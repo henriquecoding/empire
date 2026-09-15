@@ -122,11 +122,19 @@
 - **Onde:** §10 ("não é construído nem destruído"; "se cair, cai a partida"). **Proposta nos dados:** 1000 de vida,
   sem estados de ruína.
 
-### Q-033 · A curva do §06 e os edifícios reais
+### Q-033 · A curva do §06 e os edifícios reais — **medida pelo F1-11**
 - **Onde:** §06 (o simulador usa "fontes" abstratas: base = 3 + 2,6 × fontes) contra os edifícios de `buildings.csv`
   (2 a 5 por dia cada).
 - **Proposta:** o `EconomySystem` (F1-10) calcula o rendimento a partir dos edifícios; o teste de design compara-o
   com o modelo de referência e o dia de asfixia tem de continuar entre 9 e 14. Se não bater, afina-se `economy.csv`.
+- **O que o F1-11 mediu, e não decidiu:** o `EconomySystem.built_income()` soma os edifícios reais e o
+  `sources()` conta-os. A região do *greybox* tem as **7 fontes** do perfil `balanced` — quatro canteiros,
+  dois galinheiros e um pesqueiro — e rende **17 moedas no dia 1**. O simulador do §06, com as mesmas 7
+  fontes, dá **21,2**. O abstrato é 25% mais generoso do que o concreto, e o `producao_test` fixa a
+  diferença para que ela não mude em silêncio.
+- **O que fica por decidir:** qual dos dois manda. Baixar `curve_income_per_source` de 2,6 para ≈2,0 fecha a
+  diferença e move o dia da asfixia; subir os `yield_per_day` fecha-a do outro lado e mexe em seis edifícios.
+  É balanceamento e é do F1-16 — nenhum número de `data/` foi mexido aqui.
 
 ### Q-034 · A roda do rei pausa o jogo? E porque é que o teclado vai de 1 a 5?
 - **Onde:** §24 (impulso: "Tab → 1–5"; a roda tem 6 segmentos e há 6 impulsos) e §05 (a roda é o corpo do rei).
@@ -581,6 +589,19 @@
   bater); quem espera fica em `face + 30 + i × 18`, com o teto de 120 na mesma. O espaçamento do §50 mantém-se
   intacto — o que muda é de onde se conta, e é a única leitura que funciona com um muro que ocupa espaço.
 - **Decide:** ninguém, se o greybox não desmentir. É geometria, não equilíbrio.
+
+### Q-072 · O §06 diz que o pesqueiro é "imune ao rasto" e os dados só sabem dizer duas coisas
+- **Onde:** a coluna *Risco* do §06 dá três estados diferentes — a plantação é *"destruída pelo rasto"*, o
+  pesqueiro é *"imune ao rasto"*, e o galinheiro não diz nada. O §49 só escreve dois: *"a plantação no rasto é
+  destruída; as outras só param"*. O `buildings.csv` tem uma bandeira, `destroyed_by_rot_trail`, e uma
+  bandeira representa dois estados, não três.
+- **O que está implementado:** os dois do §49. O pesqueiro não é arrasado (a bandeira está a `false`) mas
+  **pára** enquanto o rasto o cobrir, como o galinheiro. A terceira leitura — produzir na mesma dentro do
+  rasto — não está escrita em lado nenhum dos dados.
+- **Proposta:** "imune" quer provavelmente dizer *fora do rasto*, e não *dentro dele a produzir*: o pesqueiro
+  está na água e o rasto é de terra. Com geometria de água no segmento (GB-01) a frase resolve-se sozinha e
+  sem coluna nova. Enquanto não houver água autorada, fica como está.
+- **Decide:** o GB-01, ou uma terceira coluna em `buildings.csv` se o playtest a pedir.
 
 ## Resolvidas na v5.2 (reversíveis)
 

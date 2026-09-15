@@ -25,6 +25,7 @@ const ECRAS := 6
 
 const MURO := &"stakes"
 const CANTEIRO := &"farm"
+const PESQUEIRO := &"fishery"
 const GALINHEIRO := &"henhouse"
 const TREINO := &"training_house"
 const TORRE := &"archer_tower"
@@ -40,6 +41,12 @@ const TREINOS_X := [-300.0, 300.0]
 const CANTEIROS_X := [-520.0, -420.0, 420.0, 520.0]
 const TORRES_X := [-680.0, 680.0]
 const GALINHEIROS_X := [-820.0, 820.0]
+# UM pesqueiro, e por duas razoes que coincidem: o segmento tem uma agua e nao
+# duas (segments.csv, coluna `resource`), e com ele a regiao fica com as SETE
+# fontes do perfil `balanced` do §06 — quatro canteiros, dois galinheiros e um
+# pesqueiro. E isso que faz do dia da asfixia medido aqui um numero sobre ESTE
+# jogo e nao sobre um slider. Fica entre a torre alta e o muro de fora.
+const PESQUEIROS_X := [1200.0]
 const TORRES_ALTAS_X := [-1100.0, 1100.0]
 const PASSAGENS_X := [-950.0, 950.0]
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
@@ -79,6 +86,8 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, CANTEIRO, POSTO_CANTEIRO)
 	for x in GALINHEIROS_X:
 		_edificio(SimLoop.core_x + x, GALINHEIRO, &"")
+	for x in PESQUEIROS_X:
+		_edificio(SimLoop.core_x + x, PESQUEIRO, &"")
 	for x in TREINOS_X:
 		_edificio(SimLoop.core_x + x, TREINO, &"")
 	# §07: "a torre nao da dano — da certeza". A alta e a que atinge a camada
@@ -88,6 +97,19 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
 	for x in TORRES_ALTAS_X:
 		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
+
+
+## Se o bioma deste segmento sustenta este edificio (§06, §21). Sem exigencia,
+## cabe em qualquer lado; com ela, so onde o segmento tem esse recurso.
+static func cabe_no_bioma(dados: BuildingData) -> bool:
+	if dados.requires_biome_feature.is_empty():
+		return true
+	return dados.requires_biome_feature == recurso()
+
+
+## O recurso que o segmento desta regiao oferece (§21, coluna `resource`).
+static func recurso() -> StringName:
+	return (Registry.entry(&"segments", SEGMENTO) as SegmentData).resource
 
 
 ## O castelo-arvore. Nao e construido nem destruido pelo jogador (§10) — nasce
@@ -132,8 +154,14 @@ static func _muro(x: float) -> void:
 	SimLoop.builds.post(vaga)
 
 
+## O §06 da tres edificios um bioma obrigatorio — pesqueiro/agua, corte de
+## madeira/bosque, poco de minerio/rocha — e ate aqui o requires_biome_feature
+## nao era lido por ninguem. Quem o le e quem POE: um sitio de obra que o bioma
+## nao sustenta nao chega a existir, e por isso nao ha um `if` disto no tick.
 static func _edificio(x: float, id: StringName, posto: StringName) -> void:
 	var dados := Registry.entry(&"buildings", id) as BuildingData
+	if not cabe_no_bioma(dados):
+		return
 	var vaga := _do_edificio(dados, x)
 	vaga.job_id = posto
 	vaga.job_slots = dados.job_slots

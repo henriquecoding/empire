@@ -58,6 +58,26 @@ func daily_income(sources: int, day: int) -> float:
 	return base * pow(_curva.income_growth, day - 1)
 
 
+## Quantas fontes de producao estao de pe. E o `sources` do simulador do §06,
+## lido do mundo em vez de vindo de um slider — a resposta de codigo a Q-033.
+func sources(obras: BuildSystem) -> int:
+	var quantas := 0
+	for vaga in obras.standing():
+		if vaga.yield_per_day > 0.0:
+			quantas += 1
+	return quantas
+
+
+## O rendimento dos edificios REAIS, a crescer ao mesmo income_growth. O
+## daily_income() acima e o modelo abstrato do §06 — 3 + 2,6 por fonte — e os
+## dois nao dao o mesmo numero com os edificios de hoje: ver Q-033.
+func built_income(obras: BuildSystem, day: int) -> float:
+	var bruto := 0.0
+	for vaga in obras.standing():
+		bruto += vaga.yield_per_day
+	return bruto * pow(_curva.income_growth, day - 1)
+
+
 ## Comercio, com efeito de rede a partir da segunda rota (§06, §29). Sem rotas e
 ## zero em qualquer dia, e nao um minimo simbolico.
 func trade_income(routes: int, day: int) -> float:

@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **29 feitos** e **24 por fazer** |
+| Tickets | **53**, dos quais **30 feitos** e **23 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 13 de 17 — F1-01 a F1-10, **F1-12**, **F1-13** e **F1-14**. Faltam quatro |
-| Suite | 314 casos, 309 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 14 de 17 — o F1-01 ao F1-14, inteiros. Faltam o F1-15, o F1-16 e o F1-17 |
+| Suite | 323 casos, 318 a passar, 5 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 61 das 62 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
+| Perguntas em aberto | 62 das 63 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -38,18 +38,18 @@ que faltam.
 
 ---
 
-## Fase 1 — 4 por fazer
+## Fase 1 — 3 por fazer
 
 **Desbloqueados agora** (as dependências estão todas feitas):
 
 | | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
 |---|---|---|---|
-| **F1-11** | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 ✔ | *Payback* de 2 dias medido em jogo; `test_payback_do_06` continua a passar |
 | **F1-15** | Cenário de combate noturno para afinação | F1-09 ✔ | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
 
 O **F1-09** fechou as três faixas: o `min_day` de cada criatura manda, o Alado
 nasce na faixa aérea e só a torre alta lá chega, e o Cavador sobe do subsolo pela
-passagem que o jogador abriu — a factura do §25 ao minuto 12:00.
+passagem que o jogador abriu — a factura do §25 ao minuto 12:00. O **F1-11** pôs
+o *payback* do §06 a ser medido no jogo a andar, e não só nos dados.
 
 **À espera de outro ticket:**
 
@@ -109,8 +109,11 @@ Está toda em dados e em prosa, e nada dela em código.
 - **Existe cena de jogo.** `scenes/game.tscn`. A `boot.tscn` continua a ser a cena
   principal (ADR 0005) — carrega o `Registry`, fixa o idioma e entrega. O que ela
   entrega é uma região de seis ecrãs com o castelo-árvore ao centro, quatro sítios
-  de muralha, quatro canteiros, dois galinheiros, duas casas de treino, duas
-  passagens para o subsolo e nove pessoas por recrutar.
+  de muralha, quatro canteiros, dois galinheiros, um pesqueiro, duas casas de
+  treino, duas torres de arqueiros, duas torres altas, duas passagens para o
+  subsolo e nove pessoas por recrutar. As sete fontes de produção são as sete do
+  perfil `balanced` do §06 — é isso que faz do dia da asfixia um número sobre
+  este jogo.
 - **As cinco acções de *input* que estavam declaradas e por ler estão ligadas.**
   Nenhuma delas muda estado directamente: cada uma enfileira uma **intenção**, e o
   início do tick seguinte consome-a, pela ordem em que chegou (§61).
@@ -146,11 +149,11 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **61 perguntas em aberto** em `docs/QUESTIONS.md`, de 62 escritas — a Q-006
-  fechou com o F1-07. As oito mais recentes (Q-064 a Q-071) são as que encher o
-  tick obrigou a fazer, e a Q-068 é a única que é uma contradição do dossiê
-  consigo próprio: o §25 diz três Rastejantes na noite 1 e a massa do §74 dá
-  sete.
+- **62 perguntas em aberto** em `docs/QUESTIONS.md`, de 63 escritas — a Q-006
+  fechou com o F1-07. As nove mais recentes (Q-064 a Q-072) são as que encher o
+  tick obrigou a fazer, e duas delas são contradições do dossiê consigo próprio:
+  a Q-068 (o §25 diz três Rastejantes na noite 1 e a massa do §74 dá sete) e a
+  Q-072 (o §06 dá três estados de risco ao rasto e o §49 só escreve dois).
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 
@@ -168,7 +171,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 314 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 323 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |
