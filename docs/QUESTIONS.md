@@ -745,7 +745,12 @@
   menos escrita e mais surpresa.
 - **Bloqueia:** a linha *"obriga a torre alta"* do §07, e com ela metade do valor da torre de 30 moedas. Não
   bloqueia o F1-16: o critério do §66 mede-se e passa sem ela, e passaria com mais margem contra.
-- **Decide:** tu. É a segunda metade da antiga Q-076, e é do F1-09 — o ticket do Alado e do Cavador.
+- **Não é a Q-075, e as duas encostam:** a Q-075 deu regra ao alcance vertical de uma criatura sobre as
+  **tropas** — e para o Alado a resposta é que ele bate no chão de onde está, porque não pode mudar de
+  faixa. Esta é sobre as **obras**, e o caminho é outro: quem filtra por faixa é o `BuildSystem.barrier()`,
+  e ele não sabe nada de `targets_bands`.
+- **Decide:** tu. É a segunda metade da Q-076, tal como ela estava escrita antes de o F1-16 a fechar, e é
+  do F1-09 — o ticket do Alado e do Cavador.
 
 ### Q-078 · O farol ilumina 300 px e a candeia nunca passa dos 260
 - **Onde:** o §80 escreve a regra de composição da noite inteira — *"uma luz domina por ecrã. Se duas
