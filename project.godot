@@ -30,6 +30,8 @@ RngService="*res://src/core/rng_service.gd"
 Registry="*res://src/core/registry.gd"
 ; ADR 0007: store_var/get_var(false) e rename atomico. Nunca load().
 SaveService="*res://src/core/save_service.gd"
+; ADR 0020: os onze passos do §43, e o unico _physics_process da simulacao.
+SimLoop="*res://src/core/sim_loop.gd"
 
 [display]
 

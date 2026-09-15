@@ -1,25 +1,29 @@
 # src/world/boot.gd — a cena principal (ADR 0005).
 #
-# Carrega o Registry, fixa o idioma, semeia o RngService, e so depois entrega.
-# No dia zero nao ha game.tscn para entregar: o que esta em baixo e o
-# placeholder da §68 (onda 2), que existe para o export ter o que mostrar. O
-# F0-10 substitui-o pela versao da §70.
+# Carrega o Registry, fixa o idioma, semeia, e so depois entrega. No dia zero
+# nao ha game.tscn para entregar: o que esta em baixo e o placeholder da §68
+# (onda 2), que o F0-10 substitui pela versao da §70.
 #
 # O que NAO acontece aqui: decisoes de jogo. Se aparecer uma regra neste
 # ficheiro, ela pertence a um sistema de src/sim/.
 extends Node2D
 
-## §21/§42: o mundo sai de uma semente, e o ecra de pausa mostra-a. Enquanto
-## nao ha menu que a peca, o arranque tira-a do relogio da maquina — e o fluxo
-## visual e o unico que ja e livre, por isso nao ha aqui aleatoriedade nenhuma.
+const FASES := ["DAWN", "MORNING", "NOON", "AFTERNOON", "DUSK", "NIGHT"]
+## Nao e balanceamento: e a escala de uma percentagem no ecra (§47).
+const PERCENTAGEM := 100.0
+
 @onready var _estado: Label = $DayZero
 
 
 func _ready() -> void:
 	Registry.load_all()
 	_fixar_idioma()
-	RngService.configure(_semente_de_arranque())
-	_estado.text = _resumo()
+
+	EventBus.day_started.connect(_no_dia)
+	EventBus.phase_changed.connect(_na_fase)
+
+	SimLoop.start(_semente_de_arranque())
+	_mostrar()
 	# Uma linha no arranque, e uma so. E o recibo do export: o CI corre o
 	# binario com --quit-after e fica com isto no registo, em vez de "nao
 	# rebentou", que nao diz se chegou a carregar alguma coisa.
@@ -37,9 +41,30 @@ func _semente_de_arranque() -> int:
 	return Time.get_unix_time_from_system() as int
 
 
+func _no_dia(_dia: int) -> void:
+	_mostrar()
+
+
+func _na_fase(_de: int, _para: int) -> void:
+	_mostrar()
+
+
+func _mostrar() -> void:
+	var relogio := ClockService.clock
+	_estado.text = (
+		"Empire · dia %d · %s %d%%\n%s"
+		% [
+			relogio.day,
+			FASES[int(relogio.current_phase())],
+			int(relogio.phase_progress() * PERCENTAGEM),
+			_resumo(),
+		]
+	)
+
+
 func _resumo() -> String:
 	return (
-		"Empire · dia zero\nsemente %d · %d recursos em %d tabelas · %s"
+		"semente %d · %d recursos em %d tabelas · %s"
 		% [
 			RngService.world_seed(),
 			Registry.total(),

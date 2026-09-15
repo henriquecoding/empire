@@ -28,8 +28,6 @@ const WORLDGEN_VERSION := 1
 const SLOTS := 3
 const PASTA := "user://saves"
 
-var _proximo_slot: int = 0
-
 
 func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(PASTA)
@@ -45,6 +43,7 @@ func save(slot: int, estado: GameState, rng_states: Dictionary = {}) -> bool:
 		&"save_version": SAVE_VERSION,
 		&"worldgen_version": WORLDGEN_VERSION,
 		&"created_utc": int(Time.get_unix_time_from_system()),
+		&"autosave_seq": _maior_seq() + 1,
 		&"seed": estado.seed,
 		&"rng_states": rng_states,
 		&"state": estado.to_dict(),
@@ -87,11 +86,40 @@ func restore_rng(slot: int) -> Dictionary:
 	return dados[&"rng_states"]
 
 
-## Grava no proximo slot da rotacao e devolve qual foi.
+## Grava no slot mais antigo e devolve qual foi. A rotacao sai do DISCO, nao de
+## um contador em memoria: um contador reinicia com o jogo, e o primeiro autosave
+## de cada sessao escrevia sempre por cima do slot 0 — que e precisamente o slot
+## que a rotacao existe para nao perder.
 func autosave(estado: GameState, rng_states: Dictionary = {}) -> int:
-	var slot := _proximo_slot
-	_proximo_slot = (_proximo_slot + 1) % SLOTS
+	var slot := _slot_mais_antigo()
 	return slot if save(slot, estado, rng_states) else -1
+
+
+## Um slot vazio primeiro; senao o de sequencia mais baixa. A sequencia e usada
+## em vez do created_utc porque este tem resolucao de um segundo, e tres
+## autosaves no mesmo segundo empatavam — e um empate na rotacao e a rotacao
+## deixar de existir.
+func _slot_mais_antigo() -> int:
+	var escolhido := 0
+	var menor := -1
+	for slot in SLOTS:
+		var dados := _ler_cru(slot)
+		if dados.is_empty():
+			return slot
+		var seq: int = dados.get(&"autosave_seq", 0)
+		if menor < 0 or seq < menor:
+			menor = seq
+			escolhido = slot
+	return escolhido
+
+
+func _maior_seq() -> int:
+	var maior := 0
+	for slot in SLOTS:
+		var dados := _ler_cru(slot)
+		if dados.has(&"autosave_seq") and typeof(dados[&"autosave_seq"]) == TYPE_INT:
+			maior = maxi(maior, dados[&"autosave_seq"])
+	return maior
 
 
 func has_slot(slot: int) -> bool:

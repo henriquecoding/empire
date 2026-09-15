@@ -37,6 +37,9 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
    nem randomize fora de src/core/rng_service.gd.
 7. Sinais: so os que existem no catalogo (docs/design/46-*.md).
 8. Sem dependencias novas sem uma ADR em docs/adr/.
+8b. Nenhum autoload le outro autoload no _ready(). A ordem em que correm e a
+    ordem de declaracao no project.godot — implicita, e por isso proibida
+    (ADR 0020). Carrega a pedido, na primeira utilizacao.
 9. Nao toques em art/ nem em audio/.
 10. Colunas "_" nos CSV sao documentacao. Um campo listado em _proposed e uma
     proposta por aprovar: se a tarefa depender dele, diz-o em docs/QUESTIONS.md
@@ -51,7 +54,14 @@ Greed -> ganancia (0-100) · RoyalSeed -> Semente Real · Favor -> favor
 ## Caminhos canonicos — se dois documentos divergirem, esta tabela manda
 src/sim/band.gd             Band          enum, planos de imagem, GROUND_LINE
 src/sim/game_clock.gd       GameClock     relogio puro (RefCounted)
-src/core/clock_service.gd   ClockService  autoload; faz o relogio andar
+src/core/clock_service.gd   ClockService  autoload; traduz o relogio em sinais
+src/core/sim_loop.gd        SimLoop       autoload; os onze passos do §43 (ADR 0020)
+src/core/event_bus.gd       EventBus      autoload; os 61 sinais da §46
+src/core/rng_service.gd     RngService    autoload; os seis fluxos (§42)
+src/core/registry.gd        Registry      autoload; os .tres por StringName
+src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
+src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
+src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 scenes/boot.tscn                          cena principal do project.godot
@@ -64,6 +74,7 @@ src/sim/data/*.gd           *Data, *Profile, *Curve simulacao    Resource, Band
 src/sim/state/*.gd          GameState, UnitRec...  simulacao     sim/
 src/sim/systems/*.gd        EconomySystem...       simulacao     sim/
 src/core/clock_service.gd   ClockService           nucleo        sim/
+src/core/sim_loop.gd        SimLoop                nucleo        core/, sim/
 src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada
 src/core/registry.gd        Registry               nucleo        sim/
