@@ -298,6 +298,13 @@ const PERGUNTAS = [
 ];
 
 async function correr() {
+// O evento `load` NAO garante que as fontes da rede ja foram aplicadas: com
+// `display=swap` a pagina desenha-se com a de recurso e troca quando o ficheiro
+// chega. Numa maquina fria isso acontece A MEIO da medicao, e o que se mede e
+// uma pagina que ainda vai mudar de forma. Foi o que aconteceu na corrida #16:
+// «320px · dia 11 fora do desenho» e «carregar num item leva a #s40 (desvio
+// -4376px)» chumbaram no runner e passavam em todo o lado, porque aqui as
+// fontes ja estavam em cache. document.fonts.ready e a barreira que faltava.
   const browser = await chromium.launch({ executablePath: EXEC, args: ARGS });
   const falhas = [];
   const resumo = [];
@@ -319,6 +326,7 @@ async function correr() {
       erros.push("console: " + t.slice(0, 160));
     });
     await page.goto(URL, { waitUntil: "load" });
+    await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(900);
 
     if (erros.length) falhas.push({ o: "Erros de JavaScript", detalhe: erros.slice(0, 6) });
@@ -461,6 +469,7 @@ async function correr() {
     const ctxSemJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1280, height: 900 } });
     const p2 = await ctxSemJs.newPage();
     await p2.goto(URL, { waitUntil: "load" });
+    await p2.evaluate(() => document.fonts.ready);
     const semJs = await p2.evaluate(() => ({
       seccoes: document.querySelectorAll("main section[id]").length,
       links: document.querySelectorAll("nav.toc a").length,
@@ -478,6 +487,7 @@ async function correr() {
       const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: 2 });
       const page = await ctx.newPage();
       await page.goto(URL, { waitUntil: "load" });
+      await page.evaluate(() => document.fonts.ready);
       await page.evaluate((t) => document.documentElement.setAttribute("data-theme", t), tema);
       await page.waitForTimeout(700);
       // Medir com a folha do telemóvel ABERTA: fechada, o índice inteiro

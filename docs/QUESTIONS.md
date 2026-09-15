@@ -391,6 +391,26 @@
   delas já pousadas. Está escrito no `SimLoop` e no `CoinSystem`.
 - **Bloqueia:** nada. **Decide:** o primeiro playtest — e o F1-06, que é quem constrói com a moeda a sério.
 
+### Q-062 · Os portões do dossiê mediam uma página que ainda ia mudar de forma
+- **Onde:** `ferramentas/verificar-dossie.mjs` e `ferramentas/verificar-novo.mjs`, em cada `goto`.
+- **O que acontecia:** os dois abriam a página com `waitUntil: "load"` e uma espera fixa de 900 ms. O evento
+  `load` **não** garante que as fontes da rede já foram aplicadas: com `display=swap` a página desenha-se com a
+  de recurso e troca quando o ficheiro chega. Numa máquina fria isso acontece *a meio da medição*.
+- **Como apareceu:** a corrida **#16** chumbou com duas falhas — «320px · "dia 11" fora do desenho» e
+  «carregar num item leva à #s40 (desvio −4376px)» — que passavam em todo o lado.
+- **O que a investigação encontrou, e é o mais importante:** neste ambiente as fontes **nunca** carregam. O
+  Chromium do Playwright recusa o certificado do proxy (`net::ERR_CERT_AUTHORITY_INVALID`) e
+  `document.fonts.size` é **0**. Ou seja: todas as corridas locais destes portões mediram uma página com
+  tipos de letra de recurso, diferente da que o *runner* mede. Com o certificado ignorado à força, a medição
+  local passou a dar **118 intactas · 5 a deslizar** — exactamente os números do *runner*, contra as 120 · 3
+  de antes. Um portão de disposição cuja resposta depende de a rede ter chegado não é um portão.
+- **Proposta:** `await página.evaluate(() => document.fonts.ready)` a seguir a cada `goto`, nos dois ficheiros.
+  É a barreira que o `load` não dá. Onde as fontes não carregam resolve de imediato e não muda nada; onde
+  carregam, faz medir depois de assentarem.
+- **O que fica por decidir:** se o dossiê deve depender de uma CDN para a sua própria verificação. Embutir as
+  fontes no ficheiro construído tornava o portão igual em qualquer máquina e sem rede — é mais trabalho e é uma
+  decisão tua. **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

@@ -14,6 +14,13 @@ const ARGS = (typeof process.getuid === "function" && process.getuid() === 0) ? 
 // portao corre contra qualquer construcao e nao so contra a da pasta.
 const ALVO = process.argv[2] || process.cwd() + "/saida/dossie-empire-v6.html";
 const FICH = ALVO.startsWith("file://") ? ALVO : "file://" + resolve(ALVO);
+// O evento `load` NAO garante que as fontes da rede ja foram aplicadas: com
+// `display=swap` a pagina desenha-se com a de recurso e troca quando o ficheiro
+// chega. Numa maquina fria isso acontece A MEIO da medicao, e o que se mede e
+// uma pagina que ainda vai mudar de forma. Foi o que aconteceu na corrida #16:
+// «320px · dia 11 fora do desenho» e «carregar num item leva a #s40 (desvio
+// -4376px)» chumbaram no runner e passavam em todo o lado, porque aqui as
+// fontes ja estavam em cache. document.fonts.ready e a barreira que faltava.
 const b = await chromium.launch({ executablePath: EXEC, args: ARGS });
 const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
 const erros = [];
@@ -23,6 +30,7 @@ p.on("pageerror", (e) => erros.push(String(e)));
 const deRede = (t) => /Failed to load resource|ERR_(CONNECTION|NAME|INTERNET|NETWORK)/.test(t);
 p.on("console", (m) => { if (m.type() === "error" && !deRede(m.text())) erros.push("console: " + m.text()); });
 await p.goto(FICH, { waitUntil: "load" });
+await p.evaluate(() => document.fonts.ready);
 await p.waitForTimeout(900);
 
 let falhas = 0;
@@ -207,6 +215,7 @@ for (const s of salto) {
    foi exactamente o que aconteceu à primeira. */
 const p2 = await b.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
 await p2.goto(FICH, { waitUntil: "load" });
+await p2.evaluate(() => document.fonts.ready);
 await p2.evaluate(() => { try { localStorage.removeItem("empire.lido.v1"); } catch (e) {} });
 await p2.reload({ waitUntil: "load" });
 await p2.waitForTimeout(900);
