@@ -391,7 +391,7 @@
   delas já pousadas. Está escrito no `SimLoop` e no `CoinSystem`.
 - **Bloqueia:** nada. **Decide:** o primeiro playtest — e o F1-06, que é quem constrói com a moeda a sério.
 
-### Q-062 · Os portões do dossiê mediam uma página que ainda ia mudar de forma
+### Q-062 · Os portões mediam com um motor e o CI media com outro
 - **Onde:** `ferramentas/verificar-dossie.mjs` e `ferramentas/verificar-novo.mjs`, em cada `goto`.
 - **O que acontecia:** os dois abriam a página com `waitUntil: "load"` e uma espera fixa de 900 ms. O evento
   `load` **não** garante que as fontes da rede já foram aplicadas: com `display=swap` a página desenha-se com a
@@ -413,14 +413,44 @@
   medem depois de uma espera FIXA — `waitForTimeout(900)` a seguir ao clique, e a remedição a 320px. As
   vizinhas que esperam por uma condição («saltar para #s40 numa parte fechada: abriu=true, desvio 0px»)
   passam sempre, no mesmo ficheiro e na mesma corrida.
-- **Patch proposto, por aplicar:** trocar as duas esperas fixas por espera até ESTABILIZAR — ler o valor em
-  intervalos curtos e só medir quando duas leituras seguidas coincidirem, com um limite de tempo. Não muda o
-  que o teste afirma, só quando o afirma. Não o apliquei porque já gastei uma tentativa às cegas nesta mesma
-  falha e não a consigo reproduzir aqui: com o mesmo Chromium (v1243) e com as fontes reais forçadas — que dão
-  as 118 · 5 do *runner* — as duas passam nesta máquina.
-- **O que fica por decidir:** se o dossiê deve depender de uma CDN para a sua própria verificação. Embutir as
-  fontes no ficheiro construído tornava o portão igual em qualquer máquina e sem rede — é mais trabalho e é uma
-  decisão tua. **Decide:** tu.
+- **A causa, finalmente medida: era a VERSÃO DO MOTOR.** Os portões escolhiam o Chromium pela ordem errada —
+  primeiro um caminho fixo (`chromium-1194`), e só se esse faltasse é que perguntavam ao Playwright. Nesta
+  máquina o caminho fixo existe, no *runner* não: eu media com o **1194** e o CI media com o **1243**, em
+  silêncio, durante três corridas. E a diferença não é cosmética. O salto do item da bandeja é **animado**, e
+  no 1243 a animação demora quase o dobro:
+
+  | motor | o salto assenta aos | o portão lia aos | resultado |
+  |---|---|---|---|
+  | 1194 (esta máquina) | **814 ms** | 900 ms fixos | passava, por 86 ms |
+  | 1243 (o *runner*) | **1613 ms** | 900 ms fixos | lia a meio da animação |
+
+- **Reproduzida.** Com o portão **antigo** e o motor do *runner*, a falha sai igual nesta máquina:
+  `FALHA carregar num item leva à #s40 (desvio −4331px)` — e numa segunda corrida **−4639 px**. Varia aqui
+  como varia lá (−4376, −4688), porque ler a meio de uma animação dá o sítio por onde a página ia passar. A
+  série medida de 100 em 100 ms mostra-o inteiro:
+  `113ms:−52409 · 213ms:−45372 · 313ms:−33967 · 413ms:−20681 · 514ms:−9275 · 614ms:−2236 · 714ms:0`.
+  Os números do *runner* caem exactamente dentro desta curva.
+- **Corrigido:** (1) pergunta-se ao Playwright PRIMEIRO qual é o Chromium, nos dois ficheiros — o caminho fixo
+  passa a recurso e não a preferência, e esta máquina passa a medir com o motor do CI; (2) a verificação do
+  item da bandeja espera até ESTABILIZAR — lê de 100 em 100 ms e só decide quando duas leituras seguidas
+  coincidem, com tecto de 6 s e um piso de 400 ms (antes disso, duas leituras iguais são a página *parada* e
+  não a página *assente*). O que se afirma não mudou; mudou quando se lê.
+- **A segunda falha (o gráfico a 320px) NÃO está explicada, e não se finge que está.** Três coisas medidas
+  sobre ela: (a) não é tempo — as coordenadas a 320px são idênticas aos 450 ms e aos 1200 ms, `W=246
+  asfW=45 x=103.1 ys=33.8,62.8,75.8`; (b) não é consequência da primeira — quando se mede o gráfico a página
+  já está parada (`scrollY 38913 → 38913`); (c) não é a versão do motor nem os tipos de letra — com o 1243 e
+  com as quatro famílias servidas do disco, passa aqui na mesma. A margem mais apertada é a separação dos
+  nomes de série: **13.0 contra um limite de 12.5**.
+- **O que se fez em vez de adivinhar:** os portões passam a dizer com que números chumbam. Cada `FALHA` leva
+  agora o detalhe — qual das quatro condições falhou e as caixas de cada rótulo — e cada corrida abre a
+  declarar **que página mediu**: `motor: 153.0.8010.12 (…)` e `tipos de letra: 38 faces · loaded 10`. Uma
+  destas duas linhas teria poupado as três corridas.
+- **O que fica por decidir:** se o dossiê deve depender de uma CDN para a sua própria verificação. Continua a
+  valer, e agora com mais provas: sem a CDN são **120 intactas · 3 a deslizar**, com ela **118 · 5**; uma face
+  pode falhar sozinha (`IBM Plex Mono 500` deu `error` numa das medições) e só ela muda a contagem dos blocos
+  de código; e os caracteres de desenho de caixa caem sempre para o tipo monoespaçado *da máquina*, que o
+  *runner* tem e esta não. Embutir as fontes no ficheiro construído tornava o portão igual em qualquer máquina
+  e sem rede. **Decide:** tu.
 
 ## Resolvidas na v5.2 (reversíveis)
 

@@ -58,13 +58,19 @@ import { existsSync } from "node:fs";
 
 const FICHEIRO = resolve(process.argv[2]);
 const URL = pathToFileURL(FICHEIRO).href;
-/* O Chromium desta máquina está num sítio fixo; num runner de CI está onde o
-   `playwright install` o pôs. Um caminho absoluto que não existe faz o
-   `launch` rebentar com um erro que não diz porquê — por isso só se passa
-   `executablePath` quando o ficheiro lá está, e caso contrário deixa-se o
-   Playwright resolver o seu. */
-const PREF = process.env.PW_CHROME || "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
-const EXEC = existsSync(PREF) ? PREF : undefined;
+/* QUAL Chromium — e a ordem estava ao contrário.
+   Um caminho absoluto que não existe faz o `launch` rebentar com um erro que
+   não diz porquê, e daí a verificação. Mas PREFERIR o caminho fixo faz esta
+   máquina medir com uma versão e o runner com outra, em silêncio: foi o que
+   aconteceu nas corridas #16 a #18 — aqui 1194, no CI 1243 — e a diferença
+   não é cosmética, porque o salto animado do 1243 demora quase o dobro.
+   Pergunta-se primeiro ao Playwright, que é quem manda no CI; o caminho fixo
+   fica para quando o `playwright install` não correu; e o PW_CHROME por cima
+   dos dois, para se poder comparar de propósito. */
+const FIXO = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+const DO_PW = (() => { try { return chromium.executablePath(); } catch { return undefined; } })();
+const EXEC = process.env.PW_CHROME
+  || (DO_PW && existsSync(DO_PW) ? DO_PW : (existsSync(FIXO) ? FIXO : undefined));
 /* Correr como root (contentor, CI) obriga a desligar a caixa de areia do
    Chromium; numa sessão normal ela fica ligada, que é o que se quer. */
 const ARGS = (typeof process.getuid === "function" && process.getuid() === 0) ? ["--no-sandbox"] : [];
