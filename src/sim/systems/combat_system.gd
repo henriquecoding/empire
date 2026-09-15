@@ -39,6 +39,8 @@ const EV_ESTADO := 3
 const EV_OBRA := 4
 ## O que a fila de contacto devolve, a passar tal e qual (§50).
 const EV_CONTACTO := 5
+## Uma criatura que subiu do subsolo por uma passagem (§07, §25 minuto 12:00).
+const EV_FAIXA := 6
 
 const CHAVE := &"kind"
 const DE := &"from"
@@ -88,9 +90,12 @@ func mark(unit_id: int, creature_id: int) -> void:
 ## Passo 4 do §43 para quem luta. Delegado, e nao repetido: a escolha tem regra
 ## propria e vive no TargetPicker.
 func choose(
-	unidades: UnitSystem, criaturas: CreatureSystem, obras: BuildSystem
+	unidades: UnitSystem,
+	criaturas: CreatureSystem,
+	obras: BuildSystem,
+	passagens: PackedFloat32Array = PackedFloat32Array()
 ) -> Array[Dictionary]:
-	return picker.choose(unidades, criaturas, obras)
+	return picker.choose(unidades, criaturas, obras, passagens)
 
 
 ## Passo 6 do §43. Os cooldowns ja desceram no passo 5, com o movimento — sao a

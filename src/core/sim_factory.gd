@@ -21,11 +21,6 @@ const TABELA_CRIATURAS := &"creatures"
 const TABELA_PODRIDAO := &"rot"
 const PODRIDAO := &"default"
 
-## A que distancia de uma passagem o Verbo 2 ainda a alcanca, em px. Nao e
-## balanceamento: e a tolerancia de um gesto, e o §11 nao lhe da numero. Fica
-## ancorada na largura de uma tropa a escala 2 (§01) — Q-066.
-const PASSAGEM_PX := 24.0
-
 
 static func curve() -> EconomyCurve:
 	return Registry.entry(TABELA_ECONOMIA, CURVA) as EconomyCurve

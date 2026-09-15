@@ -147,7 +147,7 @@ func step(delta: float) -> void:
 	#     tick.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
-	EventRelay.combat(combat.choose(units, creatures, builds))
+	EventRelay.combat(combat.choose(units, creatures, builds, passages))
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
@@ -166,7 +166,7 @@ func step(delta: float) -> void:
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
-	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... F1-14
+	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
 	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
 
 	_espelhar_relogio()

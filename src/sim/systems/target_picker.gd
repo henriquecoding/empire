@@ -65,7 +65,10 @@ func forget(unit_id: int) -> void:
 ## Quem bate em quem, neste tick. Devolve as entradas e saidas de FIGHT da
 ## tabela da §52 — as unicas mudancas de estado que o combate decide.
 func choose(
-	unidades: UnitSystem, criaturas: CreatureSystem, obras: BuildSystem
+	unidades: UnitSystem,
+	criaturas: CreatureSystem,
+	obras: BuildSystem,
+	passagens: PackedFloat32Array = PackedFloat32Array()
 ) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for unit_id in ids_por_ordem(unidades.ids):
@@ -77,6 +80,17 @@ func choose(
 			continue
 		_alvos[unit_id] = _da_tropa(unidades, i, dados, criaturas)
 		_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
+	for subiu in Passages.surface(criaturas, _criaturas, passagens):
+		(
+			eventos
+			. append(
+				{
+					CombatSystem.CHAVE: CombatSystem.EV_FAIXA,
+					CombatSystem.DE: subiu[Passages.QUEM],
+					CombatSystem.PARA: [subiu[Passages.DE], subiu[Passages.PARA]],
+				}
+			)
+		)
 	eventos.append_array(_das_criaturas(unidades, criaturas, obras))
 	return eventos
 

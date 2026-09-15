@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **28 feitos** e **25 por fazer** |
+| Tickets | **53**, dos quais **29 feitos** e **24 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 12 de 17 — F1-01 a F1-08 menos o F1-09, **F1-10**, **F1-12**, **F1-13** e **F1-14** |
-| Suite | 305 casos, 300 a passar, 5 saltados, 0 falhas, 0 *orphans* |
-| `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (F1-14) e o 10 (Fase 2) |
-| Perguntas em aberto | 62, em `docs/QUESTIONS.md` |
+| Fase 1 | 13 de 17 — F1-01 a F1-10, **F1-12**, **F1-13** e **F1-14**. Faltam quatro |
+| Suite | 314 casos, 309 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
+| Perguntas em aberto | 61 das 62 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -38,25 +38,23 @@ que faltam.
 
 ---
 
-## Fase 1 — 10 por fazer
+## Fase 1 — 4 por fazer
 
 **Desbloqueados agora** (as dependências estão todas feitas):
 
 | | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
 |---|---|---|---|
 | **F1-11** | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 ✔ | *Payback* de 2 dias medido em jogo; `test_payback_do_06` continua a passar |
+| **F1-15** | Cenário de combate noturno para afinação | F1-09 ✔ | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
 
-O **F1-09** já tem metade do caminho andado: a tabela de invocação por dia
-mínimo corre desde o F1-08, e o Alado só é atingido por quem está numa torre alta
-desde o F1-07 (Q-006, fechada). Falta-lhe o Cavador a subir do subsolo por
-passagem, e a noite 4 a obrigar mesmo a torre.
+O **F1-09** fechou as três faixas: o `min_day` de cada criatura manda, o Alado
+nasce na faixa aérea e só a torre alta lá chega, e o Cavador sobe do subsolo pela
+passagem que o jogador abriu — a factura do §25 ao minuto 12:00.
 
 **À espera de outro ticket:**
 
 | | O que é | Depende de | Critério de aceitação |
 |---|---|---|---|
-| **F1-09** | Criaturas: Rastejante, Alado, Bruto e a tabela de invocação | F1-08 ✔ | A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea |
-| F1-15 | Cenário de combate noturno para afinação | F1-09 | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
 | F1-17 | Arte da mancha: a Podridão e a candeia | F1-08 ✔, **ART-02** | Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã |
 | F1-16 | Afinar até sobreviver dez dias ser possível e não trivial | **tudo** | Medido no cenário do F1-15. É o último da fase, por construção. |
 
@@ -121,8 +119,8 @@ Está toda em dados e em prosa, e nada dela em código.
     echo "$a: $(grep -rn "&\"$a\"" src/ --include='*.gd' | wc -l)"; done
   ```
 - **Nove dos onze passos do `SimLoop`** estão escritos. Faltam dois, e cada um
-  continua a ser uma linha com o ticket que a preenche: o 9 (dívida e diplomacia,
-  F1-14) e o 10 (IA do rei inimigo, Fase 2).
+  continua a ser uma linha com o ticket que a preenche: o 9 (a Dívida é a XIII-04,
+  a diplomacia é Fase 2) e o 10 (IA do rei inimigo, Fase 2).
 
 ## O que falta e não é ticket nenhum
 
@@ -131,8 +129,9 @@ Está toda em dados e em prosa, e nada dela em código.
   mesma região que o §21 descreve — seis ecrãs de 640 px, dois *slots* de
   construção e uma passagem por segmento, lidos do `segments.csv` — mas em código
   e não autorada. É a GB-01 que o substitui.
-- **Não há um sprite.** Tudo o que se vê são rectângulos: `src/world/world_view.gd`
-  desenha as tropas, as criaturas, as moedas, as obras e a mancha com `draw_rect`.
+- **Não há um sprite.** Tudo o que se vê são rectângulos: `src/world/band_view.gd`
+  desenha as tropas, as criaturas, as moedas, as obras e a mancha com `draw_rect`,
+  uma faixa de cada vez.
   A composição por *slots* da §58 e o `UnitView` existem e estão testados, mas não
   há arte para lhes dar (ART-01, ART-02).
 - **A roda do rei não existe.** Quatro dos seis segmentos do §24 não têm sistema
@@ -147,10 +146,11 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **62 perguntas em aberto** em `docs/QUESTIONS.md` — as oito mais recentes
-  (Q-064 a Q-071) são as que encher o tick obrigou a fazer, e a Q-068 é a única
-  que é uma contradição do dossiê consigo próprio: o §25 diz três Rastejantes na
-  noite 1 e a massa do §74 dá sete.
+- **61 perguntas em aberto** em `docs/QUESTIONS.md`, de 62 escritas — a Q-006
+  fechou com o F1-07. As oito mais recentes (Q-064 a Q-071) são as que encher o
+  tick obrigou a fazer, e a Q-068 é a única que é uma contradição do dossiê
+  consigo próprio: o §25 diz três Rastejantes na noite 1 e a massa do §74 dá
+  sete.
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 
@@ -168,7 +168,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 305 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 314 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |

@@ -52,7 +52,7 @@ Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena princ
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.6: 305 testes (5 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.6: 314 testes (5 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
 - A base de dados tem **28 tabelas** e 203 recursos com todos os números do dossiê, Parte XIII incluída; o que o

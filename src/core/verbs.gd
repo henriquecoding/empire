@@ -106,17 +106,15 @@ static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32A
 	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
 	if not dados.can_change_band:
 		return false
-	for x in passagens:
-		if absf(unidades.xs[i] - x) > SimFactory.PASSAGEM_PX:
-			continue
-		var de := int(unidades.bands[i])
-		var para := int(Band.Kind.SURFACE)
-		if de == int(Band.Kind.SURFACE):
-			para = int(Band.Kind.UNDERGROUND)
-		unidades.bands[i] = para
-		EventBus.queue(&"passage_used", [king_id, de, para])
-		return true
-	return false
+	if not Passages.near(unidades.xs[i], passagens):
+		return false
+	var de := int(unidades.bands[i])
+	var para := int(Band.Kind.SURFACE)
+	if de == int(Band.Kind.SURFACE):
+		para = int(Band.Kind.UNDERGROUND)
+	unidades.bands[i] = para
+	EventBus.queue(&"passage_used", [king_id, de, para])
+	return true
 
 
 ## O gatilho direito do §24: marca a criatura mais proxima deste x para todos os

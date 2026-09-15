@@ -60,6 +60,9 @@ static func combat(eventos: Array[Dictionary]) -> Array[Dictionary]:
 				builds(e[CombatSystem.EVENTOS])
 			CombatSystem.EV_CONTACTO:
 				_contacto(e)
+			CombatSystem.EV_FAIXA:
+				var faixas: Array = e[CombatSystem.PARA]
+				EventBus.queue(&"passage_used", [e[CombatSystem.DE], faixas[0], faixas[1]])
 	return larga
 
 
