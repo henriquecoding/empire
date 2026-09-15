@@ -22,8 +22,14 @@ var bands: PackedByteArray = PackedByteArray()
 var healths: PackedInt32Array = PackedInt32Array()
 var max_healths: PackedInt32Array = PackedInt32Array()
 var speeds: PackedFloat32Array = PackedFloat32Array()
-## Para onde caminha quando nao esta a bater em ninguem: o nucleo do imperio.
+## Para onde caminha AGORA. A fila de contacto do §50 escreve aqui o lugar dela,
+## e por isso isto muda; o rumo nao.
 var target_xs: PackedFloat32Array = PackedFloat32Array()
+## O que ela veio procurar: o nucleo do imperio. Escrito no spawn e nunca mais.
+## Sao duas colunas e nao uma porque a pergunta "o que e que esta entre mim e o
+## que eu quero" nao pode ser respondida com o sitio onde estou a ir a seguir —
+## uma vez posto na fila, o muro deixava de estar no caminho de si proprio.
+var goal_xs: PackedFloat32Array = PackedFloat32Array()
 ## Em quem bate. NENHUM e "ainda vem a caminho".
 var target_ids: PackedInt32Array = PackedInt32Array()
 ## Em que OBRA bate. Uma coluna propria e nao um id partilhado com o de cima:
@@ -69,6 +75,7 @@ func spawn(estado: GameState, dados: CreatureData, x: float, rumo: float) -> int
 	max_healths.append(dados.max_health)
 	speeds.append(dados.move_speed)
 	target_xs.append(rumo)
+	goal_xs.append(rumo)
 	target_ids.append(NENHUM)
 	target_slots.append(NENHUM)
 	cooldowns.append(0.0)
@@ -126,6 +133,7 @@ func dissolve() -> PackedInt32Array:
 	max_healths = PackedInt32Array()
 	speeds = PackedFloat32Array()
 	target_xs = PackedFloat32Array()
+	goal_xs = PackedFloat32Array()
 	target_ids = PackedInt32Array()
 	target_slots = PackedInt32Array()
 	cooldowns = PackedFloat32Array()
@@ -136,23 +144,14 @@ func dissolve() -> PackedInt32Array:
 
 ## As colunas em tipos base, para o save (§62). Sem Object nenhum.
 func to_dict() -> Dictionary:
-	var nomes := PackedStringArray()
-	for nome in data_ids:
-		nomes.append(String(nome))
-	return {
-		&"ids": ids,
-		&"data_ids": nomes,
-		&"xs": xs,
-		&"bands": bands,
-		&"healths": healths,
-		&"max_healths": max_healths,
-		&"speeds": speeds,
-		&"target_xs": target_xs,
-		&"target_ids": target_ids,
-		&"target_slots": target_slots,
-		&"cooldowns": cooldowns,
-		&"coin_drops": coin_drops,
-	}
+	return Columns.to_dict(self)
+
+
+## Repoe do save. Reindexa no fim: o dicionario de ids e derivado das colunas e
+## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
+func from_dict(d: Dictionary) -> void:
+	Columns.from_dict(self, d)
+	_reindexar()
 
 
 func _copiar(de: int, para: int) -> void:
@@ -164,6 +163,7 @@ func _copiar(de: int, para: int) -> void:
 	max_healths[para] = max_healths[de]
 	speeds[para] = speeds[de]
 	target_xs[para] = target_xs[de]
+	goal_xs[para] = goal_xs[de]
 	target_ids[para] = target_ids[de]
 	target_slots[para] = target_slots[de]
 	cooldowns[para] = cooldowns[de]
@@ -180,7 +180,14 @@ func _encolher() -> void:
 	max_healths.resize(n)
 	speeds.resize(n)
 	target_xs.resize(n)
+	goal_xs.resize(n)
 	target_ids.resize(n)
 	target_slots.resize(n)
 	cooldowns.resize(n)
 	coin_drops.resize(n)
+
+
+func _reindexar() -> void:
+	_por_id.clear()
+	for i in ids.size():
+		_por_id[ids[i]] = i

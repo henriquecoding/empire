@@ -74,14 +74,15 @@ func clear() -> void:
 func publish(obras: BuildSystem) -> void:
 	var querem: Array[BuildSlot] = []
 	for obra in obras.standing():
-		if obra.job_id != &"" and obra.job_slots > 0:
+		if obra.job_id != &"" and obra.posts() > 0:
 			querem.append(obra)
 	if querem == _publicadas:
 		return
 	clear()
 	for obra in querem:
-		for k in obra.job_slots:
-			post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
+		for k in obra.posts():
+			var vaga := post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
+			vaga.grants(obra)
 	_publicadas = querem
 
 
@@ -89,10 +90,17 @@ func publish(obras: BuildSystem) -> void:
 ## todas em cima do mesmo pixel. E a mesma regra da fila do §50 — posicoes
 ## ATRIBUIDAS e nao emergentes, para que nao vibrem nem se empurrem.
 func _lugar(obra: BuildSlot, k: int) -> float:
-	if obra.job_slots <= 1:
+	var quantos := obra.posts()
+	if quantos <= 1:
 		return obra.x
-	var passo := obra.width / obra.job_slots
+	var passo := obra.width / quantos
 	return obra.x - obra.width * MEIO + passo * (k + MEIO)
+
+
+## A vaga com este id, ou null. E o que o combate pergunta para saber se quem
+## dispara esta numa torre — "a torre nao da dano, da certeza" (§07).
+func slot_of(job_id: int) -> JobSlot:
+	return slots[job_id] if job_id >= 0 and job_id < slots.size() else null
 
 
 func free_slots() -> int:

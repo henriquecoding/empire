@@ -45,13 +45,13 @@
   resto (`flee_health`). Confirma.
 - **Bloqueia:** F1-12.
 
-### Q-006 · Quem atinge a faixa aérea?
+### Q-006 · Quem atinge a faixa aérea? — **fechada pelo F1-07**
 - **Onde:** §07 (Libélula: "só atacável por arqueiros e torres altas"; Alado: "obriga a torre alta") e §10.
-- **O que diverge:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
-- **Proposta:** geometria — um arqueiro no chão não chega aos 200 px do topo com 200 px de alcance; em muro ou
-  torre de arqueiros também não; **só a torre alta** (`hits_aerial`) e os arqueiros de copa. Os dados já dizem
-  `targets_bands = SURFACE|AERIAL` no arqueiro; o alcance vertical decide.
-- **Bloqueia:** F1-07, F1-09.
+- **O que divergia:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
+- **Decisão — a proposta, tal como estava escrita:** o `targets_bands` diz o que a unidade **pode** apontar; a
+  faixa dela própria chega sempre; qualquer outra só com um posto que lhe dê altura — o `hits_aerial` do
+  `effect_params`, que hoje só a `high_tower` tem. Está em `src/sim/systems/posts.gd` e tem três testes.
+- **É uma mudança de comportamento:** antes disto um arqueiro no chão abatia o Alado.
 
 ### Q-007 · Horta: "tropas baratíssimas" quanto?
 - **Onde:** §04. Nenhum número. **Proposta:** −1 moeda no recrutamento de todas as tropas da Horta (mínimo 1).
@@ -122,11 +122,19 @@
 - **Onde:** §10 ("não é construído nem destruído"; "se cair, cai a partida"). **Proposta nos dados:** 1000 de vida,
   sem estados de ruína.
 
-### Q-033 · A curva do §06 e os edifícios reais
+### Q-033 · A curva do §06 e os edifícios reais — **medida pelo F1-11**
 - **Onde:** §06 (o simulador usa "fontes" abstratas: base = 3 + 2,6 × fontes) contra os edifícios de `buildings.csv`
   (2 a 5 por dia cada).
 - **Proposta:** o `EconomySystem` (F1-10) calcula o rendimento a partir dos edifícios; o teste de design compara-o
   com o modelo de referência e o dia de asfixia tem de continuar entre 9 e 14. Se não bater, afina-se `economy.csv`.
+- **O que o F1-11 mediu, e não decidiu:** o `EconomySystem.built_income()` soma os edifícios reais e o
+  `sources()` conta-os. A região do *greybox* tem as **7 fontes** do perfil `balanced` — quatro canteiros,
+  dois galinheiros e um pesqueiro — e rende **17 moedas no dia 1**. O simulador do §06, com as mesmas 7
+  fontes, dá **21,2**. O abstrato é 25% mais generoso do que o concreto, e o `producao_test` fixa a
+  diferença para que ela não mude em silêncio.
+- **O que fica por decidir:** qual dos dois manda. Baixar `curve_income_per_source` de 2,6 para ≈2,0 fecha a
+  diferença e move o dia da asfixia; subir os `yield_per_day` fecha-a do outro lado e mexe em seis edifícios.
+  É balanceamento e é do F1-16 — nenhum número de `data/` foi mexido aqui.
 
 ### Q-034 · A roda do rei pausa o jogo? E porque é que o teclado vai de 1 a 5?
 - **Onde:** §24 (impulso: "Tab → 1–5"; a roda tem 6 segmentos e há 6 impulsos) e §05 (a roda é o corpo do rei).
@@ -548,6 +556,96 @@
   Rastejantes contra um monarca sem muro não é isso.
 - **Decide:** tu, e é uma das duas — ou a prosa do §25 passa a sete, ou a `mass_base` do `rot.csv` desce. O
   `AGENTS.md` proíbe mexer no número para calar o teste, e por isso nada foi mexido.
+
+### Q-069 · "CanvasModulate por faixa" pede a única coisa que o motor não faz
+- **Onde:** o título do F1-13. O Godot aceita **um** `CanvasModulate` por canvas — é o que a documentação dele
+  diz e é o que o nome quer dizer: ele modula *o canvas*. Três faixas no mesmo canvas não podem ter três.
+- **Proposta:** um nó por faixa (`src/world/band_view.gd`) com o seu `modulate`. É a mesma multiplicação, e
+  três nós irmãos podem tê-la diferente. A alternativa — três `CanvasLayer`, um por faixa — dava três
+  `CanvasModulate` a sério, mas custava sincronizar a transformação da câmara à mão em cada um, porque um
+  `CanvasLayer` não a herda. Isso é a pilha de parallax da §59 e é o ART-03; quando ela existir, este ficheiro
+  passa a viver lá dentro sem que a conta mude.
+- **E o segundo número que não existe:** o §80 dá `night_value_floor` 0,11 para o chão contra 0,16 do
+  ambiente, e mais nada. Daí sai uma razão que vale em todas as fases; o subsolo leva-a duas vezes, porque não
+  há número para ele e inventar um era escrever balanceamento em código (regra 3 do `AGENTS.md`).
+- **Decide:** o ART-03, quando trouxer as seis camadas de parallax.
+
+### Q-070 · Os dois caminhos da muralha são uma decisão, e não há onde a tomar
+- **Onde:** o §10 escreve *"cada segmento oferece duas melhorias mutuamente exclusivas por nível. Nunca dá
+  para ter as duas — **e essa é a decisão**"*. A **Guarnição** põe postos e deixa o muro frágil; a
+  **Fortificação** põe vida e tira dano de saída. O `walls.csv` tem as quatro colunas para as duas.
+- **O sistema está inteiro:** `BuildSlot.choose_path()` aceita a escolha até ao nível 1 — *"nunca dá para ter
+  as duas"* também quer dizer que não se troca a meio — e a partir daí a vida e os postos saem do caminho
+  escolhido. O que não existe é **onde carregar**: a roda do rei é a Q-067 e os dois verbos já estão tomados.
+- **Proposta, por omissão:** `FORTIFICACAO`, que é a coluna que o §10 escreve como principal (é a coluna
+  "Vida (B)" da tabela). Ninguém escolhe, e por isso escolhe-se a que o dossiê põe à frente.
+- **Decide:** a Fase 2, com a roda. Até lá é uma linha no `greybox.gd` e muda-se num sítio.
+
+### Q-071 · A fila do §50 mede-se do centro do muro, e um muro tem largura
+- **Onde:** o §50 dá a fila como `wall.x + sign(...) * (30 + i * 18)`. O modelo dele não tem largura de muro;
+  estes têm — a estacaria tem 64 px de silhueta. Trinta píxeis medidos do **centro** punham o primeiro da fila
+  **dentro** dela, e quem tem *slot* de contacto ficava a 32 px de um alvo que alcança 24.
+- **Proposta:** as distâncias medem-se da **face**. Quem tem *slot* fica na face (distância zero ao que vai
+  bater); quem espera fica em `face + 30 + i × 18`, com o teto de 120 na mesma. O espaçamento do §50 mantém-se
+  intacto — o que muda é de onde se conta, e é a única leitura que funciona com um muro que ocupa espaço.
+- **Decide:** ninguém, se o greybox não desmentir. É geometria, não equilíbrio.
+
+### Q-072 · O §06 diz que o pesqueiro é "imune ao rasto" e os dados só sabem dizer duas coisas
+- **Onde:** a coluna *Risco* do §06 dá três estados diferentes — a plantação é *"destruída pelo rasto"*, o
+  pesqueiro é *"imune ao rasto"*, e o galinheiro não diz nada. O §49 só escreve dois: *"a plantação no rasto é
+  destruída; as outras só param"*. O `buildings.csv` tem uma bandeira, `destroyed_by_rot_trail`, e uma
+  bandeira representa dois estados, não três.
+- **O que está implementado:** os dois do §49. O pesqueiro não é arrasado (a bandeira está a `false`) mas
+  **pára** enquanto o rasto o cobrir, como o galinheiro. A terceira leitura — produzir na mesma dentro do
+  rasto — não está escrita em lado nenhum dos dados.
+- **Proposta:** "imune" quer provavelmente dizer *fora do rasto*, e não *dentro dele a produzir*: o pesqueiro
+  está na água e o rasto é de terra. Com geometria de água no segmento (GB-01) a frase resolve-se sozinha e
+  sem coluna nova. Enquanto não houver água autorada, fica como está.
+- **Decide:** o GB-01, ou uma terceira coluna em `buildings.csv` se o playtest a pedir.
+
+### Q-073 · O §07 quer seis arqueiros num muro que só tem um posto
+- **Onde:** o §07 fecha com a receita do microteste — *"monta um cenário fechado: um muro, **seis arqueiros**,
+  uma noite de 105 s, vagas de Rastejantes crescentes. Ajusta até a noite ser ganha com **1–2 mortes no dia 5**
+  e **perdida sem torre no dia 8**"*. O cenário existe (`tests/sim_harness.gd`, F1-15) e mede o contrário.
+- **O que o instrumento lê**, com a estacaria de nível 1 e a semente do cenário:
+
+  | Noite 5 | invoca | abate | mortes | ao muro | muro cai | núcleo |
+  |---|---|---|---|---|---|---|
+  | sem torre | 16 | 10 | **1** | 2 | **sim** | de pé |
+  | com torre de arqueiros | 16 | 16 | **0** | 7 | não | de pé |
+
+  E o dia 8 dá o mesmo desenho: sem torre o muro cai, com torre não. Sem torre o muro cai em **todas** as
+  noites, a começar na 1 — e o §25 diz que a noite 1 *"é ganha de certeza"*.
+- **Porque é que acontece, e não é um defeito do código:** a estacaria do §10 publica **um** posto de guarda
+  (`guard_posts_b = 1`, `walls.csv`). Dos seis arqueiros, um sobe ao muro e os outros cinco ficam sem vaga, e
+  quem não tem posto recolhe ao núcleo — a 500 px do muro, com 200 px de alcance. A noite inteira é decidida
+  por **um** arqueiro. A torre de arqueiros dá mais dois postos, e é isso que a tabela de cima mede: *"a torre
+  não dá dano — dá certeza"* (§07) está certo, e é a única coisa desta medição que está.
+- **Decide:** tu, e é uma de três — (a) a receita do §07 passa a incluir a torre, e o "sem torre no dia 8"
+  passa a ser a variante; (b) os postos de guarda do §10 sobem no nível 1; (c) um arqueiro sem posto passa a
+  disparar de onde está, e aí a §52 ganha uma regra que hoje não tem. O `AGENTS.md` proíbe mexer no número
+  para calar o teste, e por isso nada foi mexido: os dois testes do §07 estão **saltados com esta razão** em
+  `tests/noite_do_07_test.gd`. É o F1-16.
+
+### Q-074 · O §66 quer dez dias em dez segundos, e o tick custa o dobro disso
+- **Onde:** o §66 dá ao bloco *"Uma noite completa"* o critério *"corre em headless com delta fixo, **dez dias
+  em menos de dez segundos**"*. Dez dias são 3600 s de jogo a 30 Hz — **108 000 ticks** —, o que dá um
+  orçamento de **92 µs por tick**.
+- **O que se mede:** o cenário fechado — duas obras, sete tropas, vagas de Rastejantes — corre os dez dias em
+  **≈18 s** num *runner* headless. Medido por passo: **≈22 µs** com o mundo vazio, **≈99 µs** com as sete
+  tropas e as duas obras, **≈275 µs** a meio da noite 10. O `EventBus` não é o custo (desligar a história
+  muda 3%); o custo é o tick, e cresce com as obras e com as tropas antes de crescer com as criaturas.
+- **Não colide com o §63:** o orçamento do §63 é de **4000 µs** por tick para a simulação inteira, e a 30 Hz
+  isso é tempo real com folga — o `jogo_noite_test` mede-o e passa. O que o §66 pede é outra coisa: **360× mais
+  depressa do que o tempo real**, que é o que faz de um cenário um instrumento de afinação em vez de uma
+  partida acelerada.
+- **Proposta:** medir antes de otimizar. Este número sai de um binário de editor em *debug*, com as
+  verificações de tipo do GDScript e os `assert` ligados; a mesma medição sobre um *export* de release é o
+  primeiro passo, e não custa nada senão correr o CI. Se a diferença não chegar, o §66 é que escolhe: ou o
+  orçamento sobe, ou o tick emagrece — e aí é trabalho de simulação, com ticket próprio.
+- **Bloqueia:** o teste está saltado com esta razão em `tests/noite_do_07_test.gd`. O que **não** está saltado
+  é o que o F1-15 promete: os dez dias correm, em headless e ao passo fixo, e o relógio chega ao dia 11.
+- **Decide:** tu. Não bloqueia o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
 
 ## Resolvidas na v5.2 (reversíveis)
 

@@ -177,6 +177,24 @@ func standing() -> Array[BuildSlot]:
 	return saida
 
 
+## O estado de cada obra, por id. As obras em si sao autoradas e voltam a ser
+## postas por quem monta o mundo; o que o save leva e o que aconteceu a elas.
+func to_dict() -> Array:
+	var saida := []
+	for vaga in slots:
+		saida.append(vaga.to_dict())
+	return saida
+
+
+## Repoe sobre as obras JA POSTAS. Uma obra que o save tem e o mundo nao e
+## ignorada — e o mesmo degradar do §62, e nao um save recusado.
+func from_dict(guardadas: Array) -> void:
+	for d in guardadas:
+		var i := index_of(d.get(&"id", NENHUM))
+		if i != NENHUM:
+			slots[i].from_dict(d)
+
+
 func _aceita(vaga: BuildSlot) -> bool:
 	return vaga.state == BuildSlot.State.EMPTY or vaga.state == BuildSlot.State.DONE
 

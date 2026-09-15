@@ -114,7 +114,7 @@
   "notas": [
    "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload que lhe chama tick().",
    "O ticket dizia 'feito' e nenhum dos dois existia na árvore recuperada — a mesma perda das nove cenas de segmento (Q-048). Reescritos a 15/09/2026.",
-   "night_survived fica por emitir: precisa de deaths e walls_lost, que ainda ninguém conta. F1-12 e F1-15."
+   "night_survived ficou por emitir até ao F1-15, como aqui estava escrito: a §46 dá-lhe deaths e walls_lost e não havia sistema que os contasse. Conta-os agora o src/core/night_tally.gd, do crepúsculo ao amanhecer, e quem o anuncia é o SimLoop no amanhecer — que é onde o §48 o põe."
   ]
  },
  "F0-07": {
@@ -371,7 +371,7 @@
   "depende": "F1-05",
   "feito": "A tabela do §10 replicada em .tres; o teste test_muralhas_do_10 passa",
   "fora": "O Lenho Amargo no nível 4 — é o XIII-03.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Q-002 fechada: manda a tabela (6 · 11 · 20 · 36 · 65), não a fórmula do §06."
@@ -387,7 +387,7 @@
   "depende": "F1-06",
   "feito": "O tempo até matar medido bate com a tabela do §07, em valor esperado",
   "fora": "Criaturas — é o F1-09.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Q-003: a tabela do §07 usa 1/3 e os dados usam 0,34. O teste tem 3% de tolerância."
@@ -422,11 +422,19 @@
   "depende": "F1-08",
   "feito": "A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea",
   "fora": "O Aríete de lodo e a Consumidora — Fase 2. O Zelador — XIII-04.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
-   "Q-001 e Q-038: os arqueiros param o Aríete? Com a massa nova da §74 a conta muda; recalcular antes de desmarcar o teste.",
-   "Q-006: quem atinge a faixa aérea?"
+   "**A tabela de invocação já era dados, e continua a ser.** As seis criaturas do §07 estão em `creatures.csv` desde o F0-04, com `min_day` 1, 4, 7, 10, 14 e 20. O que este ticket fez foi pôr o `min_day` a valer: o `RotSystem.pick()` do F1-08 já o lia, e agora há um teste por criatura a provar que nenhuma entra antes do dia dela — nem por a massa chegar.",
+   "**A noite 4 obriga a torre alta, e obriga por omissão e não por regra.** Não há nenhum `if dia == 4` em lado nenhum. Há três factos que se cruzam: o Alado nasce na faixa `AERIAL`, o `Posts.reaches()` fechado na Q-006 diz que só a vaga com `hits_aerial` chega a outra faixa, e a `high_tower` é a única obra que a dá. O jogador descobre isto quando seis arqueiros disparam toda a noite e nada cai — que é o que o §07 quer ensinar sem uma linha de tutorial.",
+   "**A assimetria é de propósito e é o que torna o Alado uma ameaça:** ele chega ao chão (`targets_bands` = `SURFACE`) e o chão não chega a ele. Uma criatura que só se atinge de um sítio, e que ataca de qualquer sítio, é uma mudança de plano; uma que se atinge de todo o lado é só mais vida a abater. Dois testes fixam as duas metades.",
+   "**Um muro não trava quem voa.** O `TargetPicker` só mete uma obra à frente do alvo quando a obra está na faixa dele — o muro está na `SURFACE` e o Alado não. Isto sai de graça da regra das faixas e não de um caso especial, e é o mesmo motivo por que um muro não trava o Cavador.",
+   "**`src/sim/systems/passages.gd` (novo) é a factura do §25 ao minuto 12:00.** *\"Noite 2: um Rastejante entra pela passagem que abriste. Toda a decisão tem custo.\"* Uma passagem é um caminho aberto nos dois sentidos: quem tem `can_change_band` — hoje só o Cavador — sobe do subsolo à superfície ao passar por uma, e sem passagem nenhuma fica em baixo até ao núcleo. A tolerância é a `Band.PASSAGE_PX`, 24 px, a mesma do monarca: uma passagem não é mais larga para uns do que para outros.",
+   "**A subida é um evento e não um efeito secundário.** O `Passages.surface()` devolve quem subiu, o `CombatSystem` reencaminha, o `EventRelay` traduz em `passage_used` (§46) e o `SimLoop` passa as passagens do mundo. Nenhum sistema puro emite sinais — é o passo 11 da §43 a fazê-lo.",
+   "**O `Passages` nasceu fora do `TargetPicker` por causa do limite das 250 linhas.** Com o `_emergir` lá dentro o ficheiro ia a 274; o limite obrigou à separação e a separação está certa — escolher alvo e mudar de faixa são duas coisas.",
+   "Q-006 fica fechada desde o F1-07 e é este ticket que a paga: sem o Alado a viver mesmo na faixa aérea, a regra do `Posts.reaches()` não custava nada a ninguém.",
+   "Q-001 e Q-038 continuam abertas e continuam fora: o Aríete de lodo é Fase 2, e é ele que a conta dos 96,6 s do §07 põe em causa.",
+   "Q-068 mantém-se como o F1-08 a deixou: o §25 diz três Rastejantes na noite 1 e a massa do §74 dá sete. Nenhum número de `data/` foi mexido para calar um teste."
   ]
  },
  "F1-10": {
@@ -455,10 +463,16 @@
   "depende": "F1-10",
   "feito": "Payback de 2 dias medido em jogo; o teste test_payback_do_06 continua a passar",
   "fora": "Conversão e comércio — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
-   "Q-033: a curva abstrata do §06 contra os edifícios reais."
+   "**O payback do §06 está medido no jogo a andar, e não só nos dados.** O `design_data_test` já conferia a coluna *Payback* contra os `.tres` — custo a dividir pelo rendimento diário. O `tests/producao_test.gd` prova a outra metade: uma obra de pé larga mesmo esse número de moedas por dia com os onze passos do §43 a correr à volta. O canteiro e o pesqueiro pagam-se em dois dias; o galinheiro não, e paga-se em três — os 2,7 da tabela.",
+   "**Entre o `2.0` do CSV e duas moedas no chão estão seis fases, um `stock` fraccionário e um `floor`.** É aí que o erro cabia: `2/6` por fase dá `0,99999…` a meio do dia e um `floor` mal posto come uma moeda por dia sem falhar teste nenhum. O `stock` não se reinicia entre fases e é isso que corrige o resto — há um teste só para isto, por edifício.",
+   "**Um pesqueiro, e só um, e por duas razões que coincidem.** O `requires_biome_feature` estava escrito em `buildings.csv` desde o F0-04 e **não era lido por ninguém**; agora quem o lê é quem PÕE — o `Greybox.cabe_no_bioma()`. Um sítio de obra que o bioma não sustenta não chega a existir, e por isso não há um `if` disto dentro do tick. O `enramados_start_base_01` tem `resource = water` (uma água, não duas), e com um pesqueiro a região fica com as **sete fontes** do perfil `balanced` do §06 — o que faz do dia da asfixia medido aqui um número sobre este jogo e não sobre um *slider*.",
+   "**Q-033, medida em vez de afirmada.** `EconomySystem.sources()` conta as fontes de pé e `built_income()` soma os edifícios reais. Com as sete fontes da região: **17 moedas no dia 1** contra as **21,2** do simulador abstrato do §06. O abstrato é 25% mais generoso, e o teste fixa a diferença para que ela não mude em silêncio. Qual dos dois manda é balanceamento, é do F1-16, e nenhum número de `data/` foi mexido aqui.",
+   "**O risco é a coluna ao lado do payback, e tem teste próprio.** O §06 separa-os e este ficheiro também: as medições mandam a mancha embora ao nascer, e o rasto é o assunto dos dois últimos testes — a plantação é arrasada, o galinheiro só pára.",
+   "Q-072 (nova): o §06 dá **três** estados de risco — destruída, imune, nada dito — e o §49 escreve **dois**. O `destroyed_by_rot_trail` é uma bandeira e uma bandeira não chega para três. Está implementado o §49; a proposta é que \"imune\" queira dizer *fora do rasto* e se resolva com a água autorada do GB-01.",
+   "**Fora, e continua fora:** a conversão (celeiro, salga, curral, serração, fundição) e o comércio são Fase 2. O estábulo de vaca, o corte de madeira e o poço de minério existem em dados e não têm sítio na região: os dois últimos pedem bosque e rocha, que são os biomas do GB-02."
   ]
  },
  "F1-12": {
@@ -471,7 +485,7 @@
   "depende": "F1-05",
   "feito": "Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados",
   "fora": "Ganância e sucessão — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "5",
   "notas": [
    "Q-005: a fuga é a 30% ou a 25% de vida?"
@@ -487,7 +501,7 @@
   "depende": "F0-06",
   "feito": "As seis fases são distinguíveis sem HUD; a noite é castanha (ADR 0011)",
   "fora": "Iluminação da candeia — é o XIII-03.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "4",
   "notas": [
    "ADR 0011: os tints vêm de data/economy/clock.tres (phase_tint_hue/sat/val), não de código. O chão de valor da noite é 0,11."
@@ -503,7 +517,7 @@
   "depende": "F1-10",
   "feito": "Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória",
   "fora": "Migrações entre versões — quando houver uma segunda.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
    "ADR 0007: só tipos base. O teste D-14 já guarda os campos da Parte XIII."
@@ -519,10 +533,18 @@
   "depende": "F1-09",
   "feito": "A noite 5 ganha-se com 1 a 2 mortes; corre em headless com delta fixo",
   "fora": "Afinação propriamente dita — é o F1-16.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
-   "Q-017: três Rastejantes na noite 1, como diz a §25, ou dez, como dá a massa?"
+   "**O instrumento está feito; os números que ele lê não batem com o §07, e ficam escritos.** É a divisão que o ticket já fazia entre o *Feito* e o *Fora*, e o `tests/noite_do_07_test.gd` tem-na às duas metades: seis testes sobre o **instrumento** passam, e os três sobre os **números** estão saltados, cada um com a razão e a pergunta (ADR 0019). Nenhum valor de `data/` foi mexido — *\"um teste de design a falhar é informação, não um obstáculo\"*.",
+   "**Os dois ficheiros que o §66 nomeia existem, com esses nomes.** `tests/sim_harness.gd` é o instrumento: arma o dia, corre a noite ao passo fixo do §19 e devolve o que ela deu. `scenes/tests/night_test.tscn` corre-o de fora do motor — `godot --headless --path . scenes/tests/night_test.tscn` escreve a tabela das dez noites, com torre e sem ela, que é a mesa de trabalho do F1-16. A região fechada é ficheiro à parte (`tests/support/closed_region.gd`): o greybox põe dezoito obras, e é por isso que ele serve para jogar e não para medir.",
+   "**O `night_survived` da §46 passou a ser emitido, e é daí que o instrumento lê.** O F0-06 tinha-o registado por escrito — *\"fica por emitir … entra com o F1-12 e o F1-15\"* — e é este. Quem conta é o `src/core/night_tally.gd`, do crepúsculo ao amanhecer, e quem anuncia é o `SimLoop` no amanhecer, que é onde o §48 o põe. O instrumento **não tem contabilidade própria**: lê o mesmo número que o `docs/qa/PLAYTEST_PLAN.md` manda ler à mão, e por isso não pode divergir do jogo sem alguém dar por isso.",
+   "**\"Vagas de Rastejantes\", como o §07 escreve — e não a tabela de invocação inteira.** Com ela, a partir do dia 4 a massa compra Alados, que voam, e a partir do dia 10 Cavadores, que vêm por baixo: nenhum dos dois se deixa atingir por quem está no chão, em muro ou em torre de arqueiros (Q-006). A noite 5 do §07 ficava **sem combate nenhum para medir** — invocava nove e abatia zero. A regra de escolha do §51 fica intacta; o que muda é o que há para escolher, e `crawlers_only = false` devolve a mancha do jogo.",
+   "**Três defeitos que só o cenário podia mostrar**, e nenhum deles dava erro: 1. O dia entra no relógio **e** no `GameState`. O crepúsculo corre no passo 2 e o espelho do relógio só no fim do tick, e por isso a noite do dia 5 pedia a massa do dia 1: as dez noites davam a mesma tabela. 2. Os abates não se contam pelo `creature_died`. O `NightWatch` emite-o **também** por cada criatura que se dissolve à alvorada (§51), e com ele uma noite sem um tiro disparado dava a tabela cheia de abates. Ficou invocadas menos vivas no último passo antes do amanhecer. 3. O `night_survived` é enfileirado pelo ouvinte do `dawn_broke`, ou seja **durante** a entrega — e a fila do passo 11 serve isso no tick seguinte, de propósito. Sem uma entrega a mais no fim, a noite acabava sempre a zeros, e esta foi a que quase passou por resultado.",
+   "**Q-073 (nova): seis arqueiros num muro que só tem um posto.** A estacaria do §10 publica um posto de guarda; os outros cinco arqueiros recolhem ao núcleo, a 500 px do muro, com 200 px de alcance. A noite inteira é decidida por um. Sem torre o muro cai em todas as noites, a começar na 1, e o §25 diz que a noite 1 *\"é ganha de certeza\"*. Com torre de arqueiros — mais dois postos — a noite 5 dá 16 abates de 16 e zero mortes. A única linha do §07 que a medição confirma é a que ele escreve em maiúsculas: *\"a torre não dá dano — dá certeza\"*, e essa tem teste que passa.",
+   "**Q-074 (nova): os dez dias correm, mas em ≈18 s e não em menos de 10.** O §66 pede 360× o tempo real, o que dá 92 µs por tick; o cenário fechado custa ≈99 µs com sete tropas e duas obras, e ≈275 µs a meio da noite 10. Não colide com o §63 — esse orçamenta 4000 µs e o `jogo_noite_test` mede 176 µs e passa. A medição sai de um binário de editor em *debug*; compará-la com um *export* de release é o primeiro passo, e não custa nada senão correr o CI.",
+   "**As cenas de teste saíram do export.** O `scenes/tests/*` passou para o `exclude_filter` dos três presets, ao lado de `tests/` e `tools/`: uma cena exportada que aponta para um script que o filtro tira é uma cena que só rebenta na máquina do jogador. Nada se perde — a `bands.tscn` corre da árvore, como sempre correu.",
+   "**Fora, e continua fora:** afinar. Mexer nos números do §07 é o F1-16, e é ele que vai ler esta tabela."
   ]
  },
  "F1-16": {

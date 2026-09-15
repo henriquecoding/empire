@@ -58,6 +58,11 @@ static func combat(eventos: Array[Dictionary]) -> Array[Dictionary]:
 				_morte(e, larga)
 			CombatSystem.EV_OBRA:
 				builds(e[CombatSystem.EVENTOS])
+			CombatSystem.EV_CONTACTO:
+				_contacto(e)
+			CombatSystem.EV_FAIXA:
+				var faixas: Array = e[CombatSystem.PARA]
+				EventBus.queue(&"passage_used", [e[CombatSystem.DE], faixas[0], faixas[1]])
 	return larga
 
 
@@ -106,9 +111,30 @@ static func economy(eventos: Array[Dictionary], obras: BuildSystem) -> Array[Dic
 	return larga
 
 
+## Passo 4: a moral (§07). O §46 tem unit_fled para a saida e unit_state_changed
+## para as duas pontas — quem foge muda de estado e isso conta-se na mesma.
+static func morale(eventos: Array[Dictionary]) -> void:
+	for e in eventos:
+		var quem: int = e[MoraleSystem.UNIDADE]
+		EventBus.queue(&"unit_state_changed", [quem, e[MoraleSystem.DE], e[MoraleSystem.PARA]])
+		if e[MoraleSystem.CHAVE] == MoraleSystem.EV_FUGIU:
+			EventBus.queue(&"unit_fled", [quem, e[MoraleSystem.PORQUE]])
+
+
 ## Passo 2: o que a Podridao invocou.
 static func summoned(pedido: SpawnRequest, massa: float) -> void:
 	EventBus.queue(&"rot_summoned", [pedido.creature_id, pedido.x, massa])
+
+
+## §50: os slots de contacto tem sinal proprio no catalogo da §46, e sao os
+## unicos dois que dizem "este atacante passou a engajar" e "deixou de engajar".
+static func _contacto(e: Dictionary) -> void:
+	var vaga: int = e[ContactQueue.VAGA]
+	var lugar: int = e[ContactQueue.LUGAR]
+	if e[ContactQueue.CHAVE] == ContactQueue.EV_LIVRE:
+		EventBus.queue(&"contact_slot_freed", [vaga, lugar])
+		return
+	EventBus.queue(&"contact_slot_taken", [vaga, lugar, e[ContactQueue.QUEM]])
 
 
 static func _dano(e: Dictionary) -> void:

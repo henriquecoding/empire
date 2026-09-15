@@ -12,6 +12,37 @@ extends RefCounted
 
 const TABELA_TROPAS := &"units"
 
+## A origem que o coin_dropped leva quando a moeda sai da mao do jogador.
+const JOGADOR := &"player"
+
+
+## §61: as intencoes sao consumidas no inicio do tick, pela ordem em que
+## chegaram, e nenhuma delas mudou estado nenhum quando foi enfileirada. E o que
+## faz a partida determinista apesar de haver um humano dentro dela.
+##
+## Devolve as moedas a largar, porque largar precisa do estado, do sorteio e de
+## um id novo — e isso e do SimLoop, que tem o Verbo 1.
+static func consume(
+	fila: IntentQueue,
+	unidades: UnitSystem,
+	bichos: CreatureSystem,
+	combate: CombatSystem,
+	king_id: int,
+	passagens: PackedFloat32Array
+) -> Array[Dictionary]:
+	var larga: Array[Dictionary] = []
+	for intencao in fila.take():
+		var args: Dictionary = intencao[1]
+		match int(intencao[0]):
+			IntentQueue.Kind.DROP_COIN:
+				if spend(unidades, king_id, args[&"amount"]):
+					larga.append(args)
+			IntentQueue.Kind.ASSUME:
+				assume(unidades, king_id, passagens)
+			IntentQueue.Kind.MARK_TARGET:
+				mark(unidades, bichos, combate, args[&"x"], king_id)
+	return larga
+
 
 ## Tirar do saco para largar. O Verbo 1 nao cria moeda do nada: sai do que o
 ## monarca transporta, e o §24 mostra isso no proprio sprite — "o saco do
@@ -75,17 +106,15 @@ static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32A
 	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
 	if not dados.can_change_band:
 		return false
-	for x in passagens:
-		if absf(unidades.xs[i] - x) > SimFactory.PASSAGEM_PX:
-			continue
-		var de := int(unidades.bands[i])
-		var para := int(Band.Kind.SURFACE)
-		if de == int(Band.Kind.SURFACE):
-			para = int(Band.Kind.UNDERGROUND)
-		unidades.bands[i] = para
-		EventBus.queue(&"passage_used", [king_id, de, para])
-		return true
-	return false
+	if not Passages.near(unidades.xs[i], passagens):
+		return false
+	var de := int(unidades.bands[i])
+	var para := int(Band.Kind.SURFACE)
+	if de == int(Band.Kind.SURFACE):
+		para = int(Band.Kind.UNDERGROUND)
+	unidades.bands[i] = para
+	EventBus.queue(&"passage_used", [king_id, de, para])
+	return true
 
 
 ## O gatilho direito do §24: marca a criatura mais proxima deste x para todos os

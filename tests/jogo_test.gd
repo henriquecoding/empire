@@ -231,7 +231,7 @@ func test_o_verbo_2_muda_de_faixa_numa_passagem() -> void:
 
 func test_longe_de_uma_passagem_o_verbo_2_nao_faz_nada() -> void:
 	var i := SimLoop.units.index_of(SimLoop.king_id)
-	SimLoop.units.xs[i] = SimLoop.passages[0] + SimFactory.PASSAGEM_PX * 4.0
+	SimLoop.units.xs[i] = SimLoop.passages[0] + Band.PASSAGE_PX * 4.0
 	var antes := SimLoop.units.bands[i]
 
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)

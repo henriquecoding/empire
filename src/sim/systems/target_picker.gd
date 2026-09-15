@@ -24,15 +24,27 @@ const SEM_DANO := 0
 ## muralha, e por isso nem olha para quem esta atras dela.
 const MAIS_PROXIMO := &"nearest"
 
+## Metade. Nao e afinacao: e onde fica a face de uma coisa com largura.
+const MEIO := 0.5
+
+## A fila de contacto do §50: quem engaja e quem espera.
+var fila: ContactQueue
+
+var _postos: JobBoard
 var _unidades: Dictionary = {}
 var _criaturas: Dictionary = {}
 var _alvos: Dictionary = {}
 var _marcados: Dictionary = {}
 
 
-func _init(unidades: Dictionary, criaturas: Dictionary) -> void:
+func _init(
+	unidades: Dictionary, criaturas: Dictionary, contacto: ContactQueue, postos: JobBoard
+) -> void:
+	assert(contacto != null, "o TargetPicker precisa de uma ContactQueue (§50)")
 	_unidades = unidades
 	_criaturas = criaturas
+	fila = contacto
+	_postos = postos
 
 
 func target_of(unit_id: int) -> int:
@@ -53,7 +65,10 @@ func forget(unit_id: int) -> void:
 ## Quem bate em quem, neste tick. Devolve as entradas e saidas de FIGHT da
 ## tabela da §52 — as unicas mudancas de estado que o combate decide.
 func choose(
-	unidades: UnitSystem, criaturas: CreatureSystem, obras: BuildSystem
+	unidades: UnitSystem,
+	criaturas: CreatureSystem,
+	obras: BuildSystem,
+	passagens: PackedFloat32Array = PackedFloat32Array()
 ) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for unit_id in ids_por_ordem(unidades.ids):
@@ -65,7 +80,18 @@ func choose(
 			continue
 		_alvos[unit_id] = _da_tropa(unidades, i, dados, criaturas)
 		_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
-	_das_criaturas(unidades, criaturas, obras)
+	for subiu in Passages.surface(criaturas, _criaturas, passagens):
+		(
+			eventos
+			. append(
+				{
+					CombatSystem.CHAVE: CombatSystem.EV_FAIXA,
+					CombatSystem.DE: subiu[Passages.QUEM],
+					CombatSystem.PARA: [subiu[Passages.DE], subiu[Passages.PARA]],
+				}
+			)
+		)
+	eventos.append_array(_das_criaturas(unidades, criaturas, obras))
 	return eventos
 
 
@@ -97,16 +123,18 @@ func _serve(
 	var c := criaturas.index_of(alvo)
 	if c == NENHUM or not criaturas.alive(c):
 		return false
-	if not dados.targets_bands.has(int(criaturas.bands[c])):
+	if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 		return false
-	return absf(criaturas.xs[c] - unidades.xs[i]) <= dados.range_px
+	return absf(criaturas.xs[c] - unidades.xs[i]) <= Posts.range_px(_postos, unidades, i, dados)
 
 
 func _mais_proxima(unidades: UnitSystem, i: int, dados: UnitData, criaturas: CreatureSystem) -> int:
 	var melhor := NENHUM
-	var melhor_d := float(dados.range_px)
+	var melhor_d := Posts.range_px(_postos, unidades, i, dados)
 	for c in criaturas.count():
-		if not criaturas.alive(c) or not dados.targets_bands.has(int(criaturas.bands[c])):
+		if not criaturas.alive(c):
+			continue
+		if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 			continue
 		var d := absf(criaturas.xs[c] - unidades.xs[i])
 		if melhor != NENHUM and d >= melhor_d:
@@ -132,7 +160,14 @@ func _estado(unidades: UnitSystem, i: int, luta: bool, eventos: Array[Dictionary
 
 ## A obra que a trava ganha a tropa que esta atras dela — e o que faz um muro
 ## valer o que custa (§10). Quem so ataca muralhas nem olha para as tropas.
-func _das_criaturas(unidades: UnitSystem, criaturas: CreatureSystem, obras: BuildSystem) -> void:
+##
+## Duas passagens e nao uma: a fila do §50 e uma decisao POR MURO — quantos
+## engajam e quem espera — e nao se pode tomar uma criatura de cada vez. A
+## primeira agrupa quem vai a cada muro; a segunda reparte os slots.
+func _das_criaturas(
+	unidades: UnitSystem, criaturas: CreatureSystem, obras: BuildSystem
+) -> Array[Dictionary]:
+	var por_muro := {}
 	for creature_id in ids_por_ordem(criaturas.ids):
 		var c := criaturas.index_of(creature_id)
 		if not criaturas.alive(c):
@@ -142,23 +177,55 @@ func _das_criaturas(unidades: UnitSystem, criaturas: CreatureSystem, obras: Buil
 		criaturas.target_slots[c] = NENHUM
 		if dados == null or dados.damage <= SEM_DANO:
 			continue
-		var muro := _muro_que_trava(criaturas, c, dados, obras)
-		if muro != null:
-			criaturas.target_slots[c] = muro.id
-		elif dados.target_priority == MAIS_PROXIMO:
-			criaturas.target_ids[c] = _tropa_mais_proxima(unidades, criaturas, c, dados)
+		var muro := _muro_que_trava(criaturas, c, obras)
+		if muro == null:
+			if dados.target_priority == MAIS_PROXIMO:
+				criaturas.target_ids[c] = _tropa_mais_proxima(unidades, criaturas, c, dados)
+			continue
+		if not por_muro.has(muro.id):
+			por_muro[muro.id] = [muro, PackedInt32Array()]
+		por_muro[muro.id][1].append(creature_id)
+	return _repartir(criaturas, por_muro)
 
 
-func _muro_que_trava(
-	criaturas: CreatureSystem, c: int, dados: CreatureData, obras: BuildSystem
-) -> BuildSlot:
+## Por id de obra crescente (§42), e por muro de cada vez. Quem tem slot bate
+## quando chegar ao alcance; quem espera anda para o lugar dele e mais nada.
+func _repartir(criaturas: CreatureSystem, por_muro: Dictionary) -> Array[Dictionary]:
+	var eventos: Array[Dictionary] = []
+	var ids := PackedInt32Array(por_muro.keys())
+	ids.sort()
+	for slot_id in ids:
+		var muro: BuildSlot = por_muro[slot_id][0]
+		var atacantes: PackedInt32Array = por_muro[slot_id][1]
+		for e in fila.assign(muro, criaturas, atacantes):
+			e[CombatSystem.CHAVE] = CombatSystem.EV_CONTACTO
+			eventos.append(e)
+		for quem in atacantes:
+			var c := criaturas.index_of(quem)
+			var dados: CreatureData = _criaturas.get(criaturas.data_ids[c])
+			if fila.holds(muro, quem) and _a_jeito(criaturas, c, muro, dados):
+				criaturas.target_slots[c] = muro.id
+	return eventos
+
+
+## A obra de pe que trava quem vai para o nucleo, se ela estiver ao alcance da
+## FILA — e nao so ao alcance da arma. Quem vem de longe tem de poder tomar
+## lugar antes de bater, senao nunca chega a haver fila nenhuma.
+func _muro_que_trava(criaturas: CreatureSystem, c: int, obras: BuildSystem) -> BuildSlot:
 	if obras == null:
 		return null
 	var faixa := criaturas.bands[c] as Band.Kind
-	var muro := obras.barrier(criaturas.xs[c], criaturas.target_xs[c], faixa)
-	if muro == null or absf(muro.x - criaturas.xs[c]) > dados.range_px:
+	var muro := obras.barrier(criaturas.xs[c], criaturas.goal_xs[c], faixa)
+	if muro == null:
 		return null
-	return muro
+	return muro if absf(muro.x - criaturas.xs[c]) <= fila.reach(muro) else null
+
+
+## Bate-se na FACE do muro e nao no centro dele: um muro tem largura, e o
+## alcance de uma arma mede-se ate onde ela toca.
+func _a_jeito(criaturas: CreatureSystem, c: int, muro: BuildSlot, dados: CreatureData) -> bool:
+	var face := absf(muro.x - criaturas.xs[c]) - muro.width * MEIO
+	return face <= dados.range_px
 
 
 func _tropa_mais_proxima(

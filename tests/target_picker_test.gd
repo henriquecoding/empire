@@ -17,7 +17,11 @@ func _tabela(tabela: StringName) -> Dictionary:
 
 
 func _escolha() -> TargetPicker:
-	return TargetPicker.new(_tabela(&"units"), _tabela(&"creatures"))
+	var curva := Registry.entry(&"economy", &"curve") as EconomyCurve
+	var postos := JobBoard.new(curva, _tabela(&"jobs"), _tabela(&"units"))
+	return TargetPicker.new(
+		_tabela(&"units"), _tabela(&"creatures"), ContactQueue.new(curva), postos
+	)
 
 
 func _arqueiro(unidades: UnitSystem, estado: GameState, x: float) -> int:
@@ -28,6 +32,9 @@ func _bicho(criaturas: CreatureSystem, estado: GameState, id: StringName, x: flo
 	return criaturas.spawn(estado, Registry.entry(&"creatures", id), x, NUCLEO)
 
 
+## Uma estacaria de pe, com a tabela do §10 inteira: os dois caminhos e os
+## slots de contacto. Sem os slots ninguem engaja, e um muro sem ninguem a bater
+## nele nao prova nada.
 func _muro(obras: BuildSystem, x: float) -> BuildSlot:
 	var estacas := Registry.entry(&"walls", &"stakes") as WallData
 	var vaga := BuildSlot.new()
@@ -38,6 +45,11 @@ func _muro(obras: BuildSystem, x: float) -> BuildSlot:
 	vaga.costs = PackedInt32Array([estacas.cost])
 	vaga.works = PackedFloat32Array([1.0])
 	vaga.healths = PackedInt32Array([estacas.max_health_b])
+	vaga.healths_a = PackedInt32Array([estacas.max_health_a])
+	vaga.posts_a = PackedInt32Array([estacas.guard_posts_a])
+	vaga.posts_b = PackedInt32Array([estacas.guard_posts_b])
+	vaga.contacts = PackedInt32Array([estacas.contact_slots])
+	vaga.path = BuildSlot.Path.FORTIFICACAO
 	obras.post(vaga)
 	vaga.level = 1
 	vaga.state = BuildSlot.State.DONE

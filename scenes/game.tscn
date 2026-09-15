@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
-[ext_resource type="Script" path="res://src/world/world_view.gd" id="1_mundo"]
-[ext_resource type="Script" path="res://src/world/day_tint.gd" id="2_luz"]
+[ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
 [ext_resource type="Script" path="res://src/world/camera_rig.gd" id="3_cam"]
 [ext_resource type="Script" path="res://src/ui/input_router.gd" id="4_input"]
 [ext_resource type="Script" path="res://src/ui/hud.gd" id="5_hud"]
@@ -11,11 +10,19 @@
 [node name="Game" type="Node2D"]
 script = ExtResource("0_game")
 
-[node name="Luz" type="CanvasModulate" parent="."]
-script = ExtResource("2_luz")
-
 [node name="Mundo" type="Node2D" parent="."]
-script = ExtResource("1_mundo")
+
+[node name="Aereo" type="Node2D" parent="Mundo"]
+script = ExtResource("1_faixa")
+band = 0
+
+[node name="Superficie" type="Node2D" parent="Mundo"]
+script = ExtResource("1_faixa")
+band = 1
+
+[node name="Subsolo" type="Node2D" parent="Mundo"]
+script = ExtResource("1_faixa")
+band = 2
 
 [node name="Monarca" type="Node2D" parent="."]
 

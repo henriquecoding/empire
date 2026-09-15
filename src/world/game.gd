@@ -17,18 +17,21 @@ extends Node2D
 const TREMOR_PX := 4.0
 const TREMOR_S := 0.25
 const MEIO := 0.5
+## `godot --path . -- --novo` comeca uma partida do zero mesmo havendo save.
+const NOVO := "--novo"
 
 var _tremor: float = 0.0
 
 @onready var _camara: CameraRig = $CameraRig
-@onready var _mundo: WorldView = $Mundo
+@onready var _mundo: Node2D = $Mundo
 @onready var _monarca: Node2D = $Monarca
 
 
 func _ready() -> void:
 	Registry.load_all()
-	SimLoop.start(_semente())
-	Greybox.build()
+	if not _retomar():
+		SimLoop.start(_semente())
+		Greybox.build()
 	_camara.set_region(0.0, SimLoop.world_width)
 	# Poe o marcador onde o monarca esta ANTES de o entregar a camara: o follow()
 	# assenta a camara na posicao do alvo, e um alvo ainda na origem punha o
@@ -55,6 +58,27 @@ func _semente() -> int:
 	return Time.get_unix_time_from_system() as int
 
 
+## Retoma o autosave mais recente, se houver (ADR 0005: a boot carrega o save e
+## so depois entrega). Devolve falso quando nao ha nada para retomar.
+##
+## Duas razoes para comecar de novo mesmo havendo save: `--novo` na linha de
+## comandos, que e o que um teste de greybox precisa para repetir uma noite; e um
+## nucleo em ruina, porque retomar uma partida ja perdida nao e retomar nada.
+func _retomar() -> bool:
+	var slot := SaveService.latest_slot()
+	if slot < 0 or OS.get_cmdline_user_args().has(NOVO):
+		return false
+	var estado := SaveService.restore(slot)
+	if estado == null:
+		return false
+	SimLoop.resume(estado, SaveService.restore_rng(slot))
+	Greybox.region()
+	SimLoop.load_world(SaveService.restore_world(slot))
+	if SimLoop.builds.fallen(BuildSlot.NUCLEO) or SimLoop.units.count() == 0:
+		return false
+	return true
+
+
 ## A camara segue um Node2D (§59) e o monarca e uma LINHA DE COLUNAS, nao um no
 ## (§52). O no "Monarca" e a ponte: um no vazio que copia o x da coluna, uma vez
 ## por frame, e mais nada.
@@ -63,7 +87,7 @@ func _seguir() -> void:
 	if i == UnitSystem.NENHUM:
 		return
 	var faixa := int(SimLoop.units.bands[i])
-	_monarca.position = Vector2(SimLoop.units.xs[i], WorldView.ground_of(faixa))
+	_monarca.position = Vector2(SimLoop.units.xs[i], WorldPalette.ground_of(faixa))
 
 
 func _no_rompimento(_wall_id: int) -> void:

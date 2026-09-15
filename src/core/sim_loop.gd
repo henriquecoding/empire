@@ -18,11 +18,10 @@ extends Node
 ## aqui; ninguem guarda uma copia.
 var state: GameState
 
-## As tropas, em colunas (§52). Vive aqui porque e o tick que a faz andar.
+## As tropas em colunas (§52) e as invocacoes da Podridao (§51). Sao duas
+## coleccoes porque uma criatura nao se recruta, nao se paga e dissolve-se ao
+## amanhecer — metade das colunas das tropas nao lhe serve de nada.
 var units: UnitSystem
-
-## As invocacoes da Podridao (§51). Sao coleccao a parte porque nao se recrutam,
-## nao se pagam e dissolvem-se ao amanhecer.
 var creatures: CreatureSystem
 
 ## As obras (§55) e os postos (§52). O mundo escreve-lhes os slots; o tick
@@ -30,7 +29,9 @@ var creatures: CreatureSystem
 var builds: BuildSystem
 var jobs: JobBoard
 
+## O combate (§50), o raio do rei (§07) e a curva (§49).
 var combat: CombatSystem
+var morale: MoraleSystem
 var economy: EconomySystem
 
 ## A mancha e o que ela invoca (§51). O ciclo dela e o passo 2 e vive no
@@ -38,21 +39,12 @@ var economy: EconomySystem
 ## quatro passos novos na lista.
 var night: NightWatch
 
-## As moedas no chao e no ar (§61, o Verbo 1). Criado a pedido: precisa do
-## EconomyCurve do Registry, e nenhum autoload pode depender do _ready() de
-## outro ter corrido primeiro (ADR 0020, regra 8b do AGENTS.md).
-var coins: CoinSystem:
-	get:
-		if _coins == null:
-			_coins = CoinSystem.new(SimFactory.curve())
-		return _coins
-
-## O minuto 0:20 do §25 (F1-04). Criado a pedido pela mesma razao das moedas.
-var recruits: RecruitSystem:
-	get:
-		if _recruits == null:
-			_recruits = RecruitSystem.new(SimFactory.curve())
-		return _recruits
+## As moedas no chao e no ar (§61, o Verbo 1) e o minuto 0:20 do §25 (F1-04).
+## Nascem no start() e nao no _ready(): precisam do EconomyCurve do Registry, e
+## nenhum autoload pode depender do _ready() de outro ter corrido primeiro
+## (ADR 0020, regra 8b do AGENTS.md).
+var coins: CoinSystem
+var recruits: RecruitSystem
 
 ## A fila do §61: a entrada nunca muda estado, enfileira uma intencao.
 var intents := IntentQueue.new()
@@ -71,10 +63,12 @@ var passages: PackedFloat32Array = PackedFloat32Array()
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
 var autosave_enabled: bool = true
 
-var _coins: CoinSystem
-var _recruits: RecruitSystem
+## O que a noite levou (§46), do crepusculo ao amanhecer. Anuncia-se no §48.
+var tally := NightTally.new()
+
 var _running: bool = false
 var _fase: int = UnitSystem.NENHUM
+var _brecha: bool = false
 
 
 func _ready() -> void:
@@ -83,6 +77,10 @@ func _ready() -> void:
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
+	tally.listen()
+	# §07: um muro a cair poe a fugir quem esta fraco e e barato. O sinal so e
+	# entregue no passo 11, e por isso a brecha conta no tick seguinte.
+	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
 
 
 ## Comeca um jogo novo: semeia, poe o relogio a andar, e da o primeiro dia.
@@ -97,7 +95,8 @@ func start(semente: int) -> void:
 
 
 ## Retoma um save. Repoe o estado, o relogio e a sequencia de cada fluxo — o
-## ESTADO dos fluxos, nao a semente, senao a noite recomeca (§42).
+## ESTADO dos fluxos, nao a semente, senao a noite recomeca (§42). As coleccoes
+## entram a seguir, com load_world(), depois de a regiao estar montada.
 func resume(estado: GameState, rng_states: Dictionary) -> void:
 	state = estado
 	_montar()
@@ -105,6 +104,16 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 	RngService.restore(rng_states)
 	ClockService.seek(estado.day, estado.clock_elapsed)
 	_running = true
+
+
+## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
+## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
+func world() -> Dictionary:
+	return SimSave.world(units, creatures, coins, builds, night.rot, king_id)
+
+
+func load_world(mundo: Dictionary) -> void:
+	king_id = SimSave.restore(units, creatures, coins, builds, night.rot, mundo)
 
 
 func stop() -> void:
@@ -128,7 +137,7 @@ func set_paused(pausado: bool) -> void:
 ## milissegundos sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
-	_consumir_intencoes()
+	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages))
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	var mudou := _mudanca_de_fase()
@@ -142,7 +151,9 @@ func step(delta: float) -> void:
 	#     tick.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
-	EventRelay.combat(combat.choose(units, creatures, builds))
+	EventRelay.combat(combat.choose(units, creatures, builds, passages))
+	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
+	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
 	units.tick_movement(delta)  # 5 · MovementSystem — todo o tick
 	creatures.tick_movement(delta)
@@ -159,7 +170,7 @@ func step(delta: float) -> void:
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
-	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... F1-14
+	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
 	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
 
 	_espelhar_relogio()
@@ -181,12 +192,15 @@ func _montar() -> void:
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
 	jobs = SimFactory.job_board()
-	combat = SimFactory.combat()
+	combat = SimFactory.combat(jobs)
+	morale = SimFactory.morale()
 	economy = SimFactory.economy()
 	night = NightWatch.new()
-	_coins = null  # um jogo novo comeca sem moedas no chao
-	_recruits = null
+	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
+	recruits = RecruitSystem.new(SimFactory.curve())
+	tally.reset()
 	_fase = UnitSystem.NENHUM
+	_brecha = false
 	intents.clear()
 
 
@@ -213,21 +227,6 @@ func _largar(moedas: Array[Dictionary]) -> void:
 		)
 
 
-## §61: as intencoes sao consumidas no inicio do tick, pela ordem em que
-## chegaram. Nenhuma delas mudou estado quando foi enfileirada.
-func _consumir_intencoes() -> void:
-	for intencao in intents.take():
-		var args: Dictionary = intencao[1]
-		match int(intencao[0]):
-			IntentQueue.Kind.DROP_COIN:
-				if Verbs.spend(units, king_id, args[&"amount"]):
-					drop_coin(args[&"x"], args[&"band"], args[&"amount"], args[&"source"])
-			IntentQueue.Kind.ASSUME:
-				Verbs.assume(units, king_id, passages)
-			IntentQueue.Kind.MARK_TARGET:
-				Verbs.mark(units, creatures, combat, args[&"x"], king_id)
-
-
 func _physics_process(delta: float) -> void:
 	if not _running:
 		return
@@ -242,7 +241,10 @@ func _espelhar_relogio() -> void:
 
 
 func _no_amanhecer(dia: int) -> void:
+	var noite := tally.of_night(dia)
+	if _running and not noite.is_empty():
+		EventBus.queue(&"night_survived", noite)
 	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai seria gravar antes
 	# de ter acontecido alguma coisa.
 	if autosave_enabled and _running and dia > 1:
-		SaveService.autosave(state, RngService.snapshot())
+		SaveService.autosave(state, RngService.snapshot(), world())

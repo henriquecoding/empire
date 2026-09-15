@@ -25,8 +25,11 @@ const ECRAS := 6
 
 const MURO := &"stakes"
 const CANTEIRO := &"farm"
+const PESQUEIRO := &"fishery"
 const GALINHEIRO := &"henhouse"
 const TREINO := &"training_house"
+const TORRE := &"archer_tower"
+const TORRE_ALTA := &"high_tower"
 
 # Posicoes, relativas ao nucleo. Sao autoria de nivel e nao balanceamento: sao a
 # resposta a "onde", e o §21 diz que essa resposta e do segmento.
@@ -36,7 +39,15 @@ const TREINO := &"training_house"
 const MUROS_X := [-1300.0, -600.0, 600.0, 1300.0]
 const TREINOS_X := [-300.0, 300.0]
 const CANTEIROS_X := [-520.0, -420.0, 420.0, 520.0]
-const GALINHEIROS_X := [-760.0, 760.0]
+const TORRES_X := [-680.0, 680.0]
+const GALINHEIROS_X := [-820.0, 820.0]
+# UM pesqueiro, e por duas razoes que coincidem: o segmento tem uma agua e nao
+# duas (segments.csv, coluna `resource`), e com ele a regiao fica com as SETE
+# fontes do perfil `balanced` do §06 — quatro canteiros, dois galinheiros e um
+# pesqueiro. E isso que faz do dia da asfixia medido aqui um numero sobre ESTE
+# jogo e nao sobre um slider. Fica entre a torre alta e o muro de fora.
+const PESQUEIROS_X := [1200.0]
+const TORRES_ALTAS_X := [-1100.0, 1100.0]
 const PASSAGENS_X := [-950.0, 950.0]
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
@@ -47,12 +58,22 @@ const LANCEIROS_X := [-1100.0, 1000.0]
 
 const POSTO_MURO := &"wall"
 const POSTO_CANTEIRO := &"farm"
+const POSTO_TORRE := &"tower"
 const MEU_IMPERIO := 1
 const MEIO := 0.5
 
 
-## Monta a regiao dentro do SimLoop e devolve o id do monarca.
+## Um jogo novo: a regiao e quem la vive. Devolve o id do monarca.
 static func build() -> int:
+	region()
+	return _gente()
+
+
+## SO o que o segmento autora: a largura, os sitios de obra e as passagens
+## (§21). E o que se volta a montar ao retomar um save — a gente vem do
+## ficheiro, e chama-la outra vez gastava ids que o save ja tinha dado (§45).
+static func region() -> void:
+	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
 	SimLoop.world_width = largura * ECRAS
 	SimLoop.core_x = SimLoop.world_width * MEIO
@@ -65,10 +86,30 @@ static func build() -> int:
 		_edificio(SimLoop.core_x + x, CANTEIRO, POSTO_CANTEIRO)
 	for x in GALINHEIROS_X:
 		_edificio(SimLoop.core_x + x, GALINHEIRO, &"")
+	for x in PESQUEIROS_X:
+		_edificio(SimLoop.core_x + x, PESQUEIRO, &"")
 	for x in TREINOS_X:
 		_edificio(SimLoop.core_x + x, TREINO, &"")
+	# §07: "a torre nao da dano — da certeza". A alta e a que atinge a camada
+	# aerea, e o §07 diz que ela e obrigatoria a partir do dia 4 por causa do
+	# Alado — por isso ha sitio para ela desde o dia 1.
+	for x in TORRES_X:
+		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
+	for x in TORRES_ALTAS_X:
+		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
 
-	return _gente()
+
+## Se o bioma deste segmento sustenta este edificio (§06, §21). Sem exigencia,
+## cabe em qualquer lado; com ela, so onde o segmento tem esse recurso.
+static func cabe_no_bioma(dados: BuildingData) -> bool:
+	if dados.requires_biome_feature.is_empty():
+		return true
+	return dados.requires_biome_feature == recurso()
+
+
+## O recurso que o segmento desta regiao oferece (§21, coluna `resource`).
+static func recurso() -> StringName:
+	return (Registry.entry(&"segments", SEGMENTO) as SegmentData).resource
 
 
 ## O castelo-arvore. Nao e construido nem destruido pelo jogador (§10) — nasce
@@ -92,21 +133,35 @@ static func _muro(x: float) -> void:
 	vaga.kind = MURO
 	vaga.blocks = true
 	vaga.job_id = POSTO_MURO
-	for recurso in Registry.entries(&"walls"):
-		var nivel := recurso as WallData
+	# A tabela do §10 inteira, os dois caminhos incluidos: a vida e os postos de
+	# A e de B, e os slots de contacto por nivel. Nenhum numero esta aqui.
+	for nivel in SimFactory.walls_by_level():
 		vaga.costs.append(nivel.cost)
 		# O §55 nao da build_work as muralhas. A regra proposta dos edificios —
 		# 2 s por moeda de custo — e a unica que o repositorio escreve, e e
 		# reversivel: ver docs/QUESTIONS.md, Q-064.
 		vaga.works.append(float(nivel.cost) * _segundos_por_moeda())
 		vaga.healths.append(nivel.max_health_b)
+		vaga.healths_a.append(nivel.max_health_a)
+		vaga.posts_a.append(nivel.guard_posts_a)
+		vaga.posts_b.append(nivel.guard_posts_b)
+		vaga.contacts.append(nivel.contact_slots)
 		vaga.width = maxf(vaga.width, float(nivel.shadow_width))
-		vaga.job_slots = maxi(vaga.job_slots, nivel.guard_posts_a)
+	# §10: o nivel 1 e a base comum aos dois caminhos, e a escolha e do jogador.
+	# Enquanto a roda do rei nao existir (Q-067) ninguem lha pode pedir, e o que
+	# fica e a coluna que o §10 escreve como principal — a fortificacao (Q-070).
+	vaga.path = BuildSlot.Path.FORTIFICACAO
 	SimLoop.builds.post(vaga)
 
 
+## O §06 da tres edificios um bioma obrigatorio — pesqueiro/agua, corte de
+## madeira/bosque, poco de minerio/rocha — e ate aqui o requires_biome_feature
+## nao era lido por ninguem. Quem o le e quem POE: um sitio de obra que o bioma
+## nao sustenta nao chega a existir, e por isso nao ha um `if` disto no tick.
 static func _edificio(x: float, id: StringName, posto: StringName) -> void:
 	var dados := Registry.entry(&"buildings", id) as BuildingData
+	if not cabe_no_bioma(dados):
+		return
 	var vaga := _do_edificio(dados, x)
 	vaga.job_id = posto
 	vaga.job_slots = dados.job_slots
@@ -120,6 +175,7 @@ static func _do_edificio(dados: BuildingData, x: float) -> BuildSlot:
 	vaga.width = float(dados.width_px)
 	vaga.yield_per_day = dados.yield_per_day
 	vaga.razed_by_rot = dados.destroyed_by_rot_trail
+	vaga.effects = dados.effect_params
 	vaga.costs = PackedInt32Array([dados.cost])
 	vaga.works = PackedFloat32Array([dados.build_work])
 	vaga.healths = PackedInt32Array([dados.max_health])
@@ -128,6 +184,10 @@ static func _do_edificio(dados: BuildingData, x: float) -> BuildSlot:
 
 ## O monarca ao centro, com o que o §06 lhe da a partida, e os vagabundos
 ## espalhados. Eles nao sao teus: sao o minuto 0:20 a espera de acontecer (§25).
+static func people() -> int:
+	return _gente()
+
+
 static func _gente() -> int:
 	var estado := SimLoop.state
 	var monarca := Registry.entry(&"units", &"monarch") as UnitData
