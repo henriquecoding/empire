@@ -22,6 +22,8 @@ config/features=PackedStringArray("4.6", "Mobile")
 ; §46: um autoload so, com os sinais declarados. Carrega antes de tudo o
 ; resto porque tudo o resto comunica por ele.
 EventBus="*res://src/core/event_bus.gd"
+; ADR 0006: o relogio e puro; este autoload so lhe chama tick().
+ClockService="*res://src/core/clock_service.gd"
 
 [display]
 

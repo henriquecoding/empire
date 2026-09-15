@@ -111,8 +111,9 @@
   "estado": "parcial — falta o GameClock e o ClockService",
   "horas": "3,5",
   "notas": [
-   "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload de trinta linhas que lhe chama tick().",
-   "Parcial a 14/09: o ClockData existe (src/sim/data/clock_data.gd e data/economy/clock.tres) e os testes de design já o leem. Os dois ficheiros do relógio continuam por escrever."
+   "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload que lhe chama tick().",
+   "O ticket dizia 'feito' e nenhum dos dois existia na árvore recuperada — a mesma perda das nove cenas de segmento (Q-048). Reescritos a 15/09/2026.",
+   "night_survived fica por emitir: precisa de deaths e walls_lost, que ainda ninguém conta. F1-12 e F1-15."
   ]
  },
  "F0-07": {
