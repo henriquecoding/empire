@@ -74,13 +74,13 @@ func clear() -> void:
 func publish(obras: BuildSystem) -> void:
 	var querem: Array[BuildSlot] = []
 	for obra in obras.standing():
-		if obra.job_id != &"" and obra.job_slots > 0:
+		if obra.job_id != &"" and obra.posts() > 0:
 			querem.append(obra)
 	if querem == _publicadas:
 		return
 	clear()
 	for obra in querem:
-		for k in obra.job_slots:
+		for k in obra.posts():
 			post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
 	_publicadas = querem
 
@@ -89,9 +89,10 @@ func publish(obras: BuildSystem) -> void:
 ## todas em cima do mesmo pixel. E a mesma regra da fila do §50 — posicoes
 ## ATRIBUIDAS e nao emergentes, para que nao vibrem nem se empurrem.
 func _lugar(obra: BuildSlot, k: int) -> float:
-	if obra.job_slots <= 1:
+	var quantos := obra.posts()
+	if quantos <= 1:
 		return obra.x
-	var passo := obra.width / obra.job_slots
+	var passo := obra.width / quantos
 	return obra.x - obra.width * MEIO + passo * (k + MEIO)
 
 

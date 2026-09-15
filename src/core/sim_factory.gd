@@ -40,12 +40,25 @@ static func by_id(tabela: StringName) -> Dictionary:
 	return mapa
 
 
+## Os cinco niveis do §10, POR NIVEL. O Registry devolve por id, que e ordem
+## alfabetica — bastion, iron_wall, palisade, stakes, stone_wall — e uma escada
+## montada nessa ordem custava 65 no primeiro degrau. Ordenar aqui, uma vez, e o
+## que impede que cada sitio que a monta se lembre disso por sua conta.
+static func walls_by_level() -> Array[WallData]:
+	var niveis: Array[WallData] = []
+	for recurso in Registry.entries(&"walls"):
+		niveis.append(recurso as WallData)
+	niveis.sort_custom(func(a: WallData, b: WallData) -> bool: return a.level < b.level)
+	return niveis
+
+
 static func job_board() -> JobBoard:
 	return JobBoard.new(curve(), by_id(TABELA_POSTOS), by_id(TABELA_TROPAS))
 
 
 static func combat() -> CombatSystem:
-	return CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS))
+	var contacto := ContactQueue.new(curve())
+	return CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS), contacto)
 
 
 static func economy() -> EconomySystem:

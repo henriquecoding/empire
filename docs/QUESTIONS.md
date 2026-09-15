@@ -562,6 +562,26 @@
   há número para ele e inventar um era escrever balanceamento em código (regra 3 do `AGENTS.md`).
 - **Decide:** o ART-03, quando trouxer as seis camadas de parallax.
 
+### Q-070 · Os dois caminhos da muralha são uma decisão, e não há onde a tomar
+- **Onde:** o §10 escreve *"cada segmento oferece duas melhorias mutuamente exclusivas por nível. Nunca dá
+  para ter as duas — **e essa é a decisão**"*. A **Guarnição** põe postos e deixa o muro frágil; a
+  **Fortificação** põe vida e tira dano de saída. O `walls.csv` tem as quatro colunas para as duas.
+- **O sistema está inteiro:** `BuildSlot.choose_path()` aceita a escolha até ao nível 1 — *"nunca dá para ter
+  as duas"* também quer dizer que não se troca a meio — e a partir daí a vida e os postos saem do caminho
+  escolhido. O que não existe é **onde carregar**: a roda do rei é a Q-067 e os dois verbos já estão tomados.
+- **Proposta, por omissão:** `FORTIFICACAO`, que é a coluna que o §10 escreve como principal (é a coluna
+  "Vida (B)" da tabela). Ninguém escolhe, e por isso escolhe-se a que o dossiê põe à frente.
+- **Decide:** a Fase 2, com a roda. Até lá é uma linha no `greybox.gd` e muda-se num sítio.
+
+### Q-071 · A fila do §50 mede-se do centro do muro, e um muro tem largura
+- **Onde:** o §50 dá a fila como `wall.x + sign(...) * (30 + i * 18)`. O modelo dele não tem largura de muro;
+  estes têm — a estacaria tem 64 px de silhueta. Trinta píxeis medidos do **centro** punham o primeiro da fila
+  **dentro** dela, e quem tem *slot* de contacto ficava a 32 px de um alvo que alcança 24.
+- **Proposta:** as distâncias medem-se da **face**. Quem tem *slot* fica na face (distância zero ao que vai
+  bater); quem espera fica em `face + 30 + i × 18`, com o teto de 120 na mesma. O espaçamento do §50 mantém-se
+  intacto — o que muda é de onde se conta, e é a única leitura que funciona com um muro que ocupa espaço.
+- **Decide:** ninguém, se o greybox não desmentir. É geometria, não equilíbrio.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

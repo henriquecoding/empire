@@ -31,6 +31,9 @@ func test_nascer_copia_os_campos_quentes_do_creature_data() -> void:
 	assert_int(bicho.bands[i]).is_equal(int(dados.band))
 	assert_int(bicho.coin_drops[i]).is_equal(dados.coin_drop)
 	assert_bool(bicho.alive(i)).is_true()
+	# O rumo e o lugar para onde anda comecam iguais, e so o segundo muda depois.
+	assert_float(bicho.goal_xs[i]).is_equal(RUMO)
+	assert_float(bicho.target_xs[i]).is_equal(RUMO)
 
 
 func test_os_ids_vem_do_contador_do_game_state() -> void:

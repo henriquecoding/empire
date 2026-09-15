@@ -37,6 +37,8 @@ const EV_DANO := 1
 const EV_MORTE := 2
 const EV_ESTADO := 3
 const EV_OBRA := 4
+## O que a fila de contacto devolve, a passar tal e qual (§50).
+const EV_CONTACTO := 5
 
 const CHAVE := &"kind"
 const DE := &"from"
@@ -63,10 +65,10 @@ var _eventos: Array[Dictionary] = []
 var _golpes: Array[Dictionary] = []
 
 
-func _init(unidades: Dictionary, criaturas: Dictionary) -> void:
+func _init(unidades: Dictionary, criaturas: Dictionary, contacto: ContactQueue) -> void:
 	_dados_u = unidades
 	_dados_c = criaturas
-	picker = TargetPicker.new(unidades, criaturas)
+	picker = TargetPicker.new(unidades, criaturas, contacto)
 
 
 func target_of(unit_id: int) -> int:
@@ -104,11 +106,18 @@ func resolve(
 	return _eventos
 
 
+## As colunas de cooldown sao float32 e o delta e float64: um intervalo de 0,4 s
+## descontado em passos de 0,4 s nao fica em zero, fica em 6e-9. Sem isto, uma
+## arma podia nunca mais disparar por causa de um residuo que nem se ve.
+func _a_recarregar(cooldown: float) -> bool:
+	return cooldown > 0.0 and not is_zero_approx(cooldown)
+
+
 func _tropas_batem() -> void:
 	for unit_id in TargetPicker.ids_por_ordem(_u.ids):
 		var alvo := picker.target_of(unit_id)
 		var i := _u.index_of(unit_id)
-		if alvo == NENHUM or i == NENHUM or _u.cooldowns[i] > 0.0:
+		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
 		_u.cooldowns[i] = dados.attack_interval
@@ -121,7 +130,7 @@ func _tropas_batem() -> void:
 func _criaturas_batem() -> void:
 	for creature_id in TargetPicker.ids_por_ordem(_c.ids):
 		var c := _c.index_of(creature_id)
-		if c == NENHUM or not _c.engaged(c) or _c.cooldowns[c] > 0.0:
+		if c == NENHUM or not _c.engaged(c) or _a_recarregar(_c.cooldowns[c]):
 			continue
 		var dados: CreatureData = _dados_c.get(_c.data_ids[c])
 		_c.cooldowns[c] = dados.attack_interval

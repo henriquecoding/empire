@@ -13,6 +13,12 @@ extends RefCounted
 ## Os seis estados do §55, e cada um e um frame de sprite, nao uma cena.
 enum State { EMPTY, SCAFFOLD, BUILDING, DONE, DAMAGED, RUIN }
 
+## Os dois caminhos da muralha (§10): "cada segmento oferece duas melhorias
+## mutuamente exclusivas por nivel. Nunca da para ter as duas — e essa e a
+## decisao." A GUARNICAO poe postos e deixa o muro fragil; a FORTIFICACAO poe
+## vida e tira dano de saida. NENHUMA e o que nao e muro.
+enum Path { NENHUMA, GUARNICAO, FORTIFICACAO }
+
 const NENHUM := -1
 
 ## O castelo-arvore (§10). Nao e uma obra como as outras em exactamente uma
@@ -31,7 +37,21 @@ var kind: StringName = &""
 ## A escada, um degrau por nivel. O indice 0 e o nivel 1.
 var costs: PackedInt32Array = PackedInt32Array()
 var works: PackedFloat32Array = PackedFloat32Array()
+## A vida do caminho B, que e a coluna que o §10 escreve; e a unica que um
+## edificio tem, porque um edificio nao tem caminhos.
 var healths: PackedInt32Array = PackedInt32Array()
+
+## O caminho A, e os postos dos dois. Vazios em tudo o que nao e muro.
+var healths_a: PackedInt32Array = PackedInt32Array()
+var posts_a: PackedInt32Array = PackedInt32Array()
+var posts_b: PackedInt32Array = PackedInt32Array()
+## §07: "so N atacantes engajam". O resto espera em fila (§50).
+var contacts: PackedInt32Array = PackedInt32Array()
+var path: Path = Path.NENHUMA
+
+## Quem esta em cada slot de contacto, por indice. NENHUM e livre. Escrito pela
+## ContactQueue e por mais ninguem.
+var contact: PackedInt32Array = PackedInt32Array()
 
 ## Largura em px. Manda no raio de apanha da obra e em quem conta como presente.
 var width: float = 0.0
@@ -74,5 +94,40 @@ func next_cost() -> int:
 	return costs[level] if level < costs.size() else NENHUM
 
 
+## A vida do nivel em que esta, pelo caminho que levou. O nivel 1 e a base comum
+## aos dois: a tabela do §10 da-lhe a mesma vida nas duas colunas.
 func max_health() -> int:
-	return healths[level - 1] if level > 0 and level <= healths.size() else 0
+	if level <= 0:
+		return 0
+	if path == Path.GUARNICAO and level <= healths_a.size():
+		return healths_a[level - 1]
+	return healths[level - 1] if level <= healths.size() else 0
+
+
+## Quantas vagas de posto publica. Num muro sao os postos do caminho escolhido
+## (§10); em tudo o resto e o job_slots do BuildingData.
+func posts() -> int:
+	if level <= 0:
+		return 0
+	var tabela := posts_a if path == Path.GUARNICAO else posts_b
+	return tabela[level - 1] if level <= tabela.size() else job_slots
+
+
+## Quantos atacantes engajam ao mesmo tempo (§07, §10). Zero e "nao trava".
+func contact_slots() -> int:
+	return contacts[level - 1] if level > 0 and level <= contacts.size() else 0
+
+
+## Verdadeiro se este sitio tem os dois caminhos do §10 para escolher.
+func two_paths() -> bool:
+	return not healths_a.is_empty()
+
+
+## A escolha do §10, e e uma so: a partir do nivel 2 o muro segue um caminho e
+## nao o outro. Recusa depois de o nivel 2 estar de pe — "nunca da para ter as
+## duas" tambem quer dizer que nao se troca a meio.
+func choose_path(escolha: Path) -> bool:
+	if not two_paths() or level > 1:
+		return false
+	path = escolha
+	return true

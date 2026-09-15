@@ -13,6 +13,10 @@ const SEMENTE := 20260915
 const NUCLEO := 0.0
 
 
+func _curva() -> EconomyCurve:
+	return Registry.entry(&"economy", &"curve") as EconomyCurve
+
+
 func _tabela(tabela: StringName) -> Dictionary:
 	var mapa := {}
 	for r in Registry.entries(tabela):
@@ -21,7 +25,7 @@ func _tabela(tabela: StringName) -> Dictionary:
 
 
 func _combate() -> CombatSystem:
-	return CombatSystem.new(_tabela(&"units"), _tabela(&"creatures"))
+	return CombatSystem.new(_tabela(&"units"), _tabela(&"creatures"), ContactQueue.new(_curva()))
 
 
 func _sempre(valor: float) -> Callable:
@@ -131,12 +135,21 @@ func test_a_criatura_bate_no_muro_que_a_trava_e_nao_em_quem_esta_atras() -> void
 	var combate := _combate()
 	var vida := muro.health
 
+	# §50: "slots libertados sao preenchidos pelo atacante mais proximo da fila,
+	# com 0,4 s de transicao visivel". Quem acaba de tomar o slot nao bate no
+	# mesmo instante em que o tomou — o numero e o slot_replace_time da curva.
 	combate.choose(unidades, criaturas, obras)
 	combate.resolve(unidades, criaturas, obras, _sempre(0.0))
 
 	var c := criaturas.index_of(bicho)
 	assert_int(criaturas.target_slots[c]).is_equal(muro.id)
 	assert_int(criaturas.target_ids[c]).is_equal(CreatureSystem.NENHUM)
+	assert_int(muro.health).is_equal(vida)
+
+	criaturas.tick_movement(_curva().slot_replace_time)
+	combate.choose(unidades, criaturas, obras)
+	combate.resolve(unidades, criaturas, obras, _sempre(0.0))
+
 	assert_int(muro.health).is_less(vida)
 
 
@@ -185,6 +198,9 @@ func test_a_mesma_semente_da_a_mesma_noite() -> void:
 	assert_array(correr.call()).is_equal(primeira)
 
 
+## Uma estacaria de pe, com a tabela do §10 inteira: os dois caminhos e os
+## slots de contacto. Sem os slots ninguem engaja, e um muro sem ninguem a bater
+## nele nao prova nada.
 func _muro(obras: BuildSystem, x: float) -> BuildSlot:
 	var estacas := Registry.entry(&"walls", &"stakes") as WallData
 	var vaga := BuildSlot.new()
@@ -195,6 +211,11 @@ func _muro(obras: BuildSystem, x: float) -> BuildSlot:
 	vaga.costs = PackedInt32Array([estacas.cost])
 	vaga.works = PackedFloat32Array([1.0])
 	vaga.healths = PackedInt32Array([estacas.max_health_b])
+	vaga.healths_a = PackedInt32Array([estacas.max_health_a])
+	vaga.posts_a = PackedInt32Array([estacas.guard_posts_a])
+	vaga.posts_b = PackedInt32Array([estacas.guard_posts_b])
+	vaga.contacts = PackedInt32Array([estacas.contact_slots])
+	vaga.path = BuildSlot.Path.FORTIFICACAO
 	obras.post(vaga)
 	vaga.level = 1
 	vaga.state = BuildSlot.State.DONE

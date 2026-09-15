@@ -92,16 +92,24 @@ static func _muro(x: float) -> void:
 	vaga.kind = MURO
 	vaga.blocks = true
 	vaga.job_id = POSTO_MURO
-	for recurso in Registry.entries(&"walls"):
-		var nivel := recurso as WallData
+	# A tabela do §10 inteira, os dois caminhos incluidos: a vida e os postos de
+	# A e de B, e os slots de contacto por nivel. Nenhum numero esta aqui.
+	for nivel in SimFactory.walls_by_level():
 		vaga.costs.append(nivel.cost)
 		# O §55 nao da build_work as muralhas. A regra proposta dos edificios —
 		# 2 s por moeda de custo — e a unica que o repositorio escreve, e e
 		# reversivel: ver docs/QUESTIONS.md, Q-064.
 		vaga.works.append(float(nivel.cost) * _segundos_por_moeda())
 		vaga.healths.append(nivel.max_health_b)
+		vaga.healths_a.append(nivel.max_health_a)
+		vaga.posts_a.append(nivel.guard_posts_a)
+		vaga.posts_b.append(nivel.guard_posts_b)
+		vaga.contacts.append(nivel.contact_slots)
 		vaga.width = maxf(vaga.width, float(nivel.shadow_width))
-		vaga.job_slots = maxi(vaga.job_slots, nivel.guard_posts_a)
+	# §10: o nivel 1 e a base comum aos dois caminhos, e a escolha e do jogador.
+	# Enquanto a roda do rei nao existir (Q-067) ninguem lha pode pedir, e o que
+	# fica e a coluna que o §10 escreve como principal — a fortificacao (Q-070).
+	vaga.path = BuildSlot.Path.FORTIFICACAO
 	SimLoop.builds.post(vaga)
 
 

@@ -58,6 +58,8 @@ static func combat(eventos: Array[Dictionary]) -> Array[Dictionary]:
 				_morte(e, larga)
 			CombatSystem.EV_OBRA:
 				builds(e[CombatSystem.EVENTOS])
+			CombatSystem.EV_CONTACTO:
+				_contacto(e)
 	return larga
 
 
@@ -109,6 +111,17 @@ static func economy(eventos: Array[Dictionary], obras: BuildSystem) -> Array[Dic
 ## Passo 2: o que a Podridao invocou.
 static func summoned(pedido: SpawnRequest, massa: float) -> void:
 	EventBus.queue(&"rot_summoned", [pedido.creature_id, pedido.x, massa])
+
+
+## §50: os slots de contacto tem sinal proprio no catalogo da §46, e sao os
+## unicos dois que dizem "este atacante passou a engajar" e "deixou de engajar".
+static func _contacto(e: Dictionary) -> void:
+	var vaga: int = e[ContactQueue.VAGA]
+	var lugar: int = e[ContactQueue.LUGAR]
+	if e[ContactQueue.CHAVE] == ContactQueue.EV_LIVRE:
+		EventBus.queue(&"contact_slot_freed", [vaga, lugar])
+		return
+	EventBus.queue(&"contact_slot_taken", [vaga, lugar, e[ContactQueue.QUEM]])
 
 
 static func _dano(e: Dictionary) -> void:

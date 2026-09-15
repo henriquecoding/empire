@@ -371,7 +371,7 @@
   "depende": "F1-05",
   "feito": "A tabela do §10 replicada em .tres; o teste test_muralhas_do_10 passa",
   "fora": "O Lenho Amargo no nível 4 — é o XIII-03.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Q-002 fechada: manda a tabela (6 · 11 · 20 · 36 · 65), não a fórmula do §06."
