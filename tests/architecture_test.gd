@@ -19,6 +19,14 @@ func test_sem_literais_de_balanceamento() -> void:
 	assert_array(problems).override_failure_message("\n".join(problems)).is_empty()
 
 
+func test_g6_o_save_nunca_usa_load() -> void:
+	# ADR 0007: um .tres arbitrario pode trazer script embutido, e por isso um
+	# load() num caminho de save e execucao remota de codigo. A regra estava
+	# escrita em tres sitios e nao tinha portao nenhum.
+	var problems := Rules.check_g6()
+	assert_array(problems).override_failure_message("\n".join(problems)).is_empty()
+
+
 func test_band_vive_na_simulacao() -> void:
 	# §70: um tipo que a simulacao le vive na simulacao.
 	assert_bool(FileAccess.file_exists("res://src/sim/band.gd")).is_true()
@@ -38,9 +46,10 @@ func test_nenhum_script_passa_das_250_linhas() -> void:
 			assert_int(n).override_failure_message("%s tem %d linhas" % [f, n]).is_less_equal(251)
 
 
-# gdlint: disable=unused-argument
-func test_eventos_no_catalogo(
-	do_skip := true, skip_reason := "G3 entra com o EventBus dos 61 sinais (F0-07)"
-) -> void:
+func test_eventos_no_catalogo() -> void:
+	# G3 (§64): existe um EventBus, e e autoload — um catalogo que nao esta
+	# carregado nao guarda nada. A conferencia sinal a sinal contra a §46 esta em
+	# tests/event_bus_test.gd. F0-07 fechou o skip que estava aqui.
 	assert_bool(FileAccess.file_exists("res://src/core/event_bus.gd")).is_true()
-# gdlint: enable=unused-argument
+	var projeto := FileAccess.get_file_as_string("res://project.godot")
+	assert_str(projeto).contains('EventBus="*res://src/core/event_bus.gd"')

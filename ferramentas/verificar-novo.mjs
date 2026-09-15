@@ -3,10 +3,13 @@
 import { chromium } from "playwright";
 import { resolve } from "node:path";
 import { existsSync } from "node:fs";
-/* Ver a nota do verificar-dossie.mjs: só se passa `executablePath` quando o
-   ficheiro existe; num runner de CI quem resolve é o Playwright. */
-const PREF = process.env.PW_CHROME || "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
-const EXEC = existsSync(PREF) ? PREF : undefined;
+/* Ver a nota do verificar-dossie.mjs: pergunta-se ao Playwright PRIMEIRO, para
+   que esta máquina meça com o mesmo motor que o CI. O caminho fixo é recurso,
+   e não preferência — preferi-lo custou três corridas. */
+const FIXO = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+const DO_PW = (() => { try { return chromium.executablePath(); } catch { return undefined; } })();
+const EXEC = process.env.PW_CHROME
+  || (DO_PW && existsSync(DO_PW) ? DO_PW : (existsSync(FIXO) ? FIXO : undefined));
 /* Correr como root (contentor, CI) obriga a desligar a caixa de areia do
    Chromium; numa sessão normal ela fica ligada, que é o que se quer. */
 const ARGS = (typeof process.getuid === "function" && process.getuid() === 0) ? ["--no-sandbox"] : [];
@@ -14,6 +17,13 @@ const ARGS = (typeof process.getuid === "function" && process.getuid() === 0) ? 
 // portao corre contra qualquer construcao e nao so contra a da pasta.
 const ALVO = process.argv[2] || process.cwd() + "/saida/dossie-empire-v6.html";
 const FICH = ALVO.startsWith("file://") ? ALVO : "file://" + resolve(ALVO);
+// O evento `load` NAO garante que as fontes da rede ja foram aplicadas: com
+// `display=swap` a pagina desenha-se com a de recurso e troca quando o ficheiro
+// chega. Numa maquina fria isso acontece A MEIO da medicao, e o que se mede e
+// uma pagina que ainda vai mudar de forma. Foi o que aconteceu na corrida #16:
+// «320px · dia 11 fora do desenho» e «carregar num item leva a #s40 (desvio
+// -4376px)» chumbaram no runner e passavam em todo o lado, porque aqui as
+// fontes ja estavam em cache. document.fonts.ready e a barreira que faltava.
 const b = await chromium.launch({ executablePath: EXEC, args: ARGS });
 const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
 const erros = [];
@@ -23,10 +33,53 @@ p.on("pageerror", (e) => erros.push(String(e)));
 const deRede = (t) => /Failed to load resource|ERR_(CONNECTION|NAME|INTERNET|NETWORK)/.test(t);
 p.on("console", (m) => { if (m.type() === "error" && !deRede(m.text())) erros.push("console: " + m.text()); });
 await p.goto(FICH, { waitUntil: "load" });
+await p.evaluate(() => document.fonts.ready);
 await p.waitForTimeout(900);
 
 let falhas = 0;
-const diz = (ok, txt) => { if (!ok) falhas++; console.log(`${ok ? "  ok  " : "  FALHA"} ${txt}`); };
+/* O terceiro argumento só aparece quando a verificação chumba. Um portão que
+   diz «FALHA» e mais nada obriga quem o lê a adivinhar o que ele viu — e
+   adivinhar custou três corridas (#16, #17, #18) nestas mesmas duas linhas,
+   porque o que falhava lá não falha em mais lado nenhum. Quem chumba diz
+   sempre com que números. */
+const diz = (ok, txt, detalhe) => {
+  if (!ok) falhas++;
+  console.log(`${ok ? "  ok  " : "  FALHA"} ${txt}`);
+  if (!ok && detalhe) for (const l of String(detalhe).split("\n")) console.log(`         ${l}`);
+};
+
+/* QUE PÁGINA É QUE ISTO ACABOU DE ABRIR.
+   A folha de tipos de letra vem de uma CDN, e por isso a página medida não é a
+   mesma em todas as máquinas. Não é teoria: medido aqui, com os quatro tipos e
+   sem eles, no mesmo ficheiro construído —
+
+     sem a CDN   120 tabelas intactas · 3 a deslizar
+     com a CDN   118 tabelas intactas · 5 a deslizar   ← o que o runner mede
+
+   e uma face pode falhar sozinha (IBM Plex Mono 500 deu `error` numa das
+   medições, e só ela muda a contagem dos blocos de código). Sem esta linha, uma
+   corrida que chumbe num rótulo largo de mais não diz se mediu a página com os
+   tipos certos ou com os de recurso. Q-062 pergunta se o dossiê deve depender
+   de uma CDN para a sua própria verificação; esta linha é o mínimo até lá. */
+const tipos = await p.evaluate(() => {
+  const por = {}, maus = [];
+  document.fonts.forEach((f) => {
+    por[f.status] = (por[f.status] || 0) + 1;
+    if (f.status === "error") maus.push(`${f.family} ${f.weight} ${f.style}`);
+  });
+  return { n: document.fonts.size, por, maus };
+});
+/* E com que motor. O `PREF` acima fixa uma versão que pode não ser a que o
+   Playwright instala no runner — aqui correu 1194 durante três corridas
+   enquanto o CI corria 1243, e ninguém o disse. Medir com um motor e chumbar
+   noutro é a mesma armadilha do Makefile: correr os comandos não é correr o
+   workflow. */
+console.log(
+  `\nmotor: ${b.version()} (${EXEC || "resolvido pelo Playwright"})` +
+  `\ntipos de letra: ${tipos.n} faces · ` +
+  (Object.entries(tipos.por).map(([k, v]) => `${k} ${v}`).join(" · ") || "nenhuma") +
+  (tipos.maus.length ? ` · ERRO em ${tipos.maus.join(", ")}` : "")
+);
 
 /* ─── 1 · O plano ─────────────────────────────────────────────── */
 console.log("\nPLANO — o que a pesquisa pode afirmar");
@@ -207,6 +260,7 @@ for (const s of salto) {
    foi exactamente o que aconteceu à primeira. */
 const p2 = await b.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
 await p2.goto(FICH, { waitUntil: "load" });
+await p2.evaluate(() => document.fonts.ready);
 await p2.evaluate(() => { try { localStorage.removeItem("empire.lido.v1"); } catch (e) {} });
 await p2.reload({ waitUntil: "load" });
 await p2.waitForTimeout(900);
@@ -258,6 +312,16 @@ const r = await p.evaluate(async () => {
 diz(r.n === 1 && /^sec:/.test(r.qual || ""), `R recorta a secção que se está a ler (${r.qual})`);
 
 // um item da bandeja é um destino
+/* Mede-se ONDE A PÁGINA FICOU, e não onde ela ia ao fim de 900 ms.
+   O salto é animado, e o desvio durante a animação é um valor de passagem:
+   medido aqui, de 100 em 100 ms, dá -310px aos 213 ms e 0px aos 363 ms. Uma
+   espera fixa lê um desses dois números conforme a máquina, e a vizinha desta
+   linha — «saltar para #s40 numa parte fechada», que espera por uma CONDIÇÃO —
+   passa sempre, no mesmo ficheiro e na mesma corrida.
+   O que se AFIRMA não muda: o clique tem de levar à #s40. Muda só o momento em
+   que se lê, que passa a ser «quando duas leituras seguidas concordam».
+   O tecto é de propósito: uma página que nunca assenta é um defeito para
+   relatar — com a série toda — e não um motivo para esperar para sempre. */
 const ir = await p.evaluate(async () => {
   const d = window.__X_IDX__.docs.find(x => x.id === "sec:s40");
   window.XC.limpar(); window.XC.alternar(d.id);
@@ -265,14 +329,33 @@ const ir = await p.evaluate(async () => {
   await new Promise(x=>setTimeout(x,400));
   const it = document.querySelector(".x-rec-i[data-ir]");
   const alvo = it && it.dataset.ir;
+  const ler = () => {
+    const sec = document.getElementById(alvo);
+    if (!sec) return null;
+    const m = parseFloat(getComputedStyle(sec).scrollMarginTop) || 0;
+    return Math.round(sec.getBoundingClientRect().top - m);
+  };
+  const t0 = performance.now();
   it.click();
-  await new Promise(x=>setTimeout(x,900));
-  const sec = document.getElementById(alvo);
-  const m = parseFloat(getComputedStyle(sec).scrollMarginTop) || 0;
-  return { alvo, desvio: Math.round(sec.getBoundingClientRect().top - m),
+  const serie = [];
+  let ant = null, desvio = null, assentou = false;
+  while (performance.now() - t0 < 6000) {
+    await new Promise(x=>setTimeout(x,100));
+    const v = ler(), t = Math.round(performance.now() - t0);
+    serie.push(`${t}ms:${v}`);
+    // Antes dos 400 ms o salto pode nem ter começado: duas leituras iguais aí
+    // são a página PARADA, e não a página ASSENTE.
+    if (t >= 400 && v !== null && v === ant) { desvio = v; assentou = true; break; }
+    ant = v;
+  }
+  if (!assentou) desvio = ant;
+  return { alvo, desvio, assentou, ms: Math.round(performance.now() - t0), serie,
            folhaFechada: document.getElementById("x-rec-folha").hidden };
 });
-diz(ir.alvo === "s40" && Math.abs(ir.desvio) <= 4, `carregar num item leva à #${ir.alvo} (desvio ${ir.desvio}px)`);
+diz(ir.alvo === "s40" && Math.abs(ir.desvio) <= 4 && ir.assentou,
+  `carregar num item leva à #${ir.alvo} (desvio ${ir.desvio}px, assente aos ${ir.ms}ms)`,
+  (ir.assentou ? "" : "a página nunca assentou em 6s — o valor é o último lido\n") +
+  `série de ${ir.serie.length} leituras: ${ir.serie.join(" ")}`);
 diz(ir.folhaFechada, "e a folha sai da frente");
 
 /* ─── 5b · O SIMULADOR: as réguas, o gráfico e o «o que mais mexe» ───
@@ -433,24 +516,40 @@ for (const larg of [320, 360, 1280]) {
     const t = [...ch.querySelectorAll("text")];
     const asf = t.find((n) => (n.getAttribute("class") || "").includes("x-asf-rot"));
     const alvo = t.find((n) => (n.getAttribute("class") || "").includes("x-alvo-rot"));
-    const pontas = t.filter((n) => (n.getAttribute("class") || "").includes("x-ponta-rot")).map(cx);
+    const nsPontas = t.filter((n) => (n.getAttribute("class") || "").includes("x-ponta-rot"));
+    const pontas = nsPontas.map(cx);
     const linha = ch.querySelector("line.x-asf-linha");
     const lx = linha ? +linha.getAttribute("x1") : null;
     const a = asf ? cx(asf) : null;
     const pisa = (u, v) => !(u[1] <= v[0] + 0.5 || u[0] >= v[1] - 0.5);
+    const r1 = (n) => Math.round(n * 10) / 10;
     return {
       W, texto: asf && asf.textContent,
       fora: [a, alvo && cx(alvo), ...pontas].filter(Boolean).some((c) => c[0] < -0.5 || c[1] > W + 0.5),
       pisaPonta: a ? pontas.some((c) => pisa(a, c)) : false,
       cruzaLinha: a && lx != null ? a[0] < lx && a[1] > lx : false,
       pontasSeparadas: (() => {
-        const ys = t.filter((n) => (n.getAttribute("class") || "").includes("x-ponta-rot")).map((n) => +n.getAttribute("y")).sort((x, y) => x - y);
+        const ys = nsPontas.map((n) => +n.getAttribute("y")).sort((x, y) => x - y);
         return ys.every((y, i) => i === 0 || y - ys[i - 1] >= 12.5);
       })(),
+      // Só se imprime quando chumba, mas mede-se sempre: é o que distingue
+      // «o rótulo é largo de mais» de «os nomes ficaram colados».
+      caixas: {
+        asf: a && a.map(r1), alvo: alvo && cx(alvo).map(r1), linhaX: lx,
+        pontas: nsPontas.map((n, i) => `«${n.textContent}» [${pontas[i].map(r1)}] y=${+n.getAttribute("y")}`),
+      },
     };
   });
+  const porque = [
+    g.fora && "um rótulo sai do desenho",
+    g.pisaPonta && `«${g.texto}» pisa um nome de série`,
+    g.cruzaLinha && `«${g.texto}» cruza a própria linha`,
+    !g.pontasSeparadas && "dois nomes de série a menos de 12.5 um do outro",
+  ].filter(Boolean).join(" · ");
   diz(!g.fora && !g.pisaPonta && !g.cruzaLinha && g.pontasSeparadas,
-    `${larg}px · viewBox ${g.W} · «${g.texto}» dentro do desenho, sem pisar nomes nem a própria linha`);
+    `${larg}px · viewBox ${g.W} · «${g.texto}» dentro do desenho, sem pisar nomes nem a própria linha`,
+    `${porque}\nasf=[${g.caixas.asf}] alvo=[${g.caixas.alvo}] linha x=${g.caixas.linhaX} viewBox 0..${g.W}\n` +
+    g.caixas.pontas.join("\n"));
 }
 await p.setViewportSize({ width: 1280, height: 900 });
 await p.waitForTimeout(400);

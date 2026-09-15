@@ -101,7 +101,7 @@ Oferta, a Dívida e os limiares dos epílogos), `journals` (ato, origem, objeto 
 (canção, canção de Colheita, marco), `creatures` (o Zelador e os campos que o descrevem), `clock` (os *tints*
 das seis fases e o chão de valor da noite) e `economy` (16 chaves da Colheita, dos títulos e do Lenho Amargo).
 
-**Total: 27 tabelas, 202 recursos.**
+**Total: 28 tabelas, 203 recursos.**
 
 E fora de `data/source/`: **`data/i18n/strings.csv`** — 271 chaves de texto (PT-PT e EN), importadas pelo Godot
 como tradução. É o `strings.csv` único da §27; a terminologia está em `docs/localization/GLOSSARY.csv`. As 64

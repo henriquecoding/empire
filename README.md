@@ -40,7 +40,11 @@ Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena princ
 | `data/source/` | **Os números.** Um CSV por tabela; `_tables.csv` é o registo |
 | `data/**/*.tres` | Gerados dos CSV e versionados (ADR 0004) |
 | `data/i18n/strings.csv` | Todo o texto do jogo, PT-PT e EN |
-| `src/sim/` | Simulação pura: `band.gd`, `game_clock.gd` e os 27 `Resource` de dados, por agora |
+| `src/core/` | Os seis *autoloads*: `event_bus`, `clock_service`, `rng_service`, `registry`, `save_service`, `sim_loop` |
+| `src/sim/` | Simulação pura: `band.gd`, `game_clock.gd`, `state/`, `ai/unit_fsm.gd`, `systems/unit_system.gd` e os 28 `Resource` de dados |
+| `src/world/` | `boot.gd`, `camera_rig.gd`, `band_layers.gd`, `band_probe.gd` |
+| `src/actors/` | `unit_view.gd` — os cinco slots do §58 |
+| `shaders/` | `palette_lut.gdshader` — um shader, quatro trabalhos (§60) |
 | `tools/` | `csv_to_tres.gd`, `lint_sim.gd`, `split_dossie.py`, `check_dossie_vs_csv.py`, `content_report.py`, `export_aseprite.sh` |
 | `ferramentas/` | A camada de uso do dossiê: `construir.mjs`, `extrair-dados.mjs` e os dois portões |
 | `tests/` | gdUnit4: arquitetura, dados, design |
@@ -48,9 +52,9 @@ Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena princ
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.6: 43 testes (6 saltados, cada um com a razão e o sistema que
-  falta escritos no próprio teste), o *export* de Linux arranca.
-- A base de dados tem **27 tabelas** e 202 recursos com todos os números do dossiê, Parte XIII incluída; o que o
+- O projeto **abre, testa e exporta** em Godot 4.6: 173 testes (5 saltados, cada um com a razão e o sistema que
+  falta escritos no próprio teste), o *export* de Linux arranca e o binário corre.
+- A base de dados tem **28 tabelas** e 203 recursos com todos os números do dossiê, Parte XIII incluída; o que o
   dossiê não dá está proposto e marcado (`docs/content/PROPOSALS.md`).
 - O `tools/check_dossie_vs_csv.py` confere **193 números** do dossiê contra as tabelas, e não há divergências.
 - O estado medido, ficheiro a ficheiro, está em `docs/recovery/RETOMADA.md` e em `docs/recovery/validation.json`.

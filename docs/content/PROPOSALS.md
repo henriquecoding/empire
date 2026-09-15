@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 179 | 89 | 268 |
-| Fases 3–8 | 218 | 105 | 323 |
-| Total | 397 | 194 | 591 |
+| Fases 0–2 (fatia vertical) | 183 | 89 | 272 |
+| Fases 3–8 | 224 | 105 | 329 |
+| Total | 407 | 194 | 601 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 179
+## 1 · Fatia vertical — balanceamento — 183
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -195,6 +195,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | parallax_layers | `closed_2` | `saturation_delta` | -0.042 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_3` | `saturation_delta` | -0.03 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_4` | `saturation_delta` | -0.015 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
+| camera | `default` | `lookahead_px` | 120 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
+| camera | `default` | `lookahead_seconds` | 0.6 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
+| camera | `default` | `follow_seconds` | 0.18 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
+| camera | `default` | `free_speed_px_s` | 420 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
 
 ## 2 · Fatia vertical — apresentação e estrutura — 89
 
@@ -290,7 +294,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 323
+## 3 · Fases 3 a 8 — 329
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -561,6 +565,12 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | biomes | `subterranean` | `creature_table` | crawler\|winged\|brute\|burrower\|slime_ram\|devourer | 7 | A §07 tem uma tabela única: todos os biomas usam-na até haver criaturas por bioma. |
 | biomes | `subterranean` | `resources` | fungi | 7 | A §07 tem uma tabela única: todos os biomas usam-na até haver criaturas por bioma. |
 | economy | `coin_pickup_px` | `coin_pickup_px` | 12 | 9 | Proposta: a apanha é por distância, não por colisão. A medir no F1-01. |
+| economy | `coin_gravity_px_s2` | `coin_gravity_px_s2` | 700 | 9 | Proposta: o dossiê diz que a moeda é física e não diz com que física. 700 px/s² com o impulso abaixo dá um arco de 23 px em contínuo — cerca de 20 px a 30 Hz, que é o que se vê — e meio segundo de voo — alto o bastante para se ver por cima de uma tropa, curto o bastante para não se esperar por ele. Q-061; a medir no F1-01. |
+| economy | `coin_drop_speed_px_s` | `coin_drop_speed_px_s` | 180 | 9 | Proposta: impulso vertical ao largar. Com a gravidade acima: ápice 23 px em contínuo, ~20 px medidos a 30 Hz, voo 0,51 s. Q-061. |
+| economy | `coin_drop_spread_px_s` | `coin_drop_spread_px_s` | 40 | 9 | Proposta: dispersão horizontal máxima ao largar, em px/s. Sobre 0,51 s de voo dá ±20 px de espalhamento — mais do que o raio de apanha de 12, para que duas moedas largadas juntas não se apanhem como uma. Q-061. |
+| economy | `recruit_notice_px` | `recruit_notice_px` | 120 | 9 | Proposta: «perto» não tem número no dossiê. 120 é o limite exterior da fila do §50 — a distância a que o jogo já diz que alguém pertence a um sítio. Ver Q-063. |
+| economy | `follow_distance_px` | `follow_distance_px` | 30 | 9 | Proposta ancorada no queue_min_px do §50 (30): é a mesma pergunta — a que distância uma pessoa espera por outra. Ver Q-063. |
+| economy | `follow_spacing_px` | `follow_spacing_px` | 18 | 9 | Proposta ancorada no queue_spacing_px do §50 (18), para o jogo ter UMA regra de espaçamento e não duas. Ver Q-063. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | horta | 6 | O §12 diz 'Fortaleza do pântano', mas nenhum dos seis povos vive num pântano — Q-013. Proposta: a Horta (várzea). |
 | impulses | `forced_harvest` | `coin_cost` | 12 | 6 | coin_cost 12 ≈ o rendimento líquido do dia 1 no perfil equilibrado (12,3). O dossiê implica um custo ('os impulsos custam metade' para o tirano) sem o dar — Q-014. |

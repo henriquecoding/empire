@@ -18,23 +18,23 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [F0-04](F0-04.md) | Instalar o gdUnit4 e o workflow de CI | F0-00 | feito |
 | [F0-05](F0-05.md) | Band: enum, planos e a matriz de colisão | F0-01 | feito |
 | [F0-06](F0-06.md) | GameClock e o ClockData (prompt 1 da §29) | F0-01 | feito |
-| [F0-07](F0-07.md) | EventBus com os sinais do §46 | F0-01 | por fazer |
-| [F0-08](F0-08.md) | Câmara com lookahead e limites de região | F0-05 | por fazer |
+| [F0-07](F0-07.md) | EventBus com os sinais do §46 | F0-01 | feito |
+| [F0-08](F0-08.md) | Câmara com lookahead e limites de região | F0-05 | feito |
 | [F0-09](F0-09.md) | Spike: decidir a escala e fechar a ADR 0001 | F0-01 | por fazer |
-| [F0-10](F0-10.md) | Cena de teste: um sprite anda nas três faixas | F0-05, F0-08 | por fazer |
-| [F0-11](F0-11.md) | Registry e boot.tscn | F0-01 | por fazer |
-| [F0-12](F0-12.md) | RngService: os seis fluxos, snapshot e restore | F0-11 | por fazer |
-| [F0-13](F0-13.md) | SaveService: escrita atómica e três slots | F0-11 | por fazer |
-| [F0-14](F0-14.md) | UnitView com cinco slots e o shader da paleta | F0-10 | por fazer |
+| [F0-10](F0-10.md) | Cena de teste: um sprite anda nas três faixas | F0-05, F0-08 | feito |
+| [F0-11](F0-11.md) | Registry e boot.tscn | F0-01 | feito |
+| [F0-12](F0-12.md) | RngService: os seis fluxos, snapshot e restore | F0-11 | feito |
+| [F0-13](F0-13.md) | SaveService: escrita atómica e três slots | F0-11 | feito |
+| [F0-14](F0-14.md) | UnitView com cinco slots e o shader da paleta | F0-10 | feito |
 | [F0-15](F0-15.md) | Spike: importar arte do Aseprite e fechar a ADR 0010 | F0-02 | por fazer |
 
 ## Fase 1 — Núcleo jogável
 
 | Ticket | Tarefa | Depende | Estado |
 |---|---|---|---|
-| [F1-01](F1-01.md) | Moeda física: largar, arco, queda, apanhar, saco | F0-07 | por fazer |
+| [F1-01](F1-01.md) | Moeda física: largar, arco, queda, apanhar, saco | F0-07 | feito |
 | [F1-02](F1-02.md) | UnitData e as seis unidades do §07 | F0-03 | feito |
-| [F1-03](F1-03.md) | UnitSystem com arrays paralelos e time-slicing | F1-02 | por fazer |
+| [F1-03](F1-03.md) | UnitSystem com arrays paralelos e time-slicing | F1-02 | feito |
 | [F1-04](F1-04.md) | Recrutar um vagabundo por uma moeda; ele segue-te | F1-01, F1-03 | por fazer |
 | [F1-05](F1-05.md) | JobBoard (prompt 4 da §29) | F1-03 | por fazer |
 | [F1-06](F1-06.md) | Muro: cinco níveis, dois caminhos, slots de contacto | F1-05 | por fazer |

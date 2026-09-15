@@ -18,7 +18,8 @@
  * Cada número que sai daqui leva `fonte` — a proveniência é obrigatória.
  */
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
+import { dirname } from "node:path";
 import { join } from "node:path";
 
 /* O primeiro argumento é a RAIZ DO REPOSITÓRIO — a pasta que tem `docs/` e
@@ -250,6 +251,9 @@ const saida = {
   validacaoHistorico,
 };
 
+// A pasta de saida e ignorada pelo git e por isso NAO existe num checkout
+// frio. O construir.mjs ja a criava; este nao, e so o CI deu por isso.
+mkdirSync(dirname(SAIDA), { recursive: true });
 writeFileSync(SAIDA, JSON.stringify(saida));
 
 const abertas = perguntas.filter((p) => p.estado === "aberta").length;

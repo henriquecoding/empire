@@ -1,0 +1,18 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: O contrato do agente
+    url: https://github.com/henriquecoding/empire/blob/main/AGENTS.md
+    about: Le isto antes de abrir seja o que for. Se leres um so ficheiro, e este.
+
+  - name: O dossie — a fonte unica do design
+    url: https://github.com/henriquecoding/empire/blob/main/docs/dossie.html
+    about: Design, balanceamento e especificacao. Tudo o resto deriva dele.
+
+  - name: O backlog
+    url: https://github.com/henriquecoding/empire/tree/main/docs/backlog
+    about: 53 tickets, um ficheiro cada. Uma tarefa, uma sessao, um merge.
+
+  - name: As perguntas em aberto
+    url: https://github.com/henriquecoding/empire/blob/main/docs/QUESTIONS.md
+    about: Duvida que a spec nao cobre escreve-se ali, nao se decide sozinho.

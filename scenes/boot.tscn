@@ -1,9 +1,11 @@
-[gd_scene format=3]
+[gd_scene load_steps=4 format=3]
 
+[ext_resource type="Script" path="res://src/world/boot.gd" id="0_boot"]
 [ext_resource type="Texture2D" path="res://art/export/_placeholder/contact_shadow_18.png" id="1_n61mk"]
 [ext_resource type="Texture2D" path="res://art/export/_placeholder/unit_scale2_placeholder.png" id="2_r2kcx"]
 
 [node name="Boot" type="Node2D" unique_id=537160933]
+script = ExtResource("0_boot")
 
 [node name="Sky" type="ColorRect" parent="." unique_id=433395011]
 offset_right = 1280.0
@@ -32,4 +34,4 @@ offset_top = 16.0
 offset_right = 16.0
 offset_bottom = 16.0
 theme_override_colors/font_color = Color(0.078431375, 0.078431375, 0.05882353, 1)
-text = "Empire · dia zero — substituir em F0-10 (boot.tscn da §70)"
+text = "Empire · dia zero"

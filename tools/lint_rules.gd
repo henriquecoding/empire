@@ -30,6 +30,10 @@ const G4_ALLOWED := ["0", "1", "-1", "0.0", "1.0", "2"]
 ## Os Resource de dados tem valores por omissao que o .tres gerado sobrepoe sempre;
 ## band.gd e o ficheiro das constantes de plano (§47). Ver docs/adr/0008.
 const G4_SKIP := ["res://src/sim/data/", "res://src/sim/band.gd"]
+## I6 — o save nunca usa load() (ADR 0007). Um .tres arbitrario pode trazer
+## script embutido: load() num caminho de save e execucao remota de codigo.
+const G6_FILE := "res://src/core/save_service.gd"
+const G6_FORBIDDEN := ["load(", "ResourceLoader", "ResourceSaver"]
 
 
 static func gd_files(root: String) -> Array[String]:
@@ -95,4 +99,27 @@ static func check_g4(root: String = "res://src") -> Array[String]:
 			for m in re.search_all(line):
 				if not m.get_string() in G4_ALLOWED:
 					out.append("G4 %s:%d: literal %s — vai para data/" % [f, n, m.get_string()])
+	return out
+
+
+## I6 — o save so passa pelo canal da ADR 0007. Verifica tres coisas: que o
+## ficheiro existe (apaga-lo nao pode ser forma de calar o portao), que nao
+## nomeia nenhuma forma de load, e que cada store_var/get_var desliga mesmo os
+## objetos — `false` explicito, para que a regra se veja na linha.
+static func check_g6() -> Array[String]:
+	var out: Array[String] = []
+	if not FileAccess.file_exists(G6_FILE):
+		out.append("G6 %s: nao existe" % G6_FILE)
+		return out
+
+	var n := 0
+	for linha in strip_comments(FileAccess.get_file_as_string(G6_FILE)).split("\n"):
+		n += 1
+		for token in G6_FORBIDDEN:
+			if token in linha:
+				out.append("G6 %s:%d: usa '%s' — ADR 0007" % [G6_FILE, n, token])
+		if "store_var(" in linha and not ", false)" in linha:
+			out.append("G6 %s:%d: store_var sem `, false` — ADR 0007" % [G6_FILE, n])
+		if "get_var(" in linha and not "get_var(false)" in linha:
+			out.append("G6 %s:%d: get_var sem `false` — ADR 0007" % [G6_FILE, n])
 	return out

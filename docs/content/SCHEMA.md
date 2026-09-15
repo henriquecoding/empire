@@ -266,7 +266,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 87 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 93 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -357,6 +357,12 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 87 linha(s) · §06 §4
 | `bitter_wood_wall_level` | int | v6 · nomes, Colheita e Lenho |  |
 | `bitter_wood_bastion_cost` | int | v6 · nomes, Colheita e Lenho |  |
 | `coin_pickup_px` | float | v6 · nomes, Colheita e Lenho |  |
+| `coin_gravity_px_s2` | float | Moeda fisica — §02, §61, F1-01 |  |
+| `coin_drop_speed_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
+| `coin_drop_spread_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
+| `recruit_notice_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
+| `follow_distance_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
+| `follow_spacing_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
@@ -648,4 +654,17 @@ Script `src/sim/data/chapter_data.gd` · layout `rows` · 10 linha(s) · §77 �
 | `law_enters_walls` | bool | Regras |  |
 | `visits_tracked` | bool | Regras |  |
 | `folk_root` | String | Regras |  |
+
+## `camera.csv` → `data/camera/{id}.tres`
+
+Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24 §59 — a camara como dados; um so numero vem do dossie (Q-057)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | nome do ficheiro | — | o recurso não tem campo id |
+| `lookahead_px` | float |  |  |
+| `lookahead_seconds` | float |  |  |
+| `follow_seconds` | float |  |  |
+| `free_speed_px_s` | float |  |  |
+| `free_return_seconds` | float |  |  |
 

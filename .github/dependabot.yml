@@ -1,0 +1,34 @@
+version: 2
+
+# O Empire tem tres dependencias externas e nao mais: as actions do workflow, o
+# gdtoolkit, e o Playwright da camada de uso. O motor NAO entra aqui de
+# proposito — a versao esta em .godot-version e muda-la exige uma ADR (0001).
+
+updates:
+  # As actions do CI. Sem isto, um `actions/checkout@v4` fica preso no dia em
+  # que foi escrito e ninguem repara ate deixar de ser suportado.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
+    labels:
+      - dependencias
+
+  # O gdtoolkit, fixado em tools/requirements.txt. Um upgrade de formatador
+  # reformata o projeto inteiro, por isso vem em PR separada e revista.
+  - package-ecosystem: pip
+    directory: /tools
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 1
+    commit-message:
+      prefix: "ferramentas"
+    labels:
+      - dependencias
+
+  # ferramentas/ instala o Playwright sem manifesto (npm install --no-save), por
+  # isso nao ha nada aqui para o dependabot vigiar. Se um dia essa camada ganhar
+  # um package.json, acrescenta-se um bloco npm com directory: /ferramentas.

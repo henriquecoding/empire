@@ -272,11 +272,14 @@
 
 ### Q-052 · CI remoto e exportação
 - **Onde:** `source_gaps` da recuperação; §31 e §35.
-- **O que falta:** o workflow existe e corre localmente; sem remoto nunca correu num runner limpo, e a exportação
-  só foi testada para Linux.
-- **Proposta:** manter o `run_tests.sh` como contrato local e ligar o remoto antes da Fase 2, que é quando o
-  volume de código passa a ser maior do que uma revisão à mão aguenta (§31).
-- **Bloqueia:** Fase 2. **Decide:** tu.
+- **O que falta:** ~~sem remoto nunca correu num runner limpo~~ — **corre.** A corrida **#19** pôs os cinco
+  *jobs* verdes na mesma corrida (portões estáticos, dados e suite gdUnit4, export de Linux, camada do dossiê,
+  e o `ci` que os junta), que era a condição para fechar esta pergunta. O que fica por fazer é o resto do
+  enunciado: a **exportação só está testada para Linux**.
+- **Proposta:** manter o `run_tests.sh` como contrato local e acrescentar os outros alvos de exportação quando
+  houver máquina para os provar — exportar sem arrancar o binário não prova nada, e é o arranque que o job de
+  Linux faz hoje.
+- **Bloqueia:** Fase 2. **Decide:** tu — mas já não por falta de CI.
 
 ## Abertas — abertas ao implementar o anexo §85
 
@@ -306,6 +309,185 @@
 - **Proposta:** `chapters.csv` propõe 25 s para beira de estrada e acampamento (o desvio é curto) e 40 s para
   fortaleza (o desvio é uma região inteira). Marcado em `_proposed` nas dez linhas.
 - **Bloqueia:** Fase 5. **Decide:** o playtest.
+
+### Q-056 · O §46 dá a carga de cada sinal, mas não os tipos
+- **Onde:** `docs/design/46-o-catalogo-completo.md` contra `src/core/event_bus.gd` (F0-07).
+- **O que diverge:** a coluna *Carga* tipa sete parâmetros (`day: int`, `paused: bool`, `hit: bool`,
+  `from, to: Phase`) e deixa os outros **cerca de quarenta** só com nome: `amount`, `source`, `ratio`,
+  `tier`, `income`, `value`, `drops`, `segments`. Um sinal declarado exige o tipo escrito.
+- **Proposta:** a regra que o F0-07 aplicou, para ser uma regra e não quarenta decisões avulsas —
+  id de **dados** (existe numa linha de `data/source/*.csv`) é `StringName`; id de **instância**
+  (sai do `next_id` do §45) é `int`; moeda, matéria e contagens são `int`; posição, massa, largura,
+  rácio e duração são `float`; `drops` é `PackedStringArray` porque o CSV já os escreve `coins|corpse`.
+- **Dois casos ficam por decidir, e estão implementados pelo mais simples:**
+  `rot_summoned(creature_id)` leva o id de **dados** (é o que o §30 devolve em `pick.id`) enquanto
+  `creature_died(creature_id)` leva o de **instância** — o mesmo nome de parâmetro para duas coisas;
+  e `region_generated(segments)` ficou `int`, a contagem, porque a §46 não diz se é a lista ou quantos.
+- **Bloqueia:** nada. Os tipos mudam sem quebrar ninguém enquanto não houver emissores — **e é agora
+  que é barato**. **Decide:** tu, antes do F1-08 (o primeiro emissor de `rot_summoned`).
+
+### Q-057 · O dossiê dá um número de câmara, e a câmara precisa de cinco
+- **Onde:** `docs/design/24-controlos-hud-diegetico-e-feedback.md` contra `src/world/camera_rig.gd` (F0-08).
+- **O que diverge:** a §24 escreve *"Reconhecimento; volta sozinha em 2 s"* para a câmara livre, e nomeia a
+  antecipação ao dizer que a cegueira do Cavaleiro Selado a desliga. Não dá **nenhum** valor para a
+  antecipação, para a suavização, nem para a velocidade da câmara livre. A §19 diz que "a câmara e o
+  enquadramento dependem" da decisão de escala, que é o *spike* F0-09 e ainda não fechou.
+- **Proposta:** os quatro valores entraram em `data/source/camera.csv` marcados em `_proposed`, porque a
+  invariante I4 manda que o que se afina em *playtest* viva em `data/` e não num script:
+  `lookahead_px` **120** (3/16 da meia-tela de 640 — deixa ver cerca de dois terços do ecrã à frente de quem
+  anda), `lookahead_seconds` **0,6** (alto de propósito: uma antecipação que salta ao primeiro passo para trás
+  dá enjoo), `follow_seconds` **0,18**, `free_speed_px_s` **420** (atravessa um segmento de 640 px em pouco
+  mais de segundo e meio). O `free_return_seconds` é **2,0** e esse vem do dossiê.
+- **Bloqueia:** nada — a câmara funciona e nenhum destes números é lido pela simulação. Mas o F0-09 pode
+  mexer-lhes: se a escala mudar, a antecipação em píxeis muda com ela. **Decide:** o primeiro *playtest*,
+  depois do F0-09.
+
+### Q-058 · A célula das moedas contradiz-se dentro da própria tabela do §53
+- **Onde:** `docs/design/53-faixas-colisao-e-a-matriz-que-tem-de-existir-no-.md`, as linhas `L_SURFACE` e `L_COIN`.
+- **O que diverge:** `L_SURFACE` diz que colide com *"Terreno, edifícios, muralhas, **moedas**"*; duas linhas
+  abaixo, `L_COIN` diz que colide com *"**Nada** — é apanha por proximidade"*, e justifica-o: *"colisão de moeda
+  com 300 unidades é desperdício"*. As duas não podem ser verdade.
+- **Proposta:** manda o `L_COIN`, porque traz a razão escrita e a razão é de desempenho. O `BandLayers` põe
+  `coin_mask` a colidir só com o terreno da faixa onde a moeda foi largada — uma moeda tem de **assentar** no
+  chão (§F1-01: largar, arco, queda, apanhar) — e nenhuma máscara de corpo inclui `L_COIN`. Há teste:
+  `test_ninguem_apanha_moedas_por_colisao`.
+- **Bloqueia:** nada hoje. **Decide:** o F1-01, que é quem primeiro larga uma moeda a sério.
+
+### Q-059 · O `UnitSystem` do §30 é um `Node2D`; o do §41 e do §43 é simulação
+- **Onde:** o §30 escreve `src/actors/unit_system.gd` com `class_name UnitSystem extends Node2D` e sprites lá
+  dentro. O §41 põe os sistemas em `src/sim/systems/`, o §43 lista `UnitSystem — FSM` como o **passo 4 da
+  simulação**, e o §52 descreve-o sem uma única referência a nós.
+- **Proposta:** a especificação manda, pelo precedente da **Q-035** (*"a §46 manda (§39)"*): o §19 diz de si
+  próprio que é o esboço e que a especificação está nas §39–§67. O `UnitSystem` é puro e vive em
+  `src/sim/systems/`; o portão **G1** chumbaria de imediato um `Node2D` ali. A camada de apresentação é o
+  `UnitView` (§58, F0-14), que é outra coisa e já existe. O próprio §30 fecha com a regra que isto aplica:
+  *"os sistemas puros devolvem pedidos; só a camada de nós age"*.
+- **Bloqueia:** nada. **Decide:** confirmação tua, ou uma ADR se preferires o contrário.
+
+### Q-060 · `Array[UnitRec]` no §45 contra as colunas do F1-03
+- **Onde:** o §45 declara `var units: Array[UnitRec] = []` e dá o `UnitRec` como classe; o título do **F1-03**
+  é *"UnitSystem com arrays paralelos"*, e o §30 explica porquê: *"as unidades são linhas em arrays paralelos,
+  não nós com script. É o que permite 300 unidades a 60 fps."*
+- **O que diverge:** um `UnitRec` por unidade são 300 objetos `RefCounted` — exatamente o custo por unidade que
+  o §63 orça para não existir.
+- **Proposta:** as colunas são a verdade, e o `UnitRec` **não é criado**. O `UnitSystem` guarda `PackedArrays`
+  com um campo por coluna, e o índice `i` é a mesma unidade em todas. O save leva as colunas, que já são tipos
+  base e passam pelo canal da ADR 0007 sem conversão nenhuma — há teste. O `UnitRec` do §45 continua a ser a
+  descrição do que uma unidade **é**; deixa de ser a descrição de como é guardada.
+- **O que isto custa, e está escrito no código:** `remove()` troca com a última em vez de deslocar tudo, e por
+  isso **muda a ordem das colunas**. Nada que afete a simulação pode iterar por índice e esperar estabilidade —
+  itera-se por id crescente, que é o que a §42 já manda.
+- **Bloqueia:** nada. **Decide:** tu, e antes do F1-14 (o save do estado a sério).
+
+### Q-061 · O dossiê diz que a moeda é física e não diz com que física
+- **Onde:** o §02 e o §61 fazem da moeda física o **Verbo 1** — *"tudo o que o jogador faz passa por ela"* — e
+  o `economy.csv` traz **um** número para ela: `coin_pickup_px = 12`, já marcado em `_proposed` pelo F1-01.
+  Um arco precisa de mais três, e nenhum está escrito em lado nenhum.
+- **Proposta:** entraram em `data/source/economy.csv` marcados em `_proposed`, pela mesma regra do I4 que levou
+  lá os da câmara (Q-057): `coin_gravity_px_s2` **700**, `coin_drop_speed_px_s` **180**,
+  `coin_drop_spread_px_s` **40**. Dão um ápice de 23 px em contínuo — cerca de **20 px medidos a 30 Hz**, que é
+  o que se vê — meio segundo de voo, e ±20 px de espalhamento, mais do que o raio de apanha de 12, para que
+  duas moedas largadas juntas não se apanhem como uma só. Há teste a medir o ápice contra a fórmula, com a
+  tolerância escrita como erro de discretização (`v0 · dt`) e não como um número a gosto.
+- **Onde é que a moeda corre no tick:** o §43 tem onze passos e **nenhum é a moeda**. Corre no passo **5**, com
+  o movimento, porque é movimento — e porque o passo 8 (BuildSystem) lê *"moedas largadas"* e portanto precisa
+  delas já pousadas. Está escrito no `SimLoop` e no `CoinSystem`.
+- **Bloqueia:** nada. **Decide:** o primeiro playtest — e o F1-06, que é quem constrói com a moeda a sério.
+
+### Q-062 · Os portões mediam com um motor e o CI media com outro
+- **Onde:** `ferramentas/verificar-dossie.mjs` e `ferramentas/verificar-novo.mjs`, em cada `goto`.
+- **O que acontecia:** os dois abriam a página com `waitUntil: "load"` e uma espera fixa de 900 ms. O evento
+  `load` **não** garante que as fontes da rede já foram aplicadas: com `display=swap` a página desenha-se com a
+  de recurso e troca quando o ficheiro chega. Numa máquina fria isso acontece *a meio da medição*.
+- **Como apareceu:** a corrida **#16** chumbou com duas falhas — «320px · "dia 11" fora do desenho» e
+  «carregar num item leva à #s40 (desvio −4376px)» — que passavam em todo o lado.
+- **O que a investigação encontrou, e é o mais importante:** neste ambiente as fontes **nunca** carregam. O
+  Chromium do Playwright recusa o certificado do proxy (`net::ERR_CERT_AUTHORITY_INVALID`) e
+  `document.fonts.size` é **0**. Ou seja: todas as corridas locais destes portões mediram uma página com
+  tipos de letra de recurso, diferente da que o *runner* mede. Com o certificado ignorado à força, a medição
+  local passou a dar **118 intactas · 5 a deslizar** — exactamente os números do *runner*, contra as 120 · 3
+  de antes. Um portão de disposição cuja resposta depende de a rede ter chegado não é um portão.
+- **A barreira entrou, e NÃO chegou.** Pôs-se `await página.evaluate(() => document.fonts.ready)` a seguir a
+  cada `goto`, nos dois ficheiros. A corrida **#17** chumbou nas mesmas duas. A hipótese das fontes explicava
+  a diferença de medição — e explica — mas **não** é a causa destas duas falhas. A barreira fica porque medir
+  depois de as fontes assentarem é certo de qualquer maneira; não fica como correcção.
+- **O que os números dizem agora:** o desvio mudou de **−4376 px** (#16) para **−4688 px** (#17). Não é uma
+  diferença fixa de disposição: **varia entre corridas**. E as duas verificações que chumbam são as duas que
+  medem depois de uma espera FIXA — `waitForTimeout(900)` a seguir ao clique, e a remedição a 320px. As
+  vizinhas que esperam por uma condição («saltar para #s40 numa parte fechada: abriu=true, desvio 0px»)
+  passam sempre, no mesmo ficheiro e na mesma corrida.
+- **A causa, finalmente medida: era a VERSÃO DO MOTOR.** Os portões escolhiam o Chromium pela ordem errada —
+  primeiro um caminho fixo (`chromium-1194`), e só se esse faltasse é que perguntavam ao Playwright. Nesta
+  máquina o caminho fixo existe, no *runner* não: eu media com o **1194** e o CI media com o **1243**, em
+  silêncio, durante três corridas. E a diferença não é cosmética. O salto do item da bandeja é **animado**, e
+  no 1243 a animação demora quase o dobro:
+
+  | motor | o salto assenta aos | o portão lia aos | resultado |
+  |---|---|---|---|
+  | 1194 (esta máquina) | **814 ms** | 900 ms fixos | passava, por 86 ms |
+  | 1243 (o *runner*) | **1613 ms** | 900 ms fixos | lia a meio da animação |
+
+- **Reproduzida.** Com o portão **antigo** e o motor do *runner*, a falha sai igual nesta máquina:
+  `FALHA carregar num item leva à #s40 (desvio −4331px)` — e numa segunda corrida **−4639 px**. Varia aqui
+  como varia lá (−4376, −4688), porque ler a meio de uma animação dá o sítio por onde a página ia passar. A
+  série medida de 100 em 100 ms mostra-o inteiro:
+  `113ms:−52409 · 213ms:−45372 · 313ms:−33967 · 413ms:−20681 · 514ms:−9275 · 614ms:−2236 · 714ms:0`.
+  Os números do *runner* caem exactamente dentro desta curva.
+- **Corrigido:** (1) pergunta-se ao Playwright PRIMEIRO qual é o Chromium, nos dois ficheiros — o caminho fixo
+  passa a recurso e não a preferência, e esta máquina passa a medir com o motor do CI; (2) a verificação do
+  item da bandeja espera até ESTABILIZAR — lê de 100 em 100 ms e só decide quando duas leituras seguidas
+  coincidem, com tecto de 6 s e um piso de 400 ms (antes disso, duas leituras iguais são a página *parada* e
+  não a página *assente*). O que se afirma não mudou; mudou quando se lê.
+- **A segunda falha (o gráfico a 320px) era consequência da primeira — e eu tinha escrito aqui que não era.**
+  A medição que me levou a isso foi feita nesta máquina: quando o gráfico se mede, a página já parou
+  (`scrollY 38913 → 38913`). Só que esse «já parou» é do **1194**, onde a animação acaba aos 814 ms; no
+  *runner*, onde acaba aos 1712 ms, o salto ainda ia a meio enquanto as verificações do simulador corriam, e o
+  gráfico media-se sobre uma página em movimento. Corrigida a espera, a corrida **#19** passou as duas, e mais
+  um número mudou de sítio com elas: os blocos de código a deslizar a 1280px passaram de **4** para **5**, que
+  é o que esta máquina sempre mediu. Refutar uma hipótese com uma medição feita no ambiente errado é o mesmo
+  erro das fontes, outra vez — e por isso fica escrito.
+- **O que se fez em vez de adivinhar:** os portões passam a dizer com que números chumbam. Cada `FALHA` leva
+  agora o detalhe — qual das quatro condições falhou e as caixas de cada rótulo — e cada corrida abre a
+  declarar **que página mediu**: `motor: 153.0.8010.12 (…)` e `tipos de letra: 38 faces · loaded 10`. Uma
+  destas duas linhas teria poupado as três corridas.
+- **Fechada pela corrida #19:** os cinco *jobs* verdes, e as duas linhas que chumbavam a dizer
+  `carregar num item leva à #s40 (desvio 0px, assente aos 1712ms)` e
+  `320px · viewBox 246 · «dia 11» dentro do desenho`. Os 1712 ms do *runner* contra a espera fixa de 900 ms
+  são a medida do que estava errado.
+- **O que fica por decidir:** se o dossiê deve depender de uma CDN para a sua própria verificação. Continua a
+  valer, e agora com mais provas: sem a CDN são **120 intactas · 3 a deslizar**, com ela **118 · 5**; uma face
+  pode falhar sozinha (`IBM Plex Mono 500` deu `error` numa das medições) e só ela muda a contagem dos blocos
+  de código; e os caracteres de desenho de caixa caem sempre para o tipo monoespaçado *da máquina*, que o
+  *runner* tem e esta não. Embutir as fontes no ficheiro construído tornava o portão igual em qualquer máquina
+  e sem rede. **Decide:** tu.
+
+### Q-063 · O §25 descreve o minuto 0:20 em duas frases e não dá um número a nenhuma
+- **Onde:** o §25 e o §83 dizem *"Largas uma moeda perto dele"* e *"O vagabundo segue-te"*, e o F1-04 tem de
+  as pôr a funcionar. "Perto" não tem número, e "segue" não tem distância.
+- **Proposta:** entraram em `data/source/economy.csv` marcados em `_proposed`, pela mesma regra que levou lá os
+  da câmara (Q-057) e os da moeda (Q-061): `recruit_notice_px` **120**, `follow_distance_px` **30**,
+  `follow_spacing_px` **18**. Os dois últimos estão ancorados na fila do §50 — `queue_min_px` 30 e
+  `queue_spacing_px` 18 — **de propósito**: "a que distância uma pessoa espera por outra" já tem resposta neste
+  jogo, e ter duas seria ter duas. Não se reutilizaram as chaves do §50 porque aquelas são de quem espera vez
+  num muro; o dia em que uma mudar, a outra não tem de mudar com ela. O 120 é o limite exterior dessa mesma
+  fila, que é a distância a que o jogo já diz que alguém pertence a um sítio.
+- **Onde é que isto corre no tick:** procurar a moeda e andar atrás do rei **escrevem alvo**, e por isso são o
+  passo **4** (*"estado, alvo, intenção de movimento"*). Apanhar e ser recrutado são consequência de ter
+  **chegado**, e por isso são o passo **5**, a seguir ao movimento. O §43 não tem passo para a apanha, tal como
+  não tinha para o arco (Q-061); está escrito no `SimLoop`, que é onde a ordem vive (ADR 0020).
+- **O que a medição obrigou a mudar, e é a parte que interessa:** procurar moeda é uma varredura de unidades
+  **contra** moedas, e o custo é o produto. Medido no pior caso do §63 — 300 por recrutar, 60 moedas no chão —
+  a primeira versão dava **3871 µs só na procura**, e o tick completo **4372 µs** contra os **4000 µs** que o
+  §63 dá à simulação **inteira**. Duas correcções, ambas indicadas pelo próprio dossiê:
+  a procura passou a ser **fatiada** como a FSM (§52: *"é só a decisão que é fatiada"* — escolher para que
+  moeda se anda é uma decisão), e a apanha deixou de varrer o chão todo por unidade, porque o passo 4 já
+  escolheu a moeda e guarda-a no `target_ids` do §45, que estava na coluna à espera de quem o escrevesse.
+  O tick ficou em **971 µs**. Se voltar a crescer, a alavanca é uma grelha por X (§53) e não o `AI_SLICE`.
+- **O que fica por decidir:** (a) o §46 não tem sinal para *"deixou de ser de ninguém"* — o `unit_promoted` é
+  do **JobSystem** no catálogo, e usá-lo aqui era inventar, por isso o recrutamento anuncia-se com
+  `coin_spent(1, "recruit")`, que o §46 dá a *"Build, recrutamento"*; (b) um vagabundo por recrutar passa a
+  ter o `set_target_x` **sobreposto** de seis em seis ticks por quem procura moeda — é o que se quer, mas é uma
+  mudança de contrato para quem chamava esse método à mão. **Decide:** tu, e o primeiro playtest.
 
 ## Resolvidas na v5.2 (reversíveis)
 

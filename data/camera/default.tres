@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CameraData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/camera_data.gd" id="1_llhms"]
+
+[resource]
+script = ExtResource("1_llhms")
+lookahead_px = 120.0
+lookahead_seconds = 0.6
+follow_seconds = 0.18
+free_speed_px_s = 420.0

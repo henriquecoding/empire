@@ -1,0 +1,66 @@
+name: Defeito
+description: Alguma coisa faz o que nao devia, e sabes reproduzir.
+labels: ["defeito"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **A semente primeiro.** O §42 promete que uma semente reproduz tudo, e o
+        ecra de pausa mostra-a e deixa copiar. Um defeito de simulacao com
+        semente e tick e meia hora de trabalho; sem eles pode ser uma semana.
+
+  - type: input
+    id: semente
+    attributes:
+      label: Semente
+      description: Do ecra de pausa. Se o defeito nao e de jogo, escreve "nao aplicavel".
+    validations:
+      required: true
+
+  - type: input
+    id: quando
+    attributes:
+      label: Dia, fase e tick
+      placeholder: dia 9, NIGHT, tick 41230
+    validations:
+      required: false
+
+  - type: textarea
+    id: reproduzir
+    attributes:
+      label: Como se reproduz
+      description: Passo a passo, do arranque ate ao momento.
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que devia acontecer, e o que acontece
+      description: >
+        Se a spec diz uma coisa e o jogo faz outra, cita a seccao. Se a spec nao
+        cobre o caso, isto nao e um defeito — e uma pergunta (docs/QUESTIONS.md).
+    validations:
+      required: true
+
+  - type: input
+    id: versao
+    attributes:
+      label: Versao ou commit
+      placeholder: e964a95, ou a build de que descarregaste
+    validations:
+      required: true
+
+  - type: dropdown
+    id: onde
+    attributes:
+      label: Onde corre
+      multiple: true
+      options:
+        - Editor do Godot
+        - Export de Linux
+        - Export de Windows
+        - Steam Deck
+        - Suite de testes / CI
+    validations:
+      required: true

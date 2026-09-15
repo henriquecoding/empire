@@ -17,6 +17,22 @@ config/description="Kingdom-builder 2D em pixel art — ver AGENTS.md e docs/dos
 run/main_scene="res://scenes/boot.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
 
+[autoload]
+
+; §46: um autoload so, com os sinais declarados. Carrega antes de tudo o
+; resto porque tudo o resto comunica por ele.
+EventBus="*res://src/core/event_bus.gd"
+; ADR 0006: o relogio e puro; este autoload so lhe chama tick().
+ClockService="*res://src/core/clock_service.gd"
+; §42: o unico sitio do jogo onde ha aleatoriedade. O portao G2 guarda-o.
+RngService="*res://src/core/rng_service.gd"
+; §41/§44: os .tres por StringName. O indice deriva da arvore de data/.
+Registry="*res://src/core/registry.gd"
+; ADR 0007: store_var/get_var(false) e rename atomico. Nunca load().
+SaveService="*res://src/core/save_service.gd"
+; ADR 0020: os onze passos do §43, e o unico _physics_process da simulacao.
+SimLoop="*res://src/core/sim_loop.gd"
+
 [display]
 
 window/size/viewport_width=1280

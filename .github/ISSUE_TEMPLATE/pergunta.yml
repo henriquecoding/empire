@@ -1,0 +1,55 @@
+name: Pergunta de design
+description: A spec nao cobre o caso. Nao decidas — pergunta.
+title: "[Q] "
+labels: ["pergunta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        O AGENTS.md diz: *"Nao inventes mecanicas. Se a spec nao cobre o caso,
+        escreve a pergunta em `docs/QUESTIONS.md` e implementa a opcao mais
+        simples e mais reversivel."* Esta issue e o sitio para a **discutir**;
+        a pergunta em si tem de ficar registada no ficheiro, com numero.
+
+  - type: input
+    id: numero
+    attributes:
+      label: Numero em docs/QUESTIONS.md
+      description: Se ainda nao tem, acrescenta-a la primeiro e poe aqui o numero.
+      placeholder: Q-056
+    validations:
+      required: true
+
+  - type: textarea
+    id: pergunta
+    attributes:
+      label: A pergunta
+      description: Uma pergunta, nao um pedido de funcionalidade.
+    validations:
+      required: true
+
+  - type: textarea
+    id: onde
+    attributes:
+      label: Onde e que a spec fica em silencio
+      description: As seccoes que se leram e que nao resolvem o caso.
+    validations:
+      required: true
+
+  - type: textarea
+    id: entretanto
+    attributes:
+      label: O que se fez entretanto
+      description: >
+        A opcao mais simples e mais reversivel, e porque e reversivel. Se
+        bloqueaste em vez de implementar, diz isso.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: adr
+    attributes:
+      label: Se isto fechar
+      options:
+        - label: A decisao vira ADR em docs/adr/ antes de virar codigo ou dados
+          required: true

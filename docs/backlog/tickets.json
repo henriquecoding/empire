@@ -95,7 +95,8 @@
   "estado": "feito",
   "horas": "0,5",
   "notas": [
-   "A §70 resolveu o conflito de caminho: src/sim/band.gd, senão o portão G1 chumba no dia 1."
+   "A §70 resolveu o conflito de caminho: src/sim/band.gd, senão o portão G1 chumba no dia 1.",
+   "O contrato era mais forte do que o teste: o 'Feito' dizia que o aéreo não colide com o subsolo e o teste só comparava constantes. O F0-10 fechou a lacuna com física."
   ]
  },
  "F0-06": {
@@ -111,8 +112,9 @@
   "estado": "parcial — falta o GameClock e o ClockService",
   "horas": "3,5",
   "notas": [
-   "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload de trinta linhas que lhe chama tick().",
-   "Parcial a 14/09: o ClockData existe (src/sim/data/clock_data.gd e data/economy/clock.tres) e os testes de design já o leem. Os dois ficheiros do relógio continuam por escrever."
+   "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload que lhe chama tick().",
+   "O ticket dizia 'feito' e nenhum dos dois existia na árvore recuperada — a mesma perda das nove cenas de segmento (Q-048). Reescritos a 15/09/2026.",
+   "night_survived fica por emitir: precisa de deaths e walls_lost, que ainda ninguém conta. F1-12 e F1-15."
   ]
  },
  "F0-07": {
@@ -124,11 +126,12 @@
   "depende": "F0-01",
   "feito": "Sinais declarados, fila e flush; o portão G3 deixa de estar saltado",
   "fora": "Emissores — entram com cada sistema.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "3",
   "notas": [
-   "O G3 (tests/architecture_test.gd) está saltado à espera deste ticket.",
-   "Q-035: há sinais no §30 que não estão no catálogo da §46."
+   "O G3 (tests/architecture_test.gd) deixou de estar saltado: o skip caiu neste ticket.",
+   "Q-035 fechada pela §46: o test_o_catalogo_e_fechado chumba se um sinal do §30 voltar.",
+   "Q-056 aberta: a §46 dá a carga de cada sinal mas não os tipos."
   ]
  },
  "F0-08": {
@@ -141,8 +144,14 @@
   "depende": "F0-05",
   "feito": "Não treme com movimento subpixel; arredonda a píxel inteiro; respeita os limites",
   "fora": "Parallax — entra com o ART-03.",
-  "estado": "por fazer",
-  "horas": "3"
+  "estado": "feito",
+  "horas": "3",
+  "notas": [
+   "Q-057 (nova): o dossiê dá UM número de câmara — os 2 s do regresso da câmara livre (§24). Os outros quatro entraram em data/source/camera.csv marcados _proposed, porque o I4 manda que o que se afina em playtest viva em data/.",
+   "Tabela 28: camera.csv → data/camera/default.tres, com CameraData. A câmara não tem um único número dentro do script.",
+   "Arredonda sempre para baixo, como o parallax do §59 — uma só regra de arredondamento no projeto.",
+   "Nada de Y: o mundo é uma linha e o enquadramento vertical é fixo (§11)."
+  ]
  },
  "F0-09": {
   "title": "Spike: decidir a escala e fechar a ADR 0001",
@@ -169,8 +178,14 @@
   "depende": "F0-05, F0-08",
   "feito": "scenes/tests/bands.tscn: sobe, desce, e o aéreo atravessa o subsolo sem colidir",
   "fora": "Arte, animação, som.",
-  "estado": "por fazer",
-  "horas": "2"
+  "estado": "feito",
+  "horas": "2",
+  "notas": [
+   "A cena tem três colunas, uma por faixa, e cada uma atravessa as três alturas de faixa de propósito — só assim 'o aéreo atravessa o subsolo' é uma medição e não uma frase.",
+   "src/world/band_layers.gd é o único sítio onde collision_layer e collision_mask se escrevem. A regra que faz a matriz funcionar não estava escrita como fórmula em lado nenhum: duas coisas só colidem se partilharem o bit da faixa, e o terreno também tem faixa.",
+   "Q-058 (nova): a tabela do §53 contradiz-se na célula das moedas — L_SURFACE colide com moedas, L_COIN colide com nada. Manda o L_COIN, que traz a razão escrita.",
+   "O teste de física foi provado a falhar: partindo só o apply_body (a matriz pura fica certa), chumba com 'corpo 0 contra coluna 2: bateu=true, esperado=false'."
+  ]
  },
  "F0-11": {
   "title": "Registry e boot.tscn",
@@ -182,10 +197,13 @@
   "depende": "F0-01",
   "feito": "Carregamento por StringName; boot.tscn é a cena principal do project.godot",
   "fora": "O save — é o F0-13.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "4",
   "notas": [
-   "ADR 0005."
+   "ADR 0005: boot.tscn carrega o Registry, fixa o idioma e semeia o RngService antes de entregar.",
+   "O índice DERIVA da árvore de data/: a tabela é o caminho da pasta ('units', 'crown/impulses'). O _tables.csv não serve de fonte em runtime porque data/source/ tem .gdignore e não existe no export — o teste é que confere os dois, a correr do código-fonte.",
+   "Os ids não são únicos entre tabelas (boar é montaria e é animal); por isso o índice é por tabela e não global.",
+   "No export os .tres vêm listados como .tres.remap. Sem os tratar, o índice ficava cheio no editor e vazio no executável — verificado: 202 recursos nos dois."
   ]
  },
  "F0-12": {
@@ -197,10 +215,12 @@
   "depende": "F0-11",
   "feito": "test_seed_reproduz passa; o portão G2 recusa RandomNumberGenerator fora deste serviço",
   "fora": "Consumidores de aleatoriedade — entram com cada sistema.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "2",
   "notas": [
-   "Q-020: a §42 semeava com XOR de constantes que não são hexadecimais; o código usa hash(str(seed) + nome). Manda o código."
+   "Q-020 aplicada: as sementes vêm de hash(str(seed) + nome), não do XOR com constantes não-hexadecimais da §42.",
+   "Os consumidores NÃO recebem o gerador — pedem o valor nomeando o fluxo (int_range, float_range, unit_float, escolher). Chamar randi_range num gerador devolvido chumbaria no próprio G2.",
+   "Só depende do F0-11 na ordem sugerida; não usa o Registry."
   ]
  },
  "F0-13": {
@@ -213,11 +233,14 @@
   "depende": "F0-11",
   "feito": "Gravar e carregar um estado vazio; rotação de três slots; FileAccess.store_var/get_var(false)",
   "fora": "Migrações de versão — entram quando houver uma segunda versão.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
    "ADR 0007 e Q-036: nunca ResourceLoader num save. Só tipos base, validados campo a campo.",
-   "O teste D-14 da §84 já guarda a regra para o estado da Parte XIII."
+   "Portão G6 novo (tools/lint_rules.gd, lint_sim.gd, architecture_test.gd): a regra estava escrita em três sítios e não tinha portão nenhum. Chumba com load(, com store_var/get_var sem o false explícito, e se o ficheiro for apagado.",
+   "Medido: com allow_objects desligado a descodificação falha INTEIRA e sai Nil; com ele ligado sai o dicionário com um Object lá dentro. As duas metades estão no teste.",
+   "O GameState guarda day e clock_elapsed, não phase e phase_elapsed como a §45 escreve — é a consequência da ADR 0006, que já escolheu o relógio do §30. Guardar os dois seria guardar duas vezes a mesma informação.",
+   "As colecções da §45 (units, creatures, buildings, rot, world, debt) entram com os sistemas que as escrevem. Um campo que ninguém escreve é um campo que ninguém sabe migrar."
   ]
  },
  "F0-14": {
@@ -230,11 +253,15 @@
   "depende": "F0-10",
   "feito": "Cinco slots empilhados; o shader faz os quatro trabalhos do §22",
   "fora": "Arte definitiva dos slots — é o ART-01.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
-   "Q-023 fechada: um ficheiro por corpo com camadas; exportação por camada.",
-   "Q-024 continua aberta: a camada Equipments é o slot head?"
+   "§60 fixa DOIS uniforms e só dois: lut e mix. Um shader, quatro trabalhos — hora do dia, variante de povo, encantamento e estado são a mesma rampa com quantidades diferentes. Há teste que chumba se aparecer um terceiro.",
+   "`mix` é uma função da GLSL e mesmo assim é aceite como nome de uniform pelo Godot 4.6 — verificado. A interpolação está escrita à mão na mesma: chamar mix() com um uniform chamado mix no mesmo âmbito compila, mas ninguém quer ler isso.",
+   "A rampa em si é do ART-02 e não existe: sem LUT ligada, mix fica a zero e o sprite sai como entrou. O shader nunca é requisito para ver arte.",
+   "A largura da sombra vem de UnitData.shadow_width, e há teste com duas unidades de larguras diferentes — senão o campo obrigatório do §58 não servia para nada.",
+   "O desfasamento da animação vem do fluxo VISUAL, e o teste prova que os cinco fluxos deterministas ficam onde estavam: uma variante de animação não pode mexer no que a semente reproduz.",
+   "Q-024 continua aberta (a camada Equipments é o slot head?) — é do ART-01."
   ]
  },
  "F0-15": {
@@ -262,10 +289,15 @@
   "depende": "F0-07",
   "feito": "Largar 10 moedas a 60 fps sem picos; a capacidade do saco vem de units.csv",
   "fora": "Construir com a moeda — é o F1-06. A apanha por colisão: a proposta é por distância.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
-   "coin_pickup_px está marcado em _proposed no economy.csv: a apanha é por distância e não por colisão, e mede-se aqui."
+   "Q-061 (nova): o dossiê diz que a moeda é física e dá um só número para ela (coin_pickup_px). A gravidade, o impulso e a dispersão entraram no economy.csv marcados _proposed, pela mesma regra do I4 que levou lá os da câmara.",
+   "A apanha é por DISTÂNCIA e não por colisão, como o ticket propunha e o §53 justifica. Medido: raio 12 px, e a dispersão do arco espalha ±20 px para que duas moedas largadas juntas não se apanhem como uma só.",
+   "Euler semi-implícito — a velocidade antes da posição. A ordem inversa ultrapassa o ápice (26 px medidos onde a conta contínua dá 23) e acumula energia. Encontrado por um teste a falhar.",
+   "A moeda corre no passo 5 do §43, com o movimento: o §43 não tem passo para a moeda, e o passo 8 lê 'moedas largadas', logo precisa delas já pousadas.",
+   "O sorteio do desvio vive no SimLoop e não no sistema: a simulação não pode chamar o RngService (§70) e o portão G2 chumbaria um randf_range lá dentro. Fluxo `economy`, porque onde a moeda cai afecta o jogo.",
+   "Medido: 10 moedas no ar custam 0,9 µs por tick."
   ]
  },
  "F1-02": {
@@ -294,8 +326,15 @@
   "depende": "F1-02",
   "feito": "300 unidades a 60 fps no profiler, com o orçamento por passagem do §63",
   "fora": "IA de decisão — é o F1-05. Combate — é o F1-07.",
-  "estado": "por fazer",
-  "horas": "10"
+  "estado": "feito",
+  "horas": "10",
+  "notas": [
+   "Q-059 (nova): o §30 escreve o UnitSystem como Node2D em src/actors/; o §41, o §43 e o §52 põem-no na simulação. Manda a especificação, pelo precedente da Q-035 — e o portão G1 chumbaria um Node2D em src/sim/.",
+   "Q-060 (nova): o §45 declara Array[UnitRec]; o título deste ticket diz arrays paralelos. As colunas são a verdade e o UnitRec não é criado — 300 RefCounted é exactamente o custo por unidade que o §63 orça para não existir. O save leva as colunas, que já são tipos base.",
+   "remove() troca com a última em vez de deslocar tudo, e por isso MUDA a ordem das colunas. Nada que afecte a simulação pode iterar por índice — itera-se por id crescente (§42). Está escrito no código.",
+   "A morte NÃO é fatiada. Encontrado por um teste a falhar: com a morte dentro da fatia, uma unidade com vida a zero continuava a agir até seis ticks — o defeito que o §43 descreve por palavras suas.",
+   "Medido nesta máquina (não no Deck): FSM 81 µs e movimento 42 µs por passagem com 300 unidades, contra os orçamentos de 800 e 1000 µs do §63. O número fica no registo do CI para ser comparado no Deck."
+  ]
  },
  "F1-04": {
   "title": "Recrutar um vagabundo por uma moeda; ele segue-te",

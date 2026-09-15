@@ -26,3 +26,4 @@ amargueiros,res://src/sim/data/amargueiro_data.gd,res://data/rot/amargueiros/{id
 offers,res://src/sim/data/offer_data.gd,res://data/rot/offers/{id}.tres,rows,,"§75 — as doze ofertas, com a gramática de requires"
 titles,res://src/sim/data/title_data.gd,res://data/lore/titles/{id}.tres,rows,,§76 — os nove feitos que dão nome
 chapters,res://src/sim/data/chapter_data.gd,res://data/world/chapters/{id}.tres,rows,,§77 — os dez Capítulos
+camera,res://src/sim/data/camera_data.gd,res://data/camera/{id}.tres,rows,,§19 §24 §59 — a camara como dados; um so numero vem do dossie (Q-057)
