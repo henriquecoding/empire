@@ -321,8 +321,15 @@
   "depende": "F1-02",
   "feito": "300 unidades a 60 fps no profiler, com o orçamento por passagem do §63",
   "fora": "IA de decisão — é o F1-05. Combate — é o F1-07.",
-  "estado": "por fazer",
-  "horas": "10"
+  "estado": "feito",
+  "horas": "10",
+  "notas": [
+   "Q-059 (nova): o §30 escreve o UnitSystem como Node2D em src/actors/; o §41, o §43 e o §52 põem-no na simulação. Manda a especificação, pelo precedente da Q-035 — e o portão G1 chumbaria um Node2D em src/sim/.",
+   "Q-060 (nova): o §45 declara Array[UnitRec]; o título deste ticket diz arrays paralelos. As colunas são a verdade e o UnitRec não é criado — 300 RefCounted é exactamente o custo por unidade que o §63 orça para não existir. O save leva as colunas, que já são tipos base.",
+   "remove() troca com a última em vez de deslocar tudo, e por isso MUDA a ordem das colunas. Nada que afecte a simulação pode iterar por índice — itera-se por id crescente (§42). Está escrito no código.",
+   "A morte NÃO é fatiada. Encontrado por um teste a falhar: com a morte dentro da fatia, uma unidade com vida a zero continuava a agir até seis ticks — o defeito que o §43 descreve por palavras suas.",
+   "Medido nesta máquina (não no Deck): FSM 81 µs e movimento 42 µs por passagem com 300 unidades, contra os orçamentos de 800 e 1000 µs do §63. O número fica no registo do CI para ser comparado no Deck."
+  ]
  },
  "F1-04": {
   "title": "Recrutar um vagabundo por uma moeda; ele segue-te",

@@ -139,3 +139,27 @@ func test_parado_nao_anda() -> void:
 	# porque e assim que um teste corre um dia em milissegundos.
 	assert_bool(SimLoop.running()).is_false()
 	assert_int(SimLoop.state.tick).is_equal(tick)
+
+
+func test_as_tropas_andam_pelo_ciclo_e_nao_por_alguem_as_empurrar() -> void:
+	# Os passos 4 e 5 do §43 ligados: o SimLoop e que faz a FSM decidir e o
+	# movimento acontecer. Sem isto, o UnitSystem era uma classe que ninguem
+	# chamava — e o tipo de coisa de que so se da conta tarde.
+	SimLoop.start(SEMENTE)
+	var vagabundo: UnitData = Registry.entry(&"units", &"vagrant")
+	var unit_id := SimLoop.units.spawn(SimLoop.state, vagabundo, 0, 0.0)
+	SimLoop.units.set_target_x(unit_id, 130.0)
+	var i := SimLoop.units.index_of(unit_id)
+
+	var estados: Array[int] = []
+	var ouvinte := func(quem: int, _de: int, para: int) -> void:
+		if quem == unit_id:
+			estados.append(para)
+	EventBus.unit_state_changed.connect(ouvinte)
+
+	_correr(10.0)  # 130 px a 26 px/s sao cinco segundos; dez chegam e sobram
+
+	assert_float(SimLoop.units.xs[i]).is_equal(130.0)
+	# Saiu a andar e acabou a trabalhar, e o EventBus soube das duas coisas.
+	assert_array(estados).is_equal([UnitFsm.State.GOTO, UnitFsm.State.WORK])
+	EventBus.unit_state_changed.disconnect(ouvinte)

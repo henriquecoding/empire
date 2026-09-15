@@ -350,6 +350,32 @@
   `test_ninguem_apanha_moedas_por_colisao`.
 - **Bloqueia:** nada hoje. **Decide:** o F1-01, que é quem primeiro larga uma moeda a sério.
 
+### Q-059 · O `UnitSystem` do §30 é um `Node2D`; o do §41 e do §43 é simulação
+- **Onde:** o §30 escreve `src/actors/unit_system.gd` com `class_name UnitSystem extends Node2D` e sprites lá
+  dentro. O §41 põe os sistemas em `src/sim/systems/`, o §43 lista `UnitSystem — FSM` como o **passo 4 da
+  simulação**, e o §52 descreve-o sem uma única referência a nós.
+- **Proposta:** a especificação manda, pelo precedente da **Q-035** (*"a §46 manda (§39)"*): o §19 diz de si
+  próprio que é o esboço e que a especificação está nas §39–§67. O `UnitSystem` é puro e vive em
+  `src/sim/systems/`; o portão **G1** chumbaria de imediato um `Node2D` ali. A camada de apresentação é o
+  `UnitView` (§58, F0-14), que é outra coisa e já existe. O próprio §30 fecha com a regra que isto aplica:
+  *"os sistemas puros devolvem pedidos; só a camada de nós age"*.
+- **Bloqueia:** nada. **Decide:** confirmação tua, ou uma ADR se preferires o contrário.
+
+### Q-060 · `Array[UnitRec]` no §45 contra as colunas do F1-03
+- **Onde:** o §45 declara `var units: Array[UnitRec] = []` e dá o `UnitRec` como classe; o título do **F1-03**
+  é *"UnitSystem com arrays paralelos"*, e o §30 explica porquê: *"as unidades são linhas em arrays paralelos,
+  não nós com script. É o que permite 300 unidades a 60 fps."*
+- **O que diverge:** um `UnitRec` por unidade são 300 objetos `RefCounted` — exatamente o custo por unidade que
+  o §63 orça para não existir.
+- **Proposta:** as colunas são a verdade, e o `UnitRec` **não é criado**. O `UnitSystem` guarda `PackedArrays`
+  com um campo por coluna, e o índice `i` é a mesma unidade em todas. O save leva as colunas, que já são tipos
+  base e passam pelo canal da ADR 0007 sem conversão nenhuma — há teste. O `UnitRec` do §45 continua a ser a
+  descrição do que uma unidade **é**; deixa de ser a descrição de como é guardada.
+- **O que isto custa, e está escrito no código:** `remove()` troca com a última em vez de deslocar tudo, e por
+  isso **muda a ordem das colunas**. Nada que afete a simulação pode iterar por índice e esperar estabilidade —
+  itera-se por id crescente, que é o que a §42 já manda.
+- **Bloqueia:** nada. **Decide:** tu, e antes do F1-14 (o save do estado a sério).
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

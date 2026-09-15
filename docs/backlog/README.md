@@ -34,7 +34,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 |---|---|---|---|
 | [F1-01](F1-01.md) | Moeda física: largar, arco, queda, apanhar, saco | F0-07 | por fazer |
 | [F1-02](F1-02.md) | UnitData e as seis unidades do §07 | F0-03 | feito |
-| [F1-03](F1-03.md) | UnitSystem com arrays paralelos e time-slicing | F1-02 | por fazer |
+| [F1-03](F1-03.md) | UnitSystem com arrays paralelos e time-slicing | F1-02 | feito |
 | [F1-04](F1-04.md) | Recrutar um vagabundo por uma moeda; ele segue-te | F1-01, F1-03 | por fazer |
 | [F1-05](F1-05.md) | JobBoard (prompt 4 da §29) | F1-03 | por fazer |
 | [F1-06](F1-06.md) | Muro: cinco níveis, dois caminhos, slots de contacto | F1-05 | por fazer |

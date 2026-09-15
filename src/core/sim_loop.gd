@@ -14,6 +14,9 @@ extends Node
 ## aqui; ninguem guarda uma copia.
 var state: GameState
 
+## As tropas, em colunas (§52). Vive aqui porque e o tick que a faz andar.
+var units: UnitSystem
+
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
 var autosave_enabled: bool = true
 
@@ -22,6 +25,7 @@ var _running: bool = false
 
 func _ready() -> void:
 	state = GameState.new()
+	units = UnitSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
 
 
@@ -29,6 +33,7 @@ func _ready() -> void:
 func start(semente: int) -> void:
 	state = GameState.new()
 	state.seed = semente
+	units = UnitSystem.new()
 	RngService.configure(semente)
 	ClockService.start()
 	_running = true
@@ -61,8 +66,11 @@ func step(delta: float) -> void:
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	# 2 · RotSystem — todo o tick .......................... F1-08
 	# 3 · JobSystem — uma vez por fase ..................... F1-05
-	# 4 · UnitSystem, FSM — 1/6 das unidades por tick ...... F1-03
-	# 5 · MovementSystem — todo o tick ..................... F1-03
+	for mudanca in units.tick_decisions(state.tick):  # 4 · FSM, 1/6 por tick
+		EventBus.queue(
+			&"unit_state_changed", [mudanca[&"unit_id"], mudanca[&"from"], mudanca[&"to"]]
+		)
+	units.tick_movement(delta)  # 5 · MovementSystem — todo o tick
 	# 6 · CombatSystem — todo o tick ....................... F1-07
 	# 7 · EconomySystem — uma vez por fase ................. F1-10
 	# 8 · BuildSystem — todo o tick ........................ F1-01
