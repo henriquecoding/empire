@@ -24,6 +24,8 @@ config/features=PackedStringArray("4.6", "Mobile")
 EventBus="*res://src/core/event_bus.gd"
 ; ADR 0006: o relogio e puro; este autoload so lhe chama tick().
 ClockService="*res://src/core/clock_service.gd"
+; §42: o unico sitio do jogo onde ha aleatoriedade. O portao G2 guarda-o.
+RngService="*res://src/core/rng_service.gd"
 
 [display]
 

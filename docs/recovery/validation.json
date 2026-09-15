@@ -11,7 +11,7 @@
  "original_csv_unchanged": 27,
  "proposed_fields": 591,
  "proposed_phase_0_to_2": 268,
- "gdunit_discovered": 59,
+ "gdunit_discovered": 70,
  "gdunit_passed": 37,
  "gdunit_skipped": 5,
  "gdunit_failures": 0,
