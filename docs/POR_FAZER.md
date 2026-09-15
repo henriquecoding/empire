@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **31 feitos** e **22 por fazer** |
+| Tickets | **53**, dos quais **32 feitos** e **21 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 15 de 17 — o F1-01 ao F1-15, inteiros. Faltam o F1-16 e o F1-17 |
-| Suite | 335 casos, 325 a passar, 10 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 16 de 17 — o F1-01 ao F1-16, inteiros. Falta o F1-17 |
+| Suite | 336 casos, 328 a passar, 8 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 65 das 66 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
+| Perguntas em aberto | 65 das 67 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07, a Q-075 com o F1-16 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -40,26 +40,34 @@ que faltam.
 
 ---
 
-## Fase 1 — 2 por fazer, e os dois bloqueados
+## Fase 1 — 1 por fazer
+
+**O critério de saída da Fase 1 está medido e passa.** O §66 pede *"sobreviver 10
+dias é possível e não é trivial"*, e as duas metades têm teste: a defesa do décimo
+dia — um Bastião, a muralha de ferro no outro flanco, as duas torres e doze
+arqueiros — aguenta dez noites inteiras com o castelo-árvore intacto; a receita do
+§07 — estacaria, seis arqueiros, sem torre — cai ao terceiro dia, e os sete
+degraus entre uma e outra caem todos.
 
 | | O que é | Porque está parado |
 |---|---|---|
-| **F1-16** | Afinar até sobreviver dez dias ser possível e não trivial | **Q-075**: metade do critério mede-se e passa — uma defesa aguenta dez noites inteiras. A outra metade, *"não é trivial"*, **não é afinável**: só o `WallData` tem `contact_slots`, e uma obra com zero slots não recebe atacante nenhum. **Nada consegue derrubar o núcleo** — nem os Brutos do dia 8 sem muro nenhum. Não há número em `data/` que torne difícil um jogo que não se pode perder. |
 | F1-17 | Arte da mancha: a Podridão e a candeia | **ART-02**: a paleta mestra e o LUT. Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã. |
 
-O instrumento dos dois critérios está pronto e corre-se sem o motor aberto:
+O instrumento dos dois critérios corre-se sem o motor aberto:
 
 ```bash
 godot --headless --path . scenes/tests/night_test.tscn   # §07: dez noites, com torre e sem ela
-godot --headless --path . scenes/tests/dez_dias.tscn     # §66: oito defesas, dez dias cada
+godot --headless --path . scenes/tests/dez_dias.tscn     # §66: nove defesas, dez dias cada
 ```
 
-E o que as duas tabelas dizem hoje está escrito, não calado: a **Q-073** (o §07
-monta o microteste com seis arqueiros e a estacaria do §10 só tem um posto de
-guarda) e a **Q-075** (o jogo não se pode perder). Os cinco testes
-correspondentes estão saltados com essas razões em `tests/noite_do_07_test.gd` e
-`tests/dez_dias_test.gd` — **nenhum valor de `data/` foi mexido** para os calar,
-que é o que o `AGENTS.md` manda.
+E o que as duas tabelas ainda não dizem está escrito, não calado: a **Q-073** (o
+§07 monta o microteste com seis arqueiros e a estacaria do §10 só tem um posto de
+guarda — e o nível 1 é *"a base comum aos dois caminhos"*, por isso não é
+afinável), a **Q-074** (os dez dias custam 9 a 11 s conforme o *runner*, e o §66
+pede menos de 10) e a **Q-076** (o Alado atravessa a muralha, pousa no castelo e
+não faz nada — é do F1-09). Os três testes correspondentes estão saltados com
+essas razões em `tests/noite_do_07_test.gd` — **nenhum valor de `data/` foi
+mexido** para os calar, que é o que o `AGENTS.md` manda.
 
 ---
 
@@ -152,16 +160,15 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **65 perguntas em aberto** em `docs/QUESTIONS.md`, de 66 escritas — a Q-006
-  fechou com o F1-07. As doze mais recentes (Q-064 a Q-075) são as que encher o
-  tick e medir a noite obrigaram a fazer. A maior é a **Q-075**: só o `WallData`
-  tem `contact_slots`, e uma obra com zero slots não recebe atacante nenhum — o
-  **jogo não se pode perder**, e é isso que bloqueia o F1-16. As outras quatro
-  que valem a pena ler primeiro: a Q-068 (o §25 diz três Rastejantes na noite 1 e
-  a massa do §74 dá sete), a Q-072 (o §06 dá três estados de risco ao rasto e o
-  §49 só escreve dois), a **Q-073** (o §07 monta o microteste com seis arqueiros
-  e o muro do §10 só tem um posto de guarda) e a **Q-074** (o §66 pede dez dias
-  em dez segundos, e o tick custa o dobro disso).
+- **65 perguntas em aberto** em `docs/QUESTIONS.md`, de 67 escritas — a Q-006
+  fechou com o F1-07 e a Q-075 com o F1-16. As treze mais recentes (Q-064 a
+  Q-076) são as que encher o tick, medir a noite e afinar os dez dias obrigaram a
+  fazer. As quatro que valem a pena ler primeiro: a **Q-076** (o Alado atravessa
+  a muralha, pousa no castelo e não faz nada — e por isso os dias 4 a 6 do §07
+  não custam nada a ninguém), a **Q-073** (o §07 monta o microteste com seis
+  arqueiros e o muro do §10 só tem um posto de guarda), a Q-068 (o §25 diz três
+  Rastejantes na noite 1 e a massa do §74 dá sete) e a Q-072 (o §06 dá três
+  estados de risco ao rasto e o §49 só escreve dois).
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 

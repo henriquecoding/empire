@@ -10,9 +10,9 @@
 # pasta.
 #
 # Nenhum numero de balanceamento esta aqui: a vida, os postos e os slots de
-# contacto do muro saem de walls.csv, e os da torre de buildings.csv. O que ESTA
-# aqui sao posicoes — a resposta a "onde", que o §21 da ao segmento — e sao as
-# do greybox, para que o que se mede continue a ser sobre a mesma regiao.
+# contacto do muro saem de walls.csv, e os da torre e do nucleo de buildings.csv.
+# O que ESTA aqui sao posicoes — a resposta a "onde", que o §21 da ao segmento —
+# e sao as do greybox, para que o que se mede continue a ser sobre a mesma regiao.
 extends RefCounted
 
 const MEU_IMPERIO := 1
@@ -43,16 +43,21 @@ const POSTO_TORRE := &"tower"
 
 ## Monta a regiao no SimLoop. `flanco` e o lado por onde a mancha vem esta noite;
 ## `ambos` poe muro nos dois, que e o que dias seguidos obrigam — cada noite
-## sorteia o seu lado (§51); `nivel` e o degrau do §10 em que a muralha ja esta,
-## porque dez dias de jogo sao dez dias a subi-la e o F1-16 tem de poder pôr o
-## muro onde o jogador o teria posto.
+## sorteia o seu lado (§51); `niveis` sao os degraus do §10 em que cada muralha
+## ja esta, porque dez dias de jogo sao dez dias a subi-la e o F1-16 tem de poder
+## pôr o muro onde o jogador o teria posto.
+##
+## Um degrau por flanco, e nao um so para os dois: o Bastiao e "unico por
+## imperio" (§10), e uma tabela que so soubesse pôr o mesmo degrau dos dois lados
+## media sempre uma defesa que o jogo nao deixa ter. `niveis[0]` e a esquerda,
+## `niveis[1]` a direita; com um valor so, os dois lados levam-no.
 static func build(
 	flanco: int,
 	arqueiros: int,
 	lanceiros: int,
 	torres: Array[StringName],
 	ambos: bool,
-	nivel: int = 1
+	niveis: PackedInt32Array
 ) -> void:
 	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
@@ -68,10 +73,17 @@ static func build(
 
 	_nucleo()
 	for lado in [-1, 1] if ambos else [flanco]:
-		_muro(lado, nivel)
+		_muro(lado, _degrau(niveis, lado))
 		for id in torres:
 			_torre(lado, id)
 	_gente(flanco, arqueiros, lanceiros)
+
+
+## O degrau deste flanco. Esquerda primeiro, porque e o lado negativo do eixo.
+static func _degrau(niveis: PackedInt32Array, lado: int) -> int:
+	if niveis.is_empty():
+		return 1
+	return niveis[0] if lado < 0 or niveis.size() == 1 else niveis[1]
 
 
 ## O castelo-arvore (§10): nasce de pe, nao se constroi, e se cair cai a partida.
@@ -126,6 +138,7 @@ static func _vaga(dados: BuildingData, x: float) -> BuildSlot:
 	vaga.costs = PackedInt32Array([dados.cost])
 	vaga.works = PackedFloat32Array([dados.build_work])
 	vaga.healths = PackedInt32Array([dados.max_health])
+	vaga.contacts = PackedInt32Array([dados.contact_slots])
 	return vaga
 
 
@@ -147,11 +160,16 @@ static func _gente(flanco: int, arqueiros: int, lanceiros: int) -> void:
 	_tropas(&"spearman", lanceiros, flanco)
 
 
-## Atras do muro, espacadas. Ficam do lado ameacado porque e a proximidade que
-## manda na atribuicao de posto (§52): postas do outro lado, o quadro dava-lhes
-## o muro errado e o §07 media uma noite sem arqueiros.
+## Atras do muro, espacadas PARA DENTRO. Ficam do lado ameacado porque e a
+## proximidade que manda na atribuicao de posto (§52): postas do outro lado, o
+## quadro dava-lhes o muro errado e o §07 media uma noite sem arqueiros.
+##
+## O sentido do espacamento nao e detalhe: a fila comecava a 55 px do muro e
+## afastava-se dele, e por isso a quarta tropa em diante nascia do lado DE FORA
+## — no caminho da mancha, e nao atras da muralha que a devia proteger. Com as
+## seis do §07 ja acontecia; com as doze da defesa do decimo dia, metade.
 static func _tropas(id: StringName, quantos: int, flanco: int) -> void:
 	var dados := Registry.entry(&"units", id) as UnitData
 	var base := SimLoop.core_x + flanco * TROPAS_X
 	for k in quantos:
-		SimLoop.units.spawn(SimLoop.state, dados, MEU_IMPERIO, base + flanco * k * ENTRE_TROPAS)
+		SimLoop.units.spawn(SimLoop.state, dados, MEU_IMPERIO, base - flanco * k * ENTRE_TROPAS)

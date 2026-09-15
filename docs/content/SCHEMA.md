@@ -109,6 +109,7 @@ Script `src/sim/data/building_data.gd` · layout `rows` · 25 linha(s) · §06 �
 | `job_slots` | int | Economia | postos que publica (§20) |
 | `craft` | StringName | Economia | oficio que trabalha aqui |
 | `max_health` | int | Construcao |  |
+| `contact_slots` | int | Construcao |  |
 | `build_work` | float | Construcao | segundos de construtor presente (§55) |
 | `width_px` | int | Construcao |  |
 | `upgrade_to` | StringName | Construcao |  |

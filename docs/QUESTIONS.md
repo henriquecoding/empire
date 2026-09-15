@@ -621,13 +621,21 @@
   quem não tem posto recolhe ao núcleo — a 500 px do muro, com 200 px de alcance. A noite inteira é decidida
   por **um** arqueiro. A torre de arqueiros dá mais dois postos, e é isso que a tabela de cima mede: *"a torre
   não dá dano — dá certeza"* (§07) está certo, e é a única coisa desta medição que está.
+- **O que o F1-16 lhe acrescentou, e não fechou:** com o núcleo já atacável (Q-075) a segunda linha mudou de
+  razão mas não de resposta — uma noite 8 **sozinha** continua a acabar com o castelo-árvore de pé, porque o
+  muro cai tarde e o que resta da noite não chega para os 1000 de vida. Dez noites seguidas já chegam, e é
+  isso que o `tests/dez_dias_test.gd` mede. A primeira linha está como estava.
+- **Porque é que o F1-16 não a podia fechar, e não é falta de vontade:** a opção (b) é subir os postos de
+  guarda, e no nível 1 não há onde. O §10 escreve *"o nível 1 é a base comum aos dois caminhos"*, e os postos
+  do caminho A desse nível estão **na tabela do dossiê** — mexê-los é mexer no dossiê, não em `_proposed`. O
+  `guard_posts_b` está proposto, mas pô-lo acima de A no nível 1 desfazia a base comum.
 - **Decide:** tu, e é uma de três — (a) a receita do §07 passa a incluir a torre, e o "sem torre no dia 8"
-  passa a ser a variante; (b) os postos de guarda do §10 sobem no nível 1; (c) um arqueiro sem posto passa a
-  disparar de onde está, e aí a §52 ganha uma regra que hoje não tem. O `AGENTS.md` proíbe mexer no número
-  para calar o teste, e por isso nada foi mexido: os dois testes do §07 estão **saltados com esta razão** em
-  `tests/noite_do_07_test.gd`. É o F1-16.
+  passa a ser a variante; (b) os postos de guarda do §10 sobem no nível 1, e aí é o dossiê que muda; (c) um
+  arqueiro sem posto passa a disparar de onde está, e aí a §52 ganha uma regra que hoje não tem. O `AGENTS.md`
+  proíbe mexer no número para calar o teste, e por isso nada foi mexido: os dois testes do §07 estão
+  **saltados com esta razão** em `tests/noite_do_07_test.gd`.
 
-### Q-074 · O §66 quer dez dias em dez segundos, e o tick custa o dobro disso
+### Q-074 · O §66 quer dez dias em dez segundos, e o tick fica no fio da navalha
 - **Onde:** o §66 dá ao bloco *"Uma noite completa"* o critério *"corre em headless com delta fixo, **dez dias
   em menos de dez segundos**"*. Dez dias são 3600 s de jogo a 30 Hz — **108 000 ticks** —, o que dá um
   orçamento de **92 µs por tick**.
@@ -643,47 +651,70 @@
   verificações de tipo do GDScript e os `assert` ligados; a mesma medição sobre um *export* de release é o
   primeiro passo, e não custa nada senão correr o CI. Se a diferença não chegar, o §66 é que escolhe: ou o
   orçamento sobe, ou o tick emagrece — e aí é trabalho de simulação, com ticket próprio.
+- **O que o F1-16 voltou a medir:** noutro *runner* headless, com o mesmo binário de editor, os mesmos dez
+  dias custam **9,4 s numa corrida e 11,1 s na seguinte** — o orçamento do §66 passou a estar dentro da
+  variação da máquina. Não é uma melhoria do tick: é a mesma medição noutro sítio, e é exactamente a razão
+  para o teste continuar saltado. Um portão que responde à carga do *runner* e não ao código chumba a quem
+  não mexeu em nada.
 - **Bloqueia:** o teste está saltado com esta razão em `tests/noite_do_07_test.gd`. O que **não** está saltado
   é o que o F1-15 promete: os dez dias correm, em headless e ao passo fixo, e o relógio chega ao dia 11.
-- **Decide:** tu. Não bloqueia o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
+- **Decide:** tu. Não bloqueou o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
 
-### Q-075 · O jogo não se pode perder: nada consegue morder o castelo-árvore
+### Q-075 · O jogo não se podia perder: nada mordia o castelo-árvore — **fechada pelo F1-16**
 - **Onde:** o §10 escreve a regra mais curta do dossiê — *"se o castelo-árvore cair, cai a partida"* — e ela
-  está implementada dos dois lados: o `BuildSystem.fallen()` sabe responder e o `src/world/game.gd` pára o
-  relógio. O que não existe é o caminho pelo meio: **nada lhe tira vida**.
-- **A causa, e é de uma linha:** só o `WallData` tem `contact_slots` (`walls.csv`, 2 a 7 pelos cinco degraus
-  do §10). O `BuildingData` não tem essa coluna, e por isso o `BuildSlot.contacts` de tudo o que não é muro
-  fica vazio e o `contact_slots()` devolve **zero**. A `ContactQueue` do §50 reparte *N* atacantes por *N*
-  slots; com zero slots não atribui nenhum, o `target_slots` fica em `NENHUM`, o `engaged()` dá falso, e o
-  `CombatSystem._criaturas_batem()` salta a criatura. O núcleo, os canteiros, o pesqueiro, as torres — **nenhum
-  deles pode ser atacado**. Só o muro pode, e é por isso que só o muro cai.
-- **Medido, e não deduzido** (`scenes/tests/dez_dias.tscn`, oito defesas, dez dias cada):
+  estava implementada dos dois lados: o `BuildSystem.fallen()` sabia responder e o `src/world/game.gd` parava
+  o relógio. O que não existia era o caminho pelo meio: **nada lhe tirava vida**.
+- **A causa, e era de uma linha:** só o `WallData` tinha `contact_slots` (`walls.csv`, 2 a 7 pelos cinco
+  degraus do §10). O `BuildingData` não tinha essa coluna, e por isso o `BuildSlot.contacts` de tudo o que não
+  é muro ficava vazio e o `contact_slots()` devolvia **zero**. A `ContactQueue` do §50 reparte *N* atacantes
+  por *N* slots; com zero slots não atribuía nenhum, o `target_slots` ficava em `NENHUM`, o `engaged()` dava
+  falso, e o `CombatSystem._criaturas_batem()` saltava a criatura. **Só o muro podia ser atacado** — e era por
+  isso que só o muro caía.
+- **Decisão — a proposta, tal como estava escrita:** `contact_slots` passa a ser coluna do `buildings.csv`,
+  como a que o `walls.csv` já tinha. Não inventa mecânica nenhuma, usa a fila do §50 que já existe, e uma obra
+  com a coluna a zero comporta-se exactamente como antes — que é o caso de **todas** menos uma.
+- **O número, e porque é que ele não decide nada:** o núcleo leva **7**, que é o topo da escada do §10 — o
+  Bastião, a outra obra *única por império*; o núcleo é a maior do mapa (480 px) e a última. O dossiê não dá
+  este número, e por isso ele está marcado em `_proposed` e a escolha é revertível. **E a varredura mostra que
+  ela não muda o critério do §66**: com 2, 3, 4, 5 ou 7, as mesmas defesas aguentam e as mesmas caem. A única
+  linha que se mexe é a muralha de ferro nos dois flancos, que a 2 slots aguenta com **5%** de núcleo — o fio
+  da navalha que a escolha de 7 evita.
+- **O que isto passou a medir** (`godot --headless --path . scenes/tests/dez_dias.tscn`, nove defesas, dez
+  dias cada, com um Bastião só — o §10 escreve-o *"único por império"*):
 
-  | muro | torre | alta | arq | aguentou | mortes | muros | núcleo |
-  |---|---|---|---|---|---|---|---|
-  | 1 | não | não | 6 | **sim** | 3 | 2 | 1,00 |
-  | 4 | sim | sim | 12 | sim | 7 | 2 | 1,00 |
+  | esq | dir | torre | alta | arq | aguentou | núcleo |
+  |---|---|---|---|---|---|---|
+  | 1 | 1 | não | não | 6 | caiu no dia **3** | 0,00 |
+  | 4 | 4 | sim | sim | 12 | caiu no dia 10 | 0,00 |
+  | 5 | 4 | sim | não | 12 | caiu no dia 9 | 0,00 |
+  | 5 | 4 | não | sim | 12 | caiu no dia 9 | 0,00 |
+  | 5 | 4 | sim | sim | 6 | caiu no dia 9 | 0,00 |
+  | 5 | 4 | sim | sim | 12 | **aguentou** | **1,00** |
 
-  As oito linhas dizem o mesmo: **aguenta sempre, e o núcleo fica a 100%**. E numa noite posta de propósito
-  sem muro nenhum: os Brutos do dia 8 chegam a **270 px** do núcleo e ele perde **0%**; os Alados do dia 5
-  chegam a **0 px** — pousam-lhe em cima — e ele perde **0%**.
-- **Há um segundo defeito por baixo, e é do Alado:** para uma criatura AÉREA nenhuma obra de superfície é
-  barreira — o `BuildSystem.barrier()` filtra por faixa — e por isso ela só olha para tropas, dentro dos seus
-  24 px de alcance. O Alado atravessa a muralha, atravessa a região, pousa no castelo e **não faz nada**. Os
-  dias 4, 5 e 6, que a §07 diz serem os que *"obrigam a torre alta"*, não custam nada a ninguém.
-- **Porque é que isto bloqueia o F1-16:** o critério do §66 é *"sobreviver 10 dias é possível **e não é
-  trivial**"*. A primeira metade mede-se e passa. A segunda **não é afinável**: não há número em `data/` que
-  torne difícil um jogo que não se pode perder. Mexer na massa do §74, na velocidade da mancha ou na escada
-  do §10 muda quantos morrem no muro e mais nada.
-- **Proposta:** dar `contact_slots` ao `BuildingData` — uma coluna em `buildings.csv`, como a que o
-  `walls.csv` já tem. É a opção mais reversível: não inventa mecânica nenhuma, usa a fila do §50 que já
-  existe, e uma obra com a coluna a zero continua a comportar-se exactamente como hoje. O número para o
-  núcleo não está no dossiê (o §10 só dá os do muro), e por isso **não foi escrito**. O Alado é outra
-  conversa e é do F1-09: ou a `barrier()` deixa de filtrar por faixa para quem voa, ou o `targets_bands`
-  passa a valer também para obras.
-- **Bloqueia:** o F1-16 inteiro. Os dois testes estão saltados com esta razão em `tests/dez_dias_test.gd`.
-- **Decide:** tu. São duas decisões e podem ser tomadas em separado — a coluna (e que número leva o núcleo) e
-  o que um Alado ataca quando chega.
+  A primeira linha é a receita do §07 tal e qual. A última é a defesa do décimo dia, e é a única que aguenta:
+  o §66 tem as duas metades que pede.
+- **Onde:** `data/source/buildings.csv`, `src/sim/data/building_data.gd`, `src/world/greybox.gd`,
+  `tests/support/closed_region.gd`. Os testes são o `tests/dez_dias_test.gd`, e nenhum deles está saltado.
+
+### Q-076 · O Alado atravessa a muralha, pousa no castelo e não faz nada
+- **Onde:** o §07 dá ao Alado a linha *"Dia 4 — obriga a torre alta"*, e o §10 vende a torre alta por 30
+  moedas para *"atingir a camada aérea"*. Medido no cenário dos dez dias, os dias 4, 5 e 6 — que são os dele —
+  **não custam nada a ninguém**.
+- **A causa:** para uma criatura AÉREA nenhuma obra de superfície é barreira. O `BuildSystem.barrier()` filtra
+  por faixa (`vaga.band != faixa`), e por isso o Alado nunca encontra muro nem núcleo no caminho: só olha para
+  tropas, dentro dos seus 24 px de alcance. Atravessa a muralha, atravessa a região, pousa no castelo — e o
+  castelo perde **0%**. Medido numa noite posta de propósito sem muro nenhum: os Alados do dia 5 chegam a
+  **0 px** do núcleo.
+- **O que a torre alta vale hoje, então:** os **dois postos** que publica, com precisão 1,0 — e não a altura.
+  A varredura dos dez dias mostra-o: tirar a torre alta à defesa que aguenta faz cair a partida no dia 9, e
+  faz cair pela mesma razão que tirar a torre de arqueiros faria. Não é a faixa aérea que ela está a defender.
+- **Proposta:** ou a `barrier()` deixa de filtrar por faixa para quem voa — e aí um Alado bate no que estiver
+  por baixo —, ou o `targets_bands` do §44 passa a valer também para obras, e a faixa da obra entra na conta
+  como já entra a da tropa. A segunda usa uma coluna que já existe e não inventa regra nenhuma; a primeira é
+  menos escrita e mais surpresa.
+- **Bloqueia:** a linha *"obriga a torre alta"* do §07, e com ela metade do valor da torre de 30 moedas. Não
+  bloqueia o F1-16: o critério do §66 mede-se e passa sem ela, e passaria com mais margem contra.
+- **Decide:** tu. É a segunda metade da antiga Q-075, e é do F1-09 — o ticket do Alado e do Cavador.
 
 ## Resolvidas na v5.2 (reversíveis)
 

@@ -30,11 +30,17 @@ const MUROS := &"walls_lost"
 const NOITES := &"nights"
 const VIDA := &"core_ratio"
 const SEGUNDOS := &"seconds"
+## Noite a noite, uma linha por amanhecer: e a mesa de trabalho da afinacao. Um
+## total de dez noites diz que a defesa caiu; so a linha a linha diz em qual. As
+## linhas levam DIA, MORTES, MUROS e VIDA.
+const TABELA := &"per_night"
+const DIA := &"day"
 
 var _mortes: int = 0
 var _muros: int = 0
 var _noites: int = 0
 var _caiu: int = 0
+var _tabela: Array[Dictionary] = []
 
 
 ## Corre `dias` dias inteiros com a defesa que o `h` descreve. Devolve o dia em
@@ -48,6 +54,7 @@ func run(h: Harness, dias: int) -> Dictionary:
 	_muros = 0
 	_noites = 0
 	_caiu = 0
+	_tabela = []
 	_ouvir()
 
 	var passos := int(h.day_seconds() * dias / PASSO)
@@ -72,6 +79,7 @@ func run(h: Harness, dias: int) -> Dictionary:
 		NOITES: _noites,
 		VIDA: _vida_do_nucleo(),
 		SEGUNDOS: segundos,
+		TABELA: _tabela,
 	}
 
 
@@ -118,5 +126,10 @@ func _caiu_obra(building_id: int, _x: float) -> void:
 		_caiu = SimLoop.state.day
 
 
-func _sobreviveu(_dia: int, _mortes_da_noite: int, _muros_da_noite: int) -> void:
+## O `night_survived` da §46, um por amanhecer. A vida do nucleo nao vem dele —
+## vem do mundo, aqui e agora — porque e ela que diz se a noite custou alguma
+## coisa: dez noites ganhas a 100% e dez noites ganhas a 5% sao a mesma resposta
+## a "aguentou?" e duas respostas diferentes a "e trivial?".
+func _sobreviveu(dia: int, mortes: int, muros: int) -> void:
 	_noites += 1
+	_tabela.append({DIA: dia, MORTES: mortes, MUROS: muros, VIDA: _vida_do_nucleo()})

@@ -14,34 +14,47 @@ const Harness := preload("res://tests/sim_harness.gd")
 const Campaign := preload("res://tests/support/campaign.gd")
 
 const DIAS := 10
-## As defesas varridas: nivel do muro, torre de arqueiros, torre ALTA, arqueiros.
-## Nao sao balanceamento — sao as combinacoes que um jogador pode ter ao decimo
-## dia, e a pergunta e a partir de qual delas se aguenta.
+## As defesas varridas: degrau do muro esquerdo, degrau do direito, torre de
+## arqueiros, torre ALTA, arqueiros. Nao sao balanceamento — sao as combinacoes
+## que um jogador pode ter ao decimo dia, e a pergunta e a partir de qual delas
+## se aguenta. So UM Bastiao: o §10 escreve-o "unico por imperio".
 const DEFESAS := [
-	[1, false, false, 6],
-	[1, true, false, 6],
-	[2, true, false, 8],
-	[3, true, false, 10],
-	[1, false, true, 6],
-	[2, true, true, 8],
-	[3, true, true, 10],
-	[4, true, true, 12],
+	[1, 1, false, false, 6],
+	[2, 2, true, false, 8],
+	[3, 3, true, true, 10],
+	[4, 4, true, true, 12],
+	[5, 4, false, false, 12],
+	[5, 4, true, false, 12],
+	[5, 4, false, true, 12],
+	[5, 4, true, true, 6],
+	[5, 4, true, true, 12],
 ]
-const LINHA := "  %4d | %5s | %5s | %3d | %8s | %6d | %5d | %6.2f"
+const LINHA := "  %3d | %3d | %5s | %5s | %3d | %8s | %6d | %5d | %6.2f"
+const NOITE := "  %4d | %6d | %5d | %6.2f"
 
 
 func _ready() -> void:
 	print("\n§66 — dez dias no cenario fechado, com a tabela de invocacao inteira")
-	print("  muro | torre | alta  | arq | aguentou | mortes | muros | nucleo")
+	print("  esq | dir | torre | alta  | arq | aguentou | mortes | muros | nucleo")
+	var ultima: Array[Dictionary] = []
 	for d in DEFESAS:
-		_correr(d[0], d[1], d[2], d[3])
+		ultima = _correr(d[0], d[1], d[2], d[3], d[4])
 	print("\nO §66 quer as duas: uma linha a aguentar e uma a cair.")
+	# A ultima defesa da lista e a que aguenta, e e sobre ela que se afina: um
+	# total de dez noites diz que ela chegou ao fim, e so a linha a linha diz a
+	# que custo. Uma noite que nao custa nada nao esta afinada — esta desligada.
+	print("\nA ultima defesa, noite a noite:")
+	print("  dia | mortes | muros | nucleo")
+	for n in ultima:
+		print(NOITE % [n[Campaign.DIA], n[Campaign.MORTES], n[Campaign.MUROS], n[Campaign.VIDA]])
 	get_tree().quit()
 
 
-func _correr(nivel: int, torre: bool, alta: bool, arqueiros: int) -> void:
+func _correr(
+	esquerda: int, direita: int, torre: bool, alta: bool, arqueiros: int
+) -> Array[Dictionary]:
 	var h := Harness.new()
-	h.wall_level = nivel
+	h.wall_levels = PackedInt32Array([esquerda, direita])
 	h.tower = torre
 	h.high_tower = alta
 	h.archers = arqueiros
@@ -55,7 +68,8 @@ func _correr(nivel: int, torre: bool, alta: bool, arqueiros: int) -> void:
 		(
 			LINHA
 			% [
-				nivel,
+				esquerda,
+				direita,
 				"sim" if torre else "nao",
 				"sim" if alta else "nao",
 				arqueiros,
@@ -66,3 +80,4 @@ func _correr(nivel: int, torre: bool, alta: bool, arqueiros: int) -> void:
 			]
 		)
 	)
+	return r[Campaign.TABELA]
