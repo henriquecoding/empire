@@ -119,7 +119,7 @@ jobs:
   # O unico job que prova que isto e um jogo e nao uma pasta: produz o binario
   # e arranca-o. Separado porque so ele paga os templates de export.
   export:
-    name: Export de Linux
+    name: Export de Linux, Windows e Web
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -137,12 +137,34 @@ jobs:
       - name: Exportar e arrancar o binario
         run: make exportar
 
+      # As outras duas plataformas nao se podem arrancar num runner de Linux, e
+      # por isso nao provam o que a de cima prova. Existem por uma razao so, e e
+      # boa: sem elas, so quem tem Linux — ou quem instala o motor — consegue
+      # experimentar o que este repositorio faz.
+      - name: Exportar o Windows e o Web
+        run: make exportar-windows exportar-web
+
       - uses: actions/upload-artifact@v4
         with:
           name: empire-linux-debug
           path: |
             build/empire.x86_64
             build/empire.pck
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: empire-windows-debug
+          path: build/windows/
+          retention-days: 7
+
+      # Descarregar, descompactar, e servir a pasta de um servidor estatico
+      # qualquer. O preset tem thread_support desligado: nao precisa de COOP nem
+      # de COEP, e por isso `python3 -m http.server` chega.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: empire-web
+          path: build/web/
           retention-days: 7
 
   # ── 4 ─────────────────────────────────────────────────────────────────────

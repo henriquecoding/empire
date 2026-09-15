@@ -31,6 +31,13 @@ const NENHUM := -1
 ## linha e a esquerda.
 const ATRAS := -1.0
 
+## As chaves do que pickup() devolve. Ficam aqui e nao em strings soltas pelo
+## caminho: quem le do outro lado le estas.
+const UNIDADE := &"unit_id"
+const MOEDAS := &"amount"
+const RECRUTADO := &"hired"
+const PRECO := &"price"
+
 var _curva: EconomyCurve
 
 
@@ -111,6 +118,68 @@ func hire(unidades: UnitSystem, unit_id: int, dono: int, pago: int, preco: int) 
 		return false
 	unidades.owners[i] = dono
 	return true
+
+
+## Passo 5 do §43, a seguir ao movimento: quem chegou a uma moeda apanha-a, e
+## quem ainda nao era de ninguem e acabou de apanhar o seu preco passa a ser teu.
+##
+## As duas coisas sao consequencia de ter CHEGADO, e por isso correm depois do
+## movimento e nao antes. O §43 nao tem um passo para a apanha — a Q-063 diz
+## porque e que ela mora no passo 5, como a Q-061 disse do arco.
+##
+## Devolve o que aconteceu, por unidade; quem chama e que anuncia (§43, passo 11).
+func pickup(unidades: UnitSystem, moedas: CoinSystem, king_id: int) -> Array[Dictionary]:
+	var apanhas: Array[Dictionary] = []
+	if moedas.count() == 0:
+		return apanhas
+	var dono_do_rei := owner_of(unidades, king_id)
+	# Por id crescente (§42): duas unidades a caminho da mesma moeda tem de dar
+	# sempre a mesma vencedora, e a ordem das colunas nao e estavel.
+	var por_id := unidades.ids.duplicate()
+	por_id.sort()
+	for unit_id in por_id:
+		var apanha := _apanhar(unidades, moedas, unit_id, dono_do_rei)
+		if not apanha.is_empty():
+			apanhas.append(apanha)
+	return apanhas
+
+
+## De quem sao os recrutados. Sem rei em campo nao ha recrutamento: a moeda foi
+## apanhada na mesma — o §25 desenha isso — mas nao comprou ninguem.
+func owner_of(unidades: UnitSystem, king_id: int) -> int:
+	var rei := unidades.index_of(king_id)
+	if rei == NENHUM:
+		return SEM_DONO
+	return unidades.owners[rei]
+
+
+func _apanhar(
+	unidades: UnitSystem, moedas: CoinSystem, unit_id: int, dono_do_rei: int
+) -> Dictionary:
+	var i := unidades.index_of(unit_id)
+	var moeda := unidades.target_ids[i]
+	if moeda == UnitSystem.NENHUM or not unidades.alive(i):
+		return {}
+	var espaco := unidades.coin_capacities[i] - unidades.carried_coins[i]
+	if espaco <= 0:
+		return {}
+	var era_de_ninguem := vagrant(unidades, i)
+	var apanhado := moedas.collect_one(
+		moeda, unidades.xs[i], unidades.bands[i] as Band.Kind, espaco
+	)
+	if apanhado <= 0:
+		return {}
+	unidades.target_ids[i] = UnitSystem.NENHUM
+	unidades.carried_coins[i] += apanhado
+	var preco := unidades.recruit_costs[i]
+	# Conta o SACO e nao a moeda que acabou de apanhar. O §07 da precos de 1 a
+	# 18, e a moeda da §02 vale uma: comparar com a ultima apanhada so deixava
+	# recrutar quem custa 1, e o arqueiro do minuto 1:10 (§25) nunca seria teu.
+	# Ele fica com o que apanhou — e o que o §25 desenha e o teste do F1-04 fixa.
+	var comprado := (
+		era_de_ninguem and hire(unidades, unit_id, dono_do_rei, unidades.carried_coins[i], preco)
+	)
+	return {UNIDADE: unit_id, MOEDAS: apanhado, RECRUTADO: comprado, PRECO: preco}
 
 
 ## Verdadeiro se esta unidade ainda nao e de ninguem — o que o ecra mostra como

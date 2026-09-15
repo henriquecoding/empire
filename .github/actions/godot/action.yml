@@ -7,7 +7,7 @@ description: >
 
 inputs:
   export-templates:
-    description: Instalar tambem os templates de export de Linux (pesados, so o job do export precisa)
+    description: Instalar tambem os templates de export (pesados, so o job do export precisa)
     required: false
     default: "false"
 
@@ -65,9 +65,17 @@ runs:
       uses: actions/cache@v4
       with:
         path: ~/.local/share/godot/export_templates
-        key: godot-templates-${{ runner.os }}-${{ steps.fixada.outputs.version }}
+        # O sufixo e a LISTA de plataformas, e nao um numero de versao a mao: o
+        # dia em que se acrescentar uma, a chave muda sozinha e o cache antigo —
+        # que nao a tem la dentro — deixa de responder. Sem isto, um cache de
+        # ontem servia um export de hoje sem o template de que ele precisa, e o
+        # chumbo vinha do motor e nao do cache.
+        key: godot-templates-${{ runner.os }}-${{ steps.fixada.outputs.version }}-linux-windows-web
 
-    - name: Templates de export (so os de Linux)
+    # O .tpz tem 1,2 GB e traz todas as plataformas; extraem-se as tres que o
+    # export_presets.cfg tem preset para, e mais nenhuma. Descarregar 1,2 GB para
+    # guardar 400 MB e o preco de o ficheiro nao ser servido por partes.
+    - name: Templates de export (Linux, Windows e Web)
       if: inputs.export-templates == 'true' && steps.cache-templates.outputs.cache-hit != 'true'
       shell: bash
       env:
@@ -80,6 +88,9 @@ runs:
         curl -fsSL --retry 3 --retry-delay 5 -o /tmp/t.tpz \
           "$BASE/${V}/Godot_v${V}_export_templates.tpz"
         unzip -q -j -o /tmp/t.tpz \
-          templates/linux_debug.x86_64 templates/linux_release.x86_64 templates/version.txt -d "$T"
+          templates/linux_debug.x86_64 templates/linux_release.x86_64 \
+          templates/windows_debug_x86_64.exe templates/windows_release_x86_64.exe \
+          templates/web_dlink_nothreads_debug.zip templates/web_nothreads_release.zip \
+          templates/version.txt -d "$T"
         rm /tmp/t.tpz
         ls -la "$T"
