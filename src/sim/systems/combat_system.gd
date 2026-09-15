@@ -57,6 +57,9 @@ var picker: TargetPicker
 
 var _dados_u: Dictionary = {}
 var _dados_c: Dictionary = {}
+## O quadro de postos. "A torre nao da dano — da certeza" (§07): e por aqui que
+## se sabe se quem dispara esta numa.
+var _postos: JobBoard
 var _u: UnitSystem
 var _c: CreatureSystem
 var _o: BuildSystem
@@ -65,10 +68,13 @@ var _eventos: Array[Dictionary] = []
 var _golpes: Array[Dictionary] = []
 
 
-func _init(unidades: Dictionary, criaturas: Dictionary, contacto: ContactQueue) -> void:
+func _init(
+	unidades: Dictionary, criaturas: Dictionary, contacto: ContactQueue, postos: JobBoard
+) -> void:
 	_dados_u = unidades
 	_dados_c = criaturas
-	picker = TargetPicker.new(unidades, criaturas, contacto)
+	_postos = postos
+	picker = TargetPicker.new(unidades, criaturas, contacto, postos)
 
 
 func target_of(unit_id: int) -> int:
@@ -121,7 +127,7 @@ func _tropas_batem() -> void:
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
 		_u.cooldowns[i] = dados.attack_interval
-		var acertou: bool = _sorteio.call() < dados.accuracy_open
+		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
 			_golpes.append({DE: unit_id, PARA: alvo, QUANTO: dados.damage, CRIATURA: true})

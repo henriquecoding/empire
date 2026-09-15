@@ -30,17 +30,21 @@ const MEIO := 0.5
 ## A fila de contacto do §50: quem engaja e quem espera.
 var fila: ContactQueue
 
+var _postos: JobBoard
 var _unidades: Dictionary = {}
 var _criaturas: Dictionary = {}
 var _alvos: Dictionary = {}
 var _marcados: Dictionary = {}
 
 
-func _init(unidades: Dictionary, criaturas: Dictionary, contacto: ContactQueue) -> void:
+func _init(
+	unidades: Dictionary, criaturas: Dictionary, contacto: ContactQueue, postos: JobBoard
+) -> void:
 	assert(contacto != null, "o TargetPicker precisa de uma ContactQueue (§50)")
 	_unidades = unidades
 	_criaturas = criaturas
 	fila = contacto
+	_postos = postos
 
 
 func target_of(unit_id: int) -> int:
@@ -105,16 +109,18 @@ func _serve(
 	var c := criaturas.index_of(alvo)
 	if c == NENHUM or not criaturas.alive(c):
 		return false
-	if not dados.targets_bands.has(int(criaturas.bands[c])):
+	if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 		return false
-	return absf(criaturas.xs[c] - unidades.xs[i]) <= dados.range_px
+	return absf(criaturas.xs[c] - unidades.xs[i]) <= Posts.range_px(_postos, unidades, i, dados)
 
 
 func _mais_proxima(unidades: UnitSystem, i: int, dados: UnitData, criaturas: CreatureSystem) -> int:
 	var melhor := NENHUM
-	var melhor_d := float(dados.range_px)
+	var melhor_d := Posts.range_px(_postos, unidades, i, dados)
 	for c in criaturas.count():
-		if not criaturas.alive(c) or not dados.targets_bands.has(int(criaturas.bands[c])):
+		if not criaturas.alive(c):
+			continue
+		if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 			continue
 		var d := absf(criaturas.xs[c] - unidades.xs[i])
 		if melhor != NENHUM and d >= melhor_d:

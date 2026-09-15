@@ -81,7 +81,8 @@ func publish(obras: BuildSystem) -> void:
 	clear()
 	for obra in querem:
 		for k in obra.posts():
-			post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
+			var vaga := post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
+			vaga.grants(obra)
 	_publicadas = querem
 
 
@@ -94,6 +95,12 @@ func _lugar(obra: BuildSlot, k: int) -> float:
 		return obra.x
 	var passo := obra.width / quantos
 	return obra.x - obra.width * MEIO + passo * (k + MEIO)
+
+
+## A vaga com este id, ou null. E o que o combate pergunta para saber se quem
+## dispara esta numa torre — "a torre nao da dano, da certeza" (§07).
+func slot_of(job_id: int) -> JobSlot:
+	return slots[job_id] if job_id >= 0 and job_id < slots.size() else null
 
 
 func free_slots() -> int:

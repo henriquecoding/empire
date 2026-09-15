@@ -18,7 +18,10 @@ func _tabela(tabela: StringName) -> Dictionary:
 
 func _escolha() -> TargetPicker:
 	var curva := Registry.entry(&"economy", &"curve") as EconomyCurve
-	return TargetPicker.new(_tabela(&"units"), _tabela(&"creatures"), ContactQueue.new(curva))
+	var postos := JobBoard.new(curva, _tabela(&"jobs"), _tabela(&"units"))
+	return TargetPicker.new(
+		_tabela(&"units"), _tabela(&"creatures"), ContactQueue.new(curva), postos
+	)
 
 
 func _arqueiro(unidades: UnitSystem, estado: GameState, x: float) -> int:

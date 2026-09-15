@@ -181,7 +181,7 @@ func _montar() -> void:
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
 	jobs = SimFactory.job_board()
-	combat = SimFactory.combat()
+	combat = SimFactory.combat(jobs)
 	economy = SimFactory.economy()
 	night = NightWatch.new()
 	_coins = null  # um jogo novo comeca sem moedas no chao

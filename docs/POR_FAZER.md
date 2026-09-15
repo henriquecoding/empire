@@ -10,10 +10,10 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **25 feitos** e **28 por fazer** |
+| Tickets | **53**, dos quais **26 feitos** e **27 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 9 de 17 — F1-01 a F1-06, **F1-08**, **F1-10** e **F1-13** |
-| Suite | 278 casos, 273 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 10 de 17 — F1-01 a F1-08 menos o F1-09, **F1-10** e **F1-13** |
+| Suite | 287 casos, 282 a passar, 5 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (F1-14) e o 10 (Fase 2) |
 | Perguntas em aberto | 62, em `docs/QUESTIONS.md` |
 
@@ -48,16 +48,16 @@ que faltam.
 | **F1-12** | Moral e fuga com o raio do rei | F1-05 ✔ | Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados |
 | **F1-14** | Save e load do estado de `src/sim/` com `save_version` | F1-10 ✔ | Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória |
 
-O **F1-07** já tem metade do caminho andado, e o ticket diz qual: a ordem de
-resolução do §50 está inteira, e falta-lhe a precisão 1,0 dentro de torre — que
-precisa de saber quem está num posto de guarda, e isso o F1-06 já dá.
+O **F1-09** já tem metade do caminho andado: a tabela de invocação por dia
+mínimo corre desde o F1-08, e o Alado só é atingido por quem está numa torre alta
+desde o F1-07 (Q-006, fechada). Falta-lhe o Cavador a subir do subsolo por
+passagem, e a noite 4 a obrigar mesmo a torre.
 
 **À espera de outro ticket:**
 
 | | O que é | Depende de | Critério de aceitação |
 |---|---|---|---|
-| **F1-07** | Arqueiro: alcance, precisão 0,34 em campo e 1,0 em torre | F1-06 ✔ | O tempo até matar medido bate com a tabela do §07, em valor esperado |
-| F1-09 | Criaturas: Rastejante, Alado, Bruto e a tabela de invocação | F1-08 ✔ | A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea |
+| **F1-09** | Criaturas: Rastejante, Alado, Bruto e a tabela de invocação | F1-08 ✔ | A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea |
 | F1-15 | Cenário de combate noturno para afinação | F1-09 | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
 | F1-17 | Arte da mancha: a Podridão e a candeia | F1-08 ✔, **ART-02** | Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã |
 | F1-16 | Afinar até sobreviver dez dias ser possível e não trivial | **tudo** | Medido no cenário do F1-15. É o último da fase, por construção. |
@@ -166,7 +166,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 | O quê | Como | O que se vê |
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. |
-| **A suite** | `make testes` | 278 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 287 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |

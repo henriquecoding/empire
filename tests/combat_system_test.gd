@@ -25,7 +25,10 @@ func _tabela(tabela: StringName) -> Dictionary:
 
 
 func _combate() -> CombatSystem:
-	return CombatSystem.new(_tabela(&"units"), _tabela(&"creatures"), ContactQueue.new(_curva()))
+	var postos := JobBoard.new(_curva(), _tabela(&"jobs"), _tabela(&"units"))
+	return CombatSystem.new(
+		_tabela(&"units"), _tabela(&"creatures"), ContactQueue.new(_curva()), postos
+	)
 
 
 func _sempre(valor: float) -> Callable:

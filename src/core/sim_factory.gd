@@ -56,9 +56,11 @@ static func job_board() -> JobBoard:
 	return JobBoard.new(curve(), by_id(TABELA_POSTOS), by_id(TABELA_TROPAS))
 
 
-static func combat() -> CombatSystem:
+## O combate precisa do quadro de postos: "a torre nao da dano — da certeza"
+## (§07), e quem esta numa torre so se sabe perguntando ao posto que ocupa.
+static func combat(postos: JobBoard) -> CombatSystem:
 	var contacto := ContactQueue.new(curve())
-	return CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS), contacto)
+	return CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS), contacto, postos)
 
 
 static func economy() -> EconomySystem:

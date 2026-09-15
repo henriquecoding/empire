@@ -75,6 +75,11 @@ var stock: float = 0.0
 ## §49: uma plantacao no rasto da Podridao e destruida; as outras so param.
 var razed_by_rot: bool = false
 
+## O effect_params do BuildingData (§10): `accuracy`, `range_bonus`,
+## `hits_aerial` e o resto. Uma torre nao da dano — da certeza (§07), e e aqui
+## que essa certeza esta escrita, em dados e nao num `if e_torre`.
+var effects: Dictionary = {}
+
 var level: int = 0
 var state: State = State.EMPTY
 ## Moedas ja pagas do degrau seguinte. §55: a obra existe quando uma moeda cai.

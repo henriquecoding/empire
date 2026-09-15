@@ -387,7 +387,7 @@
   "depende": "F1-06",
   "feito": "O tempo até matar medido bate com a tabela do §07, em valor esperado",
   "fora": "Criaturas — é o F1-09.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Q-003: a tabela do §07 usa 1/3 e os dados usam 0,34. O teste tem 3% de tolerância."

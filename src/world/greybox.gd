@@ -27,6 +27,8 @@ const MURO := &"stakes"
 const CANTEIRO := &"farm"
 const GALINHEIRO := &"henhouse"
 const TREINO := &"training_house"
+const TORRE := &"archer_tower"
+const TORRE_ALTA := &"high_tower"
 
 # Posicoes, relativas ao nucleo. Sao autoria de nivel e nao balanceamento: sao a
 # resposta a "onde", e o §21 diz que essa resposta e do segmento.
@@ -36,7 +38,9 @@ const TREINO := &"training_house"
 const MUROS_X := [-1300.0, -600.0, 600.0, 1300.0]
 const TREINOS_X := [-300.0, 300.0]
 const CANTEIROS_X := [-520.0, -420.0, 420.0, 520.0]
-const GALINHEIROS_X := [-760.0, 760.0]
+const TORRES_X := [-680.0, 680.0]
+const GALINHEIROS_X := [-820.0, 820.0]
+const TORRES_ALTAS_X := [-1100.0, 1100.0]
 const PASSAGENS_X := [-950.0, 950.0]
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
@@ -47,6 +51,7 @@ const LANCEIROS_X := [-1100.0, 1000.0]
 
 const POSTO_MURO := &"wall"
 const POSTO_CANTEIRO := &"farm"
+const POSTO_TORRE := &"tower"
 const MEU_IMPERIO := 1
 const MEIO := 0.5
 
@@ -67,6 +72,13 @@ static func build() -> int:
 		_edificio(SimLoop.core_x + x, GALINHEIRO, &"")
 	for x in TREINOS_X:
 		_edificio(SimLoop.core_x + x, TREINO, &"")
+	# §07: "a torre nao da dano — da certeza". A alta e a que atinge a camada
+	# aerea, e o §07 diz que ela e obrigatoria a partir do dia 4 por causa do
+	# Alado — por isso ha sitio para ela desde o dia 1.
+	for x in TORRES_X:
+		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
+	for x in TORRES_ALTAS_X:
+		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
 
 	return _gente()
 
@@ -128,6 +140,7 @@ static func _do_edificio(dados: BuildingData, x: float) -> BuildSlot:
 	vaga.width = float(dados.width_px)
 	vaga.yield_per_day = dados.yield_per_day
 	vaga.razed_by_rot = dados.destroyed_by_rot_trail
+	vaga.effects = dados.effect_params
 	vaga.costs = PackedInt32Array([dados.cost])
 	vaga.works = PackedFloat32Array([dados.build_work])
 	vaga.healths = PackedInt32Array([dados.max_health])

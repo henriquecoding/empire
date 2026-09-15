@@ -45,13 +45,13 @@
   resto (`flee_health`). Confirma.
 - **Bloqueia:** F1-12.
 
-### Q-006 · Quem atinge a faixa aérea?
+### Q-006 · Quem atinge a faixa aérea? — **fechada pelo F1-07**
 - **Onde:** §07 (Libélula: "só atacável por arqueiros e torres altas"; Alado: "obriga a torre alta") e §10.
-- **O que diverge:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
-- **Proposta:** geometria — um arqueiro no chão não chega aos 200 px do topo com 200 px de alcance; em muro ou
-  torre de arqueiros também não; **só a torre alta** (`hits_aerial`) e os arqueiros de copa. Os dados já dizem
-  `targets_bands = SURFACE|AERIAL` no arqueiro; o alcance vertical decide.
-- **Bloqueia:** F1-07, F1-09.
+- **O que divergia:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
+- **Decisão — a proposta, tal como estava escrita:** o `targets_bands` diz o que a unidade **pode** apontar; a
+  faixa dela própria chega sempre; qualquer outra só com um posto que lhe dê altura — o `hits_aerial` do
+  `effect_params`, que hoje só a `high_tower` tem. Está em `src/sim/systems/posts.gd` e tem três testes.
+- **É uma mudança de comportamento:** antes disto um arqueiro no chão abatia o Alado.
 
 ### Q-007 · Horta: "tropas baratíssimas" quanto?
 - **Onde:** §04. Nenhum número. **Proposta:** −1 moeda no recrutamento de todas as tropas da Horta (mínimo 1).
