@@ -156,6 +156,17 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	return achada
 
 
+## Verdadeiro se existe uma obra deste tipo e ja nao esta de pe. Serve o §10 na
+## unica frase em que o nucleo e diferente de tudo o resto: "se cair, cai a
+## partida". A derrota le-se do mundo, e nao de um estado a parte que pudesse
+## divergir dele (§45).
+func fallen(kind: StringName) -> bool:
+	for vaga in slots:
+		if vaga.kind == kind and not vaga.standing():
+			return true
+	return false
+
+
 ## As obras de pe, por id crescente. Quem produz, quem publica posto e quem se
 ## desenha le por aqui em vez de filtrar a lista por sua conta.
 func standing() -> Array[BuildSlot]:

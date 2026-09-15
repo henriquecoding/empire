@@ -15,6 +15,11 @@ enum State { EMPTY, SCAFFOLD, BUILDING, DONE, DAMAGED, RUIN }
 
 const NENHUM := -1
 
+## O castelo-arvore (§10). Nao e uma obra como as outras em exactamente uma
+## coisa — "se cair, cai a partida" — e por isso o id dele vive aqui, onde quem
+## precisa de fazer essa pergunta o encontra sem inventar a string.
+const NUCLEO := &"core"
+
 var id: int = NENHUM
 var x: float = 0.0
 var band: Band.Kind = Band.Kind.SURFACE

@@ -13,7 +13,7 @@
 | Tickets | **53**, dos quais **23 feitos** e **30 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
 | Fase 1 | 7 de 17 — F1-01, F1-02, F1-03, F1-04, **F1-05**, **F1-08** e **F1-10** |
-| Suite | 254 casos, 249 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Suite | 255 casos, 250 a passar, 5 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (F1-14) e o 10 (Fase 2) |
 | Perguntas em aberto | 59, em `docs/QUESTIONS.md` |
 
@@ -145,6 +145,11 @@ Está toda em dados e em prosa, e nada dela em código.
 - **A roda do rei não existe.** Quatro dos seis segmentos do §24 não têm sistema
   nenhum por trás. A tecla `king_wheel` abre, por agora, o painel de estado do
   *greybox* — Q-067.
+- **A derrota acaba a partida e não a recomeça.** O §16 dá ressurreição até ao
+  amanhecer, o §15 dá sucessão, e nenhum dos dois existe: quando o núcleo cai, o
+  relógio pára e é preciso reabrir o jogo. O §46 também não tem sinal de derrota,
+  e inventar um quebrava a regra 7 do `AGENTS.md` — o que há é o mundo a dizê-lo,
+  com o núcleo em ruína.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
 - **59 perguntas em aberto** em `docs/QUESTIONS.md` — as cinco mais recentes
   (Q-064 a Q-068) são as que encher o tick obrigou a fazer, e a Q-068 é a única
@@ -166,7 +171,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 | O quê | Como | O que se vê |
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. |
-| **A suite** | `make testes` | 254 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 255 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `--avancar` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **Sem instalar o motor** | Artefacto `empire-linux-debug` de qualquer corrida verde do CI | O mesmo jogo, já exportado (Linux). |
@@ -191,4 +196,6 @@ sítio de obra e ela levanta-se **enquanto alguém estiver em cima dela** (§55)
 quem é teu e não tem posto anda atrás de ti, e quem tem vai para o posto quando a
 fase muda (§52); os canteiros de pé largam moeda uma vez por fase (§49); ao
 crepúsculo a mancha nasce na borda e gasta massa a invocar (§51); um muro de pé
-trava quem vem, e quem morre larga o que transportava (§50).
+trava quem vem, e quem morre larga o que transportava (§50). E **perde-se**: o
+§10 diz que se o castelo-árvore cair, cai a partida, e é o que acontece — o
+relógio pára e a entrada deixa de responder.

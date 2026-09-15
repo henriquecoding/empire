@@ -24,7 +24,8 @@ const FONTE := &"player"
 
 func _unhandled_input(evento: InputEvent) -> void:
 	if evento.is_action_pressed(&"pause"):
-		SimLoop.set_paused(SimLoop.running())
+		if not SimLoop.builds.fallen(BuildSlot.NUCLEO):
+			SimLoop.set_paused(SimLoop.running())
 		get_viewport().set_input_as_handled()
 		return
 	if not SimLoop.running():

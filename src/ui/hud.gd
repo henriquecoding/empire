@@ -30,27 +30,38 @@ func _relogio() -> String:
 	var fase := int(relogio.current_phase())
 	return (
 		"Dia %d · %s %d%%%s"
-		% [
-			relogio.day,
-			FASES[fase],
-			int(relogio.phase_progress() * PERCENTAGEM),
-			"" if SimLoop.running() else "   [EM PAUSA]",
-		]
+		% [relogio.day, FASES[fase], int(relogio.phase_progress() * PERCENTAGEM), _paragem()]
 	)
+
+
+## §10: "se cair, cai a partida". E a unica coisa que este painel diz que nao e
+## uma contagem — porque e a unica que acaba o jogo.
+func _paragem() -> String:
+	if SimLoop.builds.fallen(BuildSlot.NUCLEO):
+		return "   [O CASTELO-ARVORE CAIU — A PARTIDA ACABOU]"
+	return "" if SimLoop.running() else "   [EM PAUSA]"
 
 
 func _campo() -> String:
 	return (
-		"saco %d · tropas %d/%d · moedas no chao %d · criaturas %d · %s"
+		"saco %d · tropas %d/%d · nucleo %d · moedas no chao %d · criaturas %d · %s"
 		% [
 			_saco(),
 			_meus(),
 			SimLoop.units.count(),
+			_nucleo(),
 			SimLoop.coins.count(),
 			SimLoop.creatures.count(),
 			_podridao(),
 		]
 	)
+
+
+func _nucleo() -> int:
+	for vaga in SimLoop.builds.slots:
+		if vaga.kind == BuildSlot.NUCLEO:
+			return vaga.health
+	return 0
 
 
 func _saco() -> int:

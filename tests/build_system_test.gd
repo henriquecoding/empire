@@ -180,6 +180,25 @@ func test_o_dano_leva_a_obra_a_ruina_e_anuncia_a_brecha() -> void:
 	assert_array(tipos).contains([BuildSystem.EV_ROMPIDA])
 
 
+func test_o_nucleo_em_ruina_e_a_partida_acabada() -> void:
+	# §10, numa frase: "se cair, cai a partida". A derrota le-se do mundo e nao
+	# de um estado a parte, que podia divergir dele (§45).
+	var obras := _obras()
+	var vaga := _vaga_de_muro(0.0)
+	vaga.kind = BuildSlot.NUCLEO
+	obras.post(vaga)
+	vaga.level = 1
+	vaga.state = BuildSlot.State.DONE
+	vaga.health = vaga.max_health()
+
+	assert_bool(obras.fallen(BuildSlot.NUCLEO)).is_false()
+	assert_bool(obras.fallen(&"stakes")).is_false()
+
+	obras.damage(vaga.id, vaga.max_health())
+
+	assert_bool(obras.fallen(BuildSlot.NUCLEO)).is_true()
+
+
 func test_so_o_que_esta_de_pe_e_que_barra() -> void:
 	# O que faz um muro valer a pena e parar quem vem: uma criatura a caminho do
 	# nucleo bate no primeiro que estiver de pe entre ela e ele (§10, §50).

@@ -45,8 +45,14 @@ func _process(_delta: float) -> void:
 ## Corre `segundos` de simulacao ao passo fixo, sem render. E o mesmo step() que
 ## os testes usam, e por isso a fotografia mostra um estado que a suite tambem
 ## consegue reproduzir.
+##
+## Para quando a partida para. O step() e publico e nao olha ao _running — quem
+## o chama a mao tem de olhar, senao continua a andar com um jogo ja acabado e a
+## fotografia mostra um mundo que nunca existiu.
 func _avancar(segundos: float) -> void:
 	for _i in int(segundos / PASSO):
+		if not SimLoop.running():
+			return
 		SimLoop.step(PASSO)
 
 

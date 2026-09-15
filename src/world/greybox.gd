@@ -24,7 +24,6 @@ const SEGMENTO := &"enramados_start_base_01"
 const ECRAS := 6
 
 const MURO := &"stakes"
-const NUCLEO := &"core"
 const CANTEIRO := &"farm"
 const GALINHEIRO := &"henhouse"
 const TREINO := &"training_house"
@@ -76,7 +75,7 @@ static func build() -> int:
 ## de pe, e se cair, cai a partida. Trava as criaturas porque e o que elas vem
 ## procurar: sem isto atravessavam-no como se fosse um desenho.
 static func _nucleo() -> void:
-	var dados := Registry.entry(&"buildings", NUCLEO) as BuildingData
+	var dados := Registry.entry(&"buildings", BuildSlot.NUCLEO) as BuildingData
 	var vaga := _do_edificio(dados, SimLoop.core_x)
 	vaga.blocks = true
 	SimLoop.builds.post(vaga)

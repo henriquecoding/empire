@@ -36,6 +36,7 @@ func _ready() -> void:
 	_seguir()
 	_camara.follow(_monarca)
 	EventBus.wall_breached.connect(_no_rompimento)
+	EventBus.building_destroyed.connect(_no_desabamento)
 	print(_recibo())
 
 
@@ -67,6 +68,18 @@ func _seguir() -> void:
 
 func _no_rompimento(_wall_id: int) -> void:
 	_tremor = TREMOR_S
+
+
+## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota e
+## inventar um era quebrar a regra 7 do AGENTS.md — o que ha e o mundo, e o
+## mundo diz-o: o nucleo em ruina. O relogio para e a entrada deixa de responder.
+func _no_desabamento(building_id: int, _x: float) -> void:
+	var i := SimLoop.builds.index_of(building_id)
+	if i == UnitSystem.NENHUM or SimLoop.builds.slots[i].kind != BuildSlot.NUCLEO:
+		return
+	_tremor = TREMOR_S
+	SimLoop.set_paused(true)
+	$Entrada.set_process_unhandled_input(false)
 
 
 ## Uma linha no arranque, e uma so. E o recibo do export: o CI corre o binario
