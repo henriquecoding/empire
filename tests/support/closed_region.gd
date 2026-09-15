@@ -25,11 +25,15 @@ const MEIO := 0.5
 ## fora era so mais uma coisa para as criaturas derrubarem primeiro.
 const MURO_X := 600.0
 const TORRE_X := 520.0
+const TORRE_ALTA_X := 470.0
 const TROPAS_X := 545.0
 const ENTRE_TROPAS := 24.0
 
 const MURO := &"stakes"
 const TORRE := &"archer_tower"
+## §07: "o Alado obriga a torre alta". E a unica obra que atinge a faixa aerea
+## (Q-006), e por isso a unica que muda alguma coisa a partir do dia 4.
+const TORRE_ALTA := &"high_tower"
 const POSTO_MURO := &"wall"
 const POSTO_TORRE := &"tower"
 
@@ -40,7 +44,12 @@ const POSTO_TORRE := &"tower"
 ## porque dez dias de jogo sao dez dias a subi-la e o F1-16 tem de poder pôr o
 ## muro onde o jogador o teria posto.
 static func build(
-	flanco: int, arqueiros: int, lanceiros: int, torre: bool, ambos: bool, nivel: int = 1
+	flanco: int,
+	arqueiros: int,
+	lanceiros: int,
+	torres: Array[StringName],
+	ambos: bool,
+	nivel: int = 1
 ) -> void:
 	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
@@ -51,8 +60,8 @@ static func build(
 	_nucleo()
 	for lado in [-1, 1] if ambos else [flanco]:
 		_muro(lado, nivel)
-		if torre:
-			_torre(lado)
+		for id in torres:
+			_torre(lado, id)
 	_gente(flanco, arqueiros, lanceiros)
 
 
@@ -87,9 +96,12 @@ static func _muro(flanco: int, nivel: int) -> void:
 	_levantar(vaga, nivel)
 
 
-static func _torre(flanco: int) -> void:
-	var dados := Registry.entry(&"buildings", TORRE) as BuildingData
-	var vaga := _vaga(dados, SimLoop.core_x + flanco * TORRE_X)
+## Uma torre por id. A alta fica um pouco mais para dentro do que a de arqueiros,
+## para que as duas possam existir ao mesmo tempo sem se sobreporem no mesmo x.
+static func _torre(flanco: int, id: StringName) -> void:
+	var dados := Registry.entry(&"buildings", id) as BuildingData
+	var recuo := TORRE_X if id == TORRE else TORRE_ALTA_X
+	var vaga := _vaga(dados, SimLoop.core_x + flanco * recuo)
 	vaga.job_id = POSTO_TORRE
 	vaga.job_slots = dados.job_slots
 	SimLoop.builds.post(vaga)

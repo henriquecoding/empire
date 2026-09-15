@@ -42,6 +42,10 @@ var spearmen: int = 0
 ## "perdida SEM TORRE no dia 8" (§07): a torre e a variavel da experiencia, e e
 ## por isso que e uma bandeira e nao um numero.
 var tower: bool = false
+## §07: "o Alado obriga a torre alta", e a partir do dia 4 e ele que a mancha
+## compra. Sem ela, quem defende nao chega a faixa aerea (Q-006) — e isso e o
+## que separa uma defesa que aguenta dez dias de uma que so aguenta tres.
+var high_tower: bool = false
 ## Um muro por flanco. Uma noite mede-se com o do lado por onde ela vem — o "um
 ## muro" do §07 — mas dias seguidos trazem um sorteio de lado por noite (§51), e
 ## esses pedem os dois.
@@ -107,7 +111,7 @@ func arm(dia: int) -> void:
 	_invocadas = 0
 	_contacto = 0
 	_vivas = 0
-	Region.build(_flanco(), archers, spearmen, tower, both_flanks, wall_level)
+	Region.build(_flanco(), archers, spearmen, _torres(), both_flanks, wall_level)
 	# O dia entra nos dois sitios, como no resume() do SimLoop: o relogio e dono
 	# dele, mas quem o le a meio do tick e o GameState, e o espelho so corre no
 	# fim (passo 11). Sem esta linha o crepusculo do dia 5 pedia a massa do dia
@@ -175,6 +179,18 @@ func _so_rastejantes() -> void:
 	var perfil := Registry.entry(&"rot", &"default") as RotProfile
 	var rastejante := Registry.entry(&"creatures", &"crawler") as CreatureData
 	SimLoop.night.rot = RotSystem.new(perfil, [rastejante] as Array[CreatureData])
+
+
+## As torres que esta defesa tem, pela ordem em que o §10 as escreve. Duas
+## bandeiras e nao uma lista porque sao duas DECISOES diferentes do jogador, e o
+## §66 mede-se a ligar e a desligar cada uma por si.
+func _torres() -> Array[StringName]:
+	var quais: Array[StringName] = []
+	if tower:
+		quais.append(Region.TORRE)
+	if high_tower:
+		quais.append(Region.TORRE_ALTA)
+	return quais
 
 
 func _relogio() -> ClockData:
