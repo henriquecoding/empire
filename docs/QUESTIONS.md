@@ -489,6 +489,66 @@
   ter o `set_target_x` **sobreposto** de seis em seis ticks por quem procura moeda — é o que se quer, mas é uma
   mudança de contrato para quem chamava esse método à mão. **Decide:** tu, e o primeiro playtest.
 
+## Abertas — abertas ao encher o tick e a montar a cena de jogo
+
+### Q-064 · O §55 dá estados à obra e não dá trabalho a nenhum deles
+- **Onde:** a §55 escreve `EMPTY → SCAFFOLD → BUILDING(ratio) → DONE → DAMAGED(ratio) → RUIN` e diz que *"o
+  progresso avança enquanto ele estiver presente"*. Não diz **quanto** avança, nem quanto tempo demora um muro.
+  O `buildings.csv` tem `build_work` para os edifícios (regra proposta: 2 s × custo); o `walls.csv` não tem
+  coluna nenhuma para isso.
+- **Proposta, e é a mais reversível que há:** o muro herda a mesma regra proposta dos edifícios — `build_work =
+  2 s × custo — lida do próprio canteiro em vez de repetida à mão (`Greybox._segundos_por_moeda()`). Uma
+  estacaria de 6 moedas leva 12 s de construtor presente; um bastião de 65 leva 130.
+- **E uma mão vale uma mão:** o progresso avança `delta × quantos estão em cima da obra`, **todos por igual**.
+  O bónus do construtor é a habilidade do §09 (`builder_wall_bonus`, +8% de defesa) e não uma velocidade; dar-lhe
+  aqui um multiplicador era inventar um número que o dossiê não escreve. Reparar uma obra `DAMAGED` com moeda
+  também ficou de fora: é o posto `repair` do F1-05 mais a habilidade, e nenhum dos dois tem número.
+- **Decide:** tu, e o primeiro *playtest* — é exactamente o tipo de número que o §67 diz que o greybox fecha.
+
+### Q-065 · O §49 converte matéria em moeda por um ofício, e os ofícios são Fase 2
+- **Onde:** o §49 tem três circuitos: produzir matéria, **convertê-la** por um ofício, e comércio. O circuito 2
+  precisa do `CraftData` e do cozinheiro/ferreiro do §09, que são o F1-11 e a Fase 2. Sem ele a matéria acumula
+  dentro do edifício e nunca sai — o que é o mesmo que não haver economia nenhuma no jogo.
+- **Proposta:** enquanto não houver ofícios, a conversão é **1:1 e imediata**: um canteiro de
+  `yield_per_day` 2 larga 2 moedas por dia, repartidas pelas seis fases (Q-027, fechada: *"o CSV guarda por dia
+  e o sistema divide pelas fases"*). A moeda cai **por cima do edifício que a produziu**, que é a única parte
+  em que o §49 não admite alternativa: *"nunca escreve um inventário do jogador. Não existe inventário."*
+- **O que isto NÃO decide:** a taxa de conversão real dos ofícios. Quando o F1-11 entrar, a matéria passa a
+  parar no `stock` e o ofício é que a tira de lá — e esta linha desaparece sem que mais nada mude.
+- **Decide:** o F1-11.
+
+### Q-066 · O Verbo 2 tem quatro usos no §24 e três deles não têm sistema
+- **Onde:** o §24 dá ao Verbo 2 quatro contextos — *"trocar de classe, montar, entrar em passagem, subir em
+  criatura"*. Classes são o §08, montarias o §12, e subir em criatura a habilidade do Trepador (§08): nenhum
+  dos três existe. **Entrar em passagem** existe: a §11 dá as três faixas, o `units.csv` dá
+  `can_change_band` ao monarca, e o `segments.csv` dá uma passagem por segmento.
+- **Proposta:** o Verbo 2 faz **só** a passagem entre faixas, e a tolerância do gesto — a que distância da
+  passagem a tecla ainda pega — é `SimFactory.PASSAGEM_PX` = **24 px**, ancorada na largura de uma tropa à
+  escala 2 (§01). O dossiê não dá número nenhum a isto.
+- **Decide:** tu. O §25 mede `underground_discovered` com alvo de 14 minutos (§32); se a mediana passar disso,
+  o problema é a sinalização da passagem e não a tolerância.
+
+### Q-067 · A roda do rei tem seis segmentos e quatro deles não têm sistema por trás
+- **Onde:** o §24 chama à roda *"o único menu do jogo"* e dá-lhe seis segmentos: construir · recrutar ·
+  ofícios · impulso · expedição · sucessão. Construir e recrutar **já são os dois verbos** e não precisam de
+  menu; ofícios (§09), impulso (§15), expedição (§13) e sucessão (§15) não têm sistema nenhum.
+- **Proposta:** a acção `king_wheel` (Tab) abre, por agora, o **painel de estado do greybox** — o que cada
+  sistema está a pensar, para se poder testar uma mecânica sem ler o registo (§67, GB-03). Uma roda com quatro
+  segmentos que não fazem nada é pior do que não haver roda: ensina um gesto que depois muda.
+- **Decide:** a Fase 2, quando os quatro sistemas existirem. Até lá a tecla está ligada a alguma coisa em vez
+  de estar declarada e por ler, que era o estado anterior.
+
+### Q-068 · O §25 diz três Rastejantes na noite 1; a massa do §74 dá sete
+- **Onde:** a tabela do §25 escreve *"Noite 1: três Rastejantes. Os arqueiros matam-nos do muro."* A massa do
+  dia 1 é `40 + 18 × 1 = 58` (§74) e o Rastejante custa 8 (`creatures.csv`), o que dá **sete** — e é o que o
+  `docs/content/ROT_BY_DAY.md`, gerado dos dados, escreve na linha do dia 1.
+- **Não é um defeito do código:** o `RotSystem` gasta a massa como o §51 manda e o `ROT_BY_DAY` deriva dos
+  mesmos números. A divergência é entre a **prosa do §25** e a **tabela do §74**, e as duas são do dossiê.
+- **Porque é que importa:** o §25 diz que *"a noite 1 é ganha de certeza — está desenhada para isso"*. Sete
+  Rastejantes contra um monarca sem muro não é isso.
+- **Decide:** tu, e é uma das duas — ou a prosa do §25 passa a sete, ou a `mass_base` do `rot.csv` desce. O
+  `AGENTS.md` proíbe mexer no número para calar o teste, e por isso nada foi mexido.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

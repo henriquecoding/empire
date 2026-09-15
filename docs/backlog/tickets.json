@@ -359,7 +359,7 @@
   "depende": "F1-03",
   "feito": "Os quatro testes do prompt passam; a tropa vai ao posto certo e volta à alvorada",
   "fora": "Moral e fuga — é o F1-12.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8"
  },
  "F1-06": {
@@ -404,7 +404,7 @@
   "depende": "F0-06",
   "feito": "Os seis testes do prompt passam e a mancha vê-se no horizonte ao crepúsculo",
   "fora": "Arte da mancha (F1-17), som (F4-03), a Oferta (XIII-04), o Amargueiro (XIII-03)",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "10",
   "contrato": "TAREFA Implementar RotSystem: entidade com posicao, massa e invocacao.\nFICHEIROS src/sim/systems/rot_system.gd, tests/rot_system_test.gd\nCONTRATO\n  func spawn(day: int, side: int, map_width: float) -> void\n  func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]\n  func mass() -> float\n  func feed(amount: float) -> void\n  func position_x() -> float\n  func retreat() -> void\nREGRAS\n  velocidade = 14.0 + 0.9 * dia, px/s\n  massa      = 40.0 + 18.0 * dia + 30.0 * fortalezas_conquistadas\n             + 22.0 * amargueiros + 45.0 * amargueiros_nomeados\n             + 8.0 * min(recusas_nos_ultimos_5_dias, 5)          # §74, §75\n  invoca a cada 4-7 s (RNG com seed), gastando o custo de massa da criatura\n  escolhe a mais cara que cabe e cujo min_day ja passou             # §51, Q-019\n  sobre terreno consagrado: velocidade * 0.6\n  feed(x) reduz massa em x, minimo 0\nDADOS data/rot/default.tres, data/creatures/<id>.tres\nTESTES\n  - dia 1: velocidade == 14.9\n  - dia 10 com 2 fortalezas, campo limpo: massa == 280.0\n  - tick nao devolve SpawnRequest se massa < custo da criatura mais barata\n  - 30 s sobre consagrado percorre 60% da distancia de 30 s em terreno normal\n  - feed(1000) poe massa a 0, nunca negativa\n  - com a mesma seed, duas corridas produzem a mesma sequencia de invocacoes\nLIMITES Sem Node. Devolve pedidos; nao instancia nada.",
   "notas": [
@@ -439,7 +439,7 @@
   "depende": "F1-01",
   "feito": "O teste do dia da asfixia cai entre 9 e 14, e os três perfis batem com o alvo próprio",
   "fora": "Comércio e diplomacia — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Já há modelo de referência: tests/support/reference_model.gd. O sistema tem de bater com ele, ou a divergência vai a ADR.",

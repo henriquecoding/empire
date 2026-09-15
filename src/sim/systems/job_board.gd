@@ -28,8 +28,12 @@ const NENHUM := -1
 ## dos casos, por la alguem era pior do que deixar a vaga aberta.
 const SCORE_MINIMO := 0.0
 
+## Metade. Nao e afinacao: e o centro de uma largura e o centro de um passo.
+const MEIO := 0.5
+
 var slots: Array[JobSlot] = []
 
+var _publicadas: Array[BuildSlot] = []
 var _curva: EconomyCurve
 var _postos: Dictionary = {}
 var _dados: Dictionary = {}
@@ -59,6 +63,36 @@ func post(vaga: JobSlot) -> JobSlot:
 func clear() -> void:
 	slots = []
 	_anterior = {}
+
+
+## As vagas que as obras de pe publicam (§20: "postos publicam vagas"). Chamada
+## uma vez por fase, antes do assign().
+##
+## So reconstroi o quadro quando ele mudou MESMO. Refaze-lo a cada fase apagava
+## a memoria da histerese e punha as tropas a trocar de posto de fase em fase —
+## exatamente o que ela existe para evitar.
+func publish(obras: BuildSystem) -> void:
+	var querem: Array[BuildSlot] = []
+	for obra in obras.standing():
+		if obra.job_id != &"" and obra.job_slots > 0:
+			querem.append(obra)
+	if querem == _publicadas:
+		return
+	clear()
+	for obra in querem:
+		for k in obra.job_slots:
+			post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
+	_publicadas = querem
+
+
+## Onde fica a k-esima vaga de uma obra: repartidas pela largura dela, e nao
+## todas em cima do mesmo pixel. E a mesma regra da fila do §50 — posicoes
+## ATRIBUIDAS e nao emergentes, para que nao vibrem nem se empurrem.
+func _lugar(obra: BuildSlot, k: int) -> float:
+	if obra.job_slots <= 1:
+		return obra.x
+	var passo := obra.width / obra.job_slots
+	return obra.x - obra.width * MEIO + passo * (k + MEIO)
 
 
 func free_slots() -> int:

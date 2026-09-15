@@ -35,8 +35,11 @@ var width: float = 0.0
 ## Um canteiro nao trava ninguem, e e por isso que o §10 lhe chama outra coisa.
 var blocks: bool = false
 
-## O posto que publica quando esta de pe. Vazio = nao publica nenhum.
+## O posto que publica quando esta de pe, e quantas vagas dele. Vazio = nao
+## publica nenhuma. Os numeros vem de BuildingData.job_slots e de
+## WallData.guard_posts_a — nao ha aqui nenhum.
 var job_id: StringName = &""
+var job_slots: int = 0
 
 ## Quanto rende por dia (§06, circuito 1). O EconomySystem divide pelas fases —
 ## o CSV guarda por dia e o sistema reparte (Q-027, fechada).

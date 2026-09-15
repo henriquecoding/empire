@@ -10,13 +10,18 @@
 GODOT ?= godot
 DOSSIE := docs/dossie.html
 
+# `make captura` — o ponto do dia sai daqui, para nao ficar escrito no alvo.
+CAPTURA ?= build/empire.png
+SEGUNDOS ?= 3
+AVANCAR ?= 0
+
 # A versao do actionlint vive aqui e so aqui; o CI chama `make workflows`.
 ACTIONLINT_VERSION := 1.7.7
 ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
-        afirmacoes afirmacoes-escrever importar dados dados-gerar testes \
+        afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
         exportar ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -83,6 +88,12 @@ dados-gerar:  ## Regera os .tres a partir de data/source/*.csv
 
 testes:  ## A suite gdUnit4 inteira
 	./run_tests.sh
+
+captura:  ## Uma fotografia da cena de jogo (precisa de xvfb-run num servidor)
+	mkdir -p build
+	$(GODOT) --path . --resolution 1280x720 tools/captura.tscn -- \
+	  --segundos $(SEGUNDOS) --avancar $(AVANCAR) --saida $(CAPTURA)
+	test -s $(CAPTURA)
 
 exportar:  ## Exporta o Linux e confirma que o binario arranca
 	mkdir -p build
