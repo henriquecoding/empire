@@ -289,10 +289,15 @@
   "depende": "F0-07",
   "feito": "Largar 10 moedas a 60 fps sem picos; a capacidade do saco vem de units.csv",
   "fora": "Construir com a moeda — é o F1-06. A apanha por colisão: a proposta é por distância.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
-   "coin_pickup_px está marcado em _proposed no economy.csv: a apanha é por distância e não por colisão, e mede-se aqui."
+   "Q-061 (nova): o dossiê diz que a moeda é física e dá um só número para ela (coin_pickup_px). A gravidade, o impulso e a dispersão entraram no economy.csv marcados _proposed, pela mesma regra do I4 que levou lá os da câmara.",
+   "A apanha é por DISTÂNCIA e não por colisão, como o ticket propunha e o §53 justifica. Medido: raio 12 px, e a dispersão do arco espalha ±20 px para que duas moedas largadas juntas não se apanhem como uma só.",
+   "Euler semi-implícito — a velocidade antes da posição. A ordem inversa ultrapassa o ápice (26 px medidos onde a conta contínua dá 23) e acumula energia. Encontrado por um teste a falhar.",
+   "A moeda corre no passo 5 do §43, com o movimento: o §43 não tem passo para a moeda, e o passo 8 lê 'moedas largadas', logo precisa delas já pousadas.",
+   "O sorteio do desvio vive no SimLoop e não no sistema: a simulação não pode chamar o RngService (§70) e o portão G2 chumbaria um randf_range lá dentro. Fluxo `economy`, porque onde a moeda cai afecta o jogo.",
+   "Medido: 10 moedas no ar custam 0,9 µs por tick."
   ]
  },
  "F1-02": {

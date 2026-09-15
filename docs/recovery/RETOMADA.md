@@ -20,7 +20,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 193 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 148 casos, 143 a passar, 5 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 162 casos, 157 a passar, 5 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos e 6 saltados antes do F0-07.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save nunca usa `load()`),
@@ -44,7 +44,7 @@ a cada construção._
 
 | O quê | Porquê |
 |---|---|
-| Jogabilidade | Ninguém jogou, e continua a não haver jogo: o ciclo anda e o dia vira, mas não há uma única unidade, moeda, muralha ou Podridão. São os passos 2 a 10 do `SimLoop`, escritos e vazios, cada um com o ticket que o preenche. |
+| Jogabilidade | Ninguém jogou. Já há tropas que andam e moedas que caem e se apanham — mas não há muralha, nem Podridão, nem trabalho a fazer. Faltam os passos 2, 3, 6, 7, 8, 9 e 10 do `SimLoop`, escritos e vazios, cada um com o ticket que o preenche. |
 | GPU e arte | A medição correu sem placa gráfica. O LUT, a luz e as silhuetas continuam por ver. |
 | Os dois *spikes* da Fase 0 | O **F0-09** pede a escala testada *em 1080p e no Deck* — é hardware, e nenhuma medição headless o substitui; a ADR 0001 continua proposta. O **F0-15** pede o `export_aseprite.sh` testado *com um ficheiro real* — e não há um: zero `.aseprite` na árvore, sem Aseprite instalado e sem o Wizard; a ADR 0010 continua proposta. São os dois únicos tickets da Fase 0 por fazer, e nenhum dos dois é código. |
 | CI remoto | O `run_tests.sh` corre localmente; nunca correu num *runner* limpo. É a Q-052. |

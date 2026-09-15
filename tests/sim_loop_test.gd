@@ -163,3 +163,50 @@ func test_as_tropas_andam_pelo_ciclo_e_nao_por_alguem_as_empurrar() -> void:
 	# Saiu a andar e acabou a trabalhar, e o EventBus soube das duas coisas.
 	assert_array(estados).is_equal([UnitFsm.State.GOTO, UnitFsm.State.WORK])
 	EventBus.unit_state_changed.disconnect(ouvinte)
+
+
+func test_largar_uma_moeda_pelo_ciclo_e_determinista_e_anuncia_se() -> void:
+	# O Verbo 1 (§61) inteiro, pelo caminho que o jogo usa: o SimLoop sorteia o
+	# desvio do fluxo `economy`, o sistema puro faz a fisica, e o EventBus diz.
+	SimLoop.start(SEMENTE)
+	var largadas: Array[int] = []
+	var ouvinte := func(_x: float, _faixa: int, quanto: int, _origem: StringName) -> void:
+		largadas.append(quanto)
+	EventBus.coin_dropped.connect(ouvinte)
+
+	SimLoop.drop_coin(100.0, Band.Kind.SURFACE, 1, &"player")
+	SimLoop.step(1.0 / 30.0)
+
+	assert_array(largadas).is_equal([1])
+	assert_int(SimLoop.coins.count()).is_equal(1)
+	EventBus.coin_dropped.disconnect(ouvinte)
+
+	# A mesma semente larga a moeda no mesmo sitio: o desvio sai de um fluxo
+	# determinista, e onde a moeda cai afeta o jogo.
+	_correr(2.0)
+	var onde := SimLoop.coins.xs[0]
+
+	SimLoop.start(SEMENTE)
+	SimLoop.drop_coin(100.0, Band.Kind.SURFACE, 1, &"player")
+	_correr(2.0)
+	assert_float(SimLoop.coins.xs[0]).is_equal(onde)
+
+
+func test_apanhar_uma_moeda_pelo_ciclo_conta_o_que_apanhou() -> void:
+	SimLoop.start(SEMENTE)
+	var vagabundo: UnitData = Registry.entry(&"units", &"vagrant")
+	SimLoop.drop_coin(0.0, Band.Kind.SURFACE, 1, &"player")
+	_correr(2.0)  # deixa assentar
+
+	var apanhado: Array[int] = []
+	var ouvinte := func(_quem: int, quanto: int) -> void: apanhado.append(quanto)
+	EventBus.coin_collected.connect(ouvinte)
+
+	var x := SimLoop.coins.xs[0]
+	var total := SimLoop.collect_coins(7, x, Band.Kind.SURFACE, vagabundo.coin_capacity)
+	SimLoop.step(1.0 / 30.0)
+
+	assert_int(total).is_equal(1)
+	assert_array(apanhado).is_equal([1])
+	assert_int(SimLoop.coins.count()).is_equal(0)
+	EventBus.coin_collected.disconnect(ouvinte)

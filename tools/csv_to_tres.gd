@@ -29,7 +29,17 @@ func _init() -> void:
 
 
 func _run_table(t: Dictionary) -> void:
+	# Um script que nao compila fazia a ferramenta seguir em frente e dizer
+	# "0 problema(s)" no fim: o .tres ficava por gerar e o CI passava. Um portao
+	# que nao consegue sequer ler o que verifica tem de chumbar, nao calar-se.
 	var script: Script = load(t["script"])
+	# NAO basta comparar com null: um script com erro de analise continua a
+	# carregar como GDScript, e so falha quando se lhe chama new(). Antes desta
+	# guarda a ferramenta seguia em frente, nao gerava o .tres, e dizia
+	# "0 problema(s)" — um portao que nao consegue ler o que verifica calava-se.
+	if script == null or not script.can_instantiate():
+		_problems.append("%s: o script %s nao compila" % [t["table"], t["script"]])
+		return
 	var rows := Codec.read_rows("res://data/source/%s.csv" % t["table"])
 	var groups := _parse_groups(t.get("groups", ""))
 	var made: Array[String] = []

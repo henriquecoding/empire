@@ -17,9 +17,19 @@ var state: GameState
 ## As tropas, em colunas (§52). Vive aqui porque e o tick que a faz andar.
 var units: UnitSystem
 
+## As moedas no chao e no ar (§61, o Verbo 1). Criado a pedido: precisa do
+## EconomyCurve do Registry, e nenhum autoload pode depender do _ready() de
+## outro ter corrido primeiro (ADR 0020, regra 8b do AGENTS.md).
+var coins: CoinSystem:
+	get:
+		if _coins == null:
+			_coins = CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
+		return _coins
+
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
 var autosave_enabled: bool = true
 
+var _coins: CoinSystem
 var _running: bool = false
 
 
@@ -34,6 +44,7 @@ func start(semente: int) -> void:
 	state = GameState.new()
 	state.seed = semente
 	units = UnitSystem.new()
+	_coins = null  # um jogo novo comeca sem moedas no chao
 	RngService.configure(semente)
 	ClockService.start()
 	_running = true
@@ -71,6 +82,7 @@ func step(delta: float) -> void:
 			&"unit_state_changed", [mudanca[&"unit_id"], mudanca[&"from"], mudanca[&"to"]]
 		)
 	units.tick_movement(delta)  # 5 · MovementSystem — todo o tick
+	coins.tick(delta)  # 5 · o arco e a queda, antes de o passo 8 as ler
 	# 6 · CombatSystem — todo o tick ....................... F1-07
 	# 7 · EconomySystem — uma vez por fase ................. F1-10
 	# 8 · BuildSystem — todo o tick ........................ F1-01
@@ -79,6 +91,27 @@ func step(delta: float) -> void:
 
 	_espelhar_relogio()
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado
+
+
+## O Verbo 1 (§61). A ponte entre o sistema puro e o que ele nao pode tocar: o
+## sorteio do desvio sai do fluxo `economy` — onde a moeda cai afeta a simulacao,
+## por isso e determinista — e o evento sai do catalogo da §46.
+func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> int:
+	var desvio := RngService.float_range(&"economy", -CoinSystem.DESVIO_MAX, CoinSystem.DESVIO_MAX)
+	var coin_id := coins.drop(state, x, faixa, quanto, desvio)
+	EventBus.queue(&"coin_dropped", [x, int(faixa), quanto, origem])
+	return coin_id
+
+
+## Apanhar, tambem pelo catalogo. `espaco` e o que falta encher no saco, e vem
+## de UnitData.coin_capacity — a capacidade nao esta escrita em lado nenhum aqui.
+func collect_coins(unit_id: int, x: float, faixa: Band.Kind, espaco: int) -> int:
+	var valores := coins.amounts_by_id()
+	var apanhadas := coins.collect(x, faixa, espaco)
+	var total := coins.value_of(apanhadas, valores)
+	if total > 0:
+		EventBus.queue(&"coin_collected", [unit_id, total])
+	return total
 
 
 func _physics_process(delta: float) -> void:

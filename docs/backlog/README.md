@@ -32,7 +32,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 
 | Ticket | Tarefa | Depende | Estado |
 |---|---|---|---|
-| [F1-01](F1-01.md) | Moeda física: largar, arco, queda, apanhar, saco | F0-07 | por fazer |
+| [F1-01](F1-01.md) | Moeda física: largar, arco, queda, apanhar, saco | F0-07 | feito |
 | [F1-02](F1-02.md) | UnitData e as seis unidades do §07 | F0-03 | feito |
 | [F1-03](F1-03.md) | UnitSystem com arrays paralelos e time-slicing | F1-02 | feito |
 | [F1-04](F1-04.md) | Recrutar um vagabundo por uma moeda; ele segue-te | F1-01, F1-03 | por fazer |

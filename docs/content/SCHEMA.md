@@ -266,7 +266,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 87 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 90 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -357,6 +357,9 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 87 linha(s) · §06 §4
 | `bitter_wood_wall_level` | int | v6 · nomes, Colheita e Lenho |  |
 | `bitter_wood_bastion_cost` | int | v6 · nomes, Colheita e Lenho |  |
 | `coin_pickup_px` | float | v6 · nomes, Colheita e Lenho |  |
+| `coin_gravity_px_s2` | float | Moeda fisica — §02, §61, F1-01 |  |
+| `coin_drop_speed_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
+| `coin_drop_spread_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

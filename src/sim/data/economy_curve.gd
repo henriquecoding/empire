@@ -30,6 +30,14 @@ extends Resource
 @export var start_coins: int = 0
 @export var coin_stack_max: int = 0
 
+@export_group("Moeda fisica — §02, §61, F1-01")
+## A fisica do arco. O dossie diz que a moeda e fisica e nao diz com que fisica —
+## os tres estao em _proposed e a pergunta e a Q-061. O coin_pickup_px ja existia
+## acima, no grupo dele.
+@export var coin_gravity_px_s2: float = 0.0
+@export var coin_drop_speed_px_s: float = 0.0
+@export var coin_drop_spread_px_s: float = 0.0
+
 @export_group("Favor e diplomacia — §06, §14, §56")
 @export var favor_decay_per_day: float = 0.0
 @export var diplomat_p_dissolve: float = 0.0
