@@ -158,14 +158,22 @@ func tick_decisions(tick: int) -> Array[Dictionary]:
 ## aterra exatamente no alvo, e e por isso que a FSM nao precisa de tolerancia
 ## nenhuma para saber que chegou.
 ##
+## Quem esta em FIGHT nao anda: a tabela da §52 da a FIGHT o custo "resolucao de
+## combate" e nenhum movimento — quem esta a bater fica onde esta, mesmo com um
+## posto do outro lado do mapa. Quem esta em DEAD tambem nao, por razoes obvias.
+##
 ## A separacao por steering (§53) entra com o MovementSystem proprio; aqui nao
 ## ha vizinhos nem empurroes.
 func tick_movement(delta: float) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
-		if has_targets[i] == 0 or states[i] == UnitFsm.State.DEAD:
+		if has_targets[i] == 0 or not _anda(i):
 			continue
 		xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
+
+
+func _anda(i: int) -> bool:
+	return states[i] != UnitFsm.State.DEAD and states[i] != UnitFsm.State.FIGHT
 
 
 ## As colunas em tipos base, para o save (§62). Sem Object nenhum.
