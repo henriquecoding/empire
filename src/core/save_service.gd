@@ -35,7 +35,13 @@ func _ready() -> void:
 
 ## Grava. Devolve false e escreve o erro se nao conseguiu — quem chama decide se
 ## isso e fatal; perder um autosave nao e, perder o save manual do jogador e.
-func save(slot: int, estado: GameState, rng_states: Dictionary = {}) -> bool:
+##
+## `mundo` sao as coleccoes da §45 — tropas, criaturas, moedas, obras, mancha —
+## ja em tipos base. Sai separado do GameState porque ele e puro e nao conhece
+## sistema nenhum (§70); quem os junta e quem chama, que vive em src/core/.
+func save(
+	slot: int, estado: GameState, rng_states: Dictionary = {}, mundo: Dictionary = {}
+) -> bool:
 	if not _slot_valido(slot):
 		return false
 
@@ -47,6 +53,7 @@ func save(slot: int, estado: GameState, rng_states: Dictionary = {}) -> bool:
 		&"seed": estado.seed,
 		&"rng_states": rng_states,
 		&"state": estado.to_dict(),
+		&"world": mundo,
 	}
 
 	var final := caminho(slot)
@@ -76,6 +83,15 @@ func restore(slot: int) -> GameState:
 	return GameState.from_dict(dados[&"state"] if dados.has(&"state") else {})
 
 
+## As coleccoes da §45 guardadas neste slot. Vazio num save anterior ao F1-14 —
+## e um save de outra versao degrada em vez de recusar (§62).
+func restore_world(slot: int) -> Dictionary:
+	var dados := _ler_cru(slot)
+	if not dados.has(&"world") or typeof(dados[&"world"]) != TYPE_DICTIONARY:
+		return {}
+	return dados[&"world"]
+
+
 ## O estado dos fluxos de RNG guardado neste slot. Sai separado do GameState
 ## porque a simulacao nao pode conhecer o RngService (§70) — quem os junta e
 ## quem chama, que vive em src/core/.
@@ -90,9 +106,9 @@ func restore_rng(slot: int) -> Dictionary:
 ## um contador em memoria: um contador reinicia com o jogo, e o primeiro autosave
 ## de cada sessao escrevia sempre por cima do slot 0 — que e precisamente o slot
 ## que a rotacao existe para nao perder.
-func autosave(estado: GameState, rng_states: Dictionary = {}) -> int:
+func autosave(estado: GameState, rng_states: Dictionary = {}, mundo: Dictionary = {}) -> int:
 	var slot := _slot_mais_antigo()
-	return slot if save(slot, estado, rng_states) else -1
+	return slot if save(slot, estado, rng_states, mundo) else -1
 
 
 ## Um slot vazio primeiro; senao o de sequencia mais baixa. A sequencia e usada
@@ -120,6 +136,23 @@ func _maior_seq() -> int:
 		if dados.has(&"autosave_seq") and typeof(dados[&"autosave_seq"]) == TYPE_INT:
 			maior = maxi(maior, dados[&"autosave_seq"])
 	return maior
+
+
+## O slot mais recente, ou -1 se nao ha nenhum. E a sequencia que manda, pela
+## mesma razao da rotacao: o created_utc tem resolucao de um segundo e tres
+## autosaves no mesmo segundo empatavam.
+func latest_slot() -> int:
+	var escolhido := -1
+	var maior := -1
+	for slot in SLOTS:
+		var dados := _ler_cru(slot)
+		if dados.is_empty():
+			continue
+		var seq: int = dados.get(&"autosave_seq", 0)
+		if seq > maior:
+			maior = seq
+			escolhido = slot
+	return escolhido
 
 
 func has_slot(slot: int) -> bool:

@@ -60,11 +60,31 @@ src/core/event_bus.gd       EventBus      autoload; os 61 sinais da §46
 src/core/rng_service.gd     RngService    autoload; os seis fluxos (§42)
 src/core/registry.gd        Registry      autoload; os .tres por StringName
 src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
+src/core/sim_factory.gd     SimFactory    monta os sistemas puros a partir do Registry
+src/core/event_relay.gd     EventRelay    traduz o que os sistemas devolvem para a §46
+src/core/intent_queue.gd    IntentQueue   a fila de intencoes do §61
+src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar
+src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
+src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
+src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
+src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
+src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
+src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
+src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
+src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
+src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
+src/world/band_view.gd      BandView      desenha UMA faixa, e leva a luz dela
+src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
+src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
+src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)
+src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
+src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
 scenes/boot.tscn                          cena principal do project.godot
+scenes/game.tscn                          a cena de jogo, instanciada pela boot
 
 ## Quem pode importar quem (a tabela da §70, completa — v5.2)
 Caminho                     Classe                 Camada        Pode importar de
@@ -75,12 +95,18 @@ src/sim/state/*.gd          GameState, UnitRec...  simulacao     sim/
 src/sim/systems/*.gd        EconomySystem...       simulacao     sim/
 src/core/clock_service.gd   ClockService           nucleo        sim/
 src/core/sim_loop.gd        SimLoop                nucleo        core/, sim/
+src/core/sim_factory.gd     SimFactory             nucleo        core/, sim/
+src/core/event_relay.gd     EventRelay             nucleo        core/, sim/
+src/core/night_watch.gd     NightWatch             nucleo        core/, sim/
+src/core/verbs.gd           Verbs                  nucleo        core/, sim/
+src/core/intent_queue.gd    IntentQueue            nucleo        nada
 src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada
 src/core/registry.gd        Registry               nucleo        sim/
 src/core/save_service.gd    SaveService            nucleo        sim/
 src/world/*.gd              BandLayers, CameraRig  apresentacao  core/, sim/
 src/actors/*.gd             UnitView, KingView...  apresentacao  core/, sim/
+src/ui/*.gd                 InputRouter, Hud...    apresentacao  core/, sim/
 scenes/boot.tscn            (cena principal)       cenas         tudo
 tools/*.gd, tools/*.py      ferramentas            fora do jogo  tudo; nunca exportado
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado

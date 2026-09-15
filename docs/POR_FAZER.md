@@ -1,6 +1,6 @@
 # Por fazer — o que falta, e o que já se pode correr
 
-> **Isto é uma fotografia, tirada a 15/09/2026 sobre o commit `baec82b`.** A fonte
+> **Isto é uma fotografia, tirada a 15/09/2026, depois do núcleo jogável.** A fonte
 > é `docs/backlog/`, um ficheiro por ticket, e é lá que o estado muda — não aqui.
 > Todos os números desta página saem de comandos que estão escritos ao lado
 > deles, para que se possa desconfiar e voltar a contar. É a mesma regra do
@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **20 feitos** e **33 por fazer** |
+| Tickets | **53**, dos quais **30 feitos** e **23 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 4 de 17 — F1-01, F1-02, F1-03 e F1-04 |
-| Suite | 173 casos, 168 a passar, 5 saltados, 0 falhas, 0 *orphans* |
-| CI | cinco *jobs* verdes na mesma corrida (#19, #20, #21) |
-| Perguntas em aberto | 54, em `docs/QUESTIONS.md` |
+| Fase 1 | 14 de 17 — o F1-01 ao F1-14, inteiros. Faltam o F1-15, o F1-16 e o F1-17 |
+| Suite | 323 casos, 318 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
+| Perguntas em aberto | 62 das 63 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -38,29 +38,24 @@ que faltam.
 
 ---
 
-## Fase 1 — 13 por fazer
+## Fase 1 — 3 por fazer
 
 **Desbloqueados agora** (as dependências estão todas feitas):
 
 | | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
 |---|---|---|---|
-| **F1-05** | JobBoard — o prompt 4 da §29 | F1-03 ✔ | Os quatro testes do prompt passam; a tropa vai ao posto certo e volta à alvorada |
-| **F1-08** | RotSystem — o prompt 2 da §29 | F0-06 ✔ | Os seis testes do prompt passam e a mancha vê-se no horizonte ao crepúsculo |
-| **F1-10** | Economia e a `curve.tres` — o prompt 3 da §29 | F1-01 ✔ | O dia da asfixia cai entre 9 e 14, e os três perfis batem com o alvo próprio |
-| **F1-13** | `CanvasModulate` por faixa, animado pelo `GameClock` | F0-06 ✔ | As seis fases são distinguíveis sem HUD; a noite é castanha (ADR 0011) |
+| **F1-15** | Cenário de combate noturno para afinação | F1-09 ✔ | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
+
+O **F1-09** fechou as três faixas: o `min_day` de cada criatura manda, o Alado
+nasce na faixa aérea e só a torre alta lá chega, e o Cavador sobe do subsolo pela
+passagem que o jogador abriu — a factura do §25 ao minuto 12:00. O **F1-11** pôs
+o *payback* do §06 a ser medido no jogo a andar, e não só nos dados.
 
 **À espera de outro ticket:**
 
 | | O que é | Depende de | Critério de aceitação |
 |---|---|---|---|
-| F1-06 | Muro: cinco níveis, dois caminhos, slots de contacto | F1-05 | A tabela do §10 replicada em `.tres`; `test_muralhas_do_10` passa |
-| F1-07 | Arqueiro: alcance, precisão 0,34 em campo e 1,0 em torre | F1-06 | O tempo até matar medido bate com a tabela do §07, em valor esperado |
-| F1-09 | Criaturas: Rastejante, Alado, Bruto e a tabela de invocação | F1-08 | A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea |
-| F1-11 | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 | *Payback* de 2 dias medido em jogo; `test_payback_do_06` continua a passar |
-| F1-12 | Moral e fuga com o raio do rei | F1-05 | Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados |
-| F1-14 | Save e load do estado de `src/sim/` com `save_version` | F1-10 | Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória |
-| F1-15 | Cenário de combate noturno para afinação | F1-09 | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
-| F1-17 | Arte da mancha: a Podridão e a candeia | F1-08, **ART-02** | Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã |
+| F1-17 | Arte da mancha: a Podridão e a candeia | F1-08 ✔, **ART-02** | Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã |
 | F1-16 | Afinar até sobreviver dez dias ser possível e não trivial | **tudo** | Medido no cenário do F1-15. É o último da fase, por construção. |
 
 ---
@@ -109,26 +104,56 @@ Está toda em dados e em prosa, e nada dela em código.
 
 ---
 
-## O que falta e não é ticket nenhum
+## O que já se joga, e não é ticket nenhum
 
-- **Não existe cena de jogo.** Há duas cenas no projeto: `scenes/boot.tscn` e
-  `scenes/tests/bands.tscn`. Nenhuma põe um monarca, um vagabundo e uma moeda no
-  mundo ao mesmo tempo — o minuto 0:20 do §25 acontece na simulação e é provado
-  por teste, mas não há ecrã onde se veja.
-- **Cinco ações de input estão declaradas e ninguém as lê:** `verb_drop`,
-  `verb_assume`, `king_wheel`, `mark_target` e `pause` existem no `project.godot`
-  com **zero** usos em `src/`. O `verb_drop` é o botão de largar a moeda.
+- **Existe cena de jogo.** `scenes/game.tscn`. A `boot.tscn` continua a ser a cena
+  principal (ADR 0005) — carrega o `Registry`, fixa o idioma e entrega. O que ela
+  entrega é uma região de seis ecrãs com o castelo-árvore ao centro, quatro sítios
+  de muralha, quatro canteiros, dois galinheiros, um pesqueiro, duas casas de
+  treino, duas torres de arqueiros, duas torres altas, duas passagens para o
+  subsolo e nove pessoas por recrutar. As sete fontes de produção são as sete do
+  perfil `balanced` do §06 — é isso que faz do dia da asfixia um número sobre
+  este jogo.
+- **As cinco acções de *input* que estavam declaradas e por ler estão ligadas.**
+  Nenhuma delas muda estado directamente: cada uma enfileira uma **intenção**, e o
+  início do tick seguinte consome-a, pela ordem em que chegou (§61).
   ```bash
   for a in verb_drop verb_assume king_wheel mark_target pause; do
     echo "$a: $(grep -rn "&\"$a\"" src/ --include='*.gd' | wc -l)"; done
   ```
-- **Sete dos onze passos do `SimLoop`** estão escritos como linha vazia, cada um
-  com o ticket que o preenche — 2, 3, 6, 7, 8, 9 e 10. Abrir
-  `src/core/sim_loop.gd` mostra o esqueleto do jogo inteiro de uma vez.
-- **As nove cenas de segmento** não sobreviveram ao ZIP recuperado. É a Q-048.
+- **Nove dos onze passos do `SimLoop`** estão escritos. Faltam dois, e cada um
+  continua a ser uma linha com o ticket que a preenche: o 9 (a Dívida é a XIII-04,
+  a diplomacia é Fase 2) e o 10 (IA do rei inimigo, Fase 2).
+
+## O que falta e não é ticket nenhum
+
+- **O mundo é um *greybox* montado em código, e não as nove cenas de segmento.**
+  Elas não sobreviveram ao ZIP recuperado (Q-048). O `src/world/greybox.gd` põe a
+  mesma região que o §21 descreve — seis ecrãs de 640 px, dois *slots* de
+  construção e uma passagem por segmento, lidos do `segments.csv` — mas em código
+  e não autorada. É a GB-01 que o substitui.
+- **Não há um sprite.** Tudo o que se vê são rectângulos: `src/world/band_view.gd`
+  desenha as tropas, as criaturas, as moedas, as obras e a mancha com `draw_rect`,
+  uma faixa de cada vez.
+  A composição por *slots* da §58 e o `UnitView` existem e estão testados, mas não
+  há arte para lhes dar (ART-01, ART-02).
+- **A roda do rei não existe.** Quatro dos seis segmentos do §24 não têm sistema
+  nenhum por trás. A tecla `king_wheel` abre, por agora, o painel de estado do
+  *greybox* — Q-067.
+- **A derrota acaba a partida e não a recomeça.** O §16 dá ressurreição até ao
+  amanhecer, o §15 dá sucessão, e nenhum dos dois existe: quando o núcleo cai, o
+  relógio pára e é preciso reabrir o jogo. O §46 também não tem sinal de derrota,
+  e inventar um quebrava a regra 7 do `AGENTS.md` — o que há é o mundo a dizê-lo,
+  com o núcleo em ruína.
+- **Não há menu.** O jogo retoma o autosave mais recente, ou começa de novo se não
+  houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
+  é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **54 perguntas em aberto** em `docs/QUESTIONS.md`, à espera de decisão — a mais
-  recente é a Q-063, com os três números que o F1-04 teve de propor.
+- **62 perguntas em aberto** em `docs/QUESTIONS.md`, de 63 escritas — a Q-006
+  fechou com o F1-07. As nove mais recentes (Q-064 a Q-072) são as que encher o
+  tick obrigou a fazer, e duas delas são contradições do dossiê consigo próprio:
+  a Q-068 (o §25 diz três Rastejantes na noite 1 e a massa do §74 dá sete) e a
+  Q-072 (o §06 dá três estados de risco ao rasto e o §49 só escreve dois).
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 
@@ -144,9 +169,46 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 
 | O quê | Como | O que se vê |
 |---|---|---|
-| **A suite** | `make testes` | 173 casos. O `minuto_0_20_test.gd` corre a sequência do §25 inteira pelo `SimLoop` e é a prova a sério do F1-04. |
-| **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A **única coisa interativa** que existe: setas movem o andarilho, a câmara segue, e as colunas provam a matriz do §53. |
-| **A cena principal** | `godot --path .` | Céu, corte de solo, um *placeholder*, e o dia e a fase a avançarem em tempo real. Sem tropas nem moedas. |
-| **Sem instalar o motor** | Artefacto `empire-linux-debug` de qualquer corrida verde do CI | O mesmo que a linha de cima, já exportado (Linux). |
+| **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
+| **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
+| **A suite** | `make testes` | 323 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
+| **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |
-| **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos o export e o dossiê. |
+| **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos os exports e o dossiê. |
+
+### Sem instalar o motor
+
+Cada corrida verde do CI deixa três artefactos, e nenhum deles precisa do Godot:
+
+| Artefacto | Como se corre |
+|---|---|
+| `empire-linux-debug` | `chmod +x empire.x86_64 && ./empire.x86_64` |
+| `empire-windows-debug` | duplo clique no `empire.exe` (o `.pck` tem de ficar ao lado) |
+| `empire-web` | `python3 -m http.server` dentro da pasta, e abrir `http://localhost:8000` |
+
+O *preset* de Web tem `thread_support` desligado de propósito: não precisa dos
+cabeçalhos COOP/COEP e por isso serve-se de qualquer servidor estático. Localmente
+os três saem de `make exportar-tudo`.
+
+### Os comandos, no teclado
+
+| Tecla | O quê | Onde está escrito |
+|---|---|---|
+| **A** · **D** · ← → | Andar | §24, o mapa de comando |
+| **Espaço** | Verbo 1 — largar uma moeda do teu saco | §02, §61 |
+| **E** | Verbo 2 — entrar numa passagem e mudar de faixa | §11, §24 (Q-066) |
+| **Botão direito** | Marcar alvo para os teus | §24, §50 |
+| **Tab** | Painel de estado de cada sistema | Q-067 |
+| **Esc** | Pausa | §24 |
+| **Q** · **Z** | Câmara livre; volta sozinha em 2 s | §24 |
+
+O ciclo é o do Kingdom, e está todo lá: largas uma moeda ao lado de quem não é de
+ninguém e ele passa a ser teu (§25, minuto 0:20); largas moedas em cima de um
+sítio de obra e ela levanta-se **enquanto alguém estiver em cima dela** (§55);
+quem é teu e não tem posto anda atrás de ti, e quem tem vai para o posto quando a
+fase muda (§52); os canteiros de pé largam moeda uma vez por fase (§49); ao
+crepúsculo a mancha nasce na borda e gasta massa a invocar (§51); um muro de pé
+trava quem vem, e quem morre larga o que transportava (§50). E **perde-se**: o
+§10 diz que se o castelo-árvore cair, cai a partida, e é o que acontece — o
+relógio pára e a entrada deixa de responder.

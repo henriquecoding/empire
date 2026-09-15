@@ -203,7 +203,7 @@ func test_apanhar_uma_moeda_pelo_ciclo_conta_o_que_apanhou() -> void:
 	EventBus.coin_collected.connect(ouvinte)
 
 	var x := SimLoop.coins.xs[0]
-	var total := SimLoop.collect_coins(7, x, Band.Kind.SURFACE, vagabundo.coin_capacity)
+	var total := Verbs.collect(SimLoop.coins, 7, x, Band.Kind.SURFACE, vagabundo.coin_capacity)
 	SimLoop.step(1.0 / 30.0)
 
 	assert_int(total).is_equal(1)

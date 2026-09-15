@@ -13,6 +13,11 @@ const SCREEN_BOTTOM := 720
 const AERIAL_BOTTOM := 200
 const SOIL_CUT := SCREEN_BOTTOM - GROUND_LINE  # 203
 
+# A que distância de uma passagem ela ainda se alcança, em px (§11). Não é
+# balanceamento: é a tolerância de um gesto, e o dossiê não lhe dá número —
+# fica ancorada na largura de uma tropa à escala 2 (§01). Ver a Q-066.
+const PASSAGE_PX := 24.0
+
 # Camadas de física — uma por faixa, mais estáticos (§53)
 const L_AERIAL := 1
 const L_SURFACE := 2

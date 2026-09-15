@@ -5,73 +5,111 @@
 # ordem implicita e uma ordem que muda sozinha quando alguem reorganiza um
 # ficheiro.
 #
-# Os passos que ainda nao existem estao presentes como linha, com o ticket que
-# os preenche. Um passo que falta e uma linha que falta, e nao um sistema que
-# ninguem chama e de que ninguem da pela ausencia.
+# O que este ficheiro NAO tem, de proposito: regras. Quem decide e um sistema de
+# src/sim/; quem monta os sistemas e o SimFactory; quem traduz o que eles
+# devolvem para os sinais da §46 e o EventRelay. Aqui fica a ORDEM, e o Verbo 1,
+# que e a unica ponte entre o que o jogador faz e o que a simulacao ve.
+#
+# Passos 9 e 10 continuam por escrever, e continuam como linha: divida e
+# diplomacia sao o F1-14, e a IA do rei inimigo e a Fase 2.
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
 ## aqui; ninguem guarda uma copia.
 var state: GameState
 
-## As tropas, em colunas (§52). Vive aqui porque e o tick que a faz andar.
+## As tropas em colunas (§52) e as invocacoes da Podridao (§51). Sao duas
+## coleccoes porque uma criatura nao se recruta, nao se paga e dissolve-se ao
+## amanhecer — metade das colunas das tropas nao lhe serve de nada.
 var units: UnitSystem
+var creatures: CreatureSystem
 
-## As moedas no chao e no ar (§61, o Verbo 1). Criado a pedido: precisa do
-## EconomyCurve do Registry, e nenhum autoload pode depender do _ready() de
-## outro ter corrido primeiro (ADR 0020, regra 8b do AGENTS.md).
-var coins: CoinSystem:
-	get:
-		if _coins == null:
-			_coins = CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
-		return _coins
+## As obras (§55) e os postos (§52). O mundo escreve-lhes os slots; o tick
+## fa-los andar.
+var builds: BuildSystem
+var jobs: JobBoard
 
-## O minuto 0:20 do §25 (F1-04). Criado a pedido pela mesma razao das moedas.
-var recruits: RecruitSystem:
-	get:
-		if _recruits == null:
-			_recruits = RecruitSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
-		return _recruits
+## O combate (§50), o raio do rei (§07) e a curva (§49).
+var combat: CombatSystem
+var morale: MoraleSystem
+var economy: EconomySystem
 
-## Quem e "tu" no "ele segue-te" do §25. Enquanto nao ha cena de jogo, e quem
-## arranca a partida que o diz; o -1 e um jogo sem rei em campo, e nesse caso
-## ninguem segue ninguem.
+## A mancha e o que ela invoca (§51). O ciclo dela e o passo 2 e vive no
+## NightWatch: nascer, andar, invocar e recuar sao o que o passo FAZ, e nao
+## quatro passos novos na lista.
+var night: NightWatch
+
+## As moedas no chao e no ar (§61, o Verbo 1) e o minuto 0:20 do §25 (F1-04).
+## Nascem no start() e nao no _ready(): precisam do EconomyCurve do Registry, e
+## nenhum autoload pode depender do _ready() de outro ter corrido primeiro
+## (ADR 0020, regra 8b do AGENTS.md).
+var coins: CoinSystem
+var recruits: RecruitSystem
+
+## A fila do §61: a entrada nunca muda estado, enfileira uma intencao.
+var intents := IntentQueue.new()
+
+## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo, e nesse
+## caso ninguem segue ninguem.
 var king_id: int = UnitSystem.NENHUM
+
+## O que o mundo diz a simulacao sobre si proprio: onde fica o nucleo, onde
+## acaba a regiao, e em que x se pode mudar de faixa (§11, §21). Escritos pela
+## cena, lidos pelo tick.
+var core_x: float = 0.0
+var world_width: float = 0.0
+var passages: PackedFloat32Array = PackedFloat32Array()
 
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
 var autosave_enabled: bool = true
 
-var _coins: CoinSystem
-var _recruits: RecruitSystem
 var _running: bool = false
+var _fase: int = UnitSystem.NENHUM
+var _brecha: bool = false
 
 
 func _ready() -> void:
 	state = GameState.new()
 	units = UnitSystem.new()
+	creatures = CreatureSystem.new()
+	builds = BuildSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
+	# §07: um muro a cair poe a fugir quem esta fraco e e barato. O sinal so e
+	# entregue no passo 11, e por isso a brecha conta no tick seguinte.
+	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
 
 
 ## Comeca um jogo novo: semeia, poe o relogio a andar, e da o primeiro dia.
 func start(semente: int) -> void:
 	state = GameState.new()
 	state.seed = semente
-	units = UnitSystem.new()
-	_coins = null  # um jogo novo comeca sem moedas no chao
-	king_id = UnitSystem.NENHUM  # e sem rei em campo ate alguem o pôr la
+	_montar()
+	king_id = UnitSystem.NENHUM  # sem rei em campo ate alguem o pôr la
 	RngService.configure(semente)
 	ClockService.start()
 	_running = true
 
 
 ## Retoma um save. Repoe o estado, o relogio e a sequencia de cada fluxo — o
-## ESTADO dos fluxos, nao a semente, senao a noite recomeca (§42).
+## ESTADO dos fluxos, nao a semente, senao a noite recomeca (§42). As coleccoes
+## entram a seguir, com load_world(), depois de a regiao estar montada.
 func resume(estado: GameState, rng_states: Dictionary) -> void:
 	state = estado
+	_montar()
 	RngService.configure(estado.seed)
 	RngService.restore(rng_states)
 	ClockService.seek(estado.day, estado.clock_elapsed)
 	_running = true
+
+
+## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
+## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
+func world() -> Dictionary:
+	return SimSave.world(units, creatures, coins, builds, night.rot, king_id)
+
+
+func load_world(mundo: Dictionary) -> void:
+	king_id = SimSave.restore(units, creatures, coins, builds, night.rot, mundo)
 
 
 func stop() -> void:
@@ -83,30 +121,52 @@ func running() -> bool:
 	return _running
 
 
+## A pausa do §24, que nao e o stop(): o relogio fica onde esta e volta a andar.
+func set_paused(pausado: bool) -> void:
+	_running = not pausado
+	ClockService.running = not pausado
+	EventBus.queue(&"game_paused", [pausado])
+	EventBus.flush()  # sem tick nao ha passo 11 que entregue isto
+
+
 ## Um passo. Publico para que um teste possa correr um dia inteiro em
 ## milissegundos sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
+	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages))
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
-	# 2 · RotSystem — todo o tick .......................... F1-08
-	# 3 · JobSystem — uma vez por fase ..................... F1-05
-	# 4 · quem quer a moeda e quem anda atras do rei: os dois ESCREVEM alvo, que
-	#     e o que o passo 4 escreve ("estado, alvo, intencao de movimento"). Vem
-	#     antes da FSM para que ela ja decida sobre o alvo deste tick.
+	var mudou := _mudanca_de_fase()
+	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
+	if mudou:  # 3 · JobSystem — uma vez por fase
+		jobs.publish(builds)
+		jobs.assign(units, _fase)
+	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
+	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
+	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
+	#     tick.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
-	for mudanca in units.tick_decisions(state.tick):  # 4 · FSM, 1/6 por tick
-		EventBus.queue(
-			&"unit_state_changed", [mudanca[&"unit_id"], mudanca[&"from"], mudanca[&"to"]]
-		)
+	EventRelay.combat(combat.choose(units, creatures, builds, passages))
+	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
+	_brecha = false
+	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
 	units.tick_movement(delta)  # 5 · MovementSystem — todo o tick
-	coins.tick(delta)  # 5 · o arco e a queda, antes de o passo 8 as ler
-	_apanhar_do_chao()  # 5 · apanhar e ser recrutado sao consequencia de chegar
-	# 6 · CombatSystem — todo o tick ....................... F1-07
-	# 7 · EconomySystem — uma vez por fase ................. F1-10
-	# 8 · BuildSystem — todo o tick ........................ F1-01
-	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... F1-14
+	creatures.tick_movement(delta)
+	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
+	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
+	#     chegada — da moeda ou de quem a vai buscar — e por isso vem a seguir ao
+	#     movimento e nao no passo do sistema que os trata (Q-063, Q-064). A obra
+	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
+	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
+	EventRelay.builds(builds.absorb(coins))
+	EventRelay.pickup(recruits.pickup(units, coins, king_id))
+	Verbs.sweep(units, coins, king_id)
+	_largar(EventRelay.combat(combat.resolve(units, creatures, builds, _roll)))  # 6 · combate
+	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
+		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
+	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
+	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
 	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
 
 	_espelhar_relogio()
@@ -123,64 +183,43 @@ func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> i
 	return coin_id
 
 
-## Apanhar, tambem pelo catalogo. `espaco` e o que falta encher no saco, e vem
-## de UnitData.coin_capacity — a capacidade nao esta escrita em lado nenhum aqui.
-func collect_coins(unit_id: int, x: float, faixa: Band.Kind, espaco: int) -> int:
-	var valores := coins.amounts_by_id()
-	var apanhadas := coins.collect(x, faixa, espaco)
-	var total := coins.value_of(apanhadas, valores)
-	if total > 0:
-		EventBus.queue(&"coin_collected", [unit_id, total])
-	return total
+func _montar() -> void:
+	units = UnitSystem.new()
+	creatures = CreatureSystem.new()
+	builds = BuildSystem.new()
+	jobs = SimFactory.job_board()
+	combat = SimFactory.combat(jobs)
+	morale = SimFactory.morale()
+	economy = SimFactory.economy()
+	night = NightWatch.new()
+	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
+	recruits = RecruitSystem.new(SimFactory.curve())
+	_fase = UnitSystem.NENHUM
+	_brecha = false
+	intents.clear()
 
 
-## Passo 5 do §43, a seguir ao movimento: quem chegou a uma moeda apanha-a, e
-## quem ainda nao era de ninguem e acabou de apanhar o seu preco passa a ser teu.
-##
-## As duas coisas sao consequencia de ter CHEGADO, e por isso correm depois do
-## movimento e nao antes. O §43 nao tem um passo para a apanha — a Q-063 diz
-## porque e que ela mora aqui, como a Q-061 disse do arco.
-func _apanhar_do_chao() -> void:
-	if coins.count() == 0:
-		return
-	var dono_do_rei := _dono_do_rei()
-	# Por id crescente (§42): duas unidades a caminho da mesma moeda tem de dar
-	# sempre a mesma vencedora, e a ordem das colunas nao e estavel.
-	var por_id := units.ids.duplicate()
-	por_id.sort()
-	for unit_id in por_id:
-		var i := units.index_of(unit_id)
-		var moeda := units.target_ids[i]
-		if moeda == UnitSystem.NENHUM or not units.alive(i):
-			continue
-		var espaco := units.coin_capacities[i] - units.carried_coins[i]
-		if espaco <= 0:
-			continue
-		var era_de_ninguem := recruits.vagrant(units, i)
-		var apanhado := coins.collect_one(moeda, units.xs[i], units.bands[i] as Band.Kind, espaco)
-		if apanhado <= 0:
-			continue
-		units.target_ids[i] = UnitSystem.NENHUM
-		units.carried_coins[i] += apanhado
-		EventBus.queue(&"coin_collected", [unit_id, apanhado])
-		if not era_de_ninguem:
-			continue
-		var preco := units.recruit_costs[i]
-		if recruits.hire(units, unit_id, dono_do_rei, apanhado, preco):
-			# O §46 da o coin_spent a "Build, recrutamento" — e este e o
-			# recrutamento. Nao ha sinal para "deixou de ser de ninguem": o
-			# unit_promoted e do JobSystem no catalogo, e usa-lo aqui era
-			# inventar. Fica na Q-063.
-			EventBus.queue(&"coin_spent", [preco, &"recruit"])
+## O roll de precisao do §50, ligado ao fluxo `combat`: o arqueiro falhar um tiro
+## nao muda a criatura que a Podridao invoca (§42).
+func _roll() -> float:
+	return RngService.unit_float(&"combat")
 
 
-## De quem sao os recrutados. Sem rei em campo nao ha recrutamento: a moeda foi
-## apanhada na mesma — o §25 desenha isso — mas nao comprou ninguem.
-func _dono_do_rei() -> int:
-	var rei := units.index_of(king_id)
-	if rei == UnitSystem.NENHUM:
-		return RecruitSystem.SEM_DONO
-	return units.owners[rei]
+## Verdadeiro quando a fase mudou NESTE passo. Lido do relogio e nao de um sinal:
+## os sinais so sao entregues no passo 11, e os passos 3 e 7 correm antes disso.
+func _mudanca_de_fase() -> bool:
+	var agora := int(ClockService.clock.current_phase())
+	if agora == _fase:
+		return false
+	_fase = agora
+	return true
+
+
+func _largar(moedas: Array[Dictionary]) -> void:
+	for m in moedas:
+		drop_coin(
+			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]
+		)
 
 
 func _physics_process(delta: float) -> void:
@@ -200,4 +239,4 @@ func _no_amanhecer(dia: int) -> void:
 	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai seria gravar antes
 	# de ter acontecido alguma coisa.
 	if autosave_enabled and _running and dia > 1:
-		SaveService.autosave(state, RngService.snapshot())
+		SaveService.autosave(state, RngService.snapshot(), world())

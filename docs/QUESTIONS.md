@@ -45,13 +45,13 @@
   resto (`flee_health`). Confirma.
 - **Bloqueia:** F1-12.
 
-### Q-006 · Quem atinge a faixa aérea?
+### Q-006 · Quem atinge a faixa aérea? — **fechada pelo F1-07**
 - **Onde:** §07 (Libélula: "só atacável por arqueiros e torres altas"; Alado: "obriga a torre alta") e §10.
-- **O que diverge:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
-- **Proposta:** geometria — um arqueiro no chão não chega aos 200 px do topo com 200 px de alcance; em muro ou
-  torre de arqueiros também não; **só a torre alta** (`hits_aerial`) e os arqueiros de copa. Os dados já dizem
-  `targets_bands = SURFACE|AERIAL` no arqueiro; o alcance vertical decide.
-- **Bloqueia:** F1-07, F1-09.
+- **O que divergia:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
+- **Decisão — a proposta, tal como estava escrita:** o `targets_bands` diz o que a unidade **pode** apontar; a
+  faixa dela própria chega sempre; qualquer outra só com um posto que lhe dê altura — o `hits_aerial` do
+  `effect_params`, que hoje só a `high_tower` tem. Está em `src/sim/systems/posts.gd` e tem três testes.
+- **É uma mudança de comportamento:** antes disto um arqueiro no chão abatia o Alado.
 
 ### Q-007 · Horta: "tropas baratíssimas" quanto?
 - **Onde:** §04. Nenhum número. **Proposta:** −1 moeda no recrutamento de todas as tropas da Horta (mínimo 1).
@@ -122,11 +122,19 @@
 - **Onde:** §10 ("não é construído nem destruído"; "se cair, cai a partida"). **Proposta nos dados:** 1000 de vida,
   sem estados de ruína.
 
-### Q-033 · A curva do §06 e os edifícios reais
+### Q-033 · A curva do §06 e os edifícios reais — **medida pelo F1-11**
 - **Onde:** §06 (o simulador usa "fontes" abstratas: base = 3 + 2,6 × fontes) contra os edifícios de `buildings.csv`
   (2 a 5 por dia cada).
 - **Proposta:** o `EconomySystem` (F1-10) calcula o rendimento a partir dos edifícios; o teste de design compara-o
   com o modelo de referência e o dia de asfixia tem de continuar entre 9 e 14. Se não bater, afina-se `economy.csv`.
+- **O que o F1-11 mediu, e não decidiu:** o `EconomySystem.built_income()` soma os edifícios reais e o
+  `sources()` conta-os. A região do *greybox* tem as **7 fontes** do perfil `balanced` — quatro canteiros,
+  dois galinheiros e um pesqueiro — e rende **17 moedas no dia 1**. O simulador do §06, com as mesmas 7
+  fontes, dá **21,2**. O abstrato é 25% mais generoso do que o concreto, e o `producao_test` fixa a
+  diferença para que ela não mude em silêncio.
+- **O que fica por decidir:** qual dos dois manda. Baixar `curve_income_per_source` de 2,6 para ≈2,0 fecha a
+  diferença e move o dia da asfixia; subir os `yield_per_day` fecha-a do outro lado e mexe em seis edifícios.
+  É balanceamento e é do F1-16 — nenhum número de `data/` foi mexido aqui.
 
 ### Q-034 · A roda do rei pausa o jogo? E porque é que o teclado vai de 1 a 5?
 - **Onde:** §24 (impulso: "Tab → 1–5"; a roda tem 6 segmentos e há 6 impulsos) e §05 (a roda é o corpo do rei).
@@ -488,6 +496,112 @@
   `coin_spent(1, "recruit")`, que o §46 dá a *"Build, recrutamento"*; (b) um vagabundo por recrutar passa a
   ter o `set_target_x` **sobreposto** de seis em seis ticks por quem procura moeda — é o que se quer, mas é uma
   mudança de contrato para quem chamava esse método à mão. **Decide:** tu, e o primeiro playtest.
+
+## Abertas — abertas ao encher o tick e a montar a cena de jogo
+
+### Q-064 · O §55 dá estados à obra e não dá trabalho a nenhum deles
+- **Onde:** a §55 escreve `EMPTY → SCAFFOLD → BUILDING(ratio) → DONE → DAMAGED(ratio) → RUIN` e diz que *"o
+  progresso avança enquanto ele estiver presente"*. Não diz **quanto** avança, nem quanto tempo demora um muro.
+  O `buildings.csv` tem `build_work` para os edifícios (regra proposta: 2 s × custo); o `walls.csv` não tem
+  coluna nenhuma para isso.
+- **Proposta, e é a mais reversível que há:** o muro herda a mesma regra proposta dos edifícios — `build_work =
+  2 s × custo — lida do próprio canteiro em vez de repetida à mão (`Greybox._segundos_por_moeda()`). Uma
+  estacaria de 6 moedas leva 12 s de construtor presente; um bastião de 65 leva 130.
+- **E uma mão vale uma mão:** o progresso avança `delta × quantos estão em cima da obra`, **todos por igual**.
+  O bónus do construtor é a habilidade do §09 (`builder_wall_bonus`, +8% de defesa) e não uma velocidade; dar-lhe
+  aqui um multiplicador era inventar um número que o dossiê não escreve. Reparar uma obra `DAMAGED` com moeda
+  também ficou de fora: é o posto `repair` do F1-05 mais a habilidade, e nenhum dos dois tem número.
+- **Decide:** tu, e o primeiro *playtest* — é exactamente o tipo de número que o §67 diz que o greybox fecha.
+
+### Q-065 · O §49 converte matéria em moeda por um ofício, e os ofícios são Fase 2
+- **Onde:** o §49 tem três circuitos: produzir matéria, **convertê-la** por um ofício, e comércio. O circuito 2
+  precisa do `CraftData` e do cozinheiro/ferreiro do §09, que são o F1-11 e a Fase 2. Sem ele a matéria acumula
+  dentro do edifício e nunca sai — o que é o mesmo que não haver economia nenhuma no jogo.
+- **Proposta:** enquanto não houver ofícios, a conversão é **1:1 e imediata**: um canteiro de
+  `yield_per_day` 2 larga 2 moedas por dia, repartidas pelas seis fases (Q-027, fechada: *"o CSV guarda por dia
+  e o sistema divide pelas fases"*). A moeda cai **por cima do edifício que a produziu**, que é a única parte
+  em que o §49 não admite alternativa: *"nunca escreve um inventário do jogador. Não existe inventário."*
+- **O que isto NÃO decide:** a taxa de conversão real dos ofícios. Quando o F1-11 entrar, a matéria passa a
+  parar no `stock` e o ofício é que a tira de lá — e esta linha desaparece sem que mais nada mude.
+- **Decide:** o F1-11.
+
+### Q-066 · O Verbo 2 tem quatro usos no §24 e três deles não têm sistema
+- **Onde:** o §24 dá ao Verbo 2 quatro contextos — *"trocar de classe, montar, entrar em passagem, subir em
+  criatura"*. Classes são o §08, montarias o §12, e subir em criatura a habilidade do Trepador (§08): nenhum
+  dos três existe. **Entrar em passagem** existe: a §11 dá as três faixas, o `units.csv` dá
+  `can_change_band` ao monarca, e o `segments.csv` dá uma passagem por segmento.
+- **Proposta:** o Verbo 2 faz **só** a passagem entre faixas, e a tolerância do gesto — a que distância da
+  passagem a tecla ainda pega — é `SimFactory.PASSAGEM_PX` = **24 px**, ancorada na largura de uma tropa à
+  escala 2 (§01). O dossiê não dá número nenhum a isto.
+- **Decide:** tu. O §25 mede `underground_discovered` com alvo de 14 minutos (§32); se a mediana passar disso,
+  o problema é a sinalização da passagem e não a tolerância.
+
+### Q-067 · A roda do rei tem seis segmentos e quatro deles não têm sistema por trás
+- **Onde:** o §24 chama à roda *"o único menu do jogo"* e dá-lhe seis segmentos: construir · recrutar ·
+  ofícios · impulso · expedição · sucessão. Construir e recrutar **já são os dois verbos** e não precisam de
+  menu; ofícios (§09), impulso (§15), expedição (§13) e sucessão (§15) não têm sistema nenhum.
+- **Proposta:** a acção `king_wheel` (Tab) abre, por agora, o **painel de estado do greybox** — o que cada
+  sistema está a pensar, para se poder testar uma mecânica sem ler o registo (§67, GB-03). Uma roda com quatro
+  segmentos que não fazem nada é pior do que não haver roda: ensina um gesto que depois muda.
+- **Decide:** a Fase 2, quando os quatro sistemas existirem. Até lá a tecla está ligada a alguma coisa em vez
+  de estar declarada e por ler, que era o estado anterior.
+
+### Q-068 · O §25 diz três Rastejantes na noite 1; a massa do §74 dá sete
+- **Onde:** a tabela do §25 escreve *"Noite 1: três Rastejantes. Os arqueiros matam-nos do muro."* A massa do
+  dia 1 é `40 + 18 × 1 = 58` (§74) e o Rastejante custa 8 (`creatures.csv`), o que dá **sete** — e é o que o
+  `docs/content/ROT_BY_DAY.md`, gerado dos dados, escreve na linha do dia 1.
+- **Não é um defeito do código:** o `RotSystem` gasta a massa como o §51 manda e o `ROT_BY_DAY` deriva dos
+  mesmos números. A divergência é entre a **prosa do §25** e a **tabela do §74**, e as duas são do dossiê.
+- **Porque é que importa:** o §25 diz que *"a noite 1 é ganha de certeza — está desenhada para isso"*. Sete
+  Rastejantes contra um monarca sem muro não é isso.
+- **Decide:** tu, e é uma das duas — ou a prosa do §25 passa a sete, ou a `mass_base` do `rot.csv` desce. O
+  `AGENTS.md` proíbe mexer no número para calar o teste, e por isso nada foi mexido.
+
+### Q-069 · "CanvasModulate por faixa" pede a única coisa que o motor não faz
+- **Onde:** o título do F1-13. O Godot aceita **um** `CanvasModulate` por canvas — é o que a documentação dele
+  diz e é o que o nome quer dizer: ele modula *o canvas*. Três faixas no mesmo canvas não podem ter três.
+- **Proposta:** um nó por faixa (`src/world/band_view.gd`) com o seu `modulate`. É a mesma multiplicação, e
+  três nós irmãos podem tê-la diferente. A alternativa — três `CanvasLayer`, um por faixa — dava três
+  `CanvasModulate` a sério, mas custava sincronizar a transformação da câmara à mão em cada um, porque um
+  `CanvasLayer` não a herda. Isso é a pilha de parallax da §59 e é o ART-03; quando ela existir, este ficheiro
+  passa a viver lá dentro sem que a conta mude.
+- **E o segundo número que não existe:** o §80 dá `night_value_floor` 0,11 para o chão contra 0,16 do
+  ambiente, e mais nada. Daí sai uma razão que vale em todas as fases; o subsolo leva-a duas vezes, porque não
+  há número para ele e inventar um era escrever balanceamento em código (regra 3 do `AGENTS.md`).
+- **Decide:** o ART-03, quando trouxer as seis camadas de parallax.
+
+### Q-070 · Os dois caminhos da muralha são uma decisão, e não há onde a tomar
+- **Onde:** o §10 escreve *"cada segmento oferece duas melhorias mutuamente exclusivas por nível. Nunca dá
+  para ter as duas — **e essa é a decisão**"*. A **Guarnição** põe postos e deixa o muro frágil; a
+  **Fortificação** põe vida e tira dano de saída. O `walls.csv` tem as quatro colunas para as duas.
+- **O sistema está inteiro:** `BuildSlot.choose_path()` aceita a escolha até ao nível 1 — *"nunca dá para ter
+  as duas"* também quer dizer que não se troca a meio — e a partir daí a vida e os postos saem do caminho
+  escolhido. O que não existe é **onde carregar**: a roda do rei é a Q-067 e os dois verbos já estão tomados.
+- **Proposta, por omissão:** `FORTIFICACAO`, que é a coluna que o §10 escreve como principal (é a coluna
+  "Vida (B)" da tabela). Ninguém escolhe, e por isso escolhe-se a que o dossiê põe à frente.
+- **Decide:** a Fase 2, com a roda. Até lá é uma linha no `greybox.gd` e muda-se num sítio.
+
+### Q-071 · A fila do §50 mede-se do centro do muro, e um muro tem largura
+- **Onde:** o §50 dá a fila como `wall.x + sign(...) * (30 + i * 18)`. O modelo dele não tem largura de muro;
+  estes têm — a estacaria tem 64 px de silhueta. Trinta píxeis medidos do **centro** punham o primeiro da fila
+  **dentro** dela, e quem tem *slot* de contacto ficava a 32 px de um alvo que alcança 24.
+- **Proposta:** as distâncias medem-se da **face**. Quem tem *slot* fica na face (distância zero ao que vai
+  bater); quem espera fica em `face + 30 + i × 18`, com o teto de 120 na mesma. O espaçamento do §50 mantém-se
+  intacto — o que muda é de onde se conta, e é a única leitura que funciona com um muro que ocupa espaço.
+- **Decide:** ninguém, se o greybox não desmentir. É geometria, não equilíbrio.
+
+### Q-072 · O §06 diz que o pesqueiro é "imune ao rasto" e os dados só sabem dizer duas coisas
+- **Onde:** a coluna *Risco* do §06 dá três estados diferentes — a plantação é *"destruída pelo rasto"*, o
+  pesqueiro é *"imune ao rasto"*, e o galinheiro não diz nada. O §49 só escreve dois: *"a plantação no rasto é
+  destruída; as outras só param"*. O `buildings.csv` tem uma bandeira, `destroyed_by_rot_trail`, e uma
+  bandeira representa dois estados, não três.
+- **O que está implementado:** os dois do §49. O pesqueiro não é arrasado (a bandeira está a `false`) mas
+  **pára** enquanto o rasto o cobrir, como o galinheiro. A terceira leitura — produzir na mesma dentro do
+  rasto — não está escrita em lado nenhum dos dados.
+- **Proposta:** "imune" quer provavelmente dizer *fora do rasto*, e não *dentro dele a produzir*: o pesqueiro
+  está na água e o rasto é de terra. Com geometria de água no segmento (GB-01) a frase resolve-se sozinha e
+  sem coluna nova. Enquanto não houver água autorada, fica como está.
+- **Decide:** o GB-01, ou uma terceira coluna em `buildings.csv` se o playtest a pedir.
 
 ## Resolvidas na v5.2 (reversíveis)
 

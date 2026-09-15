@@ -359,7 +359,7 @@
   "depende": "F1-03",
   "feito": "Os quatro testes do prompt passam; a tropa vai ao posto certo e volta à alvorada",
   "fora": "Moral e fuga — é o F1-12.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8"
  },
  "F1-06": {
@@ -371,7 +371,7 @@
   "depende": "F1-05",
   "feito": "A tabela do §10 replicada em .tres; o teste test_muralhas_do_10 passa",
   "fora": "O Lenho Amargo no nível 4 — é o XIII-03.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Q-002 fechada: manda a tabela (6 · 11 · 20 · 36 · 65), não a fórmula do §06."
@@ -387,7 +387,7 @@
   "depende": "F1-06",
   "feito": "O tempo até matar medido bate com a tabela do §07, em valor esperado",
   "fora": "Criaturas — é o F1-09.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Q-003: a tabela do §07 usa 1/3 e os dados usam 0,34. O teste tem 3% de tolerância."
@@ -404,7 +404,7 @@
   "depende": "F0-06",
   "feito": "Os seis testes do prompt passam e a mancha vê-se no horizonte ao crepúsculo",
   "fora": "Arte da mancha (F1-17), som (F4-03), a Oferta (XIII-04), o Amargueiro (XIII-03)",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "10",
   "contrato": "TAREFA Implementar RotSystem: entidade com posicao, massa e invocacao.\nFICHEIROS src/sim/systems/rot_system.gd, tests/rot_system_test.gd\nCONTRATO\n  func spawn(day: int, side: int, map_width: float) -> void\n  func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]\n  func mass() -> float\n  func feed(amount: float) -> void\n  func position_x() -> float\n  func retreat() -> void\nREGRAS\n  velocidade = 14.0 + 0.9 * dia, px/s\n  massa      = 40.0 + 18.0 * dia + 30.0 * fortalezas_conquistadas\n             + 22.0 * amargueiros + 45.0 * amargueiros_nomeados\n             + 8.0 * min(recusas_nos_ultimos_5_dias, 5)          # §74, §75\n  invoca a cada 4-7 s (RNG com seed), gastando o custo de massa da criatura\n  escolhe a mais cara que cabe e cujo min_day ja passou             # §51, Q-019\n  sobre terreno consagrado: velocidade * 0.6\n  feed(x) reduz massa em x, minimo 0\nDADOS data/rot/default.tres, data/creatures/<id>.tres\nTESTES\n  - dia 1: velocidade == 14.9\n  - dia 10 com 2 fortalezas, campo limpo: massa == 280.0\n  - tick nao devolve SpawnRequest se massa < custo da criatura mais barata\n  - 30 s sobre consagrado percorre 60% da distancia de 30 s em terreno normal\n  - feed(1000) poe massa a 0, nunca negativa\n  - com a mesma seed, duas corridas produzem a mesma sequencia de invocacoes\nLIMITES Sem Node. Devolve pedidos; nao instancia nada.",
   "notas": [
@@ -422,11 +422,19 @@
   "depende": "F1-08",
   "feito": "A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea",
   "fora": "O Aríete de lodo e a Consumidora — Fase 2. O Zelador — XIII-04.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
-   "Q-001 e Q-038: os arqueiros param o Aríete? Com a massa nova da §74 a conta muda; recalcular antes de desmarcar o teste.",
-   "Q-006: quem atinge a faixa aérea?"
+   "**A tabela de invocação já era dados, e continua a ser.** As seis criaturas do §07 estão em `creatures.csv` desde o F0-04, com `min_day` 1, 4, 7, 10, 14 e 20. O que este ticket fez foi pôr o `min_day` a valer: o `RotSystem.pick()` do F1-08 já o lia, e agora há um teste por criatura a provar que nenhuma entra antes do dia dela — nem por a massa chegar.",
+   "**A noite 4 obriga a torre alta, e obriga por omissão e não por regra.** Não há nenhum `if dia == 4` em lado nenhum. Há três factos que se cruzam: o Alado nasce na faixa `AERIAL`, o `Posts.reaches()` fechado na Q-006 diz que só a vaga com `hits_aerial` chega a outra faixa, e a `high_tower` é a única obra que a dá. O jogador descobre isto quando seis arqueiros disparam toda a noite e nada cai — que é o que o §07 quer ensinar sem uma linha de tutorial.",
+   "**A assimetria é de propósito e é o que torna o Alado uma ameaça:** ele chega ao chão (`targets_bands` = `SURFACE`) e o chão não chega a ele. Uma criatura que só se atinge de um sítio, e que ataca de qualquer sítio, é uma mudança de plano; uma que se atinge de todo o lado é só mais vida a abater. Dois testes fixam as duas metades.",
+   "**Um muro não trava quem voa.** O `TargetPicker` só mete uma obra à frente do alvo quando a obra está na faixa dele — o muro está na `SURFACE` e o Alado não. Isto sai de graça da regra das faixas e não de um caso especial, e é o mesmo motivo por que um muro não trava o Cavador.",
+   "**`src/sim/systems/passages.gd` (novo) é a factura do §25 ao minuto 12:00.** *\"Noite 2: um Rastejante entra pela passagem que abriste. Toda a decisão tem custo.\"* Uma passagem é um caminho aberto nos dois sentidos: quem tem `can_change_band` — hoje só o Cavador — sobe do subsolo à superfície ao passar por uma, e sem passagem nenhuma fica em baixo até ao núcleo. A tolerância é a `Band.PASSAGE_PX`, 24 px, a mesma do monarca: uma passagem não é mais larga para uns do que para outros.",
+   "**A subida é um evento e não um efeito secundário.** O `Passages.surface()` devolve quem subiu, o `CombatSystem` reencaminha, o `EventRelay` traduz em `passage_used` (§46) e o `SimLoop` passa as passagens do mundo. Nenhum sistema puro emite sinais — é o passo 11 da §43 a fazê-lo.",
+   "**O `Passages` nasceu fora do `TargetPicker` por causa do limite das 250 linhas.** Com o `_emergir` lá dentro o ficheiro ia a 274; o limite obrigou à separação e a separação está certa — escolher alvo e mudar de faixa são duas coisas.",
+   "Q-006 fica fechada desde o F1-07 e é este ticket que a paga: sem o Alado a viver mesmo na faixa aérea, a regra do `Posts.reaches()` não custava nada a ninguém.",
+   "Q-001 e Q-038 continuam abertas e continuam fora: o Aríete de lodo é Fase 2, e é ele que a conta dos 96,6 s do §07 põe em causa.",
+   "Q-068 mantém-se como o F1-08 a deixou: o §25 diz três Rastejantes na noite 1 e a massa do §74 dá sete. Nenhum número de `data/` foi mexido para calar um teste."
   ]
  },
  "F1-10": {
@@ -439,7 +447,7 @@
   "depende": "F1-01",
   "feito": "O teste do dia da asfixia cai entre 9 e 14, e os três perfis batem com o alvo próprio",
   "fora": "Comércio e diplomacia — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
    "Já há modelo de referência: tests/support/reference_model.gd. O sistema tem de bater com ele, ou a divergência vai a ADR.",
@@ -455,10 +463,16 @@
   "depende": "F1-10",
   "feito": "Payback de 2 dias medido em jogo; o teste test_payback_do_06 continua a passar",
   "fora": "Conversão e comércio — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
-   "Q-033: a curva abstrata do §06 contra os edifícios reais."
+   "**O payback do §06 está medido no jogo a andar, e não só nos dados.** O `design_data_test` já conferia a coluna *Payback* contra os `.tres` — custo a dividir pelo rendimento diário. O `tests/producao_test.gd` prova a outra metade: uma obra de pé larga mesmo esse número de moedas por dia com os onze passos do §43 a correr à volta. O canteiro e o pesqueiro pagam-se em dois dias; o galinheiro não, e paga-se em três — os 2,7 da tabela.",
+   "**Entre o `2.0` do CSV e duas moedas no chão estão seis fases, um `stock` fraccionário e um `floor`.** É aí que o erro cabia: `2/6` por fase dá `0,99999…` a meio do dia e um `floor` mal posto come uma moeda por dia sem falhar teste nenhum. O `stock` não se reinicia entre fases e é isso que corrige o resto — há um teste só para isto, por edifício.",
+   "**Um pesqueiro, e só um, e por duas razões que coincidem.** O `requires_biome_feature` estava escrito em `buildings.csv` desde o F0-04 e **não era lido por ninguém**; agora quem o lê é quem PÕE — o `Greybox.cabe_no_bioma()`. Um sítio de obra que o bioma não sustenta não chega a existir, e por isso não há um `if` disto dentro do tick. O `enramados_start_base_01` tem `resource = water` (uma água, não duas), e com um pesqueiro a região fica com as **sete fontes** do perfil `balanced` do §06 — o que faz do dia da asfixia medido aqui um número sobre este jogo e não sobre um *slider*.",
+   "**Q-033, medida em vez de afirmada.** `EconomySystem.sources()` conta as fontes de pé e `built_income()` soma os edifícios reais. Com as sete fontes da região: **17 moedas no dia 1** contra as **21,2** do simulador abstrato do §06. O abstrato é 25% mais generoso, e o teste fixa a diferença para que ela não mude em silêncio. Qual dos dois manda é balanceamento, é do F1-16, e nenhum número de `data/` foi mexido aqui.",
+   "**O risco é a coluna ao lado do payback, e tem teste próprio.** O §06 separa-os e este ficheiro também: as medições mandam a mancha embora ao nascer, e o rasto é o assunto dos dois últimos testes — a plantação é arrasada, o galinheiro só pára.",
+   "Q-072 (nova): o §06 dá **três** estados de risco — destruída, imune, nada dito — e o §49 escreve **dois**. O `destroyed_by_rot_trail` é uma bandeira e uma bandeira não chega para três. Está implementado o §49; a proposta é que \"imune\" queira dizer *fora do rasto* e se resolva com a água autorada do GB-01.",
+   "**Fora, e continua fora:** a conversão (celeiro, salga, curral, serração, fundição) e o comércio são Fase 2. O estábulo de vaca, o corte de madeira e o poço de minério existem em dados e não têm sítio na região: os dois últimos pedem bosque e rocha, que são os biomas do GB-02."
   ]
  },
  "F1-12": {
@@ -471,7 +485,7 @@
   "depende": "F1-05",
   "feito": "Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados",
   "fora": "Ganância e sucessão — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "5",
   "notas": [
    "Q-005: a fuga é a 30% ou a 25% de vida?"
@@ -487,7 +501,7 @@
   "depende": "F0-06",
   "feito": "As seis fases são distinguíveis sem HUD; a noite é castanha (ADR 0011)",
   "fora": "Iluminação da candeia — é o XIII-03.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "4",
   "notas": [
    "ADR 0011: os tints vêm de data/economy/clock.tres (phase_tint_hue/sat/val), não de código. O chão de valor da noite é 0,11."
@@ -503,7 +517,7 @@
   "depende": "F1-10",
   "feito": "Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória",
   "fora": "Migrações entre versões — quando houver uma segunda.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
    "ADR 0007: só tipos base. O teste D-14 já guarda os campos da Parte XIII."

@@ -177,17 +177,16 @@ func in_flight() -> int:
 	return n
 
 
+## As colunas em tipos base, para o save (§62). Sem Object nenhum.
 func to_dict() -> Dictionary:
-	return {
-		&"ids": ids,
-		&"xs": xs,
-		&"heights": heights,
-		&"vxs": vxs,
-		&"vys": vys,
-		&"bands": bands,
-		&"amounts": amounts,
-		&"settled": settled,
-	}
+	return Columns.to_dict(self)
+
+
+## Repoe do save. Reindexa no fim: o dicionario de ids e derivado das colunas e
+## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
+func from_dict(d: Dictionary) -> void:
+	Columns.from_dict(self, d)
+	_reindexar()
 
 
 func _copiar(de: int, para: int) -> void:
@@ -211,3 +210,9 @@ func _encolher() -> void:
 	bands.resize(n)
 	amounts.resize(n)
 	settled.resize(n)
+
+
+func _reindexar() -> void:
+	_por_id.clear()
+	for i in ids.size():
+		_por_id[ids[i]] = i
