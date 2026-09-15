@@ -16,9 +16,15 @@
 
 # ---- Arte gerada ----
 # A fonte esta em art/source/ (LFS). art/export/ e produzido pelo Aseprite Wizard.
-art/export/
+#
+# O asterisco NAO e decoracao. Com `art/export/` — o diretorio — o git nunca
+# desce la dentro, e por isso a negacao seguinte nunca chega a ser avaliada:
+# "it is not possible to re-include a file if a parent directory of that file is
+# excluded". Os dois placeholders ficaram fora do repositorio sem um unico aviso,
+# e o CI so os deu por falta ao tentar carrega-los. Com `art/export/*` o git
+# desce, exclui o conteudo um a um, e a excecao do _placeholder/ vale.
+art/export/*
 !art/export/_placeholder/
-!art/export/_placeholder/**
 
 # ---- Dados gerados por tools/csv_to_tres.gd ----
 # ADR 0004: os .tres SAO versionados — o export precisa deles e o CI nao tem de

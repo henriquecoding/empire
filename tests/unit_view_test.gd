@@ -7,7 +7,11 @@
 extends GdUnitTestSuite
 
 const SHADER := "res://shaders/palette_lut.gdshader"
-const ARTE := preload("res://art/export/_placeholder/unit_scale2_placeholder.png")
+## load() e nao preload(): o preload resolve-se em tempo de ANALISE, antes de o
+## motor ter importado o recurso, e por isso chumbava a descoberta inteira da
+## suite num checkout frio — com uma mensagem que fala do ficheiro e nao da
+## importacao. Um so sitio a chamar load(), que e o que o gdlint pede.
+const ARTE_PNG := "res://art/export/_placeholder/unit_scale2_placeholder.png"
 
 
 func _vista() -> UnitView:
@@ -73,7 +77,7 @@ func test_um_slot_que_a_unidade_nao_usa_fica_escondido() -> void:
 func test_por_uma_arma_num_slot_que_a_unidade_nao_usa_nao_a_mostra() -> void:
 	var vista := _vista()
 	vista.apply_data(Registry.entry(&"units", &"vagrant"))
-	vista.set_slot(&"weapon", ARTE)
+	vista.set_slot(&"weapon", load(ARTE_PNG))
 
 	# O .tres manda: um vagabundo nao ganha arma por alguem lhe pousar uma.
 	assert_bool(vista.slot(&"weapon").visible).is_false()
@@ -85,7 +89,7 @@ func test_o_arqueiro_ja_mostra_a_arma() -> void:
 
 	var vista := _vista()
 	vista.apply_data(arqueiro)
-	vista.set_slot(&"weapon", ARTE)
+	vista.set_slot(&"weapon", load(ARTE_PNG))
 
 	assert_bool(vista.slot(&"weapon").visible).is_true()
 

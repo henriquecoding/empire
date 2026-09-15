@@ -10,8 +10,12 @@
 GODOT ?= godot
 DOSSIE := docs/dossie.html
 
+# A versao do actionlint vive aqui e so aqui; o CI chama `make workflows`.
+ACTIONLINT_VERSION := 1.7.7
+ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
+
 .DEFAULT_GOAL := ajuda
-.PHONY: ajuda tudo portoes formato estilo rng dossie-numeros conteudo spec \
+.PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         afirmacoes afirmacoes-escrever importar dados dados-gerar testes \
         exportar ferramentas ferramentas-python hooks limpar
 
@@ -21,13 +25,27 @@ ajuda:  ## Mostra os alvos
 
 # ── O que corre sem abrir o motor ────────────────────────────────────────────
 
-portoes: formato estilo rng dossie-numeros conteudo spec afirmacoes  ## Todos os portoes estaticos
+portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes  ## Todos os portoes estaticos
 
 formato:  ## gdformat: o formato do GDScript
 	gdformat --check src/ tests/ tools/
 
 estilo:  ## gdlint: estilo e o limite de 250 linhas (§28)
 	gdlint src/ tests/
+
+workflows: $(ACTIONLINT)  ## actionlint: o workflow tem de ser valido PARA O GITHUB
+	@$(ACTIONLINT)
+	@echo "actionlint: workflows validos"
+
+# O yaml.safe_load do Python le o ficheiro e diz que esta bem — so ve YAML. As
+# expressoes ${{ }} sao outra linguagem, e um erro nelas invalida o ficheiro
+# INTEIRO: nenhum job chega a ser criado, a corrida morre em zero segundos e nao
+# deixa registo nenhum para ler. Aconteceu onze vezes seguidas (PR #4).
+$(ACTIONLINT):
+	@mkdir -p $(dir $(ACTIONLINT))
+	@curl -fsSL "https://github.com/rhysd/actionlint/releases/download/v$(ACTIONLINT_VERSION)/actionlint_$(ACTIONLINT_VERSION)_linux_amd64.tar.gz" \
+	  | tar xz -C $(dir $(ACTIONLINT)) actionlint
+	@$(ACTIONLINT) --version | head -1
 
 rng:  ## G2 (§40 I2): nenhuma aleatoriedade fora do RngService
 	@! grep -rnE '\b(randi|randf|randomize|randi_range|randf_range)\s*\(' \

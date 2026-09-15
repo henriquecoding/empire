@@ -49,6 +49,12 @@ jobs:
       - name: Estilo e o limite de 250 linhas — gdlint
         run: make estilo
 
+      # O que o Python nao consegue ver: as expressoes ${{ }} sao outra
+      # linguagem, e um erro nelas invalida o ficheiro inteiro — nenhum job
+      # chega a ser criado. Aconteceu onze vezes seguidas antes da PR #4.
+      - name: Workflows validos para o GitHub — actionlint
+        run: make workflows
+
       # I2 (§40): a aleatoriedade entra por um sitio so. E um grep porque tem
       # de chumbar mesmo que o ficheiro nao compile.
       - name: G2 · nenhum RNG solto fora do RngService
