@@ -25,7 +25,7 @@ extends Resource
 @export var max_health: int = 0
 ## §07: "so N atacantes engajam". A coluna que o walls.csv sempre teve e o
 ## buildings.csv nao tinha: uma obra com zero slots nao recebe atacante
-## nenhum, e por isso nao podia ser atacada (Q-075). Zero e "nao trava".
+## nenhum, e por isso nao podia ser atacada (Q-076). Zero e "nao trava".
 @export var contact_slots: int = 0
 @export var build_work: float = 0.0  # segundos de construtor presente (§55)
 @export var width_px: int = 0

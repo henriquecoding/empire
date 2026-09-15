@@ -236,7 +236,7 @@ func _tropa_mais_proxima(
 	for i in unidades.count():
 		if not unidades.alive(i) or unidades.owners[i] == RecruitSystem.SEM_DONO:
 			continue
-		if not dados.targets_bands.has(int(unidades.bands[i])):
+		if not Passages.reaches(dados, int(criaturas.bands[c]), int(unidades.bands[i])):
 			continue
 		var d := absf(unidades.xs[i] - criaturas.xs[c])
 		if melhor != NENHUM and d >= melhor_d:

@@ -44,7 +44,7 @@ var spearmen: int = 0
 var tower: bool = false
 ## §07: "o Alado obriga a torre alta" — e a unica obra que atinge a faixa aerea
 ## (Q-006). Medida aos dez dias, o que ela vale hoje sao os DOIS POSTOS que
-## publica, e nao a altura: o Alado atravessa tudo e nao morde nada (Q-075).
+## publica, e nao a altura: o Alado atravessa tudo e nao morde nada (Q-076).
 var high_tower: bool = false
 ## Um muro por flanco. Uma noite mede-se com o do lado por onde ela vem — o "um
 ## muro" do §07 — mas dias seguidos trazem um sorteio de lado por noite (§51), e

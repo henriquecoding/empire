@@ -554,7 +554,7 @@
   mesmos números. A divergência é entre a **prosa do §25** e a **tabela do §74**, e as duas são do dossiê.
 - **Porque é que importa:** o §25 diz que *"a noite 1 é ganha de certeza — está desenhada para isso"*. Sete
   Rastejantes contra um monarca sem muro não é isso.
-- **E desde o F1-16 deixou de ser hipótese: é uma medição.** Com o núcleo já atacável (Q-075) o *greybox*
+- **E desde o F1-16 deixou de ser hipótese: é uma medição.** Com o núcleo já atacável (Q-076) o *greybox*
   corrido sem ninguém a jogar **perde na noite 1** — os sete Rastejantes chegam ao castelo-árvore e comem-no.
   Com as duas estacarias de dentro de pé aguenta a noite 1 com **376 de 1000** e perde na **noite 2**. Com a
   abertura do §25 inteira — muro **e** toda a gente recrutada — aguenta a noite 1 com **388** e perde na
@@ -630,7 +630,7 @@
   quem não tem posto recolhe ao núcleo — a 500 px do muro, com 200 px de alcance. A noite inteira é decidida
   por **um** arqueiro. A torre de arqueiros dá mais dois postos, e é isso que a tabela de cima mede: *"a torre
   não dá dano — dá certeza"* (§07) está certo, e é a única coisa desta medição que está.
-- **O que o F1-16 lhe acrescentou, e não fechou:** com o núcleo já atacável (Q-075) a segunda linha mudou de
+- **O que o F1-16 lhe acrescentou, e não fechou:** com o núcleo já atacável (Q-076) a segunda linha mudou de
   razão mas não de resposta — uma noite 8 **sozinha** continua a acabar com o castelo-árvore de pé, porque o
   muro cai tarde e o que resta da noite não chega para os 1000 de vida. Dez noites seguidas já chegam, e é
   isso que o `tests/dez_dias_test.gd` mede. A primeira linha está como estava.
@@ -669,7 +669,29 @@
   é o que o F1-15 promete: os dez dias correm, em headless e ao passo fixo, e o relógio chega ao dia 11.
 - **Decide:** tu. Não bloqueou o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
 
-### Q-075 · O jogo não se podia perder: nada mordia o castelo-árvore — **fechada pelo F1-16**
+### Q-075 · Uma criatura ataca de qualquer faixa que o `targets_bands` liste, de onde quer que esteja
+- **Onde:** o F1-07 escreveu para as tropas a regra do alcance vertical (`Posts.reaches`, Q-006): a faixa
+  própria alcança sempre, qualquer outra só com um posto que dê altura. Do lado das **criaturas** não havia
+  regra nenhuma — o `TargetPicker._tropa_mais_proxima` olhava só para o `targets_bands` do `CreatureData`.
+- **O que isso fazia:** o Cavador, que nasce na faixa subterrânea, atacava tropas da superfície **sem nunca
+  subir**. O §07 diz que ele *"passa pela faixa subterrânea"* — passa, e passar é o que o torna uma ameaça,
+  porque passa **por baixo do muro**. Atacar de lá não está escrito em lado nenhum, e tornava decorativo todo
+  o `src/sim/systems/passages.gd` do F1-09: a passagem que o §25 manda abrir ao minuto 10:00 deixava de ter
+  a factura que o mesmo §25 lhe põe ao minuto 12:00.
+- **Decidido, e a decisão sai dos dados que já lá estavam:** `Passages.reaches(dados, sua_faixa, alvo)`. A
+  faixa própria alcança sempre; outra faixa só se a criatura **não puder** mudar de faixa. O `can_change_band`
+  do §44 separa exactamente as duas criaturas que o §07 descreve de maneiras diferentes:
+  - o **Alado** (`can_change_band = false`) vive no ar e bate no chão de lá — *"ignora a camada de solo; só
+    atacável por arqueiros e torres altas"* (§07). A resposta a ele é um posto que chegue lá acima, e é a
+    torre alta.
+  - o **Cavador** (`can_change_band = true`) tem de **subir** para bater, e sobe onde há passagem (§11, §51).
+- **É uma mudança de comportamento**, e só toca no Cavador: o Rastejante, o Bruto, o Aríete e a Consumidora
+  nascem e batem na superfície, e para eles a regra é a identidade.
+- **Reversível, e o que a reverte:** se um dia o Cavador tiver de morder tornozelos de baixo para cima, o
+  `return not dados.can_change_band` passa a `return true` e volta tudo ao que era. Nenhum número de `data/`
+  foi mexido.
+
+### Q-076 · O jogo não se podia perder: nada mordia o castelo-árvore — **fechada pelo F1-16**
 - **Onde:** o §10 escreve a regra mais curta do dossiê — *"se o castelo-árvore cair, cai a partida"* — e ela
   estava implementada dos dois lados: o `BuildSystem.fallen()` sabia responder e o `src/world/game.gd` parava
   o relógio. O que não existia era o caminho pelo meio: **nada lhe tirava vida**.
@@ -705,7 +727,7 @@
 - **Onde:** `data/source/buildings.csv`, `src/sim/data/building_data.gd`, `src/world/greybox.gd`,
   `tests/support/closed_region.gd`. Os testes são o `tests/dez_dias_test.gd`, e nenhum deles está saltado.
 
-### Q-076 · O Alado atravessa a muralha, pousa no castelo e não faz nada
+### Q-077 · O Alado atravessa a muralha, pousa no castelo e não faz nada
 - **Onde:** o §07 dá ao Alado a linha *"Dia 4 — obriga a torre alta"*, e o §10 vende a torre alta por 30
   moedas para *"atingir a camada aérea"*. Medido no cenário dos dez dias, os dias 4, 5 e 6 — que são os dele —
   **não custam nada a ninguém**.
@@ -723,9 +745,9 @@
   menos escrita e mais surpresa.
 - **Bloqueia:** a linha *"obriga a torre alta"* do §07, e com ela metade do valor da torre de 30 moedas. Não
   bloqueia o F1-16: o critério do §66 mede-se e passa sem ela, e passaria com mais margem contra.
-- **Decide:** tu. É a segunda metade da antiga Q-075, e é do F1-09 — o ticket do Alado e do Cavador.
+- **Decide:** tu. É a segunda metade da antiga Q-076, e é do F1-09 — o ticket do Alado e do Cavador.
 
-### Q-077 · O farol ilumina 300 px e a candeia nunca passa dos 260
+### Q-078 · O farol ilumina 300 px e a candeia nunca passa dos 260
 - **Onde:** o §80 escreve a regra de composição da noite inteira — *"uma luz domina por ecrã. Se duas
   competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser **mais
   fracas do que a candeia à mesma distância**"*. E o §10 vende o farol por 40 moedas para *"iluminar 300 px"*.

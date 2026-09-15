@@ -13,7 +13,7 @@
 #
 # Nenhum numero do dossie foi mexido por este ficheiro. O unico que a Fase 1
 # escreveu de novo e o `contact_slots` do nucleo — a coluna que o `walls.csv`
-# sempre teve e o `buildings.csv` nao tinha (Q-075) —, e a varredura mostra que
+# sempre teve e o `buildings.csv` nao tinha (Q-076) —, e a varredura mostra que
 # o criterio do §66 se le igual com ela entre 2 e 7: nao e ela que decide.
 extends GdUnitTestSuite
 
@@ -88,7 +88,7 @@ func test_sem_torres_a_mesma_muralha_cai() -> void:
 	assert_bool(r[Campaign.AGUENTOU]).override_failure_message(_conta(r)).is_false()
 
 
-## Q-075, o defeito que bloqueava este ticket: so o muro tinha slots de contacto,
+## Q-076, o defeito que bloqueava este ticket: so o muro tinha slots de contacto,
 ## e uma obra com zero slots nao recebe atacante nenhum. Sem esta linha o jogo
 ## nao se podia perder, e nao ha numero em data/ que torne dificil um jogo que
 ## nao se pode perder.

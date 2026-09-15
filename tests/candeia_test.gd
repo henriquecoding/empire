@@ -116,7 +116,7 @@ func test_uma_obra_sem_luz_nao_tem_raio_nenhum() -> void:
 func test_uma_luz_domina_por_ecra(
 	do_skip := true,
 	skip_reason := (
-		"Q-077: o farol do §10 ilumina 300 px e a candeia do §74 nunca passa dos "
+		"Q-078: o farol do §10 ilumina 300 px e a candeia do §74 nunca passa dos "
 		+ "260. Ver docs/QUESTIONS.md — o dossie diz as duas coisas"
 	)
 ) -> void:
