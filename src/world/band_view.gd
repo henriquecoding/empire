@@ -15,6 +15,7 @@ extends Node2D
 
 var _tropas: Dictionary = {}
 var _bichos: Dictionary = {}
+var _edificios: Dictionary = {}
 var _relogio: ClockData
 var _podre: RotProfile
 
@@ -22,6 +23,7 @@ var _podre: RotProfile
 func _ready() -> void:
 	_tropas = SimFactory.by_id(&"units")
 	_bichos = SimFactory.by_id(&"creatures")
+	_edificios = SimFactory.by_id(&"buildings")
 	_relogio = Registry.entry(&"economy", &"clock") as ClockData
 	_podre = SimFactory.rot_profile()
 
@@ -43,7 +45,7 @@ func _draw() -> void:
 		_passagens()
 		_podridao()
 	_fogueiras()
-	_obras()
+	BuildView.draw_on(self, band, _edificios)
 	_moedas()
 	_criaturas()
 	_tropa()
@@ -101,44 +103,6 @@ func _fogueiras() -> void:
 		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, cores)
 
 
-## §25: "a silhueta e o convite. Nao ha botao construir." Um sitio por construir
-## desenha-se a altura do que la vai caber — um muro de cinco niveis e cinco
-## vezes mais alto do que um canteiro — e o que ja esta pago enche-o por baixo.
-func _obras() -> void:
-	for vaga in SimLoop.builds.slots:
-		if vaga.band != band:
-			continue
-		var chao := WorldPalette.ground_of(int(vaga.band))
-		var altura := WorldPalette.ALTURA_OBRA * maxi(1, vaga.level)
-		var canto := Vector2(vaga.x - vaga.width * WorldPalette.MEIA, chao - altura)
-		var caixa := Rect2(canto, Vector2(vaga.width, altura))
-		if vaga.standing():
-			draw_rect(caixa, WorldPalette.OBRA)
-			_barra(caixa, float(vaga.health) / maxf(1.0, float(vaga.max_health())))
-			continue
-		if vaga.state != BuildSlot.State.EMPTY and vaga.state != BuildSlot.State.RUIN:
-			draw_rect(caixa, WorldPalette.ANDAIME)
-			continue
-		var silhueta := WorldPalette.ALTURA_OBRA * maxi(1, vaga.costs.size())
-		var fantasma := Rect2(caixa.position.x, chao - silhueta, vaga.width, silhueta)
-		draw_rect(fantasma, WorldPalette.VAZIO, false, WorldPalette.CONTORNO)
-		_pago(fantasma, vaga)
-
-
-## Quanto do degrau seguinte ja esta pago. Sem isto nao ha maneira de saber se
-## faltam cinco moedas ou uma, e o §55 nao tem contador nenhum para o dizer.
-func _pago(fantasma: Rect2, vaga: BuildSlot) -> void:
-	var custo := vaga.next_cost()
-	if custo <= 0 or vaga.paid <= 0:
-		return
-	var racio := clampf(float(vaga.paid) / float(custo), 0.0, 1.0)
-	var alto := fantasma.size.y * racio
-	draw_rect(
-		Rect2(fantasma.position.x, fantasma.end.y - alto, fantasma.size.x, alto),
-		WorldPalette.ANDAIME
-	)
-
-
 func _moedas() -> void:
 	var moedas := SimLoop.coins
 	for i in moedas.count():
@@ -159,12 +123,18 @@ func _criaturas() -> void:
 		if bichos.bands[i] != int(band):
 			continue
 		var dados: CreatureData = _bichos.get(bichos.data_ids[i])
+		# A forma e o porte sao a diferenca entre "vem ai uma coisa" e "vem ai um
+		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
+		var forma := Silhouette.of_creature(dados)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := WorldPalette.body(bichos.xs[i], int(band), alto)
+		var caixa := Silhouette.body_box(forma, bichos.xs[i], int(band), alto)
 		var aceso := WorldLight.lit(bichos.xs[i], candeia.x, candeia.y)
-		draw_rect(caixa, WorldLight.reveal(WorldPalette.BICHO, aceso, chao))
+		var cor := WorldLight.reveal(WorldPalette.BICHO, aceso, chao)
+		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
 		if aceso:
-			_barra(caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i])))
+			Gauge.health(
+				self, caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i]))
+			)
 
 
 ## Onde esta a candeia e que raio tem, em (x, raio). Com a mancha recuada nao ha
@@ -176,6 +146,10 @@ func _candeeiro() -> Vector2:
 	return Vector2(rot.position_x(), WorldLight.radius(_podre, SimLoop.state.day))
 
 
+## O corpo de uma tropa e o mesmo rectangulo de sempre — uma pessoa e uma
+## pessoa. O que a distingue de outra e a ARMA, e e de proposito: o §08 diz que
+## os arquetipos sao "mesma funcao, corpo e silhueta diferentes" por POVO, e nao
+## por classe. Aqui ha um povo so, e por isso o que resta e o que ela leva.
 func _tropa() -> void:
 	var unidades := SimLoop.units
 	for i in unidades.count():
@@ -183,11 +157,47 @@ func _tropa() -> void:
 			continue
 		var dados: UnitData = _tropas.get(unidades.data_ids[i])
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := WorldPalette.body(unidades.xs[i], int(band), alto)
-		draw_rect(caixa, WorldPalette.unit_color(unidades, i))
+		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(band), alto)
+		var cor := WorldPalette.unit_color(unidades, i)
+		draw_rect(caixa, cor)
+		_arma(caixa, dados, unidades, i, cor)
+		_saco(caixa, unidades, i)
 		_cabeca(caixa, unidades, i)
 		if unidades.alive(i):
-			_barra(caixa, float(unidades.healths[i]) / maxf(1.0, float(unidades.max_healths[i])))
+			Gauge.health(
+				self, caixa, float(unidades.healths[i]) / maxf(1.0, float(unidades.max_healths[i]))
+			)
+
+
+## O que ela leva na mao, do lado para onde vai. Na COR DO CORPO e nao numa cor
+## propria: e a mesma silhueta, e o §80 quer que a meio de uma noite o contorno
+## chegue. Quem morreu nao leva nada — §50: "toda a morte larga: arma, moedas
+## transportadas, ou corpo. Nada desaparece em silencio."
+func _arma(caixa: Rect2, dados: UnitData, unidades: UnitSystem, i: int, cor: Color) -> void:
+	if not unidades.alive(i):
+		return
+	var pontos := Outline.mark(Silhouette.of_unit(dados), caixa, _sentido(unidades, i))
+	if pontos.size() < 2:
+		return
+	draw_polyline(pontos, cor, WorldPalette.CONTORNO)
+
+
+## O saco do §24. Quem morreu nao leva nada: §50 manda largar, e um corpo com o
+## saco cheio dizia que ainda havia ali dinheiro para apanhar.
+func _saco(caixa: Rect2, unidades: UnitSystem, i: int) -> void:
+	if not unidades.alive(i):
+		return
+	Gauge.purse(self, caixa, unidades.carried_coins[i], unidades.coin_capacities[i])
+
+
+## Para onde ela esta virada. O alvo e onde ela quer chegar — de um posto, de uma
+## moeda ou de quem ela vai atacar —, e sem isto uma noite inteira de tropas
+## parecia parada mesmo com toda a gente a andar.
+func _sentido(unidades: UnitSystem, i: int) -> float:
+	var frente := signf(unidades.target_xs[i] - unidades.xs[i])
+	# Quem esta parada fica virada para a direita, e nao sem lado nenhum: um
+	# sentido zero punha a arma dentro do corpo.
+	return frente if not is_zero_approx(frente) else 1.0
 
 
 ## A coroa, ou o chapeu. "Ele apanha-a e ganha um chapeu. Nada mais e preciso
@@ -200,13 +210,3 @@ func _cabeca(caixa: Rect2, unidades: UnitSystem, i: int) -> void:
 		return
 	var aba := Vector2(caixa.size.x, WorldPalette.BARRA)
 	draw_rect(Rect2(caixa.position - Vector2(0.0, WorldPalette.BARRA), aba), cor)
-
-
-## A vida por cima da cabeca. E HUD e o §24 quer a vida no rosto do sprite — mas
-## nao ha rosto ainda, e uma barra e o que deixa medir uma noite (GB-03).
-func _barra(caixa: Rect2, racio: float) -> void:
-	if racio >= 1.0 or racio <= WorldPalette.VIVO_MIN:
-		return
-	var topo := caixa.position - Vector2(0.0, WorldPalette.BARRA * WorldPalette.CONTORNO)
-	var largo := caixa.size.x * clampf(racio, 0.0, 1.0)
-	draw_rect(Rect2(topo, Vector2(largo, WorldPalette.BARRA)), WorldPalette.VIDA)

@@ -45,11 +45,12 @@ const MOEDA_R := 3.0
 const CONTORNO := 2.0
 const BARRA := 3.0
 const PASSAGEM_W := 8.0
-const ALTURA_OBRA := 14.0
+## Que fatia do corpo o saco ocupa quando esta cheio (§24). Enche de baixo para
+## cima, como um saco enche — e nao e uma barra de recurso ao contrario.
+const SACO := 0.35
 ## A altura do rasto, em px. Um degrau de silhueta e meio: ve-se de longe e nao
 ## tapa quem esta em cima dele.
 const RASTO := DEGRAU * MEIA
-const VIVO_MIN := 0.08
 
 
 ## A linha de chao de cada faixa, em y. A do meio e a do §11; a aerea assenta no
@@ -61,12 +62,6 @@ static func ground_of(faixa: int) -> float:
 		int(Band.Kind.UNDERGROUND):
 			return float(Band.GROUND_LINE + Band.SOIL_CUT * MEIA)
 	return float(Band.GROUND_LINE)
-
-
-## A caixa de um corpo pousado na linha de chao da sua faixa.
-static func body(x: float, faixa: int, alto: float) -> Rect2:
-	var largo := alto * MEIA
-	return Rect2(x - largo * MEIA, ground_of(faixa) - alto, largo, alto)
 
 
 ## A cor de uma tropa: o que ela e, e o que esta a fazer. O chapeu e outra coisa

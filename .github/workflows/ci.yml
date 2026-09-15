@@ -116,6 +116,54 @@ jobs:
           if-no-files-found: warn
 
   # ── 3 ─────────────────────────────────────────────────────────────────────
+  # XIII-01, a metade que faltava: o §80 decide que a noite e castanha e abre
+  # com isso uma regra de composicao — "o ecra noturno tem exatamente duas
+  # cores que nao sao terra: violeta e A Podridao e so A Podridao; ambar e
+  # luz". Uma regra assim nao se guarda com uma revisao de codigo, guarda-se
+  # contando pixeis, e e o unico portao que precisa de um ecra: fotografa o
+  # meio da noite e conta o que la esta frio.
+  silhueta:
+    name: Silhueta e a regra das duas frias (§80)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - uses: ./.github/actions/godot
+
+      - name: Importar recursos
+        run: make importar
+
+      # O runner nao tem ecra, e uma captura sem ecra sai preta. O xvfb da um
+      # ecra virtual, que e o mesmo que o `make captura` ja pede localmente.
+      - name: Ecra virtual
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends xvfb
+
+      - name: Pillow, na versao fixada em tools/requirements.txt
+        run: make ferramentas-python
+
+      - name: Duas frias · contadas sobre a noite
+        run: xvfb-run -a make silhueta
+
+      # Sai sempre, passe ou chumbe: quando chumba, a fotografia e a primeira
+      # coisa que alguem quer ver, e sem ela a percentagem nao diz onde.
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: captura-da-noite
+          path: |
+            build/noite.png
+            build/noite.json
+          retention-days: 14
+          if-no-files-found: warn
+
+  # ── 4 ─────────────────────────────────────────────────────────────────────
   # O unico job que prova que isto e um jogo e nao uma pasta: produz o binario
   # e arranca-o. Separado porque so ele paga os templates de export.
   export:
@@ -167,7 +215,7 @@ jobs:
           path: build/web/
           retention-days: 7
 
-  # ── 4 ─────────────────────────────────────────────────────────────────────
+  # ── 5 ─────────────────────────────────────────────────────────────────────
   # A camada de uso do dossie tem portoes proprios e so precisa de Node e de um
   # browser — nao do motor. Ver ferramentas/LEIA-ME.md.
   dossie:
@@ -213,14 +261,14 @@ jobs:
           path: ferramentas/saida/dossie-empire.html
           retention-days: 14
 
-  # ── 5 ─────────────────────────────────────────────────────────────────────
+  # ── 6 ─────────────────────────────────────────────────────────────────────
   # O unico estado que a protecao de ramo precisa de exigir. Sem ele, cada job
   # novo obriga a mexer nas definicoes do GitHub — e quem se esquece fica com um
   # portao que existe e nao guarda nada.
   ci:
     name: ci
     runs-on: ubuntu-latest
-    needs: [portoes, testes, export, dossie]
+    needs: [portoes, testes, silhueta, export, dossie]
     if: always()
     steps:
       - name: Um job vermelho chumba o conjunto

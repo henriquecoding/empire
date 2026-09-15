@@ -77,6 +77,10 @@ src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
 src/world/band_view.gd      BandView      desenha UMA faixa, e leva a luz dela
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
+src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
+src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
+src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
+src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco, pago (GB-03)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
 src/world/world_light.gd    WorldLight    as tres paragens da luz e o raio da candeia

@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **33 feitos** e **20 por fazer** |
+| Tickets | **53**, dos quais **34 feitos** e **19 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
 | Fase 1 | **17 de 17 — a Fase 1 está fechada** |
-| Suite | 347 casos, 338 a passar, 9 saltados, 0 falhas, 0 *orphans* |
+| Suite | 368 casos, 359 a passar, 9 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 67 das 69 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07, a Q-076 com o F1-16 |
+| Perguntas em aberto | 68 das 70 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07, a Q-076 com o F1-16 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -94,13 +94,18 @@ noite 1 *"é ganha de certeza"*.
 | ART-03 | As seis camadas de *parallax* com teto de valores |
 | ART-04 | Rostos e expressões: o catálogo do §60 |
 
-### Parte XIII — 10
+### Parte XIII — 9
 
-Está toda em dados e em prosa, e nada dela em código.
+Quase toda em dados e em prosa. A **XIII-01 fechou**: os *tints* das seis fases
+vinham do `clock.tres` desde o F1-13, e faltava a outra metade do contrato — o
+teste das duas frias, que agora corre no CI (`make silhueta`). Ele fotografa o
+meio da noite e conta os píxeis frios e saturados fora da mancha: a noite da
+v5.2, azul, dá 0,757% e chumba; a castanha da ADR 0011 dá zero. **Nenhum dos
+quatro limiares está escrito no script** — saem da linha *Duas frias* da tabela
+da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porquê.
 
 | | O que é |
 |---|---|
-| XIII-01 | §80 · O preto na paleta e a noite castanha |
 | XIII-02 | §74 · O termo dos Amargueiros na massa |
 | XIII-03 | §74 · O Amargueiro e a candeia, completos |
 | XIII-04 | §75 · A Oferta e a Dívida da Candeia |
@@ -155,9 +160,33 @@ Está toda em dados e em prosa, e nada dela em código.
   mesma região que o §21 descreve — seis ecrãs de 640 px, dois *slots* de
   construção e uma passagem por segmento, lidos do `segments.csv` — mas em código
   e não autorada. É a GB-01 que o substitui.
-- **Não há um sprite.** Tudo o que se vê são rectângulos: `src/world/band_view.gd`
-  desenha as tropas, as criaturas, as moedas, as obras e a mancha com `draw_rect`,
-  uma faixa de cada vez.
+- **Não há um sprite** — mas já se percebe o que cada coisa é. Até aqui tudo era o
+  mesmo rectângulo e o que mudava era a cor, e a cor diz *o que se passa*, não diz
+  *o que a coisa é*: um canteiro, uma torre e o castelo-árvore eram o mesmo cinzento
+  em larguras diferentes. Agora a **forma** diz — e é o §22 que manda fazê-lo assim:
+  *"a paleta muda com a hora do dia e com o LUT; a silhueta do telhado não muda
+  nunca"*. O `src/world/silhouette.gd` classifica, o `outline.gd` desenha, e nenhum
+  dos dois tem um `if id == "archer_tower"`: sai tudo das colunas que já existem —
+  `category` de `buildings.csv`, `tags` de `creatures.csv`, `weapon_kind` de
+  `units.csv`.
+  - **Obras**: uma forma por categoria — a copa do castelo-árvore, que entra na
+    faixa aérea porque o §11 diz que entra; os dentes do muro, **um por *slot* de
+    contacto** (§55: *"muda material, silhueta e número de slots de contacto — os
+    três ao mesmo tempo"*); a plataforma de uma torre; o mastro da torre alta, a
+    única obra que chega onde o Alado voa (§10).
+  - **Criaturas**: uma silhueta por linha de `creatures.csv`, e nenhuma repetida
+    — e portes diferentes, que é a metade da leitura que o contorno sozinho não
+    faz: o Rastejante é largo e rente ao chão, o Zelador é fino e alto.
+  - **Tropas**: o corpo é o mesmo rectângulo — uma pessoa é uma pessoa —, e o que
+    as separa é o que levam na mão, virado para onde vão. Quem morreu não leva
+    nada (§50: *"toda a morte larga"*), e o saco enche à vista (§24).
+  - O que isto **não** decide está escrito na **Q-079**: as alturas, a ruína e a
+    calha da barra de vida não vêm do dossiê. A forma definitiva é por povo e por
+    categoria (§22), e este vocabulário é o *fallback* neutro até ao ART-01.
+  - O portão que sobrevive à arte está em `tests/outline_test.gd`: **duas formas
+    nunca desenham a mesma coisa**. É a metade automatizável da leitura a 1 bit do
+    §80 — nenhum limiar separa depois duas coisas com o mesmo contorno.
+
   A composição por *slots* da §58 e o `UnitView` existem e estão testados, mas não
   há arte para lhes dar (ART-01, ART-02).
 - **A roda do rei não existe.** Quatro dos seis segmentos do §24 não têm sistema
@@ -172,10 +201,11 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **67 perguntas em aberto** em `docs/QUESTIONS.md`, de 69 escritas — a Q-006
-  fechou com o F1-07 e a Q-076 com o F1-16. As quinze mais recentes (Q-064 a
-  Q-078) são as que encher o tick, medir a noite, afinar os dez dias e acender a
-  candeia obrigaram a fazer. As quatro que valem a pena ler primeiro: a **Q-068**
+- **68 perguntas em aberto** em `docs/QUESTIONS.md`, de 70 escritas — a Q-006
+  fechou com o F1-07 e a Q-076 com o F1-16. As dezasseis mais recentes (Q-064 a
+  Q-079) são as que encher o tick, medir a noite, afinar os dez dias, acender a
+  candeia e dar forma às coisas obrigaram a fazer. As quatro que valem a pena ler
+  primeiro: a **Q-068**
   (a noite 1 do §25 *"é ganha de certeza"* e o *greybox* perde-a), a **Q-077** (o
   Alado atravessa a muralha, pousa no castelo e não faz nada — e por isso os dias
   4 a 6 do §07 não custam nada a ninguém), a **Q-073** (o §07 monta o microteste
@@ -198,10 +228,11 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 347 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 368 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. |
 | **Os dez dias, medidos** | `godot --headless --path . scenes/tests/dez_dias.tscn` | O critério de saída da Fase 1 (§66): nove defesas, dez dias cada, e por cada uma se aguentou, em que dia caiu, e com que margem ficou o castelo-árvore. A última é a que aguenta, e sai também noite a noite. |
-| **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio — `AVANCAR=312` apanha a candeia a entrar no ecrã. |
+| **Uma fotografia** | `make captura` | Escreve `build/empire.png` e uma ficha `.json` ao lado — fase, dia e onde a mancha ficou no ecrã. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio — `AVANCAR=312` apanha a candeia a entrar no ecrã. |
+| **As duas frias (§80)** | `make silhueta` | Fotografa o meio da noite e conta os píxeis frios e saturados fora da mancha. É o XIII-01, e corre no CI. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |
 | **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos os exports e o dossiê. |
