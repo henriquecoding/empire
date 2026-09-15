@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_kas78"]
+
+[resource]
+script = ExtResource("1_kas78")
+id = &"keep_the_lantern"
+display_key = "OFFER_KEEP_THE_LANTERN"
+price_kind = &"playable_class"
+price_amount = 1.0
+effect_kind = &"control_rot_tonight"
+effect_value = 1.0
+min_day = 15
+debt_delta = 5

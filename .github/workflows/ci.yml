@@ -1,0 +1,120 @@
+name: ci
+on: [push, pull_request]
+
+env:
+  GODOT_VERSION: 4.6-stable
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false                      # a suite nao precisa de arte
+
+      - name: Godot ${{ env.GODOT_VERSION }}
+        run: |
+          BASE=https://github.com/godotengine/godot-builds/releases/download
+          F=Godot_v${GODOT_VERSION}_linux.x86_64
+          curl -sSLo godot.zip $BASE/${GODOT_VERSION}/${F}.zip
+          unzip -q godot.zip && chmod +x $F && sudo mv $F /usr/local/bin/godot
+
+      # Sem este passo a suite falha sempre em checkout frio: o Godot precisa
+      # de importar os recursos uma vez antes de conseguir abrir uma cena.
+      - name: Importar recursos
+        run: godot --headless --import --path . || true
+
+      # v5.2 — ADR 0004/0008: os .tres sao versionados; o CSV e a fonte. Isto
+      # chumba se alguem editou um .tres a mao ou se esqueceu de correr a ferramenta.
+      - name: Dados · CSV e .tres em sincronia, e iguais ao dossie
+        run: |
+          godot --headless --path . -s tools/csv_to_tres.gd -- --check
+          python3 tools/check_dossie_vs_csv.py docs/dossie.html
+          python3 tools/content_report.py --check
+
+      # v5.2 — docs/design/ e gerado do dossie (§69); nunca se edita a mao.
+      - name: Spec · docs/design gerado do dossie
+        run: |
+          python3 tools/split_dossie.py docs/dossie.html docs/design
+          git diff --exit-code -- docs/design
+
+      - name: G2 · nenhum RNG solto fora do RngService
+        run: |
+          ! grep -rnE '\b(randi|randf|randomize|randi_range|randf_range)\s*\(' \
+              src/ --include='*.gd' | grep -v 'src/core/rng_service.gd'
+
+      - name: G1 G3 G4 G5 · suite gdUnit4
+        # v5.2: o gdUnit4 6.x sai com 103 em --headless sem esta opcao (ADR 0009)
+        run: godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests
+
+      - name: Formato e limite de 250 linhas
+        run: |
+          pipx install "gdtoolkit==4.*"
+          gdformat --check src/ tests/ tools/
+          gdlint src/ tests/
+
+      # v5.2 — sem templates o export falha sempre; so os de Linux, em cache.
+      - name: Cache dos templates de export
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/godot/export_templates
+          key: godot-templates-${{ env.GODOT_VERSION }}-linux
+
+      - name: Templates de export (so Linux)
+        run: |
+          T=~/.local/share/godot/export_templates/${GODOT_VERSION/-/.}
+          if [ ! -f "$T/linux_debug.x86_64" ]; then
+            mkdir -p "$T"
+            BASE=https://github.com/godotengine/godot-builds/releases/download
+            curl -sSLo t.tpz $BASE/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
+            unzip -q -j t.tpz templates/linux_debug.x86_64 templates/linux_release.x86_64 \
+              templates/version.txt -d "$T"
+            rm t.tpz
+          fi
+
+      - name: Export do Linux ainda arranca
+        run: |
+          mkdir -p build
+          godot --headless --path . --export-debug "Linux" build/empire.x86_64
+          test -s build/empire.x86_64 && test -s build/empire.pck
+          cd build && ./empire.x86_64 --headless --quit-after 30
+
+  # A camada de uso do dossie (ferramentas/) tem os seus proprios portoes, e
+  # correm num job separado porque so precisam de Node e de um browser — nao do
+  # motor. Ver ferramentas/LEIA-ME.md.
+  dossie:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Playwright e o Chromium
+        working-directory: ferramentas
+        run: |
+          npm install --no-save --no-audit --no-fund playwright
+          npx playwright install --with-deps chromium
+
+      # O inventario DERIVA das fontes; se o extrator falhar, um numero do
+      # painel de estado passou a ser uma mentira e nao um erro visivel.
+      - name: Inventario derivado das fontes
+        working-directory: ferramentas
+        run: node extrair-dados.mjs .. saida/dados.json
+
+      - name: Construir o dossie
+        working-directory: ferramentas
+        run: node construir.mjs ../docs/dossie.html saida/dados.json saida/dossie-empire-v6.html
+
+      - name: Portao · telemovel, ancoras, JavaScript e pesquisa
+        working-directory: ferramentas
+        run: node verificar-dossie.mjs saida/dossie-empire-v6.html
+
+      - name: Portao · plano, saude, tabelas e recorte
+        working-directory: ferramentas
+        run: node verificar-novo.mjs saida/dossie-empire-v6.html

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="WallData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wall_data.gd" id="1_3wi4e"]
+
+[resource]
+script = ExtResource("1_3wi4e")
+id = &"stone_wall"
+display_key = "WALL_STONE"
+level = 3
+cost = 20
+max_health_b = 210
+guard_posts_a = 4
+contact_slots = 4
+material_by_people = {
+&"enramados": &"stone",
+&"fenda": &"stone",
+&"fornalha": &"basalt",
+&"horta": &"stone",
+&"portuarios": &"coral"
+}
+max_health_a = 105
+guard_posts_b = 2
+shadow_width = 64

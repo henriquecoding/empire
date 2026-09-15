@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="GreedProfile" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/greed_profile.gd" id="1_d8nk5"]
+
+[resource]
+script = ExtResource("1_d8nk5")
+id = &"tyrant"
+display_key = "GREED_TYRANT"
+greed_range = Vector2i(65, 90)
+impulse_cost_mult = 0.5
+enemy_wall_bias = 0.5
+enemy_elite_bias = 1.5
+enemy_attack_unit = &"counterweight_ram"
+enemy_attack_timing = &"fast_siege"

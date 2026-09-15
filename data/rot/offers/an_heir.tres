@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_rrfnu"]
+
+[resource]
+script = ExtResource("1_rrfnu")
+id = &"an_heir"
+display_key = "OFFER_AN_HEIR"
+price_kind = &"successor"
+price_amount = 1.0
+effect_kind = &"greed_zero_days"
+effect_days = 10
+requires = "successor=1"
+debt_delta = 5

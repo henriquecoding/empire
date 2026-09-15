@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_tbikg"]
+
+[resource]
+script = ExtResource("1_tbikg")
+id = &"farm"
+display_key = "BUILDING_FARM"
+cost = 4
+material = &"grain"
+yield_per_day = 2.0
+destroyed_by_rot_trail = true
+job_slots = 1
+max_health = 32
+build_work = 8.0
+width_px = 96
+shadow_width = 96
+tags = Array[StringName]([&"field"])

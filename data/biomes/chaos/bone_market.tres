@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChaosModifierData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chaos_modifier_data.gd" id="1_hf2av"]
+
+[resource]
+script = ExtResource("1_hf2av")
+id = &"bone_market"
+display_key = "CHAOS_BONE_MARKET"
+mercenary_price_mult = 0.5
+debt_interest_mult = 2.0

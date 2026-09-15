@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_7mkol"]
+
+[resource]
+script = ExtResource("1_7mkol")
+id = &"she_who_held_the_gate"
+display_key = "TITLE_SHE_WHO_HELD_THE_GATE"
+feat_key = "FEAT_SHE_WHO_HELD_THE_GATE"
+condition_kind = &"sole_gate_survivor"
+condition_value = 1.0
+grant_kind = &"never_flees"
+grant_value = 1.0
+ribbon_color = "#B9663A"

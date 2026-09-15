@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CraftData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/craft_data.gd" id="1_mhhh3"]
+
+[resource]
+script = ExtResource("1_mhhh3")
+id = &"animal_pen"
+display_key = "CRAFT_ANIMAL"
+material = &"animal"
+house = &"pen"
+cost = 1
+capacity_craft = &"cook"
+capacity_kind = &"combat_dish"
+magnitude = 0.3
+duration = 20.0

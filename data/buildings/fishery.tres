@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_n3kpj"]
+
+[resource]
+script = ExtResource("1_n3kpj")
+id = &"fishery"
+display_key = "BUILDING_FISHERY"
+cost = 6
+material = &"fish"
+yield_per_day = 3.0
+requires_biome_feature = &"water"
+job_slots = 1
+max_health = 48
+build_work = 12.0
+width_px = 120
+shadow_width = 120
+tags = Array[StringName]([&"immune_to_rot_trail"])

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chapter_data.gd" id="1_0mu0r"]
+
+[resource]
+script = ExtResource("1_0mu0r")
+id = &"inverted_floodplain"
+display_key = "CHAPTER_INVERTED_FLOODPLAIN"
+law_key = "CHAPTER_LAW_INVERTED_FLOODPLAIN"
+inhabitant_key = "CHAPTER_WHO_INVERTED_FLOODPLAIN"
+song_key = "SONG_CHAPTER_INVERTED_FLOODPLAIN"
+biome = &"floodplain"
+placement = &"crossing"
+detour_seconds = 40.0
+reward_kind = &"ancient_seed"
+folk_root = "mouras encantadas"

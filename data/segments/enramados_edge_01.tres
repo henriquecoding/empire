@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_xj6os"]
+
+[resource]
+script = ExtResource("1_xj6os")
+id = &"enramados_edge_01"
+kind = &"edge"
+people = &"enramados"
+scene = "res://scenes/segments/enramados/enramados_edge_01.tscn"
+width_px = 640
+rules = Array[StringName]([&"at_region_end"])
+min_per_region = 1
+max_per_region = 1
+subject = &"cliff"

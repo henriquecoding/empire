@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_gg12a"]
+
+[resource]
+script = ExtResource("1_gg12a")
+id = &"the_tree_you_planted"
+display_key = "OFFER_THE_TREE_YOU_PLANTED"
+price_kind = &"marker"
+price_amount = 1.0
+effect_kind = &"seed_royal"
+effect_value = 1.0
+requires = "marker>=1"
+debt_delta = 2

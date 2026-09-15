@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_kggtq"]
+
+[resource]
+script = ExtResource("1_kggtq")
+id = &"enramados_fortress_01"
+kind = &"fortress"
+people = &"enramados"
+weight = 6
+scene = "res://scenes/segments/enramados/enramados_fortress_01.tscn"
+width_px = 640
+cavity_slots = 1
+rules = Array[StringName]([&"not_adjacent=fortress", &"at_region_end"])
+subject = &"enemy_keep"

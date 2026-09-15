@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_vibbk"]
+
+[resource]
+script = ExtResource("1_vibbk")
+id = &"fornalha"
+display_key = "PEOPLE_FORNALHA"
+terrain = &"volcanic"
+biome = &"volcanic"
+architecture_source = "Ferrarias bascas (ferrerías) + construção em basalto islandês"
+roof_silhouette = "Chato e pesado, atravessado por chaminés — silhueta vertical"
+landmark = &"chimney"
+palette_ramp = &"fornalha"
+wall_material = &"slag"
+economy_strength = &"metal_and_arms"
+economy_modifiers = {
+&"weapon_level_bonus": 1.0
+}
+defense_trait = &"permanent_fire"
+unique_unit = &"war_smith"
+playable_class = &"buried_knight"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
+starting_buildings = Array[StringName]([&"core", &"forge"])
+song_texture = "Bombo, ferrinhos e martelo na bigorna — percussão de trabalho"
+colheita_song = "Certinho. Certinho demais."
+landmark_roots = true

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_17tyk"]
+
+[resource]
+script = ExtResource("1_17tyk")
+id = &"the_one_with_the_same_spear"
+display_key = "TITLE_THE_ONE_WITH_THE_SAME_SPEAR"
+feat_key = "FEAT_THE_ONE_WITH_THE_SAME_SPEAR"
+condition_kind = &"same_weapon_days"
+condition_value = 10.0
+grant_kind = &"weapon_level"
+grant_value = 1.0
+ribbon_color = "#A35A2A"

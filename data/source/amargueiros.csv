@@ -1,0 +1,4 @@
+id,display_key,cost_coins,cost_seeds,work_seconds,nights_standing_required,from_dawn,yield_by_tier,yield_named,yield_kind,mass_delta,mass_delta_named,permanent,becomes,protect_radius_px,slowdown,morale_cost,morale_days,_phase,_src,_proposed,_notes
+fell,AMARGUEIRO_FELL,6,0,12,1,2,1|2|3,5,bitter_wood,-22,-45,false,,0,0,1,2,2,"§74 candeia, Amargueiro e a massa termo a termo",,"Cortar: moedas na base a partir da segunda alvorada, vem um lenhador da serração (§06), 12 s de corte. O moral só se paga se a tropa tinha nome (§76)."
+consecrate,AMARGUEIRO_CONSECRATE,0,1,0,0,1,0|0|0,0,,-22,-45,false,marker,120,0.4,0,0,2,"§74 candeia, Amargueiro e a massa termo a termo",,"Consagrar: 1 Semente Real na base, logo na primeira alvorada. Vira Marco de pedra — defesa, economia e cemitério ao mesmo tempo."
+leave,AMARGUEIRO_LEAVE,0,0,0,0,1,0|0|0,0,,22,45,true,,0,0,0,0,2,"§74 candeia, Amargueiro e a massa termo a termo",,"Deixar: não custa nada e paga-se todas as noites, para sempre."

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_ijmhe"]
+
+[resource]
+script = ExtResource("1_ijmhe")
+id = &"counterweight_ram"
+display_key = "UNIT_COUNTERWEIGHT_RAM"
+people = &"fenda"
+max_health = 80
+damage = 26
+attack_interval = 2.0
+accuracy_open = 1.0
+range_px = 30
+recruit_cost = 20
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 16.0
+scale_tier = 3
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 48
+tags = Array[StringName]([&"siege", &"walls_only"])
+coin_capacity = 5
+ability = &"siege_ram"
+weapon_kind = &"ram"

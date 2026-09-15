@@ -1,0 +1,4 @@
+id,display_key,max_health,move_speed,coin_yield,flees,damage,biomes,per_segment_max,shadow_width,_phase,_src,_proposed,_notes
+rabbit,WILDLIFE_RABBIT,4,40,1,true,0,ancient_forest|coast|canyon|floodplain,2,10,1,"§25 minuto 1:10: um coelho, um arqueiro, cai 1 moeda",max_health|move_speed|per_segment_max|shadow_width,Vida 4 = um só acerto de arqueiro (dano 4).
+deer,WILDLIFE_DEER,8,48,3,true,0,ancient_forest|floodplain,1,16,1,§06 caça 3–9; §02 referência: o veado exige 2 acertos,max_health|move_speed|coin_yield|per_segment_max|shadow_width,"Vida 8 = dois acertos de arqueiro, como no Kingdom (§02)."
+boar,WILDLIFE_BOAR,28,34,9,false,6,ancient_forest,1,24,2,§06 caça 3–9; §12 o javali-montaria obtém-se por caça na floresta,max_health|move_speed|coin_yield|damage|per_segment_max|shadow_width,Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'.

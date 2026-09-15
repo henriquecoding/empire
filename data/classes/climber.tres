@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/class_data.gd" id="1_tp3ub"]
+
+[resource]
+script = ExtResource("1_tp3ub")
+id = &"climber"
+display_key = "CLASS_CLIMBER"
+archetype = &"climber"
+base_unit = &"climber"
+evolve_seed_cost = 1
+evolve_condition = &"climbs"
+evolve_condition_value = 20
+phase1_ability = &"climb_without_ladders"
+phase2_ability = &"ride_colossus"
+phase2_params = {
+&"duration": 20.0,
+&"max_target_health_ratio": 0.2
+}

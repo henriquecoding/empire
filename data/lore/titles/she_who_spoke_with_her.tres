@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_dyfur"]
+
+[resource]
+script = ExtResource("1_dyfur")
+id = &"she_who_spoke_with_her"
+display_key = "TITLE_SHE_WHO_SPOKE_WITH_HER"
+feat_key = "FEAT_SHE_WHO_SPOKE_WITH_HER"
+condition_kind = &"survived_inside_stain"
+condition_value = 1.0
+grant_kind = &"no_panic_in_lantern"
+grant_value = 1.0
+ribbon_color = "#F6D89B"

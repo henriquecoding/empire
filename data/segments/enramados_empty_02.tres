@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_ac5yn"]
+
+[resource]
+script = ExtResource("1_ac5yn")
+id = &"enramados_empty_02"
+kind = &"empty"
+people = &"enramados"
+weight = 30
+scene = "res://scenes/segments/enramados/enramados_empty_02.tscn"
+width_px = 640
+build_slots = 3
+min_per_region = 3
+subject = &"broken_cart"

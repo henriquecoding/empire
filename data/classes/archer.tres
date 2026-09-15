@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/class_data.gd" id="1_1hx7s"]
+
+[resource]
+script = ExtResource("1_1hx7s")
+id = &"archer"
+display_key = "CLASS_ARCHER"
+archetype = &"archer"
+base_unit = &"archer"
+verb = &"mark_target"
+evolve_seed_cost = 1
+evolve_condition = &"marked_kills"
+evolve_condition_value = 30
+phase1_ability = &"mark_target"
+phase1_params = {
+&"duration": 10.0,
+&"targets": 1.0
+}
+phase2_ability = &"piercing_mark"
+phase2_params = {
+&"mark_radius": 96.0,
+&"pierce_column": 1.0
+}

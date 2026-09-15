@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AmargueiroData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/amargueiro_data.gd" id="1_0ebe7"]
+
+[resource]
+script = ExtResource("1_0ebe7")
+id = &"consecrate"
+display_key = "AMARGUEIRO_CONSECRATE"
+cost_seeds = 1
+mass_delta = -22.0
+mass_delta_named = -45.0
+becomes = &"marker"
+protect_radius_px = 120
+slowdown = 0.4

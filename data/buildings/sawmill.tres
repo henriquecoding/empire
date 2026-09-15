@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_7v8ir"]
+
+[resource]
+script = ExtResource("1_7v8ir")
+id = &"sawmill"
+display_key = "BUILDING_SAWMILL"
+category = &"conversion"
+cost = 13
+craft = &"builder"
+max_health = 104
+build_work = 26.0
+width_px = 120
+shadow_width = 120

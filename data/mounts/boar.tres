@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MountData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/mount_data.gd" id="1_l76ot"]
+
+[resource]
+script = ExtResource("1_l76ot")
+id = &"boar"
+display_key = "MOUNT_BOAR"
+speed_multiplier = 1.5
+knocks_down_stakes = true
+obtain = &"hunt"
+obtain_ref = &"ancient_forest"
+heal_days = 2

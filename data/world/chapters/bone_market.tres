@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chapter_data.gd" id="1_8qv2n"]
+
+[resource]
+script = ExtResource("1_8qv2n")
+id = &"bone_market"
+display_key = "CHAPTER_BONE_MARKET"
+law_key = "CHAPTER_LAW_BONE_MARKET"
+inhabitant_key = "CHAPTER_WHO_BONE_MARKET"
+song_key = "SONG_CHAPTER_BONE_MARKET"
+placement = &"near_mercenary_camp"
+detour_seconds = 25.0
+reward_kind = &"journal"
+reward_id = &"journal_08"
+visits_tracked = true
+folk_root = "pregão de feira"

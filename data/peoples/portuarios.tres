@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_k64mu"]
+
+[resource]
+script = ExtResource("1_k64mu")
+id = &"portuarios"
+display_key = "PEOPLE_PORTUARIOS"
+terrain = &"coast"
+biome = &"coast"
+architecture_source = "Porto palafítico da Carrasqueira (Sado) + naust nórdicos"
+roof_silhouette = "Baixo, largo, de duas águas, quase a tocar a água"
+landmark = &"lighthouse"
+palette_ramp = &"portuarios"
+wall_material = &"stakes"
+economy_strength = &"fishing_and_trade"
+economy_modifiers = {
+&"night_income": 1.0,
+&"trade_route_income_mult": 1.25
+}
+defense_trait = &"water_moat"
+unique_unit = &"barge"
+playable_class = &"climber"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
+starting_buildings = Array[StringName]([&"core", &"fishery"])
+song_texture = "Duas vozes e cavaquinho, ritmo de vira — Minho, romaria"
+colheita_song = "Depressa demais"
+landmark_roots = true

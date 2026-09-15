@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="JournalData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/journal_data.gd" id="1_xdpjs"]
+
+[resource]
+script = ExtResource("1_xdpjs")
+id = &"journal_07"
+act = 3
+order = 1
+title_key = "JOURNAL_07_TITLE"
+body_key = "JOURNAL_07_BODY"
+where_kind = &"fortress"
+where_id = &"fornalha"
+object_key = "JOURNAL_07_OBJECT"
+reveals_key = "JOURNAL_07_REVEALS"

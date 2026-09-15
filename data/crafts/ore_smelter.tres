@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CraftData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/craft_data.gd" id="1_l1o8x"]
+
+[resource]
+script = ExtResource("1_l1o8x")
+id = &"ore_smelter"
+display_key = "CRAFT_ORE"
+material = &"ore"
+house = &"smelter"
+cost = 1
+coin_multiplier = 1.5
+capacity_craft = &"smith"
+capacity_kind = &"weapon_level"
+magnitude = 1.0

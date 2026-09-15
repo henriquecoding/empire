@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ParallaxLayerData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/parallax_layer_data.gd" id="1_5v3q4"]
+
+[resource]
+script = ExtResource("1_5v3q4")
+id = &"closed_2"
+preset = &"closed"
+layer = 2
+node_name = &"MountainLayer"
+z_index = -50
+motion_scale = 0.125
+saturation_delta = -0.042
+value_delta = -0.16
+hue_shift_deg = 14.0
+min_detail_px = 8
+colors_per_16px = Vector2i(15, 20)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_kefah"]
+
+[resource]
+script = ExtResource("1_kefah")
+id = &"just_looking"
+display_key = "OFFER_JUST_LOOKING"
+price_kind = &"coins"
+price_amount = 1.0
+effect_kind = &"reveal_chapter"
+effect_value = 1.0
+min_day = 2
+debt_delta = 1

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="JobData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/job_data.gd" id="1_kaib8"]
+
+[resource]
+script = ExtResource("1_kaib8")
+id = &"cart"
+display_key = "JOB_CART"
+priority = 0.9
+urgency_by_phase = PackedFloat32Array(1, 1, 1, 0.8, 0, 0)

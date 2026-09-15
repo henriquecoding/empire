@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chapter_data.gd" id="1_gs7ee"]
+
+[resource]
+script = ExtResource("1_gs7ee")
+id = &"lit_oven"
+display_key = "CHAPTER_LIT_OVEN"
+law_key = "CHAPTER_LAW_LIT_OVEN"
+inhabitant_key = "CHAPTER_WHO_LIT_OVEN"
+song_key = "SONG_CHAPTER_LIT_OVEN"
+biome = &"volcanic"
+placement = &"roadside"
+detour_seconds = 25.0
+reward_kind = &"ancient_seed"
+law_enters_walls = true
+folk_root = "ferrarias sempre acesas"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GreedProfile" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/greed_profile.gd" id="1_hk0xv"]
+
+[resource]
+script = ExtResource("1_hk0xv")
+id = &"lavish"
+display_key = "GREED_LAVISH"
+greed_range = Vector2i(40, 60)
+free_elite_every_days = 3
+enemy_wall_bias = 1.0
+enemy_elite_bias = 1.4
+enemy_attack_timing = &"any"

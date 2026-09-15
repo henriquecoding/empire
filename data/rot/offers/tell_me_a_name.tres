@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_l31yo"]
+
+[resource]
+script = ExtResource("1_l31yo")
+id = &"tell_me_a_name"
+display_key = "OFFER_TELL_ME_A_NAME"
+price_kind = &"named_troop"
+price_amount = 1.0
+effect_kind = &"rot_detours"
+effect_value = 1.0
+requires = "named>=1"
+debt_delta = 3

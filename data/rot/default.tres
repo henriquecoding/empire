@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="RotProfile" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/rot_profile.gd" id="1_f2fao"]
+
+[resource]
+script = ExtResource("1_f2fao")
+mass_base = 40.0
+mass_per_day = 18.0
+mass_per_fortress = 30.0
+sacrifice_mass_per_animal = 8.0
+sacrifice_mass_per_troop = 14.0
+width_start = 160.0
+mass_per_amargueiro = 22.0
+mass_per_named_amargueiro = 45.0
+amargueiro_nights_standing = 1
+lantern_radius_base = 150.0
+lantern_radius_per_day = 4.0
+lantern_radius_max = 260.0
+lantern_tint = "#F6D89B"
+offer_trigger_px = 300.0
+offer_window_after_dusk = Vector2(20, 60)
+offer_seconds = 20.0
+refusal_mass = 8.0
+refusal_window_days = 5
+refusal_cap = 40.0
+debt_tiers = Array[int]([3, 6, 9, 12])
+tender_from_debt = 6
+ambient_light_from_debt = 9
+second_flame_from_debt = 12
+union_debt_max = 3
+union_peoples_released = 4
+dominion_debt_min = 12
+dominion_peoples_kept = 4

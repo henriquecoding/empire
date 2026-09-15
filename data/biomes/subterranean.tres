@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/biome_data.gd" id="1_1neiq"]
+
+[resource]
+script = ExtResource("1_1neiq")
+id = &"subterranean"
+display_key = "BIOME_SUBTERRANEAN"
+people = &"sobraiz"
+creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
+resources = Array[StringName]([&"fungi"])
+atmosphere_preset = &"closed"
+parallax_preset = &"closed"
+region_screens = Vector2i(4, 6)
+music_profile = &"music_subterranean"

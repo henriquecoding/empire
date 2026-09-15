@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/class_data.gd" id="1_t1874"]
+
+[resource]
+script = ExtResource("1_t1874")
+id = &"sealed_knight"
+display_key = "CLASS_SEALED_KNIGHT"
+archetype = &"sealed_knight"
+base_unit = &"sealed_knight"
+unlock = &"royal_seed"
+unlock_seed_cost = 2
+evolve_seed_cost = 1
+evolve_condition = &"mounted_kills"
+evolve_condition_value = 20
+phase1_ability = &"sees_through_mount"
+phase2_ability = &"mount_bond"
+phase2_params = {
+&"blind_vignette_mult": 0.5,
+&"mount_heal_days": 1.0
+}

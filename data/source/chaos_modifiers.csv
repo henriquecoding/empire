@@ -1,0 +1,5 @@
+id,display_key,damage_mult,health_loss_per_day,mercenary_price_mult,debt_interest_mult,swaps_bands,no_light,only_class,_phase,_src,_proposed,_notes
+spore_field,CHAOS_SPORE_FIELD,1.2,0.15,1.0,1.0,false,false,,7,§17 biomas caóticos: modificadores de rota; §21 segmento caotico só a partir da 2.ª região,,
+inverted_floodplain,CHAOS_INVERTED_FLOODPLAIN,1.0,0,1.0,1.0,true,false,,7,§17 biomas caóticos: modificadores de rota; §21 segmento caotico só a partir da 2.ª região,,"A faixa aérea anda-se, a superfície voa-se."
+blind_furrow,CHAOS_BLIND_FURROW,1.0,0,1.0,1.0,false,true,sealed_knight,7,§17 biomas caóticos: modificadores de rota; §21 segmento caotico só a partir da 2.ª região,,
+bone_market,CHAOS_BONE_MARKET,1.0,0,0.5,2.0,false,false,,7,§17 biomas caóticos: modificadores de rota; §21 segmento caotico só a partir da 2.ª região,,"Mercenários a metade do preço, dívida ao dobro do juro."

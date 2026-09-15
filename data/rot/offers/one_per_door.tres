@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_efj72"]
+
+[resource]
+script = ExtResource("1_efj72")
+id = &"one_per_door"
+display_key = "OFFER_ONE_PER_DOOR"
+price_kind = &"troop_per_gate"
+price_amount = 1.0
+effect_kind = &"gates_unbreakable"
+effect_value = 1.0
+requires = "gate>=1"
+min_day = 5
+debt_delta = 1

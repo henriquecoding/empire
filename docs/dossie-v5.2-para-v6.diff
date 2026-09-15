@@ -1,0 +1,1174 @@
+--- dossie v5.2
++++ dossie v6
+@@ -1,4 +1,4 @@
+-<title>Dossiê Empire</title>
++<title>Dossiê Empire v6 — O Desconhecido</title>
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&family=Silkscreen&display=swap">
+ <style>
+@@ -248,15 +248,41 @@
+   body{font-size:10pt;background:#fff;color:#000}
+   section{break-inside:avoid-page}
+ }
++/* ============ PARTE XIII — acrescentos ============ */
++.lantern{background:linear-gradient(180deg,var(--ember-wash),var(--surface));border:1px solid var(--ember);border-radius:2px;padding:20px 22px;margin:28px 0;max-width:var(--measure)}
++.lantern .lbl{font-family:var(--f-px);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ember);display:block;margin-bottom:10px}
++.lantern>:last-child{margin-bottom:0}
++.voice{font-family:var(--f-display);font-variation-settings:'SOFT' 40,'WONK' 1,'opsz' 48;font-weight:600;font-size:23px;line-height:1.3;color:var(--ink);margin:0 0 8px;letter-spacing:-.015em}
++.voice::before{content:'\201C'} .voice::after{content:'\201D'}
++.gloss{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin:0}
++.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin:26px 0;max-width:none}
++.two>div>:first-child{margin-top:0}
++.two p,.two ul{max-width:none}
++.tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:2px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
++.tag.keep{border-color:var(--leaf);color:var(--leaf);background:var(--leaf-wash)}
++.tag.drop{border-color:var(--ember);color:var(--ember);background:var(--ember-wash)}
++.tag.new{border-color:var(--rot);color:var(--rot);background:var(--rot-wash)}
++.ramp{display:flex;height:46px;margin:14px 0 6px;border:1px solid var(--line);border-radius:2px;overflow:hidden;max-width:var(--measure)}
++.ramp i{flex:1;display:block}
++.ramp-lbl{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;font-family:var(--f-mono);font-size:10.5px;line-height:1.35;color:var(--muted);max-width:var(--measure);margin-bottom:22px}
++.ramp-lbl span:nth-child(2){text-align:center}
++.ramp-lbl span:last-child{text-align:right}
++.chapline{border-left:3px solid var(--rot);background:var(--surface);padding:16px 18px;margin:0 0 12px;border-radius:0 2px 2px 0;max-width:var(--measure)}
++.chapline h6{font-family:var(--f-display);font-variation-settings:'opsz' 36;font-weight:700;font-size:18px;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em}
++.chapline .meta{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 9px}
++.chapline p{font-size:15px;margin:0 0 7px;line-height:1.5;max-width:none}
++.chapline p:last-child{margin-bottom:0}
++.chapline .law{color:var(--ink-2)}
++.chapline .law b{color:var(--rot);font-weight:600}
+ </style>
+ 
+ <div class="rail"><i id="railfill"></i></div>
+ 
+ <div class="wrap">
+ <header class="mast">
+-  <span class="kicker">Dossiê de produção · v5.2 · setembro 2026 · Rico</span>
++  <span class="kicker">Dossiê de produção · v6 · setembro 2026 · Rico</span>
+   <h1>Empire<span class="dot">.</span></h1>
+-  <p class="deck">Documento único para construir um kingdom-builder em pixel art onde cada império é uma civilização própria. Design, matemática de balanceamento, direção de arte medida, produção assistida por IA, orçamento e lançamento — e, a partir da §39, a especificação técnica completa contra a qual o código é escrito e revisto. Nada cortado, nada em ficheiros separados.</p>
++  <p class="deck">Documento único para construir um kingdom-builder em pixel art onde cada império é uma civilização própria. Design, matemática de balanceamento, direção de arte medida, produção assistida por IA, orçamento e lançamento — a partir da §39 a especificação técnica completa contra a qual o código é escrito e revisto, e a partir da §73 o que <em>Over the Garden Wall</em> tem para dar a este jogo — desmontado em sete alavancas, com A Podridão a ganhar uma candeia e uma voz. Nada cortado, nada em ficheiros separados.</p>
+   <div class="chips">
+     <span class="chip on">Godot 4.6</span>
+     <span class="chip">PC · Steam · Steam Deck</span>
+@@ -265,14 +291,22 @@
+     <span class="chip">Solo + IA</span>
+     <span class="chip">Determinista por seed</span>
+     <span class="chip new">48 mecânicas rastreadas</span>
+-    <span class="chip new">73 secções</span>
++    <span class="chip new">85 secções</span>
+     <span class="chip new">61 eventos</span>
+     <span class="chip new">Fase 0 e 1 ao ficheiro</span>
+     <span class="chip new">Dia zero, ao ficheiro</span>
+-    <span class="chip new">Repositório a correr</span>
++    <span class="chip new">Documentação e fontes recuperadas</span>
++    <span class="chip new">Parte XIII · O Desconhecido</span>
++    <span class="chip new">14 testes de design</span>
+   </div>
+ </header>
+ 
++<aside id="retomada" class="note risk" aria-label="Estado da recuperação">
++  <span class="lbl">Retomada a partir do histórico</span>
++  <p>As 105 correções da v5.2 e os 42 tickets foram recuperados. A <strong>v6</strong> acrescenta a Parte XIII (§73–§85) e as 52 questões incluem as da Parte XIII e seis conflitos encontrados na integração. As afirmações de «feito», testes, exportação e inventários da Parte XII descrevem o <strong>ambiente original do Claude</strong>, não o estado desta cópia.</p>
++  <p>A continuação v6 restaura o projeto Godot 4.6, o arranque e o conversor das 17 tabelas: 154 recursos .tres. Existem 88 ficheiros de especificação, 42 tickets, 12 ADRs e 27 classes Resource. As 932 propostas dos CSV foram preservadas. Os testes de dados e infraestrutura são executáveis; os 16 contratos de comportamento da Parte XIII continuam pendentes. <strong>Ainda não há gameplay.</strong> O estado verificável está em <a href="recovery/RETOMADA.md">docs/recovery/RETOMADA.md</a>, dentro do ZIP.</p>
++</aside>
++
+ <div class="shell">
+ <nav class="toc" aria-label="Índice">
+   <div class="grp">Abertura</div>
+@@ -387,6 +421,22 @@
+     <li><a href="#s71"><span class="n">71</span> O que já existe</a></li>
+     <li><a href="#s72"><span class="n">72</span> O que a implementação encontrou</a></li>
+   </ol>
++  <div class="grp">XIII · O Desconhecido</div>
++  <ol>
++    <li><a href="#s73"><span class="n">73</span> O método, desmontado</a></li>
++    <li><a href="#s74"><span class="n">74</span> A Podridão ganha candeia</a></li>
++    <li><a href="#s75"><span class="n">75</span> A Oferta, e a dívida</a></li>
++    <li><a href="#s76"><span class="n">76</span> Ninguém tem nome</a></li>
++    <li><a href="#s77"><span class="n">77</span> Dez lugares, uma lei cada</a></li>
++    <li><a href="#s78"><span class="n">78</span> A Colheita</a></li>
++    <li><a href="#s79"><span class="n">79</span> A árvore foi plantada</a></li>
++    <li><a href="#s80"><span class="n">80</span> O preto entra na paleta</a></li>
++    <li><a href="#s81"><span class="n">81</span> Uma canção por povo</a></li>
++    <li><a href="#s82"><span class="n">82</span> O que não se importa</a></li>
++    <li><a href="#s83"><span class="n">83</span> Os primeiros vinte minutos</a></li>
++    <li><a href="#s84"><span class="n">84</span> Testes, riscos e save</a></li>
++    <li><a href="#anx"><span class="n">85</span> Os ficheiros de dados</a></li>
++  </ol>
+   <div class="grp">Rastreador</div>
+   <ol>
+     <li><a href="#trk"><span class="n">★</span> As 48 mecânicas</a></li>
+@@ -812,11 +862,12 @@
+       <tr><td>Meio-dia</td><td class="n">40 s</td><td>Fortalezas inimigas detetam presença. Risco de contra-ataque.</td><td>Trabalho livre</td><td>Alta, dura</td></tr>
+       <tr><td>Tarde</td><td class="n">85 s</td><td>Última janela de construção. Preços de mercenários sobem 25%.</td><td>Trabalho livre</td><td>Dourada</td></tr>
+       <tr><td>Crepúsculo</td><td class="n">30 s</td><td>A Podridão nasce na borda do mapa. Aviso sonoro.</td><td>Recolha aos postos</td><td>Vermelha baixa</td></tr>
+-      <tr><td>Noite</td><td class="n">105 s</td><td>Defesa. Nada se constrói exceto pelo construtor evoluído.</td><td>Posto de cerco</td><td>Azul profundo</td></tr>
++      <tr><td>Noite</td><td class="n">105 s</td><td>Defesa. Nada se constrói exceto pelo construtor evoluído.</td><td>Posto de cerco</td><td class="mark">Castanho profundo · 32° · 0,22 · 0,16</td></tr>
+     </tbody>
+   </table></div>
+ 
+-  <h4>A Podridão — especificação completa</h4>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>A massa, a velocidade e a natureza desta entidade foram revistas na <a href="#s74">§74</a>: A Podridão passa a trazer uma candeia e a comer os mortos que ficam no campo. A cor da noite está <strong>decidida</strong>: a linha da Noite nesta tabela já foi corrigida para castanho, e a razão está na <a href="#s80">§80</a> e na ADR 0011 (Q-037, fechada a 13/09/2026). A caixa "Alimentar" ganhou voz e preço na <a href="#s75">§75</a>.</p></div>
++<h4>A Podridão — especificação completa</h4>
+   <p>A tua ideia de "uma sombra que vai de encontro ao império invocando inimigos até chegar" é a mecânica mais original da lista. Merece ser um sistema de primeira classe, não um spawner disfarçado.</p>
+   <div class="kv">
+     <dt>Natureza</dt><dd>Entidade única com posição em X, largura, e uma <em>massa</em> que funciona como orçamento de invocação</dd>
+@@ -1241,7 +1292,8 @@
+     <div class="cell"><h6>Quem passa</h6><p>Personagens jogáveis, ofícios enviados e criaturas subterrâneas. <strong>As tropas de defesa nunca descem.</strong></p></div>
+   </div>
+ 
+-  <h4>A faixa que falta — e que é a razão de as tuas cenas parecerem planas</h4>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>O diagnóstico desta secção — "falta um plano no meio" — é resolvido com um teto de valores por camada na <a href="#s80">§80</a>. As faixas de jogo não mudam.</p></div>
++<h4>A faixa que falta — e que é a razão de as tuas cenas parecerem planas</h4>
+   <p>As três faixas acima são a divisão <em>de jogo</em>: quem passa onde, o que colide com o quê. Está certa e mantém-se. Mas a divisão de jogo não é a divisão <em>de imagem</em>, e é aí que está o buraco. Medi as capturas que enviaste, faixa a faixa, do topo do ecrã para a base:</p>
+ 
+   <div class="tw"><table>
+@@ -1442,7 +1494,8 @@
+     </tbody>
+   </table></div>
+ 
+-  <h4>Os 12 diários — a estrutura narrativa</h4>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>A estrutura de quatro atos, a regra de ouro e os dois epílogos mantêm-se; o que está por baixo deles foi reescrito na <a href="#s79">§79</a>, e os biomas caóticos passaram a Capítulos na <a href="#s77">§77</a>.</p></div>
++<h4>Os 12 diários — a estrutura narrativa</h4>
+   <p>Doze fragmentos, três por ato, encontrados por ordem de conquista e não por ordem de escrita. Cada um tem de funcionar isolado <em>e</em> mudar o sentido dos anteriores. A regra: <strong>nenhum diário explica a Podridão diretamente; todos descrevem uma decisão humana que, lida em conjunto, a explica.</strong></p>
+   <div class="tw"><table>
+     <thead><tr><th>Ato</th><th>Diários</th><th>O que revelam</th><th>Reviravolta</th></tr></thead>
+@@ -1612,12 +1665,12 @@
+   </table></div>
+ 
+   <h4>Save</h4>
+-  <p>Um único <code>Resource</code> serializado (<code>ResourceSaver</code> com <code>.res</code> binário) com o estado de <code>src/sim/</code> mais as posições das entidades. Como a simulação é pura, o save é quase trivial. Regras não negociáveis:</p>
++  <p>Um <code>Dictionary</code> de tipos base validados contém o estado de <code>src/sim/</code> e as posições das entidades. Grava-se com <code>FileAccess.store_var</code> e lê-se com <code>FileAccess.get_var(false)</code>, conforme a ADR 0007. O esquema e a migração são explícitos; nenhum Resource é carregado a partir de um save. Regras não negociáveis:</p>
+   <ul>
+     <li><strong>Escreve para ficheiro temporário e só depois renomeia.</strong> Um crash a meio da escrita não pode destruir o save.</li>
+     <li><strong>Campo <code>save_version: int</code> desde a v1</strong>, com migrações explícitas. Um jogador que perca 40 horas por causa de um update não volta.</li>
+     <li><strong>Três slots com rotação</strong> em <code>user://</code>, auto-save no amanhecer de cada dia.</li>
+-    <li><strong>Nunca uses <code>load()</code> num ficheiro de save.</strong> Um <code>.tres</code> arbitrário pode conter script embutido — é uma execução remota de código disfarçada. Usa <code>ResourceLoader.load</code> com <code>CACHE_MODE_IGNORE</code> e valida os tipos à mão.</li>
++    <li><strong>Nunca uses <code>load()</code> num ficheiro de save.</strong> Um <code>.tres</code> arbitrário pode conter script embutido — é uma execução remota de código disfarçada. Grava tipos base com <code>FileAccess.store_var(dados, false)</code> e lê com <code>FileAccess.get_var(false)</code>; valida os campos. Nunca uses <code>ResourceLoader.load</code> num save (ADR 0007, Q-036).</li>
+   </ul>
+ 
+   <h4>Steam, Steam Deck e web</h4>
+@@ -1797,7 +1850,8 @@
+     </tbody>
+   </table></div>
+ 
+-  <h4>A paleta de trabalho — 112 cores, sete famílias</h4>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>O Bloco 4 muda de ordem e o parallax fica mais barato: ver <a href="#s80">§80</a>. Três valores de silhueta entram na paleta e a noite passa a castanha.</p></div>
++<h4>A paleta de trabalho — 112 cores, sete famílias</h4>
+   <p>Extraída das duas cenas (104 + 115 cores opacas, 137 únicas combinadas, 112 acima do limiar de ruído). É a rampa <em>atual</em> de arte em curso, não uma paleta fechada — a caixa no fim desta secção diz quando e como se fecha. Passa o rato por cima para ver o hex; clica para copiar. O botão exporta em <code>.gpl</code>, que a Aseprite importa diretamente.</p>
+ <div class="pal-h"><span>Neutros e contorno</span><span>23 cores</span></div>
+ <div class="pal"><div class="sw" data-hex="#000000" style="background:#000000" title="#000000"></div><div class="sw" data-hex="#0B0B0B" style="background:#0B0B0B" title="#0B0B0B"></div><div class="sw" data-hex="#0F1110" style="background:#0F1110" title="#0F1110"></div><div class="sw" data-hex="#232323" style="background:#232323" title="#232323"></div><div class="sw" data-hex="#212522" style="background:#212522" title="#212522"></div><div class="sw" data-hex="#332F2F" style="background:#332F2F" title="#332F2F"></div><div class="sw" data-hex="#3D3B48" style="background:#3D3B48" title="#3D3B48"></div><div class="sw" data-hex="#4C4849" style="background:#4C4849" title="#4C4849"></div><div class="sw" data-hex="#48464F" style="background:#48464F" title="#48464F"></div><div class="sw" data-hex="#545454" style="background:#545454" title="#545454"></div><div class="sw" data-hex="#58575D" style="background:#58575D" title="#58575D"></div><div class="sw" data-hex="#5B5863" style="background:#5B5863" title="#5B5863"></div><div class="sw" data-hex="#6A6464" style="background:#6A6464" title="#6A6464"></div><div class="sw" data-hex="#6F7066" style="background:#6F7066" title="#6F7066"></div><div class="sw" data-hex="#6E6A78" style="background:#6E6A78" title="#6E6A78"></div><div class="sw" data-hex="#827F6E" style="background:#827F6E" title="#827F6E"></div><div class="sw" data-hex="#7D7575" style="background:#7D7575" title="#7D7575"></div><div class="sw" data-hex="#A19D9E" style="background:#A19D9E" title="#A19D9E"></div><div class="sw" data-hex="#C9C5C6" style="background:#C9C5C6" title="#C9C5C6"></div><div class="sw" data-hex="#C9C6CD" style="background:#C9C6CD" title="#C9C6CD"></div><div class="sw" data-hex="#F0F0F0" style="background:#F0F0F0" title="#F0F0F0"></div><div class="sw" data-hex="#FCFCFC" style="background:#FCFCFC" title="#FCFCFC"></div><div class="sw" data-hex="#FFFFFF" style="background:#FFFFFF" title="#FFFFFF"></div></div>
+@@ -2128,7 +2182,8 @@
+     </tbody>
+   </table></div>
+ 
+-  <div class="note risk"><span class="lbl">A regra que faz isto funcionar</span>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>Esta tabela mantém-se inteira e é estendida até aos vinte minutos na <a href="#s83">§83</a>, para que o Amargueiro, a candeia e a primeira Oferta cheguem antes de o jogador formar opinião.</p></div>
++<div class="note risk"><span class="lbl">A regra que faz isto funcionar</span>
+     <p><strong>Nada nesta tabela é um tutorial.</strong> É o mundo, disposto por ordem. Mas é <em>autorado</em> — o segmento inicial não é procedural. Reserva-o: <code>segmento_00_abertura</code> é uma cena fixa, sempre igual, e é a coisa mais afinada do jogo inteiro. O Kingdom pode dispensar isto porque tem cinco mecânicas; tu não podes.</p>
+   </div>
+   <div class="note spec"><span class="lbl">Como medir se funciona</span>
+@@ -2643,7 +2698,8 @@
+   <h3>Testes, CI e os testes de design</h3>
+   <p class="lede">Sem testes automáticos não consegues rever o que a IA escreve, e vais deixar de tentar ao fim de duas semanas. Com testes, podes aceitar 400 linhas sem as ler linha a linha — porque sabes o que elas têm de fazer.</p>
+ 
+-  <h4>Três níveis</h4>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>Os catorze testes que guardam os sistemas da Parte XIII estão na <a href="#s84">§84</a> e vivem em <code>tests/design_unknown_test.gd</code>.</p></div>
++<h4>Três níveis</h4>
+   <div class="grid g3">
+     <div class="cell"><h6>Unitário — <code>src/sim/</code></h6><p>Rápido, sem editor, cobertura alta. Toda a função pública. É aqui que vive 80% da suite.</p></div>
+     <div class="cell"><h6>De cena — <code>scenes/tests/</code></h6><p>Uma noite completa em modo headless com <code>delta</code> fixo. Verifica que o muro aguenta e que ninguém fica preso.</p></div>
+@@ -2948,7 +3004,8 @@
+     </tbody>
+   </table></div>
+ 
+-  <div class="note night"><span class="lbl">Os dois riscos fatais são o mesmo risco</span>
++  <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>Seis linhas novas — os riscos que a Parte XIII traz, com sinal de alarme e mitigação — estão na <a href="#s84">§84</a>.</p></div>
++<div class="note night"><span class="lbl">Os dois riscos fatais são o mesmo risco</span>
+     <p>Repara que os dois de cima têm impacto fatal, e ambos se resolvem com a mesma coisa: <strong>chegar ao mês 7 com um jogo que te apetece jogar.</strong> Se isso acontecer, a exaustão passa a ser gerível porque estás a jogar o teu próprio jogo às sextas. Se não acontecer, os outros dez riscos não interessam. <em>Todo o plano existe ao serviço da Fase 2.</em></p>
+   </div>
+ </section>
+@@ -3053,7 +3110,7 @@
+       <tr><td class="n">I3</td><td><strong>Toda a entidade tem <code>band: Band.Kind</code> desde a criação</strong>, e as colisões usam camadas separadas por faixa.</td><td>O §11 chama-lhe a decisão arquitetónica mais importante. Acrescentar isto no dia 200 é reescrever o jogo.</td><td><code>test_toda_entidade_tem_faixa</code></td></tr>
+       <tr><td class="n">I4</td><td><strong>Números de balanceamento vivem em <code>.tres</code>, nunca em código.</strong></td><td>Balancear passa a ser editar tabelas. E permite gerar os <code>.tres</code> de um CSV, que é o que resolve a base de dados de conteúdo (§44).</td><td><code>test_sem_literais_de_balanceamento</code></td></tr>
+       <tr><td class="n">I5</td><td><strong>A simulação corre a passo fixo de 30 Hz</strong>, desacoplada do render.</td><td>Determinismo e desempenho com 300 unidades. O render interpola; a simulação não.</td><td><code>test_tick_fixo</code></td></tr>
+-      <tr><td class="n">I6</td><td><strong>Nunca <code>load()</code> num ficheiro de save.</strong> <code>ResourceLoader.load</code> com <code>CACHE_MODE_IGNORE</code> e validação de tipo à mão.</td><td>Um <code>.tres</code> arbitrário pode conter script embutido. É execução remota de código disfarçada de save.</td><td>Lint + revisão obrigatória</td></tr>
++      <tr><td class="n">I6</td><td><strong>Nunca <code>load()</code> nem <code>ResourceLoader.load</code> num ficheiro de save.</strong> Usa <code>FileAccess.get_var(false)</code>, apenas tipos base, com validação campo a campo (ADR 0007).</td><td>Um <code>.tres</code> arbitrário pode conter script embutido. É execução remota de código disfarçada de save.</td><td>Lint + revisão obrigatória</td></tr>
+       <tr><td class="n">I7</td><td><strong>A comunicação entre sistemas é por evento nomeado</strong> do catálogo do §46. Sistemas não se chamam uns aos outros diretamente.</td><td>É o que permite a um agente mexer num sistema sem partir os outros, e a ti perceberes o que aconteceu lendo um registo de eventos.</td><td><code>test_eventos_no_catalogo</code></td></tr>
+       <tr><td class="n">I8</td><td><strong>O parallax move-se em pixels inteiros.</strong> Cada camada faz <code>floor()</code> antes de aplicar a posição.</td><td>Meio pixel de deslocamento destrói a grelha de autoria, que é a regra de ouro do §01.</td><td><code>test_parallax_inteiro</code></td></tr>
+     </tbody>
+@@ -3964,7 +4021,7 @@
+       <tr><td>Escreve para ficheiro temporário e só depois renomeia</td><td>Um <em>crash</em> a meio da escrita não pode destruir o save. Renomear é atómico; escrever não é.</td></tr>
+       <tr><td><code>save_version</code> desde a v1, com migrações explícitas</td><td>Um jogador que perca 40 horas por causa de um <em>update</em> não volta. E não há v0 — a primeira versão já é a 1.</td></tr>
+       <tr><td>Três <em>slots</em> com rotação, em <code>user://</code></td><td>Autosave no <code>DAWN</code> de cada dia. Um save corrompido nunca é o único.</td></tr>
+-      <tr><td><strong>Nunca <code>load()</code></strong> — usa <code>ResourceLoader.load</code> com <code>CACHE_MODE_IGNORE</code> e valida tipos à mão</td><td>Um <code>.tres</code> arbitrário pode conter script embutido. É execução remota de código disfarçada de save, e é a falha de segurança clássica de jogos Godot.</td></tr>
++      <tr><td><strong>Nunca <code>load()</code> nem <code>ResourceLoader.load</code></strong> — grava com <code>FileAccess.store_var(dados, false)</code>, lê com <code>FileAccess.get_var(false)</code> e valida os tipos base campo a campo</td><td>Um <code>.tres</code> arbitrário pode conter script embutido. É execução remota de código disfarçada de save, e é a falha de segurança clássica de jogos Godot.</td></tr>
+       <tr><td>Campos desconhecidos são ignorados, não são erro</td><td>Permite ler um save de uma versão futura sem rebentar — degrada em vez de recusar.</td></tr>
+     </tbody>
+   </table></div>
+@@ -4836,6 +4893,7 @@
+ <section id="s71">
+   <span class="sec-no">71 — Índice · <span style="color:var(--ember)">novo</span></span>
+   <h3>O repositório que já existe, pasta a pasta</h3>
++  <p><strong>Inventário histórico:</strong> esta secção conserva o estado registrado pelo Claude. O estado da recuperação é o da nota no início desta edição e do relatório RETOMADA.md.</p>
+   <p class="lede">As ondas 1 e 2 da §68, e tudo o que o relatório do que faltava pedia, estão num repositório que abre no Godot 4.6: <strong>23 testes</strong> (dois saltados, com a razão escrita), o <em>export</em> de Linux a arrancar, e os números deste dossiê em <strong>23 tabelas</strong> de onde saem 120 recursos <code>.tres</code>. O que o dossiê não dava foi proposto e marcado — 550 valores, 265 deles na fatia vertical. Nada foi decidido em silêncio.</p>
+ 
+   <h4>Pasta a pasta</h4>
+@@ -4852,7 +4910,7 @@
+       <tr><td><code>tests/</code></td><td>Arquitetura (G1, G2, G4, a faixa canónica, 250 linhas), dados (tabelas completas, referências, chaves de texto) e design (tempo até matar do §07, Podridão, manutenção, asfixia entre 9 e 14, rotas, ganância, muralhas)</td><td>§31 · §64</td><td>23 testes; G3 espera pelo F0-07, o aríete pela Q-001</td></tr>
+       <tr><td><code>docs/design/</code></td><td>Este dossiê partido por secção, 75 ficheiros</td><td>§69</td><td>Gerado; o CI falha se divergir</td></tr>
+       <tr><td><code>docs/adr/</code></td><td>0000 a 0010 — escala, faixas, dados, versionamento, arranque, relógio, save, convenções da base de dados, correções do dia zero, importação da arte</td><td>§28 · §69</td><td>0001 e 0010 são propostas; as outras, aceites</td></tr>
+-      <tr><td><code>docs/backlog/</code></td><td>F0-00 a F0-10 e F1-01 a F1-16 no formato do §34, com os caminhos da §70 e os ficheiros reais de <code>docs/design/</code>; mais nove tickets de arte, <em>greybox</em>, nomes e dados</td><td>§34 · §65 · §66</td><td>Existe</td></tr>
++      <tr><td><code>docs/backlog/</code></td><td>42 tickets: F0-00 a F0-15 e F1-01 a F1-17 no formato do §34, com os caminhos da §70 e os ficheiros reais de <code>docs/design/</code>; mais nove tickets de arte, <em>greybox</em>, nomes e dados</td><td>§34 · §65 · §66</td><td>Existe</td></tr>
+       <tr><td><code>docs/content/</code></td><td>Dicionário e esquema da base de dados, as 550 propostas, a Podridão dia a dia, os nomes, e a bíblia de nomes com a triagem dos candidatos ao nome do jogo</td><td>§17 · §36 · §44</td><td>Existe; o nome do jogo continua por escolher</td></tr>
+       <tr><td><code>docs/art/</code></td><td>Asset Bible, registo de 251 assets, bíblia de animação, guia de expressões, 34 efeitos</td><td>§01 · §22 · §58 · §60</td><td>Existe</td></tr>
+       <tr><td><code>docs/world/</code></td><td>Bíblia de produção de mundo, regras de <em>greybox</em>, registo de 43 segmentos</td><td>§21 · §54</td><td>Existe</td></tr>
+@@ -4944,7 +5002,7 @@
+       <tr><td>Q-036</td><td>O I6 proíbe o <code>load()</code> num save e recomenda o <code>ResourceLoader.load</code> — que é a mesma função; um <code>.tres</code> pode trazer <em>script</em> e executá-lo</td><td>F0-13 — a ADR 0007 já segue a proposta</td></tr>
+     </tbody>
+   </table></div>
+-  <p>A Q-036 é a mais séria, e a única de segurança: a proposta é gravar o save com <code>FileAccess.store_var</code> e lê-lo com <code>get_var(false)</code>, só com tipos base — falta mudares a frase do I6 na §19, na §40 e na §62. As outras dezanove são de fases posteriores e estão no mesmo ficheiro, cada uma com a proposta que já está nos dados.</p>
++  <p>A Q-036 é a mais séria, e a única de segurança: a proposta é gravar o save com <code>FileAccess.store_var</code> e lê-lo com <code>get_var(false)</code>, só com tipos base. Na retomada, as frases das §19, §40 e §62 foram alinhadas com a ADR 0007; o SaveService continua por implementar. As outras dezanove são de fases posteriores e estão no mesmo ficheiro, cada uma com a proposta que já está nos dados.</p>
+ 
+   <h4>O português</h4>
+   <p>A v5.2 revê o texto inteiro contra a norma europeia com o Acordo Ortográfico de 1990, que já era a do resto do documento: <strong>105 correções</strong> — 69 grafias anteriores ao Acordo, 9 formas do Brasil e 27 de gramática, pontuação e coerência. Estão todas, uma a uma e com o contexto, em <code>docs/dossie-v5.2-correcoes.md</code>. Os blocos de código ficaram de fora de propósito: são ASCII para poderem ser colados.</p>
+@@ -4955,6 +5013,939 @@
+ </section>
+ 
+ 
++<div class="part">
++  <div class="part-rule" aria-hidden="true">
++    <svg viewBox="0 0 1200 74" preserveAspectRatio="none" role="presentation">
++      <rect x="0" y="0" width="1200" height="26" fill="var(--ground)"/>
++      <rect x="0" y="26" width="1200" height="9" fill="var(--rot)" opacity=".7"/>
++      <rect x="0" y="35" width="1200" height="39" fill="var(--surface-2)"/>
++      <path d="M0 35 H1200 V37 H0 Z" fill="var(--ink)" opacity=".55"/>
++      <path d="M180 74 v-22 q0-14 14-14 q14 0 14 14 v22 Z" fill="var(--ink)" opacity=".5"/>
++      <path d="M240 74 v-30 q0-16 12-16 q12 0 12 16 v30 Z" fill="var(--ink)" opacity=".5"/>
++      <path d="M300 74 v-18 q0-12 11-12 q11 0 11 12 v18 Z" fill="var(--ink)" opacity=".5"/>
++      <circle cx="740" cy="54" r="11" fill="var(--ember)" opacity=".85"/>
++      <circle cx="740" cy="54" r="20" fill="var(--ember)" opacity=".22"/>
++      <rect x="736" y="38" width="8" height="6" fill="var(--ink)" opacity=".6"/>
++      <path d="M900 74 v-26 q0-13 10-13 q10 0 10 13 v26 Z" fill="var(--ink)" opacity=".35"/>
++      <circle cx="1030" cy="60" r="3" fill="var(--rot)" opacity=".8"/>
++    </svg>
++  </div>
++  <span class="part-no">Parte XIII</span>
++  <h2>O Desconhecido</h2>
++  <p>A Parte XII fechou a pré-produção e escreveu a regra: a partir dali, o dossiê só muda por correção, por decisão que vira ADR, ou por número que um <em>playtest</em> desmentiu. Esta parte é do segundo tipo. Não acrescenta teoria — troca a natureza de uma coisa que já lá estava. A Podridão continua a chamar-se Podridão, continua a nascer no crepúsculo e a recuar de manhã, e os dois verbos não mudam. O que muda é que ela passa a querer alguma coisa de ti, e a saber pedi-la.</p>
++</div>
++
++<section id="s73">
++  <span class="sec-no">73 — Método · <span style="color:var(--ember)">novo</span></span>
++  <h3>O que Over the Garden Wall faz, e o que dele serve</h3>
++  <p class="lede">Cem minutos, dez capítulos, um orçamento de televisão por cabo. A série consegue uma densidade de mundo que jogos de trinta vezes o tamanho não têm, e não é por causa da paleta. É por causa de sete decisões estruturais que se podem enumerar, medir e roubar. Quatro delas cabem no Empire quase sem custo. Duas custam caro e valem. Uma não serve e é a que toda a gente copia.</p>
++
++  <h4>As sete alavancas</h4>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>Alavanca</th><th>O que é, mecanicamente</th><th>Serve?</th><th>Onde cai</th></tr></thead>
++    <tbody>
++      <tr><td>1</td><td>O antagonista oferece, não ataca</td><td>A Besta nunca força. Faz propostas razoáveis a pessoas em dificuldade e deixa-as escolher. O terror é de consentimento, não de força.</td><td><span class="tag keep">Central</span></td><td>§74 · §75</td></tr>
++      <tr><td>2</td><td>O combustível são as vítimas</td><td>A lanterna arde a óleo de <em>edelwood</em>; o <em>edelwood</em> é feito das crianças perdidas. A ameaça é literalmente construída com as perdas anteriores.</td><td><span class="tag keep">Central</span></td><td>§74</td></tr>
++      <tr><td>3</td><td>Ninguém tem nome, toda a gente tem função</td><td>Na taberna não há nomes: há o Taberneiro, o Açougueiro, a Parteira, o Salteador. Ser nomeado é ganhar um lugar na história — e uma dívida para com ela.</td><td><span class="tag keep">Barata</span></td><td>§76</td></tr>
++      <tr><td>4</td><td>Um lugar, uma lei, uma canção</td><td>Cada capítulo é um sítio fechado com uma regra estranha que ninguém explica, um habitante que a cumpre com naturalidade, e uma canção que a diz. Noventa segundos e percebeste o sítio.</td><td><span class="tag keep">Barata</span></td><td>§77</td></tr>
++      <tr><td>5</td><td>A morte é um emprego com horário</td><td>Pottsfield é uma vila de esqueletos alegres que te põem a trabalhar e depois te deixam ir. A submissão é cordial, e é isso que a torna insuportável.</td><td><span class="tag keep">Cara, vale</span></td><td>§78</td></tr>
++      <tr><td>6</td><td>A luz é o assunto da imagem</td><td>Nick Cross recusou a teoria de cor impressionista e usou preto académico. As cenas compõem-se à volta de <strong>uma</strong> fonte de luz. O resto é silhueta.</td><td><span class="tag keep">Cara, vale</span></td><td>§80</td></tr>
++      <tr><td>7</td><td>A revelação do purgatório</td><td>Nos dois últimos capítulos percebe-se que os irmãos estão a afogar-se num lago no Dia das Bruxas e que O Desconhecido é o intervalo.</td><td><span class="tag drop">Não</span></td><td>§82</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note risk"><span class="lbl">Porque é que a sétima não serve</span>
++    <p>Uma reviravolta de "afinal era tudo outra coisa" paga-se com cem minutos de investimento e cobra-se uma vez. O teu jogo pede 28 a 40 meses de produção (§33) e quarenta horas ao jogador, com <em>permadeath</em> e <em>decay</em> (§16). Um jogador que perde o império à quinquagésima hora e descobre que nada aconteceu fecha o jogo. O que se tira da série não é a revelação — é a <strong>liminaridade</strong>: a sensação de estar num sítio que funciona com regras próprias, que não te explica nada, e de onde se sai por decisão e não por vitória. Isso o Empire já tem meio construído e nem deu por isso.</p>
++  </div>
++
++  <h4>A alavanca que a série não te dá, e é a mais importante</h4>
++  <p>Patrick McHale coleciona postais de Dia das Bruxas de 1890 a 1930. Nick Cross foi buscar cromolitografia, Doré, Harrison Cady, Ivan Shishkin. A música é <em>shape-note</em> do <em>Sacred Harp</em>, <em>ragtime</em>, canção de sala e <em>parlor song</em> anterior a 1950. Nada disto é fantasia inventada: é <strong>o vernáculo popular do próprio país deles, com cem anos, posto fora de sítio</strong>. É por isso que O Desconhecido parece lembrado e não desenhado.</p>
++  <p>Se copiares o resultado — abóboras com cara, perus de carga, mansões de comerciantes de chá — ficas com o fantasma de uma coisa americana num jogo cuja fonte arquitetónica já é a Carrasqueira, a Serra da Lousã, a lezíria do Tejo e as ferrarias bascas (§22, <code>peoples.csv</code>). Se copiares o método, ficas com uma coisa que ninguém fez.</p>
++
++  <div class="note dec"><span class="lbl">A decisão que esta parte inteira assume</span>
++    <p>O Empire não vai para O Desconhecido. Vai para o <strong>equivalente ibérico d'O Desconhecido</strong>: alminhas nos cruzamentos, romarias que não chegam, encomendação das almas, caretos, mouras encantadas, cante alentejano a duas vozes, o Homem do Chapéu de Ferro, ex-votos de cera. É a mesma operação de McHale sobre um manancial que está por explorar e que é teu por direito. Cada elemento das secções seguintes tem uma raiz portuguesa verificável e uma função mecânica — se algum só tiver a raiz, corta-se.</p>
++  </div>
++
++  <h4>O que o Empire já tinha e não sabia</h4>
++  <div class="grid g2">
++    <div class="cell"><h6>§05 · Alimentar a Podridão</h6><p>"Deixar sacrifícios reduz a massa. Sinistro, eficaz, e mecanicamente honesto." Já é a Besta. Falta só que ela <em>peça</em>. A §75 faz isso com o Verbo 1 e zero UI nova.</p></div>
++    <div class="cell"><h6>§16 · O corpo fica no mapa até ao amanhecer</h6><p>Já existe uma janela entre a morte e a alvorada em que o cadáver é um objeto no mundo. É exatamente onde o <em>edelwood</em> nasce. A §74 põe lá a terceira opção.</p></div>
++    <div class="cell"><h6>§04 · Cada súbdito é alguém</h6><p>"Não são unidade tipo 3 — são razões para doer quando morrem." Escrito na v3, nunca implementado. A §76 dá-lhe a mecânica que faltava, e custa uma tabela e um <em>overlay</em>.</p></div>
++    <div class="cell"><h6>§17 · A escolha estava a ser feita desde o primeiro cerco</h6><p>A melhor frase do dossiê, e neste momento é falsa: nada no jogo regista as escolhas que levam a União ou a Domínio. A §78 torna-a verdadeira doze vezes.</p></div>
++    <div class="cell"><h6>§17 · Biomas caóticos</h6><p>Quatro regiões com uma regra estranha cada. É a estrutura de capítulo da série, meio construída e sem narrativa agarrada. A §77 leva-as a dez e cola-lhes os diários.</p></div>
++    <div class="cell"><h6>§08 · O companheiro do trono</h6><p>Uma criatura que não obedece a ouro e segue quem a alimenta. É o sapo do Greg. Falta-lhe uma canção e um nome que o jogador escolhe — §81.</p></div>
++  </div>
++
++  <p>Nenhuma das dez secções seguintes inventa um sistema do nada. Sete alteram sistemas que já estão especificados, duas dão conteúdo a estruturas vazias, e uma — a §76 — é nova e custa menos de dez horas.</p>
++</section>
++<section id="s74">
++  <span class="sec-no">74 — Ameaça · <span style="color:var(--ember)">novo</span></span>
++  <h3>A Podridão ganha uma candeia — e o combustível és tu</h3>
++  <p class="lede">A Podridão da v5.2 é meteorologia com orçamento: nasce, avança, gasta massa, recua. É melhor do que ondas, como diz a §05, mas tem um buraco que ninguém apontou — durante os 85 segundos da Manhã e os 85 da Tarde, <strong>não há nada que possas fazer em relação a hoje à noite</strong>. Constróis, colhes, recrutas. A noite é um número que já está decidido. Esta secção rouba a alavanca 2 da série e fecha esse buraco: a massa da noite passa a ser escrita pelo jogador, de dia, com os seus próprios mortos.</p>
++
++  <h4>A candeia</h4>
++  <p>A Podridão passa a trazer uma luz. Uma só, quente, no meio da mancha. É a única coisa iluminada no campo à noite tirando as tuas fogueiras, e a mancha deixa de ser uma sombra que avança para ser <em>alguém a atravessar o campo com uma lanterna</em>. A leitura inverte-se, e é a inversão que faz o arrepio: a coisa que te vem matar é a única que traz luz.</p>
++  <dl class="kv">
++    <dt>Raio da luz</dt><dd>150 + 4 × dia px, com teto em 260. Dentro do raio vê-se o que a Podridão invocou; fora, não.</dd>
++    <dt>Cor</dt><dd>Âmbar da paleta (família de 5 cores, §22). É a única fonte quente do campo que não é tua.</dd>
++    <dt>Estado</dt><dd>O brilho é o mostrador da Dívida da Candeia (§75). Nunca aparece um número.</dd>
++    <dt>Vulnerabilidade</dt><dd>Nenhuma. Continua a valer o §05: não pode ser morta em campo aberto, só impedida.</dd>
++  </dl>
++
++  <h4>O Amargueiro</h4>
++  <p>Uma tropa que morre fora das muralhas e não é recolhida antes da alvorada <strong>cria raiz</strong>. Na Alvorada — a fase de 15 s em que a §05 já manda contar as perdas — o corpo levanta-se transformado numa árvore de madeira escura e resinosa, com a cara da tropa na casca. Não anda, não ataca, não pode ser destruída por dano. Fica ali, e alimenta a noite seguinte.</p>
++  <div class="lantern">
++    <span class="lbl">A fórmula da massa, reescrita</span>
++    <pre><code><span class="c"># v5.2 — §05</span>
++M = 60 + 26 * dia + 40 * fortalezas_conquistadas
++
++<span class="c"># v6 — a Podridão come o que deixaste no campo</span>
++M = 40 + 18 * dia + 30 * fortalezas
++  + <span class="k">22 * amargueiros</span> + <span class="k">45 * amargueiros_nomeados</span>
++  + <span class="k">8  * min(recusas_nos_ultimos_5_dias, 5)</span>   <span class="c"># §75</span></code></pre>
++    <p class="gloss">A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste.</p>
++  </div>
++
++  <div class="tw"><table>
++    <thead><tr><th>Estado do campo</th><th class="n">Dia 5</th><th class="n">Dia 10</th><th class="n">Dia 20</th><th>Contra a v5.2, ao dia 20</th></tr></thead>
++    <tbody>
++      <tr><td>v5.2 (referência)</td><td class="n">190</td><td class="n">320</td><td class="n">580</td><td>—</td></tr>
++      <tr><td>Campo limpo — 0 Amargueiros</td><td class="n">130</td><td class="n">220</td><td class="n">400</td><td class="mark">−31%</td></tr>
++      <tr><td>3 Amargueiros de pé</td><td class="n">196</td><td class="n">286</td><td class="n">466</td><td>−20%</td></tr>
++      <tr><td>8 Amargueiros de pé</td><td class="n">306</td><td class="n">396</td><td class="n">576</td><td>−1%</td></tr>
++      <tr><td>5 anónimos + 3 nomeados</td><td class="n">375</td><td class="n">465</td><td class="n">645</td><td class="mark">+11%</td></tr>
++    </tbody>
++  </table></div>
++  <p class="gloss" style="margin:-14px 0 22px">Todas as linhas assumem zero fortalezas conquistadas e zero recusas, para isolar o termo novo. Com três fortalezas ao dia 20 — o que é uma progressão normal — a v5.2 dá 700 e o campo limpo dá 490, e a vantagem do jogador cuidadoso mantém-se em −30%.</p>
++  <p>Um jogador que arrasta os seus mortos para dentro tem um jogo <strong>um terço mais leve</strong> do que a v5.2 prometia. Um jogador que os deixa no campo tem um jogo mais pesado. A curva de dificuldade deixa de ser uma reta que subiste no Excel e passa a ser uma consequência — e é uma consequência que se explica sozinha, sem tutorial, na primeira vez que um Amargueiro com a cara de alguém aparece à porta.</p>
++
++  <h4>Os três destinos de um Amargueiro</h4>
++  <p>Sempre com o Verbo 1. A moeda que largas é que decide, e a decisão é a mesma que o Lenhador da série tem de tomar todos os dias sem perceber que a está a tomar.</p>
++  <div class="tw"><table>
++    <thead><tr><th>Destino</th><th>Como</th><th>Custo</th><th>Rende</th><th>Efeito na noite</th></tr></thead>
++    <tbody>
++      <tr><td><strong>Cortar</strong></td><td>Largar moedas na base, <strong>a partir da segunda alvorada</strong>. Vem um lenhador da serração (§06). 12 s de corte.</td><td>6 moedas</td><td>1 · 2 · 3 Lenho por escala · 5 se era nomeado</td><td>−22 (ou −45) de massa, a partir daí</td></tr>
++      <tr><td><strong>Consagrar</strong></td><td>Largar 1 Semente Real na base. Vira Marco de pedra. Pode fazer-se logo na primeira alvorada.</td><td>1 Semente Real</td><td>Marco permanente</td><td>−22 de massa, e a Podridão abranda 40% num raio de 120 px (a regra de terreno consagrado da §05)</td></tr>
++      <tr><td><strong>Deixar</strong></td><td>Nada.</td><td>0</td><td>0</td><td>+22 (ou +45) de massa por noite, para sempre</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>As três regras que impedem isto de virar uma máquina de dinheiro</h4>
++  <div class="note risk"><span class="lbl">A falha que a primeira versão desta secção tinha</span>
++    <p>Um vagabundo custa <strong>1 moeda</strong> a recrutar (<code>units.csv</code>). Se um Amargueiro rendesse três Lenhos vendáveis a 40 moedas, a jogada ótima do jogo passava a ser mandar vagabundos morrer lá fora de propósito: 1 moeda a entrar, 120 a sair. Um sistema de <em>design</em> que premeia matar os teus faz o contrário do que esta parte inteira quer. As três regras abaixo fecham-no, e o teste D-02 da §84 impede que volte a abrir.</p>
++  </div>
++  <div class="tw"><table>
++    <thead><tr><th>Regra</th><th>O quê</th><th>Porquê</th></tr></thead>
++    <tbody>
++      <tr><td>1 · O Lenho não é moeda</td><td>Não se vende, não se troca, não tem preço. Só se constrói com ele.</td><td>Sem preço não há arbitragem. Acaba com a exploração na raiz, em vez de a tornar menos rentável.</td></tr>
++      <tr><td>2 · Uma noite de pé</td><td>Um Amargueiro só pode ser cortado depois de ter aguentado uma noite inteira. Antes disso a serra não pega.</td><td>Pagas sempre os +22 de massa uma vez, por cada árvore. Sacrificar dez vagabundos é +220 na noite seguinte — a matemática do §84 mostra que isso mata um império do dia 6.</td></tr>
++      <tr><td>3 · Rende o que a pessoa era</td><td>Escala 1 e vagabundo: 1 Lenho. Escala 2, tropa: 2. Escala 3, elite ou monarca: 3. Nomeado: 5.</td><td>A carne barata rende pouco e a cara rende muito — que é o inverso exato do incentivo perverso.</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note spec"><span class="lbl">Para que serve o Lenho Amargo, então</span>
++    <p>Para uma coisa só, e é grande. O <code>walls.csv</code> diz que a muralha de nível 4 tem <code>requires_conquest: fornalha</code> — sem conquistares a Fornalha não há muro de ferro, e a Fornalha é um povo de Fase 7. <strong>Um Lenho Amargo dispensa esse requisito por segmento.</strong> Constróis muro de nível 4 com os teus mortos, pagando na mesma as 36 moedas, dez fases antes de o poderes ter de outra maneira. O bastião de nível 5, que é único por império, custa 3 Lenhos além das 65 moedas.</p>
++    <p>Não há penalização escondida e não há final mau por o fazeres. A única coisa que o jogo faz é mostrar-te a cara na casca antes de a serra entrar, e cobrar-te 1 ponto de moral do império durante 2 dias se a tropa tinha nome (§76) — porque toda a gente estava a ver.</p>
++  </div>
++
++  <h4>Onde o Amargueiro pode nascer, e onde não</h4>
++  <ul>
++    <li><strong>Fora das muralhas</strong> — cria raiz. É a regra.</li>
++    <li><strong>Dentro das muralhas</strong> — não cria. O corpo desaparece na alvorada e conta como perda normal. É o incentivo a arrastar os mortos para dentro, e reutiliza inteiro o gesto que a §16 já tem para o Santuário das Raízes.</li>
++    <li><strong>Na faixa subterrânea</strong> — cria raiz, e cresce <em>ao contrário</em>, para baixo. Bloqueia a passagem. Os Sob-Raiz têm um problema que os outros povos não têm, e isso é do Ato III (§79).</li>
++    <li><strong>Na faixa aérea</strong> — não há corpos na faixa aérea; as voadoras caem.</li>
++    <li><strong>Sobre terreno consagrado</strong> — não cria. Um Marco protege um raio de 120 px de novas raízes, o que faz dele defesa, economia e cemitério ao mesmo tempo.</li>
++    <li><strong>Fora da tua região e das adjacentes</strong> — cria raiz e fica lá, mas <strong>não conta para a tua massa</strong>. Um Amargueiro que deixaste a seis ecrãs de distância, numa campanha de conquista, não te persegue a casa. Conta para a massa de quem lá vive.</li>
++  </ul>
++
++  <div class="note night"><span class="lbl">O que isto custa a construir</span>
++    <p>Um <code>AmargueiroSystem</code> pequeno pendurado no sinal de alvorada que o <code>GameClock</code> já emite (§48), um termo novo na fórmula do <code>RotSystem</code> (§51), um recurso <code>Lenho Amargo</code> na tabela da §44, um <em>slot</em> de destino no <code>BuildSystem</code> (§55, que já trata moeda física em <em>slots</em> pré-definidos), e um <em>sprite</em> de tronco por escala que reaproveita o <em>slot</em> <code>face</code> das personagens que já desenhaste. Estimativa: <strong>11 h de código, 3 h de arte</strong>, e os dois testes que impedem a exploração voltar (D-02 e D-03) estão orçamentados na §84. É o melhor rácio da parte inteira.</p>
++  </div>
++</section>
++<section id="s75">
++  <span class="sec-no">75 — Voz · <span style="color:var(--ember)">novo</span></span>
++  <h3>A Oferta, e a dívida que ninguém te mostra</h3>
++  <p class="lede">A Besta nunca ataca ninguém. Aparece a pessoas cansadas, fala em voz baixa, e faz uma proposta que naquele momento é a coisa sensata a fazer. O Lenhador aceitou-a durante anos e nem se lembra de ter escolhido. Esta é a alavanca 1, e é a que transforma A Podridão de fenómeno em personagem sem lhe acrescentar um único ponto de vida.</p>
++
++  <h4>Como funciona, sem um terceiro verbo</h4>
++  <div class="steps">
++    <div class="step"><h4>A mancha chega a 300 px da muralha mais exterior</h4><p>Acontece uma vez por noite, entre os 20 e os 60 segundos depois do crepúsculo, conforme a velocidade. A música baixa. A candeia sobe de brilho durante meio segundo.</p></div>
++    <div class="step"><h4>Aparece uma linha no mundo</h4><p>Não numa caixa. Junto à mancha, na tipografia entalhada da §24, como as placas de loja que já tens. Uma frase. Nunca mais do que oito palavras. Fica 20 segundos.</p></div>
++    <div class="step"><h4>Aceitar é o Verbo 1, dentro do prato</h4><p>Com a frase aparece um <strong>prato de oferenda</strong> no chão, à borda da mancha — um alguidar de barro, do tamanho de um <em>slot</em> de construção. O preço tem de <em>lá cair dentro</em>: as moedas atiradas para o prato, a tropa mandada andar até ele, a Semente Real largada nele. É um alvo, não um menu, e continua a ser o Verbo 1.</p></div>
++    <div class="step"><h4>Recusar é não fazer nada, e tem teto</h4><p>Passam os 20 segundos, o prato afunda-se no chão, a noite continua. Recusar custa <strong>+8 de massa por cada recusa das últimas cinco noites, até cinco</strong> — no máximo +40, e volta a zero assim que aceitares uma vez. Recusar hoje é quase de graça; recusar cinco noites seguidas é uma vaga inteira; recusar trinta é exatamente igual a recusar cinco. Um jogador que decida nunca fazer negócio nenhum paga um imposto fixo e conhecido, e não uma dívida que cresce para sempre.</p></div>
++  </div>
++
++  <h4>As quatro regras que impedem acidentes e discussões</h4>
++  <div class="tw"><table>
++    <thead><tr><th>Situação</th><th>O que acontece</th><th>Porquê</th></tr></thead>
++    <tbody>
++      <tr><td>Uma moeda solta cai perto da mancha durante o combate</td><td>Nada. Só conta o que cai <em>no prato</em>.</td><td>Perder uma tropa nomeada por um clique mal dado numa noite atarefada seria a coisa mais injusta do jogo.</td></tr>
++      <tr><td>Aceitaste e não consegues pagar tudo em 20 s</td><td>A oferta caduca e conta como <strong>recusa</strong>. O que já estava no prato é devolvido no chão.</td><td>Sem meias-aceitações não há estados intermédios para depurar, e o jogador nunca perde o que pôs sem receber nada.</td></tr>
++      <tr><td>Duas manchas, a partir do dia 12 (§05)</td><td><strong>Uma oferta por noite</strong>, na mancha que chegar primeiro. A outra fica calada.</td><td>A voz é uma pessoa. Duas propostas por noite fariam dela um sistema de menus.</td></tr>
++      <tr><td>O preço deixou de existir a meio (a tropa morreu, gastaste o ouro)</td><td>Caduca como recusa. Sem penalização extra.</td><td>O jogo não pune por causa das suas próprias condições de corrida.</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>As doze ofertas</h4>
++  <p>Uma por noite, sorteada entre as elegíveis com o fluxo de aleatoriedade dedicado da §42. Nenhuma é só má e nenhuma é só boa — a regra dos impulsos reais da §15 aplica-se aqui inteira, e é por isso que este sistema encaixa sem atrito: o jogador já aprendeu a gramática "vantagem com custo" no menu do rei.</p>
++  <div class="tw"><table>
++    <thead><tr><th>A frase</th><th>Preço</th><th>O que dá</th><th>Quando</th><th class="n">Dívida</th></tr></thead>
++    <tbody>
++      <tr><td>Dá-me o que já não anda.</td><td>As tropas abaixo de 40% de vida saem e não voltam</td><td>A mancha para 25 s</td><td>Dia 3+</td><td class="n">+1</td></tr>
++      <tr><td>Nada. Só quero ver.</td><td>1 moeda</td><td>Revela a posição de um Capítulo escondido (§77)</td><td>Dia 2+</td><td class="n">+1</td></tr>
++      <tr><td>Um por cada porta.</td><td>1 tropa por portão que tenhas</td><td>Os portões não podem ser arrombados esta noite</td><td>Dia 5+</td><td class="n">+1</td></tr>
++      <tr><td>Deixa a porta aberta.</td><td>Os portões ficam abertos até à alvorada</td><td>−40% de massa</td><td>Dia 6+</td><td class="n">+2</td></tr>
++      <tr><td>O que brilha, e nada mais.</td><td>Todo o ouro em tesouraria</td><td>A noite é saltada. A mancha não nasce.</td><td>Dia 4+, tesouraria &gt; 80</td><td class="n">+2</td></tr>
++      <tr><td>A árvore que plantaste.</td><td>Um Marco consagrado teu (§74)</td><td>+1 Semente Real</td><td>Com Marco</td><td class="n">+2</td></tr>
++      <tr><td>Diz-me um nome.</td><td>Uma tropa nomeada sai e não volta (§76)</td><td>A mancha contorna o império esta noite</td><td>Com nomeados</td><td class="n">+3</td></tr>
++      <tr><td>O que enterraste.</td><td>Abrir uma passagem subterrânea selada</td><td>Massa a metade</td><td>Território Sob-Raiz</td><td class="n">+3</td></tr>
++      <tr><td>O que estava aqui antes de ti.</td><td>A arquitetura de um povo conquistado desaparece do teu império</td><td>−15% de massa, permanente</td><td>Com 2+ povos</td><td class="n">+4</td></tr>
++      <tr><td>Fica com a candeia por uma noite.</td><td>Uma classe jogável, para sempre</td><td>Controlas a mancha esta noite e mandas-la a um império rival</td><td>Dia 15+</td><td class="n">+5</td></tr>
++      <tr><td>Um herdeiro.</td><td>O sucessor em treino (§15)</td><td>Ganância a 0 durante 10 dias</td><td>Com sucessor</td><td class="n">+5</td></tr>
++      <tr><td>Devolve-me o que é meu.</td><td>Tudo o que tem nome</td><td>A Podridão não volta a nascer</td><td>Dívida ≥ 12</td><td class="n">fecha</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="lantern">
++    <span class="lbl">A voz — a regra de escrita</span>
++    <p class="voice">Dá-me o que já não anda.</p>
++    <p class="gloss">Nunca ameaça. Nunca explica. Nunca usa a segunda pessoa do plural. Fala como quem já fez este negócio muitas vezes e não tem pressa. Se uma frase soar a vilão, está errada — reescreve-se até soar a funcionário.</p>
++  </div>
++
++  <h4>A Dívida da Candeia</h4>
++  <p>Um contador escondido, de 0 a 20. Sobe com cada oferta aceite. Nunca desce. <strong>Nunca aparece como número, barra, ícone ou linha de texto.</strong> Aparece assim:</p>
++  <div class="tw"><table>
++    <thead><tr><th class="n">Dívida</th><th>O que muda no ecrã</th><th>O que muda no jogo</th></tr></thead>
++    <tbody>
++      <tr><td class="n">0–2</td><td>A candeia ilumina 1 faixa</td><td>Nada</td></tr>
++      <tr><td class="n">3–5</td><td>A candeia ilumina 1 faixa e meia; a luz tem um halo</td><td>As ofertas passam a incluir as de preço 3</td></tr>
++      <tr><td class="n">6–8</td><td>2 faixas. Aparece <em>o Zelador</em>: uma figura que anda atrás da mancha, não ataca, e olha para o teu núcleo.</td><td>Se o Zelador chegar ao núcleo, leva uma tropa nomeada. Pode ser afastado, não morto.</td></tr>
++      <tr><td class="n">9–11</td><td>O ecrã inteiro tem luz âmbar à noite. Deixa de haver escuro.</td><td>As tuas fogueiras deixam de dar bónus de visão — já não são necessárias, e isso é a perda</td></tr>
++      <tr><td class="n">12+</td><td>A candeia tem duas chamas</td><td>O epílogo União fica fechado (§79). Aparece a décima segunda oferta.</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note dec"><span class="lbl">Porque é que o mostrador é a luz e não um número</span>
++    <p>A §24 pede HUD diegético e a §26 pede que o jogo se jogue em comando sem UI de rato. Um contador moral em número é a coisa mais fácil de fazer e a que estraga isto: assim que o jogador vê "Dívida: 7", começa a otimizar um número em vez de tomar decisões. Com a luz, ele sente que qualquer coisa está a mudar e não sabe dizer o quê durante horas. E quando perceber, já lá vai. É o mesmo mecanismo que faz o Lenhador não dar por nada durante anos.</p>
++  </div>
++
++  <h4>A gramática da coluna <code>requires</code></h4>
++  <p>Doze condições ad hoc dão doze interpretações. A coluna <code>requires</code> do <code>offers.csv</code> aceita uma gramática de três formas e mais nenhuma, avaliada pelo <code>RotSystem</code> contra o estado autoritativo (§45):</p>
++  <pre><code><span class="c"># &lt;chave&gt;&lt;op&gt;&lt;numero&gt;   op em { &gt;= , &lt;= , = }</span>
++gate&gt;=1          <span class="c"># tens pelo menos um portao</span>
++treasury&gt;=80     <span class="c"># ouro em tesouraria</span>
++named&gt;=1         <span class="c"># tropas nomeadas (§76)</span>
++marker&gt;=1        <span class="c"># Marcos consagrados (§74)</span>
++peoples&gt;=2       <span class="c"># povos detidos ou soltos (§78)</span>
++successor=1      <span class="c"># ha herdeiro em treino (§15)</span>
++debt&gt;=12         <span class="c"># Divida da Candeia</span>
++
++<span class="c"># &lt;chave&gt;=&lt;id&gt;   igualdade com um id do catalogo</span>
++biome=subterranean
++
++<span class="c"># vazio: sem condicao. Varias condicoes separam-se por virgula e sao TODAS obrigatorias.</span></code></pre>
++  <p>Nada de parênteses, nada de <em>ou</em>, nada de negação. Se uma oferta precisar de mais do que isto, é porque são duas ofertas.</p>
++
++  <div class="note night"><span class="lbl">O custo que a §27 não previa</span>
++    <p>A §27 argumenta que o jogo quase não precisa de idiomas. Esta parte põe uma personagem a falar, e isso tem uma conta: <strong>doze frases de oferta (≈ 90 palavras), nove títulos (≈ 40) e dez leis de capítulo (≈ 250)</strong> — cerca de 380 palavras novas de texto traduzível, mais as 900 dos doze diários que a §17 já orçamentava. Total de 1 280 palavras. A cinco idiomas e a preço de mercado, é uma fatura de três dígitos baixos, não de quatro. A frase da §27 passa a ser "precisa de mil e trezentas palavras", e continua a ser um argumento de venda.</p>
++  </div>
++
++  <h4>O que isto resolve que estava em aberto</h4>
++  <ul>
++    <li><strong>A §05 tinha "alimentar" sem interface.</strong> Agora tem, e é o mesmo verbo de tudo o resto.</li>
++    <li><strong>A §14 tinha um só sorvedouro emocional.</strong> A dívida dos mercenários é ansiedade com relógio visível; a Dívida da Candeia é a mesma coisa sem relógio nenhum. São duas emoções diferentes e ambas boas, como a própria §14 argumenta.</li>
++    <li><strong>Os dois epílogos não tinham entradas.</strong> Agora têm duas: esta e a §78.</li>
++    <li><strong>A noite não tinha decisões.</strong> Tinha combate. Agora tem uma decisão por noite, tomada sob pressão, com informação incompleta, em 20 segundos.</li>
++  </ul>
++</section>
++<section id="s76">
++  <span class="sec-no">76 — Identidade · <span style="color:var(--ember)">novo</span></span>
++  <h3>Ninguém tem nome até merecer um</h3>
++  <p class="lede">Na taberna do quarto capítulo não há um único nome próprio. Há o Taberneiro, o Açougueiro, o Padeiro, a Parteira, o Alfaiate, o Salteador, o Fabricante de Brinquedos. Quando o Wirt se recusa a dizer o que é, a taberna não o deixa em paz — atribui-lhe um papel à força, porque um sítio assim não sabe lidar com quem não tem função. É a alavanca 3, é a mais barata das sete, e resolve um problema que todos os <em>kingdom-builders</em> têm: a sopa de unidades indistinguíveis.</p>
++
++  <div class="note spec"><span class="lbl">O problema que isto resolve, dito sem rodeios</span>
++    <p>A §04 promete: "Não são unidade tipo 3 — são razões para doer quando morrem, e a tua morte é permanente." A frase está escrita desde a v3 e nada no dossiê a implementa. Cinquenta lanceiros iguais a morrer não doem. O que dói é <em>aquele</em> lanceiro. E a diferença entre um e outro não é arte nem IA — é um nome e uma linha de história, que custam uma tabela CSV.</p>
++  </div>
++
++  <h4>Como se ganha um nome</h4>
++  <p>Nunca por sobrevivência sozinha, e nunca por escolha do jogador. Ganha-se por <strong>feito registado</strong>: uma condição que o sistema já observa para outra coisa qualquer. Na alvorada, se uma tropa viva cumpriu uma condição na noite anterior, o império nomeia-a.</p>
++  <div class="tw"><table>
++    <thead><tr><th>Feito</th><th>Condição</th><th>Título</th><th>Ganha</th></tr></thead>
++    <tbody>
++      <tr><td>Aguentou</td><td>5 noites vivo em posto de cerco</td><td>O Que Ficou</td><td>+1 vida máxima</td></tr>
++      <tr><td>Último na porta</td><td>Único sobrevivente de um portão atacado</td><td>A Que Ficou na Porta</td><td>Não foge (ignora a regra da §07)</td></tr>
++      <tr><td>Partiu o cerco</td><td>Golpe final num Aríete de lodo</td><td>O Que Partiu a Pedra</td><td>+2 dano contra <em>siege</em></td></tr>
++      <tr><td>Contou</td><td>10 Rastejantes abatidos</td><td>O Contador</td><td>+10% cadência</td></tr>
++      <tr><td>Trouxe os outros</td><td>Arrastou 3 corpos para dentro antes da alvorada</td><td>O Que Trouxe os Outros</td><td>Arrasta ao dobro da velocidade</td></tr>
++      <tr><td>Falou com ela</td><td>Estava dentro da mancha e saiu vivo</td><td>A Que Falou com Ela</td><td>Vê o raio da candeia como zona segura: não entra em pânico</td></tr>
++      <tr><td>Não comeu</td><td>7 dias sem passar pela cozinha</td><td>O Seco</td><td>Metade do consumo de comida</td></tr>
++      <tr><td>Voltou</td><td>Ressuscitado no Santuário das Raízes (§16)</td><td>A Que Voltou</td><td>Imune a encantamento do Bardo inimigo</td></tr>
++      <tr><td>Não largou</td><td>Manteve a mesma arma 10 dias</td><td>O Da Mesma Lança</td><td>A arma sobe um nível</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>As quatro regras</h4>
++  <div class="grid g2">
++    <div class="cell"><h6>Nove, no máximo</h6><p>O império segura nove nomes ao mesmo tempo. Cumprido um décimo feito, a tropa fica <strong>à espera</strong>: na alvorada seguinte pára um passo à frente das outras e não é nomeada. Fica assim até abrir vaga — e um jogador atento percebe que aquela figura parada é uma promessa por pagar. Nove cabe num ecrã sem menu, e a escassez é o que faz o nome valer.</p></div>
++    <div class="cell"><h6>O nome vê-se</h6><p>Uma fita no <em>slot</em> <code>overlay</code> que já existe na composição por <em>slots</em> (§58). Uma cor por tipo de feito. Zero <em>sprites</em> novos de corpo.</p></div>
++    <div class="cell"><h6>O nome volta, com número</h6><p>Um título é único <em>enquanto o dono estiver vivo</em>. Morto o dono, o título fica de luto três dias e depois pode ser ganho outra vez — mas por <strong>O Segundo Que Ficou</strong>, e depois pelo Terceiro. O ordinal é a memória do império, custa um inteiro no estado, e é o que impede o sistema de se esgotar às nove horas de jogo.</p></div>
++    <div class="cell"><h6>O nome custa caro na morte</h6><p>Um Amargueiro nomeado vale 45 de massa em vez de 22 (§74), rende 5 Lenho em vez de 1, 2 ou 3, e serrá-lo tira 1 ponto de moral ao império durante 2 dias. Ter nomes é ficar mais forte e mais frágil ao mesmo tempo.</p></div>
++  </div>
++
++  <h4>A encomendação</h4>
++  <p>Em boa parte do país houve, e nalguns sítios ainda há, o costume da <em>encomendação das almas</em>: na Quaresma, um grupo sai de noite e vai pelos caminhos a chamar em voz alta pelos mortos, para que não fiquem esquecidos. Não é uma cerimónia bonita — é uma obrigação, e faz-se no escuro.</p>
++  <p>É a cerimónia de nomeação do Empire, e é o momento em que os quinze segundos da Alvorada deixam de ser tempo morto. Na alvorada, se houve nomeação ou se houve Amargueiro, o império canta. Duas vozes, sem instrumentos, oito segundos (§81). Nomeia quem sobreviveu; chama quem criou raiz. A mesma melodia para as duas coisas — e é essa a decisão de <em>design</em>: o jogo não distingue celebração de luto, porque a série também não.</p>
++
++  <div class="note night"><span class="lbl">Custo</span>
++    <p><code>titles.csv</code> com nove linhas, um ouvinte de feitos pendurado nos sinais que o <code>CombatSystem</code> e o <code>UnitSystem</code> já emitem (§50, §52), um campo <code>title_id</code> no estado da unidade, um <em>sprite</em> de fita por cor e um <em>stinger</em> de oito segundos. <strong>7 h de código, 2 h de arte, 1 h de som.</strong> É a secção com o maior retorno emocional por hora de toda a Parte XIII, e nenhuma outra secção depende dela para existir — se o calendário apertar, esta entra na Fase 4 sem partir nada.</p>
++  </div>
++</section>
++<section id="s77">
++  <span class="sec-no">77 — Mundo · <span style="color:var(--ember)">novo</span></span>
++  <h3>Dez lugares, uma lei cada</h3>
++  <p class="lede">A série faz mundo com dez capítulos fechados. Cada um é um sítio com uma regra estranha que ninguém explica, um habitante que a cumpre com a naturalidade de quem sempre viveu assim, e uma canção que a diz por outras palavras. Nunca há exposição. Percebe-se o sítio em noventa segundos e nunca se percebe o mundo. É a alavanca 4, e o Empire já tem quatro destes construídos a meio — a §17 chama-lhes biomas caóticos e trata-os como modificadores de rota.</p>
++
++  <h4>As seis regras de um Capítulo</h4>
++  <ol>
++    <li><strong>Uma lei.</strong> Uma frase. Se precisar de duas, são dois capítulos ou não é nenhum.</li>
++    <li><strong>Um habitante.</strong> Fala, cumpre a lei, e comporta-se como se ela fosse óbvia. Nunca a justifica.</li>
++    <li><strong>Uma canção.</strong> Vinte a quarenta segundos, sem letra traduzível (§27, §81).</li>
++    <li><strong>Um diário.</strong> Ou uma Semente Anciã, se o capítulo não carregar narrativa nesta partida.</li>
++    <li><strong>Contorna-se sempre, e o desvio tem preço escrito.</strong> Nenhum capítulo bloqueia o caminho: o gerador garante um caminho alternativo, e esse caminho custa <strong>25 s a mais numa bifurcação e 40 s numa travessia</strong>. Obrigatório na sensação, opcional no facto, e o preço da recusa é conhecido — como em tudo o resto desta parte.</li>
++    <li><strong>A lei não entra em casa.</strong> Nada do que acontece num capítulo se aplica dentro das tuas muralhas, exceto onde a ficha disser explicitamente que sim. Só um o diz, e é de propósito.</li>
++  </ol>
++
++  <h4>Os dez</h4>
++
++  <div class="chapline">
++    <h6>1 · As Alminhas do Cruzamento</h6>
++    <p class="meta">Qualquer bioma, numa bifurcação · Semente Anciã · Sem canção</p>
++    <p class="law"><b>Lei:</b> deixa uma moeda no nicho e as almas pintadas apontam por onde a Podridão vem esta noite. Tira uma moeda e, durante três dias, todas as leituras de estrada mentem — inclusive as do teu companheiro.</p>
++    <p>Um nicho de pedra à beira do caminho, com almas em chamas pintadas a vermelho e a branco por alguém que não sabia desenhar mãos. É o único capítulo sem canção: o silêncio é a lei a funcionar. As figuras pintadas mudam de posição entre visitas e o jogo nunca dá por isso.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>2 · A Romaria Parada</h6>
++    <p class="meta">Várzea · Diário 3 · Hino de marcha que nunca resolve</p>
++    <p class="law"><b>Lei:</b> atravessar este segmento a pé custa o dobro do tempo. Larga uma moeda no andor e a procissão leva-te ao outro lado em 8 s — mas as tuas tropas andam ao passo dela durante um dia inteiro (−20% de velocidade).</p>
++    <p>Cinquenta figuras a carregar um andor com um santo cuja cara já ninguém limpa, a caminho da mesma capela há quarenta anos. O Mordomo da Festa garante que falta pouco. Falta pouco desde o princípio. A melodia sobe três notas e volta sempre ao mesmo sítio, e é o único tema do jogo que não tem fim escrito — corre em <em>loop</em> perfeito e nunca cadencia.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>3 · A Casa Que Conta</h6>
++    <p class="meta">Qualquer bioma, à beira da estrada · Diário 4 · Cantiga de contar que só sobe</p>
++    <p class="law"><b>Lei:</b> a Contadeira conta tudo o que passa. À terceira vez que passares, fica com um nome teu — perdes uma tropa nomeada (§76). Se à primeira contagem lhe deres um nome de livre vontade, ela diz-te a massa exata da Podridão, todas as noites, até ao fim da partida.</p>
++    <p>Não é malévola. Tem de manter a conta certa e não há mais ninguém para a manter. Enquanto fala contigo continua a contar, em voz baixa, por cima do que estás a dizer. A canção conta até dezassete e recomeça no doze.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>4 · A Várzea Invertida</h6>
++    <p class="meta">Várzea · Semente Anciã · Duas vozes, uma delas ao contrário</p>
++    <p class="law"><b>Lei:</b> as faixas trocam. A faixa aérea anda-se, a superfície voa-se, e a Podridão chega por cima — a candeia fica por baixo de ti.</p>
++    <p>Da §17, mantida e agarrada à Podridão. Ensina o sistema de faixas (§53) numa região onde errar não mata, e é o único sítio do jogo onde se vê a candeia de cima. No fundo de um poço que está no céu há uma moura encantada, de cabeça para baixo, que pergunta pelas horas.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>5 · O Sulco Cego</h6>
++    <p class="meta">Desfiladeiro · Diário 6 · Vozes sem corpo, à distância</p>
++    <p class="law"><b>Lei:</b> não há luz. Só o Cavaleiro Selado se orienta, porque já não usava os olhos. Qualquer luz que leves revela 60 px à tua volta e acrescenta <strong>+30 à massa desta noite</strong> — o que te vê também vê a luz.</p>
++    <p>Da §17, com o custo que lhe faltava. É a secção de <em>design</em> que prepara a §80 inteira: pela primeira vez, iluminar é uma decisão e não uma comodidade. Ouvem-se pessoas a conversar a trinta metros. Nunca se chega a trinta metros.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>6 · O Forno Aceso</h6>
++    <p class="meta">Vulcânico · Semente Anciã · Canção de trabalho, uma voz, muito lenta</p>
++    <p class="law"><b>Lei:</b> qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, cria raiz onde estiver — <strong>dentro das tuas muralhas inclusive</strong>.</p>
++    <p>O único capítulo cuja lei entra em casa, e é a razão de a regra 6 existir: para que esta a quebre. Um forno de pão aceso desde antes da rutura, atendido por um padeiro que não tem cara porque a cara é a boca do forno. Cura de graça, sem menu, sem custo visível. Um jogador vai encher lá o exército inteiro exatamente uma vez.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>7 · O Mercado dos Ossos</h6>
++    <p class="meta">Qualquer bioma, junto a acampamento de mercenários · Diário 8 · Pregão a três vozes</p>
++    <p class="law"><b>Lei:</b> mercenários a metade do preço, dívida ao dobro do juro (§14). Não se sai da praça com dívida por pagar — o portão não abre.</p>
++    <p>Da §17, com o que lhe faltava: os vendedores são os últimos donos da mercadoria, ainda de pé nas bancas, à espera de serem pagos. Pagar uma dívida por inteiro liberta um deles, que se vai embora e leva a banca. São sete. Quem esvaziar a praça encontra a cadeira do Dono — é o único que está sentado — e o diário debaixo dela.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>8 · O Campo de Esporos</h6>
++    <p class="meta">Subterrâneo e superfície · Semente Anciã · Zumbido, e por baixo dele um coro</p>
++    <p class="law"><b>Lei:</b> as tropas ganham 20% de dano e perdem 15% de vida por dia enquanto lá estiverem.</p>
++    <p>Da §17, e agora é a reviravolta do Ato III (§79). Os chapéus dos cogumelos são telhados. A cidade Sob-Raiz está por baixo, intacta, e as pessoas ainda lá estão a trabalhar. Um Escavador abre a passagem em 20 s. Ninguém lá em baixo pede ajuda, e o diário que explica porquê está na fortaleza deles, a três regiões dali.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>9 · A Ponte dos Que Voltaram</h6>
++    <p class="meta">Desfiladeiro · Diário 10 · Uma nota só, muito longa, de gaita</p>
++    <p class="law"><b>Lei:</b> atravessar custa uma memória — uma região revelada do mapa volta a ficar escura, à sorte. Voltar atrás devolve-a. À sexta travessia, a ponte dá-te um nome e um segmento da tua muralha muda de material sozinho.</p>
++    <p>Seis tramos: madeira, estacas, lascas de rocha, tabique, escória — e o sexto não tem material nenhum. É um vão, e atravessa-se na mesma. É onde o Ato II se vê em vez de se ler. Há pegadas no sentido contrário e nunca ninguém vem de lá.</p>
++  </div>
++
++  <div class="chapline">
++    <h6>10 · O Cerco Que Não Acaba</h6>
++    <p class="meta">Qualquer bioma, fortaleza · Diário 12 · Garantido · Sinos, desafinados de propósito</p>
++    <p class="law"><b>Lei:</b> entras e ficas numa noite que não acaba. Só termina de duas maneiras: partes a muralha, ou abres o portão por dentro.</p>
++    <p>Uma fortaleza sitiada por uma Podridão que nunca chega, e um rei que não manda parar porque no dia em que mandar tem de contar os mortos. Partir a muralha: ficas com os celeiros e o rei morre. Abrir o portão: o cerco acaba, a mancha desfaz-se, o rei vive, e sais de lá só com o diário. São os dois epílogos em miniatura, dados ao jogador dez horas antes de ele saber que existem — e é a razão de este capítulo carregar sempre o diário 12.</p>
++  </div>
++
++  <h4>Quantos aparecem, e onde</h4>
++  <p>Existem dez. O gerador coloca <strong>seis por campanha</strong>, no máximo um por região, com o fluxo de aleatoriedade da §42 sob a semente do mundo (§54). Um deles é sempre O Cerco Que Não Acaba; os outros cinco saem dos nove restantes. Os quatro que não saíram ficam para a próxima partida. Isto dá duas coisas ao mesmo tempo, e são as duas que faltavam:</p>
++  <div class="grid g2">
++    <div class="cell"><h6>A história chega sempre inteira</h6><p>Seis diários são de fortaleza — um por povo, contando o teu, que está numa ruína dentro das tuas muralhas desde o dia 1. Os outros seis são de capítulo: o 12 está sempre no Cerco, e os outros cinco vão para o capítulo que preferem, ou, se esse não saiu, para o seguinte que tenha saído, por ordem de ato. Uma partida vê sempre os doze.</p></div>
++    <div class="cell"><h6>O mundo nunca é o mesmo</h6><p>Quatro capítulos por descobrir em cada corrida, e o mesmo diário lido num sítio diferente muda de sentido. É a mecânica de rejogabilidade mais barata que o dossiê tem: nove fichas sorteadas cinco a cinco dão <span style="white-space:nowrap">126</span> mundos.</p></div>
++  </div>
++
++  <div class="note spec"><span class="lbl">Cada lei tem uma raiz, e a raiz é verificável</span>
++    <p>Os dez capítulos não são folclore genérico: cada um sai de uma coisa que existiu ou existe, e o <code>chapters.csv</code> guarda-a na coluna <code>folk_root</code> para que ninguém a perca pelo caminho. Alminhas e nichos de estrada; romaria e andor; encomendação das almas; mouras encantadas; ferrarias sempre acesas; pregão de feira; cidades soterradas; pontes de seis materiais. A regra é a 2: o habitante <strong>nunca justifica a lei</strong>. No momento em que alguém explicar ao jogador que "isto é uma tradição portuguesa", o capítulo passou de mundo a museu, e é assim que o folclore vira turismo.</p>
++  </div>
++
++  <div class="note risk"><span class="lbl">O erro a não cometer</span>
++    <p>A tentação é escrever mais dez. Não escrevas. A série tem dez capítulos e nem todos são bons — o quinto e o oitavo existem sobretudo para dar respiração. Dez fichas com uma lei clara valem mais do que trinta com uma lei parecida, e o custo real não é escrevê-las: é a canção, o habitante e a arte de cada uma. <strong>Orçamento: 10,6 h por capítulo</strong> — 5 de arte, 3 de código e desenho, 2 de canção e meia de escrita. Dez capítulos são 106 h e cabem na Fase 5. Trinta não cabem em lado nenhum.</p>
++  </div>
++</section>
++<section id="s78">
++  <span class="sec-no">78 — Conquista · <span style="color:var(--ember)">novo</span></span>
++  <h3>A Colheita, e as duas maneiras de acabar com um povo</h3>
++  <p class="lede">Pottsfield é uma vila de esqueletos vestidos de abóbora que recebem os irmãos com festa, os condenam a trabalho comunitário por terem estragado uma cerca, e depois os deixam ir embora com um aceno. Não há maldade nenhuma. É cordial, é organizado, e é insuportável exatamente por isso. É a alavanca 5, e é a que dá corpo à melhor frase do dossiê inteiro — a da §17: <em>"o jogador só descobre no fim que a escolha estava a ser feita desde o primeiro cerco."</em> Neste momento essa frase é falsa. Nada regista escolha nenhuma.</p>
++
++  <h4>Conquistar deixa de dar edifícios. Passa a dar uma dívida de trabalho.</h4>
++  <p>Quando tomas ou assimilas um povo, não recebes a produção dele. Recebes uma <strong>Colheita</strong>: um período em que aquela gente trabalha para ti, alegremente, à vista de toda a gente, e não é livre.</p>
++  <dl class="kv">
++    <dt>Duração</dt><dd>C = 6 + 2 × povos que já detiveres. A primeira conquista dura 6 dias; a sexta, 16.</dd>
++    <dt>Por assimilação</dt><dd>Metade (arredondada para cima). O diplomata n2 continua a valer a pena (§14).</dd>
++    <dt>Produção</dt><dd>140% durante a Colheita. Depois disso, depende do que decidires.</dd>
++    <dt>Tropas</dt><dd>Nenhuma. Não se recruta de um povo em Colheita, e a tropa única dele não existe ainda.</dd>
++    <dt>Arquitetura</dt><dd>De pé, com andaimes. Lê-se emprestada, e é o único estado visual novo que a Colheita precisa.</dd>
++    <dt>Canção</dt><dd>Cantam enquanto trabalham. Em modo menor, e mais alto do que seria natural.</dd>
++    <dt>Muralhas</dt><dd><strong>A aldeia fica fora das tuas.</strong> A Podridão prefere-a a ti enquanto durar a Colheita.</dd>
++  </dl>
++
++  <div class="note dec"><span class="lbl">O que este último ponto faz ao jogo</span>
++    <p>Durante seis a dezasseis dias tens de defender à noite gente que tomaste à força de manhã, com tropas que não podes recrutar entre eles, enquanto eles cantam. Se falhares, a Colheita acaba ali e perdes o povo inteiro — sem escolha, sem final, sem arquitetura. É a única pressão do jogo que não se resolve com muralha mais alta, e resolve de caminho o problema do <em>snowball</em>: a sexta conquista é quase três vezes mais cara de administrar do que a primeira.</p>
++  </div>
++
++  <h4>Uma Colheita de cada vez</h4>
++  <p>Conquistar um povo com uma Colheita a decorrer não a duplica: o segundo povo entra em <strong>fila</strong>. Enquanto espera, produz a 100%, não canta, não dá tropa única e a arquitetura dele não desbloqueia — e a Podridão trata a aldeia dele como trata a outra. Duas aldeias fora das muralhas ao mesmo tempo é a punição por conquistar depressa demais, e é a única que este sistema precisa.</p>
++  <p>Se uma aldeia em Colheita cair à noite, a Colheita acaba ali: perdes o povo, a decisão, a arquitetura e o diário de fortaleza dele. O diário reaparece no capítulo seguinte que saiu (§77) — a história chega sempre inteira, mesmo quando falhas.</p>
++
++  <h4>No fim da Colheita, uma decisão. Verbo 1, no núcleo deles.</h4>
++  <div class="two">
++    <div>
++      <h5>Soltar</h5>
++      <p>A aldeia fica livre e vira aliada permanente.</p>
++      <ul>
++        <li>+25 de Favor (§14)</li>
++        <li>Rota de comércio permanente: +8 moedas/dia</li>
++        <li>A tropa única passa a comprável, a 1,5× do preço</li>
++        <li>O <em>kit</em> de arquitetura deles desbloqueia para o teu construtor</li>
++        <li>A canção deles junta-se ao coro do teu império, <strong>para sempre</strong></li>
++        <li>Não podem voltar a ser conquistados: atacar um aliado custa −40 de Favor e quebra todas as outras alianças</li>
++      </ul>
++    </div>
++    <div>
++      <h5>Ficar</h5>
++      <p>A aldeia passa a ser tua e a gente também.</p>
++      <ul>
++        <li>+80% de produção permanente daquela terra</li>
++        <li>A tropa única passa a recrutável de graça</li>
++        <li>O <em>kit</em> de arquitetura deles desbloqueia para o teu construtor</li>
++        <li>A aldeia cala-se. A canção deles nunca mais toca.</li>
++        <li>Aquele povo deixa de aparecer como vagabundo no mundo</li>
++        <li>O marco deles — o farol, o silo, a chaminé, o portão lavrado, o poço — <strong>cria raiz</strong>. Vira Amargueiro, +22 de massa por noite, e não se corta.</li>
++      </ul>
++    </div>
++  </div>
++
++  <p>Nenhuma das duas é o final bom. Soltar é mais fraco em economia e mais forte em opções, e mantém-te dependente de gente que te pode dizer que não. Ficar é a jogada eficiente, e cada vez que a fazes o mundo perde uma voz e a tua noite fica 22 pontos mais pesada. As duas colunas foram equilibradas para que um jogador que só olhe para os números escolha <em>Ficar</em> as seis vezes — porque é isso que tem de acontecer para o Ato IV funcionar (§79).</p>
++
++  <div class="lantern">
++    <span class="lbl">O mostrador, outra vez, é o som</span>
++    <p>O coro noturno do teu império tem tantas vozes quantos povos soltaste. Zero vozes é silêncio; seis vozes é uma polifonia a seis partes que só um jogador em cada muitos vai ouvir alguma vez. Não há ecrã de estatísticas, não há barra de moralidade, não há aviso. O jogador que estiver a jogar bem por instinto vai reparar, algures pela terceira conquista, que a noite dele está a ficar mais calada — e não vai conseguir explicar porquê durante mais umas horas.</p>
++  </div>
++
++  <h4>O sexto marco</h4>
++  <p>Há seis marcos no mundo, um por povo, e estão todos listados no <code>peoples.csv</code>: a árvore colossal, o farol, o portão lavrado, o silo, a chaminé, o poço. O teu império começa num deles — a árvore colossal dos Enramados, a que já desenhaste na panorâmica.</p>
++  <p>Se ficares com os cinco povos que não são o teu, cinco marcos criam raiz. O sexto é o teu. E o Ato IV explica porque é que ele já lá estava plantado antes de tu chegares.</p>
++</section>
++<section id="s79">
++  <span class="sec-no">79 — Lore · <span style="color:var(--ember)">revê a §17</span></span>
++  <h3>A árvore foi plantada, e alguém tinha um turno</h3>
++  <p class="lede">A §17 tem a melhor arquitetura narrativa do dossiê: doze diários, quatro atos, uma reviravolta por ato, e a regra de ouro — nenhum diário explica A Podridão; todos descrevem uma decisão humana que, lida em conjunto, a explica. Essa regra fica. O que muda é a resposta, e muda por uma razão mecânica: a v5.2 diz que A Podridão "é o que sobra quando as seis partes estão separadas", e uma coisa que sobra não pode fazer propostas. A §75 deu-lhe uma voz. Agora é preciso que a voz tenha vindo de algum lado.</p>
++
++  <div class="note spec"><span class="lbl">O que se mantém da §17, palavra por palavra</span>
++    <p>Doze diários, três por ato. Encontrados por ordem de conquista, não de escrita. Cada um funciona isolado e muda o sentido dos anteriores. A árvore do teu castelo foi plantada dentro da muralha de propósito. As muralhas de cada povo são feitas do material que guardava a parte deles. Os Sob-Raiz não se esconderam por medo — foram enterrados pelos outros cinco. Os dois epílogos são ambos legítimos, e não são bom e mau. <strong>Nada disto muda.</strong> Muda o que está por baixo.</p>
++  </div>
++
++  <h4>Os doze, com origem</h4>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>Ato</th><th>Onde</th><th>O que é, fisicamente</th><th>O que deixa perceber</th></tr></thead>
++    <tbody>
++      <tr><td>1</td><td>I</td><td>Ruína · dentro das tuas muralhas</td><td>Uma lista de manutenção de nichos de estrada</td><td>Seis aldeias pagavam para o mesmo fundo</td></tr>
++      <tr><td>2</td><td>I</td><td>Fortaleza · Portuários</td><td>Um manifesto de porto com registo de casamentos</td><td>Havia comércio, língua comum, famílias misturadas</td></tr>
++      <tr><td>3</td><td>I</td><td>A Romaria Parada</td><td>A carta de fundação da procissão</td><td>Instituída para levar uma coisa a uma capela <em>uma vez, e nunca mais</em></td></tr>
++      <tr><td>4</td><td>II</td><td>A Casa Que Conta</td><td>A primeira página do livro da Contadeira</td><td>Seis entregas para fora. Nenhuma de volta.</td></tr>
++      <tr><td>5</td><td>II</td><td>Fortaleza · Horta</td><td>Uma requisição de material de muralha</td><td>"Do costume", em quantidade que dá exatamente uma árvore</td></tr>
++      <tr><td>6</td><td>II</td><td>O Sulco Cego</td><td>Uma carta de quem foi ver</td><td>Os seis materiais cheiram todos ao mesmo</td></tr>
++      <tr><td>7</td><td>III</td><td>Fortaleza · Fornalha</td><td>Um bilhete pregado à porta do forno</td><td>O forno foi aceso "para a vigília". Ninguém o apagou porque a vigília não acabou.</td></tr>
++      <tr><td>8</td><td>III</td><td>O Mercado dos Ossos</td><td>As contas do Dono da Praça</td><td>Cinco pagavam ao sexto para fazer o trabalho sozinho. Depois deixaram de pagar.</td></tr>
++      <tr><td>9</td><td>III</td><td>Fortaleza · Sob-Raiz</td><td>Uma escala de turnos, na cidade soterrada</td><td>Datada do ano em que A Podridão começa, com a semana seguinte já preenchida</td></tr>
++      <tr><td>10</td><td>IV</td><td>A Ponte dos Que Voltaram</td><td>O registo de travessias do guarda</td><td>Desde o soterramento, ninguém veio do outro lado</td></tr>
++      <tr><td>11</td><td>IV</td><td>Fortaleza · Fenda</td><td>A última ordem assinada pelo conselho comum</td><td>"A luz mantém-se. Quem a mantiver é rendido à volta do ano." Não há registo de rendição.</td></tr>
++      <tr><td>12</td><td>IV</td><td>O Cerco Que Não Acaba</td><td>O diário de um rei</td><td>Descreve o cerco tal como o encontraste. A última entrada é de amanhã, e a letra é a do teu rei.</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="lantern">
++    <span class="lbl">Um espécime — o diário 9, escrito por inteiro</span>
++    <p style="font-family:var(--f-mono);font-size:14px;line-height:1.7;white-space:pre-line;margin:0 0 12px;color:var(--ink)">Semana trinta e uma.
++
++Turno da manhã: Ourique, Bendafé, o rapaz do Vale que ainda não disse o nome.
++Turno da tarde: Marta, e a irmã se a perna deixar.
++Turno da noite: eu.
++
++Falta óleo para nove dias. Mandei recado acima pela terceira vez.
++Não é queixa. É a conta.
++
++Semana trinta e dois, mesma ordem.
++Semana trinta e três, mesma ordem.</p>
++    <p class="gloss">Setenta e uma palavras. Não diz o que é o óleo, não diz para que serve a luz, não diz quem está acima, e não diz que ninguém respondeu — diz que a escala da semana seguinte já estava escrita. É a regra da §17 a funcionar: uma decisão humana, e nada explicado. Os outros onze escrevem-se todos assim.</p>
++  </div>
++
++  <h4>As quatro reviravoltas</h4>
++  <div class="steps">
++    <div class="step"><h4>A árvore foi plantada — e a muralha é mais velha do que ela</h4><p>Mantido da §17, com uma linha a mais que muda tudo: a carta de fundação diz que o muro foi levantado primeiro. Não se plantou uma árvore e depois se protegeu. Fez-se um sítio fechado e depois pôs-se lá dentro uma coisa.</p></div>
++    <div class="step"><h4>Os seis materiais são uma árvore, cortada em seis</h4><p>Mantido e tornado literal. Madeira, estacas, lascas, tabique, escória e o material dos Sob-Raiz são o mesmo corpo, tratado de seis maneiras. Cada muralha do jogo é um pedaço. A Ponte dos Que Voltaram (§77) mostra os seis lado a lado e não diz nada.</p></div>
++    <div class="step"><h4>O pacto nunca foi sobre as partes. Foi sobre quem trata da luz.</h4><p>A alteração central. Os Sob-Raiz eram os zeladores — o povo com o turno. Os outros cinco enterraram-nos com o trabalho ainda nas mãos, e é por isso que a coisa vem de baixo e é por isso que eles são o único povo sem muralhas: não precisavam de uma, porque não guardavam nada. Guardavam a chama.</p></div>
++    <div class="step"><h4>A Podridão é o que o zelador se tornou quando ninguém o veio render</h4><p>Não sobra de nada. É uma pessoa que ficou de turno demasiado tempo, com uma candeia que tem de arder e um combustível que só se arranja de uma maneira. O trabalho passa a quem aceitar ofertas o suficiente. <strong>A Dívida da Candeia (§75) é a candidatura ao lugar</strong>, e o jogador esteve a preenchê-la desde o dia 3.</p></div>
++  </div>
++
++  <div class="lantern">
++    <span class="lbl">A frase que fecha o jogo</span>
++    <p class="voice">Não estava a atacar-te. Estava a pedir para ir embora.</p>
++    <p class="gloss">Dita uma vez, no diário 12, e nunca repetida nem explicada.</p>
++  </div>
++
++  <h4>Três finais, e um deles não é um final</h4>
++  <div class="tw"><table>
++    <thead><tr><th>Epílogo</th><th>Condição</th><th>O que acontece</th><th>O que custa</th></tr></thead>
++    <tbody>
++      <tr><td><strong>União</strong></td><td>Dívida ≤ 3 <em>e</em> 4+ povos soltos</td><td>Alguém rende o zelador — e o zelador só aceita ser rendido depois de ter um nome, que é o teu último uso do sistema da §76. A candeia apaga-se por mãos que não são as tuas. Os seis materiais voltam a ser uma árvore.</td><td>Os seis povos deixam de existir como culturas distintas. A tua colagem arquitetónica passa a ser a única arquitetura. O mundo fica igual em todo o lado, e isso é uma perda que o jogo não disfarça.</td></tr>
++      <tr><td><strong>Domínio</strong></td><td>Dívida ≥ 12 <em>ou</em> 4+ povos ficados</td><td>Ficas com a candeia. A Podridão obedece-te em vez de te atacar, e a noite continua — agora é tua. Último plano: um diário datado de amanhã, numa letra que não é a tua.</td><td>Alguém vem render-te, e não vai chegar. O jogo diz-te isto na última imagem e não o comenta.</td></tr>
++      <tr><td><strong>O Turno</strong></td><td>Tudo o resto</td><td>Nem uma coisa nem outra: a candeia passa ao teu herdeiro na sucessão (§15). Não é um fim, é um estado guardado.</td><td>A campanha seguinte começa com a tua Dívida como termo permanente na massa da Podridão, e com as tuas seis decisões como estado inicial do mundo. É o modo longo da Fase 8 (§18), e é o único dos três que admite que o trabalho não acaba.</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>A precedência, para não haver dúvida na implementação</h4>
++  <p>Três condições que se podem sobrepor precisam de uma ordem escrita, ou dois programadores dão dois finais diferentes ao mesmo estado. Avalia-se de cima para baixo e para na primeira que bater:</p>
++  <div class="tw"><table>
++    <thead><tr><th class="n">#</th><th>Se</th><th>Então</th></tr></thead>
++    <tbody>
++      <tr><td class="n">1</td><td><code>debt &gt;= 12</code></td><td><strong>Domínio.</strong> A dívida manda sobre tudo o resto, mesmo com os seis povos soltos. Quem chegou aos doze já aceitou o lugar.</td></tr>
++      <tr><td class="n">2</td><td><code>peoples_kept &gt;= 4</code></td><td><strong>Domínio.</strong></td></tr>
++      <tr><td class="n">3</td><td><code>debt &lt;= 3</code> <em>e</em> <code>peoples_released &gt;= 4</code></td><td><strong>União.</strong></td></tr>
++      <tr><td class="n">4</td><td>tudo o resto</td><td><strong>O Turno.</strong> Não é o final de consolação: é o estado mais provável de uma primeira campanha, e é para ele que a Fase 8 tem de estar boa.</td></tr>
++    </tbody>
++  </table></div>
++  <p>Um povo perdido a meio da Colheita (§78) não conta para nenhum dos dois contadores. Nem soltaste nem ficaste — e é o único caso em que uma decisão do jogo não é uma decisão tua.</p>
++
++  <div class="note night"><span class="lbl">O que isto acrescenta em código: quase nada</span>
++    <p>Três contadores no estado autoritativo (§45): <code>debt_lantern</code>, <code>peoples_released</code>, <code>peoples_kept</code>. Uma tabela de doze diários com origem, que já ia existir de qualquer maneira (<code>journal_data.gd</code> está escrito e vazio). Uma verificação de epílogo no fim da campanha. O trabalho todo desta secção é de escrita, e a escrita tem um orçamento: <strong>doze fragmentos de 60 a 90 palavras</strong>. Se um diário precisar de 200 palavras, é porque está a explicar, e a regra da §17 diz que não explica.</p>
++  </div>
++</section>
++<section id="s80">
++  <span class="sec-no">80 — Arte · <span style="color:var(--ember)">revê a §11 e a §22</span></span>
++  <h3>O preto entra na paleta, e a noite deixa de ser azul</h3>
++  <p class="lede">Nick Cross, o diretor de arte da série, disse uma coisa que quase nenhum artista de televisão diz: recusou a teoria de cor impressionista que se ensina hoje e usou <strong>preto académico</strong>, à maneira da pintura antiga. Não é uma escolha estética — é o que permite que uma cena inteira se resolva com duas massas escuras, um céu de ocre e uma luz. É a alavanca 6, é a mais cara das sete em horas, e é a que resolve o diagnóstico da §11: "não é falta de resolução nem de talento, é falta de um plano no meio".</p>
++
++  <div class="note dec"><span class="lbl">Decidido — ADR 0011, 13 de setembro de 2026</span>
++    <p><strong>A noite é castanha.</strong> A Q-037 está fechada e a tabela de fases da §05 já foi corrigida. O que se segue é a razão, e fica escrita porque daqui a um ano ninguém se lembra dela.</p>
++  </div>
++
++  <div class="note dec"><span class="lbl">As três imagens que enviaste já decidiram isto</span>
++    <p>Os dois cartazes que mandaste com este pedido são a mesma composição repetida: fundo de ocre queimado sem gradiente suave, duas massas de silhueta pretas sem detalhe nenhum, três figuras pequenas em contraluz, e <strong>uma</strong> fonte de luz quente ao centro. Zero azul. Zero névoa fria. É exatamente o oposto do que a §05 manda fazer à noite. Esta secção resolve a contradição do lado dos cartazes, e não do lado da tabela.</p>
++  </div>
++
++  <h4>1 · Três valores de silhueta, e são para <em>não</em> desenhar</h4>
++  <p>A tua paleta tem 112 cores, 23 delas neutras, e o mais escuro — <code>#14140F</code> — só é usado como contorno. Proposta: três valores dedicados a preencher, não a contornar.</p>
++  <div class="ramp">
++    <i style="background:#14140F"></i><i style="background:#1B1710"></i><i style="background:#241F17"></i><i style="background:#33291C"></i><i style="background:#453723"></i><i style="background:#6B5230"></i><i style="background:#9C7238"></i><i style="background:#C79A4A"></i><i style="background:#E8B87A"></i><i style="background:#F6D89B"></i>
++  </div>
++  <div class="ramp-lbl"><span>Silhueta<br>3 valores</span><span>Terra e madeira<br>a tua família de 30</span><span>Candeia<br>2 valores</span></div>
++  <div class="tw"><table>
++    <thead><tr><th>Plano (§11)</th><th>Valores permitidos</th><th>Contorno</th><th>Regra</th></tr></thead>
++    <tbody>
++      <tr><td>Distância · y 300–420</td><td class="mark">1</td><td>Nenhum</td><td>Uma massa chapada. Sem textura, sem gradiente, sem variação. <code>#17130D</code>.</td></tr>
++      <tr><td>Plano médio · y 420–517</td><td class="mark">2</td><td>Nenhum</td><td><code>#241F17</code> e <code>#2E251A</code>. É a faixa que falta, e desenha-se em duas horas se forem só dois valores.</td></tr>
++      <tr><td>Plano de jogo · y 517–720</td><td>toda a paleta</td><td>2 px</td><td>Inalterado (§22).</td></tr>
++      <tr><td>Primeiro plano · y ≈ 640–720</td><td class="mark">2</td><td>Nenhum</td><td><code>#100D09</code> e <code>#14140F</code>. Sobrepõe-se às tropas e não compete com elas.</td></tr>
++    </tbody>
++  </table></div>
++  <p>Cinco dos seis planos de parallax passam a ter um teto de valores. Isto não é uma restrição artística — é uma <strong>redução de horas</strong>: a §22 orçamenta 12 h para as seis camadas de parallax e o que as torna caras é a indecisão sobre quanto detalhe pôr. Com teto de valores, as três camadas de fundo desenham-se em 5 h e ficam melhores.</p>
++
++  <h4>2 · A noite passa a castanha</h4>
++  <p>A §05 manda "Azul profundo" na noite. A tua paleta tem 30 cores de madeira e terra, 21 de estuque, 23 neutros — e <strong>9 de azul-petróleo</strong>. A noite atual usa a família de que tens menos, o que obriga a inventar cor que não é tua, e produz o azul genérico de todos os jogos com ciclo dia-noite.</p>
++  <div class="tw"><table>
++    <thead><tr><th>Fase</th><th>v5.2</th><th>Matiz · saturação · valor do <em>tint</em></th><th>Amostra</th></tr></thead>
++    <tbody>
++      <tr><td>Alvorada · 15 s</td><td>Âmbar rasante</td><td>38° · 0,44 · 0,91 — mantém-se</td><td><code>#E8B87A</code></td></tr>
++      <tr><td>Manhã · 85 s</td><td>Neutra</td><td>42° · 0,10 · 0,95</td><td><code>#F2EADA</code></td></tr>
++      <tr><td>Meio-dia · 40 s</td><td>Alta, dura</td><td>48° · 0,05 · 1,00</td><td><code>#FFFBEF</code></td></tr>
++      <tr><td>Tarde · 85 s</td><td>Dourada</td><td>36° · 0,41 · 0,91</td><td><code>#E9C68A</code></td></tr>
++      <tr><td>Crepúsculo · 30 s</td><td>Vermelha baixa</td><td>18° · 0,68 · 0,73</td><td><code>#B9663A</code></td></tr>
++      <tr><td>Noite · 105 s</td><td>Azul profundo <em>(v5.2)</em></td><td class="mark">32° · 0,22 · 0,16 — castanho, com chão em 0,11 · <strong>ADR 0011</strong></td><td><code>#2A2117</code></td></tr>
++    </tbody>
++  </table></div>
++  <div class="note spec"><span class="lbl">A regra das duas exceções</span>
++    <p>Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: <strong>violeta</strong> (<code>#59386B</code>, o teu <em>token</em> <code>--rot</code>) é A Podridão e só A Podridão; <strong>âmbar</strong> (<code>#F6D89B</code> ao núcleo) é luz, seja a candeia dela ou uma fogueira tua. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance. É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.</p>
++  </div>
++
++  <h4>3 · A luz é o assunto, e desenha-se com três paragens</h4>
++  <p>A §22 põe "Luz quente pontual" no Bloco 4 com 3 h e sem especificação. Passa a ser o primeiro item do bloco, com regra:</p>
++  <ul>
++    <li><strong>Três paragens, nunca um gradiente.</strong> Núcleo <code>#F6D89B</code>, meio <code>#E8A94E</code>, bordo <code>#AE4F16</code>, e depois dissolve para o ambiente com <em>dither</em> de 2 px — o mesmo <em>shader</em> de revelação que a §11 já pede para o corte de terra.</li>
++    <li><strong>Uma luz domina por ecrã.</strong> Se duas competem, o ecrã lê plano. Consequência de <em>design</em>, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância. O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.</li>
++    <li><strong>Nada tem contorno dentro do raio de luz.</strong> Perto da luz vê-se cor e volume; longe vê-se silhueta. Inverte-se a lógica de <em>sprite</em> habitual e é o que dá a sensação de pintura.</li>
++  </ul>
++
++  <h4>4 · A cara na casca</h4>
++  <p>O Amargueiro (§74) é o <em>sprite</em> com maior retorno do jogo inteiro e custa três horas. Um tronco por escala — 3 troncos — mais a <em>slot</em> <code>face</code> das personagens que já tens desenhadas, encaixada na casca com uma máscara de casca por cima. Cada Amargueiro tem a cara de quem morreu ali, porque é literalmente o mesmo ficheiro. Não há <em>sprite</em> novo por unidade, não há variação a desenhar, e a variedade é automática e total.</p>
++
++  <h4>5 · O teste de silhueta, no CI</h4>
++  <p>A §31 já tem cultura de testes de <em>design</em>. Este cabe lá e corre sobre qualquer captura, como o guião de densidade da §01:</p>
++  <div class="tw"><table>
++    <thead><tr><th>Regra</th><th>Como se mede</th><th>Falha se</th></tr></thead>
++    <tbody>
++      <tr><td>Teto de valores por camada</td><td>Conta cores únicas no PNG exportado de cada camada de parallax</td><td>Distância &gt; 1 · plano médio &gt; 2 · primeiro plano &gt; 2</td></tr>
++      <tr><td>Leitura a 1 bit</td><td>Limiar de luminância a 0,42 sobre o ecrã composto</td><td>Não se identifica a cena. Manual, uma vez por ecrã acabado.</td></tr>
++      <tr><td>Rampa de densidade (§01)</td><td>Cores distintas em janela de 16×16</td><td>Topo &gt; 18 · base &lt; 30. Mantém-se da §01.</td></tr>
++      <tr><td>Duas frias</td><td>Píxeis de matiz 200°–290° <strong>com saturação &gt; 0,35</strong>, fora da mancha, à noite</td><td>&gt; 0,5% do ecrã</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note spec"><span class="lbl">Porque é que o teste tem um limiar de saturação</span>
++    <p>Sem ele o teste chumbava a tua própria arquitetura: a telha azul-petróleo é uma das sete famílias da paleta (§22) e cai dentro de 200°–290°. Com o LUT da noite a levar a saturação para 0,22, os telhados descem abaixo de 0,35 e saem do teste sozinhos — continuam azuis à luz do dia e são cinzento-frio à noite. O que fica acima de 0,35 e frio, à noite, só pode ser uma coisa, e é essa a regra que o teste protege.</p>
++  </div>
++
++  <div class="note risk"><span class="lbl">O que isto muda no calendário da §22</span>
++    <p>Parallax desce de 12 h para 5 h por causa do teto de valores. Luz e atmosfera sobe de 18 h para 24 h, e muda de ordem: a luz pontual passa a primeira e o LUT de hora do dia ganha mais duas horas para a rampa castanha. Amargueiro acrescenta 3 h ao Bloco 1. <strong>Saldo: +2 h no total da arte</strong>, com a §11 resolvida e a assinatura visual fechada. É o melhor negócio da Parte XIII e é o único item dela que eu faria mesmo que rejeitasses tudo o resto.</p>
++  </div>
++</section>
++<section id="s81">
++  <span class="sec-no">81 — Som · <span style="color:var(--ember)">novo</span></span>
++  <h3>Uma canção por povo, e a noite tem duas notas</h3>
++  <p class="lede">A banda sonora da série é anterior a 1950 e é tocada em instrumentos da época — Elijah Wood descreveu-a como música que sairia de um gramofone. O que a torna eficaz não é a nostalgia: é que <strong>as personagens cantam sobre o que são</strong>. O Salteador canta que é salteador. A taberna inteira se apresenta a cantar. A informação de mundo chega pelo som e não por texto, e é por isso que cem minutos chegam.</p>
++
++  <div class="note dec"><span class="lbl">O achado: o cante alentejano é o Sacred Harp ibérico</span>
++    <p>A série usa <em>shape-note singing</em> — polifonia sem instrumentos, de comunidades rurais americanas, do hinário <em>The Sacred Harp</em> de 1844. Soa antiga, soa a muita gente, e soa ligeiramente assustadora porque ninguém se destaca. Portugal tem o equivalente exato: <strong>cante alentejano</strong>, duas vozes solistas — o ponto e o alto — e um coro que entra por baixo, sem um único instrumento, património imaterial da UNESCO. Nenhum jogo o usou. É a decisão de som mais barata e mais distintiva que este projeto pode tomar, e vem do mesmo sítio de onde já vem a arquitetura dos teus povos.</p>
++  </div>
++
++  <h4>Uma canção por povo</h4>
++  <p>Vinte a quarenta segundos, cantada, <strong>sem letra traduzível</strong> — sílabas, vocalizos, ou palavras tão poucas que não custam localização. Isto resolve de caminho o problema da §27: o jogo continua a quase não precisar de idiomas, e ganha voz humana na mesma.</p>
++  <div class="tw"><table>
++    <thead><tr><th>Povo</th><th>Textura</th><th>Raiz</th><th>Como soa a Colheita (§78)</th></tr></thead>
++    <tbody>
++      <tr><td>Enramados</td><td>Voz sozinha e adufe</td><td>Beira Baixa · pandeiro quadrado</td><td>Meio tom abaixo, e o adufe fora de sítio</td></tr>
++      <tr><td>Portuários</td><td>Duas vozes e cavaquinho, ritmo de vira</td><td>Minho · romaria</td><td>Depressa demais</td></tr>
++      <tr><td>Fenda</td><td>Uma nota longa de gaita-de-foles</td><td>Trás-os-Montes · gaita mirandesa</td><td>A nota não acaba nunca</td></tr>
++      <tr><td>Horta</td><td>Ponto, alto e coro, sem instrumentos</td><td>Alentejo · cante</td><td>Falta-lhes o ponto. Cantam só o coro.</td></tr>
++      <tr><td>Fornalha</td><td>Bombo, ferrinhos e martelo na bigorna</td><td>Ferrarias · percussão de trabalho</td><td>Certinho. Certinho demais.</td></tr>
++      <tr><td>Sob-Raiz</td><td>Viola campaniça desafinada e uma voz que não chega à nota</td><td>Baixo Alentejo</td><td>Não cantam. Em Colheita, nunca cantaram.</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>O coro noturno é o mostrador de moral</h4>
++  <p>Está dito na §78 e repete-se aqui porque é a mecânica, não a decoração: <strong>o coro da tua noite tem tantas vozes quantos povos soltaste.</strong> Cada povo solto acrescenta a sua parte à mesma peça — que foi escrita a seis partes desde o princípio e nunca se ouve inteira num jogo normal. Cada povo ficado acrescenta silêncio. Não há ecrã, não há barra, não há aviso.</p>
++  <p>A sexta voz é a dos Sob-Raiz, e é a única que nunca fica bem. Soltos, entram — mas a voz não chega à nota, e o coro fica ligeiramente errado durante o resto da partida. <strong>Só no epílogo União é que ela assenta</strong>, e é a última coisa que se ouve antes de o ecrã escurecer. Um jogador que chegue lá com os seis povos soltos ouve uma peça a seis partes afinada pela primeira vez em vinte anos de mundo, durante onze segundos. É esse o prémio, e não há troféu nenhum a dizê-lo.</p>
++
++  <h4>As duas notas</h4>
++  <dl class="kv">
++    <dt>Motivo</dt><dd>Duas notas, terceira menor a descer, num palheta grave — harmónio ou realejo de feira.</dd>
++    <dt>Volume</dt><dd>Função da distância da mancha à muralha mais exterior. Substitui inteiramente um indicador de proximidade no HUD (§24).</dd>
++    <dt>Intervalo</dt><dd>Aperta com a massa. Terceira menor com massa baixa; segunda menor quando a massa passa 400. Um jogador aprende a ouvir quão má é a noite antes de a ver.</dd>
++    <dt>Candeia</dt><dd>Com Dívida ≥ 6, o motivo ganha uma terceira voz, uma oitava acima, que não está afinada com as outras duas.</dd>
++    <dt>A Oferta</dt><dd>Tudo cala. Um segundo de silêncio absoluto antes da frase (§75) — é o único silêncio total do jogo e é por isso que funciona.</dd>
++  </dl>
++
++  <h4>A encomendação, na alvorada</h4>
++  <p>Oito segundos, duas vozes, sem instrumentos. Toca quando há nome novo (§76) ou quando há Amargueiro novo (§74). <strong>A mesma melodia para as duas coisas.</strong> O jogo não distingue quem foi nomeado de quem criou raiz, e essa é a decisão de <em>design</em> desta secção inteira: quem canta pelos mortos no caminho, à noite, também não distingue.</p>
++
++  <h4>O companheiro canta uma vez</h4>
++  <p>O companheiro do trono (§08) — a criatura verde que já desenhaste — não fala e não combate. Uma vez por ato, sem aviso e sem razão, canta. Trinta segundos, voz grave e boa demais para o corpo que tem, e o resto do mundo cala-se para ouvir. É o momento do sapo, é a coisa que a comunidade recorta e põe em todo o lado, e custa quatro canções.</p>
++  <p>O nome dele é escolhido pelo jogador com o Verbo 1 sobre uma placa entalhada no núcleo, ciclando uma lista de vinte. Muda-se as vezes que se quiser. No epílogo, o nome que estiver escolhido é o nome que aparece.</p>
++
++  <div class="note night"><span class="lbl">Orçamento de som</span>
++    <p>Seis canções de povo (6 × 3 h), dez canções de capítulo (10 × 2 h — contadas no orçamento da §77), quatro do companheiro (4 × 2 h), o motivo da Podridão com quatro estados (4 h), a encomendação (2 h), e a mistura por camadas do coro (6 h). <strong>58 h de composição e gravação</strong>, tudo com voz e instrumentos acústicos, e nada disto precisa de orquestra. É contratável a um grupo de cante e a um instrumentista, e o valor de marketing (§36) de um trailer com seis vozes a cappella sobre uma silhueta preta e uma candeia é difícil de exagerar.</p>
++  </div>
++</section>
++<section id="s82">
++  <span class="sec-no">82 — Disciplina · <span style="color:var(--ember)">novo</span></span>
++  <h3>O que não se importa, o que custa, e o que fica por decidir</h3>
++  <p class="lede">Uma influência mal gerida deixa de ser influência e passa a ser <em>fan game</em>. As seis coisas abaixo são boas na série e seriam más aqui, e cada uma tem uma razão que não é de gosto — é de formato, de duração ou de sistema.</p>
++
++  <h4>Seis coisas a não trazer</h4>
++  <div class="tw"><table>
++    <thead><tr><th>O que</th><th>Porque é bom lá</th><th>Porque é mau aqui</th></tr></thead>
++    <tbody>
++      <tr><td>A revelação do purgatório</td><td>Cem minutos de investimento, cobrados uma vez, e recontextualizam tudo</td><td>Quarenta horas com <em>permadeath</em> e <em>decay</em> (§16). "Afinal nada aconteceu" apaga o jogo que o jogador acabou de jogar.</td></tr>
++      <tr><td>Os dois irmãos</td><td>Um contraste de temperamento carrega a série inteira</td><td>O Empire troca de personagem controlado com o Verbo 2 (§08). Um par fixo mata o sistema de classes e a colagem de povos.</td></tr>
++      <tr><td>A iconografia americana</td><td>É o vernáculo do país deles, com cem anos, posto fora de sítio</td><td>Não é o teu. Abóboras com cara ao lado de palafitas da Carrasqueira e de ferrarias bascas lê-se a empréstimo. §73.</td></tr>
++      <tr><td>Dez capítulos como espinha</td><td>A série é uma viagem: a estrutura episódica <em>é</em> o enredo</td><td>A espinha do Empire é o ciclo dia-noite. Os capítulos (§77) são conteúdo lateral, e assim que forem obrigatórios partem o <em>loop</em>.</td></tr>
++      <tr><td>O registo irónico moderno</td><td>O Wirt fala como um adolescente de 2014, e o atrito com o mundo é metade da piada</td><td>O Empire não tem protagonista falante nem texto de diálogo (§27). Sem onde assentar, a ironia vira anacronismo solto.</td></tr>
++      <tr><td>O epílogo que arruma toda a gente</td><td>Recompensa emocional depois de cem minutos de ameaça</td><td>Cinquenta horas de mortes permanentes. Arrumar toda a gente no fim desmente cada uma delas.</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>O problema que este trabalho criou, e a solução</h4>
++  <div class="note risk"><span class="lbl">Acessibilidade — apanhado a tempo</span>
++    <p>A §78 e a §81 põem o mostrador de moral inteiramente no som: o coro tem tantas vozes quantos povos soltaste. Para um jogador surdo, esse sistema não existe, e a §26 quer Steam Deck Verified e acessibilidade a sério. A Dívida da Candeia tem redundância visual — o brilho da candeia (§75) — mas o coro não tinha nenhuma.</p>
++    <p><strong>Proposta:</strong> cada povo solto hasteia o seu estandarte sobre o teu núcleo, um por povo, no mesmo sítio e na mesma ordem. Seis mastros. Zero números, zero UI, e o mostrador passa a ter as duas vias. Um povo ficado deixa o mastro vazio, o que é uma imagem melhor do que o estandarte cheio.</p>
++  </div>
++
++  <h4>O que custa, e onde entra</h4>
++  <div class="tw"><table>
++    <thead><tr><th>Secção</th><th class="n">Código</th><th class="n">Arte</th><th class="n">Som</th><th class="n">Escrita</th><th class="n">Total</th><th>Fase (§33)</th></tr></thead>
++    <tbody>
++      <tr><td>§80 · Preto na paleta, noite castanha</td><td class="n">2</td><td class="n">+2</td><td class="n">—</td><td class="n">—</td><td class="n">4</td><td><span class="tag new">Fase 0</span></td></tr>
++      <tr><td>§74 · Termo dos Amargueiros na massa</td><td class="n">1</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">1</td><td><span class="tag new">Fase 1</span></td></tr>
++      <tr><td>§74 · Amargueiro e candeia, completos</td><td class="n">10</td><td class="n">3</td><td class="n">—</td><td class="n">—</td><td class="n">13</td><td>Fase 2</td></tr>
++      <tr><td>§75 · A Oferta e a Dívida</td><td class="n">12</td><td class="n">4</td><td class="n">2</td><td class="n">2</td><td class="n">20</td><td>Fase 3</td></tr>
++      <tr><td>§76 · O Nome</td><td class="n">7</td><td class="n">2</td><td class="n">1</td><td class="n">1</td><td class="n">11</td><td>Fase 4</td></tr>
++      <tr><td>§78 · A Colheita</td><td class="n">8</td><td class="n">3</td><td class="n">—</td><td class="n">—</td><td class="n">11</td><td>Fase 5</td></tr>
++      <tr><td>§77 · Dez capítulos</td><td class="n">30</td><td class="n">50</td><td class="n">20</td><td class="n">6</td><td class="n">106</td><td>Fase 5</td></tr>
++      <tr><td>§79 · Os doze diários e os três epílogos</td><td class="n">3</td><td class="n">—</td><td class="n">—</td><td class="n">10</td><td class="n">13</td><td>Fase 6</td></tr>
++      <tr><td>§81 · Som, tudo o resto</td><td class="n">6</td><td class="n">—</td><td class="n">38</td><td class="n">—</td><td class="n">44</td><td>Fase 6</td></tr>
++      <tr><td>§83 · Os primeiros vinte minutos</td><td class="n">3</td><td class="n">4</td><td class="n">—</td><td class="n">1</td><td class="n">8</td><td><span class="tag new">Fase 1</span></td></tr>
++      <tr><td>§84 · Os catorze testes de design</td><td class="n">6</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">6</td><td><span class="tag new">Fase 1</span></td></tr>
++      <tr><td><strong>Total</strong></td><td class="n"><strong>88</strong></td><td class="n"><strong>68</strong></td><td class="n"><strong>61</strong></td><td class="n"><strong>20</strong></td><td class="n"><strong>237</strong></td><td>—</td></tr>
++    </tbody>
++  </table></div>
++  <p>Duzentas e trinta e sete horas, das quais 106 são um só item — os dez capítulos — que é cortável até quatro sem partir nada, porque a §77 já prevê que só seis apareçam por campanha. O caminho mínimo que dá a transformação inteira é <strong>§80 + §74 + §75 + §83 + §84</strong>: <strong>52 horas</strong>, e é aí que está quase todo o efeito. As §83 e §84 entram nesse mínimo de propósito: sem a primeira, o jogador conhece o Amargueiro tarde demais para ele significar alguma coisa; sem a segunda, os números das outras três desafinam-se sozinhos até ao mês oito.</p>
++
++  <div class="note dec"><span class="lbl">A ordem, e porque é que a §80 é primeiro</span>
++    <p>Só há uma dependência dura em toda a parte, e é de calendário e não de código: <strong>o teto de valores por camada tem de ser decidido antes de se desenhar cenário</strong>. Decidir agora custa 4 h. Decidir na Fase 5 custa redesenhar as camadas de fundo dos seis biomas. Tudo o resto pode entrar pela ordem que quiseres, e as §76, §77 e §81 podem cair inteiras sem que as outras deixem de funcionar.</p>
++  </div>
++
++  <div class="note night"><span class="lbl">Onde ficam os testes e os riscos</span>
++    <p>Os catorze testes de design, as seis linhas novas do registo de risco da §37 e a lista dos campos de estado que o <em>save</em> passa a ter estão na <strong>§84</strong>. Nenhum sistema desta parte entra no repositório sem o teste que o guarda.</p>
++  </div>
++
++  <h4>Uma decidida, nove por decidir</h4>
++  <div class="note dec"><span class="lbl">Q-037 · fechada</span><p><strong>A noite é castanha</strong> — decidido a 13 de setembro de 2026, <code>docs/adr/0011-noite-castanha.md</code>. A tabela da §05 está corrigida e o <code>clock.csv</code> deixou de marcar <code>night_tint_hsv</code> e <code>night_value_floor</code> como proposta. Com esta fechada, <strong>nenhuma pergunta da Parte XIII bloqueia a Fase 0</strong>.</p></div>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>A pergunta</th><th>Proposta</th><th>Bloqueia</th></tr></thead>
++    <tbody>
++      <tr><td>Q-038</td><td>A massa base desce de 60 para 40 e o termo do dia de 26 para 18. A Q-001 (o Aríete de lodo contra 105 s de noite) muda de resposta?</td><td>Recalcular o teste da §31 com os números novos antes de o desmarcar.</td><td>F1-09</td></tr>
++      <tr><td>Q-039</td><td>A lei do Forno Aceso (§77) faz nascer um Amargueiro dentro das muralhas, contra a regra da §74. Exceção ou erro?</td><td>Exceção deliberada, e a única. Se houver uma segunda, corta-se esta.</td><td>Fase 5</td></tr>
++      <tr><td>Q-040</td><td>A oferta "O que brilha, e nada mais" salta 105 s de jogo. Uma vez por campanha, ou com intervalo?</td><td>Uma vez por campanha. Saltar a noite duas vezes ensina a evitar o jogo.</td><td>Fase 3</td></tr>
++      <tr><td>Q-041</td><td>Nove nomeados é teto fixo ou cresce com o império?</td><td>Fixo. Cresce e deixa de significar nada.</td><td>Fase 4</td></tr>
++      <tr><td>Q-042</td><td>C = 6 + 2 × povos detidos põe a sexta Colheita em 16 dias. Longo demais?</td><td>Medir em <em>playtest</em>. Alternativa: 6 + 1,5 × n, arredondado.</td><td>Fase 5</td></tr>
++      <tr><td>Q-043</td><td>Seis capítulos por campanha de dez, ou os dez sempre?</td><td>Seis. Quatro por descobrir valem mais do que dez esgotados.</td><td>Fase 5</td></tr>
++      <tr><td>Q-044</td><td>O motivo sonoro da Podridão substitui um indicador visual de proximidade, ou coexistem?</td><td>Coexistem, mas o visual é a própria candeia e não um ícone.</td><td>§26</td></tr>
++      <tr><td>Q-045</td><td>A Dívida da Candeia fica escondida mesmo no modo de acessibilidade?</td><td>Fica. O brilho e os estandartes são a redundância; um número não é acessibilidade, é <em>spoiler</em>.</td><td>§26</td></tr>
++      <tr><td>Q-046</td><td>O Turno (terceiro epílogo, §79) entra na Fase 8 ou corta-se?</td><td>Entra. É um sinalizador no <em>save</em> e um termo na semente, e é o mais forte dos três.</td><td>Fase 8</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note risk"><span class="lbl">A regra da Parte XII continua a valer</span>
++    <p>A §72 fechou a pré-produção e disse que o dossiê só muda por correção, por decisão que vira ADR, ou por número que um <em>playtest</em> desmentiu. Esta parte é do segundo tipo e tem de pagar o preço disso: <strong>cada secção daqui tem de virar ADR antes de virar código</strong>, e as dez perguntas acima entram no <code>QUESTIONS.md</code> com a proposta que já está nos CSV do anexo. Nada foi decidido em silêncio. A Q-037 fechou a 13 de setembro (ADR 0011): a noite é castanha, e com ela fora do caminho <strong>nenhuma pergunta desta parte bloqueia a Fase 0</strong>. As nove que sobram esperam pelas Fases 3 a 8, ou por um <em>playtest</em>.</p>
++  </div>
++</section>
++<section id="s83">
++  <span class="sec-no">83 — Onboarding · <span style="color:var(--ember)">revê a §25</span></span>
++  <h3>Os primeiros vinte minutos, com a candeia lá dentro</h3>
++  <p class="lede">A §25 é a melhor secção de <em>onboarding</em> que este dossiê tem: doze minutos, dois dias, nada explicado, nenhuma caixa de texto, e uma lição por minuto. Nove sistemas novos sem uma linha sobre quando o jogador os conhece seria a lacuna mais grave desta parte — um jogador que descubra o Amargueiro à hora e meia já formou a opinião dele sobre o jogo. Esta secção estende a tabela até aos vinte minutos e três dias. As doze linhas originais ficam intactas; há oito novas e duas alteradas.</p>
++
++  <div class="note dec"><span class="lbl">A decisão que faz isto funcionar: o Amargueiro está lá desde o segundo zero</span>
++    <p>A §25 desenha a noite 1 para ser ganha de certeza — o teste da §31 exige <em>zero</em> mortes. Logo, o primeiro Amargueiro não pode nascer de uma perda tua. Nasce de outra coisa: <strong>há um Amargueiro velho de pé, fora das ruínas, no segmento de abertura, desde o primeiro <em>frame</em></strong>. Ao minuto zero é cenário estranho. Ao minuto treze é a coisa mais assustadora que o jogador já viu num jogo de construção. Não muda um pixel entre os dois momentos — muda o que ele sabe.</p>
++    <p>É exatamente o que a série faz no primeiro capítulo: o Lenhador está a cortar <em>edelwood</em> no minuto dois e ninguém percebe o que aquilo é durante quatro episódios.</p>
++  </div>
++
++  <h4>A tabela</h4>
++  <div class="tw"><table>
++    <thead><tr><th>Minuto</th><th>O que acontece</th><th>O que ensina</th><th>Como ensina</th></tr></thead>
++    <tbody>
++      <tr><td>0:00</td><td>Acordas a pé, sozinho, com 6 moedas, ao lado de um castelo-árvore em ruínas. <span class="mark">Um pouco à esquerda, fora do muro, está uma árvore preta com uma cara na casca.</span></td><td>Quem és e onde estás</td><td>A escala 3 do teu <em>sprite</em> contra a escala 2 de um vagabundo. A árvore não é apontada por nada.</td></tr>
++      <tr><td>0:20</td><td>O vagabundo segue-te. Largas uma moeda perto dele.</td><td>Verbo 1</td><td>Ele apanha-a e ganha um chapéu. <span class="mark">Guarda esta cara. O jogo vai precisar dela ao minuto treze.</span></td></tr>
++      <tr><td>1:10</td><td>Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda.</td><td>Economia existe fora de ti</td><td>Observação. O jogador não fez nada.</td></tr>
++      <tr><td>2:00</td><td>Sino de meio-dia. Uma estátua enterrada meio visível sob vegetação.</td><td>Há coisas escondidas</td><td>Curiosidade. Não é obrigatório.</td></tr>
++      <tr><td>3:30</td><td>Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas</td><td>Construção</td><td>A silhueta é o convite. Não há botão "construir".</td></tr>
++      <tr><td class="mark">5:00</td><td>Crepúsculo. Aviso sonoro. A mancha aparece no horizonte à direita — <span class="mark">e traz uma luz. É a única coisa iluminada de lá até aqui.</span></td><td>A Podridão existe, vem aí, e não é uma sombra</td><td>Medo, com uma inversão. A coisa que te vem matar é a única que traz luz.</td></tr>
++      <tr><td>6:00</td><td>Noite 1: três Rastejantes. Os arqueiros matam-nos do muro.</td><td>A defesa funciona</td><td>Alívio. A noite 1 é ganha de certeza — está desenhada para isso.</td></tr>
++      <tr><td>7:00</td><td>Amanhecer. Uma moeda no chão onde morreu um Rastejante.</td><td>Matar dá lucro</td><td>Recompensa física.</td></tr>
++      <tr><td class="mark">7:15</td><td class="mark">Duas vozes cantam oito segundos. A câmara não se mexe. Não morreu ninguém.</td><td class="mark">Isto acontece todas as manhãs</td><td class="mark">Estranheza sem explicação. A canção está a chamar por quem está naquela árvore, e o jogador ainda não sabe que árvores têm nome.</td></tr>
++      <tr><td>8:30</td><td>Dia 2. Aparece a Casa de Treino em ruínas, reparável por 10 moedas.</td><td>Há profundidade adiante</td><td>Promessa. Não a podes pagar ainda.</td></tr>
++      <tr><td>10:00</td><td>Encontras a passagem para o corte de solo. A terra dissolve-se com o <em>dither</em>.</td><td>O mundo tem um andar de baixo</td><td>Revelação. É o momento em que o jogo deixa de ser Kingdom.</td></tr>
++      <tr><td>11:00</td><td>Na câmara subterrânea: Semente Real + o diário 1 — uma lista de manutenção de nichos de estrada, de seis aldeias que pagavam para o mesmo fundo.</td><td>Metaprogresso e narrativa</td><td>Recompensa por curiosidade, não por combate.</td></tr>
++      <tr><td>12:00</td><td>Noite 2: um Rastejante entra pela passagem que abriste.</td><td>Toda a decisão tem custo</td><td>A lição central do jogo, ensinada por perda, ao minuto doze.</td></tr>
++      <tr><td class="mark">12:40</td><td class="mark">O Rastejante mata o vagabundo do minuto 0:20, fora do muro. Tu não chegas lá a tempo.</td><td class="mark">A morte é permanente e é de alguém</td><td class="mark">Perda. É a primeira, e o jogo escolheu-a com cuidado: é a única figura que o jogador já conhece.</td></tr>
++      <tr><td class="mark">13:10</td><td class="mark">Alvorada. O corpo levanta-se como árvore. A cara na casca é a do chapéu. A canção toca outra vez, e desta vez o jogador percebe para que serve.</td><td class="mark">O que deixas lá fora fica lá fora, e cresce</td><td class="mark">Reconhecimento. Nada é dito. A árvore do minuto 0:00 acabou de mudar de significado, e o jogador vai olhar para ela.</td></tr>
++      <tr><td class="mark">14:30</td><td class="mark">Na base do Amargueiro novo aparece a silhueta fantasma de corte: 6 moedas. É exatamente o que tens.</td><td class="mark">A escolha existe e é tua</td><td class="mark">Pressão, sem tempo limite. Cortar, consagrar ou deixar — e nenhuma das três é apresentada como a certa.</td></tr>
++      <tr><td class="mark">17:00</td><td class="mark">Crepúsculo do dia 3. A candeia chega mais perto do que ontem e uma frase acende-se junto a ela: <em>"Nada. Só quero ver."</em> Aparece um alguidar de barro no chão. Preço: 1 moeda.</td><td class="mark">Ela fala, e negoceia</td><td class="mark">A oferta mais barata do jogo, de propósito, e a única sem consequência má. Ensina o gesto por uma moeda.</td></tr>
++      <tr><td class="mark">18:00</td><td class="mark">Pagaste ou não pagaste. Se pagaste, um sítio distante acende-se no mapa. A noite 3 corre igual nos dois casos.</td><td class="mark">Fazer negócio funciona, e foi barato</td><td class="mark">Confiança — que é exatamente o que ela precisa de construir para a oferta do dia 9 valer alguma coisa.</td></tr>
++      <tr><td class="mark">20:00</td><td class="mark">Dia 4. Um lanceiro que aguentou desde a primeira noite pára um passo à frente dos outros na alvorada, e o império chama-lhe um nome.</td><td class="mark">Alguém está a contar</td><td class="mark">Orgulho, com um fio de aviso. A partir daqui há uma figura no ecrã que o jogador não quer perder.</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>As três lições, por ordem</h4>
++  <div class="grid g3">
++    <div class="cell"><span class="big">12</span><h6>minutos</h6><p><strong>Toda a decisão tem custo.</strong> A lição da §25, intacta. Abriste uma passagem e entrou uma coisa por ela.</p></div>
++    <div class="cell"><span class="big">13</span><h6>minutos</h6><p><strong>O que perdes não desaparece.</strong> Fica no campo, com a cara virada para a tua muralha, e alimenta a noite seguinte.</p></div>
++    <div class="cell"><span class="big">20</span><h6>minutos</h6><p><strong>Alguém está a contar.</strong> O império conta os nomes; A Podridão conta as respostas. Só um dos dois te diz que está a contar.</p></div>
++  </div>
++
++  <div class="note spec"><span class="lbl">O que o segmento de abertura passa a ter de conter</span>
++    <p>A §25 reserva <code>segmento_00_abertura</code> como cena fixa e autorada, e essa decisão fica. Passa a incluir, obrigatoriamente e sempre nas mesmas coordenadas: um Amargueiro velho fora do muro à esquerda; um vagabundo com <em>head_pool</em> fixo — para que a cara do minuto 0:20 seja garantidamente a mesma do minuto 13:10, e não uma sorteada; e uma bifurcação a três ecrãs para leste onde o capítulo revelado ao minuto 18:00 possa cair. São três marcações no mesmo ficheiro de cena, e sem elas a sequência inteira desta secção não acontece.</p>
++  </div>
++
++  <div class="note night"><span class="lbl">Como medir se funciona</span>
++    <p>A §25 tem três eventos de telemetria (§32). Passam a seis, e os três novos são os que dizem se esta parte do dossiê valeu a pena:</p>
++    <dl class="kv">
++      <dt><code>first_coin_dropped</code></dt><dd>&lt; 40 s — da §25</dd>
++      <dt><code>first_wall_built</code></dt><dd>&lt; 4 min — da §25</dd>
++      <dt><code>underground_discovered</code></dt><dd>&lt; 14 min — da §25</dd>
++      <dt><code>first_amargueiro_seen</code></dt><dd>&lt; 14 min. Se passar dos 20, a morte do minuto 12:40 não está a acontecer e a sequência inteira desmonta-se.</dd>
++      <dt><code>amargueiro_decision</code></dt><dd>&lt; 17 min, <em>e</em> a distribuição pelos três destinos. Se 90% cortarem sem hesitar, o dilema não existe e os números da §74 estão errados.</dd>
++      <dt><code>first_offer_answer</code></dt><dd>&lt; 19 min. Aceitar e recusar são ambos bons resultados; o mau é não reparar que houve uma oferta.</dd>
++    </dl>
++    <p>O <code>amargueiro_decision</code> é o mais importante dos seis e é o único que mede uma escolha em vez de um tempo. É a métrica que diz se esta parte do dossiê fez um jogo melhor ou só um jogo mais complicado.</p>
++  </div>
++</section>
++<section id="s84">
++  <span class="sec-no">84 — Garantias · <span style="color:var(--ember)">novo</span></span>
++  <h3>Os testes que impedem isto de apodrecer, e os riscos que traz</h3>
++  <p class="lede">A §31 diz porque é que os testes existem neste projeto: sem eles não consegues rever o que a IA escreve, e ao fim de duas semanas deixas de tentar. Nove sistemas novos sem testes de <em>design</em> são nove sistemas que se desafinam sozinhos no mês oito e ninguém dá por isso. Catorze testes, seis riscos novos para a §37, e a lista dos campos de estado que o <em>save</em> passa a ter — porque a Q-036 obriga a que sejam todos tipos base.</p>
++
++  <h4>Os catorze testes de design</h4>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>O que garante</th><th>Falha quando</th><th>Secção</th></tr></thead>
++    <tbody>
++      <tr><td>D-01</td><td>A massa em campo limpo ao dia 20 é 400</td><td>Alguém mexe nos coeficientes sem refazer a tabela da §74</td><td>§74</td></tr>
++      <tr><td>D-02</td><td>O Lenho Amargo não tem preço de venda, e o rendimento sobe com a escala</td><td>Alguém lhe dá valor em moedas — e a exploração do vagabundo volta</td><td>§74</td></tr>
++      <tr><td>D-03</td><td>Um Amargueiro não se corta antes de aguentar uma noite</td><td>A regra 2 da §74 se perde numa refatoração</td><td>§74</td></tr>
++      <tr><td>D-04</td><td>A penalização por recusa nunca passa de 40</td><td>O teto desaparece e um jogador principista fica com um jogo impossível</td><td>§75</td></tr>
++      <tr><td>D-05</td><td>Uma oferta por noite, mesmo com duas manchas a partir do dia 12</td><td>A voz vira um sistema de menus</td><td>§75</td></tr>
++      <tr><td>D-06</td><td>A Dívida nunca desce, em nenhum caminho de código</td><td>Aparece uma forma de a limpar, e o epílogo deixa de significar nada</td><td>§75 · §79</td></tr>
++      <tr><td>D-07</td><td>Nunca há mais de nove nomeados vivos</td><td>O teto cede e o nome deixa de valer</td><td>§76</td></tr>
++      <tr><td>D-08</td><td>Um título volta com ordinal depois de três dias de luto</td><td>O sistema se esgota às nove horas de jogo</td><td>§76</td></tr>
++      <tr><td>D-09</td><td>Todos os capítulos colocados têm caminho alternativo</td><td>Um capítulo passa a bloquear a rota e parte a regra 5</td><td>§77</td></tr>
++      <tr><td>D-10</td><td>Exatamente um capítulo tem <code>law_enters_walls</code></td><td>Aparece o segundo, e a exceção do Forno Aceso deixa de ser especial</td><td>§77</td></tr>
++      <tr><td>D-11</td><td>Seis capítulos por campanha, e o Cerco é sempre um deles</td><td>O diário 12 fica inalcançável nalgumas sementes</td><td>§77</td></tr>
++      <tr><td>D-12</td><td>Os doze diários são alcançáveis em <strong>mil sementes seguidas</strong></td><td>Uma combinação de capítulos deixa um ato sem fragmentos</td><td>§79</td></tr>
++      <tr><td>D-13</td><td>O epílogo é determinista e segue a precedência da §79</td><td>Dois estados iguais dão dois finais</td><td>§79</td></tr>
++      <tr><td>D-14</td><td>O <em>save</em> dos sistemas novos só contém tipos base</td><td>Alguém guarda um <code>Resource</code> e reabre o buraco da Q-036</td><td>§84</td></tr>
++    </tbody>
++  </table></div>
++
++  <p>Cinco deles escrevem-se em vinte linhas e são os que apanham as regressões que doem:</p>
++  <pre><code><span class="c"># tests/design_unknown_test.gd</span>
++<span class="k">extends</span> GdUnitTestSuite
++
++<span class="k">func</span> test_d01_massa_campo_limpo_dia_20() -&gt; <span class="k">void</span>:
++    assert_float(Rot.mass(20, 0, 0, 0, 0)).is_equal_approx(400.0, 0.1)
++
++<span class="k">func</span> test_d02_lenho_nao_e_moeda() -&gt; <span class="k">void</span>:
++    assert_bool(Lenho.sellable).is_false()
++    assert_int(Amargueiro.yield_for(1, <span class="k">false</span>)).is_equal(1)   <span class="c"># vagabundo</span>
++    assert_int(Amargueiro.yield_for(3, <span class="k">false</span>)).is_equal(3)   <span class="c"># elite</span>
++    assert_int(Amargueiro.yield_for(1, <span class="k">true</span>)).is_equal(5)    <span class="c"># nomeado</span>
++
++<span class="k">func</span> test_d03_espera_uma_noite() -&gt; <span class="k">void</span>:
++    <span class="k">var</span> a := Amargueiro.root(<span class="s">&amp;"vagrant"</span>, 1, <span class="k">false</span>, 4)
++    assert_bool(a.can_fell(4)).is_false()
++    assert_bool(a.can_fell(5)).is_true()
++
++<span class="k">func</span> test_d04_recusa_tem_teto() -&gt; <span class="k">void</span>:
++    <span class="k">var</span> r := RotState.new()
++    <span class="k">for</span> i <span class="k">in</span> 30: r.refuse()
++    assert_float(r.refusal_penalty()).is_less_equal(40.0)
++
++<span class="k">func</span> test_d10_uma_so_lei_entra_em_casa() -&gt; <span class="k">void</span>:
++    <span class="k">var</span> n := ChapterDB.all().filter(<span class="k">func</span>(c): <span class="k">return</span> c.law_enters_walls).size()
++    assert_int(n).is_equal(1)</code></pre>
++
++  <div class="note spec"><span class="lbl">O D-12 é o único caro, e é o que salva a narrativa</span>
++    <p>Mil sementes, cada uma a correr só o gerador de mundo e a atribuição de diários — sem simulação, sem cenas. Corre em segundos e é a única maneira honesta de afirmar "uma partida vê sempre os doze". Uma combinação improvável de capítulos que deixe o Ato II sem fragmentos é o género de coisa que ninguém descobre em <em>playtest</em> e que um jogador descobre na semana de lançamento.</p>
++  </div>
++
++  <h4>Seis linhas novas para o registo de risco da §37</h4>
++  <div class="tw"><table>
++    <thead><tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Sinal de alarme</th><th>Mitigação</th></tr></thead>
++    <tbody>
++      <tr><td>A §77 come o calendário — 106 h num só item</td><td>Alta</td><td>Grande</td><td>Mais de três capítulos por acabar no fim da Fase 5</td><td>Quatro é o mínimo viável. A Q-043 já prevê que só seis apareçam por campanha; com quatro, aparecem quatro e ninguém nota.</td></tr>
++      <tr><td>O Amargueiro vira economia em vez de dilema</td><td>Média</td><td>Grande</td><td>Telemetria: tropas a morrer fora do muro sem combate; <code>amargueiro_decision</code> com 90% em "cortar"</td><td>As três regras da §74 e os testes D-02 e D-03. Se o sinal aparecer na mesma, o rendimento por escala desce antes de qualquer outra coisa.</td></tr>
++      <tr><td>A Oferta degenera em "aceitar sempre" ou "recusar sempre"</td><td>Média</td><td>Grande</td><td>Mais de 85% das respostas na mesma direção, ao longo de uma campanha</td><td>O teto da recusa (§75) já impede o segundo caso. Para o primeiro, o preço das ofertas sobe com a Dívida e as caras só aparecem depois dos três.</td></tr>
++      <tr><td>A noite castanha esconde a mancha</td><td>Média</td><td>Médio</td><td><em>Playtesters</em> a serem apanhados de surpresa pela Podridão em campo aberto</td><td>O teste das "duas frias" (§80) e a regra de que o violeta é a única cor fria saturada da noite. Se falhar, sobe-se o valor da mancha e não o do ambiente.</td></tr>
++      <tr><td>A cara na casca lê-se como bug</td><td>Baixa</td><td>Médio</td><td>Alguém pergunta "porque é que aquela árvore tem cara?" antes do minuto treze</td><td>O Amargueiro velho do minuto 0:00 (§83) existe precisamente para que a pergunta chegue depois da resposta.</td></tr>
++      <tr><td>A raiz portuguesa lê-se como folclore turístico</td><td>Média</td><td>Médio</td><td>Um habitante a explicar a tradição que representa</td><td>A regra 2 da §77: o habitante cumpre a lei e nunca a justifica. Uma linha de diálogo que comece por "aqui é costume" corta-se.</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>O estado novo, e porque é que ele passa na Q-036</h4>
++  <p>A ADR 0007 fechou o <em>save</em> em <code>FileAccess.store_var</code> e <code>get_var(false)</code>: só tipos base, nada de <code>Resource</code>, nada de caminhos que o motor possa carregar. Tudo o que estes nove sistemas guardam cabe nessa regra sem exceção, e cabe em cerca de <strong>dois quilobytes</strong>.</p>
++  <div class="tw"><table>
++    <thead><tr><th>Campo</th><th>Tipo base</th><th>O que é</th></tr></thead>
++    <tbody>
++      <tr><td><code>debt_lantern</code></td><td><code>int</code></td><td>0–20. Nunca desce.</td></tr>
++      <tr><td><code>refusals_by_day</code></td><td><code>PackedInt32Array</code></td><td>Os últimos cinco dias. Janela deslizante.</td></tr>
++      <tr><td><code>amargueiro_x</code> · <code>_band</code> · <code>_tier</code> · <code>_day</code></td><td>4 × <code>PackedFloat32Array</code> / <code>PackedInt32Array</code></td><td>Arrays paralelos, um índice por árvore. Sem objetos.</td></tr>
++      <tr><td><code>amargueiro_title</code></td><td><code>PackedStringArray</code></td><td>Vazio quando anónimo. É o que põe a cara certa na casca.</td></tr>
++      <tr><td><code>titles_holder</code> · <code>titles_ordinal</code> · <code>titles_mourning</code></td><td>3 × <code>Dictionary</code> de <code>String</code> → <code>int</code></td><td>Quem tem, quantos já tiveram, até quando está de luto.</td></tr>
++      <tr><td><code>colheita_people</code> · <code>colheita_days</code> · <code>colheita_queue</code></td><td><code>String</code> · <code>int</code> · <code>PackedStringArray</code></td><td>Uma de cada vez, e a fila (§78).</td></tr>
++      <tr><td><code>peoples_released</code> · <code>peoples_kept</code></td><td>2 × <code>PackedStringArray</code></td><td>As seis decisões. É o epílogo.</td></tr>
++      <tr><td><code>chapters_placed</code> · <code>chapter_visits</code> · <code>journals_found</code></td><td><code>PackedStringArray</code> · <code>Dictionary</code> · <code>PackedStringArray</code></td><td>As visitas contam para a Casa Que Conta e para a Ponte.</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note risk"><span class="lbl">A única coisa desta parte que não tem rede</span>
++    <p>Todos os sistemas acima têm um teste, um teto, um sinal de alarme e um plano B. Um não tem: <strong>a escrita</strong>. Doze diários de setenta palavras, doze frases de oferta de oito, nove títulos e dez leis de capítulo. Se esse texto for morno, nenhum destes sistemas salva a Parte XIII — e não há teste automático que apanhe prosa morna. O único controlo possível é o espécime da §79: se um fragmento novo não aguentar a comparação com o diário 9, reescreve-se. É trabalho de uma tarde por ato, e é o que decide se isto foi uma boa ideia.</p>
++  </div>
++</section>
++
++<section id="anx">
++  <span class="sec-no">85 — Anexo · <span style="color:var(--ember)">novo</span></span>
++  <h3>Os ficheiros de dados</h3>
++  <p class="lede">Tudo o que esta parte decide está em CSV, com as mesmas colunas de disciplina que a §71 impôs ao resto: <code>_phase</code>, <code>_src</code>, <code>_proposed</code> e <code>_notes</code>. O que veio do dossiê está marcado como tal; o que foi proposto aqui está marcado como proposta, uma coluna a uma. Nada foi decidido em silêncio, e o <code>content_report.py</code> continua a poder contar.</p>
++
++  <div class="tw"><table>
++    <thead><tr><th>Ficheiro</th><th>Linhas</th><th>O que guarda</th><th>Secção</th></tr></thead>
++    <tbody>
++      <tr><td><code>data/source/rot.csv</code></td><td class="n">1</td><td>A Podridão: fórmula da massa termo a termo, velocidade, candeia, raio de luz, limiares da Dívida</td><td>§74 · §75</td></tr>
++      <tr><td><code>data/source/amargueiros.csv</code></td><td class="n">3</td><td>Os três destinos, custos, rendimentos e o efeito na massa</td><td>§74</td></tr>
++      <tr><td><code>data/source/offers.csv</code></td><td class="n">12</td><td>As doze ofertas: frase, preço, efeito, condição, dívida</td><td>§75</td></tr>
++      <tr><td><code>data/source/titles.csv</code></td><td class="n">9</td><td>Os nove feitos, os títulos e o que cada um dá</td><td>§76</td></tr>
++      <tr><td><code>data/source/chapters.csv</code></td><td class="n">10</td><td>Os dez capítulos: lei, habitante, canção, diário, bioma</td><td>§77</td></tr>
++      <tr><td><code>data/source/journals.csv</code></td><td class="n">12</td><td>Os doze diários: ato, origem, objeto físico, o que revela</td><td>§79</td></tr>
++      <tr><td><code>data/source/peoples.csv</code></td><td class="n">6</td><td><em>Alterado:</em> +<code>song_texture</code>, +<code>colheita_song</code>, +<code>landmark_roots</code></td><td>§78 · §81</td></tr>
++      <tr><td><code>data/source/creatures.csv</code></td><td class="n">+1</td><td><em>Alterado:</em> +<code>tender</code> — o Zelador, que não ataca</td><td>§75</td></tr>
++      <tr><td><code>data/source/clock.csv</code></td><td class="n">1</td><td><em>Alterado:</em> +<code>night_tint_hsv</code>, o castanho da §80</td><td>§80</td></tr>
++      <tr><td><code>src/sim/data/*.gd</code></td><td class="n">5</td><td><code>RotData</code> alargado, <code>AmargueiroData</code>, <code>OfferData</code>, <code>TitleData</code>, <code>ChapterData</code></td><td>todas</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note spec"><span class="lbl">Onde caem no repositório</span>
++    <pre><code>Empire/
++├─ data/source/
++│  ├─ rot.csv            <span class="c"># novo — fecha a Q-026 da §72</span>
++│  ├─ amargueiros.csv    <span class="c"># novo</span>
++│  ├─ offers.csv         <span class="c"># novo</span>
++│  ├─ titles.csv         <span class="c"># novo</span>
++│  ├─ chapters.csv       <span class="c"># novo — substitui os biomas caóticos soltos da §17</span>
++│  ├─ journals.csv       <span class="c"># novo — enche o journal_data.gd que já existia vazio</span>
++│  ├─ peoples.csv        <span class="c"># 3 colunas novas</span>
++│  ├─ creatures.csv      <span class="c"># 1 linha nova</span>
++│  └─ clock.csv          <span class="c"># 1 coluna nova</span>
++└─ src/sim/data/
++   ├─ rot_profile.gd     <span class="c"># alargado</span>
++   ├─ amargueiro_data.gd <span class="c"># novo</span>
++   ├─ offer_data.gd      <span class="c"># novo</span>
++   ├─ title_data.gd      <span class="c"># novo</span>
++   └─ chapter_data.gd    <span class="c"># novo</span></code></pre>
++  </div>
++
++  <p>O conversor <code>tools/csv_to_tres.gd</code> gera os 154 recursos a partir das 17 tabelas registadas em <code>data/source/_tables.csv</code>. Os scripts em <code>tools/recovered_generators/</code> são geradores históricos de CSV, não de .tres; não devem repor os dados durante o balanceamento. O <code>architecture_test.gd</code> continua a valer sem alterações — nenhum destes recursos importa nada de fora de <code>src/sim/</code>.</p>
++</section>
++
++
++
+ <section id="trk">
+   <span class="sec-no">★ — Rastreador</span>
+   <h3>As tuas 48 mecânicas, mapeadas</h3>

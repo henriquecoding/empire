@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chapter_data.gd" id="1_oic6m"]
+
+[resource]
+script = ExtResource("1_oic6m")
+id = &"spore_field"
+display_key = "CHAPTER_SPORE_FIELD"
+law_key = "CHAPTER_LAW_SPORE_FIELD"
+inhabitant_key = "CHAPTER_WHO_SPORE_FIELD"
+song_key = "SONG_CHAPTER_SPORE_FIELD"
+biome = &"subterranean"
+placement = &"crossing"
+detour_seconds = 40.0
+reward_kind = &"ancient_seed"
+folk_root = "cidades soterradas"

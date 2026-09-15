@@ -1,0 +1,28 @@
+table,script,out,layout,groups,_notes
+clock,res://src/sim/data/clock_data.gd,res://data/economy/clock.tres,rows,phase_durations=dawn+morning+noon+afternoon+dusk+night,"§69: o primeiro CSV, que prova o circuito CSV → .tres → jogo"
+units,res://src/sim/data/unit_data.gd,res://data/units/{id}.tres,rows,,§07 §08 §09 §44
+creatures,res://src/sim/data/creature_data.gd,res://data/creatures/{id}.tres,rows,,§07 §44 §51
+buildings,res://src/sim/data/building_data.gd,res://data/buildings/{id}.tres,rows,,§06 §09 §10 §44
+walls,res://src/sim/data/wall_data.gd,res://data/walls/{id}.tres,rows,,§10 §44
+peoples,res://src/sim/data/people_data.gd,res://data/peoples/{id}.tres,rows,,§04 §22 §44
+classes,res://src/sim/data/class_data.gd,res://data/classes/{id}.tres,rows,,§08 §44
+crafts,res://src/sim/data/craft_data.gd,res://data/crafts/{id}.tres,rows,,§06 circuito 2 · §44 · §49
+jobs,res://src/sim/data/job_data.gd,res://data/jobs/{id}.tres,rows,urgency_by_phase=dawn+morning+noon+afternoon+dusk+night,§20 §29 §52 — o jobs.csv do relatório mestre
+biomes,res://src/sim/data/biome_data.gd,res://data/biomes/{id}.tres,rows,,§11 §21 §44
+segments,res://src/sim/data/segment_data.gd,res://data/segments/{id}.tres,rows,,§21 §44 §54
+economy,res://src/sim/data/economy_curve.gd,res://data/economy/curve.tres,kv,,§06 §47 — chave/valor; um só recurso
+economy_profiles,res://src/sim/data/economy_profile.gd,res://data/economy/profiles/{id}.tres,rows,,§06 §31 — perfis dos testes de design
+rot,res://src/sim/data/rot_profile.gd,res://data/rot/{id}.tres,rows,,§05 §44 §51 — substitui o waves.csv (§70)
+mounts,res://src/sim/data/mount_data.gd,res://data/mounts/{id}.tres,rows,,§12 §44
+impulses,res://src/sim/data/impulse_data.gd,res://data/crown/impulses/{id}.tres,rows,,§15 §57
+greed_profiles,res://src/sim/data/greed_profile.gd,res://data/crown/greed/{id}.tres,rows,,§15 §20
+secrets,res://src/sim/data/secret_data.gd,res://data/lore/secrets/{id}.tres,rows,,§17
+journals,res://src/sim/data/journal_data.gd,res://data/lore/journals/{id}.tres,rows,,§17
+wildlife,res://src/sim/data/wildlife_data.gd,res://data/wildlife/{id}.tres,rows,,§06 §25
+companions,res://src/sim/data/companion_data.gd,res://data/companions/{id}.tres,rows,,§08
+chaos_modifiers,res://src/sim/data/chaos_modifier_data.gd,res://data/biomes/chaos/{id}.tres,rows,,§17 §21
+parallax_layers,res://src/sim/data/parallax_layer_data.gd,res://data/biomes/parallax/{id}.tres,rows,,§11 §22 §59
+amargueiros,res://src/sim/data/amargueiro_data.gd,res://data/rot/amargueiros/{id}.tres,rows,,§74 — os três destinos de um Amargueiro
+offers,res://src/sim/data/offer_data.gd,res://data/rot/offers/{id}.tres,rows,,"§75 — as doze ofertas, com a gramática de requires"
+titles,res://src/sim/data/title_data.gd,res://data/lore/titles/{id}.tres,rows,,§76 — os nove feitos que dão nome
+chapters,res://src/sim/data/chapter_data.gd,res://data/world/chapters/{id}.tres,rows,,§77 — os dez Capítulos

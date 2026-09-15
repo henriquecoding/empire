@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_44gij"]
+
+[resource]
+script = ExtResource("1_44gij")
+id = &"canopy_archer"
+display_key = "UNIT_CANOPY_ARCHER"
+people = &"enramados"
+max_health = 14
+damage = 4
+attack_interval = 1.4
+accuracy_open = 1.0
+range_px = 200
+targets_bands = Array[int]([1, 0])
+recruit_cost = 5
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"ranged", &"elevated"])
+coin_capacity = 5
+ability = &"shoot_from_canopy"
+ability_params = {
+&"accuracy_in_canopy": 1.0
+}
+weapon_kind = &"bow"

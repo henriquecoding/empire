@@ -1,0 +1,58 @@
+term_id,key,pt_PT,en,internal_id,context,max_chars,gender_pt,plural_pt,plural_en,do_not_translate,notes
+rot,ROT_NAME,A Podridão,The Rot,rot,a ameaça noturna (§04 §05),16,f,—,—,no,O artigo faz parte do nome. Nunca Blight · Decay · Corruption · sombra · onda.
+rot_blot,,mancha,blot,rot_blot,a Podridão vista no horizonte (§05),12,f,manchas,blots,no,
+rot_trail,,rasto,trail,rot_trail,terreno apodrecido até ao amanhecer (§05),12,m,rastos,trails,no,Plantações destruídas; movimento −20%.
+band,,faixa,band,Band.Kind,uma das três faixas verticais (§11),12,f,faixas,bands,no,Nunca camada/layer (camada é de parallax ou de Aseprite).
+band_aerial,,faixa aérea,aerial band,AERIAL,topo do ecrã (§11),16,f,—,—,no,
+band_surface,,superfície,surface,SURFACE,onde as tropas andam (§11),12,f,—,—,no,
+band_underground,,subsolo,underground,UNDERGROUND,o corte de solo (§11),12,m,—,—,no,
+soil_cut,,corte de solo,soil cut,soil_cut,a faixa por baixo do relvado (§11),16,m,—,—,no,
+cavity,,cavidade,cavity,cavity,espaço jogável no corte de solo (§11),12,f,cavidades,cavities,no,
+passage,,passagem,passage,passage,liga faixas (§11 §53),12,f,passagens,passages,no,
+coin,CURRENCY_COIN,moeda,coin,coin,a moeda física (§02 §06),12,f,moedas,coins,no,Nunca ouro nem dinheiro.
+royal_seed,CURRENCY_ROYAL_SEED,Semente Real,Royal Seed,royal_seed,meta-progresso (§06),16,f,Sementes Reais,Royal Seeds,no,Maiúsculas. Não confundir com a semente do mundo.
+world_seed,UI_WORLD_SEED,semente do mundo,world seed,seed,o número que gera o mundo (§42),16,f,sementes,seeds,no,
+favor,CURRENCY_FAVOR,Favor,Favor,favor,moeda de diplomacia (§06),12,m,—,—,no,EN americano.
+material,,matéria,material,material,grão · peixe · animal · madeira · minério (§06),12,f,matérias,materials,no,Nunca recurso nem inventário: não há inventário (§49).
+craft,,ofício,craft,craft,construtor · ferreiro · cozinheiro · diplomata · bardo (§09),12,m,ofícios,crafts,no,A receita de conversão é CraftData (NAMING_BIBLE §5).
+job_post,,posto,post,JobData,onde uma tropa trabalha (§20),12,m,postos,posts,no,
+royal_impulse,,impulso real,royal impulse,ImpulseData,um por dia (§15),16,m,impulsos reais,royal impulses,no,
+greed,,ganância,greed,greed,0–100 por rei (§15),12,f,—,—,no,
+king_wheel,,roda do rei,king's wheel,king_wheel,o único menu dentro do jogo (§24),16,f,—,—,no,Nunca menu.
+verb_drop,,largar moeda,drop a coin,verb_drop,Verbo 1 (§05),16,—,—,—,no,
+verb_assume,,assumir,assume,verb_assume,Verbo 2 (§05),12,—,—,—,no,
+monarch,UNIT_MONARCH,monarca,monarch,monarch,o rei ou a rainha do jogador (§08),12,m/f,monarcas,monarchs,no,
+heir,,herdeiro,heir,heir,sucessor treinado (§15),12,m,herdeiros,heirs,no,feminino: herdeira
+regent,,regente,regent,regent,durante o interregno (§16),12,m/f,regentes,regents,no,
+interregnum,UI_INTERREGNUM,interregno,interregnum,interregnum,sem sucessor (§16),16,m,—,—,no,
+succession,UI_SUCCESSION,sucessão,succession,succession,(§15),12,f,—,—,no,
+fortress,,fortaleza,fortress,fortress,base inimiga conquistável (§13),12,f,fortalezas,fortresses,no,
+trade_route,,rota de comércio,trade route,trade_route,circuito 3 (§06),20,f,rotas de comércio,trade routes,no,
+cart,,carroça,cart,cart,percorre a rota (§06),12,f,carroças,carts,no,
+mercenary,UNIT_MERCENARY,mercenário,mercenary,mercenary,(§14),12,m,mercenários,mercenaries,no,
+debt,,dívida,debt,debt,o único sorvedouro escolhido (§14),12,f,dívidas,debts,no,
+wall,,muralha,wall,WallData,cinco níveis (§10),12,f,muralhas,walls,no,Os níveis têm nome próprio: Estacaria · Paliçada · Muro de pedra · Muralha de ferro · Bastião.
+tower,,torre,tower,archer_tower · high_tower,(§10),12,f,torres,towers,no,
+consecrated_ground,,terreno consagrado,consecrated ground,consecrated,−40% de velocidade da Podridão (§05 §10),20,m,—,—,no,
+dawn,,alvorada,dawn,DAWN,fase 1 (§05),12,f,—,—,no,
+morning,,manhã,morning,MORNING,fase 2 (§05),12,f,—,—,no,
+noon,,meio-dia,noon,NOON,fase 3 (§05),12,m,—,—,no,
+afternoon,,tarde,afternoon,AFTERNOON,fase 4 (§05),12,f,—,—,no,
+dusk,,crepúsculo,dusk,DUSK,fase 5 (§05),12,m,—,—,no,
+night,,noite,night,NIGHT,fase 6 (§05),12,f,—,—,no,
+dawn_bell,CAPTION_DAWN_BELL,sino da manhã,morning bell,dawn_bell,o som mais importante (§23),16,m,—,—,no,
+day_n,DAY_N,Dia %d,Day %d,DAY_N,contador de dias (§27),10,m,—,—,no,Chave inteira com marcador; nunca concatenar.
+root_chamber,SECRET_ROOT_CHAMBER,Câmara de Raiz,Root Chamber,root_chamber,segredo (§17),20,f,Câmaras de Raiz,Root Chambers,no,
+buried_statue,SECRET_BURIED_STATUE,Estátua Enterrada,Buried Statue,buried_statue,segredo-tutorial (§17),20,f,Estátuas Enterradas,Buried Statues,no,
+campaign_journal,SECRET_CAMPAIGN_JOURNAL,Diário de Campanha,Campaign Journal,campaign_journal,12 fragmentos (§17),20,m,Diários de Campanha,Campaign Journals,no,
+ancient_seed,SECRET_ANCIENT_SEED,Semente Anciã,Ancient Seed,ancient_seed,segredo de bioma caótico (§17),16,f,Sementes Anciãs,Ancient Seeds,no,
+chaotic_biome,,bioma caótico,chaotic biome,chaotic,modificador de rota (§17),16,m,biomas caóticos,chaotic biomes,no,
+union,EPILOGUE_UNION,União,Union,union,epílogo (§17),16,f,—,—,no,
+dominion,EPILOGUE_DOMINION,Domínio,Dominion,dominion,epílogo (§17),16,m,—,—,no,
+enramados,PEOPLE_ENRAMADOS,Enramados,Enramados,enramados,povo (§04),16,m,—,—,yes,Nome próprio provisório (NAMING_BIBLE §2).
+portuarios,PEOPLE_PORTUARIOS,Portuários,Portuários,portuarios,povo (§04),16,m,—,—,yes,
+fenda,PEOPLE_FENDA,Fenda,Fenda,fenda,povo (§04),16,f,—,—,yes,
+horta,PEOPLE_HORTA,Horta,Horta,horta,povo (§04),16,f,—,—,yes,
+fornalha,PEOPLE_FORNALHA,Fornalha,Fornalha,fornalha,povo (§04),16,f,—,—,yes,
+sobraiz,PEOPLE_SOBRAIZ,Sob-Raiz,Sob-Raiz,sobraiz,povo (§04),16,m,—,—,yes,
+codename,,Empire,Empire,—,codinome do projeto (§36),—,—,—,—,yes,Nunca em texto de loja; substituir quando houver nome.

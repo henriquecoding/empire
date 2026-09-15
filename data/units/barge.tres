@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_clgi4"]
+
+[resource]
+script = ExtResource("1_clgi4")
+id = &"barge"
+display_key = "UNIT_BARGE"
+people = &"portuarios"
+max_health = 60
+attack_interval = 1.0
+accuracy_open = 1.0
+range_px = 0
+recruit_cost = 14
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 44.0
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 40
+tags = Array[StringName]([&"vehicle", &"transport"])
+coin_capacity = 5
+ability = &"ferry_troops"
+ability_params = {
+&"capacity": 6.0
+}

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CraftData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/craft_data.gd" id="1_dq6ro"]
+
+[resource]
+script = ExtResource("1_dq6ro")
+id = &"fish_saltery"
+display_key = "CRAFT_FISH"
+material = &"fish"
+house = &"saltery"
+cost = 1
+coin_multiplier = 1.5
+capacity_craft = &"cook"
+capacity_kind = &"troop_speed"
+magnitude = 0.1

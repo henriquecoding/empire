@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_2754n"]
+
+[resource]
+script = ExtResource("1_2754n")
+id = &"archer"
+display_key = "UNIT_ARCHER"
+max_health = 14
+damage = 4
+attack_interval = 1.4
+range_px = 200
+targets_bands = Array[int]([1, 0])
+recruit_cost = 3
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"ranged", &"hunter"])
+job_affinity = {
+&"farm": 0.3,
+&"hunt": 1.0,
+&"tower": 1.0,
+&"wall": 1.0
+}
+coin_capacity = 11
+weapon_kind = &"bow"
+head_pool = Array[StringName]([&"hood", &"cap", &"bare"])

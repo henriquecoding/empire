@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MountData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/mount_data.gd" id="1_wb8ej"]
+
+[resource]
+script = ExtResource("1_wb8ej")
+id = &"rot_elk"
+display_key = "MOUNT_ROT_ELK"
+speed_multiplier = 1.6
+ignores_rot_trail = true
+obtain = &"convert"
+obtain_ref = &"bard"
+heal_days = 2

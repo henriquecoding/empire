@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ImpulseData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/impulse_data.gd" id="1_t7xfc"]
+
+[resource]
+script = ExtResource("1_t7xfc")
+id = &"royal_pardon"
+display_key = "IMPULSE_ROYAL_PARDON"
+icon = &"seal"
+coin_cost = 12
+benefit = &"debt_zero"
+benefit_value = 1.0
+drawback = &"favor_zero_and_no_diplomat"
+drawback_value = 1.0
+drawback_days = 5

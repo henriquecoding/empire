@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_ct1j8"]
+
+[resource]
+script = ExtResource("1_ct1j8")
+id = &"fenda"
+display_key = "PEOPLE_FENDA"
+terrain = &"canyon"
+biome = &"canyon"
+architecture_source = "Petra + celeiros dogon da falésia de Bandiagara + aldeias de xisto da Serra da Lousã"
+roof_silhouette = "Não há — a silhueta é o negativo do desfiladeiro"
+landmark = &"carved_gate"
+palette_ramp = &"fenda"
+wall_material = &"rock_shards"
+economy_strength = &"stone_and_ore"
+economy_modifiers = {
+&"ore_yield_mult": 1.5
+}
+defense_trait = &"chokepoint"
+unique_unit = &"counterweight_ram"
+playable_class = &"monarch"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
+starting_buildings = Array[StringName]([&"core"])
+song_texture = "Uma nota longa de gaita-de-foles — Trás-os-Montes, gaita mirandesa"
+colheita_song = "A nota não acaba nunca"
+landmark_roots = true

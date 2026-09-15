@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chapter_data.gd" id="1_opbrc"]
+
+[resource]
+script = ExtResource("1_opbrc")
+id = &"crossroad_souls"
+display_key = "CHAPTER_CROSSROAD_SOULS"
+law_key = "CHAPTER_LAW_CROSSROAD_SOULS"
+inhabitant_key = "CHAPTER_WHO_CROSSROAD_SOULS"
+placement = &"bifurcation"
+detour_seconds = 25.0
+reward_kind = &"ancient_seed"
+folk_root = "alminhas e nichos de estrada"

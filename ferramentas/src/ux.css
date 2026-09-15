@@ -1,0 +1,1401 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   CAMADA DE USO — o dossiê deixa de ser um documento e passa a ser um
+   instrumento. Escrita com a disciplina do Recibo Certo.
+   ---------------------------------------------------------------------
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ ESTA CAMADA NÃO REESCREVE O DOSSIÊ. ACRESCENTA-LHE.                  │
+   │                                                                     │
+   │ Todo o seletor aqui ou é novo (prefixo `x-`) ou é uma correção       │
+   │ medida a um defeito que o portão apanhou — nunca uma questão de      │
+   │ gosto sobre o que já existia. A tipografia, a paleta, a grelha e a   │
+   │ voz do documento são as que estavam. O que muda é o que se pode      │
+   │ FAZER com ele.                                                      │
+   │                                                                     │
+   │ Regra herdada: o modo claro nunca parte. Todos os tokens novos são   │
+   │ definidos primeiro no `:root` nu, e só depois remapeados no escuro — │
+   │ nenhuma cor tem a sua única definição dentro de um `@media`.         │
+   └─────────────────────────────────────────────────────────────────────┘
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Tokens de gráfico — separados dos tokens de marca, de propósito ──
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ PORQUE É QUE UM GRÁFICO NÃO PODE USAR AS CORES DA MARCA             │
+   │                                                                     │
+   │ `--leaf` (#4C7719) e `--ember` (#AE4F16) são lindos lado a lado e    │
+   │ são a MESMA COR para quem tem deuteranopia: ΔE 3,5 em OKLab, quando  │
+   │ o mínimo utilizável é 6 e o alvo é 8. O gráfico de economia usava    │
+   │ os dois — a linha do líquido e a marca da asfixia — e para 1 homem   │
+   │ em cada 12 as duas informações mais importantes do gráfico eram      │
+   │ indistinguíveis.                                                    │
+   │                                                                     │
+   │ Isto não se resolve a olho. Os passos abaixo saíram de procurar,     │
+   │ dentro das MESMAS famílias de matiz do dossiê, a variante mais       │
+   │ próxima do token que passa as seis verificações (banda de            │
+   │ luminosidade, chão de croma, separação sob protanopia e              │
+   │ deuteranopia simuladas, chão de visão normal, contraste ≥ 3:1).      │
+   │ Desvio total: ΔE 9,7 no claro. Vê-se que é a mesma paleta; deixa de  │
+   │ ser a mesma linha.                                                  │
+   │                                                                     │
+   │ Mesmo assim NENHUMA série é só cor: todas levam rótulo direto na     │
+   │ ponta e existe uma vista de tabela. Cor é o reforço, não o dado.     │
+   └─────────────────────────────────────────────────────────────────────┘ */
+:root{
+  --s1:#18719D;   /* petrol de gráfico  — comércio        */
+  --s2:#4A781D;   /* leaf de gráfico    — líquido         */
+  --s3:#6C3D76;   /* rot de gráfico     — custo da noite  */
+  --s-ref:#75705E;/* referência (bruto) — neutro, tracejado */
+
+  --ok:#2F6B33;      --ok-wash:#E4EDDF;
+  --aviso:#8A5A0B;   --aviso-wash:#F6EBD6;
+  --grave:#9A3412;   --grave-wash:#F6E2D8;
+  --parado:#5B5748;  --parado-wash:#E6E2D2;
+
+  --x-raio:3px;
+  --x-alvo:36px;        /* alvo tátil mínimo */
+  --x-sombra:0 1px 2px rgba(20,20,15,.08),0 8px 24px -12px rgba(20,20,15,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --s1:#089BE8; --s2:#81A118; --s3:#B37BB6; --s-ref:#7E7663;
+    --ok:#8FC27A;      --ok-wash:#1D2A17;
+    --aviso:#E0B057;   --aviso-wash:#2C2211;
+    --grave:#E8906A;   --grave-wash:#2E1A12;
+    --parado:#9A9481;  --parado-wash:#22251A;
+    --x-sombra:0 1px 2px rgba(0,0,0,.5),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --s1:#089BE8; --s2:#81A118; --s3:#B37BB6; --s-ref:#7E7663;
+  --ok:#8FC27A;      --ok-wash:#1D2A17;
+  --aviso:#E0B057;   --aviso-wash:#2C2211;
+  --grave:#E8906A;   --grave-wash:#2E1A12;
+  --parado:#9A9481;  --parado-wash:#22251A;
+  --x-sombra:0 1px 2px rgba(0,0,0,.5),0 8px 24px -12px rgba(0,0,0,.7);
+}
+
+/* ─── O piso tipográfico é uma REGRA DE LARGURA, não disciplina ────────
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ 338 SÍTIOS, E NENHUM DELES DAVA ERRO                                 │
+   │                                                                     │
+   │ A medição a 360px encontrou 338 nós de texto abaixo de 12px: 833     │
+   │ `code` a 11,34, 365 células de cabeçalho a 10,5, 158 rótulos de      │
+   │ caixa a NOVE, 102 `h6` a 11. A 1340px são rótulos discretos e        │
+   │ bonitos; a 360 são uma mancha.                                      │
+   │                                                                     │
+   │ Duas famílias, e é por isso que são duas regras:                     │
+   │   · tamanho ABSOLUTO (`.lbl`, `th`, `h6`, `.kicker`) — sobe para 12; │
+   │   · tamanho RELATIVO (`code` a `.84em`, `em`, `b`) — não se corrige  │
+   │     um a um, porque o que os põe pequenos é o PAI. Ganham um chão    │
+   │     com `max()`, e continuam relativos acima dele.                  │
+   │                                                                     │
+   │ Corrigir 338 sítios à mão corrige 338 e não corrige o 339.º.         │
+   └─────────────────────────────────────────────────────────────────────┘ */
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ UM CHÃO QUE TAMBÉM EMPURRAVA PARA BAIXO NÃO É UM CHÃO              │
+   │                                                                   │
+   │ A regra era uma lista de selectores com `font-size:12px!important`.│
+   │ Para os que estavam a 9 ou 10 fez o que devia. Mas dezanove dos    │
+   │ selectores da lista JÁ estavam acima de 12 — e o `!important`      │
+   │ desceu-os. Medido a 360px, com a regra desligada:                  │
+   │                                                                   │
+   │   `td`       16px → 12   (4 002 células: o corpo das tabelas)      │
+   │   `.trk-h`   16,5 → 12   (o cabeçalho do rastreador)               │
+   │   `.mark`    até 18 → 12                                          │
+   │   `label`    até 15 → 12 (o nome de cada uma das 48 mecânicas      │
+   │                           ficava MENOR do que a etiqueta da fase   │
+   │                           ao lado, que subia de 10 para 12 — a     │
+   │                           hierarquia ao contrário)                 │
+   │                                                                   │
+   │ Não há em CSS forma de dizer «pelo menos 12, senão o que era»      │
+   │ sem saber o que era. Por isso a lista passou a ser MEDIDA: ficam   │
+   │ nela os selectores cujas instâncias estão TODAS abaixo de 12, e    │
+   │ saem os que já estavam acima. Os que tinham instâncias dos dois    │
+   │ lados (`label`, `.mark`, `h6`, `td`) saíram e voltam pelo contexto │
+   │ estreito de cada um, se o portão os apanhar abaixo do piso.        │
+   └───────────────────────────────────────────────────────────────────┘ */
+@media (max-width:700px){
+  .sec-no,.part-no,.tag,.ramp-lbl,.chapline .meta,.meta,
+  .lbl,.kicker,th,figcaption,kbd,
+  nav.toc .grp,.tools button,.trk-f,.ph,
+  .x-mini,.x-kbd,.x-grp-n,.x-item-s,.x-porque,
+  .x-inv-id,.x-res-cab,.x-chip-btn,.x-rec-lbl,
+  .x-grupo,.x-coroa-lbl,.x-parte-id,
+  .sw-hex,.x-inv-vazio,
+  .x-seg-rot,.x-alvo-selo,.x-torn-h,
+  .lg,.lg span,.pal-h,.pal-h span,nav.toc .x-grp-btn,.trk li label span,
+  .sim-ctl label,.cell h6{
+    font-size:12px!important;line-height:1.45;
+  }
+  /* Numa matriz que desliza, o corpo compacta-se DE PROPÓSITO — mais
+     colunas por gesto — mas acima do piso, e por escolha e não por
+     efeito colateral de uma régua que apanhava `td` no meio. */
+  .tw[data-modo="rola"] tbody td,
+  .tw[data-modo="rola"] thead th{font-size:13px!important}
+  nav.toc .grp{letter-spacing:.1em}
+  /* Os relativos: chão de 12px, e relativos acima dele. */
+  code,samp,small,.n,.c,.k,.s{font-size:max(12px,.84em)!important}
+  /* O texto dentro de um SVG mede-se em unidades de utilizador: as
+     figuras são redesenhadas à largura real (1 unidade = 1 px), por isso
+     12 aqui são 12 no ecrã. */
+  svg text{font-size:12px}
+}
+/* Fora do telemóvel o eixo continua discreto, mas nunca abaixo de 12 —
+   um gráfico ilegível não é um gráfico. */
+.x-eixo{font-size:12px}
+
+/* ─── Saltar para o conteúdo ─────────────────────────────────────────── */
+.x-salto{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  background:var(--ink);color:var(--ground);padding:12px 18px;
+  font-family:var(--f-mono);font-size:13px;border-radius:0 0 var(--x-raio) 0;
+}
+.x-salto:focus{left:0}
+
+/* ═══ 1 · A BARRA DE CONTEXTO ══════════════════════════════════════════
+   Onde estou, num documento de 85 secções. A barra de progresso do
+   dossiê diz QUANTO falta; não diz ONDE se está. */
+.x-ctx{
+  position:fixed;top:3px;left:0;right:0;z-index:55;
+  display:flex;align-items:center;gap:10px;
+  padding:0 14px;height:0;overflow:hidden;
+  background:color-mix(in srgb,var(--ground) 92%,transparent);
+  backdrop-filter:saturate(1.4) blur(9px);
+  -webkit-backdrop-filter:saturate(1.4) blur(9px);
+  border-bottom:1px solid transparent;
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  transition:height .18s ease,border-color .18s ease;
+}
+.x-ctx.on{height:42px;border-bottom-color:var(--line)}
+.x-ctx b{color:var(--ink);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-ctx .x-ctx-parte{color:var(--ember);white-space:nowrap;flex:0 0 auto}
+.x-ctx .x-ctx-sep{opacity:.5;flex:0 0 auto}
+.x-ctx-nav{margin-left:auto;display:flex;gap:4px;flex:0 0 auto}
+.x-ctx-nav a{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:var(--x-alvo);height:var(--x-alvo);
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  color:var(--ink-2);text-decoration:none;background:var(--surface);
+}
+.x-ctx-nav a:hover{border-color:var(--petrol);color:var(--petrol)}
+.x-ctx-nav a[aria-disabled="true"]{opacity:.35;pointer-events:none}
+@media (max-width:960px){ .x-ctx.on{height:40px} .x-ctx-nav{display:none} }
+
+/* ═══ 1b · A COLUNA LATERAL — campo fixo, índice a rolar ═══════════════
+   O `nav.toc` do dossiê é `position:sticky` com `overflow-y:auto`: o
+   índice inteiro rola dentro dele. Com o campo de pesquisa lá dentro, o
+   campo rolava com o índice e desaparecia. A coluna passa a ser a peça
+   fixa; o índice é o que rola dentro dela. */
+.x-lado{
+  position:sticky;top:0;align-self:start;
+  display:flex;flex-direction:column;gap:0;
+  max-height:100dvh;padding-block:40px 24px;min-width:0;
+}
+.x-lado>nav.toc{
+  position:static;max-height:none;padding-block:0;
+  flex:1 1 auto;min-height:0;overflow-y:auto;
+}
+@media (max-width:960px){
+  .x-lado{position:static;max-height:none;padding-block:0;display:block}
+  .x-lado>nav.toc{overflow:visible;border-bottom:0}
+}
+
+/* ═══ 2 · A PESQUISA ═══════════════════════════════════════════════════
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ É UMA REGIÃO, NÃO UM DIÁLOGO                                         │
+   │                                                                     │
+   │ Sem véu, sem `aria-modal`, sem foco preso, sem portal. O documento   │
+   │ continua legível por baixo e continua clicável. A regra vem da       │
+   │ `moldura.tsx` do Recibo Certo e existe porque uma pesquisa dentro    │
+   │ de um documento é uma FERRAMENTA DE LEITURA: prender a pessoa numa   │
+   │ camada por cima do que ela está a ler inverte a relação.             │
+   └─────────────────────────────────────────────────────────────────────┘ */
+.x-busca{position:relative;margin-bottom:18px}
+/* +2px de borda: o alvo é a caixa, mas quem o portão mede é o `input`
+   lá dentro — a 36px de caixa o campo media 34 e reprovava. */
+.x-campo{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  background:var(--surface);padding:0 10px;min-height:calc(var(--x-alvo) + 2px);
+}
+.x-campo input{min-height:var(--x-alvo)}
+.x-campo:focus-within{border-color:var(--petrol);box-shadow:0 0 0 3px color-mix(in srgb,var(--petrol) 18%,transparent)}
+.x-campo svg{flex:0 0 auto;color:var(--muted)}
+.x-campo input{
+  flex:1;min-width:0;border:0;background:none;outline:none;
+  font-family:var(--f-mono);font-size:13px;color:var(--ink);padding:0;height:100%;
+}
+.x-campo input::placeholder{color:var(--muted)}
+/* O Chromium desenha o seu próprio ✕ nos campos `type=search`, e ficavam
+   dois lado a lado — um azul do motor e o meu. Fica o meu, que sabe o
+   que fazer a seguir (limpar, redesenhar e devolver o foco). */
+.x-campo input[type=search]::-webkit-search-cancel-button,
+.x-inv-busca input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.x-kbd{
+  font-family:var(--f-mono);font-size:11px;color:var(--muted);
+  border:1px solid var(--line);border-radius:2px;padding:1px 5px;background:var(--ground);
+  flex:0 0 auto;white-space:nowrap;
+}
+.x-campo button.x-limpar{
+  flex:0 0 auto;width:26px;height:26px;display:none;align-items:center;justify-content:center;
+  border:0;background:none;color:var(--muted);cursor:pointer;border-radius:2px;
+}
+.x-campo.tem button.x-limpar{display:inline-flex}
+.x-campo button.x-limpar:hover{color:var(--ink);background:var(--surface-2)}
+
+/* A coluna do índice tem 250px. Os resultados precisam de mais do que
+   isso para uma frase caber numa linha, e como esta região não tem véu
+   nem prende o foco, pode simplesmente ser mais larga do que a coluna e
+   pousar sobre o texto — que continua lá, visível e clicável. */
+@media (min-width:961px){
+  .x-res{width:min(440px,calc(100vw - 60px))}
+}
+.x-res{
+  margin-top:8px;border:1px solid var(--line);border-radius:var(--x-raio);
+  background:var(--surface);box-shadow:var(--x-sombra);
+  max-height:min(62vh,520px);overflow-y:auto;overscroll-behavior:contain;
+}
+.x-res[hidden]{display:none}
+.x-res-cab{
+  position:sticky;top:0;z-index:2;background:var(--sunk);
+  border-bottom:1px solid var(--line);padding:8px 11px;
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.x-res-cab b{color:var(--ink);font-weight:500}
+.x-grupo{
+  font-family:var(--f-px);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ember);padding:12px 11px 5px;
+}
+.x-res ol{list-style:none;margin:0;padding:0;max-width:none}
+.x-res li{margin:0}
+.x-item{
+  display:block;padding:9px 11px;text-decoration:none;color:var(--ink);
+  border-left:2px solid transparent;min-height:var(--x-alvo);
+}
+.x-item:hover{background:var(--ground)}
+.x-item[aria-selected="true"]{background:var(--ground);border-left-color:var(--petrol)}
+.x-item-t{display:flex;align-items:baseline;gap:8px;font-size:14.5px;line-height:1.3}
+.x-item-t .x-id{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);flex:0 0 auto;
+  font-variant-numeric:tabular-nums;
+}
+.x-item-t em{font-style:normal;background:color-mix(in srgb,var(--petrol) 22%,transparent);border-radius:2px;padding:0 1px}
+.x-item-s{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:3px;
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+}
+.x-porque{color:var(--muted);opacity:.85}
+.x-coroa{
+  margin:0;padding:11px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,var(--petrol-wash),var(--surface));
+}
+.x-coroa .x-coroa-lbl{
+  font-family:var(--f-px);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--petrol);display:block;margin-bottom:6px;
+}
+.x-vazio{padding:16px 12px;font-size:14px;color:var(--ink-2);max-width:none}
+.x-vazio p{max-width:none;margin:0 0 9px;font-size:14px}
+.x-vazio ul{max-width:none;margin:0;padding-left:18px;font-size:13.5px;color:var(--muted)}
+.x-exemplos{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.x-recentes{padding:10px 11px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line-soft)}
+.x-recentes .x-rec-lbl{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-right:2px}
+.x-chip-btn{
+  font-family:var(--f-mono);font-size:12px;padding:0 9px;min-height:30px;
+  display:inline-flex;align-items:center;
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  background:var(--ground);color:var(--ink-2);cursor:pointer;
+}
+.x-chip-btn:hover{border-color:var(--petrol);color:var(--petrol)}
+.x-chip-btn.x-apagar{margin-left:auto;color:var(--muted)}
+.x-filtros{display:flex;gap:5px;flex-wrap:wrap;padding:9px 11px;border-bottom:1px solid var(--line-soft)}
+.x-filtro{
+  font-family:var(--f-mono);font-size:12px;padding:0 9px;min-height:30px;
+  display:inline-flex;align-items:center;gap:5px;
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  background:var(--ground);color:var(--ink-2);cursor:pointer;
+}
+.x-filtro[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.x-filtro .x-n{font-variant-numeric:tabular-nums;opacity:.7}
+
+/* ═══ 3 · ÍNDICE — grupos que dobram ═══════════════════════════════════ */
+nav.toc .x-grp-btn{
+  display:flex;align-items:center;gap:7px;width:100%;
+  font-family:var(--f-px);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ember);background:none;border:0;cursor:pointer;
+  padding:9px 9px 6px;margin:10px 0 0;text-align:left;min-height:var(--x-alvo);
+  border-radius:var(--x-raio);
+}
+nav.toc .x-grp-btn:hover{background:var(--surface)}
+nav.toc .x-grp-btn .x-caret{
+  flex:0 0 auto;transition:transform .16s ease;color:var(--muted);
+}
+nav.toc .x-grp-btn[aria-expanded="false"] .x-caret{transform:rotate(-90deg)}
+nav.toc .x-grp-btn .x-grp-n{margin-left:auto;color:var(--muted);font-family:var(--f-mono);letter-spacing:0}
+/* 32px é confortável com um ponteiro e impossível com um polegar. A
+   régua muda com o dispositivo, e por isso a altura também. */
+/* 28px em vez de 32: com 86 secções, cada 4px valem mais duas linhas
+   visíveis. O piso de toque continua a ser 36 e está na regra abaixo —
+   a densidade é do rato, nunca do polegar. */
+nav.toc a{min-height:28px;align-items:center}
+@media (max-width:960px){ nav.toc a{min-height:var(--x-alvo)} }
+nav.toc a.x-visto .n{color:var(--leaf)}
+nav.toc .x-conta{margin-left:auto;font-size:10px;color:var(--muted)}
+nav.toc ol[hidden]{display:none}
+.x-toc-filtro{margin:0 0 10px}
+.x-toc-vazio{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:8px 9px}
+
+/* ═══ 4 · O DOCK MÓVEL ═════════════════════════════════════════════════
+   Abaixo de 960px o índice do dossiê era uma grelha de 86 ligações NO
+   TOPO da página: para chegar à primeira linha de texto havia que passar
+   o índice inteiro. Passa a ser uma folha, chamada por um dock — o mesmo
+   desenho que o Recibo Certo usa no telemóvel. */
+.x-dock{display:none}
+@media (max-width:960px){
+  .x-dock{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;
+    background:color-mix(in srgb,var(--ground) 94%,transparent);
+    backdrop-filter:saturate(1.4) blur(10px);
+    -webkit-backdrop-filter:saturate(1.4) blur(10px);
+    border-top:1px solid var(--line);
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
+    gap:4px;
+  }
+  .x-dock button{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:var(--x-alvo);padding:5px 2px;border:0;background:none;cursor:pointer;
+    font-family:var(--f-mono);font-size:12px;color:var(--ink-2);border-radius:var(--x-raio);
+  }
+  .x-dock button[aria-expanded="true"]{background:var(--surface);color:var(--petrol)}
+  .x-dock button svg{flex:0 0 auto}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
+
+  /* A folha */
+  .x-folha{
+    position:fixed;left:0;right:0;bottom:0;z-index:69;
+    background:var(--surface);border-top:1px solid var(--line);
+    border-radius:12px 12px 0 0;box-shadow:0 -8px 40px -16px rgba(0,0,0,.4);
+    display:flex;flex-direction:column;
+    max-height:90dvh;
+    padding-bottom:calc(58px + env(safe-area-inset-bottom,0px));
+    transform:translateY(101%);transition:transform .22s cubic-bezier(.16,1,.3,1);
+  }
+  .x-folha.on{transform:translateY(0)}
+  .x-folha[hidden]{display:none}
+  .x-folha-cab{
+    flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    padding:10px 14px;border-bottom:1px solid var(--line);
+  }
+  .x-folha-cab h2{
+    font-family:var(--f-px);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ember);margin:0;font-weight:400;
+  }
+  .x-folha-cab button{
+    margin-left:auto;min-width:var(--x-alvo);min-height:var(--x-alvo);
+    border:1px solid var(--line);background:var(--ground);color:var(--ink-2);
+    border-radius:var(--x-raio);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .x-folha-corpo{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px 20px}
+  .x-folha-corpo nav.toc{position:static;max-height:none;border:0;padding:0;overflow:visible}
+  /* Uma calha dentro de outra calha: o polegar nunca sabe qual está a
+     mover. Dentro da folha, quem rola é a folha. */
+  .x-folha-corpo .x-res{max-height:none;overflow:visible;box-shadow:none}
+  .x-folha-corpo nav.toc ol{display:flex;flex-direction:column}
+  /* O índice sai do topo do documento: no telemóvel vive na folha. */
+  .shell>nav.toc{display:none}
+  .x-ctx{top:0}
+}
+@media (min-width:961px){ .x-folha{display:none!important} }
+@media (prefers-reduced-motion:reduce){ .x-folha{transition:none} }
+
+/* ═══ 5 · ÂNCORAS DE TÍTULO ════════════════════════════════════════════ */
+.x-anc{
+  opacity:0;margin-left:8px;color:var(--muted);text-decoration:none;
+  font-family:var(--f-mono);font-size:.62em;vertical-align:middle;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:28px;min-height:28px;border-radius:var(--x-raio);
+}
+h3:hover .x-anc,h4:hover .x-anc,h5:hover .x-anc,.x-anc:focus-visible{opacity:1}
+.x-anc:hover{color:var(--petrol);background:var(--surface)}
+/* No toque a âncora desaparece: são 473 alvos de 28px que existem para
+   copiar uma ligação — um gesto de secretária. Escondê-la é mais honesto
+   do que engordá-la até 36 e empurrar todos os títulos do documento. */
+@media (hover:none){ .x-anc{display:none} }
+@media (hover:hover){ .x-anc{min-width:36px;min-height:36px} }
+
+/* ═══ 6 · REFERÊNCIAS §NN — ligação + pré-visualização ═════════════════ */
+a.x-ref{
+  color:var(--petrol);text-decoration:none;
+  border-bottom:1px dotted color-mix(in srgb,var(--petrol) 55%,transparent);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+a.x-ref:hover,a.x-ref:focus-visible{border-bottom-style:solid;background:var(--petrol-wash)}
+.x-peek{
+  position:absolute;z-index:80;max-width:min(360px,88vw);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--x-raio);
+  box-shadow:var(--x-sombra);padding:11px 13px;
+  font-family:var(--f-body);font-size:14px;line-height:1.45;color:var(--ink-2);
+  pointer-events:none;
+}
+.x-peek[hidden]{display:none}
+.x-peek .x-peek-n{
+  font-family:var(--f-px);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--petrol);display:block;margin-bottom:5px;
+}
+.x-peek b{display:block;color:var(--ink);font-family:var(--f-display);font-size:16px;
+  font-weight:700;line-height:1.2;margin-bottom:5px}
+@media (max-width:700px){ .x-peek{display:none} }
+
+/* ═══ 7 · GLOSSÁRIO ════════════════════════════════════════════════════ */
+button.x-termo{
+  /* Pedimos `inline`; o motor devolve `inline-block`, porque os botões
+     são blockificados e nenhuma folha de estilo o desfaz. Fica pedido na
+     mesma — a intenção é essa — e o portão passa a reconhecer a excepção
+     de texto corrido pelo CONTEXTO (uma palavra entre palavras) e não
+     pelo valor de `display`, que aqui mente. */
+  display:inline;
+  font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
+  border-bottom:1px dashed color-mix(in srgb,var(--ember) 60%,transparent);
+}
+button.x-termo:hover,button.x-termo:focus-visible{
+  border-bottom-style:solid;border-bottom-color:var(--ember);
+}
+.x-dica{
+  position:absolute;z-index:82;max-width:min(320px,86vw);
+  background:var(--ink);color:var(--ground);border-radius:var(--x-raio);
+  padding:9px 12px;font-family:var(--f-body);font-size:13.5px;line-height:1.45;
+  box-shadow:var(--x-sombra);
+}
+.x-dica[hidden]{display:none}
+.x-dica b{color:var(--ground);display:block;font-family:var(--f-mono);font-size:12px;
+  letter-spacing:.04em;text-transform:uppercase;opacity:.75;margin-bottom:4px;font-weight:500}
+
+/* ═══ 8 · PAINÉIS NOVOS (estado, inventário, gráficos) ═════════════════ */
+.x-painel{margin:26px 0}
+.x-cartoes{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));
+  gap:10px;margin:0 0 22px;
+}
+/* Seis cartões numa grelha automática dão cinco e um órfão. Três por
+   linha dão duas linhas cheias — e espaço para o selo não partir. */
+@media (min-width:700px){ .x-cartoes{grid-template-columns:repeat(3,1fr)} }
+.x-cartao{
+  border:1px solid var(--line);border-radius:var(--x-raio);background:var(--surface);
+  padding:13px 14px;min-width:0;
+}
+.x-cartao .x-k{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);display:block;margin-bottom:6px;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.x-cartao .x-v{
+  font-family:var(--f-display);font-variation-settings:'opsz' 48;
+  font-weight:800;font-size:clamp(26px,5vw,34px);line-height:1;color:var(--ink);
+  font-variant-numeric:tabular-nums;display:block;letter-spacing:-.02em;
+}
+.x-cartao .x-v small{font-size:.44em;font-weight:600;color:var(--muted);margin-left:4px;letter-spacing:0}
+.x-cartao .x-meta{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);margin:7px 0 0;line-height:1.4;
+  max-width:none;
+}
+
+/* Estado — cor NUNCA sozinha: sempre ícone + palavra. */
+.x-estado{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--f-mono);font-size:12px;padding:2px 7px;border-radius:var(--x-raio);
+  border:1px solid currentColor;max-width:100%;
+}
+.x-estado svg{flex:0 0 auto}
+.x-estado.ok{color:var(--ok);background:var(--ok-wash)}
+.x-estado.aviso{color:var(--aviso);background:var(--aviso-wash)}
+.x-estado.grave{color:var(--grave);background:var(--grave-wash)}
+.x-estado.parado{color:var(--parado);background:var(--parado-wash)}
+
+/* Proveniência — nenhum número no ecrã sem ela. */
+.x-prov{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);line-height:1.5;
+  margin:10px 0 0;max-width:var(--measure);
+}
+.x-prov b{color:var(--ink-2);font-weight:500}
+
+/* Figuras */
+figure.x-fig{margin:22px 0;padding:0;max-width:none}
+/* `overflow:visible` deixava os rótulos do relógio saírem da caixa e o
+   recorte da janela cortava-os. As figuras são redesenhadas à largura
+   real, portanto nada precisa de sair. */
+figure.x-fig svg{display:block;width:100%;height:auto;overflow:hidden}
+figure.x-fig .x-fig-linhas{display:flex;flex-direction:column;gap:6px}
+figure.x-fig .x-fig-linha{
+  display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;
+  padding:7px 10px;border:1px solid var(--line);border-radius:var(--x-raio);background:var(--surface);
+}
+figure.x-fig .x-fig-linha i{width:26px;height:26px;border-radius:2px;border:1px solid var(--line);display:block}
+figure.x-fig .x-fig-linha b{font-weight:600;font-size:14.5px}
+figure.x-fig .x-fig-linha span{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+figure.x-fig figcaption{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);line-height:1.5;
+  margin-top:9px;max-width:var(--measure);
+}
+.x-legenda{
+  display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 10px;
+  font-family:var(--f-mono);font-size:12px;color:var(--ink-2);
+}
+.x-legenda span{display:inline-flex;align-items:center;gap:6px}
+.x-legenda i{width:14px;height:3px;border-radius:2px;display:inline-block;flex:0 0 auto}
+.x-legenda i.tracejado{background:none;border-top:2px dashed var(--s-ref);height:0}
+.x-eixo{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+.x-grelha{stroke:var(--line);stroke-width:1}
+.x-zero{stroke:var(--ink-2);stroke-width:1;opacity:.55}
+
+/* Vista de tabela — o alívio obrigatório de qualquer gráfico */
+.x-tab-toggle{
+  font-family:var(--f-mono);font-size:12px;min-height:var(--x-alvo);padding:0 11px;
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+}
+.x-tab-toggle:hover{border-color:var(--petrol);color:var(--petrol)}
+.x-tabela-vista[hidden]{display:none}
+.x-tabela-vista{margin-top:12px;overflow-x:auto}
+
+/* Tooltip de gráfico */
+.x-tip{
+  position:absolute;z-index:60;pointer-events:none;
+  background:var(--ink);color:var(--ground);border-radius:var(--x-raio);
+  padding:8px 11px;font-family:var(--f-mono);font-size:12px;line-height:1.5;
+  box-shadow:var(--x-sombra);white-space:nowrap;
+}
+.x-tip[hidden]{display:none}
+.x-tip b{color:var(--ground);font-weight:600}
+.x-tip .x-tip-l{display:flex;align-items:center;gap:6px;margin-top:3px}
+.x-tip .x-tip-l i{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+.x-tip .x-tip-v{margin-left:auto;padding-left:10px;font-variant-numeric:tabular-nums}
+
+/* ═══ 9 · INVENTÁRIO ═══════════════════════════════════════════════════ */
+.x-inv-ctl{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px;
+}
+.x-inv-busca{
+  display:flex;align-items:center;gap:7px;flex:1 1 200px;min-width:0;
+  border:1px solid var(--line);border-radius:var(--x-raio);background:var(--surface);
+  padding:0 10px;min-height:calc(var(--x-alvo) + 2px);
+}
+.x-inv-busca input{min-height:var(--x-alvo);
+  flex:1;min-width:0;border:0;background:none;outline:none;height:100%;
+  font-family:var(--f-mono);font-size:13px;color:var(--ink);
+}
+.x-inv-lista{list-style:none;margin:0;padding:0;max-width:none;
+  border:1px solid var(--line);border-radius:var(--x-raio);overflow:hidden}
+.x-inv-lista li{
+  margin:0;padding:11px 13px;border-bottom:1px solid var(--line-soft);
+  display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:start;background:var(--surface);
+}
+.x-inv-lista li:last-child{border-bottom:0}
+.x-inv-lista li:nth-child(even){background:var(--ground)}
+.x-inv-id{
+  font-family:var(--f-mono);font-size:12.5px;color:var(--petrol);font-variant-numeric:tabular-nums;
+  grid-row:1;white-space:nowrap;
+}
+.x-inv-t{font-size:15px;line-height:1.4;color:var(--ink);grid-row:1;min-width:0;overflow-wrap:anywhere}
+.x-inv-m{
+  grid-column:2;font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  display:flex;gap:6px 12px;flex-wrap:wrap;align-items:center;line-height:1.5;
+  /* Um caminho como `docs/adr/0011-noite-castanha.md` não tem onde
+     partir e empurrava a linha inteira 47px para fora da coluna. */
+  min-width:0;overflow-wrap:anywhere;
+}
+.x-inv-m>span{min-width:0;overflow-wrap:anywhere}
+.x-inv-lista li{min-width:0}
+.x-inv-m a.x-ref{
+  display:inline-flex;align-items:center;min-height:var(--x-alvo);padding:0 9px;
+  border:1px solid var(--line);border-radius:var(--x-raio);border-bottom-style:solid;
+  background:var(--ground);text-decoration:none;
+}
+.x-inv-vazio{padding:22px 14px;text-align:center;color:var(--muted);font-family:var(--f-mono);font-size:13px}
+@media (max-width:520px){
+  .x-inv-lista li{grid-template-columns:1fr}
+  .x-inv-id{grid-row:auto}
+  .x-inv-t{grid-row:auto}
+  .x-inv-m{grid-column:1}
+}
+
+/* ═══ 10 · ATALHOS ═════════════════════════════════════════════════════ */
+.x-ajuda{
+  position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
+  padding:16px;background:color-mix(in srgb,var(--ink) 42%,transparent);
+}
+.x-ajuda[hidden]{display:none}
+.x-ajuda-cx{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--x-raio);
+  box-shadow:var(--x-sombra);max-width:460px;width:100%;
+  max-height:90dvh;display:flex;flex-direction:column;
+}
+.x-ajuda-cab{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.x-ajuda-cab h2{font-family:var(--f-display);font-size:20px;margin:0;font-weight:700;color:var(--ink)}
+.x-ajuda-cab button{
+  margin-left:auto;min-width:var(--x-alvo);min-height:var(--x-alvo);
+  border:1px solid var(--line);background:var(--ground);color:var(--ink-2);
+  border-radius:var(--x-raio);cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.x-ajuda-corpo{padding:8px 16px 16px;overflow-y:auto;min-height:0;flex:1 1 auto}
+.x-ajuda-corpo dl{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;margin:10px 0 0;align-items:center}
+.x-ajuda-corpo dt{font-family:var(--f-mono);font-size:12px;text-align:right}
+.x-ajuda-corpo dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.x-ajuda-corpo kbd{
+  font-family:var(--f-mono);font-size:12px;border:1px solid var(--line);border-bottom-width:2px;
+  border-radius:3px;padding:2px 6px;background:var(--ground);color:var(--ink);white-space:nowrap;
+}
+
+/* ═══ 11 · DESTAQUE DE CHEGADA ═════════════════════════════════════════
+   Quem salta de uma pesquisa para o meio de um documento de 85 secções
+   precisa de saber ONDE aterrou. */
+@keyframes x-piscar{
+  0%{background:color-mix(in srgb,var(--ember) 34%,transparent)}
+  100%{background:transparent}
+}
+.x-aterrou{animation:x-piscar 1.5s ease-out 1;border-radius:var(--x-raio)}
+@media (prefers-reduced-motion:reduce){
+  .x-aterrou{animation:none;outline:2px solid var(--ember);outline-offset:3px}
+}
+
+/* Voltar para onde estava */
+.x-voltar{
+  position:fixed;z-index:58;left:50%;transform:translateX(-50%);
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  display:inline-flex;align-items:center;gap:7px;min-height:var(--x-alvo);padding:0 14px;
+  background:var(--ink);color:var(--ground);border:0;border-radius:var(--x-raio);
+  font-family:var(--f-mono);font-size:12.5px;cursor:pointer;box-shadow:var(--x-sombra);
+}
+.x-voltar[hidden]{display:none}
+.x-voltar:hover{background:var(--ink-2)}
+@media (max-width:960px){ .x-voltar{bottom:calc(70px + env(safe-area-inset-bottom,0px))} }
+
+/* ═══ 12 · CORREÇÕES MEDIDAS AO QUE JÁ EXISTIA ═════════════════════════
+   Cada uma tem um defeito por trás que o portão apanhou. Nenhuma é gosto. */
+
+/* ─── AS 123 TABELAS ──────────────────────────────────────────────────
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ A CAMADA QUE CORRIGIU AS TABELAS FOI ANULADA PELA QUE VEIO A SEGUIR  │
+   │                                                                     │
+   │ A passagem anterior pôs `.tw{overflow-x:auto}` e uma etiqueta        │
+   │ «→ desliza». A camada de DESENHO, que entra depois, pôs              │
+   │ `.tw{overflow:hidden}` para arredondar os cantos do cartão — e o     │
+   │ atalho `overflow` escreve OS DOIS EIXOS. As 123 tabelas perderam a   │
+   │ rolagem e passaram a cortar em silêncio; a etiqueta «→ desliza»,     │
+   │ que se posiciona com `sticky; left:100%`, ficou do lado de lá do     │
+   │ corte. Medido: **103 das 123 não cabem a 360px**, e todas tinham     │
+   │ `overflow-x: hidden`.                                               │
+   │                                                                     │
+   │ Nenhum portão apanhou, e a razão importa: o portão do telemóvel      │
+   │ procura conteúdo cortado PELA JANELA e isenta as caixas que assumem  │
+   │ a rolagem. Uma caixa com `overflow:hidden` não corta pela janela —   │
+   │ corta sozinha, dentro dos seus limites, e por isso não aparecia em   │
+   │ lado nenhum. É a mesma família da lição do achado A-2, e passou a    │
+   │ ser medida (ver `verificar-dossie.mjs`, verificação 8).             │
+   │                                                                     │
+   │ A correcção separa dois papéis que nunca deviam ter sido o mesmo     │
+   │ elemento: `.tw` é o CARTÃO — raio, sombra, e o `overflow:hidden`     │
+   │ que arredonda — e `.x-rolo`, dentro dele, é o SCROLLER.             │
+   └─────────────────────────────────────────────────────────────────────┘ */
+.tw{position:relative;max-width:100%}
+.x-rolo{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+
+/* A sombra de borda: aparece só do lado para onde ainda há conteúdo, e
+   é uma SOMBRA e não um esbatimento da cor do cartão — por baixo dela
+   passam linhas com zebra, e um véu da cor da superfície por cima de uma
+   linha escurecida lê-se como um defeito de pintura. */
+.tw::before,.tw::after{
+  content:"";position:absolute;inset-block:0;inline-size:30px;
+  pointer-events:none;opacity:0;transition:opacity .16s ease;z-index:2;
+}
+.tw::before{inset-inline-start:0;background:linear-gradient(to right,rgba(20,20,15,.30),rgba(20,20,15,.06) 55%,transparent)}
+.tw::after{inset-inline-end:0;background:linear-gradient(to left,rgba(20,20,15,.30),rgba(20,20,15,.06) 55%,transparent)}
+:root[data-theme="dark"] .tw::before,:root:not([data-theme="light"]) .tw::before{background:linear-gradient(to right,rgba(0,0,0,.62),rgba(0,0,0,.14) 55%,transparent)}
+:root[data-theme="dark"] .tw::after,:root:not([data-theme="light"]) .tw::after{background:linear-gradient(to left,rgba(0,0,0,.62),rgba(0,0,0,.14) 55%,transparent)}
+.tw[data-rola-esq="1"]::before{opacity:1}
+.tw[data-rola-dir="1"]::after{opacity:1}
+@media (prefers-reduced-motion:reduce){.tw::before,.tw::after{transition:none}}
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ E UMA PALAVRA, NO SÍTIO ONDE O OLHO JÁ ESTÁ                        │
+   │                                                                   │
+   │ Uma sombra é uma convenção, e nem toda a gente a conhece. A        │
+   │ primeira versão pôs «desliza →» no canto INFERIOR do scroller —    │
+   │ que numa tabela de 515px de altura fica três ecrãs abaixo do sítio │
+   │ onde a pessoa percebe que falta coluna. Quem chega a uma tabela vê │
+   │ o cabeçalho cortado à direita: é aí que o aviso tem de estar.      │
+   │                                                                   │
+   │ Vive em `.tw`, que não rola — por isso fica no canto, e não        │
+   │ viaja com o conteúdo — e desaparece assim que se chega ao fim.     │
+   └───────────────────────────────────────────────────────────────────┘ */
+.x-tw-desliza{
+  position:absolute;inset-block-start:0;inset-inline-end:0;z-index:3;
+  display:none;pointer-events:none;
+  font-family:var(--f-mono);font-size:12px;line-height:1;
+  color:var(--ink-2);background:color-mix(in srgb,var(--sunk) 88%,var(--surface));
+  padding:8px 9px 8px 12px;
+  border-start-end-radius:var(--r-md,3px);
+  border-inline-start:1px solid var(--line);
+  border-block-end:1px solid var(--line);
+}
+.tw[data-modo="rola"][data-rola-dir="1"] .x-tw-desliza{display:block}
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ E ROLAR NÃO CHEGA — UMA TABELA DE FICHA NÃO SE LÊ DE LADO          │
+   │                                                                   │
+   │ Das 103 que não cabem, 88 têm quatro colunas ou menos e células    │
+   │ com prosa: são fichas — «nome · valor · o que isso quer dizer» —   │
+   │ e uma ficha lê-se de cima a baixo. Obrigar a deslizar para ver a   │
+   │ terceira coluna de cada linha é pedir seis gestos para ler cinco   │
+   │ factos.                                                           │
+   │                                                                   │
+   │ Essas empilham: cada linha passa a ser um bloco, a primeira        │
+   │ célula é o título dele, e as outras levam o nome da coluna por     │
+   │ cima. As restantes — matrizes de números com cinco a oito colunas  │
+   │ — deslizam, porque aí a comparação entre linhas é o conteúdo e     │
+   │ empilhar destruía-a.                                              │
+   │                                                                   │
+   │ A escolha é MEDIDA, não escrita: a largura mínima real de cada     │
+   │ tabela contra a largura que ela tem. Uma tabela que caiba não é    │
+   │ tocada, num telemóvel ou num ecrã grande.                         │
+   └───────────────────────────────────────────────────────────────────┘ */
+.x-td-rot{display:none}
+.tw[data-modo="empilha"] .x-rolo{overflow-x:visible}
+.tw[data-modo="empilha"] thead{
+  position:absolute;inline-size:1px;block-size:1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;
+}
+.tw[data-modo="empilha"] table,
+.tw[data-modo="empilha"] tbody,
+.tw[data-modo="empilha"] tr,
+.tw[data-modo="empilha"] td{display:block;inline-size:auto}
+.tw[data-modo="empilha"] tbody tr{
+  padding:14px 16px 16px;border-block-end:1px solid var(--line);
+}
+.tw[data-modo="empilha"] tbody tr:last-child{border-block-end:0}
+.tw[data-modo="empilha"] tbody td{
+  padding:0;border:0;font-size:15px;line-height:1.5;
+}
+.tw[data-modo="empilha"] tbody td:empty{display:none}
+/* A primeira célula é o assunto da linha: é o título do bloco, e o nome
+   da coluna dela seria ruído por cima de uma coisa que já se percebe. */
+.tw[data-modo="empilha"] tbody td:first-child{
+  font-weight:600;font-size:16px;line-height:1.35;color:var(--ink);
+  margin-block-end:2px;
+}
+.tw[data-modo="empilha"] tbody td:first-child .x-td-rot{display:none}
+.tw[data-modo="empilha"] tbody td+td{margin-block-start:9px}
+.tw[data-modo="empilha"] .x-td-rot{
+  display:block;font-family:var(--f-px);font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-block-end:1px;
+}
+/* `white-space:nowrap` nas colunas numéricas existe para as alinhar numa
+   grelha. Empilhado não há grelha, e o nowrap só serve para estourar. */
+.tw[data-modo="empilha"] th.n,.tw[data-modo="empilha"] td.n{
+  white-space:normal;text-align:start;
+}
+
+/* E um chão para as colunas de prosa das tabelas que deslizam: sem ele
+   o motor dá-lhes a largura da palavra mais comprida. Só no modo que
+   desliza — empilhada a célula tem a largura toda, e intacta a tabela
+   coube e não há nada a corrigir. */
+.tw[data-modo="rola"] td[data-prosa]{min-inline-size:190px}
+
+/* Blocos de código: a mesma pergunta, outra resposta. Um bloco de código
+   não se empilha — desliza, e diz que desliza. Aqui o fundo é uniforme
+   (`--sunk`), por isso o truque das quatro camadas de fundo com
+   `background-attachment:local` chega, e não custa JavaScript nenhum:
+   as duas camadas `local` viajam com o conteúdo e tapam as sombras
+   quando não há mais nada para onde ir. */
+pre{
+  overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;
+  background-image:
+    linear-gradient(to right,var(--sunk) 60%,transparent),
+    linear-gradient(to left,var(--sunk) 60%,transparent),
+    linear-gradient(to right,rgba(20,20,15,.20),transparent),
+    linear-gradient(to left,rgba(20,20,15,.20),transparent);
+  background-position:0 0,100% 0,0 0,100% 0;
+  background-repeat:no-repeat;
+  background-size:34px 100%,34px 100%,16px 100%,16px 100%;
+  background-attachment:local,local,scroll,scroll;
+}
+:root[data-theme="dark"] pre,:root:not([data-theme="light"]) pre{
+  background-image:
+    linear-gradient(to right,var(--sunk) 60%,transparent),
+    linear-gradient(to left,var(--sunk) 60%,transparent),
+    linear-gradient(to right,rgba(0,0,0,.45),transparent),
+    linear-gradient(to left,rgba(0,0,0,.45),transparent);
+}
+
+/* Figuras largas: deslizam em vez de encolherem até ao ilegível. */
+.x-calha{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.x-calha>svg{display:block;height:auto}
+.x-calha.desliza{position:relative}
+.x-calha.desliza::after{
+  content:"→ desliza";position:sticky;left:100%;bottom:0;
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  padding:1px 5px;background:var(--ground);border-radius:2px;
+  display:block;width:max-content;pointer-events:none;
+}
+
+
+/* Os alvos do dossiê: as amostras de cor (112) tinham 30px e são para
+   tocar — copiam o hex. Quem manda na largura é a GRELHA, não a amostra:
+   forçar `min-width` na amostra fazia a grelha transbordar 6px a 360.
+   Sobe-se a grelha, e a `aspect-ratio:1` trata da altura. */
+.pal{grid-template-columns:repeat(auto-fill,minmax(var(--x-alvo),1fr))!important}
+.sw{min-width:0;min-height:var(--x-alvo)}
+/* Todos os botões do documento, e não só os que eu acrescentei: o
+   «Copiar paleta» tinha 35px — um pixel abaixo, o que é a pior espécie
+   de defeito, porque parece bem. */
+button:not(.x-termo),.tools button{min-height:var(--x-alvo)}
+.tools button{padding-inline:12px}
+.trk input[type=checkbox]{min-width:22px;min-height:22px}
+/* O alvo tátil do rótulo de cada mecânica. `display:flex` dá a altura,
+   mas transforma o texto e a referência «§NN» em dois ITENS de flex — e
+   o espaço em branco entre itens de flex desaparece: as 48 linhas liam-se
+   «Inspirado em Kingdom§02». O `gap` devolve-o, e o `wrap` deixa a
+   referência descer quando a frase é longa em vez de a empurrar para a
+   margem direita. */
+.trk li label{
+  min-height:var(--x-alvo);display:flex;flex-wrap:wrap;
+  align-items:center;gap:0 .4em;
+}
+
+/* O simulador: os deslizadores eram 100% em largura mas o rótulo e o
+   valor partilhavam a linha e esmagavam-se a 320px. */
+@media (max-width:520px){
+  .sim-ctl{grid-template-columns:1fr!important}
+}
+/* Um `input[type=range]` a 100% tem o polegar a sair 2px de cada lado —
+   é sombra interna do motor, e faz a célula acusar 4px de transbordo.
+   Não se corta o polegar: dá-se-lhe onde cair. */
+input[type=range]{min-height:var(--x-alvo);accent-color:var(--petrol);width:100%;max-width:100%;min-width:0}
+.sim-ctl>*{min-width:0;padding-inline:3px}
+
+/* Focagem visível em tudo o que é novo. */
+.x-item:focus-visible,.x-chip-btn:focus-visible,.x-filtro:focus-visible,
+.x-dock button:focus-visible,.x-tab-toggle:focus-visible,.x-voltar:focus-visible,
+nav.toc .x-grp-btn:focus-visible,button.x-termo:focus-visible{
+  outline:2px solid var(--petrol);outline-offset:2px;
+}
+
+/* Impressão: a camada de uso não se imprime; o documento imprime-se. */
+@media print{
+  .x-ctx,.x-dock,.x-folha,.x-busca,.x-voltar,.x-ajuda,.x-anc,.x-tip,.x-peek,.x-dica,
+  .x-inv-ctl,.x-tab-toggle,.x-sim-barra,.x-regua-repor{display:none!important}
+  .x-tabela-vista{display:block!important}
+  .x-tabela-vista[hidden]{display:block!important}
+  /* Num papel a régua não se arrasta — mas o mapa e o sítio onde a pega
+     está continuam a ser informação, por isso o carril fica. O que sai é
+     o que só serve para carregar. */
+  .x-torn{break-inside:avoid}
+  figure.x-fig{break-inside:avoid}
+  .x-cartao{border:1px solid #999}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   AS TRÊS CAMADAS NOVAS — plano, saúde, recorte
+   ---------------------------------------------------------------------
+   Um bloco só, no fim, e a usar os tokens que já existem. Não redefine
+   nada acima: a lição do achado A-2 é que uma camada a corrigir outra
+   camada é uma folha onde a próxima alteração tem efeitos que ninguém
+   prevê. O que é novo entra por acrescentar, não por sobrepor.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── O plano: o que a pesquisa pode AFIRMAR ─────────────────────── */
+.x-plano{
+  background:var(--sunk);border:1px solid var(--line);
+  border-left:3px solid var(--ember);
+  border-radius:var(--x-raio);padding:12px 14px;margin:0 0 10px;
+}
+.x-plano[data-conf="media"]{border-left-color:var(--muted)}
+.x-plano-lido{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  margin:0 0 7px;line-height:1.5;max-width:none;
+}
+.x-lido{
+  color:var(--ink);background:var(--surface-2);
+  border-radius:var(--x-raio);padding:1px 6px;
+}
+.x-plano-r{
+  font-size:15px;line-height:1.45;color:var(--ink);margin:0;
+  font-weight:500;max-width:var(--measure);
+}
+.x-plano-d{font-size:13.5px;line-height:1.5;color:var(--ink-2);margin:6px 0 0;max-width:var(--measure)}
+.x-plano-p{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;
+  margin:10px 0 0;max-width:none;
+}
+/* `.x-prov` já existe e traz `margin-top:10px` — dentro desta linha em
+   flex isso desalinha-a do botão. Neutraliza-se NESTE alcance, em vez de
+   se mexer na classe, que é usada noutros sítios onde a margem é certa. */
+.x-plano-p .x-prov{margin:0;max-width:none}
+.x-porque-b{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  background:none;border:0;border-bottom:1px dotted currentColor;
+  padding:2px 0;cursor:pointer;
+}
+.x-porque-b:hover{color:var(--ink)}
+.x-porque-c{margin:9px 0 0;border-top:1px solid var(--line-soft);padding-top:9px}
+.x-porque-c ul{margin:0;padding-left:18px}
+.x-porque-c li{font-size:13px;line-height:1.5;color:var(--ink-2);margin:0 0 4px}
+
+.x-opcoes{display:flex;flex-wrap:wrap;gap:8px;margin:11px 0 0}
+.x-opcao{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:var(--x-alvo);padding:0 13px;
+  font-family:var(--f-body);font-size:13.5px;
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-radius:var(--x-raio);cursor:pointer;
+}
+.x-opcao:hover{border-color:var(--ember);color:var(--ember)}
+
+/* ─── A saúde do plano ───────────────────────────────────────────── */
+.x-insights ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.x-ins{
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--muted);
+  border-radius:var(--x-raio);padding:11px 13px;
+  display:grid;gap:4px;
+}
+.x-ins-alerta{border-left-color:var(--grave)}
+.x-ins-info{border-left-color:var(--aviso)}
+.x-ins b{font-size:14.5px;color:var(--ink);font-weight:600}
+.x-ins-e{font-family:var(--f-mono);font-size:12.5px;color:var(--ember)}
+.x-ins-t{font-size:13.5px;line-height:1.5;color:var(--ink-2);max-width:var(--measure)}
+
+.x-fatores{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(min(100%,272px),1fr))}
+.x-fator{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--x-raio);padding:12px 14px;display:grid;gap:5px;align-content:start;
+}
+.x-fator-c{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:space-between}
+.x-fator-r{font-size:13.5px;font-weight:600;color:var(--ink)}
+.x-fator-e{
+  font-family:var(--f-mono);font-size:15px;color:var(--ember);
+  margin:0;max-width:none;letter-spacing:-.01em;
+}
+.x-fator-p{font-size:13px;line-height:1.5;color:var(--ink-2);margin:0;max-width:none}
+
+/* ─── O recorte ──────────────────────────────────────────────────── */
+/* ┌─────────────────────────────────────────────────────────────────────┐
+   │ O BOTÃO ERA UMA BARRA VAZIA DE 595px                                 │
+   │                                                                     │
+   │ Uma secção do dossiê é uma grelha de linhas NOMEADAS                 │
+   │ (`[calha] 66px [medida] 595px [margem] 215px`), e um item de grelha  │
+   │ é esticado para a faixa onde cai. O `display:inline-flex` não o      │
+   │ impede — quem manda no tamanho de um item de grelha é a grelha.      │
+   │ Daí a barra tracejada a atravessar a coluna de leitura, por cima do  │
+   │ primeiro parágrafo, em todas as 86 secções.                          │
+   │                                                                     │
+   │ `justify-self:end` devolve-lhe o tamanho do conteúdo e encosta-o à   │
+   │ direita da medida, onde acompanha o texto sem o cortar.              │
+   └─────────────────────────────────────────────────────────────────────┘ */
+.x-rec-b{
+  display:inline-flex;align-items:center;gap:6px;
+  justify-self:end;align-self:start;
+  min-height:var(--x-alvo);padding:0 10px;margin:0 0 4px;
+  font-family:var(--f-mono);font-size:12px;
+  background:transparent;color:var(--muted);
+  border:1px solid transparent;border-radius:999px;cursor:pointer;
+  opacity:.62;transition:opacity .14s ease,color .14s ease,border-color .14s ease;
+}
+.x-rec-b:hover,.x-rec-b:focus-visible{opacity:1;color:var(--ember);border-color:var(--line)}
+/* Dentro do recorte é estado, não sugestão: fica sempre à vista. */
+.x-rec-b[aria-pressed="true"]{
+  opacity:1;color:var(--ember);border-color:var(--ember);background:var(--sunk);
+}
+/* Sem ponteiro fino não há hover — o botão tem de se ver sempre. */
+@media (hover:none){ .x-rec-b{opacity:1;border-color:var(--line)} }
+.x-rec-b svg{width:14px;height:14px;flex:0 0 auto}
+.note .x-rec-b,.lantern .x-rec-b{margin:10px 0 0}
+
+.x-rec-flutua{
+  position:fixed;right:16px;bottom:16px;z-index:68;
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:44px;padding:0 16px;
+  font-family:var(--f-mono);font-size:12.5px;
+  background:var(--ember);color:var(--ground);
+  border:0;border-radius:999px;box-shadow:var(--x-sombra);cursor:pointer;
+}
+.x-rec-flutua[hidden]{display:none}
+/* Ao telemóvel há uma barra fixa em baixo. Um flutuante a 16px do fundo
+   cai POR CIMA dela — visível, e impossível de carregar, porque quem
+   apanha o toque é o botão «Topo» da barra. Sobe acima dela. */
+@media (max-width:960px){
+  .x-rec-flutua{bottom:calc(58px + 12px + env(safe-area-inset-bottom,0px))}
+}
+.x-rec-flutua b{font-weight:700}
+.x-rec-flutua svg{width:16px;height:16px}
+
+.x-rec-folha{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:var(--surface);border-top:1px solid var(--line);
+  border-radius:14px 14px 0 0;box-shadow:0 -8px 40px -16px rgba(0,0,0,.45);
+  display:flex;flex-direction:column;max-height:90dvh;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  transform:translateY(101%);transition:transform .22s cubic-bezier(.16,1,.3,1);
+}
+.x-rec-folha.on{transform:translateY(0)}
+.x-rec-folha[hidden]{display:none}
+.x-rec-folha .x-folha-cab{
+  flex:0 0 auto;display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-bottom:1px solid var(--line);
+}
+.x-rec-folha .x-folha-cab h2{
+  font-family:var(--f-px);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ember);margin:0;font-weight:400;
+}
+.x-rec-fechar{
+  margin-left:auto;min-width:var(--x-alvo);min-height:var(--x-alvo);
+  border:1px solid var(--line);background:var(--ground);color:var(--ink-2);
+  border-radius:var(--x-raio);cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.x-rec-corpo{
+  flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:14px 16px 22px;display:flex;flex-direction:column;gap:12px;
+}
+/* `overflow:hidden` num filho faz o mínimo automático dele cair para
+   zero — e a lista, que media 378px, era comprimida para 161 e cortava
+   dois grupos em silêncio. `flex-shrink:0` devolve-lhe o tamanho do
+   conteúdo; quem rola é o corpo da folha, que é quem deve rolar. */
+.x-rec-corpo>*{flex:0 0 auto}
+@media (min-width:961px){
+  .x-rec-folha{left:auto;width:min(560px,100vw);border-radius:14px 0 0 0}
+}
+
+.x-rec-vazio p{font-size:13.5px;line-height:1.55;color:var(--ink-2);margin:0 0 8px;max-width:var(--measure)}
+.x-rec-vazio b{color:var(--ink)}
+
+.x-rec-tit{display:grid;gap:5px}
+.x-rec-tit span{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.x-rec-tit input{
+  min-height:var(--x-alvo);padding:0 11px;font:inherit;font-size:14px;
+  background:var(--ground);color:var(--ink);
+  border:1px solid var(--line);border-radius:var(--x-raio);width:100%;
+}
+
+.x-rec-lista{
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  max-height:min(42vh,300px);overflow-y:auto;overflow-x:hidden;
+}
+.x-rec-grupo{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  background:var(--sunk);padding:7px 12px;border-bottom:1px solid var(--line-soft);
+}
+.x-rec-grupo .x-n{color:var(--ember)}
+.x-rec-lista ul{list-style:none;margin:0;padding:0}
+.x-rec-lista li{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 8px 8px 12px;border-bottom:1px solid var(--line-soft);
+}
+.x-rec-lista li:last-child{border-bottom:0}
+.x-rec-i{
+  flex:1 1 auto;min-width:0;font-size:13px;line-height:1.4;color:var(--ink-2);
+  display:flex;gap:8px;align-items:baseline;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.x-rec-tira{
+  flex:0 0 auto;min-width:var(--x-alvo);min-height:var(--x-alvo);
+  background:none;border:0;color:var(--muted);cursor:pointer;border-radius:var(--x-raio);
+  display:flex;align-items:center;justify-content:center;
+}
+.x-rec-tira:hover{color:var(--grave);background:var(--grave-wash)}
+
+.x-rec-meta{
+  display:flex;flex-wrap:wrap;gap:6px 16px;
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+}
+.x-rec-meta b{color:var(--ink)}
+.x-rec-meta code{color:var(--ember);background:var(--sunk);padding:1px 6px;border-radius:var(--x-raio)}
+.x-rec-alerta{font-family:var(--f-mono);font-size:12.5px;color:var(--grave);margin:0;max-width:none}
+
+.x-rec-formatos{display:flex;flex-wrap:wrap;gap:7px}
+.x-rec-saida{
+  margin:0;max-height:min(38vh,300px);overflow:auto;
+  background:var(--ground);border:1px solid var(--line);border-radius:var(--x-raio);
+  padding:11px 13px;font-family:var(--f-mono);font-size:12px;line-height:1.6;
+  color:var(--ink-2);white-space:pre-wrap;word-break:break-word;
+}
+.x-rec-accoes{display:flex;flex-wrap:wrap;gap:8px}
+.x-rec-accoes button{
+  min-height:var(--x-alvo);padding:0 15px;
+  font-family:var(--f-mono);font-size:12.5px;cursor:pointer;
+  border:1px solid var(--line);border-radius:var(--x-raio);
+}
+.x-rec-copiar{background:var(--ember);color:var(--ground);border-color:var(--ember)!important;font-weight:600}
+.x-rec-limpar{background:var(--ground);color:var(--ink-2)}
+.x-rec-limpar:hover{color:var(--grave);border-color:var(--grave)}
+
+@media print{.x-rec-b,.x-rec-flutua,.x-rec-folha{display:none!important}}
+
+/* ─── A RÉGUA ─────────────────────────────────────────────────────────
+   O `input` nativo continua a mandar: fica por cima, invisível, e traz
+   as setas, o Home/End, o leitor de ecrã e o arrasto por dedo. O que se
+   desenha por baixo é só o mapa.
+
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ A RAMPA DAS FAIXAS — medida, não escolhida                           │
+   │                                                                     │
+   │ A versão anterior pintava as faixas com os quatro tokens de estado.  │
+   │ Passados pelo validador de paleta (as seis verificações: banda de    │
+   │ luminosidade, chão de croma, separação sob protanopia e              │
+   │ deuteranopia simuladas, chão de visão normal e contraste ≥ 3:1) o    │
+   │ resultado era este:                                                 │
+   │                                                                     │
+   │   claro   `--ok` × `--aviso`    ΔE 3,2  (protanopia)                 │
+   │   escuro  `--ok` × `--grave`    ΔE 2,5  (deuteranopia)               │
+   │                                                                     │
+   │ O mínimo utilizável é 6 e o alvo é 8. Duas faixas vizinhas do mapa   │
+   │ eram a MESMA COR para uma pessoa em cada doze — e o mapa é a coisa   │
+   │ que se lê a arrastar.                                               │
+   │                                                                     │
+   │ A causa é estrutural e não se resolve trocando de vermelho: um       │
+   │ carril já codifica o LADO pela posição, portanto gastar matiz a      │
+   │ dizer «cedo» contra «tarde» é repetir o que a geometria diz e pagar  │
+   │ com o par vermelho–verde. O que sobra para a cor é a GRANDEZA — a    │
+   │ que distância do alvo se está — e uma grandeza pinta-se com uma      │
+   │ rampa de um matiz só.                                               │
+   │                                                                     │
+   │ As duas rampas abaixo passam as quatro verificações ordinais         │
+   │ (monotonia de luminosidade, ΔL ≥ 0,06 entre degraus, contraste do    │
+   │ degrau mais pálido contra a superfície, dispersão de matiz ≤ 40°):   │
+   │                                                                     │
+   │   claro   #94AA86 → #6E8C61 → #2F6B33   pálido a 2,23:1 · matiz 12°  │
+   │   escuro  #4A5340 → #68805A → #8FC27A   pálido a 2,03:1 · matiz  9°  │
+   │                                                                     │
+   │ O degrau mais forte de cada uma é o `--ok` que o documento já tem:   │
+   │ o alvo não ganha uma cor nova, ganha a cor que o documento já usa    │
+   │ para «certo». E porque a diferença é de luminosidade, a rampa        │
+   │ sobrevive ao cinzento, à impressão e às cores forçadas.              │
+   └─────────────────────────────────────────────────────────────────────┘ */
+:root{
+  --f-alvo:#2F6B33;   /* dentro do alvo da §06 — é o `--ok` do documento */
+  --f-perto:#6E8C61;  /* a menos de 5 dias                               */
+  --f-longe:#94AA86;  /* a 5 dias ou mais                                */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --f-alvo:#8FC27A; --f-perto:#68805A; --f-longe:#4A5340; }
+}
+:root[data-theme="dark"]{ --f-alvo:#8FC27A; --f-perto:#68805A; --f-longe:#4A5340; }
+
+/* O alvo tátil é o CONTROLO, não o carril: 36px de altura, com a barra
+   de 6px centrada lá dentro. A versão anterior dava 22px e passava no
+   portão por isenção de rótulo — uma isenção é uma dispensa, não uma
+   medida boa. */
+.x-regua{position:relative;padding-block:1px 0}
+.x-regua-nativa{
+  position:relative;z-index:2;inline-size:100%;display:block;
+  margin:0;background:none;appearance:none;-webkit-appearance:none;
+  block-size:36px;cursor:pointer;
+}
+.x-regua-nativa::-webkit-slider-runnable-track{background:none;block-size:36px}
+.x-regua-nativa::-moz-range-track{background:none;block-size:36px}
+.x-regua-nativa::-webkit-slider-thumb{
+  appearance:none;-webkit-appearance:none;margin-block-start:7px;
+  inline-size:22px;block-size:22px;border-radius:999px;background:transparent;border:0;
+}
+.x-regua-nativa::-moz-range-thumb{
+  inline-size:22px;block-size:22px;border-radius:999px;background:transparent;border:0;
+}
+
+/* O carril: as faixas todas visíveis ao mesmo tempo. Sem preenchimento
+   por cima — é isso que faz dele um mapa e não uma barra de progresso. */
+.x-regua-carril{
+  position:absolute;inset-inline:0;inset-block-start:16px;
+  block-size:6px;border-radius:999px;overflow:hidden;
+  background:var(--line);
+}
+.x-regua-faixa{position:absolute;inset-block:0}
+.x-regua-faixa[data-f="alvo"]{background:var(--f-alvo)}
+.x-regua-faixa[data-f="perto"]{background:var(--f-perto)}
+.x-regua-faixa[data-f="longe"]{background:var(--f-longe)}
+
+/* A divisória é a SUPERFÍCIE a passar por entre as faixas: não
+   acrescenta um tom ao sistema e lê-se nos dois temas. Era um
+   `border-inline-end` DENTRO da faixa — dois pixéis comidos ao
+   território, com a cor a mudar dois pixéis antes da fronteira. Agora é
+   uma marca própria, CENTRADA na fronteira, pela mesma função que
+   posiciona a faixa. */
+.x-regua-div{
+  position:absolute;inset-block:0;inline-size:2px;margin-inline-start:-1px;
+  background:var(--surface);
+}
+
+/* O alfinete do valor que a §06 publica. É um triângulo a APONTAR e não
+   um traço: um traço solto por cima de uma barra lê-se como sujidade, e
+   ainda por cima é o mesmo desenho das divisórias, que marcam outra
+   coisa. Sem ele, o «Repor a §06» refere-se a um sítio que não se vê. */
+.x-regua-pino{
+  position:absolute;inset-block-start:2px;inline-size:9px;block-size:6px;
+  margin-inline-start:-4.5px;background:var(--ink-2);
+  clip-path:polygon(50% 100%,0 0,100% 0);
+  pointer-events:none;z-index:1;
+}
+.x-regua-pino[hidden]{display:none}
+
+/* A pega, com relevo e um anel que a separa da faixa por baixo. */
+.x-regua-pega{
+  position:absolute;inset-block-start:8px;
+  inline-size:22px;block-size:22px;margin-inline-start:-11px;
+  border-radius:999px;background:var(--ink);
+  box-shadow:0 0 0 3px var(--surface),0 1px 3px rgba(0,0,0,.45);
+  pointer-events:none;z-index:1;
+  transition:box-shadow .14s ease;
+}
+.x-regua-pega::after{
+  content:"";position:absolute;inset:7px;border-radius:999px;
+  background:var(--surface);
+}
+.x-regua-pega[data-f="alvo"]{background:var(--f-alvo)}
+.x-regua-pega[data-f="perto"]{background:var(--f-perto)}
+.x-regua-pega[data-f="longe"]{background:var(--f-longe)}
+.x-regua-nativa:hover~.x-regua-pega,
+.x-regua-nativa:focus-visible~.x-regua-pega{
+  box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--ember),0 1px 3px rgba(0,0,0,.45);
+}
+
+/* A linha por baixo: o dia em que se está, e em que números é que este
+   cursor acerta no alvo. Duas coisas, dois pesos. */
+.x-regua-nota{
+  display:flex;flex-wrap:wrap;gap:2px 6px;align-items:baseline;
+  margin:5px 0 0;max-width:none;
+  font-family:var(--f-mono);font-size:12px;line-height:1.4;
+}
+.x-regua-f{color:var(--ink);font-weight:600}
+.x-regua-f[data-f="alvo"]{color:var(--f-alvo)}
+.x-regua-f[data-f="perto"]{color:var(--ink-2)}
+.x-regua-f[data-f="longe"]{color:var(--muted)}
+.x-regua-mais{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.x-regua-pega{transition:none}}
+
+/* A legenda das faixas e o «repor»: uma vez, por baixo da grelha. */
+.x-regua-legenda{
+  display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;
+  margin:2px 0 18px;font-family:var(--f-mono);font-size:12px;color:var(--muted);
+}
+.x-regua-chaves{display:flex;flex-wrap:wrap;gap:7px 16px}
+.x-regua-chaves span{display:inline-flex;align-items:center;gap:6px}
+.x-regua-chaves i{
+  inline-size:16px;block-size:6px;border-radius:999px;display:inline-block;flex:0 0 auto;
+}
+.x-regua-chaves i[data-f="alvo"]{background:var(--f-alvo)}
+.x-regua-chaves i[data-f="perto"]{background:var(--f-perto)}
+.x-regua-chaves i[data-f="longe"]{background:var(--f-longe)}
+.x-regua-repor{margin-inline-start:auto}
+.x-regua-repor[hidden]{display:none}
+
+/* ─── O botão pequeno das barras de gráfico ─────────────────────────── */
+.x-bt-mini{
+  font-family:var(--f-mono);font-size:12px;min-height:var(--x-alvo);padding:0 11px;
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--line);border-radius:var(--x-raio);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+}
+.x-bt-mini:hover{border-color:var(--petrol);color:var(--petrol)}
+.x-bt-mini[aria-pressed="true"]{border-color:var(--ink-2);color:var(--ink);font-weight:600}
+.x-sim-barra{display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.x-sim-escala-nota{margin-top:8px}
+.x-seg-rot{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);
+}
+/* O comutador: duas opções à vista, uma carregada. */
+.x-seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--x-raio);overflow:hidden}
+.x-seg-b{
+  font-family:var(--f-mono);font-size:12px;min-height:var(--x-alvo);padding:0 12px;
+  border:0;background:var(--surface);color:var(--muted);cursor:pointer;
+}
+.x-seg-b + .x-seg-b{border-inline-start:1px solid var(--line)}
+.x-seg-b:hover{color:var(--petrol)}
+.x-seg-b[aria-pressed="true"]{background:var(--ink);color:var(--ground);font-weight:600}
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ A GRELHA DOS CURSORES PASSA A SER PAR                             │
+   │                                                                   │
+   │ `repeat(auto-fit,minmax(190px,1fr))` dava três colunas na largura  │
+   │ desta secção e deixava o quarto cursor sozinho numa linha — e      │
+   │ agora que cada régua leva uma linha de texto por baixo, o órfão    │
+   │ passou a ter o dobro do peso visual dos irmãos. Dois por dois, ou  │
+   │ um por linha quando não cabem dois.                               │
+   └───────────────────────────────────────────────────────────────────┘ */
+.sim-ctl{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}
+@media (max-width:560px){ .sim-ctl{grid-template-columns:minmax(0,1fr)} }
+
+/* ─── O gráfico: a janela do alvo, a asfixia, as pontas ─────────────── */
+.x-alvo-faixa{fill:var(--ink);opacity:.055}
+:root[data-theme="dark"] .x-alvo-faixa,
+:root:not([data-theme="light"]) .x-alvo-faixa{opacity:.085}
+.x-alvo-rot{fill:var(--muted)}
+.x-asf-linha{stroke:var(--ember);stroke-width:1.5;stroke-dasharray:4 3}
+.x-asf-rot{fill:var(--ember)}
+/* O ponto do cruzamento leva um anel da superfície: por cima da própria
+   curva, um disco sem anel lê-se como um engrossamento da linha. */
+.x-asf-ponto{fill:var(--ember);stroke:var(--surface);stroke-width:2}
+.x-ponta{stroke:var(--surface);stroke-width:2}
+.x-ponta-rot{fill:var(--ink-2)}
+.x-perna{fill:none;stroke-width:1;opacity:.6}
+.x-cruz-l{stroke:var(--ink-2);stroke-width:1;stroke-dasharray:3 3}
+.x-cruz-p{stroke:var(--surface);stroke-width:2}
+.x-tip .x-tip-asf{color:var(--ember)}
+.x-tip .x-tip-alvo{opacity:.75}
+.x-am-alvo{background:var(--ink)!important;opacity:.16;height:9px!important;border-radius:2px}
+:root[data-theme="dark"] .x-am-alvo,
+:root:not([data-theme="light"]) .x-am-alvo{opacity:.22}
+
+/* O selo ao lado do dia da asfixia: a cor nunca vai sozinha. */
+.x-alvo-selo{
+  display:inline-block;margin-inline-start:7px;padding:1px 7px;
+  font-family:var(--f-mono);font-size:11px;line-height:1.6;
+  border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:var(--sunk);vertical-align:middle;
+}
+.x-alvo-selo[data-dentro="1"]{color:var(--ok);border-color:var(--ok);background:var(--ok-wash)}
+
+/* ─── «O que mais mexe» — porte do tornado do Descobrir ─────────────── */
+.x-torn{
+  margin-top:18px;padding:14px 15px;
+  border:1px solid var(--line);border-radius:var(--x-raio);background:var(--sunk);
+}
+.x-torn-h{
+  margin:0 0 10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);font-weight:600;
+}
+.x-torn-l{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.x-torn-i{
+  display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline;
+}
+.x-torn-n{font-size:13.5px;color:var(--ink-2);min-width:0}
+.x-torn-i[data-critico] .x-torn-n{color:var(--ink);font-weight:600}
+.x-torn-a{
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+/* A barra ocupa a largura toda, por baixo do nome — em 360px um rótulo
+   ao lado rouba metade da barra e o gráfico deixa de se ler. É a mesma
+   decisão que o `SensibilidadeNegocio` toma, e pela mesma razão. */
+.x-torn-b{
+  grid-column:1 / -1;position:relative;display:block;
+  block-size:9px;border-radius:999px;background:var(--line);overflow:hidden;
+}
+/* O fundo diz ONDE é o alvo — nos quatro, no mesmo sítio. */
+.x-torn-janela{position:absolute;inset-block:0;background:var(--f-alvo);opacity:.22}
+/* `min-inline-size` porque um cursor que não muda nada tem `lo === hi` e
+   uma barra de largura zero: desaparecia em vez de dizer ONDE é que está
+   preso, que é a informação que interessa nesse caso. */
+.x-torn-r{
+  position:absolute;inset-block:1px;border-radius:999px;background:var(--muted);
+  min-inline-size:4px;
+}
+.x-torn-i[data-critico] .x-torn-r{background:var(--ink-2)}
+/* E este é o troço do alcance que aterra dentro do alvo — por CIMA da
+   barra, senão a barra tapa a resposta. */
+.x-torn-r-alvo{position:absolute;inset-block:1px;border-radius:999px;background:var(--f-alvo)}
+/* Onde a asfixia está AGORA — o mesmo dia nas quatro barras, que é o que
+   as torna comparáveis de relance. */
+.x-torn-p{
+  position:absolute;inset-block:-1px;inline-size:2px;margin-inline-start:-1px;
+  background:var(--ember);
+}
+.x-torn-f{margin:11px 0 0;font-size:13px;line-height:1.55;color:var(--ink-2);max-width:none}
+.x-torn-f b{color:var(--ink);font-weight:600}
+.x-torn .x-prov{margin-top:8px}

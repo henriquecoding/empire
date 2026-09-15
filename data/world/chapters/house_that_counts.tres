@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chapter_data.gd" id="1_vgavr"]
+
+[resource]
+script = ExtResource("1_vgavr")
+id = &"house_that_counts"
+display_key = "CHAPTER_HOUSE_THAT_COUNTS"
+law_key = "CHAPTER_LAW_HOUSE_THAT_COUNTS"
+inhabitant_key = "CHAPTER_WHO_HOUSE_THAT_COUNTS"
+song_key = "SONG_CHAPTER_HOUSE_THAT_COUNTS"
+placement = &"roadside"
+detour_seconds = 25.0
+reward_kind = &"journal"
+reward_id = &"journal_04"
+visits_tracked = true
+folk_root = "encomendação das almas"

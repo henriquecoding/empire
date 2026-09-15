@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ImpulseData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/impulse_data.gd" id="1_6x7r6"]
+
+[resource]
+script = ExtResource("1_6x7r6")
+id = &"protected_route"
+display_key = "IMPULSE_PROTECTED_ROUTE"
+icon = &"shield_road"
+coin_cost = 12
+benefit = &"trade_mult_today"
+benefit_value = 2.0
+drawback = &"no_troop_leaves_today"
+drawback_value = 1.0

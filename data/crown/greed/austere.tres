@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="GreedProfile" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/greed_profile.gd" id="1_xt5m0"]
+
+[resource]
+script = ExtResource("1_xt5m0")
+id = &"austere"
+display_key = "GREED_AUSTERE"
+greed_range = Vector2i(5, 15)
+elite_morale_mod = -0.1
+enemy_wall_bias = 1.4
+enemy_elite_bias = 0.6
+enemy_attack_unit = &"root_berserker"
+enemy_attack_timing = &"any"

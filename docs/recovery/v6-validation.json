@@ -1,0 +1,40 @@
+{
+ "date": "2026-09-13",
+ "base": "Empire-v6.zip enviado pelo utilizador",
+ "engine": "4.6.stable.official.89cea1439",
+ "gdunit": "6.2.1",
+ "gdunit_commit": "08ffc7c",
+ "godot_import": "passed",
+ "boot_headless": "passed",
+ "csv_tables": 17,
+ "generated_resources": 154,
+ "original_csv_unchanged": 17,
+ "proposed_fields": 932,
+ "proposed_phase_0_to_2": 289,
+ "gdunit_discovered": 46,
+ "gdunit_passed": 29,
+ "gdunit_skipped": 17,
+ "gdunit_failures": 0,
+ "portable_checks_passed": 15,
+ "numeric_comparisons": 90,
+ "cli_isolation_tests_passed": 3,
+ "export_tested": false,
+ "gameplay_tested": false,
+ "gpu_art_tested": false,
+ "source_gaps": [
+  "9 authored segment scenes",
+  "translation catalog beyond boot title",
+  "wildlife and remaining data tables",
+  "game systems and scene",
+  "remote CI and export"
+ ],
+ "new_questions": [
+  "Q-047",
+  "Q-048",
+  "Q-049",
+  "Q-050",
+  "Q-051",
+  "Q-052"
+ ],
+ "clean_zip_extraction_check": "passed: full run_tests.sh without previous engine cache"
+}

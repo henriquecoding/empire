@@ -1,0 +1,13 @@
+id,preset,layer,node_name,z_index,motion_scale,saturation_delta,value_delta,hue_shift_deg,min_detail_px,outline_px,colors_per_16px,_phase,_src,_proposed,_notes
+open_1,open,1,SkyLayer,-60,0.03125,-0.35,0.2,20,0,0,13|18,0,"§22 a profundidade, camada a camada; §59 pilha e z",,Céu: 'bandas lisas' (detalhe 0 = sem mínimo).
+open_2,open,2,MountainLayer,-50,0.125,-0.28,0.16,14,8,0,15|20,0,"§22 a profundidade, camada a camada; §59 pilha e z",,
+open_3,open,3,HillLayer,-40,0.25,-0.2,0.11,9,4,0,18|23,0,"§22 a profundidade, camada a camada; §59 pilha e z",,
+open_4,open,4,MidLayer,-30,0.5,-0.1,0.05,4,4,0,21|26,0,"§22 a profundidade, camada a camada; §59 pilha e z",,
+open_5,open,5,EntityLayer,10,1.0,0,0,0,2,2,30|40,0,"§22 a profundidade, camada a camada; §59 pilha e z",,"Camada 5 é a referência: jogo, sombras e entidades (§59 z −10 a 10)."
+open_6,open,6,ForeLayer,30,1.5,0.05,-0.3,-5,0,2,0|20,0,"§22 a profundidade, camada a camada; §59 pilha e z",,"Primeiro plano: 'silhueta' — detalhe 0, só contorno de 2 px."
+closed_1,closed,1,SkyLayer,-60,0.03125,-0.052,-0.2,20,0,0,13|18,0,§11 e §22: em cena fechada inverte-se a coluna do valor e a saturação quase não muda,saturation_delta,Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta.
+closed_2,closed,2,MountainLayer,-50,0.125,-0.042,-0.16,14,8,0,15|20,0,§11 e §22: em cena fechada inverte-se a coluna do valor e a saturação quase não muda,saturation_delta,Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta.
+closed_3,closed,3,HillLayer,-40,0.25,-0.03,-0.11,9,4,0,18|23,0,§11 e §22: em cena fechada inverte-se a coluna do valor e a saturação quase não muda,saturation_delta,Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta.
+closed_4,closed,4,MidLayer,-30,0.5,-0.015,-0.05,4,4,0,21|26,0,§11 e §22: em cena fechada inverte-se a coluna do valor e a saturação quase não muda,saturation_delta,Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta.
+closed_5,closed,5,EntityLayer,10,1.0,0,0,0,2,2,30|40,0,§11 e §22: em cena fechada inverte-se a coluna do valor e a saturação quase não muda,,
+closed_6,closed,6,ForeLayer,30,1.5,0.05,-0.3,-5,0,2,0|20,0,§11 e §22: em cena fechada inverte-se a coluna do valor e a saturação quase não muda,,

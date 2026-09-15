@@ -1,0 +1,1021 @@
+--- dossie v5.1
++++ dossie v5.2
+@@ -254,7 +254,7 @@
+ 
+ <div class="wrap">
+ <header class="mast">
+-  <span class="kicker">Dossiê de produção · v5.1 · setembro 2026 · Rico</span>
++  <span class="kicker">Dossiê de produção · v5.2 · setembro 2026 · Rico</span>
+   <h1>Empire<span class="dot">.</span></h1>
+   <p class="deck">Documento único para construir um kingdom-builder em pixel art onde cada império é uma civilização própria. Design, matemática de balanceamento, direção de arte medida, produção assistida por IA, orçamento e lançamento — e, a partir da §39, a especificação técnica completa contra a qual o código é escrito e revisto. Nada cortado, nada em ficheiros separados.</p>
+   <div class="chips">
+@@ -265,10 +265,11 @@
+     <span class="chip">Solo + IA</span>
+     <span class="chip">Determinista por seed</span>
+     <span class="chip new">48 mecânicas rastreadas</span>
+-    <span class="chip new">71 secções</span>
++    <span class="chip new">73 secções</span>
+     <span class="chip new">61 eventos</span>
+     <span class="chip new">Fase 0 e 1 ao ficheiro</span>
+     <span class="chip new">Dia zero, ao ficheiro</span>
++    <span class="chip new">Repositório a correr</span>
+   </div>
+ </header>
+ 
+@@ -381,6 +382,11 @@
+     <li><a href="#s69"><span class="n">69</span> Ficheiros a copiar</a></li>
+     <li><a href="#s70"><span class="n">70</span> Contradições resolvidas</a></li>
+   </ol>
++  <div class="grp">XII · A implementação</div>
++  <ol>
++    <li><a href="#s71"><span class="n">71</span> O que já existe</a></li>
++    <li><a href="#s72"><span class="n">72</span> O que a implementação encontrou</a></li>
++  </ol>
+   <div class="grp">Rastreador</div>
+   <ol>
+     <li><a href="#trk"><span class="n">★</span> As 48 mecânicas</a></li>
+@@ -401,8 +407,8 @@
+   <div class="note dec"><span class="lbl">O achado da v4, que se mantém</span><p>As cinco capturas das tuas referências foram desenhadas entre <strong>327 e 450 pixels de altura de arte</strong>. Tu desenhas a <strong>720</strong>. Nenhuma delas é bonita por causa da resolução — e uma delas nem sequer é pixel art. A §01 tem os números; a §22 tem o que fazer com eles.</p></div>
+ 
+   <div class="note risk"><span class="lbl">O que a v5 acrescenta, e porquê</span>
+-    <p>O teu plano é que a IA escreva quase todo o código e tu revejas. <strong>Uma revisão só existe se houver contra o quê rever.</strong> Até agora, a §19 dava definições de projeto, uma estrutura de pastas e um exemplo de <code>Resource</code> — um esboço de arquitetura. Cada sessão de agente reinventava nomes de campos, ordem de execução e contratos de módulo, e tu passavas o tempo a arbitrar decisões que já tinhas tomado, sem te lembrares de quando.</p>
+-    <p style="margin-top:12px">As secções §39 a §67 fecham isso: <strong>doze recursos de definição com todos os campos, 61 eventos catalogados, a ordem exacta do tick, a disciplina de aleatoriedade, o esquema do save, os orçamentos de desempenho, cinco portões de CI</strong>, e a Fase 0 e a Fase 1 listadas ao nível do ficheiro, com horas e critérios de aceitação. O <code>CLAUDE.md</code> do repositório aponta para elas.</p>
++    <p>O teu plano é que a IA escreva quase todo o código e tu revejas. <strong>Uma revisão só existe se houver contra o que rever.</strong> Até agora, a §19 dava definições de projeto, uma estrutura de pastas e um exemplo de <code>Resource</code> — um esboço de arquitetura. Cada sessão de agente reinventava nomes de campos, ordem de execução e contratos de módulo, e tu passavas o tempo a arbitrar decisões que já tinhas tomado, sem te lembrares de quando.</p>
++    <p style="margin-top:12px">As secções §39 a §67 fecham isso: <strong>doze recursos de definição com todos os campos, 61 eventos catalogados, a ordem exata do tick, a disciplina de aleatoriedade, o esquema do save, os orçamentos de desempenho, cinco portões de CI</strong>, e a Fase 0 e a Fase 1 listadas ao nível do ficheiro, com horas e critérios de aceitação. O <code>CLAUDE.md</code> do repositório aponta para elas.</p>
+   </div>
+ 
+   <h4>As três correções materiais</h4>
+@@ -418,14 +424,14 @@
+   <div class="tw"><table>
+     <thead><tr><th>Camada</th><th>O que é</th><th>Fase</th><th>Se falhar</th></tr></thead>
+     <tbody>
+-      <tr><td>1 — O motor</td><td>Ciclo dia/noite, moeda física, controlo indireto, muros, ondas noturnas</td><td>0–2</td><td>Não há jogo. Pára tudo.</td></tr>
++      <tr><td>1 — O motor</td><td>Ciclo dia/noite, moeda física, controlo indireto, muros, ondas noturnas</td><td>0–2</td><td>Não há jogo. Para tudo.</td></tr>
+       <tr><td>2 — Identidade</td><td>Classes com duas fases, ofícios, segunda camada, montarias, conquista, ganância</td><td>3–5</td><td>Tens um clone de Kingdom. Vendável, esquecível.</td></tr>
+       <tr><td>3 — Profundidade</td><td>Sucessão, dívida, conversão, lore, biomas caóticos, multijogador</td><td>6–8</td><td>Tens o jogo. Cortas sem dor.</td></tr>
+     </tbody>
+   </table></div>
+ 
+   <div class="note risk"><span class="lbl">O achado desta revisão</span>
+-    <p><strong>O cenário é o caminho crítico, não o código nem as personagens.</strong> A IA escreve o código e tu revê-lo; as figuras já estão desenhadas. O que falta é o mundo à volta delas — ≈ 70 das ≈ 176 horas de arte da fatia vertical depois da revisão da v4 (§22). Ao ritmo de um sábado por semana são sete meses, e o roadmap dava-lhe três. A solução não é trabalhar mais: é <strong>começar o cenário da Fase 2 durante a Fase 1</strong>, estreitar a fatia, e pôr a luz antes dos edifícios. Arte e código são dias diferentes da semana e nunca se bloquearam.</p>
++    <p><strong>O cenário é o caminho crítico, não o código nem as personagens.</strong> A IA escreve o código e tu revê-lo; as figuras já estão desenhadas. O que falta é o mundo à volta delas — ≈ 70 das ≈ 176 horas de arte da fatia vertical depois da revisão da v4 (§22). Ao ritmo de um sábado por semana são sete meses, e o roadmap dava-lhe três. A solução não é trabalhar mais: é <strong>começar o cenário da Fase 2 durante a Fase 1</strong>, estreitar a fatia, e pôr a luz antes dos edifícios. Arte e código são dias diferentes da semana e nunca se bloqueiam.</p>
+   </div>
+ 
+   <div class="note risk"><span class="lbl">O único risco que mata o projeto</span>
+@@ -436,7 +442,10 @@
+     <p>28 a 40 meses para a versão completa, com jogo jogável ao fim de <strong>7 meses</strong> e demo pública ao fim de <strong>14</strong>. §35 põe-lhe um preço: entre <strong>2 700 € e 16 000 €</strong> em custos diretos, conforme o cenário. O custo real é o teu tempo, e esse está contabilizado.</p>
+   </div>
+   <div class="note spec"><span class="lbl">O que a v5.1 acrescenta — a Parte XI</span>
+-    <p>Três secções no fim, e um punhado de correções ao longo do documento. A §68 responde a <em>que ficheiros existem antes do primeiro código</em> e audita as dezanove que faltavam; a §69 dá o conteúdo de cada um, pronto a copiar, incluindo o <em>script</em> que transforma este dossiê nos ficheiros de <code>docs/design/</code> que o contrato do agente manda ler; a §70 resolve seis contradições que as dez partes anteriores deixaram abertas — o relógio, a faixa, a câmara, o arranque. Nenhuma delas é grave enquanto ninguém escreve código; todas se tornam duas implementações do mesmo conceito no dia em que alguém escreve.</p>
++    <p>Três secções no fim, e um punhado de correções ao longo do documento. A §68 responde a <em>que ficheiros existem antes do primeiro código</em> e audita os dezanove que faltavam; a §69 dá o conteúdo de cada um, pronto a copiar, incluindo o <em>script</em> que transforma este dossiê nos ficheiros de <code>docs/design/</code> que o contrato do agente manda ler; a §70 resolve seis contradições que as dez partes anteriores deixaram abertas — o relógio, a faixa, a câmara, o arranque. Nenhuma delas é grave enquanto ninguém escreve código; todas se tornam duas implementações do mesmo conceito no dia em que alguém escreve.</p>
++  </div>
++  <div class="note spec"><span class="lbl">O que a v5.2 acrescenta — a Parte XII</span>
++    <p>Nenhuma teoria nova. Duas secções no fim e o português revisto de ponta a ponta. A §71 é o índice do repositório que já existe: abre no Godot 4.6, passa os testes, exporta um executável, e tem os números deste dossiê em <strong>23 tabelas</strong> que o CI confere contra o texto. A §72 lista o que a implementação encontrou de errado aqui dentro — sete ficheiros do dia zero que não corriam como estavam escritos, já corrigidos na §47 e na §69, e as contradições entre secções, que passaram para <code>docs/QUESTIONS.md</code> em vez de serem decididas em silêncio. As 105 correções de português estão, uma a uma, em <code>docs/dossie-v5.2-correcoes.md</code>.</p>
+   </div>
+ </section>
+ 
+@@ -494,7 +503,7 @@
+   </table></div>
+ 
+   <h4>O que ainda está em aberto</h4>
+-  <p>Isto <strong>não se lê na arte atual</strong>. São decisões de design por tomar, e a §38 tem-nas na lista de esta semana.</p>
++  <p>Isto <strong>não se lê na arte atual</strong>. São decisões de design por tomar, e a §38 tem-nas na lista desta semana.</p>
+   <div class="tw"><table>
+     <thead><tr><th>Em aberto</th><th>O que eu tinha assumido</th><th>Como decidir</th></tr></thead>
+     <tbody>
+@@ -508,10 +517,10 @@
+   </table></div>
+ 
+   <h4>As três referências, medidas — não descritas</h4>
+-  <p>Deste-me três jogos e disseste que queres cenários assim. Não me limitei a olhar: passei as cinco capturas pelo mesmo processo que usei nas tuas cenas. O período da grelha de pixel de cada imagem sai por análise espectral do perfil de bordas — <strong>é invariante ao redimensionamento</strong>, por isso funciona mesmo em capturas da Steam já reescaladas e comprimidas. Dividindo a altura da imagem por esse período obtém-se a <em>tela efectiva</em>: a altura, em pixels de arte, a que o jogo foi realmente desenhado.</p>
++  <p>Deste-me três jogos e disseste que queres cenários assim. Não me limitei a olhar: passei as cinco capturas pelo mesmo processo que usei nas tuas cenas. O período da grelha de pixel de cada imagem sai por análise espectral do perfil de bordas — <strong>é invariante ao redimensionamento</strong>, por isso funciona mesmo em capturas da Steam já reescaladas e comprimidas. Dividindo a altura da imagem por esse período obtém-se a <em>tela efetiva</em>: a altura, em pixels de arte, a que o jogo foi realmente desenhado.</p>
+ 
+   <div class="tw"><table>
+-    <thead><tr><th>Captura</th><th>Câmara</th><th class="n">Imagem</th><th class="n">Período</th><th class="n">Tela efectiva</th><th class="n">Detalhe de 1 px</th><th class="n">Contorno 1 px</th></tr></thead>
++    <thead><tr><th>Captura</th><th>Câmara</th><th class="n">Imagem</th><th class="n">Período</th><th class="n">Tela efetiva</th><th class="n">Detalhe de 1 px</th><th class="n">Contorno 1 px</th></tr></thead>
+     <tbody>
+       <tr><td><strong>Milki Delivery</strong> — estrada</td><td>Lateral</td><td class="n">1600×900</td><td class="n">2,67</td><td class="n"><strong>600 × 338</strong></td><td class="n">72,7%</td><td class="n">57,9%</td></tr>
+       <tr><td><strong>Milki Delivery</strong> — floresta</td><td>Lateral</td><td class="n">1920×1080</td><td class="n">2,67</td><td class="n"><strong>720 × 405</strong></td><td class="n">72,3%</td><td class="n">44,2%</td></tr>
+@@ -521,7 +530,7 @@
+       <tr style="background:var(--surface)"><td><strong>Empire</strong> — as tuas cenas</td><td>Lateral</td><td class="n">1280×720</td><td class="n">1,00</td><td class="n"><strong>1280 × 720</strong></td><td class="n">—</td><td class="n">—</td></tr>
+     </tbody>
+   </table></div>
+-  <p style="color:var(--muted);font-size:13px;margin-top:-8px">"Detalhe de 1 px" = fracção de sequências horizontais de cor com um só pixel de comprimento, na grelha do próprio jogo. "Contorno 1 px" = fracção de sequências escuras com um só pixel. A estimativa de tamanho de paleta não é fiável a partir de JPEG e ficou de fora.</p>
++  <p style="color:var(--muted);font-size:13px;margin-top:-8px">"Detalhe de 1 px" = fração de sequências horizontais de cor com um só pixel de comprimento, na grelha do próprio jogo. "Contorno 1 px" = fração de sequências escuras com um só pixel. A estimativa de tamanho de paleta não é fiável a partir de JPEG e ficou de fora.</p>
+ 
+   <div class="note risk"><span class="lbl">O número que muda tudo</span>
+     <p>As cinco referências vivem entre <strong>327 e 450 pixels de altura de arte</strong>. Média: <strong>376</strong>. Tu desenhas a <strong>720</strong>.</p>
+@@ -531,13 +540,13 @@
+ 
+   <h5>O que os números querem dizer, em desenho</h5>
+   <div class="grid g2">
+-    <div class="cell"><h6>O teu contorno pesa metade</h6><p>Em todas as cinco capturas, o contorno dominante tem <strong>1 pixel na grelha delas</strong> — 39% a 69% das sequências escuras. Uma tropa tua de 47 px a 720 ocupa a mesma fracção de ecrã que uma de 25 px a 376. Pões 1 px de contorno onde elas põem o equivalente a 2 dos teus. <strong>Em peso aparente, o teu contorno é metade do da referência</strong> — e é por isso que as tuas figuras, apesar de melhor desenhadas, não "assentam" como as delas.</p></div>
++    <div class="cell"><h6>O teu contorno pesa metade</h6><p>Em todas as cinco capturas, o contorno dominante tem <strong>1 pixel na grelha delas</strong> — 39% a 69% das sequências escuras. Uma tropa tua de 47 px a 720 ocupa a mesma fração de ecrã que uma de 25 px a 376. Pões 1 px de contorno onde elas põem o equivalente a 2 dos teus. <strong>Em peso aparente, o teu contorno é metade do da referência</strong> — e é por isso que as tuas figuras, apesar de melhor desenhadas, não "assentam" como as delas.</p></div>
+     <div class="cell"><h6>O teu detalhe mínimo também</h6><p>Nas cinco, cerca de <strong>73% do detalhe é de 1 px</strong> na grelha própria — o que na tua equivale a 2. Se pintares cenário com detalhe de 1 px, estás a desenhar ao dobro da densidade das tuas referências: a pagar o dobro das horas para obter um resultado <em>mais ruidoso</em>, não mais bonito. É o erro clássico de escolher resolução a mais — sobra espaço, e o espaço enche-se de ruído.</p></div>
+   </div>
+ 
+   <div class="note dec"><span class="lbl">A lei da escala dupla — a decisão de arte mais importante deste documento</span>
+     <p><strong>Tudo o que na referência é 1 px, na tua grelha é 2 px.</strong> Contorno de silhueta, folha de erva, telha, caixilho, junta de pedra, cluster mínimo. A tua resolução é o dobro da delas; a tua unidade de desenho de cenário também tem de ser.</p>
+-    <p style="margin-top:12px"><strong>As personagens são a única excepção, e é de propósito.</strong> Elas ficam com detalhe de 1 px. Num ecrã onde o mundo é desenhado a passo de 2 px e as figuras a passo de 1 px, as figuras destacam-se sem contorno extra, sem barra de vida, sem seta — porque são literalmente o dobro da resolução de tudo o resto. É hierarquia visual feita com a grelha, e sai de graça.</p>
++    <p style="margin-top:12px"><strong>As personagens são a única exceção, e é de propósito.</strong> Elas ficam com detalhe de 1 px. Num ecrã onde o mundo é desenhado a passo de 2 px e as figuras a passo de 1 px, as figuras destacam-se sem contorno extra, sem barra de vida, sem seta — porque são literalmente o dobro da resolução de tudo o resto. É hierarquia visual feita com a grelha, e sai de graça.</p>
+     <p style="margin-top:12px">Isto <strong>não baixa a resolução do jogo nem toca numa linha da arte que já fizeste</strong>. Muda só a densidade a que pintas o mundo à volta dela. A §22 tem a especificação, o novo orçamento de horas, e o que fazer com o conflito de calendário que isto resolve.</p>
+   </div>
+ 
+@@ -724,7 +733,7 @@
+   </div>
+ 
+   <div class="note night"><span class="lbl">Nomes de trabalho</span>
+-    <p>Uso <strong>Empire</strong> como codinome do jogo e <strong>A Podridão</strong> para a ameaça noturna. Os nomes dos povos são marcadores de posição — o que tem de ficar fixo já é a <em>lógica</em> de cada um, porque é dela que saem a arte, as tropas e o balanceamento. §36 trata do nome comercial e da verificação de marca.</p>
++    <p>Uso <strong>Empire</strong> como nome de código do jogo e <strong>A Podridão</strong> para a ameaça noturna. Os nomes dos povos são marcadores de posição — o que tem de ficar fixo já é a <em>lógica</em> de cada um, porque é dela que saem a arte, as tropas e o balanceamento. §36 trata do nome comercial e da verificação de marca.</p>
+   </div>
+ </section>
+ 
+@@ -863,7 +872,7 @@
+     <thead><tr><th>Tipo</th><th>Origem</th><th>Uso</th><th>Persistência</th></tr></thead>
+     <tbody>
+       <tr><td>Moeda</td><td>Colheita, animais, pesca, caça, comércio, saque</td><td>Tudo o que é diário: recrutar, construir, pagar</td><td>Cai no chão quando morres. Roubável.</td></tr>
+-      <tr><td>Semente Real</td><td>Só de fortalezas conquistadas e segredos</td><td>Desbloquear classes, evoluções de ofício, mapas</td><td>Nunca se perde. É o teu meta-progresso.</td></tr>
++      <tr><td>Semente Real</td><td>Só de fortalezas conquistadas e segredos</td><td>Desbloquear classes, evoluções de ofício, mapas</td><td>Nunca se perde. É o teu metaprogresso.</td></tr>
+       <tr><td>Favor</td><td>Diplomacia, bardo, conversões</td><td>Assimilar impérios, comprar mercenários sem dívida</td><td>Decai 10%/dia se não for usado</td></tr>
+       <tr><td class="mark">Matéria</td><td>Grão, peixe, animal vivo, madeira, minério</td><td>Consumida por um ofício, ou vendida</td><td><strong>Fica no edifício que a produziu.</strong> Não é transportada pelo jogador.</td></tr>
+     </tbody>
+@@ -879,7 +888,7 @@
+     <tbody>
+       <tr><td>Plantação (canteiro)</td><td class="n">4</td><td>Grão</td><td class="n">2/dia</td><td class="n">2 dias</td><td>Destruída pelo rasto da Podridão</td></tr>
+       <tr><td>Pesqueiro</td><td class="n">6</td><td>Peixe</td><td class="n">3/dia</td><td class="n">2 dias</td><td>Só em bioma com água; imune ao rasto</td></tr>
+-      <tr><td>Galinheiro</td><td class="n">8</td><td>Galinhas vivas</td><td class="n">3/dia</td><td class="n">2,7 dias</td><td>Rouváveis à noite</td></tr>
++      <tr><td>Galinheiro</td><td class="n">8</td><td>Galinhas vivas</td><td class="n">3/dia</td><td class="n">2,7 dias</td><td>Roubáveis à noite</td></tr>
+       <tr><td>Estábulo de vaca</td><td class="n">14</td><td>Vacas vivas</td><td class="n">5/dia</td><td class="n">2,8 dias</td><td>Ordenha manual — exige uma tropa parada</td></tr>
+       <tr><td>Corte de madeira</td><td class="n">7</td><td>Madeira</td><td class="n">2/dia</td><td class="n">3,5 dias</td><td>Só em bioma de bosque</td></tr>
+       <tr><td>Poço de minério</td><td class="n">12</td><td>Minério</td><td class="n">4/dia</td><td class="n">3 dias</td><td>Só em bioma de rocha; atrai Cavadores</td></tr>
+@@ -915,7 +924,7 @@
+   <p>Estava em falta no documento e é o item que amarra a economia à conquista. Um povo <strong>conquistado e mantido vivo</strong> abre uma rota entre o território dele e a tua capital.</p>
+   <div class="kv">
+     <dt>Como abre</dt><dd>Rendição sem morte do rei (§13), ou assimilação pelo diplomata (§14). <strong>Arrasar não abre rota.</strong></dd>
+-    <dt>Custo</dt><dd>Uma carroça (5 moedas) a percorrer o caminho. Se a carroça morre, a rota pára até a substituíres.</dd>
++    <dt>Custo</dt><dd>Uma carroça (5 moedas) a percorrer o caminho. Se a carroça morre, a rota para até a substituíres.</dd>
+     <dt>Rendimento</dt><dd>4–6 moedas/dia por rota, a crescer ~8%/dia com o volume. Lento a arrancar, imparável no fim.</dd>
+     <dt>Efeito de rede</dt><dd>A partir da segunda rota, cada rota adicional dá +10% a <em>todas</em> as outras. Seis povos ligados valem muito mais do que a soma de seis.</dd>
+     <dt>Risco</dt><dd>Acampamentos de mercenários assaltam carroças (§14). O rasto da Podridão corta a rota durante um dia.</dd>
+@@ -1055,7 +1064,7 @@
+   </ul>
+ 
+   <div class="note risk"><span class="lbl">O que testar primeiro, na Fase 1</span>
+-    <p>Antes de existir arte final, monta um cenário fechado: <strong>um muro, seis arqueiros, uma noite de 105 s, vagas de Rastejantes crescentes.</strong> Ajusta até a noite ser ganha com 1–2 mortes no dia 5 e perdida sem torre no dia 8. Este micro-teste é a fundação de todo o balanceamento posterior — e cabe num único ficheiro de teste automatizado (§31).</p>
++    <p>Antes de existir arte final, monta um cenário fechado: <strong>um muro, seis arqueiros, uma noite de 105 s, vagas de Rastejantes crescentes.</strong> Ajusta até a noite ser ganha com 1–2 mortes no dia 5 e perdida sem torre no dia 8. Este microteste é a fundação de todo o balanceamento posterior — e cabe num único ficheiro de teste automatizado (§31).</p>
+   </div>
+ </section>
+ 
+@@ -1079,7 +1088,7 @@
+     <thead><tr><th>Classe</th><th>Gancho</th><th>Mecânica única</th></tr></thead>
+     <tbody>
+       <tr><td>Cavaleiro Enterrado</td><td>Armadura completa, aspeto sombrio, passado triste</td><td>Único personagem que se cura sozinho — sentando-se no chão. Sempre que o faz, nasce vegetação à volta que abranda A Podridão nessa faixa. <strong>Cura e terraformação são a mesma ação.</strong></td></tr>
+-      <tr><td>Cavaleiro Selado</td><td>O elmo tapa-lhe os olhos desde que teve o coração partido; o cavalo vê pelos dois</td><td>Inseparável da montaria. Se o cavalo morre, fica cego: o alcance cai para corpo-a-corpo e o jogador perde visão periférica no ecrã até arranjar nova montaria (§24).</td></tr>
++      <tr><td>Cavaleiro Selado</td><td>O elmo tapa-lhe os olhos desde que teve o coração partido; o cavalo vê pelos dois</td><td>Inseparável da montaria. Se o cavalo morre, fica cego: o alcance cai para corpo a corpo e o jogador perde visão periférica no ecrã até arranjar nova montaria (§24).</td></tr>
+       <tr><td>Diplomata</td><td>Negociador do reino</td><td>Ver §14. Não combate.</td></tr>
+       <tr><td>Companheiro</td><td>A criatura verde ao lado do trono — o teu <code>Healing Frog.aseprite</code></td><td>Não é súbdito nem obedece a ouro — segue quem o alimentar. Ver caixa abaixo.</td></tr>
+     </tbody>
+@@ -1217,7 +1226,7 @@
+     <tbody>
+       <tr><td>Aérea</td><td class="n">180–220 px</td><td>Uma voadora tem de ler-se como <em>acima do alcance</em>: precisa de pelo menos três alturas de personagem de folga sobre o telhado mais alto. 200 px ≈ 4 × escala 2.</td></tr>
+       <tr><td>Superfície</td><td class="n">300–340 px</td><td>Tem de caber o edifício mais alto que não seja o núcleo (≈ 130 px) com céu suficiente para o parallax respirar. Abaixo de 300 o mundo fica claustrofóbico; acima de 340 as tropas ficam pequenas de mais para se lerem.</td></tr>
+-      <tr><td>Corte de solo</td><td class="n">180–220 px</td><td>Uma cavidade tem de caber um monarca (58 px) de pé, com teto e solo desenháveis. Mínimo funcional 120 px; 200 px dá espaço para a caverna ter composição própria.</td></tr>
++      <tr><td>Corte de solo</td><td class="n">180–220 px</td><td>Numa cavidade tem de caber um monarca (58 px) de pé, com teto e solo desenháveis. Mínimo funcional 120 px; 200 px dá espaço para a caverna ter composição própria.</td></tr>
+       <tr><td>Linha do solo</td><td class="n">y ≈ 500–540</td><td>Consequência das três anteriores. <strong>Fixa um valor na Fase 0 e não lhe toques</strong> — meia dúzia de sistemas vão depender dele.</td></tr>
+     </tbody>
+   </table></div>
+@@ -1249,7 +1258,7 @@
+ 
+   <div class="note risk"><span class="lbl">O diagnóstico</span>
+     <p>Nas referências, a profundidade não é feita com camadas de parallax a mexer — é feita com <strong>três rampas simultâneas</strong>: o detalhe adensa, a saturação sobe e o valor escurece, tudo de forma contínua do topo para a base. Não há degraus. Não há "fundo" e "frente": há um gradiente.</p>
+-    <p style="margin-top:12px">A tua §22 descreve o teu fundo actual como <em>"achatado"</em>. É exactamente isso: tens duas superfícies — céu e chão — separadas por uma linha. As referências têm cinco ou seis planos entre elas. <strong>Não é falta de resolução nem de talento: é falta de um plano no meio.</strong></p>
++    <p style="margin-top:12px">A tua §22 descreve o teu fundo atual como <em>"achatado"</em>. É exatamente isso: tens duas superfícies — céu e chão — separadas por uma linha. As referências têm cinco ou seis planos entre elas. <strong>Não é falta de resolução nem de talento: é falta de um plano no meio.</strong></p>
+   </div>
+ 
+   <h5>O horizonte não é a linha do solo</h5>
+@@ -1267,11 +1276,11 @@
+   </table></div>
+ 
+   <div class="note dec"><span class="lbl">A regra do céu</span>
+-    <p><strong>Acima do telhado mais alto tem de haver pelo menos 30% da altura do ecrã sem nada com contorno.</strong> Só céu e camadas distantes. É a única coisa que o Milki Delivery faz e tu não fazes, e é o que transforma "objectos sobre um fundo" numa <em>paisagem</em>.</p>
+-    <p style="margin-top:12px">Repara que isto não te obriga a mudar as faixas: a tua faixa aérea já são 200 px = 28% do ecrã. O que muda é a regra de composição — <strong>nada de silhueta contornada entra na faixa aérea</strong>, excepto as voadoras e a copa da árvore colossal do castelo, que é justamente por isso que ela vai ler-se como monumental.</p>
++    <p><strong>Acima do telhado mais alto tem de haver pelo menos 30% da altura do ecrã sem nada com contorno.</strong> Só céu e camadas distantes. É a única coisa que o Milki Delivery faz e tu não fazes, e é o que transforma "objetos sobre um fundo" numa <em>paisagem</em>.</p>
++    <p style="margin-top:12px">Repara que isto não te obriga a mudar as faixas: a tua faixa aérea já são 200 px = 28% do ecrã. O que muda é a regra de composição — <strong>nada de silhueta contornada entra na faixa aérea</strong>, exceto as voadoras e a copa da árvore colossal do castelo, e é justamente por isso que ela vai ler-se como monumental.</p>
+   </div>
+ 
+-  <div class="note night"><span class="lbl">A excepção medida: cenas fechadas invertem a regra</span>
++  <div class="note night"><span class="lbl">A exceção medida: cenas fechadas invertem a regra</span>
+     <p>A captura de floresta do Milki mede ao contrário: saturação <em>maior</em> no topo (0,785) do que na base (0,561), e o topo <em>mais escuro</em> (valor 0,311 contra 0,431). Faz sentido — numa floresta fechada não há atmosfera entre o observador e o fundo, e a profundidade passa a ser feita só com <strong>valor</strong>: o fundo escurece, a frente ilumina-se.</p>
+     <p style="margin-top:12px">Isto dá-te uma gramática por bioma sem inventar nada: <strong>biomas abertos</strong> (Horta, Portuários, Fenda) fazem profundidade com saturação e névoa clara; <strong>biomas fechados</strong> (Enramados, Sob-Raiz, e o interior do corte de solo) fazem-na com escuridão no fundo. O mesmo motor de camadas, dois presets.</p>
+   </div>
+@@ -1321,7 +1330,7 @@
+     <div class="step"><h4>Reconhecimento</h4><p>De dia, aproximar-se revela a composição: nível da muralha, número de defensores e a <em>idade do rei inimigo</em> (§15). Um tirano tem muralhas fracas e tropas de elite; um austero tem o contrário.</p></div>
+     <div class="step"><h4>Marcha</h4><p>Designas tropas para avançar. Elas saem do império, <strong>que fica desguarnecido nessa noite.</strong> Esta é a decisão.</p></div>
+     <div class="step"><h4>Cerco</h4><p>O Construtor n2 ergue defesas em campo, o Ferreiro n2 recolhe armas dos mortos, o Cozinheiro alimenta. É aqui que os ofícios evoluem em 4 dias em vez de 14 — e é aqui que morrem.</p></div>
+-    <div class="step"><h4>Rendição ou queda</h4><p>Se a muralha cai e o rei inimigo estiver ausente, os defensores rendem-se e passam a ser teus. Se o rei estiver presente, lutam até ao fim: ganhas saque, não ganhas gente.</p></div>
++    <div class="step"><h4>Rendição ou queda</h4><p>Se a muralha cair e o rei inimigo estiver ausente, os defensores rendem-se e passam a ser teus. Se o rei estiver presente, lutam até ao fim: ganhas saque, não ganhas gente.</p></div>
+   </div>
+ 
+   <div class="note night"><span class="lbl">A escolha que define o jogador</span>
+@@ -1338,7 +1347,7 @@
+   <div class="tw"><table>
+     <thead><tr><th>Resultado</th><th class="n">Prob. base</th><th>Consequência</th></tr></thead>
+     <tbody>
+-      <tr><td>Dissolução</td><td class="n">30%</td><td>Acaba com o acampamento e volta com uma super-tropa — a melhor unidade do jogo naquele bioma</td></tr>
++      <tr><td>Dissolução</td><td class="n">30%</td><td>Acaba com o acampamento e volta com uma supertropa — a melhor unidade do jogo naquele bioma</td></tr>
+       <tr><td>Contrato</td><td class="n">50%</td><td>Volta com mercenários — mas contrai dívida</td></tr>
+       <tr><td>Captura</td><td class="n">20%</td><td>Fica prisioneiro. Resgate exigido com prazo.</td></tr>
+     </tbody>
+@@ -1355,7 +1364,7 @@
+     <dt>Pagamento parcial</dt><dd>Aceite. Reduz proporcionalmente e reinicia o prazo em 3 dias.</dd>
+   </div>
+ 
+-  <div class="note dec"><span class="lbl">Porquê isto é o teu melhor sorvedouro</span>
++  <div class="note dec"><span class="lbl">Porque é que isto é o teu melhor sorvedouro</span>
+     <p>Porque não é um imposto — é uma <strong>aposta</strong>. O jogador escolhe entrar em dívida para ganhar poder agora e paga com ansiedade durante seis dias. Um relógio visível no HUD, e mais nada. Compara com a ganância do rei (§15), que é passiva: os dois em conjunto dão-te um sorvedouro que o jogador aceita e outro contra o qual se revolta. São emoções diferentes e é bom que sejam.</p>
+   </div>
+ 
+@@ -1389,7 +1398,7 @@
+       <tr><td>Feira Livre</td><td>Tudo −40% de custo</td><td>Ganância +15 <strong>permanentemente</strong></td></tr>
+       <tr><td>Rota Protegida</td><td>Comércio a dobrar hoje; carroças imunes a assalto</td><td>Nenhuma tropa pode sair das muralhas hoje</td></tr>
+       <tr><td>Vigília</td><td>Tropas não fogem esta noite</td><td>Todas as tropas −30% de vida amanhã</td></tr>
+-      <tr><td>Perdão Real</td><td>Dívida de mercenários zerada</td><td>Favor a zero; nenhum diplomata funciona por 5 dias</td></tr>
++      <tr><td>Perdão Real</td><td>Dívida de mercenários a zero</td><td>Favor a zero; nenhum diplomata funciona por 5 dias</td></tr>
+     </tbody>
+   </table></div>
+ 
+@@ -1434,13 +1443,13 @@
+   </table></div>
+ 
+   <h4>Os 12 diários — a estrutura narrativa</h4>
+-  <p>Doze fragmentos, três por ato, encontrados por ordem de conquista e não por ordem de escrita. Cada um tem de funcionar isolado <em>e</em> mudar o sentido dos anteriores. A regra: <strong>nenhum diário explica a Podridão diretamente; todos descrevem uma decisão humana que, lida em conjunto, explica-a.</strong></p>
++  <p>Doze fragmentos, três por ato, encontrados por ordem de conquista e não por ordem de escrita. Cada um tem de funcionar isolado <em>e</em> mudar o sentido dos anteriores. A regra: <strong>nenhum diário explica a Podridão diretamente; todos descrevem uma decisão humana que, lida em conjunto, a explica.</strong></p>
+   <div class="tw"><table>
+     <thead><tr><th>Ato</th><th>Diários</th><th>O que revelam</th><th>Reviravolta</th></tr></thead>
+     <tbody>
+       <tr><td>I — Os seis</td><td>1–3</td><td>Os povos partilharam uma origem e uma árvore. Havia comércio, casamentos, uma língua comum.</td><td>A árvore do teu castelo não cresceu ali. Foi <em>plantada</em>, dentro da muralha, de propósito.</td></tr>
+       <tr><td>II — A partilha</td><td>4–6</td><td>Alguma coisa foi dividida em seis partes e distribuída. Cada povo guardou a sua e esqueceu porquê.</td><td>As muralhas de cada povo são feitas do material que guardava a parte deles.</td></tr>
+-      <tr><td>III — A ruptura</td><td>7–9</td><td>Um dos seis quebrou o acordo. Os outros cinco responderam. A Podridão começa nesse ano.</td><td>Os Sob-Raiz não se esconderam por medo — foram enterrados pelos outros cinco.</td></tr>
++      <tr><td>III — A rutura</td><td>7–9</td><td>Um dos seis quebrou o acordo. Os outros cinco responderam. A Podridão começa nesse ano.</td><td>Os Sob-Raiz não se esconderam por medo — foram enterrados pelos outros cinco.</td></tr>
+       <tr><td>IV — O que resta</td><td>10–12</td><td>A Podridão não é um invasor. É o que sobra quando as seis partes estão separadas.</td><td>Reuni-las acaba com ela — e acaba também com os seis povos como coisas distintas.</td></tr>
+     </tbody>
+   </table></div>
+@@ -1687,23 +1696,23 @@
+   <h4>O conflito que as referências levantam — e como se resolve</h4>
+   <p>Há aqui uma contradição que este documento nunca tinha nomeado, e as três referências obrigam a nomeá-la agora.</p>
+   <div class="note risk"><span class="lbl">Nomear o problema</span>
+-    <p>O Eastward <strong>não usa tiles</strong>. A Pixpil decompõe cada edifício em camadas — telhado à parte das paredes —, remonta-as em 3D dentro do motor e pinta um <em>bump map</em> à mão para cada peça. Nada se repete: tudo é feito à medida daquele sítio. O Chef RPG é feito por um <strong>designer de arquitectura</strong> que desenha cada local aplicando princípios de desenho urbano. O Milki Delivery tem três pessoas e um jogo de duas a quatro horas — cada ecrã é uma ilustração.</p>
++    <p>O Eastward <strong>não usa tiles</strong>. A Pixpil decompõe cada edifício em camadas — telhado à parte das paredes —, remonta-as em 3D dentro do motor e pinta um <em>bump map</em> à mão para cada peça. Nada se repete: tudo é feito à medida daquele sítio. O Chef RPG é feito por um <strong>designer de arquitetura</strong> que desenha cada local aplicando princípios de desenho urbano. O Milki Delivery tem três pessoas e um jogo de duas a quatro horas — cada ecrã é uma ilustração.</p>
+     <p style="margin-top:12px">Os três são bonitos <strong>porque são autorados sítio a sítio</strong>. O teu jogo monta o território a partir de segmentos sorteados por uma seed. É o modelo certo para um <em>kingdom-builder</em> com rejogabilidade — mas é, literalmente, o oposto do que faz a beleza das tuas referências. Fingir que não há conflito é como se resolve mal.</p>
+   </div>
+ 
+-  <p>A saída não é abandonar a geração. É <strong>subir a unidade autorada</strong> e separar quem autora o quê. Cinco regras, e a primeira sozinha resolve metade do problema.</p>
++  <p>A saída não é abandonar a geração. É <strong>subir a unidade autorada</strong> e separar quem autora o quê. Seis regras, e a primeira sozinha resolve metade do problema.</p>
+ 
+   <div class="grid g2">
+     <div class="cell"><h6>1 · O parallax nunca é por segmento <span class="mark">a mais importante</span></h6><p>As camadas de céu, distância e plano médio (§11) são geradas <strong>uma vez por região</strong>, como uma paisagem contínua, a partir da seed. Só o plano de jogo e o primeiro plano são montados segmento a segmento. O olho lê uma paisagem única; o jogo lê oito módulos. É este único truque que faz montagem procedural parecer composição.</p></div>
+-    <div class="cell"><h6>2 · Cada segmento tem um assunto</h6><p>Uma coisa em que o olho pousa: o moinho, a ponte, a árvore partida, o poço. Tudo o resto é acompanhamento. Um segmento com quatro coisas igualmente interessantes não tem nenhuma — e é exactamente o que acontece quando se espalham edifícios numa folha para ver como ficam.</p></div>
+-    <div class="cell"><h6>3 · A silhueta vem do telhado</h6><p>O teste do §22 mantém-se e agora tem um método: se cobrires tudo abaixo da linha do solo e ainda distingues o povo, o kit está bom. Variedade de <em>props</em> não substitui variedade de <em>remate</em>. É onde 80% da identidade de um povo vive.</p></div>
++    <div class="cell"><h6>2 · Cada segmento tem um assunto</h6><p>Uma coisa em que o olho pousa: o moinho, a ponte, a árvore partida, o poço. Tudo o resto é acompanhamento. Um segmento com quatro coisas igualmente interessantes não tem nenhuma — e é exatamente o que acontece quando se espalham edifícios numa folha para ver como ficam.</p></div>
++    <div class="cell"><h6>3 · A silhueta vem do telhado</h6><p>O teste do §22 mantém-se e agora tem um método: se cobrires tudo abaixo da linha do solo e ainda distinguires o povo, o kit está bom. Variedade de <em>props</em> não substitui variedade de <em>remate</em>. É onde 80% da identidade de um povo vive.</p></div>
+     <div class="cell"><h6>4 · Variação por biblioteca, não por ruído</h6><p>Cada <em>prop</em> repetível precisa de <strong>4 variantes no mínimo</strong> e de uma regra de "não repetir a mesma variante dentro de 400 px". Espelhar é proibido em tudo o que tenha lado iluminado — a luz vem sempre do mesmo sítio e o olho apanha o espelhamento antes de perceber porquê.</p></div>
+     <div class="cell"><h6>5 · Greybox antes de pintar</h6><p>Mantém-se inteira, e agora com mais razão: com a lei da escala dupla (§01), pintar um segmento com a composição errada custa-te meio dia em vez de um dia — mas continua a não consertar nada.</p></div>
+     <div class="cell"><h6>6 · Uma cena-cartaz por povo</h6><p>Um ecrã por império, acabado a 100% e <strong>fora do gerador</strong>. Serve de padrão de qualidade para os segmentos daquele povo, de material para a página da Steam, e de resposta à pergunta "quanto tempo demora uma cena acabada" (§22).</p></div>
+   </div>
+ 
+   <h4>A lição do Chef RPG: desenhar lugares, não fundos</h4>
+-  <p>O autor do Chef RPG é designer de arquitectura. Aplica desenho urbano a cada local — e é por isso que uma aldeia dele parece habitada e uma folha de assets não. São quatro ferramentas, e todas se traduzem directamente para 1.5D.</p>
++  <p>O autor do Chef RPG é designer de arquitetura. Aplica desenho urbano a cada local — e é por isso que uma aldeia dele parece habitada e uma folha de assets não. São quatro ferramentas, e todas se traduzem diretamente para 1.5D.</p>
+ 
+   <div class="tw"><table>
+     <thead><tr><th>Ferramenta</th><th>O que é</th><th>Na tua vista lateral</th></tr></thead>
+@@ -1711,7 +1720,7 @@
+       <tr><td><strong>Marco</strong></td><td>O elemento alto que se vê de longe e orienta.</td><td><strong>Um por região</strong>, visível de três segmentos de distância, no plano médio ou a furar a faixa aérea. Para os Enramados é a árvore colossal; para os Portuários é o farol; para a Fornalha é a chaminé.</td></tr>
+       <tr><td><strong>Limiar</strong></td><td>A passagem de um sítio para outro, marcada.</td><td>A fronteira entre povos <strong>nunca é um <em>fade</em></strong>: é um portão, uma ponte, uma falha na rocha, uma muralha em ruínas. Um segmento dedicado, com peso próprio.</td></tr>
+       <tr><td><strong>Bordo</strong></td><td>Onde o lugar acaba.</td><td>Uma região tem de <strong>terminar em alguma coisa</strong> — falésia, mar, muralha, desfiladeiro. Nunca em mais terreno igual que desaparece fora do ecrã.</td></tr>
+-      <tr><td><strong>Percurso</strong></td><td>A rua. Os edifícios dirigem-se a ela.</td><td>A linha do solo <strong>é a rua</strong>. E aqui está a correcção que mais vai mudar as tuas cenas: os teus edifícios <em>assentam</em> na linha do solo; têm de <strong>dar para ela</strong>. Entre a fachada e a linha por onde as tropas andam tem de haver 12–20 px de soleira: um degrau, um caixote, uma lanterna, ferramentas encostadas. É essa faixa de 16 px que faz um edifício parecer usado por alguém.</td></tr>
++      <tr><td><strong>Percurso</strong></td><td>A rua. Os edifícios dirigem-se a ela.</td><td>A linha do solo <strong>é a rua</strong>. E aqui está a correção que mais vai mudar as tuas cenas: os teus edifícios <em>assentam</em> na linha do solo; têm de <strong>dar para ela</strong>. Entre a fachada e a linha por onde as tropas andam tem de haver 12–20 px de soleira: um degrau, um caixote, uma lanterna, ferramentas encostadas. É essa faixa de 16 px que faz um edifício parecer usado por alguém.</td></tr>
+     </tbody>
+   </table></div>
+ 
+@@ -1734,30 +1743,30 @@
+ <section id="s22">
+   <span class="sec-no">22 — Arte</span>
+   <h3>Pipeline de pixel art e a paleta mestra</h3>
+-  <p class="lede">Esta secção foi reescrita à volta das três referências que deste. A especificação continua a derivar de como desenhas (§01) e a paleta continua a ser a tua — mas agora há três coisas que não havia: a <strong>lei da escala dupla</strong>, a <strong>pilha de iluminação</strong>, e a <strong>fonte arquitectónica de cada povo</strong>. O plano de produção foi refeito em consequência, e o cenário encolheu.</p>
++  <p class="lede">Esta secção foi reescrita à volta das três referências que deste. A especificação continua a derivar de como desenhas (§01) e a paleta continua a ser a tua — mas agora há três coisas que não havia: a <strong>lei da escala dupla</strong>, a <strong>pilha de iluminação</strong>, e a <strong>fonte arquitetónica de cada povo</strong>. O plano de produção foi refeito em consequência, e o cenário encolheu.</p>
+ 
+   <h4>As três alavancas — o que cada referência ensina, e qual delas é tua</h4>
+-  <p>Medi as cinco capturas (§01) e fui ver como cada jogo é feito. A conclusão útil é que os três resolvem "cenário bonito" com alavancas <strong>diferentes</strong>, e que só uma delas é directamente tua.</p>
++  <p>Medi as cinco capturas (§01) e fui ver como cada jogo é feito. A conclusão útil é que os três resolvem "cenário bonito" com alavancas <strong>diferentes</strong>, e que só uma delas é diretamente tua.</p>
+ 
+   <div class="grid g3">
+     <div class="cell"><h6>Milki Delivery — forma e calma</h6><p>Câmara lateral, <strong>como a tua</strong>. Desenhado à mão na Unity por três pessoas, num jogo de 2–4 h. Poucas formas, grandes, com ar à volta: 30% do ecrã sem nada contornado, e uma rampa contínua de detalhe do topo para a base (2,9×, medido). <strong>É a alavanca que te falta — e é de composição, não de técnica.</strong></p></div>
+-    <div class="cell"><h6>Eastward — luz</h6><p>582–640 px de tela efectiva, menos de metade da tua. A beleza não está nos pixels: está no <em>deferred lighting</em>, nos <em>bump maps</em> pintados peça a peça, no SSAO simulado, nos LUTs e nas camadas de névoa e raios ao amanhecer. <strong>Seis anos e oito pessoas.</strong> A alavanca é aproveitável; o orçamento não.</p></div>
+-    <div class="cell"><h6>Chef RPG — arquitectura</h6><p>799×450 de tela efectiva. Feito por um designer de arquitectura que desenha cada local com princípios de desenho urbano — marco, limiar, bordo, percurso (§21). É a alavanca <strong>mais barata das três</strong>: não custa horas de pintura, custa uma hora de planta antes de desenhar.</p></div>
++    <div class="cell"><h6>Eastward — luz</h6><p>582–640 px de tela efetiva, menos de metade da tua. A beleza não está nos pixels: está no <em>deferred lighting</em>, nos <em>bump maps</em> pintados peça a peça, no SSAO simulado, nos LUTs e nas camadas de névoa e raios ao amanhecer. <strong>Seis anos e oito pessoas.</strong> A alavanca é aproveitável; o orçamento não.</p></div>
++    <div class="cell"><h6>Chef RPG — arquitetura</h6><p>799×450 de tela efetiva. Feito por um designer de arquitetura que desenha cada local com princípios de desenho urbano — marco, limiar, bordo, percurso (§21). É a alavanca <strong>mais barata das três</strong>: não custa horas de pintura, custa uma hora de planta antes de desenhar.</p></div>
+   </div>
+ 
+   <div class="note dec"><span class="lbl">A ordem por que te servem</span>
+-    <p><strong>Arquitectura primeiro</strong> (é grátis), <strong>composição a seguir</strong> (é a lei da escala dupla e a regra do céu), <strong>luz por último</strong> (é onde está o retorno maior por hora, mas só depois de haver o que iluminar). Fazer luz sobre uma cena mal composta é pôr um filtro caro num problema barato.</p>
++    <p><strong>Arquitetura primeiro</strong> (é grátis), <strong>composição a seguir</strong> (é a lei da escala dupla e a regra do céu), <strong>luz por último</strong> (é onde está o retorno maior por hora, mas só depois de haver o que iluminar). Fazer luz sobre uma cena mal composta é pôr um filtro caro num problema barato.</p>
+   </div>
+ 
+   <h4>O veredito sobre a resolução — e porque é que ela fica onde está</h4>
+-  <p>A tentação, depois dos números do §01, é baixar para 640×360 e ficar em pé de igualdade com o Eastward. <strong>Não.</strong> A tua arte de personagem está desenhada a 1:1 nesta grelha, perde 6,3% dos pixels a reduzir, e é o teu activo mais valioso e o mais difícil de refazer. A regra de ouro do §01 mantém-se: é a grelha de autoria que manda.</p>
+-  <p>O que muda não é a resolução — é a <strong>densidade de desenho dentro dela</strong>. E o cálculo é directo:</p>
++  <p>A tentação, depois dos números do §01, é baixar para 640×360 e ficar em pé de igualdade com o Eastward. <strong>Não.</strong> A tua arte de personagem está desenhada a 1:1 nesta grelha, perde 6,3% dos pixels a reduzir, e é o teu ativo mais valioso e o mais difícil de refazer. A regra de ouro do §01 mantém-se: é a grelha de autoria que manda.</p>
++  <p>O que muda não é a resolução — é a <strong>densidade de desenho dentro dela</strong>. E o cálculo é direto:</p>
+ 
+   <div class="tw"><table>
+     <thead><tr><th>Elemento</th><th class="n">Na referência</th><th class="n">Na tua grelha</th><th>Consequência</th></tr></thead>
+     <tbody>
+       <tr><td>Contorno de silhueta</td><td class="n">1 px</td><td class="n"><strong>2 px</strong></td><td>Peso aparente igual ao das referências. Podes obtê-lo por <em>shader</em> de dilatação, sem redesenhar nada (ver a pilha de iluminação, abaixo).</td></tr>
+-      <tr><td>Contorno interno e detalhe de personagem</td><td class="n">1 px</td><td class="n">1 px</td><td><strong>A excepção deliberada.</strong> As figuras ficam ao dobro da resolução do mundo e destacam-se sem ajuda de UI.</td></tr>
++      <tr><td>Contorno interno e detalhe de personagem</td><td class="n">1 px</td><td class="n">1 px</td><td><strong>A exceção deliberada.</strong> As figuras ficam ao dobro da resolução do mundo e destacam-se sem ajuda de UI.</td></tr>
+       <tr><td>Erva, telha, junta de pedra, caixilho</td><td class="n">1 px</td><td class="n"><strong>2 px</strong></td><td>Metade das decisões de pixel por metro quadrado de cenário.</td></tr>
+       <tr><td>Cluster mínimo em cenário</td><td class="n">1×1</td><td class="n"><strong>2×2</strong></td><td>Nada de pixels soltos no mundo. Pixels soltos = ruído a esta densidade.</td></tr>
+       <tr><td>Detalhe nas camadas distantes</td><td class="n">2 px</td><td class="n"><strong>4 px</strong></td><td>Montanha e copa distante são <em>massa</em>, não textura.</td></tr>
+@@ -1766,7 +1775,7 @@
+   </table></div>
+ 
+   <div class="note spec"><span class="lbl">Como se verifica que a lei está a ser cumprida</span>
+-    <p>Não é a olho. A métrica é <strong>cores distintas numa janela de 16×16 px</strong>, medida na imagem final. Nas referências, em cena aberta, ela sobe do topo para a base assim: <strong>~13–18 no céu, ~21–26 no plano médio, ~30–53 no primeiro plano</strong>. Se o teu topo de ecrã medir 40, tens ruído a fingir de paisagem. O guião de medição está feito e corre sobre qualquer captura tua — mede-te a ti como mediu a eles.</p>
++    <p>Não é a olho. A métrica é <strong>cores distintas numa janela de 16×16 px</strong>, medida na imagem final. Nas referências, em cena aberta, ela sobe do topo para a base assim: <strong>~13–18 no céu, ~21–26 no plano médio, ~30–53 no primeiro plano</strong>. Se o teu topo de ecrã medir 40, tens ruído a fingir de paisagem. O guião de medição está feito e corre sobre qualquer captura tua — mede-te a ti como os mediu a eles.</p>
+   </div>
+ 
+ 
+@@ -1835,7 +1844,7 @@
+   </table></div>
+ 
+   <h5>Bloco 2 · Cenário — ≈ 70 h (40%) <span class="mark">revisto na v4</span></h5>
+-  <p>As horas abaixo já contam com a lei da escala dupla (§01). Desenhar cenário com unidade de 2 px em vez de 1 px corta perto de 40% das decisões de pixel por peça — não é uma estimativa optimista, é aritmética de área. Os valores da v3 estão entre parênteses.</p>
++  <p>As horas abaixo já contam com a lei da escala dupla (§01). Desenhar cenário com unidade de 2 px em vez de 1 px corta perto de 40% das decisões de pixel por peça — não é uma estimativa otimista, é aritmética de área. Os valores da v3 estão entre parênteses.</p>
+   <div class="tw"><table>
+     <thead><tr><th>Item</th><th>Estado</th><th>O que falta</th><th class="n">Horas</th></tr></thead>
+     <tbody>
+@@ -1851,7 +1860,7 @@
+   <div class="tw"><table>
+     <thead><tr><th>Item</th><th>Estado</th><th>O que falta</th><th class="n">Horas</th></tr></thead>
+     <tbody>
+-      <tr><td class="mark">Sombras de contacto</td><td>—</td><td>Um sprite de elipse por escala e por classe de objecto, mais o nó que o coloca</td><td class="n">1</td></tr>
++      <tr><td class="mark">Sombras de contacto</td><td>—</td><td>Um sprite de elipse por escala e por classe de objeto, mais o nó que o coloca</td><td class="n">1</td></tr>
+       <tr><td><code>CanvasModulate</code> por plano</td><td>—</td><td>Cinco planos ligados ao <code>GameClock</code></td><td class="n">2</td></tr>
+       <tr><td>LUT de hora do dia</td><td>—</td><td>Rampas para amanhecer, meio-dia, crepúsculo e noite; é o mesmo <em>shader</em> do <em>palette swap</em></td><td class="n">4</td></tr>
+       <tr><td>Névoa entre camadas</td><td>—</td><td>3 bandas, dois presets (aberto e fechado)</td><td class="n">3</td></tr>
+@@ -1912,19 +1921,19 @@
+   <div class="tw"><table>
+     <thead><tr><th class="n">#</th><th>Degrau</th><th>Como se faz em Godot</th><th class="n">Custo</th><th>O que compra</th></tr></thead>
+     <tbody>
+-      <tr><td class="n">1</td><td><strong>Sombra de contacto</strong></td><td>Um sprite elíptico desenhado à mão sob <em>tudo</em> o que toca o chão. <code>CanvasItem</code> em modo multiplicativo, 45–55% de opacidade, castanho-escuro quente — <strong>nunca preto</strong>. Escala com a largura do objecto, não com a altura.</td><td class="n">1 h</td><td>O maior salto isolado do documento. É o que separa "objectos pousados numa imagem" de "objectos que estão ali". As tuas cenas flutuam sobre branco; isto resolve-o antes de pintares um único edifício.</td></tr>
++      <tr><td class="n">1</td><td><strong>Sombra de contacto</strong></td><td>Um sprite elíptico desenhado à mão sob <em>tudo</em> o que toca o chão. <code>CanvasItem</code> em modo multiplicativo, 45–55% de opacidade, castanho-escuro quente — <strong>nunca preto</strong>. Escala com a largura do objeto, não com a altura.</td><td class="n">1 h</td><td>O maior salto isolado do documento. É o que separa "objetos pousados numa imagem" de "objetos que estão ali". As tuas cenas flutuam sobre branco; isto resolve-o antes de pintares um único edifício.</td></tr>
+       <tr><td class="n">2</td><td><strong><code>CanvasModulate</code> por faixa</strong></td><td>Um por plano de imagem (§11), animado pelo <code>GameClock</code>. O corte de solo fica permanentemente escuro; só as cavidades descobertas recebem luz.</td><td class="n">2 h</td><td>Ciclo dia/noite quase de graça, e profundidade estática por diferença de exposição entre planos.</td></tr>
+       <tr><td class="n">3</td><td><strong>Gradação por LUT</strong></td><td>Uma rampa 1D por hora do dia; todos os sprites amostram através dela. <strong>É o mesmo <em>shader</em> de <em>palette swap</em></strong> que já tens listado para variantes de povo, estados e encantamento do bardo — um <em>shader</em> a fazer quatro trabalhos.</td><td class="n">4 h</td><td>Amanhecer, meio-dia, crepúsculo e noite coerentes em todo o jogo, <strong>sem repintar nada</strong> e sem sair da paleta. É a técnica do Eastward, e é a que melhor se aplica ao teu caso.</td></tr>
+       <tr><td class="n">4</td><td><strong>Camadas de névoa</strong></td><td>Duas ou três bandas horizontais aditivas entre camadas de parallax, com opacidade de 6–14% e deriva muito lenta.</td><td class="n">3 h</td><td>É o que produz, em imagem, a rampa de saturação e valor medida na §11. Barato e desproporcionalmente eficaz em cena aberta.</td></tr>
+       <tr><td class="n">5</td><td><strong>Luz quente pontual</strong></td><td><code>PointLight2D</code> sem sombra na forja, no forno, nas lanternas e nos faróis. Sombras dinâmicas só nas três luzes mais próximas da câmara (§19).</td><td class="n">3 h</td><td>Dá vida à noite e justifica a rampa de âmbar da paleta, que hoje tem só 5 cores e quase não se usa.</td></tr>
+       <tr><td class="n">6</td><td><strong>Raios de amanhecer</strong></td><td><em>Quads</em> aditivos inclinados, opacidade ≤10%, deriva lenta, só entre as horas de nascer e pôr do sol.</td><td class="n">2 h</td><td>A assinatura visual do Eastward, e o que faz o teu sino da manhã (§23) valer uma captura de ecrã.</td></tr>
+       <tr><td class="n">7</td><td><strong>Contorno por dilatação</strong></td><td>Já está na tua lista. Aqui ganha uma função nova: <strong>engrossar a silhueta de 1 para 2 px sem redesenhar a arte</strong> (§01). Aplica-se por material — cenário sim, faixas distantes não.</td><td class="n">3 h</td><td>Resolve a lei da escala dupla no contorno sem te custar uma única hora de Aseprite.</td></tr>
+-      <tr><td class="n">8</td><td><strong><em>Normal maps</em> + luz presa à paleta</strong></td><td>O <code>PointLight2D</code> não respeita o filtro <em>Nearest</em> em <em>normal maps</em> — a armadilha já documentada abaixo. A solução conhecida é codificar o índice de paleta num canal e o brilho da normal noutro, e descodificar através de uma textura de gradiente, para <strong>a cor iluminada cair sempre numa cor da paleta</strong>.</td><td class="n">12 h+</td><td>É o efeito Eastward a sério. <strong>Só para objectos-herói</strong> — núcleo, castelo, muralhas, forja. Nunca para 300 unidades. E só depois de 1 a 7 estarem feitos.</td></tr>
++      <tr><td class="n">8</td><td><strong><em>Normal maps</em> + luz presa à paleta</strong></td><td>O <code>PointLight2D</code> não respeita o filtro <em>Nearest</em> em <em>normal maps</em> — a armadilha já documentada abaixo. A solução conhecida é codificar o índice de paleta num canal e o brilho da normal noutro, e descodificar através de uma textura de gradiente, para <strong>a cor iluminada cair sempre numa cor da paleta</strong>.</td><td class="n">12 h+</td><td>É o efeito Eastward a sério. <strong>Só para objetos-herói</strong> — núcleo, castelo, muralhas, forja. Nunca para 300 unidades. E só depois de 1 a 7 estarem feitos.</td></tr>
+     </tbody>
+   </table></div>
+ 
+   <div class="note dec"><span class="lbl">Se só fizeres uma coisa</span>
+-    <p>Faz o degrau 1. <strong>Uma hora de sombras de contacto muda mais as tuas capturas de ecrã do que cinquenta horas de edifícios novos</strong> — e resolve exactamente o sintoma que a §01 descreve: figuras acabadas espalhadas sobre um fundo por resolver. Elas não estão só sobre um fundo por resolver; estão a flutuar. Uma elipse castanha por baixo põe-nas no chão.</p>
++    <p>Faz o degrau 1. <strong>Uma hora de sombras de contacto muda mais as tuas capturas de ecrã do que cinquenta horas de edifícios novos</strong> — e resolve exatamente o sintoma que a §01 descreve: figuras acabadas espalhadas sobre um fundo por resolver. Elas não estão só sobre um fundo por resolver; estão a flutuar. Uma elipse castanha por baixo põe-nas no chão.</p>
+   </div>
+ 
+   <h4>A profundidade, camada a camada</h4>
+@@ -1943,12 +1952,12 @@
+   </table></div>
+ 
+   <div class="note spec"><span class="lbl">A regra do pixel inteiro</span>
+-    <p>Nada de parallax se move em meio pixel. Cada camada calcula a posição e <strong>arredonda para baixo antes de a aplicar</strong> (<code>floor()</code>), e a câmara move-se em pixels inteiros de mundo. As fracções acima são todas binárias exactas (1/32, 1/8, 1/4, 1/2, 3/2) precisamente para o arredondamento ser estável. Camadas que andam menos de 1 px por <em>frame</em> tremem: se acontecer, duplica a largura da textura em vez de baixar a velocidade.</p>
++    <p>Nada de parallax se move em meio pixel. Cada camada calcula a posição e <strong>arredonda para baixo antes de a aplicar</strong> (<code>floor()</code>), e a câmara move-se em pixels inteiros de mundo. As frações acima são todas binárias exatas (1/32, 1/8, 1/4, 1/2, 3/2) precisamente para o arredondamento ser estável. Camadas que andam menos de 1 px por <em>frame</em> tremem: se acontecer, duplica a largura da textura em vez de baixar a velocidade.</p>
+     <p style="margin-top:12px">Em cena fechada — Enramados, Sob-Raiz, interior de cavidade — <strong>inverte a coluna do valor</strong>: o fundo escurece em vez de clarear, e a saturação quase não muda. É o segundo preset medido na §11.</p>
+   </div>
+ 
+-  <h4>Cada povo precisa de uma fonte arquitectónica, não de uma paleta</h4>
+-  <p>Esta é a lição mais barata e a mais subestimada. O Eastward mistura arquitectura japonesa Showa e Taishō com Hong Kong e Xangai; o Chef RPG cruza arquitectura asiática e ocidental com <em>cyberpunk</em>, e o autor descreve o tema como o choque entre tradição e tecnologia. <strong>Nenhum dos dois inventou um estilo — os dois foram buscar um.</strong> É o que faz um kit parecer uma cultura em vez de um conjunto de casas.</p>
++  <h4>Cada povo precisa de uma fonte arquitetónica, não de uma paleta</h4>
++  <p>Esta é a lição mais barata e a mais subestimada. O Eastward mistura arquitetura japonesa Showa e Taishō com Hong Kong e Xangai; o Chef RPG cruza arquitetura asiática e ocidental com <em>cyberpunk</em>, e o autor descreve o tema como o choque entre tradição e tecnologia. <strong>Nenhum dos dois inventou um estilo — os dois foram buscar um.</strong> É o que faz um kit parecer uma cultura em vez de um conjunto de casas.</p>
+   <p>A tua §04 define os seis povos por terreno, economia, defesa e tropa. Falta a coluna que decide como eles se <em>desenham</em>. Estas são propostas — o que importa é que cada uma seja um sítio real que possas ir ver, e que a fonte fique escrita no <code>PeopleData.tres</code> ao lado da rampa de paleta.</p>
+ 
+   <div class="tw"><table>
+@@ -1964,7 +1973,7 @@
+   </table></div>
+ 
+   <div class="note night"><span class="lbl">O teste, e é o mesmo de sempre</span>
+-    <p>Tapa tudo abaixo da linha do solo. Se ainda distingues os seis povos, os kits estão certos. <strong>É por isso que a fonte arquitectónica importa mais do que a paleta</strong>: a paleta muda com a hora do dia e com o LUT; a silhueta do telhado não muda nunca.</p>
++    <p>Tapa tudo abaixo da linha do solo. Se ainda distingues os seis povos, os kits estão certos. <strong>É por isso que a fonte arquitetónica importa mais do que a paleta</strong>: a paleta muda com a hora do dia e com o LUT; a silhueta do telhado não muda nunca.</p>
+   </div>
+ 
+   <h4>A gramática visual — escreve-a e não a quebres</h4>
+@@ -1974,12 +1983,12 @@
+       <tr><td>Contorno</td><td>Preto puro. <strong>2 px na silhueta de tudo o que é cenário e edifício; 1 px nas personagens e no detalhe interno</strong> (§01, lei da escala dupla). As camadas 1–4 de parallax não levam contorno nenhum.</td></tr>
+       <tr><td>Materiais</td><td>Estuque creme · vigas castanho-escuro · telha azul-petróleo escamada · pedra cinza-frio · madeira quente · relva verde-lima. <strong>Um material novo exige justificação escrita.</strong></td></tr>
+       <tr><td>Sombreamento</td><td>Dois tons por material, sem gradientes, sem dithering decorativo. O dither é reservado a efeitos (revelação, dissolução) e às bandas de céu.</td></tr>
+-      <tr><td>Densidade</td><td><strong>Cluster mínimo de 2×2 px em todo o cenário</strong>; 4×4 nas camadas distantes. Pixels soltos são ruído a esta resolução. As personagens são a excepção e ficam a 1 px.</td></tr>
+-      <tr><td>Assentar no chão</td><td>Tudo o que toca o solo leva sombra de contacto — elipse castanha quente, multiplicativa, 45–55%. Sem excepções, nem para caixotes.</td></tr>
++      <tr><td>Densidade</td><td><strong>Cluster mínimo de 2×2 px em todo o cenário</strong>; 4×4 nas camadas distantes. Pixels soltos são ruído a esta resolução. As personagens são a exceção e ficam a 1 px.</td></tr>
++      <tr><td>Assentar no chão</td><td>Tudo o que toca o solo leva sombra de contacto — elipse castanha quente, multiplicativa, 45–55%. Sem exceções, nem para caixotes.</td></tr>
+       <tr><td>Céu</td><td>Pelo menos 30% da altura do ecrã acima do telhado mais alto, sem nada contornado (§11).</td></tr>
+       <tr><td>Rostos</td><td>Bocas largas com dentes, olhos afastados. O humor está na cara — atravessa idiomas sem localização.</td></tr>
+       <tr><td>Sinalética</td><td>Ícone entalhado em madeira, nunca texto. UI diegética e localização grátis.</td></tr>
+-      <tr><td>Silhueta por povo</td><td>Cada povo é reconhecível a 100% de zoom out <em>só pela forma dos telhados</em>. É o teste de qualidade de um kit novo, e cada povo tem uma fonte arquitectónica real escrita no seu <code>PeopleData.tres</code>.</td></tr>
++      <tr><td>Silhueta por povo</td><td>Cada povo é reconhecível a 100% de zoom out <em>só pela forma dos telhados</em>. É o teste de qualidade de um kit novo, e cada povo tem uma fonte arquitetónica real escrita no seu <code>PeopleData.tres</code>.</td></tr>
+     </tbody>
+   </table></div>
+ 
+@@ -2114,7 +2123,7 @@
+       <tr><td class="n">7:00</td><td>Amanhecer. Uma moeda no chão onde morreu um Rastejante.</td><td>Matar dá lucro</td><td>Recompensa física.</td></tr>
+       <tr><td class="n">8:30</td><td>Dia 2. Aparece a Casa de Treino em ruínas, reparável por 10 moedas.</td><td>Há profundidade adiante</td><td>Promessa. Não a podes pagar ainda.</td></tr>
+       <tr><td class="n">10:00</td><td>Encontras a passagem para o corte de solo. A terra dissolve-se com o dither.</td><td><strong>O mundo tem um andar de baixo</strong></td><td>Revelação. É o momento em que o jogo deixa de ser Kingdom.</td></tr>
+-      <tr><td class="n">11:00</td><td>Na câmara subterrânea: Semente Real + primeiro Diário de Campanha.</td><td>Meta-progresso e narrativa</td><td>Recompensa por curiosidade, não por combate.</td></tr>
++      <tr><td class="n">11:00</td><td>Na câmara subterrânea: Semente Real + primeiro Diário de Campanha.</td><td>Metaprogresso e narrativa</td><td>Recompensa por curiosidade, não por combate.</td></tr>
+       <tr><td class="n">12:00</td><td><strong>Noite 2:</strong> um Rastejante entra pela passagem que abriste.</td><td>Toda a decisão tem custo</td><td>A lição central do jogo, ensinada por perda, ao minuto doze.</td></tr>
+     </tbody>
+   </table></div>
+@@ -2140,7 +2149,7 @@
+       <tr><td>Entrada</td><td>Os glifos no ecrã correspondem ao dispositivo ativo</td><td>Implementar: trocar atlas de ícones por <code>Input.get_joy_name</code></td></tr>
+       <tr><td>Entrada</td><td>Texto usa a API de entrada do Steamworks ou teclado próprio navegável</td><td>Só o nome do save — usa a API</td></tr>
+       <tr><td>Ecrã</td><td>Corre a 1280×800 ou 1280×720</td><td class="mark">1280×720 nativo. Perfeito.</td></tr>
+-      <tr><td>Ecrã</td><td><strong>Nenhum caractere abaixo de 9 px de altura a 1280×800</strong>; recomendado 12 px</td><td class="mark">Risco real — a tua fonte de pixel art tem de ser ≥ 12 px</td></tr>
++      <tr><td>Ecrã</td><td><strong>Nenhum carácter abaixo de 9 px de altura a 1280×800</strong>; recomendado 12 px</td><td class="mark">Risco real — a tua fonte de pixel art tem de ser ≥ 12 px</td></tr>
+       <tr><td>Continuidade</td><td>Sem avisos de incompatibilidade; launcher navegável por comando</td><td>Sem launcher. Resolvido.</td></tr>
+       <tr><td>Desempenho</td><td>Jogável nas definições por omissão — 30 fps a 800p</td><td>Trivial para 2D; confirma com 300 unidades</td></tr>
+       <tr><td>Sistema</td><td>Sem incompatibilidades de Proton</td><td>Godot exporta Linux nativo. Testa cedo.</td></tr>
+@@ -2148,7 +2157,7 @@
+   </table></div>
+ 
+   <div class="note risk"><span class="lbl">O único risco de Verified que tens</span>
+-    <p>O tamanho de texto. Uma fonte de pixel art a 8 px é linda e <strong>reprova a certificação</strong>. Decide na Fase 0: ou desenhas a tua fonte a 12 px de altura de caractere, ou tens duas fontes (uma decorativa para títulos, uma legível para conteúdo). Como o teu jogo quase não tem texto, isto é fácil — mas só se for decidido antes de desenhares a fonte.</p>
++    <p>O tamanho de texto. Uma fonte de pixel art a 8 px é linda e <strong>reprova a certificação</strong>. Decide na Fase 0: ou desenhas a tua fonte a 12 px de altura de carácter, ou tens duas fontes (uma decorativa para títulos, uma legível para conteúdo). Como o teu jogo quase não tem texto, isto é fácil — mas só se for decidido antes de desenhares a fonte.</p>
+   </div>
+ 
+   <h4>As funcionalidades a declarar no Steam</h4>
+@@ -2673,7 +2682,7 @@
+   <p>Estes três níveis são a estrutura. Os <strong>cinco portões de CI</strong> que a fazem cumprir — incluindo o teste de reprodutibilidade por <em>seed</em>, que apanha o que nenhum dos outros apanha — estão especificados na §64.</p>
+ 
+   <div class="note spec"><span class="lbl">O último teste é o guarda-costas da arquitetura</span>
+-    <p>Um agente que não leu bem o <code>CLAUDE.md</code> vai, mais cedo ou mais tarde, pôr um <code>extends Node</code> em <code>src/sim/</code>. Esse teste apanha-o em segundos, sem tu leres nada. É vinte linhas de código que protegem a decisão mais importante do projeto durante dois anos.</p>
++    <p>Um agente que não leu bem o <code>CLAUDE.md</code> vai, mais cedo ou mais tarde, pôr um <code>extends Node</code> em <code>src/sim/</code>. Esse teste apanha-o em segundos, sem tu leres nada. São vinte linhas de código que protegem a decisão mais importante do projeto durante dois anos.</p>
+   </div>
+ 
+   <h5>CI em GitHub Actions</h5>
+@@ -2745,7 +2754,7 @@
+       <tr><td>2 · Fatia vertical</td><td class="n">3 meses</td><td class="n">7</td><td>Um povo completo com arte final (7 edifícios, 3 criaturas, 5 muralhas), 1 classe, 3 ofícios, 1 fortaleza</td><td><strong>Jogas 10 dias e queres jogar o 11.º</strong> — o teste que decide o projeto</td></tr>
+       <tr><td>3 · A segunda camada</td><td class="n">2 meses</td><td class="n">9</td><td>Subterrâneo jogável, revelação por dither, segredos, primeiro diário</td><td>O minuto 10 do §25 funciona com estranhos</td></tr>
+       <tr><td>4 · Demo pública</td><td class="n">2 meses</td><td class="n">11</td><td>Onboarding afinado, som, opções, página de Steam, build web</td><td>Página publicada. <strong>Wishlists a acumular.</strong></td></tr>
+-      <tr><td>5 · Próximo Fest</td><td class="n">3 meses</td><td class="n">14</td><td>Demo no Next Fest, acessibilidade, Steam Deck, telemetria</td><td>&gt; 5 000 wishlists. Se não, pára e diagnostica.</td></tr>
++      <tr><td>5 · Next Fest</td><td class="n">3 meses</td><td class="n">14</td><td>Demo no Next Fest, acessibilidade, Steam Deck, telemetria</td><td>&gt; 5 000 wishlists. Se não, para e diagnostica.</td></tr>
+       <tr><td>6 · Profundidade</td><td class="n">6 meses</td><td class="n">20</td><td>Classes 2–4, evoluções, montarias, ganância, impulsos, sucessão, dívida</td><td>Uma partida completa de 30 dias sem sistemas em falta</td></tr>
+       <tr><td>7 · Conteúdo e mundo</td><td class="n">6 meses</td><td class="n">26</td><td>Os 6 povos, geração procedural, 12 diários, biomas caóticos, 2 epílogos</td><td><strong>Lançamento.</strong> Ou Early Access aqui.</td></tr>
+       <tr><td>8 · Multijogador</td><td class="n">4 meses</td><td class="n">30</td><td>Ecrã dividido, depois online</td><td>Pós-lançamento. Corta sem dor se necessário.</td></tr>
+@@ -2766,7 +2775,7 @@
+   <div class="tw"><table>
+     <thead><tr><th class="n">#</th><th>Tarefa</th><th>Ficheiros</th><th>Feito quando</th></tr></thead>
+     <tbody>
+-      <tr><td class="n">F0-00</td><td><strong>Repositório do dia zero</strong>: as ondas 1 e 2 da §68</td><td><code>.gitignore</code>, <code>AGENTS.md</code>, <code>.gdlintrc</code>, CI, <code>docs/</code></td><td>Push verde e <code>docs/design/</code> com 72 ficheiros</td></tr>
++      <tr><td class="n">F0-00</td><td><strong>Repositório do dia zero</strong>: as ondas 1 e 2 da §68</td><td><code>.gitignore</code>, <code>AGENTS.md</code>, <code>.gdlintrc</code>, CI, <code>docs/</code></td><td>Push verde e <code>docs/design/</code> com 75 ficheiros</td></tr>
+       <tr><td class="n">F0-01</td><td>Criar projeto Godot 4.6 com as definições do §19</td><td><code>project.godot</code></td><td>Abre a 1280×720, filtro Nearest, 30 ticks</td></tr>
+       <tr><td class="n">F0-02</td><td>Git + LFS para <code>*.aseprite</code> e <code>art/**/*.png</code></td><td><code>.gitattributes</code></td><td><code>git lfs ls-files</code> mostra a arte</td></tr>
+       <tr><td class="n">F0-03</td><td>Escrever <code>CLAUDE.md</code> (§28) e os primeiros 3 ADRs</td><td><code>CLAUDE.md</code>, <code>docs/adr/</code></td><td>ADR 0001 escala, 0002 faixas, 0003 dados</td></tr>
+@@ -2882,7 +2891,7 @@
+       <tr><td class="n">4</td><td>Primeiro GIF bom: a Podridão a chegar ao castelo-árvore</td><td>É o teu argumento visual. Testa-o cedo em público.</td></tr>
+       <tr><td class="n">11</td><td><strong>Página de Steam publicada</strong>, localizada nos 8 idiomas</td><td>Wishlists acumulam a partir daqui. Cada mês de atraso é um mês perdido.</td></tr>
+       <tr><td class="n">12</td><td>Demo jogável, primeiro em itch.io e web</td><td>Feedback antes de te comprometeres com o Next Fest</td></tr>
+-      <tr><td class="n">14</td><td><strong>Steam Next Fest</strong></td><td>Só se podes entrar uma vez. É o teu maior pico único.</td></tr>
++      <tr><td class="n">14</td><td><strong>Steam Next Fest</strong></td><td>Só podes entrar uma vez. É o teu maior pico único.</td></tr>
+       <tr><td class="n">15–25</td><td>Devlogs, festivais menores, criadores de conteúdo pequenos</td><td>Manutenção. Mira em 1 500–3 000 wishlists por mês.</td></tr>
+       <tr><td class="n">26</td><td>Contactar imprensa e criadores com build final</td><td>4–6 semanas de antecedência é o mínimo</td></tr>
+       <tr><td class="n">28</td><td><strong>Lançamento</strong></td><td>Terça-feira. Nunca em semana de lançamento grande.</td></tr>
+@@ -2909,7 +2918,7 @@
+   </div>
+ 
+   <h4>O nome</h4>
+-  <p><em>Empire</em> é um codinome, não um nome. É genérico demais para ser pesquisável e quase de certeza colide com marcas registadas. Antes da Fase 4, precisas de um nome que: seja pesquisável no Steam sem competir com trinta jogos; funcione fonicamente em inglês e português; esteja livre como domínio <code>.com</code> e em pesquisa de marcas na UE; e diga algo sobre <em>povos</em> ou <em>a noite que avança</em> — os dois ganchos reais do jogo. Trata isto como uma tarefa de design com um prazo, não como uma coisa que aparece.</p>
++  <p><em>Empire</em> é um nome de código, não um nome. É genérico demais para ser pesquisável e quase de certeza colide com marcas registadas. Antes da Fase 4, precisas de um nome que: seja pesquisável no Steam sem competir com trinta jogos; funcione fonicamente em inglês e português; esteja livre como domínio <code>.com</code> e em pesquisa de marcas na UE; e diga algo sobre <em>povos</em> ou <em>a noite que avança</em> — os dois ganchos reais do jogo. Trata isto como uma tarefa de design com um prazo, não como uma coisa que aparece.</p>
+ 
+   <div class="note dec"><span class="lbl">O que fazer no dia do lançamento</span>
+     <p>Nada. Está tudo feito há semanas. Responde a análises, corrige o que partir, e não olhes para o gráfico de vendas de cinco em cinco minutos. A primeira semana é 20–30% do primeiro ano, e o Two Crowns ainda tinha 2 788 jogadores em simultâneo oito anos depois. <strong>Este género tem cauda longa.</strong> Constrói para ela.</p>
+@@ -2925,7 +2934,7 @@
+     <thead><tr><th>Risco</th><th class="n">Prob.</th><th class="n">Impacto</th><th>Sinal de alarme</th><th>Mitigação</th></tr></thead>
+     <tbody>
+       <tr><td><strong>A Camada 1 não é divertida</strong></td><td class="n">Média</td><td class="n">Fatal</td><td>Não queres jogar o dia 11 no mês 7</td><td>Portão da Fase 2 (§33). Dois meses de afinação de números antes de avançar.</td></tr>
+-      <tr><td><strong>Abandono por exaustão</strong></td><td class="n">Alta</td><td class="n">Fatal</td><td>Duas semanas sem commit; o devlog pára</td><td>Ritmo semanal do §28. Sexta é para jogar, sábado para arte. Fases curtas com fim visível.</td></tr>
++      <tr><td><strong>Abandono por exaustão</strong></td><td class="n">Alta</td><td class="n">Fatal</td><td>Duas semanas sem commit; o devlog para</td><td>Ritmo semanal do §28. Sexta é para jogar, sábado para arte. Fases curtas com fim visível.</td></tr>
+       <tr><td><strong>O cenário não acompanha o código</strong></td><td class="n">Alta</td><td class="n">Grande</td><td>Fim da Fase 1 sem a cena-cartaz acabada</td><td>Cenário da Fase 2 começa na Fase 1; greybox obrigatório para cenário; fatia estreita de 7 edifícios (§22)</td></tr>
+       <tr><td>Escopo cresce em vez de encolher</td><td class="n">Alta</td><td class="n">Grande</td><td>Uma tarefa nova por semana no backlog sem nenhuma sair</td><td>O campo <em>Fora</em> em cada ticket (§34). Nada entra na Fase 6 sem sair outra coisa.</td></tr>
+       <tr><td>Dívida técnica gerada por IA</td><td class="n">Média</td><td class="n">Grande</td><td>Ficheiros acima de 250 linhas; testes a serem ignorados</td><td>As sete regras + o teste que verifica <code>src/sim/</code> (§31)</td></tr>
+@@ -2939,8 +2948,8 @@
+     </tbody>
+   </table></div>
+ 
+-  <div class="note night"><span class="lbl">Os dois riscos fatais são os mesmos risco</span>
+-    <p>Repara que os dois de cima têm impacto fatal, e ambos se resolvem com a mesma coisa: <strong>chegar ao mês 7 com um jogo que te apetece jogar.</strong> Se isso acontecer, a exaustão passa a ser gerível porque estás a jogar o teu próprio jogo às sextas. Se não acontecer, os outros nove riscos não interessam. <em>Todo o plano existe ao serviço da Fase 2.</em></p>
++  <div class="note night"><span class="lbl">Os dois riscos fatais são o mesmo risco</span>
++    <p>Repara que os dois de cima têm impacto fatal, e ambos se resolvem com a mesma coisa: <strong>chegar ao mês 7 com um jogo que te apetece jogar.</strong> Se isso acontecer, a exaustão passa a ser gerível porque estás a jogar o teu próprio jogo às sextas. Se não acontecer, os outros dez riscos não interessam. <em>Todo o plano existe ao serviço da Fase 2.</em></p>
+   </div>
+ </section>
+ 
+@@ -2953,7 +2962,7 @@
+     <tbody>
+       <tr><td class="n">1</td><td>Escala de ecrã: fracionária com opção de nítido</td><td>§19</td><td>Câmara, HUD, toda a arte de UI</td></tr>
+       <tr><td class="n">1b</td><td><strong>Fixar a linha do solo e as três faixas</strong> — é uma decisão, não uma medição</td><td>§11</td><td>Câmara, geração de mundo, todas as cenas</td></tr>
+-      <tr><td class="n">2</td><td>Altura de caractere da fonte ≥ 12 px</td><td>§26</td><td>Steam Deck Verified, e a fonte não se redesenha</td></tr>
++      <tr><td class="n">2</td><td>Altura de carácter da fonte ≥ 12 px</td><td>§26</td><td>Steam Deck Verified, e a fonte não se redesenha</td></tr>
+       <tr><td class="n">3</td><td>Criar o repositório com <code>CLAUDE.md</code> e LFS</td><td>§28</td><td>Todo o trabalho com IA</td></tr>
+       <tr><td class="n">4</td><td>Separar as personagens acabadas em slots com a nomenclatura fixa</td><td>§22</td><td>Todo o pipeline de personagem — e é a tarefa mais barata da lista</td></tr>
+       <tr><td class="n">4b</td><td>Importar a paleta de trabalho e começar a cena-cartaz</td><td>§22</td><td>O devlog, e a tua estimativa real de horas por cena</td></tr>
+@@ -2976,10 +2985,10 @@
+ <section id="s39">
+   <span class="sec-no">39 — Contrato</span>
+   <h3>A especificação técnica começa aqui</h3>
+-  <p class="lede">As trinta e nove secções anteriores respondem a <em>que jogo é este e vale a pena fazê-lo</em>. As vinte e nove que se seguem respondem a <em>que ficheiros existem, que campos têm, por que ordem correm e como se sabe que estão certos</em>. São públicos diferentes: a primeira metade é para ti; esta é para ti <strong>e para os agentes que escrevem o código</strong>.</p>
++  <p class="lede">As trinta e nove secções anteriores respondem a <em>que jogo é este e se vale a pena fazê-lo</em>. As vinte e nove que se seguem respondem a <em>que ficheiros existem, que campos têm, por que ordem correm e como se sabe que estão certos</em>. São públicos diferentes: a primeira metade é para ti; esta é para ti <strong>e para os agentes que escrevem o código</strong>.</p>
+ 
+   <div class="note dec"><span class="lbl">Porque é que isto é a peça que faltava</span>
+-    <p>O teu plano é que a IA escreva quase todo o código e tu revejas. Uma revisão só existe se houver contra o quê rever. Sem especificação, cada sessão de agente reinventa nomes de campos, ordem de execução e contratos de módulo, e tu passas o tempo a arbitrar decisões que já tinhas tomado — sem te lembrares de quando.</p>
++    <p>O teu plano é que a IA escreva quase todo o código e tu revejas. Uma revisão só existe se houver contra o que rever. Sem especificação, cada sessão de agente reinventa nomes de campos, ordem de execução e contratos de módulo, e tu passas o tempo a arbitrar decisões que já tinhas tomado — sem te lembrares de quando.</p>
+     <p style="margin-top:12px">A §19 tem definições de projeto, estrutura de pastas, um exemplo de <code>Resource</code> e uma lista de truques de desempenho. É um <em>esboço</em> de arquitetura. Esta parte é a especificação: <strong>todos</strong> os recursos, <strong>todos</strong> os eventos, a ordem do tick, a disciplina de aleatoriedade, o esquema do save e os critérios de aceitação.</p>
+   </div>
+ 
+@@ -2988,7 +2997,7 @@
+     <thead><tr><th>Assunto</th><th>Manda</th><th>Regra de conflito</th></tr></thead>
+     <tbody>
+       <tr><td>Design, números de balanceamento, intenção</td><td><strong>§00 a §38</strong></td><td>Se uma secção de §39 a §67 contradiz um número das secções anteriores, é ela que está errada. Corrige-a.</td></tr>
+-      <tr><td>Nomes de classes, campos, sinais, ficheiros</td><td><strong>§39 a §67</strong></td><td>Se o código não bate certo com o nome daqui, o código está errado. Sem excepções — nomes divergentes são o que quebra a geração assistida.</td></tr>
++      <tr><td>Nomes de classes, campos, sinais, ficheiros</td><td><strong>§39 a §67</strong></td><td>Se o código não bate certo com o nome daqui, o código está errado. Sem exceções — nomes divergentes são o que quebra a geração assistida.</td></tr>
+       <tr><td>Ordem de execução e contratos de módulo</td><td><strong>§39 a §67</strong></td><td>Alterações exigem subida de versão do documento e uma linha no registo de alterações.</td></tr>
+       <tr><td>Arte, densidade, paleta, camadas</td><td><strong>§01, §11, §22</strong></td><td>Aqui só entram as consequências técnicas (nomenclatura de exportação, uniforms de shader, ordem de camadas).</td></tr>
+     </tbody>
+@@ -3000,16 +3009,16 @@
+     <thead><tr><th>Documento</th><th>Estado</th><th>Onde vive</th><th class="n">Prioridade</th></tr></thead>
+     <tbody>
+       <tr><td><strong>GDD</strong> — design, sistemas, progressão, UX</td><td>Existe e está bom</td><td>§04 a §27</td><td class="n">—</td></tr>
+-      <tr><td><strong>Bíblia de arte</strong></td><td>Existe, disperso</td><td>§01 · §11 · §21 · §22</td><td class="n">Baixa — o artista és tu e escreveste-a</td></tr>
++      <tr><td><strong>Bíblia de arte</strong></td><td>Existe — arrumada na v5.2</td><td>§01 · §11 · §21 · §22, e <code>docs/art/</code> (§71)</td><td class="n">Baixa — o artista és tu e escreveste-a</td></tr>
+       <tr style="background:var(--surface)"><td><strong>Especificação técnica</strong></td><td><strong>§39 a §67</strong></td><td>Esta parte</td><td class="n"><strong>Era a que faltava</strong></td></tr>
+-      <tr><td><strong>Base de dados de conteúdo</strong> — as tabelas como fonte única</td><td>Em falta</td><td>Hoje os números vivem em prosa nas §06 a §10, e vão viver outra vez em <code>.tres</code></td><td class="n">Alta — §44 diz como se resolve</td></tr>
+-      <tr><td><strong>Bíblia de nomes e lore</strong></td><td>Em falta</td><td>§17 tem segredos; os nomes dos povos são provisórios</td><td class="n">Média — bloqueia o §36</td></tr>
+-      <tr><td><strong>Especificação da fatia vertical</strong></td><td>Parcial</td><td>§28 tem critérios de saída, §34 tem 30 tickets</td><td class="n">Resolvida na Parte VI</td></tr>
++      <tr><td><strong>Base de dados de conteúdo</strong> — as tabelas como fonte única</td><td>Existe desde a v5.2</td><td><code>data/source/</code>: 23 tabelas geradas para <code>.tres</code> e conferidas contra este dossiê pelo CI (§71)</td><td class="n">Feita — falta aprovares as propostas</td></tr>
++      <tr><td><strong>Bíblia de nomes e lore</strong></td><td>Proposta na v5.2</td><td><code>docs/content/NAMING_BIBLE.md</code>; o nome do jogo continua por escolher</td><td class="n">Média — bloqueia o §36</td></tr>
++      <tr><td><strong>Especificação da fatia vertical</strong></td><td>Parcial</td><td>§33 tem critérios de saída, §34 tem 30 tickets</td><td class="n">Fases 0 e 1 na Parte X; os tickets em <code>docs/backlog/</code> (v5.2)</td></tr>
+     </tbody>
+   </table></div>
+ 
+   <div class="note spec"><span class="lbl">Como um agente deve usar esta parte</span>
+-    <p>O <code>CLAUDE.md</code> do repositório aponta para aqui e diz três coisas: <strong>(1)</strong> nunca inventes um nome que as §39 a §67 já definem; <strong>(2)</strong> nunca acrescentes um sinal que não esteja no catálogo da §46; <strong>(3)</strong> se precisares de algo que não está especificado, pára e pergunta em vez de decidir. A terceira é a que poupa mais tempo.</p>
++    <p>O <code>CLAUDE.md</code> do repositório aponta para aqui e diz três coisas: <strong>(1)</strong> nunca inventes um nome que as §39 a §67 já definem; <strong>(2)</strong> nunca acrescentes um sinal que não esteja no catálogo da §46; <strong>(3)</strong> se precisares de algo que não está especificado, para e pergunta em vez de decidir. A terceira é a que poupa mais tempo.</p>
+   </div>
+ </section>
+ 
+@@ -3051,7 +3060,7 @@
+   </table></div>
+ 
+   <div class="note risk"><span class="lbl">A que se quebra primeiro</span>
+-    <p>É sempre a <strong>I2</strong>. Um <code>randf()</code> solto para escolher uma variante de sprite parece inofensivo — e é, até ao dia em que precisas de reproduzir a noite 14 de um <em>bug report</em> e não consegues. Aleatoriedade puramente cosmética também vai a um fluxo: o fluxo <code>visual</code>, que existe exactamente para isso e nunca afecta a simulação.</p>
++    <p>É sempre a <strong>I2</strong>. Um <code>randf()</code> solto para escolher uma variante de sprite parece inofensivo — e é, até ao dia em que precisas de reproduzir a noite 14 de um <em>bug report</em> e não consegues. Aleatoriedade puramente cosmética também vai a um fluxo: o fluxo <code>visual</code>, que existe exatamente para isso e nunca afeta a simulação.</p>
+   </div>
+ </section>
+ 
+@@ -3140,11 +3149,11 @@
+   <div class="tw"><table>
+     <thead><tr><th>Fluxo</th><th>Consome</th><th>Semeado com</th><th>Afeta a simulação?</th></tr></thead>
+     <tbody>
+-      <tr><td><code>world</code></td><td>Geração de região, tipos de segmento, cavidades, passagens</td><td><code>seed</code></td><td>Sim</td></tr>
+-      <tr><td><code>combat</code></td><td>Precisão do arqueiro, ordem de desempate na fila de contacto</td><td><code>seed ^ 0x51ED</code></td><td>Sim</td></tr>
+-      <tr><td><code>rot</code></td><td>Intervalo de invocação, escolha de criatura, largura da mancha</td><td><code>seed ^ 0xR0T7</code> (constante nomeada)</td><td>Sim</td></tr>
+-      <tr><td><code>economy</code></td><td>Variação de rendimento, preços de mercenários, saque</td><td><code>seed ^ 0xEC0N</code></td><td>Sim</td></tr>
+-      <tr><td><code>ai</code></td><td>Desempate de utilidade do rei inimigo, atribuição de trabalho</td><td><code>seed ^ 0x0A1A</code></td><td>Sim</td></tr>
++      <tr><td><code>world</code></td><td>Geração de região, tipos de segmento, cavidades, passagens</td><td><code>hash(str(seed) + &quot;world&quot;)</code></td><td>Sim</td></tr>
++      <tr><td><code>combat</code></td><td>Precisão do arqueiro, ordem de desempate na fila de contacto</td><td><code>hash(str(seed) + &quot;combat&quot;)</code></td><td>Sim</td></tr>
++      <tr><td><code>rot</code></td><td>Intervalo de invocação, escolha de criatura, largura da mancha</td><td><code>hash(str(seed) + &quot;rot&quot;)</code></td><td>Sim</td></tr>
++      <tr><td><code>economy</code></td><td>Variação de rendimento, preços de mercenários, saque</td><td><code>hash(str(seed) + &quot;economy&quot;)</code></td><td>Sim</td></tr>
++      <tr><td><code>ai</code></td><td>Desempate de utilidade do rei inimigo, atribuição de trabalho</td><td><code>hash(str(seed) + &quot;ai&quot;)</code></td><td>Sim</td></tr>
+       <tr><td><code>visual</code></td><td>Variante de <em>prop</em>, desfasamento de animação, variação de <em>pitch</em>, partículas</td><td><code>Time.get_ticks_usec()</code></td><td><strong>Nunca</strong></td></tr>
+     </tbody>
+   </table></div>
+@@ -3178,13 +3187,13 @@
+     <span class="k">return</span> out</code></pre>
+ 
+   <div class="note spec"><span class="lbl">A parte que quase toda a gente esquece</span>
+-    <p>Guardar a <em>seed</em> não chega. Se o jogador salva a meio da noite 9, retomar tem de continuar a sequência aleatória exactamente onde ia — logo o save guarda o <strong>estado</strong> de cada fluxo (<code>rng.state</code>), não a semente. Sem isto, carregar um save muda a noite que se estava a jogar, e o bug parece um fantasma.</p>
++    <p>Guardar a <em>seed</em> não chega. Se o jogador grava a meio da noite 9, retomar tem de continuar a sequência aleatória exatamente onde ia — logo o save guarda o <strong>estado</strong> de cada fluxo (<code>rng.state</code>), não a semente. Sem isto, carregar um save muda a noite que se estava a jogar, e o bug parece um fantasma.</p>
+   </div>
+ 
+   <h4>Regras derivadas</h4>
+   <div class="grid g2">
+-    <div class="cell"><h6>Iteração ordenada</h6><p>Nunca iterar um <code>Dictionary</code> quando o resultado afecta a simulação. Ordem de dicionário não é garantida entre execuções. Usa arrays ordenados por <code>id</code>.</p></div>
+-    <div class="cell"><h6>Sem virgula flutuante acumulada</h6><p>Posição e massa da Podridão avançam por <code>delta</code> fixo de 1/30 s, sempre o mesmo. Nada de <code>get_process_delta_time()</code> dentro de <code>src/sim/</code>.</p></div>
++    <div class="cell"><h6>Iteração ordenada</h6><p>Nunca iterar um <code>Dictionary</code> quando o resultado afeta a simulação. Ordem de dicionário não é garantida entre execuções. Usa arrays ordenados por <code>id</code>.</p></div>
++    <div class="cell"><h6>Sem vírgula flutuante acumulada</h6><p>Posição e massa da Podridão avançam por <code>delta</code> fixo de 1/30 s, sempre o mesmo. Nada de <code>get_process_delta_time()</code> dentro de <code>src/sim/</code>.</p></div>
+     <div class="cell"><h6>Ordem de resolução fixa</h6><p>O combate resolve por <code>unit.id</code> crescente, não por ordem de nó nem por proximidade. Empates resolvem-se pelo fluxo <code>combat</code>, nunca por posição de memória.</p></div>
+     <div class="cell"><h6>A seed é visível</h6><p>Mostrada no ecrã de pausa e copiável. É o teu melhor instrumento de depuração e um dos melhores hábitos de comunidade que podes ter de graça.</p></div>
+   </div>
+@@ -3208,7 +3217,7 @@
+       <tr><td class="n">8</td><td><code>BuildSystem</code></td><td>Todo o tick</td><td>Moedas largadas, obras</td><td>Progresso de construção</td></tr>
+       <tr><td class="n">9</td><td><code>DebtSystem</code> · <code>DiplomacySystem</code></td><td>Uma vez por dia</td><td>Dívida, favor</td><td>Prazos, conversões</td></tr>
+       <tr><td class="n">10</td><td><code>KingAISystem</code></td><td>Uma vez por dia, por império</td><td><code>KingdomState</code></td><td>Ação escolhida</td></tr>
+-      <tr><td class="n">11</td><td><code>EventBus.flush</code></td><td>Fim do tick</td><td>Fila de eventos</td><td>Entrega a apresentação</td></tr>
++      <tr><td class="n">11</td><td><code>EventBus.flush</code></td><td>Fim do tick</td><td>Fila de eventos</td><td>Entrega à apresentação</td></tr>
+     </tbody>
+   </table></div>
+ 
+@@ -3246,7 +3255,7 @@
+       <tr><td><code>CreatureData</code></td><td><code>creatures.csv</code></td><td class="n">3 (de 6)</td><td>massa, vida, dano, intervalo, velocidade, dia mínimo, faixa, alvo preferido</td></tr>
+       <tr><td><code>BuildingData</code></td><td><code>buildings.csv</code></td><td class="n">7 (de 13)</td><td>custo, matéria produzida, ritmo, bioma exigido, largura, slots, estados</td></tr>
+       <tr><td><code>WallData</code></td><td><code>walls.csv</code></td><td class="n">5</td><td>nível, custo, vida, slots de contacto, material, peças</td></tr>
+-      <tr><td><code>PeopleData</code></td><td><code>peoples.csv</code></td><td class="n">1 (de 6)</td><td>kit de arquitectura, rampa de paleta, fonte arquitectónica, tropa única, modificadores</td></tr>
++      <tr><td><code>PeopleData</code></td><td><code>peoples.csv</code></td><td class="n">1 (de 6)</td><td>kit de arquitetura, rampa de paleta, fonte arquitetónica, tropa única, modificadores</td></tr>
+       <tr><td><code>ClassData</code></td><td><code>classes.csv</code></td><td class="n">1 (de 4)</td><td>fases, verbo, custo de Semente Real, efeitos</td></tr>
+       <tr><td><code>CraftData</code></td><td><code>crafts.csv</code></td><td class="n">3 (de 5)</td><td>matéria consumida, moeda agora, capacidade depois, edifício-alvo</td></tr>
+       <tr><td><code>BiomeData</code></td><td><code>biomes.csv</code></td><td class="n">1 (de 6)</td><td>tabela de criaturas, recursos disponíveis, preset atmosférico, faixas de parallax</td></tr>
+@@ -3389,7 +3398,7 @@
+       <tr><td><code>capacity_granted</code></td><td><code>kind, magnitude, duration</code></td><td>CraftSystem</td><td>Tropas, overlay visual</td></tr>
+       <tr><td><code>trade_route_opened</code></td><td><code>people_id, income</code></td><td>DiplomacySystem</td><td>Economia, HUD</td></tr>
+       <tr><td><code>trade_route_closed</code></td><td><code>people_id, reason</code></td><td>Conquista, Podridão</td><td>Economia</td></tr>
+-      <tr><td><code>seed_royal_gained</code></td><td><code>amount, source</code></td><td>Fortaleza, segredo</td><td>Meta-progresso, save</td></tr>
++      <tr><td><code>seed_royal_gained</code></td><td><code>amount, source</code></td><td>Fortaleza, segredo</td><td>Metaprogresso, save</td></tr>
+       <tr><td><code>favor_changed</code></td><td><code>delta, total</code></td><td>Diplomacia, bardo</td><td>HUD, mercenários</td></tr>
+ 
+       <tr><td colspan="4" style="background:var(--surface-2)"><strong>Unidades e combate — 14</strong></td></tr>
+@@ -3468,25 +3477,30 @@
+ <span class="k">const</span> SOIL_CUT       := SCREEN_BOTTOM - GROUND_LINE   <span class="c"># 203</span>
+ 
+ <span class="c"># Camadas de física — uma por faixa, mais estáticos</span>
+-<span class="k">const</span> L_AERIAL := 1, L_SURFACE := 2, L_UNDER := 4
+-<span class="k">const</span> L_TERRAIN := 8, L_BUILDING := 16, L_COIN := 32</code></pre>
++<span class="c"># v5.2: uma constante por linha — o GDScript não aceita várias numa só (C-01, §72)</span>
++<span class="k">const</span> L_AERIAL   := 1
++<span class="k">const</span> L_SURFACE  := 2
++<span class="k">const</span> L_UNDER    := 4
++<span class="k">const</span> L_TERRAIN  := 8
++<span class="k">const</span> L_BUILDING := 16
++<span class="k">const</span> L_COIN     := 32</code></pre>
+ 
+   <div class="tw"><table>
+     <thead><tr><th>Constante</th><th class="n">Valor</th><th>De onde vem</th><th>Afina-se em <em>playtest</em>?</th></tr></thead>
+     <tbody>
+       <tr><td><code>TICK_HZ</code></td><td class="n">30</td><td>§19</td><td>Não</td></tr>
+-      <tr><td><code>DAY_SECONDS</code></td><td class="n">360</td><td>§05</td><td><strong>Sim</strong> → vai para <code>EconomyCurve</code></td></tr>
++      <tr><td><code>DAY_SECONDS</code></td><td class="n">360</td><td>§05</td><td><strong>Sim</strong> → vai para <code>ClockData</code> (v5.2, ADR 0006)</td></tr>
+       <tr><td><code>GROUND_LINE</code></td><td class="n">517</td><td>§11, fixado na Fase 0</td><td>Não — meia dúzia de sistemas dependem dele</td></tr>
+       <tr><td><code>SEGMENT_WIDTH</code></td><td class="n">640</td><td>§21</td><td>Não</td></tr>
+       <tr><td><code>TILE</code></td><td class="n">32</td><td>§22</td><td>Não</td></tr>
+       <tr><td><code>AI_SLICE</code></td><td class="n">6</td><td>1/6 das unidades decide por tick</td><td>Não — é desempenho</td></tr>
+-      <tr><td><code>SLOT_REPLACE_TIME</code></td><td class="n">0.4 s</td><td>§07</td><td><strong>Sim</strong> → <code>EconomyCurve</code></td></tr>
++      <tr><td><code>SLOT_REPLACE_TIME</code></td><td class="n">0,4 s</td><td>§07</td><td><strong>Sim</strong> → <code>EconomyCurve</code></td></tr>
+       <tr><td><code>EVENT_LOG_SIZE</code></td><td class="n">600</td><td>≈ 20 s de história para depuração</td><td>Não</td></tr>
+     </tbody>
+   </table></div>
+ 
+   <div class="note night"><span class="lbl">O teste que mantém isto honesto</span>
+-    <p><code>test_sem_literais_de_balanceamento</code> percorre <code>src/</code> à procura de literais numéricos fora de uma lista de exceções (0, 1, -1, e as constantes acima). Encontrar <code>26.0</code> escrito à mão dentro de um sistema é um chumbo. É rude, e é exactamente por isso que funciona quando o código não é escrito por ti.</p>
++    <p><code>test_sem_literais_de_balanceamento</code> percorre <code>src/</code> à procura de literais numéricos fora de uma lista de exceções (0, 1, -1, e as constantes acima). Encontrar <code>26.0</code> escrito à mão dentro de um sistema é um chumbo. É rude, e é exatamente por isso que funciona quando o código não é escrito por ti.</p>
+   </div>
+ </section>
+ <div class="part">
+@@ -3602,7 +3616,7 @@
+   <div class="steps">
+     <div class="step"><h4>Atualizar slots de contacto</h4><p>Cada muro tem <code>N</code> slots (2 no nível 1 até 7 no Bastião). Slots libertados são preenchidos pelo atacante mais próximo da fila, com 0,4 s de transição visível. A fila tem posições estáveis entre 30 e 120 px — atribuídas, não emergentes.</p></div>
+     <div class="step"><h4>Decrementar cooldowns</h4><p>Por <code>unit.id</code> crescente. Sempre.</p></div>
+-    <div class="step"><h4>Escolher alvos</h4><p>Prioridade: alvo marcado pelo Arqueiro &gt; alvo atual se ainda vivo e em alcance &gt; mais próximo em faixa atingível. <strong>Nunca</strong> re-escolher se o alvo atual serve — é o que evita o desperdício de flechas que o Kingdom tem.</p></div>
++    <div class="step"><h4>Escolher alvos</h4><p>Prioridade: alvo marcado pelo Arqueiro &gt; alvo atual se ainda vivo e em alcance &gt; mais próximo em faixa atingível. <strong>Nunca</strong> reescolher se o alvo atual serve — é o que evita o desperdício de flechas que o Kingdom tem.</p></div>
+     <div class="step"><h4>Resolver ataques</h4><p>Um <em>roll</em> do fluxo <code>combat</code> contra <code>accuracy_open</code>, ou acerto garantido dentro de torre. Emite <code>attack_launched</code> com <code>hit</code> já decidido — a apresentação nunca decide se acertou.</p></div>
+     <div class="step"><h4>Aplicar dano e mortes</h4><p>Recolhe as mortes numa lista e só as aplica no fim do passo. Uma unidade que morre neste tick ainda não desaparece a meio da iteração — é o que evita "morreu e ainda atacou".</p></div>
+     <div class="step"><h4>Largar</h4><p>Toda a morte larga: arma, moedas transportadas, ou corpo. Nada desaparece em silêncio.</p></div>
+@@ -3699,7 +3713,7 @@
+       <tr><td><code>DEAD</code></td><td>Vida ≤ 0</td><td>Ressuscitada até ao amanhecer, ou removida</td><td>Nada</td></tr>
+     </tbody>
+   </table></div>
+-  <p><strong>Fatiamento:</strong> só 1/6 das unidades reavalia por tick (<code>u.id % 6 == s.tick % 6</code>). Uma unidade decide cinco vezes por segundo, o que é imperceptível e corta a IA para um sexto do custo. O movimento e o combate continuam a correr todos os ticks — é só a <em>decisão</em> que é fatiada.</p>
++  <p><strong>Fatiamento:</strong> só 1/6 das unidades reavalia por tick (<code>u.id % 6 == s.tick % 6</code>). Uma unidade decide cinco vezes por segundo, o que é impercetível e corta a IA para um sexto do custo. O movimento e o combate continuam a correr todos os ticks — é só a <em>decisão</em> que é fatiada.</p>
+ 
+   <h4>O rei inimigo</h4>
+   <p>Utilidade ponderada, cinco ações, uma vez por dia por império. O código está no §20 e não se repete aqui. A parte que interessa aqui é o contrato: <code>KingAISystem</code> lê um <code>KingdomState</code> e devolve um <code>StringName</code>. <strong>Não executa a ação</strong> — emite <code>king_action_chosen</code> e os sistemas respetivos reagem. É o que permite testá-la sem simular nada.</p>
+@@ -3836,7 +3850,7 @@
+     <dt>Nomenclatura de exportação</dt><dd><code>&lt;povo&gt;_&lt;entidade&gt;_&lt;slot&gt;.aseprite</code> → <code>art/export/&lt;povo&gt;_&lt;entidade&gt;_&lt;slot&gt;.png</code> + <code>.json</code>. Obrigatória: é o que permite a um agente gerar cenas sem ver a arte.</dd>
+     <dt>Tags</dt><dd><code>idle</code> 6 <em>frames</em> · <code>walk</code> 8 · <code>attack</code> 5 · <code>die</code> 7, a 10 fps. O <em>Godot Aseprite Wizard</em> importa respeitando tags e camadas.</dd>
+     <dt>Desfasamento</dt><dd>Cada unidade arranca a animação num <em>frame</em> aleatório do fluxo <code>visual</code>. Sem isto, 300 aldeões respiram em uníssono e parecem um exército de clones.</dd>
+-    <dt>Fora do ecrã</dt><dd><code>VisibleOnScreenNotifier2D</code>: continua a simular, pára de animar. A simulação nunca depende de estar visível.</dd>
++    <dt>Fora do ecrã</dt><dd><code>VisibleOnScreenNotifier2D</code>: continua a simular, para de animar. A simulação nunca depende de estar visível.</dd>
+   </div>
+ </section>
+ 
+@@ -3907,7 +3921,7 @@
+         Sim.queue_intent(Intent.DROP_COIN, {&<span class="s">"x"</span>: _player_x(), &<span class="s">"band"</span>: _player_band()})
+     <span class="k">elif</span> e.is_action_pressed(&<span class="s">"verb_assume"</span>):
+         Sim.queue_intent(Intent.ASSUME, {&<span class="s">"target"</span>: _nearest_assumable()})</code></pre>
+-  <p>As intenções são consumidas no início do tick seguinte, na ordem em que chegaram. É o que faz o jogo determinista <em>apesar</em> de haver um humano: dado o mesmo <em>seed</em> e a mesma sequência de intenções, a partida repete-se exactamente. E é isso que torna possível gravar uma repetição em 40 bytes por segundo.</p>
++  <p>As intenções são consumidas no início do tick seguinte, na ordem em que chegaram. É o que faz o jogo determinista <em>apesar</em> de haver um humano: dada a mesma <em>seed</em> e a mesma sequência de intenções, a partida repete-se exatamente. E é isso que torna possível gravar uma repetição em 40 bytes por segundo.</p>
+ </section>
+ 
+ <div class="part">
+@@ -4040,12 +4054,12 @@
+ <section id="s65">
+   <span class="sec-no">65 — Fase 0</span>
+   <h3>Fundação — seis semanas, 42 ficheiros, ≈ 63 h</h3>
+-  <p class="lede"><strong>Revisto na v5.1:</strong> esta lista tratava só dos ficheiros de jogo. Os do repositório — que vêm antes — estão na §68, e o conteúdo de cada um na §69; os caminhos marcados <span class="mark">§70</span> foram corrigidos. Critério de saída do §28: <em>um sprite anda nas três faixas e o CI está verde</em>. Nada mais. A tentação é fazer combate na Fase 0; resistir a essa tentação é o que faz a Fase 1 correr bem.</p>
++  <p class="lede"><strong>Revisto na v5.1:</strong> esta lista tratava só dos ficheiros de jogo. Os do repositório — que vêm antes — estão na §68, e o conteúdo de cada um na §69; os caminhos marcados <span class="mark">§70</span> foram corrigidos. Critério de saída do §33: <em>um sprite anda nas três faixas e o CI está verde</em>. Nada mais. A tentação é fazer combate na Fase 0; resistir a essa tentação é o que faz a Fase 1 correr bem.</p>
+ 
+   <div class="tw"><table>
+     <thead><tr><th>Ficheiro</th><th>O que faz</th><th>Depende de</th><th class="n">h</th></tr></thead>
+     <tbody>
+-      <tr><td colspan="4" style="background:var(--surface-2)"><strong>Infraestrutura — 6, mais as 19 da §68</strong></td></tr>
++      <tr><td colspan="4" style="background:var(--surface-2)"><strong>Infraestrutura — 6, mais os 19 da §68</strong></td></tr>
+       <tr><td><code>project.godot</code></td><td>As definições do §19, copiadas tal e qual</td><td>—</td><td class="n">1</td></tr>
+       <tr><td><code>.gitattributes</code></td><td>Git LFS para <code>art/source/</code> <strong>desde o primeiro commit</strong></td><td>—</td><td class="n">0,5</td></tr>
+       <tr><td><code>.github/workflows/ci.yml</code></td><td>gdUnit4 em <em>headless</em>, os cinco portões do §64</td><td>—</td><td class="n">3</td></tr>
+@@ -4111,7 +4125,7 @@
+       <tr><td><strong>A Podridão</strong></td><td><code>sim/systems/rot_system.gd</code> · <code>state/rot_state.gd</code> · <code>data/rot_profile.gd</code></td><td>Nasce no crepúsculo, avança, invoca dentro do orçamento de massa, deixa rasto, recua ao amanhecer. Vê-se chegar do outro lado do ecrã.</td></tr>
+       <tr><td><strong>Uma noite completa</strong></td><td><code>scenes/tests/night_test.tscn</code> · <code>tests/sim_harness.gd</code></td><td>Corre em <em>headless</em> com <em>delta</em> fixo, dez dias em menos de dez segundos. É o instrumento que vai balancear o jogo inteiro.</td></tr>
+       <tr><td><strong>Mundo mínimo</strong></td><td><code>sim/worldgen/world_gen.gd</code> · <code>segment_data.gd</code> · 8 cenas de segmento em <em>greybox</em></td><td>Uma região gerada por <em>seed</em>, com paisagem contínua e segmentos montados. A mesma <em>seed</em> dá o mesmo mundo.</td></tr>
+-      <tr><td><strong>Save</strong></td><td>migração 1→1, integração com <code>DAWN</code></td><td>Salvar a meio da noite 9 e retomar continua a mesma noite, com a mesma sequência aleatória.</td></tr>
++      <tr><td><strong>Save</strong></td><td>migração 1→1, integração com <code>DAWN</code></td><td>Gravar a meio da noite 9 e retomar continua a mesma noite, com a mesma sequência aleatória.</td></tr>
+     </tbody>
+   </table></div>
+ 
+@@ -4123,7 +4137,7 @@
+     <div class="step"><h4><code>RngService</code> e <code>test_seed_reproduz</code></h4><p>O teste passa trivialmente agora e vai proteger-te durante dois anos.</p></div>
+     <div class="step"><h4><code>GameClock</code> e o teste do ciclo</h4><p>360 segundos, seis fases, fronteiras a emitir.</p></div>
+     <div class="step"><h4><code>csv_to_tres</code> e os primeiros CSV</h4><p>Unidades e criaturas. A partir daqui, balancear é editar uma folha.</p></div>
+-    <div class="step"><h4><code>GameState</code>, <code>UnitRec</code>, <code>SaveService</code></h4><p>Salvar e carregar um estado vazio. Fazer isto cedo é o que torna o save trivial para sempre.</p></div>
++    <div class="step"><h4><code>GameState</code>, <code>UnitRec</code>, <code>SaveService</code></h4><p>Gravar e carregar um estado vazio. Fazer isto cedo é o que torna o save trivial para sempre.</p></div>
+     <div class="step"><h4><code>MovementSystem</code> e <code>UnitView</code></h4><p>Um sprite anda. É o critério de saída da Fase 0 e a primeira coisa que se parece com um jogo.</p></div>
+     <div class="step"><h4>Moeda física e <code>BuildSystem</code></h4><p>O Verbo 1. A partir daqui há decisões a tomar no ecrã.</p></div>
+     <div class="step"><h4><code>JobSystem</code> e a FSM</h4><p>As tropas passam a ir sozinhas para onde fazem falta. O jogo começa a jogar-se.</p></div>
+@@ -4151,7 +4165,7 @@
+   </table></div>
+ 
+   <div class="note dec"><span class="lbl">A peça que falta a seguir a esta</span>
+-    <p>A <strong>base de dados de conteúdo</strong>: os CSV de <code>data/source/</code> preenchidos com todas as linhas do §06 a §10, mais os campos que esta parte acrescenta. Não é prosa — são sete folhas de cálculo, e quando existirem, o §44 deixa de ser uma promessa. É a peça que mais depressa transforma tudo isto em código a correr.</p>
++    <p>A <strong>base de dados de conteúdo</strong>: os CSV de <code>data/source/</code> preenchidos com todas as linhas do §06 a §10, mais os campos que esta parte acrescenta. Não é prosa — são sete folhas de cálculo, e quando existirem, o §44 deixa de ser uma promessa. É a peça que mais depressa transforma tudo isto em código a correr. <strong>Existe desde a v5.2</strong>: são 23 tabelas, e não sete, porque os campos desta parte pediram mais — ver §71.</p>
+   </div>
+ </section>
+ 
+@@ -4307,7 +4321,8 @@
+ 
+ # Os addons trazem PNGs pequenos e nao devem ir para LFS.
+ # Em .gitattributes a ultima regra que casa e a que vale — por isso vem depois.
+-addons/**       -filter -diff -merge text
++# v5.2: &#x27;text&#x27; forcado corrompia os PNG dos addons; &#x27;!&#x27; repoe o valor por omissao (C-05, §72)
++addons/**       !filter !diff !merge text=auto
+ 
+ # Ficheiros do Godot sao texto: tem de dar diff legivel numa revisao
+ *.gd    text eol=lf
+@@ -4421,7 +4436,8 @@
+               src/ --include=&#x27;*.gd&#x27; | grep -v &#x27;src/core/rng_service.gd&#x27;
+ 
+       - name: G1 G3 G4 G5 · suite gdUnit4
+-        run: godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd -a tests
++        # v5.2: o gdUnit4 6.x sai com 103 em --headless sem esta opcao (C-03, §72)
++        run: godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests
+ 
+       - name: Formato e limite de 250 linhas
+         run: |
+@@ -4429,10 +4445,31 @@
+           gdformat --check src/ tests/ tools/
+           gdlint src/ tests/
+ 
++      # v5.2: sem templates o export falha sempre; so os de Linux, em cache (C-04, §72)
++      - name: Cache dos templates de export
++        uses: actions/cache@v4
++        with:
++          path: ~/.local/share/godot/export_templates
++          key: godot-templates-${{ env.GODOT_VERSION }}-linux
++
++      - name: Templates de export (so Linux)
++        run: |
++          T=~/.local/share/godot/export_templates/${GODOT_VERSION/-/.}
++          if [ ! -f &quot;$T/linux_debug.x86_64&quot; ]; then
++            mkdir -p &quot;$T&quot;
++            BASE=https://github.com/godotengine/godot-builds/releases/download
++            curl -sSLo t.tpz $BASE/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
++            unzip -q -j t.tpz templates/linux_debug.x86_64 templates/linux_release.x86_64 \
++              templates/version.txt -d &quot;$T&quot;
++            rm t.tpz
++          fi
++
+       - name: Export do Linux ainda arranca
+         run: |
++          mkdir -p build
+           godot --headless --path . --export-debug &quot;Linux&quot; build/empire.x86_64
+-          test -s build/empire.x86_64</code></pre>
++          test -s build/empire.x86_64 &amp;&amp; test -s build/empire.pck
++          cd build &amp;&amp; ./empire.x86_64 --headless --quit-after 30</code></pre>
+   <div class="note risk"><span class="lbl">O passo <code>--import</code> — meia manhã perdida, uma vez por projeto</span>
+     <p>Num <em>checkout</em> frio não existe <code>.godot/</code>, e portanto não existe nenhum recurso importado. Qualquer teste que abra uma cena falha com um erro que não menciona importação nenhuma. Toda a gente perde a mesma meia manhã a descobrir isto; tu já não tens de a perder.</p>
+   </div>
+@@ -4444,7 +4481,8 @@
+ set -euo pipefail
+ GODOT=&quot;${GODOT:-godot}&quot;
+ &quot;$GODOT&quot; --headless --import --path . &gt;/dev/null 2&gt;&amp;1 || true
+-&quot;$GODOT&quot; --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd -a tests &quot;$@&quot;</code></pre>
++# v5.2: o gdUnit4 6.x recusa --headless sem --ignoreHeadlessMode (sai com 103). C-03, §72
++&quot;$GODOT&quot; --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests &quot;$@&quot;</code></pre>
+   <h4>6 · <code>.github/PULL_REQUEST_TEMPLATE.md</code></h4>
+ <pre><code>## Tarefa
+ docs/backlog/&lt;id&gt;.md
+@@ -4515,8 +4553,9 @@
+ max-file-lines: 250            # a regra do §28 deixa de ser boa intencao
+ max-public-methods: 20
+ function-arguments-number: 6
+-function-name: &#x27;(_on_)?[a-z][a-z0-9]*(_[a-z0-9]+)*&#x27;
+-class-variable-name: &#x27;[a-z][a-z0-9]*(_[a-z0-9]+)*&#x27;</code></pre>
++# v5.2: &#x27;_?&#x27; aceita privados (_init, _durations), que o GameClock do §30 usa (C-02, §72)
++function-name: &#x27;(_on_)?_?[a-z][a-z0-9]*(_[a-z0-9]+)*&#x27;
++class-variable-name: &#x27;_?[a-z][a-z0-9]*(_[a-z0-9]+)*&#x27;</code></pre>
+   <div class="note dec"><span class="lbl">A linha que vale a secção inteira</span>
+     <p><code>max-file-lines: 250</code>. A regra mais valiosa do §28 — a que faz um agente escrever código revisível — deixa de depender de alguém se lembrar dela e passa a chumbar no CI. Custo: uma linha.</p>
+   </div>
+@@ -4545,7 +4584,7 @@
+   <p>Duas linhas de CSV chegam para provar o circuito inteiro — <code>data/source/clock.csv</code> → <code>tools/csv_to_tres.gd</code> → <code>data/economy/clock.tres</code> → <code>ClockService</code> — no primeiro dia, em vez de o descobrires partido quando tiveres sete folhas de cálculo para converter.</p>
+ 
+   <h4>11 · <code>tools/split_dossie.py</code></h4>
+-  <p>O ficheiro que fecha a maior lacuna da §68: transforma este dossiê nos <strong>72 ficheiros</strong> de <code>docs/design/</code> que o contrato manda o agente ler. Só biblioteca padrão, idempotente, e volta a correr sempre que editares o dossiê. Guarda o HTML em <code>docs/dossie.html</code> e corre <code>python3 tools/split_dossie.py docs/dossie.html docs/design</code>.</p>
++  <p>O ficheiro que fecha a maior lacuna da §68: transforma este dossiê nos <strong>75 ficheiros</strong> de <code>docs/design/</code> que o contrato manda o agente ler. Só biblioteca padrão, idempotente, e volta a correr sempre que editares o dossiê. Guarda o HTML em <code>docs/dossie.html</code> e corre <code>python3 tools/split_dossie.py docs/dossie.html docs/design</code>.</p>
+ <pre><code>#!/usr/bin/env python3
+ &quot;&quot;&quot;Parte o dossie HTML em docs/design/NN-slug.md, um ficheiro por seccao.
+ 
+@@ -4720,7 +4759,7 @@
+       </tr>
+       <tr>
+         <td><strong>A linha do solo</strong><br>§30 · §47</td>
+-        <td>O código do §30 usa <code>Band.GROUND_Y</code>; o §47 define <code>GROUND_LINE</code>. Dois nomes para o mesmo número — exactamente o que a regra do vocabulário do §28 existe para evitar.</td>
++        <td>O código do §30 usa <code>Band.GROUND_Y</code>; o §47 define <code>GROUND_LINE</code>. Dois nomes para o mesmo número — exatamente o que a regra do vocabulário do §28 existe para evitar.</td>
+         <td><strong><code>GROUND_LINE</code></strong>, corrigido na §30. O valor (517) continua em aberto até ao <em>greybox</em>, como diz a §67 — o nome é que não pode continuar a ser dois.</td>
+       </tr>
+       <tr>
+@@ -4772,6 +4811,150 @@
+ </section>
+ 
+ 
++<div class="part">
++  <div class="part-rule" aria-hidden="true">
++    <svg viewBox="0 0 1200 74" preserveAspectRatio="none" role="presentation">
++      <rect x="0" y="0" width="1200" height="26" fill="var(--ground)"/>
++      <rect x="0" y="26" width="1200" height="9" fill="var(--leaf)" opacity=".85"/>
++      <rect x="0" y="35" width="1200" height="39" fill="var(--surface-2)"/>
++      <path d="M0 35 H1200 V37 H0 Z" fill="var(--ink)" opacity=".55"/>
++      <rect x="120" y="41" width="26" height="26" fill="var(--ground)" opacity=".9"/>
++      <rect x="152" y="41" width="26" height="26" fill="var(--ground)" opacity=".9"/>
++      <rect x="184" y="41" width="26" height="26" fill="var(--ground)" opacity=".9"/>
++      <path d="M700 46 h70 v22 h-70 Z" fill="var(--ground)" opacity=".9"/>
++      <path d="M700 46 l35-12 l35 12" fill="var(--petrol)" opacity=".8"/>
++      <path d="M790 46 h70 v22 h-70 Z" fill="var(--ground)" opacity=".9"/>
++      <path d="M790 46 l35-12 l35 12" fill="var(--petrol)" opacity=".8"/>
++      <circle cx="430" cy="62" r="3" fill="var(--ember)" opacity=".6"/>
++    </svg>
++  </div>
++  <span class="part-no">Parte XII</span>
++  <h2>A implementação</h2>
++  <p>A Parte XI dizia o que tinha de existir antes da primeira linha de jogo. Agora existe. Esta parte não acrescenta teoria nenhuma: é o índice do que foi criado, o que a implementação encontrou de errado neste dossiê, e o que continua à espera de uma decisão tua.</p>
++</div>
++
++<section id="s71">
++  <span class="sec-no">71 — Índice · <span style="color:var(--ember)">novo</span></span>
++  <h3>O repositório que já existe, pasta a pasta</h3>
++  <p class="lede">As ondas 1 e 2 da §68, e tudo o que o relatório do que faltava pedia, estão num repositório que abre no Godot 4.6: <strong>23 testes</strong> (dois saltados, com a razão escrita), o <em>export</em> de Linux a arrancar, e os números deste dossiê em <strong>23 tabelas</strong> de onde saem 120 recursos <code>.tres</code>. O que o dossiê não dava foi proposto e marcado — 550 valores, 265 deles na fatia vertical. Nada foi decidido em silêncio.</p>
++
++  <h4>Pasta a pasta</h4>
++  <div class="tw"><table>
++    <thead><tr><th>Pasta</th><th>O que tem</th><th>Vem de</th><th>Estado</th></tr></thead>
++    <tbody>
++      <tr><td>Raiz</td><td><code>AGENTS.md</code> + <code>CLAUDE.md</code>, <code>README.md</code>, <code>.gitignore</code>, <code>.gitattributes</code>, <code>.editorconfig</code>, <code>.gdlintrc</code>, <code>.godot-version</code>, <code>LICENSE</code>, <code>NOTICE.md</code>, <code>LEGAL.md</code>, <code>project.godot</code>, <code>export_presets.cfg</code>, <code>run_tests.sh</code></td><td>§68, ondas 1 e 2 · §69</td><td>Existe e corre</td></tr>
++      <tr><td><code>.github/</code></td><td><code>workflows/ci.yml</code> — os cinco portões do §64, mais dois passos da v5.2: dados em sincronia com o dossiê, e <code>docs/design/</code> igual ao gerado · <code>PULL_REQUEST_TEMPLATE.md</code></td><td>§64 · §69</td><td>Existe; corre no GitHub quando houver remoto</td></tr>
++      <tr><td><code>data/source/</code> → <code>data/**/*.tres</code></td><td>23 tabelas e o registo <code>_tables.csv</code>; 120 <code>.tres</code> gerados e versionados. As colunas <code>_src</code> e <code>_proposed</code> dizem de onde vem cada número e o que ainda é proposta</td><td>§44 · §06 a §17</td><td>Existe; <code>csv_to_tres --check</code> sem diferenças</td></tr>
++      <tr><td><code>data/i18n/strings.csv</code></td><td>207 chaves de texto, PT-PT e EN, com contexto e limite de caracteres</td><td>§27</td><td>Existe</td></tr>
++      <tr><td><code>src/sim/</code></td><td><code>band.gd</code> e 23 recursos de definição — as doze classes da §44 e mais onze que as tabelas pediram (relógio, postos de trabalho, ganância, impulsos, segredos, diários, fauna, companheiros…)</td><td>§44 · §47 · §70</td><td>Existe; o resto da simulação são os tickets F0 e F1</td></tr>
++      <tr><td><code>scenes/boot.tscn</code></td><td>A cena principal do dia zero: céu, corte de solo, um <em>placeholder</em> de escala 2 com sombra de contacto em cima da <code>GROUND_LINE</code></td><td>§59 · §70</td><td>Existe — <em>placeholder</em>, não jogo</td></tr>
++      <tr><td><code>tools/</code></td><td><code>csv_to_tres.gd</code>, <code>csv_codec.gd</code>, <code>lint_sim.gd</code>, <code>lint_rules.gd</code>, <code>split_dossie.py</code>, <code>check_dossie_vs_csv.py</code>, <code>content_report.py</code>, <code>export_aseprite.sh</code></td><td>§41 · §64 · §69</td><td>Existe; o último por testar com o Aseprite</td></tr>
++      <tr><td><code>tests/</code></td><td>Arquitetura (G1, G2, G4, a faixa canónica, 250 linhas), dados (tabelas completas, referências, chaves de texto) e design (tempo até matar do §07, Podridão, manutenção, asfixia entre 9 e 14, rotas, ganância, muralhas)</td><td>§31 · §64</td><td>23 testes; G3 espera pelo F0-07, o aríete pela Q-001</td></tr>
++      <tr><td><code>docs/design/</code></td><td>Este dossiê partido por secção, 75 ficheiros</td><td>§69</td><td>Gerado; o CI falha se divergir</td></tr>
++      <tr><td><code>docs/adr/</code></td><td>0000 a 0010 — escala, faixas, dados, versionamento, arranque, relógio, save, convenções da base de dados, correções do dia zero, importação da arte</td><td>§28 · §69</td><td>0001 e 0010 são propostas; as outras, aceites</td></tr>
++      <tr><td><code>docs/backlog/</code></td><td>F0-00 a F0-10 e F1-01 a F1-16 no formato do §34, com os caminhos da §70 e os ficheiros reais de <code>docs/design/</code>; mais nove tickets de arte, <em>greybox</em>, nomes e dados</td><td>§34 · §65 · §66</td><td>Existe</td></tr>
++      <tr><td><code>docs/content/</code></td><td>Dicionário e esquema da base de dados, as 550 propostas, a Podridão dia a dia, os nomes, e a bíblia de nomes com a triagem dos candidatos ao nome do jogo</td><td>§17 · §36 · §44</td><td>Existe; o nome do jogo continua por escolher</td></tr>
++      <tr><td><code>docs/art/</code></td><td>Asset Bible, registo de 251 assets, bíblia de animação, guia de expressões, 34 efeitos</td><td>§01 · §22 · §58 · §60</td><td>Existe</td></tr>
++      <tr><td><code>docs/world/</code></td><td>Bíblia de produção de mundo, regras de <em>greybox</em>, registo de 43 segmentos</td><td>§21 · §54</td><td>Existe</td></tr>
++      <tr><td><code>docs/ux/</code> · <code>docs/audio/</code> · <code>docs/localization/</code></td><td>Fluxos e 25 ecrãs · bíblia de áudio e 56 pistas · glossário de 57 termos e guia de estilo</td><td>§23 · §24 · §25 · §27</td><td>Existe</td></tr>
++      <tr><td><code>docs/qa/</code></td><td>Plano e formulário de <em>playtest</em>, plano mestre de QA, regressão, desempenho, acessibilidade</td><td>§26 · §32 · §63</td><td>Existe</td></tr>
++      <tr><td><code>docs/legal/</code> · <code>docs/release/</code> · <code>docs/marketing/</code></td><td>Registo de terceiros, <em>checklists</em> de lançamento, assets da loja</td><td>§35 · §36</td><td>Existe</td></tr>
++      <tr><td><code>docs/</code></td><td><code>QUESTIONS.md</code> (Q-001 a Q-036), <code>ASSETS_TODO.md</code>, <code>dossie-v5.2-correcoes.md</code></td><td>§28 · §68</td><td>Existe</td></tr>
++    </tbody>
++  </table></div>
++
++  <h4>Como se verificou</h4>
++  <div class="kv">
++    <dt>Motor</dt><dd>Godot 4.6-stable em <em>headless</em>: o projeto importa sem erros</dd>
++    <dt>Testes</dt><dd>gdUnit4 6.2.1 — 23 testes, 21 a passar e 2 saltados com a razão escrita</dd>
++    <dt>Dados</dt><dd><code>csv_to_tres --check</code> sem diferenças; <code>check_dossie_vs_csv.py</code> confere 127 números deste dossiê contra as tabelas, e não há divergências</dd>
++    <dt>Portões</dt><dd><code>lint_sim.gd</code> (G1, G2, G4) limpo; <code>gdformat</code> e <code>gdlint</code> limpos</dd>
++    <dt>Export</dt><dd>Linux, com os templates 4.6; o executável arranca em <em>headless</em></dd>
++    <dt>A curva</dt><dd>O modelo do §06 reproduzido num teste: asfixia no dia 11 no perfil equilibrado, duas rotas empurram-na quatro dias, tudo no máximo leva-a ao dia 28 — como o simulador do §06 diz</dd>
++  </div>
++
++  <h4>A pré-produção está fechada?</h4>
++  <p>O relatório do que faltava dá doze critérios. Agrupados, o estado honesto é este:</p>
++  <div class="tw"><table>
++    <thead><tr><th>Critério</th><th>Estado</th></tr></thead>
++    <tbody>
++      <tr><td>O dossiê é a fonte de verdade</td><td>Sim — gerado para <code>docs/design/</code> e conferido pelo CI</td></tr>
++      <tr><td>As decisões da Fase 0 estão registadas</td><td>Em parte — a escala é ADR proposta até ao <em>spike</em>; a <code>GROUND_LINE</code>, a fonte e a câmara continuam na §67</td></tr>
++      <tr><td>Existe a base de dados de conteúdo</td><td>Sim, com 550 propostas por aprovar</td></tr>
++      <tr><td>Existem a Asset Bible, o registo de assets, a bíblia de animação e a de nomes</td><td>Sim — o nome do jogo não</td></tr>
++      <tr><td>Existem todos os ficheiros do dia zero</td><td>As ondas 1 e 2, completas; as ondas 3 e 4 são os tickets F0</td></tr>
++      <tr><td>O CI está verde</td><td>Localmente, com a mesma sequência de passos; no GitHub, quando houver remoto</td></tr>
++      <tr><td>O projeto exporta</td><td>Sim — Linux</td></tr>
++      <tr><td>Uma personagem funciona dentro do jogo</td><td><span class="mark">Não</span> — F0-10 e ART-01</td></tr>
++      <tr><td>A <em>greybox</em> funciona</td><td><span class="mark">Não</span> — GB-01 a GB-03</td></tr>
++    </tbody>
++  </table></div>
++
++  <div class="note dec"><span class="lbl">O que falta já não é documentação</span>
++    <p>As duas linhas por fazer não se resolvem a escrever. O próximo marco é o do relatório: <strong>abrir o Empire, controlar uma personagem real numa <em>greybox</em>, atravessar as três faixas, construir algo com uma moeda, sobreviver à primeira noite e reproduzir o resultado pela mesma <em>seed</em>.</strong> Os tickets estão por ordem em <code>docs/backlog/</code>. Começa pelo F0-00.</p>
++  </div>
++</section>
++
++<section id="s72">
++  <span class="sec-no">72 — Achados · <span style="color:var(--ember)">novo</span></span>
++  <h3>O que a implementação encontrou no dossiê</h3>
++  <p class="lede">Transformar prosa em ficheiros que correm é o teste mais duro que uma especificação pode ter. Sete ficheiros do dia zero não funcionavam como estavam escritos, trinta e cinco números ou regras estavam em falta ou não batiam entre secções, e uma regra de segurança não protegia o que prometia. Ficou tudo escrito: os ficheiros corrigidos, as contradições em perguntas com proposta, e nada decidido por omissão.</p>
++
++  <h4>Os sete ficheiros que não corriam como estavam escritos</h4>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>Onde</th><th>O que falhava</th><th>Correção</th></tr></thead>
++    <tbody>
++      <tr><td>C-01</td><td>§47 · <code>band.gd</code></td><td>Várias constantes numa só linha: erro de sintaxe, e o <code>UnitData</code> caía com ele</td><td>Uma constante por linha — corrigido na §47</td></tr>
++      <tr><td>C-02</td><td>§69 · <code>.gdlintrc</code></td><td>Os padrões recusavam nomes privados (<code>_init</code>, <code>_durations</code>): o <code>gdlint</code> chumbava o próprio <code>GameClock</code> do §30</td><td><code>_?</code> nos dois padrões — corrigido na §69</td></tr>
++      <tr><td>C-03</td><td>§69 · <code>run_tests.sh</code>, <code>ci.yml</code></td><td>O gdUnit4 6.x sai com o código 103 em <code>--headless</code></td><td><code>--ignoreHeadlessMode</code> — corrigido na §69</td></tr>
++      <tr><td>C-04</td><td>§69 · <code>ci.yml</code></td><td>O <em>export</em> falha sempre sem os templates do motor</td><td>Um passo, com <em>cache</em>, que instala só os de Linux — corrigido na §69</td></tr>
++      <tr><td>C-05</td><td>§69 · <code>.gitattributes</code></td><td><code>text</code> forçado nos <code>addons/</code> trata os PNG como texto e corrompe-os</td><td><code>!filter !diff !merge text=auto</code> — corrigido na §69</td></tr>
++      <tr><td>C-06</td><td>CI</td><td>O <em>checkout</em> sem LFS deixa ponteiros no lugar das imagens do dia zero</td><td>Os <em>placeholders</em> ficam fora do LFS, em <code>art/export/_placeholder/</code> — no repositório</td></tr>
++      <tr><td>C-07</td><td>Godot</td><td>O Godot importa qualquer <code>.csv</code> como tradução, incluindo os de <code>data/source/</code></td><td><code>.gdignore</code> em <code>data/source/</code> e em <code>docs/</code> — no repositório</td></tr>
++    </tbody>
++  </table></div>
++  <p>A ADR 0009 tem a razão de cada uma. Os ficheiros do repositório são a versão completa: o <code>AGENTS.md</code>, o <code>ci.yml</code> e o <code>clock_data.gd</code> de lá levam ainda o que a v5.2 acrescentou — a tabela da §70 inteira, os passos de dados e de spec, e os limites do <em>slider</em> da §26.</p>
++
++  <h4>As contradições entre secções</h4>
++  <p>Trinta e seis perguntas em <code>docs/QUESTIONS.md</code>, cada uma com o sítio exato, a proposta e o que bloqueia. Oito ficaram resolvidas na v5.2, porque o próprio dossiê já as decidia noutro lado; as outras esperam por ti.</p>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>Resolvida na v5.2</th><th>Ficou</th></tr></thead>
++    <tbody>
++      <tr><td>Q-019</td><td>O §30 escolhe a criatura ao acaso; a §51 manda escolher <em>a mais cara que cabe</em></td><td>A §51 — o F1-08 corrige o código do §30</td></tr>
++      <tr><td>Q-020</td><td>A §42 semeava os fluxos com XOR de constantes que nem são hexadecimais (<code>0xR0T7</code>); o código logo abaixo usa <code>hash</code></td><td>O código — a tabela da §42 foi corrigida</td></tr>
++      <tr><td>Q-021</td><td>O §47 mandava <code>DAY_SECONDS</code> para a <code>EconomyCurve</code>; a §69 criou o <code>ClockData</code></td><td><code>ClockData</code> (ADR 0006) — corrigido no §47</td></tr>
++      <tr><td>Q-022</td><td><em>Ids</em> em português nos exemplos (<code>enramados_arqueiro.tres</code>) contra a regra do código em inglês</td><td>Inglês — a bíblia de nomes, §5</td></tr>
++      <tr><td>Q-023</td><td>O §22 diz uma camada por <em>slot</em>; o §58, um ficheiro por <em>slot</em></td><td>Fonte com camadas, exportação por <em>slot</em> — Asset Bible, §2</td></tr>
++      <tr><td>Q-026</td><td>O relatório pedia um <code>waves.csv</code></td><td><code>rot.csv</code> — A Podridão substituiu as ondas (§70)</td></tr>
++      <tr><td>Q-027</td><td>A §49 lê rendimento por fase; o §06 dá números por dia</td><td>O CSV guarda por dia; o sistema divide pelas fases</td></tr>
++      <tr><td>Q-032</td><td>Os sete ficheiros acima</td><td>Aplicadas — ADR 0009</td></tr>
++    </tbody>
++  </table></div>
++  <div class="tw"><table>
++    <thead><tr><th>#</th><th>Em aberto, e bloqueia as Fases 0 e 1</th><th>Bloqueia</th></tr></thead>
++    <tbody>
++      <tr><td>Q-001</td><td>Os arqueiros param o Aríete de lodo? O §07 diz que não, mas 96,6 s é menos do que uma noite de 105 s</td><td>F1-09 — o teste está saltado</td></tr>
++      <tr><td>Q-005</td><td>As tropas fogem a 30% ou a 25% de vida?</td><td>F1-12</td></tr>
++      <tr><td>Q-006</td><td>Quem atinge a faixa aérea?</td><td>F1-07 · F1-09</td></tr>
++      <tr><td>Q-017</td><td>Três Rastejantes na noite 1, como diz a §25, ou dez, como dá a massa do §05?</td><td>F1-15</td></tr>
++      <tr><td>Q-024</td><td>A camada <code>Equipments</code> dos teus ficheiros é o <em>slot</em> <code>head</code>?</td><td>ART-01</td></tr>
++      <tr><td>Q-025</td><td>Godot 4.6-stable, 4.6.3 ou 4.7?</td><td>Fase 0</td></tr>
++      <tr><td>Q-033</td><td>A curva abstrata do §06 contra os edifícios reais</td><td>F1-10</td></tr>
++      <tr><td>Q-035</td><td>Sinais do §30 que não estão no catálogo da §46</td><td>F0-07</td></tr>
++      <tr><td>Q-036</td><td>O I6 proíbe o <code>load()</code> num save e recomenda o <code>ResourceLoader.load</code> — que é a mesma função; um <code>.tres</code> pode trazer <em>script</em> e executá-lo</td><td>F0-13 — a ADR 0007 já segue a proposta</td></tr>
++    </tbody>
++  </table></div>
++  <p>A Q-036 é a mais séria, e a única de segurança: a proposta é gravar o save com <code>FileAccess.store_var</code> e lê-lo com <code>get_var(false)</code>, só com tipos base — falta mudares a frase do I6 na §19, na §40 e na §62. As outras dezanove são de fases posteriores e estão no mesmo ficheiro, cada uma com a proposta que já está nos dados.</p>
++
++  <h4>O português</h4>
++  <p>A v5.2 revê o texto inteiro contra a norma europeia com o Acordo Ortográfico de 1990, que já era a do resto do documento: <strong>105 correções</strong> — 69 grafias anteriores ao Acordo, 9 formas do Brasil e 27 de gramática, pontuação e coerência. Estão todas, uma a uma e com o contexto, em <code>docs/dossie-v5.2-correcoes.md</code>. Os blocos de código ficaram de fora de propósito: são ASCII para poderem ser colados.</p>
++
++  <div class="note risk"><span class="lbl">A regra que fecha a pré-produção</span>
++    <p>A partir daqui, o dossiê só muda por três razões: uma correção, uma decisão que vira ADR, ou um número que um <em>playtest</em> desmentiu. Uma pergunta nova vai para <code>docs/QUESTIONS.md</code>; um número muda no CSV e o CI confere-o contra este texto. Uma v6 feita de teoria nova seria a forma mais confortável de não fazer o jogo.</p>
++  </div>
++</section>
++
++
+ <section id="trk">
+   <span class="sec-no">★ — Rastreador</span>
+   <h3>As tuas 48 mecânicas, mapeadas</h3>
+@@ -4791,7 +4974,7 @@
+ </div>
+ 
+ <footer class="foot">
+-  <p><strong>Empire — Dossiê de produção v5.1.</strong> Setembro de 2026. Escrito para o Rico, a partir das duas cenas de conceito, dos ficheiros Aseprite, da lista original de 48 mecânicas e da medição de cinco capturas de Milki Delivery, Eastward e Chef RPG. Sessenta e oito secções, num documento só.</p>
++  <p><strong>Empire — Dossiê de produção v5.2.</strong> Setembro de 2026. Escrito para o Rico, a partir das duas cenas de conceito, dos ficheiros Aseprite, da lista original de 48 mecânicas e da medição de cinco capturas de Milki Delivery, Eastward e Chef RPG. Setenta e três secções, num documento só — e, desde a v5.2, um repositório que corre.</p>
+   <p style="margin-top:12px">Em conflito sobre design ou balanceamento, mandam as §00 a §38. Em conflito sobre nomes, contratos ou ordem de execução, mandam as §39 a §67. Alterações a nomes ou contratos exigem subida de versão — uma especificação que diverge do código é pior do que nenhuma, porque dá confiança falsa.</p>
+   <p style="margin-top:12px">Medições de arte feitas pixel a pixel sobre <code>Empire Concept.png</code> (5120 × 720) e a cena de 1280 × 720. Dados de mercado, motor e plataforma verificados em setembro de 2026 — reconfirma-os antes de tomares decisões de negócio. Os números de balanceamento são pontos de partida testáveis, não verdades: existem para serem afinados contra jogadores reais.</p>
+ </footer>
+@@ -4938,7 +5121,7 @@
+ ["Cozinheiro dá vida e velocidade; buff em combate","2","§09"],["Ofícios evoluem devagar na base, rápido em combate","2","§09"],
+ ["Rei em combate aumenta a defesa mas pode morrer","1","§07"],["Treinar sucessores no império","6","§15"],
+ ["Muro destruído faz fugir as tropas fracas","1","§07"],["Diplomata: boost, paz, assimilação","6","§14"],
+-["Acampamentos de mercenários que atacam sempre","6","§14"],["Enviar o diplomata: super-tropa, dívida ou captura","6","§14"],
++["Acampamentos de mercenários que atacam sempre","6","§14"],["Enviar o diplomata: supertropa, dívida ou captura","6","§14"],
+ ["Fazendas: galinha e vaca largam moeda","1","§06"],["Cavaleiro Enterrado que se cura sentado","6","§08"],
+ ["Cavaleiro Selado que vê pelos olhos do cavalo","6","§08"],["Ninguém recupera vida sozinho","1","§08"],
+ ["Jogar como classe, mas gerir exige o rei","2","§08"],["Manter tropas no império para defender os dois lados","2","§13"],

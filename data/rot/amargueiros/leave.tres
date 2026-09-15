@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AmargueiroData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/amargueiro_data.gd" id="1_47vii"]
+
+[resource]
+script = ExtResource("1_47vii")
+id = &"leave"
+display_key = "AMARGUEIRO_LEAVE"
+mass_delta = 22.0
+mass_delta_named = 45.0
+permanent = true

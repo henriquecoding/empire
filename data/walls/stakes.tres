@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="WallData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wall_data.gd" id="1_citww"]
+
+[resource]
+script = ExtResource("1_citww")
+id = &"stakes"
+display_key = "WALL_STAKES"
+level = 1
+cost = 6
+max_health_b = 40
+guard_posts_a = 1
+contact_slots = 2
+material_by_people = {
+&"enramados": &"logs",
+&"fenda": &"rock_shards",
+&"fornalha": &"slag_chunks",
+&"horta": &"wattle",
+&"portuarios": &"stakes"
+}
+max_health_a = 40
+guard_posts_b = 1
+shadow_width = 64

@@ -1,0 +1,6 @@
+id,display_key,material,house,cost,coin_multiplier,capacity_craft,capacity_kind,magnitude,duration,_phase,_src,_proposed,_notes
+grain_granary,CRAFT_GRAIN,grain,granary,1,1.5,cook,troop_health,0.1,0,2,§06 circuito 2: grão → celeiro → cozinheiro (+vida),cost|magnitude|duration,+10% de vida máxima enquanto a conversão corre; duration 0 = recalculada a cada fase (§49).
+fish_saltery,CRAFT_FISH,fish,saltery,1,1.5,cook,troop_speed,0.1,0,6,§06 circuito 2: peixe → salga → cozinheiro (+velocidade),cost|magnitude|duration,"'+50%, e o peixe deixa de estragar' — o estrago não tem regra no dossiê (Q-012)."
+animal_pen,CRAFT_ANIMAL,animal,pen,1,1.0,cook,combat_dish,0.3,20,6,"§06 circuito 2: animal → curral; moeda agora = rendimento passivo; prato de combate 20 s, permanente no nível 2 (§09)",cost|magnitude,"coin_multiplier 1,0: no animal, 'moeda agora' é o rendimento passivo, não +50%. Prato = +30% de dano (proposta)."
+wood_sawmill,CRAFT_WOOD,wood,sawmill,1,1.5,builder,wall_and_tower_cost,-0.25,0,6,§06 circuito 2: madeira → serração → construtor: −25% no custo de muralha e torres,cost|duration,
+ore_smelter,CRAFT_ORE,ore,smelter,1,1.5,smith,weapon_level,1,0,6,§06 circuito 2: minério → fundição → ferreiro: +1 nível de arma e escudo,cost|duration,

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_wbiyn"]
+
+[resource]
+script = ExtResource("1_wbiyn")
+id = &"root_berserker"
+display_key = "UNIT_ROOT_BERSERKER"
+max_health = 40
+damage = 12
+attack_interval = 0.9
+accuracy_open = 1.0
+range_px = 30
+recruit_cost = 12
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+scale_tier = 3
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 22
+tags = Array[StringName]([&"melee", &"always_advance", &"no_retreat", &"elite"])
+job_affinity = {
+&"wall": 1.0
+}
+coin_capacity = 5
+weapon_kind = &"club"
+head_pool = Array[StringName]([&"bare", &"root_crown"])

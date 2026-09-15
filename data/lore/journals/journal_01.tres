@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="JournalData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/journal_data.gd" id="1_1lhti"]
+
+[resource]
+script = ExtResource("1_1lhti")
+id = &"journal_01"
+act = 1
+order = 1
+title_key = "JOURNAL_01_TITLE"
+body_key = "JOURNAL_01_BODY"
+where_kind = &"ruin"
+object_key = "JOURNAL_01_OBJECT"
+reveals_key = "JOURNAL_01_REVEALS"

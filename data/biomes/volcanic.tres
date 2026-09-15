@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/biome_data.gd" id="1_78bwn"]
+
+[resource]
+script = ExtResource("1_78bwn")
+id = &"volcanic"
+display_key = "BIOME_VOLCANIC"
+people = &"fornalha"
+creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
+resources = Array[StringName]([&"rock"])
+region_screens = Vector2i(4, 6)
+music_profile = &"music_volcanic"

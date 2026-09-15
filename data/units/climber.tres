@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_iyxek"]
+
+[resource]
+script = ExtResource("1_iyxek")
+id = &"climber"
+display_key = "UNIT_CLIMBER"
+max_health = 16
+damage = 5
+attack_interval = 1.0
+accuracy_open = 1.0
+range_px = 26
+targets_bands = Array[int]([1, 0])
+recruit_cost = 6
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 30.0
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"agile", &"climbs"])
+job_affinity = {
+&"hunt": 0.8,
+&"wall": 0.6
+}
+coin_capacity = 5
+weapon_kind = &"dagger"
+head_pool = Array[StringName]([&"bandana"])

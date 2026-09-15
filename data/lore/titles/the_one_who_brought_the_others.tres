@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_gt5ox"]
+
+[resource]
+script = ExtResource("1_gt5ox")
+id = &"the_one_who_brought_the_others"
+display_key = "TITLE_THE_ONE_WHO_BROUGHT_THE_OTHERS"
+feat_key = "FEAT_THE_ONE_WHO_BROUGHT_THE_OTHERS"
+condition_kind = &"corpses_dragged"
+condition_value = 3.0
+grant_kind = &"drag_speed"
+grant_value = 2.0
+ribbon_color = "#6E8B3D"

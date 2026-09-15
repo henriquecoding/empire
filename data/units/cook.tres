@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_su502"]
+
+[resource]
+script = ExtResource("1_su502")
+id = &"cook"
+display_key = "UNIT_COOK"
+max_health = 12
+recruit_cost = 10
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"craft", &"cook"])
+job_affinity = {
+&"kitchen": 1.0
+}
+coin_capacity = 2
+trained_at = &"kitchen"
+train_days = 1
+ability = &"combat_dish"
+ability_params = {
+&"duration": 20.0
+}
+head_pool = Array[StringName]([&"hat_chef"])

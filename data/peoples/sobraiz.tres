@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_n3vta"]
+
+[resource]
+script = ExtResource("1_n3vta")
+id = &"sobraiz"
+display_key = "PEOPLE_SOBRAIZ"
+terrain = &"subterranean"
+biome = &"subterranean"
+architecture_source = "Derinkuyu (Capadócia) + Coober Pedy"
+roof_silhouette = "Não há telhado — o povo lê-se pelo corte, não pelo alçado"
+landmark = &"shaft"
+palette_ramp = &"sobraiz"
+has_walls = false
+economy_strength = &"fungi_and_secrets"
+economy_modifiers = {
+&"secret_find_mult": 2.0
+}
+defense_trait = &"labyrinth"
+unique_unit = &"digger"
+playable_class = &"sealed_knight"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
+starting_buildings = Array[StringName]([&"core"])
+song_texture = "Viola campaniça desafinada e uma voz que não chega à nota — Baixo Alentejo"
+colheita_song = "Não cantam. Em Colheita, nunca cantaram."
+landmark_roots = true

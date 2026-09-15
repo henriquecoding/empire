@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_auq0s"]
+
+[resource]
+script = ExtResource("1_auq0s")
+id = &"squire"
+display_key = "UNIT_SQUIRE"
+max_health = 8
+recruit_cost = 0
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+scale_tier = 1
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])
+shadow_width = 14
+tags = Array[StringName]([&"follows_king", &"collects_coins"])
+coin_capacity = 5
+head_pool = Array[StringName]([&"helmet_big"])

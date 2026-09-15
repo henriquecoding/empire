@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="WallData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wall_data.gd" id="1_ljsop"]
+
+[resource]
+script = ExtResource("1_ljsop")
+id = &"palisade"
+display_key = "WALL_PALISADE"
+level = 2
+cost = 11
+max_health_b = 95
+guard_posts_a = 2
+contact_slots = 3
+material_by_people = {
+&"enramados": &"reinforced_wood",
+&"fenda": &"reinforced_wood",
+&"fornalha": &"reinforced_wood",
+&"horta": &"reinforced_wood",
+&"portuarios": &"reinforced_wood"
+}
+max_health_a = 48
+guard_posts_b = 1
+shadow_width = 64

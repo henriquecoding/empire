@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_53tcs"]
+
+[resource]
+script = ExtResource("1_53tcs")
+id = &"digger"
+display_key = "UNIT_DIGGER"
+people = &"sobraiz"
+max_health = 18
+damage = 3
+accuracy_open = 1.0
+range_px = 26
+recruit_cost = 8
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+band = 2
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"worker", &"opens_passages"])
+coin_capacity = 5
+ability = &"dig_passage"
+ability_params = {
+&"dig_seconds": 20.0
+}
+weapon_kind = &"pick"

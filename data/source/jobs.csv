@@ -1,0 +1,15 @@
+id,display_key,priority,dawn,morning,noon,afternoon,dusk,night,band,building_category,_phase,_src,_proposed,_notes
+wall,JOB_WALL,1.0,0.5,0.5,0.5,1.0,2.0,3.0,SURFACE,wall,1,"§29 prompt 4: à noite, muro e torre têm urgência 3,0",priority|dawn|morning|noon|afternoon|dusk,Só a noite é do dossiê; o resto sobe em rampa até ao crepúsculo.
+tower,JOB_TOWER,1.2,0.5,0.5,0.5,1.0,2.0,3.0,SURFACE,defense,1,"§29 prompt 4: à noite, muro e torre têm urgência 3,0",priority|dawn|morning|noon|afternoon|dusk,Prioridade acima do muro: 'a torre é o multiplicador' (§07).
+farm,JOB_FARM,1.0,1.0,1.0,1.0,1.0,0.0,0.0,SURFACE,production,1,"§29 prompt 4: a plantação tem urgência 0,0 à noite",priority|dawn|morning|noon|afternoon|dusk,Crepúsculo a 0: é a recolha aos postos (§05).
+hunt,JOB_HUNT,0.8,0.5,1.0,1.0,0.8,0.0,0.0,SURFACE,,1,§07 arqueiro: de dia caça; de noite defende,priority|dawn|morning|noon|afternoon|dusk|night,
+build,JOB_BUILD,1.5,1.0,1.0,1.0,1.0,0.5,0.0,SURFACE,,1,§05 noite: nada se constrói exceto pelo construtor evoluído; §55,priority|dawn|morning|noon|afternoon|dusk,"A exceção do construtor evoluído é habilidade, não urgência."
+repair,JOB_REPAIR,1.5,1.0,0.8,0.8,1.0,1.5,0.0,SURFACE,wall,1,§09 construtor; §55 estado DAMAGED,priority|dawn|morning|noon|afternoon|dusk|night,
+forge,JOB_FORGE,1.0,1.0,1.0,1.0,1.0,0.3,0.0,SURFACE,craft,2,§09 ferreiro,priority|dawn|morning|noon|afternoon|dusk|night,
+kitchen,JOB_KITCHEN,1.0,1.0,1.0,1.0,1.0,0.5,0.3,SURFACE,craft,2,§09 cozinheiro (serve prato em combate),priority|dawn|morning|noon|afternoon|dusk|night,
+embassy,JOB_EMBASSY,0.8,1.0,1.0,1.0,1.0,0.0,0.0,SURFACE,craft,6,"§09, §14 diplomata",priority|dawn|morning|noon|afternoon|dusk|night,
+milking,JOB_MILKING,0.9,1.0,1.0,1.0,1.0,0.0,0.0,SURFACE,production,6,§06 estábulo de vaca: exige uma tropa parada,priority|dawn|morning|noon|afternoon|dusk|night,
+cart,JOB_CART,0.9,1.0,1.0,1.0,0.8,0.0,0.0,SURFACE,,6,§06 circuito 3: a carroça percorre a rota,priority|dawn|morning|noon|afternoon|dusk|night,
+guard,JOB_GUARD,1.0,0.3,0.3,0.3,0.5,1.5,2.0,SURFACE,core,2,§07 linha de contacto junto ao núcleo,priority|dawn|morning|noon|afternoon|dusk|night,
+air_patrol,JOB_AIR_PATROL,1.0,0.3,0.3,0.3,0.5,2.0,3.0,AERIAL,,2,§07 libélula; §11 faixa aérea,priority|dawn|morning|noon|afternoon|dusk|night,
+perform,JOB_PERFORM,0.6,1.0,1.0,1.0,1.0,0.5,0.5,SURFACE,,6,§08 bardo: boost leve de velocidade às tropas,priority|dawn|morning|noon|afternoon|dusk|night,

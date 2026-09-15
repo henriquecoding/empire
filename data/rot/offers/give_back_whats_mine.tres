@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_6rwuf"]
+
+[resource]
+script = ExtResource("1_6rwuf")
+id = &"give_back_whats_mine"
+display_key = "OFFER_GIVE_BACK_WHATS_MINE"
+price_kind = &"everything_named"
+price_amount = 1.0
+effect_kind = &"rot_ends"
+effect_value = 1.0
+requires = "debt>=12"
+ends_rot = true

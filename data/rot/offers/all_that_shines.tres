@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_cd17o"]
+
+[resource]
+script = ExtResource("1_cd17o")
+id = &"all_that_shines"
+display_key = "OFFER_ALL_THAT_SHINES"
+price_kind = &"treasury_all"
+effect_kind = &"skip_night"
+effect_value = 1.0
+requires = "treasury>=80"
+min_day = 4
+once_per_campaign = true
+debt_delta = 2

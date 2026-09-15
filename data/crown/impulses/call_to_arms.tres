@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ImpulseData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/impulse_data.gd" id="1_pejcw"]
+
+[resource]
+script = ExtResource("1_pejcw")
+id = &"call_to_arms"
+display_key = "IMPULSE_CALL_TO_ARMS"
+icon = &"horn"
+coin_cost = 12
+benefit = &"vagrants_become_spearmen"
+benefit_value = 1.0
+drawback = &"production_zero_today"
+drawback_value = 1.0

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_vyi7c"]
+
+[resource]
+script = ExtResource("1_vyi7c")
+id = &"the_one_who_broke_stone"
+display_key = "TITLE_THE_ONE_WHO_BROKE_STONE"
+feat_key = "FEAT_THE_ONE_WHO_BROKE_STONE"
+condition_kind = &"killed_ram"
+condition_value = 1.0
+grant_kind = &"damage_vs_siege"
+grant_value = 2.0
+ribbon_color = "#8A8F7A"

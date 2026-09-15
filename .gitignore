@@ -1,0 +1,53 @@
+# Regra de ouro deste ficheiro: um comentario ocupa a sua propria linha.
+# O git NAO reconhece comentarios no fim da linha — `.godot/  # cache` e um
+# padrao literal que inclui os espacos e o texto, e por isso nunca casa com
+# nada. Foi o que aconteceu ate 15/09/2026: o `.godot/` e os `*.translation`
+# estavam escritos aqui e continuavam a ser seguidos pelo git.
+
+# ---- Godot 4 ----
+# Cache do editor: nunca vai para o repositorio.
+.godot/
+/android/
+/build/
+/export/
+
+# Gerado de data/i18n/strings.csv pelo importador do motor.
+*.translation
+
+# ---- Arte gerada ----
+# A fonte esta em art/source/ (LFS). art/export/ e produzido pelo Aseprite Wizard.
+art/export/
+!art/export/_placeholder/
+!art/export/_placeholder/**
+
+# ---- Dados gerados por tools/csv_to_tres.gd ----
+# ADR 0004: os .tres SAO versionados — o export precisa deles e o CI nao tem de
+# correr a ferramenta. Se algum dia inverteres a decisao, descomenta:
+# data/**/*.tres
+# !data/source/**
+
+# ---- Segredos ----
+# O export_presets.cfg E versionado. Palavras-passe de keystore e credenciais
+# de assinatura ficam em variaveis de ambiente / segredos do GitHub, nunca aqui.
+*.keystore
+*.p12
+*.pem
+.env
+.env.*
+!.env.example
+
+# ---- Sistema ----
+.DS_Store
+Thumbs.db
+*.tmp
+*~
+.idea/
+.vscode/
+
+# ---- Relatorios do gdUnit4 (gerados por run_tests.sh) ----
+reports/
+
+# ---- Camada de uso do dossie (ferramentas/) ----
+# O construtor escreve para saida/; o node_modules e da maquina, nao do projeto.
+ferramentas/node_modules/
+ferramentas/saida/

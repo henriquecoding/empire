@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/class_data.gd" id="1_2fl7k"]
+
+[resource]
+script = ExtResource("1_2fl7k")
+id = &"buried_knight"
+display_key = "CLASS_BURIED_KNIGHT"
+archetype = &"buried_knight"
+base_unit = &"buried_knight"
+unlock = &"royal_seed"
+unlock_seed_cost = 2
+evolve_seed_cost = 1
+evolve_condition = &"sit_heals"
+evolve_condition_value = 10
+phase1_ability = &"sit_heal"
+phase2_ability = &"sit_heal_grove"
+phase2_params = {
+&"grove_radius_mult": 2.0
+}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_3jy0f"]
+
+[resource]
+script = ExtResource("1_3jy0f")
+id = &"the_counter"
+display_key = "TITLE_THE_COUNTER"
+feat_key = "FEAT_THE_COUNTER"
+condition_kind = &"kills"
+condition_value = 10.0
+grant_kind = &"attack_rate"
+grant_value = 1.1
+ribbon_color = "#59386B"

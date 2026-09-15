@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EconomyProfile" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/economy_profile.gd" id="1_j7sq5"]
+
+[resource]
+script = ExtResource("1_j7sq5")
+id = &"greed_20"
+sources = 7
+troops = 14
+greed = 20

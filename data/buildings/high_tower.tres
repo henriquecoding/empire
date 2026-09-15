@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_7xcyi"]
+
+[resource]
+script = ExtResource("1_7xcyi")
+id = &"high_tower"
+display_key = "BUILDING_HIGH_TOWER"
+category = &"defense"
+cost = 30
+job_slots = 2
+max_health = 240
+build_work = 60.0
+width_px = 64
+effect_params = {
+&"accuracy": 1.0,
+&"hits_aerial": 1.0,
+&"posts": 2.0
+}
+shadow_width = 64
+tags = Array[StringName]([&"tower", &"elevated", &"anti_air"])

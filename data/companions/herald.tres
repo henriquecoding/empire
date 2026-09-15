@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CompanionData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/companion_data.gd" id="1_skdx7"]
+
+[resource]
+script = ExtResource("1_skdx7")
+id = &"herald"
+display_key = "COMPANION_HERALD"
+rule = &"warn_rot_side"
+rule_params = {
+&"seconds_before_dusk": 30.0
+}
+heal_per_day = 2.0
+growth_stages = 3
+food = Array[StringName]([&"grain", &"animal"])

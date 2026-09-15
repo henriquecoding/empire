@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_v2vfv"]
+
+[resource]
+script = ExtResource("1_v2vfv")
+id = &"cow_stable"
+display_key = "BUILDING_COW_STABLE"
+cost = 14
+material = &"animal"
+yield_per_day = 5.0
+job_slots = 1
+max_health = 112
+build_work = 28.0
+width_px = 160
+shadow_width = 160
+tags = Array[StringName]([&"manual_milking"])

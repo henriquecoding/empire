@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/creature_data.gd" id="1_jkkss"]
+
+[resource]
+script = ExtResource("1_jkkss")
+id = &"crawler"
+display_key = "CREATURE_CRAWLER"
+mass_cost = 8
+min_day = 1
+max_health = 10
+damage = 4
+attack_interval = 1.2
+range_px = 24
+accuracy = 1.0
+move_speed = 30.0
+scale_tier = 1
+layer_slots = Array[StringName]([&"body", &"face", &"overlay"])
+shadow_width = 16
+coin_drop = 1
+tags = Array[StringName]([&"rot", &"swarm"])

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_ic56n"]
+
+[resource]
+script = ExtResource("1_ic56n")
+id = &"war_smith"
+display_key = "UNIT_WAR_SMITH"
+people = &"fornalha"
+max_health = 24
+damage = 4
+accuracy_open = 1.0
+recruit_cost = 10
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"melee", &"repairs_walls"])
+coin_capacity = 5
+ability = &"repair_wall"
+ability_params = {
+&"hp_per_second": 3.0
+}
+weapon_kind = &"hammer"

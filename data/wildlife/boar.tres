@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WildlifeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wildlife_data.gd" id="1_nyu7w"]
+
+[resource]
+script = ExtResource("1_nyu7w")
+id = &"boar"
+display_key = "WILDLIFE_BOAR"
+max_health = 28
+move_speed = 34.0
+coin_yield = 9
+flees = false
+damage = 6
+biomes = Array[StringName]([&"ancient_forest"])
+per_segment_max = 1
+shadow_width = 24

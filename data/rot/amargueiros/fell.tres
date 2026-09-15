@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AmargueiroData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/amargueiro_data.gd" id="1_dok10"]
+
+[resource]
+script = ExtResource("1_dok10")
+id = &"fell"
+display_key = "AMARGUEIRO_FELL"
+cost_coins = 6
+work_seconds = 12.0
+nights_standing_required = 1
+from_dawn = 2
+yield_by_tier = Array[int]([1, 2, 3])
+yield_named = 5
+yield_kind = &"bitter_wood"
+mass_delta = -22.0
+mass_delta_named = -45.0
+morale_cost = 1
+morale_days = 2

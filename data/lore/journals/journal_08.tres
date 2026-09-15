@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="JournalData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/journal_data.gd" id="1_bdosw"]
+
+[resource]
+script = ExtResource("1_bdosw")
+id = &"journal_08"
+act = 3
+order = 2
+title_key = "JOURNAL_08_TITLE"
+body_key = "JOURNAL_08_BODY"
+where_kind = &"chapter"
+where_id = &"bone_market"
+object_key = "JOURNAL_08_OBJECT"
+reveals_key = "JOURNAL_08_REVEALS"

@@ -1,0 +1,19 @@
+risk_id,risco,prob,impacto,sinal_de_alarme,mitigacao,fase_de_revisao,_src,status
+R-01,A Camada 1 não é divertida,média,fatal,Não queres jogar o dia 11 no mês 7,"Portão da Fase 2 (§33). Dois meses de afinação de números antes de avançar.",fim de cada fase,§37,aberto
+R-02,Abandono por exaustão,alta,fatal,Duas semanas sem commit; o devlog para,"Ritmo semanal do §28. Sexta é para jogar, sábado para arte. Fases curtas com fim visível.",fim de cada fase,§37,aberto
+R-03,O cenário não acompanha o código,alta,grande,Fim da Fase 1 sem a cena-cartaz acabada,"Cenário da Fase 2 começa na Fase 1; greybox obrigatório; fatia estreita de 7 edifícios (§22).",fim de cada fase,§37,aberto
+R-04,Escopo cresce em vez de encolher,alta,grande,Uma tarefa nova por semana no backlog sem nenhuma sair,O campo Fora em cada ticket (§34). Nada entra na Fase 6 sem sair outra coisa.,fim de cada fase,§37,aberto
+R-05,Dívida técnica gerada por IA,média,grande,Ficheiros acima de 250 linhas; testes a serem ignorados,As sete regras mais o teste que verifica src/sim/ (§31).,fim de cada fase,§37,aberto
+R-06,Wishlists insuficientes no mês 14,média,grande,Menos de 5 000 depois do Next Fest,"Diagnóstico de posicionamento antes de mais código: trailer, capsule, tags.",Fase 4,§37,aberto
+R-07,Desempenho com 300 unidades,baixa,médio,Quedas de fps na noite do dia 20,Arquitetura de arrays desde a F1-03. Profiler de tracing do 4.6.,Fase 1,§37,aberto
+R-08,Reprovar Steam Deck Verified,média,médio,Fonte desenhada abaixo de 12 px,Decidir o tamanho da fonte na Fase 0 (§26).,Fase 0,§37,aberto
+R-09,Corrupção de saves num update,baixa,grande,Um relato basta para envenenar as análises,"save_version desde a v1, escrita atómica, 3 slots (§19). ADR 0007 e teste D-14.",Fase 1,§37,aberto
+R-10,Multijogador consome a Fase 8 e falha,média,baixo,Mais de 6 semanas em sincronização,Já está depois do lançamento. Corta e não perdes nada.,Fase 8,§37,aberto
+R-11,Nome colide com marca registada,média,médio,Descobres no mês 26,Resolver antes da Fase 4 (§36). Ticket NB-01.,Fase 4,§37,aberto
+R-12,Um clone sai primeiro,baixa,baixo,—,Irrelevante. A arte e os seis povos não se clonam em seis meses.,—,§37,aberto
+R-13,A §77 come o calendário — 106 h num só item,alta,grande,Mais de três capítulos por acabar no fim da Fase 5,"Quatro é o mínimo viável. A Q-043 já prevê que só seis apareçam por campanha; com quatro, aparecem quatro e ninguém nota.",Fase 5,§84,aberto
+R-14,O Amargueiro vira economia em vez de dilema,média,grande,"Telemetria: tropas a morrer fora do muro sem combate; amargueiro_decision com 90% em cortar","As três regras da §74 e os testes D-02 e D-03. Se o sinal aparecer na mesma, o rendimento por escala desce antes de qualquer outra coisa.",Fase 2,§84,aberto
+R-15,A Oferta degenera em aceitar sempre ou recusar sempre,média,grande,"Mais de 85% das respostas na mesma direção, ao longo de uma campanha","O teto da recusa (§75) já impede o segundo caso; o teste D-04 guarda-o. Para o primeiro, o preço das ofertas sobe com a Dívida.",Fase 3,§84,aberto
+R-16,A noite castanha esconde a mancha,média,médio,Playtesters a serem apanhados de surpresa pela Podridão em campo aberto,"O teste das duas frias (§80) e a regra de que o violeta é a única cor fria saturada da noite. Se falhar, sobe-se o valor da mancha e não o do ambiente.",Fase 0,§84,aberto
+R-17,A cara na casca lê-se como bug,baixa,médio,"Alguém pergunta ""porque é que aquela árvore tem cara?"" antes do minuto treze",O Amargueiro velho do minuto 0:00 (§83) existe precisamente para que a pergunta chegue depois da resposta. Ticket XIII-10.,Fase 2,§84,aberto
+R-18,A raiz portuguesa lê-se como folclore turístico,média,médio,Um habitante a explicar a tradição que representa,"A regra 2 da §77: o habitante cumpre a lei e nunca a justifica. Uma linha de diálogo que comece por ""aqui é costume"" corta-se.",Fase 5,§84,aberto

@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://art/export/_placeholder/contact_shadow_18.png" id="1_n61mk"]
+[ext_resource type="Texture2D" path="res://art/export/_placeholder/unit_scale2_placeholder.png" id="2_r2kcx"]
+
+[node name="Boot" type="Node2D" unique_id=537160933]
+
+[node name="Sky" type="ColorRect" parent="." unique_id=433395011]
+offset_right = 1280.0
+offset_bottom = 517.0
+color = Color(0.8745098, 0.91764706, 0.9372549, 1)
+
+[node name="SoilCut" type="ColorRect" parent="." unique_id=1808428794]
+offset_top = 517.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.41568628, 0.28627452, 0.15686275, 1)
+
+[node name="ContactShadow" type="Sprite2D" parent="." unique_id=461177596]
+position = Vector2(640, 517)
+texture = ExtResource("1_n61mk")
+
+[node name="Placeholder" type="Sprite2D" parent="." unique_id=530653655]
+position = Vector2(640, 517)
+texture = ExtResource("2_r2kcx")
+centered = false
+offset = Vector2(-12, -47)
+
+[node name="DayZero" type="Label" parent="." unique_id=2084298475]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.078431375, 0.078431375, 0.05882353, 1)
+text = "Empire · dia zero — substituir em F0-10 (boot.tscn da §70)"

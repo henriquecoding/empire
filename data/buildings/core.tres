@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_ikd6m"]
+
+[resource]
+script = ExtResource("1_ikd6m")
+id = &"core"
+display_key = "BUILDING_CORE"
+category = &"core"
+max_health = 1000
+width_px = 480
+unique_per_kingdom = true
+shadow_width = 480
+tags = Array[StringName]([&"core", &"not_buildable"])

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/creature_data.gd" id="1_qt5ss"]
+
+[resource]
+script = ExtResource("1_qt5ss")
+id = &"winged"
+display_key = "CREATURE_WINGED"
+mass_cost = 14
+min_day = 4
+max_health = 14
+damage = 5
+attack_interval = 1.1
+range_px = 24
+accuracy = 1.0
+band = 0
+move_speed = 44.0
+scale_tier = 2
+layer_slots = Array[StringName]([&"body", &"face", &"overlay"])
+coin_drop = 1
+tags = Array[StringName]([&"rot", &"flyer"])

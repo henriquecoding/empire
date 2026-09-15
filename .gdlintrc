@@ -1,0 +1,9 @@
+# .gdlintrc — gdtoolkit 4.x
+max-line-length: 100
+max-file-lines: 250            # a regra do §28 deixa de ser boa intencao
+max-public-methods: 20
+function-arguments-number: 6
+# v5.2: '_?' aceita funcoes e variaveis privadas (_init, _process, _durations), que o
+# proprio codigo do dossie usa; sem ele o gdlint chumbava o GameClock do §30. ADR 0009.
+function-name: '(_on_)?_?[a-z][a-z0-9]*(_[a-z0-9]+)*'
+class-variable-name: '_?[a-z][a-z0-9]*(_[a-z0-9]+)*'

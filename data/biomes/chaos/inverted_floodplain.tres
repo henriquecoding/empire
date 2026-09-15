@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ChaosModifierData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/chaos_modifier_data.gd" id="1_dn2bo"]
+
+[resource]
+script = ExtResource("1_dn2bo")
+id = &"inverted_floodplain"
+display_key = "CHAOS_INVERTED_FLOODPLAIN"
+swaps_bands = true

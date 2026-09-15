@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_wffyg"]
+
+[resource]
+script = ExtResource("1_wffyg")
+id = &"enramados"
+display_key = "PEOPLE_ENRAMADOS"
+terrain = &"ancient_forest"
+biome = &"ancient_forest"
+architecture_source = "Stavkirke norueguesas + casas nas árvores dos Korowai + carpintaria japonesa sem pregos"
+roof_silhouette = "Empilhado, escamado, pontiagudo — silhueta serrada"
+landmark = &"colossal_tree"
+segment_kit = Array[StringName]([&"enramados_start_base_01", &"enramados_opening_00", &"enramados_empty_01", &"enramados_empty_02", &"enramados_empty_03", &"enramados_forest_01", &"enramados_ruin_01", &"enramados_fortress_01", &"enramados_edge_01"])
+palette_ramp = &"enramados"
+wall_material = &"wood"
+economy_strength = &"wood_and_hunting"
+economy_modifiers = {
+&"hunt_yield_mult": 1.25
+}
+defense_trait = &"height"
+unique_unit = &"canopy_archer"
+playable_class = &"archer"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
+starting_buildings = Array[StringName]([&"core"])
+song_texture = "Voz sozinha e adufe — Beira Baixa, pandeiro quadrado"
+colheita_song = "Meio tom abaixo, e o adufe fora de sítio"
+landmark_roots = true

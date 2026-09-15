@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ParallaxLayerData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/parallax_layer_data.gd" id="1_tok6h"]
+
+[resource]
+script = ExtResource("1_tok6h")
+id = &"closed_5"
+preset = &"closed"
+layer = 5
+node_name = &"EntityLayer"
+z_index = 10
+motion_scale = 1.0
+min_detail_px = 2
+outline_px = 2
+colors_per_16px = Vector2i(30, 40)

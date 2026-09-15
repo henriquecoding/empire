@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ParallaxLayerData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/parallax_layer_data.gd" id="1_5uq70"]
+
+[resource]
+script = ExtResource("1_5uq70")
+id = &"open_3"
+layer = 3
+node_name = &"HillLayer"
+z_index = -40
+motion_scale = 0.25
+saturation_delta = -0.2
+value_delta = 0.11
+hue_shift_deg = 9.0
+min_detail_px = 4
+colors_per_16px = Vector2i(18, 23)

@@ -1,0 +1,829 @@
+{
+ "F0-00": {
+  "title": "Repositório do dia zero: as ondas 1 e 2 da §68",
+  "porque": "Os primeiros ficheiros não fazem o jogo andar — ficam caros de acrescentar depois. E o que o contrato cita tem de existir antes de o contrato ser escrito.",
+  "spec": [
+   "docs/design/68-o-repositorio-antes-da-primeira-linha-de-jogo.md",
+   "docs/design/69-os-ficheiros-de-dia-zero-prontos-a-copiar.md"
+  ],
+  "depende": "—",
+  "feito": "Push verde e docs/design/ com 88 ficheiros gerados por tools/split_dossie.py",
+  "fora": "Qualquer lógica de jogo. A regra 1 da §68: nenhum commit de lógica antes de um push verde.",
+  "estado": "feito",
+  "horas": "4",
+  "passos": [
+   "Onda 1: .gitignore, .gitattributes, README.md, LICENSE, NOTICE.md, .editorconfig",
+   "AGENTS.md (contrato único) e CLAUDE.md de três linhas a apontar para ele",
+   "python3 tools/split_dossie.py docs/dossie.html docs/design",
+   "docs/adr/0000-template.md, docs/QUESTIONS.md, docs/ASSETS_TODO.md, docs/backlog/",
+   "Onda 2: project.godot, .godot-version, addons/gdUnit4/, ci.yml, .gdlintrc, PULL_REQUEST_TEMPLATE.md, run_tests.sh, export_presets.cfg"
+  ],
+  "notas": [
+   "A regra 2 da §68: o que o contrato cita, existe — mesmo vazio, mesmo com uma linha.",
+   "O CI tem de trazer o passo --import, senão a suite falha sempre em checkout frio."
+  ]
+ },
+ "F0-01": {
+  "title": "Criar o projeto Godot 4.6 com as definições do §19",
+  "porque": "A escada de resoluções e o filtro decidem-se uma vez. Mudar isto no mês seis é redesenhar arte.",
+  "spec": [
+   "docs/design/19-arquitetura-godot-4-6.md"
+  ],
+  "depende": "F0-00",
+  "feito": "Abre a 1280×720, filtro Nearest, 30 ticks de física, viewport canvas_items",
+  "fora": "A escala definitiva — é o spike F0-09 que a decide.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "F0-02": {
+  "title": "Git LFS para *.aseprite e art/**/*.png",
+  "porque": "Sem LFS o repositório engorda para sempre, e com o eol errado o Git corrompe PNG.",
+  "spec": [
+   "docs/design/68-o-repositorio-antes-da-primeira-linha-de-jogo.md"
+  ],
+  "depende": "F0-00",
+  "feito": "git lfs ls-files mostra a arte; addons/ fica de fora; art/source/.gdignore existe",
+  "fora": "Meter arte real no repositório — é o ART-01.",
+  "estado": "parcial — configurado; não há arte para o LFS mostrar",
+  "horas": "0,5",
+  "notas": [
+   "A C-07 da v5.2: `* text=auto` forçado nos .gitattributes trata os PNG como texto.",
+   "Os placeholders ficam fora do LFS, em art/placeholder/.",
+   "Parcial a 14/09: .gitattributes, art/source/.gdignore e a pasta de placeholders existem; `git lfs ls-files` só mostra arte depois do ART-01."
+  ]
+ },
+ "F0-03": {
+  "title": "AGENTS.md e os primeiros ADRs",
+  "porque": "O que não existe, o agente inventa — e inventa diferente em cada sessão.",
+  "spec": [
+   "docs/design/28-como-fazer-a-ia-construir-isto.md",
+   "docs/design/40-as-oito-regras-que-nunca-se-quebram.md"
+  ],
+  "depende": "F0-00",
+  "feito": "ADR 0001 escala, 0002 faixas, 0003 dados em CSV, 0007 segurança do save",
+  "fora": "ADRs de sistemas que ainda não existem.",
+  "estado": "feito",
+  "horas": "1,5"
+ },
+ "F0-04": {
+  "title": "Instalar o gdUnit4 e o workflow de CI",
+  "porque": "O primeiro commit de código do projeto é um teste trivial que passa. Tudo o que vem depois herda um portão que funciona.",
+  "spec": [
+   "docs/design/64-tres-niveis-e-cinco-portoes.md",
+   "docs/design/31-testes-ci-e-os-testes-de-design.md"
+  ],
+  "depende": "F0-00",
+  "feito": "Push verde com um teste trivial; run_tests.sh é o único comando",
+  "fora": "Os testes de design — entram com os sistemas que guardam.",
+  "estado": "parcial — o CI existe e nunca correu num runner remoto",
+  "horas": "3",
+  "notas": [
+   "ADR 0009: o gdUnit4 6.x sai com 103 em --headless sem --ignoreHeadlessMode.",
+   "Parcial a 14/09: .github/workflows/ci.yml e run_tests.sh existem e a suite passa localmente — 43 casos, zero falhas. Sem remoto nunca houve push verde: é a Q-052."
+  ]
+ },
+ "F0-05": {
+  "title": "Band: enum, planos e a matriz de colisão",
+  "porque": "É a invariante I3. Se entrar depois, reescreve-se tudo o que lhe toca.",
+  "spec": [
+   "docs/design/53-faixas-colisao-e-a-matriz-que-tem-de-existir-no-.md",
+   "docs/design/70-seis-contradicoes-que-as-dez-partes-anteriores-d.md"
+  ],
+  "depende": "F0-01",
+  "feito": "Teste: o aéreo não colide com o subsolo; Band vive em src/sim/ e não em core/",
+  "fora": "Movimento e física de unidades — é o F1-03.",
+  "estado": "feito",
+  "horas": "0,5",
+  "notas": [
+   "A §70 resolveu o conflito de caminho: src/sim/band.gd, senão o portão G1 chumba no dia 1."
+  ]
+ },
+ "F0-06": {
+  "title": "GameClock e o ClockData (prompt 1 da §29)",
+  "porque": "O relógio é a espinha do jogo: seis fases, 360 s, e tudo o resto pendura-se nele.",
+  "spec": [
+   "docs/design/48-gameclock-a-fase-do-dia-e-um-estado-nao-um-tempo.md",
+   "docs/design/29-a-biblioteca-de-prompts-por-sistema.md"
+  ],
+  "depende": "F0-01",
+  "feito": "Os cinco testes do prompt passam; as durações vêm de data/economy/clock.tres",
+  "fora": "O CanvasModulate por fase — é o F1-13.",
+  "estado": "parcial — falta o GameClock e o ClockService",
+  "horas": "3,5",
+  "notas": [
+   "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload de trinta linhas que lhe chama tick().",
+   "Parcial a 14/09: o ClockData existe (src/sim/data/clock_data.gd e data/economy/clock.tres) e os testes de design já o leem. Os dois ficheiros do relógio continuam por escrever."
+  ]
+ },
+ "F0-07": {
+  "title": "EventBus com os sinais do §46",
+  "porque": "Um catálogo incompleto convida a inventar. Declaram-se todos de uma vez, mesmo os da Fase 6.",
+  "spec": [
+   "docs/design/46-o-catalogo-completo.md"
+  ],
+  "depende": "F0-01",
+  "feito": "Sinais declarados, fila e flush; o portão G3 deixa de estar saltado",
+  "fora": "Emissores — entram com cada sistema.",
+  "estado": "por fazer",
+  "horas": "3",
+  "notas": [
+   "O G3 (tests/architecture_test.gd) está saltado à espera deste ticket.",
+   "Q-035: há sinais no §30 que não estão no catálogo da §46."
+  ]
+ },
+ "F0-08": {
+  "title": "Câmara com lookahead e limites de região",
+  "porque": "Uma câmara que treme com movimento subpixel estraga a leitura de toda a arte que vier depois.",
+  "spec": [
+   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/59-a-pilha-de-tras-para-a-frente.md"
+  ],
+  "depende": "F0-05",
+  "feito": "Não treme com movimento subpixel; arredonda a píxel inteiro; respeita os limites",
+  "fora": "Parallax — entra com o ART-03.",
+  "estado": "por fazer",
+  "horas": "3"
+ },
+ "F0-09": {
+  "title": "Spike: decidir a escala e fechar a ADR 0001",
+  "porque": "A escala decide o tamanho de todos os sprites. É a decisão mais cara de reverter do projeto.",
+  "spec": [
+   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/01-o-que-a-arte-ja-decidiu-e-o-que-ainda-nao.md"
+  ],
+  "depende": "F0-01",
+  "feito": "Testado em 1080p e no Deck; a ADR 0001 passa de proposta a aceite",
+  "fora": "Desenhar arte definitiva antes de a ADR fechar.",
+  "estado": "por fazer",
+  "horas": "4",
+  "notas": [
+   "A ADR 0001 está como proposta até este spike. O valor 517 da linha do chão continua em aberto até ao greybox (§67)."
+  ]
+ },
+ "F0-10": {
+  "title": "Cena de teste: um sprite anda nas três faixas",
+  "porque": "É o critério de saída da Fase 0, e prova a matriz de colisão em vez de a afirmar.",
+  "spec": [
+   "docs/design/53-faixas-colisao-e-a-matriz-que-tem-de-existir-no-.md"
+  ],
+  "depende": "F0-05, F0-08",
+  "feito": "scenes/tests/bands.tscn: sobe, desce, e o aéreo atravessa o subsolo sem colidir",
+  "fora": "Arte, animação, som.",
+  "estado": "por fazer",
+  "horas": "2"
+ },
+ "F0-11": {
+  "title": "Registry e boot.tscn",
+  "porque": "A cena principal carrega o Registry, o idioma e o save, e só depois instancia o jogo. Faltava na lista da §65 e está na árvore do §41.",
+  "spec": [
+   "docs/design/41-modulos-e-quem-pode-importar-quem.md",
+   "docs/design/44-os-recursos-com-todos-os-campos.md"
+  ],
+  "depende": "F0-01",
+  "feito": "Carregamento por StringName; boot.tscn é a cena principal do project.godot",
+  "fora": "O save — é o F0-13.",
+  "estado": "por fazer",
+  "horas": "4",
+  "notas": [
+   "ADR 0005."
+  ]
+ },
+ "F0-12": {
+  "title": "RngService: os seis fluxos, snapshot e restore",
+  "porque": "O teste da semente passa trivialmente agora e protege o projeto durante dois anos.",
+  "spec": [
+   "docs/design/42-aleatoriedade-com-disciplina.md"
+  ],
+  "depende": "F0-11",
+  "feito": "test_seed_reproduz passa; o portão G2 recusa RandomNumberGenerator fora deste serviço",
+  "fora": "Consumidores de aleatoriedade — entram com cada sistema.",
+  "estado": "por fazer",
+  "horas": "2",
+  "notas": [
+   "Q-020: a §42 semeava com XOR de constantes que não são hexadecimais; o código usa hash(str(seed) + nome). Manda o código."
+  ]
+ },
+ "F0-13": {
+  "title": "SaveService: escrita atómica e três slots",
+  "porque": "Fazer o save cedo é o que o torna trivial para sempre. E é onde está a única falha de segurança que a revisão encontrou.",
+  "spec": [
+   "docs/design/62-esquema-versoes-e-a-regra-de-seguranca.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "F0-11",
+  "feito": "Gravar e carregar um estado vazio; rotação de três slots; FileAccess.store_var/get_var(false)",
+  "fora": "Migrações de versão — entram quando houver uma segunda versão.",
+  "estado": "por fazer",
+  "horas": "6",
+  "notas": [
+   "ADR 0007 e Q-036: nunca ResourceLoader num save. Só tipos base, validados campo a campo.",
+   "O teste D-14 da §84 já guarda a regra para o estado da Parte XIII."
+  ]
+ },
+ "F0-14": {
+  "title": "UnitView com cinco slots e o shader da paleta",
+  "porque": "Um sprite por combinação seria impossível de manter. Cinco slots empilhados e um LUT resolvem a variedade toda.",
+  "spec": [
+   "docs/design/58-composicao-por-slots.md",
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "F0-10",
+  "feito": "Cinco slots empilhados; o shader faz os quatro trabalhos do §22",
+  "fora": "Arte definitiva dos slots — é o ART-01.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "Q-023 fechada: um ficheiro por corpo com camadas; exportação por camada.",
+   "Q-024 continua aberta: a camada Equipments é o slot head?"
+  ]
+ },
+ "F0-15": {
+  "title": "Spike: importar arte do Aseprite e fechar a ADR 0010",
+  "porque": "O caminho da arte para o motor tem de custar uma tarde no mês 1, não uma semana no mês 20.",
+  "spec": [
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "F0-02",
+  "feito": "tools/export_aseprite.sh testado com um ficheiro real; a ADR 0010 passa a aceite",
+  "fora": "Desenhar a arte — é o ART-01.",
+  "estado": "por fazer",
+  "horas": "4",
+  "notas": [
+   "A ADR 0010 está como proposta: é o último ficheiro de tools/ por testar."
+  ]
+ },
+ "F1-01": {
+  "title": "Moeda física: largar, arco, queda, apanhar, saco",
+  "porque": "A moeda física é o Verbo 1. Tudo o que o jogador faz passa por ela.",
+  "spec": [
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md"
+  ],
+  "depende": "F0-07",
+  "feito": "Largar 10 moedas a 60 fps sem picos; a capacidade do saco vem de units.csv",
+  "fora": "Construir com a moeda — é o F1-06. A apanha por colisão: a proposta é por distância.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "coin_pickup_px está marcado em _proposed no economy.csv: a apanha é por distância e não por colisão, e mede-se aqui."
+  ]
+ },
+ "F1-02": {
+  "title": "UnitData e as seis unidades do §07",
+  "porque": "Balancear tem de ser editar uma folha. Se um número estiver em código, não se balanceia.",
+  "spec": [
+   "docs/design/44-os-recursos-com-todos-os-campos.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
+  ],
+  "depende": "F0-03",
+  "feito": "Editar o dano no .tres muda o jogo sem recompilar; o portão G4 recusa literais em src/",
+  "fora": "Comportamento de combate — é o F1-07.",
+  "estado": "feito",
+  "horas": "4",
+  "notas": [
+   "Já existe: data/source/units.csv → data/units/*.tres pelo tools/csv_to_tres.gd."
+  ]
+ },
+ "F1-03": {
+  "title": "UnitSystem com arrays paralelos e time-slicing",
+  "porque": "300 unidades a 60 fps é o orçamento do §63. Com objetos por unidade não se chega lá.",
+  "spec": [
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md",
+   "docs/design/63-orcamentos-e-como-se-medem.md"
+  ],
+  "depende": "F1-02",
+  "feito": "300 unidades a 60 fps no profiler, com o orçamento por passagem do §63",
+  "fora": "IA de decisão — é o F1-05. Combate — é o F1-07.",
+  "estado": "por fazer",
+  "horas": "10"
+ },
+ "F1-04": {
+  "title": "Recrutar um vagabundo por uma moeda; ele segue-te",
+  "porque": "É o minuto 0:20 do §25 e do §83 — o primeiro momento em que o jogador percebe o jogo.",
+  "spec": [
+   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md"
+  ],
+  "depende": "F1-01, F1-03",
+  "feito": "O minuto 0:20 do §25 funciona: uma moeda, um vagabundo, e ele segue",
+  "fora": "Ofícios e postos — é o F1-05.",
+  "estado": "por fazer",
+  "horas": "4"
+ },
+ "F1-05": {
+  "title": "JobBoard (prompt 4 da §29)",
+  "porque": "Previsível vence inteligente: o jogador tem de conseguir prever para onde vai a tropa.",
+  "spec": [
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md",
+   "docs/design/29-a-biblioteca-de-prompts-por-sistema.md"
+  ],
+  "depende": "F1-03",
+  "feito": "Os quatro testes do prompt passam; a tropa vai ao posto certo e volta à alvorada",
+  "fora": "Moral e fuga — é o F1-12.",
+  "estado": "por fazer",
+  "horas": "8"
+ },
+ "F1-06": {
+  "title": "Muro: cinco níveis, dois caminhos, slots de contacto",
+  "porque": "Os slots de contacto são o que torna o combate legível — e a tabela do §10 é o contrato.",
+  "spec": [
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md"
+  ],
+  "depende": "F1-05",
+  "feito": "A tabela do §10 replicada em .tres; o teste test_muralhas_do_10 passa",
+  "fora": "O Lenho Amargo no nível 4 — é o XIII-03.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "Q-002 fechada: manda a tabela (6 · 11 · 20 · 36 · 65), não a fórmula do §06."
+  ]
+ },
+ "F1-07": {
+  "title": "Arqueiro: alcance, precisão 0,34 em campo e 1,0 em torre",
+  "porque": "A precisão por posição é o que faz a torre valer a pena sem um número na UI.",
+  "spec": [
+   "docs/design/50-combatsystem-legivel-antes-de-emocionante.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
+  ],
+  "depende": "F1-06",
+  "feito": "O tempo até matar medido bate com a tabela do §07, em valor esperado",
+  "fora": "Criaturas — é o F1-09.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "Q-003: a tabela do §07 usa 1/3 e os dados usam 0,34. O teste tem 3% de tolerância."
+  ]
+ },
+ "F1-08": {
+  "title": "RotSystem (prompt 2 da §29)",
+  "porque": "A Podridão é a mecânica que distingue o jogo. Sem ela há um clone.",
+  "spec": [
+   "docs/design/51-rotsystem-uma-entidade-nao-um-spawner.md",
+   "docs/design/29-a-biblioteca-de-prompts-por-sistema.md",
+   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md"
+  ],
+  "depende": "F0-06",
+  "feito": "Os seis testes do prompt passam e a mancha vê-se no horizonte ao crepúsculo",
+  "fora": "Arte da mancha (F1-17), som (F4-03), a Oferta (XIII-04), o Amargueiro (XIII-03)",
+  "estado": "por fazer",
+  "horas": "10",
+  "contrato": "TAREFA Implementar RotSystem: entidade com posicao, massa e invocacao.\nFICHEIROS src/sim/systems/rot_system.gd, tests/rot_system_test.gd\nCONTRATO\n  func spawn(day: int, side: int, map_width: float) -> void\n  func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]\n  func mass() -> float\n  func feed(amount: float) -> void\n  func position_x() -> float\n  func retreat() -> void\nREGRAS\n  velocidade = 14.0 + 0.9 * dia, px/s\n  massa      = 40.0 + 18.0 * dia + 30.0 * fortalezas_conquistadas\n             + 22.0 * amargueiros + 45.0 * amargueiros_nomeados\n             + 8.0 * min(recusas_nos_ultimos_5_dias, 5)          # §74, §75\n  invoca a cada 4-7 s (RNG com seed), gastando o custo de massa da criatura\n  escolhe a mais cara que cabe e cujo min_day ja passou             # §51, Q-019\n  sobre terreno consagrado: velocidade * 0.6\n  feed(x) reduz massa em x, minimo 0\nDADOS data/rot/default.tres, data/creatures/<id>.tres\nTESTES\n  - dia 1: velocidade == 14.9\n  - dia 10 com 2 fortalezas, campo limpo: massa == 280.0\n  - tick nao devolve SpawnRequest se massa < custo da criatura mais barata\n  - 30 s sobre consagrado percorre 60% da distancia de 30 s em terreno normal\n  - feed(1000) poe massa a 0, nunca negativa\n  - com a mesma seed, duas corridas produzem a mesma sequencia de invocacoes\nLIMITES Sem Node. Devolve pedidos; nao instancia nada.",
+  "notas": [
+   "O Zelador (§75) nao entra na conta de invocacoes: nasce da Divida, nao da massa.",
+   "docs/content/ROT_BY_DAY.md tem a tabela dia a dia, derivada do rot.csv."
+  ]
+ },
+ "F1-09": {
+  "title": "Criaturas: Rastejante, Alado, Bruto e a tabela de invocação",
+  "porque": "A noite 4 tem de obrigar a torre alta. É a primeira vez que o jogador muda de plano por causa dela.",
+  "spec": [
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
+  ],
+  "depende": "F1-08",
+  "feito": "A noite 4 obriga a torre alta; o Alado só é atingido por quem chega à faixa aérea",
+  "fora": "O Aríete de lodo e a Consumidora — Fase 2. O Zelador — XIII-04.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "Q-001 e Q-038: os arqueiros param o Aríete? Com a massa nova da §74 a conta muda; recalcular antes de desmarcar o teste.",
+   "Q-006: quem atinge a faixa aérea?"
+  ]
+ },
+ "F1-10": {
+  "title": "Economy (prompt 3 da §29) e a curve.tres",
+  "porque": "O dia da asfixia entre 9 e 14 é o que torna a economia uma pressão e não uma contabilidade.",
+  "spec": [
+   "docs/design/49-economysystem-tres-circuitos-uma-passagem-por-fa.md",
+   "docs/design/06-producao-conversao-e-comercio.md"
+  ],
+  "depende": "F1-01",
+  "feito": "O teste do dia da asfixia cai entre 9 e 14, e os três perfis batem com o alvo próprio",
+  "fora": "Comércio e diplomacia — Fase 2.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "Já há modelo de referência: tests/support/reference_model.gd. O sistema tem de bater com ele, ou a divergência vai a ADR.",
+   "Q-027 fechada: o CSV guarda por dia e o sistema divide pelas fases."
+  ]
+ },
+ "F1-11": {
+  "title": "Plantação, pesqueiro e galinheiro com os valores do §06",
+  "porque": "O payback de dois dias é o que ensina o jogador a construir sem tutorial.",
+  "spec": [
+   "docs/design/06-producao-conversao-e-comercio.md"
+  ],
+  "depende": "F1-10",
+  "feito": "Payback de 2 dias medido em jogo; o teste test_payback_do_06 continua a passar",
+  "fora": "Conversão e comércio — Fase 2.",
+  "estado": "por fazer",
+  "horas": "6",
+  "notas": [
+   "Q-033: a curva abstrata do §06 contra os edifícios reais."
+  ]
+ },
+ "F1-12": {
+  "title": "Moral e fuga com o raio do rei",
+  "porque": "Com o rei em campo ninguém foge: é a regra que dá peso a pôr o rei na linha.",
+  "spec": [
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md",
+   "docs/design/20-como-as-tropas-e-os-reis-decidem.md"
+  ],
+  "depende": "F1-05",
+  "feito": "Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados",
+  "fora": "Ganância e sucessão — Fase 2.",
+  "estado": "por fazer",
+  "horas": "5",
+  "notas": [
+   "Q-005: a fuga é a 30% ou a 25% de vida?"
+  ]
+ },
+ "F1-13": {
+  "title": "CanvasModulate por faixa, animado pelo GameClock",
+  "porque": "As seis fases têm de ser distinguíveis sem HUD. É o que o §24 chama HUD diegético.",
+  "spec": [
+   "docs/design/23-camadas-que-respondem-ao-dia.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "F0-06",
+  "feito": "As seis fases são distinguíveis sem HUD; a noite é castanha (ADR 0011)",
+  "fora": "Iluminação da candeia — é o XIII-03.",
+  "estado": "por fazer",
+  "horas": "4",
+  "notas": [
+   "ADR 0011: os tints vêm de data/economy/clock.tres (phase_tint_hue/sat/val), não de código. O chão de valor da noite é 0,11."
+  ]
+ },
+ "F1-14": {
+  "title": "Save e load do estado de src/sim/ com save_version",
+  "porque": "Fechar e reabrir no dia 7 preservar tudo é o que prova que o estado autoritativo é mesmo um só.",
+  "spec": [
+   "docs/design/62-esquema-versoes-e-a-regra-de-seguranca.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "F1-10",
+  "feito": "Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória",
+  "fora": "Migrações entre versões — quando houver uma segunda.",
+  "estado": "por fazer",
+  "horas": "6",
+  "notas": [
+   "ADR 0007: só tipos base. O teste D-14 já guarda os campos da Parte XIII."
+  ]
+ },
+ "F1-15": {
+  "title": "Cenário de combate noturno para afinação",
+  "porque": "É o instrumento que vai balancear o jogo inteiro: dez dias em menos de dez segundos, em headless.",
+  "spec": [
+   "docs/design/66-nucleo-jogavel-tres-meses-sete-blocos.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
+  ],
+  "depende": "F1-09",
+  "feito": "A noite 5 ganha-se com 1 a 2 mortes; corre em headless com delta fixo",
+  "fora": "Afinação propriamente dita — é o F1-16.",
+  "estado": "por fazer",
+  "horas": "6",
+  "notas": [
+   "Q-017: três Rastejantes na noite 1, como diz a §25, ou dez, como dá a massa?"
+  ]
+ },
+ "F1-16": {
+  "title": "Afinar até sobreviver dez dias ser possível e não trivial",
+  "porque": "É o critério de saída da Fase 1, e o único que não se escreve em código.",
+  "spec": [
+   "docs/design/66-nucleo-jogavel-tres-meses-sete-blocos.md"
+  ],
+  "depende": "tudo",
+  "feito": "Sobreviver 10 dias é possível e não é trivial, medido no cenário do F1-15",
+  "fora": "Conteúdo novo. Se faltar conteúdo, afina-se o que há.",
+  "estado": "por fazer",
+  "horas": "10"
+ },
+ "F1-17": {
+  "title": "Arte da mancha: a Podridão e a candeia",
+  "porque": "A mancha é o que o jogador vê chegar do outro lado do ecrã. É o GIF de marketing do §36.",
+  "spec": [
+   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/design/36-wishlists-pagina-demo-e-trailer.md"
+  ],
+  "depende": "F1-08, ART-02",
+  "feito": "Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã",
+  "fora": "O Amargueiro — é o XIII-02. O som — Fase 6.",
+  "estado": "por fazer",
+  "horas": "6",
+  "notas": [
+   "§80: três paragens, nunca um gradiente. Núcleo #F6D89B, meio #E8A94E, bordo #AE4F16.",
+   "Uma luz domina por ecrã: as fogueiras têm de ser mais fracas do que a candeia."
+  ]
+ },
+ "ART-01": {
+  "title": "A primeira personagem real em cinco slots",
+  "porque": "Sem uma personagem real na greybox, o critério de saída da pré-produção não se pode provar.",
+  "spec": [
+   "docs/design/58-composicao-por-slots.md",
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "F0-14, F0-15",
+  "feito": "Um vagabundo com os cinco slots, na paleta, a andar na greybox",
+  "fora": "As outras 21 unidades. Uma personagem chega para provar o circuito.",
+  "estado": "por fazer",
+  "horas": "8",
+  "notas": [
+   "Q-024: a camada Equipments dos teus ficheiros é o slot head? Fechar aqui."
+  ]
+ },
+ "ART-02": {
+  "title": "A paleta mestra e o LUT",
+  "porque": "A paleta decide-se uma vez e entra em tudo. Com o preto na paleta (ADR 0011), muda a base.",
+  "spec": [
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "F0-01",
+  "feito": "112 cores com as famílias do §22; o LUT da noite leva a saturação para 0,22",
+  "fora": "Desenhar seja o que for com ela — é o ART-01.",
+  "estado": "por fazer",
+  "horas": "4",
+  "notas": [
+   "ADR 0011: os três valores de silhueta entram aqui — #17130D, #241F17 e #2E251A, #100D09 e #14140F."
+  ]
+ },
+ "ART-03": {
+  "title": "As seis camadas de parallax com teto de valores",
+  "porque": "Com teto de valores as três camadas de fundo desenham-se em 5 h e ficam melhores. Sem ele, 12 h.",
+  "spec": [
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "ART-02, F0-08",
+  "feito": "Distância 1 valor, plano médio 2, primeiro plano 2; o teste de silhueta passa no CI",
+  "fora": "Os seis biomas — Fase 2.",
+  "estado": "por fazer",
+  "horas": "5",
+  "notas": [
+   "É a única dependência dura de calendário da Parte XIII (§82): decidir agora custa 4 h, decidir na Fase 5 custa redesenhar os seis biomas."
+  ]
+ },
+ "ART-04": {
+  "title": "Rostos e expressões: o catálogo do §60",
+  "porque": "A cara é o que faz a morte doer, e é a mesma cara que vai para a casca do Amargueiro.",
+  "spec": [
+   "docs/design/60-catalogo-com-uniforms.md",
+   "docs/design/58-composicao-por-slots.md"
+  ],
+  "depende": "ART-01",
+  "feito": "O slot face com o catálogo de expressões do §60, usável por máscara",
+  "fora": "A máscara de casca do Amargueiro — é o XIII-02.",
+  "estado": "por fazer",
+  "horas": "6"
+ },
+ "GB-01": {
+  "title": "Greybox do segmento zero",
+  "porque": "O seg_000 é cena fixa e autorada (§25, §83): é o primeiro ecrã que qualquer jogador vê.",
+  "spec": [
+   "docs/design/65-fundacao-seis-semanas-42-ficheiros-63-h.md",
+   "docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md"
+  ],
+  "depende": "F0-10",
+  "feito": "Uma greybox jogável com os obrigatórios do §83 e a árvore colossal à vista",
+  "fora": "Arte definitiva — Fase 2.",
+  "estado": "por fazer",
+  "horas": "4",
+  "notas": [
+   "§83: a lista de obrigatórios inclui um Amargueiro velho fora do muro à esquerda e um vagabundo com head_pool fixo, para que a cara do minuto 0:20 seja a mesma."
+  ]
+ },
+ "GB-02": {
+  "title": "Greybox dos seis biomas",
+  "porque": "Errar a densidade num bioma inteiro custa uma semana; numa greybox custa vinte minutos.",
+  "spec": [
+   "docs/design/21-geracao-procedural-do-territorio.md",
+   "docs/design/54-worldgen-determinista-e-por-camadas-separadas.md"
+  ],
+  "depende": "GB-01",
+  "feito": "Seis greybox, uma por bioma, com a linha do chão e as três faixas marcadas",
+  "fora": "Capítulos (§77) — Fase 5.",
+  "estado": "por fazer",
+  "horas": "6"
+ },
+ "GB-03": {
+  "title": "Regras de densidade medidas no greybox",
+  "porque": "A rampa de densidade do §01 é um número, e um número mede-se em vez de se discutir.",
+  "spec": [
+   "docs/design/01-o-que-a-arte-ja-decidiu-e-o-que-ainda-nao.md"
+  ],
+  "depende": "GB-02",
+  "feito": "Topo ≤ 18 e base ≥ 30 cores distintas em janela de 16×16, medido por script no CI",
+  "fora": "Arte que cumpra a regra — Fase 2.",
+  "estado": "por fazer",
+  "horas": "3"
+ },
+ "NB-01": {
+  "title": "Bíblia de nomes e a escolha do nome do jogo",
+  "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",
+  "spec": [
+   "docs/design/36-wishlists-pagina-demo-e-trailer.md",
+   "docs/design/04-cada-imperio-e-um-povo-diferente.md"
+  ],
+  "depende": "—",
+  "feito": "Um nome escolhido, com a triagem escrita em docs/content/NAMING_BIBLE.md",
+  "fora": "Registar domínios e contas — Fase 3.",
+  "estado": "por fazer",
+  "horas": "6",
+  "notas": [
+   "Os nomes de povos e o nome do jogo continuam provisórios (§04, §36)."
+  ]
+ },
+ "CD-01": {
+  "title": "A base de dados de conteúdo, uma tabela por sessão",
+  "porque": "Balancear é editar uma folha. Cada tabela que falta é um número que volta para dentro do código.",
+  "spec": [
+   "docs/design/44-os-recursos-com-todos-os-campos.md"
+  ],
+  "depende": "F0-03",
+  "feito": "27 tabelas em data/source/ com _phase, _src, _proposed e _notes; csv_to_tres --check limpo",
+  "fora": "Afinar os valores — isso é playtest.",
+  "estado": "feito",
+  "horas": "12",
+  "notas": [
+   "Existe: 27 tabelas, 202 recursos. As propostas estão em docs/content/PROPOSALS.md.",
+   "Cada valor que não está no dossiê entra marcado, com a razão em _notes (ADR 0008)."
+  ]
+ },
+ "XIII-01": {
+  "title": "§80 · O preto na paleta e a noite castanha",
+  "porque": "É a única dependência dura de calendário da parte inteira: o teto de valores tem de ser decidido antes de se desenhar cenário.",
+  "spec": [
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "ART-02",
+  "feito": "Os tints das seis fases vêm do clock.tres; o teste das duas frias corre no CI",
+  "fora": "A candeia — é o XIII-03.",
+  "estado": "por fazer",
+  "horas": "4 (2 código + 2 arte)",
+  "notas": [
+   "ADR 0011. A Q-037 está fechada; a tabela da §05 já foi corrigida."
+  ]
+ },
+ "XIII-02": {
+  "title": "§74 · O termo dos Amargueiros na massa",
+  "porque": "Uma hora de código que transforma a curva de dificuldade de reta em consequência.",
+  "spec": [
+   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md"
+  ],
+  "depende": "F1-08",
+  "feito": "O teste D-01 passa: 400 ao dia 20 em campo limpo, 466 com três árvores, 645 com cinco e três nomeadas",
+  "fora": "O Amargueiro como objeto no mundo — é o XIII-03.",
+  "estado": "por fazer",
+  "horas": "1",
+  "notas": [
+   "Os testes D-01 a D-03 já existem em tests/parte_xiii_rot_test.gd e passam sobre os dados."
+  ]
+ },
+ "XIII-03": {
+  "title": "§74 · O Amargueiro e a candeia, completos",
+  "porque": "É o melhor rácio da parte inteira: 11 h de código e 3 de arte para a alavanca 2.",
+  "spec": [
+   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "XIII-02, F1-06, ART-04",
+  "feito": "Os três destinos com o Verbo 1; a cara na casca; a candeia com raio e cor do rot.tres",
+  "fora": "A Oferta — é o XIII-04. O cante da alvorada — é o XIII-09.",
+  "estado": "por fazer",
+  "horas": "13 (10 + 3 arte)",
+  "notas": [
+   "Q-047: uma noite de pé, ou mais? A proposta é uma, fixa.",
+   "O Lenho Amargo não tem preço (regra 1) — o D-02 chumba se alguém lhe der um."
+  ]
+ },
+ "XIII-04": {
+  "title": "§75 · A Oferta e a Dívida da Candeia",
+  "porque": "É a alavanca 1: transforma A Podridão de fenómeno em personagem sem lhe acrescentar um ponto de vida.",
+  "spec": [
+   "docs/design/75-a-oferta-e-a-divida-que-ninguem-te-mostra.md"
+  ],
+  "depende": "XIII-03",
+  "feito": "Uma oferta por noite, no prato, com o Verbo 1; a Dívida sobe e nunca desce; o Zelador aos 6",
+  "fora": "Os epílogos — é o XIII-08.",
+  "estado": "por fazer",
+  "horas": "20 (12 + 4 arte + 2 som + 2 escrita)",
+  "notas": [
+   "Os testes D-04 a D-06 estão escritos; D-05 e D-06 ficam saltados até este ticket.",
+   "Q-040 e Q-053 decidem-se aqui: a oferta que salta a noite, e o preço da décima."
+  ]
+ },
+ "XIII-05": {
+  "title": "§76 · O Nome",
+  "porque": "A secção com o maior retorno emocional por hora da parte inteira, e nenhuma outra depende dela.",
+  "spec": [
+   "docs/design/76-ninguem-tem-nome-ate-merecer-um.md"
+  ],
+  "depende": "F1-12",
+  "feito": "Nove nomes no máximo; o título ganha-se na alvorada; o luto de três dias devolve-o com ordinal",
+  "fora": "A encomendação cantada — é o XIII-09.",
+  "estado": "por fazer",
+  "horas": "11 (7 + 2 arte + 1 som + 1 escrita)",
+  "notas": [
+   "D-07 e D-08 já correm sobre os dados. Q-041: o teto é fixo."
+  ]
+ },
+ "XIII-06": {
+  "title": "§78 · A Colheita",
+  "porque": "Dá corpo à melhor frase do dossiê — a escolha estava a ser feita desde o primeiro cerco.",
+  "spec": [
+   "docs/design/78-a-colheita-e-as-duas-maneiras-de-acabar-com-um-p.md"
+  ],
+  "depende": "F1-16",
+  "feito": "C = 6 + 2 × povos; a aldeia fica fora das muralhas; soltar ou ficar, com o Verbo 1 no núcleo deles",
+  "fora": "O coro por povo — é o XIII-09. Os estandartes — entram aqui, por acessibilidade.",
+  "estado": "por fazer",
+  "horas": "11 (8 + 3 arte)",
+  "notas": [
+   "Q-042: a sexta Colheita em 16 dias mede-se em playtest.",
+   "§82: cada povo solto hasteia um estandarte — é a redundância visual do coro."
+  ]
+ },
+ "XIII-07": {
+  "title": "§77 · Os dez capítulos",
+  "porque": "É o maior item único da parte e o risco alto da §84: 106 h, cortável até quatro sem partir nada.",
+  "spec": [
+   "docs/design/77-dez-lugares-uma-lei-cada.md",
+   "docs/design/54-worldgen-determinista-e-por-camadas-separadas.md"
+  ],
+  "depende": "GB-02, XIII-06",
+  "feito": "Seis por campanha, um por região, com O Cerco sempre; D-09, D-10 e D-11 a passar",
+  "fora": "Os diários — é o XIII-08.",
+  "estado": "por fazer",
+  "horas": "106 (30 + 50 arte + 20 som + 6 escrita)",
+  "notas": [
+   "Q-043: seis por campanha. Q-054 e Q-055: duas raízes e três desvios por confirmar.",
+   "Quatro é o mínimo viável se o calendário apertar (§84, risco 1)."
+  ]
+ },
+ "XIII-08": {
+  "title": "§79 · Os doze diários e os três epílogos",
+  "porque": "Três horas de código e dez de escrita. O trabalho todo é de escrita, e é o que não tem rede.",
+  "spec": [
+   "docs/design/79-a-arvore-foi-plantada-e-alguem-tinha-um-turno.md"
+  ],
+  "depende": "XIII-04, XIII-07",
+  "feito": "Os doze diários alcançáveis em mil sementes (D-12) e o epílogo determinista (D-13)",
+  "fora": "O modo longo da Fase 8 — é onde O Turno vive.",
+  "estado": "parcial — os doze diários escritos; os epílogos por implementar",
+  "horas": "13 (3 + 10 escrita)",
+  "notas": [
+   "ADR 0018 tem a precedência. O D-13 já corre sobre os limiares do rot.tres.",
+   "Doze fragmentos de 60 a 90 palavras. Se um precisar de 200, está a explicar.",
+   "Parcial a 14/09: os doze fragmentos estão escritos em data/i18n/strings.csv (836 palavras PT-PT e EN, todos entre 60 e 90 palavras). São primeira versão e medem-se contra o diário 9, que é o espécime da §79. Falta o sistema: a atribuição por ato, o D-12 e a verificação de epílogo."
+  ]
+ },
+ "XIII-09": {
+  "title": "§81 · Som: o cante, os motivos e a encomendação",
+  "porque": "44 h, das quais 38 de som. É a secção que o coro da Colheita e a alvorada da §76 esperam.",
+  "spec": [
+   "docs/design/81-uma-cancao-por-povo-e-a-noite-tem-duas-notas.md"
+  ],
+  "depende": "XIII-05, XIII-06",
+  "feito": "Uma canção por povo; o coro com tantas vozes quantos povos soltos; o motivo da massa",
+  "fora": "As canções dos capítulos — estão orçamentadas no XIII-07.",
+  "estado": "por fazer",
+  "horas": "44 (6 + 38 som)",
+  "notas": [
+   "Q-044: o motivo sonoro coexiste com o visual, e o visual é a própria candeia."
+  ]
+ },
+ "XIII-10": {
+  "title": "§83 · Os primeiros vinte minutos",
+  "porque": "Sem isto o jogador conhece o Amargueiro tarde demais para ele significar alguma coisa.",
+  "spec": [
+   "docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "GB-01, XIII-03",
+  "feito": "O minuto 0:00 tem a candeia e um Amargueiro velho; o 17:00 tem a primeira oferta",
+  "fora": "O resto da campanha.",
+  "estado": "por fazer",
+  "horas": "8 (3 + 4 arte + 1 escrita)",
+  "notas": [
+   "§84, risco 5: o Amargueiro velho do minuto 0:00 existe para que a pergunta 'porque é que aquela árvore tem cara?' chegue depois da resposta."
+  ]
+ },
+ "XIII-11": {
+  "title": "§84 · Os catorze testes de design e as seis linhas de risco",
+  "porque": "Sem eles, os números das outras secções desafinam-se sozinhos até ao mês oito.",
+  "spec": [
+   "docs/design/84-os-testes-que-impedem-isto-de-apodrecer-e-os-ris.md",
+   "docs/design/31-testes-ci-e-os-testes-de-design.md"
+  ],
+  "depende": "XIII-02",
+  "feito": "Os catorze escritos; os que precisam de sistemas ficam saltados com a razão e o sistema que falta",
+  "fora": "Escrever os sistemas que os testes esperam.",
+  "estado": "feito",
+  "horas": "6",
+  "notas": [
+   "ADR 0019. Feito: tests/parte_xiii_rot_test.gd e tests/parte_xiii_mundo_test.gd, 20 casos, 16 a correr e 4 saltados com razão escrita.",
+   "As seis linhas novas do registo de risco entram em docs/risk/ com a §37."
+  ]
+ }
+}

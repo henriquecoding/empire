@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EconomyProfile" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/economy_profile.gd" id="1_hn5bj"]
+
+[resource]
+script = ExtResource("1_hn5bj")
+id = &"balanced"
+sources = 7
+troops = 14
+greed = 28
+expect_suffocation = Vector2i(9, 14)

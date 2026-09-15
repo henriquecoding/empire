@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OfferData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/offer_data.gd" id="1_xigu6"]
+
+[resource]
+script = ExtResource("1_xigu6")
+id = &"what_you_buried"
+display_key = "OFFER_WHAT_YOU_BURIED"
+price_kind = &"sealed_passage"
+price_amount = 1.0
+effect_kind = &"mass_mult"
+effect_value = 0.5
+requires = "biome=subterranean"
+debt_delta = 3

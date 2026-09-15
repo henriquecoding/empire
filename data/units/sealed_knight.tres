@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_4vraa"]
+
+[resource]
+script = ExtResource("1_4vraa")
+id = &"sealed_knight"
+display_key = "UNIT_SEALED_KNIGHT"
+max_health = 45
+damage = 10
+accuracy_open = 1.0
+range_px = 60
+recruit_cost = 0
+drops_on_death = Array[StringName]([&"weapon", &"corpse"])
+scale_tier = 3
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 22
+tags = Array[StringName]([&"mounted", &"blind_without_mount"])
+ability = &"sees_through_mount"
+ability_params = {
+&"blind_range_px": 28.0,
+&"vignette": 0.4
+}
+weapon_kind = &"lance"
+head_pool = Array[StringName]([&"helmet_sealed"])

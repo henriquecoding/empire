@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WildlifeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wildlife_data.gd" id="1_aoghv"]
+
+[resource]
+script = ExtResource("1_aoghv")
+id = &"deer"
+display_key = "WILDLIFE_DEER"
+max_health = 8
+move_speed = 48.0
+coin_yield = 3
+biomes = Array[StringName]([&"ancient_forest", &"floodplain"])
+per_segment_max = 1
+shadow_width = 16

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_cndu3"]
+
+[resource]
+script = ExtResource("1_cndu3")
+id = &"fire_barrel"
+display_key = "BUILDING_FIRE_BARREL"
+category = &"defense"
+cost = 12
+max_health = 20
+build_work = 24.0
+width_px = 32
+effect_params = {
+&"aoe_damage": 20.0,
+&"aoe_radius": 96.0,
+&"rot_slow": 0.25
+}
+shadow_width = 32
+tags = Array[StringName]([&"explodes"])

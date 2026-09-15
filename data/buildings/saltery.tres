@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_ojkel"]
+
+[resource]
+script = ExtResource("1_ojkel")
+id = &"saltery"
+display_key = "BUILDING_SALTERY"
+category = &"conversion"
+cost = 9
+craft = &"cook"
+max_health = 72
+build_work = 18.0
+width_px = 120
+shadow_width = 120
+tags = Array[StringName]([&"stops_spoilage"])

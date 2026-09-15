@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/job_data.gd" id="1_la8ty"]
+
+[resource]
+script = ExtResource("1_la8ty")
+id = &"guard"
+display_key = "JOB_GUARD"
+priority = 1.0
+urgency_by_phase = PackedFloat32Array(0.3, 0.3, 0.3, 0.5, 1.5, 2)
+building_category = &"core"

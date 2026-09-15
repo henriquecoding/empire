@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/creature_data.gd" id="1_cx65e"]
+
+[resource]
+script = ExtResource("1_cx65e")
+id = &"slime_ram"
+display_key = "CREATURE_SLIME_RAM"
+mass_cost = 48
+min_day = 14
+max_health = 90
+damage = 26
+attack_interval = 2.0
+range_px = 24
+accuracy = 1.0
+target_priority = &"walls_only"
+move_speed = 16.0
+scale_tier = 3
+layer_slots = Array[StringName]([&"body", &"face", &"overlay"])
+shadow_width = 40
+coin_drop = 3
+tags = Array[StringName]([&"rot", &"siege"])

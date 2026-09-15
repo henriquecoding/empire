@@ -1,0 +1,88 @@
+key,value,_group,_src,_proposed,_notes
+income_growth,1.12,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,"produção cresce a 1,12^(d−1) sobre a base construída"
+trade_growth,1.08,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,"comércio cresce a 1,08^(d−1) por rota"
+night_cost_base,6.1,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,custo de sobreviver à noite no dia 1
+night_cost_growth,1.22,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,"correção da v3: 1,22, não 1,16"
+suffocation_target,9|14,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,alvo de design do dia de asfixia; o CI falha fora disto
+curve_income_flat,3.0,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,parte fixa da base no simulador da §06
+curve_income_per_source,2.6,Curva e asfixia,"§06 curva; simulador da §06 (base = 3 + 2,6 × fontes)",,"por fonte de produção, no simulador da §06"
+upkeep_free_troops,8,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,até 8 tropas não há manutenção
+upkeep_tier1_limit,20,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,de 9 a 20
+upkeep_tier1_rate,0.5,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,"por tropa e por dia, entre 9 e 20"
+upkeep_tier2_rate,1.5,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,"por tropa e por dia, acima de 20"
+trade_route_income,4.5,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,"o §06 diz 4–6/dia; 4,5 é o valor da fórmula do §29"
+trade_network_bonus,0.1,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,+10% a todas as rotas por cada rota a partir da segunda
+trade_cart_cost,5,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,a carroça que percorre a rota
+hunt_yield,3|9,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,caça: moeda direta por saída
+loot_yield,40|160,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,"saque de fortaleza, uma vez; fecha a rota"
+start_coins,6,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,§25: acordas com 6 moedas
+coin_stack_max,99,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,§49: acima disto funde num saco
+favor_decay_per_day,0.1,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,decai 10%/dia se não for usado
+diplomat_p_dissolve,0.3,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,dissolução → super-tropa
+diplomat_p_contract,0.5,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,contrato → mercenários e dívida
+diplomat_p_capture,0.2,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,captura → resgate com prazo
+diplomat_favor_step,20,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,cada 20 de Favor...
+diplomat_favor_shift,0.05,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,...move 5 pontos de Captura para Dissolução — ver Q-004 sobre o exemplo 45/45/10
+assimilate_every_days,8,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,diplomata n2
+assimilate_favor,60,Favor e diplomacia,§06 Favor; §14 diplomata; §56,,diplomata n2
+mercenary_afternoon_markup,0.25,Mercenários e dívida,§05 tarde; §14 dívida; §56,,preços sobem 25% na tarde
+debt_base,40,Mercenários e dívida,§05 tarde; §14 dívida; §56,,D = 40 + 18 × n
+debt_per_mercenary,18,Mercenários e dívida,§05 tarde; §14 dívida; §56,,D = 40 + 18 × n
+debt_due_days,6,Mercenários e dívida,§05 tarde; §14 dívida; §56,,prazo
+debt_late_multiplier,1.25,Mercenários e dívida,§05 tarde; §14 dívida; §56,,"cada dia em atraso: D × 1,25"
+debt_partial_reset_days,3,Mercenários e dívida,§05 tarde; §14 dívida; §56,,pagamento parcial reinicia o prazo em 3 dias
+debt_desert_until_late_day,3,Mercenários e dívida,§05 tarde; §14 dívida; §56,,atraso 1–3 dias: os mercenários desertam
+debt_diplomat_dies_late_day,4,Mercenários e dívida,§05 tarde; §14 dívida; §56,,atraso 4: o diplomata morre
+debt_camp_marches_late_day,5,Mercenários e dívida,§05 tarde; §14 dívida; §56,,atraso 5+: o acampamento marcha sobre ti
+impulses_per_day,1,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,um impulso por dia
+heir_training_days,10,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,Casa do Herdeiro
+heir_training_days_diplomat,5,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,atalho do diplomata n2
+heir_cost_per_day,5,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,custo diário do treino
+heir_boost_inheritance,0.6,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,herda 60% dos boosts e 100% dos desbloqueios
+interregnum_days,3,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,sem sucessor: 3 dias sem construir
+interregnum_greed,80,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,ganância durante o interregno
+decay_structures_kept,0.4,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,ao cair mantém 40% das estruturas do império principal
+resurrection_seed_cost,3,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,ou 120 moedas
+resurrection_coin_cost,120,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,ou 3 Sementes Reais
+resurrection_phase_loss,1,"Coroa, morte e decay",§15 sucessão; §16 morte e decay,,o ressuscitado perde uma fase de evolução
+craft_evolve_days_home,14,Ofícios e conquista,§09 dilema do artesão; §13,,ofício que fica no império
+craft_evolve_days_combat,4,Ofícios e conquista,§09 dilema do artesão; §13,,ofício que vai a combate
+fortress_seeds,1|3,Ofícios e conquista,§09 dilema do artesão; §13,,Sementes Reais por fortaleza
+fortress_cavities_revealed,1|2,Ofícios e conquista,§09 dilema do artesão; §13,,cavidades marcadas no corte de solo
+tower_accuracy,1.0,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,dentro de torre ≈100%; em campo vale accuracy_open de cada unidade
+slot_replace_time,0.4,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,§47 manda-o para a EconomyCurve
+queue_min_px,30,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,a fila espera a 30–120 px
+queue_max_px,120,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,a fila espera a 30–120 px
+queue_spacing_px,18,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,o 18 do código do §50 (30 + i × 18)
+king_presence_radius,260,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,rei em campo: ninguém foge neste raio
+breach_flee_health,0.3,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,muro cai: fogem as tropas com vida < 30%...
+breach_flee_max_cost,4,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,...e custo ≤ 4
+flee_health,0.25,Combate e moral,"§07 precisão, ocupação de linha, moral; §47; §50; §52",,FSM: FUGIR com vida < 25% (§52) — ver Q-005
+job_proximity_px,400.0,Trabalho,§29 prompt 4,,proximidade = 1 / (1 + distância / 400)
+job_hysteresis,0.15,Trabalho,§29 prompt 4,,só muda de posto se o score novo superar o atual em mais de 15%
+ai_w_fortify_wall,1.4,IA do rei inimigo,§20 código; §10 Casa de Treino,,"fortify = wall_deficit × 1,4 + threat × 0,8"
+ai_w_fortify_threat,0.8,IA do rei inimigo,§20 código; §10 Casa de Treino,,
+ai_w_attack,1.2,IA do rei inimigo,§20 código; §10 Casa de Treino,,"attack = army_surplus × 1,2 − king_age_risk"
+ai_w_recruit,1.1,IA do rei inimigo,§20 código; §10 Casa de Treino,,"recruit = (1 − army_ratio) × 1,1"
+ai_w_expand,0.9,IA do rei inimigo,§20 código; §10 Casa de Treino,,"expand = income_deficit × 0,9 × (1 − greed)"
+ai_w_diplomat,1.3,IA do rei inimigo,§20 código; §10 Casa de Treino,,"diplomat = favor_ratio × 1,3"
+ai_tyrant_greed,0.65,IA do rei inimigo,§20 código; §10 Casa de Treino,,"tiranos: greed > 0,65"
+ai_tyrant_fortify_mult,0.45,IA do rei inimigo,§20 código; §10 Casa de Treino,,poupam no muro
+ai_tyrant_recruit_mult,1.35,IA do rei inimigo,§20 código; §10 Casa de Treino,,gastam em elites
+ai_target_training_house_from_day,15,IA do rei inimigo,§20 código; §10 Casa de Treino,,destruir a Casa de Treino é prioritário a partir do dia 15
+named_cap,9,Identidade — §76,§76 os nove feitos e os títulos,,Nove nomes ao mesmo tempo (D-07). A Q-041 propõe mantê-lo fixo: cresce e deixa de significar nada.
+title_mourning_days,3,Identidade — §76,§76 os nove feitos e os títulos,,"Morto o dono, o título fica de luto três dias e volta com ordinal (D-08)."
+colheita_base_days,6,Colheita — §78,§78 a Colheita e as duas decisões,,"C = 6 + 2 × povos já detidos. A sexta dura 16 dias — Q-042, a medir em playtest."
+colheita_per_people,2,Colheita — §78,§78 a Colheita e as duas decisões,,O termo que trava o snowball.
+colheita_assimilation_factor,0.5,Colheita — §78,§78 a Colheita e as duas decisões,,"Por assimilação, metade, arredondada para cima: o diplomata n2 continua a valer a pena (§14)."
+colheita_production_mult,1.4,Colheita — §78,§78 a Colheita e as duas decisões,,"Produzem a 140% enquanto dura, e cantam em modo menor (§81)."
+release_favor,25,Colheita — §78,§78 a Colheita e as duas decisões,,Soltar: +25 de Favor (§14).
+release_route_income,8,Colheita — §78,§78 a Colheita e as duas decisões,,Soltar: rota de comércio permanente de 8 moedas/dia.
+release_unit_price_mult,1.5,Colheita — §78,§78 a Colheita e as duas decisões,,"Soltar: a tropa única passa a comprável a 1,5× do preço."
+keep_production_bonus,0.8,Colheita — §78,§78 a Colheita e as duas decisões,,Ficar: +80% de produção permanente daquela terra.
+keep_landmark_mass,22,Colheita — §78,§78 a Colheita e as duas decisões,,"Ficar: o marco cria raiz e pesa 22 de massa por noite, e não se corta (§74)."
+ally_attack_favor,-40,Colheita — §78,§78 a Colheita e as duas decisões,,Atacar um aliado custa 40 de Favor e quebra todas as outras alianças.
+bitter_wood_sell_price,0,Lenho Amargo — §74,"§74 candeia, Amargueiro e a massa termo a termo",,Regra 1: o Lenho não é moeda. Fica em zero de propósito; o D-02 chumba se alguém lhe der preço.
+bitter_wood_wall_level,4,Lenho Amargo — §74,"§74 candeia, Amargueiro e a massa termo a termo",,"Um Lenho dispensa o requires_conquest da muralha de nível 4, por segmento."
+bitter_wood_bastion_cost,3,Lenho Amargo — §74,"§74 candeia, Amargueiro e a massa termo a termo",,"O bastião, único por império, custa 3 Lenhos além das 65 moedas."
+coin_pickup_px,12,Moeda física — F1-01,§02 a moeda é física; §53 L_COIN não colide,coin_pickup_px,"Proposta: a apanha é por distância, não por colisão. A medir no F1-01."

@@ -1,0 +1,1284 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   A LINHA DO SOLO — a direção de arte do documento
+   ---------------------------------------------------------------------
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ O DOSSIÊ É SOBRE UM JOGO QUE SE JOGA DE LADO, E NÃO SE PARECIA COM   │
+   │ ISSO                                                                │
+   │                                                                     │
+   │ O Empire tem uma estrutura que o define e que a §11 e a §53 repetem  │
+   │ a cada página: uma LINHA DE SOLO e três faixas — aérea, superfície,  │
+   │ subsolo. O documento que a descreve estava disposto como um artigo   │
+   │ genérico: uma coluna de texto encostada à esquerda, o terço direito  │
+   │ vazio em qualquer ecrã acima de 1100px, e 85 secções sem nada que    │
+   │ as ancorasse ao olho.                                               │
+   │                                                                     │
+   │ Esta camada dá-lhe a mesma anatomia que o jogo tem:                  │
+   │                                                                     │
+   │   CALHA      o número da secção, cravado na margem como um marco     │
+   │   MEDIDA     a prosa, a 68 caracteres, onde se lê                    │
+   │   MARGEM     onde as tabelas, as figuras e o código SANGRAM          │
+   │                                                                     │
+   │ É a mesma decisão que a §22 tomou para o cenário — «não é falta de   │
+   │ resolução nem de talento, é falta de um plano no meio» — aplicada à  │
+   │ página em vez do ecrã.                                              │
+   └─────────────────────────────────────────────────────────────────────┘
+
+   REGRA QUE NÃO SE QUEBRA: o modo claro é o do autor, medido pixel a
+   pixel sobre `Empire Concept.png`. Nenhum token de cor do tema claro é
+   redefinido aqui. O que muda é a DISPOSIÇÃO, a hierarquia e a matéria.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --calha:58px;        /* a margem onde vive o número da secção */
+  --medida:68ch;       /* onde se lê */
+  --vale:32px;         /* o vão entre colunas */
+  --horizonte:3px;     /* a espessura da linha do solo */
+}
+
+/* ═══ 0 · O PAPEL ══════════════════════════════════════════════════════
+   O dossiê é sobre pixel art medida pixel a pixel, e a página era uma
+   chapa de cor lisa. Um grão de dois por cento — ruído gerado uma vez,
+   em SVG, sem um único pedido de rede — dá ao estuque a matéria que o
+   `#EBE6D6` sozinho não tem. Fica atrás de tudo e não interceta nada. */
+body{position:relative}
+/* `z-index:-1` e não `0`: um pseudo-elemento negativo pinta por cima do
+   fundo do corpo e por baixo de TODO o conteúdo, sem obrigar mais nada a
+   declarar um plano. A primeira versão pôs `z-index:0` aqui e teve de
+   levantar `.wrap`, `.x-ctx` e o dock para 1 — e isso reescreveu o
+   `position:fixed` da barra de contexto para `relative`, que a largou no
+   meio do texto. Uma correção de pintura não pode mexer no layout. */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.055'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] body::before,
+:root:not([data-theme="light"]) body::before{mix-blend-mode:screen;opacity:.28}
+
+/* ═══ 1 · A PÁGINA USA A LARGURA QUE TEM ═══════════════════════════════
+   O `.wrap` parava nos 1340px e a prosa nos 70ch: num ecrã de 1440 isso
+   deixava 450px de nada à direita de cada parágrafo, em todas as 85
+   secções. Não é minimalismo — é uma coluna encostada a um canto. */
+.wrap{max-width:1444px;padding-inline:28px}
+.shell{grid-template-columns:248px minmax(0,1fr);gap:36px}
+/* A coluna tem um tecto: sem ele, a margem onde as tabelas sangram
+   crescia sem limite num ecrã de 2560 e o documento voltava a ser uma
+   coluna encostada a um canto, agora do outro lado. */
+main{padding-block:30px 0;max-width:1072px}
+
+@media (max-width:1180px){
+  .wrap{max-width:1080px}
+  .shell{gap:30px}
+}
+
+/* ═══ 2 · A ANATOMIA DE UMA SECÇÃO ═════════════════════════════════════ */
+
+main section{
+  display:grid;
+  grid-template-columns:[calha] var(--calha) [medida] minmax(0,var(--medida)) [margem] minmax(0,1fr);
+  column-gap:var(--vale);
+  align-content:start;
+  padding-block:56px 8px;
+  position:relative;
+}
+main section+section{border-top:0;margin-top:0}
+
+/* Tudo o que é prosa vive na medida. */
+main section>*{grid-column:medida;min-width:0}
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ O NÚMERO DEIXA DE FLUTUAR E PASSA A SER UM MARCO                   │
+   │                                                                   │
+   │ «34 — Backlog · novo» estava numa linha de dez pixéis por cima do  │
+   │ título, e era tudo o que 85 secções tinham para se distinguirem    │
+   │ umas das outras ao folhear. O número sai para a calha, grande e    │
+   │ fixo enquanto se lê a secção — é o marco ao lado do caminho — e o  │
+   │ rótulo fica onde estava, agora sem o número a competir com ele.    │
+   │                                                                   │
+   │ O `x-marco` é criado por JavaScript a partir do próprio `.sec-no`: │
+   │ o texto é o mesmo, e sem JavaScript o rótulo continua inteiro.     │
+   └───────────────────────────────────────────────────────────────────┘ */
+main section>.x-marco{
+  grid-column:calha;grid-row:1 / span 2;
+  align-self:start;
+  position:sticky;top:80px;
+  font-family:var(--f-px);font-size:21px;line-height:1;
+  color:var(--ink-2);text-align:right;
+  font-variant-numeric:tabular-nums;
+  padding-top:2px;
+}
+main section>.sec-no{
+  grid-column:medida;grid-row:1;
+  margin:0 0 10px;
+  font-size:10px;letter-spacing:.16em;
+}
+main section>h3{grid-column:medida;grid-row:2}
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ O NÚMERO CHEGA — A LINHA E O PONTO ERAM MOBÍLIA                    │
+   │                                                                   │
+   │ A calha teve, por duas versões, um corrimão vertical e um ponto de │
+   │ solo. O corrimão ficava paralelo à aresta do índice — duas réguas  │
+   │ a dizer o mesmo — e o ponto batia no algarismo, porque o número é  │
+   │ alinhado à direita e o ponto estava na mesma abcissa.              │
+   │                                                                   │
+   │ Um marco de estrada não tem corrimão. Fica o número.               │
+   └───────────────────────────────────────────────────────────────────┘ */
+
+/* O que SANGRA para a margem: tudo o que não é prosa. Uma tabela de nove
+   colunas não tem de rolar num ecrã de 1440 — tem de ter onde caber. */
+main section>.tw,
+main section>pre,
+main section>.grid,
+main section>.steps,
+main section>.sim,
+main section>.two,
+main section>.pal,
+main section>.pal-h,
+main section>.ramp,
+main section>.ramp-lbl,
+main section>.trk,
+main section>figure,
+main section>.x-cartoes,
+main section>.x-inv-ctl,
+main section>.x-inv-lista,
+main section>div[id^="x-fig"]{
+  grid-column:medida / -1;
+}
+
+/* As caixas de decisão sangram um pouco — o suficiente para lerem como
+   uma interrupção e não tanto que virem faixa. */
+main section>.note,
+main section>.lantern{
+  grid-column:medida / -1;
+  max-width:calc(var(--medida) + 120px);
+}
+
+/* Abaixo de 1000px a calha não cabe: o número volta a fluir por cima do
+   título, que é onde sempre esteve.
+   ┌───────────────────────────────────────────────────────────────────┐
+   │ UMA LINHA COM NOME QUE DEIXA DE EXISTIR NÃO DÁ ERRO — CRIA PISTAS  │
+   │                                                                   │
+   │ Colapsar a grelha para uma coluna não chega. As regras de sangria  │
+   │ (`grid-column: medida / -1`) são MAIS ESPECÍFICAS do que o         │
+   │ `main section>*` que as devia repor, e continuavam a pedir uma     │
+   │ linha chamada `medida`. Quando essa linha deixa de existir, o      │
+   │ CSS Grid não ignora o pedido nem reclama: FABRICA pistas           │
+   │ implícitas para a satisfazer. A 360px a secção continuava com três │
+   │ colunas — `0px 182px 146px` — e o texto ficava a 94 pixéis de      │
+   │ largura dentro de um ecrã de 360.                                 │
+   │                                                                   │
+   │ Nada acusou: sem erro de consola, sem regra por aplicar, e a       │
+   │ 1400px estava tudo certo. Foi o portão que contou 103 caixas a     │
+   │ transbordar. Daí o `!important`: aqui ele não é preguiça, é a      │
+   │ única forma de uma regra de colapso vencer TODAS as regras de      │
+   │ sangria sem as ter de repetir uma a uma — e sem se esquecer da     │
+   │ que for acrescentada amanhã.                                      │
+   └───────────────────────────────────────────────────────────────────┘ */
+@media (max-width:1000px){
+  main section{grid-template-columns:minmax(0,1fr);column-gap:0;padding-block:44px 4px}
+  main section>*{grid-column:1!important;grid-row:auto!important}
+  main section>.x-marco{display:none}
+  main section>.sec-no{margin-bottom:12px}
+  main section::before,main section::after{display:none}
+  main section>.note,main section>.lantern{max-width:none}
+}
+
+/* ═══ 3 · O SEPARADOR DE PARTE — uma linha de horizonte a sério ════════
+   O corte de terra existia e estava esmagado: 74px de altura para um
+   desenho com 1200 unidades de largura, esticado com
+   `preserveAspectRatio="none"`. Esticá-lo para 132 duplicava-o na
+   vertical e as nuvens viravam elipses. O desenho foi feito a 1200×74 e
+   é a 74 que se lê: o que muda é o espaço à volta e o alinhamento do
+   título ao corte de terra. */
+.part{
+  padding-top:104px;margin-bottom:4px;
+  display:grid;
+  grid-template-columns:[calha] var(--calha) [medida] minmax(0,var(--medida)) [margem] minmax(0,1fr);
+  column-gap:var(--vale);
+}
+/* 74 unidades de altura esticadas para 132px é o dobro: as nuvens viram
+   elipses e a relva vira uma barra. A 92 a distorção é de um quarto e o
+   corte de terra lê-se como o que é — céu, relva, terra. */
+.part-rule{grid-column:1 / -1;height:74px;margin-bottom:34px;position:relative}
+.part-rule svg{height:74px}
+/* O horizonte continua para lá do desenho, até à berma da coluna. */
+.part-rule::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--line);
+}
+/* «PARTE III» não cabe numa calha de 58px sem partir em duas linhas.
+   Vai para a medida, por cima do título, que é onde se lê. */
+.part-no{
+  grid-column:medida;grid-row:2;
+  font-size:10px;letter-spacing:.18em;line-height:1.5;margin-bottom:10px;
+}
+.part h2{grid-column:medida;grid-row:3;max-width:22ch;margin:0 0 14px}
+.part p{grid-column:medida;grid-row:4;max-width:58ch;font-size:19px;color:var(--ink-2)}
+
+@media (max-width:1000px){
+  .part{grid-template-columns:minmax(0,1fr);padding-top:64px}
+  .part>*{grid-column:1!important;grid-row:auto!important}
+  .part-rule{height:64px;margin-bottom:22px}
+  .part-rule svg{height:64px}
+  .part-no{text-align:left}
+}
+
+/* ═══ 4 · TIPOGRAFIA — a hierarquia que faltava ════════════════════════ */
+
+h3{
+  font-size:clamp(27px,3.1vw,40px);
+  line-height:1.03;letter-spacing:-.025em;
+  max-width:26ch;margin:0 0 16px;
+}
+.lede{
+  font-size:20px;line-height:1.5;color:var(--ink-2);
+  max-width:62ch;margin-bottom:30px;
+}
+
+/* O h4 tinha um tecto de 36ch: um título de quatro palavras partia em
+   duas linhas no meio de uma coluna de 68. E não tinha nada a separá-lo
+   do parágrafo anterior senão espaço. */
+h4{
+  font-size:22px;line-height:1.2;letter-spacing:-.012em;
+  max-width:none;margin:38px 0 14px;
+  padding-top:15px;
+  border-top:1px solid var(--line);
+}
+h4:first-of-type{border-top:0;padding-top:0}
+h5{margin:34px 0 10px;color:var(--ember);letter-spacing:.1em}
+h6{font-family:var(--f-display);font-variation-settings:'opsz' 28;
+   font-weight:700;font-size:17px;line-height:1.25;margin:0 0 6px;letter-spacing:-.01em}
+
+p{margin:0 0 16px}
+.measure,p,ul,ol{max-width:var(--medida)}
+
+/* ═══ 5 · A MATÉRIA — superfícies que se distinguem ════════════════════
+   O documento inteiro era do mesmo bege. Um cartão, uma tabela e um
+   parágrafo tinham o mesmo fundo, e por isso nada lia como objeto
+   pousado no papel. Cada superfície ganha um degrau e uma aresta. */
+
+/* ─── Caixas de decisão e risco ──────────────────────────────────────
+   Eram 149 blocos cinzentos com uma borda à esquerda. Passam a ter
+   identidade: o que é DECISÃO é petróleo, o que é RISCO é brasa, e o
+   rótulo é dito na voz do sistema (a fonte de pixéis). */
+.note{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  border-left:3px solid var(--line);
+  border-radius:0 3px 3px 0;
+  padding:18px 22px 4px;
+  margin:26px 0;
+}
+.note .lbl{
+  font-family:var(--f-px);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  display:block;margin-bottom:11px;color:var(--muted);
+}
+.note>:last-child{margin-bottom:14px}
+.note p{max-width:none}
+
+.note.dec{border-left-color:var(--petrol);background:var(--petrol-wash)}
+.note.dec .lbl{color:var(--petrol)}
+.note.risk{border-left-color:var(--ember);background:var(--ember-wash)}
+.note.risk .lbl{color:var(--ember)}
+
+.lantern{
+  border:1px solid var(--ember);border-left-width:3px;border-radius:0 3px 3px 0;
+  background:
+    radial-gradient(120% 140% at 6% 0%, color-mix(in srgb,var(--ember) 16%,transparent) 0%, transparent 62%),
+    linear-gradient(180deg,var(--ember-wash),var(--surface));
+  padding:22px 24px 8px;
+}
+
+/* ─── Tabelas ────────────────────────────────────────────────────────
+   O `min-width:max-content` que eu próprio pus obrigava QUALQUER tabela
+   a rolar, mesmo quando havia largura de sobra. Agora a tabela ocupa a
+   largura que tem e só rola quando não cabe mesmo. */
+.tw{
+  margin:24px 0;
+  border:1px solid var(--line);border-radius:3px;
+  background:var(--surface);
+}
+.tw table{min-width:0;width:100%;border-collapse:collapse}
+.tw thead th{
+  position:sticky;top:0;z-index:1;
+  background:var(--sunk);
+  font-family:var(--f-px);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:400;
+  text-align:left;padding:11px 14px;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+.tw tbody td{
+  padding:11px 14px;vertical-align:top;
+  border-bottom:1px solid var(--line-soft);
+  font-size:15.5px;line-height:1.45;
+}
+.tw tbody tr:last-child td{border-bottom:0}
+/* A 55% do degrau a zebra existia no DOM e não existia no ecrã — é o
+   erro que a medição de hierarquia do Recibo Certo apanha: abaixo de
+   1,05:1 uma superfície não está lá. Vai a 100 e vê-se. */
+.tw tbody tr:nth-child(even){background:var(--sunk)}
+.tw tbody tr:hover{background:color-mix(in srgb,var(--petrol) 7%,transparent)}
+.tw th.n,.tw td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tw td:first-child.n{text-align:left;font-family:var(--f-mono);font-size:13px;color:var(--petrol)}
+
+/* ─── Código ─────────────────────────────────────────────────────────── */
+pre{
+  /* `background-color` e NÃO o atalho `background`: o atalho escreve
+     também `background-image`, e a camada de uso põe lá as quatro
+     camadas que fazem a sombra de «há mais para o lado». Foi assim que
+     a affordance dos 52 blocos de código desapareceu sem dar erro —
+     a mesma família do `overflow:hidden` que tirou a rolagem às 123
+     tabelas. Um atalho apaga o que não nomeia. */
+  background-color:var(--sunk);
+  border:1px solid var(--line);border-left:3px solid var(--line);
+  border-radius:0 3px 3px 0;
+  padding:18px 20px;margin:24px 0;
+  font-size:13.5px;line-height:1.6;
+}
+code{background:color-mix(in srgb,var(--surface-2) 70%,transparent);
+     border:1px solid var(--line-soft);border-radius:2px;padding:1px 5px}
+pre code{background:none;border:0;padding:0}
+
+/* ─── Grelhas de células ─────────────────────────────────────────────
+   O truque de pintar o fundo da grelha e abrir 1px de intervalo desenha
+   as arestas de graça — e desenha também os LUGARES VAZIOS. A §07 tem
+   quatro células numa grelha de três: as duas casas que sobram apareciam
+   como um bloco bege do tamanho de duas células, que se lê como um erro.
+   Células soltas, com aresta própria: o que sobra é papel. */
+.grid{gap:14px;background:none;border:0;border-radius:0;overflow:visible;margin:26px 0}
+.cell{
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  padding:18px 20px;margin:0;
+}
+.cell>:last-child{margin-bottom:0}
+.cell h6{color:var(--ink)}
+
+/* ─── Pares chave/valor ──────────────────────────────────────────────── */
+.kv{
+  display:grid;grid-template-columns:minmax(120px,auto) 1fr;
+  gap:0;margin:22px 0;
+  border-top:1px solid var(--line-soft);
+}
+.kv dt,.kv>div:nth-child(odd){
+  font-family:var(--f-mono);font-size:13px;color:var(--muted);
+  padding:10px 16px 10px 0;border-bottom:1px solid var(--line-soft);
+}
+.kv dd,.kv>div:nth-child(even){
+  margin:0;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:15.5px;
+}
+
+/* ─── Passos ─────────────────────────────────────────────────────────── */
+.step{position:relative;padding-left:52px;margin-bottom:22px}
+.steps{margin:26px 0}
+
+/* ═══ 6 · O CABEÇALHO — a primeira impressão ═══════════════════════════
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ CATORZE FICHAS NÃO SÃO UMA FICHA TÉCNICA                             │
+   │                                                                     │
+   │ As 14 etiquetas do topo — «Godot 4.6», «85 secções», «61 eventos» —  │
+   │ são informação verdadeira e útil, servida como um muro de crachás    │
+   │ de CI: duas filas irregulares, três estilos diferentes, larguras     │
+   │ ao acaso. Ninguém as lê; conta-as.                                   │
+   │                                                                     │
+   │ A mesma informação, numa grelha de duas colunas com uma aresta e     │
+   │ uma linha por facto, passa a ler-se como o que é: a ficha técnica    │
+   │ do projeto. E, posta à direita do título, resolve de uma vez o       │
+   │ vazio do topo da página.                                            │
+   └─────────────────────────────────────────────────────────────────────┘ */
+.mast{
+  padding-block:72px 0;
+  display:grid;
+  /* Composição de revista: o nome atravessa a página inteira e, por
+     baixo dele, duas colunas — o que o documento É à esquerda, o que o
+     PROJETO é à direita. A primeira versão punha o título só na coluna
+     da esquerda e deixava 380px de nada entre o fim da frase e a ficha. */
+  grid-template-columns:minmax(0,66ch) minmax(0,1fr);
+  column-gap:56px;align-items:start;
+  position:relative;
+}
+.mast .kicker{grid-column:1 / -1;grid-row:1;font-size:10px;letter-spacing:.18em;margin-bottom:22px}
+.mast h1{grid-column:1 / -1;grid-row:2;font-size:clamp(54px,10.5vw,134px);margin-bottom:26px}
+.mast .deck{grid-column:1;grid-row:3;max-width:none;margin-bottom:0;
+            font-size:clamp(18px,1.8vw,21px);line-height:1.45}
+.mast .chips{grid-column:2;grid-row:3;width:100%}
+/* Com 700px de coluna, catorze linhas numa fila só deixavam metade da
+   ficha vazia. Duas colunas de sete enchem-na, e ainda cabe o rótulo
+   mais comprido que lá existe. */
+.mast .chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mast .chip{border-right:1px solid var(--line-soft)}
+.mast .chip:nth-child(2n){border-right:0}
+.mast .chip:nth-child(1),.mast .chip:nth-child(2){border-top:0}
+
+/* O horizonte: a linha do solo do jogo, à entrada do documento — as
+   mesmas três faixas que separam as partes, reduzidas a nove pixéis. */
+.mast::after{
+  content:"";position:absolute;left:0;right:0;bottom:-40px;height:9px;
+  background:
+    linear-gradient(180deg,var(--leaf) 0 3px,transparent 3px),
+    linear-gradient(180deg,transparent 0 3px,var(--surface-2) 3px 8px,var(--line) 8px 9px);
+  opacity:.9;
+}
+
+.chips{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border:1px solid var(--line);border-radius:3px;
+  background:var(--surface);overflow:hidden;
+}
+.chip{
+  font-family:var(--f-mono);font-size:12.5px;letter-spacing:0;
+  padding:9px 14px;border:0;border-radius:0;border-top:1px solid var(--line-soft);
+  background:none;color:var(--ink-2);
+  display:flex;align-items:center;gap:9px;min-height:31px;
+}
+.chip:first-child{border-top:0}
+.chip.on{background:var(--sunk);color:var(--ink);font-weight:600}
+.chip.on::before{content:"";width:7px;height:7px;background:var(--petrol);border-radius:1px;flex:0 0 auto}
+.chip.new{background:none;color:var(--ink-2);border-color:var(--line-soft)}
+.chip.new::before{content:"";width:7px;height:7px;background:var(--ember);border-radius:1px;flex:0 0 auto}
+
+@media (max-width:1000px){
+  .mast .chips{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .mast .chip{border-right:0;border-top:1px solid var(--line-soft)}
+  .mast{grid-template-columns:minmax(0,1fr);padding-block:48px 0}
+  .mast>*{grid-column:1!important;grid-row:auto!important}
+  .mast .chips{margin-top:32px;justify-self:stretch;width:100%}
+  .mast::after{bottom:-26px}
+  #retomada{margin-top:62px}
+  .chips{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .chip{border-top:1px solid var(--line-soft)}
+}
+
+#retomada{
+  position:relative;
+  margin-top:80px;
+  border:1px solid var(--ember);border-left-width:3px;border-radius:0 3px 3px 0;
+  background:linear-gradient(180deg,var(--ember-wash),var(--surface));
+  padding:22px 24px 8px;
+}
+#retomada .lbl{
+  font-family:var(--f-px);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ember);display:block;margin-bottom:12px;
+}
+/* Uma moldura de 1344px com o texto a parar aos 740 é meia caixa vazia.
+   A caixa acompanha a medida do que tem dentro. */
+#retomada{max-width:880px}
+#retomada p{max-width:82ch}
+
+#x-como{
+  border:1px solid var(--line);border-left:3px solid var(--petrol);
+  background:var(--petrol-wash);border-radius:0 3px 3px 0;
+  padding:20px 24px 6px;margin:18px 0 0;
+}
+#x-como .lbl{color:var(--petrol)}
+#x-como{max-width:880px}
+#x-como p{max-width:82ch}
+
+/* ═══ 7 · A COLUNA LATERAL ═════════════════════════════════════════════ */
+/* A barra de contexto é fixa e tem 46px. A coluna lateral é pegajosa a
+   partir do topo — e escorregava por baixo dela, com o campo de pesquisa
+   cortado ao meio. O topo da coluna é o fundo da barra. */
+.x-lado{padding-block:30px 24px;top:54px;max-height:calc(100dvh - 62px)}
+@media (max-width:960px){ .x-lado{top:auto;max-height:none} }
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ A CALHA — o que estava errado, e porquê                            │
+   │                                                                   │
+   │ Estava TUDO em monoespaçada: os títulos das secções, os números e  │
+   │ os nomes das partes, na mesma face e quase no mesmo tamanho. Uma   │
+   │ monoespaçada é boa para um identificador — `F0-08`, `#4A781D` —    │
+   │ porque alinha e não se confunde. Para «Aleatoriedade com           │
+   │ disciplina» é o contrário: tira as formas que o olho usa para      │
+   │ reconhecer uma palavra sem a ler, e um índice é exactamente isso.  │
+   │                                                                   │
+   │ Eram 41px por linha: doze secções visíveis de 86. Um índice que    │
+   │ mostra 14% do documento é uma lista de espera.                     │
+   │                                                                   │
+   │ E o activo era uma pílula cheia — uma mancha de cor num sítio onde │
+   │ já há 86 linhas a competir. A regra da casa é «premium é           │
+   │ contenção»: uma calha à esquerda e um degrau de peso dizem «estás  │
+   │ aqui» sem gritar.                                                  │
+   └───────────────────────────────────────────────────────────────────┘ */
+nav.toc{font-size:13px}
+
+/* O cabeçalho de parte: sobrancelha, não item. Difere dos itens na face,
+   no tamanho, na cor e no espaçamento — quatro sinais, porque um só
+   nunca chega quando há 86 linhas por baixo. */
+nav.toc .x-grp-btn{
+  /* A face de pixéis é do autor e é a identidade do documento — o que
+     mudou foram os ITENS, não a sobrancelha. */
+  font-family:var(--f-px);
+  margin-top:10px;padding:6px 10px 5px;
+  border-top:0;border-radius:0;
+  color:var(--ember);font-size:10.5px;letter-spacing:.16em;
+  min-height:28px;
+}
+/* O piso de toque vive AQUI e não em `ux.css`, e a razão é cascata pura:
+   `design.css` carrega depois, portanto a regra base de 28px ganhava a
+   qualquer `@media` escrito lá — media queries não acrescentam
+   especificidade. Foi a terceira vez hoje que uma regra minha mais
+   abaixo anulou uma regra minha mais acima em silêncio (o achado A-2),
+   e a lição é sempre a mesma: a excepção tem de morar ao lado da regra
+   que excepciona. */
+@media (max-width:960px){ nav.toc .x-grp-btn{min-height:var(--x-alvo)} }
+
+/* Um fio por cima de CADA grupo, com 15 grupos, é uma grelha de bandas —
+   e o olho passa a ver as bandas em vez da lista. O espaço já separa;
+   o fio fica só onde o espaço não chega, que é depois de uma lista
+   aberta. */
+nav.toc ol:not([hidden])+.x-grp-btn{
+  border-top:1px solid var(--line-soft);margin-top:14px;padding-top:11px;
+}
+nav.toc .x-grp-btn:first-of-type{border-top:0;margin-top:2px}
+nav.toc .x-grp-btn .x-grp-n{
+  font-size:11px;color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+
+/* O item. A face de CORPO, que é o que se lê; o número fica mono porque
+   é um identificador e porque assim alinha em coluna. */
+nav.toc a{
+  padding:4px 10px 4px 12px;border-radius:0;
+  border-left:2px solid transparent;
+  color:var(--ink-2);
+  font-family:var(--f-body);font-size:13px;line-height:1.35;
+  letter-spacing:0;
+  gap:10px;
+}
+nav.toc a .n{
+  min-width:17px;flex:0 0 auto;
+  font-family:var(--f-mono);font-size:11px;font-variant-numeric:tabular-nums;
+  color:var(--muted);opacity:.75;
+}
+nav.toc a:hover{background:var(--surface);color:var(--ink)}
+nav.toc a:hover .n{opacity:1}
+
+/* «Estás aqui»: calha + peso + tinta cheia. Sem preenchimento — o fundo
+   fica para o grupo aberto, que é a informação de nível acima. */
+nav.toc a.cur{
+  background:transparent;color:var(--ink);font-weight:600;
+  border-left-color:var(--ember);
+}
+nav.toc a.cur .n{color:var(--ember);opacity:1}
+
+/* Lida: o número ganha a folha. Não se esbate o título — uma secção
+   lida continua a ser um destino, e apagá-la castigava quem já leu. */
+nav.toc a.x-visto .n{color:var(--leaf);opacity:1}
+nav.toc a.x-visto.cur .n{color:var(--ember)}
+
+/* O sub-índice da secção corrente. */
+nav.toc .x-sub{
+  list-style:none;margin:2px 0 8px;padding:0 0 0 30px;
+  display:flex;flex-direction:column;gap:0;
+  border-left:1px solid var(--line-soft);margin-left:11px;
+}
+nav.toc .x-sub a{
+  display:block;padding:5px 8px;min-height:30px;
+  font-family:var(--f-body);font-size:13.5px;line-height:1.35;
+  color:var(--muted);border-left:0;border-radius:0;
+}
+nav.toc .x-sub a:hover{color:var(--ink);background:var(--surface)}
+nav.toc .x-sub a.cur{color:var(--ember);background:none}
+nav.toc .x-sub a.cur::before{
+  content:"";position:absolute;margin-left:-31px;margin-top:8px;
+  width:5px;height:5px;background:var(--ember);
+}
+nav.toc .x-sub li{position:relative;margin:0}
+@media (max-width:960px){ nav.toc .x-sub a{min-height:var(--x-alvo)} }
+
+/* ═══ 8 · A CAMADA DE USO, com a mesma voz ═════════════════════════════ */
+
+/* A barra de contexto é o HUD do documento: monoespaçada, discreta,
+   assente numa linha de solo. */
+.x-ctx{border-bottom:1px solid var(--line);padding:0 28px}
+.x-ctx.on{height:46px}
+.x-ctx .x-ctx-parte{font-family:var(--f-px);font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.x-ctx b{font-family:var(--f-mono);font-size:13px}
+.x-ctx-nav a{border-radius:2px}
+
+/* Campos e fichas: arestas rectas, como o resto do documento. */
+.x-campo,.x-inv-busca{border-radius:2px}
+.x-res{border-radius:2px}
+.x-filtro,.x-chip-btn,.x-tab-toggle,.x-kbd{border-radius:2px}
+.x-grupo{font-size:10px;letter-spacing:.13em}
+.x-coroa-lbl{font-size:10px;letter-spacing:.13em}
+.x-item{border-radius:0}
+.x-item-t{font-size:15px}
+
+/* Os cartões de estado deixam de ser caixas de painel de controlo e
+   passam a ser mostradores: rótulo em pixéis, número em display, e o
+   selo assente numa linha. */
+.x-cartoes{gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.x-cartao{border:0;border-radius:0;background:var(--surface);padding:16px 18px 15px}
+.x-cartao .x-k{
+  font-family:var(--f-px);font-size:10px;letter-spacing:.12em;color:var(--muted);
+  margin-bottom:10px;
+}
+.x-cartao .x-v{font-size:clamp(30px,4vw,40px)}
+.x-cartao .x-meta{margin-top:9px;padding-top:9px;border-top:1px solid var(--line-soft)}
+.x-estado{border-radius:2px;font-size:11.5px;padding:3px 8px}
+
+.x-inv-lista{border-radius:3px}
+.x-inv-lista li{background:var(--surface)}
+.x-inv-lista li:nth-child(even){background:var(--sunk)}
+.x-inv-id{font-family:var(--f-px);font-size:11px;letter-spacing:.03em}
+.x-prov{
+  border-top:1px solid var(--line-soft);padding-top:12px;margin-top:22px;
+  max-width:76ch;
+}
+
+figure.x-fig figcaption{
+  border-left:2px solid var(--line);padding-left:12px;max-width:66ch;
+}
+
+/* ═══ 9 · A NOITE É CASTANHA ═══════════════════════════════════════════
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ O MODO ESCURO CONTRARIAVA A ADR 0011                                 │
+   │                                                                     │
+   │ A §80 e a ADR 0011 decidiram, a 13 de setembro de 2026, que a noite  │
+   │ do Empire é CASTANHA e não azul, e a §80 publica a rampa com que se  │
+   │ pinta: dez valores de `#14140F` (silhueta) a `#F6D89B` (candeia),    │
+   │ a família de trinta de «terra e madeira».                            │
+   │                                                                     │
+   │ O modo escuro do documento estava pintado noutra coisa: superfícies  │
+   │ a `#1B1D13` e `#262A1D` — verde-azeitona. O dossiê explicava uma     │
+   │ decisão de cor numa página que não a cumpria.                        │
+   │                                                                     │
+   │ As superfícies passam a ser a rampa do autor. O chão fica na         │
+   │ silhueta, as superfícies sobem pela família da terra, e a brasa      │
+   │ passa a ser a candeia — `#E8B87A`, o penúltimo valor da rampa. Não   │
+   │ é uma cor nova: é a que a §80 escolheu.                              │
+   │                                                                     │
+   │ O modo claro não é tocado. Nenhum destes seletores o alcança.        │
+   └─────────────────────────────────────────────────────────────────────┘ */
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14140F;          /* silhueta — §80, valor 1 de 10          */
+    --surface:#241F17;         /* terra — §80, valor 3                   */
+    --surface-2:#33291C;       /* terra — §80, valor 4                   */
+    --sunk:#1B1710;            /* §80, valor 2                           */
+    --ink:#F2E6CC;
+    --ink-2:#CDBB98;
+    --muted:#948468;
+    --line:#3D3222;
+    --line-soft:#2B2318;
+    --ember:#E8B87A;           /* a candeia — §80, valor 9               */
+    --ember-wash:#2E2417;
+    --leaf:#A6C863;  --leaf-wash:#222A16;
+    --petrol:#89BFD8; --petrol-wash:#17262E;
+    --rot:#B99BCB;   --rot-wash:#241C2B;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14140F; --surface:#241F17; --surface-2:#33291C; --sunk:#1B1710;
+  --ink:#F2E6CC; --ink-2:#CDBB98; --muted:#948468;
+  --line:#3D3222; --line-soft:#2B2318;
+  --ember:#E8B87A; --ember-wash:#2E2417;
+  --leaf:#A6C863;  --leaf-wash:#222A16;
+  --petrol:#89BFD8; --petrol-wash:#17262E;
+  --rot:#B99BCB;   --rot-wash:#241C2B;
+}
+
+/* ═══ 9b · O GLOSSÁRIO NÃO É UM ERRO ORTOGRÁFICO ══════════════════════
+   Um tracejado cor de brasa por baixo de uma palavra é exactamente o que
+   um corretor ortográfico desenha quando acha que ela está errada — e a
+   primeira leitura de «A Podridão» sublinhada a tracejado é «isto está
+   mal escrito», não «isto tem uma definição». Passa a ser um pontilhado
+   discreto na cor do texto secundário, que só acende ao passar por cima. */
+button.x-termo{
+  border-bottom:1px dotted color-mix(in srgb,var(--muted) 70%,transparent);
+  text-underline-offset:3px;
+}
+button.x-termo:hover,button.x-termo:focus-visible{
+  border-bottom:1px solid var(--ember);color:var(--ember);
+}
+
+/* ═══ 10 · MOVIMENTO — o mínimo, e só onde diz alguma coisa ════════════ */
+@media (prefers-reduced-motion:no-preference){
+  main section>.sec-no{transition:color .2s ease}
+  .tw tbody tr{transition:background .12s ease}
+  nav.toc a{transition:background .12s ease,border-color .12s ease}
+}
+
+/* A âncora de 36px dentro de um `h6` estreito empurrava a caixa. Ela é
+   um gesto de secretária: só existe onde há rato E largura. */
+@media (max-width:1000px){ .x-anc{display:none} }
+
+/* ═══ 11 · O TELEMÓVEL, OUTRA VEZ ══════════════════════════════════════
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ UMA CAMADA QUE VEM DEPOIS ANULA AS MEDIA QUERIES DE QUEM VEIO ANTES  │
+   │                                                                     │
+   │ `.shell{grid-template-columns:248px minmax(0,1fr)}` tem a mesma      │
+   │ especificidade que o `@media (max-width:960px){.shell{...:1fr}}` do  │
+   │ autor — e vem depois na folha. Resultado: a 360px o documento        │
+   │ continuava a reservar 248 pixéis para uma coluna que já tinha sido   │
+   │ movida para a folha inferior, e o conteúdo ficava com vinte. O       │
+   │ portão contou 103 caixas a transbordar e a página a rolar de lado.   │
+   │                                                                     │
+   │ Não deu erro nenhum. A 1400px estava tudo bem.                       │
+   │                                                                     │
+   │ Quem acrescenta uma camada herda as media queries de baixo: têm de   │
+   │ ser repostas, não assumidas.                                        │
+   └─────────────────────────────────────────────────────────────────────┘ */
+@media (max-width:960px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  main{max-width:none;padding-block:8px 0}
+  .part{padding-top:56px}
+}
+@media (max-width:520px){
+  .wrap{padding-inline:16px}
+  h3{font-size:clamp(25px,7vw,31px);max-width:none}
+  .lede{font-size:18px}
+  h4{font-size:20px;margin:30px 0 12px}
+  .mast{padding-block:34px 0}
+  .mast h1{font-size:clamp(46px,15vw,70px)}
+  .note,.lantern,#retomada,#x-como{padding-inline:16px}
+  .tw tbody td,.tw thead th{padding:9px 11px}
+  .cell{padding:15px 16px}
+}
+
+/* As grelhas de células empilham antes de espremer: `minmax(210px,1fr)`
+   com três colunas dava 148px de célula a 360 e o conteúdo saía por fora. */
+@media (max-width:700px){
+  .grid,.g2,.g3,.two{grid-template-columns:minmax(0,1fr)!important}
+  .kv{grid-template-columns:minmax(0,1fr)}
+  .kv dt,.kv>div:nth-child(odd){padding-bottom:2px;border-bottom:0}
+  .kv dd,.kv>div:nth-child(even){padding-top:0}
+}
+
+/* O piso tipográfico vale também para o que esta camada acrescentou. */
+@media (max-width:700px){
+  .x-cartao .x-k,.x-estado,.note .lbl,#retomada .lbl,
+  .part-no,main section>.sec-no,.tw thead th{font-size:12px!important}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   REFINO — o documento deixa de ser uma grelha de caixas
+   ---------------------------------------------------------------------
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ «ESTÁ TUDO EXTREMAMENTE QUADRADO»                                    │
+   │                                                                     │
+   │ E estava. Havia UM raio (3px) e UMA forma de delimitar (um traço de  │
+   │ um pixel), aplicados a tudo: às 122 tabelas, às 149 caixas, aos      │
+   │ cartões, aos campos, às fichas, aos botões. Quando cada superfície   │
+   │ tem a mesma aresta e o mesmo peso, a página não tem hierarquia —     │
+   │ tem uma grelha de arame. Lê-se como um wireframe que ninguém acabou. │
+   │                                                                     │
+   │ A regra do design system do Recibo Certo é literal sobre isto:       │
+   │ «nem tudo é um cartão. Borda, preenchimento, raio e sombra dizem     │
+   │ cada um "objeto separado" — gastam-se POR PAPEL, levantando o que    │
+   │ precisa de ser levantado, em vez de um raio e uma sombra carimbados  │
+   │ em todos os blocos, o que achata a hierarquia.»                      │
+   │                                                                     │
+   │ Passa a haver uma ESCALA de raio e uma escala de elevação, e cada    │
+   │ superfície escolhe o degrau que o seu papel justifica:               │
+   │                                                                     │
+   │   nível 0   o papel — sem aresta nenhuma                             │
+   │   nível 1   o que se apoia (tabela, cartão): degrau de fundo + véu   │
+   │   nível 2   o que interrompe (caixa de decisão): cor + raio maior    │
+   │   nível 3   o que flutua (pesquisa, dicas): sombra a sério           │
+   │                                                                     │
+   │ E o pixel deixa de ser o esqueleto para passar a ser o sotaque: a    │
+   │ Silkscreen fica nos rótulos de dez pixéis, onde a sua rudeza é       │
+   │ intencional, e sai de tudo o que é grande.                           │
+   └─────────────────────────────────────────────────────────────────────┘ */
+
+:root{
+  --r-xs:6px;      /* fichas, selos, código em linha */
+  --r-sm:10px;     /* campos, botões               */
+  --r-md:14px;     /* cartões, células, tabelas    */
+  --r-lg:20px;     /* caixas de decisão, painéis   */
+  --r-xl:26px;     /* folhas e superfícies grandes */
+
+  /* Sombras QUENTES: a tinta do documento é #14140F, não preto. Uma
+     sombra cinzenta por cima de estuque lê-se suja. */
+  --e1:0 1px 2px rgba(20,20,15,.05), 0 1px 1px rgba(20,20,15,.03);
+  --e2:0 1px 2px rgba(20,20,15,.05), 0 6px 16px -10px rgba(20,20,15,.18);
+  --e3:0 2px 4px rgba(20,20,15,.06), 0 14px 32px -14px rgba(20,20,15,.26);
+  --e4:0 4px 8px rgba(20,20,15,.07), 0 28px 60px -24px rgba(20,20,15,.34);
+
+  /* Um traço que se vê sem gritar. Substitui `1px solid var(--line)` em
+     tudo o que é interior — as arestas exteriores ficam para a sombra. */
+  --fio:1px solid color-mix(in srgb, var(--line) 68%, transparent);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --e1:0 1px 2px rgba(0,0,0,.4);
+    --e2:0 1px 2px rgba(0,0,0,.45), 0 6px 16px -10px rgba(0,0,0,.7);
+    --e3:0 2px 4px rgba(0,0,0,.5), 0 14px 32px -14px rgba(0,0,0,.8);
+    --e4:0 4px 8px rgba(0,0,0,.55), 0 28px 60px -24px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --e1:0 1px 2px rgba(0,0,0,.4);
+  --e2:0 1px 2px rgba(0,0,0,.45), 0 6px 16px -10px rgba(0,0,0,.7);
+  --e3:0 2px 4px rgba(0,0,0,.5), 0 14px 32px -14px rgba(0,0,0,.8);
+  --e4:0 4px 8px rgba(0,0,0,.55), 0 28px 60px -24px rgba(0,0,0,.9);
+}
+
+/* ─── O marco: a Silkscreen a 21px era um carimbo, não um numeral ─────
+   Uma fonte de pixéis desenhada para dez pixéis, ampliada para vinte e
+   um, mostra a escada de cada diagonal e abre buracos entre algarismos
+   («6 9», «7 0»). Passa a ser a face de display do documento, em peso
+   leve — um numeral de margem de livro de arte. */
+main section>.x-marco{
+  font-family:var(--f-display);
+  font-variation-settings:'SOFT' 0,'WONK' 0,'opsz' 48;
+  font-weight:400;font-size:34px;line-height:.9;
+  letter-spacing:-.03em;
+  color:color-mix(in srgb, var(--muted) 78%, transparent);
+  padding-top:0;
+}
+:root{--calha:66px}
+
+/* ─── Nível 1 · o que se apoia ────────────────────────────────────── */
+
+.tw{
+  border:0;border-radius:var(--r-md);
+  background:var(--surface);
+  box-shadow:var(--e2);
+  overflow:hidden;margin:28px 0;
+}
+.tw thead th{
+  background:color-mix(in srgb, var(--sunk) 70%, var(--surface));
+  border-bottom:var(--fio);
+  padding:13px 18px;
+  letter-spacing:.14em;
+}
+.tw tbody td{padding:14px 18px;border-bottom:var(--fio);font-size:15.5px}
+.tw tbody tr:last-child td{border-bottom:0}
+.tw tbody tr:nth-child(even){background:color-mix(in srgb, var(--sunk) 46%, transparent)}
+.tw tbody tr:hover{background:color-mix(in srgb, var(--petrol) 8%, transparent)}
+
+.cell{
+  border:0;border-radius:var(--r-md);
+  background:var(--surface);
+  box-shadow:var(--e2);
+  padding:22px 24px;
+}
+.grid{gap:16px}
+
+.x-cartoes{
+  gap:14px;background:none;border:0;border-radius:0;overflow:visible;
+}
+.x-cartao{
+  border:0;border-radius:var(--r-md);
+  background:var(--surface);box-shadow:var(--e2);
+  padding:20px 22px 18px;
+}
+.x-cartao .x-meta{border-top:var(--fio);padding-top:11px;margin-top:12px}
+
+pre{
+  border:0;border-radius:var(--r-md);
+  /* Longhand, pela mesma razão da regra acima. */
+  background-color:var(--sunk);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--line) 55%,transparent);
+  padding:22px 24px;margin:26px 0;
+}
+code{
+  border:0;border-radius:var(--r-xs);
+  background:color-mix(in srgb, var(--surface-2) 62%, transparent);
+  padding:2px 6px;
+}
+pre code{background:none;padding:0}
+
+.chips{
+  border:0;border-radius:var(--r-md);
+  background:var(--surface);box-shadow:var(--e2);
+  overflow:hidden;
+}
+.chip{border-top:var(--fio);padding:11px 18px;min-height:36px}
+.mast .chip{border-right:var(--fio)}
+.chip.on::before,.chip.new::before{border-radius:50%;width:6px;height:6px}
+
+.x-inv-lista{
+  border:0;border-radius:var(--r-md);
+  background:var(--surface);box-shadow:var(--e2);overflow:hidden;
+}
+.x-inv-lista li{border-bottom:var(--fio);padding:14px 18px}
+.x-inv-m a.x-ref{border:var(--fio);border-radius:999px;padding:0 12px}
+
+/* ─── Nível 2 · o que interrompe ──────────────────────────────────── */
+
+/* A caixa deixa de ter um espigão de três pixéis à esquerda. A cor
+   entra pelo fundo e por um ponto ao lado do rótulo — mais calmo, e a
+   forma arredondada afasta-a do resto da página sem a cercar. */
+.note{
+  border:0;border-left:0;border-radius:var(--r-lg);
+  background:var(--surface);box-shadow:var(--e1);
+  padding:24px 28px 10px;margin:30px 0;
+}
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ `display:flex` NUM RÓTULO BLOCKIFICA AS PALAVRAS QUE ELE CONTÉM    │
+   │                                                                   │
+   │ O ponto de cor ficou mais simples de alinhar com um contentor      │
+   │ flex — e com isso cada `<a>` e cada termo de glossário DENTRO do   │
+   │ rótulo passou a ser um item de flex, ou seja `display:block`. Uma  │
+   │ referência «§39» no meio de uma frase deixou de ser uma palavra    │
+   │ numa frase e passou a ser uma caixa de 27×18 — e o portão, que     │
+   │ isenta alvos em texto corrido justamente por serem palavras,       │
+   │ passou a acusá-los, com razão.                                    │
+   │                                                                   │
+   │ O ponto é um `inline-block` dentro de um rótulo que continua a ser │
+   │ um bloco de texto. Alinha igual; não reescreve o que tem dentro.   │
+   └───────────────────────────────────────────────────────────────────┘ */
+.note .lbl{display:block;margin-bottom:13px}
+.note .lbl::before{
+  content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
+  margin-right:9px;vertical-align:1px;background:var(--muted);
+}
+.note.dec{background:var(--petrol-wash);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--petrol) 22%,transparent)}
+.note.dec .lbl::before{background:var(--petrol)}
+.note.risk{background:var(--ember-wash);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ember) 26%,transparent)}
+.note.risk .lbl::before{background:var(--ember)}
+
+.lantern{
+  border:0;border-radius:var(--r-lg);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ember) 34%,transparent), var(--e2);
+  padding:26px 28px 12px;
+}
+.lantern .lbl{display:block}
+.lantern .lbl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:9px;vertical-align:1px;background:var(--ember)}
+
+#retomada{
+  border:0;border-radius:var(--r-lg);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ember) 30%,transparent), var(--e2);
+  padding:26px 30px 12px;
+}
+#retomada .lbl{display:block}
+#retomada .lbl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:9px;vertical-align:1px;background:var(--ember)}
+#x-como{
+  border:0;border-radius:var(--r-lg);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--petrol) 26%,transparent);
+  padding:24px 30px 10px;
+}
+#x-como .lbl{display:block}
+#x-como .lbl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:9px;vertical-align:1px;background:var(--petrol)}
+
+.chapline{
+  border-left:0;border-radius:var(--r-md);
+  background:var(--surface);box-shadow:var(--e1);
+  padding:20px 24px;
+  border-top:3px solid color-mix(in srgb,var(--rot) 70%,transparent);
+}
+
+/* ─── Nível 3 · o que flutua ──────────────────────────────────────── */
+
+.x-campo,.x-inv-busca{
+  border:var(--fio);border-radius:999px;
+  background:var(--surface);box-shadow:var(--e1);
+  padding-inline:16px;
+}
+.x-campo:focus-within,.x-inv-busca:focus-within{
+  border-color:color-mix(in srgb,var(--petrol) 60%,transparent);
+  box-shadow:var(--e1), 0 0 0 3px color-mix(in srgb,var(--petrol) 16%,transparent);
+}
+.x-kbd{border-radius:var(--r-xs);border:var(--fio);padding:2px 7px}
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ O PAINEL DE RESULTADOS PASSAVA POR BAIXO DOS NÚMEROS DAS SECÇÕES   │
+   │                                                                   │
+   │ `.x-res` era `position:static` e `z-index:auto`. O marco de cada   │
+   │ secção é `position:sticky` — e um elemento posicionado pinta por   │
+   │ cima de um estático, independentemente da ordem no documento. O    │
+   │ resultado: o «70» da §70 aparecia por cima da lista de resultados. │
+   └───────────────────────────────────────────────────────────────────┘ */
+.x-res{
+  position:relative;z-index:60;
+  border:0;border-radius:var(--r-md);
+  background:var(--surface);box-shadow:var(--e4);
+  overflow:hidden;
+}
+.x-res>*{position:relative}
+.x-res-cab{background:color-mix(in srgb,var(--sunk) 70%,var(--surface));border-bottom:var(--fio);padding:11px 16px}
+.x-filtros,.x-recentes{padding:11px 16px;border-bottom:var(--fio)}
+.x-filtro,.x-chip-btn{border:var(--fio);border-radius:999px;padding:0 13px;min-height:32px}
+.x-filtro[aria-pressed="true"]{box-shadow:var(--e1)}
+.x-grupo{padding:15px 16px 6px}
+.x-item{padding:11px 16px;border-left:0;border-radius:0}
+.x-item[aria-selected="true"]{
+  background:color-mix(in srgb,var(--petrol) 10%,transparent);
+  box-shadow:inset 3px 0 0 var(--petrol);
+}
+.x-item-t em{
+  background:color-mix(in srgb,var(--ember) 26%,transparent);
+  border-radius:3px;padding:0 2px;font-style:normal;
+}
+.x-coroa{
+  background:linear-gradient(180deg,var(--petrol-wash),transparent);
+  border-bottom:var(--fio);padding:13px 16px 11px;
+}
+.x-coroa .x-item{padding-inline:0}
+.x-vazio{padding:20px 16px}
+
+.x-tip,.x-peek,.x-dica{border-radius:var(--r-sm);box-shadow:var(--e4);border:0}
+.x-peek{padding:14px 16px}
+.x-dica{padding:11px 14px}
+.x-tab-toggle{border:var(--fio);border-radius:999px;padding:0 15px;box-shadow:var(--e1)}
+.x-tab-toggle:hover{box-shadow:var(--e2)}
+.x-voltar{border-radius:999px;box-shadow:var(--e3);padding:0 18px}
+.x-estado{border-radius:999px;padding:3px 10px}
+.tag,.ph{border-radius:999px;padding:3px 10px}
+
+/* ─── O índice ────────────────────────────────────────────────────
+   Este bloco fazia do índice uma coluna de PASTILHAS: cada item com
+   raio, e o activo com preenchimento de ember e anel por dentro. Anulava
+   — no mesmo ficheiro, 480 linhas abaixo — a calha e a densidade
+   definidas na secção 7, e era ele que produzia a mancha lavada que se
+   via no activo.
+
+   É o achado A-2 da auditoria em ponto pequeno: uma camada minha a
+   contradizer outra camada minha, e a última a ganhar sem ninguém
+   decidir isso. A correcção é tirar a contradição, não acrescentar uma
+   terceira regra por cima — a definição do item vive na secção 7 e
+   passa a haver uma só. */
+nav.toc .x-grp-btn{border-radius:0}
+nav.toc .x-sub{border-left:var(--fio)}
+nav.toc .x-sub a{border-radius:var(--r-xs)}
+nav.toc .x-sub a.cur{background:none;box-shadow:none}
+nav.toc .x-sub a.cur::before{border-radius:50%}
+
+/* ─── Chrome: barra de contexto, dock e folha ─────────────────────── */
+.x-ctx{border-bottom:var(--fio)}
+.x-ctx-nav a{border:var(--fio);border-radius:999px;min-width:38px}
+.x-dock{border-top:var(--fio)}
+.x-dock button{border-radius:var(--r-sm)}
+.x-folha{border-radius:var(--r-xl) var(--r-xl) 0 0;border-top:0;box-shadow:var(--e4)}
+.x-folha-cab{border-bottom:var(--fio)}
+.x-folha-cab button{border:var(--fio);border-radius:999px}
+.x-ajuda-cx{border:0;border-radius:var(--r-lg);box-shadow:var(--e4)}
+.x-ajuda-cab{border-bottom:var(--fio)}
+.x-ajuda-cab button{border:var(--fio);border-radius:999px}
+.x-ajuda-corpo kbd{border-radius:var(--r-xs);border:var(--fio);border-bottom-width:2px}
+.x-salto{border-radius:0 0 var(--r-sm) 0}
+
+/* ─── Figuras e calhas ────────────────────────────────────────────── */
+figure.x-fig{margin:28px 0}
+/* Uma figura do autor não é recortada: parte do desenho vive FORA do
+   `viewBox` de propósito (o ▸ da Podridão, na §05). */
+.x-calha{padding-block:2px;border-radius:var(--r-md)}
+.x-calha>svg{overflow:visible}
+figure.x-fig svg{overflow:visible}
+figure.x-fig figcaption{border-left:0;padding-left:0;color:var(--muted)}
+.x-fig-linha{border:0;border-radius:var(--r-sm);box-shadow:var(--e1)}
+.x-tabela-vista{border-radius:var(--r-md);overflow:hidden}
+
+/* ─── Ar ──────────────────────────────────────────────────────────── */
+main section{padding-block:72px 16px}
+.lede{margin-bottom:34px}
+h4{margin:46px 0 16px;padding-top:18px;border-top:var(--fio)}
+.kv{border-top:0;gap:0}
+.kv dt,.kv>div:nth-child(odd){border-bottom:var(--fio);padding:12px 20px 12px 0}
+.kv dd,.kv>div:nth-child(even){border-bottom:var(--fio);padding:12px 0}
+
+/* ─── Movimento: um levantar, não um salto ────────────────────────── */
+@media (prefers-reduced-motion:no-preference){
+  .cell,.x-cartao,.x-inv-lista li,.tw{transition:box-shadow .18s cubic-bezier(.16,1,.3,1)}
+  .cell:hover,.x-cartao:hover{box-shadow:var(--e3)}
+  .x-filtro,.x-chip-btn,.x-tab-toggle,nav.toc a{transition:background .14s ease,box-shadow .14s ease,color .14s ease}
+}
+
+/* ─── O piso tipográfico não pode reescrever o desenho do autor ─────
+   `svg text{font-size:12px}` no telemóvel apanhava também os SVG do
+   dossiê — os rótulos do ciclo do dia saltavam de 9,5 para 12 dentro de
+   um `viewBox` desenhado para 9,5, e as palavras montavam-se umas nas
+   outras. As minhas figuras redesenham-se à largura real e já nascem a
+   12; as do autor são ampliadas pela calha até lá chegarem. */
+@media (max-width:700px){
+  svg text{font-size:inherit}
+  figure.x-fig svg text{font-size:12px}
+  .note{padding:20px 20px 8px;border-radius:var(--r-md)}
+  .lantern,#retomada,#x-como{padding:20px 20px 8px;border-radius:var(--r-md)}
+  .cell,.x-cartao{padding:17px 18px}
+  .tw tbody td,.tw thead th{padding:11px 13px}
+  main section{padding-block:48px 10px}
+}
+
+/* ═══ CORREÇÕES MEDIDAS AO REFINO ══════════════════════════════════════ */
+
+/* ┌───────────────────────────────────────────────────────────────────┐
+   │ `position:sticky` CRIA UM CONTEXTO DE EMPILHAMENTO                 │
+   │                                                                   │
+   │ O `z-index:60` que pus no painel de resultados não servia de nada: │
+   │ o painel vive dentro de `.x-lado`, que é pegajoso — e um elemento  │
+   │ pegajoso cria um contexto de empilhamento PRÓPRIO. Tudo o que está │
+   │ lá dentro fica preso nele, por mais alto que suba.                 │
+   │                                                                   │
+   │ Do lado de fora, `.x-lado` e os marcos das secções (também         │
+   │ pegajosos) são irmãos com `z-index:auto` — e quem pinta por cima é │
+   │ quem vem depois no documento. O `main` vem depois da coluna.       │
+   │ Resultado: o «70» da §70 aparecia por cima da lista de resultados. │
+   │                                                                   │
+   │ A camada que se levanta é a COLUNA, não o painel. Abaixo da barra  │
+   │ de contexto (55), acima de tudo o que é texto.                     │
+   └───────────────────────────────────────────────────────────────────┘ */
+.x-lado{z-index:40}
+main section>.x-marco{z-index:1}
+
+/* `overflow:hidden` deu-me cantos redondos e tirou a rolagem: a lista
+   de catorze resultados ficava cortada no oitavo, sem forma de chegar
+   aos outros. Recorta em X, rola em Y. */
+.x-res{overflow-x:hidden;overflow-y:auto}
+
+/* Mirar no piso deixa o arredondamento a decidir: 11,92 reprova tanto
+   como 9. O eixo dos gráficos mira meio pixel acima dele. */
+.x-eixo{font-size:12.5px}
+@media (max-width:700px){ .x-eixo{font-size:12.5px!important} }
+
+/* A lista cortava-se a meio de um resultado, sem nada a dizer que havia
+   mais. Uma máscara de oito pixéis no fundo diz «continua» sem pedir
+   uma barra de rolagem nem um botão. */
+.x-res{
+  max-height:min(66vh,560px);
+  mask-image:linear-gradient(to bottom, #000 calc(100% - 18px), transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 calc(100% - 18px), transparent 100%);
+}
+@media (max-width:960px){
+  .x-folha-corpo .x-res{mask-image:none;-webkit-mask-image:none;max-height:none}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   AS TREZE PARTES — trocar de forma, não embrulhar
+   ---------------------------------------------------------------------
+   A primeira versão punha o cabeçalho do autor — que já é um cartão
+   completo, com régua, título e frase — dentro de um SEGUNDO cartão de
+   202px. Dois títulos e duas bordas para a mesma coisa, treze vezes
+   seguidas. É o que o `SeccaoRevelavel` do Preço diz, com todas as
+   letras, para não se fazer.
+
+   Aqui a forma TROCA:
+
+       fechada  →  uma linha, com o nome e um resumo vivo
+       aberta   →  o cabeçalho do autor, exactamente como sempre foi
+
+   Quando abre, a linha desaparece e o título do próprio cabeçalho
+   ocupa-lhe o lugar. A leitura é contínua e não há duplicação.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+details.x-parte{margin:0 0 8px;padding:0;border:0}
+details.x-parte[open]{margin-block-end:0}
+
+.x-parte-cab{list-style:none;cursor:pointer;display:block}
+.x-parte-cab::-webkit-details-marker{display:none}
+.x-parte-cab::marker{content:""}
+.x-parte-cab:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:var(--r-md)}
+
+/* Aberta: a linha sai, o cabeçalho do autor fica intacto. */
+details.x-parte[open] .x-parte-linha{display:none}
+details.x-parte:not([open]) .part{display:none}
+.x-parte-cab>.part{margin-block-end:0;cursor:auto}
+
+/* ─── A linha fechada ─────────────────────────────────────────────── */
+.x-parte-linha{
+  display:grid;grid-template-columns:1fr auto;
+  gap:3px 14px;align-items:start;
+  min-block-size:var(--x-alvo);
+  padding:13px 15px;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface);
+  transition:border-color .16s ease,background .16s ease;
+}
+.x-parte-cab:hover .x-parte-linha{border-color:var(--ember);background:var(--surface-2)}
+
+.x-parte-id{
+  grid-column:1;
+  font-family:var(--f-px);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ember);
+}
+.x-parte-t{
+  grid-column:1;
+  font-family:var(--f-display);font-size:19px;line-height:1.2;
+  color:var(--ink);letter-spacing:-.01em;
+}
+/* O resumo é o que faz a densidade descer de verdade: sem ele, fechar
+   treze partes só troca treze blocos de texto por treze decisões de
+   «abro ou não abro?». Com ele, muita gente sabe aqui que não é ali que
+   quer estar — e não abre. */
+.x-parte-r{
+  grid-column:1;margin-block-start:3px;
+  font-size:13px;line-height:1.45;color:var(--muted);
+  /* Uma medida, como qualquer outro texto corrido. Sem ela o resumo
+     corria os 1 280px e duas linhas passavam a ser duzentos caracteres —
+     que é uma parede, não um resumo. */
+  max-inline-size:82ch;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.x-parte-e{
+  grid-column:1;margin-block-start:8px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  font-family:var(--f-mono);font-size:12px;color:var(--muted);
+}
+.x-parte-faixa{
+  inline-size:96px;block-size:3px;border-radius:999px;
+  background:var(--line);overflow:hidden;display:block;flex:0 0 auto;
+}
+/* Uma barra a zero não é informação — é um traço solto ao lado de «por
+   ler», que já diz a mesma coisa por extenso. Só aparece quando tem o
+   que mostrar. */
+details.x-parte[data-lidas="nenhuma"] .x-parte-faixa{display:none}
+.x-parte-faixa i{display:block;block-size:100%;inline-size:0;background:var(--leaf);border-radius:999px;transition:inline-size .3s ease}
+.x-parte-lidas{font-variant-numeric:tabular-nums}
+details.x-parte[data-lidas="todas"] .x-parte-lidas{color:var(--leaf)}
+.x-parte-seta{
+  grid-column:2;grid-row:1/-1;align-self:center;
+  color:var(--muted);display:flex;
+}
+.x-parte-cab:hover .x-parte-seta{color:var(--ember)}
+
+/* ─── Recolher: acção secundária, no fim ──────────────────────────── */
+.x-parte-recolher{
+  display:inline-flex;align-items:center;gap:6px;
+  min-block-size:36px;padding:0 10px;margin:6px 0 26px;
+  font-family:var(--f-mono);font-size:12px;
+  background:none;border:0;color:var(--muted);cursor:pointer;
+  border-radius:var(--r-xs);
+}
+.x-parte-recolher:hover{color:var(--ember);text-decoration:underline;text-underline-offset:3px}
+.x-parte-recolher:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+
+.x-parte-corpo{display:block;contain:layout}
+
+@media (prefers-reduced-motion:reduce){
+  .x-parte-linha,.x-parte-faixa i{transition:none}
+}
+@media print{
+  .x-parte-linha,.x-parte-recolher{display:none!important}
+  details.x-parte .part{display:block!important}
+}
+
+/* O piso de toque vive AQUI e não em `ux.css`, e a razão é cascata pura:
+   `design.css` carrega depois, portanto a regra base de 28px ganhava a
+   qualquer `@media` escrito lá — media queries não acrescentam
+   especificidade. */
+@media (max-width:960px){ nav.toc .x-grp-btn{min-height:var(--x-alvo)} }
+
+/* As duas acções do fim de uma parte. Secundárias as duas: quem chegou
+   aqui já leu, e o que vem a seguir é decidir o que fazer com o que leu. */
+.x-parte-accoes{
+  display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;
+  margin:10px 0 26px;
+}
+.x-parte-accoes .x-parte-recolher{margin:0}
+.x-parte-recortar{
+  display:inline-flex;align-items:center;gap:6px;
+  min-block-size:36px;padding:0 12px;
+  font-family:var(--f-mono);font-size:12px;
+  background:none;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;cursor:pointer;
+}
+.x-parte-recortar:hover{color:var(--ember);border-color:var(--ember)}
+.x-parte-recortar[aria-pressed="true"]{color:var(--ember);border-color:var(--ember);background:var(--sunk)}
+.x-parte-recortar:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+
+/* Um item do recorte é um destino, por isso é um botão. */
+.x-rec-i{
+  flex:1 1 auto;min-inline-size:0;text-align:start;
+  display:flex;gap:8px;align-items:baseline;
+  background:none;border:0;padding:6px 0;cursor:pointer;
+  font:inherit;font-size:13px;line-height:1.4;color:var(--ink-2);
+  border-radius:var(--r-xs);
+}
+.x-rec-i:hover{color:var(--ember)}
+.x-rec-i:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.x-rec-i-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

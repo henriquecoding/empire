@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="WallData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wall_data.gd" id="1_42yt1"]
+
+[resource]
+script = ExtResource("1_42yt1")
+id = &"bastion"
+display_key = "WALL_BASTION"
+level = 5
+cost = 65
+max_health_b = 900
+guard_posts_a = 9
+contact_slots = 7
+material_by_people = {
+&"enramados": &"bastion",
+&"fenda": &"bastion",
+&"fornalha": &"bastion",
+&"horta": &"bastion",
+&"portuarios": &"bastion"
+}
+max_health_a = 450
+guard_posts_b = 3
+unique_per_kingdom = true
+shadow_width = 64

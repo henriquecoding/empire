@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ParallaxLayerData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/parallax_layer_data.gd" id="1_4xrui"]
+
+[resource]
+script = ExtResource("1_4xrui")
+id = &"open_1"
+layer = 1
+node_name = &"SkyLayer"
+z_index = -60
+motion_scale = 0.03125
+saturation_delta = -0.35
+value_delta = 0.2
+hue_shift_deg = 20.0
+colors_per_16px = Vector2i(13, 18)

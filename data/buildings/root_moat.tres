@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_3k7co"]
+
+[resource]
+script = ExtResource("1_3k7co")
+id = &"root_moat"
+display_key = "BUILDING_ROOT_MOAT"
+category = &"defense"
+cost = 22
+max_health = 176
+build_work = 44.0
+width_px = 96
+effect_params = {
+&"root_seconds": 3.0
+}
+shadow_width = 96

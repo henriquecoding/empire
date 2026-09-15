@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_jrsxy"]
+
+[resource]
+script = ExtResource("1_jrsxy")
+id = &"mercenary"
+display_key = "UNIT_MERCENARY"
+max_health = 34
+damage = 11
+attack_interval = 1.0
+accuracy_open = 1.0
+range_px = 30
+recruit_cost = 18
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"melee", &"mercenary"])
+job_affinity = {
+&"guard": 1.0,
+&"wall": 1.0
+}
+coin_capacity = 5
+weapon_kind = &"sword"
+head_pool = Array[StringName]([&"helmet_horned", &"scarf"])

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_3tesr"]
+
+[resource]
+script = ExtResource("1_3tesr")
+id = &"consecrated_altar"
+display_key = "BUILDING_CONSECRATED_ALTAR"
+category = &"defense"
+cost = 55
+max_health = 440
+build_work = 110.0
+width_px = 96
+effect_params = {
+&"radius": 320.0,
+&"rot_slow": 0.4
+}
+shadow_width = 96

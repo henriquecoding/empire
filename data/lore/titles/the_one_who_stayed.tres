@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TitleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/title_data.gd" id="1_qu60o"]
+
+[resource]
+script = ExtResource("1_qu60o")
+id = &"the_one_who_stayed"
+display_key = "TITLE_THE_ONE_WHO_STAYED"
+feat_key = "FEAT_THE_ONE_WHO_STAYED"
+condition_kind = &"nights_in_siege_post"
+condition_value = 5.0
+grant_kind = &"max_health"
+grant_value = 1.0
+ribbon_color = "#C9A227"

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ImpulseData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/impulse_data.gd" id="1_5s7a7"]
+
+[resource]
+script = ExtResource("1_5s7a7")
+id = &"vigil"
+display_key = "IMPULSE_VIGIL"
+icon = &"candle"
+coin_cost = 12
+benefit = &"no_flee_tonight"
+benefit_value = 1.0
+drawback = &"troop_health_mult_tomorrow"
+drawback_value = 0.7
+drawback_days = 1

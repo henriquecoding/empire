@@ -1,0 +1,4 @@
+id,display_key,rule,rule_params,heal_per_day,growth_stages,food,_phase,_src,_proposed,_notes
+sniffer,COMPANION_SNIFFER,reveal_cavities,radius:320,2,3,grain|fish,6,"§08 o companheiro do trono: fareja segredos, avisa da Podridão, recolhe moedas; cresce com o que come",rule_params|heal_per_day|growth_stages|food,"O Healing Frog (§01) é o primeiro candidato: cura pouco, todos os dias (§08 'a cura vem do companheiro')."
+herald,COMPANION_HERALD,warn_rot_side,seconds_before_dusk:30,2,3,grain|animal,6,"§08 o companheiro do trono: fareja segredos, avisa da Podridão, recolhe moedas; cresce com o que come",rule_params|heal_per_day|growth_stages|food,30 s antes do crepúsculo = a duração do próprio crepúsculo (§05).
+magpie,COMPANION_MAGPIE,collect_dropped_coins,radius:200,2,3,fish|animal,6,"§08 o companheiro do trono: fareja segredos, avisa da Podridão, recolhe moedas; cresce com o que come",rule_params|heal_per_day|growth_stages|food,

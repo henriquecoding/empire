@@ -1,0 +1,74 @@
+cue_id,event,file,priority,volume_db,pitch_variation,max_instances,distance_px,loop,bus,caption_key,phase,status,notes
+mus_ancient_forest_base,phase_changed,audio/music/mus_ancient_forest_base.ogg,10,-16 LUFS,0,1,—,yes,Music,,2,TODO,Toca sempre; os outros três stems entram por cima (§23).
+mus_ancient_forest_day,phase_changed,audio/music/mus_ancient_forest_day.ogg,10,-16 LUFS,0,1,—,yes,Music,,2,TODO,Sobe na manhã · meio-dia · tarde.
+mus_ancient_forest_tension,rot_moved,audio/music/mus_ancient_forest_tension.ogg,10,-16 LUFS,0,1,—,yes,Music,,2,TODO,Volume proporcional à distância da mancha: ouve-se antes de se ver (§23).
+mus_ancient_forest_night,night_started,audio/music/mus_ancient_forest_night.ogg,10,-16 LUFS,0,1,—,yes,Music,,2,TODO,
+stg_dawn_bell,dawn_broke,audio/stingers/stg_dawn_bell.ogg,10,0,0,1,—,no,Stingers,CAPTION_DAWN_BELL,1,TODO,O sinal mais importante do jogo: inconfundível (§23).
+stg_dusk_warning,dusk_fell,audio/stingers/stg_dusk_warning.ogg,10,0,0,1,—,no,Stingers,CAPTION_DUSK_WARNING,1,TODO,Reage-se sem olhar para o ecrã (§23).
+stg_night,night_started,audio/stingers/stg_night.ogg,9,-2,0,1,—,no,Stingers,CAPTION_NIGHT,1,TODO,
+sfx_rot_near,rot_moved,audio/sfx/sfx_rot_near.wav,9,-3,0,1,1600,no,SFX,CAPTION_ROT_NEAR,1,TODO,Uma vez quando a mancha entra na largura visível.
+sfx_rot_summon,rot_summoned,audio/sfx/sfx_rot_summon.wav,5,-6,0.08,3,1600,no,SFX,,1,TODO,
+sfx_rot_retreat,rot_retreated,audio/sfx/sfx_rot_retreat.wav,7,-4,0,1,—,no,SFX,,1,TODO,Com a dissolução ao amanhecer.
+sfx_coin_drop,coin_dropped,audio/sfx/sfx_coin_drop.wav,6,-6,0.08,8,640,no,SFX,,1,TODO,Acontece milhares de vezes: 4 variantes (§24).
+sfx_coin_collect,coin_collected,audio/sfx/sfx_coin_collect.wav,5,-8,0.08,6,640,no,SFX,,1,TODO,
+sfx_coin_spend,coin_spent,audio/sfx/sfx_coin_spend.wav,6,-6,0.08,4,640,no,SFX,,1,TODO,Moeda a entrar num slot de construção.
+sfx_step_grass,frame de walk (1 e 5),audio/sfx/sfx_step_grass.wav,1,-18,0.08,6,640,no,SFX,,1,TODO,Sem isto o mundo é mudo; com isto e sem limite é metralhadora.
+sfx_attack_bow,attack_launched,audio/sfx/sfx_attack_bow.wav,4,-9,0.08,8,1280,no,SFX,,1,TODO,No frame de ação (ANIMATION_BIBLE).
+sfx_arrow_hit,unit_damaged,audio/sfx/sfx_arrow_hit.wav,4,-9,0.08,8,1280,no,SFX,,1,TODO,
+sfx_attack_spear,attack_launched,audio/sfx/sfx_attack_spear.wav,4,-9,0.08,6,1280,no,SFX,,1,TODO,
+sfx_attack_sword,attack_launched,audio/sfx/sfx_attack_sword.wav,4,-9,0.08,6,1280,no,SFX,,2,TODO,
+sfx_attack_club,attack_launched,audio/sfx/sfx_attack_club.wav,4,-9,0.08,4,1280,no,SFX,,2,TODO,
+sfx_hit_flesh,unit_damaged,audio/sfx/sfx_hit_flesh.wav,4,-9,0.08,6,1280,no,SFX,,1,TODO,Com o flash de 80 ms.
+sfx_death_unit,unit_died,audio/sfx/sfx_death_unit.wav,7,-6,0.05,3,1600,no,SFX,,1,TODO,A morte é permanente: tem de doer (§04).
+sfx_death_creature,creature_died,audio/sfx/sfx_death_creature.wav,4,-9,0.08,4,1280,no,SFX,,1,TODO,
+sfx_king_hit,unit_damaged (monarca),audio/sfx/sfx_king_hit.wav,9,-3,0,1,—,no,SFX,CAPTION_KING_HIT,1,TODO,O rei em campo pode morrer (§07).
+sfx_build_hammer,build_progressed,audio/sfx/sfx_build_hammer.wav,3,-12,0.08,4,1280,no,SFX,,1,TODO,No frame de ação da tag build.
+sfx_build_complete,build_completed,audio/sfx/sfx_build_complete.wav,6,-6,0,2,1600,no,SFX,,1,TODO,
+sfx_building_damaged,building_damaged,audio/sfx/sfx_building_damaged.wav,5,-8,0.08,3,1600,no,SFX,,1,TODO,
+sfx_building_destroyed,building_destroyed,audio/sfx/sfx_building_destroyed.wav,8,-4,0,2,1600,no,SFX,,1,TODO,
+sfx_wall_upgrade,wall_upgraded,audio/sfx/sfx_wall_upgrade.wav,6,-6,0,1,1600,no,SFX,,1,TODO,
+sfx_wall_breached,wall_breached,audio/sfx/sfx_wall_breached.wav,10,0,0,1,—,no,SFX,CAPTION_WALL_BREACHED,1,TODO,Com o único tremor de ecrã (§24).
+sfx_ram_hit,attack_launched (aríete),audio/sfx/sfx_ram_hit.wav,8,-3,0.05,2,1600,no,SFX,,6,TODO,
+sfx_debt_tick,day_started (com dívida),audio/sfx/sfx_debt_tick.wav,8,-6,0,1,—,no,SFX,CAPTION_DEBT_DUE,6,TODO,
+sfx_secret_near,proximidade de segredo,audio/sfx/sfx_secret_near.wav,6,-9,0,1,640,no,SFX,CAPTION_SECRET_NEAR,3,TODO,O companheiro farejador (§08).
+sfx_cavity_reveal,cavity_revealed,audio/sfx/sfx_cavity_reveal.wav,8,-4,0,1,—,no,SFX,,3,TODO,O minuto 10:00 (§25).
+sfx_passage,passage_used,audio/sfx/sfx_passage.wav,3,-12,0.08,3,640,no,SFX,,3,TODO,
+sfx_recruit,unit_spawned · unit_promoted,audio/sfx/sfx_recruit.wav,5,-8,0.05,2,640,no,SFX,,1,TODO,O vagabundo ganha um chapéu (§25).
+sfx_work_farm,frame de work (plantação),audio/sfx/sfx_work_farm.wav,1,-18,0.08,3,640,no,SFX,,1,TODO,
+sfx_work_forge,frame de smith,audio/sfx/sfx_work_forge.wav,2,-14,0.08,2,640,no,SFX,,2,TODO,
+sfx_work_cook,frame de cook,audio/sfx/sfx_work_cook.wav,2,-14,0.08,2,640,no,SFX,,2,TODO,
+sfx_cart,material_produced · material_consumed,audio/sfx/sfx_cart.wav,1,-18,0.05,2,640,yes,SFX,,6,TODO,O trânsito das carroças é o HUD da economia (§06).
+sfx_fire_loop,build_completed (forja · forno),audio/sfx/sfx_fire_loop.wav,2,-16,0,3,640,yes,SFX,,2,TODO,
+sfx_barrel_explode,building_destroyed (barril),audio/sfx/sfx_barrel_explode.wav,8,-3,0,2,1600,no,SFX,,1,TODO,
+sfx_rabbit,morte de fauna,audio/sfx/sfx_rabbit.wav,2,-14,0.08,2,640,no,SFX,,1,TODO,
+sfx_boar_charge,ataque de javali,audio/sfx/sfx_boar_charge.wav,5,-8,0.05,1,1280,no,SFX,,2,TODO,
+sfx_impulse,royal_impulse_used,audio/sfx/sfx_impulse.wav,8,-4,0,1,—,no,SFX,,6,TODO,
+stg_conquest,fortress_conquered,audio/stingers/stg_conquest.ogg,10,0,0,1,—,no,Stingers,,2,TODO,
+stg_succession,succession_started,audio/stingers/stg_succession.ogg,10,0,0,1,—,no,Stingers,,6,TODO,
+stg_defeat,derrota,audio/stingers/stg_defeat.ogg,10,0,0,1,—,no,Stingers,,1,TODO,
+amb_ancient_forest_day,phase_changed,audio/ambience/amb_ancient_forest_day.ogg,3,-20,0,1,—,yes,Ambience,,2,TODO,
+amb_ancient_forest_night,night_started,audio/ambience/amb_ancient_forest_night.ogg,3,-20,0,1,—,yes,Ambience,,2,TODO,
+amb_underground,passage_used (para o subsolo),audio/ambience/amb_underground.ogg,3,-20,0,1,—,yes,Ambience,,3,TODO,Low-pass e reverb no subsolo.
+ui_move,foco muda,audio/ui/ui_move.wav,2,-18,0.03,1,—,no,UI,,4,TODO,
+ui_confirm,confirmar,audio/ui/ui_confirm.wav,3,-14,0,1,—,no,UI,,4,TODO,
+ui_back,voltar,audio/ui/ui_back.wav,3,-14,0,1,—,no,UI,,4,TODO,
+ui_wheel_open,roda do rei aberta,audio/ui/ui_wheel_open.wav,4,-12,0,1,—,no,UI,,2,TODO,
+ui_page,diário aberto,audio/ui/ui_page.wav,3,-14,0.05,1,—,no,UI,,3,TODO,
+mus_title,ecrã de título,audio/music/mus_title.ogg,10,-16 LUFS,0,1,—,yes,Music,,4,TODO,
+mus_encomendacao,dawn_naming,audio/music/mus_encomendacao.ogg,20,-14 LUFS,0,1,—,no,Music,CAPTION_ENCOMENDACAO,4,TODO,"Duas vozes, sem instrumentos, 8 s, na alvorada. Toca quando há nome novo (§76) ou Amargueiro novo (§74). A mesma melodia para as duas coisas: o jogo não distingue celebração de luto."
+mus_colheita_choir,colheita_tick,audio/music/mus_colheita_choir.ogg,12,-16 LUFS,0,1,—,yes,Music,CAPTION_COLHEITA,5,TODO,"Cantam enquanto trabalham, em modo menor e mais alto do que seria natural (§78). Uma voz por povo solto no coro noturno — zero vozes é silêncio, seis é polifonia a seis partes."
+mus_rot_motif,rot_moved,audio/music/mus_rot_motif.ogg,14,-18 LUFS,0,1,—,yes,Music,,3,TODO,Terceira menor com massa baixa; segunda menor quando a massa passa 400 (§81). Ouve-se quão má é a noite antes de se ver.
+sfx_offer_voice,offer_opened,audio/sfx/sfx_offer_voice.ogg,30,-12 LUFS,0,1,—,no,SFX,CAPTION_OFFER,3,TODO,"A música baixa e a candeia sobe meio segundo. Fala como quem já fez este negócio muitas vezes e não tem pressa; se soar a vilão, está errado (§75)."
+sfx_offer_plate,offer_expired,audio/sfx/sfx_offer_plate.ogg,20,-18 LUFS,"0,05",1,600,no,SFX,,3,TODO,"O prato afunda-se no chão. É o som de uma recusa, e não tem nada de dramático."
+sfx_amargueiro_root,amargueiro_rooted,audio/sfx/sfx_amargueiro_root.ogg,22,-14 LUFS,"0,05",4,800,no,SFX,CAPTION_AMARGUEIRO,2,TODO,"Madeira a crescer, na alvorada. Encadeia com a mus_encomendacao quando há árvore nova."
+sfx_amargueiro_saw,amargueiro_felled,audio/sfx/sfx_amargueiro_saw.ogg,18,-16 LUFS,"0,03",1,700,yes,SFX,,2,TODO,Doze segundos de serra. O tempo é o preço: é o que dá ao jogador a hipótese de mudar de ideias.
+amb_lantern,rot_spawned,audio/ambience/amb_lantern.ogg,10,-22 LUFS,0,1,dinâmica,yes,Ambience,,2,TODO,"O chiar de uma candeia a arder. É a pista de proximidade que o §26 exige, e coexiste com o visual (Q-044)."
+mus_chapter_stopped_pilgrimage,chapter_entered,audio/music/mus_chapter_stopped_pilgrimage.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Hino de marcha que nunca resolve: sobe três notas e volta sempre ao mesmo sítio. Loop perfeito, nunca cadencia."
+mus_chapter_house_that_counts,chapter_entered,audio/music/mus_chapter_house_that_counts.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Cantiga de contar que só sobe. Conta até dezassete e recomeça no doze."
+mus_chapter_inverted_floodplain,chapter_entered,audio/music/mus_chapter_inverted_floodplain.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Duas vozes, uma delas ao contrário."
+mus_chapter_blind_furrow,chapter_entered,audio/music/mus_chapter_blind_furrow.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Vozes sem corpo, à distância. Ouvem-se a trinta metros e nunca se chega lá."
+mus_chapter_lit_oven,chapter_entered,audio/music/mus_chapter_lit_oven.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Canção de trabalho, uma voz, muito lenta."
+mus_chapter_bone_market,chapter_entered,audio/music/mus_chapter_bone_market.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Pregão a três vozes."
+mus_chapter_spore_field,chapter_entered,audio/music/mus_chapter_spore_field.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Zumbido, e por baixo dele um coro."
+mus_chapter_bridge_of_returners,chapter_entered,audio/music/mus_chapter_bridge_of_returners.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Uma nota só, muito longa, de gaita."
+mus_chapter_endless_siege,chapter_entered,audio/music/mus_chapter_endless_siege.ogg,16,-16 LUFS,0,1,—,yes,Music,,5,TODO,"20 a 40 s, sem letra traduzível (§27, §77). Sinos, desafinados de propósito."

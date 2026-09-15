@@ -1,0 +1,6 @@
+id,sources,routes,troops,greed,expect_suffocation,_phase,_src,_proposed,_notes
+balanced,7,0,14,28,9|14,1,§06 simulador (valores por omissão) e alvo 9–14; §31 EconomyProfile.BALANCED,,O modelo da §06 dá o dia 11.
+two_routes,7,2,14,28,14|16,6,§06: 'põe as rotas a 2 e vê os quatro dias que a conquista te compra',expect_suffocation,O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta.
+everything_max,16,5,4,0,28|28,6,"§06: 'mesmo com tudo no máximo, a asfixia chega ao dia 28'; limites dos sliders da §06",,"Máximo favorável: 16 fontes, 5 rotas, 4 tropas (o mínimo do slider), ganância 0. O modelo dá 28."
+greed_20,7,0,14,20,0|0,1,§29 prompt 3: 'greed 80 antecipa a asfixia em pelo menos 3 dias face a greed 20',,"Teste relativo, sem alvo próprio. O modelo dá o dia 13."
+greed_80,7,0,14,80,0|0,1,§29 prompt 3,,O modelo dá o dia 1 — a ganância de tirano asfixia logo; 12 dias antes do greed_20.

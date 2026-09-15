@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_3gkl2"]
+
+[resource]
+script = ExtResource("1_3gkl2")
+id = &"monarch"
+display_key = "UNIT_MONARCH"
+max_health = 60
+damage = 3
+accuracy_open = 1.0
+range_px = 30
+recruit_cost = 0
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+scale_tier = 3
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 22
+tags = Array[StringName]([&"king", &"tank"])
+coin_capacity = 33
+weapon_kind = &"sword"
+head_pool = Array[StringName]([&"crown_crooked"])

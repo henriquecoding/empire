@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="JobData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/job_data.gd" id="1_c7iag"]
+
+[resource]
+script = ExtResource("1_c7iag")
+id = &"perform"
+display_key = "JOB_PERFORM"
+priority = 0.6
+urgency_by_phase = PackedFloat32Array(1, 1, 1, 1, 0.5, 0.5)

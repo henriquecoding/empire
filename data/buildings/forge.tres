@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_8m84s"]
+
+[resource]
+script = ExtResource("1_8m84s")
+id = &"forge"
+display_key = "BUILDING_FORGE"
+category = &"craft"
+cost = 12
+job_slots = 1
+craft = &"smith"
+max_health = 96
+build_work = 24.0
+width_px = 120
+shadow_width = 120
+tags = Array[StringName]([&"warm_light"])

@@ -1,0 +1,5 @@
+id,display_key,greed_range,elite_morale_mod,free_elite_every_days,impulse_cost_mult,enemy_wall_bias,enemy_elite_bias,enemy_attack_unit,enemy_attack_timing,_phase,_src,_proposed,_notes
+austere,GREED_AUSTERE,5|15,-0.1,0,1.0,1.4,0.6,root_berserker,any,6,"§15 tabela de ganância; §20 tiranos com greed > 0,65",enemy_wall_bias|enemy_elite_bias,"'Muralhas fortes, poucas elites. Ataca com Berserkers.'"
+balanced,GREED_BALANCED,20|35,0,0,1.0,1.0,1.0,,succession_window,6,"§15 tabela de ganância; §20 tiranos com greed > 0,65",,'Sem fraqueza óbvia. Ataca na janela de sucessão.'
+lavish,GREED_LAVISH,40|60,0,3,1.0,1.0,1.4,,any,6,"§15 tabela de ganância; §20 tiranos com greed > 0,65",enemy_elite_bias,Fastuoso: +1 tropa de elite grátis a cada 3 dias. Qual é a tropa de elite — Q-015.
+tyrant,GREED_TYRANT,65|90,0,0,0.5,0.5,1.5,counterweight_ram,fast_siege,6,"§15 tabela de ganância; §20 tiranos com greed > 0,65",enemy_wall_bias|enemy_elite_bias|enemy_attack_unit,"'Muralhas fracas, tropas de elite. Cerco rápido com aríete.' O 0,45 do §20 (fortify) está na EconomyCurve."

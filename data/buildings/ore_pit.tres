@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_hdn61"]
+
+[resource]
+script = ExtResource("1_hdn61")
+id = &"ore_pit"
+display_key = "BUILDING_ORE_PIT"
+cost = 12
+material = &"ore"
+yield_per_day = 4.0
+requires_biome_feature = &"rock"
+job_slots = 1
+max_health = 96
+build_work = 24.0
+width_px = 120
+shadow_width = 120
+tags = Array[StringName]([&"attracts_burrowers"])

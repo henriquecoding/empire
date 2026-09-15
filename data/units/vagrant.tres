@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_wmkm0"]
+
+[resource]
+script = ExtResource("1_wmkm0")
+id = &"vagrant"
+display_key = "UNIT_VAGRANT"
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])
+tags = Array[StringName]([&"worker"])
+job_affinity = {
+&"cart": 0.8,
+&"farm": 1.0,
+&"milking": 1.0
+}
+coin_capacity = 2
+head_pool = Array[StringName]([&"bare", &"hat_straw", &"hair_black", &"beard_red"])

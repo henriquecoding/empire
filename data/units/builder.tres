@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_i04eo"]
+
+[resource]
+script = ExtResource("1_i04eo")
+id = &"builder"
+display_key = "UNIT_BUILDER"
+max_health = 12
+recruit_cost = 12
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"craft", &"builder"])
+job_affinity = {
+&"build": 1.0,
+&"repair": 1.0
+}
+coin_capacity = 2
+trained_at = &"training_house"
+train_days = 1
+ability = &"builder_wall_bonus"
+ability_params = {
+&"armory_slots": 1.0,
+&"wall_defense": 0.08
+}
+weapon_kind = &"hammer"
+head_pool = Array[StringName]([&"hat_builder"])

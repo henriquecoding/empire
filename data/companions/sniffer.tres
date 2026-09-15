@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CompanionData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/companion_data.gd" id="1_okruh"]
+
+[resource]
+script = ExtResource("1_okruh")
+id = &"sniffer"
+display_key = "COMPANION_SNIFFER"
+rule = &"reveal_cavities"
+rule_params = {
+&"radius": 320.0
+}
+heal_per_day = 2.0
+growth_stages = 3
+food = Array[StringName]([&"grain", &"fish"])

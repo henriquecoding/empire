@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_y1j0p"]
+
+[resource]
+script = ExtResource("1_y1j0p")
+id = &"heir_house"
+display_key = "BUILDING_HEIR_HOUSE"
+category = &"special"
+cost = 20
+max_health = 160
+build_work = 40.0
+width_px = 120
+unique_per_kingdom = true
+shadow_width = 120

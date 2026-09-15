@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MountData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/mount_data.gd" id="1_a82c1"]
+
+[resource]
+script = ExtResource("1_a82c1")
+id = &"lizard"
+display_key = "MOUNT_LIZARD"
+speed_multiplier = 1.4
+can_change_band = true
+climbs_walls = true
+obtain = &"secret"
+obtain_ref = &"underground"
+heal_days = 2

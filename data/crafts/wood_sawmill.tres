@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CraftData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/craft_data.gd" id="1_jgks5"]
+
+[resource]
+script = ExtResource("1_jgks5")
+id = &"wood_sawmill"
+display_key = "CRAFT_WOOD"
+material = &"wood"
+house = &"sawmill"
+cost = 1
+coin_multiplier = 1.5
+capacity_craft = &"builder"
+capacity_kind = &"wall_and_tower_cost"
+magnitude = -0.25

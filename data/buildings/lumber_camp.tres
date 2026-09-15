@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_a843d"]
+
+[resource]
+script = ExtResource("1_a843d")
+id = &"lumber_camp"
+display_key = "BUILDING_LUMBER_CAMP"
+cost = 7
+material = &"wood"
+yield_per_day = 2.0
+requires_biome_feature = &"forest"
+job_slots = 1
+max_health = 56
+build_work = 14.0
+width_px = 120
+shadow_width = 120

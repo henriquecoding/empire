@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WildlifeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wildlife_data.gd" id="1_apreb"]
+
+[resource]
+script = ExtResource("1_apreb")
+id = &"rabbit"
+display_key = "WILDLIFE_RABBIT"
+max_health = 4
+move_speed = 40.0
+coin_yield = 1
+biomes = Array[StringName]([&"ancient_forest", &"coast", &"canyon", &"floodplain"])
+per_segment_max = 2
+shadow_width = 10

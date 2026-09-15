@@ -1,0 +1,7 @@
+id,display_key,speed_multiplier,coin_capacity_multiplier,band,can_change_band,flies,climbs_walls,ignores_rot_trail,knocks_down_stakes,obtain,obtain_ref,cost,heal_days,_phase,_src,_proposed,_notes
+on_foot,MOUNT_ON_FOOT,1.0,1.0,SURFACE,false,false,false,false,false,start,,0,2,1,§12 tabela de montarias; 'recupera no estábulo em 2 dias',,A pé. 'Deliberadamente frustrante depois do dia 6.'
+draft_horse,MOUNT_DRAFT_HORSE,1.7,2.0,SURFACE,false,false,false,false,false,stable,mount_stable,30,2,6,§12 tabela de montarias; 'recupera no estábulo em 2 dias',,Carrega o dobro de moedas: essencial acima do muro de pedra.
+boar,MOUNT_BOAR,1.5,1.0,SURFACE,false,false,false,false,true,hunt,ancient_forest,0,2,6,§12 tabela de montarias; 'recupera no estábulo em 2 dias',,Derruba estacaria inimiga ao carregar.
+lizard,MOUNT_LIZARD,1.4,1.0,SURFACE,true,false,true,false,false,secret,underground,0,2,6,§12 tabela de montarias; 'recupera no estábulo em 2 dias',,Sobe paredes: acesso vertical entre faixas sem passagem.
+dragonfly_mount,MOUNT_DRAGONFLY,1.9,1.0,SURFACE,true,true,false,false,false,fortress,horta,0,2,6,§12 tabela de montarias; 'recupera no estábulo em 2 dias',obtain_ref,"O §12 diz 'Fortaleza do pântano', mas nenhum dos seis povos vive num pântano — Q-013. Proposta: a Horta (várzea)."
+rot_elk,MOUNT_ROT_ELK,1.6,1.0,SURFACE,false,false,false,true,false,convert,bard,0,2,6,§12 tabela de montarias; 'recupera no estábulo em 2 dias',,Converter com o Maestro (Bardo fase 2).

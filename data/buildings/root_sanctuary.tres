@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_abcy3"]
+
+[resource]
+script = ExtResource("1_abcy3")
+id = &"root_sanctuary"
+display_key = "BUILDING_ROOT_SANCTUARY"
+category = &"special"
+cost = 25
+max_health = 200
+build_work = 50.0
+width_px = 120
+unique_per_kingdom = true
+shadow_width = 120

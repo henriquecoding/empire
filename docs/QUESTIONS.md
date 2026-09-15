@@ -1,0 +1,328 @@
+# Perguntas em aberto
+
+> O destino que o `AGENTS.md` manda usar quando a especificação não cobre um caso: **"escreve a pergunta aqui; não
+> decidas tu."** Esta primeira leva saiu de transformar a prosa do dossiê em dados, testes e ficheiros que correm —
+> é exatamente o tipo de contradição que *"uma tabela esconde e um gráfico apanha em cinco segundos"* (§06).
+>
+> Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
+> na v5.2** estão aplicadas e documentadas, e podes revertê-las.
+
+## Abertas — balanceamento e design
+
+### Q-001 · Os arqueiros param o Aríete de lodo?
+- **Onde:** §07 (tabela de tempo até matar) contra §31 (`test_arqueiros_nao_param_ariete`).
+- **O que diverge:** o §07 diz que um arqueiro em campo demora **96,6 s** a matar um aríete — *"mais do que uma
+  noite inteira"*. A noite dura **105 s** (§05). 96,6 < 105; com a precisão dos dados (0,34) dá 94,7 s. O teste do
+  §31 exige > 105 e **falha com os números do próprio dossiê**.
+- **Proposta:** manter a intenção (arqueiros não param aríetes) subindo a vida do aríete de 90 para **104**
+  (26 golpes: 36,4 s em torre, 107 s em campo). Alternativa: medir o teste contra o tempo que o aríete demora a
+  chegar ao muro, em vez da noite.
+- **Bloqueia:** o teste está saltado com esta razão; volta quando decidires. F1-09.
+- **Decide:** tu.
+
+### Q-002 · Custo das muralhas: a tabela ou a fórmula?
+- **Onde:** §06 (`base × 1,8^n`) contra §10 (tabela).
+- **O que diverge:** a fórmula dá 6 · 10,8 · 19,4 · 35 · 63; a tabela diz 6 · 11 · 20 · **36** · **65**.
+- **Proposta:** a tabela manda (é o que está nos CSV); a fórmula passa a descrição aproximada no dossiê.
+- **Decide:** tu. Não bloqueia.
+
+### Q-003 · Precisão em campo: 1/3 ou 0,34?
+- **Onde:** §07 (tabela de TTK usa 1/3) contra §19/§44/F1-07 (`accuracy_open = 0.34`).
+- **O que diverge:** 2% no TTK em campo. O teste tolera 3%.
+- **Proposta:** fica 0,34 nos dados; a tabela do §07 passa a dizer "≈".
+
+### Q-004 · Diplomata n2 com 60 de Favor: 45/45/10?
+- **Onde:** §14.
+- **O que diverge:** a regra ("cada 20 de Favor move 5 pontos de Captura para Dissolução") dá **45/50/5** com 60
+  de Favor. O exemplo diz 45/45/10. O efeito do nível 2 do diplomata não está escrito.
+- **Proposta:** o nível 2 move 5 pontos de Contrato para Captura? Não faz sentido. Mais simples: o exemplo está
+  errado e fica **45/50/5**. Ou o nível 2 tem regra própria — escreve-a.
+- **Bloqueia:** F6 (diplomacia). **Decide:** tu.
+
+### Q-005 · Fuga: 30% ou 25% de vida?
+- **Onde:** §07 (muro cai → fogem as tropas com vida < 30% e custo ≤ 4) contra §52 (FSM: FUGIR com vida < 25%).
+- **Proposta:** são duas regras diferentes e ficam as duas — 30% quando o muro cai (`breach_flee_health`), 25% no
+  resto (`flee_health`). Confirma.
+- **Bloqueia:** F1-12.
+
+### Q-006 · Quem atinge a faixa aérea?
+- **Onde:** §07 (Libélula: "só atacável por arqueiros e torres altas"; Alado: "obriga a torre alta") e §10.
+- **O que diverge:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
+- **Proposta:** geometria — um arqueiro no chão não chega aos 200 px do topo com 200 px de alcance; em muro ou
+  torre de arqueiros também não; **só a torre alta** (`hits_aerial`) e os arqueiros de copa. Os dados já dizem
+  `targets_bands = SURFACE|AERIAL` no arqueiro; o alcance vertical decide.
+- **Bloqueia:** F1-07, F1-09.
+
+### Q-007 · Horta: "tropas baratíssimas" quanto?
+- **Onde:** §04. Nenhum número. **Proposta:** −1 moeda no recrutamento de todas as tropas da Horta (mínimo 1).
+  Fase 7.
+
+### Q-008 · Forja e Fundição são o mesmo edifício?
+- **Onde:** §09 e §22 (Forja, onde trabalha o ferreiro) contra §06 (Fundição, a casa de conversão do minério).
+- **Proposta:** dois edifícios (oficina ≠ conversão), como está nos dados. Se for um só, a fatia vertical perde a
+  forja sem minério.
+
+### Q-009 · O estábulo das montarias é o estábulo das vacas?
+- **Onde:** §06 (estábulo de vaca, 14) e §12 ("Cavalo de tração — Estábulo, 30 moedas").
+- **Proposta:** dois edifícios (`cow_stable`, `mount_stable`); os 30 são o preço do cavalo.
+
+### Q-010 · Paliçada de "gelo"?
+- **Onde:** §10 ("Madeira reforçada / gelo"). Nenhum dos seis povos é de gelo. **Proposta:** retirar o gelo.
+
+### Q-011 · As moedas de abate entram na curva?
+- **Onde:** §25 (um Rastejante morto larga uma moeda) contra §06 (o modelo da curva não conta abates).
+- **Proposta:** manter os abates baixos (1–6 moedas, nos dados) e incluí-los no modelo quando o `SimHarness` os medir.
+
+### Q-012 · O peixe estraga?
+- **Onde:** §06 (a Salga: "o peixe deixa de estragar"). Não há regra de estrago em lado nenhum.
+  **Proposta:** o peixe perde 1 unidade por dia no pesqueiro se não for convertido.
+
+### Q-013 · Que fortaleza é "do pântano"?
+- **Onde:** §12 (a libélula-montaria vem da "Fortaleza do pântano"). Nenhum dos seis povos vive num pântano.
+  **Proposta:** a Horta (várzea).
+
+### Q-014 · Quanto custa um impulso real?
+- **Onde:** §15 (o tirano paga "metade" pelos impulsos — logo têm custo — mas nenhum número).
+  **Proposta:** 12 moedas (≈ o rendimento líquido do dia 1). Fase 6.
+
+### Q-015 · Qual é a "tropa de elite"?
+- **Onde:** §15 (Fastuoso: +1 tropa de elite grátis a cada 3 dias). **Proposta:** o Berserker de Raiz (escala 3).
+
+### Q-016 · Quantas estátuas enterradas, e que mecânicas ensinam?
+- **Onde:** §17 (só a do Ferreiro está escrita). **Proposta:** uma por mecânica dos primeiros 12 minutos (§25) que
+  não se ensina por observação. Fase 3.
+
+### Q-017 · Quantas criaturas tem a noite 1?
+- **Onde:** §25 ("Noite 1: três Rastejantes") contra §05/§51 (massa do dia 1 = 86 → **10 Rastejantes**, e o tempo
+  ativo dá para 19–33 invocações — ver `docs/content/ROT_BY_DAY.md`). E a precisão dos arqueiros **num muro** (postos
+  do Caminho A) não está escrita: 0,34 ou 1,0?
+- **Proposta:** a abertura é uma cena autorada (§25): o segmento `opening` limita a Podridão da primeira noite a 3
+  Rastejantes. Postos de muro com precisão de torre (é o que o Caminho A vende).
+- **Bloqueia:** `test_noite_1_e_sempre_ganha` (§31), F1-15. **Decide:** tu, com o `SimHarness`.
+
+### Q-018 · Quanto demora a atravessar uma região?
+- **Onde:** §21 ("40–60 s de ponta a ponta, o que a 26 px/s dá 1000–1560 px").
+- **O que diverge:** 1560 px é pouco mais de um ecrã; uma região tem 4 a 6. A pé, uma região de 8 segmentos demora
+  197 s.
+- **Proposta:** ler "40–60 s **por ecrã**". Mede-se na greybox (pergunta 11 do GREYBOX_RULES).
+
+### Q-028 · Que arquétipo jogável traz cada povo?
+- **Onde:** §04 ("1 classe" por povo) e §13. **Proposta nos dados:** Enramados → arqueiro, Portuários → trepador,
+  Fenda → monarca, Horta → bardo, Fornalha → cavaleiro enterrado, Sob-Raiz → cavaleiro selado. Fase 7.
+
+### Q-029 · As "fogueiras" que abrandam A Podridão são o quê?
+- **Onde:** §05 ("fogueiras, barris de fogo e terreno consagrado abrandam-na"). Só o barril e o altar têm dados.
+  **Proposta:** fogueira = o *campfire* das rondas noturnas, edifício de 3 moedas com o abrandamento do barril.
+
+### Q-030 · Uma região tem 8 segmentos ou 4 a 6 ecrãs?
+- **Onde:** §21. Oito segmentos de 640 px são 4 ecrãs, não 6. **Proposta:** 8 na fatia vertical; 10–12 quando uma
+  região precisar de 5–6 ecrãs, com ADR.
+
+### Q-031 · O núcleo tem vida?
+- **Onde:** §10 ("não é construído nem destruído"; "se cair, cai a partida"). **Proposta nos dados:** 1000 de vida,
+  sem estados de ruína.
+
+### Q-033 · A curva do §06 e os edifícios reais
+- **Onde:** §06 (o simulador usa "fontes" abstratas: base = 3 + 2,6 × fontes) contra os edifícios de `buildings.csv`
+  (2 a 5 por dia cada).
+- **Proposta:** o `EconomySystem` (F1-10) calcula o rendimento a partir dos edifícios; o teste de design compara-o
+  com o modelo de referência e o dia de asfixia tem de continuar entre 9 e 14. Se não bater, afina-se `economy.csv`.
+
+### Q-034 · A roda do rei pausa o jogo? E porque é que o teclado vai de 1 a 5?
+- **Onde:** §24 (impulso: "Tab → 1–5"; a roda tem 6 segmentos e há 6 impulsos) e §05 (a roda é o corpo do rei).
+- **Proposta:** Tab + 1–6; a roda abranda o tempo a 50%, desligável.
+
+### Q-035 · `treasury_changed` e os sinais do §30
+- **Onde:** o `event_bus.gd` do §30 declara `treasury_changed`, `creature_requested`, `unit_band_changed`,
+  `structure_built`, `structure_destroyed` e outras cargas; **nenhum destes está no catálogo fechado da §46**.
+- **Proposta:** a §46 manda (§39). O F0-07 escreve os 61 sinais da §46; o HUD do saco usa `coin_collected`.
+
+## Abertas — técnicas
+
+### Q-024 · A camada `Equipments` é o slot `head`?
+- **Onde:** os teus ficheiros têm `Body · Face · Shield · Sword · Equipments`; a §58 tem `body · head · face ·
+  weapon · shield · overlay`. **Proposta:** `Equipments` → `head`. Confirma ao separar o `Empire troop` (ART-01).
+
+### Q-025 · Godot 4.6-stable, 4.6.3 ou 4.7?
+- **Onde:** `.godot-version` (§69). Em setembro de 2026 existem 4.6.3-stable e 4.7.2-stable; o gdUnit4 6.2.1 suporta
+  4.5–4.7.1. **Proposta:** ficar no 4.6 e subir para o **4.6.3** (só correções) com uma ADR no início da Fase 0;
+  4.7 só com uma razão concreta.
+
+### Q-036 · O I6 protege mesmo o save?
+- **Onde:** §19 ("Usa `ResourceLoader.load` com `CACHE_MODE_IGNORE` e valida os tipos à mão"), §40 (I6) e §62.
+- **O que diverge:** o `load()` do GDScript é um atalho para o `ResourceLoader.load`, e `CACHE_MODE_IGNORE` só decide
+  se o recurso vem da *cache* — um `.tres` com *script* embutido executa-o na mesma. A regra, tal como está
+  escrita, proíbe a função e recomenda a mesma função. É a única falha de segurança encontrada no dossiê.
+- **Proposta:** o save grava-se com `FileAccess.store_var` e lê-se com `FileAccess.get_var(false)` (sem objetos —
+  o valor por omissão), só com tipos base, validados campo a campo; nunca `ResourceLoader` num save. A ADR 0007 já
+  diz isto desde a v5.2; falta mudares a frase do I6 no dossiê (§19, §40, §62).
+- **Bloqueia:** F0-13 (`SaveService`) — o ticket já segue a proposta. **Decide:** tu, mas não há alternativa segura
+  com `ResourceLoader`.
+
+## Abertas — Parte XIII (§74 a §85)
+
+> A §82 fecha com a regra: *"as dez perguntas acima entram no QUESTIONS.md com a proposta que já está nos CSV do
+> anexo"*. É o que esta secção faz. A proposta de cada uma está na coluna `_proposed` da tabela indicada, e nenhuma
+> delas bloqueia a Fase 0 — a única que bloqueava era a Q-037, fechada pela ADR 0011.
+
+### Q-038 · A massa desce: a Q-001 muda de resposta?
+- **Onde:** §74 (massa base de 60 para 40, termo do dia de 26 para 18) contra §07 e §31.
+- **O que diverge:** a Q-001 media os arqueiros contra a noite com a massa antiga. Com 40 + 18 × dia a noite tem
+  menos criaturas, e o Aríete de lodo chega mais tarde — o número que fazia o teste falhar pode ter mudado.
+- **Proposta:** recalcular o teste da §31 com os números novos **antes** de o desmarcar. `docs/content/ROT_BY_DAY.md`
+  já está gerado com a fórmula nova e serve de base à conta.
+- **Bloqueia:** F1-09. **Decide:** tu.
+
+### Q-039 · O Forno Aceso faz nascer um Amargueiro dentro das muralhas
+- **Onde:** §77 (a lei do Forno Aceso: a brasa cria raiz ao sétimo dia, *"dentro das tuas muralhas inclusive"*)
+  contra §74 (*"dentro das muralhas — não cria"*).
+- **Proposta:** exceção deliberada, e a única. `chapters.csv` marca-a com `law_enters_walls`, e o teste D-10 falha
+  se aparecer uma segunda. Se houver uma segunda, corta-se esta.
+- **Bloqueia:** Fase 5. **Decide:** tu.
+
+### Q-040 · "O que brilha, e nada mais" salta 105 s de jogo
+- **Onde:** §75, quinta oferta.
+- **Proposta:** uma vez por campanha. Saltar a noite duas vezes ensina a evitar o jogo em vez de o jogar.
+  `offers.csv` traz `once_per_campaign = true` marcado em `_proposed`.
+- **Bloqueia:** Fase 3. **Decide:** tu.
+
+### Q-041 · Nove nomeados é teto fixo ou cresce com o império?
+- **Onde:** §76, regra 1.
+- **Proposta:** fixo. Cresce e deixa de significar nada — a escassez é o que faz o nome valer.
+  `economy.csv` traz `named_cap = 9`; o teste D-07 guarda-o.
+- **Bloqueia:** Fase 4. **Decide:** tu.
+
+### Q-042 · A sexta Colheita em 16 dias é longa demais?
+- **Onde:** §78 (`C = 6 + 2 × povos detidos`).
+- **Proposta:** medir em playtest. Alternativa escrita: `6 + 1,5 × n`, arredondado para cima.
+  `economy.csv` traz `colheita_base_days = 6` e `colheita_per_people = 2`, ambos marcados.
+- **Bloqueia:** Fase 5. **Decide:** o playtest.
+
+### Q-043 · Seis capítulos por campanha, ou os dez sempre?
+- **Onde:** §77.
+- **Proposta:** seis. Quatro por descobrir valem mais do que dez esgotados, e é o que dá os 126 mundos.
+  O teste D-11 guarda o número e a presença d'O Cerco Que Não Acaba.
+- **Bloqueia:** Fase 5. **Decide:** tu.
+
+### Q-044 · O motivo sonoro da Podridão substitui o indicador visual?
+- **Onde:** §81 contra §26.
+- **Proposta:** coexistem, mas o visual é a própria candeia (§74) e não um ícone.
+- **Bloqueia:** §26. **Decide:** tu.
+
+### Q-045 · A Dívida fica escondida no modo de acessibilidade?
+- **Onde:** §75 contra §26 e §82.
+- **Proposta:** fica. O brilho da candeia e os estandartes dos povos soltos (§82) são a redundância;
+  um número não é acessibilidade, é *spoiler*.
+- **Bloqueia:** §26. **Decide:** tu.
+
+### Q-046 · O Turno entra na Fase 8 ou corta-se?
+- **Onde:** §79, terceiro epílogo.
+- **Proposta:** entra. É um sinalizador no save e um termo na semente, e é o mais forte dos três.
+  `rot.csv` guarda os limiares dos outros dois; O Turno é o ramo *"tudo o resto"* da precedência.
+- **Bloqueia:** Fase 8. **Decide:** tu.
+
+## Abertas — abertas pela recuperação da v6 (13/09/2026)
+
+> `docs/recovery/v6-validation.json` regista seis perguntas novas (Q-047 a Q-052) mas não guardou o enunciado.
+> O que segue foi reconstruído das duas únicas fontes que sobreviveram: o glossário das ferramentas
+> (`ferramentas/src/03-paineis.js`, que cita a Q-047 pelo nome) e a lista `source_gaps` do próprio ficheiro.
+> **Se tiveres o enunciado original, substitui — estas são a melhor reconstrução, não o registo.**
+
+### Q-047 · Uma noite de pé, ou mais?
+- **Onde:** §74, regra 2, e o glossário das ferramentas.
+- **O que está em aberto:** o Amargueiro só se corta depois de aguentar uma noite inteira. Uma noite chega para
+  fechar a exploração do vagabundo (paga-se +22 uma vez por árvore), mas não se sabe se o número devia subir com
+  o dia, como sobe tudo o resto da §74.
+- **Proposta:** fixo em 1 (`rot.csv`, `amargueiro_nights_standing`; `amargueiros.csv`,
+  `nights_standing_required`). A conta da §74 — dez vagabundos são +220 na noite seguinte — já mata o império
+  ao dia 6 com uma só noite. O teste D-03 guarda a regra.
+- **Bloqueia:** Fase 2. **Decide:** tu.
+
+### Q-048 · As nove cenas de segmento autoradas
+- **Onde:** `source_gaps` da recuperação; §65 e §83.
+- **O que falta:** as nove cenas de segmento escritas à mão não sobreviveram ao zip recuperado. A §83 exige que
+  `seg_000` seja fixa e autorada, e agora com o Amargueiro velho e a candeia lá dentro desde o minuto 0:00.
+- **Proposta:** refazer só a `seg_000` na Fase 1, com a lista de obrigatórios da §83, e deixar as outras oito
+  para o greybox da Fase 2 — o gerador da §54 cobre-as até lá.
+- **Bloqueia:** Fase 1. **Decide:** tu.
+
+### Q-049 · O catálogo de tradução para além do título de arranque
+- **Onde:** `source_gaps` da recuperação; §27 e §75.
+- **O que falta:** `data/i18n/strings.csv` tem os nomes de conteúdo, mas a Parte XIII acrescenta 1 280 palavras
+  novas (§75): doze frases de oferta, nove títulos, dez leis de capítulo e doze diários.
+- **Proposta:** as chaves entram já (`OFFER_*`, `TITLE_*`, `CHAPTER_*`, `JOURNAL_*`), com o texto PT-PT do dossiê
+  e o `en` por traduzir. A §27 passa a dizer *"precisa de mil e trezentas palavras"*.
+- **Bloqueia:** Fase 3. **Decide:** tu.
+
+### Q-050 · As tabelas de dados que faltavam
+- **Onde:** `source_gaps` da recuperação (*"wildlife and remaining data tables"*).
+- **O que diverge:** o zip recuperado trazia 17 tabelas e 154 recursos; este repositório tem 27 e 202. As dez que
+  faltavam são as de fauna, segmentos, i18n e as quatro novas da Parte XIII.
+- **Proposta:** o `_tables.csv` deste repositório manda, e a frase da §85 (*"os 154 recursos a partir das 17
+  tabelas"*) passa a ser um número gerado e não escrito à mão.
+- **Bloqueia:** nada — já aplicado. **Decide:** confirmar o número.
+
+### Q-051 · Os sistemas de jogo e a cena de jogo
+- **Onde:** `source_gaps` da recuperação (*"game systems and scene"*).
+- **O que falta:** `src/sim/` tem os dados e as regras puras; os nove sistemas da Parte XIII (Amargueiro, Oferta,
+  Dívida, Títulos, Capítulos, Colheita, Diários, Epílogos, Som) não têm implementação.
+- **Proposta:** entram pela ordem de custo da §82 — §80, §74, §75, §83, §84 são o caminho mínimo de 52 h. Os
+  catorze testes da §84 entram com cada sistema, não depois.
+- **Bloqueia:** Fases 1 a 6. **Decide:** o calendário.
+
+### Q-052 · CI remoto e exportação
+- **Onde:** `source_gaps` da recuperação; §31 e §35.
+- **O que falta:** o workflow existe e corre localmente; sem remoto nunca correu num runner limpo, e a exportação
+  só foi testada para Linux.
+- **Proposta:** manter o `run_tests.sh` como contrato local e ligar o remoto antes da Fase 2, que é quando o
+  volume de código passa a ser maior do que uma revisão à mão aguenta (§31).
+- **Bloqueia:** Fase 2. **Decide:** tu.
+
+## Abertas — abertas ao implementar o anexo §85
+
+### Q-053 · O preço da décima oferta
+- **Onde:** §75, tabela das doze ofertas, linha *"Fica com a candeia por uma noite."*
+- **O que diverge:** a coluna **Preço** diz *"Uma classe jogável, para sempre"* e a coluna **O que dá** diz
+  *"Controlas a mancha esta noite e manda-la a um império rival"*. Lida como preço, a primeira só pode significar
+  **perder** uma classe da §08 para sempre; lida como recompensa, seria a única linha da tabela com duas
+  recompensas e preço nenhum.
+- **Proposta:** é preço. `offers.csv` traz `price_kind = playable_class`, `price_amount = 1`, marcado em
+  `_proposed`. A classe perdida escolhe-se largando a tropa dessa classe no prato, como todas as outras — continua
+  a ser o Verbo 1. É o preço mais caro da tabela, e é por isso que só aparece ao dia 15 e vale +5 de Dívida.
+- **Bloqueia:** Fase 3. **Decide:** tu.
+
+### Q-054 · Dois capítulos ficaram sem raiz
+- **Onde:** §77, caixa *"Cada lei tem uma raiz, e a raiz é verificável"*.
+- **O que diverge:** a caixa lista oito raízes para dez capítulos. O Sulco Cego e O Cerco Que Não Acaba ficaram de
+  fora, e a regra escrita é que **cada** capítulo sai de uma coisa que existiu.
+- **Proposta:** `chapters.csv` propõe *"vozes sem corpo"* para O Sulco Cego e *"cerco sem fim"* para O Cerco,
+  ambos marcados em `_proposed`. São descrições, não raízes verificáveis — falta-lhes a fonte.
+- **Bloqueia:** Fase 5 (a escrita do habitante). **Decide:** tu.
+
+### Q-055 · O desvio dos capítulos que não estão numa bifurcação nem numa travessia
+- **Onde:** §77, regra 5 (*"25 s numa bifurcação e 40 s numa travessia"*).
+- **O que diverge:** três das cinco colocações não são nenhuma das duas — beira da estrada, fortaleza e junto a
+  acampamento de mercenários.
+- **Proposta:** `chapters.csv` propõe 25 s para beira de estrada e acampamento (o desvio é curto) e 40 s para
+  fortaleza (o desvio é uma região inteira). Marcado em `_proposed` nas dez linhas.
+- **Bloqueia:** Fase 5. **Decide:** o playtest.
+
+## Resolvidas na v5.2 (reversíveis)
+
+| # | O quê | Decisão | Onde |
+|---|---|---|---|
+| Q-019 | §30 escolhe criatura ao acaso; §51 manda "a mais cara que cabe" | **§51 manda** (`pick_rule`); o F1-08 corrige o código do §30 | `rot.csv`, ROT_BY_DAY |
+| Q-020 | §42: sementes por XOR com constantes que não são hexadecimal (`0xR0T7`, `0xEC0N`); o código usa `hash(str(seed) + nome)` | o código manda; a tabela passa a dizer "derivada do nome do fluxo" | §42 |
+| Q-021 | §47 manda `DAY_SECONDS` para a `EconomyCurve`; a §69 cria o `ClockData` | `ClockData` | ADR 0006 |
+| Q-022 | ids em português nos exemplos (`enramados_arqueiro.tres`, `enramados_ferreiro_body`) contra a regra "código em inglês" | inglês | NAMING_BIBLE §5 |
+| Q-023 | §22 "uma camada por slot" contra §58 "um ficheiro por slot" | fonte: um ficheiro por corpo com camadas; exportação: uma folha por camada com o nome da §58 | ASSET_BIBLE §2 |
+| Q-026 | relatório mestre: `waves.csv`, `jobs.csv`, `GREYBOX_RULES` em `docs/design/` | `rot.csv` (§70); `jobs.csv` = postos; `docs/world/` | CONTENT_DATABASE §4 |
+| Q-027 | §49 lê `yield_per_phase`; o §06 dá números por dia | o CSV guarda por dia; o sistema divide pelas fases | `building_data.gd` |
+| Q-032 | sete correções aos ficheiros do dia zero (C-01 a C-07) | aplicadas | ADR 0009 |
+
+## Resolvidas na Parte XIII (reversíveis)
+
+| # | O quê | Decisão | Onde |
+|---|---|---|---|
+| Q-037 | A noite é azul profunda (§05) ou castanha (§80)? | **castanha** — 32° · 0,22 · 0,16, chão em 0,11 | ADR 0011, `clock.csv` |
+

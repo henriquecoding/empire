@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_xbrw6"]
+
+[resource]
+script = ExtResource("1_xbrw6")
+id = &"archer_tower"
+display_key = "BUILDING_ARCHER_TOWER"
+category = &"defense"
+cost = 18
+job_slots = 2
+max_health = 144
+build_work = 36.0
+width_px = 64
+effect_params = {
+&"accuracy": 1.0,
+&"posts": 2.0,
+&"range_bonus": 0.4
+}
+shadow_width = 64
+tags = Array[StringName]([&"tower", &"elevated"])

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_ym1yf"]
+
+[resource]
+script = ExtResource("1_ym1yf")
+id = &"horta"
+display_key = "PEOPLE_HORTA"
+terrain = &"floodplain"
+biome = &"floodplain"
+architecture_source = "Lezíria do Tejo + celeiros de estrutura de madeira ingleses"
+roof_silhouette = "Enorme e liso, com uma única inclinação"
+landmark = &"silo"
+palette_ramp = &"horta"
+wall_material = &"wattle"
+economy_strength = &"farming"
+economy_modifiers = {
+&"farm_yield_mult": 2.0
+}
+defense_trait = &"numbers"
+unique_unit = &"sower"
+playable_class = &"bard"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant", &"vagrant"])
+starting_buildings = Array[StringName]([&"core", &"farm"])
+song_texture = "Ponto, alto e coro, sem instrumentos — Alentejo, cante"
+colheita_song = "Falta-lhes o ponto: cantam só o coro"
+landmark_roots = true

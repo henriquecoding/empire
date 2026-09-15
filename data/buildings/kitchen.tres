@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_c4rkb"]
+
+[resource]
+script = ExtResource("1_c4rkb")
+id = &"kitchen"
+display_key = "BUILDING_KITCHEN"
+category = &"craft"
+cost = 10
+job_slots = 1
+craft = &"cook"
+max_health = 80
+build_work = 20.0
+width_px = 120
+shadow_width = 120
+tags = Array[StringName]([&"warm_light"])

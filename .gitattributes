@@ -1,0 +1,24 @@
+* text=auto eol=lf
+
+# ---- Git LFS, desde o primeiro commit (§28) ----
+*.aseprite      filter=lfs diff=lfs merge=lfs -text
+*.ase           filter=lfs diff=lfs merge=lfs -text
+art/**/*.png    filter=lfs diff=lfs merge=lfs -text
+audio/**/*.ogg  filter=lfs diff=lfs merge=lfs -text
+audio/**/*.wav  filter=lfs diff=lfs merge=lfs -text
+
+# Os addons trazem PNGs pequenos e nao devem ir para LFS.
+# Em .gitattributes a ultima regra que casa e a que vale — por isso vem depois.
+# v5.2: 'text' forcado tratava os PNG dos addons como texto (normalizacao de fim de
+# linha corrompe binarios); '!' devolve ao valor por omissao e text=auto deteta.
+addons/**       !filter !diff !merge text=auto
+
+# v5.2: os placeholders sao minusculos e o CI faz checkout sem LFS (§69, ci.yml);
+# fora do LFS, o boot.tscn e o export do dia zero tem imagens reais. Mesma regra: vem depois.
+art/export/_placeholder/** -filter -diff -merge binary
+
+# Ficheiros do Godot sao texto: tem de dar diff legivel numa revisao
+*.gd    text eol=lf
+*.tres  text eol=lf
+*.tscn  text eol=lf
+*.godot text eol=lf

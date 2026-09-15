@@ -1,0 +1,41 @@
+{
+ "date": "2026-09-14",
+ "base": "este repositorio — Parte XIII integrada sobre o dossie v6",
+ "engine": "4.6.stable.official.89cea1439",
+ "gdunit": "6.2.1",
+ "gdunit_commit": "08ffc7c",
+ "godot_import": "passed",
+ "boot_headless": "passed",
+ "csv_tables": 27,
+ "generated_resources": 202,
+ "original_csv_unchanged": 27,
+ "proposed_fields": 591,
+ "proposed_phase_0_to_2": 268,
+ "gdunit_discovered": 43,
+ "gdunit_passed": 37,
+ "gdunit_skipped": 6,
+ "gdunit_failures": 0,
+ "spec_sections": 87,
+ "adrs": 19,
+ "portable_checks_passed": 15,
+ "numeric_comparisons": 193,
+ "cli_isolation_tests_passed": 3,
+ "export_tested": true,
+ "gameplay_tested": false,
+ "gpu_art_tested": false,
+ "source_gaps": [
+  "9 authored segment scenes",
+  "game systems and scene",
+  "remote CI and export",
+  "audio: 56 pistas por gravar"
+ ],
+ "new_questions": [
+  "Q-053",
+  "Q-054",
+  "Q-055"
+ ],
+ "clean_zip_extraction_check": "passed: run_tests.sh completo numa extracao limpa, sem cache do motor",
+ "export_notes": "Linux release exportado e arrancado em headless (embed_pck=false): Empire.x86_64 + Empire.pck",
+ "i18n_keys": 271,
+ "i18n_placeholders": 0
+}

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ClockData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/clock_data.gd" id="1_1xmkm"]
+
+[resource]
+script = ExtResource("1_1xmkm")
+phase_durations = PackedFloat32Array(15, 85, 40, 85, 30, 105)
+phase_tint_hue = PackedFloat32Array(38, 42, 48, 36, 18, 32)
+phase_tint_sat = PackedFloat32Array(0.44, 0.1, 0.05, 0.41, 0.68, 0.22)
+phase_tint_val = PackedFloat32Array(0.91, 0.95, 1, 0.91, 0.73, 0.16)
+night_value_floor = 0.11

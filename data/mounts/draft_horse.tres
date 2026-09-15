@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MountData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/mount_data.gd" id="1_qcbo5"]
+
+[resource]
+script = ExtResource("1_qcbo5")
+id = &"draft_horse"
+display_key = "MOUNT_DRAFT_HORSE"
+speed_multiplier = 1.7
+coin_capacity_multiplier = 2.0
+obtain = &"stable"
+obtain_ref = &"mount_stable"
+cost = 30
+heal_days = 2

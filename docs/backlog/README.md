@@ -1,0 +1,101 @@
+# Backlog — Fases 0 e 1
+
+> Os tickets do §34 do dossiê, um ficheiro cada, no formato do §34, com os caminhos da §70 e os ficheiros reais de
+> `docs/design/`. A v5.2 acrescentou seis que a §65 e a §66 pediam e o §34 não tinha (F0-11 a F0-15 e F1-17), e nove
+> de arte, *greybox*, nomes e dados, que correm em paralelo aos sábados (§22, opção C).
+
+**Como se usa:** abre o ticket, lê as secções da linha *Spec*, e dá-o ao agente tal e qual — uma tarefa por sessão.
+Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *commit*.
+
+## Fase 0 — Fundação
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [F0-00](F0-00.md) | Repositório do dia zero: as ondas 1 e 2 da §68 | — | feito |
+| [F0-01](F0-01.md) | Criar o projeto Godot 4.6 com as definições do §19 | F0-00 | feito |
+| [F0-02](F0-02.md) | Git LFS para *.aseprite e art/**/*.png | F0-00 | feito |
+| [F0-03](F0-03.md) | AGENTS.md e os primeiros ADRs | F0-00 | feito |
+| [F0-04](F0-04.md) | Instalar o gdUnit4 e o workflow de CI | F0-00 | feito |
+| [F0-05](F0-05.md) | Band: enum, planos e a matriz de colisão | F0-01 | feito |
+| [F0-06](F0-06.md) | GameClock e o ClockData (prompt 1 da §29) | F0-01 | feito |
+| [F0-07](F0-07.md) | EventBus com os sinais do §46 | F0-01 | por fazer |
+| [F0-08](F0-08.md) | Câmara com lookahead e limites de região | F0-05 | por fazer |
+| [F0-09](F0-09.md) | Spike: decidir a escala e fechar a ADR 0001 | F0-01 | por fazer |
+| [F0-10](F0-10.md) | Cena de teste: um sprite anda nas três faixas | F0-05, F0-08 | por fazer |
+| [F0-11](F0-11.md) | Registry e boot.tscn | F0-01 | por fazer |
+| [F0-12](F0-12.md) | RngService: os seis fluxos, snapshot e restore | F0-11 | por fazer |
+| [F0-13](F0-13.md) | SaveService: escrita atómica e três slots | F0-11 | por fazer |
+| [F0-14](F0-14.md) | UnitView com cinco slots e o shader da paleta | F0-10 | por fazer |
+| [F0-15](F0-15.md) | Spike: importar arte do Aseprite e fechar a ADR 0010 | F0-02 | por fazer |
+
+## Fase 1 — Núcleo jogável
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [F1-01](F1-01.md) | Moeda física: largar, arco, queda, apanhar, saco | F0-07 | por fazer |
+| [F1-02](F1-02.md) | UnitData e as seis unidades do §07 | F0-03 | feito |
+| [F1-03](F1-03.md) | UnitSystem com arrays paralelos e time-slicing | F1-02 | por fazer |
+| [F1-04](F1-04.md) | Recrutar um vagabundo por uma moeda; ele segue-te | F1-01, F1-03 | por fazer |
+| [F1-05](F1-05.md) | JobBoard (prompt 4 da §29) | F1-03 | por fazer |
+| [F1-06](F1-06.md) | Muro: cinco níveis, dois caminhos, slots de contacto | F1-05 | por fazer |
+| [F1-07](F1-07.md) | Arqueiro: alcance, precisão 0,34 em campo e 1,0 em torre | F1-06 | por fazer |
+| [F1-08](F1-08.md) | RotSystem (prompt 2 da §29) | F0-06 | por fazer |
+| [F1-09](F1-09.md) | Criaturas: Rastejante, Alado, Bruto e a tabela de invocação | F1-08 | por fazer |
+| [F1-10](F1-10.md) | Economy (prompt 3 da §29) e a curve.tres | F1-01 | por fazer |
+| [F1-11](F1-11.md) | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 | por fazer |
+| [F1-12](F1-12.md) | Moral e fuga com o raio do rei | F1-05 | por fazer |
+| [F1-13](F1-13.md) | CanvasModulate por faixa, animado pelo GameClock | F0-06 | por fazer |
+| [F1-14](F1-14.md) | Save e load do estado de src/sim/ com save_version | F1-10 | por fazer |
+| [F1-15](F1-15.md) | Cenário de combate noturno para afinação | F1-09 | por fazer |
+| [F1-16](F1-16.md) | Afinar até sobreviver dez dias ser possível e não trivial | tudo | por fazer |
+| [F1-17](F1-17.md) | Arte da mancha: a Podridão e a candeia | F1-08, ART-02 | por fazer |
+
+## Em paralelo — arte, *greybox*, nomes e dados
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [ART-01](ART-01.md) | A primeira personagem real em cinco slots | F0-14, F0-15 | por fazer |
+| [ART-02](ART-02.md) | A paleta mestra e o LUT | F0-01 | por fazer |
+| [ART-03](ART-03.md) | As seis camadas de parallax com teto de valores | ART-02, F0-08 | por fazer |
+| [ART-04](ART-04.md) | Rostos e expressões: o catálogo do §60 | ART-01 | por fazer |
+| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | por fazer |
+| [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | por fazer |
+| [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | por fazer |
+| [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
+| [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
+
+## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
+
+> Onze tickets novos, pela ordem de custo da §82. O caminho mínimo que dá a transformação inteira é
+> XIII-01 + XIII-02 + XIII-03 + XIII-04 + XIII-10 + XIII-11: 52 horas, e é aí que está quase todo o efeito.
+
+| Ticket | Tarefa | Depende | Horas | Estado |
+|---|---|---|---|---|
+| [XIII-01](XIII-01.md) | §80 · O preto na paleta e a noite castanha | ART-02 | 4 (2 código + 2 arte) | por fazer |
+| [XIII-02](XIII-02.md) | §74 · O termo dos Amargueiros na massa | F1-08 | 1 | por fazer |
+| [XIII-03](XIII-03.md) | §74 · O Amargueiro e a candeia, completos | XIII-02, F1-06, ART-04 | 13 (10 + 3 arte) | por fazer |
+| [XIII-04](XIII-04.md) | §75 · A Oferta e a Dívida da Candeia | XIII-03 | 20 (12 + 4 arte + 2 som + 2 escrita) | por fazer |
+| [XIII-05](XIII-05.md) | §76 · O Nome | F1-12 | 11 (7 + 2 arte + 1 som + 1 escrita) | por fazer |
+| [XIII-06](XIII-06.md) | §78 · A Colheita | F1-16 | 11 (8 + 3 arte) | por fazer |
+| [XIII-07](XIII-07.md) | §77 · Os dez capítulos | GB-02, XIII-06 | 106 (30 + 50 arte + 20 som + 6 escrita) | por fazer |
+| [XIII-08](XIII-08.md) | §79 · Os doze diários e os três epílogos | XIII-04, XIII-07 | 13 (3 + 10 escrita) | por fazer |
+| [XIII-09](XIII-09.md) | §81 · Som: o cante, os motivos e a encomendação | XIII-05, XIII-06 | 44 (6 + 38 som) | por fazer |
+| [XIII-10](XIII-10.md) | §83 · Os primeiros vinte minutos | GB-01, XIII-03 | 8 (3 + 4 arte + 1 escrita) | por fazer |
+| [XIII-11](XIII-11.md) | §84 · Os catorze testes de design e as seis linhas de risco | XIII-02 | 6 | feito |
+
+## Ordem sugerida
+
+**Código, dias de semana:** F0-00 → F0-02 → F0-05 → F0-07 → F0-06 → F0-11 → F0-13 → F0-12 → F0-08 → F0-14 → F0-10,
+com os dois *spikes* (F0-09, F0-15) numa tarde cada. Depois a Fase 1 pela ordem dos doze *commits* da §66:
+F1-02 → F1-03 → F1-01 → F1-04 → F1-05 → F1-06 → F1-07 → F1-08 → F1-09 → F1-15 → F1-10 → F1-11 → F1-12 → F1-13 → F1-14 → F1-17 → F1-16.
+
+**Arte, aos sábados (§28):** ART-02 → ART-01 → GB-01 → ART-03 → GB-02 → GB-03 → ART-04. O NB-01 começa já e fecha antes
+da Fase 4; o CD-01 faz-se antes do F1-02 e do F1-09, uma tabela por sessão.
+
+**Parte XIII:** XIII-11 e XIII-02 primeiro (os testes e o termo da massa, que são 7 h e guardam tudo o resto),
+depois XIII-01 antes de se desenhar cenário. XIII-03 → XIII-04 → XIII-10 fecham o caminho mínimo de 52 h.
+As XIII-05, XIII-07 e XIII-09 podem cair inteiras sem que as outras deixem de funcionar (§82).
+
+**O marco que fecha a pré-produção** (relatório mestre, §32; dossiê, §71): abrir o Empire, controlar uma personagem real
+numa *greybox*, atravessar as três faixas, construir algo com uma moeda, sobreviver à primeira noite e reproduzir o
+resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, o F1-08 e o F0-11.

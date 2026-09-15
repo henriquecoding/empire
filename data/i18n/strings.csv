@@ -1,0 +1,482 @@
+keys,pt_PT,en,_context,_max_chars,_notes
+UNIT_VAGRANT,Vagabundo,Vagrant,nome de conteúdo — unit,24,
+UNIT_ARCHER,Arqueiro,Archer,nome de conteúdo — unit,24,
+UNIT_SPEARMAN,Lanceiro,Spearman,nome de conteúdo — unit,24,
+UNIT_DRAGONFLY,Libélula,Dragonfly,nome de conteúdo — unit,24,
+UNIT_ROOT_BERSERKER,Berserker de Raiz,Root Berserker,nome de conteúdo — unit,24,
+UNIT_MERCENARY,Mercenário,Mercenary,nome de conteúdo — unit,24,
+UNIT_MONARCH,Monarca,Monarch,nome de conteúdo — unit,24,
+UNIT_SQUIRE,Escudeiro,Squire,nome de conteúdo — unit,24,
+UNIT_BUILDER,Construtor,Builder,nome de conteúdo — unit,24,
+UNIT_SMITH,Ferreiro,Smith,nome de conteúdo — unit,24,
+UNIT_COOK,Cozinheiro,Cook,nome de conteúdo — unit,24,
+UNIT_DIPLOMAT,Diplomata,Diplomat,nome de conteúdo — unit,24,
+UNIT_BARD,Bardo,Bard,nome de conteúdo — unit,24,
+UNIT_CLIMBER,Trepador,Climber,nome de conteúdo — unit,24,
+UNIT_BURIED_KNIGHT,Cavaleiro Enterrado,Buried Knight,nome de conteúdo — unit,24,
+UNIT_SEALED_KNIGHT,Cavaleiro Selado,Sealed Knight,nome de conteúdo — unit,24,
+UNIT_CANOPY_ARCHER,Arqueiro de Copa,Canopy Archer,nome de conteúdo — unit,24,
+UNIT_BARGE,Barcaça,Barge,nome de conteúdo — unit,24,
+UNIT_COUNTERWEIGHT_RAM,Aríete de Contrapeso,Counterweight Ram,nome de conteúdo — unit,24,
+UNIT_SOWER,Semeador,Sower,nome de conteúdo — unit,24,
+UNIT_WAR_SMITH,Ferreiro de Guerra,War Smith,nome de conteúdo — unit,24,
+UNIT_DIGGER,Escavador,Digger,nome de conteúdo — unit,24,
+CREATURE_CRAWLER,Rastejante,Crawler,nome de conteúdo — creature,24,
+CREATURE_WINGED,Alado,Winged,nome de conteúdo — creature,24,
+CREATURE_BRUTE,Bruto,Brute,nome de conteúdo — creature,24,
+CREATURE_BURROWER,Cavador,Burrower,nome de conteúdo — creature,24,
+CREATURE_SLIME_RAM,Aríete de Lodo,Slime Ram,nome de conteúdo — creature,24,
+CREATURE_DEVOURER,Consumidora,Devourer,nome de conteúdo — creature,24,
+BUILDING_CORE,Castelo,Keep,nome de conteúdo — building,24,
+BUILDING_TRAINING_HOUSE,Casa de Treino,Training House,nome de conteúdo — building,24,
+BUILDING_FORGE,Forja,Forge,nome de conteúdo — building,24,
+BUILDING_KITCHEN,Cozinha,Kitchen,nome de conteúdo — building,24,
+BUILDING_EMBASSY,Embaixada,Embassy,nome de conteúdo — building,24,
+BUILDING_HEIR_HOUSE,Casa do Herdeiro,Heir's House,nome de conteúdo — building,24,
+BUILDING_ROOT_SANCTUARY,Santuário das Raízes,Root Sanctuary,nome de conteúdo — building,24,
+BUILDING_MOUNT_STABLE,Estábulo,Stable,nome de conteúdo — building,24,
+BUILDING_FARM,Plantação,Field,nome de conteúdo — building,24,
+BUILDING_FISHERY,Pesqueiro,Fishery,nome de conteúdo — building,24,
+BUILDING_HENHOUSE,Galinheiro,Henhouse,nome de conteúdo — building,24,
+BUILDING_COW_STABLE,Estábulo de Vacas,Cowshed,nome de conteúdo — building,24,
+BUILDING_LUMBER_CAMP,Corte de Madeira,Lumber Camp,nome de conteúdo — building,24,
+BUILDING_ORE_PIT,Poço de Minério,Ore Pit,nome de conteúdo — building,24,
+BUILDING_GRANARY,Celeiro,Granary,nome de conteúdo — building,24,
+BUILDING_SALTERY,Salga,Saltery,nome de conteúdo — building,24,
+BUILDING_PEN,Curral,Pen,nome de conteúdo — building,24,
+BUILDING_SAWMILL,Serração,Sawmill,nome de conteúdo — building,24,
+BUILDING_SMELTER,Fundição,Smelter,nome de conteúdo — building,24,
+BUILDING_ARCHER_TOWER,Torre de Arqueiros,Archer Tower,nome de conteúdo — building,24,
+BUILDING_HIGH_TOWER,Torre Alta,High Tower,nome de conteúdo — building,24,
+BUILDING_FIRE_BARREL,Barril de Fogo,Fire Barrel,nome de conteúdo — building,24,
+BUILDING_ROOT_MOAT,Fosso de Raízes,Root Moat,nome de conteúdo — building,24,
+BUILDING_LIGHTHOUSE,Farol,Lighthouse,nome de conteúdo — building,24,
+BUILDING_CONSECRATED_ALTAR,Altar Consagrado,Consecrated Altar,nome de conteúdo — building,24,
+WALL_STAKES,Estacaria,Stakes,nome de conteúdo — wall,24,
+WALL_PALISADE,Paliçada,Palisade,nome de conteúdo — wall,24,
+WALL_STONE,Muro de Pedra,Stone Wall,nome de conteúdo — wall,24,
+WALL_IRON,Muralha de Ferro,Iron Wall,nome de conteúdo — wall,24,
+WALL_BASTION,Bastião,Bastion,nome de conteúdo — wall,24,
+CLASS_MONARCH,Monarca,Monarch,nome de conteúdo — class,24,
+CLASS_ARCHER,Arqueiro,Archer,nome de conteúdo — class,24,
+CLASS_BARD,Bardo,Bard,nome de conteúdo — class,24,
+CLASS_CLIMBER,Trepador,Climber,nome de conteúdo — class,24,
+CLASS_BURIED_KNIGHT,Cavaleiro Enterrado,Buried Knight,nome de conteúdo — class,24,
+CLASS_SEALED_KNIGHT,Cavaleiro Selado,Sealed Knight,nome de conteúdo — class,24,
+CLASS_DIPLOMAT,Diplomata,Diplomat,nome de conteúdo — class,24,
+CRAFT_GRAIN,Grão,Grain,nome de conteúdo — craft,24,
+CRAFT_FISH,Peixe,Fish,nome de conteúdo — craft,24,
+CRAFT_ANIMAL,Animal vivo,Livestock,nome de conteúdo — craft,24,
+CRAFT_WOOD,Madeira,Timber,nome de conteúdo — craft,24,
+CRAFT_ORE,Minério,Ore,nome de conteúdo — craft,24,
+JOB_WALL,Muralha,Wall,nome de conteúdo — job,24,
+JOB_TOWER,Torre,Tower,nome de conteúdo — job,24,
+JOB_FARM,Plantação,Field,nome de conteúdo — job,24,
+JOB_HUNT,Caça,Hunt,nome de conteúdo — job,24,
+JOB_BUILD,Construir,Build,nome de conteúdo — job,24,
+JOB_REPAIR,Reparar,Repair,nome de conteúdo — job,24,
+JOB_FORGE,Forja,Forge,nome de conteúdo — job,24,
+JOB_KITCHEN,Cozinha,Kitchen,nome de conteúdo — job,24,
+JOB_EMBASSY,Embaixada,Embassy,nome de conteúdo — job,24,
+JOB_MILKING,Ordenha,Milking,nome de conteúdo — job,24,
+JOB_CART,Carroça,Cart,nome de conteúdo — job,24,
+JOB_GUARD,Guarda,Guard,nome de conteúdo — job,24,
+JOB_AIR_PATROL,Patrulha aérea,Air Patrol,nome de conteúdo — job,24,
+JOB_PERFORM,Atuação,Performance,nome de conteúdo — job,24,
+BIOME_ANCIENT_FOREST,Floresta Antiga,Ancient Forest,nome de conteúdo — biome,24,
+BIOME_COAST,Costa,Coast,nome de conteúdo — biome,24,
+BIOME_CANYON,Desfiladeiro,Canyon,nome de conteúdo — biome,24,
+BIOME_FLOODPLAIN,Várzea,Floodplain,nome de conteúdo — biome,24,
+BIOME_VOLCANIC,Terras Vulcânicas,Volcanic Lands,nome de conteúdo — biome,24,
+BIOME_SUBTERRANEAN,Subterrâneo,Underground,nome de conteúdo — biome,24,
+MOUNT_ON_FOOT,A pé,On Foot,nome de conteúdo — mount,24,
+MOUNT_DRAFT_HORSE,Cavalo de Tração,Draft Horse,nome de conteúdo — mount,24,
+MOUNT_BOAR,Javali,Boar,nome de conteúdo — mount,24,
+MOUNT_LIZARD,Lagarto,Lizard,nome de conteúdo — mount,24,
+MOUNT_DRAGONFLY,Libélula,Dragonfly,nome de conteúdo — mount,24,
+MOUNT_ROT_ELK,Alce da Podridão,Rot Elk,nome de conteúdo — mount,24,
+IMPULSE_FORCED_HARVEST,Colheita Forçada,Forced Harvest,nome de conteúdo — impulse,24,
+IMPULSE_CALL_TO_ARMS,Chamada às Armas,Call to Arms,nome de conteúdo — impulse,24,
+IMPULSE_FREE_FAIR,Feira Livre,Free Fair,nome de conteúdo — impulse,24,
+IMPULSE_PROTECTED_ROUTE,Rota Protegida,Protected Route,nome de conteúdo — impulse,24,
+IMPULSE_VIGIL,Vigília,Vigil,nome de conteúdo — impulse,24,
+IMPULSE_ROYAL_PARDON,Perdão Real,Royal Pardon,nome de conteúdo — impulse,24,
+GREED_AUSTERE,Austero,Austere,nome de conteúdo — greed,24,
+GREED_BALANCED,Equilibrado,Balanced,nome de conteúdo — greed,24,
+GREED_LAVISH,Fastuoso,Lavish,nome de conteúdo — greed,24,
+GREED_TYRANT,Tirano,Tyrant,nome de conteúdo — greed,24,
+SECRET_ROOT_CHAMBER,Câmara de Raiz,Root Chamber,nome de conteúdo — secret,24,
+SECRET_BURIED_STATUE,Estátua Enterrada,Buried Statue,nome de conteúdo — secret,24,
+SECRET_CAMPAIGN_JOURNAL,Diário de Campanha,Campaign Journal,nome de conteúdo — secret,24,
+SECRET_ANCIENT_SEED,Semente Anciã,Ancient Seed,nome de conteúdo — secret,24,
+WILDLIFE_RABBIT,Coelho,Rabbit,nome de conteúdo — wildlife,24,
+WILDLIFE_DEER,Veado,Deer,nome de conteúdo — wildlife,24,
+WILDLIFE_BOAR,Javali,Boar,nome de conteúdo — wildlife,24,
+COMPANION_SNIFFER,Farejador,Sniffer,nome de conteúdo — companion,24,
+COMPANION_HERALD,Arauto,Herald,nome de conteúdo — companion,24,
+COMPANION_MAGPIE,Pega,Magpie,nome de conteúdo — companion,24,
+CHAOS_SPORE_FIELD,Campo de Esporos,Spore Field,nome de conteúdo — chaos,24,
+CHAOS_INVERTED_FLOODPLAIN,Várzea Invertida,Inverted Floodplain,nome de conteúdo — chaos,24,
+CHAOS_BLIND_FURROW,Sulco Cego,Blind Furrow,nome de conteúdo — chaos,24,
+CHAOS_BONE_MARKET,Mercado dos Ossos,Bone Market,nome de conteúdo — chaos,24,
+PEOPLE_ENRAMADOS,Enramados,Enramados,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_PORTUARIOS,Portuários,Portuários,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_FENDA,Fenda,Fenda,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_HORTA,Horta,Horta,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_FORNALHA,Fornalha,Fornalha,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_SOBRAIZ,Sob-Raiz,Sob-Raiz,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+JOURNAL_01_TITLE,Lista dos nichos de estrada,The roadside shrine list,título de diário,32,Ato 1 (§79). Seis aldeias pagavam para o mesmo fundo.
+JOURNAL_01_BODY,"Nichos a caiar antes das chuvas: o da bifurcação da Horta, os dois da estrada larga, o do vau, o da subida, e o que fica no meio do sobreiro.
+
+Cal: dois alqueires. Óleo: o do costume.
+
+Pagam: Enramados, Portuários, Horta, Fornalha, Fenda, Sob-Raiz. Partes iguais, como sempre.
+
+Falta assentar quem varre o do sobreiro este ano. No ano passado foi a Fenda e ninguém reclamou.","Shrines to whitewash before the rains: the one at the Horta fork, the two on the wide road, the one at the ford, the one on the climb, and the one out in the cork oak.
+
+Lime: two bushels. Oil: the usual.
+
+Paying: Enramados, Portuários, Horta, Fornalha, Fenda, Sob-Raiz. Equal shares, as always.
+
+Still to settle who sweeps the cork oak one this year. Last year it was Fenda and nobody complained.",texto de diário,600,Ato 1 (§79). Primeira versão; mede-se contra o diário 9. Seis aldeias pagavam para o mesmo fundo.
+JOURNAL_02_TITLE,Manifesto de porto,Harbour manifest,título de diário,32,"Ato 1 (§79). Havia comércio, língua comum e famílias misturadas."
+JOURNAL_02_BODY,"Entrada de terça. Barca da Horta: cebola, dois fardos de linho, sal de retorno.
+
+Saída: madeira serrada para a Fornalha, três barris de resina.
+
+Registo da semana: casaram Anta, de cá, com Milheiro da Horta. Casou a filha do mestre de barcas com um dos Enramados, e o pai não veio.
+
+Escrito na fala do porto, que toda a gente lê.","Tuesday's arrival. Barge from Horta: onions, two bales of flax, salt on the return.
+
+Out: sawn timber for Fornalha, three barrels of resin.
+
+This week's register: Anta, of this place, married Milheiro of Horta. The bargemaster's daughter married one of the Enramados, and the father did not come.
+
+Written in harbour speech, which everyone reads.",texto de diário,600,"Ato 1 (§79). Primeira versão; mede-se contra o diário 9. Havia comércio, língua comum e famílias misturadas."
+JOURNAL_03_TITLE,Carta de fundação da procissão,Charter of the procession,título de diário,32,"Ato 1 (§79). Instituída para levar uma coisa a uma capela uma vez, e nunca mais."
+JOURNAL_03_BODY,"Fica instituída a procissão, para levar à capela do alto o que aqui se guarda. Uma vez.
+
+Sai à alvorada. Vai pelo caminho de baixo, que é mais longo e não passa por casas.
+
+Acabada a entrega, desfaz-se. Não se repete no ano seguinte nem em nenhum.
+
+Assinam os seis. O andor fica à guarda de quem o carregar primeiro.","The procession is hereby instituted, to carry what is kept here up to the chapel on the height. Once.
+
+It leaves at dawn. It takes the lower road, which is longer and passes no houses.
+
+The delivery made, it disbands. It is not repeated the following year, nor any year.
+
+The six sign. The litter stays in the keeping of whoever carries it first.",texto de diário,600,"Ato 1 (§79). Primeira versão; mede-se contra o diário 9. Instituída para levar uma coisa a uma capela uma vez, e nunca mais."
+JOURNAL_04_TITLE,O livro da Contadeira,The Counting Woman's book,título de diário,32,Ato 2 (§79). Seis entregas para fora. Nenhuma de volta.
+JOURNAL_04_BODY,"Livro de contas da casa do cruzamento. Começa hoje.
+
+Passou para poente: um carro dos Enramados, coberto. Um da Horta, coberto. Um da Fenda. Um dos Portuários. Um da Fornalha. Um dos Sob-Raiz, que levava mais gente do que carga.
+
+Seis.
+
+Para nascente, esta semana: nada. Para nascente, semana passada: nada. Para nascente, no mês inteiro: nada.
+
+Anoto na mesma, porque a conta é a conta e há de fazer falta a alguém.
+
+Deixo espaço para quando voltarem.","Accounts book of the house at the crossroad. Begins today.
+
+Went west: one cart of the Enramados, covered. One of Horta, covered. One of Fenda. One of the Portuários. One of Fornalha. One of the Sob-Raiz, carrying more people than freight.
+
+Six.
+
+Eastward, this week: nothing. Eastward, last week: nothing. Eastward, the whole month: nothing.
+
+I write it down all the same, because the count is the count and it will matter to someone.
+
+I leave room for when they come back.",texto de diário,600,Ato 2 (§79). Primeira versão; mede-se contra o diário 9. Seis entregas para fora. Nenhuma de volta.
+JOURNAL_05_TITLE,Requisição de material,Requisition for wall stock,título de diário,32,"Ato 2 (§79). «Do costume», em quantidade que dá exatamente uma árvore."
+JOURNAL_05_BODY,"Requisição para o segmento sul, do costume.
+
+Estacas: cento e vinte, de quatro palmos. Tabique: o que der para dezasseis panos. Lascas: as que sobrarem da Fenda. Escória: dois carros, se a Fornalha mandar.
+
+Total, pelo cálculo do mestre: uma.
+
+Vem pelo caminho de baixo, à noite, como das outras vezes. Não se descarrega à porta da vila, e não se pergunta ao carreiro de onde vem.
+
+Assentar em separado do resto, como sempre se assentou.","Requisition for the south segment, the usual.
+
+Stakes: one hundred and twenty, four spans. Lath: enough for sixteen panels. Splinters: whatever Fenda has left over. Slag: two carts, if Fornalha sends them.
+
+Total, by the master's reckoning: one.
+
+It comes by the lower road, at night, as the other times. It is not unloaded at the village gate, and the carter is not asked where it came from.
+
+To be entered apart from the rest, as it has always been entered.",texto de diário,600,"Ato 2 (§79). Primeira versão; mede-se contra o diário 9. «Do costume», em quantidade que dá exatamente uma árvore."
+JOURNAL_06_TITLE,Carta de quem foi ver,Letter from the one who went,título de diário,32,Ato 2 (§79). Os seis materiais cheiram todos ao mesmo.
+JOURNAL_06_BODY,"Fui aos seis, como pediste, e levei o tempo que disse que levava.
+
+A madeira dos Enramados. As estacas da Horta. As lascas da Fenda. O tabique dos Portuários. A escória da Fornalha. E o que os Sob-Raiz puseram no deles, que ninguém sabe nomear.
+
+Molhei um pedaço de cada e cheirei ao pé do lume.
+
+É o mesmo cheiro. Nos seis.
+
+Não te digo mais por carta.","I went to all six, as you asked, and it took the time I said it would.
+
+The timber of the Enramados. The stakes of Horta. The splinters of Fenda. The lath of the Portuários. The slag of Fornalha. And whatever the Sob-Raiz put in theirs, which nobody can name.
+
+I wetted a piece of each and smelled it by the fire.
+
+It is the same smell. All six.
+
+I will not tell you more by letter.",texto de diário,600,Ato 2 (§79). Primeira versão; mede-se contra o diário 9. Os seis materiais cheiram todos ao mesmo.
+JOURNAL_07_TITLE,Bilhete à porta do forno,Note nailed to the oven door,título de diário,32,Ato 3 (§79). O forno foi aceso «para a vigília». Ninguém o apagou porque a vigília não acabou.
+JOURNAL_07_BODY,"Aceso para a vigília.
+
+Não se apaga sem ordem de quem a mandou fazer. Quem estiver de turno alimenta duas vezes ao dia, de manhã e ao pôr do sol, e assina por baixo. Carvão do monte, e nunca madeira verde.
+
+Alimentei. — o ferreiro velho
+Alimentei. — o filho
+Alimentei. — o filho
+Alimentei. — a mulher do filho
+Alimentei. — não diz
+Alimentei. — não diz
+Alimentei.","Lit for the vigil.
+
+It is not put out without an order from the one who called it. Whoever is on shift feeds it twice a day, at morning and at sundown, and signs below. Charcoal from the stack, and never green wood.
+
+Fed it. — the old smith
+Fed it. — the son
+Fed it. — the son
+Fed it. — the son's wife
+Fed it. — no name
+Fed it. — no name
+Fed it.",texto de diário,600,Ato 3 (§79). Primeira versão; mede-se contra o diário 9. O forno foi aceso «para a vigília». Ninguém o apagou porque a vigília não acabou.
+JOURNAL_08_TITLE,As contas do Dono da Praça,The Square Owner's accounts,título de diário,32,Ato 3 (§79). Cinco pagavam ao sexto para fazer o trabalho sozinho. Depois deixaram de pagar.
+JOURNAL_08_BODY,"Conta corrente com os cinco, pelo turno dos Sob-Raiz.
+
+Enramados: pago até à colheita. Horta: pago. Portuários: pago, com desconto de frete. Fornalha: pago em ferro. Fenda: pago, com atraso de dois meses e sem juro, que se perdoou.
+
+Ano seguinte — Enramados: nada. Horta: nada. Portuários: nada. Fornalha: nada. Fenda: nada.
+
+Ano seguinte, igual. E o seguinte, e o outro.
+
+Mandei cobrar duas vezes e as duas cartas voltaram por mão do próprio carteiro.
+
+Ninguém veio dizer que parava. Só pararam.","Running account with the five, for the Sob-Raiz shift.
+
+Enramados: paid to harvest. Horta: paid. Portuários: paid, freight discounted. Fornalha: paid in iron. Fenda: paid, two months late and no interest, which was forgiven.
+
+Following year — Enramados: nothing. Horta: nothing. Portuários: nothing. Fornalha: nothing. Fenda: nothing.
+
+Following year, the same. And the next, and the one after.
+
+I sent to collect twice and both letters came back by the carrier's own hand.
+
+Nobody came to say they were stopping. They just stopped.",texto de diário,600,Ato 3 (§79). Primeira versão; mede-se contra o diário 9. Cinco pagavam ao sexto para fazer o trabalho sozinho. Depois deixaram de pagar.
+JOURNAL_09_TITLE,Escala de turnos,A roster of shifts,título de diário,32,"Ato 3 (§79). Datada do ano em que A Podridão começa, com a semana seguinte já preenchida. É o espécime da §79: setenta e uma palavras, e nada explicado."
+JOURNAL_09_BODY,"Semana trinta e uma.
+
+Turno da manhã: Ourique, Bendafé, o rapaz do Vale que ainda não disse o nome.
+Turno da tarde: Marta, e a irmã se a perna deixar.
+Turno da noite: eu.
+
+Falta óleo para nove dias. Mandei recado acima pela terceira vez.
+Não é queixa. É a conta.
+
+Semana trinta e dois, mesma ordem.
+Semana trinta e três, mesma ordem.","Week thirty-one.
+
+Morning shift: Ourique, Bendafé, the boy from the Vale who still hasn't given his name.
+Afternoon shift: Marta, and her sister if the leg allows.
+Night shift: me.
+
+Oil short by nine days. Sent word up for the third time.
+It is not a complaint. It is the count.
+
+Week thirty-two, same order.
+Week thirty-three, same order.",texto de diário,600,"Ato 3 (§79). Primeira versão; mede-se contra o diário 9. Datada do ano em que A Podridão começa, com a semana seguinte já preenchida. É o espécime da §79: setenta e uma palavras, e nada explicado."
+JOURNAL_10_TITLE,Registo de travessias,Register of crossings,título de diário,32,"Ato 4 (§79). Desde o soterramento, ninguém veio do outro lado."
+JOURNAL_10_BODY,"Registo da ponte. Quem passa, para que lado, e a que horas.
+
+Para lá: doze. Para cá: nenhum.
+Para lá: nove. Para cá: nenhum.
+Para lá: quatro. Para cá: nenhum.
+Para lá: um. Para cá: nenhum.
+
+Deixei de assentar as horas porque são todas iguais.
+
+Os que vão levam alguma coisa. Ponho o que levam, quando me deixam ver.
+
+Hoje não foi ninguém.","Bridge register. Who crosses, which way, and at what hour.
+
+Over: twelve. Back: none.
+Over: nine. Back: none.
+Over: four. Back: none.
+Over: one. Back: none.
+
+I stopped writing the hours because they are all the same.
+
+Those who go carry something. I put down what they carry, when they let me see.
+
+Today nobody went.",texto de diário,600,"Ato 4 (§79). Primeira versão; mede-se contra o diário 9. Desde o soterramento, ninguém veio do outro lado."
+JOURNAL_11_TITLE,A última ordem do conselho,The council's last order,título de diário,32,Ato 4 (§79). «Quem a mantiver é rendido à volta do ano.» Não há registo de rendição: as duas linhas ficam em branco.
+JOURNAL_11_BODY,"Do conselho comum, aos seis.
+
+A luz mantém-se. Fica ao cuidado de quem tiver o turno, lá em baixo, onde sempre esteve, e não sobe à superfície por motivo nenhum.
+
+Quem a mantiver é rendido à volta do ano. O óleo é dos seis, em partes iguais, e entrega-se antes das chuvas.
+
+A rendição assenta-se aqui, com o nome de quem entra e o de quem sai.
+
+Assinam: Enramados, Horta, Portuários, Fornalha, Fenda, Sob-Raiz.
+
+Entra: ———
+Sai: ———","From the common council, to the six.
+
+The light is kept. It falls to whoever holds the shift, down below, where it has always been, and it does not come up to the surface for any reason.
+
+Whoever keeps it is relieved at the turn of the year. The oil is the six's, in equal shares, delivered before the rains.
+
+The relief is entered here, with the name of the one coming in and the one going out.
+
+Signed: Enramados, Horta, Portuários, Fornalha, Fenda, Sob-Raiz.
+
+In: ———
+Out: ———",texto de diário,600,Ato 4 (§79). Primeira versão; mede-se contra o diário 9. «Quem a mantiver é rendido à volta do ano.» Não há registo de rendição: as duas linhas ficam em branco.
+JOURNAL_12_TITLE,O diário de um rei,A king's journal,título de diário,32,"Ato 4 (§79). A última entrada é de amanhã, e a letra é a do teu rei. É a única vez que a §79 diz a frase."
+JOURNAL_12_BODY,"Décimo dia. Não chegaram ao muro. Nunca chegam ao muro.
+
+Os celeiros dão para o inverno se ninguém sair. Mandei não sair.
+
+Se abrir o portão, acaba. Já o pensei quatro vezes hoje.
+
+Não abro, porque no dia em que abrir tenho de contar os que ficaram, e não sei esse número. Enquanto durar o cerco, não tenho de o saber.
+
+[amanhã]
+Não estava a atacar-me. Estava a pedir para ir embora.","Tenth day. They did not reach the wall. They never reach the wall.
+
+The granaries will hold the winter if nobody goes out. I ordered nobody out.
+
+If I open the gate, it ends. I have thought it four times today.
+
+I do not open it, because the day I do I have to count who is left, and I do not know that number. While the siege lasts, I do not have to know it.
+
+[tomorrow]
+It was not attacking me. It was asking to leave.",texto de diário,600,"Ato 4 (§79). Primeira versão; mede-se contra o diário 9. A última entrada é de amanhã, e a letra é a do teu rei. É a única vez que a §79 diz a frase."
+ROT_NAME,A Podridão,The Rot,nome da ameaça,16,"Artigo definido faz parte do nome, nas duas línguas."
+CURRENCY_COIN,Moeda,Coin,moeda,12,
+CURRENCY_COIN_PLURAL,moedas,coins,"moeda, plural",12,
+CURRENCY_ROYAL_SEED,Semente Real,Royal Seed,moeda de meta-progresso,16,
+CURRENCY_FAVOR,Favor,Favor,moeda de diplomacia,12,EN em inglês dos EUA (guia de estilo).
+DAY_N,Dia %d,Day %d,contador de dias,10,"O exemplo da §27 (DIA_N): chave inteira com marcador, nunca concatenação."
+UI_NEW_GAME,Novo jogo,New Game,menu principal,20,
+UI_CONTINUE,Continuar,Continue,menu principal,20,
+UI_OPTIONS,Opções,Options,menu,20,
+UI_CREDITS,Créditos,Credits,menu principal,20,
+UI_QUIT,Sair,Quit,menu,20,
+UI_PAUSED,Pausa,Paused,ecrã de pausa,20,
+UI_RESUME,Retomar,Resume,ecrã de pausa,20,
+UI_SAVE_AND_QUIT,Guardar e sair,Save & Quit,ecrã de pausa,24,
+UI_CHOOSE_PEOPLE,Escolhe o teu povo,Choose Your People,seleção de povo,28,
+UI_WORLD_SEED,Semente do mundo,World Seed,seleção de semente,24,Semente = seed (§42). Não confundir com Semente Real.
+UI_SEED_COPY,Copiar semente,Copy Seed,pausa: seed visível e copiável (§42),24,
+UI_SEED_RANDOM,Semente aleatória,Random Seed,seleção de semente,24,
+UI_SLOT_N,Espaço %d,Slot %d,espaço de gravação,16,Três espaços com rotação (§62).
+UI_SLOT_EMPTY,Vazio,Empty,espaço de gravação,16,
+UI_SLOT_DAY_N,Dia {day} · {people},Day {day} · {people},resumo de gravação: dia e povo,32,"Dois marcadores: nomeados, com String.format (guia de estilo §4)."
+UI_AUDIO,Áudio,Audio,opções,20,
+UI_VIDEO,Vídeo,Video,opções,20,
+UI_CONTROLS,Controlos,Controls,opções,20,
+UI_ACCESSIBILITY,Acessibilidade,Accessibility,opções,20,
+UI_LANGUAGE,Idioma,Language,opções,20,
+OPT_MASTER_VOLUME,Volume geral,Master Volume,opções de áudio,24,
+OPT_MUSIC_VOLUME,Música,Music,opções de áudio,24,
+OPT_SFX_VOLUME,Efeitos,Sound Effects,opções de áudio,24,
+OPT_FULLSCREEN,Ecrã inteiro,Fullscreen,opções de vídeo,24,
+OPT_WINDOWED,Janela,Windowed,opções de vídeo,24,
+OPT_CRISP_PIXELS,Pixels nítidos,Crisp Pixels,opções de vídeo: escala inteira com barras (§19),24,
+OPT_DAY_LENGTH,Duração do dia,Day Length,acessibilidade: 240–540 s (§26),24,
+OPT_SCREEN_SHAKE,Tremor de ecrã,Screen Shake,acessibilidade,24,
+OPT_FLASHES,Clarões,Flashes,acessibilidade: fotossensibilidade,24,
+OPT_COLORBLIND,Modo para daltonismo,Colorblind Mode,acessibilidade,28,
+OPT_CONTRAST,Contraste,Contrast,acessibilidade,24,
+OPT_CAPTIONS,Legendas de sons,Sound Captions,acessibilidade (§26),24,
+OPT_TEXT_SIZE,Tamanho do texto,Text Size,acessibilidade,24,
+OPT_REMAP,Remapear comandos,Remap Controls,controlos,28,
+OPT_TELEMETRY,Partilhar dados anónimos,Share Anonymous Data,"telemetria, desligada por omissão (§32)",32,
+UI_TELEMETRY_PROMPT,"Queres partilhar dados anónimos de jogo para ajudar a afinar o Empire? Sem nome, sem IP. Podes mudar isto nas opções.","Share anonymous gameplay data to help tune Empire? No name, no IP. You can change this in Options.",primeiro arranque (§32),160,'Empire' é codinome — substituir quando houver nome (Bíblia de nomes).
+UI_YES,Sim,Yes,confirmação,8,
+UI_NO,Não,No,confirmação,8,
+UI_INTERREGNUM,Interregno,Interregnum,morte do rei sem herdeiro (§16),20,
+UI_CROWN_FALLEN,A coroa caiu,The Crown Has Fallen,derrota (§16),28,
+UI_SUCCESSION,Sucessão,Succession,sucessão (§15),20,
+EPILOGUE_UNION,União,Union,epílogo (§17),16,
+EPILOGUE_DOMINION,Domínio,Dominion,epílogo (§17),16,
+CAPTION_DAWN_BELL,[Sino da manhã],[Morning bell],legenda de som (§26),32,
+CAPTION_DUSK_WARNING,[A Podridão desperta],[The Rot stirs],legenda de som (§26),32,
+CAPTION_ROT_NEAR,[A Podridão aproxima-se],[The Rot draws near],legenda de som (§26),32,
+CAPTION_NIGHT,[Cai a noite],[Night falls],legenda de som (§26),32,
+CAPTION_WALL_BREACHED,[Uma muralha cedeu],[A wall gives way],legenda de som (§26),32,
+CAPTION_KING_HIT,[O monarca foi ferido],[The monarch is hurt],legenda de som (§26),32,
+CAPTION_DEBT_DUE,[O prazo da dívida aproxima-se],[The debt falls due],legenda de som (§26),32,
+CAPTION_SECRET_NEAR,[Há um segredo por perto],[A secret is near],legenda de som (§26),32,
+OFFER_THE_LAME,Dá-me o que já não anda.,Give me what no longer walks.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_JUST_LOOKING,Nada. Só quero ver.,Nothing. I only want to look.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_ONE_PER_DOOR,Um por cada porta.,One for every door.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_OPEN_GATE,Deixa a porta aberta.,Leave the door open.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_ALL_THAT_SHINES,"O que brilha, e nada mais.","What shines, and nothing else.",fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_THE_TREE_YOU_PLANTED,A árvore que plantaste.,The tree you planted.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_TELL_ME_A_NAME,Diz-me um nome.,Tell me a name.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_WHAT_YOU_BURIED,O que enterraste.,What you buried.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_WHAT_WAS_HERE_BEFORE,O que estava aqui antes de ti.,What was here before you.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_KEEP_THE_LANTERN,Fica com a candeia por uma noite.,Keep the lantern for one night.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_AN_HEIR,Um herdeiro.,An heir.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_GIVE_BACK_WHATS_MINE,Devolve-me o que é meu.,Give me back what is mine.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+TITLE_THE_ONE_WHO_STAYED,O Que Ficou,The One Who Stayed,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_THE_ONE_WHO_STAYED,Aguentou,Held out,"feito, para o registo e a encomendação — §76",28,
+TITLE_SHE_WHO_HELD_THE_GATE,A Que Ficou na Porta,She Who Stayed at the Gate,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_SHE_WHO_HELD_THE_GATE,Último na porta,Last at the gate,"feito, para o registo e a encomendação — §76",28,
+TITLE_THE_ONE_WHO_BROKE_STONE,O Que Partiu a Pedra,The One Who Broke the Stone,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_THE_ONE_WHO_BROKE_STONE,Partiu o cerco,Broke the siege,"feito, para o registo e a encomendação — §76",28,
+TITLE_THE_COUNTER,O Contador,The Counter,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_THE_COUNTER,Contou,Counted,"feito, para o registo e a encomendação — §76",28,
+TITLE_THE_ONE_WHO_BROUGHT_THE_OTHERS,O Que Trouxe os Outros,The One Who Brought the Others,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_THE_ONE_WHO_BROUGHT_THE_OTHERS,Trouxe os outros,Brought the others,"feito, para o registo e a encomendação — §76",28,
+TITLE_SHE_WHO_SPOKE_WITH_HER,A Que Falou com Ela,She Who Spoke With Her,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_SHE_WHO_SPOKE_WITH_HER,Falou com ela,Spoke with her,"feito, para o registo e a encomendação — §76",28,
+TITLE_THE_DRY_ONE,O Seco,The Dry One,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_THE_DRY_ONE,Não comeu,Did not eat,"feito, para o registo e a encomendação — §76",28,
+TITLE_SHE_WHO_CAME_BACK,A Que Voltou,She Who Came Back,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_SHE_WHO_CAME_BACK,Voltou,Came back,"feito, para o registo e a encomendação — §76",28,
+TITLE_THE_ONE_WITH_THE_SAME_SPEAR,O Da Mesma Lança,The One With the Same Spear,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
+FEAT_THE_ONE_WITH_THE_SAME_SPEAR,Não largou,Never let go,"feito, para o registo e a encomendação — §76",28,
+CHAPTER_CROSSROAD_SOULS,As Alminhas do Cruzamento,The Souls at the Crossroad,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_CROSSROAD_SOULS,"Deixa uma moeda no nicho e as almas pintadas apontam por onde a Podridão vem esta noite. Tira uma moeda e, durante três dias, todas as leituras de estrada mentem — inclusive as do teu companheiro.","Leave a coin in the shrine and the painted souls point to where the Rot comes from tonight. Take a coin and, for three days, every road reading lies — your companion's included.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_CROSSROAD_SOULS,Ninguém. Um nicho de pedra com almas em chamas pintadas a vermelho e a branco por alguém que não sabia desenhar mãos.,"No one. A stone shrine with souls in flames, painted red and white by someone who could not draw hands.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_STOPPED_PILGRIMAGE,A Romaria Parada,The Halted Pilgrimage,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_STOPPED_PILGRIMAGE,Atravessar este segmento a pé custa o dobro do tempo. Larga uma moeda no andor e a procissão leva-te ao outro lado em 8 s — mas as tuas tropas andam ao passo dela durante um dia inteiro.,Crossing this segment on foot costs twice the time. Drop a coin on the litter and the procession carries you across in 8 s — but your troops keep its pace for a whole day.,"a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_STOPPED_PILGRIMAGE,"O Mordomo da Festa, que garante que falta pouco. Falta pouco desde o princípio.","The Feast Steward, who assures you it is not far now. It has not been far since the start.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_HOUSE_THAT_COUNTS,A Casa Que Conta,The House That Counts,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_HOUSE_THAT_COUNTS,"A Contadeira conta tudo o que passa. À terceira vez que passares, fica com um nome teu. Se à primeira contagem lhe deres um nome de livre vontade, ela diz-te a massa exata da Podridão, todas as noites, até ao fim da partida.","The Counting Woman counts everything that passes. On your third crossing she keeps a name of yours. Give her one freely at the first count and she tells you the Rot's exact mass, every night, to the end of the run.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_HOUSE_THAT_COUNTS,"A Contadeira. Enquanto fala contigo continua a contar, em voz baixa, por cima do que estás a dizer.","The Counting Woman. While she speaks to you she keeps counting, under her breath, over whatever you are saying.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_INVERTED_FLOODPLAIN,A Várzea Invertida,The Inverted Floodplain,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_INVERTED_FLOODPLAIN,"As faixas trocam. A faixa aérea anda-se, a superfície voa-se, e a Podridão chega por cima — a candeia fica por baixo de ti.","The bands swap. The air band is walked, the surface is flown, and the Rot arrives from above — the lantern hangs below you.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_INVERTED_FLOODPLAIN,"Uma moura encantada, de cabeça para baixo no fundo de um poço que está no céu, que pergunta pelas horas.","An enchanted moura, upside down at the bottom of a well that is in the sky, asking for the time.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_BLIND_FURROW,O Sulco Cego,The Blind Furrow,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_BLIND_FURROW,"Não há luz. Só o Cavaleiro Selado se orienta, porque já não usava os olhos. Qualquer luz que leves revela 60 px à tua volta e acrescenta +30 à massa desta noite — o que te vê também vê a luz.","There is no light. Only the Sealed Knight finds his way, because he had stopped using his eyes. Any light you carry reveals 60 px around you and adds +30 to tonight's mass — whatever sees you sees the light too.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_BLIND_FURROW,Pessoas a conversar a trinta metros. Nunca se chega a trinta metros.,People talking thirty metres away. You never get to thirty metres.,o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_LIT_OVEN,O Forno Aceso,The Lit Oven,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_LIT_OVEN,"Qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, cria raiz onde estiver — dentro das tuas muralhas inclusive.",Any troop that sleeps here heals completely and leaves with an ember in its chest. It burns for six days. On the seventh it takes root wherever it stands — inside your walls included.,"a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_LIT_OVEN,"Um padeiro que não tem cara, porque a cara é a boca do forno.","A baker with no face, because the face is the mouth of the oven.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_BONE_MARKET,O Mercado dos Ossos,The Bone Market,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_BONE_MARKET,"Mercenários a metade do preço, dívida ao dobro do juro. Não se sai da praça com dívida por pagar — o portão não abre.","Mercenaries at half price, debt at twice the interest. No one leaves the square with debt unpaid — the gate does not open.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_BONE_MARKET,"Os últimos donos da mercadoria, ainda de pé nas bancas, à espera de serem pagos. São sete.","The last owners of the goods, still standing at their stalls, waiting to be paid. There are seven.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_SPORE_FIELD,O Campo de Esporos,The Spore Field,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_SPORE_FIELD,As tropas ganham 20% de dano e perdem 15% de vida por dia enquanto lá estiverem.,Troops gain 20% damage and lose 15% health per day for as long as they stay.,"a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_SPORE_FIELD,"A cidade Sob-Raiz por baixo, intacta, e as pessoas ainda lá a trabalhar. Ninguém lá em baixo pede ajuda.","The Under-Root city below, intact, and the people still working in it. No one down there asks for help.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_BRIDGE_OF_RETURNERS,A Ponte dos Que Voltaram,The Bridge of Those Who Came Back,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_BRIDGE_OF_RETURNERS,"Atravessar custa uma memória — uma região revelada do mapa volta a ficar escura, à sorte. Voltar atrás devolve-a. À sexta travessia, a ponte dá-te um nome e um segmento da tua muralha muda de material sozinho.","Crossing costs a memory — a revealed region of the map goes dark again, at random. Going back returns it. On the sixth crossing the bridge gives you a name, and one segment of your wall changes material on its own.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_BRIDGE_OF_RETURNERS,O guarda do registo de travessias. Há pegadas no sentido contrário e nunca ninguém vem de lá.,The keeper of the crossing register. There are footprints going the other way and no one ever comes from there.,o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+CHAPTER_ENDLESS_SIEGE,O Cerco Que Não Acaba,The Siege That Does Not End,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
+CHAPTER_LAW_ENDLESS_SIEGE,"Entras e ficas numa noite que não acaba. Só termina de duas maneiras: partes a muralha, ou abres o portão por dentro.","You enter and stay in a night that does not end. It finishes in two ways only: you break the wall, or you open the gate from inside.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_WHO_ENDLESS_SIEGE,"Um rei que não manda parar o cerco, porque no dia em que mandar tem de contar os mortos.","A king who does not call off the siege, because the day he does he has to count the dead.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
+AMARGUEIRO_FELL,Cortar,Fell,destino de um Amargueiro — §74,20,
+AMARGUEIRO_CONSECRATE,Consagrar,Consecrate,destino de um Amargueiro — §74,20,
+AMARGUEIRO_LEAVE,Deixar,Leave,destino de um Amargueiro — §74,20,
+CREATURE_TENDER,Zelador,Tender,nome de conteúdo — creature,24,"Nasce da Dívida da Candeia ≥ 6. Não ataca, não morre: afasta-se."

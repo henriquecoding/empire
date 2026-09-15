@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MountData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/mount_data.gd" id="1_aoyyr"]
+
+[resource]
+script = ExtResource("1_aoyyr")
+id = &"dragonfly_mount"
+display_key = "MOUNT_DRAGONFLY"
+speed_multiplier = 1.9
+can_change_band = true
+flies = true
+obtain = &"fortress"
+obtain_ref = &"horta"
+heal_days = 2

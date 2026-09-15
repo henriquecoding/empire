@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/biome_data.gd" id="1_au638"]
+
+[resource]
+script = ExtResource("1_au638")
+id = &"floodplain"
+display_key = "BIOME_FLOODPLAIN"
+people = &"horta"
+creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
+resources = Array[StringName]([&"fertile", &"water"])
+region_screens = Vector2i(4, 6)
+music_profile = &"music_floodplain"
+wildlife = Array[StringName]([&"rabbit", &"deer"])

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MountData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/mount_data.gd" id="1_qtfg8"]
+
+[resource]
+script = ExtResource("1_qtfg8")
+id = &"on_foot"
+display_key = "MOUNT_ON_FOOT"
+heal_days = 2

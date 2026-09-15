@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_k12yd"]
+
+[resource]
+script = ExtResource("1_k12yd")
+id = &"enramados_start_base_01"
+kind = &"start_base"
+people = &"enramados"
+scene = "res://scenes/segments/enramados/enramados_start_base_01.tscn"
+width_px = 640
+build_slots = 2
+cavity_slots = 1
+passages = 1
+resource = &"water"
+rules = Array[StringName]([&"center"])
+min_per_region = 1
+max_per_region = 1
+subject = &"castle_tree"

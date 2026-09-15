@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ImpulseData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/impulse_data.gd" id="1_q0n2e"]
+
+[resource]
+script = ExtResource("1_q0n2e")
+id = &"forced_harvest"
+display_key = "IMPULSE_FORCED_HARVEST"
+icon = &"sickle"
+coin_cost = 12
+benefit = &"production_mult_today"
+benefit_value = 1.8
+drawback = &"farms_idle_tomorrow"
+drawback_value = 1.0
+drawback_days = 1

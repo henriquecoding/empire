@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_j01p0"]
+
+[resource]
+script = ExtResource("1_j01p0")
+id = &"lighthouse"
+display_key = "BUILDING_LIGHTHOUSE"
+category = &"defense"
+cost = 40
+max_health = 320
+build_work = 80.0
+width_px = 64
+effect_params = {
+&"blocks_summon": 1.0,
+&"light_radius": 300.0
+}
+shadow_width = 64
+tags = Array[StringName]([&"landmark", &"warm_light"])
