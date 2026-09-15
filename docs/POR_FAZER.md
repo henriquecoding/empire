@@ -10,17 +10,19 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **30 feitos** e **23 por fazer** |
+| Tickets | **53**, dos quais **31 feitos** e **22 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 14 de 17 — o F1-01 ao F1-14, inteiros. Faltam o F1-15, o F1-16 e o F1-17 |
-| Suite | 323 casos, 318 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 15 de 17 — o F1-01 ao F1-15, inteiros. Faltam o F1-16 e o F1-17 |
+| Suite | 332 casos, 324 a passar, 8 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 62 das 63 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
+| Perguntas em aberto | 64 das 65 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
 
 ```bash
 # a contagem de cima, a partir da árvore
 for f in docs/backlog/*.md; do [ "$(basename $f)" = README.md ] && continue
   grep -m1 '^Estado' "$f" | sed 's/^Estado *//'; done | sort | uniq -c
+# as perguntas escritas
+grep -c '^### Q-' docs/QUESTIONS.md
 ```
 
 ---
@@ -38,25 +40,32 @@ que faltam.
 
 ---
 
-## Fase 1 — 3 por fazer
+## Fase 1 — 2 por fazer
 
-**Desbloqueados agora** (as dependências estão todas feitas):
+**Desbloqueado agora** (as dependências estão todas feitas):
 
 | | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
 |---|---|---|---|
-| **F1-15** | Cenário de combate noturno para afinação | F1-09 ✔ | A noite 5 ganha-se com 1 a 2 mortes; corre em *headless* com delta fixo |
+| **F1-16** | Afinar até sobreviver dez dias ser possível e não trivial | **tudo** ✔ | Sobreviver 10 dias é possível e não é trivial, medido no cenário do F1-15 |
 
-O **F1-09** fechou as três faixas: o `min_day` de cada criatura manda, o Alado
-nasce na faixa aérea e só a torre alta lá chega, e o Cavador sobe do subsolo pela
-passagem que o jogador abriu — a factura do §25 ao minuto 12:00. O **F1-11** pôs
-o *payback* do §06 a ser medido no jogo a andar, e não só nos dados.
+O **F1-15** entregou-lhe o instrumento, e ele já tem por onde começar:
+
+```bash
+godot --headless --path . scenes/tests/night_test.tscn   # dez noites, com torre e sem ela
+```
+
+O que essa tabela diz hoje é que os **dois números do §07 não batem**: sem torre o
+muro cai em todas as noites, a começar na 1, e com torre a noite 5 ganha-se com
+zero mortes em vez das uma ou duas que o dossiê pede. Está na Q-073, e os dois
+testes correspondentes estão saltados com essa razão em `tests/noite_do_07_test.gd`
+— nenhum valor de `data/` foi mexido para os calar, que é o que o `AGENTS.md`
+manda. Afinar é exactamente o trabalho deste ticket.
 
 **À espera de outro ticket:**
 
 | | O que é | Depende de | Critério de aceitação |
 |---|---|---|---|
 | F1-17 | Arte da mancha: a Podridão e a candeia | F1-08 ✔, **ART-02** | Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã |
-| F1-16 | Afinar até sobreviver dez dias ser possível e não trivial | **tudo** | Medido no cenário do F1-15. É o último da fase, por construção. |
 
 ---
 
@@ -149,11 +158,14 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **62 perguntas em aberto** em `docs/QUESTIONS.md`, de 63 escritas — a Q-006
-  fechou com o F1-07. As nove mais recentes (Q-064 a Q-072) são as que encher o
-  tick obrigou a fazer, e duas delas são contradições do dossiê consigo próprio:
-  a Q-068 (o §25 diz três Rastejantes na noite 1 e a massa do §74 dá sete) e a
-  Q-072 (o §06 dá três estados de risco ao rasto e o §49 só escreve dois).
+- **64 perguntas em aberto** em `docs/QUESTIONS.md`, de 65 escritas — a Q-006
+  fechou com o F1-07. As onze mais recentes (Q-064 a Q-074) são as que encher o
+  tick e medir a noite obrigaram a fazer, e quatro delas são contradições do
+  dossiê consigo próprio ou com os seus números: a Q-068 (o §25 diz três
+  Rastejantes na noite 1 e a massa do §74 dá sete), a Q-072 (o §06 dá três
+  estados de risco ao rasto e o §49 só escreve dois), a **Q-073** (o §07 monta o
+  microteste com seis arqueiros e o muro do §10 só tem um posto de guarda) e a
+  **Q-074** (o §66 pede dez dias em dez segundos, e o tick custa o dobro disso).
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 
@@ -171,7 +183,8 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 323 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 332 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. É a mesa de trabalho do F1-16. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |

@@ -114,7 +114,7 @@
   "notas": [
    "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload que lhe chama tick().",
    "O ticket dizia 'feito' e nenhum dos dois existia na árvore recuperada — a mesma perda das nove cenas de segmento (Q-048). Reescritos a 15/09/2026.",
-   "night_survived fica por emitir: precisa de deaths e walls_lost, que ainda ninguém conta. F1-12 e F1-15."
+   "night_survived ficou por emitir até ao F1-15, como aqui estava escrito: a §46 dá-lhe deaths e walls_lost e não havia sistema que os contasse. Conta-os agora o src/core/night_tally.gd, do crepúsculo ao amanhecer, e quem o anuncia é o SimLoop no amanhecer — que é onde o §48 o põe."
   ]
  },
  "F0-07": {
@@ -533,10 +533,18 @@
   "depende": "F1-09",
   "feito": "A noite 5 ganha-se com 1 a 2 mortes; corre em headless com delta fixo",
   "fora": "Afinação propriamente dita — é o F1-16.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
-   "Q-017: três Rastejantes na noite 1, como diz a §25, ou dez, como dá a massa?"
+   "**O instrumento está feito; os números que ele lê não batem com o §07, e ficam escritos.** É a divisão que o ticket já fazia entre o *Feito* e o *Fora*, e o `tests/noite_do_07_test.gd` tem-na às duas metades: seis testes sobre o **instrumento** passam, e os três sobre os **números** estão saltados, cada um com a razão e a pergunta (ADR 0019). Nenhum valor de `data/` foi mexido — *\"um teste de design a falhar é informação, não um obstáculo\"*.",
+   "**Os dois ficheiros que o §66 nomeia existem, com esses nomes.** `tests/sim_harness.gd` é o instrumento: arma o dia, corre a noite ao passo fixo do §19 e devolve o que ela deu. `scenes/tests/night_test.tscn` corre-o de fora do motor — `godot --headless --path . scenes/tests/night_test.tscn` escreve a tabela das dez noites, com torre e sem ela, que é a mesa de trabalho do F1-16. A região fechada é ficheiro à parte (`tests/support/closed_region.gd`): o greybox põe dezoito obras, e é por isso que ele serve para jogar e não para medir.",
+   "**O `night_survived` da §46 passou a ser emitido, e é daí que o instrumento lê.** O F0-06 tinha-o registado por escrito — *\"fica por emitir … entra com o F1-12 e o F1-15\"* — e é este. Quem conta é o `src/core/night_tally.gd`, do crepúsculo ao amanhecer, e quem anuncia é o `SimLoop` no amanhecer, que é onde o §48 o põe. O instrumento **não tem contabilidade própria**: lê o mesmo número que o `docs/qa/PLAYTEST_PLAN.md` manda ler à mão, e por isso não pode divergir do jogo sem alguém dar por isso.",
+   "**\"Vagas de Rastejantes\", como o §07 escreve — e não a tabela de invocação inteira.** Com ela, a partir do dia 4 a massa compra Alados, que voam, e a partir do dia 10 Cavadores, que vêm por baixo: nenhum dos dois se deixa atingir por quem está no chão, em muro ou em torre de arqueiros (Q-006). A noite 5 do §07 ficava **sem combate nenhum para medir** — invocava nove e abatia zero. A regra de escolha do §51 fica intacta; o que muda é o que há para escolher, e `crawlers_only = false` devolve a mancha do jogo.",
+   "**Três defeitos que só o cenário podia mostrar**, e nenhum deles dava erro: 1. O dia entra no relógio **e** no `GameState`. O crepúsculo corre no passo 2 e o espelho do relógio só no fim do tick, e por isso a noite do dia 5 pedia a massa do dia 1: as dez noites davam a mesma tabela. 2. Os abates não se contam pelo `creature_died`. O `NightWatch` emite-o **também** por cada criatura que se dissolve à alvorada (§51), e com ele uma noite sem um tiro disparado dava a tabela cheia de abates. Ficou invocadas menos vivas no último passo antes do amanhecer. 3. O `night_survived` é enfileirado pelo ouvinte do `dawn_broke`, ou seja **durante** a entrega — e a fila do passo 11 serve isso no tick seguinte, de propósito. Sem uma entrega a mais no fim, a noite acabava sempre a zeros, e esta foi a que quase passou por resultado.",
+   "**Q-073 (nova): seis arqueiros num muro que só tem um posto.** A estacaria do §10 publica um posto de guarda; os outros cinco arqueiros recolhem ao núcleo, a 500 px do muro, com 200 px de alcance. A noite inteira é decidida por um. Sem torre o muro cai em todas as noites, a começar na 1, e o §25 diz que a noite 1 *\"é ganha de certeza\"*. Com torre de arqueiros — mais dois postos — a noite 5 dá 16 abates de 16 e zero mortes. A única linha do §07 que a medição confirma é a que ele escreve em maiúsculas: *\"a torre não dá dano — dá certeza\"*, e essa tem teste que passa.",
+   "**Q-074 (nova): os dez dias correm, mas em ≈18 s e não em menos de 10.** O §66 pede 360× o tempo real, o que dá 92 µs por tick; o cenário fechado custa ≈99 µs com sete tropas e duas obras, e ≈275 µs a meio da noite 10. Não colide com o §63 — esse orçamenta 4000 µs e o `jogo_noite_test` mede 176 µs e passa. A medição sai de um binário de editor em *debug*; compará-la com um *export* de release é o primeiro passo, e não custa nada senão correr o CI.",
+   "**As cenas de teste saíram do export.** O `scenes/tests/*` passou para o `exclude_filter` dos três presets, ao lado de `tests/` e `tools/`: uma cena exportada que aponta para um script que o filtro tira é uma cena que só rebenta na máquina do jogador. Nada se perde — a `bands.tscn` corre da árvore, como sempre correu.",
+   "**Fora, e continua fora:** afinar. Mexer nos números do §07 é o F1-16, e é ele que vai ler esta tabela."
   ]
  },
  "F1-16": {

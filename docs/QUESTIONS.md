@@ -603,6 +603,50 @@
   sem coluna nova. Enquanto não houver água autorada, fica como está.
 - **Decide:** o GB-01, ou uma terceira coluna em `buildings.csv` se o playtest a pedir.
 
+### Q-073 · O §07 quer seis arqueiros num muro que só tem um posto
+- **Onde:** o §07 fecha com a receita do microteste — *"monta um cenário fechado: um muro, **seis arqueiros**,
+  uma noite de 105 s, vagas de Rastejantes crescentes. Ajusta até a noite ser ganha com **1–2 mortes no dia 5**
+  e **perdida sem torre no dia 8**"*. O cenário existe (`tests/sim_harness.gd`, F1-15) e mede o contrário.
+- **O que o instrumento lê**, com a estacaria de nível 1 e a semente do cenário:
+
+  | Noite 5 | invoca | abate | mortes | ao muro | muro cai | núcleo |
+  |---|---|---|---|---|---|---|
+  | sem torre | 16 | 10 | **1** | 2 | **sim** | de pé |
+  | com torre de arqueiros | 16 | 16 | **0** | 7 | não | de pé |
+
+  E o dia 8 dá o mesmo desenho: sem torre o muro cai, com torre não. Sem torre o muro cai em **todas** as
+  noites, a começar na 1 — e o §25 diz que a noite 1 *"é ganha de certeza"*.
+- **Porque é que acontece, e não é um defeito do código:** a estacaria do §10 publica **um** posto de guarda
+  (`guard_posts_b = 1`, `walls.csv`). Dos seis arqueiros, um sobe ao muro e os outros cinco ficam sem vaga, e
+  quem não tem posto recolhe ao núcleo — a 500 px do muro, com 200 px de alcance. A noite inteira é decidida
+  por **um** arqueiro. A torre de arqueiros dá mais dois postos, e é isso que a tabela de cima mede: *"a torre
+  não dá dano — dá certeza"* (§07) está certo, e é a única coisa desta medição que está.
+- **Decide:** tu, e é uma de três — (a) a receita do §07 passa a incluir a torre, e o "sem torre no dia 8"
+  passa a ser a variante; (b) os postos de guarda do §10 sobem no nível 1; (c) um arqueiro sem posto passa a
+  disparar de onde está, e aí a §52 ganha uma regra que hoje não tem. O `AGENTS.md` proíbe mexer no número
+  para calar o teste, e por isso nada foi mexido: os dois testes do §07 estão **saltados com esta razão** em
+  `tests/noite_do_07_test.gd`. É o F1-16.
+
+### Q-074 · O §66 quer dez dias em dez segundos, e o tick custa o dobro disso
+- **Onde:** o §66 dá ao bloco *"Uma noite completa"* o critério *"corre em headless com delta fixo, **dez dias
+  em menos de dez segundos**"*. Dez dias são 3600 s de jogo a 30 Hz — **108 000 ticks** —, o que dá um
+  orçamento de **92 µs por tick**.
+- **O que se mede:** o cenário fechado — duas obras, sete tropas, vagas de Rastejantes — corre os dez dias em
+  **≈18 s** num *runner* headless. Medido por passo: **≈22 µs** com o mundo vazio, **≈99 µs** com as sete
+  tropas e as duas obras, **≈275 µs** a meio da noite 10. O `EventBus` não é o custo (desligar a história
+  muda 3%); o custo é o tick, e cresce com as obras e com as tropas antes de crescer com as criaturas.
+- **Não colide com o §63:** o orçamento do §63 é de **4000 µs** por tick para a simulação inteira, e a 30 Hz
+  isso é tempo real com folga — o `jogo_noite_test` mede-o e passa. O que o §66 pede é outra coisa: **360× mais
+  depressa do que o tempo real**, que é o que faz de um cenário um instrumento de afinação em vez de uma
+  partida acelerada.
+- **Proposta:** medir antes de otimizar. Este número sai de um binário de editor em *debug*, com as
+  verificações de tipo do GDScript e os `assert` ligados; a mesma medição sobre um *export* de release é o
+  primeiro passo, e não custa nada senão correr o CI. Se a diferença não chegar, o §66 é que escolhe: ou o
+  orçamento sobe, ou o tick emagrece — e aí é trabalho de simulação, com ticket próprio.
+- **Bloqueia:** o teste está saltado com esta razão em `tests/noite_do_07_test.gd`. O que **não** está saltado
+  é o que o F1-15 promete: os dez dias correm, em headless e ao passo fixo, e o relógio chega ao dia 11.
+- **Decide:** tu. Não bloqueia o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |
