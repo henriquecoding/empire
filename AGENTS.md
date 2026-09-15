@@ -69,8 +69,9 @@ src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
-src/world/world_view.gd     WorldView     desenha o mundo em formas simples
-src/world/day_tint.gd       DayTint       a luz de cada fase (§23, ADR 0011)
+src/world/band_view.gd      BandView      desenha UMA faixa, e leva a luz dela
+src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
+src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)

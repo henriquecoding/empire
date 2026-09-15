@@ -21,7 +21,7 @@ const MEIO := 0.5
 var _tremor: float = 0.0
 
 @onready var _camara: CameraRig = $CameraRig
-@onready var _mundo: WorldView = $Mundo
+@onready var _mundo: Node2D = $Mundo
 @onready var _monarca: Node2D = $Monarca
 
 
@@ -63,7 +63,7 @@ func _seguir() -> void:
 	if i == UnitSystem.NENHUM:
 		return
 	var faixa := int(SimLoop.units.bands[i])
-	_monarca.position = Vector2(SimLoop.units.xs[i], WorldView.ground_of(faixa))
+	_monarca.position = Vector2(SimLoop.units.xs[i], WorldPalette.ground_of(faixa))
 
 
 func _no_rompimento(_wall_id: int) -> void:

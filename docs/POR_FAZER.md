@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **23 feitos** e **30 por fazer** |
+| Tickets | **53**, dos quais **24 feitos** e **29 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 7 de 17 — F1-01, F1-02, F1-03, F1-04, **F1-05**, **F1-08** e **F1-10** |
-| Suite | 255 casos, 250 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 8 de 17 — F1-01 a F1-05, **F1-08**, **F1-10** e **F1-13** |
+| Suite | 264 casos, 259 a passar, 5 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (F1-14) e o 10 (Fase 2) |
-| Perguntas em aberto | 59, em `docs/QUESTIONS.md` |
+| Perguntas em aberto | 60, em `docs/QUESTIONS.md` |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -47,15 +47,12 @@ que faltam.
 | **F1-06** | Muro: cinco níveis, dois caminhos, *slots* de contacto | F1-05 ✔ | A tabela do §10 replicada em `.tres`; `test_muralhas_do_10` passa |
 | **F1-11** | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 ✔ | *Payback* de 2 dias medido em jogo; `test_payback_do_06` continua a passar |
 | **F1-12** | Moral e fuga com o raio do rei | F1-05 ✔ | Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados |
-| **F1-13** | `CanvasModulate` **por faixa**, animado pelo `GameClock` | F0-06 ✔ | As seis fases são distinguíveis sem HUD; a noite é castanha (ADR 0011) |
 | **F1-14** | Save e load do estado de `src/sim/` com `save_version` | F1-10 ✔ | Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória |
 
-Três deles já têm metade do caminho andado pelo núcleo jogável, e o ticket diz
+Dois deles já têm metade do caminho andado pelo núcleo jogável, e o ticket diz
 exactamente qual metade: o **F1-06** tem a escada dos cinco níveis a pagar-se com
 moeda e a travar criaturas, e falta-lhe a fila de contacto do §50; o **F1-07** tem
-a ordem de resolução do §50 inteira, e falta-lhe a precisão 1,0 dentro de torre;
-o **F1-13** tem o `CanvasModulate` global com as seis cores do `clock.tres`, e
-falta-lhe ser **por faixa**.
+a ordem de resolução do §50 inteira, e falta-lhe a precisão 1,0 dentro de torre.
 
 **À espera de outro ticket:**
 
@@ -151,8 +148,8 @@ Está toda em dados e em prosa, e nada dela em código.
   e inventar um quebrava a regra 7 do `AGENTS.md` — o que há é o mundo a dizê-lo,
   com o núcleo em ruína.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **59 perguntas em aberto** em `docs/QUESTIONS.md` — as cinco mais recentes
-  (Q-064 a Q-068) são as que encher o tick obrigou a fazer, e a Q-068 é a única
+- **60 perguntas em aberto** em `docs/QUESTIONS.md` — as seis mais recentes
+  (Q-064 a Q-069) são as que encher o tick obrigou a fazer, e a Q-068 é a única
   que é uma contradição do dossiê consigo próprio: o §25 diz três Rastejantes na
   noite 1 e a massa do §74 dá sete.
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
@@ -171,7 +168,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 | O quê | Como | O que se vê |
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. |
-| **A suite** | `make testes` | 255 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 264 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |

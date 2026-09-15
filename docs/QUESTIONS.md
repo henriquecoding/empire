@@ -549,6 +549,19 @@
 - **Decide:** tu, e é uma das duas — ou a prosa do §25 passa a sete, ou a `mass_base` do `rot.csv` desce. O
   `AGENTS.md` proíbe mexer no número para calar o teste, e por isso nada foi mexido.
 
+### Q-069 · "CanvasModulate por faixa" pede a única coisa que o motor não faz
+- **Onde:** o título do F1-13. O Godot aceita **um** `CanvasModulate` por canvas — é o que a documentação dele
+  diz e é o que o nome quer dizer: ele modula *o canvas*. Três faixas no mesmo canvas não podem ter três.
+- **Proposta:** um nó por faixa (`src/world/band_view.gd`) com o seu `modulate`. É a mesma multiplicação, e
+  três nós irmãos podem tê-la diferente. A alternativa — três `CanvasLayer`, um por faixa — dava três
+  `CanvasModulate` a sério, mas custava sincronizar a transformação da câmara à mão em cada um, porque um
+  `CanvasLayer` não a herda. Isso é a pilha de parallax da §59 e é o ART-03; quando ela existir, este ficheiro
+  passa a viver lá dentro sem que a conta mude.
+- **E o segundo número que não existe:** o §80 dá `night_value_floor` 0,11 para o chão contra 0,16 do
+  ambiente, e mais nada. Daí sai uma razão que vale em todas as fases; o subsolo leva-a duas vezes, porque não
+  há número para ele e inventar um era escrever balanceamento em código (regra 3 do `AGENTS.md`).
+- **Decide:** o ART-03, quando trouxer as seis camadas de parallax.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |
