@@ -42,16 +42,24 @@ var spearmen: int = 0
 ## "perdida SEM TORRE no dia 8" (§07): a torre e a variavel da experiencia, e e
 ## por isso que e uma bandeira e nao um numero.
 var tower: bool = false
+## §07: "o Alado obriga a torre alta" — e a unica obra que atinge a faixa aerea
+## (Q-006). Medida aos dez dias, o que ela vale hoje sao os DOIS POSTOS que
+## publica, e nao a altura: o Alado atravessa tudo e nao morde nada (Q-076).
+var high_tower: bool = false
 ## Um muro por flanco. Uma noite mede-se com o do lado por onde ela vem — o "um
 ## muro" do §07 — mas dias seguidos trazem um sorteio de lado por noite (§51), e
 ## esses pedem os dois.
 var both_flanks: bool = false
-## "vagas de Rastejantes crescentes" (§07), e so isso. A tabela de invocacao
-## inteira poe Alados a partir do dia 4 e Cavadores a partir do dia 10, e nenhum
-## deles se deixa atingir por quem esta no chao, em muro ou em torre de arqueiros
-## (Q-006) — com ela, a noite 5 do §07 nao tem combate nenhum para medir. Pondo
-## `false` volta a mancha do jogo, que e outra pergunta e e a do F1-09.
+## "vagas de Rastejantes crescentes" (§07), e so isso. Com a tabela inteira a
+## noite 5 do §07 nao tem combate nenhum para medir — o Alado do dia 4 nao se
+## deixa atingir por quem esta no chao (Q-006). `false` devolve a mancha do
+## jogo, que e o que o §66 mede.
 var crawlers_only: bool = true
+## O degrau do §10 de cada muralha — esquerda, direita; um valor so poe o mesmo
+## degrau dos dois lados. Dez dias de jogo sao dez dias a subi-la, e um degrau
+## por flanco e o que deixa pôr um Bastiao — "unico por imperio" (§10) — e ferro
+## no outro lado, em vez de medir sempre uma defesa que o jogo nao deixa ter.
+var wall_levels: PackedInt32Array = PackedInt32Array([1])
 var seed: int = SEMENTE
 
 var _mortes: int = 0
@@ -103,7 +111,7 @@ func arm(dia: int) -> void:
 	_invocadas = 0
 	_contacto = 0
 	_vivas = 0
-	Region.build(_flanco(), archers, spearmen, tower, both_flanks)
+	Region.build(_flanco(), archers, spearmen, _torres(), both_flanks, wall_levels)
 	# O dia entra nos dois sitios, como no resume() do SimLoop: o relogio e dono
 	# dele, mas quem o le a meio do tick e o GameState, e o espelho so corre no
 	# fim (passo 11). Sem esta linha o crepusculo do dia 5 pedia a massa do dia
@@ -171,6 +179,18 @@ func _so_rastejantes() -> void:
 	var perfil := Registry.entry(&"rot", &"default") as RotProfile
 	var rastejante := Registry.entry(&"creatures", &"crawler") as CreatureData
 	SimLoop.night.rot = RotSystem.new(perfil, [rastejante] as Array[CreatureData])
+
+
+## As torres que esta defesa tem, pela ordem em que o §10 as escreve. Duas
+## bandeiras e nao uma lista porque sao duas DECISOES diferentes do jogador, e o
+## §66 mede-se a ligar e a desligar cada uma por si.
+func _torres() -> Array[StringName]:
+	var quais: Array[StringName] = []
+	if tower:
+		quais.append(Region.TORRE)
+	if high_tower:
+		quais.append(Region.TORRE_ALTA)
+	return quais
 
 
 func _relogio() -> ClockData:

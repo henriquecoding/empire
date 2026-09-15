@@ -67,14 +67,20 @@ static func economy() -> EconomySystem:
 	return EconomySystem.new(curve(), relogio.phase_durations.size())
 
 
+## O perfil da Podridao. Publico porque a candeia do §74 tambem se le dele, e
+## quem a desenha nao tem — nem deve ter — o RotSystem por perto (F1-17).
+static func rot_profile() -> RotProfile:
+	return Registry.entry(TABELA_PODRIDAO, PODRIDAO) as RotProfile
+
+
 ## A janela entre invocacoes, em segundos (§51: a cada 4-7 s). Quem sorteia e o
 ## SimLoop, no fluxo `rot`; a simulacao nao pode (§42, §70).
 static func rot_window() -> Vector2:
-	return (Registry.entry(TABELA_PODRIDAO, PODRIDAO) as RotProfile).summon_interval
+	return rot_profile().summon_interval
 
 
 static func rot() -> RotSystem:
 	var criaturas: Array[CreatureData] = []
 	for recurso in Registry.entries(TABELA_CRIATURAS):
 		criaturas.append(recurso as CreatureData)
-	return RotSystem.new(Registry.entry(TABELA_PODRIDAO, PODRIDAO) as RotProfile, criaturas)
+	return RotSystem.new(rot_profile(), criaturas)

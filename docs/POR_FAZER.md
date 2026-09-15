@@ -10,12 +10,12 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **31 feitos** e **22 por fazer** |
+| Tickets | **53**, dos quais **33 feitos** e **20 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 15 de 17 — o F1-01 ao F1-15, inteiros. Faltam o F1-16 e o F1-17 |
-| Suite | 336 casos, 328 a passar, 8 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | **17 de 17 — a Fase 1 está fechada** |
+| Suite | 347 casos, 338 a passar, 9 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 65 das 66 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
+| Perguntas em aberto | 67 das 69 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07, a Q-076 com o F1-16 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -40,32 +40,46 @@ que faltam.
 
 ---
 
-## Fase 1 — 2 por fazer
+## Fase 1 — fechada
 
-**Desbloqueado agora** (as dependências estão todas feitas):
+**O critério de saída da Fase 1 está medido e passa.** O §66 pede *"sobreviver 10
+dias é possível e não é trivial"*, e as duas metades têm teste: a defesa do décimo
+dia — um Bastião, a muralha de ferro no outro flanco, as duas torres e doze
+arqueiros — aguenta dez noites inteiras com o castelo-árvore intacto; a receita do
+§07 — estacaria, seis arqueiros, sem torre — cai ao terceiro dia, e os sete
+degraus entre uma e outra caem todos. E a mancha vê-se: traz uma candeia de três
+paragens que entra no ecrã antes dela.
 
-| | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
-|---|---|---|---|
-| **F1-16** | Afinar até sobreviver dez dias ser possível e não trivial | **tudo** ✔ | Sobreviver 10 dias é possível e não é trivial, medido no cenário do F1-15 |
-
-O **F1-15** entregou-lhe o instrumento, e ele já tem por onde começar:
+Os dois instrumentos correm-se sem o motor aberto, e a fotografia também:
 
 ```bash
-godot --headless --path . scenes/tests/night_test.tscn   # dez noites, com torre e sem ela
+godot --headless --path . scenes/tests/night_test.tscn   # §07: dez noites, com torre e sem ela
+godot --headless --path . scenes/tests/dez_dias.tscn     # §66: nove defesas, dez dias cada
+xvfb-run -a godot --path . tools/captura.tscn -- --avancar 312 --saida build/chegada.png
 ```
 
-O que essa tabela diz hoje é que os **dois números do §07 não batem**: sem torre o
-muro cai em todas as noites, a começar na 1, e com torre a noite 5 ganha-se com
-zero mortes em vez das uma ou duas que o dossiê pede. Está na Q-073, e os dois
-testes correspondentes estão saltados com essa razão em `tests/noite_do_07_test.gd`
-— nenhum valor de `data/` foi mexido para os calar, que é o que o `AGENTS.md`
-manda. Afinar é exactamente o trabalho deste ticket.
+O que as tabelas ainda não dizem está escrito, não calado: a **Q-073** (o §07
+monta o microteste com seis arqueiros e a estacaria do §10 só tem um posto de
+guarda — e o nível 1 é *"a base comum aos dois caminhos"*, por isso não é
+afinável), a **Q-074** (os dez dias custam 9 a 11 s conforme o *runner*, e o §66
+pede menos de 10), a **Q-077** (o Alado atravessa a muralha, pousa no castelo e
+não faz nada — é do F1-09) e a **Q-078** (o farol do §10 ilumina 300 px e a
+candeia do §74 nunca passa dos 260). Os quatro testes correspondentes estão
+saltados com essas razões em `tests/noite_do_07_test.gd` e `tests/candeia_test.gd`
+— **nenhum valor de `data/` foi mexido** para os calar, que é o que o `AGENTS.md`
+manda.
 
-**À espera de outro ticket:**
+A **Q-075** é de outra espécie e está decidida e implementada: uma criatura que
+pode mudar de faixa tem de subir antes de atacar — o Cavador passa por baixo do
+muro e sobe pela passagem, em vez de morder a superfície de onde está. Fica
+escrita para poder ser revertida numa linha.
 
-| | O que é | Depende de | Critério de aceitação |
-|---|---|---|---|
-| F1-17 | Arte da mancha: a Podridão e a candeia | F1-08 ✔, **ART-02** | Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã |
+**O jogo passou a poder perder-se, e o *greybox* perde-o depressa.** Com o núcleo
+atacável (Q-076), uma partida em que ninguém joga acaba na **noite 1**; com as
+duas estacarias de dentro de pé e toda a gente recrutada, na **noite 2**; só com
+as quatro muralhas e as quatro torres de pé é que o núcleo fica a 100% ao quarto
+dia. Está medido e escrito na **Q-068**, ao lado da linha do §25 que diz que a
+noite 1 *"é ganha de certeza"*.
 
 ---
 
@@ -76,7 +90,7 @@ manda. Afinar é exactamente o trabalho deste ticket.
 | | O que é |
 |---|---|
 | ART-01 | A primeira personagem real em cinco *slots* |
-| ART-02 | A paleta mestra e o LUT — **bloqueia o F1-17** |
+| ART-02 | A paleta mestra e o LUT |
 | ART-03 | As seis camadas de *parallax* com teto de valores |
 | ART-04 | Rostos e expressões: o catálogo do §60 |
 
@@ -158,17 +172,15 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **65 perguntas em aberto** em `docs/QUESTIONS.md`, de 66 escritas — a Q-006
-  fechou com o F1-07. As doze mais recentes (Q-064 a Q-075) são as que encher o
-  tick e medir a noite obrigaram a fazer, e quatro delas são contradições do
-  dossiê consigo próprio ou com os seus números: a Q-068 (o §25 diz três
-  Rastejantes na noite 1 e a massa do §74 dá sete), a Q-072 (o §06 dá três
-  estados de risco ao rasto e o §49 só escreve dois), a **Q-073** (o §07 monta o
-  microteste com seis arqueiros e o muro do §10 só tem um posto de guarda) e a
-  **Q-074** (o §66 pede dez dias em dez segundos, e o tick custa o dobro disso).
-  A **Q-075** é de outra espécie: está decidida e implementada — uma criatura que
-  pode mudar de faixa tem de subir antes de atacar — e fica escrita para poder
-  ser revertida numa linha.
+- **67 perguntas em aberto** em `docs/QUESTIONS.md`, de 69 escritas — a Q-006
+  fechou com o F1-07 e a Q-076 com o F1-16. As quinze mais recentes (Q-064 a
+  Q-078) são as que encher o tick, medir a noite, afinar os dez dias e acender a
+  candeia obrigaram a fazer. As quatro que valem a pena ler primeiro: a **Q-068**
+  (a noite 1 do §25 *"é ganha de certeza"* e o *greybox* perde-a), a **Q-077** (o
+  Alado atravessa a muralha, pousa no castelo e não faz nada — e por isso os dias
+  4 a 6 do §07 não custam nada a ninguém), a **Q-073** (o §07 monta o microteste
+  com seis arqueiros e o muro do §10 só tem um posto de guarda) e a **Q-078** (o
+  farol ilumina 300 px e a candeia nunca passa dos 260).
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 
@@ -186,9 +198,10 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 336 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
-| **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. É a mesa de trabalho do F1-16. |
-| **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
+| **A suite** | `make testes` | 347 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. |
+| **Os dez dias, medidos** | `godot --headless --path . scenes/tests/dez_dias.tscn` | O critério de saída da Fase 1 (§66): nove defesas, dez dias cada, e por cada uma se aguentou, em que dia caiu, e com que margem ficou o castelo-árvore. A última é a que aguenta, e sai também noite a noite. |
+| **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio — `AVANCAR=312` apanha a candeia a entrar no ecrã. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |
 | **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos os exports e o dossiê. |

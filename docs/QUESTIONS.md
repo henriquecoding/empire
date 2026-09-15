@@ -554,6 +554,15 @@
   mesmos números. A divergência é entre a **prosa do §25** e a **tabela do §74**, e as duas são do dossiê.
 - **Porque é que importa:** o §25 diz que *"a noite 1 é ganha de certeza — está desenhada para isso"*. Sete
   Rastejantes contra um monarca sem muro não é isso.
+- **E desde o F1-16 deixou de ser hipótese: é uma medição.** Com o núcleo já atacável (Q-076) o *greybox*
+  corrido sem ninguém a jogar **perde na noite 1** — os sete Rastejantes chegam ao castelo-árvore e comem-no.
+  Com as duas estacarias de dentro de pé aguenta a noite 1 com **376 de 1000** e perde na **noite 2**. Com a
+  abertura do §25 inteira — muro **e** toda a gente recrutada — aguenta a noite 1 com **388** e perde na
+  noite 2 na mesma. Só com as quatro muralhas e as quatro torres de pé é que o núcleo fica a **100%** ao
+  quarto dia. Medido em `src/world/greybox.gd`, ao passo fixo, com a semente da suite.
+- **Duas leituras, e a segunda é a Q-073:** ou a noite 1 tem criaturas a mais, ou a defesa tem postos a menos
+  — nove tropas recrutadas num muro que publica **um** posto de guarda deixam oito a recolher ao núcleo, e
+  isso não é uma defesa, é uma fila. As duas perguntas são a mesma medição vista de dois lados.
 - **Decide:** tu, e é uma das duas — ou a prosa do §25 passa a sete, ou a `mass_base` do `rot.csv` desce. O
   `AGENTS.md` proíbe mexer no número para calar o teste, e por isso nada foi mexido.
 
@@ -621,13 +630,21 @@
   quem não tem posto recolhe ao núcleo — a 500 px do muro, com 200 px de alcance. A noite inteira é decidida
   por **um** arqueiro. A torre de arqueiros dá mais dois postos, e é isso que a tabela de cima mede: *"a torre
   não dá dano — dá certeza"* (§07) está certo, e é a única coisa desta medição que está.
+- **O que o F1-16 lhe acrescentou, e não fechou:** com o núcleo já atacável (Q-076) a segunda linha mudou de
+  razão mas não de resposta — uma noite 8 **sozinha** continua a acabar com o castelo-árvore de pé, porque o
+  muro cai tarde e o que resta da noite não chega para os 1000 de vida. Dez noites seguidas já chegam, e é
+  isso que o `tests/dez_dias_test.gd` mede. A primeira linha está como estava.
+- **Porque é que o F1-16 não a podia fechar, e não é falta de vontade:** a opção (b) é subir os postos de
+  guarda, e no nível 1 não há onde. O §10 escreve *"o nível 1 é a base comum aos dois caminhos"*, e os postos
+  do caminho A desse nível estão **na tabela do dossiê** — mexê-los é mexer no dossiê, não em `_proposed`. O
+  `guard_posts_b` está proposto, mas pô-lo acima de A no nível 1 desfazia a base comum.
 - **Decide:** tu, e é uma de três — (a) a receita do §07 passa a incluir a torre, e o "sem torre no dia 8"
-  passa a ser a variante; (b) os postos de guarda do §10 sobem no nível 1; (c) um arqueiro sem posto passa a
-  disparar de onde está, e aí a §52 ganha uma regra que hoje não tem. O `AGENTS.md` proíbe mexer no número
-  para calar o teste, e por isso nada foi mexido: os dois testes do §07 estão **saltados com esta razão** em
-  `tests/noite_do_07_test.gd`. É o F1-16.
+  passa a ser a variante; (b) os postos de guarda do §10 sobem no nível 1, e aí é o dossiê que muda; (c) um
+  arqueiro sem posto passa a disparar de onde está, e aí a §52 ganha uma regra que hoje não tem. O `AGENTS.md`
+  proíbe mexer no número para calar o teste, e por isso nada foi mexido: os dois testes do §07 estão
+  **saltados com esta razão** em `tests/noite_do_07_test.gd`.
 
-### Q-074 · O §66 quer dez dias em dez segundos, e o tick custa o dobro disso
+### Q-074 · O §66 quer dez dias em dez segundos, e o tick fica no fio da navalha
 - **Onde:** o §66 dá ao bloco *"Uma noite completa"* o critério *"corre em headless com delta fixo, **dez dias
   em menos de dez segundos**"*. Dez dias são 3600 s de jogo a 30 Hz — **108 000 ticks** —, o que dá um
   orçamento de **92 µs por tick**.
@@ -643,9 +660,14 @@
   verificações de tipo do GDScript e os `assert` ligados; a mesma medição sobre um *export* de release é o
   primeiro passo, e não custa nada senão correr o CI. Se a diferença não chegar, o §66 é que escolhe: ou o
   orçamento sobe, ou o tick emagrece — e aí é trabalho de simulação, com ticket próprio.
+- **O que o F1-16 voltou a medir:** noutro *runner* headless, com o mesmo binário de editor, os mesmos dez
+  dias custam **9,4 s numa corrida e 11,1 s na seguinte** — o orçamento do §66 passou a estar dentro da
+  variação da máquina. Não é uma melhoria do tick: é a mesma medição noutro sítio, e é exactamente a razão
+  para o teste continuar saltado. Um portão que responde à carga do *runner* e não ao código chumba a quem
+  não mexeu em nada.
 - **Bloqueia:** o teste está saltado com esta razão em `tests/noite_do_07_test.gd`. O que **não** está saltado
   é o que o F1-15 promete: os dez dias correm, em headless e ao passo fixo, e o relógio chega ao dia 11.
-- **Decide:** tu. Não bloqueia o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
+- **Decide:** tu. Não bloqueou o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
 
 ### Q-075 · Uma criatura ataca de qualquer faixa que o `targets_bands` liste, de onde quer que esteja
 - **Onde:** o F1-07 escreveu para as tropas a regra do alcance vertical (`Posts.reaches`, Q-006): a faixa
@@ -668,6 +690,86 @@
 - **Reversível, e o que a reverte:** se um dia o Cavador tiver de morder tornozelos de baixo para cima, o
   `return not dados.can_change_band` passa a `return true` e volta tudo ao que era. Nenhum número de `data/`
   foi mexido.
+
+### Q-076 · O jogo não se podia perder: nada mordia o castelo-árvore — **fechada pelo F1-16**
+- **Onde:** o §10 escreve a regra mais curta do dossiê — *"se o castelo-árvore cair, cai a partida"* — e ela
+  estava implementada dos dois lados: o `BuildSystem.fallen()` sabia responder e o `src/world/game.gd` parava
+  o relógio. O que não existia era o caminho pelo meio: **nada lhe tirava vida**.
+- **A causa, e era de uma linha:** só o `WallData` tinha `contact_slots` (`walls.csv`, 2 a 7 pelos cinco
+  degraus do §10). O `BuildingData` não tinha essa coluna, e por isso o `BuildSlot.contacts` de tudo o que não
+  é muro ficava vazio e o `contact_slots()` devolvia **zero**. A `ContactQueue` do §50 reparte *N* atacantes
+  por *N* slots; com zero slots não atribuía nenhum, o `target_slots` ficava em `NENHUM`, o `engaged()` dava
+  falso, e o `CombatSystem._criaturas_batem()` saltava a criatura. **Só o muro podia ser atacado** — e era por
+  isso que só o muro caía.
+- **Decisão — a proposta, tal como estava escrita:** `contact_slots` passa a ser coluna do `buildings.csv`,
+  como a que o `walls.csv` já tinha. Não inventa mecânica nenhuma, usa a fila do §50 que já existe, e uma obra
+  com a coluna a zero comporta-se exactamente como antes — que é o caso de **todas** menos uma.
+- **O número, e porque é que ele não decide nada:** o núcleo leva **7**, que é o topo da escada do §10 — o
+  Bastião, a outra obra *única por império*; o núcleo é a maior do mapa (480 px) e a última. O dossiê não dá
+  este número, e por isso ele está marcado em `_proposed` e a escolha é revertível. **E a varredura mostra que
+  ela não muda o critério do §66**: com 2, 3, 4, 5 ou 7, as mesmas defesas aguentam e as mesmas caem. A única
+  linha que se mexe é a muralha de ferro nos dois flancos, que a 2 slots aguenta com **5%** de núcleo — o fio
+  da navalha que a escolha de 7 evita.
+- **O que isto passou a medir** (`godot --headless --path . scenes/tests/dez_dias.tscn`, nove defesas, dez
+  dias cada, com um Bastião só — o §10 escreve-o *"único por império"*):
+
+  | esq | dir | torre | alta | arq | aguentou | núcleo |
+  |---|---|---|---|---|---|---|
+  | 1 | 1 | não | não | 6 | caiu no dia **3** | 0,00 |
+  | 4 | 4 | sim | sim | 12 | caiu no dia 10 | 0,00 |
+  | 5 | 4 | sim | não | 12 | caiu no dia 9 | 0,00 |
+  | 5 | 4 | não | sim | 12 | caiu no dia 9 | 0,00 |
+  | 5 | 4 | sim | sim | 6 | caiu no dia 9 | 0,00 |
+  | 5 | 4 | sim | sim | 12 | **aguentou** | **1,00** |
+
+  A primeira linha é a receita do §07 tal e qual. A última é a defesa do décimo dia, e é a única que aguenta:
+  o §66 tem as duas metades que pede.
+- **Onde:** `data/source/buildings.csv`, `src/sim/data/building_data.gd`, `src/world/greybox.gd`,
+  `tests/support/closed_region.gd`. Os testes são o `tests/dez_dias_test.gd`, e nenhum deles está saltado.
+
+### Q-077 · O Alado atravessa a muralha, pousa no castelo e não faz nada
+- **Onde:** o §07 dá ao Alado a linha *"Dia 4 — obriga a torre alta"*, e o §10 vende a torre alta por 30
+  moedas para *"atingir a camada aérea"*. Medido no cenário dos dez dias, os dias 4, 5 e 6 — que são os dele —
+  **não custam nada a ninguém**.
+- **A causa:** para uma criatura AÉREA nenhuma obra de superfície é barreira. O `BuildSystem.barrier()` filtra
+  por faixa (`vaga.band != faixa`), e por isso o Alado nunca encontra muro nem núcleo no caminho: só olha para
+  tropas, dentro dos seus 24 px de alcance. Atravessa a muralha, atravessa a região, pousa no castelo — e o
+  castelo perde **0%**. Medido numa noite posta de propósito sem muro nenhum: os Alados do dia 5 chegam a
+  **0 px** do núcleo.
+- **O que a torre alta vale hoje, então:** os **dois postos** que publica, com precisão 1,0 — e não a altura.
+  A varredura dos dez dias mostra-o: tirar a torre alta à defesa que aguenta faz cair a partida no dia 9, e
+  faz cair pela mesma razão que tirar a torre de arqueiros faria. Não é a faixa aérea que ela está a defender.
+- **Proposta:** ou a `barrier()` deixa de filtrar por faixa para quem voa — e aí um Alado bate no que estiver
+  por baixo —, ou o `targets_bands` do §44 passa a valer também para obras, e a faixa da obra entra na conta
+  como já entra a da tropa. A segunda usa uma coluna que já existe e não inventa regra nenhuma; a primeira é
+  menos escrita e mais surpresa.
+- **Bloqueia:** a linha *"obriga a torre alta"* do §07, e com ela metade do valor da torre de 30 moedas. Não
+  bloqueia o F1-16: o critério do §66 mede-se e passa sem ela, e passaria com mais margem contra.
+- **Não é a Q-075, e as duas encostam:** a Q-075 deu regra ao alcance vertical de uma criatura sobre as
+  **tropas** — e para o Alado a resposta é que ele bate no chão de onde está, porque não pode mudar de
+  faixa. Esta é sobre as **obras**, e o caminho é outro: quem filtra por faixa é o `BuildSystem.barrier()`,
+  e ele não sabe nada de `targets_bands`.
+- **Decide:** tu. É a segunda metade da Q-076, tal como ela estava escrita antes de o F1-16 a fechar, e é
+  do F1-09 — o ticket do Alado e do Cavador.
+
+### Q-078 · O farol ilumina 300 px e a candeia nunca passa dos 260
+- **Onde:** o §80 escreve a regra de composição da noite inteira — *"uma luz domina por ecrã. Se duas
+  competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser **mais
+  fracas do que a candeia à mesma distância**"*. E o §10 vende o farol por 40 moedas para *"iluminar 300 px"*.
+  A candeia do §74 é `150 + 4 × dia`, **com teto em 260**. O farol é a única obra do jogo com `light_radius`,
+  e ganha à candeia em qualquer dia.
+- **Porque é que o raio decide isto:** com as mesmas três paragens, a luz de raio maior é mais forte a
+  **qualquer** distância — o núcleo e o meio dela chegam onde a outra já é bordo. Duas luzes com paragens
+  diferentes era outra conversa, e o §80 não dá paragens às fogueiras: dá **uma** regra de luz ao jogo todo.
+- **Não bloqueia nada hoje, e é por isso que é uma pergunta e não um defeito:** o farol é de Fase 6, não está
+  no *greybox*, e tem `blocks_summon` — *"A Podridão não invoca dentro da luz"* —, portanto a candeia e ele
+  talvez nunca se encontrem no mesmo ecrã de propósito. O `tests/candeia_test.gd` tem o teste **saltado** com
+  esta razão, e ele volta sozinho no dia em que a pergunta fechar.
+- **Proposta:** a mais reversível é dar ao farol paragens próprias e mais fracas — uma coluna nova em
+  `buildings.csv`, como o `light_radius` já é — em vez de lhe cortar o raio, que é um número do dossiê. A
+  alternativa é escrever no §80 que o farol é a excepção: ele é *landmark* e não fogueira, e um marco que
+  domina o seu ecrã é exactamente o que um farol faz.
+- **Decide:** tu. A palavra que falta ao dossiê é se "fogueira" inclui o farol.
 
 ## Resolvidas na v5.2 (reversíveis)
 

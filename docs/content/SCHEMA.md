@@ -109,6 +109,7 @@ Script `src/sim/data/building_data.gd` · layout `rows` · 25 linha(s) · §06 �
 | `job_slots` | int | Economia | postos que publica (§20) |
 | `craft` | StringName | Economia | oficio que trabalha aqui |
 | `max_health` | int | Construcao |  |
+| `contact_slots` | int | Construcao |  |
 | `build_work` | float | Construcao | segundos de construtor presente (§55) |
 | `width_px` | int | Construcao |  |
 | `upgrade_to` | StringName | Construcao |  |
@@ -407,6 +408,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `lantern_radius_per_day` | float | v6 · a candeia |  |
 | `lantern_radius_max` | float | v6 · a candeia |  |
 | `lantern_tint` | String | v6 · a candeia |  |
+| `lantern_tint_mid` | String | v6 · a candeia |  |
+| `lantern_tint_edge` | String | v6 · a candeia |  |
+| `lantern_dither_px` | float | v6 · a candeia |  |
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
 | `offer_seconds` | float | v6 · a oferta |  |

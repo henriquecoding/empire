@@ -9,9 +9,13 @@
 #
 #   · o que o INSTRUMENTO tem de fazer — montar, correr em headless ao passo
 #     fixo, dar o mesmo resultado a mesma semente. E o F1-15, e passa.
-#   · o que os NUMEROS tem de dar — as duas linhas do §07. E o F1-16, e nao
-#     passa. Ficam saltados, com a razao e o numero medido, como manda a
-#     ADR 0019: um teste de design a falhar e informacao, nao um obstaculo.
+#   · o que os NUMEROS tem de dar — as duas linhas do §07. Continua saltado, e
+#     por uma razao que o F1-16 mediu e nao fechou: a Q-073. A estacaria publica
+#     UM posto de guarda e o §07 poe la seis arqueiros; nenhum numero que o
+#     F1-16 possa mexer muda isso, porque o nivel 1 e "a base comum aos dois
+#     caminhos" (§10) e os postos dele estao na tabela do dossie. A razao e o
+#     numero medido ficam no salto, como manda a ADR 0019: um teste de design a
+#     falhar e informacao, nao um obstaculo.
 #
 # Mexer em data/ para os calar era o que o AGENTS.md proibe em tantas palavras.
 extends GdUnitTestSuite
@@ -127,8 +131,8 @@ func test_dez_dias_correm_em_headless_ao_passo_fixo() -> void:
 func test_a_noite_5_ganha_se_com_1_a_2_mortes(
 	do_skip := true,
 	skip_reason := (
-		"Q-073: sem torre a noite 5 da 1 morte mas o muro cai; com torre da 0 e "
-		+ "nao cai. A receita do §07 nao tem torre. Ver docs/QUESTIONS.md. F1-16"
+		"Q-073: sem torre a noite 5 da 1 morte mas o muro cai, porque a estacaria "
+		+ "publica UM posto para os seis arqueiros do §07. Falta a decisao do §10"
 	)
 ) -> void:
 	var r := _h.night(DIA_DO_ALVO)
@@ -139,8 +143,8 @@ func test_a_noite_5_ganha_se_com_1_a_2_mortes(
 func test_a_noite_8_perde_se_sem_torre(
 	do_skip := true,
 	skip_reason := (
-		"Q-073: sem torre o muro cai em TODAS as noites, a comecar na 1, e o "
-		+ "nucleo aguenta sempre. Ver docs/QUESTIONS.md. F1-16"
+		"Q-073: sem torre o muro cai em TODAS as noites, a comecar na 1, e uma "
+		+ "noite 8 sozinha nao chega ao nucleo. Dez seguidas chegam (F1-16)"
 	)
 ) -> void:
 	_h.tower = false
@@ -150,8 +154,8 @@ func test_a_noite_8_perde_se_sem_torre(
 func test_dez_dias_em_menos_de_dez_segundos(
 	do_skip := true,
 	skip_reason := (
-		"Q-074: o cenario fechado corre os dez dias em ~18 s neste runner, e o "
-		+ "§66 pede menos de 10. Ver docs/QUESTIONS.md"
+		"Q-074: os dez dias custam 9 a 11 s conforme o runner, e o §66 pede menos "
+		+ "de 10. Um teste que depende da maquina nao e um portao"
 	)
 ) -> void:
 	assert_float(_h.days(DIAS)).is_less(ORCAMENTO_S)
