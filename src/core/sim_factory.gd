@@ -63,6 +63,10 @@ static func combat(postos: JobBoard) -> CombatSystem:
 	return CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS), contacto, postos)
 
 
+static func morale() -> MoraleSystem:
+	return MoraleSystem.new(curve(), by_id(TABELA_TROPAS))
+
+
 static func economy() -> EconomySystem:
 	var relogio := Registry.entry(TABELA_ECONOMIA, RELOGIO) as ClockData
 	return EconomySystem.new(curve(), relogio.phase_durations.size())

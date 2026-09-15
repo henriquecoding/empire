@@ -68,6 +68,7 @@ src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, �
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
 src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
+src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)

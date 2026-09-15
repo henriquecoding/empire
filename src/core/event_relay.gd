@@ -108,6 +108,16 @@ static func economy(eventos: Array[Dictionary], obras: BuildSystem) -> Array[Dic
 	return larga
 
 
+## Passo 4: a moral (§07). O §46 tem unit_fled para a saida e unit_state_changed
+## para as duas pontas — quem foge muda de estado e isso conta-se na mesma.
+static func morale(eventos: Array[Dictionary]) -> void:
+	for e in eventos:
+		var quem: int = e[MoraleSystem.UNIDADE]
+		EventBus.queue(&"unit_state_changed", [quem, e[MoraleSystem.DE], e[MoraleSystem.PARA]])
+		if e[MoraleSystem.CHAVE] == MoraleSystem.EV_FUGIU:
+			EventBus.queue(&"unit_fled", [quem, e[MoraleSystem.PORQUE]])
+
+
 ## Passo 2: o que a Podridao invocou.
 static func summoned(pedido: SpawnRequest, massa: float) -> void:
 	EventBus.queue(&"rot_summoned", [pedido.creature_id, pedido.x, massa])

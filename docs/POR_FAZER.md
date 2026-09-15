@@ -10,10 +10,10 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **26 feitos** e **27 por fazer** |
+| Tickets | **53**, dos quais **27 feitos** e **26 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 10 de 17 — F1-01 a F1-08 menos o F1-09, **F1-10** e **F1-13** |
-| Suite | 287 casos, 282 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 11 de 17 — F1-01 a F1-08 menos o F1-09, **F1-10**, **F1-12** e **F1-13** |
+| Suite | 298 casos, 293 a passar, 5 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (F1-14) e o 10 (Fase 2) |
 | Perguntas em aberto | 62, em `docs/QUESTIONS.md` |
 
@@ -45,7 +45,6 @@ que faltam.
 | | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
 |---|---|---|---|
 | **F1-11** | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 ✔ | *Payback* de 2 dias medido em jogo; `test_payback_do_06` continua a passar |
-| **F1-12** | Moral e fuga com o raio do rei | F1-05 ✔ | Com o rei em campo ninguém foge; fora do raio, foge ao limiar de vida dos dados |
 | **F1-14** | Save e load do estado de `src/sim/` com `save_version` | F1-10 ✔ | Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória |
 
 O **F1-09** já tem metade do caminho andado: a tabela de invocação por dia
@@ -166,7 +165,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 | O quê | Como | O que se vê |
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. |
-| **A suite** | `make testes` | 287 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 298 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |

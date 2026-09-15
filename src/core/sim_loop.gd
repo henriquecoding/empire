@@ -18,11 +18,10 @@ extends Node
 ## aqui; ninguem guarda uma copia.
 var state: GameState
 
-## As tropas, em colunas (§52). Vive aqui porque e o tick que a faz andar.
+## As tropas em colunas (§52) e as invocacoes da Podridao (§51). Sao duas
+## coleccoes porque uma criatura nao se recruta, nao se paga e dissolve-se ao
+## amanhecer — metade das colunas das tropas nao lhe serve de nada.
 var units: UnitSystem
-
-## As invocacoes da Podridao (§51). Sao coleccao a parte porque nao se recrutam,
-## nao se pagam e dissolvem-se ao amanhecer.
 var creatures: CreatureSystem
 
 ## As obras (§55) e os postos (§52). O mundo escreve-lhes os slots; o tick
@@ -30,7 +29,9 @@ var creatures: CreatureSystem
 var builds: BuildSystem
 var jobs: JobBoard
 
+## O combate (§50), o raio do rei (§07) e a curva (§49).
 var combat: CombatSystem
+var morale: MoraleSystem
 var economy: EconomySystem
 
 ## A mancha e o que ela invoca (§51). O ciclo dela e o passo 2 e vive no
@@ -75,6 +76,7 @@ var _coins: CoinSystem
 var _recruits: RecruitSystem
 var _running: bool = false
 var _fase: int = UnitSystem.NENHUM
+var _brecha: bool = false
 
 
 func _ready() -> void:
@@ -83,6 +85,9 @@ func _ready() -> void:
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
+	# §07: um muro a cair poe a fugir quem esta fraco e e barato. O sinal so e
+	# entregue no passo 11, e por isso a brecha conta no tick seguinte.
+	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
 
 
 ## Comeca um jogo novo: semeia, poe o relogio a andar, e da o primeiro dia.
@@ -128,7 +133,7 @@ func set_paused(pausado: bool) -> void:
 ## milissegundos sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
-	_consumir_intencoes()
+	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages))
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	var mudou := _mudanca_de_fase()
@@ -143,6 +148,8 @@ func step(delta: float) -> void:
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
 	EventRelay.combat(combat.choose(units, creatures, builds))
+	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
+	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
 	units.tick_movement(delta)  # 5 · MovementSystem — todo o tick
 	creatures.tick_movement(delta)
@@ -182,11 +189,13 @@ func _montar() -> void:
 	builds = BuildSystem.new()
 	jobs = SimFactory.job_board()
 	combat = SimFactory.combat(jobs)
+	morale = SimFactory.morale()
 	economy = SimFactory.economy()
 	night = NightWatch.new()
 	_coins = null  # um jogo novo comeca sem moedas no chao
 	_recruits = null
 	_fase = UnitSystem.NENHUM
+	_brecha = false
 	intents.clear()
 
 
@@ -211,21 +220,6 @@ func _largar(moedas: Array[Dictionary]) -> void:
 		drop_coin(
 			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]
 		)
-
-
-## §61: as intencoes sao consumidas no inicio do tick, pela ordem em que
-## chegaram. Nenhuma delas mudou estado quando foi enfileirada.
-func _consumir_intencoes() -> void:
-	for intencao in intents.take():
-		var args: Dictionary = intencao[1]
-		match int(intencao[0]):
-			IntentQueue.Kind.DROP_COIN:
-				if Verbs.spend(units, king_id, args[&"amount"]):
-					drop_coin(args[&"x"], args[&"band"], args[&"amount"], args[&"source"])
-			IntentQueue.Kind.ASSUME:
-				Verbs.assume(units, king_id, passages)
-			IntentQueue.Kind.MARK_TARGET:
-				Verbs.mark(units, creatures, combat, args[&"x"], king_id)
 
 
 func _physics_process(delta: float) -> void:
