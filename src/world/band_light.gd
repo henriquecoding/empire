@@ -50,7 +50,7 @@ static func ambient(dados: ClockData, fase: int, progresso: float) -> Color:
 ## subsolo leva a mesma razao outra vez, pela mesma razao de nao haver segundo
 ## numero: inventar-lhe um era escrever balanceamento em codigo (Q-069).
 static func of(dados: ClockData, faixa: Band.Kind, fase: int, progresso: float) -> Color:
-	return ambient(dados, fase, progresso) * plane(dados, faixa)
+	return WorldPalette.dim(ambient(dados, fase, progresso), plane(dados, faixa))
 
 
 ## Quanto da luz do ambiente chega ao PLANO desta faixa. E so para o cenario: a

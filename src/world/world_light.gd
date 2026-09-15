@@ -77,6 +77,17 @@ static func lit(x: float, centro: float, raio: float) -> bool:
 	return absf(x - centro) <= raio
 
 
+## A mesma pergunta com resposta continua: quanto da luz chega a este x — 1 no
+## centro, 0 no bordo e fora dele. O lit() responde sim ou nao porque o §74 e uma
+## regra de jogo e uma regra de jogo nao tem meios-termos; isto responde por
+## graus porque o §80 e de composicao, e "perto da luz ve-se cor e volume" e uma
+## gradacao e nao um interruptor.
+static func reach(x: float, centro: float, raio: float) -> float:
+	if raio <= 0.0:
+		return 0.0
+	return clampf(1.0 - absf(x - centro) / raio, 0.0, 1.0)
+
+
 ## §80: "uma luz domina por ecra". Com as mesmas paragens, a que alcanca mais
 ## longe e mais forte a QUALQUER distancia — o nucleo e o meio dela chegam onde
 ## a outra ja e bordo. Empatar nao chega: duas luzes iguais competem.
@@ -99,4 +110,4 @@ static func hearth_radius(vaga: BuildSlot) -> float:
 static func reveal(cor: Color, aceso: bool, chao: float) -> Color:
 	if aceso:
 		return cor
-	return Color(cor.r * chao, cor.g * chao, cor.b * chao, cor.a)
+	return WorldPalette.dim(cor, chao)

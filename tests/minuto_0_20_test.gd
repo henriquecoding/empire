@@ -92,6 +92,68 @@ func test_o_minuto_0_20_do_25_funciona() -> void:
 	assert_float(SimLoop.units.xs[i]).is_equal(400.0 - curva.follow_distance_px)
 
 
+func test_o_rei_larga_onde_esta_e_a_moeda_nao_lhe_volta_ao_saco() -> void:
+	# O caminho que o JOGO faz, e nao o que o teste de cima faz. O `input_router`
+	# larga a moeda no x do monarca — nao ha outro sitio onde ele a possa largar
+	# (§61: a entrada nao escolhe coordenadas, escolhe um verbo) — e o desvio do
+	# arco poe-na a menos de 20 px dele. O raio de varrer e 12 px.
+	#
+	# Resultado: o rei apanhava de volta a moeda que acabara de largar, e o
+	# vagabundo ao lado nunca chegava a ela. O minuto 0:20 do §25 — "largas uma
+	# moeda perto dele, ele apanha-a e ganha um chapeu" — nao acontecia no jogo,
+	# e acontecia no teste porque o teste larga a moeda a 60 px de distancia.
+	SimLoop.start(SEMENTE)
+	var eu := SimLoop.units.spawn(SimLoop.state, _monarca(), MEU_IMPERIO, 0.0)
+	SimLoop.king_id = eu
+	SimLoop.units.carried_coins[SimLoop.units.index_of(eu)] = 1
+	var ele := SimLoop.units.spawn(SimLoop.state, _vagabundo(), RecruitSystem.SEM_DONO, 30.0)
+	var i := SimLoop.units.index_of(ele)
+
+	# Exactamente o que a tecla ESPACO faz: uma intencao, no x do rei.
+	SimLoop.intents.queue(
+		IntentQueue.Kind.DROP_COIN,
+		{&"x": 0.0, &"band": Band.Kind.SURFACE, &"amount": 1, &"source": &"player"}
+	)
+	_correr(6.0)
+
+	var rei := SimLoop.units.index_of(eu)
+	var porque := "a moeda voltou para o saco do rei: ele tem %d" % SimLoop.units.carried_coins[rei]
+	assert_int(SimLoop.units.carried_coins[rei]).override_failure_message(porque).is_equal(0)
+	(
+		assert_int(SimLoop.units.owners[i])
+		. override_failure_message("o vagabundo ao lado nao ficou com a moeda que era para ele")
+		. is_equal(MEU_IMPERIO)
+	)
+
+
+func test_uma_moeda_largada_sem_ninguem_por_perto_fica_no_chao() -> void:
+	# A outra metade da mesma regra, e a resposta nao era a que eu esperava: o
+	# arco do §61 leva a moeda para fora do raio de varrer, e por isso ela FICA no
+	# chao em vez de voltar ao saco. E o que o §02 quer do Verbo 1 — a moeda sai
+	# da mao e passa a estar no mundo — e e o que deixa largar uma pilha a frente
+	# de uma obra sem a apanhar de volta a cada passo.
+	SimLoop.start(SEMENTE)
+	var eu := SimLoop.units.spawn(SimLoop.state, _monarca(), MEU_IMPERIO, 0.0)
+	SimLoop.king_id = eu
+	SimLoop.units.carried_coins[SimLoop.units.index_of(eu)] = 1
+	SimLoop.intents.queue(
+		IntentQueue.Kind.DROP_COIN,
+		{&"x": 0.0, &"band": Band.Kind.SURFACE, &"amount": 1, &"source": &"player"}
+	)
+	_correr(6.0)
+
+	assert_int(SimLoop.units.carried_coins[SimLoop.units.index_of(eu)]).is_equal(0)
+	assert_int(SimLoop.coins.count()).is_equal(1)
+
+	# E quem passa por cima dela apanha-a: o rei anda ate la e o saco enche outra
+	# vez. Sem isto, uma moeda largada por engano ficava perdida para sempre.
+	var onde: float = SimLoop.coins.xs[0]
+	SimLoop.units.set_target_x(eu, onde)
+	_correr(4.0)
+	assert_int(SimLoop.coins.count()).is_equal(0)
+	assert_int(SimLoop.units.carried_coins[SimLoop.units.index_of(eu)]).is_equal(1)
+
+
 func test_o_minuto_0_20_da_o_mesmo_com_a_mesma_semente() -> void:
 	# A promessa do §21 sobre um caminho que agora tem mais um sistema dentro.
 	var correr := func() -> Dictionary:

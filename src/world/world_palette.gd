@@ -38,6 +38,17 @@ const VAZIO := Color(0.35, 0.33, 0.30, 0.45)
 const PASSAGEM := Color(0.36, 0.55, 0.62, 0.7)
 const VIDA := Color(0.35, 0.65, 0.35)
 
+## §80 §1, a linha do primeiro plano: "#100D09 e #14140F. Sobrepoe-se as tropas e
+## nao compete com elas." E o valor mais escuro que a paleta do dossie usa para
+## PREENCHER — o §80 abre a seccao a dizer que ate ai o mais escuro so servia de
+## contorno, e que passam a existir tres valores de silhueta.
+##
+## Aqui e a cor de um corpo longe de qualquer luz (§80 §3: "perto da luz ve-se
+## cor e volume; longe ve-se silhueta"). Sem ela, "longe" era a cor de cada um
+## multiplicada pelo ambiente — e isso deixava um vagabundo a luminancia 31
+## contra um ceu a 34, que e a mesma mancha e nao se ve.
+const SILHUETA := Color(0.063, 0.051, 0.035)
+
 ## A escala do §01: um degrau sao 16 px de altura, e a largura e metade.
 const DEGRAU := 16.0
 const MEIA := 0.5
@@ -45,11 +56,31 @@ const MOEDA_R := 3.0
 const CONTORNO := 2.0
 const BARRA := 3.0
 const PASSAGEM_W := 8.0
-const ALTURA_OBRA := 14.0
+## Que fatia do corpo o saco ocupa quando esta cheio (§24). Enche de baixo para
+## cima, como um saco enche — e nao e uma barra de recurso ao contrario.
+const SACO := 0.35
 ## A altura do rasto, em px. Um degrau de silhueta e meio: ve-se de longe e nao
 ## tapa quem esta em cima dele.
 const RASTO := DEGRAU * MEIA
-const VIVO_MIN := 0.08
+
+
+## Escurecer uma cor sem lhe tirar opacidade.
+##
+## Existe por causa de um defeito que custou a noite inteira: em GDScript,
+## `Color * float` multiplica QUATRO componentes, e a quarta e o alfa. O chao era
+## desenhado com `SOLO * plane()` — 0,6875 — e por isso saia a 69% de opacidade
+## sobre o cinzento por omissao do motor. De noite o solo dava (32, 29, 26) em
+## vez de (12, 7, 4), a um passo do ceu em (36, 34, 30): sem horizonte, e sem
+## horizonte nao ha §11 nenhum. Escurecer sao TRES componentes.
+static func dim(cor: Color, luz: float) -> Color:
+	return Color(cor.r * luz, cor.g * luz, cor.b * luz, cor.a)
+
+
+## A mesma regra com uma COR de luz em vez de um numero: tres componentes, e a
+## opacidade da coisa fica a ser a dela. E o que o `modulate` fazia ao no todo, e
+## que agora se aplica onde ele manda — no cenario e nos corpos, nao nas luzes.
+static func tint(cor: Color, luz: Color) -> Color:
+	return Color(cor.r * luz.r, cor.g * luz.g, cor.b * luz.b, cor.a)
 
 
 ## A linha de chao de cada faixa, em y. A do meio e a do §11; a aerea assenta no
@@ -61,12 +92,6 @@ static func ground_of(faixa: int) -> float:
 		int(Band.Kind.UNDERGROUND):
 			return float(Band.GROUND_LINE + Band.SOIL_CUT * MEIA)
 	return float(Band.GROUND_LINE)
-
-
-## A caixa de um corpo pousado na linha de chao da sua faixa.
-static func body(x: float, faixa: int, alto: float) -> Rect2:
-	var largo := alto * MEIA
-	return Rect2(x - largo * MEIA, ground_of(faixa) - alto, largo, alto)
 
 
 ## A cor de uma tropa: o que ela e, e o que esta a fazer. O chapeu e outra coisa

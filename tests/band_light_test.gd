@@ -53,6 +53,34 @@ func test_o_chao_da_noite_desce_abaixo_do_ambiente() -> void:
 	assert_float(chao.v).is_less(ambiente.v)
 
 
+func test_o_terreno_nunca_fica_transparente() -> void:
+	# O defeito que isto apanha, e custou a noite inteira: `Color * float` em
+	# GDScript multiplica QUATRO componentes, e a quarta e o alfa. O chao era
+	# desenhado com `SOLO * plane()` — 0,6875 — e por isso saia a 69% de
+	# opacidade sobre o cinzento por omissao do motor. Medido numa captura: de
+	# dia o solo devia dar (74, 50, 27) e dava (75, 58, 42); de noite devia dar
+	# (12, 7, 4) e dava (32, 29, 26), a um passo do ceu em (36, 34, 30). Com o
+	# chao e o ceu a um passo um do outro nao ha horizonte, e sem horizonte a
+	# noite nao se le.
+	var dados := _dados()
+	for fase in range(dados.phase_durations.size()):
+		for faixa in [Band.Kind.AERIAL, Band.Kind.SURFACE, Band.Kind.UNDERGROUND]:
+			var cor := BandLight.of(dados, faixa, fase, MEIO)
+			var porque := "faixa %d na fase %d sai com alfa %.3f" % [faixa, fase, cor.a]
+			assert_float(cor.a).override_failure_message(porque).is_equal_approx(1.0, 0.0001)
+
+
+func test_escurecer_uma_cor_nao_lhe_tira_opacidade() -> void:
+	# A mesma regra, no sitio onde ela se aplica: escurecer e multiplicar TRES
+	# componentes. A mancha e o rasto sao translucidos de proposito (§51) e teem
+	# de continuar a se-lo depois de levarem luz.
+	var opaca := WorldPalette.dim(WorldPalette.SOLO, 0.5)
+	assert_float(opaca.a).is_equal_approx(WorldPalette.SOLO.a, 0.0001)
+	assert_float(opaca.r).is_equal_approx(WorldPalette.SOLO.r * 0.5, 0.0001)
+	var translucida := WorldPalette.dim(WorldPalette.MANCHA, 0.5)
+	assert_float(translucida.a).is_equal_approx(WorldPalette.MANCHA.a, 0.0001)
+
+
 func test_o_plano_de_jogo_fica_inalterado() -> void:
 	# §80, a linha "Plano de jogo · y 517-720 · toda a paleta · inalterado". O
 	# tecto de valores e para o CENARIO; as tropas e as moedas nao o levam, e por

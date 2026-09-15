@@ -19,6 +19,17 @@ func test_sem_literais_de_balanceamento() -> void:
 	assert_array(problems).override_failure_message("\n".join(problems)).is_empty()
 
 
+func test_um_const_que_nao_cabe_numa_linha_continua_a_ser_um_const() -> void:
+	# O G4 salta as linhas que comecam por `const ` — e essa e a saida que ele
+	# proprio manda usar. Uma tabela que nao cabe numa linha so nao deixa de ser
+	# uma constante, e e a contagem de parenteses que o portao le para o saber.
+	assert_int(Rules.bracket_balance("const A := [1, 2]")).is_equal(0)
+	assert_int(Rules.bracket_balance("const A := [")).is_equal(1)
+	assert_int(Rules.bracket_balance("	40, 12, 88,")).is_equal(0)
+	assert_int(Rules.bracket_balance("]")).is_equal(-1)
+	assert_int(Rules.bracket_balance("const A := {B: [1], C: [2]}")).is_equal(0)
+
+
 func test_g6_o_save_nunca_usa_load() -> void:
 	# ADR 0007: um .tres arbitrario pode trazer script embutido, e por isso um
 	# load() num caminho de save e execucao remota de codigo. A regra estava
