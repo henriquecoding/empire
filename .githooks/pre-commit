@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Corre os portoes estaticos antes de cada commit. Liga-o com `make hooks`.
+# Nao corre o motor: tem de ser rapido ou deixa de ser usado.
+#
+# Para saltar uma vez (e so uma vez, com razao): git commit --no-verify
+set -euo pipefail
+echo "pre-commit: portoes estaticos"
+if ! make --no-print-directory portoes; then
+	echo
+	echo "pre-commit: um portao chumbou. Corrige, ou usa --no-verify se souberes porque."
+	exit 1
+fi

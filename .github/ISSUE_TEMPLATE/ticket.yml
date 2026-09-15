@@ -1,0 +1,69 @@
+name: Ticket do backlog
+description: Uma tarefa, uma sessao, um merge — no formato do §34.
+title: "[<id>] "
+labels: ["ticket"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Os tickets vivem em `docs/backlog/<id>.md` e sao a fonte. Esta issue
+        serve para os **acompanhar**, nao para os substituir: se a tarefa ainda
+        nao tem ficheiro, cria-o primeiro e so depois abre isto.
+
+  - type: input
+    id: ticket
+    attributes:
+      label: Ticket
+      description: O id do ficheiro em docs/backlog/
+      placeholder: F0-07
+    validations:
+      required: true
+
+  - type: textarea
+    id: porque
+    attributes:
+      label: Porque
+      description: Uma frase. Se nao couber numa, a tarefa sao duas.
+    validations:
+      required: true
+
+  - type: textarea
+    id: spec
+    attributes:
+      label: Spec
+      description: As seccoes de docs/design/ que mandam nesta tarefa.
+      placeholder: docs/design/46-o-catalogo-completo.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: feito
+    attributes:
+      label: Feito
+      description: O contrato. Uma condicao verificavel, nao uma intencao.
+      placeholder: Sinais declarados, fila e flush; o portao G3 deixa de estar saltado
+    validations:
+      required: true
+
+  - type: textarea
+    id: fora
+    attributes:
+      label: Fora
+      description: >
+        O campo mais importante do §34 — e o que impede tres tarefas no mesmo
+        diff. Diz o que esta tarefa NAO faz e para que ticket isso vai.
+      placeholder: Emissores — entram com cada sistema.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contrato
+    attributes:
+      label: Antes de comecar
+      options:
+        - label: Li o AGENTS.md e as seccoes da linha Spec
+          required: true
+        - label: Nenhum valor de que isto depende esta marcado em `_proposed` sem estar resolvido
+          required: false
+        - label: Se surgiu duvida de design, esta em docs/QUESTIONS.md e nao foi decidida aqui
+          required: false

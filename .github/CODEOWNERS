@@ -1,0 +1,30 @@
+# Quem tem de ver o quê antes de entrar.
+# A ultima regra que casa e a que vale — por isso as mais especificas vem abaixo.
+
+*                           @henriquecoding
+
+# ── O que nao se edita a mao ────────────────────────────────────────────────
+# Estas tres pastas sao GERADAS. Uma alteracao direta aqui e quase sempre um
+# engano que o CI apanha (make spec, make dados, make conteudo), e sempre um
+# sinal de que a fonte e que devia ter mudado.
+/docs/design/               @henriquecoding
+/docs/content/SCHEMA.md     @henriquecoding
+/docs/content/PROPOSALS.md  @henriquecoding
+/docs/content/ROT_BY_DAY.md @henriquecoding
+/docs/content/NAMES.md      @henriquecoding
+/data/*/                    @henriquecoding
+
+# ── O contrato e as decisoes ─────────────────────────────────────────────────
+# Mudar aqui e mudar as regras do jogo para toda a gente, agentes incluidos.
+/AGENTS.md                  @henriquecoding
+/CLAUDE.md                  @henriquecoding
+/docs/adr/                  @henriquecoding
+/docs/dossie.html           @henriquecoding
+
+# ── A fonte dos numeros e a configuracao que os defende ──────────────────────
+/data/source/               @henriquecoding
+/tools/                     @henriquecoding
+/.github/                   @henriquecoding
+/Makefile                   @henriquecoding
+/project.godot              @henriquecoding
+/export_presets.cfg         @henriquecoding

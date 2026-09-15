@@ -1,89 +1,139 @@
 name: ci
-on: [push, pull_request]
 
-env:
-  GODOT_VERSION: 4.6-stable
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+# Nenhum job deste workflow escreve no repositorio. Declarar o minimo aqui em
+# cima tira a permissao a todos de uma vez; um job que um dia precise de mais
+# pede-a no proprio job, e a excecao fica visivel na revisao.
+permissions:
+  contents: read
+
+# Um push novo cancela o anterior do mesmo ramo. Numa PR que leva quatro pushes
+# seguidos isto e a diferenca entre quatro corridas e uma.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  testes:
+  # ── 1 ─────────────────────────────────────────────────────────────────────
+  # Tudo o que se verifica sem abrir o motor. Corre em menos de um minuto e
+  # apanha a maioria dos chumbos, por isso vem primeiro e sozinho.
+  portoes:
+    name: Portoes estaticos
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: false                      # a suite nao precisa de arte
+          lfs: false
 
-      - name: Godot ${{ env.GODOT_VERSION }}
-        run: |
-          BASE=https://github.com/godotengine/godot-builds/releases/download
-          F=Godot_v${GODOT_VERSION}_linux.x86_64
-          curl -sSLo godot.zip $BASE/${GODOT_VERSION}/${F}.zip
-          unzip -q godot.zip && chmod +x $F && sudo mv $F /usr/local/bin/godot
-
-      # Sem este passo a suite falha sempre em checkout frio: o Godot precisa
-      # de importar os recursos uma vez antes de conseguir abrir uma cena.
-      - name: Importar recursos
-        run: godot --headless --import --path . || true
-
-      # v5.2 — ADR 0004/0008: os .tres sao versionados; o CSV e a fonte. Isto
-      # chumba se alguem editou um .tres a mao ou se esqueceu de correr a ferramenta.
-      - name: Dados · CSV e .tres em sincronia, e iguais ao dossie
-        run: |
-          godot --headless --path . -s tools/csv_to_tres.gd -- --check
-          python3 tools/check_dossie_vs_csv.py docs/dossie.html
-          python3 tools/content_report.py --check
-
-      # v5.2 — docs/design/ e gerado do dossie (§69); nunca se edita a mao.
-      - name: Spec · docs/design gerado do dossie
-        run: |
-          python3 tools/split_dossie.py docs/dossie.html docs/design
-          git diff --exit-code -- docs/design
-
-      - name: G2 · nenhum RNG solto fora do RngService
-        run: |
-          ! grep -rnE '\b(randi|randf|randomize|randi_range|randf_range)\s*\(' \
-              src/ --include='*.gd' | grep -v 'src/core/rng_service.gd'
-
-      - name: G1 G3 G4 G5 · suite gdUnit4
-        # v5.2: o gdUnit4 6.x sai com 103 em --headless sem esta opcao (ADR 0009)
-        run: godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests
-
-      - name: Formato e limite de 250 linhas
-        run: |
-          pipx install "gdtoolkit==4.*"
-          gdformat --check src/ tests/ tools/
-          gdlint src/ tests/
-
-      # v5.2 — sem templates o export falha sempre; so os de Linux, em cache.
-      - name: Cache dos templates de export
-        uses: actions/cache@v4
+      - uses: actions/setup-python@v5
         with:
-          path: ~/.local/share/godot/export_templates
-          key: godot-templates-${{ env.GODOT_VERSION }}-linux
+          python-version: "3.11"
 
-      - name: Templates de export (so Linux)
-        run: |
-          T=~/.local/share/godot/export_templates/${GODOT_VERSION/-/.}
-          if [ ! -f "$T/linux_debug.x86_64" ]; then
-            mkdir -p "$T"
-            BASE=https://github.com/godotengine/godot-builds/releases/download
-            curl -sSLo t.tpz $BASE/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
-            unzip -q -j t.tpz templates/linux_debug.x86_64 templates/linux_release.x86_64 \
-              templates/version.txt -d "$T"
-            rm t.tpz
-          fi
+      - name: gdtoolkit, na versao fixada em tools/requirements.txt
+        run: make ferramentas-python
 
-      - name: Export do Linux ainda arranca
-        run: |
-          mkdir -p build
-          godot --headless --path . --export-debug "Linux" build/empire.x86_64
-          test -s build/empire.x86_64 && test -s build/empire.pck
-          cd build && ./empire.x86_64 --headless --quit-after 30
+      - name: Formato — gdformat
+        run: make formato
 
-  # A camada de uso do dossie (ferramentas/) tem os seus proprios portoes, e
-  # correm num job separado porque so precisam de Node e de um browser — nao do
-  # motor. Ver ferramentas/LEIA-ME.md.
+      - name: Estilo e o limite de 250 linhas — gdlint
+        run: make estilo
+
+      # I2 (§40): a aleatoriedade entra por um sitio so. E um grep porque tem
+      # de chumbar mesmo que o ficheiro nao compile.
+      - name: G2 · nenhum RNG solto fora do RngService
+        run: make rng
+
+      - name: Dados · os numeros do dossie contra os CSV
+        run: make dossie-numeros
+
+      - name: Conteudo · SCHEMA, PROPOSALS, ROT_BY_DAY e NAMES em dia
+        run: make conteudo
+
+      # docs/design/ e gerado do dossie (§69). Editar a mao uma seccao gerada e
+      # perder a edicao na proxima geracao, em silencio.
+      - name: Spec · docs/design gerado do dossie
+        run: make spec
+
+      # AGENTS.md: "nao escrevas a mao um numero que a ferramenta conta".
+      - name: Afirmacoes · a prosa e o validation.json contra a contagem
+        run: make afirmacoes
+
+  # ── 2 ─────────────────────────────────────────────────────────────────────
+  testes:
+    name: Dados e suite gdUnit4
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: ./.github/actions/godot
+
+      # Sem isto a suite chumba sempre em checkout frio: o motor precisa de
+      # importar os recursos uma vez antes de conseguir abrir uma cena.
+      - name: Importar recursos
+        run: make importar
+
+      # ADR 0004/0008: os .tres sao versionados e o CSV e a fonte. Chumba se
+      # alguem editou um .tres a mao ou se esqueceu de correr a ferramenta.
+      - name: Dados · CSV e .tres em sincronia
+        run: make dados
+
+      # ADR 0009: o gdUnit4 6.x sai com 103 em --headless sem esta opcao.
+      - name: G1 G3 G4 G5 · suite gdUnit4
+        run: make testes
+
+      - name: Relatorio da suite
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-gdunit4
+          path: reports/
+          retention-days: 14
+          if-no-files-found: warn
+
+  # ── 3 ─────────────────────────────────────────────────────────────────────
+  # O unico job que prova que isto e um jogo e nao uma pasta: produz o binario
+  # e arranca-o. Separado porque so ele paga os templates de export.
+  export:
+    name: Export de Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: ./.github/actions/godot
+        with:
+          export-templates: "true"
+
+      - name: Importar recursos
+        run: make importar
+
+      - name: Exportar e arrancar o binario
+        run: make exportar
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: empire-linux-debug
+          path: |
+            build/empire.x86_64
+            build/empire.pck
+          retention-days: 7
+
+  # ── 4 ─────────────────────────────────────────────────────────────────────
+  # A camada de uso do dossie tem portoes proprios e so precisa de Node e de um
+  # browser — nao do motor. Ver ferramentas/LEIA-ME.md.
   dossie:
+    name: Camada de uso do dossie
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -109,12 +159,37 @@ jobs:
 
       - name: Construir o dossie
         working-directory: ferramentas
-        run: node construir.mjs ../docs/dossie.html saida/dados.json saida/dossie-empire-v6.html
+        run: node construir.mjs ../docs/dossie.html saida/dados.json saida/dossie-empire.html
 
       - name: Portao · telemovel, ancoras, JavaScript e pesquisa
         working-directory: ferramentas
-        run: node verificar-dossie.mjs saida/dossie-empire-v6.html
+        run: node verificar-dossie.mjs saida/dossie-empire.html
 
       - name: Portao · plano, saude, tabelas e recorte
         working-directory: ferramentas
-        run: node verificar-novo.mjs saida/dossie-empire-v6.html
+        run: node verificar-novo.mjs saida/dossie-empire.html
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dossie-construido
+          path: ferramentas/saida/dossie-empire.html
+          retention-days: 14
+
+  # ── 5 ─────────────────────────────────────────────────────────────────────
+  # O unico estado que a protecao de ramo precisa de exigir. Sem ele, cada job
+  # novo obriga a mexer nas definicoes do GitHub — e quem se esquece fica com um
+  # portao que existe e nao guarda nada.
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    needs: [portoes, testes, export, dossie]
+    if: always()
+    steps:
+      - name: Um job vermelho chumba o conjunto
+        run: |
+          R='${{ join(needs.*.result, " ") }}'
+          echo "resultados: $R"
+          for r in $R; do
+            if [ "$r" != "success" ]; then echo "::error::um job nao passou ($r)"; exit 1; fi
+          done
+          echo "todos os portoes verdes"
