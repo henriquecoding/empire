@@ -52,6 +52,10 @@ var both_flanks: bool = false
 ## (Q-006) — com ela, a noite 5 do §07 nao tem combate nenhum para medir. Pondo
 ## `false` volta a mancha do jogo, que e outra pergunta e e a do F1-09.
 var crawlers_only: bool = true
+## O degrau do §10 em que a muralha ja esta. Dez dias de jogo sao dez dias a
+## subi-la, e medir a Fase 1 com a estacaria de sempre media o primeiro dia dez
+## vezes em vez de medir dez dias (F1-16).
+var wall_level: int = 1
 var seed: int = SEMENTE
 
 var _mortes: int = 0
@@ -103,7 +107,7 @@ func arm(dia: int) -> void:
 	_invocadas = 0
 	_contacto = 0
 	_vivas = 0
-	Region.build(_flanco(), archers, spearmen, tower, both_flanks)
+	Region.build(_flanco(), archers, spearmen, tower, both_flanks, wall_level)
 	# O dia entra nos dois sitios, como no resume() do SimLoop: o relogio e dono
 	# dele, mas quem o le a meio do tick e o GameState, e o espelho so corre no
 	# fim (passo 11). Sem esta linha o crepusculo do dia 5 pedia a massa do dia

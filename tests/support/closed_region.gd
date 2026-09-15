@@ -36,8 +36,12 @@ const POSTO_TORRE := &"tower"
 
 ## Monta a regiao no SimLoop. `flanco` e o lado por onde a mancha vem esta noite;
 ## `ambos` poe muro nos dois, que e o que dias seguidos obrigam — cada noite
-## sorteia o seu lado (§51).
-static func build(flanco: int, arqueiros: int, lanceiros: int, torre: bool, ambos: bool) -> void:
+## sorteia o seu lado (§51); `nivel` e o degrau do §10 em que a muralha ja esta,
+## porque dez dias de jogo sao dez dias a subi-la e o F1-16 tem de poder pôr o
+## muro onde o jogador o teria posto.
+static func build(
+	flanco: int, arqueiros: int, lanceiros: int, torre: bool, ambos: bool, nivel: int = 1
+) -> void:
 	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
 	SimLoop.world_width = largura * ECRAS
@@ -46,7 +50,7 @@ static func build(flanco: int, arqueiros: int, lanceiros: int, torre: bool, ambo
 
 	_nucleo()
 	for lado in [-1, 1] if ambos else [flanco]:
-		_muro(lado)
+		_muro(lado, nivel)
 		if torre:
 			_torre(lado)
 	_gente(flanco, arqueiros, lanceiros)
@@ -62,25 +66,25 @@ static func _nucleo() -> void:
 	_levantar(vaga)
 
 
-## O muro do §07, ja de pe no nivel 1. Nao se constroi durante o cenario: a
-## economia esta fora da receita, e um muro por levantar media outra coisa.
-static func _muro(flanco: int) -> void:
+## O muro do §07, ja de pe. Nao se constroi durante o cenario: a economia esta
+## fora da receita, e um muro por levantar media outra coisa.
+static func _muro(flanco: int, nivel: int) -> void:
 	var vaga := BuildSlot.new()
 	vaga.x = SimLoop.core_x + flanco * MURO_X
 	vaga.kind = MURO
 	vaga.blocks = true
 	vaga.job_id = POSTO_MURO
-	for nivel in SimFactory.walls_by_level():
-		vaga.costs.append(nivel.cost)
-		vaga.healths.append(nivel.max_health_b)
-		vaga.healths_a.append(nivel.max_health_a)
-		vaga.posts_a.append(nivel.guard_posts_a)
-		vaga.posts_b.append(nivel.guard_posts_b)
-		vaga.contacts.append(nivel.contact_slots)
-		vaga.width = maxf(vaga.width, float(nivel.shadow_width))
+	for degrau in SimFactory.walls_by_level():
+		vaga.costs.append(degrau.cost)
+		vaga.healths.append(degrau.max_health_b)
+		vaga.healths_a.append(degrau.max_health_a)
+		vaga.posts_a.append(degrau.guard_posts_a)
+		vaga.posts_b.append(degrau.guard_posts_b)
+		vaga.contacts.append(degrau.contact_slots)
+		vaga.width = maxf(vaga.width, float(degrau.shadow_width))
 	vaga.path = BuildSlot.Path.FORTIFICACAO  # Q-070, como no greybox
 	SimLoop.builds.post(vaga)
-	_levantar(vaga)
+	_levantar(vaga, nivel)
 
 
 static func _torre(flanco: int) -> void:
@@ -104,10 +108,10 @@ static func _vaga(dados: BuildingData, x: float) -> BuildSlot:
 	return vaga
 
 
-## De pe no nivel 1, inteira. O nivel entra depois do post() porque e o post()
-## que da o id, e a vida do nivel le-se da escada que ja la esta.
-static func _levantar(vaga: BuildSlot) -> void:
-	vaga.level = 1
+## De pe e inteira. O nivel entra depois do post() porque e o post() que da o id,
+## e a vida do degrau le-se da escada que ja la esta.
+static func _levantar(vaga: BuildSlot, nivel: int = 1) -> void:
+	vaga.level = clampi(nivel, 1, vaga.costs.size())
 	vaga.state = BuildSlot.State.DONE
 	vaga.health = vaga.max_health()
 
