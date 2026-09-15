@@ -193,3 +193,46 @@ func test_quem_nao_muda_de_faixa_nao_sobe() -> void:
 		assert_bool((Registry.entry(&"creatures", &"crawler") as CreatureData).can_change_band)
 		. is_false()
 	)
+
+
+# ─── Quem alcanca que faixa, do lado das criaturas (§07, §11) ────────────────
+
+
+func test_o_cavador_no_subsolo_nao_chega_a_quem_esta_no_chao() -> void:
+	# O espelho do Posts.reaches() do F1-07, que faltava deste lado. O §07 diz
+	# que o Cavador "PASSA pela faixa subterranea" — passa, nao ataca de la. Sem
+	# esta regra ele batia em quem estivesse em cima sem nunca subir, e a
+	# passagem do §25 nao custava nada a ninguem.
+	var cavador := Registry.entry(&"creatures", &"burrower") as CreatureData
+
+	assert_bool(cavador.can_change_band).is_true()
+	(
+		assert_bool(Passages.reaches(cavador, int(Band.Kind.UNDERGROUND), int(Band.Kind.SURFACE)))
+		. is_false()
+	)
+
+
+func test_depois_de_subir_chega() -> void:
+	var cavador := Registry.entry(&"creatures", &"burrower") as CreatureData
+
+	assert_bool(Passages.reaches(cavador, int(Band.Kind.SURFACE), int(Band.Kind.SURFACE))).is_true()
+
+
+func test_o_alado_bate_no_chao_sem_descer_porque_nao_pode_descer() -> void:
+	# A outra metade da mesma regra, e e ela que faz do Alado uma ameaca: o
+	# can_change_band dele e falso, e por isso o ar e o sitio dele para sempre.
+	# O §07 escreve-o na Libelula: "ignora a camada de solo; so atacavel por
+	# arqueiros e torres altas". A resposta a ele e um posto, e e a torre alta.
+	var alado := Registry.entry(&"creatures", &"winged") as CreatureData
+
+	assert_bool(alado.can_change_band).is_false()
+	assert_bool(Passages.reaches(alado, int(Band.Kind.AERIAL), int(Band.Kind.SURFACE))).is_true()
+
+
+func test_uma_faixa_fora_do_targets_bands_nao_se_alcanca_de_lado_nenhum() -> void:
+	var rastejante := Registry.entry(&"creatures", &"crawler") as CreatureData
+
+	(
+		assert_bool(Passages.reaches(rastejante, int(Band.Kind.SURFACE), int(Band.Kind.AERIAL)))
+		. is_false()
+	)

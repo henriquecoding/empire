@@ -13,9 +13,9 @@
 | Tickets | **53**, dos quais **31 feitos** e **22 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
 | Fase 1 | 15 de 17 — o F1-01 ao F1-15, inteiros. Faltam o F1-16 e o F1-17 |
-| Suite | 332 casos, 324 a passar, 8 saltados, 0 falhas, 0 *orphans* |
+| Suite | 336 casos, 328 a passar, 8 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 64 das 65 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
+| Perguntas em aberto | 65 das 66 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -158,14 +158,17 @@ Está toda em dados e em prosa, e nada dela em código.
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **64 perguntas em aberto** em `docs/QUESTIONS.md`, de 65 escritas — a Q-006
-  fechou com o F1-07. As onze mais recentes (Q-064 a Q-074) são as que encher o
+- **65 perguntas em aberto** em `docs/QUESTIONS.md`, de 66 escritas — a Q-006
+  fechou com o F1-07. As doze mais recentes (Q-064 a Q-075) são as que encher o
   tick e medir a noite obrigaram a fazer, e quatro delas são contradições do
   dossiê consigo próprio ou com os seus números: a Q-068 (o §25 diz três
   Rastejantes na noite 1 e a massa do §74 dá sete), a Q-072 (o §06 dá três
   estados de risco ao rasto e o §49 só escreve dois), a **Q-073** (o §07 monta o
   microteste com seis arqueiros e o muro do §10 só tem um posto de guarda) e a
   **Q-074** (o §66 pede dez dias em dez segundos, e o tick custa o dobro disso).
+  A **Q-075** é de outra espécie: está decidida e implementada — uma criatura que
+  pode mudar de faixa tem de subir antes de atacar — e fica escrita para poder
+  ser revertida numa linha.
 - **A prosa dos doze diários** é primeira versão, e não há teste que apanhe prosa
   morna (§84): o único controlo é o espécime do diário 9.
 
@@ -183,7 +186,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 332 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 336 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. É a mesa de trabalho do F1-16. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
