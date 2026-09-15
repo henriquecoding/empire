@@ -266,7 +266,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 90 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 93 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -360,6 +360,9 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 90 linha(s) · §06 §4
 | `coin_gravity_px_s2` | float | Moeda fisica — §02, §61, F1-01 |  |
 | `coin_drop_speed_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
 | `coin_drop_spread_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
+| `recruit_notice_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
+| `follow_distance_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
+| `follow_spacing_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

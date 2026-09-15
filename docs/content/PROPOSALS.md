@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 183 | 89 | 272 |
-| Fases 3–8 | 221 | 105 | 326 |
-| Total | 404 | 194 | 598 |
+| Fases 3–8 | 224 | 105 | 329 |
+| Total | 407 | 194 | 601 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -294,7 +294,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 326
+## 3 · Fases 3 a 8 — 329
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -568,6 +568,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `coin_gravity_px_s2` | `coin_gravity_px_s2` | 700 | 9 | Proposta: o dossiê diz que a moeda é física e não diz com que física. 700 px/s² com o impulso abaixo dá um arco de 23 px em contínuo — cerca de 20 px a 30 Hz, que é o que se vê — e meio segundo de voo — alto o bastante para se ver por cima de uma tropa, curto o bastante para não se esperar por ele. Q-061; a medir no F1-01. |
 | economy | `coin_drop_speed_px_s` | `coin_drop_speed_px_s` | 180 | 9 | Proposta: impulso vertical ao largar. Com a gravidade acima: ápice 23 px em contínuo, ~20 px medidos a 30 Hz, voo 0,51 s. Q-061. |
 | economy | `coin_drop_spread_px_s` | `coin_drop_spread_px_s` | 40 | 9 | Proposta: dispersão horizontal máxima ao largar, em px/s. Sobre 0,51 s de voo dá ±20 px de espalhamento — mais do que o raio de apanha de 12, para que duas moedas largadas juntas não se apanhem como uma. Q-061. |
+| economy | `recruit_notice_px` | `recruit_notice_px` | 120 | 9 | Proposta: «perto» não tem número no dossiê. 120 é o limite exterior da fila do §50 — a distância a que o jogo já diz que alguém pertence a um sítio. Ver Q-063. |
+| economy | `follow_distance_px` | `follow_distance_px` | 30 | 9 | Proposta ancorada no queue_min_px do §50 (30): é a mesma pergunta — a que distância uma pessoa espera por outra. Ver Q-063. |
+| economy | `follow_spacing_px` | `follow_spacing_px` | 18 | 9 | Proposta ancorada no queue_spacing_px do §50 (18), para o jogo ter UMA regra de espaçamento e não duas. Ver Q-063. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | horta | 6 | O §12 diz 'Fortaleza do pântano', mas nenhum dos seis povos vive num pântano — Q-013. Proposta: a Horta (várzea). |
 | impulses | `forced_harvest` | `coin_cost` | 12 | 6 | coin_cost 12 ≈ o rendimento líquido do dia 1 no perfil equilibrado (12,3). O dossiê implica um custo ('os impulsos custam metade' para o tirano) sem o dar — Q-014. |

@@ -38,6 +38,16 @@ extends Resource
 @export var coin_drop_speed_px_s: float = 0.0
 @export var coin_drop_spread_px_s: float = 0.0
 
+@export_group("Recrutamento — §25 minuto 0:20, F1-04")
+## O §25 descreve o minuto 0:20 em duas frases — "largas uma moeda perto dele" e
+## "o vagabundo segue-te" — e nao da um numero a nenhuma das duas. Os tres estao
+## em _proposed e a pergunta e a Q-063. Os dois de baixo estao ancorados na fila
+## do §50 de proposito: a que distancia uma pessoa espera por outra ja tem
+## resposta neste jogo, e ter duas seria ter duas.
+@export var recruit_notice_px: float = 0.0
+@export var follow_distance_px: float = 0.0
+@export var follow_spacing_px: float = 0.0
+
 @export_group("Favor e diplomacia — §06, §14, §56")
 @export var favor_decay_per_day: float = 0.0
 @export var diplomat_p_dissolve: float = 0.0

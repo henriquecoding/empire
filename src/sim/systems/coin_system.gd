@@ -113,6 +113,30 @@ func collect(x: float, faixa: Band.Kind, espaco: int) -> PackedInt32Array:
 	return apanhados
 
 
+## Apanha UMA moeda em concreto — a que esta unidade foi buscar — e devolve o
+## que ela valia, ou zero se ja la nao esta, se mudou de faixa, se ainda nao
+## pousou, se esta fora do raio, ou se nao cabe no saco.
+##
+## Existe por causa do custo, e o custo foi medido: o collect() por raio varre
+## TODAS as moedas do chao, e o value_of() obriga a fotografar o amounts_by_id()
+## antes — um dicionario com todas elas. Chamar os dois uma vez por unidade e por
+## tick punha o passo 5 a custar o produto de unidades por moedas, e um tick de
+## 300 unidades com 60 moedas dava 4372 us contra os 4000 us que o §63 da a
+## simulacao INTEIRA. Aqui e uma pesquisa por id e uma comparacao.
+##
+## Quem sabe qual e a moeda e o passo 4, que ja a escolheu e a guardou em
+## target_ids. Apanha-se aquela por que se veio, e nao o que calhar no caminho.
+func collect_one(coin_id: int, x: float, faixa: Band.Kind, espaco: int) -> int:
+	var i := index_of(coin_id)
+	if i == NENHUM or settled[i] == 0 or bands[i] != int(faixa):
+		return 0
+	if amounts[i] > espaco or absf(xs[i] - x) > _curva.coin_pickup_px:
+		return 0
+	var valor := amounts[i]
+	remove(coin_id)
+	return valor
+
+
 ## Quanto vale o que foi apanhado. Separado de collect() porque quem apanha
 ## precisa dos dois numeros e a lista ja nao tem as moedas.
 func value_of(coin_ids: PackedInt32Array, antes: Dictionary) -> int:

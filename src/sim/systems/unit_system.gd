@@ -36,6 +36,12 @@ var has_targets: PackedByteArray = PackedByteArray()
 var cooldowns: PackedFloat32Array = PackedFloat32Array()
 var carried_coins: PackedInt32Array = PackedInt32Array()
 var loyalties: PackedFloat32Array = PackedFloat32Array()
+# Frios no dossie, quentes no ciclo: a apanha do F1-04 pergunta por eles a cada
+# tick, e ir ao Registry buscar o UnitData de cada unidade 30 vezes por segundo e
+# exactamente a pesquisa de recurso que o cabecalho deste ficheiro diz que nao
+# acontece. Copiados no spawn, como os outros.
+var coin_capacities: PackedInt32Array = PackedInt32Array()
+var recruit_costs: PackedInt32Array = PackedInt32Array()
 
 var _por_id: Dictionary = {}
 
@@ -74,6 +80,8 @@ func spawn(estado: GameState, dados: UnitData, dono: int, x: float) -> int:
 	cooldowns.append(0.0)
 	carried_coins.append(0)
 	loyalties.append(1.0)
+	coin_capacities.append(dados.coin_capacity)
+	recruit_costs.append(dados.recruit_cost)
 	_por_id[unit_id] = ids.size() - 1
 	return unit_id
 
@@ -182,6 +190,8 @@ func to_dict() -> Dictionary:
 		&"cooldowns": cooldowns,
 		&"carried_coins": carried_coins,
 		&"loyalties": loyalties,
+		&"coin_capacities": coin_capacities,
+		&"recruit_costs": recruit_costs,
 	}
 
 
@@ -202,6 +212,8 @@ func _copiar(de: int, para: int) -> void:
 	cooldowns[para] = cooldowns[de]
 	carried_coins[para] = carried_coins[de]
 	loyalties[para] = loyalties[de]
+	coin_capacities[para] = coin_capacities[de]
+	recruit_costs[para] = recruit_costs[de]
 
 
 func _encolher() -> void:
@@ -222,3 +234,5 @@ func _encolher() -> void:
 	cooldowns.resize(n)
 	carried_coins.resize(n)
 	loyalties.resize(n)
+	coin_capacities.resize(n)
+	recruit_costs.resize(n)
