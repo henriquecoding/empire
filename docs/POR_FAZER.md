@@ -172,11 +172,24 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. |
 | **A suite** | `make testes` | 255 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
-| **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `--avancar` salta para qualquer ponto do dia sem esperar pelo relógio. |
+| **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
-| **Sem instalar o motor** | Artefacto `empire-linux-debug` de qualquer corrida verde do CI | O mesmo jogo, já exportado (Linux). |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |
-| **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos o export e o dossiê. |
+| **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos os exports e o dossiê. |
+
+### Sem instalar o motor
+
+Cada corrida verde do CI deixa três artefactos, e nenhum deles precisa do Godot:
+
+| Artefacto | Como se corre |
+|---|---|
+| `empire-linux-debug` | `chmod +x empire.x86_64 && ./empire.x86_64` |
+| `empire-windows-debug` | duplo clique no `empire.exe` (o `.pck` tem de ficar ao lado) |
+| `empire-web` | `python3 -m http.server` dentro da pasta, e abrir `http://localhost:8000` |
+
+O *preset* de Web tem `thread_support` desligado de propósito: não precisa dos
+cabeçalhos COOP/COEP e por isso serve-se de qualquer servidor estático. Localmente
+os três saem de `make exportar-tudo`.
 
 ### Os comandos, no teclado
 

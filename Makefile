@@ -22,7 +22,8 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        exportar ferramentas ferramentas-python hooks limpar
+        exportar exportar-windows exportar-web exportar-tudo \
+        ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
 	@grep -hE '^[a-z0-9-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -102,6 +103,28 @@ exportar:  ## Exporta o Linux e confirma que o binario arranca
 	test -s build/empire.pck
 	cd build && ./empire.x86_64 --headless --quit-after 30
 	@echo "export: o binario arrancou"
+
+# O Windows nao se pode arrancar aqui para confirmar; o que se confirma e que o
+# .exe e o .pck sairam com tamanho. Um .pck vazio e o defeito que este teste
+# apanha, e e o unico que apanha sem uma maquina Windows.
+exportar-windows:  ## Exporta o Windows (nao arranca: o runner e Linux)
+	mkdir -p build/windows
+	$(GODOT) --headless --path . --export-debug "Windows Desktop" build/windows/empire.exe
+	test -s build/windows/empire.exe
+	test -s build/windows/empire.pck
+	@echo "export: o .exe saiu"
+
+# O preset tem thread_support desligado, e por isso NAO precisa dos cabecalhos
+# COOP/COEP: serve-se de qualquer servidor estatico, incluindo o
+# `python3 -m http.server`. E o caminho para jogar sem instalar nada.
+exportar-web:  ## Exporta o Web (release: o debug nao cabe em lado nenhum)
+	mkdir -p build/web
+	$(GODOT) --headless --path . --export-release "Web" build/web/index.html
+	test -s build/web/index.wasm
+	test -s build/web/index.pck
+	@echo "export: o web saiu"
+
+exportar-tudo: exportar exportar-windows exportar-web  ## Os tres exports
 
 # ── Fora do jogo ─────────────────────────────────────────────────────────────
 
