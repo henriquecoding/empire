@@ -63,6 +63,9 @@ var passages: PackedFloat32Array = PackedFloat32Array()
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
 var autosave_enabled: bool = true
 
+## O que a noite levou (§46), do crepusculo ao amanhecer. Anuncia-se no §48.
+var tally := NightTally.new()
+
 var _running: bool = false
 var _fase: int = UnitSystem.NENHUM
 var _brecha: bool = false
@@ -74,6 +77,7 @@ func _ready() -> void:
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
+	tally.listen()
 	# §07: um muro a cair poe a fugir quem esta fraco e e barato. O sinal so e
 	# entregue no passo 11, e por isso a brecha conta no tick seguinte.
 	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
@@ -194,6 +198,7 @@ func _montar() -> void:
 	night = NightWatch.new()
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	recruits = RecruitSystem.new(SimFactory.curve())
+	tally.reset()
 	_fase = UnitSystem.NENHUM
 	_brecha = false
 	intents.clear()
@@ -236,6 +241,9 @@ func _espelhar_relogio() -> void:
 
 
 func _no_amanhecer(dia: int) -> void:
+	var noite := tally.of_night(dia)
+	if _running and not noite.is_empty():
+		EventBus.queue(&"night_survived", noite)
 	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai seria gravar antes
 	# de ter acontecido alguma coisa.
 	if autosave_enabled and _running and dia > 1:

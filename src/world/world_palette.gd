@@ -28,6 +28,10 @@ const BICHO := Color(0.35, 0.16, 0.22)
 const MOEDA := Color(0.96, 0.82, 0.29)
 ## §80, a regra das duas excecoes: violeta e A Podridao e so A Podridao.
 const MANCHA := Color(0.35, 0.22, 0.42, 0.55)
+## Por onde ela ja passou (§51). O mesmo violeta, mais fundo e mais fino: e uma
+## marca no chao e nao uma massa, e o §80 nao deixa entrar aqui uma terceira cor
+## fria — o rasto e a mancha sao a mesma coisa em dois momentos.
+const TRILHO := Color(0.35, 0.22, 0.42, 0.28)
 const OBRA := Color(0.55, 0.52, 0.48)
 const ANDAIME := Color(0.72, 0.62, 0.42, 0.55)
 const VAZIO := Color(0.35, 0.33, 0.30, 0.45)
@@ -42,6 +46,9 @@ const CONTORNO := 2.0
 const BARRA := 3.0
 const PASSAGEM_W := 8.0
 const ALTURA_OBRA := 14.0
+## A altura do rasto, em px. Um degrau de silhueta e meio: ve-se de longe e nao
+## tapa quem esta em cima dele.
+const RASTO := DEGRAU * MEIA
 const VIVO_MIN := 0.08
 
 

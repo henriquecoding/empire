@@ -41,7 +41,7 @@ jobs:
         with:
           lfs: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -108,7 +108,7 @@ jobs:
 
       - name: Relatorio da suite
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: relatorio-gdunit4
           path: reports/
@@ -144,7 +144,7 @@ jobs:
       - name: Exportar o Windows e o Web
         run: make exportar-windows exportar-web
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: empire-linux-debug
           path: |
@@ -152,7 +152,7 @@ jobs:
             build/empire.pck
           retention-days: 7
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: empire-windows-debug
           path: build/windows/
@@ -161,7 +161,7 @@ jobs:
       # Descarregar, descompactar, e servir a pasta de um servidor estatico
       # qualquer. O preset tem thread_support desligado: nao precisa de COOP nem
       # de COEP, e por isso `python3 -m http.server` chega.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: empire-web
           path: build/web/
@@ -179,7 +179,7 @@ jobs:
         with:
           lfs: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
 
@@ -207,7 +207,7 @@ jobs:
         working-directory: ferramentas
         run: node verificar-novo.mjs saida/dossie-empire.html
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: dossie-construido
           path: ferramentas/saida/dossie-empire.html

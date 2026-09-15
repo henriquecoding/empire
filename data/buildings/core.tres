@@ -8,6 +8,7 @@ id = &"core"
 display_key = "BUILDING_CORE"
 category = &"core"
 max_health = 1000
+contact_slots = 7
 width_px = 480
 unique_per_kingdom = true
 shadow_width = 480

@@ -44,6 +44,31 @@ static func surface(
 	return subiram
 
 
+## Se uma criatura desta faixa alcanca aquela. E o espelho do Posts.reaches()
+## que o F1-07 escreveu para as tropas, e faltava deste lado: sem ele uma
+## criatura batia em qualquer faixa que o targets_bands listasse, de onde quer
+## que estivesse.
+##
+## A faixa dela propria alcanca sempre. Outra so se ela NAO puder mudar de
+## faixa — e isso separa exatamente as duas criaturas que o §07 descreve de
+## maneiras diferentes:
+##
+##   O ALADO (can_change_band = false) vive no ar e bate no chao de la: "ignora
+##   a camada de solo, so atacavel por arqueiros e torres altas" (§07). A
+##   resposta a ele e um posto que chegue la acima, e e a torre alta.
+##   O CAVADOR (can_change_band = true) "passa pela faixa subterranea" (§07) —
+##   PASSA, nao ataca de la. Para bater tem de subir, e sobe onde ha passagem
+##   (§11, §51, e o surface() aqui em cima). Sem esta regra a passagem que o
+##   §25 poe ao minuto 12:00 nao custava nada a ninguem, e a noite 10 nao tinha
+##   resposta nenhuma — nem muro, nem torre, nem torre alta.
+static func reaches(dados: CreatureData, sua_faixa: int, alvo: int) -> bool:
+	if not dados.targets_bands.has(alvo):
+		return false
+	if alvo == sua_faixa:
+		return true
+	return not dados.can_change_band
+
+
 ## Se este x esta ao alcance de alguma passagem. A tolerancia e a do Band, e e a
 ## mesma para o monarca e para o que vem de baixo: uma passagem nao e mais larga
 ## para uns do que para outros.

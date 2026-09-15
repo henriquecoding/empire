@@ -179,6 +179,7 @@ static func _do_edificio(dados: BuildingData, x: float) -> BuildSlot:
 	vaga.costs = PackedInt32Array([dados.cost])
 	vaga.works = PackedFloat32Array([dados.build_work])
 	vaga.healths = PackedInt32Array([dados.max_health])
+	vaga.contacts = PackedInt32Array([dados.contact_slots])
 	return vaga
 
 

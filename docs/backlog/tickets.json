@@ -114,7 +114,7 @@
   "notas": [
    "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload que lhe chama tick().",
    "O ticket dizia 'feito' e nenhum dos dois existia na árvore recuperada — a mesma perda das nove cenas de segmento (Q-048). Reescritos a 15/09/2026.",
-   "night_survived fica por emitir: precisa de deaths e walls_lost, que ainda ninguém conta. F1-12 e F1-15."
+   "night_survived ficou por emitir até ao F1-15, como aqui estava escrito: a §46 dá-lhe deaths e walls_lost e não havia sistema que os contasse. Conta-os agora o src/core/night_tally.gd, do crepúsculo ao amanhecer, e quem o anuncia é o SimLoop no amanhecer — que é onde o §48 o põe."
   ]
  },
  "F0-07": {
@@ -533,10 +533,18 @@
   "depende": "F1-09",
   "feito": "A noite 5 ganha-se com 1 a 2 mortes; corre em headless com delta fixo",
   "fora": "Afinação propriamente dita — é o F1-16.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
-   "Q-017: três Rastejantes na noite 1, como diz a §25, ou dez, como dá a massa?"
+   "**O instrumento está feito; os números que ele lê não batem com o §07, e ficam escritos.** É a divisão que o ticket já fazia entre o *Feito* e o *Fora*, e o `tests/noite_do_07_test.gd` tem-na às duas metades: seis testes sobre o **instrumento** passam, e os três sobre os **números** estão saltados, cada um com a razão e a pergunta (ADR 0019). Nenhum valor de `data/` foi mexido — *\"um teste de design a falhar é informação, não um obstáculo\"*.",
+   "**Os dois ficheiros que o §66 nomeia existem, com esses nomes.** `tests/sim_harness.gd` é o instrumento: arma o dia, corre a noite ao passo fixo do §19 e devolve o que ela deu. `scenes/tests/night_test.tscn` corre-o de fora do motor — `godot --headless --path . scenes/tests/night_test.tscn` escreve a tabela das dez noites, com torre e sem ela, que é a mesa de trabalho do F1-16. A região fechada é ficheiro à parte (`tests/support/closed_region.gd`): o greybox põe dezoito obras, e é por isso que ele serve para jogar e não para medir.",
+   "**O `night_survived` da §46 passou a ser emitido, e é daí que o instrumento lê.** O F0-06 tinha-o registado por escrito — *\"fica por emitir … entra com o F1-12 e o F1-15\"* — e é este. Quem conta é o `src/core/night_tally.gd`, do crepúsculo ao amanhecer, e quem anuncia é o `SimLoop` no amanhecer, que é onde o §48 o põe. O instrumento **não tem contabilidade própria**: lê o mesmo número que o `docs/qa/PLAYTEST_PLAN.md` manda ler à mão, e por isso não pode divergir do jogo sem alguém dar por isso.",
+   "**\"Vagas de Rastejantes\", como o §07 escreve — e não a tabela de invocação inteira.** Com ela, a partir do dia 4 a massa compra Alados, que voam, e a partir do dia 10 Cavadores, que vêm por baixo: nenhum dos dois se deixa atingir por quem está no chão, em muro ou em torre de arqueiros (Q-006). A noite 5 do §07 ficava **sem combate nenhum para medir** — invocava nove e abatia zero. A regra de escolha do §51 fica intacta; o que muda é o que há para escolher, e `crawlers_only = false` devolve a mancha do jogo.",
+   "**Três defeitos que só o cenário podia mostrar**, e nenhum deles dava erro: 1. O dia entra no relógio **e** no `GameState`. O crepúsculo corre no passo 2 e o espelho do relógio só no fim do tick, e por isso a noite do dia 5 pedia a massa do dia 1: as dez noites davam a mesma tabela. 2. Os abates não se contam pelo `creature_died`. O `NightWatch` emite-o **também** por cada criatura que se dissolve à alvorada (§51), e com ele uma noite sem um tiro disparado dava a tabela cheia de abates. Ficou invocadas menos vivas no último passo antes do amanhecer. 3. O `night_survived` é enfileirado pelo ouvinte do `dawn_broke`, ou seja **durante** a entrega — e a fila do passo 11 serve isso no tick seguinte, de propósito. Sem uma entrega a mais no fim, a noite acabava sempre a zeros, e esta foi a que quase passou por resultado.",
+   "**Q-073 (nova): seis arqueiros num muro que só tem um posto.** A estacaria do §10 publica um posto de guarda; os outros cinco arqueiros recolhem ao núcleo, a 500 px do muro, com 200 px de alcance. A noite inteira é decidida por um. Sem torre o muro cai em todas as noites, a começar na 1, e o §25 diz que a noite 1 *\"é ganha de certeza\"*. Com torre de arqueiros — mais dois postos — a noite 5 dá 16 abates de 16 e zero mortes. A única linha do §07 que a medição confirma é a que ele escreve em maiúsculas: *\"a torre não dá dano — dá certeza\"*, e essa tem teste que passa.",
+   "**Q-074 (nova): os dez dias correm, mas em ≈18 s e não em menos de 10.** O §66 pede 360× o tempo real, o que dá 92 µs por tick; o cenário fechado custa ≈99 µs com sete tropas e duas obras, e ≈275 µs a meio da noite 10. Não colide com o §63 — esse orçamenta 4000 µs e o `jogo_noite_test` mede 176 µs e passa. A medição sai de um binário de editor em *debug*; compará-la com um *export* de release é o primeiro passo, e não custa nada senão correr o CI.",
+   "**As cenas de teste saíram do export.** O `scenes/tests/*` passou para o `exclude_filter` dos três presets, ao lado de `tests/` e `tools/`: uma cena exportada que aponta para um script que o filtro tira é uma cena que só rebenta na máquina do jogador. Nada se perde — a `bands.tscn` corre da árvore, como sempre correu.",
+   "**Fora, e continua fora:** afinar. Mexer nos números do §07 é o F1-16, e é ele que vai ler esta tabela."
   ]
  },
  "F1-16": {
@@ -548,8 +556,20 @@
   "depende": "tudo",
   "feito": "Sobreviver 10 dias é possível e não é trivial, medido no cenário do F1-15",
   "fora": "Conteúdo novo. Se faltar conteúdo, afina-se o que há.",
-  "estado": "por fazer",
-  "horas": "10"
+  "estado": "feito",
+  "horas": "10",
+  "notas": [
+   "**As duas metades do §66 medem-se, e têm teste que passa.** *Possível:* a defesa do décimo dia — um Bastião, a muralha de ferro no outro flanco, as duas torres e doze arqueiros — corre dez noites inteiras ao passo fixo, com a tabela de invocação a subir por dia, e o castelo-árvore fica de pé **e inteiro**. *Não trivial:* a receita do §07 — estacaria, seis arqueiros, sem torre — cai ao **terceiro** dia, e entre uma e outra há sete degraus e caem todos. O `tests/dez_dias_test.gd` tem as duas, e mais duas que dizem porquê; nenhum está saltado.",
+   "**O que bloqueava não era afinação, era uma coluna — e essa foi a decisão que o ticket teve de tomar.** A Q-076 estava escrita e por decidir: só o `WallData` tinha `contact_slots`, o `BuildSlot.contacts` de tudo o que não é muro ficava vazio, o `contact_slots()` devolvia zero, e a fila do §50 não atribuía atacante nenhum a uma obra com zero slots. **Nada podia morder o castelo-árvore**, e não há número em `data/` que torne difícil um jogo que não se pode perder. O `AGENTS.md` manda escrever a pergunta *e implementar a opção mais simples e mais reversível*: a pergunta estava escrita, e a opção implementada é a que ela própria propunha — a coluna em `buildings.csv`, igual à que o `walls.csv` sempre teve. Uma obra com a coluna a zero comporta-se exactamente como antes, que é o caso de **todas menos uma**.",
+   "**O único número novo é 7, e mediu-se que ele não decide nada.** É o topo da escada do §10 — o Bastião, a outra obra *única por império* —, e o núcleo é a maior do mapa (480 px) e a última. Está marcado em `_proposed`, e a varredura com 2, 3, 4, 5 e 7 dá a **mesma** linha de sobrevivência: as mesmas defesas aguentam e as mesmas caem. A única que se mexe é a muralha de ferro nos dois flancos, que a 2 slots aguenta com 5% de núcleo — o fio da navalha que a escolha de 7 evita. Nenhum número do dossiê foi tocado.",
+   "**A tabela, que é sobre o que se afina** (`godot --headless --path . scenes/tests/dez_dias.tscn`; muro esquerdo / muro direito / torre de arqueiros / torre alta / arqueiros → resultado): 1|1|não|não|6 → caiu no dia **3**; 2|2|sim|não|8 → caiu no dia 8; 3|3|sim|sim|10 → caiu no dia 9; 4|4|sim|sim|12 → caiu no dia 10; 5|4|não|não|12 → caiu no dia 7; 5|4|sim|não|12 → caiu no dia 9; 5|4|não|sim|12 → caiu no dia 9; 5|4|sim|sim|6 → caiu no dia 9; 5|4|sim|sim|12 → **aguentou, com o núcleo a 100%**.",
+   "**Um Bastião só, e é por isso que a tabela tem duas colunas de muro.** O §10 escreve-o *\"único por império\"*, e uma varredura que só soubesse pôr o mesmo degrau dos dois lados media sempre uma defesa que o jogo não deixa ter — e a linha que aguentava seria essa. O `wall_levels` do `SimHarness` passou a ser um degrau por flanco. **Onde se põe o Bastião importa:** com ele à esquerda aguenta-se, à direita cai-se no dia 10, porque a semente do cenário manda a mancha pela esquerda em **oito** das dez noites (§51 sorteia o lado por noite). É uma decisão do jogador, e não uma falha da medição: quem vê de onde ela vem constrói lá.",
+   "**As três linhas do meio da tabela são o §07 em maiúsculas.** *\"A torre não dá dano — dá certeza\"*: a mesma muralha sem torre nenhuma cai três dias mais cedo do que com as duas, e nenhuma das torres sozinha chega. O que a torre alta vale aqui são os **dois postos** que publica, e não a altura — o Alado não morde nada (Q-077), e por isso os dias 4 a 6 saem de graça. O critério passa **apesar** disso, e passaria com mais margem se ele fosse corrigido.",
+   "**O degrau entre onze e doze arqueiros é abrupto de propósito, e a razão tem ticket.** Onze arqueiros perdem a muralha de ferro na noite 7 e a partida na 9; doze não perdem nem uma nem outra. É assim porque **um muro rompido não volta** — reparar é o F1-05, e sem isso cada noite é um sim ou não, e não um custo. Está medido e escrito; não foi \"corrigido\" com um número.",
+   "**Dois defeitos do cenário que só a partida de dez dias mostrou:** as tropas nasciam espaçadas **para fora**, e a partir da quarta ficavam do lado de lá da muralha que as devia proteger — com as seis do §07 já acontecia, com as doze do décimo dia era metade delas. E a `Campaign` passou a guardar a tabela **noite a noite**: um total de dez noites diz que a defesa chegou ao fim, e só a linha a linha diz a que custo.",
+   "**O que fica por fechar, e não é deste ticket:** a **Q-073** (o §07 monta o microteste com seis arqueiros e a estacaria do §10 só tem um posto de guarda) não é afinável — o nível 1 é *\"a base comum aos dois caminhos\"* e os postos dele estão na tabela do dossiê; e a **Q-077** (o Alado) é do F1-09. Os dois testes do §07 continuam saltados, com as razões actualizadas ao que hoje se mede.",
+   "**Fora, e continua fora:** conteúdo novo."
+  ]
  },
  "F1-17": {
   "title": "Arte da mancha: a Podridão e a candeia",
@@ -562,11 +582,23 @@
   "depende": "F1-08, ART-02",
   "feito": "Vê-se chegar do horizonte; a candeia tem três paragens e domina o ecrã",
   "fora": "O Amargueiro — é o XIII-02. O som — Fase 6.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
    "§80: três paragens, nunca um gradiente. Núcleo #F6D89B, meio #E8A94E, bordo #AE4F16.",
-   "Uma luz domina por ecrã: as fogueiras têm de ser mais fracas do que a candeia."
+   "Uma luz domina por ecrã: as fogueiras têm de ser mais fracas do que a candeia.",
+   "**A candeia existe, e as três paragens vêm de `data/` e não do código.** O `rot.csv` já tinha o raio do §74 — `150 + 4 × dia`, com teto em 260 — e a cor do núcleo; faltavam as outras duas paragens e o *dither*, e entraram como colunas ao lado da primeira. O `check_dossie_vs_csv.py` passou a conferi-las contra a prosa do §80, como já conferia o raio: **197 números** do dossiê em vez de 193. Nenhum hexadecimal está escrito num script, nem sequer nos testes.",
+   "**Pinta-se de fora para dentro, e o bordo dissolve com um *dither* de dois estados.** Bordo, meio, núcleo, cada um um disco por cima do anterior: ao contrário seriam três discos e não uma luz. O *dither* é meia circunferência de quadrados de 2 px — um aceso, um apagado —, que é o que o §80 pede quando recusa o gradiente. Uma rampa de alfa era o gradiente com outro nome.",
+   "**\"Dentro do raio vê-se o que a Podridão invocou; fora, não\" (§74) é código e não intenção.** Uma criatura dentro do raio desenha-se com a cor dela; fora dele, com a mesma cor à luz que chega ao chão — a silhueta do §80, que não é uma cor nova mas a razão que o `BandLight` já calcula. Inventar-lhe um valor próprio era escrever paleta em código, e a paleta é o ART-02.",
+   "**A mancha passou do ecrã inteiro para o plano médio do §80.** Ia do topo do céu ao fundo do subsolo, o que punha violeta num céu que o §80 quer de terra. Passa a ir do `Band.HORIZON` à `Band.GROUND_LINE` — *\"y 420–517\"*, a linha do plano médio, tal e qual —, e a luz fica no chão, por baixo dela. As duas excepções do §80 leem-se em separado: violeta em cima, âmbar em baixo.",
+   "**E vem DEPOIS da candeia, que é a diferença entre ler-se e não se ler.** Ao dia 1 a luz tem 154 px de raio e a mancha 160 de largura: desenhada primeiro, a luz cobria-a inteira e o ecrã ficava com uma lanterna sozinha. Por cima, é uma coluna violeta contra o âmbar — que é o §74 tal e qual, *\"alguém a atravessar o campo com uma lanterna\"*.",
+   "**O rasto passou a ver-se.** O `RotState` guarda-o desde o F1-08 e o §49 lê-o, mas nada o desenhava: quem chegasse ao ecrã a meio da noite não tinha como saber de que lado ela vinha. É o mesmo violeta, mais fino e mais fundo — o §80 não deixa entrar aqui uma terceira cor fria.",
+   "**\"Vê-se chegar do horizonte\", medido e não prometido:** a luz anuncia a mancha antes da massa. Ao dia 1 o bordo da candeia entra no ecrã 154 px antes dela, e é isso que se vê primeiro — a inversão do §74, *\"a coisa que te vem matar é a única que traz luz\"*. Do castelo vê-se no último terço da noite: a região tem seis ecrãs e a câmara mostra um (§11), e ir ver de onde ela vem é o jogo.",
+   "**\"Domina o ecrã\" está medido, e o único que lhe faz sombra tem pergunta.** O `WorldLight.dominates()` é a regra do §80, e o teste percorre todas as obras com `light_radius`: o **farol** do §10 ilumina 300 px e a candeia nunca passa dos 260. É a **Q-078**, e o teste fica saltado com essa razão — nem o raio do farol nem o teto da candeia foram mexidos.",
+   "**As fogueiras do §80 ainda não existem como conteúdo.** Nenhuma obra do *greybox* tem luz — a fogueira é a Q-029, aberta, e o farol é de Fase 6. O `_fogueiras()` é por isso um ciclo sobre um conjunto vazio, como o `consecrated` do F1-08: a ausência delas, e não um esquecimento.",
+   "**A arte da mancha saiu do `band_view.gd` para o `rot_view.gd`.** Não é um nó: um nó filho desenha sempre por cima do pai, e a mancha vai por baixo das obras e das tropas. O que se ganha é o limite das 250 linhas do §28 — e que a arte da mancha se lê num sítio só.",
+   "**Vê-se com `make captura`:** `xvfb-run -a godot --path . tools/captura.tscn -- --avancar 312 --saida build/chegada.png`.",
+   "**Fora, e continua fora:** o Amargueiro e o som. E a candeia como **mostrador da Dívida** (§75) é o XIII-04: o raio de hoje vem do dia, e não da Dívida, porque Dívida ainda não há."
   ]
  },
  "ART-01": {
