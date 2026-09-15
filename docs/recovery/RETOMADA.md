@@ -20,7 +20,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 193 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 120 casos, 115 a passar, 5 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 132 casos, 127 a passar, 5 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos e 6 saltados antes do F0-07.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save nunca usa `load()`),

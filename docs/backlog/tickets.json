@@ -253,11 +253,15 @@
   "depende": "F0-10",
   "feito": "Cinco slots empilhados; o shader faz os quatro trabalhos do §22",
   "fora": "Arte definitiva dos slots — é o ART-01.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "8",
   "notas": [
-   "Q-023 fechada: um ficheiro por corpo com camadas; exportação por camada.",
-   "Q-024 continua aberta: a camada Equipments é o slot head?"
+   "§60 fixa DOIS uniforms e só dois: lut e mix. Um shader, quatro trabalhos — hora do dia, variante de povo, encantamento e estado são a mesma rampa com quantidades diferentes. Há teste que chumba se aparecer um terceiro.",
+   "`mix` é uma função da GLSL e mesmo assim é aceite como nome de uniform pelo Godot 4.6 — verificado. A interpolação está escrita à mão na mesma: chamar mix() com um uniform chamado mix no mesmo âmbito compila, mas ninguém quer ler isso.",
+   "A rampa em si é do ART-02 e não existe: sem LUT ligada, mix fica a zero e o sprite sai como entrou. O shader nunca é requisito para ver arte.",
+   "A largura da sombra vem de UnitData.shadow_width, e há teste com duas unidades de larguras diferentes — senão o campo obrigatório do §58 não servia para nada.",
+   "O desfasamento da animação vem do fluxo VISUAL, e o teste prova que os cinco fluxos deterministas ficam onde estavam: uma variante de animação não pode mexer no que a semente reproduz.",
+   "Q-024 continua aberta (a camada Equipments é o slot head?) — é do ART-01."
   ]
  },
  "F0-15": {
