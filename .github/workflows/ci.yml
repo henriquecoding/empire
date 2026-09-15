@@ -1,8 +1,13 @@
 name: ci
 
 on:
+  # Todos os ramos MENOS os que o `pull_request` ja cobre. Com `branches:
+  # ["**"]` um ramo de PR corria a CI duas vezes — uma pelo push, outra pelo
+  # pull_request — e os dois resultados eram sempre iguais. Nao se fixa `main`
+  # aqui porque este repositorio nao tem `main`: o ramo por omissao e outro, e
+  # fixa-lo desligava a CI por completo.
   push:
-    branches: ["**"]
+    branches-ignore: ["dependabot/**"]
   pull_request:
   workflow_dispatch:
 
@@ -187,7 +192,10 @@ jobs:
     steps:
       - name: Um job vermelho chumba o conjunto
         run: |
-          R='${{ join(needs.*.result, " ") }}'
+          # As expressoes do GitHub so aceitam PLICAS para literais de texto.
+          # Com aspas, o ficheiro inteiro fica invalido e nenhum job chega a
+          # ser criado — a corrida morre em zero segundos, sem registo.
+          R='${{ join(needs.*.result, ' ') }}'
           echo "resultados: $R"
           for r in $R; do
             if [ "$r" != "success" ]; then echo "::error::um job nao passou ($r)"; exit 1; fi
