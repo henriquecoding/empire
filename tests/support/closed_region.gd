@@ -28,6 +28,9 @@ const TORRE_X := 520.0
 const TORRE_ALTA_X := 470.0
 const TROPAS_X := 545.0
 const ENTRE_TROPAS := 24.0
+## Fora do muro, como no greybox: quem sobe do subsolo sobe onde a defesa o pode
+## encontrar, e nao ja dentro do perimetro.
+const PASSAGEM_X := 950.0
 
 const MURO := &"stakes"
 const TORRE := &"archer_tower"
@@ -55,7 +58,13 @@ static func build(
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
 	SimLoop.world_width = largura * ECRAS
 	SimLoop.core_x = SimLoop.world_width * MEIO
-	SimLoop.passages = PackedFloat32Array()
+	# §07: o Cavador "passa pela faixa subterranea", e sobe por uma passagem
+	# (F1-09). Sem passagem nenhuma, o dia 10 — que e o dele — mede-se com ele
+	# preso debaixo do chao, e o criterio do §66 acaba no dia 9 sem o dizer.
+	# Ficam onde o greybox as poe: fora do muro, nos dois flancos.
+	SimLoop.passages = PackedFloat32Array(
+		[SimLoop.core_x - PASSAGEM_X, SimLoop.core_x + PASSAGEM_X]
+	)
 
 	_nucleo()
 	for lado in [-1, 1] if ambos else [flanco]:
