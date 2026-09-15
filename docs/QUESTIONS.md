@@ -272,11 +272,14 @@
 
 ### Q-052 · CI remoto e exportação
 - **Onde:** `source_gaps` da recuperação; §31 e §35.
-- **O que falta:** o workflow existe e corre localmente; sem remoto nunca correu num runner limpo, e a exportação
-  só foi testada para Linux.
-- **Proposta:** manter o `run_tests.sh` como contrato local e ligar o remoto antes da Fase 2, que é quando o
-  volume de código passa a ser maior do que uma revisão à mão aguenta (§31).
-- **Bloqueia:** Fase 2. **Decide:** tu.
+- **O que falta:** ~~sem remoto nunca correu num runner limpo~~ — **corre.** A corrida **#19** pôs os cinco
+  *jobs* verdes na mesma corrida (portões estáticos, dados e suite gdUnit4, export de Linux, camada do dossiê,
+  e o `ci` que os junta), que era a condição para fechar esta pergunta. O que fica por fazer é o resto do
+  enunciado: a **exportação só está testada para Linux**.
+- **Proposta:** manter o `run_tests.sh` como contrato local e acrescentar os outros alvos de exportação quando
+  houver máquina para os provar — exportar sem arrancar o binário não prova nada, e é o arranque que o job de
+  Linux faz hoje.
+- **Bloqueia:** Fase 2. **Decide:** tu — mas já não por falta de CI.
 
 ## Abertas — abertas ao implementar o anexo §85
 
@@ -435,16 +438,22 @@
   item da bandeja espera até ESTABILIZAR — lê de 100 em 100 ms e só decide quando duas leituras seguidas
   coincidem, com tecto de 6 s e um piso de 400 ms (antes disso, duas leituras iguais são a página *parada* e
   não a página *assente*). O que se afirma não mudou; mudou quando se lê.
-- **A segunda falha (o gráfico a 320px) NÃO está explicada, e não se finge que está.** Três coisas medidas
-  sobre ela: (a) não é tempo — as coordenadas a 320px são idênticas aos 450 ms e aos 1200 ms, `W=246
-  asfW=45 x=103.1 ys=33.8,62.8,75.8`; (b) não é consequência da primeira — quando se mede o gráfico a página
-  já está parada (`scrollY 38913 → 38913`); (c) não é a versão do motor nem os tipos de letra — com o 1243 e
-  com as quatro famílias servidas do disco, passa aqui na mesma. A margem mais apertada é a separação dos
-  nomes de série: **13.0 contra um limite de 12.5**.
+- **A segunda falha (o gráfico a 320px) era consequência da primeira — e eu tinha escrito aqui que não era.**
+  A medição que me levou a isso foi feita nesta máquina: quando o gráfico se mede, a página já parou
+  (`scrollY 38913 → 38913`). Só que esse «já parou» é do **1194**, onde a animação acaba aos 814 ms; no
+  *runner*, onde acaba aos 1712 ms, o salto ainda ia a meio enquanto as verificações do simulador corriam, e o
+  gráfico media-se sobre uma página em movimento. Corrigida a espera, a corrida **#19** passou as duas, e mais
+  um número mudou de sítio com elas: os blocos de código a deslizar a 1280px passaram de **4** para **5**, que
+  é o que esta máquina sempre mediu. Refutar uma hipótese com uma medição feita no ambiente errado é o mesmo
+  erro das fontes, outra vez — e por isso fica escrito.
 - **O que se fez em vez de adivinhar:** os portões passam a dizer com que números chumbam. Cada `FALHA` leva
   agora o detalhe — qual das quatro condições falhou e as caixas de cada rótulo — e cada corrida abre a
   declarar **que página mediu**: `motor: 153.0.8010.12 (…)` e `tipos de letra: 38 faces · loaded 10`. Uma
   destas duas linhas teria poupado as três corridas.
+- **Fechada pela corrida #19:** os cinco *jobs* verdes, e as duas linhas que chumbavam a dizer
+  `carregar num item leva à #s40 (desvio 0px, assente aos 1712ms)` e
+  `320px · viewBox 246 · «dia 11» dentro do desenho`. Os 1712 ms do *runner* contra a espera fixa de 900 ms
+  são a medida do que estava errado.
 - **O que fica por decidir:** se o dossiê deve depender de uma CDN para a sua própria verificação. Continua a
   valer, e agora com mais provas: sem a CDN são **120 intactas · 3 a deslizar**, com ela **118 · 5**; uma face
   pode falhar sozinha (`IBM Plex Mono 500` deu `error` numa das medições) e só ela muda a contagem dos blocos
