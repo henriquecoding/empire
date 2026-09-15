@@ -554,6 +554,15 @@
   mesmos números. A divergência é entre a **prosa do §25** e a **tabela do §74**, e as duas são do dossiê.
 - **Porque é que importa:** o §25 diz que *"a noite 1 é ganha de certeza — está desenhada para isso"*. Sete
   Rastejantes contra um monarca sem muro não é isso.
+- **E desde o F1-16 deixou de ser hipótese: é uma medição.** Com o núcleo já atacável (Q-075) o *greybox*
+  corrido sem ninguém a jogar **perde na noite 1** — os sete Rastejantes chegam ao castelo-árvore e comem-no.
+  Com as duas estacarias de dentro de pé aguenta a noite 1 com **376 de 1000** e perde na **noite 2**. Com a
+  abertura do §25 inteira — muro **e** toda a gente recrutada — aguenta a noite 1 com **388** e perde na
+  noite 2 na mesma. Só com as quatro muralhas e as quatro torres de pé é que o núcleo fica a **100%** ao
+  quarto dia. Medido em `src/world/greybox.gd`, ao passo fixo, com a semente da suite.
+- **Duas leituras, e a segunda é a Q-073:** ou a noite 1 tem criaturas a mais, ou a defesa tem postos a menos
+  — nove tropas recrutadas num muro que publica **um** posto de guarda deixam oito a recolher ao núcleo, e
+  isso não é uma defesa, é uma fila. As duas perguntas são a mesma medição vista de dois lados.
 - **Decide:** tu, e é uma das duas — ou a prosa do §25 passa a sete, ou a `mass_base` do `rot.csv` desce. O
   `AGENTS.md` proíbe mexer no número para calar o teste, e por isso nada foi mexido.
 
@@ -715,6 +724,25 @@
 - **Bloqueia:** a linha *"obriga a torre alta"* do §07, e com ela metade do valor da torre de 30 moedas. Não
   bloqueia o F1-16: o critério do §66 mede-se e passa sem ela, e passaria com mais margem contra.
 - **Decide:** tu. É a segunda metade da antiga Q-075, e é do F1-09 — o ticket do Alado e do Cavador.
+
+### Q-077 · O farol ilumina 300 px e a candeia nunca passa dos 260
+- **Onde:** o §80 escreve a regra de composição da noite inteira — *"uma luz domina por ecrã. Se duas
+  competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser **mais
+  fracas do que a candeia à mesma distância**"*. E o §10 vende o farol por 40 moedas para *"iluminar 300 px"*.
+  A candeia do §74 é `150 + 4 × dia`, **com teto em 260**. O farol é a única obra do jogo com `light_radius`,
+  e ganha à candeia em qualquer dia.
+- **Porque é que o raio decide isto:** com as mesmas três paragens, a luz de raio maior é mais forte a
+  **qualquer** distância — o núcleo e o meio dela chegam onde a outra já é bordo. Duas luzes com paragens
+  diferentes era outra conversa, e o §80 não dá paragens às fogueiras: dá **uma** regra de luz ao jogo todo.
+- **Não bloqueia nada hoje, e é por isso que é uma pergunta e não um defeito:** o farol é de Fase 6, não está
+  no *greybox*, e tem `blocks_summon` — *"A Podridão não invoca dentro da luz"* —, portanto a candeia e ele
+  talvez nunca se encontrem no mesmo ecrã de propósito. O `tests/candeia_test.gd` tem o teste **saltado** com
+  esta razão, e ele volta sozinho no dia em que a pergunta fechar.
+- **Proposta:** a mais reversível é dar ao farol paragens próprias e mais fracas — uma coluna nova em
+  `buildings.csv`, como o `light_radius` já é — em vez de lhe cortar o raio, que é um número do dossiê. A
+  alternativa é escrever no §80 que o farol é a excepção: ele é *landmark* e não fogueira, e um marco que
+  domina o seu ecrã é exactamente o que um farol faz.
+- **Decide:** tu. A palavra que falta ao dossiê é se "fogueira" inclui o farol.
 
 ## Resolvidas na v5.2 (reversíveis)
 

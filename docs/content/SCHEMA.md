@@ -408,6 +408,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `lantern_radius_per_day` | float | v6 · a candeia |  |
 | `lantern_radius_max` | float | v6 · a candeia |  |
 | `lantern_tint` | String | v6 · a candeia |  |
+| `lantern_tint_mid` | String | v6 · a candeia |  |
+| `lantern_tint_edge` | String | v6 · a candeia |  |
+| `lantern_dither_px` | float | v6 · a candeia |  |
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
 | `offer_seconds` | float | v6 · a oferta |  |

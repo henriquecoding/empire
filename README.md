@@ -52,12 +52,12 @@ Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena princ
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.6: 336 testes (8 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.6: 343 testes (9 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
 - A base de dados tem **28 tabelas** e 203 recursos com todos os números do dossiê, Parte XIII incluída; o que o
   dossiê não dá está proposto e marcado (`docs/content/PROPOSALS.md`).
-- O `tools/check_dossie_vs_csv.py` confere **193 números** do dossiê contra as tabelas, e não há divergências.
+- O `tools/check_dossie_vs_csv.py` confere **197 números** do dossiê contra as tabelas, e não há divergências.
 - O estado medido, ficheiro a ficheiro, está em `docs/recovery/RETOMADA.md` e em `docs/recovery/validation.json`.
 - O próximo *milestone* não é mais documentação (relatório mestre, §32): é **abrir o Empire, controlar uma
   personagem real numa greybox, atravessar as três faixas, construir algo com uma moeda, sobreviver à primeira

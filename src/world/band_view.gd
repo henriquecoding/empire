@@ -16,12 +16,14 @@ extends Node2D
 var _tropas: Dictionary = {}
 var _bichos: Dictionary = {}
 var _relogio: ClockData
+var _podre: RotProfile
 
 
 func _ready() -> void:
 	_tropas = SimFactory.by_id(&"units")
 	_bichos = SimFactory.by_id(&"creatures")
 	_relogio = Registry.entry(&"economy", &"clock") as ClockData
+	_podre = SimFactory.rot_profile()
 
 
 func _process(_delta: float) -> void:
@@ -40,6 +42,7 @@ func _draw() -> void:
 	if band == Band.Kind.SURFACE:
 		_passagens()
 		_podridao()
+	_fogueiras()
 	_obras()
 	_moedas()
 	_criaturas()
@@ -79,13 +82,23 @@ func _passagens() -> void:
 		draw_rect(Rect2(canto, Vector2(largura, fundo - topo)), WorldPalette.PASSAGEM)
 
 
+## A arte da mancha vive no RotView: a massa, o rasto e a candeia sao um assunto
+## so e nao cabiam aqui sem passar as 250 linhas do §28 (F1-17).
 func _podridao() -> void:
-	var rot := SimLoop.night.rot
-	if not rot.active():
-		return
-	var largura := maxf(rot.state.width, WorldPalette.DEGRAU)
-	var canto := Vector2(rot.position_x() - largura * WorldPalette.MEIA, 0.0)
-	draw_rect(Rect2(canto, Vector2(largura, float(Band.SCREEN_BOTTOM))), WorldPalette.MANCHA)
+	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day)
+
+
+## As luzes que sao tuas (§10, coluna `light_radius`). Hoje so o farol tem uma, e
+## ele e da Fase 6 — por isso isto e um ciclo sobre um conjunto vazio, que e a
+## ausencia dele e nao um esquecimento. Levam as MESMAS tres paragens: o §80 da
+## uma regra de luz ao jogo inteiro, e nao uma por fonte.
+func _fogueiras() -> void:
+	var cores := WorldLight.stops(_podre)
+	for vaga in SimLoop.builds.slots:
+		var raio := WorldLight.hearth_radius(vaga)
+		if vaga.band != band or raio <= 0.0:
+			continue
+		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, cores)
 
 
 ## §25: "a silhueta e o convite. Nao ha botao construir." Um sitio por construir
@@ -135,16 +148,32 @@ func _moedas() -> void:
 		draw_circle(Vector2(moedas.xs[i], y), WorldPalette.MOEDA_R, WorldPalette.MOEDA)
 
 
+## §74, a frase que faz da candeia mecanica e nao decoracao: "dentro do raio
+## ve-se o que a Podridao invocou; fora, nao". Fora dela o corpo e silhueta — a
+## mesma cor com a luz que chega ao chao (§80), e nao uma cor nova.
 func _criaturas() -> void:
 	var bichos := SimLoop.creatures
+	var candeia := _candeeiro()
+	var chao := BandLight.ground_ratio(_relogio)
 	for i in bichos.count():
 		if bichos.bands[i] != int(band):
 			continue
 		var dados: CreatureData = _bichos.get(bichos.data_ids[i])
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
 		var caixa := WorldPalette.body(bichos.xs[i], int(band), alto)
-		draw_rect(caixa, WorldPalette.BICHO)
-		_barra(caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i])))
+		var aceso := WorldLight.lit(bichos.xs[i], candeia.x, candeia.y)
+		draw_rect(caixa, WorldLight.reveal(WorldPalette.BICHO, aceso, chao))
+		if aceso:
+			_barra(caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i])))
+
+
+## Onde esta a candeia e que raio tem, em (x, raio). Com a mancha recuada nao ha
+## luz nenhuma no campo — e entao esta tudo aceso, porque e dia.
+func _candeeiro() -> Vector2:
+	var rot := SimLoop.night.rot
+	if not rot.active():
+		return Vector2(0.0, INF)
+	return Vector2(rot.position_x(), WorldLight.radius(_podre, SimLoop.state.day))
 
 
 func _tropa() -> void:

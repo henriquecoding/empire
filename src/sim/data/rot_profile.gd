@@ -44,7 +44,12 @@ extends Resource
 @export var lantern_radius_per_day: float = 0.0
 @export var lantern_radius_max: float = 0.0
 ## Ambar da paleta (§22, §80): a unica fonte quente do campo que nao e tua.
+## Sao TRES paragens e nunca um gradiente (§80): nucleo, meio e bordo, e depois
+## dissolve para o ambiente com um dither de lantern_dither_px.
 @export var lantern_tint: String = ""
+@export var lantern_tint_mid: String = ""
+@export var lantern_tint_edge: String = ""
+@export var lantern_dither_px: float = 0.0
 
 @export_group("v6 · a oferta")
 ## A mancha chega a esta distancia da muralha mais exterior e fala (§75).

@@ -208,6 +208,24 @@ def parte_xiii(tables, problems, texto_cru):
             if abs(float(rot[campo]) - float(quer)) > 1e-6:
                 problems.append("§74 candeia · %s: dossie %s, rot.csv %s" % (campo, quer, rot[campo]))
 
+    # §80 · as tres paragens da luz e o dither, que estao em prosa e nao em tabela
+    # A linha esta em prosa com <code> e <em> pelo meio; sem tags e uma frase so.
+    sem_tags = re.sub(r"<[^>]+>", "", texto_cru)
+    m = re.search(r"N[uú]cleo\s*(#[0-9A-Fa-f]{6}),\s*meio\s*(#[0-9A-Fa-f]{6}),"
+                  r"\s*bordo\s*(#[0-9A-Fa-f]{6}).*?dither\s*de\s*(\d+)\s*px", sem_tags, re.S)
+    if m is None:
+        problems.append("§80: nao encontrei as tres paragens da luz no dossie")
+    else:
+        campos = ("lantern_tint", "lantern_tint_mid", "lantern_tint_edge")
+        for quer, campo in zip(m.groups()[:3], campos):
+            n += 1
+            if rot[campo].upper() != quer.upper():
+                problems.append("§80 candeia · %s: dossie %s, rot.csv %s" % (campo, quer, rot[campo]))
+        n += 1
+        if abs(float(rot["lantern_dither_px"]) - float(m.group(4))) > 1e-6:
+            problems.append("§80 candeia · dither: dossie %s px, rot.csv %s" % (
+                m.group(4), rot["lantern_dither_px"]))
+
     # §75 · as doze ofertas: quando e quanto pesa na Divida
     ofertas = find(tables, "s75", "A frase")
     off = csv_rows("offers")
