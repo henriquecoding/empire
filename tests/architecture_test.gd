@@ -19,6 +19,14 @@ func test_sem_literais_de_balanceamento() -> void:
 	assert_array(problems).override_failure_message("\n".join(problems)).is_empty()
 
 
+func test_g6_o_save_nunca_usa_load() -> void:
+	# ADR 0007: um .tres arbitrario pode trazer script embutido, e por isso um
+	# load() num caminho de save e execucao remota de codigo. A regra estava
+	# escrita em tres sitios e nao tinha portao nenhum.
+	var problems := Rules.check_g6()
+	assert_array(problems).override_failure_message("\n".join(problems)).is_empty()
+
+
 func test_band_vive_na_simulacao() -> void:
 	# §70: um tipo que a simulacao le vive na simulacao.
 	assert_bool(FileAccess.file_exists("res://src/sim/band.gd")).is_true()

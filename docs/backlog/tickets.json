@@ -220,11 +220,14 @@
   "depende": "F0-11",
   "feito": "Gravar e carregar um estado vazio; rotação de três slots; FileAccess.store_var/get_var(false)",
   "fora": "Migrações de versão — entram quando houver uma segunda versão.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
    "ADR 0007 e Q-036: nunca ResourceLoader num save. Só tipos base, validados campo a campo.",
-   "O teste D-14 da §84 já guarda a regra para o estado da Parte XIII."
+   "Portão G6 novo (tools/lint_rules.gd, lint_sim.gd, architecture_test.gd): a regra estava escrita em três sítios e não tinha portão nenhum. Chumba com load(, com store_var/get_var sem o false explícito, e se o ficheiro for apagado.",
+   "Medido: com allow_objects desligado a descodificação falha INTEIRA e sai Nil; com ele ligado sai o dicionário com um Object lá dentro. As duas metades estão no teste.",
+   "O GameState guarda day e clock_elapsed, não phase e phase_elapsed como a §45 escreve — é a consequência da ADR 0006, que já escolheu o relógio do §30. Guardar os dois seria guardar duas vezes a mesma informação.",
+   "As colecções da §45 (units, creatures, buildings, rot, world, debt) entram com os sistemas que as escrevem. Um campo que ninguém escreve é um campo que ninguém sabe migrar."
   ]
  },
  "F0-14": {
