@@ -26,6 +26,8 @@ EventBus="*res://src/core/event_bus.gd"
 ClockService="*res://src/core/clock_service.gd"
 ; §42: o unico sitio do jogo onde ha aleatoriedade. O portao G2 guarda-o.
 RngService="*res://src/core/rng_service.gd"
+; §41/§44: os .tres por StringName. O indice deriva da arvore de data/.
+Registry="*res://src/core/registry.gd"
 
 [display]
 

@@ -48,7 +48,7 @@ Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena princ
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.6: 70 testes (5 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.6: 79 testes (5 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), o *export* de Linux arranca e o binário corre.
 - A base de dados tem **27 tabelas** e 202 recursos com todos os números do dossiê, Parte XIII incluída; o que o
   dossiê não dá está proposto e marcado (`docs/content/PROPOSALS.md`).

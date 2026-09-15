@@ -184,10 +184,13 @@
   "depende": "F0-01",
   "feito": "Carregamento por StringName; boot.tscn é a cena principal do project.godot",
   "fora": "O save — é o F0-13.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "4",
   "notas": [
-   "ADR 0005."
+   "ADR 0005: boot.tscn carrega o Registry, fixa o idioma e semeia o RngService antes de entregar.",
+   "O índice DERIVA da árvore de data/: a tabela é o caminho da pasta ('units', 'crown/impulses'). O _tables.csv não serve de fonte em runtime porque data/source/ tem .gdignore e não existe no export — o teste é que confere os dois, a correr do código-fonte.",
+   "Os ids não são únicos entre tabelas (boar é montaria e é animal); por isso o índice é por tabela e não global.",
+   "No export os .tres vêm listados como .tres.remap. Sem os tratar, o índice ficava cheio no editor e vazio no executável — verificado: 202 recursos nos dois."
   ]
  },
  "F0-12": {
