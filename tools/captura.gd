@@ -57,6 +57,7 @@ func _ficha() -> void:
 		"dia": SimLoop.state.day if SimLoop.state != null else 0,
 		"fase": int(relogio.current_phase()),
 		"mancha": _mancha(),
+		"instrumentos": _instrumentos(),
 	}
 	var f := FileAccess.open(_saida.get_basename() + ".json", FileAccess.WRITE)
 	if f != null:
@@ -80,6 +81,19 @@ func _mancha() -> Array:
 	var ate := maxf(rot.state.trail_from, rot.state.trail_to)
 	var rasto := Rect2(de, chao - WorldPalette.RASTO, ate - de, WorldPalette.RASTO)
 	return [_no_ecra(t, massa), _no_ecra(t, rasto)]
+
+
+## Onde estao os INSTRUMENTOS do greybox no ecra (§67, GB-03). Quem mede a
+## imagem tem de os saltar: sao texto branco, e uma regra sobre a luz do mundo
+## medida por cima de um painel de texto media o painel.
+func _instrumentos() -> Array:
+	var fora: Array = []
+	for camada in get_tree().get_nodes_in_group(&"instrumentos"):
+		var control := camada as Control
+		if control != null and control.visible:
+			var r := control.get_global_rect()
+			fora.append([r.position.x, r.position.y, r.size.x, r.size.y])
+	return fora
 
 
 func _no_ecra(t: Transform2D, caixa: Rect2) -> Array:

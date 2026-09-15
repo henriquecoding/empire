@@ -81,6 +81,7 @@ src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas 
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
 src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
 src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco, pago (GB-03)
+src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
 src/world/world_light.gd    WorldLight    as tres paragens da luz e o raio da candeia
@@ -115,13 +116,14 @@ src/actors/*.gd             UnitView, KingView...  apresentacao  core/, sim/
 src/ui/*.gd                 InputRouter, Hud...    apresentacao  core/, sim/
 scenes/boot.tscn            (cena principal)       cenas         tudo
 tools/*.gd, tools/*.py      ferramentas            fora do jogo  tudo; nunca exportado
+tools/vistoria.gd           Vistoria/Autopilot     fora do jogo  uma partida longa, vigiada
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado
 
 ## Ciclo de trabalho
 1. Le docs/backlog/<id>.md e as seccoes de docs/design/ que ele cita.
 2. Escreve ou atualiza o teste em tests/. Confirma que falha.
 3. Implementa o minimo que o faz passar.
-4. Corre ./run_tests.sh
+4. Corre ./run_tests.sh — e `make vistoria` se mexeste no tick ou no mundo.
 5. So com tudo verde, propoe o diff, com a checklist do PR preenchida.
 
 ## O que nao fazer

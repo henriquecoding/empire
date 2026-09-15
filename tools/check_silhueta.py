@@ -54,6 +54,12 @@ FASES = ["dawn", "morning", "noon", "afternoon", "dusk", "night"]
 # a borda em que ela se mistura com o fundo por transparência.
 MARGEM_PX = 2
 
+# Os dois planos de imagem da §11 que este portão compara, em y. São constantes
+# de plano (src/sim/band.gd, §47) e não afinação: o céu é o que fica acima da
+# linha do chão, e é contra ele que uma silhueta se lê.
+HORIZONTE = 420
+CHAO = 517
+
 
 def limiares() -> tuple[float, float, float, float]:
     """Os quatro números da linha *Duas frias* da tabela da §80 §5."""
@@ -67,6 +73,34 @@ def limiares() -> tuple[float, float, float, float]:
         erro(f"a linha das duas frias tem {len(numeros)} números e não 4: {linha.strip()}")
     matiz_min, matiz_max, saturacao, percentagem = numeros
     return matiz_min, matiz_max, saturacao, percentagem
+
+
+def luminancia(c: tuple[int, int, int]) -> float:
+    """Rec. 709. É a mesma conta que o `Color.get_luminance()` do motor faz."""
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+
+def do_hex(h: str) -> tuple[int, int, int]:
+    return (int(h[1:3], 16), int(h[3:5], 16), int(h[5:7], 16))
+
+
+def paleta_da_noite() -> tuple[float, float]:
+    """Os dois extremos que a §80 dá à noite, em luminância.
+
+    O escuro é o valor mais escuro de PREENCHIMENTO que a secção nomeia — a §80
+    abre a dizer que até ali o mais escuro só servia de contorno e que passam a
+    existir "três valores dedicados a preencher". A luz é o núcleo da candeia,
+    que a §80 §3 escreve por extenso. Nenhum dos dois está escrito aqui.
+    """
+    texto = SPEC.read_text("utf-8")
+    nucleo = re.search(r"[Nn][úu]cleo (#[0-9A-Fa-f]{6})", texto)
+    if nucleo is None:
+        erro("a §80 deixou de dizer qual é o núcleo da candeia")
+    hexes = re.findall(r"#[0-9A-Fa-f]{6}", texto)
+    if len(hexes) < 2:
+        erro("a §80 deixou de trazer a paleta da noite")
+    escuro = min(luminancia(do_hex(h)) for h in hexes)
+    return escuro, luminancia(do_hex(nucleo.group(1)))
 
 
 def fase_da_noite() -> int:
@@ -123,13 +157,23 @@ def main() -> int:
     largura, altura = imagem.size
     pixeis = imagem.load()
 
+    instrumentos = [c for c in ficha.get("instrumentos", [])]
     frias = 0
     na_mancha = 0
     cores = set()
+    ceu: list[float] = []
+    luzes: list[float] = []
     for y in range(altura):
         for x in range(largura):
             cor = pixeis[x, y]
+            # Os instrumentos do greybox (GB-03) são texto branco por cima do
+            # mundo: medir a luz do mundo por cima deles media o painel.
+            if dentro(x, y, instrumentos):
+                continue
             cores.add(cor)
+            luzes.append(luminancia(cor))
+            if HORIZONTE <= y < CHAO:
+                ceu.append(luminancia(cor))
             if not frio(*cor, matiz_min, matiz_max, saturacao):
                 continue
             if dentro(x, y, caixas):
@@ -165,6 +209,44 @@ def main() -> int:
         )
         return 1
     print("silhueta: as duas frias passam")
+    return contraste(luzes, ceu)
+
+
+def contraste(luzes: list[float], ceu: list[float]) -> int:
+    """A segunda metade: a noite é escura, e uma noite chapada não é escura — é
+    cega. Os dois limiares saem da paleta que a própria §80 dá à noite.
+    """
+    escuro, luz = paleta_da_noite()
+    luzes.sort()
+    ceu.sort()
+    fundo = ceu[len(ceu) // 2] if ceu else 0.0
+    topo = luzes[-1]
+    gama = topo / max(1.0, luzes[int(len(luzes) * 0.02)])
+    exigida = luz / max(1.0, escuro)
+    print(
+        f"silhueta: fundo {fundo:.0f}, mais claro {topo:.0f}, gama {gama:.1f}x "
+        f"(a §80 dá à noite de {escuro:.0f} a {luz:.0f}, ou seja {exigida:.1f}x)"
+    )
+    if topo <= fundo:
+        print(
+            f"silhueta: CHUMBA — a coisa mais clara do ecrã ({topo:.0f}) não é mais clara do "
+            f"que o fundo ({fundo:.0f}).\n"
+            '  O §80 escreve-o em duas palavras: "âmbar é luz". Uma fonte de luz multiplicada '
+            "pelo LUT da noite fica mais escura do que o céu atrás dela, e aí a noite deixa de "
+            "ter assunto.",
+            file=sys.stderr,
+        )
+        return 1
+    if gama < exigida:
+        print(
+            f"silhueta: CHUMBA — o ecrã da noite abre {gama:.1f}x e a paleta que a §80 lhe dá "
+            f"abre {exigida:.1f}x.\n"
+            "  Uma noite que não usa a gama da sua própria paleta é uma mancha chapada: "
+            "não há horizonte, não há silhueta, e não se lê nada.",
+            file=sys.stderr,
+        )
+        return 1
+    print("silhueta: a noite abre a gama que a §80 lhe dá")
     return 0
 
 

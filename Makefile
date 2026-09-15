@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta exportar exportar-windows exportar-web exportar-tudo \
+        captura-noite silhueta vistoria exportar exportar-windows exportar-web exportar-tudo \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -85,7 +85,7 @@ afirmacoes-escrever:  ## Corrige os campos contaveis do validation.json
 
 # ── O que precisa do motor ───────────────────────────────────────────────────
 
-tudo: portoes dados testes  ## Portoes + dados + suite
+tudo: portoes dados testes vistoria  ## Portoes + dados + suite + vistoria
 
 importar:  ## Importa os recursos (obrigatorio num checkout frio, §69)
 	$(GODOT) --headless --import --path . || true
@@ -115,6 +115,13 @@ captura-noite: captura  ## Uma fotografia do meio da noite, com ficha ao lado
 
 silhueta: captura-noite  ## XIII-01 (§80): a regra das duas excecoes, contada
 	python3 tools/check_silhueta.py build/noite.png
+
+# DIAS= para correr mais. Nao mede balanceamento — mede se o estado se mantem
+# coerente com o jogo a andar, e por isso chumba com o que encontrar.
+DIAS ?= 8
+
+vistoria:  ## Uma partida longa com piloto, vigiada tick a tick
+	$(GODOT) --headless --path . scenes/tests/vistoria.tscn -- --dias $(DIAS)
 
 exportar:  ## Exporta o Linux e confirma que o binario arranca
 	mkdir -p build

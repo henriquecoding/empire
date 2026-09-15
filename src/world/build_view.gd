@@ -28,49 +28,59 @@ const MEIA := 0.5
 
 ## Todas as obras desta faixa. `edificios` e a tabela de BuildingData por id,
 ## montada uma vez por quem desenha.
-static func draw_on(canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary) -> void:
+static func draw_on(
+	canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary, luz: Lighting
+) -> void:
 	for vaga in SimLoop.builds.slots:
 		if vaga.band != faixa:
 			continue
-		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios))
+		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, vaga.x)
 
 
-static func _obra(canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form) -> void:
+static func _obra(
+	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
+) -> void:
 	if vaga.standing():
 		var caixa := _caixa(vaga, forma, vaga.level)
-		_massa(canvas, forma, caixa, vaga, WorldPalette.OBRA)
+		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.OBRA, x))
 		Gauge.health(canvas, caixa, float(vaga.health) / maxf(1.0, float(vaga.max_health())))
 		return
 	if vaga.state == BuildSlot.State.RUIN:
-		_ruina(canvas, vaga, forma)
+		_ruina(canvas, vaga, forma, luz, x)
 		return
 	if vaga.state != BuildSlot.State.EMPTY:
 		# Em andaime: a forma do que vem, ja cheia, mas na cor da madeira. §55 —
 		# "a obra existe quando uma moeda cai", e a partir dai ve-se o que sera.
-		_massa(canvas, forma, _caixa(vaga, forma, vaga.level + 1), vaga, WorldPalette.ANDAIME)
+		var proxima := _caixa(vaga, forma, vaga.level + 1)
+		_massa(canvas, forma, proxima, vaga, luz.body(WorldPalette.ANDAIME, x))
 		return
-	_convite(canvas, vaga, forma)
+	_convite(canvas, vaga, forma, luz, x)
 
 
 ## §25: "a silhueta e o convite". Contorno, a altura do TOPO da escada — um
 ## sitio de muro mostra o Bastiao que pode vir a ser, e nao a estacaria.
-static func _convite(canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form) -> void:
+static func _convite(
+	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
+) -> void:
 	var fantasma := _caixa(vaga, forma, maxi(1, vaga.costs.size()))
 	var pontos := Outline.shape(forma, fantasma, _dentes(vaga))
 	pontos.append(pontos[0])
-	canvas.draw_polyline(pontos, WorldPalette.VAZIO, WorldPalette.CONTORNO)
+	var cor := luz.body(WorldPalette.VAZIO, x)
+	canvas.draw_polyline(pontos, cor, WorldPalette.CONTORNO)
 	Gauge.paid(canvas, fantasma, vaga)
 
 
 ## O que ficou de pe depois de cair. A mesma forma, rente ao chao: reconhece-se
 ## o que era, e ve-se que ja nao e.
-static func _ruina(canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form) -> void:
+static func _ruina(
+	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
+) -> void:
 	var inteira := _caixa(vaga, forma, maxi(1, vaga.level))
 	var alto := inteira.size.y * RUINA
 	var caixa := Rect2(
 		Vector2(inteira.position.x, inteira.end.y - alto), Vector2(inteira.size.x, alto)
 	)
-	_massa(canvas, forma, caixa, vaga, WorldPalette.VAZIO)
+	_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.VAZIO, x))
 
 
 ## A forma cheia. O `draw_colored_polygon` do Godot triangula o que recebe, e por

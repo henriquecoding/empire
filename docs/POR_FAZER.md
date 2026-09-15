@@ -13,9 +13,9 @@
 | Tickets | **53**, dos quais **34 feitos** e **19 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
 | Fase 1 | **17 de 17 — a Fase 1 está fechada** |
-| Suite | 368 casos, 359 a passar, 9 saltados, 0 falhas, 0 *orphans* |
+| Suite | 372 casos, 363 a passar, 9 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (Dívida: XIII-04; Diplomacia: Fase 2) e o 10 (Fase 2) |
-| Perguntas em aberto | 68 das 70 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07, a Q-076 com o F1-16 |
+| Perguntas em aberto | 70 das 72 de `docs/QUESTIONS.md` — a Q-006 fechou com o F1-07, a Q-076 com o F1-16 |
 
 ```bash
 # a contagem de cima, a partir da árvore
@@ -186,6 +186,25 @@ da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porqu�
   - O portão que sobrevive à arte está em `tests/outline_test.gd`: **duas formas
     nunca desenham a mesma coisa**. É a metade automatizável da leitura a 1 bit do
     §80 — nenhum limiar separa depois duas coisas com o mesmo contorno.
+- **A noite vê-se, e antes não se via.** Dois defeitos, os dois medidos numa
+  captura. O chão era desenhado com `SOLO * plane()` e o `Color * float` do
+  GDScript multiplica **quatro** componentes: saía a 69% de opacidade sobre o
+  cinzento por omissão do motor, e à noite dava (32,29,26) contra um céu de
+  (36,34,30) — sem horizonte. E o ambiente vinha no `modulate` do nó, que
+  multiplica tudo, **incluindo as luzes**: a candeia saía com luminância 26
+  contra um céu de 34, ou seja, a fonte de luz mais escura do que o fundo. O §80
+  diz o contrário em duas palavras — *"âmbar é luz"*. A luz passou a viver no
+  `src/world/lighting.gd`, onde o cenário, os corpos e as luzes deixam de ser a
+  mesma multiplicação. **A noite abria 2,7× de gama e passa a abrir 97×**; a
+  candeia foi de 26 para 176, e um vagabundo de 31 — invisível contra o céu —
+  para 16, que é uma silhueta contra 34. Está na **Q-080** e tem portão:
+  `make silhueta` chumba se a noite deixar de abrir a gama que o §80 lhe dá.
+- **A derrota continua a ser de quem tem a cena aberta, e agora sabe-se porquê.**
+  A `make vistoria` correu sete dias sobre um castelo-árvore em ruína, e a
+  correcção óbvia — pôr o `SimLoop.step()` a parar sozinho — chumbou **três**
+  instrumentos do próprio repositório, os que existem para MEDIR uma derrota: o
+  §66 varre nove defesas e a coluna que interessa é *"em que dia caiu"*. Quem
+  joga tem cena; quem mede, não. Ficou na **Q-081**, com a tentativa escrita.
 
   A composição por *slots* da §58 e o `UnitView` existem e estão testados, mas não
   há arte para lhes dar (ART-01, ART-02).
@@ -201,11 +220,11 @@ da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porqu�
   houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
   é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
-- **68 perguntas em aberto** em `docs/QUESTIONS.md`, de 70 escritas — a Q-006
-  fechou com o F1-07 e a Q-076 com o F1-16. As dezasseis mais recentes (Q-064 a
-  Q-079) são as que encher o tick, medir a noite, afinar os dez dias, acender a
-  candeia e dar forma às coisas obrigaram a fazer. As quatro que valem a pena ler
-  primeiro: a **Q-068**
+- **70 perguntas em aberto** em `docs/QUESTIONS.md`, de 72 escritas — a Q-006
+  fechou com o F1-07 e a Q-076 com o F1-16. As dezoito mais recentes (Q-064 a
+  Q-081) são as que encher o tick, medir a noite, afinar os dez dias, acender a
+  candeia, dar forma às coisas e pôr a noite a ver-se obrigaram a fazer. As
+  quatro que valem a pena ler primeiro: a **Q-068**
   (a noite 1 do §25 *"é ganha de certeza"* e o *greybox* perde-a), a **Q-077** (o
   Alado atravessa a muralha, pousa no castelo e não faz nada — e por isso os dias
   4 a 6 do §07 não custam nada a ninguém), a **Q-073** (o §07 monta o microteste
@@ -228,11 +247,12 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
 | **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
-| **A suite** | `make testes` | 368 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **A suite** | `make testes` | 372 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. |
 | **Os dez dias, medidos** | `godot --headless --path . scenes/tests/dez_dias.tscn` | O critério de saída da Fase 1 (§66): nove defesas, dez dias cada, e por cada uma se aguentou, em que dia caiu, e com que margem ficou o castelo-árvore. A última é a que aguenta, e sai também noite a noite. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png` e uma ficha `.json` ao lado — fase, dia e onde a mancha ficou no ecrã. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio — `AVANCAR=312` apanha a candeia a entrar no ecrã. |
-| **As duas frias (§80)** | `make silhueta` | Fotografa o meio da noite e conta os píxeis frios e saturados fora da mancha. É o XIII-01, e corre no CI. |
+| **As duas frias (§80)** | `make silhueta` | Fotografa o meio da noite e conta os píxeis frios e saturados fora da mancha, e mede se a noite abre a gama que a paleta do §80 lhe dá. É o XIII-01, e corre no CI. |
+| **Uma partida vigiada** | `make vistoria` | Oito dias do *greybox* com um piloto, com o estado perguntado a cada passo: corpos fora da região, vida fora dos limites, ids repetidos, fases saltadas, alguém preso em FIGHT. Chumba com o que encontrar. `DIAS=20` para correr mais. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |
 | **Tudo de uma vez** | `make tudo` | Portões estáticos + dados + suite. É o que o CI corre, menos os exports e o dossiê. |

@@ -129,3 +129,8 @@ common/physics_ticks_per_second=30
 textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=false
 renderer/rendering_method="mobile"
+; O que fica por tras de tudo. Por omissao o motor poe um cinzento de 0,3 — que
+; nao e uma cor deste jogo e que so se ve quando alguma coisa falha. Passa a ser
+; o valor mais escuro da paleta do §80 (#100D09, o primeiro plano), para que um
+; buraco no desenho se leia como sombra e nao como "o motor".
+environment/defaults/default_clear_color=Color(0.063, 0.051, 0.035, 1)

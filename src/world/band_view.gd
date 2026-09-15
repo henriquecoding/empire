@@ -1,9 +1,13 @@
 # src/world/band_view.gd — uma faixa desenhada, e a luz que lhe pertence (§11).
 #
-# Tres instancias, uma por faixa, e cada uma com o seu `modulate`. E o F1-13: o
-# ticket pede "CanvasModulate por faixa" e essa e a unica forma que nao existe —
-# o Godot aceita UM CanvasModulate por canvas. O `modulate` de um no faz a mesma
-# multiplicacao e pode existir tres vezes na mesma arvore (Q-069).
+# Tres instancias, uma por faixa. E o F1-13: o ticket pede "CanvasModulate por
+# faixa" e essa e a unica forma que nao existe — o Godot aceita UM
+# CanvasModulate por canvas (Q-069).
+#
+# A luz ja NAO vem do `modulate` do no, e a razao esta no `lighting.gd`: um
+# `modulate` multiplica tudo, e nem tudo leva ambiente. O cenario leva, os
+# corpos levam a luz que chega ao sitio deles, as LUZES nao levam nada e os
+# instrumentos do greybox tambem nao.
 #
 # Um _draw() por frame, lido do SimLoop. Nao guarda estado nenhum: se o que se
 # ve divergir do que se simula, e defeito da simulacao e nao deste ficheiro. E a
@@ -18,6 +22,7 @@ var _bichos: Dictionary = {}
 var _edificios: Dictionary = {}
 var _relogio: ClockData
 var _podre: RotProfile
+var _luz := Lighting.new()
 
 
 func _ready() -> void:
@@ -28,12 +33,21 @@ func _ready() -> void:
 	_podre = SimFactory.rot_profile()
 
 
+## O ambiente vinha no `modulate` do no, e um `modulate` multiplica tudo o que o
+## no desenha. Multiplicava tres coisas que nao sao a mesma — o cenario, os
+## corpos e as LUZES — e a terceira era um defeito: medida numa captura, a
+## candeia saia com luminancia 26 contra um ceu de 34, ou seja, a fonte de luz
+## ficava mais escura do que o fundo. Agora a luz vive no `Lighting` e cada coisa
+## recebe a que lhe pertence (§80).
 func _process(_delta: float) -> void:
 	var relogio := ClockService.clock
-	# O `modulate` leva o AMBIENTE, que e igual nas tres faixas: e o LUT de hora
-	# do dia da §22, e ele vale para tudo. O que distingue uma faixa da outra e o
-	# TERRENO dela, e isso aplica-se por baixo, na cor de cada rectangulo.
-	modulate = BandLight.ambient(_relogio, int(relogio.current_phase()), relogio.phase_progress())
+	_luz.set_phase(_relogio, int(relogio.current_phase()), relogio.phase_progress())
+	var rot := SimLoop.night.rot if SimLoop.state != null else null
+	if rot != null and rot.active():
+		var raio := WorldLight.radius(_podre, SimLoop.state.day)
+		_luz.set_lamp(rot.position_x(), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
+	else:
+		_luz.clear_lamp()
 	queue_redraw()
 
 
@@ -45,7 +59,7 @@ func _draw() -> void:
 		_passagens()
 		_podridao()
 	_fogueiras()
-	BuildView.draw_on(self, band, _edificios)
+	BuildView.draw_on(self, band, _edificios, _luz)
 	_moedas()
 	_criaturas()
 	_tropa()
@@ -55,22 +69,25 @@ func _draw() -> void:
 ## superficie leva o corte de solo; o subsolo leva a metade de baixo dele.
 func _terreno() -> void:
 	var largura := maxf(SimLoop.world_width, float(Band.SCREEN_BOTTOM))
-	var luz := BandLight.plane(_relogio, band)
+	var luz := _luz.scenery(BandLight.plane(_relogio, band))
 	match band:
 		Band.Kind.AERIAL:
-			draw_rect(Rect2(0.0, 0.0, largura, float(Band.GROUND_LINE)), WorldPalette.CEU * luz)
-			draw_rect(Rect2(0.0, 0.0, largura, float(Band.AERIAL_BOTTOM)), WorldPalette.AR)
+			var ceu := Rect2(0.0, 0.0, largura, float(Band.GROUND_LINE))
+			draw_rect(ceu, WorldPalette.tint(WorldPalette.CEU, luz))
+			var ar := Rect2(0.0, 0.0, largura, float(Band.AERIAL_BOTTOM))
+			draw_rect(ar, WorldPalette.tint(WorldPalette.AR, luz))
 		Band.Kind.SURFACE:
 			var corte := Rect2(0.0, float(Band.GROUND_LINE), largura, float(Band.SOIL_CUT))
-			draw_rect(corte, WorldPalette.SOLO * luz)
+			draw_rect(corte, WorldPalette.tint(WorldPalette.SOLO, luz))
 		Band.Kind.UNDERGROUND:
 			var fundo := WorldPalette.ground_of(int(Band.Kind.UNDERGROUND))
 			draw_rect(
 				Rect2(0.0, fundo, largura, float(Band.SOIL_CUT) * WorldPalette.MEIA),
-				WorldPalette.SUBSOLO * luz
+				WorldPalette.tint(WorldPalette.SUBSOLO, luz)
 			)
 	var y := WorldPalette.ground_of(int(band))
-	draw_line(Vector2(0.0, y), Vector2(largura, y), WorldPalette.LINHA, WorldPalette.CONTORNO)
+	var linha := WorldPalette.tint(WorldPalette.LINHA, luz)
+	draw_line(Vector2(0.0, y), Vector2(largura, y), linha, WorldPalette.CONTORNO)
 
 
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
@@ -81,13 +98,14 @@ func _passagens() -> void:
 	var largura := WorldPalette.PASSAGEM_W
 	for x in SimLoop.passages:
 		var canto := Vector2(x - largura * WorldPalette.MEIA, topo)
-		draw_rect(Rect2(canto, Vector2(largura, fundo - topo)), WorldPalette.PASSAGEM)
+		var cor := WorldPalette.tint(WorldPalette.PASSAGEM, _luz.scenery(1.0))
+		draw_rect(Rect2(canto, Vector2(largura, fundo - topo)), cor)
 
 
 ## A arte da mancha vive no RotView: a massa, o rasto e a candeia sao um assunto
 ## so e nao cabiam aqui sem passar as 250 linhas do §28 (F1-17).
 func _podridao() -> void:
-	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day)
+	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day, _luz)
 
 
 ## As luzes que sao tuas (§10, coluna `light_radius`). Hoje so o farol tem uma, e
@@ -109,7 +127,8 @@ func _moedas() -> void:
 		if moedas.bands[i] != int(band):
 			continue
 		var y := WorldPalette.ground_of(int(band)) - moedas.heights[i] - WorldPalette.MOEDA_R
-		draw_circle(Vector2(moedas.xs[i], y), WorldPalette.MOEDA_R, WorldPalette.MOEDA)
+		var cor := _luz.body(WorldPalette.MOEDA, moedas.xs[i])
+		draw_circle(Vector2(moedas.xs[i], y), WorldPalette.MOEDA_R, cor)
 
 
 ## §74, a frase que faz da candeia mecanica e nao decoracao: "dentro do raio
@@ -129,7 +148,8 @@ func _criaturas() -> void:
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
 		var caixa := Silhouette.body_box(forma, bichos.xs[i], int(band), alto)
 		var aceso := WorldLight.lit(bichos.xs[i], candeia.x, candeia.y)
-		var cor := WorldLight.reveal(WorldPalette.BICHO, aceso, chao)
+		var corpo := _luz.body(WorldPalette.BICHO, bichos.xs[i])
+		var cor := WorldLight.reveal(corpo, aceso, chao)
 		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
 		if aceso:
 			Gauge.health(
@@ -158,7 +178,7 @@ func _tropa() -> void:
 		var dados: UnitData = _tropas.get(unidades.data_ids[i])
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
 		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(band), alto)
-		var cor := WorldPalette.unit_color(unidades, i)
+		var cor := _luz.body(WorldPalette.unit_color(unidades, i), unidades.xs[i])
 		draw_rect(caixa, cor)
 		_arma(caixa, dados, unidades, i, cor)
 		_saco(caixa, unidades, i)
@@ -209,4 +229,5 @@ func _cabeca(caixa: Rect2, unidades: UnitSystem, i: int) -> void:
 	elif unidades.owners[i] == RecruitSystem.SEM_DONO:
 		return
 	var aba := Vector2(caixa.size.x, WorldPalette.BARRA)
-	draw_rect(Rect2(caixa.position - Vector2(0.0, WorldPalette.BARRA), aba), cor)
+	var canto := caixa.position - Vector2(0.0, WorldPalette.BARRA)
+	draw_rect(Rect2(canto, aba), cor)

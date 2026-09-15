@@ -106,6 +106,13 @@ jobs:
       - name: G1 G3 G4 G5 · suite gdUnit4
         run: make testes
 
+      # A suite prova cada sistema; isto prova os sistemas JUNTOS. Corre oito
+      # dias do greybox com um piloto e chumba se o estado deixar de fazer
+      # sentido — um corpo fora da regiao, vida fora dos limites, um id em duas
+      # coleccoes, uma fase saltada, alguem preso em FIGHT sem nada para bater.
+      - name: Vistoria · oito dias com o estado vigiado
+        run: make vistoria
+
       - name: Relatorio da suite
         if: always()
         uses: actions/upload-artifact@v7
