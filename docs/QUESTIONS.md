@@ -323,6 +323,22 @@
 - **Bloqueia:** nada. Os tipos mudam sem quebrar ninguém enquanto não houver emissores — **e é agora
   que é barato**. **Decide:** tu, antes do F1-08 (o primeiro emissor de `rot_summoned`).
 
+### Q-057 · O dossiê dá um número de câmara, e a câmara precisa de cinco
+- **Onde:** `docs/design/24-controlos-hud-diegetico-e-feedback.md` contra `src/world/camera_rig.gd` (F0-08).
+- **O que diverge:** a §24 escreve *"Reconhecimento; volta sozinha em 2 s"* para a câmara livre, e nomeia a
+  antecipação ao dizer que a cegueira do Cavaleiro Selado a desliga. Não dá **nenhum** valor para a
+  antecipação, para a suavização, nem para a velocidade da câmara livre. A §19 diz que "a câmara e o
+  enquadramento dependem" da decisão de escala, que é o *spike* F0-09 e ainda não fechou.
+- **Proposta:** os quatro valores entraram em `data/source/camera.csv` marcados em `_proposed`, porque a
+  invariante I4 manda que o que se afina em *playtest* viva em `data/` e não num script:
+  `lookahead_px` **120** (3/16 da meia-tela de 640 — deixa ver cerca de dois terços do ecrã à frente de quem
+  anda), `lookahead_seconds` **0,6** (alto de propósito: uma antecipação que salta ao primeiro passo para trás
+  dá enjoo), `follow_seconds` **0,18**, `free_speed_px_s` **420** (atravessa um segmento de 640 px em pouco
+  mais de segundo e meio). O `free_return_seconds` é **2,0** e esse vem do dossiê.
+- **Bloqueia:** nada — a câmara funciona e nenhum destes números é lido pela simulação. Mas o F0-09 pode
+  mexer-lhes: se a escala mudar, a antecipação em píxeis muda com ela. **Decide:** o primeiro *playtest*,
+  depois do F0-09.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

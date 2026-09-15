@@ -649,3 +649,16 @@ Script `src/sim/data/chapter_data.gd` · layout `rows` · 10 linha(s) · §77 �
 | `visits_tracked` | bool | Regras |  |
 | `folk_root` | String | Regras |  |
 
+## `camera.csv` → `data/camera/{id}.tres`
+
+Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24 §59 — a camara como dados; um so numero vem do dossie (Q-057)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | nome do ficheiro | — | o recurso não tem campo id |
+| `lookahead_px` | float |  |  |
+| `lookahead_seconds` | float |  |  |
+| `follow_seconds` | float |  |  |
+| `free_speed_px_s` | float |  |  |
+| `free_return_seconds` | float |  |  |
+

@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 179 | 89 | 268 |
+| Fases 0–2 (fatia vertical) | 183 | 89 | 272 |
 | Fases 3–8 | 218 | 105 | 323 |
-| Total | 397 | 194 | 591 |
+| Total | 401 | 194 | 595 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 179
+## 1 · Fatia vertical — balanceamento — 183
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -195,6 +195,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | parallax_layers | `closed_2` | `saturation_delta` | -0.042 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_3` | `saturation_delta` | -0.03 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_4` | `saturation_delta` | -0.015 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
+| camera | `default` | `lookahead_px` | 120 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
+| camera | `default` | `lookahead_seconds` | 0.6 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
+| camera | `default` | `follow_seconds` | 0.18 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
+| camera | `default` | `free_speed_px_s` | 420 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros quatro são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. |
 
 ## 2 · Fatia vertical — apresentação e estrutura — 89
 

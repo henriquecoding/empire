@@ -17,10 +17,10 @@ a cada construção._
 ## Como se verificou
 
 - **Motor** — Godot 4.6-stable (`89cea1439`) em *headless*: o projeto importa sem erros e arranca.
-- **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 27 tabelas, 202 recursos gerados.
+- **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 193 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 102 casos, 97 a passar, 5 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 111 casos, 106 a passar, 5 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos e 6 saltados antes do F0-07.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save nunca usa `load()`),
@@ -50,8 +50,8 @@ a cada construção._
 
 | Pasta | O que lá está |
 |---|---|
-| `data/source/` | As 27 tabelas, com `_phase`, `_src`, `_proposed` e `_notes` em cada linha. É a fonte. |
-| `data/**/*.tres` | Os 202 recursos gerados. Versionados de propósito (ADR 0004). |
+| `data/source/` | As 28 tabelas, com `_phase`, `_src`, `_proposed` e `_notes` em cada linha. É a fonte. |
+| `data/**/*.tres` | Os 203 recursos gerados. Versionados de propósito (ADR 0004). |
 | `src/sim/` | Puro: sem `Node`, sem `import` para fora. O portão G1 chumba se alguém o quebrar. |
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |

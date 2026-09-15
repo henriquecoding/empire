@@ -143,8 +143,14 @@
   "depende": "F0-05",
   "feito": "Não treme com movimento subpixel; arredonda a píxel inteiro; respeita os limites",
   "fora": "Parallax — entra com o ART-03.",
-  "estado": "por fazer",
-  "horas": "3"
+  "estado": "feito",
+  "horas": "3",
+  "notas": [
+   "Q-057 (nova): o dossiê dá UM número de câmara — os 2 s do regresso da câmara livre (§24). Os outros quatro entraram em data/source/camera.csv marcados _proposed, porque o I4 manda que o que se afina em playtest viva em data/.",
+   "Tabela 28: camera.csv → data/camera/default.tres, com CameraData. A câmara não tem um único número dentro do script.",
+   "Arredonda sempre para baixo, como o parallax do §59 — uma só regra de arredondamento no projeto.",
+   "Nada de Y: o mundo é uma linha e o enquadramento vertical é fixo (§11)."
+  ]
  },
  "F0-09": {
   "title": "Spike: decidir a escala e fechar a ADR 0001",
