@@ -11,7 +11,7 @@ a cada construção._
 | v5.1 | — | O dossiê como prosa: 69 secções, sem repositório. |
 | v5.2 | 11/09/2026 | O repositório: projeto Godot 4.6, 23 tabelas de dados, 120 recursos, as bíblias de produção, 23 testes, 11 ADRs. Mais 105 correções de português PT-PT (AO90) e 27 edições de conteúdo, todas listadas em `docs/dossie-v5.2-correcoes.md`. |
 | v6 | 13/09/2026 | A Parte XIII (§70–§85) e a camada de uso do dossiê (`ferramentas/`). O repositório recuperado trazia 17 tabelas e 154 recursos — menos dez tabelas do que a v5.2 tinha. |
-| v6 + F0 | 15/09/2026 | A Fase 0 de codigo: EventBus (61 sinais), GameClock e ClockService, RngService, Registry, SaveService e o SimLoop com a ordem do §43. O relogio anda, o dia vira, o save faz ida e volta, e a semente reproduz. Mais a ADR 0020 e o portao G6. |
+| v6 + F0 | 15/09/2026 | A Fase 0 de código, catorze dos dezasseis tickets: EventBus (61 sinais), GameClock e ClockService, RngService, Registry, SaveService, o SimLoop com a ordem do §43, a câmara única, o BandLayers com as três faixas provadas por física, e o UnitView com os cinco slots e o `palette_lut`. O relógio anda, o dia vira, o save faz ida e volta, e a semente reproduz. Mais a ADR 0020, o portão G6, o `check_claims` e a tabela 28 (`camera`). |
 | v6 + XIII | 14/09/2026 | A Parte XIII em dados: quatro tabelas novas, seis alargadas, quatro `Resource` novos, catorze testes de design, nove ADRs, 19 perguntas registadas, 53 tickets, e o texto: 64 chaves de conteúdo e os doze diários da §79 escritos. |
 
 ## Como se verificou
@@ -43,6 +43,7 @@ a cada construção._
 |---|---|
 | Jogabilidade | Ninguém jogou, e continua a não haver jogo: o ciclo anda e o dia vira, mas não há uma única unidade, moeda, muralha ou Podridão. São os passos 2 a 10 do `SimLoop`, escritos e vazios, cada um com o ticket que o preenche. |
 | GPU e arte | A medição correu sem placa gráfica. O LUT, a luz e as silhuetas continuam por ver. |
+| Os dois *spikes* da Fase 0 | O **F0-09** pede a escala testada *em 1080p e no Deck* — é hardware, e nenhuma medição headless o substitui; a ADR 0001 continua proposta. O **F0-15** pede o `export_aseprite.sh` testado *com um ficheiro real* — e não há um: zero `.aseprite` na árvore, sem Aseprite instalado e sem o Wizard; a ADR 0010 continua proposta. São os dois únicos tickets da Fase 0 por fazer, e nenhum dos dois é código. |
 | CI remoto | O `run_tests.sh` corre localmente; nunca correu num *runner* limpo. É a Q-052. |
 | As nove cenas de segmento | Não sobreviveram ao ZIP recuperado. É a Q-048. |
 | Áudio | 73 pistas escritas na bíblia, zero gravadas. |
