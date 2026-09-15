@@ -21,7 +21,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [F0-07](F0-07.md) | EventBus com os sinais do §46 | F0-01 | feito |
 | [F0-08](F0-08.md) | Câmara com lookahead e limites de região | F0-05 | feito |
 | [F0-09](F0-09.md) | Spike: decidir a escala e fechar a ADR 0001 | F0-01 | por fazer |
-| [F0-10](F0-10.md) | Cena de teste: um sprite anda nas três faixas | F0-05, F0-08 | por fazer |
+| [F0-10](F0-10.md) | Cena de teste: um sprite anda nas três faixas | F0-05, F0-08 | feito |
 | [F0-11](F0-11.md) | Registry e boot.tscn | F0-01 | feito |
 | [F0-12](F0-12.md) | RngService: os seis fluxos, snapshot e restore | F0-11 | feito |
 | [F0-13](F0-13.md) | SaveService: escrita atómica e três slots | F0-11 | feito |

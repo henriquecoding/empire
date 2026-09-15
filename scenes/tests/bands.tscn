@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/world/band_probe.gd" id="0_probe"]
+[ext_resource type="Script" path="res://src/world/camera_rig.gd" id="1_cam"]
+
+[sub_resource type="RectangleShape2D" id="1_coluna"]
+size = Vector2(48, 530)
+
+[sub_resource type="RectangleShape2D" id="2_andarilho"]
+size = Vector2(14, 28)
+
+[node name="BandsProbe" type="Node2D"]
+script = ExtResource("0_probe")
+
+[node name="Ceu" type="ColorRect" parent="."]
+offset_right = 2600.0
+offset_bottom = 517.0
+color = Color(0.8745098, 0.91764706, 0.9372549, 1)
+
+[node name="Terra" type="ColorRect" parent="."]
+offset_top = 517.0
+offset_right = 2600.0
+offset_bottom = 720.0
+color = Color(0.41568628, 0.28627452, 0.15686275, 1)
+
+[node name="Terreno" type="Node2D" parent="."]
+
+[node name="ColunaAerea" type="StaticBody2D" parent="Terreno"]
+position = Vector2(700, 415)
+metadata/band = 0
+
+[node name="Colisao" type="CollisionShape2D" parent="Terreno/ColunaAerea"]
+shape = SubResource("1_coluna")
+
+[node name="Marca" type="ColorRect" parent="Terreno/ColunaAerea"]
+offset_left = -24.0
+offset_top = -265.0
+offset_right = 24.0
+offset_bottom = 265.0
+color = Color(0.53333336, 0.67058825, 0.75686276, 0.85)
+
+[node name="ColunaDaSuperficie" type="StaticBody2D" parent="Terreno"]
+position = Vector2(1400, 415)
+metadata/band = 1
+
+[node name="Colisao" type="CollisionShape2D" parent="Terreno/ColunaDaSuperficie"]
+shape = SubResource("1_coluna")
+
+[node name="Marca" type="ColorRect" parent="Terreno/ColunaDaSuperficie"]
+offset_left = -24.0
+offset_top = -265.0
+offset_right = 24.0
+offset_bottom = 265.0
+color = Color(0.44705883, 0.5647059, 0.29411766, 0.85)
+
+[node name="ColunaDoSubsolo" type="StaticBody2D" parent="Terreno"]
+position = Vector2(2100, 415)
+metadata/band = 2
+
+[node name="Colisao" type="CollisionShape2D" parent="Terreno/ColunaDoSubsolo"]
+shape = SubResource("1_coluna")
+
+[node name="Marca" type="ColorRect" parent="Terreno/ColunaDoSubsolo"]
+offset_left = -24.0
+offset_top = -265.0
+offset_right = 24.0
+offset_bottom = 265.0
+color = Color(0.36078432, 0.24705882, 0.1764706, 0.85)
+
+[node name="Andarilho" type="CharacterBody2D" parent="."]
+position = Vector2(120, 503)
+
+[node name="ColisaoAndarilho" type="CollisionShape2D" parent="Andarilho"]
+shape = SubResource("2_andarilho")
+
+[node name="Marca" type="ColorRect" parent="Andarilho"]
+offset_left = -7.0
+offset_top = -14.0
+offset_right = 7.0
+offset_bottom = 14.0
+color = Color(0.9254902, 0.84705883, 0.6117647, 1)
+
+[node name="CameraRig" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("1_cam")
+
+[node name="Estado" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.078431375, 0.078431375, 0.05882353, 1)
+text = "faixas"

@@ -20,11 +20,13 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 193 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 111 casos, 106 a passar, 5 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 120 casos, 115 a passar, 5 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos e 6 saltados antes do F0-07.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save nunca usa `load()`),
   e os três modos de quebrar o G6 estão medidos, não supostos.
+- **As três faixas** — as nove combinações do §53 medidas com o motor de física, não deduzidas da
+  tabela: a diagonal bate e tudo o resto atravessa. `scenes/tests/bands.tscn` escreve-a no arranque.
 - **O ciclo anda** — dois dias de simulação a 30 Hz, 21 600 ticks, as doze transições de fase nos
   segundos exatos da tabela do §48 (15, 100, 140, 225, 255, 360…), e a fila de eventos a voltar a
   zero em todos os ticks.

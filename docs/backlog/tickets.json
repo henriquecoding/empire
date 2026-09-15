@@ -95,7 +95,8 @@
   "estado": "feito",
   "horas": "0,5",
   "notas": [
-   "A §70 resolveu o conflito de caminho: src/sim/band.gd, senão o portão G1 chumba no dia 1."
+   "A §70 resolveu o conflito de caminho: src/sim/band.gd, senão o portão G1 chumba no dia 1.",
+   "O contrato era mais forte do que o teste: o 'Feito' dizia que o aéreo não colide com o subsolo e o teste só comparava constantes. O F0-10 fechou a lacuna com física."
   ]
  },
  "F0-06": {
@@ -177,8 +178,14 @@
   "depende": "F0-05, F0-08",
   "feito": "scenes/tests/bands.tscn: sobe, desce, e o aéreo atravessa o subsolo sem colidir",
   "fora": "Arte, animação, som.",
-  "estado": "por fazer",
-  "horas": "2"
+  "estado": "feito",
+  "horas": "2",
+  "notas": [
+   "A cena tem três colunas, uma por faixa, e cada uma atravessa as três alturas de faixa de propósito — só assim 'o aéreo atravessa o subsolo' é uma medição e não uma frase.",
+   "src/world/band_layers.gd é o único sítio onde collision_layer e collision_mask se escrevem. A regra que faz a matriz funcionar não estava escrita como fórmula em lado nenhum: duas coisas só colidem se partilharem o bit da faixa, e o terreno também tem faixa.",
+   "Q-058 (nova): a tabela do §53 contradiz-se na célula das moedas — L_SURFACE colide com moedas, L_COIN colide com nada. Manda o L_COIN, que traz a razão escrita.",
+   "O teste de física foi provado a falhar: partindo só o apply_body (a matriz pura fica certa), chumba com 'corpo 0 contra coluna 2: bateu=true, esperado=false'."
+  ]
  },
  "F0-11": {
   "title": "Registry e boot.tscn",
