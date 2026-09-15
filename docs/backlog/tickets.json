@@ -503,7 +503,7 @@
   "depende": "F1-10",
   "feito": "Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória",
   "fora": "Migrações entre versões — quando houver uma segunda.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6",
   "notas": [
    "ADR 0007: só tipos base. O teste D-14 já guarda os campos da Parte XIII."

@@ -10,10 +10,10 @@
 
 | | |
 |---|---|
-| Tickets | **53**, dos quais **27 feitos** e **26 por fazer** |
+| Tickets | **53**, dos quais **28 feitos** e **25 por fazer** |
 | Fase 0 | 14 de 16 — faltam dois, e nenhum dos dois é código |
-| Fase 1 | 11 de 17 — F1-01 a F1-08 menos o F1-09, **F1-10**, **F1-12** e **F1-13** |
-| Suite | 298 casos, 293 a passar, 5 saltados, 0 falhas, 0 *orphans* |
+| Fase 1 | 12 de 17 — F1-01 a F1-08 menos o F1-09, **F1-10**, **F1-12**, **F1-13** e **F1-14** |
+| Suite | 305 casos, 300 a passar, 5 saltados, 0 falhas, 0 *orphans* |
 | `SimLoop` | **9 dos 11 passos** do §43 escritos; faltam o 9 (F1-14) e o 10 (Fase 2) |
 | Perguntas em aberto | 62, em `docs/QUESTIONS.md` |
 
@@ -45,7 +45,6 @@ que faltam.
 | | O que é | Depende de | Critério de aceitação (o "Feito" do ticket) |
 |---|---|---|---|
 | **F1-11** | Plantação, pesqueiro e galinheiro com os valores do §06 | F1-10 ✔ | *Payback* de 2 dias medido em jogo; `test_payback_do_06` continua a passar |
-| **F1-14** | Save e load do estado de `src/sim/` com `save_version` | F1-10 ✔ | Fechar e reabrir no dia 7 preserva tudo, incluindo a sequência aleatória |
 
 O **F1-09** já tem metade do caminho andado: a tabela de invocação por dia
 mínimo corre desde o F1-08, e o Alado só é atingido por quem está numa torre alta
@@ -144,6 +143,9 @@ Está toda em dados e em prosa, e nada dela em código.
   relógio pára e é preciso reabrir o jogo. O §46 também não tem sinal de derrota,
   e inventar um quebrava a regra 7 do `AGENTS.md` — o que há é o mundo a dizê-lo,
   com o núcleo em ruína.
+- **Não há menu.** O jogo retoma o autosave mais recente, ou começa de novo se não
+  houver nenhum, se o núcleo tiver caído, ou se se passar `--novo`. Escolher slot
+  é o §18, e é a Fase 8.
 - **Áudio:** 73 pistas escritas na bíblia, zero gravadas.
 - **62 perguntas em aberto** em `docs/QUESTIONS.md` — as oito mais recentes
   (Q-064 a Q-071) são as que encher o tick obrigou a fazer, e a Q-068 é a única
@@ -164,8 +166,9 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 
 | O quê | Como | O que se vê |
 |---|---|---|
-| **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. |
-| **A suite** | `make testes` | 298 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
+| **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
+| **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
+| **A suite** | `make testes` | 305 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **Uma fotografia** | `make captura` | Escreve `build/empire.png`. Com `AVANCAR=` salta para qualquer ponto do dia sem esperar pelo relógio. |
 | **As três faixas** | `godot --path . scenes/tests/bands.tscn` | A cena de prova do §53: as colunas e a matriz de colisão, medidas e não afirmadas. |
 | **O dossiê** | `make ferramentas` | Escreve `ferramentas/saida/dossie-empire.html`. Não precisa do motor. |

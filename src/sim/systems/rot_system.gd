@@ -163,6 +163,29 @@ func trail_covers(x: float) -> bool:
 	)
 
 
+## O que se grava: o estado da mancha, o dia em que ela nasceu, e o que o
+## jogador escreveu de dia (§74). A direccao deriva do lado e nao vai no save.
+func to_dict() -> Dictionary:
+	return {
+		&"state": state.to_dict(),
+		&"day": _dia,
+		&"fortresses": fortresses,
+		&"amargueiros": amargueiros,
+		&"named": named_amargueiros,
+		&"refusals": refusals,
+	}
+
+
+func from_dict(d: Dictionary) -> void:
+	state.from_dict(d.get(&"state", {}))
+	_dia = d.get(&"day", _dia)
+	fortresses = d.get(&"fortresses", fortresses)
+	amargueiros = d.get(&"amargueiros", amargueiros)
+	named_amargueiros = d.get(&"named", named_amargueiros)
+	refusals = d.get(&"refusals", refusals)
+	_direcao = float(-state.side)
+
+
 ## A massa da §74, termo a termo. O dossie desceu a base e o termo do dia de
 ## proposito: o que a noite tem de duro deixa de vir do calendario e passa a vir
 ## de como jogaste.

@@ -144,24 +144,14 @@ func dissolve() -> PackedInt32Array:
 
 ## As colunas em tipos base, para o save (§62). Sem Object nenhum.
 func to_dict() -> Dictionary:
-	var nomes := PackedStringArray()
-	for nome in data_ids:
-		nomes.append(String(nome))
-	return {
-		&"ids": ids,
-		&"data_ids": nomes,
-		&"xs": xs,
-		&"bands": bands,
-		&"healths": healths,
-		&"max_healths": max_healths,
-		&"speeds": speeds,
-		&"target_xs": target_xs,
-		&"goal_xs": goal_xs,
-		&"target_ids": target_ids,
-		&"target_slots": target_slots,
-		&"cooldowns": cooldowns,
-		&"coin_drops": coin_drops,
-	}
+	return Columns.to_dict(self)
+
+
+## Repoe do save. Reindexa no fim: o dicionario de ids e derivado das colunas e
+## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
+func from_dict(d: Dictionary) -> void:
+	Columns.from_dict(self, d)
+	_reindexar()
 
 
 func _copiar(de: int, para: int) -> void:
@@ -195,3 +185,9 @@ func _encolher() -> void:
 	target_slots.resize(n)
 	cooldowns.resize(n)
 	coin_drops.resize(n)
+
+
+func _reindexar() -> void:
+	_por_id.clear()
+	for i in ids.size():
+		_por_id[ids[i]] = i

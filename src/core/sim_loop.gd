@@ -39,21 +39,12 @@ var economy: EconomySystem
 ## quatro passos novos na lista.
 var night: NightWatch
 
-## As moedas no chao e no ar (§61, o Verbo 1). Criado a pedido: precisa do
-## EconomyCurve do Registry, e nenhum autoload pode depender do _ready() de
-## outro ter corrido primeiro (ADR 0020, regra 8b do AGENTS.md).
-var coins: CoinSystem:
-	get:
-		if _coins == null:
-			_coins = CoinSystem.new(SimFactory.curve())
-		return _coins
-
-## O minuto 0:20 do §25 (F1-04). Criado a pedido pela mesma razao das moedas.
-var recruits: RecruitSystem:
-	get:
-		if _recruits == null:
-			_recruits = RecruitSystem.new(SimFactory.curve())
-		return _recruits
+## As moedas no chao e no ar (§61, o Verbo 1) e o minuto 0:20 do §25 (F1-04).
+## Nascem no start() e nao no _ready(): precisam do EconomyCurve do Registry, e
+## nenhum autoload pode depender do _ready() de outro ter corrido primeiro
+## (ADR 0020, regra 8b do AGENTS.md).
+var coins: CoinSystem
+var recruits: RecruitSystem
 
 ## A fila do §61: a entrada nunca muda estado, enfileira uma intencao.
 var intents := IntentQueue.new()
@@ -72,8 +63,6 @@ var passages: PackedFloat32Array = PackedFloat32Array()
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
 var autosave_enabled: bool = true
 
-var _coins: CoinSystem
-var _recruits: RecruitSystem
 var _running: bool = false
 var _fase: int = UnitSystem.NENHUM
 var _brecha: bool = false
@@ -102,7 +91,8 @@ func start(semente: int) -> void:
 
 
 ## Retoma um save. Repoe o estado, o relogio e a sequencia de cada fluxo — o
-## ESTADO dos fluxos, nao a semente, senao a noite recomeca (§42).
+## ESTADO dos fluxos, nao a semente, senao a noite recomeca (§42). As coleccoes
+## entram a seguir, com load_world(), depois de a regiao estar montada.
 func resume(estado: GameState, rng_states: Dictionary) -> void:
 	state = estado
 	_montar()
@@ -110,6 +100,16 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 	RngService.restore(rng_states)
 	ClockService.seek(estado.day, estado.clock_elapsed)
 	_running = true
+
+
+## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
+## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
+func world() -> Dictionary:
+	return SimSave.world(units, creatures, coins, builds, night.rot, king_id)
+
+
+func load_world(mundo: Dictionary) -> void:
+	king_id = SimSave.restore(units, creatures, coins, builds, night.rot, mundo)
 
 
 func stop() -> void:
@@ -192,8 +192,8 @@ func _montar() -> void:
 	morale = SimFactory.morale()
 	economy = SimFactory.economy()
 	night = NightWatch.new()
-	_coins = null  # um jogo novo comeca sem moedas no chao
-	_recruits = null
+	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
+	recruits = RecruitSystem.new(SimFactory.curve())
 	_fase = UnitSystem.NENHUM
 	_brecha = false
 	intents.clear()
@@ -239,4 +239,4 @@ func _no_amanhecer(dia: int) -> void:
 	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai seria gravar antes
 	# de ter acontecido alguma coisa.
 	if autosave_enabled and _running and dia > 1:
-		SaveService.autosave(state, RngService.snapshot())
+		SaveService.autosave(state, RngService.snapshot(), world())

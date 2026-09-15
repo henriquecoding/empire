@@ -123,6 +123,35 @@ func contact_slots() -> int:
 	return contacts[level - 1] if level > 0 and level <= contacts.size() else 0
 
 
+## O que MUDA em jogo, e so isso. A escada, a largura e os efeitos sao autorados
+## pelo segmento (§21) e voltam a existir quando ele volta a ser montado: grava-
+## los era guardar o mundo dentro do save, e um mundo que muda de versao deixava
+## de poder ser carregado (§62).
+func to_dict() -> Dictionary:
+	return {
+		&"id": id,
+		&"level": level,
+		&"state": int(state),
+		&"paid": paid,
+		&"progress": progress,
+		&"health": health,
+		&"stock": stock,
+		&"path": int(path),
+		&"contact": contact,
+	}
+
+
+func from_dict(d: Dictionary) -> void:
+	level = d.get(&"level", level)
+	state = d.get(&"state", int(state)) as State
+	paid = d.get(&"paid", paid)
+	progress = d.get(&"progress", progress)
+	health = d.get(&"health", health)
+	stock = d.get(&"stock", stock)
+	path = d.get(&"path", int(path)) as Path
+	contact = d.get(&"contact", contact)
+
+
 ## Verdadeiro se este sitio tem os dois caminhos do §10 para escolher.
 func two_paths() -> bool:
 	return not healths_a.is_empty()

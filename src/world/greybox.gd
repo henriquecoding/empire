@@ -56,8 +56,17 @@ const MEU_IMPERIO := 1
 const MEIO := 0.5
 
 
-## Monta a regiao dentro do SimLoop e devolve o id do monarca.
+## Um jogo novo: a regiao e quem la vive. Devolve o id do monarca.
 static func build() -> int:
+	region()
+	return _gente()
+
+
+## SO o que o segmento autora: a largura, os sitios de obra e as passagens
+## (§21). E o que se volta a montar ao retomar um save — a gente vem do
+## ficheiro, e chama-la outra vez gastava ids que o save ja tinha dado (§45).
+static func region() -> void:
+	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
 	SimLoop.world_width = largura * ECRAS
 	SimLoop.core_x = SimLoop.world_width * MEIO
@@ -79,8 +88,6 @@ static func build() -> int:
 		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
 	for x in TORRES_ALTAS_X:
 		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
-
-	return _gente()
 
 
 ## O castelo-arvore. Nao e construido nem destruido pelo jogador (§10) — nasce
@@ -149,6 +156,10 @@ static func _do_edificio(dados: BuildingData, x: float) -> BuildSlot:
 
 ## O monarca ao centro, com o que o §06 lhe da a partida, e os vagabundos
 ## espalhados. Eles nao sao teus: sao o minuto 0:20 a espera de acontecer (§25).
+static func people() -> int:
+	return _gente()
+
+
 static func _gente() -> int:
 	var estado := SimLoop.state
 	var monarca := Registry.entry(&"units", &"monarch") as UnitData

@@ -29,3 +29,29 @@ var next_summon_at: float = 0.0
 ## seguinte e e o que o §49 le para saber que um edificio nao produz hoje.
 var trail_from: float = 0.0
 var trail_to: float = 0.0
+
+
+## So tipos base, para o save (§62). O perfil e a tabela de criaturas nao entram:
+## sao dados do jogo, e o jogo carrega-os outra vez.
+func to_dict() -> Dictionary:
+	return {
+		&"active": active,
+		&"x": x,
+		&"width": width,
+		&"mass": mass,
+		&"side": side,
+		&"next_summon_at": next_summon_at,
+		&"trail_from": trail_from,
+		&"trail_to": trail_to,
+	}
+
+
+func from_dict(d: Dictionary) -> void:
+	active = d.get(&"active", active)
+	x = d.get(&"x", x)
+	width = d.get(&"width", width)
+	mass = d.get(&"mass", mass)
+	side = d.get(&"side", side)
+	next_summon_at = d.get(&"next_summon_at", next_summon_at)
+	trail_from = d.get(&"trail_from", trail_from)
+	trail_to = d.get(&"trail_to", trail_to)

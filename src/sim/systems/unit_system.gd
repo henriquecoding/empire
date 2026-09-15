@@ -178,29 +178,14 @@ func _anda(i: int) -> bool:
 
 ## As colunas em tipos base, para o save (§62). Sem Object nenhum.
 func to_dict() -> Dictionary:
-	var nomes := PackedStringArray()
-	for nome in data_ids:
-		nomes.append(String(nome))
-	return {
-		&"ids": ids,
-		&"data_ids": nomes,
-		&"owners": owners,
-		&"xs": xs,
-		&"bands": bands,
-		&"healths": healths,
-		&"max_healths": max_healths,
-		&"speeds": speeds,
-		&"states": states,
-		&"job_ids": job_ids,
-		&"target_ids": target_ids,
-		&"target_xs": target_xs,
-		&"has_targets": has_targets,
-		&"cooldowns": cooldowns,
-		&"carried_coins": carried_coins,
-		&"loyalties": loyalties,
-		&"coin_capacities": coin_capacities,
-		&"recruit_costs": recruit_costs,
-	}
+	return Columns.to_dict(self)
+
+
+## Repoe do save. Reindexa no fim: o dicionario de ids e derivado das colunas e
+## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
+func from_dict(d: Dictionary) -> void:
+	Columns.from_dict(self, d)
+	_reindexar()
 
 
 func _copiar(de: int, para: int) -> void:
@@ -244,3 +229,12 @@ func _encolher() -> void:
 	loyalties.resize(n)
 	coin_capacities.resize(n)
 	recruit_costs.resize(n)
+
+
+## O dicionario de ids a partir das colunas. Chamado depois de repor um save e
+## em mais lado nenhum: durante o jogo ele e mantido a par pelo spawn e pelo
+## remove, que e mais barato do que refaze-lo.
+func _reindexar() -> void:
+	_por_id.clear()
+	for i in ids.size():
+		_por_id[ids[i]] = i
