@@ -404,9 +404,20 @@
   tipos de letra de recurso, diferente da que o *runner* mede. Com o certificado ignorado à força, a medição
   local passou a dar **118 intactas · 5 a deslizar** — exactamente os números do *runner*, contra as 120 · 3
   de antes. Um portão de disposição cuja resposta depende de a rede ter chegado não é um portão.
-- **Proposta:** `await página.evaluate(() => document.fonts.ready)` a seguir a cada `goto`, nos dois ficheiros.
-  É a barreira que o `load` não dá. Onde as fontes não carregam resolve de imediato e não muda nada; onde
-  carregam, faz medir depois de assentarem.
+- **A barreira entrou, e NÃO chegou.** Pôs-se `await página.evaluate(() => document.fonts.ready)` a seguir a
+  cada `goto`, nos dois ficheiros. A corrida **#17** chumbou nas mesmas duas. A hipótese das fontes explicava
+  a diferença de medição — e explica — mas **não** é a causa destas duas falhas. A barreira fica porque medir
+  depois de as fontes assentarem é certo de qualquer maneira; não fica como correcção.
+- **O que os números dizem agora:** o desvio mudou de **−4376 px** (#16) para **−4688 px** (#17). Não é uma
+  diferença fixa de disposição: **varia entre corridas**. E as duas verificações que chumbam são as duas que
+  medem depois de uma espera FIXA — `waitForTimeout(900)` a seguir ao clique, e a remedição a 320px. As
+  vizinhas que esperam por uma condição («saltar para #s40 numa parte fechada: abriu=true, desvio 0px»)
+  passam sempre, no mesmo ficheiro e na mesma corrida.
+- **Patch proposto, por aplicar:** trocar as duas esperas fixas por espera até ESTABILIZAR — ler o valor em
+  intervalos curtos e só medir quando duas leituras seguidas coincidirem, com um limite de tempo. Não muda o
+  que o teste afirma, só quando o afirma. Não o apliquei porque já gastei uma tentativa às cegas nesta mesma
+  falha e não a consigo reproduzir aqui: com o mesmo Chromium (v1243) e com as fontes reais forçadas — que dão
+  as 118 · 5 do *runner* — as duas passam nesta máquina.
 - **O que fica por decidir:** se o dossiê deve depender de uma CDN para a sua própria verificação. Embutir as
   fontes no ficheiro construído tornava o portão igual em qualquer máquina e sem rede — é mais trabalho e é uma
   decisão tua. **Decide:** tu.
