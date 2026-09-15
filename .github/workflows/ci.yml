@@ -3,9 +3,14 @@ name: ci
 on:
   # Todos os ramos MENOS os que o `pull_request` ja cobre. Com `branches:
   # ["**"]` um ramo de PR corria a CI duas vezes — uma pelo push, outra pelo
-  # pull_request — e os dois resultados eram sempre iguais. Nao se fixa `main`
-  # aqui porque este repositorio nao tem `main`: o ramo por omissao e outro, e
-  # fixa-lo desligava a CI por completo.
+  # pull_request — e os dois resultados eram sempre iguais.
+  #
+  # Continua a NAO se fixar `branches: [main]`, e agora por outra razao. A
+  # primeira era que a `main` nao existia — este repositorio teve um ramo so
+  # ate 15/09/2026, e fixa-la teria desligado a CI por completo. Agora existe,
+  # e a razao passa a ser a que interessa: um portao que so corre no ramo de
+  # producao chega tarde. Quer-se vermelho no ramo de trabalho, antes do merge,
+  # e nao depois.
   push:
     branches-ignore: ["dependabot/**"]
   pull_request:
