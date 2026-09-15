@@ -17,6 +17,12 @@ config/description="Kingdom-builder 2D em pixel art — ver AGENTS.md e docs/dos
 run/main_scene="res://scenes/boot.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
 
+[autoload]
+
+; §46: um autoload so, com os sinais declarados. Carrega antes de tudo o
+; resto porque tudo o resto comunica por ele.
+EventBus="*res://src/core/event_bus.gd"
+
 [display]
 
 window/size/viewport_width=1280

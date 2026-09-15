@@ -18,7 +18,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [F0-04](F0-04.md) | Instalar o gdUnit4 e o workflow de CI | F0-00 | feito |
 | [F0-05](F0-05.md) | Band: enum, planos e a matriz de colisão | F0-01 | feito |
 | [F0-06](F0-06.md) | GameClock e o ClockData (prompt 1 da §29) | F0-01 | feito |
-| [F0-07](F0-07.md) | EventBus com os sinais do §46 | F0-01 | por fazer |
+| [F0-07](F0-07.md) | EventBus com os sinais do §46 | F0-01 | feito |
 | [F0-08](F0-08.md) | Câmara com lookahead e limites de região | F0-05 | por fazer |
 | [F0-09](F0-09.md) | Spike: decidir a escala e fechar a ADR 0001 | F0-01 | por fazer |
 | [F0-10](F0-10.md) | Cena de teste: um sprite anda nas três faixas | F0-05, F0-08 | por fazer |

@@ -19,8 +19,8 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 27 tabelas, 202 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 193 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 43 casos, 37 a passar, 6 saltados **com a razão escrita no próprio teste**,
-  zero falhas.
+- **Testes** — gdUnit4 6.2.1: 50 casos, 45 a passar, 5 saltados **com a razão escrita no próprio teste**,
+  zero falhas, zero *orphans*. Eram 43 e 6 antes do F0-07.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **A camada de uso** — os dois portões de `ferramentas/` passam sobre a construção de hoje:
   `verificar-dossie.mjs` (telemóvel, âncoras, JavaScript, pesquisa) e `verificar-novo.mjs`
@@ -31,7 +31,6 @@ a cada construção._
 | O quê | Porquê |
 |---|---|
 | Jogabilidade | Ninguém jogou. Não há sistemas: `src/sim/` tem os dados e as regras puras, e mais nada. |
-| Exportação | Nenhum executável foi produzido nesta árvore. É o F0-00 e o F0-15. |
 | GPU e arte | A medição correu sem placa gráfica. O LUT, a luz e as silhuetas continuam por ver. |
 | CI remoto | O `run_tests.sh` corre localmente; nunca correu num *runner* limpo. É a Q-052. |
 | As nove cenas de segmento | Não sobreviveram ao ZIP recuperado. É a Q-048. |

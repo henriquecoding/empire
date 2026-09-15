@@ -307,6 +307,22 @@
   fortaleza (o desvio é uma região inteira). Marcado em `_proposed` nas dez linhas.
 - **Bloqueia:** Fase 5. **Decide:** o playtest.
 
+### Q-056 · O §46 dá a carga de cada sinal, mas não os tipos
+- **Onde:** `docs/design/46-o-catalogo-completo.md` contra `src/core/event_bus.gd` (F0-07).
+- **O que diverge:** a coluna *Carga* tipa sete parâmetros (`day: int`, `paused: bool`, `hit: bool`,
+  `from, to: Phase`) e deixa os outros **cerca de quarenta** só com nome: `amount`, `source`, `ratio`,
+  `tier`, `income`, `value`, `drops`, `segments`. Um sinal declarado exige o tipo escrito.
+- **Proposta:** a regra que o F0-07 aplicou, para ser uma regra e não quarenta decisões avulsas —
+  id de **dados** (existe numa linha de `data/source/*.csv`) é `StringName`; id de **instância**
+  (sai do `next_id` do §45) é `int`; moeda, matéria e contagens são `int`; posição, massa, largura,
+  rácio e duração são `float`; `drops` é `PackedStringArray` porque o CSV já os escreve `coins|corpse`.
+- **Dois casos ficam por decidir, e estão implementados pelo mais simples:**
+  `rot_summoned(creature_id)` leva o id de **dados** (é o que o §30 devolve em `pick.id`) enquanto
+  `creature_died(creature_id)` leva o de **instância** — o mesmo nome de parâmetro para duas coisas;
+  e `region_generated(segments)` ficou `int`, a contagem, porque a §46 não diz se é a lista ou quantos.
+- **Bloqueia:** nada. Os tipos mudam sem quebrar ninguém enquanto não houver emissores — **e é agora
+  que é barato**. **Decide:** tu, antes do F1-08 (o primeiro emissor de `rot_summoned`).
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

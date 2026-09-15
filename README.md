@@ -48,8 +48,8 @@ Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena princ
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.6: 43 testes (6 saltados, cada um com a razão e o sistema que
-  falta escritos no próprio teste), o *export* de Linux arranca.
+- O projeto **abre, testa e exporta** em Godot 4.6: 50 testes (5 saltados, cada um com a razão e o sistema que
+  falta escritos no próprio teste), o *export* de Linux arranca e o binário corre.
 - A base de dados tem **27 tabelas** e 202 recursos com todos os números do dossiê, Parte XIII incluída; o que o
   dossiê não dá está proposto e marcado (`docs/content/PROPOSALS.md`).
 - O `tools/check_dossie_vs_csv.py` confere **193 números** do dossiê contra as tabelas, e não há divergências.

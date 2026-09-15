@@ -81,12 +81,22 @@ def _propostos() -> tuple[int, int]:
     return total, fases_0_2
 
 
+def _sinais_declarados() -> int:
+    """Os `signal` do EventBus. O event_bus_test confere nome a nome com o motor
+    a correr; isto e a mesma conferencia em contagem, no portao rapido."""
+    fonte = RAIZ / "src/core/event_bus.gd"
+    if not fonte.exists():
+        return 0
+    return len(re.findall(r"^signal\s+[a-z]", fonte.read_text(encoding="utf-8"), re.M))
+
+
 def medir() -> dict[str, int]:
     """Tudo o que uma ferramenta pode contar em vez de alguem afirmar."""
     i18n = list(csv.reader((RAIZ / "data/i18n/strings.csv").open(encoding="utf-8")))
     testes = "\n".join(p.read_text(encoding="utf-8") for p in _glob("tests/**/*.gd"))
     propostos, propostos_0_2 = _propostos()
     return {
+        "event_bus_signals": _sinais_declarados(),
         "csv_tables": len(_csvs()),
         "original_csv_unchanged": len(_csvs()),
         "generated_resources": len([p for p in RAIZ.glob("data/**/*.tres") if "source" not in p.parts]),
@@ -118,6 +128,8 @@ CONTAVEIS_NO_VALIDATION = (
     "numeric_comparisons",
     "proposed_fields",
     "proposed_phase_0_to_2",
+    "catalog_signals",
+    "event_bus_signals",
 )
 
 # Cada linha e uma afirmacao em prosa e a medicao que a tem de sustentar. O
@@ -151,6 +163,14 @@ def conferir(medido: dict[str, int]) -> list[str]:
                 f"docs/recovery/validation.json: '{chave}' diz {validacao.get(chave)},"
                 f" a contagem da {medido[chave]} — corre com --write"
             )
+
+    # §46 e uma lista fechada: o que o EventBus declara e o que a tabela tem.
+    # O event_bus_test confere nome a nome; aqui chumba tambem sem abrir o motor.
+    if medido["event_bus_signals"] != medido["catalog_signals"]:
+        problemas.append(
+            f"src/core/event_bus.gd: declara {medido['event_bus_signals']} sinais,"
+            f" a tabela da §46 tem {medido['catalog_signals']}"
+        )
 
     for ficheiro, padrao, chave in AFIRMACOES:
         texto = (RAIZ / ficheiro).read_text(encoding="utf-8")

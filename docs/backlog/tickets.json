@@ -124,11 +124,12 @@
   "depende": "F0-01",
   "feito": "Sinais declarados, fila e flush; o portão G3 deixa de estar saltado",
   "fora": "Emissores — entram com cada sistema.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "3",
   "notas": [
-   "O G3 (tests/architecture_test.gd) está saltado à espera deste ticket.",
-   "Q-035: há sinais no §30 que não estão no catálogo da §46."
+   "O G3 (tests/architecture_test.gd) deixou de estar saltado: o skip caiu neste ticket.",
+   "Q-035 fechada pela §46: o test_o_catalogo_e_fechado chumba se um sinal do §30 voltar.",
+   "Q-056 aberta: a §46 dá a carga de cada sinal mas não os tipos."
   ]
  },
  "F0-08": {

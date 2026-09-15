@@ -38,9 +38,10 @@ func test_nenhum_script_passa_das_250_linhas() -> void:
 			assert_int(n).override_failure_message("%s tem %d linhas" % [f, n]).is_less_equal(251)
 
 
-# gdlint: disable=unused-argument
-func test_eventos_no_catalogo(
-	do_skip := true, skip_reason := "G3 entra com o EventBus dos 61 sinais (F0-07)"
-) -> void:
+func test_eventos_no_catalogo() -> void:
+	# G3 (§64): existe um EventBus, e e autoload — um catalogo que nao esta
+	# carregado nao guarda nada. A conferencia sinal a sinal contra a §46 esta em
+	# tests/event_bus_test.gd. F0-07 fechou o skip que estava aqui.
 	assert_bool(FileAccess.file_exists("res://src/core/event_bus.gd")).is_true()
-# gdlint: enable=unused-argument
+	var projeto := FileAccess.get_file_as_string("res://project.godot")
+	assert_str(projeto).contains('EventBus="*res://src/core/event_bus.gd"')
