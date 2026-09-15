@@ -54,6 +54,11 @@ func run(h: Harness, dias: int) -> Dictionary:
 	var t0 := Time.get_ticks_usec()
 	for _i in passos:
 		SimLoop.step(PASSO)
+		# §10: "se o castelo-arvore cair, cai a partida". O `game.gd` para aqui e
+		# isto para tambem — continuar a simular depois da derrota media dias que
+		# ninguem chegou a jogar, e punha a medicao a demorar o dobro.
+		if _caiu > 0:
+			break
 	var segundos := float(Time.get_ticks_usec() - t0) / 1000000.0
 	EventBus.flush()  # o night_survived da ultima alvorada (F1-15)
 	_calar()

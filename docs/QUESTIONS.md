@@ -647,6 +647,44 @@
   é o que o F1-15 promete: os dez dias correm, em headless e ao passo fixo, e o relógio chega ao dia 11.
 - **Decide:** tu. Não bloqueia o F1-16 — a afinação lê a tabela noite a noite, e essa é rápida.
 
+### Q-075 · O jogo não se pode perder: nada consegue morder o castelo-árvore
+- **Onde:** o §10 escreve a regra mais curta do dossiê — *"se o castelo-árvore cair, cai a partida"* — e ela
+  está implementada dos dois lados: o `BuildSystem.fallen()` sabe responder e o `src/world/game.gd` pára o
+  relógio. O que não existe é o caminho pelo meio: **nada lhe tira vida**.
+- **A causa, e é de uma linha:** só o `WallData` tem `contact_slots` (`walls.csv`, 2 a 7 pelos cinco degraus
+  do §10). O `BuildingData` não tem essa coluna, e por isso o `BuildSlot.contacts` de tudo o que não é muro
+  fica vazio e o `contact_slots()` devolve **zero**. A `ContactQueue` do §50 reparte *N* atacantes por *N*
+  slots; com zero slots não atribui nenhum, o `target_slots` fica em `NENHUM`, o `engaged()` dá falso, e o
+  `CombatSystem._criaturas_batem()` salta a criatura. O núcleo, os canteiros, o pesqueiro, as torres — **nenhum
+  deles pode ser atacado**. Só o muro pode, e é por isso que só o muro cai.
+- **Medido, e não deduzido** (`scenes/tests/dez_dias.tscn`, oito defesas, dez dias cada):
+
+  | muro | torre | alta | arq | aguentou | mortes | muros | núcleo |
+  |---|---|---|---|---|---|---|---|
+  | 1 | não | não | 6 | **sim** | 3 | 2 | 1,00 |
+  | 4 | sim | sim | 12 | sim | 7 | 2 | 1,00 |
+
+  As oito linhas dizem o mesmo: **aguenta sempre, e o núcleo fica a 100%**. E numa noite posta de propósito
+  sem muro nenhum: os Brutos do dia 8 chegam a **270 px** do núcleo e ele perde **0%**; os Alados do dia 5
+  chegam a **0 px** — pousam-lhe em cima — e ele perde **0%**.
+- **Há um segundo defeito por baixo, e é do Alado:** para uma criatura AÉREA nenhuma obra de superfície é
+  barreira — o `BuildSystem.barrier()` filtra por faixa — e por isso ela só olha para tropas, dentro dos seus
+  24 px de alcance. O Alado atravessa a muralha, atravessa a região, pousa no castelo e **não faz nada**. Os
+  dias 4, 5 e 6, que a §07 diz serem os que *"obrigam a torre alta"*, não custam nada a ninguém.
+- **Porque é que isto bloqueia o F1-16:** o critério do §66 é *"sobreviver 10 dias é possível **e não é
+  trivial**"*. A primeira metade mede-se e passa. A segunda **não é afinável**: não há número em `data/` que
+  torne difícil um jogo que não se pode perder. Mexer na massa do §74, na velocidade da mancha ou na escada
+  do §10 muda quantos morrem no muro e mais nada.
+- **Proposta:** dar `contact_slots` ao `BuildingData` — uma coluna em `buildings.csv`, como a que o
+  `walls.csv` já tem. É a opção mais reversível: não inventa mecânica nenhuma, usa a fila do §50 que já
+  existe, e uma obra com a coluna a zero continua a comportar-se exactamente como hoje. O número para o
+  núcleo não está no dossiê (o §10 só dá os do muro), e por isso **não foi escrito**. O Alado é outra
+  conversa e é do F1-09: ou a `barrier()` deixa de filtrar por faixa para quem voa, ou o `targets_bands`
+  passa a valer também para obras.
+- **Bloqueia:** o F1-16 inteiro. Os dois testes estão saltados com esta razão em `tests/dez_dias_test.gd`.
+- **Decide:** tu. São duas decisões e podem ser tomadas em separado — a coluna (e que número leva o núcleo) e
+  o que um Alado ataca quando chega.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |
