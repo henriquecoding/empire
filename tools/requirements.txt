@@ -4,3 +4,5 @@
 #
 # O dependabot vigia este ficheiro (.github/dependabot.yml, directory: /tools).
 gdtoolkit==4.5.0
+# O check_silhueta.py do §80 conta pixeis de uma captura: precisa de ler PNG.
+pillow==12.3.0

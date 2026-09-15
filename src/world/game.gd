@@ -97,6 +97,11 @@ func _no_rompimento(_wall_id: int) -> void:
 ## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota e
 ## inventar um era quebrar a regra 7 do AGENTS.md — o que ha e o mundo, e o
 ## mundo diz-o: o nucleo em ruina. O relogio para e a entrada deixa de responder.
+##
+## Parar a partida AQUI e nao no SimLoop e deliberado, e custou uma tentativa:
+## com o `step()` a parar sozinho, os instrumentos que MEDEM uma derrota — o
+## §66 varre dez dias por defesa e diz "em que dia caiu" — deixavam de poder
+## contar. Quem joga tem cena; quem mede, nao. Ver a Q-081.
 func _no_desabamento(building_id: int, _x: float) -> void:
 	var i := SimLoop.builds.index_of(building_id)
 	if i == UnitSystem.NENHUM or SimLoop.builds.slots[i].kind != BuildSlot.NUCLEO:

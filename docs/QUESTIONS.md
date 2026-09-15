@@ -771,6 +771,83 @@
   domina o seu ecrã é exactamente o que um farol faz.
 - **Decide:** tu. A palavra que falta ao dossiê é se "fogueira" inclui o farol.
 
+### Q-079 · O vocabulário de formas do *greybox*: uma por categoria, até haver arte
+- **Onde:** §22 (*"a paleta muda com a hora do dia e com o LUT; a silhueta do telhado não muda nunca"*, e os
+  seis kits de arquitetura), §80 §5 (a tabela do teste de silhueta), §25 (*"a silhueta é o convite"*), e
+  `src/world/silhouette.gd`.
+- **O que o dossiê não diz:** o dossiê decide que a **silhueta é a identidade** de uma obra, e decide de onde
+  ela virá — do **kit de arquitetura do povo** (§22: stavkirke para os Enramados, basalto para a Fornalha, o
+  negativo do desfiladeiro para a Fenda). O que ele não diz é que forma tem um canteiro **enquanto não há
+  arte**, e até agora a resposta do repositório era "nenhuma": tudo era o mesmo rectângulo cinzento, e um
+  canteiro, uma torre e o castelo-árvore só se distinguiam pela largura.
+- **O que está escrito, e é reversível numa linha:** uma forma por **`category` de `buildings.csv`** — a
+  coluna que já existe —, mais o muro (que vem de `walls.csv` e se reconhece por ter os dois caminhos do §10),
+  mais uma por `tag` de `creatures.csv`, mais uma marca por `weapon_kind` de `units.csv`. Nada disto é um `if
+  id == "archer_tower"`: sai todo de `data/`, e no dia em que aparecer a sexta obra de defesa ela ganha forma
+  sozinha. As formas estão em `src/world/outline.gd`, em centésimos da caixa, e trocar uma é trocar uma linha
+  de números.
+- **As três coisas que escolhi e o dossiê não escreve** — e por isso estão aqui e não caladas:
+  1. **As alturas.** O §01 fixa a escala das personagens (16 px = um degrau) e o §10 dá as **larguras** em
+     `width_px`, mas nenhuma secção dá altura a um edifício. As do `Silhouette.DEGRAUS` estão em degraus —
+     um canteiro dá pelo ombro, uma torre são cinco pessoas, a torre alta são oito — e a do castelo-árvore
+     **não é uma escolha de escala**: sai da geometria das faixas, porque o §11 diz que a copa entra na faixa
+     aérea e diz porquê.
+  2. **A ruína.** O §55 dá seis estados a um sítio de obra e o dossiê descreve cinco. Uma ruína desenha-se com
+     a mesma forma, rente ao chão: reconhece-se o que era, e vê-se que já não é.
+  3. **A calha da barra de vida.** O §07 diz *"sem números no ecrã, nada de barras de vida flutuantes"*, e o
+     `Gauge` é o contrário disso e sabe que é (GB-03, §67: o *greybox* existe para se **medir** uma noite).
+     Com calha, 23 px de barra num castelo de 480 px passam a ler-se como 5% em vez de como um risco.
+- **Proposta:** fica assim até ao **ART-01/ART-02**. Este vocabulário é o *fallback* neutro — um povo só, sem
+  kit —, e a forma definitiva é por povo **e** por categoria, como o §22 manda. O `tests/outline_test.gd`
+  guarda a única regra que tem de sobreviver à arte: **duas formas nunca desenham a mesma coisa**.
+- **Decide:** tu. Não bloqueia nada, e nada na simulação muda com isto — é tudo apresentação (§45).
+
+### Q-080 · A que luz se vê um corpo à noite
+- **Onde:** §80 §1 (a tabela de tectos de valor, com *"inalterado"* na linha do plano de jogo), §80 §3
+  (*"perto da luz vê-se cor e volume; longe vê-se silhueta"*), §22 degrau 3 (*"uma rampa 1D por hora do dia;
+  todos os sprites amostram através dela"*), e `src/world/lighting.gd`.
+- **O que estava errado, e mede-se:** o ambiente da fase vinha no `modulate` do nó da faixa, e um `modulate`
+  multiplica **tudo** o que o nó desenha. Multiplicava três coisas que não são a mesma, e a terceira era um
+  defeito a sério: **a candeia saía com luminância 26 contra um céu de 34** — a fonte de luz ficava mais escura
+  do que o fundo, e o §80 diz o contrário em duas palavras, *"âmbar é luz"*. Ao lado disso, o chão era
+  desenhado com `SOLO * plane()` e o `Color * float` do GDScript multiplica **quatro** componentes: o chão saía
+  a 69% de opacidade sobre o cinzento por omissão do motor, e à noite dava (32,29,26) contra um céu de
+  (36,34,30). Sem horizonte não há §11 nenhuma. Os dois estão corrigidos e têm teste.
+- **O que não vem do dossiê, e por isso está aqui:** com o ambiente aplicado só onde ele manda, faltava
+  responder *quanto* dele chega a um corpo. Escurecer a cor de cada um pelo ambiente deixava um vagabundo
+  (0,93 0,85 0,61) a **luminância 31 contra um céu a 34** — a mesma mancha, e não se via. O que está escrito é
+  a leitura literal do §80 §3: longe de qualquer luz o corpo é **uma silhueta**, um valor escuro só — o
+  `#100D09` que o §80 §1 nomeia —, e perto da candeia é a cor dele. Mede 16 contra 34, e vê-se a **forma**,
+  que é o que a §22 diz que identifica uma coisa.
+- **As duas excepções que abri, e porquê:** o **chapéu** (§25, *"ele apanha-a e ganha um chapéu"*) e os
+  **instrumentos** do `Gauge` não levam luz nenhuma. Um sinal de dono que se apaga à noite deixa de ser um
+  sinal, e o *greybox* existe para se **medir** uma noite (§67, GB-03). Com isto, à noite vêem-se vultos
+  escuros e os que têm um ponto dourado em cima são teus — que é a leitura do Kingdom.
+- **Proposta:** fica assim até ao ART-02. A rampa 1D da §22 é o mecanismo certo e não existe enquanto não
+  houver *sprites*; o que está escrito é a mesma decisão feita com `draw_rect`. O portão que a guarda é o
+  `make silhueta`: a noite tem de abrir a gama que a paleta do §80 lhe dá, e a noite chapada de antes abria
+  2,7× contra os 16,3× exigidos.
+- **Decide:** tu. Nada na simulação muda — é tudo apresentação (§45).
+
+### Q-081 · A derrota é de quem tem a cena aberta, e isso é deliberado
+- **Onde:** §10 (*"se o castelo-árvore cair, cai a partida"*), §45 (o estado autoritativo),
+  `src/world/game.gd`, `tools/vistoria.gd`.
+- **O que a `make vistoria` mostrou:** quem pára a partida é a `game.gd` — um **nó** —, e por isso a regra só
+  vale com a cena aberta. Uma ferramenta que chame `SimLoop.step()` a mão continua a correr dias sobre um
+  castelo-árvore em ruína, e foi o que a vistoria fez: **sete dias**.
+- **A correcção óbvia está errada, e experimentei-a.** Pôr o `step()` a parar sozinho quando o núcleo cai
+  chumbou **três** instrumentos do próprio repositório, e pela mesma razão: eles existem para MEDIR uma
+  derrota. O §66 varre nove defesas por dez dias e a coluna que interessa é *"em que dia caiu"*; o
+  `jogo_noite_test` quer ver o amanhecer a seguir a uma noite que o *greybox* perde (Q-068). Um `step()` que
+  pára tira-lhes o que eles vieram contar. **Quem joga tem cena; quem mede, não** — e a linha fica onde está.
+- **O que mudou:** nada na simulação. A vistoria passou a perguntar pelo `builds.fallen()` e a dizer em que
+  dia o castelo caiu, que era o que faltava — o instrumento é que estava a medir uma partida acabada.
+- **O que continua por decidir:** o §46 **não tem sinal de derrota** e inventar um quebrava a regra 7 do
+  `AGENTS.md`. O §16 (ressurreição até ao amanhecer) e o §15 (sucessão) não existem, e por isso a derrota é um
+  fim seco: o relógio pára e é preciso reabrir o jogo.
+- **Decide:** tu. A pergunta é se a derrota ganha sinal próprio na §46 quando o §15 e o §16 chegarem — e é aí
+  que um `step()` que pára deixa de tirar nada a ninguém, porque passa a haver o que ouvir.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

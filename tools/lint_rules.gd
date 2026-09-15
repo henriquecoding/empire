@@ -92,14 +92,33 @@ static func check_g4(root: String = "res://src") -> Array[String]:
 		if G4_SKIP.any(func(p: String) -> bool: return f.begins_with(p)):
 			continue
 		var n := 0
+		var por_fechar := 0
 		for line in code_only(FileAccess.get_file_as_string(f)).split("\n"):
 			n += 1
-			if line.strip_edges().begins_with("const "):
+			# Uma declaracao `const` que nao cabe numa linha continua a ser uma
+			# declaracao. Sem contar o que ela deixa por fechar, o portao
+			# chumbava a unica saida que ele proprio manda usar — por o numero
+			# num `const` — e obrigava a escreve-la numa linha so.
+			if por_fechar > 0 or line.strip_edges().begins_with("const "):
+				por_fechar = maxi(0, por_fechar + bracket_balance(line))
 				continue
 			for m in re.search_all(line):
 				if not m.get_string() in G4_ALLOWED:
 					out.append("G4 %s:%d: literal %s — vai para data/" % [f, n, m.get_string()])
 	return out
+
+
+## Quantos parenteses, chavetas e rectos ficam por fechar nesta linha. Negativo
+## quando ela fecha mais do que abre. Le-se sobre `code_only`, e por isso um
+## parentesis dentro de uma string ou de um comentario nao conta.
+static func bracket_balance(linha: String) -> int:
+	var n := 0
+	for c in linha:
+		if c in "([{":
+			n += 1
+		elif c in ")]}":
+			n -= 1
+	return n
 
 
 ## I6 — o save so passa pelo canal da ADR 0007. Verifica tres coisas: que o

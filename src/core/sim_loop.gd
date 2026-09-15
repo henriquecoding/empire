@@ -1,14 +1,12 @@
 # src/core/sim_loop.gd — os onze passos do §43, pela ordem escrita (ADR 0020).
 #
-# O UNICO _physics_process da simulacao. 30 passos por segundo, metade do render
-# (§19), e dentro de cada passo a ordem e fixa e esta escrita aqui — porque uma
-# ordem implicita e uma ordem que muda sozinha quando alguem reorganiza um
-# ficheiro.
+# O UNICO _physics_process da simulacao: 30 passos por segundo, metade do render
+# (§19). A ordem dentro do passo esta escrita aqui porque uma ordem implicita e
+# uma ordem que muda sozinha quando alguem reorganiza um ficheiro.
 #
 # O que este ficheiro NAO tem, de proposito: regras. Quem decide e um sistema de
-# src/sim/; quem monta os sistemas e o SimFactory; quem traduz o que eles
-# devolvem para os sinais da §46 e o EventRelay. Aqui fica a ORDEM, e o Verbo 1,
-# que e a unica ponte entre o que o jogador faz e o que a simulacao ve.
+# src/sim/, quem os monta e o SimFactory, quem traduz o que devolvem e o
+# EventRelay. Aqui fica a ORDEM, e o Verbo 1.
 #
 # Passos 9 e 10 continuam por escrever, e continuam como linha: divida e
 # diplomacia sao o F1-14, e a IA do rei inimigo e a Fase 2.
@@ -177,9 +175,8 @@ func step(delta: float) -> void:
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado
 
 
-## O Verbo 1 (§61). A ponte entre o sistema puro e o que ele nao pode tocar: o
-## sorteio do desvio sai do fluxo `economy` — onde a moeda cai afeta a simulacao,
-## por isso e determinista — e o evento sai do catalogo da §46.
+## O Verbo 1 (§61). O sorteio do desvio sai do fluxo `economy` — onde a moeda cai
+## afeta a simulacao, por isso e determinista — e o evento sai da §46.
 func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> int:
 	var desvio := RngService.float_range(&"economy", -CoinSystem.DESVIO_MAX, CoinSystem.DESVIO_MAX)
 	var coin_id := coins.drop(state, x, faixa, quanto, desvio)
@@ -204,8 +201,7 @@ func _montar() -> void:
 	intents.clear()
 
 
-## O roll de precisao do §50, ligado ao fluxo `combat`: o arqueiro falhar um tiro
-## nao muda a criatura que a Podridao invoca (§42).
+## O roll do §50, no fluxo `combat`: um tiro falhado nao muda o que se invoca.
 func _roll() -> float:
 	return RngService.unit_float(&"combat")
 
@@ -244,7 +240,6 @@ func _no_amanhecer(dia: int) -> void:
 	var noite := tally.of_night(dia)
 	if _running and not noite.is_empty():
 		EventBus.queue(&"night_survived", noite)
-	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai seria gravar antes
-	# de ter acontecido alguma coisa.
+	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai nao guarda nada.
 	if autosave_enabled and _running and dia > 1:
 		SaveService.autosave(state, RngService.snapshot(), world())

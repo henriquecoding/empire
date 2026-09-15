@@ -7,6 +7,7 @@ extends GdUnitTestSuite
 
 const SEMENTE := 20260915
 const FASES_POR_DIA := 6
+const PASSO := 1.0 / 30.0
 
 
 func before_test() -> void:
@@ -29,9 +30,8 @@ func after_test() -> void:
 
 ## Corre n segundos de simulacao ao passo fixo, como o _physics_process faria.
 func _correr(segundos: float) -> void:
-	var passo := 1.0 / 30.0
-	for _i in int(segundos / passo):
-		SimLoop.step(passo)
+	for _i in int(segundos / PASSO):
+		SimLoop.step(PASSO)
 
 
 func test_arrancar_poe_o_jogo_no_dia_1_ao_amanhecer() -> void:

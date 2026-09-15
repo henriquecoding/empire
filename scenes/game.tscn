@@ -36,7 +36,7 @@ script = ExtResource("4_input")
 [node name="Interface" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="Painel" type="Label" parent="Interface"]
+[node name="Painel" type="Label" parent="Interface" groups=["instrumentos"]]
 offset_left = 12.0
 offset_top = 8.0
 offset_right = 1268.0
@@ -47,7 +47,7 @@ theme_override_constants/outline_size = 4
 text = "Empire"
 script = ExtResource("5_hud")
 
-[node name="Estado" type="Label" parent="Interface"]
+[node name="Estado" type="Label" parent="Interface" groups=["instrumentos"]]
 offset_left = 12.0
 offset_top = 96.0
 offset_right = 1268.0
