@@ -1,33 +1,12 @@
-# src/world/build_view.gd — as obras desenhadas pela forma delas (§25, §55).
-#
-# Saiu do BandView por duas razoes, e a segunda e a que interessa: o ficheiro
-# passava das 250 linhas do §28, e um sitio de obra tem quatro estados que se
-# leem de maneiras diferentes — por construir, em andaime, de pe, em ruina — e
-# isso merece um ficheiro onde se veem os quatro seguidos.
-#
-# O que mudou com o Silhouette: ate aqui uma obra era um rectangulo cinzento e
-# o que a distinguia de outra era a largura. Agora e a FORMA — o telhado de
-# duas aguas de um canteiro, a plataforma de uma torre, o mastro da torre alta,
-# os dentes de um muro. O §22 escreve porque: "a paleta muda com a hora do dia e
-# com o LUT; a silhueta do telhado nao muda nunca".
-#
-# E o §25 explica o estado vazio: "a silhueta e o convite. Nao ha botao
-# construir". Um sitio por construir desenha-se em contorno, com a altura e a
-# forma do que la vai caber — e por isso o convite passa a dizer O QUE se
-# constroi ali, e nao so que se pode construir alguma coisa.
+# src/world/build_view.gd — obras legiveis por forma, estado e detalhes.
 class_name BuildView
 extends RefCounted
 
-## Quanto resta de uma obra caida, em fraccao da altura que ela tinha. Uma ruina
-## desenhada a altura inteira lia-se como uma obra de pe — e a unica ruina que o
-## jogo tem hoje e a que acaba a partida (§10, Q-076).
+## Uma ruina conserva apenas a base da forma original para continuar reconhecivel.
 const RUINA := 0.30
-
 const MEIA := 0.5
 
 
-## Todas as obras desta faixa. `edificios` e a tabela de BuildingData por id,
-## montada uma vez por quem desenha.
 static func draw_on(
 	canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary, luz: Lighting
 ) -> void:
@@ -49,16 +28,12 @@ static func _obra(
 		_ruina(canvas, vaga, forma, luz, x)
 		return
 	if vaga.state != BuildSlot.State.EMPTY:
-		# Em andaime: a forma do que vem, ja cheia, mas na cor da madeira. §55 —
-		# "a obra existe quando uma moeda cai", e a partir dai ve-se o que sera.
 		var proxima := _caixa(vaga, forma, vaga.level + 1)
 		_massa(canvas, forma, proxima, vaga, luz.body(WorldPalette.ANDAIME, x))
 		return
 	_convite(canvas, vaga, forma, luz, x)
 
 
-## §25: "a silhueta e o convite". Contorno, a altura do TOPO da escada — um
-## sitio de muro mostra o Bastiao que pode vir a ser, e nao a estacaria.
 static func _convite(
 	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
 ) -> void:
@@ -70,8 +45,6 @@ static func _convite(
 	Gauge.paid(canvas, fantasma, vaga)
 
 
-## O que ficou de pe depois de cair. A mesma forma, rente ao chao: reconhece-se
-## o que era, e ve-se que ja nao e.
 static func _ruina(
 	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
 ) -> void:
@@ -83,25 +56,19 @@ static func _ruina(
 	_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.VAZIO, x))
 
 
-## A forma cheia. O `draw_colored_polygon` do Godot triangula o que recebe, e por
-## isso um tronco, uns dentes ou um mastro — que sao concavos — entram inteiros.
 static func _massa(
 	canvas: CanvasItem, forma: Silhouette.Form, caixa: Rect2, vaga: BuildSlot, cor: Color
 ) -> void:
 	canvas.draw_colored_polygon(Outline.shape(forma, caixa, _dentes(vaga)), cor)
+	StructureArt.draw_on(canvas, forma, caixa, vaga, cor)
 
 
-## A caixa de uma obra no nivel que ela tem. A largura vem de data/ — o
-## `width_px` do §10 —, e so a altura e do greybox.
 static func _caixa(vaga: BuildSlot, forma: Silhouette.Form, nivel: int) -> Rect2:
 	var alto := Silhouette.height(forma, nivel)
 	var chao := WorldPalette.ground_of(int(vaga.band))
 	return Rect2(Vector2(vaga.x - vaga.width * MEIA, chao - alto), Vector2(vaga.width, alto))
 
 
-## Quantos dentes leva a silhueta deste muro: os slots de contacto do nivel em
-## que ele esta (§55), ou os do primeiro degrau enquanto ele nao existe — que e
-## o que o convite promete a quem lhe largar as primeiras moedas.
 static func _dentes(vaga: BuildSlot) -> int:
 	if vaga.level > 0:
 		return vaga.contact_slots()
