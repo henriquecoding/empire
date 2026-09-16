@@ -76,8 +76,15 @@ jobs:
       - name: Exportar o Web
         run: make exportar-web
 
+      # `enablement: true` LIGA o Pages na primeira corrida, em vez de obrigar
+      # alguem a ir a Settings carregar num interruptor — a mesma corrida que
+      # publica e a que trata disso. O repositorio e publico, e por isso o Pages
+      # nao custa nada nem expoe nada que ja nao estivesse exposto: o que se
+      # serve e a pasta build/web/ e mais nada.
       - id: configuracao
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v4
         with:

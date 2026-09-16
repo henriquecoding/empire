@@ -59,7 +59,10 @@ O repositório passa a ter um ficheiro com `permissions: pages: write` e `id-tok
 mínimas que o Pages exige e estão declaradas **no job** e não no workflow, para que a excepção se veja na
 revisão. Nenhum segredo é preciso: o Pages usa o `GITHUB_TOKEN` da corrida.
 
-Fica por fazer, e é uma decisão de quem tem o repositório: em **Settings → Pages**, a origem tem de estar em
-**GitHub Actions**. Sem isso o `deploy-pages` chumba com uma mensagem clara, e não publica nada de errado.
+O Pages liga-se sozinho: o `configure-pages` corre com `enablement: true`, e é a própria corrida que publica
+que o activa na primeira vez. Não há interruptor para ninguém carregar. O repositório é público — o Pages não
+custa nada e não expõe nada que já não estivesse exposto, porque o que se serve é a pasta `build/web/` e mais
+nada. Se um dia o repositório passar a privado, o Pages privado exige um plano pago e o `deploy-pages` chumba com
+uma mensagem clara, sem publicar nada de errado.
 
 Reverter isto é apagar um ficheiro. Nada no jogo depende dele.
