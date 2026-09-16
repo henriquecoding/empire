@@ -43,7 +43,7 @@ ajuda:  ## Mostra os alvos
 portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes  ## Todos os portoes estaticos
 
 formato:  ## gdformat: o formato do GDScript
-	gdformat --check src/ tests/ tools/ || (gdformat src/ tests/ tools/; git diff -- src/world/actor_art.gd src/world/structure_art.gd src/world/terrain_art.gd src/ui/input_router.gd src/ui/game_hud.gd; exit 1)
+	gdformat --check src/ tests/ tools/
 
 estilo:  ## gdlint: estilo e o limite de 250 linhas (§28)
 	gdlint src/ tests/

@@ -1,3 +1,14 @@
+# src/world/actor_art.gd — o que uma tropa E, por dentro da caixa (§22, §24).
+#
+# O Silhouette diz a forma e o Outline o contorno; isto e o que enche esse
+# contorno: pernas, tronco, cara, chapeu e a marca que se leva na mao. Nao
+# inventa estado nenhum — le a coluna, desenha, e acabou.
+#
+# Nenhum numero vive solto numa linha de desenho: estao todos nas tabelas aqui
+# em cima, e em FRACCAO DA CAIXA sempre que se referem ao corpo. A caixa e o
+# contrato com quem escolhe a altura (§22), e uma medida em pixeis deixava de a
+# respeitar no primeiro tamanho diferente. So a marca da mao e em pixeis, e pela
+# mesma razao do Outline: uma arma sai do corpo de proposito.
 class_name ActorArt
 extends RefCounted
 
@@ -8,204 +19,212 @@ const CLOTH_LIGHT := Color(0.32, 0.54, 0.61)
 const METAL := Color(0.68, 0.70, 0.72)
 const WOOD := Color(0.43, 0.25, 0.13)
 const WOOD_LIGHT := Color(0.68, 0.41, 0.19)
-const INK := Color(0.08, 0.07, 0.08)
 const EYE := Color(0.98, 0.88, 0.59)
+const SOMBRA := Color(0.03, 0.03, 0.04, 0.30)
+
+## A caixa do tamanho 1 tem 48 px (§01: quatro degraus). Nada encolhe abaixo de
+## `minima` — por baixo disso a cara junta-se ao corpo e deixa de se ler.
+const ESCALA := {"minima": 0.55, "caixa": 48.0}
+
+## O baloico de quem anda. Quem esta parado nao baloica, e e assim que se ve de
+## longe quem vai a algum lado.
+const BALOICO := {"ritmo": 5.0, "desfase": 0.025, "alto": 0.9}
+
+## O corpo, em fraccao da ALTURA da caixa. `morto` e a linha que sobra de quem caiu.
+const CORPO := {"cabeca": 0.25, "morto": 0.48, "anca": 0.39, "joelho": 0.24, "raio": 0.30}
+
+## O mesmo corpo, em fraccao da LARGURA: onde assenta cada perna.
+const PERNA := {"anca": 0.16, "joelho": 0.20, "pe_tras": 0.07, "pe_frente": 0.34}
+
+## O tronco, e a gola que lhe marca o ombro.
+const TRONCO := {"x": 0.34, "y": 0.36, "w": 0.68, "h": 0.37, "gola": 0.14}
+const COSTURA := {"topo": 3.0, "fundo": 2.0}
+
+## A cara: a faixa clara do queixo, o olho do lado para onde se anda, e a boca.
+const CARA := {"x": 0.26, "y": 0.07, "w": 0.52, "olho_x": 0.13, "olho": 3.0, "boca": 0.16}
+
+## Quanto de cada cor propria entra na cor da tropa. A cor da tropa manda — e
+## dela que se sabe de quem ela e (§22) — e isto e o que lhe da volume.
+const MISTURA := {"tinta": 0.38, "pele": 0.32, "pano": 0.38, "gola": 0.28, "cara": 0.35}
+
+## Para que lado a tropa esta virada. Nao e uma coluna do estado: le-se do alvo,
+## e e o que poe o olho e a arma do lado certo.
+const LADO := {"frente": 1.0, "tras": -1.0}
+
+## O traco nunca e mais fino do que `minimo`: por baixo disso some-se.
+const TRACO := {"minimo": 2.0, "fino": 1.0, "raio": 4.0, "sombra": 2.0}
+
+## A aba e a coroa. Quem nao tem dono nao tem chapeu, e e o que separa um
+## vagabundo de um teu a qualquer distancia (§22).
+const CHAPEU := {"aba": 4.0, "aba_x": 0.34, "coroa": 14.0, "coroa_x": 0.18}
+
+## Onde a mao esta, e ate onde a arma vai. Em pixeis, como as marcas do Outline.
+const MAO := {"x": 0.26, "y": 0.56, "ponta_x": 18.0, "ponta_y": -13.0}
+const ARCO := {"x": 7.0, "y": -4.0, "raio": 10.0, "de": -1.1, "ate": 1.1, "pontos": 8}
+const HASTE := {"x": 22.0, "y": -18.0, "traco": 1.5}
+const FERRAMENTA := {"x": 15.0, "y": -11.0, "gume_x": 5.0, "gume_y": 3.0}
+const MACA := {"x": 14.0, "y": -11.0, "bola_x": 16.0, "bola_y": -13.0, "raio": 4.0}
+const VIGA := {"tras": 14.0, "frente": 25.0, "traco": 5.0}
 
 
 static func draw_unit(
-	canvas: CanvasItem, box: Rect2, data: UnitData, units, index: int, cor: Color
+	canvas: CanvasItem,
+	box: Rect2,
+	data: UnitData,
+	units: UnitSystem,
+	index: int,
+	cor: Color,
+	tempo: float
 ) -> void:
 	if data == null:
 		return
-	var alive := units.alive(index)
-	var scale := maxf(0.55, box.size.y / 48.0)
-	var moving := not is_zero_approx(units.target_xs[index] - units.xs[index])
-	var bob := sin(float(Time.get_ticks_msec()) * 0.005 + box.position.x * 0.025) * 0.9
-	if not moving:
-		bob = 0.0
-	var ground := box.end.y + 1.0
-	var center := Vector2(box.get_center().x, box.position.y + box.size.y * 0.25 + bob)
-	var ink := cor.darkened(0.38)
-	var stroke := maxf(2.0, scale * 2.0)
-	var skin := cor.lerp(SKIN, 0.32)
-	canvas.draw_line(
-		Vector2(box.position.x, ground + 2.0),
-		Vector2(box.end.x, ground + 2.0),
-		Color(0.03, 0.03, 0.04, 0.30),
-		stroke
-	)
-	if not alive:
-		canvas.draw_line(
-			Vector2(box.position.x, box.position.y + box.size.y * 0.48),
-			Vector2(box.end.x, box.position.y + box.size.y * 0.48),
-			ink,
-			stroke
-		)
+	var scale := maxf(ESCALA.minima, box.size.y / ESCALA.caixa)
+	var ink := cor.darkened(MISTURA.tinta)
+	var stroke := maxf(TRACO.minimo, scale * TRACO.minimo)
+	var chao := box.end.y + 1.0
+	var sombra := chao + TRACO.sombra
+	canvas.draw_line(Vector2(box.position.x, sombra), Vector2(box.end.x, sombra), SOMBRA, stroke)
+	if not units.alive(index):
+		var caido := box.position.y + box.size.y * CORPO.morto
+		canvas.draw_line(Vector2(box.position.x, caido), Vector2(box.end.x, caido), ink, stroke)
 		return
 
-	var hip := ground - box.size.y * 0.39 + bob
-	var knee := ground - box.size.y * 0.24 + bob
-	var left_hip := Vector2(center.x - box.size.x * 0.16, hip)
-	var right_hip := Vector2(center.x + box.size.x * 0.16, hip)
-	var left_knee := Vector2(center.x - box.size.x * 0.20, knee)
-	var right_knee := Vector2(center.x + box.size.x * 0.20, knee)
-	canvas.draw_line(left_hip, left_knee, ink, stroke)
-	canvas.draw_line(right_hip, right_knee, ink, stroke)
-	canvas.draw_line(left_knee, Vector2(center.x - box.size.x * 0.07, ground), SKIN, stroke)
-	canvas.draw_line(right_knee, Vector2(center.x + box.size.x * 0.34, ground), SKIN, stroke)
-
-	var torso := Rect2(
-		center.x - box.size.x * 0.34,
-		box.position.y + box.size.y * 0.36 + bob,
-		box.size.x * 0.68,
-		box.size.y * 0.37
-	)
-	canvas.draw_rect(torso, cor.lerp(CLOTH, 0.38))
-	canvas.draw_rect(
-		Rect2(torso.position, Vector2(torso.size.x, maxf(2.0, torso.size.y * 0.14))),
-		cor.lerp(CLOTH_LIGHT, 0.28)
-	)
-	canvas.draw_line(
-		Vector2(torso.get_center().x, torso.position.y + 3.0),
-		Vector2(torso.get_center().x, torso.end.y - 2.0),
-		ink,
-		maxf(1.0, scale)
-	)
-
-	var radius := maxf(4.0, box.size.x * 0.30)
-	canvas.draw_circle(center, radius, skin)
-	var face_panel := Rect2(
-		center.x - box.size.x * 0.26,
-		center.y + box.size.y * 0.07,
-		box.size.x * 0.52,
-		maxf(2.0, scale)
-	)
-	canvas.draw_rect(face_panel, SKIN_LIGHT.lerp(cor, 0.35))
-	var facing := 1.0 if units.target_xs[index] >= units.xs[index] else -1.0
-	canvas.draw_rect(Rect2(center.x + facing * box.size.x * 0.13 - 1.5, center.y - 1.0, 3.0, 3.0), EYE)
-	canvas.draw_line(
-		Vector2(center.x - box.size.x * 0.13, center.y + box.size.y * 0.16),
-		Vector2(center.x + box.size.x * 0.13, center.y + box.size.y * 0.16),
-		ink,
-		maxf(1.0, scale)
-	)
+	var bob := _baloico(box, units, index, tempo)
+	var meio := box.get_center().x
+	var center := Vector2(meio, box.position.y + box.size.y * CORPO.cabeca + bob)
+	var anca := chao - box.size.y * CORPO.anca + bob
+	var joelho := chao - box.size.y * CORPO.joelho + bob
+	var esquerdo := Vector2(meio - box.size.x * PERNA.joelho, joelho)
+	var direito := Vector2(meio + box.size.x * PERNA.joelho, joelho)
+	canvas.draw_line(Vector2(meio - box.size.x * PERNA.anca, anca), esquerdo, ink, stroke)
+	canvas.draw_line(Vector2(meio + box.size.x * PERNA.anca, anca), direito, ink, stroke)
+	canvas.draw_line(esquerdo, Vector2(meio - box.size.x * PERNA.pe_tras, chao), SKIN, stroke)
+	canvas.draw_line(direito, Vector2(meio + box.size.x * PERNA.pe_frente, chao), SKIN, stroke)
+	_tronco(canvas, box, meio, cor, ink, bob, scale)
+	_cara(canvas, box, center, cor, ink, units, index, scale)
 	_hat(canvas, center, box, units, index, scale)
 	_weapon(canvas, box, data, units, index, cor)
 
 
-static func draw_creature(
-	canvas: CanvasItem, box: Rect2, forma: Silhouette.Form, cor: Color, time: float
+## Quem esta parado nao baloica: o baloico e a unica coisa que diz, sem numeros,
+## que aquela coluna esta a ir a algum lado.
+static func _baloico(box: Rect2, units: UnitSystem, index: int, tempo: float) -> float:
+	if is_zero_approx(units.target_xs[index] - units.xs[index]):
+		return 0.0
+	return sin(tempo * BALOICO.ritmo + box.position.x * BALOICO.desfase) * BALOICO.alto
+
+
+static func _tronco(
+	canvas: CanvasItem, box: Rect2, meio: float, cor: Color, ink: Color, bob: float, scale: float
 ) -> void:
-	var scale := maxf(0.55, box.size.y / 42.0)
-	var center := box.get_center() + Vector2(0.0, sin(time * 4.0 + box.position.x * 0.018) * 0.3)
-	var ink := cor.darkened(0.42)
-	var eye := EYE.lerp(cor, 0.45)
-	match forma:
-		Silhouette.Form.ASA:
-			canvas.draw_line(
-				Vector2(box.position.x, center.y),
-				Vector2(box.position.x - 24.0 * scale, box.position.y + 8.0),
-				ink,
-				3.0
-			)
-			canvas.draw_line(
-				Vector2(box.end.x, center.y),
-				Vector2(box.end.x + 24.0 * scale, box.position.y + 8.0),
-				ink,
-				3.0
-			)
-			canvas.draw_circle(center + Vector2(-box.size.x * 0.18, 0.0), 3.0 * scale, eye)
-			canvas.draw_circle(center + Vector2(box.size.x * 0.18, 0.0), 3.0 * scale, eye)
-		Silhouette.Form.RASTEJO:
-			for i in 3:
-				var x := box.position.x + box.size.x * (0.18 + float(i) * 0.30)
-				canvas.draw_line(Vector2(x, box.end.y - 3.0), Vector2(x - 4.0, box.end.y + 5.0), ink, 2.0)
-			canvas.draw_circle(center + Vector2(box.size.x * 0.27, 0.0), 3.0 * scale, eye)
-		Silhouette.Form.ARIETE:
-			var nose_start := Vector2(box.position.x, center.y)
-			var nose_end := Vector2(box.end.x, center.y)
-			canvas.draw_line(nose_start, nose_end, ink, scale * 2.0)
-			canvas.draw_circle(
-				Vector2(box.position.x + box.size.x * 0.18, center.y - 3.0),
-				3.0 * scale,
-				eye
-			)
-		_:
-			canvas.draw_circle(center + Vector2(-box.size.x * 0.17, -box.size.y * 0.12), 4.0 * scale, eye)
-			canvas.draw_circle(center + Vector2(box.size.x * 0.17, -box.size.y * 0.12), 4.0 * scale, eye)
-			canvas.draw_line(
-				Vector2(box.position.x + box.size.x * 0.18, box.end.y),
-				Vector2(box.position.x + box.size.x * 0.10, box.end.y + 6.0),
-				ink,
-				scale * 2.0
-			)
-			canvas.draw_line(
-				Vector2(box.end.x - box.size.x * 0.18, box.end.y),
-				Vector2(box.end.x - box.size.x * 0.10, box.end.y + 6.0),
-				ink,
-				scale * 2.0
-			)
+	var torso := Rect2(
+		meio - box.size.x * TRONCO.x,
+		box.position.y + box.size.y * TRONCO.y + bob,
+		box.size.x * TRONCO.w,
+		box.size.y * TRONCO.h
+	)
+	canvas.draw_rect(torso, cor.lerp(CLOTH, MISTURA.pano))
+	var gola := Vector2(torso.size.x, maxf(TRACO.minimo, torso.size.y * TRONCO.gola))
+	canvas.draw_rect(Rect2(torso.position, gola), cor.lerp(CLOTH_LIGHT, MISTURA.gola))
+	canvas.draw_line(
+		Vector2(torso.get_center().x, torso.position.y + COSTURA.topo),
+		Vector2(torso.get_center().x, torso.end.y - COSTURA.fundo),
+		ink,
+		maxf(TRACO.fino, scale)
+	)
+
+
+static func _cara(
+	canvas: CanvasItem,
+	box: Rect2,
+	center: Vector2,
+	cor: Color,
+	ink: Color,
+	units: UnitSystem,
+	index: int,
+	scale: float
+) -> void:
+	var raio := maxf(TRACO.raio, box.size.x * CORPO.raio)
+	canvas.draw_circle(center, raio, cor.lerp(SKIN, MISTURA.pele))
+	var queixo := Rect2(
+		center.x - box.size.x * CARA.x,
+		center.y + box.size.y * CARA.y,
+		box.size.x * CARA.w,
+		maxf(TRACO.minimo, scale)
+	)
+	canvas.draw_rect(queixo, SKIN_LIGHT.lerp(cor, MISTURA.cara))
+	var lado := box.size.x * CARA.olho_x
+	var frente := lado if units.target_xs[index] >= units.xs[index] else -lado
+	var olho := Vector2(center.x + frente - CARA.olho * WorldPalette.MEIA, center.y - 1.0)
+	canvas.draw_rect(Rect2(olho, Vector2(CARA.olho, CARA.olho)), EYE)
+	var boca := center.y + box.size.y * CARA.boca
+	canvas.draw_line(
+		Vector2(center.x - lado, boca), Vector2(center.x + lado, boca), ink, maxf(TRACO.fino, scale)
+	)
 
 
 static func _hat(
-	canvas: CanvasItem, head: Vector2, box: Rect2, units, index: int, scale: float
+	canvas: CanvasItem, head: Vector2, box: Rect2, units: UnitSystem, index: int, scale: float
 ) -> void:
 	if units.owners[index] == RecruitSystem.SEM_DONO:
 		return
-	var cor := WorldPalette.REI if units.ids[index] == SimLoop.king_id else WorldPalette.CHAPEU
-	var brim := head.y - 4.0 * scale
-	canvas.draw_line(
-		Vector2(head.x - box.size.x * 0.34, brim),
-		Vector2(head.x + box.size.x * 0.34, brim),
-		cor,
-		maxf(2.0, scale * 2.0)
-	)
-	if units.ids[index] != SimLoop.king_id:
+	var rei := units.ids[index] == SimLoop.king_id
+	var cor := WorldPalette.REI if rei else WorldPalette.CHAPEU
+	var traco := maxf(TRACO.minimo, scale * TRACO.minimo)
+	var brim := head.y - CHAPEU.aba * scale
+	var aba := box.size.x * CHAPEU.aba_x
+	canvas.draw_line(Vector2(head.x - aba, brim), Vector2(head.x + aba, brim), cor, traco)
+	if not rei:
 		return
-	canvas.draw_line(
-		Vector2(head.x - box.size.x * 0.18, brim),
-		Vector2(head.x, head.y - 14.0 * scale),
-		WorldPalette.REI,
-		maxf(2.0, scale * 2.0)
-	)
-	canvas.draw_line(
-		Vector2(head.x, head.y - 14.0 * scale),
-		Vector2(head.x + box.size.x * 0.18, brim),
-		WorldPalette.REI,
-		maxf(2.0, scale * 2.0)
-	)
+	var bico := Vector2(head.x, head.y - CHAPEU.coroa * scale)
+	var pe := box.size.x * CHAPEU.coroa_x
+	canvas.draw_line(Vector2(head.x - pe, brim), bico, WorldPalette.REI, traco)
+	canvas.draw_line(bico, Vector2(head.x + pe, brim), WorldPalette.REI, traco)
 
 
+## A marca do §24, e so ela: e o que se ve de uma tropa a 1 bit, e por isso cada
+## oficio leva a sua e nenhuma leva a de outro.
 static func _weapon(
-	canvas: CanvasItem, box: Rect2, data: UnitData, units, index: int, cor: Color
+	canvas: CanvasItem, box: Rect2, data: UnitData, units: UnitSystem, index: int, cor: Color
 ) -> void:
-	if not units.alive(index):
-		return
-	var scale := maxf(0.55, box.size.y / 48.0)
-	var mark := Silhouette.of_unit(data)
-	var side := 1.0 if units.target_xs[index] >= units.xs[index] else -1.0
-	var hand := Vector2(
-		box.get_center().x + side * box.size.x * 0.26,
-		box.position.y + box.size.y * 0.56
+	var scale := maxf(ESCALA.minima, box.size.y / ESCALA.caixa)
+	var lado := LADO.frente if units.target_xs[index] >= units.xs[index] else LADO.tras
+	var mao := Vector2(
+		box.get_center().x + lado * box.size.x * MAO.x, box.position.y + box.size.y * MAO.y
 	)
-	var tip := hand + Vector2(side * 18.0, -13.0)
-	match mark:
+	var ponta := mao + Vector2(lado * MAO.ponta_x, MAO.ponta_y)
+	match Silhouette.of_unit(data):
 		Silhouette.Mark.ARCO:
-			canvas.draw_arc(hand + Vector2(side * 7.0, -4.0), 10.0 * scale, -1.1, 1.1, 8, cor, 2.0)
-			canvas.draw_line(hand, hand + Vector2(side * 7.0, -4.0), cor, 1.0)
+			var punho := mao + Vector2(lado * ARCO.x, ARCO.y)
+			canvas.draw_arc(
+				punho, ARCO.raio * scale, ARCO.de, ARCO.ate, ARCO.pontos, cor, TRACO.minimo
+			)
+			canvas.draw_line(mao, punho, cor, 1.0)
 		Silhouette.Mark.HASTE:
-			tip = hand + Vector2(side * 22.0, -18.0)
-			canvas.draw_line(hand, tip, METAL.lerp(cor, 0.45), scale * 1.5)
+			ponta = mao + Vector2(lado * HASTE.x, HASTE.y)
+			canvas.draw_line(mao, ponta, METAL.lerp(cor, MISTURA.cara), scale * HASTE.traco)
 		Silhouette.Mark.LAMINA:
-			canvas.draw_line(hand, tip, METAL.lerp(cor, 0.35), scale * 2.0)
+			canvas.draw_line(mao, ponta, METAL.lerp(cor, MISTURA.cara), scale * TRACO.minimo)
 		Silhouette.Mark.FERRAMENTA:
-			tip = hand + Vector2(side * 15.0, -11.0)
-			canvas.draw_line(hand, tip, WOOD_LIGHT.lerp(cor, 0.35), scale * 2.0)
-			canvas.draw_line(tip + Vector2(-side * 5.0, -3.0), tip + Vector2(side * 5.0, 3.0), METAL, 2.0)
+			ponta = mao + Vector2(lado * FERRAMENTA.x, FERRAMENTA.y)
+			canvas.draw_line(mao, ponta, WOOD_LIGHT.lerp(cor, MISTURA.cara), scale * TRACO.minimo)
+			canvas.draw_line(
+				ponta + Vector2(-lado * FERRAMENTA.gume_x, -FERRAMENTA.gume_y),
+				ponta + Vector2(lado * FERRAMENTA.gume_x, FERRAMENTA.gume_y),
+				METAL,
+				TRACO.minimo
+			)
 		Silhouette.Mark.MACA:
-			canvas.draw_line(hand, hand + Vector2(side * 14.0, -11.0), WOOD, scale * 2.0)
-			canvas.draw_circle(hand + Vector2(side * 16.0, -13.0), 4.0 * scale, WOOD_LIGHT.lerp(cor, 0.35))
+			canvas.draw_line(mao, mao + Vector2(lado * MACA.x, MACA.y), WOOD, scale * TRACO.minimo)
+			canvas.draw_circle(
+				mao + Vector2(lado * MACA.bola_x, MACA.bola_y),
+				MACA.raio * scale,
+				WOOD_LIGHT.lerp(cor, MISTURA.cara)
+			)
 		Silhouette.Mark.VIGA:
-			var beam_start := hand + Vector2(-side * 14.0, 0.0)
-			var beam_end := hand + Vector2(side * 25.0, 0.0)
-			canvas.draw_line(beam_start, beam_end, WOOD_LIGHT.lerp(cor, 0.35), 5.0)
+			canvas.draw_line(
+				mao + Vector2(-lado * VIGA.tras, 0.0),
+				mao + Vector2(lado * VIGA.frente, 0.0),
+				WOOD_LIGHT.lerp(cor, MISTURA.cara),
+				VIGA.traco
+			)
