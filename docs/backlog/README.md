@@ -69,6 +69,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-09](GB-09.md) | A sombra de contacto da moeda | F1-01 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
+| [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | feito |
 
 ## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
 
