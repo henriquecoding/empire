@@ -848,6 +848,82 @@
 - **Decide:** tu. A pergunta é se a derrota ganha sinal próprio na §46 quando o §15 e o §16 chegarem — e é aí
   que um `step()` que pára deixa de tirar nada a ninguém, porque passa a haver o que ouvir.
 
+### Q-082 · O §21 dá dois tempos de travessia e eles não são o mesmo tempo
+- **Onde:** §21 (*"Região — 4 a 6 ecrãs de largura... deriva-o do tempo de travessia: a pé (§12) uma região
+  deve levar 40–60 s a atravessar de ponta a ponta, o que a 26 px/s dá 1000–1560 px por ecrã"*), §47
+  (`SEGMENT_WIDTH 640`), §12, §19 e §44 (`move_speed = 26.0`), `data/source/units.csv`, `src/world/greybox.gd`.
+- **A contradição, numa linha:** a primeira metade da frase diz que a **região** se atravessa em 40–60 s; a
+  segunda faz a conta como se fossem 40–60 s **por ecrã**. Uma região de 1040–1560 px não são "4 a 6 ecrãs"
+  de 640 px, nem "oito segmentos por região" — as duas metades não podem ser verdade ao mesmo tempo.
+- **O que o jogo fazia:** nem uma nem outra. A região do *greybox* tem 3840 px (seis ecrãs de 640) e toda a
+  `units.csv` andava aos 26 px/s que o §19 e a §44 escrevem como **valor por omissão do campo**. São **148 s**
+  de ponta a ponta, num dia que dura 360 s (`clock.csv`) — quase metade de um dia a andar em linha reta, só de
+  ida. Foi por aqui que a queixa do jogador entrou: *"o personagem está a mover-se extremamente lento"*.
+- **O que foi decidido, e é reversível:** manda a primeira metade — a que a própria secção escreve como
+  **ordem** (*"deriva-o do tempo de travessia"*). A pé são 80 px/s, 48 s de travessia, e a coluna inteira da
+  `units.csv` sobe pelo mesmo factor para não perder as relações autoradas. A `creatures.csv` não se toca: a
+  velocidade das criaturas está na tabela do §07 e é conferida contra o dossiê. Ver ADR 0021.
+- **O que continua por decidir:** se o que se quis dizer foi mesmo 40–60 s **por ecrã**, então o número que
+  está errado não é a velocidade — é a região, e ela tem de passar de seis segmentos para dois e meio, o que
+  contradiz o §21 noutro sítio. Corrigir o dossiê fecha isto num dos dois sentidos; enquanto não for
+  corrigido, o `tests/travessia_test.gd` é que guarda a leitura escolhida.
+- **Decide:** tu. A pergunta é qual das duas metades da frase do §21 fica no dossiê.
+
+### Q-083 · O §24 manda largar em contínuo e não diz a que ritmo
+- **Onde:** §24 (mapa de comando: *"Largar em contínuo — A/✕ (manter) — Espaço (manter) — Pagar vários
+  níveis de uma vez"*), §55, `src/ui/input_router.gd`, `data/source/economy.csv`.
+- **O que faltava:** a linha estava no mapa de comando do §24 desde a v2 e **ninguém a lia**. O
+  `input_router.gd` dizia-o no cabeçalho — *"manter para largar em contínuo espera pelo BuildSystem a aceitar
+  pagamento por nível de uma vez"* — e isso era uma leitura a mais: o §55 quer a moeda física a cair uma a uma
+  (*"uma obra existe quando uma moeda cai num BuildSlot"*), e o que o §24 pede não é um pagamento de uma vez, é
+  **a mesma moeda a sair sozinha**. Pagar o Bastião de 65 moedas à tecla eram 65 toques.
+- **O número que não está no dossiê:** o ritmo. Fica `coin_drop_repeat_s = 0,12` — pouco mais de oito moedas
+  por segundo, o degrau mais caro do §10 (o Bastião, 65) em 8 s de tecla premida. O valor vem do PR #16, que
+  chegou a esta mesma linha do §24 por outro caminho e o escreveu num `const` do router com a justificação
+  certa (*"depressa o bastante para encher uma obra sem martelar a tecla, devagar o bastante para se ver cada
+  moeda a cair"*); ao juntar os dois ficou o **número dele** e o **sítio deste** — `economy.csv`, pela regra 3
+  do AGENTS.md, ao lado da gravidade e da dispersão do arco, que são a mesma classe de número.
+- **O que isto NÃO faz, e é de propósito:** não paga vários níveis de uma vez. O §55 diz que uma obra a meio
+  não aceita moeda, e por isso o contínuo enche o degrau seguinte, a obra arranca, e as moedas que saírem
+  depois ficam no chão à espera do degrau a seguir — que é o que o Kingdom faz.
+- **Decide:** tu, e é um número de playtest. Mais depressa e a moeda deixa de se ver a cair; mais devagar e a
+  muralha de ferro volta a ser um exercício de dedo.
+
+### Q-084 · O knockback do §24 é o único terço do impacto que mexe na simulação
+- **Onde:** §24 (*"Impacto — flash branco de 80 ms, **3 px de knockback**, partícula de 4 px na direção do
+  golpe"*), §45, §50, §61, `src/world/impact_view.gd`.
+- **O que foi feito:** dois dos três. O flash e a partícula são apresentação e vivem no `ImpactView`; o
+  `building_damaged` — o sinal que uma noite do *greybox* emite às centenas e que não se via em lado nenhum —
+  acende a orla da obra que está a ser comida.
+- **Porque é que o terceiro ficou de fora:** empurrar um corpo 3 px muda uma **posição**, e posições são a
+  simulação (§45). Um empurrão dado da camada de apresentação tira um atacante da fila de contacto do §50 sem
+  que o §50 dê por isso, e um empurrão que o *save* não conhece torna a partida irreproduzível pela mesma
+  semente (§61, §42) — que é a propriedade que este repositório mais protege.
+- **O que falta para o fazer:** um número em `data/` (3 px é do dossiê, mas falta dizer se é por golpe, se
+  acumula, e se um Bruto empurra um vagabundo tanto como o contrário), e um sítio em `src/sim/` que o aplique
+  no passo 6 do §43, a seguir à resolução do combate e antes do movimento.
+- **Decide:** tu. A pergunta é se o empurrão é do atacante (massa) ou do golpe (dano), porque disso depende se
+  ele vive no `CombatSystem` ou numa coluna nova.
+
+### Q-085 · O §52 diz que quem luta não anda; o §24 diz que o comando "Mover" vale sempre
+- **Onde:** §52 (a tabela de estados: `FIGHT | Inimigo em alcance | Alvo morre ou sai de alcance | Resolução de
+  combate`), §24 (mapa de comando: *"Mover — Stick esquerdo / D-pad — A · D · ← → — **Sempre**"*), §08,
+  `src/sim/systems/unit_system.gd`.
+- **O que estava a acontecer:** o monarca tem `damage 3` e `range_px 30` (`units.csv`), e por isso o
+  `target_picker` põe-no em FIGHT como põe qualquer tropa. Com o FIGHT a proibir movimento, uma criatura a
+  30 px tirava o jogo das mãos de quem o joga **até ela morrer** — e numa noite com cinco delas à volta, isso
+  era a partida inteira a ver-se a si própria.
+- **A leitura que mudou:** a última coluna da tabela do §52 é o **custo por tick** de cada estado — GOTO custa
+  "movimento em X", FIGHT custa "resolução de combate" — e não uma proibição. A proibição era uma
+  interpretação do código, defensável para uma tropa (um lanceiro `holds_line` não deve sair da linha) e
+  insustentável para o corpo que uma pessoa conduz.
+- **O que foi decidido, e é reversível:** quem é conduzido por uma pessoa anda mesmo em FIGHT; quem a §52
+  conduz continua a segurar a linha. Entra por parâmetro no `tick_movement()` e não por coluna, porque não é
+  propriedade da unidade — é quem a está a conduzir agora, e isso vive no `SimLoop` (§45). Andar para fora do
+  alcance desengata sozinho, e por isso fugir continua a custar o golpe que se deixa de dar.
+- **Decide:** tu. A pergunta aberta é a da Fase 2: quando o Verbo 2 deixar assumir outros corpos (§24), o
+  "conduzido" passa a ser mais do que o `king_id` — e aí talvez valha a pena ser coluna.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

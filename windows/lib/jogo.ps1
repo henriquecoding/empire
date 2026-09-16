@@ -3,7 +3,7 @@
 function Show-Controlos {
     Write-Host ''
     Write-Host '  Controlos (project.godot)' -ForegroundColor Cyan
-    Write-Host '    A/D ou setas   andar                 Espaço          largar moeda (uma por toque)'
+    Write-Host '    A/D ou setas   andar                 Espaço          largar moeda (manter: em contínuo)'
     Write-Host '    E              passagem              Botão direito   marcar alvo'
     Write-Host '    Tab            painel de estado      Q / Z           câmara livre      Esc  pausa'
     Write-Host '    Comando: analógico/D-pad, A moeda, X passagem, Y estado, gatilho direito alvo, Start pausa'

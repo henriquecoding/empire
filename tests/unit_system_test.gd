@@ -111,3 +111,51 @@ func test_o_save_das_colunas_so_leva_tipos_base() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(caminho))
 	assert_int(typeof(lido)).is_equal(TYPE_DICTIONARY)
 	assert_int((lido as Dictionary)[&"ids"].size()).is_equal(5)
+
+
+# ─── O movimento, e quem o perde ─────────────────────────────────────────────
+
+
+## §52: uma tropa em FIGHT segura a linha e nao anda — "quem esta a bater fica
+## onde esta, mesmo com um posto do outro lado do mapa".
+func test_uma_tropa_a_lutar_segura_a_linha() -> void:
+	var sistema := UnitSystem.new()
+	var unit_id := sistema.spawn(_estado(), _vagabundo(), 1, 0.0)
+	sistema.set_target_x(unit_id, 100.0)
+	sistema.states[sistema.index_of(unit_id)] = UnitFsm.State.FIGHT
+
+	sistema.tick_movement(1.0)
+
+	assert_float(sistema.xs[sistema.index_of(unit_id)]).is_equal(0.0)
+
+
+## §24 da ao comando "Mover" o contexto **Sempre**, e isso nao e uma excepcao a
+## regra de cima: uma tropa e CONDUZIDA pela §52 e o monarca e conduzido por uma
+## pessoa. Com um bicho a 30 px — o alcance dele —, o rei entrava em FIGHT e
+## deixava de responder ao comando ate o bicho morrer: o jogador ficava a ver.
+func test_quem_uma_pessoa_conduz_anda_mesmo_a_lutar() -> void:
+	var sistema := UnitSystem.new()
+	var estado := _estado()
+	var rei := sistema.spawn(estado, _vagabundo(), 1, 0.0)
+	var tropa := sistema.spawn(estado, _vagabundo(), 1, 0.0)
+	for unit_id in [rei, tropa]:
+		sistema.set_target_x(unit_id, 100.0)
+		sistema.states[sistema.index_of(unit_id)] = UnitFsm.State.FIGHT
+
+	sistema.tick_movement(1.0, rei)
+
+	assert_float(sistema.xs[sistema.index_of(rei)]).is_greater(0.0)
+	assert_float(sistema.xs[sistema.index_of(tropa)]).is_equal(0.0)
+
+
+## Conduzido nao e imortal: um corpo nao anda, e quem o conduzia deixou de o
+## conduzir. Sem isto o §16 ganhava um rei que passeia morto.
+func test_um_corpo_nao_anda_nem_sendo_conduzido() -> void:
+	var sistema := UnitSystem.new()
+	var rei := sistema.spawn(_estado(), _vagabundo(), 1, 0.0)
+	sistema.set_target_x(rei, 100.0)
+	sistema.states[sistema.index_of(rei)] = UnitFsm.State.DEAD
+
+	sistema.tick_movement(1.0, rei)
+
+	assert_float(sistema.xs[sistema.index_of(rei)]).is_equal(0.0)

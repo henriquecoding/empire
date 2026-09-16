@@ -76,11 +76,20 @@ src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
 src/world/band_view.gd      BandView      desenha UMA faixa, e leva a luz dela
+src/world/terrain_backdrop.gd TerrainBackdrop o cenario da faixa, so quando a luz muda
+src/world/terrain_art.gd    TerrainArt    o cenario de cada faixa (§11, §22)
+src/world/prop_art.gd       PropArt       a arvore e a casa, o que o cenario repete
+src/world/actor_art.gd      ActorArt      o que uma tropa E, por dentro da caixa (§22, §24)
+src/world/creature_art.gd   CreatureArt   o que um bicho E, por dentro da caixa (§22, §25)
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
+src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
 src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
 src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco, pago (GB-03)
+src/world/price_tag.gd      PriceTag      o preco do que esta debaixo do rei (§24, §55, GB-05)
+src/world/impact_view.gd    ImpactView    o golpe que se ve: flash e particula (§24, GB-08)
+src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-09)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
@@ -89,6 +98,7 @@ src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)
 src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
+src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
 scenes/boot.tscn                          cena principal do project.godot
 scenes/game.tscn                          a cena de jogo, instanciada pela boot

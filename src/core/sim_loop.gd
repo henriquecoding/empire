@@ -153,7 +153,10 @@ func step(delta: float) -> void:
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
-	units.tick_movement(delta)  # 5 · MovementSystem — todo o tick
+	# 5 · MovementSystem — todo o tick. O king_id vai junto porque o §24 da ao
+	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
+	#     preso em FIGHT como fica quem a §52 conduz.
+	units.tick_movement(delta, king_id)
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
 	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma

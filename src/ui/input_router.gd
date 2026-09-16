@@ -10,16 +10,29 @@
 # project.godot desde o F0-02 — cinco delas sem ninguem a le-las. Este ficheiro
 # e quem passou a ler.
 #
-# O que continua por ligar, e nao e esquecimento: manter para largar em continuo
-# (§24) espera pelo BuildSystem a aceitar pagamento por nivel de uma vez; a roda
-# do rei espera pelos seis sistemas que os seus segmentos abrem (Fase 2).
+# Duas coisas correm no frame e nao no tick, e e de proposito: andar e marcar
+# alvo sao GESTOS, e um gesto lido a 60 Hz fixos chega sempre um bocado depois
+# da mao. O que se escreve continua a ser um alvo e uma intencao — o passo 5 do
+# §43 e que leva a gente — e por isso o frame nao muda o que a simulacao faz,
+# so quando ela fica a saber.
+#
+# O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos
+# seis sistemas que os seus segmentos abrem (Fase 2).
 class_name InputRouter
 extends Node
 
 ## Uma moeda de cada vez. O §02 nao da outra unidade ao Verbo 1: a moeda E a
-## unidade, e largar duas era ja uma decisao de interface.
+## unidade, e largar duas era ja uma decisao de interface. Largar em CONTINUO
+## (§24) nao quebra isto — continuam a sair uma a uma, so que sozinhas.
 const UMA := 1
 const FONTE := &"player"
+
+## §24: "manter para largar em continuo". Quanto falta para a moeda seguinte
+## sair. O RITMO nao esta aqui: e o `coin_drop_repeat_s` da `economy.csv`, pela
+## regra 3 do AGENTS.md — um numero que se afina em playtest vive em data/, como
+## a gravidade e a dispersao do arco que estao ao lado dele (Q-083).
+var _repeticao := 0.0
+var _curva: EconomyCurve
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -30,18 +43,38 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	if not SimLoop.running():
 		return
-	if evento.is_action_pressed(&"verb_drop"):
-		_largar()
-	elif evento.is_action_pressed(&"verb_assume"):
+	if evento.is_action_pressed(&"verb_assume"):
 		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+		get_viewport().set_input_as_handled()
 	elif evento.is_action_pressed(&"mark_target"):
 		SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _rato_em_x()})
+		get_viewport().set_input_as_handled()
 
 
-func _physics_process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if not SimLoop.running():
+		_repeticao = 0.0
 		return
 	_andar(Input.get_axis(&"move_left", &"move_right"))
+	_repeticao = maxf(0.0, _repeticao - delta)
+	if not Input.is_action_pressed(&"verb_drop"):
+		_repeticao = 0.0
+		return
+	if _repeticao <= 0.0:
+		_largar()
+		# Nunca mais depressa do que um frame: com o intervalo a zero — um CSV
+		# mal preenchido — isto virava uma torneira e esvaziava o saco antes de
+		# a primeira moeda chegar ao chao.
+		_repeticao = maxf(_intervalo(), delta)
+
+
+## O ritmo do continuo, lido a pedido e na primeira utilizacao (AGENTS.md, regra
+## 8b): este no e filho da cena de jogo e o _ready() dele corre ANTES do dela —
+## ou seja, antes do Registry.load_all() que ela chama.
+func _intervalo() -> float:
+	if _curva == null:
+		_curva = SimFactory.curve()
+	return _curva.coin_drop_repeat_s
 
 
 ## Mover e escrever um alvo, e nao empurrar uma posicao: o passo 5 e que leva
