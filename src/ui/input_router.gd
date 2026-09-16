@@ -10,9 +10,14 @@
 # project.godot desde o F0-02 — cinco delas sem ninguem a le-las. Este ficheiro
 # e quem passou a ler.
 #
-# O que continua por ligar, e nao e esquecimento: manter para largar em continuo
-# (§24) espera pelo BuildSystem a aceitar pagamento por nivel de uma vez; a roda
-# do rei espera pelos seis sistemas que os seus segmentos abrem (Fase 2).
+# Duas coisas correm no frame e nao no tick, e e de proposito: andar e marcar
+# alvo sao GESTOS, e um gesto lido a 60 Hz fixos chega sempre um bocado depois
+# da mao. O que se escreve continua a ser um alvo e uma intencao — o passo 5 do
+# §43 e que leva a gente — e por isso o frame nao muda o que a simulacao faz,
+# so quando ela fica a saber.
+#
+# O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos
+# seis sistemas que os seus segmentos abrem (Fase 2).
 class_name InputRouter
 extends Node
 
@@ -20,6 +25,13 @@ extends Node
 ## unidade, e largar duas era ja uma decisao de interface.
 const UMA := 1
 const FONTE := &"player"
+
+## §24: "manter para largar em continuo". Uma moeda a cada oitavo de segundo —
+## depressa o bastante para encher uma obra sem martelar a tecla, devagar o
+## bastante para se ver cada moeda a cair e para se parar a tempo.
+const REPETICAO_S := 0.12
+
+var _repeticao := 0.0
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -30,18 +42,26 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	if not SimLoop.running():
 		return
-	if evento.is_action_pressed(&"verb_drop"):
-		_largar()
-	elif evento.is_action_pressed(&"verb_assume"):
+	if evento.is_action_pressed(&"verb_assume"):
 		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+		get_viewport().set_input_as_handled()
 	elif evento.is_action_pressed(&"mark_target"):
 		SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _rato_em_x()})
+		get_viewport().set_input_as_handled()
 
 
-func _physics_process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if not SimLoop.running():
+		_repeticao = 0.0
 		return
 	_andar(Input.get_axis(&"move_left", &"move_right"))
+	_repeticao = maxf(0.0, _repeticao - delta)
+	if not Input.is_action_pressed(&"verb_drop"):
+		_repeticao = 0.0
+		return
+	if _repeticao <= 0.0:
+		_largar()
+		_repeticao = REPETICAO_S
 
 
 ## Mover e escrever um alvo, e nao empurrar uma posicao: o passo 5 e que leva

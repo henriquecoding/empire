@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -6,19 +6,33 @@
 [ext_resource type="Script" path="res://src/ui/input_router.gd" id="4_input"]
 [ext_resource type="Script" path="res://src/ui/hud.gd" id="5_hud"]
 [ext_resource type="Script" path="res://src/ui/inspector.gd" id="6_estado"]
+[ext_resource type="Script" path="res://src/world/terrain_backdrop.gd" id="7_backdrop"]
+[ext_resource type="Script" path="res://src/ui/game_hud.gd" id="8_game_hud"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("0_game")
 
 [node name="Mundo" type="Node2D" parent="."]
 
+[node name="AereoBackdrop" type="Node2D" parent="Mundo"]
+script = ExtResource("7_backdrop")
+band = 0
+
 [node name="Aereo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
 band = 0
 
+[node name="SuperficieBackdrop" type="Node2D" parent="Mundo"]
+script = ExtResource("7_backdrop")
+band = 1
+
 [node name="Superficie" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
 band = 1
+
+[node name="SubsoloBackdrop" type="Node2D" parent="Mundo"]
+script = ExtResource("7_backdrop")
+band = 2
 
 [node name="Subsolo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
@@ -36,16 +50,15 @@ script = ExtResource("4_input")
 [node name="Interface" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="Painel" type="Label" parent="Interface" groups=["instrumentos"]]
-offset_left = 12.0
-offset_top = 8.0
-offset_right = 1268.0
-offset_bottom = 70.0
-theme_override_colors/font_color = Color(0.96, 0.95, 0.9, 1)
-theme_override_colors/font_outline_color = Color(0.08, 0.07, 0.06, 1)
-theme_override_constants/outline_size = 4
-text = "Empire"
-script = ExtResource("5_hud")
+[node name="HUD" type="Control" parent="Interface"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_game_hud")
 
 [node name="Estado" type="Label" parent="Interface" groups=["instrumentos"]]
 offset_left = 12.0
