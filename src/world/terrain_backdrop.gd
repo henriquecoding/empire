@@ -31,10 +31,10 @@ func _draw() -> void:
 	if _clock_data == null or SimLoop.state == null:
 		return
 	var largura := maxf(SimLoop.world_width, float(Band.SCREEN_BOTTOM))
-	var ambiente := BandLight.ambient(
+	var faixa := BandLight.of(
 		_clock_data,
+		band,
 		int(ClockService.clock.current_phase()),
 		ClockService.clock.phase_progress()
 	)
-	var faixa := WorldPalette.dim(ambiente, BandLight.plane(_clock_data, band))
 	TerrainArt.draw_on(self, band, largura, faixa)

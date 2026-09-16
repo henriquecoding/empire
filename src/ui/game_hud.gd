@@ -38,7 +38,10 @@ func _ready() -> void:
 	EventBus.passage_used.connect(_on_passage_used)
 	EventBus.wall_breached.connect(_on_wall_breached)
 	EventBus.game_paused.connect(_on_game_paused)
-	_hint.text = "A/D mover   ·   segurar ESPAÇO largar   ·   E usar passagem   ·   botão direito marcar   ·   TAB estado   ·   ESC pausa"
+	_hint.text = (
+		"A/D mover · segurar ESPAÇO · E passagem · "
+		+ "botão direito alvo · TAB estado · ESC pausa"
+	)
 	_overlay.visible = false
 	queue_redraw()
 
@@ -68,7 +71,12 @@ func _draw() -> void:
 		var progresso := ClockService.clock.phase_progress()
 		draw_rect(Rect2(360.0, 83.0, 546.0 * progresso, 3.0), GOLD)
 	draw_rect(Rect2(20.0, altura - 48.0, largura - 40.0, 30.0), PAPER)
-	draw_line(Vector2(20.0, altura - 48.0), Vector2(largura - 20.0, altura - 48.0), Color(0.32, 0.26, 0.20), 1.0)
+	draw_line(
+		Vector2(20.0, altura - 48.0),
+		Vector2(largura - 20.0, altura - 48.0),
+		Color(0.32, 0.26, 0.20),
+		1.0
+	)
 	if _toast.visible:
 		_panel(Rect2(390.0, 108.0, 500.0, 38.0), PAPER_LIGHT, GOLD)
 	if _overlay.visible:
@@ -81,7 +89,10 @@ func _atualizar() -> void:
 	var fase := int(relogio.current_phase())
 	var dia := SimLoop.state.day
 	var nome := FASES[fase] if fase >= 0 and fase < FASES.size() else "NOITE"
-	_clock_label.text = "DIA %02d   ·   %s   ·   %02d%%" % [dia, nome, int(relogio.phase_progress() * 100.0)]
+	_clock_label.text = (
+		"DIA %02d · %s · %02d%%"
+		% [dia, nome, int(relogio.phase_progress() * 100.0)]
+	)
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var capacidade := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
@@ -143,7 +154,7 @@ func _on_coin_collected(_unit_id: int, amount: int) -> void:
 	_toast_message("+%d moeda" % amount)
 
 
-func _on_build_completed(_building_id: StringName) -> void:
+func _on_build_completed(_building_id: int) -> void:
 	_toast_message("OBRA CONCLUÍDA")
 
 

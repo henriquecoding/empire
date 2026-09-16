@@ -30,7 +30,12 @@ static func draw_on(
 
 static func _core(canvas: CanvasItem, box: Rect2, cor: Color, level: int) -> void:
 	var trunk_w := maxf(22.0, box.size.x * 0.18)
-	var trunk := Rect2(box.get_center().x - trunk_w * 0.5, box.position.y + box.size.y * 0.34, trunk_w, box.size.y * 0.66)
+	var trunk := Rect2(
+		box.get_center().x - trunk_w * 0.5,
+		box.position.y + box.size.y * 0.34,
+		trunk_w,
+		box.size.y * 0.66
+	)
 	canvas.draw_rect(trunk, _mix(BARK, cor, 0.40))
 	canvas.draw_colored_polygon(
 		PackedVector2Array([
@@ -46,9 +51,21 @@ static func _core(canvas: CanvasItem, box: Rect2, cor: Color, level: int) -> voi
 		_mix(BARK, cor, 0.40)
 	)
 	var crown_y := box.position.y + box.size.y * 0.28
-	canvas.draw_circle(Vector2(box.get_center().x - box.size.x * 0.27, crown_y), box.size.x * 0.18, _mix(LEAF, cor, 0.42))
-	canvas.draw_circle(Vector2(box.get_center().x + box.size.x * 0.27, crown_y), box.size.x * 0.18, _mix(LEAF, cor, 0.42))
-	canvas.draw_circle(Vector2(box.get_center().x, box.position.y + box.size.y * 0.11), box.size.x * 0.23, _mix(LEAF, cor, 0.42))
+	canvas.draw_circle(
+		Vector2(box.get_center().x - box.size.x * 0.27, crown_y),
+		box.size.x * 0.18,
+		_mix(LEAF, cor, 0.42)
+	)
+	canvas.draw_circle(
+		Vector2(box.get_center().x + box.size.x * 0.27, crown_y),
+		box.size.x * 0.18,
+		_mix(LEAF, cor, 0.42)
+	)
+	canvas.draw_circle(
+		Vector2(box.get_center().x, box.position.y + box.size.y * 0.11),
+		box.size.x * 0.23,
+		_mix(LEAF, cor, 0.42)
+	)
 	for i in 3:
 		var x := box.position.x + box.size.x * (0.31 + float(i) * 0.19)
 		canvas.draw_rect(
@@ -96,7 +113,12 @@ static func _wall(canvas: CanvasItem, box: Rect2, cor: Color, level: int) -> voi
 static func _tower(canvas: CanvasItem, box: Rect2, cor: Color, high: bool) -> void:
 	var ink := _mix(STONE, cor, 0.42)
 	var highlight := _mix(STONE_LIGHT, cor, 0.38)
-	var platform := Rect2(box.position.x - 4.0, box.position.y + box.size.y * 0.18, box.size.x + 8.0, box.size.y * 0.12)
+	var platform := Rect2(
+		box.position.x - 4.0,
+		box.position.y + box.size.y * 0.18,
+		box.size.x + 8.0,
+		box.size.y * 0.12
+	)
 	canvas.draw_rect(platform, highlight)
 	for i in 5:
 		var x := platform.position.x + float(i) * platform.size.x / 4.0
@@ -111,7 +133,12 @@ static func _tower(canvas: CanvasItem, box: Rect2, cor: Color, high: bool) -> vo
 	)
 	if high:
 		var mast_x := box.get_center().x
-		canvas.draw_line(Vector2(mast_x, box.position.y), Vector2(mast_x, box.position.y - 34.0), ink, 3.0)
+		canvas.draw_line(
+			Vector2(mast_x, box.position.y),
+			Vector2(mast_x, box.position.y - 34.0),
+			ink,
+			3.0
+		)
 		canvas.draw_colored_polygon(
 			PackedVector2Array([
 				Vector2(mast_x, box.position.y - 32.0),
@@ -123,7 +150,12 @@ static func _tower(canvas: CanvasItem, box: Rect2, cor: Color, high: bool) -> vo
 
 
 static func _house(canvas: CanvasItem, box: Rect2, cor: Color, forma: Silhouette.Form) -> void:
-	var body := Rect2(box.position.x + box.size.x * 0.10, box.position.y + box.size.y * 0.38, box.size.x * 0.80, box.size.y * 0.62)
+	var body := Rect2(
+		box.position.x + box.size.x * 0.10,
+		box.position.y + box.size.y * 0.38,
+		box.size.x * 0.80,
+		box.size.y * 0.62
+	)
 	var wood := _mix(WOOD, cor, 0.42)
 	canvas.draw_rect(body, wood)
 	var roof := _mix(STONE, cor, 0.40)
@@ -137,11 +169,21 @@ static func _house(canvas: CanvasItem, box: Rect2, cor: Color, forma: Silhouette
 	)
 	for i in 2:
 		canvas.draw_rect(
-			Rect2(body.position.x + body.size.x * (0.18 + float(i) * 0.48), body.position.y + body.size.y * 0.25, body.size.x * 0.18, body.size.y * 0.18),
+			Rect2(
+				body.position.x + body.size.x * (0.18 + float(i) * 0.48),
+				body.position.y + body.size.y * 0.25,
+				body.size.x * 0.18,
+				body.size.y * 0.18
+			),
 			_mix(WINDOW, cor, 0.34)
 		)
 	canvas.draw_rect(
-		Rect2(body.get_center().x - body.size.x * 0.11, body.end.y - body.size.y * 0.42, body.size.x * 0.22, body.size.y * 0.42),
+		Rect2(
+			body.get_center().x - body.size.x * 0.11,
+			body.end.y - body.size.y * 0.42,
+			body.size.x * 0.22,
+			body.size.y * 0.42
+		),
 		_mix(BARK, cor, 0.42)
 	)
 	if forma == Silhouette.Form.CHAMINE:
@@ -155,7 +197,12 @@ static func _house(canvas: CanvasItem, box: Rect2, cor: Color, forma: Silhouette
 		)
 	elif forma == Silhouette.Form.ESTANDARTE:
 		var mast_x := box.position.x + box.size.x * 0.18
-		canvas.draw_line(Vector2(mast_x, box.position.y), Vector2(mast_x, body.end.y), _mix(BARK, cor, 0.35), 3.0)
+		canvas.draw_line(
+			Vector2(mast_x, box.position.y),
+			Vector2(mast_x, body.end.y),
+			_mix(BARK, cor, 0.35),
+			3.0
+		)
 		canvas.draw_colored_polygon(
 			PackedVector2Array([
 				Vector2(mast_x, box.position.y + 3.0),

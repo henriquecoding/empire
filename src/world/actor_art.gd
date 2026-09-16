@@ -11,11 +11,12 @@ const EYE := Color(0.98, 0.88, 0.59)
 
 
 static func draw_unit(
-	canvas: CanvasItem, box: Rect2, data: UnitData, units, index: int, cor: Color, time: float
+	canvas: CanvasItem, box: Rect2, data: UnitData, units, index: int, cor: Color
 ) -> void:
 	if data == null:
 		return
 	var alive := units.alive(index)
+	var time := float(Time.get_ticks_msec()) * 0.005
 	var scale := maxf(0.55, box.size.y / 48.0)
 	var moving := not is_zero_approx(units.target_xs[index] - units.xs[index])
 	var bob := sin(time * 5.0 + box.position.x * 0.025) * 0.9 if moving else 0.0
@@ -85,7 +86,12 @@ static func draw_unit(
 	var head := Vector2(center_x, box.position.y + box.size.y * 0.25 + bob)
 	canvas.draw_circle(head, maxf(4.0, box.size.x * 0.30), skin)
 	canvas.draw_rect(
-		Rect2(head.x - box.size.x * 0.26, head.y + box.size.y * 0.07, box.size.x * 0.52, maxf(2.0, scale)),
+		Rect2(
+			head.x - box.size.x * 0.26,
+			head.y + box.size.y * 0.07,
+			box.size.x * 0.52,
+			maxf(2.0, scale)
+		),
 		SKIN_LIGHT.lerp(cor, 0.35)
 	)
 	var facing := 1.0 if units.target_xs[index] >= units.xs[index] else -1.0
@@ -104,8 +110,8 @@ static func draw_unit(
 			ink, maxf(1.0, scale)
 		)
 
-	_hat(canvas, head, box, units, index, cor, scale)
-	_weapon(canvas, box, data, units, index, cor, scale)
+	_hat(canvas, head, box, units, index, scale)
+	_weapon(canvas, box, data, units, index, cor)
 
 
 static func draw_creature(
@@ -118,8 +124,18 @@ static func draw_creature(
 	var center := box.get_center() + Vector2(0.0, pulse * 0.25)
 	match forma:
 		Silhouette.Form.ASA:
-			canvas.draw_line(Vector2(box.position.x, center.y), Vector2(box.position.x - 24.0 * scale, box.position.y + 8.0), ink, 3.0)
-			canvas.draw_line(Vector2(box.end.x, center.y), Vector2(box.end.x + 24.0 * scale, box.position.y + 8.0), ink, 3.0)
+			canvas.draw_line(
+				Vector2(box.position.x, center.y),
+				Vector2(box.position.x - 24.0 * scale, box.position.y + 8.0),
+				ink,
+				3.0
+			)
+			canvas.draw_line(
+				Vector2(box.end.x, center.y),
+				Vector2(box.end.x + 24.0 * scale, box.position.y + 8.0),
+				ink,
+				3.0
+			)
 			canvas.draw_circle(center + Vector2(-box.size.x * 0.18, 0.0), 3.0 * scale, eye)
 			canvas.draw_circle(center + Vector2(box.size.x * 0.18, 0.0), 3.0 * scale, eye)
 		Silhouette.Form.RASTEJO:
@@ -150,7 +166,7 @@ static func draw_creature(
 
 
 static func _hat(
-	canvas: CanvasItem, head: Vector2, box: Rect2, units, index: int, cor: Color, scale: float
+	canvas: CanvasItem, head: Vector2, box: Rect2, units, index: int, scale: float
 ) -> void:
 	var king := units.ids[index] == SimLoop.king_id
 	var owned := units.owners[index] != RecruitSystem.SEM_DONO
@@ -173,13 +189,17 @@ static func _hat(
 
 
 static func _weapon(
-	canvas: CanvasItem, box: Rect2, data: UnitData, units, index: int, cor: Color, scale: float
+	canvas: CanvasItem, box: Rect2, data: UnitData, units, index: int, cor: Color
 ) -> void:
 	if not units.alive(index):
 		return
+	var scale := maxf(0.55, box.size.y / 48.0)
 	var mark := Silhouette.of_unit(data)
 	var side := 1.0 if units.target_xs[index] >= units.xs[index] else -1.0
-	var hand := Vector2(box.get_center().x + side * box.size.x * 0.26, box.position.y + box.size.y * 0.56)
+	var hand := Vector2(
+		box.get_center().x + side * box.size.x * 0.26,
+		box.position.y + box.size.y * 0.56
+	)
 	var tip := hand
 	match mark:
 		Silhouette.Mark.ARCO:
@@ -199,6 +219,11 @@ static func _weapon(
 			canvas.draw_line(hand, hand + Vector2(side * 14.0, -11.0), WOOD, maxf(2.0, scale * 2.0))
 			canvas.draw_circle(hand + Vector2(side * 16.0, -13.0), 4.0 * scale, WOOD_LIGHT.lerp(cor, 0.35))
 		Silhouette.Mark.VIGA:
-			canvas.draw_line(hand + Vector2(-side * 14.0, 0.0), hand + Vector2(side * 25.0, 0.0), WOOD_LIGHT.lerp(cor, 0.35), 5.0)
+			canvas.draw_line(
+				hand + Vector2(-side * 14.0, 0.0),
+				hand + Vector2(side * 25.0, 0.0),
+				WOOD_LIGHT.lerp(cor, 0.35),
+				5.0
+			)
 		_:
 			return

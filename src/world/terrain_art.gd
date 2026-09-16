@@ -1,10 +1,5 @@
 class_name TerrainArt
 extends RefCounted
-
-# Arte procedural de fundo: poucos planos grandes e detalhes deterministas.
-# Fica separado dos atores para que o mundo possa ser desenhado uma vez por
-# mudança de fase, em vez de refazer o cenário inteiro a cada frame.
-
 const SKY_TOP := Color(0.15, 0.24, 0.34)
 const SKY_BOTTOM := Color(0.76, 0.67, 0.49)
 const FAR_MOUNTAIN := Color(0.18, 0.22, 0.27)
@@ -22,8 +17,6 @@ const ROOF := Color(0.16, 0.14, 0.17)
 const LEAF := Color(0.20, 0.31, 0.23)
 const TRUNK := Color(0.25, 0.16, 0.10)
 const WINDOW := Color(0.95, 0.66, 0.28)
-
-
 static func draw_on(canvas: CanvasItem, faixa: Band.Kind, width: float, light: Color) -> void:
 	var largura := maxf(width, 1280.0)
 	match faixa:
@@ -33,15 +26,12 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, width: float, light: C
 			_surface(canvas, largura, light)
 		Band.Kind.UNDERGROUND:
 			_underground(canvas, largura, light)
-
-
 static func _aerial(canvas: CanvasItem, width: float, light: Color) -> void:
 	var strip := float(Band.GROUND_LINE) / 8.0
 	for i in 8:
 		var t := float(i) / 7.0
 		var cor := _paint(SKY_TOP.lerp(SKY_BOTTOM, t), light)
 		canvas.draw_rect(Rect2(0.0, strip * float(i), width, strip + 2.0), cor)
-
 	canvas.draw_circle(Vector2(width * 0.79, 112.0), 38.0, _paint(WINDOW, light))
 	var far := PackedVector2Array([
 		Vector2(0.0, 365.0),
@@ -69,15 +59,11 @@ static func _aerial(canvas: CanvasItem, width: float, light: Color) -> void:
 		Vector2(0.0, 446.0),
 	])
 	canvas.draw_colored_polygon(near, _paint(NEAR_MOUNTAIN, light))
-
-	# Silhuetas distantes dão escala ao horizonte sem competir com a região jogável.
 	for i in 9:
 		var x := width * (0.035 + float(i) * 0.117)
 		_tree(canvas, Vector2(x, 420.0), 0.72, _paint(LEAF, light), _paint(TRUNK, light))
 	_house(canvas, Vector2(width * 0.23, 420.0), 0.72, light)
 	_house(canvas, Vector2(width * 0.88, 420.0), 0.58, light)
-
-
 static func _surface(canvas: CanvasItem, width: float, light: Color) -> void:
 	canvas.draw_rect(
 		Rect2(0.0, float(Band.HORIZON), width, float(Band.GROUND_LINE - Band.HORIZON)),
@@ -96,7 +82,6 @@ static func _surface(canvas: CanvasItem, width: float, light: Color) -> void:
 	])
 	canvas.draw_colored_polygon(hill, _paint(FIELD, light))
 	_field_rows(canvas, width, light)
-
 	var path := PackedVector2Array([
 		Vector2(0.0, 505.0),
 		Vector2(width * 0.19, 498.0),
@@ -107,19 +92,11 @@ static func _surface(canvas: CanvasItem, width: float, light: Color) -> void:
 	])
 	canvas.draw_polyline(path, _paint(PATH, light), 18.0)
 	canvas.draw_polyline(path, _paint(PATH.lightened(0.18), light), 2.0)
-
 	_tree(canvas, Vector2(width * 0.09, 517.0), 1.1, _paint(LEAF, light), _paint(TRUNK, light))
 	_tree(canvas, Vector2(width * 0.91, 517.0), 0.88, _paint(LEAF, light), _paint(TRUNK, light))
 	_house(canvas, Vector2(width * 0.18, 517.0), 1.0, light)
 	_house(canvas, Vector2(width * 0.77, 517.0), 0.92, light)
 	_soil(canvas, width, light)
-	canvas.draw_line(
-		Vector2(0.0, float(Band.GROUND_LINE)),
-		Vector2(width, float(Band.GROUND_LINE)),
-		_paint(WorldPalette.LINHA, light), WorldPalette.CONTORNO
-	)
-
-
 static func _field_rows(canvas: CanvasItem, width: float, light: Color) -> void:
 	for i in 5:
 		var y := 462.0 + float(i) * 10.0
@@ -135,8 +112,6 @@ static func _field_rows(canvas: CanvasItem, width: float, light: Color) -> void:
 			Vector2(x, 467.0), Vector2(x + 16.0, 505.0),
 			_paint(FIELD_LIGHT, light), 3.0
 		)
-
-
 static func _soil(canvas: CanvasItem, width: float, light: Color) -> void:
 	canvas.draw_rect(
 		Rect2(0.0, float(Band.GROUND_LINE), width, float(Band.SCREEN_BOTTOM - Band.GROUND_LINE)),
@@ -156,8 +131,6 @@ static func _soil(canvas: CanvasItem, width: float, light: Color) -> void:
 			Vector2(x + 7.0, 577.0),
 		])
 		canvas.draw_polyline(root, _paint(ROOT, light), 3.0)
-
-
 static func _underground(canvas: CanvasItem, width: float, light: Color) -> void:
 	var top := WorldPalette.ground_of(int(Band.Kind.UNDERGROUND))
 	canvas.draw_rect(
@@ -176,8 +149,6 @@ static func _underground(canvas: CanvasItem, width: float, light: Color) -> void
 		Vector2(0.0, top + 64.0),
 	])
 	canvas.draw_colored_polygon(ceiling, _paint(ROCK_LIGHT, light))
-
-	# A câmara central e os contrafortes fazem a ligação visual entre raiz e vila.
 	var chamber := Rect2(width * 0.36, top + 38.0, width * 0.28, 68.0)
 	canvas.draw_rect(chamber, _paint(Color(0.08, 0.08, 0.11), light))
 	canvas.draw_line(
@@ -206,8 +177,6 @@ static func _underground(canvas: CanvasItem, width: float, light: Color) -> void
 	_stairs(canvas, Vector2(width * 0.22, top + 22.0), 1.0, light)
 	_stairs(canvas, Vector2(width * 0.78, top + 22.0), -1.0, light)
 	canvas.draw_circle(Vector2(width * 0.50, top + 74.0), 5.0, _paint(WINDOW, light))
-
-
 static func _stairs(canvas: CanvasItem, origin: Vector2, direction: float, light: Color) -> void:
 	for i in 5:
 		var y := origin.y + float(i) * 11.0
@@ -216,8 +185,6 @@ static func _stairs(canvas: CanvasItem, origin: Vector2, direction: float, light
 			Vector2(x, y), Vector2(x + direction * 38.0, y),
 			_paint(PATH, light), 4.0
 		)
-
-
 static func _tree(
 	canvas: CanvasItem, base: Vector2, scale: float, leaf: Color, trunk: Color
 ) -> void:
@@ -231,8 +198,6 @@ static func _tree(
 		base + Vector2(17.0 * scale, -h * 0.63),
 		trunk, 3.0 * scale
 	)
-
-
 static func _house(canvas: CanvasItem, base: Vector2, scale: float, light: Color) -> void:
 	var body := Rect2(base.x - 25.0 * scale, base.y - 24.0 * scale, 50.0 * scale, 24.0 * scale)
 	canvas.draw_rect(body, _paint(HOUSE, light))
@@ -256,7 +221,5 @@ static func _house(canvas: CanvasItem, base: Vector2, scale: float, light: Color
 		Rect2(base.x - 4.0 * scale, base.y - 15.0 * scale, 8.0 * scale, 15.0 * scale),
 		_paint(TRUNK, light)
 	)
-
-
 static func _paint(base: Color, light: Color) -> Color:
 	return WorldPalette.tint(base, light)
