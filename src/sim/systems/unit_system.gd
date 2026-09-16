@@ -162,18 +162,27 @@ func tick_decisions(tick: int) -> Array[Dictionary]:
 ## combate" e nenhum movimento — quem esta a bater fica onde esta, mesmo com um
 ## posto do outro lado do mapa. Quem esta em DEAD tambem nao, por razoes obvias.
 ##
+## `piloted` e a excepcao, e nao contradiz a regra de cima: ela e sobre quem a
+## §52 CONDUZ, e este e conduzido por uma pessoa. O §24 da ao comando "Mover" o
+## contexto **Sempre**, e com a regra aplicada a todos um bicho a 30 px punha o
+## monarca em FIGHT e tirava o jogo das maos de quem o joga ate o bicho morrer.
+## Entra por parametro e nao por coluna porque nao e propriedade da unidade: e
+## quem a esta a conduzir agora, e isso vive no SimLoop (§45).
+##
 ## A separacao por steering (§53) entra com o MovementSystem proprio; aqui nao
 ## ha vizinhos nem empurroes.
-func tick_movement(delta: float) -> void:
+func tick_movement(delta: float, piloted: int = NENHUM) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
-		if has_targets[i] == 0 or not _anda(i):
+		if has_targets[i] == 0 or not _anda(i, piloted):
 			continue
 		xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
 
 
-func _anda(i: int) -> bool:
-	return states[i] != UnitFsm.State.DEAD and states[i] != UnitFsm.State.FIGHT
+func _anda(i: int, piloted: int) -> bool:
+	if states[i] == UnitFsm.State.DEAD:
+		return false
+	return states[i] != UnitFsm.State.FIGHT or ids[i] == piloted
 
 
 ## As colunas em tipos base, para o save (§62). Sem Object nenhum.

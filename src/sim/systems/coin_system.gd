@@ -88,6 +88,20 @@ func tick(delta: float) -> void:
 			settled[i] = 1
 
 
+## A altura maxima do arco de uma moeda largada, em px: v²/2g. Nao e um numero
+## novo — sai dos dois que a §61 ja tem em data/ —, e existe porque quem desenha
+## a sombra de contacto dela (§22) precisa de saber contra o que a medir. Zero
+## com gravidade zero: sem queda nao ha arco, e uma divisao por zero aqui era
+## uma sombra de tamanho infinito.
+func apex_px() -> float:
+	if _curva.coin_gravity_px_s2 <= 0.0:
+		return 0.0
+	var impulso := _curva.coin_drop_speed_px_s
+	# O 2 e o da formula e nao um numero de balanceamento — o portao G4 diz o
+	# mesmo ao deixar passar o inteiro e nao o float.
+	return impulso * impulso / (2 * _curva.coin_gravity_px_s2)
+
+
 ## Apanha por DISTANCIA, nao por colisao: colisao de moeda com 300 unidades e
 ## desperdicio (§53, Q-058). So apanha o que esta pousado, na mesma faixa, e ate
 ## `espaco` moedas — a capacidade do saco vem de UnitData.coin_capacity.

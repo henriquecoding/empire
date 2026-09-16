@@ -22,16 +22,17 @@ class_name InputRouter
 extends Node
 
 ## Uma moeda de cada vez. O §02 nao da outra unidade ao Verbo 1: a moeda E a
-## unidade, e largar duas era ja uma decisao de interface.
+## unidade, e largar duas era ja uma decisao de interface. Largar em CONTINUO
+## (§24) nao quebra isto — continuam a sair uma a uma, so que sozinhas.
 const UMA := 1
 const FONTE := &"player"
 
-## §24: "manter para largar em continuo". Uma moeda a cada oitavo de segundo —
-## depressa o bastante para encher uma obra sem martelar a tecla, devagar o
-## bastante para se ver cada moeda a cair e para se parar a tempo.
-const REPETICAO_S := 0.12
-
+## §24: "manter para largar em continuo". Quanto falta para a moeda seguinte
+## sair. O RITMO nao esta aqui: e o `coin_drop_repeat_s` da `economy.csv`, pela
+## regra 3 do AGENTS.md — um numero que se afina em playtest vive em data/, como
+## a gravidade e a dispersao do arco que estao ao lado dele (Q-083).
 var _repeticao := 0.0
+var _curva: EconomyCurve
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -61,7 +62,19 @@ func _process(delta: float) -> void:
 		return
 	if _repeticao <= 0.0:
 		_largar()
-		_repeticao = REPETICAO_S
+		# Nunca mais depressa do que um frame: com o intervalo a zero — um CSV
+		# mal preenchido — isto virava uma torneira e esvaziava o saco antes de
+		# a primeira moeda chegar ao chao.
+		_repeticao = maxf(_intervalo(), delta)
+
+
+## O ritmo do continuo, lido a pedido e na primeira utilizacao (AGENTS.md, regra
+## 8b): este no e filho da cena de jogo e o _ready() dele corre ANTES do dela —
+## ou seja, antes do Registry.load_all() que ela chama.
+func _intervalo() -> float:
+	if _curva == null:
+		_curva = SimFactory.curve()
+	return _curva.coin_drop_repeat_s
 
 
 ## Mover e escrever um alvo, e nao empurrar uma posicao: o passo 5 e que leva

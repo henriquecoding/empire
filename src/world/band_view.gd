@@ -72,6 +72,9 @@ func _draw() -> void:
 	_moedas()
 	_criaturas()
 	_tropa()
+	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
+	# corpo desenhado depois dele tapava-o.
+	PriceTag.draw_on(self, band, _tropas, _edificios)
 
 
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
@@ -105,11 +108,16 @@ func _fogueiras() -> void:
 		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, cores)
 
 
+## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
+## milhares de vezes por partida: e a animacao mais importante do jogo." O arco
+## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos.
 func _moedas() -> void:
 	var moedas := SimLoop.coins
+	var apice := moedas.apex_px()
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
+		Shadow.drop(self, moedas.xs[i], int(band), WorldPalette.MOEDA_R, moedas.heights[i], apice)
 		var y := WorldPalette.ground_of(int(band)) - moedas.heights[i] - WorldPalette.MOEDA_R
 		var cor := _luz.body(WorldPalette.MOEDA, moedas.xs[i])
 		draw_circle(Vector2(moedas.xs[i], y), WorldPalette.MOEDA_R, cor)

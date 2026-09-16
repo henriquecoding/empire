@@ -87,7 +87,10 @@ func _ready() -> void:
 	_moldura_aviso.size = _caixa(AVISO_CAIXA).size
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_veu.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_dica.text = "A/D mover · ESPAÇO largar · E passagem · direito alvo · TAB estado · ESC pausa"
+	_dica.text = (
+		"A/D mover · ESPAÇO largar (manter: em contínuo)"
+		+ " · E passagem · direito alvo · TAB estado · ESC pausa"
+	)
 	_veu.visible = false
 	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.build_completed.connect(_na_obra)

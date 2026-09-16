@@ -13,6 +13,7 @@ range_px = 200
 targets_bands = Array[int]([1, 0])
 recruit_cost = 3
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 80.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"ranged", &"hunter"])
 job_affinity = {

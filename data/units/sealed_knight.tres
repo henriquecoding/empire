@@ -12,6 +12,7 @@ accuracy_open = 1.0
 range_px = 60
 recruit_cost = 0
 drops_on_death = Array[StringName]([&"weapon", &"corpse"])
+move_speed = 80.0
 scale_tier = 3
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 shadow_width = 22

@@ -29,6 +29,22 @@ func _ready() -> void:
 	# Avancar a simulacao a mao, e nao esperar pelo relogio: fotografar a noite
 	# custava 340 segundos de espera por causa das seis fases do §48.
 	_avancar(float(args.get("avancar", 0.0)))
+	_pousar_o_rei(args)
+
+
+## `--rei <x>` poe o monarca num sitio antes da fotografia, em px de mundo a
+## contar do nucleo. Existe porque metade do que ha para ver so aparece com ele
+## ao pe da coisa — o preco de uma obra (PriceTag) e o alcance de uma passagem —
+## e esperar que ele la va a andar nao e uma fotografia, e um filme.
+func _pousar_o_rei(args: Dictionary) -> void:
+	if not args.has("rei") or SimLoop.state == null:
+		return
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	if i == UnitSystem.NENHUM:
+		return
+	var x := clampf(SimLoop.core_x + float(args["rei"]), 0.0, SimLoop.world_width)
+	SimLoop.units.xs[i] = x
+	SimLoop.units.clear_target(SimLoop.king_id)
 
 
 func _process(_delta: float) -> void:

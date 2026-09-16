@@ -9,6 +9,7 @@ display_key = "UNIT_SMITH"
 max_health = 12
 recruit_cost = 15
 drops_on_death = Array[StringName]([&"coins", &"corpse"])
+move_speed = 80.0
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"craft", &"smith"])

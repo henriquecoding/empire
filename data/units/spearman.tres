@@ -12,6 +12,7 @@ attack_interval = 1.1
 accuracy_open = 1.0
 recruit_cost = 4
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 80.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"shield", &"overlay"])
 tags = Array[StringName]([&"melee", &"holds_line", &"no_pursuit"])
 job_affinity = {

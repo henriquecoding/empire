@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
+[ext_resource type="Script" path="res://src/world/impact_view.gd" id="2_impacto"]
 [ext_resource type="Script" path="res://src/world/camera_rig.gd" id="3_cam"]
 [ext_resource type="Script" path="res://src/ui/input_router.gd" id="4_input"]
 [ext_resource type="Script" path="res://src/ui/hud.gd" id="5_hud"]
@@ -37,6 +38,9 @@ band = 2
 [node name="Subsolo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
 band = 2
+
+[node name="Impactos" type="Node2D" parent="Mundo"]
+script = ExtResource("2_impacto")
 
 [node name="Monarca" type="Node2D" parent="."]
 

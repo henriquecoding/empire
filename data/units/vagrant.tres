@@ -7,6 +7,7 @@ script = ExtResource("1_wmkm0")
 id = &"vagrant"
 display_key = "UNIT_VAGRANT"
 drops_on_death = Array[StringName]([&"coins", &"corpse"])
+move_speed = 80.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])
 tags = Array[StringName]([&"worker"])
 job_affinity = {
