@@ -59,7 +59,7 @@ isso que um comando de teste lançado com ele parece não fazer nada.
 | 15 | Exportar aqui | `make exportar-windows exportar-web` |
 | 16 | Estado: commit, ficheiros alterados, versões, templates, builds e saves | — |
 | 17 | Abrir a pasta dos saves | — |
-| 18 | Atualizar: `git pull --ff-only` e reimport (recusa com alterações locais) | `make importar` |
+| 18 | Atualizar: diz o ramo e o commit, faz `git pull --ff-only`, **lista os commits que trouxe** e reimporta. Recusa com alterações locais — e quando a única for o `project.godot`, diz que é o editor do Godot a reescrevê-lo e dá o comando para o deitar fora | `make importar` |
 | 19 | Relatório de defeito com os campos do modelo do GitHub, já com commit, Godot, sistema, semente e erros do último jogo | `.github/ISSUE_TEMPLATE/defeito.yml` |
 | 20 | Instalar `gdtoolkit` e `pillow` | `make ferramentas-python` |
 
@@ -107,7 +107,7 @@ retomar. Para o provar a sério:
 | Ação | Teclado e rato | Comando |
 |---|---|---|
 | Andar | `A`/`D` ou setas | Analógico esquerdo, D-pad |
-| Largar moeda (uma por toque) | `Espaço` | A |
+| Largar moeda (**manter: em contínuo**) | `Espaço` | A |
 | Passagem (Verbo 2) | `E` | X |
 | Painel de estado — semente, tick, FSM | `Tab` | Y |
 | Marcar alvo | Botão direito | Gatilho direito |
@@ -123,3 +123,11 @@ retomar. Para o provar a sério:
 - **Fechaste uma corrida de testes a meio**: os saves estão em
   `%APPDATA%\Godot\app_userdata\Empire\saves_guardados_durante_os_testes` e voltam sozinhos da
   próxima vez que abrires o menu.
+- **Atualizaste e o jogo continua igual**: corre a opção **18** e lê as três primeiras linhas.
+  Ela diz o ramo, o commit, e o que trouxe. As três razões, por ordem de frequência:
+  - **estás noutro ramo** — um `git pull` num ramo antigo corre sem erro e não traz nada. A 18
+    recusa e dá-te o `checkout`;
+  - **o `project.godot` está alterado** — o editor do Godot reescreve-o ao abrir o projeto numa
+    versão diferente da de `.godot-version`, e a 18 recusa para não perder trabalho. Não é trabalho
+    teu: a 18 diz-te isso e dá o comando para o deitar fora;
+  - **já estavas na ponta** — e então a 18 di-lo com o commit, em vez de te deixar a adivinhar.
