@@ -1005,7 +1005,7 @@
    "docs/design/19-arquitetura-godot-4-6.md"
   ],
   "depende": "F0-04",
-  "feito": "Um endereço público que serve a última main verde. O pages.yml corre por workflow_run a seguir ao ci, só com ele verde e só na main.",
+  "feito": "Um endereço público que serve a última main verde. O job `publicar` do ci.yml tem needs: [ci, export] — não arranca sobre um commit que não passou — e serve o artefacto empire-web dessa mesma corrida.",
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
   "estado": "feito",
   "horas": "2"
