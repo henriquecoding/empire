@@ -21,6 +21,9 @@ godot --headless --path . --export-debug "Linux" build/empire.x86_64   # precisa
 
 Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena principal é `scenes/boot.tscn`.
 
+No Windows, sem `make` nem WSL: duplo clique em `JOGAR-E-TESTAR.bat`, que corre estes mesmos
+comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
+
 ## Onde está o quê
 
 | Pasta | O quê |
