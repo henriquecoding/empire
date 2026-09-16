@@ -1005,9 +1005,9 @@
    "docs/design/19-arquitetura-godot-4-6.md"
   ],
   "depende": "F0-04",
-  "feito": "Um endereço público que serve a última main verde. O job `publicar` do ci.yml tem needs: [ci, export] — não arranca sobre um commit que não passou — e serve o artefacto empire-web dessa mesma corrida.",
+  "feito": "Um endereço público que serve a última main verde. O job `publicar` está escrito e verde, mas NÃO publicou nada ainda: falta ligar o Pages em Settings > Pages > Source: GitHub Actions, e isso é um clique de quem tem admin. Até lá o job avisa e salta.",
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
-  "estado": "feito",
+  "estado": "por fazer",
   "horas": "2"
  }
 }
