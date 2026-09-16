@@ -44,16 +44,72 @@ function Show-Estado {
     return 0
 }
 
+## Os ficheiros que o EDITOR do Godot reescreve sozinho quando abre o projeto
+## numa versao diferente da fixada. Nao sao trabalho de ninguem: sao ruido do
+## motor, e sao a razao numero um de um `atualizar` que se recusa a andar.
+$script:RuidoDoMotor = @('project.godot')
+
+## O ramo que o CI mede e onde o trabalho aterra. Um `git pull` num ramo antigo
+## corre sem erro e nao traz nada — e e assim que se fica a olhar para um jogo
+## de ontem a jurar que se atualizou.
+$script:RamoDeTrabalho = 'main'
+
+
 function Update-Projeto {
-    $alteracoes = @(& git -C $Raiz status --porcelain --untracked-files=no 2>$null)
-    if ($alteracoes.Count -gt 0) {
-        Write-Falha 'Há ficheiros do projeto alterados; não atualizo para não os perder:'
-        $alteracoes | Select-Object -First 12 | ForEach-Object { Write-Host "    $_" }
-        Write-Nota 'Para os guardar antes: git stash (e depois git stash pop).'
+    $ramo = (& git -C $Raiz branch --show-current 2>$null | Select-Object -First 1)
+    $antes = (& git -C $Raiz rev-parse --short HEAD 2>$null | Select-Object -First 1)
+    Write-Host "  Ramo   : $ramo"
+    Write-Host "  Commit : $antes"
+
+    if ($ramo -and $ramo -ne $script:RamoDeTrabalho) {
+        Write-Falha "Estas no ramo '$ramo' e o trabalho aterra em '$($script:RamoDeTrabalho)'."
+        Write-Nota "Um pull aqui corre sem erro e nao traz nada. Para mudar:"
+        Write-Nota "  git -C `"$Raiz`" checkout $($script:RamoDeTrabalho)"
         return 1
     }
+
+    $alteracoes = @(& git -C $Raiz status --porcelain --untracked-files=no 2>$null)
+    if ($alteracoes.Count -gt 0) {
+        # Separar o ruido do motor do que e mesmo trabalho: a mensagem que diz
+        # "ha ficheiros alterados" sem dizer QUAIS e porque manda a pessoa
+        # procurar sozinha uma coisa que nao foi ela que fez.
+        $mexidos = $alteracoes | ForEach-Object { ($_ -replace '^..\s+', '').Trim() }
+        $trabalho = @($mexidos | Where-Object { $script:RuidoDoMotor -notcontains $_ })
+        Write-Falha 'Ha ficheiros do projeto alterados; nao atualizo para nao os perder:'
+        $mexidos | Select-Object -First 12 | ForEach-Object { Write-Host "    $_" }
+        if ($trabalho.Count -eq 0) {
+            Write-Aviso 'Isto e ruido do motor e nao trabalho teu: foi o editor do Godot a'
+            Write-Nota 'reescrever o projeto ao abri-lo numa versao diferente da fixada'
+            Write-Nota "($(Get-VersaoFixada), em .godot-version). Podes deitar fora sem perder nada:"
+            foreach ($f in $mexidos) { Write-Nota "  git -C `"$Raiz`" checkout -- $f" }
+        }
+        else {
+            Write-Nota 'Para os guardar antes: git stash (e depois git stash pop).'
+        }
+        return 1
+    }
+
     & git -C $Raiz pull --ff-only 2>&1 | ForEach-Object { Write-Host "  $_" }
-    if ($LASTEXITCODE -ne 0) { Write-Falha 'O git pull não avançou (ver acima).'; return 1 }
+    if ($LASTEXITCODE -ne 0) {
+        Write-Falha 'O git pull nao avancou (ver acima).'
+        Write-Nota 'Se o ramo divergiu, o --ff-only recusa de proposito. Ve com:'
+        Write-Nota "  git -C `"$Raiz`" log --oneline --graph HEAD...origin/$($script:RamoDeTrabalho)"
+        return 1
+    }
+
+    # Dizer o que mudou, e nao so que correu. "Ja estava atualizado" e uma
+    # resposta; ficar sem resposta nenhuma manda a pessoa abrir o jogo para
+    # descobrir, e foi isso que custou uma sessao a alguem.
+    $depois = (& git -C $Raiz rev-parse --short HEAD 2>$null | Select-Object -First 1)
+    if ($antes -eq $depois) {
+        Write-Ok "Ja estavas na ponta do '$($script:RamoDeTrabalho)' ($depois) — nada para trazer."
+    }
+    else {
+        $quantos = @(& git -C $Raiz log --oneline "$antes..$depois" 2>$null).Count
+        Write-Ok "$antes -> $depois ($quantos commit(s) novo(s)):"
+        & git -C $Raiz log --oneline "$antes..$depois" 2>$null |
+            Select-Object -First 10 | ForEach-Object { Write-Host "    $_" }
+    }
     return (Confirm-Importado -Forcar)
 }
 
