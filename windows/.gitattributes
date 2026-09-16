@@ -1,0 +1,5 @@
+# A raiz forca eol=lf em tudo. Um .bat com LF parte-se no cmd.exe (rotulos e goto
+# a meio de um bloco de 512 bytes), e o PowerShell 5.1 so le acentos num .ps1 com BOM.
+# Mesma regra da raiz: a ultima que casa e a que vale.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
