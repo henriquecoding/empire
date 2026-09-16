@@ -1,4 +1,4 @@
-# ADR 0022 — O jogo publica-se no GitHub Pages, e só o que passou nos portões
+# ADR 0022 — O jogo publica-se no GitHub Pages, e o portão é o `needs:`
 
 - Estado: aceite
 - Data: 2026-09-16
@@ -19,27 +19,37 @@ todas as letras (*"o `python3 -m http.server` chega"*). O GitHub Pages é o serv
 já tem, sem conta nova, sem fatura e sem segredo para guardar.
 
 ## Decisão
-**O jogo publica-se no GitHub Pages a partir da `main`, e publica-se o commit que passou nos portões.**
+**O jogo publica-se no GitHub Pages a partir da `main`, e o portão é o `needs:` do próprio `ci.yml`.**
 
-O `pages.yml` corre por `workflow_run` **a seguir** ao `ci`, e só quando ele acaba **verde** e **na main**. Faz
-`checkout` do `head_sha` dessa corrida — e não da ponta da `main` —, exporta com o mesmo `make exportar-web` que
-a CI já corre, e entrega a pasta ao Pages.
+O job `publicar` tem `needs: [ci, export]` e `if: success() && github.ref == 'refs/heads/main'`. O job `ci` é o
+que já existia para a protecção de ramo e só fica verde com os cinco portões verdes — por isso o `publicar` não
+pode sequer **arrancar** sobre um commit que não passou. E não reconstrói nada: serve o artefacto `empire-web`
+que o job do export produziu **nesta mesma corrida**, byte a byte.
 
-Fica **fora** do `ci.yml`, por três razões e não uma: o `ci.yml` tem `cancel-in-progress: true` e cancelar um
-deploy a meio deixa o site a servir metade de um jogo; o `ci.yml` corre em todos os ramos e publicar um ramo de
-trabalho é publicar trabalho por acabar; e o `ci.yml` abre a dizer *"nenhum job deste workflow escreve no
-repositório"* — um deploy escreve, e a permissão fica visível num ficheiro só.
+As permissões (`pages: write`, `id-token: write`) ficam declaradas **no job** e não no workflow, contra a linha de
+abertura do `ci.yml` (*"nenhum job deste workflow escreve no repositório"*) — a excepção é uma, e vê-se onde está.
+O Pages liga-se sozinho (`configure-pages` com `enablement: true`): não há interruptor para ninguém carregar.
 
 ## Alternativas consideradas
-**Um job no `ci.yml` com `if: github.ref == 'refs/heads/main'`.** Poupava um ficheiro e herdava as três
-propriedades erradas acima. A do `cancel-in-progress` é a que decide: é a única que corrompe o que já está
-publicado, e não apenas a corrida.
+**Um `pages.yml` separado, accionado por `workflow_run` depois do `ci`.** Foi a primeira decisão desta ADR, e foi
+**escrita, empurrada, fundida na `main` — e não funcionou.** O `workflow_run` tem um arranque a frio que só se
+descobre a tentar: o GitHub resolve a lista de subscritores a partir dos workflows **já registados**, e um
+workflow cujos únicos gatilhos são `workflow_run` e `workflow_dispatch` nunca chega a ser registado pelo push que
+o introduz. Medido: quinze minutos depois do merge e do `ci` verde na `main`, o `GET
+/actions/workflows/pages.yml` devolvia **404**, o workflow não aparecia na lista, e nem o `workflow_dispatch` o
+alcançava — não há botão para carregar num workflow que não existe. Rejeitada por não arrancar.
 
-**Descarregar o artefacto `empire-web` da corrida do `ci` em vez de exportar outra vez.** Publicaria os *bytes*
-exactos que os portões viram, e é mais rápido — mas obriga a um `download-artifact` com `run-id` e *token*
-cruzado, e passa a depender da retenção de 7 dias do artefacto. Exportar de novo a partir do mesmo `head_sha` com
-o mesmo alvo do `Makefile` dá o mesmo jogo por um caminho que se lê de uma vez. Rejeitada por custo de leitura,
-não por correcção.
+As três razões que na altura justificaram separá-lo não sobreviveram ao exame:
+
+| Razão escrita então | O que se confirmou |
+|---|---|
+| *"cancelar um deploy a meio deixa o Pages a servir metade de um jogo"* | **Exagerado.** Um deploy do Pages é a troca atómica de um artefacto: cancelá-lo deixa a versão anterior servida, não meia. |
+| *"o `ci.yml` corre em todos os ramos"* | Verdade, e resolve-se com uma linha: `if: github.ref == 'refs/heads/main'`. |
+| *"o `ci.yml` abre a dizer que nenhum job escreve"* | Verdade, e a resposta certa não é outro ficheiro: é declarar a permissão **no job**, que é onde uma excepção se lê. |
+
+**Reexportar o Web em vez de reusar o artefacto.** Era o que o `pages.yml` fazia, e custava outro `checkout`,
+outro motor e outro 1,2 GB de *templates*. Dentro da mesma corrida o artefacto já existe e é exactamente o que os
+portões viram — reexportar dava o mesmo jogo por mais dinheiro e com uma garantia mais fraca.
 
 **Um GitHub Release com os três binários.** Resolve o download permanente e não resolve o que falta: continua a
 não haver onde **carregar e jogar**. Não se exclui — é outra decisão, para quando houver versões a nomear.
@@ -53,16 +63,15 @@ coisa de que precisavam primeiro. Um chumbo na CI deixa de ser só um chumbo: pa
 publicado*, e isso é uma segunda razão para o manter verde.
 
 Três dependências novas, todas oficiais do GitHub e todas já vigiadas pelo `dependabot.yml` no ecossistema
-`github-actions`: `actions/configure-pages`, `actions/upload-pages-artifact` e `actions/deploy-pages`.
+`github-actions`, sem uma linha a mudar nesse ficheiro: `actions/configure-pages`, `actions/upload-pages-artifact`
+e `actions/deploy-pages`. Nenhum segredo: o Pages usa o `GITHUB_TOKEN` da corrida.
 
-O repositório passa a ter um ficheiro com `permissions: pages: write` e `id-token: write`. São as permissões
-mínimas que o Pages exige e estão declaradas **no job** e não no workflow, para que a excepção se veja na
-revisão. Nenhum segredo é preciso: o Pages usa o `GITHUB_TOKEN` da corrida.
+O repositório é público, e por isso o Pages não custa nada e não expõe nada que já não estivesse exposto — o que
+se serve é a pasta `build/web/` e mais nada. Se um dia passar a privado, o Pages privado exige plano pago e o
+`deploy-pages` chumba com uma mensagem clara, sem publicar nada de errado.
 
-O Pages liga-se sozinho: o `configure-pages` corre com `enablement: true`, e é a própria corrida que publica
-que o activa na primeira vez. Não há interruptor para ninguém carregar. O repositório é público — o Pages não
-custa nada e não expõe nada que já não estivesse exposto, porque o que se serve é a pasta `build/web/` e mais
-nada. Se um dia o repositório passar a privado, o Pages privado exige um plano pago e o `deploy-pages` chumba com
-uma mensagem clara, sem publicar nada de errado.
+**A lição, e é a que fica:** um deploy que depende de um gatilho que nunca disparou é indistinguível de não haver
+deploy. Um `needs:` dentro da corrida que já existe não tem arranque a frio, não tem lista de subscritores e não
+tem *token* cruzado — e é um portão mais forte, porque o job não arranca em vez de arrancar e desistir.
 
-Reverter isto é apagar um ficheiro. Nada no jogo depende dele.
+Reverter isto é apagar um job. Nada no jogo depende dele.
