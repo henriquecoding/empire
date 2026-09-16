@@ -877,9 +877,12 @@
   pagamento por nível de uma vez"* — e isso era uma leitura a mais: o §55 quer a moeda física a cair uma a uma
   (*"uma obra existe quando uma moeda cai num BuildSlot"*), e o que o §24 pede não é um pagamento de uma vez, é
   **a mesma moeda a sair sozinha**. Pagar o Bastião de 65 moedas à tecla eram 65 toques.
-- **O número que não está no dossiê:** o ritmo. A proposta é `coin_drop_repeat_s = 0,2` — os seis *ticks* da
-  fatia de decisão do §52 a 30 Hz, que é o ritmo a que este jogo já reavalia o que quer que seja. Dá 5 moedas/s,
-  e o degrau mais caro do §10 sai em 13 s de tecla premida.
+- **O número que não está no dossiê:** o ritmo. Fica `coin_drop_repeat_s = 0,12` — pouco mais de oito moedas
+  por segundo, o degrau mais caro do §10 (o Bastião, 65) em 8 s de tecla premida. O valor vem do PR #16, que
+  chegou a esta mesma linha do §24 por outro caminho e o escreveu num `const` do router com a justificação
+  certa (*"depressa o bastante para encher uma obra sem martelar a tecla, devagar o bastante para se ver cada
+  moeda a cair"*); ao juntar os dois ficou o **número dele** e o **sítio deste** — `economy.csv`, pela regra 3
+  do AGENTS.md, ao lado da gravidade e da dispersão do arco, que são a mesma classe de número.
 - **O que isto NÃO faz, e é de propósito:** não paga vários níveis de uma vez. O §55 diz que uma obra a meio
   não aceita moeda, e por isso o contínuo enche o degrau seguinte, a obra arranca, e as moedas que saírem
   depois ficam no chão à espera do degrau a seguir — que é o que o Kingdom faz.

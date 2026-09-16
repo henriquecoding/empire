@@ -70,7 +70,7 @@ castelo e duas das três tropas. Isso era outra coisa, e está corrigido — era
 FIGHT** (Q-085), a tanque com um bicho ao lado em vez de recuar. Com o §24 a valer (*"Mover — Sempre"*), a
 noite 1 volta a fechar com o castelo aos 1000 e as três tropas de pé, e o que sobra é a noite 2.
 
-Nenhum teste de design mudou de resultado: os 406 casos da suíte dão o mesmo — 397 a passar e os 9 saltados de
+Nenhum teste de design mudou de resultado: os 405 casos da suíte dão o mesmo — 396 a passar e os 9 saltados de
 sempre —, o F1-16 continua a fechar as duas metades, e a varredura de nove defesas por dez dias do §66 não mexe.
 A vistoria ganhou por isso uma coluna nova — a distância do rei ao núcleo —, porque sem ela uma noite perdida
 por má jogada e uma noite perdida por defeito do *tick* leem-se iguais na tabela.

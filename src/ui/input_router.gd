@@ -10,8 +10,14 @@
 # project.godot desde o F0-02 — cinco delas sem ninguem a le-las. Este ficheiro
 # e quem passou a ler.
 #
-# O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos seis
-# sistemas que os seus segmentos abrem (Fase 2).
+# Duas coisas correm no frame e nao no tick, e e de proposito: andar e marcar
+# alvo sao GESTOS, e um gesto lido a 60 Hz fixos chega sempre um bocado depois
+# da mao. O que se escreve continua a ser um alvo e uma intencao — o passo 5 do
+# §43 e que leva a gente — e por isso o frame nao muda o que a simulacao faz,
+# so quando ela fica a saber.
+#
+# O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos
+# seis sistemas que os seus segmentos abrem (Fase 2).
 class_name InputRouter
 extends Node
 
@@ -21,8 +27,11 @@ extends Node
 const UMA := 1
 const FONTE := &"player"
 
-## Ha quanto tempo saiu a ultima moeda da tecla premida.
-var _desde_a_moeda: float = 0.0
+## §24: "manter para largar em continuo". Quanto falta para a moeda seguinte
+## sair. O RITMO nao esta aqui: e o `coin_drop_repeat_s` da `economy.csv`, pela
+## regra 3 do AGENTS.md — um numero que se afina em playtest vive em data/, como
+## a gravidade e a dispersao do arco que estao ao lado dele (Q-083).
+var _repeticao := 0.0
 var _curva: EconomyCurve
 
 
@@ -34,53 +43,34 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	if not SimLoop.running():
 		return
-	if evento.is_action_pressed(&"verb_drop"):
-		_desde_a_moeda = 0.0
-		_largar()
-	elif evento.is_action_pressed(&"verb_assume"):
+	if evento.is_action_pressed(&"verb_assume"):
 		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+		get_viewport().set_input_as_handled()
 	elif evento.is_action_pressed(&"mark_target"):
 		SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _rato_em_x()})
+		get_viewport().set_input_as_handled()
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if not SimLoop.running():
+		_repeticao = 0.0
 		return
 	_andar(Input.get_axis(&"move_left", &"move_right"))
-	_largar_em_continuo(delta)
-
-
-## §24, a linha que estava no mapa de comando e nao era lida por ninguem:
-## "Largar em continuo — Espaco (manter) — pagar varios niveis de uma vez".
-##
-## Nao e uma moeda maior nem um pagamento de uma vez: e a MESMA moeda do Verbo 1
-## a sair sozinha ao ritmo do coin_drop_repeat_s. O §55 continua inteiro — cada
-## uma cai, faz o arco e e absorvida — e o que muda e so nao ter de tocar 65
-## vezes na tecla para pagar um Bastiao.
-func _largar_em_continuo(delta: float) -> void:
+	_repeticao = maxf(0.0, _repeticao - delta)
 	if not Input.is_action_pressed(&"verb_drop"):
-		_desde_a_moeda = 0.0
+		_repeticao = 0.0
 		return
-	var intervalo := _intervalo()
-	_desde_a_moeda += delta
-	var quantas := repeats(_desde_a_moeda, intervalo)
-	_desde_a_moeda -= quantas * intervalo
-	for _i in quantas:
+	if _repeticao <= 0.0:
 		_largar()
+		# Nunca mais depressa do que um frame: com o intervalo a zero — um CSV
+		# mal preenchido — isto virava uma torneira e esvaziava o saco antes de
+		# a primeira moeda chegar ao chao.
+		_repeticao = maxf(_intervalo(), delta)
 
 
-## Quantas moedas cabem no tempo acumulado. Sai daqui para ser medivel sem
-## teclado — e a unica conta deste ficheiro, e e a que se pode enganar. Um
-## intervalo de zero ou negativo e "sem continuo", e nao um ciclo infinito.
-static func repeats(acumulado: float, intervalo: float) -> int:
-	if intervalo <= 0.0:
-		return 0
-	return int(acumulado / intervalo)
-
-
-## A pedido, na primeira utilizacao (AGENTS.md, regra 8b). Este no e filho da
-## cena de jogo e o _ready() dele corre ANTES do da cena — ou seja, antes do
-## Registry.load_all() que ela chama.
+## O ritmo do continuo, lido a pedido e na primeira utilizacao (AGENTS.md, regra
+## 8b): este no e filho da cena de jogo e o _ready() dele corre ANTES do dela —
+## ou seja, antes do Registry.load_all() que ela chama.
 func _intervalo() -> float:
 	if _curva == null:
 		_curva = SimFactory.curve()

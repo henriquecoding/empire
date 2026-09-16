@@ -101,10 +101,16 @@ static func _rente(inteira: Rect2) -> Rect2:
 
 ## A forma cheia. O `draw_colored_polygon` do Godot triangula o que recebe, e por
 ## isso um tronco, uns dentes ou um mastro — que sao concavos — entram inteiros.
+##
+## Por cima dela vem o StructureArt: a forma diz o QUE e, e ele diz como e por
+## dentro — tronco e copa, fiadas e ameias, plataforma e seteiras. A ordem
+## importa e nao se inverte: o detalhe assenta na massa, nunca a substitui.
 static func _massa(
 	canvas: CanvasItem, forma: Silhouette.Form, caixa: Rect2, vaga: BuildSlot, cor: Color
 ) -> void:
-	canvas.draw_colored_polygon(Outline.shape(forma, caixa, _dentes(vaga)), cor)
+	var dentes := _dentes(vaga)
+	canvas.draw_colored_polygon(Outline.shape(forma, caixa, dentes), cor)
+	StructureArt.draw_on(canvas, forma, caixa, vaga, cor, dentes)
 
 
 ## A caixa de uma obra no nivel que ela tem. A largura vem de data/ — o
