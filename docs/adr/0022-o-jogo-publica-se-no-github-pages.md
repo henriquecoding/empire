@@ -28,7 +28,16 @@ que o job do export produziu **nesta mesma corrida**, byte a byte.
 
 As permissões (`pages: write`, `id-token: write`) ficam declaradas **no job** e não no workflow, contra a linha de
 abertura do `ci.yml` (*"nenhum job deste workflow escreve no repositório"*) — a excepção é uma, e vê-se onde está.
-O Pages liga-se sozinho (`configure-pages` com `enablement: true`): não há interruptor para ninguém carregar.
+
+**O Pages não se liga sozinho, e isso está medido.** O `GITHUB_TOKEN` de uma corrida sabe *publicar* no Pages e
+não sabe *criá-lo*: com `enablement: true` no `configure-pages`, a corrida chumbou com *"Create Pages site failed:
+Resource not accessible by integration"*. Ligar o Pages é um clique de quem tem `admin` no repositório, e uma vez
+só — **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+Por isso o job **pergunta primeiro**, com um `gh api repos/.../pages`. Sem Pages ligado, avisa e salta os passos
+seguintes em vez de chumbar: pintar a `main` de vermelho por causa de uma definição do repositório é dar o alarme
+a quem não pode fazer nada com ele, e um `::warning::` que nomeia os dois cliques diz mais do que um `HttpError`.
+Na primeira corrida depois de alguém ligar o interruptor, publica sozinho.
 
 ## Alternativas consideradas
 **Um `pages.yml` separado, accionado por `workflow_run` depois do `ci`.** Foi a primeira decisão desta ADR, e foi
