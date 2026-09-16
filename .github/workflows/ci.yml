@@ -303,26 +303,49 @@ jobs:
       name: github-pages
       url: ${{ steps.publicacao.outputs.page_url }}
     steps:
+      # O GITHUB_TOKEN desta corrida sabe PUBLICAR no Pages e nao sabe CRIA-LO.
+      # Medido: com `enablement: true` no configure-pages, esta mesma corrida
+      # chumbou com "Create Pages site failed: Resource not accessible by
+      # integration". Ligar o Pages e um clique de quem tem admin, e uma vez so:
+      # Settings > Pages > Source: GitHub Actions.
+      #
+      # Por isso pergunta-se PRIMEIRO. Sem Pages ligado, isto avisa e salta o
+      # resto do job — pintar a main de vermelho por causa de uma definicao do
+      # repositorio era dar o alarme a quem nao pode fazer nada com ele. E na
+      # primeira corrida depois de alguem ligar o interruptor, publica sozinho.
+      - id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${GITHUB_REPOSITORY}/pages" >/dev/null 2>&1; then
+            echo "ligado=true" >> "$GITHUB_OUTPUT"
+            echo "Pages ligado: publica-se."
+          else
+            echo "ligado=false" >> "$GITHUB_OUTPUT"
+            T='Pages por ligar'
+            M='Settings > Pages > Build and deployment > Source: GitHub Actions.'
+            echo "::warning title=${T}::${M} Ate la nao se publica nada."
+          fi
+
       # Nao ha `checkout`: nao e preciso o repositorio para publicar uma pasta
-      # que outro job ja construiu.
-      - uses: actions/download-artifact@v7
+      # que outro job ja construiu. O artefacto e o `empire-web` DESTA corrida,
+      # byte a byte o que os portoes viram.
+      - if: steps.pages.outputs.ligado == 'true'
+        uses: actions/download-artifact@v7
         with:
           name: empire-web
           path: web
 
-      # `enablement: true` LIGA o Pages na primeira corrida, em vez de esperar
-      # que alguem va a Settings carregar num interruptor. O repositorio e
-      # publico: o Pages nao custa nada nem expoe nada que ja nao estivesse
-      # exposto — o que se serve e esta pasta e mais nada.
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - if: steps.pages.outputs.ligado == 'true'
+        uses: actions/configure-pages@v5
 
-      - uses: actions/upload-pages-artifact@v4
+      - if: steps.pages.outputs.ligado == 'true'
+        uses: actions/upload-pages-artifact@v4
         with:
           path: web
 
       - id: publicacao
+        if: steps.pages.outputs.ligado == 'true'
         uses: actions/deploy-pages@v4
 
   # ── 7 ─────────────────────────────────────────────────────────────────────
