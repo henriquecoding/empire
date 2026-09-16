@@ -703,6 +703,47 @@
   "estado": "por fazer",
   "horas": "3"
  },
+ "GB-04": {
+  "title": "O passo do §21: a região atravessa-se em 40–60 s",
+  "porque": "A região tem 3840 px e a units.csv andava aos 26 px/s do valor por omissão do campo: 148 s de ponta a ponta, num dia de 360 s. O §21 escreve 40–60 s e manda derivar a velocidade daí.",
+  "spec": [
+   "docs/design/21-geracao-procedural-do-territorio.md",
+   "docs/design/12-montarias.md",
+   "docs/design/44-os-recursos-com-todos-os-campos.md"
+  ],
+  "depende": "GB-01",
+  "feito": "tests/travessia_test.gd verde: a região a pé em 40–60 s, a montaria abaixo disso, e quem segue o rei ao passo dele. ADR 0021 escrita e Q-082 aberta.",
+  "fora": "creatures.csv — a velocidade das criaturas está na tabela do §07 e é conferida contra o dossiê. E a MountSystem, que é da Fase 6.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-05": {
+  "title": "O preço daquilo em cima de que estás",
+  "porque": "O §55 diz «não há botão construir» e o §25 diz que «a silhueta é o convite» — mas um convite sem preço faz o jogador largar moedas a ver se acerta.",
+  "spec": [
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "GB-01",
+  "feito": "Ao alcance de uma obra ou de quem ainda não é de ninguém, o que FALTA pagar aparece em moedas por cima dela: douradas as que o saco cobre, apagadas as outras.",
+  "fora": "Texto e algarismos — o §24 não tem HUD para isso. A roda do rei (Fase 2). E a arte: isto é greybox e desaparece com o ART-01.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-06": {
+  "title": "Largar em contínuo, que o §24 já mandava",
+  "porque": "«Largar em contínuo — Espaço (manter)» está no mapa de comando do §24 e ninguém o lia. Pagar o Bastião de 65 moedas eram 65 toques na tecla.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md"
+  ],
+  "depende": "F1-01",
+  "feito": "Com a tecla premida sai uma moeda a cada coin_drop_repeat_s, pela fila de intenções do §61 como qualquer outra.",
+  "fora": "Pagar vários níveis de uma vez — o §55 diz que uma obra a meio não aceita moeda. E o gatilho analógico do comando.",
+  "estado": "feito",
+  "horas": "1"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",

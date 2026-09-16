@@ -81,6 +81,7 @@ src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas 
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
 src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
 src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco, pago (GB-03)
+src/world/price_tag.gd      PriceTag      o preco do que esta debaixo do rei (§24, §55, GB-05)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)

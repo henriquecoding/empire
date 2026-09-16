@@ -28,6 +28,10 @@ const MARGEM := 640.0
 const PRESA_S := 20.0
 const PRESA_PX := 2.0
 
+## Uma linha da marcha. Os campos entram em tres grupos — o relogio, o campo e o
+## estado — porque e por grupos que a tabela se le.
+const LINHA := "  %3d | %-10s | %4d/%-5d | %6d | %6d | %6d | %5d | %d"
+
 var _achados: Array[String] = []
 var _parada_desde: Dictionary = {}
 var _luta_desde: Dictionary = {}
@@ -42,7 +46,7 @@ func _ready() -> void:
 	SimLoop.start(SEMENTE)
 	Greybox.build()
 	print("\nvistoria — %d dias no greybox com piloto, semente %d" % [_dias, SEMENTE])
-	print("  dia | fase       |  meus/tropas | bichos | moedas | nucleo | achados")
+	print("  dia | fase       |  meus/tropas | bichos | moedas | nucleo | rei | achados")
 	_correr()
 	_relatorio()
 
@@ -180,21 +184,10 @@ func _fases() -> void:
 func _marco() -> void:
 	if int(ClockService.clock.current_phase()) != _fase or not _nova_fase():
 		return
-	print(
-		(
-			"  %3d | %-10s | %4d/%-5d | %6d | %6d | %6d | %d"
-			% [
-				SimLoop.state.day,
-				Hud.FASES[_fase],
-				_meus(),
-				SimLoop.units.count(),
-				SimLoop.creatures.count(),
-				SimLoop.coins.count(),
-				_nucleo(),
-				_achados.size(),
-			]
-		)
-	)
+	var relogio: Array = [SimLoop.state.day, Hud.FASES[_fase]]
+	var campo: Array = [_meus(), SimLoop.units.count(), SimLoop.creatures.count()]
+	var estado: Array = [SimLoop.coins.count(), _nucleo(), _do_rei(), _achados.size()]
+	print(LINHA % (relogio + campo + estado))
 
 
 func _nova_fase() -> bool:
@@ -214,6 +207,14 @@ func _meus() -> int:
 		if SimLoop.units.owners[i] != RecruitSystem.SEM_DONO and SimLoop.units.alive(i):
 			n += 1
 	return n
+
+
+## A que distancia de casa esta o rei, em px. O §07 da-lhe um raio de presenca
+## dentro do qual ninguem foge e o §25 poe quem nao tem posto a segui-lo: sem
+## esta coluna, uma noite perdida por ma jogada le-se como defeito do tick.
+func _do_rei() -> int:
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	return int(absf(SimLoop.units.xs[i] - SimLoop.core_x)) if i != UnitSystem.NENHUM else -1
 
 
 func _nucleo() -> int:

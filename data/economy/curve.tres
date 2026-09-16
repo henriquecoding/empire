@@ -25,6 +25,7 @@ coin_stack_max = 99
 coin_gravity_px_s2 = 700.0
 coin_drop_speed_px_s = 180.0
 coin_drop_spread_px_s = 40.0
+coin_drop_repeat_s = 0.2
 recruit_notice_px = 120.0
 follow_distance_px = 30.0
 follow_spacing_px = 18.0

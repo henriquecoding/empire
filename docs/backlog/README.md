@@ -61,6 +61,9 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | por fazer |
 | [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | por fazer |
 | [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | por fazer |
+| [GB-04](GB-04.md) | O passo do §21: a região atravessa-se em 40–60 s | GB-01 | feito |
+| [GB-05](GB-05.md) | O preço daquilo em cima de que estás | GB-01 | feito |
+| [GB-06](GB-06.md) | Largar em contínuo, que o §24 já mandava | F1-01 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
 

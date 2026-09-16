@@ -37,6 +37,10 @@ extends Resource
 @export var coin_gravity_px_s2: float = 0.0
 @export var coin_drop_speed_px_s: float = 0.0
 @export var coin_drop_spread_px_s: float = 0.0
+## De quanto em quanto tempo sai uma moeda com a tecla premida. O §24 tem
+## "Largar em continuo — Espaco (manter)" no mapa de comando e nao lhe da ritmo:
+## a proposta esta ancorada na fatia de decisao do §52. Ver Q-083.
+@export var coin_drop_repeat_s: float = 0.0
 
 @export_group("Recrutamento — §25 minuto 0:20, F1-04")
 ## O §25 descreve o minuto 0:20 em duas frases — "largas uma moeda perto dele" e

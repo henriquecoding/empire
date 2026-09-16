@@ -40,47 +40,55 @@ static func draw_on(
 static func _obra(
 	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
 ) -> void:
+	var caixa := drawn_box(vaga, forma)
 	if vaga.standing():
-		var caixa := _caixa(vaga, forma, vaga.level)
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.OBRA, x))
 		Gauge.health(canvas, caixa, float(vaga.health) / maxf(1.0, float(vaga.max_health())))
 		return
 	if vaga.state == BuildSlot.State.RUIN:
-		_ruina(canvas, vaga, forma, luz, x)
+		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.VAZIO, x))
 		return
 	if vaga.state != BuildSlot.State.EMPTY:
 		# Em andaime: a forma do que vem, ja cheia, mas na cor da madeira. §55 —
 		# "a obra existe quando uma moeda cai", e a partir dai ve-se o que sera.
-		var proxima := _caixa(vaga, forma, vaga.level + 1)
-		_massa(canvas, forma, proxima, vaga, luz.body(WorldPalette.ANDAIME, x))
+		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.ANDAIME, x))
 		return
-	_convite(canvas, vaga, forma, luz, x)
+	_convite(canvas, vaga, forma, luz, caixa)
 
 
-## §25: "a silhueta e o convite". Contorno, a altura do TOPO da escada — um
+## A caixa que esta obra ocupa no ecra AGORA, no estado em que esta. E publica
+## porque nao e so o desenho que precisa dela: o PriceTag pousa o preco em cima
+## do que se ve, e adivinhar esse topo era ter duas respostas para uma pergunta
+## que so tem uma.
+static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
+	if vaga.standing():
+		return _caixa(vaga, forma, vaga.level)
+	if vaga.state == BuildSlot.State.RUIN:
+		return _rente(_caixa(vaga, forma, maxi(1, vaga.level)))
+	if vaga.state != BuildSlot.State.EMPTY:
+		return _caixa(vaga, forma, vaga.level + 1)
+	# §25: "a silhueta e o convite" — o sitio vazio mostra o TOPO da escada, e nao
+	# o primeiro degrau: um sitio de muro promete o Bastiao, nao a estacaria.
+	return _caixa(vaga, forma, maxi(1, vaga.costs.size()))
+
+
+## §25: "a silhueta e o convite". Contorno, na caixa do topo da escada — um
 ## sitio de muro mostra o Bastiao que pode vir a ser, e nao a estacaria.
 static func _convite(
-	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
+	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, fantasma: Rect2
 ) -> void:
-	var fantasma := _caixa(vaga, forma, maxi(1, vaga.costs.size()))
 	var pontos := Outline.shape(forma, fantasma, _dentes(vaga))
 	pontos.append(pontos[0])
-	var cor := luz.body(WorldPalette.VAZIO, x)
+	var cor := luz.body(WorldPalette.VAZIO, vaga.x)
 	canvas.draw_polyline(pontos, cor, WorldPalette.CONTORNO)
 	Gauge.paid(canvas, fantasma, vaga)
 
 
 ## O que ficou de pe depois de cair. A mesma forma, rente ao chao: reconhece-se
 ## o que era, e ve-se que ja nao e.
-static func _ruina(
-	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
-) -> void:
-	var inteira := _caixa(vaga, forma, maxi(1, vaga.level))
+static func _rente(inteira: Rect2) -> Rect2:
 	var alto := inteira.size.y * RUINA
-	var caixa := Rect2(
-		Vector2(inteira.position.x, inteira.end.y - alto), Vector2(inteira.size.x, alto)
-	)
-	_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.VAZIO, x))
+	return Rect2(Vector2(inteira.position.x, inteira.end.y - alto), Vector2(inteira.size.x, alto))
 
 
 ## A forma cheia. O `draw_colored_polygon` do Godot triangula o que recebe, e por

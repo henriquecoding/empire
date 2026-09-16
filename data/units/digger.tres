@@ -14,6 +14,7 @@ range_px = 26
 recruit_cost = 8
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
 band = 2
+move_speed = 80.0
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"worker", &"opens_passages"])

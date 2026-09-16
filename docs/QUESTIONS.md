@@ -848,6 +848,44 @@
 - **Decide:** tu. A pergunta é se a derrota ganha sinal próprio na §46 quando o §15 e o §16 chegarem — e é aí
   que um `step()` que pára deixa de tirar nada a ninguém, porque passa a haver o que ouvir.
 
+### Q-082 · O §21 dá dois tempos de travessia e eles não são o mesmo tempo
+- **Onde:** §21 (*"Região — 4 a 6 ecrãs de largura... deriva-o do tempo de travessia: a pé (§12) uma região
+  deve levar 40–60 s a atravessar de ponta a ponta, o que a 26 px/s dá 1000–1560 px por ecrã"*), §47
+  (`SEGMENT_WIDTH 640`), §12, §19 e §44 (`move_speed = 26.0`), `data/source/units.csv`, `src/world/greybox.gd`.
+- **A contradição, numa linha:** a primeira metade da frase diz que a **região** se atravessa em 40–60 s; a
+  segunda faz a conta como se fossem 40–60 s **por ecrã**. Uma região de 1040–1560 px não são "4 a 6 ecrãs"
+  de 640 px, nem "oito segmentos por região" — as duas metades não podem ser verdade ao mesmo tempo.
+- **O que o jogo fazia:** nem uma nem outra. A região do *greybox* tem 3840 px (seis ecrãs de 640) e toda a
+  `units.csv` andava aos 26 px/s que o §19 e a §44 escrevem como **valor por omissão do campo**. São **148 s**
+  de ponta a ponta, num dia que dura 360 s (`clock.csv`) — quase metade de um dia a andar em linha reta, só de
+  ida. Foi por aqui que a queixa do jogador entrou: *"o personagem está a mover-se extremamente lento"*.
+- **O que foi decidido, e é reversível:** manda a primeira metade — a que a própria secção escreve como
+  **ordem** (*"deriva-o do tempo de travessia"*). A pé são 80 px/s, 48 s de travessia, e a coluna inteira da
+  `units.csv` sobe pelo mesmo factor para não perder as relações autoradas. A `creatures.csv` não se toca: a
+  velocidade das criaturas está na tabela do §07 e é conferida contra o dossiê. Ver ADR 0021.
+- **O que continua por decidir:** se o que se quis dizer foi mesmo 40–60 s **por ecrã**, então o número que
+  está errado não é a velocidade — é a região, e ela tem de passar de seis segmentos para dois e meio, o que
+  contradiz o §21 noutro sítio. Corrigir o dossiê fecha isto num dos dois sentidos; enquanto não for
+  corrigido, o `tests/travessia_test.gd` é que guarda a leitura escolhida.
+- **Decide:** tu. A pergunta é qual das duas metades da frase do §21 fica no dossiê.
+
+### Q-083 · O §24 manda largar em contínuo e não diz a que ritmo
+- **Onde:** §24 (mapa de comando: *"Largar em contínuo — A/✕ (manter) — Espaço (manter) — Pagar vários
+  níveis de uma vez"*), §55, `src/ui/input_router.gd`, `data/source/economy.csv`.
+- **O que faltava:** a linha estava no mapa de comando do §24 desde a v2 e **ninguém a lia**. O
+  `input_router.gd` dizia-o no cabeçalho — *"manter para largar em contínuo espera pelo BuildSystem a aceitar
+  pagamento por nível de uma vez"* — e isso era uma leitura a mais: o §55 quer a moeda física a cair uma a uma
+  (*"uma obra existe quando uma moeda cai num BuildSlot"*), e o que o §24 pede não é um pagamento de uma vez, é
+  **a mesma moeda a sair sozinha**. Pagar o Bastião de 65 moedas à tecla eram 65 toques.
+- **O número que não está no dossiê:** o ritmo. A proposta é `coin_drop_repeat_s = 0,2` — os seis *ticks* da
+  fatia de decisão do §52 a 30 Hz, que é o ritmo a que este jogo já reavalia o que quer que seja. Dá 5 moedas/s,
+  e o degrau mais caro do §10 sai em 13 s de tecla premida.
+- **O que isto NÃO faz, e é de propósito:** não paga vários níveis de uma vez. O §55 diz que uma obra a meio
+  não aceita moeda, e por isso o contínuo enche o degrau seguinte, a obra arranca, e as moedas que saírem
+  depois ficam no chão à espera do degrau a seguir — que é o que o Kingdom faz.
+- **Decide:** tu, e é um número de playtest. Mais depressa e a moeda deixa de se ver a cair; mais devagar e a
+  muralha de ferro volta a ser um exercício de dedo.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

@@ -12,6 +12,7 @@ damage = 4
 accuracy_open = 1.0
 recruit_cost = 10
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 80.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"melee", &"repairs_walls"])
 coin_capacity = 5

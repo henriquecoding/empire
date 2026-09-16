@@ -9,6 +9,7 @@ display_key = "UNIT_SQUIRE"
 max_health = 8
 recruit_cost = 0
 drops_on_death = Array[StringName]([&"coins", &"corpse"])
+move_speed = 80.0
 scale_tier = 1
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])

@@ -63,6 +63,9 @@ func _draw() -> void:
 	_moedas()
 	_criaturas()
 	_tropa()
+	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
+	# corpo desenhado depois dele tapava-o.
+	PriceTag.draw_on(self, band, _tropas, _edificios)
 
 
 ## O plano de cada faixa (§11). A aerea leva o ceu porque vive nele; a

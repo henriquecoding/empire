@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 183 | 89 | 272 |
-| Fases 3–8 | 224 | 105 | 329 |
-| Total | 407 | 194 | 601 |
+| Fases 3–8 | 225 | 105 | 330 |
+| Total | 408 | 194 | 602 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -22,11 +22,11 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `archer` | `coin_capacity` | 11 | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). |
 | units | `spearman` | `job_affinity` | wall:1.0\|guard:0.8 | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. |
 | units | `spearman` | `coin_capacity` | 5 | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. |
-| units | `dragonfly` | `accuracy_open` | 1.0 | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
-| units | `dragonfly` | `targets_bands` | AERIAL\|SURFACE | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
-| units | `dragonfly` | `move_speed` | 49 | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
-| units | `dragonfly` | `job_affinity` | air_patrol:1.0 | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
-| units | `dragonfly` | `coin_capacity` | 0 | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `accuracy_open` | 1.0 | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `targets_bands` | AERIAL\|SURFACE | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `move_speed` | 152 | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `job_affinity` | air_patrol:1.0 | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `coin_capacity` | 0 | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
 | units | `root_berserker` | `scale_tier` | 3 | 2 | 'Avança sempre. Não recua nem com o muro caído.' → always_advance, no_retreat. Escala 3 por ser elite (§01). |
 | units | `root_berserker` | `job_affinity` | wall:1.0 | 2 | 'Avança sempre. Não recua nem com o muro caído.' → always_advance, no_retreat. Escala 3 por ser elite (§01). |
 | units | `root_berserker` | `coin_capacity` | 5 | 2 | 'Avança sempre. Não recua nem com o muro caído.' → always_advance, no_retreat. Escala 3 por ser elite (§01). |
@@ -51,7 +51,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `canopy_archer` | `attack_interval` | 1.4 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
 | units | `canopy_archer` | `range_px` | 200 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
 | units | `canopy_archer` | `recruit_cost` | 5 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
-| units | `canopy_archer` | `move_speed` | 26 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
+| units | `canopy_archer` | `move_speed` | 80 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
 | units | `canopy_archer` | `coin_capacity` | 5 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
 | units | `canopy_archer` | `ability_params` | accuracy_in_canopy:1.0 | 2 | É o arqueiro do §07 com a certeza da torre: 'a torre não dá dano — dá certeza' (§07). Custo 5 = arqueiro 3 + posição. |
 | creatures | `crawler` | `range_px` | 24 | 1 | coin_drop 1 é do dossiê (§25). A curva de asfixia do §06 não conta com moedas de abate — ver Q-011. |
@@ -211,8 +211,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `spearman` | `tags` | melee\|holds_line\|no_pursuit | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. |
 | units | `spearman` | `head_pool` | helmet_round\|cap | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. |
 | units | `spearman` | `layer_slots` | body\|head\|face\|weapon\|shield\|overlay | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. |
-| units | `dragonfly` | `shadow_width` | 0 | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
-| units | `dragonfly` | `tags` | flyer | 2 | move_speed 49 = 26 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `shadow_width` | 0 | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
+| units | `dragonfly` | `tags` | flyer | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
 | units | `root_berserker` | `shadow_width` | 22 | 2 | 'Avança sempre. Não recua nem com o muro caído.' → always_advance, no_retreat. Escala 3 por ser elite (§01). |
 | units | `root_berserker` | `tags` | melee\|always_advance\|no_retreat\|elite | 2 | 'Avança sempre. Não recua nem com o muro caído.' → always_advance, no_retreat. Escala 3 por ser elite (§01). |
 | units | `root_berserker` | `head_pool` | bare\|root_crown | 2 | 'Avança sempre. Não recua nem com o muro caído.' → always_advance, no_retreat. Escala 3 por ser elite (§01). |
@@ -294,7 +294,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 329
+## 3 · Fases 3 a 8 — 330
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -321,14 +321,14 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `climber` | `range_px` | 26 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
 | units | `climber` | `targets_bands` | SURFACE\|AERIAL | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
 | units | `climber` | `recruit_cost` | 6 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
-| units | `climber` | `move_speed` | 30 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
+| units | `climber` | `move_speed` | 92 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
 | units | `climber` | `tags` | agile\|climbs | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
 | units | `climber` | `job_affinity` | hunt:0.8\|wall:0.6 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
 | units | `climber` | `coin_capacity` | 5 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. |
 | units | `buried_knight` | `max_health` | 50 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
 | units | `buried_knight` | `damage` | 9 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
 | units | `buried_knight` | `attack_interval` | 1.3 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
-| units | `buried_knight` | `move_speed` | 22 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
+| units | `buried_knight` | `move_speed` | 68 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
 | units | `buried_knight` | `ability_params` | heal_per_second:2\|rot_slow:0.25\|radius:160 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
 | units | `buried_knight` | `coin_capacity` | 0 | 6 | rot_slow 0,25 = o do barril de fogo (§10), para não criar um terceiro valor de abrandamento. |
 | units | `sealed_knight` | `max_health` | 45 | 6 | Montado o alcance é 60 px (lança); cego cai para corpo-a-corpo, 28 px = o do lanceiro (§07). |
@@ -341,7 +341,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `barge` | `attack_interval` | 1.0 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
 | units | `barge` | `range_px` | 0 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
 | units | `barge` | `recruit_cost` | 14 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
-| units | `barge` | `move_speed` | 44 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
+| units | `barge` | `move_speed` | 135 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
 | units | `barge` | `coin_capacity` | 5 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
 | units | `barge` | `ability_params` | capacity:6 | 7 | Veículo sem ataque; a capacidade de 6 é do dossiê. |
 | units | `counterweight_ram` | `max_health` | 80 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
@@ -349,7 +349,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `counterweight_ram` | `attack_interval` | 2.0 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
 | units | `counterweight_ram` | `range_px` | 30 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
 | units | `counterweight_ram` | `recruit_cost` | 20 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
-| units | `counterweight_ram` | `move_speed` | 16 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
+| units | `counterweight_ram` | `move_speed` | 49 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
 | units | `counterweight_ram` | `coin_capacity` | 5 | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
 | units | `counterweight_ram` | `ability_params` |  | 7 | Espelho aliado do Aríete de lodo (§07: dano 26, 2,0 s) com menos vida. |
 | units | `sower` | `max_health` | 12 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
@@ -357,7 +357,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `sower` | `attack_interval` | 1.0 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
 | units | `sower` | `range_px` | 0 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
 | units | `sower` | `recruit_cost` | 2 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
-| units | `sower` | `move_speed` | 26 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
+| units | `sower` | `move_speed` | 80 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
 | units | `sower` | `coin_capacity` | 5 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
 | units | `sower` | `ability_params` | plant_cost:1\|root_seconds:3 | 7 | root_seconds 3 = fosso de raízes (§10), para reutilizar a mesma regra. |
 | units | `war_smith` | `max_health` | 24 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
@@ -365,7 +365,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `war_smith` | `attack_interval` | 1.2 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
 | units | `war_smith` | `range_px` | 28 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
 | units | `war_smith` | `recruit_cost` | 10 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
-| units | `war_smith` | `move_speed` | 26 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
+| units | `war_smith` | `move_speed` | 80 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
 | units | `war_smith` | `coin_capacity` | 5 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
 | units | `war_smith` | `ability_params` | hp_per_second:3 | 7 | 3 HP/s repõe uma Estacaria (40) em ~13 s: segura uma brecha, não a torna invulnerável. |
 | units | `digger` | `max_health` | 18 | 7 | A única tropa que cria PassageRec novos (§53). |
@@ -373,7 +373,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `digger` | `attack_interval` | 1.2 | 7 | A única tropa que cria PassageRec novos (§53). |
 | units | `digger` | `range_px` | 26 | 7 | A única tropa que cria PassageRec novos (§53). |
 | units | `digger` | `recruit_cost` | 8 | 7 | A única tropa que cria PassageRec novos (§53). |
-| units | `digger` | `move_speed` | 26 | 7 | A única tropa que cria PassageRec novos (§53). |
+| units | `digger` | `move_speed` | 80 | 7 | A única tropa que cria PassageRec novos (§53). |
 | units | `digger` | `coin_capacity` | 5 | 7 | A única tropa que cria PassageRec novos (§53). |
 | units | `digger` | `ability_params` | dig_seconds:20 | 7 | A única tropa que cria PassageRec novos (§53). |
 | creatures | `burrower` | `range_px` | 24 | 3 | 'Passa pela faixa subterrânea' (§07) e o poço de minério 'atrai Cavadores' (§06). Sobe à superfície por passagem. |
@@ -568,6 +568,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `coin_gravity_px_s2` | `coin_gravity_px_s2` | 700 | 9 | Proposta: o dossiê diz que a moeda é física e não diz com que física. 700 px/s² com o impulso abaixo dá um arco de 23 px em contínuo — cerca de 20 px a 30 Hz, que é o que se vê — e meio segundo de voo — alto o bastante para se ver por cima de uma tropa, curto o bastante para não se esperar por ele. Q-061; a medir no F1-01. |
 | economy | `coin_drop_speed_px_s` | `coin_drop_speed_px_s` | 180 | 9 | Proposta: impulso vertical ao largar. Com a gravidade acima: ápice 23 px em contínuo, ~20 px medidos a 30 Hz, voo 0,51 s. Q-061. |
 | economy | `coin_drop_spread_px_s` | `coin_drop_spread_px_s` | 40 | 9 | Proposta: dispersão horizontal máxima ao largar, em px/s. Sobre 0,51 s de voo dá ±20 px de espalhamento — mais do que o raio de apanha de 12, para que duas moedas largadas juntas não se apanhem como uma. Q-061. |
+| economy | `coin_drop_repeat_s` | `coin_drop_repeat_s` | 0.2 | 9 | Proposta: o §24 manda largar em contínuo e não diz a que ritmo. 0,2 s são os 6 ticks da fatia de decisão do §52 (AI_SLICE) a 30 Hz — o ritmo a que este jogo já reavalia o que quer que seja —, e dão 5 moedas/s: o Bastião de 65 sai em 13 s de tecla premida em vez de 65 toques. Ver Q-083. |
 | economy | `recruit_notice_px` | `recruit_notice_px` | 120 | 9 | Proposta: «perto» não tem número no dossiê. 120 é o limite exterior da fila do §50 — a distância a que o jogo já diz que alguém pertence a um sítio. Ver Q-063. |
 | economy | `follow_distance_px` | `follow_distance_px` | 30 | 9 | Proposta ancorada no queue_min_px do §50 (30): é a mesma pergunta — a que distância uma pessoa espera por outra. Ver Q-063. |
 | economy | `follow_spacing_px` | `follow_spacing_px` | 18 | 9 | Proposta ancorada no queue_spacing_px do §50 (18), para o jogo ter UMA regra de espaçamento e não duas. Ver Q-063. |

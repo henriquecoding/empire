@@ -13,7 +13,7 @@ extends Label
 const FASES := ["ALVORADA", "MANHA", "MEIO-DIA", "TARDE", "CREPUSCULO", "NOITE"]
 const PERCENTAGEM := 100.0
 const TECLAS := (
-	"A/D andar · ESPACO largar moeda · E passagem"
+	"A/D andar · ESPACO largar moeda (manter: em continuo) · E passagem"
 	+ " · BOTAO DIREITO marcar · TAB estado · ESC pausa"
 )
 
