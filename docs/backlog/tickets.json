@@ -744,6 +744,45 @@
   "estado": "feito",
   "horas": "1"
  },
+ "GB-07": {
+  "title": "O rei não fica preso em combate",
+  "porque": "O monarca tem dano 3 e alcance 30: uma criatura a 30 px punha-o em FIGHT, e o FIGHT proibia movimento. O jogador deixava de ter jogo até ela morrer, e o §24 dá ao comando «Mover» o contexto «Sempre».",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md"
+  ],
+  "depende": "F1-03",
+  "feito": "Quem uma pessoa conduz anda mesmo em FIGHT; quem a §52 conduz continua a segurar a linha.",
+  "fora": "Uma coluna `piloted` no UnitSystem — só faz sentido quando o Verbo 2 assumir outros corpos (Fase 2). E o knockback do §24, que é a Q-084.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-08": {
+  "title": "O golpe que se vê",
+  "porque": "O §24 põe o impacto na lista de juice «que não é opcional» e o §07 proíbe números no ecrã. Medido numa noite do greybox: 249 building_damaged e nada no ecrã a dizê-lo.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/50-combatsystem-legivel-antes-de-emocionante.md"
+  ],
+  "depende": "F1-07",
+  "feito": "attack_launched que acerta pisca o corpo 80 ms e lança a partícula de 4 px; building_damaged acende a orla da obra.",
+  "fora": "Os 3 px de knockback do §24 — mexem numa posição, e posições são simulação (Q-084). O som. E o preenchimento numa obra: o castelo cheio de branco tapava um terço do ecrã.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-09": {
+  "title": "A sombra de contacto da moeda",
+  "porque": "O §24 chama ao arco da moeda «a animação mais importante do jogo» e pede-lhe sombra. Sem ela, uma moeda no ar e uma moeda pousada são o mesmo círculo em sítios diferentes.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "F1-01",
+  "feito": "Elipse no chão sob a moeda, a encolher com a altura e a nunca desaparecer; a altura de referência sai do arco que economy.csv já define (v²/2g).",
+  "fora": "O bounce do §24 — é física da moeda e mexe em onde ela pousa (§55). O sprite de elipse por escala do §22, que é ART-01. E sombras para tropas e criaturas.",
+  "estado": "feito",
+  "horas": "2"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",

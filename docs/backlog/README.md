@@ -64,6 +64,9 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-04](GB-04.md) | O passo do §21: a região atravessa-se em 40–60 s | GB-01 | feito |
 | [GB-05](GB-05.md) | O preço daquilo em cima de que estás | GB-01 | feito |
 | [GB-06](GB-06.md) | Largar em contínuo, que o §24 já mandava | F1-01 | feito |
+| [GB-07](GB-07.md) | O rei não fica preso em combate | F1-03 | feito |
+| [GB-08](GB-08.md) | O golpe que se vê | F1-07 | feito |
+| [GB-09](GB-09.md) | A sombra de contacto da moeda | F1-01 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
 

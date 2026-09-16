@@ -72,6 +72,14 @@ static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
 	return _caixa(vaga, forma, maxi(1, vaga.costs.size()))
 
 
+## O contorno que esta obra tem no ecra agora: a caixa dela, na forma dela, com
+## os dentes que o nivel lhe da. Publico pela mesma razao que o `drawn_box` — o
+## ImpactView pisca a obra atingida (§24) e tem de piscar a MESMA forma, senao o
+## que se ve e uma segunda muralha por cima da primeira.
+static func drawn_shape(vaga: BuildSlot, forma: Silhouette.Form) -> PackedVector2Array:
+	return Outline.shape(forma, drawn_box(vaga, forma), _dentes(vaga))
+
+
 ## §25: "a silhueta e o convite". Contorno, na caixa do topo da escada — um
 ## sitio de muro mostra o Bastiao que pode vir a ser, e nao a estacaria.
 static func _convite(

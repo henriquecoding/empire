@@ -37,6 +37,15 @@ const ANDAIME := Color(0.72, 0.62, 0.42, 0.55)
 const VAZIO := Color(0.35, 0.33, 0.30, 0.45)
 const PASSAGEM := Color(0.36, 0.55, 0.62, 0.7)
 const VIDA := Color(0.35, 0.65, 0.35)
+## A sombra de contacto do §22. Nao e uma cor nova: e o valor de silhueta do §80
+## com opacidade, porque uma sombra e o chao visto por baixo de uma coisa e nao
+## uma mancha por cima dele.
+const SOMBRA := Color(0.063, 0.051, 0.035, 0.45)
+
+## §24: "Impacto — flash branco de 80 ms". Branco, e nao a cor mais clara da
+## paleta: e feedback e nao cenario, como os instrumentos do Gauge (Q-080), e o
+## que ele tem de fazer e ler-se contra qualquer corpo a qualquer hora do dia.
+const FLASH := Color(1.0, 1.0, 1.0, 0.85)
 
 ## §80 §1, a linha do primeiro plano: "#100D09 e #14140F. Sobrepoe-se as tropas e
 ## nao compete com elas." E o valor mais escuro que a paleta do dossie usa para

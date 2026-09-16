@@ -65,7 +65,12 @@ acaso em cima do castelo; a 80 px/s ela chega mesmo ao lugar que o `follow()` do
 castelo fica sem ninguém. Os três que o seguem seguem-no porque **não têm posto** — o `RecruitSystem.follow()`
 só pega em quem está desempregado —, e quem não tem posto é assim porque o piloto não levantou uma torre.
 
-Nenhum teste de design mudou de resultado: os 390 casos da suíte dão o mesmo — 381 a passar e os 9 saltados de
+A primeira medição desta ADR dizia mais do que isto: dizia que a noite 1 passava a custar 596 de vida ao
+castelo e duas das três tropas. Isso era outra coisa, e está corrigido — era o monarca a ficar **preso em
+FIGHT** (Q-085), a tanque com um bicho ao lado em vez de recuar. Com o §24 a valer (*"Mover — Sempre"*), a
+noite 1 volta a fechar com o castelo aos 1000 e as três tropas de pé, e o que sobra é a noite 2.
+
+Nenhum teste de design mudou de resultado: os 406 casos da suíte dão o mesmo — 397 a passar e os 9 saltados de
 sempre —, o F1-16 continua a fechar as duas metades, e a varredura de nove defesas por dez dias do §66 não mexe.
 A vistoria ganhou por isso uma coluna nova — a distância do rei ao núcleo —, porque sem ela uma noite perdida
 por má jogada e uma noite perdida por defeito do *tick* leem-se iguais na tabela.

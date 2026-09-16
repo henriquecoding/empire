@@ -886,6 +886,41 @@
 - **Decide:** tu, e é um número de playtest. Mais depressa e a moeda deixa de se ver a cair; mais devagar e a
   muralha de ferro volta a ser um exercício de dedo.
 
+### Q-084 · O knockback do §24 é o único terço do impacto que mexe na simulação
+- **Onde:** §24 (*"Impacto — flash branco de 80 ms, **3 px de knockback**, partícula de 4 px na direção do
+  golpe"*), §45, §50, §61, `src/world/impact_view.gd`.
+- **O que foi feito:** dois dos três. O flash e a partícula são apresentação e vivem no `ImpactView`; o
+  `building_damaged` — o sinal que uma noite do *greybox* emite às centenas e que não se via em lado nenhum —
+  acende a orla da obra que está a ser comida.
+- **Porque é que o terceiro ficou de fora:** empurrar um corpo 3 px muda uma **posição**, e posições são a
+  simulação (§45). Um empurrão dado da camada de apresentação tira um atacante da fila de contacto do §50 sem
+  que o §50 dê por isso, e um empurrão que o *save* não conhece torna a partida irreproduzível pela mesma
+  semente (§61, §42) — que é a propriedade que este repositório mais protege.
+- **O que falta para o fazer:** um número em `data/` (3 px é do dossiê, mas falta dizer se é por golpe, se
+  acumula, e se um Bruto empurra um vagabundo tanto como o contrário), e um sítio em `src/sim/` que o aplique
+  no passo 6 do §43, a seguir à resolução do combate e antes do movimento.
+- **Decide:** tu. A pergunta é se o empurrão é do atacante (massa) ou do golpe (dano), porque disso depende se
+  ele vive no `CombatSystem` ou numa coluna nova.
+
+### Q-085 · O §52 diz que quem luta não anda; o §24 diz que o comando "Mover" vale sempre
+- **Onde:** §52 (a tabela de estados: `FIGHT | Inimigo em alcance | Alvo morre ou sai de alcance | Resolução de
+  combate`), §24 (mapa de comando: *"Mover — Stick esquerdo / D-pad — A · D · ← → — **Sempre**"*), §08,
+  `src/sim/systems/unit_system.gd`.
+- **O que estava a acontecer:** o monarca tem `damage 3` e `range_px 30` (`units.csv`), e por isso o
+  `target_picker` põe-no em FIGHT como põe qualquer tropa. Com o FIGHT a proibir movimento, uma criatura a
+  30 px tirava o jogo das mãos de quem o joga **até ela morrer** — e numa noite com cinco delas à volta, isso
+  era a partida inteira a ver-se a si própria.
+- **A leitura que mudou:** a última coluna da tabela do §52 é o **custo por tick** de cada estado — GOTO custa
+  "movimento em X", FIGHT custa "resolução de combate" — e não uma proibição. A proibição era uma
+  interpretação do código, defensável para uma tropa (um lanceiro `holds_line` não deve sair da linha) e
+  insustentável para o corpo que uma pessoa conduz.
+- **O que foi decidido, e é reversível:** quem é conduzido por uma pessoa anda mesmo em FIGHT; quem a §52
+  conduz continua a segurar a linha. Entra por parâmetro no `tick_movement()` e não por coluna, porque não é
+  propriedade da unidade — é quem a está a conduzir agora, e isso vive no `SimLoop` (§45). Andar para fora do
+  alcance desengata sozinho, e por isso fugir continua a custar o golpe que se deixa de dar.
+- **Decide:** tu. A pergunta aberta é a da Fase 2: quando o Verbo 2 deixar assumir outros corpos (§24), o
+  "conduzido" passa a ser mais do que o `king_id` — e aí talvez valha a pena ser coluna.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |
