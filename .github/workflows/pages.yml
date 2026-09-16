@@ -1,0 +1,87 @@
+name: pages
+
+# O jogo passa a ter um sitio onde se joga sem instalar nada. O preset "Web" do
+# export_presets.cfg tem thread_support desligado de proposito — nao precisa dos
+# cabecalhos COOP/COEP —, e por isso serve-se de qualquer servidor estatico. O
+# GitHub Pages e o servidor estatico que este repositorio ja tem de graca.
+#
+# Nao esta no ci.yml, e sao tres razoes e nao uma:
+#  · o ci.yml tem `cancel-in-progress: true`, e cancelar um deploy a meio deixa
+#    o Pages a servir metade de um jogo;
+#  · o ci.yml corre em todos os ramos, e publicar um ramo de trabalho seria
+#    publicar trabalho por acabar;
+#  · o ci.yml abre com "nenhum job deste workflow escreve no repositorio", e um
+#    deploy escreve. A permissao fica visivel aqui, num ficheiro so.
+#
+# So se publica o que passou nos portoes: isto corre A SEGUIR ao `ci`, e so
+# quando ele acaba verde na main. O `workflow_run` traz o `head_sha` da corrida
+# que passou, e e esse commit — e nao a ponta da main — que se exporta.
+
+on:
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
+  # A saida de emergencia: republicar sem esperar por um push novo.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Um deploy de cada vez, e o que esta a meio ACABA. E o contrario do ci.yml, e
+# de proposito: cancelar um teste custa uma corrida, cancelar um deploy deixa o
+# site partido ate ao seguinte.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    name: Publicar o Web no GitHub Pages
+    # Um `workflow_run` chega para todas as corridas do `ci`, inclusive as que
+    # chumbaram e as de ramos de trabalho. Este `if` e o portao: verde, e da
+    # main. O `workflow_dispatch` passa por fora, porque quem carrega no botao
+    # ja sabe o que esta a fazer.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      # O commit que passou nos portoes, e nao a ponta da main: entre o fim do
+      # `ci` e o inicio disto pode ter entrado outro merge, e esse ainda nao foi
+      # medido por ninguem. Num `workflow_dispatch` nao ha corrida de onde o
+      # tirar, e entao vale a ponta.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
+          lfs: false
+
+      - uses: ./.github/actions/godot
+        with:
+          export-templates: "true"
+
+      - name: Importar recursos
+        run: make importar
+
+      # O mesmo alvo que a CI ja corre. O workflow chama, nao repete (ver
+      # CONTRIBUTING.md): um export que corresse de maneira diferente aqui e no
+      # `ci` publicava um jogo que nenhum portao viu.
+      - name: Exportar o Web
+        run: make exportar-web
+
+      - id: configuracao
+        uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: build/web
+
+      - id: publicacao
+        uses: actions/deploy-pages@v4

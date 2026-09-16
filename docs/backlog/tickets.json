@@ -995,5 +995,19 @@
    "ADR 0019. Feito: tests/parte_xiii_rot_test.gd e tests/parte_xiii_mundo_test.gd, 20 casos, 16 a correr e 4 saltados com razão escrita.",
    "As seis linhas novas do registo de risco entram em docs/risk/ com a §37."
   ]
+ },
+ "PUB-01": {
+  "title": "O jogo passa a jogar-se no browser",
+  "porque": "A CI exporta o Web em cada corrida verde e o resultado é um artefacto que expira em 7 dias, exige conta no GitHub, exige descompactar e exige servir a pasta. O §36 e o §32 não começam sem um sítio onde se carrega e se joga.",
+  "spec": [
+   "docs/design/36-wishlists-pagina-demo-e-trailer.md",
+   "docs/design/32-medir-sem-espiar.md",
+   "docs/design/19-arquitetura-godot-4-6.md"
+  ],
+  "depende": "F0-04",
+  "feito": "Um endereço público que serve a última main verde. O pages.yml corre por workflow_run a seguir ao ci, só com ele verde e só na main.",
+  "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
+  "estado": "feito",
+  "horas": "2"
  }
 }
