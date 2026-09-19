@@ -1,6 +1,7 @@
 # ADR 0001 — Escala `fractional` por omissão, com interruptor para `integer`
 
-- Estado: proposta — fecha no *spike* de duas horas da Fase 0 (§65)
+- Estado: substituída pela ADR 0022 em 19/09/2026. O padrão atual é viewport 1280×720, nearest, integer.
+- O texto abaixo regista a proposta anterior; não descreve a configuração atual.
 - Data: 2026-09-11
 - Secção do dossiê: §19, §38 (decisão 1), §67
 

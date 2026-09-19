@@ -20,6 +20,8 @@ const MEIO := 0.5
 ## `godot --path . -- --novo` comeca uma partida do zero mesmo havendo save.
 const NOVO := "--novo"
 
+static var _fresh_start := false
+
 var _tremor: float = 0.0
 
 @onready var _camara: CameraRig = $CameraRig
@@ -46,10 +48,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_seguir()
 	if _tremor <= 0.0:
+		_mundo.position = Vector2.ZERO
 		return
 	_tremor = maxf(0.0, _tremor - delta)
 	var forca := TREMOR_PX * (_tremor / TREMOR_S)
-	_mundo.position = Vector2(RngService.float_range(RngService.VISUAL, -forca, forca), 0.0)
+	_mundo.position = Vector2(floorf(RngService.float_range(RngService.VISUAL, -forca, forca)), 0.0)
 
 
 ## A semente da partida. O §42 manda mostra-la no ecra e deixar copiar — o
@@ -65,6 +68,9 @@ func _semente() -> int:
 ## comandos, que e o que um teste de greybox precisa para repetir uma noite; e um
 ## nucleo em ruina, porque retomar uma partida ja perdida nao e retomar nada.
 func _retomar() -> bool:
+	if _fresh_start:
+		_fresh_start = false
+		return false
 	var slot := SaveService.latest_slot()
 	if slot < 0 or OS.get_cmdline_user_args().has(NOVO):
 		return false
@@ -87,7 +93,7 @@ func _seguir() -> void:
 	if i == UnitSystem.NENHUM:
 		return
 	var faixa := int(SimLoop.units.bands[i])
-	_monarca.position = Vector2(SimLoop.units.xs[i], WorldPalette.ground_of(faixa))
+	_monarca.position = Vector2(WorldPresentation.unit_x(i), WorldPalette.ground_of(faixa))
 
 
 func _no_rompimento(_wall_id: int) -> void:
@@ -123,3 +129,8 @@ func _recibo() -> String:
 			SimLoop.units.count(),
 		]
 	)
+
+
+func restart() -> void:
+	_fresh_start = true
+	get_tree().call_deferred("reload_current_scene")

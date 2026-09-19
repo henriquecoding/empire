@@ -48,6 +48,9 @@ jobs:
       - name: gdtoolkit, na versao fixada em tools/requirements.txt
         run: make ferramentas-python
 
+      - name: Arte original reproduzivel
+        run: make arte
+
       - name: Formato — gdformat
         run: make formato
 

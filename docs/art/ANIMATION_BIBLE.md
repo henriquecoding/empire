@@ -10,7 +10,7 @@
 | Regra | Especificação |
 |---|---|
 | Cadência | **10 fps** em todas as animações de personagem e criatura (§22). Um frame = 100 ms |
-| Referência | O `idle` de 6 frames do `Empire troop` (0,6 s por ciclo) é o metrónomo: um passo, um golpe, uma respiração medem-se contra ele |
+| Referência | O `idle` de 6 frames do `Empire troop` (650 ms por ciclo: 100/100/100/100/150/100 ms) é o metrónomo: um passo, um golpe, uma respiração medem-se contra ele |
 | No sítio | **Todas as animações são no sítio.** A posição vem da simulação (`move_speed`), nunca da animação. Exceções: *knockback* de 3 px (§24) e a queda da morte — ambos só visuais |
 | Pivot | O ponto de contacto dos pés (ASSET_BIBLE §1). Não muda entre frames nem entre tags |
 | Sem subpíxel | Todos os deslocamentos de frame são inteiros; a câmara anda em píxeis inteiros; o parallax faz `floor()` (invariante I8) |
@@ -20,18 +20,12 @@
 
 ### Travamento dos pés (*foot locking*)
 
-O passo tem de medir o que a simulação anda, ou os pés deslizam. A 26 px/s (§21, §44) e `walk` de 8 frames a
-10 fps (0,8 s, dois passos), **cada passo avança ≈ 10 px**: desenha o ciclo com os pés de contacto a 10–11 px de
-distância, pousados exatamente na linha do pivot nos frames 1 e 5. Unidades mais rápidas (`move_speed` > 30) usam
-`run`, com o passo proporcional: 49 px/s (libélula) daria 20 px — ou seja, voa.
+O passo tem de acompanhar a velocidade atual em `data/source/units.csv`. O monarca usa 80 px/s (ADR 0021): num ciclo proposto de 0,8 s com dois passos, cada passo corresponde a 32 px. Isto é uma referência para desenhar o walk, não autorização para acelerar o idle. Os exports conservam as durações originais; fontes de um só frame ficam explicitamente estáticas.
 
 ### Antecipação sem adivinhar
 
 A simulação decide o golpe (§50) e emite `attack_launched` com `hit` já resolvido; a apresentação nunca decide.
-Para o frame de ação coincidir com o evento sem prever nada, o `UnitView` lê `UnitRec.attack_cooldown` (que é
-estado, §45) e **começa a antecipação quando o *cooldown* é menor do que a duração dela**. O evento chega no frame
-de ação; o *flash* de 80 ms do alvo (§24) acontece nesse frame. Nenhum intervalo de ataque do jogo (0,9–2,0 s,
-§07) é mais curto do que a animação de ataque (0,5 s), por isso cabe sempre.
+A apresentação reage a `attack_launched`. Um cooldown baixo não garante que haverá ataque: o alvo pode sair de alcance. Enquanto não existir um contrato de antecipação, não prometer que uma animação prévia terminará sempre num golpe. O hit reage ao dano sem esperar a fronteira da tag.
 
 ### *Squash & stretch*
 
@@ -45,7 +39,7 @@ a cara não se deforma.
 
 | Tag | Frames | fps | Duração | Tipo | Antecipação | Ação | Recuperação | Pés | Som |
 |---|---|---|---|---|---|---|---|---|---|
-| `idle` | **6 (§)** | 10 | 0,6 s | loop | — | — | — | plantados | — |
+| `idle` original | **6** | variável | 0,65 s | loop | — | — | — | plantados | — |
 | `walk` | **8 (§)** | 10 | 0,8 s | loop | — | contacto em 1 e 5 | — | ciclo, passo ≈ 10 px | `sfx_step` em 1 e 5 |
 | `attack` | **5 (§)** | 10 | 0,5 s | uma vez | 1–2 | **3** | 4–5 | plantados | `sfx_attack_<arma>` no 3 |
 | `die` | **7 (§)** | 10 | 0,7 s | uma vez, fica no 7 | — | 3 (queda) | — | — | `sfx_death` no 1 |

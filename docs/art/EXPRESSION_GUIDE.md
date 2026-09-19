@@ -19,8 +19,7 @@ na escala 3 soma-se 1 px.
 | Contorno | 1 px preto no exterior da cabeça; o rosto interior não leva contorno | lei da escala dupla: personagens a 1 px (§01) |
 | Cor | Dois tons de pele por povo (sombra e luz), da rampa do povo | §22: dois tons por material |
 
-**Proibido:** pupilas maiores do que 2 × 2 px (viram *anime*), bochechas com gradiente, bocas assimétricas em
-repouso, e deformar a cabeça em *squash & stretch* (ANIMATION_BIBLE §1).
+**Proibido:** pupilas maiores do que 2 × 2 px (viram *anime*), bochechas com gradiente e deformar a cabeça em *squash & stretch* (ANIMATION_BIBLE §1).
 
 ## 2 · A matriz
 
@@ -47,8 +46,8 @@ Mínimo para a fatia vertical: `normal`, `hurt`, `hit`, `fear`. O §22 conta 3 h
 
 - **A 1×.** Tira uma captura a 1280 × 720 sem zoom e outra a 50%. A expressão tem de se ler na primeira; a
   silhueta da postura, na segunda.
-- **Em movimento.** O rosto sobe e desce com a cabeça no `walk`; não troques de expressão a meio de um ciclo — só
-  nas fronteiras de tag.
+- **Em movimento.** O rosto acompanha o pivot da cabeça. Dano e medo reagem imediatamente; prioridade: impacto, medo, ferido, ação, repouso. A troca de expressão não reinicia o corpo.
+- **Identidade.** Assimetria de boca é permitida quando pertence ao desenho original e continua legível a 1×.
 - **No Steam Deck.** O ecrã do Deck é praticamente a tua tela (§19); se lá não se lê, não se lê.
 - **Com 300 unidades.** Em multidão, só o `face_hurt` e o `face_fear` têm de sobressair: são informação de jogo.
   O resto pode perder-se.
@@ -79,3 +78,7 @@ A gramática é a mesma para todos; muda o sotaque. Nada disto está no dossiê:
 | Cavaleiro Selado | O elmo tapa os olhos (§08): só boca e queixo — quando fica cego, a boca é tudo o que resta |
 | Elite (escala 3) | A mesma gramática com 1 px a mais em cada medida e **um** detalhe extra (cicatriz, dente de ouro) |
 | Tropa comum (escala 2) | Nenhum detalhe extra: a cabeça (`head`) é que dá a identidade |
+
+## Integração de 19/09/2026
+
+O atlas atual conserva as faces originais. Flash de impacto e prioridade de expressão são assuntos diferentes: o flash já está ligado; os sprites `hurt`, `hit` e `fear` ainda precisam de desenho. Ver ADR 0022.

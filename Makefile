@@ -170,3 +170,7 @@ hooks:  ## Liga o hook de pre-commit (corre `make portoes` antes de cada commit)
 
 limpar:  ## Apaga o que e gerado e nao versionado
 	rm -rf build reports .godot ferramentas/saida
+
+.PHONY: arte
+arte:  ## Confere se os sprites versionados reproduzem os originais
+	python3 tools/export_originals.py --check

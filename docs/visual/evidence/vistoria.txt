@@ -1,0 +1,22 @@
+/workspace/scratch/3dc574a692e1/bin/Godot_v4.6-stable_linux.x86_64 --headless --path . scenes/tests/vistoria.tscn -- --dias 8
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+
+vistoria — 8 dias no greybox com piloto, semente 20260916
+  dia | fase       |  meus/tropas | bichos | moedas | nucleo | rei | achados
+    1 | ALVORADA   |    1/10    |      0 |      0 |   1000 |     2 | 0
+    1 | MANHA      |    3/10    |      0 |      0 |   1000 |   609 | 0
+    1 | MEIO-DIA   |    3/10    |      0 |      0 |   1000 |   609 | 0
+    1 | TARDE      |    3/10    |      0 |      0 |   1000 |   609 | 0
+    1 | CREPUSCULO |    3/10    |      0 |      0 |   1000 |   609 | 0
+    1 | NOITE      |    3/10    |      5 |      0 |   1000 |   609 | 0
+    2 | ALVORADA   |    3/10    |      0 |      0 |   1000 |   701 | 0
+    2 | MANHA      |    3/10    |      0 |      0 |   1000 |   701 | 0
+    2 | MEIO-DIA   |    3/10    |      0 |      0 |   1000 |   701 | 0
+    2 | TARDE      |    3/10    |      0 |      0 |   1000 |   701 | 0
+    2 | CREPUSCULO |    3/10    |      0 |      0 |   1000 |   701 | 0
+    2 | NOITE      |    3/10    |      5 |      0 |   1000 |   701 | 0
+
+  o castelo-arvore caiu ao dia 2 — a partida acabou
+
+vistoria: 8 dias sem nada a apontar
