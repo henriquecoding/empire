@@ -90,6 +90,16 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		)
 	for item in draws:
 		var i: int = item.i
+		if units.alive(i) and units.data_ids[i] in [&"archer", &"canopy_archer"]:
+			ActorArt.draw_weapon(
+				canvas,
+				_art.body_box(item.profile, item.foot - Vector2(0.0, item.bob)),
+				_data[units.data_ids[i]],
+				units,
+				i,
+				light.body(ActorArt.WOOD_LIGHT, item.foot.x),
+				_facing.get(item.id, 1.0)
+			)
 		if units.alive(i):
 			Gauge.health(
 				canvas,

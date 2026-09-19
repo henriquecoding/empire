@@ -36,6 +36,17 @@ func _ready() -> void:
 		elapsed += clock.phase_durations[i]
 	elapsed += clock.phase_durations[phase] * 0.5
 	ClockService.seek(1, elapsed)
+	if _mode == "cast":
+		# Hold simulation for a reference lineup; this mode is not a performance test.
+		SimLoop.set_physics_process(false)
+		for i in SimLoop.units.count():
+			if SimLoop.units.ids[i] != SimLoop.king_id:
+				SimLoop.units.xs[i] = 100.0
+		var roles := [&"squire", &"cook", &"archer"]
+		var offsets := [-260.0, -130.0, 150.0]
+		for i in roles.size():
+			var troop := Registry.entry(&"units", roles[i]) as UnitData
+			SimLoop.units.spawn(SimLoop.state, troop, 1, SimLoop.core_x + offsets[i])
 	if _mode in ["passage", "under"]:
 		var king := SimLoop.units.index_of(SimLoop.king_id)
 		SimLoop.units.xs[king] = SimLoop.passages[0]
@@ -95,6 +106,7 @@ func _process(delta: float) -> void:
 	var result := {
 		"fixture": _mode,
 		"prepared_state": true,
+		"simulation_held": _mode == "cast",
 		"seed": SEED,
 		"renderer": RenderingServer.get_video_adapter_name(),
 		"units": SimLoop.units.count(),

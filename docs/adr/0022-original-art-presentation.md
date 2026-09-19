@@ -2,6 +2,8 @@
 
 Estado: implementada para o trecho dos Enramados, por pedido do autor de aplicar o relatório visual de 19/09/2026.
 
+Revisão posterior do autor: [REFERENCE_AUTHORITY.md](../art/REFERENCE_AUTHORITY.md) corrige a seleção de personagens. O arqueiro original era conceito rejeitado; sua fonte fica arquivada, mas não é exportada nem usada. Arqueiros usam provisoriamente Body/Face da tropa e a marca de arco existente. Rei requer redesign e permanece provisório. O novo estudo visual não entra no runtime. O elenco quase concluído enviado pelo autor passa a orientar as próximas peças.
+
 O pedido autoriza a integração de `art/` neste trabalho. A fonte é o conjunto original enviado pelo autor: `Empire troop.aseprite`, `Archer Troop.aseprite` e `Empire Concept.aseprite`. Não foram redesenhados ou reamostrados os pixels. A ferramenta de geração de imagens devolveu limite de utilização; nenhuma imagem nova foi produzida.
 
 - As fontes pequenas e os exports necessários ficam em Git normal, com exceções explícitas ao LFS. Um checkout de CI sem LFS tem imagens utilizáveis. `make arte` confere a reprodução byte a byte.

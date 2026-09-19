@@ -1,5 +1,7 @@
 # Guia de expressões — o humor está na cara
 
+> **Referência principal:** os personagens quase concluídos enviados pelo autor, conforme [REFERENCE_AUTHORITY.md](REFERENCE_AUTHORITY.md). O arqueiro antigo foi rejeitado e o rei exige redesign. As medidas deste guia são orientações; não autorizam normalizar os rostos originais.
+
 > O dossiê é curto e firme: **bocas largas com dentes, olhos afastados, narizes grandes; o humor está na cara,
 > não em piadas de texto — e por isso atravessa idiomas de graça** (§01, §22). O rosto é também interface: a
 > camada `face` diz a vida e a lealdade da tropa sem barra nem número (§07, §24, §58). Este guia fixa como.
@@ -28,7 +30,7 @@ por animação própria: **o rosto muda de estado sem mudar de frame**.
 
 | Estado | Camada | Olhos | Boca | Postura (camada `body`) | Quando aparece |
 |---|---|---|---|---|---|
-| Repouso | `face_normal` | neutros, abertos | sorriso fechado | relaxada | `idle`, `walk` |
+| Repouso | `face_normal` | conforme a identidade original | expressão própria: sorriso dentado, língua ou boca característica | postura original | `idle`, `walk` |
 | Trabalho | `face_normal` | focados (1 px mais baixos) | fechada, cantos para dentro | ativa | `work`, `build`, `smith`, `cook` |
 | Medo | `face_fear` | grandes (2 × 2) | aberta, dentes de cima | retraída, joelhos | `flee` (§07: muro cai, vida < 30%) |
 | Raiva | `face_angry` | apertados + sobrancelha em V | dentes cerrados | inclinada para a frente | `attack`, berserker sempre |
@@ -73,7 +75,7 @@ A gramática é a mesma para todos; muda o sotaque. Nada disto está no dossiê:
 | Escudeiro | Elmo grande a tapar metade dos olhos; a boca faz o trabalho todo |
 | Bardo | O mais expressivo: boca sempre aberta ou a cantar |
 | Ferreiro | Bigode (§04); a boca quase não se vê |
-| Cozinheiro | Bochechas rosadas de 1 px, barrete branco |
+| Cozinheiro | Língua, boca original e barrete branco; rosto e corpo da referência preservados |
 | Cavaleiro Enterrado | Elmo fechado: a expressão vive **só na postura** |
 | Cavaleiro Selado | O elmo tapa os olhos (§08): só boca e queixo — quando fica cego, a boca é tudo o que resta |
 | Elite (escala 3) | A mesma gramática com 1 px a mais em cada medida e **um** detalhe extra (cicatriz, dente de ouro) |

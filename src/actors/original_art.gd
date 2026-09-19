@@ -3,6 +3,7 @@ extends RefCounted
 
 const ROOT := "res://art/export/enramados/"
 const MILLISECONDS := 1000.0
+const BODY_HEIGHT_INDEX := 3
 static var _manifest: Dictionary = {}
 static var _textures: Dictionary = {}
 
@@ -37,6 +38,13 @@ func box(id: StringName, foot: Vector2) -> Rect2:
 	return Rect2(foot - Vector2(item.foot[0], item.foot[1]), Vector2(item.size[0], item.size[1]))
 
 
+func body_box(id: StringName, foot: Vector2) -> Rect2:
+	var bounds: Array = entry(id).body_bounds
+	return Rect2(
+		foot + Vector2(bounds[0], bounds[1]), Vector2(bounds[2], bounds[BODY_HEIGHT_INDEX])
+	)
+
+
 func draw_on(
 	canvas: CanvasItem,
 	id: StringName,
@@ -64,7 +72,8 @@ static func unit_profile(data_id: StringName) -> StringName:
 		&"monarch":
 			return &"monarch"
 		&"archer", &"canopy_archer":
-			return &"archer"
+			# Rejected concept is archived; the reference troop body is a temporary proxy.
+			return &"vagrant"
 		&"vagrant", &"builder":
 			return &"vagrant"
 		&"cook":

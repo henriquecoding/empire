@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "assets": {
     "knight": {
       "source": "troop",
@@ -40,6 +40,13 @@
         }
       },
       "texture": "knight.png",
+      "review_status": "near_complete_reference",
+      "body_bounds": [
+        -12,
+        -47,
+        24,
+        47
+      ],
       "atlas_origin": [
         0,
         0
@@ -81,40 +88,15 @@
         }
       },
       "texture": "vagrant.png",
+      "review_status": "derived_temporary",
+      "body_bounds": [
+        -12,
+        -47,
+        24,
+        47
+      ],
       "atlas_origin": [
         294,
-        0
-      ]
-    },
-    "archer": {
-      "source": "archer",
-      "layers": [
-        2,
-        3,
-        4,
-        5
-      ],
-      "source_bounds": [
-        77,
-        75,
-        126,
-        129
-      ],
-      "size": [
-        49,
-        54
-      ],
-      "foot": [
-        18,
-        53
-      ],
-      "durations_ms": [
-        100
-      ],
-      "tags": {},
-      "texture": "archer.png",
-      "atlas_origin": [
-        588,
         0
       ]
     },
@@ -143,8 +125,15 @@
       ],
       "tags": {},
       "texture": "monarch.png",
+      "review_status": "redesign_required",
+      "body_bounds": [
+        -23,
+        -90,
+        46,
+        90
+      ],
       "atlas_origin": [
-        637,
+        588,
         0
       ]
     },
@@ -175,8 +164,15 @@
       ],
       "tags": {},
       "texture": "cook.png",
+      "review_status": "near_complete_reference",
+      "body_bounds": [
+        -12,
+        -47,
+        25,
+        47
+      ],
       "atlas_origin": [
-        697,
+        648,
         0
       ]
     },
@@ -204,7 +200,8 @@
         100
       ],
       "tags": {},
-      "texture": "far_keep.png"
+      "texture": "far_keep.png",
+      "review_status": "author_base_needs_refinement"
     },
     "oak": {
       "source": "concept",
@@ -229,7 +226,8 @@
         100
       ],
       "tags": {},
-      "texture": "oak.png"
+      "texture": "oak.png",
+      "review_status": "author_base_needs_refinement"
     },
     "tree_castle": {
       "source": "concept",
@@ -258,7 +256,8 @@
         100
       ],
       "tags": {},
-      "texture": "tree_castle.png"
+      "texture": "tree_castle.png",
+      "review_status": "author_base_needs_refinement"
     },
     "workshop": {
       "source": "concept",
@@ -285,7 +284,8 @@
         100
       ],
       "tags": {},
-      "texture": "workshop.png"
+      "texture": "workshop.png",
+      "review_status": "author_base_needs_refinement"
     },
     "training_house": {
       "source": "concept",
@@ -311,7 +311,8 @@
         100
       ],
       "tags": {},
-      "texture": "training_house.png"
+      "texture": "training_house.png",
+      "review_status": "author_base_needs_refinement"
     },
     "gate": {
       "source": "concept",
@@ -337,7 +338,8 @@
         100
       ],
       "tags": {},
-      "texture": "gate.png"
+      "texture": "gate.png",
+      "review_status": "author_base_needs_refinement"
     },
     "storehouse": {
       "source": "concept",
@@ -362,7 +364,8 @@
         100
       ],
       "tags": {},
-      "texture": "storehouse.png"
+      "texture": "storehouse.png",
+      "review_status": "author_base_needs_refinement"
     }
   },
   "sources": {
@@ -478,7 +481,9 @@
           "blend": 0,
           "opacity": 255
         }
-      ]
+      ],
+      "review_status": "rejected_concept",
+      "runtime_allowed": false
     },
     "concept": {
       "sha256": "db9fa33dd3a12c116ed984dcb1a6760428ade9de350ef7b8dc5ad59dd12eefa3",
@@ -1021,5 +1026,6 @@
         }
       ]
     }
-  }
+  },
+  "review_authority": "Author clarification 2026-09-19; docs/art/REFERENCE_AUTHORITY.md"
 }

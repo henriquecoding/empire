@@ -1,0 +1,19 @@
+{
+	"elapsed_seconds": 2.154729,
+	"fixture": "cast",
+	"frame_p50_ms": 9.09090909090909,
+	"frame_p95_ms": 11.1111111111111,
+	"frames_measured": 120,
+	"king_band": 1,
+	"max_draw_calls": 95.0,
+	"nodes": 55.0,
+	"physics_p95_ms": 9.687,
+	"prepared_state": true,
+	"renderer": "llvmpipe (LLVM 20.1.2, 256 bits)",
+	"seed": 20260919,
+	"simulation_held": true,
+	"texture_bytes": 14441455.0,
+	"units": 13,
+	"viewport": "(1280.0, 720.0)",
+	"window": "(1280, 720)"
+}

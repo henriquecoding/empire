@@ -2,6 +2,20 @@
 
 Estado: **integração técnica implementada; acabamento artístico parcial**.
 
+## Correção de direção após a primeira entrega
+
+O autor esclareceu quais personagens estavam quase concluídos e rejeitou o arqueiro de conceito. A [direção atual](../art/REFERENCE_AUTHORITY.md) fixa soldado, cozinheiro e elenco enviado como referências; rei exige redesign. O arqueiro antigo saiu do atlas e dos exports. O runtime usa provisoriamente o corpo/rosto da tropa com marca de arco, sem apresentar essa combinação como personagem final. O manifesto registra os estados de revisão e a checagem recusa exports obsoletos.
+
+Foi gerado um estudo do rei a partir dos anexos, identificado como proposta e sem uso no jogo. A limitação de geração descrita abaixo corresponde à primeira entrega. As capturas e medições originais também são históricas, anteriores à correção; a nova representação de arqueiros acrescenta marcas de arco e precisa de medição própria.
+
+O cenário continua com acabamento pendente. A revisão especifica melhorias sobre a arquitetura do autor — volumes, vegetação, conexões entre níveis e materiais — sem declarar que já foram desenhadas.
+
+![Elenco conferido na cena](evidence/reference-cast.png)
+
+Captura preparada `cast`: soldado, cozinheiro, rei antigo provisório e arqueiro temporário com corpo/rosto da tropa e marca de arco. A simulação fica suspensa nessa fixture para manter a comparação alinhada; seus tempos não medem desempenho jogável. O rei do estudo não aparece nesta captura.
+
+Validação desta revisão: **404 testes passaram, 9 skips existentes, 0 falhas/erros/órfãos** (413 casos); portões estáticos e reprodução dos exports passaram; PCK gerado e iniciado até o jogo. Vistoria configurada para 8 dias terminou com derrota no dia 2, sem inconsistências. Registros: [suite](evidence/direction-tests.txt), [portões](evidence/direction-gates.txt), [boot do PCK](evidence/direction-pack.txt) e [vistoria](evidence/direction-vistoria.txt).
+
 Base: `b018fb1d3b9e5cf077327d50724458fe24ba1bb2`, branch padrão `claude/gracious-ptolemy-efyrb5`. Pedido do autor: aplicar o [planejamento](PLAN-2026-09-19.md). Decisões de implementação: [ADR 0022](../adr/0022-original-art-presentation.md), acompanhamento: [VIS-01](../backlog/VIS-01.md).
 
 ## Resultado no jogo

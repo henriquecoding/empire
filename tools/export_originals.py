@@ -11,6 +11,13 @@ from aseprite_source import composite, read
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'art/source/originals'
 OUT = ROOT / 'art/export/enramados'
+REVIEW_STATUS = {
+    'knight': 'near_complete_reference',
+    'cook': 'near_complete_reference',
+    'vagrant': 'derived_temporary',
+    'monarch': 'redesign_required',
+}
+BODY_LAYERS = {'knight': 1, 'vagrant': 1, 'monarch': 63, 'cook': 43}
 
 
 def export(destination):
@@ -21,7 +28,6 @@ def export(destination):
     pieces = {
         'knight': ('troop', [1, 2, 3, 4, 5], (77, 75, 126, 129), (95, 128)),
         'vagrant': ('troop', [1, 2], (77, 75, 126, 129), (95, 128)),
-        'archer': ('archer', [2, 3, 4, 5], (77, 75, 126, 129), (95, 128)),
         'monarch': ('concept', [63, 64], (2558, 225, 2618, 319), (2593, 318)),
         'cook': ('concept', [43, 44, 45, 46], (1296, 446, 1344, 514), (1311, 512)),
         'far_keep': ('concept', [11, 12], (2230, 103, 2976, 514), (2600, 514)),
@@ -32,10 +38,13 @@ def export(destination):
         'gate': ('concept', [11, 12], (3200, 236, 3338, 514), (3269, 514)),
         'storehouse': ('concept', [26], (1872, 518, 1987, 640), (1929, 640)),
     }
-    manifest = {'version': 1, 'assets': {}, 'sources': {}}
+    manifest = {'version': 2, 'assets': {}, 'sources': {},
+                'review_authority': 'Author clarification 2026-09-19; docs/art/REFERENCE_AUTHORITY.md'}
     for name, source in sources.items():
         manifest['sources'][name] = {'sha256': hashlib.sha256((SOURCE / f'{name}.aseprite').read_bytes()).hexdigest(),
                                      'layers': source['layers']}
+        if name == 'archer':
+            manifest['sources'][name].update(review_status='rejected_concept', runtime_allowed=False)
     for name, (src, layers, bounds, foot) in pieces.items():
         source = sources[src]
         width, height = bounds[2] - bounds[0], bounds[3] - bounds[1]
@@ -45,10 +54,14 @@ def export(destination):
         sheet.save(destination / f'{name}.png')
         manifest['assets'][name] = dict(source=src, layers=layers, source_bounds=bounds,
             size=[width, height], foot=[foot[0] - bounds[0], foot[1] - bounds[1]],
-            durations_ms=source['durations'], tags=source['tags'], texture=f'{name}.png')
+            durations_ms=source['durations'], tags=source['tags'], texture=f'{name}.png',
+            review_status=REVIEW_STATUS.get(name, 'author_base_needs_refinement'))
+        if name in BODY_LAYERS:
+            x, y, body = source['frames'][0][BODY_LAYERS[name]]
+            manifest['assets'][name]['body_bounds'] = [x - foot[0], y - foot[1], *body.size]
     atlas = Image.new('RGBA', (1024, 128))
     offset = 0
-    for name in ('knight', 'vagrant', 'archer', 'monarch', 'cook'):
+    for name in ('knight', 'vagrant', 'monarch', 'cook'):
         sheet = Image.open(destination / f'{name}.png')
         atlas.alpha_composite(sheet, (offset, 0))
         manifest['assets'][name]['atlas_origin'] = [offset, 0]
@@ -65,6 +78,10 @@ if __name__ == '__main__':
     if args.check:
         with tempfile.TemporaryDirectory() as directory:
             export(Path(directory))
+            expected = {p.name for p in Path(directory).iterdir()}
+            obsolete = {p.name for p in args.output.glob('*.png')} - expected
+            if obsolete:
+                raise SystemExit(f'Obsolete runtime exports: {sorted(obsolete)}')
             for generated in Path(directory).iterdir():
                 checked_in = args.output / generated.name
                 if not checked_in.exists() or checked_in.read_bytes() != generated.read_bytes():
