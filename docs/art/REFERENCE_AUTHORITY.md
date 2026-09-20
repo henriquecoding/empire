@@ -29,13 +29,15 @@ Os arquivos de referência são cópias intactas dos anexos. [sources.json](refe
 
 Antes de variar classe, equipamento ou bioma, confrontar a nova peça com o soldado e o cozinheiro. Evitar olhos fofos genéricos, bocas indistintas, textura em excesso e resolução aparente diferente.
 
-## 3. Primeiro estudo do rei
+## 3. Estudo atual do rei
 
-![Estudo do rei — proposta, não aprovado](references/2026-09-19/king-study-v1.png)
+![Estudo do rei v2 — proposta, não aprovado](references/2026-09-19/king-study-v2.png)
 
-O estudo gerado nesta revisão explora silhueta compacta, capa azul, cintura simples e expressões de repouso, medo e dor. É **uma proposta de design**, não arte aprovada, não uma folha de animação e não um sprite nativo de 64×64. O traço e a densidade de pixels ainda precisam ser reconciliados com os originais na autoria final. Não foi inserido no runtime.
+O estudo explora silhueta compacta, capa azul e expressões de repouso, medo e dor. Na revisão de 20/09, o autor apontou que a roupa parecia pele descoberta. A v2 corrige isso com túnica azul-petróleo, mangas longas, gola clara, punhos e barra definidos, cinto de couro, calças escuras e botas. Mantém corpo gordo, rosto, coroa e capa. A v1 fica apenas como histórico da correção.
 
-O [brief utilizado](references/2026-09-19/king-study-brief.md) descreve as referências e os limites. A versão antiga do rei continua apenas como representação temporária até existir um desenho revisado adequado à integração.
+É **uma proposta de design**, não arte aprovada, não uma folha de animação e não um sprite nativo de 64×64. O traço e a densidade de pixels ainda precisam ser reconciliados com os originais na autoria final. Não foi inserido no runtime.
+
+O [brief utilizado](references/2026-09-19/king-study-v2-brief.md) descreve as referências e os limites. A versão antiga do rei continua apenas como representação temporária até existir um desenho revisado adequado à integração.
 
 ## 4. Correção imediata no jogo
 

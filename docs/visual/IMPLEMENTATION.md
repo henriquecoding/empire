@@ -8,6 +8,8 @@ O autor esclareceu quais personagens estavam quase concluídos e rejeitou o arqu
 
 Foi gerado um estudo do rei a partir dos anexos, identificado como proposta e sem uso no jogo. A limitação de geração descrita abaixo corresponde à primeira entrega. As capturas e medições originais também são históricas, anteriores à correção; a nova representação de arqueiros acrescenta marcas de arco e precisa de medição própria.
 
+Revisão de 20/09: o estudo do rei passou à v2 após o autor apontar a falta de leitura das vestimentas. A nova proposta tem túnica azul-petróleo e peças de roupa claramente delimitadas. Esta revisão altera a documentação e o estudo visual; o sprite do jogo continua provisório.
+
 O cenário continua com acabamento pendente. A revisão especifica melhorias sobre a arquitetura do autor — volumes, vegetação, conexões entre níveis e materiais — sem declarar que já foram desenhadas.
 
 ![Elenco conferido na cena](evidence/reference-cast.png)

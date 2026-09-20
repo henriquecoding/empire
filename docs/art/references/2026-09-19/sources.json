@@ -29,9 +29,20 @@
   },
   {
     "file": "king-study-v1.png",
-    "role": "proposal_not_approved",
+    "role": "superseded_clothing_study",
     "generator": "image_gen",
     "sha256": "c20f07587d35ebe556019e7ed0190f0f3be3f4e8c931b8dc5c22c04b315c75fb",
+    "runtime": false,
+    "native_sprite": false,
+    "superseded_by": "king-study-v2.png"
+  },
+  {
+    "file": "king-study-v2.png",
+    "role": "proposal_not_approved",
+    "generator": "image_gen",
+    "edit_target": "king-study-v1.png",
+    "revision": "2026-09-20",
+    "sha256": "92292b08b39a7df339f277663fa94a8aa7b28a854d1f834350589b8c66d36532",
     "runtime": false,
     "native_sprite": false
   }
