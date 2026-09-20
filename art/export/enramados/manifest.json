@@ -1,0 +1,1031 @@
+{
+  "version": 2,
+  "assets": {
+    "knight": {
+      "source": "troop",
+      "layers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_bounds": [
+        77,
+        75,
+        126,
+        129
+      ],
+      "size": [
+        49,
+        54
+      ],
+      "foot": [
+        18,
+        53
+      ],
+      "durations_ms": [
+        100,
+        100,
+        100,
+        100,
+        150,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 5,
+          "direction": 0
+        }
+      },
+      "texture": "knight.png",
+      "review_status": "near_complete_reference",
+      "body_bounds": [
+        -12,
+        -47,
+        24,
+        47
+      ],
+      "atlas_origin": [
+        0,
+        0
+      ]
+    },
+    "vagrant": {
+      "source": "troop",
+      "layers": [
+        1,
+        2
+      ],
+      "source_bounds": [
+        77,
+        75,
+        126,
+        129
+      ],
+      "size": [
+        49,
+        54
+      ],
+      "foot": [
+        18,
+        53
+      ],
+      "durations_ms": [
+        100,
+        100,
+        100,
+        100,
+        150,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 5,
+          "direction": 0
+        }
+      },
+      "texture": "vagrant.png",
+      "review_status": "derived_temporary",
+      "body_bounds": [
+        -12,
+        -47,
+        24,
+        47
+      ],
+      "atlas_origin": [
+        294,
+        0
+      ]
+    },
+    "monarch": {
+      "source": "concept",
+      "layers": [
+        63,
+        64
+      ],
+      "source_bounds": [
+        2558,
+        225,
+        2618,
+        319
+      ],
+      "size": [
+        60,
+        94
+      ],
+      "foot": [
+        35,
+        93
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "monarch.png",
+      "review_status": "redesign_required",
+      "body_bounds": [
+        -23,
+        -90,
+        46,
+        90
+      ],
+      "atlas_origin": [
+        588,
+        0
+      ]
+    },
+    "cook": {
+      "source": "concept",
+      "layers": [
+        43,
+        44,
+        45,
+        46
+      ],
+      "source_bounds": [
+        1296,
+        446,
+        1344,
+        514
+      ],
+      "size": [
+        48,
+        68
+      ],
+      "foot": [
+        15,
+        66
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "cook.png",
+      "review_status": "near_complete_reference",
+      "body_bounds": [
+        -12,
+        -47,
+        25,
+        47
+      ],
+      "atlas_origin": [
+        648,
+        0
+      ]
+    },
+    "far_keep": {
+      "source": "concept",
+      "layers": [
+        11,
+        12
+      ],
+      "source_bounds": [
+        2230,
+        103,
+        2976,
+        514
+      ],
+      "size": [
+        746,
+        411
+      ],
+      "foot": [
+        370,
+        411
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "far_keep.png",
+      "review_status": "author_base_needs_refinement"
+    },
+    "oak": {
+      "source": "concept",
+      "layers": [
+        6
+      ],
+      "source_bounds": [
+        2311,
+        0,
+        2944,
+        584
+      ],
+      "size": [
+        633,
+        584
+      ],
+      "foot": [
+        316,
+        584
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "oak.png",
+      "review_status": "author_base_needs_refinement"
+    },
+    "tree_castle": {
+      "source": "concept",
+      "layers": [
+        6,
+        8,
+        11,
+        12,
+        13
+      ],
+      "source_bounds": [
+        2230,
+        0,
+        2976,
+        514
+      ],
+      "size": [
+        746,
+        514
+      ],
+      "foot": [
+        370,
+        514
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "tree_castle.png",
+      "review_status": "author_base_needs_refinement"
+    },
+    "workshop": {
+      "source": "concept",
+      "layers": [
+        17,
+        19,
+        20
+      ],
+      "source_bounds": [
+        104,
+        358,
+        212,
+        514
+      ],
+      "size": [
+        108,
+        156
+      ],
+      "foot": [
+        54,
+        156
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "workshop.png",
+      "review_status": "author_base_needs_refinement"
+    },
+    "training_house": {
+      "source": "concept",
+      "layers": [
+        11,
+        12
+      ],
+      "source_bounds": [
+        1180,
+        358,
+        1280,
+        514
+      ],
+      "size": [
+        100,
+        156
+      ],
+      "foot": [
+        50,
+        156
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "training_house.png",
+      "review_status": "author_base_needs_refinement"
+    },
+    "gate": {
+      "source": "concept",
+      "layers": [
+        11,
+        12
+      ],
+      "source_bounds": [
+        3200,
+        236,
+        3338,
+        514
+      ],
+      "size": [
+        138,
+        278
+      ],
+      "foot": [
+        69,
+        278
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "gate.png",
+      "review_status": "author_base_needs_refinement"
+    },
+    "storehouse": {
+      "source": "concept",
+      "layers": [
+        26
+      ],
+      "source_bounds": [
+        1872,
+        518,
+        1987,
+        640
+      ],
+      "size": [
+        115,
+        122
+      ],
+      "foot": [
+        57,
+        122
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "texture": "storehouse.png",
+      "review_status": "author_base_needs_refinement"
+    }
+  },
+  "sources": {
+    "troop": {
+      "sha256": "6cc4f1604d4a3a604a2d90a0e0449e183a470a8363390517e2583317125a5eca",
+      "layers": [
+        {
+          "name": "Knight",
+          "flags": 3,
+          "type": 1,
+          "level": 0,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Shield",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Sword",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Equipments",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "References",
+          "flags": 3,
+          "type": 0,
+          "level": 0,
+          "blend": 0,
+          "opacity": 255
+        }
+      ]
+    },
+    "archer": {
+      "sha256": "d557cf2bc0982fc17add3b4e93ddfcbaccb17c9b7b97f21bbfd3aaec77385e18",
+      "layers": [
+        {
+          "name": "Layer 1",
+          "flags": 3,
+          "type": 0,
+          "level": 0,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Archer",
+          "flags": 3,
+          "type": 1,
+          "level": 0,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Arms and Weapons",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Equipments",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        }
+      ],
+      "review_status": "rejected_concept",
+      "runtime_allowed": false
+    },
+    "concept": {
+      "sha256": "db9fa33dd3a12c116ed984dcb1a6760428ade9de350ef7b8dc5ad59dd12eefa3",
+      "layers": [
+        {
+          "name": "Background",
+          "flags": 30,
+          "type": 0,
+          "level": 0,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Background Objects",
+          "flags": 3,
+          "type": 1,
+          "level": 0,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Defences",
+          "flags": 3,
+          "type": 1,
+          "level": 1,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Walls",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Ladder",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Water",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tree",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tree Leaves",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tree Details",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tree Houses",
+          "flags": 3,
+          "type": 1,
+          "level": 1,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Land",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Castle",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Details",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Bridge",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Boards",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tools",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Plataform grass",
+          "flags": 2,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Houses",
+          "flags": 3,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Houses Details",
+          "flags": 3,
+          "type": 1,
+          "level": 1,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Boards",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tools",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Objects",
+          "flags": 3,
+          "type": 1,
+          "level": 0,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Ground",
+          "flags": 3,
+          "type": 1,
+          "level": 1,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Ground",
+          "flags": 2,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Hide Ground",
+          "flags": 2,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Grass",
+          "flags": 2,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Houses",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Details",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Plataforms",
+          "flags": 2,
+          "type": 0,
+          "level": 1,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Characters",
+          "flags": 3,
+          "type": 1,
+          "level": 1,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Knight",
+          "flags": 35,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Shield",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Sword",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Equipments",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Knight Copy",
+          "flags": 35,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Shield",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Sword",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Equipments",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Chef",
+          "flags": 35,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Plate",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Accessories",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Sad Knight",
+          "flags": 35,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Sword",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Equipments",
+          "flags": 2,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Valkyria",
+          "flags": 35,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Face",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Sword",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Equipments",
+          "flags": 2,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Seller",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Builder",
+          "flags": 35,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Hammer",
+          "flags": 2,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Tool",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Emperor",
+          "flags": 3,
+          "type": 1,
+          "level": 2,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Body",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Accessories",
+          "flags": 3,
+          "type": 0,
+          "level": 3,
+          "blend": 0,
+          "opacity": 255
+        },
+        {
+          "name": "Creatures",
+          "flags": 3,
+          "type": 1,
+          "level": 1,
+          "blend": 0,
+          "opacity": 0
+        },
+        {
+          "name": "Ugu",
+          "flags": 3,
+          "type": 0,
+          "level": 2,
+          "blend": 0,
+          "opacity": 255
+        }
+      ]
+    }
+  },
+  "review_authority": "Author clarification 2026-09-19; docs/art/REFERENCE_AUTHORITY.md"
+}

@@ -1,0 +1,1841 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+[2J[H
+--------------------------------------------------------------------------------------------------
+GdUnit4 Comandline Tool
+--------------------------------------------------------------------------------------------------
+
+Headless mode is ignored by option '--ignoreHeadlessMode'"
+
+Please note that tests that use UI interaction do not work correctly in headless mode.
+Godot 'InputEvents' are not transported by the Godot engine in headless mode and therefore
+have no effect in the test!
+
+Scanning for test suites in: tests
+Installing GdUnit4 session system hooks.
+Session hook 'GdUnitHtmlTestReporter' installed.
+Session hook 'GdUnitXMLTestReporter' installed.
+Run Test Suite: res://tests/wall_test.gd
+  res://tests/wall_test.gd > test_a_escada_do_muro_sai_por_nivel_e_nao_por_id STARTED
+  res://tests/wall_test.gd > test_a_escada_do_muro_sai_por_nivel_e_nao_por_id PASSED 8ms
+
+  res://tests/wall_test.gd > test_os_dois_caminhos_do_10_sao_exclusivos STARTED
+  res://tests/wall_test.gd > test_os_dois_caminhos_do_10_sao_exclusivos PASSED 6ms
+
+  res://tests/wall_test.gd > test_a_escolha_do_caminho_fecha_se_no_nivel_2 STARTED
+  res://tests/wall_test.gd > test_a_escolha_do_caminho_fecha_se_no_nivel_2 PASSED 6ms
+
+  res://tests/wall_test.gd > test_o_muro_sobe_os_cinco_niveis_da_tabela_do_10 STARTED
+  res://tests/wall_test.gd > test_o_muro_sobe_os_cinco_niveis_da_tabela_do_10 PASSED 17ms
+
+  res://tests/wall_test.gd > test_o_dano_leva_a_obra_a_ruina_e_anuncia_a_brecha STARTED
+  res://tests/wall_test.gd > test_o_dano_leva_a_obra_a_ruina_e_anuncia_a_brecha PASSED 5ms
+
+  res://tests/wall_test.gd > test_so_o_que_esta_de_pe_e_que_barra STARTED
+  res://tests/wall_test.gd > test_so_o_que_esta_de_pe_e_que_barra PASSED 5ms
+
+Statistics: 6 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 72ms
+
+
+Run Test Suite: res://tests/hud_state_test.gd
+  res://tests/hud_state_test.gd > test_core_defeat_is_not_pause_and_has_no_resume STARTED
+  res://tests/hud_state_test.gd > test_core_defeat_is_not_pause_and_has_no_resume PASSED 42ms
+
+  res://tests/hud_state_test.gd > test_passage_hint_uses_the_same_reach_as_the_simulation STARTED
+  res://tests/hud_state_test.gd > test_passage_hint_uses_the_same_reach_as_the_simulation PASSED 35ms
+
+Statistics: 2 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 88ms
+
+
+Run Test Suite: res://tests/noite_do_07_test.gd
+  res://tests/noite_do_07_test.gd > test_o_cenario_fecha_se_a_volta_do_que_o_07_nomeia STARTED
+  res://tests/noite_do_07_test.gd > test_o_cenario_fecha_se_a_volta_do_que_o_07_nomeia PASSED 9ms
+
+  res://tests/noite_do_07_test.gd > test_a_mancha_vem_pelo_flanco_onde_esta_o_muro STARTED
+  res://tests/noite_do_07_test.gd > test_a_mancha_vem_pelo_flanco_onde_esta_o_muro PASSED 1s 111ms
+
+  res://tests/noite_do_07_test.gd > test_as_vagas_crescem_com_o_dia STARTED
+  res://tests/noite_do_07_test.gd > test_as_vagas_crescem_com_o_dia PASSED 2s 202ms
+
+  res://tests/noite_do_07_test.gd > test_a_torre_nao_da_dano_da_certeza STARTED
+  res://tests/noite_do_07_test.gd > test_a_torre_nao_da_dano_da_certeza PASSED 1s 878ms
+
+  res://tests/noite_do_07_test.gd > test_a_mesma_semente_da_a_mesma_noite STARTED
+  res://tests/noite_do_07_test.gd > test_a_mesma_semente_da_a_mesma_noite PASSED 2s 229ms
+
+  res://tests/noite_do_07_test.gd > test_dez_dias_correm_em_headless_ao_passo_fixo STARTED
+§66: 10 dias (3600 s de jogo) em 18.65 s de relogio — orcamento 10 s
+  res://tests/noite_do_07_test.gd > test_dez_dias_correm_em_headless_ao_passo_fixo PASSED 18s 666ms
+
+  res://tests/noite_do_07_test.gd > test_a_noite_5_ganha_se_com_1_a_2_mortes STARTED
+  res://tests/noite_do_07_test.gd > test_a_noite_5_ganha_se_com_1_a_2_mortes PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Q-073: sem torre a noite 5 da 1 morte mas o muro cai, porque a estacaria publica UM posto para os seis arqueiros do §07. Falta a decisao do §10'
+
+
+  res://tests/noite_do_07_test.gd > test_a_noite_8_perde_se_sem_torre STARTED
+  res://tests/noite_do_07_test.gd > test_a_noite_8_perde_se_sem_torre PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Q-073: sem torre o muro cai em TODAS as noites, a comecar na 1, e uma noite 8 sozinha nao chega ao nucleo. Dez seguidas chegam (F1-16)'
+
+
+  res://tests/noite_do_07_test.gd > test_dez_dias_em_menos_de_dez_segundos STARTED
+  res://tests/noite_do_07_test.gd > test_dez_dias_em_menos_de_dez_segundos PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Q-074: os dez dias custam 9 a 11 s conforme o runner, e o §66 pede menos de 10. Um teste que depende da maquina nao e um portao'
+
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 3 skipped | 0 orphans | PASSED 26s 154ms
+
+
+Run Test Suite: res://tests/save_world_test.gd
+  res://tests/save_world_test.gd > test_o_dia_7_reabre_no_dia_7 STARTED
+  res://tests/save_world_test.gd > test_o_dia_7_reabre_no_dia_7 PASSED 13s 902ms
+
+  res://tests/save_world_test.gd > test_as_coleccoes_voltam_todas STARTED
+  res://tests/save_world_test.gd > test_as_coleccoes_voltam_todas PASSED 13s 648ms
+
+  res://tests/save_world_test.gd > test_o_indice_de_ids_e_reconstruido STARTED
+  res://tests/save_world_test.gd > test_o_indice_de_ids_e_reconstruido PASSED 1s 954ms
+
+  res://tests/save_world_test.gd > test_a_obra_a_meio_volta_a_meio STARTED
+  res://tests/save_world_test.gd > test_a_obra_a_meio_volta_a_meio PASSED 1s 726ms
+
+  res://tests/save_world_test.gd > test_a_sequencia_aleatoria_continua_onde_ia STARTED
+  res://tests/save_world_test.gd > test_a_sequencia_aleatoria_continua_onde_ia PASSED 3s 452ms
+
+  res://tests/save_world_test.gd > test_um_save_sem_mundo_nao_rebenta STARTED
+  res://tests/save_world_test.gd > test_um_save_sem_mundo_nao_rebenta PASSED 13ms
+
+  res://tests/save_world_test.gd > test_as_colunas_saem_do_proprio_sistema STARTED
+  res://tests/save_world_test.gd > test_as_colunas_saem_do_proprio_sistema PASSED 5ms
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 34s 737ms
+
+
+Run Test Suite: res://tests/camera_rig_test.gd
+  res://tests/camera_rig_test.gd > test_a_posicao_e_sempre_um_pixel_inteiro STARTED
+  res://tests/camera_rig_test.gd > test_a_posicao_e_sempre_um_pixel_inteiro PASSED 15ms
+
+  res://tests/camera_rig_test.gd > test_nao_treme_com_movimento_subpixel STARTED
+  res://tests/camera_rig_test.gd > test_nao_treme_com_movimento_subpixel PASSED 8ms
+
+  res://tests/camera_rig_test.gd > test_antecipa_na_direcao_do_movimento STARTED
+  res://tests/camera_rig_test.gd > test_antecipa_na_direcao_do_movimento PASSED 7ms
+
+  res://tests/camera_rig_test.gd > test_a_antecipacao_troca_de_lado_quando_o_alvo_volta_para_tras STARTED
+  res://tests/camera_rig_test.gd > test_a_antecipacao_troca_de_lado_quando_o_alvo_volta_para_tras PASSED 9ms
+
+  res://tests/camera_rig_test.gd > test_um_alvo_parado_nao_faz_a_camara_oscilar STARTED
+  res://tests/camera_rig_test.gd > test_um_alvo_parado_nao_faz_a_camara_oscilar PASSED 12ms
+
+  res://tests/camera_rig_test.gd > test_respeita_os_limites_da_regiao STARTED
+  res://tests/camera_rig_test.gd > test_respeita_os_limites_da_regiao PASSED 6ms
+
+  res://tests/camera_rig_test.gd > test_uma_regiao_mais_estreita_do_que_o_ecra_fica_centrada STARTED
+  res://tests/camera_rig_test.gd > test_uma_regiao_mais_estreita_do_que_o_ecra_fica_centrada PASSED 6ms
+
+  res://tests/camera_rig_test.gd > test_a_camara_livre_volta_sozinha_nos_dois_segundos_do_dossie STARTED
+  res://tests/camera_rig_test.gd > test_a_camara_livre_volta_sozinha_nos_dois_segundos_do_dossie PASSED 9ms
+
+  res://tests/camera_rig_test.gd > test_nenhum_numero_de_afinacao_esta_no_script STARTED
+  res://tests/camera_rig_test.gd > test_nenhum_numero_de_afinacao_esta_no_script PASSED 5ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 111ms
+
+
+Run Test Suite: res://tests/band_light_test.gd
+  res://tests/band_light_test.gd > test_a_noite_e_castanha_e_nao_azul STARTED
+  res://tests/band_light_test.gd > test_a_noite_e_castanha_e_nao_azul PASSED 5ms
+
+  res://tests/band_light_test.gd > test_as_seis_fases_sao_distinguiveis STARTED
+  res://tests/band_light_test.gd > test_as_seis_fases_sao_distinguiveis PASSED 6ms
+
+  res://tests/band_light_test.gd > test_o_chao_da_noite_desce_abaixo_do_ambiente STARTED
+  res://tests/band_light_test.gd > test_o_chao_da_noite_desce_abaixo_do_ambiente PASSED 7ms
+
+  res://tests/band_light_test.gd > test_o_terreno_nunca_fica_transparente STARTED
+  res://tests/band_light_test.gd > test_o_terreno_nunca_fica_transparente PASSED 7ms
+
+  res://tests/band_light_test.gd > test_escurecer_uma_cor_nao_lhe_tira_opacidade STARTED
+  res://tests/band_light_test.gd > test_escurecer_uma_cor_nao_lhe_tira_opacidade PASSED 5ms
+
+  res://tests/band_light_test.gd > test_o_plano_de_jogo_fica_inalterado STARTED
+  res://tests/band_light_test.gd > test_o_plano_de_jogo_fica_inalterado PASSED 5ms
+
+  res://tests/band_light_test.gd > test_o_aereo_e_o_ambiente_e_o_subsolo_e_o_mais_escuro STARTED
+  res://tests/band_light_test.gd > test_o_aereo_e_o_ambiente_e_o_subsolo_e_o_mais_escuro PASSED 5ms
+
+  res://tests/band_light_test.gd > test_a_cor_de_uma_fase_e_a_cor_do_meio_dela STARTED
+  res://tests/band_light_test.gd > test_a_cor_de_uma_fase_e_a_cor_do_meio_dela PASSED 4ms
+
+  res://tests/band_light_test.gd > test_a_noite_so_clareia_no_fim STARTED
+  res://tests/band_light_test.gd > test_a_noite_so_clareia_no_fim PASSED 23ms
+
+  res://tests/band_light_test.gd > test_a_ultima_fase_da_a_volta_a_primeira STARTED
+  res://tests/band_light_test.gd > test_a_ultima_fase_da_a_volta_a_primeira PASSED 11ms
+
+  res://tests/band_light_test.gd > test_a_razao_do_chao_sai_dos_dois_numeros_do_80 STARTED
+  res://tests/band_light_test.gd > test_a_razao_do_chao_sai_dos_dois_numeros_do_80 PASSED 16ms
+
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 140ms
+
+
+Run Test Suite: res://tests/data_test.gd
+  res://tests/data_test.gd > test_cada_linha_tem_o_seu_tres STARTED
+  res://tests/data_test.gd > test_cada_linha_tem_o_seu_tres PASSED 33ms
+
+  res://tests/data_test.gd > test_curva_sem_campos_em_falta STARTED
+  res://tests/data_test.gd > test_curva_sem_campos_em_falta PASSED 9ms
+
+  res://tests/data_test.gd > test_colunas_propostas_existem STARTED
+  res://tests/data_test.gd > test_colunas_propostas_existem PASSED 34ms
+
+  res://tests/data_test.gd > test_referencias_resolvem STARTED
+  res://tests/data_test.gd > test_referencias_resolvem PASSED 26ms
+
+  res://tests/data_test.gd > test_segmentos_do_mesmo_tipo_coincidem STARTED
+  res://tests/data_test.gd > test_segmentos_do_mesmo_tipo_coincidem PASSED 11ms
+
+  res://tests/data_test.gd > test_relogio_do_05 STARTED
+  res://tests/data_test.gd > test_relogio_do_05 PASSED 6ms
+
+  res://tests/data_test.gd > test_todas_as_chaves_de_texto_existem STARTED
+  res://tests/data_test.gd > test_todas_as_chaves_de_texto_existem PASSED 45ms
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 206ms
+
+
+Run Test Suite: res://tests/architecture_test.gd
+  res://tests/architecture_test.gd > test_sim_nao_toca_em_nos STARTED
+  res://tests/architecture_test.gd > test_sim_nao_toca_em_nos PASSED 14ms
+
+  res://tests/architecture_test.gd > test_aleatoriedade_so_pelo_rng_service STARTED
+  res://tests/architecture_test.gd > test_aleatoriedade_so_pelo_rng_service PASSED 16ms
+
+  res://tests/architecture_test.gd > test_sem_literais_de_balanceamento STARTED
+  res://tests/architecture_test.gd > test_sem_literais_de_balanceamento PASSED 37ms
+
+  res://tests/architecture_test.gd > test_um_const_que_nao_cabe_numa_linha_continua_a_ser_um_const STARTED
+  res://tests/architecture_test.gd > test_um_const_que_nao_cabe_numa_linha_continua_a_ser_um_const PASSED 11ms
+
+  res://tests/architecture_test.gd > test_g6_o_save_nunca_usa_load STARTED
+  res://tests/architecture_test.gd > test_g6_o_save_nunca_usa_load PASSED 9ms
+
+  res://tests/architecture_test.gd > test_band_vive_na_simulacao STARTED
+  res://tests/architecture_test.gd > test_band_vive_na_simulacao PASSED 6ms
+
+  res://tests/architecture_test.gd > test_nenhum_script_passa_das_250_linhas STARTED
+  res://tests/architecture_test.gd > test_nenhum_script_passa_das_250_linhas PASSED 17ms
+
+  res://tests/architecture_test.gd > test_eventos_no_catalogo STARTED
+  res://tests/architecture_test.gd > test_eventos_no_catalogo PASSED 6ms
+
+Statistics: 8 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 145ms
+
+
+Run Test Suite: res://tests/event_bus_test.gd
+  res://tests/event_bus_test.gd > test_o_event_bus_declara_todos_os_sinais_do_catalogo STARTED
+  res://tests/event_bus_test.gd > test_o_event_bus_declara_todos_os_sinais_do_catalogo PASSED 5ms
+
+  res://tests/event_bus_test.gd > test_o_catalogo_e_fechado_nao_ha_sinais_inventados STARTED
+  res://tests/event_bus_test.gd > test_o_catalogo_e_fechado_nao_ha_sinais_inventados PASSED 9ms
+
+  res://tests/event_bus_test.gd > test_sao_sessenta_e_um STARTED
+  res://tests/event_bus_test.gd > test_sao_sessenta_e_um PASSED 10ms
+
+  res://tests/event_bus_test.gd > test_enfileirar_nao_emite_so_o_flush_emite STARTED
+  res://tests/event_bus_test.gd > test_enfileirar_nao_emite_so_o_flush_emite PASSED 6ms
+
+  res://tests/event_bus_test.gd > test_a_ordem_de_entrega_e_a_ordem_de_chegada STARTED
+  res://tests/event_bus_test.gd > test_a_ordem_de_entrega_e_a_ordem_de_chegada PASSED 6ms
+
+  res://tests/event_bus_test.gd > test_o_que_um_ouvinte_enfileira_fica_para_o_tick_seguinte STARTED
+  res://tests/event_bus_test.gd > test_o_que_um_ouvinte_enfileira_fica_para_o_tick_seguinte PASSED 6ms
+
+  res://tests/event_bus_test.gd > test_a_historia_guarda_os_ultimos_seiscentos STARTED
+  res://tests/event_bus_test.gd > test_a_historia_guarda_os_ultimos_seiscentos PASSED 7ms
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 74ms
+
+
+Run Test Suite: res://tests/original_art_test.gd
+  res://tests/original_art_test.gd > test_original_idle_preserves_the_long_fifth_frame STARTED
+  res://tests/original_art_test.gd > test_original_idle_preserves_the_long_fifth_frame PASSED 7ms
+
+  res://tests/original_art_test.gd > test_originals_have_native_dimensions_and_a_stable_foot STARTED
+  res://tests/original_art_test.gd > test_originals_have_native_dimensions_and_a_stable_foot PASSED 7ms
+
+Statistics: 2 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 24ms
+
+
+Run Test Suite: res://tests/scripts_load_test.gd
+  res://tests/scripts_load_test.gd > test_todos_os_scripts_de_src_compilam STARTED
+  res://tests/scripts_load_test.gd > test_todos_os_scripts_de_src_compilam PASSED 391ms
+
+Statistics: 1 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 401ms
+
+
+Run Test Suite: res://tests/minuto_0_20_test.gd
+  res://tests/minuto_0_20_test.gd > test_o_minuto_0_20_do_25_funciona STARTED
+  res://tests/minuto_0_20_test.gd > test_o_minuto_0_20_do_25_funciona PASSED 58ms
+
+  res://tests/minuto_0_20_test.gd > test_o_rei_larga_onde_esta_e_a_moeda_nao_lhe_volta_ao_saco STARTED
+  res://tests/minuto_0_20_test.gd > test_o_rei_larga_onde_esta_e_a_moeda_nao_lhe_volta_ao_saco PASSED 17ms
+
+  res://tests/minuto_0_20_test.gd > test_uma_moeda_largada_sem_ninguem_por_perto_fica_no_chao STARTED
+  res://tests/minuto_0_20_test.gd > test_uma_moeda_largada_sem_ninguem_por_perto_fica_no_chao PASSED 22ms
+
+  res://tests/minuto_0_20_test.gd > test_o_minuto_0_20_da_o_mesmo_com_a_mesma_semente STARTED
+  res://tests/minuto_0_20_test.gd > test_o_minuto_0_20_da_o_mesmo_com_a_mesma_semente PASSED 31ms
+
+  res://tests/minuto_0_20_test.gd > test_sem_rei_a_moeda_apanha_se_e_nao_compra_ninguem STARTED
+  res://tests/minuto_0_20_test.gd > test_sem_rei_a_moeda_apanha_se_e_nao_compra_ninguem PASSED 10ms
+
+  res://tests/minuto_0_20_test.gd > test_um_tick_inteiro_com_300_unidades_e_moedas_no_chao STARTED
+F1-04: tick com 300 unidades e 60 moedas = 2082.0 us (§63: 4000) · a procura sozinha 1350.4 us
+  res://tests/minuto_0_20_test.gd > test_um_tick_inteiro_com_300_unidades_e_moedas_no_chao PASSED 351ms
+
+Statistics: 6 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 522ms
+
+
+Run Test Suite: res://tests/dez_dias_test.gd
+  res://tests/dez_dias_test.gd > test_e_possivel_sobreviver_dez_dias STARTED
+  res://tests/dez_dias_test.gd > test_e_possivel_sobreviver_dez_dias PASSED 33s 857ms
+
+  res://tests/dez_dias_test.gd > test_nao_e_trivial_sobreviver_dez_dias STARTED
+  res://tests/dez_dias_test.gd > test_nao_e_trivial_sobreviver_dez_dias PASSED 6s 720ms
+
+  res://tests/dez_dias_test.gd > test_sem_torres_a_mesma_muralha_cai STARTED
+  res://tests/dez_dias_test.gd > test_sem_torres_a_mesma_muralha_cai PASSED 20s 272ms
+
+  res://tests/dez_dias_test.gd > test_o_nucleo_pode_ser_atacado STARTED
+  res://tests/dez_dias_test.gd > test_o_nucleo_pode_ser_atacado PASSED 3s 842ms
+
+Statistics: 4 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 1min 4s 723ms
+
+
+Run Test Suite: res://tests/input_router_test.gd
+  res://tests/input_router_test.gd > test_o_ritmo_do_continuo_vem_de_data STARTED
+  res://tests/input_router_test.gd > test_o_ritmo_do_continuo_vem_de_data PASSED 6ms
+
+  res://tests/input_router_test.gd > test_o_intervalo_e_maior_do_que_um_tick STARTED
+  res://tests/input_router_test.gd > test_o_intervalo_e_maior_do_que_um_tick PASSED 5ms
+
+  res://tests/input_router_test.gd > test_a_tecla_premida_paga_o_degrau_mais_caro_em_tempo_de_jogo STARTED
+  res://tests/input_router_test.gd > test_a_tecla_premida_paga_o_degrau_mais_caro_em_tempo_de_jogo PASSED 6ms
+
+  res://tests/input_router_test.gd > test_o_continuo_nao_e_mais_rapido_do_que_o_arco_de_uma_moeda STARTED
+  res://tests/input_router_test.gd > test_o_continuo_nao_e_mais_rapido_do_que_o_arco_de_uma_moeda PASSED 5ms
+
+Statistics: 4 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 43ms
+
+
+Run Test Suite: res://tests/travessia_test.gd
+  res://tests/travessia_test.gd > test_a_regiao_atravessa_se_em_40_a_60_segundos_a_pe STARTED
+  res://tests/travessia_test.gd > test_a_regiao_atravessa_se_em_40_a_60_segundos_a_pe PASSED 6ms
+
+  res://tests/travessia_test.gd > test_a_montaria_e_uma_dadiva_e_nao_uma_correcao STARTED
+  res://tests/travessia_test.gd > test_a_montaria_e_uma_dadiva_e_nao_uma_correcao PASSED 8ms
+
+  res://tests/travessia_test.gd > test_quem_segue_o_rei_anda_ao_passo_dele STARTED
+  res://tests/travessia_test.gd > test_quem_segue_o_rei_anda_ao_passo_dele PASSED 16ms
+
+Statistics: 3 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 46ms
+
+
+Run Test Suite: res://tests/rot_system_test.gd
+  res://tests/rot_system_test.gd > test_dia_1_a_velocidade_e_14_9 STARTED
+  res://tests/rot_system_test.gd > test_dia_1_a_velocidade_e_14_9 PASSED 9ms
+
+  res://tests/rot_system_test.gd > test_dia_10_com_duas_fortalezas_e_campo_limpo_da_280 STARTED
+  res://tests/rot_system_test.gd > test_dia_10_com_duas_fortalezas_e_campo_limpo_da_280 PASSED 8ms
+
+  res://tests/rot_system_test.gd > test_sem_massa_para_a_mais_barata_nao_ha_invocacao STARTED
+  res://tests/rot_system_test.gd > test_sem_massa_para_a_mais_barata_nao_ha_invocacao PASSED 8ms
+
+  res://tests/rot_system_test.gd > test_sobre_consagrado_percorre_60_por_cento STARTED
+  res://tests/rot_system_test.gd > test_sobre_consagrado_percorre_60_por_cento PASSED 11ms
+
+  res://tests/rot_system_test.gd > test_alimentar_leva_a_massa_a_zero_e_nunca_abaixo STARTED
+  res://tests/rot_system_test.gd > test_alimentar_leva_a_massa_a_zero_e_nunca_abaixo PASSED 12ms
+
+  res://tests/rot_system_test.gd > test_a_mesma_semente_da_a_mesma_sequencia_de_invocacoes STARTED
+  res://tests/rot_system_test.gd > test_a_mesma_semente_da_a_mesma_sequencia_de_invocacoes PASSED 19ms
+
+  res://tests/rot_system_test.gd > test_escolhe_a_mais_cara_que_cabe_e_cujo_dia_minimo_ja_passou STARTED
+  res://tests/rot_system_test.gd > test_escolhe_a_mais_cara_que_cabe_e_cujo_dia_minimo_ja_passou PASSED 6ms
+
+  res://tests/rot_system_test.gd > test_invocar_gasta_a_massa_da_criatura STARTED
+  res://tests/rot_system_test.gd > test_invocar_gasta_a_massa_da_criatura PASSED 6ms
+
+  res://tests/rot_system_test.gd > test_recua_ao_amanhecer_e_deixa_de_andar STARTED
+  res://tests/rot_system_test.gd > test_recua_ao_amanhecer_e_deixa_de_andar PASSED 6ms
+
+  res://tests/rot_system_test.gd > test_o_rasto_cobre_o_que_ela_ja_atravessou STARTED
+  res://tests/rot_system_test.gd > test_o_rasto_cobre_o_que_ela_ja_atravessou PASSED 8ms
+
+Statistics: 10 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 135ms
+
+
+Run Test Suite: res://tests/outline_test.gd
+  res://tests/outline_test.gd > test_nenhuma_forma_desenha_a_mesma_coisa_que_outra STARTED
+  res://tests/outline_test.gd > test_nenhuma_forma_desenha_a_mesma_coisa_que_outra PASSED 7ms
+
+  res://tests/outline_test.gd > test_toda_a_forma_cabe_na_caixa_que_lhe_deram STARTED
+  res://tests/outline_test.gd > test_toda_a_forma_cabe_na_caixa_que_lhe_deram PASSED 8ms
+
+  res://tests/outline_test.gd > test_o_muro_leva_um_dente_por_slot_de_contacto STARTED
+  res://tests/outline_test.gd > test_o_muro_leva_um_dente_por_slot_de_contacto PASSED 6ms
+
+  res://tests/outline_test.gd > test_um_muro_sem_slots_ainda_e_um_muro STARTED
+  res://tests/outline_test.gd > test_um_muro_sem_slots_ainda_e_um_muro PASSED 6ms
+
+  res://tests/outline_test.gd > test_nenhuma_marca_desenha_a_mesma_coisa_que_outra STARTED
+  res://tests/outline_test.gd > test_nenhuma_marca_desenha_a_mesma_coisa_que_outra PASSED 7ms
+
+  res://tests/outline_test.gd > test_a_marca_troca_de_lado_com_o_sentido STARTED
+  res://tests/outline_test.gd > test_a_marca_troca_de_lado_com_o_sentido PASSED 6ms
+
+  res://tests/outline_test.gd > test_a_marca_sai_do_corpo_mas_nao_se_perde_no_ecra STARTED
+  res://tests/outline_test.gd > test_a_marca_sai_do_corpo_mas_nao_se_perde_no_ecra PASSED 6ms
+
+  res://tests/outline_test.gd > test_a_copa_do_castelo_arvore_entra_na_faixa_aerea STARTED
+  res://tests/outline_test.gd > test_a_copa_do_castelo_arvore_entra_na_faixa_aerea PASSED 6ms
+
+  res://tests/outline_test.gd > test_o_castelo_arvore_e_a_obra_mais_alta_do_mapa STARTED
+  res://tests/outline_test.gd > test_o_castelo_arvore_e_a_obra_mais_alta_do_mapa PASSED 6ms
+
+  res://tests/outline_test.gd > test_o_muro_cresce_com_o_nivel_e_tudo_o_resto_nao STARTED
+  res://tests/outline_test.gd > test_o_muro_cresce_com_o_nivel_e_tudo_o_resto_nao PASSED 7ms
+
+  res://tests/outline_test.gd > test_nenhuma_obra_e_mais_baixa_do_que_uma_moeda STARTED
+  res://tests/outline_test.gd > test_nenhuma_obra_e_mais_baixa_do_que_uma_moeda PASSED 6ms
+
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 107ms
+
+
+Run Test Suite: res://tests/creature_system_test.gd
+  res://tests/creature_system_test.gd > test_nascer_copia_os_campos_quentes_do_creature_data STARTED
+  res://tests/creature_system_test.gd > test_nascer_copia_os_campos_quentes_do_creature_data PASSED 6ms
+
+  res://tests/creature_system_test.gd > test_os_ids_vem_do_contador_do_game_state STARTED
+  res://tests/creature_system_test.gd > test_os_ids_vem_do_contador_do_game_state PASSED 6ms
+
+  res://tests/creature_system_test.gd > test_andar_aproxima_do_rumo_e_para_la STARTED
+  res://tests/creature_system_test.gd > test_andar_aproxima_do_rumo_e_para_la PASSED 6ms
+
+  res://tests/creature_system_test.gd > test_quem_esta_engajado_nao_anda STARTED
+  res://tests/creature_system_test.gd > test_quem_esta_engajado_nao_anda PASSED 6ms
+
+  res://tests/creature_system_test.gd > test_morrer_e_perder_vida_ate_zero STARTED
+  res://tests/creature_system_test.gd > test_morrer_e_perder_vida_ate_zero PASSED 6ms
+
+  res://tests/creature_system_test.gd > test_remover_do_meio_nao_perde_nem_baralha_ninguem STARTED
+  res://tests/creature_system_test.gd > test_remover_do_meio_nao_perde_nem_baralha_ninguem PASSED 5ms
+
+  res://tests/creature_system_test.gd > test_dissolver_leva_tudo_e_devolve_quem_levou STARTED
+  res://tests/creature_system_test.gd > test_dissolver_leva_tudo_e_devolve_quem_levou PASSED 6ms
+
+  res://tests/creature_system_test.gd > test_o_save_das_colunas_so_leva_tipos_base STARTED
+  res://tests/creature_system_test.gd > test_o_save_das_colunas_so_leva_tipos_base PASSED 6ms
+
+Statistics: 8 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 74ms
+
+
+Run Test Suite: res://tests/contact_queue_test.gd
+  res://tests/contact_queue_test.gd > test_so_engajam_os_slots_que_o_nivel_tem STARTED
+  res://tests/contact_queue_test.gd > test_so_engajam_os_slots_que_o_nivel_tem PASSED 6ms
+
+  res://tests/contact_queue_test.gd > test_o_bastiao_engaja_mais_do_que_a_estacaria STARTED
+  res://tests/contact_queue_test.gd > test_o_bastiao_engaja_mais_do_que_a_estacaria PASSED 6ms
+
+  res://tests/contact_queue_test.gd > test_os_slots_vao_para_os_mais_proximos STARTED
+  res://tests/contact_queue_test.gd > test_os_slots_vao_para_os_mais_proximos PASSED 5ms
+
+  res://tests/contact_queue_test.gd > test_quem_ja_esta_no_slot_fica STARTED
+  res://tests/contact_queue_test.gd > test_quem_ja_esta_no_slot_fica PASSED 6ms
+
+  res://tests/contact_queue_test.gd > test_um_slot_livre_e_dado_a_quem_esta_mais_perto STARTED
+  res://tests/contact_queue_test.gd > test_um_slot_livre_e_dado_a_quem_esta_mais_perto PASSED 7ms
+
+  res://tests/contact_queue_test.gd > test_quem_entra_no_slot_leva_os_04_s_de_transicao STARTED
+  res://tests/contact_queue_test.gd > test_quem_entra_no_slot_leva_os_04_s_de_transicao PASSED 6ms
+
+  res://tests/contact_queue_test.gd > test_a_fila_e_a_mesma_duas_vezes STARTED
+  res://tests/contact_queue_test.gd > test_a_fila_e_a_mesma_duas_vezes PASSED 5ms
+
+  res://tests/contact_queue_test.gd > test_a_fila_vive_entre_o_minimo_e_o_maximo_da_curva STARTED
+  res://tests/contact_queue_test.gd > test_a_fila_vive_entre_o_minimo_e_o_maximo_da_curva PASSED 6ms
+
+  res://tests/contact_queue_test.gd > test_um_muro_em_ruina_nao_engaja_ninguem STARTED
+  res://tests/contact_queue_test.gd > test_um_muro_em_ruina_nao_engaja_ninguem PASSED 6ms
+
+  res://tests/contact_queue_test.gd > test_o_alcance_da_fila_conta_a_partir_da_face STARTED
+  res://tests/contact_queue_test.gd > test_o_alcance_da_fila_conta_a_partir_da_face PASSED 6ms
+
+Statistics: 10 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 96ms
+
+
+Run Test Suite: res://tests/rng_service_test.gd
+  res://tests/rng_service_test.gd > test_a_mesma_semente_reproduz_a_mesma_sequencia STARTED
+  res://tests/rng_service_test.gd > test_a_mesma_semente_reproduz_a_mesma_sequencia PASSED 6ms
+
+  res://tests/rng_service_test.gd > test_sementes_diferentes_dao_sequencias_diferentes STARTED
+  res://tests/rng_service_test.gd > test_sementes_diferentes_dao_sequencias_diferentes PASSED 5ms
+
+  res://tests/rng_service_test.gd > test_os_fluxos_sao_independentes_entre_si STARTED
+  res://tests/rng_service_test.gd > test_os_fluxos_sao_independentes_entre_si PASSED 7ms
+
+  res://tests/rng_service_test.gd > test_a_mesma_semente_da_fluxos_diferentes_entre_si STARTED
+  res://tests/rng_service_test.gd > test_a_mesma_semente_da_fluxos_diferentes_entre_si PASSED 6ms
+
+  res://tests/rng_service_test.gd > test_o_snapshot_guarda_o_estado_e_nao_a_semente STARTED
+  res://tests/rng_service_test.gd > test_o_snapshot_guarda_o_estado_e_nao_a_semente PASSED 8ms
+
+  res://tests/rng_service_test.gd > test_reconfigurar_pela_semente_volta_ao_principio STARTED
+  res://tests/rng_service_test.gd > test_reconfigurar_pela_semente_volta_ao_principio PASSED 8ms
+
+  res://tests/rng_service_test.gd > test_o_snapshot_so_leva_os_cinco_deterministas STARTED
+  res://tests/rng_service_test.gd > test_o_snapshot_so_leva_os_cinco_deterministas PASSED 6ms
+
+  res://tests/rng_service_test.gd > test_restaurar_um_snapshot_incompleto_degrada_em_vez_de_rebentar STARTED
+  res://tests/rng_service_test.gd > test_restaurar_um_snapshot_incompleto_degrada_em_vez_de_rebentar PASSED 7ms
+
+  res://tests/rng_service_test.gd > test_o_fluxo_visual_existe_e_nao_e_determinista STARTED
+  res://tests/rng_service_test.gd > test_o_fluxo_visual_existe_e_nao_e_determinista PASSED 7ms
+
+  res://tests/rng_service_test.gd > test_escolher_e_determinista_e_aceita_lista_vazia STARTED
+  res://tests/rng_service_test.gd > test_escolher_e_determinista_e_aceita_lista_vazia PASSED 6ms
+
+  res://tests/rng_service_test.gd > test_a_semente_do_mundo_fica_visivel_para_o_ecra_de_pausa STARTED
+  res://tests/rng_service_test.gd > test_a_semente_do_mundo_fica_visivel_para_o_ecra_de_pausa PASSED 5ms
+
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 110ms
+
+
+Run Test Suite: res://tests/impact_view_test.gd
+  res://tests/impact_view_test.gd > test_um_golpe_dura_os_80_ms_do_24 STARTED
+  res://tests/impact_view_test.gd > test_um_golpe_dura_os_80_ms_do_24 PASSED 5ms
+
+  res://tests/impact_view_test.gd > test_os_golpes_velhos_saem_e_os_novos_ficam STARTED
+  res://tests/impact_view_test.gd > test_os_golpes_velhos_saem_e_os_novos_ficam PASSED 5ms
+
+  res://tests/impact_view_test.gd > test_uma_lista_vazia_nao_se_queixa STARTED
+  res://tests/impact_view_test.gd > test_uma_lista_vazia_nao_se_queixa PASSED 5ms
+
+  res://tests/impact_view_test.gd > test_a_particula_sai_para_o_lado_para_onde_o_golpe_foi STARTED
+  res://tests/impact_view_test.gd > test_a_particula_sai_para_o_lado_para_onde_o_golpe_foi PASSED 5ms
+
+  res://tests/impact_view_test.gd > test_dois_corpos_no_mesmo_sitio_nao_dao_sentido_zero STARTED
+  res://tests/impact_view_test.gd > test_dois_corpos_no_mesmo_sitio_nao_dao_sentido_zero PASSED 6ms
+
+  res://tests/impact_view_test.gd > test_o_sinal_do_46_chega_mesmo_a_vista STARTED
+  res://tests/impact_view_test.gd > test_o_sinal_do_46_chega_mesmo_a_vista PASSED 10ms
+
+  res://tests/impact_view_test.gd > test_uma_dentada_no_muro_nao_pisca_a_tropa_com_o_mesmo_numero STARTED
+  res://tests/impact_view_test.gd > test_uma_dentada_no_muro_nao_pisca_a_tropa_com_o_mesmo_numero PASSED 7ms
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 72ms
+
+
+Run Test Suite: res://tests/shadow_test.gd
+  res://tests/shadow_test.gd > test_o_apice_sai_do_arco_que_a_economia_ja_define STARTED
+  res://tests/shadow_test.gd > test_o_apice_sai_do_arco_que_a_economia_ja_define PASSED 9ms
+
+  res://tests/shadow_test.gd > test_sem_gravidade_nao_ha_apice STARTED
+  res://tests/shadow_test.gd > test_sem_gravidade_nao_ha_apice PASSED 7ms
+
+  res://tests/shadow_test.gd > test_pousada_a_sombra_esta_inteira STARTED
+  res://tests/shadow_test.gd > test_pousada_a_sombra_esta_inteira PASSED 6ms
+
+  res://tests/shadow_test.gd > test_no_apice_a_sombra_encolhe_mas_nao_desaparece STARTED
+  res://tests/shadow_test.gd > test_no_apice_a_sombra_encolhe_mas_nao_desaparece PASSED 7ms
+
+  res://tests/shadow_test.gd > test_acima_do_apice_a_sombra_nao_encolhe_mais STARTED
+  res://tests/shadow_test.gd > test_acima_do_apice_a_sombra_nao_encolhe_mais PASSED 7ms
+
+  res://tests/shadow_test.gd > test_sem_apice_a_sombra_fica_inteira_em_vez_de_rebentar STARTED
+  res://tests/shadow_test.gd > test_sem_apice_a_sombra_fica_inteira_em_vez_de_rebentar PASSED 7ms
+
+Statistics: 6 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 69ms
+
+
+Run Test Suite: res://tests/jogo_noite_test.gd
+  res://tests/jogo_noite_test.gd > test_ao_crepusculo_a_mancha_nasce_e_a_noite_traz_criaturas STARTED
+  res://tests/jogo_noite_test.gd > test_ao_crepusculo_a_mancha_nasce_e_a_noite_traz_criaturas PASSED 1s 118ms
+
+  res://tests/jogo_noite_test.gd > test_ao_amanhecer_a_mancha_recua_e_as_criaturas_dissolvem_se STARTED
+  res://tests/jogo_noite_test.gd > test_ao_amanhecer_a_mancha_recua_e_as_criaturas_dissolvem_se PASSED 1s 528ms
+
+  res://tests/jogo_noite_test.gd > test_as_criaturas_caminham_para_o_nucleo STARTED
+  res://tests/jogo_noite_test.gd > test_as_criaturas_caminham_para_o_nucleo PASSED 1s 535ms
+
+  res://tests/jogo_noite_test.gd > test_um_tick_de_noite_cabe_no_orcamento STARTED
+jogo: tick de noite com 10 tropas, 7 criaturas e 0 moedas = 342.5 us (§63: 4000)
+  res://tests/jogo_noite_test.gd > test_um_tick_de_noite_cabe_no_orcamento PASSED 1s 994ms
+
+Statistics: 4 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 6s 202ms
+
+
+Run Test Suite: res://tests/game_clock_test.gd
+  res://tests/game_clock_test.gd > test_um_tick_de_360_avanca_exatamente_um_dia STARTED
+  res://tests/game_clock_test.gd > test_um_tick_de_360_avanca_exatamente_um_dia PASSED 9ms
+
+  res://tests/game_clock_test.gd > test_aos_75_segundos_a_fase_e_morning_e_o_progresso_e_0706 STARTED
+  res://tests/game_clock_test.gd > test_aos_75_segundos_a_fase_e_morning_e_o_progresso_e_0706 PASSED 9ms
+
+  res://tests/game_clock_test.gd > test_aos_15_exatos_ja_e_morning_a_fronteira_e_fechada_a_esquerda STARTED
+  res://tests/game_clock_test.gd > test_aos_15_exatos_ja_e_morning_a_fronteira_e_fechada_a_esquerda PASSED 8ms
+
+  res://tests/game_clock_test.gd > test_seconds_until_night_no_instante_zero_e_255 STARTED
+  res://tests/game_clock_test.gd > test_seconds_until_night_no_instante_zero_e_255 PASSED 9ms
+
+  res://tests/game_clock_test.gd > test_mudar_o_dia_para_180_mantem_as_proporcoes STARTED
+  res://tests/game_clock_test.gd > test_mudar_o_dia_para_180_mantem_as_proporcoes PASSED 8ms
+
+  res://tests/game_clock_test.gd > test_mudar_o_dia_a_meio_nao_faz_a_fase_saltar STARTED
+  res://tests/game_clock_test.gd > test_mudar_o_dia_a_meio_nao_faz_a_fase_saltar PASSED 8ms
+
+  res://tests/game_clock_test.gd > test_as_seis_fases_saem_por_ordem_e_o_dia_vira_no_fim STARTED
+  res://tests/game_clock_test.gd > test_as_seis_fases_saem_por_ordem_e_o_dia_vira_no_fim PASSED 35ms
+
+  res://tests/game_clock_test.gd > test_seconds_until_de_uma_fase_ja_passada_conta_pela_volta STARTED
+  res://tests/game_clock_test.gd > test_seconds_until_de_uma_fase_ja_passada_conta_pela_volta PASSED 8ms
+
+  res://tests/game_clock_test.gd > test_o_relogio_nao_inventa_numeros_le_os_do_tres STARTED
+  res://tests/game_clock_test.gd > test_o_relogio_nao_inventa_numeros_le_os_do_tres PASSED 9ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 153ms
+
+
+Run Test Suite: res://tests/posts_test.gd
+  res://tests/posts_test.gd > test_em_campo_aberto_dispara_com_a_accuracy_open STARTED
+  res://tests/posts_test.gd > test_em_campo_aberto_dispara_com_a_accuracy_open PASSED 9ms
+
+  res://tests/posts_test.gd > test_numa_torre_dispara_com_a_precisao_da_torre STARTED
+  res://tests/posts_test.gd > test_numa_torre_dispara_com_a_precisao_da_torre PASSED 13ms
+
+  res://tests/posts_test.gd > test_a_torre_de_arqueiros_estica_o_alcance_em_40_por_cento STARTED
+  res://tests/posts_test.gd > test_a_torre_de_arqueiros_estica_o_alcance_em_40_por_cento PASSED 8ms
+
+  res://tests/posts_test.gd > test_a_torre_nao_da_dano STARTED
+  res://tests/posts_test.gd > test_a_torre_nao_da_dano PASSED 9ms
+
+  res://tests/posts_test.gd > test_do_chao_o_arqueiro_nao_chega_ao_alado STARTED
+  res://tests/posts_test.gd > test_do_chao_o_arqueiro_nao_chega_ao_alado PASSED 9ms
+
+  res://tests/posts_test.gd > test_de_uma_torre_de_arqueiros_tambem_nao STARTED
+  res://tests/posts_test.gd > test_de_uma_torre_de_arqueiros_tambem_nao PASSED 9ms
+
+  res://tests/posts_test.gd > test_da_torre_alta_chega STARTED
+  res://tests/posts_test.gd > test_da_torre_alta_chega PASSED 11ms
+
+  res://tests/posts_test.gd > test_o_tempo_ate_matar_em_torre_bate_com_a_tabela_do_07 STARTED
+  res://tests/posts_test.gd > test_o_tempo_ate_matar_em_torre_bate_com_a_tabela_do_07 PASSED 13ms
+
+  res://tests/posts_test.gd > test_em_campo_aberto_demora_tres_vezes_mais STARTED
+  res://tests/posts_test.gd > test_em_campo_aberto_demora_tres_vezes_mais PASSED 9ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 149ms
+
+
+Run Test Suite: res://tests/visual_motion_test.gd
+  res://tests/visual_motion_test.gd > test_interpolation_is_by_id_and_survives_column_reorder STARTED
+  res://tests/visual_motion_test.gd > test_interpolation_is_by_id_and_survives_column_reorder PASSED 8ms
+
+  res://tests/visual_motion_test.gd > test_spawn_teleport_band_change_and_skipped_ticks_snap STARTED
+  res://tests/visual_motion_test.gd > test_spawn_teleport_band_change_and_skipped_ticks_snap PASSED 9ms
+
+  res://tests/visual_motion_test.gd > test_removed_ids_are_discarded_and_pause_uses_current_position STARTED
+  res://tests/visual_motion_test.gd > test_removed_ids_are_discarded_and_pause_uses_current_position PASSED 17ms
+
+Statistics: 3 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 64ms
+
+
+Run Test Suite: res://tests/economy_system_test.gd
+  res://tests/economy_system_test.gd > test_a_manutencao_tem_tres_escaloes STARTED
+  res://tests/economy_system_test.gd > test_a_manutencao_tem_tres_escaloes PASSED 10ms
+
+  res://tests/economy_system_test.gd > test_a_ganancia_corta_a_percentagem_que_diz STARTED
+  res://tests/economy_system_test.gd > test_a_ganancia_corta_a_percentagem_que_diz PASSED 9ms
+
+  res://tests/economy_system_test.gd > test_sem_rotas_o_comercio_e_zero_em_qualquer_dia STARTED
+  res://tests/economy_system_test.gd > test_sem_rotas_o_comercio_e_zero_em_qualquer_dia PASSED 10ms
+
+  res://tests/economy_system_test.gd > test_o_dia_da_asfixia_do_perfil_equilibrado_cai_entre_9_e_14 STARTED
+  res://tests/economy_system_test.gd > test_o_dia_da_asfixia_do_perfil_equilibrado_cai_entre_9_e_14 PASSED 9ms
+
+  res://tests/economy_system_test.gd > test_a_ganancia_80_antecipa_a_asfixia_em_pelo_menos_3_dias STARTED
+  res://tests/economy_system_test.gd > test_a_ganancia_80_antecipa_a_asfixia_em_pelo_menos_3_dias PASSED 8ms
+
+  res://tests/economy_system_test.gd > test_cada_rota_adia_a_asfixia STARTED
+  res://tests/economy_system_test.gd > test_cada_rota_adia_a_asfixia PASSED 8ms
+
+  res://tests/economy_system_test.gd > test_bate_com_o_modelo_de_referencia STARTED
+  res://tests/economy_system_test.gd > test_bate_com_o_modelo_de_referencia PASSED 14ms
+
+  res://tests/economy_system_test.gd > test_o_custo_da_noite_bate_com_o_modelo STARTED
+  res://tests/economy_system_test.gd > test_o_custo_da_noite_bate_com_o_modelo PASSED 9ms
+
+  res://tests/economy_system_test.gd > test_uma_obra_de_pe_produz_uma_vez_por_fase STARTED
+  res://tests/economy_system_test.gd > test_uma_obra_de_pe_produz_uma_vez_por_fase PASSED 8ms
+
+  res://tests/economy_system_test.gd > test_uma_obra_por_construir_nao_produz STARTED
+  res://tests/economy_system_test.gd > test_uma_obra_por_construir_nao_produz PASSED 8ms
+
+  res://tests/economy_system_test.gd > test_no_rasto_da_podridao_nao_se_produz_e_a_plantacao_e_arrasada STARTED
+  res://tests/economy_system_test.gd > test_no_rasto_da_podridao_nao_se_produz_e_a_plantacao_e_arrasada PASSED 8ms
+
+  res://tests/economy_system_test.gd > test_a_moeda_sai_por_cima_da_obra_que_a_produziu STARTED
+  res://tests/economy_system_test.gd > test_a_moeda_sai_por_cima_da_obra_que_a_produziu PASSED 8ms
+
+Statistics: 12 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 169ms
+
+
+Run Test Suite: res://tests/unit_fsm_test.gd
+  res://tests/unit_fsm_test.gd > test_so_um_sexto_decide_por_tick STARTED
+  res://tests/unit_fsm_test.gd > test_so_um_sexto_decide_por_tick PASSED 8ms
+
+  res://tests/unit_fsm_test.gd > test_em_seis_ticks_todas_decidem_exatamente_uma_vez STARTED
+  res://tests/unit_fsm_test.gd > test_em_seis_ticks_todas_decidem_exatamente_uma_vez PASSED 11ms
+
+  res://tests/unit_fsm_test.gd > test_vida_a_zero_e_sempre_morte_venha_de_onde_vier STARTED
+  res://tests/unit_fsm_test.gd > test_vida_a_zero_e_sempre_morte_venha_de_onde_vier PASSED 12ms
+
+  res://tests/unit_fsm_test.gd > test_de_morto_nao_se_sai_por_decisao STARTED
+  res://tests/unit_fsm_test.gd > test_de_morto_nao_se_sai_por_decisao PASSED 8ms
+
+  res://tests/unit_fsm_test.gd > test_com_alvo_longe_vai_com_alvo_perto_trabalha STARTED
+  res://tests/unit_fsm_test.gd > test_com_alvo_longe_vai_com_alvo_perto_trabalha PASSED 8ms
+
+  res://tests/unit_fsm_test.gd > test_a_unidade_anda_ate_ao_alvo_e_para_la_exatamente STARTED
+  res://tests/unit_fsm_test.gd > test_a_unidade_anda_ate_ao_alvo_e_para_la_exatamente PASSED 9ms
+
+  res://tests/unit_fsm_test.gd > test_a_morte_e_imediata_e_nao_espera_pela_fatia STARTED
+  res://tests/unit_fsm_test.gd > test_a_morte_e_imediata_e_nao_espera_pela_fatia PASSED 9ms
+
+  res://tests/unit_fsm_test.gd > test_um_morto_nao_anda STARTED
+  res://tests/unit_fsm_test.gd > test_um_morto_nao_anda PASSED 8ms
+
+  res://tests/unit_fsm_test.gd > test_trezentas_unidades_cabem_no_orcamento_da_passagem STARTED
+§63 com 300 unidades: FSM 164.2 us (orcamento 800) · movimento 181.5 us (orcamento 1000)
+  res://tests/unit_fsm_test.gd > test_trezentas_unidades_cabem_no_orcamento_da_passagem PASSED 33ms
+
+  res://tests/unit_fsm_test.gd > test_o_fatiamento_e_o_que_paga_o_orcamento STARTED
+  res://tests/unit_fsm_test.gd > test_o_fatiamento_e_o_que_paga_o_orcamento PASSED 9ms
+
+Statistics: 10 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 177ms
+
+
+Run Test Suite: res://tests/unit_system_test.gd
+  res://tests/unit_system_test.gd > test_uma_unidade_nasce_com_os_campos_do_tres STARTED
+  res://tests/unit_system_test.gd > test_uma_unidade_nasce_com_os_campos_do_tres PASSED 9ms
+
+  res://tests/unit_system_test.gd > test_os_ids_vem_do_contador_do_game_state STARTED
+  res://tests/unit_system_test.gd > test_os_ids_vem_do_contador_do_game_state PASSED 8ms
+
+  res://tests/unit_system_test.gd > test_remover_do_meio_nao_perde_nem_baralha_ninguem STARTED
+  res://tests/unit_system_test.gd > test_remover_do_meio_nao_perde_nem_baralha_ninguem PASSED 8ms
+
+  res://tests/unit_system_test.gd > test_remover_um_id_que_nao_existe_nao_faz_nada STARTED
+  res://tests/unit_system_test.gd > test_remover_um_id_que_nao_existe_nao_faz_nada PASSED 9ms
+
+  res://tests/unit_system_test.gd > test_o_save_das_colunas_so_leva_tipos_base STARTED
+  res://tests/unit_system_test.gd > test_o_save_das_colunas_so_leva_tipos_base PASSED 11ms
+
+  res://tests/unit_system_test.gd > test_uma_tropa_a_lutar_segura_a_linha STARTED
+  res://tests/unit_system_test.gd > test_uma_tropa_a_lutar_segura_a_linha PASSED 9ms
+
+  res://tests/unit_system_test.gd > test_quem_uma_pessoa_conduz_anda_mesmo_a_lutar STARTED
+  res://tests/unit_system_test.gd > test_quem_uma_pessoa_conduz_anda_mesmo_a_lutar PASSED 7ms
+
+  res://tests/unit_system_test.gd > test_um_corpo_nao_anda_nem_sendo_conduzido STARTED
+  res://tests/unit_system_test.gd > test_um_corpo_nao_anda_nem_sendo_conduzido PASSED 9ms
+
+Statistics: 8 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 123ms
+
+
+Run Test Suite: res://tests/job_board_test.gd
+  res://tests/job_board_test.gd > test_de_noite_nenhum_arqueiro_fica_na_plantacao STARTED
+  res://tests/job_board_test.gd > test_de_noite_nenhum_arqueiro_fica_na_plantacao PASSED 10ms
+
+  res://tests/job_board_test.gd > test_dois_postos_de_muro_e_cinco_arqueiros_dao_duas_atribuicoes STARTED
+  res://tests/job_board_test.gd > test_dois_postos_de_muro_e_cinco_arqueiros_dao_duas_atribuicoes PASSED 13ms
+
+  res://tests/job_board_test.gd > test_correr_duas_vezes_seguidas_nao_muda_nada STARTED
+  res://tests/job_board_test.gd > test_correr_duas_vezes_seguidas_nao_muda_nada PASSED 14ms
+
+  res://tests/job_board_test.gd > test_a_800_px_perde_para_quem_esta_a_100_px STARTED
+  res://tests/job_board_test.gd > test_a_800_px_perde_para_quem_esta_a_100_px PASSED 10ms
+
+  res://tests/job_board_test.gd > test_a_tropa_vai_ao_posto_certo STARTED
+  res://tests/job_board_test.gd > test_a_tropa_vai_ao_posto_certo PASSED 9ms
+
+  res://tests/job_board_test.gd > test_a_alvorada_larga_os_postos_de_noite STARTED
+  res://tests/job_board_test.gd > test_a_alvorada_larga_os_postos_de_noite PASSED 10ms
+
+  res://tests/job_board_test.gd > test_o_vagabundo_por_recrutar_nao_trabalha STARTED
+  res://tests/job_board_test.gd > test_o_vagabundo_por_recrutar_nao_trabalha PASSED 9ms
+
+  res://tests/job_board_test.gd > test_sem_adequacao_ao_posto_ninguem_e_atribuido STARTED
+  res://tests/job_board_test.gd > test_sem_adequacao_ao_posto_ninguem_e_atribuido PASSED 8ms
+
+Statistics: 8 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 135ms
+
+
+Run Test Suite: res://tests/unit_view_test.gd
+  res://tests/unit_view_test.gd > test_sao_cinco_slots_pela_ordem_do_58 STARTED
+  res://tests/unit_view_test.gd > test_sao_cinco_slots_pela_ordem_do_58 PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_a_sombra_fica_debaixo_de_tudo_e_e_multiplicativa STARTED
+  res://tests/unit_view_test.gd > test_a_sombra_fica_debaixo_de_tudo_e_e_multiplicativa PASSED 11ms
+
+  res://tests/unit_view_test.gd > test_a_largura_da_sombra_vem_do_tres_e_nao_do_codigo STARTED
+  res://tests/unit_view_test.gd > test_a_largura_da_sombra_vem_do_tres_e_nao_do_codigo PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_um_slot_que_a_unidade_nao_usa_fica_escondido STARTED
+  res://tests/unit_view_test.gd > test_um_slot_que_a_unidade_nao_usa_fica_escondido PASSED 9ms
+
+  res://tests/unit_view_test.gd > test_por_uma_arma_num_slot_que_a_unidade_nao_usa_nao_a_mostra STARTED
+  res://tests/unit_view_test.gd > test_por_uma_arma_num_slot_que_a_unidade_nao_usa_nao_a_mostra PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_o_arqueiro_ja_mostra_a_arma STARTED
+  res://tests/unit_view_test.gd > test_o_arqueiro_ja_mostra_a_arma PASSED 11ms
+
+  res://tests/unit_view_test.gd > test_o_shader_tem_os_dois_uniforms_do_catalogo_e_so_esses STARTED
+  res://tests/unit_view_test.gd > test_o_shader_tem_os_dois_uniforms_do_catalogo_e_so_esses PASSED 12ms
+
+  res://tests/unit_view_test.gd > test_os_cinco_slots_partilham_o_mesmo_material STARTED
+  res://tests/unit_view_test.gd > test_os_cinco_slots_partilham_o_mesmo_material PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_a_rampa_por_omissao_nao_muda_nada STARTED
+  res://tests/unit_view_test.gd > test_a_rampa_por_omissao_nao_muda_nada PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_o_desfasamento_da_animacao_vem_do_fluxo_visual STARTED
+  res://tests/unit_view_test.gd > test_o_desfasamento_da_animacao_vem_do_fluxo_visual PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_uma_animacao_de_um_frame_nao_se_desfasa STARTED
+  res://tests/unit_view_test.gd > test_uma_animacao_de_um_frame_nao_se_desfasa PASSED 10ms
+
+  res://tests/unit_view_test.gd > test_fora_do_ecra_para_de_animar_mas_continua_a_existir STARTED
+  res://tests/unit_view_test.gd > test_fora_do_ecra_para_de_animar_mas_continua_a_existir PASSED 10ms
+
+Statistics: 12 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 184ms
+
+
+Run Test Suite: res://tests/coin_system_test.gd
+  res://tests/coin_system_test.gd > test_a_moeda_sobe_antes_de_cair STARTED
+  res://tests/coin_system_test.gd > test_a_moeda_sobe_antes_de_cair PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_o_arco_tem_a_altura_que_a_fisica_dos_dados_manda STARTED
+  res://tests/coin_system_test.gd > test_o_arco_tem_a_altura_que_a_fisica_dos_dados_manda PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_a_moeda_assenta_e_fica STARTED
+  res://tests/coin_system_test.gd > test_a_moeda_assenta_e_fica PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_o_desvio_espalha_as_moedas_para_os_dois_lados STARTED
+  res://tests/coin_system_test.gd > test_o_desvio_espalha_as_moedas_para_os_dois_lados PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_a_apanha_e_por_distancia_e_respeita_o_raio STARTED
+  res://tests/coin_system_test.gd > test_a_apanha_e_por_distancia_e_respeita_o_raio PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_nao_se_apanha_uma_moeda_no_ar STARTED
+  res://tests/coin_system_test.gd > test_nao_se_apanha_uma_moeda_no_ar PASSED 15ms
+
+  res://tests/coin_system_test.gd > test_nao_se_apanha_de_outra_faixa STARTED
+  res://tests/coin_system_test.gd > test_nao_se_apanha_de_outra_faixa PASSED 13ms
+
+  res://tests/coin_system_test.gd > test_o_saco_do_vagabundo_vem_do_units_csv STARTED
+  res://tests/coin_system_test.gd > test_o_saco_do_vagabundo_vem_do_units_csv PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_um_saco_cheio_nao_apanha_nada STARTED
+  res://tests/coin_system_test.gd > test_um_saco_cheio_nao_apanha_nada PASSED 8ms
+
+  res://tests/coin_system_test.gd > test_uma_pilha_que_nao_cabe_no_saco_nao_se_parte STARTED
+  res://tests/coin_system_test.gd > test_uma_pilha_que_nao_cabe_no_saco_nao_se_parte PASSED 9ms
+
+  res://tests/coin_system_test.gd > test_o_save_das_moedas_so_leva_tipos_base STARTED
+  res://tests/coin_system_test.gd > test_o_save_das_moedas_so_leva_tipos_base PASSED 19ms
+
+  res://tests/coin_system_test.gd > test_largar_dez_moedas_nao_custa_nada STARTED
+F1-01: 10 moedas no ar custam 2.8 us por tick (orcamento 1000)
+  res://tests/coin_system_test.gd > test_largar_dez_moedas_nao_custa_nada PASSED 13ms
+
+Statistics: 12 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 210ms
+
+
+Run Test Suite: res://tests/price_tag_test.gd
+  res://tests/price_tag_test.gd > test_um_sitio_vazio_pede_o_primeiro_degrau_inteiro STARTED
+  res://tests/price_tag_test.gd > test_um_sitio_vazio_pede_o_primeiro_degrau_inteiro PASSED 9ms
+
+  res://tests/price_tag_test.gd > test_o_que_ja_foi_pago_desconta_do_que_falta STARTED
+  res://tests/price_tag_test.gd > test_o_que_ja_foi_pago_desconta_do_que_falta PASSED 9ms
+
+  res://tests/price_tag_test.gd > test_uma_obra_em_andaime_nao_pede_nada STARTED
+  res://tests/price_tag_test.gd > test_uma_obra_em_andaime_nao_pede_nada PASSED 9ms
+
+  res://tests/price_tag_test.gd > test_um_muro_de_pe_pede_o_degrau_seguinte STARTED
+  res://tests/price_tag_test.gd > test_um_muro_de_pe_pede_o_degrau_seguinte PASSED 9ms
+
+  res://tests/price_tag_test.gd > test_no_topo_da_escada_nao_ha_preco STARTED
+  res://tests/price_tag_test.gd > test_no_topo_da_escada_nao_ha_preco PASSED 8ms
+
+  res://tests/price_tag_test.gd > test_o_castelo_arvore_nunca_pede_moeda STARTED
+  res://tests/price_tag_test.gd > test_o_castelo_arvore_nunca_pede_moeda PASSED 8ms
+
+  res://tests/price_tag_test.gd > test_o_preco_so_aparece_onde_a_moeda_cairia_na_obra STARTED
+  res://tests/price_tag_test.gd > test_o_preco_so_aparece_onde_a_moeda_cairia_na_obra PASSED 8ms
+
+  res://tests/price_tag_test.gd > test_o_preco_de_quem_ainda_nao_e_de_ninguem_desconta_o_saco STARTED
+  res://tests/price_tag_test.gd > test_o_preco_de_quem_ainda_nao_e_de_ninguem_desconta_o_saco PASSED 8ms
+
+  res://tests/price_tag_test.gd > test_quem_ja_tem_o_preco_no_saco_nao_leva_etiqueta STARTED
+  res://tests/price_tag_test.gd > test_quem_ja_tem_o_preco_no_saco_nao_leva_etiqueta PASSED 8ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 125ms
+
+
+Run Test Suite: res://tests/candeia_test.gd
+  res://tests/candeia_test.gd > test_o_raio_da_candeia_sobe_com_o_dia_e_para_no_teto STARTED
+  res://tests/candeia_test.gd > test_o_raio_da_candeia_sobe_com_o_dia_e_para_no_teto PASSED 8ms
+
+  res://tests/candeia_test.gd > test_sao_tres_paragens_e_vem_todas_de_data STARTED
+  res://tests/candeia_test.gd > test_sao_tres_paragens_e_vem_todas_de_data PASSED 9ms
+
+  res://tests/candeia_test.gd > test_as_paragens_pintam_se_de_fora_para_dentro STARTED
+  res://tests/candeia_test.gd > test_as_paragens_pintam_se_de_fora_para_dentro PASSED 8ms
+
+  res://tests/candeia_test.gd > test_o_dither_e_um_padrao_de_dois_estados_e_nao_um_gradiente STARTED
+  res://tests/candeia_test.gd > test_o_dither_e_um_padrao_de_dois_estados_e_nao_um_gradiente PASSED 15ms
+
+  res://tests/candeia_test.gd > test_dentro_do_raio_ve_se_e_fora_ve_se_a_silhueta STARTED
+  res://tests/candeia_test.gd > test_dentro_do_raio_ve_se_e_fora_ve_se_a_silhueta PASSED 12ms
+
+  res://tests/candeia_test.gd > test_uma_obra_sem_luz_nao_tem_raio_nenhum STARTED
+  res://tests/candeia_test.gd > test_uma_obra_sem_luz_nao_tem_raio_nenhum PASSED 8ms
+
+  res://tests/candeia_test.gd > test_uma_luz_domina_por_ecra STARTED
+  res://tests/candeia_test.gd > test_uma_luz_domina_por_ecra PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Q-078: o farol do §10 ilumina 300 px e a candeia do §74 nunca passa dos 260. Ver docs/QUESTIONS.md — o dossie diz as duas coisas'
+
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 1 skipped | 0 orphans | PASSED 116ms
+
+
+Run Test Suite: res://tests/parte_xiii_mundo_test.gd
+  res://tests/parte_xiii_mundo_test.gd > test_d07_nunca_ha_mais_de_nove_nomeados_vivos STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d07_nunca_ha_mais_de_nove_nomeados_vivos PASSED 12ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_d08_um_titulo_volta_com_ordinal_depois_de_tres_dias_de_luto STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d08_um_titulo_volta_com_ordinal_depois_de_tres_dias_de_luto PASSED 10ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_d09_todos_os_capitulos_colocados_tem_caminho_alternativo STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d09_todos_os_capitulos_colocados_tem_caminho_alternativo PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Falta o WorldGen (§54): o caminho alternativo e uma propriedade da rota gerada.'
+
+
+  res://tests/parte_xiii_mundo_test.gd > test_d12_os_doze_diarios_sao_alcancaveis_em_mil_sementes STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d12_os_doze_diarios_sao_alcancaveis_em_mil_sementes PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Falta o WorldGen (§54) e a atribuicao de diarios (§79). E o unico caro da §84.'
+
+
+  res://tests/parte_xiii_mundo_test.gd > test_d09_dados_todo_o_capitulo_tem_preco_de_desvio STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d09_dados_todo_o_capitulo_tem_preco_de_desvio PASSED 9ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_d10_exatamente_um_capitulo_tem_law_enters_walls STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d10_exatamente_um_capitulo_tem_law_enters_walls PASSED 8ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_d11_dez_capitulos_e_o_cerco_e_sempre_um_deles STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d11_dez_capitulos_e_o_cerco_e_sempre_um_deles PASSED 10ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_o_cerco_carrega_o_diario_12 STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_o_cerco_carrega_o_diario_12 PASSED 8ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_so_o_capitulo_sem_cancao_e_o_das_alminhas STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_so_o_capitulo_sem_cancao_e_o_das_alminhas PASSED 9ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_d13_o_epilogo_e_determinista_e_segue_a_precedencia STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d13_o_epilogo_e_determinista_e_segue_a_precedencia PASSED 8ms
+
+  res://tests/parte_xiii_mundo_test.gd > test_d14_o_save_dos_sistemas_novos_so_contem_tipos_base STARTED
+  res://tests/parte_xiii_mundo_test.gd > test_d14_o_save_dos_sistemas_novos_so_contem_tipos_base PASSED 10ms
+
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 2 skipped | 0 orphans | PASSED 168ms
+
+
+Run Test Suite: res://tests/build_system_test.gd
+  res://tests/build_system_test.gd > test_uma_vaga_por_construir_comeca_vazia STARTED
+  res://tests/build_system_test.gd > test_uma_vaga_por_construir_comeca_vazia PASSED 9ms
+
+  res://tests/build_system_test.gd > test_a_obra_existe_quando_uma_moeda_cai_nela STARTED
+  res://tests/build_system_test.gd > test_a_obra_existe_quando_uma_moeda_cai_nela PASSED 12ms
+
+  res://tests/build_system_test.gd > test_pago_o_custo_a_obra_levanta_andaime STARTED
+  res://tests/build_system_test.gd > test_pago_o_custo_a_obra_levanta_andaime PASSED 9ms
+
+  res://tests/build_system_test.gd > test_o_progresso_e_presenca_e_nao_tempo STARTED
+  res://tests/build_system_test.gd > test_o_progresso_e_presenca_e_nao_tempo PASSED 10ms
+
+  res://tests/build_system_test.gd > test_a_obra_acaba_e_fica_de_pe_com_a_vida_do_nivel STARTED
+  res://tests/build_system_test.gd > test_a_obra_acaba_e_fica_de_pe_com_a_vida_do_nivel PASSED 10ms
+
+  res://tests/build_system_test.gd > test_no_topo_nao_absorve_mais_moedas STARTED
+  res://tests/build_system_test.gd > test_no_topo_nao_absorve_mais_moedas PASSED 11ms
+
+  res://tests/build_system_test.gd > test_um_canteiro_nao_tem_caminhos_e_publica_o_job_slots STARTED
+  res://tests/build_system_test.gd > test_um_canteiro_nao_tem_caminhos_e_publica_o_job_slots PASSED 16ms
+
+  res://tests/build_system_test.gd > test_o_nucleo_em_ruina_e_a_partida_acabada STARTED
+  res://tests/build_system_test.gd > test_o_nucleo_em_ruina_e_a_partida_acabada PASSED 10ms
+
+  res://tests/build_system_test.gd > test_esquecer_as_vagas_esvazia_o_quadro STARTED
+  res://tests/build_system_test.gd > test_esquecer_as_vagas_esvazia_o_quadro PASSED 8ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 162ms
+
+
+Run Test Suite: res://tests/jogo_test.gd
+  res://tests/jogo_test.gd > test_o_mundo_monta_se_com_rei_sitios_de_obra_e_vagabundos STARTED
+  res://tests/jogo_test.gd > test_o_mundo_monta_se_com_rei_sitios_de_obra_e_vagabundos PASSED 11ms
+
+  res://tests/jogo_test.gd > test_o_rei_comeca_com_as_moedas_do_06 STARTED
+  res://tests/jogo_test.gd > test_o_rei_comeca_com_as_moedas_do_06 PASSED 11ms
+
+  res://tests/jogo_test.gd > test_largar_tira_do_saco_e_nao_cria_moeda_do_nada STARTED
+  res://tests/jogo_test.gd > test_largar_tira_do_saco_e_nao_cria_moeda_do_nada PASSED 10ms
+
+  res://tests/jogo_test.gd > test_uma_moeda_ao_lado_de_um_vagabundo_recruta_o STARTED
+  res://tests/jogo_test.gd > test_uma_moeda_ao_lado_de_um_vagabundo_recruta_o PASSED 42ms
+
+  res://tests/jogo_test.gd > test_um_arqueiro_custa_tres_moedas_e_nao_uma STARTED
+  res://tests/jogo_test.gd > test_um_arqueiro_custa_tres_moedas_e_nao_uma PASSED 83ms
+
+  res://tests/jogo_test.gd > test_o_rei_apanha_o_que_pisa STARTED
+  res://tests/jogo_test.gd > test_o_rei_apanha_o_que_pisa PASSED 21ms
+
+  res://tests/jogo_test.gd > test_moedas_num_sitio_de_obra_pagam_na_e_alguem_a_levanta STARTED
+  res://tests/jogo_test.gd > test_moedas_num_sitio_de_obra_pagam_na_e_alguem_a_levanta PASSED 71ms
+
+  res://tests/jogo_test.gd > test_a_obra_de_pe_produz_e_a_moeda_cai_em_cima_dela STARTED
+  res://tests/jogo_test.gd > test_a_obra_de_pe_produz_e_a_moeda_cai_em_cima_dela PASSED 948ms
+
+  res://tests/jogo_test.gd > test_o_verbo_2_muda_de_faixa_numa_passagem STARTED
+  res://tests/jogo_test.gd > test_o_verbo_2_muda_de_faixa_numa_passagem PASSED 10ms
+
+  res://tests/jogo_test.gd > test_longe_de_uma_passagem_o_verbo_2_nao_faz_nada STARTED
+  res://tests/jogo_test.gd > test_longe_de_uma_passagem_o_verbo_2_nao_faz_nada PASSED 10ms
+
+Statistics: 10 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 1s 280ms
+
+
+Run Test Suite: res://tests/registry_test.gd
+  res://tests/registry_test.gd > test_todas_as_tabelas_do_tables_csv_estao_indexadas STARTED
+  res://tests/registry_test.gd > test_todas_as_tabelas_do_tables_csv_estao_indexadas PASSED 8ms
+
+  res://tests/registry_test.gd > test_indexa_os_202_recursos_e_nenhum_e_nulo STARTED
+ERROR: String formatting error: not enough arguments for format string.
+   at: validated_evaluate (core/variant/variant_op.h:770)
+   GDScript backtrace (most recent call first):
+       [0] test_indexa_os_202_recursos_e_nenhum_e_nulo (res://tests/registry_test.gd:44)
+       [1] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [2] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [3] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [4] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [16] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [17] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+  res://tests/registry_test.gd > test_indexa_os_202_recursos_e_nenhum_e_nulo PASSED 10ms
+
+  res://tests/registry_test.gd > test_o_id_e_a_chave_e_resolve_por_stringname STARTED
+  res://tests/registry_test.gd > test_o_id_e_a_chave_e_resolve_por_stringname PASSED 7ms
+
+  res://tests/registry_test.gd > test_ids_iguais_em_tabelas_diferentes_nao_se_atropelam STARTED
+  res://tests/registry_test.gd > test_ids_iguais_em_tabelas_diferentes_nao_se_atropelam PASSED 8ms
+
+  res://tests/registry_test.gd > test_as_subpastas_sao_tabelas_proprias STARTED
+  res://tests/registry_test.gd > test_as_subpastas_sao_tabelas_proprias PASSED 7ms
+
+  res://tests/registry_test.gd > test_ids_vem_ordenados_e_nao_pela_ordem_do_dicionario STARTED
+  res://tests/registry_test.gd > test_ids_vem_ordenados_e_nao_pela_ordem_do_dicionario PASSED 10ms
+
+  res://tests/registry_test.gd > test_a_fonte_dos_numeros_nao_entra_no_indice STARTED
+  res://tests/registry_test.gd > test_a_fonte_dos_numeros_nao_entra_no_indice PASSED 16ms
+
+  res://tests/registry_test.gd > test_uma_tabela_desconhecida_devolve_vazio_em_vez_de_rebentar STARTED
+  res://tests/registry_test.gd > test_uma_tabela_desconhecida_devolve_vazio_em_vez_de_rebentar PASSED 7ms
+
+  res://tests/registry_test.gd > test_recarregar_nao_duplica STARTED
+  res://tests/registry_test.gd > test_recarregar_nao_duplica PASSED 43ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 155ms
+
+
+Run Test Suite: res://tests/combat_system_test.gd
+  res://tests/combat_system_test.gd > test_em_alcance_a_tropa_bate_e_a_criatura_perde_vida STARTED
+  res://tests/combat_system_test.gd > test_em_alcance_a_tropa_bate_e_a_criatura_perde_vida PASSED 8ms
+
+  res://tests/combat_system_test.gd > test_a_precisao_e_um_roll_e_nao_um_multiplicador STARTED
+  res://tests/combat_system_test.gd > test_a_precisao_e_um_roll_e_nao_um_multiplicador PASSED 8ms
+
+  res://tests/combat_system_test.gd > test_o_intervalo_de_ataque_e_respeitado STARTED
+  res://tests/combat_system_test.gd > test_o_intervalo_de_ataque_e_respeitado PASSED 7ms
+
+  res://tests/combat_system_test.gd > test_a_morte_larga_o_que_transportava STARTED
+  res://tests/combat_system_test.gd > test_a_morte_larga_o_que_transportava PASSED 11ms
+
+  res://tests/combat_system_test.gd > test_a_criatura_bate_no_muro_que_a_trava_e_nao_em_quem_esta_atras STARTED
+  res://tests/combat_system_test.gd > test_a_criatura_bate_no_muro_que_a_trava_e_nao_em_quem_esta_atras PASSED 7ms
+
+  res://tests/combat_system_test.gd > test_ninguem_morre_e_ainda_ataca_no_mesmo_tick STARTED
+  res://tests/combat_system_test.gd > test_ninguem_morre_e_ainda_ataca_no_mesmo_tick PASSED 7ms
+
+  res://tests/combat_system_test.gd > test_a_mesma_semente_da_a_mesma_noite STARTED
+  res://tests/combat_system_test.gd > test_a_mesma_semente_da_a_mesma_noite PASSED 35ms
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 131ms
+
+
+Run Test Suite: res://tests/silhouette_test.gd
+  res://tests/silhouette_test.gd > test_cada_categoria_de_buildings_tem_forma_propria STARTED
+  res://tests/silhouette_test.gd > test_cada_categoria_de_buildings_tem_forma_propria PASSED 8ms
+
+  res://tests/silhouette_test.gd > test_a_torre_alta_nao_se_confunde_com_a_torre_de_arqueiros STARTED
+  res://tests/silhouette_test.gd > test_a_torre_alta_nao_se_confunde_com_a_torre_de_arqueiros PASSED 7ms
+
+  res://tests/silhouette_test.gd > test_o_muro_e_a_unica_obra_com_ameias STARTED
+  res://tests/silhouette_test.gd > test_o_muro_e_a_unica_obra_com_ameias PASSED 9ms
+
+  res://tests/silhouette_test.gd > test_uma_obra_que_o_registry_nao_conhece_nao_inventa_forma STARTED
+  res://tests/silhouette_test.gd > test_uma_obra_que_o_registry_nao_conhece_nao_inventa_forma PASSED 7ms
+
+  res://tests/silhouette_test.gd > test_as_criaturas_veem_se_todas_diferentes STARTED
+  res://tests/silhouette_test.gd > test_as_criaturas_veem_se_todas_diferentes PASSED 6ms
+
+  res://tests/silhouette_test.gd > test_toda_a_arma_de_units_csv_tem_marca STARTED
+  res://tests/silhouette_test.gd > test_toda_a_arma_de_units_csv_tem_marca PASSED 7ms
+
+  res://tests/silhouette_test.gd > test_a_tropa_do_greybox_ve_se_toda_diferente STARTED
+  res://tests/silhouette_test.gd > test_a_tropa_do_greybox_ve_se_toda_diferente PASSED 7ms
+
+  res://tests/silhouette_test.gd > test_o_porte_separa_o_que_o_contorno_sozinho_nao_separava STARTED
+  res://tests/silhouette_test.gd > test_o_porte_separa_o_que_o_contorno_sozinho_nao_separava PASSED 7ms
+
+  res://tests/silhouette_test.gd > test_todo_o_corpo_assenta_na_linha_de_chao_da_sua_faixa STARTED
+  res://tests/silhouette_test.gd > test_todo_o_corpo_assenta_na_linha_de_chao_da_sua_faixa PASSED 9ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 117ms
+
+
+Run Test Suite: res://tests/parte_xiii_rot_test.gd
+  res://tests/parte_xiii_rot_test.gd > test_d01_massa_em_campo_limpo_ao_dia_20_e_400 STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d01_massa_em_campo_limpo_ao_dia_20_e_400 PASSED 7ms
+
+  res://tests/parte_xiii_rot_test.gd > test_d02_lenho_nao_e_moeda_e_rende_o_que_a_pessoa_era STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d02_lenho_nao_e_moeda_e_rende_o_que_a_pessoa_era PASSED 9ms
+
+  res://tests/parte_xiii_rot_test.gd > test_d03_um_amargueiro_nao_se_corta_antes_de_aguentar_uma_noite STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d03_um_amargueiro_nao_se_corta_antes_de_aguentar_uma_noite PASSED 7ms
+
+  res://tests/parte_xiii_rot_test.gd > test_d04_a_penalizacao_por_recusa_nunca_passa_de_40 STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d04_a_penalizacao_por_recusa_nunca_passa_de_40 PASSED 7ms
+
+  res://tests/parte_xiii_rot_test.gd > test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Falta o RotSystem (§51) e o OfferSystem (§75): e um teste de tick, nao de dados.'
+
+
+  res://tests/parte_xiii_rot_test.gd > test_d06_a_divida_nunca_desce STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d06_a_divida_nunca_desce PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Falta o DebtLedger (§75): so um teste de caminhos prova que nao ha subtracao.'
+
+
+  res://tests/parte_xiii_rot_test.gd > test_d06_dados_nenhuma_oferta_tem_divida_negativa STARTED
+  res://tests/parte_xiii_rot_test.gd > test_d06_dados_nenhuma_oferta_tem_divida_negativa PASSED 8ms
+
+  res://tests/parte_xiii_rot_test.gd > test_limiares_da_divida_sobem_e_batem_com_a_luz STARTED
+  res://tests/parte_xiii_rot_test.gd > test_limiares_da_divida_sobem_e_batem_com_a_luz PASSED 7ms
+
+  res://tests/parte_xiii_rot_test.gd > test_a_gramatica_da_coluna_requires STARTED
+  res://tests/parte_xiii_rot_test.gd > test_a_gramatica_da_coluna_requires PASSED 7ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 2 skipped | 0 orphans | PASSED 110ms
+
+
+Run Test Suite: res://tests/sim_loop_test.gd
+  res://tests/sim_loop_test.gd > test_arrancar_poe_o_jogo_no_dia_1_ao_amanhecer STARTED
+  res://tests/sim_loop_test.gd > test_arrancar_poe_o_jogo_no_dia_1_ao_amanhecer PASSED 8ms
+
+  res://tests/sim_loop_test.gd > test_um_dia_inteiro_passa_pelas_seis_fases_e_vira STARTED
+  res://tests/sim_loop_test.gd > test_um_dia_inteiro_passa_pelas_seis_fases_e_vira PASSED 520ms
+
+  res://tests/sim_loop_test.gd > test_o_tick_conta_e_o_estado_espelha_o_relogio STARTED
+  res://tests/sim_loop_test.gd > test_o_tick_conta_e_o_estado_espelha_o_relogio PASSED 118ms
+
+  res://tests/sim_loop_test.gd > test_a_fila_de_eventos_fica_sempre_vazia_no_fim_do_tick STARTED
+  res://tests/sim_loop_test.gd > test_a_fila_de_eventos_fica_sempre_vazia_no_fim_do_tick PASSED 14ms
+
+  res://tests/sim_loop_test.gd > test_o_autosave_acontece_ao_amanhecer_e_nao_no_dia_um STARTED
+  res://tests/sim_loop_test.gd > test_o_autosave_acontece_ao_amanhecer_e_nao_no_dia_um PASSED 502ms
+
+  res://tests/sim_loop_test.gd > test_retomar_um_save_continua_o_dia_e_a_sequencia STARTED
+  res://tests/sim_loop_test.gd > test_retomar_um_save_continua_o_dia_e_a_sequencia PASSED 191ms
+
+  res://tests/sim_loop_test.gd > test_a_mesma_semente_e_o_mesmo_numero_de_passos_dao_o_mesmo_estado STARTED
+  res://tests/sim_loop_test.gd > test_a_mesma_semente_e_o_mesmo_numero_de_passos_dao_o_mesmo_estado PASSED 1s 245ms
+
+  res://tests/sim_loop_test.gd > test_parado_nao_anda STARTED
+  res://tests/sim_loop_test.gd > test_parado_nao_anda PASSED 66ms
+
+  res://tests/sim_loop_test.gd > test_as_tropas_andam_pelo_ciclo_e_nao_por_alguem_as_empurrar STARTED
+  res://tests/sim_loop_test.gd > test_as_tropas_andam_pelo_ciclo_e_nao_por_alguem_as_empurrar PASSED 19ms
+
+  res://tests/sim_loop_test.gd > test_largar_uma_moeda_pelo_ciclo_e_determinista_e_anuncia_se STARTED
+  res://tests/sim_loop_test.gd > test_largar_uma_moeda_pelo_ciclo_e_determinista_e_anuncia_se PASSED 13ms
+
+  res://tests/sim_loop_test.gd > test_apanhar_uma_moeda_pelo_ciclo_conta_o_que_apanhou STARTED
+  res://tests/sim_loop_test.gd > test_apanhar_uma_moeda_pelo_ciclo_conta_o_que_apanhou PASSED 11ms
+
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 2s 775ms
+
+
+Run Test Suite: res://tests/band_layers_test.gd
+  res://tests/band_layers_test.gd > test_cada_faixa_vive_no_seu_bit STARTED
+  res://tests/band_layers_test.gd > test_cada_faixa_vive_no_seu_bit PASSED 7ms
+
+  res://tests/band_layers_test.gd > test_so_colide_quem_partilha_a_faixa STARTED
+  res://tests/band_layers_test.gd > test_so_colide_quem_partilha_a_faixa PASSED 8ms
+
+  res://tests/band_layers_test.gd > test_a_faixa_aerea_ignora_tudo_o_que_e_de_solo STARTED
+  res://tests/band_layers_test.gd > test_a_faixa_aerea_ignora_tudo_o_que_e_de_solo PASSED 8ms
+
+  res://tests/band_layers_test.gd > test_um_edificio_e_atacavel_da_superficie_e_do_subsolo STARTED
+  res://tests/band_layers_test.gd > test_um_edificio_e_atacavel_da_superficie_e_do_subsolo PASSED 9ms
+
+  res://tests/band_layers_test.gd > test_o_terreno_nao_procura_ninguem STARTED
+  res://tests/band_layers_test.gd > test_o_terreno_nao_procura_ninguem PASSED 6ms
+
+  res://tests/band_layers_test.gd > test_ninguem_apanha_moedas_por_colisao STARTED
+  res://tests/band_layers_test.gd > test_ninguem_apanha_moedas_por_colisao PASSED 7ms
+
+  res://tests/band_layers_test.gd > test_a_fisica_confirma_a_diagonal STARTED
+  res://tests/band_layers_test.gd > test_a_fisica_confirma_a_diagonal PASSED 64ms
+
+  res://tests/band_layers_test.gd > test_o_aereo_atravessa_o_subsolo_no_mesmo_sitio STARTED
+  res://tests/band_layers_test.gd > test_o_aereo_atravessa_o_subsolo_no_mesmo_sitio PASSED 11ms
+
+  res://tests/band_layers_test.gd > test_a_cena_do_f0_10_existe_e_tem_uma_coluna_por_faixa STARTED
+  res://tests/band_layers_test.gd > test_a_cena_do_f0_10_existe_e_tem_uma_coluna_por_faixa PASSED 15ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 176ms
+
+
+Run Test Suite: res://tests/design_data_test.gd
+  res://tests/design_data_test.gd > test_tabela_de_tempo_ate_matar_do_07 STARTED
+  res://tests/design_data_test.gd > test_tabela_de_tempo_ate_matar_do_07 PASSED 8ms
+
+  res://tests/design_data_test.gd > test_arqueiros_nao_param_ariete STARTED
+  res://tests/design_data_test.gd > test_arqueiros_nao_param_ariete PASSED 0ms
+  Report:
+  This test is skipped!
+  Reason: 'Q-001: com os numeros do §07 da 94,7 s < 105 s. Ver docs/QUESTIONS.md'
+
+
+  res://tests/design_data_test.gd > test_podridao_do_29 STARTED
+  res://tests/design_data_test.gd > test_podridao_do_29 PASSED 7ms
+
+  res://tests/design_data_test.gd > test_manutencao_do_29 STARTED
+  res://tests/design_data_test.gd > test_manutencao_do_29 PASSED 6ms
+
+  res://tests/design_data_test.gd > test_dia_de_asfixia_no_intervalo STARTED
+  res://tests/design_data_test.gd > test_dia_de_asfixia_no_intervalo PASSED 7ms
+
+  res://tests/design_data_test.gd > test_perfis_com_alvo_proprio STARTED
+  res://tests/design_data_test.gd > test_perfis_com_alvo_proprio PASSED 7ms
+
+  res://tests/design_data_test.gd > test_cada_rota_adia_a_asfixia STARTED
+  res://tests/design_data_test.gd > test_cada_rota_adia_a_asfixia PASSED 7ms
+
+  res://tests/design_data_test.gd > test_ganancia_80_antecipa_pelo_menos_3_dias STARTED
+  res://tests/design_data_test.gd > test_ganancia_80_antecipa_pelo_menos_3_dias PASSED 7ms
+
+  res://tests/design_data_test.gd > test_muralhas_do_10 STARTED
+  res://tests/design_data_test.gd > test_muralhas_do_10 PASSED 7ms
+
+  res://tests/design_data_test.gd > test_payback_do_06 STARTED
+  res://tests/design_data_test.gd > test_payback_do_06 PASSED 8ms
+
+Statistics: 10 test cases | 0 errors | 0 failures | 0 flaky | 1 skipped | 0 orphans | PASSED 117ms
+
+
+Run Test Suite: res://tests/morale_system_test.gd
+  res://tests/morale_system_test.gd > test_abaixo_do_limiar_de_vida_foge_para_o_nucleo STARTED
+  res://tests/morale_system_test.gd > test_abaixo_do_limiar_de_vida_foge_para_o_nucleo PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_de_boa_saude_ninguem_foge STARTED
+  res://tests/morale_system_test.gd > test_de_boa_saude_ninguem_foge PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_com_o_rei_perto_ninguem_foge STARTED
+  res://tests/morale_system_test.gd > test_com_o_rei_perto_ninguem_foge PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_fora_do_raio_o_rei_nao_protege STARTED
+  res://tests/morale_system_test.gd > test_fora_do_raio_o_rei_nao_protege PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_o_rei_a_chegar_faz_voltar_quem_fugia STARTED
+  res://tests/morale_system_test.gd > test_o_rei_a_chegar_faz_voltar_quem_fugia PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_quem_chega_ao_nucleo_volta_ao_trabalho STARTED
+  res://tests/morale_system_test.gd > test_quem_chega_ao_nucleo_volta_ao_trabalho PASSED 6ms
+
+  res://tests/morale_system_test.gd > test_um_muro_a_cair_poe_a_fugir_quem_e_fraco_e_barato STARTED
+  res://tests/morale_system_test.gd > test_um_muro_a_cair_poe_a_fugir_quem_e_fraco_e_barato PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_sem_brecha_o_limiar_dos_30_por_cento_nao_conta STARTED
+  res://tests/morale_system_test.gd > test_sem_brecha_o_limiar_dos_30_por_cento_nao_conta PASSED 9ms
+
+  res://tests/morale_system_test.gd > test_quem_nao_recua_nao_recua_nem_com_o_muro_caido STARTED
+  res://tests/morale_system_test.gd > test_quem_nao_recua_nao_recua_nem_com_o_muro_caido PASSED 7ms
+
+  res://tests/morale_system_test.gd > test_um_vagabundo_por_recrutar_nao_entra_nesta_conta STARTED
+  res://tests/morale_system_test.gd > test_um_vagabundo_por_recrutar_nao_entra_nesta_conta PASSED 6ms
+
+  res://tests/morale_system_test.gd > test_quem_foge_anda_e_quem_luta_nao STARTED
+  res://tests/morale_system_test.gd > test_quem_foge_anda_e_quem_luta_nao PASSED 6ms
+
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 132ms
+
+
+Run Test Suite: res://tests/producao_test.gd
+  res://tests/producao_test.gd > test_o_canteiro_paga_se_ao_fim_de_dois_dias STARTED
+  res://tests/producao_test.gd > test_o_canteiro_paga_se_ao_fim_de_dois_dias PASSED 2s 487ms
+
+  res://tests/producao_test.gd > test_o_pesqueiro_paga_se_ao_fim_de_dois_dias STARTED
+  res://tests/producao_test.gd > test_o_pesqueiro_paga_se_ao_fim_de_dois_dias PASSED 3s 805ms
+
+  res://tests/producao_test.gd > test_o_galinheiro_nao_se_paga_em_dois_dias_e_paga_se_em_tres STARTED
+  res://tests/producao_test.gd > test_o_galinheiro_nao_se_paga_em_dois_dias_e_paga_se_em_tres PASSED 5s 658ms
+
+  res://tests/producao_test.gd > test_uma_obra_de_pe_larga_por_dia_o_que_o_csv_lhe_da STARTED
+  res://tests/producao_test.gd > test_uma_obra_de_pe_larga_por_dia_o_que_o_csv_lhe_da PASSED 3s 644ms
+
+  res://tests/producao_test.gd > test_a_regiao_tem_as_sete_fontes_do_perfil_equilibrado STARTED
+  res://tests/producao_test.gd > test_a_regiao_tem_as_sete_fontes_do_perfil_equilibrado PASSED 8ms
+
+  res://tests/producao_test.gd > test_so_conta_quem_esta_de_pe STARTED
+  res://tests/producao_test.gd > test_so_conta_quem_esta_de_pe PASSED 7ms
+
+  res://tests/producao_test.gd > test_os_edificios_reais_rendem_menos_do_que_o_simulador_do_06 STARTED
+  res://tests/producao_test.gd > test_os_edificios_reais_rendem_menos_do_que_o_simulador_do_06 PASSED 7ms
+
+  res://tests/producao_test.gd > test_o_rasto_arrasa_o_canteiro_e_so_para_o_galinheiro STARTED
+  res://tests/producao_test.gd > test_o_rasto_arrasa_o_canteiro_e_so_para_o_galinheiro PASSED 7ms
+
+  res://tests/producao_test.gd > test_quem_esta_no_rasto_nao_produz_naquela_fase STARTED
+  res://tests/producao_test.gd > test_quem_esta_no_rasto_nao_produz_naquela_fase PASSED 10ms
+
+Statistics: 9 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 15s 680ms
+
+
+Run Test Suite: res://tests/creatures_test.gd
+  res://tests/creatures_test.gd > test_cada_criatura_so_entra_a_partir_do_dia_dela STARTED
+  res://tests/creatures_test.gd > test_cada_criatura_so_entra_a_partir_do_dia_dela PASSED 6ms
+
+  res://tests/creatures_test.gd > test_a_noite_4_traz_o_alado STARTED
+  res://tests/creatures_test.gd > test_a_noite_4_traz_o_alado PASSED 6ms
+
+  res://tests/creatures_test.gd > test_o_alado_nasce_no_ar_e_o_cavador_debaixo_do_chao STARTED
+  res://tests/creatures_test.gd > test_o_alado_nasce_no_ar_e_o_cavador_debaixo_do_chao PASSED 6ms
+
+  res://tests/creatures_test.gd > test_do_chao_ninguem_chega_ao_alado STARTED
+  res://tests/creatures_test.gd > test_do_chao_ninguem_chega_ao_alado PASSED 6ms
+
+  res://tests/creatures_test.gd > test_o_alado_chega_a_quem_esta_no_chao STARTED
+  res://tests/creatures_test.gd > test_o_alado_chega_a_quem_esta_no_chao PASSED 6ms
+
+  res://tests/creatures_test.gd > test_um_muro_nao_trava_quem_voa STARTED
+  res://tests/creatures_test.gd > test_um_muro_nao_trava_quem_voa PASSED 6ms
+
+  res://tests/creatures_test.gd > test_o_cavador_sobe_pela_passagem_que_abriste STARTED
+  res://tests/creatures_test.gd > test_o_cavador_sobe_pela_passagem_que_abriste PASSED 6ms
+
+  res://tests/creatures_test.gd > test_sem_passagem_ele_fica_em_baixo STARTED
+  res://tests/creatures_test.gd > test_sem_passagem_ele_fica_em_baixo PASSED 5ms
+
+  res://tests/creatures_test.gd > test_quem_nao_muda_de_faixa_nao_sobe STARTED
+  res://tests/creatures_test.gd > test_quem_nao_muda_de_faixa_nao_sobe PASSED 7ms
+
+  res://tests/creatures_test.gd > test_o_cavador_no_subsolo_nao_chega_a_quem_esta_no_chao STARTED
+  res://tests/creatures_test.gd > test_o_cavador_no_subsolo_nao_chega_a_quem_esta_no_chao PASSED 6ms
+
+  res://tests/creatures_test.gd > test_depois_de_subir_chega STARTED
+  res://tests/creatures_test.gd > test_depois_de_subir_chega PASSED 6ms
+
+  res://tests/creatures_test.gd > test_o_alado_bate_no_chao_sem_descer_porque_nao_pode_descer STARTED
+  res://tests/creatures_test.gd > test_o_alado_bate_no_chao_sem_descer_porque_nao_pode_descer PASSED 7ms
+
+  res://tests/creatures_test.gd > test_uma_faixa_fora_do_targets_bands_nao_se_alcanca_de_lado_nenhum STARTED
+  res://tests/creatures_test.gd > test_uma_faixa_fora_do_targets_bands_nao_se_alcanca_de_lado_nenhum PASSED 5ms
+
+Statistics: 13 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 128ms
+
+
+Run Test Suite: res://tests/recruit_system_test.gd
+  res://tests/recruit_system_test.gd > test_um_vagabundo_nasce_de_ninguem STARTED
+  res://tests/recruit_system_test.gd > test_um_vagabundo_nasce_de_ninguem PASSED 6ms
+
+  res://tests/recruit_system_test.gd > test_uma_moeda_paga_o_preco_do_tres_e_nao_um_numero_do_codigo STARTED
+  res://tests/recruit_system_test.gd > test_uma_moeda_paga_o_preco_do_tres_e_nao_um_numero_do_codigo PASSED 10ms
+
+  res://tests/recruit_system_test.gd > test_quem_ja_e_de_alguem_nao_se_compra_outra_vez STARTED
+  res://tests/recruit_system_test.gd > test_quem_ja_e_de_alguem_nao_se_compra_outra_vez PASSED 6ms
+
+  res://tests/recruit_system_test.gd > test_a_moeda_longe_de_mais_nao_e_um_destino STARTED
+  res://tests/recruit_system_test.gd > test_a_moeda_longe_de_mais_nao_e_um_destino PASSED 7ms
+
+  res://tests/recruit_system_test.gd > test_a_fila_atras_do_rei_e_por_id_e_nao_por_indice STARTED
+  res://tests/recruit_system_test.gd > test_a_fila_atras_do_rei_e_por_id_e_nao_por_indice PASSED 6ms
+
+  res://tests/recruit_system_test.gd > test_quem_tem_posto_deixa_de_seguir_o_rei STARTED
+  res://tests/recruit_system_test.gd > test_quem_tem_posto_deixa_de_seguir_o_rei PASSED 6ms
+
+  res://tests/recruit_system_test.gd > test_sem_rei_em_campo_ninguem_segue_ninguem STARTED
+  res://tests/recruit_system_test.gd > test_sem_rei_em_campo_ninguem_segue_ninguem PASSED 6ms
+
+Statistics: 7 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 78ms
+
+
+Run Test Suite: res://tests/target_picker_test.gd
+  res://tests/target_picker_test.gd > test_escolhe_o_mais_proximo_em_alcance STARTED
+  res://tests/target_picker_test.gd > test_escolhe_o_mais_proximo_em_alcance PASSED 8ms
+
+  res://tests/target_picker_test.gd > test_fora_de_alcance_nao_ha_alvo_nenhum STARTED
+  res://tests/target_picker_test.gd > test_fora_de_alcance_nao_ha_alvo_nenhum PASSED 9ms
+
+  res://tests/target_picker_test.gd > test_nao_reescolhe_enquanto_o_atual_servir STARTED
+  res://tests/target_picker_test.gd > test_nao_reescolhe_enquanto_o_atual_servir PASSED 8ms
+
+  res://tests/target_picker_test.gd > test_morto_o_alvo_escolhe_outro STARTED
+  res://tests/target_picker_test.gd > test_morto_o_alvo_escolhe_outro PASSED 9ms
+
+  res://tests/target_picker_test.gd > test_o_alvo_marcado_ganha_ao_mais_proximo STARTED
+  res://tests/target_picker_test.gd > test_o_alvo_marcado_ganha_ao_mais_proximo PASSED 6ms
+
+  res://tests/target_picker_test.gd > test_esquecer_apaga_a_marca_e_o_alvo STARTED
+  res://tests/target_picker_test.gd > test_esquecer_apaga_a_marca_e_o_alvo PASSED 6ms
+
+  res://tests/target_picker_test.gd > test_entrar_em_combate_poe_em_fight_e_sair_devolve_a_work STARTED
+  res://tests/target_picker_test.gd > test_entrar_em_combate_poe_em_fight_e_sair_devolve_a_work PASSED 6ms
+
+  res://tests/target_picker_test.gd > test_quem_luta_nao_anda STARTED
+  res://tests/target_picker_test.gd > test_quem_luta_nao_anda PASSED 7ms
+
+  res://tests/target_picker_test.gd > test_a_criatura_prefere_o_muro_que_a_trava STARTED
+  res://tests/target_picker_test.gd > test_a_criatura_prefere_o_muro_que_a_trava PASSED 6ms
+
+  res://tests/target_picker_test.gd > test_sem_muro_a_criatura_escolhe_a_tropa STARTED
+  res://tests/target_picker_test.gd > test_sem_muro_a_criatura_escolhe_a_tropa PASSED 5ms
+
+  res://tests/target_picker_test.gd > test_quem_so_ataca_muralha_ignora_as_tropas STARTED
+  res://tests/target_picker_test.gd > test_quem_so_ataca_muralha_ignora_as_tropas PASSED 6ms
+
+  res://tests/target_picker_test.gd > test_os_ids_saem_sempre_por_ordem_crescente STARTED
+  res://tests/target_picker_test.gd > test_os_ids_saem_sempre_por_ordem_crescente PASSED 6ms
+
+Statistics: 12 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 141ms
+
+
+Run Test Suite: res://tests/save_service_test.gd
+  res://tests/save_service_test.gd > test_gravar_e_carregar_um_estado_vazio STARTED
+  res://tests/save_service_test.gd > test_gravar_e_carregar_um_estado_vazio PASSED 7ms
+
+  res://tests/save_service_test.gd > test_ida_e_volta_preserva_os_campos_e_os_tipos STARTED
+  res://tests/save_service_test.gd > test_ida_e_volta_preserva_os_campos_e_os_tipos PASSED 7ms
+
+  res://tests/save_service_test.gd > test_o_save_so_contem_tipos_base STARTED
+  res://tests/save_service_test.gd > test_o_save_so_contem_tipos_base PASSED 6ms
+
+  res://tests/save_service_test.gd > test_um_save_com_um_objeto_la_dentro_nao_o_executa STARTED
+ERROR: Condition "!p_allow_objects" is true. Returning: ERR_UNAUTHORIZED
+   at: decode_variant (core/io/marshalls.cpp:717)
+   GDScript backtrace (most recent call first):
+       [0] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:90)
+       [1] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [2] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [3] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [4] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [16] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [17] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: Error when trying to decode Variant.
+   at: decode_variant (core/io/marshalls.cpp:859)
+   GDScript backtrace (most recent call first):
+       [0] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:90)
+       [1] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [2] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [3] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [4] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [16] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [17] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: Error when trying to encode Variant.
+   at: get_var (core/io/file_access.cpp:389)
+   GDScript backtrace (most recent call first):
+       [0] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:90)
+       [1] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [2] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [3] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [4] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [16] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [17] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: Condition "!p_allow_objects" is true. Returning: ERR_UNAUTHORIZED
+   at: decode_variant (core/io/marshalls.cpp:717)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:207)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:102)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: Error when trying to decode Variant.
+   at: decode_variant (core/io/marshalls.cpp:859)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:207)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:102)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: Error when trying to encode Variant.
+   at: get_var (core/io/file_access.cpp:389)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:207)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:102)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: save: slot 0 nao contem um dicionario
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:211)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_um_save_com_um_objeto_la_dentro_nao_o_executa (res://tests/save_service_test.gd:102)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+  res://tests/save_service_test.gd > test_um_save_com_um_objeto_la_dentro_nao_o_executa PASSED 11ms
+
+  res://tests/save_service_test.gd > test_a_rotacao_usa_os_tres_slots_e_volta_ao_principio STARTED
+  res://tests/save_service_test.gd > test_a_rotacao_usa_os_tres_slots_e_volta_ao_principio PASSED 9ms
+
+  res://tests/save_service_test.gd > test_a_escrita_e_atomica_nao_fica_temporario_para_tras STARTED
+  res://tests/save_service_test.gd > test_a_escrita_e_atomica_nao_fica_temporario_para_tras PASSED 6ms
+
+  res://tests/save_service_test.gd > test_um_slot_fora_do_intervalo_e_recusado_e_nao_escreve_nada STARTED
+ERROR: save: slot 3 fora de [0, 3)
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _slot_valido (res://src/core/save_service.gd:194)
+       [1] save (res://src/core/save_service.gd:45)
+       [2] test_um_slot_fora_do_intervalo_e_recusado_e_nao_escreve_nada (res://tests/save_service_test.gd:124)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: save: slot -1 fora de [0, 3)
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _slot_valido (res://src/core/save_service.gd:194)
+       [1] save (res://src/core/save_service.gd:45)
+       [2] test_um_slot_fora_do_intervalo_e_recusado_e_nao_escreve_nada (res://tests/save_service_test.gd:125)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: save: slot 3 fora de [0, 3)
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _slot_valido (res://src/core/save_service.gd:194)
+       [1] has_slot (res://src/core/save_service.gd:159)
+       [2] _ler_cru (res://src/core/save_service.gd:202)
+       [3] restore (res://src/core/save_service.gd:80)
+       [4] test_um_slot_fora_do_intervalo_e_recusado_e_nao_escreve_nada (res://tests/save_service_test.gd:126)
+       [5] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [6] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [18] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [19] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [20] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [21] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+  res://tests/save_service_test.gd > test_um_slot_fora_do_intervalo_e_recusado_e_nao_escreve_nada PASSED 8ms
+
+  res://tests/save_service_test.gd > test_um_slot_que_nao_existe_devolve_null_em_vez_de_rebentar STARTED
+  res://tests/save_service_test.gd > test_um_slot_que_nao_existe_devolve_null_em_vez_de_rebentar PASSED 6ms
+
+  res://tests/save_service_test.gd > test_lixo_no_ficheiro_e_recusado STARTED
+ERROR: Condition "(uint32_t)buff.size() != len" is true. Returning: Variant()
+   at: get_var (core/io/file_access.cpp:383)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:207)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_lixo_no_ficheiro_e_recusado (res://tests/save_service_test.gd:140)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+ERROR: save: slot 0 nao contem um dicionario
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:211)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_lixo_no_ficheiro_e_recusado (res://tests/save_service_test.gd:140)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+  res://tests/save_service_test.gd > test_lixo_no_ficheiro_e_recusado PASSED 8ms
+
+  res://tests/save_service_test.gd > test_um_dicionario_sem_save_version_nao_e_um_save_deste_jogo STARTED
+ERROR: save: slot 0 sem save_version — nao e um save deste jogo
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _ler_cru (res://src/core/save_service.gd:215)
+       [1] restore (res://src/core/save_service.gd:80)
+       [2] test_um_dicionario_sem_save_version_nao_e_um_save_deste_jogo (res://tests/save_service_test.gd:148)
+       [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+       [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+       [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+       [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+       [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+       [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+       [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+       [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+       [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+       [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+       [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+  res://tests/save_service_test.gd > test_um_dicionario_sem_save_version_nao_e_um_save_deste_jogo PASSED 7ms
+
+  res://tests/save_service_test.gd > test_campos_desconhecidos_ignoram_se_em_vez_de_recusar STARTED
+WARNING: save: slot 0 e de uma versao futura (2)
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _ler_cru (res://src/core/save_service.gd:219)
+         [1] restore (res://src/core/save_service.gd:80)
+         [2] test_campos_desconhecidos_ignoram_se_em_vez_de_recusar (res://tests/save_service_test.gd:162)
+         [3] _execute_test_case (res://addons/gdUnit4/src/core/_TestCase.gd:79)
+         [4] execute (res://addons/gdUnit4/src/core/_TestCase.gd:40)
+         [5] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+         [6] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+         [7] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:17)
+         [8] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+         [9] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:26)
+         [10] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+         [11] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestSuiteExecutionStage.gd:36)
+         [12] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+         [13] _execute (res://addons/gdUnit4/src/core/execution/stages/GdUnitTestCaseExecutionStage.gd:35)
+         [14] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+         [15] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleExecutionStage.gd:28)
+         [16] execute (res://addons/gdUnit4/src/core/execution/stages/IGdUnitExecutionStage.gd:19)
+         [17] _execute (res://addons/gdUnit4/src/core/execution/stages/single/GdUnitTestCaseSingleTestStage.gd:10)
+         [18] execute (res://addons/gdUnit4/src/core/_TestCase.gd:41)
+         [19] test_completed (res://addons/gdUnit4/src/core/_TestCase.gd:86)
+  res://tests/save_service_test.gd > test_campos_desconhecidos_ignoram_se_em_vez_de_recusar PASSED 9ms
+
+  res://tests/save_service_test.gd > test_o_estado_dos_fluxos_de_rng_faz_a_viagem STARTED
+  res://tests/save_service_test.gd > test_o_estado_dos_fluxos_de_rng_faz_a_viagem PASSED 7ms
+
+  res://tests/save_service_test.gd > test_o_resumo_diz_o_que_o_menu_precisa_sem_carregar_o_jogo STARTED
+  res://tests/save_service_test.gd > test_o_resumo_diz_o_que_o_menu_precisa_sem_carregar_o_jogo PASSED 6ms
+
+  res://tests/save_service_test.gd > test_take_id_e_unico_e_monotonico STARTED
+  res://tests/save_service_test.gd > test_take_id_e_unico_e_monotonico PASSED 6ms
+
+Statistics: 14 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 160ms
+
+
+Overall Summary: 412 test cases | 0 errors | 0 failures | 0 flaky | 9 skipped | 0 orphans |
+Executed test suites: (50/50)
+Executed test cases : (403/412), 9 skipped
+Total execution time: 2min 37s 466ms
+ Open XML Report at: file:///workspace/scratch/3dc574a692e1/empire/reports/report_3/results.xml
+Open HTML Report at: file:///workspace/scratch/3dc574a692e1/empire/reports/report_3/index.html
+Exit code: 0
+Run dispose test resources

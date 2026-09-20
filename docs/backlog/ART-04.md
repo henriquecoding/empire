@@ -8,10 +8,12 @@ Depende   ART-01
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     O slot face com o catálogo de expressões do §60, usável por máscara
 Fora      A máscara de casca do Amargueiro — é o XIII-02.
-Estado    por fazer
+Estado    em curso — integração parcial em VIS-01; arte final pendente
 Horas     6
 ```
 
 ---
 
 Uma tarefa, uma sessão, um *merge* (§29). O campo **Fora** é o mais importante: é o que impede o agente — e a ti — de fazer três tarefas numa (§34). Se a tarefa depender de um valor marcado em `_proposed`, ou de uma pergunta aberta, diz-o em `docs/QUESTIONS.md` em vez de decidir.
+
+Integração de 19/09/2026: ver VIS-01 e ADR 0022. Preservar o contrato de saída; infraestrutura ou um export estático não o encerram.

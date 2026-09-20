@@ -1,5 +1,7 @@
 # Asset Bible — como cada asset do Empire é produzido
 
+> **Direção corrigida pelo autor em 19/09/2026:** [REFERENCE_AUTHORITY.md](REFERENCE_AUTHORITY.md) define quais personagens são referências quase concluídas, quais precisam de redesign e qual conceito foi rejeitado. Exportação e presença em jogo não equivalem a aprovação artística.
+
 > Complementa a direção de arte do dossiê (§01, §11, §21, §22, §58–§60) com o que ela não dizia: **que ficheiros
 > existem, com que tela, pivot, camadas, nomes e estados.** Onde este documento e o dossiê discordarem em
 > *intenção artística*, manda o dossiê; em *nome de ficheiro, pivot ou exportação*, manda este (§39: a arte fica
@@ -166,7 +168,7 @@ para o CI e o *export* do dia zero terem imagens reais (ADR 0009).
 
 | Categoria | Regra de produção | Dossiê |
 |---|---|---|
-| Personagens | Design fechado: **não se redesenha**. O trabalho é separar em slots e animar | §01, §22 |
+| Personagens | Soldado, cozinheiro e elenco quase concluído: preservar identidade e completar estados. Rei: redesign. Arqueiro antigo: conceito rejeitado; novo desenho deve partir dessa família | Orientação do autor em 19/09/2026; REFERENCE_AUTHORITY |
 | Criaturas | Vocabulário visual da Podridão (ameixa e sombra, 7 cores); leem-se como *dentro* da mancha. Idle, walk, attack, die | §07, §22 |
 | Edifícios | Objetos autónomos com estados de construção/destruição; luz quente pontual nas oficinas (`warm_light` nos dados) | §22, §55 |
 | Muralhas | 5 níveis × segmento, remate e portão = 15 peças por povo; material e silhueta por povo, mecânica igual | §10, §22 |

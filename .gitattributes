@@ -22,3 +22,8 @@ art/export/_placeholder/** -filter -diff -merge binary
 *.tres  text eol=lf
 *.tscn  text eol=lf
 *.godot text eol=lf
+
+# Original slice is small and must work in a cold checkout without LFS.
+art/source/originals/** -filter -diff -merge binary
+art/export/enramados/** -filter -diff -merge binary
+art/export/enramados/*.json text eol=lf

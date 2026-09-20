@@ -107,7 +107,8 @@ static func aim(de_x: float, para_x: float) -> float:
 
 
 func _process(delta: float) -> void:
-	advance(delta)
+	if SimLoop.running():
+		advance(delta)
 
 
 ## §46, `attack_launched(from_id, to_id, hit)`. So o que ACERTA pisca: o §07 da
@@ -142,7 +143,13 @@ func _draw() -> void:
 		var caixa := _caixa_de(golpe[ALVO])
 		if caixa.size == Vector2.ZERO:
 			continue
-		draw_rect(caixa, WorldPalette.FLASH)
+		# Native actors already flash through UnitArtBatch; retain the contact particle.
+		var unit := SimLoop.units.index_of(golpe[ALVO])
+		if (
+			unit == UnitSystem.NENHUM
+			or OriginalArt.unit_profile(SimLoop.units.data_ids[unit]).is_empty()
+		):
+			draw_rect(caixa, WorldPalette.FLASH)
 		_particula(caixa, golpe[SENTIDO], golpe[RESTA])
 
 
@@ -154,6 +161,13 @@ func _obra_atingida(slot_id: int) -> void:
 	if i == BuildSystem.NENHUM:
 		return
 	var vaga := SimLoop.builds.slots[i]
+	if not BuildingSkins.profile(vaga.kind).is_empty():
+		# A short contact flash at the foundation avoids a greybox outline over the art.
+		var foot := Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band)))
+		draw_line(
+			foot - Vector2(AVANCO, 0.0), foot + Vector2(AVANCO, 0.0), WorldPalette.FLASH, ORLA
+		)
+		return
 	var forma := Silhouette.of_slot(vaga, _tabela(&"buildings"))
 	var pontos := BuildView.drawn_shape(vaga, forma)
 	if pontos.size() < 2:
@@ -179,12 +193,17 @@ func _particula(caixa: Rect2, sentido: float, resta: float) -> void:
 func _caixa_de(id: int) -> Rect2:
 	var i := SimLoop.units.index_of(id)
 	if i != UnitSystem.NENHUM:
+		var x := WorldPresentation.unit_x(i)
+		var profile := OriginalArt.unit_profile(SimLoop.units.data_ids[i])
+		if not profile.is_empty():
+			var foot := Vector2(x, WorldPalette.ground_of(SimLoop.units.bands[i]))
+			return BuildingSkins.art.box(profile, foot)
 		var tropa: UnitData = _tabela(&"units").get(SimLoop.units.data_ids[i])
-		return _caixa(SimLoop.units.xs[i], SimLoop.units.bands[i], tropa)
+		return _caixa(x, SimLoop.units.bands[i], tropa)
 	var c := SimLoop.creatures.index_of(id)
 	if c != UnitSystem.NENHUM:
 		var bicho: CreatureData = _tabela(&"creatures").get(SimLoop.creatures.data_ids[c])
-		return _caixa(SimLoop.creatures.xs[c], SimLoop.creatures.bands[c], bicho)
+		return _caixa(WorldPresentation.creature_x(c), SimLoop.creatures.bands[c], bicho)
 	return SEM_CORPO
 
 

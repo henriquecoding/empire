@@ -1,5 +1,7 @@
 # Guia de expressões — o humor está na cara
 
+> **Referência principal:** os personagens quase concluídos enviados pelo autor, conforme [REFERENCE_AUTHORITY.md](REFERENCE_AUTHORITY.md). O arqueiro antigo foi rejeitado e o rei exige redesign. As medidas deste guia são orientações; não autorizam normalizar os rostos originais.
+
 > O dossiê é curto e firme: **bocas largas com dentes, olhos afastados, narizes grandes; o humor está na cara,
 > não em piadas de texto — e por isso atravessa idiomas de graça** (§01, §22). O rosto é também interface: a
 > camada `face` diz a vida e a lealdade da tropa sem barra nem número (§07, §24, §58). Este guia fixa como.
@@ -19,8 +21,7 @@ na escala 3 soma-se 1 px.
 | Contorno | 1 px preto no exterior da cabeça; o rosto interior não leva contorno | lei da escala dupla: personagens a 1 px (§01) |
 | Cor | Dois tons de pele por povo (sombra e luz), da rampa do povo | §22: dois tons por material |
 
-**Proibido:** pupilas maiores do que 2 × 2 px (viram *anime*), bochechas com gradiente, bocas assimétricas em
-repouso, e deformar a cabeça em *squash & stretch* (ANIMATION_BIBLE §1).
+**Proibido:** pupilas maiores do que 2 × 2 px (viram *anime*), bochechas com gradiente e deformar a cabeça em *squash & stretch* (ANIMATION_BIBLE §1).
 
 ## 2 · A matriz
 
@@ -29,7 +30,7 @@ por animação própria: **o rosto muda de estado sem mudar de frame**.
 
 | Estado | Camada | Olhos | Boca | Postura (camada `body`) | Quando aparece |
 |---|---|---|---|---|---|
-| Repouso | `face_normal` | neutros, abertos | sorriso fechado | relaxada | `idle`, `walk` |
+| Repouso | `face_normal` | conforme a identidade original | expressão própria: sorriso dentado, língua ou boca característica | postura original | `idle`, `walk` |
 | Trabalho | `face_normal` | focados (1 px mais baixos) | fechada, cantos para dentro | ativa | `work`, `build`, `smith`, `cook` |
 | Medo | `face_fear` | grandes (2 × 2) | aberta, dentes de cima | retraída, joelhos | `flee` (§07: muro cai, vida < 30%) |
 | Raiva | `face_angry` | apertados + sobrancelha em V | dentes cerrados | inclinada para a frente | `attack`, berserker sempre |
@@ -47,8 +48,8 @@ Mínimo para a fatia vertical: `normal`, `hurt`, `hit`, `fear`. O §22 conta 3 h
 
 - **A 1×.** Tira uma captura a 1280 × 720 sem zoom e outra a 50%. A expressão tem de se ler na primeira; a
   silhueta da postura, na segunda.
-- **Em movimento.** O rosto sobe e desce com a cabeça no `walk`; não troques de expressão a meio de um ciclo — só
-  nas fronteiras de tag.
+- **Em movimento.** O rosto acompanha o pivot da cabeça. Dano e medo reagem imediatamente; prioridade: impacto, medo, ferido, ação, repouso. A troca de expressão não reinicia o corpo.
+- **Identidade.** Assimetria de boca é permitida quando pertence ao desenho original e continua legível a 1×.
 - **No Steam Deck.** O ecrã do Deck é praticamente a tua tela (§19); se lá não se lê, não se lê.
 - **Com 300 unidades.** Em multidão, só o `face_hurt` e o `face_fear` têm de sobressair: são informação de jogo.
   O resto pode perder-se.
@@ -74,8 +75,12 @@ A gramática é a mesma para todos; muda o sotaque. Nada disto está no dossiê:
 | Escudeiro | Elmo grande a tapar metade dos olhos; a boca faz o trabalho todo |
 | Bardo | O mais expressivo: boca sempre aberta ou a cantar |
 | Ferreiro | Bigode (§04); a boca quase não se vê |
-| Cozinheiro | Bochechas rosadas de 1 px, barrete branco |
+| Cozinheiro | Língua, boca original e barrete branco; rosto e corpo da referência preservados |
 | Cavaleiro Enterrado | Elmo fechado: a expressão vive **só na postura** |
 | Cavaleiro Selado | O elmo tapa os olhos (§08): só boca e queixo — quando fica cego, a boca é tudo o que resta |
 | Elite (escala 3) | A mesma gramática com 1 px a mais em cada medida e **um** detalhe extra (cicatriz, dente de ouro) |
 | Tropa comum (escala 2) | Nenhum detalhe extra: a cabeça (`head`) é que dá a identidade |
+
+## Integração de 19/09/2026
+
+O atlas atual conserva as faces originais. Flash de impacto e prioridade de expressão são assuntos diferentes: o flash já está ligado; os sprites `hurt`, `hit` e `fear` ainda precisam de desenho. Ver ADR 0022.

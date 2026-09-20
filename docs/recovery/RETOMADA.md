@@ -22,7 +22,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 405 casos, 396 a passar, 9 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 413 casos, 396 a passar, 9 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save nunca usa `load()`),
@@ -48,7 +48,7 @@ a cada construção._
 |---|---|
 | Jogabilidade | **Ninguém jogou** — com um teclado e olhos. O ciclo está todo lá e corre em *headless*: nove dos onze passos do `SimLoop` escritos (faltam o 9 e o 10, os dois da Fase 2), o mundo montado, a mancha a chegar ao crepúsculo, e a noite e a partida de dez dias medidas por instrumento (`noite_do_07_test.gd`, `dez_dias_test.gd`, `jogo_noite_test.gd`). A partida de dez dias já se perde e já se ganha, e a fronteira entre as duas está numa tabela de nove defesas. O que medir deixou por fechar está escrito em vez de calado: os números do microteste do §07 não batem (**Q-073**) e o Alado atravessa a muralha, pousa no castelo e não faz nada (**Q-077**). |
 | GPU e arte | A medição correu sem placa gráfica. O LUT, a luz e as silhuetas continuam por ver. |
-| Os dois *spikes* da Fase 0 | O **F0-09** pede a escala testada *em 1080p e no Deck* — é hardware, e nenhuma medição headless o substitui; a ADR 0001 continua proposta. O **F0-15** pede o `export_aseprite.sh` testado *com um ficheiro real* — e não há um: zero `.aseprite` na árvore, sem Aseprite instalado e sem o Wizard; a ADR 0010 continua proposta. São os dois únicos tickets da Fase 0 por fazer, e nenhum dos dois é código. |
+| Os dois *spikes* da Fase 0 | O **F0-09** continua a exigir validação no Deck. A ADR 0022 substitui a proposta de escala da ADR 0001; janelas 1080p/1440p foram verificadas com renderer de software. Para **F0-15**, três fontes reais `.aseprite` estão agora em `art/source/originals/`, com exportação reproduzível por `make arte`. O fluxo específico Aseprite CLI/Wizard da ADR 0010 ainda não foi validado. Ver `docs/visual/IMPLEMENTATION.md` para resultados e limites. |
 | CI remoto | **Correu.** O workflow era inválido e nunca criou um único job — onze corridas de zero segundos — até à PR #4 o corrigir. A partir daí: portões estáticos, suite gdUnit4 e export de Linux verdes num *runner* limpo. A camada do dossiê chumbava em duas verificações de disposição, e **a corrida #19 pôs os cinco *jobs* verdes na mesma corrida**. A causa era uma só: os portões escolhiam o Chromium pela ordem errada e mediam com o 1194 enquanto o CI media com o 1243, onde o salto animado assenta aos 1712 ms contra a espera fixa de 900 ms — a segunda falha era consequência da primeira, medida sobre uma página ainda em movimento (Q-062, com a série medida e a reprodução local). Os portões passam a declarar que página mediram (motor e tipos de letra) e a dizer com que números chumbam. |
 | As nove cenas de segmento | Não sobreviveram ao ZIP recuperado. É a Q-048. |
 | Áudio | 73 pistas escritas na bíblia, zero gravadas. |
@@ -63,10 +63,10 @@ a cada construção._
 | `src/sim/` | Puro: sem `Node`, sem `import` para fora. O portão G1 chumba se alguém o quebrar. |
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |
-| `docs/adr/` | 22 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21 e a 0022 o sítio onde o jogo se publica. |
-| `docs/backlog/` | 60 tickets, um ficheiro cada, no formato da §34. |
+| `docs/adr/` | 23 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21 e a 0022 o sítio onde o jogo se publica. |
+| `docs/backlog/` | 61 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
-| `data/i18n/strings.csv` | 271 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
+| `data/i18n/strings.csv` | 295 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
 
 ## A regra que continua a valer

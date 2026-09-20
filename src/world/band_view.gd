@@ -9,9 +9,8 @@
 # corpos levam a luz que chega ao sitio deles, as LUZES nao levam nada e os
 # instrumentos do greybox tambem nao.
 #
-# Um _draw() por frame, lido do SimLoop. Nao guarda estado nenhum: se o que se
-# ve divergir do que se simula, e defeito da simulacao e nao deste ficheiro. E a
-# fronteira do §45 levada a serio — "se esta num no, e derivado e descartavel".
+# Apresentacao derivada: unidades leem snapshots por ID e desenham num canvas
+# filho com atlas. Nenhum estado visual volta para as colunas da simulacao.
 #
 # O CENARIO ja nao passa por aqui: mudou-se para o TerrainBackdrop, que so
 # redesenha quando a luz muda de fase. Aqui fica o que anda — passagens, mancha,
@@ -32,9 +31,13 @@ var _luz := Lighting.new()
 ## de um bicho — e por isso conta com o frame e nao com o tick (§45: o que esta
 ## num no e derivado e descartavel).
 var _visual_time := 0.0
+var _sprites := UnitCanvas.new()
 
 
 func _ready() -> void:
+	_sprites.band = band
+	_sprites.light = _luz
+	add_child(_sprites)
 	_tropas = SimFactory.by_id(&"units")
 	_bichos = SimFactory.by_id(&"creatures")
 	_edificios = SimFactory.by_id(&"buildings")
@@ -49,7 +52,8 @@ func _ready() -> void:
 ## ficava mais escura do que o fundo. Agora a luz vive no `Lighting` e cada coisa
 ## recebe a que lhe pertence (§80).
 func _process(delta: float) -> void:
-	_visual_time += delta
+	if SimLoop.running():
+		_visual_time += delta
 	var relogio := ClockService.clock
 	_luz.set_phase(_relogio, int(relogio.current_phase()), relogio.phase_progress())
 	var rot := SimLoop.night.rot if SimLoop.state != null else null
@@ -58,6 +62,8 @@ func _process(delta: float) -> void:
 		_luz.set_lamp(rot.position_x(), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
 	else:
 		_luz.clear_lamp()
+	_sprites.time = _visual_time
+	_sprites.queue_redraw()
 	queue_redraw()
 
 
@@ -68,10 +74,8 @@ func _draw() -> void:
 		_passagens()
 		_podridao()
 	_fogueiras()
-	BuildView.draw_on(self, band, _edificios, _luz)
 	_moedas()
 	_criaturas()
-	_tropa()
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
@@ -80,13 +84,7 @@ func _draw() -> void:
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
 ## desce — e o minuto 10:00 do §25, "o mundo tem um andar de baixo".
 func _passagens() -> void:
-	var topo := WorldPalette.ground_of(int(Band.Kind.SURFACE))
-	var fundo := WorldPalette.ground_of(int(Band.Kind.UNDERGROUND))
-	var largura := WorldPalette.PASSAGEM_W
-	for x in SimLoop.passages:
-		var canto := Vector2(x - largura * WorldPalette.MEIA, topo)
-		var cor := WorldPalette.tint(WorldPalette.PASSAGEM, _luz.scenery(1.0))
-		draw_rect(Rect2(canto, Vector2(largura, fundo - topo)), cor)
+	PassageArt.draw_on(self, _luz)
 
 
 ## A arte da mancha vive no RotView: a massa, o rasto e a candeia sao um assunto
@@ -115,7 +113,7 @@ func _moedas() -> void:
 	var moedas := SimLoop.coins
 	var apice := moedas.apex_px()
 	for i in moedas.count():
-		if moedas.bands[i] != int(band):
+		if moedas.bands[i] != int(band) or not _visible_x(moedas.xs[i]):
 			continue
 		Shadow.drop(self, moedas.xs[i], int(band), WorldPalette.MOEDA_R, moedas.heights[i], apice)
 		var y := WorldPalette.ground_of(int(band)) - moedas.heights[i] - WorldPalette.MOEDA_R
@@ -131,7 +129,7 @@ func _criaturas() -> void:
 	var candeia := _candeeiro()
 	var chao := BandLight.ground_ratio(_relogio)
 	for i in bichos.count():
-		if bichos.bands[i] != int(band):
+		if bichos.bands[i] != int(band) or not _visible_x(bichos.xs[i]):
 			continue
 		var dados: CreatureData = _bichos.get(bichos.data_ids[i])
 		if dados == null:
@@ -140,7 +138,7 @@ func _criaturas() -> void:
 		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
 		var forma := Silhouette.of_creature(dados)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(forma, bichos.xs[i], int(band), alto)
+		var caixa := Silhouette.body_box(forma, WorldPresentation.creature_x(i), int(band), alto)
 		var aceso := WorldLight.lit(bichos.xs[i], candeia.x, candeia.y)
 		var corpo := _luz.body(WorldPalette.BICHO, bichos.xs[i])
 		var cor := WorldLight.reveal(corpo, aceso, chao)
@@ -161,36 +159,6 @@ func _candeeiro() -> Vector2:
 	return Vector2(rot.position_x(), WorldLight.radius(_podre, SimLoop.state.day))
 
 
-## O corpo de uma tropa e o mesmo rectangulo de sempre — uma pessoa e uma
-## pessoa. O que a distingue de outra e a ARMA, e e de proposito: o §08 diz que
-## os arquetipos sao "mesma funcao, corpo e silhueta diferentes" por POVO, e nao
-## por classe. Aqui ha um povo so, e por isso o que resta e o que ela leva.
-## A tropa. A caixa continua a ser a do §22 — e dela que sai a silhueta — e o
-## que a enche e o ActorArt: corpo, cara, chapeu e a marca da mao, na COR DO
-## CORPO. O §80 quer que a meio de uma noite o contorno chegue, e um corpo
-## desenhado com uma cor propria deixava de ser o mesmo corpo.
-func _tropa() -> void:
-	var unidades := SimLoop.units
-	for i in unidades.count():
-		if unidades.bands[i] != int(band):
-			continue
-		var dados: UnitData = _tropas.get(unidades.data_ids[i])
-		if dados == null:
-			continue
-		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(band), alto)
-		var cor := _luz.body(WorldPalette.unit_color(unidades, i), unidades.xs[i])
-		ActorArt.draw_unit(self, caixa, dados, unidades, i, cor, _visual_time)
-		_saco(caixa, unidades, i)
-		if unidades.alive(i):
-			Gauge.health(
-				self, caixa, float(unidades.healths[i]) / maxf(1.0, float(unidades.max_healths[i]))
-			)
-
-
-## O saco do §24. Quem morreu nao leva nada: §50 manda largar, e um corpo com o
-## saco cheio dizia que ainda havia ali dinheiro para apanhar.
-func _saco(caixa: Rect2, unidades: UnitSystem, i: int) -> void:
-	if not unidades.alive(i):
-		return
-	Gauge.purse(self, caixa, unidades.carried_coins[i], unidades.coin_capacities[i])
+func _visible_x(x: float) -> bool:
+	var bounds := PresentationBounds.of(self)
+	return x >= bounds.position.x and x <= bounds.end.x

@@ -34,6 +34,12 @@ static func draw_on(
 	for vaga in SimLoop.builds.slots:
 		if vaga.band != faixa:
 			continue
+		var bounds := PresentationBounds.of(canvas)
+		var extent := vaga.width
+		if vaga.x + extent < bounds.position.x or vaga.x - extent > bounds.end.x:
+			continue
+		if BuildingSkins.draw_on(canvas, vaga, luz):
+			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, vaga.x)
 
 

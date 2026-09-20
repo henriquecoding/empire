@@ -103,7 +103,7 @@ static func draw_unit(
 	_tronco(canvas, box, meio, cor, ink, bob, scale)
 	_cara(canvas, box, center, cor, ink, units, index, scale)
 	_hat(canvas, center, box, units, index, scale)
-	_weapon(canvas, box, data, units, index, cor)
+	draw_weapon(canvas, box, data, units, index, cor)
 
 
 ## Quem esta parado nao baloica: o baloico e a unica coisa que diz, sem numeros,
@@ -184,11 +184,19 @@ static func _hat(
 
 ## A marca do §24, e so ela: e o que se ve de uma tropa a 1 bit, e por isso cada
 ## oficio leva a sua e nenhuma leva a de outro.
-static func _weapon(
-	canvas: CanvasItem, box: Rect2, data: UnitData, units: UnitSystem, index: int, cor: Color
+static func draw_weapon(
+	canvas: CanvasItem,
+	box: Rect2,
+	data: UnitData,
+	units: UnitSystem,
+	index: int,
+	cor: Color,
+	facing: float = 0.0
 ) -> void:
 	var scale := maxf(ESCALA.minima, box.size.y / ESCALA.caixa)
 	var lado := LADO.frente if units.target_xs[index] >= units.xs[index] else LADO.tras
+	if not is_zero_approx(facing):
+		lado = facing
 	var mao := Vector2(
 		box.get_center().x + lado * box.size.x * MAO.x, box.position.y + box.size.y * MAO.y
 	)
@@ -196,8 +204,15 @@ static func _weapon(
 	match Silhouette.of_unit(data):
 		Silhouette.Mark.ARCO:
 			var punho := mao + Vector2(lado * ARCO.x, ARCO.y)
+			var angle := 0.0 if lado > 0.0 else PI
 			canvas.draw_arc(
-				punho, ARCO.raio * scale, ARCO.de, ARCO.ate, ARCO.pontos, cor, TRACO.minimo
+				punho,
+				ARCO.raio * scale,
+				ARCO.de + angle,
+				ARCO.ate + angle,
+				ARCO.pontos,
+				cor,
+				TRACO.minimo
 			)
 			canvas.draw_line(mao, punho, cor, 1.0)
 		Silhouette.Mark.HASTE:

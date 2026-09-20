@@ -126,7 +126,10 @@ static func _gente(
 		if falta <= 0:
 			continue
 		var dados: UnitData = tropas.get(unidades.data_ids[i])
+		var profile := OriginalArt.unit_profile(dados.id)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
+		if not profile.is_empty():
+			alto = float(OriginalArt.new().entry(profile).size[1])
 		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(faixa), alto)
 		# A cabeca do §25 — o chapeu — desenha-se por cima da caixa, e o preco
 		# tem de ficar acima dele para nao lhe assentar em cima.

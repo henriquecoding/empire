@@ -16,6 +16,11 @@ uniform float mix : hint_range(0.0, 1.0) = 0.0;
 // Coeficientes de luminancia perceptual (Rec. 601). Nao sao afinacao: sao a
 // definicao de "quao clara e esta cor".
 const vec3 LUMA = vec3(0.299, 0.587, 0.114);
+varying vec4 vertex_tint;
+
+void vertex() {
+	vertex_tint = COLOR;
+}
 
 void fragment() {
 	vec4 src = texture(TEXTURE, UV);
@@ -28,5 +33,5 @@ void fragment() {
 
 	// A transparencia nunca passa pela rampa: um pixel vazio tem de continuar
 	// vazio, senao o contorno do sprite ganha halo a noite.
-	COLOR = vec4(saida, src.a) * COLOR;
+	COLOR = vec4(saida, src.a) * vertex_tint;
 }

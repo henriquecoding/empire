@@ -1,0 +1,14 @@
+gdformat --check src/ tests/ tools/
+174 files would be left unchanged
+gdlint src/ tests/
+Success: no problems found
+G2: sem RNG solto
+actionlint: workflows validos
+python3 tools/check_dossie_vs_csv.py docs/dossie.html
+check_dossie_vs_csv: 197 valores conferidos, 0 divergencia(s)
+python3 tools/content_report.py --check
+python3 tools/split_dossie.py docs/dossie.html docs/design
+87 seccoes escritas em docs/design
+git diff --exit-code -- docs/design
+python3 tools/check_claims.py
+check_claims: 14 afirmacoes em prosa, 13 campos de validation.json e o tickets.json conferidos contra 14 contagens — 0 divergencias

@@ -611,7 +611,7 @@
   "depende": "F0-14, F0-15",
   "feito": "Um vagabundo com os cinco slots, na paleta, a andar na greybox",
   "fora": "As outras 21 unidades. Uma personagem chega para provar o circuito.",
-  "estado": "por fazer",
+  "estado": "em curso",
   "horas": "8",
   "notas": [
    "Q-024: a camada Equipments dos teus ficheiros é o slot head? Fechar aqui."
@@ -627,7 +627,7 @@
   "depende": "F0-01",
   "feito": "112 cores com as famílias do §22; o LUT da noite leva a saturação para 0,22",
   "fora": "Desenhar seja o que for com ela — é o ART-01.",
-  "estado": "por fazer",
+  "estado": "em curso",
   "horas": "4",
   "notas": [
    "ADR 0011: os três valores de silhueta entram aqui — #17130D, #241F17 e #2E251A, #100D09 e #14140F."
@@ -643,7 +643,7 @@
   "depende": "ART-02, F0-08",
   "feito": "Distância 1 valor, plano médio 2, primeiro plano 2; o teste de silhueta passa no CI",
   "fora": "Os seis biomas — Fase 2.",
-  "estado": "por fazer",
+  "estado": "em curso",
   "horas": "5",
   "notas": [
    "É a única dependência dura de calendário da Parte XIII (§82): decidir agora custa 4 h, decidir na Fase 5 custa redesenhar os seis biomas."
@@ -659,7 +659,7 @@
   "depende": "ART-01",
   "feito": "O slot face com o catálogo de expressões do §60, usável por máscara",
   "fora": "A máscara de casca do Amargueiro — é o XIII-02.",
-  "estado": "por fazer",
+  "estado": "em curso",
   "horas": "6"
  },
  "GB-01": {
@@ -1009,5 +1009,20 @@
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
   "estado": "por fazer",
   "horas": "2"
+ },
+ "VIS-01": {
+  "title": "Aplicar o relatório visual de 19/09/2026",
+  "porque": "Integrar os originais na partida e substituir a apresentação do protótipo.",
+  "spec": [
+   "docs/visual/PLAN-2026-09-19.md"
+  ],
+  "depende": "ART-01, ART-02, ART-03, ART-04",
+  "feito": "Integração verificável, performance medida e evidências de renderização.",
+  "fora": "Arte nova indisponível pelo limite de geração; biomas seguintes.",
+  "estado": "em curso",
+  "horas": "",
+  "notas": [
+   "Código e integração original concluídos; acabamento artístico pendente. Ver ADR 0022."
+  ]
  }
 }
