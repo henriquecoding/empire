@@ -32,6 +32,8 @@ var _luz := Lighting.new()
 ## de um bicho — e por isso conta com o frame e nao com o tick (§45: o que esta
 ## num no e derivado e descartavel).
 var _visual_time := 0.0
+## O pequeno bounce do §24 (GB-19), criado a pedido: precisa da gravidade do arco.
+var _salto: CoinBounce
 
 
 func _ready() -> void:
@@ -111,14 +113,20 @@ func _fogueiras() -> void:
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
 ## milhares de vezes por partida: e a animacao mais importante do jogo." O arco
-## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos.
+## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos, e o salto
+## ao pousar (GB-19) e so do ecra — a moeda fica onde a simulacao a pos.
 func _moedas() -> void:
 	var moedas := SimLoop.coins
 	var apice := moedas.apex_px()
+	if _salto == null:
+		_salto = CoinBounce.new(SimFactory.curve().coin_gravity_px_s2)
+	_salto.forget_except(moedas.ids)
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
 		var onde := Smoothing.coin(moedas.ids[i], moedas.xs[i], moedas.heights[i])
+		_salto.observe(moedas.ids[i], onde.y, _visual_time)
+		onde.y += _salto.offset(moedas.ids[i], _visual_time)
 		Shadow.drop(self, onde.x, int(band), WorldPalette.MOEDA_R, onde.y, apice)
 		var y := WorldPalette.ground_of(int(band)) - onde.y - WorldPalette.MOEDA_R
 		var cor := _luz.body(WorldPalette.MOEDA, onde.x)

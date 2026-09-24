@@ -15,9 +15,14 @@ func _varrimento() -> DawnSweep:
 	return v
 
 
-## O numero e o do dossie, e e o unico que o §24 da a esta linha.
+## O numero e o do dossie, e vive no clock.csv: e a mesma frente que solta as
+## tropas dos postos (GB-21).
 func test_anda_aos_900_px_s_do_24() -> void:
-	assert_float(DawnSweep.VELOCIDADE_PX_S).is_equal(900.0)
+	var v := _varrimento()
+	v.start(REGIAO)
+	assert_float(v.speed()).is_equal(900.0)
+	var relogio := Registry.entry(&"economy", &"clock") as ClockData
+	assert_float(v.speed()).is_equal(relogio.dawn_sweep_px_s)
 
 
 func test_vai_da_esquerda_para_a_direita() -> void:
@@ -25,7 +30,7 @@ func test_vai_da_esquerda_para_a_direita() -> void:
 	v.start(REGIAO)
 	var antes := v.front()
 	v.advance(0.5)
-	assert_float(v.front()).is_equal_approx(antes + DawnSweep.VELOCIDADE_PX_S * 0.5, 0.01)
+	assert_float(v.front()).is_equal_approx(antes + v.speed() * 0.5, 0.01)
 	assert_float(antes).is_equal(0.0)
 
 
@@ -40,7 +45,7 @@ func test_atravessa_a_regiao_e_acaba() -> void:
 		passos += 1
 	assert_bool(v.active()).is_false()
 	var segundos := passos / 60.0
-	var esperado := (REGIAO + DawnSweep.LARGURA) / DawnSweep.VELOCIDADE_PX_S
+	var esperado := (REGIAO + DawnSweep.LARGURA) / v.speed()
 	assert_float(segundos).is_equal_approx(esperado, 0.05)
 
 

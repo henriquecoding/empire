@@ -977,8 +977,12 @@
 - **A leitura mais natural, e não decidida:** a mesma linha do §24 põe as duas coisas lado a lado, e por isso a
   cascata pode seguir a frente de luz — uma tropa sai do posto quando a luz lhe chega, `x / 900` s depois do
   `dawn_broke`. É um número que o dossiê já tem, e liga o que se vê ao que acontece.
-- **Decide:** tu. Muda o tempo de cada tropa ao amanhecer em até 4,3 s numa região de 3840 px, e por isso
-  mexe nos testes de design que medem dias inteiros.
+- **Implementado depois, e reversível (GB-21):** foi esta a leitura. Na alvorada, quem tem posto e está à
+  direita da frente espera por ela; a frente é o relógio vezes `dawn_sweep_px_s` (clock.csv, 900, do §24) e
+  não guarda estado. Medido: nove tropas que arrancavam todas aos 0,03 s passam a sair de 1,97 s a 2,33 s.
+  Nenhum teste de design mudou de resultado e a vistoria dá a mesma tabela. Para desligar: `dawn_sweep_px_s`
+  a zero, que desliga também a luz.
+- **Decide:** tu, se a ordem é esta — a da luz — ou outra.
 
 ### Q-090 · O `settings.cfg` da §45 grava-se como o save, e não como `ConfigFile`
 - **Onde:** §45 (*"Câmara — preferência de sessão, não estado de jogo. Vai para `user://settings.cfg`"*), §26,

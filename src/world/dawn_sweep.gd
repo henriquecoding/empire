@@ -16,8 +16,6 @@
 class_name DawnSweep
 extends Node2D
 
-## §24: "a 900 px/s". O unico numero da linha.
-const VELOCIDADE_PX_S := 900.0
 ## A cauda da frente: a luz que ja passou esbate-se ao longo disto. Geometria de
 ## greybox, como as alturas do Silhouette.
 const LARGURA := 240.0
@@ -32,6 +30,9 @@ var _frente := 0.0
 var _fim := 0.0
 var _ativo := false
 var _cor := Color.WHITE
+## §24: "a 900 px/s". Vive no clock.csv, porque a mesma frente solta as tropas
+## dos postos (DawnCascade, GB-21): a luz que se ve e a que manda sao uma so.
+var _velocidade := 0.0
 
 
 func _ready() -> void:
@@ -49,9 +50,10 @@ func _na_alvorada(_dia: int) -> void:
 func start(largura: float) -> void:
 	_frente = 0.0
 	_fim = largura + LARGURA
-	_ativo = true
 	var relogio := Registry.entry(&"economy", &"clock") as ClockData
 	_cor = BandLight.ambient(relogio, GameClock.Phase.DAWN, MEIA)
+	_velocidade = relogio.dawn_sweep_px_s
+	_ativo = _velocidade > 0.0
 	queue_redraw()
 
 
@@ -59,7 +61,7 @@ func start(largura: float) -> void:
 func advance(delta: float) -> void:
 	if not _ativo:
 		return
-	_frente += VELOCIDADE_PX_S * delta
+	_frente += _velocidade * delta
 	_ativo = _frente < _fim
 	queue_redraw()
 
@@ -70,6 +72,10 @@ func active() -> bool:
 
 func front() -> float:
 	return _frente
+
+
+func speed() -> float:
+	return _velocidade
 
 
 func color() -> Color:

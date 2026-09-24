@@ -897,6 +897,60 @@
   "estado": "feito",
   "horas": "1"
  },
+ "GB-18": {
+  "title": "O sol e a lua dizem a hora",
+  "porque": "O HUD diegético do §24: «Hora do dia — cor da luz ambiente + posição do sol/lua no céu». A cor mudava; o sol estava pintado num ponto fixo da região, a 3033 px do princípio, e não se via do castelo. Lua não havia.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "F1-13",
+  "feito": "O SkyView acompanha a câmara (um astro está no infinito) e pinta o céu e o astro por baixo das montanhas: o sol faz um arco da esquerda para a direita da alvorada ao fim do crepúsculo, a lua faz o mesmo arco na noite, com as durações do clock.csv. tests/sky_view_test.gd.",
+  "fora": "Estrelas, fases da lua e nuvens. Ao meio-dia, com o rei em casa, o sol passa por trás da copa do castelo-árvore — é um astro atrás de uma árvore, e vê-se mal se sai do centro.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-19": {
+  "title": "O pequeno bounce da moeda",
+  "porque": "«Moeda largada — arco parabólico, som com pitch variável, pequeno bounce e sombra... a animação mais importante do jogo» (§24). O GB-09 deixou o bounce de fora porque a física da moeda decide onde ela pousa (§55).",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "GB-09",
+  "feito": "Uma moeda que se viu no ar dá, ao pousar, um salto de 4 px no sítio onde a simulação a pousou, e a sombra acompanha-o. A duração é o voo de um salto dessa altura na gravidade que a economy.csv já dá ao arco. Nada da simulação muda. tests/coin_bounce_test.gd.",
+  "fora": "O som com pitch variável — audio/ não se toca. Um bounce com física, que mexia em onde a moeda pousa.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-20": {
+  "title": "A cara de quem está ferido",
+  "porque": "O HUD diegético do §24: «Vida de tropa — camada face muda para ferido abaixo de 50% — no sprite». A cara nunca mudava.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/58-composicao-por-slots.md"
+  ],
+  "depende": "F0-14",
+  "feito": "Abaixo de metade da vida a cara do ActorArt semicerra o olho e desce os cantos da boca. O limiar é o do dossiê. tests/actor_art_test.gd.",
+  "fora": "A camada face da §58 com arte (ART-04). Tirar a barra de vida do greybox — é instrumento, e vai-se com a arte.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-21": {
+  "title": "As tropas saem dos postos atrás da luz",
+  "porque": "«Amanhecer — ... as tropas a saírem dos postos em cascata, não todas ao mesmo tempo» (§24). O passo 3 do §43 dava o alvo do dia a toda a gente no mesmo tick — medido: nove tropas arrancavam todas aos 0,03 s. Estava na Q-089.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/43-o-tick-e-o-que-corre-em-que-ordem.md",
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md"
+  ],
+  "depende": "GB-17",
+  "feito": "Na alvorada, quem tem posto e está à direita da frente de luz espera por ela: sai aos x/900 s — medido, de 1,97 s a 2,33 s para as mesmas nove. A frente é o relógio vezes o dawn_sweep_px_s do clock.csv (§24), o mesmo que a luz do GB-17 usa, e não guarda estado: o save já tem o relógio. Quem foge não espera, nem o rei. tests/dawn_cascade_test.gd.",
+  "fora": "O sino. Uma cascata noutras mudanças de fase — o §24 só a pede ao amanhecer.",
+  "estado": "feito",
+  "horas": "2"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",

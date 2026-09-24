@@ -58,6 +58,15 @@ func seek(dia: int, decorrido: float) -> void:
 	running = true
 
 
+## Onde vai a frente da luz do amanhecer, em x de mundo, ou INF fora dela. A
+## luz que se ve e as tropas que ela solta leem esta mesma frente (§24, GB-21).
+func dawn_front() -> float:
+	if _clock == null:
+		return INF
+	var velocidade := _dados_do_relogio().dawn_sweep_px_s
+	return DawnCascade.front(int(clock.current_phase()), clock.elapsed, velocidade)
+
+
 ## Um passo do relogio. Chamado pelo SimLoop, na posicao 1 do §43.
 func step(delta: float) -> void:
 	if not running:

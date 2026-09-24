@@ -9,3 +9,4 @@ phase_tint_hue = PackedFloat32Array(38, 42, 48, 36, 18, 32)
 phase_tint_sat = PackedFloat32Array(0.44, 0.1, 0.05, 0.41, 0.68, 0.22)
 phase_tint_val = PackedFloat32Array(0.91, 0.95, 1, 0.91, 0.73, 0.16)
 night_value_floor = 0.11
+dawn_sweep_px_s = 900.0

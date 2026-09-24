@@ -155,8 +155,9 @@ func step(delta: float) -> void:
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
 	# 5 · MovementSystem — todo o tick. O king_id vai junto porque o §24 da ao
 	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
-	#     preso em FIGHT como fica quem a §52 conduz.
-	units.tick_movement(delta, king_id)
+	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
+	#     atras da luz (§24, DawnCascade).
+	units.tick_movement(delta, king_id, ClockService.dawn_front())
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
 	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma

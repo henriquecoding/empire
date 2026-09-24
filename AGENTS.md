@@ -70,6 +70,7 @@ src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§5
 src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
+src/sim/systems/dawn_cascade.gd DawnCascade a frente da luz que solta os postos (§24, GB-21)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/core/preferences.gd     Preferences   o tremor e os claroes, em user://settings.cfg (§26, §45)
@@ -94,6 +95,8 @@ src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-0
 src/world/smoothing.gd      Smoothing     o render interpola entre dois ticks (§40 I5, GB-10)
 src/world/passage_cue.gd    PassageCue    onde o Verbo 2 pega, dito no sitio (§11, §25, GB-14)
 src/world/dawn_sweep.gd     DawnSweep     o amanhecer que se ve chegar (§24, GB-17)
+src/world/sky_view.gd       SkyView       o ceu, e o sol e a lua que dizem a hora (§24, GB-18)
+src/world/coin_bounce.gd    CoinBounce    o pequeno bounce da moeda, so no ecra (§24, GB-19)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
