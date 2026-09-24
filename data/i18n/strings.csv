@@ -399,6 +399,17 @@ OPT_CONTRAST,Contraste,Contrast,acessibilidade,24,
 OPT_CAPTIONS,Legendas de sons,Sound Captions,acessibilidade (§26),24,
 OPT_TEXT_SIZE,Tamanho do texto,Text Size,acessibilidade,24,
 OPT_REMAP,Remapear comandos,Remap Controls,controlos,28,
+HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O glifo da tecla vem antes e muda com o dispositivo (§26).
+HINT_DROP,largar (manter: em contínuo),drop (hold: continuous),rodapé de comandos (§24): Verbo 1,32,GB-15
+HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,"GB-15. Hoje o Verbo 2 só entra em passagens (Q-066)."
+HINT_MARK,alvo,target,rodapé de comandos (§24): marcar alvo,16,GB-15
+HINT_WHEEL,estado,status,rodapé de comandos (§24): a roda do rei,16,"GB-15. Abre o painel de estado enquanto a roda não existe (Q-067)."
+HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
+KEY_SPACE,ESPAÇO,SPACE,nome de tecla no rodapé de comandos,16,GB-15
+KEY_MOUSE_RIGHT,BOTÃO DIREITO,RIGHT CLICK,nome de botão do rato no rodapé de comandos,16,GB-15
+PAD_CROSS,CRUZ,CROSS,botão ✕ de um comando PlayStation (§24),12,"GB-15. A fonte por omissão não tem ✕ ▢ △, e no browser não há fonte de sistema que os traga — por isso o nome, até haver o atlas de ícones do §26."
+PAD_SQUARE,QUADRADO,SQUARE,botão ▢ de um comando PlayStation (§24),12,GB-15
+PAD_TRIANGLE,TRIÂNGULO,TRIANGLE,botão △ de um comando PlayStation (§24),12,GB-15
 OPT_TELEMETRY,Partilhar dados anónimos,Share Anonymous Data,"telemetria, desligada por omissão (§32)",32,
 UI_TELEMETRY_PROMPT,"Queres partilhar dados anónimos de jogo para ajudar a afinar o Empire? Sem nome, sem IP. Podes mudar isto nas opções.","Share anonymous gameplay data to help tune Empire? No name, no IP. You can change this in Options.",primeiro arranque (§32),160,'Empire' é codinome — substituir quando houver nome (Bíblia de nomes).
 UI_YES,Sim,Yes,confirmação,8,

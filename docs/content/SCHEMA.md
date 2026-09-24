@@ -672,4 +672,5 @@ Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24
 | `follow_seconds` | float |  |  |
 | `free_speed_px_s` | float |  |  |
 | `free_return_seconds` | float |  |  |
+| `edge_pan_px` | float |  |  |
 

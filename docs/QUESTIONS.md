@@ -924,6 +924,76 @@
 - **Decide:** tu. A pergunta aberta é a da Fase 2: quando o Verbo 2 deixar assumir outros corpos (§24), o
   "conduzido" passa a ser mais do que o `king_id` — e aí talvez valha a pena ser coluna.
 
+### Q-086 · O gatilho direito não tem cursor, e o §24 diz «só classe Arqueiro»
+- **Onde:** §24 (mapa de comando: *"Marcar alvo — Gatilho direito — Botão dir. do rato — **Só classe
+  Arqueiro**"*), §50, `src/ui/input_router.gd`, `src/core/verbs.gd`.
+- **O que faltava:** o rato tem cursor e o gatilho não, e o dossiê não diz para onde aponta o gatilho. O router
+  lia os dois como rato — com o comando, o alvo media-se do sítio onde o cursor tivesse ficado. E o gatilho é
+  analógico: medido, um puxão emitia seis eventos «premido» e marcava seis vezes.
+- **O que foi decidido, e é reversível (GB-11):** um puxão marca uma vez, e com o comando o alvo mede-se a
+  partir do rei — o `Verbs.mark` escolhe a criatura mais perto desse x, que é a mais perto de quem joga.
+- **O que continua por decidir:** *"só classe Arqueiro"*. As classes jogáveis são do §08 e não existem; o
+  monarca marca desde o F1-07 e continua a marcar. Quando o Verbo 2 assumir um arqueiro, esta linha do §24
+  passa a ser uma condição que se pode escrever. E o alvo do comando pode ser outro: a criatura mais perto **na
+  direcção para onde o rei olha**, ou a mais perto **que a candeia mostra** (§74: *"fora, não"*).
+- **Decide:** tu, no primeiro *playtest* com comando.
+
+### Q-087 · O rato na margem não tem largura no dossiê
+- **Onde:** §24 (*"Câmara livre — Stick direito — Q · Z **ou rato na margem**"*), `data/source/camera.csv`,
+  `src/world/camera_rig.gd`.
+- **O que foi feito (GB-12):** o rato a menos de `edge_pan_px` da borda do ecrã empurra a câmara livre, que
+  volta sozinha nos 2 s do §24. Com o rato fora da janela, ou a janela sem foco, não empurra — sem isso um rato
+  que saía pela borda deixava lá a última posição, e a câmara ia-se embora sozinha.
+- **O número que não está no dossiê:** a largura da margem. Fica `edge_pan_px = 16` px de ecrã, marcado em
+  `_proposed` ao lado dos outros quatro da Q-057: 1/80 dos 1280, a faixa que se acerta sem olhar em ecrã
+  inteiro e que o rato atravessa sem parar a caminho do botão direito. Zero desliga.
+- **Decide:** o primeiro *playtest*. Em janela a margem é mais difícil de acertar; se for preciso, isto sobe —
+  e o risco oposto é o rato a caminho de marcar um bicho perto da borda levar a câmara com ele.
+
+### Q-088 · A derrota do §16 é «decay em vez de reset», e o *greybox* não tem decay
+- **Onde:** §16 (*"Ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos
+  encontrados, e 40% das estruturas do império principal... o decay resolve isso melhor do que qualquer sistema
+  de save"*), §10, `src/world/game.gd`, `src/ui/pause_menu.gd`.
+- **O que foi feito (GB-16):** com o castelo-árvore caído, o ecrã diz *"A coroa caiu"* e oferece *"Novo jogo"*,
+  que recomeça do zero **sem** retomar o autosave. É a leitura mais simples do §16 que existe hoje: nada do
+  que o decay guarda existe ainda (não há Sementes, classes, mapas nem segredos), e guardar 40% das obras é uma
+  mecânica que o §16 descreve e ninguém implementou.
+- **O que se encontrou, e não se mudou:** **fechar e reabrir** o jogo depois de uma derrota retoma o autosave
+  mais recente — o da alvorada anterior, com o castelo de pé —, porque o `_retomar()` só recusa um save cujo
+  núcleo já caiu. Isso é exactamente *"um save que se recarrega"*, que o §16 recusa. Não se mexeu: o fluxo é o
+  da ADR 0005 e da Q-081, e fechá-lo é decidir o que um save guarda depois de uma derrota.
+- **Decide:** tu, quando houver decay. As duas perguntas: o que o *"Novo jogo"* herda da partida perdida, e se
+  um autosave anterior à derrota continua a poder ser retomado.
+
+### Q-089 · A cascata do amanhecer é simulação, e o dossiê não diz a ordem
+- **Onde:** §24 (*"Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a
+  saírem dos postos em cascata, não todas ao mesmo tempo"*), §43 (passo 3), `src/sim/systems/job_board.gd`.
+- **O que foi feito (GB-17):** o varrimento, que é apresentação: uma frente de luz da cor da alvorada do
+  `clock.csv` atravessa a região a 900 px/s.
+- **O que ficou de fora:** a cascata. O `jobs.assign()` do passo 3 dá o alvo do dia a toda a gente no mesmo
+  tick; o fatiamento da §52 espalha as **decisões** por seis ticks (0,2 s), mas o alvo já está escrito e toda a
+  gente arranca junta. Uma cascata muda **quando** cada tropa recebe o alvo — é simulação, tem de ser
+  determinista, e entra no save.
+- **A leitura mais natural, e não decidida:** a mesma linha do §24 põe as duas coisas lado a lado, e por isso a
+  cascata pode seguir a frente de luz — uma tropa sai do posto quando a luz lhe chega, `x / 900` s depois do
+  `dawn_broke`. É um número que o dossiê já tem, e liga o que se vê ao que acontece.
+- **Decide:** tu. Muda o tempo de cada tropa ao amanhecer em até 4,3 s numa região de 3840 px, e por isso
+  mexe nos testes de design que medem dias inteiros.
+
+### Q-090 · O `settings.cfg` da §45 grava-se como o save, e não como `ConfigFile`
+- **Onde:** §45 (*"Câmara — preferência de sessão, não estado de jogo. Vai para `user://settings.cfg`"*), §26,
+  ADR 0007, `src/core/preferences.gd`, `tools/lint_rules.gd`.
+- **O que diverge:** a §45 dá o caminho e não o formato, e a extensão `.cfg` sugere o `ConfigFile` do motor. O
+  `ConfigFile` desserializa `Object(...)` e `Resource(...)` — a mesma porta que a ADR 0007 fecha no save: um
+  ficheiro de preferências partilhado *"para desligar o tremor"* podia trazer um *script*.
+- **O que foi decidido, e é reversível (GB-13):** o caminho é o da §45 e o formato é o da ADR 0007 — um
+  dicionário de tipos base com `store_var(_, false)`, lido com `get_var(false)` e validado campo a campo; uma
+  chave desconhecida ou um tipo errado ignoram-se. O portão G6 passa a guardar os dois ficheiros, e proíbe
+  também o `ConfigFile` neles.
+- **O custo:** o ficheiro deixa de se poder editar à mão num editor de texto. Se isso for querido, a ADR 0007
+  já lista a alternativa segura — JSON — e a troca fica num ficheiro só.
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

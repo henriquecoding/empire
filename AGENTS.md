@@ -72,6 +72,7 @@ src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
+src/core/preferences.gd     Preferences   o tremor e os claroes, em user://settings.cfg (§26, §45)
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
@@ -90,6 +91,9 @@ src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco
 src/world/price_tag.gd      PriceTag      o preco do que esta debaixo do rei (§24, §55, GB-05)
 src/world/impact_view.gd    ImpactView    o golpe que se ve: flash e particula (§24, GB-08)
 src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-09)
+src/world/smoothing.gd      Smoothing     o render interpola entre dois ticks (§40 I5, GB-10)
+src/world/passage_cue.gd    PassageCue    onde o Verbo 2 pega, dito no sitio (§11, §25, GB-14)
+src/world/dawn_sweep.gd     DawnSweep     o amanhecer que se ve chegar (§24, GB-17)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
@@ -100,6 +104,8 @@ src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estad
 src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
 src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
+src/ui/pause_menu.gd        PauseMenu     pausa, opcoes e o fim da partida (§24, §26, §16)
+src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26, GB-15)
 scenes/boot.tscn                          cena principal do project.godot
 scenes/game.tscn                          a cena de jogo, instanciada pela boot
 
@@ -121,6 +127,7 @@ src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada
 src/core/registry.gd        Registry               nucleo        sim/
 src/core/save_service.gd    SaveService            nucleo        sim/
+src/core/preferences.gd     Preferences            nucleo        nada
 src/world/*.gd              BandLayers, CameraRig  apresentacao  core/, sim/
 src/actors/*.gd             UnitView, KingView...  apresentacao  core/, sim/
 src/ui/*.gd                 InputRouter, Hud...    apresentacao  core/, sim/

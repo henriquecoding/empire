@@ -783,6 +783,120 @@
   "estado": "feito",
   "horas": "2"
  },
+ "GB-10": {
+  "title": "O render interpola, e o rei deixa de andar aos solavancos",
+  "porque": "A invariante I5 da §40 tem duas metades: \"a simulação corre a passo fixo de 30 Hz, desacoplada do render. O render interpola; a simulação não.\" Só a primeira estava feita. Medido a 60 fps com o rei a andar: 2,67 · 0 · 2,67 · 0 px por frame — cada posição ficava dois frames parada e saltava de uma vez, e a câmara, que o segue, levava os saltos para o mundo inteiro. E o rei parado continuava a baloiçar: largar a tecla desliga o alvo e deixa o x dele onde estava.",
+  "spec": [
+   "docs/design/40-as-oito-regras-que-nunca-se-quebram.md",
+   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/43-o-tick-e-o-que-corre-em-que-ordem.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "F0-06",
+  "feito": "tests/smoothing_test.gd verde. O rei, as tropas, os bichos, as moedas e a câmara desenham-se entre os dois últimos ticks — 1,33 px por frame a 60 fps, constante, medido. O baloiço do passo pergunta ao UnitSystem.walking() se a unidade anda mesmo. A vistoria dá a mesma tabela, linha a linha: a simulação não mudou.",
+  "fora": "A physics_interpolation do motor — a simulação não é física do motor, e o que se move são colunas e não nós. As obras e a luz, que não andam.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-11": {
+  "title": "O gatilho direito, num comando",
+  "porque": "O §24 dá «Marcar alvo» ao gatilho direito e ao botão direito do rato, e o router lia os dois como rato: com o comando, o alvo media-se do sítio onde o cursor tivesse ficado. E um gatilho é analógico — medido: um puxão marcava seis vezes.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/50-combatsystem-legivel-antes-de-emocionante.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md"
+  ],
+  "depende": "F1-07",
+  "feito": "Um puxão marca uma vez; o rato aponta com o cursor e o comando mede a partir do rei. tests/input_router_test.gd fixa as duas coisas, com eventos construídos e não injectados (ADR 0009).",
+  "fora": "«Só classe Arqueiro» — as classes são do §08 e não existem (Q-086). Marcar só o que a candeia mostra (§74).",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-12": {
+  "title": "A câmara livre pelo rato na margem",
+  "porque": "«Câmara livre — Stick direito — Q · Z ou rato na margem» (§24). O stick e as teclas estavam ligados; o rato na margem não.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/19-arquitetura-godot-4-6.md"
+  ],
+  "depende": "F0-08",
+  "feito": "O rato a menos de edge_pan_px da borda empurra a câmara livre, que volta sozinha nos 2 s do §24; com o rato fora da janela, ou a janela sem foco, não empurra. edge_pan_px vive em camera.csv, marcado em _proposed (Q-087). tests/camera_rig_test.gd.",
+  "fora": "Arrastar a câmara com o rato. Zoom — o §11 fixa o enquadramento.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-13": {
+  "title": "Pausa e opções: desligar o tremor e os clarões",
+  "porque": "O §24 escreve o tremor de ecrã «com opção de desligar (§26)», e o §26 põe «desligar screen shake e flashes» na lista do que se faz, com uma palavra: «obrigatório para fotossensibilidade». Não havia opção nenhuma, nem sítio para ela.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "GB-08",
+  "feito": "Esc ou Start abrem o ecrã de pausa com as duas opções e «Retomar», e navega-se nele com o comando sem código próprio (ui_up, ui_down, ui_accept). Gravam-se em user://settings.cfg (§45), lido com get_var(false) e validado campo a campo como o save (ADR 0007, Q-090); o portão G6 passa a guardar os dois ficheiros. Desligar vale já. tests/preferences_test.gd e tests/pause_menu_test.gd.",
+  "fora": "As outras seis funcionalidades do §26 — remapear, legendas, daltonismo, contraste, duração do dia, tamanho do texto. O menu principal.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-14": {
+  "title": "O sinal da passagem, onde o Verbo 2 pega",
+  "porque": "O §25 põe a passagem ao minuto 10:00 — «é o momento em que o jogo deixa de ser Kingdom» — e o §32 mede-a: se a mediana de underground_discovered passar dos 20 minutos, «a passagem está mal sinalizada». Era uma risca de 8 px, e nada dizia que o E fazia alguma coisa ali (Q-066).",
+  "spec": [
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/32-medir-sem-espiar.md"
+  ],
+  "depende": "GB-05",
+  "feito": "Ao alcance de uma passagem, uma seta a pulsar por cima dela aponta para a faixa de destino. A conta é o Verbs.destination(), a mesma que o assume() usa: se a seta aparece, o E pega; se não pega, não há seta. tests/passage_cue_test.gd, que traz também os primeiros testes do Verbo 2.",
+  "fora": "«Só onde há passagem descoberta» (§24): a descoberta não existe e hoje estão todas abertas. O dither do §25. A arte — isto é greybox, como o PriceTag.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-15": {
+  "title": "Os glifos do comando que se está a usar",
+  "porque": "O §26 põe na lista do Steam Deck Verified: «os glifos no ecrã correspondem ao dispositivo ativo». O rodapé dizia ESPAÇO, TAB e ESC a quem tinha um comando na mão, e o Steam Deck não tem nenhuma das três. E o texto estava escrito no script, contra a regra do texto por chave.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md"
+  ],
+  "depende": "GB-06",
+  "feito": "O rodapé troca entre teclado, Xbox (e Steam Deck) e PlayStation pelo último gesto e pelo Input.get_joy_name(), e começa pelo comando quando há um ligado. As palavras são onze chaves novas do strings.csv. tests/glyphs_test.gd.",
+  "fora": "O atlas de ícones do §26, que é arte. A fonte por omissão não tem ✕ ▢ △ nem setas — medido — e no browser não há fonte de sistema que os traga: até ao atlas, são nomes.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-16": {
+  "title": "A derrota diz a verdade, e dá um jogo novo",
+  "porque": "Com o castelo-árvore caído o véu dizia «JOGO EM PAUSA — ESC para continuar», e o Esc não fazia nada: a partida acabava num ecrã que mentia, e só se saía fechando o jogo. O §16 diz o que é perder — «decay em vez de reset» — e não um save que se recarrega.",
+  "spec": [
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "GB-13",
+  "feito": "A derrota abre o mesmo ecrã da pausa com «A coroa caiu» e «Novo jogo», que recomeça do zero mesmo havendo autosave. Medido no fluxo real (boot, jogo, recarregar): tick 12 com o botão, tick 3017 a recarregar sem ele. tests/pause_menu_test.gd.",
+  "fora": "O decay do §16 — 40% das estruturas, Sementes Reais, mapas (Q-088). A sucessão e a ressurreição, que são do §15 e do §16.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-17": {
+  "title": "O amanhecer que se vê chegar",
+  "porque": "A lista de juice do §24, «que não é opcional»: «Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a saírem dos postos em cascata». Não existia nenhuma das três.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md"
+  ],
+  "depende": "F1-13",
+  "feito": "No dawn_broke uma frente de luz, da cor da alvorada do clock.csv (§80), atravessa a região da esquerda para a direita a 900 px/s e acaba; com o jogo em pausa, espera. tests/dawn_sweep_test.gd.",
+  "fora": "O sino — é som, e audio/ não se toca. A cascata das tropas: mexe em quando cada uma recebe o alvo do dia, que é o passo 3 do §43 e é simulação (Q-089).",
+  "estado": "feito",
+  "horas": "1"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",

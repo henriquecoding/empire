@@ -75,6 +75,7 @@ func _draw() -> void:
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
+	PassageCue.draw_on(self, band, _visual_time)
 
 
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
@@ -117,10 +118,11 @@ func _moedas() -> void:
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
-		Shadow.drop(self, moedas.xs[i], int(band), WorldPalette.MOEDA_R, moedas.heights[i], apice)
-		var y := WorldPalette.ground_of(int(band)) - moedas.heights[i] - WorldPalette.MOEDA_R
-		var cor := _luz.body(WorldPalette.MOEDA, moedas.xs[i])
-		draw_circle(Vector2(moedas.xs[i], y), WorldPalette.MOEDA_R, cor)
+		var onde := Smoothing.coin(moedas.ids[i], moedas.xs[i], moedas.heights[i])
+		Shadow.drop(self, onde.x, int(band), WorldPalette.MOEDA_R, onde.y, apice)
+		var y := WorldPalette.ground_of(int(band)) - onde.y - WorldPalette.MOEDA_R
+		var cor := _luz.body(WorldPalette.MOEDA, onde.x)
+		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
 
 
 ## §74, a frase que faz da candeia mecanica e nao decoracao: "dentro do raio
@@ -140,9 +142,10 @@ func _criaturas() -> void:
 		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
 		var forma := Silhouette.of_creature(dados)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(forma, bichos.xs[i], int(band), alto)
-		var aceso := WorldLight.lit(bichos.xs[i], candeia.x, candeia.y)
-		var corpo := _luz.body(WorldPalette.BICHO, bichos.xs[i])
+		var x := Smoothing.x_of(Smoothing.Group.CREATURES, bichos.ids[i], bichos.xs[i])
+		var caixa := Silhouette.body_box(forma, x, int(band), alto)
+		var aceso := WorldLight.lit(x, candeia.x, candeia.y)
+		var corpo := _luz.body(WorldPalette.BICHO, x)
 		var cor := WorldLight.reveal(corpo, aceso, chao)
 		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
 		CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
@@ -178,8 +181,9 @@ func _tropa() -> void:
 		if dados == null:
 			continue
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(band), alto)
-		var cor := _luz.body(WorldPalette.unit_color(unidades, i), unidades.xs[i])
+		var x := Smoothing.x_of(Smoothing.Group.UNITS, unidades.ids[i], unidades.xs[i])
+		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, x, int(band), alto)
+		var cor := _luz.body(WorldPalette.unit_color(unidades, i), x)
 		ActorArt.draw_unit(self, caixa, dados, unidades, i, cor, _visual_time)
 		_saco(caixa, unidades, i)
 		if unidades.alive(i):

@@ -20,6 +20,10 @@ const MEIO := 0.5
 ## `godot --path . -- --novo` comeca uma partida do zero mesmo havendo save.
 const NOVO := "--novo"
 
+## Um jogo novo pedido de dentro do jogo, que sobrevive ao recarregar da cena: o
+## `--novo` da linha de comandos, dito pelo botao da derrota (GB-16).
+static var _recomecar := false
+
 var _tremor: float = 0.0
 
 @onready var _camara: CameraRig = $CameraRig
@@ -28,6 +32,11 @@ var _tremor: float = 0.0
 
 
 func _ready() -> void:
+	# O render interpola (§40, I5): grava as posicoes DEPOIS de o SimLoop dar o
+	# passo, e por isso corre atras dele — um autoload vem primeiro na arvore,
+	# mas uma ordem implicita e uma ordem que muda sozinha (ADR 0020).
+	process_physics_priority = SimLoop.process_physics_priority + 1
+	Smoothing.reset()
 	Registry.load_all()
 	if not _retomar():
 		SimLoop.start(_semente())
@@ -41,6 +50,10 @@ func _ready() -> void:
 	EventBus.wall_breached.connect(_no_rompimento)
 	EventBus.building_destroyed.connect(_no_desabamento)
 	print(_recibo())
+
+
+func _physics_process(_delta: float) -> void:
+	Smoothing.record_all()
 
 
 func _process(delta: float) -> void:
@@ -66,7 +79,9 @@ func _semente() -> int:
 ## nucleo em ruina, porque retomar uma partida ja perdida nao e retomar nada.
 func _retomar() -> bool:
 	var slot := SaveService.latest_slot()
-	if slot < 0 or OS.get_cmdline_user_args().has(NOVO):
+	var novo := _recomecar or OS.get_cmdline_user_args().has(NOVO)
+	_recomecar = false
+	if slot < 0 or novo:
 		return false
 	var estado := SaveService.restore(slot)
 	if estado == null:
@@ -81,17 +96,25 @@ func _retomar() -> bool:
 
 ## A camara segue um Node2D (§59) e o monarca e uma LINHA DE COLUNAS, nao um no
 ## (§52). O no "Monarca" e a ponte: um no vazio que copia o x da coluna, uma vez
-## por frame, e mais nada.
+## por frame — o x que se ve, entre dois ticks (GB-10), e nao o do tick.
 func _seguir() -> void:
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	if i == UnitSystem.NENHUM:
 		return
 	var faixa := int(SimLoop.units.bands[i])
-	_monarca.position = Vector2(SimLoop.units.xs[i], WorldPalette.ground_of(faixa))
+	var x := Smoothing.x_of(Smoothing.Group.UNITS, SimLoop.king_id, SimLoop.units.xs[i])
+	_monarca.position = Vector2(x, WorldPalette.ground_of(faixa))
 
 
 func _no_rompimento(_wall_id: int) -> void:
-	_tremor = TREMOR_S
+	_tremer()
+
+
+## §24: "com opcao de desligar (§26)". Pergunta-se a cada vez e nao se guarda:
+## desligar na pausa vale ja para o muro seguinte (GB-13).
+func _tremer() -> void:
+	if Preferences.on(Preferences.SCREEN_SHAKE):
+		_tremor = TREMOR_S
 
 
 ## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota e
@@ -106,9 +129,18 @@ func _no_desabamento(building_id: int, _x: float) -> void:
 	var i := SimLoop.builds.index_of(building_id)
 	if i == UnitSystem.NENHUM or SimLoop.builds.slots[i].kind != BuildSlot.NUCLEO:
 		return
-	_tremor = TREMOR_S
+	_tremer()
 	SimLoop.set_paused(true)
 	$Entrada.set_process_unhandled_input(false)
+
+
+## §16: perder nao se desfaz com um save — "decay em vez de reset". O que o
+## botao da derrota pede e um jogo novo, e nao a ultima alvorada; o decay, que
+## guarda 40% do que se construiu, ainda nao existe (Q-088). Chamado pelo grupo
+## `jogo`, porque quem o pede e a interface e ela nao importa daqui (§70).
+func new_game() -> void:
+	_recomecar = true
+	get_tree().reload_current_scene()
 
 
 ## Uma linha no arranque, e uma so. E o recibo do export: o CI corre o binario

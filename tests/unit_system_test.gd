@@ -159,3 +159,31 @@ func test_um_corpo_nao_anda_nem_sendo_conduzido() -> void:
 	sistema.tick_movement(1.0, rei)
 
 	assert_float(sistema.xs[sistema.index_of(rei)]).is_equal(0.0)
+
+
+## GB-10: quem ANDA e o que o baloico do passo pergunta. Largar a tecla desliga o
+## alvo e deixa o x dele onde estava — e o rei parado baloicava como se andasse.
+func test_quem_largou_a_tecla_deixa_de_andar() -> void:
+	var sistema := UnitSystem.new()
+	var rei := sistema.spawn(_estado(), _vagabundo(), 1, 0.0)
+	var i := sistema.index_of(rei)
+	sistema.set_target_x(rei, 100.0)
+	assert_bool(sistema.walking(i, rei)).is_true()
+
+	sistema.clear_target(rei)
+
+	assert_bool(sistema.walking(i, rei)).is_false()
+
+
+func test_quem_chegou_ou_segura_a_linha_nao_anda() -> void:
+	var sistema := UnitSystem.new()
+	var estado := _estado()
+	var chegou := sistema.spawn(estado, _vagabundo(), 1, 0.0)
+	var luta := sistema.spawn(estado, _vagabundo(), 1, 0.0)
+	sistema.set_target_x(chegou, 0.0)
+	sistema.set_target_x(luta, 100.0)
+	sistema.states[sistema.index_of(luta)] = UnitFsm.State.FIGHT
+
+	assert_bool(sistema.walking(sistema.index_of(chegou))).is_false()
+	assert_bool(sistema.walking(sistema.index_of(luta))).is_false()
+	assert_bool(sistema.walking(sistema.index_of(luta), luta)).is_true()

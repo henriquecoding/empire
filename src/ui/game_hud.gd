@@ -23,7 +23,6 @@ const TEXT := Color(0.96, 0.92, 0.81)
 const MUTED := Color(0.73, 0.67, 0.56)
 const JADE := Color(0.33, 0.53, 0.45)
 const RODAPE_LINHA := Color(0.32, 0.26, 0.20)
-const VEU_COR := Color(0.02, 0.02, 0.03, 0.62)
 
 ## O ecra de base (§67). A composicao e fixa: o greybox joga-se a 1280x720, e um
 ## painel que se reorganiza sozinho e uma decisao de arte que ainda nao existe.
@@ -36,7 +35,6 @@ const RECURSOS := {"x": 378.0, "y": 54.0, "w": 510.0, "h": 24.0, "letra": 14}
 const OBJECTIVO := {"x": 944.0, "y": 28.0, "w": 290.0, "h": 44.0, "letra": 14}
 const DICA := {"x": 40.0, "y": 0.0, "acima": 44.0, "w": 1120.0, "h": 26.0, "letra": 13}
 const AVISO := {"x": 400.0, "y": 112.0, "w": 480.0, "h": 30.0, "letra": 16}
-const VEU := {"x": 400.0, "y": 280.0, "w": 480.0, "h": 120.0, "letra": 28}
 
 ## Os tres paineis do topo, a barra da fase e o rodape das teclas.
 const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 292.0, "h": 72.0}
@@ -45,7 +43,6 @@ const PAINEL_DIR := {"recuo": 332.0, "y": 16.0, "w": 312.0, "h": 72.0}
 const BARRA := {"x": 360.0, "y": 83.0, "w": 546.0, "h": 3.0}
 const RODAPE := {"x": 20.0, "acima": 48.0, "margem": 40.0, "h": 30.0}
 const AVISO_CAIXA := {"x": 390.0, "y": 108.0, "w": 500.0, "h": 38.0}
-const VEU_CAIXA := {"x": 350.0, "y": 252.0, "w": 580.0, "h": 190.0}
 
 const TRACO := {"painel": 2.0, "rodape": 1.0, "contorno": 3}
 
@@ -64,11 +61,11 @@ var _recursos: Label
 var _objectivo: Label
 var _dica: Label
 var _aviso: Label
-var _veu: Label
 var _topo: Control
 var _rodape: Control
 var _moldura_aviso: Control
 var _aviso_ate := 0.0
+var _dispositivo := Glyphs.Device.KEYBOARD
 
 
 func _ready() -> void:
@@ -79,25 +76,35 @@ func _ready() -> void:
 	_objectivo = _label("", OBJECTIVO, MINT)
 	_dica = _label("", DICA, MUTED)
 	_aviso = _label("", AVISO, GOLD)
-	_veu = _label("", VEU, TEXT)
 	_topo = _faixa()
 	_rodape = _faixa()
 	_moldura_aviso = _faixa()
 	_moldura_aviso.position = _caixa(AVISO_CAIXA).position
 	_moldura_aviso.size = _caixa(AVISO_CAIXA).size
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_veu.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_dica.text = (
-		"A/D mover · ESPAÇO largar (manter: em contínuo)"
-		+ " · E passagem · direito alvo · TAB estado · ESC pausa"
-	)
-	_veu.visible = false
+	# §26: os glifos sao os do dispositivo activo. Um Steam Deck nao tem teclado,
+	# e por isso um comando ligado ao arrancar e o comando que se esta a usar.
+	var comandos := Input.get_connected_joypads()
+	if not comandos.is_empty():
+		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
+	_dica.text = Glyphs.hint(_dispositivo)
 	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.build_completed.connect(_na_obra)
 	EventBus.target_marked.connect(_no_alvo)
 	EventBus.passage_used.connect(_na_passagem)
 	EventBus.wall_breached.connect(_no_rompimento)
 	EventBus.game_paused.connect(_na_pausa)
+
+
+## Troca o rodape quando muda a mao (GB-15). So observa: nao consome nada.
+func _input(evento: InputEvent) -> void:
+	var nome := ""
+	if evento is InputEventJoypadButton or evento is InputEventJoypadMotion:
+		nome = Input.get_joy_name(evento.device)
+	var novo := Glyphs.device_of(evento, _dispositivo, nome)
+	if novo != _dispositivo:
+		_dispositivo = novo
+		_dica.text = Glyphs.hint(novo)
 
 
 func _process(delta: float) -> void:
@@ -107,9 +114,6 @@ func _process(delta: float) -> void:
 	_aviso_ate = maxf(0.0, _aviso_ate - delta)
 	_aviso.visible = _aviso_ate > 0.0
 	_moldura_aviso.visible = _aviso.visible
-	_veu.visible = not SimLoop.running()
-	if _veu.visible:
-		_veu.text = "JOGO EM PAUSA\n\nESC para continuar"
 	queue_redraw()
 
 
@@ -128,12 +132,9 @@ func _draw() -> void:
 	draw_rect(Rect2(RODAPE.x, rodape, largura - RODAPE.margem, RODAPE.h), PAPER)
 	var fim := Vector2(largura - RODAPE.x, rodape)
 	draw_line(Vector2(RODAPE.x, rodape), fim, RODAPE_LINHA, TRACO.rodape)
+	# A pausa e a derrota ja nao se desenham aqui: sao o PauseMenu (GB-13, GB-16).
 	if _aviso.visible:
 		_painel(_caixa(AVISO_CAIXA), PAPER_LIGHT, GOLD)
-	if not _veu.visible:
-		return
-	draw_rect(Rect2(0.0, 0.0, largura, altura), VEU_COR)
-	_painel(_caixa(VEU_CAIXA), PAPER_LIGHT, GOLD)
 
 
 func _atualizar() -> void:
@@ -238,5 +239,8 @@ func _no_rompimento(_wall_id: int) -> void:
 	_dizer("MURALHA ROMPIDA")
 
 
+## A pausa diz-se no PauseMenu, e a derrota tambem pausa: um "JOGO PAUSADO" por
+## cima de "a coroa caiu" dizia as duas coisas ao mesmo tempo (GB-16).
 func _na_pausa(pausado: bool) -> void:
-	_dizer("JOGO PAUSADO" if pausado else "JOGO RETOMADO")
+	if not pausado:
+		_dizer("JOGO RETOMADO")

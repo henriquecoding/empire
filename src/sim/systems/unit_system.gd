@@ -174,13 +174,14 @@ func tick_decisions(tick: int) -> Array[Dictionary]:
 func tick_movement(delta: float, piloted: int = NENHUM) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
-		if has_targets[i] == 0 or not _anda(i, piloted):
-			continue
-		xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
+		if walking(i, piloted):
+			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
 
 
-func _anda(i: int, piloted: int) -> bool:
-	if states[i] == UnitFsm.State.DEAD:
+## Se esta unidade anda neste tick. Um alvo por alcancar nao chega: o rei parado
+## guarda o dele (clear_target so desliga), e baloicava como se andasse (GB-10).
+func walking(i: int, piloted: int = NENHUM) -> bool:
+	if has_targets[i] == 0 or xs[i] == target_xs[i] or states[i] == UnitFsm.State.DEAD:
 		return false
 	return states[i] != UnitFsm.State.FIGHT or ids[i] == piloted
 

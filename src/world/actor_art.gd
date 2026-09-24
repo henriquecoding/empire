@@ -109,7 +109,7 @@ static func draw_unit(
 ## Quem esta parado nao baloica: o baloico e a unica coisa que diz, sem numeros,
 ## que aquela coluna esta a ir a algum lado.
 static func _baloico(box: Rect2, units: UnitSystem, index: int, tempo: float) -> float:
-	if is_zero_approx(units.target_xs[index] - units.xs[index]):
+	if not units.walking(index, SimLoop.king_id):
 		return 0.0
 	return sin(tempo * BALOICO.ritmo + box.position.x * BALOICO.desfase) * BALOICO.alto
 
