@@ -109,6 +109,7 @@ src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
 src/ui/pause_menu.gd        PauseMenu     pausa, opcoes e o fim da partida (§24, §26, §16)
 src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26, GB-15)
+src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)
 scenes/boot.tscn                          cena principal do project.godot
 scenes/game.tscn                          a cena de jogo, instanciada pela boot
 

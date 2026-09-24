@@ -32,6 +32,21 @@ func test_sem_ficheiro_esta_tudo_ligado() -> void:
 	assert_bool(p.enabled(Preferences.FLASHES)).is_true()
 
 
+## A duracao do dia e um numero, e nao um interruptor: zero e "a do clock.csv".
+func test_a_duracao_do_dia_grava_se_como_numero() -> void:
+	var p := Preferences.new(FICHEIRO)
+	assert_float(p.number(Preferences.DAY_SECONDS)).is_equal(0.0)
+	assert_bool(p.set_number(Preferences.DAY_SECONDS, 300.0)).is_true()
+	assert_float(Preferences.new(FICHEIRO).number(Preferences.DAY_SECONDS)).is_equal(300.0)
+	assert_bool(p.set_number(Preferences.SCREEN_SHAKE, 1.0)).is_false()
+	assert_bool(p.set_enabled(Preferences.DAY_SECONDS, true)).is_false()
+
+
+## As legendas de som vem desligadas: sao para quem precisa delas (GB-22).
+func test_as_legendas_vem_desligadas() -> void:
+	assert_bool(Preferences.new(FICHEIRO).enabled(Preferences.CAPTIONS)).is_false()
+
+
 func test_o_que_se_desliga_fica_desligado_depois_de_fechar_o_jogo() -> void:
 	assert_bool(Preferences.new(FICHEIRO).set_enabled(Preferences.SCREEN_SHAKE, false)).is_true()
 	var outra_sessao := Preferences.new(FICHEIRO)

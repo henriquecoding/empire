@@ -14,8 +14,10 @@ class_name IntentQueue
 extends RefCounted
 
 ## Os verbos que chegam a simulacao. Os dois primeiros sao os Verbos 1 e 2 do
-## §02; o terceiro e o gatilho direito do §24, que so o Arqueiro tem.
-enum Kind { DROP_COIN, ASSUME, MARK_TARGET }
+## §02; o terceiro e o gatilho direito do §24, que so o Arqueiro tem. O quarto e a
+## duracao do dia do §26: muda a simulacao, e por isso entra pela fila como o
+## resto — a pausa nao mexe no relogio (GB-24).
+enum Kind { DROP_COIN, ASSUME, MARK_TARGET, DAY_LENGTH }
 
 var _fila: Array[Array] = []
 

@@ -52,6 +52,7 @@ func test_as_opcoes_mostram_o_que_esta_gravado() -> void:
 	menu.open(false)
 	assert_bool(menu._tremor.button_pressed).is_false()
 	assert_bool(menu._claroes.button_pressed).is_true()
+	assert_bool(menu._legendas.button_pressed).is_false()
 
 
 ## Mudar uma opcao grava-a — e vale ja, porque quem treme pergunta a cada vez.
@@ -69,5 +70,22 @@ func test_desligar_na_pausa_vale_ja() -> void:
 func test_o_texto_sai_de_chaves_que_existem() -> void:
 	for chave in [&"UI_PAUSED", &"UI_CROWN_FALLEN", &"UI_RESUME", &"UI_NEW_GAME"]:
 		assert_str(tr(chave)).is_not_equal(String(chave))
-	for chave in [&"OPT_SCREEN_SHAKE", &"OPT_FLASHES"]:
+	for chave in [&"OPT_SCREEN_SHAKE", &"OPT_FLASHES", &"OPT_CAPTIONS", &"OPT_DAY_LENGTH"]:
 		assert_str(tr(chave)).is_not_equal(String(chave))
+
+
+## O slider do dia tem os limites do §26, e mexer nele nao mexe no relogio: pede
+## pela fila (§61), e o tick seguinte e que muda o dia (GB-24).
+func test_o_slider_do_dia_pede_pela_fila() -> void:
+	Preferences.set_shared(Preferences.new(FICHEIRO))
+	SimLoop.intents.clear()
+	var menu := _menu()
+	menu.open(false)
+	assert_float(menu._dia.min_value).is_equal(240.0)
+	assert_float(menu._dia.max_value).is_equal(540.0)
+	var antes := ClockService.clock.day_seconds()
+	menu._dia.value = 300.0
+	assert_float(ClockService.clock.day_seconds()).is_equal(antes)
+	assert_int(SimLoop.intents.pending()).is_equal(1)
+	assert_float(Preferences.shared().number(Preferences.DAY_SECONDS)).is_equal(300.0)
+	SimLoop.intents.clear()

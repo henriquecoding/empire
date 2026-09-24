@@ -70,7 +70,7 @@ func _draw() -> void:
 		_passagens()
 		_podridao()
 	_fogueiras()
-	BuildView.draw_on(self, band, _edificios, _luz)
+	BuildView.draw_on(self, band, _edificios, _luz, _visual_time)
 	_moedas()
 	_criaturas()
 	_tropa()

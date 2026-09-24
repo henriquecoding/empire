@@ -951,6 +951,48 @@
   "estado": "feito",
   "horas": "2"
  },
+ "GB-22": {
+  "title": "As legendas de som",
+  "porque": "O §26 põe «legendas para pistas sonoras — 8 pistas (sino, crepúsculo, muro a cair...)» na lista do que se faz: «substitui o áudio para surdos». As oito chaves CAPTION_* estavam no strings.csv desde o dia zero e nada as mostrava — e, sem som nenhum no jogo, era o sino que ninguém ouvia.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/23-camadas-que-respondem-ao-dia.md",
+   "docs/design/46-o-catalogo-completo.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Com OPT_CAPTIONS ligado na pausa, cinco pistas mostram a legenda no céu, por baixo do aviso do HUD: o sino da alvorada, o crepúsculo, a noite, a muralha que cede e o rei atingido; a mancha a chegar aparece uma vez por noite, quando entra na largura visível. O mapa sinal → chave é o da docs/audio/AUDIO_CUE_SHEET.csv, e o teste confere os dois. tests/captions_test.gd.",
+  "fora": "O prazo da dívida e o segredo por perto — os sistemas deles não existem (§14, §17). O som.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-23": {
+  "title": "A silhueta fantasma a piscar",
+  "porque": "O §25, minuto 3:30: «Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas. A silhueta é o convite. Não há botão construir.» O contorno existia e estava parado.",
+  "spec": [
+   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "GB-05",
+  "feito": "O contorno de um sítio de obra por construir pulsa devagar, e nunca apaga. tests/build_view_test.gd.",
+  "fora": "Piscar só a primeira estacaria: o segmento de abertura autorado é o GB-01.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-24": {
+  "title": "A duração do dia, ao ritmo de quem joga",
+  "porque": "O §26: «Jogável ao teu próprio ritmo — slider de duração do dia (240–540 s). Fazer. Também é um botão de dificuldade honesto... é uma linha de código (o GameClock já é uma variável).» O GameClock sabia escalar as fases e ninguém lho pedia; e o save não guardava a duração.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/48-gameclock-a-fase-do-dia-e-um-estado-nao-um-tempo.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Um slider na pausa, de 240 a 540 s em passos de 30, com os limites do clock.csv. A pausa não mexe no relógio: enfileira a intenção DAY_LENGTH (§61) e o tick seguinte aplica-a. A duração entra no GameState e no save (um save antigo carrega com a do clock.csv), o seek do relógio repõe-na antes do decorrido, e a escolha fica nas preferências para os jogos novos. Medido no jogo: em pausa o relógio fica a 360; depois do tick, 270; retomado o save, 270 e o mesmo decorrido. tests/day_length_test.gd.",
+  "fora": "Um save_version novo (Q-091). Mexer em quanto dura cada fase uma a uma — o §26 dá um número só.",
+  "estado": "feito",
+  "horas": "3"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",

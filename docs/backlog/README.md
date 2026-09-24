@@ -79,6 +79,9 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-19](GB-19.md) | O pequeno bounce da moeda | GB-09 | feito |
 | [GB-20](GB-20.md) | A cara de quem está ferido | F0-14 | feito |
 | [GB-21](GB-21.md) | As tropas saem dos postos atrás da luz | GB-17 | feito |
+| [GB-22](GB-22.md) | As legendas de som | GB-13 | feito |
+| [GB-23](GB-23.md) | A silhueta fantasma a piscar | GB-05 | feito |
+| [GB-24](GB-24.md) | A duração do dia, ao ritmo de quem joga | GB-13 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
 | [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | por fazer — falta ligar o Pages |

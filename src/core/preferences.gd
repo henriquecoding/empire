@@ -24,10 +24,14 @@ const FICHEIRO := "user://settings.cfg"
 
 const SCREEN_SHAKE := &"screen_shake"
 const FLASHES := &"flashes"
+const CAPTIONS := &"captions"
+## A duracao do dia do §26, em segundos. Zero e a do clock.csv.
+const DAY_SECONDS := &"day_seconds"
 
-## As que existem, e o valor com que o jogo vem. Ligadas: o §24 desenha o jogo
-## com elas, e quem precisa de as tirar tira.
-const POR_OMISSAO := {SCREEN_SHAKE: true, FLASHES: true}
+## As que existem, e o valor com que o jogo vem. O tremor e os claroes ligados: o
+## §24 desenha o jogo com eles, e quem precisa de os tirar tira. As legendas de
+## som desligadas: sao para quem precisa delas, e liga-as (GB-22).
+const POR_OMISSAO := {SCREEN_SHAKE: true, FLASHES: true, CAPTIONS: false, DAY_SECONDS: 0.0}
 
 static var _partilhadas: Preferences
 
@@ -67,9 +71,20 @@ func enabled(chave: StringName) -> bool:
 ## escreveu — o valor novo vale nesta sessao na mesma, que e o que o jogador
 ## acabou de pedir.
 func set_enabled(chave: StringName, ligado: bool) -> bool:
-	if not POR_OMISSAO.has(chave):
+	if typeof(POR_OMISSAO.get(chave)) != TYPE_BOOL:
 		return false
 	_valores[chave] = ligado
+	return _gravar()
+
+
+func number(chave: StringName) -> float:
+	return float(_valores.get(chave, POR_OMISSAO.get(chave, 0.0)))
+
+
+func set_number(chave: StringName, valor: float) -> bool:
+	if typeof(POR_OMISSAO.get(chave)) != TYPE_FLOAT:
+		return false
+	_valores[chave] = valor
 	return _gravar()
 
 
@@ -88,7 +103,7 @@ func _ler() -> Dictionary:
 		return limpo
 	for chave: StringName in POR_OMISSAO:
 		var valor: Variant = (cru as Dictionary).get(String(chave))
-		if typeof(valor) == TYPE_BOOL:
+		if typeof(valor) == typeof(POR_OMISSAO[chave]):
 			limpo[chave] = valor
 	return limpo
 

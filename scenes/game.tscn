@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://src/ui/pause_menu.gd" id="9_pausa"]
 [ext_resource type="Script" path="res://src/world/dawn_sweep.gd" id="10_alvorada"]
 [ext_resource type="Script" path="res://src/world/sky_view.gd" id="11_ceu"]
+[ext_resource type="Script" path="res://src/ui/captions.gd" id="12_legendas"]
 
 [node name="Game" type="Node2D" groups=["jogo"]]
 script = ExtResource("0_game")
@@ -82,6 +83,9 @@ theme_override_colors/font_color = Color(0.96, 0.95, 0.9, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.07, 0.06, 1)
 theme_override_constants/outline_size = 4
 script = ExtResource("6_estado")
+
+[node name="Legendas" type="Label" parent="Interface" groups=["instrumentos"]]
+script = ExtResource("12_legendas")
 
 [node name="Pausa" type="Control" parent="Interface"]
 layout_mode = 3

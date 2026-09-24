@@ -41,6 +41,11 @@ func _ready() -> void:
 	if not _retomar():
 		SimLoop.start(_semente())
 		Greybox.build()
+		# §26: o dia ao ritmo de quem joga. Um jogo novo nasce com a duracao da
+		# ultima escolha, pela fila como qualquer outra (§61, GB-24).
+		var segundos := Preferences.shared().number(Preferences.DAY_SECONDS)
+		if segundos > 0.0:
+			SimLoop.intents.queue(IntentQueue.Kind.DAY_LENGTH, {&"seconds": segundos})
 	_camara.set_region(0.0, SimLoop.world_width)
 	# Poe o marcador onde o monarca esta ANTES de o entregar a camara: o follow()
 	# assenta a camara na posicao do alvo, e um alvo ainda na origem punha o

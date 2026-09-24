@@ -44,6 +44,8 @@ static func consume(
 				assume(unidades, king_id, passagens)
 			IntentQueue.Kind.MARK_TARGET:
 				mark(unidades, bichos, combate, args[&"x"], king_id)
+			IntentQueue.Kind.DAY_LENGTH:
+				day_length(args[&"seconds"])
 	return larga
 
 
@@ -126,6 +128,15 @@ static func destination(unidades: UnitSystem, unit_id: int, passagens: PackedFlo
 	if int(unidades.bands[i]) == int(Band.Kind.SURFACE):
 		return int(Band.Kind.UNDERGROUND)
 	return int(Band.Kind.SURFACE)
+
+
+## §26: "slider de duracao do dia (240–540 s)". Os limites sao os do clock.csv e
+## aplicam-se aqui, onde a intencao chega a simulacao; zero e o dia do clock.csv.
+## O relogio escala as seis fases e o decorrido juntos, e a fase nao salta.
+static func day_length(segundos: float) -> void:
+	var dados := Registry.entry(&"economy", &"clock") as ClockData
+	var alvo := segundos if segundos > 0.0 else dados.day_seconds
+	ClockService.clock.set_day_seconds(clampf(alvo, dados.day_seconds_min, dados.day_seconds_max))
 
 
 ## O gatilho direito do §24: marca a criatura mais proxima deste x para todos os

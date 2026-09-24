@@ -100,7 +100,7 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 	_montar()
 	RngService.configure(estado.seed)
 	RngService.restore(rng_states)
-	ClockService.seek(estado.day, estado.clock_elapsed)
+	ClockService.seek(estado.day, estado.clock_elapsed, estado.day_seconds)
 	_running = true
 
 
@@ -238,6 +238,7 @@ func _physics_process(delta: float) -> void:
 func _espelhar_relogio() -> void:
 	state.day = ClockService.clock.day
 	state.clock_elapsed = ClockService.clock.elapsed
+	state.day_seconds = ClockService.clock.day_seconds()
 
 
 func _no_amanhecer(dia: int) -> void:

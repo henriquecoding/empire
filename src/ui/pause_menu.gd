@@ -33,10 +33,15 @@ const TINTA := Color(0.96, 0.92, 0.81)
 const LETRA := {"titulo": 30, "item": 20}
 const MOLDURA := {"borda": 3, "canto": 4, "margem": 28, "entre": 14}
 const LARGURA := 380.0
+## De quanto em quanto anda o slider do dia: onze paragens entre 240 e 540 s.
+const PASSO_DIA_S := 30.0
 
 var _titulo: Label
 var _tremor: CheckButton
 var _claroes: CheckButton
+var _legendas: CheckButton
+var _dia: HSlider
+var _dia_rotulo: Label
 var _retomar: Button
 var _novo: Button
 
@@ -59,6 +64,8 @@ func _ready() -> void:
 	_titulo = _rotulo(caixa)
 	_tremor = _opcao(caixa, &"OPT_SCREEN_SHAKE", Preferences.SCREEN_SHAKE)
 	_claroes = _opcao(caixa, &"OPT_FLASHES", Preferences.FLASHES)
+	_legendas = _opcao(caixa, &"OPT_CAPTIONS", Preferences.CAPTIONS)
+	_duracao(caixa)
 	_retomar = _botao(caixa, &"UI_RESUME", _ao_retomar)
 	_novo = _botao(caixa, &"UI_NEW_GAME", _ao_recomecar)
 	hide()
@@ -82,6 +89,9 @@ func open(perdido: bool) -> void:
 	_novo.visible = perdido
 	_tremor.set_pressed_no_signal(Preferences.on(Preferences.SCREEN_SHAKE))
 	_claroes.set_pressed_no_signal(Preferences.on(Preferences.FLASHES))
+	_legendas.set_pressed_no_signal(Preferences.on(Preferences.CAPTIONS))
+	_dia.set_value_no_signal(ClockService.clock.day_seconds())
+	_mostrar_dia(_dia.value)
 	show()
 	(_novo if perdido else _retomar).grab_focus()
 
@@ -142,6 +152,35 @@ func _opcao(caixa: VBoxContainer, chave: StringName, preferencia: StringName) ->
 	)
 	caixa.add_child(opcao)
 	return opcao
+
+
+## §26: "slider de duracao do dia (240–540 s)". Os limites sao os do clock.csv. O
+## que se escolhe fica nas preferencias para os jogos novos, e chega a este pela
+## fila de intencoes (§61): a pausa nao mexe no relogio (GB-24).
+func _duracao(caixa: VBoxContainer) -> void:
+	var dados := Registry.entry(&"economy", &"clock") as ClockData
+	_dia_rotulo = Label.new()
+	_dia_rotulo.add_theme_font_size_override("font_size", LETRA.item)
+	_dia_rotulo.add_theme_color_override("font_color", TINTA)
+	caixa.add_child(_dia_rotulo)
+	_dia = HSlider.new()
+	_dia.min_value = dados.day_seconds_min
+	_dia.max_value = dados.day_seconds_max
+	_dia.step = PASSO_DIA_S
+	_dia.value = dados.day_seconds
+	_dia.value_changed.connect(_no_dia)
+	caixa.add_child(_dia)
+	_mostrar_dia(_dia.value)
+
+
+func _no_dia(segundos: float) -> void:
+	_mostrar_dia(segundos)
+	Preferences.shared().set_number(Preferences.DAY_SECONDS, segundos)
+	SimLoop.intents.queue(IntentQueue.Kind.DAY_LENGTH, {&"seconds": segundos})
+
+
+func _mostrar_dia(segundos: float) -> void:
+	_dia_rotulo.text = "%s · %d s" % [tr(&"OPT_DAY_LENGTH"), int(segundos)]
 
 
 func _botao(caixa: VBoxContainer, chave: StringName, ao_premir: Callable) -> Button:
