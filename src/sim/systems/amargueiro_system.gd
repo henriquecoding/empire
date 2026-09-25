@@ -5,10 +5,8 @@
 # base, depois de uma noite de pe; rende Lenho Amargo), consagrar (Semente Real;
 # vira Marco) ou deixar (pesa para sempre). Puro, em colunas como as tropas.
 #
-# O que NAO esta aqui: pagar a Semente Real (nao ha ainda quem a guarde — o
-# consecrate() e a regra, e o saco e de quem chama); gastar o Lenho na muralha
-# de nivel 4 (§74, walls.csv); a raiz que tapa a passagem no subsolo (Ato III,
-# §79); e o nome, que e o XIII-05 — ate la ninguem e nomeado.
+# A Semente e o Lenho sao do GameState, e quem os cobra e gasta e quem chama.
+# Fica de fora a raiz que tapa a passagem no subsolo (Ato III, §79).
 class_name AmargueiroSystem
 extends RefCounted
 
@@ -37,9 +35,6 @@ var fates: PackedByteArray = PackedByteArray()
 var paid: PackedInt32Array = PackedInt32Array()
 var progress: PackedFloat32Array = PackedFloat32Array()
 var widths: PackedFloat32Array = PackedFloat32Array()
-
-## O Lenho Amargo: um inteiro e nao uma moeda — nao tem preco (§74, regra 1).
-var bitter_wood: int = 0
 
 var _perfil: RotProfile
 var _cortar: AmargueiroData
@@ -159,9 +154,8 @@ func consecrate(tree_id: int) -> bool:
 	return true
 
 
-## Todos os ticks, a seguir ao movimento: as moedas pousadas na base de uma
-## arvore que ja aceita a serra pagam o corte, e o corte anda com quem la esta
-## — a mesma regra de presenca do §55 (Q-064).
+## Todos os ticks: as moedas na base de uma arvore que ja aceita a serra pagam
+## o corte, e o corte anda com quem la esta — a presenca do §55 (Q-064).
 func tick(delta: float, unidades: UnitSystem, moedas: CoinSystem) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	var cortadas := PackedInt32Array()
@@ -174,21 +168,27 @@ func tick(delta: float, unidades: UnitSystem, moedas: CoinSystem) -> Array[Dicti
 				cortadas.append(ids[i])
 	for tree_id in cortadas:
 		var i := index_of(tree_id)
-		bitter_wood += _rende(i)
 		eventos.append({CHAVE: EV_CORTADA, ID: tree_id, X: xs[i], QUANTO: _rende(i)})
-		_tirar(i)
+		remove_at(i)
 	return eventos
 
 
 func to_dict() -> Dictionary:
-	var d := Columns.to_dict(self)
-	d[&"bitter_wood"] = bitter_wood
-	return d
+	return Columns.to_dict(self)
 
 
 func from_dict(d: Dictionary) -> void:
 	Columns.from_dict(self, d)
-	bitter_wood = d.get(&"bitter_wood", bitter_wood)
+
+
+## A arvore de pe cuja base cobre este x nesta faixa, ou NENHUM. E onde o
+## Verbo 1 cai quando larga em cima de uma (§74).
+func tree_at(x: float, faixa: int) -> int:
+	for i in ids.size():
+		var perto := absf(xs[i] - x) <= widths[i] * BuildSystem.METADE
+		if perto and bands[i] == faixa and fates[i] == Fate.STANDING:
+			return ids[i]
+	return NENHUM
 
 
 func _cria_raiz(x: float, faixa: int, dentro: Vector2) -> bool:
@@ -242,7 +242,8 @@ func _rende(i: int) -> int:
 	return _cortar.yield_named if named[i] else _cortar.yield_by_tier[tiers[i] - 1]
 
 
-func _tirar(i: int) -> void:
+## Tira a arvore i do campo: cortada, ou o Marco dado a Podridao (§75).
+func remove_at(i: int) -> void:
 	for nome in Columns.names(self):
 		var coluna: Variant = get(nome)
 		coluna.remove_at(i)

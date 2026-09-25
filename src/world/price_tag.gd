@@ -75,7 +75,7 @@ static func _obras(
 		if vaga.band != faixa or not over(vaga, x):
 			continue
 		var falta := owed_by(vaga)
-		if falta <= 0:
+		if falta <= 0 or not SimLoop.builds.can_climb(vaga, SimLoop.state):
 			continue
 		var caixa := BuildView.drawn_box(vaga, Silhouette.of_slot(vaga, edificios))
 		stack(canvas, vaga.x, caixa.position.y, falta, saco)

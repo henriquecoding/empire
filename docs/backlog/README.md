@@ -80,7 +80,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 |---|---|---|---|---|
 | [XIII-01](XIII-01.md) | §80 · O preto na paleta e a noite castanha | ART-02 | 4 (2 código + 2 arte) | por fazer |
 | [XIII-02](XIII-02.md) | §74 · O termo dos Amargueiros na massa | F1-08 | 1 | feito |
-| [XIII-03](XIII-03.md) | §74 · O Amargueiro e a candeia, completos | XIII-02, F1-06, ART-04 | 13 (10 + 3 arte) | parcial — falta a Semente Real e a arte (ART-04) |
+| [XIII-03](XIII-03.md) | §74 · O Amargueiro e a candeia, completos | XIII-02, F1-06, ART-04 | 13 (10 + 3 arte) | feito |
 | [XIII-04](XIII-04.md) | §75 · A Oferta e a Dívida da Candeia | XIII-03 | 20 (12 + 4 arte + 2 som + 2 escrita) | feito |
 | [XIII-05](XIII-05.md) | §76 · O Nome | F1-12 | 11 (7 + 2 arte + 1 som + 1 escrita) | por fazer |
 | [XIII-06](XIII-06.md) | §78 · A Colheita | F1-16 | 11 (8 + 3 arte) | por fazer |

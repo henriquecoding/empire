@@ -23,6 +23,7 @@ const FONTE_PRODUCAO := &"production"
 const PROPOSITO_RECRUTA := &"recruit"
 const PROPOSITO_CORTE := &"amargueiro_fell"
 const LENHO := &"bitter_wood"
+const FONTE_SEGREDO := &"secret"
 
 
 ## Passo 4: as mudancas de estado da FSM (§52).
@@ -185,12 +186,21 @@ static func _completa(vaga: BuildSlot, nivel: int) -> void:
 
 
 ## Passo 5: o corte de um Amargueiro (§74). O pagamento e um coin_spent como o
-## de uma obra; o Lenho e material produzido. Raiz e Marco nao tem sinal na §46.
-static func amargueiros(eventos: Array[Dictionary]) -> void:
+## de uma obra; o Lenho e material produzido, e vai para o imperio (§45).
+static func amargueiros(eventos: Array[Dictionary], estado: GameState) -> void:
 	for e in eventos:
 		match int(e[AmargueiroSystem.CHAVE]):
 			AmargueiroSystem.EV_CORTE:
 				EventBus.queue(&"coin_spent", [e[AmargueiroSystem.QUANTO], PROPOSITO_CORTE])
 			AmargueiroSystem.EV_CORTADA:
+				estado.bitter_wood += int(e[AmargueiroSystem.QUANTO])
 				var lenho := [e[AmargueiroSystem.ID], LENHO, e[AmargueiroSystem.QUANTO]]
 				EventBus.queue(&"material_produced", lenho)
+
+
+## Passo 5: um segredo achado (§17) e a Semente Real que ele deu (§46).
+static func secrets(achados: Array[Dictionary]) -> void:
+	for a in achados:
+		EventBus.queue(&"secret_found", [a[SecretSites.ID]])
+		if int(a[SecretSites.SEMENTES]) > 0:
+			EventBus.queue(&"seed_royal_gained", [a[SecretSites.SEMENTES], FONTE_SEGREDO])

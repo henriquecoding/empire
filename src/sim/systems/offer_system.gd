@@ -26,8 +26,10 @@ const ESCALARES: Array[StringName] = [
 ## O que o jogo ja sabe cobrar e dar (Q-087). Uma oferta cujo preco ou efeito
 ## ainda nao tem sistema nunca e sorteada — dar a Divida por nada era pior do
 ## que calar a voz. Esta lista e a lista do que falta, como um teste saltado.
-const PRECOS_FEITOS: Array[StringName] = [&"coins", &"treasury_all", &"troops_below_health"]
-const EFEITOS_FEITOS: Array[StringName] = [&"rot_pause", &"mass_mult", &"skip_night"]
+const PRECOS_FEITOS: Array[StringName] = [
+	&"coins", &"treasury_all", &"troops_below_health", &"marker"
+]
+const EFEITOS_FEITOS: Array[StringName] = [&"rot_pause", &"mass_mult", &"skip_night", &"seed_royal"]
 
 var debt: DebtLedger
 

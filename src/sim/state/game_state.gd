@@ -31,6 +31,15 @@ var clock_elapsed: float = 0.0
 ## 0 nunca seja um id valido e sirva de "nenhum".
 var next_id: int = 1
 
+## Os recursos do imperio que nao sao moeda (§44). A Semente Real paga consagrar
+## e classes; o Lenho Amargo so se constroi com ele — nao tem preco (§74, regra 1).
+var royal_seeds: int = 0
+var bitter_wood: int = 0
+## Os povos conquistados (§13), pelo id: e o que o requires_conquest le.
+var conquests: PackedStringArray = PackedStringArray()
+## Os segredos ja encontrados (§17). Um segredo so da a recompensa uma vez.
+var found: PackedStringArray = PackedStringArray()
+
 
 ## Le um dicionario ja validado. Campos em falta ficam no valor por omissao e
 ## campos desconhecidos ignoram-se: um save de outra versao degrada em vez de
@@ -42,6 +51,10 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.day = _inteiro(d, &"day", estado.day)
 	estado.next_id = _inteiro(d, &"next_id", estado.next_id)
 	estado.clock_elapsed = _real(d, &"clock_elapsed", estado.clock_elapsed)
+	estado.royal_seeds = _inteiro(d, &"royal_seeds", estado.royal_seeds)
+	estado.bitter_wood = _inteiro(d, &"bitter_wood", estado.bitter_wood)
+	estado.conquests = _textos(d, &"conquests")
+	estado.found = _textos(d, &"found")
 	return estado
 
 
@@ -60,6 +73,10 @@ func to_dict() -> Dictionary:
 		&"day": day,
 		&"clock_elapsed": clock_elapsed,
 		&"next_id": next_id,
+		&"royal_seeds": royal_seeds,
+		&"bitter_wood": bitter_wood,
+		&"conquests": conquests,
+		&"found": found,
 	}
 
 
@@ -67,6 +84,12 @@ static func _inteiro(d: Dictionary, chave: StringName, omissao: int) -> int:
 	if d.has(chave) and typeof(d[chave]) == TYPE_INT:
 		return d[chave]
 	return omissao
+
+
+static func _textos(d: Dictionary, chave: StringName) -> PackedStringArray:
+	if d.has(chave) and typeof(d[chave]) == TYPE_PACKED_STRING_ARRAY:
+		return d[chave]
+	return PackedStringArray()
 
 
 static func _real(d: Dictionary, chave: StringName, omissao: float) -> float:

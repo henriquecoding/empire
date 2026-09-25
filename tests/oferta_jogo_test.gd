@@ -123,3 +123,24 @@ func test_sem_divida_nao_ha_zelador() -> void:
 	_vespera_do_crepusculo(DIA)
 	for c in SimLoop.creatures.count():
 		assert_str(String(SimLoop.creatures.data_ids[c])).is_not_equal("tender")
+
+
+func test_um_marco_pela_semente_real() -> void:
+	# "A arvore que plantaste": o Marco sai do campo e entra uma Semente (§75).
+	var dono := SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
+	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
+	var x := SimLoop.core_x + SimLoop.world_width * 0.45
+	var morto := SimLoop.units.spawn(SimLoop.state, arqueiro, dono, x)
+	SimLoop.units.states[SimLoop.units.index_of(morto)] = UnitFsm.State.DEAD
+	SimLoop.night.dawn(SimLoop.state, SimLoop.units, SimLoop.builds, SimLoop.core_x)
+	SimLoop.night.trees.consecrate(SimLoop.night.trees.ids[0])
+	_vespera_do_crepusculo(DIA)
+	assert_bool(_ate_falar()).is_true()
+	var ofertas := SimLoop.night.offers
+	assert_str(String(ofertas.offer_id)).is_equal("the_tree_you_planted")
+	SimLoop.drop_coin(ofertas.dish_x, Band.Kind.SURFACE, 1, &"player")
+	for _i in int(3.0 / PASSO):
+		SimLoop.step(PASSO)
+	assert_int(SimLoop.night.trees.markers().size()).is_equal(0)
+	assert_int(SimLoop.state.royal_seeds).is_equal(1)
+	assert_int(ofertas.debt.debt).is_equal(2)

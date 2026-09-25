@@ -220,3 +220,9 @@ func test_o_que_ja_nao_anda_sao_as_tuas_tropas_fracas_menos_o_rei() -> void:
 	var saem := OfferSystem.below_health(u, limiar, rei)
 	assert_array(Array(saem)).is_equal([fraco])
 	assert_bool(saem.has(forte)).is_false()
+
+
+func test_com_um_marco_a_arvore_que_plantaste_pode_ser_dita() -> void:
+	var s := SimFactory.offers()
+	assert_array(_ids(s.eligible({&"day": 1}))).is_empty()
+	assert_array(_ids(s.eligible({&"day": 1, &"marker": 1}))).is_equal(["the_tree_you_planted"])

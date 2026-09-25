@@ -159,7 +159,6 @@ func test_cortar_custa_as_moedas_e_o_tempo_e_rende_pela_escala() -> void:
 		for x in s.tick(PASSO, u, moedas):
 			cortada = x
 	assert_int(cortada[AmargueiroSystem.QUANTO]).is_equal(fell.yield_by_tier[1])  # arqueiro: 2
-	assert_int(s.bitter_wood).is_equal(fell.yield_by_tier[1])
 	assert_int(s.count()).is_equal(0)
 
 
@@ -191,10 +190,8 @@ func test_o_campo_sobrevive_ao_save() -> void:
 	var s := _sistema()
 	s.consecrate(_arvore(s, e, u))
 	_arvore(s, e, u, LONGE - 300.0)
-	s.bitter_wood = 3
 	var copia := _sistema()
 	copia.from_dict(s.to_dict())
 	assert_array(Array(copia.ids)).is_equal(Array(s.ids))
 	assert_array(copia.markers()).is_equal(s.markers())
 	assert_int(copia.standing(false)).is_equal(1)
-	assert_int(copia.bitter_wood).is_equal(3)

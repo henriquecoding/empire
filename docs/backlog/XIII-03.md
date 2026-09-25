@@ -8,7 +8,7 @@ Depende   XIII-02, F1-06, ART-04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Os três destinos com o Verbo 1; a cara na casca; a candeia com raio e cor do rot.tres
 Fora      A Oferta — é o XIII-04. O cante da alvorada — é o XIII-09.
-Estado    parcial — falta a Semente Real e a arte (ART-04)
+Estado    feito
 Horas     13 (10 + 3 arte)
 ```
 
@@ -27,9 +27,11 @@ Horas     13 (10 + 3 arte)
   `material_produced`. Grava-se no save. **A cara na casca**, em *greybox*: `src/world/amargueiro_view.gd`,
   com o preço do corte por cima quando o rei está na base, pelo mesmo gesto do GB-05. **A candeia** já
   vinha do F1-17.
-- **O que falta, e porquê** (Q-086): *consagrar* está escrito e testado mas não tem gesto — não há onde
-  guardar uma Semente Real. O Lenho acumula-se e ainda não se gasta na muralha de nível 4. O tronco e a
-  cara definitivos são do ART-04.
+- **Fechado depois** (Q-086): *consagrar* pelo Verbo 1 — largar em cima da árvore com uma Semente Real
+  no império. A Semente vem da câmara atrás da passagem (`root_chamber`, §25 minuto 11:00), que o rei
+  acha ao entrar, e da oferta *"A árvore que plantaste"*. O Lenho gasta-se: dispensa a Fornalha no
+  nível 4 e paga os 3 Lenhos do bastião, que é único por império (`WallSite`, `BuildSystem.can_climb`).
+  Lenho e Sementes são do `GameState`. O tronco e a cara definitivos continuam a ser do ART-04.
 
 ---
 

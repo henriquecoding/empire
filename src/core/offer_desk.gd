@@ -113,6 +113,11 @@ static func _cobrar(noite: NightWatch, o: OfferData) -> bool:
 			for unit_id in saem:
 				EventBus.queue(&"unit_fled", [unit_id, FONTE])
 				unidades.remove(unit_id)
+		&"marker":
+			var marco := noite.trees.fates.find(AmargueiroSystem.Fate.MARKER)
+			if marco == -1:
+				return false
+			noite.trees.remove_at(marco)
 	EventBus.queue(&"coin_spent", [noite.offers.needed(), FONTE])
 	return true
 
@@ -128,6 +133,9 @@ static func _dar(noite: NightWatch, offer_id: StringName) -> void:
 			noite.rot.scale_mass(o.effect_value)
 		&"skip_night":
 			noite.skip(SimLoop.state, SimLoop.creatures)
+		&"seed_royal":
+			SimLoop.state.royal_seeds += int(o.effect_value)
+			EventBus.queue(&"seed_royal_gained", [int(o.effect_value), FONTE])
 	EventBus.queue(&"rot_fed", [maxf(0.0, antes - noite.rot.mass()), offer_id])
 
 

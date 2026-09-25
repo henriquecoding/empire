@@ -73,6 +73,25 @@ func skip(estado: GameState, bichos: CreatureSystem) -> void:
 		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 
 
+## O Verbo 1 em cima de uma arvore, com uma Semente Real no imperio: consagra-a
+## em vez de largar a moeda, e a moeda volta ao saco de quem a largou (§74). E
+## a Semente e nao a moeda que decide — "a moeda que largas e que decide".
+func consecrate_at(estado: GameState, largada: Dictionary, unidades: UnitSystem, quem: int) -> bool:
+	var consagrar := (
+		Registry.entry(&"rot/amargueiros", AmargueiroSystem.CONSAGRAR) as AmargueiroData
+	)
+	if estado.royal_seeds < consagrar.cost_seeds:
+		return false
+	var arvore := trees.tree_at(largada[EventRelay.ONDE], int(largada[EventRelay.FAIXA]))
+	if arvore == AmargueiroSystem.NENHUM or not trees.consecrate(arvore):
+		return false
+	estado.royal_seeds -= consagrar.cost_seeds
+	var i := unidades.index_of(quem)
+	if i != UnitSystem.NENHUM:
+		unidades.carried_coins[i] += int(largada[EventRelay.QUANTO])
+	return true
+
+
 func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2) -> void:
 	if fase == GameClock.Phase.DUSK:
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por

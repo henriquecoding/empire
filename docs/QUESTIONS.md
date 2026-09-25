@@ -940,12 +940,20 @@
   presença do §55 (a mesma da Q-064) — hoje, na prática, o rei.
 - **A largura da base** — onde a moeda tem de cair para pagar — é o `shadow_width` de quem morreu. É o
   corpo que se levantou; não há outro número.
-- **O que ficou por ligar, e porquê:** *consagrar* está escrito e testado (`consecrate()`), mas não há
-  onde guardar uma Semente Real — nenhum sistema a ganha nem a gasta —, e por isso ainda não tem gesto.
-  O Lenho acumula-se e ainda não se gasta: a muralha de nível 4 sem a Fornalha e o bastião com 3 Lenhos
-  são do `walls.csv` e pedem o BuildSystem a saber de materiais. A raiz subterrânea não tapa a
-  passagem (Ato III, §79). E ninguém é nomeado até ao XIII-05, por isso o custo de moral do corte de um
-  nomeado viaja no evento e não é cobrado.
+- **Consagrar, com o Verbo 1.** O §74 diz "largar 1 Semente Real na base" e o Verbo 1 larga moedas.
+  Escolhido: largar em cima de uma árvore de pé com uma Semente no império consagra-a, e a moeda volta
+  ao saco — *a moeda que largas é que decide*, e aqui decide a Semente. Sem Semente, cai a moeda.
+- **De onde vem a Semente.** A câmara atrás da passagem (`root_chamber` em `secrets.csv`, o minuto
+  11:00 do §25): o rei que lá entra acha-a, uma vez por partida. E a oferta *"A árvore que plantaste"*
+  troca um Marco por outra.
+- **O Lenho na muralha, e o que isso muda.** Um Lenho dispensa a Fornalha no nível 4, por segmento; o
+  bastião custa 3 Lenhos além das 65 moedas e só pode haver um. Até aqui o *greybox* deixava subir
+  qualquer muro até 5; agora, sem nenhum povo conquistável, **a muralha de ferro só se faz com os teus
+  mortos**. É o §74 tal e qual, e é uma mudança de jogo a sério. A defesa do décimo dia do F1-16 põe
+  os níveis à mão e não passa por aqui.
+- **O que ficou por ligar:** a raiz subterrânea não tapa a passagem (Ato III, §79), e ninguém é
+  nomeado até ao XIII-05, por isso o custo de moral do corte de um nomeado viaja no evento e não é
+  cobrado.
 - **Os mortos saem das colunas na alvorada.** Até aqui uma tropa em DEAD ficava na coluna para sempre; o
   §16 dá-lhe ressurreição "até ao amanhecer" e o §74 diz que ao amanhecer ela ou cria raiz ou desaparece.
 - **Decide:** tu — sobretudo a fronteira de "dentro" e a tag `worker`, que são as duas que mudam números.

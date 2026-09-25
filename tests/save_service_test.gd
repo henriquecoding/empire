@@ -200,3 +200,22 @@ func test_take_id_e_unico_e_monotonico() -> void:
 	SaveService.save(0, estado)
 	# O contador sobrevive ao save: senao, carregar um jogo reciclava ids.
 	assert_int(SaveService.restore(0).next_id).is_equal(11)
+
+
+func test_os_recursos_que_nao_sao_moeda_fazem_ida_e_volta() -> void:
+	# §44, §74: a Semente Real, o Lenho, as conquistas e os segredos achados.
+	var antes := _estado(3)
+	antes.royal_seeds = 2
+	antes.bitter_wood = 5
+	antes.conquests = PackedStringArray(["fornalha"])
+	antes.found = PackedStringArray(["root_chamber"])
+	SaveService.save(0, antes)
+	var depois := SaveService.restore(0)
+	assert_int(depois.royal_seeds).is_equal(2)
+	assert_int(depois.bitter_wood).is_equal(5)
+	assert_array(Array(depois.conquests)).is_equal(["fornalha"])
+	assert_array(Array(depois.found)).is_equal(["root_chamber"])
+	# Um save de antes destes campos degrada para zero e vazio (§62).
+	var velho := GameState.from_dict({&"seed": 1})
+	assert_int(velho.royal_seeds).is_equal(0)
+	assert_array(Array(velho.found)).is_empty()

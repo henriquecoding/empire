@@ -20,6 +20,9 @@
 class_name BandView
 extends Node2D
 
+## A camara de um segredo: dois degraus de alto, e a Semente do dobro de uma moeda.
+const NICHO := 2.0
+
 @export var band: Band.Kind = Band.Kind.SURFACE
 
 var _tropas: Dictionary = {}
@@ -68,6 +71,7 @@ func _draw() -> void:
 		_passagens()
 		_podridao()
 	_fogueiras()
+	_camaras()
 	BuildView.draw_on(self, band, _edificios, _luz)
 	AmargueiroView.draw_on(self, band, _luz)
 	_moedas()
@@ -109,6 +113,29 @@ func _fogueiras() -> void:
 		if vaga.band != band or raio <= 0.0:
 			continue
 		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, cores)
+
+
+## A camara de um segredo (§17): um nicho no subsolo, e a Semente la dentro
+## enquanto ninguem a tiver achado.
+func _camaras() -> void:
+	var s := SimLoop.secrets
+	var chao := WorldPalette.ground_of(int(band))
+	for k in s.count():
+		if s.bands[k] != int(band):
+			continue
+		var nicho := Rect2(
+			s.xs[k] - s.widths[k] * WorldPalette.MEIA,
+			chao - WorldPalette.DEGRAU * NICHO,
+			s.widths[k],
+			WorldPalette.DEGRAU * NICHO
+		)
+		draw_rect(nicho, _luz.body(WorldPalette.VAZIO, s.xs[k]))
+		if not String(s.ids[k]) in SimLoop.state.found:
+			draw_circle(
+				Vector2(s.xs[k], chao - WorldPalette.DEGRAU),
+				WorldPalette.MOEDA_R * NICHO,
+				WorldPalette.SEMENTE
+			)
 
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
