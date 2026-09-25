@@ -8,8 +8,7 @@
 # src/sim/, quem os monta e o SimFactory, quem traduz o que devolvem e o
 # EventRelay. Aqui fica a ORDEM, e o Verbo 1.
 #
-# Passos 9 e 10 continuam por escrever, e continuam como linha: divida e
-# diplomacia sao o F1-14, e a IA do rei inimigo e a Fase 2.
+# Passos 9 e 10 continuam por escrever, e continuam como linha (Fase 2).
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
@@ -107,11 +106,11 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 ## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
 ## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
 func world() -> Dictionary:
-	return SimSave.world(units, creatures, coins, builds, night.rot, king_id)
+	return SimSave.world(units, creatures, coins, builds, night, king_id)
 
 
 func load_world(mundo: Dictionary) -> void:
-	king_id = SimSave.restore(units, creatures, coins, builds, night.rot, mundo)
+	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo)
 
 
 func stop() -> void:
@@ -165,6 +164,9 @@ func step(delta: float) -> void:
 	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
 	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
 	EventRelay.builds(builds.absorb(coins))
+	if mudou and _fase == GameClock.Phase.DAWN:
+		night.dawn(state, units, builds, core_x)  # 5 · §74: quem ficou no campo
+	EventRelay.amargueiros(night.trees.tick(delta, units, coins))
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
 	_largar(EventRelay.combat(combat.resolve(units, creatures, builds, _roll)))  # 6 · combate

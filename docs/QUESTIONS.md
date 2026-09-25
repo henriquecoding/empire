@@ -924,6 +924,32 @@
 - **Decide:** tu. A pergunta aberta é a da Fase 2: quando o Verbo 2 deixar assumir outros corpos (§24), o
   "conduzido" passa a ser mais do que o `king_id` — e aí talvez valha a pena ser coluna.
 
+### Q-086 · O que o §74 não diz sobre o Amargueiro, e o que o XIII-03 escolheu
+- **Onde:** §74 (onde nasce, os três destinos, a regra 3), §16 (recolher os mortos), §55, §06,
+  `src/sim/systems/amargueiro_system.gd`, `src/world/amargueiro_view.gd`.
+- **"Dentro das muralhas".** O §74 não diz onde acaba. Escolhido: do bordo de fora do muro de pé mais
+  afastado de um lado do núcleo ao do outro; um lado sem muro de pé não tem dentro. Quem cai **em cima**
+  do muro caiu dentro — medido: com o centro do muro como fronteira, metade dos arqueiros de um posto de
+  muralha criava raiz, e a defesa do décimo dia do F1-16 passava a cair no dia 9.
+- **"Escala 1 e vagabundo".** O `scale_tier` do vagabundo em `units.csv` é **2** (é o tamanho do corpo,
+  §22), e a regra 3 dá-lhe 1 Lenho. Escolhido: quem tem a tag `worker` rende o primeiro degrau; o resto
+  rende pelo `scale_tier`. Isto põe também o semeador e o cavador no degrau 1 — é a carne barata, mas
+  é uma leitura.
+- **Quem corta.** O §74 manda vir "um lenhador da serração (§06)". Não há serração no *greybox* nem posto
+  de lenhador em `jobs.csv`. Escolhido: o corte anda com qualquer tropa tua presente, pela regra de
+  presença do §55 (a mesma da Q-064) — hoje, na prática, o rei.
+- **A largura da base** — onde a moeda tem de cair para pagar — é o `shadow_width` de quem morreu. É o
+  corpo que se levantou; não há outro número.
+- **O que ficou por ligar, e porquê:** *consagrar* está escrito e testado (`consecrate()`), mas não há
+  onde guardar uma Semente Real — nenhum sistema a ganha nem a gasta —, e por isso ainda não tem gesto.
+  O Lenho acumula-se e ainda não se gasta: a muralha de nível 4 sem a Fornalha e o bastião com 3 Lenhos
+  são do `walls.csv` e pedem o BuildSystem a saber de materiais. A raiz subterrânea não tapa a
+  passagem (Ato III, §79). E ninguém é nomeado até ao XIII-05, por isso o custo de moral do corte de um
+  nomeado viaja no evento e não é cobrado.
+- **Os mortos saem das colunas na alvorada.** Até aqui uma tropa em DEAD ficava na coluna para sempre; o
+  §16 dá-lhe ressurreição "até ao amanhecer" e o §74 diz que ao amanhecer ela ou cria raiz ou desaparece.
+- **Decide:** tu — sobretudo a fronteira de "dentro" e a tag `worker`, que são as duas que mudam números.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

@@ -165,3 +165,62 @@ func test_o_rasto_cobre_o_que_ela_ja_atravessou() -> void:
 	assert_bool(rot.trail_covers(rot.position_x())).is_true()
 	assert_bool(rot.trail_covers(0.0)).is_true()
 	assert_bool(rot.trail_covers(LARGURA)).is_false()
+
+
+# ─── XIII-02: o termo dos Amargueiros na massa (§74) ────────────────────────
+
+
+func test_d01_a_tabela_da_74_sai_do_proprio_rot_system() -> void:
+	# O D-01 mede o modelo de referencia; este mede o sistema que a noite usa.
+	# As quatro linhas da tabela ao dia 20, e a nota das tres fortalezas.
+	var linhas := [[0, 0, 0, 400.0], [0, 3, 0, 466.0], [0, 8, 0, 576.0], [0, 5, 3, 645.0]]
+	linhas.append([3, 0, 0, 490.0])
+	for l: Array in linhas:
+		var rot := _mancha()
+		rot.fortresses = l[0]
+		rot.amargueiros = l[1]
+		rot.named_amargueiros = l[2]
+		rot.spawn(20, DIREITA, LARGURA)
+		var msg := "fortalezas %d, arvores %d, nomeadas %d" % [l[0], l[1], l[2]]
+		assert_float(rot.mass()).override_failure_message(msg).is_equal(l[3])
+		assert_float(rot.mass()).is_equal(Referencia.rot_mass(20, l[0], _perfil(), l[1], l[2]))
+
+
+func test_as_arvores_so_pesam_na_noite_seguinte_a_serem_contadas() -> void:
+	# A massa escreve-se ao crepusculo: uma arvore que nasce a meio da noite
+	# nao engorda a mancha que ja esta no campo — engorda a de amanha.
+	var rot := _mancha()
+	rot.spawn(5, DIREITA, LARGURA)
+	var hoje := rot.mass()
+	rot.amargueiros = 3
+	assert_float(rot.mass()).is_equal(hoje)
+	rot.spawn(6, DIREITA, LARGURA)
+	var p := _perfil()
+	assert_float(rot.mass()).is_equal(hoje + p.mass_per_day + 3 * p.mass_per_amargueiro)
+
+
+func test_as_recusas_somam_ate_ao_teto_e_nunca_mais() -> void:
+	# §74 e §75: min(recusas nos ultimos 5 dias, 5), e o D-04 poe-lhe o teto.
+	var p := _perfil()
+	var limpa := _mancha()
+	limpa.spawn(10, DIREITA, LARGURA)
+	for recusas in [1, 5, 30]:
+		var rot := _mancha()
+		rot.refusals = recusas
+		rot.spawn(10, DIREITA, LARGURA)
+		var esperado := minf(p.refusal_mass * mini(recusas, p.refusal_window_days), p.refusal_cap)
+		assert_float(rot.mass() - limpa.mass()).is_equal(esperado)
+		assert_float(rot.mass()).is_equal(Referencia.rot_mass(10, 0, p, 0, 0, recusas))
+
+
+func test_o_que_o_jogador_escreveu_de_dia_sobrevive_ao_save() -> void:
+	var rot := _mancha()
+	rot.fortresses = 1
+	rot.amargueiros = 4
+	rot.named_amargueiros = 2
+	rot.refusals = 3
+	var copia := _mancha()
+	copia.from_dict(rot.to_dict())
+	copia.spawn(9, DIREITA, LARGURA)
+	rot.spawn(9, DIREITA, LARGURA)
+	assert_float(copia.mass()).is_equal(rot.mass())

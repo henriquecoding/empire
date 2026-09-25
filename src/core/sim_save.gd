@@ -21,6 +21,7 @@ const MOEDAS := &"coins"
 const OBRAS := &"builds"
 const PODRIDAO := &"rot"
 const REI := &"king_id"
+const CAMPO := &"amargueiros"
 
 
 static func world(
@@ -28,7 +29,7 @@ static func world(
 	bichos: CreatureSystem,
 	moedas: CoinSystem,
 	obras: BuildSystem,
-	rot: RotSystem,
+	noite: NightWatch,
 	king_id: int
 ) -> Dictionary:
 	return {
@@ -36,7 +37,8 @@ static func world(
 		CRIATURAS: bichos.to_dict(),
 		MOEDAS: moedas.to_dict(),
 		OBRAS: obras.to_dict(),
-		PODRIDAO: rot.to_dict(),
+		PODRIDAO: noite.rot.to_dict(),
+		CAMPO: noite.trees.to_dict(),
 		REI: king_id,
 	}
 
@@ -48,12 +50,13 @@ static func restore(
 	bichos: CreatureSystem,
 	moedas: CoinSystem,
 	obras: BuildSystem,
-	rot: RotSystem,
+	noite: NightWatch,
 	mundo: Dictionary
 ) -> int:
 	unidades.from_dict(mundo.get(UNIDADES, {}))
 	bichos.from_dict(mundo.get(CRIATURAS, {}))
 	moedas.from_dict(mundo.get(MOEDAS, {}))
 	obras.from_dict(mundo.get(OBRAS, []))
-	rot.from_dict(mundo.get(PODRIDAO, {}))
+	noite.rot.from_dict(mundo.get(PODRIDAO, {}))
+	noite.trees.from_dict(mundo.get(CAMPO, {}))
 	return mundo.get(REI, UnitSystem.NENHUM)

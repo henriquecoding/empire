@@ -15,9 +15,14 @@ const TABELA_CRIATURAS := &"creatures"
 
 var rot: RotSystem
 
+## Quem ficou no campo (§74). Vive aqui porque e a noite que o le e a alvorada
+## que o escreve: a massa ao crepusculo, a raiz ao amanhecer.
+var trees: AmargueiroSystem
+
 
 func _init() -> void:
 	rot = SimFactory.rot()
+	trees = SimFactory.amargueiros()
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -32,9 +37,9 @@ func tick(
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
 		rot.arm(RngService.float_range(&"rot", janela.x, janela.y))
-	# Terreno consagrado ainda nao existe: fogueiras, barris e consagracao sao o
-	# F1-17 e a XIII-04. Uma lista vazia e a ausencia deles, nao um esquecimento.
-	for pedido in rot.tick(delta, []):
+	# O terreno consagrado que ja existe sao os Marcos (§74). Fogueiras e barris
+	# sao da XIII-04 e ainda nao estao aqui.
+	for pedido in rot.tick(delta, trees.markers()):
 		_invocar(pedido, estado, bichos, mundo.x)
 	EventBus.queue(&"rot_moved", [rot.position_x(), rot.state.width])
 
@@ -48,12 +53,20 @@ func trail() -> Array[Vector2]:
 	return [Vector2(de, maxf(rot.state.trail_from, rot.state.trail_to))]
 
 
+## A Alvorada do campo (§74): quem morreu desde ontem cria raiz ou desaparece.
+## Corre no passo 5 e nao no 2, porque precisa das tropas e das muralhas.
+func dawn(estado: GameState, unidades: UnitSystem, obras: BuildSystem, core_x: float) -> void:
+	trees.at_dawn(estado, unidades, obras, core_x)
+
+
 func _virar(fase: int, estado: GameState, bichos: CreatureSystem, largura: float) -> void:
 	if fase == GameClock.Phase.DUSK:
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso
 		# sao duas NightWatch — e o F1-09 que as poe.
 		var lado := 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
+		rot.amargueiros = trees.standing(false)
+		rot.named_amargueiros = trees.standing(true)
 		rot.spawn(estado.day, lado, largura)
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
 		return

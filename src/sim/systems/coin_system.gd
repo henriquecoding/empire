@@ -168,6 +168,20 @@ func amounts_by_id() -> Dictionary:
 	return mapa
 
 
+## Tira do chao tudo o que esta pousado a `raio` de x nesta faixa, e devolve
+## quanto valia. E pagar com moeda fisica (§55) para quem nao e uma obra (§74).
+func take_within(x: float, faixa: int, raio: float) -> int:
+	var apanhadas := PackedInt32Array()
+	for i in ids.size():
+		if settled[i] == 1 and bands[i] == faixa and absf(xs[i] - x) <= raio:
+			apanhadas.append(ids[i])
+	var valor := 0
+	for coin_id in apanhadas:  # recolhidas antes: o remove() mexe na ordem
+		valor += amounts[index_of(coin_id)]
+		remove(coin_id)
+	return valor
+
+
 func remove(coin_id: int) -> bool:
 	var i := index_of(coin_id)
 	if i == NENHUM:

@@ -78,7 +78,7 @@ static func _obras(
 		if falta <= 0:
 			continue
 		var caixa := BuildView.drawn_box(vaga, Silhouette.of_slot(vaga, edificios))
-		_moedas(canvas, vaga.x, caixa.position.y, falta, saco)
+		stack(canvas, vaga.x, caixa.position.y, falta, saco)
 
 
 ## Se uma moeda largada daqui cai NESTA obra. E a meia largura com que o
@@ -130,13 +130,13 @@ static func _gente(
 		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(faixa), alto)
 		# A cabeca do §25 — o chapeu — desenha-se por cima da caixa, e o preco
 		# tem de ficar acima dele para nao lhe assentar em cima.
-		_moedas(canvas, unidades.xs[i], caixa.position.y - WorldPalette.BARRA, falta, saco)
+		stack(canvas, unidades.xs[i], caixa.position.y - WorldPalette.BARRA, falta, saco)
 
 
 ## `falta` moedas empilhadas sobre (x, topo), de baixo para cima. As primeiras
 ## `saco` saem douradas — sao as que ja podes pousar ali — e as outras apagadas.
 ## Contam-se: e para isso que ha uma por moeda e nao um algarismo.
-static func _moedas(canvas: CanvasItem, x: float, topo: float, falta: int, saco: int) -> void:
+static func stack(canvas: CanvasItem, x: float, topo: float, falta: int, saco: int) -> void:
 	var base := topo - ACIMA
 	for n in falta:
 		var fila := n / POR_FILA

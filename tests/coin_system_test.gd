@@ -210,3 +210,16 @@ func test_largar_dez_moedas_nao_custa_nada() -> void:
 	)
 	var porque := "%.1f us contra o orcamento de %d" % [us, ORCAMENTO_US]
 	assert_bool(us < ORCAMENTO_US).override_failure_message(porque).is_true()
+
+
+func test_tirar_do_chao_so_leva_o_que_pousou_perto_e_na_faixa() -> void:
+	# O pagamento de quem nao e obra (§74): o Amargueiro cobra-se assim.
+	var sistema := _sistema()
+	var e := _estado()
+	sistema.drop(e, 100.0, Band.Kind.SURFACE, 2, 0.0)
+	sistema.drop(e, 100.0, Band.Kind.UNDERGROUND, 1, 0.0)
+	sistema.drop(e, 300.0, Band.Kind.SURFACE, 1, 0.0)
+	assert_int(sistema.take_within(100.0, Band.Kind.SURFACE, 20.0)).is_equal(0)  # no ar
+	_assentar(sistema)
+	assert_int(sistema.take_within(100.0, Band.Kind.SURFACE, 20.0)).is_equal(2)
+	assert_int(sistema.count()).is_equal(2)

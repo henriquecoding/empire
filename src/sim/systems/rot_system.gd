@@ -23,9 +23,6 @@ extends RefCounted
 ## que separa "ainda faltam 3 s" de "ninguem me deu o intervalo".
 const NAO_ARMADA := -1.0
 
-## O tecto de recusas que contam para a massa (§74: min(recusas, 5)).
-const RECUSAS_MAX := 5
-
 const SEM_CRIATURA := &""
 
 var state := RotState.new()
@@ -197,7 +194,9 @@ func _massa_do_dia() -> float:
 		_perfil.mass_per_amargueiro * amargueiros
 		+ _perfil.mass_per_named_amargueiro * named_amargueiros
 	)
-	var recusas := _perfil.refusal_mass * mini(refusals, RECUSAS_MAX)
+	# min(recusas nos ultimos 5 dias, 5): uma recusa por noite, por isso o teto
+	# da contagem e a propria janela (§74, §75).
+	var recusas := _perfil.refusal_mass * mini(refusals, _perfil.refusal_window_days)
 	return base + arvores + minf(recusas, _perfil.refusal_cap)
 
 

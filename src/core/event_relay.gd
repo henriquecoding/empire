@@ -21,6 +21,8 @@ const PORQUE := &"source"
 const FONTE_MORTE := &"death"
 const FONTE_PRODUCAO := &"production"
 const PROPOSITO_RECRUTA := &"recruit"
+const PROPOSITO_CORTE := &"amargueiro_fell"
+const LENHO := &"bitter_wood"
 
 
 ## Passo 4: as mudancas de estado da FSM (§52).
@@ -180,3 +182,15 @@ static func _completa(vaga: BuildSlot, nivel: int) -> void:
 		EventBus.queue(&"build_completed", [vaga.id])
 	if vaga.blocks:
 		EventBus.queue(&"wall_upgraded", [vaga.id, nivel])
+
+
+## Passo 5: o corte de um Amargueiro (§74). O pagamento e um coin_spent como o
+## de uma obra; o Lenho e material produzido. Raiz e Marco nao tem sinal na §46.
+static func amargueiros(eventos: Array[Dictionary]) -> void:
+	for e in eventos:
+		match int(e[AmargueiroSystem.CHAVE]):
+			AmargueiroSystem.EV_CORTE:
+				EventBus.queue(&"coin_spent", [e[AmargueiroSystem.QUANTO], PROPOSITO_CORTE])
+			AmargueiroSystem.EV_CORTADA:
+				var lenho := [e[AmargueiroSystem.ID], LENHO, e[AmargueiroSystem.QUANTO]]
+				EventBus.queue(&"material_produced", lenho)

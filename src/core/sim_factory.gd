@@ -84,3 +84,12 @@ static func rot() -> RotSystem:
 	for recurso in Registry.entries(TABELA_CRIATURAS):
 		criaturas.append(recurso as CreatureData)
 	return RotSystem.new(rot_profile(), criaturas)
+
+
+## Os tres destinos da §74 e as tropas por id: a escala de quem morreu decide
+## quanto Lenho a arvore rende (regra 3).
+static func amargueiros() -> AmargueiroSystem:
+	var destinos := {}
+	for recurso in Registry.entries(&"rot/amargueiros"):
+		destinos[(recurso as AmargueiroData).id] = recurso
+	return AmargueiroSystem.new(rot_profile(), destinos, by_id(TABELA_TROPAS))

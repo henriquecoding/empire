@@ -25,6 +25,8 @@ const MORTO := Color(0.35, 0.33, 0.30, 0.6)
 const LUTA := Color(0.78, 0.31, 0.24)
 const FUGA := Color(0.62, 0.55, 0.78)
 const BICHO := Color(0.35, 0.16, 0.22)
+## A madeira escura e resinosa do Amargueiro (§74).
+const AMARGO := Color(0.22, 0.14, 0.10)
 const MOEDA := Color(0.96, 0.82, 0.29)
 ## §80, a regra das duas excecoes: violeta e A Podridao e so A Podridao.
 const MANCHA := Color(0.35, 0.22, 0.42, 0.55)
