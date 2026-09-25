@@ -23,8 +23,16 @@ enum Phase { WAITING, OPEN, DONE }
 const PRECOS: Array[StringName] = [
 	&"coins", &"troops_below_health", &"named_troop", &"everything_named"
 ]
+## "Revela um Capitulo" guarda-se como revelacao por fazer: e o XIII-07 que a
+## gasta, e a oferta nao espera por ele para existir (§83, minuto 18:00).
 const EFEITOS: Array[StringName] = [
-	&"rot_pause", &"mass_mult", &"mass_mult_permanent", &"rot_detours", &"skip_night", &"rot_ends"
+	&"rot_pause",
+	&"mass_mult",
+	&"mass_mult_permanent",
+	&"rot_detours",
+	&"skip_night",
+	&"rot_ends",
+	&"reveal_chapter",
 ]
 ## O monarca nao e uma tropa: nenhum preco o leva (§75 fala em tropas).
 const REI := &"king"

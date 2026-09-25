@@ -12,6 +12,10 @@
 class_name OfferWatch
 extends RefCounted
 
+## §83, minuto 17:00: a primeira oferta da campanha e a mais barata, de proposito
+## — "Nada. So quero ver.", uma moeda. Ensina o gesto, e e a unica sem nada de mau.
+const PRIMEIRA := &"just_looking"
+
 var offers: OfferSystem
 var debt: DebtLedger
 ## O Zelador (§75): so anda com a Divida no limiar tender_from_debt.
@@ -19,6 +23,10 @@ var tender: Tender
 ## unit_id -> chave do titulo (§76). Quem o escreve e o sistema dos nomes; aqui
 ## so se le, para saber quem pode pagar uma oferta de nomes.
 var titles: Dictionary = {}
+## Quantas vezes ela ja falou nesta campanha. A primeira e a do §83.
+var spoken: int = 0
+## Capitulos por revelar (§77): o que "Nada. So quero ver." da. O XIII-07 gasta-os.
+var reveals: int = 0
 
 var _moedas: CoinSystem
 var _tropas: UnitSystem
@@ -116,6 +124,8 @@ func to_dict() -> Dictionary:
 		&"debt": debt.to_dict(),
 		&"tender": tender.to_dict(),
 		&"pause": _pausa,
+		&"spoken": spoken,
+		&"reveals": reveals,
 	}
 
 
@@ -124,6 +134,8 @@ func from_dict(d: Dictionary) -> void:
 	debt.from_dict(d.get(&"debt", {}))
 	tender.from_dict(d.get(&"tender", {}))
 	_pausa = d.get(&"pause", _pausa)
+	spoken = d.get(&"spoken", spoken)
+	reveals = d.get(&"reveals", reveals)
 
 
 ## "Chegar ao nucleo" e entrar na meia largura do castelo-arvore (§10, §55).
@@ -140,6 +152,10 @@ func _abrir(rot: RotSystem, dia: int, nucleo: float, amargueiros: AmargueiroSyst
 		offers.close_quietly()
 		return
 	var escolhida := lista[RngService.int_range(&"rot", 0, lista.size() - 1)]
+	for o in lista:
+		if spoken == 0 and o.id == PRIMEIRA:
+			escolhida = o
+	spoken += 1
 	# O prato fica a borda da mancha, do lado do imperio (§75).
 	var rumo := signf(nucleo - rot.position_x())
 	var x := rot.position_x() + rumo * rot.state.width * BuildSystem.METADE
@@ -166,4 +182,6 @@ func _aceite(rot: RotSystem, dia: int) -> void:
 		&"rot_ends":
 			debt.ended = true
 			rot.retreat()
+		&"reveal_chapter":
+			reveals += int(o.effect_value)
 	EventBus.queue(&"rot_fed", [maxf(0.0, antes - rot.mass()), o.id])

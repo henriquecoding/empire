@@ -82,7 +82,9 @@ func test_so_sao_candidatas_as_que_se_podem_pagar_e_cumprir() -> void:
 	var ids: Array[String] = []
 	for c in o.candidates(_factos({&"named": 1, &"debt": 12}), 30, PackedStringArray()):
 		ids.append(String(c.id))
-	assert_array(ids).contains_exactly(["give_back_whats_mine", "tell_me_a_name", "the_lame"])
+	assert_array(ids).contains_exactly(
+		["give_back_whats_mine", "just_looking", "tell_me_a_name", "the_lame"]
+	)
 	# O que falta nao esta esquecido: esta escrito, oferta a oferta.
 	for c: OfferData in Registry.entries(&"rot/offers"):
 		var pagavel := OfferSystem.PRECOS.has(c.price_kind)

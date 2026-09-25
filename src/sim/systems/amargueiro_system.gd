@@ -1,30 +1,23 @@
 # src/sim/systems/amargueiro_system.gd — o que a noite deixa no campo (§74).
 #
-# Uma tropa que morre fora das muralhas e nao e recolhida cria raiz na alvorada,
-# com a cara na casca. Nao anda, nao ataca, nao se destroi por dano: alimenta a
-# noite seguinte com +22 de massa, ou +45 se tinha nome.
+# Uma tropa que morre fora das muralhas cria raiz na alvorada, com a cara na
+# casca, e alimenta a noite seguinte: +22 de massa, ou +45 se tinha nome. Os tres
+# destinos sao o Verbo 1 (§05): cortar e moeda na base — um slot de destino no
+# BuildSystem (§55); consagrar e uma Semente Real, e vira Marco; deixar e nada.
 #
-# Os tres destinos sao sempre o Verbo 1 (§05): cortar e largar moedas na base,
-# e por isso e um slot de destino no BuildSystem (§55) — a moeda cai, e quem la
-# esta faz a serra andar; consagrar e largar uma Semente Real, e vira Marco de
-# pedra; deixar e nao fazer nada.
-#
-# Colunas, como a §84 as escreve: um indice por arvore. Puro: devolve o que houve.
-#
-# O que NAO esta aqui: a Semente Real como coisa que se larga (§15, §57 — ainda
-# nao existe, Q-087); o Amargueiro subterraneo a bloquear a passagem (Ato III,
-# §79); o limite das regioes adjacentes (ha uma regiao so). O moral do nomeado
-# cortado sai no evento e e o XIII-05 que o cobra. Onde se cria raiz e quem se
-# levanta sao as regras do AmargueiroRoots.
+# Colunas, como a §84 as escreve. Puro: devolve o que houve. Onde se cria raiz e
+# do AmargueiroRoots. Fora daqui: a Semente Real como coisa que se larga (Q-087),
+# o Amargueiro subterraneo a bloquear a passagem (§79), as regioes adjacentes.
 class_name AmargueiroSystem
 extends RefCounted
 
-enum Fate { STANDING, MARKER }
+## OLD e o Amargueiro velho do segmento de abertura (§83): de pe desde antes de
+## ti, com cara, sem serra, e fora da tua massa (Q-096).
+enum Fate { STANDING, MARKER, OLD }
 
 const NENHUM := -1
 
-## O kind do slot de destino. Nao e um edificio de buildings.csv: e a arvore
-## vista pelo BuildSystem, e quem a desenha sabe que nao a deve desenhar como obra.
+## O kind do slot de destino: a arvore vista pelo BuildSystem, e nao uma obra.
 const CORTE := &"amargueiro"
 
 const CORTAR := &"fell"
@@ -193,6 +186,12 @@ func from_dict(d: Dictionary, obras: BuildSystem) -> void:
 func plant(x: float, faixa: int, escala: int, dia: int, titulo: String) -> int:
 	_plantar(x, faixa, escala, dia, titulo)
 	return count() - 1
+
+
+func plant_old(x: float, faixa: int, escala: int) -> int:
+	var i := plant(x, faixa, escala, 0, "")
+	fates[i] = Fate.OLD
+	return i
 
 
 ## Uma serra nova para a arvore i. Publica para o save a poder repor.

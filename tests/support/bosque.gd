@@ -55,11 +55,16 @@ static func alvorada(
 
 static func moedas_pousadas(estado: GameState, x: float, quantas: int) -> CoinSystem:
 	var moedas := CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
+	pousar(moedas, estado, x, quantas)
+	return moedas
+
+
+## Larga moedas em x e deixa-as cair ate ao chao.
+static func pousar(moedas: CoinSystem, estado: GameState, x: float, quantas: int) -> void:
 	for _i in quantas:
 		moedas.drop(estado, x, Band.Kind.SURFACE, 1, 0.0)
 	for _t in 300:
 		moedas.tick(PASSO)
-	return moedas
 
 
 ## Paga o corte com o Verbo 1 e poe alguem ao pe da arvore ate a serra acabar —
@@ -77,6 +82,7 @@ static func cortar(
 
 
 ## A noite como o SimLoop a monta, com tropas, obras e moedas proprias.
-static func noite(u: UnitSystem, o: BuildSystem) -> NightWatch:
-	var moedas := CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
+static func noite(u: UnitSystem, o: BuildSystem, moedas: CoinSystem = null) -> NightWatch:
+	if moedas == null:
+		moedas = CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
 	return NightWatch.new(u, o, moedas, SimFactory.job_board())

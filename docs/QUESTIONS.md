@@ -978,9 +978,9 @@
   os tem), tesouraria, Capítulos (§77), sucessor (§15), povos (§78), classes jogáveis (§08), passagens seladas,
   e a Semente Real como coisa que se larga (Q-087).
 - **O que foi feito:** uma oferta só é candidata quando o preço dela se pode pagar com o Verbo 1 **e** o efeito
-  existe. Hoje: *Dá-me o que já não anda* (a partir do dia 3), *Diz-me um nome* (com nomeados, XIII-05) e
-  *Devolve-me o que é meu* (com a Dívida em 12). As outras nove não são sorteadas — nenhuma aparece para não
-  fazer nada. Cada sistema que chegar acrescenta a sua linha às duas listas, e a oferta entra sozinha.
+  existe. Hoje: *Nada. Só quero ver.* (dia 2+, a do §83 — a revelação fica guardada para os Capítulos), *Dá-me
+  o que já não anda* (dia 3+), *Diz-me um nome* (com nomeados, XIII-05) e *Devolve-me o que é meu* (com a
+  Dívida em 12). As outras oito não são sorteadas — nenhuma aparece para não fazer nada. Cada sistema que chegar acrescenta a sua linha às duas listas, e a oferta entra sozinha.
 - **Q-040 e Q-053 continuam por decidir por isto:** *O que brilha* e *Fica com a candeia* não são candidatas
   enquanto não houver tesouraria nem classes. O `once_per_campaign` da Q-040 já é respeitado.
 - **Decide:** o calendário.
@@ -1033,6 +1033,21 @@
   ficar, os campos da §84 — e as duas ligações que já têm onde pegar: cada alvorada é um dia de Colheita, e o
   marco de cada povo que ficou pesa +22 por noite, como um Amargueiro que não se corta.
 - **Decide:** tu (o gesto) e o calendário (a conquista).
+
+### Q-096 · O Amargueiro velho do minuto 0:00, e o dia da primeira oferta
+- **Onde:** §83 (a tabela dos vinte minutos e a caixa *"o que o segmento de abertura passa a ter de conter"*),
+  §25 (*"a noite 1 é ganha de certeza"*), §74, `offers.csv` (`just_looking`, `min_day 2`).
+- **O Amargueiro velho:** está lá desde o primeiro frame, logo a seguir à estacaria da esquerda (−750 px do
+  núcleo). O §83 não diz se pesa na massa. Pesar eram +22 na noite 1 — a que tem de ser ganha de certeza —, e
+  por isso **não pesa**: é cenário de antes de ti (`Fate.OLD`), não se serra e não se consagra. Reverte-se numa
+  linha (`Fate.STANDING`).
+- **A primeira oferta:** a primeira da campanha é sempre *"Nada. Só quero ver."*, como o §83 manda. Mas o §83
+  põe-na no crepúsculo do **dia 3** (17:00) e a tabela da §75 — e o `offers.csv` — dá-lhe **dia 2+**. Com os
+  dados como estão, ela fala na noite 2. Não mexi no `min_day`: é dado da §75 e a divergência é entre as duas
+  secções.
+- **O que falta do segmento de abertura:** o vagabundo com `head_pool` fixo é arte (ART-01: no greybox todas as
+  caras são a mesma), e a bifurcação a três ecrãs para leste precisa dos Capítulos (XIII-07).
+- **Decide:** tu.
 
 ## Resolvidas na v5.2 (reversíveis)
 

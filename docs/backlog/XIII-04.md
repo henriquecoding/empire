@@ -7,7 +7,7 @@ Depende   XIII-03
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Uma oferta por noite, no prato, com o Verbo 1; a Dívida sobe e nunca desce; o Zelador aos 6
 Fora      Os epílogos — é o XIII-08.
-Estado    feito — 3 das 12 ofertas com preço e efeito ligados (Q-091)
+Estado    feito — 4 das 12 ofertas com preço e efeito ligados (Q-091)
 Horas     20 (12 + 4 arte + 2 som + 2 escrita)
 ```
 
@@ -21,7 +21,7 @@ Horas     20 (12 + 4 arte + 2 som + 2 escrita)
 - **A Dívida sobe e nunca desce**, e o D-06 prova-o por caminhos. **O D-05 e o D-06 deixaram de estar saltados.**
 - **O Zelador aos 6**: nasce com a mancha, anda atrás dela, um muro de pé pára-o, e se chegar ao núcleo leva uma tropa nomeada — uma por noite. Afastá-lo não tem gesto (Q-092).
 - **O mostrador é a luz.** A candeia só ilumina a faixa da mancha; a Dívida vai-a estendendo às vizinhas (1, 1,5, 2 faixas, o ecrã inteiro), pela tabela da §75. A frase aparece no mundo por chave de `strings.csv`, sem caixa e sem contador. O ambiente âmbar dos 9–11 e as duas chamas dos 12+ ficam para a arte da candeia.
-- **Só três ofertas têm hoje onde pegar** — o preço e o efeito das outras dependem de portões, tesouraria, Capítulos, sucessor e povos (Q-091). Nenhuma aparece para não fazer nada. Q-040 e Q-053 ficam por decidir por isto.
+- **Só quatro ofertas têm hoje onde pegar** (a quarta, *Nada. Só quero ver.*, entrou com o XIII-10) — o preço e o efeito das outras dependem de portões, tesouraria, Capítulos, sucessor e povos (Q-091). Nenhuma aparece para não fazer nada. Q-040 e Q-053 ficam por decidir por isto.
 - **Informação para o §66 (Q-093):** o instrumento dos dez dias não paga ofertas, e por isso recusa todas; com o imposto das recusas, a defesa do décimo dia cai ao dia 9. O teste do §66 mede o que media (a mancha calada) e diz-o; o de recusar sempre está saltado com a razão. Nenhum número de `data/` foi mexido.
 - `rot.csv` ganha `offer_plate_px` (96, em `_proposed`, Q-090).
 

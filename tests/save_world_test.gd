@@ -200,11 +200,12 @@ func test_o_amargueiro_e_a_serra_a_meio_atravessam_o_ficheiro() -> void:
 	SimLoop.load_world(SaveService.restore_world(SLOT))
 
 	var lido := SimLoop.night.amargueiros
-	assert_int(lido.count()).is_equal(1)
-	assert_float(lido.xs[0]).is_equal(x)
+	assert_int(lido.count()).is_equal(bosque.count())  # e o velho do §83 tambem
+	var k := Array(lido.xs).find(x)
+	assert_int(k).is_equal(i)
 	assert_int(lido.named()).is_equal(1)
 	assert_int(lido.bitter_wood).is_equal(3)
-	var s := SimLoop.builds.index_of(lido.slot_ids[0])
+	var s := SimLoop.builds.index_of(lido.slot_ids[k])
 	assert_int(s).is_not_equal(BuildSystem.NENHUM)
 	assert_str(String(SimLoop.builds.slots[s].kind)).is_equal(String(AmargueiroSystem.CORTE))
 	assert_int(SimLoop.builds.slots[s].paid).is_equal(2)

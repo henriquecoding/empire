@@ -52,7 +52,8 @@ func test_a_oferta_abre_o_prato_a_borda_da_mancha_do_lado_do_imperio() -> void:
 	_noite_ate_ao_prato(noite, estado)
 	var o := noite.voice.offers
 	assert_int(o.phase).is_equal(OfferSystem.Phase.OPEN)
-	assert_str(String(o.offer_id)).is_equal("the_lame")  # a unica candidata ao dia 5
+	# A primeira da campanha e sempre a do §83, a mais barata.
+	assert_str(String(o.offer_id)).is_equal(String(OfferWatch.PRIMEIRA))
 	var rumo := signf(B.NUCLEO - noite.rot.position_x())
 	assert_float(signf(o.plate_x - noite.rot.position_x())).is_equal(rumo)
 
@@ -64,13 +65,13 @@ func test_aceitar_sobe_a_divida_apaga_as_recusas_e_para_a_mancha() -> void:
 	var estado := GameState.new()
 	estado.day = DIA
 	_virar(noite, GameClock.Phase.DUSK, estado)
-	_noite_ate_ao_prato(noite, estado)
+	var coxos := Registry.entry(&"rot/offers", &"the_lame") as OfferData
+	noite.voice.offers.open(coxos, noite.rot.position_x(), int(Band.Kind.SURFACE))
 	var ferido := u.spawn(
 		estado, Registry.entry(&"units", &"archer"), B.MEU_IMPERIO, noite.voice.offers.plate_x
 	)
 	u.healths[u.index_of(ferido)] = 1
 	noite.tick(B.PASSO, int(GameClock.Phase.NIGHT), false, estado, CreatureSystem.new(), _mundo())
-	var coxos := Registry.entry(&"rot/offers", &"the_lame") as OfferData
 	assert_int(noite.voice.debt.debt).is_equal(coxos.debt_delta)
 	assert_int(noite.voice.debt.refusals(DIA + 1)).is_equal(0)
 	assert_int(u.index_of(ferido)).is_equal(UnitSystem.NENHUM)
