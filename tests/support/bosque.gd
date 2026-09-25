@@ -78,6 +78,5 @@ static func cortar(
 
 ## A noite como o SimLoop a monta, com tropas, obras e moedas proprias.
 static func noite(u: UnitSystem, o: BuildSystem) -> NightWatch:
-	return NightWatch.new(
-		u, o, CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
-	)
+	var moedas := CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
+	return NightWatch.new(u, o, moedas, SimFactory.job_board())

@@ -104,3 +104,12 @@ static func offers() -> OfferSystem:
 ## O Zelador (§75): o tender de creatures.csv, que nao e invocado pela massa.
 static func tender() -> Tender:
 	return Tender.new(Registry.entry(TABELA_CRIATURAS, &"tender") as CreatureData)
+
+
+## Os nomes (§76): os nove titulos, o teto e o luto da curva, e as duas tabelas
+## que dizem o que um feito e — quem o fez, e o que se abateu.
+static func titles() -> TitleSystem:
+	var lista: Array[TitleData] = []
+	for recurso in Registry.entries(&"lore/titles"):
+		lista.append(recurso as TitleData)
+	return TitleSystem.new(lista, curve(), by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS))

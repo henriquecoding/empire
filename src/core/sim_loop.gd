@@ -167,7 +167,7 @@ func step(delta: float) -> void:
 	EventRelay.builds(builds.absorb(coins))
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
-	_largar(EventRelay.combat(combat.resolve(units, creatures, builds, _roll)))  # 6 · combate
+	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
@@ -196,7 +196,7 @@ func _montar() -> void:
 	morale = SimFactory.morale()
 	economy = SimFactory.economy()
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
-	night = NightWatch.new(units, builds, coins)
+	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
 	tally.reset()
 	_fase = UnitSystem.NENHUM

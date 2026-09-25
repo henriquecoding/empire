@@ -79,6 +79,8 @@ src/sim/systems/offer_rules.gd OfferRules    a gramatica da coluna requires (§7
 src/sim/systems/offer_price.gd OfferPrice    se o preco caiu no prato (§75)
 src/sim/systems/debt_ledger.gd DebtLedger    a Divida da Candeia e as recusas (§75)
 src/sim/systems/tender.gd   Tender        o Zelador (§75)
+src/sim/systems/title_system.gd TitleSystem  quem tem nome, o teto, o luto e o ordinal (§76)
+src/sim/systems/feat_ledger.gd FeatLedger    os feitos registados (§76)
 src/core/offer_watch.gd     OfferWatch    a voz da Podridao: falar, cobrar, dar (§75)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
@@ -93,6 +95,7 @@ src/world/creature_art.gd   CreatureArt   o que um bicho E, por dentro da caixa 
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
 src/world/amargueiro_view.gd AmargueiroView a arvore com a cara na casca, e o Marco (§74)
 src/world/offer_view.gd     OfferView     o prato, a frase e o Zelador (§75)
+src/world/title_view.gd     TitleView     a fita de quem tem nome (§76)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)

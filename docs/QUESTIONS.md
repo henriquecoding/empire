@@ -1007,6 +1007,20 @@
   mudam), ou só para quem aceita alguma coisa (e então o instrumento precisa de uma política de ofertas).
 - **Decide:** tu.
 
+### Q-094 · Dos nove feitos, cinco têm hoje o que observar; das nove bonificações, uma
+- **Onde:** §76, a tabela dos nove feitos; `src/sim/systems/feat_ledger.gd`, `title_system.gd`.
+- **O que falta:** *Último na porta* precisa de portões (o §10 não os tem); *Trouxe os outros*, do gesto de
+  arrastar corpos (§16, Q-088); *Não comeu*, de cozinha e consumo; *Voltou*, da ressurreição (§16). Até lá
+  nunca se cumprem. Das bonificações, só **+1 vida máxima** tem onde pegar: *não foge*, *+10% cadência*,
+  *+2 dano contra cerco*, *arrasta ao dobro*, *não entra em pânico na candeia*, *metade da comida*,
+  *imune a encantamento* e *a arma sobe um nível* mexem na moral, no combate e na economia, e ficam escritas
+  em `titles.csv` à espera de quem as leia.
+- **Também em aberto:** *"serrá-lo tira 1 ponto de moral ao império durante 2 dias"* (§74, §76) — o moral do
+  império não existe (o do §07 é por tropa). O corte de um Amargueiro nomeado já devolve o custo no evento.
+- **O que foi feito:** os cinco feitos observáveis (noites em posto de cerco, Rastejantes abatidos, o golpe
+  final num Aríete, sair vivo de dentro da mancha, dias com a mesma arma) e as quatro regras inteiras.
+- **Decide:** o calendário.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

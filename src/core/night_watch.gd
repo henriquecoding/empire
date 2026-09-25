@@ -21,20 +21,25 @@ const TABELA_CRIATURAS := &"creatures"
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
 var voice: OfferWatch
+## Os nomes (§76): ganham-se na alvorada, e a noite e onde se fazem os feitos.
+var names: TitleSystem
 
 var _tropas: UnitSystem
 var _obras: BuildSystem
+var _postos: JobBoard
 
 
 ## As tropas, as obras e as moedas sao as do SimLoop, e as mesmas durante o jogo
 ## inteiro: um corpo sai das colunas na alvorada, uma serra entra no
 ## BuildSystem (§55), e o preco de uma oferta cai no prato (§75).
-func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem) -> void:
+func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: JobBoard) -> void:
 	rot = SimFactory.rot()
 	amargueiros = SimFactory.amargueiros()
 	voice = OfferWatch.new(moedas, tropas, obras)
+	names = SimFactory.titles()
 	_tropas = tropas
 	_obras = obras
+	_postos = postos
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -45,6 +50,7 @@ func tick(
 	if mudou:
 		_virar(fase, estado, bichos, mundo)
 	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
+	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
 	if not rot.active() or voice.paused(delta):
 		return
@@ -55,7 +61,15 @@ func tick(
 	# luz do §10 e nao consagram nada; o altar consagrado e da Fase 6.
 	for pedido in rot.tick(delta, amargueiros.consecrated()):
 		_invocar(pedido, estado, bichos, mundo.x)
+	var meia := rot.state.width * BuildSystem.METADE
+	names.stain(_tropas, rot.position_x() - meia, rot.position_x() + meia)  # §76
 	EventBus.queue(&"rot_moved", [rot.position_x(), rot.state.width])
+
+
+## Passo 6: o que o combate devolveu passa pelo registo dos feitos (§76) — quem
+## abateu o que — e segue tal e qual para o EventRelay.
+func feats(eventos: Array[Dictionary]) -> Array[Dictionary]:
+	return names.observe(eventos)
 
 
 ## Os intervalos em x por onde ela ja passou. O §49 le isto para saber que um
@@ -70,7 +84,11 @@ func trail() -> Array[Vector2]:
 func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2) -> void:
 	if fase == GameClock.Phase.DAWN:
 		# O dia do relogio e nao o do GameState: esse so e espelhado no fim do tick.
-		amargueiros.at_dawn(ClockService.clock.day, _tropas, _obras, mundo.x, mundo.y)
+		# Os nomes leem-se ANTES de os corpos se levantarem: uma arvore nomeada e a
+		# cara de alguem que tinha titulo (§74, §76), e o titulo so depois vai de luto.
+		var dia := ClockService.clock.day
+		amargueiros.at_dawn(dia, _tropas, _obras, mundo.x, mundo.y, names.by_unit())
+		names.at_dawn(dia, _tropas, _postos)
 	if fase == GameClock.Phase.DUSK:
 		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
 		rot.amargueiros = amargueiros.anonymous()

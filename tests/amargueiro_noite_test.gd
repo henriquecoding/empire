@@ -78,3 +78,20 @@ func test_a_arvore_tem_a_altura_da_pessoa_e_no_subsolo_pende_do_tecto() -> void:
 	var chao := WorldPalette.ground_of(int(Band.Kind.SURFACE))
 	assert_float(AmargueiroView.box(bosque, baixa).end.y).is_equal(chao)
 	assert_float(AmargueiroView.box(bosque, funda).position.y).is_equal(float(Band.GROUND_LINE))
+
+
+func test_um_nomeado_morto_la_fora_e_uma_arvore_nomeada_e_o_titulo_vai_de_luto() -> void:
+	var u := UnitSystem.new()
+	var o := BuildSystem.new()
+	var noite := B.noite(u, o)
+	var estado := GameState.new()
+	estado.day = DIA
+	var morto := B.morto(u, estado, &"archer", B.FORA)
+	noite.names.from_dict({&"titles_holder": {"the_counter": morto}})
+	_virar(noite, GameClock.Phase.DAWN, estado)
+	assert_int(noite.amargueiros.named()).is_equal(1)
+	assert_str(noite.amargueiros.titles[0]).is_equal("the_counter")
+	assert_int(noite.names.count()).is_equal(0)
+	assert_bool(noite.names.mourning.has("the_counter")).is_true()
+	_virar(noite, GameClock.Phase.DUSK, estado)
+	assert_float(noite.rot.mass()).is_equal(Model.rot_mass(DIA, 0, B.perfil(), 0, 1))
