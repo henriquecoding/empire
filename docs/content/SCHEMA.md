@@ -406,6 +406,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `amargueiro_nights_standing` | int | v6 · a massa escreve-se de dia |  |
 | `amargueiro_roots_outside_walls` | bool | v6 · a massa escreve-se de dia |  |
 | `amargueiro_roots_underground` | bool | v6 · a massa escreve-se de dia |  |
+| `amargueiro_base_px` | float | v6 · a massa escreve-se de dia |  |
 | `lantern_radius_base` | float | v6 · a candeia |  |
 | `lantern_radius_per_day` | float | v6 · a candeia |  |
 | `lantern_radius_max` | float | v6 · a candeia |  |
@@ -416,6 +417,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
 | `offer_seconds` | float | v6 · a oferta |  |
+| `offer_plate_px` | float | v6 · a oferta |  |
 | `offers_per_night` | int | v6 · a oferta |  |
 | `refusal_mass` | float | v6 · a oferta |  |
 | `refusal_window_days` | int | v6 · a oferta |  |

@@ -107,11 +107,11 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 ## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
 ## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
 func world() -> Dictionary:
-	return SimSave.world(units, creatures, coins, builds, night.rot, king_id)
+	return SimSave.world(units, creatures, coins, builds, night, king_id)
 
 
 func load_world(mundo: Dictionary) -> void:
-	king_id = SimSave.restore(units, creatures, coins, builds, night.rot, mundo)
+	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo)
 
 
 func stop() -> void:
@@ -168,7 +168,7 @@ func step(delta: float) -> void:
 	EventRelay.builds(builds.absorb(coins))
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
-	_largar(EventRelay.combat(combat.resolve(units, creatures, builds, _roll)))  # 6 · combate
+	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
@@ -196,8 +196,8 @@ func _montar() -> void:
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()
 	economy = SimFactory.economy()
-	night = NightWatch.new()
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
+	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
 	tally.reset()
 	_fase = UnitSystem.NENHUM

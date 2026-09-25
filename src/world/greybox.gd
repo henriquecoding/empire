@@ -55,6 +55,12 @@ const PASSAGENS_X := [-950.0, 950.0]
 const VAGABUNDOS_X := [-240.0, 320.0, 780.0, 1240.0]
 const ARQUEIROS_X := [-620.0, -180.0, 520.0]
 const LANCEIROS_X := [-1100.0, 1000.0]
+# §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
+# casca." Esta la desde o primeiro frame e nao e apontada por nada. O muro e o do
+# §25, a estacaria do minuto 3:30 — a de dentro —, e a arvore fica logo depois
+# dele, entre a torre e o galinheiro. Tem a escala de uma tropa (§22).
+const AMARGUEIRO_VELHO_X := -750.0
+const AMARGUEIRO_VELHO_ESCALA := 2
 
 const POSTO_MURO := &"wall"
 const POSTO_CANTEIRO := &"farm"
@@ -66,6 +72,9 @@ const MEIO := 0.5
 ## Um jogo novo: a regiao e quem la vive. Devolve o id do monarca.
 static func build() -> int:
 	region()
+	var faixa := int(Band.Kind.SURFACE)
+	var x := SimLoop.core_x + AMARGUEIRO_VELHO_X
+	SimLoop.night.amargueiros.plant_old(x, faixa, AMARGUEIRO_VELHO_ESCALA)
 	return _gente()
 
 

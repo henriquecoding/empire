@@ -73,23 +73,45 @@ func test_d04_a_penalizacao_por_recusa_nunca_passa_de_40() -> void:
 		assert_float(mass - Model.rot_mass(10, 0, r)).is_less_equal(r.refusal_cap)
 
 
-# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
-# gdlint: disable=unused-argument
-func test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas(
-	do_skip := true,
-	skip_reason := "Falta o RotSystem (§51) e o OfferSystem (§75): e um teste de tick, nao de dados."
-) -> void:
-	assert_int(_rot().offers_per_night).is_equal(1)
+func test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas() -> void:
+	# A partir do dia 12 ha duas manchas (§05). As duas perguntam a mesma noite, a
+	# cada tick, uma de cada lado do muro: so uma fala, e so uma vez.
+	var r := _rot()
+	assert_int(r.offers_per_night).is_equal(1)
+	var voz := SimFactory.offers()
+	voz.dusk()
+	var muro := 1000.0
+	var passo := 1.0 / 30.0
+	var falou := 0
+	for _t in int(r.offer_window_after_dusk.y * 2.0 / passo):
+		for mancha in [muro + 10.0, muro - 10.0]:
+			if voz.due(passo, mancha, muro):
+				falou += 1
+				voz.open(load("res://data/rot/offers/the_lame.tres"), mancha, 1)
+	assert_int(falou).is_equal(r.offers_per_night)
 
 
-func test_d06_a_divida_nunca_desce(
-	do_skip := true,
-	skip_reason := "Falta o DebtLedger (§75): so um teste de caminhos prova que nao ha subtracao."
-) -> void:
-	assert_int(_rot().debt_max).is_equal(20)
-
-
-# gdlint: enable=unused-argument
+func test_d06_a_divida_nunca_desce() -> void:
+	# Todos os caminhos do DebtLedger, por uma ordem qualquer: nenhum desce a
+	# Divida. Nao ha subtracao, e isto e o que o prova sem ler o codigo.
+	var r := _rot()
+	assert_int(r.debt_max).is_equal(20)
+	var livro := DebtLedger.new(r)
+	var antes := livro.debt
+	var caminhos := [
+		func() -> void: livro.incur(3),
+		func() -> void: livro.refuse(4),
+		func() -> void: livro.accept(5),
+		func() -> void: livro.remember(&"all_that_shines"),
+		func() -> void: livro.from_dict(livro.to_dict()),
+		func() -> void: livro.incur(0),
+	]
+	for volta in 8:
+		for c: Callable in caminhos:
+			c.call()
+			assert_int(livro.debt).is_greater_equal(antes)
+			antes = livro.debt
+	assert_int(livro.debt).is_equal(r.debt_max)
 
 
 func test_d06_dados_nenhuma_oferta_tem_divida_negativa() -> void:

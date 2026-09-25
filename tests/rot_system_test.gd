@@ -165,3 +165,64 @@ func test_o_rasto_cobre_o_que_ela_ja_atravessou() -> void:
 	assert_bool(rot.trail_covers(rot.position_x())).is_true()
 	assert_bool(rot.trail_covers(0.0)).is_true()
 	assert_bool(rot.trail_covers(LARGURA)).is_false()
+
+
+# ─── XIII-02: o termo dos Amargueiros na massa (§74) ─────────────────────────
+
+
+func test_a_tabela_da_74_sai_do_sistema_e_nao_so_do_modelo() -> void:
+	# O D-01 prova a tabela contra o modelo de referencia; isto prova que o
+	# RotSystem a le igual. [dia, anonimos, nomeados, massa] — as quatro linhas
+	# da §74 nas tres colunas, com zero fortalezas e zero recusas.
+	var tabela := [
+		[5, 0, 0, 130.0],
+		[10, 0, 0, 220.0],
+		[20, 0, 0, 400.0],
+		[5, 3, 0, 196.0],
+		[10, 3, 0, 286.0],
+		[20, 3, 0, 466.0],
+		[5, 8, 0, 306.0],
+		[10, 8, 0, 396.0],
+		[20, 8, 0, 576.0],
+		[5, 5, 3, 375.0],
+		[10, 5, 3, 465.0],
+		[20, 5, 3, 645.0],
+	]
+	for linha in tabela:
+		var rot := _mancha()
+		rot.amargueiros = linha[1]
+		rot.named_amargueiros = linha[2]
+		rot.spawn(linha[0], DIREITA, LARGURA)
+		var msg := "dia %d, %d + %d nomeados" % [linha[0], linha[1], linha[2]]
+		assert_float(rot.mass()).override_failure_message(msg).is_equal(linha[3])
+		var ref := Referencia.rot_mass(linha[0], 0, _perfil(), linha[1], linha[2])
+		assert_float(rot.mass()).is_equal(ref)
+
+
+func test_as_arvores_so_pesam_na_noite_seguinte() -> void:
+	# §74: o Amargueiro "alimenta a noite seguinte". A massa escreve-se ao
+	# crepusculo; uma arvore que nasce depois nao engorda a mancha ja no campo.
+	var rot := _mancha()
+	rot.spawn(20, DIREITA, LARGURA)
+	rot.amargueiros = 3
+	assert_float(rot.mass()).is_equal(400.0)
+	rot.retreat()
+	rot.spawn(20, DIREITA, LARGURA)
+	assert_float(rot.mass()).is_equal(466.0)
+
+
+func test_o_save_guarda_o_que_o_jogador_escreveu_de_dia() -> void:
+	var rot := _mancha()
+	rot.fortresses = 3
+	rot.amargueiros = 5
+	rot.named_amargueiros = 3
+	rot.spawn(20, DIREITA, LARGURA)
+
+	var lida := _mancha()
+	lida.from_dict(rot.to_dict())
+	lida.spawn(20, DIREITA, LARGURA)
+
+	assert_int(lida.amargueiros).is_equal(5)
+	assert_int(lida.named_amargueiros).is_equal(3)
+	assert_float(lida.mass()).is_equal(rot.mass())
+	assert_float(lida.mass()).is_equal(Referencia.rot_mass(20, 3, _perfil(), 5, 3))

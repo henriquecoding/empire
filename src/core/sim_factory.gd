@@ -20,6 +20,7 @@ const TABELA_TROPAS := &"units"
 const TABELA_CRIATURAS := &"creatures"
 const TABELA_PODRIDAO := &"rot"
 const PODRIDAO := &"default"
+const TABELA_AMARGUEIROS := &"rot/amargueiros"
 
 
 static func curve() -> EconomyCurve:
@@ -84,3 +85,31 @@ static func rot() -> RotSystem:
 	for recurso in Registry.entries(TABELA_CRIATURAS):
 		criaturas.append(recurso as CreatureData)
 	return RotSystem.new(rot_profile(), criaturas)
+
+
+## O que a noite deixa no campo (§74): os tres destinos, e a escala de quem morre.
+static func amargueiros() -> AmargueiroSystem:
+	return AmargueiroSystem.new(rot_profile(), by_id(TABELA_AMARGUEIROS), by_id(TABELA_TROPAS))
+
+
+## A voz da Podridao (§75): as doze ofertas, e a tabela das tropas para saber
+## quem e o monarca — que nenhum preco leva.
+static func offers() -> OfferSystem:
+	var lista: Array[OfferData] = []
+	for recurso in Registry.entries(&"rot/offers"):
+		lista.append(recurso as OfferData)
+	return OfferSystem.new(rot_profile(), lista, by_id(TABELA_TROPAS))
+
+
+## O Zelador (§75): o tender de creatures.csv, que nao e invocado pela massa.
+static func tender() -> Tender:
+	return Tender.new(Registry.entry(TABELA_CRIATURAS, &"tender") as CreatureData)
+
+
+## Os nomes (§76): os nove titulos, o teto e o luto da curva, e as duas tabelas
+## que dizem o que um feito e — quem o fez, e o que se abateu.
+static func titles() -> TitleSystem:
+	var lista: Array[TitleData] = []
+	for recurso in Registry.entries(&"lore/titles"):
+		lista.append(recurso as TitleData)
+	return TitleSystem.new(lista, curve(), by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS))

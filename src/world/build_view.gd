@@ -38,7 +38,8 @@ static func draw_on(
 ) -> void:
 	var pulso := blink(tempo)
 	for vaga in SimLoop.builds.slots:
-		if vaga.band != faixa:
+		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
+		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso)
 

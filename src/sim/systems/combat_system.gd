@@ -54,6 +54,8 @@ const MOEDAS := &"coins"
 const LARGA := &"drops"
 const OBRA := &"slot"
 const EVENTOS := &"events"
+## O que a criatura era: o nome de um feito (§76) depende de QUEM se abateu.
+const QUEM := &"data_id"
 
 var picker: TargetPicker
 
@@ -208,6 +210,7 @@ func _mortes_das_criaturas() -> void:
 					FAIXA: int(_c.bands[c]),
 					MOEDAS: _c.coin_drops[c],
 					CRIATURA: true,
+					QUEM: _c.data_ids[c],
 				}
 			)
 		)

@@ -58,7 +58,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [ART-02](ART-02.md) | A paleta mestra e o LUT | F0-01 | por fazer |
 | [ART-03](ART-03.md) | As seis camadas de parallax com teto de valores | ART-02, F0-08 | por fazer |
 | [ART-04](ART-04.md) | Rostos e expressões: o catálogo do §60 | ART-01 | por fazer |
-| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | por fazer |
+| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | parcial — falta a bifurcação dos Capítulos e a cara fixa do vagabundo (Q-104) |
 | [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | por fazer |
 | [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | por fazer |
 | [GB-04](GB-04.md) | O passo do §21: a região atravessa-se em 40–60 s | GB-01 | feito |
@@ -98,15 +98,15 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | Ticket | Tarefa | Depende | Horas | Estado |
 |---|---|---|---|---|
 | [XIII-01](XIII-01.md) | §80 · O preto na paleta e a noite castanha | ART-02 | 4 (2 código + 2 arte) | por fazer |
-| [XIII-02](XIII-02.md) | §74 · O termo dos Amargueiros na massa | F1-08 | 1 | por fazer |
-| [XIII-03](XIII-03.md) | §74 · O Amargueiro e a candeia, completos | XIII-02, F1-06, ART-04 | 13 (10 + 3 arte) | por fazer |
-| [XIII-04](XIII-04.md) | §75 · A Oferta e a Dívida da Candeia | XIII-03 | 20 (12 + 4 arte + 2 som + 2 escrita) | por fazer |
-| [XIII-05](XIII-05.md) | §76 · O Nome | F1-12 | 11 (7 + 2 arte + 1 som + 1 escrita) | por fazer |
-| [XIII-06](XIII-06.md) | §78 · A Colheita | F1-16 | 11 (8 + 3 arte) | por fazer |
+| [XIII-02](XIII-02.md) | §74 · O termo dos Amargueiros na massa | F1-08 | 1 | feito |
+| [XIII-03](XIII-03.md) | §74 · O Amargueiro e a candeia, completos | XIII-02, F1-06, ART-04 | 13 (10 + 3 arte) | feito, falta a Semente Real (Q-095) |
+| [XIII-04](XIII-04.md) | §75 · A Oferta e a Dívida da Candeia | XIII-03 | 20 (12 + 4 arte + 2 som + 2 escrita) | feito — 4 das 12 ofertas com preço e efeito ligados (Q-099) |
+| [XIII-05](XIII-05.md) | §76 · O Nome | F1-12 | 11 (7 + 2 arte + 1 som + 1 escrita) | feito — 5 dos 9 feitos com o que observar (Q-102) |
+| [XIII-06](XIII-06.md) | §78 · A Colheita | F1-16 | 11 (8 + 3 arte) | parcial — falta a conquista que a começa e o gesto da decisão (Q-103) |
 | [XIII-07](XIII-07.md) | §77 · Os dez capítulos | GB-02, XIII-06 | 106 (30 + 50 arte + 20 som + 6 escrita) | por fazer |
 | [XIII-08](XIII-08.md) | §79 · Os doze diários e os três epílogos | XIII-04, XIII-07 | 13 (3 + 10 escrita) | por fazer |
 | [XIII-09](XIII-09.md) | §81 · Som: o cante, os motivos e a encomendação | XIII-05, XIII-06 | 44 (6 + 38 som) | por fazer |
-| [XIII-10](XIII-10.md) | §83 · Os primeiros vinte minutos | GB-01, XIII-03 | 8 (3 + 4 arte + 1 escrita) | por fazer |
+| [XIII-10](XIII-10.md) | §83 · Os primeiros vinte minutos | GB-01, XIII-03 | 8 (3 + 4 arte + 1 escrita) | parcial — a primeira oferta fala na noite 2 e o §83 quer a 3 (Q-104) |
 | [XIII-11](XIII-11.md) | §84 · Os catorze testes de design e as seis linhas de risco | XIII-02 | 6 | feito |
 
 ## Ordem sugerida

@@ -47,19 +47,42 @@ func after_test() -> void:
 	_h.stop()
 
 
+## A curva da §74 e a defesa, sem a voz da §75: e o que o §66 media quando o
+## F1-16 o fechou, e continua a ser o portao do combate e da economia.
 func test_e_possivel_sobreviver_dez_dias() -> void:
 	_h.wall_levels = PackedInt32Array(BASTIAO_E_FERRO)
 	_h.tower = true
 	_h.high_tower = true
 	_h.archers = ARQUEIROS
 
-	var r := Campaign.new().run(_h, DIAS)
+	var campanha := Campaign.new()
+	campanha.voice = false
+	var r := campanha.run(_h, DIAS)
 
 	assert_bool(r[Campaign.AGUENTOU]).override_failure_message(_conta(r)).is_true()
 	assert_int(r[Campaign.NOITES]).is_equal(DIAS)
 	# De pe E inteiro. Aguentar a 5% e aguentar, mas e a resposta de quem nao
 	# tem decimo primeiro dia — e o §66 nao acaba a Fase 1 no fio da navalha.
 	assert_float(r[Campaign.VIDA]).is_equal_approx(1.0, 0.01)
+
+
+# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
+# gdlint: disable=unused-argument
+## A mesma defesa com a voz ligada e sem pagar nada: recusa todas as noites, e o
+## imposto das recusas (§75, ate +40) chega a noite 6. Medido: cai ao dia 9.
+func test_e_possivel_sobreviver_dez_dias_a_recusar_todas_as_ofertas(
+	do_skip := true,
+	skip_reason := "Q-101: a recusar sempre, a defesa do decimo dia cai ao dia 9 (6 mortes)"
+) -> void:
+	_h.wall_levels = PackedInt32Array(BASTIAO_E_FERRO)
+	_h.tower = true
+	_h.high_tower = true
+	_h.archers = ARQUEIROS
+	var r := Campaign.new().run(_h, DIAS)
+	assert_bool(r[Campaign.AGUENTOU]).override_failure_message(_conta(r)).is_true()
+
+
+# gdlint: enable=unused-argument
 
 
 func test_nao_e_trivial_sobreviver_dez_dias() -> void:
