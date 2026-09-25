@@ -11,9 +11,7 @@
 class_name GameHud
 extends Control
 
-## As seis fases do §05, pela ordem do relogio.
-const FASES := ["ALVORADA", "MANHÃ", "MEIO-DIA", "TARDE", "CREPÚSCULO", "NOITE"]
-
+## O texto e todo por chave, e compoe-se no HudText (§27, GB-27).
 const INK := Color(0.08, 0.07, 0.06)
 const PAPER := Color(0.12, 0.10, 0.10, 0.88)
 const PAPER_LIGHT := Color(0.20, 0.16, 0.13, 0.94)
@@ -70,7 +68,7 @@ var _dispositivo := Glyphs.Device.KEYBOARD
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_titulo = _label("EMPIRE", TITULO, GOLD)
+	_titulo = _label("", TITULO, GOLD)
 	_relogio = _label("", RELOGIO, TEXT)
 	_recursos = _label("", RECURSOS, MUTED)
 	_objectivo = _label("", OBJECTIVO, MINT)
@@ -87,13 +85,12 @@ func _ready() -> void:
 	var comandos := Input.get_connected_joypads()
 	if not comandos.is_empty():
 		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
-	_dica.text = Glyphs.hint(_dispositivo)
+	_escrever_fixos()
 	EventBus.coin_collected.connect(_no_apanhar)
-	EventBus.build_completed.connect(_na_obra)
-	EventBus.target_marked.connect(_no_alvo)
-	EventBus.passage_used.connect(_na_passagem)
-	EventBus.wall_breached.connect(_no_rompimento)
 	EventBus.game_paused.connect(_na_pausa)
+	for sinal: StringName in HudText.AVISOS:
+		var aviso: String = HudText.AVISOS[sinal]
+		EventBus.connect(sinal, _dizer_chave.bind(aviso).unbind(_argumentos(sinal)))
 
 
 ## Troca o rodape quando muda a mao (GB-15). So observa: nao consome nada.
@@ -105,6 +102,18 @@ func _input(evento: InputEvent) -> void:
 	if novo != _dispositivo:
 		_dispositivo = novo
 		_dica.text = Glyphs.hint(novo)
+
+
+## O que so se escreve uma vez. Volta a escrever-se quando o idioma muda na
+## pausa (§27, GB-28) — o resto do painel ja se escreve a cada frame.
+func _escrever_fixos() -> void:
+	_titulo.text = tr(&"GAME_CODENAME")
+	_dica.text = Glyphs.hint(_dispositivo)
+
+
+func _notification(o_que: int) -> void:
+	if o_que == NOTIFICATION_TRANSLATION_CHANGED and _dica != null:
+		_escrever_fixos()
 
 
 func _process(delta: float) -> void:
@@ -140,19 +149,12 @@ func _draw() -> void:
 func _atualizar() -> void:
 	var relogio := ClockService.clock
 	var fase := int(relogio.current_phase())
-	var conhecida := fase >= 0 and fase < FASES.size()
-	var nome: String = FASES[fase] if conhecida else FASES[FASES.size() - 1]
-	var por_cento := int(relogio.phase_progress() * CEM)
-	_relogio.text = "DIA %02d · %s · %02d%%" % [SimLoop.state.day, nome, por_cento]
+	_relogio.text = HudText.clock(SimLoop.state.day, fase, relogio.phase_progress())
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
-	var texto := "SACO %02d/%02d   ·   TROPAS %02d   ·   NÚCLEO %03d%%"
-	_recursos.text = texto % [saco, cabem, _meus(), _vida_nucleo()]
-	if SimLoop.night.rot.active():
-		_objectivo.text = "A PODRIDÃO AVANÇA\nprotege as muralhas"
-	else:
-		_objectivo.text = "RECOLHE MOEDAS\nprepara a fronteira"
+	_recursos.text = HudText.resources(saco, cabem, _meus(), _vida_nucleo())
+	_objectivo.text = HudText.goal(SimLoop.night.rot.active())
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)
 	_rodape.position = Vector2(0.0, size.y - RODAPE.acima)
@@ -213,6 +215,18 @@ func _painel(caixa: Rect2, fundo: Color, risco: Color) -> void:
 	draw_line(caixa.position, caixa.position + Vector2(0.0, caixa.size.y), risco, TRACO.painel)
 
 
+func _dizer_chave(chave: StringName) -> void:
+	_dizer(tr(chave))
+
+
+## Quantos argumentos traz um sinal do catalogo — o que o unbind tem de largar.
+static func _argumentos(sinal: StringName) -> int:
+	for s in EventBus.get_signal_list():
+		if s.name == sinal:
+			return s.args.size()
+	return 0
+
+
 func _dizer(mensagem: String) -> void:
 	_aviso.text = mensagem
 	_aviso_ate = AVISO_S
@@ -220,27 +234,11 @@ func _dizer(mensagem: String) -> void:
 
 
 func _no_apanhar(_unit_id: int, amount: int) -> void:
-	_dizer("+%d moeda" % amount)
-
-
-func _na_obra(_building_id: int) -> void:
-	_dizer("OBRA CONCLUÍDA")
-
-
-func _no_alvo(_target_id: int, _by_id: int) -> void:
-	_dizer("ALVO MARCADO")
-
-
-func _na_passagem(_unit_id: int, _from_band: int, _to_band: int) -> void:
-	_dizer("PASSAGEM USADA")
-
-
-func _no_rompimento(_wall_id: int) -> void:
-	_dizer("MURALHA ROMPIDA")
+	_dizer(HudText.coins(amount))
 
 
 ## A pausa diz-se no PauseMenu, e a derrota tambem pausa: um "JOGO PAUSADO" por
 ## cima de "a coroa caiu" dizia as duas coisas ao mesmo tempo (GB-16).
 func _na_pausa(pausado: bool) -> void:
 	if not pausado:
-		_dizer("JOGO RETOMADO")
+		_dizer(tr(&"TOAST_RESUMED"))

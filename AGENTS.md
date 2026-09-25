@@ -108,9 +108,11 @@ src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estad
 src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
 src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
-src/ui/pause_menu.gd        PauseMenu     pausa, opcoes e o fim da partida (§24, §26, §16)
+src/ui/pause_menu.gd        PauseMenu     a pausa e o fim da partida (§24, §16)
 src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26, GB-15)
 src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)
+src/ui/hud_text.gd          HudText       o texto do painel, por chave (§27, GB-27)
+src/ui/options_panel.gd     OptionsPanel  as opcoes da pausa, e o idioma (§26, §27)
 scenes/boot.tscn                          cena principal do project.godot
 scenes/game.tscn                          a cena de jogo, instanciada pela boot
 

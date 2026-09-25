@@ -30,6 +30,10 @@ const DAY_SECONDS := &"day_seconds"
 ## O contraste (1 e o da §80) e o modo para daltonismo (0 e nenhum), do §26.
 const CONTRAST := &"contrast"
 const COLORBLIND := &"colorblind"
+## O idioma escolhido na pausa (§27). Vazio e "o do sistema", como a boot fazia.
+const LANGUAGE := &"language"
+## Os idiomas que o strings.csv tem (§27). A boot e a pausa leem esta lista.
+const LANGUAGES := ["pt_PT", "en"]
 
 ## As que existem, e o valor com que o jogo vem. O tremor e os claroes ligados: o
 ## §24 desenha o jogo com eles, e quem precisa de os tirar tira. As legendas de
@@ -41,6 +45,7 @@ const POR_OMISSAO := {
 	DAY_SECONDS: 0.0,
 	CONTRAST: 1.0,
 	COLORBLIND: 0,
+	LANGUAGE: "",
 }
 
 static var _partilhadas: Preferences
@@ -101,6 +106,17 @@ func set_number(chave: StringName, valor: float) -> bool:
 		_valores[chave] = valor
 	else:
 		return false
+	return _gravar()
+
+
+func text(chave: StringName) -> String:
+	return str(_valores.get(chave, POR_OMISSAO.get(chave, "")))
+
+
+func set_text(chave: StringName, valor: String) -> bool:
+	if typeof(POR_OMISSAO.get(chave)) != TYPE_STRING:
+		return false
+	_valores[chave] = valor
 	return _gravar()
 
 

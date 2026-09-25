@@ -98,6 +98,11 @@ func _process(delta: float) -> void:
 	advance(delta)
 
 
+func _notification(o_que: int) -> void:
+	if o_que == NOTIFICATION_TRANSLATION_CHANGED:
+		_escrever()
+
+
 func _escrever() -> void:
 	var partes := PackedStringArray()
 	for linha in _linhas:

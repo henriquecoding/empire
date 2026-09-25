@@ -15,7 +15,8 @@
 # as accoes ui_up, ui_down e ui_accept ja trazem o D-pad e o botao A (§26: "a
 # configuracao por omissao da acesso a todo o conteudo").
 #
-# O texto e todo por chave de data/i18n/strings.csv (AGENTS.md).
+# O texto e todo por chave de data/i18n/strings.csv (AGENTS.md), e as opcoes
+# vivem no OptionsPanel desde que isto chegou as 250 linhas do §28.
 class_name PauseMenu
 extends Control
 
@@ -27,29 +28,17 @@ const RECOMECAR := &"new_game"
 const FUNDO := Color(0.02, 0.02, 0.03, 0.62)
 const PAPEL := Color(0.20, 0.16, 0.13, 0.96)
 const OURO := Color(0.95, 0.67, 0.27)
-const TINTA := Color(0.96, 0.92, 0.81)
 ## §26: "nenhum caracter abaixo de 9 px... recomendado 12 px". Isto e titulo e
 ## menu, lidos a um metro de um Steam Deck.
 const LETRA := {"titulo": 30, "item": 20}
 const MOLDURA := {"borda": 3, "canto": 4, "margem": 28, "entre": 14}
 const LARGURA := 380.0
-## De quanto em quanto anda o slider do dia: onze paragens entre 240 e 540 s.
-const PASSO_DIA_S := 30.0
-const CEM := 100.0
-## Os modos para daltonismo, pela ordem do AccessibilityFilter.Mode.
-const MODOS := [&"OPT_COLORBLIND_OFF", &"OPT_PROTANOPIA", &"OPT_DEUTERANOPIA", &"OPT_TRITANOPIA"]
 
 var _titulo: Label
-var _tremor: CheckButton
-var _claroes: CheckButton
-var _legendas: CheckButton
-var _dia: HSlider
-var _dia_rotulo: Label
-var _contraste: HSlider
-var _contraste_rotulo: Label
-var _daltonismo: OptionButton
+var _opcoes: OptionsPanel
 var _retomar: Button
 var _novo: Button
+var _perdido := false
 
 
 func _ready() -> void:
@@ -68,13 +57,12 @@ func _ready() -> void:
 	caixa.add_theme_constant_override("separation", MOLDURA.entre)
 	centro.add_child(_painel(caixa))
 	_titulo = _rotulo(caixa)
-	_tremor = _opcao(caixa, &"OPT_SCREEN_SHAKE", Preferences.SCREEN_SHAKE)
-	_claroes = _opcao(caixa, &"OPT_FLASHES", Preferences.FLASHES)
-	_legendas = _opcao(caixa, &"OPT_CAPTIONS", Preferences.CAPTIONS)
-	_duracao(caixa)
-	_visao(caixa)
-	_retomar = _botao(caixa, &"UI_RESUME", _ao_retomar)
-	_novo = _botao(caixa, &"UI_NEW_GAME", _ao_recomecar)
+	_opcoes = OptionsPanel.new()
+	_opcoes.add_theme_constant_override("separation", MOLDURA.entre)
+	caixa.add_child(_opcoes)
+	_retomar = _botao(caixa, _ao_retomar)
+	_novo = _botao(caixa, _ao_recomecar)
+	_escrever()
 	hide()
 	EventBus.game_paused.connect(_na_pausa)
 
@@ -91,17 +79,11 @@ func _na_pausa(pausado: bool) -> void:
 ## Abre o ecra, de pausa ou de derrota. Publico para se poder medir sem montar
 ## uma partida e deixa-la cair.
 func open(perdido: bool) -> void:
-	_titulo.text = tr(&"UI_CROWN_FALLEN") if perdido else tr(&"UI_PAUSED")
+	_perdido = perdido
 	_retomar.visible = not perdido
 	_novo.visible = perdido
-	_tremor.set_pressed_no_signal(Preferences.on(Preferences.SCREEN_SHAKE))
-	_claroes.set_pressed_no_signal(Preferences.on(Preferences.FLASHES))
-	_legendas.set_pressed_no_signal(Preferences.on(Preferences.CAPTIONS))
-	_dia.set_value_no_signal(ClockService.clock.day_seconds())
-	_mostrar_dia(_dia.value)
-	_contraste.set_value_no_signal(Preferences.shared().number(Preferences.CONTRAST))
-	_mostrar_contraste(_contraste.value)
-	_daltonismo.select(int(Preferences.shared().number(Preferences.COLORBLIND)))
+	_opcoes.refresh()
+	_escrever()
 	show()
 	(_novo if perdido else _retomar).grab_focus()
 
@@ -109,6 +91,18 @@ func open(perdido: bool) -> void:
 ## §10: "se cair, cai a partida". E a unica pausa de onde nao se volta.
 static func defeated() -> bool:
 	return SimLoop.state != null and SimLoop.builds.fallen(BuildSlot.NUCLEO)
+
+
+## O texto do menu. Volta a escrever-se quando o idioma muda (§27, GB-28).
+func _escrever() -> void:
+	_titulo.text = tr(&"UI_CROWN_FALLEN") if _perdido else tr(&"UI_PAUSED")
+	_retomar.text = tr(&"UI_RESUME")
+	_novo.text = tr(&"UI_NEW_GAME")
+
+
+func _notification(o_que: int) -> void:
+	if o_que == NOTIFICATION_TRANSLATION_CHANGED and _titulo != null:
+		_escrever()
 
 
 ## Quem fecha solta o foco: um botao escondido com foco continuava a ouvir o
@@ -152,96 +146,8 @@ func _rotulo(caixa: VBoxContainer) -> Label:
 	return rotulo
 
 
-func _opcao(caixa: VBoxContainer, chave: StringName, preferencia: StringName) -> CheckButton:
-	var opcao := CheckButton.new()
-	opcao.text = tr(chave)
-	opcao.add_theme_font_size_override("font_size", LETRA.item)
-	opcao.add_theme_color_override("font_color", TINTA)
-	opcao.toggled.connect(
-		func(ligado: bool) -> void: Preferences.shared().set_enabled(preferencia, ligado)
-	)
-	caixa.add_child(opcao)
-	return opcao
-
-
-## §26: "slider de duracao do dia (240–540 s)". Os limites sao os do clock.csv. O
-## que se escolhe fica nas preferencias para os jogos novos, e chega a este pela
-## fila de intencoes (§61): a pausa nao mexe no relogio (GB-24).
-func _duracao(caixa: VBoxContainer) -> void:
-	var dados := Registry.entry(&"economy", &"clock") as ClockData
-	_dia_rotulo = Label.new()
-	_dia_rotulo.add_theme_font_size_override("font_size", LETRA.item)
-	_dia_rotulo.add_theme_color_override("font_color", TINTA)
-	caixa.add_child(_dia_rotulo)
-	_dia = HSlider.new()
-	_dia.min_value = dados.day_seconds_min
-	_dia.max_value = dados.day_seconds_max
-	_dia.step = PASSO_DIA_S
-	_dia.value = dados.day_seconds
-	_dia.value_changed.connect(_no_dia)
-	caixa.add_child(_dia)
-	_mostrar_dia(_dia.value)
-
-
-func _no_dia(segundos: float) -> void:
-	_mostrar_dia(segundos)
-	Preferences.shared().set_number(Preferences.DAY_SECONDS, segundos)
-	SimLoop.intents.queue(IntentQueue.Kind.DAY_LENGTH, {&"seconds": segundos})
-
-
-func _mostrar_dia(segundos: float) -> void:
-	_dia_rotulo.text = "%s · %d s" % [tr(&"OPT_DAY_LENGTH"), int(segundos)]
-
-
-## §26: contraste e modos para daltonismo (GB-25, GB-26). Sao preferencias de
-## quem ve, e nao estado de jogo: gravam-se e o filtro le-as ja.
-func _visao(caixa: VBoxContainer) -> void:
-	var gama: Dictionary = AccessibilityFilter.CONTRASTE
-	_contraste_rotulo = _rotulo_item(caixa)
-	_contraste = HSlider.new()
-	_contraste.min_value = gama.min
-	_contraste.max_value = gama.max
-	_contraste.step = gama.passo
-	_contraste.value = 1.0
-	_contraste.value_changed.connect(_no_contraste)
-	caixa.add_child(_contraste)
-	_mostrar_contraste(_contraste.value)
-	var linha := HBoxContainer.new()
-	var nome := _rotulo_item(linha)
-	nome.text = tr(&"OPT_COLORBLIND")
-	nome.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_daltonismo = OptionButton.new()
-	for chave: StringName in MODOS:
-		_daltonismo.add_item(tr(chave))
-	_daltonismo.item_selected.connect(_no_daltonismo)
-	linha.add_child(_daltonismo)
-	caixa.add_child(linha)
-
-
-func _no_contraste(valor: float) -> void:
-	_mostrar_contraste(valor)
-	Preferences.shared().set_number(Preferences.CONTRAST, valor)
-
-
-func _no_daltonismo(modo: int) -> void:
-	Preferences.shared().set_number(Preferences.COLORBLIND, modo)
-
-
-func _mostrar_contraste(valor: float) -> void:
-	_contraste_rotulo.text = "%s · %d%%" % [tr(&"OPT_CONTRAST"), roundi(valor * CEM)]
-
-
-func _rotulo_item(onde: Container) -> Label:
-	var rotulo := Label.new()
-	rotulo.add_theme_font_size_override("font_size", LETRA.item)
-	rotulo.add_theme_color_override("font_color", TINTA)
-	onde.add_child(rotulo)
-	return rotulo
-
-
-func _botao(caixa: VBoxContainer, chave: StringName, ao_premir: Callable) -> Button:
+func _botao(caixa: VBoxContainer, ao_premir: Callable) -> Button:
 	var botao := Button.new()
-	botao.text = tr(chave)
 	botao.add_theme_font_size_override("font_size", LETRA.item)
 	botao.pressed.connect(ao_premir)
 	caixa.add_child(botao)

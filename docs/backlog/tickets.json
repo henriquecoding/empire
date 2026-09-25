@@ -1021,6 +1021,34 @@
   "estado": "feito",
   "horas": "2"
  },
+ "GB-27": {
+  "title": "O painel fala por chave",
+  "porque": "O §27 dá duas regras de engenharia «agora»: um strings.csv só, e «nunca componhas frases por concatenação — usa sempre a chave inteira com placeholder». O GameHud tinha doze frases escritas no código em português (DIA, SACO, OBRA CONCLUÍDA...), contra a regra do texto por chave do AGENTS.md; uma troca de idioma deixava-as lá.",
+  "spec": [
+   "docs/design/27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/localization/GLOSSARY.csv"
+  ],
+  "depende": "GB-15",
+  "feito": "O texto do painel sai de dezassete chaves novas, com marcadores com nome ({day}, {phase}, {bag}...). Os nomes das fases saem do enum do relógio (PHASE_DAWN...), sem lista escrita duas vezes. A composição vive no HudText, que é puro. tests/hud_text_test.gd lê as chaves do próprio código e confere-as nos dois idiomas.",
+  "fora": "O Inspector (TAB): é instrumento de depuração (Q-067), e as siglas dele são nomes de estado da §52.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-28": {
+  "title": "O idioma escolhe-se na pausa",
+  "porque": "O §27 põe PT-PT e inglês no dia 1, e o strings.csv tem os dois; a boot escolhia pelo idioma do sistema e não havia forma de o mudar.",
+  "spec": [
+   "docs/design/27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "GB-27",
+  "feito": "Na pausa, Idioma: Português ou English, cada um no nome dele. Troca já — o HUD, o rodapé, o menu e as legendas voltam a escrever-se com NOTIFICATION_TRANSLATION_CHANGED — e fica nas preferências, que a boot lê da próxima vez. As opções saíram do PauseMenu para o OptionsPanel (o menu estava nas 248 linhas). tests/pause_menu_test.gd.",
+  "fora": "Os outros seis idiomas do §27 — é tradução, e não código. O tamanho do texto do §26.",
+  "estado": "feito",
+  "horas": "2"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",
