@@ -80,6 +80,11 @@ jobs:
       - name: Afirmacoes · a prosa e o validation.json contra a contagem
         run: make afirmacoes
 
+      # GB-03: o contador da rampa de densidade (§11, §22) prova que chumba uma
+      # cena chapada e passa uma que cumpre. Sem motor e sem ecra.
+      - name: Densidade · o contador chumba o chapado e passa a rampa
+        run: make densidade-prova
+
   # ── 2 ─────────────────────────────────────────────────────────────────────
   testes:
     name: Dados e suite gdUnit4
@@ -158,6 +163,13 @@ jobs:
       - name: Duas frias · contadas sobre a noite
         run: xvfb-run -a make silhueta
 
+      # GB-02 e GB-03: fotografa a greybox de cada bioma e conta a rampa de
+      # densidade do §11 nelas e numa captura de dia. O greybox e chapado e
+      # chumbava por construcao: aqui e relatorio, e o portao e o `--prova`,
+      # que corre nos portoes estaticos.
+      - name: Greybox dos seis biomas e a rampa de densidade · relatorio
+        run: xvfb-run -a make densidade
+
       # Sai sempre, passe ou chumbe: quando chumba, a fotografia e a primeira
       # coisa que alguem quer ver, e sem ela a percentagem nao diz onde.
       - uses: actions/upload-artifact@v7
@@ -167,6 +179,8 @@ jobs:
           path: |
             build/noite.png
             build/noite.json
+            build/empire.png
+            build/greybox/*.png
           retention-days: 14
           if-no-files-found: warn
 

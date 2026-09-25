@@ -688,7 +688,7 @@
   "depende": "GB-01",
   "feito": "Seis greybox, uma por bioma, com a linha do chão e as três faixas marcadas",
   "fora": "Capítulos (§77) — Fase 5.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6"
  },
  "GB-03": {
@@ -700,7 +700,7 @@
   "depende": "GB-02",
   "feito": "Topo ≤ 18 e base ≥ 30 cores distintas em janela de 16×16, medido por script no CI",
   "fora": "Arte que cumpra a regra — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "3"
  },
  "GB-04": {

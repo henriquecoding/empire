@@ -83,7 +83,7 @@ noite 1 *"é ganha de certeza"*.
 
 ---
 
-## Fora da Fase 1 — 12 por fazer
+## Fora da Fase 1 — 10 por fazer
 
 ### Arte — 4
 
@@ -111,12 +111,10 @@ da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porqu�
 | XIII-08 | §79 · Os doze diários e os três epílogos |
 | XIII-09 | §81 · Som: o cante, os motivos e a encomendação |
 
-### Greybox — 2
+### Greybox — 0
 
 | | O que é |
 |---|---|
-| GB-02 | Greybox dos seis biomas |
-| GB-03 | Regras de densidade medidas no greybox |
 
 ### Nomes — 1
 

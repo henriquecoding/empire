@@ -59,8 +59,8 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [ART-03](ART-03.md) | As seis camadas de parallax com teto de valores | ART-02, F0-08 | por fazer |
 | [ART-04](ART-04.md) | Rostos e expressões: o catálogo do §60 | ART-01 | por fazer |
 | [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | feito |
-| [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | por fazer |
-| [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | por fazer |
+| [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | feito |
+| [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | feito |
 | [GB-04](GB-04.md) | O passo do §21: a região atravessa-se em 40–60 s | GB-01 | feito |
 | [GB-05](GB-05.md) | O preço daquilo em cima de que estás | GB-01 | feito |
 | [GB-06](GB-06.md) | Largar em contínuo, que o §24 já mandava | F1-01 | feito |
