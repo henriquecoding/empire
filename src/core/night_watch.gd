@@ -5,6 +5,10 @@
 # guarda a ORDEM dos onze passos (ADR 0020) e chama isto uma vez; a mancha nasce,
 # anda, invoca e recua sem que a lista de passos cresca com tres funcoes.
 #
+# E e tambem o que a noite deixa: os Amargueiros (§74) nascem na alvorada, pesam
+# no crepusculo seguinte e, quando viram Marco, abrandam a mancha — tres pontas
+# do mesmo ciclo, e por isso vivem aqui e nao num passo novo do §43.
+#
 # A ponte que a pureza obriga esta toda aqui: o intervalo entre invocacoes vem
 # sorteado do fluxo `rot`, o lado por onde ela chega tambem, e os CreatureData
 # vem do Registry — tres coisas que a simulacao nao pode tocar (§42, §70).
@@ -14,10 +18,19 @@ extends RefCounted
 const TABELA_CRIATURAS := &"creatures"
 
 var rot: RotSystem
+var amargueiros: AmargueiroSystem
+
+var _tropas: UnitSystem
+var _obras: BuildSystem
 
 
-func _init() -> void:
+## As tropas e as obras sao as do SimLoop, e as mesmas durante o jogo inteiro:
+## um corpo sai das colunas na alvorada e uma serra entra no BuildSystem (§55).
+func _init(tropas: UnitSystem, obras: BuildSystem) -> void:
 	rot = SimFactory.rot()
+	amargueiros = SimFactory.amargueiros()
+	_tropas = tropas
+	_obras = obras
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -26,15 +39,16 @@ func tick(
 	delta: float, fase: int, mudou: bool, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 ) -> void:
 	if mudou:
-		_virar(fase, estado, bichos, mundo.y)
+		_virar(fase, estado, bichos, mundo)
+	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
 	if not rot.active():
 		return
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
 		rot.arm(RngService.float_range(&"rot", janela.x, janela.y))
-	# Terreno consagrado ainda nao existe: fogueiras, barris e consagracao sao o
-	# F1-17 e a XIII-04. Uma lista vazia e a ausencia deles, nao um esquecimento.
-	for pedido in rot.tick(delta, []):
+	# O terreno consagrado de hoje sao os Marcos (§74). Fogueiras e barris sao
+	# luz do §10 e nao consagram nada; o altar consagrado e da Fase 6.
+	for pedido in rot.tick(delta, amargueiros.consecrated()):
 		_invocar(pedido, estado, bichos, mundo.x)
 	EventBus.queue(&"rot_moved", [rot.position_x(), rot.state.width])
 
@@ -48,13 +62,19 @@ func trail() -> Array[Vector2]:
 	return [Vector2(de, maxf(rot.state.trail_from, rot.state.trail_to))]
 
 
-func _virar(fase: int, estado: GameState, bichos: CreatureSystem, largura: float) -> void:
+func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2) -> void:
+	if fase == GameClock.Phase.DAWN:
+		# O dia do relogio e nao o do GameState: esse so e espelhado no fim do tick.
+		amargueiros.at_dawn(ClockService.clock.day, _tropas, _obras, mundo.x, mundo.y)
 	if fase == GameClock.Phase.DUSK:
+		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
+		rot.amargueiros = amargueiros.anonymous()
+		rot.named_amargueiros = amargueiros.named()
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso
 		# sao duas NightWatch — e o F1-09 que as poe.
 		var lado := 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
-		rot.spawn(estado.day, lado, largura)
+		rot.spawn(estado.day, lado, mundo.y)
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
 		return
 	if fase != GameClock.Phase.DAWN or not rot.active():

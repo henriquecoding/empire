@@ -63,7 +63,7 @@ src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
 src/core/sim_factory.gd     SimFactory    monta os sistemas puros a partir do Registry
 src/core/event_relay.gd     EventRelay    traduz o que os sistemas devolvem para a §46
 src/core/intent_queue.gd    IntentQueue   a fila de intencoes do §61
-src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar
+src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar, e o que fica (§74)
 src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
@@ -71,6 +71,9 @@ src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocu
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
+src/sim/systems/amargueiro_system.gd AmargueiroSystem o que a noite deixa no campo (§74)
+src/sim/systems/amargueiro_roots.gd AmargueiroRoots quem se levanta na alvorada, e onde (§74)
+src/sim/state/amargueiro_save.gd AmargueiroSave as arvores em tipos base (§84)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
@@ -82,6 +85,7 @@ src/world/prop_art.gd       PropArt       a arvore e a casa, o que o cenario rep
 src/world/actor_art.gd      ActorArt      o que uma tropa E, por dentro da caixa (§22, §24)
 src/world/creature_art.gd   CreatureArt   o que um bicho E, por dentro da caixa (§22, §25)
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
+src/world/amargueiro_view.gd AmargueiroView a arvore com a cara na casca, e o Marco (§74)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)

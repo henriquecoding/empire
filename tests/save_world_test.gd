@@ -177,3 +177,34 @@ func test_as_colunas_saem_do_proprio_sistema() -> void:
 	assert_array(nomes).contains(["ids", "data_ids", "xs", "healths", "carried_coins"])
 	assert_bool(nomes.has("_por_id")).is_false()
 	assert_int(nomes.size()).is_equal(unidades.to_dict().size())
+
+
+func test_o_amargueiro_e_a_serra_a_meio_atravessam_o_ficheiro() -> void:
+	# §74, §84: as arvores sao estado autoritativo e nao se derivam do segmento.
+	# A serra e um slot do BuildSystem que o segmento NAO autora — por isso volta
+	# pelo AmargueiroSystem, depois das obras, e nao pelo BuildSystem.
+	_jogar_ate_ao_dia(2)
+	var bosque := SimLoop.night.amargueiros
+	var x := SimLoop.core_x + SimLoop.world_width * 0.4
+	var i := bosque.plant(x, int(Band.Kind.SURFACE), 2, 1, "TITLE_FIRST_WALL")
+	bosque.nights[i] = 1
+	var vaga := SimLoop.builds.post(bosque.saw(i))
+	bosque.slot_ids[i] = vaga.id
+	vaga.paid = 2
+	bosque.bitter_wood = 3
+	SaveService.save(SLOT, SimLoop.state, RngService.snapshot(), SimLoop.world())
+	SimLoop.stop()
+
+	SimLoop.resume(SaveService.restore(SLOT), SaveService.restore_rng(SLOT))
+	Greybox.region()
+	SimLoop.load_world(SaveService.restore_world(SLOT))
+
+	var lido := SimLoop.night.amargueiros
+	assert_int(lido.count()).is_equal(1)
+	assert_float(lido.xs[0]).is_equal(x)
+	assert_int(lido.named()).is_equal(1)
+	assert_int(lido.bitter_wood).is_equal(3)
+	var s := SimLoop.builds.index_of(lido.slot_ids[0])
+	assert_int(s).is_not_equal(BuildSystem.NENHUM)
+	assert_str(String(SimLoop.builds.slots[s].kind)).is_equal(String(AmargueiroSystem.CORTE))
+	assert_int(SimLoop.builds.slots[s].paid).is_equal(2)

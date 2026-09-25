@@ -107,11 +107,11 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 ## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
 ## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
 func world() -> Dictionary:
-	return SimSave.world(units, creatures, coins, builds, night.rot, king_id)
+	return SimSave.world(units, creatures, coins, builds, night, king_id)
 
 
 func load_world(mundo: Dictionary) -> void:
-	king_id = SimSave.restore(units, creatures, coins, builds, night.rot, mundo)
+	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo)
 
 
 func stop() -> void:
@@ -195,7 +195,7 @@ func _montar() -> void:
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()
 	economy = SimFactory.economy()
-	night = NightWatch.new()
+	night = NightWatch.new(units, builds)
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	recruits = RecruitSystem.new(SimFactory.curve())
 	tally.reset()

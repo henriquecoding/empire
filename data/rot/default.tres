@@ -13,6 +13,7 @@ width_start = 160.0
 mass_per_amargueiro = 22.0
 mass_per_named_amargueiro = 45.0
 amargueiro_nights_standing = 1
+amargueiro_base_px = 32.0
 lantern_radius_base = 150.0
 lantern_radius_per_day = 4.0
 lantern_radius_max = 260.0

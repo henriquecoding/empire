@@ -37,6 +37,9 @@ extends Resource
 ## arrastar os mortos para dentro (§74).
 @export var amargueiro_roots_outside_walls: bool = true
 @export var amargueiro_roots_underground: bool = true
+## A base do tronco, em px: onde uma moeda cai NELE e onde tem de estar quem o
+## corta — a meia largura do §55, como em qualquer obra. Proposta (Q-086).
+@export var amargueiro_base_px: float = 0.0
 
 @export_group("v6 · a candeia")
 ## Raio da luz: base + por_dia*dia, com teto (§74).

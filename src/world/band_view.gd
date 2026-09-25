@@ -69,6 +69,7 @@ func _draw() -> void:
 		_podridao()
 	_fogueiras()
 	BuildView.draw_on(self, band, _edificios, _luz)
+	AmargueiroView.draw_on(self, band, _luz)  # §74: o que a noite deixou
 	_moedas()
 	_criaturas()
 	_tropa()

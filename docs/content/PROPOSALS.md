@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 183 | 89 | 272 |
+| Fases 0–2 (fatia vertical) | 184 | 89 | 273 |
 | Fases 3–8 | 225 | 105 | 330 |
-| Total | 408 | 194 | 602 |
+| Total | 409 | 194 | 603 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 183
+## 1 · Fatia vertical — balanceamento — 184
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -179,9 +179,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | segments | `enramados_fortress_01` | `build_slots` | 0 | 1 | 'Nunca duas adjacentes. Uma nas extremidades da região.' |
 | segments | `enramados_fortress_01` | `cavity_slots` | 1 | 1 | 'Nunca duas adjacentes. Uma nas extremidades da região.' |
 | segments | `enramados_edge_01` | `build_slots` | 0 | 1 | O tipo edge vem da lição do Chef RPG (§21), que pede um segmento dedicado; não está na tabela de pesos. |
-| rot | `default` | `sacrifice_mass_per_animal` | 8 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. |
-| rot | `default` | `sacrifice_mass_per_troop` | 14 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. |
-| rot | `default` | `width_start` | 160 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. |
+| rot | `default` | `sacrifice_mass_per_animal` | 8 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-086). |
+| rot | `default` | `sacrifice_mass_per_troop` | 14 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-086). |
+| rot | `default` | `width_start` | 160 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-086). |
+| rot | `default` | `amargueiro_base_px` | 32 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-086). |
 | wildlife | `rabbit` | `max_health` | 4 | 1 | Vida 4 = um só acerto de arqueiro (dano 4). |
 | wildlife | `rabbit` | `move_speed` | 40 | 1 | Vida 4 = um só acerto de arqueiro (dano 4). |
 | wildlife | `deer` | `max_health` | 8 | 1 | Vida 8 = dois acertos de arqueiro, como no Kingdom (§02). |

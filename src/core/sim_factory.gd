@@ -20,6 +20,7 @@ const TABELA_TROPAS := &"units"
 const TABELA_CRIATURAS := &"creatures"
 const TABELA_PODRIDAO := &"rot"
 const PODRIDAO := &"default"
+const TABELA_AMARGUEIROS := &"rot/amargueiros"
 
 
 static func curve() -> EconomyCurve:
@@ -84,3 +85,8 @@ static func rot() -> RotSystem:
 	for recurso in Registry.entries(TABELA_CRIATURAS):
 		criaturas.append(recurso as CreatureData)
 	return RotSystem.new(rot_profile(), criaturas)
+
+
+## O que a noite deixa no campo (§74): os tres destinos, e a escala de quem morre.
+static func amargueiros() -> AmargueiroSystem:
+	return AmargueiroSystem.new(rot_profile(), by_id(TABELA_AMARGUEIROS), by_id(TABELA_TROPAS))

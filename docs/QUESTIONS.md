@@ -924,6 +924,48 @@
 - **Decide:** tu. A pergunta aberta é a da Fase 2: quando o Verbo 2 deixar assumir outros corpos (§24), o
   "conduzido" passa a ser mais do que o `king_id` — e aí talvez valha a pena ser coluna.
 
+### Q-086 · A base do Amargueiro não tem largura
+- **Onde:** §74 (*"largar moedas na base"*), §55 (a moeda cai *numa* obra quando cai dentro da meia largura
+  dela), `data/source/rot.csv`.
+- **O que falta:** o corte é um slot de destino no BuildSystem, e um slot precisa de largura — é ela que diz
+  se uma moeda caiu na árvore ou ao lado, e quem está lá a serrar. O dossiê não a escreve.
+- **O que foi feito, e é reversível:** `amargueiro_base_px = 32`, marcado em `_proposed` — a largura do barril
+  de fogo, a obra mais estreita de `buildings.csv`. Um tronco é mais estreito do que uma casa e mais largo do
+  que uma pessoa.
+- **Decide:** o playtest — se largar seis moedas numa árvore obrigar a acertar, sobe.
+
+### Q-087 · Consagrar pede uma Semente Real, e a Semente Real ainda não se larga
+- **Onde:** §74 (*"Consagrar — largar 1 Semente Real na base"*), §15, §57 (CrownSystem), §61 (Verbo 1).
+- **O que falta:** o Verbo 1 hoje larga moedas e só moedas. A Semente Real existe como número nos dados
+  (`class_data.gd`, `economy_curve.gd`) e como sinal no catálogo (`seed_royal_gained`), mas não há inventário
+  de sementes nem gesto para largar uma.
+- **O que foi feito:** o destino está inteiro no `AmargueiroSystem.consecrate()` — vira Marco, sai da massa,
+  protege 120 px de raízes novas, e a mancha abranda 40% sobre ele (testado pela `NightWatch`). O que não
+  existe é quem o chame. Liga-se no dia em que a semente for uma coisa que sai da mão.
+- **Bloqueia:** o "Feito" do XIII-03 fica parcial por isto. **Decide:** o calendário — é o CrownSystem da
+  Fase 2, e não uma decisão de design.
+
+### Q-088 · "Não é recolhida antes da alvorada" — não há gesto para recolher
+- **Onde:** §74 (*"uma tropa que morre fora das muralhas e não é recolhida antes da alvorada cria raiz"*;
+  *"reutiliza inteiro o gesto que a §16 já tem para o Santuário das Raízes"*), §16.
+- **O que falta:** o gesto de arrastar um corpo para dentro é do Santuário das Raízes (§16), e o Santuário
+  ainda não existe. Hoje um corpo fica onde caiu.
+- **O que foi feito:** a regra de onde cria raiz está inteira — dentro das muralhas não cria, no subsolo cria,
+  a voadora cai para a superfície, o Marco protege o raio dele. "Dentro" é haver, do lado do corpo, um muro de
+  pé cuja face de fora está mais longe do núcleo do que ele (`AmargueiroRoots`): quem morre no posto do muro
+  morreu em cima dele, e não fora. Recolher entra com o §16, e só muda o x do corpo antes da alvorada.
+- **Decide:** o calendário.
+
+### Q-089 · O vagabundo tem escala 2 no units.csv e a §74 dá-lhe escala 1
+- **Onde:** §74, regra 3 (*"Escala 1 e vagabundo: 1 Lenho. Escala 2, tropa: 2"*), §22, `units.csv`
+  (`vagrant,…,scale_tier 2`).
+- **O que diverge:** a escala do §22 é a da figura, e um vagabundo tem o tamanho de qualquer tropa. A regra 3
+  lê-se como "a carne barata rende pouco", e por isso junta o vagabundo à escala 1.
+- **O que foi feito, e é reversível:** o vagabundo rende como escala 1 por exceção explícita
+  (`AmargueiroRoots.VAGABUNDO`); todas as outras tropas rendem pela `scale_tier`. Uma linha a apagar, se a
+  leitura for outra.
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |
