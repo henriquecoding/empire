@@ -10,7 +10,7 @@
 # titles_mourning. Os feitos sao do FeatLedger; aqui so se da o nome.
 #
 # Das nove bonificacoes, so a vida maxima tem hoje onde pegar. As outras mexem
-# na moral, na cadencia, no dano e na comida, e ficam registadas (Q-094).
+# na moral, na cadencia, no dano e na comida, e ficam registadas (Q-102).
 class_name TitleSystem
 extends RefCounted
 

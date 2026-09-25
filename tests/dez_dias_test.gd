@@ -72,7 +72,7 @@ func test_e_possivel_sobreviver_dez_dias() -> void:
 ## imposto das recusas (§75, ate +40) chega a noite 6. Medido: cai ao dia 9.
 func test_e_possivel_sobreviver_dez_dias_a_recusar_todas_as_ofertas(
 	do_skip := true,
-	skip_reason := "Q-093: a recusar sempre, a defesa do decimo dia cai ao dia 9 (6 mortes)"
+	skip_reason := "Q-101: a recusar sempre, a defesa do decimo dia cai ao dia 9 (6 mortes)"
 ) -> void:
 	_h.wall_levels = PackedInt32Array(BASTIAO_E_FERRO)
 	_h.tower = true

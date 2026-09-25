@@ -5,8 +5,8 @@
 # por isso nada aqui fala de Y. O que se afina e como ela segue em X.
 #
 # So um destes numeros vem do dossie — os 2 s do regresso da camara livre (§24).
-# Os outros estao marcados em _proposed e a pergunta e a Q-057: sao propostas
-# por aprovar, nao decisoes tomadas em silencio.
+# Os outros estao marcados em _proposed e as perguntas sao a Q-057 e a Q-087:
+# sao propostas por aprovar, nao decisoes tomadas em silencio.
 class_name CameraData
 extends Resource
 
@@ -29,3 +29,8 @@ extends Resource
 ## §24: "Reconhecimento; volta sozinha em 2 s". O unico numero desta tabela que
 ## o dossie escreve.
 @export var free_return_seconds: float = 2.0
+
+## §24: a camara livre anda com "Q · Z ou rato na margem". A largura dessa
+## margem, em px de ECRA e nao de mundo: e onde a mao poe o rato, e a mao nao
+## sabe onde a camara esta. Zero desliga.
+@export var edge_pan_px: float = 0.0

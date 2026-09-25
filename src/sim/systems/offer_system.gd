@@ -14,7 +14,7 @@
 #
 # So entram nas candidatas as ofertas cujo preco se pode pagar e cujo efeito
 # existe hoje (PRECOS, EFEITOS). As outras dependem de portoes, tesouraria,
-# capitulos, sucessor e povos, que ainda nao ha — ver a Q-091.
+# capitulos, sucessor e povos, que ainda nao ha — ver a Q-099.
 class_name OfferSystem
 extends RefCounted
 

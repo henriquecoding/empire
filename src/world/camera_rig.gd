@@ -19,6 +19,9 @@ extends Camera2D
 ## afinacao: e o limiar numerico que impede a direcao de oscilar quando o alvo
 ## treme um milesimo de pixel.
 const PARADO := 0.01
+## Os dois lados da margem do rato, na mesma unidade do `pan()`.
+const ESQUERDA := -1.0
+const DIREITA := 1.0
 
 ## Largura do enquadramento, em px de mundo. Sai do viewport no _ready(); um
 ## teste poe-a a mao para nao precisar de janela.
@@ -35,6 +38,10 @@ var _direcao: float = 0.0
 var _limite_esq: float = 0.0
 var _limite_dir: float = 0.0
 var _tem_limites: bool = false
+## Se o rato esta dentro da janela, e a janela tem o foco. Sem isto um rato que
+## saiu pela borda deixava a ultima posicao la encostada, e a camara ia-se embora
+## sozinha enquanto se lia outra coisa noutra janela.
+var _rato_dentro: bool = false
 
 
 func _ready() -> void:
@@ -64,7 +71,8 @@ func clear_region() -> void:
 	_tem_limites = false
 
 
-## Camara livre (§24: stick direito, Q e Z). direcao e -1, 0 ou 1.
+## Camara livre (§24: stick direito, Q e Z, ou o rato na margem). direcao e -1,
+## 0 ou 1.
 func pan(direcao: float, delta: float) -> void:
 	if is_zero_approx(direcao):
 		return
@@ -90,8 +98,38 @@ func advance(delta: float) -> void:
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	pan(Input.get_axis(&"camera_left", &"camera_right"), delta)
+	var direcao := Input.get_axis(&"camera_left", &"camera_right")
+	if is_zero_approx(direcao) and _rato_dentro:
+		direcao = edge(get_viewport().get_mouse_position().x, view_width, _dados.edge_pan_px)
+	pan(direcao, delta)
 	advance(delta)
+
+
+## §24: "Q · Z ou rato na margem". -1 na margem esquerda, 1 na direita, 0 no
+## resto do ecra — que e onde se clica. Em px de ecra, como a mao os ve (GB-12).
+static func edge(rato_x: float, largura: float, margem: float) -> float:
+	if margem <= 0.0:
+		return 0.0
+	if rato_x < margem:
+		return ESQUERDA
+	if rato_x >= largura - margem:
+		return DIREITA
+	return 0.0
+
+
+func _input(evento: InputEvent) -> void:
+	if evento is InputEventMouseMotion:
+		_rato_dentro = true
+
+
+func _notification(o_que: int) -> void:
+	var saiu := [
+		NOTIFICATION_WM_MOUSE_EXIT,
+		NOTIFICATION_WM_WINDOW_FOCUS_OUT,
+		NOTIFICATION_APPLICATION_FOCUS_OUT,
+	]
+	if o_que in saiu:
+		_rato_dentro = false
 
 
 func _atualizar_direcao() -> void:

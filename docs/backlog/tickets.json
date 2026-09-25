@@ -672,11 +672,11 @@
   "depende": "F0-10",
   "feito": "Uma greybox jogável com os obrigatórios do §83 e a árvore colossal à vista",
   "fora": "Arte definitiva — Fase 2.",
-  "estado": "parcial — falta a bifurcação dos Capítulos e a cara fixa do vagabundo (Q-096)",
+  "estado": "parcial — falta a bifurcação dos Capítulos e a cara fixa do vagabundo (Q-104)",
   "horas": "4",
   "notas": [
    "§83: a lista de obrigatórios inclui um Amargueiro velho fora do muro à esquerda e um vagabundo com head_pool fixo, para que a cara do minuto 0:20 seja a mesma.",
-   "**O Amargueiro velho** está no segmento de abertura desde o primeiro frame, logo a seguir à estacaria da esquerda, com a cara na casca e a escala de uma tropa. Não pesa na massa, não se serra, não se consagra: é cenário de antes de ti, e a noite 1 continua a ser a que se ganha de certeza (Q-096).",
+   "**O Amargueiro velho** está no segmento de abertura desde o primeiro frame, logo a seguir à estacaria da esquerda, com a cara na casca e a escala de uma tropa. Não pesa na massa, não se serra, não se consagra: é cenário de antes de ti, e a noite 1 continua a ser a que se ganha de certeza (Q-104).",
    "**A árvore colossal** — o castelo-árvore — já estava à vista ao minuto 0:00.",
    "**Por fazer:** o vagabundo com `head_pool` fixo é arte (ART-01), e a bifurcação a três ecrãs para leste precisa dos Capítulos (XIII-07). O greybox continua montado em código (`src/world/greybox.gd`) e não numa cena autorada."
   ]
@@ -786,6 +786,272 @@
   "estado": "feito",
   "horas": "2"
  },
+ "GB-10": {
+  "title": "O render interpola, e o rei deixa de andar aos solavancos",
+  "porque": "A invariante I5 da §40 tem duas metades: \"a simulação corre a passo fixo de 30 Hz, desacoplada do render. O render interpola; a simulação não.\" Só a primeira estava feita. Medido a 60 fps com o rei a andar: 2,67 · 0 · 2,67 · 0 px por frame — cada posição ficava dois frames parada e saltava de uma vez, e a câmara, que o segue, levava os saltos para o mundo inteiro. E o rei parado continuava a baloiçar: largar a tecla desliga o alvo e deixa o x dele onde estava.",
+  "spec": [
+   "docs/design/40-as-oito-regras-que-nunca-se-quebram.md",
+   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/43-o-tick-e-o-que-corre-em-que-ordem.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "F0-06",
+  "feito": "tests/smoothing_test.gd verde. O rei, as tropas, os bichos, as moedas e a câmara desenham-se entre os dois últimos ticks — 1,33 px por frame a 60 fps, constante, medido. O baloiço do passo pergunta ao UnitSystem.walking() se a unidade anda mesmo. A vistoria dá a mesma tabela, linha a linha: a simulação não mudou.",
+  "fora": "A physics_interpolation do motor — a simulação não é física do motor, e o que se move são colunas e não nós. As obras e a luz, que não andam.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-11": {
+  "title": "O gatilho direito, num comando",
+  "porque": "O §24 dá «Marcar alvo» ao gatilho direito e ao botão direito do rato, e o router lia os dois como rato: com o comando, o alvo media-se do sítio onde o cursor tivesse ficado. E um gatilho é analógico — medido: um puxão marcava seis vezes.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/50-combatsystem-legivel-antes-de-emocionante.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md"
+  ],
+  "depende": "F1-07",
+  "feito": "Um puxão marca uma vez; o rato aponta com o cursor e o comando mede a partir do rei. tests/input_router_test.gd fixa as duas coisas, com eventos construídos e não injectados (ADR 0009).",
+  "fora": "«Só classe Arqueiro» — as classes são do §08 e não existem (Q-086). Marcar só o que a candeia mostra (§74).",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-12": {
+  "title": "A câmara livre pelo rato na margem",
+  "porque": "«Câmara livre — Stick direito — Q · Z ou rato na margem» (§24). O stick e as teclas estavam ligados; o rato na margem não.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/19-arquitetura-godot-4-6.md"
+  ],
+  "depende": "F0-08",
+  "feito": "O rato a menos de edge_pan_px da borda empurra a câmara livre, que volta sozinha nos 2 s do §24; com o rato fora da janela, ou a janela sem foco, não empurra. edge_pan_px vive em camera.csv, marcado em _proposed (Q-087). tests/camera_rig_test.gd.",
+  "fora": "Arrastar a câmara com o rato. Zoom — o §11 fixa o enquadramento.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-13": {
+  "title": "Pausa e opções: desligar o tremor e os clarões",
+  "porque": "O §24 escreve o tremor de ecrã «com opção de desligar (§26)», e o §26 põe «desligar screen shake e flashes» na lista do que se faz, com uma palavra: «obrigatório para fotossensibilidade». Não havia opção nenhuma, nem sítio para ela.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "GB-08",
+  "feito": "Esc ou Start abrem o ecrã de pausa com as duas opções e «Retomar», e navega-se nele com o comando sem código próprio (ui_up, ui_down, ui_accept). Gravam-se em user://settings.cfg (§45), lido com get_var(false) e validado campo a campo como o save (ADR 0007, Q-090); o portão G6 passa a guardar os dois ficheiros. Desligar vale já. tests/preferences_test.gd e tests/pause_menu_test.gd.",
+  "fora": "As outras seis funcionalidades do §26 — remapear, legendas, daltonismo, contraste, duração do dia, tamanho do texto. O menu principal.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-14": {
+  "title": "O sinal da passagem, onde o Verbo 2 pega",
+  "porque": "O §25 põe a passagem ao minuto 10:00 — «é o momento em que o jogo deixa de ser Kingdom» — e o §32 mede-a: se a mediana de underground_discovered passar dos 20 minutos, «a passagem está mal sinalizada». Era uma risca de 8 px, e nada dizia que o E fazia alguma coisa ali (Q-066).",
+  "spec": [
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/32-medir-sem-espiar.md"
+  ],
+  "depende": "GB-05",
+  "feito": "Ao alcance de uma passagem, uma seta a pulsar por cima dela aponta para a faixa de destino. A conta é o Verbs.destination(), a mesma que o assume() usa: se a seta aparece, o E pega; se não pega, não há seta. tests/passage_cue_test.gd, que traz também os primeiros testes do Verbo 2.",
+  "fora": "«Só onde há passagem descoberta» (§24): a descoberta não existe e hoje estão todas abertas. O dither do §25. A arte — isto é greybox, como o PriceTag.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-15": {
+  "title": "Os glifos do comando que se está a usar",
+  "porque": "O §26 põe na lista do Steam Deck Verified: «os glifos no ecrã correspondem ao dispositivo ativo». O rodapé dizia ESPAÇO, TAB e ESC a quem tinha um comando na mão, e o Steam Deck não tem nenhuma das três. E o texto estava escrito no script, contra a regra do texto por chave.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md"
+  ],
+  "depende": "GB-06",
+  "feito": "O rodapé troca entre teclado, Xbox (e Steam Deck) e PlayStation pelo último gesto e pelo Input.get_joy_name(), e começa pelo comando quando há um ligado. As palavras são onze chaves novas do strings.csv. tests/glyphs_test.gd.",
+  "fora": "O atlas de ícones do §26, que é arte. A fonte por omissão não tem ✕ ▢ △ nem setas — medido — e no browser não há fonte de sistema que os traga: até ao atlas, são nomes.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-16": {
+  "title": "A derrota diz a verdade, e dá um jogo novo",
+  "porque": "Com o castelo-árvore caído o véu dizia «JOGO EM PAUSA — ESC para continuar», e o Esc não fazia nada: a partida acabava num ecrã que mentia, e só se saía fechando o jogo. O §16 diz o que é perder — «decay em vez de reset» — e não um save que se recarrega.",
+  "spec": [
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "GB-13",
+  "feito": "A derrota abre o mesmo ecrã da pausa com «A coroa caiu» e «Novo jogo», que recomeça do zero mesmo havendo autosave. Medido no fluxo real (boot, jogo, recarregar): tick 12 com o botão, tick 3017 a recarregar sem ele. tests/pause_menu_test.gd.",
+  "fora": "O decay do §16 — 40% das estruturas, Sementes Reais, mapas (Q-088). A sucessão e a ressurreição, que são do §15 e do §16.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-17": {
+  "title": "O amanhecer que se vê chegar",
+  "porque": "A lista de juice do §24, «que não é opcional»: «Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a saírem dos postos em cascata». Não existia nenhuma das três.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md"
+  ],
+  "depende": "F1-13",
+  "feito": "No dawn_broke uma frente de luz, da cor da alvorada do clock.csv (§80), atravessa a região da esquerda para a direita a 900 px/s e acaba; com o jogo em pausa, espera. tests/dawn_sweep_test.gd.",
+  "fora": "O sino — é som, e audio/ não se toca. A cascata das tropas: mexe em quando cada uma recebe o alvo do dia, que é o passo 3 do §43 e é simulação (Q-089).",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-18": {
+  "title": "O sol e a lua dizem a hora",
+  "porque": "O HUD diegético do §24: «Hora do dia — cor da luz ambiente + posição do sol/lua no céu». A cor mudava; o sol estava pintado num ponto fixo da região, a 3033 px do princípio, e não se via do castelo. Lua não havia.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "F1-13",
+  "feito": "O SkyView acompanha a câmara (um astro está no infinito) e pinta o céu e o astro por baixo das montanhas: o sol faz um arco da esquerda para a direita da alvorada ao fim do crepúsculo, a lua faz o mesmo arco na noite, com as durações do clock.csv. tests/sky_view_test.gd.",
+  "fora": "Estrelas, fases da lua e nuvens. Ao meio-dia, com o rei em casa, o sol passa por trás da copa do castelo-árvore — é um astro atrás de uma árvore, e vê-se mal se sai do centro.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-19": {
+  "title": "O pequeno bounce da moeda",
+  "porque": "«Moeda largada — arco parabólico, som com pitch variável, pequeno bounce e sombra... a animação mais importante do jogo» (§24). O GB-09 deixou o bounce de fora porque a física da moeda decide onde ela pousa (§55).",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "GB-09",
+  "feito": "Uma moeda que se viu no ar dá, ao pousar, um salto de 4 px no sítio onde a simulação a pousou, e a sombra acompanha-o. A duração é o voo de um salto dessa altura na gravidade que a economy.csv já dá ao arco. Nada da simulação muda. tests/coin_bounce_test.gd.",
+  "fora": "O som com pitch variável — audio/ não se toca. Um bounce com física, que mexia em onde a moeda pousa.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-20": {
+  "title": "A cara de quem está ferido",
+  "porque": "O HUD diegético do §24: «Vida de tropa — camada face muda para ferido abaixo de 50% — no sprite». A cara nunca mudava.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/58-composicao-por-slots.md"
+  ],
+  "depende": "F0-14",
+  "feito": "Abaixo de metade da vida a cara do ActorArt semicerra o olho e desce os cantos da boca. O limiar é o do dossiê. tests/actor_art_test.gd.",
+  "fora": "A camada face da §58 com arte (ART-04). Tirar a barra de vida do greybox — é instrumento, e vai-se com a arte.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-21": {
+  "title": "As tropas saem dos postos atrás da luz",
+  "porque": "«Amanhecer — ... as tropas a saírem dos postos em cascata, não todas ao mesmo tempo» (§24). O passo 3 do §43 dava o alvo do dia a toda a gente no mesmo tick — medido: nove tropas arrancavam todas aos 0,03 s. Estava na Q-089.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/43-o-tick-e-o-que-corre-em-que-ordem.md",
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md"
+  ],
+  "depende": "GB-17",
+  "feito": "Na alvorada, quem tem posto e está à direita da frente de luz espera por ela: sai aos x/900 s — medido, de 1,97 s a 2,33 s para as mesmas nove. A frente é o relógio vezes o dawn_sweep_px_s do clock.csv (§24), o mesmo que a luz do GB-17 usa, e não guarda estado: o save já tem o relógio. Quem foge não espera, nem o rei. tests/dawn_cascade_test.gd.",
+  "fora": "O sino. Uma cascata noutras mudanças de fase — o §24 só a pede ao amanhecer.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-22": {
+  "title": "As legendas de som",
+  "porque": "O §26 põe «legendas para pistas sonoras — 8 pistas (sino, crepúsculo, muro a cair...)» na lista do que se faz: «substitui o áudio para surdos». As oito chaves CAPTION_* estavam no strings.csv desde o dia zero e nada as mostrava — e, sem som nenhum no jogo, era o sino que ninguém ouvia.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/23-camadas-que-respondem-ao-dia.md",
+   "docs/design/46-o-catalogo-completo.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Com OPT_CAPTIONS ligado na pausa, cinco pistas mostram a legenda no céu, por baixo do aviso do HUD: o sino da alvorada, o crepúsculo, a noite, a muralha que cede e o rei atingido; a mancha a chegar aparece uma vez por noite, quando entra na largura visível. O mapa sinal → chave é o da docs/audio/AUDIO_CUE_SHEET.csv, e o teste confere os dois. tests/captions_test.gd.",
+  "fora": "O prazo da dívida e o segredo por perto — os sistemas deles não existem (§14, §17). O som.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-23": {
+  "title": "A silhueta fantasma a piscar",
+  "porque": "O §25, minuto 3:30: «Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas. A silhueta é o convite. Não há botão construir.» O contorno existia e estava parado.",
+  "spec": [
+   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "GB-05",
+  "feito": "O contorno de um sítio de obra por construir pulsa devagar, e nunca apaga. tests/build_view_test.gd.",
+  "fora": "Piscar só a primeira estacaria: o segmento de abertura autorado é o GB-01.",
+  "estado": "feito",
+  "horas": "1"
+ },
+ "GB-24": {
+  "title": "A duração do dia, ao ritmo de quem joga",
+  "porque": "O §26: «Jogável ao teu próprio ritmo — slider de duração do dia (240–540 s). Fazer. Também é um botão de dificuldade honesto... é uma linha de código (o GameClock já é uma variável).» O GameClock sabia escalar as fases e ninguém lho pedia; e o save não guardava a duração.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/48-gameclock-a-fase-do-dia-e-um-estado-nao-um-tempo.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Um slider na pausa, de 240 a 540 s em passos de 30, com os limites do clock.csv. A pausa não mexe no relógio: enfileira a intenção DAY_LENGTH (§61) e o tick seguinte aplica-a. A duração entra no GameState e no save (um save antigo carrega com a do clock.csv), o seek do relógio repõe-na antes do decorrido, e a escolha fica nas preferências para os jogos novos. Medido no jogo: em pausa o relógio fica a 360; depois do tick, 270; retomado o save, 270 e o mesmo decorrido. tests/day_length_test.gd.",
+  "fora": "Um save_version novo (Q-091). Mexer em quanto dura cada fase uma a uma — o §26 dá um número só.",
+  "estado": "feito",
+  "horas": "3"
+ },
+ "GB-25": {
+  "title": "O controlo de contraste",
+  "porque": "O §26: «Controlos de contraste — baixo — um shader de saturação/contraste global. Fazer.» A matriz de QA (A3) pede que a mancha e as tropas se distingam do fundo no mínimo e no máximo.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/qa/ACCESSIBILITY_MATRIX.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Um slider na pausa, de 75% a 150% (Q-093), grava nas preferências e o filtro de ecrã aplica-o já, entre o mundo e a interface. A 100% o filtro esconde-se e o jogo é o da §80 píxel a píxel. tests/accessibility_filter_test.gd (A3), e no ecrã: 480 píxeis a no máximo 0,008 da conta em GDScript.",
+  "fora": "A saturação, que o §26 junta ao contraste — um slider só por agora (Q-093). O texto do HUD, que não passa pelo filtro.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-26": {
+  "title": "Os modos para daltonismo",
+  "porque": "O §26: «Modos para daltonismo — médio — a paleta é quente/fria, boa base. Fazer. Testa a Podridão contra o terreno em protanopia.» A matriz de QA (A4, A15) quer a mancha distinta do chão nos três filtros.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/qa/ACCESSIBILITY_MATRIX.md"
+  ],
+  "depende": "GB-25",
+  "feito": "Protanopia, deuteranopia e tritanopia na pausa. Correcção de Fidaner sobre a simulação de Machado (2009); as matrizes vivem no GDScript e passam ao shader como uniforms. Medido: com o modo ligado, quem tem a deficiência mantém 95% a 117% da separação mancha–chão que um olho sem ela vê; sem o modo, em tritanopia, perde 60%. tests/accessibility_filter_test.gd (A4, A15).",
+  "fora": "Uma captura filtrada no CI (a A15 como portão de ecrã) e ajustar a paleta: a correcção é por cima dela.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-27": {
+  "title": "O painel fala por chave",
+  "porque": "O §27 dá duas regras de engenharia «agora»: um strings.csv só, e «nunca componhas frases por concatenação — usa sempre a chave inteira com placeholder». O GameHud tinha doze frases escritas no código em português (DIA, SACO, OBRA CONCLUÍDA...), contra a regra do texto por chave do AGENTS.md; uma troca de idioma deixava-as lá.",
+  "spec": [
+   "docs/design/27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/localization/GLOSSARY.csv"
+  ],
+  "depende": "GB-15",
+  "feito": "O texto do painel sai de dezassete chaves novas, com marcadores com nome ({day}, {phase}, {bag}...). Os nomes das fases saem do enum do relógio (PHASE_DAWN...), sem lista escrita duas vezes. A composição vive no HudText, que é puro. tests/hud_text_test.gd lê as chaves do próprio código e confere-as nos dois idiomas.",
+  "fora": "O Inspector (TAB): é instrumento de depuração (Q-067), e as siglas dele são nomes de estado da §52.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-28": {
+  "title": "O idioma escolhe-se na pausa",
+  "porque": "O §27 põe PT-PT e inglês no dia 1, e o strings.csv tem os dois; a boot escolhia pelo idioma do sistema e não havia forma de o mudar.",
+  "spec": [
+   "docs/design/27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
+  ],
+  "depende": "GB-27",
+  "feito": "Na pausa, Idioma: Português ou English, cada um no nome dele. Troca já — o HUD, o rodapé, o menu e as legendas voltam a escrever-se com NOTIFICATION_TRANSLATION_CHANGED — e fica nas preferências, que a boot lê da próxima vez. As opções saíram do PauseMenu para o OptionsPanel (o menu estava nas 248 linhas). tests/pause_menu_test.gd.",
+  "fora": "Os outros seis idiomas do §27 — é tradução, e não código. O tamanho do texto do §26.",
+  "estado": "feito",
+  "horas": "2"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",
@@ -868,7 +1134,7 @@
   "depende": "XIII-02, F1-06, ART-04",
   "feito": "Os três destinos com o Verbo 1; a cara na casca; a candeia com raio e cor do rot.tres",
   "fora": "A Oferta — é o XIII-04. O cante da alvorada — é o XIII-09.",
-  "estado": "feito, falta a Semente Real (Q-087)",
+  "estado": "feito, falta a Semente Real (Q-095)",
   "horas": "13 (10 + 3 arte)",
   "notas": [
    "Q-047: uma noite de pé, ou mais? A proposta é uma, fixa.",
@@ -876,11 +1142,11 @@
    "**O sistema.** `src/sim/systems/amargueiro_system.gd`, em colunas com os nomes da §84, pendurado na alvorada pela `NightWatch` (é o \"sinal de alvorada que o GameClock já emite\" da §74). Na alvorada: envelhece as árvores de pé, põe a serra às que já aguentaram uma noite, e levanta os mortos da noite — fora das muralhas criam raiz, dentro desaparecem como perda normal. No crepúsculo seguinte, cada árvore de pé é +22 de massa, ou +45 com nome.",
    "**Onde nasce** é o `AmargueiroRoots`, as cinco linhas da §74: dentro das muralhas não cria; no subsolo cria, e cresce do tecto para baixo; a voadora cai para a superfície; o Marco protege o raio dele. \"Dentro\" é haver um muro de pé cuja face de fora está mais longe do núcleo do que o corpo — quem morre no posto do muro morreu em cima dele. Foi essa leitura que manteve os dez dias do §66 a passar: com o centro do muro em vez da face, metade dos arqueiros do muro criava raiz e a defesa caía ao dia 9.",
    "**Cortar** é um slot de destino no BuildSystem (§55): a serra só pega na segunda alvorada (regra 2; as moedas largadas antes ficam no chão), custa as 6 moedas de `amargueiros.csv`, e anda enquanto houver alguém presente — o mesmo contrato de qualquer obra, com o mesmo preço a aparecer por cima (GB-05). Rende 1·2·3 Lenho por escala, 5 se tinha nome; o moral do nomeado sai no evento e é o XIII-05 que o cobra.",
-   "**Consagrar** está inteiro no sistema — Marco de pedra, sai da massa, protege 120 px de raízes novas, e a mancha abranda sobre ele (a `NightWatch` passa os Marcos ao `RotSystem.tick` como terreno consagrado). Falta quem o chame: a Semente Real ainda não é coisa que se largue (Q-087).",
+   "**Consagrar** está inteiro no sistema — Marco de pedra, sai da massa, protege 120 px de raízes novas, e a mancha abranda sobre ele (a `NightWatch` passa os Marcos ao `RotSystem.tick` como terreno consagrado). Falta quem o chame: a Semente Real ainda não é coisa que se largue (Q-095).",
    "**A cara na casca** é o `AmargueiroView`: um tronco mais alto do que a pessoa, pela escala dela, com a copa curta e dois olhos — acesos se tinha nome. A serra a meio vê-se como a vida da árvore a descer. É greybox: o rosto real é do ART-04.",
    "**A candeia** já estava: raio `150 + 4 × dia` com teto 260 e as três paragens de cor, lidos do `rot.tres` desde o F1-17 (`WorldLight`, `RotView`).",
    "**O save** leva as árvores, o Lenho e a serra a meio, e repõe-nas depois das obras autoradas — provado pelo ficheiro, em `tests/save_world_test.gd`.",
-   "Perguntas abertas por este ticket: Q-086 (a largura da base), Q-087 (a Semente Real), Q-088 (recolher o corpo é o gesto do §16), Q-089 (o vagabundo rende como escala 1)."
+   "Perguntas abertas por este ticket: Q-094 (a largura da base), Q-095 (a Semente Real), Q-096 (recolher o corpo é o gesto do §16), Q-097 (o vagabundo rende como escala 1)."
   ]
  },
  "XIII-04": {
@@ -892,7 +1158,7 @@
   "depende": "XIII-03",
   "feito": "Uma oferta por noite, no prato, com o Verbo 1; a Dívida sobe e nunca desce; o Zelador aos 6",
   "fora": "Os epílogos — é o XIII-08.",
-  "estado": "feito — 4 das 12 ofertas com preço e efeito ligados (Q-091)",
+  "estado": "feito — 4 das 12 ofertas com preço e efeito ligados (Q-099)",
   "horas": "20 (12 + 4 arte + 2 som + 2 escrita)",
   "notas": [
    "Os testes D-04 a D-06 estão escritos; D-05 e D-06 ficam saltados até este ticket.",
@@ -901,11 +1167,11 @@
    "**Uma por noite, no prato, com o Verbo 1.** Fala quando a mancha chega a 300 px da muralha mais exterior do lado dela, nunca antes dos 20 s depois do crepúsculo e sempre até aos 60. O sorteio entre as candidatas sai do fluxo `rot` (§42), sobre as ofertas por id. O prato fica à borda da mancha, do lado do império. Só conta o que cai lá dentro; o monarca não é preço de ninguém. Aceitar sai como `rot_fed` na §46 — é o \"alimentar\" que a §75 diz ter finalmente interface.",
    "**Recusar** é não fazer nada: passam os 20 s e conta como recusa. As recusas das últimas cinco noites pesam no crepúsculo (+8 cada, até +40) e voltam a zero ao aceitar uma vez. Uma noite sem candidatas fica calada, e isso não é recusa.",
    "**A Dívida sobe e nunca desce**, e o D-06 prova-o por caminhos. **O D-05 e o D-06 deixaram de estar saltados.**",
-   "**O Zelador aos 6**: nasce com a mancha, anda atrás dela, um muro de pé pára-o, e se chegar ao núcleo leva uma tropa nomeada — uma por noite. Afastá-lo não tem gesto (Q-092).",
+   "**O Zelador aos 6**: nasce com a mancha, anda atrás dela, um muro de pé pára-o, e se chegar ao núcleo leva uma tropa nomeada — uma por noite. Afastá-lo não tem gesto (Q-100).",
    "**O mostrador é a luz.** A candeia só ilumina a faixa da mancha; a Dívida vai-a estendendo às vizinhas (1, 1,5, 2 faixas, o ecrã inteiro), pela tabela da §75. A frase aparece no mundo por chave de `strings.csv`, sem caixa e sem contador. O ambiente âmbar dos 9–11 e as duas chamas dos 12+ ficam para a arte da candeia.",
-   "**Só quatro ofertas têm hoje onde pegar** (a quarta, *Nada. Só quero ver.*, entrou com o XIII-10) — o preço e o efeito das outras dependem de portões, tesouraria, Capítulos, sucessor e povos (Q-091). Nenhuma aparece para não fazer nada. Q-040 e Q-053 ficam por decidir por isto.",
-   "**Informação para o §66 (Q-093):** o instrumento dos dez dias não paga ofertas, e por isso recusa todas; com o imposto das recusas, a defesa do décimo dia cai ao dia 9. O teste do §66 mede o que media (a mancha calada) e diz-o; o de recusar sempre está saltado com a razão. Nenhum número de `data/` foi mexido.",
-   "`rot.csv` ganha `offer_plate_px` (96, em `_proposed`, Q-090)."
+   "**Só quatro ofertas têm hoje onde pegar** (a quarta, *Nada. Só quero ver.*, entrou com o XIII-10) — o preço e o efeito das outras dependem de portões, tesouraria, Capítulos, sucessor e povos (Q-099). Nenhuma aparece para não fazer nada. Q-040 e Q-053 ficam por decidir por isto.",
+   "**Informação para o §66 (Q-101):** o instrumento dos dez dias não paga ofertas, e por isso recusa todas; com o imposto das recusas, a defesa do décimo dia cai ao dia 9. O teste do §66 mede o que media (a mancha calada) e diz-o; o de recusar sempre está saltado com a razão. Nenhum número de `data/` foi mexido.",
+   "`rot.csv` ganha `offer_plate_px` (96, em `_proposed`, Q-098)."
   ]
  },
  "XIII-05": {
@@ -917,7 +1183,7 @@
   "depende": "F1-12",
   "feito": "Nove nomes no máximo; o título ganha-se na alvorada; o luto de três dias devolve-o com ordinal",
   "fora": "A encomendação cantada — é o XIII-09.",
-  "estado": "feito — 5 dos 9 feitos com o que observar (Q-094)",
+  "estado": "feito — 5 dos 9 feitos com o que observar (Q-102)",
   "horas": "11 (7 + 2 arte + 1 som + 1 escrita)",
   "notas": [
    "D-07 e D-08 já correm sobre os dados. Q-041: o teto é fixo.",
@@ -927,7 +1193,7 @@
    "**Morto o dono, três dias de luto, e volta com ordinal** — o segundo que o ganha é O Segundo Que Ficou. Morrer, criar raiz ou ser levado pela Oferta ou pelo Zelador são o mesmo para o título.",
    "**Os nomes chegam onde a Parte XIII os pede:** um nomeado morto lá fora é um Amargueiro nomeado (+45 de massa, 5 Lenho), porque os nomes se leem antes de os corpos se levantarem; a Oferta e o Zelador leem os nomes verdadeiros.",
    "**A fita** (§58, slot overlay) na cor de `titles.csv`; quem espera por vaga tem só o contorno. O monarca e os vagabundos por recrutar não ganham nome.",
-   "Das nove bonificações só a vida máxima se aplica hoje; quatro dos nove feitos dependem de portões, arrastar corpos, cozinha e ressurreição (Q-094). A encomendação cantada é o XIII-09."
+   "Das nove bonificações só a vida máxima se aplica hoje; quatro dos nove feitos dependem de portões, arrastar corpos, cozinha e ressurreição (Q-102). A encomendação cantada é o XIII-09."
   ]
  },
  "XIII-06": {
@@ -939,14 +1205,14 @@
   "depende": "F1-16",
   "feito": "C = 6 + 2 × povos; a aldeia fica fora das muralhas; soltar ou ficar, com o Verbo 1 no núcleo deles",
   "fora": "O coro por povo — é o XIII-09. Os estandartes — entram aqui, por acessibilidade.",
-  "estado": "parcial — falta a conquista que a começa e o gesto da decisão (Q-095)",
+  "estado": "parcial — falta a conquista que a começa e o gesto da decisão (Q-103)",
   "horas": "11 (8 + 3 arte)",
   "notas": [
    "Q-042: a sexta Colheita em 16 dias mede-se em playtest.",
    "§82: cada povo solto hasteia um estandarte — é a redundância visual do coro.",
    "**O sistema** (`HarvestSystem`) está inteiro, com os campos da §84: C = 6 + 2 × povos já detidos (a primeira dura 6, a sexta 16), metade arredondada para cima por assimilação; uma Colheita de cada vez, e a seguinte em fila a 100%; 140% de produção enquanto dura; no fim, espera pela decisão — ninguém decide por ti; soltar dá uma voz ao coro, ficar dá +80% e um marco com raiz; se a aldeia cair, perde-se o povo sem escolha.",
    "**Já ligado:** cada alvorada é um dia de Colheita (`NightWatch`), o marco de cada povo que ficou pesa +22 de massa por noite como um Amargueiro que não se corta, e o save leva tudo. Um teste confere que o `keep_landmark_mass` e o `mass_per_amargueiro` são o mesmo número.",
-   "**Por ligar (Q-095):** a conquista (§13) que chama `conquer()` ainda não existe, nem aldeias no greybox; o Verbo 1 no núcleo deles tem duas saídas e o dossiê não diz como se distingue soltar de ficar; os estandartes do §82 não têm cor por povo em `peoples.csv`."
+   "**Por ligar (Q-103):** a conquista (§13) que chama `conquer()` ainda não existe, nem aldeias no greybox; o Verbo 1 no núcleo deles tem duas saídas e o dossiê não diz como se distingue soltar de ficar; os estandartes do §82 não têm cor por povo em `peoples.csv`."
   ]
  },
  "XIII-07": {
@@ -1008,13 +1274,13 @@
   "depende": "GB-01, XIII-03",
   "feito": "O minuto 0:00 tem a candeia e um Amargueiro velho; o 17:00 tem a primeira oferta",
   "fora": "O resto da campanha.",
-  "estado": "parcial — a primeira oferta fala na noite 2 e o §83 quer a 3 (Q-096)",
+  "estado": "parcial — a primeira oferta fala na noite 2 e o §83 quer a 3 (Q-104)",
   "horas": "8 (3 + 4 arte + 1 escrita)",
   "notas": [
    "§84, risco 5: o Amargueiro velho do minuto 0:00 existe para que a pergunta 'porque é que aquela árvore tem cara?' chegue depois da resposta.",
    "**0:00** — o Amargueiro velho está lá (GB-01); a candeia vem com a mancha ao crepúsculo, desde o F1-17.",
    "**17:00** — a primeira oferta da campanha é sempre *\"Nada. Só quero ver.\"*: uma moeda no prato, +1 de Dívida, e um Capítulo por revelar guardado para o XIII-07 (o \"sítio distante que se acende\" do minuto 18:00). A noite corre igual nos dois casos, com teste.",
-   "**Divergência (Q-096):** o `offers.csv` dá-lhe dia 2+ (§75) e o §83 põe-na no crepúsculo do dia 3; com os dados como estão, fala na noite 2.",
+   "**Divergência (Q-104):** o `offers.csv` dá-lhe dia 2+ (§75) e o §83 põe-na no crepúsculo do dia 3; com os dados como estão, fala na noite 2.",
    "O minuto 13:10 (o vagabundo do 0:20 a levantar-se como árvore) já acontece pelos sistemas do XIII-03 e XIII-05; o 20:00 (o primeiro nome) pelo XIII-05."
   ]
  },

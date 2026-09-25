@@ -100,7 +100,7 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 	_montar()
 	RngService.configure(estado.seed)
 	RngService.restore(rng_states)
-	ClockService.seek(estado.day, estado.clock_elapsed)
+	ClockService.seek(estado.day, estado.clock_elapsed, estado.day_seconds)
 	_running = true
 
 
@@ -155,8 +155,9 @@ func step(delta: float) -> void:
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
 	# 5 · MovementSystem — todo o tick. O king_id vai junto porque o §24 da ao
 	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
-	#     preso em FIGHT como fica quem a §52 conduz.
-	units.tick_movement(delta, king_id)
+	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
+	#     atras da luz (§24, DawnCascade).
+	units.tick_movement(delta, king_id, ClockService.dawn_front())
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
 	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
@@ -237,6 +238,7 @@ func _physics_process(delta: float) -> void:
 func _espelhar_relogio() -> void:
 	state.day = ClockService.clock.day
 	state.clock_elapsed = ClockService.clock.elapsed
+	state.day_seconds = ClockService.clock.day_seconds()
 
 
 func _no_amanhecer(dia: int) -> void:

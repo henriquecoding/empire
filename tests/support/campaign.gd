@@ -39,7 +39,7 @@ const DIA := &"day"
 ## A voz da Podridao (§75). Desligada, a mancha nao fala e ninguem recusa: e a
 ## curva da §74 com recusas a zero, que e como a propria tabela da §74 isola o
 ## termo novo — e o que o F1-16 afinou, antes de a Oferta existir. Ligada, este
-## instrumento nao paga nada, e por isso recusa todas as noites (Q-093).
+## instrumento nao paga nada, e por isso recusa todas as noites (Q-101).
 var voice: bool = true
 
 var _mortes: int = 0

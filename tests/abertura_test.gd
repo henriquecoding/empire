@@ -38,7 +38,7 @@ func test_ao_minuto_zero_ha_um_amargueiro_velho_fora_do_muro_a_esquerda() -> voi
 
 
 func test_o_amargueiro_velho_nao_e_teu_nao_pesa_e_nao_se_serra() -> void:
-	# §25: a noite 1 e ganha de certeza. A arvore velha e cenario (Q-096).
+	# §25: a noite 1 e ganha de certeza. A arvore velha e cenario (Q-104).
 	var bosque := SimFactory.amargueiros()
 	var o := BuildSystem.new()
 	bosque.plant_old(100.0, int(Band.Kind.SURFACE), 2)

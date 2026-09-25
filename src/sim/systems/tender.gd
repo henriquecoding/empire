@@ -9,7 +9,7 @@
 # no combate — o creatures.csv da-lhe max_health 0, e no CreatureSystem isso e
 # morrer no primeiro tick. Anda por conta propria e so tem duas regras: nunca
 # passa a frente da mancha, e um muro de pe para-o — nao ataca, por isso nao
-# o rompe (Q-092). Afasta-lo e o gesto que falta.
+# o rompe (Q-100). Afasta-lo e o gesto que falta.
 class_name Tender
 extends RefCounted
 

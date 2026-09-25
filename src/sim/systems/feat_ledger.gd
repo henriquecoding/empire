@@ -7,7 +7,7 @@
 #
 # Cinco dos nove feitos tem hoje o que observar. Os outros quatro precisam de
 # portoes (o unico sobrevivente de um portao), de arrastar corpos (§16), de
-# cozinha e de ressurreicao (§16) — e nunca se cumprem ate la (Q-094).
+# cozinha e de ressurreicao (§16) — e nunca se cumprem ate la (Q-102).
 #
 # Puro. Os abates leem-se dos acontecimentos que o CombatSystem ja devolve: o
 # ultimo golpe numa criatura e de quem a abateu.

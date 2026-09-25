@@ -33,6 +33,9 @@ const FONTE := &"player"
 ## a gravidade e a dispersao do arco que estao ao lado dele (Q-083).
 var _repeticao := 0.0
 var _curva: EconomyCurve
+## Se o gesto de marcar alvo esta premido. Um gatilho e analogico e emite um
+## evento por cada posicao do caminho; sem isto um puxao marcava seis vezes.
+var _marcar := false
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -46,9 +49,31 @@ func _unhandled_input(evento: InputEvent) -> void:
 	if evento.is_action_pressed(&"verb_assume"):
 		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		get_viewport().set_input_as_handled()
-	elif evento.is_action_pressed(&"mark_target"):
-		SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _rato_em_x()})
+	elif evento.is_action(&"mark_target"):
+		var marca := rising(evento, _marcar)
+		_marcar = held(evento, _marcar)
+		if marca:
+			SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _alvo_em_x(evento)})
 		get_viewport().set_input_as_handled()
+
+
+## Verdadeiro no instante em que o gesto de marcar comeca, e so nesse (GB-11).
+static func rising(evento: InputEvent, estava: bool) -> bool:
+	return held(evento, estava) and not estava
+
+
+## Se o gesto de marcar fica premido depois deste evento. O eco do teclado nao
+## e um gesto: `is_action_pressed` deixa-o de fora por omissao.
+static func held(evento: InputEvent, estava: bool) -> bool:
+	if not evento.is_action(&"mark_target"):
+		return estava
+	return evento.is_action_pressed(&"mark_target")
+
+
+## O rato aponta; o comando nao tem cursor. O §24 da o gatilho direito ao comando
+## e o botao direito ao rato, e so um dos dois sabe onde esta o bicho no ecra.
+static func aims_with_cursor(evento: InputEvent) -> bool:
+	return evento is InputEventMouse
 
 
 func _process(delta: float) -> void:
@@ -111,5 +136,10 @@ func _largar() -> void:
 	)
 
 
-func _rato_em_x() -> float:
-	return get_viewport().get_camera_2d().get_global_mouse_position().x
+## Onde o gesto aponta. Sem cursor, e o rei: o Verbs.mark escolhe o bicho mais
+## perto deste x, e o mais perto de quem joga e o que o esta a ameacar (Q-086).
+func _alvo_em_x(evento: InputEvent) -> float:
+	if aims_with_cursor(evento):
+		return get_viewport().get_camera_2d().get_global_mouse_position().x
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	return SimLoop.units.xs[i] if i != UnitSystem.NENHUM else SimLoop.core_x

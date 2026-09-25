@@ -6,13 +6,13 @@
 # BuildSystem (§55); consagrar e uma Semente Real, e vira Marco; deixar e nada.
 #
 # Colunas, como a §84 as escreve. Puro: devolve o que houve. Onde se cria raiz e
-# do AmargueiroRoots. Fora daqui: a Semente Real como coisa que se larga (Q-087),
+# do AmargueiroRoots. Fora daqui: a Semente Real como coisa que se larga (Q-095),
 # o Amargueiro subterraneo a bloquear a passagem (§79), as regioes adjacentes.
 class_name AmargueiroSystem
 extends RefCounted
 
 ## OLD e o Amargueiro velho do segmento de abertura (§83): de pe desde antes de
-## ti, com cara, sem serra, e fora da tua massa (Q-096).
+## ti, com cara, sem serra, e fora da tua massa (Q-104).
 enum Fate { STANDING, MARKER, OLD }
 
 const NENHUM := -1

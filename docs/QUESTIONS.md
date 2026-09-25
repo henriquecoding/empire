@@ -924,7 +924,118 @@
 - **Decide:** tu. A pergunta aberta é a da Fase 2: quando o Verbo 2 deixar assumir outros corpos (§24), o
   "conduzido" passa a ser mais do que o `king_id` — e aí talvez valha a pena ser coluna.
 
-### Q-086 · A base do Amargueiro não tem largura
+### Q-086 · O gatilho direito não tem cursor, e o §24 diz «só classe Arqueiro»
+- **Onde:** §24 (mapa de comando: *"Marcar alvo — Gatilho direito — Botão dir. do rato — **Só classe
+  Arqueiro**"*), §50, `src/ui/input_router.gd`, `src/core/verbs.gd`.
+- **O que faltava:** o rato tem cursor e o gatilho não, e o dossiê não diz para onde aponta o gatilho. O router
+  lia os dois como rato — com o comando, o alvo media-se do sítio onde o cursor tivesse ficado. E o gatilho é
+  analógico: medido, um puxão emitia seis eventos «premido» e marcava seis vezes.
+- **O que foi decidido, e é reversível (GB-11):** um puxão marca uma vez, e com o comando o alvo mede-se a
+  partir do rei — o `Verbs.mark` escolhe a criatura mais perto desse x, que é a mais perto de quem joga.
+- **O que continua por decidir:** *"só classe Arqueiro"*. As classes jogáveis são do §08 e não existem; o
+  monarca marca desde o F1-07 e continua a marcar. Quando o Verbo 2 assumir um arqueiro, esta linha do §24
+  passa a ser uma condição que se pode escrever. E o alvo do comando pode ser outro: a criatura mais perto **na
+  direcção para onde o rei olha**, ou a mais perto **que a candeia mostra** (§74: *"fora, não"*).
+- **Decide:** tu, no primeiro *playtest* com comando.
+
+### Q-087 · O rato na margem não tem largura no dossiê
+- **Onde:** §24 (*"Câmara livre — Stick direito — Q · Z **ou rato na margem**"*), `data/source/camera.csv`,
+  `src/world/camera_rig.gd`.
+- **O que foi feito (GB-12):** o rato a menos de `edge_pan_px` da borda do ecrã empurra a câmara livre, que
+  volta sozinha nos 2 s do §24. Com o rato fora da janela, ou a janela sem foco, não empurra — sem isso um rato
+  que saía pela borda deixava lá a última posição, e a câmara ia-se embora sozinha.
+- **O número que não está no dossiê:** a largura da margem. Fica `edge_pan_px = 16` px de ecrã, marcado em
+  `_proposed` ao lado dos outros quatro da Q-057: 1/80 dos 1280, a faixa que se acerta sem olhar em ecrã
+  inteiro e que o rato atravessa sem parar a caminho do botão direito. Zero desliga.
+- **Decide:** o primeiro *playtest*. Em janela a margem é mais difícil de acertar; se for preciso, isto sobe —
+  e o risco oposto é o rato a caminho de marcar um bicho perto da borda levar a câmara com ele.
+
+### Q-088 · A derrota do §16 é «decay em vez de reset», e o *greybox* não tem decay
+- **Onde:** §16 (*"Ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos
+  encontrados, e 40% das estruturas do império principal... o decay resolve isso melhor do que qualquer sistema
+  de save"*), §10, `src/world/game.gd`, `src/ui/pause_menu.gd`.
+- **O que foi feito (GB-16):** com o castelo-árvore caído, o ecrã diz *"A coroa caiu"* e oferece *"Novo jogo"*,
+  que recomeça do zero **sem** retomar o autosave. É a leitura mais simples do §16 que existe hoje: nada do
+  que o decay guarda existe ainda (não há Sementes, classes, mapas nem segredos), e guardar 40% das obras é uma
+  mecânica que o §16 descreve e ninguém implementou.
+- **O que se encontrou, e não se mudou:** **fechar e reabrir** o jogo depois de uma derrota retoma o autosave
+  mais recente — o da alvorada anterior, com o castelo de pé —, porque o `_retomar()` só recusa um save cujo
+  núcleo já caiu. Isso é exactamente *"um save que se recarrega"*, que o §16 recusa. Não se mexeu: o fluxo é o
+  da ADR 0005 e da Q-081, e fechá-lo é decidir o que um save guarda depois de uma derrota.
+- **Decide:** tu, quando houver decay. As duas perguntas: o que o *"Novo jogo"* herda da partida perdida, e se
+  um autosave anterior à derrota continua a poder ser retomado.
+
+### Q-089 · A cascata do amanhecer é simulação, e o dossiê não diz a ordem
+- **Onde:** §24 (*"Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a
+  saírem dos postos em cascata, não todas ao mesmo tempo"*), §43 (passo 3), `src/sim/systems/job_board.gd`.
+- **O que foi feito (GB-17):** o varrimento, que é apresentação: uma frente de luz da cor da alvorada do
+  `clock.csv` atravessa a região a 900 px/s.
+- **O que ficou de fora:** a cascata. O `jobs.assign()` do passo 3 dá o alvo do dia a toda a gente no mesmo
+  tick; o fatiamento da §52 espalha as **decisões** por seis ticks (0,2 s), mas o alvo já está escrito e toda a
+  gente arranca junta. Uma cascata muda **quando** cada tropa recebe o alvo — é simulação, tem de ser
+  determinista, e entra no save.
+- **A leitura mais natural, e não decidida:** a mesma linha do §24 põe as duas coisas lado a lado, e por isso a
+  cascata pode seguir a frente de luz — uma tropa sai do posto quando a luz lhe chega, `x / 900` s depois do
+  `dawn_broke`. É um número que o dossiê já tem, e liga o que se vê ao que acontece.
+- **Implementado depois, e reversível (GB-21):** foi esta a leitura. Na alvorada, quem tem posto e está à
+  direita da frente espera por ela; a frente é o relógio vezes `dawn_sweep_px_s` (clock.csv, 900, do §24) e
+  não guarda estado. Medido: nove tropas que arrancavam todas aos 0,03 s passam a sair de 1,97 s a 2,33 s.
+  Nenhum teste de design mudou de resultado e a vistoria dá a mesma tabela. Para desligar: `dawn_sweep_px_s`
+  a zero, que desliga também a luz.
+- **Decide:** tu, se a ordem é esta — a da luz — ou outra.
+
+### Q-090 · O `settings.cfg` da §45 grava-se como o save, e não como `ConfigFile`
+- **Onde:** §45 (*"Câmara — preferência de sessão, não estado de jogo. Vai para `user://settings.cfg`"*), §26,
+  ADR 0007, `src/core/preferences.gd`, `tools/lint_rules.gd`.
+- **O que diverge:** a §45 dá o caminho e não o formato, e a extensão `.cfg` sugere o `ConfigFile` do motor. O
+  `ConfigFile` desserializa `Object(...)` e `Resource(...)` — a mesma porta que a ADR 0007 fecha no save: um
+  ficheiro de preferências partilhado *"para desligar o tremor"* podia trazer um *script*.
+- **O que foi decidido, e é reversível (GB-13):** o caminho é o da §45 e o formato é o da ADR 0007 — um
+  dicionário de tipos base com `store_var(_, false)`, lido com `get_var(false)` e validado campo a campo; uma
+  chave desconhecida ou um tipo errado ignoram-se. O portão G6 passa a guardar os dois ficheiros, e proíbe
+  também o `ConfigFile` neles.
+- **O custo:** o ficheiro deixa de se poder editar à mão num editor de texto. Se isso for querido, a ADR 0007
+  já lista a alternativa segura — JSON — e a troca fica num ficheiro só.
+- **Decide:** tu.
+
+### Q-091 · A duração do dia entrou no save sem `save_version` novo
+- **Onde:** §26 (*"slider de duração do dia (240–540 s)"*), §62 e ADR 0007 (*"save_version desde a 1, com uma
+  migração por alteração, no mesmo commit"*), `src/sim/state/game_state.gd`, `src/core/save_service.gd`.
+- **O que foi feito (GB-24):** o `GameState` ganhou `day_seconds`, e o `from_dict` já é *"campos em falta ficam
+  no valor por omissão"*. Zero quer dizer *"a do clock.csv"* — e é exactamente o que um save de antes disto
+  tinha, porque o slider não existia. Por isso um save antigo carrega igual, sem migração nenhuma.
+- **O que diverge:** a ADR 0007 pede uma migração por alteração, e isto é uma alteração sem migração nem versão
+  nova. Nenhuma das colecções acrescentadas desde o F1-14 subiu a versão, e o `SaveService` não tem ainda
+  código de migração nenhum — mas a regra está escrita.
+- **Decide:** tu. Subir para 2 com uma migração que só escreve o zero, ou escrever na ADR que um campo novo
+  cujo omissão é o comportamento antigo não precisa de versão.
+
+### Q-092 · As legendas de som vêm desligadas, e o jogo ainda não tem som
+- **Onde:** §26 (*"Legendas para pistas sonoras... Fazer. Substitui o áudio para surdos."*),
+  `docs/audio/AUDIO_CUE_SHEET.csv`, `src/ui/captions.gd`, `src/core/preferences.gd`.
+- **O que foi decidido (GB-22):** desligadas por omissão, e ligam-se na pausa. É o costume de uma opção de
+  acessibilidade, e a matriz de QA (A8) testa-as *"com OPT_CAPTIONS ligado"*.
+- **O que isso custa hoje:** não há som nenhum gravado (73 pistas escritas, zero gravadas), e por isso, com as
+  legendas desligadas, o sino da alvorada e o aviso do crepúsculo não chegam a ninguém de maneira nenhuma. Até
+  haver som, ligá-las por omissão seria defensável.
+- **O número que não está no dossiê:** 3 s por legenda, e até três de uma vez. É o tempo de ler uma linha
+  curta.
+- **Decide:** tu.
+
+### Q-093 · O §26 pede contraste e daltonismo, e não diz com que gama nem com que algoritmo
+- **Onde:** §26 (*"Controlos de contraste — um shader de saturação/contraste global"*; *"Modos para daltonismo —
+  a paleta é quente/fria, boa base. Testa a Podridão contra o terreno em protanopia"*), `docs/qa/ACCESSIBILITY_MATRIX.md`
+  (A3, A4, A15), `src/world/accessibility_filter.gd`, `shaders/accessibility.gdshader`.
+- **O que foi decidido, e é reversível (GB-25, GB-26):**
+  - **contraste de 75% a 150%**, em passos de 5%. Abaixo de 75% a noite castanha da §80 fecha-se num tom só;
+    acima de 150% o meio-dia queima. Um slider só: a saturação que o §26 junta ao contraste fica por fazer;
+  - **daltonismo por correcção**, e não por simulação: a simulação é a de Machado, Oliveira e Fernandes (2009),
+    com severidade total, e a correcção é a de Fidaner, Lin e Ozguven (2005), que leva o que o olho perde para os
+    canais que ele ainda separa. As matrizes são publicadas e estão no `AccessibilityFilter`;
+  - **o limiar do teste A4/A15**: com o modo ligado, quem tem a deficiência tem de manter 90% da separação
+    mancha–chão que um olho sem ela vê. Medido: 116% em protanopia, 117% em deuteranopia, 95% em tritanopia.
+- **Decide:** tu, com um *playtest* com jogadores daltónicos, que é o único que responde a isto.
+### Q-094 · A base do Amargueiro não tem largura
 - **Onde:** §74 (*"largar moedas na base"*), §55 (a moeda cai *numa* obra quando cai dentro da meia largura
   dela), `data/source/rot.csv`.
 - **O que falta:** o corte é um slot de destino no BuildSystem, e um slot precisa de largura — é ela que diz
@@ -934,7 +1045,7 @@
   que uma pessoa.
 - **Decide:** o playtest — se largar seis moedas numa árvore obrigar a acertar, sobe.
 
-### Q-087 · Consagrar pede uma Semente Real, e a Semente Real ainda não se larga
+### Q-095 · Consagrar pede uma Semente Real, e a Semente Real ainda não se larga
 - **Onde:** §74 (*"Consagrar — largar 1 Semente Real na base"*), §15, §57 (CrownSystem), §61 (Verbo 1).
 - **O que falta:** o Verbo 1 hoje larga moedas e só moedas. A Semente Real existe como número nos dados
   (`class_data.gd`, `economy_curve.gd`) e como sinal no catálogo (`seed_royal_gained`), mas não há inventário
@@ -945,7 +1056,7 @@
 - **Bloqueia:** o "Feito" do XIII-03 fica parcial por isto. **Decide:** o calendário — é o CrownSystem da
   Fase 2, e não uma decisão de design.
 
-### Q-088 · "Não é recolhida antes da alvorada" — não há gesto para recolher
+### Q-096 · "Não é recolhida antes da alvorada" — não há gesto para recolher
 - **Onde:** §74 (*"uma tropa que morre fora das muralhas e não é recolhida antes da alvorada cria raiz"*;
   *"reutiliza inteiro o gesto que a §16 já tem para o Santuário das Raízes"*), §16.
 - **O que falta:** o gesto de arrastar um corpo para dentro é do Santuário das Raízes (§16), e o Santuário
@@ -956,7 +1067,7 @@
   morreu em cima dele, e não fora. Recolher entra com o §16, e só muda o x do corpo antes da alvorada.
 - **Decide:** o calendário.
 
-### Q-089 · O vagabundo tem escala 2 no units.csv e a §74 dá-lhe escala 1
+### Q-097 · O vagabundo tem escala 2 no units.csv e a §74 dá-lhe escala 1
 - **Onde:** §74, regra 3 (*"Escala 1 e vagabundo: 1 Lenho. Escala 2, tropa: 2"*), §22, `units.csv`
   (`vagrant,…,scale_tier 2`).
 - **O que diverge:** a escala do §22 é a da figura, e um vagabundo tem o tamanho de qualquer tropa. A regra 3
@@ -966,17 +1077,17 @@
   leitura for outra.
 - **Decide:** tu.
 
-### Q-090 · O prato tem "o tamanho de um slot de construção" — de qual?
+### Q-098 · O prato tem "o tamanho de um slot de construção" — de qual?
 - **Onde:** §75 (*"um alguidar de barro, do tamanho de um slot de construção"*), `data/source/rot.csv`.
 - **O que foi feito, e é reversível:** `offer_plate_px = 96`, marcado em `_proposed` — o canteiro, o slot mais
   comum do greybox. Só conta o que cai dentro dele (a primeira das quatro regras da §75).
 - **Decide:** o playtest.
 
-### Q-091 · Das doze ofertas, só três têm hoje onde pegar
+### Q-099 · Das doze ofertas, só quatro têm hoje onde pegar
 - **Onde:** §75, a tabela das doze; `src/sim/systems/offer_system.gd` (`PRECOS`, `EFEITOS`).
 - **O que falta:** oito preços e cinco efeitos dependem de sistemas que ainda não existem — portões (§10 não
   os tem), tesouraria, Capítulos (§77), sucessor (§15), povos (§78), classes jogáveis (§08), passagens seladas,
-  e a Semente Real como coisa que se larga (Q-087).
+  e a Semente Real como coisa que se larga (Q-095).
 - **O que foi feito:** uma oferta só é candidata quando o preço dela se pode pagar com o Verbo 1 **e** o efeito
   existe. Hoje: *Nada. Só quero ver.* (dia 2+, a do §83 — a revelação fica guardada para os Capítulos), *Dá-me
   o que já não anda* (dia 3+), *Diz-me um nome* (com nomeados, XIII-05) e *Devolve-me o que é meu* (com a
@@ -985,7 +1096,7 @@
   enquanto não houver tesouraria nem classes. O `once_per_campaign` da Q-040 já é respeitado.
 - **Decide:** o calendário.
 
-### Q-092 · O Zelador pode ser afastado — com quê?
+### Q-100 · O Zelador pode ser afastado — com quê?
 - **Onde:** §75 (*"Pode ser afastado, não morto"*), `creatures.csv` (`tender`, `pushable = true`).
 - **O que falta:** o dossiê não diz o gesto. Não há empurrar no jogo.
 - **O que foi feito, e é reversível:** o Zelador não é uma criatura do combate (tem `max_health 0`, e no
@@ -994,7 +1105,7 @@
   entra quando houver o gesto.
 - **Decide:** tu.
 
-### Q-093 · A recusar todas as ofertas, a defesa do décimo dia cai ao dia 9
+### Q-101 · A recusar todas as ofertas, a defesa do décimo dia cai ao dia 9
 - **Onde:** §66 (*"sobreviver 10 dias é possível e não é trivial"*), §75 (*"recusar custa +8 de massa por cada
   recusa das últimas cinco noites, até cinco"*), `tests/dez_dias_test.gd`.
 - **O que foi medido:** a defesa que fecha a Fase 1 — Bastião, ferro, duas torres, doze arqueiros — aguenta dez
@@ -1007,10 +1118,10 @@
   mudam), ou só para quem aceita alguma coisa (e então o instrumento precisa de uma política de ofertas).
 - **Decide:** tu.
 
-### Q-094 · Dos nove feitos, cinco têm hoje o que observar; das nove bonificações, uma
+### Q-102 · Dos nove feitos, cinco têm hoje o que observar; das nove bonificações, uma
 - **Onde:** §76, a tabela dos nove feitos; `src/sim/systems/feat_ledger.gd`, `title_system.gd`.
 - **O que falta:** *Último na porta* precisa de portões (o §10 não os tem); *Trouxe os outros*, do gesto de
-  arrastar corpos (§16, Q-088); *Não comeu*, de cozinha e consumo; *Voltou*, da ressurreição (§16). Até lá
+  arrastar corpos (§16, Q-096); *Não comeu*, de cozinha e consumo; *Voltou*, da ressurreição (§16). Até lá
   nunca se cumprem. Das bonificações, só **+1 vida máxima** tem onde pegar: *não foge*, *+10% cadência*,
   *+2 dano contra cerco*, *arrasta ao dobro*, *não entra em pânico na candeia*, *metade da comida*,
   *imune a encantamento* e *a arma sobe um nível* mexem na moral, no combate e na economia, e ficam escritas
@@ -1021,7 +1132,7 @@
   final num Aríete, sair vivo de dentro da mancha, dias com a mesma arma) e as quatro regras inteiras.
 - **Decide:** o calendário.
 
-### Q-095 · A Colheita não tem quem a comece, nem onde se decida
+### Q-103 · A Colheita não tem quem a comece, nem onde se decida
 - **Onde:** §78 (*"quando tomas ou assimilas um povo"*; *"No fim da Colheita, uma decisão. Verbo 1, no núcleo
   deles"*; *"a aldeia fica fora das tuas muralhas"*), §13, §82 (os estandartes).
 - **O que falta:** a conquista (§13) ainda não existe, nem há aldeias no greybox — por isso ninguém chama
@@ -1034,7 +1145,7 @@
   marco de cada povo que ficou pesa +22 por noite, como um Amargueiro que não se corta.
 - **Decide:** tu (o gesto) e o calendário (a conquista).
 
-### Q-096 · O Amargueiro velho do minuto 0:00, e o dia da primeira oferta
+### Q-104 · O Amargueiro velho do minuto 0:00, e o dia da primeira oferta
 - **Onde:** §83 (a tabela dos vinte minutos e a caixa *"o que o segmento de abertura passa a ter de conter"*),
   §25 (*"a noite 1 é ganha de certeza"*), §74, `offers.csv` (`just_looking`, `min_day 2`).
 - **O Amargueiro velho:** está lá desde o primeiro frame, logo a seguir à estacaria da esquerda (−750 px do

@@ -26,6 +26,9 @@ var seed: int = 0
 var tick: int = 0
 var day: int = 1
 var clock_elapsed: float = 0.0
+## A duracao do dia que o jogador escolheu (§26, GB-24), em segundos. Zero e a do
+## clock.csv — e e o que um save de antes disto carrega, porque era a que tinha.
+var day_seconds: float = 0.0
 
 ## Contador unico e monotonico dos ids de instancia (§45). Comeca em 1 para que
 ## 0 nunca seja um id valido e sirva de "nenhum".
@@ -42,6 +45,7 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.day = _inteiro(d, &"day", estado.day)
 	estado.next_id = _inteiro(d, &"next_id", estado.next_id)
 	estado.clock_elapsed = _real(d, &"clock_elapsed", estado.clock_elapsed)
+	estado.day_seconds = _real(d, &"day_seconds", estado.day_seconds)
 	return estado
 
 
@@ -59,6 +63,7 @@ func to_dict() -> Dictionary:
 		&"tick": tick,
 		&"day": day,
 		&"clock_elapsed": clock_elapsed,
+		&"day_seconds": day_seconds,
 		&"next_id": next_id,
 	}
 

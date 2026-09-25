@@ -134,15 +134,21 @@ func _na_dentada(building_id: int, _ratio: float) -> void:
 	_golpes.append([building_id, SEM_SENTIDO, FLASH_S, true])
 
 
+## Com os claroes desligados (§26, "obrigatorio para fotossensibilidade") fica a
+## particula: 4 px a afastar-se nao sao um clarao, e sao a unica coisa que diz de
+## que lado veio o golpe (GB-13).
 func _draw() -> void:
+	var clarao := Preferences.on(Preferences.FLASHES)
 	for golpe in _golpes:
 		if golpe[OBRA]:
-			_obra_atingida(golpe[ALVO])
+			if clarao:
+				_obra_atingida(golpe[ALVO])
 			continue
 		var caixa := _caixa_de(golpe[ALVO])
 		if caixa.size == Vector2.ZERO:
 			continue
-		draw_rect(caixa, WorldPalette.FLASH)
+		if clarao:
+			draw_rect(caixa, WorldPalette.FLASH)
 		_particula(caixa, golpe[SENTIDO], golpe[RESTA])
 
 
@@ -180,11 +186,13 @@ func _caixa_de(id: int) -> Rect2:
 	var i := SimLoop.units.index_of(id)
 	if i != UnitSystem.NENHUM:
 		var tropa: UnitData = _tabela(&"units").get(SimLoop.units.data_ids[i])
-		return _caixa(SimLoop.units.xs[i], SimLoop.units.bands[i], tropa)
+		var x := Smoothing.x_of(Smoothing.Group.UNITS, id, SimLoop.units.xs[i])
+		return _caixa(x, SimLoop.units.bands[i], tropa)
 	var c := SimLoop.creatures.index_of(id)
 	if c != UnitSystem.NENHUM:
 		var bicho: CreatureData = _tabela(&"creatures").get(SimLoop.creatures.data_ids[c])
-		return _caixa(SimLoop.creatures.xs[c], SimLoop.creatures.bands[c], bicho)
+		var em := Smoothing.x_of(Smoothing.Group.CREATURES, id, SimLoop.creatures.xs[c])
+		return _caixa(em, SimLoop.creatures.bands[c], bicho)
 	return SEM_CORPO
 
 

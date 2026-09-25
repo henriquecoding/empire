@@ -13,7 +13,7 @@
 #
 # Puro. Os campos do save sao os da §84. O que comeca uma Colheita e a conquista
 # (§13), que ainda nao existe; o gesto da decisao e o Verbo 1 no nucleo deles,
-# que ainda nao tem aldeia onde cair (Q-095).
+# que ainda nao tem aldeia onde cair (Q-103).
 class_name HarvestSystem
 extends RefCounted
 

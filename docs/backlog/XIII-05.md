@@ -7,7 +7,7 @@ Depende   F1-12
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Nove nomes no máximo; o título ganha-se na alvorada; o luto de três dias devolve-o com ordinal
 Fora      A encomendação cantada — é o XIII-09.
-Estado    feito — 5 dos 9 feitos com o que observar (Q-094)
+Estado    feito — 5 dos 9 feitos com o que observar (Q-102)
 Horas     11 (7 + 2 arte + 1 som + 1 escrita)
 ```
 
@@ -20,7 +20,7 @@ Horas     11 (7 + 2 arte + 1 som + 1 escrita)
 - **Morto o dono, três dias de luto, e volta com ordinal** — o segundo que o ganha é O Segundo Que Ficou. Morrer, criar raiz ou ser levado pela Oferta ou pelo Zelador são o mesmo para o título.
 - **Os nomes chegam onde a Parte XIII os pede:** um nomeado morto lá fora é um Amargueiro nomeado (+45 de massa, 5 Lenho), porque os nomes se leem antes de os corpos se levantarem; a Oferta e o Zelador leem os nomes verdadeiros.
 - **A fita** (§58, slot overlay) na cor de `titles.csv`; quem espera por vaga tem só o contorno. O monarca e os vagabundos por recrutar não ganham nome.
-- Das nove bonificações só a vida máxima se aplica hoje; quatro dos nove feitos dependem de portões, arrastar corpos, cozinha e ressurreição (Q-094). A encomendação cantada é o XIII-09.
+- Das nove bonificações só a vida máxima se aplica hoje; quatro dos nove feitos dependem de portões, arrastar corpos, cozinha e ressurreição (Q-102). A encomendação cantada é o XIII-09.
 
 ---
 

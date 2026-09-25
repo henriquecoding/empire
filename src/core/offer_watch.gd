@@ -100,7 +100,7 @@ func tick(
 
 ## As oito chaves da §75, com o que o jogo hoje sabe. Portoes, tesouraria,
 ## povos e sucessor ainda nao existem e valem zero: uma condicao sobre eles
-## nunca se cumpre, e e isso que os deixa de fora (Q-091).
+## nunca se cumpre, e e isso que os deixa de fora (Q-099).
 func facts(amargueiros: AmargueiroSystem) -> Dictionary:
 	var marcos := 0
 	for i in amargueiros.count():

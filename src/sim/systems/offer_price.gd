@@ -3,7 +3,7 @@
 # Quatro precos tem hoje onde pegar, e sao os quatro gestos do Verbo 1 que o
 # jogo ja tem: moedas largadas no prato; uma tropa ferida levada ate ele; uma
 # tropa com nome levada ate ele; e, na decima segunda, uma com nome que leva
-# todas as outras. Os outros oito precisam de sistemas que ainda nao ha (Q-091).
+# todas as outras. Os outros oito precisam de sistemas que ainda nao ha (Q-099).
 #
 # Sem meias-aceitacoes: ou o preco inteiro esta no prato neste tick e sai tudo
 # de uma vez, ou nao sai nada. O que caiu e nao chegou fica no chao, onde caiu.
