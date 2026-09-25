@@ -95,3 +95,15 @@ func test_um_nomeado_morto_la_fora_e_uma_arvore_nomeada_e_o_titulo_vai_de_luto()
 	assert_bool(noite.names.mourning.has("the_counter")).is_true()
 	_virar(noite, GameClock.Phase.DUSK, estado)
 	assert_float(noite.rot.mass()).is_equal(Model.rot_mass(DIA, 0, B.perfil(), 0, 1))
+
+
+func test_o_marco_de_um_povo_que_ficou_pesa_como_uma_arvore() -> void:
+	var noite := B.noite(UnitSystem.new(), BuildSystem.new())
+	var estado := GameState.new()
+	estado.day = DIA
+	noite.harvest.conquer(&"portuarios", false)
+	for _d in noite.harvest.days_left:
+		_virar(noite, GameClock.Phase.DAWN, estado)
+	noite.harvest.decide(HarvestSystem.Choice.KEEP)
+	_virar(noite, GameClock.Phase.DUSK, estado)
+	assert_float(noite.rot.mass()).is_equal(Model.rot_mass(DIA, 0, B.perfil(), 1, 0))

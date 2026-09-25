@@ -23,6 +23,8 @@ var amargueiros: AmargueiroSystem
 var voice: OfferWatch
 ## Os nomes (§76): ganham-se na alvorada, e a noite e onde se fazem os feitos.
 var names: TitleSystem
+## A Colheita (§78): conta dias a alvorada, e os marcos de quem ficou pesam.
+var harvest: HarvestSystem
 
 var _tropas: UnitSystem
 var _obras: BuildSystem
@@ -37,6 +39,7 @@ func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: J
 	amargueiros = SimFactory.amargueiros()
 	voice = OfferWatch.new(moedas, tropas, obras)
 	names = SimFactory.titles()
+	harvest = HarvestSystem.new(SimFactory.curve())
 	_tropas = tropas
 	_obras = obras
 	_postos = postos
@@ -89,9 +92,11 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		var dia := ClockService.clock.day
 		amargueiros.at_dawn(dia, _tropas, _obras, mundo.x, mundo.y, names.by_unit())
 		names.at_dawn(dia, _tropas, _postos)
+		harvest.at_dawn()
 	if fase == GameClock.Phase.DUSK:
 		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
-		rot.amargueiros = amargueiros.anonymous()
+		# O marco de um povo que ficou cria raiz e nao se corta (§78): e mais uma.
+		rot.amargueiros = amargueiros.anonymous() + harvest.landmarks()
 		rot.named_amargueiros = amargueiros.named()
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso

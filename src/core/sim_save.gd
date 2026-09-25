@@ -23,6 +23,7 @@ const PODRIDAO := &"rot"
 const AMARGUEIROS := &"amargueiros"
 const VOZ := &"offers"
 const NOMES := &"titles"
+const COLHEITA := &"harvest"
 const REI := &"king_id"
 
 
@@ -43,6 +44,7 @@ static func world(
 		AMARGUEIROS: noite.amargueiros.to_dict(obras),
 		VOZ: noite.voice.to_dict(),
 		NOMES: noite.names.to_dict(),
+		COLHEITA: noite.harvest.to_dict(),
 		REI: king_id,
 	}
 
@@ -67,4 +69,5 @@ static func restore(
 	noite.amargueiros.from_dict(mundo.get(AMARGUEIROS, {}), obras)
 	noite.voice.from_dict(mundo.get(VOZ, {}))
 	noite.names.from_dict(mundo.get(NOMES, {}))
+	noite.harvest.from_dict(mundo.get(COLHEITA, {}))
 	return mundo.get(REI, UnitSystem.NENHUM)

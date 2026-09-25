@@ -1021,6 +1021,19 @@
   final num Aríete, sair vivo de dentro da mancha, dias com a mesma arma) e as quatro regras inteiras.
 - **Decide:** o calendário.
 
+### Q-095 · A Colheita não tem quem a comece, nem onde se decida
+- **Onde:** §78 (*"quando tomas ou assimilas um povo"*; *"No fim da Colheita, uma decisão. Verbo 1, no núcleo
+  deles"*; *"a aldeia fica fora das tuas muralhas"*), §13, §82 (os estandartes).
+- **O que falta:** a conquista (§13) ainda não existe, nem há aldeias no greybox — por isso ninguém chama
+  `HarvestSystem.conquer()`. E a decisão tem duas saídas para um só gesto: largar moeda no núcleo deles diz
+  *que* decides, não *o quê*. O dossiê não escreve se são dois sítios (o núcleo e o marco?), duas quantias,
+  ou outra coisa. Os estandartes do §82 também não têm cor por povo em `peoples.csv`.
+- **O que foi feito:** o sistema inteiro — a duração (C = 6 + 2 × povos, metade por assimilação), uma de cada
+  vez com fila a 100%, os 140% em Colheita e os +80% de quem ficou, perder o povo se a aldeia cair, soltar e
+  ficar, os campos da §84 — e as duas ligações que já têm onde pegar: cada alvorada é um dia de Colheita, e o
+  marco de cada povo que ficou pesa +22 por noite, como um Amargueiro que não se corta.
+- **Decide:** tu (o gesto) e o calendário (a conquista).
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

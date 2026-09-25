@@ -81,6 +81,7 @@ src/sim/systems/debt_ledger.gd DebtLedger    a Divida da Candeia e as recusas (�
 src/sim/systems/tender.gd   Tender        o Zelador (§75)
 src/sim/systems/title_system.gd TitleSystem  quem tem nome, o teto, o luto e o ordinal (§76)
 src/sim/systems/feat_ledger.gd FeatLedger    os feitos registados (§76)
+src/sim/systems/harvest_system.gd HarvestSystem a Colheita: soltar ou ficar (§78)
 src/core/offer_watch.gd     OfferWatch    a voz da Podridao: falar, cobrar, dar (§75)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
