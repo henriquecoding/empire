@@ -966,6 +966,47 @@
   leitura for outra.
 - **Decide:** tu.
 
+### Q-090 · O prato tem "o tamanho de um slot de construção" — de qual?
+- **Onde:** §75 (*"um alguidar de barro, do tamanho de um slot de construção"*), `data/source/rot.csv`.
+- **O que foi feito, e é reversível:** `offer_plate_px = 96`, marcado em `_proposed` — o canteiro, o slot mais
+  comum do greybox. Só conta o que cai dentro dele (a primeira das quatro regras da §75).
+- **Decide:** o playtest.
+
+### Q-091 · Das doze ofertas, só três têm hoje onde pegar
+- **Onde:** §75, a tabela das doze; `src/sim/systems/offer_system.gd` (`PRECOS`, `EFEITOS`).
+- **O que falta:** oito preços e cinco efeitos dependem de sistemas que ainda não existem — portões (§10 não
+  os tem), tesouraria, Capítulos (§77), sucessor (§15), povos (§78), classes jogáveis (§08), passagens seladas,
+  e a Semente Real como coisa que se larga (Q-087).
+- **O que foi feito:** uma oferta só é candidata quando o preço dela se pode pagar com o Verbo 1 **e** o efeito
+  existe. Hoje: *Dá-me o que já não anda* (a partir do dia 3), *Diz-me um nome* (com nomeados, XIII-05) e
+  *Devolve-me o que é meu* (com a Dívida em 12). As outras nove não são sorteadas — nenhuma aparece para não
+  fazer nada. Cada sistema que chegar acrescenta a sua linha às duas listas, e a oferta entra sozinha.
+- **Q-040 e Q-053 continuam por decidir por isto:** *O que brilha* e *Fica com a candeia* não são candidatas
+  enquanto não houver tesouraria nem classes. O `once_per_campaign` da Q-040 já é respeitado.
+- **Decide:** o calendário.
+
+### Q-092 · O Zelador pode ser afastado — com quê?
+- **Onde:** §75 (*"Pode ser afastado, não morto"*), `creatures.csv` (`tender`, `pushable = true`).
+- **O que falta:** o dossiê não diz o gesto. Não há empurrar no jogo.
+- **O que foi feito, e é reversível:** o Zelador não é uma criatura do combate (tem `max_health 0`, e no
+  CreatureSystem isso é morrer no primeiro tick); anda por conta própria, nunca à frente da mancha, e um muro
+  de pé pára-o — não ataca, por isso não o rompe. Com as muralhas de pé, fica a olhar para o núcleo. Afastá-lo
+  entra quando houver o gesto.
+- **Decide:** tu.
+
+### Q-093 · A recusar todas as ofertas, a defesa do décimo dia cai ao dia 9
+- **Onde:** §66 (*"sobreviver 10 dias é possível e não é trivial"*), §75 (*"recusar custa +8 de massa por cada
+  recusa das últimas cinco noites, até cinco"*), `tests/dez_dias_test.gd`.
+- **O que foi medido:** a defesa que fecha a Fase 1 — Bastião, ferro, duas torres, doze arqueiros — aguenta dez
+  noites com a mancha calada (a curva da §74 com recusas a zero, que é como a tabela da §74 isola o termo, e o
+  que o F1-16 afinou). Com a voz ligada, o instrumento não paga nada e recusa todas as noites: o imposto chega
+  aos +40 à sexta, e o núcleo cai **ao dia 9, com 6 mortes**.
+- **O que foi feito:** o teste do §66 mede o que media, e diz agora que é sem a voz; o teste novo, a recusar
+  sempre, está saltado com esta razão. Nenhum número de `data/` foi mexido.
+- **O que está em aberto:** se o §66 deve valer para quem recusa sempre (e então o teto de +40 ou a defesa
+  mudam), ou só para quem aceita alguma coisa (e então o instrumento precisa de uma política de ofertas).
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

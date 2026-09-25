@@ -28,12 +28,27 @@ const POR_CELULA := 2.0
 
 const MEIA := 0.5
 
+## §75, a tabela da Divida: quantas faixas a candeia ilumina a partir de cada
+## limiar de debt_tiers — 1, faixa e meia, 2, o ecra inteiro. O indice e quantos
+## limiares ja foram passados (DebtLedger.tier()). Nunca aparece como numero:
+## e isto que o jogador ve em vez dele.
+const FAIXAS_POR_LIMIAR := [1.0, 1.5, 2.0, 3.0, 3.0]
+## A faixa da mancha e uma; o resto reparte-se pelas duas vizinhas.
+const VIZINHAS := 2.0
+
 
 ## O raio da candeia neste dia (§74): base + por_dia * dia, com teto. O dia 0 —
 ## que e o que um mundo por comecar tem — da o raio da base, e nao zero.
 static func radius(perfil: RotProfile, dia: int) -> float:
 	var raio := perfil.lantern_radius_base + perfil.lantern_radius_per_day * float(maxi(dia, 0))
 	return minf(raio, perfil.lantern_radius_max)
+
+
+## Que fraccao do raio chega a uma faixa que nao e a da mancha, com a Divida
+## neste limiar. Zero no principio: "a candeia ilumina 1 faixa" (§75).
+static func debt_reach(limiar: int) -> float:
+	var faixas: float = FAIXAS_POR_LIMIAR[clampi(limiar, 0, FAIXAS_POR_LIMIAR.size() - 1)]
+	return clampf((faixas - 1.0) / VIZINHAS, 0.0, 1.0)
 
 
 ## As tres paragens, do bordo para o nucleo — que e a ordem por que se pintam,

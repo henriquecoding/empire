@@ -195,8 +195,8 @@ func _montar() -> void:
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()
 	economy = SimFactory.economy()
-	night = NightWatch.new(units, builds)
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
+	night = NightWatch.new(units, builds, coins)
 	recruits = RecruitSystem.new(SimFactory.curve())
 	tally.reset()
 	_fase = UnitSystem.NENHUM

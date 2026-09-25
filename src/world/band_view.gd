@@ -53,12 +53,23 @@ func _process(delta: float) -> void:
 	var relogio := ClockService.clock
 	_luz.set_phase(_relogio, int(relogio.current_phase()), relogio.phase_progress())
 	var rot := SimLoop.night.rot if SimLoop.state != null else null
-	if rot != null and rot.active():
-		var raio := WorldLight.radius(_podre, SimLoop.state.day)
+	var raio := _raio_nesta_faixa(rot)
+	if raio > 0.0:
 		_luz.set_lamp(rot.position_x(), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
 	else:
 		_luz.clear_lamp()
 	queue_redraw()
+
+
+## A candeia e o mostrador da Divida (§74, §75): na faixa da mancha e o raio do
+## dia; nas outras so chega o que a Divida ja deixou chegar.
+func _raio_nesta_faixa(rot: RotSystem) -> float:
+	if rot == null or not rot.active():
+		return 0.0
+	var raio := WorldLight.radius(_podre, SimLoop.state.day)
+	if band == Band.Kind.SURFACE:
+		return raio
+	return raio * WorldLight.debt_reach(SimLoop.night.voice.debt.tier())
 
 
 func _draw() -> void:
@@ -67,6 +78,7 @@ func _draw() -> void:
 	if band == Band.Kind.SURFACE:
 		_passagens()
 		_podridao()
+		OfferView.draw_on(self, _luz)  # §75: o prato, a frase e o Zelador
 	_fogueiras()
 	BuildView.draw_on(self, band, _edificios, _luz)
 	AmargueiroView.draw_on(self, band, _luz)  # §74: o que a noite deixou

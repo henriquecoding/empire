@@ -74,3 +74,10 @@ static func cortar(
 		o.tick(PASSO, u)
 		eventos.append_array(bosque.harvest(o))
 	return eventos
+
+
+## A noite como o SimLoop a monta, com tropas, obras e moedas proprias.
+static func noite(u: UnitSystem, o: BuildSystem) -> NightWatch:
+	return NightWatch.new(
+		u, o, CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
+	)

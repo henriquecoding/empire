@@ -21,6 +21,7 @@ const MOEDAS := &"coins"
 const OBRAS := &"builds"
 const PODRIDAO := &"rot"
 const AMARGUEIROS := &"amargueiros"
+const VOZ := &"offers"
 const REI := &"king_id"
 
 
@@ -39,6 +40,7 @@ static func world(
 		OBRAS: obras.to_dict(),
 		PODRIDAO: noite.rot.to_dict(),
 		AMARGUEIROS: noite.amargueiros.to_dict(obras),
+		VOZ: noite.voice.to_dict(),
 		REI: king_id,
 	}
 
@@ -61,4 +63,5 @@ static func restore(
 	# Depois das obras, e nao antes: as serras voltam com ids novos, e as obras
 	# autoradas ja tem de estar no sitio para os velhos nao lhes caberem (§62).
 	noite.amargueiros.from_dict(mundo.get(AMARGUEIROS, {}), obras)
+	noite.voice.from_dict(mundo.get(VOZ, {}))
 	return mundo.get(REI, UnitSystem.NENHUM)

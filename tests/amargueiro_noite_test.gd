@@ -27,7 +27,7 @@ func before_test() -> void:
 func test_tres_mortos_la_fora_sao_a_linha_das_tres_arvores_da_74() -> void:
 	var u := UnitSystem.new()
 	var o := BuildSystem.new()
-	var noite := NightWatch.new(u, o)
+	var noite := B.noite(u, o)
 	var estado := GameState.new()
 	estado.day = DIA
 	for k in 3:
@@ -51,7 +51,7 @@ func _distancia_percorrida(com_marco: bool) -> float:
 	RngService.configure(SEMENTE)
 	var u := UnitSystem.new()
 	var o := BuildSystem.new()
-	var noite := NightWatch.new(u, o)
+	var noite := B.noite(u, o)
 	var estado := GameState.new()
 	estado.day = DIA
 	# Um Marco em cada borda: o lado por onde ela nasce e sorteado (§51).

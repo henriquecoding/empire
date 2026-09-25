@@ -61,6 +61,9 @@ extends Resource
 @export var offer_window_after_dusk: Vector2 = Vector2.ZERO
 ## A frase fica este tempo no mundo; passado isso, o prato afunda-se (§75).
 @export var offer_seconds: float = 0.0
+## O prato de oferenda, "do tamanho de um slot de construcao" (§75). Proposta:
+## o canteiro (Q-090). So conta o que cai dentro dele.
+@export var offer_plate_px: float = 0.0
 ## Uma por noite, mesmo com duas manchas a partir do dia 12 (§75, D-05).
 @export var offers_per_night: int = 1
 ## Recusar custa refusal_mass por cada recusa das ultimas refusal_window_days,

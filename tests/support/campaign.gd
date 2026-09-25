@@ -36,6 +36,12 @@ const SEGUNDOS := &"seconds"
 const TABELA := &"per_night"
 const DIA := &"day"
 
+## A voz da Podridao (§75). Desligada, a mancha nao fala e ninguem recusa: e a
+## curva da §74 com recusas a zero, que e como a propria tabela da §74 isola o
+## termo novo — e o que o F1-16 afinou, antes de a Oferta existir. Ligada, este
+## instrumento nao paga nada, e por isso recusa todas as noites (Q-093).
+var voice: bool = true
+
 var _mortes: int = 0
 var _muros: int = 0
 var _noites: int = 0
@@ -61,6 +67,8 @@ func run(h: Harness, dias: int) -> Dictionary:
 	var t0 := Time.get_ticks_usec()
 	for _i in passos:
 		SimLoop.step(PASSO)
+		if not voice:
+			SimLoop.night.voice.offers.close_quietly()
 		# §10: "se o castelo-arvore cair, cai a partida". O `game.gd` para aqui e
 		# isto para tambem — continuar a simular depois da derrota media dias que
 		# ninguem chegou a jogar, e punha a medicao a demorar o dobro.

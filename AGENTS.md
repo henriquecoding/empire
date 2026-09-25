@@ -74,6 +74,12 @@ src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (
 src/sim/systems/amargueiro_system.gd AmargueiroSystem o que a noite deixa no campo (§74)
 src/sim/systems/amargueiro_roots.gd AmargueiroRoots quem se levanta na alvorada, e onde (§74)
 src/sim/state/amargueiro_save.gd AmargueiroSave as arvores em tipos base (§84)
+src/sim/systems/offer_system.gd OfferSystem  a Oferta: uma por noite, no prato (§75)
+src/sim/systems/offer_rules.gd OfferRules    a gramatica da coluna requires (§75)
+src/sim/systems/offer_price.gd OfferPrice    se o preco caiu no prato (§75)
+src/sim/systems/debt_ledger.gd DebtLedger    a Divida da Candeia e as recusas (§75)
+src/sim/systems/tender.gd   Tender        o Zelador (§75)
+src/core/offer_watch.gd     OfferWatch    a voz da Podridao: falar, cobrar, dar (§75)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
@@ -86,6 +92,7 @@ src/world/actor_art.gd      ActorArt      o que uma tropa E, por dentro da caixa
 src/world/creature_art.gd   CreatureArt   o que um bicho E, por dentro da caixa (§22, §25)
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
 src/world/amargueiro_view.gd AmargueiroView a arvore com a cara na casca, e o Marco (§74)
+src/world/offer_view.gd     OfferView     o prato, a frase e o Zelador (§75)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
@@ -119,6 +126,7 @@ src/core/sim_loop.gd        SimLoop                nucleo        core/, sim/
 src/core/sim_factory.gd     SimFactory             nucleo        core/, sim/
 src/core/event_relay.gd     EventRelay             nucleo        core/, sim/
 src/core/night_watch.gd     NightWatch             nucleo        core/, sim/
+src/core/offer_watch.gd     OfferWatch             nucleo        core/, sim/
 src/core/verbs.gd           Verbs                  nucleo        core/, sim/
 src/core/intent_queue.gd    IntentQueue            nucleo        nada
 src/core/event_bus.gd       EventBus               nucleo        nada

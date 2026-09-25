@@ -24,6 +24,7 @@ lantern_dither_px = 2.0
 offer_trigger_px = 300.0
 offer_window_after_dusk = Vector2(20, 60)
 offer_seconds = 20.0
+offer_plate_px = 96.0
 refusal_mass = 8.0
 refusal_window_days = 5
 refusal_cap = 40.0

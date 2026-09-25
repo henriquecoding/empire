@@ -7,7 +7,8 @@
 #
 # E e tambem o que a noite deixa: os Amargueiros (§74) nascem na alvorada, pesam
 # no crepusculo seguinte e, quando viram Marco, abrandam a mancha — tres pontas
-# do mesmo ciclo, e por isso vivem aqui e nao num passo novo do §43.
+# do mesmo ciclo, e por isso vivem aqui e nao num passo novo do §43. A voz dela
+# — a Oferta e a Divida da Candeia (§75) — e o OfferWatch, que isto chama.
 #
 # A ponte que a pureza obriga esta toda aqui: o intervalo entre invocacoes vem
 # sorteado do fluxo `rot`, o lado por onde ela chega tambem, e os CreatureData
@@ -19,16 +20,19 @@ const TABELA_CRIATURAS := &"creatures"
 
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
+var voice: OfferWatch
 
 var _tropas: UnitSystem
 var _obras: BuildSystem
 
 
-## As tropas e as obras sao as do SimLoop, e as mesmas durante o jogo inteiro:
-## um corpo sai das colunas na alvorada e uma serra entra no BuildSystem (§55).
-func _init(tropas: UnitSystem, obras: BuildSystem) -> void:
+## As tropas, as obras e as moedas sao as do SimLoop, e as mesmas durante o jogo
+## inteiro: um corpo sai das colunas na alvorada, uma serra entra no
+## BuildSystem (§55), e o preco de uma oferta cai no prato (§75).
+func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem) -> void:
 	rot = SimFactory.rot()
 	amargueiros = SimFactory.amargueiros()
+	voice = OfferWatch.new(moedas, tropas, obras)
 	_tropas = tropas
 	_obras = obras
 
@@ -41,7 +45,8 @@ func tick(
 	if mudou:
 		_virar(fase, estado, bichos, mundo)
 	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
-	if not rot.active():
+	voice.tick(delta, rot, estado.day, mundo, amargueiros)
+	if not rot.active() or voice.paused(delta):
 		return
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
@@ -74,13 +79,20 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso
 		# sao duas NightWatch — e o F1-09 que as poe.
 		var lado := 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
+		if not voice.before_spawn(rot, estado.day):
+			return  # §75: a decima segunda fechou o ciclo
 		rot.spawn(estado.day, lado, mundo.y)
+		voice.after_spawn(rot)
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
 		return
-	if fase != GameClock.Phase.DAWN or not rot.active():
+	if fase != GameClock.Phase.DAWN:
 		return
-	rot.retreat()
-	EventBus.queue(&"rot_retreated", [estado.day])
+	# O que ela invocou dissolve-se sempre: uma oferta pode te-la recolhido antes
+	# da alvorada (§75, "a mancha contorna"), e o que ficou no campo nao fica.
+	voice.dawn()
+	if rot.active():
+		rot.retreat()
+		EventBus.queue(&"rot_retreated", [estado.day])
 	for creature_id in bichos.dissolve():
 		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 

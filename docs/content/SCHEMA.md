@@ -416,6 +416,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
 | `offer_seconds` | float | v6 · a oferta |  |
+| `offer_plate_px` | float | v6 · a oferta |  |
 | `offers_per_night` | int | v6 · a oferta |  |
 | `refusal_mass` | float | v6 · a oferta |  |
 | `refusal_window_days` | int | v6 · a oferta |  |
