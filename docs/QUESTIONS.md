@@ -1010,6 +1010,29 @@
   `MoraleSystem` não tem ainda moral do império, só por tropa.
 - **Decide:** tu — sobretudo "qualquer criatura conta" e "posto de cerco = muralha ou torre".
 
+### Q-089 · Os primeiros vinte minutos: o que o §83 pede e o que os dados dão
+- **Onde:** §83, §75, §25, `src/world/greybox.gd`, `src/core/offer_desk.gd`,
+  `tests/abertura_test.gd`.
+- **A primeira oferta cai no dia 2, e o §83 põe-na no dia 3 (17:00).** Medido, com a muralha de dentro de
+  pé: a mancha chega aos 300 px aos 57,5 s da noite 2, e *"Nada. Só quero ver."* tem `min_day 2` em
+  `offers.csv`, que é o "Dia 2+" da tabela da §75. São duas secções do dossiê a dizer coisas diferentes.
+  Não mexi em `data/`: com `min_day 3` o §83 cumpre-se. **Decide:** tu.
+- **A mancha só fala se chegar aos 300 px.** No XIII-04 eu tinha-a posto a falar no fim da janela onde
+  estivesse; o §75 não diz isso, e o §83 ("a candeia chega mais perto do que ontem") lê-se contra. Sem
+  muralha de pé o bordo é o núcleo, e ela não chega a tempo — a primeira estacaria do §25 é o que a faz
+  falar. Medido também: uma estacaria cai a meio da noite 3, e com ela vai a oferta dessa noite.
+- **A primeira oferta da campanha é a mais barata** (menos Dívida, depois preço em moedas), e não
+  sorteada: o §83 diz "de propósito". Depois disso volta o sorteio no fluxo `rot`.
+- **"Revela a posição de um Capítulo escondido"** acende a placa da bifurcação a leste — não há mapa nem
+  capítulos (XIII-07). Fica no `found` do `GameState` como `chapter_site`. Numa região sem capítulo
+  escondido (a região fechada do §07), a oferta não se diz: não tem o que mostrar.
+- **O Amargueiro velho** não é um morto teu: não pesa na massa, não se corta nem se consagra, e não tem
+  chapéu na casca — as árvores das tuas tropas têm, e é o reconhecimento do minuto 13:10.
+- **O vagabundo do minuto 0:20** é sempre o mesmo porque nasce sempre primeiro, no mesmo sítio. O
+  `head_pool` fixo é arte (ART-01): o *greybox* não desenha cabeças diferentes.
+- **O que o §25 tem e o *greybox* ainda não:** o coelho do minuto 1:10 (não há fauna), a Casa de Treino
+  em ruínas reparável, e o diário 1 na câmara (XIII-08). A estátua meio enterrada do minuto 2:00 está.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

@@ -75,6 +75,8 @@ src/sim/systems/offer_system.gd OfferSystem a Oferta: uma por noite, no prato (�
 src/sim/systems/debt_ledger.gd DebtLedger  a Divida da Candeia, que nunca desce (§75)
 src/sim/systems/secret_sites.gd SecretSites onde estao os segredos, e quem os acha (§17)
 src/sim/systems/name_system.gd NameSystem  ninguem tem nome ate merecer um (§76)
+src/sim/systems/requires.gd Requires      a gramatica da coluna requires (§75)
+src/sim/systems/walls.gd    Walls         onde acaba o "dentro das muralhas" (§74, §75)
 src/core/offer_desk.gd      OfferDesk     quando a mancha fala, o preco e o efeito (§75)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
@@ -92,6 +94,7 @@ src/world/amargueiro_view.gd AmargueiroView a arvore com a cara na casca, e o Ma
 src/world/offer_view.gd     OfferView     o prato e a frase da Oferta (§75)
 src/world/wall_site.gd      WallSite      o sitio de muro: a escada do §10 e o Lenho (§74)
 src/world/name_view.gd      NameView      a fita de quem tem nome, e quem espera (§76)
+src/world/site_view.gd      SiteView      a camara, a estatua e a placa do capitulo (§17, §83)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)

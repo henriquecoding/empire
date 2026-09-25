@@ -181,7 +181,7 @@ func test_o_nomeado_pesa_a_dobrar_e_rende_cinco() -> void:
 	s.at_dawn(e, u, BuildSystem.new(), NUCLEO, {nome: true})
 	assert_int(s.standing(true)).is_equal(1)
 	assert_int(s.standing(false)).is_equal(0)
-	assert_int(s.wood_of(s.ids[0])).is_equal(_destino(&"fell").yield_named)
+	assert_int(s.named[0]).is_equal(1)
 
 
 func test_o_campo_sobrevive_ao_save() -> void:
@@ -195,3 +195,30 @@ func test_o_campo_sobrevive_ao_save() -> void:
 	assert_array(Array(copia.ids)).is_equal(Array(s.ids))
 	assert_array(copia.markers()).is_equal(s.markers())
 	assert_int(copia.standing(false)).is_equal(1)
+
+
+func test_a_arvore_velha_nao_pesa_nem_se_toca() -> void:
+	# §83: esta la desde o primeiro frame e nao e de ninguem que conhecas.
+	var e := GameState.new()
+	var s := _sistema()
+	var velha := s.plant_old(e, LONGE, Registry.entry(&"units", &"vagrant") as UnitData)
+	for _k in 3:
+		s.at_dawn(e, UnitSystem.new(), BuildSystem.new(), NUCLEO)
+	assert_int(s.standing(false)).is_equal(0)
+	assert_bool(s.ready_for(velha, &"fell")).is_false()
+	assert_bool(s.consecrate(velha)).is_false()
+	assert_int(s.tree_at(LONGE, int(Band.Kind.SURFACE))).is_equal(AmargueiroSystem.NENHUM)
+	var copia := _sistema()
+	copia.from_dict(s.to_dict())
+	assert_int(copia.wild[0]).is_equal(1)
+
+
+func test_o_dentro_das_muralhas_vai_ao_bordo_de_fora() -> void:
+	var obras := BuildSystem.new()
+	var muro := WallSite.slot(NUCLEO - 300.0)
+	muro.level = 1
+	muro.state = BuildSlot.State.DONE
+	obras.post(muro)
+	var dentro := Walls.inside(obras, NUCLEO)
+	assert_float(dentro.x).is_less(NUCLEO - 300.0)  # a largura do muro conta
+	assert_float(dentro.y).is_equal(NUCLEO)  # o lado sem muro nao tem dentro

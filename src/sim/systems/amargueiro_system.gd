@@ -35,6 +35,8 @@ var fates: PackedByteArray = PackedByteArray()
 var paid: PackedInt32Array = PackedInt32Array()
 var progress: PackedFloat32Array = PackedFloat32Array()
 var widths: PackedFloat32Array = PackedFloat32Array()
+## 1 para a arvore que ja la estava (§83): nao e tua, nao pesa, nao se toca.
+var wild: PackedByteArray = PackedByteArray()
 
 var _perfil: RotProfile
 var _cortar: AmargueiroData
@@ -62,7 +64,7 @@ func index_of(tree_id: int) -> int:
 func standing(de_nome: bool) -> int:
 	var n := 0
 	for i in ids.size():
-		if fates[i] != Fate.MARKER and bool(named[i]) == de_nome:
+		if fates[i] != Fate.MARKER and bool(named[i]) == de_nome and wild[i] == 0:
 			n += 1
 	return n
 
@@ -95,7 +97,7 @@ func at_dawn(
 		func(u: int) -> bool: return not unidades.alive(unidades.index_of(u))
 	)
 	mortos.sort()  # por id, e nao pela ordem das colunas (§42)
-	var dentro := inside(obras, core_x)
+	var dentro := Walls.inside(obras, core_x)
 	var eventos: Array[Dictionary] = []
 	for unit_id in mortos:
 		var i := unidades.index_of(unit_id)
@@ -113,32 +115,14 @@ func at_dawn(
 	return eventos
 
 
-## O "dentro das muralhas": do bordo de fora do muro de pe mais afastado de um
-## lado do nucleo ao do outro. Quem cai em cima do muro caiu dentro (Q-086).
-func inside(obras: BuildSystem, core_x: float) -> Vector2:
-	var dentro := Vector2(core_x, core_x)
-	for vaga in obras.standing():
-		if not vaga.blocks or not vaga.two_paths() or vaga.band != Band.Kind.SURFACE:
-			continue
-		dentro.x = minf(dentro.x, vaga.x - vaga.width * BuildSystem.METADE)
-		dentro.y = maxf(dentro.y, vaga.x + vaga.width * BuildSystem.METADE)
-	return dentro
-
-
 ## Verdadeiro se esta arvore ja aceita este destino. Cortar pede uma noite de pe
 ## e a segunda alvorada (regra 2); consagrar pode ser logo na primeira.
 func ready_for(tree_id: int, destino: StringName) -> bool:
 	var i := index_of(tree_id)
-	if i == NENHUM or fates[i] != Fate.STANDING:
+	if i == NENHUM or fates[i] != Fate.STANDING or wild[i] == 1:
 		return false
 	var d := _cortar if destino == CORTAR else _consagrar
 	return nights[i] >= maxi(d.nights_standing_required, d.from_dawn - 1)
-
-
-## Quanto Lenho renderia cortada — o que a cara na casca vale (§74, regra 3).
-func wood_of(tree_id: int) -> int:
-	var i := index_of(tree_id)
-	return _rende(i) if i != NENHUM else 0
 
 
 ## Quanto custa a serra, em moedas (§74). O preco que o rei ve em cima da arvore.
@@ -179,6 +163,9 @@ func to_dict() -> Dictionary:
 
 func from_dict(d: Dictionary) -> void:
 	Columns.from_dict(self, d)
+	if wild.size() != ids.size():  # um save de antes da arvore velha: todas tuas
+		wild.resize(ids.size())
+		wild.fill(0)
 
 
 ## A arvore de pe cuja base cobre este x nesta faixa, ou NENHUM. E onde o
@@ -186,7 +173,7 @@ func from_dict(d: Dictionary) -> void:
 func tree_at(x: float, faixa: int) -> int:
 	for i in ids.size():
 		var perto := absf(xs[i] - x) <= widths[i] * BuildSystem.METADE
-		if perto and bands[i] == faixa and fates[i] == Fate.STANDING:
+		if perto and bands[i] == faixa and fates[i] == Fate.STANDING and wild[i] == 0:
 			return ids[i]
 	return NENHUM
 
@@ -213,6 +200,14 @@ func _nascer(estado: GameState, x: float, faixa: int, dados: UnitData, nome: boo
 	paid.append(0)
 	progress.append(0.0)
 	widths.append(float(dados.shadow_width))
+	wild.append(0)
+	return tree_id
+
+
+## A arvore velha da abertura (§83): de alguem que ninguem conhece.
+func plant_old(estado: GameState, x: float, dados: UnitData) -> int:
+	var tree_id := _nascer(estado, x, int(Band.Kind.SURFACE), dados, false)
+	wild[index_of(tree_id)] = 1
 	return tree_id
 
 

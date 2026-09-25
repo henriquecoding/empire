@@ -48,11 +48,17 @@ const GALINHEIROS_X := [-820.0, 820.0]
 const PESQUEIROS_X := [1200.0]
 const TORRES_ALTAS_X := [-1100.0, 1100.0]
 const PASSAGENS_X := [-950.0, 950.0]
-# §25, minuto 11:00: "na camara subterranea: Semente Real". O `behind_passage`
-# de secrets.csv, atras da passagem de fora do lado esquerdo.
-const CAMARAS_X := [-1180.0]
+# Os segredos do segmento de abertura, pelo `location` de secrets.csv. §25: ao
+# minuto 2:00 a estatua meio enterrada; ao 11:00, a camara atras da passagem de
+# fora, com a Semente Real. Um sitio por tipo, e a largura e a de um nicho.
+const SEGREDOS_X := {&"under_vegetation": 360.0, &"behind_passage": -1180.0}
 const CAMARA_W := 64.0
-const ATRAS_DA_PASSAGEM := &"behind_passage"
+# §83, os tres obrigatorios da abertura, sempre nas mesmas coordenadas: o
+# Amargueiro velho fora do muro a esquerda, o vagabundo do minuto 0:20 (o
+# primeiro de VAGABUNDOS_X, que nasce sempre primeiro e com o mesmo id), e a
+# bifurcacao a leste onde cai o capitulo que a primeira oferta revela.
+const AMARGUEIRO_VELHO_X := -720.0
+const BIFURCACAO_X := 1800.0
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
 # distingue e o preco que o §07 lhes da: 1, 3 e 4.
@@ -135,16 +141,14 @@ static func _muro(x: float) -> void:
 	SimLoop.builds.post(WallSite.slot(x))
 
 
-## Os segredos atras de uma passagem (§17), um por camara autorada.
+## Os segredos do segmento (§17), um por tipo de sitio autorado.
 static func _camaras() -> void:
 	SimLoop.secrets.clear()
-	var k := 0
 	for recurso in Registry.entries(&"lore/secrets"):
 		var dados := recurso as SecretData
-		if dados.location != ATRAS_DA_PASSAGEM or k >= CAMARAS_X.size():
-			continue
-		SimLoop.secrets.post(dados, SimLoop.core_x + CAMARAS_X[k], CAMARA_W)
-		k += 1
+		if SEGREDOS_X.has(dados.location):
+			SimLoop.secrets.post(dados, SimLoop.core_x + SEGREDOS_X[dados.location], CAMARA_W)
+	SimLoop.secrets.chapters.append(SimLoop.core_x + BIFURCACAO_X)
 
 
 ## O §06 da tres edificios um bioma obrigatorio — pesqueiro/agua, corte de
@@ -189,6 +193,9 @@ static func _gente() -> int:
 	SimLoop.king_id = rei
 	SimLoop.units.carried_coins[SimLoop.units.index_of(rei)] = SimFactory.curve().start_coins
 
+	# §83: a arvore velha esta la desde o primeiro frame. E de quem, ninguem sabe.
+	var ninguem := Registry.entry(&"units", &"vagrant") as UnitData
+	SimLoop.night.trees.plant_old(estado, SimLoop.core_x + AMARGUEIRO_VELHO_X, ninguem)
 	_por_recrutar(&"vagrant", VAGABUNDOS_X)
 	_por_recrutar(&"archer", ARQUEIROS_X)
 	_por_recrutar(&"spearman", LANCEIROS_X)

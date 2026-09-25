@@ -46,5 +46,7 @@ func test_sem_rei_ninguem_acha_nada() -> void:
 	var s := SecretSites.new()
 	s.post(_camara(), CAMARA, LARGA)
 	assert_array(s.tick(UnitSystem.new(), UnitSystem.NENHUM, GameState.new())).is_empty()
+	s.chapters.append(900.0)
 	s.clear()
 	assert_int(s.count()).is_equal(0)
+	assert_int(s.chapters.size()).is_equal(0)

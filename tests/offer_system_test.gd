@@ -44,23 +44,24 @@ func _ids(lista: Array[OfferData]) -> Array:
 
 func test_a_gramatica_requires() -> void:
 	var ctx := {&"treasury": 80, &"gate": 0, &"biome": "subterranean", &"debt": 12}
-	assert_bool(OfferSystem.meets("", ctx)).is_true()
-	assert_bool(OfferSystem.meets("treasury>=80", ctx)).is_true()
-	assert_bool(OfferSystem.meets("treasury>=81", ctx)).is_false()
-	assert_bool(OfferSystem.meets("gate>=1", ctx)).is_false()
-	assert_bool(OfferSystem.meets("gate<=0,debt>=12", ctx)).is_true()
-	assert_bool(OfferSystem.meets("biome=subterranean", ctx)).is_true()
-	assert_bool(OfferSystem.meets("biome=forest", ctx)).is_false()
-	assert_bool(OfferSystem.meets("named>=1", ctx)).is_false()  # chave que nao existe vale 0
-	assert_bool(OfferSystem.meets("treasury>=80 ou gate>=1", ctx)).is_false()
+	assert_bool(Requires.meets("", ctx)).is_true()
+	assert_bool(Requires.meets("treasury>=80", ctx)).is_true()
+	assert_bool(Requires.meets("treasury>=81", ctx)).is_false()
+	assert_bool(Requires.meets("gate>=1", ctx)).is_false()
+	assert_bool(Requires.meets("gate<=0,debt>=12", ctx)).is_true()
+	assert_bool(Requires.meets("biome=subterranean", ctx)).is_true()
+	assert_bool(Requires.meets("biome=forest", ctx)).is_false()
+	assert_bool(Requires.meets("named>=1", ctx)).is_false()  # chave que nao existe vale 0
+	assert_bool(Requires.meets("treasury>=80 ou gate>=1", ctx)).is_false()
 
 
 func test_so_se_sorteia_o_que_o_jogo_sabe_cobrar_e_dar() -> void:
 	var s := SimFactory.offers()
-	assert_array(_ids(s.eligible({&"day": 2}))).is_empty()
-	assert_array(_ids(s.eligible({&"day": 3}))).is_equal(["the_lame"])
+	assert_array(_ids(s.eligible({&"day": 1}))).is_empty()
+	assert_array(_ids(s.eligible({&"day": 2}))).is_equal(["just_looking"])
+	assert_array(_ids(s.eligible({&"day": 3}))).is_equal(["just_looking", "the_lame"])
 	var rico := {&"day": 4, &"treasury": 80}
-	assert_array(_ids(s.eligible(rico))).is_equal(["all_that_shines", "the_lame"])
+	assert_array(_ids(s.eligible(rico))).is_equal(["all_that_shines", "just_looking", "the_lame"])
 	for o in s.eligible({&"day": 30, &"treasury": 999}):
 		assert_array(OfferSystem.PRECOS_FEITOS).contains([o.price_kind])
 		assert_array(OfferSystem.EFEITOS_FEITOS).contains([o.effect_kind])
@@ -226,3 +227,9 @@ func test_com_um_marco_a_arvore_que_plantaste_pode_ser_dita() -> void:
 	var s := SimFactory.offers()
 	assert_array(_ids(s.eligible({&"day": 1}))).is_empty()
 	assert_array(_ids(s.eligible({&"day": 1, &"marker": 1}))).is_equal(["the_tree_you_planted"])
+
+
+func test_a_mais_barata_e_a_de_menos_divida_e_menor_preco() -> void:
+	var lista := [_oferta(&"all_that_shines"), _oferta(&"the_lame"), _oferta(&"just_looking")]
+	assert_str(String(OfferSystem.cheapest(lista).id)).is_equal("just_looking")
+	assert_object(OfferSystem.cheapest([])).is_null()

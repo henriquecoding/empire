@@ -18,6 +18,9 @@ var xs: PackedFloat32Array = PackedFloat32Array()
 var bands: PackedByteArray = PackedByteArray()
 var widths: PackedFloat32Array = PackedFloat32Array()
 var seeds: PackedInt32Array = PackedInt32Array()
+## Onde ha um capitulo escondido (§77, §83): a bifurcacao do segmento. E o que a
+## oferta "Nada. So quero ver." revela; sem nenhum, ela nao tem o que mostrar.
+var chapters: PackedFloat32Array = PackedFloat32Array()
 
 
 func count() -> int:
@@ -30,6 +33,7 @@ func clear() -> void:
 	bands = PackedByteArray()
 	widths = PackedFloat32Array()
 	seeds = PackedInt32Array()
+	chapters = PackedFloat32Array()
 
 
 ## Poe um segredo no mundo. `largura` e a da camara: e dentro dela que se acha.

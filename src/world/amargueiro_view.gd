@@ -20,6 +20,10 @@ const OLHOS_Y := 0.3
 const OLHOS_X := 0.22
 const BOCA_Y := 0.45
 const TRACO := 1.5
+## O chapeu na casca: a que altura, a aba em fraccao da largura, e o traco.
+const CHAPEU_Y := 0.18
+const CHAPEU_ABA := 0.45
+const CHAPEU_TRACO := 2.0
 
 
 static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting) -> void:
@@ -34,6 +38,8 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting) -> void
 		var cor := luz.body(WorldPalette.AMARGO, arvores.xs[i])
 		_tronco(canvas, caixa, cor, faixa == Band.Kind.UNDERGROUND)
 		_cara(canvas, caixa, faixa == Band.Kind.UNDERGROUND)
+		if arvores.wild[i] == 0:
+			_chapeu(canvas, caixa, faixa == Band.Kind.UNDERGROUND)
 	_preco(canvas, faixa)
 
 
@@ -72,6 +78,17 @@ static func _cara(canvas: CanvasItem, caixa: Rect2, invertida: bool) -> void:
 	canvas.draw_circle(Vector2(meio - afasta, cima), TRACO, tinta)
 	canvas.draw_circle(Vector2(meio + afasta, cima), TRACO, tinta)
 	canvas.draw_line(Vector2(meio - afasta, boca), Vector2(meio + afasta, boca), tinta, TRACO)
+
+
+## "A cara na casca e a do chapeu" (§83, 13:10): quem foi teu levou chapeu, e a
+## arvore guarda-o por cima da cara. A arvore velha nao tem — nunca foi de ninguem.
+static func _chapeu(canvas: CanvasItem, caixa: Rect2, invertida: bool) -> void:
+	var y := caixa.position.y + caixa.size.y * (1.0 - CHAPEU_Y if invertida else CHAPEU_Y)
+	var meio := caixa.get_center().x
+	var aba := caixa.size.x * CHAPEU_ABA
+	canvas.draw_line(
+		Vector2(meio - aba, y), Vector2(meio + aba, y), WorldPalette.CHAPEU, TRACO * CHAPEU_TRACO
+	)
 
 
 ## O preco do corte, em cima da arvore que o rei alcanca — o mesmo gesto do

@@ -11,6 +11,9 @@ extends RefCounted
 
 const FONTE := &"offer"
 const FONTE_ZELADOR := &"tender"
+## O sitio do capitulo que a oferta revela: a bifurcacao do segmento de abertura
+## (§83). Vai no `found` do GameState como um segredo achado (Q-089).
+const CAPITULO := "chapter_site"
 
 
 ## Um passo, a seguir ao movimento. Devolve as moedas a largar (o Verbo 1 e do
@@ -57,9 +60,9 @@ static func _chegou(noite: NightWatch) -> bool:
 	var perfil := SimFactory.rot_profile()
 	var janela := perfil.offer_window_after_dusk
 	var t := noite.offers.night_time
-	if t < janela.x:
+	if t < janela.x or t > janela.y:
 		return false
-	return t >= janela.y or absf(_frente(noite) - _bordo(noite)) <= perfil.offer_trigger_px
+	return absf(_frente(noite) - _bordo(noite)) <= perfil.offer_trigger_px
 
 
 static func _frente(noite: NightWatch) -> float:
@@ -68,7 +71,7 @@ static func _frente(noite: NightWatch) -> float:
 
 
 static func _bordo(noite: NightWatch) -> float:
-	var dentro := noite.trees.inside(SimLoop.builds, SimLoop.core_x)
+	var dentro := Walls.inside(SimLoop.builds, SimLoop.core_x)
 	return dentro.y if noite.rot.state.side > 0 else dentro.x
 
 
@@ -80,8 +83,10 @@ static func _falar(noite: NightWatch, dia: int) -> void:
 	if elegiveis.is_empty() or largura <= 0.0:
 		noite.offers.spoken_day = dia  # calou-se: e a oferta desta noite
 		return
-	var k := RngService.int_range(&"rot", 0, elegiveis.size() - 1)
-	noite.offers.open(elegiveis[k], dia, _frente(noite), largura)
+	var o := OfferSystem.cheapest(elegiveis)
+	if noite.offers.ever_spoke():
+		o = elegiveis[RngService.int_range(&"rot", 0, elegiveis.size() - 1)]
+	noite.offers.open(o, dia, _frente(noite), largura)
 
 
 ## "Do tamanho de um slot de construcao" (§75): o de um sitio de muralha.
@@ -93,6 +98,9 @@ static func _largura_do_prato() -> float:
 
 
 static func _ha_preco(o: OfferData) -> bool:
+	if o.effect_kind == &"reveal_chapter":
+		# So ha o que mostrar se houver um capitulo escondido e ainda por ver.
+		return not SimLoop.secrets.chapters.is_empty() and not SimLoop.state.found.has(CAPITULO)
 	if o.price_kind == &"troops_below_health":
 		return not (
 			OfferSystem.below_health(SimLoop.units, o.price_amount, SimLoop.king_id).is_empty()
@@ -137,6 +145,8 @@ static func _dar(noite: NightWatch, offer_id: StringName) -> void:
 			noite.rot.scale_mass(o.effect_value)
 		&"skip_night":
 			noite.skip(SimLoop.state, SimLoop.creatures)
+		&"reveal_chapter":
+			SimLoop.state.found.append(CAPITULO)
 		&"seed_royal":
 			SimLoop.state.royal_seeds += int(o.effect_value)
 			EventBus.queue(&"seed_royal_gained", [int(o.effect_value), FONTE])

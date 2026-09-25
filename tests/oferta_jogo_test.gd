@@ -51,6 +51,18 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	# A primeira oferta da campanha e "Nada. So quero ver." e mede-se no
+	# abertura_test. Aqui a campanha ja falou uma vez e o capitulo ja se viu.
+	SimLoop.night.offers.spoken_day = 1
+	SimLoop.state.found.append(OfferDesk.CAPITULO)
+	# Sem muralha a mancha nao tem de onde chegar aos 300 px (§75), e nao fala.
+	# Pedra, e nao a estacaria do §25: a estacaria cai a meio da noite 3, e isto
+	# mede a oferta e nao a defesa.
+	for vaga in SimLoop.builds.slots:
+		if vaga.two_paths() and absf(vaga.x - SimLoop.core_x) < SimLoop.world_width * 0.25:
+			vaga.level = 3
+			vaga.state = BuildSlot.State.DONE
+			vaga.health = vaga.max_health()
 
 
 func after_test() -> void:
@@ -129,11 +141,11 @@ func test_um_marco_pela_semente_real() -> void:
 	# "A arvore que plantaste": o Marco sai do campo e entra uma Semente (§75).
 	var dono := SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
 	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
-	var x := SimLoop.core_x + SimLoop.world_width * 0.45
+	var x := SimLoop.core_x - 700.0  # logo fora da muralha de dentro, longe da borda
 	var morto := SimLoop.units.spawn(SimLoop.state, arqueiro, dono, x)
 	SimLoop.units.states[SimLoop.units.index_of(morto)] = UnitFsm.State.DEAD
 	SimLoop.night.dawn(SimLoop.state, SimLoop.units, SimLoop.builds, SimLoop.core_x, SimLoop.jobs)
-	SimLoop.night.trees.consecrate(SimLoop.night.trees.ids[0])
+	SimLoop.night.trees.consecrate(SimLoop.night.trees.tree_at(x, int(Band.Kind.SURFACE)))
 	_vespera_do_crepusculo(DIA)
 	assert_bool(_ate_falar()).is_true()
 	var ofertas := SimLoop.night.offers

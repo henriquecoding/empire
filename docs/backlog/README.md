@@ -58,7 +58,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [ART-02](ART-02.md) | A paleta mestra e o LUT | F0-01 | por fazer |
 | [ART-03](ART-03.md) | As seis camadas de parallax com teto de valores | ART-02, F0-08 | por fazer |
 | [ART-04](ART-04.md) | Rostos e expressões: o catálogo do §60 | ART-01 | por fazer |
-| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | por fazer |
+| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | feito |
 | [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | por fazer |
 | [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | por fazer |
 | [GB-04](GB-04.md) | O passo do §21: a região atravessa-se em 40–60 s | GB-01 | feito |
@@ -87,7 +87,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [XIII-07](XIII-07.md) | §77 · Os dez capítulos | GB-02, XIII-06 | 106 (30 + 50 arte + 20 som + 6 escrita) | por fazer |
 | [XIII-08](XIII-08.md) | §79 · Os doze diários e os três epílogos | XIII-04, XIII-07 | 13 (3 + 10 escrita) | por fazer |
 | [XIII-09](XIII-09.md) | §81 · Som: o cante, os motivos e a encomendação | XIII-05, XIII-06 | 44 (6 + 38 som) | por fazer |
-| [XIII-10](XIII-10.md) | §83 · Os primeiros vinte minutos | GB-01, XIII-03 | 8 (3 + 4 arte + 1 escrita) | por fazer |
+| [XIII-10](XIII-10.md) | §83 · Os primeiros vinte minutos | GB-01, XIII-03 | 8 (3 + 4 arte + 1 escrita) | parcial — a primeira oferta cai no dia 2 e não no 3 (Q-089) |
 | [XIII-11](XIII-11.md) | §84 · Os catorze testes de design e as seis linhas de risco | XIII-02 | 6 | feito |
 
 ## Ordem sugerida

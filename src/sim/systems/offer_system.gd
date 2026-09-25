@@ -29,7 +29,9 @@ const ESCALARES: Array[StringName] = [
 const PRECOS_FEITOS: Array[StringName] = [
 	&"coins", &"treasury_all", &"troops_below_health", &"marker"
 ]
-const EFEITOS_FEITOS: Array[StringName] = [&"rot_pause", &"mass_mult", &"skip_night", &"seed_royal"]
+const EFEITOS_FEITOS: Array[StringName] = [
+	&"rot_pause", &"mass_mult", &"skip_night", &"seed_royal", &"reveal_chapter"
+]
 
 var debt: DebtLedger
 
@@ -75,39 +77,6 @@ func offer() -> OfferData:
 	return null
 
 
-## A gramatica da §75: <chave><op><numero> ou <chave>=<id>, virgulas em AND. Uma
-## chave que o estado nao tem vale zero — e por isso nenhuma condicao sobre um
-## sistema que ainda nao existe e verdadeira por acaso.
-static func meets(requires: String, ctx: Dictionary) -> bool:
-	if requires.strip_edges().is_empty():
-		return true
-	var forma := RegEx.create_from_string(
-		"^(?<chave>[a-z_]+)(?<op>>=|<=|=)(?<valor>[A-Za-z0-9_]+)$"
-	)
-	for termo in requires.split(","):
-		var m := forma.search(termo.strip_edges())
-		if m == null:
-			return false
-		var tem: Variant = ctx.get(StringName(m.get_string("chave")), 0)
-		var quer := m.get_string("valor")
-		if not quer.is_valid_int():
-			if str(tem) != quer:
-				return false
-			continue
-		var n := int(tem)
-		match m.get_string("op"):
-			">=":
-				if n < int(quer):
-					return false
-			"<=":
-				if n > int(quer):
-					return false
-			_:
-				if n != int(quer):
-					return false
-	return true
-
-
 ## As que podem ser ditas hoje. `ctx` e o estado autoritativo visto pela
 ## gramatica: day, treasury, marker, named, gate, peoples, successor, biome. A
 ## Divida junta-se aqui, e as de preco alto so entram com o primeiro limiar
@@ -117,7 +86,7 @@ func eligible(ctx: Dictionary) -> Array[OfferData]:
 	com[&"debt"] = debt.debt
 	var saida: Array[OfferData] = []
 	for o in _ofertas:
-		if o.min_day > int(com.get(&"day", 0)) or not meets(o.requires, com):
+		if o.min_day > int(com.get(&"day", 0)) or not Requires.meets(o.requires, com):
 			continue
 		if o.once_per_campaign and used.has(String(o.id)):
 			continue
@@ -126,6 +95,32 @@ func eligible(ctx: Dictionary) -> Array[OfferData]:
 		if o.price_kind in PRECOS_FEITOS and o.effect_kind in EFEITOS_FEITOS:
 			saida.append(o)
 	return saida
+
+
+## A primeira oferta da campanha e a mais barata, de proposito (§83, 17:00):
+## menos Divida, depois preco em moedas, depois o menor, depois id. Ensina o
+## gesto por uma moeda.
+static func cheapest(lista: Array) -> OfferData:
+	var melhor: OfferData = null
+	for o: OfferData in lista:
+		if melhor == null or _mais_barata(o, melhor):
+			melhor = o
+	return melhor
+
+
+static func _mais_barata(a: OfferData, b: OfferData) -> bool:
+	if a.debt_delta != b.debt_delta:
+		return a.debt_delta < b.debt_delta
+	if (a.price_kind == MOEDAS) != (b.price_kind == MOEDAS):
+		return a.price_kind == MOEDAS  # um preco em moedas le-se; uma fraccao, nao
+	if a.price_amount != b.price_amount:
+		return a.price_amount < b.price_amount
+	return String(a.id) < String(b.id)
+
+
+## Verdadeiro se ja houve alguma oferta nesta campanha.
+func ever_spoke() -> bool:
+	return spoken_day != 0
 
 
 ## Verdadeiro se esta noite ainda nao falou.
