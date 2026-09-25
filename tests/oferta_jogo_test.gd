@@ -53,7 +53,7 @@ func before_test() -> void:
 	Greybox.build()
 	# A primeira oferta da campanha e "Nada. So quero ver." e mede-se no
 	# abertura_test. Aqui a campanha ja falou uma vez e o capitulo ja se viu.
-	SimLoop.night.offers.spoken_day = 1
+	SimLoop.night.offers.spoken = true
 	SimLoop.state.found.append(OfferDesk.CAPITULO)
 	# Sem muralha a mancha nao tem de onde chegar aos 300 px (§75), e nao fala.
 	# Pedra, e nao a estacaria do §25: a estacaria cai a meio da noite 3, e isto

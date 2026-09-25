@@ -1,6 +1,6 @@
 id,display_key,price_kind,price_amount,effect_kind,effect_value,effect_days,requires,min_day,once_per_campaign,debt_delta,ends_rot,_phase,_src,_proposed,_notes
 the_lame,OFFER_THE_LAME,troops_below_health,0.4,rot_pause,25,0,,3,false,1,false,3,§75 a Oferta e a Divida da Candeia,,'Dá-me o que já não anda.' As tropas abaixo de 40% saem e não voltam; a mancha para 25 s.
-just_looking,OFFER_JUST_LOOKING,coins,1,reveal_chapter,1,0,,2,false,1,false,3,§75 a Oferta e a Divida da Candeia,,'Nada. Só quero ver.' Revela a posição de um Capítulo escondido (§77). É a oferta do minuto 17:00 do §83.
+just_looking,OFFER_JUST_LOOKING,coins,1,reveal_chapter,1,0,,3,false,1,false,3,§75 a Oferta e a Divida da Candeia,,'Nada. Só quero ver.' Revela a posição de um Capítulo escondido (§77). É a oferta do minuto 17:00 do §83: dia 3 e não 2, pela ADR 0023.
 one_per_door,OFFER_ONE_PER_DOOR,troop_per_gate,1,gates_unbreakable,1,0,gate>=1,5,false,1,false,3,§75 a Oferta e a Divida da Candeia,,'Um por cada porta.' Uma tropa por portão; os portões não se arrombam esta noite.
 open_gate,OFFER_OPEN_GATE,gates_open,1,mass_mult,0.6,0,,6,false,2,false,3,§75 a Oferta e a Divida da Candeia,,'Deixa a porta aberta.' Portões abertos até à alvorada; −40% de massa.
 all_that_shines,OFFER_ALL_THAT_SHINES,treasury_all,0,skip_night,1,0,treasury>=80,4,true,2,false,3,§75 a Oferta e a Divida da Candeia,once_per_campaign,"'O que brilha, e nada mais.' A noite é saltada. Q-040: uma vez por campanha — saltar duas ensina a evitar o jogo."

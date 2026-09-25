@@ -10,10 +10,16 @@ func _relogio() -> ClockData:
 	return Registry.entry(&"economy", &"clock") as ClockData
 
 
+## Corre ate a mancha falar. As muralhas ficam de pe: sem ninguem nos postos a
+## pedra cai na noite 1, e isto mede a voz e nao a defesa.
 func _ate_falar(max_dias: int) -> int:
 	var passos := int(_relogio().day_seconds * max_dias / PASSO)
 	for _i in passos:
 		SimLoop.step(PASSO)
+		for vaga in SimLoop.builds.slots:
+			if vaga.two_paths() and vaga.level > 0:
+				vaga.state = BuildSlot.State.DONE
+				vaga.health = vaga.max_health()
 		if SimLoop.night.offers.active():
 			return SimLoop.state.day
 	return 0
@@ -78,7 +84,8 @@ func test_os_segredos_da_abertura_estao_la() -> void:
 func test_a_primeira_oferta_e_so_quero_ver_e_acende_a_bifurcacao() -> void:
 	var dia := _ate_falar(4)
 	var ofertas := SimLoop.night.offers
-	assert_int(dia).is_greater(0)
+	# §83, 17:00: o crepusculo do dia 3 (ADR 0023). Antes disso a voz esta calada.
+	assert_int(dia).is_equal(3)
 	assert_str(String(ofertas.offer_id)).is_equal("just_looking")
 	assert_bool(SimLoop.state.found.has(OfferDesk.CAPITULO)).is_false()
 	SimLoop.drop_coin(ofertas.dish_x, Band.Kind.SURFACE, 1, &"player")

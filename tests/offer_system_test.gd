@@ -57,8 +57,8 @@ func test_a_gramatica_requires() -> void:
 
 func test_so_se_sorteia_o_que_o_jogo_sabe_cobrar_e_dar() -> void:
 	var s := SimFactory.offers()
-	assert_array(_ids(s.eligible({&"day": 1}))).is_empty()
-	assert_array(_ids(s.eligible({&"day": 2}))).is_equal(["just_looking"])
+	assert_array(_ids(s.eligible({&"day": 2}))).is_empty()
+	# ADR 0023: "Nada. So quero ver." e a do dia 3, como o §83 a escreve.
 	assert_array(_ids(s.eligible({&"day": 3}))).is_equal(["just_looking", "the_lame"])
 	var rico := {&"day": 4, &"treasury": 80}
 	assert_array(_ids(s.eligible(rico))).is_equal(["all_that_shines", "just_looking", "the_lame"])
@@ -179,6 +179,15 @@ func test_a_oferta_aberta_sobrevive_ao_save() -> void:
 	assert_int(copia.debt.debt).is_equal(4)
 	assert_int(copia.refusals(3)).is_equal(2)
 	assert_bool(copia.can_speak(3)).is_false()
+	assert_bool(copia.ever_spoke()).is_true()
+
+
+func test_uma_noite_calada_nao_conta_como_a_primeira_oferta() -> void:
+	var s := SimFactory.offers()
+	s.spoken_day = 2  # a noite 2 calou-se: nada para dizer
+	assert_bool(s.ever_spoke()).is_false()
+	s.open(_oferta(&"just_looking"), 3, PRATO, LARGO)
+	assert_bool(s.ever_spoke()).is_true()
 
 
 # ─── XIII-04: o que a Oferta faz a mancha (§75) ─────────────────────────────

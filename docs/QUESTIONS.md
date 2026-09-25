@@ -1013,16 +1013,17 @@
 ### Q-089 · Os primeiros vinte minutos: o que o §83 pede e o que os dados dão
 - **Onde:** §83, §75, §25, `src/world/greybox.gd`, `src/core/offer_desk.gd`,
   `tests/abertura_test.gd`.
-- **A primeira oferta cai no dia 2, e o §83 põe-na no dia 3 (17:00).** Medido, com a muralha de dentro de
-  pé: a mancha chega aos 300 px aos 57,5 s da noite 2, e *"Nada. Só quero ver."* tem `min_day 2` em
-  `offers.csv`, que é o "Dia 2+" da tabela da §75. São duas secções do dossiê a dizer coisas diferentes.
-  Não mexi em `data/`: com `min_day 3` o §83 cumpre-se. **Decide:** tu.
+- **A primeira oferta caía no dia 2, e o §83 põe-na no dia 3 (17:00). Fechada pela ADR 0023:** o §83
+  manda; `just_looking` passa a `min_day 3` e a tabela da §75 a "Dia 3+". Medido antes: com `min_day 2`
+  a mancha chegava aos 300 px aos 57,5 s da noite 2 e a voz falava ao minuto ~11, antes do reconhecimento
+  do 13:10.
 - **A mancha só fala se chegar aos 300 px.** No XIII-04 eu tinha-a posto a falar no fim da janela onde
   estivesse; o §75 não diz isso, e o §83 ("a candeia chega mais perto do que ontem") lê-se contra. Sem
   muralha de pé o bordo é o núcleo, e ela não chega a tempo — a primeira estacaria do §25 é o que a faz
   falar. Medido também: uma estacaria cai a meio da noite 3, e com ela vai a oferta dessa noite.
 - **A primeira oferta da campanha é a mais barata** (menos Dívida, depois preço em moedas), e não
-  sorteada: o §83 diz "de propósito". Depois disso volta o sorteio no fluxo `rot`.
+  sorteada: o §83 diz "de propósito". Depois disso volta o sorteio no fluxo `rot`. Uma noite em que a
+  voz se cala por não ter o que dizer não conta como "já falou".
 - **"Revela a posição de um Capítulo escondido"** acende a placa da bifurcação a leste — não há mapa nem
   capítulos (XIII-07). Fica no `found` do `GameState` como `chapter_site`. Numa região sem capítulo
   escondido (a região fechada do §07), a oferta não se diz: não tem o que mostrar.
@@ -1050,5 +1051,6 @@
 
 | # | O quê | Decisão | Onde |
 |---|---|---|---|
+| Q-089 | A primeira oferta: "Dia 2+" (§75) ou 17:00 do dia 3 (§83)? | **dia 3** — o §83 manda | ADR 0023, `offers.csv` |
 | Q-037 | A noite é azul profunda (§05) ou castanha (§80)? | **castanha** — 32° · 0,22 · 0,16, chão em 0,11 | ADR 0011, `clock.csv` |
 

@@ -20,7 +20,14 @@ const QUANTO := &"amount"
 const SEM_OFERTA := &""
 const MOEDAS := &"coins"
 const ESCALARES: Array[StringName] = [
-	&"offer_id", &"dish_x", &"dish_width", &"time_left", &"paid", &"spoken_day", &"night_time"
+	&"offer_id",
+	&"dish_x",
+	&"dish_width",
+	&"time_left",
+	&"paid",
+	&"spoken_day",
+	&"night_time",
+	&"spoken"
 ]
 
 ## O que o jogo ja sabe cobrar e dar (Q-087). Uma oferta cujo preco ou efeito
@@ -44,6 +51,9 @@ var paid: int = 0
 ## O dia da ultima noite em que ja houve oferta: uma por noite, mesmo com duas
 ## manchas (D-05).
 var spoken_day: int = 0
+## Se ja houve uma oferta dita nesta campanha. Uma noite calada nao conta: e o
+## que separa a primeira oferta (a mais barata, §83) das outras (sorteadas).
+var spoken: bool = false
 ## Os dias em que se recusou, desde a ultima aceitacao (§75: volta a zero).
 var refused_days: PackedInt32Array = PackedInt32Array()
 ## As ofertas de uma vez por campanha ja aceites (Q-040).
@@ -120,7 +130,7 @@ static func _mais_barata(a: OfferData, b: OfferData) -> bool:
 
 ## Verdadeiro se ja houve alguma oferta nesta campanha.
 func ever_spoke() -> bool:
-	return spoken_day != 0
+	return spoken
 
 
 ## Verdadeiro se esta noite ainda nao falou.
@@ -132,6 +142,7 @@ func can_speak(dia: int) -> bool:
 func open(o: OfferData, dia: int, x: float, largura: float) -> Dictionary:
 	offer_id = o.id
 	spoken_day = dia
+	spoken = true
 	dish_x = x
 	dish_width = largura
 	time_left = _perfil.offer_seconds
