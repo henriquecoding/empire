@@ -15,6 +15,10 @@ Horas     13 (3 + 10 escrita)
 
 - ADR 0018 tem a precedência. O D-13 já corre sobre os limiares do rot.tres.
 - Doze fragmentos de 60 a 90 palavras. Se um precisar de 200, está a explicar.
+- **Já feito:** a precedência dos três epílogos vive em `src/sim/systems/epilogue.gd` (`Epilogue.of`), e o
+  D-13 chama-a em vez de a ter escrita dentro do teste. O resto espera pelo XIII-07: os diários só se
+  distribuem com capítulos e WorldGen (D-12), e o epílogo só tem entradas quando a Colheita (XIII-06)
+  der povos ficados e soltos.
 
 ---
 
