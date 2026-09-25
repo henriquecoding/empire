@@ -1315,9 +1315,9 @@
    "docs/design/19-arquitetura-godot-4-6.md"
   ],
   "depende": "F0-04",
-  "feito": "Um endereço público que serve a última main verde. O job `publicar` está escrito e verde, mas NÃO publicou nada ainda: falta ligar o Pages em Settings > Pages > Source: GitHub Actions, e isso é um clique de quem tem admin. Até lá o job avisa e salta.",
+  "feito": "Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024, que substitui a 0022). Cada PR tem a sua pré-visualização.",
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
-  "estado": "por fazer",
+  "estado": "parcial — o site constrói-se e publica-se na Vercel (ADR 0024); falta a produção seguir a main",
   "horas": "2"
  }
 }

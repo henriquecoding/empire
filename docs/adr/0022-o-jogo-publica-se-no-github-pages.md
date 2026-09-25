@@ -1,6 +1,6 @@
 # ADR 0022 — O jogo publica-se no GitHub Pages, e o portão é o `needs:`
 
-- Estado: aceite
+- Estado: substituída pela ADR 0024 (o jogo publica-se na Vercel)
 - Data: 2026-09-16
 - Secção do dossiê: §19, §26, §32, §36
 

@@ -3,6 +3,17 @@
 Kingdom-builder 2D em pixel art, em Godot 4.6, onde cada império é uma civilização própria.
 A fonte de verdade do design é o **Dossiê Empire** — `docs/dossie.html` (v5.2). Tudo o resto deriva dele.
 
+## Jogar no browser
+
+O site constrói-se de raiz em cada push, na Vercel, e cada PR tem a sua pré-visualização (ADR 0024): a página
+de entrada na raiz, o jogo em `/jogar/` e o dossiê em `/dossie/`. O mesmo comando corre aqui, sem nada
+instalado além de Node e bash — o motor e o template Web descarregam-se na versão de `.godot-version`:
+
+```bash
+make site                                   # build/site/ inteiro
+python3 -m http.server -d build/site 8000   # e abre http://localhost:8000
+```
+
 ## Correr, testar, exportar
 
 Precisas do Godot **4.6-stable** (a versão está fixada em `.godot-version`) no `PATH` como `godot`, ou em `GODOT`.

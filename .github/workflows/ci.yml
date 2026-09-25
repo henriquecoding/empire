@@ -283,84 +283,44 @@ jobs:
           retention-days: 14
 
   # ── 6 ─────────────────────────────────────────────────────────────────────
-  # O jogo passa a ter um sitio onde se joga sem instalar nada (PUB-01,
-  # ADR 0022). O preset Web tem thread_support desligado de proposito — nao
-  # precisa de COOP nem de COEP — e por isso serve-se de qualquer servidor
-  # estatico; o GitHub Pages e o que este repositorio ja tem.
-  #
-  # `needs: [ci]` e o portao, e e o mais forte que ha: o job de cima so fica
-  # verde com os cinco anteriores verdes, e por isso isto nao pode sequer
-  # ARRANCAR sobre um commit que nao passou. Nao republica o que ja foi medido:
-  # serve o artefacto `empire-web` que o job do export produziu NESTA corrida,
-  # byte a byte.
-  publicar:
-    name: Publicar o Web no GitHub Pages
+  # O site que a Vercel publica (ADR 0024): construido de raiz, como la, e
+  # medido contra o ARTEFACTO — telemovel a 320/360/768/1440 nos dois temas,
+  # axe WCAG 2.1 AA, ligacoes, SEO, teclado, tema sem clarao, movimento
+  # reduzido e o jogo a arrancar num Chromium. A disciplina e a do Recibo
+  # Certo: uma regra que so se ve no ecra certo nao e regra, e intencao.
+  site:
+    name: Site (entrada, jogo e dossie)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [ci, export]
-    # So a main. Um ramo de trabalho verde e trabalho por acabar, e publicar
-    # trabalho por acabar e pior do que nao publicar nada.
-    if: success() && github.ref == 'refs/heads/main'
-    # As permissoes que o cabecalho deste ficheiro diz que nenhum job tem. E a
-    # excepcao, e esta aqui em vez de la em cima precisamente para se ver na
-    # revisao: um job que escreve, e um so.
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    # Um deploy de cada vez, e o que esta a meio acaba. E o contrario do
-    # `concurrency` do workflow, e e de proposito.
-    concurrency:
-      group: pages
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.publicacao.outputs.page_url }}
+    timeout-minutes: 20
     steps:
-      # O GITHUB_TOKEN desta corrida sabe PUBLICAR no Pages e nao sabe CRIA-LO.
-      # Medido: com `enablement: true` no configure-pages, esta mesma corrida
-      # chumbou com "Create Pages site failed: Resource not accessible by
-      # integration". Ligar o Pages e um clique de quem tem admin, e uma vez so:
-      # Settings > Pages > Source: GitHub Actions.
-      #
-      # Por isso pergunta-se PRIMEIRO. Sem Pages ligado, isto avisa e salta o
-      # resto do job — pintar a main de vermelho por causa de uma definicao do
-      # repositorio era dar o alarme a quem nao pode fazer nada com ele. E na
-      # primeira corrida depois de alguem ligar o interruptor, publica sozinho.
-      - id: pages
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Playwright, axe e o Chromium
+        working-directory: ferramentas
         run: |
-          if gh api "repos/${GITHUB_REPOSITORY}/pages" >/dev/null 2>&1; then
-            echo "ligado=true" >> "$GITHUB_OUTPUT"
-            echo "Pages ligado: publica-se."
-          else
-            echo "ligado=false" >> "$GITHUB_OUTPUT"
-            T='Pages por ligar'
-            M='Settings > Pages > Build and deployment > Source: GitHub Actions.'
-            echo "::warning title=${T}::${M} Ate la nao se publica nada."
-          fi
+          npm install --no-save --no-audit --no-fund playwright @axe-core/playwright
+          npx playwright install --with-deps chromium
 
-      # Nao ha `checkout`: nao e preciso o repositorio para publicar uma pasta
-      # que outro job ja construiu. O artefacto e o `empire-web` DESTA corrida,
-      # byte a byte o que os portoes viram.
-      - if: steps.pages.outputs.ligado == 'true'
-        uses: actions/download-artifact@v7
+      # O mesmo comando que a Vercel corre: descarrega o motor de .godot-version
+      # e so o template Web do .tpz, por pedidos parciais.
+      - name: Construir o site
+        run: bash tools/web/construir.sh
+
+      - name: Portao · telemovel, axe, ligacoes, SEO, teclado e o jogo
+        run: node tools/web/verificar_site.mjs
+
+      - uses: actions/upload-artifact@v7
+        if: always()
         with:
-          name: empire-web
-          path: web
-
-      - if: steps.pages.outputs.ligado == 'true'
-        uses: actions/configure-pages@v5
-
-      - if: steps.pages.outputs.ligado == 'true'
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: web
-
-      - id: publicacao
-        if: steps.pages.outputs.ligado == 'true'
-        uses: actions/deploy-pages@v4
+          name: site
+          path: build/site/
+          retention-days: 7
 
   # ── 7 ─────────────────────────────────────────────────────────────────────
   # O unico estado que a protecao de ramo precisa de exigir. Sem ele, cada job
@@ -369,7 +329,7 @@ jobs:
   ci:
     name: ci
     runs-on: ubuntu-latest
-    needs: [portoes, testes, silhueta, export, dossie]
+    needs: [portoes, testes, silhueta, export, dossie, site]
     if: always()
     steps:
       - name: Um job vermelho chumba o conjunto

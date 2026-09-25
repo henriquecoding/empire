@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1510">
+<meta name="description" content="Empire — um kingdom-builder em pixel art, a correr no browser. Greybox jogável.">
+<title>A jogar · Empire</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* A casca do Godot, com a cara do Empire (tools/web/shell.html).
+   A noite é castanha (ADR 0011) e a barra de progresso é a linha do solo
+   (§11, §53): enche da esquerda para a direita como a alvorada. */
+:root{
+  --noite:#1a1510; --noite-2:#241d15; --solo:#6b4a29; --luz:#e9a54a;
+  --papel:#efeada; --papel-2:#c7c1aa; --baixo:#8e8875; --erro:#b58fc7;
+  --f-px:'Silkscreen','Courier New',monospace;
+  --f-corpo:'Source Serif 4',Georgia,serif;
+}
+html,body,#canvas{margin:0;padding:0;border:0}
+body{color:var(--papel);background:var(--noite);overflow:hidden;touch-action:none;
+  font-family:var(--f-corpo)}
+#canvas{display:block}
+#canvas:focus{outline:none}
+
+#status{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:28px;padding:24px;visibility:hidden;
+  background:
+    radial-gradient(120% 70% at 50% 100%, #3a2a1a 0%, transparent 60%),
+    linear-gradient(to bottom, var(--noite) 0%, var(--noite-2) 62%, #2c2216 62.2%, #20180f 100%)}
+#status-splash{display:none}
+.marca{font-family:var(--f-px);font-size:clamp(34px,7vw,72px);letter-spacing:.12em;
+  margin:0;line-height:1;color:var(--papel);text-shadow:0 3px 0 #000}
+.lema{margin:-12px 0 0;font-size:clamp(15px,2vw,18px);color:var(--papel-2);text-align:center;max-width:44ch}
+
+/* A linha do solo: um risco que enche. As três faixas ficam marcadas por
+   baixo — aérea, superfície, subsolo — como no ecrã do jogo. */
+.solo{width:min(560px,86vw)}
+#status-progress{appearance:none;-webkit-appearance:none;display:block;width:100%;height:6px;
+  border:0;background:#3b2d1d;border-radius:0;overflow:hidden}
+#status-progress::-webkit-progress-bar{background:#3b2d1d}
+#status-progress::-webkit-progress-value{background:linear-gradient(90deg,var(--solo),var(--luz))}
+#status-progress::-moz-progress-bar{background:linear-gradient(90deg,var(--solo),var(--luz))}
+#status-progress:indeterminate{background:
+  linear-gradient(90deg,transparent,var(--luz),transparent) 0 0/40% 100% no-repeat #3b2d1d;
+  animation:varre 1.4s linear infinite}
+@keyframes varre{from{background-position:-40% 0}to{background-position:140% 0}}
+@media (prefers-reduced-motion:reduce){#status-progress:indeterminate{animation:none}}
+.faixas{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--f-px);
+  font-size:12px;letter-spacing:.14em;color:var(--baixo);text-transform:uppercase}
+#estado{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;color:var(--papel-2);
+  text-transform:uppercase;min-height:1.2em;margin:0}
+
+#status-notice{display:none;max-width:52ch;background:#231a2a;border:1px solid var(--erro);
+  color:var(--papel);line-height:1.45;padding:16px 20px;text-align:left;font-size:16px}
+#status-notice strong{font-family:var(--f-px);font-weight:400;font-size:12px;letter-spacing:.12em;
+  display:block;margin-bottom:8px;color:var(--erro);text-transform:uppercase}
+
+.toque{display:none;max-width:44ch;text-align:center;color:var(--papel-2);font-size:15px;line-height:1.45}
+.toque button{margin-top:12px;min-height:44px;font:inherit;font-family:var(--f-px);font-size:12px;letter-spacing:.1em;
+  background:transparent;color:var(--papel);border:1px solid var(--papel-2);padding:10px 16px;cursor:pointer}
+.voltar{position:absolute;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));font-family:var(--f-px);font-size:12px;letter-spacing:.12em;
+  min-height:40px;display:inline-flex;align-items:center;padding:0 8px;
+  color:var(--papel-2);text-decoration:none;text-transform:uppercase}
+.voltar:hover,.voltar:focus-visible{color:var(--papel)}
+:focus-visible{outline:2px solid var(--luz);outline-offset:3px}
+</style>
+$GODOT_HEAD_INCLUDE
+</head>
+<body>
+<canvas id="canvas">O teu browser não desenha num canvas.</canvas>
+<noscript>O Empire corre em JavaScript e WebAssembly; sem JavaScript não arranca.</noscript>
+
+<div id="status">
+  <a class="voltar" href="/">← Empire</a>
+  <img id="status-splash" class="$GODOT_SPLASH_CLASSES" src="$GODOT_SPLASH" alt="">
+  <h1 class="marca">EMPIRE</h1>
+  <p class="lema">Cada império é uma civilização. À noite, a Podridão vem com uma candeia.</p>
+  <div class="solo" id="solo">
+    <progress id="status-progress"></progress>
+    <div class="faixas" aria-hidden="true"><span>aérea</span><span>superfície</span><span>subsolo</span></div>
+  </div>
+  <p id="estado" role="status" aria-live="polite">A acordar o motor</p>
+  <div class="toque" id="toque">
+    O Empire joga-se com <strong>teclado</strong> ou com um <strong>comando</strong>. Num ecrã
+    tátil podes vê-lo arrancar, mas ainda não há controlos por toque.
+    <br><button type="button" id="mesmo-assim">Arrancar mesmo assim</button>
+  </div>
+  <div id="status-notice" role="alert"></div>
+</div>
+
+<script src="$GODOT_URL"></script>
+<script>
+const GODOT_CONFIG = $GODOT_CONFIG;
+const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
+const engine = new Engine(GODOT_CONFIG);
+
+(function () {
+  const overlay = document.getElementById('status');
+  const progress = document.getElementById('status-progress');
+  const notice = document.getElementById('status-notice');
+  const estado = document.getElementById('estado');
+  const solo = document.getElementById('solo');
+  const toque = document.getElementById('toque');
+  let initializing = true;
+  let mode = '';
+
+  function setMode(m) {
+    if (mode === m || !initializing) return;
+    if (m === 'hidden') { overlay.remove(); initializing = false; return; }
+    overlay.style.visibility = 'visible';
+    solo.style.display = m === 'progress' ? 'block' : 'none';
+    estado.style.display = m === 'progress' ? 'block' : 'none';
+    notice.style.display = m === 'notice' ? 'block' : 'none';
+    toque.style.display = m === 'touch' ? 'block' : 'none';
+    mode = m;
+  }
+
+  function mb(n) { return (n / 1048576).toFixed(n < 10485760 ? 1 : 0).replace('.', ','); }
+
+  function fail(err) {
+    console.error(err);
+    while (notice.lastChild) notice.removeChild(notice.lastChild);
+    const t = document.createElement('strong');
+    t.textContent = 'O jogo não arrancou';
+    notice.appendChild(t);
+    const msg = err instanceof Error ? err.message : (typeof err === 'string' ? err : 'Um erro sem nome.');
+    msg.split('\n').forEach((l) => { notice.appendChild(document.createTextNode(l)); notice.appendChild(document.createElement('br')); });
+    setMode('notice');
+    initializing = false;
+  }
+
+  // Sem progresso durante LENTO ms, diz-se porque: o .wasm tem 36 MB, e numa
+  // ligacao fraca a barra parada parece um jogo partido.
+  const LENTO = 20000;
+  let ultimo = 0;
+  let vigia = 0;
+  function vigiar() {
+    clearTimeout(vigia);
+    vigia = setTimeout(() => {
+      if (initializing && mode === 'progress') {
+        estado.textContent = 'A ligação está lenta · o motor tem ' + mb(ultimo || 0) + ' MB até aqui';
+      }
+    }, LENTO);
+  }
+
+  function start() {
+    setMode('progress');
+    vigiar();
+    engine.startGame({
+      onProgress: function (current, total) {
+        if (current > 0 && total > 0) {
+          if (current !== ultimo) { ultimo = current; vigiar(); }
+          progress.value = current; progress.max = total;
+          estado.textContent = current >= total
+            ? 'A montar o reino'
+            : 'A trazer o reino · ' + mb(current) + ' de ' + mb(total) + ' MB';
+        } else {
+          progress.removeAttribute('value'); progress.removeAttribute('max');
+        }
+      },
+    }).then(() => { clearTimeout(vigia); setMode('hidden'); }, fail);
+  }
+
+  const missing = Engine.getMissingFeatures({ threads: GODOT_THREADS_ENABLED });
+  if (missing.length !== 0) {
+    fail('Falta ao browser o que o Godot precisa para correr na Web:\n' + missing.join('\n')
+      + '\nExperimenta um Chrome, Edge ou Firefox recentes.');
+    return;
+  }
+  // Sem rato nem teclado provável: avisa, e deixa arrancar se a pessoa quiser.
+  const soToque = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (soToque) {
+    setMode('touch');
+    document.getElementById('mesmo-assim').addEventListener('click', start, { once: true });
+  } else {
+    start();
+  }
+}());
+</script>
+</body>
+</html>

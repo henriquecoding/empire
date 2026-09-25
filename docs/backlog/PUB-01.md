@@ -10,16 +10,15 @@ Spec      docs/design/36-wishlists-pagina-demo-e-trailer.md
           docs/design/19-arquitetura-godot-4-6.md
 Depende   F0-04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
-Feito     Um endereço público que serve a última main verde. O job `publicar` do ci.yml tem
-          needs: [ci, export] — não arranca sobre um commit que não passou — e serve o artefacto
-          empire-web dessa mesma corrida, byte a byte.
-Falta     LIGAR O PAGES, e é um clique de quem tem admin: Settings > Pages > Build and deployment
-          > Source: GitHub Actions. O GITHUB_TOKEN de uma corrida sabe publicar e não sabe criar o
-          site (medido: "Resource not accessible by integration"), e a API do Pages está fora do
-          alcance do agente. Até esse clique o job avisa e salta, e a main fica verde.
+Feito     Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o
+          dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024,
+          que substitui a 0022). Cada PR tem a sua pré-visualização.
+Falta     APONTAR A PRODUÇÃO À MAIN. A Vercel importou o projeto com o ramo por omissão do GitHub,
+          que não é a main. Na Vercel: Settings > Environments > Production > Branch Tracking; ou no
+          GitHub: Settings > General > Default branch. A API da Vercel não o muda de fora.
 Fora      Releases com os binários de Linux e Windows — é outra decisão, para quando houver versões
           a nomear. Domínio próprio. Telemetria: o §32 é "medir sem espiar" e isto não mede nada.
-Estado    por fazer
+Estado    parcial — o site constrói-se e publica-se na Vercel (ADR 0024); falta a produção seguir a main
 Horas     2
 ```
 
