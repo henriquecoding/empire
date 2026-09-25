@@ -76,6 +76,12 @@ func has(capitulo: StringName) -> bool:
 	return placed.has(String(capitulo))
 
 
+## O capitulo da regiao deste bioma; vazio se nenhum la caiu.
+func in_region(bioma: StringName) -> StringName:
+	var i := regions.find(String(bioma))
+	return StringName(placed[i]) if i != NENHUM else &""
+
+
 ## Se o diario se acha nesta campanha: o da ruina esta dentro das tuas muralhas
 ## desde o dia 1; o de fortaleza, se o povo dela esta numa regiao (`povos`, pela
 ## ordem de `regions`); o de capitulo, se algum capitulo o carrega.
@@ -97,11 +103,28 @@ func to_dict() -> Dictionary:
 	}
 
 
+## Um campo com o tipo errado fica como estava: um save antigo, ou mexido a
+## mao, carrega sem capitulos em vez de rebentar (§62).
 func from_dict(d: Dictionary) -> void:
-	regions = d.get(&"chapter_regions", regions)
-	placed = d.get(&"chapters_placed", placed)
-	journals = d.get(&"chapter_journals", journals)
-	detours = d.get(&"chapter_detours", detours)
+	regions = _textos(d, &"chapter_regions", regions)
+	placed = _textos(d, &"chapters_placed", placed)
+	journals = _textos(d, &"chapter_journals", journals)
+	if typeof(d.get(&"chapter_detours")) == TYPE_PACKED_FLOAT32_ARRAY:
+		detours = d[&"chapter_detours"]
+	var n := regions.size()
+	if placed.size() != n or journals.size() != n or detours.size() != n:
+		regions = PackedStringArray()
+		placed = PackedStringArray()
+		journals = PackedStringArray()
+		detours = PackedFloat32Array()
+
+
+static func _textos(
+	d: Dictionary, chave: StringName, omissao: PackedStringArray
+) -> PackedStringArray:
+	if typeof(d.get(chave)) == TYPE_PACKED_STRING_ARRAY:
+		return d[chave]
+	return omissao
 
 
 # ─── Por dentro ──────────────────────────────────────────────────────────────

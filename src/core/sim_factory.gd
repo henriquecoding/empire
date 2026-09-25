@@ -132,6 +132,12 @@ static func campaign_peoples() -> PackedStringArray:
 	return povos
 
 
+## O bioma do povo de um segmento: o do segmento de partida e a regiao de casa.
+static func biome_of_segment(segmento: StringName) -> StringName:
+	var povo := (Registry.entry(&"segments", segmento) as SegmentData).people
+	return (Registry.entry(&"peoples", povo) as PeopleData).biome
+
+
 ## Os capitulos desta campanha (§77), sorteados no fluxo `world` (§42, §54).
 static func chapter_plan(regioes: PackedStringArray) -> ChapterPlan:
 	var lista: Array[ChapterData] = []

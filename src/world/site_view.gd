@@ -10,6 +10,8 @@ extends RefCounted
 
 ## Dois degraus de alto, e a Semente do dobro de uma moeda.
 const NICHO := 2.0
+## O nome do capitulo, por cima da placa, quando a oferta o revela (§83, 18:00).
+const LETRA := 12
 
 
 static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting) -> void:
@@ -41,3 +43,17 @@ static func _placa(canvas: CanvasItem, x: float, chao: float, luz: Lighting) -> 
 	canvas.draw_line(topo, topo - braco + desce, cor, WorldPalette.CONTORNO)
 	if SimLoop.night.voice.reveals > 0:
 		canvas.draw_circle(topo, WorldPalette.MOEDA_R * NICHO, WorldPalette.MOEDA)
+		var onde := topo - Vector2(braco.x, WorldPalette.DEGRAU)
+		var fonte := ThemeDB.fallback_font
+		canvas.draw_string(fonte, onde, chapter_name(), HORIZONTAL_ALIGNMENT_LEFT, -1, LETRA, cor)
+
+
+## O capitulo que cai na bifurcacao de casa (XIII-07): o da regiao do povo do
+## segmento de partida. Vazio enquanto a campanha nao tiver plano.
+static func chapter_name() -> String:
+	var casa := SimFactory.biome_of_segment(Greybox.SEGMENTO)
+	var id := SimLoop.state.chapters.in_region(casa)
+	if id == &"":
+		return ""
+	var dados := Registry.entry(SimFactory.TABELA_CAPITULOS, id) as ChapterData
+	return TranslationServer.translate(dados.display_key)

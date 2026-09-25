@@ -41,6 +41,9 @@ var royal_seeds: int = 0
 var conquests: PackedStringArray = PackedStringArray()
 ## Os segredos ja encontrados (§17). Um segredo so da a recompensa uma vez.
 var found: PackedStringArray = PackedStringArray()
+## Os capitulos da campanha e o diario de cada um (§77, §79): sorteados uma vez,
+## no start(), e depois so lidos. Vai no save com os nomes da §84.
+var chapters: ChapterPlan = ChapterPlan.new()
 
 
 ## Le um dicionario ja validado. Campos em falta ficam no valor por omissao e
@@ -57,6 +60,7 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.royal_seeds = _inteiro(d, &"royal_seeds", estado.royal_seeds)
 	estado.conquests = _textos(d, &"conquests")
 	estado.found = _textos(d, &"found")
+	estado.chapters.from_dict(d)
 	return estado
 
 
@@ -69,17 +73,20 @@ func take_id() -> int:
 
 ## So tipos base, para o canal da ADR 0007. Nada aqui pode ser um Object.
 func to_dict() -> Dictionary:
-	return {
-		&"seed": seed,
-		&"tick": tick,
-		&"day": day,
-		&"clock_elapsed": clock_elapsed,
-		&"day_seconds": day_seconds,
-		&"next_id": next_id,
-		&"royal_seeds": royal_seeds,
-		&"conquests": conquests,
-		&"found": found,
-	}
+	return (
+		{
+			&"seed": seed,
+			&"tick": tick,
+			&"day": day,
+			&"clock_elapsed": clock_elapsed,
+			&"day_seconds": day_seconds,
+			&"next_id": next_id,
+			&"royal_seeds": royal_seeds,
+			&"conquests": conquests,
+			&"found": found,
+		}
+		. merged(chapters.to_dict())
+	)
 
 
 static func _inteiro(d: Dictionary, chave: StringName, omissao: int) -> int:

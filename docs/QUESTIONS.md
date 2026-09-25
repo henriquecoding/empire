@@ -1165,7 +1165,7 @@
 - **O que falta do segmento de abertura:** o vagabundo com `head_pool` fixo é arte (ART-01: no greybox todas as
   caras são a mesma), e a bifurcação a três ecrãs para leste precisa dos Capítulos (XIII-07). A **placa** da
   bifurcação já está no segmento (`SecretSites.chapters`, a leste) e acende-se quando a primeira oferta é
-  paga; o capítulo que lá cai é do XIII-07.
+  paga; o capítulo que lá cai é o da região dos Enramados no plano do XIII-07, e a placa diz-lhe o nome.
 - **Decide:** tu.
 
 ### Q-105 · Nove fichas cinco a cinco não dão 126 mundos: dão 61
