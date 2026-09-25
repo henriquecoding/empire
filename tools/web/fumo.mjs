@@ -35,13 +35,34 @@ const raiz = await pedir("/");
 exigir("/ responde 200", raiz.status === 200, `HTTP ${raiz.status}`);
 const html = await raiz.text();
 exigir("/ é a página do Empire", html.includes("Cada império é uma"));
-exigir("/ sem marcadores por preencher", !/\{\{[A-Z0-9_]+\}\}/.test(html));
+exigir("/ sem marcadores por preencher", !/\{[a-z_0-9]+\}/.test(html));
+exigir("/ não pede nada à Google (as fontes são daqui)", !/fonts\.(googleapis|gstatic)\.com/.test(html));
 for (const h of SEGURANCA) exigir(`cabeçalho ${h}`, raiz.headers.has(h));
+
+const ingles = await pedir("/en/");
+exigir("/en/ responde 200", ingles.status === 200, `HTTP ${ingles.status}`);
+exigir("/en/ é a página inglesa", (await ingles.text()).includes("Every empire is a"));
+
+// A folha e os scripts têm o conteúdo no nome, e por isso servem-se para
+// sempre; as fontes são do próprio site e chegam como font/woff2.
+const css = html.match(/href="(\/assets\/estilo\.[0-9a-f]+\.css)"/)?.[1];
+exigir("/ liga a uma folha com hash", !!css);
+if (css) {
+  const r = await pedir(css);
+  exigir(`${css} responde 200`, r.status === 200, `HTTP ${r.status}`);
+  exigir(`${css} tem cache imutável`, /immutable/.test(r.headers.get("cache-control") || ""), r.headers.get("cache-control") || "sem cache-control");
+}
+const fonte = await pedir("/fontes/fraunces-400-900-latin.woff2", { method: "HEAD" });
+exigir("as fontes servem-se daqui, como font/woff2", fonte.status === 200 && /woff2/.test(fonte.headers.get("content-type") || ""),
+  `HTTP ${fonte.status} ${fonte.headers.get("content-type")}`);
 
 for (const [rota, texto] of [["/jogar/", "new Engine("], ["/dossie/", "<html"]]) {
   const r = await pedir(rota);
   exigir(`${rota} responde 200`, r.status === 200, `HTTP ${r.status}`);
-  exigir(`${rota} tem o que devia`, (await r.text()).includes(texto));
+  const corpo = await r.text();
+  exigir(`${rota} tem o que devia`, corpo.includes(texto));
+  exigir(`${rota} não pede nada à Google`, !/fonts\.(googleapis|gstatic)\.com/.test(corpo));
+  if (rota === "/jogar/") exigir("/jogar/ tem a CSP com o hash dos blocos em linha", /script-src 'self' 'wasm-unsafe-eval' 'sha256-/.test(corpo));
 }
 
 const wasm = await pedir("/jogar/index.wasm", { headers: { "Accept-Encoding": "br, gzip" } });
@@ -61,7 +82,7 @@ exigir("/jogar leva a /jogar/", [301, 307, 308].includes(sem.status) && (sem.hea
 
 const nada = await pedir("/nao-existe-de-certeza/");
 exigir("uma página que não existe dá 404", nada.status === 404, `HTTP ${nada.status}`);
-exigir("e o 404 é o do Empire", (await nada.text()).includes("FORA DO MAPA"));
+exigir("e o 404 é o do Empire", /fora do mapa/i.test(await nada.text()));
 
 const v = await pedir("/versao.json");
 exigir("/versao.json responde 200", v.status === 200, `HTTP ${v.status}`);

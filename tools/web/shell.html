@@ -3,93 +3,135 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1a1510">
+<!--EMPIRE:CSP-->
+<meta name="theme-color" content="#15120c">
 <meta name="description" content="Empire — um kingdom-builder em pixel art, a correr no browser. Greybox jogável.">
+<!--EMPIRE:ROBOTS-->
 <title>A jogar · Empire</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="preload" href="/fontes/silkscreen-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fontes/fontes.css">
+<script>
+/* A lingua, antes do primeiro pixel: /jogar/?lingua=en vem da pagina inglesa. */
+(function () {
+  var q = new URLSearchParams(location.search).get("lingua");
+  if (q === "en" || q === "pt") { try { localStorage.setItem("empire:lingua", q); } catch (e) {} }
+  var l = q;
+  if (!l) { try { l = localStorage.getItem("empire:lingua"); } catch (e) {} }
+  if (l === "en") document.documentElement.lang = "en";
+})();
+</script>
 <style>
-/* A casca do Godot, com a cara do Empire (tools/web/shell.html).
-   A noite é castanha (ADR 0011) e a barra de progresso é a linha do solo
-   (§11, §53): enche da esquerda para a direita como a alvorada. */
+/* A casca do Godot, com a cara do Empire (tools/web/shell.html; ADR 0024, 0025).
+   A noite e castanha (ADR 0011) e a barra de progresso e a linha do solo
+   (§11, §53): enche da esquerda para a direita como a alvorada. Enquanto o
+   motor chega, o ecra ensina os controlos — e o tempo de espera deixa de ser
+   tempo perdido. */
 :root{
-  --noite:#1a1510; --noite-2:#241d15; --solo:#6b4a29; --luz:#e9a54a;
-  --papel:#efeada; --papel-2:#c7c1aa; --baixo:#8e8875; --erro:#b58fc7;
+  --noite:#15120c; --noite-2:#211a12; --solo:#6b4a29; --luz:#e9a54a;
+  --papel:#efeada; --papel-2:#c7c1aa; --baixo:#9a9480; --linha:#3a3326; --erro:#b58fc7;
   --f-px:'Silkscreen','Courier New',monospace;
   --f-corpo:'Source Serif 4',Georgia,serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
 }
+html[lang="en"] [lang="pt-PT"],html[lang="pt-PT"] [lang="en"]{display:none!important}
 html,body,#canvas{margin:0;padding:0;border:0}
-body{color:var(--papel);background:var(--noite);overflow:hidden;touch-action:none;
-  font-family:var(--f-corpo)}
+body{color:var(--papel);background:var(--noite);overflow:hidden;touch-action:none;font-family:var(--f-corpo)}
 #canvas{display:block}
 #canvas:focus{outline:none}
+:focus-visible{outline:2px solid var(--luz);outline-offset:3px}
 
-#status{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:28px;padding:24px;visibility:hidden;
+#status{position:absolute;inset:0;display:flex;flex-direction:column;visibility:hidden;overflow:auto;
   background:
+    radial-gradient(60% 50% at 70% 30%, #e8a94e1f 0%, transparent 70%),
     radial-gradient(120% 70% at 50% 100%, #3a2a1a 0%, transparent 60%),
-    linear-gradient(to bottom, var(--noite) 0%, var(--noite-2) 62%, #2c2216 62.2%, #20180f 100%)}
+    linear-gradient(to bottom, var(--noite) 0%, var(--noite-2) 84%, #2c2216 84.2%, #1a130c 100%)}
 #status-splash{display:none}
-.marca{font-family:var(--f-px);font-size:clamp(34px,7vw,72px);letter-spacing:.12em;
-  margin:0;line-height:1;color:var(--papel);text-shadow:0 3px 0 #000}
-.lema{margin:-12px 0 0;font-size:clamp(15px,2vw,18px);color:var(--papel-2);text-align:center;max-width:44ch}
-
-/* A linha do solo: um risco que enche. As três faixas ficam marcadas por
-   baixo — aérea, superfície, subsolo — como no ecrã do jogo. */
+.barra{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left))}
+.barra a{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;min-height:40px;display:inline-flex;
+  align-items:center;padding:0 10px;color:var(--papel-2);text-decoration:none;border:1px solid transparent}
+.barra a:hover,.barra a:focus-visible{color:var(--papel)}
+.barra .lingua{border-color:var(--linha)}
+.centro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px 20px 40px;text-align:center}
+.marca{font-family:var(--f-px);font-size:clamp(34px,7vw,72px);letter-spacing:.12em;margin:0;line-height:1;color:var(--papel);text-shadow:0 3px 0 #000}
+.lema{margin:-10px 0 0;font-size:clamp(15px,2vw,18px);color:var(--papel-2);max-width:46ch}
 .solo{width:min(560px,86vw)}
-#status-progress{appearance:none;-webkit-appearance:none;display:block;width:100%;height:6px;
-  border:0;background:#3b2d1d;border-radius:0;overflow:hidden}
+#status-progress{appearance:none;-webkit-appearance:none;display:block;width:100%;height:6px;border:0;background:#3b2d1d;border-radius:0;overflow:hidden}
 #status-progress::-webkit-progress-bar{background:#3b2d1d}
 #status-progress::-webkit-progress-value{background:linear-gradient(90deg,var(--solo),var(--luz))}
 #status-progress::-moz-progress-bar{background:linear-gradient(90deg,var(--solo),var(--luz))}
-#status-progress:indeterminate{background:
-  linear-gradient(90deg,transparent,var(--luz),transparent) 0 0/40% 100% no-repeat #3b2d1d;
+#status-progress:indeterminate{background:linear-gradient(90deg,transparent,var(--luz),transparent) 0 0/40% 100% no-repeat #3b2d1d;
   animation:varre 1.4s linear infinite}
 @keyframes varre{from{background-position:-40% 0}to{background-position:140% 0}}
-@media (prefers-reduced-motion:reduce){#status-progress:indeterminate{animation:none}}
-.faixas{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--f-px);
-  font-size:12px;letter-spacing:.14em;color:var(--baixo);text-transform:uppercase}
-#estado{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;color:var(--papel-2);
-  text-transform:uppercase;min-height:1.2em;margin:0}
-
-#status-notice{display:none;max-width:52ch;background:#231a2a;border:1px solid var(--erro);
-  color:var(--papel);line-height:1.45;padding:16px 20px;text-align:left;font-size:16px}
-#status-notice strong{font-family:var(--f-px);font-weight:400;font-size:12px;letter-spacing:.12em;
-  display:block;margin-bottom:8px;color:var(--erro);text-transform:uppercase}
-
-.toque{display:none;max-width:44ch;text-align:center;color:var(--papel-2);font-size:15px;line-height:1.45}
-.toque button{margin-top:12px;min-height:44px;font:inherit;font-family:var(--f-px);font-size:12px;letter-spacing:.1em;
+.faixas{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--f-px);font-size:12px;letter-spacing:.14em;
+  color:var(--baixo);text-transform:uppercase}
+#estado{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;color:var(--papel-2);text-transform:uppercase;min-height:1.2em;margin:0}
+#status-notice{display:none;max-width:52ch;background:#231a2a;border:1px solid var(--erro);color:var(--papel);line-height:1.45;
+  padding:16px 20px;text-align:left;font-size:16px}
+#status-notice strong{font-family:var(--f-px);font-weight:400;font-size:12px;letter-spacing:.12em;display:block;margin-bottom:8px;
+  color:var(--erro);text-transform:uppercase}
+.toque{display:none;max-width:44ch;color:var(--papel-2);font-size:16px;line-height:1.45}
+.toque button,.ecra-inteiro{min-height:44px;font-family:var(--f-px);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
   background:transparent;color:var(--papel);border:1px solid var(--papel-2);padding:10px 16px;cursor:pointer}
-.voltar{position:absolute;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));font-family:var(--f-px);font-size:12px;letter-spacing:.12em;
-  min-height:40px;display:inline-flex;align-items:center;padding:0 8px;
-  color:var(--papel-2);text-decoration:none;text-transform:uppercase}
-.voltar:hover,.voltar:focus-visible{color:var(--papel)}
-:focus-visible{outline:2px solid var(--luz);outline-offset:3px}
+.toque button{margin-top:14px}
+
+/* Os controlos, lidos do project.godot na construcao do site (pagina.mjs). */
+.controlos{width:min(620px,92vw);margin-top:6px;border-top:1px solid var(--linha);padding-top:18px}
+.controlos p{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--baixo);margin:0 0 12px}
+.controlos dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px;margin:0;text-align:left}
+.controlos dl>div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px solid #2a241b;padding:4px 0}
+.controlos dt{font-size:15px;color:var(--papel-2)}
+.controlos dd{margin:0;white-space:nowrap}
+kbd{font-family:var(--f-mono);font-size:12px;color:var(--papel);background:#27221a;border:1px solid var(--linha);border-bottom-width:3px;
+  padding:1px 6px;border-radius:3px;margin-left:3px}
+@media (max-width:560px){.controlos dl{grid-template-columns:1fr}}
+@media (max-height:620px){.controlos{display:none}}
+
+/* Depois de arrancar: voltar e ecra inteiro, num canto, e so quando o rato
+   se mexe perto de cima — o jogo e do jogo, e nao da casca. */
+.ferramentas{position:fixed;top:max(10px,env(safe-area-inset-top));left:max(10px,env(safe-area-inset-left));display:flex;gap:8px;
+  opacity:0;transform:translateY(-6px);transition:opacity .4s var(--ease),transform .4s var(--ease);pointer-events:none}
+.ferramentas.visivel{opacity:1;transform:none;pointer-events:auto}
+.ferramentas a,.ecra-inteiro{background:#15120cd9;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ferramentas a{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;min-height:44px;display:inline-flex;
+  align-items:center;padding:0 14px;color:var(--papel);text-decoration:none;border:1px solid var(--papel-2)}
+.ferramentas[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){#status-progress:indeterminate{animation:none}.ferramentas{transition:none}}
 </style>
 $GODOT_HEAD_INCLUDE
 </head>
 <body>
-<canvas id="canvas">O teu browser não desenha num canvas.</canvas>
-<noscript>O Empire corre em JavaScript e WebAssembly; sem JavaScript não arranca.</noscript>
+<canvas id="canvas"><span lang="pt-PT">O teu browser não desenha num canvas.</span><span lang="en">Your browser can't draw on a canvas.</span></canvas>
+<noscript><span lang="pt-PT">O Empire corre em JavaScript e WebAssembly; sem JavaScript não arranca.</span> <span lang="en">Empire runs on JavaScript and WebAssembly; it won't start without JavaScript.</span></noscript>
 
 <div id="status">
-  <a class="voltar" href="/">← Empire</a>
-  <img id="status-splash" class="$GODOT_SPLASH_CLASSES" src="$GODOT_SPLASH" alt="">
-  <h1 class="marca">EMPIRE</h1>
-  <p class="lema">Cada império é uma civilização. À noite, a Podridão vem com uma candeia.</p>
-  <div class="solo" id="solo">
-    <progress id="status-progress"></progress>
-    <div class="faixas" aria-hidden="true"><span>aérea</span><span>superfície</span><span>subsolo</span></div>
+  <div class="barra">
+    <a href="/"><span lang="pt-PT">← Empire</span><span lang="en">← Empire</span></a>
+    <a class="lingua" id="lingua" href="?lingua=en"><span lang="pt-PT">EN</span><span lang="en">PT</span></a>
   </div>
-  <p id="estado" role="status" aria-live="polite">A acordar o motor</p>
-  <div class="toque" id="toque">
-    O Empire joga-se com <strong>teclado</strong> ou com um <strong>comando</strong>. Num ecrã
-    tátil podes vê-lo arrancar, mas ainda não há controlos por toque.
-    <br><button type="button" id="mesmo-assim">Arrancar mesmo assim</button>
+  <div class="centro">
+    <img id="status-splash" class="$GODOT_SPLASH_CLASSES" src="$GODOT_SPLASH" alt="">
+    <h1 class="marca">EMPIRE</h1>
+    <p class="lema"><span lang="pt-PT">Cada império é uma civilização. À noite, a Podridão vem com uma candeia.</span><span lang="en">Every empire is a civilization. At night, the Rot comes with a lantern.</span></p>
+    <div class="solo" id="solo">
+      <progress id="status-progress"></progress>
+      <div class="faixas" aria-hidden="true"><span lang="pt-PT">aérea</span><span lang="en">aerial</span><span lang="pt-PT">superfície</span><span lang="en">surface</span><span lang="pt-PT">subsolo</span><span lang="en">underground</span></div>
+    </div>
+    <p id="estado" role="status" aria-live="polite"></p>
+    <div class="toque" id="toque">
+      <span lang="pt-PT">O Empire joga-se com <strong>teclado</strong> ou com um <strong>comando</strong>. Num ecrã tátil podes vê-lo arrancar, mas ainda não há controlos por toque.</span>
+      <span lang="en">Empire is played with a <strong>keyboard</strong> or a <strong>gamepad</strong>. On a touch screen you can watch it start, but there are no touch controls yet.</span>
+      <br><button type="button" id="mesmo-assim"><span lang="pt-PT">Arrancar mesmo assim</span><span lang="en">Start anyway</span></button>
+    </div>
+    <div id="status-notice" role="alert"></div>
+    <!--EMPIRE:CONTROLOS-->
   </div>
-  <div id="status-notice" role="alert"></div>
+</div>
+<div class="ferramentas" id="ferramentas" hidden>
+  <a href="/"><span lang="pt-PT">← Empire</span><span lang="en">← Empire</span></a>
+  <button class="ecra-inteiro" type="button" id="ecra-inteiro"><span lang="pt-PT">Ecrã inteiro</span><span lang="en">Full screen</span></button>
 </div>
 
 <script src="$GODOT_URL"></script>
@@ -99,6 +141,23 @@ const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
 const engine = new Engine(GODOT_CONFIG);
 
 (function () {
+  const en = document.documentElement.lang === 'en';
+  const T = en ? {
+    acordar: 'Waking the engine', montar: 'Building the kingdom', trazer: 'Bringing the kingdom · {p}%',
+    lenta: 'The connection is slow · {p}% so far', falhou: 'The game did not start',
+    falta: 'Your browser is missing what Godot needs to run on the web:', experimenta: 'Try a recent Chrome, Edge or Firefox.',
+    semNome: 'An unnamed error.',
+  } : {
+    acordar: 'A acordar o motor', montar: 'A montar o reino', trazer: 'A trazer o reino · {p}%',
+    lenta: 'A ligação está lenta · {p}% até aqui', falhou: 'O jogo não arrancou',
+    falta: 'Falta ao browser o que o Godot precisa para correr na Web:', experimenta: 'Experimenta um Chrome, Edge ou Firefox recentes.',
+    semNome: 'Um erro sem nome.',
+  };
+  const fmt = (s, v) => s.replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m));
+  const lingua = document.getElementById('lingua');
+  lingua.href = en ? '?lingua=pt' : '?lingua=en';
+  lingua.setAttribute('hreflang', en ? 'pt-PT' : 'en');
+
   const overlay = document.getElementById('status');
   const progress = document.getElementById('status-progress');
   const notice = document.getElementById('status-notice');
@@ -107,10 +166,11 @@ const engine = new Engine(GODOT_CONFIG);
   const toque = document.getElementById('toque');
   let initializing = true;
   let mode = '';
+  estado.textContent = T.acordar;
 
   function setMode(m) {
     if (mode === m || !initializing) return;
-    if (m === 'hidden') { overlay.remove(); initializing = false; return; }
+    if (m === 'hidden') { overlay.remove(); initializing = false; ferramentas(); return; }
     overlay.style.visibility = 'visible';
     solo.style.display = m === 'progress' ? 'block' : 'none';
     estado.style.display = m === 'progress' ? 'block' : 'none';
@@ -119,15 +179,19 @@ const engine = new Engine(GODOT_CONFIG);
     mode = m;
   }
 
-  function mb(n) { return (n / 1048576).toFixed(n < 10485760 ? 1 : 0).replace('.', ','); }
+  // Em percentagem, e nao em MB: o total que o motor conhece e o do disco
+  // (37 MB), e o que a rede traz com brotli e um quarto disso — a pagina de
+  // entrada diz o segundo, e as duas nao se podem desmentir.
+  let total = 0;
+  const pct = (n) => (total ? Math.floor((100 * n) / total) : 0);
 
   function fail(err) {
     console.error(err);
     while (notice.lastChild) notice.removeChild(notice.lastChild);
     const t = document.createElement('strong');
-    t.textContent = 'O jogo não arrancou';
+    t.textContent = T.falhou;
     notice.appendChild(t);
-    const msg = err instanceof Error ? err.message : (typeof err === 'string' ? err : 'Um erro sem nome.');
+    const msg = err instanceof Error ? err.message : (typeof err === 'string' ? err : T.semNome);
     msg.split('\n').forEach((l) => { notice.appendChild(document.createTextNode(l)); notice.appendChild(document.createElement('br')); });
     setMode('notice');
     initializing = false;
@@ -141,23 +205,44 @@ const engine = new Engine(GODOT_CONFIG);
   function vigiar() {
     clearTimeout(vigia);
     vigia = setTimeout(() => {
-      if (initializing && mode === 'progress') {
-        estado.textContent = 'A ligação está lenta · o motor tem ' + mb(ultimo || 0) + ' MB até aqui';
-      }
+      if (initializing && mode === 'progress') estado.textContent = fmt(T.lenta, { p: pct(ultimo || 0) });
     }, LENTO);
+  }
+
+  // Depois de arrancar: o voltar e o ecra inteiro aparecem quatro segundos, e
+  // voltam quando o rato passa perto de cima. Sem a API de ecra inteiro, o
+  // botao nem aparece.
+  function ferramentas() {
+    const barra = document.getElementById('ferramentas');
+    const botao = document.getElementById('ecra-inteiro');
+    const raiz = document.documentElement;
+    if (!raiz.requestFullscreen) botao.remove();
+    else botao.addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else raiz.requestFullscreen().catch(() => {});
+      document.getElementById('canvas').focus();
+    });
+    barra.hidden = false;
+    let esconder = 0;
+    const mostrar = () => {
+      barra.classList.add('visivel');
+      clearTimeout(esconder);
+      esconder = setTimeout(() => barra.classList.remove('visivel'), 4000);
+    };
+    requestAnimationFrame(mostrar);
+    window.addEventListener('mousemove', (e) => { if (e.clientY < 80) mostrar(); }, { passive: true });
   }
 
   function start() {
     setMode('progress');
     vigiar();
     engine.startGame({
-      onProgress: function (current, total) {
-        if (current > 0 && total > 0) {
+      onProgress: function (current, max) {
+        if (current > 0 && max > 0) {
           if (current !== ultimo) { ultimo = current; vigiar(); }
-          progress.value = current; progress.max = total;
-          estado.textContent = current >= total
-            ? 'A montar o reino'
-            : 'A trazer o reino · ' + mb(current) + ' de ' + mb(total) + ' MB';
+          total = max;
+          progress.value = current; progress.max = max;
+          estado.textContent = current >= max ? T.montar : fmt(T.trazer, { p: pct(current) });
         } else {
           progress.removeAttribute('value'); progress.removeAttribute('max');
         }
@@ -167,11 +252,10 @@ const engine = new Engine(GODOT_CONFIG);
 
   const missing = Engine.getMissingFeatures({ threads: GODOT_THREADS_ENABLED });
   if (missing.length !== 0) {
-    fail('Falta ao browser o que o Godot precisa para correr na Web:\n' + missing.join('\n')
-      + '\nExperimenta um Chrome, Edge ou Firefox recentes.');
+    fail(T.falta + '\n' + missing.join('\n') + '\n' + T.experimenta);
     return;
   }
-  // Sem rato nem teclado provável: avisa, e deixa arrancar se a pessoa quiser.
+  // Sem rato nem teclado provavel: avisa, e deixa arrancar se a pessoa quiser.
   const soToque = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (soToque) {
     setMode('touch');

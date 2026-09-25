@@ -88,7 +88,8 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-28](GB-28.md) | O idioma escolhe-se na pausa | GB-27 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
-| [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | por fazer — falta ligar o Pages |
+| [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | feito |
+| [PUB-02](PUB-02.md) | O site passa a ser a página do jogo | PUB-01 | feito |
 
 ## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
 

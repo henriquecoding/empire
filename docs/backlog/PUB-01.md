@@ -13,12 +13,10 @@ Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o
           dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024,
           que substitui a 0022). Cada PR tem a sua pré-visualização.
-Falta     APONTAR A PRODUÇÃO À MAIN. A Vercel importou o projeto com o ramo por omissão do GitHub,
-          que não é a main. Na Vercel: Settings > Environments > Production > Branch Tracking; ou no
-          GitHub: Settings > General > Default branch. A API da Vercel não o muda de fora.
 Fora      Releases com os binários de Linux e Windows — é outra decisão, para quando houver versões
           a nomear. Domínio próprio. Telemetria: o §32 é "medir sem espiar" e isto não mede nada.
-Estado    parcial — o site constrói-se e publica-se na Vercel (ADR 0024); falta a produção seguir a main
+Estado    feito — a produção segue a main: medido a 25/09/2026, o /versao.json de
+          empire-phi-eight.vercel.app diz ramo main, ambiente production (tools/web/fumo.mjs)
 Horas     2
 ```
 
