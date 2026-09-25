@@ -177,3 +177,59 @@ func test_as_colunas_saem_do_proprio_sistema() -> void:
 	assert_array(nomes).contains(["ids", "data_ids", "xs", "healths", "carried_coins"])
 	assert_bool(nomes.has("_por_id")).is_false()
 	assert_int(nomes.size()).is_equal(unidades.to_dict().size())
+
+
+func test_o_amargueiro_e_a_serra_a_meio_atravessam_o_ficheiro() -> void:
+	# §74, §84: as arvores sao estado autoritativo e nao se derivam do segmento.
+	# A serra e um slot do BuildSystem que o segmento NAO autora — por isso volta
+	# pelo AmargueiroSystem, depois das obras, e nao pelo BuildSystem.
+	_jogar_ate_ao_dia(2)
+	var bosque := SimLoop.night.amargueiros
+	var x := SimLoop.core_x + SimLoop.world_width * 0.4
+	var i := bosque.plant(x, int(Band.Kind.SURFACE), 2, 1, "TITLE_FIRST_WALL")
+	bosque.nights[i] = 1
+	var vaga := SimLoop.builds.post(bosque.saw(i))
+	bosque.slot_ids[i] = vaga.id
+	vaga.paid = 2
+	bosque.bitter_wood = 3
+	SaveService.save(SLOT, SimLoop.state, RngService.snapshot(), SimLoop.world())
+	SimLoop.stop()
+
+	SimLoop.resume(SaveService.restore(SLOT), SaveService.restore_rng(SLOT))
+	Greybox.region()
+	SimLoop.load_world(SaveService.restore_world(SLOT))
+
+	var lido := SimLoop.night.amargueiros
+	assert_int(lido.count()).is_equal(bosque.count())  # e o velho do §83 tambem
+	var k := Array(lido.xs).find(x)
+	assert_int(k).is_equal(i)
+	assert_int(lido.named()).is_equal(1)
+	assert_int(lido.bitter_wood).is_equal(3)
+	var s := SimLoop.builds.index_of(lido.slot_ids[k])
+	assert_int(s).is_not_equal(BuildSystem.NENHUM)
+	assert_str(String(SimLoop.builds.slots[s].kind)).is_equal(String(AmargueiroSystem.CORTE))
+	assert_int(SimLoop.builds.slots[s].paid).is_equal(2)
+
+
+func test_a_divida_as_recusas_e_o_prato_no_chao_atravessam_o_ficheiro() -> void:
+	# §75, §84: debt_lantern e refusals_by_day sao estado autoritativo, e uma
+	# oferta a meio tambem — gravar com o prato no chao e voltar com ele la.
+	_jogar_ate_ao_dia(2)
+	var voz := SimLoop.night.voice
+	voz.debt.incur(7)
+	voz.debt.refuse(1)
+	voz.offers.open(Registry.entry(&"rot/offers", &"the_lame"), SimLoop.core_x, 1)
+	voz.tender.dusk(SimLoop.core_x + 500.0)
+	SaveService.save(SLOT, SimLoop.state, RngService.snapshot(), SimLoop.world())
+	SimLoop.stop()
+
+	SimLoop.resume(SaveService.restore(SLOT), SaveService.restore_rng(SLOT))
+	Greybox.region()
+	SimLoop.load_world(SaveService.restore_world(SLOT))
+
+	var lida := SimLoop.night.voice
+	assert_int(lida.debt.debt).is_equal(7)
+	assert_int(lida.debt.refusals(2)).is_equal(1)
+	assert_int(lida.offers.phase).is_equal(OfferSystem.Phase.OPEN)
+	assert_float(lida.offers.plate_x).is_equal(SimLoop.core_x)
+	assert_bool(lida.tender.active).is_true()

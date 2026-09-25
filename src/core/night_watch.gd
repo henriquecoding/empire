@@ -5,6 +5,11 @@
 # guarda a ORDEM dos onze passos (ADR 0020) e chama isto uma vez; a mancha nasce,
 # anda, invoca e recua sem que a lista de passos cresca com tres funcoes.
 #
+# E e tambem o que a noite deixa: os Amargueiros (§74) nascem na alvorada, pesam
+# no crepusculo seguinte e, quando viram Marco, abrandam a mancha — tres pontas
+# do mesmo ciclo, e por isso vivem aqui e nao num passo novo do §43. A voz dela
+# — a Oferta e a Divida da Candeia (§75) — e o OfferWatch, que isto chama.
+#
 # A ponte que a pureza obriga esta toda aqui: o intervalo entre invocacoes vem
 # sorteado do fluxo `rot`, o lado por onde ela chega tambem, e os CreatureData
 # vem do Registry — tres coisas que a simulacao nao pode tocar (§42, §70).
@@ -14,30 +19,30 @@ extends RefCounted
 const TABELA_CRIATURAS := &"creatures"
 
 var rot: RotSystem
-
-## Quem ficou no campo (§74). Vive aqui porque e a noite que o le e a alvorada
-## que o escreve: a massa ao crepusculo, a raiz ao amanhecer.
-var trees: AmargueiroSystem
-
-## A voz da mancha e a Divida que ela sobe (§75). A ponte com o resto do jogo e
-## o OfferDesk.
-var offers: OfferSystem
-
-## Os nomes (§76). A alvorada e deles tambem: quem cai com nome pesa a dobrar
-## como arvore, e quem cumpriu um feito e nomeado.
-var names: NameSystem
-
-## A Colheita (§78): anda na alvorada, e os marcos dos povos que ficaste pesam
-## na noite. Sem conquista ainda nao comeca nenhuma (Q-090).
+var amargueiros: AmargueiroSystem
+var voice: OfferWatch
+## Os nomes (§76): ganham-se na alvorada, e a noite e onde se fazem os feitos.
+var names: TitleSystem
+## A Colheita (§78): conta dias a alvorada, e os marcos de quem ficou pesam.
 var harvest: HarvestSystem
 
+var _tropas: UnitSystem
+var _obras: BuildSystem
+var _postos: JobBoard
 
-func _init() -> void:
+
+## As tropas, as obras e as moedas sao as do SimLoop, e as mesmas durante o jogo
+## inteiro: um corpo sai das colunas na alvorada, uma serra entra no
+## BuildSystem (§55), e o preco de uma oferta cai no prato (§75).
+func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: JobBoard) -> void:
 	rot = SimFactory.rot()
-	trees = SimFactory.amargueiros()
-	offers = SimFactory.offers()
-	names = SimFactory.names()
-	harvest = SimFactory.harvest()
+	amargueiros = SimFactory.amargueiros()
+	voice = OfferWatch.new(moedas, tropas, obras)
+	names = SimFactory.titles()
+	harvest = HarvestSystem.new(SimFactory.curve())
+	_tropas = tropas
+	_obras = obras
+	_postos = postos
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -47,16 +52,59 @@ func tick(
 ) -> void:
 	if mudou:
 		_virar(fase, estado, bichos, mundo)
-	if not rot.active():
+	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
+	voice.titles = names.by_unit()
+	voice.tick(delta, rot, estado.day, mundo, amargueiros)
+	if not rot.active() or voice.paused(delta):
 		return
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
 		rot.arm(RngService.float_range(&"rot", janela.x, janela.y))
-	# O terreno consagrado que ja existe sao os Marcos (§74). Fogueiras e barris
-	# sao da XIII-04 e ainda nao estao aqui.
-	for pedido in rot.tick(delta, trees.markers()):
+	# O terreno consagrado de hoje sao os Marcos (§74). Fogueiras e barris sao
+	# luz do §10 e nao consagram nada; o altar consagrado e da Fase 6.
+	for pedido in rot.tick(delta, amargueiros.consecrated()):
 		_invocar(pedido, estado, bichos, mundo.x)
+	var meia := rot.state.width * BuildSystem.METADE
+	names.stain(_tropas, rot.position_x() - meia, rot.position_x() + meia)  # §76
 	EventBus.queue(&"rot_moved", [rot.position_x(), rot.state.width])
+
+
+## Passo 6: o que o combate devolveu passa pelo registo dos feitos (§76) — quem
+## abateu o que — e segue tal e qual para o EventRelay.
+func feats(eventos: Array[Dictionary]) -> Array[Dictionary]:
+	return names.observe(eventos)
+
+
+## O Verbo 1 em cima de uma arvore de pe, com uma Semente Real no imperio:
+## consagra-a em vez de largar a moeda, e a moeda volta ao saco de quem a largou
+## (§74, Q-095). Sem Semente, ou fora de uma base, cai a moeda.
+func consecrate_at(estado: GameState, largada: Dictionary, quem: int) -> bool:
+	var custo := (
+		(Registry.entry(&"rot/amargueiros", AmargueiroSystem.CONSAGRAR) as AmargueiroData)
+		. cost_seeds
+	)
+	if estado.royal_seeds < custo:
+		return false
+	var x: float = largada[EventRelay.ONDE]
+	var meia := SimFactory.rot_profile().amargueiro_base_px * BuildSystem.METADE
+	for i in amargueiros.count():
+		var aqui := amargueiros.bands[i] == int(largada[EventRelay.FAIXA])
+		if not aqui or absf(amargueiros.xs[i] - x) > meia:
+			continue
+		if not amargueiros.consecrate(i, _obras):
+			return false
+		estado.royal_seeds -= custo
+		var u := _tropas.index_of(quem)
+		if u != UnitSystem.NENHUM:
+			_tropas.carried_coins[u] += int(largada[EventRelay.QUANTO])
+		return true
+	return false
+
+
+## Qual dos tres finais, se a campanha acabasse agora (§79, ADR 0018).
+func epilogue() -> StringName:
+	var perfil := SimFactory.rot_profile()
+	return Epilogue.of(voice.debt.debt, harvest.kept.size(), harvest.released.size(), perfil)
 
 
 ## Os intervalos em x por onde ela ja passou. O §49 le isto para saber que um
@@ -68,78 +116,40 @@ func trail() -> Array[Vector2]:
 	return [Vector2(de, maxf(rot.state.trail_from, rot.state.trail_to))]
 
 
-## A Alvorada do campo (§74, §76): os nomeados que cairam ficam de luto, quem
-## morreu desde ontem cria raiz ou desaparece, e quem cumpriu um feito ganha nome.
-## Corre no passo 5 e nao no 2, porque precisa das tropas, das muralhas e dos postos.
-func dawn(
-	estado: GameState, unidades: UnitSystem, obras: BuildSystem, core_x: float, postos: JobBoard
-) -> Array[Dictionary]:
-	var caidos := names.bury(estado, unidades)
-	trees.at_dawn(estado, unidades, obras, core_x, caidos)
-	harvest.at_dawn()
-	return names.at_dawn(estado, unidades, postos)
-
-
-## Qual dos tres finais, se a campanha acabasse agora (§79, ADR 0018).
-func epilogue() -> StringName:
-	var perfil := SimFactory.rot_profile()
-	return Epilogue.of(offers.debt.debt, harvest.kept(), harvest.released(), perfil)
-
-
-## A noite saltada ("O que brilha, e nada mais", §75): a mancha recua ja, e o
-## que ela invocou dissolve-se como ao amanhecer.
-func skip(estado: GameState, bichos: CreatureSystem) -> void:
-	rot.retreat()
-	EventBus.queue(&"rot_retreated", [estado.day])
-	for creature_id in bichos.dissolve():
-		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
-
-
-## O Verbo 1 em cima de uma arvore, com uma Semente Real no imperio: consagra-a
-## em vez de largar a moeda, e a moeda volta ao saco de quem a largou (§74). E
-## a Semente e nao a moeda que decide — "a moeda que largas e que decide".
-func consecrate_at(estado: GameState, largada: Dictionary, unidades: UnitSystem, quem: int) -> bool:
-	var consagrar := (
-		Registry.entry(&"rot/amargueiros", AmargueiroSystem.CONSAGRAR) as AmargueiroData
-	)
-	if estado.royal_seeds < consagrar.cost_seeds:
-		return false
-	var arvore := trees.tree_at(largada[EventRelay.ONDE], int(largada[EventRelay.FAIXA]))
-	if arvore == AmargueiroSystem.NENHUM or not trees.consecrate(arvore):
-		return false
-	estado.royal_seeds -= consagrar.cost_seeds
-	var i := unidades.index_of(quem)
-	if i != UnitSystem.NENHUM:
-		unidades.carried_coins[i] += int(largada[EventRelay.QUANTO])
-	return true
-
-
 func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2) -> void:
+	if fase == GameClock.Phase.DAWN:
+		# O dia do relogio e nao o do GameState: esse so e espelhado no fim do tick.
+		# Os nomes leem-se ANTES de os corpos se levantarem: uma arvore nomeada e a
+		# cara de alguem que tinha titulo (§74, §76), e o titulo so depois vai de luto.
+		var dia := ClockService.clock.day
+		amargueiros.at_dawn(dia, _tropas, _obras, mundo.x, mundo.y, names.by_unit())
+		names.at_dawn(dia, _tropas, _postos)
+		harvest.at_dawn()
 	if fase == GameClock.Phase.DUSK:
+		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
+		# O marco de um povo que ficou cria raiz e nao se corta (§78): e mais uma.
+		rot.amargueiros = amargueiros.anonymous() + harvest.landmarks()
+		rot.named_amargueiros = amargueiros.named()
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso
 		# sao duas NightWatch — e o F1-09 que as poe.
 		var lado := 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
-		rot.amargueiros = trees.standing(false)
-		rot.named_amargueiros = trees.standing(true)
-		rot.refusals = offers.refusals(estado.day)
-		rot.landmarks = harvest.landmark_mass()
+		if not voice.before_spawn(rot, estado.day):
+			return  # §75: a decima segunda fechou o ciclo
 		rot.spawn(estado.day, lado, mundo.y)
-		offers.night_time = 0.0
+		voice.after_spawn(rot)
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
-		_da_divida(estado, bichos, mundo.x)
 		return
-	if fase == GameClock.Phase.DAWN and rot.active():
-		skip(estado, bichos)
-
-
-## O que nasce da Divida e nao da massa: o Zelador aos 6 (§75). Anda atras da
-## mancha, para o nucleo, e nao bate em ninguem.
-func _da_divida(estado: GameState, bichos: CreatureSystem, nucleo: float) -> void:
-	for recurso in Registry.entries(TABELA_CRIATURAS):
-		var dados := recurso as CreatureData
-		if dados.from_debt > 0 and offers.debt.debt >= dados.from_debt:
-			bichos.spawn(estado, dados, rot.position_x(), nucleo)
+	if fase != GameClock.Phase.DAWN:
+		return
+	# O que ela invocou dissolve-se sempre: uma oferta pode te-la recolhido antes
+	# da alvorada (§75, "a mancha contorna"), e o que ficou no campo nao fica.
+	voice.dawn()
+	if rot.active():
+		rot.retreat()
+		EventBus.queue(&"rot_retreated", [estado.day])
+	for creature_id in bichos.dissolve():
+		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 
 
 func _invocar(

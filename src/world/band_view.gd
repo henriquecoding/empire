@@ -32,6 +32,8 @@ var _luz := Lighting.new()
 ## de um bicho — e por isso conta com o frame e nao com o tick (§45: o que esta
 ## num no e derivado e descartavel).
 var _visual_time := 0.0
+## O pequeno bounce do §24 (GB-19), criado a pedido: precisa da gravidade do arco.
+var _salto: CoinBounce
 
 
 func _ready() -> void:
@@ -53,12 +55,23 @@ func _process(delta: float) -> void:
 	var relogio := ClockService.clock
 	_luz.set_phase(_relogio, int(relogio.current_phase()), relogio.phase_progress())
 	var rot := SimLoop.night.rot if SimLoop.state != null else null
-	if rot != null and rot.active():
-		var raio := WorldLight.radius(_podre, SimLoop.state.day)
+	var raio := _raio_nesta_faixa(rot)
+	if raio > 0.0:
 		_luz.set_lamp(rot.position_x(), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
 	else:
 		_luz.clear_lamp()
 	queue_redraw()
+
+
+## A candeia e o mostrador da Divida (§74, §75): na faixa da mancha e o raio do
+## dia; nas outras so chega o que a Divida ja deixou chegar.
+func _raio_nesta_faixa(rot: RotSystem) -> float:
+	if rot == null or not rot.active():
+		return 0.0
+	var raio := WorldLight.radius(_podre, SimLoop.state.day)
+	if band == Band.Kind.SURFACE:
+		return raio
+	return raio * WorldLight.debt_reach(SimLoop.night.voice.debt.tier())
 
 
 func _draw() -> void:
@@ -67,18 +80,18 @@ func _draw() -> void:
 	if band == Band.Kind.SURFACE:
 		_passagens()
 		_podridao()
+		OfferView.draw_on(self, _luz)  # §75: o prato, a frase e o Zelador
 	_fogueiras()
 	SiteView.draw_on(self, band, _luz)
-	BuildView.draw_on(self, band, _edificios, _luz)
-	AmargueiroView.draw_on(self, band, _luz)
+	BuildView.draw_on(self, band, _edificios, _luz, _visual_time)
+	AmargueiroView.draw_on(self, band, _luz)  # §74: o que a noite deixou
 	_moedas()
 	_criaturas()
 	_tropa()
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
-	if band == Band.Kind.SURFACE:
-		OfferView.draw_on(self, _luz)
+	PassageCue.draw_on(self, band, _visual_time)
 
 
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
@@ -114,17 +127,24 @@ func _fogueiras() -> void:
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
 ## milhares de vezes por partida: e a animacao mais importante do jogo." O arco
-## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos.
+## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos, e o salto
+## ao pousar (GB-19) e so do ecra — a moeda fica onde a simulacao a pos.
 func _moedas() -> void:
 	var moedas := SimLoop.coins
 	var apice := moedas.apex_px()
+	if _salto == null:
+		_salto = CoinBounce.new(SimFactory.curve().coin_gravity_px_s2)
+	_salto.forget_except(moedas.ids)
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
-		Shadow.drop(self, moedas.xs[i], int(band), WorldPalette.MOEDA_R, moedas.heights[i], apice)
-		var y := WorldPalette.ground_of(int(band)) - moedas.heights[i] - WorldPalette.MOEDA_R
-		var cor := _luz.body(WorldPalette.MOEDA, moedas.xs[i])
-		draw_circle(Vector2(moedas.xs[i], y), WorldPalette.MOEDA_R, cor)
+		var onde := Smoothing.coin(moedas.ids[i], moedas.xs[i], moedas.heights[i])
+		_salto.observe(moedas.ids[i], onde.y, _visual_time)
+		onde.y += _salto.offset(moedas.ids[i], _visual_time)
+		Shadow.drop(self, onde.x, int(band), WorldPalette.MOEDA_R, onde.y, apice)
+		var y := WorldPalette.ground_of(int(band)) - onde.y - WorldPalette.MOEDA_R
+		var cor := _luz.body(WorldPalette.MOEDA, onde.x)
+		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
 
 
 ## §74, a frase que faz da candeia mecanica e nao decoracao: "dentro do raio
@@ -144,9 +164,10 @@ func _criaturas() -> void:
 		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
 		var forma := Silhouette.of_creature(dados)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(forma, bichos.xs[i], int(band), alto)
-		var aceso := WorldLight.lit(bichos.xs[i], candeia.x, candeia.y)
-		var corpo := _luz.body(WorldPalette.BICHO, bichos.xs[i])
+		var x := Smoothing.x_of(Smoothing.Group.CREATURES, bichos.ids[i], bichos.xs[i])
+		var caixa := Silhouette.body_box(forma, x, int(band), alto)
+		var aceso := WorldLight.lit(x, candeia.x, candeia.y)
+		var corpo := _luz.body(WorldPalette.BICHO, x)
 		var cor := WorldLight.reveal(corpo, aceso, chao)
 		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
 		CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
@@ -182,10 +203,11 @@ func _tropa() -> void:
 		if dados == null:
 			continue
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(band), alto)
-		var cor := _luz.body(WorldPalette.unit_color(unidades, i), unidades.xs[i])
+		var x := Smoothing.x_of(Smoothing.Group.UNITS, unidades.ids[i], unidades.xs[i])
+		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, x, int(band), alto)
+		var cor := _luz.body(WorldPalette.unit_color(unidades, i), x)
 		ActorArt.draw_unit(self, caixa, dados, unidades, i, cor, _visual_time)
-		NameView.draw_on(self, caixa, unidades.ids[i])
+		TitleView.draw_on(self, caixa, unidades.ids[i], _luz)  # §76: a fita
 		_saco(caixa, unidades, i)
 		if unidades.alive(i):
 			Gauge.health(

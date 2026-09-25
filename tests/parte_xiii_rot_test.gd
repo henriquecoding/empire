@@ -74,25 +74,44 @@ func test_d04_a_penalizacao_por_recusa_nunca_passa_de_40() -> void:
 
 
 func test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas() -> void:
-	# A voz e uma pessoa (§75): a segunda mancha do dia 12 fica calada.
-	assert_int(_rot().offers_per_night).is_equal(1)
-	var s := SimFactory.offers()
-	var o: OfferData = load("res://data/rot/offers/the_lame.tres")
-	assert_bool(s.can_speak(12)).is_true()
-	s.open(o, 12, 0.0, 1.0)
-	s.settle(false, 12)
-	assert_bool(s.can_speak(12)).is_false()
+	# A partir do dia 12 ha duas manchas (§05). As duas perguntam a mesma noite, a
+	# cada tick, uma de cada lado do muro: so uma fala, e so uma vez.
+	var r := _rot()
+	assert_int(r.offers_per_night).is_equal(1)
+	var voz := SimFactory.offers()
+	voz.dusk()
+	var muro := 1000.0
+	var passo := 1.0 / 30.0
+	var falou := 0
+	for _t in int(r.offer_window_after_dusk.y * 2.0 / passo):
+		for mancha in [muro + 10.0, muro - 10.0]:
+			if voz.due(passo, mancha, muro):
+				falou += 1
+				voz.open(load("res://data/rot/offers/the_lame.tres"), mancha, 1)
+	assert_int(falou).is_equal(r.offers_per_night)
 
 
 func test_d06_a_divida_nunca_desce() -> void:
-	# O caminho, e nao so os dados: nenhuma sequencia de somas a faz descer.
-	var d := DebtLedger.new(_rot())
-	var antes := 0
-	for delta in [1, -5, 0, 3, -20, 2, 100, -1]:
-		d.add(delta)
-		assert_int(d.debt).is_greater_equal(antes)
-		antes = d.debt
-	assert_int(d.debt).is_equal(_rot().debt_max)
+	# Todos os caminhos do DebtLedger, por uma ordem qualquer: nenhum desce a
+	# Divida. Nao ha subtracao, e isto e o que o prova sem ler o codigo.
+	var r := _rot()
+	assert_int(r.debt_max).is_equal(20)
+	var livro := DebtLedger.new(r)
+	var antes := livro.debt
+	var caminhos := [
+		func() -> void: livro.incur(3),
+		func() -> void: livro.refuse(4),
+		func() -> void: livro.accept(5),
+		func() -> void: livro.remember(&"all_that_shines"),
+		func() -> void: livro.from_dict(livro.to_dict()),
+		func() -> void: livro.incur(0),
+	]
+	for volta in 8:
+		for c: Callable in caminhos:
+			c.call()
+			assert_int(livro.debt).is_greater_equal(antes)
+			antes = livro.debt
+	assert_int(livro.debt).is_equal(r.debt_max)
 
 
 func test_d06_dados_nenhuma_oferta_tem_divida_negativa() -> void:

@@ -25,21 +25,34 @@ const RUINA := 0.30
 
 const MEIA := 0.5
 
+## §25, minuto 3:30: "primeira estacaria construivel — silhueta fantasma a
+## piscar". Um pulso lento, que nunca apaga: o convite que desaparece metade do
+## tempo e um convite que se perde metade do tempo (GB-23). Greybox.
+const PISCAR := {"rad_s": 3.0, "minimo": 0.35}
+
 
 ## Todas as obras desta faixa. `edificios` e a tabela de BuildingData por id,
 ## montada uma vez por quem desenha.
 static func draw_on(
-	canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary, luz: Lighting
+	canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary, luz: Lighting, tempo: float = 0.0
 ) -> void:
+	var pulso := blink(tempo)
 	for vaga in SimLoop.builds.slots:
-		if vaga.band != faixa:
+		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
+		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
-		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, vaga.x)
+		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso)
+
+
+## O alfa do convite neste instante do ecra: entre PISCAR.minimo e 1.
+static func blink(tempo: float) -> float:
+	return lerpf(PISCAR.minimo, 1.0, MEIA + MEIA * sin(tempo * PISCAR.rad_s))
 
 
 static func _obra(
-	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, x: float
+	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, pulso: float
 ) -> void:
+	var x := vaga.x
 	var caixa := drawn_box(vaga, forma)
 	if vaga.standing():
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.OBRA, x))
@@ -53,7 +66,7 @@ static func _obra(
 		# "a obra existe quando uma moeda cai", e a partir dai ve-se o que sera.
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.ANDAIME, x))
 		return
-	_convite(canvas, vaga, forma, luz, caixa)
+	_convite(canvas, vaga, forma, luz, caixa, pulso)
 
 
 ## A caixa que esta obra ocupa no ecra AGORA, no estado em que esta. E publica
@@ -83,11 +96,17 @@ static func drawn_shape(vaga: BuildSlot, forma: Silhouette.Form) -> PackedVector
 ## §25: "a silhueta e o convite". Contorno, na caixa do topo da escada — um
 ## sitio de muro mostra o Bastiao que pode vir a ser, e nao a estacaria.
 static func _convite(
-	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, fantasma: Rect2
+	canvas: CanvasItem,
+	vaga: BuildSlot,
+	forma: Silhouette.Form,
+	luz: Lighting,
+	fantasma: Rect2,
+	pulso: float
 ) -> void:
 	var pontos := Outline.shape(forma, fantasma, _dentes(vaga))
 	pontos.append(pontos[0])
 	var cor := luz.body(WorldPalette.VAZIO, vaga.x)
+	cor.a *= pulso
 	canvas.draw_polyline(pontos, cor, WorldPalette.CONTORNO)
 	Gauge.paid(canvas, fantasma, vaga)
 

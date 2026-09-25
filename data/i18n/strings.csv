@@ -395,10 +395,44 @@ OPT_DAY_LENGTH,Duração do dia,Day Length,acessibilidade: 240–540 s (§26),24
 OPT_SCREEN_SHAKE,Tremor de ecrã,Screen Shake,acessibilidade,24,
 OPT_FLASHES,Clarões,Flashes,acessibilidade: fotossensibilidade,24,
 OPT_COLORBLIND,Modo para daltonismo,Colorblind Mode,acessibilidade,28,
+OPT_COLORBLIND_OFF,Desligado,Off,modo para daltonismo (§26),16,GB-26
+OPT_PROTANOPIA,Protanopia,Protanopia,modo para daltonismo (§26): vermelho,16,GB-26
+OPT_DEUTERANOPIA,Deuteranopia,Deuteranopia,modo para daltonismo (§26): verde,16,GB-26
+OPT_TRITANOPIA,Tritanopia,Tritanopia,modo para daltonismo (§26): azul,16,GB-26
 OPT_CONTRAST,Contraste,Contrast,acessibilidade,24,
 OPT_CAPTIONS,Legendas de sons,Sound Captions,acessibilidade (§26),24,
 OPT_TEXT_SIZE,Tamanho do texto,Text Size,acessibilidade,24,
 OPT_REMAP,Remapear comandos,Remap Controls,controlos,28,
+GAME_CODENAME,EMPIRE,EMPIRE,título no HUD do greybox,16,Codinome (NB-01): substitui-se quando houver nome.
+PHASE_DAWN,Alvorada,Dawn,fase do dia (§05),12,GB-27
+PHASE_MORNING,Manhã,Morning,fase do dia (§05),12,GB-27
+PHASE_NOON,Meio-dia,Noon,fase do dia (§05),12,GB-27
+PHASE_AFTERNOON,Tarde,Afternoon,fase do dia (§05),12,GB-27
+PHASE_DUSK,Crepúsculo,Dusk,fase do dia (§05),12,GB-27
+PHASE_NIGHT,Noite,Night,fase do dia (§05),12,GB-27
+HUD_CLOCK,DIA {day} · {phase} · {pct}%,DAY {day} · {phase} · {pct}%,"HUD do greybox: dia, fase e progresso",40,GB-27. Marcadores com nome (§27): a ordem pode mudar por idioma.
+HUD_RESOURCES,SACO {bag}/{cap}   ·   TROPAS {troops}   ·   NÚCLEO {core}%,PURSE {bag}/{cap}   ·   TROOPS {troops}   ·   KEEP {core}%,"HUD do greybox: saco, tropas e vida do núcleo",64,GB-27
+HUD_GOAL_DAY,RECOLHE MOEDAS\nprepara a fronteira,GATHER COINS\nready the border,HUD do greybox: objectivo de dia,40,GB-27. Duas linhas.
+HUD_GOAL_NIGHT,A PODRIDÃO AVANÇA\nprotege as muralhas,THE ROT ADVANCES\nguard the walls,HUD do greybox: objectivo de noite,40,GB-27. Duas linhas.
+TOAST_COIN,+{n} moeda,+{n} coin,aviso do HUD: moeda apanhada,16,GB-27
+TOAST_BUILT,OBRA CONCLUÍDA,BUILT,aviso do HUD (build_completed),24,GB-27
+TOAST_MARKED,ALVO MARCADO,TARGET MARKED,aviso do HUD (target_marked),24,GB-27
+TOAST_PASSAGE,PASSAGEM USADA,PASSAGE USED,aviso do HUD (passage_used),24,GB-27
+TOAST_BREACH,MURALHA ROMPIDA,WALL BREACHED,aviso do HUD (wall_breached),24,GB-27
+TOAST_RESUMED,JOGO RETOMADO,RESUMED,aviso do HUD (game_paused falso),24,GB-27
+LANG_PT_PT,Português,Português,"nome do idioma, no próprio idioma (§27)",16,GB-28. Endónimo: não se traduz.
+LANG_EN,English,English,"nome do idioma, no próprio idioma (§27)",16,GB-28. Endónimo: não se traduz.
+HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O glifo da tecla vem antes e muda com o dispositivo (§26).
+HINT_DROP,largar (manter: em contínuo),drop (hold: continuous),rodapé de comandos (§24): Verbo 1,32,GB-15
+HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,"GB-15. Hoje o Verbo 2 só entra em passagens (Q-066)."
+HINT_MARK,alvo,target,rodapé de comandos (§24): marcar alvo,16,GB-15
+HINT_WHEEL,estado,status,rodapé de comandos (§24): a roda do rei,16,"GB-15. Abre o painel de estado enquanto a roda não existe (Q-067)."
+HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
+KEY_SPACE,ESPAÇO,SPACE,nome de tecla no rodapé de comandos,16,GB-15
+KEY_MOUSE_RIGHT,BOTÃO DIREITO,RIGHT CLICK,nome de botão do rato no rodapé de comandos,16,GB-15
+PAD_CROSS,CRUZ,CROSS,botão ✕ de um comando PlayStation (§24),12,"GB-15. A fonte por omissão não tem ✕ ▢ △, e no browser não há fonte de sistema que os traga — por isso o nome, até haver o atlas de ícones do §26."
+PAD_SQUARE,QUADRADO,SQUARE,botão ▢ de um comando PlayStation (§24),12,GB-15
+PAD_TRIANGLE,TRIÂNGULO,TRIANGLE,botão △ de um comando PlayStation (§24),12,GB-15
 OPT_TELEMETRY,Partilhar dados anónimos,Share Anonymous Data,"telemetria, desligada por omissão (§32)",32,
 UI_TELEMETRY_PROMPT,"Queres partilhar dados anónimos de jogo para ajudar a afinar o Empire? Sem nome, sem IP. Podes mudar isto nas opções.","Share anonymous gameplay data to help tune Empire? No name, no IP. You can change this in Options.",primeiro arranque (§32),160,'Empire' é codinome — substituir quando houver nome (Bíblia de nomes).
 UI_YES,Sim,Yes,confirmação,8,

@@ -15,12 +15,12 @@ Horas     8 (3 + 4 arte + 1 escrita)
 ## Notas
 
 - §84, risco 5: o Amargueiro velho do minuto 0:00 existe para que a pergunta 'porque é que aquela árvore tem cara?' chegue depois da resposta.
-- **O minuto 0:00** tem o Amargueiro velho e a candeia (F1-17). **A primeira oferta** é sempre *"Nada.
-  Só quero ver."* — a mais barata, de propósito —, com o alguidar e o preço de uma moeda; paga, acende a
-  bifurcação. A árvore de uma tropa tua leva o chapéu na casca (13:10). Teste: `tests/abertura_test.gd`.
-- **Fechado pela ADR 0023:** a primeira oferta caía ao minuto ~11 (dia 2), porque o `offers.csv` tinha o
-  "Dia 2+" da §75. O §83 manda: `min_day 3`, e o `abertura_test` exige a primeira oferta no crepúsculo
-  do dia 3. O resto do ticket é arte e escrita.
+- **0:00** — o Amargueiro velho está lá (GB-01); a candeia vem com a mancha ao crepúsculo, desde o F1-17.
+- **17:00** — a primeira oferta da campanha é sempre *"Nada. Só quero ver."*: uma moeda no prato, +1 de Dívida, e um Capítulo por revelar guardado para o XIII-07 (o "sítio distante que se acende" do minuto 18:00). A noite corre igual nos dois casos, com teste.
+- **Divergência (Q-104):** o `offers.csv` dá-lhe dia 2+ (§75) e o §83 põe-na no crepúsculo do dia 3; com os dados como estão, fala na noite 2.
+- O minuto 13:10 (o vagabundo do 0:20 a levantar-se como árvore) já acontece pelos sistemas do XIII-03 e XIII-05; o 20:00 (o primeiro nome) pelo XIII-05.
+- **Fechado pela ADR 0023:** a primeira oferta caía na noite 2, porque o `offers.csv` tinha o "Dia 2+" da
+  §75. O §83 manda: `min_day 3`, e o `abertura_test` prova que a noite 2 fica calada.
 
 ---
 

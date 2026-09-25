@@ -37,6 +37,9 @@ extends Resource
 ## arrastar os mortos para dentro (§74).
 @export var amargueiro_roots_outside_walls: bool = true
 @export var amargueiro_roots_underground: bool = true
+## A base do tronco, em px: onde uma moeda cai NELE e onde tem de estar quem o
+## corta — a meia largura do §55, como em qualquer obra. Proposta (Q-094).
+@export var amargueiro_base_px: float = 0.0
 
 @export_group("v6 · a candeia")
 ## Raio da luz: base + por_dia*dia, com teto (§74).
@@ -58,6 +61,9 @@ extends Resource
 @export var offer_window_after_dusk: Vector2 = Vector2.ZERO
 ## A frase fica este tempo no mundo; passado isso, o prato afunda-se (§75).
 @export var offer_seconds: float = 0.0
+## O prato de oferenda, "do tamanho de um slot de construcao" (§75). Proposta:
+## o canteiro (Q-098). So conta o que cai dentro dele.
+@export var offer_plate_px: float = 0.0
 ## Uma por noite, mesmo com duas manchas a partir do dia 12 (§75, D-05).
 @export var offers_per_night: int = 1
 ## Recusar custa refusal_mass por cada recusa das ultimas refusal_window_days,

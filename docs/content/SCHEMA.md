@@ -25,6 +25,7 @@ Script `src/sim/data/clock_data.gd` · layout `rows` · 1 linha(s) · §69: o pr
 | `phase_tint_sat` | PackedFloat32Array | v6 · a cor de cada fase (§80, ADR 0011) |  |
 | `phase_tint_val` | PackedFloat32Array | v6 · a cor de cada fase (§80, ADR 0011) |  |
 | `night_value_floor` | float | v6 · a cor de cada fase (§80, ADR 0011) |  |
+| `dawn_sweep_px_s` | float | §24 · o amanhecer |  |
 
 ## `units.csv` → `data/units/{id}.tres`
 
@@ -405,6 +406,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `amargueiro_nights_standing` | int | v6 · a massa escreve-se de dia |  |
 | `amargueiro_roots_outside_walls` | bool | v6 · a massa escreve-se de dia |  |
 | `amargueiro_roots_underground` | bool | v6 · a massa escreve-se de dia |  |
+| `amargueiro_base_px` | float | v6 · a massa escreve-se de dia |  |
 | `lantern_radius_base` | float | v6 · a candeia |  |
 | `lantern_radius_per_day` | float | v6 · a candeia |  |
 | `lantern_radius_max` | float | v6 · a candeia |  |
@@ -415,6 +417,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
 | `offer_seconds` | float | v6 · a oferta |  |
+| `offer_plate_px` | float | v6 · a oferta |  |
 | `offers_per_night` | int | v6 · a oferta |  |
 | `refusal_mass` | float | v6 · a oferta |  |
 | `refusal_window_days` | int | v6 · a oferta |  |
@@ -672,4 +675,5 @@ Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24
 | `follow_seconds` | float |  |  |
 | `free_speed_px_s` | float |  |  |
 | `free_return_seconds` | float |  |  |
+| `edge_pan_px` | float |  |  |
 

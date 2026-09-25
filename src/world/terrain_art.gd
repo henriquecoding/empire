@@ -38,8 +38,8 @@ const ECRA := 1280.0
 
 ## O ceu em faixas horizontais, do topo ao horizonte. Oito chegam: com menos
 ## ve-se a banda, com mais nao se ve a diferenca.
+## O sol e a lua ja nao vivem aqui: andam com a hora e com a camara (SkyView, GB-18).
 const CEU := {"faixas": 8, "folga": 2.0}
-const SOL := {"x": 0.79, "y": 112.0, "raio": 38.0}
 
 ## Os dois perfis de montanha da §11. Como as formas do Outline, sao pares: x em
 ## CENTESIMOS da largura da regiao, y em pixeis do ecra. So o cimo esta escrito —
@@ -102,17 +102,21 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, width: float, light: C
 			_underground(canvas, largura, light)
 
 
-static func _aerial(canvas: CanvasItem, width: float, light: Color) -> void:
+## O ceu em faixas, do topo a linha do chao. Publico porque quem o pinta e o
+## SkyView, por baixo do astro: o cenario que vem a seguir tapa-o ao nascer.
+static func sky(canvas: CanvasItem, width: float, light: Color) -> void:
 	var faixa := float(Band.GROUND_LINE) / float(CEU.faixas)
 	for i in CEU.faixas:
 		var t := float(i) / float(CEU.faixas - 1)
 		var caixa := Rect2(0.0, faixa * float(i), width, faixa + CEU.folga)
-		canvas.draw_rect(caixa, _paint(SKY_TOP.lerp(SKY_BOTTOM, t), light))
-	canvas.draw_circle(Vector2(width * SOL.x, SOL.y), SOL.raio, _paint(WINDOW, light))
+		canvas.draw_rect(caixa, paint(SKY_TOP.lerp(SKY_BOTTOM, t), light))
+
+
+static func _aerial(canvas: CanvasItem, width: float, light: Color) -> void:
 	var longe := _massa(SERRA_LONGE, width, SERRA_FECHO.longe)
-	canvas.draw_colored_polygon(longe, _paint(FAR_MOUNTAIN, light))
+	canvas.draw_colored_polygon(longe, paint(FAR_MOUNTAIN, light))
 	var perto := _massa(SERRA_PERTO, width, SERRA_FECHO.perto)
-	canvas.draw_colored_polygon(perto, _paint(NEAR_MOUNTAIN, light))
+	canvas.draw_colored_polygon(perto, paint(NEAR_MOUNTAIN, light))
 	for i in ARVORES_AR.quantas:
 		var x := width * (ARVORES_AR.x + float(i) * ARVORES_AR.passo)
 		PropArt.tree(canvas, Vector2(x, ARVORES_AR.y), ARVORES_AR.escala, light)
@@ -121,24 +125,24 @@ static func _aerial(canvas: CanvasItem, width: float, light: Color) -> void:
 
 static func _surface(canvas: CanvasItem, width: float, light: Color) -> void:
 	var alto := float(Band.GROUND_LINE - Band.HORIZON)
-	canvas.draw_rect(Rect2(0.0, float(Band.HORIZON), width, alto), _paint(MEADOW, light))
+	canvas.draw_rect(Rect2(0.0, float(Band.HORIZON), width, alto), paint(MEADOW, light))
 	var colina := _massa(COLINA, width, float(Band.GROUND_LINE))
-	canvas.draw_colored_polygon(colina, _paint(FIELD, light))
+	canvas.draw_colored_polygon(colina, paint(FIELD, light))
 	_field_rows(canvas, width, light)
 	var caminho := _perfil(CAMINHO, width)
-	canvas.draw_polyline(caminho, _paint(PATH, light), CAMINHO_TRACO.largo)
+	canvas.draw_polyline(caminho, paint(PATH, light), CAMINHO_TRACO.largo)
 	var clara := PATH.lightened(CAMINHO_TRACO.clarear)
-	canvas.draw_polyline(caminho, _paint(clara, light), CAMINHO_TRACO.risco)
+	canvas.draw_polyline(caminho, paint(clara, light), CAMINHO_TRACO.risco)
 	PropArt.trees(canvas, ARVORES_CHAO, width, light)
 	PropArt.houses(canvas, CASAS_CHAO, width, light)
 	_soil(canvas, width, light)
 	var chao := float(Band.GROUND_LINE)
-	var cor := _paint(WorldPalette.LINHA, light)
+	var cor := paint(WorldPalette.LINHA, light)
 	canvas.draw_line(Vector2(0.0, chao), Vector2(width, chao), cor, WorldPalette.CONTORNO)
 
 
 static func _field_rows(canvas: CanvasItem, width: float, light: Color) -> void:
-	var cor := _paint(FIELD_LIGHT, light)
+	var cor := paint(FIELD_LIGHT, light)
 	for i in SULCO.quantos:
 		var y := SULCO.y + float(i) * SULCO.passo
 		var de := width * (SULCO_X.de + float(i % 2) * SULCO_X.salto)
@@ -152,11 +156,11 @@ static func _field_rows(canvas: CanvasItem, width: float, light: Color) -> void:
 
 static func _soil(canvas: CanvasItem, width: float, light: Color) -> void:
 	var chao := float(Band.GROUND_LINE)
-	canvas.draw_rect(Rect2(0.0, chao, width, float(Band.SOIL_CUT)), _paint(SOIL, light))
+	canvas.draw_rect(Rect2(0.0, chao, width, float(Band.SOIL_CUT)), paint(SOIL, light))
 	for i in VEIA.quantas:
 		var y := chao + VEIA.fundo + float(i) * VEIA.passo
 		var fim := Vector2(width, y + sin(float(i) * VEIA.onda) * VEIA.alto)
-		canvas.draw_line(Vector2(0.0, y), fim, _paint(SOIL_LIGHT, light), VEIA.traco)
+		canvas.draw_line(Vector2(0.0, y), fim, paint(SOIL_LIGHT, light), VEIA.traco)
 	for i in RAIZ.quantas:
 		var x := width * (RAIZ.x + float(i) * RAIZ.passo)
 		var raiz := PackedVector2Array(
@@ -166,19 +170,19 @@ static func _soil(canvas: CanvasItem, width: float, light: Color) -> void:
 				Vector2(x + RAIZ_Y.pe, RAIZ_Y.fundo),
 			]
 		)
-		canvas.draw_polyline(raiz, _paint(ROOT, light), RAIZ.traco)
+		canvas.draw_polyline(raiz, paint(ROOT, light), RAIZ.traco)
 
 
 static func _underground(canvas: CanvasItem, width: float, light: Color) -> void:
 	var top := WorldPalette.ground_of(int(Band.Kind.UNDERGROUND))
 	var fundo := float(Band.SCREEN_BOTTOM)
-	canvas.draw_rect(Rect2(0.0, top, width, fundo - top), _paint(ROCK, light))
+	canvas.draw_rect(Rect2(0.0, top, width, fundo - top), paint(ROCK, light))
 	var tecto := _massa(TECTO, width, TECTO_FECHO, top)
-	canvas.draw_colored_polygon(tecto, _paint(ROCK_LIGHT, light))
+	canvas.draw_colored_polygon(tecto, paint(ROCK_LIGHT, light))
 	var camara := Rect2(width * CAMARA.x, top + CAMARA.y, width * CAMARA.w, CAMARA.h)
-	canvas.draw_rect(camara, _paint(CHAMBER, light))
+	canvas.draw_rect(camara, paint(CHAMBER, light))
 	var verga := Vector2(camara.end.x, camara.position.y)
-	canvas.draw_line(camara.position, verga, _paint(ROOT, light), CAMARA.traco)
+	canvas.draw_line(camara.position, verga, paint(ROOT, light), CAMARA.traco)
 	for i in DENTE.quantos:
 		var x := width * (DENTE.x + float(i) * DENTE.passo)
 		var h := DENTE.alto + float(i % CICLO) * DENTE.degrau
@@ -190,16 +194,16 @@ static func _underground(canvas: CanvasItem, width: float, light: Color) -> void
 				Vector2(x + DENTE_X.pe, fundo),
 			]
 		)
-		canvas.draw_colored_polygon(dente, _paint(ROCK_LIGHT, light))
+		canvas.draw_colored_polygon(dente, paint(ROCK_LIGHT, light))
 	for i in VEIA_ROCHA.quantas:
 		var y := top + VEIA_ROCHA.y + float(i) * VEIA_ROCHA.passo
 		var fim := Vector2(width, y + float(i % 2) * VEIA_ROCHA.alto)
-		canvas.draw_line(Vector2(0.0, y), fim, _paint(ROOT, light), VEIA_ROCHA.traco)
+		canvas.draw_line(Vector2(0.0, y), fim, paint(ROOT, light), VEIA_ROCHA.traco)
 	for i in range(0, ESCADAS_X.size(), 2):
 		var origem := Vector2(width * float(ESCADAS_X[i]), top + ESCADA.topo)
 		_stairs(canvas, origem, float(ESCADAS_X[i + 1]), light)
 	var lume := Vector2(width * CANDEIA.x, top + CANDEIA.y)
-	canvas.draw_circle(lume, CANDEIA.raio, _paint(WINDOW, light))
+	canvas.draw_circle(lume, CANDEIA.raio, paint(WINDOW, light))
 
 
 static func _stairs(canvas: CanvasItem, origin: Vector2, sentido: float, light: Color) -> void:
@@ -207,7 +211,7 @@ static func _stairs(canvas: CanvasItem, origin: Vector2, sentido: float, light: 
 		var y := origin.y + float(i) * ESCADA.alto
 		var x := origin.x + sentido * float(i) * ESCADA.recuo
 		var fim := Vector2(x + sentido * ESCADA.largo, y)
-		canvas.draw_line(Vector2(x, y), fim, _paint(PATH, light), ESCADA.traco)
+		canvas.draw_line(Vector2(x, y), fim, paint(PATH, light), ESCADA.traco)
 
 
 ## Um perfil escrito em pares — x em centesimos da largura, y em pixeis — ja na
@@ -232,5 +236,5 @@ static func _massa(
 	return out
 
 
-static func _paint(base: Color, light: Color) -> Color:
+static func paint(base: Color, light: Color) -> Color:
 	return WorldPalette.tint(base, light)

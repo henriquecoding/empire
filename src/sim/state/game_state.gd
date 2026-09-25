@@ -26,15 +26,17 @@ var seed: int = 0
 var tick: int = 0
 var day: int = 1
 var clock_elapsed: float = 0.0
+## A duracao do dia que o jogador escolheu (§26, GB-24), em segundos. Zero e a do
+## clock.csv — e e o que um save de antes disto carrega, porque era a que tinha.
+var day_seconds: float = 0.0
 
 ## Contador unico e monotonico dos ids de instancia (§45). Comeca em 1 para que
 ## 0 nunca seja um id valido e sirva de "nenhum".
 var next_id: int = 1
 
-## Os recursos do imperio que nao sao moeda (§44). A Semente Real paga consagrar
-## e classes; o Lenho Amargo so se constroi com ele — nao tem preco (§74, regra 1).
+## A Semente Real (§44): paga consagrar e classes. O Lenho Amargo, que tambem
+## nao e moeda, e guardado pelo AmargueiroSystem.
 var royal_seeds: int = 0
-var bitter_wood: int = 0
 ## Os povos conquistados (§13), pelo id: e o que o requires_conquest le.
 var conquests: PackedStringArray = PackedStringArray()
 ## Os segredos ja encontrados (§17). Um segredo so da a recompensa uma vez.
@@ -51,8 +53,8 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.day = _inteiro(d, &"day", estado.day)
 	estado.next_id = _inteiro(d, &"next_id", estado.next_id)
 	estado.clock_elapsed = _real(d, &"clock_elapsed", estado.clock_elapsed)
+	estado.day_seconds = _real(d, &"day_seconds", estado.day_seconds)
 	estado.royal_seeds = _inteiro(d, &"royal_seeds", estado.royal_seeds)
-	estado.bitter_wood = _inteiro(d, &"bitter_wood", estado.bitter_wood)
 	estado.conquests = _textos(d, &"conquests")
 	estado.found = _textos(d, &"found")
 	return estado
@@ -72,9 +74,9 @@ func to_dict() -> Dictionary:
 		&"tick": tick,
 		&"day": day,
 		&"clock_elapsed": clock_elapsed,
+		&"day_seconds": day_seconds,
 		&"next_id": next_id,
 		&"royal_seeds": royal_seeds,
-		&"bitter_wood": bitter_wood,
 		&"conquests": conquests,
 		&"found": found,
 	}

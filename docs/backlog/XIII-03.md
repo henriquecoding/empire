@@ -16,22 +16,20 @@ Horas     13 (10 + 3 arte)
 
 - Q-047: uma noite de pé, ou mais? A proposta é uma, fixa.
 - O Lenho Amargo não tem preço (regra 1) — o D-02 chumba se alguém lhe der um.
-- **O que está feito.** `src/sim/systems/amargueiro_system.gd`, em colunas como as tropas, e
-  `tests/amargueiro_system_test.gd`. Na Alvorada quem morreu fora das muralhas cria raiz (no subsolo
-  também; no ar cai; dentro das muralhas e sobre um Marco desaparece) e os mortos saem das colunas das
-  tropas. A massa do crepúsculo conta as árvores de pé (`NightWatch`), e os Marcos entram como terreno
-  consagrado no `rot.tick()`. **Cortar** pelo Verbo 1: as moedas pousadas na base pagam as 6 do
-  `amargueiros.csv`, só depois de uma noite de pé (regra 2 — antes disso ficam no chão), e os 12 s
-  andam com quem lá está; rende 1 · 2 · 3 Lenho pela escala, ou 5 se era nomeado (regra 3), e o Lenho é
-  um inteiro, não uma moeda (regra 1). O pagamento anuncia-se com `coin_spent` e o Lenho com
-  `material_produced`. Grava-se no save. **A cara na casca**, em *greybox*: `src/world/amargueiro_view.gd`,
-  com o preço do corte por cima quando o rei está na base, pelo mesmo gesto do GB-05. **A candeia** já
-  vinha do F1-17.
-- **Fechado depois** (Q-086): *consagrar* pelo Verbo 1 — largar em cima da árvore com uma Semente Real
-  no império. A Semente vem da câmara atrás da passagem (`root_chamber`, §25 minuto 11:00), que o rei
-  acha ao entrar, e da oferta *"A árvore que plantaste"*. O Lenho gasta-se: dispensa a Fornalha no
-  nível 4 e paga os 3 Lenhos do bastião, que é único por império (`WallSite`, `BuildSystem.can_climb`).
-  Lenho e Sementes são do `GameState`. O tronco e a cara definitivos continuam a ser do ART-04.
+- **O sistema.** `src/sim/systems/amargueiro_system.gd`, em colunas com os nomes da §84, pendurado na alvorada pela `NightWatch` (é o "sinal de alvorada que o GameClock já emite" da §74). Na alvorada: envelhece as árvores de pé, põe a serra às que já aguentaram uma noite, e levanta os mortos da noite — fora das muralhas criam raiz, dentro desaparecem como perda normal. No crepúsculo seguinte, cada árvore de pé é +22 de massa, ou +45 com nome.
+- **Onde nasce** é o `AmargueiroRoots`, as cinco linhas da §74: dentro das muralhas não cria; no subsolo cria, e cresce do tecto para baixo; a voadora cai para a superfície; o Marco protege o raio dele. "Dentro" é haver um muro de pé cuja face de fora está mais longe do núcleo do que o corpo — quem morre no posto do muro morreu em cima dele. Foi essa leitura que manteve os dez dias do §66 a passar: com o centro do muro em vez da face, metade dos arqueiros do muro criava raiz e a defesa caía ao dia 9.
+- **Cortar** é um slot de destino no BuildSystem (§55): a serra só pega na segunda alvorada (regra 2; as moedas largadas antes ficam no chão), custa as 6 moedas de `amargueiros.csv`, e anda enquanto houver alguém presente — o mesmo contrato de qualquer obra, com o mesmo preço a aparecer por cima (GB-05). Rende 1·2·3 Lenho por escala, 5 se tinha nome; o moral do nomeado sai no evento e é o XIII-05 que o cobra.
+- **Consagrar** está inteiro no sistema — Marco de pedra, sai da massa, protege 120 px de raízes novas, e a mancha abranda sobre ele (a `NightWatch` passa os Marcos ao `RotSystem.tick` como terreno consagrado). Falta quem o chame: a Semente Real ainda não é coisa que se largue (Q-095).
+- **A cara na casca** é o `AmargueiroView`: um tronco mais alto do que a pessoa, pela escala dela, com a copa curta e dois olhos — acesos se tinha nome. A serra a meio vê-se como a vida da árvore a descer. É greybox: o rosto real é do ART-04.
+- **A candeia** já estava: raio `150 + 4 × dia` com teto 260 e as três paragens de cor, lidos do `rot.tres` desde o F1-17 (`WorldLight`, `RotView`).
+- **O save** leva as árvores, o Lenho e a serra a meio, e repõe-nas depois das obras autoradas — provado pelo ficheiro, em `tests/save_world_test.gd`.
+- Perguntas abertas por este ticket: Q-094 (a largura da base), Q-095 (a Semente Real), Q-096 (recolher o corpo é o gesto do §16), Q-097 (o vagabundo rende como escala 1).
+- **Fechado na junção com o ramo `dossie-implementation-ymfkjl`:** a Semente Real sai da câmara atrás da
+  passagem (`root_chamber`) e consagra-se com o Verbo 1 em cima da árvore (Q-095). O Lenho gasta-se na
+  muralha: dispensa a Fornalha no nível 4, por segmento, e paga os 3 Lenhos do bastião, que é único por
+  império (`WallSite`, `BuildSystem.can_climb`). Testes: `tests/semente_jogo_test.gd`,
+  `tests/secret_sites_test.gd`, `tests/lenho_test.gd`. Sem povos conquistáveis, **a muralha de ferro só se
+  faz com os teus mortos** — é o §74 tal e qual.
 
 ---
 

@@ -58,7 +58,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [ART-02](ART-02.md) | A paleta mestra e o LUT | F0-01 | por fazer |
 | [ART-03](ART-03.md) | As seis camadas de parallax com teto de valores | ART-02, F0-08 | por fazer |
 | [ART-04](ART-04.md) | Rostos e expressões: o catálogo do §60 | ART-01 | por fazer |
-| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | feito |
+| [GB-01](GB-01.md) | Greybox do segmento zero | F0-10 | parcial — falta a cara fixa do vagabundo (ART-01, Q-104) |
 | [GB-02](GB-02.md) | Greybox dos seis biomas | GB-01 | feito |
 | [GB-03](GB-03.md) | Regras de densidade medidas no greybox | GB-02 | feito |
 | [GB-04](GB-04.md) | O passo do §21: a região atravessa-se em 40–60 s | GB-01 | feito |
@@ -67,6 +67,25 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-07](GB-07.md) | O rei não fica preso em combate | F1-03 | feito |
 | [GB-08](GB-08.md) | O golpe que se vê | F1-07 | feito |
 | [GB-09](GB-09.md) | A sombra de contacto da moeda | F1-01 | feito |
+| [GB-10](GB-10.md) | O render interpola, e o rei deixa de andar aos solavancos | F0-06 | feito |
+| [GB-11](GB-11.md) | O gatilho direito, num comando | F1-07 | feito |
+| [GB-12](GB-12.md) | A câmara livre pelo rato na margem | F0-08 | feito |
+| [GB-13](GB-13.md) | Pausa e opções: desligar o tremor e os clarões | GB-08 | feito |
+| [GB-14](GB-14.md) | O sinal da passagem, onde o Verbo 2 pega | GB-05 | feito |
+| [GB-15](GB-15.md) | Os glifos do comando que se está a usar | GB-06 | feito |
+| [GB-16](GB-16.md) | A derrota diz a verdade, e dá um jogo novo | GB-13 | feito |
+| [GB-17](GB-17.md) | O amanhecer que se vê chegar | F1-13 | feito |
+| [GB-18](GB-18.md) | O sol e a lua dizem a hora | F1-13 | feito |
+| [GB-19](GB-19.md) | O pequeno bounce da moeda | GB-09 | feito |
+| [GB-20](GB-20.md) | A cara de quem está ferido | F0-14 | feito |
+| [GB-21](GB-21.md) | As tropas saem dos postos atrás da luz | GB-17 | feito |
+| [GB-22](GB-22.md) | As legendas de som | GB-13 | feito |
+| [GB-23](GB-23.md) | A silhueta fantasma a piscar | GB-05 | feito |
+| [GB-24](GB-24.md) | A duração do dia, ao ritmo de quem joga | GB-13 | feito |
+| [GB-25](GB-25.md) | O controlo de contraste | GB-13 | feito |
+| [GB-26](GB-26.md) | Os modos para daltonismo | GB-25 | feito |
+| [GB-27](GB-27.md) | O painel fala por chave | GB-15 | feito |
+| [GB-28](GB-28.md) | O idioma escolhe-se na pausa | GB-27 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
 | [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | por fazer — falta ligar o Pages |
@@ -81,9 +100,9 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [XIII-01](XIII-01.md) | §80 · O preto na paleta e a noite castanha | ART-02 | 4 (2 código + 2 arte) | por fazer |
 | [XIII-02](XIII-02.md) | §74 · O termo dos Amargueiros na massa | F1-08 | 1 | feito |
 | [XIII-03](XIII-03.md) | §74 · O Amargueiro e a candeia, completos | XIII-02, F1-06, ART-04 | 13 (10 + 3 arte) | feito |
-| [XIII-04](XIII-04.md) | §75 · A Oferta e a Dívida da Candeia | XIII-03 | 20 (12 + 4 arte + 2 som + 2 escrita) | feito |
-| [XIII-05](XIII-05.md) | §76 · O Nome | F1-12 | 11 (7 + 2 arte + 1 som + 1 escrita) | feito |
-| [XIII-06](XIII-06.md) | §78 · A Colheita | F1-16 | 11 (8 + 3 arte) | parcial — falta a conquista, que é da Fase 2 (Q-090) |
+| [XIII-04](XIII-04.md) | §75 · A Oferta e a Dívida da Candeia | XIII-03 | 20 (12 + 4 arte + 2 som + 2 escrita) | feito — 4 das 12 ofertas com preço e efeito ligados (Q-099) |
+| [XIII-05](XIII-05.md) | §76 · O Nome | F1-12 | 11 (7 + 2 arte + 1 som + 1 escrita) | feito — 5 dos 9 feitos com o que observar (Q-102) |
+| [XIII-06](XIII-06.md) | §78 · A Colheita | F1-16 | 11 (8 + 3 arte) | parcial — falta a conquista que a começa e o gesto da decisão (Q-103) |
 | [XIII-07](XIII-07.md) | §77 · Os dez capítulos | GB-02, XIII-06 | 106 (30 + 50 arte + 20 som + 6 escrita) | por fazer |
 | [XIII-08](XIII-08.md) | §79 · Os doze diários e os três epílogos | XIII-04, XIII-07 | 13 (3 + 10 escrita) | por fazer |
 | [XIII-09](XIII-09.md) | §81 · Som: o cante, os motivos e a encomendação | XIII-05, XIII-06 | 44 (6 + 38 som) | por fazer |

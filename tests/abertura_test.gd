@@ -1,43 +1,19 @@
-# tests/abertura_test.gd — GB-01 e XIII-10: o segmento de abertura e os
-# primeiros vinte minutos, com a candeia la dentro (§25, §83).
+# tests/abertura_test.gd — os primeiros vinte minutos, com a candeia la dentro
+# (§83, XIII-10, GB-01).
+#
+# "O Amargueiro esta la desde o segundo zero": ao minuto 0:00 e cenario
+# estranho; ao minuto 13:00 e a coisa mais assustadora do jogo. E a primeira
+# oferta e a mais barata, de proposito: "Nada. So quero ver." — uma moeda.
 extends GdUnitTestSuite
 
+const B := preload("res://tests/support/bosque.gd")
+
 const SEMENTE := 20260925
-const PASSO := 1.0 / 30.0
-
-
-func _relogio() -> ClockData:
-	return Registry.entry(&"economy", &"clock") as ClockData
-
-
-## Corre ate a mancha falar. As muralhas ficam de pe: sem ninguem nos postos a
-## pedra cai na noite 1, e isto mede a voz e nao a defesa.
-func _ate_falar(max_dias: int) -> int:
-	var passos := int(_relogio().day_seconds * max_dias / PASSO)
-	for _i in passos:
-		SimLoop.step(PASSO)
-		for vaga in SimLoop.builds.slots:
-			if vaga.two_paths() and vaga.level > 0:
-				vaga.state = BuildSlot.State.DONE
-				vaga.health = vaga.max_health()
-		if SimLoop.night.offers.active():
-			return SimLoop.state.day
-	return 0
 
 
 func before_test() -> void:
 	SimLoop.autosave_enabled = false
 	EventBus.reset()
-	SimLoop.start(SEMENTE)
-	Greybox.build()
-	# Sem muralha a mancha nao tem de onde chegar aos 300 px (§75), e nao fala.
-	# Pedra, e nao a estacaria do §25: a estacaria cai a meio da noite 3, e isto
-	# mede a oferta e nao a defesa.
-	for vaga in SimLoop.builds.slots:
-		if vaga.two_paths() and absf(vaga.x - SimLoop.core_x) < SimLoop.world_width * 0.25:
-			vaga.level = 3
-			vaga.state = BuildSlot.State.DONE
-			vaga.health = vaga.max_health()
 
 
 func after_test() -> void:
@@ -46,50 +22,80 @@ func after_test() -> void:
 
 
 func test_ao_minuto_zero_ha_um_amargueiro_velho_fora_do_muro_a_esquerda() -> void:
-	var arvores := SimLoop.night.trees
-	assert_int(arvores.count()).is_equal(1)
-	assert_int(arvores.wild[0]).is_equal(1)
-	assert_float(arvores.xs[0]).is_equal(SimLoop.core_x + Greybox.AMARGUEIRO_VELHO_X)
-	var de_dentro: float = Greybox.MUROS_X.filter(func(x: float) -> bool: return x < 0.0).max()
-	var muro_de_dentro := SimLoop.core_x + de_dentro
-	assert_float(arvores.xs[0]).is_less(muro_de_dentro)
-	# Nao e um morto teu: nao pesa na primeira noite, que e ganha de certeza (§25).
-	assert_int(arvores.standing(false)).is_equal(0)
-
-
-func test_o_vagabundo_do_minuto_0_20_e_sempre_o_mesmo() -> void:
-	var primeiro := _o_primeiro_vagabundo()
-	SimLoop.stop()
-	SimLoop.start(SEMENTE + 1)
+	SimLoop.start(SEMENTE)
 	Greybox.build()
-	assert_array(_o_primeiro_vagabundo()).is_equal(primeiro)
+	var bosque := SimLoop.night.amargueiros
+	assert_int(bosque.count()).is_equal(1)
+	assert_int(bosque.fates[0]).is_equal(AmargueiroSystem.Fate.OLD)
+	# "Fora do muro": para la da primeira muralha a esquerda do nucleo — a
+	# estacaria do minuto 3:30 (§25) —, e na mesma regiao.
+	var primeiro_muro := 0.0
+	for vaga in SimLoop.builds.slots:
+		if vaga.two_paths() and vaga.x < SimLoop.core_x:
+			primeiro_muro = maxf(primeiro_muro, vaga.x - vaga.width * BuildSystem.METADE)
+	assert_float(bosque.xs[0]).is_less(primeiro_muro)
+	assert_float(bosque.xs[0]).is_greater(0.0)
 
 
-func _o_primeiro_vagabundo() -> Array:
-	var u := SimLoop.units
-	var x := SimLoop.core_x + Greybox.VAGABUNDOS_X[0]
-	for i in u.count():
-		if u.data_ids[i] == &"vagrant" and u.xs[i] == x:
-			return [u.ids[i], u.xs[i]]
-	return []
+func test_o_amargueiro_velho_nao_e_teu_nao_pesa_e_nao_se_serra() -> void:
+	# §25: a noite 1 e ganha de certeza. A arvore velha e cenario (Q-104).
+	var bosque := SimFactory.amargueiros()
+	var o := BuildSystem.new()
+	bosque.plant_old(100.0, int(Band.Kind.SURFACE), 2)
+	assert_int(bosque.anonymous()).is_equal(0)
+	for dia in range(1, 5):
+		bosque.at_dawn(dia, UnitSystem.new(), o, B.NUCLEO, B.LARGURA)
+	assert_int(o.count()).is_equal(0)
+	assert_bool(bosque.consecrate(0, o)).is_false()
 
 
-func test_os_segredos_da_abertura_estao_la() -> void:
-	var sitios := Array(SimLoop.secrets.ids).map(func(id: StringName) -> String: return String(id))
-	assert_array(sitios).contains(["buried_statue", "root_chamber"])
-	# A bifurcacao a leste, onde cai o capitulo que a primeira oferta revela.
-	assert_array(Array(SimLoop.secrets.chapters)).is_equal([SimLoop.core_x + Greybox.BIFURCACAO_X])
+func test_a_primeira_oferta_da_campanha_e_nada_so_quero_ver() -> void:
+	var u := UnitSystem.new()
+	var noite := B.noite(u, BuildSystem.new())
+	var estado := GameState.new()
+	estado.day = 3  # o dia 3 ja tem as duas: a dos coxos e esta
+	RngService.configure(SEMENTE)
+	noite.tick(B.PASSO, int(GameClock.Phase.DUSK), true, estado, CreatureSystem.new(), _mundo())
+	for _t in int(B.perfil().offer_window_after_dusk.y / B.PASSO) + 2:
+		noite.tick(
+			B.PASSO, int(GameClock.Phase.NIGHT), false, estado, CreatureSystem.new(), _mundo()
+		)
+	var voz := noite.voice
+	assert_str(String(voz.offers.offer_id)).is_equal("just_looking")
+	assert_int(voz.spoken).is_equal(1)
 
 
-func test_a_primeira_oferta_e_so_quero_ver_e_acende_a_bifurcacao() -> void:
-	var dia := _ate_falar(4)
-	var ofertas := SimLoop.night.offers
-	# §83, 17:00: o crepusculo do dia 3 (ADR 0023). Antes disso a voz esta calada.
-	assert_int(dia).is_equal(3)
-	assert_str(String(ofertas.offer_id)).is_equal("just_looking")
-	assert_bool(SimLoop.state.found.has(OfferDesk.CAPITULO)).is_false()
-	SimLoop.drop_coin(ofertas.dish_x, Band.Kind.SURFACE, 1, &"player")
-	for _i in int(3.0 / PASSO):
-		SimLoop.step(PASSO)
-	assert_bool(SimLoop.state.found.has(OfferDesk.CAPITULO)).is_true()
-	assert_int(ofertas.debt.debt).is_equal(1)
+func test_na_noite_2_a_voz_ainda_esta_calada() -> void:
+	# ADR 0023: o §83 poe a primeira oferta ao 17:00, crepusculo do dia 3.
+	var u := UnitSystem.new()
+	var noite := B.noite(u, BuildSystem.new())
+	var estado := GameState.new()
+	estado.day = 2
+	RngService.configure(SEMENTE)
+	noite.tick(B.PASSO, int(GameClock.Phase.DUSK), true, estado, CreatureSystem.new(), _mundo())
+	for _t in int(B.perfil().offer_window_after_dusk.y / B.PASSO) + 2:
+		noite.tick(
+			B.PASSO, int(GameClock.Phase.NIGHT), false, estado, CreatureSystem.new(), _mundo()
+		)
+	assert_int(noite.voice.spoken).is_equal(0)
+
+
+func test_pagar_a_primeira_revela_um_capitulo_e_a_noite_corre_igual() -> void:
+	var moedas := CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
+	var noite := B.noite(UnitSystem.new(), BuildSystem.new(), moedas)
+	var estado := GameState.new()
+	estado.day = 3
+	RngService.configure(SEMENTE)
+	noite.tick(B.PASSO, int(GameClock.Phase.DUSK), true, estado, CreatureSystem.new(), _mundo())
+	var ver := Registry.entry(&"rot/offers", &"just_looking") as OfferData
+	noite.voice.offers.open(ver, B.FORA, int(Band.Kind.SURFACE))
+	var massa := noite.rot.mass()
+	B.pousar(moedas, estado, B.FORA, int(ver.price_amount))
+	noite.tick(B.PASSO, int(GameClock.Phase.NIGHT), false, estado, CreatureSystem.new(), _mundo())
+	assert_int(noite.voice.reveals).is_equal(1)
+	assert_int(noite.voice.debt.debt).is_equal(ver.debt_delta)
+	assert_float(noite.rot.mass()).is_equal(massa)  # "a noite 3 corre igual"
+
+
+func _mundo() -> Vector2:
+	return Vector2(B.NUCLEO, B.LARGURA)

@@ -29,10 +29,16 @@ func _ready() -> void:
 
 
 ## §27: o jogo tem dois idiomas e o texto vive todo em data/i18n/strings.csv.
-## Respeita o do sistema quando e um dos dois; senao, PT-PT.
+## O escolhido na pausa manda (GB-28); sem escolha, o do sistema quando e um dos
+## dois, e senao PT-PT.
 func _fixar_idioma() -> void:
-	var sistema := OS.get_locale_language()
-	TranslationServer.set_locale("en" if sistema == "en" else "pt_PT")
+	TranslationServer.set_locale(language(Preferences.shared().text(Preferences.LANGUAGE)))
+
+
+static func language(escolhido: String) -> String:
+	if escolhido in Preferences.LANGUAGES:
+		return escolhido
+	return "en" if OS.get_locale_language() == "en" else "pt_PT"
 
 
 func _entregar() -> void:

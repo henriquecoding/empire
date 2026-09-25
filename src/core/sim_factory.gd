@@ -20,6 +20,7 @@ const TABELA_TROPAS := &"units"
 const TABELA_CRIATURAS := &"creatures"
 const TABELA_PODRIDAO := &"rot"
 const PODRIDAO := &"default"
+const TABELA_AMARGUEIROS := &"rot/amargueiros"
 
 
 static func curve() -> EconomyCurve:
@@ -86,31 +87,29 @@ static func rot() -> RotSystem:
 	return RotSystem.new(rot_profile(), criaturas)
 
 
-## Os tres destinos da §74 e as tropas por id: a escala de quem morreu decide
-## quanto Lenho a arvore rende (regra 3).
+## O que a noite deixa no campo (§74): os tres destinos, e a escala de quem morre.
 static func amargueiros() -> AmargueiroSystem:
-	var destinos := {}
-	for recurso in Registry.entries(&"rot/amargueiros"):
-		destinos[(recurso as AmargueiroData).id] = recurso
-	return AmargueiroSystem.new(rot_profile(), destinos, by_id(TABELA_TROPAS))
+	return AmargueiroSystem.new(rot_profile(), by_id(TABELA_AMARGUEIROS), by_id(TABELA_TROPAS))
 
 
-## As doze ofertas da §75 e a Divida que elas sobem.
+## A voz da Podridao (§75): as doze ofertas, e a tabela das tropas para saber
+## quem e o monarca — que nenhum preco leva.
 static func offers() -> OfferSystem:
-	var ofertas: Array[OfferData] = []
+	var lista: Array[OfferData] = []
 	for recurso in Registry.entries(&"rot/offers"):
-		ofertas.append(recurso as OfferData)
-	return OfferSystem.new(rot_profile(), ofertas)
+		lista.append(recurso as OfferData)
+	return OfferSystem.new(rot_profile(), lista, by_id(TABELA_TROPAS))
 
 
-## Os nove titulos da §76 e as criaturas por id: o Ariete e quem tem a tag de cerco.
-static func names() -> NameSystem:
-	var titulos: Array[TitleData] = []
+## O Zelador (§75): o tender de creatures.csv, que nao e invocado pela massa.
+static func tender() -> Tender:
+	return Tender.new(Registry.entry(TABELA_CRIATURAS, &"tender") as CreatureData)
+
+
+## Os nomes (§76): os nove titulos, o teto e o luto da curva, e as duas tabelas
+## que dizem o que um feito e — quem o fez, e o que se abateu.
+static func titles() -> TitleSystem:
+	var lista: Array[TitleData] = []
 	for recurso in Registry.entries(&"lore/titles"):
-		titulos.append(recurso as TitleData)
-	return NameSystem.new(curve(), titulos, by_id(TABELA_CRIATURAS))
-
-
-## A Colheita (§78): a curva e os povos por id — o marco de quem fica enraiza, ou nao.
-static func harvest() -> HarvestSystem:
-	return HarvestSystem.new(curve(), by_id(&"peoples"))
+		lista.append(recurso as TitleData)
+	return TitleSystem.new(lista, curve(), by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS))

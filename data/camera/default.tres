@@ -8,3 +8,4 @@ lookahead_px = 120.0
 lookahead_seconds = 0.6
 follow_seconds = 0.18
 free_speed_px_s = 420.0
+edge_pan_px = 16.0

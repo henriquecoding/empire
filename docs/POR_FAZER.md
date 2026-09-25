@@ -83,7 +83,7 @@ noite 1 *"é ganha de certeza"*.
 
 ---
 
-## Fora da Fase 1 — 10 por fazer
+## Fora da Fase 1 — 18 por fazer
 
 ### Arte — 4
 
@@ -94,7 +94,7 @@ noite 1 *"é ganha de certeza"*.
 | ART-03 | As seis camadas de *parallax* com teto de valores |
 | ART-04 | Rostos e expressões: o catálogo do §60 |
 
-### Parte XIII — 4
+### Parte XIII — 9
 
 Quase toda em dados e em prosa. A **XIII-01 fechou**: os *tints* das seis fases
 vinham do `clock.tres` desde o F1-13, e faltava a outra metade do contrato — o
@@ -106,15 +106,23 @@ da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porqu�
 
 | | O que é |
 |---|---|
-| XIII-06 | §78 · A Colheita — **parcial**: o sistema está, falta a conquista (Q-090) |
+| XIII-02 | §74 · O termo dos Amargueiros na massa |
+| XIII-03 | §74 · O Amargueiro e a candeia, completos |
+| XIII-04 | §75 · A Oferta e a Dívida da Candeia |
+| XIII-05 | §76 · O Nome |
+| XIII-06 | §78 · A Colheita |
 | XIII-07 | §77 · Os dez capítulos |
 | XIII-08 | §79 · Os doze diários e os três epílogos |
 | XIII-09 | §81 · Som: o cante, os motivos e a encomendação |
+| XIII-10 | §83 · Os primeiros vinte minutos |
 
-### Greybox — 0
+### Greybox — 3
 
 | | O que é |
 |---|---|
+| GB-01 | Greybox do segmento zero |
+| GB-02 | Greybox dos seis biomas |
+| GB-03 | Regras de densidade medidas no greybox |
 
 ### Nomes — 1
 

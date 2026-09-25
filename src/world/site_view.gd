@@ -39,5 +39,5 @@ static func _placa(canvas: CanvasItem, x: float, chao: float, luz: Lighting) -> 
 	canvas.draw_line(topo, topo + braco, cor, WorldPalette.CONTORNO)
 	var desce := Vector2(0.0, WorldPalette.RASTO)
 	canvas.draw_line(topo, topo - braco + desce, cor, WorldPalette.CONTORNO)
-	if SimLoop.state.found.has(OfferDesk.CAPITULO):
+	if SimLoop.night.voice.reveals > 0:
 		canvas.draw_circle(topo, WorldPalette.MOEDA_R * NICHO, WorldPalette.MOEDA)

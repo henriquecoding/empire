@@ -20,11 +20,11 @@ const CRIATURAS := &"creatures"
 const MOEDAS := &"coins"
 const OBRAS := &"builds"
 const PODRIDAO := &"rot"
-const REI := &"king_id"
-const CAMPO := &"amargueiros"
-const OFERTAS := &"offers"
-const NOMES := &"names"
+const AMARGUEIROS := &"amargueiros"
+const VOZ := &"offers"
+const NOMES := &"titles"
 const COLHEITA := &"harvest"
+const REI := &"king_id"
 
 
 static func world(
@@ -41,8 +41,8 @@ static func world(
 		MOEDAS: moedas.to_dict(),
 		OBRAS: obras.to_dict(),
 		PODRIDAO: noite.rot.to_dict(),
-		CAMPO: noite.trees.to_dict(),
-		OFERTAS: noite.offers.to_dict(),
+		AMARGUEIROS: noite.amargueiros.to_dict(obras),
+		VOZ: noite.voice.to_dict(),
 		NOMES: noite.names.to_dict(),
 		COLHEITA: noite.harvest.to_dict(),
 		REI: king_id,
@@ -64,8 +64,10 @@ static func restore(
 	moedas.from_dict(mundo.get(MOEDAS, {}))
 	obras.from_dict(mundo.get(OBRAS, []))
 	noite.rot.from_dict(mundo.get(PODRIDAO, {}))
-	noite.trees.from_dict(mundo.get(CAMPO, {}))
-	noite.offers.from_dict(mundo.get(OFERTAS, {}))
+	# Depois das obras, e nao antes: as serras voltam com ids novos, e as obras
+	# autoradas ja tem de estar no sitio para os velhos nao lhes caberem (§62).
+	noite.amargueiros.from_dict(mundo.get(AMARGUEIROS, {}), obras)
+	noite.voice.from_dict(mundo.get(VOZ, {}))
 	noite.names.from_dict(mundo.get(NOMES, {}))
 	noite.harvest.from_dict(mundo.get(COLHEITA, {}))
 	return mundo.get(REI, UnitSystem.NENHUM)

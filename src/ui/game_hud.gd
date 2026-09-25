@@ -11,9 +11,7 @@
 class_name GameHud
 extends Control
 
-## As seis fases do §05, pela ordem do relogio.
-const FASES := ["ALVORADA", "MANHÃ", "MEIO-DIA", "TARDE", "CREPÚSCULO", "NOITE"]
-
+## O texto e todo por chave, e compoe-se no HudText (§27, GB-27).
 const INK := Color(0.08, 0.07, 0.06)
 const PAPER := Color(0.12, 0.10, 0.10, 0.88)
 const PAPER_LIGHT := Color(0.20, 0.16, 0.13, 0.94)
@@ -23,7 +21,6 @@ const TEXT := Color(0.96, 0.92, 0.81)
 const MUTED := Color(0.73, 0.67, 0.56)
 const JADE := Color(0.33, 0.53, 0.45)
 const RODAPE_LINHA := Color(0.32, 0.26, 0.20)
-const VEU_COR := Color(0.02, 0.02, 0.03, 0.62)
 
 ## O ecra de base (§67). A composicao e fixa: o greybox joga-se a 1280x720, e um
 ## painel que se reorganiza sozinho e uma decisao de arte que ainda nao existe.
@@ -36,7 +33,6 @@ const RECURSOS := {"x": 378.0, "y": 54.0, "w": 510.0, "h": 24.0, "letra": 14}
 const OBJECTIVO := {"x": 944.0, "y": 28.0, "w": 290.0, "h": 44.0, "letra": 14}
 const DICA := {"x": 40.0, "y": 0.0, "acima": 44.0, "w": 1120.0, "h": 26.0, "letra": 13}
 const AVISO := {"x": 400.0, "y": 112.0, "w": 480.0, "h": 30.0, "letra": 16}
-const VEU := {"x": 400.0, "y": 280.0, "w": 480.0, "h": 120.0, "letra": 28}
 
 ## Os tres paineis do topo, a barra da fase e o rodape das teclas.
 const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 292.0, "h": 72.0}
@@ -45,7 +41,6 @@ const PAINEL_DIR := {"recuo": 332.0, "y": 16.0, "w": 312.0, "h": 72.0}
 const BARRA := {"x": 360.0, "y": 83.0, "w": 546.0, "h": 3.0}
 const RODAPE := {"x": 20.0, "acima": 48.0, "margem": 40.0, "h": 30.0}
 const AVISO_CAIXA := {"x": 390.0, "y": 108.0, "w": 500.0, "h": 38.0}
-const VEU_CAIXA := {"x": 350.0, "y": 252.0, "w": 580.0, "h": 190.0}
 
 const TRACO := {"painel": 2.0, "rodape": 1.0, "contorno": 3}
 
@@ -64,40 +59,61 @@ var _recursos: Label
 var _objectivo: Label
 var _dica: Label
 var _aviso: Label
-var _veu: Label
 var _topo: Control
 var _rodape: Control
 var _moldura_aviso: Control
 var _aviso_ate := 0.0
+var _dispositivo := Glyphs.Device.KEYBOARD
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_titulo = _label("EMPIRE", TITULO, GOLD)
+	_titulo = _label("", TITULO, GOLD)
 	_relogio = _label("", RELOGIO, TEXT)
 	_recursos = _label("", RECURSOS, MUTED)
 	_objectivo = _label("", OBJECTIVO, MINT)
 	_dica = _label("", DICA, MUTED)
 	_aviso = _label("", AVISO, GOLD)
-	_veu = _label("", VEU, TEXT)
 	_topo = _faixa()
 	_rodape = _faixa()
 	_moldura_aviso = _faixa()
 	_moldura_aviso.position = _caixa(AVISO_CAIXA).position
 	_moldura_aviso.size = _caixa(AVISO_CAIXA).size
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_veu.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_dica.text = (
-		"A/D mover · ESPAÇO largar (manter: em contínuo)"
-		+ " · E passagem · direito alvo · TAB estado · ESC pausa"
-	)
-	_veu.visible = false
+	# §26: os glifos sao os do dispositivo activo. Um Steam Deck nao tem teclado,
+	# e por isso um comando ligado ao arrancar e o comando que se esta a usar.
+	var comandos := Input.get_connected_joypads()
+	if not comandos.is_empty():
+		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
+	_escrever_fixos()
 	EventBus.coin_collected.connect(_no_apanhar)
-	EventBus.build_completed.connect(_na_obra)
-	EventBus.target_marked.connect(_no_alvo)
-	EventBus.passage_used.connect(_na_passagem)
-	EventBus.wall_breached.connect(_no_rompimento)
 	EventBus.game_paused.connect(_na_pausa)
+	for sinal: StringName in HudText.AVISOS:
+		var aviso: String = HudText.AVISOS[sinal]
+		EventBus.connect(sinal, _dizer_chave.bind(aviso).unbind(_argumentos(sinal)))
+
+
+## Troca o rodape quando muda a mao (GB-15). So observa: nao consome nada.
+func _input(evento: InputEvent) -> void:
+	var nome := ""
+	if evento is InputEventJoypadButton or evento is InputEventJoypadMotion:
+		nome = Input.get_joy_name(evento.device)
+	var novo := Glyphs.device_of(evento, _dispositivo, nome)
+	if novo != _dispositivo:
+		_dispositivo = novo
+		_dica.text = Glyphs.hint(novo)
+
+
+## O que so se escreve uma vez. Volta a escrever-se quando o idioma muda na
+## pausa (§27, GB-28) — o resto do painel ja se escreve a cada frame.
+func _escrever_fixos() -> void:
+	_titulo.text = tr(&"GAME_CODENAME")
+	_dica.text = Glyphs.hint(_dispositivo)
+
+
+func _notification(o_que: int) -> void:
+	if o_que == NOTIFICATION_TRANSLATION_CHANGED and _dica != null:
+		_escrever_fixos()
 
 
 func _process(delta: float) -> void:
@@ -107,9 +123,6 @@ func _process(delta: float) -> void:
 	_aviso_ate = maxf(0.0, _aviso_ate - delta)
 	_aviso.visible = _aviso_ate > 0.0
 	_moldura_aviso.visible = _aviso.visible
-	_veu.visible = not SimLoop.running()
-	if _veu.visible:
-		_veu.text = "JOGO EM PAUSA\n\nESC para continuar"
 	queue_redraw()
 
 
@@ -128,30 +141,20 @@ func _draw() -> void:
 	draw_rect(Rect2(RODAPE.x, rodape, largura - RODAPE.margem, RODAPE.h), PAPER)
 	var fim := Vector2(largura - RODAPE.x, rodape)
 	draw_line(Vector2(RODAPE.x, rodape), fim, RODAPE_LINHA, TRACO.rodape)
+	# A pausa e a derrota ja nao se desenham aqui: sao o PauseMenu (GB-13, GB-16).
 	if _aviso.visible:
 		_painel(_caixa(AVISO_CAIXA), PAPER_LIGHT, GOLD)
-	if not _veu.visible:
-		return
-	draw_rect(Rect2(0.0, 0.0, largura, altura), VEU_COR)
-	_painel(_caixa(VEU_CAIXA), PAPER_LIGHT, GOLD)
 
 
 func _atualizar() -> void:
 	var relogio := ClockService.clock
 	var fase := int(relogio.current_phase())
-	var conhecida := fase >= 0 and fase < FASES.size()
-	var nome: String = FASES[fase] if conhecida else FASES[FASES.size() - 1]
-	var por_cento := int(relogio.phase_progress() * CEM)
-	_relogio.text = "DIA %02d · %s · %02d%%" % [SimLoop.state.day, nome, por_cento]
+	_relogio.text = HudText.clock(SimLoop.state.day, fase, relogio.phase_progress())
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
-	var texto := "SACO %02d/%02d   ·   TROPAS %02d   ·   NÚCLEO %03d%%"
-	_recursos.text = texto % [saco, cabem, _meus(), _vida_nucleo()]
-	if SimLoop.night.rot.active():
-		_objectivo.text = "A PODRIDÃO AVANÇA\nprotege as muralhas"
-	else:
-		_objectivo.text = "RECOLHE MOEDAS\nprepara a fronteira"
+	_recursos.text = HudText.resources(saco, cabem, _meus(), _vida_nucleo())
+	_objectivo.text = HudText.goal(SimLoop.night.rot.active())
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)
 	_rodape.position = Vector2(0.0, size.y - RODAPE.acima)
@@ -212,6 +215,18 @@ func _painel(caixa: Rect2, fundo: Color, risco: Color) -> void:
 	draw_line(caixa.position, caixa.position + Vector2(0.0, caixa.size.y), risco, TRACO.painel)
 
 
+func _dizer_chave(chave: StringName) -> void:
+	_dizer(tr(chave))
+
+
+## Quantos argumentos traz um sinal do catalogo — o que o unbind tem de largar.
+static func _argumentos(sinal: StringName) -> int:
+	for s in EventBus.get_signal_list():
+		if s.name == sinal:
+			return s.args.size()
+	return 0
+
+
 func _dizer(mensagem: String) -> void:
 	_aviso.text = mensagem
 	_aviso_ate = AVISO_S
@@ -219,24 +234,11 @@ func _dizer(mensagem: String) -> void:
 
 
 func _no_apanhar(_unit_id: int, amount: int) -> void:
-	_dizer("+%d moeda" % amount)
+	_dizer(HudText.coins(amount))
 
 
-func _na_obra(_building_id: int) -> void:
-	_dizer("OBRA CONCLUÍDA")
-
-
-func _no_alvo(_target_id: int, _by_id: int) -> void:
-	_dizer("ALVO MARCADO")
-
-
-func _na_passagem(_unit_id: int, _from_band: int, _to_band: int) -> void:
-	_dizer("PASSAGEM USADA")
-
-
-func _no_rompimento(_wall_id: int) -> void:
-	_dizer("MURALHA ROMPIDA")
-
-
+## A pausa diz-se no PauseMenu, e a derrota tambem pausa: um "JOGO PAUSADO" por
+## cima de "a coroa caiu" dizia as duas coisas ao mesmo tempo (GB-16).
 func _na_pausa(pausado: bool) -> void:
-	_dizer("JOGO PAUSADO" if pausado else "JOGO RETOMADO")
+	if not pausado:
+		_dizer(tr(&"TOAST_RESUMED"))

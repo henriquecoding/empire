@@ -11,10 +11,6 @@
 class_name RotView
 extends RefCounted
 
-## O halo da Divida: pontos do arco, e onde fica a segunda chama (em raios).
-const HALO_PONTOS := 64
-const SEGUNDA_CHAMA := 0.35
-
 
 ## O rasto, a candeia e a mancha, por esta ordem — que e a ordem em que se veem:
 ## por onde ela passou, a luz que ela traz, e ela por cima da luz.
@@ -80,19 +76,3 @@ static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia
 	var celula := perfil.lantern_dither_px
 	for canto in WorldLight.dither(centro, raio, celula):
 		canvas.draw_rect(Rect2(canto, Vector2(celula, celula)), cores[0])
-	_divida(canvas, centro, raio, cores)
-
-
-## O mostrador da Divida e a luz, e nunca um numero (§75). Ao primeiro limiar a
-## luz ganha halo; ao ultimo, a candeia tem duas chamas.
-static func _divida(
-	canvas: CanvasItem, centro: Vector2, raio: float, cores: PackedColorArray
-) -> void:
-	var divida := SimLoop.night.offers.debt
-	if divida.tier() >= 1:
-		canvas.draw_arc(centro, raio, 0.0, TAU, HALO_PONTOS, cores[0], WorldPalette.CONTORNO)
-	if divida.second_flame():
-		var ao_lado := Vector2(raio * SEGUNDA_CHAMA, 0.0)
-		canvas.draw_circle(
-			centro + ao_lado, WorldLight.stop_radius(raio, cores.size() - 1), cores[-1]
-		)

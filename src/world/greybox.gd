@@ -48,16 +48,11 @@ const GALINHEIROS_X := [-820.0, 820.0]
 const PESQUEIROS_X := [1200.0]
 const TORRES_ALTAS_X := [-1100.0, 1100.0]
 const PASSAGENS_X := [-950.0, 950.0]
-# Os segredos do segmento de abertura, pelo `location` de secrets.csv. §25: ao
-# minuto 2:00 a estatua meio enterrada; ao 11:00, a camara atras da passagem de
-# fora, com a Semente Real. Um sitio por tipo, e a largura e a de um nicho.
+# Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
+# estatua meio enterrada; ao 11:00, a camara atras da passagem de fora, com a
+# Semente Real. E a bifurcacao a leste onde cai o capitulo revelado (§83).
 const SEGREDOS_X := {&"under_vegetation": 360.0, &"behind_passage": -1180.0}
 const CAMARA_W := 64.0
-# §83, os tres obrigatorios da abertura, sempre nas mesmas coordenadas: o
-# Amargueiro velho fora do muro a esquerda, o vagabundo do minuto 0:20 (o
-# primeiro de VAGABUNDOS_X, que nasce sempre primeiro e com o mesmo id), e a
-# bifurcacao a leste onde cai o capitulo que a primeira oferta revela.
-const AMARGUEIRO_VELHO_X := -720.0
 const BIFURCACAO_X := 1800.0
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
@@ -65,6 +60,12 @@ const BIFURCACAO_X := 1800.0
 const VAGABUNDOS_X := [-240.0, 320.0, 780.0, 1240.0]
 const ARQUEIROS_X := [-620.0, -180.0, 520.0]
 const LANCEIROS_X := [-1100.0, 1000.0]
+# §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
+# casca." Esta la desde o primeiro frame e nao e apontada por nada. O muro e o do
+# §25, a estacaria do minuto 3:30 — a de dentro —, e a arvore fica logo depois
+# dele, entre a torre e o galinheiro. Tem a escala de uma tropa (§22).
+const AMARGUEIRO_VELHO_X := -750.0
+const AMARGUEIRO_VELHO_ESCALA := 2
 
 const POSTO_CANTEIRO := &"farm"
 const POSTO_TORRE := &"tower"
@@ -75,6 +76,9 @@ const MEIO := 0.5
 ## Um jogo novo: a regiao e quem la vive. Devolve o id do monarca.
 static func build() -> int:
 	region()
+	var faixa := int(Band.Kind.SURFACE)
+	var x := SimLoop.core_x + AMARGUEIRO_VELHO_X
+	SimLoop.night.amargueiros.plant_old(x, faixa, AMARGUEIRO_VELHO_ESCALA)
 	return _gente()
 
 
@@ -87,7 +91,7 @@ static func region() -> void:
 	SimLoop.world_width = largura * ECRAS
 	SimLoop.core_x = SimLoop.world_width * MEIO
 	SimLoop.passages = _deslocadas(PASSAGENS_X)
-	_camaras()
+	_segredos()
 
 	_nucleo()
 	for x in MUROS_X:
@@ -111,6 +115,15 @@ static func region() -> void:
 
 ## Se o bioma deste segmento sustenta este edificio (§06, §21). Sem exigencia,
 ## cabe em qualquer lado; com ela, so onde o segmento tem esse recurso.
+static func _segredos() -> void:
+	SimLoop.secrets.clear()
+	for recurso in Registry.entries(&"lore/secrets"):
+		var dados := recurso as SecretData
+		if SEGREDOS_X.has(dados.location):
+			SimLoop.secrets.post(dados, SimLoop.core_x + SEGREDOS_X[dados.location], CAMARA_W)
+	SimLoop.secrets.chapters.append(SimLoop.core_x + BIFURCACAO_X)
+
+
 static func cabe_no_bioma(dados: BuildingData) -> bool:
 	if dados.requires_biome_feature.is_empty():
 		return true
@@ -138,17 +151,9 @@ static func _nucleo() -> void:
 ## Um sitio de muro, vazio. Os cinco niveis do §10 sao os cinco degraus da
 ## escada, e sobe-se um de cada vez largando moedas em cima dele (§55).
 static func _muro(x: float) -> void:
+	# A escada do §10 e o que cada degrau pede alem das moedas (§74) vivem no
+	# WallSite, para que quem monta uma regiao de teste monte o mesmo muro.
 	SimLoop.builds.post(WallSite.slot(x))
-
-
-## Os segredos do segmento (§17), um por tipo de sitio autorado.
-static func _camaras() -> void:
-	SimLoop.secrets.clear()
-	for recurso in Registry.entries(&"lore/secrets"):
-		var dados := recurso as SecretData
-		if SEGREDOS_X.has(dados.location):
-			SimLoop.secrets.post(dados, SimLoop.core_x + SEGREDOS_X[dados.location], CAMARA_W)
-	SimLoop.secrets.chapters.append(SimLoop.core_x + BIFURCACAO_X)
 
 
 ## O §06 da tres edificios um bioma obrigatorio — pesqueiro/agua, corte de
@@ -193,9 +198,6 @@ static func _gente() -> int:
 	SimLoop.king_id = rei
 	SimLoop.units.carried_coins[SimLoop.units.index_of(rei)] = SimFactory.curve().start_coins
 
-	# §83: a arvore velha esta la desde o primeiro frame. E de quem, ninguem sabe.
-	var ninguem := Registry.entry(&"units", &"vagrant") as UnitData
-	SimLoop.night.trees.plant_old(estado, SimLoop.core_x + AMARGUEIRO_VELHO_X, ninguem)
 	_por_recrutar(&"vagrant", VAGABUNDOS_X)
 	_por_recrutar(&"archer", ARQUEIROS_X)
 	_por_recrutar(&"spearman", LANCEIROS_X)

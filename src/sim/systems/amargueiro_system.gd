@@ -1,42 +1,56 @@
-# src/sim/systems/amargueiro_system.gd — quem fica no campo cria raiz (§74).
+# src/sim/systems/amargueiro_system.gd — o que a noite deixa no campo (§74).
 #
-# Uma tropa tua que morre fora das muralhas levanta-se na Alvorada como arvore
-# e alimenta a noite seguinte. Tres destinos, pelo Verbo 1: cortar (moedas na
-# base, depois de uma noite de pe; rende Lenho Amargo), consagrar (Semente Real;
-# vira Marco) ou deixar (pesa para sempre). Puro, em colunas como as tropas.
+# Uma tropa que morre fora das muralhas cria raiz na alvorada, com a cara na
+# casca, e alimenta a noite seguinte: +22 de massa, ou +45 se tinha nome. Os tres
+# destinos sao o Verbo 1 (§05): cortar e moeda na base — um slot de destino no
+# BuildSystem (§55); consagrar e uma Semente Real, e vira Marco; deixar e nada.
 #
-# A Semente e o Lenho sao do GameState, e quem os cobra e gasta e quem chama.
-# Fica de fora a raiz que tapa a passagem no subsolo (Ato III, §79).
+# Colunas, como a §84 as escreve. Puro: devolve o que houve. Onde se cria raiz e
+# do AmargueiroRoots. Fora daqui: a Semente Real como coisa que se larga (Q-095),
+# o Amargueiro subterraneo a bloquear a passagem (§79), as regioes adjacentes.
 class_name AmargueiroSystem
 extends RefCounted
 
-enum Fate { STANDING, FELLING, MARKER }
-enum { EV_RAIZ, EV_SUMIU, EV_PAGA, EV_CORTE, EV_CORTADA }
+## OLD e o Amargueiro velho do segmento de abertura (§83): de pe desde antes de
+## ti, com cara, sem serra, e fora da tua massa (Q-104).
+enum Fate { STANDING, MARKER, OLD }
 
 const NENHUM := -1
-const CHAVE := &"kind"
-const ID := &"id"
-const X := &"x"
-const QUANTO := &"amount"
-const NOMEADO := &"named"
+
+## O kind do slot de destino: a arvore vista pelo BuildSystem, e nao uma obra.
+const CORTE := &"amargueiro"
 
 const CORTAR := &"fell"
 const CONSAGRAR := &"consecrate"
-## A tag de quem vale o minimo (§74, regra 3: "escala 1 e vagabundo"). Q-086.
-const CARNE_BARATA := &"worker"
 
-var ids: PackedInt32Array = PackedInt32Array()
+const EV_RAIZ := 0
+const EV_PERDA := 1
+const EV_SERRA := 2
+const EV_CORTADO := 3
+
+const CHAVE := &"kind"
+const ONDE := &"x"
+const FAIXA := &"band"
+const ESCALA := &"tier"
+const TITULO := &"title"
+const LENHO := &"bitter_wood"
+const MORAL := &"morale"
+const DIAS := &"morale_days"
+const VAGA := &"slot"
+
 var xs: PackedFloat32Array = PackedFloat32Array()
-var bands: PackedByteArray = PackedByteArray()
-var tiers: PackedByteArray = PackedByteArray()
-var named: PackedByteArray = PackedByteArray()
+var bands: PackedInt32Array = PackedInt32Array()
+var tiers: PackedInt32Array = PackedInt32Array()
+var days: PackedInt32Array = PackedInt32Array()
+var titles: PackedStringArray = PackedStringArray()
 var nights: PackedInt32Array = PackedInt32Array()
-var fates: PackedByteArray = PackedByteArray()
-var paid: PackedInt32Array = PackedInt32Array()
-var progress: PackedFloat32Array = PackedFloat32Array()
-var widths: PackedFloat32Array = PackedFloat32Array()
-## 1 para a arvore que ja la estava (§83): nao e tua, nao pesa, nao se toca.
-var wild: PackedByteArray = PackedByteArray()
+var fates: PackedInt32Array = PackedInt32Array()
+## O slot do corte no BuildSystem, ou NENHUM enquanto a serra nao pega.
+var slot_ids: PackedInt32Array = PackedInt32Array()
+
+## O Lenho Amargo (§74, regra 1): nao e moeda, nao se vende, so se constroi com
+## ele. Por isso e um contador aqui e nunca uma moeda no chao.
+var bitter_wood: int = 0
 
 var _perfil: RotProfile
 var _cortar: AmargueiroData
@@ -44,202 +58,192 @@ var _consagrar: AmargueiroData
 var _tropas: Dictionary
 
 
+## `destinos` e a tabela de amargueiros.csv por id; `tropas` a de units.csv, para
+## a escala de quem morreu.
 func _init(perfil: RotProfile, destinos: Dictionary, tropas: Dictionary) -> void:
+	assert(perfil != null, "o AmargueiroSystem precisa do RotProfile")
 	_perfil = perfil
-	_cortar = destinos[CORTAR]
-	_consagrar = destinos[CONSAGRAR]
+	_cortar = destinos.get(CORTAR)
+	_consagrar = destinos.get(CONSAGRAR)
 	_tropas = tropas
 
 
 func count() -> int:
-	return ids.size()
+	return xs.size()
 
 
-func index_of(tree_id: int) -> int:
-	return ids.find(tree_id)
+## As arvores de pe sem nome e com nome: os dois termos da massa da §74. Um Marco
+## ja nao conta — consagrar tira os +22 (amargueiros.csv, mass_delta).
+func anonymous() -> int:
+	return _de_pe(false)
 
 
-## Quantas arvores de pe pesam na massa (§74). Um Marco ja nao pesa; uma arvore
-## com a serra dentro ainda pesa, porque ainda esta de pe.
-func standing(de_nome: bool) -> int:
+func named() -> int:
+	return _de_pe(true)
+
+
+## A alvorada (§48, §05: a fase em que se contam as perdas). Primeiro envelhece
+## quem ja estava — uma noite de pe e o que deixa a serra pegar (regra 2) — e so
+## depois levanta os mortos da noite, que ainda nao aguentaram nenhuma.
+##
+## Os corpos saem das colunas das tropas: fora das muralhas levantam-se arvore,
+## dentro desaparecem e contam como perda normal. `titulos` e unit_id -> chave
+## do titulo (§76); quem nao esta la morreu anonimo.
+func at_dawn(
+	dia: int,
+	unidades: UnitSystem,
+	obras: BuildSystem,
+	nucleo: float,
+	largura: float,
+	titulos: Dictionary = {}
+) -> Array[Dictionary]:
+	var eventos: Array[Dictionary] = []
+	for i in count():
+		if fates[i] != Fate.STANDING:
+			continue
+		nights[i] += 1
+		if slot_ids[i] == NENHUM and nights[i] >= _perfil.amargueiro_nights_standing:
+			var vaga := obras.post(_serra(xs[i], bands[i]))
+			slot_ids[i] = vaga.id
+			eventos.append({CHAVE: EV_SERRA, VAGA: vaga.id, ONDE: xs[i]})
+	var regras := AmargueiroRoots.new(_perfil, _tropas, _cortar.yield_by_tier.size())
+	for unit_id in regras.dead(unidades):
+		var u := unidades.index_of(unit_id)
+		var x := unidades.xs[u]
+		var faixa := AmargueiroRoots.body_band(unidades.bands[u])
+		var escala := regras.tier(unidades.data_ids[u])
+		var titulo: String = titulos.get(unit_id, "")
+		unidades.remove(unit_id)
+		if not regras.roots(x, faixa, obras, Vector2(nucleo, largura), consecrated()):
+			eventos.append({CHAVE: EV_PERDA, ONDE: x, FAIXA: faixa})
+			continue
+		_plantar(x, faixa, escala, dia, titulo)
+		eventos.append({CHAVE: EV_RAIZ, ONDE: x, FAIXA: faixa, ESCALA: escala, TITULO: titulo})
+	return eventos
+
+
+## Todos os ticks: as serras que acabaram. O BuildSystem fez a parte do §55 —
+## moeda, presenca, progresso —, aqui so se colhe o que ficou de pe no fim.
+func harvest(obras: BuildSystem) -> Array[Dictionary]:
+	var eventos: Array[Dictionary] = []
+	for i in range(count() - 1, -1, -1):
+		if slot_ids[i] == NENHUM or fates[i] != Fate.STANDING:
+			continue
+		var s := obras.index_of(slot_ids[i])
+		if s == NENHUM or obras.slots[s].level < 1:
+			continue
+		_toco(obras.slots[s])
+		var nomeado := not titles[i].is_empty()
+		var lenho := _cortar.yield_named if nomeado else _cortar.yield_by_tier[tiers[i] - 1]
+		bitter_wood += lenho
+		var e := {CHAVE: EV_CORTADO, ONDE: xs[i], LENHO: lenho, TITULO: titles[i]}
+		e[MORAL] = _cortar.morale_cost if nomeado else 0
+		e[DIAS] = _cortar.morale_days if nomeado else 0
+		eventos.append(e)
+		_arrancar(i)
+	return eventos
+
+
+## Uma Semente Real na base: vira Marco de pedra (§74). Pode ser logo na primeira
+## alvorada. Recusa um Marco e recusa uma arvore com a serra ja dentro — as
+## moedas pagas do corte nao voltam, e nao se paga duas vezes o mesmo destino.
+func consecrate(i: int, obras: BuildSystem) -> bool:
+	if i < 0 or i >= count() or fates[i] != Fate.STANDING:
+		return false
+	if slot_ids[i] != NENHUM:
+		var s := obras.index_of(slot_ids[i])
+		if s != NENHUM and obras.slots[s].state != BuildSlot.State.EMPTY:
+			return false
+		if s != NENHUM:
+			_toco(obras.slots[s])
+	fates[i] = Fate.MARKER
+	slot_ids[i] = NENHUM
+	return true
+
+
+## O terreno consagrado dos Marcos, em intervalos de x. E a lista que o
+## RotSystem.tick recebe: sobre ela a Podridao abranda (§05, §51).
+func consecrated() -> Array[Vector2]:
+	var saida: Array[Vector2] = []
+	var raio := float(_consagrar.protect_radius_px)
+	for i in count():
+		if fates[i] == Fate.MARKER:
+			saida.append(Vector2(xs[i] - raio, xs[i] + raio))
+	return saida
+
+
+## Os campos da §84, e o que nao se deriva: o destino, as noites, e a serra a meio.
+func to_dict(obras: BuildSystem) -> Dictionary:
+	return AmargueiroSave.write(self, obras)
+
+
+## Repoe DEPOIS de o BuildSystem ter reposto as obras autoradas: as serras
+## voltam a ser postas aqui, com ids novos, e so assim nao colidem com os velhos.
+func from_dict(d: Dictionary, obras: BuildSystem) -> void:
+	AmargueiroSave.read(self, d, obras)
+
+
+func plant(x: float, faixa: int, escala: int, dia: int, titulo: String) -> int:
+	_plantar(x, faixa, escala, dia, titulo)
+	return count() - 1
+
+
+func plant_old(x: float, faixa: int, escala: int) -> int:
+	var i := plant(x, faixa, escala, 0, "")
+	fates[i] = Fate.OLD
+	return i
+
+
+## Uma serra nova para a arvore i. Publica para o save a poder repor.
+func saw(i: int) -> BuildSlot:
+	return _serra(xs[i], bands[i])
+
+
+func _de_pe(com_nome: bool) -> int:
 	var n := 0
-	for i in ids.size():
-		if fates[i] != Fate.MARKER and bool(named[i]) == de_nome and wild[i] == 0:
+	for i in count():
+		if fates[i] == Fate.STANDING and titles[i].is_empty() != com_nome:
 			n += 1
 	return n
 
 
-## Terreno consagrado, em intervalos de x. E o que a Podridao le para abrandar
-## (§05) e o que a raiz le para nao nascer.
-func markers() -> Array[Vector2]:
-	var saida: Array[Vector2] = []
-	var r := float(_consagrar.protect_radius_px)
-	for i in ids.size():
-		if fates[i] == Fate.MARKER:
-			saida.append(Vector2(xs[i] - r, xs[i] + r))
-	return saida
-
-
-## A Alvorada. Quem ja estava de pe aguentou mais uma noite; quem morreu desde
-## ontem cria raiz ou desaparece, e sai das colunas das tropas de uma vez.
-## `nomeados` sao os ids das tropas com nome (§76), vazio ate ao XIII-05.
-func at_dawn(
-	estado: GameState,
-	unidades: UnitSystem,
-	obras: BuildSystem,
-	core_x: float,
-	nomeados: Dictionary = {}
-) -> Array[Dictionary]:
-	for i in ids.size():
-		if fates[i] != Fate.MARKER:
-			nights[i] += 1
-	var mortos := Array(unidades.ids).filter(
-		func(u: int) -> bool: return not unidades.alive(unidades.index_of(u))
-	)
-	mortos.sort()  # por id, e nao pela ordem das colunas (§42)
-	var dentro := Walls.inside(obras, core_x)
-	var eventos: Array[Dictionary] = []
-	for unit_id in mortos:
-		var i := unidades.index_of(unit_id)
-		var faixa := unidades.bands[i]
-		if faixa == Band.Kind.AERIAL:
-			faixa = Band.Kind.SURFACE  # nao ha corpos no ar: as voadoras caem
-		var x := unidades.xs[i]
-		if unidades.owners[i] != RecruitSystem.SEM_DONO and _cria_raiz(x, faixa, dentro):
-			var dados: UnitData = _tropas[unidades.data_ids[i]]
-			var tree_id := _nascer(estado, x, faixa, dados, nomeados.has(unit_id))
-			eventos.append({CHAVE: EV_RAIZ, ID: tree_id, X: x, NOMEADO: nomeados.has(unit_id)})
-		else:
-			eventos.append({CHAVE: EV_SUMIU, ID: unit_id, X: x})
-		unidades.remove(unit_id)
-	return eventos
-
-
-## Verdadeiro se esta arvore ja aceita este destino. Cortar pede uma noite de pe
-## e a segunda alvorada (regra 2); consagrar pode ser logo na primeira.
-func ready_for(tree_id: int, destino: StringName) -> bool:
-	var i := index_of(tree_id)
-	if i == NENHUM or fates[i] != Fate.STANDING or wild[i] == 1:
-		return false
-	var d := _cortar if destino == CORTAR else _consagrar
-	return nights[i] >= maxi(d.nights_standing_required, d.from_dawn - 1)
-
-
-## Quanto custa a serra, em moedas (§74). O preco que o rei ve em cima da arvore.
-func fell_cost() -> int:
-	return _cortar.cost_coins
-
-
-## Consagrar (§74). Quem chama ja cobrou a Semente Real; aqui e a regra.
-func consecrate(tree_id: int) -> bool:
-	if not ready_for(tree_id, CONSAGRAR):
-		return false
-	fates[index_of(tree_id)] = Fate.MARKER
-	return true
-
-
-## Todos os ticks: as moedas na base de uma arvore que ja aceita a serra pagam
-## o corte, e o corte anda com quem la esta — a presenca do §55 (Q-064).
-func tick(delta: float, unidades: UnitSystem, moedas: CoinSystem) -> Array[Dictionary]:
-	var eventos: Array[Dictionary] = []
-	var cortadas := PackedInt32Array()
-	for i in ids.size():
-		if fates[i] == Fate.STANDING and ready_for(ids[i], CORTAR):
-			_pagar(i, moedas, eventos)
-		elif fates[i] == Fate.FELLING:
-			progress[i] += delta * _maos(i, unidades)
-			if progress[i] >= _cortar.work_seconds:
-				cortadas.append(ids[i])
-	for tree_id in cortadas:
-		var i := index_of(tree_id)
-		eventos.append({CHAVE: EV_CORTADA, ID: tree_id, X: xs[i], QUANTO: _rende(i)})
-		remove_at(i)
-	return eventos
-
-
-func to_dict() -> Dictionary:
-	return Columns.to_dict(self)
-
-
-func from_dict(d: Dictionary) -> void:
-	Columns.from_dict(self, d)
-	if wild.size() != ids.size():  # um save de antes da arvore velha: todas tuas
-		wild.resize(ids.size())
-		wild.fill(0)
-
-
-## A arvore de pe cuja base cobre este x nesta faixa, ou NENHUM. E onde o
-## Verbo 1 cai quando larga em cima de uma (§74).
-func tree_at(x: float, faixa: int) -> int:
-	for i in ids.size():
-		var perto := absf(xs[i] - x) <= widths[i] * BuildSystem.METADE
-		if perto and bands[i] == faixa and fates[i] == Fate.STANDING and wild[i] == 0:
-			return ids[i]
-	return NENHUM
-
-
-func _cria_raiz(x: float, faixa: int, dentro: Vector2) -> bool:
-	for m in markers():
-		if x >= m.x and x <= m.y:
-			return false
-	if faixa == Band.Kind.UNDERGROUND:
-		return _perfil.amargueiro_roots_underground
-	return _perfil.amargueiro_roots_outside_walls and (x < dentro.x or x > dentro.y)
-
-
-func _nascer(estado: GameState, x: float, faixa: int, dados: UnitData, nome: bool) -> int:
-	var tree_id := estado.take_id()
-	ids.append(tree_id)
+func _plantar(x: float, faixa: int, escala: int, dia: int, titulo: String) -> void:
 	xs.append(x)
 	bands.append(faixa)
-	var escala := 1 if dados.tags.has(CARNE_BARATA) else dados.scale_tier
-	tiers.append(clampi(escala, 1, _cortar.yield_by_tier.size()))
-	named.append(int(nome))
+	tiers.append(escala)
+	days.append(dia)
+	titles.append(titulo)
 	nights.append(0)
 	fates.append(Fate.STANDING)
-	paid.append(0)
-	progress.append(0.0)
-	widths.append(float(dados.shadow_width))
-	wild.append(0)
-	return tree_id
+	slot_ids.append(NENHUM)
 
 
-## A arvore velha da abertura (§83): de alguem que ninguem conhece.
-func plant_old(estado: GameState, x: float, dados: UnitData) -> int:
-	var tree_id := _nascer(estado, x, int(Band.Kind.SURFACE), dados, false)
-	wild[index_of(tree_id)] = 1
-	return tree_id
+func _serra(x: float, faixa: int) -> BuildSlot:
+	var vaga := BuildSlot.new()
+	vaga.kind = CORTE
+	vaga.x = x
+	vaga.band = faixa as Band.Kind
+	vaga.width = _perfil.amargueiro_base_px
+	vaga.costs = PackedInt32Array([_cortar.cost_coins])
+	vaga.works = PackedFloat32Array([_cortar.work_seconds])
+	return vaga
 
 
-func _pagar(i: int, moedas: CoinSystem, eventos: Array[Dictionary]) -> void:
-	var valor := moedas.take_within(xs[i], bands[i], widths[i] * BuildSystem.METADE)
-	if valor == 0:
-		return
-	paid[i] += valor
-	eventos.append({CHAVE: EV_PAGA, ID: ids[i], X: xs[i], QUANTO: valor})
-	if paid[i] >= _cortar.cost_coins:
-		paid[i] -= _cortar.cost_coins
-		fates[i] = Fate.FELLING
-		eventos.append({CHAVE: EV_CORTE, ID: ids[i], X: xs[i], QUANTO: _cortar.cost_coins})
+## O que fica quando a serra acaba, ou quando a arvore vira pedra: um slot que ja
+## nao aceita moeda e nao esta de pe. Os ids do BuildSystem sao indices, e por
+## isso ele nao se tira da lista — deixa de ser uma obra.
+func _toco(vaga: BuildSlot) -> void:
+	vaga.costs = PackedInt32Array()
+	vaga.works = PackedFloat32Array()
+	vaga.state = BuildSlot.State.RUIN
 
 
-func _maos(i: int, unidades: UnitSystem) -> int:
-	var maos := 0
-	var raio := widths[i] * BuildSystem.METADE
-	for u in unidades.count():
-		var tua := unidades.owners[u] != RecruitSystem.SEM_DONO and unidades.alive(u)
-		if tua and unidades.bands[u] == bands[i] and absf(unidades.xs[u] - xs[i]) <= raio:
-			maos += 1
-	return maos
-
-
-func _rende(i: int) -> int:
-	return _cortar.yield_named if named[i] else _cortar.yield_by_tier[tiers[i] - 1]
-
-
-## Tira a arvore i do campo: cortada, ou o Marco dado a Podridao (§75).
-func remove_at(i: int) -> void:
-	for nome in Columns.names(self):
-		var coluna: Variant = get(nome)
-		coluna.remove_at(i)
-		set(nome, coluna)
+func _arrancar(i: int) -> void:
+	xs.remove_at(i)
+	bands.remove_at(i)
+	tiers.remove_at(i)
+	days.remove_at(i)
+	titles.remove_at(i)
+	nights.remove_at(i)
+	fates.remove_at(i)
+	slot_ids.remove_at(i)

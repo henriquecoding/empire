@@ -25,12 +25,6 @@ const MORTO := Color(0.35, 0.33, 0.30, 0.6)
 const LUTA := Color(0.78, 0.31, 0.24)
 const FUGA := Color(0.62, 0.55, 0.78)
 const BICHO := Color(0.35, 0.16, 0.22)
-## A madeira escura e resinosa do Amargueiro (§74).
-const AMARGO := Color(0.22, 0.14, 0.10)
-## O barro do prato de oferenda (§75).
-const BARRO := Color(0.58, 0.36, 0.24)
-## A Semente Real, que se ve de longe no escuro do subsolo (§17).
-const SEMENTE := Color(0.62, 0.86, 0.45)
 const MOEDA := Color(0.96, 0.82, 0.29)
 ## §80, a regra das duas excecoes: violeta e A Podridao e so A Podridao.
 const MANCHA := Color(0.35, 0.22, 0.42, 0.55)
@@ -41,6 +35,8 @@ const TRILHO := Color(0.35, 0.22, 0.42, 0.28)
 const OBRA := Color(0.55, 0.52, 0.48)
 const ANDAIME := Color(0.72, 0.62, 0.42, 0.55)
 const VAZIO := Color(0.35, 0.33, 0.30, 0.45)
+## A Semente Real, que se ve de longe no escuro do subsolo (§17).
+const SEMENTE := Color(0.62, 0.86, 0.45)
 const PASSAGEM := Color(0.36, 0.55, 0.62, 0.7)
 const VIDA := Color(0.35, 0.65, 0.35)
 ## A sombra de contacto do §22. Nao e uma cor nova: e o valor de silhueta do §80

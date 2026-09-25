@@ -23,6 +23,9 @@ extends RefCounted
 ## que separa "ainda faltam 3 s" de "ninguem me deu o intervalo".
 const NAO_ARMADA := -1.0
 
+## O tecto de recusas que contam para a massa (§74: min(recusas, 5)).
+const RECUSAS_MAX := 5
+
 const SEM_CRIATURA := &""
 
 var state := RotState.new()
@@ -34,9 +37,6 @@ var fortresses: int = 0
 var amargueiros: int = 0
 var named_amargueiros: int = 0
 var refusals: int = 0
-## A massa dos marcos dos povos que ficaste: cada um vira Amargueiro que nao se
-## corta, e pesa todas as noites (§78).
-var landmarks: float = 0.0
 
 var _perfil: RotProfile
 var _tabela: Array[CreatureData] = []
@@ -69,7 +69,6 @@ func spawn(day: int, side: int, map_width: float) -> void:
 	state.mass = _massa_do_dia()
 	state.x = map_width if side > 0 else 0.0
 	state.next_summon_at = NAO_ARMADA
-	state.paused_for = 0.0
 	state.trail_from = state.x
 	state.trail_to = state.x
 
@@ -94,9 +93,6 @@ func arm(segundos: float) -> void:
 func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]:
 	var pedidos: Array[SpawnRequest] = []
 	if not state.active:
-		return pedidos
-	if state.paused_for > 0.0:  # parada nao anda nem invoca (§75)
-		state.paused_for = maxf(0.0, state.paused_for - delta)
 		return pedidos
 
 	var v := speed()
@@ -146,16 +142,6 @@ func feed(amount: float) -> void:
 	state.mass = maxf(0.0, state.mass - amount)
 
 
-## Para por uns segundos: nao anda nem invoca (§75, "a mancha para 25 s").
-func pause(segundos: float) -> void:
-	state.paused_for = maxf(state.paused_for, segundos)
-
-
-## A massa desta noite multiplicada por `fator` (§75, "-40% de massa").
-func scale_mass(fator: float) -> void:
-	state.mass = maxf(0.0, state.mass * fator)
-
-
 ## O amanhecer. Nao morre: recua, e as criaturas vivas dissolvem-se (§51).
 func retreat() -> void:
 	state.active = false
@@ -187,7 +173,6 @@ func to_dict() -> Dictionary:
 		&"amargueiros": amargueiros,
 		&"named": named_amargueiros,
 		&"refusals": refusals,
-		&"landmarks": landmarks,
 	}
 
 
@@ -198,7 +183,6 @@ func from_dict(d: Dictionary) -> void:
 	amargueiros = d.get(&"amargueiros", amargueiros)
 	named_amargueiros = d.get(&"named", named_amargueiros)
 	refusals = d.get(&"refusals", refusals)
-	landmarks = d.get(&"landmarks", landmarks)
 	_direcao = float(-state.side)
 
 
@@ -213,10 +197,8 @@ func _massa_do_dia() -> float:
 		_perfil.mass_per_amargueiro * amargueiros
 		+ _perfil.mass_per_named_amargueiro * named_amargueiros
 	)
-	# min(recusas nos ultimos 5 dias, 5): uma recusa por noite, por isso o teto
-	# da contagem e a propria janela (§74, §75).
-	var recusas := _perfil.refusal_mass * mini(refusals, _perfil.refusal_window_days)
-	return base + arvores + minf(recusas, _perfil.refusal_cap) + landmarks
+	var recusas := _perfil.refusal_mass * mini(refusals, RECUSAS_MAX)
+	return base + arvores + minf(recusas, _perfil.refusal_cap)
 
 
 ## A mais cara que cabe e cujo dia minimo ja passou (§51, Q-019). A tabela ja

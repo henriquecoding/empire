@@ -21,8 +21,6 @@ const PORQUE := &"source"
 const FONTE_MORTE := &"death"
 const FONTE_PRODUCAO := &"production"
 const PROPOSITO_RECRUTA := &"recruit"
-const PROPOSITO_CORTE := &"amargueiro_fell"
-const LENHO := &"bitter_wood"
 const FONTE_SEGREDO := &"secret"
 
 
@@ -185,31 +183,9 @@ static func _completa(vaga: BuildSlot, nivel: int) -> void:
 		EventBus.queue(&"wall_upgraded", [vaga.id, nivel])
 
 
-## Passo 5: o corte de um Amargueiro (§74). O pagamento e um coin_spent como o
-## de uma obra; o Lenho e material produzido, e vai para o imperio (§45).
-static func amargueiros(eventos: Array[Dictionary], estado: GameState) -> void:
-	for e in eventos:
-		match int(e[AmargueiroSystem.CHAVE]):
-			AmargueiroSystem.EV_CORTE:
-				EventBus.queue(&"coin_spent", [e[AmargueiroSystem.QUANTO], PROPOSITO_CORTE])
-			AmargueiroSystem.EV_CORTADA:
-				estado.bitter_wood += int(e[AmargueiroSystem.QUANTO])
-				var lenho := [e[AmargueiroSystem.ID], LENHO, e[AmargueiroSystem.QUANTO]]
-				EventBus.queue(&"material_produced", lenho)
-
-
 ## Passo 5: um segredo achado (§17) e a Semente Real que ele deu (§46).
 static func secrets(achados: Array[Dictionary]) -> void:
 	for a in achados:
 		EventBus.queue(&"secret_found", [a[SecretSites.ID]])
 		if int(a[SecretSites.SEMENTES]) > 0:
 			EventBus.queue(&"seed_royal_gained", [a[SecretSites.SEMENTES], FONTE_SEGREDO])
-
-
-## Passo 5, na alvorada: quem ganhou nome (§76). A §46 nao tem sinal para um
-## titulo; o unit_promoted e o que mais se lhe chega — "de" nada "para" o
-## titulo —, e e o que a encomendacao do XIII-09 vai ouvir (Q-088).
-static func names(eventos: Array[Dictionary]) -> void:
-	for e in eventos:
-		if int(e[NameSystem.CHAVE]) == NameSystem.EV_NOMEADO:
-			EventBus.queue(&"unit_promoted", [e[NameSystem.UNIDADE], &"", e[NameSystem.TITULO]])

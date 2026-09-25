@@ -1,165 +1,174 @@
 # src/sim/systems/harvest_system.gd — a Colheita, e as duas maneiras de acabar
 # com um povo (§78).
 #
-# Tomar ou assimilar um povo nao da a producao dele: da uma Colheita, uns dias
-# em que aquela gente trabalha para ti, a vista de todos, e nao e livre. C = 6 +
-# 2 x povos ja detidos; por assimilacao, metade, arredondada para cima. Uma de
-# cada vez: a segunda conquista espera em fila. No fim, uma decisao — soltar ou
-# ficar — e nenhuma das duas e o final bom. Se a aldeia cair a noite a meio, o
-# povo perde-se.
+# Conquistar deixa de dar edificios: da uma divida de trabalho. Um povo tomado
+# trabalha para ti a 140% durante C = 6 + 2 x povos ja detidos dias (metade,
+# arredondada para cima, por assimilacao), fora das tuas muralhas. Uma Colheita
+# de cada vez — a seguinte espera em fila, a 100%. Se a aldeia cair a noite,
+# perde-se o povo sem escolha. No fim, uma decisao: soltar ou ficar.
 #
-# Puro, em colunas, pela ordem das conquistas. Os numeros sao do economy.csv; se
-# o marco cria raiz ao ficar e do peoples.csv. O que falta para isto se jogar e
-# a conquista (§13, Fase 2) e o gesto de decidir (Q-090).
+# Soltar da uma voz ao coro (§81); ficar da +80% de producao e poe o marco deles
+# a criar raiz — um Amargueiro que nao se corta, +22 por noite (§74). Nenhuma e
+# o final bom: as duas listas sao o epilogo (§79).
+#
+# Puro. Os campos do save sao os da §84. O que comeca uma Colheita e a conquista
+# (§13), que ainda nao existe; o gesto da decisao e o Verbo 1 no nucleo deles,
+# que ainda nao tem aldeia onde cair (Q-103).
 class_name HarvestSystem
 extends RefCounted
 
-enum Estado { EM_FILA, EM_COLHEITA, A_DECIDIR, SOLTO, FICADO, PERDIDO }
-enum { EV_COMECA, EV_EM_FILA, EV_DECIDIR, EV_SOLTO, EV_FICADO, EV_PERDIDO }
+enum Choice { NONE, RELEASE, KEEP }
+
+const EV_COMECA := 0
+const EV_DECIDIR := 1
+const EV_DECIDIDO := 2
+const EV_PERDIDO := 3
 
 const CHAVE := &"kind"
 const POVO := &"people"
-const DIAS := &"days"
 
-var peoples: PackedStringArray = PackedStringArray()
-var states: PackedByteArray = PackedByteArray()
-var days_left: PackedInt32Array = PackedInt32Array()
-var assimilated: PackedByteArray = PackedByteArray()
+var people: String = ""
+var days_left: int = 0
+var assimilated: bool = false
+var queue: PackedStringArray = PackedStringArray()
+## Em paralelo com a fila: 1 se esse povo foi assimilado e nao tomado.
+var queue_assimilated: PackedByteArray = PackedByteArray()
+## O povo cuja Colheita acabou e espera pela decisao. Ninguem decide por ti.
+var deciding: String = ""
+var released: PackedStringArray = PackedStringArray()
+var kept: PackedStringArray = PackedStringArray()
+var lost: PackedStringArray = PackedStringArray()
 
 var _curva: EconomyCurve
-var _povos: Dictionary
 
 
-## `povos` e PeopleData por id: o marco de quem fica cria raiz, ou nao (§78).
-func _init(curva: EconomyCurve, povos: Dictionary) -> void:
+func _init(curva: EconomyCurve) -> void:
+	assert(curva != null, "a Colheita precisa do EconomyCurve")
 	_curva = curva
-	_povos = povos
 
 
-func state_of(people_id: StringName) -> int:
-	var i := peoples.find(String(people_id))
-	return states[i] if i != -1 else -1
-
-
-## Quantos dias dura a proxima: C = base + por_povo x ja detidos; por
-## assimilacao, a fraccao do CSV, arredondada para cima (§78).
-func duration(por_assimilacao: bool) -> int:
-	var c := _curva.colheita_base_days + _curva.colheita_per_people * held()
+## C = base + por_povo x detidos; por assimilacao, factor dela, para cima.
+func duration(detidos: int, por_assimilacao: bool) -> int:
+	var c := _curva.colheita_base_days + _curva.colheita_per_people * detidos
 	if por_assimilacao:
-		return ceili(c * _curva.colheita_assimilation_factor)
+		return ceili(float(c) * _curva.colheita_assimilation_factor)
 	return c
 
 
-## Os povos ja detidos: soltos, ficados, e o que estiver em Colheita.
+## Os povos que ja detens: soltos, ficados, o que esta a ser colhido, o que
+## espera pela decisao e os que esperam em fila. Os perdidos ja nao.
 func held() -> int:
-	var n := 0
-	for e in states:
-		if e in [Estado.SOLTO, Estado.FICADO, Estado.EM_COLHEITA, Estado.A_DECIDIR]:
-			n += 1
-	return n
+	var n := released.size() + kept.size() + queue.size()
+	return n + (1 if people != "" else 0) + (1 if deciding != "" else 0)
 
 
-## Conquistar ou assimilar. Com uma Colheita a decorrer, o povo entra em fila:
-## "Conquistar um povo com uma Colheita a decorrer nao a duplica" (§78).
-func conquer(people_id: StringName, por_assimilacao: bool) -> Dictionary:
-	var dias := duration(por_assimilacao)
-	var ocupada := _atual() != -1
-	peoples.append(String(people_id))
-	assimilated.append(int(por_assimilacao))
-	states.append(Estado.EM_FILA if ocupada else Estado.EM_COLHEITA)
-	days_left.append(0 if ocupada else dias)
-	if ocupada:
-		return {CHAVE: EV_EM_FILA, POVO: people_id}
-	return {CHAVE: EV_COMECA, POVO: people_id, DIAS: dias}
+## Um povo tomado ou assimilado. Falso se ja passou por aqui.
+func conquer(povo: StringName, por_assimilacao: bool) -> bool:
+	var id := String(povo)
+	if id == people or id == deciding or queue.has(id):
+		return false
+	if released.has(id) or kept.has(id) or lost.has(id):
+		return false
+	queue.append(id)
+	queue_assimilated.append(1 if por_assimilacao else 0)
+	_seguinte()
+	return true
 
 
-## A alvorada: a Colheita anda um dia; acabada, espera pela decisao.
+## Cada alvorada e um dia de trabalho. No ultimo, o povo espera pela decisao.
 func at_dawn() -> Array[Dictionary]:
-	var i := _atual()
-	if i == -1 or states[i] != Estado.EM_COLHEITA:
+	if people == "":
 		return []
-	days_left[i] -= 1
-	if days_left[i] > 0:
+	days_left -= 1
+	if days_left > 0:
 		return []
-	states[i] = Estado.A_DECIDIR
-	return [{CHAVE: EV_DECIDIR, POVO: StringName(peoples[i])}]
+	deciding = people
+	people = ""
+	return [{CHAVE: EV_DECIDIR, POVO: deciding}]
 
 
-## Soltar ou ficar (§78). So quando a Colheita acabou; e a seguinte da fila
-## comeca logo, com a duracao contada nesse momento.
-func decide(people_id: StringName, soltar: bool) -> Array[Dictionary]:
-	var i := peoples.find(String(people_id))
-	if i == -1 or states[i] != Estado.A_DECIDIR:
-		return []
-	states[i] = Estado.SOLTO if soltar else Estado.FICADO
-	var eventos: Array[Dictionary] = [{CHAVE: EV_SOLTO if soltar else EV_FICADO, POVO: people_id}]
-	eventos.append_array(_proxima())
-	return eventos
+func decide(escolha: Choice) -> Dictionary:
+	if deciding == "" or escolha == Choice.NONE:
+		return {}
+	if escolha == Choice.RELEASE:
+		released.append(deciding)
+	else:
+		kept.append(deciding)
+	var e := {CHAVE: EV_DECIDIDO, POVO: deciding}
+	deciding = ""
+	_seguinte()
+	return e
 
 
-## A aldeia caiu a noite a meio da Colheita: perde-se o povo, a decisao e a
-## arquitetura. So a que esta em Colheita pode cair assim.
-func fall(people_id: StringName) -> Array[Dictionary]:
-	var i := peoples.find(String(people_id))
-	if i == -1 or states[i] != Estado.EM_COLHEITA:
-		return []
-	states[i] = Estado.PERDIDO
-	var eventos: Array[Dictionary] = [{CHAVE: EV_PERDIDO, POVO: people_id}]
-	eventos.append_array(_proxima())
-	return eventos
+## A aldeia em Colheita caiu a noite: acaba ali, sem escolha (§78).
+func fall() -> Dictionary:
+	if people == "":
+		return {}
+	var e := {CHAVE: EV_PERDIDO, POVO: people}
+	lost.append(people)
+	people = ""
+	days_left = 0
+	_seguinte()
+	return e
 
 
-func released() -> int:
-	return states.count(Estado.SOLTO)
-
-
-func kept() -> int:
-	return states.count(Estado.FICADO)
-
-
-## A producao daquela terra, em multiplo: 140% em Colheita, +80% para sempre se
-## ficaste; soltos e em fila produzem o normal (§78).
-func production_mult(people_id: StringName) -> float:
-	match state_of(people_id):
-		Estado.EM_COLHEITA, Estado.A_DECIDIR:
-			return _curva.colheita_production_mult
-		Estado.FICADO:
-			return 1.0 + _curva.keep_production_bonus
+## A producao daquela terra: 140% em Colheita, +80% para sempre se ficou.
+func production_mult(povo: StringName) -> float:
+	var id := String(povo)
+	if id == people:
+		return _curva.colheita_production_mult
+	if kept.has(id):
+		return 1.0 + _curva.keep_production_bonus
 	return 1.0
 
 
-## A massa dos marcos que criaram raiz: cada povo ficado cujo marco enraiza pesa
-## keep_landmark_mass todas as noites, e nao se corta (§78).
-func landmark_mass() -> float:
-	var n := 0
-	for i in peoples.size():
-		var povo := _povos.get(StringName(peoples[i])) as PeopleData
-		if states[i] == Estado.FICADO and povo != null and povo.landmark_roots:
-			n += 1
-	return n * _curva.keep_landmark_mass
+## Os marcos que criaram raiz — um por povo que ficou.
+func landmarks() -> int:
+	return kept.size()
+
+
+## As vozes do coro noturno: tantas quantos povos soltos (§78, §81).
+func voices() -> int:
+	return released.size()
 
 
 func to_dict() -> Dictionary:
-	return Columns.to_dict(self)
+	return {
+		&"colheita_people": people,
+		&"colheita_days": days_left,
+		&"colheita_assimilated": assimilated,
+		&"colheita_queue": queue,
+		&"colheita_queue_assimilated": queue_assimilated,
+		&"colheita_deciding": deciding,
+		&"peoples_released": released,
+		&"peoples_kept": kept,
+		&"peoples_lost": lost,
+	}
 
 
 func from_dict(d: Dictionary) -> void:
-	Columns.from_dict(self, d)
+	people = d.get(&"colheita_people", people)
+	days_left = d.get(&"colheita_days", days_left)
+	assimilated = d.get(&"colheita_assimilated", assimilated)
+	queue = d.get(&"colheita_queue", queue)
+	queue_assimilated = d.get(&"colheita_queue_assimilated", queue_assimilated)
+	deciding = d.get(&"colheita_deciding", deciding)
+	released = d.get(&"peoples_released", released)
+	kept = d.get(&"peoples_kept", kept)
+	lost = d.get(&"peoples_lost", lost)
+	while queue_assimilated.size() < queue.size():
+		queue_assimilated.append(0)
 
 
-## A que esta a decorrer ou a espera de decisao, ou -1.
-func _atual() -> int:
-	for i in states.size():
-		if states[i] == Estado.EM_COLHEITA or states[i] == Estado.A_DECIDIR:
-			return i
-	return -1
-
-
-func _proxima() -> Array[Dictionary]:
-	var i := states.find(Estado.EM_FILA)
-	if i == -1:
-		return []
-	var dias := duration(bool(assimilated[i]))  # antes de contar: nao se detem a si proprio
-	states[i] = Estado.EM_COLHEITA
-	days_left[i] = dias
-	return [{CHAVE: EV_COMECA, POVO: StringName(peoples[i]), DIAS: days_left[i]}]
+## Comeca a seguinte da fila, se nao ha nenhuma a decorrer nem a decidir. Conta
+## os povos ja detidos ANTES dela — "a primeira conquista dura 6 dias".
+func _seguinte() -> void:
+	if people != "" or deciding != "" or queue.is_empty():
+		return
+	var id := queue[0]
+	var por_assimilacao := queue_assimilated[0] == 1
+	queue.remove_at(0)
+	queue_assimilated.remove_at(0)
+	days_left = duration(held(), por_assimilacao)
+	people = id
+	assimilated = por_assimilacao

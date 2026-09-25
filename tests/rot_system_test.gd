@@ -167,73 +167,62 @@ func test_o_rasto_cobre_o_que_ela_ja_atravessou() -> void:
 	assert_bool(rot.trail_covers(LARGURA)).is_false()
 
 
-# ─── XIII-02: o termo dos Amargueiros na massa (§74) ────────────────────────
+# ─── XIII-02: o termo dos Amargueiros na massa (§74) ─────────────────────────
 
 
-func test_d01_a_tabela_da_74_sai_do_proprio_rot_system() -> void:
-	# O D-01 mede o modelo de referencia; este mede o sistema que a noite usa.
-	# As quatro linhas da tabela ao dia 20, e a nota das tres fortalezas.
-	var linhas := [[0, 0, 0, 400.0], [0, 3, 0, 466.0], [0, 8, 0, 576.0], [0, 5, 3, 645.0]]
-	linhas.append([3, 0, 0, 490.0])
-	for l: Array in linhas:
+func test_a_tabela_da_74_sai_do_sistema_e_nao_so_do_modelo() -> void:
+	# O D-01 prova a tabela contra o modelo de referencia; isto prova que o
+	# RotSystem a le igual. [dia, anonimos, nomeados, massa] — as quatro linhas
+	# da §74 nas tres colunas, com zero fortalezas e zero recusas.
+	var tabela := [
+		[5, 0, 0, 130.0],
+		[10, 0, 0, 220.0],
+		[20, 0, 0, 400.0],
+		[5, 3, 0, 196.0],
+		[10, 3, 0, 286.0],
+		[20, 3, 0, 466.0],
+		[5, 8, 0, 306.0],
+		[10, 8, 0, 396.0],
+		[20, 8, 0, 576.0],
+		[5, 5, 3, 375.0],
+		[10, 5, 3, 465.0],
+		[20, 5, 3, 645.0],
+	]
+	for linha in tabela:
 		var rot := _mancha()
-		rot.fortresses = l[0]
-		rot.amargueiros = l[1]
-		rot.named_amargueiros = l[2]
-		rot.spawn(20, DIREITA, LARGURA)
-		var msg := "fortalezas %d, arvores %d, nomeadas %d" % [l[0], l[1], l[2]]
-		assert_float(rot.mass()).override_failure_message(msg).is_equal(l[3])
-		assert_float(rot.mass()).is_equal(Referencia.rot_mass(20, l[0], _perfil(), l[1], l[2]))
+		rot.amargueiros = linha[1]
+		rot.named_amargueiros = linha[2]
+		rot.spawn(linha[0], DIREITA, LARGURA)
+		var msg := "dia %d, %d + %d nomeados" % [linha[0], linha[1], linha[2]]
+		assert_float(rot.mass()).override_failure_message(msg).is_equal(linha[3])
+		var ref := Referencia.rot_mass(linha[0], 0, _perfil(), linha[1], linha[2])
+		assert_float(rot.mass()).is_equal(ref)
 
 
-func test_as_arvores_so_pesam_na_noite_seguinte_a_serem_contadas() -> void:
-	# A massa escreve-se ao crepusculo: uma arvore que nasce a meio da noite
-	# nao engorda a mancha que ja esta no campo — engorda a de amanha.
+func test_as_arvores_so_pesam_na_noite_seguinte() -> void:
+	# §74: o Amargueiro "alimenta a noite seguinte". A massa escreve-se ao
+	# crepusculo; uma arvore que nasce depois nao engorda a mancha ja no campo.
 	var rot := _mancha()
-	rot.spawn(5, DIREITA, LARGURA)
-	var hoje := rot.mass()
+	rot.spawn(20, DIREITA, LARGURA)
 	rot.amargueiros = 3
-	assert_float(rot.mass()).is_equal(hoje)
-	rot.spawn(6, DIREITA, LARGURA)
-	var p := _perfil()
-	assert_float(rot.mass()).is_equal(hoje + p.mass_per_day + 3 * p.mass_per_amargueiro)
+	assert_float(rot.mass()).is_equal(400.0)
+	rot.retreat()
+	rot.spawn(20, DIREITA, LARGURA)
+	assert_float(rot.mass()).is_equal(466.0)
 
 
-func test_as_recusas_somam_ate_ao_teto_e_nunca_mais() -> void:
-	# §74 e §75: min(recusas nos ultimos 5 dias, 5), e o D-04 poe-lhe o teto.
-	var p := _perfil()
-	var limpa := _mancha()
-	limpa.spawn(10, DIREITA, LARGURA)
-	for recusas in [1, 5, 30]:
-		var rot := _mancha()
-		rot.refusals = recusas
-		rot.spawn(10, DIREITA, LARGURA)
-		var esperado := minf(p.refusal_mass * mini(recusas, p.refusal_window_days), p.refusal_cap)
-		assert_float(rot.mass() - limpa.mass()).is_equal(esperado)
-		assert_float(rot.mass()).is_equal(Referencia.rot_mass(10, 0, p, 0, 0, recusas))
-
-
-func test_o_que_o_jogador_escreveu_de_dia_sobrevive_ao_save() -> void:
+func test_o_save_guarda_o_que_o_jogador_escreveu_de_dia() -> void:
 	var rot := _mancha()
-	rot.fortresses = 1
-	rot.amargueiros = 4
-	rot.named_amargueiros = 2
-	rot.refusals = 3
-	var copia := _mancha()
-	copia.from_dict(rot.to_dict())
-	copia.spawn(9, DIREITA, LARGURA)
-	rot.spawn(9, DIREITA, LARGURA)
-	assert_float(copia.mass()).is_equal(rot.mass())
+	rot.fortresses = 3
+	rot.amargueiros = 5
+	rot.named_amargueiros = 3
+	rot.spawn(20, DIREITA, LARGURA)
 
+	var lida := _mancha()
+	lida.from_dict(rot.to_dict())
+	lida.spawn(20, DIREITA, LARGURA)
 
-func test_os_marcos_dos_povos_ficados_pesam_na_noite() -> void:
-	# §78: ficar faz o marco criar raiz, e ele pesa todas as noites.
-	var limpa := _mancha()
-	limpa.spawn(10, DIREITA, LARGURA)
-	var rot := _mancha()
-	rot.landmarks = SimFactory.curve().keep_landmark_mass
-	rot.spawn(10, DIREITA, LARGURA)
-	assert_float(rot.mass() - limpa.mass()).is_equal(SimFactory.curve().keep_landmark_mass)
-	var copia := _mancha()
-	copia.from_dict(rot.to_dict())
-	assert_float(copia.landmarks).is_equal(rot.landmarks)
+	assert_int(lida.amargueiros).is_equal(5)
+	assert_int(lida.named_amargueiros).is_equal(3)
+	assert_float(lida.mass()).is_equal(rot.mass())
+	assert_float(lida.mass()).is_equal(Referencia.rot_mass(20, 3, _perfil(), 5, 3))

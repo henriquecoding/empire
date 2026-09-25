@@ -75,10 +75,11 @@ static func _obras(
 		if vaga.band != faixa or not over(vaga, x):
 			continue
 		var falta := owed_by(vaga)
-		if falta <= 0 or not SimLoop.builds.can_climb(vaga, SimLoop.state):
+		var madeira := SimLoop.night.amargueiros
+		if falta <= 0 or not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira):
 			continue
 		var caixa := BuildView.drawn_box(vaga, Silhouette.of_slot(vaga, edificios))
-		stack(canvas, vaga.x, caixa.position.y, falta, saco)
+		_moedas(canvas, vaga.x, caixa.position.y, falta, saco)
 
 
 ## Se uma moeda largada daqui cai NESTA obra. E a meia largura com que o
@@ -127,16 +128,17 @@ static func _gente(
 			continue
 		var dados: UnitData = tropas.get(unidades.data_ids[i])
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(faixa), alto)
+		var em := Smoothing.x_of(Smoothing.Group.UNITS, unidades.ids[i], unidades.xs[i])
+		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, em, int(faixa), alto)
 		# A cabeca do §25 — o chapeu — desenha-se por cima da caixa, e o preco
 		# tem de ficar acima dele para nao lhe assentar em cima.
-		stack(canvas, unidades.xs[i], caixa.position.y - WorldPalette.BARRA, falta, saco)
+		_moedas(canvas, em, caixa.position.y - WorldPalette.BARRA, falta, saco)
 
 
 ## `falta` moedas empilhadas sobre (x, topo), de baixo para cima. As primeiras
 ## `saco` saem douradas — sao as que ja podes pousar ali — e as outras apagadas.
 ## Contam-se: e para isso que ha uma por moeda e nao um algarismo.
-static func stack(canvas: CanvasItem, x: float, topo: float, falta: int, saco: int) -> void:
+static func _moedas(canvas: CanvasItem, x: float, topo: float, falta: int, saco: int) -> void:
 	var base := topo - ACIMA
 	for n in falta:
 		var fila := n / POR_FILA

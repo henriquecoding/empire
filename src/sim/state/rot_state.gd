@@ -27,9 +27,6 @@ var next_summon_at: float = 0.0
 
 ## O rasto, do sitio onde nasceu ate onde ja chegou. Persiste ate ao DAWN
 ## seguinte e e o que o §49 le para saber que um edificio nao produz hoje.
-## Segundos que ainda fica parada: a oferta "Da-me o que ja nao anda" (§75).
-var paused_for: float = 0.0
-
 var trail_from: float = 0.0
 var trail_to: float = 0.0
 
@@ -44,7 +41,6 @@ func to_dict() -> Dictionary:
 		&"mass": mass,
 		&"side": side,
 		&"next_summon_at": next_summon_at,
-		&"paused_for": paused_for,
 		&"trail_from": trail_from,
 		&"trail_to": trail_to,
 	}
@@ -57,6 +53,5 @@ func from_dict(d: Dictionary) -> void:
 	mass = d.get(&"mass", mass)
 	side = d.get(&"side", side)
 	next_summon_at = d.get(&"next_summon_at", next_summon_at)
-	paused_for = d.get(&"paused_for", paused_for)
 	trail_from = d.get(&"trail_from", trail_from)
 	trail_to = d.get(&"trail_to", trail_to)

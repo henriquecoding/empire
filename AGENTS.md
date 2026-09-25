@@ -63,25 +63,31 @@ src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
 src/core/sim_factory.gd     SimFactory    monta os sistemas puros a partir do Registry
 src/core/event_relay.gd     EventRelay    traduz o que os sistemas devolvem para a §46
 src/core/intent_queue.gd    IntentQueue   a fila de intencoes do §61
-src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar
+src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar, e o que fica (§74)
 src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
 src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
-src/sim/systems/amargueiro_system.gd AmargueiroSystem quem fica no campo cria raiz (§74)
-src/sim/systems/offer_system.gd OfferSystem a Oferta: uma por noite, no prato (§75)
-src/sim/systems/debt_ledger.gd DebtLedger  a Divida da Candeia, que nunca desce (§75)
+src/sim/systems/dawn_cascade.gd DawnCascade a frente da luz que solta os postos (§24, GB-21)
 src/sim/systems/secret_sites.gd SecretSites onde estao os segredos, e quem os acha (§17)
-src/sim/systems/name_system.gd NameSystem  ninguem tem nome ate merecer um (§76)
-src/sim/systems/requires.gd Requires      a gramatica da coluna requires (§75)
-src/sim/systems/walls.gd    Walls         onde acaba o "dentro das muralhas" (§74, §75)
 src/sim/systems/epilogue.gd Epilogue      qual dos tres finais, por precedencia (§79, ADR 0018)
-src/sim/systems/harvest_system.gd HarvestSystem a Colheita: soltar ou ficar (§78)
-src/core/offer_desk.gd      OfferDesk     quando a mancha fala, o preco e o efeito (§75)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
+src/sim/systems/amargueiro_system.gd AmargueiroSystem o que a noite deixa no campo (§74)
+src/sim/systems/amargueiro_roots.gd AmargueiroRoots quem se levanta na alvorada, e onde (§74)
+src/sim/state/amargueiro_save.gd AmargueiroSave as arvores em tipos base (§84)
+src/sim/systems/offer_system.gd OfferSystem  a Oferta: uma por noite, no prato (§75)
+src/sim/systems/offer_rules.gd OfferRules    a gramatica da coluna requires (§75)
+src/sim/systems/offer_price.gd OfferPrice    se o preco caiu no prato (§75)
+src/sim/systems/debt_ledger.gd DebtLedger    a Divida da Candeia e as recusas (§75)
+src/sim/systems/tender.gd   Tender        o Zelador (§75)
+src/sim/systems/title_system.gd TitleSystem  quem tem nome, o teto, o luto e o ordinal (§76)
+src/sim/systems/feat_ledger.gd FeatLedger    os feitos registados (§76)
+src/sim/systems/harvest_system.gd HarvestSystem a Colheita: soltar ou ficar (§78)
+src/core/offer_watch.gd     OfferWatch    a voz da Podridao: falar, cobrar, dar (§75)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
+src/core/preferences.gd     Preferences   o tremor e os claroes, em user://settings.cfg (§26, §45)
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
@@ -93,11 +99,8 @@ src/world/actor_art.gd      ActorArt      o que uma tropa E, por dentro da caixa
 src/world/creature_art.gd   CreatureArt   o que um bicho E, por dentro da caixa (§22, §25)
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
 src/world/amargueiro_view.gd AmargueiroView a arvore com a cara na casca, e o Marco (§74)
-src/world/offer_view.gd     OfferView     o prato e a frase da Oferta (§75)
-src/world/wall_site.gd      WallSite      o sitio de muro: a escada do §10 e o Lenho (§74)
-src/world/name_view.gd      NameView      a fita de quem tem nome, e quem espera (§76)
-src/world/site_view.gd      SiteView      a camara, a estatua e a placa do capitulo (§17, §83)
-src/world/biome_greybox.gd  BiomeGreybox  a greybox de cada bioma, em formas lisas (GB-02)
+src/world/offer_view.gd     OfferView     o prato, a frase e o Zelador (§75)
+src/world/title_view.gd     TitleView     a fita de quem tem nome (§76)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
@@ -106,16 +109,30 @@ src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco
 src/world/price_tag.gd      PriceTag      o preco do que esta debaixo do rei (§24, §55, GB-05)
 src/world/impact_view.gd    ImpactView    o golpe que se ve: flash e particula (§24, GB-08)
 src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-09)
+src/world/smoothing.gd      Smoothing     o render interpola entre dois ticks (§40 I5, GB-10)
+src/world/passage_cue.gd    PassageCue    onde o Verbo 2 pega, dito no sitio (§11, §25, GB-14)
+src/world/dawn_sweep.gd     DawnSweep     o amanhecer que se ve chegar (§24, GB-17)
+src/world/sky_view.gd       SkyView       o ceu, e o sol e a lua que dizem a hora (§24, GB-18)
+src/world/coin_bounce.gd    CoinBounce    o pequeno bounce da moeda, so no ecra (§24, GB-19)
+src/world/accessibility_filter.gd AccessibilityFilter contraste e daltonismo, por cima do mundo (§26)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
 src/world/world_light.gd    WorldLight    as tres paragens da luz e o raio da candeia
+src/world/wall_site.gd      WallSite      o sitio de muro: a escada do §10 e o Lenho (§74)
+src/world/site_view.gd      SiteView      a camara, a estatua e a placa do capitulo (§17, §83)
+src/world/biome_greybox.gd  BiomeGreybox  a greybox de cada bioma, em formas lisas (GB-02)
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)
 src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
 src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
+src/ui/pause_menu.gd        PauseMenu     a pausa e o fim da partida (§24, §16)
+src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26, GB-15)
+src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)
+src/ui/hud_text.gd          HudText       o texto do painel, por chave (§27, GB-27)
+src/ui/options_panel.gd     OptionsPanel  as opcoes da pausa, e o idioma (§26, §27)
 scenes/boot.tscn                          cena principal do project.godot
 scenes/game.tscn                          a cena de jogo, instanciada pela boot
 
@@ -131,13 +148,14 @@ src/core/sim_loop.gd        SimLoop                nucleo        core/, sim/
 src/core/sim_factory.gd     SimFactory             nucleo        core/, sim/
 src/core/event_relay.gd     EventRelay             nucleo        core/, sim/
 src/core/night_watch.gd     NightWatch             nucleo        core/, sim/
+src/core/offer_watch.gd     OfferWatch             nucleo        core/, sim/
 src/core/verbs.gd           Verbs                  nucleo        core/, sim/
-src/core/offer_desk.gd      OfferDesk              nucleo        core/, sim/
 src/core/intent_queue.gd    IntentQueue            nucleo        nada
 src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada
 src/core/registry.gd        Registry               nucleo        sim/
 src/core/save_service.gd    SaveService            nucleo        sim/
+src/core/preferences.gd     Preferences            nucleo        nada
 src/world/*.gd              BandLayers, CameraRig  apresentacao  core/, sim/
 src/actors/*.gd             UnitView, KingView...  apresentacao  core/, sim/
 src/ui/*.gd                 InputRouter, Hud...    apresentacao  core/, sim/
@@ -152,6 +170,11 @@ ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca e
 3. Implementa o minimo que o faz passar.
 4. Corre ./run_tests.sh — e `make vistoria` se mexeste no tick ou no mundo.
 5. So com tudo verde, propoe o diff, com a checklist do PR preenchida.
+6. A `main` e o ramo por omissao, e e la que o trabalho feito vive. Regra do
+   dono: tudo o que estiver feito — suite e portoes verdes — entra na `main`
+   no fim da sessao, por PR, e nao fica num ramo de trabalho a espera. Antes
+   de abrir o PR, junta a `main` ao ramo e volta a correr tudo. Um PR em
+   rascunho nao esta feito: nao se junta sem o dono dizer.
 
 ## O que nao fazer
 - Nao inventes mecanicas. Se a spec nao cobre o caso, escreve a pergunta em

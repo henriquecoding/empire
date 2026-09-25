@@ -8,6 +8,7 @@
 # src/sim/, quem os monta e o SimFactory, quem traduz o que devolvem e o
 # EventRelay. Aqui fica a ORDEM, e o Verbo 1.
 #
+# Passos 9 e 10 continuam por escrever, e continuam como linha (Fase 2).
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
@@ -47,8 +48,9 @@ var intents := IntentQueue.new()
 ## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo.
 var king_id: int = UnitSystem.NENHUM
 
-## O que o mundo diz a simulacao: onde fica o nucleo, onde acaba a regiao, e em
-## que x se muda de faixa (§11, §21). Escritos pela cena, lidos pelo tick.
+## O que o mundo diz a simulacao sobre si proprio: onde fica o nucleo, onde
+## acaba a regiao, e em que x se pode mudar de faixa (§11, §21). Escritos pela
+## cena, lidos pelo tick.
 var core_x: float = 0.0
 var world_width: float = 0.0
 var passages: PackedFloat32Array = PackedFloat32Array()
@@ -95,7 +97,7 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 	_montar()
 	RngService.configure(estado.seed)
 	RngService.restore(rng_states)
-	ClockService.seek(estado.day, estado.clock_elapsed)
+	ClockService.seek(estado.day, estado.clock_elapsed, estado.day_seconds)
 	_running = true
 
 
@@ -150,28 +152,26 @@ func step(delta: float) -> void:
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
 	# 5 · MovementSystem — todo o tick. O king_id vai junto porque o §24 da ao
 	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
-	#     preso em FIGHT como fica quem a §52 conduz.
-	units.tick_movement(delta, king_id)
+	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
+	#     atras da luz (§24, DawnCascade).
+	units.tick_movement(delta, king_id, ClockService.dawn_front())
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
-	# 5 · apanhar, pagar e ser recrutado sao consequencia de uma chegada, e vem a
-	#     seguir ao movimento (Q-063, Q-064). O prato da §75 primeiro — e um alvo
-	#     por cima do que estiver no chao —, depois a obra e a arvore.
-	_largar(OfferDesk.tick(delta, night))
-	EventRelay.builds(builds.absorb(coins, state))
-	if mudou and _fase == GameClock.Phase.DAWN:
-		EventRelay.names(night.dawn(state, units, builds, core_x, jobs))  # 5 · §74, §76
-	EventRelay.amargueiros(night.trees.tick(delta, units, coins), state)
+	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
+	#     chegada — da moeda ou de quem a vai buscar — e por isso vem a seguir ao
+	#     movimento e nao no passo do sistema que os trata (Q-063, Q-064). A obra
+	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
+	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
+	EventRelay.builds(builds.absorb(coins, state, night.amargueiros))
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, king_id, state))
-	var golpes := combat.resolve(units, creatures, builds, _roll)  # 6 · combate
-	night.names.observe(golpes, units, night.rot)  # 6 · os feitos do §76
-	_largar(EventRelay.combat(golpes))
+	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
-	# 9 · DiplomacySystem e 10 · KingAISystem — por escrever, Fase 2
+	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
+	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
 
 	_espelhar_relogio()
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado
@@ -194,8 +194,8 @@ func _montar() -> void:
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()
 	economy = SimFactory.economy()
-	night = NightWatch.new()
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
+	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
 	tally.reset()
 	_fase = UnitSystem.NENHUM
@@ -220,7 +220,7 @@ func _mudanca_de_fase() -> bool:
 
 func _largar(moedas: Array[Dictionary]) -> void:
 	for m in moedas:
-		if m[EventRelay.PORQUE] == Verbs.JOGADOR and night.consecrate_at(state, m, units, king_id):
+		if m[EventRelay.PORQUE] == Verbs.JOGADOR and night.consecrate_at(state, m, king_id):
 			continue
 		drop_coin(
 			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]
@@ -238,6 +238,7 @@ func _physics_process(delta: float) -> void:
 func _espelhar_relogio() -> void:
 	state.day = ClockService.clock.day
 	state.clock_elapsed = ClockService.clock.elapsed
+	state.day_seconds = ClockService.clock.day_seconds()
 
 
 func _no_amanhecer(dia: int) -> void:
