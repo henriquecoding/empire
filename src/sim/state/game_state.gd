@@ -34,6 +34,14 @@ var day_seconds: float = 0.0
 ## 0 nunca seja um id valido e sirva de "nenhum".
 var next_id: int = 1
 
+## A Semente Real (§44): paga consagrar e classes. O Lenho Amargo, que tambem
+## nao e moeda, e guardado pelo AmargueiroSystem.
+var royal_seeds: int = 0
+## Os povos conquistados (§13), pelo id: e o que o requires_conquest le.
+var conquests: PackedStringArray = PackedStringArray()
+## Os segredos ja encontrados (§17). Um segredo so da a recompensa uma vez.
+var found: PackedStringArray = PackedStringArray()
+
 
 ## Le um dicionario ja validado. Campos em falta ficam no valor por omissao e
 ## campos desconhecidos ignoram-se: um save de outra versao degrada em vez de
@@ -46,6 +54,9 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.next_id = _inteiro(d, &"next_id", estado.next_id)
 	estado.clock_elapsed = _real(d, &"clock_elapsed", estado.clock_elapsed)
 	estado.day_seconds = _real(d, &"day_seconds", estado.day_seconds)
+	estado.royal_seeds = _inteiro(d, &"royal_seeds", estado.royal_seeds)
+	estado.conquests = _textos(d, &"conquests")
+	estado.found = _textos(d, &"found")
 	return estado
 
 
@@ -65,6 +76,9 @@ func to_dict() -> Dictionary:
 		&"clock_elapsed": clock_elapsed,
 		&"day_seconds": day_seconds,
 		&"next_id": next_id,
+		&"royal_seeds": royal_seeds,
+		&"conquests": conquests,
+		&"found": found,
 	}
 
 
@@ -72,6 +86,12 @@ static func _inteiro(d: Dictionary, chave: StringName, omissao: int) -> int:
 	if d.has(chave) and typeof(d[chave]) == TYPE_INT:
 		return d[chave]
 	return omissao
+
+
+static func _textos(d: Dictionary, chave: StringName) -> PackedStringArray:
+	if d.has(chave) and typeof(d[chave]) == TYPE_PACKED_STRING_ARRAY:
+		return d[chave]
+	return PackedStringArray()
 
 
 static func _real(d: Dictionary, chave: StringName, omissao: float) -> float:

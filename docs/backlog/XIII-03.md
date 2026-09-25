@@ -8,7 +8,7 @@ Depende   XIII-02, F1-06, ART-04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Os três destinos com o Verbo 1; a cara na casca; a candeia com raio e cor do rot.tres
 Fora      A Oferta — é o XIII-04. O cante da alvorada — é o XIII-09.
-Estado    feito, falta a Semente Real (Q-095)
+Estado    feito
 Horas     13 (10 + 3 arte)
 ```
 
@@ -24,6 +24,12 @@ Horas     13 (10 + 3 arte)
 - **A candeia** já estava: raio `150 + 4 × dia` com teto 260 e as três paragens de cor, lidos do `rot.tres` desde o F1-17 (`WorldLight`, `RotView`).
 - **O save** leva as árvores, o Lenho e a serra a meio, e repõe-nas depois das obras autoradas — provado pelo ficheiro, em `tests/save_world_test.gd`.
 - Perguntas abertas por este ticket: Q-094 (a largura da base), Q-095 (a Semente Real), Q-096 (recolher o corpo é o gesto do §16), Q-097 (o vagabundo rende como escala 1).
+- **Fechado na junção com o ramo `dossie-implementation-ymfkjl`:** a Semente Real sai da câmara atrás da
+  passagem (`root_chamber`) e consagra-se com o Verbo 1 em cima da árvore (Q-095). O Lenho gasta-se na
+  muralha: dispensa a Fornalha no nível 4, por segmento, e paga os 3 Lenhos do bastião, que é único por
+  império (`WallSite`, `BuildSystem.can_climb`). Testes: `tests/semente_jogo_test.gd`,
+  `tests/secret_sites_test.gd`, `tests/lenho_test.gd`. Sem povos conquistáveis, **a muralha de ferro só se
+  faz com os teus mortos** — é o §74 tal e qual.
 
 ---
 

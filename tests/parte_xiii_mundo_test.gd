@@ -116,7 +116,7 @@ func test_so_o_capitulo_sem_cancao_e_o_das_alminhas() -> void:
 
 func test_d13_o_epilogo_e_determinista_e_segue_a_precedencia() -> void:
 	# A tabela da §79, avaliada de cima para baixo, contra os quatro limiares
-	# do rot.csv. Nao precisa de sistema nenhum: e uma funcao pura.
+	# do rot.csv, pelo Epilogue — a funcao pura que o XIII-08 vai chamar.
 	var casos := [
 		[20, 6, 6, "dominio"],  # divida manda, mesmo com os seis soltos
 		[12, 0, 6, "dominio"],
@@ -134,16 +134,10 @@ func test_d13_o_epilogo_e_determinista_e_segue_a_precedencia() -> void:
 		)
 
 
-## A precedencia da §79, uma vez, para nao a haver escrita em dois sitios.
+## A precedencia da §79 vive no Epilogue (ADR 0018); aqui so se traduz o nome.
 func _epilogue(debt: int, kept: int, released: int) -> String:
-	var r := _rot()
-	if debt >= r.dominion_debt_min:
-		return "dominio"
-	if kept >= r.dominion_peoples_kept:
-		return "dominio"
-	if debt <= r.union_debt_max and released >= r.union_peoples_released:
-		return "uniao"
-	return "turno"
+	var nomes := {Epilogue.DOMINIO: "dominio", Epilogue.UNIAO: "uniao", Epilogue.TURNO: "turno"}
+	return nomes[Epilogue.of(debt, kept, released, _rot())]
 
 
 # ----------------------------------------------------------------- §84

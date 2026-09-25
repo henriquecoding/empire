@@ -1055,6 +1055,12 @@
   existe é quem o chame. Liga-se no dia em que a semente for uma coisa que sai da mão.
 - **Bloqueia:** o "Feito" do XIII-03 fica parcial por isto. **Decide:** o calendário — é o CrownSystem da
   Fase 2, e não uma decisão de design.
+- **Ligado depois (junção com o ramo `dossie-implementation-ymfkjl`):** a Semente passa a existir e a sair
+  da mão. `GameState.royal_seeds`; a primeira vem da câmara atrás da passagem (`root_chamber` em
+  `secrets.csv`, o minuto 11:00 do §25), que o rei acha ao entrar (`SecretSites`). E o gesto é o Verbo 1:
+  largar em cima de uma árvore de pé com uma Semente no império chama o `consecrate()` e a moeda volta ao
+  saco — *a moeda que largas é que decide*, e aqui decide a Semente. Sem Semente, cai a moeda. O inventário
+  do CrownSystem (§57) continua a ser da Fase 2; isto é o mínimo que fecha o destino.
 
 ### Q-096 · "Não é recolhida antes da alvorada" — não há gesto para recolher
 - **Onde:** §74 (*"uma tropa que morre fora das muralhas e não é recolhida antes da alvorada cria raiz"*;
@@ -1154,10 +1160,12 @@
   linha (`Fate.STANDING`).
 - **A primeira oferta:** a primeira da campanha é sempre *"Nada. Só quero ver."*, como o §83 manda. Mas o §83
   põe-na no crepúsculo do **dia 3** (17:00) e a tabela da §75 — e o `offers.csv` — dá-lhe **dia 2+**. Com os
-  dados como estão, ela fala na noite 2. Não mexi no `min_day`: é dado da §75 e a divergência é entre as duas
-  secções.
+  dados como estão, ela fala na noite 2. **Fechado pela ADR 0023:** o §83 manda; `min_day 3` e "Dia 3+" na
+  §75, e o `abertura_test` prova que a noite 2 fica calada.
 - **O que falta do segmento de abertura:** o vagabundo com `head_pool` fixo é arte (ART-01: no greybox todas as
-  caras são a mesma), e a bifurcação a três ecrãs para leste precisa dos Capítulos (XIII-07).
+  caras são a mesma), e a bifurcação a três ecrãs para leste precisa dos Capítulos (XIII-07). A **placa** da
+  bifurcação já está no segmento (`SecretSites.chapters`, a leste) e acende-se quando a primeira oferta é
+  paga; o capítulo que lá cai é do XIII-07.
 - **Decide:** tu.
 
 ## Resolvidas na v5.2 (reversíveis)

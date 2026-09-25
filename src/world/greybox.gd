@@ -23,7 +23,6 @@ const SEGMENTO := &"enramados_start_base_01"
 ## para as duas muralhas de cada lado caberem sem se encostarem ao nucleo.
 const ECRAS := 6
 
-const MURO := &"stakes"
 const CANTEIRO := &"farm"
 const PESQUEIRO := &"fishery"
 const GALINHEIRO := &"henhouse"
@@ -49,6 +48,12 @@ const GALINHEIROS_X := [-820.0, 820.0]
 const PESQUEIROS_X := [1200.0]
 const TORRES_ALTAS_X := [-1100.0, 1100.0]
 const PASSAGENS_X := [-950.0, 950.0]
+# Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
+# estatua meio enterrada; ao 11:00, a camara atras da passagem de fora, com a
+# Semente Real. E a bifurcacao a leste onde cai o capitulo revelado (§83).
+const SEGREDOS_X := {&"under_vegetation": 360.0, &"behind_passage": -1180.0}
+const CAMARA_W := 64.0
+const BIFURCACAO_X := 1800.0
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
 # distingue e o preco que o §07 lhes da: 1, 3 e 4.
@@ -62,7 +67,6 @@ const LANCEIROS_X := [-1100.0, 1000.0]
 const AMARGUEIRO_VELHO_X := -750.0
 const AMARGUEIRO_VELHO_ESCALA := 2
 
-const POSTO_MURO := &"wall"
 const POSTO_CANTEIRO := &"farm"
 const POSTO_TORRE := &"tower"
 const MEU_IMPERIO := 1
@@ -87,6 +91,7 @@ static func region() -> void:
 	SimLoop.world_width = largura * ECRAS
 	SimLoop.core_x = SimLoop.world_width * MEIO
 	SimLoop.passages = _deslocadas(PASSAGENS_X)
+	_segredos()
 
 	_nucleo()
 	for x in MUROS_X:
@@ -110,6 +115,15 @@ static func region() -> void:
 
 ## Se o bioma deste segmento sustenta este edificio (§06, §21). Sem exigencia,
 ## cabe em qualquer lado; com ela, so onde o segmento tem esse recurso.
+static func _segredos() -> void:
+	SimLoop.secrets.clear()
+	for recurso in Registry.entries(&"lore/secrets"):
+		var dados := recurso as SecretData
+		if SEGREDOS_X.has(dados.location):
+			SimLoop.secrets.post(dados, SimLoop.core_x + SEGREDOS_X[dados.location], CAMARA_W)
+	SimLoop.secrets.chapters.append(SimLoop.core_x + BIFURCACAO_X)
+
+
 static func cabe_no_bioma(dados: BuildingData) -> bool:
 	if dados.requires_biome_feature.is_empty():
 		return true
@@ -137,30 +151,9 @@ static func _nucleo() -> void:
 ## Um sitio de muro, vazio. Os cinco niveis do §10 sao os cinco degraus da
 ## escada, e sobe-se um de cada vez largando moedas em cima dele (§55).
 static func _muro(x: float) -> void:
-	var vaga := BuildSlot.new()
-	vaga.x = x
-	vaga.kind = MURO
-	vaga.blocks = true
-	vaga.job_id = POSTO_MURO
-	# A tabela do §10 inteira, os dois caminhos incluidos: a vida e os postos de
-	# A e de B, e os slots de contacto por nivel. Nenhum numero esta aqui.
-	for nivel in SimFactory.walls_by_level():
-		vaga.costs.append(nivel.cost)
-		# O §55 nao da build_work as muralhas. A regra proposta dos edificios —
-		# 2 s por moeda de custo — e a unica que o repositorio escreve, e e
-		# reversivel: ver docs/QUESTIONS.md, Q-064.
-		vaga.works.append(float(nivel.cost) * _segundos_por_moeda())
-		vaga.healths.append(nivel.max_health_b)
-		vaga.healths_a.append(nivel.max_health_a)
-		vaga.posts_a.append(nivel.guard_posts_a)
-		vaga.posts_b.append(nivel.guard_posts_b)
-		vaga.contacts.append(nivel.contact_slots)
-		vaga.width = maxf(vaga.width, float(nivel.shadow_width))
-	# §10: o nivel 1 e a base comum aos dois caminhos, e a escolha e do jogador.
-	# Enquanto a roda do rei nao existir (Q-067) ninguem lha pode pedir, e o que
-	# fica e a coluna que o §10 escreve como principal — a fortificacao (Q-070).
-	vaga.path = BuildSlot.Path.FORTIFICACAO
-	SimLoop.builds.post(vaga)
+	# A escada do §10 e o que cada degrau pede alem das moedas (§74) vivem no
+	# WallSite, para que quem monta uma regiao de teste monte o mesmo muro.
+	SimLoop.builds.post(WallSite.slot(x))
 
 
 ## O §06 da tres edificios um bioma obrigatorio — pesqueiro/agua, corte de
@@ -217,13 +210,6 @@ static func _por_recrutar(id: StringName, posicoes: Array) -> void:
 	var dados := Registry.entry(&"units", id) as UnitData
 	for x in posicoes:
 		SimLoop.units.spawn(SimLoop.state, dados, RecruitSystem.SEM_DONO, SimLoop.core_x + x)
-
-
-## A regra proposta de buildings.csv, lida do proprio CSV em vez de repetida:
-## build_work = 2 s x custo. Sai do canteiro, que e o edificio mais barato.
-static func _segundos_por_moeda() -> float:
-	var canteiro := Registry.entry(&"buildings", CANTEIRO) as BuildingData
-	return canteiro.build_work / float(canteiro.cost)
 
 
 ## Um PackedFloat32Array nao e expressao constante em GDScript, e por isso as

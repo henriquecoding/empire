@@ -11,10 +11,8 @@
 # Puro: nao e Node, nao conhece o catalogo de eventos e nao sorteia nada.
 # Devolve o que aconteceu; quem chama e que anuncia (§43, passo 11).
 #
-# O que NAO esta aqui, e nao e esquecimento: reparar uma obra DAMAGED com moeda
-# e o posto `repair` do F1-05 mais a habilidade do construtor (§09); a
-# apresentacao dos seis estados e ART-01; os slots de contacto do muro sao o
-# F1-06. Ver docs/QUESTIONS.md, Q-064.
+# Fora daqui: reparar com moeda (o posto `repair` e o §09) e a apresentacao dos
+# seis estados (ART-01). Ver docs/QUESTIONS.md, Q-064.
 class_name BuildSystem
 extends RefCounted
 
@@ -72,11 +70,16 @@ func clear() -> void:
 ## So absorve o que ainda falta pagar, e so em EMPTY (a obra por comecar) ou
 ## DONE (o degrau seguinte). Uma obra a meio nao aceita moeda: pagar mais nao a
 ## faz andar mais depressa — quem a faz andar e quem esta la.
-func absorb(moedas: CoinSystem) -> Array[Dictionary]:
+##
+## `estado` traz as conquistas e `madeira` o Lenho (§74); sem eles, so contam as
+## moedas. Um degrau que pede Lenho gasta-o quando a obra comeca.
+func absorb(
+	moedas: CoinSystem, estado: GameState = null, madeira: AmargueiroSystem = null
+) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
 		var custo := vaga.next_cost()
-		if custo == NENHUM or not _aceita(vaga):
+		if custo == NENHUM or not _aceita(vaga) or not can_climb(vaga, estado, madeira):
 			continue
 		var apanhadas := _moedas_na_obra(moedas, vaga)
 		if apanhadas.is_empty():
@@ -88,11 +91,33 @@ func absorb(moedas: CoinSystem) -> Array[Dictionary]:
 		vaga.paid += valor
 		eventos.append({CHAVE: EV_PAGA, VAGA: vaga, QUANTO: valor})
 		if vaga.paid >= custo:
+			if estado != null and madeira != null:
+				madeira.bitter_wood -= vaga.woods_for_next(estado.conquests)
 			vaga.paid -= custo
 			vaga.progress = 0.0
 			vaga.state = BuildSlot.State.SCAFFOLD
 			eventos.append({CHAVE: EV_INICIADA, VAGA: vaga})
 	return eventos
+
+
+## Se o degrau seguinte desta obra se pode pagar ja: o Lenho que pede esta
+## guardado e, sendo unico por imperio, nenhuma outra muralha o tem nem o esta a
+## levantar (§10, §74). Uma moeda largada num degrau que nao sobe fica no chao.
+func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
+	if estado == null or madeira == null:
+		return true
+	var lenho := vaga.woods_for_next(estado.conquests)
+	if lenho == NENHUM or lenho > madeira.bitter_wood:
+		return false
+	if not vaga.next_unique():
+		return true
+	for outra in slots:
+		if outra == vaga or not outra.two_paths():
+			continue
+		var a_subir := outra.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]
+		if outra.level > vaga.level or (a_subir and outra.level == vaga.level):
+			return false
+	return true
 
 
 ## Passo 8 do §43, todos os ticks. Avanca as obras que tem gente em cima.
@@ -156,10 +181,8 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	return achada
 
 
-## Verdadeiro se existe uma obra deste tipo e ja nao esta de pe. Serve o §10 na
-## unica frase em que o nucleo e diferente de tudo o resto: "se cair, cai a
-## partida". A derrota le-se do mundo, e nao de um estado a parte que pudesse
-## divergir dele (§45).
+## Verdadeiro se existe uma obra deste tipo e ja nao esta de pe: "se o nucleo
+## cair, cai a partida" (§10), lido do mundo e nao de um estado a parte (§45).
 func fallen(kind: StringName) -> bool:
 	for vaga in slots:
 		if vaga.kind == kind and not vaga.standing():
@@ -213,8 +236,7 @@ func _moedas_na_obra(moedas: CoinSystem, vaga: BuildSlot) -> PackedInt32Array:
 
 
 ## Quantas maos estao em cima da obra. Qualquer tropa tua conta, e por igual: o
-## bonus do construtor e a habilidade do §09, que entra com o F1-05 — dar-lhe
-## aqui um numero era inventar um que o dossie nao escreve (Q-064).
+## bonus do construtor e do §09, e o dossie nao lhe da numero (Q-064).
 func _presentes(unidades: UnitSystem, vaga: BuildSlot) -> int:
 	var maos := 0
 	var raio := vaga.width * METADE

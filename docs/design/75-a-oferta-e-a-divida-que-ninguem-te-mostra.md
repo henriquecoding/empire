@@ -37,7 +37,7 @@ Uma por noite, sorteada entre as elegíveis com o fluxo de aleatoriedade dedicad
 | A frase | Preço | O que dá | Quando | Dívida |
 | --- | --- | --- | --- | --- |
 | Dá-me o que já não anda. | As tropas abaixo de 40% de vida saem e não voltam | A mancha para 25 s | Dia 3+ | +1 |
-| Nada. Só quero ver. | 1 moeda | Revela a posição de um Capítulo escondido (§77) | Dia 2+ | +1 |
+| Nada. Só quero ver. | 1 moeda | Revela a posição de um Capítulo escondido (§77) | Dia 3+ | +1 |
 | Um por cada porta. | 1 tropa por portão que tenhas | Os portões não podem ser arrombados esta noite | Dia 5+ | +1 |
 | Deixa a porta aberta. | Os portões ficam abertos até à alvorada | −40% de massa | Dia 6+ | +2 |
 | O que brilha, e nada mais. | Todo o ouro em tesouraria | A noite é saltada. A mancha não nasce. | Dia 4+, tesouraria > 80 | +2 |

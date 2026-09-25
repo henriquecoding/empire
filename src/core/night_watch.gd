@@ -75,6 +75,38 @@ func feats(eventos: Array[Dictionary]) -> Array[Dictionary]:
 	return names.observe(eventos)
 
 
+## O Verbo 1 em cima de uma arvore de pe, com uma Semente Real no imperio:
+## consagra-a em vez de largar a moeda, e a moeda volta ao saco de quem a largou
+## (§74, Q-095). Sem Semente, ou fora de uma base, cai a moeda.
+func consecrate_at(estado: GameState, largada: Dictionary, quem: int) -> bool:
+	var custo := (
+		(Registry.entry(&"rot/amargueiros", AmargueiroSystem.CONSAGRAR) as AmargueiroData)
+		. cost_seeds
+	)
+	if estado.royal_seeds < custo:
+		return false
+	var x: float = largada[EventRelay.ONDE]
+	var meia := SimFactory.rot_profile().amargueiro_base_px * BuildSystem.METADE
+	for i in amargueiros.count():
+		var aqui := amargueiros.bands[i] == int(largada[EventRelay.FAIXA])
+		if not aqui or absf(amargueiros.xs[i] - x) > meia:
+			continue
+		if not amargueiros.consecrate(i, _obras):
+			return false
+		estado.royal_seeds -= custo
+		var u := _tropas.index_of(quem)
+		if u != UnitSystem.NENHUM:
+			_tropas.carried_coins[u] += int(largada[EventRelay.QUANTO])
+		return true
+	return false
+
+
+## Qual dos tres finais, se a campanha acabasse agora (§79, ADR 0018).
+func epilogue() -> StringName:
+	var perfil := SimFactory.rot_profile()
+	return Epilogue.of(voice.debt.debt, harvest.kept.size(), harvest.released.size(), perfil)
+
+
 ## Os intervalos em x por onde ela ja passou. O §49 le isto para saber que um
 ## edificio nao produz hoje, e que uma plantacao foi arrasada.
 func trail() -> Array[Vector2]:

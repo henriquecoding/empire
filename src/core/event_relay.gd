@@ -21,6 +21,7 @@ const PORQUE := &"source"
 const FONTE_MORTE := &"death"
 const FONTE_PRODUCAO := &"production"
 const PROPOSITO_RECRUTA := &"recruit"
+const FONTE_SEGREDO := &"secret"
 
 
 ## Passo 4: as mudancas de estado da FSM (§52).
@@ -180,3 +181,11 @@ static func _completa(vaga: BuildSlot, nivel: int) -> void:
 		EventBus.queue(&"build_completed", [vaga.id])
 	if vaga.blocks:
 		EventBus.queue(&"wall_upgraded", [vaga.id, nivel])
+
+
+## Passo 5: um segredo achado (§17) e a Semente Real que ele deu (§46).
+static func secrets(achados: Array[Dictionary]) -> void:
+	for a in achados:
+		EventBus.queue(&"secret_found", [a[SecretSites.ID]])
+		if int(a[SecretSites.SEMENTES]) > 0:
+			EventBus.queue(&"seed_royal_gained", [a[SecretSites.SEMENTES], FONTE_SEGREDO])

@@ -47,6 +47,12 @@ var posts_a: PackedInt32Array = PackedInt32Array()
 var posts_b: PackedInt32Array = PackedInt32Array()
 ## §07: "so N atacantes engajam". O resto espera em fila (§50).
 var contacts: PackedInt32Array = PackedInt32Array()
+## O que cada degrau pede alem das moedas (§10, §74): o povo que tens de ter
+## conquistado, o Lenho Amargo, e se so pode haver um no imperio. Vazios em tudo
+## o que nao e muro.
+var conquests: PackedStringArray = PackedStringArray()
+var woods: PackedInt32Array = PackedInt32Array()
+var unique: PackedByteArray = PackedByteArray()
 var path: Path = Path.NENHUMA
 
 ## Quem esta em cada slot de contacto, por indice. NENHUM e livre. Escrito pela
@@ -92,6 +98,24 @@ var health: int = 0
 ## De pe: ja construida, inteira ou tocada, mas ainda nao ruina.
 func standing() -> bool:
 	return state == State.DONE or state == State.DAMAGED
+
+
+## Quanto Lenho pede o degrau seguinte a quem conquistou `conquistas`, ou
+## NENHUM se nao ha maneira de o subir. Com conquista exigida, o Lenho SUBSTITUI
+## a conquista (a muralha de ferro sem a Fornalha, §74); sem ela, o Lenho e um
+## custo a mais (o bastiao, 3 Lenhos alem das moedas).
+func woods_for_next(conquistas: PackedStringArray) -> int:
+	if level >= woods.size():
+		return 0
+	var povo := conquests[level] if level < conquests.size() else ""
+	if povo.is_empty() or povo in conquistas:
+		return woods[level] if povo.is_empty() else 0
+	return woods[level] if woods[level] > 0 else NENHUM
+
+
+## Verdadeiro se o degrau seguinte so pode existir uma vez no imperio (§10).
+func next_unique() -> bool:
+	return level < unique.size() and unique[level] == 1
 
 
 ## Quanto custa o degrau seguinte, ou NENHUM se ja chegou ao topo.

@@ -8,8 +8,7 @@
 # src/sim/, quem os monta e o SimFactory, quem traduz o que devolvem e o
 # EventRelay. Aqui fica a ORDEM, e o Verbo 1.
 #
-# Passos 9 e 10 continuam por escrever, e continuam como linha: divida e
-# diplomacia sao o F1-14, e a IA do rei inimigo e a Fase 2.
+# Passos 9 e 10 continuam por escrever, e continuam como linha (Fase 2).
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
@@ -22,10 +21,11 @@ var state: GameState
 var units: UnitSystem
 var creatures: CreatureSystem
 
-## As obras (§55) e os postos (§52). O mundo escreve-lhes os slots; o tick
-## fa-los andar.
+## As obras (§55), os postos (§52) e os segredos (§17). O mundo escreve-lhes
+## os sitios; o tick fa-los andar.
 var builds: BuildSystem
 var jobs: JobBoard
+var secrets := SecretSites.new()
 
 ## O combate (§50), o raio do rei (§07) e a curva (§49).
 var combat: CombatSystem
@@ -37,18 +37,15 @@ var economy: EconomySystem
 ## quatro passos novos na lista.
 var night: NightWatch
 
-## As moedas no chao e no ar (§61, o Verbo 1) e o minuto 0:20 do §25 (F1-04).
-## Nascem no start() e nao no _ready(): precisam do EconomyCurve do Registry, e
-## nenhum autoload pode depender do _ready() de outro ter corrido primeiro
-## (ADR 0020, regra 8b do AGENTS.md).
+## As moedas (§61, o Verbo 1) e o minuto 0:20 do §25. Nascem no start() e nao
+## no _ready(): precisam do Registry, e isso e a regra 8b (ADR 0020).
 var coins: CoinSystem
 var recruits: RecruitSystem
 
 ## A fila do §61: a entrada nunca muda estado, enfileira uma intencao.
 var intents := IntentQueue.new()
 
-## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo, e nesse
-## caso ninguem segue ninguem.
+## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo.
 var king_id: int = UnitSystem.NENHUM
 
 ## O que o mundo diz a simulacao sobre si proprio: onde fica o nucleo, onde
@@ -165,9 +162,10 @@ func step(delta: float) -> void:
 	#     movimento e nao no passo do sistema que os trata (Q-063, Q-064). A obra
 	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
 	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
-	EventRelay.builds(builds.absorb(coins))
+	EventRelay.builds(builds.absorb(coins, state, night.amargueiros))
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
+	EventRelay.secrets(secrets.tick(units, king_id, state))
 	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
@@ -222,6 +220,8 @@ func _mudanca_de_fase() -> bool:
 
 func _largar(moedas: Array[Dictionary]) -> void:
 	for m in moedas:
+		if m[EventRelay.PORQUE] == Verbs.JOGADOR and night.consecrate_at(state, m, king_id):
+			continue
 		drop_coin(
 			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]
 		)

@@ -672,7 +672,7 @@
   "depende": "F0-10",
   "feito": "Uma greybox jogável com os obrigatórios do §83 e a árvore colossal à vista",
   "fora": "Arte definitiva — Fase 2.",
-  "estado": "parcial — falta a bifurcação dos Capítulos e a cara fixa do vagabundo (Q-104)",
+  "estado": "parcial — falta a cara fixa do vagabundo (ART-01, Q-104)",
   "horas": "4",
   "notas": [
    "§83: a lista de obrigatórios inclui um Amargueiro velho fora do muro à esquerda e um vagabundo com head_pool fixo, para que a cara do minuto 0:20 seja a mesma.",
@@ -691,7 +691,7 @@
   "depende": "GB-01",
   "feito": "Seis greybox, uma por bioma, com a linha do chão e as três faixas marcadas",
   "fora": "Capítulos (§77) — Fase 5.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "6"
  },
  "GB-03": {
@@ -703,7 +703,7 @@
   "depende": "GB-02",
   "feito": "Topo ≤ 18 e base ≥ 30 cores distintas em janela de 16×16, medido por script no CI",
   "fora": "Arte que cumpra a regra — Fase 2.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "3"
  },
  "GB-04": {
@@ -1134,7 +1134,7 @@
   "depende": "XIII-02, F1-06, ART-04",
   "feito": "Os três destinos com o Verbo 1; a cara na casca; a candeia com raio e cor do rot.tres",
   "fora": "A Oferta — é o XIII-04. O cante da alvorada — é o XIII-09.",
-  "estado": "feito, falta a Semente Real (Q-095)",
+  "estado": "feito",
   "horas": "13 (10 + 3 arte)",
   "notas": [
    "Q-047: uma noite de pé, ou mais? A proposta é uma, fixa.",
@@ -1274,7 +1274,7 @@
   "depende": "GB-01, XIII-03",
   "feito": "O minuto 0:00 tem a candeia e um Amargueiro velho; o 17:00 tem a primeira oferta",
   "fora": "O resto da campanha.",
-  "estado": "parcial — a primeira oferta fala na noite 2 e o §83 quer a 3 (Q-104)",
+  "estado": "feito",
   "horas": "8 (3 + 4 arte + 1 escrita)",
   "notas": [
    "§84, risco 5: o Amargueiro velho do minuto 0:00 existe para que a pergunta 'porque é que aquela árvore tem cara?' chegue depois da resposta.",

@@ -65,6 +65,21 @@ func test_a_primeira_oferta_da_campanha_e_nada_so_quero_ver() -> void:
 	assert_int(voz.spoken).is_equal(1)
 
 
+func test_na_noite_2_a_voz_ainda_esta_calada() -> void:
+	# ADR 0023: o §83 poe a primeira oferta ao 17:00, crepusculo do dia 3.
+	var u := UnitSystem.new()
+	var noite := B.noite(u, BuildSystem.new())
+	var estado := GameState.new()
+	estado.day = 2
+	RngService.configure(SEMENTE)
+	noite.tick(B.PASSO, int(GameClock.Phase.DUSK), true, estado, CreatureSystem.new(), _mundo())
+	for _t in int(B.perfil().offer_window_after_dusk.y / B.PASSO) + 2:
+		noite.tick(
+			B.PASSO, int(GameClock.Phase.NIGHT), false, estado, CreatureSystem.new(), _mundo()
+		)
+	assert_int(noite.voice.spoken).is_equal(0)
+
+
 func test_pagar_a_primeira_revela_um_capitulo_e_a_noite_corre_igual() -> void:
 	var moedas := CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
 	var noite := B.noite(UnitSystem.new(), BuildSystem.new(), moedas)

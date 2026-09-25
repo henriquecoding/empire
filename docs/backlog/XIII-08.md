@@ -15,6 +15,8 @@ Horas     13 (3 + 10 escrita)
 
 - ADR 0018 tem a precedência. O D-13 já corre sobre os limiares do rot.tres.
 - Doze fragmentos de 60 a 90 palavras. Se um precisar de 200, está a explicar.
+- **Já feito:** a precedência dos três epílogos vive em `src/sim/systems/epilogue.gd` (`Epilogue.of`), o
+  D-13 chama-a, e a `NightWatch.epilogue()` lê a Dívida e as listas da Colheita. O resto espera pelo XIII-07.
 
 ---
 

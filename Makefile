@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta vistoria exportar exportar-windows exportar-web exportar-tudo \
+        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -40,7 +40,7 @@ ajuda:  ## Mostra os alvos
 
 # ── O que corre sem abrir o motor ────────────────────────────────────────────
 
-portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes  ## Todos os portoes estaticos
+portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes densidade-prova  ## Todos os portoes estaticos
 
 formato:  ## gdformat: o formato do GDScript
 	gdformat --check src/ tests/ tools/
@@ -115,6 +115,20 @@ captura-noite: captura  ## Uma fotografia do meio da noite, com ficha ao lado
 
 silhueta: captura-noite  ## XIII-01 (§80): a regra das duas excecoes, contada
 	python3 tools/check_silhueta.py build/noite.png
+
+densidade-prova:  ## GB-03: o contador de densidade chumba o chapado e passa a rampa
+	python3 tools/check_densidade.py --prova
+
+# O greybox e de cores chapadas e chumba a rampa por construcao; a regra e sobre
+# a arte da Fase 2. Por isso aqui e RELATORIO — os seis numeros, medidos —, e o
+# portao sobre um ecra acabado e `check_densidade.py --exigir <png>`.
+densidade: densidade-prova captura greybox-biomas  ## GB-03 (§11, §22): a rampa medida
+	python3 tools/check_densidade.py $(CAPTURA) build/greybox/*.png
+
+greybox-biomas:  ## GB-02: a greybox de cada bioma, em build/greybox/ (precisa de ecra)
+	mkdir -p build/greybox
+	$(GODOT) --path . --resolution 1280x720 tools/greybox_biomas.tscn
+	test -s build/greybox/ancient_forest.png
 
 # DIAS= para correr mais. Nao mede balanceamento — mede se o estado se mantem
 # coerente com o jogo a andar, e por isso chumba com o que encontrar.

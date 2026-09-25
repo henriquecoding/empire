@@ -129,3 +129,19 @@ func test_o_save_tem_os_nomes_da_84() -> void:
 	_passar_dias(lida, lida.days_left)
 	lida.decide(HarvestSystem.Choice.KEEP)
 	assert_int(lida.days_left).is_equal(lida.duration(1, false))  # a fenda nao foi assimilada
+
+
+func test_ficar_com_quatro_povos_fecha_o_dominio() -> void:
+	# §79 e ADR 0018: as listas da Colheita sao a entrada do epilogo.
+	var perfil := Registry.entry(&"rot", &"default") as RotProfile
+	var c := _colheita()
+	assert_str(String(Epilogue.of(0, c.kept.size(), c.released.size(), perfil))).is_equal(
+		String(Epilogue.TURNO)
+	)
+	for k in perfil.dominion_peoples_kept:
+		c.conquer(StringName(POVOS[k]), false)
+		_passar_dias(c, c.days_left)
+		c.decide(HarvestSystem.Choice.KEEP)
+	assert_str(String(Epilogue.of(0, c.kept.size(), c.released.size(), perfil))).is_equal(
+		String(Epilogue.DOMINIO)
+	)

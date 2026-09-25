@@ -35,6 +35,8 @@ const TRILHO := Color(0.35, 0.22, 0.42, 0.28)
 const OBRA := Color(0.55, 0.52, 0.48)
 const ANDAIME := Color(0.72, 0.62, 0.42, 0.55)
 const VAZIO := Color(0.35, 0.33, 0.30, 0.45)
+## A Semente Real, que se ve de longe no escuro do subsolo (§17).
+const SEMENTE := Color(0.62, 0.86, 0.45)
 const PASSAGEM := Color(0.36, 0.55, 0.62, 0.7)
 const VIDA := Color(0.35, 0.65, 0.35)
 ## A sombra de contacto do §22. Nao e uma cor nova: e o valor de silhueta do §80

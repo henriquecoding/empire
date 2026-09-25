@@ -71,6 +71,8 @@ src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocu
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
 src/sim/systems/dawn_cascade.gd DawnCascade a frente da luz que solta os postos (§24, GB-21)
+src/sim/systems/secret_sites.gd SecretSites onde estao os segredos, e quem os acha (§17)
+src/sim/systems/epilogue.gd Epilogue      qual dos tres finais, por precedencia (§79, ADR 0018)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
 src/sim/systems/amargueiro_system.gd AmargueiroSystem o que a noite deixa no campo (§74)
 src/sim/systems/amargueiro_roots.gd AmargueiroRoots quem se levanta na alvorada, e onde (§74)
@@ -117,6 +119,9 @@ src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, �
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)
 src/world/world_light.gd    WorldLight    as tres paragens da luz e o raio da candeia
+src/world/wall_site.gd      WallSite      o sitio de muro: a escada do §10 e o Lenho (§74)
+src/world/site_view.gd      SiteView      a camara, a estatua e a placa do capitulo (§17, §83)
+src/world/biome_greybox.gd  BiomeGreybox  a greybox de cada bioma, em formas lisas (GB-02)
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)
