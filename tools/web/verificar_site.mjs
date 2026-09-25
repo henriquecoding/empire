@@ -312,11 +312,15 @@ async function main() {
 
   console.log("\n11 · o jogo");
   for (const q of ["", "?lingua=en"]) {
+    // O que a casca TRAZ confere-se no HTML servido, e não no DOM vivo: os
+    // controlos vivem no ecrã de carregamento, que sai quando o motor arranca —
+    // e numa segunda carga, com o motor em cache, sai antes de se poder contar.
+    const html = await (await fetch(base + "/jogar/" + q)).text();
+    resultado(`/jogar/${q}: tem CSP e robots`, html.includes("Content-Security-Policy") && /<meta name="robots"/.test(html));
+    const controlos = html.match(/<div class="controlos">[\s\S]*?<\/dl><\/div>/)?.[0] || "";
+    resultado(`/jogar/${q}: os controlos do project.godot estão lá`, (controlos.match(/<dt>/g) || []).length === TEXTOS.pt.controlos.acoes.length);
     const { ctx, p, erros, pedidos } = await nova(b, base, 1280, "dark");
     await p.goto(base + "/jogar/" + q, { waitUntil: "load" });
-    const html = await p.content();
-    resultado(`/jogar/${q}: tem CSP e robots`, html.includes("Content-Security-Policy") && /<meta name="robots"/.test(html));
-    resultado(`/jogar/${q}: os controlos do project.godot estão lá`, (await p.locator(".controlos dl > div").count()) === TEXTOS.pt.controlos.acoes.length);
     resultado(`/jogar/${q}: a língua é ${q ? "en" : "pt-PT"}`, (await p.evaluate(() => document.documentElement.lang)) === (q ? "en" : "pt-PT"));
     const saiu = await p.waitForFunction(() => !document.getElementById("status"), null, { timeout: JOGO_S * 1000 })
       .then(() => true, () => false);
