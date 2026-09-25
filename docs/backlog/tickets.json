@@ -1317,7 +1317,23 @@
   "depende": "F0-04",
   "feito": "Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024, que substitui a 0022). Cada PR tem a sua pré-visualização.",
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
-  "estado": "parcial — o site constrói-se e publica-se na Vercel (ADR 0024); falta a produção seguir a main",
+  "estado": "feito — a produção segue a main (medido a 25/09/2026 no /versao.json da produção)",
   "horas": "2"
+ },
+ "PUB-02": {
+  "title": "O site passa a ser a página do jogo",
+  "porque": "O PUB-01 pôs o jogo num endereço, e a página à volta dele ficou por fazer: uma língua só, as fontes pedidas à Google com o IP de cada visitante, o texto copiado à mão do dossiê, JavaScript em linha que impedia uma CSP a sério, e uma imagem de partilha cortada a meio.",
+  "spec": [
+   "docs/design/36-wishlists-pagina-demo-e-trailer.md",
+   "docs/design/32-medir-sem-espiar.md",
+   "docs/design/04-cada-imperio-e-um-povo-diferente.md",
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "PUB-01",
+  "feito": "/ em PT-PT e /en/ em inglês, com a mesma forma, lidas do repositório na construção (tools/web/dados.mjs). Seis fotografias do jogo ao longo do dia, tiradas pelo próprio jogo. Fontes servidas pelo site, nenhum pedido a outra origem, CSP estrita em todas as páginas e na casca do jogo; tools/web/verificar_site.mjs mede tudo isto (ADR 0025).",
+  "fora": "Um domínio próprio. Um devlog ou um press kit (§36: Fase 4). A página de Steam. Telemetria de qualquer espécie. O nome final e o logótipo (NB-01).",
+  "estado": "feito",
+  "horas": "6"
  }
 }

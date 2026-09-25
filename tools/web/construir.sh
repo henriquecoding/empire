@@ -7,8 +7,10 @@
 # pedidos parciais (tools/web/obter_godot.mjs).
 #
 # Sai em build/site/:
-#   /          a pagina de entrada (tools/web/site/, com os numeros contados agora)
-#   /jogar/    o export Web do jogo, com a casca tools/web/shell.html
+#   / e /en/   a pagina de entrada, em PT-PT e em ingles, lida do repositorio
+#              (tools/web/pagina.mjs e tools/web/dados.mjs; ADR 0025)
+#   /jogar/    o export Web do jogo, com a casca tools/web/shell.html — e a CSP
+#              e os controlos que o pagina.mjs lhe acrescenta depois do export
 #   /dossie/   o dossie construido pela camada de uso (ferramentas/)
 #
 # Se o motor ja estiver no PATH ou em GODOT, usa esse (e o caso local).
@@ -54,7 +56,7 @@ passo "o dossie"
 node ferramentas/extrair-dados.mjs . build/dossie-dados.json
 node ferramentas/construir.mjs docs/dossie.html build/dossie-dados.json "$SAIDA/dossie/index.html"
 
-passo "a pagina de entrada"
+passo "as paginas, e a casca do jogo completada"
 node tools/web/pagina.mjs "$SAIDA"
 
 passo "pronto"

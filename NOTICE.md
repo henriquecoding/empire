@@ -33,6 +33,23 @@ têm de acompanhar o jogo. **Antes da demo**, gera a lista exata da versão usad
 documentação oficial: <https://docs.godotengine.org/en/stable/about/complying_with_licenses.html>. É um item da
 RELEASE_CHECKLIST.
 
+## Distribuído com o site (não com o jogo)
+
+As quatro famílias de fontes do site (ADR 0025) são servidas pelo próprio site, a partir de
+`tools/web/site/fontes/`, com o texto da licença ao lado de cada uma (`OFL-*.txt`). Todas estão sob a
+**SIL Open Font License 1.1**, que permite usá-las, embebê-las e redistribuí-las com a licença, e proíbe
+vendê-las sozinhas. Os ficheiros são os que o Google Fonts distribui, byte a byte, sem outra modificação
+(`tools/web/fontes.mjs` só escolhe os subconjuntos latin e latin-ext e escreve o `fontes.css`).
+
+| Família | Autor | Licença |
+|---|---|---|
+| Fraunces | Copyright 2018 The Fraunces Project Authors | SIL OFL 1.1 |
+| Source Serif 4 | Copyright 2014 The Source Serif 4 Project Authors | SIL OFL 1.1 |
+| IBM Plex Mono | Copyright © 2017 IBM Corp., com o nome reservado «Plex» | SIL OFL 1.1 |
+| Silkscreen | Copyright 2001 The Silkscreen Project Authors | SIL OFL 1.1 |
+
+Não entram no jogo: o jogo exportado não as usa, e a fonte de texto do jogo continua por decidir (Fase 0).
+
 ## Só no desenvolvimento (não distribuído)
 
 | Componente | Licença | Onde |

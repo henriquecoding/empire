@@ -5,13 +5,22 @@ A fonte de verdade do design é o **Dossiê Empire** — `docs/dossie.html` (v5.
 
 ## Jogar no browser
 
-O site constrói-se de raiz em cada push, na Vercel, e cada PR tem a sua pré-visualização (ADR 0024): a página
-de entrada na raiz, o jogo em `/jogar/` e o dossiê em `/dossie/`. O mesmo comando corre aqui, sem nada
-instalado além de Node e bash — o motor e o template Web descarregam-se na versão de `.godot-version`:
+**<https://empire-phi-eight.vercel.app>** — a página do jogo em português, [`/en/`](https://empire-phi-eight.vercel.app/en/)
+em inglês, o jogo em [`/jogar/`](https://empire-phi-eight.vercel.app/jogar/) e o dossiê em
+[`/dossie/`](https://empire-phi-eight.vercel.app/dossie/).
+
+O site constrói-se de raiz em cada push, na Vercel, e cada PR tem a sua pré-visualização (ADR 0024). A página
+não tem texto copiado à mão do que o repositório já sabe: as fases e a luz vêm do `clock.csv`, a candeia e as
+falas da Podridão do `rot.csv` e do `strings.csv`, os controlos do `project.godot`, os povos e o roteiro do
+dossiê, o estado do `tickets.json` — e as imagens são o próprio jogo, fotografado ao longo de um dia. Não pede
+nada a outra origem, nem as fontes (ADR 0025). O mesmo comando corre aqui, sem nada instalado além de Node e
+bash — o motor e o template Web descarregam-se na versão de `.godot-version`:
 
 ```bash
 make site                                   # build/site/ inteiro
 python3 -m http.server -d build/site 8000   # e abre http://localhost:8000
+make site-verificar                         # o portão: telemóvel, axe, CSP, privacidade, as duas línguas, os dados
+make site-capturas                          # volta a fotografar o jogo (precisa de ecrã: xvfb-run num servidor)
 ```
 
 ## Correr, testar, exportar

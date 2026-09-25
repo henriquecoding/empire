@@ -163,6 +163,7 @@ scenes/boot.tscn            (cena principal)       cenas         tudo
 tools/*.gd, tools/*.py      ferramentas            fora do jogo  tudo; nunca exportado
 tools/vistoria.gd           Vistoria/Autopilot     fora do jogo  uma partida longa, vigiada
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado
+tools/web/**                o site (ADR 0024, 0025)  fora do jogo  le data/, docs/ e o project.godot; nunca exportado
 
 ## Ciclo de trabalho
 1. Le docs/backlog/<id>.md e as seccoes de docs/design/ que ele cita.

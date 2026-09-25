@@ -312,7 +312,7 @@ jobs:
       - name: Construir o site
         run: bash tools/web/construir.sh
 
-      - name: Portao · telemovel, axe, ligacoes, SEO, teclado e o jogo
+      - name: Portao · telemovel, axe, CSP, privacidade, as duas linguas, os dados e o jogo
         run: node tools/web/verificar_site.mjs
 
       - uses: actions/upload-artifact@v7

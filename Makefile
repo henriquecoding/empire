@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo \
+        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -173,8 +173,18 @@ site:  ## O site inteiro em build/site/ (entrada, /jogar/, /dossie/)
 	GODOT=$(GODOT) bash tools/web/construir.sh
 	@echo "site: python3 -m http.server -d build/site 8000"
 
-site-verificar:  ## O portao do site: telemovel, axe, ligacoes, SEO, teclado e o jogo
+site-verificar:  ## O portao do site: telemovel, axe, CSP, privacidade, as duas linguas, os dados e o jogo
 	node tools/web/verificar_site.mjs
+
+# ADR 0025: as imagens do site sao o jogo, tiradas do jogo. Corre-se a mao
+# quando o que se ve muda (precisa de ecra: xvfb-run num servidor), e o que sai
+# fica versionado em tools/web/site/ — a Vercel nao tem ecra nem browser.
+site-capturas:  ## As seis fases do dia, o ecra do greybox, a imagem de partilha e os icones
+	GODOT=$(GODOT) python3 tools/web/capturas.py
+	node tools/web/partilha.mjs
+
+site-fontes:  ## Volta a trazer as quatro familias (OFL) para tools/web/site/fontes/
+	NODE_USE_ENV_PROXY=1 node tools/web/fontes.mjs
 
 # URL=https://... e, opcional, COMMIT=<sha> para exigir que seja esse o publicado.
 site-fumo:  ## O site publicado responde como deve (cabecalhos, tipos, 404, versao)
