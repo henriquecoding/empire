@@ -132,7 +132,7 @@ func test_um_marco_pela_semente_real() -> void:
 	var x := SimLoop.core_x + SimLoop.world_width * 0.45
 	var morto := SimLoop.units.spawn(SimLoop.state, arqueiro, dono, x)
 	SimLoop.units.states[SimLoop.units.index_of(morto)] = UnitFsm.State.DEAD
-	SimLoop.night.dawn(SimLoop.state, SimLoop.units, SimLoop.builds, SimLoop.core_x)
+	SimLoop.night.dawn(SimLoop.state, SimLoop.units, SimLoop.builds, SimLoop.core_x, SimLoop.jobs)
 	SimLoop.night.trees.consecrate(SimLoop.night.trees.ids[0])
 	_vespera_do_crepusculo(DIA)
 	assert_bool(_ate_falar()).is_true()
@@ -144,3 +144,18 @@ func test_um_marco_pela_semente_real() -> void:
 	assert_int(SimLoop.night.trees.markers().size()).is_equal(0)
 	assert_int(SimLoop.state.royal_seeds).is_equal(1)
 	assert_int(ofertas.debt.debt).is_equal(2)
+
+
+func test_o_zelador_no_nucleo_leva_o_nomeado_mais_antigo() -> void:
+	var dono := SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
+	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
+	var nomeado := SimLoop.units.spawn(SimLoop.state, arqueiro, dono, SimLoop.core_x)
+	SimLoop.night.names.titles_of[nomeado] = &"the_counter"
+	SimLoop.night.names.holders[&"the_counter"] = nomeado
+	var zelador := Registry.entry(&"creatures", &"tender") as CreatureData
+	SimLoop.creatures.spawn(SimLoop.state, zelador, SimLoop.core_x, SimLoop.core_x)
+	SimLoop.step(PASSO)
+	assert_int(SimLoop.units.index_of(nomeado)).is_equal(UnitSystem.NENHUM)
+	assert_int(SimLoop.night.names.named_count()).is_equal(0)
+	for c in SimLoop.creatures.count():
+		assert_str(String(SimLoop.creatures.data_ids[c])).is_not_equal("tender")

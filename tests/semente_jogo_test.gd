@@ -23,7 +23,7 @@ func _arvore(x: float) -> int:
 	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
 	var morto := SimLoop.units.spawn(SimLoop.state, arqueiro, dono, x)
 	SimLoop.units.states[SimLoop.units.index_of(morto)] = UnitFsm.State.DEAD
-	SimLoop.night.dawn(SimLoop.state, SimLoop.units, SimLoop.builds, SimLoop.core_x)
+	SimLoop.night.dawn(SimLoop.state, SimLoop.units, SimLoop.builds, SimLoop.core_x, SimLoop.jobs)
 	return SimLoop.night.trees.tree_at(x, int(Band.Kind.SURFACE))
 
 

@@ -211,6 +211,7 @@ func _tropa() -> void:
 		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(band), alto)
 		var cor := _luz.body(WorldPalette.unit_color(unidades, i), unidades.xs[i])
 		ActorArt.draw_unit(self, caixa, dados, unidades, i, cor, _visual_time)
+		NameView.draw_on(self, caixa, unidades.ids[i])
 		_saco(caixa, unidades, i)
 		if unidades.alive(i):
 			Gauge.health(

@@ -23,11 +23,16 @@ var trees: AmargueiroSystem
 ## o OfferDesk.
 var offers: OfferSystem
 
+## Os nomes (§76). A alvorada e deles tambem: quem cai com nome pesa a dobrar
+## como arvore, e quem cumpriu um feito e nomeado.
+var names: NameSystem
+
 
 func _init() -> void:
 	rot = SimFactory.rot()
 	trees = SimFactory.amargueiros()
 	offers = SimFactory.offers()
+	names = SimFactory.names()
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -58,10 +63,15 @@ func trail() -> Array[Vector2]:
 	return [Vector2(de, maxf(rot.state.trail_from, rot.state.trail_to))]
 
 
-## A Alvorada do campo (§74): quem morreu desde ontem cria raiz ou desaparece.
-## Corre no passo 5 e nao no 2, porque precisa das tropas e das muralhas.
-func dawn(estado: GameState, unidades: UnitSystem, obras: BuildSystem, core_x: float) -> void:
-	trees.at_dawn(estado, unidades, obras, core_x)
+## A Alvorada do campo (§74, §76): os nomeados que cairam ficam de luto, quem
+## morreu desde ontem cria raiz ou desaparece, e quem cumpriu um feito ganha nome.
+## Corre no passo 5 e nao no 2, porque precisa das tropas, das muralhas e dos postos.
+func dawn(
+	estado: GameState, unidades: UnitSystem, obras: BuildSystem, core_x: float, postos: JobBoard
+) -> Array[Dictionary]:
+	var caidos := names.bury(estado, unidades)
+	trees.at_dawn(estado, unidades, obras, core_x, caidos)
+	return names.at_dawn(estado, unidades, postos)
 
 
 ## A noite saltada ("O que brilha, e nada mais", §75): a mancha recua ja, e o

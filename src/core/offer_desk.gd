@@ -10,6 +10,7 @@ class_name OfferDesk
 extends RefCounted
 
 const FONTE := &"offer"
+const FONTE_ZELADOR := &"tender"
 
 
 ## Um passo, a seguir ao movimento. Devolve as moedas a largar (o Verbo 1 e do
@@ -22,6 +23,7 @@ static func tick(delta: float, noite: NightWatch) -> Array[Dictionary]:
 		ofertas.night_time += delta
 		if ofertas.can_speak(dia) and _chegou(noite):
 			_falar(noite, dia)
+	_zelador(noite)
 	var larga: Array[Dictionary] = []
 	for e in ofertas.tick(delta, SimLoop.coins, dia):
 		if int(e[OfferSystem.CHAVE]) == OfferSystem.EV_PAGO:
@@ -35,7 +37,8 @@ static func tick(delta: float, noite: NightWatch) -> Array[Dictionary]:
 
 
 ## O estado autoritativo visto pela gramatica da §75. So o que existe: a
-## tesouraria e o saco do rei; Marcos contam-se no campo. O resto vale zero.
+## tesouraria e o saco do rei; Marcos contam-se no campo; nomes, nos vivos. O
+## resto vale zero.
 static func context(noite: NightWatch) -> Dictionary:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei != UnitSystem.NENHUM else 0
@@ -43,6 +46,7 @@ static func context(noite: NightWatch) -> Dictionary:
 		&"day": SimLoop.state.day,
 		&"treasury": saco,
 		&"marker": noite.trees.markers().size(),
+		&"named": noite.names.named_count(),
 	}
 
 
@@ -137,6 +141,35 @@ static func _dar(noite: NightWatch, offer_id: StringName) -> void:
 			SimLoop.state.royal_seeds += int(o.effect_value)
 			EventBus.queue(&"seed_royal_gained", [int(o.effect_value), FONTE])
 	EventBus.queue(&"rot_fed", [maxf(0.0, antes - noite.rot.mass()), offer_id])
+
+
+## "Se o Zelador chegar ao nucleo, leva uma tropa nomeada" (§75). Leva a de id
+## mais baixo — a mais antiga (§42) — e vai-se com ela. Sem nomeados, espera.
+static func _zelador(noite: NightWatch) -> void:
+	var nucleo := _nucleo()
+	var bichos := SimLoop.creatures
+	for c in range(bichos.count() - 1, -1, -1):
+		var dados := Registry.entry(&"creatures", bichos.data_ids[c]) as CreatureData
+		if not dados.steals_named or nucleo == null:
+			continue
+		if absf(bichos.xs[c] - nucleo.x) > nucleo.width * BuildSystem.METADE:
+			continue
+		var levados := PackedInt32Array(noite.names.titles_of.keys())
+		if levados.is_empty():
+			continue
+		levados.sort()
+		EventBus.queue(&"unit_fled", [levados[0], FONTE_ZELADOR])
+		SimLoop.units.remove(levados[0])
+		noite.names.bury(SimLoop.state, SimLoop.units)
+		EventBus.queue(&"creature_died", [bichos.ids[c], bichos.xs[c], int(bichos.bands[c])])
+		bichos.remove(bichos.ids[c])
+
+
+static func _nucleo() -> BuildSlot:
+	for vaga in SimLoop.builds.slots:
+		if vaga.kind == BuildSlot.NUCLEO:
+			return vaga
+	return null
 
 
 static func _moedas(e: Dictionary) -> Dictionary:

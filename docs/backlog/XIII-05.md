@@ -7,13 +7,21 @@ Depende   F1-12
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Nove nomes no máximo; o título ganha-se na alvorada; o luto de três dias devolve-o com ordinal
 Fora      A encomendação cantada — é o XIII-09.
-Estado    por fazer
+Estado    feito
 Horas     11 (7 + 2 arte + 1 som + 1 escrita)
 ```
 
 ## Notas
 
 - D-07 e D-08 já correm sobre os dados. Q-041: o teto é fixo.
+- **Feito.** `NameSystem` (puro): os feitos contam-se no combate e na alvorada; na alvorada quem cumpriu
+  um feito é nomeado, por id crescente, até ao `named_cap`; o décimo fica à espera e dá um passo à
+  frente (uma seta, no *greybox*). Morto o dono, o título fica de luto `title_mourning_days` e volta com
+  ordinal. Quem cai com nome pesa 45 como Amargueiro e rende 5 Lenho (§74). O Zelador leva um nomeado.
+  A fita da cor do título vê-se (`NameView`). Testes: `tests/name_system_test.gd`, e o Zelador em
+  `tests/oferta_jogo_test.gd`.
+- **O que fica** (Q-088): quatro dos nove feitos observam-se hoje; só o +1 de vida tem efeito; a
+  encomendação é do XIII-09; a fita definitiva e o *stinger* são arte e som.
 
 ---
 

@@ -83,7 +83,7 @@ noite 1 *"é ganha de certeza"*.
 
 ---
 
-## Fora da Fase 1 — 15 por fazer
+## Fora da Fase 1 — 14 por fazer
 
 ### Arte — 4
 
@@ -94,7 +94,7 @@ noite 1 *"é ganha de certeza"*.
 | ART-03 | As seis camadas de *parallax* com teto de valores |
 | ART-04 | Rostos e expressões: o catálogo do §60 |
 
-### Parte XIII — 6
+### Parte XIII — 5
 
 Quase toda em dados e em prosa. A **XIII-01 fechou**: os *tints* das seis fases
 vinham do `clock.tres` desde o F1-13, e faltava a outra metade do contrato — o
@@ -106,7 +106,6 @@ da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porqu�
 
 | | O que é |
 |---|---|
-| XIII-05 | §76 · O Nome |
 | XIII-06 | §78 · A Colheita |
 | XIII-07 | §77 · Os dez capítulos |
 | XIII-08 | §79 · Os doze diários e os três epílogos |

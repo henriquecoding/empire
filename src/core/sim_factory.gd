@@ -101,3 +101,11 @@ static func offers() -> OfferSystem:
 	for recurso in Registry.entries(&"rot/offers"):
 		ofertas.append(recurso as OfferData)
 	return OfferSystem.new(rot_profile(), ofertas)
+
+
+## Os nove titulos da §76 e as criaturas por id: o Ariete e quem tem a tag de cerco.
+static func names() -> NameSystem:
+	var titulos: Array[TitleData] = []
+	for recurso in Registry.entries(&"lore/titles"):
+		titulos.append(recurso as TitleData)
+	return NameSystem.new(curve(), titulos, by_id(TABELA_CRIATURAS))

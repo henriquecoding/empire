@@ -54,6 +54,9 @@ const MOEDAS := &"coins"
 const LARGA := &"drops"
 const OBRA := &"slot"
 const EVENTOS := &"events"
+## Na morte de uma criatura: quem deu o ultimo golpe, e o que ela era (§76).
+const POR := &"by"
+const TIPO := &"data_id"
 
 var picker: TargetPicker
 
@@ -68,6 +71,7 @@ var _o: BuildSystem
 var _sorteio: Callable
 var _eventos: Array[Dictionary] = []
 var _golpes: Array[Dictionary] = []
+var _ultimo: Dictionary = {}
 
 
 func _init(
@@ -109,6 +113,7 @@ func resolve(
 	_sorteio = sorteio
 	_eventos = []
 	_golpes = []
+	_ultimo = {}
 	_tropas_batem()
 	_criaturas_batem()
 	_aplicar()
@@ -170,6 +175,7 @@ func _aplicar() -> void:
 	for golpe in _golpes:
 		if golpe[CRIATURA]:
 			_c.damage(golpe[PARA], golpe[QUANTO])
+			_ultimo[golpe[PARA]] = golpe[DE]
 			_eventos.append(_dano(golpe, true))
 			continue
 		if golpe[OBRA] != NENHUM:
@@ -208,6 +214,8 @@ func _mortes_das_criaturas() -> void:
 					FAIXA: int(_c.bands[c]),
 					MOEDAS: _c.coin_drops[c],
 					CRIATURA: true,
+					POR: _ultimo.get(creature_id, NENHUM),
+					TIPO: _c.data_ids[c],
 				}
 			)
 		)

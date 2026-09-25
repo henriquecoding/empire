@@ -8,7 +8,6 @@
 # src/sim/, quem os monta e o SimFactory, quem traduz o que devolvem e o
 # EventRelay. Aqui fica a ORDEM, e o Verbo 1.
 #
-# Passos 9 e 10 continuam por escrever, e continuam como linha (Fase 2).
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
@@ -161,17 +160,18 @@ func step(delta: float) -> void:
 	_largar(OfferDesk.tick(delta, night))
 	EventRelay.builds(builds.absorb(coins, state))
 	if mudou and _fase == GameClock.Phase.DAWN:
-		night.dawn(state, units, builds, core_x)  # 5 · §74: quem ficou no campo
+		EventRelay.names(night.dawn(state, units, builds, core_x, jobs))  # 5 · §74, §76
 	EventRelay.amargueiros(night.trees.tick(delta, units, coins), state)
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, king_id, state))
-	_largar(EventRelay.combat(combat.resolve(units, creatures, builds, _roll)))  # 6 · combate
+	var golpes := combat.resolve(units, creatures, builds, _roll)  # 6 · combate
+	night.names.observe(golpes, units, night.rot)  # 6 · os feitos do §76
+	_largar(EventRelay.combat(golpes))
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
-	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
-	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
+	# 9 · DiplomacySystem e 10 · KingAISystem — por escrever, Fase 2
 
 	_espelhar_relogio()
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado

@@ -991,6 +991,25 @@
 - **Decide:** tu — sobretudo o gesto de aceitar e a regra "o preço existe quando é dito", que mudam
   números.
 
+### Q-088 · O que o §76 não diz sobre o Nome, e o que o XIII-05 escolheu
+- **Onde:** §76, §75 (o Zelador), `src/sim/systems/name_system.gd`, `src/core/offer_desk.gd`.
+- **Só se ganham os feitos que o jogo já observa.** Quatro dos nove: *Contou* (o último golpe conta a
+  morte), *Partiu o cerco* (o último golpe numa criatura com a tag `siege`), *Aguentou* (noites vivo num
+  posto de muralha ou de torre — é o que se lê por "posto de cerco") e *Falou com ela* (dentro da mancha,
+  vivo, e vivo na alvorada). Os outros cinco pedem portões, arrastar corpos, cozinha, o Santuário das
+  Raízes e armas que se trocam. A lista é a constante `FEITOS`.
+- **"10 Rastejantes abatidos"** — conta-se qualquer criatura, porque a condição em `titles.csv` é
+  `kills` e não `kills_crawler`. Se for só Rastejantes, é uma coluna nova.
+- **Um nome por tropa**, o primeiro título livre por ordem de id. O §76 não diz se se acumulam.
+- **O que o título dá.** Só o *+1 de vida máxima* de *O Que Ficou* tem efeito hoje. Os outros pedem
+  colunas por tropa (cadência, dano contra cerco, não fugir) que o combate e a moral ainda não têm.
+- **Sem sinal no catálogo.** A §46 não tem um sinal para "ganhou nome". Uso o `unit_promoted(id, "",
+  título)`, que é o que mais se aproxima e é o que a encomendação do XIII-09 vai ouvir.
+- **O Zelador leva o nomeado mais antigo** (id mais baixo) quando chega ao núcleo, e vai-se com ele.
+- **O custo de moral do corte de um nomeado** (1 ponto durante 2 dias) continua por cobrar: o
+  `MoraleSystem` não tem ainda moral do império, só por tropa.
+- **Decide:** tu — sobretudo "qualquer criatura conta" e "posto de cerco = muralha ou torre".
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

@@ -204,3 +204,12 @@ static func secrets(achados: Array[Dictionary]) -> void:
 		EventBus.queue(&"secret_found", [a[SecretSites.ID]])
 		if int(a[SecretSites.SEMENTES]) > 0:
 			EventBus.queue(&"seed_royal_gained", [a[SecretSites.SEMENTES], FONTE_SEGREDO])
+
+
+## Passo 5, na alvorada: quem ganhou nome (§76). A §46 nao tem sinal para um
+## titulo; o unit_promoted e o que mais se lhe chega — "de" nada "para" o
+## titulo —, e e o que a encomendacao do XIII-09 vai ouvir (Q-088).
+static func names(eventos: Array[Dictionary]) -> void:
+	for e in eventos:
+		if int(e[NameSystem.CHAVE]) == NameSystem.EV_NOMEADO:
+			EventBus.queue(&"unit_promoted", [e[NameSystem.UNIDADE], &"", e[NameSystem.TITULO]])
