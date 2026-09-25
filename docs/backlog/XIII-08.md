@@ -17,6 +17,9 @@ Horas     13 (3 + 10 escrita)
 - Doze fragmentos de 60 a 90 palavras. Se um precisar de 200, está a explicar.
 - **Já feito:** a precedência dos três epílogos vive em `src/sim/systems/epilogue.gd` (`Epilogue.of`), o
   D-13 chama-a, e a `NightWatch.epilogue()` lê a Dívida e as listas da Colheita. O resto espera pelo XIII-07.
+- **Feito com o XIII-07:** a atribuição por ato e o D-12. O `ChapterPlan` dá a cada capítulo colocado o seu
+  diário, ou o de um capítulo que não saiu, e o D-12 prova-o em mil sementes. Falta mostrar o diário quando se
+  acha, e o ecrã do epílogo.
 
 ---
 

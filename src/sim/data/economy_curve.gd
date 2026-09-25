@@ -125,6 +125,8 @@ extends Resource
 @export var named_cap: int = 0
 ## Morto o dono, o titulo fica de luto e volta com ordinal (§76, D-08).
 @export var title_mourning_days: int = 0
+## Seis capitulos por campanha, dos dez; um e sempre o Cerco (§77, D-11, Q-043).
+@export var chapters_per_campaign: int = 0
 ## C = colheita_base_days + colheita_per_people * povos ja detidos (§78).
 @export var colheita_base_days: int = 0
 @export var colheita_per_people: int = 0

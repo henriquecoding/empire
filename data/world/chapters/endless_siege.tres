@@ -12,6 +12,7 @@ song_key = "SONG_CHAPTER_ENDLESS_SIEGE"
 placement = &"fortress"
 detour_seconds = 40.0
 guaranteed = true
+order = 10
 reward_kind = &"journal"
 reward_id = &"journal_12"
 folk_root = "cerco sem fim"

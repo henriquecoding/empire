@@ -72,6 +72,7 @@ ai_tyrant_recruit_mult,1.35,IA do rei inimigo,§20 código; §10 Casa de Treino,
 ai_target_training_house_from_day,15,IA do rei inimigo,§20 código; §10 Casa de Treino,,destruir a Casa de Treino é prioritário a partir do dia 15
 named_cap,9,Identidade — §76,§76 os nove feitos e os títulos,,Nove nomes ao mesmo tempo (D-07). A Q-041 propõe mantê-lo fixo: cresce e deixa de significar nada.
 title_mourning_days,3,Identidade — §76,§76 os nove feitos e os títulos,,"Morto o dono, o título fica de luto três dias e volta com ordinal (D-08)."
+chapters_per_campaign,6,Mundo — §77,§77 quantos aparecem e onde,,"Seis dos dez por campanha, um deles sempre o Cerco (D-11). A Q-043 propõe seis e não os dez sempre."
 colheita_base_days,6,Colheita — §78,§78 a Colheita e as duas decisões,,"C = 6 + 2 × povos já detidos. A sexta dura 16 dias — Q-042, a medir em playtest."
 colheita_per_people,2,Colheita — §78,§78 a Colheita e as duas decisões,,O termo que trava o snowball.
 colheita_assimilation_factor,0.5,Colheita — §78,§78 a Colheita e as duas decisões,,"Por assimilação, metade, arredondada para cima: o diplomata n2 continua a valer a pena (§14)."

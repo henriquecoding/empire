@@ -12,6 +12,7 @@ song_key = "SONG_CHAPTER_STOPPED_PILGRIMAGE"
 biome = &"floodplain"
 placement = &"crossing"
 detour_seconds = 40.0
+order = 2
 reward_kind = &"journal"
 reward_id = &"journal_03"
 folk_root = "romaria e andor"

@@ -22,6 +22,9 @@ extends Resource
 @export var detour_seconds: float = 0.0
 ## O Cerco Que Nao Acaba sai sempre — e o que garante o diario 12 (§77, D-11).
 @export var guaranteed: bool = false
+## A ordem da §77, de 1 a 10. Um diario cujo capitulo nao saiu vai para o
+## seguinte que tenha saido, por esta ordem (§77, "a historia chega inteira").
+@export var order: int = 0
 
 @export_group("Recompensa")
 ## &"journal" ou &"ancient_seed" (§77, regra 4).

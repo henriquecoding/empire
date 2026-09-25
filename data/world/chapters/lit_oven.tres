@@ -12,6 +12,7 @@ song_key = "SONG_CHAPTER_LIT_OVEN"
 biome = &"volcanic"
 placement = &"roadside"
 detour_seconds = 25.0
+order = 6
 reward_kind = &"ancient_seed"
 law_enters_walls = true
 folk_root = "ferrarias sempre acesas"

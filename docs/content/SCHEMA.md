@@ -268,7 +268,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 94 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 95 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -345,6 +345,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 94 linha(s) · §06 §4
 | `ai_target_training_house_from_day` | int | IA do rei inimigo — §10, §20 |  |
 | `named_cap` | int | v6 · nomes, Colheita e Lenho |  |
 | `title_mourning_days` | int | v6 · nomes, Colheita e Lenho |  |
+| `chapters_per_campaign` | int | v6 · nomes, Colheita e Lenho |  |
 | `colheita_base_days` | int | v6 · nomes, Colheita e Lenho |  |
 | `colheita_per_people` | int | v6 · nomes, Colheita e Lenho |  |
 | `colheita_assimilation_factor` | float | v6 · nomes, Colheita e Lenho |  |
@@ -657,6 +658,7 @@ Script `src/sim/data/chapter_data.gd` · layout `rows` · 10 linha(s) · §77 �
 | `placement` | StringName | Colocacao |  |
 | `detour_seconds` | float | Colocacao |  |
 | `guaranteed` | bool | Colocacao |  |
+| `order` | int | Colocacao |  |
 | `reward_kind` | StringName | Recompensa |  |
 | `reward_id` | StringName | Recompensa |  |
 | `law_enters_walls` | bool | Regras |  |

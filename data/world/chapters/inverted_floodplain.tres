@@ -12,5 +12,6 @@ song_key = "SONG_CHAPTER_INVERTED_FLOODPLAIN"
 biome = &"floodplain"
 placement = &"crossing"
 detour_seconds = 40.0
+order = 4
 reward_kind = &"ancient_seed"
 folk_root = "mouras encantadas"

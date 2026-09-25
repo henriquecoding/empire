@@ -12,6 +12,7 @@ song_key = "SONG_CHAPTER_BLIND_FURROW"
 biome = &"canyon"
 placement = &"crossing"
 detour_seconds = 40.0
+order = 5
 reward_kind = &"journal"
 reward_id = &"journal_06"
 folk_root = "vozes sem corpo"
