@@ -31,9 +31,11 @@ const G4_ALLOWED := ["0", "1", "-1", "0.0", "1.0", "2"]
 ## band.gd e o ficheiro das constantes de plano (§47). Ver docs/adr/0008.
 const G4_SKIP := ["res://src/sim/data/", "res://src/sim/band.gd"]
 ## I6 — o save nunca usa load() (ADR 0007). Um .tres arbitrario pode trazer
-## script embutido: load() num caminho de save e execucao remota de codigo.
-const G6_FILE := "res://src/core/save_service.gd"
-const G6_FORBIDDEN := ["load(", "ResourceLoader", "ResourceSaver"]
+## script embutido: load() num caminho de save e execucao remota de codigo. As
+## preferencias (§45) sao o outro ficheiro que o jogo le de user://, e a mesma
+## porta: o ConfigFile desserializa Object(...) e Resource(...) (GB-13).
+const G6_FILES := ["res://src/core/save_service.gd", "res://src/core/preferences.gd"]
+const G6_FORBIDDEN := ["load(", "ResourceLoader", "ResourceSaver", "ConfigFile"]
 
 
 static func gd_files(root: String) -> Array[String]:
@@ -127,18 +129,25 @@ static func bracket_balance(linha: String) -> int:
 ## objetos — `false` explicito, para que a regra se veja na linha.
 static func check_g6() -> Array[String]:
 	var out: Array[String] = []
-	if not FileAccess.file_exists(G6_FILE):
-		out.append("G6 %s: nao existe" % G6_FILE)
+	for ficheiro: String in G6_FILES:
+		out.append_array(_g6_de(ficheiro))
+	return out
+
+
+static func _g6_de(ficheiro: String) -> Array[String]:
+	var out: Array[String] = []
+	if not FileAccess.file_exists(ficheiro):
+		out.append("G6 %s: nao existe" % ficheiro)
 		return out
 
 	var n := 0
-	for linha in strip_comments(FileAccess.get_file_as_string(G6_FILE)).split("\n"):
+	for linha in strip_comments(FileAccess.get_file_as_string(ficheiro)).split("\n"):
 		n += 1
 		for token in G6_FORBIDDEN:
 			if token in linha:
-				out.append("G6 %s:%d: usa '%s' — ADR 0007" % [G6_FILE, n, token])
+				out.append("G6 %s:%d: usa '%s' — ADR 0007" % [ficheiro, n, token])
 		if "store_var(" in linha and not ", false)" in linha:
-			out.append("G6 %s:%d: store_var sem `, false` — ADR 0007" % [G6_FILE, n])
+			out.append("G6 %s:%d: store_var sem `, false` — ADR 0007" % [ficheiro, n])
 		if "get_var(" in linha and not "get_var(false)" in linha:
-			out.append("G6 %s:%d: get_var sem `false` — ADR 0007" % [G6_FILE, n])
+			out.append("G6 %s:%d: get_var sem `false` — ADR 0007" % [ficheiro, n])
 	return out

@@ -14,6 +14,7 @@ a cada construção._
 | v6 + F0 | 15/09/2026 | A Fase 0 de código, catorze dos dezasseis tickets: EventBus (61 sinais), GameClock e ClockService, RngService, Registry, SaveService, o SimLoop com a ordem do §43, a câmara única, o BandLayers com as três faixas provadas por física, e o UnitView com os cinco slots e o `palette_lut`. O relógio anda, o dia vira, o save faz ida e volta, e a semente reproduz. Mais a ADR 0020, o portão G6, o `check_claims` e a tabela 28 (`camera`). |
 | v6 + F1 | 15/09/2026 | A Fase 1 **inteira**: os dezassete tickets, pela ordem do §66. As tropas em colunas, a moeda física, o minuto 0:20, o JobBoard, a muralha do §10 com os dois caminhos, o arqueiro e a certeza da torre, a Podridão e as criaturas nas três faixas, a economia e o *payback* do §06, a moral e a fuga, a luz por faixa, o save do estado da simulação, e a cena de jogo com os dois verbos ligados. Fecha com o **F1-15** (o cenário fechado do §07 em *headless*) e o **F1-16**, que é o critério de saída: *"sobreviver 10 dias é possível e não é trivial"* mede-se e passa nas duas metades — a defesa do décimo dia aguenta dez noites com o núcleo intacto, e os oito degraus abaixo dela caem. Para lá chegar foi preciso fechar a Q-076: o `contact_slots` passou a ser coluna do `buildings.csv`, e o castelo-árvore passou a poder ser atacado. E fecha com o **F1-17**: a mancha passou a trazer a candeia do §74 — três paragens do §80, lidas de `data/`, com o *dither* de 2 px —, e é a luz que entra no ecrã antes dela. |
 | v6 + jogo | 16/09/2026 | O *greybox* passa a jogar-se, e a lista é a do §24. A lei da travessia do §21 aplicada — a região atravessa-se em 48 s a pé e não em 148 (ADR 0021, Q-082). O preço do que está debaixo do rei, em moedas por cima da coisa (§55). «Largar em contínuo», que estava no mapa de comando e ninguém lia (Q-083). O rei deixa de ficar preso em combate, porque o §24 dá a «Mover» o contexto *Sempre* (Q-085). O golpe passa a ver-se — flash de 80 ms, partícula, e a orla da obra que está a ser comida (Q-084). E a moeda ganha sombra de contacto, que o §24 chama «a animação mais importante do jogo». Seis tickets: GB-04 a GB-09. |
+| v6 + comando | 24/09/2026 | O comando do §24, afinado. O *render* passa a interpolar entre ticks, que é a segunda metade da I5 da §40 — o rei andava aos solavancos de 2,67 px e zero, e passa a 1,33 px por frame; e deixa de baloiçar parado. O gatilho direito marca uma vez por puxão e a partir do rei (Q-086); a câmara livre anda também com o rato na margem (Q-087). A pausa ganha as duas opções que o §26 diz obrigatórias — tremor e clarões —, gravadas em `user://settings.cfg` com a regra da ADR 0007 (Q-090). A passagem passa a dizer onde o Verbo 2 pega, com uma seta para a faixa de destino. O rodapé mostra os botões do dispositivo que se está a usar (§26). A derrota deixa de dizer «ESC para continuar» e oferece um jogo novo, como o §16 manda (Q-088). E o amanhecer atravessa a região a 900 px/s, e as tropas saem dos postos atrás dessa luz, uma a uma (Q-089). Depois, o resto do HUD diegético do §24: o sol e a lua passam a dizer a hora, a moeda dá o pequeno salto ao pousar, e a cara de quem está ferido muda abaixo de metade da vida. Do §26 e do §25 entram ainda as legendas de som, o slider de duração do dia (240–540 s, pela fila de intenções e guardado no save — Q-091) e a silhueta fantasma a piscar. E o contraste e os três modos para daltonismo do §26, num filtro de ecrã medido contra a própria conta (Q-093). O painel passa a falar por chave, como o §27 manda, e o idioma escolhe-se na pausa. Dezanove tickets: GB-10 a GB-28; a vistoria dá a mesma tabela, linha a linha, e a única mudança na simulação é a cascata do amanhecer. |
 | v6 + XIII | 14/09/2026 | A Parte XIII em dados: quatro tabelas novas, seis alargadas, quatro `Resource` novos, catorze testes de design, nove ADRs, 19 perguntas registadas, 53 tickets, e o texto: 64 chaves de conteúdo e os doze diários da §79 escritos. |
 
 ## Como se verificou
@@ -22,10 +23,10 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 405 casos, 396 a passar, 9 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 500 casos, 491 a passar, 9 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
-- **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save nunca usa `load()`),
+- **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save e as preferências nunca usam `load()`),
   e os três modos de quebrar o G6 estão medidos, não supostos.
 - **As três faixas** — as nove combinações do §53 medidas com o motor de física, não deduzidas da
   tabela: a diagonal bate e tudo o resto atravessa. `scenes/tests/bands.tscn` escreve-a no arranque.
@@ -64,9 +65,9 @@ a cada construção._
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |
 | `docs/adr/` | 22 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21 e a 0022 o sítio onde o jogo se publica. |
-| `docs/backlog/` | 60 tickets, um ficheiro cada, no formato da §34. |
+| `docs/backlog/` | 79 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
-| `data/i18n/strings.csv` | 271 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
+| `data/i18n/strings.csv` | 305 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
 
 ## A regra que continua a valer

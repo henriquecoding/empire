@@ -30,7 +30,7 @@
 | Categoria | Critério | Estado | Teste |
 |---|---|---|---|
 | Entrada | A configuração por omissão do comando dá acesso a todo o conteúdo | resolvido por design (dois verbos) | A9 |
-| Entrada | Glifos correspondem ao dispositivo | a implementar | A12 |
+| Entrada | Glifos correspondem ao dispositivo | no rodapé, por nome — teclado, Xbox/Deck, PlayStation (GB-15); falta o atlas de ícones | A12 |
 | Entrada | Texto pela API do Steamworks ou teclado próprio navegável | só o nome do save | A16 |
 | Ecrã | Corre a 1280 × 800 ou 1280 × 720 | nativo | PERFORMANCE_MATRIX |
 | Ecrã | Nenhum carácter abaixo de 9 px a 1280 × 800; recomendado 12 | **o único risco real** | A1 |

@@ -15,6 +15,9 @@ const TABELA_TROPAS := &"units"
 ## A origem que o coin_dropped leva quando a moeda sai da mao do jogador.
 const JOGADOR := &"player"
 
+## Sem faixa para onde ir: longe de uma passagem, ou um corpo que nao muda.
+const NENHUMA := -1
+
 
 ## §61: as intencoes sao consumidas no inicio do tick, pela ordem em que
 ## chegaram, e nenhuma delas mudou estado nenhum quando foi enfileirada. E o que
@@ -41,6 +44,8 @@ static func consume(
 				assume(unidades, king_id, passagens)
 			IntentQueue.Kind.MARK_TARGET:
 				mark(unidades, bichos, combate, args[&"x"], king_id)
+			IntentQueue.Kind.DAY_LENGTH:
+				day_length(args[&"seconds"])
 	return larga
 
 
@@ -100,21 +105,38 @@ static func collect(
 ##
 ## Devolve verdadeiro se alguem mudou mesmo de faixa.
 static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32Array) -> bool:
+	var para := destination(unidades, king_id, passagens)
+	if para == NENHUMA:
+		return false
 	var i := unidades.index_of(king_id)
-	if i == UnitSystem.NENHUM or passagens.is_empty():
-		return false
-	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
-	if not dados.can_change_band:
-		return false
-	if not Passages.near(unidades.xs[i], passagens):
-		return false
 	var de := int(unidades.bands[i])
-	var para := int(Band.Kind.SURFACE)
-	if de == int(Band.Kind.SURFACE):
-		para = int(Band.Kind.UNDERGROUND)
 	unidades.bands[i] = para
 	EventBus.queue(&"passage_used", [king_id, de, para])
 	return true
+
+
+## Para que faixa o Verbo 2 levava este corpo AGORA, ou NENHUMA. E a conta do
+## gesto e a do sinal que o PassageCue desenha, e por isso e uma so (GB-14): se o
+## sinal aparece, o E pega; se o E nao pega, nao ha sinal.
+static func destination(unidades: UnitSystem, unit_id: int, passagens: PackedFloat32Array) -> int:
+	var i := unidades.index_of(unit_id)
+	if i == UnitSystem.NENHUM or passagens.is_empty() or not unidades.alive(i):
+		return NENHUMA
+	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
+	if not dados.can_change_band or not Passages.near(unidades.xs[i], passagens):
+		return NENHUMA
+	if int(unidades.bands[i]) == int(Band.Kind.SURFACE):
+		return int(Band.Kind.UNDERGROUND)
+	return int(Band.Kind.SURFACE)
+
+
+## §26: "slider de duracao do dia (240–540 s)". Os limites sao os do clock.csv e
+## aplicam-se aqui, onde a intencao chega a simulacao; zero e o dia do clock.csv.
+## O relogio escala as seis fases e o decorrido juntos, e a fase nao salta.
+static func day_length(segundos: float) -> void:
+	var dados := Registry.entry(&"economy", &"clock") as ClockData
+	var alvo := segundos if segundos > 0.0 else dados.day_seconds
+	ClockService.clock.set_day_seconds(clampf(alvo, dados.day_seconds_min, dados.day_seconds_max))
 
 
 ## O gatilho direito do §24: marca a criatura mais proxima deste x para todos os

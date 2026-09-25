@@ -43,6 +43,10 @@ const COSTURA := {"topo": 3.0, "fundo": 2.0}
 ## A cara: a faixa clara do queixo, o olho do lado para onde se anda, e a boca.
 const CARA := {"x": 0.26, "y": 0.07, "w": 0.52, "olho_x": 0.13, "olho": 3.0, "boca": 0.16}
 
+## §24: "Vida de tropa — camada face muda para ferido abaixo de 50%". O limiar e
+## o do dossie; o canto e quanto a boca desce, em px por escala (GB-20).
+const FERIDA := {"limiar": 0.5, "canto": 2.0}
+
 ## Quanto de cada cor propria entra na cor da tropa. A cor da tropa manda — e
 ## dela que se sabe de quem ela e (§22) — e isto e o que lhe da volume.
 const MISTURA := {"tinta": 0.38, "pele": 0.32, "pano": 0.38, "gola": 0.28, "cara": 0.35}
@@ -109,7 +113,7 @@ static func draw_unit(
 ## Quem esta parado nao baloica: o baloico e a unica coisa que diz, sem numeros,
 ## que aquela coluna esta a ir a algum lado.
 static func _baloico(box: Rect2, units: UnitSystem, index: int, tempo: float) -> float:
-	if is_zero_approx(units.target_xs[index] - units.xs[index]):
+	if not units.walking(index, SimLoop.king_id, ClockService.dawn_front()):
 		return 0.0
 	return sin(tempo * BALOICO.ritmo + box.position.x * BALOICO.desfase) * BALOICO.alto
 
@@ -156,11 +160,20 @@ static func _cara(
 	var lado := box.size.x * CARA.olho_x
 	var frente := lado if units.target_xs[index] >= units.xs[index] else -lado
 	var olho := Vector2(center.x + frente - CARA.olho * WorldPalette.MEIA, center.y - 1.0)
-	canvas.draw_rect(Rect2(olho, Vector2(CARA.olho, CARA.olho)), EYE)
+	var ferido := wounded(units.healths[index], units.max_healths[index])
+	var aberto: float = TRACO.fino if ferido else CARA.olho
+	canvas.draw_rect(Rect2(olho, Vector2(CARA.olho, aberto)), EYE)
 	var boca := center.y + box.size.y * CARA.boca
-	canvas.draw_line(
-		Vector2(center.x - lado, boca), Vector2(center.x + lado, boca), ink, maxf(TRACO.fino, scale)
-	)
+	var canto: float = boca + (FERIDA.canto * scale if ferido else 0.0)
+	var traco := maxf(TRACO.fino, scale)
+	canvas.draw_line(Vector2(center.x - lado, canto), Vector2(center.x, boca), ink, traco)
+	canvas.draw_line(Vector2(center.x, boca), Vector2(center.x + lado, canto), ink, traco)
+
+
+## Abaixo de metade da vida a cara diz-o: olho semicerrado e a boca a descer. E a
+## unica leitura de vida que o §24 da a uma tropa, e esta no sprite (GB-20).
+static func wounded(vida: int, maxima: int) -> bool:
+	return maxima > 0 and float(vida) < float(maxima) * FERIDA.limiar
 
 
 static func _hat(

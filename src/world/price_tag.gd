@@ -127,10 +127,11 @@ static func _gente(
 			continue
 		var dados: UnitData = tropas.get(unidades.data_ids[i])
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, unidades.xs[i], int(faixa), alto)
+		var em := Smoothing.x_of(Smoothing.Group.UNITS, unidades.ids[i], unidades.xs[i])
+		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, em, int(faixa), alto)
 		# A cabeca do §25 — o chapeu — desenha-se por cima da caixa, e o preco
 		# tem de ficar acima dele para nao lhe assentar em cima.
-		_moedas(canvas, unidades.xs[i], caixa.position.y - WorldPalette.BARRA, falta, saco)
+		_moedas(canvas, em, caixa.position.y - WorldPalette.BARRA, falta, saco)
 
 
 ## `falta` moedas empilhadas sobre (x, topo), de baixo para cima. As primeiras

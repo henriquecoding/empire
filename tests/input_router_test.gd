@@ -45,3 +45,52 @@ func test_o_continuo_nao_e_mais_rapido_do_que_o_arco_de_uma_moeda() -> void:
 	var voo := 2.0 * curva.coin_drop_speed_px_s / curva.coin_gravity_px_s2
 	var msg := "voo de %.2f s contra um intervalo de %.2f s" % [voo, _intervalo()]
 	assert_float(_intervalo()).override_failure_message(msg).is_greater(voo * 0.1)
+
+
+# ─── O gatilho direito no comando (GB-11) ────────────────────────────────────
+#
+# Os eventos constroem-se aqui e nao se injectam: nenhum passa pelo Input nem
+# pela arvore (ADR 0009). O que se testa e a leitura que o router faz deles.
+
+
+func _gatilho(valor: float) -> InputEventJoypadMotion:
+	var e := InputEventJoypadMotion.new()
+	e.axis = JOY_AXIS_TRIGGER_RIGHT
+	e.axis_value = valor
+	return e
+
+
+## Um gatilho e analogico: carregar nele emite um evento por cada posicao do
+## caminho, e cada um le como "premido". Medido antes disto: um puxao marcava
+## seis vezes. Um puxao e UM gesto, e marca uma vez.
+func test_um_puxao_do_gatilho_marca_uma_vez() -> void:
+	var premido := false
+	var marcas := 0
+	for valor in [0.1, 0.3, 0.5, 0.7, 0.9, 1.0, 0.8, 0.0, 0.6, 1.0, 0.0]:
+		var e := _gatilho(valor)
+		if InputRouter.rising(e, premido):
+			marcas += 1
+		premido = InputRouter.held(e, premido)
+	assert_int(marcas).is_equal(2)
+
+
+## O rato aponta; o comando nao tem cursor. Com o gatilho, o alvo mede-se a
+## partir do rei — antes media-se do sitio onde o rato tivesse ficado.
+func test_so_o_rato_aponta_com_o_cursor() -> void:
+	assert_bool(InputRouter.aims_with_cursor(_clique(true))).is_true()
+	assert_bool(InputRouter.aims_with_cursor(_gatilho(1.0))).is_false()
+
+
+func _clique(premido: bool) -> InputEventMouseButton:
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_RIGHT
+	e.pressed = premido
+	return e
+
+
+## O clique marca ao premir e nao ao soltar — o soltar tambem e um evento da
+## mesma accao, e sem isto cada clique contava duas vezes para o "premido".
+func test_o_clique_marca_ao_premir_e_nao_ao_soltar() -> void:
+	assert_bool(InputRouter.rising(_clique(true), false)).is_true()
+	assert_bool(InputRouter.rising(_clique(false), true)).is_false()
+	assert_bool(InputRouter.held(_clique(false), true)).is_false()

@@ -67,6 +67,25 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [GB-07](GB-07.md) | O rei não fica preso em combate | F1-03 | feito |
 | [GB-08](GB-08.md) | O golpe que se vê | F1-07 | feito |
 | [GB-09](GB-09.md) | A sombra de contacto da moeda | F1-01 | feito |
+| [GB-10](GB-10.md) | O render interpola, e o rei deixa de andar aos solavancos | F0-06 | feito |
+| [GB-11](GB-11.md) | O gatilho direito, num comando | F1-07 | feito |
+| [GB-12](GB-12.md) | A câmara livre pelo rato na margem | F0-08 | feito |
+| [GB-13](GB-13.md) | Pausa e opções: desligar o tremor e os clarões | GB-08 | feito |
+| [GB-14](GB-14.md) | O sinal da passagem, onde o Verbo 2 pega | GB-05 | feito |
+| [GB-15](GB-15.md) | Os glifos do comando que se está a usar | GB-06 | feito |
+| [GB-16](GB-16.md) | A derrota diz a verdade, e dá um jogo novo | GB-13 | feito |
+| [GB-17](GB-17.md) | O amanhecer que se vê chegar | F1-13 | feito |
+| [GB-18](GB-18.md) | O sol e a lua dizem a hora | F1-13 | feito |
+| [GB-19](GB-19.md) | O pequeno bounce da moeda | GB-09 | feito |
+| [GB-20](GB-20.md) | A cara de quem está ferido | F0-14 | feito |
+| [GB-21](GB-21.md) | As tropas saem dos postos atrás da luz | GB-17 | feito |
+| [GB-22](GB-22.md) | As legendas de som | GB-13 | feito |
+| [GB-23](GB-23.md) | A silhueta fantasma a piscar | GB-05 | feito |
+| [GB-24](GB-24.md) | A duração do dia, ao ritmo de quem joga | GB-13 | feito |
+| [GB-25](GB-25.md) | O controlo de contraste | GB-13 | feito |
+| [GB-26](GB-26.md) | Os modos para daltonismo | GB-25 | feito |
+| [GB-27](GB-27.md) | O painel fala por chave | GB-15 | feito |
+| [GB-28](GB-28.md) | O idioma escolhe-se na pausa | GB-27 | feito |
 | [NB-01](NB-01.md) | Bíblia de nomes e a escolha do nome do jogo | — | por fazer |
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
 | [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | por fazer — falta ligar o Pages |

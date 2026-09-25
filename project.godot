@@ -8,29 +8,20 @@
 
 config_version=5
 
-; Empire — definicoes do §19 do dossie. Mudar aqui exige uma ADR (docs/adr/0001).
-
 [application]
 
 config/name="Empire"
 config/description="Kingdom-builder 2D em pixel art — ver AGENTS.md e docs/dossie.html"
 run/main_scene="res://scenes/boot.tscn"
-config/features=PackedStringArray("4.6", "Mobile")
+config/features=PackedStringArray("4.7", "Mobile")
 
 [autoload]
 
-; §46: um autoload so, com os sinais declarados. Carrega antes de tudo o
-; resto porque tudo o resto comunica por ele.
 EventBus="*res://src/core/event_bus.gd"
-; ADR 0006: o relogio e puro; este autoload so lhe chama tick().
 ClockService="*res://src/core/clock_service.gd"
-; §42: o unico sitio do jogo onde ha aleatoriedade. O portao G2 guarda-o.
 RngService="*res://src/core/rng_service.gd"
-; §41/§44: os .tres por StringName. O indice deriva da arvore de data/.
 Registry="*res://src/core/registry.gd"
-; ADR 0007: store_var/get_var(false) e rename atomico. Nunca load().
 SaveService="*res://src/core/save_service.gd"
-; ADR 0020: os onze passos do §43, e o unico _physics_process da simulacao.
 SimLoop="*res://src/core/sim_loop.gd"
 
 [display]
@@ -38,9 +29,6 @@ SimLoop="*res://src/core/sim_loop.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
-; §19 — explicitos de proposito, mesmo iguais ao valor por omissao do 4.6:
-window/stretch/aspect="keep"
-window/stretch/scale_mode="fractional"
 
 [editor_plugins]
 
@@ -127,10 +115,5 @@ common/physics_ticks_per_second=30
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-2d/snap/snap_2d_transforms_to_pixel=false
 renderer/rendering_method="mobile"
-; O que fica por tras de tudo. Por omissao o motor poe um cinzento de 0,3 — que
-; nao e uma cor deste jogo e que so se ve quando alguma coisa falha. Passa a ser
-; o valor mais escuro da paleta do §80 (#100D09, o primeiro plano), para que um
-; buraco no desenho se leia como sombra e nao como "o motor".
 environment/defaults/default_clear_color=Color(0.063, 0.051, 0.035, 1)

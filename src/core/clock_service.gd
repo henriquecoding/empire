@@ -50,12 +50,25 @@ func stop() -> void:
 
 
 ## Poe o relogio num ponto do dia. Para retomar um save, e mais nada — ninguem
-## deve andar com o tempo para tras a meio de um jogo.
-func seek(dia: int, decorrido: float) -> void:
+## deve andar com o tempo para tras a meio de um jogo. `segundos` e a duracao do
+## dia que o save guardou (§26); zero e a do clock.csv. Escala-se ANTES de pousar
+## o decorrido, que ja vem na escala dela.
+func seek(dia: int, decorrido: float, segundos: float = 0.0) -> void:
 	_clock = GameClock.new(_dados_do_relogio())
+	if segundos > 0.0:
+		_clock.set_day_seconds(segundos)
 	_clock.day = dia
 	_clock.elapsed = decorrido
 	running = true
+
+
+## Onde vai a frente da luz do amanhecer, em x de mundo, ou INF fora dela. A
+## luz que se ve e as tropas que ela solta leem esta mesma frente (§24, GB-21).
+func dawn_front() -> float:
+	if _clock == null:
+		return INF
+	var velocidade := _dados_do_relogio().dawn_sweep_px_s
+	return DawnCascade.front(int(clock.current_phase()), clock.elapsed, velocidade)
 
 
 ## Um passo do relogio. Chamado pelo SimLoop, na posicao 1 do §43.

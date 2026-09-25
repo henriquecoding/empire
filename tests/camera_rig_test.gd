@@ -162,3 +162,52 @@ func test_nenhum_numero_de_afinacao_esta_no_script() -> void:
 	assert_bool(dados.lookahead_px > 0.0).is_true()
 	assert_bool(dados.follow_seconds > 0.0).is_true()
 	assert_float(dados.free_return_seconds).is_equal(2.0)
+
+
+# ─── O rato na margem (§24, GB-12) ───────────────────────────────────────────
+
+
+## §24: a camara livre anda com "Q · Z ou rato na margem". A margem esquerda
+## empurra para a esquerda, a direita para a direita, e o resto do ecra e do
+## jogo — e onde se clica com o botao direito.
+func test_a_margem_empurra_para_o_lado_dela() -> void:
+	var margem: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_px
+	assert_float(CameraRig.edge(0.0, VISTA, margem)).is_equal(-1.0)
+	assert_float(CameraRig.edge(VISTA - 1.0, VISTA, margem)).is_equal(1.0)
+	assert_float(CameraRig.edge(VISTA / 2, VISTA, margem)).is_equal(0.0)
+	assert_float(CameraRig.edge(margem + 1.0, VISTA, margem)).is_equal(0.0)
+
+
+## Zero na coluna desliga o gesto: quem jogar em janela e nao o quiser, tira-o
+## no CSV e nao num script.
+func test_margem_zero_desliga() -> void:
+	assert_float(CameraRig.edge(0.0, VISTA, 0.0)).is_equal(0.0)
+
+
+## A margem e uma faixa e nao meio ecra: um oitavo da largura ja come o sitio
+## onde a Podridao aparece a noite (§25, minuto 5:00 — "a mancha no horizonte").
+func test_a_margem_vem_de_data_e_e_estreita() -> void:
+	var margem: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_px
+	assert_float(margem).is_greater(0.0)
+	assert_float(margem).is_less(VISTA / 8)
+
+
+## O rato na margem e a mesma camara livre das teclas: anda, e volta sozinha nos
+## 2 s do §24 quando o rato sai de la.
+func test_o_rato_na_margem_e_a_camara_livre_e_volta_sozinha() -> void:
+	var rig := _rig()
+	var alvo := _alvo(1000.0)
+	rig.follow(alvo)
+	_assentar(rig)
+	var pousada := rig.position.x
+	var dados: CameraData = Registry.entry(&"camera", &"default")
+
+	for _i in int(1.0 / PASSO):
+		rig.pan(CameraRig.edge(VISTA - 1.0, VISTA, dados.edge_pan_px), PASSO)
+		rig.advance(PASSO)
+	assert_bool(rig.position.x > pousada).is_true()
+
+	for _i in int(dados.free_return_seconds / PASSO) + 1:
+		rig.pan(CameraRig.edge(VISTA / 2, VISTA, dados.edge_pan_px), PASSO)
+		rig.advance(PASSO)
+	assert_float(rig.position.x).is_equal(pousada)

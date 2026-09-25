@@ -25,6 +25,7 @@ Script `src/sim/data/clock_data.gd` · layout `rows` · 1 linha(s) · §69: o pr
 | `phase_tint_sat` | PackedFloat32Array | v6 · a cor de cada fase (§80, ADR 0011) |  |
 | `phase_tint_val` | PackedFloat32Array | v6 · a cor de cada fase (§80, ADR 0011) |  |
 | `night_value_floor` | float | v6 · a cor de cada fase (§80, ADR 0011) |  |
+| `dawn_sweep_px_s` | float | §24 · o amanhecer |  |
 
 ## `units.csv` → `data/units/{id}.tres`
 
@@ -672,4 +673,5 @@ Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24
 | `follow_seconds` | float |  |  |
 | `free_speed_px_s` | float |  |  |
 | `free_return_seconds` | float |  |  |
+| `edge_pan_px` | float |  |  |
 
