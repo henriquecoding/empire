@@ -54,6 +54,9 @@ const PASSAGENS_X := [-950.0, 950.0]
 const SEGREDOS_X := {&"under_vegetation": 360.0, &"behind_passage": -1180.0}
 const CAMARA_W := 64.0
 const BIFURCACAO_X := 1800.0
+## §79: o diario 1 esta "numa ruina dentro das tuas muralhas desde o dia 1". Fica
+## entre os canteiros e a casa de treino da esquerda, longe de onde o rei nasce.
+const RUINA_X := -360.0
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
 # distingue e o preco que o §07 lhes da: 1, 3 e 4.
@@ -122,6 +125,10 @@ static func _segredos() -> void:
 		if SEGREDOS_X.has(dados.location):
 			SimLoop.secrets.post(dados, SimLoop.core_x + SEGREDOS_X[dados.location], CAMARA_W)
 	SimLoop.secrets.chapters.append(SimLoop.core_x + BIFURCACAO_X)
+	for recurso in Registry.entries(SimFactory.TABELA_DIARIOS):
+		var diario := recurso as JournalData
+		if diario.where_kind == ChapterPlan.RUINA:
+			SimLoop.secrets.post_journal(diario.id, SimLoop.core_x + RUINA_X, CAMARA_W)
 
 
 static func cabe_no_bioma(dados: BuildingData) -> bool:

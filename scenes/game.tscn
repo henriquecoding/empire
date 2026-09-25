@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://src/world/sky_view.gd" id="11_ceu"]
 [ext_resource type="Script" path="res://src/ui/captions.gd" id="12_legendas"]
 [ext_resource type="Script" path="res://src/world/accessibility_filter.gd" id="13_filtro"]
+[ext_resource type="Script" path="res://src/ui/journal_panel.gd" id="14_diario"]
 
 [node name="Game" type="Node2D" groups=["jogo"]]
 script = ExtResource("0_game")
@@ -91,6 +92,9 @@ script = ExtResource("6_estado")
 
 [node name="Legendas" type="Label" parent="Interface" groups=["instrumentos"]]
 script = ExtResource("12_legendas")
+
+[node name="Diario" type="PanelContainer" parent="Interface"]
+script = ExtResource("14_diario")
 
 [node name="Pausa" type="Control" parent="Interface"]
 layout_mode = 3

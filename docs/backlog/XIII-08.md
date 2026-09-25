@@ -7,7 +7,7 @@ Depende   XIII-04, XIII-07
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Os doze diários alcançáveis em mil sementes (D-12) e o epílogo determinista (D-13)
 Fora      O modo longo da Fase 8 — é onde O Turno vive.
-Estado    por fazer
+Estado    parcial — a atribuição, o D-12, o D-13 e o diário 1 legível; os outros onze esperam pelas fortalezas e pelos capítulos
 Horas     13 (3 + 10 escrita)
 ```
 
@@ -18,8 +18,12 @@ Horas     13 (3 + 10 escrita)
 - **Já feito:** a precedência dos três epílogos vive em `src/sim/systems/epilogue.gd` (`Epilogue.of`), o
   D-13 chama-a, e a `NightWatch.epilogue()` lê a Dívida e as listas da Colheita. O resto espera pelo XIII-07.
 - **Feito com o XIII-07:** a atribuição por ato e o D-12. O `ChapterPlan` dá a cada capítulo colocado o seu
-  diário, ou o de um capítulo que não saiu, e o D-12 prova-o em mil sementes. Falta mostrar o diário quando se
-  acha, e o ecrã do epílogo.
+  diário, ou o de um capítulo que não saiu, e o D-12 prova-o em mil sementes.
+- **O diário 1 já se lê.** Está na ruína dentro das muralhas desde o dia 1 (`Greybox.RUINA_X`), acha-se como um
+  segredo do §17 — o rei entra lá — e o `JournalPanel` mostra o título e o corpo sem pausar o jogo. O sinal é o
+  `secret_found` da §46 com o id do diário: o catálogo não tem um só para diários.
+- **Falta:** os outros onze esperam pelas fortalezas (conquista, Fase 2) e pelos segmentos dos capítulos; e o
+  ecrã do epílogo, que espera por um fim de campanha.
 
 ---
 

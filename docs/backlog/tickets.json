@@ -1244,13 +1244,14 @@
   "depende": "XIII-04, XIII-07",
   "feito": "Os doze diários alcançáveis em mil sementes (D-12) e o epílogo determinista (D-13)",
   "fora": "O modo longo da Fase 8 — é onde O Turno vive.",
-  "estado": "parcial — os doze diários escritos; os epílogos por implementar",
+  "estado": "parcial — a atribuição, o D-12, o D-13 e o diário 1 legível; os outros onze esperam pelas fortalezas e pelos capítulos",
   "horas": "13 (3 + 10 escrita)",
   "notas": [
    "ADR 0018 tem a precedência. O D-13 já corre sobre os limiares do rot.tres.",
    "Doze fragmentos de 60 a 90 palavras. Se um precisar de 200, está a explicar.",
    "Parcial a 14/09: os doze fragmentos estão escritos em data/i18n/strings.csv (836 palavras PT-PT e EN, todos entre 60 e 90 palavras). São primeira versão e medem-se contra o diário 9, que é o espécime da §79. Falta o sistema: a atribuição por ato, o D-12 e a verificação de epílogo.",
-   "A atribuição por ato e o D-12 estão feitos com o XIII-07: `ChapterPlan` dá a cada capítulo colocado o seu diário, ou o de um capítulo que não saiu, e o D-12 prova-o em mil sementes."
+   "A atribuição por ato e o D-12 estão feitos com o XIII-07: `ChapterPlan` dá a cada capítulo colocado o seu diário, ou o de um capítulo que não saiu, e o D-12 prova-o em mil sementes.",
+   "O diário 1 já se lê: está na ruína dentro das muralhas desde o dia 1, acha-se como um segredo do §17, e o JournalPanel mostra-o sem pausar o jogo. Falta o ecrã do epílogo."
   ]
  },
  "XIII-09": {

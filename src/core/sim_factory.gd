@@ -22,6 +22,7 @@ const TABELA_PODRIDAO := &"rot"
 const PODRIDAO := &"default"
 const TABELA_AMARGUEIROS := &"rot/amargueiros"
 const TABELA_CAPITULOS := &"world/chapters"
+const TABELA_DIARIOS := &"lore/journals"
 const TABELA_BIOMAS := &"biomes"
 const MUNDO := &"world"
 

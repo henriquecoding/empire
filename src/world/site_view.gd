@@ -25,9 +25,14 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting) -> void
 			s.xs[k] - s.widths[k] * WorldPalette.MEIA, chao - alto, s.widths[k], alto
 		)
 		canvas.draw_rect(nicho, luz.body(WorldPalette.VAZIO, s.xs[k]))
-		if s.seeds[k] > 0 and not String(s.ids[k]) in SimLoop.state.found:
-			var semente := Vector2(s.xs[k], chao - WorldPalette.DEGRAU)
-			canvas.draw_circle(semente, WorldPalette.MOEDA_R * NICHO, WorldPalette.SEMENTE)
+		if String(s.ids[k]) in SimLoop.state.found:
+			continue
+		var centro := Vector2(s.xs[k], chao - WorldPalette.DEGRAU)
+		if s.seeds[k] > 0:
+			canvas.draw_circle(centro, WorldPalette.MOEDA_R * NICHO, WorldPalette.SEMENTE)
+		elif Registry.has_entry(SimFactory.TABELA_DIARIOS, s.ids[k]):
+			var lado := Vector2.ONE * WorldPalette.MOEDA_R * NICHO
+			canvas.draw_rect(Rect2(centro - lado, lado * NICHO), WorldPalette.FOLHA)
 	if faixa == Band.Kind.SURFACE:
 		for x in s.chapters:
 			_placa(canvas, x, chao, luz)
