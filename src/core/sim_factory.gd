@@ -21,6 +21,10 @@ const TABELA_CRIATURAS := &"creatures"
 const TABELA_PODRIDAO := &"rot"
 const PODRIDAO := &"default"
 const TABELA_AMARGUEIROS := &"rot/amargueiros"
+const TABELA_CAPITULOS := &"world/chapters"
+const TABELA_DIARIOS := &"lore/journals"
+const TABELA_BIOMAS := &"biomes"
+const MUNDO := &"world"
 
 
 static func curve() -> EconomyCurve:
@@ -113,3 +117,32 @@ static func titles() -> TitleSystem:
 	for recurso in Registry.entries(&"lore/titles"):
 		lista.append(recurso as TitleData)
 	return TitleSystem.new(lista, curve(), by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS))
+
+
+## As regioes da campanha: uma por povo, e um povo por bioma (§21: "uma regiao =
+## um povo = um imperio a conquistar"). Pela ordem do Registry, que e a dos ids.
+static func campaign_regions() -> PackedStringArray:
+	return Registry.ids(TABELA_BIOMAS)
+
+
+## O povo de cada regiao, pela mesma ordem.
+static func campaign_peoples() -> PackedStringArray:
+	var povos := PackedStringArray()
+	for id in campaign_regions():
+		povos.append(String((Registry.entry(TABELA_BIOMAS, StringName(id)) as BiomeData).people))
+	return povos
+
+
+## O bioma do povo de um segmento: o do segmento de partida e a regiao de casa.
+static func biome_of_segment(segmento: StringName) -> StringName:
+	var povo := (Registry.entry(&"segments", segmento) as SegmentData).people
+	return (Registry.entry(&"peoples", povo) as PeopleData).biome
+
+
+## Os capitulos desta campanha (§77), sorteados no fluxo `world` (§42, §54).
+static func chapter_plan(regioes: PackedStringArray) -> ChapterPlan:
+	var lista: Array[ChapterData] = []
+	for recurso in Registry.entries(TABELA_CAPITULOS):
+		lista.append(recurso as ChapterData)
+	var sorteio := func(de: int, ate: int) -> int: return RngService.int_range(MUNDO, de, ate)
+	return ChapterPlan.draw(regioes, lista, curve().chapters_per_campaign, sorteio)

@@ -3,6 +3,17 @@
 Kingdom-builder 2D em pixel art, em Godot 4.6, onde cada império é uma civilização própria.
 A fonte de verdade do design é o **Dossiê Empire** — `docs/dossie.html` (v5.2). Tudo o resto deriva dele.
 
+## Jogar no browser
+
+O site constrói-se de raiz em cada push, na Vercel, e cada PR tem a sua pré-visualização (ADR 0024): a página
+de entrada na raiz, o jogo em `/jogar/` e o dossiê em `/dossie/`. O mesmo comando corre aqui, sem nada
+instalado além de Node e bash — o motor e o template Web descarregam-se na versão de `.godot-version`:
+
+```bash
+make site                                   # build/site/ inteiro
+python3 -m http.server -d build/site 8000   # e abre http://localhost:8000
+```
+
 ## Correr, testar, exportar
 
 Precisas do Godot **4.6-stable** (a versão está fixada em `.godot-version`) no `PATH` como `godot`, ou em `GODOT`.
@@ -55,7 +66,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.6: 607 testes (8 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.6: 633 testes (6 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
 - A base de dados tem **28 tabelas** e 203 recursos com todos os números do dossiê, Parte XIII incluída; o que o

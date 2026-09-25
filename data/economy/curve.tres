@@ -84,6 +84,7 @@ ai_tyrant_recruit_mult = 1.35
 ai_target_training_house_from_day = 15
 named_cap = 9
 title_mourning_days = 3
+chapters_per_campaign = 6
 colheita_base_days = 6
 colheita_per_people = 2
 colheita_assimilation_factor = 0.5

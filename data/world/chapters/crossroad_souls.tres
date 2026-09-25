@@ -10,5 +10,6 @@ law_key = "CHAPTER_LAW_CROSSROAD_SOULS"
 inhabitant_key = "CHAPTER_WHO_CROSSROAD_SOULS"
 placement = &"bifurcation"
 detour_seconds = 25.0
+order = 1
 reward_kind = &"ancient_seed"
 folk_root = "alminhas e nichos de estrada"

@@ -85,6 +85,7 @@ func start(semente: int) -> void:
 	_montar()
 	king_id = UnitSystem.NENHUM  # sem rei em campo ate alguem o pôr la
 	RngService.configure(semente)
+	state.chapters = SimFactory.chapter_plan(SimFactory.campaign_regions())  # §77, fluxo world
 	ClockService.start()
 	_running = true
 
@@ -128,8 +129,7 @@ func set_paused(pausado: bool) -> void:
 	EventBus.flush()  # sem tick nao ha passo 11 que entregue isto
 
 
-## Um passo. Publico para que um teste possa correr um dia inteiro em
-## milissegundos sem esperar por _physics_process.
+## Um passo. Publico: um teste corre um dia inteiro sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
 	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages))

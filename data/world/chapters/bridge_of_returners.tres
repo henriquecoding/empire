@@ -12,6 +12,7 @@ song_key = "SONG_CHAPTER_BRIDGE_OF_RETURNERS"
 biome = &"canyon"
 placement = &"crossing"
 detour_seconds = 40.0
+order = 9
 reward_kind = &"journal"
 reward_id = &"journal_10"
 visits_tracked = true

@@ -12,5 +12,6 @@ song_key = "SONG_CHAPTER_SPORE_FIELD"
 biome = &"subterranean"
 placement = &"crossing"
 detour_seconds = 40.0
+order = 8
 reward_kind = &"ancient_seed"
 folk_root = "cidades soterradas"

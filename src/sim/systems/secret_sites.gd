@@ -36,6 +36,16 @@ func clear() -> void:
 	chapters = PackedFloat32Array()
 
 
+## Um diario num sitio (§79): acha-se como um segredo, e nao da Semente. O id e
+## o do diario, e e esse que fica em `found` — e o que o painel le.
+func post_journal(diario: StringName, x: float, largura: float) -> void:
+	ids.append(diario)
+	xs.append(x)
+	bands.append(int(Band.Kind.SURFACE))
+	widths.append(largura)
+	seeds.append(0)
+
+
 ## Poe um segredo no mundo. `largura` e a da camara: e dentro dela que se acha.
 func post(dados: SecretData, x: float, largura: float) -> void:
 	ids.append(dados.id)

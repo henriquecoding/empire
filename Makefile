@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo \
+        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -166,6 +166,19 @@ exportar-web:  ## Exporta o Web (release: o debug nao cabe em lado nenhum)
 	@echo "export: o web saiu"
 
 exportar-tudo: exportar exportar-windows exportar-web  ## Os tres exports
+
+# ADR 0024: o que a Vercel corre em cada push, e corre igual aqui. Sem motor no
+# PATH descarrega o de .godot-version; com ele (GODOT=...), usa esse.
+site:  ## O site inteiro em build/site/ (entrada, /jogar/, /dossie/)
+	GODOT=$(GODOT) bash tools/web/construir.sh
+	@echo "site: python3 -m http.server -d build/site 8000"
+
+site-verificar:  ## O portao do site: telemovel, axe, ligacoes, SEO, teclado e o jogo
+	node tools/web/verificar_site.mjs
+
+# URL=https://... e, opcional, COMMIT=<sha> para exigir que seja esse o publicado.
+site-fumo:  ## O site publicado responde como deve (cabecalhos, tipos, 404, versao)
+	node tools/web/fumo.mjs $(URL) $(COMMIT)
 
 # ── Fora do jogo ─────────────────────────────────────────────────────────────
 

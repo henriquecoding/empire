@@ -1165,7 +1165,21 @@
 - **O que falta do segmento de abertura:** o vagabundo com `head_pool` fixo é arte (ART-01: no greybox todas as
   caras são a mesma), e a bifurcação a três ecrãs para leste precisa dos Capítulos (XIII-07). A **placa** da
   bifurcação já está no segmento (`SecretSites.chapters`, a leste) e acende-se quando a primeira oferta é
-  paga; o capítulo que lá cai é do XIII-07.
+  paga; o capítulo que lá cai é o da região dos Enramados no plano do XIII-07, e a placa diz-lhe o nome.
+- **Decide:** tu.
+
+### Q-105 · Nove fichas cinco a cinco não dão 126 mundos: dão 61
+- **Onde:** §77 (*"nove fichas sorteadas cinco a cinco dão 126 mundos"*; *"no máximo um por região"*), §21
+  (*"uma região = um povo"*), `chapters.csv` (`biome`).
+- **O que diverge:** 126 é C(9,5), e só é verdade se qualquer cinco couberem juntas. Não cabem: a romaria e a
+  várzea virada são as duas da várzea, o sulco cego e a ponte são as duas do desfiladeiro, e uma campanha tem uma
+  região por povo — uma várzea, um desfiladeiro. As campanhas com as duas de um bioma são 65 das 126, e ficam
+  **61**. O `ChapterPlan.worlds` conta-as e o `chapter_plan_test` prova que mil sementes as dão todas.
+- **Proposta:** manter as regras e corrigir o número da §77 para 61. A alternativa — deixar dois capítulos no
+  mesmo bioma quando a campanha tiver duas regiões dele — muda a §21 e não a §77.
+- **Também por decidir:** o *"junto a acampamento de mercenários"* do mercado e o *"fortaleza"* do Cerco não
+  restringem nada hoje: qualquer região tem um e outro. Se o WorldGen (§54) vier a ter regiões sem acampamento,
+  o mercado passa a precisar de uma, e o `_cabem` é o sítio.
 - **Decide:** tu.
 
 ## Resolvidas na v5.2 (reversíveis)

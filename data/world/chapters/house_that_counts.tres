@@ -11,6 +11,7 @@ inhabitant_key = "CHAPTER_WHO_HOUSE_THAT_COUNTS"
 song_key = "SONG_CHAPTER_HOUSE_THAT_COUNTS"
 placement = &"roadside"
 detour_seconds = 25.0
+order = 3
 reward_kind = &"journal"
 reward_id = &"journal_04"
 visits_tracked = true

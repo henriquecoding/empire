@@ -8,6 +8,18 @@
 extends GdUnitTestSuite
 
 const Dados := preload("res://tests/support/dados.gd")
+## A §84 pede mil sementes seguidas para o D-12; o D-09 corre sobre as mesmas.
+const SEMENTES := 1000
+
+var _rng_antes: Dictionary
+
+
+func before() -> void:
+	_rng_antes = RngService.snapshot()
+
+
+func after() -> void:
+	RngService.restore(_rng_antes)
 
 
 func _rot() -> RotProfile:
@@ -41,23 +53,32 @@ func test_d08_um_titulo_volta_com_ordinal_depois_de_tres_dias_de_luto() -> void:
 # ----------------------------------------------------------------- §77
 
 
-# gdlint: disable=unused-argument
-func test_d09_todos_os_capitulos_colocados_tem_caminho_alternativo(
-	do_skip := true,
-	skip_reason := "Falta o WorldGen (§54): o caminho alternativo e uma propriedade da rota gerada."
-) -> void:
-	for c: ChapterData in Dados.all_in("res://data/world/chapters"):
-		assert_float(c.detour_seconds).is_greater(0.0)
+func test_d09_todos_os_capitulos_colocados_tem_caminho_alternativo() -> void:
+	# Mil campanhas: nenhum capitulo colocado sem o preco do desvio (regra 5).
+	for semente in SEMENTES:
+		var p := _plano(semente)
+		for i in p.regions.size():
+			if p.placed[i].is_empty():
+				continue
+			var msg := "semente %d: %s sem desvio" % [semente, p.placed[i]]
+			assert_float(p.detours[i]).override_failure_message(msg).is_greater(0.0)
 
 
-func test_d12_os_doze_diarios_sao_alcancaveis_em_mil_sementes(
-	do_skip := true,
-	skip_reason := "Falta o WorldGen (§54) e a atribuicao de diarios (§79). E o unico caro da §84."
-) -> void:
-	assert_int(Dados.all_in("res://data/lore/journals").size()).is_equal(12)
+func test_d12_os_doze_diarios_sao_alcancaveis_em_mil_sementes() -> void:
+	var diarios := Dados.all_in("res://data/lore/journals")
+	assert_int(diarios.size()).is_equal(12)
+	var povos := SimFactory.campaign_peoples()
+	for semente in SEMENTES:
+		var p := _plano(semente)
+		for j: JournalData in diarios:
+			var msg := "semente %d: %s nao se alcanca (%s)" % [semente, j.id, p.placed]
+			assert_bool(p.reachable(j, povos)).override_failure_message(msg).is_true()
 
 
-# gdlint: enable=unused-argument
+## Uma campanha pela semente, no fluxo `world`, como o jogo a gera (XIII-07).
+func _plano(semente: int) -> ChapterPlan:
+	RngService.configure(semente)
+	return SimFactory.chapter_plan(SimFactory.campaign_regions())
 
 
 func test_d09_dados_todo_o_capitulo_tem_preco_de_desvio() -> void:

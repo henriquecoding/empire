@@ -11,6 +11,7 @@ inhabitant_key = "CHAPTER_WHO_BONE_MARKET"
 song_key = "SONG_CHAPTER_BONE_MARKET"
 placement = &"near_mercenary_camp"
 detour_seconds = 25.0
+order = 7
 reward_kind = &"journal"
 reward_id = &"journal_08"
 visits_tracked = true

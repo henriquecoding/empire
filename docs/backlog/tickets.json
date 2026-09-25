@@ -1225,11 +1225,14 @@
   "depende": "GB-02, XIII-06",
   "feito": "Seis por campanha, um por região, com O Cerco sempre; D-09, D-10 e D-11 a passar",
   "fora": "Os diários — é o XIII-08.",
-  "estado": "por fazer",
+  "estado": "parcial — a colocação e os diários feitos (D-09, D-11, D-12); as leis, a arte e as canções por fazer",
   "horas": "106 (30 + 50 arte + 20 som + 6 escrita)",
   "notas": [
    "Q-043: seis por campanha. Q-054 e Q-055: duas raízes e três desvios por confirmar.",
-   "Quatro é o mínimo viável se o calendário apertar (§84, risco 1)."
+   "Quatro é o mínimo viável se o calendário apertar (§84, risco 1).",
+   "**Já feito — a colocação.** `src/sim/systems/chapter_plan.gd` (`ChapterPlan.draw`) sorteia no fluxo `world` os seis da campanha (`chapters_per_campaign` na curva), o Cerco sempre, um por região, e um capítulo de bioma só na região desse bioma. As regiões são uma por povo (`SimFactory.campaign_regions`). Os diários vão para o seu capítulo ou, se ele não saiu, para o seguinte que saiu, pela coluna `order` de `chapters.csv` (a ordem da §77). O D-09, o D-11 e o D-12 correm sobre mil sementes. Q-105: as contas dão 61 mundos, e não 126.",
+   "**Já feito — o plano no jogo.** O `SimLoop.start()` sorteia-o logo a seguir a semear, e ele vive no `GameState.chapters` e vai no save com os nomes da §84 (`chapters_placed`, e o diário e o desvio de cada um). A placa da bifurcação de casa (§83) diz, quando a oferta a revela, o nome do capítulo que caiu na região dos Enramados.",
+   "**Por fazer:** a lei de cada um (dez sistemas pequenos), o habitante, a canção, a arte, e o segmento do capítulo em cada região, com o desvio — precisa das outras cinco regiões, que o greybox ainda não tem. É a Fase 5."
   ]
  },
  "XIII-08": {
@@ -1241,12 +1244,14 @@
   "depende": "XIII-04, XIII-07",
   "feito": "Os doze diários alcançáveis em mil sementes (D-12) e o epílogo determinista (D-13)",
   "fora": "O modo longo da Fase 8 — é onde O Turno vive.",
-  "estado": "parcial — os doze diários escritos; os epílogos por implementar",
+  "estado": "parcial — a atribuição, o D-12, o D-13 e o diário 1 legível; os outros onze esperam pelas fortalezas e pelos capítulos",
   "horas": "13 (3 + 10 escrita)",
   "notas": [
    "ADR 0018 tem a precedência. O D-13 já corre sobre os limiares do rot.tres.",
    "Doze fragmentos de 60 a 90 palavras. Se um precisar de 200, está a explicar.",
-   "Parcial a 14/09: os doze fragmentos estão escritos em data/i18n/strings.csv (836 palavras PT-PT e EN, todos entre 60 e 90 palavras). São primeira versão e medem-se contra o diário 9, que é o espécime da §79. Falta o sistema: a atribuição por ato, o D-12 e a verificação de epílogo."
+   "Parcial a 14/09: os doze fragmentos estão escritos em data/i18n/strings.csv (836 palavras PT-PT e EN, todos entre 60 e 90 palavras). São primeira versão e medem-se contra o diário 9, que é o espécime da §79. Falta o sistema: a atribuição por ato, o D-12 e a verificação de epílogo.",
+   "A atribuição por ato e o D-12 estão feitos com o XIII-07: `ChapterPlan` dá a cada capítulo colocado o seu diário, ou o de um capítulo que não saiu, e o D-12 prova-o em mil sementes.",
+   "O diário 1 já se lê: está na ruína dentro das muralhas desde o dia 1, acha-se como um segredo do §17, e o JournalPanel mostra-o sem pausar o jogo. Falta o ecrã do epílogo."
   ]
  },
  "XIII-09": {
@@ -1310,9 +1315,9 @@
    "docs/design/19-arquitetura-godot-4-6.md"
   ],
   "depende": "F0-04",
-  "feito": "Um endereço público que serve a última main verde. O job `publicar` está escrito e verde, mas NÃO publicou nada ainda: falta ligar o Pages em Settings > Pages > Source: GitHub Actions, e isso é um clique de quem tem admin. Até lá o job avisa e salta.",
+  "feito": "Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024, que substitui a 0022). Cada PR tem a sua pré-visualização.",
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
-  "estado": "por fazer",
+  "estado": "parcial — o site constrói-se e publica-se na Vercel (ADR 0024); falta a produção seguir a main",
   "horas": "2"
  }
 }
