@@ -22,6 +22,7 @@ const OBRAS := &"builds"
 const PODRIDAO := &"rot"
 const REI := &"king_id"
 const CAMPO := &"amargueiros"
+const OFERTAS := &"offers"
 
 
 static func world(
@@ -39,6 +40,7 @@ static func world(
 		OBRAS: obras.to_dict(),
 		PODRIDAO: noite.rot.to_dict(),
 		CAMPO: noite.trees.to_dict(),
+		OFERTAS: noite.offers.to_dict(),
 		REI: king_id,
 	}
 
@@ -59,4 +61,5 @@ static func restore(
 	obras.from_dict(mundo.get(OBRAS, []))
 	noite.rot.from_dict(mundo.get(PODRIDAO, {}))
 	noite.trees.from_dict(mundo.get(CAMPO, {}))
+	noite.offers.from_dict(mundo.get(OFERTAS, {}))
 	return mundo.get(REI, UnitSystem.NENHUM)

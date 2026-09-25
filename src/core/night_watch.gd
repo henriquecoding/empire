@@ -19,10 +19,15 @@ var rot: RotSystem
 ## que o escreve: a massa ao crepusculo, a raiz ao amanhecer.
 var trees: AmargueiroSystem
 
+## A voz da mancha e a Divida que ela sobe (§75). A ponte com o resto do jogo e
+## o OfferDesk.
+var offers: OfferSystem
+
 
 func _init() -> void:
 	rot = SimFactory.rot()
 	trees = SimFactory.amargueiros()
+	offers = SimFactory.offers()
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -31,7 +36,7 @@ func tick(
 	delta: float, fase: int, mudou: bool, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 ) -> void:
 	if mudou:
-		_virar(fase, estado, bichos, mundo.y)
+		_virar(fase, estado, bichos, mundo)
 	if not rot.active():
 		return
 	if rot.needs_interval():
@@ -59,7 +64,16 @@ func dawn(estado: GameState, unidades: UnitSystem, obras: BuildSystem, core_x: f
 	trees.at_dawn(estado, unidades, obras, core_x)
 
 
-func _virar(fase: int, estado: GameState, bichos: CreatureSystem, largura: float) -> void:
+## A noite saltada ("O que brilha, e nada mais", §75): a mancha recua ja, e o
+## que ela invocou dissolve-se como ao amanhecer.
+func skip(estado: GameState, bichos: CreatureSystem) -> void:
+	rot.retreat()
+	EventBus.queue(&"rot_retreated", [estado.day])
+	for creature_id in bichos.dissolve():
+		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
+
+
+func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2) -> void:
 	if fase == GameClock.Phase.DUSK:
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso
@@ -67,15 +81,23 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, largura: float
 		var lado := 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
 		rot.amargueiros = trees.standing(false)
 		rot.named_amargueiros = trees.standing(true)
-		rot.spawn(estado.day, lado, largura)
+		rot.refusals = offers.refusals(estado.day)
+		rot.spawn(estado.day, lado, mundo.y)
+		offers.night_time = 0.0
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
+		_da_divida(estado, bichos, mundo.x)
 		return
-	if fase != GameClock.Phase.DAWN or not rot.active():
-		return
-	rot.retreat()
-	EventBus.queue(&"rot_retreated", [estado.day])
-	for creature_id in bichos.dissolve():
-		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
+	if fase == GameClock.Phase.DAWN and rot.active():
+		skip(estado, bichos)
+
+
+## O que nasce da Divida e nao da massa: o Zelador aos 6 (§75). Anda atras da
+## mancha, para o nucleo, e nao bate em ninguem.
+func _da_divida(estado: GameState, bichos: CreatureSystem, nucleo: float) -> void:
+	for recurso in Registry.entries(TABELA_CRIATURAS):
+		var dados := recurso as CreatureData
+		if dados.from_debt > 0 and offers.debt.debt >= dados.from_debt:
+			bichos.spawn(estado, dados, rot.position_x(), nucleo)
 
 
 func _invocar(

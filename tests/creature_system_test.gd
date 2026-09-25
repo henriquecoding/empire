@@ -141,3 +141,23 @@ func test_o_save_das_colunas_so_leva_tipos_base() -> void:
 
 	for valor in bicho.to_dict().values():
 		assert_int(typeof(valor)).is_not_equal(TYPE_OBJECT)
+
+
+func test_o_zelador_nao_morre_e_nao_e_alvo() -> void:
+	# §75: "pode ser afastado, nao morto". Vida 0 e can_be_killed false.
+	var bichos := CreatureSystem.new()
+	var e := GameState.new()
+	var zelador := Registry.entry(&"creatures", &"tender") as CreatureData
+	var id := bichos.spawn(e, zelador, 100.0, 0.0)
+	bichos.damage(id, 999)
+	var i := bichos.index_of(id)
+	assert_bool(bichos.alive(i)).is_true()
+	assert_bool(bichos.targetable(i)).is_false()
+	var rastejante := Registry.entry(&"creatures", &"crawler") as CreatureData
+	var outro := bichos.spawn(e, rastejante, 100.0, 0.0)
+	assert_bool(bichos.targetable(bichos.index_of(outro))).is_true()
+	var copia := CreatureSystem.new()
+	var guardado := bichos.to_dict()
+	guardado.erase(&"mortals")  # um save de antes do Zelador
+	copia.from_dict(guardado)
+	assert_bool(copia.targetable(copia.index_of(id))).is_false()  # vida 0: nao se aponta

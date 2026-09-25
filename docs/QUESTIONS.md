@@ -950,6 +950,39 @@
   §16 dá-lhe ressurreição "até ao amanhecer" e o §74 diz que ao amanhecer ela ou cria raiz ou desaparece.
 - **Decide:** tu — sobretudo a fronteira de "dentro" e a tag `worker`, que são as duas que mudam números.
 
+### Q-087 · O que o §75 não diz sobre a Oferta, e o que o XIII-04 escolheu
+- **Onde:** §75, `src/sim/systems/offer_system.gd`, `src/sim/systems/debt_ledger.gd`,
+  `src/core/offer_desk.gd`, `src/world/offer_view.gd`.
+- **Só se sorteia o que o jogo sabe cobrar e dar.** Das doze ofertas, dez pedem um sistema que ainda não
+  existe — portões, capítulos (§77), nomes (§76), sucessor, povos, passagens seladas, classes — e uma
+  oferta que sobe a Dívida sem entregar nada era pior do que a voz calada. Hoje entram duas: *"Dá-me o que
+  já não anda"* e *"O que brilha, e nada mais"*. A lista do que falta é a constante `PRECOS_FEITOS` /
+  `EFEITOS_FEITOS`, e cresce com cada sistema.
+- **O gesto de um preço que não é moeda.** O §75 diz "a tropa mandada andar até ele". Não há ainda como
+  mandar uma tropa a um sítio. Escolhido: uma moeda no prato é o gesto de aceitar, e o preço cobra-se
+  sozinho.
+- **O preço tem de existir quando a oferta é dita.** O §75 só a deixa caducar se o preço deixar de
+  existir *"a meio"*. Medido: sem esta leitura, *"Dá-me o que já não anda"* era dita todas as noites
+  sem nenhuma tropa ferida, caducava sempre, e as recusas somavam +40 — a defesa do décimo dia do F1-16
+  passava a cair no dia 9.
+- **"Tesouraria"** é o saco do rei. Não há outro ouro guardado.
+- **"As ofertas passam a incluir as de preço 3" (Dívida 3–5).** Lido como: uma oferta cujo `debt_delta`
+  chega ao primeiro limiar só entra depois de a Dívida o passar.
+- **Onde e quando fala.** A 300 px entre a frente da mancha e o bordo de fora da muralha do lado dela
+  (sem muralha, o núcleo), nunca antes do início da janela; no fim da janela fala onde estiver. O prato
+  fica à frente da mancha, com a largura de um sítio de muralha, e é servido **antes** de uma obra que
+  esteja por baixo dele — medido: sem isso um galinheiro por construir comia a moeda.
+- **"A noite é saltada."** A mancha recua já e o que ela invocou dissolve-se; o relógio não salta. A Q-040
+  (uma vez por campanha) lê-se do `once_per_campaign` do `offers.csv`, que continua em `_proposed`.
+- **O Zelador** nasce ao crepúsculo com a Dívida no limiar, na mancha, e anda para o núcleo. Não pode ser
+  morto nem é alvo; como não bate, também não pára nas muralhas. Ao núcleo não leva ninguém — não há
+  nomeados até ao XIII-05 —, e "afastar" é o empurrão da Q-084, que não existe.
+- **A luz.** Estão o halo (primeiro limiar) e a segunda chama (Dívida 12). Faltam o raio a crescer por
+  "faixas", o âmbar no ecrã inteiro aos 9 e as fogueiras a perder o bónus, a música a baixar e a candeia a
+  subir de brilho quando fala — arte e som.
+- **Decide:** tu — sobretudo o gesto de aceitar e a regra "o preço existe quando é dito", que mudam
+  números.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

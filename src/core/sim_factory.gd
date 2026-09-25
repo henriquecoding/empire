@@ -93,3 +93,11 @@ static func amargueiros() -> AmargueiroSystem:
 	for recurso in Registry.entries(&"rot/amargueiros"):
 		destinos[(recurso as AmargueiroData).id] = recurso
 	return AmargueiroSystem.new(rot_profile(), destinos, by_id(TABELA_TROPAS))
+
+
+## As doze ofertas da §75 e a Divida que elas sobem.
+static func offers() -> OfferSystem:
+	var ofertas: Array[OfferData] = []
+	for recurso in Registry.entries(&"rot/offers"):
+		ofertas.append(recurso as OfferData)
+	return OfferSystem.new(rot_profile(), ofertas)

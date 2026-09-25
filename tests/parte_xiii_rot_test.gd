@@ -73,23 +73,26 @@ func test_d04_a_penalizacao_por_recusa_nunca_passa_de_40() -> void:
 		assert_float(mass - Model.rot_mass(10, 0, r)).is_less_equal(r.refusal_cap)
 
 
-# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
-# gdlint: disable=unused-argument
-func test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas(
-	do_skip := true,
-	skip_reason := "Falta o RotSystem (§51) e o OfferSystem (§75): e um teste de tick, nao de dados."
-) -> void:
+func test_d05_uma_oferta_por_noite_mesmo_com_duas_manchas() -> void:
+	# A voz e uma pessoa (§75): a segunda mancha do dia 12 fica calada.
 	assert_int(_rot().offers_per_night).is_equal(1)
+	var s := SimFactory.offers()
+	var o: OfferData = load("res://data/rot/offers/the_lame.tres")
+	assert_bool(s.can_speak(12)).is_true()
+	s.open(o, 12, 0.0, 1.0)
+	s.settle(false, 12)
+	assert_bool(s.can_speak(12)).is_false()
 
 
-func test_d06_a_divida_nunca_desce(
-	do_skip := true,
-	skip_reason := "Falta o DebtLedger (§75): so um teste de caminhos prova que nao ha subtracao."
-) -> void:
-	assert_int(_rot().debt_max).is_equal(20)
-
-
-# gdlint: enable=unused-argument
+func test_d06_a_divida_nunca_desce() -> void:
+	# O caminho, e nao so os dados: nenhuma sequencia de somas a faz descer.
+	var d := DebtLedger.new(_rot())
+	var antes := 0
+	for delta in [1, -5, 0, 3, -20, 2, 100, -1]:
+		d.add(delta)
+		assert_int(d.debt).is_greater_equal(antes)
+		antes = d.debt
+	assert_int(d.debt).is_equal(_rot().debt_max)
 
 
 func test_d06_dados_nenhuma_oferta_tem_divida_negativa() -> void:

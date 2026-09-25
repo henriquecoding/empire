@@ -71,6 +71,9 @@ src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocu
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
 src/sim/systems/amargueiro_system.gd AmargueiroSystem quem fica no campo cria raiz (§74)
+src/sim/systems/offer_system.gd OfferSystem a Oferta: uma por noite, no prato (§75)
+src/sim/systems/debt_ledger.gd DebtLedger  a Divida da Candeia, que nunca desce (§75)
+src/core/offer_desk.gd      OfferDesk     quando a mancha fala, o preco e o efeito (§75)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
@@ -84,6 +87,7 @@ src/world/actor_art.gd      ActorArt      o que uma tropa E, por dentro da caixa
 src/world/creature_art.gd   CreatureArt   o que um bicho E, por dentro da caixa (§22, §25)
 src/world/rot_view.gd       RotView       a mancha, o rasto e a candeia (§74, §80)
 src/world/amargueiro_view.gd AmargueiroView a arvore com a cara na casca, e o Marco (§74)
+src/world/offer_view.gd     OfferView     o prato e a frase da Oferta (§75)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
@@ -118,6 +122,7 @@ src/core/sim_factory.gd     SimFactory             nucleo        core/, sim/
 src/core/event_relay.gd     EventRelay             nucleo        core/, sim/
 src/core/night_watch.gd     NightWatch             nucleo        core/, sim/
 src/core/verbs.gd           Verbs                  nucleo        core/, sim/
+src/core/offer_desk.gd      OfferDesk              nucleo        core/, sim/
 src/core/intent_queue.gd    IntentQueue            nucleo        nada
 src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada

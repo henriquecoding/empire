@@ -40,6 +40,8 @@ var cooldowns: PackedFloat32Array = PackedFloat32Array()
 ## Quantas moedas deixa onde morre (§25: "uma moeda no chao onde morreu um
 ## Rastejante"). Fria no dossie, quente aqui: le-se em cada morte.
 var coin_drops: PackedInt32Array = PackedInt32Array()
+## 0 para quem nao pode ser morto (§75: o Zelador "pode ser afastado, nao morto").
+var mortals: PackedByteArray = PackedByteArray()
 
 var _por_id: Dictionary = {}
 
@@ -53,7 +55,12 @@ func index_of(creature_id: int) -> int:
 
 
 func alive(i: int) -> bool:
-	return healths[i] > 0
+	return healths[i] > 0 or mortals[i] == 0
+
+
+## Se vale a pena apontar-lhe uma arma: so a quem uma arma pode matar.
+func targetable(i: int) -> bool:
+	return mortals[i] == 1 and healths[i] > 0
 
 
 ## Ja esta a bater em alguem ou em alguma coisa. Quem esta engajado nao anda:
@@ -80,6 +87,7 @@ func spawn(estado: GameState, dados: CreatureData, x: float, rumo: float) -> int
 	target_slots.append(NENHUM)
 	cooldowns.append(0.0)
 	coin_drops.append(dados.coin_drop)
+	mortals.append(int(dados.can_be_killed))
 	_por_id[creature_id] = ids.size() - 1
 	return creature_id
 
@@ -99,7 +107,7 @@ func remove(creature_id: int) -> bool:
 
 func damage(creature_id: int, quanto: int) -> void:
 	var i := index_of(creature_id)
-	if i != NENHUM:
+	if i != NENHUM and mortals[i] == 1:
 		healths[i] = maxi(0, healths[i] - quanto)
 
 
@@ -114,7 +122,7 @@ func set_target_x(creature_id: int, x: float) -> void:
 func tick_movement(delta: float) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
-		if engaged(i) or healths[i] <= 0:
+		if engaged(i) or not alive(i):
 			continue
 		xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
 
@@ -138,6 +146,7 @@ func dissolve() -> PackedInt32Array:
 	target_slots = PackedInt32Array()
 	cooldowns = PackedFloat32Array()
 	coin_drops = PackedInt32Array()
+	mortals = PackedByteArray()
 	_por_id = {}
 	return levadas
 
@@ -151,6 +160,9 @@ func to_dict() -> Dictionary:
 ## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
 func from_dict(d: Dictionary) -> void:
 	Columns.from_dict(self, d)
+	if mortals.size() != ids.size():  # um save de antes do Zelador: todos mortais
+		mortals.resize(ids.size())
+		mortals.fill(1)
 	_reindexar()
 
 
@@ -168,6 +180,7 @@ func _copiar(de: int, para: int) -> void:
 	target_slots[para] = target_slots[de]
 	cooldowns[para] = cooldowns[de]
 	coin_drops[para] = coin_drops[de]
+	mortals[para] = mortals[de]
 
 
 func _encolher() -> void:
@@ -185,6 +198,7 @@ func _encolher() -> void:
 	target_slots.resize(n)
 	cooldowns.resize(n)
 	coin_drops.resize(n)
+	mortals.resize(n)
 
 
 func _reindexar() -> void:

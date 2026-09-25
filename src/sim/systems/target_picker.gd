@@ -121,7 +121,7 @@ func _serve(
 	if alvo == NENHUM:
 		return false
 	var c := criaturas.index_of(alvo)
-	if c == NENHUM or not criaturas.alive(c):
+	if c == NENHUM or not criaturas.targetable(c):
 		return false
 	if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 		return false
@@ -132,7 +132,7 @@ func _mais_proxima(unidades: UnitSystem, i: int, dados: UnitData, criaturas: Cre
 	var melhor := NENHUM
 	var melhor_d := Posts.range_px(_postos, unidades, i, dados)
 	for c in criaturas.count():
-		if not criaturas.alive(c):
+		if not criaturas.targetable(c):
 			continue
 		if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 			continue

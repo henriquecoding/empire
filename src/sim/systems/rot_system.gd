@@ -66,6 +66,7 @@ func spawn(day: int, side: int, map_width: float) -> void:
 	state.mass = _massa_do_dia()
 	state.x = map_width if side > 0 else 0.0
 	state.next_summon_at = NAO_ARMADA
+	state.paused_for = 0.0
 	state.trail_from = state.x
 	state.trail_to = state.x
 
@@ -90,6 +91,9 @@ func arm(segundos: float) -> void:
 func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]:
 	var pedidos: Array[SpawnRequest] = []
 	if not state.active:
+		return pedidos
+	if state.paused_for > 0.0:  # parada nao anda nem invoca (§75)
+		state.paused_for = maxf(0.0, state.paused_for - delta)
 		return pedidos
 
 	var v := speed()
@@ -137,6 +141,16 @@ func active() -> bool:
 ## acumulava credito e a noite seguinte vinha de graca.
 func feed(amount: float) -> void:
 	state.mass = maxf(0.0, state.mass - amount)
+
+
+## Para por uns segundos: nao anda nem invoca (§75, "a mancha para 25 s").
+func pause(segundos: float) -> void:
+	state.paused_for = maxf(state.paused_for, segundos)
+
+
+## A massa desta noite multiplicada por `fator` (§75, "-40% de massa").
+func scale_mass(fator: float) -> void:
+	state.mass = maxf(0.0, state.mass * fator)
 
 
 ## O amanhecer. Nao morre: recua, e as criaturas vivas dissolvem-se (§51).

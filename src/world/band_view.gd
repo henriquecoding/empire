@@ -76,6 +76,8 @@ func _draw() -> void:
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
+	if band == Band.Kind.SURFACE:
+		OfferView.draw_on(self, _luz)
 
 
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se

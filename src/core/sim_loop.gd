@@ -158,11 +158,10 @@ func step(delta: float) -> void:
 	units.tick_movement(delta, king_id)
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
-	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
-	#     chegada — da moeda ou de quem a vai buscar — e por isso vem a seguir ao
-	#     movimento e nao no passo do sistema que os trata (Q-063, Q-064). A obra
-	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
-	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
+	# 5 · apanhar, pagar e ser recrutado sao consequencia de uma chegada, e vem a
+	#     seguir ao movimento (Q-063, Q-064). O prato da §75 primeiro — e um alvo
+	#     por cima do que estiver no chao —, depois a obra e a arvore.
+	_largar(OfferDesk.tick(delta, night))
 	EventRelay.builds(builds.absorb(coins))
 	if mudou and _fase == GameClock.Phase.DAWN:
 		night.dawn(state, units, builds, core_x)  # 5 · §74: quem ficou no campo
