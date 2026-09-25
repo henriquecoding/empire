@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync, statSync, cpSync, existsSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
 import { execSync } from "node:child_process";
+import zlib, { brotliCompressSync } from "node:zlib";
 import { fileURLToPath } from "node:url";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -48,13 +49,20 @@ function pct(n, total) {
   return total ? ((100 * n) / total).toFixed(2) : "0";
 }
 
+// O que o browser descarrega de facto: a Vercel serve o .wasm, o .pck e o .js
+// com brotli, e o .wasm de 36 MB chega com 9 (medido; a qualidade 4 e a que
+// mais se aproxima do que ela serve). Dizer o tamanho em disco era
+// assustar quem vai jogar com um numero quatro vezes maior do que o real.
 function megas(saida) {
   let n = 0;
   for (const f of ["index.wasm", "index.pck", "index.js"]) {
     const p = join(saida, "jogar", f);
-    if (existsSync(p)) n += statSync(p).size;
+    if (!existsSync(p)) continue;
+    n += brotliCompressSync(readFileSync(p), {
+      params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 4, [zlib.constants.BROTLI_PARAM_SIZE_HINT]: statSync(p).size },
+    }).length;
   }
-  return Math.round(n / 1048576);
+  return Math.max(1, Math.ceil(n / 1048576));
 }
 
 export function valores(saida) {
