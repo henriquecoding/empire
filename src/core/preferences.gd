@@ -27,11 +27,21 @@ const FLASHES := &"flashes"
 const CAPTIONS := &"captions"
 ## A duracao do dia do §26, em segundos. Zero e a do clock.csv.
 const DAY_SECONDS := &"day_seconds"
+## O contraste (1 e o da §80) e o modo para daltonismo (0 e nenhum), do §26.
+const CONTRAST := &"contrast"
+const COLORBLIND := &"colorblind"
 
 ## As que existem, e o valor com que o jogo vem. O tremor e os claroes ligados: o
 ## §24 desenha o jogo com eles, e quem precisa de os tirar tira. As legendas de
 ## som desligadas: sao para quem precisa delas, e liga-as (GB-22).
-const POR_OMISSAO := {SCREEN_SHAKE: true, FLASHES: true, CAPTIONS: false, DAY_SECONDS: 0.0}
+const POR_OMISSAO := {
+	SCREEN_SHAKE: true,
+	FLASHES: true,
+	CAPTIONS: false,
+	DAY_SECONDS: 0.0,
+	CONTRAST: 1.0,
+	COLORBLIND: 0,
+}
 
 static var _partilhadas: Preferences
 
@@ -81,10 +91,16 @@ func number(chave: StringName) -> float:
 	return float(_valores.get(chave, POR_OMISSAO.get(chave, 0.0)))
 
 
+## Grava um numero com o tipo que a preferencia tem: um modo e um inteiro, uma
+## duracao e um real, e o ficheiro guarda-os assim.
 func set_number(chave: StringName, valor: float) -> bool:
-	if typeof(POR_OMISSAO.get(chave)) != TYPE_FLOAT:
+	var tipo := typeof(POR_OMISSAO.get(chave))
+	if tipo == TYPE_INT:
+		_valores[chave] = int(valor)
+	elif tipo == TYPE_FLOAT:
+		_valores[chave] = valor
+	else:
 		return false
-	_valores[chave] = valor
 	return _gravar()
 
 

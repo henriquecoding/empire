@@ -395,6 +395,10 @@ OPT_DAY_LENGTH,Duração do dia,Day Length,acessibilidade: 240–540 s (§26),24
 OPT_SCREEN_SHAKE,Tremor de ecrã,Screen Shake,acessibilidade,24,
 OPT_FLASHES,Clarões,Flashes,acessibilidade: fotossensibilidade,24,
 OPT_COLORBLIND,Modo para daltonismo,Colorblind Mode,acessibilidade,28,
+OPT_COLORBLIND_OFF,Desligado,Off,modo para daltonismo (§26),16,GB-26
+OPT_PROTANOPIA,Protanopia,Protanopia,modo para daltonismo (§26): vermelho,16,GB-26
+OPT_DEUTERANOPIA,Deuteranopia,Deuteranopia,modo para daltonismo (§26): verde,16,GB-26
+OPT_TRITANOPIA,Tritanopia,Tritanopia,modo para daltonismo (§26): azul,16,GB-26
 OPT_CONTRAST,Contraste,Contrast,acessibilidade,24,
 OPT_CAPTIONS,Legendas de sons,Sound Captions,acessibilidade (§26),24,
 OPT_TEXT_SIZE,Tamanho do texto,Text Size,acessibilidade,24,

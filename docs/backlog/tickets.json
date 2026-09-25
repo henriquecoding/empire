@@ -993,6 +993,34 @@
   "estado": "feito",
   "horas": "3"
  },
+ "GB-25": {
+  "title": "O controlo de contraste",
+  "porque": "O §26: «Controlos de contraste — baixo — um shader de saturação/contraste global. Fazer.» A matriz de QA (A3) pede que a mancha e as tropas se distingam do fundo no mínimo e no máximo.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/qa/ACCESSIBILITY_MATRIX.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Um slider na pausa, de 75% a 150% (Q-093), grava nas preferências e o filtro de ecrã aplica-o já, entre o mundo e a interface. A 100% o filtro esconde-se e o jogo é o da §80 píxel a píxel. tests/accessibility_filter_test.gd (A3), e no ecrã: 480 píxeis a no máximo 0,008 da conta em GDScript.",
+  "fora": "A saturação, que o §26 junta ao contraste — um slider só por agora (Q-093). O texto do HUD, que não passa pelo filtro.",
+  "estado": "feito",
+  "horas": "2"
+ },
+ "GB-26": {
+  "title": "Os modos para daltonismo",
+  "porque": "O §26: «Modos para daltonismo — médio — a paleta é quente/fria, boa base. Fazer. Testa a Podridão contra o terreno em protanopia.» A matriz de QA (A4, A15) quer a mancha distinta do chão nos três filtros.",
+  "spec": [
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
+   "docs/qa/ACCESSIBILITY_MATRIX.md"
+  ],
+  "depende": "GB-25",
+  "feito": "Protanopia, deuteranopia e tritanopia na pausa. Correcção de Fidaner sobre a simulação de Machado (2009); as matrizes vivem no GDScript e passam ao shader como uniforms. Medido: com o modo ligado, quem tem a deficiência mantém 95% a 117% da separação mancha–chão que um olho sem ela vê; sem o modo, em tritanopia, perde 60%. tests/accessibility_filter_test.gd (A4, A15).",
+  "fora": "Uma captura filtrada no CI (a A15 como portão de ecrã) e ajustar a paleta: a correcção é por cima dela.",
+  "estado": "feito",
+  "horas": "2"
+ },
  "NB-01": {
   "title": "Bíblia de nomes e a escolha do nome do jogo",
   "porque": "O nome entra na loja, no trailer e no domínio. Escolher tarde custa refazer os três.",

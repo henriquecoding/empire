@@ -97,6 +97,7 @@ src/world/passage_cue.gd    PassageCue    onde o Verbo 2 pega, dito no sitio (§
 src/world/dawn_sweep.gd     DawnSweep     o amanhecer que se ve chegar (§24, GB-17)
 src/world/sky_view.gd       SkyView       o ceu, e o sol e a lua que dizem a hora (§24, GB-18)
 src/world/coin_bounce.gd    CoinBounce    o pequeno bounce da moeda, so no ecra (§24, GB-19)
+src/world/accessibility_filter.gd AccessibilityFilter contraste e daltonismo, por cima do mundo (§26)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
 src/world/world_palette.gd  WorldPalette  as cores e a geometria do greybox
 src/world/band_light.gd     BandLight     a luz de cada faixa por fase (§80, ADR 0011)

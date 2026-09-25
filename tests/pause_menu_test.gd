@@ -70,7 +70,8 @@ func test_desligar_na_pausa_vale_ja() -> void:
 func test_o_texto_sai_de_chaves_que_existem() -> void:
 	for chave in [&"UI_PAUSED", &"UI_CROWN_FALLEN", &"UI_RESUME", &"UI_NEW_GAME"]:
 		assert_str(tr(chave)).is_not_equal(String(chave))
-	for chave in [&"OPT_SCREEN_SHAKE", &"OPT_FLASHES", &"OPT_CAPTIONS", &"OPT_DAY_LENGTH"]:
+	var chaves: Array = [&"OPT_SCREEN_SHAKE", &"OPT_FLASHES", &"OPT_CAPTIONS", &"OPT_DAY_LENGTH"]
+	for chave in chaves + [&"OPT_CONTRAST", &"OPT_COLORBLIND"] + PauseMenu.MODOS:
 		assert_str(tr(chave)).is_not_equal(String(chave))
 
 
@@ -89,3 +90,16 @@ func test_o_slider_do_dia_pede_pela_fila() -> void:
 	assert_int(SimLoop.intents.pending()).is_equal(1)
 	assert_float(Preferences.shared().number(Preferences.DAY_SECONDS)).is_equal(300.0)
 	SimLoop.intents.clear()
+
+
+## O contraste e o daltonismo gravam-se nas preferencias e o filtro le-as ja:
+## sao de quem ve, e nao da partida (GB-25, GB-26).
+func test_contraste_e_daltonismo_gravam_nas_preferencias() -> void:
+	Preferences.set_shared(Preferences.new(FICHEIRO))
+	var menu := _menu()
+	menu.open(false)
+	menu._contraste.value = 1.2
+	menu._daltonismo.item_selected.emit(AccessibilityFilter.Mode.TRITANOPIA)
+	assert_float(Preferences.shared().number(Preferences.CONTRAST)).is_equal_approx(1.2, 0.001)
+	assert_int(int(Preferences.shared().number(Preferences.COLORBLIND))).is_equal(3)
+	assert_int(PauseMenu.MODOS.size()).is_equal(AccessibilityFilter.Mode.size())

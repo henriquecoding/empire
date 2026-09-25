@@ -35,6 +35,9 @@ const MOLDURA := {"borda": 3, "canto": 4, "margem": 28, "entre": 14}
 const LARGURA := 380.0
 ## De quanto em quanto anda o slider do dia: onze paragens entre 240 e 540 s.
 const PASSO_DIA_S := 30.0
+const CEM := 100.0
+## Os modos para daltonismo, pela ordem do AccessibilityFilter.Mode.
+const MODOS := [&"OPT_COLORBLIND_OFF", &"OPT_PROTANOPIA", &"OPT_DEUTERANOPIA", &"OPT_TRITANOPIA"]
 
 var _titulo: Label
 var _tremor: CheckButton
@@ -42,6 +45,9 @@ var _claroes: CheckButton
 var _legendas: CheckButton
 var _dia: HSlider
 var _dia_rotulo: Label
+var _contraste: HSlider
+var _contraste_rotulo: Label
+var _daltonismo: OptionButton
 var _retomar: Button
 var _novo: Button
 
@@ -66,6 +72,7 @@ func _ready() -> void:
 	_claroes = _opcao(caixa, &"OPT_FLASHES", Preferences.FLASHES)
 	_legendas = _opcao(caixa, &"OPT_CAPTIONS", Preferences.CAPTIONS)
 	_duracao(caixa)
+	_visao(caixa)
 	_retomar = _botao(caixa, &"UI_RESUME", _ao_retomar)
 	_novo = _botao(caixa, &"UI_NEW_GAME", _ao_recomecar)
 	hide()
@@ -92,6 +99,9 @@ func open(perdido: bool) -> void:
 	_legendas.set_pressed_no_signal(Preferences.on(Preferences.CAPTIONS))
 	_dia.set_value_no_signal(ClockService.clock.day_seconds())
 	_mostrar_dia(_dia.value)
+	_contraste.set_value_no_signal(Preferences.shared().number(Preferences.CONTRAST))
+	_mostrar_contraste(_contraste.value)
+	_daltonismo.select(int(Preferences.shared().number(Preferences.COLORBLIND)))
 	show()
 	(_novo if perdido else _retomar).grab_focus()
 
@@ -181,6 +191,52 @@ func _no_dia(segundos: float) -> void:
 
 func _mostrar_dia(segundos: float) -> void:
 	_dia_rotulo.text = "%s · %d s" % [tr(&"OPT_DAY_LENGTH"), int(segundos)]
+
+
+## §26: contraste e modos para daltonismo (GB-25, GB-26). Sao preferencias de
+## quem ve, e nao estado de jogo: gravam-se e o filtro le-as ja.
+func _visao(caixa: VBoxContainer) -> void:
+	var gama: Dictionary = AccessibilityFilter.CONTRASTE
+	_contraste_rotulo = _rotulo_item(caixa)
+	_contraste = HSlider.new()
+	_contraste.min_value = gama.min
+	_contraste.max_value = gama.max
+	_contraste.step = gama.passo
+	_contraste.value = 1.0
+	_contraste.value_changed.connect(_no_contraste)
+	caixa.add_child(_contraste)
+	_mostrar_contraste(_contraste.value)
+	var linha := HBoxContainer.new()
+	var nome := _rotulo_item(linha)
+	nome.text = tr(&"OPT_COLORBLIND")
+	nome.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_daltonismo = OptionButton.new()
+	for chave: StringName in MODOS:
+		_daltonismo.add_item(tr(chave))
+	_daltonismo.item_selected.connect(_no_daltonismo)
+	linha.add_child(_daltonismo)
+	caixa.add_child(linha)
+
+
+func _no_contraste(valor: float) -> void:
+	_mostrar_contraste(valor)
+	Preferences.shared().set_number(Preferences.CONTRAST, valor)
+
+
+func _no_daltonismo(modo: int) -> void:
+	Preferences.shared().set_number(Preferences.COLORBLIND, modo)
+
+
+func _mostrar_contraste(valor: float) -> void:
+	_contraste_rotulo.text = "%s · %d%%" % [tr(&"OPT_CONTRAST"), roundi(valor * CEM)]
+
+
+func _rotulo_item(onde: Container) -> Label:
+	var rotulo := Label.new()
+	rotulo.add_theme_font_size_override("font_size", LETRA.item)
+	rotulo.add_theme_color_override("font_color", TINTA)
+	onde.add_child(rotulo)
+	return rotulo
 
 
 func _botao(caixa: VBoxContainer, chave: StringName, ao_premir: Callable) -> Button:
