@@ -27,12 +27,17 @@ var offers: OfferSystem
 ## como arvore, e quem cumpriu um feito e nomeado.
 var names: NameSystem
 
+## A Colheita (§78): anda na alvorada, e os marcos dos povos que ficaste pesam
+## na noite. Sem conquista ainda nao comeca nenhuma (Q-090).
+var harvest: HarvestSystem
+
 
 func _init() -> void:
 	rot = SimFactory.rot()
 	trees = SimFactory.amargueiros()
 	offers = SimFactory.offers()
 	names = SimFactory.names()
+	harvest = SimFactory.harvest()
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -71,7 +76,14 @@ func dawn(
 ) -> Array[Dictionary]:
 	var caidos := names.bury(estado, unidades)
 	trees.at_dawn(estado, unidades, obras, core_x, caidos)
+	harvest.at_dawn()
 	return names.at_dawn(estado, unidades, postos)
+
+
+## Qual dos tres finais, se a campanha acabasse agora (§79, ADR 0018).
+func epilogue() -> StringName:
+	var perfil := SimFactory.rot_profile()
+	return Epilogue.of(offers.debt.debt, harvest.kept(), harvest.released(), perfil)
 
 
 ## A noite saltada ("O que brilha, e nada mais", §75): a mancha recua ja, e o
@@ -111,6 +123,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		rot.amargueiros = trees.standing(false)
 		rot.named_amargueiros = trees.standing(true)
 		rot.refusals = offers.refusals(estado.day)
+		rot.landmarks = harvest.landmark_mass()
 		rot.spawn(estado.day, lado, mundo.y)
 		offers.night_time = 0.0
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])

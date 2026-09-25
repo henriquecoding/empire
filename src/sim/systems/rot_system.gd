@@ -34,6 +34,9 @@ var fortresses: int = 0
 var amargueiros: int = 0
 var named_amargueiros: int = 0
 var refusals: int = 0
+## A massa dos marcos dos povos que ficaste: cada um vira Amargueiro que nao se
+## corta, e pesa todas as noites (§78).
+var landmarks: float = 0.0
 
 var _perfil: RotProfile
 var _tabela: Array[CreatureData] = []
@@ -184,6 +187,7 @@ func to_dict() -> Dictionary:
 		&"amargueiros": amargueiros,
 		&"named": named_amargueiros,
 		&"refusals": refusals,
+		&"landmarks": landmarks,
 	}
 
 
@@ -194,6 +198,7 @@ func from_dict(d: Dictionary) -> void:
 	amargueiros = d.get(&"amargueiros", amargueiros)
 	named_amargueiros = d.get(&"named", named_amargueiros)
 	refusals = d.get(&"refusals", refusals)
+	landmarks = d.get(&"landmarks", landmarks)
 	_direcao = float(-state.side)
 
 
@@ -211,7 +216,7 @@ func _massa_do_dia() -> float:
 	# min(recusas nos ultimos 5 dias, 5): uma recusa por noite, por isso o teto
 	# da contagem e a propria janela (§74, §75).
 	var recusas := _perfil.refusal_mass * mini(refusals, _perfil.refusal_window_days)
-	return base + arvores + minf(recusas, _perfil.refusal_cap)
+	return base + arvores + minf(recusas, _perfil.refusal_cap) + landmarks
 
 
 ## A mais cara que cabe e cujo dia minimo ja passou (§51, Q-019). A tabela ja

@@ -1034,6 +1034,22 @@
 - **O que o §25 tem e o *greybox* ainda não:** o coelho do minuto 1:10 (não há fauna), a Casa de Treino
   em ruínas reparável, e o diário 1 na câmara (XIII-08). A estátua meio enterrada do minuto 2:00 está.
 
+### Q-090 · A Colheita existe, e nenhuma pode começar: falta a conquista
+- **Onde:** §78, §13, `src/sim/systems/harvest_system.gd`.
+- **O que está:** o `HarvestSystem` tem a regra inteira — C = 6 + 2 × povos detidos, metade (para cima) por
+  assimilação, uma de cada vez com fila, a decisão no fim, a aldeia que cai perde o povo, a produção a 140%
+  e depois +80% se ficaste, e o marco que cria raiz e pesa 22 na noite (`RotSystem.landmarks`). Anda na
+  alvorada, vai no save, conta para a gramática das ofertas (`peoples`) e para o epílogo (§79).
+- **O que falta, e é por isso que nenhuma começa:** não há conquista nem assimilação — nem fortalezas
+  (§13), nem aldeias de outros povos no mundo, nem diplomata de nível 2. Nenhum ticket do backlog as tem:
+  são da Fase 2 em diante.
+- **Por decidir quando a aldeia existir:** o §78 diz "Verbo 1, no núcleo deles" para uma decisão com duas
+  saídas, e o Verbo 1 é um gesto só. Uma leitura possível: largar no núcleo deles solta, e não largar até à
+  alvorada seguinte fica. **Decide:** tu.
+- **O que a decisão dá e ainda não se aplica:** o Favor (§14), a rota de comércio de 8 moedas por dia, a
+  tropa única comprável a 1,5× ou de graça, o kit de arquitetura e a canção no coro (XIII-09) — cada um
+  pede um sistema que não existe. A Podridão a preferir a aldeia em Colheita também espera pela aldeia.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

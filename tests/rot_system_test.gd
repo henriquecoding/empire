@@ -224,3 +224,16 @@ func test_o_que_o_jogador_escreveu_de_dia_sobrevive_ao_save() -> void:
 	copia.spawn(9, DIREITA, LARGURA)
 	rot.spawn(9, DIREITA, LARGURA)
 	assert_float(copia.mass()).is_equal(rot.mass())
+
+
+func test_os_marcos_dos_povos_ficados_pesam_na_noite() -> void:
+	# §78: ficar faz o marco criar raiz, e ele pesa todas as noites.
+	var limpa := _mancha()
+	limpa.spawn(10, DIREITA, LARGURA)
+	var rot := _mancha()
+	rot.landmarks = SimFactory.curve().keep_landmark_mass
+	rot.spawn(10, DIREITA, LARGURA)
+	assert_float(rot.mass() - limpa.mass()).is_equal(SimFactory.curve().keep_landmark_mass)
+	var copia := _mancha()
+	copia.from_dict(rot.to_dict())
+	assert_float(copia.landmarks).is_equal(rot.landmarks)

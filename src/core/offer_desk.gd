@@ -40,8 +40,8 @@ static func tick(delta: float, noite: NightWatch) -> Array[Dictionary]:
 
 
 ## O estado autoritativo visto pela gramatica da §75. So o que existe: a
-## tesouraria e o saco do rei; Marcos contam-se no campo; nomes, nos vivos. O
-## resto vale zero.
+## tesouraria e o saco do rei; Marcos contam-se no campo; nomes, nos vivos;
+## povos, os soltos e os ficados (§78). O resto vale zero.
 static func context(noite: NightWatch) -> Dictionary:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei != UnitSystem.NENHUM else 0
@@ -50,6 +50,7 @@ static func context(noite: NightWatch) -> Dictionary:
 		&"treasury": saco,
 		&"marker": noite.trees.markers().size(),
 		&"named": noite.names.named_count(),
+		&"peoples": noite.harvest.released() + noite.harvest.kept(),
 	}
 
 

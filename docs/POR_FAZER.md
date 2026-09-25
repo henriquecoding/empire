@@ -106,7 +106,7 @@ da §80 §5. O resto dessa tabela não se automatiza hoje, e o ticket diz porqu�
 
 | | O que é |
 |---|---|
-| XIII-06 | §78 · A Colheita |
+| XIII-06 | §78 · A Colheita — **parcial**: o sistema está, falta a conquista (Q-090) |
 | XIII-07 | §77 · Os dez capítulos |
 | XIII-08 | §79 · Os doze diários e os três epílogos |
 | XIII-09 | §81 · Som: o cante, os motivos e a encomendação |

@@ -78,6 +78,7 @@ src/sim/systems/name_system.gd NameSystem  ninguem tem nome ate merecer um (§76
 src/sim/systems/requires.gd Requires      a gramatica da coluna requires (§75)
 src/sim/systems/walls.gd    Walls         onde acaba o "dentro das muralhas" (§74, §75)
 src/sim/systems/epilogue.gd Epilogue      qual dos tres finais, por precedencia (§79, ADR 0018)
+src/sim/systems/harvest_system.gd HarvestSystem a Colheita: soltar ou ficar (§78)
 src/core/offer_desk.gd      OfferDesk     quando a mancha fala, o preco e o efeito (§75)
 src/sim/state/columns.gd    Columns       gravar e repor um sistema de colunas (§62)
 src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save

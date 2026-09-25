@@ -109,3 +109,8 @@ static func names() -> NameSystem:
 	for recurso in Registry.entries(&"lore/titles"):
 		titulos.append(recurso as TitleData)
 	return NameSystem.new(curve(), titulos, by_id(TABELA_CRIATURAS))
+
+
+## A Colheita (§78): a curva e os povos por id — o marco de quem fica enraiza, ou nao.
+static func harvest() -> HarvestSystem:
+	return HarvestSystem.new(curve(), by_id(&"peoples"))
