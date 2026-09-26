@@ -33,7 +33,8 @@ static func consume(
 	combate: CombatSystem,
 	king_id: int,
 	passagens: PackedFloat32Array,
-	obras: BuildSystem = null
+	obras: BuildSystem = null,
+	campo: FieldWork = null
 ) -> Array[Dictionary]:
 	var larga: Array[Dictionary] = []
 	for intencao in fila.take():
@@ -49,6 +50,9 @@ static func consume(
 				mark(unidades, bichos, combate, args[&"x"], king_id)
 			IntentQueue.Kind.DAY_LENGTH:
 				day_length(args[&"seconds"])
+			IntentQueue.Kind.IMPULSE:
+				if campo != null:
+					campo.impulse(args[&"id"], unidades, king_id)
 	return larga
 
 

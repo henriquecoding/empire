@@ -123,13 +123,13 @@ func set_paused(pausado: bool) -> void:
 ## Um passo. Publico: um teste corre um dia inteiro sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
-	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages, builds))
+	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages, builds, field))
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
-	field.prepare(ClockService.clock.day, core_x, world_width)
+	field.prepare(ClockService.clock.day, core_x, world_width, units)
 	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
 	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
 	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
@@ -190,7 +190,7 @@ func _montar() -> void:
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
-	field = FieldWork.new()
+	field = FieldWork.new(economy, morale)
 	hunting = field.hunting
 	tally.reset()
 	_fase = UnitSystem.NENHUM

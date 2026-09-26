@@ -17,7 +17,7 @@ extends RefCounted
 ## §02; o terceiro e o gatilho direito do §24, que so o Arqueiro tem. O quarto e a
 ## duracao do dia do §26: muda a simulacao, e por isso entra pela fila como o
 ## resto — a pausa nao mexe no relogio (GB-24).
-enum Kind { DROP_COIN, ASSUME, MARK_TARGET, DAY_LENGTH }
+enum Kind { DROP_COIN, ASSUME, MARK_TARGET, DAY_LENGTH, IMPULSE }
 
 var _fila: Array[Array] = []
 

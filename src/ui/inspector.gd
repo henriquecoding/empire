@@ -42,6 +42,9 @@ func _process(_delta: float) -> void:
 				"OBRAS   " + _obras(),
 				"POSTOS  " + _postos(),
 				"NOITE   " + _noite(),
+				"",
+				"IMPULSOS (TAB + numero, um por dia)",
+				_impulsos(),
 			]
 		)
 	)
@@ -56,6 +59,20 @@ func _tropas() -> String:
 	for nome in [&"GOTO", &"WORK", &"FIGHT", &"FLEE", &"DEAD"]:
 		partes.append("%s %d" % [nome, por_estado.get(String(nome), 0)])
 	return " · ".join(partes)
+
+
+func _impulsos() -> String:
+	var coroa := SimLoop.field.crown
+	var linhas := PackedStringArray()
+	var n := 0
+	for id in coroa.ids():
+		n += 1
+		var impulso := Registry.entry(&"crown/impulses", id) as ImpulseData
+		var estado := "" if coroa.available(id) else " (por ligar)"
+		linhas.append("%d %s · %d%s" % [n, tr(impulso.display_key), impulso.coin_cost, estado])
+	if coroa.used_day == SimLoop.state.day:
+		linhas.append("hoje ja se usou um")
+	return "\n".join(linhas)
 
 
 func _obras() -> String:

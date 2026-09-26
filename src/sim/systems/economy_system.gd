@@ -41,6 +41,11 @@ const QUANTO := &"amount"
 const ONDE := &"x"
 const FAIXA := &"band"
 
+## Os impulsos reais (§15) e o dia em que se esta: a Colheita Forcada e a Chamada
+## as Armas mexem no que cada obra rende hoje. Sem coroa, rende o que rendia.
+var crown: CrownSystem
+var today := 1
+
 var _curva: EconomyCurve
 var _fases: int
 
@@ -135,7 +140,8 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 		if _no_rasto(vaga.x, rasto):
 			_queimar(vaga, eventos)
 			continue
-		vaga.stock += vaga.yield_per_day / _fases
+		var fator := crown.yield_mult(today, vaga.kind) if crown != null else 1.0
+		vaga.stock += vaga.yield_per_day / _fases * fator
 		var moedas := int(floorf(vaga.stock))
 		if moedas <= 0:
 			continue

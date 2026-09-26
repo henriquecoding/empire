@@ -159,3 +159,13 @@ static func training() -> TrainingSystem:
 		if oficio != null and oficio.trained_at == obra.id:
 			casas[obra.id] = oficio.id
 	return TrainingSystem.new(tropas, casas)
+
+
+## Os impulsos reais (§15). "Plantacoes" sao as obras que produzem grao — o que
+## a Colheita Forcada deixa paradas no dia seguinte.
+static func crown() -> CrownSystem:
+	var plantacoes := PackedStringArray()
+	for recurso in Registry.entries(&"buildings"):
+		if (recurso as BuildingData).material == &"grain":
+			plantacoes.append(String(recurso.get(&"id")))
+	return CrownSystem.new(by_id(&"crown/impulses"), by_id(TABELA_TROPAS), plantacoes)

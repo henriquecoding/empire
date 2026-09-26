@@ -41,6 +41,8 @@ const EV_VOLTOU := 1
 const POR_VIDA := &"health"
 const POR_BRECHA := &"breach"
 
+## A Vigilia (§15): esta noite ninguem foge. Escrita pelo FieldWork a cada tick.
+var steadfast := false
 var _curva: EconomyCurve
 var _dados: Dictionary = {}
 
@@ -80,7 +82,7 @@ func protected(unidades: UnitSystem, i: int, rei_x: float) -> bool:
 ## com o muro caido" e uma tag e nao um caso especial (§07).
 func can_flee(unidades: UnitSystem, i: int) -> bool:
 	var dados: UnitData = _dados.get(unidades.data_ids[i])
-	return dados != null and not dados.tags.has(SEM_RECUO)
+	return not steadfast and dados != null and not dados.tags.has(SEM_RECUO)
 
 
 func _onde_esta_o_rei(unidades: UnitSystem, king_id: int) -> float:

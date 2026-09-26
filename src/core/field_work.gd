@@ -9,18 +9,44 @@ extends RefCounted
 
 var hunting: HuntingSystem
 var training: TrainingSystem
+var crown: CrownSystem
+
+var _economia: EconomySystem
+var _moral: MoraleSystem
+var _dia := 0
 
 
-func _init() -> void:
+func _init(economia: EconomySystem = null, moral: MoraleSystem = null) -> void:
 	hunting = HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
 	)
 	training = SimFactory.training()
+	crown = SimFactory.crown()
+	_economia = economia
+	_moral = moral
+	if _economia != null:
+		_economia.crown = crown
 
 
-## Passo 3: o dia novo abre as clareiras.
-func prepare(dia: int, core_x: float, largura: float) -> void:
+## Passo 3: o dia novo abre as clareiras e cobra o que os impulsos de ontem
+## deixaram a pagar (§15).
+func prepare(dia: int, core_x: float, largura: float, unidades: UnitSystem = null) -> void:
 	HuntWatch.prepare(hunting, dia, core_x, largura)
+	if dia != _dia and unidades != null:
+		_dia = dia
+		crown.dawn(dia, unidades)
+	if _economia != null:
+		_economia.today = dia
+	if _moral != null:
+		_moral.steadfast = crown.steadfast(dia)
+
+
+## A intencao do §61 que a roda do rei enfileira: um impulso por dia (§15, §24).
+func impulse(id: StringName, unidades: UnitSystem, rei: int) -> void:
+	var custo := (Registry.entry(&"crown/impulses", id) as ImpulseData).coin_cost
+	if crown.use(id, ClockService.clock.day, unidades, rei):
+		EventBus.queue(&"royal_impulse_used", [id])
+		EventBus.queue(&"coin_spent", [custo, &"impulse"])
 
 
 ## Passo 4: quem caca e quem treina escrevem alvo por cima de seguir o rei.
@@ -45,9 +71,13 @@ func resolve(
 
 
 func to_dict() -> Dictionary:
-	return {&"hunting": hunting.to_dict(), &"training": training.to_dict()}
+	return {
+		&"hunting": hunting.to_dict(), &"training": training.to_dict(), &"crown": crown.to_dict()
+	}
 
 
 func from_dict(mundo: Dictionary) -> void:
 	hunting.from_dict(mundo.get(&"hunting", {}))
 	training.from_dict(mundo.get(&"training", {}))
+	crown.from_dict(mundo.get(&"crown", {}))
+	_dia = ClockService.clock.day if ClockService.clock != null else 0
