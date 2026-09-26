@@ -1216,6 +1216,46 @@
   não é apanhável por quem não tem dono até o rei passar por ela.
 - **Decide:** tu.
 
+### Q-108 · Quanto custa reparar, e quem repara
+- **Onde:** §55 (os estados `DAMAGED` e `RUIN`), §25 (*"Casa de Treino em ruínas, reparável por 10 moedas"*),
+  §09 (o construtor), `jobs.csv` (o posto `repair`, que existia sem obra que o publicasse).
+- **O que o dossiê dá:** só um número — a ruína da Casa de Treino repara-se por 10, que é o preço dela. Nada
+  sobre a obra tocada nem sobre quem trabalha.
+- **O que foi feito (reversível, `RepairWork` e `BuildSlot.repair_cost`):** a **ruína** custa o degrau em que
+  estava e volta a andaime, levantando-se outra vez no mesmo nível com o `build_work` desse degrau. A **obra
+  tocada** custa a parte da vida que perdeu (arredondada para cima, mínimo 1), **fica de pé enquanto se repara**
+  — continua a travar — e ganha vida à razão de uma obra inteira por `build_work`. O posto `repair` é publicado
+  quando a reparação está paga e vai lá um trabalhador (a urgência nocturna do `jobs.csv` é zero: repara-se de
+  dia). Quem conta como presente é a regra da Q-064: todos os teus. Cair a meio perde o pago. O núcleo não se
+  repara com moeda.
+- **Decide:** tu — em especial se a obra tocada deve pagar em proporção ou por degrau, e se só o construtor
+  repara.
+
+### Q-109 · O "+8% defesa das muralhas" do construtor
+- **Onde:** §09 (*"Construtor — dentro do império: +8% defesa das muralhas"*), `units.csv`
+  (`ability_params wall_defense:0.08`).
+- **O que foi feito (reversível):** lido como **menos 8% de dano** em cada muralha (só as que têm os dois
+  caminhos do §10; torres e edifícios não), enquanto houver **um** construtor teu vivo — dois não somam. A
+  fracção poupada guarda-se de golpe para golpe (`BuildSlot.soak`), porque um golpe de 6 com 8% arredondado
+  poupava zero sempre.
+- **Em aberto:** se "defesa" é dano recebido ou vida máxima, e se soma por construtor. O "+1 slot de armas no
+  arsenal" não tem arsenal onde pegar.
+- **Decide:** tu.
+
+### Q-110 · Três dos seis impulsos reais têm onde pegar
+- **Onde:** §15 (a tabela dos impulsos), §24 (*"Roda do rei → segmento · Tab → 1–5"*), §57, `impulses.csv`.
+- **O que foi feito:** o `CrownSystem` paga do saco do rei, um por dia, e lê o `benefit` e o `drawback` como
+  chaves. Ligados: **Colheita Forçada** (produção ×1,8 hoje; as plantações de grão não produzem amanhã),
+  **Chamada às Armas** (os vagabundos **sem dono** viram lanceiros teus; a produção de hoje vai a zero) e
+  **Vigília** (esta noite ninguém foge; ao amanhecer seguinte a vida de cada tropa tua cai a 70%, uma vez).
+  **Recusados sem cobrar:** Feira Livre (precisa da ganância e de um multiplicador de custo em todos os
+  preços), Rota Protegida (comércio) e Perdão Real (dívida de mercenários e favor).
+- **O gesto:** Tab mantido + 1–6, pela ordem dos ids (a tabela tem seis e o §24 diz "1–5"). O painel do Tab
+  lista-os, com o preço e o que está por ligar. A roda de seis segmentos da Q-067 continua por desenhar.
+- **Em aberto:** se "todos os vagabundos" inclui os teus trabalhadores; se o custo da Vigília é vida actual ou
+  vida máxima por um dia; e o custo de 12 moedas é proposta (`_proposed` no CSV).
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

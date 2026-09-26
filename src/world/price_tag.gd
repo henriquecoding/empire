@@ -75,8 +75,11 @@ static func _obras(
 		if vaga.band != faixa or not over(vaga, x):
 			continue
 		var falta := owed_by(vaga)
+		if falta <= 0 and SimLoop.field != null:
+			falta = SimLoop.field.training.owed(vaga, SimLoop.units)
 		var madeira := SimLoop.night.amargueiros
-		if falta <= 0 or not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira):
+		var subir := vaga.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]
+		if falta <= 0 or (subir and not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira)):
 			continue
 		var caixa := BuildView.drawn_box(vaga, Silhouette.of_slot(vaga, edificios))
 		_moedas(canvas, vaga.x, caixa.position.y, falta, saco)
@@ -89,15 +92,19 @@ static func over(vaga: BuildSlot, x: float) -> bool:
 	return absf(vaga.x - x) <= vaga.width * MEIA
 
 
-## Quanto falta pagar do degrau seguinte, ou zero quando nao ha nada a pagar:
-## a obra chegou ao topo da escada, ou esta a meio.
+## Quanto falta pagar do degrau seguinte — ou da reparacao, se esta tocada ou
+## em ruina (Q-108) —, ou zero: chegou ao topo, esta a meio, ou ja se repara.
 ##
 ## Uma obra a meio nao aceita moeda — §55, "pagar mais nao a faz andar mais
 ## depressa: quem a faz andar e quem esta la" — e por isso tambem nao tem preco.
 static func owed_by(vaga: BuildSlot) -> int:
-	if vaga.state != BuildSlot.State.EMPTY and not vaga.standing():
+	var reparar := vaga.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN]
+	if (
+		vaga.mending
+		or (vaga.state != BuildSlot.State.EMPTY and not vaga.standing() and not reparar)
+	):
 		return 0
-	var custo := vaga.next_cost()
+	var custo := vaga.repair_cost() if reparar else vaga.next_cost()
 	if custo <= 0:
 		return 0
 	return maxi(0, custo - vaga.paid)

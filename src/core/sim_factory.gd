@@ -146,3 +146,26 @@ static func chapter_plan(regioes: PackedStringArray) -> ChapterPlan:
 		lista.append(recurso as ChapterData)
 	var sorteio := func(de: int, ate: int) -> int: return RngService.int_range(MUNDO, de, ate)
 	return ChapterPlan.draw(regioes, lista, curve().chapters_per_campaign, sorteio)
+
+
+## A Casa de Treino e as outras casas de oficio (§09, §10): cada obra cujo
+## `craft` e uma tropa treinada NELA (`trained_at`) sabe que oficio forma.
+static func training() -> TrainingSystem:
+	var tropas := by_id(TABELA_TROPAS)
+	var casas := {}
+	for recurso in Registry.entries(&"buildings"):
+		var obra := recurso as BuildingData
+		var oficio: UnitData = tropas.get(obra.craft)
+		if oficio != null and oficio.trained_at == obra.id:
+			casas[obra.id] = oficio.id
+	return TrainingSystem.new(tropas, casas)
+
+
+## Os impulsos reais (§15). "Plantacoes" sao as obras que produzem grao — o que
+## a Colheita Forcada deixa paradas no dia seguinte.
+static func crown() -> CrownSystem:
+	var plantacoes := PackedStringArray()
+	for recurso in Registry.entries(&"buildings"):
+		if (recurso as BuildingData).material == &"grain":
+			plantacoes.append(String(recurso.get(&"id")))
+	return CrownSystem.new(by_id(&"crown/impulses"), by_id(TABELA_TROPAS), plantacoes)

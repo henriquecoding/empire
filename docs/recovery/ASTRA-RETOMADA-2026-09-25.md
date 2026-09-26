@@ -793,3 +793,22 @@ ferramenta escreve-a na saída, `Empire · semente N`; o dia e a fase ficam na f
 A etapa D (§19): uma cena autorada da abertura — subsolo com conteúdo e ligação legível à passagem, e cada
 obra com silhueta própria —, validada com capturas desta mesma ferramenta, dia, crepúsculo e noite. E uma
 resposta à Q-106, que decide se o dia tem motivo para andar depois dos primeiros trinta segundos.
+
+## 25. Seguimento — 26/09/2026, segunda fatia: o que faltava do dossiê e dá decisões
+
+Pedido: "aplicar o que falta do dossiê". Escolhidas as frentes que dão ao jogador uma decisão nova com
+consequência visível, cada uma com teste antes do código e ligada de ponta a ponta (gesto → simulação → save →
+ecrã):
+
+| Frente | O que passou a existir | Prova | Decisões por fechar |
+|---|---|---|---|
+| Reparação (§55, §25) | Moedas numa obra tocada ou em ruína pagam a reparação; um trabalhador vai lá de dia; o preço e o painel dizem-no; objetivo "REPARA A DEFESA" | `repair_test`, `reparar_no_jogo_test`, `price_tag_test` | Q-108 |
+| Casa de Treino (§09, §10) | Moedas na casa de pé pagam o ofício; o trabalhador teu mais perto entra um dia e sai **construtor**, com martelo; o construtor dá −8% de dano às muralhas | `training_test`, `treino_no_jogo_test` | Q-109 |
+| Impulsos reais (§15, §57) | Tab + 1–6: Colheita Forçada, Chamada às Armas e Vigília, um por dia, pagos do saco, com o custo no dia seguinte; os outros três recusados sem cobrar | `crown_test`, `impulso_no_jogo_test`, `input_router_test` | Q-110 |
+| Subsolo (etapa D) | O corte dos Enramados deixa de ser uma grelha: abóbadas, raízes do castelo, escoras e lanterna nas passagens, arcos antigos, cogumelos, estratos; o painel de contexto sai de cima dele | capturas Xvfb de 26/09 (dia, núcleo, noite) | — |
+| Leitura das tropas (§25 0:20) | Os corpos originais ganham o chapéu de quem é teu e a arma do ofício | captura Xvfb | — |
+
+Continua por fazer, por ordem de valor: a resposta à Q-106 (a caça esgota-se em 30 s), a noite 1 do §25 (Q-068),
+a ganância como número vivo (desbloqueia a Feira Livre), a forja e a cozinha como casas de ofício com efeito
+(o `TrainingSystem` já as forma; falta o que o ferreiro e o cozinheiro fazem), e o dilema do artesão do §09
+(dois ritmos de evolução).

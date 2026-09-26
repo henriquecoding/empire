@@ -94,3 +94,17 @@ func test_o_clique_marca_ao_premir_e_nao_ao_soltar() -> void:
 	assert_bool(InputRouter.rising(_clique(true), false)).is_true()
 	assert_bool(InputRouter.rising(_clique(false), true)).is_false()
 	assert_bool(InputRouter.held(_clique(false), true)).is_false()
+
+
+func test_com_a_roda_premida_os_numeros_escolhem_o_impulso() -> void:
+	var dois := InputEventKey.new()
+	dois.physical_keycode = KEY_2
+	dois.pressed = true
+	assert_int(InputRouter.wheel_choice(dois, true)).is_equal(1)
+	assert_int(InputRouter.wheel_choice(dois, false)).is_equal(-1)
+	dois.echo = true
+	assert_int(InputRouter.wheel_choice(dois, true)).is_equal(-1)
+	var letra := InputEventKey.new()
+	letra.physical_keycode = KEY_A
+	letra.pressed = true
+	assert_int(InputRouter.wheel_choice(letra, true)).is_equal(-1)

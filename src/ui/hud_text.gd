@@ -16,6 +16,8 @@ const AVISOS := {
 	&"target_marked": &"TOAST_MARKED",
 	&"passage_used": &"TOAST_PASSAGE",
 	&"wall_breached": &"TOAST_BREACH",
+	&"unit_promoted": &"TOAST_PROMOTED",
+	&"royal_impulse_used": &"TOAST_IMPULSE",
 }
 ## Os algarismos com zeros a esquerda, como o painel sempre os mostrou.
 const DOIS := "%02d"

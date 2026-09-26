@@ -1,7 +1,7 @@
 class_name ContextPanel
 extends Label
 
-const POSITION := Vector2(280, 590)
+const POSITION := Vector2(280, 152)
 const BOX := Vector2(720, 56)
 const FONT := 16
 const EDGE := 8

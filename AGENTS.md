@@ -65,11 +65,14 @@ src/core/event_relay.gd     EventRelay    traduz o que os sistemas devolvem para
 src/core/intent_queue.gd    IntentQueue   a fila de intencoes do §61
 src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar, e o que fica (§74)
 src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
+src/core/field_work.gd      FieldWork     a caca e as casas de oficio, no tick (§09, §25)
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
 src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
+src/sim/systems/repair_work.gd RepairWork reparar com a moeda fisica (§55, Q-108)
+src/sim/systems/training_system.gd TrainingSystem a Casa de Treino: trabalhador -> oficio (§09, §10)
 src/sim/systems/dawn_cascade.gd DawnCascade a frente da luz que solta os postos (§24, GB-21)
 src/sim/systems/secret_sites.gd SecretSites onde estao os segredos, e quem os acha (§17)
 src/sim/systems/epilogue.gd Epilogue      qual dos tres finais, por precedencia (§79, ADR 0018)
@@ -150,6 +153,7 @@ src/core/event_relay.gd     EventRelay             nucleo        core/, sim/
 src/core/night_watch.gd     NightWatch             nucleo        core/, sim/
 src/core/offer_watch.gd     OfferWatch             nucleo        core/, sim/
 src/core/verbs.gd           Verbs                  nucleo        core/, sim/
+src/core/field_work.gd      FieldWork              nucleo        core/, sim/
 src/core/intent_queue.gd    IntentQueue            nucleo        nada
 src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada

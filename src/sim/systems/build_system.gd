@@ -1,25 +1,18 @@
 # src/sim/systems/build_system.gd — construir e pagar com moeda fisica (§55).
 #
-# O contrato do §55 numa frase: "uma obra existe quando uma moeda cai num
-# BuildSlot". Nao ha menu de construcao, nao ha caixa de dialogo e nao ha
-# confirmacao — ha uma moeda no chao, e e o mesmo Verbo 1 que recruta (§61).
-#
-# A segunda frase e a que torna os construtores um recurso a serio: o progresso
-# avanca enquanto alguem estiver PRESENTE, e nao por tempo decorrido. Uma obra
-# paga e abandonada fica em andaime para sempre, e isso e informacao.
+# "Uma obra existe quando uma moeda cai num BuildSlot": sem menu nem dialogo, o
+# mesmo Verbo 1 que recruta (§61). O progresso avanca enquanto alguem estiver
+# PRESENTE, e nao por tempo: uma obra paga e abandonada fica em andaime.
 #
 # Puro: nao e Node, nao conhece o catalogo de eventos e nao sorteia nada.
-# Devolve o que aconteceu; quem chama e que anuncia (§43, passo 11).
-#
-# Fora daqui: reparar com moeda (o posto `repair` e o §09) e a apresentacao dos
-# seis estados (ART-01). Ver docs/QUESTIONS.md, Q-064.
+# Devolve o que aconteceu; quem chama e que anuncia (§43, passo 11). Reparar
+# esta no RepairWork (Q-108); quem conta como presente, na Q-064.
 class_name BuildSystem
 extends RefCounted
 
 const NENHUM := -1
 
-## Os tipos de acontecimento devolvidos. Sao chaves de dicionario e nao nomes de
-## sinal: a simulacao nao conhece a §46, e quem chama e que traduz.
+## Os acontecimentos devolvidos: chaves, e nao sinais — quem chama traduz (§46).
 const EV_PAGA := 0
 const EV_INICIADA := 1
 const EV_PROGRESSO := 2
@@ -27,6 +20,7 @@ const EV_COMPLETA := 3
 const EV_DANO := 4
 const EV_DESTRUIDA := 5
 const EV_ROMPIDA := 6
+const EV_REPARADA := 7
 
 const CHAVE := &"kind"
 const VAGA := &"slot"
@@ -39,6 +33,8 @@ const NIVEL := &"level"
 const METADE := 0.5
 
 var slots: Array[BuildSlot] = []
+## A defesa das muralhas que um construtor teu da (§09); escrita a cada tick.
+var wall_defense := 0.0
 
 
 func count() -> int:
@@ -67,9 +63,8 @@ func clear() -> void:
 ## As moedas pousadas que cairam numa obra passam a ser dela. E o §55 inteiro:
 ## nao ha outro caminho para pagar uma construcao.
 ##
-## So absorve o que ainda falta pagar, e so em EMPTY (a obra por comecar) ou
-## DONE (o degrau seguinte). Uma obra a meio nao aceita moeda: pagar mais nao a
-## faz andar mais depressa — quem a faz andar e quem esta la.
+## So em EMPTY ou DONE (o degrau seguinte), ou tocada e em ruina (a reparacao).
+## Uma obra a meio nao aceita moeda: quem a faz andar e quem esta la.
 ##
 ## `estado` traz as conquistas e `madeira` o Lenho (§74); sem eles, so contam as
 ## moedas. Um degrau que pede Lenho gasta-o quando a obra comeca.
@@ -78,6 +73,9 @@ func absorb(
 ) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
+		if vaga.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN]:
+			eventos.append_array(RepairWork.absorb(moedas, vaga, _moedas_na_obra(moedas, vaga)))
+			continue
 		var custo := vaga.next_cost()
 		if custo == NENHUM or not _aceita(vaga) or not can_climb(vaga, estado, madeira):
 			continue
@@ -124,6 +122,9 @@ func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) ->
 func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
+		if vaga.mending:
+			eventos.append_array(RepairWork.tick(vaga, delta * _presentes(unidades, vaga)))
+			continue
 		if vaga.state != BuildSlot.State.SCAFFOLD and vaga.state != BuildSlot.State.BUILDING:
 			continue
 		var maos := _presentes(unidades, vaga)
@@ -149,13 +150,14 @@ func damage(slot_id: int, quanto: int) -> Array[Dictionary]:
 	if i == NENHUM or not slots[i].standing():
 		return []
 	var vaga := slots[i]
-	vaga.health -= quanto
+	vaga.health -= vaga.soak(quanto, wall_defense)
 	if vaga.health > 0:
 		vaga.state = BuildSlot.State.DAMAGED
 		return [{CHAVE: EV_DANO, VAGA: vaga, RACIO: float(vaga.health) / vaga.max_health()}]
 
 	vaga.health = 0
 	vaga.state = BuildSlot.State.RUIN
+	vaga.mending = false
 	var eventos: Array[Dictionary] = [{CHAVE: EV_DESTRUIDA, VAGA: vaga}]
 	# §24: a brecha e o unico acontecimento com direito a tremor de ecra.
 	if vaga.blocks:
@@ -181,8 +183,7 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	return achada
 
 
-## Verdadeiro se existe uma obra deste tipo e ja nao esta de pe: "se o nucleo
-## cair, cai a partida" (§10), lido do mundo e nao de um estado a parte (§45).
+## Uma obra deste tipo ja nao esta de pe: "se o nucleo cair, cai a partida" (§10).
 func fallen(kind: StringName) -> bool:
 	for vaga in slots:
 		if vaga.kind == kind and not vaga.standing():
@@ -190,8 +191,7 @@ func fallen(kind: StringName) -> bool:
 	return false
 
 
-## As obras de pe, por id crescente. Quem produz, quem publica posto e quem se
-## desenha le por aqui em vez de filtrar a lista por sua conta.
+## As obras de pe, por id crescente: quem produz, publica posto ou desenha.
 func standing() -> Array[BuildSlot]:
 	var saida: Array[BuildSlot] = []
 	for vaga in slots:

@@ -11,6 +11,8 @@ const SCORE_MINIMO := 0.0
 
 ## Metade. Nao e afinacao: e o centro de uma largura e o centro de um passo.
 const MEIO := 0.5
+## O posto da obra paga para reparar (jobs.csv, §09, Q-108).
+const REPARAR := &"repair"
 
 var slots: Array[JobSlot] = []
 
@@ -63,6 +65,8 @@ func publish(obras: BuildSystem) -> void:
 		var job := &"build" if building else obra.job_id
 		if job != &"" and count > 0:
 			querem.append([obra.id, job, count, obra.level, obra.path, obra.band, obra.x])
+		if obra.mending and obra.standing():
+			querem.append([obra.id, REPARAR, 1, obra.level, obra.path, obra.band, obra.x])
 	if querem == _publicadas:
 		return
 	clear()
@@ -70,9 +74,10 @@ func publish(obras: BuildSystem) -> void:
 		var obra: BuildSlot = obras.slots[obras.index_of(entry[0])]
 		var job: StringName = entry[1]
 		for k in entry[2]:
-			var x := obra.x if job == &"build" else _lugar(obra, k)
+			var na_obra := job in [&"build", REPARAR]
+			var x := obra.x if na_obra else _lugar(obra, k)
 			var vaga := post(JobSlot.new(job, x, obra.band))
-			if job != &"build":
+			if not na_obra:
 				vaga.grants(obra)
 	_publicadas = querem
 
@@ -164,7 +169,7 @@ func _score(unidades: UnitSystem, i: int, vaga: JobSlot, fase: int) -> float:
 	if posto == null or dados == null or fase >= posto.urgency_by_phase.size():
 		return SCORE_MINIMO
 	var adequacao: float = dados.job_affinity.get(vaga.job_id, SCORE_MINIMO)
-	if vaga.job_id == &"build" and dados.tags.has(&"worker"):
+	if vaga.job_id in [&"build", REPARAR] and dados.tags.has(&"worker"):
 		adequacao = maxf(adequacao, dados.job_affinity.get(&"farm", SCORE_MINIMO))
 	if adequacao <= SCORE_MINIMO:
 		return SCORE_MINIMO

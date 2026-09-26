@@ -93,6 +93,10 @@ var paid: int = 0
 ## Segundos de construtor PRESENTE, e nao tempo decorrido (§55).
 var progress: float = 0.0
 var health: int = 0
+## A obra paga esta a ser reparada, e nao a subir de nivel (§55, Q-108).
+var mending := false
+## A fracao de dano que a defesa ja poupou e ainda nao chegou a um ponto de vida.
+var soaked: float = 0.0
 
 
 ## De pe: ja construida, inteira ou tocada, mas ainda nao ruina.
@@ -116,6 +120,33 @@ func woods_for_next(conquistas: PackedStringArray) -> int:
 ## Verdadeiro se o degrau seguinte so pode existir uma vez no imperio (§10).
 func next_unique() -> bool:
 	return level < unique.size() and unique[level] == 1
+
+
+## Quanto custa pôr esta obra inteira outra vez, ou NENHUM se nao ha o que
+## reparar. A ruina custa o degrau em que estava — o §25 da "reparavel por 10
+## moedas" a Casa de Treino, que e o preco dela —; a obra tocada paga a parte
+## da vida que perdeu (Q-108). Sem preco (o nucleo) nao se repara com moeda.
+func repair_cost() -> int:
+	if level <= 0 or level > costs.size() or costs[level - 1] <= 0:
+		return NENHUM
+	if state == State.RUIN:
+		return costs[level - 1]
+	if state != State.DAMAGED:
+		return NENHUM
+	var perdida := 1.0 - float(health) / maxf(1.0, float(max_health()))
+	return maxi(1, ceili(costs[level - 1] * perdida))
+
+
+## O dano que passa, depois de `defesa` (0..1) o reduzir — so num muro (§09,
+## construtor: "+8% defesa das muralhas"). A fracao guarda-se: oito golpes de 6
+## com 8% poupam 4 de vida, e nao zero de cada vez (Q-109).
+func soak(quanto: int, defesa: float) -> int:
+	if not two_paths() or defesa <= 0.0:
+		return quanto
+	soaked += quanto * defesa
+	var poupado := mini(quanto, int(soaked))
+	soaked -= poupado
+	return quanto - poupado
 
 
 ## Quanto custa o degrau seguinte, ou NENHUM se ja chegou ao topo.
@@ -159,6 +190,8 @@ func to_dict() -> Dictionary:
 		&"paid": paid,
 		&"progress": progress,
 		&"health": health,
+		&"mending": mending,
+		&"soaked": soaked,
 		&"stock": stock,
 		&"path": int(path),
 		&"contact": contact,
@@ -171,6 +204,8 @@ func from_dict(d: Dictionary) -> void:
 	paid = d.get(&"paid", paid)
 	progress = d.get(&"progress", progress)
 	health = d.get(&"health", health)
+	mending = d.get(&"mending", mending)
+	soaked = d.get(&"soaked", soaked)
 	stock = d.get(&"stock", stock)
 	path = d.get(&"path", int(path)) as Path
 	contact = d.get(&"contact", contact)

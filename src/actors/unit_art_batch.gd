@@ -8,6 +8,10 @@ const HIT_TINT := Color(1.0, 0.82, 0.60)
 const DEAD_ALPHA := 0.35
 const SHADOW_HEIGHT := 6.0
 const IDLE_SECONDS := 0.65
+## O chapeu de quem e teu (§25, 0:20): pousa um pouco abaixo do topo da cabeca,
+## e a escala e a da caixa de 48 px do ActorArt.
+const HAT_DROP := 6.0
+const HAT_SCALE := 48.0
 const SHADOW_TEXTURE := preload("res://art/export/_placeholder/contact_shadow_18.png")
 
 var _art := OriginalArt.new()
@@ -93,7 +97,9 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		)
 	for item in draws:
 		var i: int = item.i
-		if units.alive(i) and units.data_ids[i] in [&"archer", &"canopy_archer"]:
+		var dados: UnitData = _data.get(units.data_ids[i])
+		var arma: bool = dados != null and dados.weapon_kind != &"" and item.profile == &"vagrant"
+		if units.alive(i) and arma:
 			ActorArt.draw_weapon(
 				canvas,
 				_art.body_box(item.profile, item.foot - Vector2(0.0, item.bob)),
@@ -105,6 +111,9 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 			)
 		if units.alive(i):
 			var box := _art.body_box(item.profile, item.foot)
+			if item.profile == &"vagrant":
+				var cabeca := Vector2(box.get_center().x, box.position.y + HAT_DROP)
+				ActorArt.draw_hat(canvas, cabeca, box, units, i, box.size.y / HAT_SCALE)
 			TitleView.draw_on(canvas, box, item.id, light)
 			Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
 			Gauge.health(

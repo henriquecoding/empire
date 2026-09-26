@@ -17,6 +17,9 @@ static func goal() -> String:
 		hunter = hunter or data.tags.has(&"hunter")
 	if not worker:
 		return _tr(&"GUIDE_WORKER")
+	for site in SimLoop.builds.slots:
+		if site.blocks and not site.mending and site.repair_cost() > 0:
+			return _tr(&"GUIDE_REPAIR")
 	if not hunter:
 		return _tr(&"GUIDE_HUNTER")
 	var production := false
@@ -59,6 +62,10 @@ static func context(device: Glyphs.Device) -> String:
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
 			return _tr(&"CONTEXT_BUILDING").format(values)
+		if site.mending:
+			return _tr(&"CONTEXT_REPAIRING").format(values)
+		if site.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN] and values.cost > 0:
+			return _tr(&"CONTEXT_REPAIR").format(values)
 		if Verbs.wall_choice_open(site):
 			values["path"] = _tr(
 				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
@@ -68,7 +75,7 @@ static func context(device: Glyphs.Device) -> String:
 			if not SimLoop.builds.can_climb(site, SimLoop.state, SimLoop.night.amargueiros):
 				return _tr(&"CONTEXT_LOCKED").format(values)
 			return _tr(&"CONTEXT_BUILD").format(values)
-		return _tr(&"CONTEXT_DONE").format(values)
+		return _training(site, values)
 	var nearest := -1
 	var distance := SimFactory.curve().recruit_notice_px
 	for i in units.count():
@@ -99,3 +106,20 @@ static func _button(button: Variant) -> String:
 
 static func _tr(key: StringName) -> String:
 	return TranslationServer.translate(key)
+
+
+## Uma obra de pe: se forma um oficio (§09), diz o preco do treino, quem esta
+## la dentro, ou que falta um trabalhador teu para mandar; senao, funciona.
+static func _training(site: BuildSlot, values: Dictionary) -> String:
+	var treino := SimLoop.field.training
+	var oficio := treino.craft_of(site)
+	if oficio == null or not site.standing():
+		return _tr(&"CONTEXT_DONE").format(values)
+	values["craft"] = _tr(oficio.display_key)
+	for quem in treino.trainees:
+		if treino.trainees[quem][0] == site.id:
+			return _tr(&"CONTEXT_TRAINING").format(values)
+	values["cost"] = treino.owed(site, SimLoop.units)
+	if values.cost <= 0:
+		return _tr(&"CONTEXT_TRAIN_NOBODY").format(values)
+	return _tr(&"CONTEXT_TRAIN").format(values)

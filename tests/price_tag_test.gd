@@ -113,3 +113,21 @@ func test_o_preco_de_quem_ainda_nao_e_de_ninguem_desconta_o_saco() -> void:
 func test_quem_ja_tem_o_preco_no_saco_nao_leva_etiqueta() -> void:
 	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
 	assert_int(PriceTag.owed_by_unit(_com(&"archer", arqueiro.recruit_cost), 0)).is_equal(0)
+
+
+## Q-108: tocada ou em ruina, o preco e o da reparacao, e nao o do degrau
+## seguinte — que ela nao aceita. Paga, deixa de pedir.
+func test_uma_obra_tocada_ou_em_ruina_pede_a_reparacao() -> void:
+	var vaga := _vaga_de_muro()
+	vaga.level = 1
+	vaga.state = BuildSlot.State.DAMAGED
+	vaga.health = vaga.max_health() / 2
+	assert_int(PriceTag.owed_by(vaga)).is_equal(vaga.repair_cost())
+	vaga.paid = 1
+	assert_int(PriceTag.owed_by(vaga)).is_equal(vaga.repair_cost() - 1)
+	vaga.mending = true
+	assert_int(PriceTag.owed_by(vaga)).is_equal(0)
+	vaga.mending = false
+	vaga.paid = 0
+	vaga.state = BuildSlot.State.RUIN
+	assert_int(PriceTag.owed_by(vaga)).is_equal(vaga.costs[0])

@@ -79,12 +79,24 @@ static func builds(eventos: Array[Dictionary]) -> void:
 				EventBus.queue(&"build_progressed", [vaga.id, e[BuildSystem.RACIO]])
 			BuildSystem.EV_COMPLETA:
 				_completa(vaga, e[BuildSystem.NIVEL])
+			BuildSystem.EV_REPARADA:
+				EventBus.queue(&"build_completed", [vaga.id])
 			BuildSystem.EV_DANO:
 				EventBus.queue(&"building_damaged", [vaga.id, e[BuildSystem.RACIO]])
 			BuildSystem.EV_DESTRUIDA:
 				EventBus.queue(&"building_destroyed", [vaga.id, vaga.x])
 			BuildSystem.EV_ROMPIDA:
 				EventBus.queue(&"wall_breached", [vaga.id])
+
+
+## A Casa de Treino (§09): quem sai do treino e promovido, no catalogo (§46).
+static func training(eventos: Array[Dictionary]) -> void:
+	for e in eventos:
+		if e[TrainingSystem.CHAVE] == TrainingSystem.EV_FORMADO:
+			var quem: int = e[TrainingSystem.UNIDADE]
+			EventBus.queue(&"unit_promoted", [quem, e[TrainingSystem.DE], e[TrainingSystem.PARA]])
+		elif e[TrainingSystem.CHAVE] == TrainingSystem.EV_PAGA:
+			EventBus.queue(&"coin_spent", [e[TrainingSystem.QUANTO], &"training"])
 
 
 ## Passo 7: a producao do §49. A materia sai como moeda por cima da obra que a

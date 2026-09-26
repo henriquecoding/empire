@@ -426,7 +426,7 @@ HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O g
 HINT_DROP,largar (manter: em contínuo),drop (hold: continuous),rodapé de comandos (§24): Verbo 1,32,GB-15
 HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,"GB-15. Hoje o Verbo 2 só entra em passagens (Q-066)."
 HINT_MARK,alvo,target,rodapé de comandos (§24): marcar alvo,16,GB-15
-HINT_WHEEL,estado,status,rodapé de comandos (§24): a roda do rei,16,"GB-15. Abre o painel de estado enquanto a roda não existe (Q-067)."
+HINT_WHEEL,estado · +1–6 impulso,status · +1–6 impulse,rodapé de comandos (§24): a roda do rei,32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
 HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
 KEY_SPACE,ESPAÇO,SPACE,nome de tecla no rodapé de comandos,16,GB-15
 KEY_MOUSE_RIGHT,BOTÃO DIREITO,RIGHT CLICK,nome de botão do rato no rodapé de comandos,16,GB-15
@@ -548,3 +548,23 @@ CONTEXT_RECRUIT,"{name} · Faltam {cost} moedas
 {drop} to recruit",guia contextual de jogo,160,
 CONTEXT_WALL_NAME,Muralha,Wall,guia contextual de jogo,160,
 CONTEXT_SITE,Obra,Construction,guia contextual de jogo,160,
+GUIDE_REPAIR,"REPARA A DEFESA
+Larga moedas na muralha tocada antes da noite","REPAIR YOUR DEFENCE
+Drop coins on the damaged wall before nightfall",guia contextual de jogo,160,Q-108
+CONTEXT_REPAIR,"{name} · Danificada · faltam {cost} moedas
+{drop} pagar a reparação","{name} · Damaged · {cost} coins remaining
+{drop} fund the repair",guia contextual de jogo,160,Q-108
+CONTEXT_REPAIRING,"{name} · Reparação paga
+O trabalhador vem reparar; de dia","{name} · Repair funded
+A worker is on the way; by day",guia contextual de jogo,160,Q-108
+CONTEXT_TRAIN,"{name} · Treinar {craft}: faltam {cost} moedas
+{drop} pagar o treino · um trabalhador teu entra por um dia","{name} · Train a {craft}: {cost} coins remaining
+{drop} fund the training · a worker of yours goes in for a day",guia contextual de jogo,160,§09 §10
+CONTEXT_TRAINING,"{name} · A formar um {craft}
+Sai amanhã a esta hora","{name} · Training a {craft}
+Out by this time tomorrow",guia contextual de jogo,160,§09 §10
+CONTEXT_TRAIN_NOBODY,"{name} · Forma {craft}
+Precisa de um trabalhador teu por perto","{name} · Trains a {craft}
+Needs a worker of yours nearby",guia contextual de jogo,160,§09 §10
+TOAST_PROMOTED,Um ofício novo no reino,A new craftsman joins your realm,aviso do HUD: treino acabado,40,§09
+TOAST_IMPULSE,Impulso real: hoje tem um preço,Royal impulse: today has a price,aviso do HUD: impulso usado,40,§15

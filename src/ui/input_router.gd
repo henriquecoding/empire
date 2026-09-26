@@ -46,6 +46,13 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	if not SimLoop.running():
 		return
+	var impulso := wheel_choice(evento, Input.is_action_pressed(&"king_wheel"))
+	if impulso >= 0:
+		var ids := SimLoop.field.crown.ids()
+		if impulso < ids.size():
+			SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": ids[impulso]})
+		get_viewport().set_input_as_handled()
+		return
 	if evento.is_action_pressed(&"verb_assume"):
 		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		get_viewport().set_input_as_handled()
@@ -55,6 +62,15 @@ func _unhandled_input(evento: InputEvent) -> void:
 		if marca:
 			SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _alvo_em_x(evento)})
 		get_viewport().set_input_as_handled()
+
+
+## §24: "Tab (manter) -> 1-5". Com a roda premida, a tecla de numero escolhe o
+## impulso (0 e o primeiro); qualquer outra coisa e -1.
+static func wheel_choice(evento: InputEvent, roda: bool) -> int:
+	if not roda or not evento is InputEventKey or not evento.pressed or evento.echo:
+		return -1
+	var tecla: int = (evento as InputEventKey).physical_keycode
+	return tecla - KEY_1 if tecla >= KEY_1 and tecla <= KEY_9 else -1
 
 
 ## Verdadeiro no instante em que o gesto de marcar comeca, e so nesse (GB-11).
