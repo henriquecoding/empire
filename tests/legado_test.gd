@@ -40,7 +40,9 @@ func _fica() -> float:
 func test_guarda_as_sementes_os_segredos_e_as_conquistas() -> void:
 	SimLoop.state.royal_seeds = SEMENTES
 	SimLoop.state.found = PackedStringArray([SEGREDO])
+	SimLoop.state.region = 1
 	var legado := Legacy.of(SimLoop.state, SimLoop.builds, _fica())
+	assert_int(int(legado[Legacy.REGIAO])).is_equal(1)
 	assert_int(int(legado[Legacy.SEMENTES])).is_equal(SEMENTES)
 	assert_array(Array(legado[Legacy.ACHADOS])).contains([SEGREDO])
 

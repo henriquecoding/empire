@@ -40,6 +40,7 @@ static func of(estado: GameState, obras: BuildSystem, fracao: float) -> Dictiona
 		ACHADOS: estado.found,
 		CONQUISTAS: estado.conquests,
 		PLANO: estado.chapters.to_dict(),
+		REGIAO: estado.region,  # o decay recomeca a regiao onde se perdeu (§16)
 		OBRAS: ficam,
 	}
 

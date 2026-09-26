@@ -1515,7 +1515,8 @@
 - **Onde:** §16 (*"Decay em vez de reset... mantém: Sementes Reais, classes desbloqueadas, mapas revelados,
   segredos encontrados, e 40% das estruturas do império principal"*), `economy.csv` (`decay_structures_kept`).
 - **Decidido (AUD-05):** na derrota escreve-se o **legado** (`Legacy`) — as Sementes Reais, os segredos achados,
-  as conquistas, o plano da campanha e as obras que ficam — e **os saves da partida perdida apagam-se**: perder
+  as conquistas, o plano da campanha, a região em que se estava e as obras que ficam — e **os saves da partida
+  perdida apagam-se**: perder
   não se desfaz a recarregar a alvorada de antes. Ficam as obras de pé mais caras (por moedas investidas; no
   empate, por id), `round(40% × obras de pé)`, sem o núcleo nem as ruínas. O jogo novo (o botão da derrota, ou
   abrir o jogo outra vez) monta a região e levanta-as no mesmo sítio, no mesmo degrau e caminho, inteiras. O
