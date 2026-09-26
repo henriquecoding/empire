@@ -41,7 +41,7 @@ static func draw_on(
 		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
-		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso)
+		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso, tempo)
 
 
 ## O alfa do convite neste instante do ecra: entre PISCAR.minimo e 1.
@@ -50,28 +50,41 @@ static func blink(tempo: float) -> float:
 
 
 static func _obra(
-	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, pulso: float
+	canvas: CanvasItem,
+	vaga: BuildSlot,
+	forma: Silhouette.Form,
+	luz: Lighting,
+	pulso: float,
+	tempo: float
 ) -> void:
-	if BuildingSkins.draw_on(canvas, vaga, luz):
+	if BuildingSkins.draw_on(canvas, vaga, luz, tempo):
 		return
 	if SettlementArt.handles(vaga.kind):
-		SettlementArt.draw_on(canvas, vaga, luz)
+		SettlementArt.draw_on(canvas, vaga, luz, tempo)
 		return
 	var x := vaga.x
 	var caixa := drawn_box(vaga, forma)
+	var trabalho := SiteMarks.working(vaga, tempo)
+	var etapa := SiteStage.of(vaga, trabalho)
+	var lit := luz.body(Color.WHITE, x)
 	if vaga.standing():
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.OBRA, x))
+		if etapa != SiteStage.Stage.OPERATING:
+			SiteMarks.cracks(canvas, caixa, 1.0 - SiteStage.built(vaga), lit)
+		if etapa == SiteStage.Stage.MENDING:
+			SiteMarks.braces(canvas, caixa, SiteStage.built(vaga), lit, tempo, trabalho)
 		Gauge.health(canvas, caixa, float(vaga.health) / maxf(1.0, float(vaga.max_health())))
-		return
-	if vaga.state == BuildSlot.State.RUIN:
+	elif vaga.state == BuildSlot.State.RUIN:
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.VAZIO, x))
-		return
-	if vaga.state != BuildSlot.State.EMPTY:
+	elif vaga.state != BuildSlot.State.EMPTY:
 		# Em andaime: a forma do que vem, ja cheia, mas na cor da madeira. §55 —
 		# "a obra existe quando uma moeda cai", e a partir dai ve-se o que sera.
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.ANDAIME, x))
-		return
-	_convite(canvas, vaga, forma, luz, caixa, pulso)
+		SiteMarks.scaffold(canvas, caixa, SiteStage.built(vaga), lit, tempo, trabalho)
+	else:
+		_convite(canvas, vaga, forma, luz, caixa, pulso)
+	var pe := Vector2(x, WorldPalette.ground_of(int(vaga.band)))
+	SiteMarks.coins(canvas, pe, vaga.paid, SiteStage.cost_now(vaga), lit)
 
 
 ## A caixa que esta obra ocupa no ecra AGORA, no estado em que esta. E publica
@@ -118,7 +131,6 @@ static func _convite(
 	var cor := luz.body(WorldPalette.VAZIO, vaga.x)
 	cor.a *= pulso
 	canvas.draw_polyline(pontos, cor, WorldPalette.CONTORNO)
-	Gauge.paid(canvas, fantasma, vaga)
 
 
 ## O que ficou de pe depois de cair. A mesma forma, rente ao chao: reconhece-se
