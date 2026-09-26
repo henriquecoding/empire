@@ -127,7 +127,7 @@ func next_unique() -> bool:
 ## moedas" a Casa de Treino, que e o preco dela —; a obra tocada paga a parte
 ## da vida que perdeu (Q-108). Sem preco (o nucleo) nao se repara com moeda.
 func repair_cost() -> int:
-	if level <= 0 or level > costs.size() or costs[level - 1] <= 0:
+	if level <= 0 or level > costs.size() or costs[level - 1] <= 0 or works.is_empty():
 		return NENHUM
 	if state == State.RUIN:
 		return costs[level - 1]
