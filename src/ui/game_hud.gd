@@ -145,7 +145,10 @@ func _atualizar() -> void:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
-	_recursos.text = HudText.resources(saco, cabem, GameplayGuide.troops(), _vida_nucleo())
+	var soldo := SimLoop.economy.upkeep(SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id))
+	_recursos.text = HudText.resources(
+		saco, cabem, GameplayGuide.troops(), _vida_nucleo(), SimLoop.state.greed, soldo
+	)
 	_objectivo.text = GameplayGuide.goal()
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)

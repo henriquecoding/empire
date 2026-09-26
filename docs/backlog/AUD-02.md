@@ -10,6 +10,7 @@ Depende   AUD-01
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     A produção medida no SimLoop bate com o modelo com tolerância escrita; um sorvedouro real na partida; um piloto que joga bem mede o §66 com a voz ligada; nenhum impulso nem modo do celeiro é dominado no teste
 Fora      Comércio, diplomacia e dívida.
-Estado    por fazer
+Estado    feito — a produção cresce, paga nobres e pede o trabalhador; a manutenção e o vagabundo da
+          alvorada na partida; o D8 passa para o AUD-04 (o Cavador do dia 10, Q-101)
 Horas     16
 ```

@@ -151,3 +151,14 @@ extends Resource
 @export var bitter_wood_bastion_cost: int = 0
 ## Raio de apanha da moeda, em px (F1-01, proposta).
 @export var coin_pickup_px: float = 0.0
+
+@export_group("Auditoria de gameplay — AUD-02")
+## O que rende uma obra com posto sem ninguem la, nas fases em que o posto e
+## urgente (Q-121). O galinheiro, sem posto, rende sozinho.
+@export var unstaffed_yield: float = 0.0
+## A populacao por recrutar nao acaba: um vagabundo por alvorada num acampamento
+## da regiao, ate haver este numero deles vivos (Q-122).
+@export var vagrants_per_dawn: int = 0
+@export var vagrant_camp_cap: int = 0
+## O perfil de ganancia do teu rei no inicio (§15, Q-123).
+@export var start_greed_profile: StringName = &""

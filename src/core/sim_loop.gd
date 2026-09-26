@@ -73,7 +73,7 @@ func start(semente: int) -> void:
 	_montar()
 	king_id = UnitSystem.NENHUM  # sem rei em campo ate alguem o pôr la
 	RngService.configure(semente)
-	state.chapters = SimFactory.chapter_plan(SimFactory.campaign_regions())  # §77, fluxo world
+	SimFactory.draw_campaign(state)  # §77 os capitulos e §15 a ganancia, fluxo world
 	ClockService.start()
 	_running = true
 
@@ -130,7 +130,7 @@ func step(delta: float) -> void:
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
-	field.prepare(ClockService.clock.day, core_x, world_width, units, _fase)
+	field.prepare(ClockService.clock.day, core_x, world_width, units, _fase, state)
 	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
 	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
 	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
@@ -189,7 +189,7 @@ func _montar() -> void:
 	jobs = SimFactory.job_board()
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()
-	economy = SimFactory.economy()
+	economy = SimFactory.economy(jobs)
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())

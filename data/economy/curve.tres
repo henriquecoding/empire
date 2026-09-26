@@ -98,3 +98,7 @@ ally_attack_favor = -40
 bitter_wood_wall_level = 4
 bitter_wood_bastion_cost = 3
 coin_pickup_px = 12.0
+unstaffed_yield = 0.25
+vagrants_per_dawn = 1
+vagrant_camp_cap = 4
+start_greed_profile = &"balanced"

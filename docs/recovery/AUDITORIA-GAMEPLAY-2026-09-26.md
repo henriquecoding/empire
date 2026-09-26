@@ -1154,3 +1154,22 @@ recrutava por acaso **obras** (os recrutáveis nasciam dentro delas, o próprio 
 regresso ao núcleo ao crepúsculo passou a viver 2 dias. O piloto que joga bem é o P-E, no AUD-02. O
 `celeiro_no_jogo_test` largava uma moeda a cada 10 ticks com o voo a durar ~15, e só passava porque a venda do
 celeiro o voltava a trocar sozinha (D1): passou a largar uma e esperar que pouse.
+
+## Seguimento — AUD-02 (Lote 2, a economia verdadeira)
+
+Decisões nas Q-121 a Q-124; ticket `docs/backlog/AUD-02.md`.
+
+| Frente | O que mudou | Prova |
+|---|---|---|
+| D7 a economia do CI ≠ a do jogo | A produção cresce ao `income_growth` e paga a ganância (§15) antes de virar moeda; o dia da asfixia calcula-se sobre as obras do greybox e a caça média: **dia 10**, dentro de 9–14 | `economia_jogada_test` |
+| P-B a produção não pedia ninguém | `Staffing`: rende inteiro com alguém no posto, 25% sem ninguém nas fases em que o posto é urgente | `economia_jogada_test` |
+| P-D sem sorvedouros | `UpkeepSystem`: soldo na alvorada, do saco do rei; sem moedas, uma tropa vai-se embora | `upkeep_system_test`, `economia_jogada_test` |
+| População finita (achado novo) | Um vagabundo por alvorada num acampamento, até 4 por recrutar | `economia_jogada_test` |
+| P-M decisões dominadas | Com o crescimento, a Colheita Forçada compensa a partir do dia ~10 (sete fontes); o modo capacidade do celeiro continua dominado (Q-112) | `economia_jogada_test` |
+| D8 §66 com a voz | Medido com uma política de pagar ofertas de moeda: nada muda, porque no cenário fechado as ofertas pedem nomes e feridos; o que derruba a defesa no dia 10 são 7 Cavadores por baixo do muro → AUD-04 | `dez_dias` (duas corridas), Q-101 |
+| O painel | "SOLDO x/dia · NOBRES y%" ao lado do saco e das tropas | `hud_text_test` |
+
+O cenário fechado do §07/§66 passou a dar o saco cheio ao rei: mede o combate, e a manutenção é paga pela economia.
+Os testes da coluna *Payback* do §06 passaram a pôr o trabalhador no posto e a ganância a zero — a coluna é bruta,
+como o rasto que eles já isolavam. A vistoria voltou a viver 3 dias (o piloto espera a noite na borda do núcleo do
+lado da mancha e, à tarde, prefere muro).

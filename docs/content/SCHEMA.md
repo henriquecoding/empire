@@ -268,7 +268,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 95 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 99 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -367,6 +367,10 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 95 linha(s) · §06 §4
 | `recruit_notice_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 | `follow_distance_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 | `follow_spacing_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
+| `unstaffed_yield` | float | Auditoria de gameplay — AUD-02 |  |
+| `vagrants_per_dawn` | int | Auditoria de gameplay — AUD-02 |  |
+| `vagrant_camp_cap` | int | Auditoria de gameplay — AUD-02 |  |
+| `start_greed_profile` | StringName | Auditoria de gameplay — AUD-02 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

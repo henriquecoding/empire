@@ -37,6 +37,9 @@ var next_id: int = 1
 ## A Semente Real (§44): paga consagrar e classes. O Lenho Amargo, que tambem
 ## nao e moeda, e guardado pelo AmargueiroSystem.
 var royal_seeds: int = 0
+## A ganancia do teu rei, 0 a 100 (§15): a parte do rendimento que desaparece
+## para os nobres. Sorteada no inicio da partida (SimFactory.draw_campaign).
+var greed: int = 0
 ## Os povos conquistados (§13), pelo id: e o que o requires_conquest le.
 var conquests: PackedStringArray = PackedStringArray()
 ## Os segredos ja encontrados (§17). Um segredo so da a recompensa uma vez.
@@ -58,6 +61,7 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.clock_elapsed = _real(d, &"clock_elapsed", estado.clock_elapsed)
 	estado.day_seconds = _real(d, &"day_seconds", estado.day_seconds)
 	estado.royal_seeds = _inteiro(d, &"royal_seeds", estado.royal_seeds)
+	estado.greed = _inteiro(d, &"greed", estado.greed)
 	estado.conquests = _textos(d, &"conquests")
 	estado.found = _textos(d, &"found")
 	estado.chapters.from_dict(d)
@@ -82,6 +86,7 @@ func to_dict() -> Dictionary:
 			&"day_seconds": day_seconds,
 			&"next_id": next_id,
 			&"royal_seeds": royal_seeds,
+			&"greed": greed,
 			&"conquests": conquests,
 			&"found": found,
 		}
