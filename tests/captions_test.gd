@@ -82,3 +82,15 @@ func test_a_mancha_entra_no_ecra() -> void:
 	assert_bool(Captions.in_view(3000.0, 400.0, ecra)).is_false()
 	assert_bool(Captions.in_view(2400.0, 400.0, ecra)).is_true()
 	assert_bool(Captions.in_view(900.0, 400.0, ecra)).is_true()
+
+
+## AUD-03: a mancha alimentada (Q-127) e quem se vai embora sem soldo (Q-124).
+## Quem foge com medo nao tem legenda: ve-se a correr.
+func test_o_sacrificio_e_quem_se_vai_embora_tem_legenda() -> void:
+	var c := _legendas()
+	EventBus.rot_fed.emit(8.0, &"coins")
+	assert_str(c.text).contains(tr(&"CAPTION_ROT_FED"))
+	EventBus.unit_fled.emit(1, &"morale")
+	assert_str(c.text).not_contains(tr(&"CAPTION_UNIT_LEFT"))
+	EventBus.unit_fled.emit(1, &"upkeep")
+	assert_str(c.text).contains(tr(&"CAPTION_UNIT_LEFT"))

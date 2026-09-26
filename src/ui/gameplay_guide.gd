@@ -6,8 +6,15 @@ const CEM := 100.0
 
 
 static func goal() -> String:
-	if SimLoop.night.rot.active():
+	var rot := SimLoop.night.rot
+	if rot.active():
+		if _rei_na_mancha():
+			return _tr(&"GUIDE_ROT_FED")
 		return _tr(&"HUD_GOAL_NIGHT")
+	if rot.announced != 0:
+		var lado := {"side": _tr(&"SIDE_EAST" if rot.announced > 0 else &"SIDE_WEST")}
+		var funda := rot.deep(ClockService.clock.day)
+		return _tr(&"GUIDE_ROT_COMING_DEEP" if funda else &"GUIDE_ROT_COMING").format(lado)
 	var worker := false
 	var hunter := false
 	for i in SimLoop.units.count():
@@ -171,3 +178,12 @@ static func conversion_key(estado: ConversionSystem.Status, tem_oficio: bool) ->
 		ConversionSystem.Status.WANTS_CRAFT:
 			return &"CONTEXT_CONVERT_WANTS_CRAFT"
 	return &"CONTEXT_CONVERT_COIN" if tem_oficio else &"CONTEXT_CONVERT_NOBODY"
+
+
+## O rei dentro da mancha, com moedas: e ai que o Verbo 1 alimenta (§05, Q-127).
+static func _rei_na_mancha() -> bool:
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	if i < 0 or SimLoop.units.carried_coins[i] <= 0:
+		return false
+	var rot := SimLoop.night.rot
+	return absf(SimLoop.units.xs[i] - rot.position_x()) <= rot.state.width * HALF

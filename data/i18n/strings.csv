@@ -591,3 +591,16 @@ CAPACITY_TROOP_SPEED,+{pct}% de passo às tropas,+{pct}% speed for your troops,c
 CAPACITY_COMBAT_DISH,prato de combate,a combat dish,capacidade do §06,40,crafts.csv
 CAPACITY_WALL_AND_TOWER_COST,−{pct}% no custo de muralhas e torres,−{pct}% wall and tower cost,capacidade do §06,40,crafts.csv
 CAPACITY_WEAPON_LEVEL,+1 nível de arma,+1 weapon level,capacidade do §06,40,crafts.csv
+GUIDE_ROT_COMING,"A NOITE VEM DE {side}
+Leva a gente e as moedas para esse lado","THE NIGHT COMES FROM THE {side}
+Take your people and coins to that side",guia contextual de jogo: a tarde diz o lado (Q-125),160,AUD-03
+GUIDE_ROT_COMING_DEEP,"NOITE FUNDA A {side}
+Mais escura do que as outras: prepara-te","A DEEP NIGHT FROM THE {side}
+Darker than the others: be ready",guia contextual de jogo: a noite de pico (Q-126),160,AUD-03
+GUIDE_ROT_FED,"ALIMENTA A PODRIDÃO
+Moedas largadas dentro da mancha tiram-lhe massa","FEED THE ROT
+Coins dropped inside the stain take away its mass",guia contextual de jogo: o sacrifício do §05 (Q-127),160,AUD-03
+SIDE_WEST,OESTE,WEST,lado da região (esquerda),8,AUD-03
+SIDE_EAST,LESTE,EAST,lado da região (direita),8,AUD-03
+CAPTION_ROT_FED,[A mancha engole o sacrifício],[The stain takes the offering],legenda de som (§26); o sacrifício do §05 (Q-127),32,AUD-03
+CAPTION_UNIT_LEFT,"[Sem soldo, alguém partiu]","[Unpaid, someone left]",legenda de som (§26); a manutenção (Q-124),32,AUD-03

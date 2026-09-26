@@ -76,10 +76,13 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	while _producao.is_empty() and ClockService.clock.day == 1:
 		_passo(longe)
 	assert_array(_producao).contains([canteiro.x])
-	# Nenhuma moeda apareceu por outra via: tudo o que caiu foi largado, cacado
-	# ou produzido — a regra "nada cria moeda do nada" do §02, na abertura.
+	# Nenhuma moeda apareceu por outra via: tudo o que caiu foi largado, cacado,
+	# produzido ou largado por quem morreu — a regra "nada cria moeda do nada" do
+	# §02, na abertura. O saque entrou com a formacao da noite (Q-128): o arqueiro
+	# defende a borda do nucleo e os Rastejantes que ele abate largam a moeda (§25).
+	var fisicas := [Verbs.JOGADOR, &"hunt", &"production", EventRelay.FONTE_MORTE]
 	for origem in _origens:
-		assert_bool(origem in [Verbs.JOGADOR, &"hunt", &"production"]).is_true()
+		assert_bool(origem in fisicas).override_failure_message(String(origem)).is_true()
 
 
 func _recrutar(id: int) -> void:

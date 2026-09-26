@@ -1427,6 +1427,38 @@
   dentro do alvo 9–14 (`economia_jogada_test`). A Colheita Forçada passa a compensar a partir do dia ~10 com as
   sete fontes; o modo capacidade do celeiro continua dominado pela venda (Q-112, em aberto).
 
+### Q-125 · De que lado vem a noite, e quando se sabe
+- **Onde:** §05, §51; Into the Breach e Thronefall (auditoria §6); auditoria §5.5 (P-F).
+- **O que estava:** o lado sorteava-se no próprio crepúsculo, e a composição não se mostrava.
+- **Decidido (AUD-03):** o lado sorteia-se **na passagem para a tarde**, no mesmo fluxo `rot` e com a mesma
+  conta — nada do fluxo corre entre a tarde e o crepúsculo, por isso as noites de uma semente são as mesmas —, e
+  vai no save (`RotSystem.announced`). Diz-se no mundo (a candeia acende-se no horizonte dessa borda) e no guia
+  ("A NOITE VEM DE LESTE"). A composição continua por dizer: vê-se chegar.
+
+### Q-126 · O ritmo da noite
+- **Onde:** §74 (a massa termo a termo); a Lua de Sangue do Kingdom e o *relax* do AI Director (auditoria §6, P-H).
+- **Decidido (AUD-03):** de `peak_every` (6) em 6 noites uma **funda** (massa × 1,3), e a seguinte **calma**
+  (× 0,6); sabe-se de véspera e diz-se à tarde ("NOITE FUNDA"), com uma candeia maior no horizonte. Os três
+  números em `rot.csv`, em `_proposed`; a tabela `ROT_BY_DAY.md` mostra-os. A noite 10 (o Cavador) não é funda.
+
+### Q-127 · Alimentar a Podridão com moedas
+- **Onde:** §05 (*"Alimentar — deixar sacrifícios (animais, tropas fracas, ouro) reduz a massa. Sinistro,
+  eficaz, e mecanicamente honesto: transformas economia em segurança"*), `rot.csv` (`sacrifice_mass_per_coin`,
+  que nenhum sistema lia).
+- **Decidido (AUD-03):** as moedas que **o rei** largou sem outro destino, pousadas dentro da mancha, somem nela e
+  tiram-lhe `sacrifice_mass_per_coin` (0,5) de massa cada; a do prato de uma oferta aberta é da oferta; a que caiu
+  de quem morreu não é sacrifício. Sai o `rot_fed` da §46 e uma legenda. O guia di-lo com o rei dentro da mancha
+  e com moedas. Os animais e as tropas fracas ficam por fazer.
+
+### Q-128 · Quem não tem posto, de noite
+- **Onde:** §25 (*"o vagabundo segue-te"*), §52; auditoria §5.5 e D13 (P-C).
+- **O que estava:** quem não tinha posto seguia o rei também de noite — para fora do muro, ou para o meio de um
+  castelo de 480 px enquanto as criaturas mordiam a borda.
+- **Decidido (AUD-03):** do crepúsculo à alvorada forma-se (`Muster`): quem luta vai para a borda do núcleo do lado
+  da noite, para dentro, um a seguir ao outro; quem não luta recolhe ao núcleo; o escudeiro fica com o rei; quem
+  treina continua a treinar. Medido: a vistoria passa de 3 para 8 dias, e a defesa mais fraca do `dez_dias` de
+  cair ao dia 2 para cair ao 7.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |
