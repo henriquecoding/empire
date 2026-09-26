@@ -33,6 +33,9 @@ var vys: PackedFloat32Array = PackedFloat32Array()
 var bands: PackedByteArray = PackedByteArray()
 var amounts: PackedInt32Array = PackedInt32Array()
 var settled: PackedByteArray = PackedByteArray()
+## 1 se foi o rei que a largou (Verbo 1). Quem apanha moedas caidas — o escudeiro
+## do §08 — deixa estas, que o rei largou para pagar ou recrutar (Q-114).
+var from_king: PackedByteArray = PackedByteArray()
 
 var _curva: EconomyCurve
 var _por_id: Dictionary = {}
@@ -54,7 +57,9 @@ func index_of(coin_id: int) -> int:
 ## Larga uma moeda. `desvio` esta em [-1, 1] e vem sorteado de fora, do fluxo
 ## `economy`: onde a moeda cai afeta a simulacao, por isso tem de ser um fluxo
 ## determinista e nao o visual (§42).
-func drop(estado: GameState, x: float, faixa: Band.Kind, quanto: int, desvio: float) -> int:
+func drop(
+	estado: GameState, x: float, faixa: Band.Kind, quanto: int, desvio: float, do_rei := false
+) -> int:
 	var coin_id := estado.take_id()
 	ids.append(coin_id)
 	xs.append(x)
@@ -64,6 +69,7 @@ func drop(estado: GameState, x: float, faixa: Band.Kind, quanto: int, desvio: fl
 	bands.append(int(faixa))
 	amounts.append(quanto)
 	settled.append(0)
+	from_king.append(1 if do_rei else 0)
 	_por_id[coin_id] = ids.size() - 1
 	return coin_id
 
@@ -107,14 +113,14 @@ func apex_px() -> float:
 ## `espaco` moedas — a capacidade do saco vem de UnitData.coin_capacity.
 ##
 ## Devolve os ids apanhados, para quem chama emitir coin_collected.
-func collect(x: float, faixa: Band.Kind, espaco: int) -> PackedInt32Array:
+func collect(x: float, faixa: Band.Kind, espaco: int, so_caidas := false) -> PackedInt32Array:
 	var apanhados := PackedInt32Array()
 	if espaco <= 0:
 		return apanhados
 	var raio := _curva.coin_pickup_px
 	var levado := 0
 	for i in ids.size():
-		if settled[i] == 0 or bands[i] != int(faixa):
+		if settled[i] == 0 or bands[i] != int(faixa) or (so_caidas and from_king[i] == 1):
 			continue
 		if absf(xs[i] - x) > raio:
 			continue
@@ -200,6 +206,7 @@ func to_dict() -> Dictionary:
 ## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
 func from_dict(d: Dictionary) -> void:
 	Columns.from_dict(self, d)
+	from_king.resize(ids.size())  # um save anterior a coluna: todas caidas
 	_reindexar()
 
 
@@ -212,6 +219,7 @@ func _copiar(de: int, para: int) -> void:
 	bands[para] = bands[de]
 	amounts[para] = amounts[de]
 	settled[para] = settled[de]
+	from_king[para] = from_king[de]
 
 
 func _encolher() -> void:
@@ -224,6 +232,7 @@ func _encolher() -> void:
 	bands.resize(n)
 	amounts.resize(n)
 	settled.resize(n)
+	from_king.resize(n)
 
 
 func _reindexar() -> void:

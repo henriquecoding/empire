@@ -1317,13 +1317,14 @@
   - **O gesto de evoluir** é o Verbo 1 no núcleo, com a condição cumprida e a Semente Real: a semente gasta-se
     e a moeda volta ao saco, como ao consagrar uma árvore (§74). Sem as duas coisas, a moeda cai como sempre.
     O guia de contexto di-lo no núcleo.
-- **O escudeiro não entrou.** Os campos dele (`tags follows_king|collects_coins`, `coin_capacity 5`) estão em
-  `_proposed`, e "apanha moedas caídas" pede uma distinção que a simulação não guarda: uma moeda no chão não
-  sabe se caiu (de uma morte, de um saco cheio) ou se foi largada pelo rei para pagar uma obra ou recrutar.
-  Um escudeiro que apanha tudo o que está ao pé do rei tira-lhe as moedas que ele larga. "Cresce e torna-se
-  tropa de combate" também não diz em quê: o `squire` tem dano 0.
-- **Em aberto:** as três leituras de cima; se o escudeiro deve apanhar só moedas de origem marcada (uma coluna
-  nova no `CoinSystem`), só as que ficam no chão mais de um tempo, ou outra coisa; em que tropa ele cresce.
+- **O escudeiro (a opção mais simples e mais reversível, como manda o `AGENTS.md`):** nasce com o rei, é teu,
+  e segue-o como quem não tem posto. Apanha **só moedas caídas**: cada moeda passou a lembrar-se de quem a
+  largou (`CoinSystem.from_king`), e as que o rei larga com o Verbo 1 — para pagar uma obra ou recrutar — ficam
+  para quem as ia receber. O que apanha, entrega ao rei quando está ao pé dele, como o caçador (Q-111). Não é
+  tropa de combate (dano 0) e o painel não o conta. Os campos dele continuam em `_proposed`.
+- **Em aberto:** as três leituras de cima; se "caídas" deve ser outra coisa que "não largadas pelo rei"; se
+  entregar ao rei é o que o §08 quer (a alternativa é ele guardar até 5, como armadura de moedas do Kingdom);
+  e **em que tropa ele cresce** na fase 2 (`squire_becomes_combatant`) — não entrou, porque o dossiê não o diz.
 - **Decide:** tu.
 
 ## Resolvidas na v5.2 (reversíveis)

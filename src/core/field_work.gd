@@ -28,7 +28,8 @@ func _init(
 	training = SimFactory.training()
 	crown = SimFactory.crown()
 	conversion = SimFactory.conversion()
-	classes = ClassSystem.new(Registry.entry(&"classes", &"monarch") as ClassData)
+	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
+	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
 	if combate != null:
 		combate.guard = classes
 	_economia = economia
@@ -121,7 +122,10 @@ func resolve(
 	for d in caca:
 		if not d in chao:
 			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
-	var entregue := hunting.deliver(unidades, rei, SimFactory.curve().recruit_notice_px)
+	var alcance := SimFactory.curve().recruit_notice_px
+	var entregue := (
+		hunting.deliver(unidades, rei, alcance) + classes.hand_over(unidades, rei, alcance)
+	)
 	if entregue > 0:
 		EventBus.queue(&"coin_collected", [rei, entregue])
 	return chao

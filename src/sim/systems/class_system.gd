@@ -21,19 +21,24 @@ const PRIMEIRA := 1
 ## A chave dos parametros de cada fase (classes.csv, `phase*_params`).
 const DEFESA := &"defense"
 const RAIO := &"radius"
+## A tag do escudeiro em units.csv (§08): apanha moedas caidas.
+const COLHE := &"collects_coins"
 
 var phase: int = PRIMEIRA
 var nights_defended: int = 0
 
 var _dados: ClassData
+## UnitData por id: quem tem a tag de apanhar moedas e o escudeiro.
+var _tropas: Dictionary
 var _rei: int = NENHUM
 var _defendida := false
 ## A fraccao de dano que a aura ja poupou a cada tropa e ainda nao fez um ponto.
 var _poupado: Dictionary = {}
 
 
-func _init(dados: ClassData) -> void:
+func _init(dados: ClassData, tropas: Dictionary = {}) -> void:
 	_dados = dados
+	_tropas = tropas
 
 
 ## A defesa que `i` recebe da classe agora: a da fase em curso se a tropa e tua e
@@ -85,6 +90,30 @@ func dawn() -> void:
 	_defendida = false
 
 
+## "Escudeiro acompanha e apanha moedas caidas" (§08): quem tem a tag de apanhar
+## e esta a `alcance` do rei, na faixa dele, entrega-lhe o que leva, ate o saco
+## do rei encher — como o cacador (Q-111). Devolve quanto entregou (Q-114).
+func hand_over(unidades: UnitSystem, rei: int, alcance: float) -> int:
+	var r := unidades.index_of(rei)
+	if r == NENHUM or not unidades.alive(r):
+		return 0
+	var espaco := unidades.coin_capacities[r] - unidades.carried_coins[r]
+	var entregue := 0
+	for i in unidades.count():
+		if espaco <= 0:
+			break
+		if i == r or not _escudeiro(unidades, i, r):
+			continue
+		if absf(unidades.xs[i] - unidades.xs[r]) > alcance:
+			continue
+		var n := mini(unidades.carried_coins[i], espaco)
+		unidades.carried_coins[i] -= n
+		unidades.carried_coins[r] += n
+		espaco -= n
+		entregue += n
+	return entregue
+
+
 ## Se ha fase seguinte, a condicao de feito esta cumprida e `sementes` chegam.
 func can_evolve(sementes: int) -> bool:
 	if phase >= _dados.phase_count or sementes < _dados.evolve_seed_cost:
@@ -123,6 +152,15 @@ func from_dict(guardado: Dictionary) -> void:
 
 func _params() -> Dictionary:
 	return _dados.phase1_params if phase == PRIMEIRA else _dados.phase2_params
+
+
+func _escudeiro(unidades: UnitSystem, i: int, r: int) -> bool:
+	if not unidades.alive(i) or unidades.owners[i] != unidades.owners[r]:
+		return false
+	if unidades.bands[i] != unidades.bands[r]:
+		return false
+	var dados: UnitData = _tropas.get(unidades.data_ids[i])
+	return dados != null and dados.tags.has(COLHE)
 
 
 func _na_aura(unidades: UnitSystem, i: int, r: int, raio: float) -> bool:

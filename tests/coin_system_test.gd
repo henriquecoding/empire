@@ -180,6 +180,33 @@ func test_uma_pilha_que_nao_cabe_no_saco_nao_se_parte() -> void:
 	assert_int(sistema.collect(0.0, Band.Kind.SURFACE, 5).size()).is_equal(1)
 
 
+## §08, Q-114: o escudeiro apanha moedas caidas e nao as que o rei larga para
+## pagar uma obra ou recrutar. A moeda lembra-se de quem a largou.
+func test_quem_apanha_so_caidas_deixa_as_que_o_rei_largou() -> void:
+	var sistema := _sistema()
+	var estado := _estado()
+	var do_rei := sistema.drop(estado, 0.0, Band.Kind.SURFACE, 1, 0.0, true)
+	var caida := sistema.drop(estado, 0.0, Band.Kind.SURFACE, 1, 0.0)
+	_assentar(sistema)
+	var apanhadas := sistema.collect(0.0, Band.Kind.SURFACE, 5, true)
+	assert_array(Array(apanhadas)).is_equal([caida])
+	# O rei, e quem apanha tudo, continua a poder levar a dele.
+	assert_array(Array(sistema.collect(0.0, Band.Kind.SURFACE, 5))).is_equal([do_rei])
+
+
+func test_um_save_sem_a_coluna_de_quem_largou_repoe_as_moedas_como_caidas() -> void:
+	var sistema := _sistema()
+	var estado := _estado()
+	sistema.drop(estado, 0.0, Band.Kind.SURFACE, 1, 0.0, true)
+	sistema.drop(estado, 0.0, Band.Kind.SURFACE, 1, 0.0)
+	var antigo := sistema.to_dict()
+	antigo.erase(&"from_king")
+	var copia := _sistema()
+	copia.from_dict(antigo)
+	assert_int(copia.from_king.size()).is_equal(copia.count())
+	assert_array(Array(copia.from_king)).is_equal([0, 0])
+
+
 func test_o_save_das_moedas_so_leva_tipos_base() -> void:
 	var sistema := _sistema()
 	var estado := _estado()

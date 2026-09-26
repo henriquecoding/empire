@@ -175,7 +175,7 @@ func step(delta: float) -> void:
 ## afeta a simulacao, por isso e determinista — e o evento sai da §46.
 func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> int:
 	var desvio := RngService.float_range(&"economy", -CoinSystem.DESVIO_MAX, CoinSystem.DESVIO_MAX)
-	var coin_id := coins.drop(state, x, faixa, quanto, desvio)
+	var coin_id := coins.drop(state, x, faixa, quanto, desvio, origem == Verbs.JOGADOR)
 	EventBus.queue(&"coin_dropped", [x, int(faixa), quanto, origem])
 	return coin_id
 

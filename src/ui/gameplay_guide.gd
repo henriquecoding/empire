@@ -34,11 +34,15 @@ static func goal() -> String:
 
 
 ## As tropas que o painel conta: quem e teu e esta vivo, sem o monarca — ele e
-## quem as tem, e "TROPAS 01" com o rei sozinho em campo dizia que havia uma.
+## quem as tem, e "TROPAS 01" com o rei sozinho em campo dizia que havia uma. Nem
+## o escudeiro, que so "se torna tropa de combate" quando a classe evolui (§08).
 static func troops() -> int:
 	var total := 0
 	for i in SimLoop.units.count():
 		if not SimLoop.units.alive(i) or SimLoop.units.ids[i] == SimLoop.king_id:
+			continue
+		var dados := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
+		if dados.tags.has(ClassSystem.COLHE):
 			continue
 		if SimLoop.units.owners[i] != RecruitSystem.SEM_DONO:
 			total += 1

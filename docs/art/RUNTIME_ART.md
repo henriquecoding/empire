@@ -33,7 +33,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `root_berserker` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `mercenary` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
 | `monarch` | 1 | sim | `monarch` | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `squire` | 1 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
+| `squire` | 1 | sim | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
 | `builder` | 1 | sim | `vagrant` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
 | `smith` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `cook` | 2 | sim | `cook` | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
@@ -89,6 +89,7 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 - `archer`: `vagrant` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
 - `spearman`: `vagrant` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
 - `monarch`: `monarch`; faltam `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work`
+- `squire`: `knight` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
 - `builder`: `vagrant` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
 - `cook`: `cook`; faltam `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work`
 

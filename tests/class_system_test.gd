@@ -18,7 +18,7 @@ var rei: int
 func before_test() -> void:
 	estado = GameState.new()
 	unidades = UnitSystem.new()
-	classes = ClassSystem.new(_monarca())
+	classes = ClassSystem.new(_monarca(), SimFactory.by_id(&"units"))
 	rei = unidades.spawn(estado, Registry.entry(&"units", &"monarch"), MEU, 1000.0)
 
 
@@ -133,3 +133,32 @@ func test_o_save_leva_o_que_muda_o_proximo_golpe() -> void:
 	copia.from_dict(classes.to_dict())
 	# Sem watch() depois de carregar: o proximo golpe e igual nos dois.
 	assert_int(copia.soak(unidades, tropa, 4)).is_equal(classes.soak(unidades, tropa, 4))
+
+
+func test_o_escudeiro_entrega_ao_rei_o_que_apanhou_quando_esta_perto() -> void:
+	var dados := Registry.entry(&"units", &"squire") as UnitData
+	var escudeiro := unidades.spawn(estado, dados, MEU, 1000.0 + 20.0)
+	var e := unidades.index_of(escudeiro)
+	var r := unidades.index_of(rei)
+	unidades.carried_coins[e] = 3
+	var antes := unidades.carried_coins[r]
+	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(3)
+	assert_int(unidades.carried_coins[e]).is_equal(0)
+	assert_int(unidades.carried_coins[r]).is_equal(antes + 3)
+	# Longe, fica com elas; e um arqueiro com moedas nao e escudeiro.
+	unidades.carried_coins[e] = 2
+	unidades.xs[e] = LONGE
+	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(0)
+	var arqueiro := unidades.index_of(_tropa(1000.0))
+	unidades.carried_coins[arqueiro] = 2
+	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(0)
+
+
+func test_o_saco_cheio_do_rei_nao_recebe_mais() -> void:
+	var dados := Registry.entry(&"units", &"squire") as UnitData
+	var e := unidades.index_of(unidades.spawn(estado, dados, MEU, 1000.0))
+	var r := unidades.index_of(rei)
+	unidades.carried_coins[r] = unidades.coin_capacities[r] - 1
+	unidades.carried_coins[e] = 4
+	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(1)
+	assert_int(unidades.carried_coins[e]).is_equal(3)

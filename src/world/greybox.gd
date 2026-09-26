@@ -31,6 +31,7 @@ const COZINHA := &"kitchen"
 const CELEIRO := &"granary"
 const TORRE := &"archer_tower"
 const TORRE_ALTA := &"high_tower"
+const ESCUDEIRO := &"squire"
 
 # Posicoes, relativas ao nucleo. Sao autoria de nivel e nao balanceamento: sao a
 # resposta a "onde", e o §21 diz que essa resposta e do segmento.
@@ -220,6 +221,9 @@ static func _gente() -> int:
 	_por_recrutar(&"vagrant", VAGABUNDOS_X)
 	_por_recrutar(&"archer", ARQUEIROS_X)
 	_por_recrutar(&"spearman", LANCEIROS_X)
+	# §08: "Escudeiro acompanha e apanha moedas caidas" — nasce com o Monarca, e
+	# por ultimo: os ids de quem ja la estava nao mudam (os saves e os testes).
+	SimLoop.units.spawn(estado, Registry.entry(&"units", ESCUDEIRO), MEU_IMPERIO, SimLoop.core_x)
 	return rei
 
 
