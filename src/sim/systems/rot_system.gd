@@ -37,6 +37,9 @@ var fortresses: int = 0
 var amargueiros: int = 0
 var named_amargueiros: int = 0
 var refusals: int = 0
+## O lado desta noite, sorteado a tarde e dito no mundo antes do crepusculo (Q-125).
+## Zero e ainda nao dito.
+var announced: int = 0
 
 var _perfil: RotProfile
 var _tabela: Array[CreatureData] = []
@@ -173,6 +176,7 @@ func to_dict() -> Dictionary:
 		&"amargueiros": amargueiros,
 		&"named": named_amargueiros,
 		&"refusals": refusals,
+		&"announced": announced,
 	}
 
 
@@ -183,6 +187,7 @@ func from_dict(d: Dictionary) -> void:
 	amargueiros = d.get(&"amargueiros", amargueiros)
 	named_amargueiros = d.get(&"named", named_amargueiros)
 	refusals = d.get(&"refusals", refusals)
+	announced = d.get(&"announced", announced)
 	_direcao = float(-state.side)
 
 
@@ -198,7 +203,24 @@ func _massa_do_dia() -> float:
 		+ _perfil.mass_per_named_amargueiro * named_amargueiros
 	)
 	var recusas := _perfil.refusal_mass * mini(refusals, RECUSAS_MAX)
-	return base + arvores + minf(recusas, _perfil.refusal_cap)
+	return (base + arvores + minf(recusas, _perfil.refusal_cap)) * rhythm(_dia)
+
+
+## O ritmo da noite (Q-126): de peak_every em peak_every noites uma funda, e a
+## seguinte calma. Nao e sorteio: a noite funda sabe-se de vespera.
+func rhythm(dia: int) -> float:
+	if _perfil.peak_every <= 0 or dia <= 0:
+		return 1.0
+	if dia % _perfil.peak_every == 0:
+		return _perfil.peak_mass_mult
+	if dia > 1 and (dia - 1) % _perfil.peak_every == 0:
+		return _perfil.calm_mass_mult
+	return 1.0
+
+
+## Se a noite deste dia e funda (Q-126).
+func deep(dia: int) -> bool:
+	return rhythm(dia) > 1.0
 
 
 ## A mais cara que cabe e cujo dia minimo ja passou (§51, Q-019). A tabela ja

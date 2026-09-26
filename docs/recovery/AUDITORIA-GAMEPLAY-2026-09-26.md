@@ -1173,3 +1173,19 @@ O cenário fechado do §07/§66 passou a dar o saco cheio ao rei: mede o combate
 Os testes da coluna *Payback* do §06 passaram a pôr o trabalhador no posto e a ganância a zero — a coluna é bruta,
 como o rasto que eles já isolavam. A vistoria voltou a viver 3 dias (o piloto espera a noite na borda do núcleo do
 lado da mancha e, à tarde, prefere muro).
+
+## Seguimento — AUD-03 (Lote 3, a noite legível)
+
+Decisões nas Q-125 a Q-128; ticket `docs/backlog/AUD-03.md`.
+
+| Frente | O que mudou | Prova |
+|---|---|---|
+| P-A a noite não se anunciava | O lado é sorteado ao virar para a tarde e é esse que vem ao crepúsculo (`RotSystem.announced`, no save); o guia da tarde diz «a noite vem de LESTE/OESTE» e a borda do mundo desse lado acende uma candeia (Q-125) | `noite_legivel_test` |
+| P-F todas as noites iguais | De seis em seis noites uma funda (×1,3 da massa) e a seguinte calma (×0,6), em `rot.csv`; o guia avisa a funda na tarde (Q-126) | `noite_legivel_test`, `ROT_BY_DAY.md` |
+| P-G a moeda não tinha uso de noite | Moedas do rei pousadas na mancha, sem destino e fora do prato de uma oferta, são comidas: tiram `sacrifice_mass_per_coin` de massa cada; o saque não conta (Q-127) | `noite_legivel_test` |
+| P-C quem não tinha posto seguia o rei | `Muster`: do crepúsculo à alvorada, quem luta forma na borda do núcleo do lado da noite e o resto recolhe ao núcleo; o escudeiro fica com o rei (Q-128) | `noite_legivel_test` |
+| Legendas | «A mancha engole o sacrifício» e «foi-se embora sem soldo» nas legendas do §26 | `captions_test` |
+
+Efeitos medidos: a vistoria com piloto passou de 3 para **8 dias em 10**; no `dez_dias` o degrau mais fraco passou
+a cair no dia 7 (caía no 2) e a defesa do topo continua a cair no dia 10 — os Cavadores por baixo do muro, que são
+o AUD-04. O som gravado das legendas continua a ser da pasta `audio/`, que este lote não toca.

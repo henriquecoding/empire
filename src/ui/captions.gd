@@ -54,6 +54,9 @@ func _ready() -> void:
 	EventBus.unit_damaged.connect(_no_dano)
 	EventBus.rot_spawned.connect(_na_mancha_nova)
 	EventBus.rot_moved.connect(_na_mancha)
+	# AUD-03: o sacrificio (Q-127) e quem se vai embora por falta de soldo (Q-124).
+	EventBus.rot_fed.connect(_no_sacrificio)
+	EventBus.unit_fled.connect(_na_fuga)
 
 
 ## Mostra uma legenda. A mesma pista outra vez refaz o tempo em vez de somar uma
@@ -108,6 +111,15 @@ func _escrever() -> void:
 	for linha in _linhas:
 		partes.append(tr(linha[0]))
 	text = "\n".join(partes)
+
+
+func _no_sacrificio(_massa: float, _oferta: StringName) -> void:
+	say(&"CAPTION_ROT_FED")
+
+
+func _na_fuga(_unit_id: int, porque: StringName) -> void:
+	if porque == &"upkeep":
+		_na_pista(&"CAPTION_UNIT_LEFT")
 
 
 func _na_pista(chave: StringName) -> void:

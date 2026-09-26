@@ -77,6 +77,7 @@ src/sim/systems/class_system.gd ClassSystem a classe do rei: a aura e a evolucao
 src/sim/systems/coin_target.gd CoinTarget a quem serve uma moeda largada (§02, §55, Q-115)
 src/sim/systems/staffing.gd Staffing      quem esteve no posto na fase que acabou (§06, §52, Q-121)
 src/sim/systems/upkeep_system.gd UpkeepSystem a manutencao do exercito, a alvorada (§06, Q-124)
+src/sim/systems/muster.gd   Muster        a formacao da noite de quem nao tem posto (§05, Q-128)
 src/sim/systems/repair_work.gd RepairWork reparar com a moeda fisica (§55, Q-108)
 src/sim/systems/training_system.gd TrainingSystem a Casa de Treino: trabalhador -> oficio (§09, §10)
 src/sim/systems/crown_system.gd CrownSystem os impulsos reais (§15, §57)

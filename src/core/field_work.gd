@@ -23,11 +23,19 @@ var _economia: EconomySystem
 var _moral: MoraleSystem
 var _dia := 0
 var _rei := UnitSystem.NENHUM
+var _noite: NightWatch
+var _nucleo := Vector2.ZERO
+var _perfis: Dictionary
 
 
 func _init(
-	economia: EconomySystem = null, moral: MoraleSystem = null, combate: CombatSystem = null
+	economia: EconomySystem = null,
+	moral: MoraleSystem = null,
+	combate: CombatSystem = null,
+	noite: NightWatch = null
 ) -> void:
+	_noite = noite
+	_perfis = SimFactory.by_id(&"units")
 	hunting = HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
 	)
@@ -107,9 +115,15 @@ func _no_nucleo(largada: Dictionary, obras: BuildSystem) -> bool:
 	return false
 
 
-## Passo 4: quem caca e quem treina escrevem alvo por cima de seguir o rei.
+## Passo 4: quem caca, quem se forma para a noite (Q-128) e quem treina escrevem
+## alvo por cima de seguir o rei — por esta ordem, e o treino ganha.
 func plan(unidades: UnitSystem, luz: bool) -> void:
 	hunting.plan(unidades, luz)
+	if not luz and _noite != null:
+		var rot := _noite.rot
+		var lado := rot.state.side if rot.active() else rot.announced
+		var passo := SimFactory.curve().follow_spacing_px
+		Muster.plan(unidades, _perfis, _rei, _nucleo, lado, passo)
 	training.plan(unidades)
 
 
@@ -128,6 +142,7 @@ func resolve(
 	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
 	_rei = rei
+	_nucleo = _do_nucleo(obras)
 	obras.wall_defense = training.wall_defense(unidades)
 	classes.watch(unidades, rei, not luz)
 	conversion.bind(unidades)
@@ -190,3 +205,10 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 		var x := camps[(dia + k) % camps.size()]
 		var novo := unidades.spawn(estado, vagabundo, RecruitSystem.SEM_DONO, x)
 		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])
+
+
+func _do_nucleo(obras: BuildSystem) -> Vector2:
+	for vaga in obras.slots:
+		if vaga.kind == BuildSlot.NUCLEO:
+			return Vector2(vaga.x, vaga.width * BuildSystem.METADE)
+	return _nucleo

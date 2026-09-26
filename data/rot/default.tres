@@ -36,3 +36,6 @@ union_debt_max = 3
 union_peoples_released = 4
 dominion_debt_min = 12
 dominion_peoples_kept = 4
+peak_every = 6
+peak_mass_mult = 1.3
+calm_mass_mult = 0.6

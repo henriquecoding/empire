@@ -90,3 +90,10 @@ extends Resource
 @export var union_peoples_released: int = 0
 @export var dominion_debt_min: int = 0
 @export var dominion_peoples_kept: int = 0
+
+@export_group("Auditoria de gameplay — AUD-03")
+## O ritmo da noite (Q-126): de `peak_every` em `peak_every` noites, uma funda
+## (massa × peak_mass_mult), e a seguinte calma (× calm_mass_mult). Zero desliga.
+@export var peak_every: int = 0
+@export var peak_mass_mult: float = 0.0
+@export var calm_mass_mult: float = 0.0

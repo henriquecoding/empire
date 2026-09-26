@@ -436,6 +436,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `union_peoples_released` | int | v6 · os epilogos |  |
 | `dominion_debt_min` | int | v6 · os epilogos |  |
 | `dominion_peoples_kept` | int | v6 · os epilogos |  |
+| `peak_every` | int | Auditoria de gameplay — AUD-03 |  |
+| `peak_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
+| `calm_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`
 

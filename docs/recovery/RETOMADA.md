@@ -19,6 +19,7 @@ a cada construção._
 | v6 + circuito 2 | 26/09/2026 | A caça reparte-se pelo dia e o caçador entrega-a ao rei (Q-106, Q-111); o celeiro do §06 vende o grão a +50% ou, com o cozinheiro formado na cozinha, dá vida às tropas (Q-112). Secção 26 do relatório ASTRA. |
 | v6 + decisões | 26/09/2026 | O que faltava do dossiê e dá decisões: reparar com moeda (§55, Q-108), a Casa de Treino a formar construtores (§09, §10, Q-109), três dos seis impulsos reais pela roda do rei (§15, Q-110), o subsolo dos Enramados desenhado como lugar, e o chapéu e a arma nos corpos originais. Secção 25 do relatório ASTRA. |
 | v6 + economia | 26/09/2026 | O AUD-02: a produção da partida cresce ao `income_growth`, paga a ganância do rei (sorteada no perfil equilibrado) e só rende inteira com o trabalhador no posto; a manutenção do §06 paga-se na alvorada e, sem moedas, uma tropa vai-se embora; um vagabundo novo por alvorada num acampamento. O dia da asfixia calculado sobre as obras do greybox cai no 10. Q-121 a Q-124. |
+| v6 + noite | 26/09/2026 | O AUD-03: a tarde diz de que lado vem a noite (e a borda do mundo acende-se desse lado), de seis em seis noites uma funda e a seguir uma calma, as moedas do rei largadas na mancha tiram-lhe massa, e quem não tem posto forma-se no núcleo — quem luta na borda do lado da noite. A vistoria vive 8 dias em 10. Q-125 a Q-128. |
 | v6 + auditoria | 26/09/2026 | A auditoria de gameplay (`AUDITORIA-GAMEPLAY-2026-09-26.md`) e o AUD-01: a moeda passa a ter destino resolvido no gesto (o celeiro já não troca de modo sozinho e a moeda do 0:20 recruta), retomar não repete a fase, a torre dá certeza a quem está nela, o muro a subir de degrau continua a travar, a morte do rei é derrota, grava-se ao pausar e ao fechar de dia. Q-115 a Q-120. |
 | v6 + XIII | 14/09/2026 | A Parte XIII em dados: quatro tabelas novas, seis alargadas, quatro `Resource` novos, catorze testes de design, nove ADRs, 19 perguntas registadas, 53 tickets, e o texto: 64 chaves de conteúdo e os doze diários da §79 escritos. |
 
@@ -28,7 +29,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 778 casos, 772 a passar, 6 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 786 casos, 780 a passar, 6 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save e as preferências nunca usam `load()`),
@@ -72,7 +73,7 @@ a cada construção._
 | `docs/adr/` | 25 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros. |
 | `docs/backlog/` | 86 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
-| `data/i18n/strings.csv` | 340 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
+| `data/i18n/strings.csv` | 347 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
 
 ## A regra que continua a valer

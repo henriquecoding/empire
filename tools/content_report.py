@@ -94,6 +94,18 @@ def rot_md():
     ma, mn = float(rot["mass_per_amargueiro"]), float(rot["mass_per_named_amargueiro"])
     mr, mrw, mrc = float(rot["refusal_mass"]), int(rot["refusal_window_days"]), float(rot["refusal_cap"])
     lo, hi = [float(x) for x in rot["summon_interval"].split("|")]
+    pe = int(rot.get("peak_every") or 0)
+    pm, cm = float(rot.get("peak_mass_mult") or 1), float(rot.get("calm_mass_mult") or 1)
+
+    def ritmo(d):
+        # Q-126: a noite funda de pe em pe noites, e a calma a seguir.
+        if pe <= 0:
+            return 1.0, ""
+        if d % pe == 0:
+            return pm, " (funda)"
+        if d > 1 and (d - 1) % pe == 0:
+            return cm, " (calma)"
+        return 1.0, ""
     active = float(clock["dusk"]) + float(clock["night"])
     out = ["# A Podridão, dia a dia\n\n", HEADER,
            "O dossiê não tem ondas: A Podridão é uma entidade com massa (§05, §51), e a §70 acabou com o "
@@ -111,11 +123,14 @@ def rot_md():
            "- Invoca a cada %g–%g s enquanto está ativa: crepúsculo + noite = %g s → **%d a %d invocações** no máximo\n" % (
                lo, hi, active, math.floor(active / hi), math.floor(active / lo)),
            "- Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou\n",
-           "- Lado duplo a partir do dia %s\n\n" % rot["two_sided_from_day"],
+           "- Lado duplo a partir do dia %s\n" % rot["two_sided_from_day"],
+           "- Ritmo (Q-126): de %d em %d noites uma **funda** (massa × %g), e a seguinte **calma** (× %g). "
+           "O lado de cada noite diz-se à tarde (Q-125)\n\n" % (pe, pe, pm, cm),
            "| dia | velocidade px/s | massa (0 fort.) | massa (2 fort.) | criatura mais cara disponível | "
            "invocações até esgotar (0 fort.) | lados |\n|---|---|---|---|---|---|---|\n"]
     for d in range(1, 31):
-        mass = mb + md * d
+        mult, nota = ritmo(d)
+        mass = (mb + md * d) * mult
         avail = [c for c in creatures if int(c["min_day"]) <= d]
         top = max(avail, key=lambda c: int(c["mass_cost"]))
         m, n = mass, 0
@@ -126,8 +141,9 @@ def rot_md():
             m -= int(max(fit, key=lambda c: int(c["mass_cost"]))["mass_cost"])
             n += 1
         sides = "2" if d >= int(rot["two_sided_from_day"]) else "1"
-        out.append("| %d | %.1f | %g | %g | %s (%s) | %d | %s |\n" % (
-            d, sb + sd * d, mass, mass + 2 * mf, top["id"], top["mass_cost"], n, sides))
+        out.append("| %d%s | %.1f | %g | %g | %s (%s) | %d | %s |\n" % (
+            d, nota, sb + sd * d, round(mass, 1), round(mass + 2 * mf * mult, 1), top["id"],
+            top["mass_cost"], n, sides))
     out.append("\n**Leitura:** a coluna \"invocações até esgotar\" é o que a massa paga; o tempo ativo limita-a "
                "a %d–%d. Quando a primeira passa a segunda, sobra massa ao amanhecer — a noite deixa de ser limitada "
                "pela massa e passa a ser limitada pelo relógio. Ver Q-017 em docs/QUESTIONS.md.\n" % (

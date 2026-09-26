@@ -11,6 +11,12 @@
 class_name RotView
 extends RefCounted
 
+## O aviso da tarde: que fraccao da candeia se ve no horizonte, e com que alfa.
+## Geometria de greybox, como o resto deste ficheiro — vai-se com a arte.
+const AVISO := 0.35
+const AVISO_FUNDO := 0.6
+const AVISO_ALFA := 0.5
+
 
 ## O rasto, a candeia e a mancha, por esta ordem — que e a ordem em que se veem:
 ## por onde ela passou, a luz que ela traz, e ela por cima da luz.
@@ -24,6 +30,7 @@ static func draw_on(
 	canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int, luz: Lighting
 ) -> void:
 	if not rot.active():
+		_aviso(canvas, rot, perfil, dia)
 		return
 	_rasto(canvas, rot, luz)
 	# A candeia NAO leva ambiente: e a luz, e o §80 diz que ela e o assunto.
@@ -76,3 +83,17 @@ static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia
 	var celula := perfil.lantern_dither_px
 	for canto in WorldLight.dither(centro, raio, celula):
 		canvas.draw_rect(Rect2(canto, Vector2(celula, celula)), cores[0])
+
+
+## A tarde diz de que lado vem a noite (Q-125): a candeia acende-se no horizonte
+## dessa borda antes de a mancha nascer — ve-se de longe e nao diz um numero. Numa
+## noite funda (Q-126) a luz e maior.
+static func _aviso(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int) -> void:
+	if rot.announced == 0:
+		return
+	var x := SimLoop.world_width if rot.announced > 0 else 0.0
+	var raio := perfil.lantern_radius_base * (AVISO_FUNDO if rot.deep(dia) else AVISO)
+	var cores := WorldLight.stops(perfil)
+	for i in cores.size():
+		cores[i] = Color(cores[i], cores[i].a * AVISO_ALFA)
+	lamp(canvas, Vector2(x, float(Band.HORIZON)), raio, cores)

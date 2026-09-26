@@ -9,6 +9,7 @@ Depende   AUD-01
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     O lado da noite anuncia-se à tarde; a curva tem respiração; quem não tem posto recolhe ao núcleo ao crepúsculo; os acontecimentos da noite têm legenda
 Fora      Gravar som (a pasta audio/ é de outra pessoa).
-Estado    por fazer
+Estado    feito — o lado dito à tarde, o ritmo, o sacrifício de moedas, a formação da noite e as
+          legendas; som gravado continua a ser da pasta audio/
 Horas     12
 ```
