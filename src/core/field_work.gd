@@ -15,6 +15,8 @@ var conversion: ConversionSystem
 var classes: ClassSystem
 ## A manutencao do exercito, paga a alvorada (§06, Q-124).
 var upkeep: UpkeepSystem
+## O herdeiro: forma-se a alvorada e assume a coroa na seguinte a morte do rei (Q-133).
+var succession: Succession
 ## Os acampamentos da regiao, de onde chega um vagabundo por alvorada (Q-122).
 ## Escritos por quem monta o mundo.
 var camps: PackedFloat32Array = PackedFloat32Array()
@@ -26,6 +28,7 @@ var _rei := UnitSystem.NENHUM
 var _noite: NightWatch
 var _nucleo := Vector2.ZERO
 var _perfis: Dictionary
+var _obras: BuildSystem
 
 
 func _init(
@@ -45,6 +48,8 @@ func _init(
 	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
 	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
 	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"))
+	var curva := SimFactory.curve()
+	succession = Succession.new(curva.heir_training_days, curva.heir_cost_per_day)
 	if combate != null:
 		combate.guard = classes
 	_economia = economia
@@ -142,6 +147,7 @@ func resolve(
 	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
 	_rei = rei
+	_obras = obras
 	_nucleo = _do_nucleo(obras)
 	obras.wall_defense = training.wall_defense(unidades)
 	classes.watch(unidades, rei, not luz)
@@ -171,6 +177,7 @@ func to_dict() -> Dictionary:
 		&"conversion": conversion.to_dict(),
 		&"classes": classes.to_dict(),
 		&"upkeep": upkeep.to_dict(),
+		&"succession": succession.to_dict(),
 	}
 
 
@@ -181,12 +188,18 @@ func from_dict(mundo: Dictionary) -> void:
 	conversion.from_dict(mundo.get(&"conversion", {}))
 	classes.from_dict(mundo.get(&"classes", {}))
 	upkeep.from_dict(mundo.get(&"upkeep", {}))
+	succession.from_dict(mundo.get(&"succession", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 
 ## A alvorada de um dia que nao e o primeiro: a manutencao do dia que acabou, e o
 ## vagabundo novo no acampamento do lado do dia (Q-122, Q-124).
 func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
+	if _obras != null:
+		_coroar(unidades, estado)
+		var treino := succession.dawn(_obras, unidades, _rei)
+		if treino > 0:
+			EventBus.queue(&"coin_spent", [treino, &"heir"])
 	if _economia != null:
 		for e in upkeep.dawn(unidades, _rei, _economia):
 			if e[UpkeepSystem.CHAVE] == UpkeepSystem.EV_PAGA:
@@ -205,6 +218,25 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 		var x := camps[(dia + k) % camps.size()]
 		var novo := unidades.spawn(estado, vagabundo, RecruitSystem.SEM_DONO, x)
 		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])
+
+
+## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce na casa do
+## herdeiro, sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
+func _coroar(unidades: UnitSystem, estado: GameState) -> void:
+	var i := unidades.index_of(_rei)
+	if _rei == UnitSystem.NENHUM or (i != UnitSystem.NENHUM and unidades.healths[i] > 0):
+		return
+	var monarca := Registry.entry(&"units", &"monarch") as UnitData
+	var novo := succession.crown(estado, unidades, _obras, monarca)
+	if novo == UnitSystem.NENHUM:
+		return
+	var x := unidades.xs[unidades.index_of(novo)]
+	EventBus.queue(&"unit_spawned", [novo, monarca.id, x, int(Band.Kind.SURFACE)])
+	EventBus.queue(&"king_died", [succession.owner, novo])
+	EventBus.queue(&"succession_started", [novo])
+	SimFactory.draw_greed(estado)
+	SimLoop.king_id = novo  # quem manda passa a ser ele: o Verbo, a camara, o Defeat
+	_rei = novo
 
 
 func _do_nucleo(obras: BuildSystem) -> Vector2:

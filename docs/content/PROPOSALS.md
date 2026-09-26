@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 194 | 97 | 291 |
-| Fases 3–8 | 229 | 101 | 330 |
+| Fases 0–2 (fatia vertical) | 196 | 100 | 296 |
+| Fases 3–8 | 227 | 98 | 325 |
 | Total | 423 | 198 | 621 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 194
+## 1 · Fatia vertical — balanceamento — 196
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -72,6 +72,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `forge` | `max_health` | 96 | 2 | Forja (oficina do ferreiro) ≠ Fundição (casa de conversão do minério) — ver Q-008. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `kitchen` | `cost` | 10 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `kitchen` | `max_health` | 80 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `heir_house` | `cost` | 20 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `heir_house` | `max_health` | 160 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `farm` | `max_health` | 32 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `fishery` | `max_health` | 48 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `henhouse` | `max_health` | 64 | 1 | 'Galinhas roubáveis à noite' (§06). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
@@ -211,7 +213,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | camera | `default` | `free_speed_px_s` | 420 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros cinco são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. edge_pan_px 16 é a margem do ecrã onde o rato empurra a câmara livre (§24: «Q · Z ou rato na margem»), em px de ecrã: 1/80 da largura de 1280, a faixa que se acerta sem olhar em ecrã inteiro e que o rato atravessa sem parar a caminho do botão direito. Zero desliga. Ver Q-087. |
 | camera | `default` | `edge_pan_px` | 16 | 0 | Q-057: o dossiê dá UM número de câmara — os 2 s do regresso (§24). Os outros cinco são propostas. lookahead_px 120 é 3/16 da meia-tela (640), o que deixa ver cerca de dois terços do ecrã à frente de quem anda. lookahead_seconds 0,6 é alto de propósito: uma antecipação que salta ao primeiro passo para trás dá enjoo. follow_seconds 0,18 cola a câmara ao alvo e deixa a folga para a antecipação. free_speed_px_s 420 atravessa um segmento de 640 px em pouco mais de um segundo e meio. Todos se afinam no primeiro playtest — e nenhum é lido por nada da simulação. edge_pan_px 16 é a margem do ecrã onde o rato empurra a câmara livre (§24: «Q · Z ou rato na margem»), em px de ecrã: 1/80 da largura de 1280, a faixa que se acerta sem olhar em ecrã inteiro e que o rato atravessa sem parar a caminho do botão direito. Zero desliga. Ver Q-087. |
 
-## 2 · Fatia vertical — apresentação e estrutura — 97
+## 2 · Fatia vertical — apresentação e estrutura — 100
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -256,6 +258,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `kitchen` | `width_px` | 120 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `kitchen` | `shadow_width` | 120 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `kitchen` | `job_slots` | 1 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `heir_house` | `build_work` | 40 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `heir_house` | `width_px` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `heir_house` | `shadow_width` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `farm` | `build_work` | 8 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `farm` | `width_px` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `farm` | `shadow_width` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
@@ -313,7 +318,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 330
+## 3 · Fases 3 a 8 — 325
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -423,11 +428,6 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `embassy` | `width_px` | 120 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `embassy` | `shadow_width` | 120 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `embassy` | `job_slots` | 1 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `heir_house` | `cost` | 20 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `heir_house` | `max_health` | 160 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `heir_house` | `build_work` | 40 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `heir_house` | `width_px` | 120 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `heir_house` | `shadow_width` | 120 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `root_sanctuary` | `cost` | 25 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `root_sanctuary` | `max_health` | 200 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `root_sanctuary` | `build_work` | 50 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |

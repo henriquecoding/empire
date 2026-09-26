@@ -147,6 +147,11 @@ static func biome_of_segment(segmento: StringName) -> StringName:
 ## capitulos de uma semente nao mudam por a ganancia ter chegado depois.
 static func draw_campaign(estado: GameState) -> void:
 	estado.chapters = chapter_plan(campaign_regions())
+	draw_greed(estado)
+
+
+## A ganancia do rei, do perfil do inicio: no comeco e em cada sucessao (§15).
+static func draw_greed(estado: GameState) -> void:
 	var perfil := Registry.entry(&"crown/greed", curve().start_greed_profile)
 	var gama: Vector2i = (perfil as GreedProfile).greed_range
 	estado.greed = RngService.int_range(MUNDO, gama.x, gama.y)

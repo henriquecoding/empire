@@ -79,6 +79,8 @@ src/sim/systems/staffing.gd Staffing      quem esteve no posto na fase que acabo
 src/sim/systems/upkeep_system.gd UpkeepSystem a manutencao do exercito, a alvorada (§06, Q-124)
 src/sim/systems/muster.gd   Muster        a formacao da noite de quem nao tem posto (§05, Q-128)
 src/sim/systems/thieves.gd  Thieves       o Alado rouba galinhas e leva-as a alvorada (§06, §07, Q-129)
+src/sim/systems/succession.gd Succession  o herdeiro: treino na casa e a coroa a alvorada (§15, §16, Q-133)
+src/sim/systems/legacy.gd   Legacy        o que fica quando se perde: decay em vez de reset (§16, Q-134)
 src/sim/systems/repair_work.gd RepairWork reparar com a moeda fisica (§55, Q-108)
 src/sim/systems/training_system.gd TrainingSystem a Casa de Treino: trabalhador -> oficio (§09, §10)
 src/sim/systems/crown_system.gd CrownSystem os impulsos reais (§15, §57)

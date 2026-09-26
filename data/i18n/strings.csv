@@ -612,3 +612,13 @@ GUIDE_CLIMB,"SOBE ANTES DA NOITE
 O Cavador passa por baixo e lá em cima precisam de ti","CLIMB BEFORE NIGHTFALL
 The Burrower comes from below and you are needed above",guia contextual de jogo: o rei no subsolo à tarde (P-I),160,AUD-04
 CAPTION_CHICKENS_STOLEN,[Levaram galinhas],[Chickens taken],legenda de som (§26); o Alado que chegou vivo à alvorada (Q-129),32,AUD-04
+UI_LEGACY,"Fica: {slots} obras, {seeds} Sementes Reais, {found} segredos","Kept: {slots} buildings, {seeds} Royal Seeds, {found} secrets",derrota (§16): o que o jogo novo herda (Q-134),64,AUD-05
+GUIDE_HEIR,"O REI CAIU
+O herdeiro assume a coroa ao amanhecer","THE KING HAS FALLEN
+The heir takes the crown at dawn",guia contextual de jogo: a sucessão (§16),160,AUD-05 (Q-133)
+CONTEXT_HEIR,"{name} · herdeiro {days}/{total} dias
+{cost} moedas do teu saco a cada alvorada","{name} · heir {days}/{total} days
+{cost} coins from your purse each dawn",guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
+CONTEXT_HEIR_READY,"{name} · herdeiro formado
+Se o rei cair, ele assume ao amanhecer","{name} · heir trained
+If the king falls, the heir rules at dawn",guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
