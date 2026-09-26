@@ -19,6 +19,9 @@ const TREMOR_S := 0.25
 const MEIO := 0.5
 ## `godot --path . -- --novo` comeca uma partida do zero mesmo havendo save.
 const NOVO := "--novo"
+## `-- --semente 42` fixa a semente de um jogo novo. Uma captura que nao a fixa
+## nao se repete: a semente por omissao e o relogio (planejamento 26/09, §8).
+const SEMENTE := "--semente"
 
 ## Um jogo novo pedido de dentro do jogo, que sobrevive ao recarregar da cena: o
 ## `--novo` da linha de comandos, dito pelo botao da derrota (GB-16).
@@ -73,7 +76,15 @@ func _process(delta: float) -> void:
 ## A semente da partida. O §42 manda mostra-la no ecra e deixar copiar — o
 ## Inspector fa-lo — e e o melhor instrumento de depuracao que ha de graca.
 func _semente() -> int:
-	return Time.get_unix_time_from_system() as int
+	return seed_from(OS.get_cmdline_user_args(), Time.get_unix_time_from_system() as int)
+
+
+## A semente pedida na linha de comandos, ou `omissao` se nao ha uma valida.
+static func seed_from(args: PackedStringArray, omissao: int) -> int:
+	var i := args.find(SEMENTE)
+	if i >= 0 and i + 1 < args.size() and args[i + 1].is_valid_int():
+		return args[i + 1].to_int()
+	return omissao
 
 
 ## Retoma o autosave mais recente, se houver (ADR 0005: a boot carrega o save e

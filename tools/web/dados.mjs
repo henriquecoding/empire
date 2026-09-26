@@ -12,9 +12,10 @@
 // Tudo o que não se consegue ler chumba a construção, com o nome do ficheiro:
 // uma página com um buraco é pior do que nenhuma.
 
-import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
+import { join, relative, sep } from "node:path";
 import { execSync } from "node:child_process";
+import { createHash } from "node:crypto";
 
 const falha = (msg) => {
   throw new Error(`dados: ${msg}`);
@@ -258,6 +259,34 @@ function linguasDoJogo(raiz) {
   return cab.filter((c) => c && !c.startsWith("_") && c !== "keys");
 }
 
+// A impressão dos ficheiros de que o jogo depende para se ver — a mesma conta do
+// aparencia() do tools/web/capturas.py, que a grava na ficha das imagens. Se a
+// de agora diferir, as imagens são de um jogo que já não é o publicado.
+const APARENCIA_PASTAS = ["src", "scenes", "art/export", "shaders", "data"];
+const APARENCIA_TIPOS = [".gd", ".tscn", ".tres", ".gdshader", ".png", ".json", ".csv", ".godot"];
+
+function ficheirosEm(pasta) {
+  if (!existsSync(pasta)) return [];
+  return readdirSync(pasta, { withFileTypes: true }).flatMap((e) => {
+    const caminho = join(pasta, e.name);
+    return e.isDirectory() ? ficheirosEm(caminho) : [caminho];
+  });
+}
+
+export function aparencia(raiz) {
+  const ficheiros = [join(raiz, "project.godot")];
+  for (const pasta of APARENCIA_PASTAS) {
+    ficheiros.push(...ficheirosEm(join(raiz, pasta)).filter((f) => APARENCIA_TIPOS.some((t) => f.endsWith(t)) && statSync(f).isFile()));
+  }
+  const caminhos = ficheiros.map((f) => relative(raiz, f).split(sep).join("/")).sort();
+  const total = createHash("sha256");
+  for (const c of caminhos) {
+    const conteudo = createHash("sha256").update(readFileSync(join(raiz, c))).digest("hex");
+    total.update(`${c}\0${conteudo}\n`);
+  }
+  return total.digest("hex");
+}
+
 /** O repositório inteiro, lido uma vez. */
 export function ler(raiz) {
   const v = JSON.parse(readFileSync(join(raiz, "docs/recovery/validation.json"), "utf8"));
@@ -273,6 +302,7 @@ export function ler(raiz) {
     roteiro: roteiro(raiz),
     tickets: tickets(raiz),
     capturas: JSON.parse(readFileSync(capturas, "utf8")),
+    aparencia: aparencia(raiz),
     linguas: linguasDoJogo(raiz),
     contas: {
       testes: v.gdunit_discovered, adrs: v.adrs, seccoes: v.spec_sections, tabelas: v.csv_tables,

@@ -131,6 +131,24 @@ function nomeFase(t, f) {
   return t.lingua === "pt-PT" ? f.nome : t.dia.fases[f.id].nome;
 }
 
+// De onde vêm as imagens: o commit e o dia em que foram tiradas. E, se o que o
+// jogo mostra mudou desde então (a impressão dos ficheiros de apresentação já
+// não é a da ficha), o aviso — nenhuma imagem antiga passa pelo ecrã de hoje.
+function proveniencia(t, d, texto, html = true) {
+  const cap = d.capturas;
+  const sha7 = cap.commit.slice(0, 7);
+  const data = new Intl.DateTimeFormat(t.lingua, { dateStyle: "long", timeZone: "UTC" })
+    .format(new Date(`${cap.tiradas}T00:00:00Z`));
+  const commit = html ? `<a href="${d.repo}/commit/${cap.commit}"><code>${sha7}</code></a>` : sha7;
+  return fmt(texto, { sha7: commit, data });
+}
+
+function antigas(t, d) {
+  if (d.capturas.aparencia === d.aparencia) return "";
+  const publicado = `<a href="${d.repo}/commit/${d.sha}"><code>${d.sha.slice(0, 7)}</code></a>`;
+  return ` <strong>${fmt(t.abertura.antigas, { publicado })}</strong>`;
+}
+
 function abertura({ t, d, v, mb }) {
   const a = t.abertura;
   const cap = d.capturas;
@@ -174,7 +192,7 @@ function abertura({ t, d, v, mb }) {
         <div class="fases-palco" id="fita-palco" data-rotulo="${esc(t.dia.rotulo)}"><ol class="fases" aria-hidden="true">${fases}</ol><i class="agulha" aria-hidden="true"></i></div>
         <p class="agora" id="agora" aria-hidden="true">${esc(fmt(a.agora, { dia: 1, fase: nomeFase(t, inicial) }))}</p>
       </div>
-      <figcaption>${fmt(a.legenda, { sha7: `<a href="${d.repo}/commit/${cap.commit}"><code>${cap.commit.slice(0, 7)}</code></a>` })}</figcaption>
+      <figcaption>${proveniencia(t, d, a.legenda)}${antigas(t, d)}</figcaption>
     </div>
   </figure>
   <div class="solo" aria-hidden="true"></div>
@@ -356,8 +374,8 @@ function controlos({ t, d }) {
           <p class="fonte">${s.fonte}</p>
         </div>
         <figure class="ecra">
-          <div class="moldura"><img src="/img/ecra.webp" width="${d.capturas.ecra[0]}" height="${d.capturas.ecra[1]}" loading="lazy" decoding="async" alt="${esc(s.ecra)}"></div>
-          <figcaption>${s.ecra}</figcaption>
+          <div class="moldura"><img src="/img/ecra.webp" width="${d.capturas.ecra[0]}" height="${d.capturas.ecra[1]}" loading="lazy" decoding="async" alt="${esc(proveniencia(t, d, s.ecra, false))}"></div>
+          <figcaption>${proveniencia(t, d, s.ecra)}${antigas(t, d)}</figcaption>
         </figure>
       </div>
     </div>

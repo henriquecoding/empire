@@ -46,7 +46,8 @@ export const TEXTOS = {
       agora: "Dia {dia} · {fase}",
       alt: "O castelo-árvore dos Enramados na fase «{fase}», fotografado pelo próprio jogo.",
       alt_noite: "O castelo-árvore dos Enramados à noite, com a candeia da Podridão a chegar — três anéis de luz cor de brasa.",
-      legenda: "Seis fotografias da build, no mesmo segmento, da alvorada à noite — tiradas pelo próprio jogo no commit {sha7}. Os painéis do greybox ficaram fora do recorte.",
+      legenda: "Seis fotografias da build, no mesmo segmento, da alvorada à noite — tiradas pelo próprio jogo no commit {sha7}, a {data}. Os painéis do greybox ficaram fora do recorte.",
+      antigas: "O jogo publicado ({publicado}) já não se vê assim: estas imagens são anteriores a ele e voltam a ser tiradas depois da próxima revisão visual.",
     },
     pilares: {
       n: "§04 · O que é",
@@ -125,7 +126,7 @@ export const TEXTOS = {
         { de: ["pause"], t: "Pausa e opções" },
       ],
       ou: "ou",
-      ecra: "O ecrã tal como está hoje, com os instrumentos do greybox: formas lisas primeiro, arte depois (§22).",
+      ecra: "O ecrã no commit {sha7}, a {data}, com os instrumentos do greybox.",
       fonte: "Lido do mapa de entrada do project.godot em cada publicação.",
     },
     estado: {
@@ -220,7 +221,8 @@ export const TEXTOS = {
       agora: "Day {dia} · {fase}",
       alt: "The Enramados' tree-castle during {fase}, captured by the game itself.",
       alt_noite: "The Enramados' tree-castle at night, with the Rot's lantern closing in — three rings of ember-colored light.",
-      legenda: "Six captures of the build, on the same segment, from dawn to night — taken by the game itself at commit {sha7}. The greybox panels were cropped out.",
+      legenda: "Six captures of the build, on the same segment, from dawn to night — taken by the game itself at commit {sha7}, on {data}. The greybox panels were cropped out.",
+      antigas: "The published game ({publicado}) no longer looks like this: these images predate it and will be retaken after the next visual review.",
     },
     pilares: {
       n: "§04 · What it is",
@@ -313,7 +315,7 @@ export const TEXTOS = {
         { de: ["pause"], t: "Pause and options" },
       ],
       ou: "or",
-      ecra: "The screen as it is today, with the greybox instruments: flat shapes first, art later (§22).",
+      ecra: "The screen at commit {sha7}, on {data}, with the greybox instruments.",
       fonte: "Read from project.godot's input map on every publish.",
     },
     estado: {
