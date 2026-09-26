@@ -24,14 +24,12 @@ const ESTICAR := {"canvas_items": 1, "viewport": 2}
 const ESCALA := {"fractional": 0, "integer": 1}
 const FILTRO := {"nearest": 0, "linear": 1}
 const FAIXAS := {"surface": Band.Kind.SURFACE, "underground": Band.Kind.UNDERGROUND}
+const Obras := preload("res://tools/captura_obras.gd")
 
 var _restam: int = 0
 var _saida: String = SAIDA
 var _preparacao: PackedStringArray = PackedStringArray()
-## Obras preparadas "a trabalhar": o progresso sobe um pouco a cada frame, que e
-## o que o SiteMarks le como trabalho. Sem construtor presente o tick nao mexe
-## nelas, e a fotografia de uma obra em curso mostrava sempre uma obra parada.
-var _a_trabalhar: Array[BuildSlot] = []
+var _obras := Obras.new()
 
 
 func _ready() -> void:
@@ -48,59 +46,7 @@ func _ready() -> void:
 	# custava 340 segundos de espera por causa das seis fases do §48.
 	_avancar(float(args.get("avancar", 0.0)))
 	_pousar_o_rei(args)
-	_preparar_obras(String(args.get("obras", "")))
-
-
-## `--obras "training_house=paying,farm#1=ruin"` poe obras num ponto do SiteStage
-## (planejamento 26/09, lote 3 e §7: "estados preparados rotulados"). `#n` e a
-## n-esima obra desse tipo, pela ordem do Greybox. Preparado, e a ficha di-lo.
-func _preparar_obras(pedido: String) -> void:
-	for par in pedido.split(",", false):
-		var partes := par.split("=")
-		var alvo := partes[0].split("#")
-		var vaga := _obra(StringName(alvo[0]), int(alvo[1]) if alvo.size() > 1 else 0)
-		if vaga == null or partes.size() < 2:
-			push_error("captura: obra %s nao existe nesta regiao" % par)
-			continue
-		_preparar(vaga, partes[1])
-		_preparacao.append("obra %s em x=%d: %s" % [partes[0], int(vaga.x), partes[1]])
-
-
-func _obra(tipo: StringName, n: int) -> BuildSlot:
-	for vaga in SimLoop.builds.slots:
-		if vaga.kind == tipo:
-			if n == 0:
-				return vaga
-			n -= 1
-	return null
-
-
-func _preparar(vaga: BuildSlot, etapa: String) -> void:
-	var de_pe := etapa in ["operating", "damaged", "mending", "ruin"]
-	vaga.level = 1 if de_pe else 0
-	vaga.state = BuildSlot.State.EMPTY
-	vaga.paid = 0
-	vaga.progress = 0.0
-	vaga.mending = false
-	vaga.health = vaga.max_health()
-	match etapa:
-		"paying":
-			vaga.paid = maxi(1, vaga.next_cost() / 2)
-		"waiting", "working":
-			vaga.state = BuildSlot.State.SCAFFOLD
-			vaga.progress = vaga.works[0] * (0.3 if etapa == "waiting" else 0.6)
-		"operating":
-			vaga.state = BuildSlot.State.DONE
-		"damaged", "mending":
-			vaga.state = BuildSlot.State.DAMAGED
-			vaga.health = int(vaga.max_health() * (0.4 if etapa == "damaged" else 0.6))
-			vaga.mending = etapa == "mending"
-		"ruin":
-			vaga.state = BuildSlot.State.RUIN
-			vaga.health = 0
-			vaga.paid = maxi(1, vaga.repair_cost() / 2)
-	if etapa in ["working", "mending"]:
-		_a_trabalhar.append(vaga)
+	_preparacao.append_array(_obras.prepare(String(args.get("obras", ""))))
 
 
 ## `--esticar`, `--escala` e `--filtro` trocam o modo de ecra so nesta
@@ -143,8 +89,7 @@ func _pousar_o_rei(args: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
-	for vaga in _a_trabalhar:
-		vaga.progress = minf(vaga.progress + delta * 0.01, vaga.works[0] * 0.99)
+	_obras.advance(delta)
 	_restam -= 1
 	if _restam > 0:
 		return

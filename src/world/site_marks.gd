@@ -30,6 +30,12 @@ const EMBLEMA := 5.0
 ## Quanto tempo o progresso parado ainda conta como trabalho: o tick e 30 Hz e o
 ## ecra 60, e sem folga a obra piscava entre "a trabalhar" e "a espera".
 const FOLGA_TRABALHO := 0.5
+## Quantos segmentos tem o anel de uma moeda por pagar.
+const ANEL := 12
+## A perna de baixo de uma fissura desce mais do que a de cima.
+const FISSURA_PE := 1.5
+## A seta ao lado do disco, a esta distancia em raios do emblema.
+const AO_LADO := 3.0
 
 static var _visto: Dictionary = {}
 
@@ -60,7 +66,7 @@ static func coins(canvas: CanvasItem, pe: Vector2, pagas: int, custo: int, luz: 
 			canvas.draw_circle(centro, WorldPalette.MOEDA_R, WorldPalette.MOEDA * luz)
 		else:
 			canvas.draw_arc(
-				centro, WorldPalette.MOEDA_R, 0.0, TAU, 12, WorldPalette.MOEDA * luz, 1.0
+				centro, WorldPalette.MOEDA_R, 0.0, TAU, ANEL, WorldPalette.MOEDA * luz, 1.0
 			)
 
 
@@ -101,7 +107,7 @@ static func cracks(canvas: CanvasItem, caixa: Rect2, perdida: float, luz: Color)
 				p - Vector2(tamanho * WorldPalette.MEIA, tamanho),
 				p,
 				p + Vector2(-tamanho * WorldPalette.MEIA, tamanho),
-				p + Vector2(tamanho * WorldPalette.MEIA, tamanho * 1.5),
+				p + Vector2(tamanho * WorldPalette.MEIA, tamanho * FISSURA_PE),
 			]
 		)
 		canvas.draw_polyline(linha, PEDRA_ESCURA * luz, VIGA)
@@ -126,7 +132,7 @@ static func _lascas(
 ) -> void:
 	var fase := int(t / LASCA_S)
 	for k in LASCAS:
-		var x := canto.x + largura * (float(k) + 0.5) / LASCAS
+		var x := canto.x + largura * (float(k) + WorldPalette.MEIA) / LASCAS
 		var salto := float((fase + k) % 2) * LASCA.y
 		canvas.draw_rect(Rect2(Vector2(x, canto.y - LASCA.y - salto), LASCA), LASCA_COR * luz)
 
@@ -144,7 +150,7 @@ static func emblem(
 	var seta := centro
 	if vende:
 		canvas.draw_circle(centro, EMBLEMA, WorldPalette.MOEDA * luz)
-		seta += Vector2(EMBLEMA * 3.0, 0.0)
+		seta += Vector2(EMBLEMA * AO_LADO, 0.0)
 	if estado == ConversionSystem.Status.COIN:
 		return
 	var pontos := PackedVector2Array(
