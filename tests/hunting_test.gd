@@ -110,3 +110,58 @@ func test_the_intro_is_moot_once_the_players_hunter_took_its_rabbit() -> void:
 	assert_int(hunt.resolve(units, true, true).size()).is_equal(1)
 	assert_bool(hunt.intro_done).is_true()
 	assert_array(hunt.rabbits).is_equal([900.0])
+
+
+func test_as_clareiras_do_dia_abrem_em_vagas_e_o_total_nao_muda() -> void:
+	var dia := HuntingSystem.new(SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit"))
+	dia.open_day(1, [10.0, 20.0, 30.0, 40.0, 50.0], 3)
+	assert_array(dia.rabbits).is_equal([10.0, 40.0])
+	assert_float(dia.intro_x).is_equal(10.0)
+	dia.release()
+	assert_array(dia.rabbits).is_equal([10.0, 40.0, 20.0, 50.0])
+	var copia := HuntingSystem.new(
+		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit")
+	)
+	copia.from_dict(dia.to_dict())
+	copia.release()
+	assert_array(copia.rabbits).is_equal([10.0, 40.0, 20.0, 50.0, 30.0])
+	copia.release()
+	assert_int(copia.rabbits.size()).is_equal(5)
+
+
+func test_a_vigia_abre_cada_vaga_na_sua_fase_de_luz() -> void:
+	var dia := HuntingSystem.new(SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit"))
+	dia.open_day(1, [10.0, 20.0, 30.0], HuntWatch.WAVE_PHASES.size())
+	HuntWatch.release_due(dia, GameClock.Phase.MORNING)
+	assert_int(dia.rabbits.size()).is_equal(1)
+	HuntWatch.release_due(dia, GameClock.Phase.NOON)
+	assert_int(dia.rabbits.size()).is_equal(2)
+	HuntWatch.release_due(dia, GameClock.Phase.DUSK)
+	assert_int(dia.rabbits.size()).is_equal(3)
+
+
+func test_o_cacador_teu_guarda_a_caca_no_saco_e_o_sem_dono_larga_a() -> void:
+	var meu := _archer()
+	var drops := hunt.resolve(units, true, true)
+	var chao := hunt.bag(units, drops)
+	assert_array(chao).is_empty()
+	assert_int(units.carried_coins[units.index_of(meu)]).is_equal(1)
+	assert_int(hunt.bagged[meu]).is_equal(1)
+	var livre := units.spawn(state, Registry.entry(&"units", &"archer"), 0, 120.0)
+	var so_dele: Array[Dictionary] = [{&"x": 120.0, &"amount": 1, &"hunter": livre}]
+	assert_int(hunt.bag(units, so_dele).size()).is_equal(1)
+
+
+func test_entrega_ao_rei_so_o_que_cacou_e_so_perto_dele() -> void:
+	var meu := _archer()
+	var i := units.index_of(meu)
+	units.carried_coins[i] = 3  # o preco que pagaste para o recrutar fica com ele
+	hunt.bagged[meu] = 2
+	units.carried_coins[i] += 2
+	var rei := units.spawn(state, Registry.entry(&"units", &"monarch"), 1, 900.0)
+	assert_int(hunt.deliver(units, rei, 120.0)).is_equal(0)
+	units.xs[units.index_of(rei)] = 60.0
+	assert_int(hunt.deliver(units, rei, 120.0)).is_equal(2)
+	assert_int(units.carried_coins[i]).is_equal(3)
+	assert_int(units.carried_coins[units.index_of(rei)]).is_equal(2)
+	assert_bool(hunt.bagged.has(meu)).is_false()

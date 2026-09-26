@@ -30,8 +30,10 @@ func _init(economia: EconomySystem = null, moral: MoraleSystem = null) -> void:
 
 ## Passo 3: o dia novo abre as clareiras e cobra o que os impulsos de ontem
 ## deixaram a pagar (§15).
-func prepare(dia: int, core_x: float, largura: float, unidades: UnitSystem = null) -> void:
-	HuntWatch.prepare(hunting, dia, core_x, largura)
+func prepare(
+	dia: int, core_x: float, largura: float, unidades: UnitSystem = null, fase: int = 0
+) -> void:
+	HuntWatch.prepare(hunting, dia, core_x, largura, fase)
 	if dia != _dia and unidades != null:
 		_dia = dia
 		crown.dawn(dia, unidades)
@@ -62,12 +64,22 @@ func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> voi
 
 ## Passos 6 e 8: a caca rende moeda; o treino corre com quem esta la dentro, e a
 ## defesa que os construtores dao as muralhas acompanha quem esta vivo.
+## A caca do cacador teu vai para o saco dele e chega ao rei quando ele passa
+## perto (Q-111); a de quem nao e de ninguem cai no chao, que e o 1:10 do §25.
 func resolve(
-	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock
+	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
 	obras.wall_defense = training.wall_defense(unidades)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
-	return hunting.resolve(unidades, luz, relogio.elapsed >= HuntWatch.INTRO_SECONDS)
+	var caca := hunting.resolve(unidades, luz, relogio.elapsed >= HuntWatch.INTRO_SECONDS)
+	var chao := hunting.bag(unidades, caca)
+	for d in caca:
+		if not d in chao:
+			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
+	var entregue := hunting.deliver(unidades, rei, SimFactory.curve().recruit_notice_px)
+	if entregue > 0:
+		EventBus.queue(&"coin_collected", [rei, entregue])
+	return chao
 
 
 func to_dict() -> Dictionary:

@@ -21,6 +21,7 @@ var _origens: Array[StringName] = []
 var _caca: Array[float] = []
 var _producao: Array[float] = []
 var _espera := 0
+var _no_saco_do_arqueiro := 0
 
 
 func before_test() -> void:
@@ -29,10 +30,12 @@ func before_test() -> void:
 	SimLoop.start(SEMENTE)
 	Greybox.build()
 	EventBus.coin_dropped.connect(_caiu)
+	EventBus.coin_collected.connect(_apanhou)
 
 
 func after_test() -> void:
 	EventBus.coin_dropped.disconnect(_caiu)
+	EventBus.coin_collected.disconnect(_apanhou)
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
 
@@ -54,11 +57,13 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	_recrutar(O_ARQUEIRO)
 	var canteiro := _obra(O_CANTEIRO)
 	var preco := canteiro.next_cost()
-	var limite := _fase_em(GameClock.Phase.NOON)
+	# A caca abre em vagas pela luz (Q-106): o canteiro paga-se antes do crepusculo.
+	var limite := _fase_em(GameClock.Phase.DUSK)
 	while _saco() < preco and ClockService.clock.elapsed < limite:
 		_passo(_moeda_mais_perto())
 	assert_int(_saco()).is_greater_equal(preco)
-	assert_int(_caca.size()).is_greater_equal(preco)
+	# A caca chega ao saco do rei pela mao do arqueiro (Q-111), e nao do chao.
+	assert_int(_no_saco_do_arqueiro).is_greater_equal(preco - 2)
 	while canteiro.state == BuildSlot.State.EMPTY and ClockService.clock.elapsed < limite:
 		_passo(canteiro.x, true)
 	assert_int(canteiro.state).is_not_equal(BuildSlot.State.EMPTY)
@@ -68,7 +73,7 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 		_passo(longe)
 	assert_int(canteiro.state).is_equal(BuildSlot.State.DONE)
 	assert_float(absf(_x_do_rei() - canteiro.x)).is_greater(canteiro.width)
-	while _producao.is_empty() and ClockService.clock.elapsed < _fase_em(GameClock.Phase.NIGHT):
+	while _producao.is_empty() and ClockService.clock.day == 1:
 		_passo(longe)
 	assert_array(_producao).contains([canteiro.x])
 	# Nenhuma moeda apareceu por outra via: tudo o que caiu foi largado, cacado
@@ -115,6 +120,11 @@ func _caiu(x: float, _faixa: int, _quanto: int, origem: StringName) -> void:
 		_caca.append(x)
 	elif origem == &"production":
 		_producao.append(x)
+
+
+func _apanhou(quem: int, quanto: int) -> void:
+	if quem == O_ARQUEIRO and SimLoop.units.owners[SimLoop.units.index_of(quem)] != 0:
+		_no_saco_do_arqueiro += quanto
 
 
 func _moeda_mais_perto() -> float:
