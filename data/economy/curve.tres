@@ -102,3 +102,4 @@ unstaffed_yield = 0.25
 vagrants_per_dawn = 1
 vagrant_camp_cap = 4
 start_greed_profile = &"balanced"
+chicken_theft_matter = 1.0

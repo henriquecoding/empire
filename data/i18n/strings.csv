@@ -604,3 +604,11 @@ SIDE_WEST,OESTE,WEST,lado da região (esquerda),8,AUD-03
 SIDE_EAST,LESTE,EAST,lado da região (direita),8,AUD-03
 CAPTION_ROT_FED,[A mancha engole o sacrifício],[The stain takes the offering],legenda de som (§26); o sacrifício do §05 (Q-127),32,AUD-03
 CAPTION_UNIT_LEFT,"[Sem soldo, alguém partiu]","[Unpaid, someone left]",legenda de som (§26); a manutenção (Q-124),32,AUD-03
+BUILDING_PASSAGE_SEAL,Escora,Shoring,nome de conteúdo — building,24,AUD-04 (Q-132)
+CONTEXT_PASSAGE_SEAL,"PASSAGEM · {assume} para mudar de faixa
+{drop} escora-a: fechada ao Cavador e a ti · {cost}","PASSAGE · {assume} to change layer
+{drop} shore it: closed to the Burrower and to you · {cost}",guia contextual de jogo: a boca de uma passagem por escorar (Q-132),160,AUD-04
+GUIDE_CLIMB,"SOBE ANTES DA NOITE
+O Cavador passa por baixo e lá em cima precisam de ti","CLIMB BEFORE NIGHTFALL
+The Burrower comes from below and you are needed above",guia contextual de jogo: o rei no subsolo à tarde (P-I),160,AUD-04
+CAPTION_CHICKENS_STOLEN,[Levaram galinhas],[Chickens taken],legenda de som (§26); o Alado que chegou vivo à alvorada (Q-129),32,AUD-04

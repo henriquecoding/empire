@@ -40,6 +40,8 @@ var cooldowns: PackedFloat32Array = PackedFloat32Array()
 ## Quantas moedas deixa onde morre (§25: "uma moeda no chao onde morreu um
 ## Rastejante"). Fria no dossie, quente aqui: le-se em cada morte.
 var coin_drops: PackedInt32Array = PackedInt32Array()
+## A obra de onde levou alguma coisa e ainda a leva (o Alado e as galinhas, Q-129).
+var loot_slots: PackedInt32Array = PackedInt32Array()
 
 var _por_id: Dictionary = {}
 
@@ -80,6 +82,7 @@ func spawn(estado: GameState, dados: CreatureData, x: float, rumo: float) -> int
 	target_slots.append(NENHUM)
 	cooldowns.append(0.0)
 	coin_drops.append(dados.coin_drop)
+	loot_slots.append(NENHUM)
 	_por_id[creature_id] = ids.size() - 1
 	return creature_id
 
@@ -138,6 +141,7 @@ func dissolve() -> PackedInt32Array:
 	target_slots = PackedInt32Array()
 	cooldowns = PackedFloat32Array()
 	coin_drops = PackedInt32Array()
+	loot_slots = PackedInt32Array()
 	_por_id = {}
 	return levadas
 
@@ -151,6 +155,11 @@ func to_dict() -> Dictionary:
 ## nao vem no ficheiro — guarda-lo era guardar duas vezes a mesma coisa.
 func from_dict(d: Dictionary) -> void:
 	Columns.from_dict(self, d)
+	# Um save anterior ao roubo (AUD-04) nao traz a coluna: ninguem levava nada.
+	var antes := loot_slots.size()
+	loot_slots.resize(ids.size())
+	for k in range(antes, ids.size()):
+		loot_slots[k] = NENHUM
 	_reindexar()
 
 
@@ -168,6 +177,7 @@ func _copiar(de: int, para: int) -> void:
 	target_slots[para] = target_slots[de]
 	cooldowns[para] = cooldowns[de]
 	coin_drops[para] = coin_drops[de]
+	loot_slots[para] = loot_slots[de]
 
 
 func _encolher() -> void:
@@ -185,6 +195,7 @@ func _encolher() -> void:
 	target_slots.resize(n)
 	cooldowns.resize(n)
 	coin_drops.resize(n)
+	loot_slots.resize(n)
 
 
 func _reindexar() -> void:

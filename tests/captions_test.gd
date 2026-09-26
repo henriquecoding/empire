@@ -94,3 +94,12 @@ func test_o_sacrificio_e_quem_se_vai_embora_tem_legenda() -> void:
 	assert_str(c.text).not_contains(tr(&"CAPTION_UNIT_LEFT"))
 	EventBus.unit_fled.emit(1, &"upkeep")
 	assert_str(c.text).contains(tr(&"CAPTION_UNIT_LEFT"))
+
+
+## AUD-04: as galinhas que o Alado levou ate a alvorada (Q-129).
+func test_as_galinhas_levadas_tem_legenda() -> void:
+	var c := _legendas()
+	EventBus.material_consumed.emit(3, &"grain", 1)
+	assert_str(c.text).is_empty()
+	EventBus.material_consumed.emit(3, &"animal", 1)
+	assert_str(c.text).contains(tr(&"CAPTION_CHICKENS_STOLEN"))

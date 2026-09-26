@@ -162,3 +162,8 @@ extends Resource
 @export var vagrant_camp_cap: int = 0
 ## O perfil de ganancia do teu rei no inicio (§15, Q-123).
 @export var start_greed_profile: StringName = &""
+
+@export_group("Auditoria de gameplay — AUD-04")
+## O que um Alado leva de um galinheiro, em materia, se chegar vivo a alvorada
+## (Q-129): a producao do dia seguinte, e nunca mais do que um dia dela.
+@export var chicken_theft_matter: float = 0.0

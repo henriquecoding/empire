@@ -72,6 +72,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `root_moat` | `BUILDING_ROOT_MOAT` | Fosso de Raízes | Root Moat |
 | `lighthouse` | `BUILDING_LIGHTHOUSE` | Farol | Lighthouse |
 | `consecrated_altar` | `BUILDING_CONSECRATED_ALTAR` | Altar Consagrado | Consecrated Altar |
+| `passage_seal` | `BUILDING_PASSAGE_SEAL` | Escora | Shoring |
 
 ## walls
 

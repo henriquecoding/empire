@@ -9,6 +9,6 @@ Depende   AUD-01
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Há obra a fazer lá em baixo e razão para descer de dia; o Alado leva alguma coisa que a torre alta protege
 Fora      Arte nova (art/ é de outra pessoa).
-Estado    por fazer
+Estado    feito — o poço nas cavidades, a escora das passagens, o Cavador chamado pelo poço e o Alado que rouba galinhas
 Horas     12
 ```

@@ -57,6 +57,7 @@ func _ready() -> void:
 	# AUD-03: o sacrificio (Q-127) e quem se vai embora por falta de soldo (Q-124).
 	EventBus.rot_fed.connect(_no_sacrificio)
 	EventBus.unit_fled.connect(_na_fuga)
+	EventBus.material_consumed.connect(_no_roubo)  # AUD-04: o Alado (Q-129)
 
 
 ## Mostra uma legenda. A mesma pista outra vez refaz o tempo em vez de somar uma
@@ -115,6 +116,11 @@ func _escrever() -> void:
 
 func _no_sacrificio(_massa: float, _oferta: StringName) -> void:
 	say(&"CAPTION_ROT_FED")
+
+
+func _no_roubo(_obra: int, tipo: StringName, _quanto: int) -> void:
+	if tipo == &"animal":
+		say(&"CAPTION_CHICKENS_STOLEN")
 
 
 func _na_fuga(_unit_id: int, porque: StringName) -> void:

@@ -94,7 +94,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 25 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 26 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -268,7 +268,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 99 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 100 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -371,6 +371,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 99 linha(s) · §06 §4
 | `vagrants_per_dawn` | int | Auditoria de gameplay — AUD-02 |  |
 | `vagrant_camp_cap` | int | Auditoria de gameplay — AUD-02 |  |
 | `start_greed_profile` | StringName | Auditoria de gameplay — AUD-02 |  |
+| `chicken_theft_matter` | float | Auditoria de gameplay — AUD-04 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
@@ -439,6 +440,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `peak_every` | int | Auditoria de gameplay — AUD-03 |  |
 | `peak_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 | `calm_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
+| `mine_lure_days` | int | Auditoria de gameplay — AUD-04 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`
 

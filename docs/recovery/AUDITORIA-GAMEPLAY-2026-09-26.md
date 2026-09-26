@@ -1189,3 +1189,22 @@ Decisões nas Q-125 a Q-128; ticket `docs/backlog/AUD-03.md`.
 Efeitos medidos: a vistoria com piloto passou de 3 para **8 dias em 10**; no `dez_dias` o degrau mais fraco passou
 a cair no dia 7 (caía no 2) e a defesa do topo continua a cair no dia 10 — os Cavadores por baixo do muro, que são
 o AUD-04. O som gravado das legendas continua a ser da pasta `audio/`, que este lote não toca.
+
+## Seguimento — AUD-04 (Lote 4, as faixas)
+
+Decisões nas Q-129 a Q-132 (a Q-129 fecha a Q-077); ticket `docs/backlog/AUD-04.md`.
+
+| Frente | O que mudou | Prova |
+|---|---|---|
+| P-J o Alado não fazia nada | Quem voa vai ao galinheiro de pé mais perto, leva uma galinha e volta para a borda da noite (`Thieves`); se chegar vivo à alvorada, o galinheiro perde a produção do dia seguinte (nunca mais do que um dia); abatido pelo caminho, não leva nada. Legenda «Levaram galinhas» (Q-129) | `alado_ladrao_test`, `captions_test` |
+| P-I nada se fazia lá em baixo | Uma cavidade de cada lado, atrás da passagem, com um poço de minério no subsolo (`Cavities`): a cavidade é rocha; só o rei o levanta e as moedas dele caem lá em baixo (Q-130) | `subsolo_expedicao_test` |
+| O custo do poço | Com um poço de pé o Cavador vem 3 noites mais cedo (`mine_lure_days`, `rot.csv`) (Q-131) | `subsolo_expedicao_test` |
+| O Cavador do dia 10 sem resposta | Uma escora por construir em cada boca de passagem (`passage_seal`, 10 moedas): de pé fecha a passagem para toda a gente, e a mancha de um lado fechado não gasta massa no subsolo — compra o que vem por cima (Q-132) | `subsolo_expedicao_test` |
+| Subir antes da noite | O guia manda subir quem está no subsolo à tarde; o painel da boca diz que se pode escorar | `subsolo_expedicao_test` |
+
+Efeitos medidos: o `dez_dias` fica igual linha a linha — a região fechada do §07 não tem galinheiros nem poço, e
+as passagens dela estão abertas. A defesa do topo continua a cair no dia 10 e **não é pelos Cavadores**: posta
+sozinha no dia 10, a mesma defesa aguenta a noite com o muro direito a 132/450; na campanha de dez dias cai porque
+ninguém repara os muros entre noites (o instrumento não tem jogador). O piloto da vistoria continua a morrer na
+noite 4, na main e aqui (não constrói a torre alta nem responde ao Alado); sem rei, a partida que ele deixa cai
+no dia 7 em vez do 8. O piloto passou a só pagar obras da faixa em que está: não desce.
