@@ -46,6 +46,10 @@ static func step(loop: Node) -> void:
 ## por levantar. E a ordem do §25 — primeiro ter com que pagar, depois gente,
 ## depois muro.
 static func _destino(loop: Node, rei: int, onde: float) -> float:
+	# Ao crepusculo volta-se para dentro, e quem te segue vem contigo: uma noite
+	# passada fora do muro com a gente atras deixava o nucleo sem ninguem (§25).
+	if int(ClockService.clock.current_phase()) >= int(GameClock.Phase.DUSK):
+		return loop.core_x
 	var saco: int = loop.units.carried_coins[rei]
 	# Com o saco vazio nao ha nada a fazer senao ir buscar moeda. Com moeda na
 	# mao vai-se GASTAR: um piloto que corresse atras da moeda que acabou de

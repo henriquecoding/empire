@@ -40,7 +40,7 @@ var _marcar := false
 
 func _unhandled_input(evento: InputEvent) -> void:
 	if evento.is_action_pressed(&"pause"):
-		if not SimLoop.builds.fallen(BuildSlot.NUCLEO):
+		if not Defeat.happened():
 			SimLoop.set_paused(SimLoop.running())
 		get_viewport().set_input_as_handled()
 		return

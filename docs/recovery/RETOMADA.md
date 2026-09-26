@@ -18,6 +18,7 @@ a cada construção._
 | v6 + abertura | 25–26/09/2026 | A abertura legível (PR #30 e a seguinte): caça do §25 com moeda física, cadência da arma e save; o JobBoard publica obras pagas e reage a recrutamentos na mesma fase; a escolha A/B da muralha pelo Verbo 2; o painel de contexto e o objetivo por chave; a arte original recuperada (`art/export/enramados/`) com export verificado byte a byte. Na seguinte: o coelho do minuto 1:10 passa a cair junto ao castelo e não fora do ecrã, o painel deixa de anunciar a escolha da muralha onde o verbo a recusa, o "+1 moeda" só aparece quando é o rei a apanhar, as tropas deixam de contar o rei, e a vistoria diz os dias vividos. O circuito recrutar → caçar → pagar → ver construir → colher passa a jogar-se num teste só com gestos (`abertura_natural_test.gd`), e o que ele mediu virou a Q-106 e a Q-107. Relatório e seguimento em `ASTRA-RETOMADA-2026-09-25.md`. |
 | v6 + circuito 2 | 26/09/2026 | A caça reparte-se pelo dia e o caçador entrega-a ao rei (Q-106, Q-111); o celeiro do §06 vende o grão a +50% ou, com o cozinheiro formado na cozinha, dá vida às tropas (Q-112). Secção 26 do relatório ASTRA. |
 | v6 + decisões | 26/09/2026 | O que faltava do dossiê e dá decisões: reparar com moeda (§55, Q-108), a Casa de Treino a formar construtores (§09, §10, Q-109), três dos seis impulsos reais pela roda do rei (§15, Q-110), o subsolo dos Enramados desenhado como lugar, e o chapéu e a arma nos corpos originais. Secção 25 do relatório ASTRA. |
+| v6 + auditoria | 26/09/2026 | A auditoria de gameplay (`AUDITORIA-GAMEPLAY-2026-09-26.md`) e o AUD-01: a moeda passa a ter destino resolvido no gesto (o celeiro já não troca de modo sozinho e a moeda do 0:20 recruta), retomar não repete a fase, a torre dá certeza a quem está nela, o muro a subir de degrau continua a travar, a morte do rei é derrota, grava-se ao pausar e ao fechar de dia. Q-115 a Q-120. |
 | v6 + XIII | 14/09/2026 | A Parte XIII em dados: quatro tabelas novas, seis alargadas, quatro `Resource` novos, catorze testes de design, nove ADRs, 19 perguntas registadas, 53 tickets, e o texto: 64 chaves de conteúdo e os doze diários da §79 escritos. |
 
 ## Como se verificou
@@ -26,7 +27,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 28 tabelas, 203 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 735 casos, 729 a passar, 6 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 761 casos, 755 a passar, 6 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save e as preferências nunca usam `load()`),
@@ -68,7 +69,7 @@ a cada construção._
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |
 | `docs/adr/` | 25 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros. |
-| `docs/backlog/` | 81 tickets, um ficheiro cada, no formato da §34. |
+| `docs/backlog/` | 86 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
 | `data/i18n/strings.csv` | 340 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |

@@ -117,7 +117,8 @@ func resolve(
 	conversion.bind(unidades)
 	conversion.apply(unidades, conversion.active)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
-	var caca := hunting.resolve(unidades, luz, relogio.elapsed >= HuntWatch.INTRO_SECONDS)
+	var intro := relogio.elapsed >= HuntWatch.intro_at(relogio.day_seconds())
+	var caca := hunting.resolve(unidades, luz, intro)
 	var chao := hunting.bag(unidades, caca)
 	for d in caca:
 		if not d in chao:

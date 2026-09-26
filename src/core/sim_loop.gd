@@ -87,6 +87,7 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 	RngService.configure(estado.seed)
 	RngService.restore(rng_states)
 	ClockService.seek(estado.day, estado.clock_elapsed, estado.day_seconds)
+	_fase = int(ClockService.clock.current_phase())  # o save ja passou esta fase (D2)
 	_running = true
 
 
@@ -176,6 +177,7 @@ func step(delta: float) -> void:
 func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> int:
 	var desvio := RngService.float_range(&"economy", -CoinSystem.DESVIO_MAX, CoinSystem.DESVIO_MAX)
 	var coin_id := coins.drop(state, x, faixa, quanto, desvio, origem == Verbs.JOGADOR)
+	CoinTarget.aim(coins, coin_id, builds, origem == Verbs.JOGADOR)
 	EventBus.queue(&"coin_dropped", [x, int(faixa), quanto, origem])
 	return coin_id
 

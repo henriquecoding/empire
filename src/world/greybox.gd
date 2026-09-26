@@ -68,10 +68,12 @@ const BIFURCACAO_X := 1800.0
 const RUINA_X := -360.0
 # §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
 # ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
-# distingue e o preco que o §07 lhes da: 1, 3 e 4.
-const VAGABUNDOS_X := [-240.0, 320.0, 780.0, 1240.0]
-const ARQUEIROS_X := [-620.0, -180.0, 520.0]
-const LANCEIROS_X := [-1100.0, 1000.0]
+# distingue e o preco que o §07 lhes da: 1, 3 e 4. Ninguem nasce dentro de um
+# sitio de obra: la, a moeda largada ao lado dele pagava a obra e nao o recrutava
+# (auditoria de 26/09, D5). O nucleo nao e sitio de obra, e por isso serve.
+const VAGABUNDOS_X := [-230.0, 230.0, 740.0, 980.0]
+const ARQUEIROS_X := [-740.0, -180.0, 180.0]
+const LANCEIROS_X := [-990.0, 1040.0]
 # §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
 # casca." Esta la desde o primeiro frame e nao e apontada por nada. O muro e o do
 # §25, a estacaria do minuto 3:30 — a de dentro —, e a arvore fica logo depois

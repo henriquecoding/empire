@@ -21,10 +21,18 @@ static func of(postos: JobBoard, unidades: UnitSystem, i: int) -> JobSlot:
 	return postos.slot_of(unidades.job_ids[i])
 
 
+## A vaga que esta tropa ocupa E onde ela esta: o que o posto da, da-o a quem esta
+## la. A caminho da torre, a fugir dela ou atras da luz da alvorada, dispara como
+## em campo aberto (auditoria de 26/09, D3).
+static func present(postos: JobBoard, unidades: UnitSystem, i: int) -> JobSlot:
+	var vaga := of(postos, unidades, i)
+	return vaga if vaga != null and vaga.holds(unidades.xs[i]) else null
+
+
 ## A precisao com que ela dispara. Dentro de torre e a do posto; em campo aberto
 ## e a accuracy_open do §19 — 0,34 no arqueiro.
 static func accuracy(postos: JobBoard, unidades: UnitSystem, i: int, dados: UnitData) -> float:
-	var vaga := of(postos, unidades, i)
+	var vaga := present(postos, unidades, i)
 	if vaga == null or vaga.accuracy <= 0.0:
 		return dados.accuracy_open
 	return vaga.accuracy
@@ -32,7 +40,7 @@ static func accuracy(postos: JobBoard, unidades: UnitSystem, i: int, dados: Unit
 
 ## O alcance. A torre de arqueiros da +40% (§10, range_bonus).
 static func range_px(postos: JobBoard, unidades: UnitSystem, i: int, dados: UnitData) -> float:
-	var vaga := of(postos, unidades, i)
+	var vaga := present(postos, unidades, i)
 	var bonus := vaga.range_bonus if vaga != null else 0.0
 	return float(dados.range_px) * (1.0 + bonus)
 
@@ -51,5 +59,5 @@ static func reaches(
 		return false
 	if faixa == int(unidades.bands[i]):
 		return true
-	var vaga := of(postos, unidades, i)
+	var vaga := present(postos, unidades, i)
 	return vaga != null and vaga.hits_aerial and faixa == int(Band.Kind.AERIAL)

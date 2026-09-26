@@ -80,6 +80,11 @@ static func _obra(
 		# Em andaime: a forma do que vem, ja cheia, mas na cor da madeira. §55 —
 		# "a obra existe quando uma moeda cai", e a partir dai ve-se o que sera.
 		_massa(canvas, forma, caixa, vaga, luz.body(WorldPalette.ANDAIME, x))
+		if vaga.upgrading():
+			# O degrau de baixo continua de pe dentro do andaime (D4): e ele que trava.
+			var velho := _caixa(vaga, forma, vaga.level)
+			_massa(canvas, forma, velho, vaga, luz.body(WorldPalette.OBRA, x))
+			Gauge.health(canvas, velho, float(vaga.health) / maxf(1.0, float(vaga.max_health())))
 		SiteMarks.scaffold(canvas, caixa, SiteStage.built(vaga), lit, tempo, trabalho)
 	else:
 		_convite(canvas, vaga, forma, luz, caixa, pulso)

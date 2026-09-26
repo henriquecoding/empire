@@ -75,7 +75,7 @@ func reach(obra: BuildSlot) -> float:
 ## O array de slots acompanha o nivel: subir de muro abre slots, e uma brecha
 ## fecha-os. Sem isto, um muro que subiu continuava com os slots do nivel 1.
 func _ajustar(obra: BuildSlot, eventos: Array[Dictionary]) -> void:
-	var quantos := obra.contact_slots() if obra.standing() else 0
+	var quantos := obra.contact_slots() if obra.holds() else 0
 	if obra.contact.size() == quantos:
 		return
 	for i in range(quantos, obra.contact.size()):

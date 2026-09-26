@@ -1129,3 +1129,28 @@ Economia, interface, acessibilidade e processo:
 - [Steam Deck and Steam Machine Compatibility Review — Steamworks](https://partner.steamgames.com/doc/steamhardware/compat)
 - [Using the RITE method to improve products — Medlock et al.](https://www.jpattonassociates.com/wp-content/uploads/2015/04/rite_method.pdf)
 - [Juice it or lose it — Jonasson & Purho (GDC Europe 2012)](https://www.youtube.com/watch?v=Fy0aCDmgnxg)
+
+---
+
+## Seguimento — AUD-01 (Lote 1, integridade da simulação)
+
+Autorizado pelo dono do repositório a 26/09. Decisões nas Q-115 a Q-120; ticket `docs/backlog/AUD-01.md`.
+
+| Defeito | O que mudou | Prova |
+|---|---|---|
+| D1 celeiro | A moeda tem destino resolvido no gesto (`CoinTarget`, coluna `CoinSystem.targets`); a venda do celeiro não tem destino e não troca nada | `destino_da_moeda_test` |
+| D2 retomar | `SimLoop.resume()` repõe a fase em que se gravou | `retomar_fase_test` (3 casos, os três falhavam antes) |
+| D3 torre | `Posts.present()`: o bónus é de quem está dentro da obra | `posto_presente_test` |
+| D4 muro em obra | `BuildSlot.upgrading()`/`holds()`: trava, leva golpes, mantém contactos e postos | `muro_em_obra_test` |
+| D5 moeda do 0:20 | O destino é o do painel; ninguém por recrutar nasce dentro de uma obra; o rei não re-apanha a moeda que alguém vem buscar | `destino_da_moeda_test` |
+| D6 rei morto | `Defeat.happened()`: núcleo caído **ou** rei morto → derrota | `rei_caido_test` |
+| D9 troco do treino | Fica pago para o treino seguinte | `training_test` |
+| D10 coelho do 1:10 | `HuntWatch.intro_at()` escala com o dia | `hunting_test` |
+| D11 gravar | `SavePoint`: ao pausar e ao fechar, de dia | `rei_caido_test` |
+| D12 teste do registo | Formatação corrigida | `registry_test` |
+
+Efeitos medidos: `dez_dias` igual linha a linha. A vistoria com piloto passou do dia 3 para o dia 1 — o piloto
+recrutava por acaso **obras** (os recrutáveis nasciam dentro delas, o próprio D5) e agora recruta gente; com o
+regresso ao núcleo ao crepúsculo passou a viver 2 dias. O piloto que joga bem é o P-E, no AUD-02. O
+`celeiro_no_jogo_test` largava uma moeda a cada 10 ticks com o voo a durar ~15, e só passava porque a venda do
+celeiro o voltava a trocar sozinha (D1): passou a largar uma e esperar que pouse.

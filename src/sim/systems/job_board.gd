@@ -60,11 +60,12 @@ func clear() -> void:
 func publish(obras: BuildSystem) -> void:
 	var querem: Array = []
 	for obra in obras.slots:
-		var building := obra.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]
-		var count := 1 if building else obra.posts() if obra.standing() else 0
-		var job := &"build" if building else obra.job_id
-		if job != &"" and count > 0:
-			querem.append([obra.id, job, count, obra.level, obra.path, obra.band, obra.x])
+		if obra.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
+			querem.append([obra.id, &"build", 1, obra.level, obra.path, obra.band, obra.x])
+		# Um muro a subir de degrau continua guardado pelo degrau que ja tem (D4).
+		var postos := obra.posts() if obra.holds() else 0
+		if obra.job_id != &"" and postos > 0:
+			querem.append([obra.id, obra.job_id, postos, obra.level, obra.path, obra.band, obra.x])
 		if obra.mending and obra.standing():
 			querem.append([obra.id, REPARAR, 1, obra.level, obra.path, obra.band, obra.x])
 	if querem == _publicadas:

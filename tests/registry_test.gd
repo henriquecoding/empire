@@ -41,7 +41,7 @@ func test_indexa_os_202_recursos_e_nenhum_e_nulo() -> void:
 			if Registry.entry(tabela, id) == null:
 				nulos.append("%s/%s" % [tabela, id])
 
-	var porque := "recursos que nao carregaram: %s" % nulos
+	var porque := "recursos que nao carregaram: %s" % [nulos]
 	assert_array(nulos).override_failure_message(porque).is_empty()
 	assert_int(contados).is_equal(Registry.total())
 	# O numero nao esta escrito aqui: conta-se a arvore e compara-se com o indice.

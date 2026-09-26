@@ -65,6 +65,8 @@ src/core/event_relay.gd     EventRelay    traduz o que os sistemas devolvem para
 src/core/intent_queue.gd    IntentQueue   a fila de intencoes do §61
 src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar, e o que fica (§74)
 src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
+src/core/defeat.gd          Defeat        quando a partida acabou: o nucleo ou o rei (§10, §16, Q-118)
+src/core/save_point.gd      SavePoint     gravar ao pausar e ao fechar, de dia (§62, Q-119)
 src/core/field_work.gd      FieldWork     a caca e as casas de oficio, no tick (§09, §25)
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
@@ -72,6 +74,7 @@ src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocu
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
 src/sim/systems/class_system.gd ClassSystem a classe do rei: a aura e a evolucao (§08)
+src/sim/systems/coin_target.gd CoinTarget a quem serve uma moeda largada (§02, §55, Q-115)
 src/sim/systems/repair_work.gd RepairWork reparar com a moeda fisica (§55, Q-108)
 src/sim/systems/training_system.gd TrainingSystem a Casa de Treino: trabalhador -> oficio (§09, §10)
 src/sim/systems/crown_system.gd CrownSystem os impulsos reais (§15, §57)

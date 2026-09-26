@@ -1349,5 +1349,78 @@
   "fora": "As outras classes (Arqueiro, Bardo, Trepador) e trocar de classe com o Verbo 2 — Fase 6.",
   "estado": "parcial — a aura, a evolução e o escudeiro que apanha moedas caídas ligados; \"o escudeiro torna-se tropa de combate\" espera pela Q-114",
   "horas": "6"
+ },
+ "AUD-01": {
+  "title": "Integridade da simulação: a moeda, o muro, a torre, o rei e o save",
+  "porque": "A auditoria de 26/09 reproduziu seis defeitos que nenhum teste apanhava: o celeiro trocava de modo sozinho, retomar repetia a alvorada, a torre dava certeza longe dela, o muro em obra deixava de travar, a moeda do 0:20 pagava a Casa de Treino e o rei morto deixava a partida sem comando.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md"
+  ],
+  "depende": "—",
+  "feito": "Os oito testes de reprodução do anexo A passam a dar o comportamento certo, com teste novo por defeito",
+  "fora": "A economia (AUD-02), a noite (AUD-03), as faixas (AUD-04) e a campanha (AUD-05).",
+  "estado": "feito",
+  "horas": "8"
+ },
+ "AUD-02": {
+  "title": "A economia verdadeira: o que o CI afina é o que o jogo corre",
+  "porque": "O modelo do §06 que o teste da asfixia afina dá 21→33 moedas/dia e o jogo produz 17 fixas; manutenção, ganância e custo da noite só existem no modelo; a produção não pede o trabalhador; a Colheita Forçada é sempre prejuízo.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md",
+   "docs/design/06-producao-conversao-e-comercio.md",
+   "docs/design/49-economysystem-tres-circuitos-uma-passagem-por-fa.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md"
+  ],
+  "depende": "AUD-01",
+  "feito": "A produção medida no SimLoop bate com o modelo com tolerância escrita; um sorvedouro real na partida; um piloto que joga bem mede o §66 com a voz ligada; nenhum impulso nem modo do celeiro é dominado no teste",
+  "fora": "Comércio, diplomacia e dívida.",
+  "estado": "por fazer",
+  "horas": "16"
+ },
+ "AUD-03": {
+  "title": "A noite legível e com gestos",
+  "porque": "135 s de 360 sem aviso de lado nem de composição, sem ritmo e sem gesto que mude o resultado; quem não tem posto segue o rei para fora do muro.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md",
+   "docs/design/05-o-dia-a-noite-e-a-podridao.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "AUD-01",
+  "feito": "O lado da noite anuncia-se à tarde; a curva tem respiração; quem não tem posto recolhe ao núcleo ao crepúsculo; os acontecimentos da noite têm legenda",
+  "fora": "Gravar som (a pasta audio/ é de outra pessoa).",
+  "estado": "por fazer",
+  "horas": "12"
+ },
+ "AUD-04": {
+  "title": "As faixas: o subsolo como expedição e o Alado com alvo",
+  "porque": "O subsolo é um corredor com dois segredos; o Alado do dia 4 pousa e não faz nada (Q-077); o Cavador do dia 10 não tem resposta.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md"
+  ],
+  "depende": "AUD-01",
+  "feito": "Há obra a fazer lá em baixo e razão para descer de dia; o Alado leva alguma coisa que a torre alta protege",
+  "fora": "Arte nova (art/ é de outra pessoa).",
+  "estado": "por fazer",
+  "horas": "12"
+ },
+ "AUD-05": {
+  "title": "Uma campanha mínima: sucessão, fim de região e decay",
+  "porque": "Não há objetivo depois do dia 3: os capítulos não se visitam, o epílogo não se chama, perder recomeça do zero e o rei não tem herdeiro.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/77-dez-lugares-uma-lei-cada.md"
+  ],
+  "depende": "AUD-02, AUD-03",
+  "feito": "Uma partida tem começo, travessia e fim; perder guarda parte do que se construiu; o rei tem herdeiro",
+  "fora": "Conquista de povos e IA dos reis inimigos (Fase 2 do §33).",
+  "estado": "por fazer",
+  "horas": "20"
  }
 }

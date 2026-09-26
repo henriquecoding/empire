@@ -97,6 +97,18 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 |---|---|---|---|
 | [F2-01](F2-01.md) | A classe do Monarca: a aura e a evolução | F1-12, XIII-03 | parcial |
 
+## Auditoria de gameplay de 26/09 — o que o relatório mandou fazer
+
+> `docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md`. As decisões estão nas Q-115 em diante.
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [AUD-01](AUD-01.md) | Integridade da simulação: a moeda, o muro, a torre, o rei e o save | — | feito |
+| [AUD-02](AUD-02.md) | A economia verdadeira: o que o CI afina é o que o jogo corre | AUD-01 | por fazer |
+| [AUD-03](AUD-03.md) | A noite legível e com gestos | AUD-01 | por fazer |
+| [AUD-04](AUD-04.md) | As faixas: o subsolo como expedição e o Alado com alvo | AUD-01 | por fazer |
+| [AUD-05](AUD-05.md) | Uma campanha mínima: sucessão, fim de região e decay | AUD-02, AUD-03 | por fazer |
+
 ## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
 
 > Onze tickets novos, pela ordem de custo da §82. O caminho mínimo que dá a transformação inteira é

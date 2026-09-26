@@ -123,9 +123,7 @@ func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> boo
 				continue
 			para = CraftData.Mode.CAPACITY
 		for c in moedas.count():
-			if moedas.settled[c] == 0 or moedas.bands[c] != int(casa.band):
-				continue
-			if absf(moedas.xs[c] - casa.x) > casa.width * METADE:
+			if not CoinTarget.pays(moedas, c, casa):
 				continue
 			moedas.remove(moedas.ids[c])
 			modes[casa.id] = para
@@ -153,12 +151,13 @@ func apply(unidades: UnitSystem, capacidades: Dictionary) -> void:
 
 
 func to_dict() -> Dictionary:
-	return {&"modes": modes.duplicate(), &"value": value.duplicate()}
+	return {&"modes": modes.duplicate(), &"value": value.duplicate(), &"active": active.duplicate()}
 
 
 func from_dict(guardado: Dictionary) -> void:
 	modes = guardado.get(&"modes", {}).duplicate()
 	value = guardado.get(&"value", {}).duplicate()
+	active = guardado.get(&"active", {}).duplicate()
 
 
 func _modo_efectivo(casa: BuildSlot, conv: CraftData) -> int:

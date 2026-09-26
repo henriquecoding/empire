@@ -88,9 +88,10 @@ func open(perdido: bool) -> void:
 	(_novo if perdido else _retomar).grab_focus()
 
 
-## §10: "se cair, cai a partida". E a unica pausa de onde nao se volta.
+## §10: "se cair, cai a partida" — o nucleo, ou o rei sem herdeiro (Defeat). E a
+## unica pausa de onde nao se volta.
 static func defeated() -> bool:
-	return SimLoop.state != null and SimLoop.builds.fallen(BuildSlot.NUCLEO)
+	return Defeat.happened()
 
 
 ## O texto do menu. Volta a escrever-se quando o idioma muda (§27, GB-28).

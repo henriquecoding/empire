@@ -8,6 +8,7 @@ class_name JobSlot
 extends RefCounted
 
 const NENHUM := -1
+const HALF := 0.5
 
 ## A chave do JobData: &"wall", &"farm", &"tower". Nao e texto para o ecra.
 var job_id: StringName = &""
@@ -32,6 +33,10 @@ var source: int = NENHUM
 var accuracy: float = 0.0
 var range_bonus: float = 0.0
 var hits_aerial: bool = false
+## Onde fica a obra que da estes efeitos, e ate onde ela chega: a certeza e de
+## quem esta EM CIMA dela, e nao de quem so tem o posto (auditoria de 26/09, D3).
+var origin_x: float = 0.0
+var reach: float = 0.0
 
 
 func _init(posto: StringName, onde: float, faixa: Band.Kind) -> void:
@@ -47,3 +52,10 @@ func grants(obra: BuildSlot) -> void:
 	accuracy = obra.effects.get(&"accuracy", 0.0)
 	range_bonus = obra.effects.get(&"range_bonus", 0.0)
 	hits_aerial = obra.effects.get(&"hits_aerial", 0.0) > 0.0
+	origin_x = obra.x
+	reach = obra.width * HALF
+
+
+## Se quem esta em `x` esta dentro da obra que publicou esta vaga.
+func holds(x: float) -> bool:
+	return absf(x - origin_x) <= reach

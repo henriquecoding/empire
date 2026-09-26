@@ -9,6 +9,14 @@ const INTRO_SECONDS := 70.0  # §25, minuto 1:10; encenacao, nao afinacao de com
 const WAVE_PHASES := [GameClock.Phase.DAWN, GameClock.Phase.NOON, GameClock.Phase.AFTERNOON]
 
 
+## O segundo do dia em que cai o coelho do 1:10, no dia que o jogador escolheu
+## (§26, 240–540 s). O 1:10 e o de um dia do clock.csv; num dia mais longo ou mais
+## curto cai no mesmo PONTO do dia, e nao ao mesmo segundo (auditoria, D10).
+static func intro_at(dia_s: float) -> float:
+	var base := (Registry.entry(&"economy", &"clock") as ClockData).day_seconds
+	return INTRO_SECONDS * dia_s / base
+
+
 static func prepare(
 	hunt: HuntingSystem, day: int, core_x: float, width: float, fase: int = 0
 ) -> void:

@@ -144,15 +144,16 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	return eventos
 
 
-## Bater numa obra. So o que esta de pe leva dano — uma ruina ja caiu.
+## Bater numa obra. So o que esta de pe leva dano — uma ruina ja caiu. Um muro a
+## subir de degrau perde vida e continua a obra: acabar repoe-na toda.
 func damage(slot_id: int, quanto: int) -> Array[Dictionary]:
 	var i := index_of(slot_id)
-	if i == NENHUM or not slots[i].standing():
+	if i == NENHUM or not slots[i].holds():
 		return []
 	var vaga := slots[i]
 	vaga.health -= vaga.soak(quanto, wall_defense)
 	if vaga.health > 0:
-		vaga.state = BuildSlot.State.DAMAGED
+		vaga.state = vaga.state if vaga.upgrading() else BuildSlot.State.DAMAGED
 		return [{CHAVE: EV_DANO, VAGA: vaga, RACIO: float(vaga.health) / vaga.max_health()}]
 
 	vaga.health = 0
@@ -172,7 +173,7 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	var achada: BuildSlot = null
 	var mais_perto := INF
 	for vaga in slots:
-		if not vaga.blocks or not vaga.standing() or vaga.band != faixa:
+		if not vaga.blocks or not vaga.holds() or vaga.band != faixa:
 			continue
 		if vaga.x < minf(de, para) or vaga.x > maxf(de, para):
 			continue
@@ -226,11 +227,8 @@ func _aceita(vaga: BuildSlot) -> bool:
 ## remover nenhuma: o remove() do CoinSystem troca com a ultima e mexe na ordem.
 func _moedas_na_obra(moedas: CoinSystem, vaga: BuildSlot) -> PackedInt32Array:
 	var apanhadas := PackedInt32Array()
-	var raio := vaga.width * METADE
 	for c in moedas.count():
-		if moedas.settled[c] == 0 or moedas.bands[c] != int(vaga.band):
-			continue
-		if absf(moedas.xs[c] - vaga.x) <= raio:
+		if CoinTarget.pays(moedas, c, vaga):
 			apanhadas.append(moedas.ids[c])
 	return apanhadas
 

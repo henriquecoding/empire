@@ -57,7 +57,20 @@ func _ready() -> void:
 	_camara.follow(_monarca)
 	EventBus.wall_breached.connect(_no_rompimento)
 	EventBus.building_destroyed.connect(_no_desabamento)
+	EventBus.unit_died.connect(_na_morte)
+	EventBus.game_paused.connect(_na_pausa)
 	print(_recibo())
+
+
+## Quem fecha a janela ou deixa a aplicacao nao perde o dia (SavePoint, D11).
+func _notification(what: int) -> void:
+	if what in [NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_APPLICATION_PAUSED]:
+		SavePoint.now()
+
+
+func _na_pausa(pausado: bool) -> void:
+	if pausado:
+		SavePoint.now()
 
 
 func _physics_process(_delta: float) -> void:
@@ -105,7 +118,7 @@ func _retomar() -> bool:
 	SimLoop.resume(estado, SaveService.restore_rng(slot))
 	Greybox.region()
 	SimLoop.load_world(SaveService.restore_world(slot))
-	if SimLoop.builds.fallen(BuildSlot.NUCLEO) or SimLoop.units.count() == 0:
+	if Defeat.happened() or SimLoop.units.count() == 0:
 		return false
 	return true
 
@@ -145,6 +158,16 @@ func _no_desabamento(building_id: int, _x: float) -> void:
 	var i := SimLoop.builds.index_of(building_id)
 	if i == UnitSystem.NENHUM or SimLoop.builds.slots[i].kind != BuildSlot.NUCLEO:
 		return
+	_acabar()
+
+
+## O rei caiu e nao ha herdeiro (§16, Defeat): e a mesma derrota que o nucleo.
+func _na_morte(unit_id: int, _x: float, _faixa: int, _larga: PackedStringArray) -> void:
+	if unit_id == SimLoop.king_id and Defeat.happened():
+		_acabar()
+
+
+func _acabar() -> void:
 	_tremer()
 	SimLoop.set_paused(true)
 	$Entrada.set_process_unhandled_input(false)

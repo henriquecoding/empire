@@ -69,7 +69,10 @@ func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> Arr
 		eventos.append({CHAVE: EV_PAGA, CASA: vaga.id, QUANTO: valor})
 		if owed(vaga) > 0:
 			continue
-		paid.erase(vaga.id)
+		# O troco de uma moeda que valia mais do que faltava fica para o seguinte.
+		paid[vaga.id] = int(paid[vaga.id]) - craft_of(vaga).recruit_cost
+		if int(paid[vaga.id]) <= 0:
+			paid.erase(vaga.id)
 		var quem := unidades.ids[_candidato(unidades, vaga)]
 		trainees[quem] = [vaga.id, 0.0, vaga.x]
 		eventos.append({CHAVE: EV_ENTROU, CASA: vaga.id, UNIDADE: quem})
@@ -180,9 +183,7 @@ func _candidato(unidades: UnitSystem, vaga: BuildSlot) -> int:
 func _apanhar(moedas: CoinSystem, vaga: BuildSlot, falta: int) -> int:
 	var ids := PackedInt32Array()
 	for c in moedas.count():
-		if moedas.settled[c] == 0 or moedas.bands[c] != int(vaga.band):
-			continue
-		if absf(moedas.xs[c] - vaga.x) <= vaga.width * METADE:
+		if CoinTarget.pays(moedas, c, vaga):
 			ids.append(moedas.ids[c])
 	var valor := 0
 	for coin_id in ids:
