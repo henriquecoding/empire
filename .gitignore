@@ -59,3 +59,7 @@ ferramentas/node_modules/
 # A cache do motor e do template Web do tools/web/construir.sh (ADR 0024).
 /node_modules/
 ferramentas/saida/
+
+# ---- Python ----
+# O check_claims importa o estado_tickets, e o Python deixa a cache ao lado.
+__pycache__/

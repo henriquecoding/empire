@@ -27,6 +27,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import estado_tickets  # noqa: E402
+
 RAIZ = Path(__file__).resolve().parent.parent
 VALIDACAO = RAIZ / "docs/recovery/validation.json"
 
@@ -194,6 +197,9 @@ def conferir(medido: dict[str, int]) -> list[str]:
         if ficheiro.stem not in tickets:
             problemas.append(f"docs/backlog/tickets.json: falta o {ficheiro.stem}")
 
+    # O estado de cada ticket vive no ficheiro dele; o tickets.json e a tabela
+    # do README tem de dizer o mesmo (tools/estado_tickets.py).
+    problemas.extend(estado_tickets.divergencias(RAIZ))
     return problemas
 
 
@@ -210,6 +216,8 @@ def main() -> int:
         validacao.update({c: medido[c] for c in CONTAVEIS_NO_VALIDATION})
         VALIDACAO.write_text(json.dumps(validacao, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"check_claims: validation.json atualizado, {len(mudados)} campo(s) mudaram: {mudados}")
+        acertos = estado_tickets.escrever(RAIZ)
+        print(f"check_claims: estado dos tickets, {len(acertos)} acerto(s): {acertos}")
         return 0
 
     problemas = conferir(medido)

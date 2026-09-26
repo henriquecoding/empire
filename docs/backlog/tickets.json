@@ -44,7 +44,7 @@
   "depende": "F0-00",
   "feito": "git lfs ls-files mostra a arte; addons/ fica de fora; art/source/.gdignore existe",
   "fora": "Meter arte real no repositório — é o ART-01.",
-  "estado": "parcial — configurado; não há arte para o LFS mostrar",
+  "estado": "parcial — configurado; a arte que há (art/source/originals, art/export/enramados) está fora do LFS de propósito (.gitattributes), e git lfs ls-files não mostra nada",
   "horas": "0,5",
   "notas": [
    "A C-07 da v5.2: `* text=auto` forçado nos .gitattributes trata os PNG como texto.",
@@ -75,7 +75,7 @@
   "depende": "F0-00",
   "feito": "Push verde com um teste trivial; run_tests.sh é o único comando",
   "fora": "Os testes de design — entram com os sistemas que guardam.",
-  "estado": "parcial — o CI existe e nunca correu num runner remoto",
+  "estado": "feito",
   "horas": "3",
   "notas": [
    "ADR 0009: o gdUnit4 6.x sai com 103 em --headless sem --ignoreHeadlessMode.",
@@ -109,7 +109,7 @@
   "depende": "F0-01",
   "feito": "Os cinco testes do prompt passam; as durações vêm de data/economy/clock.tres",
   "fora": "O CanvasModulate por fase — é o F1-13.",
-  "estado": "parcial — falta o GameClock e o ClockService",
+  "estado": "feito",
   "horas": "3,5",
   "notas": [
    "ADR 0006: dois ficheiros. src/sim/game_clock.gd é puro; src/core/clock_service.gd é o autoload que lhe chama tick().",
@@ -346,7 +346,7 @@
   "depende": "F1-01, F1-03",
   "feito": "O minuto 0:20 do §25 funciona: uma moeda, um vagabundo, e ele segue",
   "fora": "Ofícios e postos — é o F1-05.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "4"
  },
  "F1-05": {
@@ -1317,7 +1317,7 @@
   "depende": "F0-04",
   "feito": "Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024, que substitui a 0022). Cada PR tem a sua pré-visualização.",
   "fora": "Releases com os binários de Linux e Windows — é outra decisão. Domínio próprio. Telemetria: o §32 é «medir sem espiar» e isto não mede nada.",
-  "estado": "feito — a produção segue a main (medido a 25/09/2026 no /versao.json da produção)",
+  "estado": "feito — a produção segue a main: medido a 25/09/2026, o /versao.json de empire-phi-eight.vercel.app diz ramo main, ambiente production (tools/web/fumo.mjs)",
   "horas": "2"
  },
  "PUB-02": {
