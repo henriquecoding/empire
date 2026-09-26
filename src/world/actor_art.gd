@@ -96,7 +96,7 @@ static func draw_unit(
 	canvas.draw_line(direito, Vector2(meio + box.size.x * PERNA.pe_frente, chao), SKIN, stroke)
 	_tronco(canvas, box, meio, cor, ink, bob, scale)
 	_cara(canvas, box, center, cor, ink, units, index, scale)
-	_hat(canvas, center, box, units, index, scale)
+	draw_hat(canvas, center, box, units, index, scale)
 	draw_weapon(canvas, box, data, units, index, cor)
 
 
@@ -166,7 +166,7 @@ static func wounded(vida: int, maxima: int) -> bool:
 	return maxima > 0 and float(vida) < float(maxima) * FERIDA.limiar
 
 
-static func _hat(
+static func draw_hat(
 	canvas: CanvasItem, head: Vector2, box: Rect2, units: UnitSystem, index: int, scale: float
 ) -> void:
 	if units.owners[index] == RecruitSystem.SEM_DONO:

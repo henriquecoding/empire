@@ -74,7 +74,7 @@ static func unit_profile(data_id: StringName) -> StringName:
 		&"archer", &"canopy_archer":
 			# Rejected concept is archived; the reference troop body is a temporary proxy.
 			return &"vagrant"
-		&"vagrant", &"builder":
+		&"vagrant", &"builder", &"spearman":
 			return &"vagrant"
 		&"cook":
 			return &"cook"

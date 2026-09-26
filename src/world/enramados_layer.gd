@@ -12,7 +12,6 @@ const FIELD := Color("6e7546")
 const PATH := Color("b09a68")
 const SOIL := Color("483b2a")
 const ROCK := Color("65543a")
-const CAVE := Color("211f19")
 const MOSS := Color("505433")
 const LAYERS := 6
 const LAST_PLANE := 5
@@ -25,9 +24,6 @@ const HALF := 0.5
 const CELL := 64
 const DETAIL := 4
 const MID_GROUND := 490.0
-const CAVE_TOP := 524.0
-const CAVE_FLOOR := 620.0
-const CAVE_PILLAR := 192
 const BACK_GROUND := 421.0
 const FAR_SCALE := 0.25
 const FOREST_SCALE := 1.0
@@ -120,16 +116,4 @@ func _ground() -> void:
 
 
 func _underground() -> void:
-	draw_rect(Rect2(0, CAVE_TOP, WIDTH, CAVE_FLOOR - CAVE_TOP), CAVE)
-	draw_rect(Rect2(0, CAVE_FLOOR, WIDTH, DETAIL), ROCK)
-	for x in range(0, WIDTH, CAVE_PILLAR):
-		draw_rect(Rect2(x, CAVE_TOP, DETAIL * TWO, CAVE_FLOOR - CAVE_TOP), ROCK)
-		draw_rect(Rect2(x, CAVE_TOP, CELL, DETAIL), ROCK)
-		var root := PackedVector2Array(
-			[
-				Vector2(x + CELL, Band.GROUND_LINE),
-				Vector2(x + CELL, CAVE_TOP - DETAIL),
-				Vector2(x + CELL + DETAIL, CAVE_TOP + DETAIL)
-			]
-		)
-		draw_polyline(root, SOIL.lightened(FAR_SCALE), DETAIL)
+	RootCellars.draw(self, WIDTH)

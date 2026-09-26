@@ -19,10 +19,14 @@ const TODAS := &"*"
 ## O que ja sabe ler. Uma chave fora daqui e um impulso por ligar.
 const BENEFICIOS := [&"production_mult_today", &"vagrants_become_spearmen", &"no_flee_tonight"]
 const TROPA_DA_CHAMADA := &"spearman"
+const E_CHAVE := 0
+const E_VALOR := 1
+const E_DE := 2
+const E_ATE := 3
 
 ## O ultimo dia em que se usou um impulso.
 var used_day := 0
-## Efeitos activos: [chave, valor, primeiro dia, ultimo dia].
+## Efeitos activos: [chave, valor, primeiro dia, ultimo dia] — os indices abaixo.
 var effects: Array = []
 
 var _impulsos: Dictionary
@@ -73,9 +77,9 @@ func use(id: StringName, dia: int, unidades: UnitSystem, rei: int) -> bool:
 func yield_mult(dia: int, kind: StringName) -> float:
 	var fator := 1.0
 	for e in _de(dia):
-		match e[0]:
+		match e[E_CHAVE]:
 			&"production_mult_today":
-				fator *= e[1]
+				fator *= e[E_VALOR]
 			&"production_zero_today":
 				fator = 0.0
 			&"farms_idle_tomorrow":
@@ -87,7 +91,7 @@ func yield_mult(dia: int, kind: StringName) -> float:
 ## Vigilia: esta noite ninguem foge (§07 pede a fuga; o impulso tira-a).
 func steadfast(dia: int) -> bool:
 	for e in _de(dia):
-		if e[0] == &"no_flee_tonight":
+		if e[E_CHAVE] == &"no_flee_tonight":
 			return true
 	return false
 
@@ -96,15 +100,15 @@ func steadfast(dia: int) -> bool:
 ## o impulso diz, uma vez. Esquece os efeitos que ja passaram.
 func dawn(dia: int, unidades: UnitSystem) -> void:
 	for e in _de(dia):
-		if e[0] != &"troop_health_mult_tomorrow" or e[2] != dia:
+		if e[E_CHAVE] != &"troop_health_mult_tomorrow" or e[E_DE] != dia:
 			continue
 		for i in unidades.count():
 			if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
 				continue
-			var teto := ceili(unidades.max_healths[i] * float(e[1]))
+			var teto := ceili(unidades.max_healths[i] * float(e[E_VALOR]))
 			unidades.healths[i] = mini(unidades.healths[i], teto)
-		e[2] = dia + 1  # aplicado: nao volta a cortar no mesmo dia
-	effects = effects.filter(func(e: Array) -> bool: return e[3] >= dia)
+		e[E_DE] = dia + 1  # aplicado: nao volta a cortar no mesmo dia
+	effects = effects.filter(func(e: Array) -> bool: return e[E_ATE] >= dia)
 
 
 func to_dict() -> Dictionary:
@@ -117,7 +121,7 @@ func from_dict(guardado: Dictionary) -> void:
 
 
 func _de(dia: int) -> Array:
-	return effects.filter(func(e: Array) -> bool: return e[2] <= dia and dia <= e[3])
+	return effects.filter(func(e: Array) -> bool: return e[E_DE] <= dia and dia <= e[E_ATE])
 
 
 ## "Todos os vagabundos viram lanceiros gratis": os que ainda nao sao de ninguem
