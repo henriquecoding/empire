@@ -137,7 +137,8 @@ func _argumentos() -> Dictionary:
 	var args := OS.get_cmdline_user_args()
 	var i := 0
 	while i < args.size() - 1:
-		if args[i].begins_with("--"):
+		# Um `--novo` e so bandeira: nao pode engolir o `--saida` que vem a seguir.
+		if args[i].begins_with("--") and not args[i + 1].begins_with("--"):
 			saida[args[i].substr(2)] = args[i + 1]
 			i += 1
 		i += 1

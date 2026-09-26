@@ -84,3 +84,29 @@ func test_two_hunters_cannot_claim_the_same_rabbit() -> void:
 	_archer()
 	hunt.rabbits.assign([100.0])
 	assert_int(hunt.resolve(units, true, true).size()).is_equal(1)
+
+
+func test_the_intro_is_the_first_clearing_taken_by_the_nearest_neutral_hunter() -> void:
+	var far := units.spawn(state, Registry.entry(&"units", &"archer"), 0, 1000.0)
+	var near := units.spawn(state, Registry.entry(&"units", &"archer"), 0, 1640.0)
+	var intro := HuntingSystem.new(
+		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit")
+	)
+	intro.open_day(1, [1760.0, 1160.0])
+	var drops := intro.resolve(units, true, true)
+	assert_int(drops.size()).is_equal(1)
+	assert_float(drops[0][&"x"]).is_equal(1760.0)
+	assert_float(units.cooldowns[units.index_of(near)]).is_greater(0.0)
+	assert_float(units.cooldowns[units.index_of(far)]).is_equal(0.0)
+	assert_array(intro.resolve(units, true, true)).is_empty()
+	assert_array(intro.rabbits).is_equal([1160.0])
+
+
+func test_the_intro_is_moot_once_the_players_hunter_took_its_rabbit() -> void:
+	var own := _archer()
+	units.cooldowns[units.index_of(own)] = 0.0
+	units.spawn(state, Registry.entry(&"units", &"archer"), 0, 900.0)
+	hunt.rabbits.erase(100.0)
+	assert_int(hunt.resolve(units, true, true).size()).is_equal(1)
+	assert_bool(hunt.intro_done).is_true()
+	assert_array(hunt.rabbits).is_equal([900.0])

@@ -1,5 +1,5 @@
 {
- "date": "2026-09-14",
+ "date": "2026-09-26",
  "base": "este repositorio — Parte XIII integrada sobre o dossie v6",
  "engine": "4.6.stable.official.89cea1439",
  "gdunit": "6.2.1",
@@ -11,8 +11,8 @@
  "original_csv_unchanged": 28,
  "proposed_fields": 605,
  "proposed_phase_0_to_2": 275,
- "gdunit_discovered": 649,
- "gdunit_passed": 37,
+ "gdunit_discovered": 655,
+ "gdunit_passed": 649,
  "gdunit_skipped": 6,
  "gdunit_failures": 0,
  "spec_sections": 87,

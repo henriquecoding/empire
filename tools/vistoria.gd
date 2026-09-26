@@ -1,6 +1,5 @@
-# tools/vistoria.gd — uma partida longa, vigiada tick a tick (§45, §63).
-#
-# Fora do jogo: `tools/` esta no exclude_filter do export.
+# tools/vistoria.gd — uma partida longa, vigiada tick a tick (§45, §63). Fora do
+# jogo: `tools/` esta no exclude_filter do export.
 #
 # A suite prova que cada sistema faz o que promete. Isto e outra coisa: monta o
 # greybox INTEIRO — a regiao, a gente, o relogio, a noite — e corre dias
@@ -38,6 +37,7 @@ var _luta_desde: Dictionary = {}
 var _fase: int = -1
 var _dias: int = DIAS
 var _ultima_linha: int = -1
+var _caiu_ao_dia := 0  # o resumo diz os dias vividos: caido no dia 1 nao sao 10
 
 
 func _ready() -> void:
@@ -60,7 +60,8 @@ func _correr() -> void:
 		# nao tem cena — sem esta pergunta media dias de uma partida perdida, e
 		# foi o que fez nas primeiras corridas: sete (Q-081).
 		if SimLoop.builds.fallen(BuildSlot.NUCLEO):
-			print("\n  o castelo-arvore caiu ao dia %d — a partida acabou" % SimLoop.state.day)
+			_caiu_ao_dia = SimLoop.state.day
+			print("\n  o castelo-arvore caiu ao dia %d — a partida acabou" % _caiu_ao_dia)
 			break
 		if not SimLoop.running():
 			_nota("a simulacao parou sozinha ao dia %d" % SimLoop.state.day)
@@ -225,18 +226,19 @@ func _nucleo() -> int:
 
 
 func _nota(o_que: String) -> void:
-	# Uma vez cada: uma anomalia por tick durante uma noite enche o ecra e
-	# esconde as outras.
+	# Uma vez cada: uma anomalia por tick numa noite esconde as outras.
 	if not _achados.has(o_que):
 		_achados.append(o_que)
 
 
 func _relatorio() -> void:
+	var dias := "%d dias" % _dias
+	dias = "%d de %s, o nucleo caiu" % [_caiu_ao_dia, dias] if _caiu_ao_dia > 0 else dias
 	if _achados.is_empty():
-		print("\nvistoria: %d dias sem nada a apontar" % _dias)
+		print("\nvistoria: %s — sem invariantes quebradas" % dias)
 		get_tree().quit()
 		return
-	print("\nvistoria: %d coisa(s) a apontar" % _achados.size())
+	print("\nvistoria: %s — %d coisa(s) a apontar" % [dias, _achados.size()])
 	for a in _achados:
 		print("  · %s" % a)
 	get_tree().quit(1)
