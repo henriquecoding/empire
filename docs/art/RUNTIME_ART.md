@@ -66,7 +66,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `henhouse` | 1 | sim | procedural (`SettlementArt`) | por codigo |
 | `cow_stable` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `lumber_camp` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `ore_pit` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `ore_pit` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `granary` | 2 | sim | `storehouse` — partilhada com `pen`, `saltery` | 1 frame; estados por codigo |
 | `saltery` | 6 |  | `storehouse` — partilhada com `granary`, `pen` | 1 frame; estados por codigo |
 | `pen` | 6 |  | `storehouse` — partilhada com `granary`, `saltery` | 1 frame; estados por codigo |
@@ -78,6 +78,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `root_moat` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `lighthouse` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `consecrated_altar` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `passage_seal` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 
@@ -101,9 +102,11 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 - `farm`: procedural (`SettlementArt`); por codigo
 - `fishery`: procedural (`SettlementArt`); por codigo
 - `henhouse`: procedural (`SettlementArt`); por codigo
+- `ore_pit`: procedural (`Silhouette`/`StructureArt`); por codigo
 - `granary`: `storehouse` — partilhada com `pen`, `saltery`; 1 frame; estados por codigo
 - `archer_tower`: procedural (`Silhouette`/`StructureArt`); por codigo
 - `high_tower`: procedural (`Silhouette`/`StructureArt`); por codigo
+- `passage_seal`: procedural (`Silhouette`/`StructureArt`); por codigo
 - muralha (`walls.csv`, 5 niveis): procedural (`Silhouette`/`StructureArt`); por codigo
 
 **Exportacoes**

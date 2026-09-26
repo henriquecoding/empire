@@ -139,9 +139,11 @@ func test_uma_obra_de_pe_larga_por_dia_o_que_o_csv_lhe_da() -> void:
 
 func test_a_regiao_tem_as_sete_fontes_do_perfil_equilibrado() -> void:
 	# O perfil `balanced` do §06 corre com 7 fontes e da o dia 11 de asfixia. Se
-	# a regiao nao tiver 7, esse numero e sobre outro jogo qualquer.
+	# a regiao nao tiver 7, esse numero e sobre outro jogo qualquer. Sao as da
+	# SUPERFICIE: o poco do subsolo e a expedicao do rei (Q-130), que so rende a
+	# quem la desce, e fica fora do perfil como fica a caca.
 	for vaga in SimLoop.builds.slots:
-		if vaga.yield_per_day > 0.0:
+		if vaga.yield_per_day > 0.0 and vaga.band == Band.Kind.SURFACE:
 			_levantar(vaga.kind)
 			vaga.level = 1
 			vaga.state = BuildSlot.State.DONE

@@ -751,6 +751,8 @@
   e ele não sabe nada de `targets_bands`.
 - **Decide:** tu. É a segunda metade da Q-076, tal como ela estava escrita antes de o F1-16 a fechar, e é
   do F1-09 — o ticket do Alado e do Cavador.
+- **Fechada (AUD-04, 26/09):** nem uma nem outra — o Alado passa a roubar galinhas, e a torre alta a proteger
+  uma coisa concreta. Ver a Q-129.
 
 ### Q-078 · O farol ilumina 300 px e a candeia nunca passa dos 260
 - **Onde:** o §80 escreve a regra de composição da noite inteira — *"uma luz domina por ecrã. Se duas
@@ -1458,6 +1460,42 @@
   da noite, para dentro, um a seguir ao outro; quem não luta recolhe ao núcleo; o escudeiro fica com o rei; quem
   treina continua a treinar. Medido: a vistoria passa de 3 para 8 dias, e a defesa mais fraca do `dez_dias` de
   cair ao dia 2 para cair ao 7.
+
+### Q-129 · O Alado rouba galinhas (fecha a Q-077)
+- **Onde:** §06 (galinheiro, *"galinhas roubáveis à noite"*), §07 (*"Dia 4 — obriga a torre alta"*); a Q-077
+  media o Alado a pousar no castelo sem custar nada a ninguém; auditoria P-J.
+- **Decidido (AUD-04):** quem voa (`flyer`) vai ao galinheiro de pé mais perto dele (`stealable_at_night`), leva
+  **uma** galinha e volta para a borda de onde a noite veio (`Thieves`). Se chegar vivo à alvorada, o galinheiro
+  perde `chicken_theft_matter` (1) da matéria — a produção do dia seguinte —, nunca abaixo de menos um dia de
+  rendimento; abatido pelo caminho, não leva nada. Sem galinheiro de pé, segue para o núcleo como antes. A
+  `barrier()` continua a filtrar por faixa: a resposta ao Alado é a torre alta entre a borda e as galinhas, e não
+  um muro que ele não vê. Sai o `material_consumed` da §46 e uma legenda.
+
+### Q-130 · As cavidades do subsolo têm um poço
+- **Onde:** §11 (*"ao aceder a uma passagem secreta encontras níveis, porões"*), §06 (poço de minério, rocha,
+  *"atrai Cavadores"*), `segments.csv` (`cavity_slots`, que ninguém lia); auditoria P-I.
+- **Decidido (AUD-04):** uma cavidade de cada lado, atrás da passagem (`Cavities`, ±1060 px do núcleo), com um
+  sítio de poço de minério **no subsolo**. A cavidade é rocha, e por isso o `requires_biome_feature = rock` do
+  poço cumpre-se lá em baixo em qualquer bioma. Não tem posto (ninguém mais desce): rende sozinho, e as moedas
+  dele caem no subsolo, onde só o rei as apanha — é a expedição de dia. O `ore_pit` passa à Fase 1. O perfil
+  `balanced` do §06 continua a contar as sete fontes da superfície: o poço fica fora, como a caça.
+
+### Q-131 · O poço chama o Cavador
+- **Onde:** §06 (*"atrai Cavadores"*), a tag `attracted_by_mine` do Cavador; auditoria P-I (*"a própria tag é o
+  custo"*).
+- **Decidido (AUD-04):** com um poço de pé, o Cavador pode ser invocado `mine_lure_days` (3) noites mais cedo —
+  do dia 7 em vez do 10. É o preço da renda do subsolo. Em `rot.csv`, em `_proposed`.
+
+### Q-132 · A escora fecha a passagem
+- **Onde:** §51 (*"se o caminho de superfície estiver selado, a mancha usa a faixa subterrânea"*), §25 (minuto
+  12:00, *"um Rastejante entra pela passagem que abriste"*), a oferta *O que enterraste* (`sealed_passage`);
+  auditoria P-I e AUD-04 (*"o Cavador do dia 10 não tem resposta"*).
+- **Decidido (AUD-04):** cada boca de passagem tem um sítio de **escora** (`passage_seal`, 10 moedas, em
+  `buildings.csv` com `_proposed`). De pé, a passagem fecha **para toda a gente**: o Cavador não sobe por ela e
+  o rei não desce. Um lado com todas as passagens escoradas não deixa caminho ao subsolo, e a mancha desse lado
+  não gasta massa em quem vem por baixo — compra o que vem por cima (o espelho da frase do §51). É para sempre
+  nesta região: fechar o subsolo de um lado é perder o poço e a câmara desse lado. Abrir uma passagem escorada
+  (o preço da oferta *O que enterraste*) fica por fazer.
 
 ## Resolvidas na v5.2 (reversíveis)
 

@@ -15,6 +15,9 @@
 class_name Passages
 extends RefCounted
 
+## A obra que fecha uma boca de passagem (Q-132): de pe, ninguem passa por ela.
+const ESCORA := &"passage_seal"
+
 ## O que devolve, para quem chama traduzir no passage_used da §46.
 const QUEM := &"id"
 const DE := &"from"
@@ -75,5 +78,41 @@ static func reaches(dados: CreatureData, sua_faixa: int, alvo: int) -> bool:
 static func near(x: float, passagens: PackedFloat32Array) -> bool:
 	for passagem in passagens:
 		if absf(x - passagem) <= Band.PASSAGE_PX:
+			return true
+	return false
+
+
+## As passagens que ainda se atravessam: as que nao tem uma escora de pe na boca
+## (AUD-04, Q-132). Escorar fecha para toda a gente — o Cavador nao sobe e o rei
+## nao desce —, e e por isso uma decisao e nao uma porta.
+static func open(passagens: PackedFloat32Array, obras: BuildSystem) -> PackedFloat32Array:
+	var abertas := PackedFloat32Array()
+	for passagem in passagens:
+		if not _escorada(passagem, obras):
+			abertas.append(passagem)
+	return abertas
+
+
+## Se o subsolo esta fechado do lado `lado` (-1 ou +1) do `centro`: ha passagem
+## desse lado e todas estao escoradas. Sem passagem nenhuma nao se diz fechado —
+## e o mundo de um teste que nao as pos, e nao uma escolha de quem joga.
+static func sealed_side(
+	passagens: PackedFloat32Array, obras: BuildSystem, centro: float, lado: int
+) -> bool:
+	var ha := false
+	for passagem in passagens:
+		if signf(passagem - centro) != signf(lado):
+			continue
+		ha = true
+		if not _escorada(passagem, obras):
+			return false
+	return ha
+
+
+static func _escorada(passagem: float, obras: BuildSystem) -> bool:
+	if obras == null:
+		return false
+	for obra in obras.slots:
+		if obra.kind == ESCORA and obra.standing() and absf(obra.x - passagem) <= Band.PASSAGE_PX:
 			return true
 	return false

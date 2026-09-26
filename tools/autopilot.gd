@@ -108,9 +108,13 @@ static func _obra(loop: Node, onde: float, saco: int) -> float:
 	var rende := false
 	# A tarde prepara a noite: o que "rende" passa a ser o que trava (§05).
 	var tarde := int(ClockService.clock.current_phase()) == int(GameClock.Phase.AFTERNOON)
+	# O piloto nao desce (AUD-04): o poco da cavidade paga-se la em baixo.
+	var faixa: int = loop.units.bands[loop.units.index_of(loop.king_id)]
 	for vaga in loop.builds.slots:
 		var custo: int = vaga.next_cost()
 		if vaga.kind == BuildSlot.NUCLEO or custo <= 0 or custo > saco:
+			continue
+		if int(vaga.band) != faixa:
 			continue
 		var da_renda: bool = vaga.blocks if tarde else vaga.yield_per_day > 0.0
 		if rende and not da_renda:

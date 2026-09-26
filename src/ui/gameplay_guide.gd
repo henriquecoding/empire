@@ -7,6 +7,9 @@ const CEM := 100.0
 
 static func goal() -> String:
 	var rot := SimLoop.night.rot
+	var tarde := ClockService.clock.current_phase() >= GameClock.Phase.AFTERNOON
+	if _rei_em_baixo() and (tarde or rot.active()):
+		return _tr(&"GUIDE_CLIMB")  # P-I: o subsolo e de dia
 	if rot.active():
 		if _rei_na_mancha():
 			return _tr(&"GUIDE_ROT_FED")
@@ -63,8 +66,9 @@ static func context(device: Glyphs.Device) -> String:
 		return ""
 	var buttons: Array = Glyphs.BOTOES[device]
 	var values := {"drop": _button(buttons[1]), "assume": _button(buttons[2])}
-	if Verbs.destination(units, SimLoop.king_id, SimLoop.passages) != Verbs.NENHUMA:
-		return _tr(&"CONTEXT_PASSAGE").format(values)
+	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
+	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
+		return _passage(king, values)
 	for site in SimLoop.builds.slots:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue
@@ -178,6 +182,25 @@ static func conversion_key(estado: ConversionSystem.Status, tem_oficio: bool) ->
 		ConversionSystem.Status.WANTS_CRAFT:
 			return &"CONTEXT_CONVERT_WANTS_CRAFT"
 	return &"CONTEXT_CONVERT_COIN" if tem_oficio else &"CONTEXT_CONVERT_NOBODY"
+
+
+## A boca de uma passagem: descer, ou escora-la enquanto a escora esta por pagar
+## (Q-132). A escora a meio ou de pe ja nao se oferece.
+static func _passage(king: int, values: Dictionary) -> String:
+	for site in SimLoop.builds.slots:
+		if site.kind != Passages.ESCORA or site.band != SimLoop.units.bands[king]:
+			continue
+		if absf(site.x - SimLoop.units.xs[king]) > site.width * HALF:
+			continue
+		values["cost"] = PriceTag.owed_by(site)
+		if site.state == BuildSlot.State.EMPTY and values.cost > 0:
+			return _tr(&"CONTEXT_PASSAGE_SEAL").format(values)
+	return _tr(&"CONTEXT_PASSAGE").format(values)
+
+
+static func _rei_em_baixo() -> bool:
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	return i >= 0 and SimLoop.units.bands[i] == int(Band.Kind.UNDERGROUND)
 
 
 ## O rei dentro da mancha, com moedas: e ai que o Verbo 1 alimenta (§05, Q-127).

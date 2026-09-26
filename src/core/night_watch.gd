@@ -17,6 +17,8 @@ class_name NightWatch
 extends RefCounted
 
 const TABELA_CRIATURAS := &"creatures"
+## O poco de minerio "atrai Cavadores" (§06): a tag e da obra (Q-131).
+const CHAMA_CAVADORES := &"attracts_burrowers"
 
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
@@ -30,6 +32,8 @@ var _tropas: UnitSystem
 var _obras: BuildSystem
 var _postos: JobBoard
 var _moedas: CoinSystem
+var _edificios: Dictionary
+var _criaturas: Dictionary
 
 
 ## As tropas, as obras e as moedas sao as do SimLoop, e as mesmas durante o jogo
@@ -45,6 +49,8 @@ func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: J
 	_moedas = moedas
 	_obras = obras
 	_postos = postos
+	_edificios = SimFactory.by_id(&"buildings")
+	_criaturas = SimFactory.by_id(TABELA_CRIATURAS)
 
 
 ## Passo 2 do §43. `mundo` leva o x do nucleo e a largura da regiao: e para o
@@ -60,6 +66,8 @@ func tick(
 	if not rot.active():
 		return
 	_alimentar()
+	var borda := mundo.y if rot.state.side > 0 else 0.0
+	Thieves.plan(bichos, _criaturas, _obras, _edificios, borda)  # o Alado (Q-129)
 	if voice.paused(delta):
 		return
 	if rot.needs_interval():
@@ -144,6 +152,10 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		# sao duas NightWatch — e o F1-09 que as poe.
 		var lado := rot.announced if rot.announced != 0 else _sortear_lado()
 		rot.announced = 0
+		# O subsolo (AUD-04): o poco chama o Cavador mais cedo (Q-131), e um lado
+		# com as passagens escoradas nao lhe deixa caminho (Q-132).
+		rot.lure_days = SimFactory.rot_profile().mine_lure_days if _chama() else 0
+		rot.underground_open = not Passages.sealed_side(SimLoop.passages, _obras, mundo.x, lado)
 		if not voice.before_spawn(rot, estado.day):
 			return  # §75: a decima segunda fechou o ciclo
 		rot.spawn(estado.day, lado, mundo.y)
@@ -158,6 +170,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 	if rot.active():
 		rot.retreat()
 		EventBus.queue(&"rot_retreated", [estado.day])
+	_roubos(bichos)
 	for creature_id in bichos.dissolve():
 		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 
@@ -168,6 +181,22 @@ func _invocar(
 	var dados := Registry.entry(TABELA_CRIATURAS, pedido.creature_id) as CreatureData
 	bichos.spawn(estado, dados, pedido.x, nucleo)
 	EventRelay.summoned(pedido, rot.mass())
+
+
+## Quem chegou vivo a alvorada com uma galinha levou-a (Q-129).
+func _roubos(bichos: CreatureSystem) -> void:
+	for perda in Thieves.escape(bichos, _obras, SimFactory.curve().chicken_theft_matter):
+		var obra := _obras.slots[_obras.index_of(perda[Thieves.OBRA])]
+		var tipo: StringName = (_edificios[obra.kind] as BuildingData).material
+		EventBus.queue(&"material_consumed", [obra.id, tipo, roundi(perda[Thieves.QUANTO])])
+
+
+func _chama() -> bool:
+	for obra in _obras.standing():
+		var dados: BuildingData = _edificios.get(obra.kind)
+		if dados != null and dados.tags.has(CHAMA_CAVADORES):
+			return true
+	return false
 
 
 func _sortear_lado() -> int:

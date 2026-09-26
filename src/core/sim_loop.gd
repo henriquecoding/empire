@@ -124,7 +124,8 @@ func set_paused(pausado: bool) -> void:
 ## Um passo. Publico: um teste corre um dia inteiro sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
-	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages, builds, field))
+	var abertas := Passages.open(passages, builds)  # a escora fecha a boca (Q-132)
+	_largar(Verbs.consume(intents, units, creatures, combat, king_id, abertas, builds, field))
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	var mudou := _mudanca_de_fase()
@@ -138,7 +139,7 @@ func step(delta: float) -> void:
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
 	field.plan(units, _fase < GameClock.Phase.DUSK)
-	EventRelay.combat(combat.choose(units, creatures, builds, passages))
+	EventRelay.combat(combat.choose(units, creatures, builds, abertas))
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick

@@ -62,8 +62,11 @@ def ramos(fonte: str, cabeca: str, constantes: dict[str, str]) -> dict[str, str]
 
 def mapas() -> dict:
     nucleo = re.search(r'const NUCLEO := &"(\w+)"', ler("src/sim/state/build_slot.gd")).group(1)
-    greybox = ler("src/world/greybox.gd")
+    # O subsolo e a boca das passagens (AUD-04) montam-se no Cavities, e a escora
+    # e a do Passages.
+    greybox = ler("src/world/greybox.gd") + ler("src/world/cavities.gd")
     no_marco = set(re.findall(r'const [A-Z_]+ := &"(\w+)"', greybox)) | {nucleo}
+    no_marco |= set(re.findall(r'const ESCORA := &"(\w+)"', ler("src/sim/systems/passages.gd")))
     no_marco |= set(re.findall(r'_por_recrutar\(&"(\w+)"', greybox))
     no_marco |= set(re.findall(r'Registry\.entry\(&"units", &"(\w+)"\)', greybox))
     # Quem se forma numa obra do marco: a obra diz o oficio (`craft`) e a tropa

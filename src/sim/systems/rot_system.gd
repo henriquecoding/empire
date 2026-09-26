@@ -27,6 +27,8 @@ const NAO_ARMADA := -1.0
 const RECUSAS_MAX := 5
 
 const SEM_CRIATURA := &""
+## A tag da criatura que o poco de minerio chama mais cedo (§06, Q-131).
+const ATRAIDA := &"attracted_by_mine"
 
 var state := RotState.new()
 
@@ -40,6 +42,10 @@ var refusals: int = 0
 ## O lado desta noite, sorteado a tarde e dito no mundo antes do crepusculo (Q-125).
 ## Zero e ainda nao dito.
 var announced: int = 0
+## O que o subsolo deixa (AUD-04), escrito ao crepusculo: noites de avanco do
+## Cavador com um poco de pe (Q-131), e se o subsolo deste lado passa (Q-132).
+var lure_days: int = 0
+var underground_open: bool = true
 
 var _perfil: RotProfile
 var _tabela: Array[CreatureData] = []
@@ -227,7 +233,9 @@ func deep(dia: int) -> bool:
 ## esta por custo decrescente, por isso a primeira que serve e a escolhida.
 func _escolher() -> CreatureData:
 	for c in _tabela:
-		if c.min_day <= _dia and c.mass_cost <= state.mass:
+		var cedo := lure_days if c.tags.has(ATRAIDA) else 0
+		var fechado := c.band == Band.Kind.UNDERGROUND and not underground_open
+		if c.min_day - cedo <= _dia and c.mass_cost <= state.mass and not fechado:
 			return c
 	return null
 

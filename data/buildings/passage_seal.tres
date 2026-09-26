@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_gc2fx"]
+
+[resource]
+script = ExtResource("1_gc2fx")
+id = &"passage_seal"
+display_key = "BUILDING_PASSAGE_SEAL"
+category = &"special"
+cost = 10
+max_health = 80
+build_work = 20.0
+width_px = 48
+shadow_width = 48
+tags = Array[StringName]([&"seals_passage"])

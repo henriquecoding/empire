@@ -13,8 +13,7 @@
 # exatamente o que um segmento e (§21: "o gerador escolhe segmentos; o segmento
 # decide onde se pode construir").
 #
-# Quando o GB-01 trouxer a cena a serio, este ficheiro desaparece e o que fica
-# e a mesma chamada: alguem enche o SimLoop de slots, passagens e gente.
+# Quando o GB-01 trouxer a cena a serio, isto desaparece e fica a mesma chamada.
 class_name Greybox
 extends RefCounted
 
@@ -132,10 +131,9 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
 	for x in CELEIROS_X:
 		_edificio(SimLoop.core_x + x, CELEIRO, &"")
+	Cavities.author()  # o subsolo e a boca das passagens (P-I), depois de tudo
 
 
-## Se o bioma deste segmento sustenta este edificio (§06, §21). Sem exigencia,
-## cabe em qualquer lado; com ela, so onde o segmento tem esse recurso.
 static func _segredos() -> void:
 	SimLoop.secrets.clear()
 	for recurso in Registry.entries(&"lore/secrets"):
@@ -149,6 +147,8 @@ static func _segredos() -> void:
 			SimLoop.secrets.post_journal(diario.id, SimLoop.core_x + RUINA_X, CAMARA_W)
 
 
+## Se o bioma deste segmento sustenta este edificio (§06, §21): sem exigencia cabe
+## em qualquer lado; com ela, so onde o segmento tem esse recurso.
 static func cabe_no_bioma(dados: BuildingData) -> bool:
 	if dados.requires_biome_feature.is_empty():
 		return true
@@ -165,7 +165,7 @@ static func recurso() -> StringName:
 ## procurar: sem isto atravessavam-no como se fosse um desenho.
 static func _nucleo() -> void:
 	var dados := Registry.entry(&"buildings", BuildSlot.NUCLEO) as BuildingData
-	var vaga := _do_edificio(dados, SimLoop.core_x)
+	var vaga := slot_of(dados, SimLoop.core_x)
 	vaga.blocks = true
 	SimLoop.builds.post(vaga)
 	vaga.level = 1
@@ -189,13 +189,13 @@ static func _edificio(x: float, id: StringName, posto: StringName) -> void:
 	var dados := Registry.entry(&"buildings", id) as BuildingData
 	if not cabe_no_bioma(dados):
 		return
-	var vaga := _do_edificio(dados, x)
+	var vaga := slot_of(dados, x)
 	vaga.job_id = posto
 	vaga.job_slots = dados.job_slots
 	SimLoop.builds.post(vaga)
 
 
-static func _do_edificio(dados: BuildingData, x: float) -> BuildSlot:
+static func slot_of(dados: BuildingData, x: float) -> BuildSlot:
 	var vaga := BuildSlot.new()
 	vaga.x = x
 	vaga.kind = dados.id

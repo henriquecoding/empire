@@ -39,3 +39,4 @@ dominion_peoples_kept = 4
 peak_every = 6
 peak_mass_mult = 1.3
 calm_mass_mult = 0.6
+mine_lure_days = 3

@@ -97,3 +97,8 @@ extends Resource
 @export var peak_every: int = 0
 @export var peak_mass_mult: float = 0.0
 @export var calm_mass_mult: float = 0.0
+
+@export_group("Auditoria de gameplay — AUD-04")
+## O poco de minerio "atrai Cavadores" (§06): com um de pe, o Cavador vem este
+## numero de noites mais cedo (Q-131).
+@export var mine_lure_days: int = 0

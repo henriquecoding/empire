@@ -43,7 +43,8 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, tempo: float) -> void:
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	if i == UnitSystem.NENHUM or int(SimLoop.units.bands[i]) != int(faixa):
 		return
-	var para := Verbs.destination(SimLoop.units, SimLoop.king_id, SimLoop.passages)
+	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)  # a escora fecha (Q-132)
+	var para := Verbs.destination(SimLoop.units, SimLoop.king_id, abertas)
 	if para == Verbs.NENHUMA:
 		return
 	var x := nearest(SimLoop.units.xs[i], SimLoop.passages)
