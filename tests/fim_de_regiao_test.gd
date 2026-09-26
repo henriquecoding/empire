@@ -145,3 +145,12 @@ func test_depois_da_ultima_regiao_vem_o_epilogo() -> void:
 func test_a_regiao_vai_no_save() -> void:
 	SimLoop.state.region = 2
 	assert_int(GameState.from_dict(SimLoop.state.to_dict()).region).is_equal(2)
+
+
+## A pausa do fim nao refaz o save que a travessia apagou (Q-135).
+func test_depois_de_atravessar_nao_se_grava() -> void:
+	_no_dia(SimFactory.curve().crossing_day)
+	assert_bool(SavePoint.allowed()).is_true()
+	_na_bifurcacao()
+	_verbo_2()
+	assert_bool(SavePoint.allowed()).is_false()

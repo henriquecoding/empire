@@ -125,7 +125,7 @@ func _retomar() -> bool:
 	SimLoop.resume(estado, SaveService.restore_rng(slot))
 	Greybox.region()
 	SimLoop.load_world(SaveService.restore_world(slot))
-	if Defeat.happened() or SimLoop.units.count() == 0:
+	if Defeat.happened() or SimLoop.state.crossed or SimLoop.units.count() == 0:
 		return false
 	return true
 
