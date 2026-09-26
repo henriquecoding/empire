@@ -114,6 +114,30 @@ func test_a_capacidade_de_vida_sobe_e_desce_o_teto_das_tuas_tropas() -> void:
 	assert_int(unidades.healths[i]).is_equal(base)
 
 
+## Modo escolhido e efeito activo sao coisas diferentes (planejamento 26/09,
+## §7): o modo guardado fica CAPACITY mesmo sem cozinheiro, e o ecra tem de dizer
+## o que corre de facto.
+func test_o_estado_da_casa_separa_o_modo_escolhido_do_efeito_activo() -> void:
+	conversao.bind(unidades)
+	assert_int(conversao.status(celeiro)).is_equal(ConversionSystem.Status.COIN)
+	conversao.modes[celeiro.id] = CraftData.Mode.CAPACITY
+	assert_int(conversao.status(celeiro)).is_equal(ConversionSystem.Status.WANTS_CRAFT)
+	unidades.spawn(estado, Registry.entry(&"units", &"cook"), MEU, 0.0)
+	# Escolhido e com oficio, mas a conversao ainda nao correu nenhuma fase.
+	assert_int(conversao.status(celeiro)).is_equal(ConversionSystem.Status.WAITING)
+	_um_dia_com(unidades)
+	assert_int(conversao.status(celeiro)).is_equal(ConversionSystem.Status.ACTIVE)
+	assert_int(conversao.status(canteiro)).is_equal(ConversionSystem.Status.NONE)
+
+
+func test_sem_produtor_de_pe_a_capacidade_escolhida_nao_corre() -> void:
+	conversao.modes[celeiro.id] = CraftData.Mode.CAPACITY
+	unidades.spawn(estado, Registry.entry(&"units", &"cook"), MEU, 0.0)
+	canteiro.state = BuildSlot.State.RUIN
+	_um_dia_com(unidades)
+	assert_int(conversao.status(celeiro)).is_equal(ConversionSystem.Status.WAITING)
+
+
 func test_o_modo_vai_no_save() -> void:
 	conversao.modes[celeiro.id] = CraftData.Mode.CAPACITY
 	var copia := SimFactory.conversion()

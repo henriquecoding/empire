@@ -140,8 +140,19 @@ static func _conversion(site: BuildSlot, values: Dictionary) -> String:
 	values["effect"] = _tr(&"CAPACITY_" + String(conv.capacity_kind).to_upper()).format(
 		{"pct": roundi(absf(conv.magnitude) * CEM)}
 	)
-	if conversao.mode_of(site) == CraftData.Mode.CAPACITY:
-		return _tr(&"CONTEXT_CONVERT_CAPACITY").format(values)
-	if not conversao.has_craft(conv.capacity_craft):
-		return _tr(&"CONTEXT_CONVERT_NOBODY").format(values)
-	return _tr(&"CONTEXT_CONVERT_COIN").format(values)
+	var chave := conversion_key(conversao.status(site), conversao.has_craft(conv.capacity_craft))
+	return _tr(chave).format(values)
+
+
+## A frase de uma casa de conversao. O modo guardado nao chega: a capacidade
+## escolhida sem o oficio vende, e com ele so da efeito depois de uma fase com
+## materia — o que se diz e o estado efectivo (planejamento 26/09, §7).
+static func conversion_key(estado: ConversionSystem.Status, tem_oficio: bool) -> StringName:
+	match estado:
+		ConversionSystem.Status.ACTIVE:
+			return &"CONTEXT_CONVERT_CAPACITY"
+		ConversionSystem.Status.WAITING:
+			return &"CONTEXT_CONVERT_WAITING"
+		ConversionSystem.Status.WANTS_CRAFT:
+			return &"CONTEXT_CONVERT_WANTS_CRAFT"
+	return &"CONTEXT_CONVERT_COIN" if tem_oficio else &"CONTEXT_CONVERT_NOBODY"

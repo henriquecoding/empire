@@ -13,6 +13,12 @@
 class_name ConversionSystem
 extends RefCounted
 
+## O que uma casa faz AGORA, e nao so o modo guardado (planejamento 26/09, §7):
+## NONE nao e casa de conversao; COIN vende; WANTS_CRAFT tem a capacidade
+## escolhida e vende porque falta o oficio; WAITING tem oficio e ainda nao deu
+## a capacidade nesta fase; ACTIVE da-a.
+enum Status { NONE, COIN, WANTS_CRAFT, WAITING, ACTIVE }
+
 const METADE := 0.5
 ## Uma fraccao de materia que a soma das fases nao fecha (0,333 x 3) nao pode
 ## deixar de converter: e aritmetica de virgula, e nao regra.
@@ -159,6 +165,19 @@ func _modo_efectivo(casa: BuildSlot, conv: CraftData) -> int:
 	if mode_of(casa) == CraftData.Mode.CAPACITY and _tem_oficio(conv.capacity_craft):
 		return CraftData.Mode.CAPACITY
 	return CraftData.Mode.COIN
+
+
+## O estado efectivo de `casa`. `active` e o que a ultima fase deu e o que o
+## apply() poe nas tropas — por isso e ele, e nao o modo, que diz ACTIVE.
+func status(casa: BuildSlot) -> Status:
+	var conv := craft_of(casa)
+	if conv == null:
+		return Status.NONE
+	if mode_of(casa) == CraftData.Mode.COIN:
+		return Status.COIN
+	if not _tem_oficio(conv.capacity_craft):
+		return Status.WANTS_CRAFT
+	return Status.ACTIVE if capacity(conv.capacity_kind) > 0.0 else Status.WAITING
 
 
 ## Se ha um deste oficio teu vivo — o que a capacidade precisa para correr.

@@ -23,6 +23,10 @@ const LASCA_S := 0.25
 const MADEIRA := Color("776343")
 const PEDRA_ESCURA := Color("3b3326")
 const LASCA_COR := Color("e7c587")
+## O emblema de uma casa de conversao, por cima dela: um disco de moeda quando
+## vende, uma seta quando da capacidade — cheia a correr, vazia a espera.
+const EMBLEMA_ALTURA := 14.0
+const EMBLEMA := 5.0
 ## Quanto tempo o progresso parado ainda conta como trabalho: o tick e 30 Hz e o
 ## ecra 60, e sem folga a obra piscava entre "a trabalhar" e "a espera".
 const FOLGA_TRABALHO := 0.5
@@ -125,3 +129,33 @@ static func _lascas(
 		var x := canto.x + largura * (float(k) + 0.5) / LASCAS
 		var salto := float((fase + k) % 2) * LASCA.y
 		canvas.draw_rect(Rect2(Vector2(x, canto.y - LASCA.y - salto), LASCA), LASCA_COR * luz)
+
+
+## O que uma casa de conversao faz agora (ConversionSystem.status), por forma:
+## disco = vende; seta cheia = capacidade a correr; seta vazia = escolhida e sem
+## efeito. Sem oficio, vende e mostra a seta vazia ao lado do disco.
+static func emblem(
+	canvas: CanvasItem, caixa: Rect2, estado: ConversionSystem.Status, luz: Color
+) -> void:
+	if estado == ConversionSystem.Status.NONE:
+		return
+	var centro := Vector2(caixa.get_center().x, caixa.position.y - EMBLEMA_ALTURA)
+	var vende := estado in [ConversionSystem.Status.COIN, ConversionSystem.Status.WANTS_CRAFT]
+	var seta := centro
+	if vende:
+		canvas.draw_circle(centro, EMBLEMA, WorldPalette.MOEDA * luz)
+		seta += Vector2(EMBLEMA * 3.0, 0.0)
+	if estado == ConversionSystem.Status.COIN:
+		return
+	var pontos := PackedVector2Array(
+		[
+			seta + Vector2(-EMBLEMA, EMBLEMA),
+			seta + Vector2(0.0, -EMBLEMA),
+			seta + Vector2(EMBLEMA, EMBLEMA),
+		]
+	)
+	if estado == ConversionSystem.Status.ACTIVE:
+		canvas.draw_colored_polygon(pontos, WorldPalette.VIDA * luz)
+	else:
+		pontos.append(pontos[0])
+		canvas.draw_polyline(pontos, WorldPalette.VIDA * luz, 1.0)

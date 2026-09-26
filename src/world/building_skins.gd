@@ -54,6 +54,8 @@ static func draw_on(canvas: CanvasItem, slot: BuildSlot, light: Lighting, tempo:
 			if stage == SiteStage.Stage.MENDING:
 				SiteMarks.braces(canvas, box, SiteStage.built(slot), lit, tempo, trabalho)
 	SiteMarks.coins(canvas, foot, slot.paid, SiteStage.cost_now(slot), lit)
+	if SiteStage.operating(stage) and SimLoop.field != null:
+		SiteMarks.emblem(canvas, box, SimLoop.field.conversion.status(slot), lit)
 	if slot.standing():
 		Gauge.health(canvas, box, float(slot.health) / maxf(1.0, slot.max_health()))
 	return true
