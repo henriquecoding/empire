@@ -6,6 +6,8 @@ const CEM := 100.0
 
 
 static func goal() -> String:
+	if Defeat.king_fell() and SimLoop.field.succession.ready():
+		return _tr(&"GUIDE_HEIR")  # §16: o herdeiro assume ao amanhecer
 	var rot := SimLoop.night.rot
 	var tarde := ClockService.clock.current_phase() >= GameClock.Phase.AFTERNOON
 	if _rei_em_baixo() and (tarde or rot.active()):
@@ -77,6 +79,8 @@ static func context(device: Glyphs.Device) -> String:
 				return _evolve(site, values)
 			continue
 		values["name"] = _building_name(site)
+		if site.kind == Succession.CASA and site.standing():
+			return _heir(values)
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
 			return _tr(&"CONTEXT_BUILDING").format(values)
@@ -196,6 +200,18 @@ static func _passage(king: int, values: Dictionary) -> String:
 		if site.state == BuildSlot.State.EMPTY and values.cost > 0:
 			return _tr(&"CONTEXT_PASSAGE_SEAL").format(values)
 	return _tr(&"CONTEXT_PASSAGE").format(values)
+
+
+## A casa do herdeiro de pe: quantos dias de treino, e o que custa cada um (§15).
+static func _heir(values: Dictionary) -> String:
+	var herdeiro := SimLoop.field.succession
+	if herdeiro.ready():
+		return _tr(&"CONTEXT_HEIR_READY").format(values)
+	var curva := SimFactory.curve()
+	values["days"] = herdeiro.days
+	values["total"] = curva.heir_training_days
+	values["cost"] = curva.heir_cost_per_day
+	return _tr(&"CONTEXT_HEIR").format(values)
 
 
 static func _rei_em_baixo() -> bool:

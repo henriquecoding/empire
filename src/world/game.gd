@@ -44,6 +44,8 @@ func _ready() -> void:
 	if not _retomar():
 		SimLoop.start(_semente())
 		Greybox.build()
+		# §16: o que a partida perdida deixou (Q-134). Sem legado, nao muda nada.
+		Legacy.apply(SaveService.take_legacy(), SimLoop.state, SimLoop.builds)
 		# §26: o dia ao ritmo de quem joga. Um jogo novo nasce com a duracao da
 		# ultima escolha, pela fila como qualquer outra (§61, GB-24).
 		var segundos := Preferences.shared().number(Preferences.DAY_SECONDS)
@@ -169,13 +171,16 @@ func _na_morte(unit_id: int, _x: float, _faixa: int, _larga: PackedStringArray) 
 
 func _acabar() -> void:
 	_tremer()
+	# O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134).
+	var fica := SimFactory.curve().decay_structures_kept
+	SaveService.lose(Legacy.of(SimLoop.state, SimLoop.builds, fica))
 	SimLoop.set_paused(true)
 	$Entrada.set_process_unhandled_input(false)
 
 
 ## §16: perder nao se desfaz com um save — "decay em vez de reset". O que o
-## botao da derrota pede e um jogo novo, e nao a ultima alvorada; o decay, que
-## guarda 40% do que se construiu, ainda nao existe (Q-088). Chamado pelo grupo
+## botao da derrota pede e um jogo novo, e nao a ultima alvorada: os saves ja se
+## apagaram, e o jogo novo recebe o legado (Q-088, Q-134). Chamado pelo grupo
 ## `jogo`, porque quem o pede e a interface e ela nao importa daqui (§70).
 func new_game() -> void:
 	_recomecar = true

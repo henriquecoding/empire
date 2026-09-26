@@ -67,6 +67,7 @@ def mapas() -> dict:
     greybox = ler("src/world/greybox.gd") + ler("src/world/cavities.gd")
     no_marco = set(re.findall(r'const [A-Z_]+ := &"(\w+)"', greybox)) | {nucleo}
     no_marco |= set(re.findall(r'const ESCORA := &"(\w+)"', ler("src/sim/systems/passages.gd")))
+    no_marco |= set(re.findall(r'const CASA := &"(\w+)"', ler("src/sim/systems/succession.gd")))
     no_marco |= set(re.findall(r'_por_recrutar\(&"(\w+)"', greybox))
     no_marco |= set(re.findall(r'Registry\.entry\(&"units", &"(\w+)"\)', greybox))
     # Quem se forma numa obra do marco: a obra diz o oficio (`craft`) e a tropa

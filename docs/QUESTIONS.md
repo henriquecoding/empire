@@ -966,6 +966,7 @@
   da ADR 0005 e da Q-081, e fechá-lo é decidir o que um save guarda depois de uma derrota.
 - **Decide:** tu, quando houver decay. As duas perguntas: o que o *"Novo jogo"* herda da partida perdida, e se
   um autosave anterior à derrota continua a poder ser retomado.
+- **Fechada (AUD-05, 26/09):** herda o legado do §16 e os autosaves da partida perdida apagam-se. Ver a Q-134.
 
 ### Q-089 · A cascata do amanhecer é simulação, e o dossiê não diz a ordem
 - **Onde:** §24 (*"Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a
@@ -1496,6 +1497,29 @@
   não gasta massa em quem vem por baixo — compra o que vem por cima (o espelho da frase do §51). É para sempre
   nesta região: fechar o subsolo de um lado é perder o poço e a câmara desse lado. Abrir uma passagem escorada
   (o preço da oferta *O que enterraste*) fica por fazer.
+
+### Q-133 · O herdeiro
+- **Onde:** §15 (*"Treino — 10 dias na Casa do Herdeiro. Custa 5 moedas/dia"*; *"a Ganância é sorteada de novo"*),
+  §16 (*"se houver sucessor, ele assume no amanhecer"*), `economy.csv` (`heir_training_days`,
+  `heir_cost_per_day`, que ninguém lia); auditoria D6 e AUD-05.
+- **Decidido (AUD-05):** a casa do herdeiro tem sítio no *greybox* (fora do muro de fora, a oeste, do outro lado
+  do celeiro) e passa à Fase 1. De pé, cada alvorada tira um dia de treino ao saco do rei (5 moedas; sem elas,
+  nesse dia não treina). Com o herdeiro formado, a morte do rei **deixa de ser derrota**: o guia diz "o herdeiro
+  assume ao amanhecer", e na alvorada seguinte ele nasce na casa, sem moedas, com a ganância sorteada de novo, e o
+  treino recomeça do zero. Saem `king_died` e `succession_started` da §46.
+- **Sem herdeiro continua a ser derrota:** o interregno do §16 (3 dias sem construir, ganância 80) pede outro
+  personagem jogável que o atravesse, e na Fase 1 o monarca é o único. Os 60% de *boosts* herdados ficam para
+  quando houver *boosts* que durem; a evolução da classe é do império e fica.
+
+### Q-134 · O que fica quando se perde (fecha a Q-088)
+- **Onde:** §16 (*"Decay em vez de reset... mantém: Sementes Reais, classes desbloqueadas, mapas revelados,
+  segredos encontrados, e 40% das estruturas do império principal"*), `economy.csv` (`decay_structures_kept`).
+- **Decidido (AUD-05):** na derrota escreve-se o **legado** (`Legacy`) — as Sementes Reais, os segredos achados,
+  as conquistas, o plano da campanha e as obras que ficam — e **os saves da partida perdida apagam-se**: perder
+  não se desfaz a recarregar a alvorada de antes. Ficam as obras de pé mais caras (por moedas investidas; no
+  empate, por id), `round(40% × obras de pé)`, sem o núcleo nem as ruínas. O jogo novo (o botão da derrota, ou
+  abrir o jogo outra vez) monta a região e levanta-as no mesmo sítio, no mesmo degrau e caminho, inteiras. O
+  ecrã da derrota diz o que fica.
 
 ## Resolvidas na v5.2 (reversíveis)
 

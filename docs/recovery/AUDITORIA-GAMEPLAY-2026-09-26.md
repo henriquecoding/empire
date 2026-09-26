@@ -1208,3 +1208,14 @@ sozinha no dia 10, a mesma defesa aguenta a noite com o muro direito a 132/450; 
 ninguém repara os muros entre noites (o instrumento não tem jogador). O piloto da vistoria continua a morrer na
 noite 4, na main e aqui (não constrói a torre alta nem responde ao Alado); sem rei, a partida que ele deixa cai
 no dia 7 em vez do 8. O piloto passou a só pagar obras da faixa em que está: não desce.
+
+## Seguimento — AUD-05, primeira metade (o herdeiro e o *decay*)
+
+Decisões nas Q-133 e Q-134 (a Q-134 fecha a Q-088); ticket `docs/backlog/AUD-05.md`.
+
+| Frente | O que mudou | Prova |
+|---|---|---|
+| D6 de design — o rei sem herdeiro | A casa do herdeiro tem sítio e passa à Fase 1; cada alvorada tira 5 moedas ao saco do rei por um dia de treino (10 dias). Com o herdeiro formado a morte do rei não é derrota: na alvorada seguinte ele nasce na casa, a ganância sorteia-se de novo e o treino recomeça (`Succession`). Sem herdeiro, continua a ser derrota | `sucessao_test` |
+| Perder recomeçava do zero | Na derrota escreve-se o legado (`Legacy`: Sementes, segredos, conquistas, plano da campanha e as 40% obras mais caras) e os saves da partida apagam-se; o jogo novo levanta-as no mesmo sítio e degrau; o ecrã da derrota diz o que fica | `legado_test` |
+
+Falta a segunda metade: a travessia da região (P-K), o epílogo chamado no fim e as variantes de melhoria (P-N).

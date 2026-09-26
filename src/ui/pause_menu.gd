@@ -97,8 +97,26 @@ static func defeated() -> bool:
 ## O texto do menu. Volta a escrever-se quando o idioma muda (§27, GB-28).
 func _escrever() -> void:
 	_titulo.text = tr(&"UI_CROWN_FALLEN") if _perdido else tr(&"UI_PAUSED")
+	if _perdido:
+		_titulo.text += "\n" + legacy_line(SaveService.legacy())
 	_retomar.text = tr(&"UI_RESUME")
 	_novo.text = tr(&"UI_NEW_GAME")
+
+
+## O que o jogo novo herda, numa linha (§16, Q-134).
+static func legacy_line(legado: Dictionary) -> String:
+	return (
+		TranslationServer
+		. translate(&"UI_LEGACY")
+		. format(
+			{
+				"slots": (legado.get(Legacy.OBRAS, []) as Array).size(),
+				"seeds": int(legado.get(Legacy.SEMENTES, 0)),
+				"found":
+				(legado.get(Legacy.ACHADOS, PackedStringArray()) as PackedStringArray).size(),
+			}
+		)
+	)
 
 
 func _notification(o_que: int) -> void:

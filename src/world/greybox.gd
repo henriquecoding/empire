@@ -6,14 +6,10 @@
 # segmento — montada em codigo a partir de data/source/segments.csv em vez de
 # autorada numa cena.
 #
-# Nenhum numero de conteudo esta escrito aqui: a largura do segmento, quantos
-# slots e quantas passagens saem do SegmentData; os custos, as vidas e os
-# trabalhos saem de buildings.csv e walls.csv. O que ESTA aqui sao posicoes —
-# onde fica cada coisa dentro da regiao — e isso e autoria de nivel, que e
-# exatamente o que um segmento e (§21: "o gerador escolhe segmentos; o segmento
-# decide onde se pode construir").
-#
-# Quando o GB-01 trouxer a cena a serio, isto desaparece e fica a mesma chamada.
+# Nenhum numero de conteudo esta aqui (sai de segments.csv, buildings.csv e
+# walls.csv). O que ESTA aqui sao posicoes, que sao autoria de nivel (§21: "o
+# gerador escolhe segmentos; o segmento decide onde se pode construir"). Quando o
+# GB-01 trouxer a cena a serio, isto desaparece e fica a mesma chamada.
 class_name Greybox
 extends RefCounted
 
@@ -45,6 +41,8 @@ const COZINHAS_X := [300.0]
 # O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
 # render e tambem a de mandar o cozinheiro ao sitio arriscado (§21).
 const CELEIROS_X := [1450.0]
+# E a casa do herdeiro (§15) do outro lado, a oeste: o rei novo nasce la (Q-133).
+const HERDEIROS_X := [-1450.0]
 const CANTEIROS_X := [-520.0, -420.0, 420.0, 520.0]
 const TORRES_X := [-680.0, 680.0]
 const GALINHEIROS_X := [-820.0, 820.0]
@@ -131,7 +129,9 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
 	for x in CELEIROS_X:
 		_edificio(SimLoop.core_x + x, CELEIRO, &"")
-	Cavities.author()  # o subsolo e a boca das passagens (P-I), depois de tudo
+	Cavities.author()  # o subsolo e a boca das passagens (P-I)
+	for x in HERDEIROS_X:  # depois dos de antes: os ids deles nao mudam (§45)
+		_edificio(SimLoop.core_x + x, Succession.CASA, &"")
 
 
 static func _segredos() -> void:
