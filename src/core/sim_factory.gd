@@ -67,9 +67,11 @@ static func morale() -> MoraleSystem:
 	return MoraleSystem.new(curve(), by_id(TABELA_TROPAS))
 
 
-static func economy() -> EconomySystem:
+static func economy(postos: JobBoard = null) -> EconomySystem:
 	var relogio := Registry.entry(TABELA_ECONOMIA, RELOGIO) as ClockData
-	return EconomySystem.new(curve(), relogio.phase_durations.size())
+	var economia := EconomySystem.new(curve(), relogio.phase_durations.size())
+	economia.jobs = postos
+	return economia
 
 
 ## O perfil da Podridao. Publico porque a candeia do §74 tambem se le dele, e
@@ -140,6 +142,16 @@ static func biome_of_segment(segmento: StringName) -> StringName:
 
 
 ## Os capitulos desta campanha (§77), sorteados no fluxo `world` (§42, §54).
+## O que uma partida nova sorteia no fluxo world: os capitulos (§77) e, a seguir,
+## a ganancia do teu rei no perfil do inicio (§15, Q-123). Por esta ordem — os
+## capitulos de uma semente nao mudam por a ganancia ter chegado depois.
+static func draw_campaign(estado: GameState) -> void:
+	estado.chapters = chapter_plan(campaign_regions())
+	var perfil := Registry.entry(&"crown/greed", curve().start_greed_profile)
+	var gama: Vector2i = (perfil as GreedProfile).greed_range
+	estado.greed = RngService.int_range(MUNDO, gama.x, gama.y)
+
+
 static func chapter_plan(regioes: PackedStringArray) -> ChapterPlan:
 	var lista: Array[ChapterData] = []
 	for recurso in Registry.entries(TABELA_CAPITULOS):

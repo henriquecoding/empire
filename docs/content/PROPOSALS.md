@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 186 | 89 | 275 |
-| Fases 3–8 | 225 | 105 | 330 |
-| Total | 411 | 194 | 605 |
+| Fases 3–8 | 229 | 105 | 334 |
+| Total | 415 | 194 | 609 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -297,7 +297,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 330
+## 3 · Fases 3 a 8 — 334
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -575,6 +575,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `recruit_notice_px` | `recruit_notice_px` | 120 | 9 | Proposta: «perto» não tem número no dossiê. 120 é o limite exterior da fila do §50 — a distância a que o jogo já diz que alguém pertence a um sítio. Ver Q-063. |
 | economy | `follow_distance_px` | `follow_distance_px` | 30 | 9 | Proposta ancorada no queue_min_px do §50 (30): é a mesma pergunta — a que distância uma pessoa espera por outra. Ver Q-063. |
 | economy | `follow_spacing_px` | `follow_spacing_px` | 18 | 9 | Proposta ancorada no queue_spacing_px do §50 (18), para o jogo ter UMA regra de espaçamento e não duas. Ver Q-063. |
+| economy | `unstaffed_yield` | `unstaffed_yield` | 0.25 | 9 | Proposta (Q-121): uma obra com posto rende inteiro com quem lá trabalha, e esta fracção sem ninguém — nas fases em que o posto é urgente (jobs.csv). O galinheiro, sem posto, rende sozinho: é a diferença entre as fontes. |
+| economy | `vagrants_per_dawn` | `vagrants_per_dawn` | 1 | 9 | Proposta (Q-122): o dossiê não tem fonte de vagabundos, e a população por recrutar acabava em nove pessoas. Um por alvorada, num dos acampamentos da região, alternando o lado. |
+| economy | `vagrant_camp_cap` | `vagrant_camp_cap` | 4 | 9 | Proposta (Q-122): acima de quatro vagabundos por recrutar vivos, o acampamento não dá mais — e o que pesa é recrutá-los, não esperar por eles. |
+| economy | `start_greed_profile` | `start_greed_profile` | balanced | 9 | Proposta (Q-123): o perfil 'Equilibrado' (20–35) é o do §15 que diz 'neutro'. A ganância sorteia-se no início pelo fluxo world e leva a sua parte da produção, como o modelo do §06 já fazia. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | horta | 6 | O §12 diz 'Fortaleza do pântano', mas nenhum dos seis povos vive num pântano — Q-013. Proposta: a Horta (várzea). |
 | impulses | `forced_harvest` | `coin_cost` | 12 | 6 | coin_cost 12 ≈ o rendimento líquido do dia 1 no perfil equilibrado (12,3). O dossiê implica um custo ('os impulsos custam metade' para o tirano) sem o dar — Q-014. |

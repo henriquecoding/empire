@@ -13,10 +13,16 @@ var crown: CrownSystem
 var conversion: ConversionSystem
 ## A classe do rei (§08): a aura do Monarca e a evolucao.
 var classes: ClassSystem
+## A manutencao do exercito, paga a alvorada (§06, Q-124).
+var upkeep: UpkeepSystem
+## Os acampamentos da regiao, de onde chega um vagabundo por alvorada (Q-122).
+## Escritos por quem monta o mundo.
+var camps: PackedFloat32Array = PackedFloat32Array()
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
 var _dia := 0
+var _rei := UnitSystem.NENHUM
 
 
 func _init(
@@ -30,6 +36,7 @@ func _init(
 	conversion = SimFactory.conversion()
 	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
 	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
+	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"))
 	if combate != null:
 		combate.guard = classes
 	_economia = economia
@@ -39,18 +46,26 @@ func _init(
 		_economia.conversion = conversion
 
 
-## Passo 3: o dia novo abre as clareiras e cobra o que os impulsos de ontem
-## deixaram a pagar (§15).
+## Passo 3: o dia novo abre as clareiras, cobra o que os impulsos de ontem
+## deixaram a pagar (§15) e a manutencao (§06), e traz um vagabundo (Q-122).
 func prepare(
-	dia: int, core_x: float, largura: float, unidades: UnitSystem = null, fase: int = 0
+	dia: int,
+	core_x: float,
+	largura: float,
+	unidades: UnitSystem = null,
+	fase: int = 0,
+	estado: GameState = null
 ) -> void:
 	HuntWatch.prepare(hunting, dia, core_x, largura, fase)
 	if dia != _dia and unidades != null:
 		_dia = dia
 		crown.dawn(dia, unidades)
 		classes.dawn()
+		if dia > 1 and estado != null:
+			_alvorada(dia, unidades, estado)
 	if _economia != null:
 		_economia.today = dia
+		_economia.greed = estado.greed if estado != null else 0
 	if _moral != null:
 		_moral.steadfast = crown.steadfast(dia)
 
@@ -112,6 +127,7 @@ func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> voi
 func resolve(
 	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
+	_rei = rei
 	obras.wall_defense = training.wall_defense(unidades)
 	classes.watch(unidades, rei, not luz)
 	conversion.bind(unidades)
@@ -139,6 +155,7 @@ func to_dict() -> Dictionary:
 		&"crown": crown.to_dict(),
 		&"conversion": conversion.to_dict(),
 		&"classes": classes.to_dict(),
+		&"upkeep": upkeep.to_dict(),
 	}
 
 
@@ -148,4 +165,28 @@ func from_dict(mundo: Dictionary) -> void:
 	crown.from_dict(mundo.get(&"crown", {}))
 	conversion.from_dict(mundo.get(&"conversion", {}))
 	classes.from_dict(mundo.get(&"classes", {}))
+	upkeep.from_dict(mundo.get(&"upkeep", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
+
+
+## A alvorada de um dia que nao e o primeiro: a manutencao do dia que acabou, e o
+## vagabundo novo no acampamento do lado do dia (Q-122, Q-124).
+func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
+	if _economia != null:
+		for e in upkeep.dawn(unidades, _rei, _economia):
+			if e[UpkeepSystem.CHAVE] == UpkeepSystem.EV_PAGA:
+				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
+			else:
+				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
+	if camps.is_empty():
+		return
+	var curva := SimFactory.curve()
+	var vagabundo := Registry.entry(&"units", &"vagrant") as UnitData
+	var livres := 0
+	for i in unidades.count():
+		if unidades.owners[i] == RecruitSystem.SEM_DONO and unidades.alive(i):
+			livres += 1 if unidades.data_ids[i] == vagabundo.id else 0
+	for k in mini(curva.vagrants_per_dawn, maxi(0, curva.vagrant_camp_cap - livres)):
+		var x := camps[(dia + k) % camps.size()]
+		var novo := unidades.spawn(estado, vagabundo, RecruitSystem.SEM_DONO, x)
+		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])

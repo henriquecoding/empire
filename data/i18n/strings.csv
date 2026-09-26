@@ -411,7 +411,7 @@ PHASE_AFTERNOON,Tarde,Afternoon,fase do dia (§05),12,GB-27
 PHASE_DUSK,Crepúsculo,Dusk,fase do dia (§05),12,GB-27
 PHASE_NIGHT,Noite,Night,fase do dia (§05),12,GB-27
 HUD_CLOCK,DIA {day} · {phase} · {pct}%,DAY {day} · {phase} · {pct}%,"HUD do greybox: dia, fase e progresso",40,GB-27. Marcadores com nome (§27): a ordem pode mudar por idioma.
-HUD_RESOURCES,SACO {bag}/{cap}   ·   TROPAS {troops}   ·   NÚCLEO {core}%,PURSE {bag}/{cap}   ·   TROOPS {troops}   ·   KEEP {core}%,"HUD do greybox: saco, tropas e vida do núcleo",64,GB-27
+HUD_RESOURCES,SACO {bag}/{cap} · TROPAS {troops} · SOLDO {wages}/dia · NOBRES {greed}% · NÚCLEO {core}%,PURSE {bag}/{cap} · TROOPS {troops} · WAGES {wages}/day · NOBLES {greed}% · KEEP {core}%,"HUD do greybox: saco, tropas, manutenção do dia (Q-124), ganância (§15) e vida do núcleo",96,GB-27; AUD-02
 HUD_GOAL_DAY,RECOLHE MOEDAS\nprepara a fronteira,GATHER COINS\nready the border,HUD do greybox: objectivo de dia,40,GB-27. Duas linhas.
 HUD_GOAL_NIGHT,A PODRIDÃO AVANÇA\nprotege as muralhas,THE ROT ADVANCES\nguard the walls,HUD do greybox: objectivo de noite,40,GB-27. Duas linhas.
 TOAST_COIN,+{n} moeda,+{n} coin,aviso do HUD: moeda apanhada,16,GB-27

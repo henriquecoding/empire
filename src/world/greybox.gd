@@ -74,6 +74,8 @@ const RUINA_X := -360.0
 const VAGABUNDOS_X := [-230.0, 230.0, 740.0, 980.0]
 const ARQUEIROS_X := [-740.0, -180.0, 180.0]
 const LANCEIROS_X := [-990.0, 1040.0]
+# Os acampamentos do vagabundo de cada alvorada (Q-122), fora das muralhas de fora.
+const ACAMPAMENTOS_X := [-1650.0, 1650.0]
 # §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
 # casca." Esta la desde o primeiro frame e nao e apontada por nada. O muro e o do
 # §25, a estacaria do minuto 3:30 — a de dentro —, e a arvore fica logo depois
@@ -105,6 +107,7 @@ static func region() -> void:
 	SimLoop.world_width = largura * ECRAS
 	SimLoop.core_x = SimLoop.world_width * MEIO
 	SimLoop.passages = _deslocadas(PASSAGENS_X)
+	SimLoop.field.camps = _deslocadas(ACAMPAMENTOS_X)
 	_segredos()
 
 	_nucleo()

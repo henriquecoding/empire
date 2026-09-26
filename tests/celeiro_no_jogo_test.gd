@@ -3,6 +3,8 @@
 # cozinheiro teu vivo troca a moeda pela vida das tropas (Q-112).
 extends GdUnitTestSuite
 
+const Posto := preload("res://tests/support/posto.gd")
+
 const STEP := 1.0 / 30.0
 ## Uma moeda de cada vez, e so a seguinte depois de a anterior pousar (o voo leva
 ## ~15 ticks): cada moeda que pousa no celeiro troca o modo, e duas no ar trocavam-no
@@ -25,6 +27,7 @@ func before_test() -> void:
 		obra.level = 1
 		obra.state = BuildSlot.State.DONE
 		obra.health = obra.max_health()
+	Posto.staff_all()
 
 
 func after_test() -> void:

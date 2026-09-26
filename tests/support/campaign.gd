@@ -41,6 +41,11 @@ const DIA := &"day"
 ## termo novo — e o que o F1-16 afinou, antes de a Oferta existir. Ligada, este
 ## instrumento nao paga nada, e por isso recusa todas as noites (Q-101).
 var voice: bool = true
+## Com a voz ligada: paga as ofertas cujo preco sao moedas, e recusa as outras
+## (D8 da auditoria de 26/09, Q-101). Sem isto o instrumento recusa sempre, e
+## um jogador que recusa sempre paga o imposto inteiro das recusas.
+var pay_coin_offers: bool = false
+var _oferta_paga := &""
 
 var _mortes: int = 0
 var _muros: int = 0
@@ -69,6 +74,8 @@ func run(h: Harness, dias: int) -> Dictionary:
 		SimLoop.step(PASSO)
 		if not voice:
 			SimLoop.night.voice.offers.close_quietly()
+		elif pay_coin_offers:
+			_pagar()
 		# §10: "se o castelo-arvore cair, cai a partida". O `game.gd` para aqui e
 		# isto para tambem — continuar a simular depois da derrota media dias que
 		# ninguem chegou a jogar, e punha a medicao a demorar o dobro.
@@ -99,6 +106,20 @@ func _vida_do_nucleo() -> float:
 		if vaga.kind == BuildSlot.NUCLEO:
 			return float(vaga.health) / maxf(1.0, float(vaga.max_health()))
 	return 0.0
+
+
+## Larga no prato o preco de uma oferta aberta que se paga com moedas, uma vez.
+func _pagar() -> void:
+	var prato := SimLoop.night.voice.offers
+	if prato.phase != OfferSystem.Phase.OPEN:
+		_oferta_paga = &""
+		return
+	var oferta := prato.offer()
+	if oferta.price_kind != &"coins" or _oferta_paga == oferta.id:
+		return
+	_oferta_paga = oferta.id
+	for _k in int(oferta.price_amount):
+		SimLoop.drop_coin(prato.plate_x, prato.band as Band.Kind, 1, Verbs.JOGADOR)
 
 
 func _ouvir() -> void:

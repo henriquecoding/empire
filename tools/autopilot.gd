@@ -49,7 +49,11 @@ static func _destino(loop: Node, rei: int, onde: float) -> float:
 	# Ao crepusculo volta-se para dentro, e quem te segue vem contigo: uma noite
 	# passada fora do muro com a gente atras deixava o nucleo sem ninguem (§25).
 	if int(ClockService.clock.current_phase()) >= int(GameClock.Phase.DUSK):
-		return loop.core_x
+		if not loop.night.rot.active():
+			return loop.core_x
+		# Na borda do nucleo do lado da mancha: e ai que as criaturas mordem.
+		var lado := signf(loop.night.rot.position_x() - loop.core_x)
+		return loop.core_x + lado * _meio_nucleo(loop)
 	var saco: int = loop.units.carried_coins[rei]
 	# Com o saco vazio nao ha nada a fazer senao ir buscar moeda. Com moeda na
 	# mao vai-se GASTAR: um piloto que corresse atras da moeda que acabou de
@@ -102,11 +106,13 @@ static func _por_recrutar(loop: Node, onde: float) -> float:
 static func _obra(loop: Node, onde: float, saco: int) -> float:
 	var melhor := INF
 	var rende := false
+	# A tarde prepara a noite: o que "rende" passa a ser o que trava (§05).
+	var tarde := int(ClockService.clock.current_phase()) == int(GameClock.Phase.AFTERNOON)
 	for vaga in loop.builds.slots:
 		var custo: int = vaga.next_cost()
 		if vaga.kind == BuildSlot.NUCLEO or custo <= 0 or custo > saco:
 			continue
-		var da_renda: bool = vaga.yield_per_day > 0.0
+		var da_renda: bool = vaga.blocks if tarde else vaga.yield_per_day > 0.0
 		if rende and not da_renda:
 			continue
 		var troca := da_renda and not rende
@@ -130,3 +136,10 @@ static func _largar(loop: Node, rei: int) -> void:
 			}
 		)
 	)
+
+
+static func _meio_nucleo(loop: Node) -> float:
+	for vaga in loop.builds.slots:
+		if vaga.kind == BuildSlot.NUCLEO:
+			return vaga.width * BuildSystem.METADE
+	return 0.0

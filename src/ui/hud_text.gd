@@ -39,10 +39,21 @@ static func clock(dia: int, fase: int, progresso: float) -> String:
 	return TranslationServer.translate(&"HUD_CLOCK").format(valores)
 
 
-static func resources(saco: int, cabem: int, tropas: int, nucleo: int) -> String:
+static func resources(
+	saco: int, cabem: int, tropas: int, nucleo: int, ganancia := 0, soldo := 0.0
+) -> String:
 	var valores := {"bag": DOIS % saco, "cap": DOIS % cabem, "troops": DOIS % tropas}
 	valores["core"] = TRES % nucleo
+	valores["greed"] = ganancia
+	# O soldo do dia (§06, Q-124): a virgula e a do idioma.
+	var decimal := ("%.1f" % soldo).replace(".", tr_decimal())
+	valores["wages"] = decimal
 	return TranslationServer.translate(&"HUD_RESOURCES").format(valores)
+
+
+## O separador decimal do idioma escolhido (§27).
+static func tr_decimal() -> String:
+	return "," if TranslationServer.get_locale().begins_with("pt") else "."
 
 
 static func goal(noite: bool) -> String:

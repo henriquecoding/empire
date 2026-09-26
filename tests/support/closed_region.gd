@@ -156,6 +156,9 @@ static func _levantar(vaga: BuildSlot, nivel: int = 1) -> void:
 static func _gente(flanco: int, arqueiros: int, lanceiros: int) -> void:
 	var monarca := Registry.entry(&"units", &"monarch") as UnitData
 	SimLoop.king_id = SimLoop.units.spawn(SimLoop.state, monarca, MEU_IMPERIO, SimLoop.core_x)
+	# O saco cheio: a manutencao do §06 (Q-124) e paga pela economia, que e a
+	# outra pergunta. Sem isto os arqueiros desertavam e a noite media a divida.
+	SimLoop.units.carried_coins[SimLoop.units.index_of(SimLoop.king_id)] = monarca.coin_capacity
 	_tropas(&"archer", arqueiros, flanco)
 	_tropas(&"spearman", lanceiros, flanco)
 

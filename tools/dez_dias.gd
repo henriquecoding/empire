@@ -47,11 +47,17 @@ func _ready() -> void:
 	print("  dia | mortes | muros | nucleo")
 	for n in ultima:
 		print(NOITE % [n[Campaign.DIA], n[Campaign.MORTES], n[Campaign.MUROS], n[Campaign.VIDA]])
+	# A tabela de cima recusa todas as ofertas (Q-101). A mesma ultima defesa, a
+	# pagar as que custam moedas — e a politica de quem joga, e nao a do imposto.
+	print("\nA ultima defesa, a pagar as ofertas que custam moedas (D8):")
+	var d: Array = DEFESAS[DEFESAS.size() - 1]
+	for n in _correr(d[0], d[1], d[2], d[3], d[4], true):
+		print(NOITE % [n[Campaign.DIA], n[Campaign.MORTES], n[Campaign.MUROS], n[Campaign.VIDA]])
 	get_tree().quit()
 
 
 func _correr(
-	esquerda: int, direita: int, torre: bool, alta: bool, arqueiros: int
+	esquerda: int, direita: int, torre: bool, alta: bool, arqueiros: int, paga := false
 ) -> Array[Dictionary]:
 	var h := Harness.new()
 	h.wall_levels = PackedInt32Array([esquerda, direita])
@@ -62,7 +68,9 @@ func _correr(
 	# dia 4 e o Cavador do dia 10 que fazem a curva subir (§07). O crawlers_only
 	# e do §07, que e um microteste de combate e outra pergunta.
 	h.crawlers_only = false
-	var r := Campaign.new().run(h, DIAS)
+	var campanha := Campaign.new()
+	campanha.pay_coin_offers = paga
+	var r := campanha.run(h, DIAS)
 	h.stop()
 	print(
 		(

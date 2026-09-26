@@ -47,6 +47,10 @@ var crown: CrownSystem
 var today := 1
 ## O circuito 2 (§06, §49): com a casa de conversao de pe, a materia vai para ela.
 var conversion: ConversionSystem
+## A parte dos nobres (§15), 0 a 100: sai antes de a materia virar moeda.
+var greed := 0
+## Os postos (§52): uma obra com posto so rende inteiro com quem la trabalha (Q-121).
+var jobs: JobBoard
 
 var _curva: EconomyCurve
 var _fases: int
@@ -143,7 +147,7 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 			_queimar(vaga, eventos)
 			continue
 		var fator := crown.yield_mult(today, vaga.kind) if crown != null else 1.0
-		vaga.stock += vaga.yield_per_day / _fases * fator
+		vaga.stock += vaga.yield_per_day / _fases * fator * _hoje(vaga)
 		if conversion != null and conversion.claims(vaga, obras):
 			continue
 		var moedas := int(floorf(vaga.stock))
@@ -156,6 +160,16 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 	if conversion != null:
 		eventos.append_array(conversion.on_phase(obras))
 	return eventos
+
+
+## O que a base construida rende hoje por cada unidade do CSV: o crescimento do
+## §06 (a mesma conta do built_income, que ate a auditoria de 26/09 so o modelo
+## fazia — D7), a parte dos nobres (§15) e quem esta no posto (Q-121).
+func _hoje(vaga: BuildSlot) -> float:
+	var crescer := pow(_curva.income_growth, maxi(0, today - 1))
+	var nobres := 1.0 - clampf(greed / PERCENTAGEM, 0.0, 1.0)
+	var mao := 1.0 if jobs == null or jobs.staffing.worked(vaga) else _curva.unstaffed_yield
+	return crescer * nobres * mao
 
 
 ## §49: a plantacao no rasto e destruida; as outras so param. A distincao esta

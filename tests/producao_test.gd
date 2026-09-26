@@ -15,6 +15,7 @@
 # ultimos testes, com nome proprio.
 extends GdUnitTestSuite
 
+const Posto := preload("res://tests/support/posto.gd")
 const SEMENTE := 20260915
 const PASSO := 1.0 / 30.0
 ## §06: o rasto so arrasa a plantacao; as outras obras so param.
@@ -46,6 +47,7 @@ func _levantar(tipo: StringName) -> BuildSlot:
 	vaga.state = BuildSlot.State.DONE
 	vaga.health = vaga.max_health()
 	vaga.stock = 0.0
+	Posto.staff_all()  # a ganancia e o posto vazio sao colunas do lado, como o rasto
 	return vaga
 
 

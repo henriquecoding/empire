@@ -15,6 +15,8 @@ const MEIO := 0.5
 const REPARAR := &"repair"
 
 var slots: Array[JobSlot] = []
+## Quem esteve no posto na fase que acabou: e o que faz uma obra render (Q-121).
+var staffing: Staffing
 
 var _publicadas: Array = []
 var _roster: Array = []
@@ -31,6 +33,7 @@ func _init(curva: EconomyCurve, postos: Dictionary, dados: Dictionary) -> void:
 	_curva = curva
 	_postos = postos
 	_dados = dados
+	staffing = Staffing.new(postos)
 
 
 ## Publica uma vaga e devolve-a, ja com o id que a coluna job_ids vai guardar.
@@ -100,6 +103,7 @@ func refresh(obras: BuildSystem, unidades: UnitSystem, fase: int) -> void:
 	if roster != _roster:
 		assign(unidades, fase)
 		_roster = roster
+	staffing.observe(slots, unidades, fase)
 
 
 ## Onde fica a k-esima vaga de uma obra: repartidas pela largura dela, e nao

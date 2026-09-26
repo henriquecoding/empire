@@ -27,7 +27,18 @@ func test_o_relogio_diz_se_nos_dois_idiomas() -> void:
 func test_os_recursos_levam_os_zeros_de_sempre() -> void:
 	TranslationServer.set_locale("pt_PT")
 	var texto := HudText.resources(6, 33, 2, 100)
-	assert_str(texto).is_equal("SACO 06/33   ·   TROPAS 02   ·   NÚCLEO 100%")
+	assert_str(texto).is_equal("SACO 06/33 · TROPAS 02 · SOLDO 0,0/dia · NOBRES 0% · NÚCLEO 100%")
+
+
+## A manutencao do dia e a parte dos nobres (§06, §15, AUD-02), com a virgula do
+## idioma: sem os ver, sao dois numeros que tiram moedas sem ninguem saber porque.
+func test_os_recursos_dizem_o_soldo_e_os_nobres() -> void:
+	TranslationServer.set_locale("pt_PT")
+	assert_str(HudText.resources(6, 33, 12, 100, 27, 2.5)).contains("SOLDO 2,5/dia")
+	assert_str(HudText.resources(6, 33, 12, 100, 27, 2.5)).contains("NOBRES 27%")
+	TranslationServer.set_locale("en")
+	assert_str(HudText.resources(6, 33, 12, 100, 27, 2.5)).contains("WAGES 2.5/day")
+	TranslationServer.set_locale("pt_PT")
 
 
 ## Todas as fases do enum tem chave nos dois idiomas: o nome sai do enum, e uma

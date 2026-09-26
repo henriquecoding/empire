@@ -11,6 +11,8 @@
 # escreve.
 extends GdUnitTestSuite
 
+const Posto := preload("res://tests/support/posto.gd")
+
 const SEMENTE := 20260915
 const PASSO := 1.0 / 30.0
 ## §63: a simulacao inteira, tick completo.
@@ -200,6 +202,7 @@ func test_a_obra_de_pe_produz_e_a_moeda_cai_em_cima_dela() -> void:
 	canteiro.state = BuildSlot.State.DONE
 	canteiro.health = canteiro.max_health()
 	canteiro.stock = 0.0
+	Posto.staff_all()
 	var caidas: Array[float] = []
 	var ouvinte := func(x: float, _b: int, _q: int, origem: StringName) -> void:
 		if origem == EventRelay.FONTE_PRODUCAO:

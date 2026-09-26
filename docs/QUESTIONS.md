@@ -1122,6 +1122,12 @@
   sempre, está saltado com esta razão. Nenhum número de `data/` foi mexido.
 - **O que está em aberto:** se o §66 deve valer para quem recusa sempre (e então o teto de +40 ou a defesa
   mudam), ou só para quem aceita alguma coisa (e então o instrumento precisa de uma política de ofertas).
+- **Medido na auditoria de 26/09 (AUD-02):** o instrumento ganhou uma política — pagar as ofertas que custam
+  moedas (`Campaign.pay_coin_offers`) — e a última defesa **cai ao dia 10 igual**: no cenário fechado as ofertas
+  que aparecem nunca custam moedas (*Diz-me um nome* nos dias 2, 4, 7 e 9; *Dá-me o que já não anda* nos dias 3
+  e 10). E o que a derruba no dia 10 são **sete Cavadores** (massa 228): a primeira ameaça que passa por baixo do
+  muro, e nada no jogo lhe responde. O `dez_dias` imprime as duas corridas. A resposta é o subsolo (AUD-04), e não
+  o teto das recusas.
 - **Decide:** tu.
 
 ### Q-102 · Dos nove feitos, cinco têm hoje o que observar; das nove bonificações, uma
@@ -1385,6 +1391,41 @@
 ### Q-120 · O coelho do 1:10 num dia de outra duração
 - **Onde:** §25 (minuto 1:10), §26 (*slider* de 240–540 s); auditoria D10.
 - **Decidido (AUD-01):** cai no mesmo **ponto** do dia (`HuntWatch.intro_at`), e não ao mesmo segundo.
+
+### Q-121 · A obra com posto pede quem lá trabalhe
+- **Onde:** §06 circuito 1, §52; auditoria §5.3 (P-B).
+- **O que estava:** a produção somava a todas as obras de pé e o posto do canteiro não mudava nada.
+- **Decidido (AUD-02):** uma obra com posto rende inteiro com alguém no posto **e dentro dela** (`Staffing`), e
+  `unstaffed_yield` (0,25, `_proposed`) sem ninguém — só nas fases em que o posto é urgente (`jobs.csv`): de
+  noite o canteiro não pede ninguém e não é por isso que rende menos. O galinheiro e o pesqueiro do greybox não
+  têm posto e rendem sozinhos. Retomar um save não penaliza a primeira fase (não se viu quem lá esteve).
+
+### Q-122 · De onde vem gente nova
+- **Onde:** §02 (o Kingdom desmontado), §25; auditoria (achado do Lote 2).
+- **O que estava:** a população por recrutar acabava em nove pessoas — o dossiê não tem fonte de vagabundos — e
+  a manutenção (grátis até à oitava tropa) nunca chegava a morder.
+- **Decidido (AUD-02):** um vagabundo por alvorada (`vagrants_per_dawn`) num dos dois acampamentos do greybox,
+  fora das muralhas de fora, alternando o lado, até haver `vagrant_camp_cap` (4) vivos por recrutar. O greybox
+  nasce com o teto cheio: o acampamento repõe quem recrutaste.
+
+### Q-123 · A ganância do teu rei
+- **Onde:** §15 (*"a percentagem do rendimento diário que desaparece para os nobres"*; *"sorteada de novo"* na
+  sucessão), §06 (o modelo já a cobrava).
+- **Decidido (AUD-02):** sorteada no início, no fluxo `world`, dentro do perfil `start_greed_profile`
+  (`balanced`, 20–35); vai no save (`GameState.greed`) e leva a sua parte da produção antes de ela virar moeda.
+  A caça não paga nobres (é moeda física do teu caçador). O painel mostra-a ("NOBRES 27%"). Os efeitos do perfil
+  (moral de elite, elite grátis, impulsos a metade) e a Feira Livre (+15) ficam para quando houver elite e
+  sucessão.
+
+### Q-124 · A manutenção do exército, na partida
+- **Onde:** §06 sorvedouro 1 (três escalões); auditoria D7 e §5.4 (P-D).
+- **Decidido (AUD-02):** paga-se na alvorada, do saco do rei (`UpkeepSystem`); a fração que o dia não fecha
+  passa ao seguinte. Sem moedas para a parte inteira, a dívida do dia perdoa-se e **uma** tropa vai-se embora —
+  a mais barata sem posto — e volta a poder ser recrutada. O rei e o escudeiro não contam. O painel mostra o
+  soldo do dia ("SOLDO 0,5/dia"). Com a produção a crescer ao `income_growth` e a ganância, **a economia do jogo
+  passa a ser a do modelo**: o dia da asfixia calculado sobre as obras do greybox e a caça média cai no dia 10,
+  dentro do alvo 9–14 (`economia_jogada_test`). A Colheita Forçada passa a compensar a partir do dia ~10 com as
+  sete fontes; o modo capacidade do celeiro continua dominado pela venda (Q-112, em aberto).
 
 ## Resolvidas na v5.2 (reversíveis)
 
