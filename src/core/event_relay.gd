@@ -79,6 +79,8 @@ static func builds(eventos: Array[Dictionary]) -> void:
 				EventBus.queue(&"build_progressed", [vaga.id, e[BuildSystem.RACIO]])
 			BuildSystem.EV_COMPLETA:
 				_completa(vaga, e[BuildSystem.NIVEL])
+			BuildSystem.EV_REPARADA:
+				EventBus.queue(&"build_completed", [vaga.id])
 			BuildSystem.EV_DANO:
 				EventBus.queue(&"building_damaged", [vaga.id, e[BuildSystem.RACIO]])
 			BuildSystem.EV_DESTRUIDA:

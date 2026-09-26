@@ -548,3 +548,12 @@ CONTEXT_RECRUIT,"{name} · Faltam {cost} moedas
 {drop} to recruit",guia contextual de jogo,160,
 CONTEXT_WALL_NAME,Muralha,Wall,guia contextual de jogo,160,
 CONTEXT_SITE,Obra,Construction,guia contextual de jogo,160,
+GUIDE_REPAIR,"REPARA A DEFESA
+Larga moedas na muralha tocada antes da noite","REPAIR YOUR DEFENCE
+Drop coins on the damaged wall before nightfall",guia contextual de jogo,160,Q-108
+CONTEXT_REPAIR,"{name} · Danificada · faltam {cost} moedas
+{drop} pagar a reparação","{name} · Damaged · {cost} coins remaining
+{drop} fund the repair",guia contextual de jogo,160,Q-108
+CONTEXT_REPAIRING,"{name} · Reparação paga
+O trabalhador vem reparar; de dia","{name} · Repair funded
+A worker is on the way; by day",guia contextual de jogo,160,Q-108

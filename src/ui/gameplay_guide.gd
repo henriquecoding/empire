@@ -17,6 +17,9 @@ static func goal() -> String:
 		hunter = hunter or data.tags.has(&"hunter")
 	if not worker:
 		return _tr(&"GUIDE_WORKER")
+	for site in SimLoop.builds.slots:
+		if site.blocks and not site.mending and site.repair_cost() > 0:
+			return _tr(&"GUIDE_REPAIR")
 	if not hunter:
 		return _tr(&"GUIDE_HUNTER")
 	var production := false
@@ -59,6 +62,10 @@ static func context(device: Glyphs.Device) -> String:
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
 			return _tr(&"CONTEXT_BUILDING").format(values)
+		if site.mending:
+			return _tr(&"CONTEXT_REPAIRING").format(values)
+		if site.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN] and values.cost > 0:
+			return _tr(&"CONTEXT_REPAIR").format(values)
 		if Verbs.wall_choice_open(site):
 			values["path"] = _tr(
 				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
