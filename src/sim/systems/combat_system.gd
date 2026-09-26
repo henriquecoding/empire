@@ -135,7 +135,7 @@ func _tropas_batem() -> void:
 		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
-		_u.cooldowns[i] = dados.attack_interval
+		_u.cooldowns[i] = dados.attack_interval * Posts.cadence(_postos, _u, i)
 		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:

@@ -14,5 +14,9 @@ job_slots = 1
 max_health = 32
 build_work = 8.0
 width_px = 96
+variant_params = {
+&"immune_to_rot_trail": 1.0,
+&"yield_mult": 0.75
+}
 shadow_width = 96
 tags = Array[StringName]([&"field"])

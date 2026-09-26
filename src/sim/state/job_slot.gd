@@ -33,6 +33,8 @@ var source: int = NENHUM
 var accuracy: float = 0.0
 var range_bonus: float = 0.0
 var hits_aerial: bool = false
+## O intervalo de quem dispara daqui, em fraccao do dele (a torre de cadencia, Q-136).
+var cadence: float = 1.0
 ## Onde fica a obra que da estes efeitos, e ate onde ela chega: a certeza e de
 ## quem esta EM CIMA dela, e nao de quem so tem o posto (auditoria de 26/09, D3).
 var origin_x: float = 0.0
@@ -49,9 +51,11 @@ func _init(posto: StringName, onde: float, faixa: Band.Kind) -> void:
 ## effect_params de buildings.csv e nao ha nenhuma escrita em codigo de sistema.
 func grants(obra: BuildSlot) -> void:
 	source = obra.id
-	accuracy = obra.effects.get(&"accuracy", 0.0)
-	range_bonus = obra.effects.get(&"range_bonus", 0.0)
-	hits_aerial = obra.effects.get(&"hits_aerial", 0.0) > 0.0
+	var efeitos := SlotVariant.effects(obra)  # a variante escolhida (Q-136)
+	accuracy = efeitos.get(&"accuracy", 0.0)
+	range_bonus = efeitos.get(&"range_bonus", 0.0)
+	hits_aerial = efeitos.get(&"hits_aerial", 0.0) > 0.0
+	cadence = efeitos.get(&"cadence", 1.0)
 	origin_x = obra.x
 	reach = obra.width * HALF
 

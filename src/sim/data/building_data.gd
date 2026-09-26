@@ -36,6 +36,9 @@ var states: Array[StringName] = [&"empty", &"scaffold", &"building", &"done", &"
 
 @export_group("Efeito")
 @export var effect_params: Dictionary = {}  # torres e defesas (§10)
+## A variante B da melhoria (auditoria P-N, Q-136): o que muda sobre o effect_params
+## quando se escolhe o outro caminho. Vazio = sem escolha.
+@export var variant_params: Dictionary = {}
 
 @export_group("Arte")
 @export var shadow_width: int = 0

@@ -47,6 +47,10 @@ var found: PackedStringArray = PackedStringArray()
 ## Os capitulos da campanha e o diario de cada um (§77, §79): sorteados uma vez,
 ## no start(), e depois so lidos. Vai no save com os nomes da §84.
 var chapters: ChapterPlan = ChapterPlan.new()
+## A regiao da campanha em que se esta, pela ordem de `chapters.regions` (P-K).
+var region: int = 0
+## O rei atravessou a bifurcacao: esta regiao acabou (Q-135).
+var crossed: bool = false
 
 
 ## Le um dicionario ja validado. Campos em falta ficam no valor por omissao e
@@ -65,6 +69,8 @@ static func from_dict(d: Dictionary) -> GameState:
 	estado.conquests = _textos(d, &"conquests")
 	estado.found = _textos(d, &"found")
 	estado.chapters.from_dict(d)
+	estado.region = _inteiro(d, &"region", estado.region)
+	estado.crossed = d.get(&"crossed", false) == true
 	return estado
 
 
@@ -89,6 +95,8 @@ func to_dict() -> Dictionary:
 			&"greed": greed,
 			&"conquests": conquests,
 			&"found": found,
+			&"region": region,
+			&"crossed": crossed,
 		}
 		. merged(chapters.to_dict())
 	)

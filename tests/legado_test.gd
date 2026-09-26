@@ -88,7 +88,7 @@ func test_o_legado_vai_ao_ficheiro_apaga_os_saves_e_gasta_se_uma_vez() -> void:
 	SaveService.autosave(SimLoop.state)
 	assert_int(SaveService.latest_slot()).is_not_equal(-1)
 	SimLoop.state.royal_seeds = SEMENTES
-	SaveService.lose(Legacy.of(SimLoop.state, SimLoop.builds, _fica()))
+	SaveService.leave(Legacy.of(SimLoop.state, SimLoop.builds, _fica()))
 	assert_int(SaveService.latest_slot()).is_equal(-1)
 	assert_int(int(SaveService.legacy()[Legacy.SEMENTES])).is_equal(SEMENTES)
 	assert_int(int(SaveService.take_legacy()[Legacy.SEMENTES])).is_equal(SEMENTES)

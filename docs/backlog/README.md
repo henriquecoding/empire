@@ -107,7 +107,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [AUD-02](AUD-02.md) | A economia verdadeira: o que o CI afina é o que o jogo corre | AUD-01 | feito — a produção cresce, paga nobres e pede o trabalhador; a manutenção e o vagabundo da alvorada na partida; o D8 passa para o AUD-04 (o Cavador do dia 10, Q-101) |
 | [AUD-03](AUD-03.md) | A noite legível e com gestos | AUD-01 | feito — o lado dito à tarde, o ritmo, o sacrifício de moedas, a formação da noite e as legendas; som gravado continua a ser da pasta audio/ |
 | [AUD-04](AUD-04.md) | As faixas: o subsolo como expedição e o Alado com alvo | AUD-01 | feito — o poço nas cavidades, a escora das passagens, o Cavador chamado pelo poço e o Alado que rouba galinhas |
-| [AUD-05](AUD-05.md) | Uma campanha mínima: sucessão, fim de região e decay | AUD-02, AUD-03 | parcial — o herdeiro e o decay feitos; faltam a travessia, o epílogo e as variantes de melhoria |
+| [AUD-05](AUD-05.md) | Uma campanha mínima: sucessão, fim de região e decay | AUD-02, AUD-03 | feito — o herdeiro, o decay, a travessia com o epílogo e as variantes da torre e do canteiro |
 
 ## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
 

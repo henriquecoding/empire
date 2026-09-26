@@ -71,7 +71,7 @@ func _ready() -> void:
 ## entao que ele muda de titulo e de botao.
 func _na_pausa(pausado: bool) -> void:
 	if pausado:
-		open(defeated())
+		open(defeated() or SimLoop.state != null and SimLoop.state.crossed)
 	else:
 		_fechar()
 
@@ -97,14 +97,30 @@ static func defeated() -> bool:
 ## O texto do menu. Volta a escrever-se quando o idioma muda (§27, GB-28).
 func _escrever() -> void:
 	_titulo.text = tr(&"UI_CROWN_FALLEN") if _perdido else tr(&"UI_PAUSED")
+	if _perdido and SimLoop.state != null and SimLoop.state.crossed:
+		_titulo.text = crossing_title(SaveService.legacy())
 	if _perdido:
 		_titulo.text += "\n" + legacy_line(SaveService.legacy())
 	_retomar.text = tr(&"UI_RESUME")
 	_novo.text = tr(&"UI_NEW_GAME")
 
 
+## A regiao atravessada (P-K): a seguinte, ou, depois da ultima, o epilogo (§79).
+static func crossing_title(legado: Dictionary) -> String:
+	if int(legado.get(Legacy.REGIAO, 1)) > 0:
+		return TranslationServer.translate(&"UI_CROSSED")
+	var fim := String(SimLoop.night.epilogue()).to_upper()
+	return TranslationServer.translate(&"UI_CAMPAIGN_END").format(
+		{"epilogue": TranslationServer.translate(StringName("EPILOGUE_" + fim))}
+	)
+
+
 ## O que o jogo novo herda, numa linha (§16, Q-134).
 static func legacy_line(legado: Dictionary) -> String:
+	if legado.has(Legacy.COMITIVA):
+		var quem := (legado[Legacy.COMITIVA] as PackedStringArray).size()
+		var saco := int(legado.get(Legacy.SACO, 0))
+		return TranslationServer.translate(&"UI_PARTY").format({"party": quem, "purse": saco})
 	return (
 		TranslationServer
 		. translate(&"UI_LEGACY")

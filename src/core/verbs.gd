@@ -18,6 +18,8 @@ const JOGADOR := &"player"
 ## Sem faixa para onde ir: longe de uma passagem, ou um corpo que nao muda.
 const NENHUMA := -1
 const HALF := 0.5
+## O tipo do segment_entered que diz que o rei atravessou para a regiao seguinte.
+const CROSSING := &"crossing"
 
 
 ## §61: as intencoes sao consumidas no inicio do tick, pela ordem em que
@@ -44,7 +46,7 @@ static func consume(
 				if spend(unidades, king_id, args[&"amount"]):
 					larga.append(args)
 			IntentQueue.Kind.ASSUME:
-				if not assume(unidades, king_id, passagens):
+				if not assume(unidades, king_id, passagens) and not cross(unidades, king_id):
 					choose_wall(unidades, king_id, obras)
 			IntentQueue.Kind.MARK_TARGET:
 				mark(unidades, bichos, combate, args[&"x"], king_id)
@@ -56,15 +58,18 @@ static func consume(
 	return larga
 
 
-## A escolha A/B do §10, antes de pagar o segundo degrau; E partilha o Verbo 2.
+## A escolha A/B do §10, antes de pagar o segundo degrau; E partilha o Verbo 2. E
+## a variante de uma melhoria (P-N, Q-136), antes da primeira moeda.
 static func choose_wall(units: UnitSystem, king: int, builds: BuildSystem) -> bool:
 	var i := units.index_of(king)
 	if builds == null or i < 0 or not units.alive(i):
 		return false
 	for slot in builds.slots:
-		if slot.band != units.bands[i] or not wall_choice_open(slot):
+		if slot.band != units.bands[i] or absf(slot.x - units.xs[i]) > slot.width * HALF:
 			continue
-		if absf(slot.x - units.xs[i]) > slot.width * HALF:
+		if SlotVariant.choose(slot):
+			return true
+		if not wall_choice_open(slot):
 			continue
 		var path := (
 			BuildSlot.Path.GUARNICAO
@@ -159,11 +164,9 @@ static func collect(
 	return total
 
 
-## O Verbo 2 onde ele ja tem onde acontecer: uma passagem entre faixas (§11).
-## Trocar de classe, montar e subir em criatura sao os outros tres usos do §24, e
-## nenhum deles tem sistema ainda.
-##
-## Devolve verdadeiro se alguem mudou mesmo de faixa.
+## O Verbo 2 onde ele ja tem onde acontecer: uma passagem entre faixas (§11). Trocar
+## de classe, montar e subir em criatura (§24) nao tem sistema ainda. Verdadeiro se
+## alguem mudou mesmo de faixa.
 static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32Array) -> bool:
 	var para := destination(unidades, king_id, passagens)
 	if para == NENHUMA:
@@ -173,6 +176,35 @@ static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32A
 	unidades.bands[i] = para
 	EventBus.queue(&"passage_used", [king_id, de, para])
 	return true
+
+
+## A travessia (P-K, Q-135): o Verbo 2 na bifurcacao, de dia, a partir do dia
+## `crossing_day`, acaba a regiao (o game.gd ouve o segment_entered).
+static func cross(unidades: UnitSystem, king_id: int) -> bool:
+	if not crossing_open(unidades, king_id):
+		return false
+	SimLoop.state.crossed = true
+	var ordem := SimLoop.state.region + 1
+	var regioes := SimLoop.state.chapters.regions
+	var a_seguir := regioes[ordem] if ordem < regioes.size() else ""
+	EventBus.queue(&"segment_entered", [StringName(a_seguir), CROSSING])
+	return true
+
+
+## Se o rei esta onde a travessia pega, e ela ja abriu.
+static func crossing_open(unidades: UnitSystem, king_id: int) -> bool:
+	var i := unidades.index_of(king_id)
+	if i == UnitSystem.NENHUM or not unidades.alive(i) or SimLoop.state.crossed:
+		return false
+	if unidades.bands[i] != int(Band.Kind.SURFACE) or not at_fork(unidades.xs[i]):
+		return false
+	var dia := ClockService.clock.day
+	var de_dia := ClockService.clock.current_phase() < GameClock.Phase.DUSK
+	return de_dia and dia >= SimFactory.curve().crossing_day
+
+
+static func at_fork(x: float) -> bool:
+	return Passages.near(x, SimLoop.secrets.chapters)
 
 
 ## Para que faixa o Verbo 2 levava este corpo AGORA, ou NENHUMA. E a conta do
@@ -190,9 +222,8 @@ static func destination(unidades: UnitSystem, unit_id: int, passagens: PackedFlo
 	return int(Band.Kind.SURFACE)
 
 
-## §26: "slider de duracao do dia (240–540 s)". Os limites sao os do clock.csv e
-## aplicam-se aqui, onde a intencao chega a simulacao; zero e o dia do clock.csv.
-## O relogio escala as seis fases e o decorrido juntos, e a fase nao salta.
+## §26: "slider de duracao do dia (240–540 s)", com os limites do clock.csv (zero e
+## o dia dele). O relogio escala as seis fases e o decorrido juntos; a fase nao salta.
 static func day_length(segundos: float) -> void:
 	var dados := Registry.entry(&"economy", &"clock") as ClockData
 	var alvo := segundos if segundos > 0.0 else dados.day_seconds

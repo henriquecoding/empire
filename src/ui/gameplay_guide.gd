@@ -20,6 +20,8 @@ static func goal() -> String:
 		var lado := {"side": _tr(&"SIDE_EAST" if rot.announced > 0 else &"SIDE_WEST")}
 		var funda := rot.deep(ClockService.clock.day)
 		return _tr(&"GUIDE_ROT_COMING_DEEP" if funda else &"GUIDE_ROT_COMING").format(lado)
+	if ClockService.clock.day >= SimFactory.curve().crossing_day:
+		return _tr(&"GUIDE_CROSS")  # P-K: a regiao pode acabar (Q-135)
 	var worker := false
 	var hunter := false
 	for i in SimLoop.units.count():
@@ -71,6 +73,11 @@ static func context(device: Glyphs.Device) -> String:
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
 		return _passage(king, values)
+	if units.bands[king] == int(Band.Kind.SURFACE) and Verbs.at_fork(units.xs[king]):
+		if Verbs.crossing_open(units, SimLoop.king_id):
+			return _tr(&"CONTEXT_CROSS").format(values)
+		values["day"] = SimFactory.curve().crossing_day
+		return _tr(&"CONTEXT_CROSS_LOCKED").format(values)
 	for site in SimLoop.builds.slots:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue
@@ -93,6 +100,10 @@ static func context(device: Glyphs.Device) -> String:
 				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
 			)
 			return _tr(&"CONTEXT_WALL").format(values)
+		if SlotVariant.open(site):  # P-N: a variante escolhe-se antes da moeda (Q-136)
+			var chave := "VARIANT_%s_%s" % [String(site.kind).to_upper(), "AB"[site.variant]]
+			values["variant"] = _tr(StringName(chave))
+			return _tr(&"CONTEXT_VARIANT").format(values)
 		if values.cost > 0:
 			if not SimLoop.builds.can_climb(site, SimLoop.state, SimLoop.night.amargueiros):
 				return _tr(&"CONTEXT_LOCKED").format(values)

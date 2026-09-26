@@ -17,5 +17,9 @@ effect_params = {
 &"posts": 2.0,
 &"range_bonus": 0.4
 }
+variant_params = {
+&"cadence": 0.75,
+&"range_bonus": 0.0
+}
 shadow_width = 64
 tags = Array[StringName]([&"tower", &"elevated"])

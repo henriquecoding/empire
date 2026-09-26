@@ -38,6 +38,12 @@ static func accuracy(postos: JobBoard, unidades: UnitSystem, i: int, dados: Unit
 	return vaga.accuracy
 
 
+## O intervalo entre golpes, em fraccao do da tropa: 1 fora de posto (Q-136).
+static func cadence(postos: JobBoard, unidades: UnitSystem, i: int) -> float:
+	var vaga := present(postos, unidades, i)
+	return vaga.cadence if vaga != null and vaga.cadence > 0.0 else 1.0
+
+
 ## O alcance. A torre de arqueiros da +40% (§10, range_bonus).
 static func range_px(postos: JobBoard, unidades: UnitSystem, i: int, dados: UnitData) -> float:
 	var vaga := present(postos, unidades, i)

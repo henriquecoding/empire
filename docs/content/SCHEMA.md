@@ -116,6 +116,7 @@ Script `src/sim/data/building_data.gd` · layout `rows` · 26 linha(s) · §06 �
 | `upgrade_to` | StringName | Construcao |  |
 | `unique_per_kingdom` | bool | Construcao |  |
 | `effect_params` | Dictionary | Efeito | torres e defesas (§10) |
+| `variant_params` | Dictionary | Efeito |  |
 | `shadow_width` | int | Arte |  |
 | `tags` | Array[StringName] | Arte |  |
 
@@ -268,7 +269,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 100 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 102 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -372,6 +373,8 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 100 linha(s) · §06 §
 | `vagrant_camp_cap` | int | Auditoria de gameplay — AUD-02 |  |
 | `start_greed_profile` | StringName | Auditoria de gameplay — AUD-02 |  |
 | `chicken_theft_matter` | float | Auditoria de gameplay — AUD-04 |  |
+| `crossing_day` | int | Auditoria de gameplay — AUD-05 |  |
+| `crossing_party_px` | float | Auditoria de gameplay — AUD-05 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

@@ -167,3 +167,9 @@ extends Resource
 ## O que um Alado leva de um galinheiro, em materia, se chegar vivo a alvorada
 ## (Q-129): a producao do dia seguinte, e nunca mais do que um dia dela.
 @export var chicken_theft_matter: float = 0.0
+
+@export_group("Auditoria de gameplay — AUD-05")
+## A bifurcacao abre a travessia para a regiao seguinte a partir deste dia (Q-135).
+@export var crossing_day: int = 0
+## Quem e teu e esta a esta distancia do rei quando ele atravessa vai com ele.
+@export var crossing_party_px: float = 0.0

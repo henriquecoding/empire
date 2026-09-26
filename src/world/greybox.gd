@@ -34,8 +34,7 @@ const ESCUDEIRO := &"squire"
 # volta dele de dentro para fora, e a muralha de dentro cabe no ecra a partir do
 # nucleo: o §25 quer a estacaria vista ao minuto 3:30, nao procurada.
 const MUROS_X := [-1300.0, -600.0, 600.0, 1300.0]
-# A Casa de Treino e unica por imperio (buildings.csv); do outro lado do nucleo
-# fica a cozinha, onde se forma o cozinheiro (§09).
+# A Casa de Treino e unica por imperio; do outro lado, a cozinha do cozinheiro (§09).
 const TREINOS_X := [-300.0]
 const COZINHAS_X := [300.0]
 # O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
@@ -203,6 +202,7 @@ static func slot_of(dados: BuildingData, x: float) -> BuildSlot:
 	vaga.yield_per_day = dados.yield_per_day
 	vaga.razed_by_rot = dados.destroyed_by_rot_trail
 	vaga.effects = dados.effect_params
+	vaga.effects_b = dados.variant_params  # a outra variante da melhoria (Q-136)
 	vaga.costs = PackedInt32Array([dados.cost])
 	vaga.works = PackedFloat32Array([dados.build_work])
 	vaga.healths = PackedInt32Array([dados.max_health])
