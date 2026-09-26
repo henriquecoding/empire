@@ -58,9 +58,7 @@ static func choose_wall(units: UnitSystem, king: int, builds: BuildSystem) -> bo
 	if builds == null or i < 0 or not units.alive(i):
 		return false
 	for slot in builds.slots:
-		if not slot.two_paths() or slot.level > 1 or slot.band != units.bands[i]:
-			continue
-		if slot.paid > 0 or slot.state not in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]:
+		if slot.band != units.bands[i] or not wall_choice_open(slot):
 			continue
 		if absf(slot.x - units.xs[i]) > slot.width * HALF:
 			continue
@@ -71,6 +69,14 @@ static func choose_wall(units: UnitSystem, king: int, builds: BuildSystem) -> bo
 		)
 		return slot.choose_path(path)
 	return false
+
+
+## Se a escolha A/B ainda se faz nesta obra. O painel de contexto pergunta isto
+## mesmo, para nunca anunciar um gesto que o verbo depois recusa.
+static func wall_choice_open(slot: BuildSlot) -> bool:
+	if not slot.two_paths() or slot.level > 1 or slot.paid > 0:
+		return false
+	return slot.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]
 
 
 ## Tirar do saco para largar. O Verbo 1 nao cria moeda do nada: sai do que o

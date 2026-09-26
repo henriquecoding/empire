@@ -145,7 +145,7 @@ func _atualizar() -> void:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
-	_recursos.text = HudText.resources(saco, cabem, _meus(), _vida_nucleo())
+	_recursos.text = HudText.resources(saco, cabem, GameplayGuide.troops(), _vida_nucleo())
 	_objectivo.text = GameplayGuide.goal()
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)
@@ -162,14 +162,6 @@ func _vida_nucleo() -> int:
 			continue
 		melhor = maxf(melhor, float(vaga.health) / maxf(1.0, float(vaga.max_health())))
 	return clampi(int(round(melhor * CEM)), 0, int(CEM))
-
-
-func _meus() -> int:
-	var total := 0
-	for i in SimLoop.units.count():
-		if SimLoop.units.alive(i) and SimLoop.units.owners[i] != RecruitSystem.SEM_DONO:
-			total += 1
-	return total
 
 
 func _label(conteudo: String, caixa: Dictionary, cor: Color) -> Label:
@@ -225,8 +217,11 @@ func _dizer(mensagem: String) -> void:
 	_aviso.visible = true
 
 
-func _no_apanhar(_unit_id: int, amount: int) -> void:
-	_dizer(HudText.coins(amount))
+## So o que entra no TEU saco: o arqueiro sem dono que apanha a moeda da caca
+## (§25, 1:10) nao te deu nada, e um "+1" ali mentia sobre o saco.
+func _no_apanhar(unit_id: int, amount: int) -> void:
+	if unit_id == SimLoop.king_id:
+		_dizer(HudText.coins(amount))
 
 
 ## A pausa diz-se no PauseMenu, e a derrota tambem pausa: um "JOGO PAUSADO" por

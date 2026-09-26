@@ -29,6 +29,18 @@ static func goal() -> String:
 	return _tr(&"GUIDE_EXPLORE" if wall else &"GUIDE_WALL")
 
 
+## As tropas que o painel conta: quem e teu e esta vivo, sem o monarca — ele e
+## quem as tem, e "TROPAS 01" com o rei sozinho em campo dizia que havia uma.
+static func troops() -> int:
+	var total := 0
+	for i in SimLoop.units.count():
+		if not SimLoop.units.alive(i) or SimLoop.units.ids[i] == SimLoop.king_id:
+			continue
+		if SimLoop.units.owners[i] != RecruitSystem.SEM_DONO:
+			total += 1
+	return total
+
+
 static func context(device: Glyphs.Device) -> String:
 	var units := SimLoop.units
 	var king := units.index_of(SimLoop.king_id)
@@ -47,7 +59,7 @@ static func context(device: Glyphs.Device) -> String:
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
 			return _tr(&"CONTEXT_BUILDING").format(values)
-		if site.two_paths() and site.level <= 1 and site.paid == 0:
+		if Verbs.wall_choice_open(site):
 			values["path"] = _tr(
 				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
 			)

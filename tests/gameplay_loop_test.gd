@@ -78,3 +78,41 @@ func test_wall_path_can_be_chosen_with_the_real_intent_and_is_saved() -> void:
 	SimLoop.load_world(saved)
 	assert_int(site.path).is_equal(BuildSlot.Path.GUARNICAO)
 	assert_dict(SimLoop.hunting.to_dict()).is_equal(saved[&"hunting"])
+
+
+func test_the_context_only_offers_the_wall_path_the_verb_accepts() -> void:
+	var site := SimLoop.builds.slots[1]
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var paths := [
+		TranslationServer.translate(&"PATH_GARRISON"), TranslationServer.translate(&"PATH_FORTIFY")
+	]
+	SimLoop.units.xs[i] = site.x
+	site.level = 1
+	site.state = BuildSlot.State.DAMAGED
+	var before := site.path
+	var hint := GameplayGuide.context(Glyphs.Device.KEYBOARD)
+	for path in paths:
+		assert_str(hint).not_contains(path)
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(STEP)
+	assert_int(site.path).is_equal(before)
+	site.state = BuildSlot.State.DONE
+	SimLoop.units.xs[i] = site.x
+	var offered := GameplayGuide.context(Glyphs.Device.KEYBOARD)
+	assert_bool(offered.contains(paths[0]) or offered.contains(paths[1])).is_true()
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(STEP)
+	assert_int(site.path).is_not_equal(before)
+
+
+func test_the_coin_toast_is_the_kings_and_troops_do_not_count_him() -> void:
+	var hud: GameHud = auto_free(GameHud.new())
+	add_child(hud)
+	assert_int(GameplayGuide.troops()).is_equal(0)
+	var archer := SimLoop.units.index_of(7)
+	SimLoop.units.owners[archer] = SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
+	assert_int(GameplayGuide.troops()).is_equal(1)
+	EventBus.coin_collected.emit(SimLoop.units.ids[archer], 1)
+	assert_str(hud._aviso.text).is_empty()
+	EventBus.coin_collected.emit(SimLoop.king_id, 1)
+	assert_str(hud._aviso.text).is_equal(HudText.coins(1))

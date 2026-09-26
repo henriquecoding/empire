@@ -1182,6 +1182,40 @@
   o mercado passa a precisar de uma, e o `_cabem` é o sítio.
 - **Decide:** tu.
 
+### Q-106 · A caça é um stock do dia e esgota-se em meio minuto
+- **Onde:** §06 (circuito 1), §25 (minuto 1:10), `economy.csv` (`hunt_yield 3|9`, nota *"caça: moeda direta
+  por saída"*), `src/core/hunt_watch.gd`, `src/sim/systems/hunting_system.gd`.
+- **O que diverge:** o CSV dá 3–9 moedas **por saída**; o `HuntWatch` lê o mesmo intervalo como **o stock do
+  dia** — sorteia quantos coelhos há ao amanhecer e põe-nos todos nas clareiras de uma vez. O dossiê não diz o
+  que é uma "saída" nem quantas há por dia.
+- **O que foi medido** (`tests/abertura_natural_test.gd`, semente 20260926, dia de 360 s): o vagabundo e o
+  arqueiro do lado do castelo ficam teus aos 6 s, e o arqueiro mata os cinco coelhos do dia 1 **até aos 30 s**.
+  O rei tem 4 moedas aos 20 s, paga o canteiro aos 27 s, e o trabalhador acaba-o aos 34 s com o rei a 590 px
+  dali; a primeira colheita cai aos 225 s, no crepúsculo. Entre os 30 s e o crepúsculo a caça não rende mais
+  nada: a renda chega toda de uma vez e o resto do dia não tem caça para ir buscar — o *"deslocamento parece
+  vazio"* do relatório ASTRA (secção 16), medido.
+- **O que foi feito:** nada nos dados nem na leitura. É a opção que já estava e reverte-se num sítio só
+  (`HuntWatch.prepare`).
+- **Opções:** (a) manter o stock do dia; (b) repartir o sorteio pelas fases de luz — coelhos que aparecem de
+  manhã, ao meio-dia e à tarde; (c) ler "saída" à letra: cada caçador tem N saídas por dia e cada uma rende
+  entre 3 e 9 dividido por elas. A (b) é a que dá motivo às viagens sem mudar o total do dia.
+- **Decide:** tu.
+
+### Q-107 · A moeda do minuto 1:10 fica com o arqueiro que a caçou
+- **Onde:** §25 (*"Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda. — Observação. O jogador
+  não fez nada."*), §02 (a moeda física), `RecruitSystem.seek_coins`, `recruit_notice_px 120`.
+- **O que foi medido:** com o rei parado no castelo, o coelho da primeira clareira cai aos 70 s, a 160 px do
+  rei — no ecrã, depois da correção desta mesma medição (antes caía a 760 px, fora dele, morto pelo arqueiro de
+  id mais baixo que tivesse **outro** coelho ao alcance). **0,8 s depois o próprio arqueiro sem dono apanha a
+  moeda**, porque quem não é de ninguém anda para a moeda pousada mais perto (§25, minuto 0:20). Fica com 1 das
+  3 do preço dele, e o preço por cima dele passa a dizer 2.
+- **Leitura:** é a regra da moeda física a funcionar — a economia existe fora de ti e baixa-lhe o preço —, mas
+  o jogador vê a moeda cair e não a vê chegar-lhe ao saco. O aviso "+1 moeda" dizia que tinha chegado; passou a
+  aparecer só quando é o rei a apanhar.
+- **Opções:** (a) manter: a lição é "a caça rende", e o preço mais baixo mostra-o; (b) a moeda da demonstração
+  não é apanhável por quem não tem dono até o rei passar por ela.
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

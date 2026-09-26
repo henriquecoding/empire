@@ -737,3 +737,59 @@ Os nomes report_N são gerados e mudam entre execuções. Guardar os resultados 
 > Continue o Empire em `henriquecoding/empire`, preservando o worktree de `gameplay/readable-kingdom-loop`. Leia primeiro `AGENTS.md` e `docs/recovery/ASTRA-RETOMADA-2026-09-25.md`. A prioridade é tornar a abertura agradável e legível, conforme Kingdom como referência e a identidade autoral do dossiê. A árvore local importa em Godot 4.6, mas a suíte tem 3 falhas: G4 com 650 ocorrências e dois testes de moeda afetados pela caça no primeiro tick. Há 633 testes passados e 6 skips declarados. A vistoria perde o castelo no dia 1 e não prova dez dias de sobrevivência. Feche essas falhas, prove o circuito natural moeda → recrutamento → trabalho → renda → defesa e valide visualmente uma cena autorada. Preserve as expressões e referências aprovadas; não use o arqueiro rejeitado como final. Integre a main atualizada sem perder o site do PR #29. Não confunda o status Vercel da main com o desta branch. Entregue evidências do build real, testes, capturas e limitações restantes. Não declare conclusão com base somente em quantidade de arquivos, contagens de testes ou screenshots ilustrativas.
 
 **Resultado que o utilizador deve perceber na próxima entrega:** ele reconhece cada lugar e pessoa, toma decisões com consequências visíveis e quer continuar a jogar depois da primeira noite.
+
+## 24. Seguimento — 26/09/2026
+
+Esta secção acrescenta; não reescreve a auditoria acima, que continua a ser a fotografia de 25/09.
+
+### O que o chat de 25–26/09 fez depois deste relatório
+
+A fatia local foi reconstruída sobre a `main` e entrou pelo **PR #30** (`d85cfc7`). O CI desse PR ficou verde nos
+seis *jobs*, e o deploy de produção da Vercel desse mesmo SHA ficou `READY` (confirmado a 26/09; era o passo que
+o chat deixou por fechar, a aguardar o estado `pending`).
+
+### Estado medido na `main` antes desta continuação
+
+| Verificação | Resultado |
+|---|---|
+| Suíte gdUnit4 em `d85cfc7` | 649 casos, 643 a passar, 6 saltados, **0 falhas reais** (as três de §8 estão fechadas) |
+| G4, `gdformat`, `gdlint`, G2, dossiê contra CSV, `check_claims`, export dos originais | limpos |
+| Vistoria de 10 dias com piloto | sem invariantes quebradas; o núcleo cai na **noite 2** (era a noite 1) — Q-068 continua a ser a razão |
+
+### O que esta continuação fechou
+
+| Ponto do relatório | O que mudou | Prova |
+|---|---|---|
+| §8 — a vistoria dizia "10 dias sem nada a apontar" com o núcleo caído no dia 1 | O resumo diz os dias vividos: *"2 de 10 dias, o nucleo caiu — sem invariantes quebradas"* | `make vistoria DIAS=10` |
+| §10 — a demonstração da caça | Medido: aos 70 s o coelho que caía era o de −760 px (fora do ecrã), morto pelo arqueiro sem dono de id mais baixo que tivesse **outro** coelho ao alcance. Passa a ser o da primeira clareira (−160 px), pelo arqueiro sem dono mais perto dele; se um caçador teu já o levou, a demonstração deixa de acontecer | `hunting_test` (dois novos), `abertura_natural_test` (falha sem a correção) |
+| §10 — "salvar/carregar não a repete" | A clareira da demonstração vai no save (`intro_x`) | `abertura_natural_test` |
+| §12 — o contexto anunciava uma ação que o verbo recusava | O painel e o Verbo 2 perguntam a mesma coisa (`Verbs.wall_choice_open`): muralha danificada ou em ruína já não diz "E escolher caminho" | `gameplay_loop_test` |
+| §13.1 — "TROPAS" contava o monarca | Conta só quem é teu, sem o rei | `gameplay_loop_test` |
+| §13.7 — mensagens que não correspondem ao estado | O "+1 moeda" aparecia quando o arqueiro **sem dono** apanhava a moeda da caça; passa a aparecer só quando entra no saco do rei | `gameplay_loop_test` |
+| §19 C — provar o circuito sem mexer no saldo nem nas obras | Um teste joga a abertura só com os dois gestos do §61: recruta o vagabundo e o arqueiro (6 s), junta 4 moedas de caça (20 s), paga o canteiro (27 s), afasta-se, e o trabalhador acaba-o sozinho (34 s); a colheita cai no crepúsculo (225 s). Nenhuma moeda aparece por outra via | `abertura_natural_test` |
+| §21 — "não foi obtida renderização" | Neste ambiente o Xvfb funciona: `xvfb-run -a make captura` tira capturas reais (Mesa em *software*). O `--novo` antes de outra opção engolia-a; o parser da captura passou a tratá-lo como bandeira | `tools/captura.gd` |
+
+### O que a medição deixou como pergunta, e não como decisão
+
+- **Q-106** — a caça é um stock do dia e esgota-se em 30 s depois de recrutar o arqueiro; o CSV fala de moedas
+  "por saída". Três opções escritas; nada mudou nos dados.
+- **Q-107** — a moeda do 1:10 fica com o arqueiro sem dono que a caçou, 0,8 s depois (baixa-lhe o preço para 2).
+- **Q-068 / Q-073** continuam: a noite 1 não é "ganha de certeza" com os dados de hoje.
+
+### O que as capturas reais mostram, e continua por fazer
+
+Capturas de 26/09, 1280×720, a partir de `tools/captura.tscn` com `--novo` (a semente é aleatória e a
+ferramenta escreve-a na saída, `Empire · semente N`; o dia e a fase ficam na ficha `.json` ao lado do PNG):
+
+- O castelo-árvore autoral e os corpos originais aparecem e leem-se de dia; o preço e a ação por cima do que
+  está debaixo do rei (canteiro 4, muralha 6, vagabundo 1) estão certos.
+- **O subsolo é uma grelha de caixas escuras vazias** e o painel de contexto assenta em cima dela — é a queixa
+  de 25/09 (§3: *"não reduzir o subsolo a uma faixa quase invisível"*) e continua de pé.
+- **À noite as tropas quase desaparecem** contra o fundo; é a regra do §80, mas pede a verificação de §20.2.
+- Canteiros vazios leem-se como placas e contornos fantasma finos; a §15 continua por fazer.
+
+### Próximo passo recomendado
+
+A etapa D (§19): uma cena autorada da abertura — subsolo com conteúdo e ligação legível à passagem, e cada
+obra com silhueta própria —, validada com capturas desta mesma ferramenta, dia, crepúsculo e noite. E uma
+resposta à Q-106, que decide se o dia tem motivo para andar depois dos primeiros trinta segundos.
