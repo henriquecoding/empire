@@ -52,6 +52,11 @@ static func blink(tempo: float) -> float:
 static func _obra(
 	canvas: CanvasItem, vaga: BuildSlot, forma: Silhouette.Form, luz: Lighting, pulso: float
 ) -> void:
+	if BuildingSkins.draw_on(canvas, vaga, luz):
+		return
+	if SettlementArt.handles(vaga.kind):
+		SettlementArt.draw_on(canvas, vaga, luz)
+		return
 	var x := vaga.x
 	var caixa := drawn_box(vaga, forma)
 	if vaga.standing():
@@ -74,6 +79,11 @@ static func _obra(
 ## do que se ve, e adivinhar esse topo era ter duas respostas para uma pergunta
 ## que so tem uma.
 static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
+	var skin := BuildingSkins.profile(vaga.kind)
+	if skin != &"":
+		var foot := Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band)))
+		var native_box := BuildingSkins.art.box(skin, foot)
+		return _rente(native_box) if vaga.state == BuildSlot.State.RUIN else native_box
 	if vaga.standing():
 		return _caixa(vaga, forma, vaga.level)
 	if vaga.state == BuildSlot.State.RUIN:

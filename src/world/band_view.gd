@@ -34,6 +34,7 @@ var _luz := Lighting.new()
 var _visual_time := 0.0
 ## O pequeno bounce do §24 (GB-19), criado a pedido: precisa da gravidade do arco.
 var _salto: CoinBounce
+var _actors: UnitCanvas
 
 
 func _ready() -> void:
@@ -42,6 +43,10 @@ func _ready() -> void:
 	_edificios = SimFactory.by_id(&"buildings")
 	_relogio = Registry.entry(&"economy", &"clock") as ClockData
 	_podre = SimFactory.rot_profile()
+	_actors = UnitCanvas.new()
+	_actors.band = band
+	_actors.light = _luz
+	add_child(_actors)
 
 
 ## O ambiente vinha no `modulate` do no, e um `modulate` multiplica tudo o que o
@@ -61,6 +66,8 @@ func _process(delta: float) -> void:
 	else:
 		_luz.clear_lamp()
 	queue_redraw()
+	_actors.time = _visual_time
+	_actors.queue_redraw()
 
 
 ## A candeia e o mostrador da Divida (§74, §75): na faixa da mancha e o raio do
@@ -87,7 +94,8 @@ func _draw() -> void:
 	AmargueiroView.draw_on(self, band, _luz)  # §74: o que a noite deixou
 	_moedas()
 	_criaturas()
-	_tropa()
+	if band == Band.Kind.SURFACE:
+		HuntView.draw_on(self, _luz, _visual_time)
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
@@ -97,13 +105,7 @@ func _draw() -> void:
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
 ## desce — e o minuto 10:00 do §25, "o mundo tem um andar de baixo".
 func _passagens() -> void:
-	var topo := WorldPalette.ground_of(int(Band.Kind.SURFACE))
-	var fundo := WorldPalette.ground_of(int(Band.Kind.UNDERGROUND))
-	var largura := WorldPalette.PASSAGEM_W
-	for x in SimLoop.passages:
-		var canto := Vector2(x - largura * WorldPalette.MEIA, topo)
-		var cor := WorldPalette.tint(WorldPalette.PASSAGEM, _luz.scenery(1.0))
-		draw_rect(Rect2(canto, Vector2(largura, fundo - topo)), cor)
+	PassageArt.draw_on(self, _luz)
 
 
 ## A arte da mancha vive no RotView: a massa, o rasto e a candeia sao um assunto
@@ -184,40 +186,3 @@ func _candeeiro() -> Vector2:
 	if not rot.active():
 		return Vector2(0.0, INF)
 	return Vector2(rot.position_x(), WorldLight.radius(_podre, SimLoop.state.day))
-
-
-## O corpo de uma tropa e o mesmo rectangulo de sempre — uma pessoa e uma
-## pessoa. O que a distingue de outra e a ARMA, e e de proposito: o §08 diz que
-## os arquetipos sao "mesma funcao, corpo e silhueta diferentes" por POVO, e nao
-## por classe. Aqui ha um povo so, e por isso o que resta e o que ela leva.
-## A tropa. A caixa continua a ser a do §22 — e dela que sai a silhueta — e o
-## que a enche e o ActorArt: corpo, cara, chapeu e a marca da mao, na COR DO
-## CORPO. O §80 quer que a meio de uma noite o contorno chegue, e um corpo
-## desenhado com uma cor propria deixava de ser o mesmo corpo.
-func _tropa() -> void:
-	var unidades := SimLoop.units
-	for i in unidades.count():
-		if unidades.bands[i] != int(band):
-			continue
-		var dados: UnitData = _tropas.get(unidades.data_ids[i])
-		if dados == null:
-			continue
-		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var x := Smoothing.x_of(Smoothing.Group.UNITS, unidades.ids[i], unidades.xs[i])
-		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, x, int(band), alto)
-		var cor := _luz.body(WorldPalette.unit_color(unidades, i), x)
-		ActorArt.draw_unit(self, caixa, dados, unidades, i, cor, _visual_time)
-		TitleView.draw_on(self, caixa, unidades.ids[i], _luz)  # §76: a fita
-		_saco(caixa, unidades, i)
-		if unidades.alive(i):
-			Gauge.health(
-				self, caixa, float(unidades.healths[i]) / maxf(1.0, float(unidades.max_healths[i]))
-			)
-
-
-## O saco do §24. Quem morreu nao leva nada: §50 manda largar, e um corpo com o
-## saco cheio dizia que ainda havia ali dinheiro para apanhar.
-func _saco(caixa: Rect2, unidades: UnitSystem, i: int) -> void:
-	if not unidades.alive(i):
-		return
-	Gauge.purse(self, caixa, unidades.carried_coins[i], unidades.coin_capacities[i])

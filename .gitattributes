@@ -16,6 +16,8 @@ addons/**       !filter !diff !merge text=auto
 # v5.2: os placeholders sao minusculos e o CI faz checkout sem LFS (§69, ci.yml);
 # fora do LFS, o boot.tscn e o export do dia zero tem imagens reais. Mesma regra: vem depois.
 art/export/_placeholder/** -filter -diff -merge binary
+art/export/enramados/** -filter -diff -merge binary
+art/source/originals/** -filter -diff -merge binary
 
 # Ficheiros do Godot sao texto: tem de dar diff legivel numa revisao
 *.gd    text eol=lf

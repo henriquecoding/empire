@@ -1,23 +1,11 @@
 # src/core/sim_loop.gd — os onze passos do §43, pela ordem escrita (ADR 0020).
-#
-# O UNICO _physics_process da simulacao: 30 passos por segundo, metade do render
-# (§19). A ordem dentro do passo esta escrita aqui porque uma ordem implicita e
-# uma ordem que muda sozinha quando alguem reorganiza um ficheiro.
-#
-# O que este ficheiro NAO tem, de proposito: regras. Quem decide e um sistema de
-# src/sim/, quem os monta e o SimFactory, quem traduz o que devolvem e o
-# EventRelay. Aqui fica a ORDEM, e o Verbo 1.
-#
-# Passos 9 e 10 continuam por escrever, e continuam como linha (Fase 2).
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
 ## aqui; ninguem guarda uma copia.
 var state: GameState
 
-## As tropas em colunas (§52) e as invocacoes da Podridao (§51). Sao duas
-## coleccoes porque uma criatura nao se recruta, nao se paga e dissolve-se ao
-## amanhecer — metade das colunas das tropas nao lhe serve de nada.
+## Tropas e criaturas mantem coleccoes distintas (§51, §52).
 var units: UnitSystem
 var creatures: CreatureSystem
 
@@ -27,7 +15,6 @@ var builds: BuildSystem
 var jobs: JobBoard
 var secrets := SecretSites.new()
 
-## O combate (§50), o raio do rei (§07) e a curva (§49).
 var combat: CombatSystem
 var morale: MoraleSystem
 var economy: EconomySystem
@@ -41,8 +28,8 @@ var night: NightWatch
 ## no _ready(): precisam do Registry, e isso e a regra 8b (ADR 0020).
 var coins: CoinSystem
 var recruits: RecruitSystem
+var hunting: HuntingSystem
 
-## A fila do §61: a entrada nunca muda estado, enfileira uma intencao.
 var intents := IntentQueue.new()
 
 ## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo.
@@ -105,11 +92,14 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 ## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
 ## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
 func world() -> Dictionary:
-	return SimSave.world(units, creatures, coins, builds, night, king_id)
+	var saved := SimSave.world(units, creatures, coins, builds, night, king_id)
+	saved[&"hunting"] = hunting.to_dict()
+	return saved
 
 
 func load_world(mundo: Dictionary) -> void:
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo)
+	hunting.from_dict(mundo.get(&"hunting", {}))
 
 
 func stop() -> void:
@@ -132,20 +122,20 @@ func set_paused(pausado: bool) -> void:
 ## Um passo. Publico: um teste corre um dia inteiro sem esperar por _physics_process.
 func step(delta: float) -> void:
 	state.tick += 1
-	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages))
+	_largar(Verbs.consume(intents, units, creatures, combat, king_id, passages, builds))
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
-	if mudou:  # 3 · JobSystem — uma vez por fase
-		jobs.publish(builds)
-		jobs.assign(units, _fase)
+	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
+	HuntWatch.prepare(hunting, ClockService.clock.day, core_x, world_width)
 	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
 	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
 	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
 	#     tick.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
+	hunting.plan(units, _fase < GameClock.Phase.DUSK)
 	EventRelay.combat(combat.choose(units, creatures, builds, passages))
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
@@ -167,6 +157,13 @@ func step(delta: float) -> void:
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, king_id, state))
 	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
+	_largar(
+		hunting.resolve(
+			units,
+			_fase < GameClock.Phase.DUSK,
+			ClockService.clock.elapsed >= HuntWatch.INTRO_SECONDS
+		)
+	)
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
@@ -197,6 +194,9 @@ func _montar() -> void:
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
+	hunting = HuntingSystem.new(
+		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
+	)
 	tally.reset()
 	_fase = UnitSystem.NENHUM
 	_brecha = false

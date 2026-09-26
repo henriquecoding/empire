@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://src/ui/input_router.gd" id="4_input"]
 [ext_resource type="Script" path="res://src/ui/hud.gd" id="5_hud"]
 [ext_resource type="Script" path="res://src/ui/inspector.gd" id="6_estado"]
-[ext_resource type="Script" path="res://src/world/terrain_backdrop.gd" id="7_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/segments/enramados/enramados_start_base_01.tscn" id="7_backdrop"]
 [ext_resource type="Script" path="res://src/ui/game_hud.gd" id="8_game_hud"]
 [ext_resource type="Script" path="res://src/ui/pause_menu.gd" id="9_pausa"]
 [ext_resource type="Script" path="res://src/world/dawn_sweep.gd" id="10_alvorada"]
@@ -21,28 +21,15 @@ script = ExtResource("0_game")
 
 [node name="Mundo" type="Node2D" parent="."]
 
-[node name="Ceu" type="Node2D" parent="Mundo"]
-script = ExtResource("11_ceu")
-
-[node name="AereoBackdrop" type="Node2D" parent="Mundo"]
-script = ExtResource("7_backdrop")
-band = 0
+[node name="Enramados" parent="Mundo" instance=ExtResource("7_backdrop")]
 
 [node name="Aereo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
 band = 0
 
-[node name="SuperficieBackdrop" type="Node2D" parent="Mundo"]
-script = ExtResource("7_backdrop")
-band = 1
-
 [node name="Superficie" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
 band = 1
-
-[node name="SubsoloBackdrop" type="Node2D" parent="Mundo"]
-script = ExtResource("7_backdrop")
-band = 2
 
 [node name="Subsolo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")

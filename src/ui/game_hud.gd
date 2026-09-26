@@ -1,13 +1,4 @@
 # src/ui/game_hud.gd — o painel de quem joga (§24).
-#
-# Nao e o Inspector: aquele mostra o estado de cada sistema, a pedido, e serve
-# para depurar (Q-067). Isto e o contrario — quatro coisas, sempre no mesmo
-# sitio, para quem esta a jogar e nao quer ler nada: que horas sao, o que se
-# tem, o que falta fazer, e o que acabou de acontecer.
-#
-# Nao decide nada e nao toca no estado: le o SimLoop e ouve os sinais do §46. Os
-# avisos sao todos sinais do catalogo — um HUD que inventasse um evento seu era
-# um sitio onde a regra 7 do AGENTS.md deixava de valer.
 class_name GameHud
 extends Control
 
@@ -27,18 +18,18 @@ const RODAPE_LINHA := Color(0.32, 0.26, 0.20)
 const ECRA := {"largura": 1280.0, "altura": 720.0}
 
 ## Cada rotulo: canto, tamanho da caixa e corpo da letra.
-const TITULO := {"x": 36.0, "y": 27.0, "w": 230.0, "h": 32.0, "letra": 24}
-const RELOGIO := {"x": 378.0, "y": 27.0, "w": 510.0, "h": 28.0, "letra": 19}
-const RECURSOS := {"x": 378.0, "y": 54.0, "w": 510.0, "h": 24.0, "letra": 14}
-const OBJECTIVO := {"x": 944.0, "y": 28.0, "w": 290.0, "h": 44.0, "letra": 14}
+const TITULO := {"x": 36.0, "y": 24.0, "w": 160.0, "h": 32.0, "letra": 22}
+const RELOGIO := {"x": 232.0, "y": 20.0, "w": 540.0, "h": 28.0, "letra": 19}
+const RECURSOS := {"x": 232.0, "y": 44.0, "w": 540.0, "h": 24.0, "letra": 13}
+const OBJECTIVO := {"x": 844.0, "y": 23.0, "w": 390.0, "h": 44.0, "letra": 13}
 const DICA := {"x": 40.0, "y": 0.0, "acima": 44.0, "w": 1120.0, "h": 26.0, "letra": 13}
 const AVISO := {"x": 400.0, "y": 112.0, "w": 480.0, "h": 30.0, "letra": 16}
 
 ## Os tres paineis do topo, a barra da fase e o rodape das teclas.
-const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 292.0, "h": 72.0}
-const PAINEL_MEIO := {"x": 348.0, "y": 16.0, "w": 570.0, "h": 72.0}
-const PAINEL_DIR := {"recuo": 332.0, "y": 16.0, "w": 312.0, "h": 72.0}
-const BARRA := {"x": 360.0, "y": 83.0, "w": 546.0, "h": 3.0}
+const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 180.0, "h": 56.0}
+const PAINEL_MEIO := {"x": 216.0, "y": 16.0, "w": 586.0, "h": 56.0}
+const PAINEL_DIR := {"recuo": 456.0, "y": 16.0, "w": 436.0, "h": 56.0}
+const BARRA := {"x": 228.0, "y": 69.0, "w": 562.0, "h": 3.0}
 const RODAPE := {"x": 20.0, "acima": 48.0, "margem": 40.0, "h": 30.0}
 const AVISO_CAIXA := {"x": 390.0, "y": 108.0, "w": 500.0, "h": 38.0}
 
@@ -46,7 +37,7 @@ const TRACO := {"painel": 2.0, "rodape": 1.0, "contorno": 3}
 
 ## As duas faixas que este painel ocupa: a de cima acaba onde o painel acaba, e
 ## a de baixo e o rodape das teclas.
-const FAIXA_TOPO := 88.0
+const FAIXA_TOPO := 72.0
 
 ## Quanto tempo um aviso fica no ecra, e a percentagem em que tudo se le.
 const AVISO_S := 2.0
@@ -86,6 +77,7 @@ func _ready() -> void:
 	if not comandos.is_empty():
 		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
 	_escrever_fixos()
+	add_child(ContextPanel.new())
 	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.game_paused.connect(_na_pausa)
 	for sinal: StringName in HudText.AVISOS:
@@ -154,7 +146,7 @@ func _atualizar() -> void:
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
 	_recursos.text = HudText.resources(saco, cabem, _meus(), _vida_nucleo())
-	_objectivo.text = HudText.goal(SimLoop.night.rot.active())
+	_objectivo.text = GameplayGuide.goal()
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)
 	_rodape.position = Vector2(0.0, size.y - RODAPE.acima)

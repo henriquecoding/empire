@@ -28,6 +28,7 @@ const LUA_RAIO := 24.0
 const LUA := Color(0.86, 0.82, 0.70)
 const MEIA := 0.5
 
+@export var paint_sky := true
 var view_width: float = 0.0
 var _relogio: ClockData
 
@@ -69,7 +70,8 @@ func _draw() -> void:
 		return
 	var fase := int(relogio.current_phase())
 	var luz := BandLight.of(_relogio, Band.Kind.AERIAL, fase, relogio.phase_progress())
-	TerrainArt.sky(self, view_width, luz)
+	if paint_sky:
+		TerrainArt.sky(self, view_width, luz)
 	var onde := course(relogio.elapsed, _relogio.phase_durations)
 	var ponto := arc(onde.t, view_width)
 	if onde.moon:
