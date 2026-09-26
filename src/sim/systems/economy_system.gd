@@ -45,6 +45,8 @@ const FAIXA := &"band"
 ## as Armas mexem no que cada obra rende hoje. Sem coroa, rende o que rendia.
 var crown: CrownSystem
 var today := 1
+## O circuito 2 (§06, §49): com a casa de conversao de pe, a materia vai para ela.
+var conversion: ConversionSystem
 
 var _curva: EconomyCurve
 var _fases: int
@@ -142,6 +144,8 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 			continue
 		var fator := crown.yield_mult(today, vaga.kind) if crown != null else 1.0
 		vaga.stock += vaga.yield_per_day / _fases * fator
+		if conversion != null and conversion.claims(vaga, obras):
+			continue
 		var moedas := int(floorf(vaga.stock))
 		if moedas <= 0:
 			continue
@@ -149,6 +153,8 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 		eventos.append(
 			{CHAVE: EV_MOEDA, VAGA: vaga, QUANTO: moedas, ONDE: vaga.x, FAIXA: int(vaga.band)}
 		)
+	if conversion != null:
+		eventos.append_array(conversion.on_phase(obras))
 	return eventos
 
 

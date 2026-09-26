@@ -1194,8 +1194,11 @@
   dali; a primeira colheita cai aos 225 s, no crepúsculo. Entre os 30 s e o crepúsculo a caça não rende mais
   nada: a renda chega toda de uma vez e o resto do dia não tem caça para ir buscar — o *"deslocamento parece
   vazio"* do relatório ASTRA (secção 16), medido.
-- **O que foi feito:** nada nos dados nem na leitura. É a opção que já estava e reverte-se num sítio só
-  (`HuntWatch.prepare`).
+- **O que foi feito (26/09, segunda fatia):** aplicada a opção **(b)**, reversível numa linha
+  (`HuntWatch.WAVE_PHASES` com uma só fase volta ao stock do dia): o sorteio do dia reparte-se em três vagas —
+  alvorada, meio-dia e tarde —, com o mesmo total. Com a Q-111, a abertura medida passa a ser: 4 moedas de caça
+  no saco do rei aos 107 s, o canteiro de pé aos 119 s, a primeira colheita aos 255 s; e há caça por apanhar
+  até ao crepúsculo.
 - **Opções:** (a) manter o stock do dia; (b) repartir o sorteio pelas fases de luz — coelhos que aparecem de
   manhã, ao meio-dia e à tarde; (c) ler "saída" à letra: cada caçador tem N saídas por dia e cada uma rende
   entre 3 e 9 dividido por elas. A (b) é a que dá motivo às viagens sem mudar o total do dia.
@@ -1214,6 +1217,37 @@
   aparecer só quando é o rei a apanhar.
 - **Opções:** (a) manter: a lição é "a caça rende", e o preço mais baixo mostra-o; (b) a moeda da demonstração
   não é apanhável por quem não tem dono até o rei passar por ela.
+- **Decide:** tu.
+
+### Q-111 · O caçador guarda a caça e entrega-a ao rei
+- **Onde:** §02 (*"Capacidade de moedas — Arqueiro 11"*, herdado do Kingdom), §06 (a caça, *"moeda direta"*),
+  §25 (o minuto 1:10), Q-106.
+- **O que foi medido:** com a caça repartida pelo dia, a moeda caía onde o coelho morria — a 700 px do rei ou
+  ao lado de um lanceiro sem dono, que a apanhava. De seis moedas de caça até ao crepúsculo, três chegavam ao
+  rei.
+- **O que foi feito (reversível, `HuntingSystem.bag` e `deliver`):** a caça do **teu** caçador vai para o saco
+  dele (o saco de 11 do arqueiro não tinha outro uso) e passa para o saco do rei quando os dois estão a
+  `recruit_notice_px` um do outro. Entrega só o que caçou — o preço que pagaste para o recrutar fica com ele. A
+  caça de quem **não** é de ninguém continua a cair no chão (o 1:10 do §25, Q-107). O saco do caçador vê-se por
+  cima dele (§24).
+- **Decide:** tu — em particular se o caçador deve ir ter com o rei quando o saco enche, em vez de só entregar
+  quando se cruzam.
+
+### Q-112 · A decisão do circuito 2: como se "aponta um ofício a um edifício"
+- **Onde:** §06 (*"a decisão de conversão faz-se apontando um ofício a um edifício, que é o Verbo 1 com outro
+  alvo"*), §49 (o algoritmo), `crafts.csv`, `buildings.csv` (celeiro, salga, curral).
+- **O que foi feito (reversível, `ConversionSystem`):** o algoritmo do §49 à letra — com a casa de pé, a matéria
+  dos produtores dela é consumida (`cost` por conversão) e dá moeda ×`coin_multiplier` **ou** a capacidade.
+  O gesto: **uma moeda largada na casa troca o modo**; para capacidade só se tiveres o ofício vivo (o
+  cozinheiro, para o grão), e sem ele a casa volta a vender. A capacidade corre enquanto houver o ofício e um
+  produtor da matéria de pé ("duration 0 = recalculada a cada fase"). Ligadas: `troop_health` e `troop_speed`
+  (vida máxima e passo das tuas tropas, a partir do perfil). As outras três (`combat_dish`,
+  `wall_and_tower_cost`, `weapon_level`) aparecem no painel mas ainda não têm efeito.
+- **O greybox:** a segunda Casa de Treino (a `training_house` é única por império) passa a **cozinha**, e há um
+  **celeiro fora do muro de fora** — pôr a render é mandar o cozinheiro ao sítio arriscado (§21). A arte é a
+  autoral recuperada: `storehouse` para as casas de conversão, `workshop` para a cozinha e a forja.
+- **Em aberto:** as carroças do §06 (a matéria não se transporta hoje: a casa consome à distância); se trocar
+  de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
 - **Decide:** tu.
 
 ### Q-108 · Quanto custa reparar, e quem repara

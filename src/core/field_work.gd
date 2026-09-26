@@ -10,6 +10,7 @@ extends RefCounted
 var hunting: HuntingSystem
 var training: TrainingSystem
 var crown: CrownSystem
+var conversion: ConversionSystem
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
@@ -22,16 +23,20 @@ func _init(economia: EconomySystem = null, moral: MoraleSystem = null) -> void:
 	)
 	training = SimFactory.training()
 	crown = SimFactory.crown()
+	conversion = SimFactory.conversion()
 	_economia = economia
 	_moral = moral
 	if _economia != null:
 		_economia.crown = crown
+		_economia.conversion = conversion
 
 
 ## Passo 3: o dia novo abre as clareiras e cobra o que os impulsos de ontem
 ## deixaram a pagar (§15).
-func prepare(dia: int, core_x: float, largura: float, unidades: UnitSystem = null) -> void:
-	HuntWatch.prepare(hunting, dia, core_x, largura)
+func prepare(
+	dia: int, core_x: float, largura: float, unidades: UnitSystem = null, fase: int = 0
+) -> void:
+	HuntWatch.prepare(hunting, dia, core_x, largura, fase)
 	if dia != _dia and unidades != null:
 		_dia = dia
 		crown.dawn(dia, unidades)
@@ -58,21 +63,38 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 ## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio.
 func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> void:
 	EventRelay.training(training.absorb(moedas, obras, unidades))
+	if conversion.absorb(moedas, obras, unidades):
+		EventBus.queue(&"coin_spent", [1, &"conversion"])
 
 
 ## Passos 6 e 8: a caca rende moeda; o treino corre com quem esta la dentro, e a
 ## defesa que os construtores dao as muralhas acompanha quem esta vivo.
+## A caca do cacador teu vai para o saco dele e chega ao rei quando ele passa
+## perto (Q-111); a de quem nao e de ninguem cai no chao, que e o 1:10 do §25.
 func resolve(
-	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock
+	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
 	obras.wall_defense = training.wall_defense(unidades)
+	conversion.bind(unidades)
+	conversion.apply(unidades, conversion.active)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
-	return hunting.resolve(unidades, luz, relogio.elapsed >= HuntWatch.INTRO_SECONDS)
+	var caca := hunting.resolve(unidades, luz, relogio.elapsed >= HuntWatch.INTRO_SECONDS)
+	var chao := hunting.bag(unidades, caca)
+	for d in caca:
+		if not d in chao:
+			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
+	var entregue := hunting.deliver(unidades, rei, SimFactory.curve().recruit_notice_px)
+	if entregue > 0:
+		EventBus.queue(&"coin_collected", [rei, entregue])
+	return chao
 
 
 func to_dict() -> Dictionary:
 	return {
-		&"hunting": hunting.to_dict(), &"training": training.to_dict(), &"crown": crown.to_dict()
+		&"hunting": hunting.to_dict(),
+		&"training": training.to_dict(),
+		&"crown": crown.to_dict(),
+		&"conversion": conversion.to_dict()
 	}
 
 
@@ -80,4 +102,5 @@ func from_dict(mundo: Dictionary) -> void:
 	hunting.from_dict(mundo.get(&"hunting", {}))
 	training.from_dict(mundo.get(&"training", {}))
 	crown.from_dict(mundo.get(&"crown", {}))
+	conversion.from_dict(mundo.get(&"conversion", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0

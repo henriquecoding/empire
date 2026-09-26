@@ -126,3 +126,15 @@ func test_o_quadro_publica_a_reparacao_paga_e_um_trabalhador_vai_la() -> void:
 	assert_int(unidades.job_ids[i]).is_not_equal(JobBoard.NENHUM)
 	assert_str(String(jobs.slot_of(unidades.job_ids[i]).job_id)).is_equal("repair")
 	assert_float(unidades.target_xs[i]).is_equal(X)
+
+
+func test_uma_escada_de_trabalho_curta_nao_parte_a_reparacao() -> void:
+	var vaga := _muro_de_pe()
+	vaga.level = vaga.costs.size()
+	vaga.works = PackedFloat32Array([vaga.works[0]])
+	vaga.health = vaga.max_health()
+	obras.damage(vaga.id, 1)
+	_pagar(vaga.repair_cost())
+	unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X)
+	_trabalhar(vaga.works[0])
+	assert_int(vaga.state).is_equal(BuildSlot.State.DONE)

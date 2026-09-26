@@ -2,6 +2,7 @@ class_name GameplayGuide
 extends RefCounted
 
 const HALF := 0.5
+const CEM := 100.0
 
 
 static func goal() -> String:
@@ -111,6 +112,8 @@ static func _tr(key: StringName) -> String:
 ## Uma obra de pe: se forma um oficio (§09), diz o preco do treino, quem esta
 ## la dentro, ou que falta um trabalhador teu para mandar; senao, funciona.
 static func _training(site: BuildSlot, values: Dictionary) -> String:
+	if SimLoop.field.conversion.craft_of(site) != null and site.standing():
+		return _conversion(site, values)
 	var treino := SimLoop.field.training
 	var oficio := treino.craft_of(site)
 	if oficio == null or not site.standing():
@@ -123,3 +126,22 @@ static func _training(site: BuildSlot, values: Dictionary) -> String:
 	if values.cost <= 0:
 		return _tr(&"CONTEXT_TRAIN_NOBODY").format(values)
 	return _tr(&"CONTEXT_TRAIN").format(values)
+
+
+## Uma casa de conversao (§06, circuito 2): o que faz agora, e o que a moeda
+## largada nela faria — vender, ou mandar o oficio dar a capacidade (Q-112).
+static func _conversion(site: BuildSlot, values: Dictionary) -> String:
+	var conversao := SimLoop.field.conversion
+	var conv := conversao.craft_of(site)
+	var oficio := Registry.entry(&"units", conv.capacity_craft) as UnitData
+	values["material"] = _tr(conv.display_key)
+	values["bonus"] = roundi((conv.coin_multiplier - 1.0) * CEM)
+	values["craft"] = _tr(oficio.display_key) if oficio != null else ""
+	values["effect"] = _tr(&"CAPACITY_" + String(conv.capacity_kind).to_upper()).format(
+		{"pct": roundi(absf(conv.magnitude) * CEM)}
+	)
+	if conversao.mode_of(site) == CraftData.Mode.CAPACITY:
+		return _tr(&"CONTEXT_CONVERT_CAPACITY").format(values)
+	if not conversao.has_craft(conv.capacity_craft):
+		return _tr(&"CONTEXT_CONVERT_NOBODY").format(values)
+	return _tr(&"CONTEXT_CONVERT_COIN").format(values)

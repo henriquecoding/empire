@@ -129,7 +129,7 @@ func step(delta: float) -> void:
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
-	field.prepare(ClockService.clock.day, core_x, world_width, units)
+	field.prepare(ClockService.clock.day, core_x, world_width, units, _fase)
 	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
 	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
 	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
@@ -159,7 +159,8 @@ func step(delta: float) -> void:
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, king_id, state))
 	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
-	_largar(field.resolve(units, builds, delta, _fase < GameClock.Phase.DUSK, ClockService.clock))
+	var luz := _fase < GameClock.Phase.DUSK
+	_largar(field.resolve(units, builds, delta, luz, ClockService.clock, king_id))
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick

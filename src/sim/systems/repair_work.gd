@@ -42,7 +42,8 @@ static func absorb(
 static func tick(vaga: BuildSlot, maos: float) -> Array[Dictionary]:
 	if maos <= 0.0:
 		return []
-	var trabalho := vaga.works[vaga.level - 1]
+	# Uma escada de trabalho mais curta do que a de niveis usa o ultimo degrau.
+	var trabalho := vaga.works[mini(vaga.level, vaga.works.size()) - 1]
 	vaga.progress += maos
 	if vaga.state == BuildSlot.State.DAMAGED:
 		var cura := int(vaga.progress / trabalho * vaga.max_health())

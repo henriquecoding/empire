@@ -812,3 +812,15 @@ Continua por fazer, por ordem de valor: a resposta à Q-106 (a caça esgota-se e
 a ganância como número vivo (desbloqueia a Feira Livre), a forja e a cozinha como casas de ofício com efeito
 (o `TrainingSystem` já as forma; falta o que o ferreiro e o cozinheiro fazem), e o dilema do artesão do §09
 (dois ritmos de evolução).
+
+## 26. Seguimento — 26/09/2026, terceira fatia: a caça que dá motivo ao dia, e o circuito 2
+
+| Frente | O que passou a existir | Prova | Decisões |
+|---|---|---|---|
+| Caça pelo dia (Q-106 b) | Os coelhos do dia abrem em três vagas (alvorada, meio-dia, tarde), com o mesmo total | `hunting_test` | Q-106 |
+| O caçador entrega (Q-111) | A caça do teu caçador vai para o saco dele e passa ao rei quando se cruzam; só o que caçou | `hunting_test`, `abertura_natural_test` | Q-111 |
+| Circuito 2 do §06 | Celeiro fora do muro: vende o grão a +50%; uma moeda nele com um cozinheiro vivo troca a moeda por +10% de vida às tropas. Cozinha dentro das muralhas forma o cozinheiro. Arte autoral `storehouse` e `workshop` ligada | `conversion_test`, `celeiro_no_jogo_test` | Q-112 |
+| Defeito apanhado | A reparação partia numa obra sem escada de trabalho (campanha de dez dias) | `repair_test`, `dez_dias_test` | — |
+
+A abertura medida com os gestos passa a ser: 4 moedas de caça no saco do rei aos 107 s, canteiro de pé aos 119 s,
+colheita aos 255 s, e caça por apanhar até ao crepúsculo.
