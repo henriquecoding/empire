@@ -1233,6 +1233,23 @@
 - **Decide:** tu — em particular se o caçador deve ir ter com o rei quando o saco enche, em vez de só entregar
   quando se cruzam.
 
+### Q-112 · A decisão do circuito 2: como se "aponta um ofício a um edifício"
+- **Onde:** §06 (*"a decisão de conversão faz-se apontando um ofício a um edifício, que é o Verbo 1 com outro
+  alvo"*), §49 (o algoritmo), `crafts.csv`, `buildings.csv` (celeiro, salga, curral).
+- **O que foi feito (reversível, `ConversionSystem`):** o algoritmo do §49 à letra — com a casa de pé, a matéria
+  dos produtores dela é consumida (`cost` por conversão) e dá moeda ×`coin_multiplier` **ou** a capacidade.
+  O gesto: **uma moeda largada na casa troca o modo**; para capacidade só se tiveres o ofício vivo (o
+  cozinheiro, para o grão), e sem ele a casa volta a vender. A capacidade corre enquanto houver o ofício e um
+  produtor da matéria de pé ("duration 0 = recalculada a cada fase"). Ligadas: `troop_health` e `troop_speed`
+  (vida máxima e passo das tuas tropas, a partir do perfil). As outras três (`combat_dish`,
+  `wall_and_tower_cost`, `weapon_level`) aparecem no painel mas ainda não têm efeito.
+- **O greybox:** a segunda Casa de Treino (a `training_house` é única por império) passa a **cozinha**, e há um
+  **celeiro fora do muro de fora** — pôr a render é mandar o cozinheiro ao sítio arriscado (§21). A arte é a
+  autoral recuperada: `storehouse` para as casas de conversão, `workshop` para a cozinha e a forja.
+- **Em aberto:** as carroças do §06 (a matéria não se transporta hoje: a casa consome à distância); se trocar
+  de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
+- **Decide:** tu.
+
 ### Q-108 · Quanto custa reparar, e quem repara
 - **Onde:** §55 (os estados `DAMAGED` e `RUIN`), §25 (*"Casa de Treino em ruínas, reparável por 10 moedas"*),
   §09 (o construtor), `jobs.csv` (o posto `repair`, que existia sem obra que o publicasse).

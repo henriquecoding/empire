@@ -18,6 +18,10 @@ static func profile(kind: StringName) -> StringName:
 			return &"tree_castle"
 		&"training_house":
 			return &"training_house"
+		&"granary", &"saltery", &"pen":
+			return &"storehouse"
+		&"kitchen", &"forge":
+			return &"workshop"
 	return &""
 
 

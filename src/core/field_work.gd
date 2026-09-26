@@ -10,6 +10,7 @@ extends RefCounted
 var hunting: HuntingSystem
 var training: TrainingSystem
 var crown: CrownSystem
+var conversion: ConversionSystem
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
@@ -22,10 +23,12 @@ func _init(economia: EconomySystem = null, moral: MoraleSystem = null) -> void:
 	)
 	training = SimFactory.training()
 	crown = SimFactory.crown()
+	conversion = SimFactory.conversion()
 	_economia = economia
 	_moral = moral
 	if _economia != null:
 		_economia.crown = crown
+		_economia.conversion = conversion
 
 
 ## Passo 3: o dia novo abre as clareiras e cobra o que os impulsos de ontem
@@ -60,6 +63,8 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 ## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio.
 func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> void:
 	EventRelay.training(training.absorb(moedas, obras, unidades))
+	if conversion.absorb(moedas, obras, unidades):
+		EventBus.queue(&"coin_spent", [1, &"conversion"])
 
 
 ## Passos 6 e 8: a caca rende moeda; o treino corre com quem esta la dentro, e a
@@ -70,6 +75,8 @@ func resolve(
 	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
 	obras.wall_defense = training.wall_defense(unidades)
+	conversion.bind(unidades)
+	conversion.apply(unidades, conversion.active)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
 	var caca := hunting.resolve(unidades, luz, relogio.elapsed >= HuntWatch.INTRO_SECONDS)
 	var chao := hunting.bag(unidades, caca)
@@ -84,7 +91,10 @@ func resolve(
 
 func to_dict() -> Dictionary:
 	return {
-		&"hunting": hunting.to_dict(), &"training": training.to_dict(), &"crown": crown.to_dict()
+		&"hunting": hunting.to_dict(),
+		&"training": training.to_dict(),
+		&"crown": crown.to_dict(),
+		&"conversion": conversion.to_dict()
 	}
 
 
@@ -92,4 +102,5 @@ func from_dict(mundo: Dictionary) -> void:
 	hunting.from_dict(mundo.get(&"hunting", {}))
 	training.from_dict(mundo.get(&"training", {}))
 	crown.from_dict(mundo.get(&"crown", {}))
+	conversion.from_dict(mundo.get(&"conversion", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0

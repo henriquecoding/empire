@@ -169,3 +169,17 @@ static func crown() -> CrownSystem:
 		if (recurso as BuildingData).material == &"grain":
 			plantacoes.append(String(recurso.get(&"id")))
 	return CrownSystem.new(by_id(&"crown/impulses"), by_id(TABELA_TROPAS), plantacoes)
+
+
+## O circuito 2 do §06: as conversoes por casa, e a materia de cada produtor.
+static func conversion() -> ConversionSystem:
+	var conversoes := {}
+	for recurso in Registry.entries(&"crafts"):
+		var conv := recurso as CraftData
+		conversoes[conv.house] = conv
+	var materias := {}
+	for recurso in Registry.entries(&"buildings"):
+		var obra := recurso as BuildingData
+		if obra.material != &"" and obra.yield_per_day > 0.0:
+			materias[obra.id] = obra.material
+	return ConversionSystem.new(conversoes, materias, by_id(TABELA_TROPAS))

@@ -27,6 +27,8 @@ const CANTEIRO := &"farm"
 const PESQUEIRO := &"fishery"
 const GALINHEIRO := &"henhouse"
 const TREINO := &"training_house"
+const COZINHA := &"kitchen"
+const CELEIRO := &"granary"
 const TORRE := &"archer_tower"
 const TORRE_ALTA := &"high_tower"
 
@@ -36,7 +38,13 @@ const TORRE_ALTA := &"high_tower"
 # volta dele de dentro para fora, e a muralha de dentro cabe no ecra a partir do
 # nucleo: o §25 quer a estacaria vista ao minuto 3:30, nao procurada.
 const MUROS_X := [-1300.0, -600.0, 600.0, 1300.0]
-const TREINOS_X := [-300.0, 300.0]
+# A Casa de Treino e unica por imperio (buildings.csv); do outro lado do nucleo
+# fica a cozinha, onde se forma o cozinheiro (§09).
+const TREINOS_X := [-300.0]
+const COZINHAS_X := [300.0]
+# O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
+# render e tambem a de mandar o cozinheiro ao sitio arriscado (§21).
+const CELEIROS_X := [1450.0]
 const CANTEIROS_X := [-520.0, -420.0, 420.0, 520.0]
 const TORRES_X := [-680.0, 680.0]
 const GALINHEIROS_X := [-820.0, 820.0]
@@ -107,6 +115,8 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, PESQUEIRO, &"")
 	for x in TREINOS_X:
 		_edificio(SimLoop.core_x + x, TREINO, &"")
+	for x in COZINHAS_X:
+		_edificio(SimLoop.core_x + x, COZINHA, &"")
 	# §07: "a torre nao da dano — da certeza". A alta e a que atinge a camada
 	# aerea, e o §07 diz que ela e obrigatoria a partir do dia 4 por causa do
 	# Alado — por isso ha sitio para ela desde o dia 1.
@@ -114,6 +124,8 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
 	for x in TORRES_ALTAS_X:
 		_edificio(SimLoop.core_x + x, TORRE_ALTA, POSTO_TORRE)
+	for x in CELEIROS_X:
+		_edificio(SimLoop.core_x + x, CELEIRO, &"")
 
 
 ## Se o bioma deste segmento sustenta este edificio (§06, §21). Sem exigencia,
