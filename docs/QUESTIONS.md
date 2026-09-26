@@ -1303,6 +1303,30 @@
   curto do HUD ao recusar, com um sinal novo no §46; (c) esconder os recusados até terem sistema.
 - **Decide:** tu.
 
+### Q-114 · A classe do Monarca: o que é "defesa", o que é "em pessoa", como se evolui — e o escudeiro
+- **Onde:** §08 (*"Tanque. +10% defesa às tropas num raio. Dano fraco. Escudeiro acompanha e apanha moedas
+  caídas"*; *"O boost passa a +25% e aplica-se ao império inteiro; o escudeiro cresce e torna-se tropa de
+  combate"*; *"Evolução custa Semente Real (1 para a Fase 2) e uma condição de feito"*), `classes.csv`
+  (`nights_defended_in_person` 5), `units.csv` (o `squire`), F2-01.
+- **O que foi feito (reversível, `ClassSystem`):**
+  - **Defesa** é menos dano recebido, com a fracção poupada guardada de golpe para golpe — a leitura que a
+    Q-109 já deu ao construtor e às muralhas. Na fase 1 vale para as tuas tropas na faixa do rei e a 260 px
+    dele; na fase 2, para todas as tuas tropas. Nunca para o próprio rei, que é quem a dá.
+  - **Uma noite defendida em pessoa** é uma em que, pelo menos num tick entre o crepúsculo e a alvorada, uma
+    tropa tua combateu dentro do raio do rei, na faixa dele. Conta na alvorada.
+  - **O gesto de evoluir** é o Verbo 1 no núcleo, com a condição cumprida e a Semente Real: a semente gasta-se
+    e a moeda volta ao saco, como ao consagrar uma árvore (§74). Sem as duas coisas, a moeda cai como sempre.
+    O guia de contexto di-lo no núcleo.
+- **O escudeiro (a opção mais simples e mais reversível, como manda o `AGENTS.md`):** nasce com o rei, é teu,
+  e segue-o como quem não tem posto. Apanha **só moedas caídas**: cada moeda passou a lembrar-se de quem a
+  largou (`CoinSystem.from_king`), e as que o rei larga com o Verbo 1 — para pagar uma obra ou recrutar — ficam
+  para quem as ia receber. O que apanha, entrega ao rei quando está ao pé dele, como o caçador (Q-111). Não é
+  tropa de combate (dano 0) e o painel não o conta. Os campos dele continuam em `_proposed`.
+- **Em aberto:** as três leituras de cima; se "caídas" deve ser outra coisa que "não largadas pelo rei"; se
+  entregar ao rei é o que o §08 quer (a alternativa é ele guardar até 5, como armadura de moedas do Kingdom);
+  e **em que tropa ele cresce** na fase 2 (`squire_becomes_combatant`) — não entrou, porque o dossiê não o diz.
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

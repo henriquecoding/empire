@@ -19,7 +19,9 @@
   --papel:#ebe6d6; --papel-2:#f5f1e5; --papel-3:#dfd9c3;
   --tinta:#14140f; --tinta-2:#3e3a2e; --baixo:#5b5645;
   --linha:#cec7b0; --linha-2:#dcd6c2; --linha-forte:#a79f86;
-  --petroleo:#235a73; --folha:#4c7719; --brasa:#a0470f;
+  /* --folha e texto sobre o papel (o roteiro, a tabela, o selo): 4,9:1, acima
+     dos 4,5 que o AA pede a 13 px. #4c7719 dava 4,25 e o axe chumbava-o. */
+  --petroleo:#235a73; --folha:#446c16; --brasa:#a0470f;
   --accao:#9c440e; --accao-tinta:#fff8ee; --destaque:#a0470f;
   --sombra:0 30px 70px -34px rgba(20,20,15,.42);
   --sombra-leve:0 1px 0 rgba(20,20,15,.04),0 12px 30px -18px rgba(20,20,15,.28);

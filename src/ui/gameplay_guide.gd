@@ -34,11 +34,15 @@ static func goal() -> String:
 
 
 ## As tropas que o painel conta: quem e teu e esta vivo, sem o monarca — ele e
-## quem as tem, e "TROPAS 01" com o rei sozinho em campo dizia que havia uma.
+## quem as tem, e "TROPAS 01" com o rei sozinho em campo dizia que havia uma. Nem
+## o escudeiro, que so "se torna tropa de combate" quando a classe evolui (§08).
 static func troops() -> int:
 	var total := 0
 	for i in SimLoop.units.count():
 		if not SimLoop.units.alive(i) or SimLoop.units.ids[i] == SimLoop.king_id:
+			continue
+		var dados := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
+		if dados.tags.has(ClassSystem.COLHE):
 			continue
 		if SimLoop.units.owners[i] != RecruitSystem.SEM_DONO:
 			total += 1
@@ -58,6 +62,8 @@ static func context(device: Glyphs.Device) -> String:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue
 		if site.kind == BuildSlot.NUCLEO:
+			if SimLoop.field.classes.can_evolve(SimLoop.state.royal_seeds):
+				return _evolve(site, values)
 			continue
 		values["name"] = _building_name(site)
 		values["cost"] = PriceTag.owed_by(site)
@@ -92,6 +98,15 @@ static func context(device: Glyphs.Device) -> String:
 		values["cost"] = PriceTag.owed_by_unit(units, nearest)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
 	return ""
+
+
+## A classe pode evoluir (§08): o Verbo 1 no nucleo, e o que ela passa a dar.
+static func _evolve(site: BuildSlot, values: Dictionary) -> String:
+	var classe := Registry.entry(&"classes", &"monarch") as ClassData
+	values["name"] = _building_name(site)
+	values["pct"] = roundi(float(classe.phase2_params.get(ClassSystem.DEFESA, 0.0)) * CEM)
+	values["seeds"] = classe.evolve_seed_cost
+	return _tr(&"CONTEXT_EVOLVE").format(values)
 
 
 static func _building_name(site: BuildSlot) -> String:

@@ -11,19 +11,27 @@ var hunting: HuntingSystem
 var training: TrainingSystem
 var crown: CrownSystem
 var conversion: ConversionSystem
+## A classe do rei (§08): a aura do Monarca e a evolucao.
+var classes: ClassSystem
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
 var _dia := 0
 
 
-func _init(economia: EconomySystem = null, moral: MoraleSystem = null) -> void:
+func _init(
+	economia: EconomySystem = null, moral: MoraleSystem = null, combate: CombatSystem = null
+) -> void:
 	hunting = HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
 	)
 	training = SimFactory.training()
 	crown = SimFactory.crown()
 	conversion = SimFactory.conversion()
+	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
+	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
+	if combate != null:
+		combate.guard = classes
 	_economia = economia
 	_moral = moral
 	if _economia != null:
@@ -40,6 +48,7 @@ func prepare(
 	if dia != _dia and unidades != null:
 		_dia = dia
 		crown.dawn(dia, unidades)
+		classes.dawn()
 	if _economia != null:
 		_economia.today = dia
 	if _moral != null:
@@ -52,6 +61,35 @@ func impulse(id: StringName, unidades: UnitSystem, rei: int) -> void:
 	if crown.use(id, ClockService.clock.day, unidades, rei):
 		EventBus.queue(&"royal_impulse_used", [id])
 		EventBus.queue(&"coin_spent", [custo, &"impulse"])
+
+
+## Uma moeda do rei com outro alvo que o chao: uma arvore a consagrar (§74) ou
+## o nucleo, para a classe evoluir (§08, Q-114). Nos dois a moeda volta ao saco.
+func claims(
+	largada: Dictionary,
+	estado: GameState,
+	noite: NightWatch,
+	obras: BuildSystem,
+	unidades: UnitSystem,
+	rei: int
+) -> bool:
+	if noite.consecrate_at(estado, largada, rei):
+		return true
+	if not classes.can_evolve(estado.royal_seeds) or not _no_nucleo(largada, obras):
+		return false
+	classes.evolve(estado)
+	var i := unidades.index_of(rei)
+	if i != UnitSystem.NENHUM:
+		unidades.carried_coins[i] += int(largada[EventRelay.QUANTO])
+	return true
+
+
+func _no_nucleo(largada: Dictionary, obras: BuildSystem) -> bool:
+	var x: float = largada[EventRelay.ONDE]
+	for vaga in obras.slots:
+		if vaga.kind == BuildSlot.NUCLEO and vaga.band == int(largada[EventRelay.FAIXA]):
+			return absf(vaga.x - x) <= vaga.width * BuildSystem.METADE
+	return false
 
 
 ## Passo 4: quem caca e quem treina escrevem alvo por cima de seguir o rei.
@@ -75,6 +113,7 @@ func resolve(
 	unidades: UnitSystem, obras: BuildSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
 	obras.wall_defense = training.wall_defense(unidades)
+	classes.watch(unidades, rei, not luz)
 	conversion.bind(unidades)
 	conversion.apply(unidades, conversion.active)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
@@ -83,7 +122,10 @@ func resolve(
 	for d in caca:
 		if not d in chao:
 			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
-	var entregue := hunting.deliver(unidades, rei, SimFactory.curve().recruit_notice_px)
+	var alcance := SimFactory.curve().recruit_notice_px
+	var entregue := (
+		hunting.deliver(unidades, rei, alcance) + classes.hand_over(unidades, rei, alcance)
+	)
 	if entregue > 0:
 		EventBus.queue(&"coin_collected", [rei, entregue])
 	return chao
@@ -94,7 +136,8 @@ func to_dict() -> Dictionary:
 		&"hunting": hunting.to_dict(),
 		&"training": training.to_dict(),
 		&"crown": crown.to_dict(),
-		&"conversion": conversion.to_dict()
+		&"conversion": conversion.to_dict(),
+		&"classes": classes.to_dict(),
 	}
 
 
@@ -103,4 +146,5 @@ func from_dict(mundo: Dictionary) -> void:
 	training.from_dict(mundo.get(&"training", {}))
 	crown.from_dict(mundo.get(&"crown", {}))
 	conversion.from_dict(mundo.get(&"conversion", {}))
+	classes.from_dict(mundo.get(&"classes", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0

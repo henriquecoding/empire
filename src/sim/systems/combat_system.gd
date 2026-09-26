@@ -58,6 +58,8 @@ const EVENTOS := &"events"
 const QUEM := &"data_id"
 
 var picker: TargetPicker
+## A defesa da classe do rei (§08). Sem ela, o golpe passa inteiro.
+var guard: ClassSystem
 
 var _dados_u: Dictionary = {}
 var _dados_c: Dictionary = {}
@@ -178,6 +180,8 @@ func _aplicar() -> void:
 			if _o != null:
 				_eventos.append({CHAVE: EV_OBRA, EVENTOS: _o.damage(golpe[OBRA], golpe[QUANTO])})
 			continue
+		if guard != null:
+			golpe[QUANTO] = guard.soak(_u, golpe[PARA], golpe[QUANTO])
 		_u.damage(golpe[PARA], golpe[QUANTO])
 		_eventos.append(_dano(golpe, false))
 

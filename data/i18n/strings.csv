@@ -583,6 +583,9 @@ CONTEXT_CONVERT_WANTS_CRAFT,"{name} · Sem {craft} teu, vende {material} a +{bon
 CONTEXT_CONVERT_WAITING,"{name} · O {craft} espera {material}: {effect} ainda sem efeito
 {drop} voltar a vender a +{bonus}%","{name} · The {craft} awaits {material}: {effect} not yet in effect
 {drop} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; escolhido e com ofício mas a fase ainda não deu a capacidade
+CONTEXT_EVOLVE,"{name} · {drop} evoluir o Monarca
++{pct}% de defesa a todas as tuas tropas · {seeds} Semente Real","{name} · {drop} evolve the Monarch
++{pct}% defence for all your troops · {seeds} Royal Seed",guia contextual de jogo,160,§08: a evolução da classe; o gesto é a Q-114
 CAPACITY_TROOP_HEALTH,+{pct}% de vida às tropas,+{pct}% health for your troops,capacidade do §06,40,crafts.csv
 CAPACITY_TROOP_SPEED,+{pct}% de passo às tropas,+{pct}% speed for your troops,capacidade do §06,40,crafts.csv
 CAPACITY_COMBAT_DISH,prato de combate,a combat dish,capacidade do §06,40,crafts.csv

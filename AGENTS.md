@@ -71,6 +71,7 @@ src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§5
 src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde (§11, §53)
+src/sim/systems/class_system.gd ClassSystem a classe do rei: a aura e a evolucao (§08)
 src/sim/systems/repair_work.gd RepairWork reparar com a moeda fisica (§55, Q-108)
 src/sim/systems/training_system.gd TrainingSystem a Casa de Treino: trabalhador -> oficio (§09, §10)
 src/sim/systems/crown_system.gd CrownSystem os impulsos reais (§15, §57)

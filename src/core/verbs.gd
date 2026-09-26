@@ -107,7 +107,9 @@ static func sweep(unidades: UnitSystem, moedas: CoinSystem, king_id: int) -> voi
 		if espaco <= 0 or not _apanha_do_chao(unidades, i, king_id):
 			continue
 		var faixa := unidades.bands[i] as Band.Kind
-		var levado := collect(moedas, unidades.ids[i], unidades.xs[i], faixa, espaco)
+		# So o rei leva as que ele proprio largou; o escudeiro apanha as caidas (Q-114).
+		var caidas := unidades.ids[i] != king_id
+		var levado := collect(moedas, unidades.ids[i], unidades.xs[i], faixa, espaco, caidas)
 		unidades.carried_coins[i] += levado
 
 
@@ -123,10 +125,10 @@ static func _apanha_do_chao(unidades: UnitSystem, i: int, king_id: int) -> bool:
 ## E o lado de fora do Verbo 1: largar e do SimLoop, que tem o estado e o
 ## sorteio; apanhar so precisa das moedas.
 static func collect(
-	moedas: CoinSystem, unit_id: int, x: float, faixa: Band.Kind, espaco: int
+	moedas: CoinSystem, unit_id: int, x: float, faixa: Band.Kind, espaco: int, so_caidas := false
 ) -> int:
 	var valores := moedas.amounts_by_id()
-	var apanhadas := moedas.collect(x, faixa, espaco)
+	var apanhadas := moedas.collect(x, faixa, espaco, so_caidas)
 	var total := moedas.value_of(apanhadas, valores)
 	if total > 0:
 		EventBus.queue(&"coin_collected", [unit_id, total])
