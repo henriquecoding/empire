@@ -193,7 +193,7 @@ func _montar() -> void:
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
-	field = FieldWork.new(economy, morale, combat)
+	field = FieldWork.new(economy, morale, combat, night)
 	hunting = field.hunting
 	tally.reset()
 	_fase = UnitSystem.NENHUM

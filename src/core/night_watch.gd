@@ -29,6 +29,7 @@ var harvest: HarvestSystem
 var _tropas: UnitSystem
 var _obras: BuildSystem
 var _postos: JobBoard
+var _moedas: CoinSystem
 
 
 ## As tropas, as obras e as moedas sao as do SimLoop, e as mesmas durante o jogo
@@ -41,6 +42,7 @@ func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: J
 	names = SimFactory.titles()
 	harvest = HarvestSystem.new(SimFactory.curve())
 	_tropas = tropas
+	_moedas = moedas
 	_obras = obras
 	_postos = postos
 
@@ -55,7 +57,10 @@ func tick(
 	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
 	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
-	if not rot.active() or voice.paused(delta):
+	if not rot.active():
+		return
+	_alimentar()
+	if voice.paused(delta):
 		return
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
@@ -117,6 +122,10 @@ func trail() -> Array[Vector2]:
 
 
 func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2) -> void:
+	# A tarde diz de que lado vem a noite (Q-125): e o mesmo sorteio que o
+	# crepusculo fazia, so mais cedo — nada do fluxo `rot` corre entre os dois.
+	if fase == GameClock.Phase.AFTERNOON and rot.announced == 0:
+		rot.announced = _sortear_lado()
 	if fase == GameClock.Phase.DAWN:
 		# O dia do relogio e nao o do GameState: esse so e espelhado no fim do tick.
 		# Os nomes leem-se ANTES de os corpos se levantarem: uma arvore nomeada e a
@@ -133,7 +142,8 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		# O lado sai do fluxo `rot`: de que lado ela vem afeta a simulacao e por
 		# isso reproduz-se com a semente. O dia 12 traz duas manchas (§51) e isso
 		# sao duas NightWatch — e o F1-09 que as poe.
-		var lado := 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
+		var lado := rot.announced if rot.announced != 0 else _sortear_lado()
+		rot.announced = 0
 		if not voice.before_spawn(rot, estado.day):
 			return  # §75: a decima segunda fechou o ciclo
 		rot.spawn(estado.day, lado, mundo.y)
@@ -158,3 +168,38 @@ func _invocar(
 	var dados := Registry.entry(TABELA_CRIATURAS, pedido.creature_id) as CreatureData
 	bichos.spawn(estado, dados, pedido.x, nucleo)
 	EventRelay.summoned(pedido, rot.mass())
+
+
+func _sortear_lado() -> int:
+	return 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
+
+
+## §05: "Alimentar — deixar sacrificios (animais, tropas fracas, ouro) reduz a
+## massa. Sinistro, eficaz, e mecanicamente honesto" (Q-127). As moedas que o REI
+## largou sem outro destino, pousadas dentro da mancha, somem nela. A do prato de
+## uma oferta aberta e da oferta; a que caiu de quem morreu nao e sacrificio.
+func _alimentar() -> void:
+	var meia := rot.state.width * BuildSystem.METADE
+	var prato := voice.offers
+	var meio_prato := SimFactory.rot_profile().offer_plate_px * BuildSystem.METADE
+	var comidas := PackedInt32Array()
+	var valor := 0
+	for c in _moedas.count():
+		if _moedas.settled[c] == 0 or _moedas.from_king[c] == 0 or _moedas.targets[c] >= 0:
+			continue
+		if _moedas.bands[c] != int(Band.Kind.SURFACE):
+			continue
+		if absf(_moedas.xs[c] - rot.position_x()) > meia:
+			continue
+		var aberto := prato.phase == OfferSystem.Phase.OPEN
+		if aberto and absf(_moedas.xs[c] - prato.plate_x) <= meio_prato:
+			continue
+		comidas.append(_moedas.ids[c])
+		valor += _moedas.amounts[c]
+	if comidas.is_empty():
+		return
+	for coin_id in comidas:
+		_moedas.remove(coin_id)
+	var tirada := minf(rot.state.mass, valor * SimFactory.rot_profile().sacrifice_mass_per_coin)
+	rot.state.mass -= tirada
+	EventBus.queue(&"rot_fed", [tirada, &"coins"])
