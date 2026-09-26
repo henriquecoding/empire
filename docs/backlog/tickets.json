@@ -1420,7 +1420,7 @@
   "depende": "AUD-02, AUD-03",
   "feito": "Uma partida tem começo, travessia e fim; perder guarda parte do que se construiu; o rei tem herdeiro",
   "fora": "Conquista de povos e IA dos reis inimigos (Fase 2 do §33).",
-  "estado": "parcial — o herdeiro e o decay feitos; faltam a travessia, o epílogo e as variantes de melhoria",
+  "estado": "feito — o herdeiro, o decay, a travessia com o epílogo e as variantes da torre e do canteiro",
   "horas": "20"
  }
 }

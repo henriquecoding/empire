@@ -103,3 +103,5 @@ vagrants_per_dawn = 1
 vagrant_camp_cap = 4
 start_greed_profile = &"balanced"
 chicken_theft_matter = 1.0
+crossing_day = 11
+crossing_party_px = 120.0

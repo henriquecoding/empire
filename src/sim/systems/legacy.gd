@@ -24,6 +24,10 @@ const OBRAS := &"slots"
 const ID := &"id"
 const NIVEL := &"level"
 const CAMINHO := &"path"
+## A travessia (P-K, Q-135): a regiao seguinte, quem vai com o rei e o saco dele.
+const REGIAO := &"region"
+const COMITIVA := &"party"
+const SACO := &"purse"
 
 
 ## O que o jogo novo herda desta partida.
@@ -36,8 +40,36 @@ static func of(estado: GameState, obras: BuildSystem, fracao: float) -> Dictiona
 		ACHADOS: estado.found,
 		CONQUISTAS: estado.conquests,
 		PLANO: estado.chapters.to_dict(),
+		REGIAO: estado.region,  # o decay recomeca a regiao onde se perdeu (§16)
 		OBRAS: ficam,
 	}
+
+
+## O que atravessa com o rei (P-K, Q-135): nenhuma obra — a regiao seguinte e
+## outra —, mas quem e teu e esta perto dele (`alcance`), o saco, e a regiao a
+## seguir. Depois da ultima, a campanha acabou: o plano sorteia-se de novo.
+static func crossing(
+	estado: GameState, unidades: UnitSystem, dados: Dictionary, rei: int, alcance: float
+) -> Dictionary:
+	var d := of(estado, BuildSystem.new(), 0.0)
+	var r := unidades.index_of(rei)
+	var comitiva := PackedStringArray()
+	for i in unidades.count():
+		var perfil: UnitData = dados.get(unidades.data_ids[i])
+		if i == r or perfil == null or perfil.tags.has(&"follows_king") or not unidades.alive(i):
+			continue
+		if (
+			unidades.owners[i] == unidades.owners[r]
+			and absf(unidades.xs[i] - unidades.xs[r]) <= alcance
+		):
+			comitiva.append(String(unidades.data_ids[i]))
+	d[COMITIVA] = comitiva
+	d[SACO] = unidades.carried_coins[r]
+	d[REGIAO] = estado.region + 1
+	if estado.region + 1 >= estado.chapters.regions.size():
+		d[REGIAO] = 0
+		d.erase(PLANO)
+	return d
 
 
 ## As obras que ficam, das mais caras para as mais baratas.
@@ -72,6 +104,7 @@ static func apply(d: Dictionary, estado: GameState, obras: BuildSystem) -> void:
 	var plano: Dictionary = d.get(PLANO, {})
 	if not plano.is_empty():
 		estado.chapters.from_dict(plano)
+	estado.region = int(d.get(REGIAO, estado.region))
 	for guardada: Dictionary in d.get(OBRAS, []):
 		var i := obras.index_of(int(guardada.get(ID, BuildSlot.NENHUM)))
 		if i == BuildSlot.NENHUM:
@@ -83,3 +116,19 @@ static func apply(d: Dictionary, estado: GameState, obras: BuildSystem) -> void:
 		obra.progress = 0.0
 		obra.paid = 0
 		obra.health = obra.max_health()
+
+
+## A comitiva e o saco da travessia chegam com o rei ao nucleo da regiao nova.
+static func arrive(
+	d: Dictionary, estado: GameState, unidades: UnitSystem, dados: Dictionary, rei: int, x: float
+) -> Array[int]:
+	var chegaram: Array[int] = []
+	var r := unidades.index_of(rei)
+	if r == UnitSystem.NENHUM:
+		return chegaram
+	unidades.carried_coins[r] += int(d.get(SACO, 0))
+	for id in PackedStringArray(d.get(COMITIVA, PackedStringArray())):
+		var perfil: UnitData = dados.get(StringName(id))
+		if perfil != null:
+			chegaram.append(unidades.spawn(estado, perfil, unidades.owners[r], x))
+	return chegaram

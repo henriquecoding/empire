@@ -143,10 +143,13 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 	for vaga in obras.standing():
 		if vaga.yield_per_day <= 0.0:
 			continue
-		if _no_rasto(vaga.x, rasto):
+		# A variante da melhoria (Q-136): o canteiro resguardado nao para no rasto.
+		var efeitos := SlotVariant.effects(vaga)
+		if _no_rasto(vaga.x, rasto) and efeitos.get(&"immune_to_rot_trail", 0.0) <= 0.0:
 			_queimar(vaga, eventos)
 			continue
 		var fator := crown.yield_mult(today, vaga.kind) if crown != null else 1.0
+		fator *= efeitos.get(&"yield_mult", 1.0)
 		vaga.stock += vaga.yield_per_day / _fases * fator * _hoje(vaga)
 		if conversion != null and conversion.claims(vaga, obras):
 			continue

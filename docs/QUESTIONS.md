@@ -1515,11 +1515,34 @@
 - **Onde:** §16 (*"Decay em vez de reset... mantém: Sementes Reais, classes desbloqueadas, mapas revelados,
   segredos encontrados, e 40% das estruturas do império principal"*), `economy.csv` (`decay_structures_kept`).
 - **Decidido (AUD-05):** na derrota escreve-se o **legado** (`Legacy`) — as Sementes Reais, os segredos achados,
-  as conquistas, o plano da campanha e as obras que ficam — e **os saves da partida perdida apagam-se**: perder
+  as conquistas, o plano da campanha, a região em que se estava e as obras que ficam — e **os saves da partida
+  perdida apagam-se**: perder
   não se desfaz a recarregar a alvorada de antes. Ficam as obras de pé mais caras (por moedas investidas; no
   empate, por id), `round(40% × obras de pé)`, sem o núcleo nem as ruínas. O jogo novo (o botão da derrota, ou
   abrir o jogo outra vez) monta a região e levanta-as no mesmo sítio, no mesmo degrau e caminho, inteiras. O
   ecrã da derrota diz o que fica.
+
+### Q-135 · Uma região acaba: a travessia
+- **Onde:** §16, §21, §83 (*"a bifurcação a leste"*), §79 (os três finais, ADR 0018); Kingdom Two Crowns (a ilha
+  seguinte) e Against the Storm (a região como *run* curta); auditoria P-K (*"não há objetivo depois do dia 3"*).
+- **Decidido (AUD-05):** a partir da manhã do dia `crossing_day` (11 — depois das dez noites do §66), o Verbo 2
+  na bifurcação, de dia, **acaba a região**: o rei leva o saco e quem é teu e está a `crossing_party_px` (120)
+  dele; as obras ficam para trás (a região seguinte é outra). Os saves da região atravessada apagam-se e o jogo
+  novo começa a região seguinte da campanha (`GameState.region`) com a comitiva, o saco, as Sementes, os segredos
+  e o mesmo plano de capítulos. Depois da última região vem o **epílogo** (`NightWatch.epilogue()`, §79): o ecrã
+  diz "Fim da campanha · União/Domínio/O Turno", e o jogo novo começa uma campanha nova com o que o §16 guarda.
+  Antes do dia, a bifurcação diz em que dia abre. Sai o `segment_entered` da §46 com o tipo `crossing`.
+- **O que fica por fazer:** a região seguinte é montada pelo mesmo *greybox* (o bioma dela está no plano, as
+  cenas não); voltar a uma região deixada e retomá-la com *decay* (P-K) espera pelas regiões com cena.
+
+### Q-136 · Melhorias com variante
+- **Onde:** §10 (a escolha A/B da muralha: *"nunca dá para ter as duas"*); Thronefall (auditoria P-N: *"upgrades
+  com variante, não mais edifícios"*).
+- **Decidido (AUD-05):** a torre de arqueiros e o canteiro ganham uma **variante B** (`variant_params` em
+  `buildings.csv`, sobre o `effect_params`): a torre de **cadência** perde os 40% de alcance e dispara com 75% do
+  intervalo; o canteiro **resguardado** não para nem é arrasado no rasto da Podridão e rende 75%. A variante A é a
+  de sempre. Escolhe-se com o Verbo 2 com o sítio vazio e sem moeda, e fica; vai no save. Os três números em
+  `_proposed`.
 
 ## Resolvidas na v5.2 (reversíveis)
 

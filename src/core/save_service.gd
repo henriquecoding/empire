@@ -226,7 +226,7 @@ func _ler_cru(slot: int) -> Dictionary:
 
 ## §16, "decay em vez de reset" (Q-134): o legado espera pelo jogo novo e os saves
 ## da partida perdida apagam-se — perder nao se desfaz a recarregar (Q-088).
-func lose(legado: Dictionary) -> void:
+func leave(legado: Dictionary) -> void:
 	var f := FileAccess.open(LEGADO, FileAccess.WRITE)
 	if f != null:
 		f.store_var(legado, false)  # como os saves: sem objetos (ADR 0007)

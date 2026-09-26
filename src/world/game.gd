@@ -44,8 +44,12 @@ func _ready() -> void:
 	if not _retomar():
 		SimLoop.start(_semente())
 		Greybox.build()
-		# §16: o que a partida perdida deixou (Q-134). Sem legado, nao muda nada.
-		Legacy.apply(SaveService.take_legacy(), SimLoop.state, SimLoop.builds)
+		# §16: o que a partida perdida deixou (Q-134), ou quem atravessou com o rei
+		# (Q-135). Sem legado, nao muda nada.
+		var legado := SaveService.take_legacy()
+		Legacy.apply(legado, SimLoop.state, SimLoop.builds)
+		var tropas := SimFactory.by_id(&"units")
+		Legacy.arrive(legado, SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, SimLoop.core_x)
 		# §26: o dia ao ritmo de quem joga. Um jogo novo nasce com a duracao da
 		# ultima escolha, pela fila como qualquer outra (§61, GB-24).
 		var segundos := Preferences.shared().number(Preferences.DAY_SECONDS)
@@ -60,6 +64,7 @@ func _ready() -> void:
 	EventBus.wall_breached.connect(_no_rompimento)
 	EventBus.building_destroyed.connect(_no_desabamento)
 	EventBus.unit_died.connect(_na_morte)
+	EventBus.segment_entered.connect(_na_travessia)
 	EventBus.game_paused.connect(_na_pausa)
 	print(_recibo())
 
@@ -120,7 +125,7 @@ func _retomar() -> bool:
 	SimLoop.resume(estado, SaveService.restore_rng(slot))
 	Greybox.region()
 	SimLoop.load_world(SaveService.restore_world(slot))
-	if Defeat.happened() or SimLoop.units.count() == 0:
+	if Defeat.happened() or SimLoop.state.crossed or SimLoop.units.count() == 0:
 		return false
 	return true
 
@@ -169,11 +174,24 @@ func _na_morte(unit_id: int, _x: float, _faixa: int, _larga: PackedStringArray) 
 		_acabar()
 
 
+## A travessia (P-K, Q-135): a regiao acabou, e o rei leva quem esta perto dele.
+func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
+	if tipo != Verbs.CROSSING:
+		return
+	var tropas := SimFactory.by_id(&"units")
+	var perto := SimFactory.curve().crossing_party_px
+	_fim(Legacy.crossing(SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto))
+
+
 func _acabar() -> void:
 	_tremer()
-	# O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134).
 	var fica := SimFactory.curve().decay_structures_kept
-	SaveService.lose(Legacy.of(SimLoop.state, SimLoop.builds, fica))
+	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica))
+
+
+## O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134).
+func _fim(legado: Dictionary) -> void:
+	SaveService.leave(legado)
 	SimLoop.set_paused(true)
 	$Entrada.set_process_unhandled_input(false)
 

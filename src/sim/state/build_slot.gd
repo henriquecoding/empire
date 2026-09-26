@@ -85,6 +85,10 @@ var razed_by_rot: bool = false
 ## `hits_aerial` e o resto. Uma torre nao da dano — da certeza (§07), e e aqui
 ## que essa certeza esta escrita, em dados e nao num `if e_torre`.
 var effects: Dictionary = {}
+## A variante B da melhoria (P-N, Q-136) — o que muda sobre `effects` — e a
+## escolhida: 0 e a de sempre, 1 e a outra. Escolhe-se antes da primeira moeda.
+var effects_b: Dictionary = {}
+var variant: int = 0
 
 var level: int = 0
 var state: State = State.EMPTY
@@ -207,6 +211,7 @@ func to_dict() -> Dictionary:
 		&"soaked": soaked,
 		&"stock": stock,
 		&"path": int(path),
+		&"variant": variant,
 		&"contact": contact,
 	}
 
@@ -221,6 +226,7 @@ func from_dict(d: Dictionary) -> void:
 	soaked = d.get(&"soaked", soaked)
 	stock = d.get(&"stock", stock)
 	path = d.get(&"path", int(path)) as Path
+	variant = d.get(&"variant", variant)
 	contact = d.get(&"contact", contact)
 
 

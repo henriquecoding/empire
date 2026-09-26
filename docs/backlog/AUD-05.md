@@ -10,6 +10,6 @@ Depende   AUD-02, AUD-03
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Uma partida tem começo, travessia e fim; perder guarda parte do que se construiu; o rei tem herdeiro
 Fora      Conquista de povos e IA dos reis inimigos (Fase 2 do §33).
-Estado    parcial — o herdeiro e o decay feitos; faltam a travessia, o epílogo e as variantes de melhoria
+Estado    feito — o herdeiro, o decay, a travessia com o epílogo e as variantes da torre e do canteiro
 Horas     20
 ```

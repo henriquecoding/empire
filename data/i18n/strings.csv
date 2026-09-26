@@ -622,3 +622,23 @@ CONTEXT_HEIR,"{name} · herdeiro {days}/{total} dias
 CONTEXT_HEIR_READY,"{name} · herdeiro formado
 Se o rei cair, ele assume ao amanhecer","{name} · heir trained
 If the king falls, the heir rules at dawn",guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
+EPILOGUE_SHIFT,O Turno,The Shift,epílogo (§79),16,AUD-05: o terceiro final da ADR 0018 não tinha nome escrito
+UI_CROSSED,A região está atravessada,The Region Is Crossed,travessia (P-K): a região acabou (Q-135),32,AUD-05
+UI_CAMPAIGN_END,Fim da campanha · {epilogue},End of the Campaign · {epilogue},travessia da última região: o epílogo (§79),40,AUD-05
+GUIDE_CROSS,"A TRAVESSIA ESTÁ ABERTA
+A bifurcação a leste leva à região seguinte","THE CROSSING IS OPEN
+The fork to the east leads to the next region",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
+CONTEXT_CROSS,"BIFURCAÇÃO · {assume} atravessar
+Levas o teu saco e quem estiver perto de ti","FORK · {assume} to cross
+You take your purse and whoever is near you",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
+CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · abre no dia {day}
+Aguenta até lá","FORK · opens on day {day}
+Hold out until then",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
+UI_PARTY,"Vão contigo: {party} dos teus e {purse} moedas","With you: {party} of your people and {purse} coins",travessia (P-K): a comitiva (Q-135),64,AUD-05
+CONTEXT_VARIANT,"{name} · {variant}
+{assume} trocar · {drop} construir: faltam {cost}","{name} · {variant}
+{assume} switch · {drop} build: {cost} to go",guia contextual de jogo: a variante da melhoria (P-N),160,AUD-05 (Q-136)
+VARIANT_ARCHER_TOWER_A,alcance (+40%),range (+40%),variante da torre de arqueiros (Q-136),24,AUD-05
+VARIANT_ARCHER_TOWER_B,cadência (um terço mais tiros),cadence (a third more shots),variante da torre de arqueiros (Q-136),32,AUD-05
+VARIANT_FARM_A,renda,yield,variante do canteiro (Q-136),24,AUD-05
+VARIANT_FARM_B,"resguardo (o rasto não o para, rende 75%)","sheltered (the trail spares it, 75% yield)",variante do canteiro (Q-136),48,AUD-05

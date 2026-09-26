@@ -1219,3 +1219,18 @@ Decisões nas Q-133 e Q-134 (a Q-134 fecha a Q-088); ticket `docs/backlog/AUD-05
 | Perder recomeçava do zero | Na derrota escreve-se o legado (`Legacy`: Sementes, segredos, conquistas, plano da campanha e as 40% obras mais caras) e os saves da partida apagam-se; o jogo novo levanta-as no mesmo sítio e degrau; o ecrã da derrota diz o que fica | `legado_test` |
 
 Falta a segunda metade: a travessia da região (P-K), o epílogo chamado no fim e as variantes de melhoria (P-N).
+
+## Seguimento — AUD-05, segunda metade (a travessia, o epílogo e as variantes)
+
+Decisões nas Q-135 e Q-136.
+
+| Frente | O que mudou | Prova |
+|---|---|---|
+| P-K uma região acaba | A partir do dia 11, o Verbo 2 na bifurcação, de dia, acaba a região: o rei leva o saco e quem está perto dele, os saves da região apagam-se e o jogo novo começa a região seguinte da campanha. Antes, a bifurcação diz em que dia abre; o guia diz quando está aberta | `fim_de_regiao_test` |
+| O `epilogue()` sem quem o chamasse | Depois da última região, o ecrã diz "Fim da campanha" com o final do §79 (União, Domínio ou O Turno) | `fim_de_regiao_test` |
+| P-N melhorias com variante | Torre de arqueiros: alcance (a de sempre) ou cadência (sem o alcance, um terço mais tiros); canteiro: renda (o de sempre) ou resguardo (o rasto não o para, rende 75%). Verbo 2 com o sítio vazio; vai no save | `variantes_test` |
+
+Com isto, os cinco lotes da auditoria estão na main. O que o relatório deixa para depois, e continua: o som
+gravado (P-O, pasta `audio/`), a arte nova (pasta `art/`), as regiões com cena por bioma (a travessia monta a
+seguinte no mesmo *greybox*), abrir uma passagem escorada (o preço da oferta *O que enterraste*), o interregno do
+§16 e a conquista de povos (Fase 2 do §33).

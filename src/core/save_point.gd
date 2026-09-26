@@ -11,9 +11,13 @@ class_name SavePoint
 extends RefCounted
 
 
-## Se a partida se pode gravar agora: ha partida, nao acabou, e e de dia.
+## Se a partida se pode gravar agora: ha partida, nao acabou (nem por derrota nem
+## por travessia, Q-135 — a pausa do fim nao pode refazer o save que o fim apagou),
+## e e de dia.
 static func allowed() -> bool:
 	if SimLoop.state == null or SimLoop.king_id == UnitSystem.NENHUM or Defeat.happened():
+		return false
+	if SimLoop.state.crossed:
 		return false
 	return int(ClockService.clock.current_phase()) < int(GameClock.Phase.DUSK)
 

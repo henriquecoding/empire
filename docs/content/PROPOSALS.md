@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 196 | 100 | 296 |
-| Fases 3–8 | 227 | 98 | 325 |
-| Total | 423 | 198 | 621 |
+| Fases 0–2 (fatia vertical) | 198 | 100 | 298 |
+| Fases 3–8 | 229 | 98 | 327 |
+| Total | 427 | 198 | 625 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 196
+## 1 · Fatia vertical — balanceamento — 198
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -74,12 +74,14 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `kitchen` | `max_health` | 80 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `cost` | 20 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `max_health` | 160 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `farm` | `max_health` | 32 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `farm` | `max_health` | 32 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
+| buildings | `farm` | `variant_params` | yield_mult:0.75\|immune_to_rot_trail:1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `fishery` | `max_health` | 48 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `henhouse` | `max_health` | 64 | 1 | 'Galinhas roubáveis à noite' (§06). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `ore_pit` | `max_health` | 96 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo |
 | buildings | `granary` | `max_health` | 80 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `archer_tower` | `max_health` | 144 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `archer_tower` | `max_health` | 144 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
+| buildings | `archer_tower` | `variant_params` | range_bonus:0\|cadence:0.75 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
 | buildings | `high_tower` | `max_health` | 240 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `fire_barrel` | `max_health` | 20 | 1 | Exceção à regra de vida: 20, porque tem de rebentar. aoe_damage 20 mata dois Rastejantes (vida 10) e fere um Bruto. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `fire_barrel` | `effect_params` | rot_slow:0.25\|aoe_damage:20\|aoe_radius:96 | 1 | Exceção à regra de vida: 20, porque tem de rebentar. aoe_damage 20 mata dois Rastejantes (vida 10) e fere um Bruto. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
@@ -261,10 +263,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `heir_house` | `build_work` | 40 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `width_px` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `shadow_width` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `farm` | `build_work` | 8 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `farm` | `width_px` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `farm` | `shadow_width` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `farm` | `job_slots` | 1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `farm` | `build_work` | 8 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
+| buildings | `farm` | `width_px` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
+| buildings | `farm` | `shadow_width` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
+| buildings | `farm` | `job_slots` | 1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `fishery` | `build_work` | 12 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `fishery` | `width_px` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `fishery` | `shadow_width` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
@@ -279,9 +281,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `granary` | `build_work` | 20 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `granary` | `width_px` | 120 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `granary` | `shadow_width` | 120 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `archer_tower` | `build_work` | 36 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `archer_tower` | `width_px` | 64 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `archer_tower` | `shadow_width` | 64 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `archer_tower` | `build_work` | 36 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
+| buildings | `archer_tower` | `width_px` | 64 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
+| buildings | `archer_tower` | `shadow_width` | 64 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
 | buildings | `high_tower` | `build_work` | 60 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `high_tower` | `width_px` | 64 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `high_tower` | `shadow_width` | 64 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
@@ -318,7 +320,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 325
+## 3 · Fases 3 a 8 — 327
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -591,6 +593,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `vagrant_camp_cap` | `vagrant_camp_cap` | 4 | 9 | Proposta (Q-122): acima de quatro vagabundos por recrutar vivos, o acampamento não dá mais — e o que pesa é recrutá-los, não esperar por eles. |
 | economy | `start_greed_profile` | `start_greed_profile` | balanced | 9 | Proposta (Q-123): o perfil 'Equilibrado' (20–35) é o do §15 que diz 'neutro'. A ganância sorteia-se no início pelo fluxo world e leva a sua parte da produção, como o modelo do §06 já fazia. |
 | economy | `chicken_theft_matter` | `chicken_theft_matter` | 1 | 9 | Proposta (Q-129): o que um Alado leva de um galinheiro, em matéria — uma moeda da produção do dia seguinte, se ele chegar vivo à alvorada. Nunca mais do que o rendimento de um dia por galinheiro. |
+| economy | `crossing_day` | `crossing_day` | 11 | 9 | Proposta (Q-135): a bifurcação abre a travessia para a região seguinte na manhã do dia 11 — depois de a partida viver as dez noites do §66 (o Cavador incluído). Antes disso, a bifurcação só diz em que dia abre. |
+| economy | `crossing_party_px` | `crossing_party_px` | 120 | 9 | Proposta (Q-135): quem é teu e está a esta distância do rei quando ele atravessa vai com ele. É o recruit_notice_px (120), a distância a que o jogo já diz que alguém pertence a um sítio. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | horta | 6 | O §12 diz 'Fortaleza do pântano', mas nenhum dos seis povos vive num pântano — Q-013. Proposta: a Horta (várzea). |
 | impulses | `forced_harvest` | `coin_cost` | 12 | 6 | coin_cost 12 ≈ o rendimento líquido do dia 1 no perfil equilibrado (12,3). O dossiê implica um custo ('os impulsos custam metade' para o tirano) sem o dar — Q-014. |
