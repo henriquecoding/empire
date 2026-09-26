@@ -165,3 +165,13 @@ func test_entrega_ao_rei_so_o_que_cacou_e_so_perto_dele() -> void:
 	assert_int(units.carried_coins[i]).is_equal(3)
 	assert_int(units.carried_coins[units.index_of(rei)]).is_equal(2)
 	assert_bool(hunt.bagged.has(meu)).is_false()
+
+
+## O coelho do 1:10 cai no mesmo PONTO do dia que o jogador escolheu (§26), e
+## nao ao mesmo segundo (auditoria de 26/09, D10).
+func test_o_coelho_do_1_10_acompanha_a_duracao_do_dia() -> void:
+	var base := (Registry.entry(&"economy", &"clock") as ClockData).day_seconds
+	assert_float(HuntWatch.intro_at(base)).is_equal(HuntWatch.INTRO_SECONDS)
+	assert_float(HuntWatch.intro_at(base * 1.5)).is_equal_approx(
+		HuntWatch.INTRO_SECONDS * 1.5, 0.001
+	)

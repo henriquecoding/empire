@@ -76,7 +76,7 @@ func roots(
 func _dentro(x: float, obras: BuildSystem, nucleo: float) -> bool:
 	var lado := signf(x - nucleo)
 	for vaga in obras.slots:
-		if not vaga.blocks or not vaga.standing() or vaga.band != Band.Kind.SURFACE:
+		if not vaga.blocks or not vaga.holds() or vaga.band != Band.Kind.SURFACE:
 			continue
 		if signf(vaga.x - nucleo) != lado and lado != 0.0:
 			continue

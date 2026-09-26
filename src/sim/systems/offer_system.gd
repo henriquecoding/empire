@@ -151,7 +151,7 @@ func in_plate(x: float, faixa: int) -> bool:
 static func outer_wall(obras: BuildSystem, nucleo: float, lado: int) -> float:
 	var x := nucleo
 	for vaga in obras.slots:
-		if not vaga.blocks or not vaga.standing() or vaga.band != Band.Kind.SURFACE:
+		if not vaga.blocks or not vaga.holds() or vaga.band != Band.Kind.SURFACE:
 			continue
 		if signf(vaga.x - nucleo) == float(lado) and absf(vaga.x - nucleo) > absf(x - nucleo):
 			x = vaga.x

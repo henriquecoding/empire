@@ -36,6 +36,9 @@ var settled: PackedByteArray = PackedByteArray()
 ## 1 se foi o rei que a largou (Verbo 1). Quem apanha moedas caidas — o escudeiro
 ## do §08 — deixa estas, que o rei largou para pagar ou recrutar (Q-114).
 var from_king: PackedByteArray = PackedByteArray()
+## A obra que esta moeda paga, resolvida no gesto (CoinTarget): so essa a absorve.
+## NENHUM apanha-se e nao paga; QUALQUER paga a obra em cujo raio cair.
+var targets: PackedInt32Array = PackedInt32Array()
 
 var _curva: EconomyCurve
 var _por_id: Dictionary = {}
@@ -70,6 +73,7 @@ func drop(
 	amounts.append(quanto)
 	settled.append(0)
 	from_king.append(1 if do_rei else 0)
+	targets.append(CoinTarget.QUALQUER)
 	_por_id[coin_id] = ids.size() - 1
 	return coin_id
 
@@ -207,6 +211,7 @@ func to_dict() -> Dictionary:
 func from_dict(d: Dictionary) -> void:
 	Columns.from_dict(self, d)
 	from_king.resize(ids.size())  # um save anterior a coluna: todas caidas
+	CoinTarget.pad(self)
 	_reindexar()
 
 
@@ -220,6 +225,7 @@ func _copiar(de: int, para: int) -> void:
 	amounts[para] = amounts[de]
 	settled[para] = settled[de]
 	from_king[para] = from_king[de]
+	targets[para] = targets[de]
 
 
 func _encolher() -> void:
@@ -233,6 +239,7 @@ func _encolher() -> void:
 	amounts.resize(n)
 	settled.resize(n)
 	from_king.resize(n)
+	targets.resize(n)
 
 
 func _reindexar() -> void:

@@ -145,3 +145,16 @@ func test_a_defesa_do_construtor_poupa_vida_a_muralha_golpe_a_golpe() -> void:
 	assert_int(muro.health).is_equal(muro.max_health() - 24 + 1)
 	obras.damage(casa.id, 3)
 	assert_int(casa.health).is_equal(casa.max_health() - 3)
+
+
+## Uma moeda que vale mais do que falta nao perde o troco: fica paga para o
+## treino seguinte (auditoria de 26/09, D9).
+func test_o_troco_de_uma_moeda_grande_fica_para_o_treino_seguinte() -> void:
+	_trabalhador(CASA_X)
+	_trabalhador(CASA_X + 1.0)
+	var preco := _construtor().recruit_cost
+	var id := moedas.drop(estado, CASA_X, Band.Kind.SURFACE, preco + 2, 0.0)
+	moedas.settled[moedas.index_of(id)] = 1
+	treino.absorb(moedas, obras, unidades)
+	assert_int(treino.trainees.size()).is_equal(1)
+	assert_int(int(treino.paid.get(casa.id, 0))).is_equal(2)

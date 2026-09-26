@@ -4,7 +4,11 @@
 extends GdUnitTestSuite
 
 const STEP := 1.0 / 30.0
-const ESPERA := 10
+## Uma moeda de cada vez, e so a seguinte depois de a anterior pousar (o voo leva
+## ~15 ticks): cada moeda que pousa no celeiro troca o modo, e duas no ar trocavam-no
+## duas vezes. Antes passava com 10 porque a venda do proprio celeiro o voltava a
+## trocar sozinha — o D1 da auditoria de 26/09.
+const ESPERA := 30
 
 var _no_celeiro := 0
 var _celeiro: BuildSlot

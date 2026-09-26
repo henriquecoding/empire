@@ -37,7 +37,7 @@ func _relogio() -> String:
 ## §10: "se cair, cai a partida". E a unica coisa que este painel diz que nao e
 ## uma contagem — porque e a unica que acaba o jogo.
 func _paragem() -> String:
-	if SimLoop.builds.fallen(BuildSlot.NUCLEO):
+	if Defeat.happened():
 		return "   [O CASTELO-ARVORE CAIU — A PARTIDA ACABOU]"
 	return "" if SimLoop.running() else "   [EM PAUSA]"
 

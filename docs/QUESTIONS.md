@@ -1327,6 +1327,65 @@
   e **em que tropa ele cresce** na fase 2 (`squire_becomes_combatant`) — não entrou, porque o dossiê não o diz.
 - **Decide:** tu.
 
+## Decididas na auditoria de gameplay de 26/09 (reversíveis)
+
+> O dono do repositório autorizou a aplicar o relatório `docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md` inteiro
+> (26/09/2026). Cada entrada diz o que ficou decidido, onde, e como se reverte. Os tickets são os AUD-01 a AUD-05.
+
+### Q-115 · A quem serve uma moeda largada
+- **Onde:** §02 (*"tudo o que o jogador faz passa pela moeda"*), §55, §61, Q-112; auditoria D1 e D5.
+- **O que estava:** a moeda pousada servia quatro leitores pela ordem do tick (obra → treino → celeiro → quem a
+  foi buscar → quem a pisa) e nenhum sabia quem a largou nem para quê. A venda do celeiro trocava-lhe o modo
+  sozinha, e a moeda largada ao lado de um vagabundo pagava a Casa de Treino onde ele nascera.
+- **Decidido (AUD-01):** o destino resolve-se **no gesto**, pela mesma conta do painel de contexto e do
+  `PriceTag` — o sítio de obra debaixo do rei, ou nenhum (`CoinTarget.slot_at`) — e vai na moeda
+  (`CoinSystem.targets`). Só esse sítio a absorve (obra, reparação, treino ou celeiro); uma moeda que caiu de
+  outra coisa (venda, caça, saque) apanha-se e não paga nada. O `PriceTag` deixa de mostrar o preço de quem está
+  ao lado quando há uma obra a cobrar. Ninguém por recrutar nasce dentro de um sítio de obra (o `Greybox`
+  mudou-os de sítio). E o rei não volta a pôr no saco a moeda que acabou de largar enquanto alguém por
+  recrutar estiver ao alcance dela (`Verbs.awaited`) — largar ao lado de alguém chega a ele.
+- **Em aberto:** o celeiro troca de modo a **cada** moeda que lá pousa; largar em contínuo troca-o de um lado
+  para o outro. Uma alternativa é a moeda só trocar se não houver outra no ar para o mesmo sítio.
+- **Reverte-se:** `CoinTarget.QUALQUER` em todas as moedas volta ao raio antigo.
+
+### Q-116 · Um muro a subir de degrau continua a ser o muro que era
+- **Onde:** §10, §55; auditoria D4.
+- **O que estava:** pagar o degrau seguinte punha o muro em andaime, e um andaime não travava, não levava
+  golpes, não tinha slots de contacto nem postos. Melhorar o muro à tarde abria a porta à noite.
+- **Decidido (AUD-01):** `BuildSlot.upgrading()` — pago, em andaime, com o degrau de baixo de pé — e
+  `BuildSlot.holds()`. Enquanto sobe, o muro trava, leva golpes (perde vida sem parar a obra), mantém os slots de
+  contacto e os postos do degrau que tem, e publica também a vaga de obra. Derrubado durante a obra, cai em
+  ruína e perde o degrau pago. Acabada a obra, fica com a vida inteira do degrau novo. Desenha-se o muro velho
+  dentro do andaime.
+- **Reverte-se:** `holds()` a devolver `standing()`.
+
+### Q-117 · A certeza da torre é de quem está nela
+- **Onde:** §07 (*"a torre não dá dano — dá certeza"*), §10; auditoria D3.
+- **O que estava:** o bónus ia com o **posto** (`job_id`): 100% de precisão e +40% de alcance a 500 px da torre.
+- **Decidido (AUD-01):** `Posts.present()` — o posto dá o que dá a quem está dentro da largura da obra que o
+  publicou (`JobSlot.holds`). A caminho, a fugir ou atrás da luz da alvorada, dispara como em campo aberto. O
+  `dez_dias` foi medido outra vez e não mudou.
+
+### Q-118 · A morte do rei, enquanto não há sucessão
+- **Onde:** §15, §16 (*"Morte do rei — se houver sucessor, ele assume no amanhecer; se não houver, interregno"*;
+  *"Derrota — todos os personagens jogáveis mortos e sem sucessor"*); auditoria D6.
+- **O que estava:** o rei morria como qualquer tropa e a partida continuava sem ninguém para comandar.
+- **Decidido (AUD-01):** até haver herdeiro, a morte do rei é a derrota, com o mesmo ecrã que o núcleo caído
+  (`Defeat.happened()`, uma regra só, lida pelo menu, pela entrada, pelo painel e pelo arranque). A sucessão do
+  §15/§16 é o AUD-05.
+
+### Q-119 · Gravar quando quem joga para
+- **Onde:** §62; Game Accessibility Guidelines (*save anytime*); auditoria D11.
+- **O que estava:** só o autosave da alvorada; fechar o jogo a meio do dia perdia até seis minutos.
+- **Decidido (AUD-01):** grava-se também ao pausar e ao fechar a janela (ou ao deixar a aplicação), **só de
+  dia** e com a partida viva (`SavePoint`). À noite fica o save da alvorada: a noite tem estado que o save não
+  leva (o intervalo da invocação, a oferta a meio, o que a noite já levou). Retomar deixou de repetir a fase em
+  que se gravou (D2, sem pergunta: era um defeito).
+
+### Q-120 · O coelho do 1:10 num dia de outra duração
+- **Onde:** §25 (minuto 1:10), §26 (*slider* de 240–540 s); auditoria D10.
+- **Decidido (AUD-01):** cai no mesmo **ponto** do dia (`HuntWatch.intro_at`), e não ao mesmo segundo.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

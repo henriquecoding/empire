@@ -104,6 +104,19 @@ func standing() -> bool:
 	return state == State.DONE or state == State.DAMAGED
 
 
+## A subir de degrau: paga, em andaime, e o degrau de baixo ainda de pe. Nao e
+## uma ruina a ser reparada (essa esta `mending` e nao trava ninguem).
+func upgrading() -> bool:
+	return level > 0 and not mending and state in [State.SCAFFOLD, State.BUILDING]
+
+
+## De pe para quem vem de fora: trava, leva golpes e tem os postos do degrau que
+## ja tem. Um muro a subir de nivel continua a ser o muro que era ate o novo
+## acabar (auditoria de 26/09, D4) — pagar a melhoria a tarde nao abre a porta.
+func holds() -> bool:
+	return standing() or upgrading()
+
+
 ## Quanto Lenho pede o degrau seguinte a quem conquistou `conquistas`, ou
 ## NENHUM se nao ha maneira de o subir. Com conquista exigida, o Lenho SUBSTITUI
 ## a conquista (a muralha de ferro sem a Fornalha, §74); sem ela, o Lenho e um

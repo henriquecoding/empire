@@ -109,8 +109,32 @@ static func sweep(unidades: UnitSystem, moedas: CoinSystem, king_id: int) -> voi
 		var faixa := unidades.bands[i] as Band.Kind
 		# So o rei leva as que ele proprio largou; o escudeiro apanha as caidas (Q-114).
 		var caidas := unidades.ids[i] != king_id
+		if not caidas and awaited(unidades, moedas, i):
+			continue
 		var levado := collect(moedas, unidades.ids[i], unidades.xs[i], faixa, espaco, caidas)
 		unidades.carried_coins[i] += levado
+
+
+## Se ha, aos pes de quem varre, uma moeda que o rei largou e que alguem por
+## recrutar esta a vir buscar (§25, 0:20). O rei nao a leva de volta ao saco
+## antes de ele la chegar: largar ao lado de alguem tem de chegar a ele
+## (auditoria de 26/09). Afasta-te, ou ele apanha-a, e o chao volta a ser teu.
+static func awaited(unidades: UnitSystem, moedas: CoinSystem, i: int) -> bool:
+	var curva := SimFactory.curve()
+	for c in moedas.count():
+		if moedas.from_king[c] == 0 or moedas.settled[c] == 0:
+			continue
+		if moedas.bands[c] != unidades.bands[i]:
+			continue
+		if absf(moedas.xs[c] - unidades.xs[i]) > curva.coin_pickup_px:
+			continue
+		for u in unidades.count():
+			if unidades.owners[u] != RecruitSystem.SEM_DONO or not unidades.alive(u):
+				continue
+			if unidades.bands[u] == moedas.bands[c]:
+				if absf(unidades.xs[u] - moedas.xs[c]) <= curva.recruit_notice_px:
+					return true
+	return false
 
 
 static func _apanha_do_chao(unidades: UnitSystem, i: int, king_id: int) -> bool:

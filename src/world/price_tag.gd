@@ -62,15 +62,18 @@ static func draw_on(
 		return
 	var x := SimLoop.units.xs[rei]
 	var saco := SimLoop.units.carried_coins[rei]
-	_obras(canvas, faixa, edificios, x, saco)
-	_gente(canvas, faixa, tropas, x, saco)
+	# A moeda vai para a obra debaixo do rei (CoinTarget): com uma obra a cobrar,
+	# o preco de quem esta ao lado seria uma promessa que o gesto nao cumpre.
+	if not _obras(canvas, faixa, edificios, x, saco):
+		_gente(canvas, faixa, tropas, x, saco)
 
 
 ## O degrau seguinte de cada obra ao alcance. O raio e a meia largura da obra —
 ## o mesmo com que o BuildSystem decide que uma moeda caiu NELA (§55).
 static func _obras(
 	canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary, x: float, saco: int
-) -> void:
+) -> bool:
+	var cobrou := false
 	for vaga in SimLoop.builds.slots:
 		if vaga.band != faixa or not over(vaga, x):
 			continue
@@ -83,6 +86,8 @@ static func _obras(
 			continue
 		var caixa := BuildView.drawn_box(vaga, Silhouette.of_slot(vaga, edificios))
 		_moedas(canvas, vaga.x, caixa.position.y, falta, saco)
+		cobrou = true
+	return cobrou
 
 
 ## Se uma moeda largada daqui cai NESTA obra. E a meia largura com que o
