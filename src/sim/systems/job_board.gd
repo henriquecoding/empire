@@ -1,23 +1,4 @@
 # src/sim/systems/job_board.gd — a camada A da §52: quem trabalha onde.
-#
-# E o algoritmo do Kingdom, e a previsibilidade e a funcionalidade. Num jogo de
-# controlo indireto o jogador tem de conseguir antecipar para onde vai a tropa;
-# uma IA que otimiza melhor mas surpreende e pior (§52). Por isso: sem behavior
-# trees, sem custo escondido, e uma formula de tres termos que se le em voz alta.
-#
-#     score = adequacao(unidade, posto) x proximidade x urgencia(fase)
-#
-# A histerese e a parte que parece um detalhe e nao e: sem ela a atribuicao
-# treme a cada fase e as tropas passam o dia a atravessar o mapa em vez de
-# trabalhar. Uma unidade so muda de posto se o score novo superar o atual em
-# mais do que job_hysteresis (§29, prompt 4).
-#
-# Puro: nao e Node, nao conhece o catalogo de eventos, e nao sorteia nada — a
-# atribuicao e determinista de proposito, e e a mesma duas vezes seguidas.
-#
-# Uma diferenca de forma face ao §29, e so de forma: o prompt escreve
-# `assign(units: Array[UnitState], ...)` e aqui as tropas sao COLUNAS (§52,
-# §63). A tabela da §70 manda no UnitSystem, e por isso e ele que entra.
 class_name JobBoard
 extends RefCounted
 
@@ -33,7 +14,8 @@ const MEIO := 0.5
 
 var slots: Array[JobSlot] = []
 
-var _publicadas: Array[BuildSlot] = []
+var _publicadas: Array = []
+var _roster: Array = []
 var _curva: EconomyCurve
 var _postos: Dictionary = {}
 var _dados: Dictionary = {}
@@ -63,6 +45,8 @@ func post(vaga: JobSlot) -> JobSlot:
 func clear() -> void:
 	slots = []
 	_anterior = {}
+	_publicadas = []
+	_roster = []
 
 
 ## As vagas que as obras de pe publicam (§20: "postos publicam vagas"). Chamada
@@ -72,18 +56,44 @@ func clear() -> void:
 ## a memoria da histerese e punha as tropas a trocar de posto de fase em fase —
 ## exatamente o que ela existe para evitar.
 func publish(obras: BuildSystem) -> void:
-	var querem: Array[BuildSlot] = []
-	for obra in obras.standing():
-		if obra.job_id != &"" and obra.posts() > 0:
-			querem.append(obra)
+	var querem: Array = []
+	for obra in obras.slots:
+		var building := obra.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]
+		var count := 1 if building else obra.posts() if obra.standing() else 0
+		var job := &"build" if building else obra.job_id
+		if job != &"" and count > 0:
+			querem.append([obra.id, job, count, obra.level, obra.path, obra.band, obra.x])
 	if querem == _publicadas:
 		return
 	clear()
-	for obra in querem:
-		for k in obra.posts():
-			var vaga := post(JobSlot.new(obra.job_id, _lugar(obra, k), obra.band))
-			vaga.grants(obra)
+	for entry in querem:
+		var obra: BuildSlot = obras.slots[obras.index_of(entry[0])]
+		var job: StringName = entry[1]
+		for k in entry[2]:
+			var x := obra.x if job == &"build" else _lugar(obra, k)
+			var vaga := post(JobSlot.new(job, x, obra.band))
+			if job != &"build":
+				vaga.grants(obra)
 	_publicadas = querem
+
+
+## Reage a recrutamento, morte, faixa e classe sem reatribuir a cada movimento.
+func refresh(obras: BuildSystem, unidades: UnitSystem, fase: int) -> void:
+	publish(obras)
+	var roster: Array = [fase]
+	for i in unidades.count():
+		roster.append(
+			[
+				unidades.ids[i],
+				unidades.owners[i],
+				unidades.alive(i),
+				unidades.bands[i],
+				unidades.data_ids[i]
+			]
+		)
+	if roster != _roster:
+		assign(unidades, fase)
+		_roster = roster
 
 
 ## Onde fica a k-esima vaga de uma obra: repartidas pela largura dela, e nao
@@ -154,6 +164,8 @@ func _score(unidades: UnitSystem, i: int, vaga: JobSlot, fase: int) -> float:
 	if posto == null or dados == null or fase >= posto.urgency_by_phase.size():
 		return SCORE_MINIMO
 	var adequacao: float = dados.job_affinity.get(vaga.job_id, SCORE_MINIMO)
+	if vaga.job_id == &"build" and dados.tags.has(&"worker"):
+		adequacao = maxf(adequacao, dados.job_affinity.get(&"farm", SCORE_MINIMO))
 	if adequacao <= SCORE_MINIMO:
 		return SCORE_MINIMO
 	var distancia := absf(unidades.xs[i] - vaga.x)

@@ -514,3 +514,37 @@ AMARGUEIRO_FELL,Cortar,Fell,destino de um Amargueiro — §74,20,
 AMARGUEIRO_CONSECRATE,Consagrar,Consecrate,destino de um Amargueiro — §74,20,
 AMARGUEIRO_LEAVE,Deixar,Leave,destino de um Amargueiro — §74,20,
 CREATURE_TENDER,Zelador,Tender,nome de conteúdo — creature,24,"Nasce da Dívida da Candeia ≥ 6. Não ataca, não morre: afasta-se."
+GUIDE_WORKER,"RECRUTA UM TRABALHADOR
+Larga uma moeda junto de um vagabundo","RECRUIT A WORKER
+Drop a coin beside a vagrant",guia contextual de jogo,160,
+GUIDE_HUNTER,"CONTRATA UM ARQUEIRO
+A caça financia o teu reino","HIRE AN ARCHER
+Hunting funds your kingdom",guia contextual de jogo,160,
+GUIDE_FARM,"CRIA RENDA
+Recolhe a caça e paga um canteiro","GROW YOUR INCOME
+Collect hunting coins and fund a farm",guia contextual de jogo,160,
+GUIDE_WALL,"PREPARA A DEFESA
+Ergue uma muralha antes da noite","PREPARE YOUR DEFENCE
+Build a wall before nightfall",guia contextual de jogo,160,
+GUIDE_EXPLORE,"EXPANDE O REINO
+Reforça o outro flanco e explora","EXPAND YOUR KINGDOM
+Reinforce the other flank and explore",guia contextual de jogo,160,
+CONTEXT_PASSAGE,PASSAGEM · {assume} para mudar de faixa,PASSAGE · {assume} to change layer,guia contextual de jogo,160,
+CONTEXT_BUILDING,"{name} · Obra paga
+O trabalhador vem construir; podes explorar","{name} · Construction funded
+A worker is on the way; you can explore",guia contextual de jogo,160,
+CONTEXT_WALL,"MURALHA · {cost} moedas · {path}
+{assume} escolher caminho · {drop} investir","WALL · {cost} coins · {path}
+{assume} choose path · {drop} invest",guia contextual de jogo,160,
+PATH_GARRISON,Guarnição: mais postos,Garrison: more posts,guia contextual de jogo,160,
+PATH_FORTIFY,Fortificação: mais resistência,Fortification: more health,guia contextual de jogo,160,
+CONTEXT_BUILD,"{name} · Faltam {cost} moedas
+{drop} investir · manter para largar em sequência","{name} · {cost} coins remaining
+{drop} invest · hold to drop continuously",guia contextual de jogo,160,
+CONTEXT_DONE,{name} · Em funcionamento,{name} · Operational,guia contextual de jogo,160,
+CONTEXT_LOCKED,{name} · Requer conquista ou Lenho Amargo,{name} · Requires conquest or Bitter Wood,guia contextual de jogo,160,
+CONTEXT_RECRUIT,"{name} · Faltam {cost} moedas
+{drop} largar para recrutar","{name} · {cost} coins remaining
+{drop} to recruit",guia contextual de jogo,160,
+CONTEXT_WALL_NAME,Muralha,Wall,guia contextual de jogo,160,
+CONTEXT_SITE,Obra,Construction,guia contextual de jogo,160,

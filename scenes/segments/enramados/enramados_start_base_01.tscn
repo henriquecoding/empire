@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/world/enramados_layer.gd" id="1"]
+[ext_resource type="Script" path="res://src/world/sky_view.gd" id="2"]
+
+[node name="Enramados" type="Node2D"]
+
+[node name="Sky" type="Node2D" parent="."]
+script = ExtResource("1")
+plane = 0
+
+[node name="SunAndMoon" type="Node2D" parent="."]
+script = ExtResource("2")
+paint_sky = false
+
+[node name="FarHills" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.12, 1)
+
+[node name="Art" type="Node2D" parent="FarHills"]
+script = ExtResource("1")
+plane = 1
+
+[node name="DistantRealm" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 1)
+
+[node name="Art" type="Node2D" parent="DistantRealm"]
+script = ExtResource("1")
+plane = 2
+
+[node name="Grove" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.65, 1)
+
+[node name="Art" type="Node2D" parent="Grove"]
+script = ExtResource("1")
+plane = 3
+
+[node name="PathAndSoil" type="Node2D" parent="."]
+script = ExtResource("1")
+plane = 4
+
+[node name="RootCellars" type="Node2D" parent="."]
+script = ExtResource("1")
+plane = 5

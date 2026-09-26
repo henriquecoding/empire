@@ -17,6 +17,7 @@ const JOGADOR := &"player"
 
 ## Sem faixa para onde ir: longe de uma passagem, ou um corpo que nao muda.
 const NENHUMA := -1
+const HALF := 0.5
 
 
 ## §61: as intencoes sao consumidas no inicio do tick, pela ordem em que
@@ -31,7 +32,8 @@ static func consume(
 	bichos: CreatureSystem,
 	combate: CombatSystem,
 	king_id: int,
-	passagens: PackedFloat32Array
+	passagens: PackedFloat32Array,
+	obras: BuildSystem = null
 ) -> Array[Dictionary]:
 	var larga: Array[Dictionary] = []
 	for intencao in fila.take():
@@ -41,12 +43,34 @@ static func consume(
 				if spend(unidades, king_id, args[&"amount"]):
 					larga.append(args)
 			IntentQueue.Kind.ASSUME:
-				assume(unidades, king_id, passagens)
+				if not assume(unidades, king_id, passagens):
+					choose_wall(unidades, king_id, obras)
 			IntentQueue.Kind.MARK_TARGET:
 				mark(unidades, bichos, combate, args[&"x"], king_id)
 			IntentQueue.Kind.DAY_LENGTH:
 				day_length(args[&"seconds"])
 	return larga
+
+
+## A escolha A/B do §10, antes de pagar o segundo degrau; E partilha o Verbo 2.
+static func choose_wall(units: UnitSystem, king: int, builds: BuildSystem) -> bool:
+	var i := units.index_of(king)
+	if builds == null or i < 0 or not units.alive(i):
+		return false
+	for slot in builds.slots:
+		if not slot.two_paths() or slot.level > 1 or slot.band != units.bands[i]:
+			continue
+		if slot.paid > 0 or slot.state not in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]:
+			continue
+		if absf(slot.x - units.xs[i]) > slot.width * HALF:
+			continue
+		var path := (
+			BuildSlot.Path.GUARNICAO
+			if slot.path == BuildSlot.Path.FORTIFICACAO
+			else BuildSlot.Path.FORTIFICACAO
+		)
+		return slot.choose_path(path)
+	return false
 
 
 ## Tirar do saco para largar. O Verbo 1 nao cria moeda do nada: sai do que o

@@ -1,0 +1,49 @@
+[
+  {
+    "file": "castle-and-cast.png",
+    "uploaded_name": "3CC0ECB2-FC24-4B2A-8BBD-51D841E9735B.png",
+    "role": "author_castle_and_character_references",
+    "sha256": "46532af5491dff8d0c1dde748dd3e7b54a280374d62e027167bc2175d70689e4",
+    "runtime": false
+  },
+  {
+    "file": "cook-and-counter.png",
+    "uploaded_name": "F4CE5D82-F5CE-4391-8F24-B87CCAF9186A.png",
+    "role": "near_complete_character_references",
+    "sha256": "e0a073003877dd74b2944aedf68e2453e154d94373bd662925cea8a8ef977c70",
+    "runtime": false
+  },
+  {
+    "file": "soldier.png",
+    "uploaded_name": "C558C167-797E-4BF0-BE82-02395B9A75F4(1).png",
+    "role": "primary_near_complete_character_reference",
+    "sha256": "2dc3ad5a3c1ba358bb61fe45d79aab962700a69e849b0fb904ba5f721c70f36e",
+    "runtime": false
+  },
+  {
+    "file": "kingdom-composition.jpeg",
+    "uploaded_name": "E5B26CE7-FEBB-48FE-9787-2917CDE2AAB6.jpeg",
+    "role": "composition_reference",
+    "sha256": "19a7bd80d28e57742f07caa63e77b8dfcf5cf93e6844d0e3844e4db0c812dec1",
+    "runtime": false
+  },
+  {
+    "file": "king-study-v1.png",
+    "role": "superseded_clothing_study",
+    "generator": "image_gen",
+    "sha256": "c20f07587d35ebe556019e7ed0190f0f3be3f4e8c931b8dc5c22c04b315c75fb",
+    "runtime": false,
+    "native_sprite": false,
+    "superseded_by": "king-study-v2.png"
+  },
+  {
+    "file": "king-study-v2.png",
+    "role": "proposal_not_approved",
+    "generator": "image_gen",
+    "edit_target": "king-study-v1.png",
+    "revision": "2026-09-20",
+    "sha256": "92292b08b39a7df339f277663fa94a8aa7b28a854d1f834350589b8c66d36532",
+    "runtime": false,
+    "native_sprite": false
+  }
+]
