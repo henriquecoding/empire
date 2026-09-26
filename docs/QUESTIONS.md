@@ -1303,6 +1303,29 @@
   curto do HUD ao recusar, com um sinal novo no §46; (c) esconder os recusados até terem sistema.
 - **Decide:** tu.
 
+### Q-114 · A classe do Monarca: o que é "defesa", o que é "em pessoa", como se evolui — e o escudeiro
+- **Onde:** §08 (*"Tanque. +10% defesa às tropas num raio. Dano fraco. Escudeiro acompanha e apanha moedas
+  caídas"*; *"O boost passa a +25% e aplica-se ao império inteiro; o escudeiro cresce e torna-se tropa de
+  combate"*; *"Evolução custa Semente Real (1 para a Fase 2) e uma condição de feito"*), `classes.csv`
+  (`nights_defended_in_person` 5), `units.csv` (o `squire`), F2-01.
+- **O que foi feito (reversível, `ClassSystem`):**
+  - **Defesa** é menos dano recebido, com a fracção poupada guardada de golpe para golpe — a leitura que a
+    Q-109 já deu ao construtor e às muralhas. Na fase 1 vale para as tuas tropas na faixa do rei e a 260 px
+    dele; na fase 2, para todas as tuas tropas. Nunca para o próprio rei, que é quem a dá.
+  - **Uma noite defendida em pessoa** é uma em que, pelo menos num tick entre o crepúsculo e a alvorada, uma
+    tropa tua combateu dentro do raio do rei, na faixa dele. Conta na alvorada.
+  - **O gesto de evoluir** é o Verbo 1 no núcleo, com a condição cumprida e a Semente Real: a semente gasta-se
+    e a moeda volta ao saco, como ao consagrar uma árvore (§74). Sem as duas coisas, a moeda cai como sempre.
+    O guia de contexto di-lo no núcleo.
+- **O escudeiro não entrou.** Os campos dele (`tags follows_king|collects_coins`, `coin_capacity 5`) estão em
+  `_proposed`, e "apanha moedas caídas" pede uma distinção que a simulação não guarda: uma moeda no chão não
+  sabe se caiu (de uma morte, de um saco cheio) ou se foi largada pelo rei para pagar uma obra ou recrutar.
+  Um escudeiro que apanha tudo o que está ao pé do rei tira-lhe as moedas que ele larga. "Cresce e torna-se
+  tropa de combate" também não diz em quê: o `squire` tem dano 0.
+- **Em aberto:** as três leituras de cima; se o escudeiro deve apanhar só moedas de origem marcada (uma coluna
+  nova no `CoinSystem`), só as que ficam no chão mais de um tempo, ou outra coisa; em que tropa ele cresce.
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

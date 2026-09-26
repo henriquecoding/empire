@@ -58,6 +58,8 @@ static func context(device: Glyphs.Device) -> String:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue
 		if site.kind == BuildSlot.NUCLEO:
+			if SimLoop.field.classes.can_evolve(SimLoop.state.royal_seeds):
+				return _evolve(site, values)
 			continue
 		values["name"] = _building_name(site)
 		values["cost"] = PriceTag.owed_by(site)
@@ -92,6 +94,15 @@ static func context(device: Glyphs.Device) -> String:
 		values["cost"] = PriceTag.owed_by_unit(units, nearest)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
 	return ""
+
+
+## A classe pode evoluir (§08): o Verbo 1 no nucleo, e o que ela passa a dar.
+static func _evolve(site: BuildSlot, values: Dictionary) -> String:
+	var classe := Registry.entry(&"classes", &"monarch") as ClassData
+	values["name"] = _building_name(site)
+	values["pct"] = roundi(float(classe.phase2_params.get(ClassSystem.DEFESA, 0.0)) * CEM)
+	values["seeds"] = classe.evolve_seed_cost
+	return _tr(&"CONTEXT_EVOLVE").format(values)
 
 
 static func _building_name(site: BuildSlot) -> String:

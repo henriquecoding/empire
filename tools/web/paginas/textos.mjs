@@ -143,7 +143,7 @@ export const TEXTOS = {
       feito: "Feito", parcial: "Parcial", falta: "Por fazer",
       leg_feito: "feitos", leg_parcial: "parciais", leg_falta: "por fazer",
       trilhos: {
-        F0: "Fase 0 · Fundação", F1: "Fase 1 · Núcleo jogável", GB: "Greybox", XIII: "Parte XIII · a candeia e a colheita",
+        F0: "Fase 0 · Fundação", F1: "Fase 1 · Núcleo jogável", F2: "Fase 2 · Fatia vertical", GB: "Greybox", XIII: "Parte XIII · a candeia e a colheita",
         CD: "Conteúdo", ART: "Arte", NB: "Nomes", PUB: "Publicação",
       },
       lista: "Ver os tickets numa lista",
@@ -332,7 +332,7 @@ export const TEXTOS = {
       feito: "Done", parcial: "Partial", falta: "To do",
       leg_feito: "done", leg_parcial: "partial", leg_falta: "to do",
       trilhos: {
-        F0: "Phase 0 · Foundation", F1: "Phase 1 · Playable core", GB: "Greybox", XIII: "Part XIII · the lantern and the harvest",
+        F0: "Phase 0 · Foundation", F1: "Phase 1 · Playable core", F2: "Phase 2 · Vertical slice", GB: "Greybox", XIII: "Part XIII · the lantern and the harvest",
         CD: "Content", ART: "Art", NB: "Naming", PUB: "Publishing",
       },
       lista: "See the tickets as a list",

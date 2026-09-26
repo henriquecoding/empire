@@ -191,7 +191,7 @@ func _montar() -> void:
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
-	field = FieldWork.new(economy, morale)
+	field = FieldWork.new(economy, morale, combat)
 	hunting = field.hunting
 	tally.reset()
 	_fase = UnitSystem.NENHUM
@@ -216,7 +216,8 @@ func _mudanca_de_fase() -> bool:
 
 func _largar(moedas: Array[Dictionary]) -> void:
 	for m in moedas:
-		if m[EventRelay.PORQUE] == Verbs.JOGADOR and night.consecrate_at(state, m, king_id):
+		var do_rei: bool = m[EventRelay.PORQUE] == Verbs.JOGADOR
+		if do_rei and field.claims(m, state, night, builds, units, king_id):
 			continue
 		drop_coin(
 			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]

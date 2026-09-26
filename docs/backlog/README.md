@@ -91,6 +91,12 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | feito |
 | [PUB-02](PUB-02.md) | O site passa a ser a página do jogo | PUB-01 | feito |
 
+## Fase 2 — Fatia vertical
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [F2-01](F2-01.md) | A classe do Monarca: a aura e a evolução | F1-12, XIII-03 | parcial |
+
 ## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
 
 > Onze tickets novos, pela ordem de custo da §82. O caminho mínimo que dá a transformação inteira é

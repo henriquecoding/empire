@@ -1335,5 +1335,19 @@
   "fora": "Um domínio próprio. Um devlog ou um press kit (§36: Fase 4). A página de Steam. Telemetria de qualquer espécie. O nome final e o logótipo (NB-01).",
   "estado": "feito",
   "horas": "6"
+ },
+ "F2-01": {
+  "title": "A classe do Monarca: a aura e a evolução",
+  "porque": "A Fase 2 pede \"1 classe\" (§33), e a do Monarca é a de quem começa: está em classes.csv desde a Fase 1 e não tinha sistema nenhum.",
+  "spec": [
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md"
+  ],
+  "depende": "F1-12, XIII-03",
+  "feito": "+10% de defesa às tuas tropas no raio do rei; ao fim de cinco noites defendidas em pessoa e com uma Semente Real, a classe evolui e a defesa passa a +25% no império inteiro",
+  "fora": "As outras classes (Arqueiro, Bardo, Trepador) e trocar de classe com o Verbo 2 — Fase 6.",
+  "estado": "parcial — a aura e a evolução ligadas; o escudeiro que apanha moedas e \"o escudeiro vira tropa\" esperam pela Q-114",
+  "horas": "6"
  }
 }
