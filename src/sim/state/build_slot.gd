@@ -95,6 +95,8 @@ var progress: float = 0.0
 var health: int = 0
 ## A obra paga esta a ser reparada, e nao a subir de nivel (§55, Q-108).
 var mending := false
+## A fracao de dano que a defesa ja poupou e ainda nao chegou a um ponto de vida.
+var soaked: float = 0.0
 
 
 ## De pe: ja construida, inteira ou tocada, mas ainda nao ruina.
@@ -133,6 +135,18 @@ func repair_cost() -> int:
 		return NENHUM
 	var perdida := 1.0 - float(health) / maxf(1.0, float(max_health()))
 	return maxi(1, ceili(costs[level - 1] * perdida))
+
+
+## O dano que passa, depois de `defesa` (0..1) o reduzir — so num muro (§09,
+## construtor: "+8% defesa das muralhas"). A fracao guarda-se: oito golpes de 6
+## com 8% poupam 4 de vida, e nao zero de cada vez (Q-109).
+func soak(quanto: int, defesa: float) -> int:
+	if not two_paths() or defesa <= 0.0:
+		return quanto
+	soaked += quanto * defesa
+	var poupado := mini(quanto, int(soaked))
+	soaked -= poupado
+	return quanto - poupado
 
 
 ## Quanto custa o degrau seguinte, ou NENHUM se ja chegou ao topo.
@@ -177,6 +191,7 @@ func to_dict() -> Dictionary:
 		&"progress": progress,
 		&"health": health,
 		&"mending": mending,
+		&"soaked": soaked,
 		&"stock": stock,
 		&"path": int(path),
 		&"contact": contact,
@@ -190,6 +205,7 @@ func from_dict(d: Dictionary) -> void:
 	progress = d.get(&"progress", progress)
 	health = d.get(&"health", health)
 	mending = d.get(&"mending", mending)
+	soaked = d.get(&"soaked", soaked)
 	stock = d.get(&"stock", stock)
 	path = d.get(&"path", int(path)) as Path
 	contact = d.get(&"contact", contact)

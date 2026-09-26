@@ -28,6 +28,7 @@ var night: NightWatch
 ## no _ready(): precisam do Registry, e isso e a regra 8b (ADR 0020).
 var coins: CoinSystem
 var recruits: RecruitSystem
+var field: FieldWork
 var hunting: HuntingSystem
 
 var intents := IntentQueue.new()
@@ -93,13 +94,13 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 ## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
 func world() -> Dictionary:
 	var saved := SimSave.world(units, creatures, coins, builds, night, king_id)
-	saved[&"hunting"] = hunting.to_dict()
+	saved.merge(field.to_dict())
 	return saved
 
 
 func load_world(mundo: Dictionary) -> void:
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo)
-	hunting.from_dict(mundo.get(&"hunting", {}))
+	field.from_dict(mundo)
 
 
 func stop() -> void:
@@ -128,14 +129,14 @@ func step(delta: float) -> void:
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
-	HuntWatch.prepare(hunting, ClockService.clock.day, core_x, world_width)
+	field.prepare(ClockService.clock.day, core_x, world_width)
 	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
 	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
 	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
 	#     tick.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id)
-	hunting.plan(units, _fase < GameClock.Phase.DUSK)
+	field.plan(units, _fase < GameClock.Phase.DUSK)
 	EventRelay.combat(combat.choose(units, creatures, builds, passages))
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
@@ -153,17 +154,12 @@ func step(delta: float) -> void:
 	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
 	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
 	EventRelay.builds(builds.absorb(coins, state, night.amargueiros))
+	field.absorb(coins, builds, units)
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, king_id, state))
 	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
-	_largar(
-		hunting.resolve(
-			units,
-			_fase < GameClock.Phase.DUSK,
-			ClockService.clock.elapsed >= HuntWatch.INTRO_SECONDS
-		)
-	)
+	_largar(field.resolve(units, builds, delta, _fase < GameClock.Phase.DUSK, ClockService.clock))
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
 	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
@@ -194,9 +190,8 @@ func _montar() -> void:
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RecruitSystem.new(SimFactory.curve())
-	hunting = HuntingSystem.new(
-		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
-	)
+	field = FieldWork.new()
+	hunting = field.hunting
 	tally.reset()
 	_fase = UnitSystem.NENHUM
 	_brecha = false

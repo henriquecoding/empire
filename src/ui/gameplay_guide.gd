@@ -75,7 +75,7 @@ static func context(device: Glyphs.Device) -> String:
 			if not SimLoop.builds.can_climb(site, SimLoop.state, SimLoop.night.amargueiros):
 				return _tr(&"CONTEXT_LOCKED").format(values)
 			return _tr(&"CONTEXT_BUILD").format(values)
-		return _tr(&"CONTEXT_DONE").format(values)
+		return _training(site, values)
 	var nearest := -1
 	var distance := SimFactory.curve().recruit_notice_px
 	for i in units.count():
@@ -106,3 +106,20 @@ static func _button(button: Variant) -> String:
 
 static func _tr(key: StringName) -> String:
 	return TranslationServer.translate(key)
+
+
+## Uma obra de pe: se forma um oficio (§09), diz o preco do treino, quem esta
+## la dentro, ou que falta um trabalhador teu para mandar; senao, funciona.
+static func _training(site: BuildSlot, values: Dictionary) -> String:
+	var treino := SimLoop.field.training
+	var oficio := treino.craft_of(site)
+	if oficio == null or not site.standing():
+		return _tr(&"CONTEXT_DONE").format(values)
+	values["craft"] = _tr(oficio.display_key)
+	for quem in treino.trainees:
+		if treino.trainees[quem][0] == site.id:
+			return _tr(&"CONTEXT_TRAINING").format(values)
+	values["cost"] = treino.owed(site, SimLoop.units)
+	if values.cost <= 0:
+		return _tr(&"CONTEXT_TRAIN_NOBODY").format(values)
+	return _tr(&"CONTEXT_TRAIN").format(values)

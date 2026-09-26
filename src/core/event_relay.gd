@@ -89,6 +89,16 @@ static func builds(eventos: Array[Dictionary]) -> void:
 				EventBus.queue(&"wall_breached", [vaga.id])
 
 
+## A Casa de Treino (§09): quem sai do treino e promovido, no catalogo (§46).
+static func training(eventos: Array[Dictionary]) -> void:
+	for e in eventos:
+		if e[TrainingSystem.CHAVE] == TrainingSystem.EV_FORMADO:
+			var quem: int = e[TrainingSystem.UNIDADE]
+			EventBus.queue(&"unit_promoted", [quem, e[TrainingSystem.DE], e[TrainingSystem.PARA]])
+		elif e[TrainingSystem.CHAVE] == TrainingSystem.EV_PAGA:
+			EventBus.queue(&"coin_spent", [e[TrainingSystem.QUANTO], &"training"])
+
+
 ## Passo 7: a producao do §49. A materia sai como moeda por cima da obra que a
 ## produziu — o §49 proibe um inventario do jogador, e e essa proibicao que
 ## mantem os dois verbos intactos. A plantacao apanhada pelo rasto e arrasada

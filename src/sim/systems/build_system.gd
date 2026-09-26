@@ -33,6 +33,8 @@ const NIVEL := &"level"
 const METADE := 0.5
 
 var slots: Array[BuildSlot] = []
+## A defesa das muralhas que um construtor teu da (§09); escrita a cada tick.
+var wall_defense := 0.0
 
 
 func count() -> int:
@@ -148,7 +150,7 @@ func damage(slot_id: int, quanto: int) -> Array[Dictionary]:
 	if i == NENHUM or not slots[i].standing():
 		return []
 	var vaga := slots[i]
-	vaga.health -= quanto
+	vaga.health -= vaga.soak(quanto, wall_defense)
 	if vaga.health > 0:
 		vaga.state = BuildSlot.State.DAMAGED
 		return [{CHAVE: EV_DANO, VAGA: vaga, RACIO: float(vaga.health) / vaga.max_health()}]
@@ -181,8 +183,7 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	return achada
 
 
-## Verdadeiro se existe uma obra deste tipo e ja nao esta de pe: "se o nucleo
-## cair, cai a partida" (§10), lido do mundo e nao de um estado a parte (§45).
+## Uma obra deste tipo ja nao esta de pe: "se o nucleo cair, cai a partida" (§10).
 func fallen(kind: StringName) -> bool:
 	for vaga in slots:
 		if vaga.kind == kind and not vaga.standing():
@@ -190,8 +191,7 @@ func fallen(kind: StringName) -> bool:
 	return false
 
 
-## As obras de pe, por id crescente. Quem produz, quem publica posto e quem se
-## desenha le por aqui em vez de filtrar a lista por sua conta.
+## As obras de pe, por id crescente: quem produz, publica posto ou desenha.
 func standing() -> Array[BuildSlot]:
 	var saida: Array[BuildSlot] = []
 	for vaga in slots:

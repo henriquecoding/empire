@@ -75,6 +75,8 @@ static func _obras(
 		if vaga.band != faixa or not over(vaga, x):
 			continue
 		var falta := owed_by(vaga)
+		if falta <= 0 and SimLoop.field != null:
+			falta = SimLoop.field.training.owed(vaga, SimLoop.units)
 		var madeira := SimLoop.night.amargueiros
 		var subir := vaga.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]
 		if falta <= 0 or (subir and not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira)):

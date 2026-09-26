@@ -557,3 +557,13 @@ CONTEXT_REPAIR,"{name} · Danificada · faltam {cost} moedas
 CONTEXT_REPAIRING,"{name} · Reparação paga
 O trabalhador vem reparar; de dia","{name} · Repair funded
 A worker is on the way; by day",guia contextual de jogo,160,Q-108
+CONTEXT_TRAIN,"{name} · Treinar {craft}: faltam {cost} moedas
+{drop} pagar o treino · um trabalhador teu entra por um dia","{name} · Train a {craft}: {cost} coins remaining
+{drop} fund the training · a worker of yours goes in for a day",guia contextual de jogo,160,§09 §10
+CONTEXT_TRAINING,"{name} · A formar um {craft}
+Sai amanhã a esta hora","{name} · Training a {craft}
+Out by this time tomorrow",guia contextual de jogo,160,§09 §10
+CONTEXT_TRAIN_NOBODY,"{name} · Forma {craft}
+Precisa de um trabalhador teu por perto","{name} · Trains a {craft}
+Needs a worker of yours nearby",guia contextual de jogo,160,§09 §10
+TOAST_PROMOTED,Um ofício novo no reino,A new craftsman joins your realm,aviso do HUD: treino acabado,40,§09
