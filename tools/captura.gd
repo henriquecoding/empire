@@ -8,15 +8,28 @@
 #
 # Corre como CENA e nao com `-s`: o modo de script nao carrega autoloads, e sem
 # eles nao ha SimLoop nenhum para fotografar.
+#
+# Ao lado do PNG fica a ficha (.json): o que o planejamento de 26/09 (§8) pede
+# para que duas imagens se possam comparar — commit, motor, renderer que CORREU,
+# resolucao, escala, semente, dia e fase, onde estava o rei, e se o estado foi
+# natural ou preparado a mao. Um ecra virtual sem Vulkan cai para OpenGL: o
+# renderer escrito no project.godot nao e prova de nada, o da ficha e.
 extends Node
 
 const JOGO := "res://scenes/game.tscn"
 const SAIDA := "build/empire.png"
 const SEGUNDOS := 3.0
 const PASSO := 1.0 / 30.0
+const ESTICAR := {"canvas_items": 1, "viewport": 2}
+const ESCALA := {"fractional": 0, "integer": 1}
+const FILTRO := {"nearest": 0, "linear": 1}
+const FAIXAS := {"surface": Band.Kind.SURFACE, "underground": Band.Kind.UNDERGROUND}
+const Obras := preload("res://tools/captura_obras.gd")
 
 var _restam: int = 0
 var _saida: String = SAIDA
+var _preparacao: PackedStringArray = PackedStringArray()
+var _obras := Obras.new()
 
 
 func _ready() -> void:
@@ -25,17 +38,34 @@ func _ready() -> void:
 	_restam = int(float(args.get("segundos", SEGUNDOS)) * Engine.get_frames_per_second())
 	if _restam <= 0:
 		_restam = int(SEGUNDOS * Engine.physics_ticks_per_second)
+	_ecra(args)
 	add_child(load(JOGO).instantiate())
+	if not OS.get_cmdline_user_args().has(Game.NOVO):
+		_preparacao.append("retomado do save")
 	# Avancar a simulacao a mao, e nao esperar pelo relogio: fotografar a noite
 	# custava 340 segundos de espera por causa das seis fases do §48.
 	_avancar(float(args.get("avancar", 0.0)))
 	_pousar_o_rei(args)
+	_preparacao.append_array(_obras.prepare(String(args.get("obras", ""))))
+
+
+## `--esticar`, `--escala` e `--filtro` trocam o modo de ecra so nesta
+## fotografia, para comparar as alternativas da ADR 0001 com a mesma cena.
+func _ecra(args: Dictionary) -> void:
+	var raiz := get_tree().root
+	if ESTICAR.has(args.get("esticar")):
+		raiz.content_scale_mode = ESTICAR[args["esticar"]]
+	if ESCALA.has(args.get("escala")):
+		raiz.content_scale_stretch = ESCALA[args["escala"]]
+	if FILTRO.has(args.get("filtro")):
+		raiz.canvas_item_default_texture_filter = FILTRO[args["filtro"]]
 
 
 ## `--rei <x>` poe o monarca num sitio antes da fotografia, em px de mundo a
-## contar do nucleo. Existe porque metade do que ha para ver so aparece com ele
-## ao pe da coisa — o preco de uma obra (PriceTag) e o alcance de uma passagem —
-## e esperar que ele la va a andar nao e uma fotografia, e um filme.
+## contar do nucleo; `--faixa underground` poe-no no subsolo. Existe porque
+## metade do que ha para ver so aparece com ele ao pe da coisa — o preco de uma
+## obra (PriceTag) e o alcance de uma passagem. E um estado PREPARADO, e a ficha
+## di-lo: ninguem andou ate la.
 func _pousar_o_rei(args: Dictionary) -> void:
 	if not args.has("rei") or SimLoop.state == null:
 		return
@@ -44,10 +74,22 @@ func _pousar_o_rei(args: Dictionary) -> void:
 		return
 	var x := clampf(SimLoop.core_x + float(args["rei"]), 0.0, SimLoop.world_width)
 	SimLoop.units.xs[i] = x
+	_preparacao.append("rei posto em x=%d" % int(x))
+	if FAIXAS.has(args.get("faixa")):
+		SimLoop.units.bands[i] = FAIXAS[args["faixa"]]
+		_preparacao.append("rei posto na faixa %s" % args["faixa"])
 	SimLoop.units.clear_target(SimLoop.king_id)
+	# A camara segue com atraso e antecipa na direccao do salto; uma fotografia
+	# de um sitio tem de estar ENQUADRADA nele, e por isso assenta ja.
+	Smoothing.reset()
+	var jogo := get_child(0)
+	var monarca := jogo.get_node(^"Monarca") as Node2D
+	monarca.position = Vector2(x, WorldPalette.ground_of(int(SimLoop.units.bands[i])))
+	(jogo.get_node(^"CameraRig") as CameraRig).follow(monarca)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_obras.advance(delta)
 	_restam -= 1
 	if _restam > 0:
 		return
@@ -55,7 +97,7 @@ func _process(_delta: float) -> void:
 	await RenderingServer.frame_post_draw
 	var imagem := get_viewport().get_texture().get_image()
 	print("captura: %s (erro %d)" % [_saida, imagem.save_png(_saida)])
-	_ficha()
+	_ficha(imagem)
 	get_tree().quit()
 
 
@@ -63,8 +105,8 @@ func _process(_delta: float) -> void:
 ## duas coisas que um PNG nao sabe dizer: em que fase do dia foi tirada, e ONDE
 ## estava a mancha — porque a regra das duas excepcoes diz "violeta e A Podridao
 ## e so A Podridao", e um teste que nao saiba onde ela esta ou chumba a mancha
-## ou nao chumba nada.
-func _ficha() -> void:
+## ou nao chumba nada. O resto e a proveniencia (planejamento 26/09, §8).
+func _ficha(imagem: Image) -> void:
 	var relogio := ClockService.clock
 	var ecra := get_viewport().get_visible_rect().size
 	var ficha := {
@@ -72,13 +114,70 @@ func _ficha() -> void:
 		"altura": ecra.y,
 		"dia": SimLoop.state.day if SimLoop.state != null else 0,
 		"fase": int(relogio.current_phase()),
+		"progresso_fase": snappedf(relogio.phase_progress(), 0.001),
 		"mancha": _mancha(),
 		"instrumentos": _instrumentos(),
+		"semente": RngService.world_seed(),
+		"rei": _rei(),
+		"camara_x": _camara_x(),
+		"estado": "preparado" if not _preparacao.is_empty() else "natural",
+		"preparacao": _preparacao,
+		"imagem": [imagem.get_width(), imagem.get_height()],
 	}
+	ficha.merge(_motor())
 	var f := FileAccess.open(_saida.get_basename() + ".json", FileAccess.WRITE)
 	if f != null:
-		f.store_string(JSON.stringify(ficha, "\t"))
+		f.store_string(JSON.stringify(ficha, "\t", true))
 		f.close()
+
+
+## Com que motor, que renderer e que ecra — o que CORREU, e nao o declarado.
+func _motor() -> Dictionary:
+	var raiz := get_tree().root
+	var git := []
+	OS.execute("git", ["rev-parse", "HEAD"], git)
+	var sujo := []
+	OS.execute("git", ["status", "--porcelain", "--untracked-files=no"], sujo)
+	return {
+		"commit": String(git[0]).strip_edges() if not git.is_empty() else "",
+		"sujo": not sujo.is_empty() and not String(sujo[0]).strip_edges().is_empty(),
+		"motor": Engine.get_version_info().string,
+		"renderer": RenderingServer.get_current_rendering_method(),
+		"driver": RenderingServer.get_current_rendering_driver_name(),
+		"adaptador": RenderingServer.get_video_adapter_name(),
+		"janela": [DisplayServer.window_get_size().x, DisplayServer.window_get_size().y],
+		"base":
+		[
+			ProjectSettings.get_setting("display/window/size/viewport_width"),
+			ProjectSettings.get_setting("display/window/size/viewport_height"),
+		],
+		"esticar": ESTICAR.find_key(raiz.content_scale_mode),
+		"escala": ESCALA.find_key(raiz.content_scale_stretch),
+		"filtro": FILTRO.find_key(raiz.canvas_item_default_texture_filter),
+		"fator": snappedf(raiz.get_final_transform().get_scale().x, 0.001),
+		"comando":
+		" ".join(OS.get_cmdline_args() + PackedStringArray(["--"]) + OS.get_cmdline_user_args()),
+		"tirada": Time.get_datetime_string_from_system(true) + "Z",
+	}
+
+
+func _rei() -> Dictionary:
+	var i := SimLoop.units.index_of(SimLoop.king_id) if SimLoop.state != null else -1
+	if i == UnitSystem.NENHUM or i < 0:
+		return {}
+	var faixa := int(SimLoop.units.bands[i])
+	return {
+		"x": snappedf(SimLoop.units.xs[i], 0.1),
+		"do_nucleo": snappedf(SimLoop.units.xs[i] - SimLoop.core_x, 0.1),
+		"faixa": String(Band.Kind.find_key(faixa)).to_lower(),
+	}
+
+
+## O x do mundo que esta no meio do ecra. E o que diz "vista oeste, centro ou
+## leste" sem ter de confiar em onde se pediu a camara.
+func _camara_x() -> float:
+	var t := get_viewport().get_canvas_transform()
+	return snappedf((t.affine_inverse() * (get_viewport().get_visible_rect().size * 0.5)).x, 0.1)
 
 
 ## Onde a mancha e o rasto dela estao NO ECRA, em rectangulos. A camara so anda

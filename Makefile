@@ -30,7 +30,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
-        afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
+        manifesto escala marco obras inventario-arte afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
         captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
         ferramentas ferramentas-python hooks limpar
 
@@ -40,7 +40,7 @@ ajuda:  ## Mostra os alvos
 
 # ── O que corre sem abrir o motor ────────────────────────────────────────────
 
-portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes densidade-prova  ## Todos os portoes estaticos
+portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes densidade-prova manifesto inventario-arte  ## Todos os portoes estaticos
 
 formato:  ## gdformat: o formato do GDScript
 	gdformat --check src/ tests/ tools/
@@ -77,6 +77,12 @@ spec:  ## docs/design/ e gerado do dossie e nao foi editado a mao (§69)
 	python3 tools/split_dossie.py $(DOSSIE) docs/design
 	git diff --exit-code -- docs/design
 
+manifesto:  ## O motor declarado no project.godot e o fixado no .godot-version
+	python3 tools/manifesto.py --check
+
+inventario-arte:  ## docs/art/RUNTIME_ART.md em dia com o manifesto, os CSV e o codigo
+	python3 tools/inventario_arte.py --check
+
 afirmacoes:  ## A prosa e o validation.json contra a contagem real
 	python3 tools/check_claims.py
 
@@ -104,6 +110,18 @@ captura:  ## Uma fotografia da cena de jogo (precisa de xvfb-run num servidor)
 	$(GODOT) --path . --resolution 1280x720 tools/captura.tscn -- \
 	  --segundos $(SEGUNDOS) --avancar $(AVANCAR) --saida $(CAPTURA) $(EXTRA)
 	test -s $(CAPTURA)
+
+# O planejamento visual de 26/09: as onze vistas do marco (§8) e a comparacao
+# de escala da ADR 0001 (§4.5). Semente fixa, jogo novo, ficha por imagem; sai
+# em build/revisao/ e nao se versiona (precisa de ecra: xvfb-run num servidor).
+marco:  ## As onze capturas do marco dos Enramados, com ficha e folha de contacto
+	python3 tools/revisao.py marco
+
+escala:  ## A mesma cena em 720p, 1080p e 1280x800 com as tres escalas da ADR 0001
+	python3 tools/revisao.py escala
+
+obras:  ## Oito quadros do centro com as obras em cada ponto do SiteStage (lote 3)
+	python3 tools/revisao.py obras
 
 # O ponto do dia nao e um parametro aqui: a regra das duas excepcoes do §80 so
 # existe a noite, e o NOITE_S conta o meio dela do clock.csv. `--novo` porque

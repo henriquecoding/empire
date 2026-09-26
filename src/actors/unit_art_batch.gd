@@ -21,6 +21,10 @@ var _health: Dictionary = {}
 var _facing: Dictionary = {}
 var _hit_until: Dictionary = {}
 var _phase: Dictionary = {}
+## A accao que cada unidade mostra, e desde quando: uma accao nova comeca no seu
+## primeiro frame (a preparacao de um golpe nao entra a meio).
+var _action: Dictionary = {}
+var _since: Dictionary = {}
 
 
 func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) -> void:
@@ -69,15 +73,30 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 				if units.alive(i):
 					Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
 			continue
-		var bob := float(int(time / STEP_SECONDS) % 2) if moving else 0.0
+		var hit := time < float(_hit_until.get(id, 0.0))
+		var kind := ActorAction.of(units.states[i] as UnitFsm.State, moving, hit)
+		var shown := ActorAction.shown(_art, profile, kind)
+		var frame := _frame(id, profile, kind, shown, time)
+		# Sem ciclo de caminhada desenhado, o baloico de um pixel e o que diz que
+		# anda; com ele, e a arte que o diz.
+		var animated := shown in [ActorAction.Kind.WALK, ActorAction.Kind.FLEE]
+		var bob := float(int(time / STEP_SECONDS) % 2) if moving and not animated else 0.0
 		var color := light.body(Color.WHITE, x)
-		if time < float(_hit_until.get(id, 0.0)):
+		if hit:
 			color = HIT_TINT
 		if not units.alive(i):
 			color.a = DEAD_ALPHA
 			bob = 0.0
 		draws.append(
-			{"profile": profile, "foot": foot, "bob": bob, "color": color, "id": id, "i": i}
+			{
+				"profile": profile,
+				"foot": foot,
+				"bob": bob,
+				"color": color,
+				"id": id,
+				"i": i,
+				"frame": frame
+			}
 		)
 	# Two passes keep the shared shadow texture and actor atlas batchable.
 	for item in draws:
@@ -92,7 +111,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 			item.profile,
 			item.foot - Vector2(0.0, item.bob),
 			item.color,
-			time + float(_phase[item.id]),
+			item.frame,
 			_facing.get(item.id, 1.0)
 		)
 	for item in draws:
@@ -128,3 +147,20 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 			_facing.erase(id)
 			_hit_until.erase(id)
 			_phase.erase(id)
+			_action.erase(id)
+			_since.erase(id)
+
+
+## O frame que a unidade mostra: o da accao que a arte tem, contado desde que a
+## accao comecou. O repouso leva a fase propria de cada unidade, para que um
+## grupo parado nao respire em unissono.
+func _frame(
+	id: int, profile: StringName, kind: ActorAction.Kind, shown: ActorAction.Kind, time: float
+) -> int:
+	if _action.get(id, -1) != kind:
+		_action[id] = kind
+		_since[id] = time
+	var elapsed := time - float(_since[id])
+	if shown == ActorAction.Kind.IDLE:
+		elapsed = time + float(_phase[id])
+	return _art.frame_at(profile, elapsed, ActorAction.TAGS[shown], ActorAction.loops(shown))

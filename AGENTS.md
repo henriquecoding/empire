@@ -110,7 +110,10 @@ src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas 
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
 src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
-src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco, pago (GB-03)
+src/world/gauge.gd          Gauge         os instrumentos do greybox: vida e saco (GB-03)
+src/world/site_stage.gd     SiteStage     em que ponto esta uma obra, para a obra o mostrar
+src/world/site_marks.gd     SiteMarks     moedas pagas, andaime, fissuras e reparo, por forma
+src/actors/actor_action.gd  ActorAction   que tag da arte mostra o que a unidade faz
 src/world/price_tag.gd      PriceTag      o preco do que esta debaixo do rei (§24, §55, GB-05)
 src/world/impact_view.gd    ImpactView    o golpe que se ve: flash e particula (§24, GB-08)
 src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-09)

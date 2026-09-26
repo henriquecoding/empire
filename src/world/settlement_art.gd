@@ -32,9 +32,12 @@ static func handles(kind: StringName) -> bool:
 	return kind in [&"farm", &"henhouse", &"fishery"]
 
 
-static func draw_on(canvas: CanvasItem, site: BuildSlot, light: Lighting) -> void:
-	var color := light.body(Color.WHITE, site.x)
-	if site.state == BuildSlot.State.EMPTY:
+static func draw_on(canvas: CanvasItem, site: BuildSlot, light: Lighting, tempo: float) -> void:
+	var lit := light.body(Color.WHITE, site.x)
+	var trabalho := SiteMarks.working(site, tempo)
+	var etapa := SiteStage.of(site, trabalho)
+	var color := lit
+	if etapa in [SiteStage.Stage.AVAILABLE, SiteStage.Stage.PAYING]:
 		color.a = GHOST
 	var foot := Vector2(site.x, WorldPalette.ground_of(int(site.band)))
 	canvas.draw_set_transform(foot)
@@ -50,9 +53,13 @@ static func draw_on(canvas: CanvasItem, site: BuildSlot, light: Lighting) -> voi
 	var box := Rect2(
 		foot - Vector2(site.width * HALF, FARM_HEIGHT), Vector2(site.width, FARM_HEIGHT)
 	)
-	Gauge.paid(canvas, box, site)
-	if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
-		canvas.draw_line(box.position, box.end, TIMBER * color, RAIL)
+	if etapa in [SiteStage.Stage.WAITING, SiteStage.Stage.WORKING]:
+		SiteMarks.scaffold(canvas, box, SiteStage.built(site), lit, tempo, trabalho)
+	elif etapa in [SiteStage.Stage.DAMAGED, SiteStage.Stage.MENDING]:
+		SiteMarks.cracks(canvas, box, 1.0 - SiteStage.built(site), lit)
+		if etapa == SiteStage.Stage.MENDING:
+			SiteMarks.braces(canvas, box, SiteStage.built(site), lit, tempo, trabalho)
+	SiteMarks.coins(canvas, foot, site.paid, SiteStage.cost_now(site), lit)
 	if site.standing():
 		Gauge.health(canvas, box, float(site.health) / maxf(1.0, site.max_health()))
 

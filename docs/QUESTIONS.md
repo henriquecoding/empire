@@ -1290,6 +1290,19 @@
   vida máxima por um dia; e o custo de 12 moedas é proposta (`_proposed` no CSV).
 - **Decide:** tu.
 
+### Q-113 · Como o jogador vê que um impulso não está disponível
+- **Onde:** planejamento visual de 26/09 (§7: *"Impulsos — seleção, custo, indisponibilidade e consequência;
+  um funcional e um indisponível; recusa sem cobrança"*), §24, §46, Q-110.
+- **O que há:** a recusa sem cobrança existe (`CrownSystem.use` devolve falso e o saco fica igual), mas só o
+  painel de diagnóstico do Tab (`Inspector`) diz "por ligar", com texto escrito no script. Ao carregar 1–6 num
+  impulso recusado, o jogador não vê nada.
+- **Porque não se fez:** mostrar a recusa pede ou um sinal que o catálogo do §46 não tem (regra 7 do
+  `AGENTS.md`), ou que a interface pergunte ao `CrownSystem` antes de pôr a intenção na fila — que é uma decisão
+  de desenho do HUD (a roda de seis segmentos da Q-067 continua por desenhar). Nada foi alterado.
+- **Opções:** (a) a roda desenha os três recusados apagados e com cadeado, e a tecla não faz nada; (b) um aviso
+  curto do HUD ao recusar, com um sinal novo no §46; (c) esconder os recusados até terem sistema.
+- **Decide:** tu.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

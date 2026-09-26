@@ -38,16 +38,3 @@ static func purse(canvas: CanvasItem, caixa: Rect2, moedas: int, cabem: int) -> 
 	var alto := caixa.size.y * WorldPalette.SACO * cheio
 	var canto := Vector2(caixa.position.x, caixa.end.y - alto)
 	canvas.draw_rect(Rect2(canto, Vector2(caixa.size.x, alto)), WorldPalette.MOEDA)
-
-
-## Quanto do degrau seguinte de uma obra ja esta pago (§55). Sem isto nao ha
-## maneira de saber se faltam cinco moedas ou uma, e o §55 nao tem contador
-## nenhum para o dizer — enche o fantasma por baixo, como o saco.
-static func paid(canvas: CanvasItem, fantasma: Rect2, vaga: BuildSlot) -> void:
-	var custo := vaga.next_cost()
-	if custo <= 0 or vaga.paid <= 0:
-		return
-	var racio := clampf(float(vaga.paid) / float(custo), 0.0, 1.0)
-	var alto := fantasma.size.y * racio
-	var canto := Vector2(fantasma.position.x, fantasma.end.y - alto)
-	canvas.draw_rect(Rect2(canto, Vector2(fantasma.size.x, alto)), WorldPalette.ANDAIME)

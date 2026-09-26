@@ -577,6 +577,12 @@ CONTEXT_CONVERT_CAPACITY,"{name} · O {craft} converte: {effect}
 CONTEXT_CONVERT_NOBODY,"{name} · Vende {material} a +{bonus}%
 Com um {craft} teu: {effect}","{name} · Sells {material} at +{bonus}%
 With a {craft} of yours: {effect}",guia contextual de jogo,160,§06 circuito 2; Q-112
+CONTEXT_CONVERT_WANTS_CRAFT,"{name} · Sem {craft} teu, vende {material} a +{bonus}%
+{effect} volta com um {craft} · {drop} só vender","{name} · No {craft} of yours: sells {material} at +{bonus}%
+{effect} returns with a {craft} · {drop} just sell",guia contextual de jogo,160,§06 circuito 2; Q-112; o modo capacidade escolhido sem o ofício
+CONTEXT_CONVERT_WAITING,"{name} · O {craft} espera {material}: {effect} ainda sem efeito
+{drop} voltar a vender a +{bonus}%","{name} · The {craft} awaits {material}: {effect} not yet in effect
+{drop} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; escolhido e com ofício mas a fase ainda não deu a capacidade
 CAPACITY_TROOP_HEALTH,+{pct}% de vida às tropas,+{pct}% health for your troops,capacidade do §06,40,crafts.csv
 CAPACITY_TROOP_SPEED,+{pct}% de passo às tropas,+{pct}% speed for your troops,capacidade do §06,40,crafts.csv
 CAPACITY_COMBAT_DISH,prato de combate,a combat dish,capacidade do §06,40,crafts.csv

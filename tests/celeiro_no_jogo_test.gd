@@ -60,6 +60,25 @@ func test_o_grao_vende_se_no_celeiro_e_a_moeda_manda_o_cozinheiro() -> void:
 	assert_int(SimLoop.units.max_healths[arqueiro]).is_greater(base)
 
 
+func test_o_guia_diz_o_estado_efectivo_e_nao_so_o_modo_guardado() -> void:
+	var estado := ConversionSystem.Status
+	var chave := GameplayGuide.conversion_key
+	assert_str(String(chave.call(estado.ACTIVE, true))).is_equal("CONTEXT_CONVERT_CAPACITY")
+	assert_str(String(chave.call(estado.WAITING, true))).is_equal("CONTEXT_CONVERT_WAITING")
+	assert_str(String(chave.call(estado.WANTS_CRAFT, false))).is_equal(
+		"CONTEXT_CONVERT_WANTS_CRAFT"
+	)
+	assert_str(String(chave.call(estado.COIN, true))).is_equal("CONTEXT_CONVERT_COIN")
+	assert_str(String(chave.call(estado.COIN, false))).is_equal("CONTEXT_CONVERT_NOBODY")
+	# Sem cozinheiro, o modo guardado continua capacidade e o estado efectivo nao.
+	SimLoop.field.conversion.modes[_celeiro.id] = CraftData.Mode.CAPACITY
+	assert_int(SimLoop.field.conversion.status(_celeiro)).is_equal(estado.WANTS_CRAFT)
+	SimLoop.units.xs[_rei()] = _celeiro.x
+	assert_str(GameplayGuide.context(Glyphs.Device.KEYBOARD)).contains(
+		TranslationServer.translate(&"BUILDING_GRANARY")
+	)
+
+
 func _correr(segundos: float) -> void:
 	for _t in int(segundos / STEP):
 		SimLoop.step(STEP)

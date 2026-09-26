@@ -32,6 +32,7 @@ que se ve mudou. A Vercel nao a corre: nao tem ecra.
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import os
 import subprocess
@@ -123,6 +124,29 @@ def gravar(png: Path, destino: Path, caixa: tuple[int, int, int, int] | None) ->
     return destino.stat().st_size
 
 
+# O que o jogo mostra depende destes ficheiros, e so destes. A impressao deles vai
+# na ficha das imagens, e o site (tools/web/dados.mjs) volta a calcula-la na
+# publicacao: se diferir, as imagens sao de um jogo que ja nao e o publicado, e a
+# pagina di-lo em vez de as apresentar como o ecra de hoje. Sem git: a Vercel
+# nao tem o historico, tem os ficheiros. A mesma conta dos dois lados.
+APARENCIA_PASTAS = ("src", "scenes", "art/export", "shaders", "data")
+APARENCIA_TIPOS = (".gd", ".tscn", ".tres", ".gdshader", ".png", ".json", ".csv", ".godot")
+
+
+def aparencia(raiz: Path = RAIZ) -> str:
+    """sha256 de `caminho\\0sha256(conteudo)\\n` por ficheiro, pela ordem do caminho."""
+    ficheiros = [raiz / "project.godot"]
+    for pasta in APARENCIA_PASTAS:
+        ficheiros += [
+            f for f in (raiz / pasta).rglob("*") if f.is_file() and f.suffix in APARENCIA_TIPOS
+        ]
+    total = hashlib.sha256()
+    for caminho in sorted(f.relative_to(raiz).as_posix() for f in ficheiros):
+        conteudo = hashlib.sha256((raiz / caminho).read_bytes()).hexdigest()
+        total.update(f"{caminho}\0{conteudo}\n".encode())
+    return total.hexdigest()
+
+
 def git(*args: str) -> str:
     return subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, text=True).stdout.strip()
 
@@ -151,6 +175,7 @@ def main() -> int:
     print(f"capturas: ecra.webp · {n / 1024:.0f} KB · com os instrumentos")
     ficha = {
         "commit": git("rev-parse", "HEAD"),
+        "aparencia": aparencia(),
         "tiradas": date.today().isoformat(),
         "godot": (RAIZ / ".godot-version").read_text(encoding="utf-8").strip(),
         "largura": caixa[2] - caixa[0],

@@ -4,6 +4,7 @@ extends RefCounted
 const ROOT := "res://art/export/enramados/"
 const MILLISECONDS := 1000.0
 const BODY_HEIGHT_INDEX := 3
+const IDLE := &"idle"
 static var _manifest: Dictionary = {}
 static var _textures: Dictionary = {}
 
@@ -20,17 +21,38 @@ func texture(id: StringName) -> Texture2D:
 	return _textures[id]
 
 
-func frame_at(id: StringName, time: float) -> int:
-	var durations: Array = entry(id).durations_ms
+## O frame de `id` ao fim de `time` segundos de `action`. Sem essa tag no
+## manifesto, percorre os frames todos (o que as exportacoes de um frame so
+## tem). `loop` falso fica no ultimo frame em vez de recomecar.
+func frame_at(id: StringName, time: float, action: StringName = IDLE, loop: bool = true) -> int:
+	var item := entry(id)
+	var durations: Array = item.durations_ms
+	var tag: Dictionary = item.get("tags", {}).get(String(action), {})
+	var first := int(tag.get("from_frame", 0))
+	var last := int(tag.get("to_frame", durations.size() - 1))
+	return frame_in(durations, first, last, time * MILLISECONDS, loop)
+
+
+## Se a arte de `id` tem a tag `action` no manifesto.
+func has_action(id: StringName, action: StringName) -> bool:
+	return entry(id).get("tags", {}).has(String(action))
+
+
+## O indice do frame, entre `first` e `last`, ao fim de `ms` milissegundos.
+static func frame_in(durations: Array, first: int, last: int, ms: float, loop: bool) -> int:
 	var total := 0.0
-	for duration in durations:
-		total += float(duration)
-	var cursor := fposmod(time * MILLISECONDS, total)
-	for i in durations.size():
+	for i in range(first, last + 1):
+		total += float(durations[i])
+	if total <= 0.0:
+		return first
+	if not loop and ms >= total:
+		return last
+	var cursor := fposmod(ms, total)
+	for i in range(first, last + 1):
 		cursor -= float(durations[i])
 		if cursor < 0.0:
 			return i
-	return 0
+	return first
 
 
 func box(id: StringName, foot: Vector2) -> Rect2:
@@ -45,17 +67,19 @@ func body_box(id: StringName, foot: Vector2) -> Rect2:
 	)
 
 
+## Desenha o frame `frame` de `id` com os pes em `foot`. Quem escolhe o frame e
+## quem sabe a accao (UnitArtBatch, ActorAction); as obras tem um frame so.
 func draw_on(
 	canvas: CanvasItem,
 	id: StringName,
 	foot: Vector2,
 	tint: Color,
-	time: float = 0.0,
-	facing: float = 1.0
+	frame: int = 0,
+	facing: float = 1.0,
 ) -> void:
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])
-	var source := Rect2(Vector2(size.x * frame_at(id, time), 0.0), size)
+	var source := Rect2(Vector2(size.x * frame, 0.0), size)
 	var sheet := texture(id)
 	if item.has("atlas_origin"):
 		source.position += Vector2(item.atlas_origin[0], item.atlas_origin[1])

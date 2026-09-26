@@ -85,6 +85,16 @@ jobs:
       - name: Densidade · o contador chumba o chapado e passa a rampa
         run: make densidade-prova
 
+      # O motor declarado no project.godot e o fixado no .godot-version sao o
+      # mesmo: sem isto, uma captura nao diz com que motor foi tirada.
+      - name: Manifesto · o motor declarado e o fixado
+        run: make manifesto
+
+      # Fonte, export, chamada em runtime, accoes e aprovacao de cada original,
+      # e as lacunas do marco: gerado, e por isso tem de estar em dia.
+      - name: Arte em runtime · docs/art/RUNTIME_ART.md em dia
+        run: make inventario-arte
+
   # ── 2 ─────────────────────────────────────────────────────────────────────
   testes:
     name: Dados e suite gdUnit4

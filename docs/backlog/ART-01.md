@@ -15,6 +15,9 @@ Horas     8
 ## Notas
 
 - Q-024: a camada Equipments dos teus ficheiros é o slot head? Fechar aqui.
+- 26/09: o contrato de ações (`src/actors/actor_action.gd`) já liga `walk`, `work`, `attack`, `hit`, `flee`
+  e `die` ao estado da simulação; uma tag nova no manifesto entra no jogo sem código. O que falta desenhar
+  está em `docs/art/RUNTIME_ART.md`; o registo da execução em `docs/art/PLANO_VISUAL_EXECUCAO.md`.
 
 ---
 
