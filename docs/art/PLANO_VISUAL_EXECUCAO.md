@@ -61,7 +61,7 @@ a mesma região, a mesma gente e a mesma noite.
   regra 9 do `AGENTS.md`. O contrato de ações e o inventário dizem exatamente o que falta e onde entra.
 - **Impulsos (§7).** A disponibilidade só aparece no inspetor de diagnóstico, com texto fixo, e a recusa de um
   impulso não ligado não se mostra ao jogador. Mostrá-la pede ou um sinal novo (o catálogo do §46 é fechado,
-  regra 7) ou uma decisão de HUD — fica para decisão, não se inventou.
+  regra 7) ou uma decisão de HUD — fica para decisão, não se inventou (Q-113).
 - **Caça e entrega, treino com entrada e saída, travessia com percurso** (§7): dependem de ações desenhadas; o
   `ActorAction` já lê o estado de que precisam.
 - **Revisão integrada** (vídeo, desempenho, publicação): exige o marco com arte.
