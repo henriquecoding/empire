@@ -1592,16 +1592,27 @@
   Os "8 dias" da Q-128 mediam só o núcleo; um número de dias sobrevividos cita a versão e a regra de derrota.
   Medido a 27/09 sobre a `568c568` com estas correções: `make vistoria DIAS=10`, semente 20260916 — *"4 de 10 dias,
   o rei caiu sem herdeiro — sem invariantes quebradas"* (antes: núcleo no dia 7). É um piloto, não todo o jogador.
+  Com a política cautelosa (`-- --cauteloso 1`: de noite o rei fica do lado do núcleo onde a mancha não está),
+  a mesma semente chega ao dia 6. A contabilidade por dia (`tools/contabilidade.gd`) mostra porquê o piloto
+  morre pobre: produção recolhida 1–12 moedas/dia contra a base de 17 com as sete fontes, e o grosso das moedas
+  largadas é o rei a largar e a apanhar as mesmas.
 - **Fica por fazer (CONT-05):** separar a estabilidade da simulação, a resistência de uma defesa pronta e um piloto
   que começa com as seis moedas, paga pela bolsa e chega à travessia com a voz ligada.
 
-### Q-143 · O que atravessa uma região, além do que já vai (aberta)
+### Q-143 · O que atravessa uma região, além do que já vai (em parte decidida)
 - **Onde:** §16, Q-133, Q-135, §79; `Legacy.crossing()`, `NightWatch.epilogue()`.
 - **O que está:** a travessia leva Sementes, segredos, conquistas, plano, saco, a fase da classe (Q-140) e os
   **tipos** de quem está perto. Zera a Dívida da Candeia, os povos soltos/retidos e o treino do herdeiro; a comitiva
   perde identidade, título, ferimentos e moedas, e a proximidade não olha à faixa. O epílogo lê só a região corrente.
 - **Recomendação do relatório:** separar dívida local de memória da campanha; histórico de povos acumulado; um
   *snapshot* mínimo da comitiva; decidir se o treino do herdeiro acompanha a corte. O que se zerar diz-se no resumo.
+- **Decidido (CONT-02, opção mais simples e reversível):** a travessia leva **tal e qual** a Dívida da Candeia, os
+  povos soltos, retidos e perdidos, e o treino do herdeiro (`CampaignMemory`); o epílogo lê assim a campanha
+  inteira. Ficam locais as recusas por dia, as ofertas usadas e a massa da Podridão. A derrota não os leva (não
+  estão na lista do §16). A comitiva passa a ser só de quem está perto **e na faixa do rei**. O ecrã da travessia
+  diz o que vai (`UI_CROSSING_MEMORY`).
+- **Continua aberto:** separar a dívida operacional da memória da campanha (hoje a dívida levada pesa na região
+  seguinte como pesava nesta); a identidade da comitiva (título, ferimentos, moedas) — hoje só vão os tipos.
 
 ### Q-144 · Inadimplência do soldo (N6, aberta)
 - **Onde:** Q-124; `UpkeepSystem`, `RecruitSystem`.
@@ -1627,6 +1638,15 @@
 ### Q-147 · Ofertas com preço sem sistema (aberta)
 - **Onde:** §75; `OfferPrice`.
 - **Por decidir:** mostrar só as ofertas que se podem de facto pagar hoje, ou dizer que estão indisponíveis.
+
+### Q-148 · O impulso no comando (CONT-08)
+- **Onde:** §24 (*"Manter Y abre uma roda de seis segmentos... Selecionar é apontar o stick e largar"*), Q-067, Q-113;
+  `InputRouter.wheel_segment()`.
+- **O que estava:** com teclado, Tab mantido + número escolhia o impulso; no comando não havia gesto nenhum.
+- **Decidido (opção mais simples):** com Y mantido o rei pára e o stick aponta; largar Y usa o impulso apontado. Os
+  segmentos são os impulsos, pela ordem do Inspector (o primeiro em cima, no sentido do relógio), e o Inspector
+  marca o apontado. A roda de seis segmentos do §24 continua à espera dos sistemas que ela abre (Q-067).
+- **Fica por fazer:** o desenho da roda (vitral, ícones) e a razão e o custo de um impulso indisponível no sítio.
 
 ## Resolvidas na v5.2 (reversíveis)
 

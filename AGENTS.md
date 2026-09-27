@@ -82,6 +82,7 @@ src/sim/systems/muster.gd   Muster        a formacao da noite de quem nao tem po
 src/sim/systems/thieves.gd  Thieves       o Alado rouba galinhas e leva-as a alvorada (§06, §07, Q-129)
 src/sim/systems/succession.gd Succession  o herdeiro: treino na casa e a coroa a alvorada (§15, §16, Q-133)
 src/sim/systems/legacy.gd   Legacy        o que fica quando se perde ou se atravessa (§16, Q-134, Q-135)
+src/sim/systems/campaign_memory.gd CampaignMemory o que a campanha lembra ao atravessar (§16, §79, Q-143)
 src/sim/state/slot_variant.gd SlotVariant a variante A/B de uma melhoria: torre e canteiro (§10, Q-136)
 src/sim/systems/repair_work.gd RepairWork reparar com a moeda fisica (§55, Q-108)
 src/sim/systems/training_system.gd TrainingSystem a Casa de Treino: trabalhador -> oficio (§09, §10)

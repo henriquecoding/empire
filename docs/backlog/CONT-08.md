@@ -9,6 +9,6 @@ Depende   CONT-04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Uma pessoa nova conclui as tarefas da abertura com teclado ou comando sem ajuda constante
 Fora      Novas ordens de RTS.
-Estado    por fazer
+Estado    parcial — o impulso escolhe-se no comando pelo gesto do §24 (manter Y, apontar, largar; Q-148); falta o destinatário da moeda antes de largar, a razão do que não pode e o retorno da expedição
 Horas     12
 ```
