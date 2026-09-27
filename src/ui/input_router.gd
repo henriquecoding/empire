@@ -17,7 +17,8 @@
 # so quando ela fica a saber.
 #
 # O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos
-# seis sistemas que os seus segmentos abrem (Fase 2).
+# seis sistemas que os seus segmentos abrem (Fase 2). Do gesto dela ja ha o que
+# o impulso pede: manter Y, apontar o stick e largar (§24; CONT-08, Q-148).
 class_name InputRouter
 extends Node
 
@@ -26,6 +27,12 @@ extends Node
 ## (§24) nao quebra isto — continuam a sair uma a uma, so que sozinhas.
 const UMA := 1
 const FONTE := &"player"
+## Quanto o stick tem de sair do centro para apontar um segmento. E a tolerancia
+## do gesto, como o deadzone do project.godot — nao e balanceamento.
+const RODA_ZONA := 0.5
+
+## O segmento que o stick aponta com a roda premida, ou -1. O Inspector marca-o.
+static var pointed: int = -1
 
 ## §24: "manter para largar em continuo". Quanto falta para a moeda seguinte
 ## sair. O RITMO nao esta aqui: e o `coin_drop_repeat_s` da `economy.csv`, pela
@@ -48,9 +55,7 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	var impulso := wheel_choice(evento, Input.is_action_pressed(&"king_wheel"))
 	if impulso >= 0:
-		var ids := SimLoop.field.crown.ids()
-		if impulso < ids.size():
-			SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": ids[impulso]})
+		_impulso(impulso)
 		get_viewport().set_input_as_handled()
 		return
 	if evento.is_action_pressed(&"verb_assume"):
@@ -71,6 +76,15 @@ static func wheel_choice(evento: InputEvent, roda: bool) -> int:
 		return -1
 	var tecla: int = (evento as InputEventKey).physical_keycode
 	return tecla - KEY_1 if tecla >= KEY_1 and tecla <= KEY_9 else -1
+
+
+## §24: "selecionar e apontar o stick e largar". O segmento para onde `v` aponta,
+## a contar do de cima e no sentido do relogio, entre `n`; -1 perto do centro.
+static func wheel_segment(v: Vector2, n: int) -> int:
+	if n <= 0 or v.length() < RODA_ZONA:
+		return -1
+	var angulo := fposmod(atan2(v.x, -v.y), TAU)
+	return roundi(angulo / (TAU / n)) % n
 
 
 ## Verdadeiro no instante em que o gesto de marcar comeca, e so nesse (GB-11).
@@ -96,7 +110,18 @@ func _process(delta: float) -> void:
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
-	_andar(Input.get_axis(&"move_left", &"move_right"))
+	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
+	if Input.is_action_pressed(&"king_wheel"):
+		var segmento := wheel_segment(_stick(), SimLoop.field.crown.ids().size())
+		pointed = segmento  # ao centro nao aponta nada: largar Y ai cancela
+		_andar(0.0)
+	else:
+		# Largar o Y usa o que o stick apontava. Lido aqui e nao no evento: o
+		# Inspector trata o evento do Y antes de ele chegar a este no.
+		if pointed >= 0:
+			_impulso(pointed)
+		pointed = -1
+		_andar(Input.get_axis(&"move_left", &"move_right"))
 	_repeticao = maxf(0.0, _repeticao - delta)
 	if not Input.is_action_pressed(&"verb_drop"):
 		_repeticao = 0.0
@@ -131,6 +156,23 @@ func _andar(direccao: float) -> void:
 		SimLoop.king_id,
 		clampf(SimLoop.units.xs[i] + direccao * SimLoop.world_width, 0.0, SimLoop.world_width)
 	)
+
+
+func _impulso(indice: int) -> void:
+	var ids := SimLoop.field.crown.ids()
+	if indice < ids.size():
+		SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": ids[indice]})
+
+
+## O stick esquerdo de quem o estiver a usar: o que mais saiu do centro.
+static func _stick() -> Vector2:
+	var melhor := Vector2.ZERO
+	for d in Input.get_connected_joypads():
+		var v := Vector2(
+			Input.get_joy_axis(d, JOY_AXIS_LEFT_X), Input.get_joy_axis(d, JOY_AXIS_LEFT_Y)
+		)
+		melhor = v if v.length() > melhor.length() else melhor
+	return melhor
 
 
 func _largar() -> void:

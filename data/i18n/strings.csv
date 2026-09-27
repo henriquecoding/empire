@@ -643,3 +643,4 @@ VARIANT_ARCHER_TOWER_B,cadência (um terço mais tiros),cadence (a third more sh
 VARIANT_FARM_A,renda,yield,variante do canteiro (Q-136),24,AUD-05
 VARIANT_FARM_B,"resguardo (o rasto não o para, rende 75%)","sheltered (the trail spares it, 75% yield)",variante do canteiro (Q-136),48,AUD-05
 UI_LEGACY_FAILED,"O que fica não se gravou: os saves desta partida continuam onde estavam","What remains could not be saved: this run's saves are still where they were",fim da partida: o legado não se escreveu (CONT-01),96,CONT-01
+UI_CROSSING_MEMORY,"Levas a dívida ({debt}), {peoples} povos na memória e {heir} dias de treino do herdeiro; as obras ficam","You carry the debt ({debt}), {peoples} peoples in memory and {heir} days of heir training; the buildings stay",travessia (P-K): o que a campanha leva (Q-143),112,CONT-02

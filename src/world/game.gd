@@ -54,6 +54,8 @@ func _ready() -> void:
 		Legacy.apply(legado, SimLoop.state, SimLoop.builds, SimLoop.field.classes)
 		var tropas := SimFactory.by_id(&"units")
 		Legacy.arrive(legado, SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, SimLoop.core_x)
+		var noite := SimLoop.night
+		CampaignMemory.apply(legado, noite.voice.debt, noite.harvest, SimLoop.field.succession)
 		_chegada = not legado.is_empty()
 		# §26: o dia ao ritmo de quem joga. Um jogo novo nasce com a duracao da
 		# ultima escolha, pela fila como qualquer outra (§61, GB-24).
@@ -193,11 +195,13 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 		return
 	var tropas := SimFactory.by_id(&"units")
 	var perto := SimFactory.curve().crossing_party_px
-	_fim(
-		Legacy.crossing(
-			SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
-		)
+	var legado := Legacy.crossing(
+		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
 	)
+	var noite := SimLoop.night
+	if CampaignMemory.carries(not legado.has(Legacy.PLANO), noite.epilogue()):
+		legado.merge(CampaignMemory.of(noite.voice.debt, noite.harvest, SimLoop.field.succession))
+	_fim(legado)
 
 
 func _acabar() -> void:

@@ -75,6 +75,7 @@ static func crossing(
 			continue
 		if (
 			unidades.owners[i] == unidades.owners[r]
+			and unidades.bands[i] == unidades.bands[r]  # perto e na mesma faixa (N2)
 			and absf(unidades.xs[i] - unidades.xs[r]) <= alcance
 		):
 			comitiva.append(String(unidades.data_ids[i]))

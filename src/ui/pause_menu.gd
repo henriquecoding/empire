@@ -124,7 +124,8 @@ static func legacy_line(legado: Dictionary) -> String:
 	if legado.has(Legacy.COMITIVA):
 		var quem := (legado[Legacy.COMITIVA] as PackedStringArray).size()
 		var saco := int(legado.get(Legacy.SACO, 0))
-		return TranslationServer.translate(&"UI_PARTY").format({"party": quem, "purse": saco})
+		var linha := TranslationServer.translate(&"UI_PARTY").format({"party": quem, "purse": saco})
+		return linha + "\n" + memory_line(legado)
 	return (
 		TranslationServer
 		. translate(&"UI_LEGACY")
@@ -134,6 +135,24 @@ static func legacy_line(legado: Dictionary) -> String:
 				"seeds": int(legado.get(Legacy.SEMENTES, 0)),
 				"found":
 				(legado.get(Legacy.ACHADOS, PackedStringArray()) as PackedStringArray).size(),
+			}
+		)
+	)
+
+
+## O que a campanha leva da regiao atravessada, dito antes de chegar (CONT-02, Q-143).
+static func memory_line(legado: Dictionary) -> String:
+	var povos := 0
+	for chave in [CampaignMemory.SOLTOS, CampaignMemory.RETIDOS, CampaignMemory.PERDIDOS]:
+		povos += (legado.get(chave, PackedStringArray()) as PackedStringArray).size()
+	return (
+		TranslationServer
+		. translate(&"UI_CROSSING_MEMORY")
+		. format(
+			{
+				"debt": int(legado.get(CampaignMemory.DIVIDA, 0)),
+				"peoples": povos,
+				"heir": int(legado.get(CampaignMemory.TREINO, 0)),
 			}
 		)
 	)

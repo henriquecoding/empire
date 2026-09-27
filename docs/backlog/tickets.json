@@ -1448,7 +1448,7 @@
   "depende": "CONT-01; Q-143",
   "feito": "Duas travessias e um decay preservam os campos acordados; o epílogo lê a história definida para a campanha; o que se zera diz-se no resumo da travessia",
   "fora": "Regiões com cena própria (CONT-10).",
-  "estado": "parcial — a variante e a fase da classe já vão no legado (Q-140); dívida, povos, comitiva e herdeiro esperam pela Q-143",
+  "estado": "parcial — a variante, a fase da classe, a dívida, os povos e o treino do herdeiro atravessam; a comitiva só da faixa do rei (Q-140, Q-143); falta separar a dívida local e a identidade da comitiva",
   "horas": "12"
  },
  "CONT-03": {
@@ -1488,7 +1488,7 @@
   "depende": "—; repetir depois de CONT-01 a 04",
   "feito": "Instrumento e cena acabam no mesmo tick; um piloto começa com recursos normais, usa intenções, paga pela bolsa, não cria moedas e chega à travessia com a voz ligada",
   "fora": "Afinar números para passar.",
-  "estado": "parcial — a vistoria pára com o Defeat e diz a causa (Q-142); falta o piloto financiado e a contabilidade por origem",
+  "estado": "parcial — a vistoria pára com o Defeat e diz a causa, conta as moedas por origem e por sorvedouro, e compara duas políticas (Q-142); falta um piloto que invista em renda e chegue à travessia",
   "horas": "12"
  },
  "CONT-06": {
@@ -1528,7 +1528,7 @@
   "depende": "CONT-04",
   "feito": "Uma pessoa nova conclui as tarefas da abertura com teclado ou comando sem ajuda constante",
   "fora": "Novas ordens de RTS.",
-  "estado": "por fazer",
+  "estado": "parcial — o impulso escolhe-se no comando pelo gesto do §24 (manter Y, apontar, largar; Q-148); falta o destinatário da moeda antes de largar, a razão do que não pode e o retorno da expedição",
   "horas": "12"
  },
  "CONT-09": {

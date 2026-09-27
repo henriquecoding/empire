@@ -8,6 +8,6 @@ Depende   —; repetir depois de CONT-01 a 04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Instrumento e cena acabam no mesmo tick; um piloto começa com recursos normais, usa intenções, paga pela bolsa, não cria moedas e chega à travessia com a voz ligada
 Fora      Afinar números para passar.
-Estado    parcial — a vistoria pára com o Defeat e diz a causa (Q-142); falta o piloto financiado e a contabilidade por origem
+Estado    parcial — a vistoria pára com o Defeat e diz a causa, conta as moedas por origem e por sorvedouro, e compara duas políticas (Q-142); falta um piloto que invista em renda e chegue à travessia
 Horas     12
 ```

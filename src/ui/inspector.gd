@@ -19,9 +19,16 @@ func _ready() -> void:
 
 
 func _unhandled_input(evento: InputEvent) -> void:
-	if evento.is_action_pressed(&"king_wheel"):
+	if not evento.is_action(&"king_wheel") or evento.is_echo():
+		return
+	# No comando a roda e manter e largar (§24, Q-148): o painel abre com o Y e fecha
+	# com ele, para que o apontado se veja em cada gesto. No teclado continua a
+	# alternar com o Tab (Q-067).
+	if evento is InputEventJoypadButton:
+		visible = evento.is_pressed()
+	elif evento.is_pressed():
 		visible = not visible
-		get_viewport().set_input_as_handled()
+	get_viewport().set_input_as_handled()
 
 
 func _process(_delta: float) -> void:
@@ -43,7 +50,7 @@ func _process(_delta: float) -> void:
 				"POSTOS  " + _postos(),
 				"NOITE   " + _noite(),
 				"",
-				"IMPULSOS (TAB + numero, um por dia)",
+				"IMPULSOS (TAB + numero, ou Y + stick e largar; um por dia)",
 				_impulsos(),
 			]
 		)
@@ -69,7 +76,11 @@ func _impulsos() -> String:
 		n += 1
 		var impulso := Registry.entry(&"crown/impulses", id) as ImpulseData
 		var estado := "" if coroa.available(id) else " (por ligar)"
-		linhas.append("%d %s · %d%s" % [n, tr(impulso.display_key), impulso.coin_cost, estado])
+		var marca := "> " if n - 1 == InputRouter.pointed else ""
+		var linha := (
+			"%s%d %s · %d%s" % [marca, n, tr(impulso.display_key), impulso.coin_cost, estado]
+		)
+		linhas.append(linha)
 	if coroa.used_day == SimLoop.state.day:
 		linhas.append("hoje ja se usou um")
 	return "\n".join(linhas)
