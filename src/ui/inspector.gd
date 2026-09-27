@@ -19,9 +19,16 @@ func _ready() -> void:
 
 
 func _unhandled_input(evento: InputEvent) -> void:
-	if evento.is_action_pressed(&"king_wheel"):
+	if not evento.is_action(&"king_wheel") or evento.is_echo():
+		return
+	# No comando a roda e manter e largar (§24, Q-148): o painel abre com o Y e fecha
+	# com ele, para que o apontado se veja em cada gesto. No teclado continua a
+	# alternar com o Tab (Q-067).
+	if evento is InputEventJoypadButton:
+		visible = evento.is_pressed()
+	elif evento.is_pressed():
 		visible = not visible
-		get_viewport().set_input_as_handled()
+	get_viewport().set_input_as_handled()
 
 
 func _process(_delta: float) -> void:

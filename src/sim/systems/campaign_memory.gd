@@ -23,6 +23,13 @@ const TREINO := &"campaign_heir_days"
 const DONO := &"campaign_heir_owner"
 
 
+## Se a memoria vai. Entre regioes, sempre. Depois da ultima, so no Turno: "a
+## campanha seguinte comeca com a tua Divida... e com as tuas seis decisoes"; a
+## Uniao e o Dominio acabam (§79).
+static func carries(ultima: bool, fim: StringName) -> bool:
+	return not ultima or fim == Epilogue.TURNO
+
+
 ## O que atravessa, desta regiao.
 static func of(divida: DebtLedger, colheita: HarvestSystem, herdeiro: Succession) -> Dictionary:
 	return {

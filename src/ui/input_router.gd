@@ -53,9 +53,6 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	if not SimLoop.running():
 		return
-	if evento.is_action_released(&"king_wheel") and pointed >= 0:
-		_impulso(pointed)
-		pointed = -1
 	var impulso := wheel_choice(evento, Input.is_action_pressed(&"king_wheel"))
 	if impulso >= 0:
 		_impulso(impulso)
@@ -116,9 +113,14 @@ func _process(delta: float) -> void:
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
 	if Input.is_action_pressed(&"king_wheel"):
 		var segmento := wheel_segment(_stick(), SimLoop.field.crown.ids().size())
-		pointed = segmento if segmento >= 0 else pointed
+		pointed = segmento  # ao centro nao aponta nada: largar Y ai cancela
 		_andar(0.0)
 	else:
+		# Largar o Y usa o que o stick apontava. Lido aqui e nao no evento: o
+		# Inspector trata o evento do Y antes de ele chegar a este no.
+		if pointed >= 0:
+			_impulso(pointed)
+		pointed = -1
 		_andar(Input.get_axis(&"move_left", &"move_right"))
 	_repeticao = maxf(0.0, _repeticao - delta)
 	if not Input.is_action_pressed(&"verb_drop"):

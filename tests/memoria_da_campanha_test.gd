@@ -89,3 +89,12 @@ func test_o_ecra_da_travessia_diz_o_que_a_campanha_leva() -> void:
 	var d := _memoria()
 	d[Legacy.COMITIVA] = PackedStringArray()
 	assert_str(PauseMenu.legacy_line(d)).contains("dívida (%d)" % DIVIDA)
+
+
+## §79: depois da ultima regiao so o Turno leva a campanha seguinte; a Uniao e o
+## Dominio acabam-na (revisao do PR #44).
+func test_depois_da_ultima_regiao_so_o_turno_leva_a_memoria() -> void:
+	assert_bool(CampaignMemory.carries(false, Epilogue.UNIAO)).is_true()
+	assert_bool(CampaignMemory.carries(true, Epilogue.TURNO)).is_true()
+	assert_bool(CampaignMemory.carries(true, Epilogue.UNIAO)).is_false()
+	assert_bool(CampaignMemory.carries(true, Epilogue.DOMINIO)).is_false()

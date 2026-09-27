@@ -199,7 +199,8 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
 	)
 	var noite := SimLoop.night
-	legado.merge(CampaignMemory.of(noite.voice.debt, noite.harvest, SimLoop.field.succession))
+	if CampaignMemory.carries(not legado.has(Legacy.PLANO), noite.epilogue()):
+		legado.merge(CampaignMemory.of(noite.voice.debt, noite.harvest, SimLoop.field.succession))
 	_fim(legado)
 
 

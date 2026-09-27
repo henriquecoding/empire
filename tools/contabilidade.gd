@@ -8,8 +8,10 @@
 # isso sem poder mudar a partida que mede.
 #
 # Largar nao e gastar: a moeda largada pelo rei numa obra ou num recruta muda de
-# mao, e o `coin_spent` so diz os sorvedouros que a §46 ja nomeia (treino,
-# herdeiro, soldo, impulso, conversao).
+# mao, e o `coin_spent` so diz os sorvedouros que a §46 ja nomeia (recrutar,
+# treino, herdeiro, soldo, impulso, conversao). A obra nao tem sinal de moeda: o
+# que ela absorveu le-se no fim de cada dia, pelo que as obras ja custaram — os
+# degraus levantados e o pago do degrau a meio — e entra como "obras".
 class_name Contabilidade
 extends RefCounted
 
@@ -17,10 +19,13 @@ const LINHA := "  %3d | %-40s | %-24s | %s"
 
 ## dia -> {"largou": {origem: n}, "apanhou": {rei|outros: n}, "gastou": {porque: n}}
 static var dias: Dictionary = {}
+## dia -> o que as obras tinham custado quando o dia comecou.
+static var _obras_no_inicio: Dictionary = {}
 
 
 static func ligar() -> void:
 	dias = {}
+	_obras_no_inicio = {}
 	EventBus.coin_dropped.connect(_largou)
 	EventBus.coin_collected.connect(_apanhou)
 	EventBus.coin_spent.connect(_gastou)
@@ -30,6 +35,7 @@ static func _dia() -> Dictionary:
 	var dia := SimLoop.state.day if SimLoop.state != null else 0
 	if not dias.has(dia):
 		dias[dia] = {"largou": {}, "apanhou": {}, "gastou": {}}
+		_obras_no_inicio[dia] = _nas_obras()
 	return dias[dia]
 
 
@@ -55,9 +61,23 @@ static func imprimir() -> void:
 	print("\n  contas — dia | largadas por origem | apanhadas | gastas")
 	var ordem := dias.keys()
 	ordem.sort()
-	for dia in ordem:
+	for k in ordem.size():
+		var dia: int = ordem[k]
 		var d: Dictionary = dias[dia]
+		var fim: int = _obras_no_inicio[ordem[k + 1]] if k + 1 < ordem.size() else _nas_obras()
+		# Uma obra que cai perde degraus: isso e perda, nao gasto negativo.
+		var obras := maxi(0, fim - int(_obras_no_inicio[dia]))
+		if obras > 0:
+			d["gastou"]["obras"] = obras
 		print(LINHA % [dia, _texto(d["largou"]), _texto(d["apanhou"]), _texto(d["gastou"])])
+
+
+## As moedas que as obras de pe ja absorveram: os degraus e o pago do seguinte.
+static func _nas_obras() -> int:
+	var total := 0
+	for obra in SimLoop.builds.slots:
+		total += Legacy.invested(obra) + obra.paid
+	return total
 
 
 static func _texto(g: Dictionary) -> String:

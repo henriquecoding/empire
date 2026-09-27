@@ -1610,7 +1610,8 @@
   povos soltos, retidos e perdidos, e o treino do herdeiro (`CampaignMemory`); o epílogo lê assim a campanha
   inteira. Ficam locais as recusas por dia, as ofertas usadas e a massa da Podridão. A derrota não os leva (não
   estão na lista do §16). A comitiva passa a ser só de quem está perto **e na faixa do rei**. O ecrã da travessia
-  diz o que vai (`UI_CROSSING_MEMORY`).
+  diz o que vai (`UI_CROSSING_MEMORY`). Depois da **última** região só o Turno leva a memória à campanha seguinte;
+  a União e o Domínio acabam-na (§79, `CampaignMemory.carries()`).
 - **Continua aberto:** separar a dívida operacional da memória da campanha (hoje a dívida levada pesa na região
   seguinte como pesava nesta); a identidade da comitiva (título, ferimentos, moedas) — hoje só vão os tipos.
 
@@ -1643,7 +1644,8 @@
 - **Onde:** §24 (*"Manter Y abre uma roda de seis segmentos... Selecionar é apontar o stick e largar"*), Q-067, Q-113;
   `InputRouter.wheel_segment()`.
 - **O que estava:** com teclado, Tab mantido + número escolhia o impulso; no comando não havia gesto nenhum.
-- **Decidido (opção mais simples):** com Y mantido o rei pára e o stick aponta; largar Y usa o impulso apontado. Os
+- **Decidido (opção mais simples):** com Y mantido o rei pára, o painel abre e o stick aponta; largar Y usa o impulso
+  apontado, e largar com o stick ao centro cancela. Os
   segmentos são os impulsos, pela ordem do Inspector (o primeiro em cima, no sentido do relógio), e o Inspector
   marca o apontado. A roda de seis segmentos do §24 continua à espera dos sistemas que ela abre (Q-067).
 - **Fica por fazer:** o desenho da roda (vitral, ícones) e a razão e o custo de um impulso indisponível no sítio.
