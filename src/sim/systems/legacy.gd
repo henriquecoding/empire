@@ -7,10 +7,12 @@
 #
 # O legado e um dicionario em tipos base — vai para um ficheiro e volta — com o
 # que o jogo novo herda: as Sementes, os segredos achados, as conquistas, o plano
-# da campanha, e as obras que ficam. Ficam as mais caras: a fraccao
-# `decay_structures_kept` das obras de pe (arredondada), por moedas investidas e,
-# no empate, por id. Levantam-se no mesmo sitio, no mesmo degrau e caminho — o
-# segmento e o mesmo, e os ids dos sitios tambem (§21, §45).
+# da campanha, a fase da classe do rei, e as obras que ficam. Ficam as mais caras:
+# a fraccao `decay_structures_kept` das obras de pe (arredondada), por moedas
+# investidas e, no empate, por id. Levantam-se no mesmo sitio, no mesmo degrau,
+# caminho e variante — o segmento e o mesmo, e os ids dos sitios tambem (§21, §45).
+# A variante e a classe faltavam: uma torre B voltava A, e a evolucao paga com a
+# Semente sumia com a Semente gasta (auditoria de 27/09, N1 e N2; Q-133, Q-136).
 #
 # Puro: recebe o estado e as obras.
 class_name Legacy
@@ -24,6 +26,9 @@ const OBRAS := &"slots"
 const ID := &"id"
 const NIVEL := &"level"
 const CAMINHO := &"path"
+const VARIANTE := &"variant"
+## A fase da classe do rei: "a evolucao da classe e do imperio e fica" (Q-133).
+const CLASSE := &"class_phase"
 ## A travessia (P-K, Q-135): a regiao seguinte, quem vai com o rei e o saco dele.
 const REGIAO := &"region"
 const COMITIVA := &"party"
@@ -31,11 +36,16 @@ const SACO := &"purse"
 
 
 ## O que o jogo novo herda desta partida.
-static func of(estado: GameState, obras: BuildSystem, fracao: float) -> Dictionary:
+static func of(
+	estado: GameState, obras: BuildSystem, fracao: float, classes: ClassSystem = null
+) -> Dictionary:
 	var ficam := []
 	for obra in kept(obras, fracao):
-		ficam.append({ID: obra.id, NIVEL: obra.level, CAMINHO: int(obra.path)})
+		ficam.append(
+			{ID: obra.id, NIVEL: obra.level, CAMINHO: int(obra.path), VARIANTE: obra.variant}
+		)
 	return {
+		CLASSE: classes.phase if classes != null else ClassSystem.PRIMEIRA,
 		SEMENTES: estado.royal_seeds,
 		ACHADOS: estado.found,
 		CONQUISTAS: estado.conquests,
@@ -49,9 +59,14 @@ static func of(estado: GameState, obras: BuildSystem, fracao: float) -> Dictiona
 ## outra —, mas quem e teu e esta perto dele (`alcance`), o saco, e a regiao a
 ## seguir. Depois da ultima, a campanha acabou: o plano sorteia-se de novo.
 static func crossing(
-	estado: GameState, unidades: UnitSystem, dados: Dictionary, rei: int, alcance: float
+	estado: GameState,
+	unidades: UnitSystem,
+	dados: Dictionary,
+	rei: int,
+	alcance: float,
+	classes: ClassSystem = null
 ) -> Dictionary:
-	var d := of(estado, BuildSystem.new(), 0.0)
+	var d := of(estado, BuildSystem.new(), 0.0, classes)
 	var r := unidades.index_of(rei)
 	var comitiva := PackedStringArray()
 	for i in unidades.count():
@@ -95,9 +110,14 @@ static func invested(obra: BuildSlot) -> int:
 	return total
 
 
-## Um jogo novo, ja montado, recebe o legado: o estado e as obras que ficam, de pe
-## e inteiras. Um sitio que o mundo novo nao tem ignora-se (§62).
-static func apply(d: Dictionary, estado: GameState, obras: BuildSystem) -> void:
+## Um jogo novo, ja montado, recebe o legado: o estado, a classe e as obras que
+## ficam, de pe e inteiras. Um sitio que o mundo novo nao tem ignora-se, e um
+## legado sem variante ou sem classe (de antes do CONT-02) fica com as de raiz (§62).
+static func apply(
+	d: Dictionary, estado: GameState, obras: BuildSystem, classes: ClassSystem = null
+) -> void:
+	if classes != null:
+		classes.phase = maxi(classes.phase, int(d.get(CLASSE, ClassSystem.PRIMEIRA)))
 	estado.royal_seeds = int(d.get(SEMENTES, estado.royal_seeds))
 	estado.found = PackedStringArray(d.get(ACHADOS, estado.found))
 	estado.conquests = PackedStringArray(d.get(CONQUISTAS, estado.conquests))
@@ -112,6 +132,7 @@ static func apply(d: Dictionary, estado: GameState, obras: BuildSystem) -> void:
 		var obra := obras.slots[i]
 		obra.path = int(guardada.get(CAMINHO, int(obra.path))) as BuildSlot.Path
 		obra.level = mini(int(guardada.get(NIVEL, 1)), obra.costs.size())
+		obra.variant = int(guardada.get(VARIANTE, obra.variant))
 		obra.state = BuildSlot.State.DONE
 		obra.progress = 0.0
 		obra.paid = 0

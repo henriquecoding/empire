@@ -6,7 +6,7 @@ const CEM := 100.0
 
 
 static func goal() -> String:
-	if Defeat.king_fell() and SimLoop.field.succession.ready():
+	if Defeat.king_fell() and SimLoop.field.succession.possible(SimLoop.builds):
 		return _tr(&"GUIDE_HEIR")  # §16: o herdeiro assume ao amanhecer
 	var rot := SimLoop.night.rot
 	var tarde := ClockService.clock.current_phase() >= GameClock.Phase.AFTERNOON

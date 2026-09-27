@@ -97,10 +97,14 @@ static func defeated() -> bool:
 ## O texto do menu. Volta a escrever-se quando o idioma muda (§27, GB-28).
 func _escrever() -> void:
 	_titulo.text = tr(&"UI_CROWN_FALLEN") if _perdido else tr(&"UI_PAUSED")
+	# Um legado que nao se gravou nao se anuncia como travessia feita (CONT-01).
 	if _perdido and SimLoop.state != null and SimLoop.state.crossed:
-		_titulo.text = crossing_title(SaveService.legacy())
+		var falhou := LegacyStore.failed
+		_titulo.text = tr(&"UI_PAUSED") if falhou else crossing_title(LegacyStore.pending())
 	if _perdido:
-		_titulo.text += "\n" + legacy_line(SaveService.legacy())
+		var falhou := LegacyStore.failed
+		var linha := tr(&"UI_LEGACY_FAILED") if falhou else legacy_line(LegacyStore.pending())
+		_titulo.text += "\n" + linha
 	_retomar.text = tr(&"UI_RESUME")
 	_novo.text = tr(&"UI_NEW_GAME")
 

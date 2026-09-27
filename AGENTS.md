@@ -67,6 +67,7 @@ src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, rec
 src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
 src/core/defeat.gd          Defeat        quando a partida acabou: o nucleo ou o rei (§10, §16, Q-118)
 src/core/save_point.gd      SavePoint     gravar ao pausar e ao fechar, de dia (§62, Q-119)
+src/core/legacy_store.gd    LegacyStore   o legado como transacao: gravar, confirmar, gastar (§16, §62, Q-139)
 src/core/field_work.gd      FieldWork     a caca e as casas de oficio, no tick (§09, §25)
 src/sim/state/game_state.gd GameState     o estado autoritativo (§45)
 src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§50)
@@ -176,6 +177,7 @@ src/core/event_bus.gd       EventBus               nucleo        nada
 src/core/rng_service.gd     RngService             nucleo        nada
 src/core/registry.gd        Registry               nucleo        sim/
 src/core/save_service.gd    SaveService            nucleo        sim/
+src/core/legacy_store.gd    LegacyStore            nucleo        core/, sim/
 src/core/preferences.gd     Preferences            nucleo        nada
 src/world/*.gd              BandLayers, CameraRig  apresentacao  core/, sim/
 src/actors/*.gd             UnitView, KingView...  apresentacao  core/, sim/

@@ -16,8 +16,8 @@ const NENHUMA := -1
 
 ## As obras que tiveram alguem no posto durante a fase que acabou.
 var served: Dictionary = {}
-## A fase que acabou; NENHUMA no inicio e depois de retomar um save — e entao
-## ninguem e penalizado pelo que nao se viu.
+## A fase que acabou; NENHUMA no inicio — e entao ninguem e penalizado pelo que
+## nao se viu.
 var ended: int = NENHUMA
 
 var _a_servir: Dictionary = {}
@@ -56,3 +56,29 @@ func worked(obra: BuildSlot) -> bool:
 	if posto.urgency_by_phase[ended] <= 0.0:
 		return true
 	return served.has(obra.id)
+
+
+## O que ja se viu nesta fase e na que acabou vai no save (CONT-03): sem isto, quem
+## trabalhou antes de gravar deixava de contar ao retomar, e a mesma fase rendia
+## menos carregada do que jogada de seguida (auditoria de 27/09, N5).
+func to_dict() -> Dictionary:
+	return {
+		&"phase": _fase,
+		&"ended": ended,
+		&"serving": PackedInt32Array(_a_servir.keys()),
+		&"served": PackedInt32Array(served.keys()),
+	}
+
+
+func from_dict(guardado: Dictionary) -> void:
+	_fase = int(guardado.get(&"phase", NENHUMA))
+	ended = int(guardado.get(&"ended", NENHUMA))
+	_a_servir = _conjunto(guardado.get(&"serving", PackedInt32Array()))
+	served = _conjunto(guardado.get(&"served", PackedInt32Array()))
+
+
+static func _conjunto(ids: PackedInt32Array) -> Dictionary:
+	var saida := {}
+	for id in ids:
+		saida[id] = true
+	return saida

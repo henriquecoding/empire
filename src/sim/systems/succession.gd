@@ -39,6 +39,14 @@ func ready() -> bool:
 	return _dias > 0 and days >= _dias
 
 
+## Se a coroa pode passar na proxima alvorada: herdeiro formado e casa de pe, onde
+## ele nasce. E a condicao que o Defeat, o guia e a coroacao leem — antes o Defeat
+## lia so o treino, e um herdeiro formado sem casa nem acabava a partida nem era
+## coroado (auditoria de 27/09, N3; Q-137).
+func possible(obras: BuildSystem) -> bool:
+	return ready() and house(obras) != null
+
+
 ## A casa do herdeiro de pe, ou null.
 func house(obras: BuildSystem) -> BuildSlot:
 	for obra in obras.standing():
@@ -64,9 +72,9 @@ func dawn(obras: BuildSystem, unidades: UnitSystem, rei: int) -> int:
 ## A coroa passa: o herdeiro nasce na casa com os dados do monarca, e o treino
 ## recomeca do zero para o proximo. Devolve o id dele, ou NENHUM sem herdeiro.
 func crown(estado: GameState, unidades: UnitSystem, obras: BuildSystem, monarca: UnitData) -> int:
-	var casa := house(obras)
-	if not ready() or casa == null:
+	if not possible(obras):
 		return NENHUM
+	var casa := house(obras)
 	days = 0
 	return unidades.spawn(estado, monarca, owner, casa.x)
 

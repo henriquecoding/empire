@@ -47,7 +47,7 @@ func test_a_derrota_oferece_um_jogo_novo_e_nao_retomar() -> void:
 	menu.open(true)
 	# §16 (Q-134): a derrota diz tambem o que o jogo novo herda.
 	assert_str(menu._titulo.text).starts_with(tr(&"UI_CROWN_FALLEN"))
-	assert_str(menu._titulo.text).contains(PauseMenu.legacy_line(SaveService.legacy()))
+	assert_str(menu._titulo.text).contains(PauseMenu.legacy_line(LegacyStore.pending()))
 	assert_bool(menu._retomar.visible).is_false()
 	assert_bool(menu._novo.visible).is_true()
 

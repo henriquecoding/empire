@@ -28,6 +28,9 @@ const SEMENTE := "--semente"
 static var _recomecar := false
 
 var _tremor: float = 0.0
+var _acabou := false
+## O legado aplicado espera pelo primeiro save do jogo novo para se gastar (CONT-01).
+var _chegada := false
 
 @onready var _camara: CameraRig = $CameraRig
 @onready var _mundo: Node2D = $Mundo
@@ -41,15 +44,17 @@ func _ready() -> void:
 	process_physics_priority = SimLoop.process_physics_priority + 1
 	Smoothing.reset()
 	Registry.load_all()
+	LegacyStore.settle()  # um fim ou um comeco que um fecho interrompeu (CONT-01)
 	if not _retomar():
 		SimLoop.start(_semente())
 		Greybox.build()
 		# §16: o que a partida perdida deixou (Q-134), ou quem atravessou com o rei
 		# (Q-135). Sem legado, nao muda nada.
-		var legado := SaveService.take_legacy()
-		Legacy.apply(legado, SimLoop.state, SimLoop.builds)
+		var legado := LegacyStore.pending()
+		Legacy.apply(legado, SimLoop.state, SimLoop.builds, SimLoop.field.classes)
 		var tropas := SimFactory.by_id(&"units")
 		Legacy.arrive(legado, SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, SimLoop.core_x)
+		_chegada = not legado.is_empty()
 		# §26: o dia ao ritmo de quem joga. Um jogo novo nasce com a duracao da
 		# ultima escolha, pela fila como qualquer outra (§61, GB-24).
 		var segundos := Preferences.shared().number(Preferences.DAY_SECONDS)
@@ -82,6 +87,13 @@ func _na_pausa(pausado: bool) -> void:
 
 func _physics_process(_delta: float) -> void:
 	Smoothing.record_all()
+	# Depois do primeiro tick, com a duracao do dia ja consumida da fila. Ate haver
+	# um save do jogo novo, um fecho volta a aplicar o legado a um mundo novo — e se
+	# este falhar, o da alvorada gasta-o no arranque seguinte (CONT-01).
+	if _chegada:
+		_chegada = false
+		if SavePoint.now() >= 0:
+			LegacyStore.settle()
 
 
 func _process(delta: float) -> void:
@@ -161,11 +173,12 @@ func _tremer() -> void:
 ## com o `step()` a parar sozinho, os instrumentos que MEDEM uma derrota — o
 ## §66 varre dez dias por defesa e diz "em que dia caiu" — deixavam de poder
 ## contar. Quem joga tem cena; quem mede, nao. Ver a Q-081.
-func _no_desabamento(building_id: int, _x: float) -> void:
-	var i := SimLoop.builds.index_of(building_id)
-	if i == UnitSystem.NENHUM or SimLoop.builds.slots[i].kind != BuildSlot.NUCLEO:
-		return
-	_acabar()
+##
+## Pergunta ao Defeat e nao so pelo nucleo: a casa do herdeiro a cair com o rei
+## ja morto tambem acaba a partida (N3, Q-137).
+func _no_desabamento(_building_id: int, _x: float) -> void:
+	if Defeat.happened():
+		_acabar()
 
 
 ## O rei caiu e nao ha herdeiro (§16, Defeat): e a mesma derrota que o nucleo.
@@ -180,18 +193,27 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 		return
 	var tropas := SimFactory.by_id(&"units")
 	var perto := SimFactory.curve().crossing_party_px
-	_fim(Legacy.crossing(SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto))
+	_fim(
+		Legacy.crossing(
+			SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
+		)
+	)
 
 
 func _acabar() -> void:
 	_tremer()
 	var fica := SimFactory.curve().decay_structures_kept
-	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica))
+	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica, SimLoop.field.classes))
 
 
-## O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134).
+## O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134). Um
+## legado que nao se escreveu deixa os saves onde estavam, e o ecra di-lo (CONT-01).
+## Uma vez so: o nucleo e o rei podem cair no mesmo tick.
 func _fim(legado: Dictionary) -> void:
-	SaveService.leave(legado)
+	if _acabou:
+		return
+	_acabou = true
+	LegacyStore.leave(legado)
 	SimLoop.set_paused(true)
 	$Entrada.set_process_unhandled_input(false)
 

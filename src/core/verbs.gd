@@ -207,19 +207,19 @@ static func at_fork(x: float) -> bool:
 	return Passages.near(x, SimLoop.secrets.chapters)
 
 
-## Para que faixa o Verbo 2 levava este corpo AGORA, ou NENHUMA. E a conta do
-## gesto e a do sinal que o PassageCue desenha, e por isso e uma so (GB-14): se o
-## sinal aparece, o E pega; se o E nao pega, nao ha sinal.
+## Para onde o Verbo 2 leva este corpo AGORA, ou NENHUMA: e o gesto e o sinal (GB-14).
+## De baixo, a boca escorada tambem serve — a escora fecha por cima (N4, Q-138).
 static func destination(unidades: UnitSystem, unit_id: int, passagens: PackedFloat32Array) -> int:
 	var i := unidades.index_of(unit_id)
-	if i == UnitSystem.NENHUM or passagens.is_empty() or not unidades.alive(i):
+	if i == UnitSystem.NENHUM or not unidades.alive(i):
 		return NENHUMA
 	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
-	if not dados.can_change_band or not Passages.near(unidades.xs[i], passagens):
+	var em_baixo := int(unidades.bands[i]) == int(Band.Kind.UNDERGROUND)
+	var x := unidades.xs[i]
+	var boca := Passages.near(x, passagens) or em_baixo and Passages.near(x, SimLoop.passages)
+	if not dados.can_change_band or not boca:
 		return NENHUMA
-	if int(unidades.bands[i]) == int(Band.Kind.SURFACE):
-		return int(Band.Kind.UNDERGROUND)
-	return int(Band.Kind.SURFACE)
+	return int(Band.Kind.SURFACE) if em_baixo else int(Band.Kind.UNDERGROUND)
 
 
 ## §26: "slider de duracao do dia (240–540 s)", com os limites do clock.csv (zero e

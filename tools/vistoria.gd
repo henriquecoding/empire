@@ -38,6 +38,7 @@ var _fase: int = -1
 var _dias: int = DIAS
 var _ultima_linha: int = -1
 var _caiu_ao_dia := 0  # o resumo diz os dias vividos: caido no dia 1 nao sao 10
+var _causa := ""
 
 
 func _ready() -> void:
@@ -56,12 +57,11 @@ func _correr() -> void:
 	var total := float(_dias) * relogio.day_seconds
 	var passos := int(total / PASSO)
 	for _i in passos:
-		# §10: "se cair, cai a partida". Quem para o relogio e a `game.gd`, e isto
-		# nao tem cena — sem esta pergunta media dias de uma partida perdida, e
-		# foi o que fez nas primeiras corridas: sete (Q-081).
-		if SimLoop.builds.fallen(BuildSlot.NUCLEO):
+		# A regra do jogo, e nao so o nucleo: o rei sem herdeiro acaba-a (Q-081, N9).
+		if Defeat.happened():
 			_caiu_ao_dia = SimLoop.state.day
-			print("\n  o castelo-arvore caiu ao dia %d — a partida acabou" % _caiu_ao_dia)
+			_causa = "o rei caiu sem herdeiro" if Defeat.king_fell() else "o nucleo caiu"
+			print("\n  %s ao dia %d — a partida acabou" % [_causa, _caiu_ao_dia])
 			break
 		if not SimLoop.running():
 			_nota("a simulacao parou sozinha ao dia %d" % SimLoop.state.day)
@@ -233,7 +233,7 @@ func _nota(o_que: String) -> void:
 
 func _relatorio() -> void:
 	var dias := "%d dias" % _dias
-	dias = "%d de %s, o nucleo caiu" % [_caiu_ao_dia, dias] if _caiu_ao_dia > 0 else dias
+	dias = "%d de %s, %s" % [_caiu_ao_dia, dias, _causa] if _caiu_ao_dia > 0 else dias
 	if _achados.is_empty():
 		print("\nvistoria: %s — sem invariantes quebradas" % dias)
 		get_tree().quit()

@@ -137,3 +137,30 @@ func test_o_treino_vai_no_save() -> void:
 	copia.from_dict(SimLoop.field.to_dict()[&"succession"])
 	assert_int(copia.days).is_equal(1)
 	assert_int(copia.owner).is_equal(SimLoop.units.owners[_rei()])
+
+
+## N3 (auditoria de 27/09; Q-137): herdeiro formado sem casa nao tem onde nascer.
+## Antes, o Defeat dizia "nao acabou" e a alvorada nao coroava ninguem.
+func test_herdeiro_formado_sem_casa_e_derrota_e_nao_fica_preso() -> void:
+	var casa := _casa()
+	_de_pe(casa)
+	SimLoop.field.succession.days = _curva().heir_training_days
+	SimLoop.field.succession.owner = SimLoop.units.owners[_rei()]
+	assert_bool(SimLoop.field.succession.possible(SimLoop.builds)).is_true()
+	casa.state = BuildSlot.State.RUIN
+	casa.health = 0
+	SimLoop.units.healths[_rei()] = 0
+	assert_bool(SimLoop.field.succession.possible(SimLoop.builds)).is_false()
+	assert_bool(Defeat.happened()).is_true()
+
+
+func test_herdeiro_formado_com_casa_de_pe_espera_pela_alvorada() -> void:
+	_de_pe(_casa())
+	SimLoop.field.succession.days = _curva().heir_training_days
+	SimLoop.field.succession.owner = SimLoop.units.owners[_rei()]
+	var velho := SimLoop.king_id
+	SimLoop.units.healths[_rei()] = 0
+	assert_bool(Defeat.happened()).is_false()
+	_alvorada(2)
+	assert_int(SimLoop.king_id).is_not_equal(velho)
+	assert_bool(Defeat.happened()).is_false()
