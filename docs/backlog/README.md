@@ -109,6 +109,25 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [AUD-04](AUD-04.md) | As faixas: o subsolo como expedição e o Alado com alvo | AUD-01 | feito — o poço nas cavidades, a escora das passagens, o Cavador chamado pelo poço e o Alado que rouba galinhas |
 | [AUD-05](AUD-05.md) | Uma campanha mínima: sucessão, fim de região e decay | AUD-02, AUD-03 | feito — o herdeiro, o decay, a travessia com o epílogo e as variantes da torre e do canteiro |
 
+## Auditoria de gameplay de 27/09 — a continuidade
+
+> `docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md`. As decisões e as perguntas abertas estão nas Q-137 a Q-147.
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [CONT-01](CONT-01.md) | Transição durável: o legado como transação | — | feito — LegacyStore: temporário, leitura de volta e rename; os slots só se apagam depois; o primeiro save do jogo novo gasta o legado (Q-139) |
+| [CONT-02](CONT-02.md) | Memória da campanha: o que atravessa e o que fica | CONT-01; Q-143 | parcial — a variante e a fase da classe já vão no legado (Q-140); dívida, povos, comitiva e herdeiro esperam pela Q-143 |
+| [CONT-03](CONT-03.md) | Snapshot do trabalho: o Staffing no save | — | feito — o Staffing grava a fase, quem serve e quem serviu; retomar fecha a fase igual (Q-141) |
+| [CONT-04](CONT-04.md) | Transições sem prisão: sucessão e escoras | Q-137, Q-138 | parcial — uma condição de sucessão (casa de pé) e a escora fecha por cima; a topologia do subsolo e o treino sem casa ficam na Q-137/Q-138 |
+| [CONT-05](CONT-05.md) | Medição fiel da partida | —; repetir depois de CONT-01 a 04 | parcial — a vistoria pára com o Defeat e diz a causa (Q-142); falta o piloto financiado e a contabilidade por origem |
+| [CONT-06](CONT-06.md) | Manutenção com custo marginal | CONT-05; Q-144 | por fazer |
+| [CONT-07](CONT-07.md) | Duas economias de conversão válidas | CONT-05, CONT-06; Q-145 | por fazer |
+| [CONT-08](CONT-08.md) | Abertura e controlo completos | CONT-04 | por fazer |
+| [CONT-09](CONT-09.md) | Sinais de ação e ameaça | — | por fazer |
+| [CONT-10](CONT-10.md) | Duas regiões autoradas | CONT-01, CONT-02, CONT-05 | por fazer |
+| [CONT-11](CONT-11.md) | Um povo, uma escolha completa | CONT-02, CONT-10 | por fazer |
+| [CONT-12](CONT-12.md) | Evidências e estado derivados | contínuo | parcial — o validation.json acertado a 27/09; repetir a cada entrega |
+
 ## Parte XIII — a candeia, a Oferta, o Nome, a Colheita e os Capítulos
 
 > Onze tickets novos, pela ordem de custo da §82. O caminho mínimo que dá a transformação inteira é
