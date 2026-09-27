@@ -26,6 +26,11 @@ const CHEGOU_PX := 12.0
 ## caminho por quem ja esta ao lado.
 const PERTO_PX := 90.0
 
+## A politica cautelosa (CONT-05, auditoria de 27/09 §13.3): de noite o rei fica na
+## borda do nucleo do lado ONDE A MANCHA NAO ESTA — a mesma partida, com o rei fora
+## da mordida. Nao e afinar o cenario: e uma segunda politica para comparar.
+static var cauteloso: bool = false
+
 
 ## Um passo do piloto. Escolhe para onde ir e larga quando chega.
 static func step(loop: Node) -> void:
@@ -53,7 +58,7 @@ static func _destino(loop: Node, rei: int, onde: float) -> float:
 			return loop.core_x
 		# Na borda do nucleo do lado da mancha: e ai que as criaturas mordem.
 		var lado := signf(loop.night.rot.position_x() - loop.core_x)
-		return loop.core_x + lado * _meio_nucleo(loop)
+		return loop.core_x + (-lado if cauteloso else lado) * _meio_nucleo(loop)
 	var saco: int = loop.units.carried_coins[rei]
 	# Com o saco vazio nao ha nada a fazer senao ir buscar moeda. Com moeda na
 	# mao vai-se GASTAR: um piloto que corresse atras da moeda que acabou de

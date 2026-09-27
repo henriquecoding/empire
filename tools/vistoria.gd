@@ -46,6 +46,8 @@ func _ready() -> void:
 	SimLoop.autosave_enabled = false
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Contabilidade.ligar()
+	Autopilot.cauteloso = _argumento("cauteloso", 0.0) > 0.0  # CONT-05: outra politica
 	print("\nvistoria — %d dias no greybox com piloto, semente %d" % [_dias, SEMENTE])
 	print("  dia | fase       |  meus/tropas | bichos | moedas | nucleo | rei | achados")
 	_correr()
@@ -72,8 +74,7 @@ func _correr() -> void:
 		_marco()
 
 
-## O que se pergunta a cada passo. Sao invariantes e nao afinacao: qualquer uma
-## delas falsa e um estado que o jogo nao sabe desenhar nem gravar.
+## Invariantes, a cada passo: uma falsa e um estado que o jogo nao desenha nem grava.
 func _vigiar() -> void:
 	var unidades := SimLoop.units
 	for i in unidades.count():
@@ -112,9 +113,8 @@ func _vida(que: String, id: int, vida: int, tecto: int) -> void:
 func _presa(i: int) -> void:
 	var unidades := SimLoop.units
 	var id := unidades.ids[i]
-	# Quem esta a bater nao anda, e isso e o §50 e nao um defeito: "parar a bater
-	# e a leitura que o §50 defende". O primeiro relato desta vistoria foi o
-	# monarca a aguentar cinco Rastejantes seguidos — 24 s de pe, e certo.
+	# Quem esta a bater nao anda, e isso e o §50 e nao um defeito. O primeiro relato
+	# desta vistoria foi o monarca a aguentar cinco Rastejantes — 24 s de pe, e certo.
 	var luta := unidades.states[i] == UnitFsm.State.FIGHT
 	var chegou := absf(unidades.target_xs[i] - unidades.xs[i]) <= PRESA_PX
 	if not unidades.alive(i) or luta or chegou:
@@ -147,9 +147,8 @@ func _luta_sem_alvo() -> void:
 		if SimLoop.creatures.count() > 0:
 			_luta_desde.erase(unidades.ids[i])
 			continue
-		# Um tick de FIGHT sem criaturas e normal e nao e defeito: o `choose`
-		# poe o estado e o `resolve` mata a ultima criatura no MESMO passo, e
-		# quem limpa e o `choose` do passo seguinte. O que nao pode e durar.
+		# Um tick de FIGHT sem criaturas e normal: o `resolve` mata a ultima no MESMO
+		# passo em que o `choose` poe o estado, e o seguinte limpa. Nao pode e durar.
 		var quanto: float = float(_luta_desde.get(unidades.ids[i], 0.0)) + PASSO
 		_luta_desde[unidades.ids[i]] = quanto
 		if quanto > PRESA_S:
@@ -232,6 +231,7 @@ func _nota(o_que: String) -> void:
 
 
 func _relatorio() -> void:
+	Contabilidade.imprimir()
 	var dias := "%d dias" % _dias
 	dias = "%d de %s, %s" % [_caiu_ao_dia, dias, _causa] if _caiu_ao_dia > 0 else dias
 	if _achados.is_empty():
