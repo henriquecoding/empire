@@ -43,7 +43,7 @@ func _process(_delta: float) -> void:
 				"POSTOS  " + _postos(),
 				"NOITE   " + _noite(),
 				"",
-				"IMPULSOS (TAB + numero, um por dia)",
+				"IMPULSOS (TAB + numero, ou Y + stick e largar; um por dia)",
 				_impulsos(),
 			]
 		)
@@ -69,7 +69,11 @@ func _impulsos() -> String:
 		n += 1
 		var impulso := Registry.entry(&"crown/impulses", id) as ImpulseData
 		var estado := "" if coroa.available(id) else " (por ligar)"
-		linhas.append("%d %s · %d%s" % [n, tr(impulso.display_key), impulso.coin_cost, estado])
+		var marca := "> " if n - 1 == InputRouter.pointed else ""
+		var linha := (
+			"%s%d %s · %d%s" % [marca, n, tr(impulso.display_key), impulso.coin_cost, estado]
+		)
+		linhas.append(linha)
 	if coroa.used_day == SimLoop.state.day:
 		linhas.append("hoje ja se usou um")
 	return "\n".join(linhas)

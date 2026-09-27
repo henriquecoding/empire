@@ -108,3 +108,15 @@ func test_com_a_roda_premida_os_numeros_escolhem_o_impulso() -> void:
 	letra.physical_keycode = KEY_A
 	letra.pressed = true
 	assert_int(InputRouter.wheel_choice(letra, true)).is_equal(-1)
+
+
+## §24 no comando (CONT-08): manter Y, apontar o stick, largar. O segmento de cima
+## e o primeiro e contam no sentido do relogio; perto do centro nao aponta nada.
+func test_o_stick_aponta_o_segmento_da_roda() -> void:
+	assert_int(InputRouter.wheel_segment(Vector2(0.0, -1.0), 3)).is_equal(0)
+	assert_int(InputRouter.wheel_segment(Vector2(1.0, 0.0), 4)).is_equal(1)
+	assert_int(InputRouter.wheel_segment(Vector2(0.0, 1.0), 4)).is_equal(2)
+	assert_int(InputRouter.wheel_segment(Vector2(-1.0, 0.0), 4)).is_equal(3)
+	assert_int(InputRouter.wheel_segment(Vector2(-0.1, -1.0), 4)).is_equal(0)
+	assert_int(InputRouter.wheel_segment(Vector2(0.2, 0.1), 4)).is_equal(-1)
+	assert_int(InputRouter.wheel_segment(Vector2(0.0, -1.0), 0)).is_equal(-1)
