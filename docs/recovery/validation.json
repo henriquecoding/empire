@@ -1,5 +1,5 @@
 {
- "date": "2026-09-26",
+ "date": "2026-09-27",
  "base": "este repositorio — Parte XIII integrada sobre o dossie v6",
  "engine": "4.6.stable.official.89cea1439",
  "gdunit": "6.2.1",
@@ -11,8 +11,8 @@
  "original_csv_unchanged": 28,
  "proposed_fields": 625,
  "proposed_phase_0_to_2": 298,
- "gdunit_discovered": 832,
- "gdunit_passed": 729,
+ "gdunit_discovered": 849,
+ "gdunit_passed": 843,
  "gdunit_skipped": 6,
  "gdunit_failures": 0,
  "spec_sections": 87,
@@ -25,9 +25,8 @@
  "gpu_art_tested": false,
  "source_gaps": [
   "9 authored segment scenes",
-  "game systems and scene",
   "remote CI and export",
-  "audio: 56 pistas por gravar"
+  "audio: 73 cues TODO no AUDIO_CUE_SHEET.csv"
  ],
  "new_questions": [
   "Q-053",
@@ -36,7 +35,7 @@
  ],
  "clean_zip_extraction_check": "passed: run_tests.sh completo numa extracao limpa, sem cache do motor",
  "export_notes": "Linux release exportado e arrancado em headless (embed_pck=false): Empire.x86_64 + Empire.pck",
- "i18n_keys": 367,
+ "i18n_keys": 368,
  "i18n_placeholders": 0,
  "catalog_signals": 61,
  "event_bus_signals": 61

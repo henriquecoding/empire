@@ -25,6 +25,7 @@ const VOZ := &"offers"
 const NOMES := &"titles"
 const COLHEITA := &"harvest"
 const REI := &"king_id"
+const POSTOS := &"staffing"
 
 
 static func world(
@@ -33,9 +34,11 @@ static func world(
 	moedas: CoinSystem,
 	obras: BuildSystem,
 	noite: NightWatch,
-	king_id: int
+	king_id: int,
+	postos: JobBoard = null
 ) -> Dictionary:
 	return {
+		POSTOS: postos.staffing.to_dict() if postos != null else {},
 		UNIDADES: unidades.to_dict(),
 		CRIATURAS: bichos.to_dict(),
 		MOEDAS: moedas.to_dict(),
@@ -57,8 +60,11 @@ static func restore(
 	moedas: CoinSystem,
 	obras: BuildSystem,
 	noite: NightWatch,
-	mundo: Dictionary
+	mundo: Dictionary,
+	postos: JobBoard = null
 ) -> int:
+	if postos != null:
+		postos.staffing.from_dict(mundo.get(POSTOS, {}))
 	unidades.from_dict(mundo.get(UNIDADES, {}))
 	bichos.from_dict(mundo.get(CRIATURAS, {}))
 	moedas.from_dict(mundo.get(MOEDAS, {}))

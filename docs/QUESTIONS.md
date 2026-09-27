@@ -1544,6 +1544,90 @@
   de sempre. Escolhe-se com o Verbo 2 com o sítio vazio e sem moeda, e fica; vai no save. Os três números em
   `_proposed`.
 
+## Da auditoria de gameplay de 27/09 — decididas (reversíveis) e abertas
+
+> O dono do repositório pediu para aplicar o relatório `docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md` (27/09/2026),
+> auditado sobre a `main` em `568c568`. Os defeitos que não pediam decisão de design corrigiram-se (N1, N3, N4, N5,
+> N7/N8, N9, e a parte do N2 que a Q-133 já decidia). O que pede decisão fica aqui aberto, com a recomendação do
+> relatório — **não é regra aprovada**. Os tickets são os CONT-01 a CONT-12 (`docs/backlog/`).
+
+### Q-137 · Herdeiro formado sem casa (N3)
+- **Onde:** §15, §16, Q-133; `Defeat.happened()`, `Succession.crown()`.
+- **O que estava:** o `Defeat` só lia o treino; a coroação pedia também a casa de pé. Com herdeiro formado, rei
+  morto e casa em ruína, o jogo não acabava e ninguém era coroado.
+- **Decidido (opção mais simples):** uma só condição, `Succession.possible()` — herdeiro formado **e** casa de pé —,
+  lida pelo `Defeat`, pelo guia e pela coroação. Sem casa ele não tem onde nascer, e é derrota; a casa a cair com o
+  rei já morto também acaba a partida (`game.gd` pergunta ao `Defeat` a cada desabamento).
+- **Fica por decidir:** se o treino sobrevive à perda da casa e, nesse caso, onde nasce o sucessor.
+
+### Q-138 · A escora fecha por cima (N4)
+- **Onde:** Q-132; `Verbs.destination()`, `Passages.open()`.
+- **O que estava:** as duas escoras de pé com o rei no subsolo tiravam-lhe todas as saídas.
+- **Decidido (opção mais simples):** a escora fecha a boca **por cima**: ninguém desce e o Cavador não sobe, mas quem
+  está em baixo e pode mudar de faixa (hoje, só o rei) sobe por ela. O sinal e o gesto continuam a ser a mesma conta.
+- **Fica por decidir:** a Q-132 diz que fechar um lado perde o poço e a câmara desse lado, mas o subsolo do *greybox*
+  é um corredor contínuo — ou as cavidades passam a isolar-se por lado, ou o texto passa a descrever o corredor.
+
+### Q-139 · O legado é uma transação (N7, N8)
+- **Onde:** §16, §62, ADR 0007; `LegacyStore` (novo, `src/core/legacy_store.gd`).
+- **Decidido (CONT-01):** o legado escreve-se num temporário, lê-se de volta, compara-se e renomeia-se; só então se
+  apagam os slots. Se falhar, os slots ficam e o ecrã do fim di-lo (`UI_LEGACY_FAILED`) em vez de anunciar a
+  travessia. O jogo novo aplica-o a um mundo novo e grava logo o primeiro save; é esse save — numerado acima da
+  sequência guardada na moldura do legado — que o gasta (`LegacyStore.settle()`, no arranque). Um fecho entre dois
+  passos repete o que faltava; aplicar a um mundo novo não duplica nada. Legados sem moldura leem-se na mesma.
+
+### Q-140 · O que o legado leva: variante e classe (N1, N2 em parte)
+- **Onde:** §16 (*"classes desbloqueadas"*), Q-133 (*"a evolução da classe é do império e fica"*), Q-134, Q-136.
+- **Decidido:** cada obra retida leva a variante (uma torre B volta B); o legado da derrota e o da travessia levam a
+  fase da classe do rei, e o jogo novo nunca a baixa. Um legado sem estes campos fica com os de raiz.
+
+### Q-141 · O trabalho da fase vai no save (N5)
+- **Onde:** Q-121 (*"a primeira fase depois de retomar não é penalizada"*); `Staffing`, `SimSave`.
+- **Decidido (CONT-03):** o `Staffing` grava a fase que observa, quem já serviu nela e quem serviu na que acabou.
+  Retomar e jogar de seguida fecham a fase igual. Um save anterior não tem o campo e ninguém é penalizado.
+
+### Q-142 · A vistoria acaba quando o jogo acaba (N9)
+- **Onde:** Q-081, Q-128; `tools/vistoria.gd`.
+- **Decidido:** a vistoria pára com o `Defeat.happened()` — núcleo, ou rei sem sucessão possível — e diz a causa.
+  Os "8 dias" da Q-128 mediam só o núcleo; um número de dias sobrevividos cita a versão e a regra de derrota.
+  Medido a 27/09 sobre a `568c568` com estas correções: `make vistoria DIAS=10`, semente 20260916 — *"4 de 10 dias,
+  o rei caiu sem herdeiro — sem invariantes quebradas"* (antes: núcleo no dia 7). É um piloto, não todo o jogador.
+- **Fica por fazer (CONT-05):** separar a estabilidade da simulação, a resistência de uma defesa pronta e um piloto
+  que começa com as seis moedas, paga pela bolsa e chega à travessia com a voz ligada.
+
+### Q-143 · O que atravessa uma região, além do que já vai (aberta)
+- **Onde:** §16, Q-133, Q-135, §79; `Legacy.crossing()`, `NightWatch.epilogue()`.
+- **O que está:** a travessia leva Sementes, segredos, conquistas, plano, saco, a fase da classe (Q-140) e os
+  **tipos** de quem está perto. Zera a Dívida da Candeia, os povos soltos/retidos e o treino do herdeiro; a comitiva
+  perde identidade, título, ferimentos e moedas, e a proximidade não olha à faixa. O epílogo lê só a região corrente.
+- **Recomendação do relatório:** separar dívida local de memória da campanha; histórico de povos acumulado; um
+  *snapshot* mínimo da comitiva; decidir se o treino do herdeiro acompanha a corte. O que se zerar diz-se no resumo.
+
+### Q-144 · Inadimplência do soldo (N6, aberta)
+- **Onde:** Q-124; `UpkeepSystem`, `RecruitSystem`.
+- **O que está:** sem moedas, a parte inteira em falta perdoa-se e deserta a tropa mais barata sem posto — que se
+  recontrata por uma moeda. Com 25 tropas, 13,5 de soldo trocam-se por uma deserção de custo 1.
+- **Recomendação:** comparar dívida de soldo, desertores proporcionais ao défice e indisponibilidade temporária para
+  recontratar, sem criar a espiral deserção → menos renda → mais deserção. Depende do CONT-05 para medir.
+
+### Q-145 · O celeiro e a Colheita Forçada (aberta)
+- **Onde:** Q-115, Q-124; `ConversionSystem`, `economia_jogada_test.gd`.
+- **O que está:** a capacidade (+10% de vida) liga-se com um cozinheiro vivo em qualquer sítio e um produtor de pé,
+  mesmo sem matéria consumida; o teste da Colheita Forçada omite a ganância e o momento da ativação.
+- **Por decidir:** se a capacidade exige consumo e presença; que cenário a justifica contra a venda; e refazer a
+  conta de retorno do impulso com as condições reais. Não mudar o +10% antes de medir.
+
+### Q-146 · O que encerra uma região, e para que serve o herdeiro (aberta)
+- **Onde:** Q-133, Q-135; `crossing_day` 11, `heir_training_days` 10.
+- **O que está:** o dia 11 são ~60 minutos (40–90 com o *slider*); o herdeiro custa 70 moedas e fica formado no dia
+  11 no melhor caso — e o treino não atravessa.
+- **Por decidir:** manter o dia como portão de teste e experimentar uma meta de região; escolher a função do herdeiro
+  (seguro de região longa, próximo monarca da campanha, ou objetivo de permanência) antes de mexer no 10.
+
+### Q-147 · Ofertas com preço sem sistema (aberta)
+- **Onde:** §75; `OfferPrice`.
+- **Por decidir:** mostrar só as ofertas que se podem de facto pagar hoje, ou dizer que estão indisponíveis.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

@@ -124,6 +124,25 @@ func test_a_escora_fecha_a_passagem_ao_rei_e_ao_cavador() -> void:
 	assert_int(SimLoop.creatures.bands[c]).is_equal(int(Band.Kind.UNDERGROUND))
 
 
+## N4 (auditoria de 27/09; Q-138): as duas escoras de pe com o rei la em baixo
+## deixavam-no sem saida. A escora fecha por cima: de baixo sobe-se na mesma, e
+## o Cavador — que so sobe por uma boca aberta — continua a nao passar.
+func test_as_duas_escoras_nao_prendem_o_rei_la_em_baixo() -> void:
+	for x in SimLoop.passages:
+		_de_pe(_escora(x))
+	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
+	assert_int(abertas.size()).is_equal(0)
+	SimLoop.units.bands[_rei()] = int(Band.Kind.UNDERGROUND)
+	SimLoop.units.xs[_rei()] = SimLoop.passages[0]
+	var para := Verbs.destination(SimLoop.units, SimLoop.king_id, abertas)
+	assert_int(para).is_equal(int(Band.Kind.SURFACE))
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(STEP)
+	assert_int(SimLoop.units.bands[_rei()]).is_equal(int(Band.Kind.SURFACE))
+	var desce := Verbs.destination(SimLoop.units, SimLoop.king_id, abertas)
+	assert_int(desce).is_equal(Verbs.NENHUMA)
+
+
 func test_a_mancha_nao_gasta_massa_num_subsolo_fechado() -> void:
 	var rot := SimFactory.rot()
 	rot.spawn(DIA_DO_CAVADOR, 1, SimLoop.world_width)

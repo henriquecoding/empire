@@ -1422,5 +1422,166 @@
   "fora": "Conquista de povos e IA dos reis inimigos (Fase 2 do §33).",
   "estado": "feito — o herdeiro, o decay, a travessia com o epílogo e as variantes da torre e do canteiro",
   "horas": "20"
+ },
+ "CONT-01": {
+  "title": "Transição durável: o legado como transação",
+  "porque": "Uma escrita falhada do legado apagava os saves na mesma, e o jogo novo gastava o legado antes de ter um save seu (N7, N8): perdia-se a única recuperação.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/adr/0007-save-security.md"
+  ],
+  "depende": "—",
+  "feito": "Falhas ao abrir, escrever, validar e renomear deixam exatamente um estado recuperável; reiniciar em cada fronteira não duplica nem perde recompensas; o erro não se anuncia como travessia feita",
+  "fora": "Quanto se retém, custos, recompensas e a regra da derrota.",
+  "estado": "feito — LegacyStore: temporário, leitura de volta e rename; os slots só se apagam depois; o primeiro save do jogo novo gasta o legado (Q-139)",
+  "horas": "8"
+ },
+ "CONT-02": {
+  "title": "Memória da campanha: o que atravessa e o que fica",
+  "porque": "O legado guarda um subconjunto sem contrato: a variante voltava A (N1), a evolução do Monarca sumia (N2), e a travessia zera dívida, povos e treino do herdeiro.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md"
+  ],
+  "depende": "CONT-01; Q-143",
+  "feito": "Duas travessias e um decay preservam os campos acordados; o epílogo lê a história definida para a campanha; o que se zera diz-se no resumo da travessia",
+  "fora": "Regiões com cena própria (CONT-10).",
+  "estado": "parcial — a variante e a fase da classe já vão no legado (Q-140); dívida, povos, comitiva e herdeiro esperam pela Q-143",
+  "horas": "12"
+ },
+ "CONT-03": {
+  "title": "Snapshot do trabalho: o Staffing no save",
+  "porque": "Quem trabalhou antes de gravar deixava de contar ao retomar: 0,467 contínuo contra 0,292 retomado (N5), contra a Q-121.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/06-producao-conversao-e-comercio.md"
+  ],
+  "depende": "—",
+  "feito": "Contínuo e retomado produzem o mesmo com trabalhador presente, ausente, morto ou transferido antes do snapshot",
+  "fora": "Produção por segundo.",
+  "estado": "feito — o Staffing grava a fase, quem serve e quem serviu; retomar fecha a fase igual (Q-141)",
+  "horas": "4"
+ },
+ "CONT-04": {
+  "title": "Transições sem prisão: sucessão e escoras",
+  "porque": "Herdeiro formado sem casa nem acabava a partida nem era coroado (N3); as duas escoras prendiam o rei no subsolo (N4).",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md"
+  ],
+  "depende": "Q-137, Q-138",
+  "feito": "Todo o rei morto tem desfecho (coroação alcançável ou fim explícito); nenhuma ordem comum de pagar, descer e concluir prende o rei",
+  "fora": "Cavidades isoladas por lado.",
+  "estado": "parcial — uma condição de sucessão (casa de pé) e a escora fecha por cima; a topologia do subsolo e o treino sem casa ficam na Q-137/Q-138",
+  "horas": "8"
+ },
+ "CONT-05": {
+  "title": "Medição fiel da partida",
+  "porque": "A vistoria contava dias depois de o rei cair sem herdeiro (N9): dia 7 pelo núcleo, derrota real no dia 4; e nenhum piloto começa com as seis moedas.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/66-nucleo-jogavel-tres-meses-sete-blocos.md"
+  ],
+  "depende": "—; repetir depois de CONT-01 a 04",
+  "feito": "Instrumento e cena acabam no mesmo tick; um piloto começa com recursos normais, usa intenções, paga pela bolsa, não cria moedas e chega à travessia com a voz ligada",
+  "fora": "Afinar números para passar.",
+  "estado": "parcial — a vistoria pára com o Defeat e diz a causa (Q-142); falta o piloto financiado e a contabilidade por origem",
+  "horas": "12"
+ },
+ "CONT-06": {
+  "title": "Manutenção com custo marginal",
+  "porque": "Um soldo de 13,5 troca-se por uma deserção de custo 1 (N6).",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/06-producao-conversao-e-comercio.md"
+  ],
+  "depende": "CONT-05; Q-144",
+  "feito": "Inadimplir de propósito não domina pagar em composições representativas; perder uma noite ainda deixa recuperar; a interface antecipa o valor e a consequência",
+  "fora": "Punições cumulativas sem comparação.",
+  "estado": "por fazer",
+  "horas": "10"
+ },
+ "CONT-07": {
+  "title": "Duas economias de conversão válidas",
+  "porque": "A capacidade do celeiro não tem nicho demonstrado e liga-se sem consumo; a Colheita Forçada mede-se sem ganância nem momento.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/49-economysystem-tres-circuitos-uma-passagem-por-fa.md"
+  ],
+  "depende": "CONT-05, CONT-06; Q-145",
+  "feito": "Há um cenário relevante para cada alternativa; o preview corresponde ao resultado; o gesto escolhe um modo estável",
+  "fora": "Mudar o +10% antes de medir.",
+  "estado": "por fazer",
+  "horas": "10"
+ },
+ "CONT-08": {
+  "title": "Abertura e controlo completos",
+  "porque": "O destinatário da moeda, as razões de indisponibilidade e a roda de impulsos no comando ainda não fecham o percurso.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md"
+  ],
+  "depende": "CONT-04",
+  "feito": "Uma pessoa nova conclui as tarefas da abertura com teclado ou comando sem ajuda constante",
+  "fora": "Novas ordens de RTS.",
+  "estado": "por fazer",
+  "horas": "12"
+ },
+ "CONT-09": {
+  "title": "Sinais de ação e ameaça",
+  "porque": "Ataque, dano, trabalho, roubo e mudança de fase ainda não se distinguem bem; 73 cues de áudio TODO.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/audio/AUDIO_CUE_SHEET.csv",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "—",
+  "feito": "O jogador identifica ataque, dano, trabalho, roubo e mudança de fase, com equivalente visual para o som",
+  "fora": "Direção musical completa.",
+  "estado": "por fazer",
+  "horas": "12"
+ },
+ "CONT-10": {
+  "title": "Duas regiões autoradas",
+  "porque": "A região seguinte é o mesmo Greybox: a travessia muda o número e não a estratégia.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/21-geracao-procedural-do-territorio.md"
+  ],
+  "depende": "CONT-01, CONT-02, CONT-05",
+  "feito": "A estratégia muda entre regiões (uma restrição económica, uma topologia e uma decisão final diferentes) e não há reinício acidental da campanha",
+  "fora": "Todos os biomas.",
+  "estado": "por fazer",
+  "horas": "24"
+ },
+ "CONT-11": {
+  "title": "Um povo, uma escolha completa",
+  "porque": "A Colheita de povos não tem início jogável: descobrir, escolher, resolver e ver a consequência.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/design/78-a-colheita-e-as-duas-maneiras-de-acabar-com-um-p.md"
+  ],
+  "depende": "CONT-02, CONT-10",
+  "feito": "Uma ação do jogador produz uma decisão persistente que muda a leitura do epílogo",
+  "fora": "Diplomacia inteira e IA de reis rivais.",
+  "estado": "por fazer",
+  "horas": "24"
+ },
+ "CONT-12": {
+  "title": "Evidências e estado derivados",
+  "porque": "O validation.json tinha contadores que não fechavam entre si e lacunas históricas; um 'feito' tem de corresponder ao contrato demonstrado.",
+  "spec": [
+   "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-27.md",
+   "docs/recovery/validation.json"
+  ],
+  "depende": "contínuo",
+  "feito": "Cada número vem de uma execução ou da ferramenta, com data e SHA",
+  "fora": "—",
+  "estado": "parcial — o validation.json acertado a 27/09; repetir a cada entrega",
+  "horas": "2"
  }
 }

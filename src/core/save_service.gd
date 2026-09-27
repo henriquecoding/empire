@@ -27,7 +27,6 @@ const WORLDGEN_VERSION := 1
 ## Autosave no DAWN de cada dia, em rotacao. Um save corrompido nunca e o unico.
 const SLOTS := 3
 const PASTA := "user://saves"
-const LEGADO := "user://saves/legacy.save"
 
 
 func _ready() -> void:
@@ -130,8 +129,14 @@ func _slot_mais_antigo() -> int:
 	return escolhido
 
 
+## A sequencia do save mais novo, e nunca abaixo da do legado a espera: o primeiro
+## save do jogo novo tem de ser mais novo do que ele (LegacyStore, CONT-01).
+func latest_seq() -> int:
+	return _maior_seq()
+
+
 func _maior_seq() -> int:
-	var maior := 0
+	var maior := LegacyStore.seq_floor()
 	for slot in SLOTS:
 		var dados := _ler_cru(slot)
 		if dados.has(&"autosave_seq") and typeof(dados[&"autosave_seq"]) == TYPE_INT:
@@ -222,29 +227,3 @@ func _ler_cru(slot: int) -> Dictionary:
 		push_error("save: slot %d sem estado" % slot)
 		return {}
 	return dados
-
-
-## §16, "decay em vez de reset" (Q-134): o legado espera pelo jogo novo e os saves
-## da partida perdida apagam-se — perder nao se desfaz a recarregar (Q-088).
-func leave(legado: Dictionary) -> void:
-	var f := FileAccess.open(LEGADO, FileAccess.WRITE)
-	if f != null:
-		f.store_var(legado, false)  # como os saves: sem objetos (ADR 0007)
-	for slot in SLOTS:
-		delete_slot(slot)
-
-
-## O legado a espera, sem o gastar ({} se nao ha). E o que o ecra da derrota diz.
-func legacy() -> Dictionary:
-	if not FileAccess.file_exists(LEGADO):
-		return {}
-	var f := FileAccess.open(LEGADO, FileAccess.READ)
-	var lido: Variant = f.get_var(false) if f != null else null  # allow_objects: ADR 0007
-	return lido if typeof(lido) == TYPE_DICTIONARY else {}
-
-
-func take_legacy() -> Dictionary:  # gasto: so um jogo novo o recebe
-	var legado := legacy()
-	if FileAccess.file_exists(LEGADO):
-		DirAccess.remove_absolute(ProjectSettings.globalize_path(LEGADO))
-	return legado

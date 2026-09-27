@@ -27,7 +27,7 @@ func after_test() -> void:
 	EventBus.segment_entered.disconnect(_entrou)
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
-	SaveService.take_legacy()
+	LegacyStore.discard()
 
 
 func _entrou(_segmento: StringName, tipo: StringName) -> void:

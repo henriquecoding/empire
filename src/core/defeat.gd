@@ -4,7 +4,8 @@
 # partida" (§10). A outra e o rei. O §16 da-lhe sucessao — herdeiro ao amanhecer,
 # ou interregno. Sem herdeiro formado, um rei morto deixava o mundo a correr sem
 # ninguem para comandar (D6): a morte dele e o fim da partida, com o mesmo ecra
-# que o nucleo caido. Com herdeiro, espera-se pela alvorada (Q-133).
+# que o nucleo caido. Com herdeiro formado e casa de pe, espera-se pela alvorada
+# (Q-133); sem a casa ele nao tem onde nascer, e e derrota (Q-137).
 #
 # Uma regra so, lida por quem pausa, por quem desenha o menu e por quem decide se
 # um save se retoma — antes eram tres `fallen(NUCLEO)` espalhados.
@@ -18,7 +19,7 @@ static func happened() -> bool:
 		return false
 	if SimLoop.builds.fallen(BuildSlot.NUCLEO):
 		return true
-	return king_fell() and not SimLoop.field.succession.ready()
+	return king_fell() and not SimLoop.field.succession.possible(SimLoop.builds)
 
 
 ## O rei que estava em campo ja nao esta de pe. Sem rei posto em campo (um teste,

@@ -642,3 +642,4 @@ VARIANT_ARCHER_TOWER_A,alcance (+40%),range (+40%),variante da torre de arqueiro
 VARIANT_ARCHER_TOWER_B,cadência (um terço mais tiros),cadence (a third more shots),variante da torre de arqueiros (Q-136),32,AUD-05
 VARIANT_FARM_A,renda,yield,variante do canteiro (Q-136),24,AUD-05
 VARIANT_FARM_B,"resguardo (o rasto não o para, rende 75%)","sheltered (the trail spares it, 75% yield)",variante do canteiro (Q-136),48,AUD-05
+UI_LEGACY_FAILED,"O que fica não se gravou: os saves desta partida continuam onde estavam","What remains could not be saved: this run's saves are still where they were",fim da partida: o legado não se escreveu (CONT-01),96,CONT-01

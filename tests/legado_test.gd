@@ -19,7 +19,7 @@ func before_test() -> void:
 func after_test() -> void:
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
-	SaveService.take_legacy()
+	LegacyStore.discard()
 
 
 func _de_pe(kind: StringName, nivel: int = 1) -> Array[BuildSlot]:
@@ -90,11 +90,59 @@ func test_o_legado_vai_ao_ficheiro_apaga_os_saves_e_gasta_se_uma_vez() -> void:
 	SaveService.autosave(SimLoop.state)
 	assert_int(SaveService.latest_slot()).is_not_equal(-1)
 	SimLoop.state.royal_seeds = SEMENTES
-	SaveService.leave(Legacy.of(SimLoop.state, SimLoop.builds, _fica()))
+	assert_bool(LegacyStore.leave(Legacy.of(SimLoop.state, SimLoop.builds, _fica()))).is_true()
 	assert_int(SaveService.latest_slot()).is_equal(-1)
-	assert_int(int(SaveService.legacy()[Legacy.SEMENTES])).is_equal(SEMENTES)
-	assert_int(int(SaveService.take_legacy()[Legacy.SEMENTES])).is_equal(SEMENTES)
-	assert_bool(SaveService.take_legacy().is_empty()).is_true()
+	assert_int(int(LegacyStore.pending()[Legacy.SEMENTES])).is_equal(SEMENTES)
+	SaveService.autosave(SimLoop.state)  # o primeiro save do jogo novo (CONT-01)
+	LegacyStore.settle()
+	assert_bool(LegacyStore.pending().is_empty()).is_true()
+
+
+## N1 (auditoria de 27/09): duas torres B retidas voltavam A.
+func test_a_obra_que_fica_guarda_a_variante() -> void:
+	var torres := _de_pe(&"archer_tower")
+	for torre in torres:
+		torre.variant = 1
+	var legado := Legacy.of(SimLoop.state, SimLoop.builds, 1.0)
+	SimLoop.stop()
+	SimLoop.start(SEMENTE + 1)
+	Greybox.build()
+	Legacy.apply(legado, SimLoop.state, SimLoop.builds)
+	for torre in torres:
+		var nova := SimLoop.builds.slots[SimLoop.builds.index_of(torre.id)]
+		assert_bool(nova.standing()).is_true()
+		assert_int(nova.variant).is_equal(1)
+
+
+func test_um_legado_sem_variante_fica_com_a_de_raiz() -> void:
+	var torre := _de_pe(&"archer_tower")[0]
+	var legado := {Legacy.OBRAS: [{Legacy.ID: torre.id, Legacy.NIVEL: 1}]}
+	torre.variant = 0
+	Legacy.apply(legado, SimLoop.state, SimLoop.builds)
+	assert_int(torre.variant).is_equal(0)
+	assert_int(int(torre.path)).is_equal(int(BuildSlot.Path.NENHUMA))
+
+
+## N2 e Q-133: "a evolucao da classe e do imperio e fica" — na derrota e na travessia.
+func test_a_classe_evoluida_fica_na_derrota_e_na_travessia() -> void:
+	SimLoop.field.classes.phase = ClassSystem.PRIMEIRA + 1
+	var perdido := Legacy.of(SimLoop.state, SimLoop.builds, _fica(), SimLoop.field.classes)
+	var tropas := SimFactory.by_id(&"units")
+	var atravessado := Legacy.crossing(
+		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, 0.0, SimLoop.field.classes
+	)
+	for legado: Dictionary in [perdido, atravessado]:
+		SimLoop.stop()
+		SimLoop.start(SEMENTE + 1)
+		Greybox.build()
+		assert_int(SimLoop.field.classes.phase).is_equal(ClassSystem.PRIMEIRA)
+		Legacy.apply(legado, SimLoop.state, SimLoop.builds, SimLoop.field.classes)
+		assert_int(SimLoop.field.classes.phase).is_equal(ClassSystem.PRIMEIRA + 1)
+
+
+func test_um_legado_sem_classe_nao_tira_a_fase_a_ninguem() -> void:
+	Legacy.apply({}, SimLoop.state, SimLoop.builds, SimLoop.field.classes)
+	assert_int(SimLoop.field.classes.phase).is_equal(ClassSystem.PRIMEIRA)
 
 
 func test_o_ecra_da_derrota_diz_o_que_fica() -> void:

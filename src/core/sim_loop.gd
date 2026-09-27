@@ -94,13 +94,13 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 ## As coleccoes da §45 em tipos base, e de volta (§62). O que entra no ficheiro
 ## e a lista do SimSave; aqui so se sabe quais os sistemas que existem.
 func world() -> Dictionary:
-	var saved := SimSave.world(units, creatures, coins, builds, night, king_id)
+	var saved := SimSave.world(units, creatures, coins, builds, night, king_id, jobs)
 	saved.merge(field.to_dict())
 	return saved
 
 
 func load_world(mundo: Dictionary) -> void:
-	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo)
+	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
 	field.from_dict(mundo)
 
 
