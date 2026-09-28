@@ -144,6 +144,13 @@ src/world/wall_site.gd      WallSite      o sitio de muro: a escada do §10 e o 
 src/world/cavities.gd       Cavities      o poco das cavidades e as escoras das passagens (§11, Q-130)
 src/world/site_view.gd      SiteView      a camara, a estatua e a placa do capitulo (§17, §83)
 src/world/biome_greybox.gd  BiomeGreybox  a greybox de cada bioma, em formas lisas (GB-02)
+src/world/wilds.gd          Wilds         o que cresce e vive numa regiao, pela semente (Q-150)
+src/world/wilds_layer.gd    WildsLayer    um plano gerado: campo, horizonte ou nuvens
+src/world/flora_art.gd      FloraArt      o que cresce, em pixeis
+src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
+src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds
+src/world/fauna_art.gd      FaunaArt      o que um bicho de cenario E, em pixeis
+src/world/fauna_view.gd     FaunaView     os bichos de cenario, a mexer
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)

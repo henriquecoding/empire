@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://src/ui/captions.gd" id="12_legendas"]
 [ext_resource type="Script" path="res://src/world/accessibility_filter.gd" id="13_filtro"]
 [ext_resource type="Script" path="res://src/ui/journal_panel.gd" id="14_diario"]
+[ext_resource type="Script" path="res://src/world/fauna_view.gd" id="15_fauna"]
 
 [node name="Game" type="Node2D" groups=["jogo"]]
 script = ExtResource("0_game")
@@ -22,6 +23,9 @@ script = ExtResource("0_game")
 [node name="Mundo" type="Node2D" parent="."]
 
 [node name="Enramados" parent="Mundo" instance=ExtResource("7_backdrop")]
+
+[node name="Fauna" type="Node2D" parent="Mundo"]
+script = ExtResource("15_fauna")
 
 [node name="Aereo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")

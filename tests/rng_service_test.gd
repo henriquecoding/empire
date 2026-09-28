@@ -137,3 +137,33 @@ func test_escolher_e_determinista_e_aceita_lista_vazia() -> void:
 func test_a_semente_do_mundo_fica_visivel_para_o_ecra_de_pausa() -> void:
 	RngService.configure(SEMENTE)
 	assert_int(RngService.world_seed()).is_equal(SEMENTE)
+
+
+func test_a_dispersao_e_da_semente_e_da_chave_e_nao_gasta_fluxo_nenhum() -> void:
+	# As terras bravias: o mesmo sitio da o mesmo bosque, e desenha-lo nao pode
+	# mexer na noite que se esta a jogar.
+	RngService.configure(SEMENTE)
+	var esperado := _sequencia(&"world", AMOSTRAS)
+	RngService.configure(SEMENTE)
+	var bosque := RngService.scatter(42, AMOSTRAS)
+	assert_array(_sequencia(&"world", AMOSTRAS)).is_equal(esperado)
+	assert_int(bosque.size()).is_equal(AMOSTRAS)
+	assert_array(RngService.scatter(42, AMOSTRAS)).is_equal(bosque)
+	assert_array(RngService.scatter(43, AMOSTRAS)).is_not_equal(bosque)
+	for v in bosque:
+		assert_float(v).is_between(0.0, 1.0)
+	RngService.configure(OUTRA_SEMENTE)
+	assert_array(RngService.scatter(42, AMOSTRAS)).is_not_equal(bosque)
+
+
+func test_o_ruido_e_da_semente_e_do_sal() -> void:
+	RngService.configure(SEMENTE)
+	var a := RngService.noise(7, 0.01, 3)
+	var b := RngService.noise(7, 0.01, 3)
+	var c := RngService.noise(8, 0.01, 3)
+	var iguais := 0
+	for i in AMOSTRAS:
+		var x := float(i) * 13.0
+		assert_float(b.get_noise_1d(x)).is_equal(a.get_noise_1d(x))
+		iguais += 1 if is_equal_approx(a.get_noise_1d(x), c.get_noise_1d(x)) else 0
+	assert_int(iguais).is_less(AMOSTRAS)
