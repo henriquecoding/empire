@@ -132,12 +132,12 @@ func step(delta: float) -> void:
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
 	field.prepare(ClockService.clock.day, core_x, world_width, units, _fase, state)
-	# 4 · quem quer a moeda, quem anda atras do rei e quem luta: os tres ESCREVEM
+	# 4 · quem quer a moeda, quem espera no nucleo e quem luta: os tres ESCREVEM
 	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
 	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
 	#     tick.
 	recruits.seek_coins(units, coins, state.tick)
-	recruits.follow(units, king_id)
+	recruits.follow(units, king_id, core_x)
 	field.plan(units, _fase < GameClock.Phase.DUSK)
 	EventRelay.combat(combat.choose(units, creatures, builds, abertas))
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
@@ -193,7 +193,7 @@ func _montar() -> void:
 	economy = SimFactory.economy(jobs)
 	coins = CoinSystem.new(SimFactory.curve())  # um jogo novo comeca sem moedas
 	night = NightWatch.new(units, builds, coins, jobs)
-	recruits = RecruitSystem.new(SimFactory.curve())
+	recruits = RulesFactory.recruits(state)  # o desconto do povo da regiao (Q-007)
 	field = FieldWork.new(economy, morale, combat, night)
 	hunting = field.hunting
 	tally.reset()
@@ -228,9 +228,8 @@ func _largar(moedas: Array[Dictionary]) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not _running:
-		return
-	step(delta)
+	if _running and Pace.due():  # a roda abranda saltando passos (Q-034)
+		step(delta)
 
 
 ## O relogio e dono do dia e do tempo decorrido; o GameState e o que se grava.

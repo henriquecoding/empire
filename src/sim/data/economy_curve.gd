@@ -177,3 +177,9 @@ extends Resource
 @export_group("Andar — correr")
 ## Quanto mais depressa o rei anda com a tecla de correr premida (Q-149).
 @export var king_run_mult: float = 0.0
+
+@export_group("Coroa — o preco dos impulsos (Q-014)")
+## Repetir o mesmo decreto dentro de impulse_repeat_days dias multiplica o preco
+## por isto, por cada vez que ele saiu: o reino cansa-se da mesma ordem.
+@export var impulse_repeat_mult: float = 1.0
+@export var impulse_repeat_days: int = 0

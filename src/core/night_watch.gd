@@ -27,6 +27,8 @@ var voice: OfferWatch
 var names: TitleSystem
 ## A Colheita (§78): conta dias a alvorada, e os marcos de quem ficou pesam.
 var harvest: HarvestSystem
+## O escuro, o archote e quem vem de la (Q-029).
+var dark: DarkWatch
 
 var _tropas: UnitSystem
 var _obras: BuildSystem
@@ -45,6 +47,7 @@ func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: J
 	voice = OfferWatch.new(moedas, tropas, obras)
 	names = SimFactory.titles()
 	harvest = HarvestSystem.new(SimFactory.curve())
+	dark = DarkWatch.new()
 	_tropas = tropas
 	_moedas = moedas
 	_obras = obras
@@ -63,9 +66,11 @@ func tick(
 	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
 	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
+	dark.tick(delta, fase, estado, bichos, _obras, mundo.x)
 	if not rot.active():
 		return
-	_alimentar()
+	if Discoveries.known(estado, &"sacrifice"):  # a Estatua da Oferenda (Q-016)
+		_alimentar()
 	var borda := mundo.y if rot.state.side > 0 else 0.0
 	Thieves.plan(bichos, _criaturas, _obras, _edificios, borda)  # o Alado (Q-129)
 	if voice.paused(delta):
@@ -73,9 +78,9 @@ func tick(
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
 		rot.arm(RngService.float_range(&"rot", janela.x, janela.y))
-	# O terreno consagrado de hoje sao os Marcos (§74). Fogueiras e barris sao
-	# luz do §10 e nao consagram nada; o altar consagrado e da Fase 6.
-	for pedido in rot.tick(delta, amargueiros.consecrated()):
+	# O terreno consagrado sao os Marcos (§74); fogueiras e barris abrandam-na
+	# pelo `rot_slow` deles (§05, Q-029). O altar consagrado e da Fase 6.
+	for pedido in rot.tick(delta, amargueiros.consecrated(), FireZones.of(_obras)):
 		_invocar(pedido, estado, bichos, mundo.x)
 	var meia := rot.state.width * BuildSystem.METADE
 	names.stain(_tropas, rot.position_x() - meia, rot.position_x() + meia)  # §76

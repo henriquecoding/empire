@@ -102,6 +102,8 @@ func absorb(
 ## guardado e, sendo unico por imperio, nenhuma outra muralha o tem nem o esta a
 ## levantar (§10, §74). Uma moeda largada num degrau que nao sobe fica no chao.
 func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
+	if not Discoveries.known(estado, vaga.kind):
+		return false  # uma estatua guarda esta obra, e ainda ninguem a achou (Q-016)
 	if estado == null or madeira == null:
 		return true
 	var lenho := vaga.woods_for_next(estado.conquests)

@@ -102,3 +102,40 @@ extends Resource
 ## O poco de minerio "atrai Cavadores" (§06): com um de pe, o Cavador vem este
 ## numero de noites mais cedo (Q-131).
 @export var mine_lure_days: int = 0
+
+@export_group("As primeiras noites — Q-017, Q-068")
+## A noite 1 do §25: "tres Rastejantes". A massa que os paga, e nao a do
+## calendario da §74 (58, sete). O dono confirmou os tres (Q-068).
+@export var opening_mass: float = 0.0
+## Ate esta noite a massa do calendario sobe em linha recta da noite 1 ate a §74,
+## e dela em diante e a §74 tal e qual: "comeca leve e vai intensificando" (Q-017).
+@export var ramp_nights: int = 0
+
+@export_group("A noite saltada — Q-040")
+## A fraccao da massa de uma noite saltada que vem na seguinte: "saltar o jogo
+## gera consequencias; nada pode ser feito de qualquer jeito" (o dono, Q-040).
+@export var skipped_mass_carry: float = 0.0
+
+@export_group("O escuro e o archote — Q-029")
+## O archote: quanto custa numa fogueira, quantos se levam, quanto arde.
+@export var torch_cost: int = 1
+@export var torch_max: int = 0
+@export var torch_burn_s: float = 0.0
+## A luz dele, a volta do rei.
+@export var torch_radius_px: float = 0.0
+## No escuro e sem archote: de quanto em quanto nasce alguem, a que distancia,
+## quantos no maximo por noite, e o que nasce.
+@export var dark_ambush_s: float = 0.0
+@export var dark_ambush_px: float = 0.0
+@export var dark_ambush_max: int = 0
+@export var dark_creature: StringName = &""
+
+
+## A parte do calendario da massa (§74: base + dia), com as primeiras noites em
+## rampa (Q-017, Q-068). Sem rampa escrita nos dados, e a §74 tal e qual.
+func calendar_mass(dia: int) -> float:
+	var cheia := mass_base + mass_per_day * dia
+	if ramp_nights <= 1 or opening_mass <= 0.0 or dia >= ramp_nights:
+		return cheia
+	var t := float(maxi(dia, 1) - 1) / float(ramp_nights - 1)
+	return opening_mass + (cheia - opening_mass) * t

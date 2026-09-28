@@ -85,6 +85,7 @@ func test_de_seis_em_seis_noites_uma_funda_e_a_seguir_uma_calma() -> void:
 
 
 func test_moedas_do_rei_dentro_da_mancha_tiram_lhe_massa() -> void:
+	SimLoop.state.found.append("statue_offering")  # a Estatua da Oferenda (Q-016)
 	_ate(GameClock.Phase.DUSK)
 	SimLoop.step(STEP)
 	var rot := SimLoop.night.rot
@@ -126,3 +127,16 @@ func test_ao_crepusculo_quem_luta_vai_para_a_borda_do_lado_da_noite() -> void:
 	var vagabundo := SimLoop.units.index_of(O_VAGABUNDO)
 	if SimLoop.units.job_ids[vagabundo] == UnitSystem.NENHUM:
 		assert_float(SimLoop.units.target_xs[vagabundo]).is_equal_approx(nucleo.x, 1.0)
+
+
+func test_sem_a_estatua_da_oferenda_a_mancha_nao_come_moedas() -> void:
+	# Q-016: o sacrificio so existe depois de achada a estatua que o guarda.
+	_ate(GameClock.Phase.DUSK)
+	SimLoop.step(STEP)
+	var rot := SimLoop.night.rot
+	var x := rot.position_x()
+	for _k in 4:
+		SimLoop.drop_coin(x, Band.Kind.SURFACE, 1, Verbs.JOGADOR)
+	for _t in ASSENTAR:
+		SimLoop.step(STEP)
+	assert_float(_fed).is_equal(0.0)

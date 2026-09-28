@@ -10,3 +10,7 @@ extends Resource
 @export var reward_seeds: int = 0
 @export var reward: StringName = &""  # lore_fragment, teach_mechanic, journal, unlock
 @export var teaches: StringName = &""  # mecanica ensinada (estatuas)
+
+## Onde fica, em px a partir do centro do nucleo (sinal = lado). Zero: pelo sitio
+## que a `location` da (Q-016: as estatuas tem cada uma o seu).
+@export var place_px: float = 0.0

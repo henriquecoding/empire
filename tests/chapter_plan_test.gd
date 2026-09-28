@@ -34,9 +34,17 @@ func _plano(semente: int) -> ChapterPlan:
 # ─── A campanha: seis regioes, uma por povo ──────────────────────────────────
 
 
-func test_a_campanha_tem_uma_regiao_por_bioma() -> void:
+func test_a_campanha_tem_uma_regiao_por_bioma_da_campanha() -> void:
+	# Os povos do gelo e do pantano (Q-010, Q-013) estao nos dados e fora da
+	# campanha ate o dono decidir como ela cresce (Q-152): continuam seis.
 	var regioes := SimFactory.campaign_regions()
-	assert_int(regioes.size()).is_equal(Registry.entries(&"biomes").size())
+	var dentro := 0
+	for recurso in Registry.entries(&"biomes"):
+		if (recurso as BiomeData).in_campaign:
+			dentro += 1
+	assert_int(regioes.size()).is_equal(dentro)
+	assert_int(regioes.size()).is_equal(6)
+	assert_bool(regioes.has("glacier") or regioes.has("marsh")).is_false()
 
 
 # ─── D-11: seis, e o Cerco sempre ────────────────────────────────────────────

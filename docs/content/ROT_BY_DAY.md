@@ -9,16 +9,17 @@ O dossiê não tem ondas: A Podridão é uma entidade com massa (§05, §51), e 
 - O que a tabela mostra é o **piso**: só os dois primeiros termos. A base e o termo do dia desceram de propósito na §74 — o que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. Duas árvores deixadas de pé (+44) valem mais do que um dia inteiro (+18).
 - O Zelador (§75) não entra nesta conta: não é invocado por massa, nasce da Dívida da Candeia ≥ 6
 - Invoca a cada 4–7 s enquanto está ativa: crepúsculo + noite = 135 s → **19 a 33 invocações** no máximo
+- As primeiras noites (Q-017, Q-068): a noite 1 tem massa 24 — os três Rastejantes do §25 — e o calendário sobe em linha recta até à fórmula de cima, que manda por inteiro a partir da noite 5
 - Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou
 - Lado duplo a partir do dia 12
 - Ritmo (Q-126): de 6 em 6 noites uma **funda** (massa × 1.3), e a seguinte **calma** (× 0.6). O lado de cada noite diz-se à tarde (Q-125)
 
 | dia | velocidade px/s | massa (0 fort.) | massa (2 fort.) | criatura mais cara disponível | invocações até esgotar (0 fort.) | lados |
 |---|---|---|---|---|---|---|
-| 1 | 14.9 | 58 | 118 | crawler (8) | 7 | 1 |
-| 2 | 15.8 | 76 | 136 | crawler (8) | 9 | 1 |
-| 3 | 16.7 | 94 | 154 | crawler (8) | 11 | 1 |
-| 4 | 17.6 | 112 | 172 | winged (14) | 8 | 1 |
+| 1 | 14.9 | 24 | 84 | crawler (8) | 3 | 1 |
+| 2 | 15.8 | 37 | 97 | crawler (8) | 4 | 1 |
+| 3 | 16.7 | 59 | 119 | crawler (8) | 7 | 1 |
+| 4 | 17.6 | 90 | 150 | winged (14) | 6 | 1 |
 | 5 | 18.5 | 130 | 190 | winged (14) | 9 | 1 |
 | 6 (funda) | 19.4 | 192.4 | 270.4 | winged (14) | 14 | 1 |
 | 7 (calma) | 20.3 | 99.6 | 135.6 | brute (22) | 5 | 1 |

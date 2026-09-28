@@ -12,3 +12,6 @@ extends Resource
 @export var region_screens: Vector2i = Vector2i()  # §21
 @export var music_profile: StringName = &""
 @export var wildlife: Array[StringName] = []  # WildlifeData ids
+## Se a regiao deste bioma entra na campanha. Os dois povos do pedido do dono (o
+## gelo e o pantano, Q-010 e Q-013) existem nos dados e ficam fora ate a Q-152.
+@export var in_campaign: bool = true

@@ -73,6 +73,15 @@ func _rendimento(obras: Array[BuildSlot]) -> float:
 	return total
 
 
+## O que estraga por dia nestas obras sem casa que as converta (Q-012). Nao
+## cresce com o dia: e uma unidade de materia, e nao uma fracao do que rendem.
+func _estrago(obras: Array[BuildSlot]) -> float:
+	var total := 0.0
+	for obra in obras:
+		total += (Registry.entry(&"buildings", obra.kind) as BuildingData).spoil_per_day
+	return total
+
+
 func test_a_ganancia_nasce_no_perfil_do_inicio_e_vai_no_save() -> void:
 	var perfil := Registry.entry(&"crown/greed", _curva().start_greed_profile) as GreedProfile
 	assert_int(SimLoop.state.greed).is_between(perfil.greed_range.x, perfil.greed_range.y)
@@ -87,7 +96,7 @@ func test_a_producao_cresce_ao_ritmo_da_base_construida() -> void:
 	var obras := _de_pe([&"henhouse", &"fishery"])
 	var base := _rendimento(obras)
 	for dia in range(1, 4):
-		var esperado := base * pow(_curva().income_growth, dia - 1)
+		var esperado := base * pow(_curva().income_growth, dia - 1) - _estrago(obras)
 		assert_float(float(_um_dia())).is_equal_approx(esperado, obras.size() * FOLGA_POR_FONTE)
 
 
@@ -96,7 +105,7 @@ func test_a_ganancia_leva_a_parte_dela() -> void:
 	SimLoop.state.greed = 50
 	var com := _um_dia()
 	assert_float(float(com)).is_equal_approx(
-		_rendimento(obras) * METADE, obras.size() * FOLGA_POR_FONTE
+		_rendimento(obras) * METADE - _estrago(obras), obras.size() * FOLGA_POR_FONTE
 	)
 
 

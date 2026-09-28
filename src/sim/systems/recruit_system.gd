@@ -13,10 +13,9 @@
 # construtor como o CoinSystem recebe a dele. Quem enfileira os eventos e o
 # SimLoop, porque a simulacao nao emite (§43, passo 11).
 #
-# O que NAO esta aqui, e nao e esquecimento: oficios e postos sao o F1-05, e e o
-# JobSystem que vai dar trabalho a quem hoje anda atras do rei. A condicao de
-# seguir ja esta escrita a pensar nisso — segue quem NAO tem posto — e por isso
-# o F1-05 tira gente da fila sem tocar neste ficheiro.
+# Depois de recrutada, a pessoa nao anda atras do rei: vai para o nucleo e espera
+# la por trabalho, como no Kingdom: New Lands (Q-063) — e o Retinue. O JobSystem
+# e que a tira de la, e quem tem posto nao espera por ninguem.
 class_name RecruitSystem
 extends RefCounted
 
@@ -26,17 +25,20 @@ const SEM_DONO := 0
 
 const NENHUM := -1
 
-## De que lado fica quem esta exatamente em cima do rei. Nao e balanceamento e
-## por isso nao vai para data/: e uma direccao — atras, que num mundo de uma
-## linha e a esquerda.
-const ATRAS := -1.0
-
 ## As chaves do que pickup() devolve. Ficam aqui e nao em strings soltas pelo
 ## caminho: quem le do outro lado le estas.
 const UNIDADE := &"unit_id"
 const MOEDAS := &"amount"
 const RECRUTADO := &"hired"
 const PRECO := &"price"
+
+## O desconto de recrutamento do povo de cada regiao da campanha, pela ordem das
+## regioes (§04: a Horta tem "tropas baratissimas", Q-007). Escrito pelo SimFactory.
+var cost_deltas: PackedInt32Array = PackedInt32Array()
+## O estado em que se joga: a regiao dele diz que desconto vale agora.
+var state: GameState
+## Os ids de dados que andam atras do rei (a tag `follows_king`: o escudeiro).
+var followers: Dictionary = {}
 
 var _curva: EconomyCurve
 
@@ -84,23 +86,13 @@ func seek_coins(unidades: UnitSystem, moedas: CoinSystem, tick: int) -> void:
 		unidades.set_target_x(unidades.ids[i], moedas.xs[alvo])
 
 
-## Passo 4 tambem: quem ja e teu e ainda nao tem posto anda atras de ti.
-##
-## A forma da fila e a do §50 — `base + i * espacamento`, posicoes ATRIBUIDAS e
-## nao emergentes, por id crescente para que nao vibrem nem se empurrem. O §50
-## escreve-a para quem espera vez num muro; e a mesma pergunta e fica a mesma
-## resposta, com numeros proprios (Q-063).
-func follow(unidades: UnitSystem, king_id: int) -> void:
-	var rei := unidades.index_of(king_id)
-	if rei == NENHUM or not unidades.alive(rei):
-		return
-	var dono := unidades.owners[rei]
-	var seguidores := _seguidores(unidades, king_id, dono)
-	var rei_x := unidades.xs[rei]
-	for lugar in seguidores.size():
-		var i := unidades.index_of(seguidores[lugar])
-		var recuo := _curva.follow_distance_px + lugar * _curva.follow_spacing_px
-		unidades.set_target_x(seguidores[lugar], rei_x + _lado(unidades.xs[i], rei_x) * recuo)
+## Passo 4 tambem: quem ja e teu e ainda nao tem posto. O escudeiro anda atras
+## de ti; os outros vao para o nucleo e esperam la — o minuto 0:20 do Kingdom:
+## New Lands, que o dono pediu (Q-063). As posicoes sao do Retinue.
+func follow(unidades: UnitSystem, king_id: int, nucleo_x: float) -> void:
+	Retinue.place(
+		unidades, king_id, nucleo_x, followers, _curva.follow_distance_px, _curva.follow_spacing_px
+	)
 
 
 ## O recrutamento em si, e o unico sitio onde ele acontece. Devolve verdadeiro
@@ -171,7 +163,7 @@ func _apanhar(
 		return {}
 	unidades.target_ids[i] = UnitSystem.NENHUM
 	unidades.carried_coins[i] += apanhado
-	var preco := unidades.recruit_costs[i]
+	var preco := price(unidades, i)
 	# Conta o SACO e nao a moeda que acabou de apanhar. O §07 da precos de 1 a
 	# 18, e a moeda da §02 vale uma: comparar com a ultima apanhada so deixava
 	# recrutar quem custa 1, e o arqueiro do minuto 1:10 (§25) nunca seria teu.
@@ -180,6 +172,22 @@ func _apanhar(
 		era_de_ninguem and hire(unidades, unit_id, dono_do_rei, unidades.carried_coins[i], preco)
 	)
 	return {UNIDADE: unit_id, MOEDAS: apanhado, RECRUTADO: comprado, PRECO: preco}
+
+
+## Quanto custa comprar esta pessoa aqui: o recruit_cost dela com o desconto do
+## povo da regiao (Q-007). O PriceTag mostra este numero, e nao o da coluna.
+func price(unidades: UnitSystem, i: int) -> int:
+	var delta := 0
+	if state != null and state.region >= 0 and state.region < cost_deltas.size():
+		delta = cost_deltas[state.region]
+	return discounted(unidades.recruit_costs[i], delta)
+
+
+## "-1 moeda no recrutamento, minimo 1" (Q-007). Quem nao custava nada continua.
+static func discounted(base: int, delta: int) -> int:
+	if delta == 0 or base <= 0:
+		return base
+	return maxi(1, base + delta)
 
 
 ## Verdadeiro se esta unidade ainda nao e de ninguem — o que o ecra mostra como
@@ -203,30 +211,3 @@ func _moeda_mais_proxima(moedas: CoinSystem, x: float, faixa: int) -> int:
 			melhor_d = d
 			melhor = c
 	return melhor
-
-
-## Quem segue, POR ID CRESCENTE: vivo, teu, sem posto, e nao es tu proprio.
-##
-## Devolve ids e nao indices porque a ordem das colunas nao e estavel — o
-## remove() troca a unidade removida com a ultima (§42). Ordenar indices dava
-## uma fila que se reordenava sozinha a cada morte, e cada um mudava de lugar
-## sem se ter mexido.
-func _seguidores(unidades: UnitSystem, king_id: int, dono: int) -> PackedInt32Array:
-	var lista := PackedInt32Array()
-	for i in unidades.count():
-		if unidades.ids[i] == king_id or unidades.owners[i] != dono:
-			continue
-		if unidades.job_ids[i] != UnitSystem.NENHUM or not unidades.alive(i):
-			continue
-		lista.append(unidades.ids[i])
-	lista.sort()
-	return lista
-
-
-## De que lado do rei fica quem o segue: o lado em que ja esta. Quem esta
-## exatamente em cima dele vai para tras — a esquerda — porque um recuo de zero
-## punha-o dentro do rei.
-func _lado(x: float, rei_x: float) -> float:
-	if is_equal_approx(x, rei_x):
-		return ATRAS
-	return signf(x - rei_x)

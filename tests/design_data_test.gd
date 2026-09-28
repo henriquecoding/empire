@@ -9,11 +9,11 @@ const Model := preload("res://tests/support/reference_model.gd")
 ## §07, "Tempo ate matar": atacante, precisao, e os cinco valores da tabela
 ## (Rastejante, Alado, Bruto, Cavador, Ariete).
 const TTK_07 := [
-	["archer", "tower", [4.2, 5.6, 11.2, 9.8, 32.2]],
-	["archer", "open", [12.6, 16.8, 33.6, 29.4, 96.6]],
-	["spearman", "unit", [2.2, 3.3, 6.6, 5.5, 16.5]],
-	["root_berserker", "unit", [0.9, 1.8, 2.7, 2.7, 7.2]],
-	["mercenary", "unit", [1.0, 2.0, 3.0, 3.0, 9.0]],
+	["archer", "tower", [4.2, 5.6, 11.2, 9.8, 36.4]],
+	["archer", "open", [12.6, 16.8, 33.6, 29.4, 109.2]],
+	["spearman", "unit", [2.2, 3.3, 6.6, 5.5, 19.8]],
+	["root_berserker", "unit", [0.9, 1.8, 2.7, 2.7, 8.1]],
+	["mercenary", "unit", [1.0, 2.0, 3.0, 3.0, 10.0]],
 ]
 const TARGETS := ["crawler", "winged", "brute", "burrower", "slime_ram"]
 
@@ -55,18 +55,42 @@ func test_tabela_de_tempo_ate_matar_do_07() -> void:
 			assert_float(got).override_failure_message(msg).is_equal_approx(want, want * 0.03)
 
 
-# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
-# gdlint: disable=unused-argument
-func test_arqueiros_nao_param_ariete(
-	do_skip := true,
-	skip_reason := "Q-001: com os numeros do §07 da 94,7 s < 105 s. Ver docs/QUESTIONS.md"
-) -> void:
+func test_arqueiros_nao_param_ariete() -> void:
+	# §31, e a mensagem do §07: um arqueiro em campo nao mata o Ariete numa noite.
+	# Com a vida de 90 dava 94,7 s; o dono subiu-a para 104 (Q-001), e a conta
+	# refeita com a massa da §74 nao muda (Q-038): o tempo ate matar nao depende
+	# de quantas criaturas a noite traz, e a noite continua a durar o que dura.
 	var u: UnitData = load("res://data/units/archer.tres")
 	var ram: CreatureData = load("res://data/creatures/slime_ram.tres")
-	assert_float(Model.ttk(u, ram.max_health, u.accuracy_open)).is_greater(105.0)
+	var relogio: ClockData = load("res://data/economy/clock.tres")
+	var noite: float = relogio.phase_durations[GameClock.Phase.NIGHT]
+	assert_float(Model.ttk(u, ram.max_health, u.accuracy_open)).is_greater(noite)
 
 
-# gdlint: enable=unused-argument
+func test_os_abates_pagam_mais_quanto_mais_custa_derrotar() -> void:
+	# Q-011, decidida pelo dono: "os abates geram moedas, e mais conforme o
+	# inimigo for mais dificil de derrotar". A massa e o preco que a Podridao
+	# paga por cada criatura (§51), e por isso e a medida da dificuldade: quem
+	# custa mais massa nunca larga menos moedas, e cada uma larga pelo menos uma.
+	var criaturas: Array[CreatureData] = []
+	for nome in ResourceLoader.list_directory("res://data/creatures"):
+		var c := load("res://data/creatures".path_join(nome)) as CreatureData
+		if c != null and c.mass_cost > 0:
+			criaturas.append(c)
+	criaturas.sort_custom(
+		func(a: CreatureData, b: CreatureData) -> bool: return a.mass_cost < b.mass_cost
+	)
+	for i in criaturas.size():
+		var c := criaturas[i]
+		assert_int(c.coin_drop).override_failure_message("%s nao larga moeda" % c.id).is_greater(0)
+		if i > 0:
+			var antes := criaturas[i - 1]
+			var msg := (
+				"%s (massa %d) larga %d e %s (massa %d) larga %d"
+				% [c.id, c.mass_cost, c.coin_drop, antes.id, antes.mass_cost, antes.coin_drop]
+			)
+			assert_int(c.coin_drop).override_failure_message(msg).is_greater_equal(antes.coin_drop)
+	assert_int(criaturas.back().coin_drop).is_greater(criaturas.front().coin_drop)
 
 
 func test_podridao_do_29() -> void:

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/biome_data.gd" id="1_yp0wo"]
+
+[resource]
+script = ExtResource("1_yp0wo")
+id = &"marsh"
+display_key = "BIOME_MARSH"
+people = &"paul"
+creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
+resources = Array[StringName]([&"water", &"fertile"])
+atmosphere_preset = &"closed"
+parallax_preset = &"closed"
+region_screens = Vector2i(4, 6)
+music_profile = &"music_marsh"
+in_campaign = false

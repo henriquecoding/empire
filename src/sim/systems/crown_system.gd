@@ -26,6 +26,14 @@ const E_ATE := 3
 
 ## O ultimo dia em que se usou um impulso.
 var used_day := 0
+## O preco (Q-014): quanto sobe por dia — o income_growth do §06, para custar
+## sempre o mesmo em dias de trabalho —, quanto encarece repetir o mesmo decreto,
+## e durante quantos dias o reino se lembra dele. Escritos pelo SimFactory.
+var growth := 1.0
+var repeat_mult := 1.0
+var repeat_days := 0
+## Os decretos dos ultimos dias, [id, dia]: o que torna a repeticao mais cara.
+var history: Array = []
 ## Efeitos activos: [chave, valor, primeiro dia, ultimo dia] — os indices abaixo.
 var effects: Array = []
 
@@ -54,17 +62,35 @@ func ids() -> Array[StringName]:
 	return saida
 
 
+## O preco de um impulso hoje (Q-014): a base do impulses.csv, a crescer com a
+## producao, vezes o perfil de ganancia do rei (`perfil`: o tirano paga metade,
+## §15), vezes repeat_mult por cada vez que o mesmo decreto saiu nos ultimos
+## repeat_days dias. Arredondado a moeda, e nunca de graca.
+func price(id: StringName, dia: int, perfil: float = 1.0) -> int:
+	var impulso: ImpulseData = _impulsos.get(id)
+	if impulso == null:
+		return 0
+	var fator := pow(growth, maxi(0, dia - 1)) * perfil
+	for h in history:
+		if h[0] == id and int(h[1]) < dia and dia - int(h[1]) <= repeat_days:
+			fator *= repeat_mult
+	return maxi(1, roundi(impulso.coin_cost * fator))
+
+
 ## Usa um impulso hoje, se ainda nao se usou nenhum, se ele tem onde pegar e se o
-## saco do rei chega. Devolve verdadeiro se usou.
-func use(id: StringName, dia: int, unidades: UnitSystem, rei: int) -> bool:
+## saco do rei chega ao preco (`preco`, ou o de hoje sem perfil). Devolve
+## verdadeiro se usou.
+func use(id: StringName, dia: int, unidades: UnitSystem, rei: int, preco: int = -1) -> bool:
 	var i := unidades.index_of(rei)
 	if used_day == dia or not available(id) or i == NENHUM or not unidades.alive(i):
 		return false
 	var impulso: ImpulseData = _impulsos[id]
-	if unidades.carried_coins[i] < impulso.coin_cost:
+	var custo := preco if preco >= 0 else price(id, dia)
+	if unidades.carried_coins[i] < custo:
 		return false
-	unidades.carried_coins[i] -= impulso.coin_cost
+	unidades.carried_coins[i] -= custo
 	used_day = dia
+	history.append([id, dia])
 	effects.append([impulso.benefit, impulso.benefit_value, dia, dia])
 	var de := dia if impulso.drawback_days == 0 else dia + 1
 	effects.append([impulso.drawback, impulso.drawback_value, de, dia + impulso.drawback_days])
@@ -109,15 +135,21 @@ func dawn(dia: int, unidades: UnitSystem) -> void:
 			unidades.healths[i] = mini(unidades.healths[i], teto)
 		e[E_DE] = dia + 1  # aplicado: nao volta a cortar no mesmo dia
 	effects = effects.filter(func(e: Array) -> bool: return e[E_ATE] >= dia)
+	history = history.filter(func(h: Array) -> bool: return dia - int(h[1]) <= repeat_days)
 
 
 func to_dict() -> Dictionary:
-	return {&"used_day": used_day, &"effects": effects.duplicate(true)}
+	return {
+		&"used_day": used_day,
+		&"effects": effects.duplicate(true),
+		&"history": history.duplicate(true)
+	}
 
 
 func from_dict(guardado: Dictionary) -> void:
 	used_day = guardado.get(&"used_day", 0)
 	effects = guardado.get(&"effects", []).duplicate(true)
+	history = guardado.get(&"history", []).duplicate(true)
 
 
 func _de(dia: int) -> Array:

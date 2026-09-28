@@ -113,6 +113,7 @@ static func _muro(flanco: int, nivel: int) -> void:
 		vaga.contacts.append(degrau.contact_slots)
 		vaga.width = maxf(vaga.width, float(degrau.shadow_width))
 	vaga.path = BuildSlot.Path.FORTIFICACAO  # Q-070, como no greybox
+	vaga.effects = {&"accuracy": SimFactory.curve().tower_accuracy}  # Q-017, como o WallSite
 	SimLoop.builds.post(vaga)
 	_levantar(vaga, nivel)
 

@@ -8,7 +8,7 @@ O Kingdom usa "blocos de construção modulares dispostos aleatoriamente, com ve
 >
 > A versão anterior desta secção dizia que a tua panorâmica "já é, na prática, o primeiro protótipo" do gerador e que "cada edifício está colocado com intenção". Não é e não está. É uma folha de assets com 24,5% da superfície pintada e vazios de até 400 px (§01). Ainda não existe nenhum segmento autorado — o primeiro está por fazer, e o resto desta secção é a proposta de como o fazer, não a descrição de algo que já lá está.
 
-- **Região** — 4 a 6 ecrãs de largura. Não fixes isto pela largura da tela onde desenhaste — deriva-o do tempo de travessia: a pé (§12) uma região deve levar 40–60 s a atravessar de ponta a ponta, o que a 26 px/s dá 1000–1560 px por ecrã de conteúdo útil. Uma região = um povo = um império a conquistar.
+- **Região** — 4 a 6 ecrãs de largura — oito segmentos na fatia vertical, dez a doze quando uma região pedir cinco ou seis ecrãs, com ADR (Q-030). Não fixes isto pela largura da tela onde desenhaste — deriva-o do tempo de travessia: a pé (§12) atravessar uma região leva cerca de 40–60 s. É uma estimativa, e não uma lei: cada região é única e o número adapta-se a ela, e mede-se no greybox (Q-018, Q-082). A pé anda-se a 80 px/s (ADR 0021). Uma região = um povo = um império a conquistar.
 - **Segmento** — 640 px (meio ecrã). Oito segmentos por região. Cada segmento é uma cena autorada à mão.
 - **Linha do solo** — Constante em toda a região, no valor fixado na Fase 0 (§11). O terreno não sobe nem desce — é o que torna o mundo 1.5D e o movimento das tropas trivial (§20).
 - **Corte de solo** — Gerado em paralelo com a superfície: cada segmento tem 0–2 cavidades e 0–1 passagem, dentro da altura fixada em §11.

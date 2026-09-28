@@ -27,7 +27,7 @@ M = 40 + 18 * dia + 30 * fortalezas
   + 8  * min(recusas_nos_ultimos_5_dias, 5)   # §75
 ```
 
-A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste.
+A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068).
 
 | Estado do campo | Dia 5 | Dia 10 | Dia 20 | Contra a v5.2, ao dia 20 |
 | --- | --- | --- | --- | --- |

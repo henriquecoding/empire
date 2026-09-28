@@ -49,7 +49,7 @@ A §05 mandava "Azul profundo" na noite. A tua paleta tem 30 cores de madeira e 
 A §22 põe "Luz quente pontual" no Bloco 4 com 3 h e sem especificação. Passa a ser o primeiro item do bloco, com regra:
 
 - Três paragens, nunca um gradiente. Núcleo #F6D89B, meio #E8A94E, bordo #AE4F16, e depois dissolve para o ambiente com dither de 2 px — o mesmo shader de revelação que a §11 já pede para o corte de terra.
-- Uma luz domina por ecrã. Se duas competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância. O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.
+- Uma luz domina por ecrã. Se duas competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância — e o farol do §10 também: ilumina os seus 300 px com paragens próprias a metade da força (Q-078). O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.
 - Nada tem contorno dentro do raio de luz. Perto da luz vê-se cor e volume; longe vê-se silhueta. Inverte-se a lógica de sprite habitual e é o que dá a sensação de pintura.
 
 ## 4 · A cara na casca

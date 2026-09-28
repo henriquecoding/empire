@@ -106,16 +106,52 @@ static func reach(x: float, centro: float, raio: float) -> float:
 ## §80: "uma luz domina por ecra". Com as mesmas paragens, a que alcanca mais
 ## longe e mais forte a QUALQUER distancia — o nucleo e o meio dela chegam onde
 ## a outra ja e bordo. Empatar nao chega: duas luzes iguais competem.
-static func dominates(candeia: float, outra: float) -> bool:
-	return candeia > outra
+##
+## Uma luz com paragens proprias e mais fracas (`forca` < 1, o farol da Q-078) e
+## outra conversa: domina-se se, a cada distancia a que as duas acendem, a
+## paragem da candeia for mais clara do que a da outra ja enfraquecida.
+static func dominates(
+	candeia: float, outra: float, forca: float = 1.0, perfil: RotProfile = null
+) -> bool:
+	if forca >= 1.0 or perfil == null:
+		return candeia > outra
+	var cores := stops(perfil)
+	for d in int(minf(candeia, outra)) + 1:
+		var minha := cores[_paragem(candeia, d)].get_luminance()
+		var dela := cores[_paragem(outra, d)].get_luminance() * forca
+		if minha <= dela:
+			return false
+	return true
+
+
+## A paragem que acende a esta distancia de uma luz deste raio: 0 e o bordo.
+static func _paragem(raio: float, d: float) -> int:
+	for p in range(PARAGENS - 1, -1, -1):
+		if d <= stop_radius(raio, p):
+			return p
+	return 0
 
 
 ## O raio da luz de uma obra, ou zero se ela nao tiver nenhuma. Le-se do
-## effect_params do §10 — o farol tem `light_radius`, e mais ninguem tem.
+## effect_params do §10 — o farol tem `light_radius`, e as fogueiras (Q-029).
 static func hearth_radius(vaga: BuildSlot) -> float:
 	if not vaga.standing():
 		return 0.0
 	return float(vaga.effects.get(&"light_radius", 0.0))
+
+
+## A forca das paragens de uma obra (Q-078): 1 e a da candeia; menos e mais
+## fraca. Sem `light_strength` e a regra do §80, as mesmas tres paragens.
+static func hearth_strength(vaga: BuildSlot) -> float:
+	return float(vaga.effects.get(&"light_strength", 1.0))
+
+
+## As tres paragens de uma luz com esta forca: as da candeia, escurecidas.
+static func weakened(cores: PackedColorArray, forca: float) -> PackedColorArray:
+	var saida := PackedColorArray()
+	for cor in cores:
+		saida.append(Color(cor.r * forca, cor.g * forca, cor.b * forca, cor.a))
+	return saida
 
 
 ## A cor com que um corpo se ve. Aceso, e ele proprio; as escuras, e a silhueta

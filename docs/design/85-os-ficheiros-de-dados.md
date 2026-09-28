@@ -22,4 +22,4 @@ Tudo o que esta parte decide está em CSV, com as mesmas colunas de disciplina q
 >
 
 
-O conversor tools/csv_to_tres.gd gera os 154 recursos a partir das 17 tabelas registadas em data/source/_tables.csv. Os scripts em tools/recovered_generators/ são geradores históricos de CSV, não de .tres; não devem repor os dados durante o balanceamento. O architecture_test.gd continua a valer sem alterações — nenhum destes recursos importa nada de fora de src/sim/.
+O conversor tools/csv_to_tres.gd gera os recursos a partir das tabelas registadas em data/source/_tables.csv — quantos são conta-o a ferramenta (docs/recovery/validation.json, conferido pelo tools/check_claims.py), e não esta frase. Os scripts em tools/recovered_generators/ são geradores históricos de CSV, não de .tres; não devem repor os dados durante o balanceamento. O architecture_test.gd continua a valer sem alterações — nenhum destes recursos importa nada de fora de src/sim/.

@@ -10,7 +10,7 @@ Cada rei — o teu e os inimigos — tem um valor de Ganância (0–100): a perc
 | --- | --- | --- | --- |
 | Austero | 5–15 | Quase todo o rendimento fica. Nobres descontentes: −10% moral das tropas de elite. | Muralhas fortes, poucas elites. Ataca com Berserkers. |
 | Equilibrado | 20–35 | Neutro. | Sem fraqueza óbvia. Ataca na janela de sucessão. |
-| Fastuoso | 40–60 | Economia sufocada, mas nobres leais: +1 tropa de elite grátis a cada 3 dias. | Elites perigosas, muralhas médias. |
+| Fastuoso | 40–60 | Economia sufocada, mas nobres leais: +1 tropa de elite grátis (o Berserker de Raiz) a cada 5 dias. | Elites perigosas, muralhas médias. |
 | Tirano | 65–90 | Mal dá para construir. Em compensação, os impulsos reais custam metade. | Muralhas fracas, tropas de elite. Cerco rápido com aríete. |
 
 
@@ -27,6 +27,8 @@ Um impulso por dia. Cada um tem vantagem e desvantagem — nunca só vantagem. �
 | Vigília | Tropas não fogem esta noite | Todas as tropas −30% de vida amanhã |
 | Perdão Real | Dívida de mercenários a zero | Favor a zero; nenhum diplomata funciona por 5 dias |
 
+
+O preço em moedas (Q-014). Cada impulso tem uma base, na medida do que vale: a Colheita Forçada e a Chamada às Armas 4, a Rota Protegida 5, a Feira Livre e a Vigília 6, o Perdão Real 10. O preço de cada dia é essa base a crescer com a produção — ao mesmo ritmo que ela (§06) —, e por isso custa sempre o mesmo em dias de trabalho. O tirano paga metade. Repetir o mesmo decreto dentro de três dias custa uma vez e meia por cada vez que ele saiu: o reino cansa-se da mesma ordem, e o melhor impulso deixa de ser o único que se usa.
 
 ## Sucessão
 

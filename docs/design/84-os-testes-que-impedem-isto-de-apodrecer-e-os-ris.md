@@ -17,7 +17,7 @@ A §31 diz porque é que os testes existem neste projeto: sem eles não consegue
 | D-07 | Nunca há mais de nove nomeados vivos | O teto cede e o nome deixa de valer | §76 |
 | D-08 | Um título volta com ordinal depois de três dias de luto | O sistema se esgota às nove horas de jogo | §76 |
 | D-09 | Todos os capítulos colocados têm caminho alternativo | Um capítulo passa a bloquear a rota e parte a regra 5 | §77 |
-| D-10 | Exatamente um capítulo tem law_enters_walls | Aparece o segundo, e a exceção do Forno Aceso deixa de ser especial | §77 |
+| D-10 | Nenhum capítulo tem law_enters_walls | Aparece um, e a regra 6 da §77 passa a ter exceção (Q-039) | §77 |
 | D-11 | Seis capítulos por campanha, e o Cerco é sempre um deles | O diário 12 fica inalcançável nalgumas sementes | §77 |
 | D-12 | Os doze diários são alcançáveis em mil sementes seguidas | Uma combinação de capítulos deixa um ato sem fragmentos | §79 |
 | D-13 | O epílogo é determinista e segue a precedência da §79 | Dois estados iguais dão dois finais | §79 |
@@ -49,9 +49,9 @@ func test_d04_recusa_tem_teto() -> void:
     for i in 30: r.refuse()
     assert_float(r.refusal_penalty()).is_less_equal(40.0)
 
-func test_d10_uma_so_lei_entra_em_casa() -> void:
+func test_d10_nenhuma_lei_entra_em_casa() -> void:
     var n := ChapterDB.all().filter(func(c): return c.law_enters_walls).size()
-    assert_int(n).is_equal(1)
+    assert_int(n).is_equal(0)
 ```
 
 > **O D-12 é o único caro, e é o que salva a narrativa**

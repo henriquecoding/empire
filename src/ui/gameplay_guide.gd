@@ -121,7 +121,9 @@ static func context(device: Glyphs.Device) -> String:
 	if nearest >= 0:
 		var data := Registry.entry(&"units", units.data_ids[nearest]) as UnitData
 		values["name"] = _tr(data.display_key)
-		values["cost"] = PriceTag.owed_by_unit(units, nearest)
+		values["cost"] = PriceTag.owed_by_unit(
+			units, nearest, SimLoop.recruits.price(units, nearest)
+		)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
 	return ""
 

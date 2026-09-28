@@ -13,7 +13,8 @@ build_work = 80.0
 width_px = 64
 effect_params = {
 &"blocks_summon": 1.0,
-&"light_radius": 300.0
+&"light_radius": 300.0,
+&"light_strength": 0.5
 }
 shadow_width = 64
 tags = Array[StringName]([&"landmark", &"warm_light"])

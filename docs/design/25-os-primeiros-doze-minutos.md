@@ -7,7 +7,7 @@ Dois dias de jogo. É neste tempo que se decide se alguém escreve uma análise 
 | Minuto | O que acontece | O que ensina | Como ensina |
 | --- | --- | --- | --- |
 | 0:00 | Acordas a pé, sozinho, com 6 moedas, ao lado de um castelo-árvore em ruínas | Quem és e onde estás | A escala 3 do teu sprite contra a escala 2 de um vagabundo a olhar para ti |
-| 0:20 | O vagabundo segue-te. Largas uma moeda perto dele. | Verbo 1 | Ele apanha-a e ganha um chapéu. Nada mais é preciso dizer. |
+| 0:20 | Largas uma moeda perto do vagabundo; ele corre para ela. | Verbo 1 | Ele apanha-a e ganha um chapéu, e vai para a vila esperar por trabalho — como no Kingdom: New Lands (Q-063). Nada mais é preciso dizer. |
 | 1:10 | Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda. | Economia existe fora de ti | Observação. O jogador não fez nada. |
 | 2:00 | Sino de meio-dia. Uma estátua enterrada meio visível sob vegetação. | Há coisas escondidas | Curiosidade. Não é obrigatório. |
 | 3:30 | Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas | Construção | A silhueta é o convite. Não há botão "construir". |

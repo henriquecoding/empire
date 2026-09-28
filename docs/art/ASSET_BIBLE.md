@@ -62,13 +62,17 @@ a tabela de correspondência:
 |---|---|---|---|---|
 | `shadow` | −1 | largura do sprite (`shadow_width`) | — (nova) | — |
 | `body` | 0 | povo e escala | `Body` | Body |
-| `head` | 1 | identidade (sorteada do fluxo `visual`) | `Equipments` *(a confirmar: Q-024)* | Equipment |
+| `head` | 1 | identidade (sorteada do fluxo `visual`) | — (nova: `Equipments` **não** é a cabeça, Q-024) | — |
 | `face` | 2 | estado e lealdade — **nunca guardado** | `Face` | Face |
 | `weapon` | 3 | nível do ferreiro | `Sword`, `Arms and Weapons` | Weapon |
 | `shield` | 3 | nível do ferreiro | `Shield` | Shield / Secondary |
 | `overlay` | 4 | efeitos ativos | — (nova) | — |
 
 `Knight`, `References` e `Background` são camadas de trabalho: não se exportam.
+
+`Equipments` fica **sem slot** por agora: o dono decidiu que não é o `head` (Q-024, 28/09/2026) e não disse onde
+vai. As duas leituras — um slot próprio `equipment` entre o `body` e o `head`, ou parte do `body` — estão na Q-153.
+Até lá não se exporta nem se desenha (AGENTS.md, regra 9: não se toca em `art/`).
 
 ### Regras por slot
 

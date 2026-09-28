@@ -56,8 +56,9 @@ static func of(
 
 
 ## O que atravessa com o rei (P-K, Q-135): nenhuma obra — a regiao seguinte e
-## outra —, mas quem e teu e esta perto dele (`alcance`), o saco, e a regiao a
-## seguir. Depois da ultima, a campanha acabou: o plano sorteia-se de novo.
+## outra —, mas quem e teu e esta perto dele (`alcance`) ou espera sem posto no
+## nucleo (Q-063), o saco, e a regiao a seguir. Depois da ultima, a campanha
+## acabou: o plano sorteia-se de novo.
 static func crossing(
 	estado: GameState,
 	unidades: UnitSystem,
@@ -73,11 +74,15 @@ static func crossing(
 		var perfil: UnitData = dados.get(unidades.data_ids[i])
 		if i == r or perfil == null or perfil.tags.has(&"follows_king") or not unidades.alive(i):
 			continue
-		if (
-			unidades.owners[i] == unidades.owners[r]
-			and unidades.bands[i] == unidades.bands[r]  # perto e na mesma faixa (N2)
-			and absf(unidades.xs[i] - unidades.xs[r]) <= alcance
-		):
+		if unidades.owners[i] != unidades.owners[r]:
+			continue
+		if unidades.bands[i] != unidades.bands[r]:
+			continue  # so na faixa do rei (N2)
+		# Quem esta perto vai; e quem espera no nucleo sem posto embarca com ele,
+		# como a tripulacao do barco do Kingdom: New Lands — ja nao anda atras
+		# dele (Q-063). Quem tem posto fica, e e o decay da regiao (§16).
+		var perto := absf(unidades.xs[i] - unidades.xs[r]) <= alcance
+		if perto or unidades.job_ids[i] == UnitSystem.NENHUM:
 			comitiva.append(String(unidades.data_ids[i]))
 	d[COMITIVA] = comitiva
 	d[SACO] = unidades.carried_coins[r]

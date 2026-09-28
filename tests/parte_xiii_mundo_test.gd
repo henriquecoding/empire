@@ -88,16 +88,15 @@ func test_d09_dados_todo_o_capitulo_tem_preco_de_desvio() -> void:
 		assert_float(c.detour_seconds).override_failure_message(msg).is_greater(0.0)
 
 
-func test_d10_exatamente_um_capitulo_tem_law_enters_walls() -> void:
-	# Aparece o segundo, e a excecao do Forno Aceso deixa de ser especial (Q-039).
-	var n := 0
-	var quem := ""
+func test_d10_nenhum_capitulo_tem_law_enters_walls() -> void:
+	# A regra 6 da §77 sem excecao: o dono cortou a do Forno Aceso (Q-039, "uma
+	# fornalha nao"). Aparece uma, e a §74 volta a ter dentro das muralhas o que
+	# diz que la nao ha.
+	var quem: Array[String] = []
 	for c: ChapterData in Dados.all_in("res://data/world/chapters"):
 		if c.law_enters_walls:
-			n += 1
-			quem = str(c.id)
-	assert_int(n).override_failure_message("leis dentro de casa: %d (%s)" % [n, quem]).is_equal(1)
-	assert_str(quem).is_equal("lit_oven")
+			quem.append(str(c.id))
+	assert_array(quem).override_failure_message("leis dentro de casa: %s" % [quem]).is_empty()
 
 
 func test_d11_dez_capitulos_e_o_cerco_e_sempre_um_deles() -> void:

@@ -15,7 +15,7 @@ A §25 é a melhor secção de onboarding que este dossiê tem: doze minutos, do
 | Minuto | O que acontece | O que ensina | Como ensina |
 | --- | --- | --- | --- |
 | 0:00 | Acordas a pé, sozinho, com 6 moedas, ao lado de um castelo-árvore em ruínas. Um pouco à esquerda, fora do muro, está uma árvore preta com uma cara na casca. | Quem és e onde estás | A escala 3 do teu sprite contra a escala 2 de um vagabundo. A árvore não é apontada por nada. |
-| 0:20 | O vagabundo segue-te. Largas uma moeda perto dele. | Verbo 1 | Ele apanha-a e ganha um chapéu. Guarda esta cara. O jogo vai precisar dela ao minuto treze. |
+| 0:20 | Largas uma moeda perto do vagabundo; ele corre para ela. | Verbo 1 | Ele apanha-a, ganha um chapéu e vai para a vila (Q-063). Guarda esta cara. O jogo vai precisar dela ao minuto treze. |
 | 1:10 | Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda. | Economia existe fora de ti | Observação. O jogador não fez nada. |
 | 2:00 | Sino de meio-dia. Uma estátua enterrada meio visível sob vegetação. | Há coisas escondidas | Curiosidade. Não é obrigatório. |
 | 3:30 | Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas | Construção | A silhueta é o convite. Não há botão "construir". |

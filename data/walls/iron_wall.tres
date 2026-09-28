@@ -15,7 +15,9 @@ material_by_people = {
 &"enramados": &"iron",
 &"fenda": &"iron",
 &"fornalha": &"slag",
+&"geada": &"iron",
 &"horta": &"iron",
+&"paul": &"iron",
 &"portuarios": &"iron"
 }
 max_health_a = 225

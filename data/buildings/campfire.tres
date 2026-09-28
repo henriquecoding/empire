@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_utnrg"]
+
+[resource]
+script = ExtResource("1_utnrg")
+id = &"campfire"
+display_key = "BUILDING_CAMPFIRE"
+category = &"defense"
+cost = 3
+max_health = 24
+build_work = 6.0
+width_px = 32
+effect_params = {
+&"light_radius": 96.0,
+&"light_strength": 0.5,
+&"radius": 96.0,
+&"rot_slow": 0.25,
+&"sells_torch": 1.0
+}
+shadow_width = 32
+tags = Array[StringName]([&"warm_light"])

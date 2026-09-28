@@ -91,3 +91,58 @@ func test_o_save_guarda_o_dia_e_os_efeitos() -> void:
 	copia.from_dict(coroa.to_dict())
 	assert_bool(copia.use(&"vigil", 3, unidades, rei)).is_false()
 	assert_float(copia.yield_mult(4, &"farm")).is_equal(0.0)
+
+
+# ─── O preco (Q-014, o sistema que o dono pediu) ─────────────────────────────
+
+
+func _curva() -> EconomyCurve:
+	return Registry.entry(&"economy", &"curve") as EconomyCurve
+
+
+func test_o_preco_do_dia_1_e_a_base_da_tabela() -> void:
+	assert_int(coroa.price(&"vigil", 1)).is_equal(_impulso(&"vigil").coin_cost)
+
+
+func test_o_preco_cresce_com_a_producao() -> void:
+	# Ao ritmo do income_growth do §06: custa sempre o mesmo em dias de trabalho.
+	var base := _impulso(&"royal_pardon").coin_cost
+	var esperado := roundi(base * pow(_curva().income_growth, 9))
+	assert_int(coroa.price(&"royal_pardon", 10)).is_equal(esperado)
+	assert_int(coroa.price(&"royal_pardon", 10)).is_greater(base)
+
+
+func test_o_tirano_paga_metade() -> void:
+	# §15: "os impulsos reais custam metade". O perfil e o da gama da ganancia.
+	var tirano := Registry.entry(&"crown/greed", &"tyrant") as GreedProfile
+	var perfil := RulesFactory.impulse_cost_mult(tirano.greed_range.x)
+	assert_float(perfil).is_equal(0.5)
+	assert_float(RulesFactory.impulse_cost_mult(27)).is_equal(1.0)
+	var base := _impulso(&"royal_pardon").coin_cost
+	assert_int(coroa.price(&"royal_pardon", 1, perfil)).is_equal(roundi(base * perfil))
+
+
+func test_repetir_o_mesmo_decreto_sai_mais_caro_e_o_reino_esquece() -> void:
+	var c := _curva()
+	assert_bool(coroa.use(&"vigil", 1, unidades, rei)).is_true()
+	var base := _impulso(&"vigil").coin_cost
+	var dia2 := roundi(base * c.income_growth * c.impulse_repeat_mult)
+	assert_int(coroa.price(&"vigil", 2)).is_equal(dia2)
+	# Outro decreto nao se lembra deste.
+	var outro := _impulso(&"forced_harvest").coin_cost
+	assert_int(coroa.price(&"forced_harvest", 2)).is_equal(roundi(outro * c.income_growth))
+	# Passados os dias de memoria, volta ao preco do dia.
+	var longe := 2 + c.impulse_repeat_days
+	coroa.dawn(longe, unidades)
+	var so_o_dia := roundi(base * pow(c.income_growth, longe - 1))
+	assert_int(coroa.price(&"vigil", longe)).is_equal(so_o_dia)
+
+
+func test_cobra_o_preco_de_hoje_e_ele_vai_no_save() -> void:
+	unidades.carried_coins[unidades.index_of(rei)] = 100
+	var preco := coroa.price(&"vigil", 5)
+	assert_bool(coroa.use(&"vigil", 5, unidades, rei, preco)).is_true()
+	assert_int(_saco()).is_equal(100 - preco)
+	var outra := SimFactory.crown()
+	outra.from_dict(coroa.to_dict())
+	assert_int(outra.price(&"vigil", 6)).is_equal(coroa.price(&"vigil", 6))

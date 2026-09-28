@@ -13,7 +13,7 @@ Acampamentos de mercenários espalhados pelo caminho. Atacam sempre — não sã
 | Captura | 20% | Fica prisioneiro. Resgate exigido com prazo. |
 
 
-As probabilidades deslocam-se com o nível do diplomata e o Favor acumulado: cada 20 de Favor move 5 pontos de Captura para Dissolução. Um diplomata n2 com 60 de Favor tem 45/45/10.
+As probabilidades deslocam-se com o nível do diplomata e o Favor acumulado: cada 20 de Favor move 5 pontos de Captura para Dissolução. Um diplomata com 60 de Favor tem 45/50/5 (Dissolução/Contrato/Captura).
 
 ## A dívida
 

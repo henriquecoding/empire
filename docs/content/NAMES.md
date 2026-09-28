@@ -30,6 +30,8 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `sower` | `UNIT_SOWER` | Semeador | Sower |
 | `war_smith` | `UNIT_WAR_SMITH` | Ferreiro de Guerra | War Smith |
 | `digger` | `UNIT_DIGGER` | Escavador | Digger |
+| `ice_warden` | `UNIT_ICE_WARDEN` | Guarda do Gelo | Ice Warden |
+| `reed_stalker` | `UNIT_REED_STALKER` | Caçador do Caniçal | Reed Stalker |
 
 ## creatures
 
@@ -73,6 +75,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `lighthouse` | `BUILDING_LIGHTHOUSE` | Farol | Lighthouse |
 | `consecrated_altar` | `BUILDING_CONSECRATED_ALTAR` | Altar Consagrado | Consecrated Altar |
 | `passage_seal` | `BUILDING_PASSAGE_SEAL` | Escora | Shoring |
+| `campfire` | `BUILDING_CAMPFIRE` | Fogueira | Campfire |
 
 ## walls
 
@@ -94,6 +97,8 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `horta` | `PEOPLE_HORTA` | Horta | Horta |
 | `fornalha` | `PEOPLE_FORNALHA` | Fornalha | Fornalha |
 | `sobraiz` | `PEOPLE_SOBRAIZ` | Sob-Raiz | Sob-Raiz |
+| `geada` | `PEOPLE_GEADA` | Geada | Geada |
+| `paul` | `PEOPLE_PAUL` | Paul | Paul |
 
 ## classes
 
@@ -146,6 +151,8 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `floodplain` | `BIOME_FLOODPLAIN` | Várzea | Floodplain |
 | `volcanic` | `BIOME_VOLCANIC` | Terras Vulcânicas | Volcanic Lands |
 | `subterranean` | `BIOME_SUBTERRANEAN` | Subterrâneo | Underground |
+| `glacier` | `BIOME_GLACIER` | Glaciar | Glacier |
+| `marsh` | `BIOME_MARSH` | Paul | Marsh |
 
 ## mounts
 
@@ -186,6 +193,8 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `buried_statue` | `SECRET_BURIED_STATUE` | Estátua Enterrada | Buried Statue |
 | `campaign_journal` | `SECRET_CAMPAIGN_JOURNAL` | Diário de Campanha | Campaign Journal |
 | `ancient_seed` | `SECRET_ANCIENT_SEED` | Semente Anciã | Ancient Seed |
+| `statue_offering` | `SECRET_STATUE_OFFERING` | Estátua da Oferenda | Statue of the Offering |
+| `statue_seal` | `SECRET_STATUE_SEAL` | Estátua do Mineiro | Statue of the Miner |
 
 ## wildlife
 

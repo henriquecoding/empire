@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_x1cbc"]
+
+[resource]
+script = ExtResource("1_x1cbc")
+id = &"ice_warden"
+display_key = "UNIT_ICE_WARDEN"
+people = &"geada"
+max_health = 20
+damage = 3
+attack_interval = 1.4
+accuracy_open = 1.0
+recruit_cost = 8
+drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
+move_speed = 68.0
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"melee", &"slows_on_hit"])
+coin_capacity = 5
+ability = &"freeze_on_hit"
+ability_params = {
+&"seconds": 2.0,
+&"slow": 0.3
+}
+weapon_kind = &"spear"

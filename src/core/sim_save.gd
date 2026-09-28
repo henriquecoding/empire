@@ -24,6 +24,8 @@ const AMARGUEIROS := &"amargueiros"
 const VOZ := &"offers"
 const NOMES := &"titles"
 const COLHEITA := &"harvest"
+## O archote do rei (Q-029).
+const ARCHOTE := &"torch"
 const REI := &"king_id"
 const POSTOS := &"staffing"
 
@@ -48,6 +50,7 @@ static func world(
 		VOZ: noite.voice.to_dict(),
 		NOMES: noite.names.to_dict(),
 		COLHEITA: noite.harvest.to_dict(),
+		ARCHOTE: noite.dark.torch.to_dict(),
 		REI: king_id,
 	}
 
@@ -76,4 +79,5 @@ static func restore(
 	noite.voice.from_dict(mundo.get(VOZ, {}))
 	noite.names.from_dict(mundo.get(NOMES, {}))
 	noite.harvest.from_dict(mundo.get(COLHEITA, {}))
+	noite.dark.torch.from_dict(mundo.get(ARCHOTE, {}))
 	return mundo.get(REI, UnitSystem.NENHUM)

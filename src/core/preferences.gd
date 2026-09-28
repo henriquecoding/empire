@@ -25,6 +25,8 @@ const FICHEIRO := "user://settings.cfg"
 const SCREEN_SHAKE := &"screen_shake"
 const FLASHES := &"flashes"
 const CAPTIONS := &"captions"
+## A roda do rei abranda o tempo enquanto esta aberta (§24, Q-034). Desliga-se.
+const WHEEL_SLOWDOWN := &"wheel_slowdown"
 ## A duracao do dia do §26, em segundos. Zero e a do clock.csv.
 const DAY_SECONDS := &"day_seconds"
 ## O contraste (1 e o da §80) e o modo para daltonismo (0 e nenhum), do §26.
@@ -42,6 +44,7 @@ const POR_OMISSAO := {
 	SCREEN_SHAKE: true,
 	FLASHES: true,
 	CAPTIONS: false,
+	WHEEL_SLOWDOWN: true,
 	DAY_SECONDS: 0.0,
 	CONTRAST: 1.0,
 	COLORBLIND: 0,

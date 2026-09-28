@@ -16,6 +16,9 @@ extends Resource
 ## Valor de venda por dia (§06). O §49 le yield_per_phase: o EconomySystem divide
 ## pelo numero de fases do ClockData.
 @export var yield_per_day: float = 0.0
+## O que a materia perde por dia na obra se nenhuma casa a converter (Q-012: o
+## peixe estraga; a Salga de pe acaba com isso, §06). Zero e "nao estraga".
+@export var spoil_per_day: float = 0.0
 @export var requires_biome_feature: StringName = &""  # water, forest, rock (§06, §21)
 @export var destroyed_by_rot_trail: bool = false  # §49: plantacoes destruidas, o resto para
 @export var job_slots: int = 0  # postos que publica (§20)

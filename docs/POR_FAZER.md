@@ -240,7 +240,7 @@ canónica disto, e é a que se mantém a par.
 
 ## Apêndice — o que já se pode correr
 
-Precisa de **Godot 4.6-stable** (fixado em `.godot-version`). Num *checkout*
+Precisa de **Godot 4.7.2-stable** (fixado em `.godot-version`). Num *checkout*
 frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena.
 
 | O quê | Como | O que se vê |

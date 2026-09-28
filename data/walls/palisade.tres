@@ -15,7 +15,9 @@ material_by_people = {
 &"enramados": &"reinforced_wood",
 &"fenda": &"reinforced_wood",
 &"fornalha": &"reinforced_wood",
+&"geada": &"ice",
 &"horta": &"reinforced_wood",
+&"paul": &"reinforced_reeds",
 &"portuarios": &"reinforced_wood"
 }
 max_health_a = 48

@@ -31,7 +31,11 @@ func _economia() -> EconomySystem:
 
 
 func _canteiro(obras: BuildSystem, x: float) -> BuildSlot:
-	var d := Registry.entry(&"buildings", &"farm") as BuildingData
+	return _obra(obras, &"farm", x)
+
+
+func _obra(obras: BuildSystem, tipo: StringName, x: float) -> BuildSlot:
+	var d := Registry.entry(&"buildings", tipo) as BuildingData
 	var vaga := BuildSlot.new()
 	vaga.x = x
 	vaga.kind = d.id
@@ -132,6 +136,56 @@ func test_uma_obra_de_pe_produz_uma_vez_por_fase() -> void:
 			moedas += evento[EconomySystem.QUANTO]
 
 	assert_int(moedas).is_equal(int(vaga.yield_per_day))
+
+
+## As moedas que as obras largam num dia inteiro, fase a fase.
+func _um_dia(e: EconomySystem, obras: BuildSystem) -> int:
+	var moedas := 0
+	for f in _relogio().phase_durations.size():
+		for evento in e.on_phase(obras, f, []):
+			if evento[EconomySystem.CHAVE] == EconomySystem.EV_MOEDA:
+				moedas += evento[EconomySystem.QUANTO]
+	return moedas
+
+
+func test_o_peixe_estraga_no_pesqueiro_sem_salga() -> void:
+	# Q-012, decidida pelo dono: "no meu jogo ha o conceito de podridao e faz
+	# sentido ter". O peixe que nenhuma Salga converte perde spoil_per_day por
+	# dia no pesqueiro, repartido pelas fases como o rendimento (Q-027).
+	var e := _economia()
+	e.spoil = RulesFactory.spoilage()
+	var obras := BuildSystem.new()
+	var pesqueiro := _obra(obras, &"fishery", 100.0)
+	var dados := Registry.entry(&"buildings", &"fishery") as BuildingData
+
+	assert_float(dados.spoil_per_day).is_greater(0.0)
+	assert_int(_um_dia(e, obras)).is_equal(int(pesqueiro.yield_per_day - dados.spoil_per_day))
+
+
+func test_so_o_peixe_estraga() -> void:
+	# O canteiro rende o que rendia: o estrago e uma coluna do edificio, e nao
+	# uma taxa sobre tudo o que se produz.
+	var e := _economia()
+	e.spoil = RulesFactory.spoilage()
+	var obras := BuildSystem.new()
+	var vaga := _canteiro(obras, 100.0)
+
+	assert_int(_um_dia(e, obras)).is_equal(int(vaga.yield_per_day))
+
+
+func test_com_a_salga_de_pe_o_peixe_deixa_de_estragar() -> void:
+	# §06: "a Salga: +50%, e o peixe deixa de estragar". O peixe que vai para a
+	# casa nao fica no pesqueiro, e por isso nao apodrece la.
+	var e := _economia()
+	e.spoil = RulesFactory.spoilage()
+	e.conversion = SimFactory.conversion()
+	var obras := BuildSystem.new()
+	var pesqueiro := _obra(obras, &"fishery", 100.0)
+	_obra(obras, &"saltery", 300.0)
+	var salga := Registry.entry(&"crafts", &"fish_saltery") as CraftData
+
+	var inteiro := pesqueiro.yield_per_day * salga.coin_multiplier
+	assert_int(_um_dia(e, obras)).is_equal(int(floorf(inteiro)))
 
 
 func test_uma_obra_por_construir_nao_produz() -> void:

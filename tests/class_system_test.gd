@@ -162,3 +162,19 @@ func test_o_saco_cheio_do_rei_nao_recebe_mais() -> void:
 	unidades.carried_coins[e] = 4
 	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(1)
 	assert_int(unidades.carried_coins[e]).is_equal(3)
+
+
+func test_so_uma_classe_de_arco_marca_alvos() -> void:
+	# §24: "Marcar alvo — so classe Arqueiro"; e o dono: "vale para a classe
+	# arqueiro e para outras que podem ter uma gameplay parecida" (Q-086). Quem
+	# marca e quem o classes.csv da o verbo mark_target, e o Monarca nao o tem.
+	var monarca := ClassSystem.new(Registry.entry(&"classes", &"monarch") as ClassData)
+	var arqueiro := ClassSystem.new(Registry.entry(&"classes", &"archer") as ClassData)
+	assert_bool(monarca.marks()).is_false()
+	assert_bool(arqueiro.marks()).is_true()
+	for recurso in Registry.entries(&"classes"):
+		var dados := recurso as ClassData
+		var marca := ClassSystem.new(dados).marks()
+		assert_bool(marca).override_failure_message(String(dados.id)).is_equal(
+			dados.verb == &"mark_target"
+		)

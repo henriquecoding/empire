@@ -31,3 +31,8 @@ var phase_durations: PackedFloat32Array = PackedFloat32Array([15.0, 85.0, 40.0, 
 ## tropas a sairem dos postos em cascata". A mesma frente leva a luz (DawnSweep)
 ## e solta as tropas (DawnCascade): uma sai do posto quando a luz lhe chega.
 @export var dawn_sweep_px_s: float = 0.0
+
+@export_group("§24 · a roda do rei")
+## Quantos passos por frame correm com a roda aberta: "a roda abranda o tempo a
+## 50%, desligavel" (Q-034). Nao e simulacao — e o ritmo a que ela corre.
+@export var wheel_time_scale: float = 1.0

@@ -58,6 +58,7 @@ func before_spawn(rot: RotSystem, dia: int) -> bool:
 ## Depois de nascer: o que e permanente pesa ja, e a noite volta a ter voz.
 func after_spawn(rot: RotSystem) -> void:
 	rot.state.mass *= debt.mass_mult_permanent
+	rot.state.mass += debt.collect()  # o que a noite saltada nao gastou (Q-040)
 	offers.dusk()
 	_pausa = 0.0
 	if debt.tender():
@@ -177,7 +178,10 @@ func _aceite(rot: RotSystem, dia: int) -> void:
 		&"mass_mult_permanent":
 			debt.mass_mult_permanent *= o.effect_value
 			rot.state.mass *= o.effect_value
-		&"rot_detours", &"skip_night":
+		&"rot_detours":
+			rot.retreat()
+		&"skip_night":
+			debt.carry(rot.mass())  # saltar tem peso: vem na noite seguinte (Q-040)
 			rot.retreat()
 		&"rot_ends":
 			debt.ended = true

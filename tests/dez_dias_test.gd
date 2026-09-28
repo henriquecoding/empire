@@ -31,7 +31,9 @@ const ESTACARIA := [1, 1]
 const RECEITA_DO_07 := 6
 ## Duas noites chegam para a pergunta "chega-lhe alguma coisa?": com a estacaria
 ## do §10 o muro cai na primeira, e a partir dai o nucleo esta a descoberto.
-const DUAS_NOITES := 2
+## Com as primeiras noites em rampa (Q-017) e a certeza dos postos de muro, a
+## receita do §07 aguenta mais: o nucleo so leva na setima noite, e cai nela.
+const NOITES_ATE_MORDER := 7
 
 var _h: Harness
 
@@ -121,7 +123,7 @@ func test_o_nucleo_pode_ser_atacado() -> void:
 	_h.high_tower = false
 	_h.archers = RECEITA_DO_07
 
-	var r := Campaign.new().run(_h, DUAS_NOITES)
+	var r := Campaign.new().run(_h, NOITES_ATE_MORDER)
 
 	assert_float(r[Campaign.VIDA]).override_failure_message(_conta(r)).is_less(1.0)
 

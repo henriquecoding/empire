@@ -21,6 +21,9 @@ var used: PackedStringArray = PackedStringArray()
 var mass_mult_permanent: float = 1.0
 ## A decima segunda aceite: "A Podridao nao volta a nascer" (§75, §79).
 var ended: bool = false
+## A massa de uma noite saltada, que a seguinte traz (Q-040: "saltar o jogo gera
+## consequencias"). A Podridao nao esquece o que nao gastou.
+var carried_mass: float = 0.0
 
 var _perfil: RotProfile
 
@@ -87,6 +90,7 @@ func to_dict() -> Dictionary:
 		&"offers_used": used,
 		&"mass_mult_permanent": mass_mult_permanent,
 		&"rot_ended": ended,
+		&"carried_mass": carried_mass,
 	}
 
 
@@ -96,3 +100,17 @@ func from_dict(d: Dictionary) -> void:
 	used = d.get(&"offers_used", used)
 	mass_mult_permanent = d.get(&"mass_mult_permanent", mass_mult_permanent)
 	ended = d.get(&"rot_ended", ended)
+	carried_mass = d.get(&"carried_mass", carried_mass)
+
+
+## A noite saltada deixa a massa dela para a seguinte (Q-040), na fraccao do
+## skipped_mass_carry do rot.csv.
+func carry(massa: float) -> void:
+	carried_mass += maxf(0.0, massa) * _perfil.skipped_mass_carry
+
+
+## A noite seguinte leva-a toda, e o que se leva deixa de se dever.
+func collect() -> float:
+	var levada := carried_mass
+	carried_mass = 0.0
+	return levada

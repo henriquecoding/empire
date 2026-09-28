@@ -124,7 +124,15 @@ func _fogueiras() -> void:
 		var raio := WorldLight.hearth_radius(vaga)
 		if vaga.band != band or raio <= 0.0:
 			continue
-		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, cores)
+		var proprias := WorldLight.weakened(cores, WorldLight.hearth_strength(vaga))  # Q-078
+		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, proprias)
+	# O archote aceso do rei (Q-029): a mesma luz, a metade da forca, a volta dele.
+	var rei := SimLoop.units.index_of(SimLoop.king_id)
+	if rei >= 0 and SimLoop.night.dark.torch.lit() and SimLoop.units.bands[rei] == int(band):
+		var chao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)))
+		RotView.lamp(
+			self, chao, _podre.torch_radius_px, WorldLight.weakened(cores, WorldLight.MEIA)
+		)
 
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece

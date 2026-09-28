@@ -13,8 +13,9 @@ func _com(formas: Array[Dictionary], chave: StringName) -> Array:
 	return formas.filter(func(f: Dictionary) -> bool: return f.has(chave))
 
 
-func test_ha_seis_biomas_e_cada_um_tem_a_sua_greybox() -> void:
-	assert_int(_biomas().size()).is_equal(6)
+func test_ha_oito_biomas_e_cada_um_tem_a_sua_greybox() -> void:
+	# Os seis do §04 e os dois do pedido do dono: o gelo e o pantano (Q-010, Q-013).
+	assert_int(_biomas().size()).is_equal(8)
 	for id in _biomas():
 		assert_array(BiomeGreybox.shapes(StringName(id), LARGURA)).is_not_empty()
 

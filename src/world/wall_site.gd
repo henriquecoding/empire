@@ -40,6 +40,9 @@ static func slot(x: float) -> BuildSlot:
 	# §10: o nivel 1 e a base comum aos dois caminhos, e a escolha e do jogador.
 	# Enquanto a roda do rei nao existir (Q-067) fica a fortificacao (Q-070).
 	vaga.path = BuildSlot.Path.FORTIFICACAO
+	# Quem guarda um muro dispara com a certeza de uma torre (Q-017, aprovada):
+	# o posto e o que o Caminho A vende, e o §07 da a torre como a medida dela.
+	vaga.effects = {&"accuracy": curva.tower_accuracy}
 	return vaga
 
 

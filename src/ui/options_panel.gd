@@ -24,6 +24,7 @@ const NOMES_IDIOMA := [&"LANG_PT_PT", &"LANG_EN"]
 var _tremor: CheckButton
 var _claroes: CheckButton
 var _legendas: CheckButton
+var _roda: CheckButton
 var _dia: HSlider
 var _dia_rotulo: Label
 var _contraste: HSlider
@@ -38,6 +39,7 @@ func _ready() -> void:
 	_tremor = _opcao(Preferences.SCREEN_SHAKE)
 	_claroes = _opcao(Preferences.FLASHES)
 	_legendas = _opcao(Preferences.CAPTIONS)
+	_roda = _opcao(Preferences.WHEEL_SLOWDOWN)
 	var relogio := Registry.entry(&"economy", &"clock") as ClockData
 	_dia_rotulo = _rotulo(self)
 	_dia = _slider(relogio.day_seconds_min, relogio.day_seconds_max, PASSO_DIA_S, _no_dia)
@@ -57,6 +59,7 @@ func refresh() -> void:
 	_tremor.set_pressed_no_signal(prefs.enabled(Preferences.SCREEN_SHAKE))
 	_claroes.set_pressed_no_signal(prefs.enabled(Preferences.FLASHES))
 	_legendas.set_pressed_no_signal(prefs.enabled(Preferences.CAPTIONS))
+	_roda.set_pressed_no_signal(prefs.enabled(Preferences.WHEEL_SLOWDOWN))
 	_dia.set_value_no_signal(ClockService.clock.day_seconds())
 	_contraste.set_value_no_signal(prefs.number(Preferences.CONTRAST))
 	_daltonismo.select(int(prefs.number(Preferences.COLORBLIND)))
@@ -69,6 +72,7 @@ func _escrever() -> void:
 	_tremor.text = tr(&"OPT_SCREEN_SHAKE")
 	_claroes.text = tr(&"OPT_FLASHES")
 	_legendas.text = tr(&"OPT_CAPTIONS")
+	_roda.text = tr(&"OPT_WHEEL_SLOWDOWN")
 	_dia_rotulo.text = "%s · %d s" % [tr(&"OPT_DAY_LENGTH"), int(_dia.value)]
 	_contraste_rotulo.text = "%s · %d%%" % [tr(&"OPT_CONTRAST"), roundi(_contraste.value * CEM)]
 	_daltonismo_rotulo.text = tr(&"OPT_COLORBLIND")

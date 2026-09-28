@@ -882,7 +882,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <h5>Como o jogador interage com ela</h5>
   <ul>
     <li><strong>Ver</strong> — a mancha é visível no horizonte durante o crepúsculo. O jogador consegue estimar a que horas chega, e isso é uma decisão: avançar mais uma plantação ou recuar já?</li>
-    <li><strong>Atrasar</strong> — fogueiras, barris de fogo e terreno consagrado abrandam-na. Cada segundo de atraso é uma vaga de invocação a menos.</li>
+    <li><strong>Atrasar</strong> — fogueiras, barris de fogo e terreno consagrado abrandam-na. Cada segundo de atraso é uma vaga de invocação a menos. A fogueira é a das rondas noturnas: 3 moedas, o abrandamento do barril, e é lá que se compra o <strong>archote</strong> — o item que se leva para explorar de noite. Arde um tempo e acaba; fora das muralhas e da luz, sem ele, a noite traz inimigos de qualquer lado (Q-029).</li>
     <li><strong>Desviar</strong> — pontes e o nível subterrâneo permitem que ela passe por baixo ou por cima do teu império se o caminho de superfície estiver selado. Isto é uma tática avançada, não um bug.</li>
     <li><strong>Alimentar</strong> — deixar sacrifícios (animais, tropas fracas, ouro) reduz a massa. Sinistro, eficaz, e mecanicamente honesto: transformas economia em segurança.</li>
   </ul>
@@ -938,7 +938,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <thead><tr><th>Fonte</th><th class="n">Custo</th><th>Produz</th><th class="n">Se vender</th><th class="n">Payback</th><th>Risco</th></tr></thead>
     <tbody>
       <tr><td>Plantação (canteiro)</td><td class="n">4</td><td>Grão</td><td class="n">2/dia</td><td class="n">2 dias</td><td>Destruída pelo rasto da Podridão</td></tr>
-      <tr><td>Pesqueiro</td><td class="n">6</td><td>Peixe</td><td class="n">3/dia</td><td class="n">2 dias</td><td>Só em bioma com água; imune ao rasto</td></tr>
+      <tr><td>Pesqueiro</td><td class="n">6</td><td>Peixe</td><td class="n">3/dia</td><td class="n">2 dias</td><td>Só em bioma com água; imune ao rasto. O peixe estraga: sem Salga perde 1 por dia no pesqueiro, e o payback passa a 3 dias</td></tr>
       <tr><td>Galinheiro</td><td class="n">8</td><td>Galinhas vivas</td><td class="n">3/dia</td><td class="n">2,7 dias</td><td>Roubáveis à noite</td></tr>
       <tr><td>Estábulo de vaca</td><td class="n">14</td><td>Vacas vivas</td><td class="n">5/dia</td><td class="n">2,8 dias</td><td>Ordenha manual — exige uma tropa parada</td></tr>
       <tr><td>Corte de madeira</td><td class="n">7</td><td>Madeira</td><td class="n">2/dia</td><td class="n">3,5 dias</td><td>Só em bioma de bosque</td></tr>
@@ -992,7 +992,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <div class="step"><h4>Ganância do rei</h4><p>Uma percentagem do rendimento diário desaparece para os nobres — <strong>incluindo o comércio</strong>. Varia por rei (§15) e é o teu mostrador de dificuldade narrativa: o jogador percebe que está a ser roubado por alguém, não penalizado por um sistema.</p></div>
     <div class="step"><h4>Dívida com mercenários</h4><p>Juro composto com prazo. É o único sorvedouro que o jogador <em>escolhe</em> contrair. §14.</p></div>
     <div class="step"><h4>Alimentar A Podridão</h4><p>Converter animais, tropas fracas ou ouro em segurança à noite.</p></div>
-    <div class="step"><h4>Custo escalado de muralha</h4><p>Cada nível custa <code>base × 1,8^n</code>, e há dois caminhos concorrentes de upgrade (§10) — o jogador nunca tem dinheiro para os dois.</p></div>
+    <div class="step"><h4>Custo escalado de muralha</h4><p>Cada nível custa aproximadamente <code>base × 1,8^n</code> — os preços que mandam são os da tabela do §10 (6 · 11 · 20 · 36 · 65) —, e há dois caminhos concorrentes de upgrade (§10) — o jogador nunca tem dinheiro para os dois.</p></div>
   </div>
 
   <h4>A curva, e o dia da asfixia</h4>
@@ -1074,26 +1074,26 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Alado</td><td class="n">14</td><td class="n">14</td><td class="n">5</td><td class="n">1,1 s</td><td class="n">44</td><td>Dia 4 — obriga a torre alta</td></tr>
       <tr><td>Bruto</td><td class="n">22</td><td class="n">32</td><td class="n">9</td><td class="n">1,3 s</td><td class="n">22</td><td>Dia 7</td></tr>
       <tr><td>Cavador</td><td class="n">30</td><td class="n">28</td><td class="n">7</td><td class="n">1,0 s</td><td class="n">26</td><td>Dia 10 — passa pela faixa subterrânea</td></tr>
-      <tr><td>Aríete de lodo</td><td class="n">48</td><td class="n">90</td><td class="n">26</td><td class="n">2,0 s</td><td class="n">16</td><td>Dia 14 — só ataca muralha, ignora tropas</td></tr>
+      <tr><td>Aríete de lodo</td><td class="n">48</td><td class="n">104</td><td class="n">26</td><td class="n">2,0 s</td><td class="n">16</td><td>Dia 14 — só ataca muralha, ignora tropas</td></tr>
       <tr><td>Consumidora</td><td class="n">120</td><td class="n">260</td><td class="n">30</td><td class="n">1,8 s</td><td class="n">14</td><td>Dia 20 — alvo do Trepador evoluído (§08)</td></tr>
     </tbody>
   </table></div>
 
   <h4>Tempo até matar — a tabela que evita desastres</h4>
-  <p>Segundos que uma unidade demora a matar cada criatura, já com a penalização de precisão do arqueiro em campo aberto. É esta tabela que diz se uma noite é sobrevivível antes de a jogares.</p>
+  <p>Segundos que uma unidade demora a matar cada criatura, já com a penalização de precisão do arqueiro em campo aberto. É esta tabela que diz se uma noite é sobrevivível antes de a jogares. A linha do arqueiro em campo faz a conta com 1/3 e é por isso aproximada (≈): os dados usam <code>accuracy_open = 0,34</code> (§19, §44), 2% ao lado.</p>
   <div class="tw"><table>
     <thead><tr><th>Atacante</th><th class="n">Rastejante</th><th class="n">Alado</th><th class="n">Bruto</th><th class="n">Cavador</th><th class="n">Aríete</th></tr></thead>
     <tbody>
-      <tr><td>Arqueiro (torre)</td><td class="n">4,2 s</td><td class="n">5,6 s</td><td class="n">11,2 s</td><td class="n">9,8 s</td><td class="n">32,2 s</td></tr>
-      <tr><td>Arqueiro (campo)</td><td class="n">12,6 s</td><td class="n">16,8 s</td><td class="n">33,6 s</td><td class="n">29,4 s</td><td class="n">96,6 s</td></tr>
-      <tr><td>Lanceiro</td><td class="n">2,2 s</td><td class="n">3,3 s</td><td class="n">6,6 s</td><td class="n">5,5 s</td><td class="n">16,5 s</td></tr>
-      <tr><td>Berserker</td><td class="n">0,9 s</td><td class="n">1,8 s</td><td class="n">2,7 s</td><td class="n">2,7 s</td><td class="n">7,2 s</td></tr>
-      <tr><td>Mercenário</td><td class="n">1,0 s</td><td class="n">2,0 s</td><td class="n">3,0 s</td><td class="n">3,0 s</td><td class="n">9,0 s</td></tr>
+      <tr><td>Arqueiro (torre)</td><td class="n">4,2 s</td><td class="n">5,6 s</td><td class="n">11,2 s</td><td class="n">9,8 s</td><td class="n">36,4 s</td></tr>
+      <tr><td>Arqueiro (campo)</td><td class="n">≈ 12,6 s</td><td class="n">≈ 16,8 s</td><td class="n">≈ 33,6 s</td><td class="n">≈ 29,4 s</td><td class="n">≈ 109,2 s</td></tr>
+      <tr><td>Lanceiro</td><td class="n">2,2 s</td><td class="n">3,3 s</td><td class="n">6,6 s</td><td class="n">5,5 s</td><td class="n">19,8 s</td></tr>
+      <tr><td>Berserker</td><td class="n">0,9 s</td><td class="n">1,8 s</td><td class="n">2,7 s</td><td class="n">2,7 s</td><td class="n">8,1 s</td></tr>
+      <tr><td>Mercenário</td><td class="n">1,0 s</td><td class="n">2,0 s</td><td class="n">3,0 s</td><td class="n">3,0 s</td><td class="n">10,0 s</td></tr>
     </tbody>
   </table></div>
 
   <div class="note spec"><span class="lbl">A leitura de design que esta tabela obriga</span>
-    <p>Repara na coluna do Aríete: <strong>96,6 segundos</strong> para um arqueiro em campo o abater — mais do que uma noite inteira. Isso não é um erro de balanceamento, é a mensagem: <em>arqueiros não param aríetes.</em> Só o muro fortificado (Caminho B, §10), o fosso de raízes ou o barril de fogo o fazem. Cada linha desta tabela tem de ensinar uma coisa dessas. Quando uma coluna não ensinar nada, a criatura é redundante — corta-a.</p>
+    <p>Repara na coluna do Aríete: <strong>109,2 segundos</strong> para um arqueiro em campo o abater — mais do que uma noite inteira. Isso não é um erro de balanceamento, é a mensagem: <em>arqueiros não param aríetes.</em> Só o muro fortificado (Caminho B, §10), o fosso de raízes ou o barril de fogo o fazem. Cada linha desta tabela tem de ensinar uma coisa dessas. Quando uma coluna não ensinar nada, a criatura é redundante — corta-a.</p>
   </div>
 
   <h4>Ocupação de linha — como 300 unidades cabem num eixo</h4>
@@ -1103,7 +1103,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <dt>Fila</dt><dd>Os restantes esperam a 30–120 px, em posições estáveis atribuídas pelo sistema. Não empurram, não vibram.</dd>
     <dt>Substituição</dt><dd>Quando um atacante morre, o mais próximo da fila ocupa o slot em 0,4 s, com passo visível.</dd>
     <dt>Alcance vertical</dt><dd>Arqueiros em torre atingem a fila inteira dentro de 200 px, não só o slot ocupado. É por isso que a torre é o multiplicador e o muro é o denominador.</dd>
-    <dt>Marca do arqueiro</dt><dd>A classe Arqueiro (§08) marca um alvo: todas as tropas aliadas passam a priorizá-lo. Resolve o desperdício de flechas em alvos já mortos — a falha explícita do Kingdom.</dd>
+    <dt>Marca do arqueiro</dt><dd>A classe Arqueiro (§08) — e qualquer classe de jogo parecido, a que o <code>classes.csv</code> dá o verbo <code>mark_target</code> (Q-086) — marca um alvo: todas as tropas aliadas passam a priorizá-lo. Resolve o desperdício de flechas em alvos já mortos — a falha explícita do Kingdom.</dd>
   </div>
 
   <h4>Moral, fuga e a presença do rei</h4>
@@ -1115,7 +1115,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   </ul>
 
   <div class="note risk"><span class="lbl">O que testar primeiro, na Fase 1</span>
-    <p>Antes de existir arte final, monta um cenário fechado: <strong>um muro, seis arqueiros, uma noite de 105 s, vagas de Rastejantes crescentes.</strong> Ajusta até a noite ser ganha com 1–2 mortes no dia 5 e perdida sem torre no dia 8. Este microteste é a fundação de todo o balanceamento posterior — e cabe num único ficheiro de teste automatizado (§31).</p>
+    <p>Antes de existir arte final, monta um cenário fechado: <strong>um muro, uma torre de arqueiros, seis arqueiros, uma noite de 105 s, vagas de Rastejantes crescentes.</strong> Um posto é um lugar: o muro de nível 1 tem um, e para caberem mais arqueiros evolui-se o lugar — a torre, ou o muro pelo Caminho A (Q-073). Quem não tem posto não dispara do muro. Ajusta até a noite ser ganha com 1–2 mortes no dia 5; a variante sem torre perde o muro no dia 8. Este microteste é a fundação de todo o balanceamento posterior — e cabe num único ficheiro de teste automatizado (§31).</p>
   </div>
 </section>
 
@@ -1404,7 +1404,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Captura</td><td class="n">20%</td><td>Fica prisioneiro. Resgate exigido com prazo.</td></tr>
     </tbody>
   </table></div>
-  <p>As probabilidades deslocam-se com o nível do diplomata e o Favor acumulado: cada 20 de Favor move 5 pontos de <em>Captura</em> para <em>Dissolução</em>. Um diplomata n2 com 60 de Favor tem 45/45/10.</p>
+  <p>As probabilidades deslocam-se com o nível do diplomata e o Favor acumulado: cada 20 de Favor move 5 pontos de <em>Captura</em> para <em>Dissolução</em>. Um diplomata com 60 de Favor tem 45/50/5 (Dissolução/Contrato/Captura).</p>
 
   <h4>A dívida</h4>
   <div class="kv">
@@ -1435,7 +1435,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <tbody>
       <tr><td>Austero</td><td class="n">5–15</td><td>Quase todo o rendimento fica. Nobres descontentes: −10% moral das tropas de elite.</td><td>Muralhas fortes, poucas elites. Ataca com Berserkers.</td></tr>
       <tr><td>Equilibrado</td><td class="n">20–35</td><td>Neutro.</td><td>Sem fraqueza óbvia. Ataca na janela de sucessão.</td></tr>
-      <tr><td>Fastuoso</td><td class="n">40–60</td><td>Economia sufocada, mas nobres leais: +1 tropa de elite grátis a cada 3 dias.</td><td>Elites perigosas, muralhas médias.</td></tr>
+      <tr><td>Fastuoso</td><td class="n">40–60</td><td>Economia sufocada, mas nobres leais: +1 tropa de elite grátis (o Berserker de Raiz) a cada 5 dias.</td><td>Elites perigosas, muralhas médias.</td></tr>
       <tr><td>Tirano</td><td class="n">65–90</td><td>Mal dá para construir. Em compensação, os impulsos reais custam metade.</td><td><strong>Muralhas fracas, tropas de elite.</strong> Cerco rápido com aríete.</td></tr>
     </tbody>
   </table></div>
@@ -1453,6 +1453,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Perdão Real</td><td>Dívida de mercenários a zero</td><td>Favor a zero; nenhum diplomata funciona por 5 dias</td></tr>
     </tbody>
   </table></div>
+  <p><strong>O preço em moedas</strong> (Q-014). Cada impulso tem uma base, na medida do que vale: a Colheita Forçada e a Chamada às Armas 4, a Rota Protegida 5, a Feira Livre e a Vigília 6, o Perdão Real 10. O preço de cada dia é essa base a crescer com a produção — ao mesmo ritmo que ela (§06) —, e por isso custa sempre o mesmo em dias de trabalho. O tirano paga metade. Repetir o mesmo decreto dentro de três dias custa uma vez e meia por cada vez que ele saiu: o reino cansa-se da mesma ordem, e o melhor impulso deixa de ser o único que se usa.</p>
 
   <h4>Sucessão</h4>
   <div class="kv">
@@ -1493,6 +1494,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Semente Anciã</td><td>Biomas caóticos</td><td>Desbloqueia uma classe ou montaria rara</td><td>Recompensa risco elevado</td></tr>
     </tbody>
   </table></div>
+  <p><strong>O que a estátua ensina só existe depois de achada</strong> (Q-016). Cada estátua guarda uma coisa — uma obra ou um gesto — e até o rei lá ir em pessoa essa coisa não existe no teu jogo: a obra não aceita moeda, o gesto não faz nada. A do Ferreiro, perto do castelo, guarda a Forja; a da Oferenda, fora das muralhas a leste, o sacrifício de moedas à Podridão; a do Mineiro, fora das muralhas a oeste, a escora que fecha a passagem. O que se acha é do império e passa ao herdeiro e à região seguinte. Nada do núcleo do jogo — os dois verbos, as muralhas, recrutar — fica atrás de uma estátua.</p>
 
   <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>A estrutura de quatro atos, a regra de ouro e os dois epílogos mantêm-se; o que está por baixo deles foi reescrito na <a href="#s79">§79</a>, e os biomas caóticos passaram a Capítulos na <a href="#s77">§77</a>.</p></div>
 <h4>Os 12 diários — a estrutura narrativa</h4>
@@ -1727,7 +1729,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <p>O Kingdom usa <em>"blocos de construção modulares dispostos aleatoriamente, com vegetação de solo colocada automaticamente e cotos estratégicos de torre e muro para evitar sobreposição"</em>. É o modelo certo para ti também.</p>
   <div class="note risk"><span class="lbl">Correção</span><p>A versão anterior desta secção dizia que a tua panorâmica <em>"já é, na prática, o primeiro protótipo"</em> do gerador e que "cada edifício está colocado com intenção". <strong>Não é e não está.</strong> É uma folha de assets com 24,5% da superfície pintada e vazios de até 400 px (§01). <strong>Ainda não existe nenhum segmento autorado</strong> — o primeiro está por fazer, e o resto desta secção é a proposta de como o fazer, não a descrição de algo que já lá está.</p></div>
   <div class="kv">
-    <dt>Região</dt><dd>4 a 6 ecrãs de largura. <strong>Não fixes isto pela largura da tela onde desenhaste</strong> — deriva-o do tempo de travessia: a pé (§12) uma região deve levar 40–60 s a atravessar de ponta a ponta, o que a 26 px/s dá 1000–1560 px por ecrã de conteúdo útil. Uma região = um povo = um império a conquistar.</dd>
+    <dt>Região</dt><dd>4 a 6 ecrãs de largura — oito segmentos na fatia vertical, dez a doze quando uma região pedir cinco ou seis ecrãs, com ADR (Q-030). <strong>Não fixes isto pela largura da tela onde desenhaste</strong> — deriva-o do tempo de travessia: a pé (§12) atravessar uma região leva cerca de 40–60 s. <strong>É uma estimativa, e não uma lei</strong>: cada região é única e o número adapta-se a ela, e mede-se no <em>greybox</em> (Q-018, Q-082). A pé anda-se a 80 px/s (ADR 0021). Uma região = um povo = um império a conquistar.</dd>
     <dt>Segmento</dt><dd>640 px (meio ecrã). Oito segmentos por região. Cada segmento é uma cena autorada à mão.</dd>
     <dt>Linha do solo</dt><dd>Constante em toda a região, no valor fixado na Fase 0 (§11). O terreno não sobe nem desce — é o que torna o mundo 1.5D e o movimento das tropas trivial (§20).</dd>
     <dt>Corte de solo</dt><dd>Gerado em paralelo com a superfície: cada segmento tem 0–2 cavidades e 0–1 passagem, dentro da altura fixada em §11.</dd>
@@ -2120,7 +2122,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td><strong>Verbo 2 — Assumir</strong></td><td>X / ▢</td><td>E</td><td>Trocar de classe, montar, entrar em passagem, subir em criatura</td></tr>
       <tr><td>Descer / subir de faixa</td><td>Verbo 2 sobre passagem</td><td>E sobre passagem</td><td>Só onde há passagem descoberta</td></tr>
       <tr><td>Roda do rei</td><td>Y / △ (manter)</td><td>Tab (manter)</td><td>Só com o monarca assumido. É o corpo dele, não um menu.</td></tr>
-      <tr><td>Marcar alvo</td><td>Gatilho direito</td><td>Botão dir. do rato</td><td>Só classe Arqueiro</td></tr>
+      <tr><td>Marcar alvo</td><td>Gatilho direito</td><td>Botão dir. do rato</td><td>Só classe Arqueiro, e as de jogo parecido (Q-086)</td></tr>
       <tr><td>Impulso real</td><td>Roda do rei → segmento</td><td>Tab → 1–5</td><td>Um por dia (§15)</td></tr>
       <tr><td>Câmara livre</td><td>Stick direito</td><td>Q · Z ou rato na margem</td><td>Reconhecimento; volta sozinha em 2 s</td></tr>
       <tr><td>Pausa / opções</td><td>Start</td><td>Esc</td><td>Sempre</td></tr>
@@ -2168,7 +2170,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <thead><tr><th class="n">Minuto</th><th>O que acontece</th><th>O que ensina</th><th>Como ensina</th></tr></thead>
     <tbody>
       <tr><td class="n">0:00</td><td>Acordas a pé, sozinho, com 6 moedas, ao lado de um castelo-árvore em ruínas</td><td>Quem és e onde estás</td><td>A escala 3 do teu sprite contra a escala 2 de um vagabundo a olhar para ti</td></tr>
-      <tr><td class="n">0:20</td><td>O vagabundo segue-te. Largas uma moeda perto dele.</td><td><strong>Verbo 1</strong></td><td>Ele apanha-a e ganha um chapéu. Nada mais é preciso dizer.</td></tr>
+      <tr><td class="n">0:20</td><td>Largas uma moeda perto do vagabundo; ele corre para ela.</td><td><strong>Verbo 1</strong></td><td>Ele apanha-a e ganha um chapéu, e vai para a vila esperar por trabalho — como no Kingdom: New Lands (Q-063). Nada mais é preciso dizer.</td></tr>
       <tr><td class="n">1:10</td><td>Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda.</td><td>Economia existe fora de ti</td><td>Observação. O jogador não fez nada.</td></tr>
       <tr><td class="n">2:00</td><td>Sino de meio-dia. Uma estátua enterrada meio visível sob vegetação.</td><td>Há coisas escondidas</td><td>Curiosidade. Não é obrigatório.</td></tr>
       <tr><td class="n">3:30</td><td>Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas</td><td>Construção</td><td>A silhueta é o convite. Não há botão "construir".</td></tr>
@@ -2235,7 +2237,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 <section id="s27">
   <span class="sec-no">27 — Localização · <span style="color:var(--ember)">novo</span></span>
   <h3>Idiomas, e porque é que quase não precisas deles</h3>
-  <p class="lede">A tua maior vantagem competitiva escondida: o humor está nas caras e a sinalética é entalhada em madeira. <strong>Um jogo com cem palavras localiza-se por 200 €.</strong> A maioria dos indies gasta entre 5 000 € e 30 000 € nisto.</p>
+  <p class="lede">A tua maior vantagem competitiva escondida: o humor está nas caras e a sinalética é entalhada em madeira. <strong>Um jogo que precisa de mil e trezentas palavras localiza-se por uma fatura de três dígitos baixos.</strong> A maioria dos indies gasta entre 5 000 € e 30 000 € nisto. As mil e trezentas são as da Parte XIII (§75): doze frases de oferta, nove títulos, dez leis de capítulo e doze diários.</p>
 
   <div class="tw"><table>
     <thead><tr><th>Idioma</th><th class="n">% utilizadores Steam</th><th>Quando</th><th>Nota</th></tr></thead>
@@ -2854,7 +2856,7 @@ jobs:
       <tr><td class="n">F1-01</td><td>Moeda física: largar, arco, queda, apanhar, saco com capacidade</td><td>F0-07</td><td>Largar 10 moedas a 60 fps sem picos</td></tr>
       <tr><td class="n">F1-02</td><td><code>UnitData.tres</code> + as 6 unidades do §07</td><td>F0-03</td><td>Editar dano no <code>.tres</code> muda o jogo sem recompilar</td></tr>
       <tr><td class="n">F1-03</td><td><code>UnitSystem</code> com arrays paralelos e time-slicing</td><td>F1-02</td><td>300 unidades a 60 fps no profiler</td></tr>
-      <tr><td class="n">F1-04</td><td>Recrutar vagabundo por 1 moeda; ele segue-te</td><td>F1-01, F1-03</td><td>O minuto 0:20 do §25 funciona</td></tr>
+      <tr><td class="n">F1-04</td><td>Recrutar vagabundo por 1 moeda; ele vai para a vila (Q-063)</td><td>F1-01, F1-03</td><td>O minuto 0:20 do §25 funciona</td></tr>
       <tr><td class="n">F1-05</td><td><code>JobBoard</code> (prompt 4, §29)</td><td>F1-03</td><td>Os 4 testes do prompt passam</td></tr>
       <tr><td class="n">F1-06</td><td>Muro: 5 níveis, dois caminhos, slots de contacto</td><td>F1-05</td><td>Tabela do §10 replicada em <code>.tres</code></td></tr>
       <tr><td class="n">F1-07</td><td>Arqueiro: alcance, precisão 0,34 em campo / 1,0 em torre</td><td>F1-06</td><td>TTK medido bate com a tabela do §07</td></tr>
@@ -5105,7 +5107,7 @@ M = 60 + 26 * dia + 40 * fortalezas_conquistadas
 M = 40 + 18 * dia + 30 * fortalezas
   + <span class="k">22 * amargueiros</span> + <span class="k">45 * amargueiros_nomeados</span>
   + <span class="k">8  * min(recusas_nos_ultimos_5_dias, 5)</span>   <span class="c"># §75</span></code></pre>
-    <p class="gloss">A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste.</p>
+    <p class="gloss">A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068).</p>
   </div>
 
   <div class="tw"><table>
@@ -5314,7 +5316,7 @@ biome=subterranean
     <li><strong>Uma canção.</strong> Vinte a quarenta segundos, sem letra traduzível (§27, §81).</li>
     <li><strong>Um diário.</strong> Ou uma Semente Anciã, se o capítulo não carregar narrativa nesta partida.</li>
     <li><strong>Contorna-se sempre, e o desvio tem preço escrito.</strong> Nenhum capítulo bloqueia o caminho: o gerador garante um caminho alternativo, e esse caminho custa <strong>25 s a mais numa bifurcação e 40 s numa travessia</strong>. Obrigatório na sensação, opcional no facto, e o preço da recusa é conhecido — como em tudo o resto desta parte.</li>
-    <li><strong>A lei não entra em casa.</strong> Nada do que acontece num capítulo se aplica dentro das tuas muralhas, exceto onde a ficha disser explicitamente que sim. Só um o diz, e é de propósito.</li>
+    <li><strong>A lei não entra em casa.</strong> Nada do que acontece num capítulo se aplica dentro das tuas muralhas. Nenhuma ficha o contraria (Q-039).</li>
   </ol>
 
   <h4>Os dez</h4>
@@ -5357,8 +5359,8 @@ biome=subterranean
   <div class="chapline">
     <h6>6 · O Forno Aceso</h6>
     <p class="meta">Vulcânico · Semente Anciã · Canção de trabalho, uma voz, muito lenta</p>
-    <p class="law"><b>Lei:</b> qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, cria raiz onde estiver — <strong>dentro das tuas muralhas inclusive</strong>.</p>
-    <p>O único capítulo cuja lei entra em casa, e é a razão de a regra 6 existir: para que esta a quebre. Um forno de pão aceso desde antes da rutura, atendido por um padeiro que não tem cara porque a cara é a boca do forno. Cura de graça, sem menu, sem custo visível. Um jogador vai encher lá o exército inteiro exatamente uma vez.</p>
+    <p class="law"><b>Lei:</b> qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, se estiver fora das tuas muralhas, cria raiz onde estiver.</p>
+    <p>Foi escrito como o único capítulo cuja lei entrava em casa; o dono cortou a exceção (Q-039, 28/09/2026) — um forno não faz nascer árvores dentro das muralhas, e a regra 6 fica sem exceção nenhuma. Um forno de pão aceso desde antes da rutura, atendido por um padeiro que não tem cara porque a cara é a boca do forno. Cura de graça, sem menu, sem custo visível. Um jogador vai encher lá o exército inteiro exatamente uma vez.</p>
   </div>
 
   <div class="chapline">
@@ -5604,7 +5606,7 @@ Semana trinta e três, mesma ordem.</p>
   <p>A §22 põe "Luz quente pontual" no Bloco 4 com 3 h e sem especificação. Passa a ser o primeiro item do bloco, com regra:</p>
   <ul>
     <li><strong>Três paragens, nunca um gradiente.</strong> Núcleo <code>#F6D89B</code>, meio <code>#E8A94E</code>, bordo <code>#AE4F16</code>, e depois dissolve para o ambiente com <em>dither</em> de 2 px — o mesmo <em>shader</em> de revelação que a §11 já pede para o corte de terra.</li>
-    <li><strong>Uma luz domina por ecrã.</strong> Se duas competem, o ecrã lê plano. Consequência de <em>design</em>, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância. O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.</li>
+    <li><strong>Uma luz domina por ecrã.</strong> Se duas competem, o ecrã lê plano. Consequência de <em>design</em>, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância — e o farol do §10 também: ilumina os seus 300 px com paragens próprias a metade da força (Q-078). O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.</li>
     <li><strong>Nada tem contorno dentro do raio de luz.</strong> Perto da luz vê-se cor e volume; longe vê-se silhueta. Inverte-se a lógica de <em>sprite</em> habitual e é o que dá a sensação de pintura.</li>
   </ul>
 
@@ -5766,7 +5768,7 @@ Semana trinta e três, mesma ordem.</p>
     <thead><tr><th>Minuto</th><th>O que acontece</th><th>O que ensina</th><th>Como ensina</th></tr></thead>
     <tbody>
       <tr><td>0:00</td><td>Acordas a pé, sozinho, com 6 moedas, ao lado de um castelo-árvore em ruínas. <span class="mark">Um pouco à esquerda, fora do muro, está uma árvore preta com uma cara na casca.</span></td><td>Quem és e onde estás</td><td>A escala 3 do teu <em>sprite</em> contra a escala 2 de um vagabundo. A árvore não é apontada por nada.</td></tr>
-      <tr><td>0:20</td><td>O vagabundo segue-te. Largas uma moeda perto dele.</td><td>Verbo 1</td><td>Ele apanha-a e ganha um chapéu. <span class="mark">Guarda esta cara. O jogo vai precisar dela ao minuto treze.</span></td></tr>
+      <tr><td>0:20</td><td>Largas uma moeda perto do vagabundo; ele corre para ela.</td><td>Verbo 1</td><td>Ele apanha-a, ganha um chapéu e vai para a vila (Q-063). <span class="mark">Guarda esta cara. O jogo vai precisar dela ao minuto treze.</span></td></tr>
       <tr><td>1:10</td><td>Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda.</td><td>Economia existe fora de ti</td><td>Observação. O jogador não fez nada.</td></tr>
       <tr><td>2:00</td><td>Sino de meio-dia. Uma estátua enterrada meio visível sob vegetação.</td><td>Há coisas escondidas</td><td>Curiosidade. Não é obrigatório.</td></tr>
       <tr><td>3:30</td><td>Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas</td><td>Construção</td><td>A silhueta é o convite. Não há botão "construir".</td></tr>
@@ -5829,7 +5831,7 @@ Semana trinta e três, mesma ordem.</p>
       <tr><td>D-07</td><td>Nunca há mais de nove nomeados vivos</td><td>O teto cede e o nome deixa de valer</td><td>§76</td></tr>
       <tr><td>D-08</td><td>Um título volta com ordinal depois de três dias de luto</td><td>O sistema se esgota às nove horas de jogo</td><td>§76</td></tr>
       <tr><td>D-09</td><td>Todos os capítulos colocados têm caminho alternativo</td><td>Um capítulo passa a bloquear a rota e parte a regra 5</td><td>§77</td></tr>
-      <tr><td>D-10</td><td>Exatamente um capítulo tem <code>law_enters_walls</code></td><td>Aparece o segundo, e a exceção do Forno Aceso deixa de ser especial</td><td>§77</td></tr>
+      <tr><td>D-10</td><td>Nenhum capítulo tem <code>law_enters_walls</code></td><td>Aparece um, e a regra 6 da §77 passa a ter exceção (Q-039)</td><td>§77</td></tr>
       <tr><td>D-11</td><td>Seis capítulos por campanha, e o Cerco é sempre um deles</td><td>O diário 12 fica inalcançável nalgumas sementes</td><td>§77</td></tr>
       <tr><td>D-12</td><td>Os doze diários são alcançáveis em <strong>mil sementes seguidas</strong></td><td>Uma combinação de capítulos deixa um ato sem fragmentos</td><td>§79</td></tr>
       <tr><td>D-13</td><td>O epílogo é determinista e segue a precedência da §79</td><td>Dois estados iguais dão dois finais</td><td>§79</td></tr>
@@ -5860,9 +5862,9 @@ Semana trinta e três, mesma ordem.</p>
     <span class="k">for</span> i <span class="k">in</span> 30: r.refuse()
     assert_float(r.refusal_penalty()).is_less_equal(40.0)
 
-<span class="k">func</span> test_d10_uma_so_lei_entra_em_casa() -&gt; <span class="k">void</span>:
+<span class="k">func</span> test_d10_nenhuma_lei_entra_em_casa() -&gt; <span class="k">void</span>:
     <span class="k">var</span> n := ChapterDB.all().filter(<span class="k">func</span>(c): <span class="k">return</span> c.law_enters_walls).size()
-    assert_int(n).is_equal(1)</code></pre>
+    assert_int(n).is_equal(0)</code></pre>
 
   <div class="note spec"><span class="lbl">O D-12 é o único caro, e é o que salva a narrativa</span>
     <p>Mil sementes, cada uma a correr só o gerador de mundo e a atribuição de diários — sem simulação, sem cenas. Corre em segundos e é a única maneira honesta de afirmar "uma partida vê sempre os doze". Uma combinação improvável de capítulos que deixe o Ato II sem fragmentos é o género de coisa que ninguém descobre em <em>playtest</em> e que um jogador descobre na semana de lançamento.</p>
@@ -5943,7 +5945,7 @@ Semana trinta e três, mesma ordem.</p>
    └─ chapter_data.gd    <span class="c"># novo</span></code></pre>
   </div>
 
-  <p>O conversor <code>tools/csv_to_tres.gd</code> gera os 154 recursos a partir das 17 tabelas registadas em <code>data/source/_tables.csv</code>. Os scripts em <code>tools/recovered_generators/</code> são geradores históricos de CSV, não de .tres; não devem repor os dados durante o balanceamento. O <code>architecture_test.gd</code> continua a valer sem alterações — nenhum destes recursos importa nada de fora de <code>src/sim/</code>.</p>
+  <p>O conversor <code>tools/csv_to_tres.gd</code> gera os recursos a partir das tabelas registadas em <code>data/source/_tables.csv</code> — quantos são conta-o a ferramenta (<code>docs/recovery/validation.json</code>, conferido pelo <code>tools/check_claims.py</code>), e não esta frase. Os scripts em <code>tools/recovered_generators/</code> são geradores históricos de CSV, não de .tres; não devem repor os dados durante o balanceamento. O <code>architecture_test.gd</code> continua a valer sem alterações — nenhum destes recursos importa nada de fora de <code>src/sim/</code>.</p>
 </section>
 
 

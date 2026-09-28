@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="PeopleData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/people_data.gd" id="1_q5qbf"]
+
+[resource]
+script = ExtResource("1_q5qbf")
+id = &"geada"
+display_key = "PEOPLE_GEADA"
+terrain = &"glacier"
+biome = &"glacier"
+architecture_source = "Iglus inuítes + abrigos de pastor da Serra da Estrela + armazéns de gelo (neveiros) da Serra de Montejunto"
+roof_silhouette = "Cúpulas baixas e redondas, com a neve a desenhar o contorno"
+landmark = &"ice_well"
+palette_ramp = &"geada"
+wall_material = &"ice"
+economy_strength = &"cold_storage"
+economy_modifiers = {
+&"rot_speed_mult": 0.85,
+&"spoil_mult": 0.0
+}
+defense_trait = &"frozen_ground"
+unique_unit = &"ice_warden"
+playable_class = &"climber"
+starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
+starting_buildings = Array[StringName]([&"core"])
+song_texture = "Voz grave e bater de pés na neve, sem instrumento — os cantares de Janeiras da Beira"
+colheita_song = "Cantam para dentro, com a boca fechada"
+landmark_roots = true

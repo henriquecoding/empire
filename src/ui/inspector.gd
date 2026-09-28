@@ -77,9 +77,9 @@ func _impulsos() -> String:
 		var impulso := Registry.entry(&"crown/impulses", id) as ImpulseData
 		var estado := "" if coroa.available(id) else " (por ligar)"
 		var marca := "> " if n - 1 == InputRouter.pointed else ""
-		var linha := (
-			"%s%d %s · %d%s" % [marca, n, tr(impulso.display_key), impulso.coin_cost, estado]
-		)
+		var perfil := RulesFactory.impulse_cost_mult(SimLoop.state.greed)
+		var preco := coroa.price(id, SimLoop.state.day, perfil)  # o de hoje (Q-014)
+		var linha := "%s%d %s · %d%s" % [marca, n, tr(impulso.display_key), preco, estado]
 		linhas.append(linha)
 	if coroa.used_day == SimLoop.state.day:
 		linhas.append("hoje ja se usou um")

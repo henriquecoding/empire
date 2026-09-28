@@ -85,11 +85,17 @@ func test_o_guia_diz_que_a_travessia_esta_aberta() -> void:
 	assert_str(GameplayGuide.goal()).contains("TRAVESSIA")
 
 
-func test_o_rei_leva_o_saco_e_quem_esta_perto() -> void:
+func test_o_rei_leva_o_saco_quem_esta_perto_e_quem_espera_sem_posto() -> void:
+	# Q-063: ninguem anda atras do rei, e quem espera no nucleo sem posto embarca
+	# com ele, como a tripulacao do barco do Kingdom: New Lands. Quem tem posto
+	# fica na regiao que se deixa.
 	var r := _rei()
 	var dono := SimLoop.units.owners[r]
 	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
+	var lanceiro := Registry.entry(&"units", &"spearman") as UnitData
 	SimLoop.units.spawn(SimLoop.state, arqueiro, dono, SimLoop.units.xs[r])
+	var de_posto := SimLoop.units.spawn(SimLoop.state, lanceiro, dono, SimLoop.units.xs[r] + LONGE)
+	SimLoop.units.job_ids[SimLoop.units.index_of(de_posto)] = 1
 	SimLoop.units.spawn(SimLoop.state, arqueiro, dono, SimLoop.units.xs[r] + LONGE)
 	SimLoop.units.carried_coins[r] = 9
 	var legado := Legacy.crossing(
@@ -99,7 +105,7 @@ func test_o_rei_leva_o_saco_e_quem_esta_perto() -> void:
 		SimLoop.king_id,
 		SimFactory.curve().crossing_party_px
 	)
-	assert_array(Array(legado[Legacy.COMITIVA])).is_equal(["archer"])
+	assert_array(Array(legado[Legacy.COMITIVA])).is_equal(["archer", "archer"])
 	assert_int(int(legado[Legacy.SACO])).is_equal(9)
 	assert_int(int(legado[Legacy.REGIAO])).is_equal(1)
 	assert_array(legado[Legacy.OBRAS]).is_empty()

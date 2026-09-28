@@ -94,8 +94,16 @@ def rot_md():
     ma, mn = float(rot["mass_per_amargueiro"]), float(rot["mass_per_named_amargueiro"])
     mr, mrw, mrc = float(rot["refusal_mass"]), int(rot["refusal_window_days"]), float(rot["refusal_cap"])
     lo, hi = [float(x) for x in rot["summon_interval"].split("|")]
+    om, rn = float(rot.get("opening_mass") or 0), int(rot.get("ramp_nights") or 0)
     pe = int(rot.get("peak_every") or 0)
     pm, cm = float(rot.get("peak_mass_mult") or 1), float(rot.get("calm_mass_mult") or 1)
+
+    def calendario(d):
+        # Q-017, Q-068: a noite 1 com os tres Rastejantes do §25 e a rampa ate a §74.
+        cheia = mb + md * d
+        if rn <= 1 or om <= 0 or d >= rn:
+            return cheia
+        return om + (cheia - om) * (d - 1) / (rn - 1)
 
     def ritmo(d):
         # Q-126: a noite funda de pe em pe noites, e a calma a seguir.
@@ -122,6 +130,8 @@ def rot_md():
                rot["tender_from_debt"]),
            "- Invoca a cada %g–%g s enquanto está ativa: crepúsculo + noite = %g s → **%d a %d invocações** no máximo\n" % (
                lo, hi, active, math.floor(active / hi), math.floor(active / lo)),
+           "- As primeiras noites (Q-017, Q-068): a noite 1 tem massa %g — os três Rastejantes do §25 — e o "
+           "calendário sobe em linha recta até à fórmula de cima, que manda por inteiro a partir da noite %d\n" % (om, rn),
            "- Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou\n",
            "- Lado duplo a partir do dia %s\n" % rot["two_sided_from_day"],
            "- Ritmo (Q-126): de %d em %d noites uma **funda** (massa × %g), e a seguinte **calma** (× %g). "
@@ -130,7 +140,7 @@ def rot_md():
            "invocações até esgotar (0 fort.) | lados |\n|---|---|---|---|---|---|---|\n"]
     for d in range(1, 31):
         mult, nota = ritmo(d)
-        mass = (mb + md * d) * mult
+        mass = calendario(d) * mult
         avail = [c for c in creatures if int(c["min_day"]) <= d]
         top = max(avail, key=lambda c: int(c["mass_cost"]))
         m, n = mass, 0
@@ -142,7 +152,7 @@ def rot_md():
             n += 1
         sides = "2" if d >= int(rot["two_sided_from_day"]) else "1"
         out.append("| %d%s | %.1f | %g | %g | %s (%s) | %d | %s |\n" % (
-            d, nota, sb + sd * d, round(mass, 1), round(mass + 2 * mf * mult, 1), top["id"],
+            d, nota, sb + sd * d, round(mass, 1), round((calendario(d) + 2 * mf) * mult, 1), top["id"],
             top["mass_cost"], n, sides))
     out.append("\n**Leitura:** a coluna \"invocações até esgotar\" é o que a massa paga; o tempo ativo limita-a "
                "a %d–%d. Quando a primeira passa a segunda, sobra massa ao amanhecer — a noite deixa de ser limitada "

@@ -99,7 +99,9 @@ func arm(segundos: float) -> void:
 ## eles a mancha anda a (1 - consecrated_slowdown) da velocidade, e cada segundo
 ## de atraso e uma invocacao a menos — o orcamento gasta-se por TEMPO e nao por
 ## distancia, que e o que torna abrandar uma tactica e nao um adiamento (§51).
-func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]:
+func tick(
+	delta: float, consecrated: Array[Vector2], fogo: Array[Vector3] = []
+) -> Array[SpawnRequest]:
 	var pedidos: Array[SpawnRequest] = []
 	if not state.active:
 		return pedidos
@@ -107,6 +109,7 @@ func tick(delta: float, consecrated: Array[Vector2]) -> Array[SpawnRequest]:
 	var v := speed()
 	if _sobre_consagrado(state.x, consecrated):
 		v *= 1.0 - _perfil.consecrated_slowdown
+	v *= 1.0 - FireZones.slow(state.x, fogo)  # fogueiras e barris (§05, Q-029)
 	state.x += _direcao * v * delta
 	state.trail_to = state.x
 
@@ -199,11 +202,9 @@ func from_dict(d: Dictionary) -> void:
 
 ## A massa da §74, termo a termo. O dossie desceu a base e o termo do dia de
 ## proposito: o que a noite tem de duro deixa de vir do calendario e passa a vir
-## de como jogaste.
+## de como jogaste. As primeiras noites sobem em rampa (Q-017, Q-068).
 func _massa_do_dia() -> float:
-	var base := (
-		_perfil.mass_base + _perfil.mass_per_day * _dia + _perfil.mass_per_fortress * fortresses
-	)
+	var base := _perfil.calendar_mass(_dia) + _perfil.mass_per_fortress * fortresses
 	var arvores := (
 		_perfil.mass_per_amargueiro * amargueiros
 		+ _perfil.mass_per_named_amargueiro * named_amargueiros

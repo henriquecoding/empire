@@ -15,7 +15,8 @@ palette_ramp = &"horta"
 wall_material = &"wattle"
 economy_strength = &"farming"
 economy_modifiers = {
-&"farm_yield_mult": 2.0
+&"farm_yield_mult": 2.0,
+&"recruit_cost_delta": -1.0
 }
 defense_trait = &"numbers"
 unique_unit = &"sower"

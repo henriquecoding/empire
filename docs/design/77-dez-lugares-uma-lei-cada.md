@@ -11,7 +11,7 @@ A série faz mundo com dez capítulos fechados. Cada um é um sítio com uma reg
 1. Uma canção. Vinte a quarenta segundos, sem letra traduzível (§27, §81).
 1. Um diário. Ou uma Semente Anciã, se o capítulo não carregar narrativa nesta partida.
 1. Contorna-se sempre, e o desvio tem preço escrito. Nenhum capítulo bloqueia o caminho: o gerador garante um caminho alternativo, e esse caminho custa 25 s a mais numa bifurcação e 40 s numa travessia. Obrigatório na sensação, opcional no facto, e o preço da recusa é conhecido — como em tudo o resto desta parte.
-1. A lei não entra em casa. Nada do que acontece num capítulo se aplica dentro das tuas muralhas, exceto onde a ficha disser explicitamente que sim. Só um o diz, e é de propósito.
+1. A lei não entra em casa. Nada do que acontece num capítulo se aplica dentro das tuas muralhas. Nenhuma ficha o contraria (Q-039).
 
 ## Os dez
 
@@ -47,9 +47,9 @@ Da §17, com o custo que lhe faltava. É a secção de design que prepara a §80
 
 Vulcânico · Semente Anciã · Canção de trabalho, uma voz, muito lenta
 
-Lei: qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, cria raiz onde estiver — dentro das tuas muralhas inclusive.
+Lei: qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, se estiver fora das tuas muralhas, cria raiz onde estiver.
 
-O único capítulo cuja lei entra em casa, e é a razão de a regra 6 existir: para que esta a quebre. Um forno de pão aceso desde antes da rutura, atendido por um padeiro que não tem cara porque a cara é a boca do forno. Cura de graça, sem menu, sem custo visível. Um jogador vai encher lá o exército inteiro exatamente uma vez.
+Foi escrito como o único capítulo cuja lei entrava em casa; o dono cortou a exceção (Q-039, 28/09/2026) — um forno não faz nascer árvores dentro das muralhas, e a regra 6 fica sem exceção nenhuma. Um forno de pão aceso desde antes da rutura, atendido por um padeiro que não tem cara porque a cara é a boca do forno. Cura de graça, sem menu, sem custo visível. Um jogador vai encher lá o exército inteiro exatamente uma vez.
 
 Qualquer bioma, junto a acampamento de mercenários · Diário 8 · Pregão a três vozes
 

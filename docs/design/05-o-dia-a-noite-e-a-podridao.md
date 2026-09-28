@@ -33,7 +33,7 @@ A tua ideia de "uma sombra que vai de encontro ao império invocando inimigos at
 ### Como o jogador interage com ela
 
 - Ver — a mancha é visível no horizonte durante o crepúsculo. O jogador consegue estimar a que horas chega, e isso é uma decisão: avançar mais uma plantação ou recuar já?
-- Atrasar — fogueiras, barris de fogo e terreno consagrado abrandam-na. Cada segundo de atraso é uma vaga de invocação a menos.
+- Atrasar — fogueiras, barris de fogo e terreno consagrado abrandam-na. Cada segundo de atraso é uma vaga de invocação a menos. A fogueira é a das rondas noturnas: 3 moedas, o abrandamento do barril, e é lá que se compra o archote — o item que se leva para explorar de noite. Arde um tempo e acaba; fora das muralhas e da luz, sem ele, a noite traz inimigos de qualquer lado (Q-029).
 - Desviar — pontes e o nível subterrâneo permitem que ela passe por baixo ou por cima do teu império se o caminho de superfície estiver selado. Isto é uma tática avançada, não um bug.
 - Alimentar — deixar sacrifícios (animais, tropas fracas, ouro) reduz a massa. Sinistro, eficaz, e mecanicamente honesto: transformas economia em segurança.
 

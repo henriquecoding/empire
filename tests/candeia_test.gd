@@ -109,24 +109,24 @@ func test_uma_obra_sem_luz_nao_tem_raio_nenhum() -> void:
 	assert_float(WorldLight.hearth_radius(vaga)).is_equal_approx(0.0, 0.001)
 
 
-# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
-# gdlint: disable=unused-argument
-
-
-func test_uma_luz_domina_por_ecra(
-	do_skip := true,
-	skip_reason := (
-		"Q-078: o farol do §10 ilumina 300 px e a candeia do §74 nunca passa dos "
-		+ "260. Ver docs/QUESTIONS.md — o dossie diz as duas coisas"
-	)
-) -> void:
-	# §80: "uma luz domina por ecra. Se duas competem, o ecra le plano."
+func test_uma_luz_domina_por_ecra() -> void:
+	# §80: "uma luz domina por ecra. Se duas competem, o ecra le plano." O farol
+	# ilumina 300 px e a candeia nunca passa dos 260; o dono aprovou dar-lhe
+	# paragens proprias e mais fracas (Q-078), e nao cortar-lhe o raio do §10.
 	var tecto := _perfil().lantern_radius_max
 	for dados: BuildingData in Registry.entries(&"buildings"):
 		var raio := float(dados.effect_params.get(&"light_radius", 0.0))
 		if raio <= 0.0:
 			continue
-		var porque := "%s ilumina %d px e a candeia so chega a %d" % [dados.id, raio, tecto]
-		assert_bool(WorldLight.dominates(tecto, raio)).override_failure_message(porque).is_true()
+		var forca := float(dados.effect_params.get(&"light_strength", 1.0))
+		var porque := (
+			"%s ilumina %d px a %.2f e a candeia so chega a %d" % [dados.id, raio, forca, tecto]
+		)
+		var domina := WorldLight.dominates(tecto, raio, forca, _perfil())
+		assert_bool(domina).override_failure_message(porque).is_true()
 
-# gdlint: enable=unused-argument
+
+func test_a_mesma_luz_mais_forte_ja_competia() -> void:
+	# O que o teste de cima mede, visto do outro lado: sem paragens proprias, o
+	# farol de 300 px ganhava a candeia a qualquer distancia.
+	assert_bool(WorldLight.dominates(_perfil().lantern_radius_max, 300.0)).is_false()

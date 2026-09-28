@@ -30,9 +30,7 @@ const ESCUDEIRO := &"squire"
 
 # Posicoes, relativas ao nucleo. Sao autoria de nivel e nao balanceamento: sao a
 # resposta a "onde", e o §21 diz que essa resposta e do segmento.
-# O nucleo tem 480 px de largura (buildings.csv) e ocupa +-240. O resto poe-se a
-# volta dele de dentro para fora, e a muralha de dentro cabe no ecra a partir do
-# nucleo: o §25 quer a estacaria vista ao minuto 3:30, nao procurada.
+# O nucleo tem 480 px; o resto a volta dele, de dentro para fora (§25: 3:30).
 const MUROS_X := [-1300.0, -600.0, 600.0, 1300.0]
 # A Casa de Treino e unica por imperio; do outro lado, a cozinha do cozinheiro (§09).
 const TREINOS_X := [-300.0]
@@ -131,14 +129,16 @@ static func region() -> void:
 	Cavities.author()  # o subsolo e a boca das passagens (P-I)
 	for x in HERDEIROS_X:  # depois dos de antes: os ids deles nao mudam (§45)
 		_edificio(SimLoop.core_x + x, Succession.CASA, &"")
+	Campfires.author()  # as fogueiras do archote, por ultimo (Q-029)
 
 
 static func _segredos() -> void:
 	SimLoop.secrets.clear()
 	for recurso in Registry.entries(&"lore/secrets"):
 		var dados := recurso as SecretData
-		if SEGREDOS_X.has(dados.location):
-			SimLoop.secrets.post(dados, SimLoop.core_x + SEGREDOS_X[dados.location], CAMARA_W)
+		var x: float = dados.place_px if dados.place_px else SEGREDOS_X.get(dados.location, NAN)
+		if not is_nan(x):  # cada estatua tem o seu sitio (Q-016)
+			SimLoop.secrets.post(dados, SimLoop.core_x + x, CAMARA_W)
 	SimLoop.secrets.chapters.append(SimLoop.core_x + BIFURCACAO_X)
 	for recurso in Registry.entries(SimFactory.TABELA_DIARIOS):
 		var diario := recurso as JournalData
