@@ -322,9 +322,9 @@ jobs:
       - name: Construir o site
         run: bash tools/web/construir.sh
 
-      - name: Painel · contexto, decisões, rascunhos e acessibilidade
+      - name: Painel · sessão, contexto, decisões, rascunhos e acessibilidade
         run: |
-          node --test tests/web/perguntas.test.mjs
+          node --test tests/web/*.test.mjs
           node tests/web/painel-ui.mjs
 
       - name: Portao · telemovel, axe, CSP, privacidade, as duas linguas, os dados e o jogo

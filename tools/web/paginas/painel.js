@@ -5,7 +5,7 @@
   if (!M) return;
   var todas = Array.from(document.querySelectorAll("article.pergunta"));
   var botoes = Array.from(document.querySelectorAll(".fila-item"));
-  var respostas = {}, visiveis = [], atual = null, pronto = false, sujas = new Set();
+  var respostas = {}, visiveis = [], atual = null, pronto = false, sujas = new Set(), retomar = null;
   function dizer(el, texto, tipo) { el.textContent = texto; el.className = "p-guardado " + (tipo || ""); }
   function estado(a) {
     if (a.dataset.tipo === "encerrada") return "encerrada";
@@ -82,15 +82,29 @@
     M.pedir("/rest/v1/empire_respostas?select=pergunta,escolha,texto,estado,atualizado_em").then(linhas => {
       respostas = {}; (linhas || []).forEach(r => { respostas[r.pergunta] = r; });
       pronto = true; habilitar(true); todas.forEach(a => pintar(a, !sujas.has(a.id))); contar();
-      var id = location.hash.slice(1);
+      var id = retomar || location.hash.slice(1);
       if (todas.some(a => a.id === id)) $("f-estado").value = "";
       filtrar(id); dizer($("lote-estado"), "Respostas atualizadas. Escolhe uma decisão para começar.");
+      if (retomar) {
+        retomar = null; selecionar(id, true);
+        dizer($("lote-estado"), "Sessão recuperada. As alterações por guardar continuam aqui. Revê a resposta e carrega em Guardar decisão.");
+      }
     }, e => { dizer($("lote-estado"), "Não foi possível ler as respostas. Tenta novamente antes de editar. " + e.message, "erro"); $("recarregar").hidden = false; });
   }
   function abrir() {
-    $("entrar").hidden = true; $("area").hidden = false;
+    $("entrar").hidden = true; $("entrar-ajuda").hidden = true; $("area").hidden = false;
     $("sessao").textContent = "Sessão de administração · " + (M.sessao()?.email || "Empire"); carregar();
   }
+  window.addEventListener("empire:sessao-expirada", ev => {
+    pronto = false; habilitar(false);
+    if (!$("perguntas").hidden) retomar = atual && atual.id;
+    $("area").hidden = true; $("entrar").hidden = false; $("entrar-ajuda").hidden = false;
+    $("entrar-t").textContent = "Entrar novamente";
+    if (ev.detail?.email) $("en-email").value = ev.detail.email;
+    $("en-senha").value = "";
+    dizer($("entrar-estado"), "A sessão de acesso terminou. Confirma a tua palavra-passe para continuar.", "aviso");
+    $("en-senha").focus(); $("entrar").scrollIntoView({ block: "center" });
+  });
   $("entrar-form").addEventListener("submit", ev => {
     ev.preventDefault(); var b = ev.target.querySelector("button"); b.disabled = true;
     dizer($("entrar-estado"), "A entrar…");
@@ -139,7 +153,7 @@
         gravadas.forEach(x => { respostas[x.pergunta] = x; }); sujas.delete(a.id); pintar(a, false); contar();
         dizer(aviso, r.value === "adiar" ? "Adiada. Podes retomá-la no filtro «Adiadas»." : "Decisão guardada. Aguarda implementação no jogo.", "feito");
       }).catch(e => dizer(aviso, "Não foi guardada. A tua resposta continua aqui. " + e.message, "erro"))
-        .finally(() => { delete f.dataset.enviando; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = false; }); });
+        .finally(() => { delete f.dataset.enviando; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = !pronto; }); });
     });
   });
   $("copiar").addEventListener("click", () => {
@@ -158,5 +172,5 @@
   if (!document.body.dataset.sbUrl) { $("entrar-desligado").hidden = false; $("entrar-form").hidden = true; return; }
   if (M.sessao()) M.pedir("/rest/v1/rpc/empire_e_admin", { metodo: "POST", corpo: {} }).then(admin => {
     if (admin === true) abrir(); else M.sair();
-  }, () => { M.sair(); dizer($("entrar-estado"), "A sessão terminou. Entra novamente."); });
+  }, e => { if (!e.sessaoExpirada) dizer($("entrar-estado"), "Não foi possível confirmar o acesso. Verifica a ligação e tenta entrar novamente.", "erro"); });
 })();
