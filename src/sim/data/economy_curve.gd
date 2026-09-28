@@ -173,3 +173,7 @@ extends Resource
 @export var crossing_day: int = 0
 ## Quem e teu e esta a esta distancia do rei quando ele atravessa vai com ele.
 @export var crossing_party_px: float = 0.0
+
+@export_group("Andar — correr")
+## Quanto mais depressa o rei anda com a tecla de correr premida (Q-149).
+@export var king_run_mult: float = 0.0

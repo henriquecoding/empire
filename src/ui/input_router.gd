@@ -110,6 +110,9 @@ func _process(delta: float) -> void:
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
+	# Correr (Q-149): enquanto a tecla esta premida, o rei anda ao king_run_mult.
+	var correr := Input.is_action_pressed(&"king_run")
+	SimLoop.units.piloted_pace = _curva_lida().king_run_mult if correr else 1.0
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
 	if Input.is_action_pressed(&"king_wheel"):
 		var segmento := wheel_segment(_stick(), SimLoop.field.crown.ids().size())
@@ -138,9 +141,13 @@ func _process(delta: float) -> void:
 ## 8b): este no e filho da cena de jogo e o _ready() dele corre ANTES do dela —
 ## ou seja, antes do Registry.load_all() que ela chama.
 func _intervalo() -> float:
+	return _curva_lida().coin_drop_repeat_s
+
+
+func _curva_lida() -> EconomyCurve:
 	if _curva == null:
 		_curva = SimFactory.curve()
-	return _curva.coin_drop_repeat_s
+	return _curva
 
 
 ## Mover e escrever um alvo, e nao empurrar uma posicao: o passo 5 e que leva

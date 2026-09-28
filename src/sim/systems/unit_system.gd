@@ -36,13 +36,12 @@ var has_targets: PackedByteArray = PackedByteArray()
 var cooldowns: PackedFloat32Array = PackedFloat32Array()
 var carried_coins: PackedInt32Array = PackedInt32Array()
 var loyalties: PackedFloat32Array = PackedFloat32Array()
-# Frios no dossie, quentes no ciclo: a apanha do F1-04 pergunta por eles a cada
-# tick, e ir ao Registry buscar o UnitData de cada unidade 30 vezes por segundo e
-# exactamente a pesquisa de recurso que o cabecalho deste ficheiro diz que nao
-# acontece. Copiados no spawn, como os outros.
+# Frios no dossie, quentes no ciclo: a apanha (F1-04) le-os a cada tick. Do spawn.
 var coin_capacities: PackedInt32Array = PackedInt32Array()
 var recruit_costs: PackedInt32Array = PackedInt32Array()
 
+## O passo de quem e conduzido: 1, ou o king_run_mult com a tecla de correr (Q-149).
+var piloted_pace: float = 1.0
 var _por_id: Dictionary = {}
 
 
@@ -171,7 +170,8 @@ func tick_movement(delta: float, piloted: int = NENHUM, frente: float = INF) -> 
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 		if walking(i, piloted, frente):
-			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
+			var passo := piloted_pace if ids[i] == piloted else 1.0
+			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * passo * delta)
 
 
 ## Se esta unidade anda neste tick. Um alvo por alcancar nao chega: o rei parado

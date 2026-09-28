@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 198 | 100 | 298 |
-| Fases 3–8 | 229 | 98 | 327 |
-| Total | 427 | 198 | 625 |
+| Fases 3–8 | 230 | 98 | 328 |
+| Total | 428 | 198 | 626 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -320,7 +320,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 327
+## 3 · Fases 3 a 8 — 328
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -595,6 +595,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `chicken_theft_matter` | `chicken_theft_matter` | 1 | 9 | Proposta (Q-129): o que um Alado leva de um galinheiro, em matéria — uma moeda da produção do dia seguinte, se ele chegar vivo à alvorada. Nunca mais do que o rendimento de um dia por galinheiro. |
 | economy | `crossing_day` | `crossing_day` | 11 | 9 | Proposta (Q-135): a bifurcação abre a travessia para a região seguinte na manhã do dia 11 — depois de a partida viver as dez noites do §66 (o Cavador incluído). Antes disso, a bifurcação só diz em que dia abre. |
 | economy | `crossing_party_px` | `crossing_party_px` | 120 | 9 | Proposta (Q-135): quem é teu e está a esta distância do rei quando ele atravessa vai com ele. É o recruit_notice_px (120), a distância a que o jogo já diz que alguém pertence a um sítio. |
+| economy | `king_run_mult` | `king_run_mult` | 1.6 | 9 | Proposta (Q-149): com o Shift esquerdo (ou L3) premido o rei anda a 1,6× — 80 px/s passam a 128, o mapa inteiro de 48 s passa a 30 s. Só o rei, e sem custo por agora: a travessia do §21 e a presença do §07 continuam a pedir que ele esteja no sítio, só lá chega mais depressa. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | horta | 6 | O §12 diz 'Fortaleza do pântano', mas nenhum dos seis povos vive num pântano — Q-013. Proposta: a Horta (várzea). |
 | impulses | `forced_harvest` | `coin_cost` | 12 | 6 | coin_cost 12 ≈ o rendimento líquido do dia 1 no perfil equilibrado (12,3). O dossiê implica um custo ('os impulsos custam metade' para o tirano) sem o dar — Q-014. |

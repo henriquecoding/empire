@@ -1650,6 +1650,15 @@
   marca o apontado. A roda de seis segmentos do §24 continua à espera dos sistemas que ela abre (Q-067).
 - **Fica por fazer:** o desenho da roda (vitral, ícones) e a razão e o custo de um impulso indisponível no sítio.
 
+### Q-149 · Correr com o Shift esquerdo
+- **Onde:** pedido do dono (28/09/2026); §24 (o mapa de comando não tem correr), §07 (o raio de presença do rei),
+  §21 (a região é para atravessar a pé); `king_run_mult` em `economy.csv`, `UnitSystem.piloted_pace`.
+- **Decidido (opção mais simples):** com o Shift esquerdo (ou L3 no comando) premido, só o rei anda a
+  `king_run_mult` (1,6×: 80 → 128 px/s; o mapa de 48 s passa a 30 s). Sem custo e sem efeito em quem o segue.
+- **Por decidir:** se correr tem preço (fôlego, moedas que caem do saco, a aura do Monarca desligada a correr) e
+  se quem segue o rei acompanha o passo dele. Um correr sem custo encurta o preço do deslocamento que a auditoria
+  de 27/09 (§6.5) diz ser um diferencial do jogo.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

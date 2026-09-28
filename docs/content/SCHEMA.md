@@ -269,7 +269,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 102 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 103 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -375,6 +375,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 102 linha(s) · §06 §
 | `chicken_theft_matter` | float | Auditoria de gameplay — AUD-04 |  |
 | `crossing_day` | int | Auditoria de gameplay — AUD-05 |  |
 | `crossing_party_px` | float | Auditoria de gameplay — AUD-05 |  |
+| `king_run_mult` | float | Andar — correr |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
