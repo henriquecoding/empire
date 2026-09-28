@@ -461,3 +461,82 @@ kbd{font-family:var(--f-mono);font-size:13px;color:var(--tinta);background:var(-
   .fases li,.fita span,.barra i,.cela,.amostra{forced-color-adjust:none}
   .botao,.botao-jogar{border:1px solid ButtonText}
 }
+
+/* ── Reportes e painel do dono (ADR 0026) ────────────────────────────────────
+   Formulários com a mesma régua do resto: o papel, a linha e o píxel nos
+   rótulos. O estado de cada coisa (por responder, aplicada, um erro) tem forma
+   além da cor — um traço, uma palavra — e não só o tom. */
+.reportar,.painel{padding-block:clamp(40px,7vw,88px)}
+.reportar [hidden],.painel [hidden]{display:none!important}
+.reportar h1,.painel h1{font-family:var(--f-titulo);font-weight:600;font-size:clamp(30px,5vw,48px);line-height:1.05;margin:12px 0 18px}
+.reportar-grelha{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,72px);align-items:start}
+.reportar-intro,.painel-intro{color:var(--tinta-2);font-size:18px;line-height:1.55;max-width:60ch}
+.reportar-guarda{color:var(--baixo);font-size:14px;line-height:1.5;border-left:2px solid var(--linha-forte);padding-left:12px;max-width:52ch}
+.reportar-lingua a{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--petroleo)}
+.reportar-form,.entrar-form,.resposta{display:grid;gap:18px}
+.reportar-form{background:var(--papel-2);border:1px solid var(--linha);padding:clamp(18px,3vw,32px);box-shadow:var(--sombra-leve)}
+.tipos{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tipos legend,.campo>span{font-family:var(--f-px);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--baixo);margin-bottom:8px}
+.escolha{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--linha);background:var(--papel);padding:10px 12px;cursor:pointer;border-radius:2px}
+.escolha:hover{border-color:var(--linha-forte)}
+.escolha:has(input:checked){border-color:var(--accao);box-shadow:inset 3px 0 0 var(--accao)}
+.escolha input{margin-top:3px;accent-color:var(--accao)}
+.escolha span{display:grid;gap:2px;line-height:1.35}
+.escolha small{color:var(--baixo);font-size:13px}
+.campo{display:grid;gap:4px;align-content:start}
+.campo input,.campo select,.campo textarea{font:inherit;font-size:16px;color:var(--tinta);background:var(--papel);border:1px solid var(--linha-forte);border-radius:2px;padding:10px 12px;width:100%;box-sizing:border-box}
+.campo textarea{resize:vertical;min-height:4.5em;line-height:1.5}
+.campo small{color:var(--baixo);font-size:13px;line-height:1.45}
+.campos-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.contador{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.contador.perto{color:var(--brasa)}
+.estado-envio,.p-guardado{margin:0;min-height:1.4em;color:var(--tinta-2);font-size:15px}
+.estado-envio.erro,.p-guardado.erro{color:var(--brasa);font-weight:600}
+.estado-envio.erro::before,.p-guardado.erro::before{content:"✕ "}
+.estado-envio.feito,.p-guardado.feito{color:var(--folha);font-weight:600}
+.estado-envio.feito::before,.p-guardado.feito::before{content:"✓ "}
+.estado-envio.aviso{color:var(--tinta-2);border-left:2px solid var(--brasa);padding-left:10px}
+.reportar .accoes,.painel .accoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+.entrar{max-width:460px;margin-top:28px;border:1px solid var(--linha);background:var(--papel-2);padding:24px}
+.entrar h2{font-family:var(--f-px);font-weight:400;font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px}
+.painel-barra{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;border-block:1px solid var(--linha);padding-block:12px;margin:28px 0 20px}
+.sessao{margin:0;color:var(--baixo);font-size:14px}
+.separadores{display:flex;gap:4px}
+.separador{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:transparent;color:var(--tinta-2);border:1px solid transparent;padding:8px 14px;cursor:pointer;border-radius:2px}
+.separador[aria-selected="true"]{border-color:var(--tinta);color:var(--tinta);background:var(--papel-2)}
+.resumo{display:flex;flex-wrap:wrap;gap:8px 28px;margin:0 0 18px}
+.resumo p{margin:0;color:var(--tinta-2)}
+.resumo strong{font-family:var(--f-titulo);font-size:28px;font-variant-numeric:tabular-nums;color:var(--tinta);margin-right:6px}
+.filtros{display:grid;grid-template-columns:2fr repeat(3,minmax(0,1fr));gap:12px;align-items:end;margin-bottom:14px}
+.lote{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+.lote>span{display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vazio{color:var(--baixo)}
+.lista-perguntas,.lista-reportes{display:grid;gap:14px}
+.pergunta,.reporte{border:1px solid var(--linha);background:var(--papel-2);padding:18px 20px;display:grid;gap:12px}
+.pergunta[data-estado="respondida"]{box-shadow:inset 3px 0 0 var(--folha)}
+.pergunta[data-estado="aplicada"]{box-shadow:inset 3px 0 0 var(--petroleo);opacity:.85}
+.pergunta h3,.reporte h3{font-family:var(--f-titulo);font-weight:600;font-size:21px;line-height:1.25;margin:0}
+.p-meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin:0 0 6px;font-size:13px;color:var(--baixo)}
+.p-id{font-family:var(--f-mono);font-weight:600;color:var(--tinta)}
+.chip{font-family:var(--f-px);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border:1px solid currentColor;border-radius:2px}
+.chip-confirmar,.chip-sugestao{color:var(--folha)}
+.chip-escolher,.chip-duvida{color:var(--petroleo)}
+.chip-decidir,.chip-erro{color:var(--brasa)}
+.chip-mensagem{color:var(--tinta-2)}
+.p-estado{font-family:var(--f-px);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.p-estado[data-estado="por"]::before{content:"○ "}
+.p-estado[data-estado="respondida"]{color:var(--folha)}
+.p-estado[data-estado="respondida"]::before{content:"● "}
+.p-estado[data-estado="aplicada"]{color:var(--petroleo)}
+.p-estado[data-estado="aplicada"]::before{content:"✓ "}
+.pergunta details summary{cursor:pointer;color:var(--tinta-2);font-size:15px}
+.p-corpo{color:var(--tinta-2);font-size:15px;line-height:1.55;max-width:80ch}
+.p-corpo ul{padding-left:1.2em;margin:10px 0}
+.p-corpo li{margin-bottom:6px}
+.resposta fieldset{border:0;margin:0;padding:0;display:grid;gap:6px}
+.reporte-msg{white-space:pre-wrap;margin:0;line-height:1.55}
+.reporte-quem{margin:0;color:var(--baixo);font-size:14px}
+@media (max-width:760px){
+  .reportar-grelha,.campos-2,.filtros{grid-template-columns:1fr}
+}

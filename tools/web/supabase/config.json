@@ -1,0 +1,5 @@
+{
+  "_nota": "O projeto Supabase do Empire (ADR 0026). A chave é a publicável (sb_publishable_...), feita para ir no browser: o que ela deixa fazer decide-o o RLS da 001_empire_reportes.sql. Nunca pôr aqui a service_role. EMPIRE_SUPABASE_URL e EMPIRE_SUPABASE_CHAVE, se definidas no ambiente, mandam sobre este ficheiro.",
+  "url": "https://ohpyuifmdsbcjntabemr.supabase.co",
+  "chave": "sb_publishable_UYvp92WeYQF75DANSi5w9A_99jIL9HE"
+}

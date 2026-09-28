@@ -29,6 +29,8 @@ import { fileURLToPath } from "node:url";
 import { ler } from "./dados.mjs";
 import { TEXTOS, conferirParidade } from "./paginas/textos.mjs";
 import { entrada, erro, cssDosDados, controlosCasca } from "./paginas/molde.mjs";
+import { reportar, painel } from "./paginas/reportes.mjs";
+import { perguntas } from "./perguntas.mjs";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SITE = join(RAIZ, "tools", "web", "site");
@@ -100,12 +102,30 @@ function escreverAssets(saida, d) {
     ["estilo", "css", css],
     ["tema", "js", readFileSync(join(PAGINAS, "tema.js"), "utf8")],
     ["site", "js", readFileSync(join(PAGINAS, "site.js"), "utf8")],
+    ["motor", "js", readFileSync(join(PAGINAS, "motor.js"), "utf8")],
+    ["reportar", "js", readFileSync(join(PAGINAS, "reportar.js"), "utf8")],
+    ["painel", "js", readFileSync(join(PAGINAS, "painel.js"), "utf8")],
   ]) {
     const f = `${nome}.${hash(texto)}.${ext}`;
     writeFileSync(join(dir, f), texto);
     saidas[nome] = `/assets/${f}`;
   }
-  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site };
+  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site, motor: saidas.motor, reportar: saidas.reportar, painel: saidas.painel };
+}
+
+// O Supabase do Empire (ADR 0026): o ambiente manda, e o config.json é o de
+// sempre. Sem nenhum dos dois as páginas publicam-se e dizem que o envio não
+// está ligado. Só a chave publicável: a service_role nunca sai do Supabase.
+function supabase() {
+  let sb = { url: process.env.EMPIRE_SUPABASE_URL || "", chave: process.env.EMPIRE_SUPABASE_CHAVE || "" };
+  const f = join(RAIZ, "tools", "web", "supabase", "config.json");
+  if ((!sb.url || !sb.chave) && existsSync(f)) {
+    const c = JSON.parse(readFileSync(f, "utf8"));
+    sb = { url: sb.url || c.url || "", chave: sb.chave || c.chave || "" };
+  }
+  if (sb.url && !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(sb.url)) throw new Error(`pagina: o endereço do Supabase não parece um projeto: ${sb.url}`);
+  if (/service_role|sb_secret_/.test(sb.chave)) throw new Error("pagina: a chave do Supabase é secreta — o site só leva a publicável");
+  return sb;
 }
 
 function preencherOuChumbar(nome, html) {
@@ -179,18 +199,31 @@ function main() {
     writeFileSync(join(dir, "index.html"), preencherOuChumbar(`${t.caminho}index.html`, entrada({ t, d, v, mb, url, robots })));
   }
   writeFileSync(join(saida, "404.html"), preencherOuChumbar("404.html", erro({ textos: TEXTOS, d, v: { ...assets, jogar: "/jogar/" } })));
+  // Os reportes e o painel do dono (ADR 0026).
+  const sb = supabase();
+  for (const [lingua, t] of Object.entries(TEXTOS)) {
+    const v = { ...assets, jogar: lingua === "pt" ? "/jogar/" : "/jogar/?lingua=en" };
+    const dir = join(saida, t.caminho, t.reportar.caminho);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "index.html"), preencherOuChumbar(`${t.caminho}${t.reportar.caminho}index.html`, reportar({ t, d, v, sb, robots })));
+  }
+  const qs = perguntas(RAIZ);
+  mkdirSync(join(saida, "painel"), { recursive: true });
+  writeFileSync(join(saida, "painel", "index.html"),
+    preencherOuChumbar("painel/index.html", painel({ textos: TEXTOS, d, v: { ...assets, jogar: "/jogar/" }, sb, perguntas: qs })));
   dossieSemTerceiros(saida);
   if (existsSync(join(saida, "jogar", "index.html"))) completarCasca(saida, d, robots);
 
   // robots.txt e sitemap.xml: na produção abre-se tudo e diz-se onde está o
   // mapa; numa pré-visualização fecha-se tudo.
   writeFileSync(join(saida, "robots.txt"), d.producao
-    ? `User-agent: *\nAllow: /\n${url ? `Sitemap: ${url}/sitemap.xml\n` : ""}`
+    ? `User-agent: *\nAllow: /\nDisallow: /painel/\n${url ? `Sitemap: ${url}/sitemap.xml\n` : ""}`
     : "User-agent: *\nDisallow: /\n");
   if (url) {
     const hoje = d.agora.toISOString().slice(0, 10);
     const alt = `<xhtml:link rel="alternate" hreflang="pt-PT" href="${url}/"/><xhtml:link rel="alternate" hreflang="en" href="${url}/en/"/>`;
-    const urls = [["/", alt], ["/en/", alt], ["/jogar/", ""], ["/dossie/", ""]]
+    const altR = `<xhtml:link rel="alternate" hreflang="pt-PT" href="${url}/reportar/"/><xhtml:link rel="alternate" hreflang="en" href="${url}/en/report/"/>`;
+    const urls = [["/", alt], ["/en/", alt], ["/jogar/", ""], ["/dossie/", ""], ["/reportar/", altR], ["/en/report/", altR]]
       .map(([c, a]) => `  <url><loc>${url}${c}</loc><lastmod>${hoje}</lastmod>${a}</url>`).join("\n");
     writeFileSync(join(saida, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n`
       + `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`);
@@ -209,6 +242,7 @@ function main() {
     commit: d.sha, ramo: d.ramo, ambiente: d.ambiente, godot: d.godot, publicado: d.agora.toISOString(),
     capturas: d.capturas.commit,
   }, null, 2) + "\n");
+  console.log(`pagina: reportes ${sb.url ? "ligados a " + sb.url : "por ligar"} · painel com ${qs.length} perguntas`);
   console.log(`pagina: / e /en/ · commit ${d.sha.slice(0, 7)} · ${d.tickets.feitos}/${d.tickets.total} tickets · ${d.contas.testes} testes · jogo ${mb} MB`);
 }
 

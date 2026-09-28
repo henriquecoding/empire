@@ -52,14 +52,14 @@ export function cssDosDados(d) {
 
 // ── Peças comuns ─────────────────────────────────────────────────────────
 
-function cabeca({ t, v, titulo, descricao, robots, canonico, alternativas, og, extra = "" }) {
+export function cabeca({ t, v, titulo, descricao, robots, canonico, alternativas, og, extra = "", csp = CSP }) {
   const alt = alternativas.map(([l, h]) => `<link rel="alternate" hreflang="${l}" href="${h}">`).join("\n");
   return `<!DOCTYPE html>
 <html lang="${t.lingua}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="${CSP}">
+<meta http-equiv="Content-Security-Policy" content="${csp}">
 <title>${esc(titulo)}</title>
 <meta name="description" content="${esc(descricao)}">
 <meta name="robots" content="${robots}">
@@ -78,7 +78,7 @@ ${extra}<link rel="stylesheet" href="${v.css}">
 ${og || ""}</head>`;
 }
 
-function topo({ t, v, ancoras }) {
+export function topo({ t, v, ancoras }) {
   const n = t.nav;
   const itens = ancoras
     ? [["#jogo", n.jogo], ["#dia", n.dia], ["#povos", n.povos], ["#controlos", n.controlos], ["#estado", n.estado]]
@@ -102,12 +102,12 @@ function topo({ t, v, ancoras }) {
 </header>`;
 }
 
-function rodape({ t, d, v }) {
+export function rodape({ t, d, v }) {
   const r = t.rodape;
   const data = new Intl.DateTimeFormat(t.lingua, { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Lisbon" }).format(d.agora);
   const sha = `<a href="${d.repo}/commit/${d.sha}"><code>${d.sha.slice(0, 7)}</code></a>`;
   const jogo = [v.jogar, "/dossie/", d.repo];
-  const projeto = [`${d.repo}/tree/main/docs/backlog`, `${d.repo}/blob/main/docs/QUESTIONS.md`, `${d.repo}/tree/main/docs/adr`];
+  const projeto = [`${d.repo}/tree/main/docs/backlog`, `${d.repo}/blob/main/docs/QUESTIONS.md`, `${d.repo}/tree/main/docs/adr`, `${t.caminho}${t.reportar.caminho}`];
   const lista = (hrefs, rot) => `<ul>${hrefs.map((h, i) => `<li><a href="${h}">${rot[i]}</a></li>`).join("")}</ul>`;
   return `<footer class="rodape">
   <div class="envolve">
