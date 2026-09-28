@@ -21,12 +21,20 @@ const url = `http://127.0.0.1:${server.address().port}/painel/`;
 const browser = await chromium.launch({ headless: true, ...(process.env.CHROMIUM_PATH ? {executablePath: process.env.CHROMIUM_PATH} : {}), args: ['--no-sandbox'] });
 const context = await browser.newContext();
 let rows = [{ pergunta: 'Q-001', escolha: 'aprovar', texto: null, estado: 'nova' }], writes = 0, failRead = false, failWrite = false;
-await context.addInitScript(() => sessionStorage.setItem('empire.painel.sessao', JSON.stringify({token:'fixture',email:'teste@example.invalid',expira:Date.now()+3600000})));
+let expireWrite = false, failRefresh = false, refreshes = 0, logins = 0;
+await context.addInitScript(() => sessionStorage.setItem('empire.painel.sessao', JSON.stringify({token:'fixture',refresh:'fixture-refresh',email:'teste@example.invalid',expira:Date.now()+3600000})));
 await context.route('https://*.supabase.co/**', async route => {
   const req = route.request(), path = new URL(req.url()).pathname;
+  if (path.endsWith('/token')) {
+    const isRefresh = req.url().includes('grant_type=refresh_token');
+    if (isRefresh) refreshes++; else logins++;
+    if (isRefresh && failRefresh) return route.fulfill({status:400,json:{message:'Invalid Refresh Token: Already Used'}});
+    return route.fulfill({json:{access_token:'fixture-new',refresh_token:'fixture-refresh-new',expires_in:3600,user:{email:'teste@example.invalid'}}});
+  }
   if (path.endsWith('empire_e_admin')) return route.fulfill({json:true});
   if (path.endsWith('empire_feedback')) return route.fulfill({json:[]});
   if (req.method() === 'GET') return route.fulfill(failRead ? {status:503,json:{message:'Teste de falha de leitura'}} : {json:rows});
+  if (expireWrite) { expireWrite=false; return route.fulfill({status:401,json:{message:'JWT expired',code:'PGRST301'}}); }
   writes++;
   if (failWrite) return route.fulfill({status:503,json:{message:'Teste de falha de gravação'}});
   const sent = req.postDataJSON();
@@ -56,6 +64,32 @@ try {
   await page.locator('#Q-005 button[type=submit]').click(); await page.locator('#Q-005 .p-guardado.feito').waitFor();
   assert.equal(await page.locator('#c-adiadas').textContent(),'1');
   assert.equal(await page.locator('#c-respondidas').textContent(),'2');
+  await choose('Q-044'); await page.locator('#Q-044 input[value=outra]').check();
+  await page.locator('#Q-044 textarea').fill('Resposta preservada durante a renovação.');
+  const beforeRefresh = writes; expireWrite=true;
+  await page.locator('#Q-044 button[type=submit]').click(); await page.locator('#Q-044 .p-guardado.feito').waitFor();
+  assert.equal(refreshes,1); assert.equal(writes,beforeRefresh+1); assert.equal(logins,0);
+  assert.equal(rows.find(r=>r.pergunta==='Q-044').texto,'Resposta preservada durante a renovação.');
+  await page.locator('#Q-044 textarea').fill('Rascunho que sobrevive ao novo login.');
+  await choose('Q-045'); await page.locator('#Q-045 input[value=outra]').check();
+  await page.locator('#Q-045 textarea').fill('Outra decisão também por guardar.');
+  await choose('Q-044'); failRefresh=true; expireWrite=true; const beforeLogin=writes;
+  await page.locator('#Q-044 button[type=submit]').click(); await page.locator('#entrar').waitFor({state:'visible'});
+  assert.match(await page.locator('#entrar-ajuda').innerText(),/continuam nesta aba/);
+  assert.equal(await page.locator('#en-email').inputValue(),'teste@example.invalid');
+  assert.equal(await page.locator('#Q-044 textarea').inputValue(),'Rascunho que sobrevive ao novo login.');
+  await page.setViewportSize({width:360,height:900});
+  const loginAxe = await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+  assert.deepEqual(loginAxe.violations.map(v=>v.id),[],'acessibilidade do novo login');
+  failRefresh=false; await page.locator('#en-senha').fill('senha-de-teste');
+  await page.locator('#entrar-form button').click(); await page.locator('#Q-044 button[type=submit]').waitFor({state:'visible'});
+  await page.waitForFunction(() => !document.querySelector('#Q-044 button[type=submit]').disabled);
+  assert.equal(writes,beforeLogin,'o login não submete automaticamente a decisão'); assert.equal(logins,1);
+  assert.equal(await page.locator('#Q-044 input[value=outra]').isChecked(),true);
+  assert.equal(await page.locator('#Q-044 textarea').inputValue(),'Rascunho que sobrevive ao novo login.');
+  await page.locator('#Q-044 button[type=submit]').click(); await page.locator('#Q-044 .p-guardado.feito').waitFor();
+  await choose('Q-045'); assert.equal(await page.locator('#Q-045 textarea').inputValue(),'Outra decisão também por guardar.');
+  await page.locator('#Q-045 button[type=submit]').click(); await page.locator('#Q-045 .p-guardado.feito').waitFor();
   await choose('Q-006'); assert.equal(await page.locator('#Q-006 form').count(),0);
   await choose('Q-143'); assert.equal(await page.locator('#Q-143 input[value=aprovar]').count(),0);
   assert.match(await page.locator('#Q-143 .pendencia').innerText(),/identidade/);
@@ -78,5 +112,5 @@ try {
   assert.equal(await page.locator('#Q-005 button[type=submit]').isDisabled(),true);
   failRead=false; await page.locator('#recarregar').click(); await page.waitForFunction(() => !document.querySelector('#copiar').disabled);
   assert.deepEqual(errors,[]);
-  console.log('PASS: contexto, estados, rascunhos, gravação, erros, teclado e axe em 8 combinações.');
+  console.log('PASS: renovação, novo login sem perda nem envio automático, contexto, estados, rascunhos, erros, teclado e axe.');
 } finally { await browser.close(); server.close(); }

@@ -98,6 +98,7 @@ ${topo({ t, v, ancoras: false })}
 
     <section class="entrar" id="entrar" aria-labelledby="entrar-t">
       <h2 id="entrar-t">Entrar</h2>
+      <p id="entrar-ajuda" hidden>As respostas já guardadas estão seguras. As alterações por guardar continuam nesta aba e reaparecem depois de entrares. Não precisas de recarregar a página.</p>
       <p id="entrar-desligado" hidden>O Supabase não está configurado nesta publicação: define <code>EMPIRE_SUPABASE_URL</code> e
         <code>EMPIRE_SUPABASE_CHAVE</code> na Vercel (ver <code>tools/web/supabase/</code>).</p>
       <form id="entrar-form" class="entrar-form">

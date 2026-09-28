@@ -20,6 +20,18 @@ Estado    feito
   `src/app/dashboard/page.tsx`: próxima ação, contexto, cartões arredondados,
   tipografia legível e detalhes progressivos.
 
+## Correção da sessão (28/09/2026)
+- O painel guardava apenas o access token e falhava com «JWT expired» após o prazo.
+- Guardar também o refresh token, rodar ambos antes de cada pedido que precise
+  da renovação e repetir uma única vez quando a API recusa com 401.
+- Partilhar renovações concorrentes; falhas de rede mantêm a sessão recuperável.
+- Se o refresh for revogado ou a sessão antiga não o tiver, pedir login na mesma
+  página e preservar as escolhas e notas por guardar. Não submeter depois do login
+  sem um novo clique em Guardar.
+- Reportes públicos usam a chave publicável, sem depender da sessão do painel.
+- Regressão do motor em `tests/web/sessao.test.mjs` e fluxo de recuperação no
+  navegador em `tests/web/painel-ui.mjs`; sem alterar prazos, contas ou RLS.
+
 ## Critérios
 - Encerradas não pedem aprovação; decisões parciais mostram o que falta.
 - Aprovação só aparece com um objeto explícito, sem truncamento.
