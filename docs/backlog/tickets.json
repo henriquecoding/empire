@@ -1583,5 +1583,19 @@
   "fora": "—",
   "estado": "parcial — o validation.json acertado a 27/09; repetir a cada entrega",
   "horas": "2"
+ },
+ "PUB-03": {
+  "title": "Decisões compreensíveis no painel",
+  "porque": "Falta contexto para aprovar e a interface mistura questões abertas e encerradas.",
+  "spec": [
+   "docs/QUESTIONS.md"
+  ],
+  "depende": "—",
+  "feito": "Contexto explícito, ficha única, estados e rascunhos verificados no desktop e telemóvel.",
+  "fora": "Mecânicas e balanceamento.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

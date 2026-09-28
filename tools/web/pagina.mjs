@@ -4,12 +4,9 @@
 // em build/site/:
 //
 //   /index.html · /en/index.html   a página de entrada, uma por língua
-//   /404.html                      o «fora do mapa», nas duas
 //   /assets/*.<hash>.{css,js}      a folha e os scripts, com o conteúdo no nome —
 //                                  por isso servem-se com cache imutável
 //   /robots.txt · /sitemap.xml     abertos só na produção (VERCEL_ENV)
-//   /site.webmanifest              o nome, as cores e os ícones
-//   /versao.json                   o commit que está publicado
 //
 // e passa o dossiê construído a usar as fontes do site em vez das da Google.
 //
@@ -104,13 +101,15 @@ function escreverAssets(saida, d) {
     ["site", "js", readFileSync(join(PAGINAS, "site.js"), "utf8")],
     ["motor", "js", readFileSync(join(PAGINAS, "motor.js"), "utf8")],
     ["reportar", "js", readFileSync(join(PAGINAS, "reportar.js"), "utf8")],
+    ["painelCss", "css", minificarCss(readFileSync(join(PAGINAS, "painel.css"), "utf8"))],
+    ["painelReportes", "js", readFileSync(join(PAGINAS, "painel-reportes.js"), "utf8")],
     ["painel", "js", readFileSync(join(PAGINAS, "painel.js"), "utf8")],
   ]) {
     const f = `${nome}.${hash(texto)}.${ext}`;
     writeFileSync(join(dir, f), texto);
     saidas[nome] = `/assets/${f}`;
   }
-  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site, motor: saidas.motor, reportar: saidas.reportar, painel: saidas.painel };
+  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site, motor: saidas.motor, reportar: saidas.reportar, painel: saidas.painel, painelCss: saidas.painelCss, painelReportes: saidas.painelReportes };
 }
 
 // O Supabase do Empire (ADR 0026): o ambiente manda, e o config.json é o de
@@ -208,6 +207,7 @@ function main() {
     writeFileSync(join(dir, "index.html"), preencherOuChumbar(`${t.caminho}${t.reportar.caminho}index.html`, reportar({ t, d, v, sb, robots })));
   }
   const qs = perguntas(RAIZ);
+  qs.forEach(q => { q.fonte = q.fonte.replace("/blob/main/", `/blob/${d.sha}/`); });
   mkdirSync(join(saida, "painel"), { recursive: true });
   writeFileSync(join(saida, "painel", "index.html"),
     preencherOuChumbar("painel/index.html", painel({ textos: TEXTOS, d, v: { ...assets, jogar: "/jogar/" }, sb, perguntas: qs })));

@@ -1,302 +1,162 @@
-/* tools/web/paginas/painel.js — o painel do dono em /painel/ (ADR 0026).
- *
- * Responder às perguntas do QUESTIONS.md e tratar os reportes. As perguntas já
- * vêm no HTML (geradas do repositório em cada publicação); daqui só se lê e
- * escreve o que o dono respondeu. O que vem da base de dados — os reportes são
- * escritos por qualquer pessoa — entra sempre por textContent, nunca por
- * innerHTML. */
+/* Uma decisão de cada vez. Rascunhos vivem no formulário até guardar. */
 (function () {
   "use strict";
-  var M = window.EmpireMotor;
+  var M = window.EmpireMotor, $ = function (id) { return document.getElementById(id); };
   if (!M) return;
-  var $ = function (id) { return document.getElementById(id); };
-  var todas = Array.prototype.slice.call(document.querySelectorAll("article.pergunta"));
-  var respostas = {};
-
-  function dizer(el, texto, tipo) {
-    el.textContent = texto;
-    el.className = el.className.replace(/\s*(erro|feito|aviso)\b/g, "") + (tipo ? " " + tipo : "");
+  var todas = Array.from(document.querySelectorAll("article.pergunta"));
+  var botoes = Array.from(document.querySelectorAll(".fila-item"));
+  var respostas = {}, visiveis = [], atual = null, pronto = false, sujas = new Set();
+  function dizer(el, texto, tipo) { el.textContent = texto; el.className = "p-guardado " + (tipo || ""); }
+  function estado(a) {
+    if (a.dataset.tipo === "encerrada") return "encerrada";
+    var r = respostas[a.id];
+    return !r ? "por" : r.estado === "aplicada" ? "aplicada" : r.escolha === "adiar" ? "adiada" : "respondida";
   }
-
-  // ── Entrar ──────────────────────────────────────────────────────────────
-  if (!document.body.getAttribute("data-sb-url")) {
-    $("entrar-desligado").hidden = false;
-    $("entrar-form").hidden = true;
-    return;
+  var rotulos = { por: "Por decidir", aplicada: "Aplicada", adiada: "Adiada", respondida: "À espera de implementação", encerrada: "Encerrada no projeto" };
+  function pintar(a, preencher) {
+    var r = respostas[a.id], e = estado(a), b = botoes.find(b => b.dataset.pergunta === a.id);
+    a.dataset.estado = e;
+    a.querySelector(".p-estado").textContent = pronto ? rotulos[e] : "A carregar resposta…";
+    b.querySelector(".fila-estado").textContent = pronto ? rotulos[e] : "A carregar";
+    var f = a.querySelector("form");
+    if (!f || !preencher) return;
+    f.querySelectorAll("input[type=radio]").forEach(x => { x.checked = !!r && x.value === r.escolha; });
+    f.querySelector("textarea").value = r && r.texto || "";
+    if (r && r.escolha === "aprovar" && a.dataset.aprovavel !== "true")
+      dizer(a.querySelector(".p-guardado"), "Existe uma aprovação anterior. Revê-a: esta questão tem pontos em aberto.", "aviso");
+    recibo(a);
   }
-
-  function abrir() {
-    var s = M.sessao();
-    $("entrar").hidden = true;
-    $("area").hidden = false;
-    $("sessao").textContent = "Entraste como " + (s && s.email ? s.email : "administração") + ".";
-    carregarRespostas();
-  }
-
-  $("entrar-form").addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    dizer($("entrar-estado"), "A entrar…", "");
-    M.entrar($("en-email").value.trim(), $("en-senha").value).then(function () {
-      $("en-senha").value = "";
-      dizer($("entrar-estado"), "", "");
-      abrir();
-    }, function (e) {
-      dizer($("entrar-estado"), "Não foi possível entrar: " + e.message, "erro");
-    });
-  });
-
-  $("sair").addEventListener("click", function () {
-    M.sair();
-    location.reload();
-  });
-
-  if (M.sessao()) {
-    M.pedir("/rest/v1/rpc/empire_e_admin", { metodo: "POST", corpo: {} }).then(function (admin) {
-      if (admin === true) abrir(); else M.sair();
-    }, function () { M.sair(); });
-  }
-
-  // ── Separadores ─────────────────────────────────────────────────────────
-  function separador(qual) {
-    ["perguntas", "reportes"].forEach(function (s) {
-      $("tab-" + s).setAttribute("aria-selected", String(s === qual));
-      $(s).hidden = s !== qual;
-    });
-    if (qual === "reportes") carregarReportes();
-  }
-  $("tab-perguntas").addEventListener("click", function () { separador("perguntas"); });
-  $("tab-reportes").addEventListener("click", function () { separador("reportes"); });
-
-  // ── Perguntas ───────────────────────────────────────────────────────────
-  function estadoDe(id) {
-    var r = respostas[id];
-    if (!r) return "por";
-    return r.estado === "aplicada" ? "aplicada" : "respondida";
-  }
-
-  function pintar(art) {
-    var id = art.dataset.id;
-    var r = respostas[id];
-    var e = estadoDe(id);
-    art.dataset.estado = e;
-    var rot = art.querySelector(".p-estado");
-    rot.dataset.estado = e;
-    rot.textContent = e === "por" ? "Por responder"
-      : (e === "aplicada" ? "Aplicada" : "Respondida") + " · " + ({ aprovar: "aprovada", outra: "outra resposta", adiar: "adiada" })[r.escolha];
-    if (!r) return;
-    var radio = art.querySelector("input[value=" + r.escolha + "]");
-    if (radio) radio.checked = true;
-    art.querySelector("textarea[name=texto]").value = r.texto || "";
-  }
-
   function contar() {
-    var n = { por: 0, respondida: 0, aplicada: 0 };
-    todas.forEach(function (a) { n[estadoDe(a.dataset.id)]++; });
-    $("c-respondidas").textContent = n.respondida + n.aplicada;
+    var n = { por: 0, respondida: 0, aplicada: 0, adiada: 0, encerrada: 0 };
+    todas.forEach(a => { n[estado(a)]++; });
     $("c-por").textContent = n.por;
-    $("c-aplicadas").textContent = n.aplicada;
+    $("c-respondidas").textContent = n.respondida;
+    $("c-adiadas").textContent = n.adiada;
+    $("c-aplicadas").textContent = n.aplicada + n.encerrada;
   }
-
-  function filtrar() {
-    var txt = $("f-texto").value.trim().toLowerCase();
-    var tipo = $("f-tipo").value;
-    var est = $("f-estado").value;
-    var grupo = $("f-grupo").value;
-    var visiveis = 0;
-    todas.forEach(function (a) {
-      var ok = (!tipo || a.dataset.tipo === tipo)
-        && (!est || estadoDe(a.dataset.id) === est)
-        && (!grupo || a.dataset.grupo === grupo)
-        && (!txt || a.textContent.toLowerCase().indexOf(txt) >= 0);
-      a.hidden = !ok;
-      if (ok) visiveis++;
+  function selecionar(id, foco) {
+    atual = visiveis.find(a => a.id === id) || visiveis[0] || null;
+    todas.forEach(a => { a.hidden = a !== atual; });
+    botoes.forEach(b => {
+      if (atual && b.dataset.pergunta === atual.id) b.setAttribute("aria-current", "true");
+      else b.removeAttribute("aria-current");
     });
-    $("sem-resultados").hidden = visiveis > 0;
+    var i = visiveis.indexOf(atual);
+    $("posicao").textContent = atual ? (i + 1) + " de " + visiveis.length : "";
+    $("anterior").disabled = i <= 0; $("seguinte").disabled = i < 0 || i >= visiveis.length - 1;
+    document.querySelector(".decisao-palco").hidden = !atual;
+    if (atual && foco) {
+      history.replaceState(null, "", "#" + atual.id);
+      atual.querySelector("h3").focus({ preventScroll: true });
+      atual.scrollIntoView({ block: "start" });
+    }
   }
-  ["f-texto", "f-tipo", "f-estado", "f-grupo"].forEach(function (id) {
-    $(id).addEventListener(id === "f-texto" ? "input" : "change", filtrar);
+  function filtrar(preferida) {
+    var normal = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    var txt = normal($("f-texto").value.trim());
+    visiveis = todas.filter(a => (!$('f-tipo').value || a.dataset.tipo === $('f-tipo').value)
+      && (!$('f-estado').value || estado(a) === $('f-estado').value)
+      && (!$('f-grupo').value || a.dataset.grupo === $('f-grupo').value)
+      && (!txt || normal(a.textContent).includes(txt)));
+    botoes.forEach(b => { b.hidden = !visiveis.some(a => a.id === b.dataset.pergunta); });
+    $("sem-resultados").hidden = visiveis.length > 0;
+    $("fila-contagem").textContent = visiveis.length + " decisões nesta lista";
+    selecionar(preferida || (atual && atual.id), false);
+  }
+  function recibo(a) {
+    var f = a.querySelector("form"), r = f.querySelector("input:checked"), caixa = f.querySelector(".decisao-recibo");
+    var outra = r && r.value === "outra";
+    f.querySelector("textarea").required = !!outra;
+    f.querySelector(".nota-obrigatoria").textContent = outra ? "(obrigatória)" : "(opcional)";
+    caixa.hidden = !r;
+    if (r) caixa.querySelector("p").textContent = r.value === "aprovar" ? "Aprovar: " + f.querySelector(".objeto-aprovacao").textContent
+      : outra ? (f.querySelector("textarea").value.trim() || "Escreve abaixo a regra ou alteração que queres guardar.") : "Adiar esta decisão. Nenhuma proposta será aprovada.";
+  }
+  function habilitar(valor) {
+    todas.forEach(a => a.querySelectorAll("fieldset, textarea, button[type=submit]").forEach(e => { e.disabled = !valor; }));
+    $("copiar").disabled = !valor;
+  }
+  function carregar() {
+    pronto = false; habilitar(false); $("recarregar").hidden = true;
+    dizer($("lote-estado"), "A carregar respostas…");
+    M.pedir("/rest/v1/empire_respostas?select=pergunta,escolha,texto,estado,atualizado_em").then(linhas => {
+      respostas = {}; (linhas || []).forEach(r => { respostas[r.pergunta] = r; });
+      pronto = true; habilitar(true); todas.forEach(a => pintar(a, !sujas.has(a.id))); contar();
+      var id = location.hash.slice(1);
+      if (todas.some(a => a.id === id)) $("f-estado").value = "";
+      filtrar(id); dizer($("lote-estado"), "Respostas atualizadas. Escolhe uma decisão para começar.");
+    }, e => { dizer($("lote-estado"), "Não foi possível ler as respostas. Tenta novamente antes de editar. " + e.message, "erro"); $("recarregar").hidden = false; });
+  }
+  function abrir() {
+    $("entrar").hidden = true; $("area").hidden = false;
+    $("sessao").textContent = "Sessão de administração · " + (M.sessao()?.email || "Empire"); carregar();
+  }
+  $("entrar-form").addEventListener("submit", ev => {
+    ev.preventDefault(); var b = ev.target.querySelector("button"); b.disabled = true;
+    dizer($("entrar-estado"), "A entrar…");
+    M.entrar($("en-email").value.trim(), $("en-senha").value).then(() => { $("en-senha").value = ""; abrir(); },
+      e => dizer($("entrar-estado"), "Não foi possível entrar: " + e.message, "erro")).finally(() => { b.disabled = false; });
   });
-
-  function carregarRespostas() {
-    M.pedir("/rest/v1/empire_respostas?select=pergunta,escolha,texto,estado,atualizado_em").then(function (linhas) {
-      respostas = {};
-      (linhas || []).forEach(function (r) { respostas[r.pergunta] = r; });
-      todas.forEach(pintar);
-      contar();
-      filtrar();
-    }, function (e) {
-      dizer($("lote-estado"), "Não foi possível ler as respostas: " + e.message, "erro");
-    });
-  }
-
-  // Guardar sobrepõe a resposta anterior e volta a pô-la em «nova»: uma
-  // resposta mudada tem de ser aplicada outra vez.
-  function guardar(linhas) {
-    return M.pedir("/rest/v1/empire_respostas?on_conflict=pergunta", {
-      metodo: "POST",
-      cabecalhos: { Prefer: "resolution=merge-duplicates,return=representation" },
-      corpo: linhas,
-    }).then(function (gravadas) {
-      (gravadas || []).forEach(function (r) { respostas[r.pergunta] = r; });
-      todas.forEach(function (a) { if (respostas[a.dataset.id]) pintar(a); });
-      contar();
-    });
-  }
-
-  todas.forEach(function (art) {
-    var form = art.querySelector("form.resposta");
-    var aviso = art.querySelector(".p-guardado");
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var escolha = form.querySelector("input[type=radio]:checked");
-      var texto = M.sanitizar(form.querySelector("textarea[name=texto]").value);
-      if (!escolha) return dizer(aviso, "Escolhe uma das três.", "erro");
-      if (escolha.value === "outra" && !texto) return dizer(aviso, "Escreve a outra resposta.", "erro");
-      if (M.contemCodigo(texto)) return dizer(aviso, "Sem código nem HTML, por favor.", "erro");
-      dizer(aviso, "A guardar…", "");
-      guardar([{ pergunta: art.dataset.id, escolha: escolha.value, texto: texto || null,
-        titulo: art.dataset.titulo.slice(0, 300), estado: "nova" }]).then(function () {
-        dizer(aviso, "Guardada.", "feito");
-      }, function (e) {
-        dizer(aviso, "Não guardou: " + e.message, "erro");
-      });
-    });
+  $("sair").addEventListener("click", () => {
+    if (sujas.size) return dizer($("lote-estado"), "Tens decisões por guardar. Guarda-as antes de sair ou recarrega a página para as descartar.", "aviso");
+    M.sair(); location.reload();
   });
-
-  // ── Em lote ─────────────────────────────────────────────────────────────
-  var lote = [];
-  $("aprovar-visiveis").addEventListener("click", function () {
-    lote = todas.filter(function (a) {
-      return !a.hidden && a.dataset.tipo === "confirmar" && estadoDe(a.dataset.id) === "por";
-    });
-    if (!lote.length) return dizer($("lote-estado"), "Não há «Confirmar» por responder à vista.", "aviso");
-    $("lote-n").textContent = lote.length;
-    $("lote-confirma").hidden = false;
-  });
-  $("lote-nao").addEventListener("click", function () { $("lote-confirma").hidden = true; });
-  $("lote-sim").addEventListener("click", function () {
-    $("lote-confirma").hidden = true;
-    dizer($("lote-estado"), "A aprovar " + lote.length + "…", "");
-    guardar(lote.map(function (a) {
-      return { pergunta: a.dataset.id, escolha: "aprovar", texto: null, titulo: a.dataset.titulo.slice(0, 300), estado: "nova" };
-    })).then(function () {
-      dizer($("lote-estado"), lote.length + " aprovadas.", "feito");
-      filtrar();
-    }, function (e) {
-      dizer($("lote-estado"), "Não aprovou: " + e.message, "erro");
+  function separador(qual) {
+    ["perguntas", "reportes"].forEach(s => { $("tab-" + s).setAttribute("aria-selected", String(s === qual)); $("tab-" + s).tabIndex = s === qual ? 0 : -1; $(s).hidden = s !== qual; });
+    if (qual === "reportes") window.EmpireReportes.carregar();
+  }
+  ["perguntas", "reportes"].forEach(s => {
+    $("tab-" + s).addEventListener("click", () => separador(s));
+    $("tab-" + s).addEventListener("keydown", ev => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(ev.key)) return;
+      ev.preventDefault(); var proximo = ev.key === "Home" ? "perguntas" : ev.key === "End" ? "reportes" : s === "perguntas" ? "reportes" : "perguntas";
+      separador(proximo); $("tab-" + proximo).focus();
     });
   });
-
-  // O que se cola numa sessão com um agente para as aplicar ao repositório.
-  $("copiar").addEventListener("click", function () {
-    var linhas = ["# Respostas às perguntas do QUESTIONS.md", ""];
-    todas.forEach(function (a) {
-      var r = respostas[a.dataset.id];
-      if (!r) return;
-      var o = { aprovar: "aprovar a proposta", outra: "outra resposta", adiar: "adiar" }[r.escolha];
-      linhas.push("- **" + a.dataset.id + "** · " + a.dataset.titulo + " — " + o + (r.texto ? ": " + r.texto : "")
-        + (r.estado === "aplicada" ? " (já aplicada)" : ""));
+  ["f-texto", "f-tipo", "f-estado", "f-grupo"].forEach(id => $(id).addEventListener(id === "f-texto" ? "input" : "change", () => filtrar()));
+  $("limpar-filtros").addEventListener("click", () => { ["f-texto", "f-tipo", "f-estado", "f-grupo"].forEach(id => { $(id).value = ""; }); filtrar(); });
+  botoes.forEach(b => b.addEventListener("click", () => selecionar(b.dataset.pergunta, true)));
+  $("anterior").addEventListener("click", () => selecionar(visiveis[visiveis.indexOf(atual) - 1]?.id, true));
+  $("seguinte").addEventListener("click", () => selecionar(visiveis[visiveis.indexOf(atual) + 1]?.id, true));
+  $("recarregar").addEventListener("click", carregar);
+  todas.forEach(a => {
+    var f = a.querySelector("form"); if (!f) return;
+    f.addEventListener("input", () => { sujas.add(a.id); recibo(a); dizer(a.querySelector(".p-guardado"), "Alterações por guardar."); });
+    f.addEventListener("submit", ev => {
+      ev.preventDefault(); if (!pronto || f.dataset.enviando) return;
+      var r = f.querySelector("input:checked"), nota = f.querySelector("textarea").value, aviso = a.querySelector(".p-guardado");
+      if (!r) return dizer(aviso, "Escolhe como queres responder.", "erro");
+      if (r.value === "aprovar" && a.dataset.aprovavel !== "true") return;
+      if (M.contemCodigo(nota)) return dizer(aviso, "Escreve a decisão sem código HTML.", "erro");
+      var texto = M.sanitizar(nota);
+      if (r.value === "outra" && !texto) return dizer(aviso, "Escreve a tua decisão.", "erro");
+      f.dataset.enviando = "true"; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = true; });
+      dizer(aviso, "A guardar…");
+      M.pedir("/rest/v1/empire_respostas?on_conflict=pergunta", { metodo: "POST", cabecalhos: { Prefer: "resolution=merge-duplicates,return=representation" },
+        corpo: [{ pergunta: a.id, escolha: r.value, texto: texto || null, titulo: a.dataset.titulo.slice(0, 300), estado: "nova" }],
+      }).then(gravadas => {
+        if (!gravadas?.some(x => x.pergunta === a.id)) throw new Error("O servidor não confirmou a resposta.");
+        gravadas.forEach(x => { respostas[x.pergunta] = x; }); sujas.delete(a.id); pintar(a, false); contar();
+        dizer(aviso, r.value === "adiar" ? "Adiada. Podes retomá-la no filtro «Adiadas»." : "Decisão guardada. Aguarda implementação no jogo.", "feito");
+      }).catch(e => dizer(aviso, "Não foi guardada. A tua resposta continua aqui. " + e.message, "erro"))
+        .finally(() => { delete f.dataset.enviando; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = false; }); });
     });
-    var md = linhas.join("\n") + "\n";
-    var fim = function (ok) {
-      dizer($("lote-estado"), ok ? "Copiado." : "Não deu para copiar: a lista está na consola.", ok ? "feito" : "aviso");
-      if (!ok) console.log(md);
-    };
-    if (navigator.clipboard) navigator.clipboard.writeText(md).then(function () { fim(true); }, function () { fim(false); });
-    else fim(false);
   });
-
-  // ── Reportes ────────────────────────────────────────────────────────────
-  var ESTADOS = [["novo", "Novo"], ["em_analise", "Em análise"], ["valido", "Válido"], ["resolvido", "Resolvido"], ["rejeitado", "Rejeitado"]];
-  var TIPOS = { sugestao: "Sugestão", erro: "Erro", duvida: "Dúvida", mensagem: "Mensagem" };
-
-  function el(tag, classe, texto) {
-    var e = document.createElement(tag);
-    if (classe) e.className = classe;
-    if (texto !== undefined && texto !== null) e.textContent = texto;
-    return e;
-  }
-
-  function cartaoReporte(r) {
-    var art = el("article", "reporte");
-    var meta = el("p", "p-meta");
-    meta.appendChild(el("span", "chip chip-" + r.tipo, TIPOS[r.tipo] || r.tipo));
-    meta.appendChild(el("span", "p-grupo", new Date(r.criado_em).toLocaleString("pt-PT")));
-    if (r.area) meta.appendChild(el("span", "p-grupo", r.area));
-    if (r.versao) meta.appendChild(el("code", "", r.versao.slice(0, 7)));
-    art.appendChild(meta);
-    if (r.assunto) art.appendChild(el("h3", "", r.assunto));
-    art.appendChild(el("p", "reporte-msg", r.mensagem));
-    if (r.nome || r.email) art.appendChild(el("p", "reporte-quem", [r.nome, r.email].filter(Boolean).join(" · ")));
-
-    var form = el("form", "resposta");
-    var sel = el("select");
-    ESTADOS.forEach(function (e) {
-      var o = el("option", "", e[1]);
-      o.value = e[0];
-      if (e[0] === r.estado) o.selected = true;
-      sel.appendChild(o);
+  $("copiar").addEventListener("click", () => {
+    var linhas = ["# Decisões do Empire", ""];
+    todas.forEach(a => { var r = respostas[a.id]; if (!r) return;
+      linhas.push("## " + a.id + " · " + a.dataset.titulo, "Escolha: " + r.escolha + " · Estado: " + r.estado);
+      var objeto = a.querySelector(".objeto-aprovacao");
+      if (r.escolha === "aprovar") linhas.push("Proposta na versão consultada (conferir antes de aplicar): " + (objeto?.textContent || "Consultar a fonte; questão encerrada ou alterada."));
+      if (r.texto) linhas.push("Resposta: " + r.texto); linhas.push("");
     });
-    var rotSel = el("label", "campo");
-    rotSel.appendChild(el("span", "", "Estado"));
-    rotSel.appendChild(sel);
-    var nota = el("textarea");
-    nota.rows = 2;
-    nota.maxLength = 4000;
-    nota.value = r.nota_admin || "";
-    var rotNota = el("label", "campo");
-    rotNota.appendChild(el("span", "", "Nota interna"));
-    rotNota.appendChild(nota);
-    var accoes = el("div", "accoes");
-    var gravar = el("button", "botao principal", "Guardar");
-    gravar.type = "submit";
-    var apagar = el("button", "botao", "Apagar");
-    apagar.type = "button";
-    var aviso = el("span", "p-guardado");
-    aviso.setAttribute("role", "status");
-    accoes.appendChild(gravar);
-    accoes.appendChild(apagar);
-    accoes.appendChild(aviso);
-    form.appendChild(rotSel);
-    form.appendChild(rotNota);
-    form.appendChild(accoes);
-    art.appendChild(form);
-
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      dizer(aviso, "A guardar…", "");
-      M.pedir("/rest/v1/empire_feedback?id=eq." + encodeURIComponent(r.id), {
-        metodo: "PATCH", cabecalhos: { Prefer: "return=minimal" },
-        corpo: { estado: sel.value, nota_admin: M.sanitizar(nota.value) || null },
-      }).then(function () { dizer(aviso, "Guardado.", "feito"); }, function (e) { dizer(aviso, "Não guardou: " + e.message, "erro"); });
-    });
-    // Apagar pede um segundo clique: o viewer não tem confirm().
-    var armado = false;
-    apagar.addEventListener("click", function () {
-      if (!armado) {
-        armado = true;
-        apagar.textContent = "Carrega outra vez para apagar";
-        return;
-      }
-      M.pedir("/rest/v1/empire_feedback?id=eq." + encodeURIComponent(r.id), { metodo: "DELETE" })
-        .then(function () { art.remove(); }, function (e) { dizer(aviso, "Não apagou: " + e.message, "erro"); });
-    });
-    return art;
-  }
-
-  function carregarReportes() {
-    var lista = $("lista-reportes");
-    var est = $("fr-estado").value;
-    dizer($("fr-estado-msg"), "A carregar…", "");
-    M.pedir("/rest/v1/empire_feedback?select=*&order=criado_em.desc&limit=200" + (est ? "&estado=eq." + est : ""))
-      .then(function (linhas) {
-        lista.textContent = "";
-        (linhas || []).forEach(function (r) { lista.appendChild(cartaoReporte(r)); });
-        dizer($("fr-estado-msg"), (linhas || []).length ? (linhas.length + " reporte(s).") : "Nenhum reporte com este estado.", "");
-      }, function (e) {
-        dizer($("fr-estado-msg"), "Não foi possível ler os reportes: " + e.message, "erro");
-      });
-  }
-  $("fr-estado").addEventListener("change", carregarReportes);
-  $("fr-atualizar").addEventListener("click", carregarReportes);
+    var md = linhas.join("\n");
+    if (!navigator.clipboard) return dizer($("lote-estado"), "O navegador não permite copiar nesta ligação.", "erro");
+    navigator.clipboard.writeText(md).then(() => dizer($("lote-estado"), "Decisões copiadas.", "feito"), () => dizer($("lote-estado"), "Não foi possível copiar. Permite o acesso à área de transferência.", "erro"));
+  });
+  window.addEventListener("beforeunload", ev => { if (sujas.size) { ev.preventDefault(); ev.returnValue = ""; } });
+  if (!document.body.dataset.sbUrl) { $("entrar-desligado").hidden = false; $("entrar-form").hidden = true; return; }
+  if (M.sessao()) M.pedir("/rest/v1/rpc/empire_e_admin", { metodo: "POST", corpo: {} }).then(admin => {
+    if (admin === true) abrir(); else M.sair();
+  }, () => { M.sair(); dizer($("entrar-estado"), "A sessão terminou. Entra novamente."); });
 })();
