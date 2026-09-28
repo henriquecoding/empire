@@ -14,6 +14,7 @@
 // as páginas publicam-se na mesma e dizem que o envio não está ligado.
 
 import { cabeca, topo, rodape, esc, CSP } from "./molde.mjs";
+import { cartaoPergunta, filaPergunta } from "./decisao.mjs";
 
 const cspCom = (url) => (url ? CSP.replace("connect-src 'self'", `connect-src 'self' ${url}`) : CSP);
 
@@ -77,43 +78,13 @@ ${rodape({ t, d, v })}
 `;
 }
 
-const TIPO = {
-  confirmar: ["Confirmar", "Já há uma decisão provisória: aprova-a ou muda-a."],
-  escolher: ["Escolher", "Há uma proposta ou recomendação, e alguma parte por decidir."],
-  decidir: ["Decidir", "Não há proposta: a resposta é tua."],
-};
-
-function cartaoPergunta(q) {
-  const [rot, dica] = TIPO[q.tipo];
-  const aprovar = q.proposta ? `Aprovar: ${esc(q.proposta.length > 220 ? q.proposta.slice(0, 217) + "…" : q.proposta)}` : "Aprovar como está";
-  return `
-    <article class="pergunta" id="${q.id}" data-id="${q.id}" data-tipo="${q.tipo}" data-grupo="${esc(q.grupo)}" data-titulo="${esc(q.titulo)}">
-      <header>
-        <p class="p-meta"><span class="p-id">${q.id}</span><span class="chip chip-${q.tipo}" title="${dica}">${rot}</span><span class="p-grupo">${esc(q.grupo)}</span><span class="p-estado" data-estado="por">Por responder</span></p>
-        <h3>${esc(q.titulo)}</h3>
-      </header>
-      <details><summary>O texto da pergunta</summary><div class="p-corpo">${q.html}</div></details>
-      <form class="resposta" data-id="${q.id}">
-        <fieldset>
-          <legend class="sr">A tua resposta a ${q.id}</legend>
-          <label class="escolha"><input type="radio" name="e-${q.id}" value="aprovar"><span>${aprovar}</span></label>
-          <label class="escolha"><input type="radio" name="e-${q.id}" value="outra"><span>Outra resposta</span></label>
-          <label class="escolha"><input type="radio" name="e-${q.id}" value="adiar"><span>Adiar</span></label>
-        </fieldset>
-        <label class="campo"><span>Nota ou resposta (obrigatória em «Outra resposta»)</span>
-          <textarea name="texto" rows="3" maxlength="4000"></textarea></label>
-        <div class="accoes"><button class="botao principal" type="submit">Guardar</button><span class="p-guardado" role="status" aria-live="polite"></span></div>
-      </form>
-    </article>`;
-}
-
 export function painel({ textos, d, v, sb, perguntas }) {
   const t = textos.pt;
   const grupos = [...new Set(perguntas.map((q) => q.grupo))];
   const cab = cabeca({
     t, v, titulo: "Painel · Empire", descricao: "As perguntas do QUESTIONS.md e os reportes, para o dono responder.",
     robots: "noindex, nofollow", canonico: "", alternativas: [], csp: cspCom(sb.url),
-    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
+    extra: `<link rel="stylesheet" href="${v.painelCss}">\n<script src="${v.motor}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
   });
   const n = (tipo) => perguntas.filter((q) => q.tipo === tipo).length;
   return `${cab}
@@ -121,10 +92,9 @@ export function painel({ textos, d, v, sb, perguntas }) {
 ${topo({ t, v, ancoras: false })}
 <main id="conteudo" class="painel">
   <div class="envolve">
-    <p class="kicker"><span>Commit ${esc(d.sha.slice(0, 7))} · ${perguntas.length} perguntas à espera</span></p>
-    <h1>Painel do dono</h1>
-    <p class="painel-intro">As perguntas abertas do <code>docs/QUESTIONS.md</code> e os reportes de quem joga. Cada resposta fica
-      guardada no Supabase do Empire; um agente lê-as e aplica-as no repositório, e a pergunta passa a «aplicada».</p>
+    <p class="kicker"><span>Commit ${esc(d.sha.slice(0, 7))} · Centro de decisões</span></p>
+    <h1>Vamos dar forma ao Empire.</h1>
+    <p class="painel-intro">Entende o que está em causa, avalia a proposta e decide o próximo passo do jogo. Uma decisão de cada vez.</p>
 
     <section class="entrar" id="entrar" aria-labelledby="entrar-t">
       <h2 id="entrar-t">Entrar</h2>
@@ -141,41 +111,40 @@ ${topo({ t, v, ancoras: false })}
     <div id="area" hidden>
       <div class="painel-barra">
         <p id="sessao" class="sessao"></p>
-        <div class="separadores" role="tablist">
-          <button class="separador" role="tab" id="tab-perguntas" aria-selected="true" aria-controls="perguntas" type="button">Perguntas</button>
-          <button class="separador" role="tab" id="tab-reportes" aria-selected="false" aria-controls="reportes" type="button">Reportes</button>
+        <div class="separadores" role="tablist" aria-label="Áreas do painel">
+          <button class="separador" role="tab" id="tab-perguntas" aria-selected="true" aria-controls="perguntas" type="button">Decisões do jogo</button>
+          <button class="separador" role="tab" id="tab-reportes" tabindex="-1" aria-selected="false" aria-controls="reportes" type="button">Feedback dos jogadores</button>
         </div>
         <button class="botao" id="sair" type="button">Sair</button>
       </div>
 
       <section id="perguntas" role="tabpanel" aria-labelledby="tab-perguntas">
-        <div class="resumo" id="resumo">
-          <p><strong id="c-total">${perguntas.length}</strong> perguntas</p>
-          <p><strong id="c-respondidas">0</strong> respondidas</p>
-          <p><strong id="c-por">${perguntas.length}</strong> por responder</p>
-          <p><strong id="c-aplicadas">0</strong> aplicadas</p>
+        <div class="resumo" id="resumo" aria-label="Estado das decisões">
+          <p><strong id="c-por">—</strong><span>Por decidir</span></p>
+          <p><strong id="c-respondidas">—</strong><span>À espera de implementação</span></p>
+          <p><strong id="c-adiadas">—</strong><span>Adiadas</span></p>
+          <p><strong id="c-aplicadas">—</strong><span>Aplicadas ou encerradas</span></p>
         </div>
+        <div class="painel-agora"><div><p class="eyebrow">O próximo passo</p><h2>Uma escolha informada começa pelo contexto.</h2><p>À esquerda, escolhe uma questão. Na ficha, vê a proposta completa e o que ainda está em aberto.</p></div><button class="botao" id="copiar" type="button" disabled>Copiar decisões guardadas</button></div>
+        <div class="estado-carregamento"><p id="lote-estado" role="status" aria-live="polite">A carregar respostas…</p><button class="botao" id="recarregar" type="button" hidden>Tentar novamente</button></div>
         <div class="filtros">
           <label class="campo"><span>Procurar</span><input id="f-texto" type="search" placeholder="Q-143, herdeiro, soldo…"></label>
           <label class="campo"><span>Tipo</span><select id="f-tipo">
-            <option value="">Todos</option><option value="confirmar">Confirmar (${n("confirmar")})</option>
-            <option value="escolher">Escolher (${n("escolher")})</option><option value="decidir">Decidir (${n("decidir")})</option></select></label>
+            <option value="">Todos</option><option value="confirmar">Rever decisão (${n("confirmar")})</option>
+            <option value="escolher">Avaliar proposta (${n("escolher")})</option><option value="decidir">Decidir (${n("decidir")})</option></select></label>
           <label class="campo"><span>Estado</span><select id="f-estado">
-            <option value="">Todas</option><option value="por" selected>Por responder</option>
-            <option value="respondida">Respondidas</option><option value="aplicada">Aplicadas</option></select></label>
+            <option value="">Todas</option><option value="por" selected>Por decidir</option>
+            <option value="respondida">À espera de implementação</option><option value="adiada">Adiadas</option><option value="aplicada">Aplicadas</option><option value="encerrada">Encerradas no projeto</option></select></label>
           <label class="campo"><span>Secção</span><select id="f-grupo"><option value="">Todas</option>
             ${grupos.map((g) => `<option>${esc(g)}</option>`).join("")}</select></label>
         </div>
-        <div class="lote">
-          <button class="botao" id="aprovar-visiveis" type="button">Aprovar as «Confirmar» que estão à vista</button>
-          <span id="lote-confirma" hidden>Aprovar <strong id="lote-n">0</strong> de uma vez?
-            <button class="botao principal" id="lote-sim" type="button">Sim, aprovar</button>
-            <button class="botao" id="lote-nao" type="button">Não</button></span>
-          <button class="botao" id="copiar" type="button">Copiar as respostas em markdown</button>
-          <span class="p-guardado" id="lote-estado" role="status" aria-live="polite"></span>
-        </div>
-        <p class="vazio" id="sem-resultados" hidden>Nenhuma pergunta com estes filtros.</p>
-        <div class="lista-perguntas">${perguntas.map(cartaoPergunta).join("")}
+        <div class="fila-barra"><p id="fila-contagem" role="status"></p><button class="botao" id="limpar-filtros" type="button">Limpar filtros</button></div>
+        <p class="vazio" id="sem-resultados" hidden>Nenhuma decisão corresponde aos filtros. Altera a pesquisa ou limpa os filtros para ver todas.</p>
+        <div class="decisoes-layout">
+          <nav class="fila-decisoes" aria-label="Escolher uma decisão">${perguntas.map(filaPergunta).join('')}</nav>
+          <div class="decisao-palco"><div class="decisao-navegacao"><button class="botao" id="anterior" type="button">← Anterior</button><span id="posicao"></span><button class="botao" id="seguinte" type="button">Seguinte →</button></div>
+            <div class="lista-perguntas">${perguntas.map(cartaoPergunta).join('')}</div>
+          </div>
         </div>
       </section>
 

@@ -1,0 +1,71 @@
+{
+  "Q-001": {
+    "resumo": "Um arqueiro sozinho, em campo aberto, consegue matar o Aríete de lodo antes de a noite acabar. Isso contradiz a intenção de que este inimigo obrigue o jogador a investir noutra defesa.",
+    "impacto": "A proposta aumenta a vida do aríete de 90 para 104: o tempo estimado para o matar em campo passa para 107 segundos, acima dos 105 segundos da noite. A alternativa é avaliar o tempo até ele chegar ao muro. Aprovar a proposta favorece o aumento de vida; para escolher a alternativa, escreve uma alteração.",
+    "alerta": "A Q-038 pede que esta conta seja refeita com a massa mais recente da Podridão antes de reativar o teste. A aprovação não substitui essa medição.",
+    "fonteHash": "16a88169a8299e51"
+  },
+  "Q-002": {
+    "resumo": "Há dois preços diferentes para melhorar as muralhas: os valores da tabela e os resultados de uma fórmula. É preciso escolher qual é a regra oficial.",
+    "impacto": "Aprovar mantém os preços que já estão nos dados: 6, 11, 20, 36 e 65 moedas. A fórmula passa a servir apenas como aproximação na documentação; não autoriza uma alteração de preços.",
+    "fonteHash": "4451caf99a3f1b39"
+  },
+  "Q-003": {
+    "resumo": "A documentação calcula a precisão dos arqueiros em campo como um terço (cerca de 33,33%), mas os dados usam 34%. Essa pequena diferença altera o tempo esperado para derrotar um inimigo.",
+    "impacto": "Aprovar mantém os 34% que já estão nos dados e identifica os tempos da tabela como aproximados. Não torna os arqueiros mais ou menos precisos.",
+    "fonteHash": "fd2fbd4da1ef9353"
+  },
+  "Q-004": {
+    "resumo": "O exemplo de diplomacia com 60 pontos de Favor não corresponde à regra escrita. Também não há uma regra clara para o efeito do nível 2 do diplomata.",
+    "impacto": "A proposta mais simples é corrigir o exemplo para 45/50/5, seguindo a regra atual. Se queres que o nível 2 tenha um efeito próprio, é preciso descrevê-lo. A fonte apresenta hipóteses diferentes; usa a resposta escrita para indicar exatamente qual queres.",
+    "fonteHash": "509f619d6d422f46",
+    "aprovavel": false
+  },
+  "Q-005": {
+    "resumo": "O jogo descreve dois momentos em que uma tropa pode fugir: quando a muralha cai e quando fica gravemente ferida. Os limites de vida são diferentes, mas podem coexistir.",
+    "impacto": "Se aprovares, ficam duas regras: na queda de um muro, fogem as tropas elegíveis com menos de 30% de vida e custo até 4 moedas; no restante comportamento, o limite é 25%. Exemplo: uma tropa barata com 28% de vida pode fugir quando o muro cai, mesmo estando acima do limite normal.",
+    "fonteHash": "f95ed61a9e2906cd"
+  },
+  "Q-006": {
+    "resumo": "Esta questão já foi encerrada. Ter um ataque que permite atingir inimigos aéreos não basta: a unidade também precisa da altura fornecida por um posto adequado.",
+    "impacto": "Um arqueiro no chão não abate o Alado. A torre alta permite atingir essa faixa. Esta ficha é apenas o histórico da regra já implementada.",
+    "fonteHash": "6b66c2c238add9ed"
+  },
+  "Q-033": {
+    "resumo": "A previsão de rendimento da documentação é mais generosa do que as construções reais do jogo. Ainda falta escolher se se corrige o modelo ou se se aumenta a produção dos edifícios.",
+    "impacto": "Baixar a previsão muda o modelo e o dia em que a economia deixa de se sustentar; aumentar a produção altera o rendimento de seis edifícios. São intervenções diferentes: a tua resposta precisa de dizer qual delas deve ser medida e adotada.",
+    "fonteHash": "7ab5d0eb9fc85e9d"
+  },
+  "Q-143": {
+    "resumo": "Ao mudar de região, parte do progresso já acompanha o rei. Ainda falta decidir como separar a dívida local da memória da campanha e como preservar a identidade das tropas da comitiva.",
+    "impacto": "Hoje, a dívida levada continua a pesar na nova região e a comitiva conserva os tipos de tropas, mas não os seus títulos, ferimentos e moedas. A tua resposta deve tratar estes pontos em aberto; a aprovação da regra anterior não os resolve.",
+    "fonteHash": "1f1715a48dbbf841"
+  },
+  "Q-144": {
+    "resumo": "Quando faltam moedas para pagar o exército, a penalização pode sair muito barata: uma dívida grande é perdoada em troca da deserção de uma tropa barata, que pode voltar a ser contratada por uma moeda.",
+    "impacto": "Há três caminhos a comparar: acumular dívida, aumentar as deserções conforme o valor em falta, ou impedir a recontratação imediata. Falta medir o efeito para evitar um ciclo de deserção e empobrecimento. Aprovar uma comparação não equivale a escolher uma destas regras.",
+    "fonteHash": "c09ba2056156aca1",
+    "aprovavel": false
+  },
+  "Q-145": {
+    "resumo": "O celeiro pode conceder mais vida sem consumir matéria e sem exigir que o cozinheiro esteja no local. Ainda não está demonstrado quando esse benefício compensa mais do que vender a produção.",
+    "impacto": "Decide se o benefício deve exigir consumo de recursos e presença do cozinheiro. O ganho atual de 10% de vida só deve ser revisto depois de medir um cenário real, incluindo a ganância e o momento da ativação.",
+    "fonteHash": "a7463de3231a8a3f"
+  },
+  "Q-146": {
+    "resumo": "A região abre a travessia no dia 11 e o herdeiro só termina o treino nesse dia no melhor cenário. É preciso definir para que serve o herdeiro e se sair da região depende apenas do tempo ou de um objetivo.",
+    "impacto": "O herdeiro pode funcionar como seguro para uma estadia longa, como próximo monarca da campanha ou como incentivo para permanecer. A decisão sobre essa função deve vir antes de alterar o tempo de treino.",
+    "alerta": "Há um trecho desatualizado na pergunta original: diz que o treino não atravessa. A decisão posterior da Q-143 já faz o treino acompanhar a campanha. Considera essa regra ao responder.",
+    "fonteHash": "3dd6410601af4edc"
+  },
+  "Q-147": {
+    "resumo": "Algumas ofertas exigem formas de pagamento cujos sistemas ainda não existem no jogo. O jogador não consegue concluir essas trocas.",
+    "impacto": "Escolhe entre esconder temporariamente essas ofertas ou mostrá-las como indisponíveis, com uma explicação. Escreve a tua preferência; não existe uma opção única proposta para aprovar.",
+    "fonteHash": "6a813e0242e58ea0"
+  },
+  "Q-149": {
+    "resumo": "Correr já funciona com Shift esquerdo ou L3: o rei anda mais depressa sem pagar um custo. Falta decidir se isso deve ter uma contrapartida e se os seguidores acompanham o passo.",
+    "impacto": "A regra atual acelera apenas o rei em 1,6 vezes. A decisão em aberto é sobre um eventual custo de correr e o comportamento dos seguidores. Não precisas de aprovar novamente a existência do botão de corrida.",
+    "fonteHash": "3cbe56ade96ed676"
+  }
+}

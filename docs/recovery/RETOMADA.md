@@ -74,7 +74,7 @@ a cada construção._
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |
 | `docs/adr/` | 26 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros; e a 0026 os reportes e as respostas às perguntas, num Supabase só do Empire. |
-| `docs/backlog/` | 98 tickets, um ficheiro cada, no formato da §34. |
+| `docs/backlog/` | 99 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
 | `data/i18n/strings.csv` | 369 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
