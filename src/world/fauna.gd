@@ -24,6 +24,8 @@ const SEMPRE := 3
 ## casa (y de mundo; o pardal tira-a do arbusto e o corvo do chao).
 const MODO := [Modo.POISO, Modo.CHAO, Modo.PAIRA, Modo.PAIRA, Modo.BANDO, Modo.PAIRA, Modo.PAIRA]
 const TURNO := [DIA, DIA, DIA, NOITE, DIA, SEMPRE, DIA]
+## A faixa de cada um (Band.Kind: 0 ar, 1 superficie, 2 subsolo), para a luz.
+const FAIXA := [1, 1, 1, 1, 0, 2, 0]
 const ALTURA := [
 	[0.0, 0.0],
 	[0.0, 0.0],

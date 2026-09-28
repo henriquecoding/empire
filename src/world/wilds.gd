@@ -116,6 +116,8 @@ const FAUNA := {
 const POUSO := 0.5
 const MIL := 1000.0
 const MEIO := 0.5
+## Quao largo nasce o bando: dentro do raio de vizinho do Flock.
+const BANDO_PX := 60.0
 ## Terraria: ha noites de enxame e noites de poucos. Quanto dos pirilampos se ve.
 const ENXAME := {"de": 0.3, "ate": 1.0}
 
@@ -178,9 +180,15 @@ static func animals(
 	var lista := tabela
 	for k in range(0, lista.size(), 2):
 		var quantos := roundi(float(lista[k + 1]) * (b - a) / MIL)
+		# O bando nasce junto, a volta de uma origem so: longe uns dos outros, as
+		# regras de Reynolds nao chegavam a correr.
+		var origem := lerpf(a, b, RngService.scatter(hash([SAL.fauna, regiao, lista[k]]), 1)[0])
 		for j in quantos:
 			var d := RngService.scatter(hash([SAL.fauna, regiao, lista[k], j]), 2)
-			saida.append_array(PackedFloat32Array([lista[k], lerpf(a, b, d[0]), d[1]]))
+			var x := lerpf(a, b, d[0])
+			if int(lista[k]) == Animal.BIRD:
+				x = origem + (d[0] - MEIO) * BANDO_PX
+			saida.append_array(PackedFloat32Array([lista[k], x, d[1]]))
 	return saida
 
 

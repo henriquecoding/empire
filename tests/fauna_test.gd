@@ -94,7 +94,14 @@ func test_ha_um_perfil_por_bicho() -> void:
 	assert_int(Fauna.MODO.size()).is_equal(n)
 	assert_int(Fauna.TURNO.size()).is_equal(n)
 	assert_int(Fauna.ALTURA.size()).is_equal(n)
+	assert_int(Fauna.FAIXA.size()).is_equal(n)
 	assert_int(FaunaArt.SPRITES.size()).is_equal(n)
 	assert_int(FaunaArt.CORES.size()).is_equal(n)
 	for tipo in Wilds.Plant.values():
 		assert_bool(FloraArt.SPRITES.has(tipo)).is_true()
+
+
+func test_a_faixa_de_cada_bicho_e_a_da_luz_que_o_ilumina() -> void:
+	assert_int(Fauna.FAIXA[Wilds.Animal.BAT]).is_equal(Band.Kind.UNDERGROUND)
+	assert_int(Fauna.FAIXA[Wilds.Animal.BIRD]).is_equal(Band.Kind.AERIAL)
+	assert_int(Fauna.FAIXA[Wilds.Animal.SONGBIRD]).is_equal(Band.Kind.SURFACE)

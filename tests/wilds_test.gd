@@ -117,3 +117,15 @@ func test_o_enxame_muda_de_noite_para_noite_e_e_sempre_o_mesmo() -> void:
 		assert_float(Wilds.swarm(dia)).is_equal(e)
 		vistos[snappedf(e, 0.1)] = true
 	assert_int(vistos.size()).is_greater(2)
+
+
+func test_o_bando_nasce_junto_para_as_regras_correrem() -> void:
+	var tabela := Wilds.table(Wilds.FAUNA, &"ancient_forest")
+	var bichos := Wilds.animals(tabela, 0.0, REGIAO, 0, PackedFloat32Array())
+	var xs: Array[float] = []
+	for i in range(0, bichos.size(), Wilds.BICHO):
+		if int(bichos[i]) == Wilds.Animal.BIRD:
+			xs.append(bichos[i + 1])
+	assert_int(xs.size()).is_greater(1)
+	assert_float(xs.max() - xs.min()).is_less_equal(Wilds.BANDO_PX)
+	assert_float(Wilds.BANDO_PX).is_less(Flock.REGRAS.vizinho)
