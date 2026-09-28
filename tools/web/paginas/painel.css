@@ -3,7 +3,7 @@
 .pagina-painel::before{display:none}
 .painel{padding-block:40px 64px}
 .painel>.envolve{max-width:1320px}
-.painel h1{font-size:clamp(30px,4vw,44px);letter-spacing:-.035em;margin:12px 0}
+.painel h1{max-width:none;font-size:clamp(30px,4vw,44px);letter-spacing:-.035em;margin:12px 0}
 .painel-intro{font-size:16px;max-width:76ch}
 .painel .kicker{font-family:inherit;letter-spacing:.1em;font-size:12px}
 .painel .botao,.painel .separador{font-family:inherit;font-size:14px;letter-spacing:0;text-transform:none;font-weight:600;min-height:44px;border-radius:12px;padding:10px 16px;box-shadow:none}
@@ -25,7 +25,7 @@
 .painel .resumo p:first-child{border-color:var(--folha)}
 .painel .resumo p:first-child strong{color:var(--folha)}
 .painel-agora{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 26px;border-radius:22px;background:var(--papel-2);border:1px solid var(--linha);border-left:4px solid var(--folha)}
-.painel-agora h2{font-weight:600;line-height:1.35;margin:3px 0 6px;font-family:inherit;font-size:19px}
+.painel-agora h2{max-width:none;font-weight:600;line-height:1.35;margin:3px 0 6px;font-family:inherit;font-size:19px}
 .painel-agora p{margin:0;color:var(--tinta-2);font-size:14px;max-width:72ch}
 .painel-agora .eyebrow{color:var(--folha);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
 .painel-agora .botao{flex-shrink:0}
@@ -86,7 +86,7 @@
 .painel .reporte .resposta{padding:18px 0 0}
 @media(max-width:1050px){.decisoes-layout{grid-template-columns:245px minmax(0,1fr);gap:16px}.painel .filtros{grid-template-columns:1fr 1fr}.painel-agora{align-items:flex-start;flex-direction:column;gap:16px}.painel-barra .sessao{display:none}}
 @media(max-width:760px){
-  .painel{padding-top:24px}.painel>.envolve{width:calc(100% - 32px)}
+  .painel{padding-top:24px}.painel>.envolve{width:100%;padding-inline:16px}
   .painel .resumo{grid-template-columns:1fr 1fr;gap:8px}.painel .resumo p{padding:16px;border-radius:16px;font-size:12px}
   .painel .resumo strong{font-size:28px}.painel-agora{padding:20px}.painel .filtros{gap:10px}.painel .filtros .campo:first-child{grid-column:1/-1}
   .decisoes-layout{grid-template-columns:minmax(0,1fr)}

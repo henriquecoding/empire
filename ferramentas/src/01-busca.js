@@ -156,7 +156,7 @@ function pontuarCampo(qNorm, valor) {
   const tCon = tokensDeConsulta(qNorm);
   if (!tCon.length) return porFrase;
 
-  let soma = 0, cobertos = 0;
+  let soma = 0, cobertos = 0, cobrePalavra = false;
   for (const alvo of tCon) {
     let p = 0;
     if (tDoc.includes(alvo)) p = 45;
@@ -165,10 +165,11 @@ function pontuarCampo(qNorm, valor) {
     // curtas uma edição transforma «rot» em «rio» e passa a ser outra
     // pergunta.
     else if (alvo.length >= 5 && tDoc.some((t) => distanciaAteUm(t, alvo))) p = 18;
-    if (p > 0) cobertos++;
+    if (p > 0) { cobertos++; if (/[a-z]/.test(alvo)) cobrePalavra = true; }
     soma += p;
   }
-  if (!cobertos) return porFrase;
+  // Um número isolado não reconhece uma consulta que também contém palavras.
+  if (!cobertos || (!cobrePalavra && tCon.some((t) => /[a-z]/.test(t)))) return porFrase;
 
   // Proporção de cobertura: quem cobre metade da pergunta vale metade.
   // É o que impede «a podridão avança» de devolver tudo o que diz
