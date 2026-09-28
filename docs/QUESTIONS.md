@@ -1659,6 +1659,27 @@
   se quem segue o rei acompanha o passo dele. Um correr sem custo encurta o preço do deslocamento que a auditoria
   de 27/09 (§6.5) diz ser um diferencial do jogo.
 
+### Q-150 · Um mundo mais vivo, gerado pela semente (terras bravias)
+- **Onde:** pedido do dono (28/09/2026: *"fazer o mundo ser mais vivo, ter mais animais, vegetação, e que se
+  expanda de forma generativa, não seja limitado"*); §11 (os planos), §21 (a região), §22 (a profundidade),
+  §80 (as duas frias), Q-135 (a travessia), `biomes.csv`, `src/world/wilds.gd`.
+- **Decidido (só cenário, reversível):** o campo entre o horizonte e o caminho, a linha de árvores do horizonte
+  (num `Parallax2D` a 0,5, a `motion_scale` da MidLayer do `parallax_layers.csv`) e as nuvens (a 0,03125, a da
+  SkyLayer) são gerados pela semente, com tabelas por bioma da campanha. A região N é o troço N de um ruído
+  que não acaba, por isso cada travessia chega a terra nova. Técnicas: grelha com tremor (espaçamento mínimo,
+  sem costuras) e densidade por ruído contínuo (`FastNoiseLite`, semeado pelo `RngService.noise`) para haver
+  bosque e clareira. Bichos de cenário (`Fauna`): pardais que pousam nos arbustos e fogem do rei, corvos no
+  caminho, borboletas, pirilampos (enxame que muda de noite para noite), um bando pelas regras de Reynolds
+  (`Flock`), gaivotas na costa, morcegos na cave. Nada entra na simulação nem no save.
+- **O que ficou de fora de propósito:** coelho, veado e javali são **caça** (`wildlife.csv`, `HuntingSystem`),
+  e um bicho de cenário com a mesma cara era uma mentira ao jogador; por isso nenhum bicho de cenário é caça.
+  A região continua a acabar (Q-135): o "sem limite" é a campanha — cada região gerada de novo — e o cenário
+  em parallax, que se desenha para lá das bordas. O rei não sai da região a pé.
+- **Por decidir:** (1) se o rei deve poder andar para lá da região, nas terras bravias, ou se a travessia é a
+  única maneira de avançar; (2) se a caça deve nascer das mesmas manchas de bosque (Kingdom Two Crowns: os
+  veados nascem junto às árvores); (3) os sprites são rectângulos desenhados em código, à espera de arte a sério
+  (ASSET_REGISTER) — trocar é mudar o `FloraArt`/`FaunaArt`, não o gerador.
+
 ## Resolvidas na v5.2 (reversíveis)
 
 | # | O quê | Decisão | Onde |

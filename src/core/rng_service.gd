@@ -75,6 +75,31 @@ func escolher(fluxo: StringName, opcoes: Array) -> Variant:
 	return opcoes[int_range(fluxo, 0, opcoes.size() - 1)]
 
 
+## Uma mao-cheia de reais em [0, 1), sempre os mesmos para a mesma semente e a
+## mesma chave, e sem tocar em fluxo nenhum. E o que as terras bravias usam: um
+## sitio do mundo e uma chave, e o que la cresce tem de ser o mesmo de cada vez
+## que se desenha — sem gastar a sequencia de quem simula.
+func scatter(chave: int, quantos: int) -> PackedFloat32Array:
+	var r := RandomNumberGenerator.new()
+	r.seed = hash([_seed, chave])
+	var saida := PackedFloat32Array()
+	saida.resize(quantos)
+	for i in quantos:
+		saida[i] = r.randf()
+	return saida
+
+
+## Um ruido continuo (FastNoiseLite, do motor) semeado pela semente do mundo e
+## por `sal`. Serve o que tem de variar DEVAGAR ao longo do mundo — onde ha
+## bosque e onde ha clareira — e que um dado por sitio nao da.
+func noise(sal: int, frequencia: float, oitavas: int) -> FastNoiseLite:
+	var n := FastNoiseLite.new()
+	n.seed = hash([_seed, sal])
+	n.frequency = frequencia
+	n.fractal_octaves = oitavas
+	return n
+
+
 ## O estado de cada fluxo determinista, para o save (§62). Chaves em String
 ## porque o save so leva tipos base e e lido com get_var(false).
 func snapshot() -> Dictionary:
