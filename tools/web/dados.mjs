@@ -150,7 +150,7 @@ const TECLAS = {
   4194319: "←|←", 4194320: "↑|↑", 4194321: "→|→", 4194322: "↓|↓", 4194325: "Shift|Shift",
 };
 const BOTOES = {
-  0: "A|A", 1: "B|B", 2: "X|X", 3: "Y|Y", 4: "View|View", 6: "Menu|Menu",
+  0: "A|A", 1: "B|B", 2: "X|X", 3: "Y|Y", 4: "View|View", 6: "Menu|Menu", 7: "L3|L3",
   9: "LB|LB", 10: "RB|RB", 11: "cruzeta ↑|D-pad ↑", 12: "cruzeta ↓|D-pad ↓",
   13: "cruzeta ←|D-pad ←", 14: "cruzeta →|D-pad →",
 };

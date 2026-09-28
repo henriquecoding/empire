@@ -118,6 +118,7 @@ export const TEXTOS = {
       cab: ["Ação", "Teclado e rato", "Comando"],
       acoes: [
         { de: ["move_left", "move_right"], t: "Andar" },
+        { de: ["king_run"], t: "Correr (manter)" },
         { de: ["verb_drop"], t: "Largar uma moeda" },
         { de: ["verb_assume"], t: "Usar uma passagem" },
         { de: ["mark_target"], t: "Marcar um alvo" },
@@ -307,6 +308,7 @@ export const TEXTOS = {
       cab: ["Action", "Keyboard and mouse", "Gamepad"],
       acoes: [
         { de: ["move_left", "move_right"], t: "Walk" },
+        { de: ["king_run"], t: "Run (hold)" },
         { de: ["verb_drop"], t: "Drop a coin" },
         { de: ["verb_assume"], t: "Use a passage" },
         { de: ["mark_target"], t: "Mark a target" },
