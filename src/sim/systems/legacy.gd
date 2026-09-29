@@ -88,10 +88,16 @@ static func crossing(
 	d[SACO] = unidades.carried_coins[r]
 	d[REGIAO] = estado.region + 1
 	if estado.region + 1 >= estado.chapters.regions.size():
-		d[REGIAO] = 0
-		d.erase(PLANO)
-		d.erase(CLASSE)
+		end_campaign(d)
 	return d
+
+
+## A campanha acabou (a ultima regiao, ou o Lume apagado, Q-156): o jogo novo
+## comeca outra, com o plano sorteado de novo e a classe sem a evolucao (Q-140).
+static func end_campaign(d: Dictionary) -> void:
+	d[REGIAO] = 0
+	d.erase(PLANO)
+	d.erase(CLASSE)
 
 
 ## As obras que ficam, das mais caras para as mais baratas.

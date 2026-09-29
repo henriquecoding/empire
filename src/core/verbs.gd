@@ -46,9 +46,12 @@ static func consume(
 				if spend(unidades, king_id, args[&"amount"]):
 					larga.append(args)
 			IntentQueue.Kind.ASSUME:
-				if not assume(unidades, king_id, passagens) and not cross(unidades, king_id):
-					if not choose_mode(unidades, king_id, obras, campo):
-						choose_wall(unidades, king_id, obras)
+				if assume(unidades, king_id, passagens) or cross(unidades, king_id):
+					continue
+				if Lume.extinguish(unidades, king_id):  # o fim do ciclo pela luz (Q-156)
+					continue
+				if not choose_mode(unidades, king_id, obras, campo):
+					choose_wall(unidades, king_id, obras)
 			IntentQueue.Kind.MARK_TARGET:
 				if campo == null or campo.classes.marks():  # so quem tem arco (Q-086)
 					mark(unidades, bichos, combate, args[&"x"], king_id)

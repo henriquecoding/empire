@@ -186,21 +186,22 @@ func _na_morte(unit_id: int, _x: float, _faixa: int, _larga: PackedStringArray) 
 			SimLoop.set_paused(true)
 
 
-## Quem joga deixou a coroa cair em vez de continuar com o herdeiro (Q-146).
-func end_reign() -> void:
+func end_reign() -> void:  # deixar a coroa cair em vez do herdeiro (Q-146)
 	SimLoop.field.succession.declined = true
 	_acabar()
 
 
 ## A travessia (P-K, Q-135): a regiao acabou, e o rei leva quem esta perto dele.
 func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
-	if tipo != Verbs.CROSSING:
+	if tipo != Verbs.CROSSING and tipo != Lume.TIPO:  # o Lume apagado acaba o ciclo (Q-156)
 		return
 	var tropas := SimFactory.by_id(&"units")
 	var perto := SimFactory.curve().crossing_party_px
 	var legado := Legacy.crossing(
 		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
 	)
+	if tipo == Lume.TIPO:
+		Legacy.end_campaign(legado)
 	var noite := SimLoop.night
 	if CampaignMemory.carries(not legado.has(Legacy.PLANO), noite.epilogue()):
 		legado.merge(CampaignMemory.of(noite.voice.debt, noite.harvest, SimLoop.field.succession))

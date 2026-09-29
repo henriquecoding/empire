@@ -14,7 +14,13 @@ const TURNO := &"shift"
 
 ## 1 · Divida no limiar → Dominio, mesmo com os seis soltos. 2 · povos ficados
 ## no limiar → Dominio. 3 · Divida baixa e povos soltos → Uniao. 4 · O Turno.
-static func of(debt: int, kept: int, released: int, perfil: RotProfile) -> StringName:
+## 0 · o Lume apagado (Q-156) e a Uniao, e vem antes de tudo: so se apaga com a
+## Divida baixa.
+static func of(
+	debt: int, kept: int, released: int, perfil: RotProfile, lume_out := false
+) -> StringName:
+	if lume_out:
+		return UNIAO
 	if debt >= perfil.dominion_debt_min:
 		return DOMINIO
 	if kept >= perfil.dominion_peoples_kept:

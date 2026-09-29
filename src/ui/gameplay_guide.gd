@@ -78,6 +78,9 @@ static func context(device: Glyphs.Device) -> String:
 			return _tr(&"CONTEXT_CROSS").format(values)
 		values["day"] = SimFactory.curve().crossing_day
 		return _tr(&"CONTEXT_CROSS_LOCKED").format(values)
+	if units.bands[king] == int(Band.Kind.SURFACE) and Lume.at_base(units.xs[king]):
+		var falta := Lume.refusal(units, SimLoop.king_id)  # o fim pela luz (Q-156)
+		return _tr(&"CONTEXT_LUME" if falta.is_empty() else falta).format(values)
 	for site in SimLoop.builds.slots:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue

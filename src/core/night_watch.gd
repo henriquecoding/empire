@@ -126,7 +126,9 @@ func consecrate_at(estado: GameState, largada: Dictionary, quem: int) -> bool:
 ## Qual dos tres finais, se a campanha acabasse agora (§79, ADR 0018).
 func epilogue() -> StringName:
 	var perfil := SimFactory.rot_profile()
-	return Epilogue.of(voice.debt.debt, harvest.kept.size(), harvest.released.size(), perfil)
+	var divida := voice.debt
+	var soltos := harvest.released.size()
+	return Epilogue.of(divida.debt, harvest.kept.size(), soltos, perfil, divida.lume_out)
 
 
 ## Os intervalos em x por onde ela ja passou. O §49 le isto para saber que um
