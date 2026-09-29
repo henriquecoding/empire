@@ -16,4 +16,19 @@ layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])
 shadow_width = 14
 tags = Array[StringName]([&"follows_king", &"collects_coins"])
 coin_capacity = 5
+ability = &"squire_guard"
+ability_params = {
+&"escort_px": 24.0,
+&"knight_shield_coins": 10.0,
+&"knight_sword_damage": 10.0,
+&"knight_sword_strikes": 5.0,
+&"shield_coins": 5.0,
+&"shield_per_coin": 2.0,
+&"strong_from_damage": 8.0,
+&"strong_hit": 5.0,
+&"sword_coins": 3.0,
+&"sword_damage": 6.0,
+&"sword_strikes": 3.0,
+&"weak_hit": 2.0
+}
 head_pool = Array[StringName]([&"helmet_big"])

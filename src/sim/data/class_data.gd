@@ -9,6 +9,8 @@ extends Resource
 @export var base_unit: StringName  # UnitData que se assume com o Verbo 2 (§08)
 @export var verb: StringName = &""  # acao propria da classe (§24: arqueiro marca alvo)
 @export var fights: bool = true
+## O armazenamento de quem se joga com esta classe (storages.csv, Q-153).
+@export var storage: StringName = &""
 
 @export_group("Desbloqueio")
 ## &"start" | &"royal_seed" | &"conquest" | &"secret"

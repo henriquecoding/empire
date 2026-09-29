@@ -35,7 +35,7 @@ Não é malévola. Tem de manter a conta certa e não há mais ninguém para a m
 
 Várzea · Semente Anciã · Duas vozes, uma delas ao contrário
 
-Lei: as faixas trocam. A faixa aérea anda-se, a superfície voa-se, e a Podridão chega por cima — a candeia fica por baixo de ti.
+Lei: as faixas trocam. A faixa aérea anda-se, a superfície voa-se, e a Podridão chega por cima — o Lume fica por baixo de ti.
 
 Da §17, mantida e agarrada à Podridão. Ensina o sistema de faixas (§53) numa região onde errar não mata, e é o único sítio do jogo onde se vê a candeia de cima. No fundo de um poço que está no céu há uma moura encantada, de cabeça para baixo, que pergunta pelas horas.
 
@@ -81,7 +81,7 @@ Existem dez. O gerador coloca seis por campanha, no máximo um por região, com 
 
 **A história chega sempre inteira** — Seis diários são de fortaleza — um por povo, contando o teu, que está numa ruína dentro das tuas muralhas desde o dia 1. Os outros seis são de capítulo: o 12 está sempre no Cerco, e os outros cinco vão para o capítulo que preferem, ou, se esse não saiu, para o seguinte que tenha saído, por ordem de ato. Uma partida vê sempre os doze.
 
-Quatro capítulos por descobrir em cada corrida, e o mesmo diário lido num sítio diferente muda de sentido. É a mecânica de rejogabilidade mais barata que o dossiê tem: nove fichas sorteadas cinco a cinco dão 126 mundos.
+Quatro capítulos por descobrir em cada corrida, e o mesmo diário lido num sítio diferente muda de sentido. É a mecânica de rejogabilidade mais barata que o dossiê tem: nove fichas sorteadas cinco a cinco, em regiões que a semente ordena de novo em cada campanha — como num mundo de Minecraft (Q-105) —, e nenhuma campanha é igual a outra: a ordem dos oito povos muda, e das fichas cabem 61 combinações (duas da mesma região nunca cabem juntas).
 
 > **Cada lei tem uma raiz, e a raiz é verificável**
 >

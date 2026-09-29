@@ -59,6 +59,7 @@ var _dispositivo := Glyphs.Device.KEYBOARD
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_to_group(&"painel")
 	_titulo = _label("", TITULO, GOLD)
 	_relogio = _label("", RELOGIO, TEXT)
 	_recursos = _label("", RECURSOS, MUTED)
@@ -155,8 +156,8 @@ func _atualizar() -> void:
 		saco, cabem, GameplayGuide.troops(), _vida_nucleo(), SimLoop.state.greed, soldo
 	)
 	var archotes := SimLoop.night.dark.torch.torches  # Q-029
-	if archotes > 0:
-		_recursos.text += "  ·  " + tr(&"HUD_TORCHES").format({"n": archotes})
+	var animo := SimLoop.field.spirit.value(ClockService.clock.day)  # Q-102
+	_recursos.text += HudText.extras(archotes, animo, SimLoop.state.royal_seeds)  # Q-095
 	_objectivo.text = GameplayGuide.goal()
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)
@@ -220,6 +221,12 @@ static func _argumentos(sinal: StringName) -> int:
 		if s.name == sinal:
 			return s.args.size()
 	return 0
+
+
+## O que outra parte da interface quer dizer no aviso (grupo "painel"): o impulso
+## recusado diz o que lhe falta (Q-113).
+func say(mensagem: String) -> void:
+	_dizer(mensagem)
 
 
 func _dizer(mensagem: String) -> void:

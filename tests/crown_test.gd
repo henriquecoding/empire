@@ -146,3 +146,24 @@ func test_cobra_o_preco_de_hoje_e_ele_vai_no_save() -> void:
 	var outra := SimFactory.crown()
 	outra.from_dict(coroa.to_dict())
 	assert_int(outra.price(&"vigil", 6)).is_equal(coroa.price(&"vigil", 6))
+
+
+## Q-113 (o dono, 29/09/2026): o jogador recebe uma mensagem sobre o que e preciso.
+## A recusa diz a razao — e cada razao tem a sua frase no strings.csv.
+func test_a_recusa_diz_o_que_falta() -> void:
+	var preco := coroa.price(&"vigil", 1)
+	assert_bool(coroa.refusal(&"vigil", 1, unidades, rei, preco) == &"").is_true()
+	var nao_ha := coroa.refusal(&"protected_route", 1, unidades, rei, preco)
+	assert_bool(nao_ha == &"TOAST_IMPULSE_NOT_YET").is_true()
+	var caro := coroa.refusal(&"vigil", 1, unidades, rei, _saco() + 1)
+	assert_bool(caro == &"TOAST_IMPULSE_NEEDS_COINS").is_true()
+	coroa.use(&"vigil", 1, unidades, rei)
+	var hoje := coroa.refusal(&"forced_harvest", 1, unidades, rei, 1)
+	assert_bool(hoje == &"TOAST_IMPULSE_USED_TODAY").is_true()
+	unidades.healths[unidades.index_of(rei)] = 0
+	var sem_rei := coroa.refusal(&"forced_harvest", 2, unidades, rei, 1)
+	assert_bool(sem_rei == &"TOAST_IMPULSE_NEEDS_KING").is_true()
+	TranslationServer.set_locale("pt_PT")
+	for chave: StringName in [nao_ha, caro, hoje, sem_rei]:
+		var frase := String(TranslationServer.translate(chave))
+		assert_bool(frase != String(chave)).override_failure_message(frase).is_true()

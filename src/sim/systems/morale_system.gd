@@ -43,6 +43,10 @@ const POR_BRECHA := &"breach"
 
 ## A Vigilia (§15): esta noite ninguem foge. Escrita pelo FieldWork a cada tick.
 var steadfast := false
+## O nivel do animo do reino (Q-102): abatido foge-se mais cedo, animado mais tarde.
+var spirit := 0
+## O que os titulos dao (§76): quem tem "nao foge" nao foge (Q-102).
+var perks: Dictionary = {}
 var _curva: EconomyCurve
 var _dados: Dictionary = {}
 
@@ -82,7 +86,8 @@ func protected(unidades: UnitSystem, i: int, rei_x: float) -> bool:
 ## com o muro caido" e uma tag e nao um caso especial (§07).
 func can_flee(unidades: UnitSystem, i: int) -> bool:
 	var dados: UnitData = _dados.get(unidades.data_ids[i])
-	return not steadfast and dados != null and not dados.tags.has(SEM_RECUO)
+	var firme: bool = perks.get(unidades.ids[i], {}).has(&"never_flees")
+	return not steadfast and not firme and dados != null and not dados.tags.has(SEM_RECUO)
 
 
 func _onde_esta_o_rei(unidades: UnitSystem, king_id: int) -> float:
@@ -104,7 +109,8 @@ func _talvez_fuja(
 		return
 	var racio := float(unidades.healths[i]) / maxf(1.0, float(unidades.max_healths[i]))
 	var porque := &""
-	if racio < _curva.flee_health:
+	var animo := _curva.spirit_flee_mult.x if spirit < 0 else _curva.spirit_flee_mult.y
+	if racio < _curva.flee_health * (animo if spirit != 0 else 1.0):
 		porque = POR_VIDA
 	elif brecha and racio < _curva.breach_flee_health:
 		if unidades.recruit_costs[i] <= _curva.breach_flee_max_cost:

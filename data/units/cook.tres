@@ -16,7 +16,7 @@ tags = Array[StringName]([&"craft", &"cook"])
 job_affinity = {
 &"kitchen": 1.0
 }
-coin_capacity = 2
+coin_capacity = 5
 trained_at = &"kitchen"
 train_days = 1
 ability = &"combat_dish"

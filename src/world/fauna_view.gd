@@ -61,11 +61,12 @@ func _soltar() -> void:
 	if chave == _chave:
 		return
 	_chave = chave
-	var largura := SimLoop.world_width
+	var de := -SimLoop.wild_px  # e nas terras bravias (Q-154)
+	var largura := SimLoop.world_width + SimLoop.wild_px
 	var regiao := SimLoop.state.region
 	var campo := Wilds.table(Wilds.CAMPO, bioma)
-	var plantas := Wilds.plants(campo, 0.0, largura, regiao, Wilds.SAL.campo, Wilds.woods())
-	var lista := Wilds.animals(Wilds.table(Wilds.FAUNA, bioma), 0.0, largura, regiao, plantas)
+	var plantas := Wilds.plants(campo, de, largura, regiao, Wilds.SAL.campo, Wilds.woods())
+	var lista := Wilds.animals(Wilds.table(Wilds.FAUNA, bioma), de, largura, regiao, plantas)
 	_fauna.populate(lista, largura)
 
 

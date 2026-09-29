@@ -11,11 +11,28 @@ const TAIL := Rect2(-9, -7, 4, 4)
 const PAWS := Rect2(-4, -2, 11, 2)
 const EYE_OFFSET := Vector2(7, -9)
 const BREATH := 2.0
+## A toca (Q-106): um arbusto baixo onde o bicho sai. Uma toca perdida nao se desenha.
+const BUSH := Color("4f6a3a")
+const BUSH_DARK := Color("33452a")
+const BUSH_PARTS := [Rect2(-14, -10, 28, 10), Rect2(-9, -16, 18, 8), Rect2(-4, -19, 9, 5)]
+const BUSH_ROOT := Rect2(-14, -2, 28, 2)
+## A toca fica ao lado de onde o bicho se senta, e nao por baixo dele.
+const BUSH_SIDE := 18.0
 
 
 static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 	if SimLoop.hunting == null:
 		return
+	var tocas := SimLoop.hunting.burrows
+	for k in tocas.xs.size():
+		if tocas.alive[k] == 0:
+			continue
+		var bx: float = tocas.xs[k] - BUSH_SIDE
+		canvas.draw_set_transform(Vector2(bx, Band.GROUND_LINE))
+		for parte: Rect2 in BUSH_PARTS:
+			canvas.draw_rect(parte, light.body(BUSH, bx))
+		canvas.draw_rect(BUSH_ROOT, light.body(BUSH_DARK, bx))
+	canvas.draw_set_transform(Vector2.ZERO)
 	for x in SimLoop.hunting.rabbits:
 		var bob := floorf(sin(time * BREATH + x))
 		canvas.draw_set_transform(Vector2(x, Band.GROUND_LINE + bob))

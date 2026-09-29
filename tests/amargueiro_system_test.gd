@@ -91,7 +91,8 @@ func test_quem_esta_vivo_ou_nao_e_teu_nao_cria_raiz() -> void:
 # ─── Regra 3: rende o que a pessoa era ───────────────────────────────────────
 
 
-func test_a_escala_e_a_da_pessoa_e_o_vagabundo_e_escala_1() -> void:
+## Q-097: o vagabundo tem o tamanho de uma tropa, e rende como ela.
+func test_a_escala_e_a_da_pessoa_e_o_vagabundo_e_uma_tropa() -> void:
 	var estado := GameState.new()
 	var u := UnitSystem.new()
 	B.morto(u, estado, &"vagrant", B.FORA)
@@ -99,7 +100,7 @@ func test_a_escala_e_a_da_pessoa_e_o_vagabundo_e_escala_1() -> void:
 	B.morto(u, estado, &"root_berserker", B.FORA + 200.0)
 	var bosque := SimFactory.amargueiros()
 	B.alvorada(bosque, 3, u, BuildSystem.new())
-	assert_array(Array(bosque.tiers)).is_equal([1, 2, 3])
+	assert_array(Array(bosque.tiers)).is_equal([2, 2, 3])
 
 
 # ─── A massa: +22, ou +45 com nome ───────────────────────────────────────────
@@ -133,7 +134,7 @@ func test_as_regras_de_onde_nasce_perguntadas_sem_alvorada() -> void:
 	assert_bool(regras.roots(B.DENTRO, int(Band.Kind.UNDERGROUND), o, mundo, nada)).is_true()
 	var marco: Array[Vector2] = [Vector2(B.FORA - 1.0, B.FORA + 1.0)]
 	assert_bool(regras.roots(B.FORA, int(Band.Kind.SURFACE), o, mundo, marco)).is_false()
-	assert_int(regras.tier(&"vagrant")).is_equal(1)
+	assert_int(regras.tier(&"vagrant")).is_equal(regras.tier(&"archer"))
 	assert_int(regras.tier(&"monarch")).is_equal(3)
 	assert_int(regras.tier(&"squire")).is_equal(1)
 	assert_int(AmargueiroRoots.body_band(int(Band.Kind.AERIAL))).is_equal(int(Band.Kind.SURFACE))

@@ -65,7 +65,7 @@ func tick(
 ) -> void:
 	if mudou:
 		_virar(fase, estado, bichos, mundo)
-	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
+	SpiritWatch.felled(amargueiros.harvest(_obras))  # a serra acabada; o nome pesa (§74)
 	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
 	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.
@@ -126,7 +126,10 @@ func consecrate_at(estado: GameState, largada: Dictionary, quem: int) -> bool:
 ## Qual dos tres finais, se a campanha acabasse agora (§79, ADR 0018).
 func epilogue() -> StringName:
 	var perfil := SimFactory.rot_profile()
-	return Epilogue.of(voice.debt.debt, harvest.kept.size(), harvest.released.size(), perfil)
+	var divida := voice.debt
+	var ficaram := harvest.kept.size() + SimLoop.field.realm.vassals.vassals.size()  # Q-103
+	var soltos := harvest.released.size()
+	return Epilogue.of(divida.debt, ficaram, soltos, perfil, divida.lume_out)
 
 
 ## Os intervalos em x por onde ela ja passou. O §49 le isto para saber que um
@@ -151,6 +154,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		amargueiros.at_dawn(dia, _tropas, _obras, mundo.x, mundo.y, names.by_unit())
 		names.at_dawn(dia, _tropas, _postos)
 		harvest.at_dawn()
+		Ward.dawn(_obras, dia)  # o sino perde carga, mais quanto mais tarde (Q-100)
 	if fase == GameClock.Phase.DUSK:
 		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
 		# O marco de um povo que ficou cria raiz e nao se corta (§78): e mais uma.
@@ -175,7 +179,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		return
 	# O que ela invocou dissolve-se sempre: uma oferta pode te-la recolhido antes
 	# da alvorada (§75, "a mancha contorna"), e o que ficou no campo nao fica.
-	voice.dawn()
+	voice.dawn(estado.day)
 	if rot.active():
 		rot.retreat()
 		EventBus.queue(&"rot_retreated", [estado.day])

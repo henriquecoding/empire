@@ -49,6 +49,8 @@ var today := 1
 var conversion: ConversionSystem
 ## A parte dos nobres (§15), 0 a 100: sai antes de a materia virar moeda.
 var greed := 0
+## O nivel do animo do reino (Q-102): -1, 0 ou +1. Escrito pelo FieldWork.
+var spirit := 0
 ## Os postos (§52): uma obra com posto so rende inteiro com quem la trabalha (Q-121).
 var jobs: JobBoard
 ## O que estraga por dia em cada tipo de obra, se nenhuma casa a converter (Q-012).
@@ -178,7 +180,7 @@ func _hoje(vaga: BuildSlot) -> float:
 	var crescer := pow(_curva.income_growth, maxi(0, today - 1))
 	var nobres := 1.0 - clampf(greed / PERCENTAGEM, 0.0, 1.0)
 	var mao := 1.0 if jobs == null or jobs.staffing.worked(vaga) else _curva.unstaffed_yield
-	return crescer * nobres * mao
+	return crescer * nobres * mao * (1.0 + _curva.spirit_yield * spirit)  # o animo (Q-102)
 
 
 ## §49: a plantacao no rasto e destruida; as outras so param. A distincao esta

@@ -57,6 +57,11 @@ static func rot_mass(
 		var cheia := r.mass_base + r.mass_per_day * day
 		var t := float(maxi(day, 1) - 1) / float(r.ramp_nights - 1)
 		base += r.opening_mass + (cheia - r.opening_mass) * t - cheia
+	if r.growth_from_night > 0 and day > r.growth_from_night:
+		# Depois da noite growth_from_night, o calendario cresce a mass_growth por
+		# noite (Q-151); as fortalezas nao.
+		var calendario := r.mass_base + r.mass_per_day * day
+		base += calendario * (pow(r.mass_growth, day - r.growth_from_night) - 1.0)
 	var trees := (
 		r.mass_per_amargueiro * amargueiros + r.mass_per_named_amargueiro * named_amargueiros
 	)

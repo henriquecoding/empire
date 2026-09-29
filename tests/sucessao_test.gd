@@ -108,7 +108,7 @@ func test_com_herdeiro_formado_a_morte_do_rei_nao_e_derrota() -> void:
 	assert_str(GameplayGuide.goal()).contains("REI CAIU")
 
 
-func test_o_herdeiro_assume_na_alvorada_na_casa_dele() -> void:
+func test_o_herdeiro_assume_na_alvorada_no_castelo() -> void:
 	var casa := _casa()
 	_de_pe(casa)
 	SimLoop.units.carried_coins[_rei()] = SACO
@@ -122,7 +122,8 @@ func test_o_herdeiro_assume_na_alvorada_na_casa_dele() -> void:
 	var i := _rei()
 	assert_bool(SimLoop.units.alive(i)).is_true()
 	assert_str(String(SimLoop.units.data_ids[i])).is_equal("monarch")
-	assert_float(SimLoop.units.xs[i]).is_equal(casa.x)
+	assert_float(SimLoop.units.xs[i]).is_equal(Succession.castle(SimLoop.builds).x)
+	assert_float(SimLoop.units.xs[i]).is_not_equal(casa.x)
 	assert_int(SimLoop.field.succession.days).is_equal(0)
 	assert_bool(Defeat.happened()).is_false()
 	var perfil := Registry.entry(&"crown/greed", _curva().start_greed_profile) as GreedProfile
@@ -139,17 +140,21 @@ func test_o_treino_vai_no_save() -> void:
 	assert_int(copia.owner).is_equal(SimLoop.units.owners[_rei()])
 
 
-## N3 (auditoria de 27/09; Q-137): herdeiro formado sem casa nao tem onde nascer.
-## Antes, o Defeat dizia "nao acabou" e a alvorada nao coroava ninguem.
-func test_herdeiro_formado_sem_casa_e_derrota_e_nao_fica_preso() -> void:
+## Q-137 (o dono, 29/09/2026): o sucessor so nasce no castelo. Formado, perder a
+## casa ja nao o perde; sem castelo nao ha onde nascer, e a partida acaba.
+func test_herdeiro_formado_nasce_no_castelo_mesmo_sem_casa() -> void:
 	var casa := _casa()
 	_de_pe(casa)
 	SimLoop.field.succession.days = _curva().heir_training_days
 	SimLoop.field.succession.owner = SimLoop.units.owners[_rei()]
-	assert_bool(SimLoop.field.succession.possible(SimLoop.builds)).is_true()
 	casa.state = BuildSlot.State.RUIN
 	casa.health = 0
 	SimLoop.units.healths[_rei()] = 0
+	assert_bool(SimLoop.field.succession.possible(SimLoop.builds)).is_true()
+	assert_bool(Defeat.happened()).is_false()
+	var castelo := Succession.castle(SimLoop.builds)
+	castelo.state = BuildSlot.State.RUIN
+	castelo.health = 0
 	assert_bool(SimLoop.field.succession.possible(SimLoop.builds)).is_false()
 	assert_bool(Defeat.happened()).is_true()
 
@@ -164,3 +169,27 @@ func test_herdeiro_formado_com_casa_de_pe_espera_pela_alvorada() -> void:
 	_alvorada(2)
 	assert_int(SimLoop.king_id).is_not_equal(velho)
 	assert_bool(Defeat.happened()).is_false()
+
+
+## Q-146 (o dono, 29/09/2026): com o herdeiro pronto, quem joga escolhe. Deixar a
+## coroa cair e a derrota; a escolha vai no save.
+func test_com_herdeiro_pronto_quem_joga_pode_deixar_a_coroa_cair() -> void:
+	SimLoop.field.succession.days = _curva().heir_training_days
+	SimLoop.field.succession.owner = SimLoop.units.owners[_rei()]
+	SimLoop.units.healths[_rei()] = 0
+	assert_bool(PauseMenu.heir_waits()).is_true()
+	SimLoop.field.succession.declined = true
+	assert_bool(Defeat.happened()).is_true()
+	assert_bool(PauseMenu.heir_waits()).is_false()
+	var copia := Succession.new(1, 1)
+	copia.from_dict(SimLoop.field.to_dict()[&"succession"])
+	assert_bool(copia.declined).is_true()
+
+
+func test_continuar_coroa_o_herdeiro_e_limpa_a_escolha() -> void:
+	SimLoop.field.succession.days = _curva().heir_training_days
+	SimLoop.field.succession.owner = SimLoop.units.owners[_rei()]
+	SimLoop.units.healths[_rei()] = 0
+	_alvorada(2)
+	assert_bool(Defeat.king_fell()).is_false()
+	assert_bool(SimLoop.field.succession.declined).is_false()

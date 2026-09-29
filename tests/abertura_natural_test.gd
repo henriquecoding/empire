@@ -45,7 +45,7 @@ func test_sem_ninguem_a_jogar_o_coelho_do_1_10_cai_junto_ao_castelo_uma_so_vez()
 	assert_array(_caca).is_empty()
 	_correr_ate(HuntWatch.INTRO_SECONDS + 2.0)
 	assert_int(_caca.size()).is_equal(1)
-	assert_float(_caca[0]).is_equal(SimLoop.core_x + HuntWatch.CLEARINGS[0])
+	assert_float(_caca[0]).is_equal(SimLoop.core_x + HuntWatch.BUSHES[0])
 	var salvo := SimLoop.world()
 	SimLoop.load_world(salvo)
 	_correr_ate(HuntWatch.INTRO_SECONDS + 30.0)
@@ -73,7 +73,9 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 		_passo(longe)
 	assert_int(canteiro.state).is_equal(BuildSlot.State.DONE)
 	assert_float(absf(_x_do_rei() - canteiro.x)).is_greater(canteiro.width)
-	while _producao.is_empty() and ClockService.clock.day == 1:
+	# A caca sai das tocas aos poucos (Q-106): o canteiro fica de pe mais tarde, e a
+	# primeira colheita pode cair ja na noite ou na alvorada do dia 2.
+	while _producao.is_empty() and ClockService.clock.day <= 2:
 		_passo(longe)
 	assert_array(_producao).contains([canteiro.x])
 	# Nenhuma moeda apareceu por outra via: tudo o que caiu foi largado, cacado,

@@ -18,7 +18,9 @@ var _perfil: RotProfile
 
 func _init() -> void:
 	_perfil = SimFactory.rot_profile()
-	torch = Torchlight.new(_perfil)
+	# O cinto do rei; o FieldWork troca-o pelo da classe, que e o que se grava (Q-153).
+	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
+	torch = Torchlight.new(_perfil, SimFactory.storage(monarca))
 
 
 ## Passo 2, com a noite: o rei no escuro sem archote chama quem la vive.

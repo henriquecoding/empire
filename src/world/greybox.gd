@@ -14,9 +14,9 @@ class_name Greybox
 extends RefCounted
 
 const SEGMENTO := &"enramados_start_base_01"
-## §21: uma regiao tem 4 a 6 ecras. Seis e o limite de cima, e e o que da espaco
-## para as duas muralhas de cada lado caberem sem se encostarem ao nucleo.
+## §21: uma regiao tem 4 a 6 ecras. Seis dao espaco as duas muralhas de cada lado.
 const ECRAS := 6
+const BRAVIAS_ECRAS := 6  # de terra brava para la de cada base (Q-154)
 
 const CANTEIRO := &"farm"
 const PESQUEIRO := &"fishery"
@@ -57,23 +57,20 @@ const PASSAGENS_X := [-950.0, 950.0]
 const SEGREDOS_X := {&"under_vegetation": 360.0, &"behind_passage": -1180.0}
 const CAMARA_W := 64.0
 const BIFURCACAO_X := 1800.0
-## §79: o diario 1 esta "numa ruina dentro das tuas muralhas desde o dia 1". Fica
-## entre os canteiros e a casa de treino da esquerda, longe de onde o rei nasce.
-const RUINA_X := -360.0
-# §25: ao minuto 0:20 um vagabundo, ao minuto 1:10 "um segundo vagabundo COM
-# ARCO", e a noite 1 e ganha pelos arqueiros. Sao gente por recrutar, e o que os
-# distingue e o preco que o §07 lhes da: 1, 3 e 4. Ninguem nasce dentro de um
-# sitio de obra: la, a moeda largada ao lado dele pagava a obra e nao o recrutava
-# (auditoria de 26/09, D5). O nucleo nao e sitio de obra, e por isso serve.
-const VAGABUNDOS_X := [-230.0, 230.0, 740.0, 980.0]
+const RUINA_X := -360.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
+# §25: gente por recrutar, ao preco do §07 (1, 3 e 4), e nunca dentro de um sitio
+# de obra (auditoria de 26/09, D5). Q-110 (o dono, 29/09/2026): "os vagabundos nao
+# sao meus trabalhadores, devo procura-los em acampamentos; ao iniciar o imperio
+# tera algumas tropas sem funcoes". Os dois ao pe do castelo ja sao teus; os
+# outros dois estao nos acampamentos, fora das muralhas de fora.
+const VAGABUNDOS_X := [-230.0, 230.0, -1650.0, 1650.0]
+const JA_TEUS := 2
 const ARQUEIROS_X := [-740.0, -180.0, 180.0]
 const LANCEIROS_X := [-990.0, 1040.0]
-# Os acampamentos do vagabundo de cada alvorada (Q-122), fora das muralhas de fora.
-const ACAMPAMENTOS_X := [-1650.0, 1650.0]
+const ACAMPAMENTOS_X := [-1650.0, 1650.0]  # o vagabundo de cada alvorada (Q-122)
 # §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
-# casca." Esta la desde o primeiro frame e nao e apontada por nada. O muro e o do
-# §25, a estacaria do minuto 3:30 — a de dentro —, e a arvore fica logo depois
-# dele, entre a torre e o galinheiro. Tem a escala de uma tropa (§22).
+# casca." Logo depois da estacaria de dentro, entre a torre e o galinheiro, com a
+# escala de uma tropa (§22).
 const AMARGUEIRO_VELHO_X := -750.0
 const AMARGUEIRO_VELHO_ESCALA := 2
 
@@ -99,6 +96,7 @@ static func region() -> void:
 	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
 	SimLoop.world_width = largura * ECRAS
+	SimLoop.wild_px = largura * BRAVIAS_ECRAS  # o mapa muito mais largo (Q-154)
 	SimLoop.core_x = SimLoop.world_width * MEIO
 	SimLoop.passages = _deslocadas(PASSAGENS_X)
 	SimLoop.field.camps = _deslocadas(ACAMPAMENTOS_X)
@@ -117,9 +115,8 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, TREINO, &"")
 	for x in COZINHAS_X:
 		_edificio(SimLoop.core_x + x, COZINHA, &"")
-	# §07: "a torre nao da dano — da certeza". A alta e a que atinge a camada
-	# aerea, e o §07 diz que ela e obrigatoria a partir do dia 4 por causa do
-	# Alado — por isso ha sitio para ela desde o dia 1.
+	# §07: "a torre nao da dano — da certeza". A alta atinge a camada aerea, e o
+	# §07 obriga-a a partir do dia 4 (o Alado): ha sitio para ela desde o dia 1.
 	for x in TORRES_X:
 		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
 	for x in TORRES_ALTAS_X:
@@ -129,7 +126,8 @@ static func region() -> void:
 	Cavities.author()  # o subsolo e a boca das passagens (P-I)
 	for x in HERDEIROS_X:  # depois dos de antes: os ids deles nao mudam (§45)
 		_edificio(SimLoop.core_x + x, Succession.CASA, &"")
-	Campfires.author()  # as fogueiras do archote, por ultimo (Q-029)
+	Campfires.author()  # as fogueiras do archote (Q-029)
+	Wards.author()  # e os sinos que afastam o Zelador, por ultimo (Q-100)
 
 
 static func _segredos() -> void:
@@ -224,6 +222,8 @@ static func _gente() -> int:
 	SimLoop.units.carried_coins[SimLoop.units.index_of(rei)] = SimFactory.curve().start_coins
 
 	_por_recrutar(&"vagrant", VAGABUNDOS_X)
+	for k in JA_TEUS:  # os primeiros, sem funcao, ja sao teus (Q-110)
+		SimLoop.units.owners[SimLoop.units.index_of(rei + 1 + k)] = MEU_IMPERIO
 	_por_recrutar(&"archer", ARQUEIROS_X)
 	_por_recrutar(&"spearman", LANCEIROS_X)
 	# §08: "Escudeiro acompanha e apanha moedas caidas" — nasce com o Monarca, e

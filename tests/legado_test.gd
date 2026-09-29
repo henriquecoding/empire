@@ -123,21 +123,25 @@ func test_um_legado_sem_variante_fica_com_a_de_raiz() -> void:
 	assert_int(int(torre.path)).is_equal(int(BuildSlot.Path.NENHUMA))
 
 
-## N2 e Q-133: "a evolucao da classe e do imperio e fica" — na derrota e na travessia.
-func test_a_classe_evoluida_fica_na_derrota_e_na_travessia() -> void:
+## Q-140 (o dono, 29/09/2026): a classe e desbloqueada para o jogo novo, mas a
+## evolucao nao — volta a ganhar-se a jogar. A travessia nao e jogo novo: e a
+## mesma campanha, e a evolucao vai com ela.
+func test_a_evolucao_atravessa_mas_nao_fica_na_derrota() -> void:
 	SimLoop.field.classes.phase = ClassSystem.PRIMEIRA + 1
-	var perdido := Legacy.of(SimLoop.state, SimLoop.builds, _fica(), SimLoop.field.classes)
+	var perdido := Legacy.of(SimLoop.state, SimLoop.builds, _fica())
 	var tropas := SimFactory.by_id(&"units")
 	var atravessado := Legacy.crossing(
 		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, 0.0, SimLoop.field.classes
 	)
-	for legado: Dictionary in [perdido, atravessado]:
+	var esperado := [ClassSystem.PRIMEIRA, ClassSystem.PRIMEIRA + 1]
+	var legados := [perdido, atravessado]
+	for k in legados.size():
 		SimLoop.stop()
 		SimLoop.start(SEMENTE + 1)
 		Greybox.build()
 		assert_int(SimLoop.field.classes.phase).is_equal(ClassSystem.PRIMEIRA)
-		Legacy.apply(legado, SimLoop.state, SimLoop.builds, SimLoop.field.classes)
-		assert_int(SimLoop.field.classes.phase).is_equal(ClassSystem.PRIMEIRA + 1)
+		Legacy.apply(legados[k], SimLoop.state, SimLoop.builds, SimLoop.field.classes)
+		assert_int(SimLoop.field.classes.phase).is_equal(esperado[k])
 
 
 func test_um_legado_sem_classe_nao_tira_a_fase_a_ninguem() -> void:

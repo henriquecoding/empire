@@ -9,6 +9,7 @@ display_key = "CLASS_ARCHER"
 archetype = &"archer"
 base_unit = &"archer"
 verb = &"mark_target"
+storage = &"quiver"
 evolve_seed_cost = 1
 evolve_condition = &"marked_kills"
 evolve_condition_value = 30

@@ -64,7 +64,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 | `data/**/*.tres` | Gerados dos CSV e versionados (ADR 0004) |
 | `data/i18n/strings.csv` | Todo o texto do jogo, PT-PT e EN |
 | `src/core/` | Os seis *autoloads*: `event_bus`, `clock_service`, `rng_service`, `registry`, `save_service`, `sim_loop` |
-| `src/sim/` | Simulação pura: `band.gd`, `game_clock.gd`, `state/`, `ai/unit_fsm.gd`, `systems/unit_system.gd` e os 28 `Resource` de dados |
+| `src/sim/` | Simulação pura: `band.gd`, `game_clock.gd`, `state/`, `ai/unit_fsm.gd`, `systems/unit_system.gd` e os 29 `Resource` de dados |
 | `src/world/` | `boot.gd`, `camera_rig.gd`, `band_layers.gd`, `band_probe.gd` |
 | `src/actors/` | `unit_view.gd` — os cinco slots do §58 |
 | `shaders/` | `palette_lut.gdshader` — um shader, quatro trabalhos (§60) |
@@ -75,10 +75,10 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.7.2: 932 testes (3 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.7.2: 1007 testes (3 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
-- A base de dados tem **28 tabelas** e 213 recursos com todos os números do dossiê, Parte XIII incluída; o que o
+- A base de dados tem **29 tabelas** e 221 recursos com todos os números do dossiê, Parte XIII incluída; o que o
   dossiê não dá está proposto e marcado (`docs/content/PROPOSALS.md`).
 - O `tools/check_dossie_vs_csv.py` confere **197 números** do dossiê contra as tabelas, e não há divergências.
 - O estado medido, ficheiro a ficheiro, está em `docs/recovery/RETOMADA.md` e em `docs/recovery/validation.json`.

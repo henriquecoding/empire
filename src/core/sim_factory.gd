@@ -12,6 +12,11 @@
 class_name SimFactory
 extends RefCounted
 
+## O segmento onde a campanha comeca: a casa (§83). E a regiao 0 do plano.
+const SEGMENTO_DE_PARTIDA := &"enramados_start_base_01"
+## A chave do scatter que ordena as regioes da campanha (Q-105).
+const ORDEM_DAS_REGIOES := 105
+
 const TABELA_ECONOMIA := &"economy"
 const CURVA := &"curve"
 const RELOGIO := &"clock"
@@ -44,6 +49,11 @@ static func by_id(tabela: StringName) -> Dictionary:
 ## alfabetica — bastion, iron_wall, palisade, stakes, stone_wall — e uma escada
 ## montada nessa ordem custava 65 no primeiro degrau. Ordenar aqui, uma vez, e o
 ## que impede que cada sitio que a monta se lembre disso por sua conta.
+## O armazenamento de quem se joga com `classe` (storages.csv, Q-153), vazio.
+static func storage(classe: ClassData) -> Storage:
+	return Storage.new(Registry.entry(&"classes/storages", classe.storage) as StorageData)
+
+
 static func walls_by_level() -> Array[WallData]:
 	var niveis: Array[WallData] = []
 	for recurso in Registry.entries(&"walls"):
@@ -123,12 +133,24 @@ static func titles() -> TitleSystem:
 
 
 ## As regioes da campanha: uma por povo, e um povo por bioma (§21: "uma regiao =
-## um povo = um imperio a conquistar"). Pela ordem do Registry, que e a dos ids.
+## um povo = um imperio a conquistar") — as oito (Q-152). A primeira e a casa, a do
+## segmento de partida; as outras vem por uma ordem que a semente do mundo decide,
+## "gerada proceduralmente como em Minecraft, tornando a campanha sempre unica"
+## (Q-105, o dono a 29/09/2026). A ordem sai do scatter, que nao gasta fluxo
+## nenhum: os capitulos e a ganancia de uma semente nao mudam por causa dela.
 static func campaign_regions() -> PackedStringArray:
-	var regioes := PackedStringArray()
+	var casa := String(biome_of_segment(SEGMENTO_DE_PARTIDA))
+	var outras: Array[String] = []
 	for id in Registry.ids(TABELA_BIOMAS):
-		if (Registry.entry(TABELA_BIOMAS, StringName(id)) as BiomeData).in_campaign:
-			regioes.append(id)  # so os povos da campanha (Q-152)
+		var dados := Registry.entry(TABELA_BIOMAS, StringName(id)) as BiomeData
+		if dados.in_campaign and id != casa:
+			outras.append(id)
+	var chaves := RngService.scatter(ORDEM_DAS_REGIOES, outras.size())
+	var indices := range(outras.size())
+	indices.sort_custom(func(a: int, b: int) -> bool: return chaves[a] < chaves[b])
+	var regioes := PackedStringArray([casa])
+	for k: int in indices:
+		regioes.append(outras[k])
 	return regioes
 
 
@@ -208,4 +230,7 @@ static func conversion() -> ConversionSystem:
 		var obra := recurso as BuildingData
 		if obra.material != &"" and obra.yield_per_day > 0.0:
 			materias[obra.id] = obra.material
-	return ConversionSystem.new(conversoes, materias, by_id(TABELA_TROPAS))
+	var conversao := ConversionSystem.new(conversoes, materias, by_id(TABELA_TROPAS))
+	var relogio := Registry.entry(TABELA_ECONOMIA, RELOGIO) as ClockData
+	conversao.phases_per_day = relogio.phase_durations.size()
+	return conversao

@@ -11,12 +11,12 @@ recruit_cost = 20
 drops_on_death = Array[StringName]([&"coins", &"corpse"])
 move_speed = 80.0
 can_change_band = true
-layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"craft", &"diplomat", &"non_combatant"])
 job_affinity = {
 &"embassy": 1.0
 }
-coin_capacity = 2
+coin_capacity = 5
 trained_at = &"embassy"
 train_days = 1
 head_pool = Array[StringName]([&"hat_feather"])

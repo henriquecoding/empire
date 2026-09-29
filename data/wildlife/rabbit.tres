@@ -12,3 +12,5 @@ coin_yield = 1
 biomes = Array[StringName]([&"ancient_forest", &"coast", &"canyon", &"floodplain"])
 per_segment_max = 2
 shadow_width = 10
+burrows_per_region = 4
+burrow_wither_px = 48.0

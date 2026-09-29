@@ -1,17 +1,11 @@
 # tests/celeiro_no_jogo_test.gd — o circuito 2 do §06 no jogo inteiro: com o
-# celeiro de pe o grao vende-se la com o bonus; uma moeda largada nele com um
-# cozinheiro teu vivo troca a moeda pela vida das tropas (Q-112).
+# celeiro de pe o grao vende-se la com o bonus; com um cozinheiro teu vivo, o
+# Verbo 2 no celeiro escolhe a vida das tropas em vez da moeda (Q-112, Q-115).
 extends GdUnitTestSuite
 
 const Posto := preload("res://tests/support/posto.gd")
 
 const STEP := 1.0 / 30.0
-## Uma moeda de cada vez, e so a seguinte depois de a anterior pousar (o voo leva
-## ~15 ticks): cada moeda que pousa no celeiro troca o modo, e duas no ar trocavam-no
-## duas vezes. Antes passava com 10 porque a venda do proprio celeiro o voltava a
-## trocar sozinha — o D1 da auditoria de 26/09.
-const ESPERA := 30
-
 var _no_celeiro := 0
 var _celeiro: BuildSlot
 
@@ -36,7 +30,7 @@ func after_test() -> void:
 	SimLoop.autosave_enabled = true
 
 
-func test_o_grao_vende_se_no_celeiro_e_a_moeda_manda_o_cozinheiro() -> void:
+func test_o_grao_vende_se_no_celeiro_e_o_verbo_2_manda_o_cozinheiro() -> void:
 	_correr(ClockService.clock.day_seconds() * 0.7)
 	assert_int(_no_celeiro).is_greater(0)
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
@@ -50,16 +44,9 @@ func test_o_grao_vende_se_no_celeiro_e_a_moeda_manda_o_cozinheiro() -> void:
 		SimLoop.state, Registry.entry(&"units", &"cook"), SimLoop.units.owners[rei], SimLoop.core_x
 	)
 	assert_int(cozinheiro).is_greater(0)
-	var espera := 0
-	for _t in 600:
-		if SimLoop.field.conversion.mode_of(_celeiro) == CraftData.Mode.CAPACITY:
-			break
-		espera -= 1
-		SimLoop.units.set_target_x(SimLoop.king_id, _celeiro.x)
-		if espera <= 0 and SimLoop.units.carried_coins[_rei()] > 0:
-			espera = ESPERA
-			_largar()
-		SimLoop.step(STEP)
+	SimLoop.units.set_target_x(SimLoop.king_id, _celeiro.x)
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(STEP)
 	assert_int(SimLoop.field.conversion.mode_of(_celeiro)).is_equal(CraftData.Mode.CAPACITY)
 	_correr(ClockService.clock.day_seconds() * 0.4)
 	assert_float(SimLoop.field.conversion.capacity(&"troop_health")).is_greater(0.0)
@@ -105,13 +92,3 @@ func _rei() -> int:
 func _caiu(x: float, _faixa: int, quanto: int, origem: StringName) -> void:
 	if origem == &"production" and is_equal_approx(x, _celeiro.x):
 		_no_celeiro += quanto
-
-
-func _largar() -> void:
-	var moeda := {
-		&"x": SimLoop.units.xs[_rei()],
-		&"band": Band.Kind.SURFACE,
-		&"amount": InputRouter.UMA,
-		&"source": Verbs.JOGADOR
-	}
-	SimLoop.intents.queue(IntentQueue.Kind.DROP_COIN, moeda)

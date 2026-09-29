@@ -6,8 +6,10 @@
 # conversao) e da moeda com o bonus (`coin_multiplier`) ou, com o oficio vivo, a
 # capacidade (`capacity_kind`, `magnitude`) enquanto a conversao corre.
 #
-# O gesto e o Verbo 1 com outro alvo (§06): uma moeda largada na casa troca o
-# modo — para capacidade so se tiveres o oficio (Q-112).
+# O gesto e escolher, e nao largar uma moeda (Q-115, o dono a 29/09/2026: "para
+# coisas como troca de modo, nao e simplesmente largar a moeda, o jogador deve
+# selecionar para o que quer trocar"): o Verbo 2 na casa escolhe o outro modo —
+# para capacidade so se tiveres o oficio (Q-112).
 #
 # Puro: recebe as conversoes, as materias e as tropas ja carregadas.
 class_name ConversionSystem
@@ -20,6 +22,8 @@ extends RefCounted
 enum Status { NONE, COIN, WANTS_CRAFT, WAITING, ACTIVE }
 
 const METADE := 0.5
+## O posto do oficio da capacidade (jobs.csv): o cozinheiro trabalha na cozinha.
+const POSTO := &"kitchen"
 ## Uma fraccao de materia que a soma das fases nao fecha (0,333 x 3) nao pode
 ## deixar de converter: e aritmetica de virgula, e nao regra.
 const FOLGA := 0.0001
@@ -30,6 +34,14 @@ var modes: Dictionary = {}
 var value: Dictionary = {}
 ## As capacidades activas nesta fase: tipo -> magnitude.
 var active: Dictionary = {}
+## O quadro de postos: a capacidade pede o oficio DENTRO da casa (Q-145).
+var jobs: JobBoard
+## Um dia de fases (§48, clock.csv): o que uma conversao paga em capacidade.
+var phases_per_day := 1
+## Fases de capacidade que a materia consumida ainda paga, por casa (Q-145): uma
+## conversao da um dia inteiro, para o efeito nao piscar de fase em fase enquanto
+## a materia se junta para a seguinte.
+var fed: Dictionary = {}
 
 var _conversoes: Dictionary
 var _materias: Dictionary
@@ -78,18 +90,20 @@ func on_phase(obras: BuildSystem) -> Array[Dictionary]:
 		if conv == null:
 			continue
 		var modo := _modo_efectivo(casa, conv)
-		var corre := false
+		var corre := maxi(0, int(fed.get(casa.id, 0)) - 1)
 		for produtor in obras.standing():
 			if _materias.get(produtor.kind, &"") != conv.material:
 				continue
-			corre = true
 			while produtor.stock + FOLGA >= conv.cost:
+				corre = phases_per_day  # a capacidade pede materia consumida (Q-145)
 				produtor.stock -= conv.cost
 				if modo == CraftData.Mode.COIN:
 					value[casa.id] = (
 						float(value.get(casa.id, 0.0)) + conv.cost * conv.coin_multiplier
 					)
-		if modo == CraftData.Mode.CAPACITY and corre:
+		fed[casa.id] = corre
+		var presente := jobs == null or jobs.staffing.worked(casa)
+		if modo == CraftData.Mode.CAPACITY and corre > 0 and presente:
 			active[conv.capacity_kind] = maxf(capacity(conv.capacity_kind), conv.magnitude)
 		var moedas := int(floorf(float(value.get(casa.id, 0.0)) + FOLGA))
 		if moedas > 0:
@@ -109,26 +123,31 @@ func on_phase(obras: BuildSystem) -> Array[Dictionary]:
 	return eventos
 
 
-## Uma moeda pousada numa casa troca o modo. Para capacidade, so com o oficio
-## teu vivo; de volta a moeda, sempre. Devolve verdadeiro se trocou.
-func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> bool:
-	_unidades = unidades
-	for casa in obras.standing():
+## Cada tick: a casa em capacidade pede o oficio dentro dela — publica o posto
+## dele (Q-145); a vender, nao pede ninguem. O posto sai do modo, que vai no save.
+func staff(obras: BuildSystem) -> void:
+	for casa in obras.slots:
 		var conv := craft_of(casa)
 		if conv == null:
 			continue
-		var para := CraftData.Mode.COIN
-		if mode_of(casa) == CraftData.Mode.COIN:
-			if not _tem_oficio(conv.capacity_craft):
-				continue
-			para = CraftData.Mode.CAPACITY
-		for c in moedas.count():
-			if not CoinTarget.pays(moedas, c, casa):
-				continue
-			moedas.remove(moedas.ids[c])
-			modes[casa.id] = para
-			return true
-	return false
+		var quer := mode_of(casa) == CraftData.Mode.CAPACITY and casa.standing()
+		casa.job_id = POSTO if quer else &""
+		casa.job_slots = 1 if quer else 0
+
+
+## O Verbo 2 na casa: escolhe o outro modo. Para capacidade, so com o oficio teu
+## vivo; de volta a moeda, sempre. Devolve verdadeiro se trocou.
+func choose(casa: BuildSlot) -> bool:
+	var conv := craft_of(casa)
+	if conv == null or not casa.standing():
+		return false
+	if mode_of(casa) == CraftData.Mode.CAPACITY:
+		modes[casa.id] = CraftData.Mode.COIN
+		return true
+	if not _tem_oficio(conv.capacity_craft):
+		return false
+	modes[casa.id] = CraftData.Mode.CAPACITY
+	return true
 
 
 ## As capacidades nas tuas tropas: a vida maxima e o passo do perfil, mais o que
@@ -151,13 +170,19 @@ func apply(unidades: UnitSystem, capacidades: Dictionary) -> void:
 
 
 func to_dict() -> Dictionary:
-	return {&"modes": modes.duplicate(), &"value": value.duplicate(), &"active": active.duplicate()}
+	return {
+		&"modes": modes.duplicate(),
+		&"value": value.duplicate(),
+		&"active": active.duplicate(),
+		&"fed": fed.duplicate(),
+	}
 
 
 func from_dict(guardado: Dictionary) -> void:
 	modes = guardado.get(&"modes", {}).duplicate()
 	value = guardado.get(&"value", {}).duplicate()
 	active = guardado.get(&"active", {}).duplicate()
+	fed = guardado.get(&"fed", {}).duplicate()
 
 
 func _modo_efectivo(casa: BuildSlot, conv: CraftData) -> int:

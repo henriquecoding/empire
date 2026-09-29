@@ -1,18 +1,14 @@
 # src/sim/systems/unit_system.gd — as tropas em colunas, nao em objetos (§52, §63).
 #
-# Uma unidade e um INDICE, nao um objeto. Trezentas unidades a 60 fps e o
-# orcamento do §63, e com um objeto por unidade — cada um com o seu _process —
-# nao se la chega. As colunas sao PackedArrays: memoria contigua, sem alocacao
-# por tick, sem apontadores a saltar.
+# Uma unidade e um INDICE, nao um objeto: trezentas a 60 fps (§63) nao cabem num
+# objeto cada. PackedArrays: memoria contigua, sem alocacao por tick.
 #
 # Puro: nao e Node, nao conhece o Registry nem o EventBus. Os campos quentes de
 # UnitData sao COPIADOS para colunas no spawn — assim o ciclo de cada tick nao
 # faz uma unica pesquisa de recurso.
 #
-# tick_decisions() e o passo 4 do §43 e corre fatiado; tick_movement() e o passo
-# 5 e corre para todos. Sao dois metodos porque sao dois passos: junta-los
-# poupava uma chamada e perdia a ordem, que e o que a ADR 0020 existe para
-# defender.
+# tick_decisions() e o passo 4 do §43, fatiado; tick_movement() e o passo 5, para
+# todos. Dois metodos porque sao dois passos, e a ordem e a da ADR 0020.
 class_name UnitSystem
 extends RefCounted
 
@@ -49,8 +45,7 @@ func count() -> int:
 	return ids.size()
 
 
-## O indice de uma unidade, ou NENHUM. Dicionario de proposito: procurar por id
-## num array de 300 e o tipo de custo que so se ve quando ja e tarde.
+## O indice de uma unidade, ou NENHUM. Dicionario: procurar num array de 300 nao.
 func index_of(unit_id: int) -> int:
 	return _por_id.get(unit_id, NENHUM)
 
@@ -101,6 +96,13 @@ func remove(unit_id: int) -> bool:
 	_encolher()
 	_por_id.erase(unit_id)
 	return true
+
+
+## Repoe uma unidade guardada por Columns.row(), com o mesmo id. Devolve o indice.
+func restore(linha: Dictionary) -> int:
+	Columns.append_row(self, linha)
+	_por_id[ids[-1]] = ids.size() - 1
+	return ids.size() - 1
 
 
 ## Para onde esta unidade anda. Enquanto nao ha JobSystem (F1-05), e quem chama
@@ -157,9 +159,8 @@ func tick_decisions(tick: int) -> Array[Dictionary]:
 ## aterra exatamente no alvo, e e por isso que a FSM nao precisa de tolerancia
 ## nenhuma para saber que chegou.
 ##
-## Quem esta em FIGHT nao anda: a tabela da §52 da a FIGHT o custo "resolucao de
-## combate" e nenhum movimento — quem esta a bater fica onde esta, mesmo com um
-## posto do outro lado do mapa. Quem esta em DEAD tambem nao, por razoes obvias.
+## Quem esta em FIGHT nao anda (§52: "resolucao de combate", nenhum movimento),
+## mesmo com um posto do outro lado do mapa. Quem esta em DEAD tambem nao.
 ##
 ## `piloted` e a excepcao: a regra de cima e sobre quem a §52 CONDUZ, e este e
 ## conduzido por uma pessoa — o §24 da ao "Mover" o contexto **Sempre** (Q-085).
@@ -241,9 +242,8 @@ func _encolher() -> void:
 	recruit_costs.resize(n)
 
 
-## O dicionario de ids a partir das colunas. Chamado depois de repor um save e
-## em mais lado nenhum: durante o jogo ele e mantido a par pelo spawn e pelo
-## remove, que e mais barato do que refaze-lo.
+## O dicionario de ids a partir das colunas, depois de repor um save; no jogo o
+## spawn, o remove e o restore mantem-no a par.
 func _reindexar() -> void:
 	_por_id.clear()
 	for i in ids.size():

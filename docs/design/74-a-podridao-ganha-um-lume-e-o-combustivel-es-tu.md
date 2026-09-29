@@ -43,20 +43,20 @@ M = 40 + 18 * dia + 30 * fortalezas
   + 8  * min(recusas_nos_ultimos_5_dias, 5)   # §75
 ```
 
-A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068).
+A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068). Depois da noite 10 a parte do calendário cresce 6% por noite: conforme os dias passam, a noite fica mais difícil exponencialmente (Q-151).
 
 | Estado do campo | Dia 5 | Dia 10 | Dia 20 | Contra a v5.2, ao dia 20 |
 | --- | --- | --- | --- | --- |
 | v5.2 (referência) | 190 | 320 | 580 | — |
-| Campo limpo — 0 Amargueiros | 130 | 220 | 400 | −31% |
-| 3 Amargueiros de pé | 196 | 286 | 466 | −20% |
-| 8 Amargueiros de pé | 306 | 396 | 576 | −1% |
-| 5 anónimos + 3 nomeados | 375 | 465 | 645 | +11% |
+| Campo limpo — 0 Amargueiros | 130 | 220 | 716 | +24% |
+| 3 Amargueiros de pé | 196 | 286 | 782 | +35% |
+| 8 Amargueiros de pé | 306 | 396 | 892 | +54% |
+| 5 anónimos + 3 nomeados | 375 | 465 | 961 | +66% |
 
 
-Todas as linhas assumem zero fortalezas conquistadas e zero recusas, para isolar o termo novo. Com três fortalezas ao dia 20 — o que é uma progressão normal — a v5.2 dá 700 e o campo limpo dá 490, e a vantagem do jogador cuidadoso mantém-se em −30%.
+Todas as linhas assumem zero fortalezas conquistadas e zero recusas, para isolar o termo novo. O dia 20 já traz dez noites de crescimento a 6% do calendário (Q-151, o dono a 29/09/2026: depois da noite 5 a noite fica mais difícil exponencialmente) — por isso passa a v5.2; as árvores e as fortalezas não crescem, e a distância entre o campo limpo e o campo cheio de mortos é a mesma em qualquer dia: +66 com três árvores, +245 com cinco anónimas e três nomeadas.
 
-Um jogador que arrasta os seus mortos para dentro tem um jogo um terço mais leve do que a v5.2 prometia. Um jogador que os deixa no campo tem um jogo mais pesado. A curva de dificuldade deixa de ser uma reta que subiste no Excel e passa a ser uma consequência — e é uma consequência que se explica sozinha, sem tutorial, na primeira vez que um Amargueiro com a cara de alguém aparece à porta.
+Um jogador que arrasta os seus mortos para dentro tem um jogo um quarto mais leve do que o que os deixa no campo. Um jogador que os deixa no campo tem um jogo mais pesado. A curva de dificuldade deixa de ser uma reta que subiste no Excel e passa a ser uma consequência — e é uma consequência que se explica sozinha, sem tutorial, na primeira vez que um Amargueiro com a cara de alguém aparece à porta.
 
 ## Os três destinos de um Amargueiro
 
@@ -79,7 +79,7 @@ Sempre com o Verbo 1. A moeda que largas é que decide, e a decisão é a mesma 
 | --- | --- | --- |
 | 1 · O Lenho não é moeda | Não se vende, não se troca, não tem preço. Só se constrói com ele. | Sem preço não há arbitragem. Acaba com a exploração na raiz, em vez de a tornar menos rentável. |
 | 2 · Uma noite de pé | Um Amargueiro só pode ser cortado depois de ter aguentado uma noite inteira. Antes disso a serra não pega. | Pagas sempre os +22 de massa uma vez, por cada árvore. Sacrificar dez vagabundos é +220 na noite seguinte — a matemática do §84 mostra que isso mata um império do dia 6. |
-| 3 · Rende o que a pessoa era | Escala 1 e vagabundo: 1 Lenho. Escala 2, tropa: 2. Escala 3, elite ou monarca: 3. Nomeado: 5. | A carne barata rende pouco e a cara rende muito — que é o inverso exato do incentivo perverso. |
+| 3 · Rende o que a pessoa era | Escala 1 (o escudeiro): 1 Lenho. Escala 2, tropa ou vagabundo: 2. Escala 3 ou mais, elite, personagem jogável ou monarca: 3. Nomeado: 5. | A carne barata rende pouco e a cara rende muito — que é o inverso exato do incentivo perverso. |
 
 
 > **Para que serve o Lenho Amargo, então**

@@ -2,8 +2,7 @@
 #
 # A ADR 0005 escreve o contrato: a boot.tscn carrega o Registry, o idioma e o
 # save, decide que game.tscn instanciar, e so depois entrega. Isto e o que ela
-# entrega, e ate agora nao existia — "nao ha cena de jogo" era a primeira linha
-# do docs/POR_FAZER.md.
+# entrega.
 #
 # O que este ficheiro faz e curto de proposito: semeia, manda o Greybox montar a
 # regiao, aponta a camara ao monarca e liga o tremor de ecra do §24. Nenhuma
@@ -62,7 +61,7 @@ func _ready() -> void:
 		var segundos := Preferences.shared().number(Preferences.DAY_SECONDS)
 		if segundos > 0.0:
 			SimLoop.intents.queue(IntentQueue.Kind.DAY_LENGTH, {&"seconds": segundos})
-	_camara.set_region(0.0, SimLoop.world_width)
+	_camara.set_region(-SimLoop.wild_px, SimLoop.world_width + SimLoop.wild_px)  # Q-154
 	# Poe o marcador onde o monarca esta ANTES de o entregar a camara: o follow()
 	# assenta a camara na posicao do alvo, e um alvo ainda na origem punha o
 	# primeiro segundo de cada partida a viajar da borda do mapa ate ao castelo.
@@ -73,6 +72,8 @@ func _ready() -> void:
 	EventBus.unit_died.connect(_na_morte)
 	EventBus.segment_entered.connect(_na_travessia)
 	EventBus.game_paused.connect(_na_pausa)
+	if PauseMenu.heir_waits():  # retomado com a escolha do herdeiro por fazer (Q-146)
+		SimLoop.set_paused(true)
 	print(_recibo())
 
 
@@ -167,37 +168,41 @@ func _tremer() -> void:
 		_tremor = TREMOR_S
 
 
-## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota e
-## inventar um era quebrar a regra 7 do AGENTS.md — o que ha e o mundo, e o
-## mundo diz-o: o nucleo em ruina. O relogio para e a entrada deixa de responder.
-##
-## Parar a partida AQUI e nao no SimLoop e deliberado, e custou uma tentativa:
-## com o `step()` a parar sozinho, os instrumentos que MEDEM uma derrota — o
-## §66 varre dez dias por defesa e diz "em que dia caiu" — deixavam de poder
-## contar. Quem joga tem cena; quem mede, nao. Ver a Q-081.
-##
-## Pergunta ao Defeat e nao so pelo nucleo: a casa do herdeiro a cair com o rei
-## ja morto tambem acaba a partida (N3, Q-137).
+## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota (regra
+## 7 do AGENTS.md): o mundo diz-o, com o nucleo em ruina. Parar AQUI e nao no
+## SimLoop e deliberado: quem mede uma derrota (o §66) precisa de continuar a
+## contar. Quem joga tem cena; quem mede, nao (Q-081).
 func _no_desabamento(_building_id: int, _x: float) -> void:
 	if Defeat.happened():
 		_acabar()
 
 
-## O rei caiu e nao ha herdeiro (§16, Defeat): e a mesma derrota que o nucleo.
+## O rei caiu: sem herdeiro e a mesma derrota que o nucleo (§16, Defeat); com ele
+## pronto, a pausa pergunta se se continua com um novo monarca (Q-146).
 func _na_morte(unit_id: int, _x: float, _faixa: int, _larga: PackedStringArray) -> void:
-	if unit_id == SimLoop.king_id and Defeat.happened():
-		_acabar()
+	if unit_id == SimLoop.king_id:
+		if Defeat.happened():
+			_acabar()
+		else:
+			SimLoop.set_paused(true)
 
 
-## A travessia (P-K, Q-135): a regiao acabou, e o rei leva quem esta perto dele.
+func end_reign() -> void:  # deixar a coroa cair em vez do herdeiro (Q-146)
+	SimLoop.field.succession.declined = true
+	_acabar()
+
+
+## O fim do ciclo — o Lume apagado, ou o ultimo povo vassalo: a campanha acaba, e
+## o jogo novo leva o legado da travessia (Q-135, Q-156, Q-103).
 func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
-	if tipo != Verbs.CROSSING:
+	if tipo != Lume.TIPO and tipo != Realm.TODOS:  # o fim do ciclo (Q-156, Q-103)
 		return
 	var tropas := SimFactory.by_id(&"units")
 	var perto := SimFactory.curve().crossing_party_px
 	var legado := Legacy.crossing(
 		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
 	)
+	Legacy.end_campaign(legado)
 	var noite := SimLoop.night
 	if CampaignMemory.carries(not legado.has(Legacy.PLANO), noite.epilogue()):
 		legado.merge(CampaignMemory.of(noite.voice.debt, noite.harvest, SimLoop.field.succession))
@@ -207,7 +212,7 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 func _acabar() -> void:
 	_tremer()
 	var fica := SimFactory.curve().decay_structures_kept
-	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica, SimLoop.field.classes))
+	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica))
 
 
 ## O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134). Um

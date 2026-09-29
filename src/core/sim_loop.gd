@@ -33,7 +33,6 @@ var hunting: HuntingSystem
 
 var intents := IntentQueue.new()
 
-## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo.
 var king_id: int = UnitSystem.NENHUM
 
 ## O que o mundo diz a simulacao sobre si proprio: onde fica o nucleo, onde
@@ -41,6 +40,8 @@ var king_id: int = UnitSystem.NENHUM
 ## cena, lidos pelo tick.
 var core_x: float = 0.0
 var world_width: float = 0.0
+## As terras bravias de cada lado, alem das bases da Podridao: anda-se la (Q-154).
+var wild_px: float = 0.0
 var passages: PackedFloat32Array = PackedFloat32Array()
 
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.
@@ -61,8 +62,8 @@ func _ready() -> void:
 	builds = BuildSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
 	tally.listen()
-	# §07: um muro a cair poe a fugir quem esta fraco e e barato. O sinal so e
-	# entregue no passo 11, e por isso a brecha conta no tick seguinte.
+	SpiritWatch.listen()  # o animo do reino (Q-102)
+	# §07: a brecha poe a fugir quem esta fraco; conta no tick seguinte (passo 11).
 	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
 
 
@@ -70,9 +71,9 @@ func _ready() -> void:
 func start(semente: int) -> void:
 	state = GameState.new()
 	state.seed = semente
+	RngService.configure(semente)  # antes de montar: o desconto por regiao le-a (Q-105)
 	_montar()
 	king_id = UnitSystem.NENHUM  # sem rei em campo ate alguem o pôr la
-	RngService.configure(semente)
 	SimFactory.draw_campaign(state)  # §77 os capitulos e §15 a ganancia, fluxo world
 	ClockService.start()
 	_running = true
@@ -83,8 +84,8 @@ func start(semente: int) -> void:
 ## entram a seguir, com load_world(), depois de a regiao estar montada.
 func resume(estado: GameState, rng_states: Dictionary) -> void:
 	state = estado
-	_montar()
 	RngService.configure(estado.seed)
+	_montar()
 	RngService.restore(rng_states)
 	ClockService.seek(estado.day, estado.clock_elapsed, estado.day_seconds)
 	_fase = int(ClockService.clock.current_phase())  # o save ja passou esta fase (D2)
@@ -195,6 +196,7 @@ func _montar() -> void:
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RulesFactory.recruits(state)  # o desconto do povo da regiao (Q-007)
 	field = FieldWork.new(economy, morale, combat, night)
+	recruits.resting = field.upkeep.resting  # quem desertou nao volta logo (Q-144)
 	hunting = field.hunting
 	tally.reset()
 	_fase = UnitSystem.NENHUM
@@ -202,8 +204,7 @@ func _montar() -> void:
 	intents.clear()
 
 
-## O roll do §50, no fluxo `combat`: um tiro falhado nao muda o que se invoca.
-func _roll() -> float:
+func _roll() -> float:  # o roll do §50, no fluxo `combat`
 	return RngService.unit_float(&"combat")
 
 
@@ -220,7 +221,7 @@ func _mudanca_de_fase() -> bool:
 func _largar(moedas: Array[Dictionary]) -> void:
 	for m in moedas:
 		var do_rei: bool = m[EventRelay.PORQUE] == Verbs.JOGADOR
-		if do_rei and field.claims(m, state, night, builds, units, king_id):
+		if do_rei and KingClaims.of(field, m, state, night, builds, units, king_id):
 			continue
 		drop_coin(
 			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]

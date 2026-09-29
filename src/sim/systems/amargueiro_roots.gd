@@ -9,9 +9,6 @@
 class_name AmargueiroRoots
 extends RefCounted
 
-## §74, regra 3: "Escala 1 e vagabundo: 1 Lenho". O vagabundo tem escala 2 no
-## units.csv (a da figura, §22) e rende como a carne mais barata que e.
-const VAGABUNDO := &"vagrant"
 const CORPO := &"corpse"
 const PRIMEIRA_ESCALA := 1
 
@@ -45,10 +42,9 @@ static func body_band(faixa: int) -> int:
 	return int(Band.Kind.SURFACE) if faixa == int(Band.Kind.AERIAL) else faixa
 
 
-## A escala do §22, de 1 a quantas o corte tiver. O vagabundo e a excecao.
+## A escala do §22, de 1 a quantas o corte tiver. O vagabundo tem o tamanho de
+## uma tropa, porque pode ser convertido numa (Q-097), e rende como ela.
 func tier(data_id: StringName) -> int:
-	if data_id == VAGABUNDO:
-		return PRIMEIRA_ESCALA
 	var dados: UnitData = _tropas.get(data_id)
 	var escala := dados.scale_tier if dados != null else PRIMEIRA_ESCALA
 	return clampi(escala, PRIMEIRA_ESCALA, _escalas)

@@ -17,8 +17,8 @@
 # escrever nao e. Um crash a meio da escrita nao pode destruir o save anterior.
 extends Node
 
-## Desde a v1, com migracoes explicitas. Nao ha v0 (§62).
-const SAVE_VERSION := 1
+## Desde a v1, com migracoes explicitas (SaveMigrations, Q-091). Nao ha v0 (§62).
+const SAVE_VERSION := SaveMigrations.CURRENT
 
 ## §54. Se mudar, o mundo e regenerado ou recusado. Ainda nao ha WorldGen; o
 ## campo existe desde ja porque acrescenta-lo depois obriga a uma migracao.
@@ -226,4 +226,4 @@ func _ler_cru(slot: int) -> Dictionary:
 	if typeof(dados.get(&"state")) != TYPE_DICTIONARY:
 		push_error("save: slot %d sem estado" % slot)
 		return {}
-	return dados
+	return SaveMigrations.migrate(dados)  # uma por versao, por ordem (Q-091)

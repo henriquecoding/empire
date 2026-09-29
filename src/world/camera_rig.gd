@@ -100,14 +100,16 @@ func _process(delta: float) -> void:
 		return
 	var direcao := Input.get_axis(&"camera_left", &"camera_right")
 	if is_zero_approx(direcao) and _rato_dentro:
-		direcao = edge(get_viewport().get_mouse_position().x, view_width, _dados.edge_pan_px)
+		direcao = edge(get_viewport().get_mouse_position().x, view_width, _dados.edge_pan_frac)
 	pan(direcao, delta)
 	advance(delta)
 
 
 ## §24: "Q · Z ou rato na margem". -1 na margem esquerda, 1 na direita, 0 no
-## resto do ecra — que e onde se clica. Em px de ecra, como a mao os ve (GB-12).
-static func edge(rato_x: float, largura: float, margem: float) -> float:
+## resto do ecra — que e onde se clica. A margem e uma fracao da largura do ecra
+## (Q-087): cresce com ele.
+static func edge(rato_x: float, largura: float, fracao: float) -> float:
+	var margem := fracao * largura
 	if margem <= 0.0:
 		return 0.0
 	if rato_x < margem:

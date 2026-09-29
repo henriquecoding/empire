@@ -139,12 +139,39 @@ func test_a_defesa_do_construtor_poupa_vida_a_muralha_golpe_a_golpe() -> void:
 	muro.level = 1
 	muro.state = BuildSlot.State.DONE
 	muro.health = muro.max_health()
-	obras.wall_defense = 0.08
+	obras.wall_defense = 0.1
 	for _k in 8:
 		obras.damage(muro.id, 3)
-	assert_int(muro.health).is_equal(muro.max_health() - 24 + 1)
+	# 24 de dano com +10% aguentado: 24 x 0,1 / 1,1 = 2,18 — poupa 2.
+	assert_int(muro.health).is_equal(muro.max_health() - 24 + 2)
 	obras.damage(casa.id, 3)
 	assert_int(casa.health).is_equal(casa.max_health() - 3)
+
+
+## Q-109 (o dono, 29/09/2026): cada construtor soma a sua parte, ate ao teto.
+func test_os_construtores_somam_ate_ao_teto() -> void:
+	var dados := _construtor()
+	var parte: float = dados.ability_params[&"wall_defense"]
+	var teto: float = dados.ability_params[&"wall_defense_max"]
+	for k in 8:
+		var i := unidades.index_of(_trabalhador(CASA_X + k))
+		TrainingSystem.retrain(unidades, i, dados)
+		var esperado := minf(parte * (k + 1), teto)
+		assert_float(treino.wall_defense(unidades)).is_equal_approx(esperado, 0.0001)
+	assert_float(treino.wall_defense(unidades)).is_equal_approx(teto, 0.0001)
+
+
+## A defesa e dano AGUENTADO: com +10% a muralha leva 110 de dano para perder o
+## que perdia com 100.
+func test_mais_dez_por_cento_aguenta_mais_dez_por_cento_de_dano() -> void:
+	var muro := obras.post(WallSite.slot(CASA_X + 1000.0))
+	muro.level = 1
+	muro.state = BuildSlot.State.DONE
+	muro.health = 1000
+	obras.wall_defense = 0.1
+	for _k in 110:
+		obras.damage(muro.id, 1)
+	assert_int(1000 - muro.health).is_equal(100)
 
 
 ## Uma moeda que vale mais do que falta nao perde o troco: fica paga para o

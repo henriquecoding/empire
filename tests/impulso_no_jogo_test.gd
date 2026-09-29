@@ -25,6 +25,10 @@ func test_a_chamada_as_armas_pela_roda_arma_os_vagabundos_e_nao_se_repete() -> v
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	var custo := (Registry.entry(&"crown/impulses", &"call_to_arms") as ImpulseData).coin_cost
 	SimLoop.units.carried_coins[rei] = custo * 2
+	var livres := 0  # os vagabundos dos acampamentos: os do castelo ja sao teus (Q-110)
+	for i in SimLoop.units.count():
+		if SimLoop.units.data_ids[i] == &"vagrant" and SimLoop.units.owners[i] == 0:
+			livres += 1
 	SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": &"call_to_arms"})
 	SimLoop.step(STEP)
 	assert_array(_usados).is_equal([&"call_to_arms"])
@@ -33,7 +37,8 @@ func test_a_chamada_as_armas_pela_roda_arma_os_vagabundos_e_nao_se_repete() -> v
 	for i in SimLoop.units.count():
 		if SimLoop.units.data_ids[i] == &"spearman" and SimLoop.units.owners[i] != 0:
 			lanceiros += 1
-	assert_int(lanceiros).is_greater_equal(4)
+	assert_int(lanceiros).is_greater_equal(livres)
+	assert_int(livres).is_greater(0)
 	var salvo := SimLoop.world()
 	SimLoop.load_world(salvo)
 	SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": &"vigil"})

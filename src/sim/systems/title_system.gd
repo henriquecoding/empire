@@ -9,8 +9,10 @@
 # Os campos do save sao os da §84: titles_holder, titles_ordinal,
 # titles_mourning. Os feitos sao do FeatLedger; aqui so se da o nome.
 #
-# Das nove bonificacoes, so a vida maxima tem hoje onde pegar. As outras mexem
-# na moral, na cadencia, no dano e na comida, e ficam registadas (Q-102).
+# Das nove bonificacoes, quatro tem hoje onde pegar (Q-102): a vida maxima, nao
+# fugir, a cadencia e o dano contra cerco — grants() da-as a quem as tem. As
+# outras (arrastar, comida, encantamento, a arma, o panico no Lume) esperam pelos
+# sistemas delas.
 class_name TitleSystem
 extends RefCounted
 
@@ -32,6 +34,8 @@ var holders: Dictionary = {}
 var ordinals: Dictionary = {}
 ## titulo -> o dia em que o luto acaba.
 var mourning: Dictionary = {}
+## Os ids de quem esta fora na marcha (March.away): nao morreram (Q-146).
+var away: Dictionary = {}
 ## Quem mereceu e nao tem vaga, pela ordem em que chegou.
 var waiting: PackedInt32Array = PackedInt32Array()
 var feats: FeatLedger
@@ -57,6 +61,16 @@ func _init(
 
 func count() -> int:
 	return holders.size()
+
+
+## O que cada nomeado vivo ganhou com o titulo: unit_id -> {grant_kind: valor}.
+func grants() -> Dictionary:
+	var saida := {}
+	for dados in _titulos:
+		var quem: int = holders.get(String(dados.id), -1)
+		if quem >= 0:
+			saida[quem] = {dados.grant_kind: dados.grant_value}
+	return saida
 
 
 func title_of(unit_id: int) -> String:
@@ -136,7 +150,7 @@ func from_dict(d: Dictionary) -> void:
 func _enterrar(dia: int, unidades: UnitSystem, eventos: Array[Dictionary]) -> void:
 	for t in holders.keys():
 		var i := unidades.index_of(holders[t])
-		if i != UnitSystem.NENHUM and unidades.alive(i):
+		if i != UnitSystem.NENHUM and unidades.alive(i) or away.has(holders[t]):
 			continue
 		feats.forget(holders[t])
 		holders.erase(t)
@@ -144,6 +158,8 @@ func _enterrar(dia: int, unidades: UnitSystem, eventos: Array[Dictionary]) -> vo
 		eventos.append({CHAVE: EV_LUTO, TITULO: t})
 	for k in range(waiting.size() - 1, -1, -1):
 		var i := unidades.index_of(waiting[k])
+		if away.has(waiting[k]):
+			continue
 		if i == UnitSystem.NENHUM or not unidades.alive(i):
 			feats.forget(waiting[k])
 			waiting.remove_at(k)

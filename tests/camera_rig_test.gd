@@ -171,11 +171,22 @@ func test_nenhum_numero_de_afinacao_esta_no_script() -> void:
 ## empurra para a esquerda, a direita para a direita, e o resto do ecra e do
 ## jogo — e onde se clica com o botao direito.
 func test_a_margem_empurra_para_o_lado_dela() -> void:
-	var margem: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_px
-	assert_float(CameraRig.edge(0.0, VISTA, margem)).is_equal(-1.0)
-	assert_float(CameraRig.edge(VISTA - 1.0, VISTA, margem)).is_equal(1.0)
-	assert_float(CameraRig.edge(VISTA / 2, VISTA, margem)).is_equal(0.0)
-	assert_float(CameraRig.edge(margem + 1.0, VISTA, margem)).is_equal(0.0)
+	var fracao: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_frac
+	var margem := fracao * VISTA
+	assert_float(CameraRig.edge(0.0, VISTA, fracao)).is_equal(-1.0)
+	assert_float(CameraRig.edge(VISTA - 1.0, VISTA, fracao)).is_equal(1.0)
+	assert_float(CameraRig.edge(VISTA / 2, VISTA, fracao)).is_equal(0.0)
+	assert_float(CameraRig.edge(margem + 1.0, VISTA, fracao)).is_equal(0.0)
+
+
+## Q-087 (o dono, 29/09/2026): a margem e do tamanho do ecra. Num ecra maior a
+## faixa que empurra e mais larga, na mesma proporcao.
+func test_a_margem_cresce_com_o_ecra() -> void:
+	var fracao: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_frac
+	var grande := VISTA * 1.5
+	var margem := fracao * grande
+	assert_float(CameraRig.edge(margem - 1.0, grande, fracao)).is_equal(-1.0)
+	assert_float(CameraRig.edge(margem - 1.0, VISTA, fracao)).is_equal(0.0)
 
 
 ## Zero na coluna desliga o gesto: quem jogar em janela e nao o quiser, tira-o
@@ -187,9 +198,9 @@ func test_margem_zero_desliga() -> void:
 ## A margem e uma faixa e nao meio ecra: um oitavo da largura ja come o sitio
 ## onde a Podridao aparece a noite (§25, minuto 5:00 — "a mancha no horizonte").
 func test_a_margem_vem_de_data_e_e_estreita() -> void:
-	var margem: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_px
-	assert_float(margem).is_greater(0.0)
-	assert_float(margem).is_less(VISTA / 8)
+	var fracao: float = (Registry.entry(&"camera", &"default") as CameraData).edge_pan_frac
+	assert_float(fracao).is_greater(0.0)
+	assert_float(fracao).is_less(1.0 / 8)
 
 
 ## O rato na margem e a mesma camara livre das teclas: anda, e volta sozinha nos
@@ -203,11 +214,11 @@ func test_o_rato_na_margem_e_a_camara_livre_e_volta_sozinha() -> void:
 	var dados: CameraData = Registry.entry(&"camera", &"default")
 
 	for _i in int(1.0 / PASSO):
-		rig.pan(CameraRig.edge(VISTA - 1.0, VISTA, dados.edge_pan_px), PASSO)
+		rig.pan(CameraRig.edge(VISTA - 1.0, VISTA, dados.edge_pan_frac), PASSO)
 		rig.advance(PASSO)
 	assert_bool(rig.position.x > pousada).is_true()
 
 	for _i in int(dados.free_return_seconds / PASSO) + 1:
-		rig.pan(CameraRig.edge(VISTA / 2, VISTA, dados.edge_pan_px), PASSO)
+		rig.pan(CameraRig.edge(VISTA / 2, VISTA, dados.edge_pan_frac), PASSO)
 		rig.advance(PASSO)
 	assert_float(rig.position.x).is_equal(pousada)

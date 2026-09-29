@@ -138,14 +138,14 @@ func test_d13_o_epilogo_e_determinista_e_segue_a_precedencia() -> void:
 	# A tabela da §79, avaliada de cima para baixo, contra os quatro limiares
 	# do rot.csv, pelo Epilogue — a funcao pura que o XIII-08 vai chamar.
 	var casos := [
-		[20, 6, 6, "dominio"],  # divida manda, mesmo com os seis soltos
-		[12, 0, 6, "dominio"],
-		[11, 4, 0, "dominio"],
-		[3, 0, 4, "uniao"],
-		[0, 0, 6, "uniao"],
-		[4, 0, 6, "turno"],  # divida de 4: nem uma coisa nem outra
-		[0, 0, 3, "turno"],
-		[11, 3, 3, "turno"],
+		[20, 7, 7, "dominio"],  # divida manda, mesmo com os sete soltos
+		[12, 0, 7, "dominio"],
+		[11, 5, 0, "dominio"],  # cinco de oito ficados (Q-152)
+		[3, 0, 5, "uniao"],
+		[0, 0, 7, "uniao"],
+		[4, 0, 7, "turno"],  # divida de 4: nem uma coisa nem outra
+		[0, 0, 4, "turno"],
+		[11, 4, 4, "turno"],
 	]
 	for caso in casos:
 		var msg := "divida %d, ficados %d, soltos %d" % [caso[0], caso[1], caso[2]]

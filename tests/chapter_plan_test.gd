@@ -35,16 +35,31 @@ func _plano(semente: int) -> ChapterPlan:
 
 
 func test_a_campanha_tem_uma_regiao_por_bioma_da_campanha() -> void:
-	# Os povos do gelo e do pantano (Q-010, Q-013) estao nos dados e fora da
-	# campanha ate o dono decidir como ela cresce (Q-152): continuam seis.
+	# Os povos do gelo e do pantano (Q-010, Q-013) entram na campanha: passa a
+	# oito regioes, tudo no mesmo sistema (Q-152, o dono a 29/09/2026).
 	var regioes := SimFactory.campaign_regions()
 	var dentro := 0
 	for recurso in Registry.entries(&"biomes"):
 		if (recurso as BiomeData).in_campaign:
 			dentro += 1
 	assert_int(regioes.size()).is_equal(dentro)
-	assert_int(regioes.size()).is_equal(6)
-	assert_bool(regioes.has("glacier") or regioes.has("marsh")).is_false()
+	assert_int(regioes.size()).is_equal(8)
+	assert_bool(regioes.has("glacier") and regioes.has("marsh")).is_true()
+
+
+## Q-105 (o dono, 29/09/2026): "as regioes nao sao fixas, sao geradas como em
+## Minecraft". A casa e sempre a primeira; a ordem das outras muda com a semente
+## e e sempre a mesma para a mesma semente.
+func test_a_ordem_das_regioes_sai_da_semente_e_a_casa_e_a_primeira() -> void:
+	var ordens := {}
+	for semente in [1, 2, 3, 4, 5, 6]:
+		RngService.configure(semente)
+		var a := SimFactory.campaign_regions()
+		RngService.configure(semente)
+		assert_array(Array(SimFactory.campaign_regions())).is_equal(Array(a))
+		assert_str(a[0]).is_equal("ancient_forest")
+		ordens[str(a)] = true
+	assert_int(ordens.size()).is_greater(1)
 
 
 # ─── D-11: seis, e o Cerco sempre ────────────────────────────────────────────

@@ -80,19 +80,20 @@ func test_com_celeiro_o_grao_vende_se_la_com_o_bonus() -> void:
 	assert_int(_moedas_em(dia, celeiro.x)).is_equal(esperado)
 
 
-func test_uma_moeda_no_celeiro_com_cozinheiro_passa_a_capacidade() -> void:
-	var moedas := CoinSystem.new(Registry.entry(&"economy", &"curve") as EconomyCurve)
-	var id := moedas.drop(estado, celeiro.x, Band.Kind.SURFACE, 1, 0.0)
-	moedas.settled[moedas.index_of(id)] = 1
-	assert_bool(conversao.absorb(moedas, obras, unidades)).is_false()
-	assert_int(moedas.count()).is_equal(1)
+## Q-115 (o dono, 29/09/2026): o modo escolhe-se, e nao se troca com uma moeda.
+## Para capacidade, so com o cozinheiro teu vivo; de volta a venda, sempre.
+func test_escolher_a_capacidade_no_celeiro_pede_o_cozinheiro() -> void:
+	assert_bool(conversao.choose(celeiro)).is_false()
+	assert_int(conversao.mode_of(celeiro)).is_equal(CraftData.Mode.COIN)
 	unidades.spawn(estado, Registry.entry(&"units", &"cook"), MEU, 0.0)
-	assert_bool(conversao.absorb(moedas, obras, unidades)).is_true()
-	assert_int(moedas.count()).is_equal(0)
+	conversao.bind(unidades)
+	assert_bool(conversao.choose(celeiro)).is_true()
 	assert_int(conversao.mode_of(celeiro)).is_equal(CraftData.Mode.CAPACITY)
 	var dia := _um_dia_com(unidades)
 	assert_int(_moedas_em(dia, celeiro.x)).is_equal(0)
 	assert_float(conversao.capacity(_grao().capacity_kind)).is_equal(_grao().magnitude)
+	assert_bool(conversao.choose(celeiro)).is_true()
+	assert_int(conversao.mode_of(celeiro)).is_equal(CraftData.Mode.COIN)
 
 
 func test_sem_cozinheiro_vivo_a_capacidade_volta_a_moeda() -> void:
@@ -148,3 +149,29 @@ func test_o_modo_vai_no_save() -> void:
 func _um_dia_com(quem: UnitSystem) -> Array[Dictionary]:
 	conversao.bind(quem)
 	return _um_dia()
+
+
+## Q-145 (o dono, 29/09/2026): a capacidade pede o cozinheiro DENTRO da casa — a
+## casa em capacidade publica o posto dele — e materia consumida na fase.
+func test_a_capacidade_pede_o_cozinheiro_la_dentro() -> void:
+	var jobs := SimFactory.job_board()
+	conversao.jobs = jobs
+	conversao.modes[celeiro.id] = CraftData.Mode.CAPACITY
+	conversao.staff(obras)
+	assert_str(String(celeiro.job_id)).is_equal(String(ConversionSystem.POSTO))
+	assert_int(celeiro.posts()).is_equal(1)
+	var longe := unidades.spawn(estado, Registry.entry(&"units", &"cook"), MEU, 5000.0)
+	conversao.bind(unidades)
+	jobs.refresh(obras, unidades, GameClock.Phase.MORNING)
+	jobs.staffing.observe(jobs.slots, unidades, GameClock.Phase.NOON)
+	economia.on_phase(obras, GameClock.Phase.MORNING, [])
+	assert_float(conversao.capacity(_grao().capacity_kind)).is_equal(0.0)
+	unidades.xs[unidades.index_of(longe)] = celeiro.x
+	jobs.staffing.observe(jobs.slots, unidades, GameClock.Phase.NOON)
+	jobs.staffing.observe(jobs.slots, unidades, GameClock.Phase.AFTERNOON)
+	canteiro.stock = _grao().cost
+	economia.on_phase(obras, GameClock.Phase.NOON, [])
+	assert_float(conversao.capacity(_grao().capacity_kind)).is_equal(_grao().magnitude)
+	conversao.modes[celeiro.id] = CraftData.Mode.COIN
+	conversao.staff(obras)
+	assert_int(celeiro.posts()).is_equal(0)

@@ -8,8 +8,19 @@ var hunt: HuntingSystem
 func before_test() -> void:
 	units = UnitSystem.new()
 	state = GameState.new()
-	hunt = HuntingSystem.new(SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit"))
-	hunt.open_day(1, [100.0, 120.0, 900.0])
+	hunt = _nova([100.0, 120.0, 900.0])
+	hunt.grow(0.0, true, 1.0)
+
+
+## Uma caca com as tocas nestes x, todas prontas a dar o primeiro bicho.
+func _nova(tocas: Array[float]) -> HuntingSystem:
+	var h := HuntingSystem.new(SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit"))
+	var esperas: Array[float] = []
+	esperas.resize(tocas.size())
+	esperas.fill(0.0)
+	h.burrows.place(tocas, esperas)
+	h.open_day(1)
+	return h
 
 
 func _archer(owner: int = 1) -> int:
@@ -66,17 +77,16 @@ func test_dead_underground_and_fighting_hunters_do_not_hunt() -> void:
 	assert_array(hunt.resolve(units, true, true)).is_empty()
 
 
-func test_save_preserves_exhausted_clearings_until_the_next_day() -> void:
+func test_o_save_guarda_as_tocas_e_quem_esta_a_porta() -> void:
 	_archer()
 	hunt.resolve(units, true, true)
 	var copy := HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit")
 	)
 	copy.from_dict(hunt.to_dict())
-	copy.open_day(1, [1.0, 2.0])
 	assert_array(copy.rabbits).is_equal(hunt.rabbits)
-	copy.open_day(2, [1.0, 2.0])
-	assert_array(copy.rabbits).is_equal([1.0, 2.0])
+	assert_array(copy.burrows.xs).is_equal(hunt.burrows.xs)
+	assert_int(copy.burrows.living()).is_equal(3)
 
 
 func test_two_hunters_cannot_claim_the_same_rabbit() -> void:
@@ -89,10 +99,8 @@ func test_two_hunters_cannot_claim_the_same_rabbit() -> void:
 func test_the_intro_is_the_first_clearing_taken_by_the_nearest_neutral_hunter() -> void:
 	var far := units.spawn(state, Registry.entry(&"units", &"archer"), 0, 1000.0)
 	var near := units.spawn(state, Registry.entry(&"units", &"archer"), 0, 1640.0)
-	var intro := HuntingSystem.new(
-		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit")
-	)
-	intro.open_day(1, [1760.0, 1160.0])
+	var intro := _nova([1760.0, 1160.0])
+	intro.grow(0.0, true, 1.0)
 	var drops := intro.resolve(units, true, true)
 	assert_int(drops.size()).is_equal(1)
 	assert_float(drops[0][&"x"]).is_equal(1760.0)
@@ -112,32 +120,50 @@ func test_the_intro_is_moot_once_the_players_hunter_took_its_rabbit() -> void:
 	assert_array(hunt.rabbits).is_equal([900.0])
 
 
-func test_as_clareiras_do_dia_abrem_em_vagas_e_o_total_nao_muda() -> void:
-	var dia := HuntingSystem.new(SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit"))
-	dia.open_day(1, [10.0, 20.0, 30.0, 40.0, 50.0], 3)
-	assert_array(dia.rabbits).is_equal([10.0, 40.0])
-	assert_float(dia.intro_x).is_equal(10.0)
-	dia.release()
-	assert_array(dia.rabbits).is_equal([10.0, 40.0, 20.0, 50.0])
-	var copia := HuntingSystem.new(
-		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit")
+## Q-106 e Q-120 (o dono, 29/09/2026): as tocas dao os bichos aos poucos, um de
+## cada vez, e so de dia. Um bicho que ninguem caca fica e a toca espera.
+func test_uma_toca_da_um_bicho_de_cada_vez_e_so_de_dia() -> void:
+	var dia := _nova([10.0])
+	dia.burrows.waits[0] = 5.0
+	dia.grow(4.0, true, 5.0)
+	assert_array(dia.rabbits).is_empty()
+	dia.grow(4.0, false, 5.0)
+	assert_array(dia.rabbits).is_empty()
+	dia.grow(1.0, true, 5.0)
+	assert_array(dia.rabbits).is_equal([10.0])
+	dia.grow(50.0, true, 5.0)
+	assert_array(dia.rabbits).is_equal([10.0])
+	dia.rabbits.clear()
+	dia.grow(5.0, true, 5.0)
+	assert_array(dia.rabbits).is_equal([10.0])
+
+
+## "Se fizer algo errado e perder o arbusto, para de ser gerado o coelho": um
+## Amargueiro que cria raiz ao pe de uma toca mata-a, e o bicho foge com ela.
+func test_uma_toca_perdida_nao_da_mais_nada() -> void:
+	var dia := _nova([10.0, 500.0])
+	dia.grow(0.0, true, 5.0)
+	assert_array(dia.wither(PackedFloat32Array([30.0]), 48.0)).is_equal([10.0])
+	assert_array(dia.rabbits).is_equal([500.0])
+	dia.rabbits.clear()
+	dia.grow(100.0, true, 5.0)
+	assert_array(dia.rabbits).is_equal([500.0])
+	assert_int(dia.burrows.living()).is_equal(1)
+
+
+## A media do dia continua a do hunt_yield: o periodo reparte-a pela luz.
+func test_o_periodo_da_a_caca_media_do_dia() -> void:
+	var relogio := Registry.entry(&"economy", &"clock") as ClockData
+	var dados := Registry.entry(&"wildlife", &"rabbit") as WildlifeData
+	var luz := 0.0
+	for fase in HuntWatch.LUZ:
+		luz += relogio.phase_durations[fase]
+	var por_dia := luz / HuntWatch.period(relogio.day_seconds) * dados.burrows_per_region
+	var curva := SimFactory.curve()
+	assert_float(por_dia).is_equal_approx((curva.hunt_yield.x + curva.hunt_yield.y) * 0.5, 0.01)
+	assert_float(HuntWatch.period(relogio.day_seconds * 1.5)).is_equal_approx(
+		HuntWatch.period(relogio.day_seconds) * 1.5, 0.01
 	)
-	copia.from_dict(dia.to_dict())
-	copia.release()
-	assert_array(copia.rabbits).is_equal([10.0, 40.0, 20.0, 50.0, 30.0])
-	copia.release()
-	assert_int(copia.rabbits.size()).is_equal(5)
-
-
-func test_a_vigia_abre_cada_vaga_na_sua_fase_de_luz() -> void:
-	var dia := HuntingSystem.new(SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit"))
-	dia.open_day(1, [10.0, 20.0, 30.0], HuntWatch.WAVE_PHASES.size())
-	HuntWatch.release_due(dia, GameClock.Phase.MORNING)
-	assert_int(dia.rabbits.size()).is_equal(1)
-	HuntWatch.release_due(dia, GameClock.Phase.NOON)
-	assert_int(dia.rabbits.size()).is_equal(2)
-	HuntWatch.release_due(dia, GameClock.Phase.DUSK)
-	assert_int(dia.rabbits.size()).is_equal(3)
 
 
 func test_o_cacador_teu_guarda_a_caca_no_saco_e_o_sem_dono_larga_a() -> void:

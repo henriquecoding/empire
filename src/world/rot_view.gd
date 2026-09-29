@@ -87,9 +87,9 @@ static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia
 	)
 
 
-## A tarde diz de que lado vem a noite (Q-125): a candeia acende-se no horizonte
-## dessa borda antes de a mancha nascer — ve-se de longe e nao diz um numero. Numa
-## noite funda (Q-126) a luz e maior.
+## A tarde diz de que lado vem a noite (Q-125): o Lume acende-se na base dela, no
+## horizonte dessa borda, antes de a mancha nascer (ADR 0034) — ve-se de longe e nao
+## diz um numero. Numa noite funda (Q-126) arde maior.
 static func _aviso(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int) -> void:
 	if rot.announced == 0:
 		return

@@ -20,6 +20,6 @@ job_affinity = {
 &"guard": 1.0,
 &"wall": 1.0
 }
-coin_capacity = 5
+coin_capacity = 8
 weapon_kind = &"sword"
 head_pool = Array[StringName]([&"helmet_horned", &"scarf"])

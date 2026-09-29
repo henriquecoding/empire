@@ -9,6 +9,10 @@
 class_name RepairWork
 extends RefCounted
 
+## Q-108 (o dono, 29/09/2026): "como em Kingdom, precisa do construtor para
+## conseguir reparar os danos". So o oficio com este id trabalha numa reparacao.
+const REPAIRER := &"builder"
+
 
 ## Paga a reparacao com as moedas `apanhadas` (ids ja em cima da obra).
 static func absorb(
@@ -67,3 +71,21 @@ static func tick(vaga: BuildSlot, maos: float) -> Array[Dictionary]:
 	vaga.progress = 0.0
 	vaga.mending = false
 	return [{BuildSystem.CHAVE: BuildSystem.EV_REPARADA, BuildSystem.VAGA: vaga}]
+
+
+## Quantas maos estao em cima da obra. Numa obra nova, qualquer tropa tua conta,
+## e por igual (Q-064); numa reparacao, so os construtores (Q-108). `oficio`
+## vazio e qualquer um.
+static func hands(unidades: UnitSystem, vaga: BuildSlot, oficio := REPAIRER) -> int:
+	var maos := 0
+	var raio := vaga.width * BuildSystem.METADE
+	for i in unidades.count():
+		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
+			continue
+		if unidades.bands[i] != int(vaga.band):
+			continue
+		if oficio != &"" and unidades.data_ids[i] != oficio:
+			continue
+		if absf(unidades.xs[i] - vaga.x) <= raio:
+			maos += 1
+	return maos

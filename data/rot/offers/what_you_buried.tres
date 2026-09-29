@@ -10,5 +10,5 @@ price_kind = &"sealed_passage"
 price_amount = 1.0
 effect_kind = &"mass_mult"
 effect_value = 0.5
-requires = "biome=subterranean"
+requires = "biome=subterranean,sealed>=1"
 debt_delta = 3

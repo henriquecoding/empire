@@ -53,6 +53,8 @@ BUILDING_HIGH_TOWER,Torre Alta,High Tower,nome de conteúdo — building,24,
 BUILDING_FIRE_BARREL,Barril de Fogo,Fire Barrel,nome de conteúdo — building,24,
 BUILDING_CAMPFIRE,Fogueira,Campfire,nome de conteúdo — building (Q-029),24,
 HUD_TORCHES,ARCHOTES {n},TORCHES {n},painel do jogo: archotes no saco do rei (Q-029),16,
+HUD_SPIRIT,ÂNIMO {n},SPIRIT {n},HUD do greybox: o ânimo do reino (Q-102),16,
+HUD_SEEDS,SEMENTES {n},SEEDS {n},HUD do greybox: as Sementes Reais (Q-095),16,
 BUILDING_ROOT_MOAT,Fosso de Raízes,Root Moat,nome de conteúdo — building,24,
 BUILDING_LIGHTHOUSE,Farol,Lighthouse,nome de conteúdo — building,24,
 BUILDING_CONSECRATED_ALTAR,Altar Consagrado,Consecrated Altar,nome de conteúdo — building,24,
@@ -68,6 +70,13 @@ CLASS_CLIMBER,Trepador,Climber,nome de conteúdo — class,24,
 CLASS_BURIED_KNIGHT,Cavaleiro Enterrado,Buried Knight,nome de conteúdo — class,24,
 CLASS_SEALED_KNIGHT,Cavaleiro Selado,Sealed Knight,nome de conteúdo — class,24,
 CLASS_DIPLOMAT,Diplomata,Diplomat,nome de conteúdo — class,24,
+STORAGE_ROYAL_BELT,Cinto real,Royal belt,nome de conteúdo — storage,24,
+STORAGE_QUIVER,Aljava,Quiver,nome de conteúdo — storage,24,
+STORAGE_SATCHEL,Alforge,Satchel,nome de conteúdo — storage,24,
+STORAGE_CLIMBING_BELT,Cinto de escalada,Climbing belt,nome de conteúdo — storage,24,
+STORAGE_KNIGHT_PACK,Mochila de armadura,Knight's pack,nome de conteúdo — storage,24,
+STORAGE_SADDLEBAGS,Alforges,Saddlebags,nome de conteúdo — storage,24,
+STORAGE_DISPATCH_CASE,Pasta de tratados,Dispatch case,nome de conteúdo — storage,24,
 CRAFT_GRAIN,Grão,Grain,nome de conteúdo — craft,24,
 CRAFT_FISH,Peixe,Fish,nome de conteúdo — craft,24,
 CRAFT_ANIMAL,Animal vivo,Livestock,nome de conteúdo — craft,24,
@@ -435,7 +444,7 @@ LANG_PT_PT,Português,Português,"nome do idioma, no próprio idioma (§27)",16,
 LANG_EN,English,English,"nome do idioma, no próprio idioma (§27)",16,GB-28. Endónimo: não se traduz.
 HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O glifo da tecla vem antes e muda com o dispositivo (§26).
 HINT_DROP,largar (manter: em contínuo),drop (hold: continuous),rodapé de comandos (§24): Verbo 1,32,GB-15
-HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,"GB-15. Hoje o Verbo 2 só entra em passagens (Q-066)."
+HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,GB-15. Hoje o Verbo 2 só entra em passagens (Q-066).
 HINT_MARK,alvo,target,rodapé de comandos (§24): marcar alvo,16,GB-15
 HINT_WHEEL,estado · +1–6 impulso,status · +1–6 impulse,rodapé de comandos (§24): a roda do rei,32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
 HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
@@ -451,6 +460,9 @@ UI_NO,Não,No,confirmação,8,
 UI_INTERREGNUM,Interregno,Interregnum,morte do rei sem herdeiro (§16),20,
 UI_CROWN_FALLEN,A coroa caiu,The Crown Has Fallen,derrota (§16),28,
 UI_SUCCESSION,Sucessão,Succession,sucessão (§15),20,
+UI_HEIR_CHOICE,O rei caiu. O herdeiro está pronto — continuas com um novo monarca?,The king has fallen. The heir is ready — carry on with a new monarch?,escolha da sucessão (§16; Q-146),90,
+UI_HEIR_CONTINUE,Continuar com o herdeiro,Carry on with the heir,escolha da sucessão (Q-146),32,
+UI_HEIR_DECLINE,Deixar a coroa cair,Let the crown fall,escolha da sucessão (Q-146),32,
 EPILOGUE_UNION,União,Union,epílogo (§17),16,
 EPILOGUE_DOMINION,Domínio,Dominion,epílogo (§17),16,
 CAPTION_DAWN_BELL,[Sino da manhã],[Morning bell],legenda de som (§26),32,
@@ -470,7 +482,7 @@ OFFER_THE_TREE_YOU_PLANTED,A árvore que plantaste.,The tree you planted.,fala d
 OFFER_TELL_ME_A_NAME,Diz-me um nome.,Tell me a name.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
 OFFER_WHAT_YOU_BURIED,O que enterraste.,What you buried.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
 OFFER_WHAT_WAS_HERE_BEFORE,O que estava aqui antes de ti.,What was here before you.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
-OFFER_KEEP_THE_LANTERN,Fica com a candeia por uma noite.,Keep the lantern for one night.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
+OFFER_KEEP_THE_LANTERN,Fica com o Lume por uma noite.,Keep the Lume for one night.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
 OFFER_AN_HEIR,Um herdeiro.,An heir.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
 OFFER_GIVE_BACK_WHATS_MINE,Devolve-me o que é meu.,Give me back what is mine.,fala da Podridão — §75,48,"Oito palavras no máximo. Nunca ameaça, nunca explica, nunca trata por vós."
 TITLE_THE_ONE_WHO_STAYED,O Que Ficou,The One Who Stayed,título de tropa — §76,36,Ganho por feito na alvorada; o ordinal acrescenta-se em código (D-08).
@@ -501,7 +513,7 @@ CHAPTER_HOUSE_THAT_COUNTS,A Casa Que Conta,The House That Counts,nome de capítu
 CHAPTER_LAW_HOUSE_THAT_COUNTS,"A Contadeira conta tudo o que passa. À terceira vez que passares, fica com um nome teu. Se à primeira contagem lhe deres um nome de livre vontade, ela diz-te a massa exata da Podridão, todas as noites, até ao fim da partida.","The Counting Woman counts everything that passes. On your third crossing she keeps a name of yours. Give her one freely at the first count and she tells you the Rot's exact mass, every night, to the end of the run.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
 CHAPTER_WHO_HOUSE_THAT_COUNTS,"A Contadeira. Enquanto fala contigo continua a contar, em voz baixa, por cima do que estás a dizer.","The Counting Woman. While she speaks to you she keeps counting, under her breath, over whatever you are saying.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
 CHAPTER_INVERTED_FLOODPLAIN,A Várzea Invertida,The Inverted Floodplain,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
-CHAPTER_LAW_INVERTED_FLOODPLAIN,"As faixas trocam. A faixa aérea anda-se, a superfície voa-se, e a Podridão chega por cima — a candeia fica por baixo de ti.","The bands swap. The air band is walked, the surface is flown, and the Rot arrives from above — the lantern hangs below you.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_LAW_INVERTED_FLOODPLAIN,"As faixas trocam. A faixa aérea anda-se, a superfície voa-se, e a Podridão chega por cima — o Lume fica por baixo de ti.","The bands swap. The air band is walked, the surface is flown, and the Rot arrives from above — the Lume burns below you.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
 CHAPTER_WHO_INVERTED_FLOODPLAIN,"Uma moura encantada, de cabeça para baixo no fundo de um poço que está no céu, que pergunta pelas horas.","An enchanted moura, upside down at the bottom of a well that is in the sky, asking for the time.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
 CHAPTER_BLIND_FURROW,O Sulco Cego,The Blind Furrow,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
 CHAPTER_LAW_BLIND_FURROW,"Não há luz. Só o Cavaleiro Selado se orienta, porque já não usava os olhos. Qualquer luz que leves revela 60 px à tua volta e acrescenta +30 à massa desta noite — o que te vê também vê a luz.","There is no light. Only the Sealed Knight finds his way, because he had stopped using his eyes. Any light you carry reveals 60 px around you and adds +30 to tonight's mass — whatever sees you sees the light too.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
@@ -553,6 +565,20 @@ CONTEXT_BUILD,"{name} · Faltam {cost} moedas
 {drop} investir · manter para largar em sequência","{name} · {cost} coins remaining
 {drop} invest · hold to drop continuously",guia contextual de jogo,160,
 CONTEXT_DONE,{name} · Em funcionamento,{name} · Operational,guia contextual de jogo,160,
+CONTEXT_WARD,"{name} · Carga {charge}/{max}: afasta o Zelador
+{drop} carregar","{name} · Charge {charge}/{max}: keeps the Tender away
+{drop} recharge",guia contextual de jogo,160,§75; Q-100
+CONTEXT_SEALED,"{name} · A boca está fechada
+{assume} desmontar a escora: a boca abre","{name} · The mouth is shut
+{assume} take the shoring down: the mouth opens",guia contextual de jogo,160,Q-138
+CONTEXT_SQUIRE,"Escudeiro · Escudo {shield}/{max}
+{assume} dar-lhe uma moeda","Squire · Shield {shield}/{max}
+{assume} give him a coin",guia contextual de jogo,160,§08; Q-114
+CONTEXT_LUME,O Lume · {assume} apagá-lo: a Podridão não volta a nascer,The Lume · {assume} put it out: the Rot will not rise again,guia contextual de jogo,160,§74; Q-156
+LUME_NOT_HERE,O Lume arde na borda de onde a Podridão nasce,The Lume burns at the edge where the Rot is born,guia contextual de jogo,160,Q-156
+LUME_NEEDS_DAY,O Lume · Só se apaga de dia,The Lume · It can only be put out by day,guia contextual de jogo,160,Q-156
+LUME_NEEDS_LIGHTHOUSE,O Lume · Só se apaga com um farol teu de pé,The Lume · It needs one of your lighthouses standing,guia contextual de jogo,160,Q-156
+LUME_NEEDS_LOW_DEBT,O Lume · Deves-lhe demasiado para o apagar,The Lume · You owe it too much to put it out,guia contextual de jogo,160,Q-156; a Dívida da Candeia acima do limiar da União
 CONTEXT_LOCKED,{name} · Requer conquista ou Lenho Amargo,{name} · Requires conquest or Bitter Wood,guia contextual de jogo,160,
 CONTEXT_RECRUIT,"{name} · Faltam {cost} moedas
 {drop} largar para recrutar","{name} · {cost} coins remaining
@@ -579,21 +605,25 @@ Precisa de um trabalhador teu por perto","{name} · Trains a {craft}
 Needs a worker of yours nearby",guia contextual de jogo,160,§09 §10
 TOAST_PROMOTED,Um ofício novo no reino,A new craftsman joins your realm,aviso do HUD: treino acabado,40,§09
 TOAST_IMPULSE,Impulso real: hoje tem um preço,Royal impulse: today has a price,aviso do HUD: impulso usado,40,§15
+TOAST_IMPULSE_NEEDS_KING,{name}: é preciso o rei de pé,{name}: the king must be standing,aviso do HUD: impulso recusado (Q-113),48,
+TOAST_IMPULSE_NOT_YET,{name}: ainda não há onde isto pegue no reino,{name}: nothing in the kingdom for this to take hold of yet,aviso do HUD: impulso recusado (Q-113) — o sistema por trás ainda não existe,64,
+TOAST_IMPULSE_USED_TODAY,{name}: já decretaste um impulso hoje,{name}: you already decreed one today,aviso do HUD: impulso recusado (Q-113),64,
+TOAST_IMPULSE_NEEDS_COINS,{name}: custa {cost} moedas no saco do rei,{name}: costs {cost} coins in the king's purse,aviso do HUD: impulso recusado (Q-113),56,
 CONTEXT_CONVERT_COIN,"{name} · Vende {material} a +{bonus}%
-{drop} mandar o {craft}: {effect}","{name} · Sells {material} at +{bonus}%
-{drop} send the {craft}: {effect}",guia contextual de jogo,160,§06 circuito 2; Q-112
+{assume} mandar o {craft}: {effect}","{name} · Sells {material} at +{bonus}%
+{assume} send the {craft}: {effect}",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2
 CONTEXT_CONVERT_CAPACITY,"{name} · O {craft} converte: {effect}
-{drop} voltar a vender a +{bonus}%","{name} · The {craft} converts: {effect}
-{drop} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112
+{assume} voltar a vender a +{bonus}%","{name} · The {craft} converts: {effect}
+{assume} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2
 CONTEXT_CONVERT_NOBODY,"{name} · Vende {material} a +{bonus}%
 Com um {craft} teu: {effect}","{name} · Sells {material} at +{bonus}%
 With a {craft} of yours: {effect}",guia contextual de jogo,160,§06 circuito 2; Q-112
 CONTEXT_CONVERT_WANTS_CRAFT,"{name} · Sem {craft} teu, vende {material} a +{bonus}%
-{effect} volta com um {craft} · {drop} só vender","{name} · No {craft} of yours: sells {material} at +{bonus}%
-{effect} returns with a {craft} · {drop} just sell",guia contextual de jogo,160,§06 circuito 2; Q-112; o modo capacidade escolhido sem o ofício
-CONTEXT_CONVERT_WAITING,"{name} · O {craft} espera {material}: {effect} ainda sem efeito
-{drop} voltar a vender a +{bonus}%","{name} · The {craft} awaits {material}: {effect} not yet in effect
-{drop} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; escolhido e com ofício mas a fase ainda não deu a capacidade
+{effect} volta com um {craft} · {assume} só vender","{name} · No {craft} of yours: sells {material} at +{bonus}%
+{effect} returns with a {craft} · {assume} just sell",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2; o modo capacidade escolhido sem o ofício
+CONTEXT_CONVERT_WAITING,"{name} · O {craft} tem de estar cá e ter {material}: {effect} ainda sem efeito
+{assume} voltar a vender a +{bonus}%","{name} · The {craft} must be here, with {material}: {effect} not yet in effect
+{assume} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2; escolhido e com ofício mas a fase ainda não deu a capacidade: falta o ofício na casa ou a matéria (Q-145)
 CONTEXT_EVOLVE,"{name} · {drop} evoluir o Monarca
 +{pct}% de defesa a todas as tuas tropas · {seeds} Semente Real","{name} · {drop} evolve the Monarch
 +{pct}% defence for all your troops · {seeds} Royal Seed",guia contextual de jogo,160,§08: a evolução da classe; o gesto é a Q-114
@@ -616,6 +646,7 @@ SIDE_EAST,LESTE,EAST,lado da região (direita),8,AUD-03
 CAPTION_ROT_FED,[A mancha engole o sacrifício],[The stain takes the offering],legenda de som (§26); o sacrifício do §05 (Q-127),32,AUD-03
 CAPTION_UNIT_LEFT,"[Sem soldo, alguém partiu]","[Unpaid, someone left]",legenda de som (§26); a manutenção (Q-124),32,AUD-03
 BUILDING_PASSAGE_SEAL,Escora,Shoring,nome de conteúdo — building,24,AUD-04 (Q-132)
+BUILDING_TENDER_WARD,Sino de Vigia,Warding Bell,nome de conteúdo — building (Q-100),24,
 CONTEXT_PASSAGE_SEAL,"PASSAGEM · {assume} para mudar de faixa
 {drop} escora-a: fechada ao Cavador e a ti · {cost}","PASSAGE · {assume} to change layer
 {drop} shore it: closed to the Burrower and to you · {cost}",guia contextual de jogo: a boca de uma passagem por escorar (Q-132),160,AUD-04
@@ -636,16 +667,23 @@ If the king falls, the heir rules at dawn",guia contextual de jogo: a casa do he
 EPILOGUE_SHIFT,O Turno,The Shift,epílogo (§79),16,AUD-05: o terceiro final da ADR 0018 não tinha nome escrito
 UI_CROSSED,A região está atravessada,The Region Is Crossed,travessia (P-K): a região acabou (Q-135),32,AUD-05
 UI_CAMPAIGN_END,Fim da campanha · {epilogue},End of the Campaign · {epilogue},travessia da última região: o epílogo (§79),40,AUD-05
-GUIDE_CROSS,"A TRAVESSIA ESTÁ ABERTA
-A bifurcação a leste leva à região seguinte","THE CROSSING IS OPEN
-The fork to the east leads to the next region",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
-CONTEXT_CROSS,"BIFURCAÇÃO · {assume} atravessar
-Levas o teu saco e quem estiver perto de ti","FORK · {assume} to cross
-You take your purse and whoever is near you",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
-CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · abre no dia {day}
-Aguenta até lá","FORK · opens on day {day}
-Hold out until then",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
-UI_PARTY,"Vão contigo: {party} dos teus e {purse} moedas","With you: {party} of your people and {purse} coins",travessia (P-K): a comitiva (Q-135),64,AUD-05
+GUIDE_CROSS,"A MARCHA PODE SAIR
+Na bifurcação a leste, manda os teus conquistar o povo seguinte","THE MARCH CAN LEAVE
+At the fork to the east, send your people to conquer the next folk",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-103 (ADR 0035)"
+CONTEXT_CROSS,"BIFURCAÇÃO · {assume} mandar a marcha
+Vão os teus que estão perto; tu ficas no reino","FORK · {assume} send the march
+Your people nearby go; you stay in the kingdom",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-154 (ADR 0035)"
+CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · a marcha sai no dia {day}
+Aguenta até lá","FORK · the march leaves on day {day}
+Hold out until then",guia contextual de jogo: a marcha (§13),160,Q-146 (ADR 0035)
+MARCH_AWAY,"BIFURCAÇÃO · A marcha está fora
+Volta ao amanhecer","FORK · The march is away
+It returns at dawn",guia contextual de jogo: a marcha (§13),160,Q-146
+MARCH_NOBODY_LEFT,BIFURCAÇÃO · Todos os povos te pagam tributo,FORK · Every folk pays you tribute,guia contextual de jogo: a marcha (§13),160,Q-103
+MARCH_TOO_FEW,"BIFURCAÇÃO · Para marchar, traz pelo menos três dos teus
+Construtores, arqueiros ou gente de armas","FORK · To march, bring at least three of yours
+Builders, archers or men-at-arms",guia contextual de jogo: a marcha (§13),160,Q-154
+UI_PARTY,Vão contigo: {party} dos teus e {purse} moedas,With you: {party} of your people and {purse} coins,travessia (P-K): a comitiva (Q-135),64,AUD-05
 CONTEXT_VARIANT,"{name} · {variant}
 {assume} trocar · {drop} construir: faltam {cost}","{name} · {variant}
 {assume} switch · {drop} build: {cost} to go",guia contextual de jogo: a variante da melhoria (P-N),160,AUD-05 (Q-136)
@@ -653,5 +691,5 @@ VARIANT_ARCHER_TOWER_A,alcance (+40%),range (+40%),variante da torre de arqueiro
 VARIANT_ARCHER_TOWER_B,cadência (um terço mais tiros),cadence (a third more shots),variante da torre de arqueiros (Q-136),32,AUD-05
 VARIANT_FARM_A,renda,yield,variante do canteiro (Q-136),24,AUD-05
 VARIANT_FARM_B,"resguardo (o rasto não o para, rende 75%)","sheltered (the trail spares it, 75% yield)",variante do canteiro (Q-136),48,AUD-05
-UI_LEGACY_FAILED,"O que fica não se gravou: os saves desta partida continuam onde estavam","What remains could not be saved: this run's saves are still where they were",fim da partida: o legado não se escreveu (CONT-01),96,CONT-01
+UI_LEGACY_FAILED,O que fica não se gravou: os saves desta partida continuam onde estavam,What remains could not be saved: this run's saves are still where they were,fim da partida: o legado não se escreveu (CONT-01),96,CONT-01
 UI_CROSSING_MEMORY,"Levas a dívida ({debt}), {peoples} povos na memória e {heir} dias de treino do herdeiro; as obras ficam","You carry the debt ({debt}), {peoples} peoples in memory and {heir} days of heir training; the buildings stay",travessia (P-K): o que a campanha leva (Q-143),112,CONT-02

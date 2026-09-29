@@ -51,9 +51,10 @@ try {
   await choose('Q-005');
   assert.equal(await page.locator('#Q-005 .decisao-bloco').first().isVisible(),true);
   // O resumo do painel so se agarra a uma pergunta cujo texto nao mudou desde que foi escrito
-  // (fonteHash): a Q-005 foi decidida no painel e perdeu-o; a Q-149 ainda esta aberta e tem-no.
-  await choose('Q-149');
-  assert.match(await page.locator('#Q-149').innerText(), /1,6 vezes/);
+  // (fonteHash): a Q-005 e a Q-149 foram decididas no painel e perderam-no; a Q-147 foi adiada,
+  // continua aberta e tem-no.
+  await choose('Q-147');
+  assert.match(await page.locator('#Q-147').innerText(), /formas de pagamento/);
   await choose('Q-005');
   await page.locator('#Q-005 input[value=outra]').check();
   await page.locator('#Q-005 textarea').fill('Rascunho que não pode desaparecer.');

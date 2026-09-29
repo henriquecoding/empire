@@ -173,20 +173,21 @@ func test_o_rasto_cobre_o_que_ela_ja_atravessou() -> void:
 func test_a_tabela_da_74_sai_do_sistema_e_nao_so_do_modelo() -> void:
 	# O D-01 prova a tabela contra o modelo de referencia; isto prova que o
 	# RotSystem a le igual. [dia, anonimos, nomeados, massa] — as quatro linhas
-	# da §74 nas tres colunas, com zero fortalezas e zero recusas.
+	# da §74 nas tres colunas, com zero fortalezas e zero recusas. O dia 20 ja traz
+	# as dez noites de crescimento da Q-151.
 	var tabela := [
 		[5, 0, 0, 130.0],
 		[10, 0, 0, 220.0],
-		[20, 0, 0, 400.0],
+		[20, 0, 0, 716.3],
 		[5, 3, 0, 196.0],
 		[10, 3, 0, 286.0],
-		[20, 3, 0, 466.0],
+		[20, 3, 0, 782.3],
 		[5, 8, 0, 306.0],
 		[10, 8, 0, 396.0],
-		[20, 8, 0, 576.0],
+		[20, 8, 0, 892.3],
 		[5, 5, 3, 375.0],
 		[10, 5, 3, 465.0],
-		[20, 5, 3, 645.0],
+		[20, 5, 3, 961.3],
 	]
 	for linha in tabela:
 		var rot := _mancha()
@@ -194,21 +195,21 @@ func test_a_tabela_da_74_sai_do_sistema_e_nao_so_do_modelo() -> void:
 		rot.named_amargueiros = linha[2]
 		rot.spawn(linha[0], DIREITA, LARGURA)
 		var msg := "dia %d, %d + %d nomeados" % [linha[0], linha[1], linha[2]]
-		assert_float(rot.mass()).override_failure_message(msg).is_equal(linha[3])
+		assert_float(rot.mass()).override_failure_message(msg).is_equal_approx(linha[3], 0.1)
 		var ref := Referencia.rot_mass(linha[0], 0, _perfil(), linha[1], linha[2])
-		assert_float(rot.mass()).is_equal(ref)
+		assert_float(rot.mass()).is_equal_approx(ref, 0.001)
 
 
 func test_as_arvores_so_pesam_na_noite_seguinte() -> void:
 	# §74: o Amargueiro "alimenta a noite seguinte". A massa escreve-se ao
 	# crepusculo; uma arvore que nasce depois nao engorda a mancha ja no campo.
 	var rot := _mancha()
-	rot.spawn(20, DIREITA, LARGURA)
+	rot.spawn(10, DIREITA, LARGURA)
 	rot.amargueiros = 3
-	assert_float(rot.mass()).is_equal(400.0)
+	assert_float(rot.mass()).is_equal(220.0)
 	rot.retreat()
-	rot.spawn(20, DIREITA, LARGURA)
-	assert_float(rot.mass()).is_equal(466.0)
+	rot.spawn(10, DIREITA, LARGURA)
+	assert_float(rot.mass()).is_equal(286.0)
 
 
 func test_o_save_guarda_o_que_o_jogador_escreveu_de_dia() -> void:

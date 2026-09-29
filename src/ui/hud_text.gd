@@ -62,3 +62,16 @@ static func goal(noite: bool) -> String:
 
 static func coins(quantas: int) -> String:
 	return TranslationServer.translate(&"TOAST_COIN").format({"n": quantas})
+
+
+## O que se junta a linha dos recursos: os archotes (Q-029), o animo do reino
+## (Q-102) e as Sementes Reais (Q-095). Os archotes e as Sementes so com algum.
+static func extras(archotes: int, animo: float, sementes: int) -> String:
+	var texto := ""
+	var separador := "  ·  "
+	if archotes > 0:
+		texto += separador + TranslationServer.translate(&"HUD_TORCHES").format({"n": archotes})
+	texto += separador + TranslationServer.translate(&"HUD_SPIRIT").format({"n": roundi(animo)})
+	if sementes > 0:
+		texto += separador + TranslationServer.translate(&"HUD_SEEDS").format({"n": sementes})
+	return texto

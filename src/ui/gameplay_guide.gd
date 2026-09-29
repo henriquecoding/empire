@@ -21,7 +21,7 @@ static func goal() -> String:
 		var funda := rot.deep(ClockService.clock.day)
 		return _tr(&"GUIDE_ROT_COMING_DEEP" if funda else &"GUIDE_ROT_COMING").format(lado)
 	if ClockService.clock.day >= SimFactory.curve().crossing_day:
-		return _tr(&"GUIDE_CROSS")  # P-K: a regiao pode acabar (Q-135)
+		return _tr(&"GUIDE_CROSS")  # a marcha pode sair (Q-146)
 	var worker := false
 	var hunter := false
 	for i in SimLoop.units.count():
@@ -72,12 +72,16 @@ static func context(device: Glyphs.Device) -> String:
 	var values := {"drop": _button(buttons[1]), "assume": _button(buttons[2])}
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
-		return _passage(king, values)
+		return GuideSites.passage(king, values)
 	if units.bands[king] == int(Band.Kind.SURFACE) and Verbs.at_fork(units.xs[king]):
 		if Verbs.crossing_open(units, SimLoop.king_id):
-			return _tr(&"CONTEXT_CROSS").format(values)
+			var falta := SimLoop.field.realm.refusal(units, SimLoop.king_id, SimLoop.state)
+			return _tr(&"CONTEXT_CROSS" if falta.is_empty() else falta).format(values)
 		values["day"] = SimFactory.curve().crossing_day
 		return _tr(&"CONTEXT_CROSS_LOCKED").format(values)
+	if units.bands[king] == int(Band.Kind.SURFACE) and Lume.at_base(units.xs[king]):
+		var falta := Lume.refusal(units, SimLoop.king_id)  # o fim pela luz (Q-156)
+		return _tr(&"CONTEXT_LUME" if falta.is_empty() else falta).format(values)
 	for site in SimLoop.builds.slots:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue
@@ -87,7 +91,7 @@ static func context(device: Glyphs.Device) -> String:
 			continue
 		values["name"] = _building_name(site)
 		if site.kind == Succession.CASA and site.standing():
-			return _heir(values)
+			return GuideSites.heir(values)
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
 			return _tr(&"CONTEXT_BUILDING").format(values)
@@ -125,10 +129,19 @@ static func context(device: Glyphs.Device) -> String:
 			units, nearest, SimLoop.recruits.price(units, nearest)
 		)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
-	return ""
+	return _squire(values)
 
 
-## A classe pode evoluir (§08): o Verbo 1 no nucleo, e o que ela passa a dar.
+## O escudo do escudeiro, se o Verbo 2 o arma agora (Q-114); "" se nao.
+static func _squire(values: Dictionary) -> String:
+	var classes := SimLoop.field.classes
+	if not Verbs.squire_wants(SimLoop.units, SimLoop.king_id, classes):
+		return ""
+	values["shield"] = classes.squire.shield
+	values["max"] = classes.squire.shield_cap()
+	return _tr(&"CONTEXT_SQUIRE").format(values)
+
+
 static func _evolve(site: BuildSlot, values: Dictionary) -> String:
 	var classe := Registry.entry(&"classes", &"monarch") as ClassData
 	values["name"] = _building_name(site)
@@ -152,15 +165,21 @@ static func _tr(key: StringName) -> String:
 	return TranslationServer.translate(key)
 
 
-## Uma obra de pe: se forma um oficio (§09), diz o preco do treino, quem esta
-## la dentro, ou que falta um trabalhador teu para mandar; senao, funciona.
+## Uma obra de pe: o preco do treino (§09), quem la esta, ou que funciona.
 static func _training(site: BuildSlot, values: Dictionary) -> String:
 	if SimLoop.field.conversion.craft_of(site) != null and site.standing():
 		return _conversion(site, values)
+	if site.kind == Passages.ESCORA and site.standing():  # abre-se outra vez (Q-138)
+		return _tr(&"CONTEXT_SEALED").format(values)
+	if site.kind == Ward.SINO and site.standing():  # a carga do sino (Q-100)
+		values["charge"] = floori(site.charge)
+		values["max"] = floori(Ward.cap(site))
+		return _tr(&"CONTEXT_WARD").format(values)
 	var treino := SimLoop.field.training
 	var oficio := treino.craft_of(site)
 	if oficio == null or not site.standing():
-		return _tr(&"CONTEXT_DONE").format(values)
+		var escudo := _squire(values)  # o Verbo 2 aqui arma o escudeiro (Verbs.consume)
+		return escudo if not escudo.is_empty() else _tr(&"CONTEXT_DONE").format(values)
 	values["craft"] = _tr(oficio.display_key)
 	for quem in treino.trainees:
 		if treino.trainees[quem][0] == site.id:
@@ -171,8 +190,7 @@ static func _training(site: BuildSlot, values: Dictionary) -> String:
 	return _tr(&"CONTEXT_TRAIN").format(values)
 
 
-## Uma casa de conversao (§06, circuito 2): o que faz agora, e o que a moeda
-## largada nela faria — vender, ou mandar o oficio dar a capacidade (Q-112).
+## Uma casa de conversao (§06, circuito 2): o que faz agora, e o que o Verbo 2 troca.
 static func _conversion(site: BuildSlot, values: Dictionary) -> String:
 	var conversao := SimLoop.field.conversion
 	var conv := conversao.craft_of(site)
@@ -187,9 +205,8 @@ static func _conversion(site: BuildSlot, values: Dictionary) -> String:
 	return _tr(chave).format(values)
 
 
-## A frase de uma casa de conversao. O modo guardado nao chega: a capacidade
-## escolhida sem o oficio vende, e com ele so da efeito depois de uma fase com
-## materia — o que se diz e o estado efectivo (planejamento 26/09, §7).
+## A frase de uma casa de conversao: o estado efectivo, e nao so o modo guardado
+## (planejamento 26/09, §7).
 static func conversion_key(estado: ConversionSystem.Status, tem_oficio: bool) -> StringName:
 	match estado:
 		ConversionSystem.Status.ACTIVE:
@@ -199,32 +216,6 @@ static func conversion_key(estado: ConversionSystem.Status, tem_oficio: bool) ->
 		ConversionSystem.Status.WANTS_CRAFT:
 			return &"CONTEXT_CONVERT_WANTS_CRAFT"
 	return &"CONTEXT_CONVERT_COIN" if tem_oficio else &"CONTEXT_CONVERT_NOBODY"
-
-
-## A boca de uma passagem: descer, ou escora-la enquanto a escora esta por pagar
-## (Q-132). A escora a meio ou de pe ja nao se oferece.
-static func _passage(king: int, values: Dictionary) -> String:
-	for site in SimLoop.builds.slots:
-		if site.kind != Passages.ESCORA or site.band != SimLoop.units.bands[king]:
-			continue
-		if absf(site.x - SimLoop.units.xs[king]) > site.width * HALF:
-			continue
-		values["cost"] = PriceTag.owed_by(site)
-		if site.state == BuildSlot.State.EMPTY and values.cost > 0:
-			return _tr(&"CONTEXT_PASSAGE_SEAL").format(values)
-	return _tr(&"CONTEXT_PASSAGE").format(values)
-
-
-## A casa do herdeiro de pe: quantos dias de treino, e o que custa cada um (§15).
-static func _heir(values: Dictionary) -> String:
-	var herdeiro := SimLoop.field.succession
-	if herdeiro.ready():
-		return _tr(&"CONTEXT_HEIR_READY").format(values)
-	var curva := SimFactory.curve()
-	values["days"] = herdeiro.days
-	values["total"] = curva.heir_training_days
-	values["cost"] = curva.heir_cost_per_day
-	return _tr(&"CONTEXT_HEIR").format(values)
 
 
 static func _rei_em_baixo() -> bool:

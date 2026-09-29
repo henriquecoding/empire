@@ -24,7 +24,7 @@ extends Resource
 @export_group("Mundo")
 @export var band: Band.Kind = Band.Kind.SURFACE
 @export var move_speed: float = 26.0  # px/s
-@export var scale_tier: int = 2  # 1, 2 ou 3 — §22
+@export var scale_tier: int = 2  # 1 a 4 — §22; o rei e o 4 (Q-097)
 @export var can_change_band: bool = false
 
 @export_group("Arte")

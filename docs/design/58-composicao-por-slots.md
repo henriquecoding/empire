@@ -2,15 +2,16 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-Cinco Sprite2D empilhados por personagem, um AnimationPlayer partilhado. Custo de desenho desprezável em 2D; poupança de trabalho artístico enorme — e é o que torna viável ter seis povos (§22).
+Seis Sprite2D empilhados por personagem, um AnimationPlayer partilhado. Custo de desenho desprezável em 2D; poupança de trabalho artístico enorme — e é o que torna viável ter seis povos (§22).
 
 | Slot | Ordem Z | Trocado por | Fonte do valor |
 | --- | --- | --- | --- |
 | body | 0 | Povo e escala | UnitData.people + scale_tier |
-| head | 1 | Identidade | UnitRec.slots["head"] — sorteado do fluxo visual |
-| face | 2 | Estado e lealdade | Derivado de health e loyalty. Nunca guardado. |
-| weapon / shield | 3 | Nível de ferreiro | UnitRec.slots["weapon"] |
-| overlay | 4 | Efeitos | Capacidades ativas, marca do arqueiro, rasto da Podridão |
+| storage | 1 | O armazenamento do personagem jogável e o que leva | ClassData.storage (storages.csv) — a camada Equipments (Q-153) |
+| head | 2 | Identidade | UnitRec.slots["head"] — sorteado do fluxo visual |
+| face | 3 | Estado e lealdade | Derivado de health e loyalty. Nunca guardado. |
+| weapon / shield | 4 | Nível de ferreiro | UnitRec.slots["weapon"] |
+| overlay | 5 | Efeitos | Capacidades ativas, marca do arqueiro, rasto da Podridão |
 | shadow | −1 | Largura do sprite | UnitData.shadow_width — obrigatório, §22 |
 
 

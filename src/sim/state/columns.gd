@@ -55,6 +55,25 @@ static func from_dict(sistema: Object, d: Dictionary) -> void:
 		sistema.set(nome, _como(sistema.get(nome), d[chave]))
 
 
+## Uma linha inteira (o indice `i`) em tipos base: quem sai do mundo e volta
+## depois volta como era — a vida, as moedas, o id que o nome conhece (Q-146).
+static func row(sistema: Object, i: int) -> Dictionary:
+	var saida := {}
+	for nome in names(sistema):
+		var valor: Variant = sistema.get(nome)[i]
+		saida[StringName(nome)] = String(valor) if valor is StringName else valor
+	return saida
+
+
+## Acrescenta no fim das colunas uma linha guardada por row().
+static func append_row(sistema: Object, linha: Dictionary) -> void:
+	for nome in names(sistema):
+		var coluna: Variant = sistema.get(nome)
+		var valor: Variant = linha.get(StringName(nome))
+		coluna.append(StringName(valor) if typeof(coluna) == TYPE_ARRAY else valor)
+		sistema.set(nome, coluna)
+
+
 ## So variaveis de script, e so as que sao arrays. O `script` e os grupos que o
 ## get_property_list() tambem devolve nao sao colunas de nada.
 static func _e_coluna(p: Dictionary) -> bool:

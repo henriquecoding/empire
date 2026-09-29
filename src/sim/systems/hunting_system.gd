@@ -1,3 +1,5 @@
+# src/sim/systems/hunting_system.gd — a caca (§06, §25): quem caca, o que cai e para
+# onde vai. Os bichos saem das tocas (Burrows, Q-106), aos poucos e de dia.
 class_name HuntingSystem
 extends RefCounted
 
@@ -5,13 +7,13 @@ extends RefCounted
 const SEM_INTRO := -1.0
 
 var day := 0
+## Os bichos que estao agora a porta das tocas, por x.
 var rabbits: Array[float] = []
 var intro_done := false
-## O coelho do minuto 1:10 (§25): a primeira clareira do dia 1, junto ao castelo.
+## O coelho do minuto 1:10 (§25): o da primeira toca no dia 1, junto ao castelo.
 var intro_x := SEM_INTRO
-## As clareiras que o dia ainda vai abrir, por vaga (Q-106): a caca reparte-se
-## pela luz em vez de se esgotar na primeira meia hora.
-var pending: Array = []
+## As tocas de onde os bichos saem aos poucos (Q-106, Q-120).
+var burrows := Burrows.new()
 ## Quanto de caca cada cacador teu leva no saco (id -> moedas). So isto se entrega
 ## ao rei: o preco que pagaste para o recrutar fica com ele (Q-111).
 var bagged: Dictionary = {}
@@ -24,23 +26,27 @@ func _init(profiles: Dictionary, rabbit: WildlifeData) -> void:
 	_rabbit = rabbit
 
 
-func open_day(number: int, clearings: Array[float], waves: int = 1) -> void:
+## Um dia novo. No primeiro, o bicho da primeira toca e o do 1:10 (§25).
+func open_day(number: int) -> void:
 	if number <= day:
 		return
 	day = number
-	pending = []
-	for _k in maxi(1, waves):
-		pending.append([])
-	for i in clearings.size():
-		pending[i % pending.size()].append(clearings[i])
-	rabbits.assign(pending.pop_front())
-	intro_x = clearings[0] if number == 1 and not clearings.is_empty() else SEM_INTRO
+	var primeira := burrows.xs[0] if burrows.placed() else SEM_INTRO
+	intro_x = primeira if number == 1 else SEM_INTRO
 
 
-## Abre a vaga seguinte, se ainda houver.
-func release() -> void:
-	if not pending.is_empty():
-		rabbits.append_array(pending.pop_front())
+## `delta` segundos: de dia, as tocas vivas poem bichos a porta, um de cada vez.
+func grow(delta: float, daylight: bool, periodo: float) -> void:
+	if daylight:
+		rabbits.append_array(burrows.grow(delta, periodo, rabbits))
+
+
+## As tocas a `raio` destes x perdem-se, e o bicho que estava a porta foge com elas.
+func wither(perigos: PackedFloat32Array, raio: float) -> Array[float]:
+	var perdidas := burrows.wither(perigos, raio)
+	for x in perdidas:
+		rabbits.erase(x)
+	return perdidas
 
 
 ## O alvo de caca cede ao combate e aos postos; nunca atravessa faixas.
@@ -134,7 +140,7 @@ func to_dict() -> Dictionary:
 		&"rabbits": rabbits.duplicate(),
 		&"intro_done": intro_done,
 		&"intro_x": intro_x,
-		&"pending": pending.duplicate(true),
+		&"burrows": burrows.to_dict(),
 		&"bagged": bagged.duplicate()
 	}
 
@@ -144,7 +150,8 @@ func from_dict(saved: Dictionary) -> void:
 	rabbits.assign(saved.get(&"rabbits", []))
 	intro_done = saved.get(&"intro_done", false)
 	intro_x = saved.get(&"intro_x", SEM_INTRO)
-	pending = saved.get(&"pending", []).duplicate(true)
+	burrows = Burrows.new()
+	burrows.from_dict(saved.get(&"burrows", {}))
 	bagged = saved.get(&"bagged", {}).duplicate()
 
 

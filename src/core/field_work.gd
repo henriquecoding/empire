@@ -20,12 +20,18 @@ var succession: Succession
 ## Os acampamentos da regiao, de onde chega um vagabundo por alvorada (Q-122).
 ## Escritos por quem monta o mundo.
 var camps: PackedFloat32Array = PackedFloat32Array()
+## A marcha e os vassalos (§13; Q-103, Q-146): o reino que fica.
+var realm := Realm.new()
+## O animo do reino (Q-102): memorias com prazo, que mexem na fuga, na producao e
+## em quem chega aos acampamentos.
+var spirit: Spirit
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
 var _dia := 0
 var _rei := UnitSystem.NENHUM
 var _noite: NightWatch
+var _combate: CombatSystem
 var _nucleo := Vector2.ZERO
 var _perfis: Dictionary
 var _obras: BuildSystem
@@ -47,17 +53,24 @@ func _init(
 	crown = SimFactory.crown()
 	conversion = SimFactory.conversion()
 	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
-	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
-	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"))
+	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"), SimFactory.storage(monarca))
+	if noite != null:
+		noite.dark.torch.storage = classes.storage  # os archotes vao no cinto (Q-153)
+		noite.names.away = realm.march.away  # quem marcha nao e chorado (Q-146)
+	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"), SimFactory.curve())
 	var curva := SimFactory.curve()
+	var niveis := curva.spirit_levels
+	spirit = Spirit.new(niveis[1], niveis[0], niveis[2])
 	succession = Succession.new(curva.heir_training_days, curva.heir_cost_per_day)
 	if combate != null:
 		combate.guard = classes
+	_combate = combate
 	_economia = economia
 	_moral = moral
 	if _economia != null:
 		_economia.crown = crown
 		_economia.conversion = conversion
+		conversion.jobs = _economia.jobs
 
 
 ## Passo 3: o dia novo abre as clareiras, cobra o que os impulsos de ontem
@@ -80,8 +93,14 @@ func prepare(
 	if _economia != null:
 		_economia.today = dia
 		_economia.greed = estado.greed if estado != null else 0
+		_economia.spirit = spirit.level(dia)
+	var perks: Dictionary = _noite.names.grants() if _noite != null else {}  # §76, Q-102
 	if _moral != null:
 		_moral.steadfast = crown.steadfast(dia)
+		_moral.spirit = spirit.level(dia)
+		_moral.perks = perks
+	if _combate != null:
+		_combate.perks = perks
 
 
 ## A intencao do §61 que a roda do rei enfileira: um impulso por dia (§15, §24).
@@ -93,52 +112,25 @@ func impulse(id: StringName, unidades: UnitSystem, rei: int) -> void:
 		EventBus.queue(&"coin_spent", [custo, &"impulse"])
 
 
-## Uma moeda do rei com outro alvo que o chao: uma arvore a consagrar (§74) ou
-## o nucleo, para a classe evoluir (§08, Q-114). Nos dois a moeda volta ao saco.
-func claims(
-	largada: Dictionary,
-	estado: GameState,
-	noite: NightWatch,
-	obras: BuildSystem,
-	unidades: UnitSystem,
-	rei: int
-) -> bool:
-	if noite.consecrate_at(estado, largada, rei) or noite.dark.buy_at(largada, obras):
-		return true  # uma arvore a consagrar, ou archotes numa fogueira (Q-029)
-	if not classes.can_evolve(estado.royal_seeds) or not _no_nucleo(largada, obras):
-		return false
-	classes.evolve(estado)
-	var i := unidades.index_of(rei)
-	if i != UnitSystem.NENHUM:
-		unidades.carried_coins[i] += int(largada[EventRelay.QUANTO])
-	return true
-
-
-func _no_nucleo(largada: Dictionary, obras: BuildSystem) -> bool:
-	var x: float = largada[EventRelay.ONDE]
-	for vaga in obras.slots:
-		if vaga.kind == BuildSlot.NUCLEO and vaga.band == int(largada[EventRelay.FAIXA]):
-			return absf(vaga.x - x) <= vaga.width * BuildSystem.METADE
-	return false
-
-
 ## Passo 4: quem caca, quem se forma para a noite (Q-128) e quem treina escrevem
 ## alvo por cima de seguir o rei — por esta ordem, e o treino ganha.
 func plan(unidades: UnitSystem, luz: bool) -> void:
 	hunting.plan(unidades, luz)
+	var lado := 0
 	if not luz and _noite != null:
 		var rot := _noite.rot
-		var lado := rot.state.side if rot.active() else rot.announced
+		lado = rot.state.side if rot.active() else rot.announced
 		var passo := SimFactory.curve().follow_spacing_px
 		Muster.plan(unidades, _perfis, _rei, _nucleo, lado, passo)
+	classes.escort(unidades, lado)
 	training.plan(unidades)
 
 
-## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio.
+## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio. A casa de
+## conversao ja nao troca de modo com a moeda: escolhe-se (Q-115, Verbs).
 func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> void:
 	EventRelay.training(training.absorb(moedas, obras, unidades))
-	if conversion.absorb(moedas, obras, unidades):
-		EventBus.queue(&"coin_spent", [1, &"conversion"])
+	conversion.staff(obras)  # a capacidade pede o cozinheiro la dentro (Q-145)
 
 
 ## Passos 6 e 8: a caca rende moeda; o treino corre com quem esta la dentro, e a
@@ -157,15 +149,14 @@ func resolve(
 	conversion.apply(unidades, conversion.active)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
 	var intro := relogio.elapsed >= HuntWatch.intro_at(relogio.day_seconds())
+	hunting.grow(delta, luz, HuntWatch.period(relogio.day_seconds()))
 	var caca := hunting.resolve(unidades, luz, intro)
 	var chao := hunting.bag(unidades, caca)
 	for d in caca:
 		if not d in chao:
 			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
 	var alcance := SimFactory.curve().recruit_notice_px
-	var entregue := (
-		hunting.deliver(unidades, rei, alcance) + classes.hand_over(unidades, rei, alcance)
-	)
+	var entregue := hunting.deliver(unidades, rei, alcance)  # o escudeiro guarda (Q-114)
 	if entregue > 0:
 		EventBus.queue(&"coin_collected", [rei, entregue])
 	return chao
@@ -180,6 +171,8 @@ func to_dict() -> Dictionary:
 		&"classes": classes.to_dict(),
 		&"upkeep": upkeep.to_dict(),
 		&"succession": succession.to_dict(),
+		&"realm": realm.to_dict(),
+		&"spirit": spirit.to_dict(),
 	}
 
 
@@ -191,6 +184,8 @@ func from_dict(mundo: Dictionary) -> void:
 	classes.from_dict(mundo.get(&"classes", {}))
 	upkeep.from_dict(mundo.get(&"upkeep", {}))
 	succession.from_dict(mundo.get(&"succession", {}))
+	realm.from_dict(mundo.get(&"realm", {}))
+	spirit.from_dict(mundo.get(&"spirit", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 
@@ -203,27 +198,21 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 		if treino > 0:
 			EventBus.queue(&"coin_spent", [treino, &"heir"])
 	if _economia != null:
-		for e in upkeep.dawn(unidades, _rei, _economia):
+		for e in upkeep.dawn(unidades, _rei, _economia, dia):
 			if e[UpkeepSystem.CHAVE] == UpkeepSystem.EV_PAGA:
 				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
 			else:
 				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
-	if camps.is_empty():
-		return
-	var curva := SimFactory.curve()
-	var vagabundo := Registry.entry(&"units", &"vagrant") as UnitData
-	var livres := 0
-	for i in unidades.count():
-		if unidades.owners[i] == RecruitSystem.SEM_DONO and unidades.alive(i):
-			livres += 1 if unidades.data_ids[i] == vagabundo.id else 0
-	for k in mini(curva.vagrants_per_dawn, maxi(0, curva.vagrant_camp_cap - livres)):
-		var x := camps[(dia + k) % camps.size()]
-		var novo := unidades.spawn(estado, vagabundo, RecruitSystem.SEM_DONO, x)
-		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])
+	SpiritWatch.dawn(spirit, dia, upkeep.arrears())  # o soldo em atraso pesa (Q-102)
+	Camps.dawn(camps, dia, unidades, estado, spirit.level(dia))
+	var fork := (
+		SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else _nucleo.x
+	)
+	realm.dawn(dia, unidades, estado, _rei, Vector2(_nucleo.x, fork))  # marcha e tributo (Q-103)
 
 
-## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce na casa do
-## herdeiro, sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
+## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce no castelo
+## (Q-137), sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
 func _coroar(unidades: UnitSystem, estado: GameState) -> void:
 	var i := unidades.index_of(_rei)
 	if _rei == UnitSystem.NENHUM or (i != UnitSystem.NENHUM and unidades.healths[i] > 0):

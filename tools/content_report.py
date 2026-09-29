@@ -37,7 +37,8 @@ def cell(text):
 COSMETIC = {"tags", "head_pool", "layer_slots", "shadow_width", "width_px", "icon", "subject", "landmark",
             "weapon_kind", "material_by_people", "food", "growth_stages", "obtain_ref", "expect_suffocation",
             "job_slots", "build_work", "teaches", "playable_class", "starting_units", "starting_buildings",
-            "atmosphere_preset", "parallax_preset", "resources", "wildlife", "creature_table", "per_segment_max"}
+            "atmosphere_preset", "parallax_preset", "resources", "wildlife", "creature_table", "per_segment_max",
+            "worn"}
 
 
 def collect():
@@ -97,10 +98,14 @@ def rot_md():
     om, rn = float(rot.get("opening_mass") or 0), int(rot.get("ramp_nights") or 0)
     pe = int(rot.get("peak_every") or 0)
     pm, cm = float(rot.get("peak_mass_mult") or 1), float(rot.get("calm_mass_mult") or 1)
+    mg, gf = float(rot.get("mass_growth") or 1), int(rot.get("growth_from_night") or 0)
 
     def calendario(d):
         # Q-017, Q-068: a noite 1 com os tres Rastejantes do §25 e a rampa ate a §74.
+        # Q-151: depois da rampa, a formula cresce a mg por noite.
         cheia = mb + md * d
+        if gf > 0 and d > gf and mg > 1:
+            return cheia * mg ** (d - gf)
         if rn <= 1 or om <= 0 or d >= rn:
             return cheia
         return om + (cheia - om) * (d - 1) / (rn - 1)
@@ -132,6 +137,8 @@ def rot_md():
                lo, hi, active, math.floor(active / hi), math.floor(active / lo)),
            "- As primeiras noites (Q-017, Q-068): a noite 1 tem massa %g — os três Rastejantes do §25 — e o "
            "calendário sobe em linha recta até à fórmula de cima, que manda por inteiro a partir da noite %d\n" % (om, rn),
+           "- Depois (Q-151): mais difícil exponencialmente — a fórmula multiplica-se por %g a cada noite "
+           "depois da noite %d\n" % (mg, gf),
            "- Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou\n",
            "- Lado duplo a partir do dia %s\n" % rot["two_sided_from_day"],
            "- Ritmo (Q-126): de %d em %d noites uma **funda** (massa × %g), e a seguinte **calma** (× %g). "

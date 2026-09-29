@@ -27,6 +27,8 @@ var carried_mass: float = 0.0
 ## O que o Lume ja comeu — moedas sacrificadas, galinhas roubadas (ADR 0034):
 ## "tudo aquilo que a Podridao consome alimenta-a". Nunca desce.
 var lume_fuel: float = 0.0
+## O Lume apagado (Q-156): o fim do ciclo pela luz — a Uniao do §79.
+var lume_out: bool = false
 
 var _perfil: RotProfile
 
@@ -95,6 +97,7 @@ func to_dict() -> Dictionary:
 		&"rot_ended": ended,
 		&"carried_mass": carried_mass,
 		&"lume_fuel": lume_fuel,
+		&"lume_out": lume_out,
 	}
 
 
@@ -106,6 +109,7 @@ func from_dict(d: Dictionary) -> void:
 	ended = d.get(&"rot_ended", ended)
 	carried_mass = d.get(&"carried_mass", carried_mass)
 	lume_fuel = d.get(&"lume_fuel", lume_fuel)
+	lume_out = d.get(&"lume_out", lume_out)
 
 
 ## O Lume come (ADR 0034). So sobe.

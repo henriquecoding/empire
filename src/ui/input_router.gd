@@ -172,14 +172,38 @@ func _andar(direccao: float) -> void:
 		return
 	SimLoop.units.set_target_x(
 		SimLoop.king_id,
-		clampf(SimLoop.units.xs[i] + direccao * SimLoop.world_width, 0.0, SimLoop.world_width)
+		clampf(
+			SimLoop.units.xs[i] + direccao * SimLoop.world_width,
+			-SimLoop.wild_px,
+			SimLoop.world_width + SimLoop.wild_px
+		)
 	)
 
 
+## Um impulso que nao se pode usar diz porque, no painel, e nao entra na fila
+## (Q-113): nada muda de estado e o saco fica igual.
 func _impulso(indice: int) -> void:
 	var ids := SimLoop.field.crown.ids()
-	if indice < ids.size():
+	if indice >= ids.size():
+		return
+	var porque := impulse_refusal(ids[indice])
+	if porque.is_empty():
 		SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": ids[indice]})
+	else:
+		get_tree().call_group(&"painel", &"say", porque)
+
+
+## A frase do que falta para usar o impulso `id` hoje, ou "" se pode.
+static func impulse_refusal(id: StringName) -> String:
+	var coroa := SimLoop.field.crown
+	var dia := ClockService.clock.day
+	var perfil := RulesFactory.impulse_cost_mult(SimLoop.state.greed)
+	var preco := coroa.price(id, dia, perfil)
+	var chave := coroa.refusal(id, dia, SimLoop.units, SimLoop.king_id, preco)
+	if chave == &"":
+		return ""
+	var nome := TranslationServer.translate(StringName("IMPULSE_" + String(id).to_upper()))
+	return TranslationServer.translate(chave).format({"name": nome, "cost": preco})
 
 
 ## O stick esquerdo de quem o estiver a usar: o que mais saiu do centro.

@@ -8,6 +8,7 @@ id = &"climber"
 display_key = "CLASS_CLIMBER"
 archetype = &"climber"
 base_unit = &"climber"
+storage = &"climbing_belt"
 evolve_seed_cost = 1
 evolve_condition = &"climbs"
 evolve_condition_value = 20

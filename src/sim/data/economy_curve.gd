@@ -183,3 +183,26 @@ extends Resource
 ## por isto, por cada vez que ele saiu: o reino cansa-se da mesma ordem.
 @export var impulse_repeat_mult: float = 1.0
 @export var impulse_repeat_days: int = 0
+
+## Q-144: dias de soldo que as tropas aguentam por pagar antes de desertarem, e
+## dias em que quem desertou nao volta a ser recrutado.
+@export var wage_grace_days: float = 1.0
+@export var deserter_rest_days: int = 2
+
+## A marcha e os vassalos (§13; Q-103, Q-146, Q-154).
+@export var march_party_caps: Dictionary = {}
+@export var march_min_party: int = 0
+@export var march_nights: int = 1
+@export var vassal_tribute: Vector2i = Vector2i()
+@export var vassal_seeds: Vector2i = Vector2i()
+@export var vassal_strength: float = 0.0
+@export var vassal_erosion_per_mass: float = 0.0
+@export var vassals_can_fall: bool = true
+
+## O animo do reino (Q-102): limiares, pesos e prazos das memorias, e o que mexe.
+@export var spirit_levels: PackedFloat32Array = PackedFloat32Array([35.0, 50.0, 65.0])
+@export var spirit_weights: Dictionary = {}
+@export var spirit_days: Dictionary = {}
+@export var spirit_flee_mult: Vector2 = Vector2.ONE
+@export var spirit_yield: float = 0.0
+@export var spirit_vagrants: int = 0

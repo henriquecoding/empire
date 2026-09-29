@@ -48,7 +48,7 @@ Script `src/sim/data/unit_data.gd` · layout `rows` · 24 linha(s) · §07 §08 
 | `drops_on_death` | Array[StringName] | Economia |  |
 | `band` | Band.Kind | Mundo |  |
 | `move_speed` | float | Mundo | px/s |
-| `scale_tier` | int | Mundo | 1, 2 ou 3 — §22 |
+| `scale_tier` | int | Mundo | 1 a 4 — §22; o rei e o 4 (Q-097) |
 | `can_change_band` | bool | Mundo |  |
 | `layer_slots` | Array[StringName] | Arte |  |
 | `shadow_width` | int | Arte | largura da elipse de contacto |
@@ -95,7 +95,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 27 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 28 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -183,6 +183,7 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `base_unit` | StringName |  | UnitData que se assume com o Verbo 2 (§08) |
 | `verb` | StringName |  | acao propria da classe (§24: arqueiro marca alvo) |
 | `fights` | bool |  |  |
+| `storage` | StringName |  |  |
 | `unlock` | StringName | Desbloqueio |  |
 | `unlock_seed_cost` | int | Desbloqueio |  |
 | `phase_count` | int | Fases |  |
@@ -193,6 +194,17 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `phase1_params` | Dictionary | Fases |  |
 | `phase2_ability` | StringName | Fases |  |
 | `phase2_params` | Dictionary | Fases |  |
+
+## `storages.csv` → `data/classes/storages/{id}.tres`
+
+Script `src/sim/data/storage_data.gd` · layout `rows` · 7 linha(s) · Q-153 — o armazenamento de cada personagem jogável (§08, §58)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | StringName |  |  |
+| `display_key` | String |  |  |
+| `holds` | Dictionary |  |  |
+| `worn` | StringName |  |  |
 
 ## `crafts.csv` → `data/crafts/{id}.tres`
 
@@ -272,7 +284,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 121 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -287,6 +299,8 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §
 | `upkeep_tier1_limit` | int | Manutencao — §06 |  |
 | `upkeep_tier1_rate` | float | Manutencao — §06 |  |
 | `upkeep_tier2_rate` | float | Manutencao — §06 |  |
+| `wage_grace_days` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `deserter_rest_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `trade_route_income` | float | Comercio, caca, saque — §06, §13, §25, §49 |  |
 | `trade_network_bonus` | float | Comercio, caca, saque — §06, §13, §25, §49 |  |
 | `trade_cart_cost` | int | Comercio, caca, saque — §06, §13, §25, §49 |  |
@@ -378,6 +392,20 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §
 | `chicken_theft_matter` | float | Auditoria de gameplay — AUD-04 |  |
 | `crossing_day` | int | Auditoria de gameplay — AUD-05 |  |
 | `crossing_party_px` | float | Auditoria de gameplay — AUD-05 |  |
+| `march_party_caps` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_min_party` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_nights` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_tribute` | Vector2i | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_seeds` | Vector2i | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_strength` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_erosion_per_mass` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassals_can_fall` | bool | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_levels` | PackedFloat32Array | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_weights` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_days` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_flee_mult` | Vector2 | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_yield` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_vagrants` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `king_run_mult` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
@@ -456,7 +484,6 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `calm_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 | `skipped_mass_carry` | float | A noite saltada — Q-040 |  |
 | `torch_cost` | int | O escuro e o archote — Q-029 |  |
-| `torch_max` | int | O escuro e o archote — Q-029 |  |
 | `torch_burn_s` | float | O escuro e o archote — Q-029 |  |
 | `torch_radius_px` | float | O escuro e o archote — Q-029 |  |
 | `dark_ambush_s` | float | O escuro e o archote — Q-029 |  |
@@ -467,6 +494,8 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `light_recoil_s` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `lume_mass_per_fuel` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `mine_lure_days` | int | Auditoria de gameplay — AUD-04 |  |
+| `mass_growth` | float | O Lume e as tuas luzes — ADR 0034 |  |
+| `growth_from_night` | int | O Lume e as tuas luzes — ADR 0034 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`
 
@@ -569,6 +598,8 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 3 linha(s) · §06 §
 | `biomes` | Array[StringName] |  |  |
 | `per_segment_max` | int |  |  |
 | `shadow_width` | int |  |  |
+| `burrows_per_region` | int |  |  |
+| `burrow_wither_px` | float |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 
@@ -713,5 +744,5 @@ Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24
 | `follow_seconds` | float |  |  |
 | `free_speed_px_s` | float |  |  |
 | `free_return_seconds` | float |  |  |
-| `edge_pan_px` | float |  |  |
+| `edge_pan_frac` | float |  |  |
 

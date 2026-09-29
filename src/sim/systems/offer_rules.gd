@@ -12,7 +12,15 @@ class_name OfferRules
 extends RefCounted
 
 const CHAVES: Array[StringName] = [
-	&"gate", &"treasury", &"named", &"marker", &"peoples", &"successor", &"debt", &"biome"
+	&"gate",
+	&"treasury",
+	&"named",
+	&"marker",
+	&"peoples",
+	&"successor",
+	&"debt",
+	&"biome",
+	&"sealed"
 ]
 const FORMA := "^([a-z_]+)(>=|<=|=)([A-Za-z0-9_]+)$"
 const SEPARADOR := ","

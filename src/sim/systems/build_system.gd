@@ -76,6 +76,9 @@ func absorb(
 		if vaga.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN]:
 			eventos.append_array(RepairWork.absorb(moedas, vaga, _moedas_na_obra(moedas, vaga)))
 			continue
+		if Ward.wants(vaga):  # o sino carrega-se com moedas (Q-100)
+			Ward.absorb(moedas, vaga, _moedas_na_obra(moedas, vaga))
+			continue
 		var custo := vaga.next_cost()
 		if custo == NENHUM or not _aceita(vaga) or not can_climb(vaga, estado, madeira):
 			continue
@@ -125,11 +128,12 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
 		if vaga.mending:
-			eventos.append_array(RepairWork.tick(vaga, delta * _presentes(unidades, vaga)))
+			var quem := RepairWork.hands(unidades, vaga)
+			eventos.append_array(RepairWork.tick(vaga, delta * quem))
 			continue
 		if vaga.state != BuildSlot.State.SCAFFOLD and vaga.state != BuildSlot.State.BUILDING:
 			continue
-		var maos := _presentes(unidades, vaga)
+		var maos := RepairWork.hands(unidades, vaga, &"")
 		if maos == 0:
 			continue
 		var trabalho := vaga.works[vaga.level]
@@ -142,6 +146,7 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 		vaga.progress = 0.0
 		vaga.state = BuildSlot.State.DONE
 		vaga.health = vaga.max_health()
+		vaga.charge = Ward.cap(vaga) if vaga.kind == Ward.SINO else vaga.charge
 		eventos.append({CHAVE: EV_COMPLETA, VAGA: vaga, NIVEL: vaga.level})
 	return eventos
 
@@ -233,18 +238,3 @@ func _moedas_na_obra(moedas: CoinSystem, vaga: BuildSlot) -> PackedInt32Array:
 		if CoinTarget.pays(moedas, c, vaga):
 			apanhadas.append(moedas.ids[c])
 	return apanhadas
-
-
-## Quantas maos estao em cima da obra. Qualquer tropa tua conta, e por igual: o
-## bonus do construtor e do §09, e o dossie nao lhe da numero (Q-064).
-func _presentes(unidades: UnitSystem, vaga: BuildSlot) -> int:
-	var maos := 0
-	var raio := vaga.width * METADE
-	for i in unidades.count():
-		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
-			continue
-		if unidades.bands[i] != int(vaga.band):
-			continue
-		if absf(unidades.xs[i] - vaga.x) <= raio:
-			maos += 1
-	return maos
