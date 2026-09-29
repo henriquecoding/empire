@@ -12,9 +12,9 @@ Começar como povo das árvores ou do porto muda a economia inicial, as defesas 
 
 Cada povo é um kit fechado: arquitetura + 1 tropa + 1 classe + 1 especialidade + 1 gramática de muralha. É uma unidade de produção que cabe numa fase do roadmap.
 
-## Os seis povos
+## Os seis povos, e mais dois
 
-Nomes provisórios. O que interessa é a lógica: terreno → arquitetura → economia → defesa → tropa única. Nunca inventes um povo sem preencher as cinco colunas.
+Nomes provisórios. A Geada e o Paul entraram pelo painel (ADR 0031) e ficam fora da campanha até à Q-152. O que interessa é a lógica: terreno → arquitetura → economia → defesa → tropa única. Nunca inventes um povo sem preencher as cinco colunas.
 
 | Povo | Terreno | Constrói | Economia forte | Defesa | Tropa única |
 | --- | --- | --- | --- | --- | --- |
@@ -24,6 +24,8 @@ Nomes provisórios. O que interessa é a lógica: terreno → arquitetura → ec
 | Horta (os legumes) | Várzea fértil | Celeiros, estufas, silos, espantalhos | Agricultura — o dobro de rendimento por canteiro | Números: tropas baratíssimas | Semeador — planta durante o combate |
 | Fornalha | Vulcânico | Fundições, chaminés, muros de escória | Metal e armas | Fogo permanente nas muralhas | Ferreiro de guerra — repara muros em combate |
 | Sob-Raiz | Subterrâneo | Túneis, câmaras, cogumelares | Fungos e segredos | Não tem muralhas — tem labirinto | Escavador — abre passagens entre faixas |
+| Geada (ADR 0031, fora da campanha) | Glaciar | Iglus, abrigos de pastor de pedra, paliçada de gelo | Frio que guarda — nada estraga | Chão gelado: a Podridão abranda | Guarda do Gelo — abranda quem golpeia |
+| Paul (ADR 0031, fora da campanha) | Pântano | Palheiros de colmo e casas sobre estacas | Caniço e enguias; as montarias recuperam ao dobro | Lodo que prende | Caçador do Caniçal — chega às libélulas |
 
 
 > **O que um povo é, tecnicamente**
