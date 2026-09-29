@@ -77,6 +77,23 @@ func test_quem_tira_abaixo_da_chance_nao_volta() -> void:
 	assert_int(todos.size()).is_equal(foram.size())
 
 
+## Quem fica no campo nao volta as colunas. Com a marcha acabada ja nao esta fora, e
+## quem tinha nome e chorado pelos titulos, como qualquer morto.
+func test_quem_fica_no_campo_e_chorado() -> void:
+	var unidades := UnitSystem.new()
+	var nomes := SimFactory.titles()
+	var a := unidades.spawn(GameState.new(), Registry.entry(&"units", &"archer"), 1, 10.0)
+	nomes.holders[&"the_one_who_stayed"] = a
+	var m := March.new()
+	nomes.away = m.away
+	m.start(unidades, PackedInt32Array([a]), 1, 11, 1)
+	var voltam := March.survivors(m.finish(), PackedFloat32Array([0.0]), _curva().march_loss_chance)
+	assert_array(voltam).is_empty()
+	nomes.at_dawn(12, unidades, SimFactory.job_board())
+	assert_bool(nomes.holders.has(&"the_one_who_stayed")).is_false()
+	assert_bool(nomes.mourning.has(&"the_one_who_stayed")).is_true()
+
+
 ## No jogo: cada marcha com o minimo de gente tira a sua parte, a fortaleza fica de pe
 ## com o que sobra, e cai na marcha em que a conta chega a zero — nem antes nem depois.
 func test_no_jogo_a_fortaleza_cai_quando_a_conta_chega_a_zero() -> void:
@@ -97,6 +114,10 @@ func test_no_jogo_a_fortaleza_cai_quando_a_conta_chega_a_zero() -> void:
 	assert_int(marchas).is_equal(precisa)
 	assert_bool(reino.vassals.has(Realm._povo(_regiao(alvo)))).is_true()
 	assert_array(_conquistas).is_equal([[alvo, Realm._povo(_regiao(alvo))]])
+	# Conquistada, a conta limpa-se: se a mancha comer o vassalo (Q-103), a fortaleza
+	# volta inteira e reconquista-se do principio.
+	assert_bool(reino.march.sieges.has(alvo)).is_false()
+	assert_int(_firmeza(reino.march, alvo)).is_equal(_cheia(alvo))
 
 
 ## As baixas saem do fluxo combat: a mesma semente, a mesma marcha, os mesmos que

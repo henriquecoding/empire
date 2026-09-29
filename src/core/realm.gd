@@ -125,6 +125,7 @@ func _voltar(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: 
 	march.siege(alvo, foram.size() * curva.march_siege_per_unit)
 	if march.firmness(alvo, curva.march_fortress_base, curva.march_fortress_per_region) > 0:
 		return  # a fortaleza aguenta: a proxima marcha comeca onde esta parou
+	march.sieges.erase(alvo)  # se a mancha comer o vassalo, reconquista-se do principio
 	var povo := _povo(estado.chapters.regions[alvo])
 	EventBus.queue(&"fortress_conquered", [alvo, povo])
 	var tributo := RngService.int_range(&"economy", curva.vassal_tribute.x, curva.vassal_tribute.y)
