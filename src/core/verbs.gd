@@ -120,7 +120,8 @@ static func spend(unidades: UnitSystem, unit_id: int, quanto: int) -> bool:
 ## vai para o saco delas e para o rei quando ele passa (Q-107, Q-111).
 static func sweep(unidades: UnitSystem, moedas: CoinSystem, king_id: int) -> void:
 	var guarda: Dictionary = SimLoop.hunting.bagged if SimLoop.hunting != null else {}
-	Gleaning.sweep(unidades, moedas, king_id, guarda)
+	var escudeiro := SimLoop.field.classes.squire if SimLoop.field != null else null
+	Gleaning.sweep(unidades, moedas, king_id, guarda, escudeiro)
 
 
 ## Apanhar a mao, pelo catalogo. `espaco` e o que falta encher no saco, e vem de

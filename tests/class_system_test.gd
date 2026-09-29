@@ -135,33 +135,46 @@ func test_o_save_leva_o_que_muda_o_proximo_golpe() -> void:
 	assert_int(copia.soak(unidades, tropa, 4)).is_equal(classes.soak(unidades, tropa, 4))
 
 
-func test_o_escudeiro_entrega_ao_rei_o_que_apanhou_quando_esta_perto() -> void:
+## Q-114 (o dono, 29/09/2026): o escudo do escudeiro leva os golpes dirigidos ao
+## rei e a ele; a espada golpeia primeiro quem ataca.
+func test_o_escudeiro_leva_o_golpe_do_rei_e_revida_com_a_espada() -> void:
 	var dados := Registry.entry(&"units", &"squire") as UnitData
-	var escudeiro := unidades.spawn(estado, dados, MEU, 1000.0 + 20.0)
-	var e := unidades.index_of(escudeiro)
-	var r := unidades.index_of(rei)
-	unidades.carried_coins[e] = 3
-	var antes := unidades.carried_coins[r]
-	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(3)
-	assert_int(unidades.carried_coins[e]).is_equal(0)
-	assert_int(unidades.carried_coins[r]).is_equal(antes + 3)
-	# Longe, fica com elas; e um arqueiro com moedas nao e escudeiro.
-	unidades.carried_coins[e] = 2
-	unidades.xs[e] = LONGE
-	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(0)
-	var arqueiro := unidades.index_of(_tropa(1000.0))
-	unidades.carried_coins[arqueiro] = 2
-	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(0)
+	var e := unidades.spawn(estado, dados, MEU, 1000.0 + 20.0)
+	classes.watch(unidades, rei, false)
+	assert_int(classes.squire_index(unidades)).is_equal(unidades.index_of(e))
+	assert_int(classes.soak(unidades, rei, 4)).is_equal(4)
+	classes.squire.arm(5)
+	assert_int(classes.soak(unidades, rei, 4)).is_equal(0)
+	assert_int(classes.soak(unidades, e, 4)).is_equal(0)
+	assert_int(classes.riposte()).is_equal(0)
+	classes.squire.take_loot(int(dados.ability_params[&"sword_coins"]))
+	classes.soak(unidades, rei, 4)
+	assert_int(classes.riposte()).is_equal(int(dados.ability_params[&"sword_damage"]))
+	assert_int(classes.riposte()).is_equal(0)
 
 
-func test_o_saco_cheio_do_rei_nao_recebe_mais() -> void:
+func test_o_escudeiro_vai_a_frente_com_escudo_e_atras_sem_ele() -> void:
 	var dados := Registry.entry(&"units", &"squire") as UnitData
-	var e := unidades.index_of(unidades.spawn(estado, dados, MEU, 1000.0))
+	var e := unidades.spawn(estado, dados, MEU, 1000.0)
+	classes.watch(unidades, rei, false)
 	var r := unidades.index_of(rei)
-	unidades.carried_coins[r] = unidades.coin_capacities[r] - 1
-	unidades.carried_coins[e] = 4
-	assert_int(classes.hand_over(unidades, rei, 64.0)).is_equal(1)
-	assert_int(unidades.carried_coins[e]).is_equal(3)
+	var perto := classes.squire.escort_px()
+	classes.escort(unidades, 1)
+	assert_float(unidades.target_xs[unidades.index_of(e)]).is_equal(unidades.xs[r] - perto)
+	classes.squire.arm(1)
+	classes.escort(unidades, 1)
+	assert_float(unidades.target_xs[unidades.index_of(e)]).is_equal(unidades.xs[r] + perto)
+
+
+func test_a_fase_2_investe_o_escudeiro_cavaleiro() -> void:
+	classes.nights_defended = _monarca().evolve_condition_value
+	estado.royal_seeds = _monarca().evolve_seed_cost
+	assert_bool(classes.squire.knight).is_false()
+	classes.evolve(estado)
+	assert_bool(classes.squire.knight).is_true()
+	var copia := ClassSystem.new(_monarca(), SimFactory.by_id(&"units"))
+	copia.from_dict(classes.to_dict())
+	assert_bool(copia.squire.knight).is_true()
 
 
 func test_so_uma_classe_de_arco_marca_alvos() -> void:

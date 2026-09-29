@@ -26,6 +26,8 @@ const COLHE := &"collects_coins"
 
 var phase: int = PRIMEIRA
 var nights_defended: int = 0
+## O escudeiro do rei: escudo, espada e investidura (Q-114).
+var squire: Squire
 
 var _dados: ClassData
 ## UnitData por id: quem tem a tag de apanhar moedas e o escudeiro.
@@ -34,11 +36,15 @@ var _rei: int = NENHUM
 var _defendida := false
 ## A fraccao de dano que a aura ja poupou a cada tropa e ainda nao fez um ponto.
 var _poupado: Dictionary = {}
+## O golpe que o escudeiro deu primeiro, a espera de quem o aplique (CombatSystem).
+var _revide := 0
 
 
 func _init(dados: ClassData, tropas: Dictionary = {}) -> void:
 	_dados = dados
 	_tropas = tropas
+	var escudeiro: UnitData = tropas.get(&"squire")
+	squire = Squire.new(escudeiro.ability_params if escudeiro != null else {})
 
 
 ## A defesa que `i` recebe da classe agora: a da fase em curso se a tropa e tua e
@@ -55,8 +61,15 @@ func defense_of(unidades: UnitSystem, i: int) -> float:
 	return float(params.get(DEFESA, 0.0))
 
 
-## O dano que passa de `quanto` num golpe em `unit_id`, depois da defesa.
+## O dano que passa de `quanto` num golpe em `unit_id`, depois do escudeiro e da
+## defesa. Um golpe no rei ou no escudeiro leva primeiro a espada dele (o revide) e
+## depois o escudo (Q-114).
 func soak(unidades: UnitSystem, unit_id: int, quanto: int) -> int:
+	var e := squire_index(unidades)
+	if e != NENHUM and (unit_id == _rei or unidades.ids[e] == unit_id):
+		_revide += squire.strike()
+		if squire.block(quanto):
+			return 0
 	var defesa := defense_of(unidades, unidades.index_of(unit_id))
 	if defesa <= 0.0:
 		return quanto
@@ -90,28 +103,37 @@ func dawn() -> void:
 	_defendida = false
 
 
-## "Escudeiro acompanha e apanha moedas caidas" (§08): quem tem a tag de apanhar
-## e esta a `alcance` do rei, na faixa dele, entrega-lhe o que leva, ate o saco
-## do rei encher — como o cacador (Q-111). Devolve quanto entregou (Q-114).
-func hand_over(unidades: UnitSystem, rei: int, alcance: float) -> int:
-	var r := unidades.index_of(rei)
+## O golpe que o escudeiro deu primeiro, e que o combate aplica a quem atacou.
+func riposte() -> int:
+	var dano := _revide
+	_revide = 0
+	return dano
+
+
+## O escudeiro do rei vivo, na faixa dele, ou NENHUM.
+func squire_index(unidades: UnitSystem) -> int:
+	var r := unidades.index_of(_rei)
 	if r == NENHUM or not unidades.alive(r):
-		return 0
-	var espaco := unidades.coin_capacities[r] - unidades.carried_coins[r]
-	var entregue := 0
+		return NENHUM
 	for i in unidades.count():
-		if espaco <= 0:
-			break
-		if i == r or not _escudeiro(unidades, i, r):
-			continue
-		if absf(unidades.xs[i] - unidades.xs[r]) > alcance:
-			continue
-		var n := mini(unidades.carried_coins[i], espaco)
-		unidades.carried_coins[i] -= n
-		unidades.carried_coins[r] += n
-		espaco -= n
-		entregue += n
-	return entregue
+		if i != r and _escudeiro(unidades, i, r):
+			return i
+	return NENHUM
+
+
+## Passo 4: o escudeiro fica a frente do rei com escudo, e atras sem ele. A frente
+## e `lado` (o lado da noite), ou, sem ele, para onde o rei anda; parado, fica onde
+## esta (Q-114).
+func escort(unidades: UnitSystem, lado: int) -> void:
+	var e := squire_index(unidades)
+	if e == NENHUM:
+		return
+	var r := unidades.index_of(_rei)
+	var para := signf(unidades.target_xs[r] - unidades.xs[r]) if lado == 0 else float(lado)
+	if is_zero_approx(para):
+		return
+	var frente := para if squire.shielded() else -para
+	unidades.set_target_x(unidades.ids[e], unidades.xs[r] + frente * squire.escort_px())
 
 
 ## Se ha fase seguinte, a condicao de feito esta cumprida e `sementes` chegam.
@@ -134,7 +156,13 @@ func evolve(estado: GameState) -> bool:
 		return false
 	estado.royal_seeds -= _dados.evolve_seed_cost
 	phase += 1
+	_investir()
 	return true
+
+
+## A investidura: com a fase que o diz, o escudeiro passa a cavaleiro (Q-114).
+func _investir() -> void:
+	squire.knight = phase > PRIMEIRA and int(_params().get(&"squire_becomes_combatant", 0)) > 0
 
 
 ## Tudo o que muda o proximo golpe vai no save — a fraccao guardada e o rei
@@ -146,6 +174,7 @@ func to_dict() -> Dictionary:
 		&"defended": _defendida,
 		&"king": _rei,
 		&"soaked": _poupado.duplicate(),
+		&"squire": squire.to_dict(),
 	}
 
 
@@ -155,6 +184,8 @@ func from_dict(guardado: Dictionary) -> void:
 	_defendida = guardado.get(&"defended", false)
 	_rei = guardado.get(&"king", NENHUM)
 	_poupado = guardado.get(&"soaked", {}).duplicate()
+	squire.from_dict(guardado.get(&"squire", {}))
+	_investir()
 
 
 func _params() -> Dictionary:

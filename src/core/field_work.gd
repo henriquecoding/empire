@@ -126,11 +126,13 @@ func _no_nucleo(largada: Dictionary, obras: BuildSystem) -> bool:
 ## alvo por cima de seguir o rei — por esta ordem, e o treino ganha.
 func plan(unidades: UnitSystem, luz: bool) -> void:
 	hunting.plan(unidades, luz)
+	var lado := 0
 	if not luz and _noite != null:
 		var rot := _noite.rot
-		var lado := rot.state.side if rot.active() else rot.announced
+		lado = rot.state.side if rot.active() else rot.announced
 		var passo := SimFactory.curve().follow_spacing_px
 		Muster.plan(unidades, _perfis, _rei, _nucleo, lado, passo)
+	classes.escort(unidades, lado)
 	training.plan(unidades)
 
 
@@ -163,9 +165,7 @@ func resolve(
 		if not d in chao:
 			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
 	var alcance := SimFactory.curve().recruit_notice_px
-	var entregue := (
-		hunting.deliver(unidades, rei, alcance) + classes.hand_over(unidades, rei, alcance)
-	)
+	var entregue := hunting.deliver(unidades, rei, alcance)  # o escudeiro guarda (Q-114)
 	if entregue > 0:
 		EventBus.queue(&"coin_collected", [rei, entregue])
 	return chao

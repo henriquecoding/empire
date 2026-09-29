@@ -71,7 +71,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 				)
 				TitleView.draw_on(canvas, box, id, light)
 				if units.alive(i):
-					Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
+					_saco(canvas, box, units, i)
 			continue
 		var hit := time < float(_hit_until.get(id, 0.0))
 		var kind := ActorAction.of(units.states[i] as UnitFsm.State, moving, hit)
@@ -134,7 +134,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 				var cabeca := Vector2(box.get_center().x, box.position.y + HAT_DROP)
 				ActorArt.draw_hat(canvas, cabeca, box, units, i, box.size.y / HAT_SCALE)
 			TitleView.draw_on(canvas, box, item.id, light)
-			Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
+			_saco(canvas, box, units, i)
 			Gauge.health(
 				canvas,
 				_art.box(item.profile, item.foot),
@@ -164,3 +164,13 @@ func _frame(
 	if shown == ActorAction.Kind.IDLE:
 		elapsed = time + float(_phase[id])
 	return _art.frame_at(profile, elapsed, ActorAction.TAGS[shown], ActorAction.loops(shown))
+
+
+## O saco de cada um; o do escudeiro e o escudo, que e o que ele guarda (Q-114).
+func _saco(canvas: CanvasItem, box: Rect2, units: UnitSystem, i: int) -> void:
+	var escudeiro := SimLoop.field.classes.squire if SimLoop.field != null else null
+	var dados: UnitData = _data.get(units.data_ids[i])
+	if escudeiro != null and dados != null and dados.tags.has(&"collects_coins"):
+		Gauge.purse(canvas, box, escudeiro.shield, escudeiro.shield_cap())
+		return
+	Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
