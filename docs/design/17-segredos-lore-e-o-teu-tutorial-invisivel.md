@@ -12,6 +12,8 @@ O Kingdom pode dispensar tutorial porque tem cinco mecânicas. Tu tens quarenta 
 | Semente Anciã | Biomas caóticos | Desbloqueia uma classe ou montaria rara | Recompensa risco elevado |
 
 
+O que a estátua ensina só existe depois de achada (Q-016). Cada estátua guarda uma coisa — uma obra ou um gesto — e até o rei lá ir em pessoa essa coisa não existe no teu jogo: a obra não aceita moeda, o gesto não faz nada. A do Ferreiro, perto do castelo, guarda a Forja; a da Oferenda, fora das muralhas a leste, o sacrifício de moedas à Podridão; a do Mineiro, fora das muralhas a oeste, a escora que fecha a passagem. O que se acha é do império e passa ao herdeiro e à região seguinte. Nada do núcleo do jogo — os dois verbos, as muralhas, recrutar — fica atrás de uma estátua.
+
 > **Revisto na Parte XIII**
 >
 > A estrutura de quatro atos, a regra de ouro e os dois epílogos mantêm-se; o que está por baixo deles foi reescrito na §79, e os biomas caóticos passaram a Capítulos na §77.

@@ -2,7 +2,7 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-A tua maior vantagem competitiva escondida: o humor está nas caras e a sinalética é entalhada em madeira. Um jogo com cem palavras localiza-se por 200 €. A maioria dos indies gasta entre 5 000 € e 30 000 € nisto.
+A tua maior vantagem competitiva escondida: o humor está nas caras e a sinalética é entalhada em madeira. Um jogo que precisa de mil e trezentas palavras localiza-se por uma fatura de três dígitos baixos. A maioria dos indies gasta entre 5 000 € e 30 000 € nisto. As mil e trezentas são as da Parte XIII (§75): doze frases de oferta, nove títulos, dez leis de capítulo e doze diários.
 
 | Idioma | % utilizadores Steam | Quando | Nota |
 | --- | --- | --- | --- |

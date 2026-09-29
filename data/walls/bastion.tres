@@ -15,7 +15,9 @@ material_by_people = {
 &"enramados": &"bastion",
 &"fenda": &"bastion",
 &"fornalha": &"bastion",
+&"geada": &"bastion",
 &"horta": &"bastion",
+&"paul": &"bastion",
 &"portuarios": &"bastion"
 }
 max_health_a = 450

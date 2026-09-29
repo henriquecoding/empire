@@ -9,6 +9,7 @@ display_key = "BUILDING_FISHERY"
 cost = 6
 material = &"fish"
 yield_per_day = 3.0
+spoil_per_day = 1.0
 requires_biome_feature = &"water"
 job_slots = 1
 max_health = 48

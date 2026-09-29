@@ -48,6 +48,8 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `sower` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `war_smith` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `digger` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `ice_warden` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `reed_stalker` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 
 ## Obras
 
@@ -79,6 +81,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `lighthouse` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `consecrated_altar` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `passage_seal` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `campfire` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 

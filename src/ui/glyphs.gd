@@ -58,11 +58,14 @@ static func pad_of(nome: String) -> Device:
 	return Device.XBOX
 
 
-## O rodape inteiro: "BOTAO gesto · BOTAO gesto · ...".
-static func hint(dispositivo: Device) -> String:
+## O rodape inteiro: "BOTAO gesto · BOTAO gesto · ...". Sem `marca` o gatilho
+## direito nao aparece: so uma classe de arco marca alvos (Q-086).
+static func hint(dispositivo: Device, marca: bool = true) -> String:
 	var partes := PackedStringArray()
 	var botoes: Array = BOTOES[dispositivo]
 	for i in ACCOES.size():
+		if ACCOES[i] == &"HINT_MARK" and not marca:
+			continue
 		partes.append("%s %s" % [_nome(botoes[i]), TranslationServer.translate(ACCOES[i])])
 	return SEPARADOR.join(partes)
 

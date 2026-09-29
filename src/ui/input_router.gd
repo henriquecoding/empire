@@ -114,7 +114,14 @@ func _process(delta: float) -> void:
 	var correr := Input.is_action_pressed(&"king_run")
 	SimLoop.units.piloted_pace = _curva_lida().king_run_mult if correr else 1.0
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
-	if Input.is_action_pressed(&"king_wheel"):
+	# E o tempo abranda, se o jogador nao o desligou (Q-034).
+	var roda := Input.is_action_pressed(&"king_wheel")
+	Pace.scale = (
+		_relogio_lido().wheel_time_scale
+		if roda and Preferences.on(Preferences.WHEEL_SLOWDOWN)
+		else 1.0
+	)
+	if roda:
 		var segmento := wheel_segment(_stick(), SimLoop.field.crown.ids().size())
 		pointed = segmento  # ao centro nao aponta nada: largar Y ai cancela
 		_andar(0.0)
@@ -142,6 +149,10 @@ func _process(delta: float) -> void:
 ## ou seja, antes do Registry.load_all() que ela chama.
 func _intervalo() -> float:
 	return _curva_lida().coin_drop_repeat_s
+
+
+func _relogio_lido() -> ClockData:
+	return Registry.entry(&"economy", &"clock") as ClockData
 
 
 func _curva_lida() -> EconomyCurve:

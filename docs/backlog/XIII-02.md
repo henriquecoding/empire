@@ -2,7 +2,7 @@
 
 ```text
 Porque    Uma hora de código que transforma a curva de dificuldade de reta em consequência.
-Spec      docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md
+Spec      docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md
 Depende   F1-08
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     O teste D-01 passa: 400 ao dia 20 em campo limpo, 466 com três árvores, 645 com cinco e três nomeadas

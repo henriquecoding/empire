@@ -3,6 +3,9 @@
 #   "O vagabundo segue-te. Largas uma moeda perto dele. Ele apanha-a e ganha um
 #    chapeu. Nada mais e preciso dizer."   (§25, §83)
 #
+# Com a decisao do dono (Q-063): como no Kingdom: New Lands, o recrutado nao segue
+# o rei — vai para o nucleo e espera la por trabalho.
+#
 # Corre a sequencia inteira pelo SimLoop, ao passo fixo, como o jogo a corre. As
 # pecas em separado estao no tests/recruit_system_test.gd.
 extends GdUnitTestSuite
@@ -83,13 +86,12 @@ func test_o_minuto_0_20_do_25_funciona() -> void:
 	assert_array(gasto).is_equal([[_vagabundo().recruit_cost, &"recruit"]])
 	EventBus.coin_spent.disconnect(ouvinte)
 
-	# "O vagabundo segue-te." Ando para longe; ele vem atras e para a distancia
-	# da fila, e nao em cima de mim.
+	# E agora e como no Kingdom: New Lands (Q-063): ele nao anda atras de mim.
+	# Ando para longe, e ele vai para o nucleo e espera la por trabalho.
 	SimLoop.units.xs[SimLoop.units.index_of(eu)] = 400.0
 	_correr(30.0)
 
-	var curva := _curva()
-	assert_float(SimLoop.units.xs[i]).is_equal(400.0 - curva.follow_distance_px)
+	assert_float(SimLoop.units.xs[i]).is_equal(SimLoop.core_x)
 
 
 func test_o_rei_larga_onde_esta_e_a_moeda_nao_lhe_volta_ao_saco() -> void:

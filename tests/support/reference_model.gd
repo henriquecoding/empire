@@ -50,6 +50,13 @@ static func rot_mass(
 	refusals := 0
 ) -> float:
 	var base := r.mass_base + r.mass_per_day * day + r.mass_per_fortress * fortresses
+	if r.ramp_nights > 1 and r.opening_mass > 0.0 and day < r.ramp_nights:
+		# As primeiras noites em rampa (Q-017, Q-068), escritas de novo e nao lidas
+		# do RotProfile: um modelo de referencia que chama o codigo que confere
+		# confere-se a si proprio.
+		var cheia := r.mass_base + r.mass_per_day * day
+		var t := float(maxi(day, 1) - 1) / float(r.ramp_nights - 1)
+		base += r.opening_mass + (cheia - r.opening_mass) * t - cheia
 	var trees := (
 		r.mass_per_amargueiro * amargueiros + r.mass_per_named_amargueiro * named_amargueiros
 	)

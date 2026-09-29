@@ -26,10 +26,11 @@ Script `src/sim/data/clock_data.gd` · layout `rows` · 1 linha(s) · §69: o pr
 | `phase_tint_val` | PackedFloat32Array | v6 · a cor de cada fase (§80, ADR 0011) |  |
 | `night_value_floor` | float | v6 · a cor de cada fase (§80, ADR 0011) |  |
 | `dawn_sweep_px_s` | float | §24 · o amanhecer |  |
+| `wheel_time_scale` | float | §24 · a roda do rei |  |
 
 ## `units.csv` → `data/units/{id}.tres`
 
-Script `src/sim/data/unit_data.gd` · layout `rows` · 22 linha(s) · §07 §08 §09 §44
+Script `src/sim/data/unit_data.gd` · layout `rows` · 24 linha(s) · §07 §08 §09 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -94,7 +95,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 26 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 27 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -105,6 +106,7 @@ Script `src/sim/data/building_data.gd` · layout `rows` · 26 linha(s) · §06 �
 | `cost` | int | Economia |  |
 | `material` | StringName | Economia | materia produzida: grain, fish, animal, wood, ore |
 | `yield_per_day` | float | Economia |  |
+| `spoil_per_day` | float | Economia |  |
 | `requires_biome_feature` | StringName | Economia | water, forest, rock (§06, §21) |
 | `destroyed_by_rot_trail` | bool | Economia | §49: plantacoes destruidas, o resto para |
 | `job_slots` | int | Economia | postos que publica (§20) |
@@ -143,7 +145,7 @@ Script `src/sim/data/wall_data.gd` · layout `rows` · 5 linha(s) · §10 §44
 
 ## `peoples.csv` → `data/peoples/{id}.tres`
 
-Script `src/sim/data/people_data.gd` · layout `rows` · 6 linha(s) · §04 §22 §44
+Script `src/sim/data/people_data.gd` · layout `rows` · 8 linha(s) · §04 §22 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -229,7 +231,7 @@ Script `src/sim/data/job_data.gd` · layout `rows` · 14 linha(s) · §20 §29 �
 
 ## `biomes.csv` → `data/biomes/{id}.tres`
 
-Script `src/sim/data/biome_data.gd` · layout `rows` · 6 linha(s) · §11 §21 §44
+Script `src/sim/data/biome_data.gd` · layout `rows` · 8 linha(s) · §11 §21 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -243,6 +245,7 @@ Script `src/sim/data/biome_data.gd` · layout `rows` · 6 linha(s) · §11 §21 
 | `region_screens` | Vector2i |  | §21 |
 | `music_profile` | StringName |  |  |
 | `wildlife` | Array[StringName] |  | WildlifeData ids |
+| `in_campaign` | bool |  |  |
 
 ## `segments.csv` → `data/segments/{id}.tres`
 
@@ -269,7 +272,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 103 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -376,6 +379,8 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 103 linha(s) · §06 §
 | `crossing_day` | int | Auditoria de gameplay — AUD-05 |  |
 | `crossing_party_px` | float | Auditoria de gameplay — AUD-05 |  |
 | `king_run_mult` | float | Andar — correr |  |
+| `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
@@ -402,6 +407,8 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `mass_base` | float |  |  |
 | `mass_per_day` | float |  |  |
 | `mass_per_fortress` | float |  |  |
+| `opening_mass` | float | As primeiras noites — Q-017, Q-068 |  |
+| `ramp_nights` | int | As primeiras noites — Q-017, Q-068 |  |
 | `summon_interval` | Vector2 |  |  |
 | `consecrated_slowdown` | float |  | -40% em terreno consagrado |
 | `trail_move_penalty` | float |  |  |
@@ -423,6 +430,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `lantern_tint` | String | v6 · a candeia |  |
 | `lantern_tint_mid` | String | v6 · a candeia |  |
 | `lantern_tint_edge` | String | v6 · a candeia |  |
+| `fire_tint` | String | v6 · a candeia |  |
+| `fire_tint_mid` | String | v6 · a candeia |  |
+| `fire_tint_edge` | String | v6 · a candeia |  |
 | `lantern_dither_px` | float | v6 · a candeia |  |
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
@@ -444,6 +454,18 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `peak_every` | int | Auditoria de gameplay — AUD-03 |  |
 | `peak_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 | `calm_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
+| `skipped_mass_carry` | float | A noite saltada — Q-040 |  |
+| `torch_cost` | int | O escuro e o archote — Q-029 |  |
+| `torch_max` | int | O escuro e o archote — Q-029 |  |
+| `torch_burn_s` | float | O escuro e o archote — Q-029 |  |
+| `torch_radius_px` | float | O escuro e o archote — Q-029 |  |
+| `dark_ambush_s` | float | O escuro e o archote — Q-029 |  |
+| `dark_ambush_px` | float | O escuro e o archote — Q-029 |  |
+| `dark_ambush_max` | int | O escuro e o archote — Q-029 |  |
+| `dark_creature` | StringName | O escuro e o archote — Q-029 |  |
+| `torch_repel_mass` | int | O escuro e o archote — Q-029 |  |
+| `light_recoil_s` | float | O Lume e as tuas luzes — ADR 0034 |  |
+| `lume_mass_per_fuel` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `mine_lure_days` | int | Auditoria de gameplay — AUD-04 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`
@@ -502,7 +524,7 @@ Script `src/sim/data/greed_profile.gd` · layout `rows` · 4 linha(s) · §15 §
 
 ## `secrets.csv` → `data/lore/secrets/{id}.tres`
 
-Script `src/sim/data/secret_data.gd` · layout `rows` · 4 linha(s) · §17
+Script `src/sim/data/secret_data.gd` · layout `rows` · 6 linha(s) · §17
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -510,6 +532,7 @@ Script `src/sim/data/secret_data.gd` · layout `rows` · 4 linha(s) · §17
 | `display_key` | String |  |  |
 | `band` | Band.Kind |  |  |
 | `location` | StringName |  | behind_passage, under_vegetation, fortress, chaotic_biome |
+| `place_px` | float |  |  |
 | `reward_seeds` | int |  |  |
 | `reward` | StringName |  | lore_fragment, teach_mechanic, journal, unlock |
 | `teaches` | StringName |  | mecanica ensinada (estatuas) |

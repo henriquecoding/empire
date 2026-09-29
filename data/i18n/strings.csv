@@ -19,6 +19,8 @@ UNIT_CANOPY_ARCHER,Arqueiro de Copa,Canopy Archer,nome de conteúdo — unit,24,
 UNIT_BARGE,Barcaça,Barge,nome de conteúdo — unit,24,
 UNIT_COUNTERWEIGHT_RAM,Aríete de Contrapeso,Counterweight Ram,nome de conteúdo — unit,24,
 UNIT_SOWER,Semeador,Sower,nome de conteúdo — unit,24,
+UNIT_ICE_WARDEN,Guarda do Gelo,Ice Warden,nome de conteúdo — unit (Q-010),24,
+UNIT_REED_STALKER,Caçador do Caniçal,Reed Stalker,nome de conteúdo — unit (Q-013),24,
 UNIT_WAR_SMITH,Ferreiro de Guerra,War Smith,nome de conteúdo — unit,24,
 UNIT_DIGGER,Escavador,Digger,nome de conteúdo — unit,24,
 CREATURE_CRAWLER,Rastejante,Crawler,nome de conteúdo — creature,24,
@@ -49,6 +51,8 @@ BUILDING_SMELTER,Fundição,Smelter,nome de conteúdo — building,24,
 BUILDING_ARCHER_TOWER,Torre de Arqueiros,Archer Tower,nome de conteúdo — building,24,
 BUILDING_HIGH_TOWER,Torre Alta,High Tower,nome de conteúdo — building,24,
 BUILDING_FIRE_BARREL,Barril de Fogo,Fire Barrel,nome de conteúdo — building,24,
+BUILDING_CAMPFIRE,Fogueira,Campfire,nome de conteúdo — building (Q-029),24,
+HUD_TORCHES,ARCHOTES {n},TORCHES {n},painel do jogo: archotes no saco do rei (Q-029),16,
 BUILDING_ROOT_MOAT,Fosso de Raízes,Root Moat,nome de conteúdo — building,24,
 BUILDING_LIGHTHOUSE,Farol,Lighthouse,nome de conteúdo — building,24,
 BUILDING_CONSECRATED_ALTAR,Altar Consagrado,Consecrated Altar,nome de conteúdo — building,24,
@@ -87,6 +91,8 @@ BIOME_ANCIENT_FOREST,Floresta Antiga,Ancient Forest,nome de conteúdo — biome,
 BIOME_COAST,Costa,Coast,nome de conteúdo — biome,24,
 BIOME_CANYON,Desfiladeiro,Canyon,nome de conteúdo — biome,24,
 BIOME_FLOODPLAIN,Várzea,Floodplain,nome de conteúdo — biome,24,
+BIOME_GLACIER,Glaciar,Glacier,nome de conteúdo — biome (Q-010),24,
+BIOME_MARSH,Paul,Marsh,nome de conteúdo — biome (Q-013),24,
 BIOME_VOLCANIC,Terras Vulcânicas,Volcanic Lands,nome de conteúdo — biome,24,
 BIOME_SUBTERRANEAN,Subterrâneo,Underground,nome de conteúdo — biome,24,
 MOUNT_ON_FOOT,A pé,On Foot,nome de conteúdo — mount,24,
@@ -109,6 +115,8 @@ SECRET_ROOT_CHAMBER,Câmara de Raiz,Root Chamber,nome de conteúdo — secret,24
 SECRET_BURIED_STATUE,Estátua Enterrada,Buried Statue,nome de conteúdo — secret,24,
 SECRET_CAMPAIGN_JOURNAL,Diário de Campanha,Campaign Journal,nome de conteúdo — secret,24,
 SECRET_ANCIENT_SEED,Semente Anciã,Ancient Seed,nome de conteúdo — secret,24,
+SECRET_STATUE_OFFERING,Estátua da Oferenda,Statue of the Offering,nome de conteúdo — secret (Q-016),24,
+SECRET_STATUE_SEAL,Estátua do Mineiro,Statue of the Miner,nome de conteúdo — secret (Q-016),24,
 WILDLIFE_RABBIT,Coelho,Rabbit,nome de conteúdo — wildlife,24,
 WILDLIFE_DEER,Veado,Deer,nome de conteúdo — wildlife,24,
 WILDLIFE_BOAR,Javali,Boar,nome de conteúdo — wildlife,24,
@@ -123,6 +131,8 @@ PEOPLE_ENRAMADOS,Enramados,Enramados,nome de povo,16,Nome provisório (§04). No
 PEOPLE_PORTUARIOS,Portuários,Portuários,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_FENDA,Fenda,Fenda,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_HORTA,Horta,Horta,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_GEADA,Geada,Geada,nome de povo (Q-010),16,Nome provisório: o povo do gelo. Fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_PAUL,Paul,Paul,nome de povo (Q-013),16,Nome provisório: o povo do pântano (paul = terra alagada). Fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_FORNALHA,Fornalha,Fornalha,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_SOBRAIZ,Sob-Raiz,Sob-Raiz,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 JOURNAL_01_TITLE,Lista dos nichos de estrada,The roadside shrine list,título de diário,32,Ato 1 (§79). Seis aldeias pagavam para o mesmo fundo.
@@ -401,6 +411,7 @@ OPT_DEUTERANOPIA,Deuteranopia,Deuteranopia,modo para daltonismo (§26): verde,16
 OPT_TRITANOPIA,Tritanopia,Tritanopia,modo para daltonismo (§26): azul,16,GB-26
 OPT_CONTRAST,Contraste,Contrast,acessibilidade,24,
 OPT_CAPTIONS,Legendas de sons,Sound Captions,acessibilidade (§26),24,
+OPT_WHEEL_SLOWDOWN,Roda abranda o tempo,Wheel slows time,a roda do rei abranda o tempo a metade (§24; Q-034),24,Desligável: com isto desligado a roda não mexe no tempo.
 OPT_TEXT_SIZE,Tamanho do texto,Text Size,acessibilidade,24,
 OPT_REMAP,Remapear comandos,Remap Controls,controlos,28,
 GAME_CODENAME,EMPIRE,EMPIRE,título no HUD do greybox,16,Codinome (NB-01): substitui-se quando houver nome.
@@ -496,7 +507,7 @@ CHAPTER_BLIND_FURROW,O Sulco Cego,The Blind Furrow,nome de capítulo — §77,40
 CHAPTER_LAW_BLIND_FURROW,"Não há luz. Só o Cavaleiro Selado se orienta, porque já não usava os olhos. Qualquer luz que leves revela 60 px à tua volta e acrescenta +30 à massa desta noite — o que te vê também vê a luz.","There is no light. Only the Sealed Knight finds his way, because he had stopped using his eyes. Any light you carry reveals 60 px around you and adds +30 to tonight's mass — whatever sees you sees the light too.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
 CHAPTER_WHO_BLIND_FURROW,Pessoas a conversar a trinta metros. Nunca se chega a trinta metros.,People talking thirty metres away. You never get to thirty metres.,o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
 CHAPTER_LIT_OVEN,O Forno Aceso,The Lit Oven,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
-CHAPTER_LAW_LIT_OVEN,"Qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, cria raiz onde estiver — dentro das tuas muralhas inclusive.",Any troop that sleeps here heals completely and leaves with an ember in its chest. It burns for six days. On the seventh it takes root wherever it stands — inside your walls included.,"a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
+CHAPTER_LAW_LIT_OVEN,"Qualquer tropa que durma aqui cura por completo e sai com uma brasa no peito. Arde seis dias. Ao sétimo, se estiver fora das tuas muralhas, cria raiz onde estiver.","Any troop that sleeps here heals completely and leaves with an ember in its chest. It burns for six days. On the seventh, if it stands outside your walls, it takes root there.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."
 CHAPTER_WHO_LIT_OVEN,"Um padeiro que não tem cara, porque a cara é a boca do forno.","A baker with no face, because the face is the mouth of the oven.",o habitante — §77,,Regra 2 da §77: cumpre a lei e nunca a justifica.
 CHAPTER_BONE_MARKET,O Mercado dos Ossos,The Bone Market,nome de capítulo — §77,40,"Nome provisório (§04, §36)."
 CHAPTER_LAW_BONE_MARKET,"Mercenários a metade do preço, dívida ao dobro do juro. Não se sai da praça com dívida por pagar — o portão não abre.","Mercenaries at half price, debt at twice the interest. No one leaves the square with debt unpaid — the gate does not open.","a lei do capítulo, numa frase — §77",,"Regra 1 da §77: uma lei. Se precisar de duas, são dois capítulos."

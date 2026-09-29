@@ -115,6 +115,13 @@ func hand_over(unidades: UnitSystem, rei: int, alcance: float) -> int:
 
 
 ## Se ha fase seguinte, a condicao de feito esta cumprida e `sementes` chegam.
+## Se a classe que o rei tem marca alvos com o gatilho direito: "so classe
+## Arqueiro" (§24), e as de jogo parecido — as que o classes.csv da o verbo
+## mark_target (Q-086). O Monarca nao marca: e tanque e nao atirador.
+func marks() -> bool:
+	return _dados != null and _dados.verb == &"mark_target"
+
+
 func can_evolve(sementes: int) -> bool:
 	if phase >= _dados.phase_count or sementes < _dados.evolve_seed_cost:
 		return false

@@ -49,7 +49,8 @@ static func consume(
 				if not assume(unidades, king_id, passagens) and not cross(unidades, king_id):
 					choose_wall(unidades, king_id, obras)
 			IntentQueue.Kind.MARK_TARGET:
-				mark(unidades, bichos, combate, args[&"x"], king_id)
+				if campo == null or campo.classes.marks():  # so quem tem arco (Q-086)
+					mark(unidades, bichos, combate, args[&"x"], king_id)
 			IntentQueue.Kind.DAY_LENGTH:
 				day_length(args[&"seconds"])
 			IntentQueue.Kind.IMPULSE:
@@ -222,8 +223,7 @@ static func destination(unidades: UnitSystem, unit_id: int, passagens: PackedFlo
 	return int(Band.Kind.SURFACE) if em_baixo else int(Band.Kind.UNDERGROUND)
 
 
-## §26: "slider de duracao do dia (240–540 s)", com os limites do clock.csv (zero e
-## o dia dele). O relogio escala as seis fases e o decorrido juntos; a fase nao salta.
+## §26: o slider do dia (240–540 s) nos limites do clock.csv; zero e o dia dele.
 static func day_length(segundos: float) -> void:
 	var dados := Registry.entry(&"economy", &"clock") as ClockData
 	var alvo := segundos if segundos > 0.0 else dados.day_seconds
@@ -231,7 +231,7 @@ static func day_length(segundos: float) -> void:
 
 
 ## O gatilho direito do §24: marca a criatura mais proxima deste x para todos os
-## teus. O §50 poe o alvo marcado no topo da prioridade de escolha.
+## teus, no topo da prioridade do §50. So uma classe de arco marca (Q-086).
 static func mark(
 	unidades: UnitSystem, bichos: CreatureSystem, combate: CombatSystem, x: float, king_id: int
 ) -> void:

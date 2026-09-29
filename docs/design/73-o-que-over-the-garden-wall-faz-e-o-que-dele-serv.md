@@ -9,7 +9,7 @@ Cem minutos, dez capítulos, um orçamento de televisão por cabo. A série cons
 | # | Alavanca | O que é, mecanicamente | Serve? | Onde cai |
 | --- | --- | --- | --- | --- |
 | 1 | O antagonista oferece, não ataca | A Besta nunca força. Faz propostas razoáveis a pessoas em dificuldade e deixa-as escolher. O terror é de consentimento, não de força. | Central | §74 · §75 |
-| 2 | O combustível são as vítimas | A lanterna arde a óleo de edelwood; o edelwood é feito das crianças perdidas. A ameaça é literalmente construída com as perdas anteriores. | Central | §74 |
+| 2 | O combustível são as vítimas | A lanterna arde a óleo de edelwood; o edelwood é feito das crianças perdidas. A ameaça é literalmente construída com as perdas anteriores. No Empire é o Lume: arde roxo na base dela, e tudo o que ela consome o alimenta; a tua luz afasta-a (ADR 0034). | Central | §74 |
 | 3 | Ninguém tem nome, toda a gente tem função | Na taberna não há nomes: há o Taberneiro, o Açougueiro, a Parteira, o Salteador. Ser nomeado é ganhar um lugar na história — e uma dívida para com ela. | Barata | §76 |
 | 4 | Um lugar, uma lei, uma canção | Cada capítulo é um sítio fechado com uma regra estranha que ninguém explica, um habitante que a cumpre com naturalidade, e uma canção que a diz. Noventa segundos e percebeste o sítio. | Barata | §77 |
 | 5 | A morte é um emprego com horário | Pottsfield é uma vila de esqueletos alegres que te põem a trabalhar e depois te deixam ir. A submissão é cordial, e é isso que a torna insuportável. | Cara, vale | §78 |

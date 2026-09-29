@@ -103,13 +103,15 @@ func test_o_canteiro_paga_se_ao_fim_de_dois_dias() -> void:
 	assert_int(moedas).is_greater_equal(dados.cost)
 
 
-func test_o_pesqueiro_paga_se_ao_fim_de_dois_dias() -> void:
+func test_sem_salga_o_pesqueiro_paga_se_ao_terceiro_dia() -> void:
+	# A tabela do §06 da 2 dias a quem vende o peixe todo. O peixe estraga
+	# (Q-012): sem Salga perde uma unidade por dia no pesqueiro, rende 3 - 1, e
+	# paga-se ao terceiro dia. E o preco de ser a obra que o rasto nao toca.
 	var dados := _edificio(Greybox.PESQUEIRO)
 	var vaga := _levantar(Greybox.PESQUEIRO)
 
-	var moedas := _moedas_de(vaga, 2)
-
-	assert_int(moedas).is_greater_equal(dados.cost)
+	assert_int(_moedas_de(vaga, 2)).is_less(dados.cost)
+	assert_int(_moedas_de(vaga, 1)).is_greater(0)
 
 
 func test_o_galinheiro_nao_se_paga_em_dois_dias_e_paga_se_em_tres() -> void:
@@ -131,7 +133,8 @@ func test_uma_obra_de_pe_larga_por_dia_o_que_o_csv_lhe_da() -> void:
 		SimLoop.start(SEMENTE)
 		Greybox.build()
 		var vaga := _levantar(id)
-		assert_int(_moedas_de(vaga, 1)).is_equal(int(_edificio(id).yield_per_day))
+		var dados := _edificio(id)
+		assert_int(_moedas_de(vaga, 1)).is_equal(int(dados.yield_per_day - dados.spoil_per_day))
 
 
 # ─── As fontes, e a curva do §06 contra os edificios reais (Q-033) ───────────

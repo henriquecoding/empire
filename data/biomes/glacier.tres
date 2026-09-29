@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/biome_data.gd" id="1_malub"]
+
+[resource]
+script = ExtResource("1_malub")
+id = &"glacier"
+display_key = "BIOME_GLACIER"
+people = &"geada"
+creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
+resources = Array[StringName]([&"water", &"rock"])
+region_screens = Vector2i(4, 6)
+music_profile = &"music_glacier"
+in_campaign = false

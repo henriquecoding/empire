@@ -71,6 +71,7 @@ static func economy(postos: JobBoard = null) -> EconomySystem:
 	var relogio := Registry.entry(TABELA_ECONOMIA, RELOGIO) as ClockData
 	var economia := EconomySystem.new(curve(), relogio.phase_durations.size())
 	economia.jobs = postos
+	economia.spoil = RulesFactory.spoilage()
 	return economia
 
 
@@ -124,7 +125,11 @@ static func titles() -> TitleSystem:
 ## As regioes da campanha: uma por povo, e um povo por bioma (§21: "uma regiao =
 ## um povo = um imperio a conquistar"). Pela ordem do Registry, que e a dos ids.
 static func campaign_regions() -> PackedStringArray:
-	return Registry.ids(TABELA_BIOMAS)
+	var regioes := PackedStringArray()
+	for id in Registry.ids(TABELA_BIOMAS):
+		if (Registry.entry(TABELA_BIOMAS, StringName(id)) as BiomeData).in_campaign:
+			regioes.append(id)  # so os povos da campanha (Q-152)
+	return regioes
 
 
 ## O povo de cada regiao, pela mesma ordem.
@@ -185,7 +190,11 @@ static func crown() -> CrownSystem:
 	for recurso in Registry.entries(&"buildings"):
 		if (recurso as BuildingData).material == &"grain":
 			plantacoes.append(String(recurso.get(&"id")))
-	return CrownSystem.new(by_id(&"crown/impulses"), by_id(TABELA_TROPAS), plantacoes)
+	var coroa := CrownSystem.new(by_id(&"crown/impulses"), by_id(TABELA_TROPAS), plantacoes)
+	coroa.growth = curve().income_growth  # o preco acompanha a producao (Q-014)
+	coroa.repeat_mult = curve().impulse_repeat_mult
+	coroa.repeat_days = curve().impulse_repeat_days
+	return coroa
 
 
 ## O circuito 2 do §06: as conversoes por casa, e a materia de cada produtor.

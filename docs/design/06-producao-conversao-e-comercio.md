@@ -37,7 +37,7 @@ Três moedas com velocidades diferentes, e uma quarta camada que não é moeda e
 | Fonte | Custo | Produz | Se vender | Payback | Risco |
 | --- | --- | --- | --- | --- | --- |
 | Plantação (canteiro) | 4 | Grão | 2/dia | 2 dias | Destruída pelo rasto da Podridão |
-| Pesqueiro | 6 | Peixe | 3/dia | 2 dias | Só em bioma com água; imune ao rasto |
+| Pesqueiro | 6 | Peixe | 3/dia | 2 dias | Só em bioma com água; imune ao rasto. O peixe estraga: sem Salga perde 1 por dia no pesqueiro, e o payback passa a 3 dias |
 | Galinheiro | 8 | Galinhas vivas | 3/dia | 2,7 dias | Roubáveis à noite |
 | Estábulo de vaca | 14 | Vacas vivas | 5/dia | 2,8 dias | Ordenha manual — exige uma tropa parada |
 | Corte de madeira | 7 | Madeira | 2/dia | 3,5 dias | Só em bioma de bosque |
@@ -98,7 +98,7 @@ Converter animais, tropas fracas ou ouro em segurança à noite.
 
 ## Custo escalado de muralha
 
-Cada nível custa base × 1,8^n, e há dois caminhos concorrentes de upgrade (§10) — o jogador nunca tem dinheiro para os dois.
+Cada nível custa aproximadamente base × 1,8^n — os preços que mandam são os da tabela do §10 (6 · 11 · 20 · 36 · 65) —, e há dois caminhos concorrentes de upgrade (§10) — o jogador nunca tem dinheiro para os dois.
 
 ## A curva, e o dia da asfixia
 

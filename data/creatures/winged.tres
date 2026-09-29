@@ -17,5 +17,5 @@ band = 0
 move_speed = 44.0
 scale_tier = 2
 layer_slots = Array[StringName]([&"body", &"face", &"overlay"])
-coin_drop = 1
+coin_drop = 2
 tags = Array[StringName]([&"rot", &"flyer"])

@@ -166,7 +166,7 @@ func test_o_tempo_ate_matar_em_torre_bate_com_a_tabela_do_07() -> void:
 	# intermitente e acaba desligado.
 	var arqueiro := _dados()
 	var alvos := ["crawler", "winged", "brute", "burrower", "slime_ram"]
-	var tabela := [4.2, 5.6, 11.2, 9.8, 32.2]
+	var tabela := [4.2, 5.6, 11.2, 9.8, 36.4]  # o Ariete com 104 de vida (Q-001)
 	for k in alvos.size():
 		var bicho := Registry.entry(&"creatures", StringName(alvos[k])) as CreatureData
 		var medido := Referencia.ttk(arqueiro, bicho.max_health, _curva().tower_accuracy)

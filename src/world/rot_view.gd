@@ -1,5 +1,5 @@
-# src/world/rot_view.gd — a arte da mancha: a Podridao, o rasto e a candeia
-# (F1-17, §74, §80).
+# src/world/rot_view.gd — a arte da mancha: a Podridao, o rasto e o Lume roxo na
+# base dela (F1-17, §74, §80, ADR 0034).
 #
 # Nao e um no. E o BandView da superficie que chama isto a meio do `_draw()`, e
 # tem de ser assim: a mancha vai por baixo das obras e das tropas, e um no filho
@@ -16,25 +16,22 @@ extends RefCounted
 const AVISO := 0.35
 const AVISO_FUNDO := 0.6
 const AVISO_ALFA := 0.5
+## O braseiro do Lume, em greybox: um poste com a chama no topo (ADR 0034).
+const BRASEIRO := Vector2(8.0, 28.0)
 
 
-## O rasto, a candeia e a mancha, por esta ordem — que e a ordem em que se veem:
-## por onde ela passou, a luz que ela traz, e ela por cima da luz.
-##
-## A mancha vem DEPOIS da candeia e nao antes, e e a diferenca entre ler-se e
-## nao se ler: ao dia 1 a luz tem 154 px de raio e a mancha 160 de largura, por
-## isso a luz cobre-a inteira. Por cima, a mancha e uma coluna violeta contra o
-## ambar — que e o §74 tal e qual: "alguem a atravessar o campo com uma
-## lanterna", e nao uma lanterna sozinha.
+## O Lume, o rasto e a mancha, por esta ordem. O Lume arde na base de onde ela
+## nasceu e fica la (ADR 0034): a mancha que atravessa o campo e escuridao, e a
+## unica luz dela e o fogo roxo la atras — o unico que a aquece.
 static func draw_on(
 	canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int, luz: Lighting
 ) -> void:
 	if not rot.active():
 		_aviso(canvas, rot, perfil, dia)
 		return
-	_rasto(canvas, rot, luz)
-	# A candeia NAO leva ambiente: e a luz, e o §80 diz que ela e o assunto.
+	# O Lume NAO leva ambiente: e uma luz, e o §80 diz que a luz e o assunto.
 	_candeia(canvas, rot, perfil, dia)
+	_rasto(canvas, rot, luz)
 	_mancha(canvas, rot, luz)
 
 
@@ -76,13 +73,18 @@ static func _rasto(canvas: CanvasItem, rot: RotSystem, luz: Lighting) -> void:
 
 
 static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int) -> void:
-	var centro := Vector2(rot.position_x(), WorldPalette.ground_of(int(Band.Kind.SURFACE)))
+	var centro := Vector2(WorldLight.nest_x(rot), WorldPalette.ground_of(int(Band.Kind.SURFACE)))
 	var raio := WorldLight.radius(perfil, dia)
 	var cores := WorldLight.stops(perfil)
 	lamp(canvas, centro, raio, cores)
 	var celula := perfil.lantern_dither_px
 	for canto in WorldLight.dither(centro, raio, celula):
 		canvas.draw_rect(Rect2(canto, Vector2(celula, celula)), cores[0])
+	var poste := Rect2(centro - Vector2(BRASEIRO.x * WorldPalette.MEIA, BRASEIRO.y), BRASEIRO)
+	canvas.draw_rect(poste, WorldPalette.MANCHA)
+	canvas.draw_circle(
+		poste.position + Vector2(BRASEIRO.x * WorldPalette.MEIA, 0.0), BRASEIRO.x, cores[2]
+	)
 
 
 ## A tarde diz de que lado vem a noite (Q-125): a candeia acende-se no horizonte

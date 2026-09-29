@@ -61,6 +61,9 @@ src/core/rng_service.gd     RngService    autoload; os seis fluxos (§42)
 src/core/registry.gd        Registry      autoload; os .tres por StringName
 src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
 src/core/sim_factory.gd     SimFactory    monta os sistemas puros a partir do Registry
+src/core/rules_factory.gd   RulesFactory  o que as respostas do painel trouxeram: precos, estatuas, estrago (ADR 0027)
+src/core/pace.gd            Pace          a roda abranda o tempo saltando passos (Q-034)
+src/core/dark_watch.gd      DarkWatch     o escuro da noite, o archote e quem vem de la (Q-029)
 src/core/event_relay.gd     EventRelay    traduz o que os sistemas devolvem para a §46
 src/core/intent_queue.gd    IntentQueue   a fila de intencoes do §61
 src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, recuar, e o que fica (§74)
@@ -74,6 +77,11 @@ src/sim/systems/contact_queue.gd ContactQueue os slots de contacto e a fila (§5
 src/sim/systems/posts.gd    Posts         o que um posto acrescenta a quem o ocupa (§07)
 src/sim/systems/morale_system.gd MoraleSystem moral, fuga e o raio do rei (§07)
 src/sim/systems/passages.gd Passages    quem muda de faixa, e onde; a escora fecha (§11, §53, Q-132)
+src/sim/systems/retinue.gd  Retinue       quem espera no nucleo e quem segue o rei (§25, Q-063)
+src/sim/systems/discoveries.gd Discoveries o que so se sabe fazer depois de achar a estatua (§17, Q-016)
+src/sim/systems/torchlight.gd Torchlight  o archote do rei e o escuro da noite (Q-029)
+src/sim/systems/fire_zones.gd FireZones   fogueiras e barris abrandam a Podridao (§05, Q-029)
+src/sim/systems/light_ward.gd LightWard   as tuas luzes fazem recuar ou abrandar a noite (ADR 0034)
 src/sim/systems/class_system.gd ClassSystem a classe do rei: a aura e a evolucao (§08)
 src/sim/systems/coin_target.gd CoinTarget a quem serve uma moeda largada (§02, §55, Q-115)
 src/sim/systems/staffing.gd Staffing      quem esteve no posto na fase que acabou (§06, §52, Q-121)
@@ -122,6 +130,7 @@ src/world/title_view.gd     TitleView     a fita de quem tem nome (§76)
 src/world/build_view.gd     BuildView     as obras, desenhadas pela forma delas (§25, §55)
 src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do contorno (§25, §55)
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
+src/world/campfires.gd      Campfires     os sitios de fogueira da regiao (Q-029)
 src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
 src/world/gauge.gd          Gauge         os instrumentos do greybox: vida e saco (GB-03)
 src/world/site_stage.gd     SiteStage     em que ponto esta uma obra, para a obra o mostrar

@@ -98,7 +98,7 @@ export const TEXTOS = {
       inst_fonte: "As contas do rot.csv, as mesmas que o jogo faz: três paragens de luz, nunca um gradiente, e um bordo de dither de {dither} px (§80). «px» são píxeis do plano de jogo.",
     },
     povos: {
-      n: "§04 · Seis povos",
+      n: "§04 · Os povos",
       h2: "Conquistar não é mais um recurso. É ganhar o direito de construir como eles.",
       intro: "Cada povo é um kit fechado: arquitetura, uma tropa única, uma economia e uma defesa. Duas partidas com a mesma seed jogam-se de forma diferente só pela ordem de conquista.",
       terreno: "Terreno", constroi: "Constrói", economia: "Economia", defesa: "Defesa", tropa: "Tropa única",
@@ -313,7 +313,7 @@ export const TEXTOS = {
       inst_fonte: "The math from rot.csv, the same the game runs: three light stops, never a gradient, and a {dither} px dithered edge (§80). “px” are pixels of the play plane.",
     },
     povos: {
-      n: "§04 · Six peoples",
+      n: "§04 · The peoples",
       h2: "Conquest isn't one more resource. It's earning the right to build like them.",
       intro: "Each people is a closed kit: architecture, a unique troop, an economy and a defense. Two runs with the same seed play differently just from the order of conquest.",
       terreno: "Terrain", constroi: "Builds", economia: "Economy", defesa: "Defense", tropa: "Unique troop",
@@ -326,6 +326,8 @@ export const TEXTOS = {
         horta: { pt: "e8a22460", nome: "Horta", terreno: "Fertile floodplain", constroi: "Barns, greenhouses, silos, scarecrows", economia: "Farming — twice the yield per plot", defesa: "Numbers: dirt-cheap troops", tropa: "Sower — plants in the middle of combat" },
         fornalha: { pt: "7446a3f9", nome: "Fornalha", terreno: "Volcanic", constroi: "Foundries, chimneys, slag walls", economia: "Metal and weapons", defesa: "Permanent fire on the walls", tropa: "War smith — repairs walls in combat" },
         sobraiz: { pt: "f08333c0", nome: "Sob-Raiz", terreno: "Underground", constroi: "Tunnels, chambers, mushroom farms", economia: "Fungi and secrets", defesa: "No walls — a labyrinth instead", tropa: "Digger — opens passages between bands" },
+        geada: { pt: "3579ad28", nome: "Geada", terreno: "Glacier", constroi: "Igloos, stone shepherd shelters, an ice palisade", economia: "Cold that keeps — nothing spoils", defesa: "Frozen ground: the Rot slows down", tropa: "Ice Warden — slows whoever it strikes" },
+        paul: { pt: "146e8468", nome: "Paul", terreno: "Marsh", constroi: "Thatched reed huts and houses on stilts", economia: "Reeds and eels; mounts recover twice as fast", defesa: "Mud that holds", tropa: "Reed Stalker — reaches the dragonflies" },
       },
     },
     controlos: {

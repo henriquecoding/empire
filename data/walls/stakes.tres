@@ -15,7 +15,9 @@ material_by_people = {
 &"enramados": &"logs",
 &"fenda": &"rock_shards",
 &"fornalha": &"slag_chunks",
+&"geada": &"ice_blocks",
 &"horta": &"wattle",
+&"paul": &"reed_bundles",
 &"portuarios": &"stakes"
 }
 max_health_a = 40

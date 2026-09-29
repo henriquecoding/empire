@@ -2,7 +2,7 @@
 
 ```text
 Porque    É o melhor rácio da parte inteira: 11 h de código e 3 de arte para a alavanca 2.
-Spec      docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md
+Spec      docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md
           docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md
 Depende   XIII-02, F1-06, ART-04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec

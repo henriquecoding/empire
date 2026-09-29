@@ -19,6 +19,8 @@ extends RefCounted
 const TABELA_CRIATURAS := &"creatures"
 ## O poco de minerio "atrai Cavadores" (§06): a tag e da obra (Q-131).
 const CHAMA_CAVADORES := &"attracts_burrowers"
+## O que o escuro recebe no lugar da fase quando a noite ja nao tem Podridao.
+const SEM_NOITE := -1
 
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
@@ -27,6 +29,8 @@ var voice: OfferWatch
 var names: TitleSystem
 ## A Colheita (§78): conta dias a alvorada, e os marcos de quem ficou pesam.
 var harvest: HarvestSystem
+## O escuro, o archote e quem vem de la (Q-029).
+var dark: DarkWatch
 
 var _tropas: UnitSystem
 var _obras: BuildSystem
@@ -45,6 +49,7 @@ func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: J
 	voice = OfferWatch.new(moedas, tropas, obras)
 	names = SimFactory.titles()
 	harvest = HarvestSystem.new(SimFactory.curve())
+	dark = DarkWatch.new()
 	_tropas = tropas
 	_moedas = moedas
 	_obras = obras
@@ -63,9 +68,13 @@ func tick(
 	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
 	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
+	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.
+	dark.tick(delta, fase if rot.active() else SEM_NOITE, estado, bichos, _obras, mundo.x)
+	bichos.set_lights(LightWard.of(_obras, dark.ward()), SimFactory.rot_profile().light_recoil_s)
 	if not rot.active():
 		return
-	_alimentar()
+	if Discoveries.known(estado, &"sacrifice"):  # a Estatua da Oferenda (Q-016)
+		_alimentar()
 	var borda := mundo.y if rot.state.side > 0 else 0.0
 	Thieves.plan(bichos, _criaturas, _obras, _edificios, borda)  # o Alado (Q-129)
 	if voice.paused(delta):
@@ -73,9 +82,9 @@ func tick(
 	if rot.needs_interval():
 		var janela := SimFactory.rot_window()
 		rot.arm(RngService.float_range(&"rot", janela.x, janela.y))
-	# O terreno consagrado de hoje sao os Marcos (§74). Fogueiras e barris sao
-	# luz do §10 e nao consagram nada; o altar consagrado e da Fase 6.
-	for pedido in rot.tick(delta, amargueiros.consecrated()):
+	# O terreno consagrado sao os Marcos (§74); fogueiras e barris abrandam-na
+	# pelo `rot_slow` deles (§05, Q-029). O altar consagrado e da Fase 6.
+	for pedido in rot.tick(delta, amargueiros.consecrated(), FireZones.of(_obras)):
 		_invocar(pedido, estado, bichos, mundo.x)
 	var meia := rot.state.width * BuildSystem.METADE
 	names.stain(_tropas, rot.position_x() - meia, rot.position_x() + meia)  # §76
@@ -187,6 +196,7 @@ func _invocar(
 func _roubos(bichos: CreatureSystem) -> void:
 	for perda in Thieves.escape(bichos, _obras, SimFactory.curve().chicken_theft_matter):
 		var obra := _obras.slots[_obras.index_of(perda[Thieves.OBRA])]
+		voice.debt.feed_lume(perda[Thieves.QUANTO])  # a galinha vai para o Lume
 		var tipo: StringName = (_edificios[obra.kind] as BuildingData).material
 		EventBus.queue(&"material_consumed", [obra.id, tipo, roundi(perda[Thieves.QUANTO])])
 
@@ -231,4 +241,5 @@ func _alimentar() -> void:
 		_moedas.remove(coin_id)
 	var tirada := minf(rot.state.mass, valor * SimFactory.rot_profile().sacrifice_mass_per_coin)
 	rot.state.mass -= tirada
+	voice.debt.feed_lume(valor)  # compra a noite de hoje e alimenta o Lume (ADR 0034)
 	EventBus.queue(&"rot_fed", [tirada, &"coins"])

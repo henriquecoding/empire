@@ -117,9 +117,11 @@ static func owed_by(vaga: BuildSlot) -> int:
 
 ## Quantas moedas faltam ao saco desta pessoa para ela passar a ser tua. E a
 ## conta do RecruitSystem vista do lado de fora: ele compara o SACO com o
-## recruit_cost do §07, e nao a ultima moeda apanhada.
-static func owed_by_unit(unidades: UnitSystem, i: int) -> int:
-	return maxi(0, unidades.recruit_costs[i] - unidades.carried_coins[i])
+## recruit_cost do §07, e nao a ultima moeda apanhada. `preco` e o do povo da
+## regiao (Q-007); sem ele, o da coluna.
+static func owed_by_unit(unidades: UnitSystem, i: int, preco: int = -1) -> int:
+	var custo := unidades.recruit_costs[i] if preco < 0 else preco
+	return maxi(0, custo - unidades.carried_coins[i])
 
 
 ## O preco de quem ainda nao e de ninguem. O raio e o recruit_notice_px: e a
@@ -135,7 +137,7 @@ static func _gente(
 			continue
 		if not SimLoop.recruits.vagrant(unidades, i) or absf(unidades.xs[i] - x) > alcance:
 			continue
-		var falta := owed_by_unit(unidades, i)
+		var falta := owed_by_unit(unidades, i, SimLoop.recruits.price(unidades, i))
 		if falta <= 0:
 			continue
 		var dados: UnitData = tropas.get(unidades.data_ids[i])

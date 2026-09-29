@@ -14,7 +14,7 @@ A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 m
 | Verbo 2 — Assumir | X / ▢ | E | Trocar de classe, montar, entrar em passagem, subir em criatura |
 | Descer / subir de faixa | Verbo 2 sobre passagem | E sobre passagem | Só onde há passagem descoberta |
 | Roda do rei | Y / △ (manter) | Tab (manter) | Só com o monarca assumido. É o corpo dele, não um menu. |
-| Marcar alvo | Gatilho direito | Botão dir. do rato | Só classe Arqueiro |
+| Marcar alvo | Gatilho direito | Botão dir. do rato | Só classe Arqueiro, e as de jogo parecido (Q-086) |
 | Impulso real | Roda do rei → segmento | Tab → 1–5 | Um por dia (§15) |
 | Câmara livre | Stick direito | Q · Z ou rato na margem | Reconhecimento; volta sozinha em 2 s |
 | Pausa / opções | Start | Esc | Sempre |

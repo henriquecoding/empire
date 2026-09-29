@@ -9,13 +9,11 @@
 #
 #   · o que o INSTRUMENTO tem de fazer — montar, correr em headless ao passo
 #     fixo, dar o mesmo resultado a mesma semente. E o F1-15, e passa.
-#   · o que os NUMEROS tem de dar — as duas linhas do §07. Continua saltado, e
-#     por uma razao que o F1-16 mediu e nao fechou: a Q-073. A estacaria publica
-#     UM posto de guarda e o §07 poe la seis arqueiros; nenhum numero que o
-#     F1-16 possa mexer muda isso, porque o nivel 1 e "a base comum aos dois
-#     caminhos" (§10) e os postos dele estao na tabela do dossie. A razao e o
-#     numero medido ficam no salto, como manda a ADR 0019: um teste de design a
-#     falhar e informacao, nao um obstaculo.
+#   · o que os NUMEROS tem de dar — as duas linhas do §07. A Q-073 fechou-as
+#     pela receita: um posto e um lugar, e para caberem mais arqueiros evolui-se
+#     o lugar, por isso a torre entra na receita e o "sem torre no dia 8" passa
+#     a variante. Fica saltada so a metade das mortes (Q-151): com a torre e as
+#     primeiras noites em rampa, a noite 5 ganha-se sem ninguem morrer.
 #
 # Mexer em data/ para os calar era o que o AGENTS.md proibe em tantas palavras.
 extends GdUnitTestSuite
@@ -128,34 +126,41 @@ func test_dez_dias_correm_em_headless_ao_passo_fixo() -> void:
 # gdlint: disable=unused-argument
 
 
-func test_a_noite_5_ganha_se_com_1_a_2_mortes(
-	do_skip := true,
-	skip_reason := (
-		"Q-073: sem torre a noite 5 da 1 morte mas o muro cai, porque a estacaria "
-		+ "publica UM posto para os seis arqueiros do §07. Falta a decisao do §10"
-	)
-) -> void:
+func test_a_noite_5_ganha_se_com_a_torre() -> void:
+	# Q-073, decidida pelo dono: "se so ha um lugar so deve haver um; para caber
+	# mais, evolui-se o lugar". A receita do §07 passa a ter a torre — e com ela
+	# os seis arqueiros tem onde estar, e a noite 5 ganha-se: o muro fica de pe.
+	_h.tower = true
 	var r := _h.night(DIA_DO_ALVO)
 	assert_int(r[Harness.MUROS]).is_equal(0)
-	assert_int(r[Harness.MORTES]).is_between(MORTES_MIN, MORTES_MAX)
+	assert_bool(r[Harness.DE_PE]).is_true()
+	assert_int(r[Harness.MORTES]).is_less_equal(MORTES_MAX)
 
 
-func test_a_noite_8_perde_se_sem_torre(
+func test_a_noite_5_custa_1_a_2_mortes(
 	do_skip := true,
 	skip_reason := (
-		"Q-073: sem torre o muro cai em TODAS as noites, a comecar na 1, e uma "
-		+ "noite 8 sozinha nao chega ao nucleo. Dez seguidas chegam (F1-16)"
+		"Q-151: com a torre na receita (Q-073) a noite 5 ganha-se sem mortes, e as "
+		+ "primeiras noites em rampa (Q-017) tornam-na mais leve. Falta a afinacao"
 	)
 ) -> void:
+	_h.tower = true
+	assert_int(_h.night(DIA_DO_ALVO)[Harness.MORTES]).is_between(MORTES_MIN, MORTES_MAX)
+
+
+func test_sem_torre_a_noite_8_perde_o_muro() -> void:
+	# A variante do §07 (Q-073): sem a torre, o unico posto da estacaria nao chega
+	# para a noite 8, e o muro cai. Uma noite sozinha nao chega ao nucleo; dez
+	# seguidas chegam, e e isso que o tests/dez_dias_test.gd mede.
 	_h.tower = false
-	assert_bool(_h.night(DIA_DA_PERDA)[Harness.DE_PE]).is_false()
+	assert_int(_h.night(DIA_DA_PERDA)[Harness.MUROS]).is_greater(0)
 
 
 func test_dez_dias_em_menos_de_dez_segundos(
 	do_skip := true,
 	skip_reason := (
-		"Q-074: os dez dias custam 9 a 11 s conforme o runner, e o §66 pede menos "
-		+ "de 10. Um teste que depende da maquina nao e um portao"
+		"Q-074 (decidida: medir antes de otimizar, e primeiro num export de release): "
+		+ "o binario de editor da 9 a 11 s e o §66 pede 10. Falta o export de medicao"
 	)
 ) -> void:
 	assert_float(_h.days(DIAS)).is_less(ORCAMENTO_S)

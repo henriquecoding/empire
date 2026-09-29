@@ -39,6 +39,7 @@ func _init(
 ) -> void:
 	_noite = noite
 	_perfis = SimFactory.by_id(&"units")
+	Discoveries.gates = RulesFactory.discovery_gates()  # as estatuas (Q-016)
 	hunting = HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
 	)
@@ -85,8 +86,9 @@ func prepare(
 
 ## A intencao do §61 que a roda do rei enfileira: um impulso por dia (§15, §24).
 func impulse(id: StringName, unidades: UnitSystem, rei: int) -> void:
-	var custo := (Registry.entry(&"crown/impulses", id) as ImpulseData).coin_cost
-	if crown.use(id, ClockService.clock.day, unidades, rei):
+	var perfil := RulesFactory.impulse_cost_mult(_economia.greed if _economia != null else 0)
+	var custo := crown.price(id, ClockService.clock.day, perfil)  # o preco de hoje (Q-014)
+	if crown.use(id, ClockService.clock.day, unidades, rei, custo):
 		EventBus.queue(&"royal_impulse_used", [id])
 		EventBus.queue(&"coin_spent", [custo, &"impulse"])
 
@@ -101,8 +103,8 @@ func claims(
 	unidades: UnitSystem,
 	rei: int
 ) -> bool:
-	if noite.consecrate_at(estado, largada, rei):
-		return true
+	if noite.consecrate_at(estado, largada, rei) or noite.dark.buy_at(largada, obras):
+		return true  # uma arvore a consagrar, ou archotes numa fogueira (Q-029)
 	if not classes.can_evolve(estado.royal_seeds) or not _no_nucleo(largada, obras):
 		return false
 	classes.evolve(estado)

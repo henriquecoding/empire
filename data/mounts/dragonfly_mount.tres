@@ -10,5 +10,5 @@ speed_multiplier = 1.9
 can_change_band = true
 flies = true
 obtain = &"fortress"
-obtain_ref = &"horta"
+obtain_ref = &"paul"
 heal_days = 2

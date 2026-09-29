@@ -77,7 +77,7 @@ A fonte unica e o dossie; estes ficheiros existem para o agente os ler.
 - [71 — Índice · novo · O repositório que já existe, pasta a pasta](71-o-repositorio-que-ja-existe-pasta-a-pasta.md)
 - [72 — Achados · novo · O que a implementação encontrou no dossiê](72-o-que-a-implementacao-encontrou-no-dossie.md)
 - [73 — Método · novo · O que Over the Garden Wall faz, e o que dele serve](73-o-que-over-the-garden-wall-faz-e-o-que-dele-serv.md)
-- [74 — Ameaça · novo · A Podridão ganha uma candeia — e o combustível és tu](74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md)
+- [74 — Ameaça · novo · A Podridão ganha um Lume — e o combustível és tu](74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md)
 - [75 — Voz · novo · A Oferta, e a dívida que ninguém te mostra](75-a-oferta-e-a-divida-que-ninguem-te-mostra.md)
 - [76 — Identidade · novo · Ninguém tem nome até merecer um](76-ninguem-tem-nome-ate-merecer-um.md)
 - [77 — Mundo · novo · Dez lugares, uma lei cada](77-dez-lugares-uma-lei-cada.md)

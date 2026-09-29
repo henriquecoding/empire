@@ -51,6 +51,8 @@ var conversion: ConversionSystem
 var greed := 0
 ## Os postos (§52): uma obra com posto so rende inteiro com quem la trabalha (Q-121).
 var jobs: JobBoard
+## O que estraga por dia em cada tipo de obra, se nenhuma casa a converter (Q-012).
+var spoil: Dictionary = {}
 
 var _curva: EconomyCurve
 var _fases: int
@@ -84,9 +86,12 @@ func sources(obras: BuildSystem) -> int:
 ## dois nao dao o mesmo numero com os edificios de hoje: ver Q-033.
 func built_income(obras: BuildSystem, day: int) -> float:
 	var bruto := 0.0
+	var estraga := 0.0
 	for vaga in obras.standing():
 		bruto += vaga.yield_per_day
-	return bruto * pow(_curva.income_growth, day - 1)
+		if conversion == null or not conversion.claims(vaga, obras):
+			estraga += float(spoil.get(vaga.kind, 0.0))  # Q-012, como no on_phase
+	return maxf(0.0, bruto * pow(_curva.income_growth, day - 1) - estraga)
 
 
 ## Comercio, com efeito de rede a partir da segunda rota (§06, §29). Sem rotas e
@@ -153,6 +158,7 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 		vaga.stock += vaga.yield_per_day / _fases * fator * _hoje(vaga)
 		if conversion != null and conversion.claims(vaga, obras):
 			continue
+		vaga.stock = maxf(0.0, vaga.stock - float(spoil.get(vaga.kind, 0.0)) / _fases)
 		var moedas := int(floorf(vaga.stock))
 		if moedas <= 0:
 			continue

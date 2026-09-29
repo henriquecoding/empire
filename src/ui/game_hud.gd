@@ -93,14 +93,19 @@ func _input(evento: InputEvent) -> void:
 	var novo := Glyphs.device_of(evento, _dispositivo, nome)
 	if novo != _dispositivo:
 		_dispositivo = novo
-		_dica.text = Glyphs.hint(novo)
+		_dica.text = Glyphs.hint(novo, _marca())
 
 
 ## O que so se escreve uma vez. Volta a escrever-se quando o idioma muda na
 ## pausa (§27, GB-28) — o resto do painel ja se escreve a cada frame.
 func _escrever_fixos() -> void:
 	_titulo.text = tr(&"GAME_CODENAME")
-	_dica.text = Glyphs.hint(_dispositivo)
+	_dica.text = Glyphs.hint(_dispositivo, _marca())
+
+
+## Se o gatilho direito faz alguma coisa a esta classe (Q-086).
+func _marca() -> bool:
+	return SimLoop.field == null or SimLoop.field.classes.marks()
 
 
 func _notification(o_que: int) -> void:
@@ -149,6 +154,9 @@ func _atualizar() -> void:
 	_recursos.text = HudText.resources(
 		saco, cabem, GameplayGuide.troops(), _vida_nucleo(), SimLoop.state.greed, soldo
 	)
+	var archotes := SimLoop.night.dark.torch.torches  # Q-029
+	if archotes > 0:
+		_recursos.text += "  ·  " + tr(&"HUD_TORCHES").format({"n": archotes})
 	_objectivo.text = GameplayGuide.goal()
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)

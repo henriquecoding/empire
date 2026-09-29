@@ -28,7 +28,7 @@ Isto é o que abres na segunda-feira. Cada linha é uma sessão de agente, no fo
 | F1-01 | Moeda física: largar, arco, queda, apanhar, saco com capacidade | F0-07 | Largar 10 moedas a 60 fps sem picos |
 | F1-02 | UnitData.tres + as 6 unidades do §07 | F0-03 | Editar dano no .tres muda o jogo sem recompilar |
 | F1-03 | UnitSystem com arrays paralelos e time-slicing | F1-02 | 300 unidades a 60 fps no profiler |
-| F1-04 | Recrutar vagabundo por 1 moeda; ele segue-te | F1-01, F1-03 | O minuto 0:20 do §25 funciona |
+| F1-04 | Recrutar vagabundo por 1 moeda; ele vai para a vila (Q-063) | F1-01, F1-03 | O minuto 0:20 do §25 funciona |
 | F1-05 | JobBoard (prompt 4, §29) | F1-03 | Os 4 testes do prompt passam |
 | F1-06 | Muro: 5 níveis, dois caminhos, slots de contacto | F1-05 | Tabela do §10 replicada em .tres |
 | F1-07 | Arqueiro: alcance, precisão 0,34 em campo / 1,0 em torre | F1-06 | TTK medido bate com a tabela do §07 |

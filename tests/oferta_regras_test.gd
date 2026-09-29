@@ -157,3 +157,29 @@ func test_o_save_da_divida_tem_os_nomes_da_84() -> void:
 	assert_array(Array(lido.used)).is_equal(["all_that_shines"])
 	assert_float(lido.mass_mult_permanent).is_equal(0.85)
 	assert_bool(lido.ended).is_true()
+
+
+# ─── Saltar a noite tem peso (Q-040) ─────────────────────────────────────────
+
+
+func test_a_noite_saltada_vem_na_seguinte() -> void:
+	# O dono: "saltar o jogo gera consequencias, nada pode ser feito de qualquer
+	# jeito". A massa que a noite saltada trazia nao se perde: a seguinte leva-a.
+	var livro := DebtLedger.new(_perfil())
+	livro.carry(120.0)
+	assert_float(livro.carried_mass).is_equal(120.0 * _perfil().skipped_mass_carry)
+	assert_float(_perfil().skipped_mass_carry).is_greater(0.0)
+	assert_float(livro.collect()).is_equal(120.0 * _perfil().skipped_mass_carry)
+	assert_float(livro.collect()).is_equal(0.0)  # a seguinte leva-a uma vez so
+
+
+func test_a_noite_saltada_vai_no_save() -> void:
+	var livro := DebtLedger.new(_perfil())
+	livro.carry(50.0)
+	var lido := DebtLedger.new(_perfil())
+	lido.from_dict(livro.to_dict())
+	assert_float(lido.carried_mass).is_equal(livro.carried_mass)
+
+
+func test_o_que_brilha_e_uma_vez_por_campanha() -> void:
+	assert_bool(_oferta(&"all_that_shines").once_per_campaign).is_true()
