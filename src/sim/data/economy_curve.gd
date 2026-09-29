@@ -193,6 +193,13 @@ extends Resource
 @export var march_party_caps: Dictionary = {}
 @export var march_min_party: int = 0
 @export var march_nights: int = 1
+## O cerco (§13; Q-166): a firmeza da fortaleza do primeiro povo, quanto mais tem
+## cada povo adiante no plano, quanto lhe tira cada um que marcha, e a chance de
+## cada um nao voltar.
+@export var march_fortress_base: int = 0
+@export var march_fortress_per_region: int = 0
+@export var march_siege_per_unit: int = 0
+@export var march_loss_chance: float = 0.0
 @export var vassal_tribute: Vector2i = Vector2i()
 @export var vassal_seeds: Vector2i = Vector2i()
 @export var vassal_strength: float = 0.0

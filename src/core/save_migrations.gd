@@ -15,7 +15,7 @@ class_name SaveMigrations
 extends RefCounted
 
 ## A versao que o jogo grava. Sobe com cada passo novo, no mesmo commit.
-const CURRENT := 2
+const CURRENT := 3
 
 
 ## Leva `dados` (a moldura inteira do save) ate CURRENT. Devolve o dicionario
@@ -27,6 +27,8 @@ static func migrate(dados: Dictionary) -> Dictionary:
 		match versao:
 			1:
 				_de_1_para_2(d)
+			2:
+				_de_2_para_3(d)
 		versao += 1
 		d[&"save_version"] = versao
 	return d
@@ -71,6 +73,22 @@ static func _de_1_para_2(d: Dictionary) -> void:
 	archote.erase(&"torches")
 	mundo[&"torch"] = archote
 	mundo[&"classes"] = classes
+	d[&"world"] = mundo
+
+
+## v3 — o relatorio Kingdom de 29/09 (Q-166): o cerco. A marcha guarda a firmeza que
+## ja tirou a cada fortaleza; um save de antes nao tirou nenhuma. Um reino vazio (sem
+## marcha nunca gravada) fica vazio: a marcha nasce sem cerco.
+static func _de_2_para_3(d: Dictionary) -> void:
+	var mundo := _dict(d, &"world")
+	var reino := _dict(mundo, &"realm")
+	if reino.is_empty():
+		return
+	var marcha := _dict(reino, &"march")
+	if not marcha.has(&"sieges"):
+		marcha[&"sieges"] = {}
+	reino[&"march"] = marcha
+	mundo[&"realm"] = reino
 	d[&"world"] = mundo
 
 

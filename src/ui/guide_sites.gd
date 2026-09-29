@@ -1,5 +1,6 @@
-# src/ui/guide_sites.gd — o que o guia diz nalguns sitios: a boca de uma passagem e
-# a casa do herdeiro. Tirado do GameplayGuide, que chegou as 250 linhas do §28.
+# src/ui/guide_sites.gd — o que o guia diz nalguns sitios: a boca de uma passagem,
+# a casa do herdeiro e a bifurcacao. Tirado do GameplayGuide, que chegou as 250
+# linhas do §28.
 class_name GuideSites
 extends RefCounted
 
@@ -28,3 +29,17 @@ static func heir(values: Dictionary) -> String:
 	values["total"] = curva.heir_training_days
 	values["cost"] = curva.heir_cost_per_day
 	return TranslationServer.translate(&"CONTEXT_HEIR").format(values)
+
+
+## A bifurcacao com a marcha pronta: o reconhecimento do §13 (Q-166). O povo da
+## fortaleza seguinte, a firmeza que lhe sobra de marchas anteriores e o que os que
+## estao perto do rei lhe tirariam agora.
+static func march(values: Dictionary) -> String:
+	var reino := SimLoop.field.realm
+	var visto := reino.scouted(SimLoop.state)
+	var povo := Registry.entry(&"peoples", reino.next_people(SimLoop.state)) as PeopleData
+	values["people"] = TranslationServer.translate(povo.display_key) if povo != null else ""
+	values["left"] = visto.x
+	values["full"] = visto.y
+	values["hit"] = reino.blow(SimLoop.units, SimLoop.king_id)
+	return TranslationServer.translate(&"CONTEXT_CROSS").format(values)

@@ -670,9 +670,9 @@ UI_CAMPAIGN_END,Fim da campanha · {epilogue},End of the Campaign · {epilogue},
 GUIDE_CROSS,"A MARCHA PODE SAIR
 Na bifurcação a leste, manda os teus conquistar o povo seguinte","THE MARCH CAN LEAVE
 At the fork to the east, send your people to conquer the next folk",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-103 (ADR 0035)"
-CONTEXT_CROSS,"BIFURCAÇÃO · {assume} mandar a marcha
-Vão os teus que estão perto; tu ficas no reino","FORK · {assume} send the march
-Your people nearby go; you stay in the kingdom",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-154 (ADR 0035)"
+CONTEXT_CROSS,"BIFURCAÇÃO · {assume} mandar os teus que estão perto; tu ficas
+{people}: fortaleza a {left}/{full}, esta marcha tira {hit}","FORK · {assume} send your people nearby; you stay
+{people}: fortress at {left}/{full}, this march takes {hit}",guia contextual de jogo: a marcha e o reconhecimento da fortaleza (§13),160,"Q-146, Q-154 (ADR 0035); Q-166: o reconhecimento do §13 — a firmeza que sobra à fortaleza seguinte e o que os que estão perto lhe tiram"
 CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · a marcha sai no dia {day}
 Aguenta até lá","FORK · the march leaves on day {day}
 Hold out until then",guia contextual de jogo: a marcha (§13),160,Q-146 (ADR 0035)

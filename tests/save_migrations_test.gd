@@ -30,6 +30,20 @@ func test_um_save_v1_sobe_a_versao_de_agora() -> void:
 	assert_dict(mundo[&"upkeep"][&"resting"]).is_empty()
 
 
+## v3 (Q-166): a marcha de um save de antes do cerco nao tirou firmeza a ninguem.
+func test_um_save_v2_com_marcha_sobe_sem_cerco() -> void:
+	var marcha := {&"party": [], &"target": 1, &"returns": 12}
+	var v2 := {&"save_version": 2, &"state": {}, &"world": {&"realm": {&"march": marcha}}}
+	var d := SaveMigrations.migrate(v2)
+	assert_int(int(d[&"save_version"])).is_equal(SaveMigrations.CURRENT)
+	var migrada: Dictionary = d[&"world"][&"realm"][&"march"]
+	assert_dict(migrada[&"sieges"]).is_empty()
+	assert_int(int(migrada[&"target"])).is_equal(1)
+	var m := March.new()
+	m.from_dict(migrada)
+	assert_bool(m.sieges.is_empty()).is_true()
+
+
 func test_os_archotes_passam_para_o_cinto_do_rei() -> void:
 	# Q-153: os archotes deixaram de ser do archote e passaram a ser do armazenamento.
 	var mundo: Dictionary = SaveMigrations.migrate(_v1())[&"world"]
