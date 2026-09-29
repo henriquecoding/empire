@@ -14,3 +14,7 @@ extends Resource
 @export var biomes: Array[StringName] = []
 @export var per_segment_max: int = 0
 @export var shadow_width: int = 0
+## Quantas tocas deste bicho tem uma regiao, e a que distancia de um Amargueiro
+## uma toca se perde (Q-106). Zero: este bicho nao sai de tocas.
+@export var burrows_per_region: int = 0
+@export var burrow_wither_px: float = 0.0
