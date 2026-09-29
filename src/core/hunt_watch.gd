@@ -11,6 +11,7 @@ extends RefCounted
 const BUSHES := [-160.0, 770.0, -880.0, 1040.0, -1450.0, 1440.0, -1040.0, 910.0]
 const INTRO_SECONDS := 70.0  # §25, minuto 1:10; encenacao, nao afinacao de combate.
 const BICHO := &"rabbit"
+const METADE := 0.5
 const LUZ := [
 	GameClock.Phase.DAWN, GameClock.Phase.MORNING, GameClock.Phase.NOON, GameClock.Phase.AFTERNOON
 ]
@@ -61,7 +62,7 @@ static func period(dia_s: float) -> float:
 		return _periodo[dia_s]
 	var relogio := Registry.entry(&"economy", &"clock") as ClockData
 	var dados := Registry.entry(&"wildlife", BICHO) as WildlifeData
-	var media := (SimFactory.curve().hunt_yield.x + SimFactory.curve().hunt_yield.y) * 0.5
+	var media := (SimFactory.curve().hunt_yield.x + SimFactory.curve().hunt_yield.y) * METADE
 	if media <= 0.0 or dados.burrows_per_region <= 0:
 		return 0.0
 	var luz := 0.0

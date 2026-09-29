@@ -22,17 +22,20 @@ func _amargueiro(id: String) -> AmargueiroData:
 # ----------------------------------------------------------------- §74
 
 
-func test_d01_massa_em_campo_limpo_ao_dia_20_e_400() -> void:
+func test_d01_massa_em_campo_limpo_ao_dia_20() -> void:
 	# A linha "Campo limpo" da tabela da §74. Se alguem mexer nos coeficientes
-	# sem refazer a tabela, e aqui que se ve.
+	# sem refazer a tabela, e aqui que se ve. Ao dia 10 a formula tal e qual; ao
+	# dia 20 o calendario ja cresceu dez noites a 6% (Q-151): 400 x 1,06^10.
 	var r := _rot()
-	assert_float(Model.rot_mass(20, 0, r)).is_equal(400.0)
-	# E as outras tres linhas da mesma tabela, que sao a razao de ser da secao.
-	assert_float(Model.rot_mass(20, 0, r, 3, 0)).is_equal(466.0)
-	assert_float(Model.rot_mass(20, 0, r, 8, 0)).is_equal(576.0)
-	assert_float(Model.rot_mass(20, 0, r, 5, 3)).is_equal(645.0)
-	# Tres fortalezas ao dia 20, campo limpo: 490 contra os 700 da v5.2 (-30%).
-	assert_float(Model.rot_mass(20, 3, r)).is_equal(490.0)
+	assert_float(Model.rot_mass(10, 0, r)).is_equal(220.0)
+	assert_float(Model.rot_mass(20, 0, r)).is_equal_approx(716.3, 0.1)
+	# E as outras tres linhas da mesma tabela, que sao a razao de ser da secao: as
+	# arvores pesam o mesmo em qualquer dia, e nao crescem com o calendario.
+	assert_float(Model.rot_mass(20, 0, r, 3, 0)).is_equal_approx(782.3, 0.1)
+	assert_float(Model.rot_mass(20, 0, r, 8, 0)).is_equal_approx(892.3, 0.1)
+	assert_float(Model.rot_mass(20, 0, r, 5, 3)).is_equal_approx(961.3, 0.1)
+	# Tres fortalezas ao dia 20, campo limpo: as fortalezas tambem nao crescem.
+	assert_float(Model.rot_mass(20, 3, r)).is_equal_approx(806.3, 0.1)
 
 
 func test_d02_lenho_nao_e_moeda_e_rende_o_que_a_pessoa_era() -> void:
@@ -142,7 +145,7 @@ func test_limiares_da_divida_sobem_e_batem_com_a_luz() -> void:
 func test_a_gramatica_da_coluna_requires() -> void:
 	# §75: <chave><op><numero> ou <chave>=<id>, virgulas em AND. Sem parenteses,
 	# sem "ou", sem negacao. Se uma oferta precisar de mais, sao duas ofertas.
-	var chaves := ["gate", "treasury", "named", "marker", "peoples", "successor", "debt", "biome"]
+	var chaves := OfferRules.CHAVES.map(func(c: StringName) -> String: return String(c))
 	var forma := RegEx.create_from_string("^([a-z_]+)(>=|<=|=)([A-Za-z0-9_]+)$")
 	for o: OfferData in Dados.all_in("res://data/rot/offers"):
 		if o.requires.is_empty():

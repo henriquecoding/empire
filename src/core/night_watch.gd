@@ -127,8 +127,9 @@ func consecrate_at(estado: GameState, largada: Dictionary, quem: int) -> bool:
 func epilogue() -> StringName:
 	var perfil := SimFactory.rot_profile()
 	var divida := voice.debt
+	var ficaram := harvest.kept.size() + SimLoop.field.realm.vassals.vassals.size()  # Q-103
 	var soltos := harvest.released.size()
-	return Epilogue.of(divida.debt, harvest.kept.size(), soltos, perfil, divida.lume_out)
+	return Epilogue.of(divida.debt, ficaram, soltos, perfil, divida.lume_out)
 
 
 ## Os intervalos em x por onde ela ja passou. O §49 le isto para saber que um

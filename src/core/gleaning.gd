@@ -23,11 +23,6 @@ static func sweep(
 ) -> void:
 	if moedas.count() == 0:
 		return
-	# O escudeiro primeiro: a moeda que o rei lhe da nao volta ao saco do rei.
-	for i in unidades.count():
-		if escudeiro != null and unidades.alive(i) and _escudeiro(unidades, i):
-			if unidades.owners[i] != RecruitSystem.SEM_DONO:
-				_armar(unidades, moedas, i, escudeiro)
 	var ha_caidas := _ha_caidas(moedas)
 	for i in unidades.count():
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
@@ -73,23 +68,6 @@ static func awaited(unidades: UnitSystem, moedas: CoinSystem, i: int) -> bool:
 				if absf(unidades.xs[u] - moedas.xs[c]) <= curva.recruit_notice_px:
 					return true
 	return false
-
-
-## "O rei pode dar 5 moedas ao escudeiro" (Q-114): a moeda que o rei larga sem obra
-## por baixo, aos pes do escudeiro, vai para o escudo enquanto ele a aceitar — a
-## menos que alguem por recrutar a esteja a vir buscar.
-static func _armar(unidades: UnitSystem, moedas: CoinSystem, i: int, escudeiro: Squire) -> void:
-	var raio := SimFactory.curve().coin_pickup_px + escudeiro.escort_px()
-	var c := 0
-	while c < moedas.count() and escudeiro.coins_wanted() > 0:
-		var dele := moedas.from_king[c] == 1 and moedas.targets[c] == CoinTarget.NENHUM
-		var aqui := moedas.bands[c] == unidades.bands[i]
-		if dele and aqui and moedas.settled[c] != 0 and absf(moedas.xs[c] - unidades.xs[i]) <= raio:
-			if not awaited(unidades, moedas, i):
-				escudeiro.arm(moedas.amounts[c])
-				moedas.remove(moedas.ids[c])
-				continue
-		c += 1
 
 
 ## O escudeiro guarda o que apanha para ele (Q-114): nao entra no livro do rei.

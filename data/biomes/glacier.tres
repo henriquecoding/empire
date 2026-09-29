@@ -11,4 +11,3 @@ creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower"
 resources = Array[StringName]([&"water", &"rock"])
 region_screens = Vector2i(4, 6)
 music_profile = &"music_glacier"
-in_campaign = false

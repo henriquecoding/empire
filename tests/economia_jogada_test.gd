@@ -111,6 +111,8 @@ func test_a_ganancia_leva_a_parte_dela() -> void:
 
 func test_o_canteiro_sem_ninguem_no_posto_rende_menos() -> void:
 	SimLoop.state.greed = 0
+	for id in [2, 3]:  # os dois sem funcao do inicio iam para o posto (Q-110)
+		SimLoop.units.owners[SimLoop.units.index_of(id)] = RecruitSystem.SEM_DONO
 	var canteiros := _de_pe([&"farm"])
 	var sozinhos := _um_dia()
 	var cheio := _rendimento(canteiros) * pow(_curva().income_growth, 1)

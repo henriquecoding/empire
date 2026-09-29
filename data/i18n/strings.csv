@@ -435,7 +435,7 @@ LANG_PT_PT,Português,Português,"nome do idioma, no próprio idioma (§27)",16,
 LANG_EN,English,English,"nome do idioma, no próprio idioma (§27)",16,GB-28. Endónimo: não se traduz.
 HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O glifo da tecla vem antes e muda com o dispositivo (§26).
 HINT_DROP,largar (manter: em contínuo),drop (hold: continuous),rodapé de comandos (§24): Verbo 1,32,GB-15
-HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,"GB-15. Hoje o Verbo 2 só entra em passagens (Q-066)."
+HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,GB-15. Hoje o Verbo 2 só entra em passagens (Q-066).
 HINT_MARK,alvo,target,rodapé de comandos (§24): marcar alvo,16,GB-15
 HINT_WHEEL,estado · +1–6 impulso,status · +1–6 impulse,rodapé de comandos (§24): a roda do rei,32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
 HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
@@ -451,7 +451,7 @@ UI_NO,Não,No,confirmação,8,
 UI_INTERREGNUM,Interregno,Interregnum,morte do rei sem herdeiro (§16),20,
 UI_CROWN_FALLEN,A coroa caiu,The Crown Has Fallen,derrota (§16),28,
 UI_SUCCESSION,Sucessão,Succession,sucessão (§15),20,
-UI_HEIR_CHOICE,"O rei caiu. O herdeiro está pronto — continuas com um novo monarca?","The king has fallen. The heir is ready — carry on with a new monarch?",escolha da sucessão (§16; Q-146),90,
+UI_HEIR_CHOICE,O rei caiu. O herdeiro está pronto — continuas com um novo monarca?,The king has fallen. The heir is ready — carry on with a new monarch?,escolha da sucessão (§16; Q-146),90,
 UI_HEIR_CONTINUE,Continuar com o herdeiro,Carry on with the heir,escolha da sucessão (Q-146),32,
 UI_HEIR_DECLINE,Deixar a coroa cair,Let the crown fall,escolha da sucessão (Q-146),32,
 EPILOGUE_UNION,União,Union,epílogo (§17),16,
@@ -557,13 +557,16 @@ CONTEXT_BUILD,"{name} · Faltam {cost} moedas
 {drop} invest · hold to drop continuously",guia contextual de jogo,160,
 CONTEXT_DONE,{name} · Em funcionamento,{name} · Operational,guia contextual de jogo,160,
 CONTEXT_WARD,"{name} · Carga {charge}/{max}: afasta o Zelador
-CONTEXT_LUME,"O Lume · {assume} apagá-lo: a Podridão não volta a nascer","The Lume · {assume} put it out: the Rot will not rise again",guia contextual de jogo,160,§74; Q-156
+{drop} carregar","{name} · Charge {charge}/{max}: keeps the Tender away
+{drop} recharge",guia contextual de jogo,160,§75; Q-100
+CONTEXT_SQUIRE,"Escudeiro · Escudo {shield}/{max}
+{assume} dar-lhe uma moeda","Squire · Shield {shield}/{max}
+{assume} give him a coin",guia contextual de jogo,160,§08; Q-114
+CONTEXT_LUME,O Lume · {assume} apagá-lo: a Podridão não volta a nascer,The Lume · {assume} put it out: the Rot will not rise again,guia contextual de jogo,160,§74; Q-156
 LUME_NOT_HERE,O Lume arde na borda de onde a Podridão nasce,The Lume burns at the edge where the Rot is born,guia contextual de jogo,160,Q-156
-LUME_NEEDS_DAY,"O Lume · Só se apaga de dia","The Lume · It can only be put out by day",guia contextual de jogo,160,Q-156
-LUME_NEEDS_LIGHTHOUSE,"O Lume · Só se apaga com um farol teu de pé","The Lume · It can only be put out with one of your lighthouses standing",guia contextual de jogo,160,Q-156
-LUME_NEEDS_LOW_DEBT,"O Lume · Deves-lhe demasiado para o apagar","The Lume · You owe it too much to put it out",guia contextual de jogo,160,Q-156; a Dívida da Candeia acima do limiar da União
-{drop} carregar · a carga desce a cada alvorada","{name} · Charge {charge}/{max}: keeps the Tender away
-{drop} recharge · the charge drops every dawn",guia contextual de jogo,160,§75; Q-100
+LUME_NEEDS_DAY,O Lume · Só se apaga de dia,The Lume · It can only be put out by day,guia contextual de jogo,160,Q-156
+LUME_NEEDS_LIGHTHOUSE,O Lume · Só se apaga com um farol teu de pé,The Lume · It needs one of your lighthouses standing,guia contextual de jogo,160,Q-156
+LUME_NEEDS_LOW_DEBT,O Lume · Deves-lhe demasiado para o apagar,The Lume · You owe it too much to put it out,guia contextual de jogo,160,Q-156; a Dívida da Candeia acima do limiar da União
 CONTEXT_LOCKED,{name} · Requer conquista ou Lenho Amargo,{name} · Requires conquest or Bitter Wood,guia contextual de jogo,160,
 CONTEXT_RECRUIT,"{name} · Faltam {cost} moedas
 {drop} largar para recrutar","{name} · {cost} coins remaining
@@ -592,7 +595,7 @@ TOAST_PROMOTED,Um ofício novo no reino,A new craftsman joins your realm,aviso d
 TOAST_IMPULSE,Impulso real: hoje tem um preço,Royal impulse: today has a price,aviso do HUD: impulso usado,40,§15
 TOAST_IMPULSE_NEEDS_KING,{name}: é preciso o rei de pé,{name}: the king must be standing,aviso do HUD: impulso recusado (Q-113),48,
 TOAST_IMPULSE_NOT_YET,{name}: ainda não há onde isto pegue no reino,{name}: nothing in the kingdom for this to take hold of yet,aviso do HUD: impulso recusado (Q-113) — o sistema por trás ainda não existe,64,
-TOAST_IMPULSE_USED_TODAY,{name}: já decretaste um impulso hoje — volta amanhã,{name}: you already decreed an impulse today — come back tomorrow,aviso do HUD: impulso recusado (Q-113),64,
+TOAST_IMPULSE_USED_TODAY,{name}: já decretaste um impulso hoje,{name}: you already decreed one today,aviso do HUD: impulso recusado (Q-113),64,
 TOAST_IMPULSE_NEEDS_COINS,{name}: custa {cost} moedas no saco do rei,{name}: costs {cost} coins in the king's purse,aviso do HUD: impulso recusado (Q-113),56,
 CONTEXT_CONVERT_COIN,"{name} · Vende {material} a +{bonus}%
 {assume} mandar o {craft}: {effect}","{name} · Sells {material} at +{bonus}%
@@ -652,16 +655,23 @@ If the king falls, the heir rules at dawn",guia contextual de jogo: a casa do he
 EPILOGUE_SHIFT,O Turno,The Shift,epílogo (§79),16,AUD-05: o terceiro final da ADR 0018 não tinha nome escrito
 UI_CROSSED,A região está atravessada,The Region Is Crossed,travessia (P-K): a região acabou (Q-135),32,AUD-05
 UI_CAMPAIGN_END,Fim da campanha · {epilogue},End of the Campaign · {epilogue},travessia da última região: o epílogo (§79),40,AUD-05
-GUIDE_CROSS,"A TRAVESSIA ESTÁ ABERTA
-A bifurcação a leste leva à região seguinte","THE CROSSING IS OPEN
-The fork to the east leads to the next region",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
-CONTEXT_CROSS,"BIFURCAÇÃO · {assume} atravessar
-Levas o teu saco e quem estiver perto de ti","FORK · {assume} to cross
-You take your purse and whoever is near you",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
-CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · abre no dia {day}
-Aguenta até lá","FORK · opens on day {day}
-Hold out until then",guia contextual de jogo: a travessia (P-K),160,AUD-05 (Q-135)
-UI_PARTY,"Vão contigo: {party} dos teus e {purse} moedas","With you: {party} of your people and {purse} coins",travessia (P-K): a comitiva (Q-135),64,AUD-05
+GUIDE_CROSS,"A MARCHA PODE SAIR
+Na bifurcação a leste, manda os teus conquistar o povo seguinte","THE MARCH CAN LEAVE
+At the fork to the east, send your people to conquer the next folk",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-103 (ADR 0035)"
+CONTEXT_CROSS,"BIFURCAÇÃO · {assume} mandar a marcha
+Vão os teus que estão perto; tu ficas no reino","FORK · {assume} send the march
+Your people nearby go; you stay in the kingdom",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-154 (ADR 0035)"
+CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · a marcha sai no dia {day}
+Aguenta até lá","FORK · the march leaves on day {day}
+Hold out until then",guia contextual de jogo: a marcha (§13),160,Q-146 (ADR 0035)
+MARCH_AWAY,"BIFURCAÇÃO · A marcha está fora
+Volta ao amanhecer","FORK · The march is away
+It returns at dawn",guia contextual de jogo: a marcha (§13),160,Q-146
+MARCH_NOBODY_LEFT,BIFURCAÇÃO · Todos os povos te pagam tributo,FORK · Every folk pays you tribute,guia contextual de jogo: a marcha (§13),160,Q-103
+MARCH_TOO_FEW,"BIFURCAÇÃO · Para marchar, traz pelo menos três dos teus
+Construtores, arqueiros ou gente de armas","FORK · To march, bring at least three of yours
+Builders, archers or men-at-arms",guia contextual de jogo: a marcha (§13),160,Q-154
+UI_PARTY,Vão contigo: {party} dos teus e {purse} moedas,With you: {party} of your people and {purse} coins,travessia (P-K): a comitiva (Q-135),64,AUD-05
 CONTEXT_VARIANT,"{name} · {variant}
 {assume} trocar · {drop} construir: faltam {cost}","{name} · {variant}
 {assume} switch · {drop} build: {cost} to go",guia contextual de jogo: a variante da melhoria (P-N),160,AUD-05 (Q-136)
@@ -669,5 +679,5 @@ VARIANT_ARCHER_TOWER_A,alcance (+40%),range (+40%),variante da torre de arqueiro
 VARIANT_ARCHER_TOWER_B,cadência (um terço mais tiros),cadence (a third more shots),variante da torre de arqueiros (Q-136),32,AUD-05
 VARIANT_FARM_A,renda,yield,variante do canteiro (Q-136),24,AUD-05
 VARIANT_FARM_B,"resguardo (o rasto não o para, rende 75%)","sheltered (the trail spares it, 75% yield)",variante do canteiro (Q-136),48,AUD-05
-UI_LEGACY_FAILED,"O que fica não se gravou: os saves desta partida continuam onde estavam","What remains could not be saved: this run's saves are still where they were",fim da partida: o legado não se escreveu (CONT-01),96,CONT-01
+UI_LEGACY_FAILED,O que fica não se gravou: os saves desta partida continuam onde estavam,What remains could not be saved: this run's saves are still where they were,fim da partida: o legado não se escreveu (CONT-01),96,CONT-01
 UI_CROSSING_MEMORY,"Levas a dívida ({debt}), {peoples} povos na memória e {heir} dias de treino do herdeiro; as obras ficam","You carry the debt ({debt}), {peoples} peoples in memory and {heir} days of heir training; the buildings stay",travessia (P-K): o que a campanha leva (Q-143),112,CONT-02

@@ -19,7 +19,7 @@ const FAROL := &"lighthouse"
 
 ## Se o rei esta ao pe do Lume numa das bordas.
 static func at_base(x: float) -> bool:
-	return x <= Band.PASSAGE_PX or x >= SimLoop.world_width - Band.PASSAGE_PX
+	return absf(x) <= Band.PASSAGE_PX or absf(x - SimLoop.world_width) <= Band.PASSAGE_PX
 
 
 ## Porque e que nao se apaga agora, ou &"" se se apaga (o guia di-lo).

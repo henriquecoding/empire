@@ -161,6 +161,8 @@ def parte_xiii(tables, problems, texto_cru):
     rot = csv_rows("rot")["default"]
     mb, md = float(rot["mass_base"]), float(rot["mass_per_day"])
     ma, mn = float(rot["mass_per_amargueiro"]), float(rot["mass_per_named_amargueiro"])
+    # Q-151: depois da noite growth_from_night o calendario cresce a mass_growth.
+    mg, gf = float(rot.get("mass_growth") or 1), int(rot.get("growth_from_night") or 0)
 
     # §74 · a massa termo a termo, dia 5 / 10 / 20
     massa = find(tables, "s74", "Estado do campo")
@@ -173,8 +175,9 @@ def parte_xiii(tables, problems, texto_cru):
         for coluna, dia in enumerate(dias, start=1):
             n += 1
             quer = num(r[coluna])
-            tem = mb + md * dia + ma * anon + mn * nomeados
-            if abs(tem - quer) > 1e-6:
+            cresce = mg ** (dia - gf) if gf > 0 and dia > gf else 1.0
+            tem = (mb + md * dia) * cresce + ma * anon + mn * nomeados
+            if abs(tem - quer) > 0.5:  # o dossie arredonda a unidade
                 problems.append("§74 %s · dia %d: dossie %g, rot.csv da %g" % (chave, dia, quer, tem))
 
     # §74 · os tres destinos

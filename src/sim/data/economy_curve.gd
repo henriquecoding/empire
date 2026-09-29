@@ -188,3 +188,13 @@ extends Resource
 ## dias em que quem desertou nao volta a ser recrutado.
 @export var wage_grace_days: float = 1.0
 @export var deserter_rest_days: int = 2
+
+## A marcha e os vassalos (§13; Q-103, Q-146, Q-154).
+@export var march_party_caps: Dictionary = {}
+@export var march_min_party: int = 0
+@export var march_nights: int = 1
+@export var vassal_tribute: Vector2i = Vector2i()
+@export var vassal_seeds: Vector2i = Vector2i()
+@export var vassal_strength: float = 0.0
+@export var vassal_erosion_per_mass: float = 0.0
+@export var vassals_can_fall: bool = true

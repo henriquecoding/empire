@@ -33,7 +33,6 @@ var hunting: HuntingSystem
 
 var intents := IntentQueue.new()
 
-## Quem e "tu" no "ele segue-te" do §25. O -1 e um jogo sem rei em campo.
 var king_id: int = UnitSystem.NENHUM
 
 ## O que o mundo diz a simulacao sobre si proprio: onde fica o nucleo, onde
@@ -41,6 +40,8 @@ var king_id: int = UnitSystem.NENHUM
 ## cena, lidos pelo tick.
 var core_x: float = 0.0
 var world_width: float = 0.0
+## As terras bravias de cada lado, alem das bases da Podridao: anda-se la (Q-154).
+var wild_px: float = 0.0
 var passages: PackedFloat32Array = PackedFloat32Array()
 
 ## §62: autosave no DAWN de cada dia. Desliga-se em testes e em ferramentas.

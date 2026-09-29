@@ -46,12 +46,13 @@ static func consume(
 				if spend(unidades, king_id, args[&"amount"]):
 					larga.append(args)
 			IntentQueue.Kind.ASSUME:
-				if assume(unidades, king_id, passagens) or cross(unidades, king_id):
+				if assume(unidades, king_id, passagens) or cross(unidades, king_id, campo):
 					continue
 				if Lume.extinguish(unidades, king_id):  # o fim do ciclo pela luz (Q-156)
 					continue
 				if not choose_mode(unidades, king_id, obras, campo):
-					choose_wall(unidades, king_id, obras)
+					if not choose_wall(unidades, king_id, obras):
+						arm_squire(unidades, king_id, campo)
 			IntentQueue.Kind.MARK_TARGET:
 				if campo == null or campo.classes.marks():  # so quem tem arco (Q-086)
 					mark(unidades, bichos, combate, args[&"x"], king_id)
@@ -61,6 +62,27 @@ static func consume(
 				if campo != null:
 					campo.impulse(args[&"id"], unidades, king_id)
 	return larga
+
+
+## "O rei pode dar 5 moedas ao escudeiro" (Q-114): o Verbo 2 sem mais nada onde
+## pegar da-lhe uma moeda do saco, se ele esta ao pe e o escudo ainda a aceita.
+static func arm_squire(units: UnitSystem, king: int, campo: FieldWork) -> bool:
+	if campo == null or not squire_wants(units, king, campo.classes):
+		return false
+	units.carried_coins[units.index_of(king)] -= 1
+	campo.classes.squire.arm(1)
+	EventBus.queue(&"coin_spent", [1, &"squire"])
+	return true
+
+
+## Se o escudeiro, ao pe do rei, aceita uma moeda que o rei tem para dar.
+static func squire_wants(units: UnitSystem, king: int, classes: ClassSystem) -> bool:
+	var e := classes.squire_index(units, king)
+	var i := units.index_of(king)
+	if e == UnitSystem.NENHUM or i == UnitSystem.NENHUM or units.carried_coins[i] <= 0:
+		return false
+	var perto := classes.squire.escort_px() + SimFactory.curve().coin_pickup_px
+	return classes.squire.coins_wanted() > 0 and absf(units.xs[e] - units.xs[i]) <= perto
 
 
 ## O Verbo 2 numa casa de conversao de pe: escolhe o outro modo (Q-115).
@@ -156,17 +178,13 @@ static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32A
 	return true
 
 
-## A travessia (P-K, Q-135): o Verbo 2 na bifurcacao, de dia, a partir do dia
-## `crossing_day`, acaba a regiao (o game.gd ouve o segment_entered).
-static func cross(unidades: UnitSystem, king_id: int) -> bool:
-	if not crossing_open(unidades, king_id):
+## A marcha (§13; Q-146): o Verbo 2 na bifurcacao, de dia, a partir do dia
+## `crossing_day`, manda quem esta perto do rei conquistar o povo seguinte. O rei
+## fica: e o reino dele (Realm, ADR 0035).
+static func cross(unidades: UnitSystem, king_id: int, campo: FieldWork = null) -> bool:
+	if campo == null or not crossing_open(unidades, king_id):
 		return false
-	SimLoop.state.crossed = true
-	var ordem := SimLoop.state.region + 1
-	var regioes := SimLoop.state.chapters.regions
-	var a_seguir := regioes[ordem] if ordem < regioes.size() else ""
-	EventBus.queue(&"segment_entered", [StringName(a_seguir), CROSSING])
-	return true
+	return campo.realm.send(unidades, king_id, SimLoop.state, ClockService.clock.day)
 
 
 ## Se o rei esta onde a travessia pega, e ela ja abriu.

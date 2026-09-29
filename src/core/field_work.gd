@@ -20,6 +20,8 @@ var succession: Succession
 ## Os acampamentos da regiao, de onde chega um vagabundo por alvorada (Q-122).
 ## Escritos por quem monta o mundo.
 var camps: PackedFloat32Array = PackedFloat32Array()
+## A marcha e os vassalos (§13; Q-103, Q-146): o reino que fica.
+var realm := Realm.new()
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
@@ -182,6 +184,7 @@ func to_dict() -> Dictionary:
 		&"classes": classes.to_dict(),
 		&"upkeep": upkeep.to_dict(),
 		&"succession": succession.to_dict(),
+		&"realm": realm.to_dict(),
 	}
 
 
@@ -193,6 +196,7 @@ func from_dict(mundo: Dictionary) -> void:
 	classes.from_dict(mundo.get(&"classes", {}))
 	upkeep.from_dict(mundo.get(&"upkeep", {}))
 	succession.from_dict(mundo.get(&"succession", {}))
+	realm.from_dict(mundo.get(&"realm", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 
@@ -210,18 +214,11 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
 			else:
 				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
-	if camps.is_empty():
-		return
-	var curva := SimFactory.curve()
-	var vagabundo := Registry.entry(&"units", &"vagrant") as UnitData
-	var livres := 0
-	for i in unidades.count():
-		if unidades.owners[i] == RecruitSystem.SEM_DONO and unidades.alive(i):
-			livres += 1 if unidades.data_ids[i] == vagabundo.id else 0
-	for k in mini(curva.vagrants_per_dawn, maxi(0, curva.vagrant_camp_cap - livres)):
-		var x := camps[(dia + k) % camps.size()]
-		var novo := unidades.spawn(estado, vagabundo, RecruitSystem.SEM_DONO, x)
-		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])
+	Camps.dawn(camps, dia, unidades, estado)
+	var fork := (
+		SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else _nucleo.x
+	)
+	realm.dawn(dia, unidades, estado, _rei, Vector2(_nucleo.x, fork))  # marcha e tributo (Q-103)
 
 
 ## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce no castelo

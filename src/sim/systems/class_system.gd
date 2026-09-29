@@ -112,9 +112,10 @@ func riposte() -> int:
 	return dano
 
 
-## O escudeiro do rei vivo, na faixa dele, ou NENHUM.
-func squire_index(unidades: UnitSystem) -> int:
-	var r := unidades.index_of(_rei)
+## O escudeiro do rei vivo, na faixa dele, ou NENHUM. `rei` por omissao e o que o
+## ultimo tick viu.
+func squire_index(unidades: UnitSystem, rei: int = NENHUM) -> int:
+	var r := unidades.index_of(_rei if rei == NENHUM else rei)
 	if r == NENHUM or not unidades.alive(r):
 		return NENHUM
 	for i in unidades.count():

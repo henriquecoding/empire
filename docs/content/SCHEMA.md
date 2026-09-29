@@ -95,7 +95,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 27 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 28 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -272,7 +272,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 115 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -287,6 +287,8 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §
 | `upkeep_tier1_limit` | int | Manutencao — §06 |  |
 | `upkeep_tier1_rate` | float | Manutencao — §06 |  |
 | `upkeep_tier2_rate` | float | Manutencao — §06 |  |
+| `wage_grace_days` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `deserter_rest_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `trade_route_income` | float | Comercio, caca, saque — §06, §13, §25, §49 |  |
 | `trade_network_bonus` | float | Comercio, caca, saque — §06, §13, §25, §49 |  |
 | `trade_cart_cost` | int | Comercio, caca, saque — §06, §13, §25, §49 |  |
@@ -378,6 +380,14 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 105 linha(s) · §06 §
 | `chicken_theft_matter` | float | Auditoria de gameplay — AUD-04 |  |
 | `crossing_day` | int | Auditoria de gameplay — AUD-05 |  |
 | `crossing_party_px` | float | Auditoria de gameplay — AUD-05 |  |
+| `march_party_caps` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_min_party` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_nights` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_tribute` | Vector2i | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_seeds` | Vector2i | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_strength` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassal_erosion_per_mass` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `vassals_can_fall` | bool | Coroa — o preco dos impulsos (Q-014) |  |
 | `king_run_mult` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
@@ -571,6 +581,8 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 3 linha(s) · §06 §
 | `biomes` | Array[StringName] |  |  |
 | `per_segment_max` | int |  |  |
 | `shadow_width` | int |  |  |
+| `burrows_per_region` | int |  |  |
+| `burrow_wither_px` | float |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 

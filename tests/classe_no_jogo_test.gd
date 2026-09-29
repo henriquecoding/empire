@@ -96,23 +96,23 @@ func test_o_escudeiro_nasce_com_o_rei_e_e_teu() -> void:
 	assert_int(GameplayGuide.troops()).is_equal(0)
 
 
-## Q-114 (o dono, 29/09/2026): a moeda caida vai para a espada do escudeiro, e a
-## que o rei lhe da (largada ao pe dele, sem obra por baixo) vai para o escudo. Nao
-## entrega nada ao rei: o sistema dele e complementar.
-func test_o_escudeiro_junta_a_caida_para_a_espada_e_a_do_rei_para_o_escudo() -> void:
+## Q-114 (o dono, 29/09/2026): a moeda caida vai para a espada do escudeiro, e o
+## rei da-lhe moedas para o escudo com o Verbo 2 ao pe dele. Nao entrega nada ao
+## rei: o sistema dele e complementar.
+func test_o_escudeiro_junta_a_caida_para_a_espada_e_o_rei_da_lhe_o_escudo() -> void:
 	var e := _escudeiro()
 	var x := SimLoop.units.xs[e]
 	var escudeiro := SimLoop.field.classes.squire
 	SimLoop.units.xs[_rei()] = x + SimFactory.curve().recruit_notice_px * 4.0
 	var caida := SimLoop.drop_coin(x, Band.Kind.SURFACE, 1, &"production")
-	var do_rei := SimLoop.drop_coin(x, Band.Kind.SURFACE, 1, Verbs.JOGADOR)
 	for _t in 90:
 		SimLoop.coins.tick(PASSO)
-	var saco := SimLoop.units.carried_coins[_rei()]
 	Verbs.sweep(SimLoop.units, SimLoop.coins, SimLoop.king_id)
 	assert_int(SimLoop.coins.index_of(caida)).is_equal(CoinSystem.NENHUM)
-	assert_int(SimLoop.coins.index_of(do_rei)).is_equal(CoinSystem.NENHUM)
 	assert_int(escudeiro.loot).is_equal(1)
-	assert_bool(escudeiro.shielded()).is_true()
 	assert_int(SimLoop.units.carried_coins[e]).is_equal(0)
-	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(saco)
+	SimLoop.units.xs[_rei()] = x
+	SimLoop.units.carried_coins[_rei()] = 3
+	assert_bool(Verbs.arm_squire(SimLoop.units, SimLoop.king_id, SimLoop.field)).is_true()
+	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(2)
+	assert_bool(escudeiro.shielded()).is_true()

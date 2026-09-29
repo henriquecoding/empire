@@ -10,7 +10,8 @@ extends GdUnitTestSuite
 
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
-const O_VAGABUNDO := 2
+## O vagabundo de um acampamento: os dois do castelo ja sao teus (Q-110).
+const O_VAGABUNDO := 4
 const ASSENTAR := 45
 
 

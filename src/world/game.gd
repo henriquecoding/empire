@@ -62,7 +62,7 @@ func _ready() -> void:
 		var segundos := Preferences.shared().number(Preferences.DAY_SECONDS)
 		if segundos > 0.0:
 			SimLoop.intents.queue(IntentQueue.Kind.DAY_LENGTH, {&"seconds": segundos})
-	_camara.set_region(0.0, SimLoop.world_width)
+	_camara.set_region(-SimLoop.wild_px, SimLoop.world_width + SimLoop.wild_px)  # Q-154
 	# Poe o marcador onde o monarca esta ANTES de o entregar a camara: o follow()
 	# assenta a camara na posicao do alvo, e um alvo ainda na origem punha o
 	# primeiro segundo de cada partida a viajar da borda do mapa ate ao castelo.
@@ -191,17 +191,17 @@ func end_reign() -> void:  # deixar a coroa cair em vez do herdeiro (Q-146)
 	_acabar()
 
 
-## A travessia (P-K, Q-135): a regiao acabou, e o rei leva quem esta perto dele.
+## O fim do ciclo — o Lume apagado, ou o ultimo povo vassalo: a campanha acaba, e
+## o jogo novo leva o legado da travessia (Q-135, Q-156, Q-103).
 func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
-	if tipo != Verbs.CROSSING and tipo != Lume.TIPO:  # o Lume apagado acaba o ciclo (Q-156)
+	if tipo != Lume.TIPO and tipo != Realm.TODOS:  # o fim do ciclo (Q-156, Q-103)
 		return
 	var tropas := SimFactory.by_id(&"units")
 	var perto := SimFactory.curve().crossing_party_px
 	var legado := Legacy.crossing(
 		SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, perto, SimLoop.field.classes
 	)
-	if tipo == Lume.TIPO:
-		Legacy.end_campaign(legado)
+	Legacy.end_campaign(legado)
 	var noite := SimLoop.night
 	if CampaignMemory.carries(not legado.has(Legacy.PLANO), noite.epilogue()):
 		legado.merge(CampaignMemory.of(noite.voice.debt, noite.harvest, SimLoop.field.succession))

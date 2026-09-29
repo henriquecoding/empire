@@ -172,7 +172,11 @@ func _andar(direccao: float) -> void:
 		return
 	SimLoop.units.set_target_x(
 		SimLoop.king_id,
-		clampf(SimLoop.units.xs[i] + direccao * SimLoop.world_width, 0.0, SimLoop.world_width)
+		clampf(
+			SimLoop.units.xs[i] + direccao * SimLoop.world_width,
+			-SimLoop.wild_px,
+			SimLoop.world_width + SimLoop.wild_px
+		)
 	)
 
 

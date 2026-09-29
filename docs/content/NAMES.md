@@ -76,6 +76,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `consecrated_altar` | `BUILDING_CONSECRATED_ALTAR` | Altar Consagrado | Consecrated Altar |
 | `passage_seal` | `BUILDING_PASSAGE_SEAL` | Escora | Shoring |
 | `campfire` | `BUILDING_CAMPFIRE` | Fogueira | Campfire |
+| `tender_ward` | `BUILDING_TENDER_WARD` | Sino de Vigia | Warding Bell |
 
 ## walls
 
@@ -242,7 +243,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `tell_me_a_name` | `OFFER_TELL_ME_A_NAME` | Diz-me um nome. | Tell me a name. |
 | `what_you_buried` | `OFFER_WHAT_YOU_BURIED` | O que enterraste. | What you buried. |
 | `what_was_here_before` | `OFFER_WHAT_WAS_HERE_BEFORE` | O que estava aqui antes de ti. | What was here before you. |
-| `keep_the_lantern` | `OFFER_KEEP_THE_LANTERN` | Fica com a candeia por uma noite. | Keep the lantern for one night. |
+| `keep_the_lantern` | `OFFER_KEEP_THE_LANTERN` | Fica com o Lume por uma noite. | Keep the Lume for one night. |
 | `an_heir` | `OFFER_AN_HEIR` | Um herdeiro. | An heir. |
 | `give_back_whats_mine` | `OFFER_GIVE_BACK_WHATS_MINE` | Devolve-me o que é meu. | Give me back what is mine. |
 
