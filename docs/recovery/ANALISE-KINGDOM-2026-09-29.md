@@ -12,19 +12,19 @@
 
 **Estado.** A `main` está saudável. O CI está verde (corrida [#258](https://github.com/henriquecoding/empire/actions/runs/36573738544)) e o deploy de produção na Vercel está `READY` no mesmo commit, construído em 31 s. Dos 99 tickets, 75 estão feitos, 11 parciais e 13 por fazer. O ciclo curto do Kingdom (recrutar, caçar, pagar, ver construir, colher, sobreviver à noite) existe inteiro. Por cima dele, o Empire acrescenta o que o Kingdom não tem: a Podridão com massa e Lume, as três faixas, a sucessão, o legado, as ofertas, os títulos, o ânimo e os vassalos.
 
-**O que a comparação com o Kingdom revela.** O Empire herdou bem a *superfície* do Kingdom (moeda física, um verbo de pagar, recrutados que esperam na vila, decay em vez de reset). Faltam três *engrenagens* que fazem o Kingdom escalar e criar tensão:
+**O que a comparação com o Kingdom revela.** O Empire herdou bem a *superfície* do Kingdom (moeda física, um verbo de pagar, recrutados que esperam na vila, decay em vez de reset). Faltam algumas *engrenagens* que fazem o Kingdom escalar e criar tensão:
 
 | # | Achado | Por que importa | Prioridade |
 |---|---|---|---|
-| **K1** | **O teto militar.** A região tem **3 arqueiros e 2 lanceiros para sempre**. Um vagabundo nunca vira soldado: só trabalha (canteiro, ordenha, carroça) ou vira ofício. **Medido:** em 10 dias só nasceram vagabundos. O instrumento do §66 afina a noite contra **12 arqueiros**, um exército que a partida não consegue ter. | No Kingdom, o exército cresce comprando ferramentas: qualquer aldeão vira arqueiro com um arco de 2 moedas. Sem isso, moeda sobrando não vira defesa, e a curva da noite está calibrada contra algo inalcançável. | **P0** |
-| **K2** | **O saco não protege o rei.** O rei tem 60 de vida e as moedas só caem quando ele morre. | No Kingdom, cada golpe arranca moedas e a coroa só cai com o saco vazio. Carregar moedas à noite é armadura *e* risco. É a tensão mais barata do gênero. | P1 |
+| **K1** | **O teto dos arqueiros.** A região tem **3 arqueiros para sempre**. Um vagabundo nunca vira arqueiro. Os lanceiros renovam-se, mas só em bloco, pelo impulso real **Chamada às Armas**: 4 moedas ou mais, até 4 vagabundos livres, e a produção desse dia a zero. **Medido:** sem impulsos, em 10 dias só nasceram vagabundos. O instrumento do §66 afina a noite contra **12 arqueiros**, e as torres, que só aceitam arqueiros, nunca terão mais de 3. | No Kingdom, o arco custa 2 moedas e qualquer aldeão vira arqueiro, um a um. Aqui, a defesa à distância (a que a torre multiplica, §07) não cresce com a economia, e a curva da noite está calibrada contra um exército inalcançável. | **P0** (medição) |
 | **K6** | **A marcha ganha sempre** que leva 3 ou mais (ADR 0035, Q-159 aberta). | No Kingdom, atacar um portal tem atrito: o portal não regenera vida e as tropas podem não voltar. Conquista sem risco não é decisão. | P1 |
 | **K5** | **Acampamentos sem custo de oportunidade.** Ficam fixos a ±1650 px e nada os destrói. | No Kingdom, expandir derruba árvores e com elas os acampamentos. "Crescer ou continuar recrutando" é a decisão espacial do gênero. | P1/P2 |
+| K2 | **O saco em si não protege o rei**, mas a decisão "moeda por proteção" já existe no **escudo do escudeiro**: 5 moedas dão 5 golpes fracos ou 2 fortes (Q-114). Falta só a "coroa no chão" recuperável. | Acrescentar outra camada de moedas-armadura duplicaria o escudeiro. O que falta do Kingdom é a derrota não binária. | P2 |
 | K3, K4, K7, K8, K9 | Despromoção em vez de morte; fôlego e montaria; alicerces no decay; calendário e estações; som. | Ver a seção 4. | P2 |
 
 **O Recomeçar do zero.** Hoje não existe. O botão "Novo jogo" só aparece depois da derrota (ou na escolha do herdeiro) e **herda o legado**: a sonda mostrou 4 Sementes, 2 segredos e 11 obras de pé no jogo seguinte. Até o `-- --novo` da linha de comando herda o legado, embora o `docs/POR_FAZER.md` ainda o chame de "partida do zero". A proposta (seção 7) é pequena e isolada:
 
-- `src/core/fresh_start.gd`: apaga os 3 slots e o legado, com os temporários.
+- `src/core/fresh_start.gd`: apaga os 3 slots e o legado, com os temporários, **tudo ou nada** (quarentena e reversão se algum ficheiro não sair).
 - `src/ui/fresh_start_panel.gd`: o botão "Recomeçar do zero…" e a confirmação, com o foco em "Cancelar".
 - Mais 4 linhas no `PauseMenu`, 5 chaves no `strings.csv` e um arquivo de testes.
 - O `game.gd`, que já está nas 250 linhas, **não muda**: o `new_game()` de hoje, com o disco limpo, já é um jogo do zero.
@@ -115,9 +115,9 @@ A leitura do §02 continua certa: o Kingdom funciona por decisões que parecem a
 |---|---|---|---|---|
 | 1 | **Um só botão: pagar** | Recrutar, construir, melhorar, alimentar: tudo é largar moeda | Verbo 1 (`Verbs`, `CoinTarget`), mais o Verbo 2 contextual (§05) | ✅ |
 | 2 | **Moeda física, saco com teto** | Cada moeda é um objeto: cai, rola e é roubada | `CoinSystem` com arco, sombra e salto. Saco do rei com **33** (`units.csv`). A moeda caída é de quem passa (`Gleaning`) | ✅ |
-| 3 | **O saco é a vida; a coroa cai** | Um golpe arranca moedas. Sem moedas, a coroa cai e um Greedling que a apanhe acaba o jogo | O rei tem **60 de vida** (`tank`). As moedas só caem na morte (`combat_system.gd:245`) | ❌ (K2) |
+| 3 | **O saco é a vida; a coroa cai** | Um golpe arranca moedas. Sem moedas, a coroa cai e um Greedling que a apanhe acaba o jogo | O rei tem **60 de vida** (`tank`) e as moedas do saco só caem na morte (`combat_system.gd:245`). Mas a moeda já compra proteção: o **escudo do escudeiro** (`Verbs.arm_squire`, `ClassSystem.soak` → `Squire.block`) | 🔶 (K2) |
 | 4 | **Recrutar no acampamento** | O vagabundo corre para a moeda, apanha e vai esperar na vila | `RecruitSystem` e `Retinue` (ADR 0033). `Camps`: 1 por alvorada, teto de 4, ânimo ±1 | ✅ |
-| 5 | **A ferramenta dá o ofício** | Arco 2, martelo 3, foice 4: o aldeão mais próximo pega e vira arqueiro, construtor ou agricultor | Ofícios de casa (construtor 12, ferreiro 15, cozinheiro 10…). **Arqueiros e lanceiros já nascem prontos** e só existem 3+2 na região | ❌ para soldados (K1) |
+| 5 | **A ferramenta dá o ofício** | Arco 2, martelo 3, foice 4: o aldeão mais próximo pega e vira arqueiro, construtor ou agricultor | Ofícios de casa (construtor 12, ferreiro 15, cozinheiro 10…). **Arqueiros já nascem prontos e só existem 3 na região.** Lanceiros: 2 prontos, e mais pela Chamada às Armas, que arma os vagabundos livres todos de uma vez (`CrownSystem._chamar_as_armas`) | ❌ para arqueiros, 🔶 para lanceiros (K1) |
 | 6 | **Despromoção em vez de morte** | Um golpe tira a ferramenta (vira aldeão), outro tira a moeda (vira vagabundo) | Morte permanente (§16). O corpo alimenta os Amargueiros (§74) | 🚫 hoje; proposta híbrida (K3) |
 | 7 | **Expandir derrubando floresta** | Pagar para cortar árvores abre terreno e **destrói acampamentos** vizinhos. A Casa de Cidadãos substitui o acampamento a preço maior | Sítios de obra pré-definidos (§55). Acampamentos fixos (`greybox.gd:70`). A decisão da árvore existe noutra forma: cada Amargueiro de pé dá +22 de massa | 🔶 (K5) |
 | 8 | **Muralhas por níveis, torre que acerta** | Arqueiro com cerca de 1/3 de precisão no campo e perto de 100% na torre | 5 degraus com caminho A/B, postos com presença física. D3 e D4 corrigidos em 26/09 | ✅ |
@@ -146,43 +146,53 @@ flowchart LR
     A -->|golpe| V
 ```
 
-No Empire há **duas populações que não se tocam**: gente que trabalha, que se renova, e gente que luta, que não se renova.
+No Empire, o circuito divide-se. Os trabalhadores renovam-se um a um. Os lanceiros renovam-se em bloco, por decreto do rei. Os arqueiros não se renovam.
 
 ```mermaid
 flowchart LR
     V2[Vagabundo no acampamento<br/>1 por alvorada · teto 4] -->|1 moeda| T[Trabalhador<br/>canteiro · ordenha · carroça]
+    V2 -->|"Chamada às Armas<br/>4+ moedas · produção do dia a 0<br/>todos os livres de uma vez"| L[Lanceiro]
     T -->|12 + Casa de Treino| C2[Construtor]
     T -->|10 + Cozinha| K2[Cozinheiro]
-    T -.->|não existe| R2[Arqueiro / Lanceiro]
-    P[3 arqueiros + 2 lanceiros<br/>pré-colocados na região] -->|3 ou 4 moedas| R2
-    R2 -->|morte| X[Corpo → Amargueiro]
+    T -.->|não existe| A2[Arqueiro]
+    P[3 arqueiros + 2 lanceiros<br/>pré-colocados na região] -->|3 ou 4 moedas| A2
+    P --> L
+    A2 -->|morte| X[Corpo → Amargueiro]
 ```
 
-O preço do arqueiro no Empire (3) já é, por coincidência feliz, **vagabundo (1) + arco (2)**, o preço total do Kingdom. Os dados já estão prontos para o circuito do Kingdom. Falta só o caminho.
+O preço do arqueiro no Empire (3) já é, por coincidência feliz, **vagabundo (1) + arco (2)**, o preço total do Kingdom. Os dados já estão prontos para o circuito do Kingdom. Para o arqueiro, falta só o caminho.
 
 ---
 
 ## 4. Achados novos, com evidência
 
-### K1 · O teto militar: 3 arqueiros e 2 lanceiros por região, para sempre (P0)
+### K1 · O teto dos arqueiros: 3 por região, para sempre (P0 para a medição)
 
-**Reproduzido.**
+**Reproduzido** para o fluxo natural; **confirmado no código** para o impulso.
 
 - A região põe gente para recrutar em posições fixas: 4 vagabundos (2 deles já teus), **3 arqueiros**, **2 lanceiros** (`src/world/greybox.gd:66-69`, `:224-228`).
 - A única fonte de gente nova é o `Camps.dawn()`, que só cria o perfil `vagrant` (`src/core/camps.gd:12-30`).
 - O vagabundo só serve para `farm`, `milking` e `cart` (`job_affinity` no `data/source/units.csv`). As casas de ofício formam construtor, ferreiro, cozinheiro, diplomata e bardo, nunca soldados (`src/core/sim_factory.gd:197-205`: `trained_at`).
-- Os outros `spawn()` do código são o rei (sucessão), a comitiva do legado (quem já existia) e as criaturas.
-- **Sonda:** no dia 1 há `archer/livre: 3`, `spearman/livre: 2`, `vagrant/livre: 2`. Do dia 1 ao 10 nasceram **`vagrant: 2`** e mais nada (Anexo A).
-- O critério de saída da Fase 1 (§66) mede-se com "a muralha de ferro no outro flanco, as duas torres e **doze arqueiros** — os postos dos dois flancos são treze" (`tests/dez_dias_test.gd:24-26`). A receita do §07 pede **seis**. Nenhuma das duas cabe numa partida real.
+- **Os lanceiros têm uma saída:** o impulso real **Chamada às Armas** (`impulses.csv: call_to_arms`, Q-110) transforma todos os vagabundos *livres* em lanceiros teus (`CrownSystem._chamar_as_armas`, `crown_system.gd:177`; testado em `tests/impulso_no_jogo_test.gd`). As condições:
+  - o preço base é 4, cresce com a produção e sobe ×1,5 se o decreto se repetir em 3 dias;
+  - a produção desse dia vai a zero;
+  - só há um impulso por dia;
+  - o acampamento reenche a um vagabundo por alvorada, até 4.
+  
+  Conta de ordem de grandeza: cerca de 4 lanceiros a cada 4 dias, por uma aposta que custa um dia inteiro de produção.
+- **Para os arqueiros não há saída nenhuma.** Os outros `spawn()` do código são o rei (sucessão), a comitiva do legado (quem já existia) e as criaturas.
+- **Sonda:** no dia 1 há `archer/livre: 3`, `spearman/livre: 2`, `vagrant/livre: 2`. Sem impulsos, do dia 1 ao 10 nasceram **`vagrant: 2`** e mais nada (Anexo A). A sonda corre sem piloto e não usa a roda; o impulso é a exceção descrita acima.
+- O posto `tower` aceita arqueiros; o lanceiro só serve para `wall` e `guard` (`units.csv`). **As torres nunca terão mais de 3 pessoas.**
+- O critério de saída da Fase 1 (§66) mede-se com "a muralha de ferro no outro flanco, as duas torres e **doze arqueiros** — os postos dos dois flancos são treze" (`tests/dez_dias_test.gd:24-26`). A receita do §07 pede **seis**. Nenhuma das duas cabe numa partida real, com ou sem Chamada às Armas.
 
 **Consequências para quem joga.**
 
-- Dos 13 postos de defesa da defesa de referência, no máximo 5 terão gente (o rei e o escudeiro não ocupam postos). As torres e os degraus altos de muralha, que "multiplicam" arqueiros (§07), multiplicam 3.
-- *Inferência de design, a medir:* depois dos primeiros dias, a moeda que sobra não tem onde virar defesa móvel. Só vira pedra. É o "rico demais" que o van den Berg admite no Kingdom, mas por outra razão: não há *em que* gastar gente.
-- A noite (Q-157) e os testes de design afinam-se contra um exército hipotético. O CONT-05 ("medição fiel da partida") fica impossível de fechar enquanto o piloto não conseguir *comprar* soldados.
+- A defesa à distância, a que a torre multiplica (§07: "a torre é o multiplicador"), fica presa em 3 para sempre. A defesa de corpo a corpo cresce, mas aos saltos e só por decreto.
+- *Inferência de design, a medir:* o crescimento militar deixa de ser uma decisão por moeda (o "mais um arqueiro?" do Kingdom) e passa a um decreto de poucos em poucos dias. Entre decretos, a moeda que sobra só vira pedra.
+- A noite (Q-157) e os testes de design afinam-se contra um exército de arqueiros hipotético. O CONT-05 ("medição fiel da partida") só fecha com um piloto que use os caminhos reais: recrutar, a Chamada às Armas e, se vier, a banca do arco.
 - A morte de um arqueiro é irreparável. No tom do §74 isso é bonito, mas economicamente é um beco: um arqueiro morto na noite 3 é 1/3 do arco da região para sempre.
 
-**Proposta K1-a (a do Kingdom, recomendada): a banca de armas.** É uma obra perto do núcleo, com a moeda largada nela (Verbo 1). Cada moeda compra uma arma que fica **visível num suporte** (o *rack* do Kingdom, com teto de 4). Um recrutado que espera no núcleo sem posto vai lá, pega e **vira arqueiro** (arco, 2 moedas: a diferença de 3 − 1 que o `units.csv` já tem) ou **lanceiro** (lança, 3 moedas: 4 − 1). Nada de novo no gesto:
+**Proposta K1-a (a do Kingdom, recomendada): a banca do arco.** É uma obra perto do núcleo, com a moeda largada nela (Verbo 1). Cada moeda compra um arco que fica **visível num suporte** (o *rack* do Kingdom, com teto de 4). Um recrutado que espera no núcleo sem posto vai lá, pega e **vira arqueiro**, por 2 moedas: a diferença de 3 − 1 que o `units.csv` já tem. Os lanceiros continuam a sair da Chamada às Armas. Uma lança avulsa (3 moedas: 4 − 1) é opcional: daria ao lanceiro o mesmo caminho unitário, mas tira valor ao decreto. Nada de novo no gesto:
 
 - É o mesmo destino resolvido no gesto do AUD-01 (`CoinTarget`).
 - O suporte é informação diegética: quantas armas esperam dono.
@@ -196,21 +206,29 @@ O que falta:
 - Um sistema puro pequeno (`Arsenal`, abaixo de 150 linhas) ou a generalização do `TrainingSystem` com a variante A/B que já existe (`SlotVariant`, Q-136).
 - Testes, e depois refazer o §66 com um piloto que **financia** a defesa (CONT-05).
 
-**Proposta K1-b (mínima, só dados):** o acampamento sorteia o perfil do recém-chegado (por exemplo 70% vagabundo, 20% arqueiro, 10% lanceiro, no fluxo `world`). É uma linha no `economy.csv` e uma no `Camps`. Resolve o teto, mas não é Kingdom: a pessoa chega pronta e o jogador não decide.
+**Proposta K1-b (mínima, só dados):** o acampamento sorteia o perfil do recém-chegado (por exemplo 80% vagabundo e 20% arqueiro, no fluxo `world`). É uma linha no `economy.csv` e uma no `Camps`. Resolve o teto, mas não é Kingdom: a pessoa chega pronta e o jogador não decide.
 
 **Decisão do dono:** Q-A (seção 9). Muda uma mecânica e não está no dossiê.
 
-### K2 · O saco não protege o rei (P1)
+### K2 · O saco em si não protege o rei, mas o escudeiro já vende proteção (P2)
 
-**Confirmado no código.** O combate tira vida ao rei como a qualquer tropa, e o `carried_coins` só vai ao chão no `unit_died` (`src/sim/systems/combat_system.gd:245`). No Kingdom, cada golpe no monarca arranca moedas. Sem moedas, a coroa cai na direção oposta ao golpe, e só a perde quem deixa uma criatura apanhá-la (Kingdom Wiki: *Crown*, *Greedling*).
+**Confirmado no código.** O combate tira vida ao rei, e o `carried_coins` do saco só vai ao chão no `unit_died` (`src/sim/systems/combat_system.gd:245`). No Kingdom, cada golpe no monarca arranca moedas. Sem moedas, a coroa cai na direção oposta ao golpe, e só a perde quem deixa uma criatura apanhá-la (Kingdom Wiki: *Crown*, *Greedling*).
 
-**Por que vale a pena no Empire, e mais do que no Kingdom:**
+**Mas a decisão "moeda por proteção" já existe no Empire, e é a do escudeiro** (Q-114):
 
-- **É a decisão da noite que falta.** Levar 30 moedas para a muralha é armadura (a uma moeda por golpe, aguenta 30) e é risco (as moedas ficam no chão, para quem passar primeiro).
-- **Liga-se ao que o Empire já tem de único.** Moedas arrancadas dentro da mancha **alimentam o Lume** (ADR 0034: o Lume "alimenta-se do que ela consome (moedas…)"). É o título do §74 ao pé da letra: "o combustível és tu". Fora da mancha, o `Gleaning` decide: um vagabundo ou uma tropa apanha.
-- **Não conflita com a sucessão.** A vida continua a existir; o saco é uma camada por cima. Uma fase "coroa no chão" até à alvorada encaixa no §16 ("ressurreição até ao amanhecer").
+- Uma moeda largada ao pé dele arma o escudo (`Verbs.arm_squire`, `verbs.gd:72`).
+- O escudo absorve os golpes dirigidos ao rei que está perto (`ClassSystem.soak` → `Squire.block`).
+- Pelos parâmetros do `units.csv` (`shield_coins:5`, `shield_per_coin:2`, `weak_hit:2`, `strong_hit:5`), 5 moedas aguentam 5 golpes fracos ou 2 fortes.
+- A espada (3 moedas, 3 golpes de 6) e a investidura de cavaleiro sobem os dois.
 
-**Proposta.** Um golpe no rei com o saco não vazio arranca `king_hit_coins` moedas (em dados, `_proposed`) e não tira vida. Com o saco vazio, tira vida como hoje. **Decisão:** Q-B.
+É a mesma família do Kingdom: lá, os escudeiros e cavaleiros também convertem moeda em escudo.
+
+**Leitura.** Acrescentar ao saco outra camada completa de moedas-armadura duplicaria o escudeiro e protegeria demais o rei. O que falta do Kingdom é a **derrota não binária**: hoje o rei chega a 0 e a partida vai para o herdeiro ou acaba. Há uma variante pequena que encaixa no que existe:
+
+- **A coroa no chão.** Com o rei caído e o escudo gasto, a coroa cai. Recupera-se até à alvorada se nenhuma criatura a apanhar primeiro. Encaixa no §16 ("ressurreição até ao amanhecer", que ainda não existe).
+- Se a coroa cair dentro da mancha, **alimenta o Lume** (ADR 0034: o Lume "alimenta-se do que ela consome"). É o título do §74 ao pé da letra: "o combustível és tu".
+
+**Antes de decidir:** medir com que frequência o escudo do escudeiro absorve golpes numa partida pilotada. Se ele já segura o rei nas noites típicas, a coroa no chão é a única peça que falta. **Decisão:** Q-B.
 
 ### K3 · Morte em vez de despromoção (P2, decisão de tom)
 
@@ -285,12 +303,12 @@ Todos já têm linha no `docs/audio/AUDIO_CUE_SHEET.csv`, ligados a sinais do ca
 
 | Prioridade | Proposta | Resolve | Custo | Decisão |
 |---|---|---|---|---|
-| **P0** | K1-a: banca de armas (arco 2, lança 3) mais o §66 refeito com um piloto que financia a defesa | K1; fecha o CONT-05 | Médio: 1 obra, 1 sistema pequeno, a greybox, cerca de 10 testes | Q-A |
-| P1 | K2: saco como armadura; as moedas arrancadas na mancha alimentam o Lume | K2 | Pequeno a médio: combate, dados, testes | Q-B |
+| **P0** | K1-a: banca do arco (2 moedas) mais o §66 refeito com um piloto que usa os caminhos reais (recrutar, Chamada às Armas, banca) | K1; fecha o CONT-05 | Médio: 1 obra, 1 sistema pequeno, a greybox, cerca de 10 testes | Q-A |
 | P1 | K6: o cerco do §13, com firmeza persistente e baixas | K6, Q-159 | Médio | Q-F |
 | P1 | K9: os 7 sons mínimos | Sensação e legibilidade | Produção de áudio; código já previsto | — |
 | P1/P2 | K5: acampamentos ligados ao terreno e casa de cidadãos | K5 | Médio | Q-E |
 | P2 | K4: fôlego e cavalo de tração | K4 | Médio | Q-D |
+| P2 | K2: a coroa no chão, recuperável até à alvorada (depois de medir o escudo do escudeiro) | K2 | Pequeno a médio | Q-B |
 | P2 | K7: alicerces | K7 | Pequeno a médio (o legado já grava degrau, caminho e variante) | Q-G |
 | P2 | K8 pequeno: a lua avisa o pico na véspera | K8 | Pequeno (só apresentação) | — |
 | P2 | K3: despromoção híbrida | K3 | Médio, com afinação do §74 | Q-C |
@@ -302,13 +320,13 @@ Todos já têm linha no `docs/audio/AUDIO_CUE_SHEET.csv`, ligados a sinais do ca
 
 ```mermaid
 flowchart LR
-    E0["Etapa 0<br/>Recomeçar do zero (seção 7)<br/>isolado · pedido"] --> E1["Etapa 1<br/>K1 banca de armas<br/>+ §66 com piloto financiado"]
-    E1 --> E2["Etapa 2<br/>K2 saco-armadura · K6 cerco<br/>· K9 sons mínimos"]
-    E2 --> E3["Etapa 3<br/>K5 acampamentos · K4 fôlego e cavalo<br/>· K7 alicerces · lua do pico"]
+    E0["Etapa 0<br/>Recomeçar do zero (seção 7)<br/>isolado · pedido"] --> E1["Etapa 1<br/>K1 banca do arco<br/>+ §66 com piloto real"]
+    E1 --> E2["Etapa 2<br/>K6 cerco<br/>· K9 sons mínimos"]
+    E2 --> E3["Etapa 3<br/>K5 acampamentos · K4 fôlego e cavalo<br/>· K7 alicerces · K2 coroa no chão · lua do pico"]
     E3 --> E4["Etapa 4<br/>estações · modos · co-op (§18)"]
 ```
 
-A ordem segue uma regra: **primeiro o que faz a moeda virar exército (K1), depois o que dá risco ao que se carrega (K2, K6), depois o espaço (K5, K4), por fim o calendário.** Cada etapa termina com um instrumento que mede a partida real, desde as 6 moedas, e não uma defesa posta à mão.
+A ordem segue uma regra: **primeiro o que faz a moeda virar exército (K1), depois o que dá risco à conquista (K6), depois o espaço e a derrota (K5, K4, K7, K2), por fim o calendário.** Cada etapa termina com um instrumento que mede a partida real, desde as 6 moedas, e não uma defesa posta à mão.
 
 ---
 
@@ -380,8 +398,12 @@ A ordem segue uma regra: **primeiro o que faz a moeda virar exército (K1), depo
 - **O foco começa em Cancelar.** O Espaço é o Verbo 1 e o A do comando é o `ui_accept` (§26). Um toque a mais não pode apagar uma campanha.
 - Esc ou Start durante a pergunta fecha a pausa, o que equivale a cancelar. Na abertura seguinte, a pergunta está fechada.
 - **Sem "manter premido" nem temporizador** (acessibilidade motora, §26). A proteção é a segunda confirmação com o foco no lado seguro.
-- Ao confirmar: os botões desativam-se, apaga-se o disco e recarrega-se a cena. Se não se conseguir apagar tudo, a pergunta diz *"Não foi possível apagar tudo: nada recomeçou."* e não recarrega. É a mesma honestidade do CONT-01 (`UI_LEGACY_FAILED`).
-- Os números da pergunta: durante uma partida viva são o dia e as Sementes e segredos do `GameState`. Depois de uma derrota são os do legado à espera (`LegacyStore.pending()`), os mesmos da linha que a derrota já mostra (`PauseMenu.legacy_line`).
+- Ao confirmar: os botões desativam-se, apaga-se o disco (**tudo ou nada**, 7.4) e recarrega-se a cena. Se algum ficheiro não sair, os que já saíram voltam ao sítio e a pergunta diz *"Não foi possível apagar tudo: nada foi apagado nem recomeçou."* É a mesma honestidade do CONT-01 (`UI_LEGACY_FAILED`).
+- Cancelar devolve o foco ao botão "Recomeçar do zero…". Um botão escondido com foco continuava a ouvir o Espaço, que é o Verbo 1; é a razão pela qual o `PauseMenu._fechar()` já solta o foco.
+- Os números da pergunta:
+  - Durante uma partida viva: o dia e as Sementes e segredos do `GameState`.
+  - Depois de uma derrota com o legado gravado: os do legado à espera (`LegacyStore.pending()`), os mesmos da linha que a derrota já mostra (`PauseMenu.legacy_line`).
+  - Se o legado **falhou** (`LegacyStore.failed`): continua a ser o `GameState`, porque os saves que ficaram guardam esses números e vão ser apagados.
 
 ```mermaid
 flowchart TD
@@ -390,7 +412,7 @@ flowchart TD
     B -->|Recomeçar do zero…| C{"Pergunta<br/>foco em Cancelar"}
     C -->|Cancelar · Esc| B
     C -->|Apagar tudo e recomeçar| D[FreshStart.wipe]
-    D -->|falhou| E["A pergunta diz:<br/>nada recomeçou"]
+    D -->|um ficheiro não saiu| R["os que saíram voltam ao sítio"] --> E["A pergunta diz:<br/>nada foi apagado nem recomeçou"]
     D -->|ok| F["call_group('jogo', 'new_game')"]
     F --> G[reload_current_scene]
     G --> H["_retomar(): sem slot<br/>SimLoop.start + Greybox.build"]
@@ -401,7 +423,7 @@ flowchart TD
 
 | Ficheiro | Camada (§70) | O quê | Tamanho |
 |---|---|---|---|
-| `src/core/fresh_start.gd` (**novo**, `FreshStart`) | núcleo; importa só `core/` e `sim/` | `wipe() -> bool` apaga slots, temporários e legado, repõe `LegacyStore.failed` e `Pace`. `clean() -> bool` verifica | Cerca de 40 linhas |
+| `src/core/fresh_start.gd` (**novo**, `FreshStart`) | núcleo; importa só `core/` e `sim/` | `wipe() -> bool` põe slots, temporários e legado em quarentena e só depois os apaga (tudo ou nada); repõe `LegacyStore.failed` e `Pace` | Cerca de 60 linhas |
 | `src/ui/fresh_start_panel.gd` (**novo**, `FreshStartPanel`) | apresentação | O botão, a pergunta e as duas respostas. Chama `FreshStart.wipe()`, repõe `InputRouter.pointed` e pede o jogo novo pelo grupo `jogo`, como o botão da derrota (a UI não importa `src/world/`) | Cerca de 100 linhas |
 | `src/ui/pause_menu.gd` | apresentação | +4 linhas: cria o painel e fecha a pergunta em cada `open()` | 231 → cerca de 235 |
 | `src/world/game.gd` | — | **Sem mudança.** O `new_game()` com o disco limpo já é um jogo do zero. Continua nas 250 linhas | 250 |
@@ -420,7 +442,12 @@ flowchart TD
 - Texto só por chave.
 - O esquema do save não muda, por isso não há migração.
 
-**Ordem do apagamento, e porquê.** Primeiro os slots (o que se quer largar), depois o legado. Um fecho entre os dois deixa, no pior caso, um legado sem saves. Esse é exatamente o estado depois de uma derrota, que o arranque já sabe tratar (`LegacyStore.settle()`, CONT-01). Nunca fica um estado que o jogo não conheça.
+**Tudo ou nada.** Apagar ficheiro a ficheiro deixa uma janela má: no Windows, dois slots saem e o `legacy.save` fica preso. Parte da campanha já se foi, o menu diz "nada recomeçou", e o arranque seguinte trata o legado que sobrou como uma derrota acabada. Por isso o apagamento é em dois tempos:
+
+1. **Quarentena.** Cada ficheiro do jogo que exista é renomeado para `<nome>.apagar`. Renomear é atómico, e o `SaveService` e o `LegacyStore` só leem `slot_N.save` e `legacy.save`, portanto um ficheiro em quarentena já não conta. Se um renomear falhar, os que já foram **voltam ao nome original** e o `wipe()` devolve falso: nada mudou.
+2. **Apagar.** Só com todos em quarentena é que se apagam. Um `.apagar` que não saia fica inerte (o jogo não o lê) e o `wipe()` seguinte leva-o.
+
+O pior caso que sobra é o regresso da quarentena falhar a meio da reversão, o que exige duas falhas seguidas no mesmo segundo. Mesmo aí, nada se perde: o ficheiro fica com o sufixo `.apagar`, recuperável à mão.
 
 ### 7.5 Código proposto (esboço, para o ticket)
 
@@ -434,38 +461,65 @@ flowchart TD
 # jogo seguinte nasce como o primeiro. As opcoes (§45) ficam — sao de quem joga, e
 # nao da partida.
 #
-# Apaga pela ordem que deixa sempre uma maneira de continuar: primeiro os slots, que
-# e o que se quer largar; depois o legado. Um fecho entre os dois deixa um legado
-# sem saves — o estado de uma derrota, que o arranque ja sabe tratar (CONT-01).
+# Tudo ou nada. Apagar ficheiro a ficheiro deixava meia campanha apagada quando um
+# deles ficava preso (auditoria Kingdom, 29/09). Primeiro renomeia-se cada um para a
+# quarentena — renomear e atomico, e o SaveService e o LegacyStore so leem os nomes
+# originais —, e se um falhar os que ja foram voltam ao sitio. So com todos fora e
+# que se apagam; um que nao saia fica inerte, e o wipe seguinte leva-o.
 class_name FreshStart
 extends RefCounted
 
 const TEMPORARIO := ".tmp"
+const QUARENTENA := ".apagar"
 
 
-## Apaga os saves e o legado. Devolve falso se alguma coisa ficou no disco.
+## Apaga os saves e o legado, ou nada. Devolve falso se nada mudou.
 static func wipe() -> bool:
-	for slot in SaveService.SLOTS:
-		SaveService.delete_slot(slot)
-		_apagar(SaveService.caminho(slot) + TEMPORARIO)
-	LegacyStore.discard()
-	_apagar(LegacyStore.PATH + TEMPORARIO)
+	_varrer()  # o que um wipe anterior deixou em quarentena
+	var fora: PackedStringArray = []
+	for caminho in _do_jogo():
+		if not FileAccess.file_exists(caminho):
+			continue
+		if _mover(caminho, caminho + QUARENTENA) != OK:
+			for voltar in fora:
+				_mover(voltar + QUARENTENA, voltar)
+			return false
+		fora.append(caminho)
+	_varrer()
 	LegacyStore.failed = false
 	Pace.reset()
-	return clean()
+	return true
 
 
 ## Verdadeiro se nao ha nada para retomar nem para herdar.
 static func clean() -> bool:
-	for slot in SaveService.SLOTS:
-		if SaveService.has_slot(slot):
+	for caminho in _do_jogo():
+		if FileAccess.file_exists(caminho):
 			return false
-	return not FileAccess.file_exists(LegacyStore.PATH)
+	return true
 
 
-static func _apagar(caminho: String) -> void:
-	if FileAccess.file_exists(caminho):
-		DirAccess.remove_absolute(ProjectSettings.globalize_path(caminho))
+## O que o jogo le para retomar ou herdar, e os temporarios da escrita.
+static func _do_jogo() -> PackedStringArray:
+	var saida: PackedStringArray = []
+	for slot in SaveService.SLOTS:
+		saida.append(SaveService.caminho(slot))
+		saida.append(SaveService.caminho(slot) + TEMPORARIO)
+	saida.append(LegacyStore.PATH)
+	saida.append(LegacyStore.PATH + TEMPORARIO)
+	return saida
+
+
+static func _varrer() -> void:
+	for caminho in _do_jogo():
+		if FileAccess.file_exists(caminho + QUARENTENA):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(caminho + QUARENTENA))
+
+
+static func _mover(de: String, para: String) -> Error:
+	return DirAccess.rename_absolute(
+		ProjectSettings.globalize_path(de), ProjectSettings.globalize_path(para)
+	)
 ```
 
 #### 7.5.2 `src/ui/fresh_start_panel.gd` (esqueleto)
@@ -499,19 +553,30 @@ func _init(ao_sair: Callable) -> void:
 func _ready() -> void:
 	_abrir = _botao(_perguntar)
 	_pergunta = _rotulo()
-	_cancelar = _botao(close)
+	_cancelar = _botao(_desistir)
 	_apagar = _botao(_confirmar)
 	close()
 
 
-## Volta ao botao, sem pergunta. A pausa chama-o de cada vez que abre.
+## Volta ao botao, sem pergunta. A pausa chama-o de cada vez que abre. Quem fecha
+## solta o foco que esteja num controlo que vai esconder (a regra do PauseMenu._fechar).
 func close() -> void:
+	var com_foco := get_viewport().gui_get_focus_owner() if is_inside_tree() else null
+	if com_foco != null and com_foco != _abrir and is_ancestor_of(com_foco):
+		com_foco.release_focus()
 	_mostrar(false)
 
 
 func _perguntar() -> void:
 	_mostrar(true)
 	_cancelar.grab_focus()
+
+
+## Cancelar devolve o foco ao botao: um botao escondido com foco continuava a ouvir o
+## Espaco, que e o Verbo 1.
+func _desistir() -> void:
+	close()
+	_abrir.grab_focus()
 
 
 func _confirmar() -> void:
@@ -532,8 +597,6 @@ func _depois(apagou: bool) -> void:
 	get_tree().call_group(GRUPO_JOGO, RECOMECAR)
 
 
-## O que se perde: a partida viva (dia, Sementes, segredos) ou, depois do fim, o
-## legado a espera — os mesmos numeros que a linha da derrota ja mostra.
 func _escrever() -> void:
 	var perde := lost()
 	_abrir.text = tr(&"UI_FRESH_START")
@@ -542,6 +605,9 @@ func _escrever() -> void:
 	_apagar.text = tr(&"UI_FRESH_START_CONFIRM")
 
 
+## O que se perde. Depois do fim, com o legado gravado, e o legado a espera — os
+## numeros da linha da derrota. Se o legado falhou (CONT-01), os saves que ficaram
+## guardam a partida viva, e sao esses os numeros que se vao apagar.
 static func lost() -> Dictionary:
 	var estado := SimLoop.state
 	var perde := {
@@ -549,8 +615,9 @@ static func lost() -> Dictionary:
 		"seeds": estado.royal_seeds,
 		"found": estado.found.size(),
 	}
-	if Defeat.happened() or estado.crossed:  # depois do fim, perde-se o legado a espera
-		var legado := LegacyStore.pending()
+	var legado := LegacyStore.pending()
+	var acabou := Defeat.happened() or estado.crossed
+	if acabou and not LegacyStore.failed and not legado.is_empty():
 		perde["seeds"] = int(legado.get(Legacy.SEMENTES, 0))
 		perde["found"] = PackedStringArray(legado.get(Legacy.ACHADOS, [])).size()
 	return perde
@@ -583,7 +650,7 @@ UI_FRESH_START,Recomeçar do zero…,Start Over…,pausa: apaga os saves e o leg
 UI_FRESH_START_ASK,"Recomeçar do zero apaga esta partida (dia {day}) e o legado — {seeds} Sementes Reais e {found} segredos. As opções ficam como estão.","Starting over erases this run (day {day}) and the legacy — {seeds} Royal Seeds and {found} secrets. Your options stay as they are.",pausa: a pergunta antes de apagar,160,
 UI_FRESH_START_CONFIRM,Apagar tudo e recomeçar,Erase Everything and Start Over,pausa: confirmar o recomeço do zero,32,
 UI_CANCEL,Cancelar,Cancel,pausa: voltar sem apagar,16,
-UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada recomeçou.,Could not erase everything: nothing was restarted.,pausa: o recomeço do zero falhou,64,
+UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada foi apagado nem recomeçou.,Could not erase everything: nothing was erased or restarted.,pausa: o recomeço do zero falhou e voltou tudo ao sítio,72,
 ```
 
 ### 7.6 Testes, primeiro (regra 4 e ciclo do `AGENTS.md`)
@@ -596,13 +663,17 @@ UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada recomeçou.,Could not
 | `test_apaga_os_temporarios` | `slot_N.save.tmp` e `legacy.save.tmp` deixados por um fecho a meio desaparecem |
 | `test_o_que_nao_e_do_jogo_fica` | Um ficheiro irmão em `user://` (e o `settings.cfg` de um `Preferences` de teste) continua lá |
 | `test_apagar_duas_vezes_nao_falha` | Idempotente: um segundo `wipe()` devolve verdadeiro |
+| `test_uma_falha_a_meio_volta_tudo_ao_sitio` | Com três slots e um legado, uma pasta não vazia em `legacy.save.apagar` faz o renomear do legado falhar. `wipe()` devolve falso, **os três slots continuam nos nomes originais** e nenhum `.apagar` fica para trás |
+| `test_a_quarentena_que_sobrou_sai_no_wipe_seguinte` | Um `slot_0.save.apagar` deixado por um wipe interrompido desaparece no seguinte, e nunca é lido como save |
 | `test_um_legado_falhado_deixa_de_contar` | `LegacyStore.failed = true` antes; `false` depois |
 | `test_o_jogo_seguinte_nasce_do_zero` | Depois de `wipe()`: `SimLoop.start` + `Greybox.build` + `Legacy.apply(pending())` dá dia 1, `royal_seeds == 0`, `found` vazio, saco do rei == `start_coins`, nenhuma obra além do núcleo (o que a sonda 4 mediu) |
 | `test_a_pausa_oferece_recomecar_nos_tres_estados` | `open(false)`, `open(true)` e o estado do herdeiro mostram o botão |
 | `test_a_pergunta_abre_com_o_foco_em_cancelar` | Depois de `_perguntar()`, o dono do foco é `_cancelar` |
 | `test_cancelar_nao_apaga` | Com um slot gravado, cancelar mantém o slot e volta ao botão |
+| `test_cancelar_devolve_o_foco_ao_botao` | Depois de Cancelar, o dono do foco é `_abrir`, e nenhum controlo escondido tem foco |
+| `test_com_o_legado_falhado_a_pergunta_conta_a_partida_viva` | `Defeat` verdadeiro, `LegacyStore.failed` verdadeiro e `pending()` vazio: `lost()` devolve as Sementes e os segredos do `GameState`, e não zeros |
 | `test_confirmar_pede_um_jogo_novo` | Um nó falso no grupo `jogo` com `new_game()` que conta os pedidos; confirmar dá 1 pedido e disco limpo |
-| `test_a_falha_diz_e_nao_recomeca` | `_depois(false)`: a pergunta mostra `UI_FRESH_START_FAILED`, 0 pedidos ao grupo, Cancelar de novo ativo |
+| `test_a_falha_diz_e_nao_recomeca` | `_depois(false)`: a pergunta mostra `UI_FRESH_START_FAILED`, 0 pedidos ao grupo, Cancelar de novo ativo e com o foco |
 | `test_o_texto_sai_de_chaves_que_existem` | As 5 chaves novas traduzem-se nas duas línguas |
 
 ```gdscript
@@ -631,14 +702,22 @@ Depois: `./run_tests.sh` e `make portoes` (formato, estilo e as 250 linhas). A `
 
 ### 7.7 Web (Vercel) e casos de borda
 
-**No browser.** O `user://` do jogo web vive no IndexedDB do site. Houve um defeito do Godot em que `DirAccess.remove_absolute` devolvia sucesso mas o ficheiro voltava depois de recarregar a página ([godotengine/godot#100217](https://github.com/godotengine/godot/issues/100217)). Foi corrigido para a 4.4 (PR #100221), e o Empire está na 4.7.2. Mesmo assim, vale um teste de fumo em produção:
+**No browser.** O `user://` do jogo web vive no IndexedDB do site. Houve um defeito do Godot em que `DirAccess.remove_absolute` devolvia sucesso mas o ficheiro voltava depois de recarregar a página ([godotengine/godot#100217](https://github.com/godotengine/godot/issues/100217)). Foi corrigido para a 4.4 (PR #100221), e o Empire está na 4.7.2. Mesmo assim, vale um teste de fumo em produção.
 
-1. Abrir `/jogar/`, jogar até ao dia 2 e fechar a pausa (grava).
+O recibo de arranque que o jogo já imprime (`Empire · semente … · região … · sítios … · em campo …`, `game.gd:_recibo`) **não serve de prova**. Sai igual num jogo retomado, num que herdou o legado e num limpo, e um F5 que trouxesse a campanha antiga de volta passava nele.
+
+A prova precisa de uma linha que diga **o estado do disco**. A `boot.gd` (52 linhas) já imprime um recibo antes de entregar a cena. Basta acrescentar-lhe duas coisas:
+
+- o save mais recente (`SaveService.summaries()`: existe? que dia?);
+- se há legado à espera (`LegacyStore.pending().is_empty()`).
+
+Por exemplo: `… · save: dia 3 · legado: sim`. O teste passa a ser:
+
+1. Abrir `/jogar/`, jogar até ao dia 2 e abrir a pausa de dia (grava). F5: a linha da boot diz `save: dia 2`.
 2. Esc → Recomeçar do zero → confirmar.
-3. Recarregar a página (F5).
-4. A consola deve mostrar o recibo de arranque (`Empire · semente …`) de um jogo novo, no dia 1, sem legado.
+3. F5. A linha da boot tem de dizer `save: nenhum` (ou `dia 1`, se o jogo novo já gravou ao perder o foco) e `legado: não`. Qualquer `dia ≥ 2` ou `legado: sim` quer dizer que o apagamento não persistiu.
 
-O `tools/web/fumo.mjs` pode automatizar o passo 4 a ler a consola. Onde o browser não persiste o IndexedDB (algumas janelas privadas, cookies bloqueados), o `user://` não persiste (`OS.is_userfs_persistent()` é falso); o recomeço funciona na sessão e não há nada a apagar depois.
+O `tools/web/fumo.mjs` pode automatizar os três passos a ler a consola. Onde o browser não persiste o IndexedDB (algumas janelas privadas, cookies bloqueados), o `user://` não persiste (`OS.is_userfs_persistent()` é falso); o recomeço funciona na sessão e não há nada a apagar depois.
 
 | Caso | O que acontece com a proposta |
 |---|---|
@@ -648,7 +727,8 @@ O `tools/web/fumo.mjs` pode automatizar o passo 4 a ler a consola. Onde o browse
 | Recomeçar na **janela `_chegada`** (legado aplicado, primeiro save por gravar) | O `wipe` apaga o legado; o jogo novo nasce sem ele |
 | **Duplo clique** em confirmar | Os botões desativam-se no primeiro; o `wipe` é idempotente |
 | **Comando** com a roda apontada ao pausar | `InputRouter.pointed = -1` antes de recarregar: nenhum impulso fantasma |
-| **Windows** com o ficheiro preso | `clean()` falso: a pergunta diz, nada recomeça, nada fica meio apagado de forma que o arranque não conheça |
+| **Windows** com o ficheiro preso | O ficheiro preso não entra em quarentena; os que já entraram voltam ao nome original; `wipe()` falso; a pergunta diz "nada foi apagado nem recomeçou", e é verdade |
+| Um `.apagar` que não se deixou apagar | Fica inerte (nenhum sistema lê esse nome) e sai no `wipe()` seguinte |
 | **Esc** durante a pergunta | Fecha a pausa (cancela); a pergunta reabre fechada |
 
 ### 7.8 Checklist do PR
@@ -659,7 +739,7 @@ O `tools/web/fumo.mjs` pode automatizar o passo 4 a ler a consola. Onde o browse
 - [ ] `pause_menu.gd` ≤ 250 linhas; `game.gd` intocado.
 - [ ] 5 chaves no `strings.csv`, PT-PT e EN, dentro do `_max_chars`.
 - [ ] `./run_tests.sh` verde; `make portoes` verde.
-- [ ] Teste de fumo no preview da Vercel (7.7).
+- [ ] A linha do estado do disco no recibo da `boot.gd` e o teste de fumo no preview da Vercel (7.7).
 - [ ] Corrigir a linha do `docs/POR_FAZER.md` que chama o `--novo` de "partida do zero".
 
 ### 7.9 Extensões opcionais (fora do pedido)
@@ -673,16 +753,16 @@ O `tools/web/fumo.mjs` pode automatizar o passo 4 a ler a consola. Onde o browse
 
 ## 8. Plano de validação
 
-**Automático.** Os testes da seção 7.6. Para K1 a K8, cada proposta traz o seu instrumento, e o primeiro é o piloto financiado desde as 6 moedas (CONT-05). Nenhum teste de design passa por se mexer num número de `data/`.
+**Automático.** Os testes da seção 7.6. Para K1 a K8, cada proposta traz o seu instrumento. O primeiro é o piloto financiado desde as 6 moedas (CONT-05), que usa os caminhos reais de gente: recrutar, a Chamada às Armas e, se vier, a banca do arco. Nenhum teste de design passa por se mexer num número de `data/`.
 
 **Métricas de partida** (eventos que o §32 já prevê, mais os que estas propostas pedem):
 
 | Métrica | Pergunta | Proposta ligada |
 |---|---|---|
 | Postos de defesa com gente ao crepúsculo, em % | O jogador consegue guarnecer o que constrói? | K1 |
-| Moedas no saco e no chão ao crepúsculo, por dia | A riqueza acumula-se sem destino (o "rico demais" do Kingdom)? | K1, K2 |
-| Tempo entre recrutar e armar | O circuito da ferramenta é legível? | K1 |
-| Golpes aguentados pelo saco por noite; moedas que foram para o Lume | O saco-armadura cria decisão ou só castiga? | K2 |
+| Moedas no saco e no chão ao crepúsculo, por dia | A riqueza acumula-se sem destino (o "rico demais" do Kingdom)? | K1 |
+| Tempo entre recrutar e armar; Chamadas às Armas por partida | O circuito da ferramenta é legível? O decreto é a única saída que se usa? | K1 |
+| Golpes no rei absorvidos pelo escudo do escudeiro, por noite | O escudo já segura o rei? Falta mesmo a coroa no chão? | K2 |
 | Taxa de sucesso e baixas por marcha | Conquistar é planeável? | K6 |
 | Acampamentos perdidos até ao dia 10 | A expansão cobra alguma coisa? | K5 |
 | Recomeços do zero por sessão; tempo até ao primeiro | O botão é achado; ninguém o carrega sem querer | Seção 7 |
@@ -690,7 +770,7 @@ O `tools/web/fumo.mjs` pode automatizar o passo 4 a ler a consola. Onde o browse
 **Sessões humanas (RITE, como na auditoria de 26/09).**
 
 - "Sem ajuda, descobre como fazer mais arqueiros?" (K1)
-- "Percebe por que perdeu as moedas?" (K2)
+- "Percebe que as moedas dadas ao escudeiro o protegem?" (K2)
 - "Encontra como recomeçar do zero? Percebe o que perde? Alguma vez carregou sem querer?" (seção 7)
 
 ---
@@ -699,15 +779,16 @@ O `tools/web/fumo.mjs` pode automatizar o passo 4 a ler a consola. Onde o browse
 
 No formato do repositório, em PT-PT, para numerar ao colar (a próxima livre é a Q-164).
 
-### Q-A · Um vagabundo nunca passa a soldado: a região tem 3 arqueiros e 2 lanceiros para sempre
-- **Onde:** §07, §09, §25 (o minuto 1:10 já mostra "um segundo vagabundo com arco"), §66; `greybox.gd` (`ARQUEIROS_X`, `LANCEIROS_X`), `camps.gd`, `units.csv` (`job_affinity`), `tests/dez_dias_test.gd`.
-- **O que está:** só os vagabundos se renovam, e só trabalham ou viram ofício. Medido: do dia 1 ao 10 nascem 2 vagabundos e mais nada. O §66 mede com 12 arqueiros e o §07 com 6.
-- **Proposta:** a banca de armas do Kingdom — arco a 2 e lança a 3, num suporte com teto, e o recrutado que espera no núcleo pega e passa a arqueiro ou lanceiro. A alternativa mínima é o acampamento sortear o perfil de quem chega.
+### Q-A · Um vagabundo nunca passa a arqueiro: a região tem 3 arqueiros para sempre
+- **Onde:** §07, §09, §25 (o minuto 1:10 já mostra "um segundo vagabundo com arco"), §66; `greybox.gd` (`ARQUEIROS_X`), `camps.gd`, `units.csv` (`job_affinity`), `impulses.csv` (`call_to_arms`), `tests/dez_dias_test.gd`.
+- **O que está:** só os vagabundos se renovam, e só trabalham ou viram ofício. Os lanceiros renovam-se em bloco pela Chamada às Armas (Q-110); os arqueiros não se renovam. Medido sem impulsos: do dia 1 ao 10 nascem 2 vagabundos e mais nada. O §66 mede com 12 arqueiros e o §07 com 6, e as torres só aceitam arqueiros.
+- **Proposta:** a banca do arco do Kingdom — um arco a 2 moedas num suporte com teto; o recrutado que espera no núcleo pega e passa a arqueiro. A Chamada às Armas continua a ser o caminho dos lanceiros. A alternativa mínima é o acampamento sortear o perfil de quem chega.
 - **Decide:** tu.
 
-### Q-B · O saco do rei como armadura
-- **Onde:** §02 ("as moedas caem no chão... os inimigos roubam-nas"), §16, §74, ADR 0034; `combat_system.gd`.
-- **Proposta:** um golpe no rei com moedas no saco arranca `king_hit_coins` moedas e não tira vida; as que caem na mancha alimentam o Lume. Com o saco vazio, tira vida como hoje.
+### Q-B · A coroa no chão, recuperável até à alvorada
+- **Onde:** §02 ("as moedas caem no chão... os inimigos roubam-nas"), §16 (ressurreição até ao amanhecer), §74, ADR 0034, Q-114 (o escudo do escudeiro); `combat_system.gd`, `class_system.gd`, `squire.gd`.
+- **O que está:** a moeda já compra proteção ao rei pelo escudo do escudeiro (5 moedas, 5 golpes fracos ou 2 fortes). A derrota continua binária: o rei a 0 passa ao herdeiro ou acaba.
+- **Proposta:** medir primeiro quanto o escudo segura numa partida pilotada. Se faltar tensão, a coroa cai quando o rei cai e recupera-se até à alvorada, se nenhuma criatura a apanhar; na mancha, alimenta o Lume. Não acrescentar uma segunda camada de moedas-armadura no saco, que duplicaria o escudeiro.
 - **Decide:** tu.
 
 ### Q-C · A tropa armada que cai larga a arma antes de morrer
@@ -887,8 +968,8 @@ SONDA 4 | do zero: sementes=0 achados=0 obras de pe=0 dia=1 saco do rei=6 legado
 
 **Leitura.**
 
-- **Sonda 1:** é a população inteira de soldados da região.
-- **Sonda 2:** a partida corre sem piloto, por isso o reino cai (não sobra nada "teu" no dia 11). O que interessa é a coluna de nascimentos: só vagabundos, até ao teto de 4 livres.
+- **Sonda 1:** é a população inteira de soldados que a região põe no mapa.
+- **Sonda 2:** a partida corre sem piloto, por isso o reino cai (não sobra nada "teu" no dia 11). O que interessa é a coluna de nascimentos: só vagabundos, até ao teto de 4 livres. A sonda não usa a roda do rei. A Chamada às Armas (seção 4, K1) transformaria esses vagabundos livres em lanceiros de uma vez; nenhum caminho os transforma em arqueiros.
 - **Sonda 3:** o caminho de hoje herda o legado.
 - **Sonda 4:** apagar os slots e o legado antes de montar dá o jogo do zero, com as opções intactas. É o `FreshStart.wipe()` da seção 7.
 
