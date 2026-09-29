@@ -2138,9 +2138,10 @@
 ### Q-143 · O que atravessa uma região, além do que já vai (em parte decidida)
 - **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O herdeiro não se trata de uma nova campanha do
   zero, por isso ele herda dívidas e consequências dessa campanha, o herdeiro é uma segunda chance, não um jogo novo»
-  — fica como está, e fecha o que estava aberto: a Dívida da Candeia não se separa em operacional e de campanha; o
-  herdeiro fica com tudo o que o rei deixou — a Dívida, o soldo em atraso (Q-144), a memória da morte dele no ânimo
-  (Q-102) —, e só a ganância se sorteia de novo (§15).
+  — fecha a primeira metade do que estava aberto: a Dívida da Candeia não se separa em operacional e de campanha, e
+  o herdeiro fica com tudo o que o rei deixou — a Dívida, o soldo em atraso (Q-144), a memória da morte dele no
+  ânimo (Q-102) —; só a ganância se sorteia de novo (§15). A identidade da comitiva continua aberta, e passa à
+  marcha (ADR 0035): quem volta volta com o mesmo tipo, sem título, ferimentos nem moedas.
 - **Onde:** §16, Q-133, Q-135, §79; `Legacy.crossing()`, `NightWatch.epilogue()`.
 - **O que está:** a travessia leva Sementes, segredos, conquistas, plano, saco, a fase da classe (Q-140) e os
   **tipos** de quem está perto. Zera a Dívida da Candeia, os povos soltos/retidos e o treino do herdeiro; a comitiva
