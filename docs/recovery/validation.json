@@ -12,7 +12,7 @@
  "proposed_fields": 685,
  "proposed_phase_0_to_2": 311,
  "gdunit_discovered": 1048,
- "gdunit_passed": 877,
+ "gdunit_passed": 1045,
  "gdunit_skipped": 3,
  "gdunit_failures": 0,
  "spec_sections": 87,
