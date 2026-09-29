@@ -43,9 +43,9 @@ Uma por noite, sorteada entre as elegíveis com o fluxo de aleatoriedade dedicad
 | O que brilha, e nada mais. | Todo o ouro em tesouraria | A noite é saltada. A mancha não nasce. | Dia 4+, tesouraria > 80 | +2 |
 | A árvore que plantaste. | Um Marco consagrado teu (§74) | +1 Semente Real | Com Marco | +2 |
 | Diz-me um nome. | Uma tropa nomeada sai e não volta (§76) | A mancha contorna o império esta noite | Com nomeados | +3 |
-| O que enterraste. | Abrir uma passagem subterrânea selada | Massa a metade | Território Sob-Raiz | +3 |
+| O que enterraste. | Abrir uma passagem que escoraste (a escora cai) | Massa a metade | Território Sob-Raiz, com escora | +3 |
 | O que estava aqui antes de ti. | A arquitetura de um povo conquistado desaparece do teu império | −15% de massa, permanente | Com 2+ povos | +4 |
-| Fica com a candeia por uma noite. | Uma classe jogável, para sempre | Controlas a mancha esta noite e manda-la a um império rival | Dia 15+ | +5 |
+| Fica com o Lume por uma noite. | A evolução da tua classe jogável, para sempre nesta campanha (a classe fica, Q-140) | Seguras o Lume: a mancha é tua esta noite e vai-se (manda-la a um império rival, quando os houver) | Dia 15+ | +5 |
 | Um herdeiro. | O sucessor em treino (§15) | Ganância a 0 durante 10 dias | Com sucessor | +5 |
 | Devolve-me o que é meu. | Tudo o que tem nome | A Podridão não volta a nascer | Dívida ≥ 12 | fecha |
 

@@ -120,7 +120,7 @@ OFERTAS = {
     "Diz-me um nome": "tell_me_a_name",
     "O que enterraste": "what_you_buried",
     "O que estava aqui antes de ti": "what_was_here_before",
-    "Fica com a candeia por uma noite": "keep_the_lantern",
+    "Fica com o Lume por uma noite": "keep_the_lantern",  # a candeia passou a Lume (ADR 0034)
     "Um herdeiro": "an_heir",
     "Devolve-me o que é meu": "give_back_whats_mine",
 }

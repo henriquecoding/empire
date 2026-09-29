@@ -82,6 +82,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `consecrated_altar` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `passage_seal` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `campfire` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `tender_ward` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 

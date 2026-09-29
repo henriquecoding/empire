@@ -7,59 +7,92 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Abertas — abertas pelas respostas do painel (28/09/2026)
+## Abertas — abertas pelas respostas do painel (29/09/2026)
 
-### Q-151 · Com a torre na receita, a noite 5 ganha-se sem mortes
-- **Onde:** §07 (*"ajusta até a noite ser ganha com 1–2 mortes no dia 5"*), Q-073, Q-017; `tests/noite_do_07_test.gd`.
-- **O que está:** com a torre na receita (Q-073) os seis arqueiros têm lugar e a noite 5 invoca 16 e mata 16, sem
-  ninguém morrer; as primeiras noites em rampa (Q-017) tornam o início ainda mais leve. As 1–2 mortes do §07 não
-  aparecem, e o teste dessa metade está saltado com esta razão.
-- **Opções:** (a) o §07 passa a pedir *"ganha sem perder o muro"* e as mortes deixam de ser o alvo; (b) afina-se a
-  noite 5 (mais massa, ou a receita com menos arqueiros) até custar 1–2 mortes; (c) medir as mortes numa campanha de
-  dez dias seguidos e não numa noite solta.
+### Q-157 · A noite fica exponencialmente mais difícil — a partir de que noite?
+- **Onde:** Q-151, §74, §66; `mass_growth` e `growth_from_night` em `rot.csv`.
+- **O que pediste:** *«mais brando até a noite 5, depois conforme os dias passam se torna mais difícil
+  exponencialmente»*.
+- **O que foi feito:** as primeiras cinco noites continuam brandas; da 6 à 10 a massa sobe pela fórmula da §74
+  (+18 por noite); a partir da 11 multiplica-se por 1,06 a cada noite — à noite 20 pesa 1,8 vezes, à 30 pesa 3,2.
+- **Porque não começa na 6:** medido, com o crescimento logo a seguir à noite 5, qualquer ritmo a partir de 2% por
+  noite derruba no dia 10 a defesa que o §66 manda aguentar dez noites — e o §66 é o portão da Fase 1.
+- **Proposta:** fica assim, a crescer a partir da noite 11. As alternativas são começar na 6 com um ritmo mais
+  baixo e mexer no §66, ou mudar a defesa de referência do §66.
 - **Decide:** tu.
 
-### Q-152 · Os povos do gelo e do pântano: como entram na campanha
-- **Onde:** Q-010, Q-013; §04 (*"seis povos"*), §77 (seis capítulos e os 126 mundos), §79 (União e Domínio contam
-  4 de 6 povos), `peoples.csv`, `biomes.csv` (`in_campaign`).
-- **O que está:** a Geada e o Paul existem nos dados com características, unidade, arquitectura e canção propostas,
-  e **fora da campanha**, que continua com seis regiões. A classe de cada um é provisória (Trepador e Diplomata).
-- **Por decidir:** (1) se a campanha passa a oito regiões ou se cada campanha sorteia seis dos oito povos; (2) os
-  limiares da União e do Domínio com oito povos; (3) se cada um ganha uma classe própria; (4) os nomes definitivos.
+### Q-158 · A Colheita Forçada devolve menos do que custa
+- **Onde:** Q-145, §15 (os impulsos), ADR 0028 (o preço cresce com a produção); `impulses.csv`,
+  `tests/colheita_forcada_test.gd`.
+- **O que é:** um impulso do rei: paga-se, e nesse dia a produção rende 1,8 vezes — mas no dia seguinte as
+  plantações param.
+- **O que se mediu:** com as condições reais — a ganância leva a parte dela, o preço é o do dia e o impulso só
+  pesa nas fases que faltam —, no *greybox* de três fontes (canteiro, galinheiro, pesqueiro) cada moeda paga
+  devolve **0,83**, em qualquer dia, porque o ganho e o preço crescem ao mesmo ritmo. Nunca compensa. O teste que
+  pede que compense nalgum dia está saltado com esta pergunta.
+- **Proposta:** baixar o preço base de 4 para 3 (devolve perto de 1,1 com três fontes, e mais com mais fontes). As
+  alternativas são subir o que ela rende (`benefit_value`), ou deixá-la como impulso de aflição: moedas já, com
+  perda.
 - **Decide:** tu.
 
-### Q-153 · Onde vai a camada `Equipments`
-- **Onde:** Q-024, §22, §58, `docs/art/ASSET_BIBLE.md`.
-- **O que está:** o dono decidiu que `Equipments` não é o `head`, e ficou sem slot.
-- **Opções:** (a) um slot próprio `equipment` entre o `body` e o `head` (a §58 passa a sete); (b) funde-se no
-  `body` ao exportar.
-- **Decide:** tu, ao separar o `Empire troop` (ART-01).
-
-### Q-154 · A comitiva da travessia com o recrutamento do Kingdom
-- **Onde:** Q-063, Q-135, Q-143; `Legacy.crossing()`.
-- **O que está:** desde a Q-063 ninguém anda atrás do rei, e por isso a travessia leva quem está perto **e** quem
-  espera sem posto no núcleo (na faixa do rei), como a tripulação do barco do New Lands. O New Lands tem teto: o
-  barco leva até 3 construtores, 4 arqueiros e 3 cavaleiros.
-- **Por decidir:** se a comitiva tem um teto como o barco, e qual.
+### Q-159 · A marcha no lugar da travessia (ADR 0035) — confirma
+- **Onde:** Q-135 (aprovada: o Verbo 2 na bifurcação acaba a região, e o rei leva a comitiva), Q-146 (*«o rei
+  nunca sai para longe do reino, quem vai para longe do reino é as classes jogáveis»*), Q-103, Q-154; ADR 0035,
+  `Realm`, `March`, `VassalSystem`.
+- **O que foi feito:** as duas respostas não cabiam juntas, e ficou a mais recente e a mais específica: o rei fica.
+  O Verbo 2 na bifurcação, de dia e a partir do dia 11, manda uma **marcha** — quem é teu e está perto do rei, até
+  ao teto do barco do New Lands (3 construtores, 4 de longo alcance, 3 de corpo a corpo), com pelo menos 3 —
+  conquistar o povo seguinte da campanha. Saem nessa noite (o reino fica desguarnecido, §13) e voltam na alvorada;
+  o povo passa a vassalo (Q-103), com o tributo e as Sementes. Com todos os povos vassalos, a campanha acaba, e o
+  epílogo da §79 conta os vassalos como povos que ficaram.
+- **O que muda com isto:** as regiões seguintes já não se jogam com o rei lá dentro — conquistam-se de longe. Hoje a
+  marcha ganha sempre que leva três ou mais: o preço é a noite sem eles. As classes jogáveis a ir para longe (a tua
+  frase) esperam por trocar de classe (§08), que ainda não existe: por agora vai quem é teu.
+- **Proposta:** fica assim. Se a conquista deve poder falhar (e quantos voltam), é a parte a decidir a seguir.
 - **Decide:** tu.
 
-### Q-155 · A Q-018 e a Q-082 disseram coisas diferentes sobre os 40–60 s
-- **Onde:** §21, Q-018 (aprovada: *"40–60 s por ecrã"*), Q-082 (*"cada região é única, esse número é uma
-  estimativa"*), ADR 0021.
-- **O que foi feito:** apliquei a Q-082, a mais recente e a mais específica: os 40–60 s são uma estimativa por região,
-  medida no *greybox*, e a velocidade a pé fica em 80 px/s. Ler a Q-018 à letra (40–60 s **por ecrã**) punha o rei
-  outra vez a 26 px/s, que foi a queixa que deu a ADR 0021.
-- **Confirma:** se era isto.
+### Q-160 · O prato das ofertas: de que largura? (a Q-098, em palavras simples)
+- **Onde:** §75; `offer_plate_px` em `rot.csv`.
+- **O que é o prato:** quando a Podridão te faz uma oferta, à noite, põe no chão um alguidar de barro — o «prato».
+  Aceitas largando lá dentro o que ela pede; se não largares nada até o tempo acabar, é uma recusa.
+- **A dúvida:** o dossiê diz que o prato tem *«o tamanho de um slot de construção»*, mas os sítios de construção têm
+  larguras diferentes. A largura decide quão perto do prato o rei tem de estar para a moeda contar. Hoje são
+  **96 px**: a largura de um canteiro, o sítio de construção mais comum.
+- **Proposta:** ficam os 96 px, e o *playtest* diz se é preciso alargar.
+- **Decide:** tu, ou o *playtest*.
 
-### Q-156 · Como se apaga o Lume?
-- **Onde:** §74, §75 (a décima segunda oferta "fecha"), ADR 0034.
-- **O que foi feito:** o Lume (a candeia) ficou na base de onde a Podridão nasce, roxo, alimentado pelo que ela
-  consome; as tuas luzes fazem recuar os fracos e abrandam os fortes. O dono comparou-o à *"Besta perante a lanterna
-  apagada, no fim da série"* — e na série apagar a lanterna é o fim da Besta. Nada no jogo apaga o Lume ainda.
-- **Proposta:** apagar o Lume é o fim do ciclo de um império — uma expedição à base dela, de dia, com o farol de pé
-  e a Dívida baixa (União, §75); aceitar a décima segunda oferta é o outro fim (quem acende a lanterna passa a ser
-  tu). Até lá, a base não se ataca.
-- **Confirma:** se o Lume se apaga, como, e se é o fim da campanha ou só de uma região.
+### Q-161 · A árvore velha do início conta para a noite? (a Q-104, em palavras simples)
+- **Onde:** §83 (o minuto 0:00), §74, §25 (*«a noite 1 é ganha de certeza»*); `AmargueiroSystem.Fate.OLD`.
+- **O que é:** quando o jogo começa, já há uma árvore amarga (um Amargueiro) de pé, perto da estacaria da esquerda.
+  Os Amargueiros de pé tornam cada noite mais forte: +22 de massa cada um.
+- **A dúvida:** se esta árvore contasse, a primeira noite — que o §25 diz que tem de ser ganha de certeza — ficava
+  mais forte do que o dossiê manda. Por isso está como **paisagem de antes de ti**: não conta para a noite, não se
+  corta e não se consagra.
+- **Proposta:** fica como paisagem. A alternativa é contar desde o início e poder cortar-se, como as outras — e a
+  primeira noite fica mais difícil.
+- **Decide:** tu.
+
+### Q-162 · O arqueiro, o bardo e o diplomata jogáveis têm corpo de tropa
+- **Onde:** Q-097 (*«os personagens jogáveis são maiores que tropas e o rei é maior que os personagens
+  jogáveis»*), §08 (trocar de classe é o Verbo 2 sobre uma tropa da classe), §22, `units.csv`.
+- **O que está:** o Trepador e os dois cavaleiros só existem como personagens jogáveis, e ficaram na escala 3. O
+  arqueiro, o bardo e o diplomata são ao mesmo tempo tropa (ou ofício) e o corpo da classe jogável — e ficaram na
+  escala 2, a de tropa.
+- **Proposta:** cada uma destas três classes ganha um corpo jogável próprio, na escala 3, que é o que assumes com o
+  Verbo 2; a tropa do mesmo nome fica na 2. Custa três corpos de arte a mais por povo. A alternativa é aceitar a
+  excepção: estas três jogam-se do tamanho de tropa.
+- **Decide:** tu.
+
+### Q-163 · O que cada armazenamento leva além do archote
+- **Onde:** Q-153, §08, `storages.csv`, `docs/art/ASSET_BIBLE.md`.
+- **O que está:** cada personagem jogável tem o seu armazenamento, desenhado na camada `Equipments`, e hoje todos
+  levam só archotes — de 1 a 4. As moedas vão no saco do corpo. O archote é o único item que o jogo já tem para
+  levar.
+- **Proposta:** cada tipo ganha o item da classe quando o sistema dela existir: a aljava, flechas de marca (hoje o
+  arqueiro marca sem limite); o alforge do bardo, as canções que encantam; o cinto de escalada, a corda para subir
+  sem escada; os alforges, a ração do cavalo; a pasta, os tratados do §14. Os tetos ficam em `storages.csv`, como
+  os archotes.
+- **Decide:** tu.
 
 ## Abertas — balanceamento e design
 
@@ -224,18 +257,6 @@
 - **Decide:** tu. A pergunta é se a derrota ganha sinal próprio na §46 quando o §15 e o §16 chegarem — e é aí
   que um `step()` que pára deixa de tirar nada a ninguém, porque passa a haver o que ouvir.
 
-### Q-087 · O rato na margem não tem largura no dossiê
-- **Onde:** §24 (*"Câmara livre — Stick direito — Q · Z **ou rato na margem**"*), `data/source/camera.csv`,
-  `src/world/camera_rig.gd`.
-- **O que foi feito (GB-12):** o rato a menos de `edge_pan_px` da borda do ecrã empurra a câmara livre, que
-  volta sozinha nos 2 s do §24. Com o rato fora da janela, ou a janela sem foco, não empurra — sem isso um rato
-  que saía pela borda deixava lá a última posição, e a câmara ia-se embora sozinha.
-- **O número que não está no dossiê:** a largura da margem. Fica `edge_pan_px = 16` px de ecrã, marcado em
-  `_proposed` ao lado dos outros quatro da Q-057: 1/80 dos 1280, a faixa que se acerta sem olhar em ecrã
-  inteiro e que o rato atravessa sem parar a caminho do botão direito. Zero desliga.
-- **Decide:** o primeiro *playtest*. Em janela a margem é mais difícil de acertar; se for preciso, isto sobe —
-  e o risco oposto é o rato a caminho de marcar um bicho perto da borda levar a câmara com ele.
-
 ### Q-088 · A derrota do §16 é «decay em vez de reset», e o *greybox* não tem decay
 - **Onde:** §16 (*"Ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos
   encontrados, e 40% das estruturas do império principal... o decay resolve isso melhor do que qualquer sistema
@@ -252,7 +273,52 @@
   um autosave anterior à derrota continua a poder ser retomado.
 - **Fechada (AUD-05, 26/09):** herda o legado do §16 e os autosaves da partida perdida apagam-se. Ver a Q-134.
 
+### Q-112 · A decisão do circuito 2: como se "aponta um ofício a um edifício"
+- **Onde:** §06 (*"a decisão de conversão faz-se apontando um ofício a um edifício, que é o Verbo 1 com outro
+  alvo"*), §49 (o algoritmo), `crafts.csv`, `buildings.csv` (celeiro, salga, curral).
+- **O que foi feito (reversível, `ConversionSystem`):** o algoritmo do §49 à letra — com a casa de pé, a matéria
+  dos produtores dela é consumida (`cost` por conversão) e dá moeda ×`coin_multiplier` **ou** a capacidade.
+  O gesto: **uma moeda largada na casa troca o modo**; para capacidade só se tiveres o ofício vivo (o
+  cozinheiro, para o grão), e sem ele a casa volta a vender. A capacidade corre enquanto houver o ofício e um
+  produtor da matéria de pé ("duration 0 = recalculada a cada fase"). Ligadas: `troop_health` e `troop_speed`
+  (vida máxima e passo das tuas tropas, a partir do perfil). As outras três (`combat_dish`,
+  `wall_and_tower_cost`, `weapon_level`) aparecem no painel mas ainda não têm efeito.
+- **O greybox:** a segunda Casa de Treino (a `training_house` é única por império) passa a **cozinha**, e há um
+  **celeiro fora do muro de fora** — pôr a render é mandar o cozinheiro ao sítio arriscado (§21). A arte é a
+  autoral recuperada: `storehouse` para as casas de conversão, `workshop` para a cozinha e a forja.
+- **Em aberto:** as carroças do §06 (a matéria não se transporta hoje: a casa consome à distância); se trocar
+  de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
+- **Decide:** tu.
+
+## Decididas pelo dono no painel (29/09/2026)
+
+> As 66 respostas que o dono guardou no painel (`/painel/`, ADR 0026) e que um agente aplicou a 29/09/2026 (ADR 0036).
+> As 32 que estavam abertas vêm para aqui; as 34 das duas auditorias (Q-115 a Q-149) ficam onde estavam, com a
+> decisão do dono por cima. Cada entrada abre com a decisão e o que se mudou, e mantém por baixo o que estava
+> escrito, para se ver de onde veio. São reversíveis como as outras. Onde uma resposta deixou uma parte por decidir,
+> ou pediu uma pergunta mais clara, a parte está nas Q-157 a Q-163. A Q-081, a Q-112 e a Q-147 foram adiadas no
+> painel e continuam onde estavam.
+
+### Q-087 · O rato na margem não tem largura no dossiê
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «tamanho do ecra» — a margem do rato deixa de ser um
+  número de píxeis e passa a ser uma fracção da largura do ecrã: `edge_pan_frac` 0,0125 no `camera.csv` (16 px a
+  1280, 24 px a 1920), lida pelo `CameraRig.edge()`. `tests/camera_rig_test.gd`.
+- **Onde:** §24 (*"Câmara livre — Stick direito — Q · Z **ou rato na margem**"*), `data/source/camera.csv`,
+  `src/world/camera_rig.gd`.
+- **O que foi feito (GB-12):** o rato a menos de `edge_pan_px` da borda do ecrã empurra a câmara livre, que
+  volta sozinha nos 2 s do §24. Com o rato fora da janela, ou a janela sem foco, não empurra — sem isso um rato
+  que saía pela borda deixava lá a última posição, e a câmara ia-se embora sozinha.
+- **O número que não está no dossiê:** a largura da margem. Fica `edge_pan_px = 16` px de ecrã, marcado em
+  `_proposed` ao lado dos outros quatro da Q-057: 1/80 dos 1280, a faixa que se acerta sem olhar em ecrã
+  inteiro e que o rato atravessa sem parar a caminho do botão direito. Zero desliga.
+- **Decide:** o primeiro *playtest*. Em janela a margem é mais difícil de acertar; se for preciso, isto sobe —
+  e o risco oposto é o rato a caminho de marcar um bicho perto da borda levar a câmara com ele.
+
 ### Q-089 · A cascata do amanhecer é simulação, e o dossiê não diz a ordem
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Sim, a dispersão é em cascata e gradual, não se
+  demora tanto, mas deve ser feita de forma suave» — fica a leitura da GB-21, que era esta: cada tropa sai do posto
+  quando a frente de luz da alvorada lhe chega (900 px/s, `dawn_sweep_px_s`), e nove tropas saem entre 1,97 s e 2,33
+  s — em cascata, curta, e sem saltos, porque a frente é contínua.
 - **Onde:** §24 (*"Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a
   saírem dos postos em cascata, não todas ao mesmo tempo"*), §43 (passo 3), `src/sim/systems/job_board.gd`.
 - **O que foi feito (GB-17):** o varrimento, que é apresentação: uma frente de luz da cor da alvorada do
@@ -272,6 +338,8 @@
 - **Decide:** tu, se a ordem é esta — a da luz — ou outra.
 
 ### Q-090 · O `settings.cfg` da §45 grava-se como o save, e não como `ConfigFile`
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está: o caminho da §45 com o formato da
+  ADR 0007, e o G6 a guardá-lo.
 - **Onde:** §45 (*"Câmara — preferência de sessão, não estado de jogo. Vai para `user://settings.cfg`"*), §26,
   ADR 0007, `src/core/preferences.gd`, `tools/lint_rules.gd`.
 - **O que diverge:** a §45 dá o caminho e não o formato, e a extensão `.cfg` sugere o `ConfigFile` do motor. O
@@ -286,6 +354,13 @@
 - **Decide:** tu.
 
 ### Q-091 · A duração do dia entrou no save sem `save_version` novo
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Como está escrito gere todo esse sistema para que
+  seja bem feito e faça sentido.» — o save passa a ter migrações a sério (`SaveMigrations`,
+  `src/core/save_migrations.gd`): uma por versão, corridas por ordem ao ler (`SaveService`), sobre dicionários de
+  tipos base (nunca instanciam objectos, ADR 0007), cada uma a escrever o que a versão acrescentou com o valor que dá
+  o jogo antigo. Um save de uma versão futura não se toca (§62). A v2 leva a duração do dia (GB-24), as tocas da caça
+  (Q-106), o reino e os vassalos (Q-103), a escolha da sucessão (Q-146), o escudeiro (Q-114), quem desertou (Q-144) e
+  os archotes no cinto do rei (Q-153). `tests/save_migrations_test.gd`.
 - **Onde:** §26 (*"slider de duração do dia (240–540 s)"*), §62 e ADR 0007 (*"save_version desde a 1, com uma
   migração por alteração, no mesmo commit"*), `src/sim/state/game_state.gd`, `src/core/save_service.gd`.
 - **O que foi feito (GB-24):** o `GameState` ganhou `day_seconds`, e o `from_dict` já é *"campos em falta ficam
@@ -298,6 +373,8 @@
   cujo omissão é o comportamento antigo não precisa de versão.
 
 ### Q-092 · As legendas de som vêm desligadas, e o jogo ainda não tem som
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** ficam desligadas por omissão e ligam-se na pausa;
+  3 s por legenda, até três de uma vez.
 - **Onde:** §26 (*"Legendas para pistas sonoras... Fazer. Substitui o áudio para surdos."*),
   `docs/audio/AUDIO_CUE_SHEET.csv`, `src/ui/captions.gd`, `src/core/preferences.gd`.
 - **O que foi decidido (GB-22):** desligadas por omissão, e ligam-se na pausa. É o costume de uma opção de
@@ -310,6 +387,8 @@
 - **Decide:** tu.
 
 ### Q-093 · O §26 pede contraste e daltonismo, e não diz com que gama nem com que algoritmo
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** ficam o contraste de 75% a 150%, o daltonismo por
+  correcção (Machado 2009 e Fidaner 2005) e o limiar de 90% do A4/A15.
 - **Onde:** §26 (*"Controlos de contraste — um shader de saturação/contraste global"*; *"Modos para daltonismo —
   a paleta é quente/fria, boa base. Testa a Podridão contra o terreno em protanopia"*), `docs/qa/ACCESSIBILITY_MATRIX.md`
   (A3, A4, A15), `src/world/accessibility_filter.gd`, `shaders/accessibility.gdshader`.
@@ -322,7 +401,10 @@
   - **o limiar do teste A4/A15**: com o modo ligado, quem tem a deficiência tem de manter 90% da separação
     mancha–chão que um olho sem ela vê. Medido: 116% em protanopia, 117% em deuteranopia, 95% em tritanopia.
 - **Decide:** tu, com um *playtest* com jogadores daltónicos, que é o único que responde a isto.
+
 ### Q-094 · A base do Amargueiro não tem largura
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Isso será definido pela arte, quando estiver pronta»
+  — os 32 px ficam como marcador, em `_proposed`, até a arte do Amargueiro dar a largura do tronco (ART-01).
 - **Onde:** §74 (*"largar moedas na base"*), §55 (a moeda cai *numa* obra quando cai dentro da meia largura
   dela), `data/source/rot.csv`.
 - **O que falta:** o corte é um slot de destino no BuildSystem, e um slot precisa de largura — é ela que diz
@@ -333,6 +415,11 @@
 - **Decide:** o playtest — se largar seis moedas numa árvore obrigar a acertar, sobe.
 
 ### Q-095 · Consagrar pede uma Semente Real, e a Semente Real ainda não se larga
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Gere todo esse sistema.» — a Semente Real passa a
+  ter o ciclo inteiro. **Ganha-se** na câmara atrás da passagem (`root_chamber`), ao conquistar um povo pela marcha
+  (Q-103, `vassal_seeds` 1 a 3) e na oferta que a dá (Q-099, `seed_royal`), sempre com o `seed_royal_gained` da §46.
+  **Gasta-se** a consagrar um Amargueiro (§74) e a evoluir a classe (§08). **Vê-se** no painel (`SEMENTES n`,
+  `HUD_SEEDS`) e **fica** no legado da derrota e na travessia (§16).
 - **Onde:** §74 (*"Consagrar — largar 1 Semente Real na base"*), §15, §57 (CrownSystem), §61 (Verbo 1).
 - **O que falta:** o Verbo 1 hoje larga moedas e só moedas. A Semente Real existe como número nos dados
   (`class_data.gd`, `economy_curve.gd`) e como sinal no catálogo (`seed_royal_gained`), mas não há inventário
@@ -350,6 +437,9 @@
   do CrownSystem (§57) continua a ser da Fase 2; isto é o mínimo que fecha o destino.
 
 ### Q-096 · "Não é recolhida antes da alvorada" — não há gesto para recolher
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Se cria raízes nas tropas caídas e elas somem
+  suavemente a seguir» — os corpos que a alvorada leva desvanecem em 1,6 s (`FADE_SECONDS`), com raízes a crescer por
+  baixo deles (`UnitArtBatch._fade`). Não há gesto de recolher: a alvorada recolhe-os.
 - **Onde:** §74 (*"uma tropa que morre fora das muralhas e não é recolhida antes da alvorada cria raiz"*;
   *"reutiliza inteiro o gesto que a §16 já tem para o Santuário das Raízes"*), §16.
 - **O que falta:** o gesto de arrastar um corpo para dentro é do Santuário das Raízes (§16), e o Santuário
@@ -361,6 +451,12 @@
 - **Decide:** o calendário.
 
 ### Q-097 · O vagabundo tem escala 2 no units.csv e a §74 dá-lhe escala 1
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Os vagabundos tem o tamanho de tropas pois eles
+  podem ser convertidos em tropas, os personagens jogáveis são maiores que tropas e o rei é maior que os personagens
+  jogáveis...» — três degraus: tropa e vagabundo na escala 2, personagem jogável na 3 (o Trepador sobe de 2 para 3;
+  os cavaleiros já lá estavam), o rei na 4 (64–70 px). A tabela da §22 e a regra 3 da §74 dizem-no, e o vagabundo
+  deixa de ser excepção no Lenho que rende (2, como uma tropa). O arqueiro, o bardo e o diplomata jogáveis ainda
+  partilham o corpo da tropa do mesmo nome: a Q-162 pergunta como se separam.
 - **Onde:** §74, regra 3 (*"Escala 1 e vagabundo: 1 Lenho. Escala 2, tropa: 2"*), §22, `units.csv`
   (`vagrant,…,scale_tier 2`).
 - **O que diverge:** a escala do §22 é a da figura, e um vagabundo tem o tamanho de qualquer tropa. A regra 3
@@ -371,12 +467,24 @@
 - **Decide:** tu.
 
 ### Q-098 · O prato tem "o tamanho de um slot de construção" — de qual?
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Não entendi isso, como assim o prato tem o tamanho
+  de um slot de construção, não sei não o que é o prato......» — a pergunta estava mal escrita. Está reescrita em
+  palavras simples na **Q-160**; até lá o prato fica com os 96 px.
 - **Onde:** §75 (*"um alguidar de barro, do tamanho de um slot de construção"*), `data/source/rot.csv`.
 - **O que foi feito, e é reversível:** `offer_plate_px = 96`, marcado em `_proposed` — o canteiro, o slot mais
   comum do greybox. Só conta o que cai dentro dele (a primeira das quatro regras da §75).
 - **Decide:** o playtest.
 
 ### Q-099 · Das doze ofertas, só quatro têm hoje onde pegar
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Recentemente eu ditei as mudanças da candeeira,
+  consultar isso e corrigir» — as ofertas passam a falar do Lume da ADR 0034 («Fica com o Lume por uma noite»; na
+  §77, «o Lume fica por baixo de ti»), e oito das doze têm agora onde pegar. A moeda do rei no prato é o sim
+  (`OfferPrice`); o `OfferToll` leva o resto do mundo: o treino do herdeiro volta a zero (`successor`), um Marco
+  consagrado volta a ser árvore dela (`marker`), a primeira escora de pé cai e a passagem abre (`sealed_passage`), a
+  evolução da classe fica presa nesta campanha (`playable_class`, `ClassSystem.locked`). E dá o que só existe fora da
+  mancha: Sementes Reais (`seed_royal`), dias de ganância a zero (`greed_zero_days`) e a mancha desta noite, que é
+  tua e se vai (`control_rot_tonight`). *O que enterraste* pede agora uma passagem que escoraste (`sealed>=1`). A
+  pesquisa que a Q-101 pediu está em `docs/recovery/PESQUISA-OFERTAS-2026-09-29.md`. `tests/oferta_ligada_test.gd`.
 - **Onde:** §75, a tabela das doze; `src/sim/systems/offer_system.gd` (`PRECOS`, `EFEITOS`).
 - **O que falta:** oito preços e cinco efeitos dependem de sistemas que ainda não existem — portões (§10 não
   os tem), tesouraria, Capítulos (§77), sucessor (§15), povos (§78), classes jogáveis (§08), passagens seladas,
@@ -390,6 +498,14 @@
 - **Decide:** o calendário.
 
 ### Q-100 · O Zelador pode ser afastado — com quê?
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O que é isso? O inimigo mais forte?, você não me
+  explicou, pode ser um tipo de construção que emita algo que impessa que ele avance, e esse recurso vai diminuindo
+  conforme o poder da podridão se torna mais forte [...]» — o Zelador é a figura que a Dívida da Candeia chama a
+  partir de 6: anda atrás da mancha, não ataca e não morre, e se chegar ao núcleo leva uma tropa com nome. Afasta-o
+  agora o **Sino de Vigia** (`tender_ward`, 8 moedas, dois sítios a ±1560 px do núcleo; `Ward`): com carga, o Zelador
+  não entra no raio dele (200 px) e, se já lá estiver, é empurrado para fora. A carga enche com moedas largadas no
+  sino (uma por moeda, até 6) e desce a cada alvorada, tanto mais quanto mais avançada a campanha (1 + 0,1 × dia): é
+  preciso mantê-lo, e destruído repara-se como qualquer obra. Números em `_proposed`. `tests/ward_test.gd`.
 - **Onde:** §75 (*"Pode ser afastado, não morto"*), `creatures.csv` (`tender`, `pushable = true`).
 - **O que falta:** o dossiê não diz o gesto. Não há empurrar no jogo.
 - **O que foi feito, e é reversível:** o Zelador não é uma criatura do combate (tem `max_health 0`, e no
@@ -399,6 +515,12 @@
 - **Decide:** tu.
 
 ### Q-101 · A recusar todas as ofertas, a defesa do décimo dia cai ao dia 9
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Faça uma pesquisa e embase todo esse sistema, a
+  sempre consequencias das escolhas feitas» — a pesquisa está em `docs/recovery/PESQUISA-OFERTAS-2026-09-29.md`
+  (Inscryption, Darkest Dungeon, Hades, Frostpunk, Kingdom Two Crowns, Cultist Simulator). O §66 continua a medir-se
+  com a voz calada, e recusar tudo deixou de ser um teste saltado: é uma regra, e o
+  `test_recusar_todas_as_ofertas_tem_consequencia` prova que a mesma defesa cai. Nenhum número mudou para calar a
+  medição.
 - **Onde:** §66 (*"sobreviver 10 dias é possível e não é trivial"*), §75 (*"recusar custa +8 de massa por cada
   recusa das últimas cinco noites, até cinco"*), `tests/dez_dias_test.gd`.
 - **O que foi medido:** a defesa que fecha a Fase 1 — Bastião, ferro, duas torres, doze arqueiros — aguenta dez
@@ -418,6 +540,16 @@
 - **Decide:** tu.
 
 ### Q-102 · Dos nove feitos, cinco têm hoje o que observar; das nove bonificações, uma
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Gosto desse sistema de moral, faça uma densa
+  pesquisa e elabore algo concreto que faça sentido ao meu jogo» — a pesquisa está em
+  `docs/recovery/PESQUISA-MORAL-2026-09-29.md` (RimWorld, Stronghold, Frostpunk, Mount & Blade, Total War, Darkest
+  Dungeon). O **ânimo do reino** (`Spirit`, `SpiritWatch`) é feito de memórias com peso e prazo — a noite ganha, os
+  mortos, os desertores, o soldo em atraso, a árvore com nome serrada (os −1 durante 2 dias do §74), os vassalos
+  ganhos e perdidos —, entre 0 e 100 à volta de 50. Três estados mexem em três coisas que já existiam: abatido
+  (abaixo de 35) foge com 30% mais vida, rende −10% e não chega ninguém aos acampamentos; animado (acima de 65) foge
+  com 20% menos, rende +10% e chega mais um vagabundo por alvorada. O painel mostra-o (`ÂNIMO n`). Das nove
+  bonificações de título ligam-se as que já têm sistema: não foge, +10% de cadência, +2 de dano contra cerco
+  (`TitlePerks`). `tests/animo_test.gd`.
 - **Onde:** §76, a tabela dos nove feitos; `src/sim/systems/feat_ledger.gd`, `title_system.gd`.
 - **O que falta:** *Último na porta* precisa de portões (o §10 não os tem); *Trouxe os outros*, do gesto de
   arrastar corpos (§16, Q-096); *Não comeu*, de cozinha e consumo; *Voltou*, da ressurreição (§16). Até lá
@@ -432,6 +564,14 @@
 - **Decide:** o calendário.
 
 ### Q-103 · A Colheita não tem quem a comece, nem onde se decida
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Deve ser feito todo um sistema de vassalos e
+  suseranos [...] O meu reino será sempre o que eu começo, os outros que assimilei podem inclusive serem conquistados
+  ou consumidos pelo meu inimigo, dependendo do modo de jogo» — ADR 0035. Um povo conquistado passa a **vassalo**
+  (`VassalSystem`): continua a funcionar sem ti e paga tributo a cada alvorada (os «4–6 moedas/dia para sempre» do
+  §13, entregues no núcleo) e, ao ser conquistado, dá Sementes Reais (1 a 3). O teu reino é sempre o primeiro. Os
+  vassalos têm força (100), e a massa da Podridão desgasta-a (0,02 por ponto de massa); a zero, o vassalo é consumido
+  — e `vassals_can_fall` é a chave do modo de jogo. Com todos os povos vassalos a campanha acaba. Números em
+  `_proposed`. `tests/marcha_test.gd`.
 - **Onde:** §78 (*"quando tomas ou assimilas um povo"*; *"No fim da Colheita, uma decisão. Verbo 1, no núcleo
   deles"*; *"a aldeia fica fora das tuas muralhas"*), §13, §82 (os estandartes).
 - **O que falta:** a conquista (§13) ainda não existe, nem há aldeias no greybox — por isso ninguém chama
@@ -445,6 +585,9 @@
 - **Decide:** tu (o gesto) e o calendário (a conquista).
 
 ### Q-104 · O Amargueiro velho do minuto 0:00, e o dia da primeira oferta
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Não entendi nada dessa pergunta, você formula de uma
+  forma que não faz sentido nenhum...» — a pergunta está reescrita em palavras simples na **Q-161**. A parte da
+  primeira oferta já estava fechada pela ADR 0023; a árvore velha fica como estava (não conta) até lá.
 - **Onde:** §83 (a tabela dos vinte minutos e a caixa *"o que o segmento de abertura passa a ter de conter"*),
   §25 (*"a noite 1 é ganha de certeza"*), §74, `offers.csv` (`just_looking`, `min_day 2`).
 - **O Amargueiro velho:** está lá desde o primeiro frame, logo a seguir à estacaria da esquerda (−750 px do
@@ -462,6 +605,10 @@
 - **Decide:** tu.
 
 ### Q-105 · Nove fichas cinco a cinco não dão 126 mundos: dão 61
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «A campanha tem um lore, mas as regiões não são
+  fixas, é gerada proceduralmente como é em minecraft, tornando assim a campanha sempre única» — a ordem das regiões
+  passa a sair da semente (`SimFactory.campaign_regions()`): a região de casa primeiro, as outras baralhadas pela
+  semente, como um mundo do Minecraft. A §77 diz agora isso, e as 61 combinações de fichas.
 - **Onde:** §77 (*"nove fichas sorteadas cinco a cinco dão 126 mundos"*; *"no máximo um por região"*), §21
   (*"uma região = um povo"*), `chapters.csv` (`biome`).
 - **O que diverge:** 126 é C(9,5), e só é verdade se qualquer cinco couberem juntas. Não cabem: a romaria e a
@@ -476,6 +623,13 @@
 - **Decide:** tu.
 
 ### Q-106 · A caça é um stock do dia e esgota-se em meio minuto
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Isso não deve ser feito assim, como em kingdom os
+  coelhos saem de arbustos ou coisas similares, os arbustos geram aos poucos os coelhos [...] se fizer algo errado e
+  perder o arbusto para de ser gerado os coelhos e consequentemente aquele tipo de receita» — a caça passa a sair de
+  **tocas** (`Burrows`): quatro arbustos por região (`burrows_per_region`), cada um a soltar um coelho de cada vez —
+  o seguinte só depois de o anterior sair —, ao ritmo que faz a caça do dia render o `hunt_yield`. Um Amargueiro de
+  pé a menos de 48 px de um arbusto seca-o (`burrow_wither_px`), e com ele a receita. Os arbustos desenham-se
+  (`HuntView`). `tests/hunting_test.gd`.
 - **Onde:** §06 (circuito 1), §25 (minuto 1:10), `economy.csv` (`hunt_yield 3|9`, nota *"caça: moeda direta
   por saída"*), `src/core/hunt_watch.gd`, `src/sim/systems/hunting_system.gd`.
 - **O que diverge:** o CSV dá 3–9 moedas **por saída**; o `HuntWatch` lê o mesmo intervalo como **o stock do
@@ -498,6 +652,11 @@
 - **Decide:** tu.
 
 ### Q-107 · A moeda do minuto 1:10 fica com o arqueiro que a caçou
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «É como em kingdom, se o jogador não pega o vagabundo
+  pode pegar e se tornar tropa, ou a tropa pode pegar e armazenar, até uma quantidade limitada de 5 moedas» — a moeda
+  caída que o rei não apanha é de quem passa (`Gleaning`): um vagabundo que a apanha fica recrutado, e uma tropa tua
+  guarda-a no saco dela, até ao teto (5 para as mais básicas, Q-111), e entrega-a ao rei quando ele passa. A moeda
+  que o próprio rei largou continua a ser dele. `tests/gleaning_test.gd`.
 - **Onde:** §25 (*"Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda. — Observação. O jogador
   não fez nada."*), §02 (a moeda física), `RecruitSystem.seek_coins`, `recruit_notice_px 120`.
 - **O que foi medido:** com o rei parado no castelo, o coelho da primeira clareira cai aos 70 s, a 160 px do
@@ -512,38 +671,10 @@
   não é apanhável por quem não tem dono até o rei passar por ela.
 - **Decide:** tu.
 
-### Q-111 · O caçador guarda a caça e entrega-a ao rei
-- **Onde:** §02 (*"Capacidade de moedas — Arqueiro 11"*, herdado do Kingdom), §06 (a caça, *"moeda direta"*),
-  §25 (o minuto 1:10), Q-106.
-- **O que foi medido:** com a caça repartida pelo dia, a moeda caía onde o coelho morria — a 700 px do rei ou
-  ao lado de um lanceiro sem dono, que a apanhava. De seis moedas de caça até ao crepúsculo, três chegavam ao
-  rei.
-- **O que foi feito (reversível, `HuntingSystem.bag` e `deliver`):** a caça do **teu** caçador vai para o saco
-  dele (o saco de 11 do arqueiro não tinha outro uso) e passa para o saco do rei quando os dois estão a
-  `recruit_notice_px` um do outro. Entrega só o que caçou — o preço que pagaste para o recrutar fica com ele. A
-  caça de quem **não** é de ninguém continua a cair no chão (o 1:10 do §25, Q-107). O saco do caçador vê-se por
-  cima dele (§24).
-- **Decide:** tu — em particular se o caçador deve ir ter com o rei quando o saco enche, em vez de só entregar
-  quando se cruzam.
-
-### Q-112 · A decisão do circuito 2: como se "aponta um ofício a um edifício"
-- **Onde:** §06 (*"a decisão de conversão faz-se apontando um ofício a um edifício, que é o Verbo 1 com outro
-  alvo"*), §49 (o algoritmo), `crafts.csv`, `buildings.csv` (celeiro, salga, curral).
-- **O que foi feito (reversível, `ConversionSystem`):** o algoritmo do §49 à letra — com a casa de pé, a matéria
-  dos produtores dela é consumida (`cost` por conversão) e dá moeda ×`coin_multiplier` **ou** a capacidade.
-  O gesto: **uma moeda largada na casa troca o modo**; para capacidade só se tiveres o ofício vivo (o
-  cozinheiro, para o grão), e sem ele a casa volta a vender. A capacidade corre enquanto houver o ofício e um
-  produtor da matéria de pé ("duration 0 = recalculada a cada fase"). Ligadas: `troop_health` e `troop_speed`
-  (vida máxima e passo das tuas tropas, a partir do perfil). As outras três (`combat_dish`,
-  `wall_and_tower_cost`, `weapon_level`) aparecem no painel mas ainda não têm efeito.
-- **O greybox:** a segunda Casa de Treino (a `training_house` é única por império) passa a **cozinha**, e há um
-  **celeiro fora do muro de fora** — pôr a render é mandar o cozinheiro ao sítio arriscado (§21). A arte é a
-  autoral recuperada: `storehouse` para as casas de conversão, `workshop` para a cozinha e a forja.
-- **Em aberto:** as carroças do §06 (a matéria não se transporta hoje: a casa consome à distância); se trocar
-  de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
-- **Decide:** tu.
-
 ### Q-108 · Quanto custa reparar, e quem repara
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «é COMO EM KINGDOM precisa do construtor para
+  conseguir reparar os danos» — só o construtor repara (`RepairWork.REPAIRER`); uma obra nova levanta-se com quem
+  estiver no sítio, como antes. `tests/repair_test.gd`.
 - **Onde:** §55 (os estados `DAMAGED` e `RUIN`), §25 (*"Casa de Treino em ruínas, reparável por 10 moedas"*),
   §09 (o construtor), `jobs.csv` (o posto `repair`, que existia sem obra que o publicasse).
 - **O que o dossiê dá:** só um número — a ruína da Casa de Treino repara-se por 10, que é o preço dela. Nada
@@ -559,6 +690,10 @@
   repara.
 
 ### Q-109 · O "+8% defesa das muralhas" do construtor
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O defesa é a quantidade suportada de danos pelas
+  muralhas, um construtor dá +2% de defesa, podendo chegar ao máximo de até +10% conforme há mais construtores» —
+  `wall_defense` 0,02 por construtor, até `wall_defense_max` 0,1, lidos como dano aguentado a mais: a muralha leva
+  `dano × defesa / (1 + defesa)` a menos. A §09 diz-o. `tests/training_test.gd`.
 - **Onde:** §09 (*"Construtor — dentro do império: +8% defesa das muralhas"*), `units.csv`
   (`ability_params wall_defense:0.08`).
 - **O que foi feito (reversível):** lido como **menos 8% de dano** em cada muralha (só as que têm os dois
@@ -570,6 +705,11 @@
 - **Decide:** tu.
 
 ### Q-110 · Três dos seis impulsos reais têm onde pegar
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Os vagabundos não são meus trabalhadores, assim como
+  kingdom eu devo procurar eles pelo mundo em acampamentos [...] meu império apenas terá algumas tropas sem funções
+  que devo sabiamente atribuir [...]» — o jogo começa simples: duas tropas já tuas, sem ofício (`Greybox.JA_TEUS`), e
+  os outros vagabundos estão nos acampamentos lá fora (a ±1650 px), para ires buscar. Os acampamentos repõem um por
+  alvorada (Q-122, `Camps`).
 - **Onde:** §15 (a tabela dos impulsos), §24 (*"Roda do rei → segmento · Tab → 1–5"*), §57, `impulses.csv`.
 - **O que foi feito:** o `CrownSystem` paga do saco do rei, um por dia, e lê o `benefit` e o `drawback` como
   chaves. Ligados: **Colheita Forçada** (produção ×1,8 hoje; as plantações de grão não produzem amanhã),
@@ -583,7 +723,28 @@
   vida máxima por um dia; e o custo de 12 moedas é proposta (`_proposed` no CSV).
 - **Decide:** tu.
 
+### Q-111 · O caçador guarda a caça e entrega-a ao rei
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Cada tropa pode armazenar uma quantidade diferente,
+  tropas mais básicas 5 moedas e outras podem armazenar um pouco mais para depois poder entregar ao jogador ao
+  passar» — o `coin_capacity` do `units.csv`: 5 para o vagabundo e os ofícios, 7 para o lanceiro, 8 para o
+  mercenário, 11 para o arqueiro (o caçador). Quem guarda entrega ao rei quando ele passa (`HuntingSystem.bagged`).
+- **Onde:** §02 (*"Capacidade de moedas — Arqueiro 11"*, herdado do Kingdom), §06 (a caça, *"moeda direta"*),
+  §25 (o minuto 1:10), Q-106.
+- **O que foi medido:** com a caça repartida pelo dia, a moeda caía onde o coelho morria — a 700 px do rei ou
+  ao lado de um lanceiro sem dono, que a apanhava. De seis moedas de caça até ao crepúsculo, três chegavam ao
+  rei.
+- **O que foi feito (reversível, `HuntingSystem.bag` e `deliver`):** a caça do **teu** caçador vai para o saco
+  dele (o saco de 11 do arqueiro não tinha outro uso) e passa para o saco do rei quando os dois estão a
+  `recruit_notice_px` um do outro. Entrega só o que caçou — o preço que pagaste para o recrutar fica com ele. A
+  caça de quem **não** é de ninguém continua a cair no chão (o 1:10 do §25, Q-107). O saco do caçador vê-se por
+  cima dele (§24).
+- **Decide:** tu — em particular se o caçador deve ir ter com o rei quando o saco enche, em vez de só entregar
+  quando se cruzam.
+
 ### Q-113 · Como o jogador vê que um impulso não está disponível
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «o jogador recebe uma mensagem sobre o que é preciso
+  para utilizar aquilo» — um impulso recusado diz porquê (`CrownSystem.refusal()`): precisa do rei, ainda não, já
+  usado hoje, ou faltam moedas — no painel do jogo (`GameHud.say`).
 - **Onde:** planejamento visual de 26/09 (§7: *"Impulsos — seleção, custo, indisponibilidade e consequência;
   um funcional e um indisponível; recusa sem cobrança"*), §24, §46, Q-110.
 - **O que há:** a recusa sem cobrança existe (`CrownSystem.use` devolve falso e o saco fica igual), mas só o
@@ -597,6 +758,14 @@
 - **Decide:** tu.
 
 ### Q-114 · A classe do Monarca: o que é "defesa", o que é "em pessoa", como se evolui — e o escudeiro
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O escudeiro tem um escudo que protege o rei, o rei
+  pode dar 5 moedas para o escudeiro [...] torna-se cavaleiro [...]» — o escudeiro (`Squire`): o Verbo 2 dá-lhe uma
+  moeda de cada vez para o escudo, até 5; cada moeda aguenta um golpe fraco, e um forte (8 de dano ou mais) gasta
+  duas e meia — 5 fracos ou 2 fortes. Três moedas caídas que ele apanha dão-lhe uma espada de 3 golpes (6 de dano)
+  que bate primeiro, antes de o inimigo bater; depois parte-se e o ciclo recomeça. Anda à frente do rei (24 px) e só
+  passa para trás sem escudo. Não entrega moedas ao rei. Na segunda fase do Monarca é armado cavaleiro: escudo até 10
+  moedas, espada de 5 golpes de 10. O escudo é o saco que se lhe desenha. Números em `_proposed`.
+  `tests/squire_test.gd`.
 - **Onde:** §08 (*"Tanque. +10% defesa às tropas num raio. Dano fraco. Escudeiro acompanha e apanha moedas
   caídas"*; *"O boost passa a +25% e aplica-se ao império inteiro; o escudeiro cresce e torna-se tropa de
   combate"*; *"Evolução custa Semente Real (1 para a Fase 2) e uma condição de feito"*), `classes.csv`
@@ -619,6 +788,88 @@
   entregar ao rei é o que o §08 quer (a alternativa é ele guardar até 5, como armadura de moedas do Kingdom);
   e **em que tropa ele cresce** na fase 2 (`squire_becomes_combatant`) — não entrou, porque o dossiê não o diz.
 - **Decide:** tu.
+
+### Q-151 · Com a torre na receita, a noite 5 ganha-se sem mortes
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Tudo bem, pode ser mais brando assim até a noite 5
+  depois conforme os dias passam se torna mais difícil exponencialmente» — as primeiras cinco noites ficam brandas, e
+  o calendário da massa passa a crescer 6% por noite (`mass_growth` 1,06) — mas só depois da noite 10
+  (`growth_from_night`), porque a partir da 6 qualquer ritmo derrubava a defesa que o §66 manda aguentar dez noites.
+  À noite 20 pesa 1,8×; à 30, 3,2×. As árvores e as fortalezas não crescem. O dia em que começa é a **Q-157**.
+- **Onde:** §07 (*"ajusta até a noite ser ganha com 1–2 mortes no dia 5"*), Q-073, Q-017; `tests/noite_do_07_test.gd`.
+- **O que está:** com a torre na receita (Q-073) os seis arqueiros têm lugar e a noite 5 invoca 16 e mata 16, sem
+  ninguém morrer; as primeiras noites em rampa (Q-017) tornam o início ainda mais leve. As 1–2 mortes do §07 não
+  aparecem, e o teste dessa metade está saltado com esta razão.
+- **Opções:** (a) o §07 passa a pedir *"ganha sem perder o muro"* e as mortes deixam de ser o alvo; (b) afina-se a
+  noite 5 (mais massa, ou a receita com menos arqueiros) até custar 1–2 mortes; (c) medir as mortes numa campanha de
+  dez dias seguidos e não numa noite solta.
+- **Decide:** tu.
+
+### Q-152 · Os povos do gelo e do pântano: como entram na campanha
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Passa a 8 regiões, tudo está integrado no mesmo
+  sistema» — a Geada e o Paul entram na campanha (`biomes.csv`, `in_campaign`), que passa a ter oito regiões; os
+  finais da §79 passam a «5 de oito» (`union_peoples_released` e `dominion_peoples_kept`, 5).
+  `tests/parte_xiii_mundo_test.gd`.
+- **Onde:** Q-010, Q-013; §04 (*"seis povos"*), §77 (seis capítulos e os 126 mundos), §79 (União e Domínio contam
+  4 de 6 povos), `peoples.csv`, `biomes.csv` (`in_campaign`).
+- **O que está:** a Geada e o Paul existem nos dados com características, unidade, arquitectura e canção propostas,
+  e **fora da campanha**, que continua com seis regiões. A classe de cada um é provisória (Trepador e Diplomata).
+- **Por decidir:** (1) se a campanha passa a oito regiões ou se cada campanha sorteia seis dos oito povos; (2) os
+  limiares da União e do Domínio com oito povos; (3) se cada um ganha uma classe própria; (4) os nomes definitivos.
+- **Decide:** tu.
+
+### Q-153 · Onde vai a camada `Equipments`
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Equipaments faz parte do armazenamento do
+  personagem, cada personagem jogável a um tipo de armazenamento que deve ser desenvolvido e bem feito» — a camada
+  `Equipments` é o **armazenamento** do personagem jogável: um slot próprio, `storage`, entre o `body` e o `head` (a
+  §58 passa a seis), só para quem se joga. Cada classe da §08 traz o seu tipo (`storages.csv`, `Storage`): o cinto do
+  rei, a aljava do arqueiro, o alforge do bardo, o cinto de escalada do trepador, a mochila do cavaleiro enterrado,
+  os alforges do cavaleiro selado e a pasta de tratados do diplomata — com o que cada um leva e onde o traz no corpo.
+  Os archotes do Q-029 vão no cinto do rei (o `torch_max` saiu do `rot.csv`) e gravam-se com ele; trocar de
+  personagem fica com o que cabe e larga o resto. As moedas continuam no saco do corpo (§02). O `ASSET_BIBLE` tem a
+  tabela. O que mais cada um leva é a **Q-163**. `tests/armazenamento_test.gd`.
+- **Onde:** Q-024, §22, §58, `docs/art/ASSET_BIBLE.md`.
+- **O que está:** o dono decidiu que `Equipments` não é o `head`, e ficou sem slot.
+- **Opções:** (a) um slot próprio `equipment` entre o `body` e o `head` (a §58 passa a sete); (b) funde-se no
+  `body` ao exportar.
+- **Decide:** tu, ao separar o `Empire troop` (ART-01).
+
+### Q-154 · A comitiva da travessia com o recrutamento do Kingdom
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «A comitiva tem um teto também, mas está mal feito
+  atualmente, está delimitando o mapa, o mapa deve ser expandido muito mais horizontalmente, a comitiva não deve
+  limitar as bordas» — a comitiva tem o teto do barco do New Lands (3 construtores, 4 de longo alcance, 3 de corpo a
+  corpo; `march_party_caps`), e deixou de marcar as bordas: o mapa estende-se seis ecrãs de terras bravias para cada
+  lado (`Greybox.BRAVIAS_ECRAS`, `SimLoop.wild_px`), onde o rei anda e a câmara vai.
+- **Onde:** Q-063, Q-135, Q-143; `Legacy.crossing()`.
+- **O que está:** desde a Q-063 ninguém anda atrás do rei, e por isso a travessia leva quem está perto **e** quem
+  espera sem posto no núcleo (na faixa do rei), como a tripulação do barco do New Lands. O New Lands tem teto: o
+  barco leva até 3 construtores, 4 arqueiros e 3 cavaleiros.
+- **Por decidir:** se a comitiva tem um teto como o barco, e qual.
+- **Decide:** tu.
+
+### Q-155 · A Q-018 e a Q-082 disseram coisas diferentes sobre os 40–60 s
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Isso será definido conforme o design de cada região,
+  ainda não tem um valor exato» — os 40–60 s são uma estimativa, e cada região terá o tempo que o desenho dela pedir;
+  o rei continua a 80 px/s a pé.
+- **Onde:** §21, Q-018 (aprovada: *"40–60 s por ecrã"*), Q-082 (*"cada região é única, esse número é uma
+  estimativa"*), ADR 0021.
+- **O que foi feito:** apliquei a Q-082, a mais recente e a mais específica: os 40–60 s são uma estimativa por região,
+  medida no *greybox*, e a velocidade a pé fica em 80 px/s. Ler a Q-018 à letra (40–60 s **por ecrã**) punha o rei
+  outra vez a 26 px/s, que foi a queixa que deu a ADR 0021.
+- **Confirma:** se era isto.
+
+### Q-156 · Como se apaga o Lume?
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** apagar o Lume é o fim do ciclo (`Lume`): o Verbo
+  2 na base dela, de dia, com o farol de pé e a Dívida da Candeia até ao limiar da União (3), acaba a campanha em
+  **União** (§75). Sem cada uma das três, o guia diz o que falta. Aceitar a décima segunda oferta continua a ser o
+  outro fim. `tests/apagar_o_lume_test.gd`.
+- **Onde:** §74, §75 (a décima segunda oferta "fecha"), ADR 0034.
+- **O que foi feito:** o Lume (a candeia) ficou na base de onde a Podridão nasce, roxo, alimentado pelo que ela
+  consome; as tuas luzes fazem recuar os fracos e abrandam os fortes. O dono comparou-o à *"Besta perante a lanterna
+  apagada, no fim da série"* — e na série apagar a lanterna é o fim da Besta. Nada no jogo apaga o Lume ainda.
+- **Proposta:** apagar o Lume é o fim do ciclo de um império — uma expedição à base dela, de dia, com o farol de pé
+  e a Dívida baixa (União, §75); aceitar a décima segunda oferta é o outro fim (quem acende a lanterna passa a ser
+  tu). Até lá, a base não se ataca.
+- **Confirma:** se o Lume se apaga, como, e se é o fim da campanha ou só de uma região.
 
 ## Decididas pelo dono no painel (28/09/2026)
 
@@ -1572,6 +1823,10 @@
 > (26/09/2026). Cada entrada diz o que ficou decidido, onde, e como se reverte. Os tickets são os AUD-01 a AUD-05.
 
 ### Q-115 · A quem serve uma moeda largada
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Para coisas como troca de modo, não é simplesmente
+  largar a moeda, o jogador deve selecionar para o que quer trocar» — o modo do celeiro escolhe-se com o Verbo 2 em
+  cima dele (`ConversionSystem.choose`, `Verbs.choose_mode`), e a moeda só paga. Fecha o que estava em aberto.
+  `tests/conversion_test.gd`.
 - **Onde:** §02 (*"tudo o que o jogador faz passa pela moeda"*), §55, §61, Q-112; auditoria D1 e D5.
 - **O que estava:** a moeda pousada servia quatro leitores pela ordem do tick (obra → treino → celeiro → quem a
   foi buscar → quem a pisa) e nenhum sabia quem a largou nem para quê. A venda do celeiro trocava-lhe o modo
@@ -1588,6 +1843,7 @@
 - **Reverte-se:** `CoinTarget.QUALQUER` em todas as moedas volta ao raio antigo.
 
 ### Q-116 · Um muro a subir de degrau continua a ser o muro que era
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §10, §55; auditoria D4.
 - **O que estava:** pagar o degrau seguinte punha o muro em andaime, e um andaime não travava, não levava
   golpes, não tinha slots de contacto nem postos. Melhorar o muro à tarde abria a porta à noite.
@@ -1599,6 +1855,7 @@
 - **Reverte-se:** `holds()` a devolver `standing()`.
 
 ### Q-117 · A certeza da torre é de quem está nela
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §07 (*"a torre não dá dano — dá certeza"*), §10; auditoria D3.
 - **O que estava:** o bónus ia com o **posto** (`job_id`): 100% de precisão e +40% de alcance a 500 px da torre.
 - **Decidido (AUD-01):** `Posts.present()` — o posto dá o que dá a quem está dentro da largura da obra que o
@@ -1606,6 +1863,7 @@
   `dez_dias` foi medido outra vez e não mudou.
 
 ### Q-118 · A morte do rei, enquanto não há sucessão
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §15, §16 (*"Morte do rei — se houver sucessor, ele assume no amanhecer; se não houver, interregno"*;
   *"Derrota — todos os personagens jogáveis mortos e sem sucessor"*); auditoria D6.
 - **O que estava:** o rei morria como qualquer tropa e a partida continuava sem ninguém para comandar.
@@ -1614,6 +1872,7 @@
   §15/§16 é o AUD-05.
 
 ### Q-119 · Gravar quando quem joga para
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §62; Game Accessibility Guidelines (*save anytime*); auditoria D11.
 - **O que estava:** só o autosave da alvorada; fechar o jogo a meio do dia perdia até seis minutos.
 - **Decidido (AUD-01):** grava-se também ao pausar e ao fechar a janela (ou ao deixar a aplicação), **só de
@@ -1622,10 +1881,15 @@
   que se gravou (D2, sem pergunta: era um defeito).
 
 ### Q-120 · O coelho do 1:10 num dia de outra duração
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «As criaturas que nascem para ser caçadas e gerar
+  dinheiro nunca nascem todas ao mesmo tempo e todas de uma vez, é sempre progressivamente e de forma suave e
+  estável» — é o que as tocas da Q-106 fazem: cada arbusto solta um bicho de cada vez, espaçado ao longo do dia, e o
+  dia não abre com a caça toda de uma vez. `tests/abertura_natural_test.gd`.
 - **Onde:** §25 (minuto 1:10), §26 (*slider* de 240–540 s); auditoria D10.
 - **Decidido (AUD-01):** cai no mesmo **ponto** do dia (`HuntWatch.intro_at`), e não ao mesmo segundo.
 
 ### Q-121 · A obra com posto pede quem lá trabalhe
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §06 circuito 1, §52; auditoria §5.3 (P-B).
 - **O que estava:** a produção somava a todas as obras de pé e o posto do canteiro não mudava nada.
 - **Decidido (AUD-02):** uma obra com posto rende inteiro com alguém no posto **e dentro dela** (`Staffing`), e
@@ -1634,6 +1898,8 @@
   têm posto e rendem sozinhos. Retomar um save não penaliza a primeira fase (não se viu quem lá esteve).
 
 ### Q-122 · De onde vem gente nova
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está, com o arranque da Q-110 (duas
+  tropas tuas, o resto nos acampamentos) e o ânimo da Q-102 (animado chega mais um; abatido não chega ninguém).
 - **Onde:** §02 (o Kingdom desmontado), §25; auditoria (achado do Lote 2).
 - **O que estava:** a população por recrutar acabava em nove pessoas — o dossiê não tem fonte de vagabundos — e
   a manutenção (grátis até à oitava tropa) nunca chegava a morder.
@@ -1642,6 +1908,7 @@
   nasce com o teto cheio: o acampamento repõe quem recrutaste.
 
 ### Q-123 · A ganância do teu rei
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §15 (*"a percentagem do rendimento diário que desaparece para os nobres"*; *"sorteada de novo"* na
   sucessão), §06 (o modelo já a cobrava).
 - **Decidido (AUD-02):** sorteada no início, no fluxo `world`, dentro do perfil `start_greed_profile`
@@ -1651,6 +1918,8 @@
   sucessão.
 
 ### Q-124 · A manutenção do exército, na partida
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica, com o soldo em atraso da Q-144 por cima: o
+  que falta fica a dever-se em vez de se perdoar.
 - **Onde:** §06 sorvedouro 1 (três escalões); auditoria D7 e §5.4 (P-D).
 - **Decidido (AUD-02):** paga-se na alvorada, do saco do rei (`UpkeepSystem`); a fração que o dia não fecha
   passa ao seguinte. Sem moedas para a parte inteira, a dívida do dia perdoa-se e **uma** tropa vai-se embora —
@@ -1661,6 +1930,7 @@
   sete fontes; o modo capacidade do celeiro continua dominado pela venda (Q-112, em aberto).
 
 ### Q-125 · De que lado vem a noite, e quando se sabe
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §05, §51; Into the Breach e Thronefall (auditoria §6); auditoria §5.5 (P-F).
 - **O que estava:** o lado sorteava-se no próprio crepúsculo, e a composição não se mostrava.
 - **Decidido (AUD-03):** o lado sorteia-se **na passagem para a tarde**, no mesmo fluxo `rot` e com a mesma
@@ -1669,12 +1939,16 @@
   ("A NOITE VEM DE LESTE"). A composição continua por dizer: vê-se chegar.
 
 ### Q-126 · O ritmo da noite
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O conceito dA candeeia foi alterado, ajuste isso» —
+  o aviso da tarde passa a ser o Lume da ADR 0034: acende-se na base dela, no horizonte da borda de onde a noite vem,
+  em violeta, e maior numa noite funda. O ritmo (uma funda de seis em seis, a seguinte calma) fica.
 - **Onde:** §74 (a massa termo a termo); a Lua de Sangue do Kingdom e o *relax* do AI Director (auditoria §6, P-H).
 - **Decidido (AUD-03):** de `peak_every` (6) em 6 noites uma **funda** (massa × 1,3), e a seguinte **calma**
   (× 0,6); sabe-se de véspera e diz-se à tarde ("NOITE FUNDA"), com uma candeia maior no horizonte. Os três
   números em `rot.csv`, em `_proposed`; a tabela `ROT_BY_DAY.md` mostra-os. A noite 10 (o Cavador) não é funda.
 
 ### Q-127 · Alimentar a Podridão com moedas
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §05 (*"Alimentar — deixar sacrifícios (animais, tropas fracas, ouro) reduz a massa. Sinistro,
   eficaz, e mecanicamente honesto: transformas economia em segurança"*), `rot.csv` (`sacrifice_mass_per_coin`,
   que nenhum sistema lia).
@@ -1684,6 +1958,7 @@
   e com moedas. Os animais e as tropas fracas ficam por fazer.
 
 ### Q-128 · Quem não tem posto, de noite
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §25 (*"o vagabundo segue-te"*), §52; auditoria §5.5 e D13 (P-C).
 - **O que estava:** quem não tinha posto seguia o rei também de noite — para fora do muro, ou para o meio de um
   castelo de 480 px enquanto as criaturas mordiam a borda.
@@ -1693,6 +1968,7 @@
   cair ao dia 2 para cair ao 7.
 
 ### Q-129 · O Alado rouba galinhas (fecha a Q-077)
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §06 (galinheiro, *"galinhas roubáveis à noite"*), §07 (*"Dia 4 — obriga a torre alta"*); a Q-077
   media o Alado a pousar no castelo sem custar nada a ninguém; auditoria P-J.
 - **Decidido (AUD-04):** quem voa (`flyer`) vai ao galinheiro de pé mais perto dele (`stealable_at_night`), leva
@@ -1703,6 +1979,7 @@
   um muro que ele não vê. Sai o `material_consumed` da §46 e uma legenda.
 
 ### Q-130 · As cavidades do subsolo têm um poço
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §11 (*"ao aceder a uma passagem secreta encontras níveis, porões"*), §06 (poço de minério, rocha,
   *"atrai Cavadores"*), `segments.csv` (`cavity_slots`, que ninguém lia); auditoria P-I.
 - **Decidido (AUD-04):** uma cavidade de cada lado, atrás da passagem (`Cavities`, ±1060 px do núcleo), com um
@@ -1712,12 +1989,16 @@
   `balanced` do §06 continua a contar as sete fontes da superfície: o poço fica fora, como a caça.
 
 ### Q-131 · O poço chama o Cavador
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §06 (*"atrai Cavadores"*), a tag `attracted_by_mine` do Cavador; auditoria P-I (*"a própria tag é o
   custo"*).
 - **Decidido (AUD-04):** com um poço de pé, o Cavador pode ser invocado `mine_lure_days` (3) noites mais cedo —
   do dia 7 em vez do 10. É o preço da renda do subsolo. Em `rot.csv`, em `_proposed`.
 
 ### Q-132 · A escora fecha a passagem
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica, e a parte que estava por fazer fez-se:
+  abrir uma passagem escorada é o preço de *O que enterraste* (Q-099), e uma escora das tuas desmonta-se com o Verbo
+  2 (Q-138).
 - **Onde:** §51 (*"se o caminho de superfície estiver selado, a mancha usa a faixa subterrânea"*), §25 (minuto
   12:00, *"um Rastejante entra pela passagem que abriste"*), a oferta *O que enterraste* (`sealed_passage`);
   auditoria P-I e AUD-04 (*"o Cavador do dia 10 não tem resposta"*).
@@ -1729,6 +2010,8 @@
   (o preço da oferta *O que enterraste*) fica por fazer.
 
 ### Q-133 · O herdeiro
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica, com a Q-137 e a Q-146 por cima: o sucessor
+  nasce no castelo, e com ele pronto a morte do rei pergunta se continuas com um monarca novo.
 - **Onde:** §15 (*"Treino — 10 dias na Casa do Herdeiro. Custa 5 moedas/dia"*; *"a Ganância é sorteada de novo"*),
   §16 (*"se houver sucessor, ele assume no amanhecer"*), `economy.csv` (`heir_training_days`,
   `heir_cost_per_day`, que ninguém lia); auditoria D6 e AUD-05.
@@ -1742,6 +2025,8 @@
   quando houver *boosts* que durem; a evolução da classe é do império e fica.
 
 ### Q-134 · O que fica quando se perde (fecha a Q-088)
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica, sem a evolução da classe (Q-140): num jogo
+  novo volta-se a ganhar.
 - **Onde:** §16 (*"Decay em vez de reset... mantém: Sementes Reais, classes desbloqueadas, mapas revelados,
   segredos encontrados, e 40% das estruturas do império principal"*), `economy.csv` (`decay_structures_kept`).
 - **Decidido (AUD-05):** na derrota escreve-se o **legado** (`Legacy`) — as Sementes Reais, os segredos achados,
@@ -1753,6 +2038,9 @@
   ecrã da derrota diz o que fica.
 
 ### Q-135 · Uma região acaba: a travessia
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** aprovada, e mudada no mesmo painel pela Q-146: «o
+  rei nunca sai para longe do reino». A travessia passa a **marcha** (ADR 0035): o Verbo 2 na bifurcação manda quem
+  está perto conquistar o povo seguinte, e o rei fica. A Q-159 pede-te que confirmes a troca.
 - **Onde:** §16, §21, §83 (*"a bifurcação a leste"*), §79 (os três finais, ADR 0018); Kingdom Two Crowns (a ilha
   seguinte) e Against the Storm (a região como *run* curta); auditoria P-K (*"não há objetivo depois do dia 3"*).
 - **Decidido (AUD-05):** a partir da manhã do dia `crossing_day` (11 — depois das dez noites do §66), o Verbo 2
@@ -1766,6 +2054,7 @@
   cenas não); voltar a uma região deixada e retomá-la com *decay* (P-K) espera pelas regiões com cena.
 
 ### Q-136 · Melhorias com variante
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §10 (a escolha A/B da muralha: *"nunca dá para ter as duas"*); Thronefall (auditoria P-N: *"upgrades
   com variante, não mais edifícios"*).
 - **Decidido (AUD-05):** a torre de arqueiros e o canteiro ganham uma **variante B** (`variant_params` em
@@ -1782,6 +2071,11 @@
 > relatório — **não é regra aprovada**. Os tickets são os CONT-01 a CONT-12 (`docs/backlog/`).
 
 ### Q-137 · Herdeiro formado sem casa (N3)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Não sei nem o que é o treino, mas o sucessor só
+  nasce no castelo, e ele deve existir para poder continuar, se não houver a partida acaba» — o treino são os 10 dias
+  em que o herdeiro aprende na casa dele (5 moedas por dia, Q-133). O sucessor nasce agora **no castelo**
+  (`Succession.castle()`), e só há sucessão com o herdeiro formado e o castelo de pé (`Succession.possible()`); sem
+  isso, a partida acaba. `tests/sucessao_test.gd`.
 - **Onde:** §15, §16, Q-133; `Defeat.happened()`, `Succession.crown()`.
 - **O que estava:** o `Defeat` só lia o treino; a coroação pedia também a casa de pé. Com herdeiro formado, rei
   morto e casa em ruína, o jogo não acabava e ninguém era coroado.
@@ -1791,6 +2085,11 @@
 - **Fica por decidir:** se o treino sobrevive à perda da casa e, nesse caso, onde nasce o sucessor.
 
 ### Q-138 · A escora fecha por cima (N4)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Depende do que é o subsolo, se for o subsolo de uma
+  construção o jogador pode fechar ou abrir [...] mas há subsolos que a entrada/saída é sempre aberta» — uma boca com
+  sítio de escora é das tuas: a escora fecha-a, e o Verbo 2 em cima da escora desmonta-a e abre-a outra vez
+  (`Passages.unseal()`; fechar volta a custar). Uma boca sem sítio de escora é natural e fica sempre aberta. O guia
+  diz-o (`CONTEXT_SEALED`). `tests/escora_abre_test.gd`.
 - **Onde:** Q-132; `Verbs.destination()`, `Passages.open()`.
 - **O que estava:** as duas escoras de pé com o rei no subsolo tiravam-lhe todas as saídas.
 - **Decidido (opção mais simples):** a escora fecha a boca **por cima**: ninguém desce e o Cavador não sobe, mas quem
@@ -1799,6 +2098,7 @@
   é um corredor contínuo — ou as cavidades passam a isolar-se por lado, ou o texto passa a descrever o corredor.
 
 ### Q-139 · O legado é uma transação (N7, N8)
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §16, §62, ADR 0007; `LegacyStore` (novo, `src/core/legacy_store.gd`).
 - **Decidido (CONT-01):** o legado escreve-se num temporário, lê-se de volta, compara-se e renomeia-se; só então se
   apagam os slots. Se falhar, os slots ficam e o ecrã do fim di-lo (`UI_LEGACY_FAILED`) em vez de anunciar a
@@ -1807,16 +2107,22 @@
   passos repete o que faltava; aplicar a um mundo novo não duplica nada. Legados sem moldura leem-se na mesma.
 
 ### Q-140 · O que o legado leva: variante e classe (N1, N2 em parte)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «A classe é desbloqueada para o jogo novo, mas a
+  evolução dela não, isso deve ser novamente obtido jogando…» — o legado da derrota deixa de levar a fase da classe
+  (`Legacy.of()`); a travessia continua a levá-la dentro da mesma campanha (`Legacy.crossing()`), e o fim da campanha
+  apaga-a (`Legacy.end_campaign()`). `tests/legado_test.gd`.
 - **Onde:** §16 (*"classes desbloqueadas"*), Q-133 (*"a evolução da classe é do império e fica"*), Q-134, Q-136.
 - **Decidido:** cada obra retida leva a variante (uma torre B volta B); o legado da derrota e o da travessia levam a
   fase da classe do rei, e o jogo novo nunca a baixa. Um legado sem estes campos fica com os de raiz.
 
 ### Q-141 · O trabalho da fase vai no save (N5)
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** Q-121 (*"a primeira fase depois de retomar não é penalizada"*); `Staffing`, `SimSave`.
 - **Decidido (CONT-03):** o `Staffing` grava a fase que observa, quem já serviu nela e quem serviu na que acabou.
   Retomar e jogar de seguida fecham a fase igual. Um save anterior não tem o campo e ninguém é penalizado.
 
 ### Q-142 · A vistoria acaba quando o jogo acaba (N9)
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** Q-081, Q-128; `tools/vistoria.gd`.
 - **Decidido:** a vistoria pára com o `Defeat.happened()` — núcleo, ou rei sem sucessão possível — e diz a causa.
   Os "8 dias" da Q-128 mediam só o núcleo; um número de dias sobrevividos cita a versão e a regra de derrota.
@@ -1830,6 +2136,11 @@
   que começa com as seis moedas, paga pela bolsa e chega à travessia com a voz ligada.
 
 ### Q-143 · O que atravessa uma região, além do que já vai (em parte decidida)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O herdeiro não se trata de uma nova campanha do
+  zero, por isso ele herda dívidas e consequências dessa campanha, o herdeiro é uma segunda chance, não um jogo novo»
+  — fica como está, e fecha o que estava aberto: a Dívida da Candeia não se separa em operacional e de campanha; o
+  herdeiro fica com tudo o que o rei deixou — a Dívida, o soldo em atraso (Q-144), a memória da morte dele no ânimo
+  (Q-102) —, e só a ganância se sorteia de novo (§15).
 - **Onde:** §16, Q-133, Q-135, §79; `Legacy.crossing()`, `NightWatch.epilogue()`.
 - **O que está:** a travessia leva Sementes, segredos, conquistas, plano, saco, a fase da classe (Q-140) e os
   **tipos** de quem está perto. Zera a Dívida da Candeia, os povos soltos/retidos e o treino do herdeiro; a comitiva
@@ -1846,6 +2157,13 @@
   seguinte como pesava nesta); a identidade da comitiva (título, ferimentos, moedas) — hoje só vão os tipos.
 
 ### Q-144 · Inadimplência do soldo (N6, aberta)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Elabore um planeamento completo para implementar
+  isso, você está no caminho correto» — o soldo que falta fica **a dever-se** (`UpkeepSystem.owed`) e paga-se
+  primeiro na alvorada seguinte. O que se deve para lá de um dia de soldo (`wage_grace_days`) faz desertar, uma a
+  uma, as tropas cujo soldo o paga — a mais barata sem posto primeiro —, e cada uma leva da dívida o que custava;
+  quem desertou descansa dois dias (`deserter_rest_days`) antes de voltar a aceitar moedas — já não se recontrata por
+  uma moeda no dia seguinte. O ânimo lembra-se do soldo em atraso e de cada deserção (Q-102).
+  `tests/upkeep_system_test.gd`.
 - **Onde:** Q-124; `UpkeepSystem`, `RecruitSystem`.
 - **O que está:** sem moedas, a parte inteira em falta perdoa-se e deserta a tropa mais barata sem posto — que se
   recontrata por uma moeda. Com 25 tropas, 13,5 de soldo trocam-se por uma deserção de custo 1.
@@ -1853,6 +2171,11 @@
   recontratar, sem criar a espiral deserção → menos renda → mais deserção. Depende do CONT-05 para medir.
 
 ### Q-145 · O celeiro e a Colheita Forçada (aberta)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Vejo que elaborou bem, siga por esse caminho» — a
+  capacidade do celeiro passa a exigir consumo **e** presença: o cozinheiro tem posto dentro do celeiro
+  (`ConversionSystem.staff`), e sem matéria consumida não há +10%. A conta de retorno da Colheita Forçada refez-se
+  com as condições reais (a ganância, o preço do dia, as fases que faltam): devolve 0,83 por moeda paga, em qualquer
+  dia — o que isso quer dizer está na **Q-158**. `tests/colheita_forcada_test.gd`.
 - **Onde:** Q-115, Q-124; `ConversionSystem`, `economia_jogada_test.gd`.
 - **O que está:** a capacidade (+10% de vida) liga-se com um cozinheiro vivo em qualquer sítio e um produtor de pé,
   mesmo sem matéria consumida; o teste da Colheita Forçada omite a ganância e o momento da ativação.
@@ -1860,6 +2183,14 @@
   conta de retorno do impulso com as condições reais. Não mudar o +10% antes de medir.
 
 ### Q-146 · O que encerra uma região, e para que serve o herdeiro (aberta)
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «O herdeiro é como uma segunda chance para o rei caso
+  ele morra, o rei nunca sai para longe do reino, quem vai para longe do reino são as classes jogáveis, se o
+  imperador morre e o herdeiro estiver pronto, o jogador pode optar por continuar [...]» — com o herdeiro pronto, a
+  morte do rei pára o jogo e pergunta: continuar com um novo monarca, ou deixar cair a coroa (`PauseMenu`,
+  `end_reign`). E o rei não sai do reino: a região já não acaba com ele a atravessar — a bifurcação passa a mandar
+  uma **marcha** (ADR 0035, `Realm`, `March`): quem está perto do rei, até ao teto da comitiva (Q-154), vai
+  conquistar o povo seguinte, e volta ao fim de uma noite; com gente bastante, o povo passa a vassalo (Q-103). O dia
+  11 continua a ser o portão da marcha. A Q-159 pede a confirmação.
 - **Onde:** Q-133, Q-135; `crossing_day` 11, `heir_training_days` 10.
 - **O que está:** o dia 11 são ~60 minutos (40–90 com o *slider*); o herdeiro custa 70 moedas e fica formado no dia
   11 no melhor caso — e o treino não atravessa.
@@ -1871,6 +2202,7 @@
 - **Por decidir:** mostrar só as ofertas que se podem de facto pagar hoje, ou dizer que estão indisponíveis.
 
 ### Q-148 · O impulso no comando (CONT-08)
+- **Decidido pelo dono (painel, 29/09/2026 — aprovar a proposta):** fica como está.
 - **Onde:** §24 (*"Manter Y abre uma roda de seis segmentos... Selecionar é apontar o stick e largar"*), Q-067, Q-113;
   `InputRouter.wheel_segment()`.
 - **O que estava:** com teclado, Tab mantido + número escolhia o impulso; no comando não havia gesto nenhum.
@@ -1881,6 +2213,8 @@
 - **Fica por fazer:** o desenho da roda (vitral, ícones) e a razão e o custo de um impulso indisponível no sítio.
 
 ### Q-149 · Correr com o Shift esquerdo
+- **Decidido pelo dono (painel, 29/09/2026 — outra resposta):** «Pode ser até 1.8 vezes a velocidade normal» —
+  `king_run_mult` 1,8: a correr, o rei vai de 80 a 144 px/s.
 - **Onde:** pedido do dono (28/09/2026); §24 (o mapa de comando não tem correr), §07 (o raio de presença do rei),
   §21 (a região é para atravessar a pé); `king_run_mult` em `economy.csv`, `UnitSystem.piloted_pace`.
 - **Decidido (opção mais simples):** com o Shift esquerdo (ou L3 no comando) premido, só o rei anda a
@@ -1909,6 +2243,9 @@
   única maneira de avançar; (2) se a caça deve nascer das mesmas manchas de bosque (Kingdom Two Crowns: os
   veados nascem junto às árvores); (3) os sprites são rectângulos desenhados em código, à espera de arte a sério
   (ASSET_REGISTER) — trocar é mudar o `FloraArt`/`FaunaArt`, não o gerador.
+- **O (1) respondeu-o a Q-154 (29/09/2026):** o mapa estende-se seis ecrãs de terras bravias para cada lado
+  (`Greybox.BRAVIAS_ECRAS`), e o rei anda lá; a região continua a não se atravessar a pé — conquista-se pela marcha
+  (Q-159). Ficam o (2) e o (3).
 
 ## Resolvidas na v5.2 (reversíveis)
 

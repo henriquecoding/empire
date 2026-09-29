@@ -4,7 +4,7 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
 | Ofício | Nível 1 | Nível 2 | Treino |
 | --- | --- | --- | --- |
-| Construtor | Constrói e melhora estruturas. Dentro do império: +8% defesa das muralhas e +1 slot de armas no arsenal. | Sai das muralhas e constrói defesas avançadas em campo; melhora a base das tropas; adiciona tropas às defesas; ergue torres e armadilhas. | 12 + Casa de Treino |
+| Construtor | Constrói e melhora estruturas. Dentro do império: +2% defesa das muralhas por construtor, até +10% — a defesa é o dano que a muralha aguenta a mais — e +1 slot de armas no arsenal. Só o construtor repara. | Sai das muralhas e constrói defesas avançadas em campo; melhora a base das tropas; adiciona tropas às defesas; ergue torres e armadilhas. | 12 + Casa de Treino |
 | Ferreiro | Fabrica armas e escudos melhores: +ataque e +defesa a todas as tropas equipadas. | Recolhe armas largadas por inimigos e por aliados mortos e usa-as em combate. O campo de batalha vira inventário. | 15 + Forja |
 | Cozinheiro | +vida e +velocidade às tropas. Em combate, serve prato a uma tropa: buff forte de 20 s. | O buff passa a permanente para a tropa servida. Recebe animais do galinheiro e do estábulo como ingrediente. | 10 + Cozinha |
 | Diplomata | Boost de progressão. Impérios vizinhos não atacam. | Assimila um império próximo a cada 8 dias; pode treinar um sucessor do rei. | 20 + Embaixada |

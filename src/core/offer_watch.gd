@@ -194,6 +194,7 @@ func _aceite(rot: RotSystem, dia: int) -> void:
 			reveals += int(o.effect_value)
 		&"seed_royal":
 			SimLoop.state.royal_seeds += int(o.effect_value)
+			EventBus.queue(&"seed_royal_gained", [int(o.effect_value), o.id])  # §46, Q-095
 		&"greed_zero_days":
 			greed_kept = SimLoop.state.greed if greed_until == 0 else greed_kept
 			greed_until = dia + o.effect_days

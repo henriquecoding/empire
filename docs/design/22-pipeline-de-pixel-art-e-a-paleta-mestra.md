@@ -47,7 +47,8 @@ O que muda não é a resolução — é a densidade de desenho dentro dela. E o 
 | Grelha de tile | 32 px | Autora em 64×64 como já fazes; 64 = 2×2 tiles |
 | Escala 1 — escudeiro | 32–36 px | Escudeiro do trono |
 | Escala 2 — aldeão/tropa | 46–52 px | Empire troop de 47 px |
-| Escala 3 — monarca/elite | 56–62 px | O rei |
+| Escala 3 — personagem jogável/elite | 56–62 px | As classes jogáveis (§08) e a elite |
+| Escala 4 — o rei | 64–70 px | O rei é o maior: tropa < personagem jogável < rei; o vagabundo tem o tamanho de uma tropa, porque pode ser convertido numa (Q-097) |
 | Casa pequena | ≈ 120 × 130 px | Ferreiro da panorâmica — indicativo, a confirmar em jogo |
 | Animação | 10 fps | Idle 6 frames (como já fazes) · andar 8 · ataque 5 · morte 7 |
 | Parallax | 6 camadas | céu · montanha · colina · fundo médio · jogo · primeiro plano |

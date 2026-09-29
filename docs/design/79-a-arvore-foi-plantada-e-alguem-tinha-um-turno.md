@@ -64,8 +64,8 @@ Dita uma vez, no diário 12, e nunca repetida nem explicada.
 
 | Epílogo | Condição | O que acontece | O que custa |
 | --- | --- | --- | --- |
-| União | Dívida ≤ 3 e 4+ povos soltos | Alguém rende o zelador — e o zelador só aceita ser rendido depois de ter um nome, que é o teu último uso do sistema da §76. A candeia apaga-se por mãos que não são as tuas. Os seis materiais voltam a ser uma árvore. | Os seis povos deixam de existir como culturas distintas. A tua colagem arquitetónica passa a ser a única arquitetura. O mundo fica igual em todo o lado, e isso é uma perda que o jogo não disfarça. |
-| Domínio | Dívida ≥ 12 ou 4+ povos ficados | Ficas com a candeia. A Podridão obedece-te em vez de te atacar, e a noite continua — agora é tua. Último plano: um diário datado de amanhã, numa letra que não é a tua. | Alguém vem render-te, e não vai chegar. O jogo diz-te isto na última imagem e não o comenta. |
+| União | Dívida ≤ 3 e 5+ povos soltos (de oito, Q-152) | Alguém rende o zelador — e o zelador só aceita ser rendido depois de ter um nome, que é o teu último uso do sistema da §76. A candeia apaga-se por mãos que não são as tuas. Os seis materiais voltam a ser uma árvore. | Os seis povos deixam de existir como culturas distintas. A tua colagem arquitetónica passa a ser a única arquitetura. O mundo fica igual em todo o lado, e isso é uma perda que o jogo não disfarça. |
+| Domínio | Dívida ≥ 12 ou 5+ povos ficados (vassalos incluídos, Q-103) | Ficas com a candeia. A Podridão obedece-te em vez de te atacar, e a noite continua — agora é tua. Último plano: um diário datado de amanhã, numa letra que não é a tua. | Alguém vem render-te, e não vai chegar. O jogo diz-te isto na última imagem e não o comenta. |
 | O Turno | Tudo o resto | Nem uma coisa nem outra: a candeia passa ao teu herdeiro na sucessão (§15). Não é um fim, é um estado guardado. | A campanha seguinte começa com a tua Dívida como termo permanente na massa da Podridão, e com as tuas seis decisões como estado inicial do mundo. É o modo longo da Fase 8 (§18), e é o único dos três que admite que o trabalho não acaba. |
 
 
