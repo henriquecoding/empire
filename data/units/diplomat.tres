@@ -16,7 +16,7 @@ tags = Array[StringName]([&"craft", &"diplomat", &"non_combatant"])
 job_affinity = {
 &"embassy": 1.0
 }
-coin_capacity = 2
+coin_capacity = 5
 trained_at = &"embassy"
 train_days = 1
 head_pool = Array[StringName]([&"hat_feather"])

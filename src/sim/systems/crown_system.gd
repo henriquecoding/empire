@@ -77,6 +77,22 @@ func price(id: StringName, dia: int, perfil: float = 1.0) -> int:
 	return maxi(1, roundi(impulso.coin_cost * fator))
 
 
+## Porque e que este impulso nao se pode usar agora, ou &"" se pode (Q-113, o dono
+## a 29/09/2026: "o jogador recebe uma mensagem sobre o que e preciso para
+## utilizar aquilo"). A chave diz o que falta; o preco vai com ela.
+func refusal(id: StringName, dia: int, unidades: UnitSystem, rei: int, preco: int) -> StringName:
+	var i := unidades.index_of(rei)
+	if i == NENHUM or not unidades.alive(i) or unidades.healths[i] <= 0:
+		return &"TOAST_IMPULSE_NEEDS_KING"
+	if not available(id):
+		return &"TOAST_IMPULSE_NOT_YET"
+	if used_day == dia:
+		return &"TOAST_IMPULSE_USED_TODAY"
+	if unidades.carried_coins[i] < preco:
+		return &"TOAST_IMPULSE_NEEDS_COINS"
+	return &""
+
+
 ## Usa um impulso hoje, se ainda nao se usou nenhum, se ele tem onde pegar e se o
 ## saco do rei chega ao preco (`preco`, ou o de hoje sem perfil). Devolve
 ## verdadeiro se usou.

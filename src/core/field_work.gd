@@ -134,11 +134,10 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 	training.plan(unidades)
 
 
-## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio.
+## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio. A casa de
+## conversao ja nao troca de modo com a moeda: escolhe-se (Q-115, Verbs).
 func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> void:
 	EventRelay.training(training.absorb(moedas, obras, unidades))
-	if conversion.absorb(moedas, obras, unidades):
-		EventBus.queue(&"coin_spent", [1, &"conversion"])
 
 
 ## Passos 6 e 8: a caca rende moeda; o treino corre com quem esta la dentro, e a

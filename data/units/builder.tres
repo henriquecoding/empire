@@ -17,7 +17,7 @@ job_affinity = {
 &"build": 1.0,
 &"repair": 1.0
 }
-coin_capacity = 2
+coin_capacity = 5
 trained_at = &"training_house"
 train_days = 1
 ability = &"builder_wall_bonus"

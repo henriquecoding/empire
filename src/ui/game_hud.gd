@@ -59,6 +59,7 @@ var _dispositivo := Glyphs.Device.KEYBOARD
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_to_group(&"painel")
 	_titulo = _label("", TITULO, GOLD)
 	_relogio = _label("", RELOGIO, TEXT)
 	_recursos = _label("", RECURSOS, MUTED)
@@ -220,6 +221,12 @@ static func _argumentos(sinal: StringName) -> int:
 		if s.name == sinal:
 			return s.args.size()
 	return 0
+
+
+## O que outra parte da interface quer dizer no aviso (grupo "painel"): o impulso
+## recusado diz o que lhe falta (Q-113).
+func say(mensagem: String) -> void:
+	_dizer(mensagem)
 
 
 func _dizer(mensagem: String) -> void:

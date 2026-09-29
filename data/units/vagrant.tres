@@ -15,5 +15,5 @@ job_affinity = {
 &"farm": 1.0,
 &"milking": 1.0
 }
-coin_capacity = 2
+coin_capacity = 5
 head_pool = Array[StringName]([&"bare", &"hat_straw", &"hair_black", &"beard_red"])

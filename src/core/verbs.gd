@@ -47,7 +47,8 @@ static func consume(
 					larga.append(args)
 			IntentQueue.Kind.ASSUME:
 				if not assume(unidades, king_id, passagens) and not cross(unidades, king_id):
-					choose_wall(unidades, king_id, obras)
+					if not choose_mode(unidades, king_id, obras, campo):
+						choose_wall(unidades, king_id, obras)
 			IntentQueue.Kind.MARK_TARGET:
 				if campo == null or campo.classes.marks():  # so quem tem arco (Q-086)
 					mark(unidades, bichos, combate, args[&"x"], king_id)
@@ -57,6 +58,21 @@ static func consume(
 				if campo != null:
 					campo.impulse(args[&"id"], unidades, king_id)
 	return larga
+
+
+## O Verbo 2 numa casa de conversao de pe: escolhe o outro modo (Q-115).
+static func choose_mode(
+	units: UnitSystem, king: int, builds: BuildSystem, campo: FieldWork
+) -> bool:
+	var i := units.index_of(king)
+	if builds == null or campo == null or i < 0 or not units.alive(i):
+		return false
+	for slot in builds.slots:
+		if slot.band != units.bands[i] or absf(slot.x - units.xs[i]) > slot.width * HALF:
+			continue
+		if campo.conversion.craft_of(slot) != null and slot.standing():
+			return campo.conversion.choose(slot)
+	return false
 
 
 ## A escolha A/B do §10, antes de pagar o segundo degrau; E partilha o Verbo 2. E
@@ -100,54 +116,11 @@ static func spend(unidades: UnitSystem, unit_id: int, quanto: int) -> bool:
 	return true
 
 
-## Quem pisa uma moeda apanha-a: o monarca e quem tiver a tag `collects_coins`
-## (o escudeiro do §08). Nao e o mesmo que a apanha do F1-04 — aquela e de quem
-## FOI buscar uma moeda em concreto; esta e de quem passou por cima.
+## Quem pisa uma moeda apanha-a (Gleaning). A caca e o que as tuas tropas apanham
+## vai para o saco delas e para o rei quando ele passa (Q-107, Q-111).
 static func sweep(unidades: UnitSystem, moedas: CoinSystem, king_id: int) -> void:
-	if moedas.count() == 0:
-		return
-	for i in unidades.count():
-		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
-			continue
-		var espaco := unidades.coin_capacities[i] - unidades.carried_coins[i]
-		if espaco <= 0 or not _apanha_do_chao(unidades, i, king_id):
-			continue
-		var faixa := unidades.bands[i] as Band.Kind
-		# So o rei leva as que ele proprio largou; o escudeiro apanha as caidas (Q-114).
-		var caidas := unidades.ids[i] != king_id
-		if not caidas and awaited(unidades, moedas, i):
-			continue
-		var levado := collect(moedas, unidades.ids[i], unidades.xs[i], faixa, espaco, caidas)
-		unidades.carried_coins[i] += levado
-
-
-## Se ha, aos pes de quem varre, uma moeda que o rei largou e que alguem por
-## recrutar esta a vir buscar (§25, 0:20). O rei nao a leva de volta ao saco
-## antes de ele la chegar: largar ao lado de alguem tem de chegar a ele
-## (auditoria de 26/09). Afasta-te, ou ele apanha-a, e o chao volta a ser teu.
-static func awaited(unidades: UnitSystem, moedas: CoinSystem, i: int) -> bool:
-	var curva := SimFactory.curve()
-	for c in moedas.count():
-		if moedas.from_king[c] == 0 or moedas.settled[c] == 0:
-			continue
-		if moedas.bands[c] != unidades.bands[i]:
-			continue
-		if absf(moedas.xs[c] - unidades.xs[i]) > curva.coin_pickup_px:
-			continue
-		for u in unidades.count():
-			if unidades.owners[u] != RecruitSystem.SEM_DONO or not unidades.alive(u):
-				continue
-			if unidades.bands[u] == moedas.bands[c]:
-				if absf(unidades.xs[u] - moedas.xs[c]) <= curva.recruit_notice_px:
-					return true
-	return false
-
-
-static func _apanha_do_chao(unidades: UnitSystem, i: int, king_id: int) -> bool:
-	if unidades.ids[i] == king_id:
-		return true
-	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
-	return dados.tags.has(&"collects_coins")
+	var guarda: Dictionary = SimLoop.hunting.bagged if SimLoop.hunting != null else {}
+	Gleaning.sweep(unidades, moedas, king_id, guarda)
 
 
 ## Apanhar a mao, pelo catalogo. `espaco` e o que falta encher no saco, e vem de

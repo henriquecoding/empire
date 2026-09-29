@@ -6,8 +6,10 @@
 # conversao) e da moeda com o bonus (`coin_multiplier`) ou, com o oficio vivo, a
 # capacidade (`capacity_kind`, `magnitude`) enquanto a conversao corre.
 #
-# O gesto e o Verbo 1 com outro alvo (§06): uma moeda largada na casa troca o
-# modo — para capacidade so se tiveres o oficio (Q-112).
+# O gesto e escolher, e nao largar uma moeda (Q-115, o dono a 29/09/2026: "para
+# coisas como troca de modo, nao e simplesmente largar a moeda, o jogador deve
+# selecionar para o que quer trocar"): o Verbo 2 na casa escolhe o outro modo —
+# para capacidade so se tiveres o oficio (Q-112).
 #
 # Puro: recebe as conversoes, as materias e as tropas ja carregadas.
 class_name ConversionSystem
@@ -109,26 +111,19 @@ func on_phase(obras: BuildSystem) -> Array[Dictionary]:
 	return eventos
 
 
-## Uma moeda pousada numa casa troca o modo. Para capacidade, so com o oficio
-## teu vivo; de volta a moeda, sempre. Devolve verdadeiro se trocou.
-func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> bool:
-	_unidades = unidades
-	for casa in obras.standing():
-		var conv := craft_of(casa)
-		if conv == null:
-			continue
-		var para := CraftData.Mode.COIN
-		if mode_of(casa) == CraftData.Mode.COIN:
-			if not _tem_oficio(conv.capacity_craft):
-				continue
-			para = CraftData.Mode.CAPACITY
-		for c in moedas.count():
-			if not CoinTarget.pays(moedas, c, casa):
-				continue
-			moedas.remove(moedas.ids[c])
-			modes[casa.id] = para
-			return true
-	return false
+## O Verbo 2 na casa: escolhe o outro modo. Para capacidade, so com o oficio teu
+## vivo; de volta a moeda, sempre. Devolve verdadeiro se trocou.
+func choose(casa: BuildSlot) -> bool:
+	var conv := craft_of(casa)
+	if conv == null or not casa.standing():
+		return false
+	if mode_of(casa) == CraftData.Mode.CAPACITY:
+		modes[casa.id] = CraftData.Mode.COIN
+		return true
+	if not _tem_oficio(conv.capacity_craft):
+		return false
+	modes[casa.id] = CraftData.Mode.CAPACITY
+	return true
 
 
 ## As capacidades nas tuas tropas: a vida maxima e o passo do perfil, mais o que
