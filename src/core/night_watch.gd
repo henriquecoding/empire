@@ -19,6 +19,8 @@ extends RefCounted
 const TABELA_CRIATURAS := &"creatures"
 ## O poco de minerio "atrai Cavadores" (§06): a tag e da obra (Q-131).
 const CHAMA_CAVADORES := &"attracts_burrowers"
+## O que o escuro recebe no lugar da fase quando a noite ja nao tem Podridao.
+const SEM_NOITE := -1
 
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
@@ -66,7 +68,8 @@ func tick(
 	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
 	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
-	dark.tick(delta, fase, estado, bichos, _obras, mundo.x)
+	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.
+	dark.tick(delta, fase if rot.active() else SEM_NOITE, estado, bichos, _obras, mundo.x)
 	bichos.set_lights(LightWard.of(_obras, dark.ward()), SimFactory.rot_profile().light_recoil_s)
 	if not rot.active():
 		return

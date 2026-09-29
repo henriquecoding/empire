@@ -121,3 +121,14 @@ func test_o_lume_e_roxo_e_o_teu_fogo_e_ambar() -> void:
 	var fogo := WorldLight.fire_stops(_perfil())[WorldLight.PARAGENS - 1]
 	assert_float(lume.b).is_greater(lume.g)  # violeta: mais azul do que verde
 	assert_float(fogo.r).is_greater(fogo.b)  # ambar: mais vermelho do que azul
+
+
+func test_o_archote_aceso_arde_mesmo_fora_do_escuro() -> void:
+	# Senao o rei guardava os 60 s de um archote entre saidas, voltando a luz.
+	var archote := Torchlight.new(_perfil())
+	archote.buy(1)
+	archote.tick(PASSO, true, true)
+	assert_bool(archote.lit()).is_true()
+	var antes := archote.burning
+	archote.tick(1.0, true, false)
+	assert_float(archote.burning).is_equal_approx(antes - 1.0, 0.001)

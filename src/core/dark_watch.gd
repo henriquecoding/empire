@@ -9,6 +9,8 @@ extends RefCounted
 
 const NENHUM := -1
 const METADE := 0.5
+## O proposito do coin_spent de uma moeda que ficou numa fogueira (§46).
+const ARCHOTE := &"torch"
 
 var torch: Torchlight
 var _perfil: RotProfile
@@ -64,7 +66,10 @@ func buy_at(largada: Dictionary, obras: BuildSystem) -> bool:
 		if absf(obra.x - x) > obra.width * BuildSystem.METADE:
 			continue
 		var quantos := int(largada[EventRelay.QUANTO]) / maxi(1, _perfil.torch_cost)
-		return torch.buy(quantos) > 0
+		if torch.buy(quantos) <= 0:
+			return false
+		EventBus.queue(&"coin_spent", [int(largada[EventRelay.QUANTO]), ARCHOTE])  # §46
+		return true
 	return false
 
 

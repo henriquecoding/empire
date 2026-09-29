@@ -49,10 +49,10 @@ func tick(delta: float, noite: bool, no_escuro: bool) -> bool:
 		_espera = _perfil.dark_ambush_s
 		_emboscadas = 0
 		return false
-	if not no_escuro:
-		return false
-	if burning > 0.0:
+	if burning > 0.0:  # aceso, arde onde quer que o rei esteja
 		burning = maxf(0.0, burning - delta)
+		return false
+	if not no_escuro:
 		return false
 	if torches > 0:
 		torches -= 1

@@ -194,6 +194,8 @@ func _luzes_da_noite() -> Array[Vector2]:
 	var rot := SimLoop.night.rot
 	if not rot.active():
 		return [Vector2(0.0, INF)]
-	var luzes := WorldLight.hearths(SimLoop.builds, SimLoop.night.dark.ward())
+	var luzes: Array[Vector2] = []
+	if band == Band.Kind.SURFACE:  # as tuas luzes so alumiam a faixa delas
+		luzes = WorldLight.hearths(SimLoop.builds, SimLoop.night.dark.ward())
 	luzes.append(Vector2(WorldLight.nest_x(rot), WorldLight.radius(_podre, SimLoop.state.day)))
 	return luzes
