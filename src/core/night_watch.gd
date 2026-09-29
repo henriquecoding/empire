@@ -65,7 +65,7 @@ func tick(
 ) -> void:
 	if mudou:
 		_virar(fase, estado, bichos, mundo)
-	amargueiros.harvest(_obras)  # a serra que acabou no passo 8 do tick anterior
+	SpiritWatch.felled(amargueiros.harvest(_obras))  # a serra acabada; o nome pesa (§74)
 	voice.titles = names.by_unit()
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
 	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.

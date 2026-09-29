@@ -24,7 +24,7 @@ const METADE := 0.5
 
 
 ## O sitio de obra que o Verbo 1 paga quando largado em `x`, ou NENHUM. O nucleo
-## nao e sitio de obra (§10): o que ele leva, leva-o o FieldWork.claims().
+## nao e sitio de obra (§10): o que ele leva, leva-o o KingClaims.of().
 static func slot_at(obras: BuildSystem, x: float, faixa: int) -> int:
 	for vaga in obras.slots:
 		if vaga.kind == BuildSlot.NUCLEO or int(vaga.band) != faixa:

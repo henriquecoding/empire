@@ -198,3 +198,11 @@ extends Resource
 @export var vassal_strength: float = 0.0
 @export var vassal_erosion_per_mass: float = 0.0
 @export var vassals_can_fall: bool = true
+
+## O animo do reino (Q-102): limiares, pesos e prazos das memorias, e o que mexe.
+@export var spirit_levels: PackedFloat32Array = PackedFloat32Array([35.0, 50.0, 65.0])
+@export var spirit_weights: Dictionary = {}
+@export var spirit_days: Dictionary = {}
+@export var spirit_flee_mult: Vector2 = Vector2.ONE
+@export var spirit_yield: float = 0.0
+@export var spirit_vagrants: int = 0

@@ -9,8 +9,10 @@
 # Os campos do save sao os da §84: titles_holder, titles_ordinal,
 # titles_mourning. Os feitos sao do FeatLedger; aqui so se da o nome.
 #
-# Das nove bonificacoes, so a vida maxima tem hoje onde pegar. As outras mexem
-# na moral, na cadencia, no dano e na comida, e ficam registadas (Q-102).
+# Das nove bonificacoes, quatro tem hoje onde pegar (Q-102): a vida maxima, nao
+# fugir, a cadencia e o dano contra cerco — grants() da-as a quem as tem. As
+# outras (arrastar, comida, encantamento, a arma, o panico no Lume) esperam pelos
+# sistemas delas.
 class_name TitleSystem
 extends RefCounted
 
@@ -57,6 +59,16 @@ func _init(
 
 func count() -> int:
 	return holders.size()
+
+
+## O que cada nomeado vivo ganhou com o titulo: unit_id -> {grant_kind: valor}.
+func grants() -> Dictionary:
+	var saida := {}
+	for dados in _titulos:
+		var quem: int = holders.get(String(dados.id), -1)
+		if quem >= 0:
+			saida[quem] = {dados.grant_kind: dados.grant_value}
+	return saida
 
 
 func title_of(unit_id: int) -> String:

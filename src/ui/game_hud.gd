@@ -156,8 +156,8 @@ func _atualizar() -> void:
 		saco, cabem, GameplayGuide.troops(), _vida_nucleo(), SimLoop.state.greed, soldo
 	)
 	var archotes := SimLoop.night.dark.torch.torches  # Q-029
-	if archotes > 0:
-		_recursos.text += "  ·  " + tr(&"HUD_TORCHES").format({"n": archotes})
+	var animo := SimLoop.field.spirit.value(ClockService.clock.day)  # Q-102
+	_recursos.text += HudText.extras(archotes, animo, SimLoop.state.royal_seeds)  # Q-095
 	_objectivo.text = GameplayGuide.goal()
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)

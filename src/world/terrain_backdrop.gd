@@ -45,5 +45,5 @@ func _draw() -> void:
 	)
 	# As terras bravias (Q-154): o cenario vai de uma ponta a outra do que se anda.
 	draw_set_transform(Vector2(-SimLoop.wild_px, 0.0))
-	TerrainArt.draw_on(self, band, SimLoop.world_width + SimLoop.wild_px * 2.0, luz)
+	TerrainArt.draw_on(self, band, SimLoop.world_width + SimLoop.wild_px + SimLoop.wild_px, luz)
 	draw_set_transform(Vector2.ZERO)

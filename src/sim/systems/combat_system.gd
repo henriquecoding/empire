@@ -10,9 +10,7 @@
 #   3 · aplicar dano        — tudo de uma vez, no fim
 #   4 · mortes e o que cai  — depois do dano, nunca a meio
 #
-# O passo 3 e o que evita o defeito que o §43 descreve por palavras suas: "uma
-# tropa morre e ainda ataca no mesmo tick". Os golpes sao todos decididos antes
-# de qualquer vida mudar.
+# O passo 3 evita "uma tropa morre e ainda ataca no mesmo tick" (§43).
 #
 # Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70): quem
 # chama liga-o ao fluxo `combat` e a noite reproduz-se com a semente. A §50
@@ -22,9 +20,7 @@
 # chamada a resolve(): sao o contexto do passo, e sao reescritos a cada um. E o
 # que permite que os metodos de dentro nao levem cinco argumentos cada.
 #
-# O que NAO esta aqui: os slots de contacto e a fila do muro (F1-06); a precisao
-# 1,0 dentro de torre, que precisa de saber quem esta dentro de uma (F1-06);
-# moral e fuga (F1-12); o corpo que fica no chao (§16).
+# O que NAO esta aqui: a fila do muro (F1-06), a moral e a fuga (F1-12).
 class_name CombatSystem
 extends RefCounted
 
@@ -59,6 +55,8 @@ const QUEM := &"data_id"
 
 var picker: TargetPicker
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
+## O que os titulos dao a quem os tem (§76, Q-102): unit_id -> {grant: valor}.
+var perks: Dictionary = {}
 
 var _dados_u: Dictionary = {}
 var _dados_c: Dictionary = {}
@@ -134,11 +132,15 @@ func _tropas_batem() -> void:
 		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
-		_u.cooldowns[i] = dados.attack_interval * Posts.cadence(_postos, _u, i)
+		var bonus: Dictionary = perks.get(unit_id, {})  # o titulo (Q-102)
+		_u.cooldowns[i] = (
+			dados.attack_interval * Posts.cadence(_postos, _u, i) / TitlePerks.rate(bonus)
+		)
 		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
-			_golpes.append({DE: unit_id, PARA: alvo, QUANTO: dados.damage, CRIATURA: true})
+			var dano := dados.damage + TitlePerks.vs_siege(bonus, _c, _dados_c, alvo)
+			_golpes.append({DE: unit_id, PARA: alvo, QUANTO: dano, CRIATURA: true})
 
 
 func _criaturas_batem() -> void:

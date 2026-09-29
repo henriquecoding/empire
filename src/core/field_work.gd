@@ -22,12 +22,16 @@ var succession: Succession
 var camps: PackedFloat32Array = PackedFloat32Array()
 ## A marcha e os vassalos (§13; Q-103, Q-146): o reino que fica.
 var realm := Realm.new()
+## O animo do reino (Q-102): memorias com prazo, que mexem na fuga, na producao e
+## em quem chega aos acampamentos.
+var spirit: Spirit
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
 var _dia := 0
 var _rei := UnitSystem.NENHUM
 var _noite: NightWatch
+var _combate: CombatSystem
 var _nucleo := Vector2.ZERO
 var _perfis: Dictionary
 var _obras: BuildSystem
@@ -52,9 +56,12 @@ func _init(
 	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
 	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"), SimFactory.curve())
 	var curva := SimFactory.curve()
+	var niveis := curva.spirit_levels
+	spirit = Spirit.new(niveis[1], niveis[0], niveis[2])
 	succession = Succession.new(curva.heir_training_days, curva.heir_cost_per_day)
 	if combate != null:
 		combate.guard = classes
+	_combate = combate
 	_economia = economia
 	_moral = moral
 	if _economia != null:
@@ -83,8 +90,14 @@ func prepare(
 	if _economia != null:
 		_economia.today = dia
 		_economia.greed = estado.greed if estado != null else 0
+		_economia.spirit = spirit.level(dia)
+	var perks: Dictionary = _noite.names.grants() if _noite != null else {}  # §76, Q-102
 	if _moral != null:
 		_moral.steadfast = crown.steadfast(dia)
+		_moral.spirit = spirit.level(dia)
+		_moral.perks = perks
+	if _combate != null:
+		_combate.perks = perks
 
 
 ## A intencao do §61 que a roda do rei enfileira: um impulso por dia (§15, §24).
@@ -94,35 +107,6 @@ func impulse(id: StringName, unidades: UnitSystem, rei: int) -> void:
 	if crown.use(id, ClockService.clock.day, unidades, rei, custo):
 		EventBus.queue(&"royal_impulse_used", [id])
 		EventBus.queue(&"coin_spent", [custo, &"impulse"])
-
-
-## Uma moeda do rei com outro alvo que o chao: uma arvore a consagrar (§74) ou
-## o nucleo, para a classe evoluir (§08, Q-114). Nos dois a moeda volta ao saco.
-func claims(
-	largada: Dictionary,
-	estado: GameState,
-	noite: NightWatch,
-	obras: BuildSystem,
-	unidades: UnitSystem,
-	rei: int
-) -> bool:
-	if noite.consecrate_at(estado, largada, rei) or noite.dark.buy_at(largada, obras):
-		return true  # uma arvore a consagrar, ou archotes numa fogueira (Q-029)
-	if not classes.can_evolve(estado.royal_seeds) or not _no_nucleo(largada, obras):
-		return false
-	classes.evolve(estado)
-	var i := unidades.index_of(rei)
-	if i != UnitSystem.NENHUM:
-		unidades.carried_coins[i] += int(largada[EventRelay.QUANTO])
-	return true
-
-
-func _no_nucleo(largada: Dictionary, obras: BuildSystem) -> bool:
-	var x: float = largada[EventRelay.ONDE]
-	for vaga in obras.slots:
-		if vaga.kind == BuildSlot.NUCLEO and vaga.band == int(largada[EventRelay.FAIXA]):
-			return absf(vaga.x - x) <= vaga.width * BuildSystem.METADE
-	return false
 
 
 ## Passo 4: quem caca, quem se forma para a noite (Q-128) e quem treina escrevem
@@ -185,6 +169,7 @@ func to_dict() -> Dictionary:
 		&"upkeep": upkeep.to_dict(),
 		&"succession": succession.to_dict(),
 		&"realm": realm.to_dict(),
+		&"spirit": spirit.to_dict(),
 	}
 
 
@@ -197,6 +182,7 @@ func from_dict(mundo: Dictionary) -> void:
 	upkeep.from_dict(mundo.get(&"upkeep", {}))
 	succession.from_dict(mundo.get(&"succession", {}))
 	realm.from_dict(mundo.get(&"realm", {}))
+	spirit.from_dict(mundo.get(&"spirit", {}))
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 
@@ -214,7 +200,8 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
 			else:
 				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
-	Camps.dawn(camps, dia, unidades, estado)
+	SpiritWatch.dawn(spirit, dia, upkeep.arrears())  # o soldo em atraso pesa (Q-102)
+	Camps.dawn(camps, dia, unidades, estado, spirit.level(dia))
 	var fork := (
 		SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else _nucleo.x
 	)

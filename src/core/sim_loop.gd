@@ -62,8 +62,8 @@ func _ready() -> void:
 	builds = BuildSystem.new()
 	EventBus.dawn_broke.connect(_no_amanhecer)
 	tally.listen()
-	# §07: um muro a cair poe a fugir quem esta fraco e e barato. O sinal so e
-	# entregue no passo 11, e por isso a brecha conta no tick seguinte.
+	SpiritWatch.listen()  # o animo do reino (Q-102)
+	# §07: a brecha poe a fugir quem esta fraco; conta no tick seguinte (passo 11).
 	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
 
 
@@ -221,7 +221,7 @@ func _mudanca_de_fase() -> bool:
 func _largar(moedas: Array[Dictionary]) -> void:
 	for m in moedas:
 		var do_rei: bool = m[EventRelay.PORQUE] == Verbs.JOGADOR
-		if do_rei and field.claims(m, state, night, builds, units, king_id):
+		if do_rei and KingClaims.of(field, m, state, night, builds, units, king_id):
 			continue
 		drop_coin(
 			m[EventRelay.ONDE], m[EventRelay.FAIXA], m[EventRelay.QUANTO], m[EventRelay.PORQUE]
