@@ -246,7 +246,7 @@ frio, `make importar` primeiro — sem isso o motor não consegue abrir uma cena
 | O quê | Como | O que se vê |
 |---|---|---|
 | **O jogo** | `godot --path .` | A partida. Andas, largas moedas, recrutas, constróis, desces ao subsolo, e ao crepúsculo a mancha chega. Retoma o autosave da última alvorada. |
-| **Uma partida do zero** | `godot --path . -- --novo` | O mesmo, ignorando o save. É o que se usa para repetir uma noite. |
+| **Uma partida nova** | `godot --path . -- --novo` | O mesmo, ignorando o save — mas herda o legado, se houver (§16, Q-134). Do zero mesmo é **Recomeçar do zero**, na pausa, que apaga os saves e o legado (Q-164). |
 | **A suite** | `make testes` | 372 casos. O `jogo_test.gd` e o `jogo_noite_test.gd` correm um dia e uma noite inteiros pelo `SimLoop`, em *headless*, com o mundo montado. |
 | **A noite, medida** | `godot --headless --path . scenes/tests/night_test.tscn` | O cenário fechado do §07: dez noites, com torre e sem ela, e por noite as invocadas, os abates, as mortes e quantas chegaram a encostar ao muro. |
 | **Os dez dias, medidos** | `godot --headless --path . scenes/tests/dez_dias.tscn` | O critério de saída da Fase 1 (§66): nove defesas, dez dias cada, e por cada uma se aguentou, em que dia caiu, e com que margem ficou o castelo-árvore. A última é a que aguenta, e sai também noite a noite. |

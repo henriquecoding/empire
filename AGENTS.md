@@ -70,6 +70,7 @@ src/core/night_watch.gd     NightWatch    o ciclo da noite: nascer, invocar, rec
 src/core/verbs.gd           Verbs         o Verbo 2 e o gatilho direito (§24, §61)
 src/core/defeat.gd          Defeat        quando a partida acabou: o nucleo ou o rei (§10, §16, Q-118)
 src/core/save_point.gd      SavePoint     gravar ao pausar e ao fechar, de dia (§62, Q-119)
+src/core/fresh_start.gd     FreshStart    recomecar do zero: os saves e o legado, tudo ou nada (Q-164)
 src/core/legacy_store.gd    LegacyStore   o legado como transacao: gravar, confirmar, gastar (§16, §62, Q-139)
 src/core/field_work.gd      FieldWork     a caca e as casas de oficio, no tick (§09, §25)
 src/core/camps.gd           Camps         o vagabundo novo de cada alvorada, nos acampamentos (Q-110, Q-122)
@@ -189,6 +190,7 @@ src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26,
 src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)
 src/ui/hud_text.gd          HudText       o texto do painel, por chave (§27, GB-27)
 src/ui/options_panel.gd     OptionsPanel  as opcoes da pausa, e o idioma (§26, §27)
+src/ui/fresh_start_panel.gd FreshStartPanel o "Recomecar do zero" da pausa, e a pergunta (Q-164)
 scenes/boot.tscn                          cena principal do project.godot
 scenes/game.tscn                          a cena de jogo, instanciada pela boot
 
