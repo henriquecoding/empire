@@ -56,3 +56,5 @@ dark_creature = &"crawler"
 torch_repel_mass = 8
 light_recoil_s = 3.0
 lume_mass_per_fuel = 0.25
+mass_growth = 1.06
+growth_from_night = 10

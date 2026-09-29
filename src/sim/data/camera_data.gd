@@ -31,6 +31,6 @@ extends Resource
 @export var free_return_seconds: float = 2.0
 
 ## §24: a camara livre anda com "Q · Z ou rato na margem". A largura dessa
-## margem, em px de ECRA e nao de mundo: e onde a mao poe o rato, e a mao nao
-## sabe onde a camara esta. Zero desliga.
-@export var edge_pan_px: float = 0.0
+## margem, em fracao da largura do ECRA (Q-087): e onde a mao poe o rato, e a
+## mao nao sabe onde a camara esta. Zero desliga.
+@export var edge_pan_frac: float = 0.0

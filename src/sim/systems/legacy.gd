@@ -27,7 +27,9 @@ const ID := &"id"
 const NIVEL := &"level"
 const CAMINHO := &"path"
 const VARIANTE := &"variant"
-## A fase da classe do rei: "a evolucao da classe e do imperio e fica" (Q-133).
+## A fase da classe do rei. Atravessa com a campanha; num jogo novo — a derrota,
+## ou a campanha seguinte — a classe continua desbloqueada, mas a evolucao volta
+## a ganhar-se a jogar (Q-140, o dono a 29/09/2026).
 const CLASSE := &"class_phase"
 ## A travessia (P-K, Q-135): a regiao seguinte, quem vai com o rei e o saco dele.
 const REGIAO := &"region"
@@ -36,16 +38,13 @@ const SACO := &"purse"
 
 
 ## O que o jogo novo herda desta partida.
-static func of(
-	estado: GameState, obras: BuildSystem, fracao: float, classes: ClassSystem = null
-) -> Dictionary:
+static func of(estado: GameState, obras: BuildSystem, fracao: float) -> Dictionary:
 	var ficam := []
 	for obra in kept(obras, fracao):
 		ficam.append(
 			{ID: obra.id, NIVEL: obra.level, CAMINHO: int(obra.path), VARIANTE: obra.variant}
 		)
 	return {
-		CLASSE: classes.phase if classes != null else ClassSystem.PRIMEIRA,
 		SEMENTES: estado.royal_seeds,
 		ACHADOS: estado.found,
 		CONQUISTAS: estado.conquests,
@@ -67,7 +66,8 @@ static func crossing(
 	alcance: float,
 	classes: ClassSystem = null
 ) -> Dictionary:
-	var d := of(estado, BuildSystem.new(), 0.0, classes)
+	var d := of(estado, BuildSystem.new(), 0.0)
+	d[CLASSE] = classes.phase if classes != null else ClassSystem.PRIMEIRA
 	var r := unidades.index_of(rei)
 	var comitiva := PackedStringArray()
 	for i in unidades.count():
@@ -90,6 +90,7 @@ static func crossing(
 	if estado.region + 1 >= estado.chapters.regions.size():
 		d[REGIAO] = 0
 		d.erase(PLANO)
+		d.erase(CLASSE)
 	return d
 
 

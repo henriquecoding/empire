@@ -24,6 +24,7 @@ extends Control
 ## pedido vai pelo grupo e nao por um import.
 const GRUPO_JOGO := &"jogo"
 const RECOMECAR := &"new_game"
+const ABDICAR := &"end_reign"
 
 const FUNDO := Color(0.02, 0.02, 0.03, 0.62)
 const PAPEL := Color(0.20, 0.16, 0.13, 0.96)
@@ -39,6 +40,8 @@ var _opcoes: OptionsPanel
 var _retomar: Button
 var _novo: Button
 var _perdido := false
+## O rei caiu com herdeiro pronto: continuar, ou deixar a coroa cair (Q-146).
+var _herdeiro := false
 
 
 func _ready() -> void:
@@ -80,8 +83,9 @@ func _na_pausa(pausado: bool) -> void:
 ## uma partida e deixa-la cair.
 func open(perdido: bool) -> void:
 	_perdido = perdido
+	_herdeiro = not perdido and heir_waits()
 	_retomar.visible = not perdido
-	_novo.visible = perdido
+	_novo.visible = perdido or _herdeiro
 	_opcoes.refresh()
 	_escrever()
 	show()
@@ -94,9 +98,19 @@ static func defeated() -> bool:
 	return Defeat.happened()
 
 
+## O rei esta caido e o herdeiro pronto: a escolha do Q-146 ainda esta por fazer.
+static func heir_waits() -> bool:
+	return SimLoop.state != null and Defeat.king_fell() and not Defeat.happened()
+
+
 ## O texto do menu. Volta a escrever-se quando o idioma muda (§27, GB-28).
 func _escrever() -> void:
 	_titulo.text = tr(&"UI_CROWN_FALLEN") if _perdido else tr(&"UI_PAUSED")
+	if _herdeiro:
+		_titulo.text = tr(&"UI_HEIR_CHOICE")
+		_retomar.text = tr(&"UI_HEIR_CONTINUE")
+		_novo.text = tr(&"UI_HEIR_DECLINE")
+		return
 	# Um legado que nao se gravou nao se anuncia como travessia feita (CONT-01).
 	if _perdido and SimLoop.state != null and SimLoop.state.crossed:
 		var falhou := LegacyStore.failed
@@ -178,6 +192,11 @@ func _ao_retomar() -> void:
 
 
 func _ao_recomecar() -> void:
+	if _herdeiro:
+		_herdeiro = false
+		get_tree().call_group(GRUPO_JOGO, ABDICAR)
+		open(true)
+		return
 	_fechar()
 	get_tree().call_group(GRUPO_JOGO, RECOMECAR)
 

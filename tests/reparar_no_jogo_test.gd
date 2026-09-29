@@ -1,6 +1,6 @@
 # tests/reparar_no_jogo_test.gd — a reparacao no jogo inteiro (Q-108): a muralha
-# tocada pede o preco no painel, o rei paga com o Verbo 1, e um trabalhador teu
-# vai la e poe-na inteira sem o rei ao pe.
+# tocada pede o preco no painel, o rei paga com o Verbo 1, e um construtor teu
+# (Q-108) vai la e poe-na inteira sem o rei ao pe.
 extends GdUnitTestSuite
 
 const STEP := 1.0 / 30.0
@@ -40,6 +40,7 @@ func test_a_muralha_tocada_repara_se_com_gestos_e_um_trabalhador() -> void:
 			}
 		)
 	)
+	TrainingSystem.retrain(SimLoop.units, trabalhador, Registry.entry(&"units", &"builder"))
 	var espera := 0
 	for _t in 600:
 		if muro.mending:

@@ -160,7 +160,7 @@ func repair_cost() -> int:
 func soak(quanto: int, defesa: float) -> int:
 	if not two_paths() or defesa <= 0.0:
 		return quanto
-	soaked += quanto * defesa
+	soaked += quanto * defesa / (1.0 + defesa)
 	var poupado := mini(quanto, int(soaked))
 	soaked -= poupado
 	return quanto - poupado

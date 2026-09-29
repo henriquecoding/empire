@@ -48,7 +48,7 @@ Script `src/sim/data/unit_data.gd` · layout `rows` · 24 linha(s) · §07 §08 
 | `drops_on_death` | Array[StringName] | Economia |  |
 | `band` | Band.Kind | Mundo |  |
 | `move_speed` | float | Mundo | px/s |
-| `scale_tier` | int | Mundo | 1, 2 ou 3 — §22 |
+| `scale_tier` | int | Mundo | 1 a 4 — §22; o rei e o 4 (Q-097) |
 | `can_change_band` | bool | Mundo |  |
 | `layer_slots` | Array[StringName] | Arte |  |
 | `shadow_width` | int | Arte | largura da elipse de contacto |
@@ -467,6 +467,8 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `light_recoil_s` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `lume_mass_per_fuel` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `mine_lure_days` | int | Auditoria de gameplay — AUD-04 |  |
+| `mass_growth` | float | O Lume e as tuas luzes — ADR 0034 |  |
+| `growth_from_night` | int | O Lume e as tuas luzes — ADR 0034 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`
 
@@ -713,5 +715,5 @@ Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24
 | `follow_seconds` | float |  |  |
 | `free_speed_px_s` | float |  |  |
 | `free_return_seconds` | float |  |  |
-| `edge_pan_px` | float |  |  |
+| `edge_pan_frac` | float |  |  |
 

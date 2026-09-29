@@ -167,26 +167,29 @@ func _tremer() -> void:
 		_tremor = TREMOR_S
 
 
-## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota e
-## inventar um era quebrar a regra 7 do AGENTS.md — o que ha e o mundo, e o
-## mundo diz-o: o nucleo em ruina. O relogio para e a entrada deixa de responder.
-##
-## Parar a partida AQUI e nao no SimLoop e deliberado, e custou uma tentativa:
-## com o `step()` a parar sozinho, os instrumentos que MEDEM uma derrota — o
-## §66 varre dez dias por defesa e diz "em que dia caiu" — deixavam de poder
-## contar. Quem joga tem cena; quem mede, nao. Ver a Q-081.
-##
-## Pergunta ao Defeat e nao so pelo nucleo: a casa do herdeiro a cair com o rei
-## ja morto tambem acaba a partida (N3, Q-137).
+## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota (regra
+## 7 do AGENTS.md): o mundo diz-o, com o nucleo em ruina. Parar AQUI e nao no
+## SimLoop e deliberado: quem mede uma derrota (o §66) precisa de continuar a
+## contar. Quem joga tem cena; quem mede, nao (Q-081).
 func _no_desabamento(_building_id: int, _x: float) -> void:
 	if Defeat.happened():
 		_acabar()
 
 
-## O rei caiu e nao ha herdeiro (§16, Defeat): e a mesma derrota que o nucleo.
+## O rei caiu: sem herdeiro e a mesma derrota que o nucleo (§16, Defeat); com ele
+## pronto, a pausa pergunta se se continua com um novo monarca (Q-146).
 func _na_morte(unit_id: int, _x: float, _faixa: int, _larga: PackedStringArray) -> void:
-	if unit_id == SimLoop.king_id and Defeat.happened():
-		_acabar()
+	if unit_id == SimLoop.king_id:
+		if Defeat.happened():
+			_acabar()
+		else:
+			SimLoop.set_paused(true)
+
+
+## Quem joga deixou a coroa cair em vez de continuar com o herdeiro (Q-146).
+func end_reign() -> void:
+	SimLoop.field.succession.declined = true
+	_acabar()
 
 
 ## A travessia (P-K, Q-135): a regiao acabou, e o rei leva quem esta perto dele.
@@ -207,7 +210,7 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 func _acabar() -> void:
 	_tremer()
 	var fica := SimFactory.curve().decay_structures_kept
-	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica, SimLoop.field.classes))
+	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica))
 
 
 ## O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134). Um

@@ -48,7 +48,7 @@ func test_uma_ruina_custa_o_degrau_que_tinha_e_volta_a_esse_nivel() -> void:
 	_pagar(vaga.costs[0])
 	assert_int(vaga.state).is_equal(BuildSlot.State.SCAFFOLD)
 	assert_bool(vaga.mending).is_true()
-	unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X)
+	unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU, X)
 	_trabalhar(vaga.works[0])
 	assert_int(vaga.state).is_equal(BuildSlot.State.DONE)
 	assert_int(vaga.level).is_equal(1)
@@ -67,7 +67,7 @@ func test_uma_obra_tocada_paga_o_que_perdeu_e_fica_de_pe_enquanto_se_repara() ->
 	assert_int(vaga.state).is_equal(BuildSlot.State.DAMAGED)
 	assert_bool(vaga.standing()).is_true()
 	assert_bool(vaga.mending).is_true()
-	unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X)
+	unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU, X)
 	_trabalhar(vaga.works[0])
 	assert_int(vaga.state).is_equal(BuildSlot.State.DONE)
 	assert_int(vaga.health).is_equal(vaga.max_health())
@@ -78,7 +78,7 @@ func test_sem_moeda_ninguem_repara_e_sem_ninguem_a_moeda_nao_repara() -> void:
 	var vaga := _muro_de_pe()
 	obras.damage(vaga.id, 1)
 	var vida := vaga.health
-	unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X)
+	unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU, X)
 	_trabalhar(vaga.works[0])
 	assert_int(vaga.health).is_equal(vida)
 	unidades.remove(unidades.ids[0])
@@ -112,11 +112,29 @@ func test_o_nucleo_nao_se_repara_com_moeda_e_a_reparacao_vai_no_save() -> void:
 	assert_bool(copia.mending).is_true()
 
 
+## Q-108 (o dono, 29/09/2026): como no Kingdom, so o construtor repara. Um
+## vagabundo teu em cima da obra paga nao a poe inteira, nem vai ao posto.
+func test_so_o_construtor_repara() -> void:
+	var vaga := _muro_de_pe()
+	obras.damage(vaga.id, vaga.max_health() / 2)
+	var vida := vaga.health
+	_pagar(vaga.repair_cost())
+	var jobs := SimFactory.job_board()
+	var quem := unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X)
+	jobs.refresh(obras, unidades, GameClock.Phase.MORNING)
+	assert_int(unidades.job_ids[unidades.index_of(quem)]).is_equal(JobBoard.NENHUM)
+	_trabalhar(vaga.works[0])
+	assert_int(vaga.health).is_equal(vida)
+	unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU, X)
+	_trabalhar(vaga.works[0])
+	assert_int(vaga.health).is_equal(vaga.max_health())
+
+
 func test_o_quadro_publica_a_reparacao_paga_e_um_trabalhador_vai_la() -> void:
 	var vaga := _muro_de_pe()
 	obras.damage(vaga.id, 1)
 	var jobs := SimFactory.job_board()
-	var obreiro := unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X + 200.0)
+	var obreiro := unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU, X + 200.0)
 	jobs.publish(obras)
 	var antes := jobs.slots.size()
 	_pagar(vaga.repair_cost())
@@ -135,6 +153,6 @@ func test_uma_escada_de_trabalho_curta_nao_parte_a_reparacao() -> void:
 	vaga.health = vaga.max_health()
 	obras.damage(vaga.id, 1)
 	_pagar(vaga.repair_cost())
-	unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU, X)
+	unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU, X)
 	_trabalhar(vaga.works[0])
 	assert_int(vaga.state).is_equal(BuildSlot.State.DONE)

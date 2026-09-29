@@ -5,7 +5,7 @@
 # nada disto existia: um rei morto deixava o mundo sem comando (D6), e a correcao
 # minima fez dele o fim da partida. Com a casa de pe, cada alvorada tira um dia de
 # treino ao saco do rei; com o herdeiro formado, a morte do rei deixa de ser a
-# derrota, e na alvorada seguinte o herdeiro nasce na casa e a coroa passa.
+# derrota, e na alvorada seguinte o herdeiro nasce no castelo e a coroa passa.
 #
 # Sem herdeiro continua a ser derrota: o §16 da ao rei sem sucessor um interregno,
 # mas o interregno pede outro personagem jogavel que o atravesse, e na Fase 1 o
@@ -24,6 +24,9 @@ const METADE := 0.5
 var days: int = 0
 ## O imperio a quem o herdeiro pertence: o do rei que o pagou.
 var owner: int = NENHUM
+## Quem joga escolheu nao continuar com o herdeiro: "se o imperador morre e o
+## herdeiro estiver pronto, o jogador pode optar por continuar" (Q-146).
+var declined := false
 
 var _dias: int
 var _custo: int
@@ -39,12 +42,21 @@ func ready() -> bool:
 	return _dias > 0 and days >= _dias
 
 
-## Se a coroa pode passar na proxima alvorada: herdeiro formado e casa de pe, onde
-## ele nasce. E a condicao que o Defeat, o guia e a coroacao leem — antes o Defeat
-## lia so o treino, e um herdeiro formado sem casa nem acabava a partida nem era
-## coroado (auditoria de 27/09, N3; Q-137).
+## Se a coroa pode passar na proxima alvorada: herdeiro formado e castelo de pe,
+## onde ele nasce. "O sucessor so nasce no castelo, e ele deve existir para poder
+## continuar; se nao houver, a partida acaba" (Q-137, o dono a 29/09/2026). A casa
+## e onde se forma, e nao onde nasce: perde-la depois de formado nao o perde.
+## E a condicao que o Defeat, o guia e a coroacao leem.
 func possible(obras: BuildSystem) -> bool:
-	return ready() and house(obras) != null
+	return ready() and not declined and castle(obras) != null
+
+
+## O castelo-arvore de pe, ou null.
+static func castle(obras: BuildSystem) -> BuildSlot:
+	for obra in obras.standing():
+		if obra.kind == BuildSlot.NUCLEO:
+			return obra
+	return null
 
 
 ## A casa do herdeiro de pe, ou null.
@@ -69,20 +81,22 @@ func dawn(obras: BuildSystem, unidades: UnitSystem, rei: int) -> int:
 	return _custo
 
 
-## A coroa passa: o herdeiro nasce na casa com os dados do monarca, e o treino
+## A coroa passa: o herdeiro nasce no castelo com os dados do monarca, e o treino
 ## recomeca do zero para o proximo. Devolve o id dele, ou NENHUM sem herdeiro.
 func crown(estado: GameState, unidades: UnitSystem, obras: BuildSystem, monarca: UnitData) -> int:
 	if not possible(obras):
 		return NENHUM
-	var casa := house(obras)
+	var castelo := castle(obras)
 	days = 0
-	return unidades.spawn(estado, monarca, owner, casa.x)
+	declined = false
+	return unidades.spawn(estado, monarca, owner, castelo.x)
 
 
 func to_dict() -> Dictionary:
-	return {&"days": days, &"owner": owner}
+	return {&"days": days, &"owner": owner, &"declined": declined}
 
 
 func from_dict(d: Dictionary) -> void:
 	days = int(d.get(&"days", 0))
 	owner = int(d.get(&"owner", NENHUM))
+	declined = bool(d.get(&"declined", false))

@@ -23,7 +23,8 @@ train_days = 1
 ability = &"builder_wall_bonus"
 ability_params = {
 &"armory_slots": 1.0,
-&"wall_defense": 0.08
+&"wall_defense": 0.02,
+&"wall_defense_max": 0.1
 }
 weapon_kind = &"hammer"
 head_pool = Array[StringName]([&"hat_builder"])

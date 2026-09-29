@@ -174,7 +174,7 @@ func _score(unidades: UnitSystem, i: int, vaga: JobSlot, fase: int) -> float:
 	if posto == null or dados == null or fase >= posto.urgency_by_phase.size():
 		return SCORE_MINIMO
 	var adequacao: float = dados.job_affinity.get(vaga.job_id, SCORE_MINIMO)
-	if vaga.job_id in [&"build", REPARAR] and dados.tags.has(&"worker"):
+	if vaga.job_id == &"build" and dados.tags.has(&"worker"):
 		adequacao = maxf(adequacao, dados.job_affinity.get(&"farm", SCORE_MINIMO))
 	if adequacao <= SCORE_MINIMO:
 		return SCORE_MINIMO

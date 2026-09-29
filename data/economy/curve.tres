@@ -105,6 +105,6 @@ start_greed_profile = &"balanced"
 chicken_theft_matter = 1.0
 crossing_day = 11
 crossing_party_px = 120.0
-king_run_mult = 1.6
+king_run_mult = 1.8
 impulse_repeat_mult = 1.5
 impulse_repeat_days = 3

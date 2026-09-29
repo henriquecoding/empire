@@ -143,12 +143,20 @@ extends Resource
 ## O que a noite seguinte ganha por cada unidade do que o Lume comeu (sacrificios,
 ## galinhas roubadas): "tudo aquilo que a Podridao consome alimenta-a".
 @export var lume_mass_per_fuel: float = 0.0
+## Q-151 (o dono, 29/09/2026): "mais brando ate a noite 5, depois, conforme os dias
+## passam, torna-se mais dificil exponencialmente". O calendario da massa cresce a
+## esta razao por noite depois da noite `growth_from_night`. 1 desliga.
+@export var mass_growth: float = 1.0
+@export var growth_from_night: int = 0
 
 
 ## A parte do calendario da massa (§74: base + dia), com as primeiras noites em
-## rampa (Q-017, Q-068). Sem rampa escrita nos dados, e a §74 tal e qual.
+## rampa (Q-017, Q-068) e, depois da noite `growth_from_night`, a subir de noite
+## para noite ao `mass_growth` (Q-151). Sem rampa nem crescimento, e a §74.
 func calendar_mass(dia: int) -> float:
 	var cheia := mass_base + mass_per_day * dia
+	if growth_from_night > 0 and dia > growth_from_night and mass_growth > 1.0:
+		return cheia * pow(mass_growth, dia - growth_from_night)
 	if ramp_nights <= 1 or opening_mass <= 0.0 or dia >= ramp_nights:
 		return cheia
 	var t := float(maxi(dia, 1) - 1) / float(ramp_nights - 1)

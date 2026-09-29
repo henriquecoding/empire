@@ -1167,7 +1167,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <div class="tw"><table>
     <thead><tr><th>Ofício</th><th>Nível 1</th><th>Nível 2</th><th class="n">Treino</th></tr></thead>
     <tbody>
-      <tr><td>Construtor</td><td>Constrói e melhora estruturas. Dentro do império: +8% defesa das muralhas e +1 slot de armas no arsenal.</td><td>Sai das muralhas e constrói defesas avançadas em campo; melhora a base das tropas; adiciona tropas às defesas; ergue torres e armadilhas.</td><td class="n">12 + Casa de Treino</td></tr>
+      <tr><td>Construtor</td><td>Constrói e melhora estruturas. Dentro do império: +2% defesa das muralhas por construtor, até +10% — a defesa é o dano que a muralha aguenta a mais — e +1 slot de armas no arsenal. Só o construtor repara.</td><td>Sai das muralhas e constrói defesas avançadas em campo; melhora a base das tropas; adiciona tropas às defesas; ergue torres e armadilhas.</td><td class="n">12 + Casa de Treino</td></tr>
       <tr><td>Ferreiro</td><td>Fabrica armas e escudos melhores: +ataque e +defesa a todas as tropas equipadas.</td><td>Recolhe armas largadas por inimigos e por aliados mortos e usa-as em combate. <strong>O campo de batalha vira inventário.</strong></td><td class="n">15 + Forja</td></tr>
       <tr><td>Cozinheiro</td><td>+vida e +velocidade às tropas. Em combate, serve prato a uma tropa: buff forte de 20 s.</td><td>O buff passa a permanente para a tropa servida. Recebe animais do galinheiro e do estábulo como ingrediente.</td><td class="n">10 + Cozinha</td></tr>
       <tr><td>Diplomata</td><td>Boost de progressão. Impérios vizinhos não atacam.</td><td>Assimila um império próximo a cada 8 dias; pode treinar um sucessor do rei.</td><td class="n">20 + Embaixada</td></tr>
@@ -1847,7 +1847,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Grelha de tile</td><td>32 px</td><td>Autora em 64×64 como já fazes; 64 = 2×2 tiles</td></tr>
       <tr><td>Escala 1 — escudeiro</td><td>32–36 px</td><td>Escudeiro do trono</td></tr>
       <tr><td>Escala 2 — aldeão/tropa</td><td>46–52 px</td><td><code>Empire troop</code> de 47 px</td></tr>
-      <tr><td>Escala 3 — monarca/elite</td><td>56–62 px</td><td>O rei</td></tr>
+      <tr><td>Escala 3 — personagem jogável/elite</td><td>56–62 px</td><td>As classes jogáveis (§08) e a elite</td></tr>
+      <tr><td>Escala 4 — o rei</td><td>64–70 px</td><td>O rei é o maior: tropa &lt; personagem jogável &lt; rei; o vagabundo tem o tamanho de uma tropa, porque pode ser convertido numa (Q-097)</td></tr>
       <tr><td>Casa pequena</td><td>≈ 120 × 130 px</td><td>Ferreiro da panorâmica — indicativo, a confirmar em jogo</td></tr>
       <tr><td>Animação</td><td>10 fps</td><td>Idle 6 frames (como já fazes) · andar 8 · ataque 5 · morte 7</td></tr>
       <tr><td>Parallax</td><td>6 camadas</td><td>céu · montanha · colina · fundo médio · jogo · primeiro plano</td></tr>
@@ -5122,7 +5123,7 @@ M = 60 + 26 * dia + 40 * fortalezas_conquistadas
 M = 40 + 18 * dia + 30 * fortalezas
   + <span class="k">22 * amargueiros</span> + <span class="k">45 * amargueiros_nomeados</span>
   + <span class="k">8  * min(recusas_nos_ultimos_5_dias, 5)</span>   <span class="c"># §75</span></code></pre>
-    <p class="gloss">A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068).</p>
+    <p class="gloss">A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068). Depois da noite 10 a parte do calendário cresce 6% por noite: conforme os dias passam, a noite fica mais difícil exponencialmente (Q-151).</p>
   </div>
 
   <div class="tw"><table>
@@ -5158,7 +5159,7 @@ M = 40 + 18 * dia + 30 * fortalezas
     <tbody>
       <tr><td>1 · O Lenho não é moeda</td><td>Não se vende, não se troca, não tem preço. Só se constrói com ele.</td><td>Sem preço não há arbitragem. Acaba com a exploração na raiz, em vez de a tornar menos rentável.</td></tr>
       <tr><td>2 · Uma noite de pé</td><td>Um Amargueiro só pode ser cortado depois de ter aguentado uma noite inteira. Antes disso a serra não pega.</td><td>Pagas sempre os +22 de massa uma vez, por cada árvore. Sacrificar dez vagabundos é +220 na noite seguinte — a matemática do §84 mostra que isso mata um império do dia 6.</td></tr>
-      <tr><td>3 · Rende o que a pessoa era</td><td>Escala 1 e vagabundo: 1 Lenho. Escala 2, tropa: 2. Escala 3, elite ou monarca: 3. Nomeado: 5.</td><td>A carne barata rende pouco e a cara rende muito — que é o inverso exato do incentivo perverso.</td></tr>
+      <tr><td>3 · Rende o que a pessoa era</td><td>Escala 1 (o escudeiro): 1 Lenho. Escala 2, tropa ou vagabundo: 2. Escala 3 ou mais, elite, personagem jogável ou monarca: 3. Nomeado: 5.</td><td>A carne barata rende pouco e a cara rende muito — que é o inverso exato do incentivo perverso.</td></tr>
     </tbody>
   </table></div>
 

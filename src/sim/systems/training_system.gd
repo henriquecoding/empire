@@ -132,17 +132,20 @@ static func retrain(unidades: UnitSystem, i: int, oficio: UnitData) -> void:
 	unidades.carried_coins[i] = mini(unidades.carried_coins[i], oficio.coin_capacity)
 
 
-## §09, construtor: "+8% defesa das muralhas" enquanto houver um teu vivo. Nao
-## soma: dois construtores nao dao duas vezes (Q-109).
+## §09, construtor: a defesa das muralhas e o dano que elas aguentam a mais. Cada
+## construtor teu vivo soma a sua parte, ate ao teto do oficio (Q-109, o dono a
+## 29/09/2026: +2% cada, ate +10%).
 func wall_defense(unidades: UnitSystem) -> float:
-	var melhor := 0.0
+	var soma := 0.0
+	var teto := 0.0
 	for i in unidades.count():
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
 			continue
 		var dados: UnitData = _tropas.get(unidades.data_ids[i])
-		if dados != null:
-			melhor = maxf(melhor, float(dados.ability_params.get(&"wall_defense", 0.0)))
-	return melhor
+		if dados != null and dados.ability_params.has(&"wall_defense"):
+			soma += float(dados.ability_params[&"wall_defense"])
+			teto = maxf(teto, float(dados.ability_params.get(&"wall_defense_max", 0.0)))
+	return minf(soma, teto) if teto > 0.0 else soma
 
 
 func to_dict() -> Dictionary:

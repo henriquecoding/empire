@@ -10,6 +10,7 @@ O dossiê não tem ondas: A Podridão é uma entidade com massa (§05, §51), e 
 - O Zelador (§75) não entra nesta conta: não é invocado por massa, nasce da Dívida da Candeia ≥ 6
 - Invoca a cada 4–7 s enquanto está ativa: crepúsculo + noite = 135 s → **19 a 33 invocações** no máximo
 - As primeiras noites (Q-017, Q-068): a noite 1 tem massa 24 — os três Rastejantes do §25 — e o calendário sobe em linha recta até à fórmula de cima, que manda por inteiro a partir da noite 5
+- Depois (Q-151): mais difícil exponencialmente — a fórmula multiplica-se por 1.06 a cada noite depois da noite 10
 - Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou
 - Lado duplo a partir do dia 12
 - Ritmo (Q-126): de 6 em 6 noites uma **funda** (massa × 1.3), e a seguinte **calma** (× 0.6). O lado de cada noite diz-se à tarde (Q-125)
@@ -26,25 +27,25 @@ O dossiê não tem ondas: A Podridão é uma entidade com massa (§05, §51), e 
 | 8 | 21.2 | 184 | 244 | brute (22) | 9 | 1 |
 | 9 | 22.1 | 202 | 262 | brute (22) | 9 | 1 |
 | 10 | 23.0 | 220 | 280 | burrower (30) | 8 | 1 |
-| 11 | 23.9 | 238 | 298 | burrower (30) | 8 | 1 |
-| 12 (funda) | 24.8 | 332.8 | 410.8 | burrower (30) | 11 | 2 |
-| 13 (calma) | 25.7 | 164.4 | 200.4 | burrower (30) | 6 | 2 |
-| 14 | 26.6 | 292 | 352 | slime_ram (48) | 6 | 2 |
-| 15 | 27.5 | 310 | 370 | slime_ram (48) | 7 | 2 |
-| 16 | 28.4 | 328 | 388 | slime_ram (48) | 8 | 2 |
-| 17 | 29.3 | 346 | 406 | slime_ram (48) | 8 | 2 |
-| 18 (funda) | 30.2 | 473.2 | 551.2 | slime_ram (48) | 11 | 2 |
-| 19 (calma) | 31.1 | 229.2 | 265.2 | slime_ram (48) | 5 | 2 |
-| 20 | 32.0 | 400 | 460 | devourer (120) | 5 | 2 |
-| 21 | 32.9 | 418 | 478 | devourer (120) | 5 | 2 |
-| 22 | 33.8 | 436 | 496 | devourer (120) | 5 | 2 |
-| 23 | 34.7 | 454 | 514 | devourer (120) | 6 | 2 |
-| 24 (funda) | 35.6 | 613.6 | 691.6 | devourer (120) | 6 | 2 |
-| 25 (calma) | 36.5 | 294 | 330 | devourer (120) | 3 | 2 |
-| 26 | 37.4 | 508 | 568 | devourer (120) | 5 | 2 |
-| 27 | 38.3 | 526 | 586 | devourer (120) | 6 | 2 |
-| 28 | 39.2 | 544 | 604 | devourer (120) | 6 | 2 |
-| 29 | 40.1 | 562 | 622 | devourer (120) | 6 | 2 |
-| 30 (funda) | 41.0 | 754 | 832 | devourer (120) | 7 | 2 |
+| 11 | 23.9 | 252.3 | 312.3 | burrower (30) | 9 | 1 |
+| 12 (funda) | 24.8 | 373.9 | 451.9 | burrower (30) | 13 | 2 |
+| 13 (calma) | 25.7 | 195.8 | 231.8 | burrower (30) | 7 | 2 |
+| 14 | 26.6 | 368.6 | 428.6 | slime_ram (48) | 8 | 2 |
+| 15 | 27.5 | 414.8 | 474.8 | slime_ram (48) | 9 | 2 |
+| 16 | 28.4 | 465.3 | 525.3 | slime_ram (48) | 10 | 2 |
+| 17 | 29.3 | 520.3 | 580.3 | slime_ram (48) | 12 | 2 |
+| 18 (funda) | 30.2 | 754.2 | 832.2 | slime_ram (48) | 16 | 2 |
+| 19 (calma) | 31.1 | 387.2 | 423.2 | slime_ram (48) | 8 | 2 |
+| 20 | 32.0 | 716.3 | 776.3 | devourer (120) | 8 | 2 |
+| 21 | 32.9 | 793.5 | 853.5 | devourer (120) | 8 | 2 |
+| 22 | 33.8 | 877.3 | 937.3 | devourer (120) | 8 | 2 |
+| 23 | 34.7 | 968.3 | 1028.3 | devourer (120) | 9 | 2 |
+| 24 (funda) | 35.6 | 1387.3 | 1465.3 | devourer (120) | 13 | 2 |
+| 25 (calma) | 36.5 | 704.6 | 740.6 | devourer (120) | 8 | 2 |
+| 26 | 37.4 | 1290.5 | 1350.5 | devourer (120) | 13 | 2 |
+| 27 | 38.3 | 1416.4 | 1476.4 | devourer (120) | 13 | 2 |
+| 28 | 39.2 | 1552.8 | 1612.8 | devourer (120) | 15 | 2 |
+| 29 | 40.1 | 1700.4 | 1760.4 | devourer (120) | 15 | 2 |
+| 30 (funda) | 41.0 | 2418.2 | 2496.2 | devourer (120) | 21 | 2 |
 
 **Leitura:** a coluna "invocações até esgotar" é o que a massa paga; o tempo ativo limita-a a 19–33. Quando a primeira passa a segunda, sobra massa ao amanhecer — a noite deixa de ser limitada pela massa e passa a ser limitada pelo relógio. Ver Q-017 em docs/QUESTIONS.md.

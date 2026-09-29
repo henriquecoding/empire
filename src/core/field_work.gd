@@ -222,8 +222,8 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])
 
 
-## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce na casa do
-## herdeiro, sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
+## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce no castelo
+## (Q-137), sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
 func _coroar(unidades: UnitSystem, estado: GameState) -> void:
 	var i := unidades.index_of(_rei)
 	if _rei == UnitSystem.NENHUM or (i != UnitSystem.NENHUM and unidades.healths[i] > 0):
