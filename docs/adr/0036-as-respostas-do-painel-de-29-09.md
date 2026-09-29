@@ -38,4 +38,4 @@ sistema inteiro. Rejeitado, como na ADR 0027.
 
 ## Consequências
 O painel mostra as 66 como aplicadas e as sete novas por decidir. A versão do save sobe para 2, com a migração no
-mesmo commit (ADR 0007). A suite passa a 1002 casos, com três saltados, cada um com a razão escrita.
+mesmo commit (ADR 0007). A suite passa a 1007 casos, com três saltados, cada um com a razão escrita.
