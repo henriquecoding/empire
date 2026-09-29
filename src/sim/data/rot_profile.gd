@@ -122,9 +122,9 @@ extends Resource
 @export var skipped_mass_carry: float = 0.0
 
 @export_group("O escuro e o archote — Q-029")
-## O archote: quanto custa numa fogueira, quantos se levam, quanto arde.
+## O archote: quanto custa numa fogueira e quanto arde. Quantos se levam e do
+## armazenamento de cada personagem (storages.csv, Q-153).
 @export var torch_cost: int = 1
-@export var torch_max: int = 0
 @export var torch_burn_s: float = 0.0
 ## A luz dele, a volta do rei.
 @export var torch_radius_px: float = 0.0

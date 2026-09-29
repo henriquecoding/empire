@@ -8,6 +8,7 @@ id = &"monarch"
 display_key = "CLASS_MONARCH"
 archetype = &"monarch"
 base_unit = &"monarch"
+storage = &"royal_belt"
 evolve_seed_cost = 1
 evolve_condition = &"nights_defended_in_person"
 evolve_condition_value = 5

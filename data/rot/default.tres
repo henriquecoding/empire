@@ -46,7 +46,6 @@ mine_lure_days = 3
 opening_mass = 24.0
 ramp_nights = 5
 skipped_mass_carry = 1.0
-torch_max = 2
 torch_burn_s = 60.0
 torch_radius_px = 96.0
 dark_ambush_s = 8.0

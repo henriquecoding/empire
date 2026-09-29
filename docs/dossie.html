@@ -3896,16 +3896,17 @@ jobs:
 <section id="s58">
   <span class="sec-no">58 — Sprites</span>
   <h3>Composição por slots</h3>
-  <p class="lede">Cinco <code>Sprite2D</code> empilhados por personagem, um <code>AnimationPlayer</code> partilhado. Custo de desenho desprezável em 2D; poupança de trabalho artístico enorme — e é o que torna viável ter seis povos (§22).</p>
+  <p class="lede">Seis <code>Sprite2D</code> empilhados por personagem, um <code>AnimationPlayer</code> partilhado. Custo de desenho desprezável em 2D; poupança de trabalho artístico enorme — e é o que torna viável ter seis povos (§22).</p>
 
   <div class="tw"><table>
     <thead><tr><th>Slot</th><th class="n">Ordem Z</th><th>Trocado por</th><th>Fonte do valor</th></tr></thead>
     <tbody>
       <tr><td><code>body</code></td><td class="n">0</td><td>Povo e escala</td><td><code>UnitData.people</code> + <code>scale_tier</code></td></tr>
-      <tr><td><code>head</code></td><td class="n">1</td><td>Identidade</td><td><code>UnitRec.slots["head"]</code> — sorteado do fluxo <code>visual</code></td></tr>
-      <tr><td><code>face</code></td><td class="n">2</td><td>Estado e lealdade</td><td>Derivado de <code>health</code> e <code>loyalty</code>. <strong>Nunca guardado.</strong></td></tr>
-      <tr><td><code>weapon</code> / <code>shield</code></td><td class="n">3</td><td>Nível de ferreiro</td><td><code>UnitRec.slots["weapon"]</code></td></tr>
-      <tr><td><code>overlay</code></td><td class="n">4</td><td>Efeitos</td><td>Capacidades ativas, marca do arqueiro, rasto da Podridão</td></tr>
+      <tr><td><code>storage</code></td><td class="n">1</td><td>O armazenamento do personagem jogável e o que leva</td><td><code>ClassData.storage</code> (<code>storages.csv</code>) — a camada <code>Equipments</code> (Q-153)</td></tr>
+      <tr><td><code>head</code></td><td class="n">2</td><td>Identidade</td><td><code>UnitRec.slots["head"]</code> — sorteado do fluxo <code>visual</code></td></tr>
+      <tr><td><code>face</code></td><td class="n">3</td><td>Estado e lealdade</td><td>Derivado de <code>health</code> e <code>loyalty</code>. <strong>Nunca guardado.</strong></td></tr>
+      <tr><td><code>weapon</code> / <code>shield</code></td><td class="n">4</td><td>Nível de ferreiro</td><td><code>UnitRec.slots["weapon"]</code></td></tr>
+      <tr><td><code>overlay</code></td><td class="n">5</td><td>Efeitos</td><td>Capacidades ativas, marca do arqueiro, rasto da Podridão</td></tr>
       <tr><td><code>shadow</code></td><td class="n">−1</td><td>Largura do sprite</td><td><code>UnitData.shadow_width</code> — <strong>obrigatório</strong>, §22</td></tr>
     </tbody>
   </table></div>

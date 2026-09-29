@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StorageData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/storage_data.gd" id="1_yp30o"]
+
+[resource]
+script = ExtResource("1_yp30o")
+id = &"climbing_belt"
+display_key = "STORAGE_CLIMBING_BELT"
+holds = {
+&"torch": 3.0
+}

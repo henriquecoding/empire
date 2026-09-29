@@ -14,6 +14,11 @@ func _perfil() -> RotProfile:
 	return SimFactory.rot_profile()
 
 
+## O cinto do rei, onde os archotes vao (Q-153).
+func _cinto() -> Storage:
+	return SimFactory.storage(Registry.entry(&"classes", &"monarch") as ClassData)
+
+
 func _obra(tipo: StringName, x: float) -> BuildSlot:
 	var dados := Registry.entry(&"buildings", tipo) as BuildingData
 	var vaga := Greybox.slot_of(dados, x)
@@ -66,13 +71,15 @@ func test_a_fogueira_e_mais_fraca_do_que_a_candeia() -> void:
 
 
 func test_levam_se_ate_ao_maximo() -> void:
-	var t := Torchlight.new(_perfil())
-	assert_int(t.buy(99)).is_equal(_perfil().torch_max)
+	# "Levam-se dois" (Q-029): o teto e o do cinto do rei (Q-153).
+	var t := Torchlight.new(_perfil(), _cinto())
+	assert_int(t.storage.cap(Storage.ARCHOTE)).is_equal(2)
+	assert_int(t.buy(99)).is_equal(t.storage.cap(Storage.ARCHOTE))
 	assert_int(t.buy(1)).is_equal(0)
 
 
 func test_no_escuro_acende_se_sozinho_e_acaba() -> void:
-	var t := Torchlight.new(_perfil())
+	var t := Torchlight.new(_perfil(), _cinto())
 	t.buy(1)
 	assert_bool(t.tick(PASSO, true, true)).is_false()
 	assert_bool(t.lit()).is_true()
@@ -85,7 +92,7 @@ func test_no_escuro_acende_se_sozinho_e_acaba() -> void:
 
 
 func test_no_escuro_sem_archote_vem_gente_ate_ao_teto_da_noite() -> void:
-	var t := Torchlight.new(_perfil())
+	var t := Torchlight.new(_perfil(), _cinto())
 	var vieram := 0
 	for _i in int(300.0 / PASSO):
 		if t.tick(PASSO, true, true):
@@ -94,7 +101,7 @@ func test_no_escuro_sem_archote_vem_gente_ate_ao_teto_da_noite() -> void:
 
 
 func test_a_luz_de_dia_e_dentro_das_muralhas_nao_trazem_ninguem() -> void:
-	var t := Torchlight.new(_perfil())
+	var t := Torchlight.new(_perfil(), _cinto())
 	for _i in int(60.0 / PASSO):
 		assert_bool(t.tick(PASSO, false, true)).is_false()
 		assert_bool(t.tick(PASSO, true, false)).is_false()

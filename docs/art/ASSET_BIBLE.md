@@ -54,7 +54,7 @@ valida-a separando o `Empire troop` (tela atual 192 × 192) antes de a fixares �
 
 ## 2 · O sistema de slots
 
-Os teus ficheiros já separam as camadas; o dossiê formalizou-as em cinco slots (§22) e deu-lhes ordem Z (§58).
+Os teus ficheiros já separam as camadas; o dossiê formalizou-as em cinco slots (§22) e deu-lhes ordem Z (§58); o `storage` da Q-153 fez seis.
 O relatório mestre sugeria outra lista (Body, Face, Equipment, Weapon, Shield/Secondary). **Manda a §58.** Esta é
 a tabela de correspondência:
 
@@ -62,17 +62,34 @@ a tabela de correspondência:
 |---|---|---|---|---|
 | `shadow` | −1 | largura do sprite (`shadow_width`) | — (nova) | — |
 | `body` | 0 | povo e escala | `Body` | Body |
-| `head` | 1 | identidade (sorteada do fluxo `visual`) | — (nova: `Equipments` **não** é a cabeça, Q-024) | — |
-| `face` | 2 | estado e lealdade — **nunca guardado** | `Face` | Face |
-| `weapon` | 3 | nível do ferreiro | `Sword`, `Arms and Weapons` | Weapon |
-| `shield` | 3 | nível do ferreiro | `Shield` | Shield / Secondary |
-| `overlay` | 4 | efeitos ativos | — (nova) | — |
+| `storage` | 1 | o armazenamento do personagem jogável e o que leva (Q-153) | `Equipments` | Equipment |
+| `head` | 2 | identidade (sorteada do fluxo `visual`) | — (nova: `Equipments` **não** é a cabeça, Q-024) | — |
+| `face` | 3 | estado e lealdade — **nunca guardado** | `Face` | Face |
+| `weapon` | 4 | nível do ferreiro | `Sword`, `Arms and Weapons` | Weapon |
+| `shield` | 4 | nível do ferreiro | `Shield` | Shield / Secondary |
+| `overlay` | 5 | efeitos ativos | — (nova) | — |
 
 `Knight`, `References` e `Background` são camadas de trabalho: não se exportam.
 
-`Equipments` fica **sem slot** por agora: o dono decidiu que não é o `head` (Q-024, 28/09/2026) e não disse onde
-vai. As duas leituras — um slot próprio `equipment` entre o `body` e o `head`, ou parte do `body` — estão na Q-153.
-Até lá não se exporta nem se desenha (AGENTS.md, regra 9: não se toca em `art/`).
+`Equipments` é o **armazenamento do personagem** (Q-153, o dono a 29/09/2026: *«Equipments faz parte do
+armazenamento do personagem, cada personagem jogável [tem] um tipo de armazenamento que deve ser desenvolvido e bem
+feito»*). Tem slot próprio, `storage`, entre o `body` e o `head` — a §58 passa a seis —, e só o têm os personagens
+jogáveis (os corpos-base das classes da §08). O que se desenha depende do tipo de armazenamento de cada um
+(`data/source/storages.csv`), e o desenho enche com o que leva, como o saco do §24:
+
+| Personagem | Armazenamento | Onde se traz | Leva |
+|---|---|---|---|
+| Monarca | cinto real (`royal_belt`) | à cinta | 2 archotes |
+| Arqueiro | aljava (`quiver`) | às costas | 1 archote |
+| Bardo | alforge (`satchel`) | a tiracolo | 1 archote |
+| Trepador | cinto de escalada (`climbing_belt`) | à cinta | 3 archotes |
+| Cavaleiro Enterrado | mochila de armadura (`knight_pack`) | às costas | 2 archotes |
+| Cavaleiro Selado | alforges (`saddlebags`) | na sela | 4 archotes |
+| Diplomata | pasta de tratados (`dispatch_case`) | a tiracolo | 1 archote |
+
+As moedas não entram: vão no saco do corpo, que toda a gente tem (§02). Até ao ART-01 o greybox desenha o armazenamento
+do rei como um risco por archote ao lado do corpo (`Gauge.kit`); a arte do `Equipments` substitui-o, uma variante por
+tipo de armazenamento e por povo (AGENTS.md, regra 9: não se toca em `art/`).
 
 ### Regras por slot
 

@@ -6,6 +6,7 @@ buildings,res://src/sim/data/building_data.gd,res://data/buildings/{id}.tres,row
 walls,res://src/sim/data/wall_data.gd,res://data/walls/{id}.tres,rows,,§10 §44
 peoples,res://src/sim/data/people_data.gd,res://data/peoples/{id}.tres,rows,,§04 §22 §44
 classes,res://src/sim/data/class_data.gd,res://data/classes/{id}.tres,rows,,§08 §44
+storages,res://src/sim/data/storage_data.gd,res://data/classes/storages/{id}.tres,rows,,"Q-153 — o armazenamento de cada personagem jogável (§08, §58)"
 crafts,res://src/sim/data/craft_data.gd,res://data/crafts/{id}.tres,rows,,§06 circuito 2 · §44 · §49
 jobs,res://src/sim/data/job_data.gd,res://data/jobs/{id}.tres,rows,urgency_by_phase=dawn+morning+noon+afternoon+dusk+night,§20 §29 §52 — o jobs.csv do relatório mestre
 biomes,res://src/sim/data/biome_data.gd,res://data/biomes/{id}.tres,rows,,§11 §21 §44

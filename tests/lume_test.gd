@@ -125,7 +125,8 @@ func test_o_lume_e_roxo_e_o_teu_fogo_e_ambar() -> void:
 
 func test_o_archote_aceso_arde_mesmo_fora_do_escuro() -> void:
 	# Senao o rei guardava os 60 s de um archote entre saidas, voltando a luz.
-	var archote := Torchlight.new(_perfil())
+	var cinto := SimFactory.storage(Registry.entry(&"classes", &"monarch") as ClassData)
+	var archote := Torchlight.new(_perfil(), cinto)
 	archote.buy(1)
 	archote.tick(PASSO, true, true)
 	assert_bool(archote.lit()).is_true()

@@ -113,6 +113,18 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `sealed_knight` | `CLASS_SEALED_KNIGHT` | Cavaleiro Selado | Sealed Knight |
 | `diplomat` | `CLASS_DIPLOMAT` | Diplomata | Diplomat |
 
+## storages
+
+| id | chave | PT-PT | EN |
+|---|---|---|---|
+| `royal_belt` | `STORAGE_ROYAL_BELT` | Cinto real | Royal belt |
+| `quiver` | `STORAGE_QUIVER` | Aljava | Quiver |
+| `satchel` | `STORAGE_SATCHEL` | Alforge | Satchel |
+| `climbing_belt` | `STORAGE_CLIMBING_BELT` | Cinto de escalada | Climbing belt |
+| `knight_pack` | `STORAGE_KNIGHT_PACK` | Mochila de armadura | Knight's pack |
+| `saddlebags` | `STORAGE_SADDLEBAGS` | Alforges | Saddlebags |
+| `dispatch_case` | `STORAGE_DISPATCH_CASE` | Pasta de tratados | Dispatch case |
+
 ## crafts
 
 | id | chave | PT-PT | EN |

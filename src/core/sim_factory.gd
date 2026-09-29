@@ -49,6 +49,11 @@ static func by_id(tabela: StringName) -> Dictionary:
 ## alfabetica — bastion, iron_wall, palisade, stakes, stone_wall — e uma escada
 ## montada nessa ordem custava 65 no primeiro degrau. Ordenar aqui, uma vez, e o
 ## que impede que cada sitio que a monta se lembre disso por sua conta.
+## O armazenamento de quem se joga com `classe` (storages.csv, Q-153), vazio.
+static func storage(classe: ClassData) -> Storage:
+	return Storage.new(Registry.entry(&"classes/storages", classe.storage) as StorageData)
+
+
 static func walls_by_level() -> Array[WallData]:
 	var niveis: Array[WallData] = []
 	for recurso in Registry.entries(&"walls"):

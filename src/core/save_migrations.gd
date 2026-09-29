@@ -34,7 +34,8 @@ static func migrate(dados: Dictionary) -> Dictionary:
 
 ## v2 — o painel de 28 e 29/09/2026: a duracao do dia (Q-091, GB-24), as tocas da
 ## caca (Q-106), o reino e os vassalos (Q-103), a escolha da sucessao (Q-146), o
-## escudeiro (Q-114), quem desertou (Q-144). Tudo com o valor que da o jogo antigo.
+## escudeiro (Q-114), quem desertou (Q-144), e os archotes que passam para o
+## armazenamento do rei (Q-153). Tudo com o valor que da o jogo antigo.
 static func _de_1_para_2(d: Dictionary) -> void:
 	var estado: Dictionary = d.get(&"state", {})
 	if not estado.has(&"day_seconds"):
@@ -61,5 +62,11 @@ static func _de_1_para_2(d: Dictionary) -> void:
 	var classes: Dictionary = mundo.get(&"classes", {})
 	if not classes.has(&"squire"):
 		classes[&"squire"] = {}
+	var archote: Dictionary = mundo.get(&"torch", {})
+	if not classes.has(&"storage"):
+		var levados := int(archote.get(&"torches", 0))
+		classes[&"storage"] = {&"kind": &"royal_belt", &"items": {&"torch": levados}}
+	archote.erase(&"torches")
+	mundo[&"torch"] = archote
 	mundo[&"classes"] = classes
 	d[&"world"] = mundo

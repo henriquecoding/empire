@@ -183,6 +183,7 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `base_unit` | StringName |  | UnitData que se assume com o Verbo 2 (§08) |
 | `verb` | StringName |  | acao propria da classe (§24: arqueiro marca alvo) |
 | `fights` | bool |  |  |
+| `storage` | StringName |  |  |
 | `unlock` | StringName | Desbloqueio |  |
 | `unlock_seed_cost` | int | Desbloqueio |  |
 | `phase_count` | int | Fases |  |
@@ -193,6 +194,17 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `phase1_params` | Dictionary | Fases |  |
 | `phase2_ability` | StringName | Fases |  |
 | `phase2_params` | Dictionary | Fases |  |
+
+## `storages.csv` → `data/classes/storages/{id}.tres`
+
+Script `src/sim/data/storage_data.gd` · layout `rows` · 7 linha(s) · Q-153 — o armazenamento de cada personagem jogável (§08, §58)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | StringName |  |  |
+| `display_key` | String |  |  |
+| `holds` | Dictionary |  |  |
+| `worn` | StringName |  |  |
 
 ## `crafts.csv` → `data/crafts/{id}.tres`
 
@@ -272,7 +284,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 115 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 121 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -388,6 +400,12 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 115 linha(s) · §06 §
 | `vassal_strength` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `vassal_erosion_per_mass` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `vassals_can_fall` | bool | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_levels` | PackedFloat32Array | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_weights` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_days` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_flee_mult` | Vector2 | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_yield` | float | Coroa — o preco dos impulsos (Q-014) |  |
+| `spirit_vagrants` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `king_run_mult` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
@@ -466,7 +484,6 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `calm_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 | `skipped_mass_carry` | float | A noite saltada — Q-040 |  |
 | `torch_cost` | int | O escuro e o archote — Q-029 |  |
-| `torch_max` | int | O escuro e o archote — Q-029 |  |
 | `torch_burn_s` | float | O escuro e o archote — Q-029 |  |
 | `torch_radius_px` | float | O escuro e o archote — Q-029 |  |
 | `dark_ambush_s` | float | O escuro e o archote — Q-029 |  |

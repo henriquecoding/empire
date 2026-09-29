@@ -6,8 +6,9 @@
 # e muito perigoso, pois podem aparecer inimigos de qualquer lugar".
 #
 # O item e o archote. Compra-se numa fogueira de pe com o Verbo 1 (uma moeda,
-# `torch_cost`), leva-se ate `torch_max`, e acende-se sozinho quando o rei entra
-# no escuro de noite: arde `torch_burn_s` segundos e acaba. No escuro e sem
+# `torch_cost`), leva-se no armazenamento de quem se joga ate ao teto dele (o
+# cinto do rei leva dois; storages.csv, Q-153), e acende-se sozinho quando o rei
+# entra no escuro de noite: arde `torch_burn_s` segundos e acaba. No escuro e sem
 # archote, de `dark_ambush_s` em `dark_ambush_s` segundos nasce uma criatura ao
 # lado dele (`dark_ambush_px`), ate `dark_ambush_max` por noite. O escuro e fora
 # do nucleo, fora das muralhas de pe e fora do raio de qualquer luz tua.
@@ -17,7 +18,15 @@
 class_name Torchlight
 extends RefCounted
 
-var torches := 0
+## Onde os archotes vao: o armazenamento de quem se joga (Q-153). O teto e dele.
+var storage: Storage
+## Os archotes por acender, que estao no armazenamento.
+var torches: int:
+	get:
+		return storage.count(Storage.ARCHOTE)
+	set(quantos):
+		storage.take(Storage.ARCHOTE, storage.count(Storage.ARCHOTE))
+		storage.put(Storage.ARCHOTE, quantos)
 ## Segundos que o archote aceso ainda arde. Zero e apagado.
 var burning := 0.0
 
@@ -26,16 +35,15 @@ var _emboscadas := 0
 var _perfil: RotProfile
 
 
-func _init(perfil: RotProfile) -> void:
+func _init(perfil: RotProfile, armazem: Storage = null) -> void:
 	_perfil = perfil
 	_espera = perfil.dark_ambush_s
+	storage = armazem if armazem != null else Storage.new()
 
 
-## Leva mais archotes, ate ao maximo. Devolve quantos levou.
+## Leva mais archotes, ate ao teto do armazenamento. Devolve quantos levou.
 func buy(quantos: int) -> int:
-	var levados := clampi(quantos, 0, maxi(0, _perfil.torch_max - torches))
-	torches += levados
-	return levados
+	return storage.put(Storage.ARCHOTE, quantos)
 
 
 func lit() -> bool:
@@ -54,8 +62,7 @@ func tick(delta: float, noite: bool, no_escuro: bool) -> bool:
 		return false
 	if not no_escuro:
 		return false
-	if torches > 0:
-		torches -= 1
+	if storage.take(Storage.ARCHOTE, 1) > 0:
 		burning = _perfil.torch_burn_s
 		return false
 	_espera -= delta
@@ -84,10 +91,11 @@ static func in_dark(x: float, obras: BuildSystem, nucleo_x: float, meia: float) 
 	return true
 
 
+## Os archotes por acender gravam-se com o armazenamento (ClassSystem); aqui fica
+## so o que arde.
 func to_dict() -> Dictionary:
-	return {&"torches": torches, &"burning": burning}
+	return {&"burning": burning}
 
 
 func from_dict(d: Dictionary) -> void:
-	torches = int(d.get(&"torches", torches))
 	burning = float(d.get(&"burning", burning))

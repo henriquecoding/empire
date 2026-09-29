@@ -38,3 +38,14 @@ static func purse(canvas: CanvasItem, caixa: Rect2, moedas: int, cabem: int) -> 
 	var alto := caixa.size.y * WorldPalette.SACO * cheio
 	var canto := Vector2(caixa.position.x, caixa.end.y - alto)
 	canvas.draw_rect(Rect2(canto, Vector2(caixa.size.x, alto)), WorldPalette.MOEDA)
+
+
+## A camada Equipments no greybox (Q-153): o armazenamento de quem se joga, ao
+## lado do corpo, com um risco por item que leva — os archotes a cinta do rei.
+## Vazio nao se desenha.
+static func kit(canvas: CanvasItem, caixa: Rect2, itens: int) -> void:
+	var alto := caixa.size.y * WorldPalette.SACO
+	for k in itens:
+		var x := caixa.end.x + WorldPalette.CONTORNO * (k * 2 + 1)
+		var topo := Vector2(x, caixa.end.y - alto)
+		canvas.draw_line(topo, Vector2(x, caixa.end.y), WorldPalette.CHAPEU, WorldPalette.CONTORNO)

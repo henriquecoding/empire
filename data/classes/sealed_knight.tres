@@ -8,6 +8,7 @@ id = &"sealed_knight"
 display_key = "CLASS_SEALED_KNIGHT"
 archetype = &"sealed_knight"
 base_unit = &"sealed_knight"
+storage = &"saddlebags"
 unlock = &"royal_seed"
 unlock_seed_cost = 2
 evolve_seed_cost = 1

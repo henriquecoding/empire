@@ -1,9 +1,11 @@
 # src/actors/unit_view.gd — a composicao por slots (§58).
 #
-# Cinco Sprite2D empilhados e um AnimationPlayer partilhado. Um sprite por
+# Seis Sprite2D empilhados e um AnimationPlayer partilhado. Um sprite por
 # combinacao de povo, cabeca, rosto, arma e efeito seria impossivel de manter —
 # seis povos multiplicam-se depressa de mais. Custo de desenho despreziavel em
-# 2D; poupanca de trabalho artistico enorme.
+# 2D; poupanca de trabalho artistico enorme. O `storage` e o armazenamento do
+# personagem jogavel — a camada `Equipments` dos teus ficheiros (Q-153): so quem se
+# joga o tem, e desenha-se por cima do corpo e por baixo da cabeca.
 #
 # A sombra de contacto nao e opcional: e o degrau 1 do §22, "o maior salto
 # isolado do documento", e e o que separa figuras pousadas numa imagem de
@@ -15,7 +17,7 @@ class_name UnitView
 extends Node2D
 
 ## A ordem do §58. O indice na lista e o z_index dentro da unidade.
-const SLOTS: Array[StringName] = [&"body", &"head", &"face", &"weapon", &"overlay"]
+const SLOTS: Array[StringName] = [&"body", &"storage", &"head", &"face", &"weapon", &"overlay"]
 const SLOT_SHADOW := &"shadow"
 const Z_SHADOW := -1
 

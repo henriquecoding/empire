@@ -30,6 +30,8 @@ var nights_defended: int = 0
 var squire: Squire
 ## A evolucao dada a Podridao ("Fica com o Lume", §75): nao volta nesta campanha.
 var locked := false
+## O armazenamento de quem se joga (Q-153): o cinto do rei, com os archotes.
+var storage: Storage
 
 var _dados: ClassData
 ## UnitData por id: quem tem a tag de apanhar moedas e o escudeiro.
@@ -42,9 +44,10 @@ var _poupado: Dictionary = {}
 var _revide := 0
 
 
-func _init(dados: ClassData, tropas: Dictionary = {}) -> void:
+func _init(dados: ClassData, tropas: Dictionary = {}, armazem: Storage = null) -> void:
 	_dados = dados
 	_tropas = tropas
+	storage = armazem if armazem != null else Storage.new()
 	var escudeiro: UnitData = tropas.get(&"squire")
 	squire = Squire.new(escudeiro.ability_params if escudeiro != null else {})
 
@@ -186,6 +189,7 @@ func to_dict() -> Dictionary:
 		&"soaked": _poupado.duplicate(),
 		&"squire": squire.to_dict(),
 		&"locked": locked,
+		&"storage": storage.to_dict(),
 	}
 
 
@@ -197,6 +201,7 @@ func from_dict(guardado: Dictionary) -> void:
 	_poupado = guardado.get(&"soaked", {}).duplicate()
 	squire.from_dict(guardado.get(&"squire", {}))
 	locked = guardado.get(&"locked", false)
+	storage.from_dict(guardado.get(&"storage", {}))
 	_investir()
 
 

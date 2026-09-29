@@ -37,7 +37,8 @@ def cell(text):
 COSMETIC = {"tags", "head_pool", "layer_slots", "shadow_width", "width_px", "icon", "subject", "landmark",
             "weapon_kind", "material_by_people", "food", "growth_stages", "obtain_ref", "expect_suffocation",
             "job_slots", "build_work", "teaches", "playable_class", "starting_units", "starting_buildings",
-            "atmosphere_preset", "parallax_preset", "resources", "wildlife", "creature_table", "per_segment_max"}
+            "atmosphere_preset", "parallax_preset", "resources", "wildlife", "creature_table", "per_segment_max",
+            "worn"}
 
 
 def collect():

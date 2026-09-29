@@ -8,6 +8,7 @@ id = &"buried_knight"
 display_key = "CLASS_BURIED_KNIGHT"
 archetype = &"buried_knight"
 base_unit = &"buried_knight"
+storage = &"knight_pack"
 unlock = &"royal_seed"
 unlock_seed_cost = 2
 evolve_seed_cost = 1

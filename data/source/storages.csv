@@ -1,0 +1,8 @@
+id,display_key,holds,worn,_phase,_src,_proposed,_notes
+royal_belt,STORAGE_ROYAL_BELT,torch:2,hip,1,Q-153 (o dono a 29/09/2026: cada personagem jogável tem o seu armazenamento); Q-029 o archote,holds|worn,O cinto do rei: a bolsa das moedas (§02) e os dois archotes do Q-029 — o teto que estava no rot.csv (torch_max) passou para aqui. A camada Equipments dos teus ficheiros desenha-o à cinta.
+quiver,STORAGE_QUIVER,torch:1,back,2,Q-153; §08 o Arqueiro,holds|worn,"A aljava às costas: um archote, porque o arqueiro vê de longe e não precisa de andar no escuro."
+satchel,STORAGE_SATCHEL,torch:1,side,6,Q-153; §08 o Bardo,holds|worn,O alforge a tiracolo do Bardo.
+climbing_belt,STORAGE_CLIMBING_BELT,torch:3,hip,6,Q-153; §08 o Trepador,holds|worn,"O cinto de escalada: três archotes, mais um do que o rei, porque o Trepador é quem explora (§08, mobilidade)."
+knight_pack,STORAGE_KNIGHT_PACK,torch:2,back,6,Q-153; §08 o Cavaleiro Enterrado,holds|worn,A mochila de armadura.
+saddlebags,STORAGE_SADDLEBAGS,torch:4,saddle,6,Q-153; §08 o Cavaleiro Selado,holds|worn,"Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias."
+dispatch_case,STORAGE_DISPATCH_CASE,torch:1,side,6,Q-153; §08 o Diplomata; §14,holds|worn,A pasta de tratados do Diplomata.

@@ -53,7 +53,9 @@ func _init(
 	crown = SimFactory.crown()
 	conversion = SimFactory.conversion()
 	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
-	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
+	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"), SimFactory.storage(monarca))
+	if noite != null:
+		noite.dark.torch.storage = classes.storage  # os archotes vao no cinto (Q-153)
 	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"), SimFactory.curve())
 	var curva := SimFactory.curve()
 	var niveis := curva.spirit_levels

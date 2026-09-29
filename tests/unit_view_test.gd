@@ -1,4 +1,4 @@
-# tests/unit_view_test.gd — os cinco slots do §58 e o shader dos dois uniforms.
+# tests/unit_view_test.gd — os seis slots do §58 e o shader dos dois uniforms.
 #
 # A arte definitiva e do ART-01 e a rampa e do ART-02. O que se prova aqui e o
 # mecanismo: que os slots existem pela ordem certa, que a sombra sai do .tres e
@@ -20,8 +20,11 @@ func _vista() -> UnitView:
 	return v
 
 
-func test_sao_cinco_slots_pela_ordem_do_58() -> void:
-	assert_array(UnitView.SLOTS).is_equal([&"body", &"head", &"face", &"weapon", &"overlay"])
+func test_sao_seis_slots_pela_ordem_do_58() -> void:
+	# O storage e o armazenamento do personagem jogavel, entre o corpo e a cabeca
+	# (Q-153): a camada Equipments dos ficheiros do dono.
+	var ordem := [&"body", &"storage", &"head", &"face", &"weapon", &"overlay"]
+	assert_array(UnitView.SLOTS).is_equal(ordem)
 
 	var vista := _vista()
 	for i in UnitView.SLOTS.size():

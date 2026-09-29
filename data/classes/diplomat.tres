@@ -9,6 +9,7 @@ display_key = "CLASS_DIPLOMAT"
 archetype = &"diplomat"
 base_unit = &"diplomat"
 fights = false
+storage = &"dispatch_case"
 unlock = &"royal_seed"
 unlock_seed_cost = 2
 evolve_seed_cost = 1
