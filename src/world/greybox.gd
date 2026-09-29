@@ -127,7 +127,8 @@ static func region() -> void:
 	for x in HERDEIROS_X:  # depois dos de antes: os ids deles nao mudam (§45)
 		_edificio(SimLoop.core_x + x, Succession.CASA, &"")
 	Campfires.author()  # as fogueiras do archote (Q-029)
-	Wards.author()  # e os sinos que afastam o Zelador, por ultimo (Q-100)
+	Wards.author()  # os sinos que afastam o Zelador (Q-100)
+	BowRacks.author()  # e a banca do arco, por ultimo (Q-165)
 
 
 static func _segredos() -> void:
@@ -240,9 +241,8 @@ static func _por_recrutar(id: StringName, posicoes: Array) -> void:
 		SimLoop.units.spawn(SimLoop.state, dados, RecruitSystem.SEM_DONO, SimLoop.core_x + x)
 
 
-## Um PackedFloat32Array nao e expressao constante em GDScript, e por isso as
-## posicoes acima sao Array e passam por aqui. A coluna que o SimLoop guarda e
-## que e compacta — e onde ela e lida, e a cada tick.
+## Um PackedFloat32Array nao e expressao constante em GDScript: as posicoes acima sao
+## Array e passam por aqui. A coluna que o SimLoop guarda e lida a cada tick.
 static func _deslocadas(xs: Array) -> PackedFloat32Array:
 	var saida := PackedFloat32Array()
 	for x in xs:

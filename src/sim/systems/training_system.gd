@@ -52,7 +52,7 @@ func owed(vaga: BuildSlot, unidades: UnitSystem = null) -> int:
 		return 0
 	if unidades != null and _candidato(unidades, vaga) == NENHUM:
 		return 0
-	return maxi(0, oficio.recruit_cost - int(paid.get(vaga.id, 0)))
+	return maxi(0, _preco(vaga, oficio) - int(paid.get(vaga.id, 0)))
 
 
 ## Passo 5, a seguir as obras: as moedas pousadas numa casa pagam o treino.
@@ -70,7 +70,7 @@ func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> Arr
 		if owed(vaga) > 0:
 			continue
 		# O troco de uma moeda que valia mais do que faltava fica para o seguinte.
-		paid[vaga.id] = int(paid[vaga.id]) - craft_of(vaga).recruit_cost
+		paid[vaga.id] = int(paid[vaga.id]) - _preco(vaga, craft_of(vaga))
 		if int(paid[vaga.id]) <= 0:
 			paid.erase(vaga.id)
 		var quem := unidades.ids[_candidato(unidades, vaga)]
@@ -155,6 +155,13 @@ func to_dict() -> Dictionary:
 func from_dict(guardado: Dictionary) -> void:
 	paid = guardado.get(&"paid", {}).duplicate()
 	trainees = guardado.get(&"trainees", {}).duplicate(true)
+
+
+## O preco de um treino nesta casa: o `craft_cost` da obra, se o tiver — a banca do
+## arco vende o arco, e o arco custa 2 (Q-165, §02) —, senao o recruit_cost do
+## oficio, que e o da Casa de Treino (§09).
+func _preco(vaga: BuildSlot, oficio: UnitData) -> int:
+	return int(vaga.effects.get(&"craft_cost", oficio.recruit_cost))
 
 
 func _ocupada(casa_id: int) -> bool:

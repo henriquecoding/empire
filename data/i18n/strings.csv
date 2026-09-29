@@ -698,3 +698,4 @@ UI_FRESH_START_ASK,Recomeçar do zero apaga esta partida (dia {day}) e o legado 
 UI_FRESH_START_CONFIRM,Apagar tudo e recomeçar,Erase Everything and Start Over,pausa: confirmar o recomeço do zero (Q-164),32,Q-164
 UI_CANCEL,Cancelar,Cancel,pausa: voltar sem apagar (Q-164),16,Q-164
 UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada foi apagado nem recomeçou.,Could not erase everything: nothing was erased or restarted.,pausa: o recomeço do zero falhou e voltou tudo ao sítio (Q-164),72,Q-164
+BUILDING_BOW_RACK,Banca do Arco,Bow Rack,nome de conteúdo — building (Q-165),24,Q-165

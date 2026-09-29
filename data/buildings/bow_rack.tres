@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_y7cu2"]
+
+[resource]
+script = ExtResource("1_y7cu2")
+id = &"bow_rack"
+display_key = "BUILDING_BOW_RACK"
+category = &"training"
+cost = 4
+craft = &"archer"
+max_health = 32
+build_work = 8.0
+width_px = 48
+unique_per_kingdom = true
+effect_params = {
+&"craft_cost": 2.0
+}
+shadow_width = 48
