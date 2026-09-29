@@ -72,7 +72,7 @@ static func context(device: Glyphs.Device) -> String:
 	var values := {"drop": _button(buttons[1]), "assume": _button(buttons[2])}
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
-		return _passage(king, values)
+		return GuideSites.passage(king, values)
 	if units.bands[king] == int(Band.Kind.SURFACE) and Verbs.at_fork(units.xs[king]):
 		if Verbs.crossing_open(units, SimLoop.king_id):
 			var falta := SimLoop.field.realm.refusal(units, SimLoop.king_id, SimLoop.state)
@@ -91,7 +91,7 @@ static func context(device: Glyphs.Device) -> String:
 			continue
 		values["name"] = _building_name(site)
 		if site.kind == Succession.CASA and site.standing():
-			return _heir(values)
+			return GuideSites.heir(values)
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
 			return _tr(&"CONTEXT_BUILDING").format(values)
@@ -164,6 +164,8 @@ static func _tr(key: StringName) -> String:
 static func _training(site: BuildSlot, values: Dictionary) -> String:
 	if SimLoop.field.conversion.craft_of(site) != null and site.standing():
 		return _conversion(site, values)
+	if site.kind == Passages.ESCORA and site.standing():  # abre-se outra vez (Q-138)
+		return _tr(&"CONTEXT_SEALED").format(values)
 	if site.kind == Ward.SINO and site.standing():  # a carga do sino (Q-100)
 		values["charge"] = floori(site.charge)
 		values["max"] = floori(Ward.cap(site))
@@ -208,32 +210,6 @@ static func conversion_key(estado: ConversionSystem.Status, tem_oficio: bool) ->
 		ConversionSystem.Status.WANTS_CRAFT:
 			return &"CONTEXT_CONVERT_WANTS_CRAFT"
 	return &"CONTEXT_CONVERT_COIN" if tem_oficio else &"CONTEXT_CONVERT_NOBODY"
-
-
-## A boca de uma passagem: descer, ou escora-la enquanto a escora esta por pagar
-## (Q-132). A escora a meio ou de pe ja nao se oferece.
-static func _passage(king: int, values: Dictionary) -> String:
-	for site in SimLoop.builds.slots:
-		if site.kind != Passages.ESCORA or site.band != SimLoop.units.bands[king]:
-			continue
-		if absf(site.x - SimLoop.units.xs[king]) > site.width * HALF:
-			continue
-		values["cost"] = PriceTag.owed_by(site)
-		if site.state == BuildSlot.State.EMPTY and values.cost > 0:
-			return _tr(&"CONTEXT_PASSAGE_SEAL").format(values)
-	return _tr(&"CONTEXT_PASSAGE").format(values)
-
-
-## A casa do herdeiro de pe: quantos dias de treino, e o que custa cada um (§15).
-static func _heir(values: Dictionary) -> String:
-	var herdeiro := SimLoop.field.succession
-	if herdeiro.ready():
-		return _tr(&"CONTEXT_HEIR_READY").format(values)
-	var curva := SimFactory.curve()
-	values["days"] = herdeiro.days
-	values["total"] = curva.heir_training_days
-	values["cost"] = curva.heir_cost_per_day
-	return _tr(&"CONTEXT_HEIR").format(values)
 
 
 static func _rei_em_baixo() -> bool:

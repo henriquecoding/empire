@@ -6,6 +6,12 @@ const STEP_SECONDS := 0.12
 const HIT_SECONDS := 0.12
 const HIT_TINT := Color(1.0, 0.82, 0.60)
 const DEAD_ALPHA := 0.35
+## Q-096 (o dono, 29/09/2026): "cria raizes nas tropas caidas, e elas somem
+## suavemente a seguir". O corpo que sai das colunas na alvorada desvanece neste
+## tempo, com raizes a crescer-lhe por baixo.
+const FADE_SECONDS := 1.6
+const ROOT := Color("2b1d14")
+const ROOTS := [Vector2(-6, 3), Vector2(-2, 5), Vector2(3, 4), Vector2(7, 2)]
 const SHADOW_HEIGHT := 6.0
 const IDLE_SECONDS := 0.65
 ## O chapeu de quem e teu (§25, 0:20): pousa um pouco abaixo do topo da cabeca,
@@ -25,6 +31,9 @@ var _phase: Dictionary = {}
 ## primeiro frame (a preparacao de um golpe nao entra a meio).
 var _action: Dictionary = {}
 var _since: Dictionary = {}
+## Os corpos que se veem (id -> o ultimo desenho), e os que estao a desvanecer.
+var _bodies: Dictionary = {}
+var _fading: Dictionary = {}
 
 
 func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) -> void:
@@ -87,6 +96,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		if not units.alive(i):
 			color.a = DEAD_ALPHA
 			bob = 0.0
+			_bodies[id] = {"profile": profile, "foot": foot, "frame": frame, "band": int(band)}
 		draws.append(
 			{
 				"profile": profile,
@@ -140,6 +150,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 				_art.box(item.profile, item.foot),
 				float(units.healths[i]) / units.max_healths[i]
 			)
+	_fade(canvas, band, live, time)
 	for id in _previous.keys():
 		if not live.has(id):
 			_previous.erase(id)
@@ -174,3 +185,25 @@ func _saco(canvas: CanvasItem, box: Rect2, units: UnitSystem, i: int) -> void:
 		Gauge.purse(canvas, box, escudeiro.shield, escudeiro.shield_cap())
 		return
 	Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
+
+
+## Os corpos que a alvorada levou desvanecem, com as raizes por baixo (Q-096).
+func _fade(canvas: CanvasItem, band: Band.Kind, live: Dictionary, time: float) -> void:
+	for id in _bodies.keys():
+		if not live.has(id) and _bodies[id]["band"] == int(band):
+			_fading[id] = _bodies[id]
+			_fading[id]["t0"] = time
+			_bodies.erase(id)
+	for id in _fading.keys():
+		var corpo: Dictionary = _fading[id]
+		if corpo["band"] != int(band):
+			continue
+		var resto := 1.0 - (time - float(corpo["t0"])) / FADE_SECONDS
+		if resto <= 0.0:
+			_fading.erase(id)
+			continue
+		var cor := Color(1.0, 1.0, 1.0, DEAD_ALPHA * resto)
+		_art.draw_on(canvas, corpo["profile"], corpo["foot"], cor, corpo["frame"], 1.0)
+		var raiz := Color(ROOT, 1.0 - resto)
+		for ponta: Vector2 in ROOTS:
+			canvas.draw_line(corpo["foot"], corpo["foot"] + ponta, raiz)

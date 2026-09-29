@@ -68,23 +68,17 @@ func test_e_possivel_sobreviver_dez_dias() -> void:
 	assert_float(r[Campaign.VIDA]).is_equal_approx(1.0, 0.01)
 
 
-# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
-# gdlint: disable=unused-argument
-## A mesma defesa com a voz ligada e sem pagar nada: recusa todas as noites, e o
-## imposto das recusas (§75, ate +40) chega a noite 6. Medido: cai ao dia 9.
-func test_e_possivel_sobreviver_dez_dias_a_recusar_todas_as_ofertas(
-	do_skip := true,
-	skip_reason := "Q-101: a recusar sempre, a defesa do decimo dia cai ao dia 9 (6 mortes)"
-) -> void:
+## Q-101 (o dono, 29/09/2026): "ha sempre consequencias das escolhas feitas". A
+## mesma defesa que aguenta dez noites com a mancha calada cai se recusar todas as
+## ofertas: o imposto das recusas (§75, ate +40) e o preco de nunca aceitar, e o
+## §66 mede-se com a voz calada — nao com a voz a cobrar tudo.
+func test_recusar_todas_as_ofertas_tem_consequencia() -> void:
 	_h.wall_levels = PackedInt32Array(BASTIAO_E_FERRO)
 	_h.tower = true
 	_h.high_tower = true
 	_h.archers = ARQUEIROS
 	var r := Campaign.new().run(_h, DIAS)
-	assert_bool(r[Campaign.AGUENTOU]).override_failure_message(_conta(r)).is_true()
-
-
-# gdlint: enable=unused-argument
+	assert_bool(r[Campaign.AGUENTOU]).override_failure_message(_conta(r)).is_false()
 
 
 func test_nao_e_trivial_sobreviver_dez_dias() -> void:

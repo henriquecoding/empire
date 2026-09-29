@@ -109,6 +109,26 @@ static func sealed_side(
 	return ha
 
 
+## Q-138 (o dono, 29/09/2026): "se for o subsolo de uma construcao, o jogador pode
+## fechar ou abrir; mas ha subsolos cuja entrada e sempre aberta". Uma boca com
+## sitio de escora e das tuas, e o Verbo 2 na escora de pe desmonta-a — a boca
+## abre, e fechar outra vez volta a custar. Uma boca sem sitio de escora e natural
+## e fica sempre aberta. Devolve verdadeiro se abriu.
+static func unseal(obras: BuildSystem, x: float, faixa: int) -> bool:
+	if obras == null:
+		return false
+	for obra in obras.slots:
+		if obra.kind != ESCORA or not obra.standing() or int(obra.band) != faixa:
+			continue
+		if absf(obra.x - x) <= obra.width * BuildSystem.METADE:
+			obra.state = BuildSlot.State.EMPTY
+			obra.level = 0
+			obra.health = 0
+			obra.paid = 0
+			return true
+	return false
+
+
 static func _escorada(passagem: float, obras: BuildSystem) -> bool:
 	if obras == null:
 		return false

@@ -124,7 +124,9 @@ func test_o_rei_leva_o_saco_quem_esta_perto_e_quem_espera_sem_posto() -> void:
 		SimLoop.king_id,
 		SimFactory.curve().crossing_party_px
 	)
-	assert_array(Array(legado[Legacy.COMITIVA])).is_equal(["archer", "archer"])
+	# Os dois sem funcao do inicio (Q-110) esperam no nucleo, e tambem vao.
+	var comitiva := ["vagrant", "vagrant", "archer", "archer"]
+	assert_array(Array(legado[Legacy.COMITIVA])).is_equal(comitiva)
 	assert_int(int(legado[Legacy.SACO])).is_equal(9)
 	assert_int(int(legado[Legacy.REGIAO])).is_equal(1)
 	assert_array(legado[Legacy.OBRAS]).is_empty()

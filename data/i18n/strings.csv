@@ -559,6 +559,9 @@ CONTEXT_DONE,{name} · Em funcionamento,{name} · Operational,guia contextual de
 CONTEXT_WARD,"{name} · Carga {charge}/{max}: afasta o Zelador
 {drop} carregar","{name} · Charge {charge}/{max}: keeps the Tender away
 {drop} recharge",guia contextual de jogo,160,§75; Q-100
+CONTEXT_SEALED,"{name} · A boca está fechada
+{assume} desmontar a escora: a boca abre","{name} · The mouth is shut
+{assume} take the shoring down: the mouth opens",guia contextual de jogo,160,Q-138
 CONTEXT_SQUIRE,"Escudeiro · Escudo {shield}/{max}
 {assume} dar-lhe uma moeda","Squire · Shield {shield}/{max}
 {assume} give him a coin",guia contextual de jogo,160,§08; Q-114

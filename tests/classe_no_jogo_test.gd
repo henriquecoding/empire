@@ -92,8 +92,9 @@ func test_o_escudeiro_nasce_com_o_rei_e_e_teu() -> void:
 	var e := _escudeiro()
 	assert_int(e).is_not_equal(UnitSystem.NENHUM)
 	assert_int(SimLoop.units.owners[e]).is_equal(SimLoop.units.owners[_rei()])
-	# Nao e uma tropa ate a classe evoluir: o painel nao o conta.
-	assert_int(GameplayGuide.troops()).is_equal(0)
+	# Nao e uma tropa ate a classe evoluir: o painel nao o conta — so os dois sem
+	# funcao com que o reino comeca (Q-110).
+	assert_int(GameplayGuide.troops()).is_equal(Greybox.JA_TEUS)
 
 
 ## Q-114 (o dono, 29/09/2026): a moeda caida vai para a espada do escudeiro, e o

@@ -50,6 +50,9 @@ static func consume(
 					continue
 				if Lume.extinguish(unidades, king_id):  # o fim do ciclo pela luz (Q-156)
 					continue
+				var i := unidades.index_of(king_id)
+				if i >= 0 and Passages.unseal(obras, unidades.xs[i], unidades.bands[i]):
+					continue  # a escora das tuas desmonta-se (Q-138)
 				if not choose_mode(unidades, king_id, obras, campo):
 					if not choose_wall(unidades, king_id, obras):
 						arm_squire(unidades, king_id, campo)
