@@ -37,32 +37,34 @@ static func migrate(dados: Dictionary) -> Dictionary:
 ## escudeiro (Q-114), quem desertou (Q-144), e os archotes que passam para o
 ## armazenamento do rei (Q-153). Tudo com o valor que da o jogo antigo.
 static func _de_1_para_2(d: Dictionary) -> void:
-	var estado: Dictionary = d.get(&"state", {})
+	if not d.get(&"state", {}) is Dictionary or not d.get(&"world", {}) is Dictionary:
+		return  # nao e um save: o SaveService recusa-o a seguir, como antes
+	var estado := _dict(d, &"state")
 	if not estado.has(&"day_seconds"):
 		estado[&"day_seconds"] = 0.0  # zero e "a do clock.csv", como antes do slider
 	d[&"state"] = estado
-	var mundo: Dictionary = d.get(&"world", {})
+	var mundo := _dict(d, &"world")
 	if mundo.is_empty():
 		return
-	var caca: Dictionary = mundo.get(&"hunting", {})
+	var caca := _dict(mundo, &"hunting")
 	if caca.has(&"pending"):
 		caca.erase(&"pending")  # o stock do dia por vagas deu lugar as tocas
 		caca[&"rabbits"] = []
 	mundo[&"hunting"] = caca
 	if not mundo.has(&"realm"):
 		mundo[&"realm"] = {}
-	var sucessao: Dictionary = mundo.get(&"succession", {})
+	var sucessao := _dict(mundo, &"succession")
 	if not sucessao.has(&"declined"):
 		sucessao[&"declined"] = false
 	mundo[&"succession"] = sucessao
-	var soldo: Dictionary = mundo.get(&"upkeep", {})
+	var soldo := _dict(mundo, &"upkeep")
 	if not soldo.has(&"resting"):
 		soldo[&"resting"] = {}
 	mundo[&"upkeep"] = soldo
-	var classes: Dictionary = mundo.get(&"classes", {})
+	var classes := _dict(mundo, &"classes")
 	if not classes.has(&"squire"):
 		classes[&"squire"] = {}
-	var archote: Dictionary = mundo.get(&"torch", {})
+	var archote := _dict(mundo, &"torch")
 	if not classes.has(&"storage"):
 		var levados := int(archote.get(&"torches", 0))
 		classes[&"storage"] = {&"kind": &"royal_belt", &"items": {&"torch": levados}}
@@ -70,3 +72,10 @@ static func _de_1_para_2(d: Dictionary) -> void:
 	mundo[&"torch"] = archote
 	mundo[&"classes"] = classes
 	d[&"world"] = mundo
+
+
+## O dicionario em `chave`, ou um vazio: um save estragado ou de fora nao pode
+## rebentar a migracao ao atribuir outro tipo a um Dictionary (§62, ADR 0007).
+static func _dict(d: Dictionary, chave: StringName) -> Dictionary:
+	var valor: Variant = d.get(chave, {})
+	return valor if valor is Dictionary else {}

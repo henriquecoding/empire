@@ -129,12 +129,17 @@ static func context(device: Glyphs.Device) -> String:
 			units, nearest, SimLoop.recruits.price(units, nearest)
 		)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
+	return _squire(values)
+
+
+## O escudo do escudeiro, se o Verbo 2 o arma agora (Q-114); "" se nao.
+static func _squire(values: Dictionary) -> String:
 	var classes := SimLoop.field.classes
-	if Verbs.squire_wants(units, SimLoop.king_id, classes):  # o escudo (Q-114)
-		values["shield"] = classes.squire.shield
-		values["max"] = classes.squire.shield_cap()
-		return _tr(&"CONTEXT_SQUIRE").format(values)
-	return ""
+	if not Verbs.squire_wants(SimLoop.units, SimLoop.king_id, classes):
+		return ""
+	values["shield"] = classes.squire.shield
+	values["max"] = classes.squire.shield_cap()
+	return _tr(&"CONTEXT_SQUIRE").format(values)
 
 
 static func _evolve(site: BuildSlot, values: Dictionary) -> String:
@@ -173,7 +178,8 @@ static func _training(site: BuildSlot, values: Dictionary) -> String:
 	var treino := SimLoop.field.training
 	var oficio := treino.craft_of(site)
 	if oficio == null or not site.standing():
-		return _tr(&"CONTEXT_DONE").format(values)
+		var escudo := _squire(values)  # o Verbo 2 aqui arma o escudeiro (Verbs.consume)
+		return escudo if not escudo.is_empty() else _tr(&"CONTEXT_DONE").format(values)
 	values["craft"] = _tr(oficio.display_key)
 	for quem in treino.trainees:
 		if treino.trainees[quem][0] == site.id:

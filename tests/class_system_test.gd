@@ -153,6 +153,16 @@ func test_o_escudeiro_leva_o_golpe_do_rei_e_revida_com_a_espada() -> void:
 	assert_int(classes.riposte()).is_equal(0)
 
 
+func test_o_escudeiro_longe_do_rei_nao_lhe_apara_o_golpe() -> void:
+	var dados := Registry.entry(&"units", &"squire") as UnitData
+	unidades.spawn(estado, dados, MEU, 1000.0 + LONGE)
+	classes.watch(unidades, rei, false)
+	classes.squire.arm(5)
+	var escudo := classes.squire.shield
+	assert_int(classes.soak(unidades, rei, 4)).is_equal(4)
+	assert_int(classes.squire.shield).is_equal(escudo)
+
+
 func test_o_escudeiro_vai_a_frente_com_escudo_e_atras_sem_ele() -> void:
 	var dados := Registry.entry(&"units", &"squire") as UnitData
 	var e := unidades.spawn(estado, dados, MEU, 1000.0)

@@ -24,8 +24,6 @@ enum Status { NONE, COIN, WANTS_CRAFT, WAITING, ACTIVE }
 const METADE := 0.5
 ## O posto do oficio da capacidade (jobs.csv): o cozinheiro trabalha na cozinha.
 const POSTO := &"kitchen"
-## Um dia de fases (§48): o que uma conversao paga em capacidade.
-const FASES_POR_CONVERSAO := 6
 ## Uma fraccao de materia que a soma das fases nao fecha (0,333 x 3) nao pode
 ## deixar de converter: e aritmetica de virgula, e nao regra.
 const FOLGA := 0.0001
@@ -38,6 +36,8 @@ var value: Dictionary = {}
 var active: Dictionary = {}
 ## O quadro de postos: a capacidade pede o oficio DENTRO da casa (Q-145).
 var jobs: JobBoard
+## Um dia de fases (§48, clock.csv): o que uma conversao paga em capacidade.
+var phases_per_day := 1
 ## Fases de capacidade que a materia consumida ainda paga, por casa (Q-145): uma
 ## conversao da um dia inteiro, para o efeito nao piscar de fase em fase enquanto
 ## a materia se junta para a seguinte.
@@ -95,7 +95,7 @@ func on_phase(obras: BuildSystem) -> Array[Dictionary]:
 			if _materias.get(produtor.kind, &"") != conv.material:
 				continue
 			while produtor.stock + FOLGA >= conv.cost:
-				corre = FASES_POR_CONVERSAO  # a capacidade pede materia consumida (Q-145)
+				corre = phases_per_day  # a capacidade pede materia consumida (Q-145)
 				produtor.stock -= conv.cost
 				if modo == CraftData.Mode.COIN:
 					value[casa.id] = (

@@ -71,9 +71,9 @@ func _ready() -> void:
 func start(semente: int) -> void:
 	state = GameState.new()
 	state.seed = semente
+	RngService.configure(semente)  # antes de montar: o desconto por regiao le-a (Q-105)
 	_montar()
 	king_id = UnitSystem.NENHUM  # sem rei em campo ate alguem o pôr la
-	RngService.configure(semente)
 	SimFactory.draw_campaign(state)  # §77 os capitulos e §15 a ganancia, fluxo world
 	ClockService.start()
 	_running = true
@@ -84,8 +84,8 @@ func start(semente: int) -> void:
 ## entram a seguir, com load_world(), depois de a regiao estar montada.
 func resume(estado: GameState, rng_states: Dictionary) -> void:
 	state = estado
-	_montar()
 	RngService.configure(estado.seed)
+	_montar()
 	RngService.restore(rng_states)
 	ClockService.seek(estado.day, estado.clock_elapsed, estado.day_seconds)
 	_fase = int(ClockService.clock.current_phase())  # o save ja passou esta fase (D2)

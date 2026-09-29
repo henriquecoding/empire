@@ -2,8 +2,7 @@
 #
 # A ADR 0005 escreve o contrato: a boot.tscn carrega o Registry, o idioma e o
 # save, decide que game.tscn instanciar, e so depois entrega. Isto e o que ela
-# entrega, e ate agora nao existia — "nao ha cena de jogo" era a primeira linha
-# do docs/POR_FAZER.md.
+# entrega.
 #
 # O que este ficheiro faz e curto de proposito: semeia, manda o Greybox montar a
 # regiao, aponta a camara ao monarca e liga o tremor de ecra do §24. Nenhuma
@@ -73,6 +72,8 @@ func _ready() -> void:
 	EventBus.unit_died.connect(_na_morte)
 	EventBus.segment_entered.connect(_na_travessia)
 	EventBus.game_paused.connect(_na_pausa)
+	if PauseMenu.heir_waits():  # retomado com a escolha do herdeiro por fazer (Q-146)
+		SimLoop.set_paused(true)
 	print(_recibo())
 
 

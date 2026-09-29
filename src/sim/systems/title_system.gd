@@ -34,6 +34,8 @@ var holders: Dictionary = {}
 var ordinals: Dictionary = {}
 ## titulo -> o dia em que o luto acaba.
 var mourning: Dictionary = {}
+## Os ids de quem esta fora na marcha (March.away): nao morreram (Q-146).
+var away: Dictionary = {}
 ## Quem mereceu e nao tem vaga, pela ordem em que chegou.
 var waiting: PackedInt32Array = PackedInt32Array()
 var feats: FeatLedger
@@ -148,7 +150,7 @@ func from_dict(d: Dictionary) -> void:
 func _enterrar(dia: int, unidades: UnitSystem, eventos: Array[Dictionary]) -> void:
 	for t in holders.keys():
 		var i := unidades.index_of(holders[t])
-		if i != UnitSystem.NENHUM and unidades.alive(i):
+		if i != UnitSystem.NENHUM and unidades.alive(i) or away.has(holders[t]):
 			continue
 		feats.forget(holders[t])
 		holders.erase(t)
@@ -156,6 +158,8 @@ func _enterrar(dia: int, unidades: UnitSystem, eventos: Array[Dictionary]) -> vo
 		eventos.append({CHAVE: EV_LUTO, TITULO: t})
 	for k in range(waiting.size() - 1, -1, -1):
 		var i := unidades.index_of(waiting[k])
+		if away.has(waiting[k]):
+			continue
 		if i == UnitSystem.NENHUM or not unidades.alive(i):
 			feats.forget(waiting[k])
 			waiting.remove_at(k)

@@ -55,6 +55,20 @@ func test_o_herdeiro_perde_o_treino_e_a_escora_cai() -> void:
 	assert_object(OfferToll.sealed()).is_null()
 
 
+func test_sem_o_preco_no_mundo_a_oferta_nao_da_nada() -> void:
+	# Aberta "O que enterraste" e desmontada a escora antes de pagar: nao ha divida
+	# nem massa a metade so pela moeda do sim.
+	var voz := SimLoop.night.voice
+	var rot := SimLoop.night.rot
+	voz.offers.open(Registry.entry(&"rot/offers", &"what_you_buried") as OfferData, 500.0, 1)
+	assert_object(OfferToll.sealed()).is_null()
+	var divida := voz.debt.debt
+	var massa := rot.mass()
+	voz._aceite(rot, 12)
+	assert_int(voz.debt.debt).is_equal(divida)
+	assert_float(rot.mass()).is_equal(massa)
+
+
 func test_fica_com_o_lume_leva_a_evolucao_para_sempre() -> void:
 	var classes := SimLoop.field.classes
 	classes.phase = 2

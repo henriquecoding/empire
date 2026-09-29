@@ -71,7 +71,7 @@ func defense_of(unidades: UnitSystem, i: int) -> float:
 ## depois o escudo (Q-114).
 func soak(unidades: UnitSystem, unit_id: int, quanto: int) -> int:
 	var e := squire_index(unidades)
-	if e != NENHUM and (unit_id == _rei or unidades.ids[e] == unit_id):
+	if e != NENHUM and (unit_id == _rei or unidades.ids[e] == unit_id) and _perto(unidades, e):
 		_revide += squire.strike()
 		if squire.block(quanto):
 			return 0
@@ -125,6 +125,14 @@ func squire_index(unidades: UnitSystem, rei: int = NENHUM) -> int:
 		if i != r and _escudeiro(unidades, i, r):
 			return i
 	return NENHUM
+
+
+## Se o escudeiro esta ao pe do rei — no raio de presenca dele (§07) — para lhe
+## aparar o golpe. Longe, o escudo nao chega la.
+func _perto(unidades: UnitSystem, e: int) -> bool:
+	var r := unidades.index_of(_rei)
+	var raio := float(_dados.phase1_params.get(RAIO, 0.0))
+	return r != NENHUM and absf(unidades.xs[e] - unidades.xs[r]) <= raio
 
 
 ## Passo 4: o escudeiro fica a frente do rei com escudo, e atras sem ele. A frente

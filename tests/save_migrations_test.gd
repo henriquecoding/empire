@@ -39,6 +39,18 @@ func test_os_archotes_passam_para_o_cinto_do_rei() -> void:
 	assert_bool(mundo[&"torch"].has(&"torches")).is_false()
 
 
+func test_um_save_estragado_nao_rebenta_a_migracao() -> void:
+	# Um mundo que nao e dicionario sai como entrou, e o SaveService recusa-o a seguir.
+	var torto := SaveMigrations.migrate({&"save_version": 1, &"state": {}, &"world": 7})
+	assert_int(int(torto[&"world"])).is_equal(7)
+	var aninhado := _v1()
+	aninhado[&"world"][&"hunting"] = "lixo"
+	aninhado[&"world"][&"torch"] = 3
+	var d := SaveMigrations.migrate(aninhado)
+	assert_int(int(d[&"save_version"])).is_equal(SaveMigrations.CURRENT)
+	assert_dict(d[&"world"][&"hunting"]).is_empty()
+
+
 func test_a_migracao_nao_mexe_no_dicionario_de_entrada() -> void:
 	var v1 := _v1()
 	SaveMigrations.migrate(v1)

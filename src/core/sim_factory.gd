@@ -230,4 +230,7 @@ static func conversion() -> ConversionSystem:
 		var obra := recurso as BuildingData
 		if obra.material != &"" and obra.yield_per_day > 0.0:
 			materias[obra.id] = obra.material
-	return ConversionSystem.new(conversoes, materias, by_id(TABELA_TROPAS))
+	var conversao := ConversionSystem.new(conversoes, materias, by_id(TABELA_TROPAS))
+	var relogio := Registry.entry(TABELA_ECONOMIA, RELOGIO) as ClockData
+	conversao.phases_per_day = relogio.phase_durations.size()
+	return conversao

@@ -8,8 +8,9 @@
 # 3 cavaleiros).
 #
 # Vai quem e teu, esta perto do rei e na faixa dele, ate ao teto de cada papel (a
-# tag do units.csv: builder, ranged, melee). Saem das colunas; na alvorada em que a
-# marcha acaba voltam, e o que trazem depende de quantos foram.
+# tag do units.csv: builder, ranged, melee). Saem das colunas como estavam (a linha
+# inteira, Columns.row) e na alvorada em que a marcha acaba voltam iguais: com a
+# vida, as moedas e o id que o nome deles conhece.
 #
 # Puro: recebe as tropas, os perfis e os numeros.
 class_name March
@@ -17,8 +18,10 @@ extends RefCounted
 
 const NENHUM := -1
 
-## Os perfis de quem foi (data ids), por ordem de id.
-var party: PackedStringArray = PackedStringArray()
+## Quem foi, linha a linha como estava nas colunas, por ordem de id.
+var party: Array[Dictionary] = []
+## Os ids de quem esta fora: nao morreram, e o TitleSystem nao os chora.
+var away: Dictionary = {}
 ## A regiao (indice no plano) que a marcha foi conquistar.
 var target: int = NENHUM
 ## O dia em cuja alvorada a marcha volta.
@@ -63,9 +66,11 @@ static func who(
 func start(
 	unidades: UnitSystem, quem: PackedInt32Array, regiao: int, dia: int, noites: int
 ) -> void:
-	party = PackedStringArray()
+	party = []
+	away.clear()
 	for unit_id in quem:
-		party.append(String(unidades.data_ids[unidades.index_of(unit_id)]))
+		party.append(Columns.row(unidades, unidades.index_of(unit_id)))
+		away[unit_id] = true
 		unidades.remove(unit_id)
 	target = regiao
 	returns = dia + noites
@@ -76,10 +81,11 @@ func due(dia: int) -> bool:
 	return marching() and dia >= returns
 
 
-## Acaba: devolve quem volta, e esquece a marcha.
-func finish() -> PackedStringArray:
+## Acaba: devolve quem volta (as linhas), e esquece a marcha.
+func finish() -> Array[Dictionary]:
 	var voltam := party
-	party = PackedStringArray()
+	party = []
+	away.clear()
 	target = NENHUM
 	return voltam
 
@@ -98,6 +104,11 @@ func to_dict() -> Dictionary:
 
 
 func from_dict(d: Dictionary) -> void:
-	party = PackedStringArray(d.get(&"party", PackedStringArray()))
+	party = []
+	away.clear()
+	for linha: Variant in d.get(&"party", []):
+		if linha is Dictionary:
+			party.append(linha)
+			away[int(linha.get(&"ids", NENHUM))] = true
 	target = int(d.get(&"target", NENHUM))
 	returns = int(d.get(&"returns", 0))

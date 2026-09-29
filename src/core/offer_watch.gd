@@ -168,7 +168,8 @@ func _abrir(rot: RotSystem, dia: int, nucleo: float, amargueiros: AmargueiroSyst
 
 func _aceite(rot: RotSystem, dia: int) -> void:
 	var o := offers.offer()
-	OfferToll.take(o.price_kind)
+	if not OfferToll.take(o.price_kind):
+		return  # o preco ja nao existe (a escora desmontada, o Marco perdido): nada se da
 	debt.incur(o.debt_delta)
 	debt.accept(dia)
 	if o.once_per_campaign:

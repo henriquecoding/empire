@@ -56,6 +56,7 @@ func _init(
 	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"), SimFactory.storage(monarca))
 	if noite != null:
 		noite.dark.torch.storage = classes.storage  # os archotes vao no cinto (Q-153)
+		noite.names.away = realm.march.away  # quem marcha nao e chorado (Q-146)
 	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"), SimFactory.curve())
 	var curva := SimFactory.curve()
 	var niveis := curva.spirit_levels

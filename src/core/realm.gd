@@ -69,8 +69,13 @@ func dawn(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: Vec
 	var fim := vassals.dawn(massa, curva.vassal_erosion_per_mass, curva.vassals_can_fall)
 	for povo: String in fim[&"fallen"]:
 		EventBus.queue(&"trade_route_closed", [StringName(povo), &"consumed"])
-	if int(fim[&"coins"]) > 0:
-		SimLoop.drop_coin(onde.x, Band.Kind.SURFACE, int(fim[&"coins"]), TRIBUTO)
+	# Em montes do tamanho de um tributo: um monte maior do que o saco do rei nunca
+	# se apanhava (CoinSystem.collect salta o que nao cabe).
+	var falta := int(fim[&"coins"])
+	while falta > 0:
+		var monte := mini(falta, curva.vassal_tribute.y)
+		SimLoop.drop_coin(onde.x, Band.Kind.SURFACE, monte, TRIBUTO)
+		falta -= monte
 	if march.due(dia):
 		_voltar(dia, unidades, estado, rei, onde.y)
 
@@ -79,17 +84,25 @@ func _voltar(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: 
 	var alvo := march.target
 	var voltam := march.finish()
 	var r := unidades.index_of(rei)
-	var dono := unidades.owners[r] if r != UnitSystem.NENHUM else 1
-	for id in voltam:
-		var perfil := Registry.entry(&"units", StringName(id)) as UnitData
-		var novo := unidades.spawn(estado, perfil, dono, onde)
-		EventBus.queue(&"unit_spawned", [novo, perfil.id, onde, int(Band.Kind.SURFACE)])
+	for linha in voltam:
+		var i := unidades.restore(linha)  # a mesma tropa: vida, moedas e nome (Q-146)
+		unidades.xs[i] = onde
+		unidades.target_xs[i] = onde
+		unidades.has_targets[i] = 0
+		unidades.job_ids[i] = UnitSystem.NENHUM
+		unidades.bands[i] = int(Band.Kind.SURFACE)
+		if r != UnitSystem.NENHUM:
+			unidades.owners[i] = unidades.owners[r]
+		var sinal := [unidades.ids[i], unidades.data_ids[i], onde, int(Band.Kind.SURFACE)]
+		EventBus.queue(&"unit_spawned", sinal)
 	var curva := SimFactory.curve()
 	if voltam.size() < curva.march_min_party or alvo < 0:
 		return
 	var povo := _povo(estado.chapters.regions[alvo])
 	var tributo := RngService.int_range(&"economy", curva.vassal_tribute.x, curva.vassal_tribute.y)
 	vassals.add(povo, tributo, curva.vassal_strength, dia)
+	if not estado.conquests.has(String(povo)):
+		estado.conquests.append(String(povo))  # o que desbloqueia muros e fica no legado
 	var sementes := RngService.int_range(&"economy", curva.vassal_seeds.x, curva.vassal_seeds.y)
 	estado.royal_seeds += sementes
 	EventBus.queue(&"people_assimilated", [povo])

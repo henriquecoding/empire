@@ -35,15 +35,42 @@ func test_vai_quem_esta_perto_ate_ao_teto_de_cada_papel() -> void:
 	assert_int(quem.size()).is_equal(int(tetos[&"ranged"]) + int(tetos[&"builder"]))
 
 
-func test_quem_marcha_sai_das_colunas_e_volta_na_alvorada() -> void:
+func test_quem_marcha_sai_das_colunas_e_volta_na_alvorada_como_foi() -> void:
+	# Ferido e com moedas no saco: volta assim, com o mesmo id (o do nome dele).
 	var m := March.new()
 	var a := unidades.spawn(estado, Registry.entry(&"units", &"archer"), MEU, 10.0)
+	unidades.healths[0] = 3
+	unidades.carried_coins[0] = 4
 	m.start(unidades, PackedInt32Array([a]), 2, 11, 1)
 	assert_int(unidades.count()).is_equal(0)
+	assert_bool(m.away.has(a)).is_true()
 	assert_bool(m.due(11)).is_false()
 	assert_bool(m.due(12)).is_true()
-	assert_array(Array(m.finish())).is_equal(["archer"])
-	assert_bool(m.marching()).is_false()
+	var copia := March.new()
+	copia.from_dict(m.to_dict())
+	assert_bool(copia.away.has(a)).is_true()
+	var voltam := copia.finish()
+	assert_int(voltam.size()).is_equal(1)
+	var i := unidades.restore(voltam[0])
+	assert_int(unidades.ids[i]).is_equal(a)
+	assert_int(unidades.index_of(a)).is_equal(i)
+	assert_str(String(unidades.data_ids[i])).is_equal("archer")
+	assert_int(unidades.healths[i]).is_equal(3)
+	assert_int(unidades.carried_coins[i]).is_equal(4)
+	assert_bool(copia.marching()).is_false()
+	assert_bool(copia.away.is_empty()).is_true()
+
+
+func test_quem_esta_fora_nao_e_chorado() -> void:
+	var nomes := SimFactory.titles()
+	var a := unidades.spawn(estado, Registry.entry(&"units", &"archer"), MEU, 10.0)
+	nomes.holders[&"the_one_who_stayed"] = a
+	var m := March.new()
+	nomes.away = m.away
+	m.start(unidades, PackedInt32Array([a]), 2, 11, 1)
+	nomes.at_dawn(12, unidades, SimFactory.job_board())
+	assert_int(int(nomes.holders.get(&"the_one_who_stayed", -1))).is_equal(a)
+	assert_bool(nomes.mourning.is_empty()).is_true()
 
 
 func test_o_vassalo_paga_tributo_e_a_noite_come_lhe_a_firmeza() -> void:
@@ -91,11 +118,35 @@ func test_no_jogo_a_marcha_conquista_o_povo_seguinte() -> void:
 	assert_bool(reino.vassals.has(povo)).is_true()
 	assert_int(SimLoop.state.royal_seeds).is_greater(sementes)
 	assert_int(reino.next_target(SimLoop.state)).is_equal(2)
+	# A conquista fica no estado: e o que desbloqueia muros e passa ao legado.
+	assert_bool(SimLoop.state.conquests.has(String(povo))).is_true()
+	# Quem foi voltou, com o mesmo id.
+	assert_int(SimLoop.units.count()).is_greater_equal(_curva().march_min_party)
 	var moedas := SimLoop.coins.count()
 	reino.dawn(13, SimLoop.units, SimLoop.state, SimLoop.king_id, fork)
 	assert_int(SimLoop.coins.count()).is_greater(moedas)
 	var copia := Realm.new()
 	copia.from_dict(reino.to_dict())
 	assert_bool(copia.vassals.has(povo)).is_true()
+	SimLoop.stop()
+	SimLoop.autosave_enabled = true
+
+
+func test_o_tributo_cai_em_montes_que_cabem_num_saco() -> void:
+	SimLoop.autosave_enabled = false
+	EventBus.reset()
+	SimLoop.start(20260929)
+	Greybox.build()
+	var reino := SimLoop.field.realm
+	for k in 6:
+		reino.vassals.add(StringName("povo_%d" % k), _curva().vassal_tribute.y, 1000.0, 1)
+	var antes := SimLoop.coins.count()
+	var fork := Vector2(SimLoop.core_x, SimLoop.secrets.chapters[0])
+	reino.dawn(2, SimLoop.units, SimLoop.state, SimLoop.king_id, fork)
+	var maior := 0
+	for valor in SimLoop.coins.amounts_by_id().values():
+		maior = maxi(maior, int(valor))
+	assert_int(SimLoop.coins.count() - antes).is_greater_equal(6)
+	assert_int(maior).is_less_equal(_curva().vassal_tribute.y)
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
