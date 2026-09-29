@@ -28,6 +28,8 @@ var phase: int = PRIMEIRA
 var nights_defended: int = 0
 ## O escudeiro do rei: escudo, espada e investidura (Q-114).
 var squire: Squire
+## A evolucao dada a Podridao ("Fica com o Lume", §75): nao volta nesta campanha.
+var locked := false
 
 var _dados: ClassData
 ## UnitData por id: quem tem a tag de apanhar moedas e o escudeiro.
@@ -145,7 +147,7 @@ func marks() -> bool:
 
 
 func can_evolve(sementes: int) -> bool:
-	if phase >= _dados.phase_count or sementes < _dados.evolve_seed_cost:
+	if locked or phase >= _dados.phase_count or sementes < _dados.evolve_seed_cost:
 		return false
 	return nights_defended >= _dados.evolve_condition_value
 
@@ -158,6 +160,13 @@ func evolve(estado: GameState) -> bool:
 	phase += 1
 	_investir()
 	return true
+
+
+## A evolucao perdida para sempre nesta campanha (a oferta "Fica com o Lume").
+func surrender() -> void:
+	phase = PRIMEIRA
+	locked = true
+	_investir()
 
 
 ## A investidura: com a fase que o diz, o escudeiro passa a cavaleiro (Q-114).
@@ -175,6 +184,7 @@ func to_dict() -> Dictionary:
 		&"king": _rei,
 		&"soaked": _poupado.duplicate(),
 		&"squire": squire.to_dict(),
+		&"locked": locked,
 	}
 
 
@@ -185,6 +195,7 @@ func from_dict(guardado: Dictionary) -> void:
 	_rei = guardado.get(&"king", NENHUM)
 	_poupado = guardado.get(&"soaked", {}).duplicate()
 	squire.from_dict(guardado.get(&"squire", {}))
+	locked = guardado.get(&"locked", false)
 	_investir()
 
 

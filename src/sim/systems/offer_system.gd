@@ -13,15 +13,23 @@
 # NightWatch, que tem a mancha; aqui decide-se se foi paga.
 #
 # So entram nas candidatas as ofertas cujo preco se pode pagar e cujo efeito
-# existe hoje (PRECOS, EFEITOS). As outras dependem de portoes, tesouraria,
-# capitulos, sucessor e povos, que ainda nao ha — ver a Q-099.
+# existe hoje (PRECOS, EFEITOS). O herdeiro, o Marco, a escora e a classe ja
+# existem (Q-099, o dono a 29/09/2026); faltam os portoes, a tesouraria e a
+# arquitectura dos povos (Q-147, adiada).
 class_name OfferSystem
 extends RefCounted
 
 enum Phase { WAITING, OPEN, DONE }
 
 const PRECOS: Array[StringName] = [
-	&"coins", &"troops_below_health", &"named_troop", &"everything_named"
+	&"coins",
+	&"troops_below_health",
+	&"named_troop",
+	&"everything_named",
+	&"successor",
+	&"marker",
+	&"sealed_passage",
+	&"playable_class",
 ]
 ## "Revela um Capitulo" guarda-se como revelacao por fazer: e o XIII-07 que a
 ## gasta, e a oferta nao espera por ele para existir (§83, minuto 18:00).
@@ -33,6 +41,9 @@ const EFEITOS: Array[StringName] = [
 	&"skip_night",
 	&"rot_ends",
 	&"reveal_chapter",
+	&"seed_royal",
+	&"greed_zero_days",
+	&"control_rot_tonight",
 ]
 ## O monarca nao e uma tropa: nenhum preco o leva (§75 fala em tropas).
 const REI := &"king"

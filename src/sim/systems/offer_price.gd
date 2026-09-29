@@ -1,9 +1,10 @@
 # src/sim/systems/offer_price.gd — se o preco de uma oferta caiu no prato (§75).
 #
-# Quatro precos tem hoje onde pegar, e sao os quatro gestos do Verbo 1 que o
-# jogo ja tem: moedas largadas no prato; uma tropa ferida levada ate ele; uma
-# tropa com nome levada ate ele; e, na decima segunda, uma com nome que leva
-# todas as outras. Os outros oito precisam de sistemas que ainda nao ha (Q-099).
+# Oito precos tem hoje onde pegar. Quatro sao gestos do Verbo 1 sobre o que cabe
+# no prato: moedas; uma tropa ferida levada ate ele; uma tropa com nome; e, na
+# decima segunda, uma com nome que leva todas as outras. Os outros quatro — o
+# herdeiro, um Marco, uma escora, a evolucao da classe — nao cabem no prato: a
+# moeda do rei no prato e o sim (Q-099).
 #
 # Sem meias-aceitacoes: ou o preco inteiro esta no prato neste tick e sai tudo
 # de uma vez, ou nao sai nada. O que caiu e nao chegou fica no chao, onde caiu.
@@ -41,6 +42,22 @@ static func pay(
 				unidades, tropas, func(i: int) -> bool: return titulos.has(unidades.ids[i])
 			)
 			return _levar(prato, unidades, todas)
+		&"successor", &"marker", &"sealed_passage", &"playable_class":
+			return _consentir(prato, moedas)
+	return {}
+
+
+## Um preco que nao cabe no prato — o herdeiro, um Marco, uma escora, a evolucao
+## da classe (Q-099) — paga-se com o gesto: uma moeda do rei no prato diz que
+## sim, e quem chama leva o resto (OfferWatch). A moeda vai com ele.
+static func _consentir(prato: OfferSystem, moedas: CoinSystem) -> Dictionary:
+	for c in moedas.count():
+		if moedas.settled[c] == 0 or moedas.from_king[c] == 0:
+			continue
+		if prato.in_plate(moedas.xs[c], moedas.bands[c]):
+			var valor := moedas.amounts[c]
+			moedas.remove(moedas.ids[c])
+			return {OfferSystem.SAEM: PackedInt32Array(), OfferSystem.MOEDAS: valor}
 	return {}
 
 

@@ -178,7 +178,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		return
 	# O que ela invocou dissolve-se sempre: uma oferta pode te-la recolhido antes
 	# da alvorada (§75, "a mancha contorna"), e o que ficou no campo nao fica.
-	voice.dawn()
+	voice.dawn(estado.day)
 	if rot.active():
 		rot.retreat()
 		EventBus.queue(&"rot_retreated", [estado.day])

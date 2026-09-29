@@ -27,6 +27,9 @@ var titles: Dictionary = {}
 var spoken: int = 0
 ## Capitulos por revelar (§77): o que "Nada. So quero ver." da. O XIII-07 gasta-os.
 var reveals: int = 0
+## "Um herdeiro": a ganancia a zero ate este dia, e a que volta depois (§15, Q-099).
+var greed_until: int = 0
+var greed_kept: int = 0
 
 var _moedas: CoinSystem
 var _tropas: UnitSystem
@@ -66,9 +69,12 @@ func after_spawn(rot: RotSystem) -> void:
 		tender.dusk(rot.position_x())
 
 
-## A alvorada leva o Zelador com ela.
-func dawn() -> void:
+## A alvorada leva o Zelador com ela, e acaba a ganancia a zero quando e o dia.
+func dawn(dia: int = 0) -> void:
 	tender.dawn()
+	if greed_until > 0 and dia >= greed_until and SimLoop.state != null:
+		SimLoop.state.greed = greed_kept
+		greed_until = 0
 
 
 ## Verdadeiro enquanto a mancha esta parada por uma oferta ("a mancha para 25 s").
@@ -100,24 +106,16 @@ func tick(
 	_aceite(rot, dia)
 
 
-## As oito chaves da §75, com o que o jogo hoje sabe. Portoes, tesouraria,
-## povos e sucessor ainda nao existem e valem zero: uma condicao sobre eles
-## nunca se cumpre, e e isso que os deixa de fora (Q-099).
+## As chaves da §75, com o que o jogo hoje sabe. Os portoes ainda nao existem e
+## valem zero: uma condicao sobre eles nunca se cumpre (Q-099, Q-147).
 func facts(amargueiros: AmargueiroSystem) -> Dictionary:
 	var marcos := 0
 	for i in amargueiros.count():
 		if amargueiros.fates[i] == AmargueiroSystem.Fate.MARKER:
 			marcos += 1
-	return {
-		&"gate": 0,
-		&"treasury": 0,
-		&"named": titles.size(),
-		&"marker": marcos,
-		&"peoples": 0,
-		&"successor": 0,
-		&"debt": debt.debt,
-		&"biome": &"",
-	}
+	var factos := {&"gate": 0, &"named": titles.size(), &"marker": marcos, &"debt": debt.debt}
+	factos.merge(OfferToll.facts() if SimLoop.state != null else {})
+	return factos
 
 
 func to_dict() -> Dictionary:
@@ -128,6 +126,7 @@ func to_dict() -> Dictionary:
 		&"pause": _pausa,
 		&"spoken": spoken,
 		&"reveals": reveals,
+		&"greed": [greed_until, greed_kept],
 	}
 
 
@@ -138,6 +137,9 @@ func from_dict(d: Dictionary) -> void:
 	_pausa = d.get(&"pause", _pausa)
 	spoken = d.get(&"spoken", spoken)
 	reveals = d.get(&"reveals", reveals)
+	var ganancia: Array = d.get(&"greed", [0, 0])
+	greed_until = int(ganancia[0])
+	greed_kept = int(ganancia[1])
 
 
 ## "Chegar ao nucleo" e entrar na meia largura do castelo-arvore (§10, §55).
@@ -166,6 +168,7 @@ func _abrir(rot: RotSystem, dia: int, nucleo: float, amargueiros: AmargueiroSyst
 
 func _aceite(rot: RotSystem, dia: int) -> void:
 	var o := offers.offer()
+	OfferToll.take(o.price_kind)
 	debt.incur(o.debt_delta)
 	debt.accept(dia)
 	if o.once_per_campaign:
@@ -189,4 +192,12 @@ func _aceite(rot: RotSystem, dia: int) -> void:
 			rot.retreat()
 		&"reveal_chapter":
 			reveals += int(o.effect_value)
+		&"seed_royal":
+			SimLoop.state.royal_seeds += int(o.effect_value)
+		&"greed_zero_days":
+			greed_kept = SimLoop.state.greed if greed_until == 0 else greed_kept
+			greed_until = dia + o.effect_days
+			SimLoop.state.greed = 0
+		&"control_rot_tonight":
+			rot.retreat()  # a mancha e tua esta noite, e vai-se (§75)
 	EventBus.queue(&"rot_fed", [maxf(0.0, antes - rot.mass()), o.id])

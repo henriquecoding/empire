@@ -26,6 +26,7 @@ func _factos(extra := {}) -> Dictionary:
 		&"successor": 0,
 		&"debt": 0,
 		&"biome": &"",
+		&"sealed": 0,
 	}
 	f.merge(extra, true)
 	return f
@@ -80,10 +81,25 @@ func test_d05_uma_oferta_por_noite_seja_qual_for_a_mancha_que_pergunta() -> void
 func test_so_sao_candidatas_as_que_se_podem_pagar_e_cumprir() -> void:
 	var o := _ofertas()
 	var ids: Array[String] = []
-	for c in o.candidates(_factos({&"named": 1, &"debt": 12}), 30, PackedStringArray()):
+	# Com o herdeiro, o Marco, a escora e a classe ligados (Q-099).
+	var factos := {&"named": 1, &"debt": 12, &"successor": 1, &"marker": 1, &"sealed": 1}
+	factos[&"biome"] = &"subterranean"
+	for c in o.candidates(_factos(factos), 30, PackedStringArray()):
 		ids.append(String(c.id))
-	assert_array(ids).contains_exactly(
-		["give_back_whats_mine", "just_looking", "tell_me_a_name", "the_lame"]
+	(
+		assert_array(ids)
+		. contains_exactly_in_any_order(
+			[
+				"give_back_whats_mine",
+				"just_looking",
+				"tell_me_a_name",
+				"the_lame",
+				"an_heir",
+				"the_tree_you_planted",
+				"what_you_buried",
+				"keep_the_lantern",
+			]
+		)
 	)
 	# O que falta nao esta esquecido: esta escrito, oferta a oferta.
 	for c: OfferData in Registry.entries(&"rot/offers"):
