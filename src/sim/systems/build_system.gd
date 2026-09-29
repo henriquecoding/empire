@@ -76,6 +76,9 @@ func absorb(
 		if vaga.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN]:
 			eventos.append_array(RepairWork.absorb(moedas, vaga, _moedas_na_obra(moedas, vaga)))
 			continue
+		if Ward.wants(vaga):  # o sino carrega-se com moedas (Q-100)
+			Ward.absorb(moedas, vaga, _moedas_na_obra(moedas, vaga))
+			continue
 		var custo := vaga.next_cost()
 		if custo == NENHUM or not _aceita(vaga) or not can_climb(vaga, estado, madeira):
 			continue
@@ -143,6 +146,7 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 		vaga.progress = 0.0
 		vaga.state = BuildSlot.State.DONE
 		vaga.health = vaga.max_health()
+		vaga.charge = Ward.cap(vaga) if vaga.kind == Ward.SINO else vaga.charge
 		eventos.append({CHAVE: EV_COMPLETA, VAGA: vaga, NIVEL: vaga.level})
 	return eventos
 

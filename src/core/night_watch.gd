@@ -151,6 +151,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		amargueiros.at_dawn(dia, _tropas, _obras, mundo.x, mundo.y, names.by_unit())
 		names.at_dawn(dia, _tropas, _postos)
 		harvest.at_dawn()
+		Ward.dawn(_obras, dia)  # o sino perde carga, mais quanto mais tarde (Q-100)
 	if fase == GameClock.Phase.DUSK:
 		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
 		# O marco de um povo que ficou cria raiz e nao se corta (§78): e mais uma.

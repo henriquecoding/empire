@@ -117,9 +117,8 @@ static func region() -> void:
 		_edificio(SimLoop.core_x + x, TREINO, &"")
 	for x in COZINHAS_X:
 		_edificio(SimLoop.core_x + x, COZINHA, &"")
-	# §07: "a torre nao da dano — da certeza". A alta e a que atinge a camada
-	# aerea, e o §07 diz que ela e obrigatoria a partir do dia 4 por causa do
-	# Alado — por isso ha sitio para ela desde o dia 1.
+	# §07: "a torre nao da dano — da certeza". A alta atinge a camada aerea, e o
+	# §07 obriga-a a partir do dia 4 (o Alado): ha sitio para ela desde o dia 1.
 	for x in TORRES_X:
 		_edificio(SimLoop.core_x + x, TORRE, POSTO_TORRE)
 	for x in TORRES_ALTAS_X:
@@ -129,7 +128,8 @@ static func region() -> void:
 	Cavities.author()  # o subsolo e a boca das passagens (P-I)
 	for x in HERDEIROS_X:  # depois dos de antes: os ids deles nao mudam (§45)
 		_edificio(SimLoop.core_x + x, Succession.CASA, &"")
-	Campfires.author()  # as fogueiras do archote, por ultimo (Q-029)
+	Campfires.author()  # as fogueiras do archote (Q-029)
+	Wards.author()  # e os sinos que afastam o Zelador, por ultimo (Q-100)
 
 
 static func _segredos() -> void:

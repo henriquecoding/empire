@@ -157,6 +157,10 @@ static func _tr(key: StringName) -> String:
 static func _training(site: BuildSlot, values: Dictionary) -> String:
 	if SimLoop.field.conversion.craft_of(site) != null and site.standing():
 		return _conversion(site, values)
+	if site.kind == Ward.SINO and site.standing():  # a carga do sino (Q-100)
+		values["charge"] = floori(site.charge)
+		values["max"] = floori(Ward.cap(site))
+		return _tr(&"CONTEXT_WARD").format(values)
 	var treino := SimLoop.field.training
 	var oficio := treino.craft_of(site)
 	if oficio == null or not site.standing():

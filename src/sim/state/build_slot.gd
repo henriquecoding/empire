@@ -78,6 +78,8 @@ var yield_per_day: float = 0.0
 ## Materia acumulada e ainda nao convertida. Float porque uma fase rende menos
 ## do que uma moeda e a parte de tras nao se perde.
 var stock: float = 0.0
+## A carga do Sino de Vigia (Ward, Q-100). Zero em tudo o resto.
+var charge := 0.0
 ## §49: uma plantacao no rasto da Podridao e destruida; as outras so param.
 var razed_by_rot: bool = false
 
@@ -213,6 +215,7 @@ func to_dict() -> Dictionary:
 		&"path": int(path),
 		&"variant": variant,
 		&"contact": contact,
+		&"charge": charge,
 	}
 
 
@@ -228,6 +231,7 @@ func from_dict(d: Dictionary) -> void:
 	path = d.get(&"path", int(path)) as Path
 	variant = d.get(&"variant", variant)
 	contact = d.get(&"contact", contact)
+	charge = d.get(&"charge", charge)
 
 
 ## Verdadeiro se este sitio tem os dois caminhos do §10 para escolher.

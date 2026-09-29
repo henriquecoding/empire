@@ -9,7 +9,8 @@
 # no combate — o creatures.csv da-lhe max_health 0, e no CreatureSystem isso e
 # morrer no primeiro tick. Anda por conta propria e so tem duas regras: nunca
 # passa a frente da mancha, e um muro de pe para-o — nao ataca, por isso nao
-# o rompe (Q-100). Afasta-lo e o gesto que falta.
+# o rompe. Afasta-o o Sino de Vigia com carga (Ward, Q-100): nao entra no raio
+# dele, e se la estiver e empurrado para fora.
 class_name Tender
 extends RefCounted
 
@@ -52,7 +53,7 @@ func tick(delta: float, rot_x: float, nucleo: float, raio: float, obras: BuildSy
 		alvo = muro.x - rumo * muro.width * BuildSystem.METADE
 		if absf(alvo - nucleo) > absf(x - nucleo):
 			alvo = x
-	x = alvo
+	x = Ward.hold(obras, x, alvo, nucleo)
 	return absf(x - nucleo) <= raio
 
 
