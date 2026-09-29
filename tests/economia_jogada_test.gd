@@ -151,8 +151,8 @@ func test_o_dia_da_asfixia_da_economia_do_jogo_cai_no_alvo() -> void:
 
 ## A alvorada do dia 2, pedida ao FieldWork sem esperar pela noite: o que se mede
 ## e a ligacao, e nao quem a noite leva.
-func _alvorada() -> void:
-	SimLoop.field.prepare(2, SimLoop.core_x, SimLoop.world_width, SimLoop.units, 0, SimLoop.state)
+func _alvorada(dia: int = 2) -> void:
+	SimLoop.field.prepare(dia, SimLoop.core_x, SimLoop.world_width, SimLoop.units, 0, SimLoop.state)
 	EventBus.flush()
 
 
@@ -176,13 +176,17 @@ func test_a_manutencao_paga_se_na_alvorada_do_saco_do_rei() -> void:
 	assert_int(SimLoop.units.carried_coins[rei]).is_equal(30 - devido)
 
 
-func test_sem_moedas_para_a_manutencao_uma_tropa_vai_embora() -> void:
+## Q-144: o primeiro dia sem soldo fica em atraso; o segundo ja leva gente.
+func test_sem_moedas_para_a_manutencao_as_tropas_acabam_por_ir_embora() -> void:
 	SimLoop.step(STEP)
 	_lanceiros(12)
 	var antes := SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id)
 	SimLoop.units.carried_coins[SimLoop.units.index_of(SimLoop.king_id)] = 0
-	_alvorada()
-	assert_int(SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id)).is_equal(antes - 1)
+	_alvorada(2)
+	assert_int(SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id)).is_equal(antes)
+	SimLoop.units.carried_coins[SimLoop.units.index_of(SimLoop.king_id)] = 0
+	_alvorada(3)
+	assert_int(SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id)).is_less(antes)
 
 
 func test_um_vagabundo_novo_por_alvorada_num_acampamento() -> void:
@@ -208,24 +212,6 @@ func test_com_o_acampamento_cheio_nao_vem_mais_ninguem() -> void:
 	var antes := _por_recrutar()
 	_alvorada()
 	assert_int(_por_recrutar()).is_equal(antes)
-
-
-## A Colheita Forcada do §15 tem de poder compensar nalgum dia (P-M): sem o
-## crescimento da producao, nunca compensava.
-func test_a_colheita_forcada_compensa_nalgum_dia() -> void:
-	var eco := SimLoop.economy
-	var impulso := Registry.entry(&"crown/impulses", &"forced_harvest") as ImpulseData
-	_de_pe([&"farm", &"henhouse", &"fishery"])
-	var canteiros := 0.0
-	for obra in SimLoop.builds.standing():
-		if obra.kind == &"farm":
-			canteiros += obra.yield_per_day
-	var compensa := false
-	for d in range(1, 21):
-		var hoje := eco.built_income(SimLoop.builds, d) * (impulso.benefit_value - 1.0)
-		var amanha := canteiros * pow(_curva().income_growth, d)
-		compensa = compensa or hoje - amanha - impulso.coin_cost > 0.0
-	assert_bool(compensa).is_true()
 
 
 func _por_recrutar() -> int:

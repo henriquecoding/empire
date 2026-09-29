@@ -183,3 +183,8 @@ extends Resource
 ## por isto, por cada vez que ele saiu: o reino cansa-se da mesma ordem.
 @export var impulse_repeat_mult: float = 1.0
 @export var impulse_repeat_days: int = 0
+
+## Q-144: dias de soldo que as tropas aguentam por pagar antes de desertarem, e
+## dias em que quem desertou nao volta a ser recrutado.
+@export var wage_grace_days: float = 1.0
+@export var deserter_rest_days: int = 2

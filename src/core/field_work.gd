@@ -48,7 +48,7 @@ func _init(
 	conversion = SimFactory.conversion()
 	var monarca := Registry.entry(&"classes", &"monarch") as ClassData
 	classes = ClassSystem.new(monarca, SimFactory.by_id(&"units"))
-	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"))
+	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"), SimFactory.curve())
 	var curva := SimFactory.curve()
 	succession = Succession.new(curva.heir_training_days, curva.heir_cost_per_day)
 	if combate != null:
@@ -58,6 +58,7 @@ func _init(
 	if _economia != null:
 		_economia.crown = crown
 		_economia.conversion = conversion
+		conversion.jobs = _economia.jobs
 
 
 ## Passo 3: o dia novo abre as clareiras, cobra o que os impulsos de ontem
@@ -140,6 +141,7 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 ## conversao ja nao troca de modo com a moeda: escolhe-se (Q-115, Verbs).
 func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> void:
 	EventRelay.training(training.absorb(moedas, obras, unidades))
+	conversion.staff(obras)  # a capacidade pede o cozinheiro la dentro (Q-145)
 
 
 ## Passos 6 e 8: a caca rende moeda; o treino corre com quem esta la dentro, e a
@@ -203,7 +205,7 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 		if treino > 0:
 			EventBus.queue(&"coin_spent", [treino, &"heir"])
 	if _economia != null:
-		for e in upkeep.dawn(unidades, _rei, _economia):
+		for e in upkeep.dawn(unidades, _rei, _economia, dia):
 			if e[UpkeepSystem.CHAVE] == UpkeepSystem.EV_PAGA:
 				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
 			else:

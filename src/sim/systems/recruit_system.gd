@@ -39,6 +39,9 @@ var cost_deltas: PackedInt32Array = PackedInt32Array()
 var state: GameState
 ## Os ids de dados que andam atras do rei (a tag `follows_king`: o escudeiro).
 var followers: Dictionary = {}
+## Quem desertou por soldo em atraso: id -> o dia a partir do qual volta a poder ser
+## recrutado (Q-144). Partilhado com o UpkeepSystem, que o escreve e o grava.
+var resting: Dictionary = {}
 
 var _curva: EconomyCurve
 
@@ -73,7 +76,7 @@ func seek_coins(unidades: UnitSystem, moedas: CoinSystem, tick: int) -> void:
 	for i in unidades.count():
 		if unidades.owners[i] != SEM_DONO or not unidades.alive(i):
 			continue
-		if not UnitFsm.decides(unidades.ids[i], tick):
+		if not UnitFsm.decides(unidades.ids[i], tick) or resting_now(unidades.ids[i]):
 			continue
 		var alvo := _moeda_mais_proxima(moedas, unidades.xs[i], unidades.bands[i])
 		if alvo == NENHUM:
@@ -106,7 +109,7 @@ func hire(unidades: UnitSystem, unit_id: int, dono: int, pago: int, preco: int) 
 	var i := unidades.index_of(unit_id)
 	if i == NENHUM or unidades.owners[i] != SEM_DONO or not unidades.alive(i):
 		return false
-	if dono == SEM_DONO or pago < preco:
+	if dono == SEM_DONO or pago < preco or resting_now(unit_id):
 		return false
 	unidades.owners[i] = dono
 	return true
@@ -172,6 +175,11 @@ func _apanhar(
 		era_de_ninguem and hire(unidades, unit_id, dono_do_rei, unidades.carried_coins[i], preco)
 	)
 	return {UNIDADE: unit_id, MOEDAS: apanhado, RECRUTADO: comprado, PRECO: preco}
+
+
+## Se quem desertou ainda nao quer voltar (Q-144).
+func resting_now(unit_id: int) -> bool:
+	return state != null and int(resting.get(unit_id, 0)) > state.day
 
 
 ## Quanto custa comprar esta pessoa aqui: o recruit_cost dela com o desconto do

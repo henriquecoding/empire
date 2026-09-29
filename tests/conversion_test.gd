@@ -149,3 +149,29 @@ func test_o_modo_vai_no_save() -> void:
 func _um_dia_com(quem: UnitSystem) -> Array[Dictionary]:
 	conversao.bind(quem)
 	return _um_dia()
+
+
+## Q-145 (o dono, 29/09/2026): a capacidade pede o cozinheiro DENTRO da casa — a
+## casa em capacidade publica o posto dele — e materia consumida na fase.
+func test_a_capacidade_pede_o_cozinheiro_la_dentro() -> void:
+	var jobs := SimFactory.job_board()
+	conversao.jobs = jobs
+	conversao.modes[celeiro.id] = CraftData.Mode.CAPACITY
+	conversao.staff(obras)
+	assert_str(String(celeiro.job_id)).is_equal(String(ConversionSystem.POSTO))
+	assert_int(celeiro.posts()).is_equal(1)
+	var longe := unidades.spawn(estado, Registry.entry(&"units", &"cook"), MEU, 5000.0)
+	conversao.bind(unidades)
+	jobs.refresh(obras, unidades, GameClock.Phase.MORNING)
+	jobs.staffing.observe(jobs.slots, unidades, GameClock.Phase.NOON)
+	economia.on_phase(obras, GameClock.Phase.MORNING, [])
+	assert_float(conversao.capacity(_grao().capacity_kind)).is_equal(0.0)
+	unidades.xs[unidades.index_of(longe)] = celeiro.x
+	jobs.staffing.observe(jobs.slots, unidades, GameClock.Phase.NOON)
+	jobs.staffing.observe(jobs.slots, unidades, GameClock.Phase.AFTERNOON)
+	canteiro.stock = _grao().cost
+	economia.on_phase(obras, GameClock.Phase.NOON, [])
+	assert_float(conversao.capacity(_grao().capacity_kind)).is_equal(_grao().magnitude)
+	conversao.modes[celeiro.id] = CraftData.Mode.COIN
+	conversao.staff(obras)
+	assert_int(celeiro.posts()).is_equal(0)

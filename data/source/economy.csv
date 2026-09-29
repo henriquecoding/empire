@@ -10,6 +10,8 @@ upkeep_free_troops,8,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) 
 upkeep_tier1_limit,20,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,de 9 a 20
 upkeep_tier1_rate,0.5,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,"por tropa e por dia, entre 9 e 20"
 upkeep_tier2_rate,1.5,Manutenção,"§06 sorvedouro 1; §29 prompt 3 (upkeep(14) = 3,0; upkeep(25) = 13,5)",,"por tropa e por dia, acima de 20"
+wage_grace_days,1,Manutenção,"§06 sorvedouro 1; Q-144 (o dono a 29/09/2026: elabore um planeamento completo)",wage_grace_days,"Proposta (Q-144): o soldo que não se paga fica em atraso e paga-se primeiro nas alvoradas seguintes; as tropas aguentam um dia de soldo por pagar. Um dia mau não leva ninguém — é o que trava a espiral deserção → menos renda → mais deserção."
+deserter_rest_days,2,Manutenção,"§06 sorvedouro 1; Q-144",deserter_rest_days,"Proposta (Q-144): para lá da tolerância, vão-se tantas tropas quantas o excesso paga, a um soldo por cabeça, e cada uma leva a sua parte do atraso. Quem desertou só volta a poder ser recrutado dois dias depois."
 trade_route_income,4.5,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,"o §06 diz 4–6/dia; 4,5 é o valor da fórmula do §29"
 trade_network_bonus,0.1,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,+10% a todas as rotas por cada rota a partir da segunda
 trade_cart_cost,5,"Comércio, caça e saque",§06 circuitos 1 e 3; §13; §25; §29 prompt 3; §49,,a carroça que percorre a rota

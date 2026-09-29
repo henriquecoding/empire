@@ -195,6 +195,7 @@ func _montar() -> void:
 	night = NightWatch.new(units, builds, coins, jobs)
 	recruits = RulesFactory.recruits(state)  # o desconto do povo da regiao (Q-007)
 	field = FieldWork.new(economy, morale, combat, night)
+	recruits.resting = field.upkeep.resting  # quem desertou nao volta logo (Q-144)
 	hunting = field.hunting
 	tally.reset()
 	_fase = UnitSystem.NENHUM
@@ -202,8 +203,7 @@ func _montar() -> void:
 	intents.clear()
 
 
-## O roll do §50, no fluxo `combat`: um tiro falhado nao muda o que se invoca.
-func _roll() -> float:
+func _roll() -> float:  # o roll do §50, no fluxo `combat`
 	return RngService.unit_float(&"combat")
 
 

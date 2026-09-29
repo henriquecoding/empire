@@ -598,9 +598,9 @@ With a {craft} of yours: {effect}",guia contextual de jogo,160,§06 circuito 2; 
 CONTEXT_CONVERT_WANTS_CRAFT,"{name} · Sem {craft} teu, vende {material} a +{bonus}%
 {effect} volta com um {craft} · {assume} só vender","{name} · No {craft} of yours: sells {material} at +{bonus}%
 {effect} returns with a {craft} · {assume} just sell",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2; o modo capacidade escolhido sem o ofício
-CONTEXT_CONVERT_WAITING,"{name} · O {craft} espera {material}: {effect} ainda sem efeito
-{assume} voltar a vender a +{bonus}%","{name} · The {craft} awaits {material}: {effect} not yet in effect
-{assume} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2; escolhido e com ofício mas a fase ainda não deu a capacidade
+CONTEXT_CONVERT_WAITING,"{name} · O {craft} tem de estar cá e ter {material}: {effect} ainda sem efeito
+{assume} voltar a vender a +{bonus}%","{name} · The {craft} must be here, with {material}: {effect} not yet in effect
+{assume} go back to selling at +{bonus}%",guia contextual de jogo,160,§06 circuito 2; Q-112; Q-115: escolhe-se com o Verbo 2; escolhido e com ofício mas a fase ainda não deu a capacidade: falta o ofício na casa ou a matéria (Q-145)
 CONTEXT_EVOLVE,"{name} · {drop} evoluir o Monarca
 +{pct}% de defesa a todas as tuas tropas · {seeds} Semente Real","{name} · {drop} evolve the Monarch
 +{pct}% defence for all your troops · {seeds} Royal Seed",guia contextual de jogo,160,§08: a evolução da classe; o gesto é a Q-114
