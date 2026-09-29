@@ -1,6 +1,6 @@
 # Empire (nome de trabalho)
 
-Kingdom-builder 2D em pixel art, em Godot 4.6, onde cada império é uma civilização própria.
+Kingdom-builder 2D em pixel art, em Godot 4.7, onde cada império é uma civilização própria.
 A fonte de verdade do design é o **Dossiê Empire** — `docs/dossie.html` (v5.2). Tudo o resto deriva dele.
 
 ## Jogar no browser
@@ -36,7 +36,7 @@ godot --headless --path . -s tools/lint_sim.gd               # G1, G2 e G4 sem o
 python3 tools/check_dossie_vs_csv.py            # os números do dossiê contra os CSV
 python3 tools/content_report.py                 # regenera SCHEMA, PROPOSALS, ROT_BY_DAY, NAMES
 python3 tools/split_dossie.py docs/dossie.html docs/design   # regenera a spec que o agente lê
-godot --headless --path . --export-debug "Linux" build/empire.x86_64   # precisa dos templates 4.6
+godot --headless --path . --export-debug "Linux" build/empire.x86_64   # precisa dos templates 4.7.2
 ```
 
 Para abrir no editor: `godot --path .` (ou abre o `project.godot`). A cena principal é `scenes/boot.tscn`.
@@ -75,10 +75,10 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.7.2: 1007 testes (3 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.7.2: 1048 testes (3 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
-- A base de dados tem **29 tabelas** e 221 recursos com todos os números do dossiê, Parte XIII incluída; o que o
+- A base de dados tem **29 tabelas** e 222 recursos com todos os números do dossiê, Parte XIII incluída; o que o
   dossiê não dá está proposto e marcado (`docs/content/PROPOSALS.md`).
 - O `tools/check_dossie_vs_csv.py` confere **197 números** do dossiê contra as tabelas, e não há divergências.
 - O estado medido, ficheiro a ficheiro, está em `docs/recovery/RETOMADA.md` e em `docs/recovery/validation.json`.

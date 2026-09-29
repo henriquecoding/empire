@@ -149,6 +149,7 @@ src/world/structure_art.gd  StructureArt  o que cada obra E, por dentro do conto
 src/world/silhouette.gd     Silhouette    o que cada coisa E, em forma (§22, Q-079)
 src/world/campfires.gd      Campfires     os sitios de fogueira da regiao (Q-029)
 src/world/wards.gd          Wards         os sitios dos sinos de vigia e do farol (Q-100, Q-156)
+src/world/bow_racks.gd      BowRacks      o sitio da banca do arco, posta por ultimo (Q-165)
 src/world/outline.gd        Outline       o contorno de cada forma, em centesimos da caixa
 src/world/gauge.gd          Gauge         os instrumentos do greybox: vida, saco e armazenamento (GB-03, Q-153)
 src/world/site_stage.gd     SiteStage     em que ponto esta uma obra, para a obra o mostrar
@@ -160,7 +161,7 @@ src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-0
 src/world/smoothing.gd      Smoothing     o render interpola entre dois ticks (§40 I5, GB-10)
 src/world/passage_cue.gd    PassageCue    onde o Verbo 2 pega, dito no sitio (§11, §25, GB-14)
 src/world/dawn_sweep.gd     DawnSweep     o amanhecer que se ve chegar (§24, GB-17)
-src/world/sky_view.gd       SkyView       o ceu, e o sol e a lua que dizem a hora (§24, GB-18)
+src/world/sky_view.gd       SkyView       o ceu, e o sol e a lua que dizem a hora e a noite funda (§24, GB-18)
 src/world/coin_bounce.gd    CoinBounce    o pequeno bounce da moeda, so no ecra (§24, GB-19)
 src/world/accessibility_filter.gd AccessibilityFilter contraste e daltonismo, por cima do mundo (§26)
 src/world/lighting.gd       Lighting      quanta luz chega a cada coisa (§22, §74, §80)
@@ -185,7 +186,7 @@ src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §
 src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
 src/ui/pause_menu.gd        PauseMenu     a pausa e o fim da partida (§24, §16)
-src/ui/guide_sites.gd       GuideSites    o que o guia diz nos sitios: a passagem e o herdeiro (Q-138)
+src/ui/guide_sites.gd       GuideSites    o que o guia diz nos sitios: a passagem, o herdeiro e a fortaleza (Q-138, Q-166)
 src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26, GB-15)
 src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)
 src/ui/hud_text.gd          HudText       o texto do painel, por chave (§27, GB-27)
