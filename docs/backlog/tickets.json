@@ -399,7 +399,7 @@
   "spec": [
    "docs/design/51-rotsystem-uma-entidade-nao-um-spawner.md",
    "docs/design/29-a-biblioteca-de-prompts-por-sistema.md",
-   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md"
+   "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md"
   ],
   "depende": "F0-06",
   "feito": "Os seis testes do prompt passam e a mancha vê-se no horizonte ao crepúsculo",
@@ -575,7 +575,7 @@
   "title": "Arte da mancha: a Podridão e a candeia",
   "porque": "A mancha é o que o jogador vê chegar do outro lado do ecrã. É o GIF de marketing do §36.",
   "spec": [
-   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md",
+   "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md",
    "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md",
    "docs/design/36-wishlists-pagina-demo-e-trailer.md"
   ],
@@ -1108,7 +1108,7 @@
   "title": "§74 · O termo dos Amargueiros na massa",
   "porque": "Uma hora de código que transforma a curva de dificuldade de reta em consequência.",
   "spec": [
-   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md"
+   "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md"
   ],
   "depende": "F1-08",
   "feito": "O teste D-01 passa: 400 ao dia 20 em campo limpo, 466 com três árvores, 645 com cinco e três nomeadas",
@@ -1128,7 +1128,7 @@
   "title": "§74 · O Amargueiro e a candeia, completos",
   "porque": "É o melhor rácio da parte inteira: 11 h de código e 3 de arte para a alavanca 2.",
   "spec": [
-   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md",
+   "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md",
    "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
   ],
   "depende": "XIII-02, F1-06, ART-04",
@@ -1400,7 +1400,7 @@
   "spec": [
    "docs/recovery/AUDITORIA-GAMEPLAY-2026-09-26.md",
    "docs/design/11-o-mundo-em-duas-camadas.md",
-   "docs/design/74-a-podridao-ganha-uma-candeia-e-o-combustivel-es-.md"
+   "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md"
   ],
   "depende": "AUD-01",
   "feito": "Há obra a fazer lá em baixo e razão para descer de dia; o Alado leva alguma coisa que a torre alta protege",

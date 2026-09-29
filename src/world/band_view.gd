@@ -62,7 +62,9 @@ func _process(delta: float) -> void:
 	var rot := SimLoop.night.rot if SimLoop.state != null else null
 	var raio := _raio_nesta_faixa(rot)
 	if raio > 0.0:
-		_luz.set_lamp(rot.position_x(), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
+		_luz.set_lamp(
+			WorldLight.nest_x(rot), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1]
+		)
 	else:
 		_luz.clear_lamp()
 	queue_redraw()
@@ -114,12 +116,11 @@ func _podridao() -> void:
 	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day, _luz)
 
 
-## As luzes que sao tuas (§10, coluna `light_radius`). Hoje so o farol tem uma, e
-## ele e da Fase 6 — por isso isto e um ciclo sobre um conjunto vazio, que e a
-## ausencia dele e nao um esquecimento. Levam as MESMAS tres paragens: o §80 da
-## uma regra de luz ao jogo inteiro, e nao uma por fonte.
+## As luzes que sao tuas (§10, coluna `light_radius`): fogueiras, farol e o
+## archote. Levam as mesmas tres paragens do §80, mas em ambar — o roxo e do Lume,
+## e de longe tem de se saber de quem e cada luz (ADR 0034).
 func _fogueiras() -> void:
-	var cores := WorldLight.stops(_podre)
+	var cores := WorldLight.fire_stops(_podre)  # ambar: o fogo e teu (ADR 0034)
 	for vaga in SimLoop.builds.slots:
 		var raio := WorldLight.hearth_radius(vaga)
 		if vaga.band != band or raio <= 0.0:
@@ -157,12 +158,12 @@ func _moedas() -> void:
 		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
 
 
-## §74, a frase que faz da candeia mecanica e nao decoracao: "dentro do raio
-## ve-se o que a Podridao invocou; fora, nao". Fora dela o corpo e silhueta — a
+## O que a noite traz so se ve dentro de uma luz: as tuas (as obras que alumiam e
+## o archote) e o Lume roxo na base dela (ADR 0034). Fora, o corpo e silhueta — a
 ## mesma cor com a luz que chega ao chao (§80), e nao uma cor nova.
 func _criaturas() -> void:
 	var bichos := SimLoop.creatures
-	var candeia := _candeeiro()
+	var luzes := _luzes_da_noite()
 	var chao := BandLight.ground_ratio(_relogio)
 	for i in bichos.count():
 		if bichos.bands[i] != int(band):
@@ -176,7 +177,7 @@ func _criaturas() -> void:
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
 		var x := Smoothing.x_of(Smoothing.Group.CREATURES, bichos.ids[i], bichos.xs[i])
 		var caixa := Silhouette.body_box(forma, x, int(band), alto)
-		var aceso := WorldLight.lit(x, candeia.x, candeia.y)
+		var aceso := WorldLight.seen(x, luzes)
 		var corpo := _luz.body(WorldPalette.BICHO, x)
 		var cor := WorldLight.reveal(corpo, aceso, chao)
 		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
@@ -187,10 +188,12 @@ func _criaturas() -> void:
 			)
 
 
-## Onde esta a candeia e que raio tem, em (x, raio). Com a mancha recuada nao ha
-## luz nenhuma no campo — e entao esta tudo aceso, porque e dia.
-func _candeeiro() -> Vector2:
+## As luzes em que se ve, em (x, raio): as tuas e o Lume. Com a mancha recuada e
+## dia, e esta tudo aceso.
+func _luzes_da_noite() -> Array[Vector2]:
 	var rot := SimLoop.night.rot
 	if not rot.active():
-		return Vector2(0.0, INF)
-	return Vector2(rot.position_x(), WorldLight.radius(_podre, SimLoop.state.day))
+		return [Vector2(0.0, INF)]
+	var luzes := WorldLight.hearths(SimLoop.builds, SimLoop.night.dark.ward())
+	luzes.append(Vector2(WorldLight.nest_x(rot), WorldLight.radius(_podre, SimLoop.state.day)))
+	return luzes

@@ -46,12 +46,17 @@ extends Resource
 @export var lantern_radius_base: float = 0.0
 @export var lantern_radius_per_day: float = 0.0
 @export var lantern_radius_max: float = 0.0
-## Ambar da paleta (§22, §80): a unica fonte quente do campo que nao e tua.
-## Sao TRES paragens e nunca um gradiente (§80): nucleo, meio e bordo, e depois
-## dissolve para o ambiente com um dither de lantern_dither_px.
+## O Lume, roxo (ADR 0034): a unica luz do campo que nao e tua, e a unica que
+## aquece a Podridao. Sao TRES paragens e nunca um gradiente (§80): nucleo, meio
+## e bordo, e depois dissolve para o ambiente com um dither de lantern_dither_px.
 @export var lantern_tint: String = ""
 @export var lantern_tint_mid: String = ""
 @export var lantern_tint_edge: String = ""
+## O ambar (§22): o fogo que e TEU — fogueiras, farol, archote. As mesmas tres
+## paragens, noutra cor: de longe sabe-se de quem e cada luz.
+@export var fire_tint: String = ""
+@export var fire_tint_mid: String = ""
+@export var fire_tint_edge: String = ""
 @export var lantern_dither_px: float = 0.0
 
 @export_group("v6 · a oferta")
@@ -129,6 +134,15 @@ extends Resource
 @export var dark_ambush_px: float = 0.0
 @export var dark_ambush_max: int = 0
 @export var dark_creature: StringName = &""
+## A massa da criatura mais cara que o archote aceso faz recuar (ADR 0034).
+@export var torch_repel_mass: int = 0
+
+@export_group("O Lume e as tuas luzes — ADR 0034")
+## Quanto tempo recua quem entra numa luz tua que a aguenta.
+@export var light_recoil_s: float = 0.0
+## O que a noite seguinte ganha por cada unidade do que o Lume comeu (sacrificios,
+## galinhas roubadas): "tudo aquilo que a Podridao consome alimenta-a".
+@export var lume_mass_per_fuel: float = 0.0
 
 
 ## A parte do calendario da massa (§74: base + dia), com as primeiras noites em

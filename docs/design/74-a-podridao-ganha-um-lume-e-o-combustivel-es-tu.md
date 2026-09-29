@@ -1,17 +1,33 @@
-# 74 — Ameaça · novo · A Podridão ganha uma candeia — e o combustível és tu
+# 74 — Ameaça · novo · A Podridão ganha um Lume — e o combustível és tu
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
 A Podridão da v5.2 é meteorologia com orçamento: nasce, avança, gasta massa, recua. É melhor do que ondas, como diz a §05, mas tem um buraco que ninguém apontou — durante os 85 segundos da Manhã e os 85 da Tarde, não há nada que possas fazer em relação a hoje à noite. Constróis, colhes, recrutas. A noite é um número que já está decidido. Esta secção rouba a alavanca 2 da série e fecha esse buraco: a massa da noite passa a ser escrita pelo jogador, de dia, com os seus próprios mortos.
 
-## A candeia
+## A candeia — o Lume
 
-A Podridão passa a trazer uma luz. Uma só, quente, no meio da mancha. É a única coisa iluminada no campo à noite tirando as tuas fogueiras, e a mancha deixa de ser uma sombra que avança para ser alguém a atravessar o campo com uma lanterna. A leitura inverte-se, e é a inversão que faz o arrepio: a coisa que te vem matar é a única que traz luz.
+(Reescrito pelo dono a 29/09/2026, ADR 0034. A primeira versão punha a luz no meio da mancha, a atravessar o campo — copiava a lanterna da Besta ao pé da letra e deitava fora o que a série diz dela.)
 
-- **Raio da luz** — 150 + 4 × dia px, com teto em 260. Dentro do raio vê-se o que a Podridão invocou; fora, não.
-- **Cor** — Âmbar da paleta (família de 5 cores, §22). É a única fonte quente do campo que não é tua.
+A Podridão tem uma luz, e é uma só: o Lume, um fogo roxo que arde na base de onde ela nasce — o horizonte do lado ameaçado, como os portais do Kingdom. Não sai de lá. A mancha que atravessa o campo é escuridão; a única luz dela é aquela, lá atrás, e é a única que a aquece. Tudo o que a Podridão consome vai parar ao Lume: as moedas e os animais que lhe dás, o que os Ladrões roubam, os Amargueiros que deixas de pé. É a lanterna da Besta tal como a série a conta — arde com o óleo das vítimas e guarda a alma de quem a acende —, adaptada ao Empire: a lanterna não vem ter contigo, és tu que a vês crescer no horizonte noite após noite.
+
+- **Raio da luz** — 150 + 4 × dia px, com teto em 260. Dentro do raio vê-se o que a Podridão invocou; fora, não — tirando o que as tuas luzes alumiam.
+- **Cor** — Roxo (§80: núcleo, meio e bordo violeta). É a única luz do campo que não é tua, e a atmosfera da base inimiga é essa: tudo ali tingido de roxo.
+- **Combustível** — O que ela consome alimenta-o. Cada unidade de combustível vale lume_mass_per_fuel de massa nas noites seguintes (0,25, proposta) — alimentá-la compra esta noite e paga-se nas próximas, que é o preço da Besta.
 - **Estado** — O brilho é o mostrador da Dívida da Candeia (§75). Nunca aparece um número.
-- **Vulnerabilidade** — Nenhuma. Continua a valer o §05: não pode ser morta em campo aberto, só impedida.
+- **Vulnerabilidade** — Nenhuma em campo aberto: continua a valer o §05, não pode ser morta, só impedida. Apagar o Lume é o fim do ciclo — a Besta perante a lanterna apagada — e é pergunta aberta (Q-156).
+
+## As tuas luzes afastam-na
+
+Na série é a Besta que foge da luz apagada; no Empire é a Podridão que foge da tua. Cada luz tua de pé — fogueira, farol, o archote do rei — guarda um troço de chão, e o que entra nele recua ou abranda conforme o tipo de construção e o nível da criatura. O nível é a massa: o preço que a Podridão pagou por ela (§51).
+
+| Luz | Raio | Faz recuar até massa | Aos mais fortes |
+| --- | --- | --- | --- |
+| Archote do rei | 96 px | 8 — Rastejantes | nada |
+| Fogueira | 96 px | 8 — Rastejantes | abranda 25% |
+| Farol | 300 px | 30 — Brutos | abranda 30% |
+
+
+Quem recua anda para trás durante 3 s (light_recoil_s) e volta a tentar; quem é forte de mais só abranda, e o Ariete de lodo e o Devorador atravessam qualquer luz. Os números são proposta (_proposed em rot.csv e buildings.csv). A mancha em si continua a abrandar por cima do fogo (§05).
 
 ## O Amargueiro
 

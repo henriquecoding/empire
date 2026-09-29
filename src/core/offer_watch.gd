@@ -59,6 +59,7 @@ func before_spawn(rot: RotSystem, dia: int) -> bool:
 func after_spawn(rot: RotSystem) -> void:
 	rot.state.mass *= debt.mass_mult_permanent
 	rot.state.mass += debt.collect()  # o que a noite saltada nao gastou (Q-040)
+	rot.state.mass += debt.lume_mass()  # o que o Lume ja comeu (ADR 0034)
 	offers.dusk()
 	_pausa = 0.0
 	if debt.tender():

@@ -24,6 +24,9 @@ var ended: bool = false
 ## A massa de uma noite saltada, que a seguinte traz (Q-040: "saltar o jogo gera
 ## consequencias"). A Podridao nao esquece o que nao gastou.
 var carried_mass: float = 0.0
+## O que o Lume ja comeu — moedas sacrificadas, galinhas roubadas (ADR 0034):
+## "tudo aquilo que a Podridao consome alimenta-a". Nunca desce.
+var lume_fuel: float = 0.0
 
 var _perfil: RotProfile
 
@@ -91,6 +94,7 @@ func to_dict() -> Dictionary:
 		&"mass_mult_permanent": mass_mult_permanent,
 		&"rot_ended": ended,
 		&"carried_mass": carried_mass,
+		&"lume_fuel": lume_fuel,
 	}
 
 
@@ -101,6 +105,17 @@ func from_dict(d: Dictionary) -> void:
 	mass_mult_permanent = d.get(&"mass_mult_permanent", mass_mult_permanent)
 	ended = d.get(&"rot_ended", ended)
 	carried_mass = d.get(&"carried_mass", carried_mass)
+	lume_fuel = d.get(&"lume_fuel", lume_fuel)
+
+
+## O Lume come (ADR 0034). So sobe.
+func feed_lume(quanto: float) -> void:
+	lume_fuel += maxf(0.0, quanto)
+
+
+## A massa que o que o Lume ja comeu acrescenta a cada noite.
+func lume_mass() -> float:
+	return lume_fuel * _perfil.lume_mass_per_fuel
 
 
 ## A noite saltada deixa a massa dela para a seguinte (Q-040), na fraccao do

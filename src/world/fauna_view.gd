@@ -88,4 +88,4 @@ func _acender(luz: Lighting, faixa: int, fase: int, progresso: float) -> void:
 	var raio := WorldLight.radius(_podre, SimLoop.state.day)
 	if faixa != Band.Kind.SURFACE:
 		raio *= WorldLight.debt_reach(SimLoop.night.voice.debt.tier())
-	luz.set_lamp(rot.position_x(), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
+	luz.set_lamp(WorldLight.nest_x(rot), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])

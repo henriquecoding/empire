@@ -430,6 +430,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `lantern_tint` | String | v6 · a candeia |  |
 | `lantern_tint_mid` | String | v6 · a candeia |  |
 | `lantern_tint_edge` | String | v6 · a candeia |  |
+| `fire_tint` | String | v6 · a candeia |  |
+| `fire_tint_mid` | String | v6 · a candeia |  |
+| `fire_tint_edge` | String | v6 · a candeia |  |
 | `lantern_dither_px` | float | v6 · a candeia |  |
 | `offer_trigger_px` | float | v6 · a oferta |  |
 | `offer_window_after_dusk` | Vector2 | v6 · a oferta |  |
@@ -460,6 +463,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `dark_ambush_px` | float | O escuro e o archote — Q-029 |  |
 | `dark_ambush_max` | int | O escuro e o archote — Q-029 |  |
 | `dark_creature` | StringName | O escuro e o archote — Q-029 |  |
+| `torch_repel_mass` | int | O escuro e o archote — Q-029 |  |
+| `light_recoil_s` | float | O Lume e as tuas luzes — ADR 0034 |  |
+| `lume_mass_per_fuel` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `mine_lure_days` | int | Auditoria de gameplay — AUD-04 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`

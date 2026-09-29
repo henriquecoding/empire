@@ -44,6 +44,16 @@ func tick(
 	EventRelay.summoned(SpawnRequest.new(dados.id, x, Band.Kind.SURFACE), 0.0)
 
 
+## A luz do archote aceso, como zona do LightWard (ADR 0034); vazia se apagado.
+func ward() -> Vector4:
+	var r := SimLoop.units.index_of(SimLoop.king_id)
+	if r == NENHUM or not torch.lit():
+		return Vector4.ZERO
+	var x := SimLoop.units.xs[r]
+	var raio := _perfil.torch_radius_px
+	return Vector4(x - raio, x + raio, float(_perfil.torch_repel_mass), 0.0)
+
+
 ## Uma moeda do rei numa fogueira de pe compra archotes (Q-029). Verdadeiro se
 ## comprou: a moeda fica na fogueira.
 func buy_at(largada: Dictionary, obras: BuildSystem) -> bool:

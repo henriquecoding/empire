@@ -51,6 +51,16 @@
   outra vez a 26 px/s, que foi a queixa que deu a ADR 0021.
 - **Confirma:** se era isto.
 
+### Q-156 · Como se apaga o Lume?
+- **Onde:** §74, §75 (a décima segunda oferta "fecha"), ADR 0034.
+- **O que foi feito:** o Lume (a candeia) ficou na base de onde a Podridão nasce, roxo, alimentado pelo que ela
+  consome; as tuas luzes fazem recuar os fracos e abrandam os fortes. O dono comparou-o à *"Besta perante a lanterna
+  apagada, no fim da série"* — e na série apagar a lanterna é o fim da Besta. Nada no jogo apaga o Lume ainda.
+- **Proposta:** apagar o Lume é o fim do ciclo de um império — uma expedição à base dela, de dia, com o farol de pé
+  e a Dívida baixa (União, §75); aceitar a décima segunda oferta é o outro fim (quem acende a lanterna passa a ser
+  tu). Até lá, a base não se ataca.
+- **Confirma:** se o Lume se apaga, como, e se é o fim da campanha ou só de uma região.
+
 ## Abertas — balanceamento e design
 
 ### Q-006 · Quem atinge a faixa aérea? — **fechada pelo F1-07**

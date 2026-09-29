@@ -16,6 +16,7 @@ A noite é castanha: matiz 32°, saturação 0,22, valor 0,16, com chão de valo
 cor de preenchimento e não só de contorno, com teto de valores por plano de *parallax*: 1 valor na distância, 2 no
 plano médio, 2 no primeiro plano, paleta inteira só no plano de jogo. À noite o ecrã tem exatamente duas cores que
 não são terra: violeta (`--rot`) é A Podridão e só A Podridão; âmbar é luz, seja a candeia dela ou uma fogueira tua.
+*(Actualizada pela ADR 0034: o Lume dela é roxo, e o âmbar é só a tua luz.)*
 
 ## Alternativas consideradas
 Manter o azul e afinar o valor: o azul é frio como o violeta, e as duas coisas fundem-se — a leitura de relance do

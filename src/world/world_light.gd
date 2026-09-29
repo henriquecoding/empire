@@ -63,6 +63,17 @@ static func stops(perfil: RotProfile) -> PackedColorArray:
 	)
 
 
+## As paragens do fogo que e teu (ADR 0034): ambar, onde o Lume e roxo.
+static func fire_stops(perfil: RotProfile) -> PackedColorArray:
+	return PackedColorArray(
+		[
+			Color.html(perfil.fire_tint_edge),
+			Color.html(perfil.fire_tint_mid),
+			Color.html(perfil.fire_tint),
+		]
+	)
+
+
 ## O raio de cada paragem, do bordo para o nucleo: o bordo e o raio inteiro e as
 ## de dentro sao fraccoes iguais dele. Nao ha aqui numero nenhum a afinar — sao
 ## PARAGENS partes de um raio que vem de data/.
@@ -109,16 +120,17 @@ static func reach(x: float, centro: float, raio: float) -> float:
 ##
 ## Uma luz com paragens proprias e mais fracas (`forca` < 1, o farol da Q-078) e
 ## outra conversa: domina-se se, a cada distancia a que as duas acendem, a
-## paragem da candeia for mais clara do que a da outra ja enfraquecida.
+## paragem do Lume (roxo) for mais clara do que a do fogo (ambar) ja enfraquecido.
 static func dominates(
 	candeia: float, outra: float, forca: float = 1.0, perfil: RotProfile = null
 ) -> bool:
 	if forca >= 1.0 or perfil == null:
 		return candeia > outra
 	var cores := stops(perfil)
+	var fogo := fire_stops(perfil)
 	for d in int(minf(candeia, outra)) + 1:
 		var minha := cores[_paragem(candeia, d)].get_luminance()
-		var dela := cores[_paragem(outra, d)].get_luminance() * forca
+		var dela := fogo[_paragem(outra, d)].get_luminance() * forca
 		if minha <= dela:
 			return false
 	return true
@@ -162,3 +174,30 @@ static func reveal(cor: Color, aceso: bool, chao: float) -> Color:
 	if aceso:
 		return cor
 	return WorldPalette.dim(cor, chao)
+
+
+## Onde arde o Lume desta noite (ADR 0034): na base de onde a mancha nasceu, e nao
+## em cima dela. A mancha anda; o Lume fica.
+static func nest_x(rot: RotSystem) -> float:
+	return rot.state.trail_from
+
+
+## As tuas luzes de pe na superficie, em (x, raio): as obras com `light_radius`
+## e o archote aceso do rei. E dentro delas que se ve o que a noite traz.
+static func hearths(obras: BuildSystem, archote: Vector4 = Vector4.ZERO) -> Array[Vector2]:
+	var luzes: Array[Vector2] = []
+	for obra in obras.slots:
+		var raio := hearth_radius(obra)
+		if raio > 0.0 and obra.band == Band.Kind.SURFACE:
+			luzes.append(Vector2(obra.x, raio))
+	if archote.y > archote.x:
+		luzes.append(Vector2((archote.x + archote.y) * MEIA, (archote.y - archote.x) * MEIA))
+	return luzes
+
+
+## Se este x esta dentro de alguma das luzes (x, raio).
+static func seen(x: float, luzes: Array[Vector2]) -> bool:
+	for l in luzes:
+		if lit(x, l.x, l.y):
+			return true
+	return false

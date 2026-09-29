@@ -42,14 +42,14 @@ A §05 mandava "Azul profundo" na noite. A tua paleta tem 30 cores de madeira e 
 
 > **A regra das duas exceções**
 >
-> Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: violeta (#59386B, o teu token --rot) é A Podridão e só A Podridão; âmbar (#F6D89B ao núcleo) é luz, seja a candeia dela ou uma fogueira tua. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance. É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.
+> Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: violeta (#59386B, o teu token --rot) é A Podridão e tudo o que é dela, a começar pelo Lume que arde roxo na base de onde ela nasce; âmbar (#F6D89B ao núcleo) é a tua luz — fogueira, farol, archote — e a tua luz afasta-a. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance: roxo é dela, âmbar é teu. (ADR 0034, o dono a 29/09/2026: até aqui a candeia dela também era âmbar, e o ecrã dizia que a luz era dela.) É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.
 
 ## 3 · A luz é o assunto, e desenha-se com três paragens
 
 A §22 põe "Luz quente pontual" no Bloco 4 com 3 h e sem especificação. Passa a ser o primeiro item do bloco, com regra:
 
-- Três paragens, nunca um gradiente. Núcleo #F6D89B, meio #E8A94E, bordo #AE4F16, e depois dissolve para o ambiente com dither de 2 px — o mesmo shader de revelação que a §11 já pede para o corte de terra.
-- Uma luz domina por ecrã. Se duas competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância — e o farol do §10 também: ilumina os seus 300 px com paragens próprias a metade da força (Q-078). O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.
+- Três paragens, nunca um gradiente. O Lume: Núcleo #E9D5FF, meio #C084FC, bordo #8B5CF6, e depois dissolve para o ambiente com dither de 2 px — o mesmo shader de revelação que a §11 já pede para o corte de terra. O teu fogo leva as mesmas três paragens em âmbar: #F6D89B, #E8A94E, #AE4F16 (ADR 0034).
+- Uma luz domina por ecrã. Se duas competem, o ecrã lê plano. Consequência de design, não só de arte: as tuas fogueiras têm de ser mais fracas do que o Lume à mesma distância — e o farol do §10 também: ilumina os seus 300 px com paragens próprias a metade da força (Q-078). O que faz do Lume, roxo, ao fundo, o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing: a base dela a arder no horizonte e as tuas fogueirinhas âmbar a segurar a linha.
 - Nada tem contorno dentro do raio de luz. Perto da luz vê-se cor e volume; longe vê-se silhueta. Inverte-se a lógica de sprite habitual e é o que dá a sensação de pintura.
 
 ## 4 · A cara na casca

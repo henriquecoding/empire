@@ -25,5 +25,6 @@ respostas do dono no painel (ADR 0026, ADR 0027) — e cada linha diz de que per
 | P17 | §77 | o Forno Aceso cria raiz "dentro das tuas muralhas inclusive"; "só um o diz"; D-10 = 1 | a lei respeita as muralhas; nenhuma ficha o contraria; D-10 = 0 | Q-039 |
 | P18 | §80 | "as tuas fogueiras têm de ser mais fracas do que a candeia" | e o farol também, com paragens a metade da força | Q-078 |
 | P19 | §85 | "gera os 154 recursos a partir das 17 tabelas" | a contagem é da ferramenta (`validation.json`), e não da frase | Q-050 |
+| P20 | §73, §74, §80, §83 | a candeia no meio da mancha, âmbar: "a coisa que te vem matar é a única que traz luz" | o Lume: roxo, fica na base de onde ela nasce, alimenta-se do que ela consome; as tuas luzes (âmbar) fazem recuar ou abrandar conforme a obra e a massa da criatura | ADR 0034 (o dono a 29/09/2026), Q-156 |
 
 `docs/design/` foi gerado outra vez com `tools/split_dossie.py`, como sempre.

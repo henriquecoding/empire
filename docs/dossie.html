@@ -5049,7 +5049,7 @@ if __name__ == &quot;__main__&quot;:
     <thead><tr><th>#</th><th>Alavanca</th><th>O que é, mecanicamente</th><th>Serve?</th><th>Onde cai</th></tr></thead>
     <tbody>
       <tr><td>1</td><td>O antagonista oferece, não ataca</td><td>A Besta nunca força. Faz propostas razoáveis a pessoas em dificuldade e deixa-as escolher. O terror é de consentimento, não de força.</td><td><span class="tag keep">Central</span></td><td>§74 · §75</td></tr>
-      <tr><td>2</td><td>O combustível são as vítimas</td><td>A lanterna arde a óleo de <em>edelwood</em>; o <em>edelwood</em> é feito das crianças perdidas. A ameaça é literalmente construída com as perdas anteriores.</td><td><span class="tag keep">Central</span></td><td>§74</td></tr>
+      <tr><td>2</td><td>O combustível são as vítimas</td><td>A lanterna arde a óleo de <em>edelwood</em>; o <em>edelwood</em> é feito das crianças perdidas. A ameaça é literalmente construída com as perdas anteriores. No Empire é o Lume: arde roxo na base dela, e tudo o que ela consome o alimenta; a tua luz afasta-a (ADR 0034).</td><td><span class="tag keep">Central</span></td><td>§74</td></tr>
       <tr><td>3</td><td>Ninguém tem nome, toda a gente tem função</td><td>Na taberna não há nomes: há o Taberneiro, o Açougueiro, a Parteira, o Salteador. Ser nomeado é ganhar um lugar na história — e uma dívida para com ela.</td><td><span class="tag keep">Barata</span></td><td>§76</td></tr>
       <tr><td>4</td><td>Um lugar, uma lei, uma canção</td><td>Cada capítulo é um sítio fechado com uma regra estranha que ninguém explica, um habitante que a cumpre com naturalidade, e uma canção que a diz. Noventa segundos e percebeste o sítio.</td><td><span class="tag keep">Barata</span></td><td>§77</td></tr>
       <tr><td>5</td><td>A morte é um emprego com horário</td><td>Pottsfield é uma vila de esqueletos alegres que te põem a trabalhar e depois te deixam ir. A submissão é cordial, e é isso que a torna insuportável.</td><td><span class="tag keep">Cara, vale</span></td><td>§78</td></tr>
@@ -5084,17 +5084,30 @@ if __name__ == &quot;__main__&quot;:
 </section>
 <section id="s74">
   <span class="sec-no">74 — Ameaça · <span style="color:var(--ember)">novo</span></span>
-  <h3>A Podridão ganha uma candeia — e o combustível és tu</h3>
+  <h3>A Podridão ganha um Lume — e o combustível és tu</h3>
   <p class="lede">A Podridão da v5.2 é meteorologia com orçamento: nasce, avança, gasta massa, recua. É melhor do que ondas, como diz a §05, mas tem um buraco que ninguém apontou — durante os 85 segundos da Manhã e os 85 da Tarde, <strong>não há nada que possas fazer em relação a hoje à noite</strong>. Constróis, colhes, recrutas. A noite é um número que já está decidido. Esta secção rouba a alavanca 2 da série e fecha esse buraco: a massa da noite passa a ser escrita pelo jogador, de dia, com os seus próprios mortos.</p>
 
-  <h4>A candeia</h4>
-  <p>A Podridão passa a trazer uma luz. Uma só, quente, no meio da mancha. É a única coisa iluminada no campo à noite tirando as tuas fogueiras, e a mancha deixa de ser uma sombra que avança para ser <em>alguém a atravessar o campo com uma lanterna</em>. A leitura inverte-se, e é a inversão que faz o arrepio: a coisa que te vem matar é a única que traz luz.</p>
+  <h4>A candeia — o Lume</h4>
+  <p><em>(Reescrito pelo dono a 29/09/2026, ADR 0034. A primeira versão punha a luz no meio da mancha, a atravessar o campo — copiava a lanterna da Besta ao pé da letra e deitava fora o que a série diz dela.)</em></p>
+  <p>A Podridão tem uma luz, e é uma só: <strong>o Lume</strong>, um fogo roxo que arde na base de onde ela nasce — o horizonte do lado ameaçado, como os portais do Kingdom. Não sai de lá. A mancha que atravessa o campo é escuridão; a única luz dela é aquela, lá atrás, e é a única que a aquece. Tudo o que a Podridão consome vai parar ao Lume: as moedas e os animais que lhe dás, o que os Ladrões roubam, os Amargueiros que deixas de pé. É a lanterna da Besta tal como a série a conta — arde com o óleo das vítimas e guarda a alma de quem a acende —, adaptada ao Empire: a lanterna não vem ter contigo, és tu que a vês crescer no horizonte noite após noite.</p>
   <dl class="kv">
-    <dt>Raio da luz</dt><dd>150 + 4 × dia px, com teto em 260. Dentro do raio vê-se o que a Podridão invocou; fora, não.</dd>
-    <dt>Cor</dt><dd>Âmbar da paleta (família de 5 cores, §22). É a única fonte quente do campo que não é tua.</dd>
+    <dt>Raio da luz</dt><dd>150 + 4 × dia px, com teto em 260. Dentro do raio vê-se o que a Podridão invocou; fora, não — tirando o que as tuas luzes alumiam.</dd>
+    <dt>Cor</dt><dd>Roxo (§80: núcleo, meio e bordo violeta). É a única luz do campo que não é tua, e a atmosfera da base inimiga é essa: tudo ali tingido de roxo.</dd>
+    <dt>Combustível</dt><dd>O que ela consome alimenta-o. Cada unidade de combustível vale <code>lume_mass_per_fuel</code> de massa nas noites seguintes (0,25, proposta) — alimentá-la compra esta noite e paga-se nas próximas, que é o preço da Besta.</dd>
     <dt>Estado</dt><dd>O brilho é o mostrador da Dívida da Candeia (§75). Nunca aparece um número.</dd>
-    <dt>Vulnerabilidade</dt><dd>Nenhuma. Continua a valer o §05: não pode ser morta em campo aberto, só impedida.</dd>
+    <dt>Vulnerabilidade</dt><dd>Nenhuma em campo aberto: continua a valer o §05, não pode ser morta, só impedida. Apagar o Lume é o fim do ciclo — a Besta perante a lanterna apagada — e é pergunta aberta (Q-156).</dd>
   </dl>
+  <h4>As tuas luzes afastam-na</h4>
+  <p>Na série é a Besta que foge da luz apagada; no Empire é a Podridão que foge da tua. Cada luz tua de pé — fogueira, farol, o archote do rei — guarda um troço de chão, e o que entra nele recua ou abranda <strong>conforme o tipo de construção e o nível da criatura</strong>. O nível é a massa: o preço que a Podridão pagou por ela (§51).</p>
+  <div class="tw"><table>
+    <thead><tr><th>Luz</th><th>Raio</th><th>Faz recuar até massa</th><th>Aos mais fortes</th></tr></thead>
+    <tbody>
+      <tr><td>Archote do rei</td><td>96 px</td><td>8 — Rastejantes</td><td>nada</td></tr>
+      <tr><td>Fogueira</td><td>96 px</td><td>8 — Rastejantes</td><td>abranda 25%</td></tr>
+      <tr><td>Farol</td><td>300 px</td><td>30 — Brutos</td><td>abranda 30%</td></tr>
+    </tbody>
+  </table></div>
+  <p>Quem recua anda para trás durante 3 s (<code>light_recoil_s</code>) e volta a tentar; quem é forte de mais só abranda, e o Ariete de lodo e o Devorador atravessam qualquer luz. Os números são proposta (<code>_proposed</code> em <code>rot.csv</code> e <code>buildings.csv</code>). A mancha em si continua a abrandar por cima do fogo (§05).</p>
 
   <h4>O Amargueiro</h4>
   <p>Uma tropa que morre fora das muralhas e não é recolhida antes da alvorada <strong>cria raiz</strong>. Na Alvorada — a fase de 15 s em que a §05 já manda contar as perdas — o corpo levanta-se transformado numa árvore de madeira escura e resinosa, com a cara da tropa na casca. Não anda, não ataca, não pode ser destruída por dano. Fica ali, e alimenta a noite seguinte.</p>
@@ -5599,14 +5612,14 @@ Semana trinta e três, mesma ordem.</p>
     </tbody>
   </table></div>
   <div class="note spec"><span class="lbl">A regra das duas exceções</span>
-    <p>Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: <strong>violeta</strong> (<code>#59386B</code>, o teu <em>token</em> <code>--rot</code>) é A Podridão e só A Podridão; <strong>âmbar</strong> (<code>#F6D89B</code> ao núcleo) é luz, seja a candeia dela ou uma fogueira tua. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance. É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.</p>
+    <p>Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: <strong>violeta</strong> (<code>#59386B</code>, o teu <em>token</em> <code>--rot</code>) é A Podridão e tudo o que é dela, a começar pelo Lume que arde roxo na base de onde ela nasce; <strong>âmbar</strong> (<code>#F6D89B</code> ao núcleo) é a tua luz — fogueira, farol, archote — e a tua luz afasta-a. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance: roxo é dela, âmbar é teu. <em>(ADR 0034, o dono a 29/09/2026: até aqui a candeia dela também era âmbar, e o ecrã dizia que a luz era dela.)</em> É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.</p>
   </div>
 
   <h4>3 · A luz é o assunto, e desenha-se com três paragens</h4>
   <p>A §22 põe "Luz quente pontual" no Bloco 4 com 3 h e sem especificação. Passa a ser o primeiro item do bloco, com regra:</p>
   <ul>
-    <li><strong>Três paragens, nunca um gradiente.</strong> Núcleo <code>#F6D89B</code>, meio <code>#E8A94E</code>, bordo <code>#AE4F16</code>, e depois dissolve para o ambiente com <em>dither</em> de 2 px — o mesmo <em>shader</em> de revelação que a §11 já pede para o corte de terra.</li>
-    <li><strong>Uma luz domina por ecrã.</strong> Se duas competem, o ecrã lê plano. Consequência de <em>design</em>, não só de arte: as tuas fogueiras têm de ser mais fracas do que a candeia à mesma distância — e o farol do §10 também: ilumina os seus 300 px com paragens próprias a metade da força (Q-078). O que faz da candeia o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing.</li>
+    <li><strong>Três paragens, nunca um gradiente.</strong> O Lume: Núcleo <code>#E9D5FF</code>, meio <code>#C084FC</code>, bordo <code>#8B5CF6</code>, e depois dissolve para o ambiente com <em>dither</em> de 2 px — o mesmo <em>shader</em> de revelação que a §11 já pede para o corte de terra. O teu fogo leva as mesmas três paragens em âmbar: <code>#F6D89B</code>, <code>#E8A94E</code>, <code>#AE4F16</code> <em>(ADR 0034)</em>.</li>
+    <li><strong>Uma luz domina por ecrã.</strong> Se duas competem, o ecrã lê plano. Consequência de <em>design</em>, não só de arte: as tuas fogueiras têm de ser mais fracas do que o Lume à mesma distância — e o farol do §10 também: ilumina os seus 300 px com paragens próprias a metade da força (Q-078). O que faz do Lume, roxo, ao fundo, o centro de composição de todas as noites, que é precisamente onde a §36 quer o GIF de marketing: a base dela a arder no horizonte e as tuas fogueirinhas âmbar a segurar a linha.</li>
     <li><strong>Nada tem contorno dentro do raio de luz.</strong> Perto da luz vê-se cor e volume; longe vê-se silhueta. Inverte-se a lógica de <em>sprite</em> habitual e é o que dá a sensação de pintura.</li>
   </ul>
 
@@ -5772,7 +5785,7 @@ Semana trinta e três, mesma ordem.</p>
       <tr><td>1:10</td><td>Um coelho passa. Um segundo vagabundo com arco mata-o. Cai 1 moeda.</td><td>Economia existe fora de ti</td><td>Observação. O jogador não fez nada.</td></tr>
       <tr><td>2:00</td><td>Sino de meio-dia. Uma estátua enterrada meio visível sob vegetação.</td><td>Há coisas escondidas</td><td>Curiosidade. Não é obrigatório.</td></tr>
       <tr><td>3:30</td><td>Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas</td><td>Construção</td><td>A silhueta é o convite. Não há botão "construir".</td></tr>
-      <tr><td class="mark">5:00</td><td>Crepúsculo. Aviso sonoro. A mancha aparece no horizonte à direita — <span class="mark">e traz uma luz. É a única coisa iluminada de lá até aqui.</span></td><td>A Podridão existe, vem aí, e não é uma sombra</td><td>Medo, com uma inversão. A coisa que te vem matar é a única que traz luz.</td></tr>
+      <tr><td class="mark">5:00</td><td>Crepúsculo. Aviso sonoro. A mancha aparece no horizonte à direita — <span class="mark">e lá atrás acende-se o Lume, roxo. É a única luz que não é tua (ADR 0034).</span></td><td>A Podridão existe, vem aí, e tem uma casa</td><td>Medo, e a primeira regra: a tua fogueira faz recuar o que ela manda.</td></tr>
       <tr><td>6:00</td><td>Noite 1: três Rastejantes. Os arqueiros matam-nos do muro.</td><td>A defesa funciona</td><td>Alívio. A noite 1 é ganha de certeza — está desenhada para isso.</td></tr>
       <tr><td>7:00</td><td>Amanhecer. Uma moeda no chão onde morreu um Rastejante.</td><td>Matar dá lucro</td><td>Recompensa física.</td></tr>
       <tr><td class="mark">7:15</td><td class="mark">Duas vozes cantam oito segundos. A câmara não se mexe. Não morreu ninguém.</td><td class="mark">Isto acontece todas as manhãs</td><td class="mark">Estranheza sem explicação. A canção está a chamar por quem está naquela árvore, e o jogador ainda não sabe que árvores têm nome.</td></tr>
@@ -5783,7 +5796,7 @@ Semana trinta e três, mesma ordem.</p>
       <tr><td class="mark">12:40</td><td class="mark">O Rastejante mata o vagabundo do minuto 0:20, fora do muro. Tu não chegas lá a tempo.</td><td class="mark">A morte é permanente e é de alguém</td><td class="mark">Perda. É a primeira, e o jogo escolheu-a com cuidado: é a única figura que o jogador já conhece.</td></tr>
       <tr><td class="mark">13:10</td><td class="mark">Alvorada. O corpo levanta-se como árvore. A cara na casca é a do chapéu. A canção toca outra vez, e desta vez o jogador percebe para que serve.</td><td class="mark">O que deixas lá fora fica lá fora, e cresce</td><td class="mark">Reconhecimento. Nada é dito. A árvore do minuto 0:00 acabou de mudar de significado, e o jogador vai olhar para ela.</td></tr>
       <tr><td class="mark">14:30</td><td class="mark">Na base do Amargueiro novo aparece a silhueta fantasma de corte: 6 moedas. É exatamente o que tens.</td><td class="mark">A escolha existe e é tua</td><td class="mark">Pressão, sem tempo limite. Cortar, consagrar ou deixar — e nenhuma das três é apresentada como a certa.</td></tr>
-      <tr><td class="mark">17:00</td><td class="mark">Crepúsculo do dia 3. A candeia chega mais perto do que ontem e uma frase acende-se junto a ela: <em>"Nada. Só quero ver."</em> Aparece um alguidar de barro no chão. Preço: 1 moeda.</td><td class="mark">Ela fala, e negoceia</td><td class="mark">A oferta mais barata do jogo, de propósito, e a única sem consequência má. Ensina o gesto por uma moeda.</td></tr>
+      <tr><td class="mark">17:00</td><td class="mark">Crepúsculo do dia 3. A mancha chega mais perto do que ontem e uma frase acende-se junto a ela: <em>"Nada. Só quero ver."</em> Aparece um alguidar de barro no chão. Preço: 1 moeda.</td><td class="mark">Ela fala, e negoceia</td><td class="mark">A oferta mais barata do jogo, de propósito, e a única sem consequência má. Ensina o gesto por uma moeda.</td></tr>
       <tr><td class="mark">18:00</td><td class="mark">Pagaste ou não pagaste. Se pagaste, um sítio distante acende-se no mapa. A noite 3 corre igual nos dois casos.</td><td class="mark">Fazer negócio funciona, e foi barato</td><td class="mark">Confiança — que é exatamente o que ela precisa de construir para a oferta do dia 9 valer alguma coisa.</td></tr>
       <tr><td class="mark">20:00</td><td class="mark">Dia 4. Um lanceiro que aguentou desde a primeira noite para um passo à frente dos outros na alvorada, e o império chama-lhe um nome.</td><td class="mark">Alguém está a contar</td><td class="mark">Orgulho, com um fio de aviso. A partir daqui há uma figura no ecrã que o jogador não quer perder.</td></tr>
     </tbody>

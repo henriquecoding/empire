@@ -81,6 +81,7 @@ src/sim/systems/retinue.gd  Retinue       quem espera no nucleo e quem segue o r
 src/sim/systems/discoveries.gd Discoveries o que so se sabe fazer depois de achar a estatua (§17, Q-016)
 src/sim/systems/torchlight.gd Torchlight  o archote do rei e o escuro da noite (Q-029)
 src/sim/systems/fire_zones.gd FireZones   fogueiras e barris abrandam a Podridao (§05, Q-029)
+src/sim/systems/light_ward.gd LightWard   as tuas luzes fazem recuar ou abrandar a noite (ADR 0034)
 src/sim/systems/class_system.gd ClassSystem a classe do rei: a aura e a evolucao (§08)
 src/sim/systems/coin_target.gd CoinTarget a quem serve uma moeda largada (§02, §55, Q-115)
 src/sim/systems/staffing.gd Staffing      quem esteve no posto na fase que acabou (§06, §52, Q-121)

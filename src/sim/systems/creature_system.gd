@@ -14,6 +14,8 @@ class_name CreatureSystem
 extends RefCounted
 
 const NENHUM := -1
+## So a superficie tem as tuas luzes (LightWard).
+const SUPERFICIE := int(Band.Kind.SURFACE)
 
 var ids: PackedInt32Array = PackedInt32Array()
 var data_ids: Array[StringName] = []
@@ -42,8 +44,15 @@ var cooldowns: PackedFloat32Array = PackedFloat32Array()
 var coin_drops: PackedInt32Array = PackedInt32Array()
 ## A obra de onde levou alguma coisa e ainda a leva (o Alado e as galinhas, Q-129).
 var loot_slots: PackedInt32Array = PackedInt32Array()
+## A massa de cada uma — o nivel dela, que diz se a tua luz a faz recuar (ADR 0034).
+var masses: PackedInt32Array = PackedInt32Array()
+## Segundos que ainda anda para tras, a fugir de uma luz tua.
+var recoils: PackedFloat32Array = PackedFloat32Array()
 
 var _por_id: Dictionary = {}
+## As luzes deste tick (LightWard). Com underscore: nao e coluna nem vai no save.
+var _luzes: Array[Vector4] = []
+var _recuo := 0.0
 
 
 func count() -> int:
@@ -83,6 +92,8 @@ func spawn(estado: GameState, dados: CreatureData, x: float, rumo: float) -> int
 	cooldowns.append(0.0)
 	coin_drops.append(dados.coin_drop)
 	loot_slots.append(NENHUM)
+	masses.append(dados.mass_cost)
+	recoils.append(0.0)
 	_por_id[creature_id] = ids.size() - 1
 	return creature_id
 
@@ -119,7 +130,23 @@ func tick_movement(delta: float) -> void:
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 		if engaged(i) or healths[i] <= 0:
 			continue
-		xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
+		var luz := (
+			LightWard.at(xs[i], masses[i], _luzes) if bands[i] == SUPERFICIE else Vector2.ZERO
+		)
+		if luz.x > 0.0 and recoils[i] <= 0.0:
+			recoils[i] = _recuo  # entrou numa luz que a aguenta: recua (ADR 0034)
+		if recoils[i] > 0.0:
+			recoils[i] = maxf(0.0, recoils[i] - delta)
+			xs[i] -= signf(goal_xs[i] - xs[i]) * speeds[i] * delta
+			continue
+		xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta * (1.0 - luz.y))
+
+
+## As tuas luzes de pe para o movimento deste tick, e quanto recua quem entra
+## numa que a aguenta (rot.csv, light_recoil_s). Quem chama e o NightWatch.
+func set_lights(zonas: Array[Vector4], recuo: float) -> void:
+	_luzes = zonas
+	_recuo = recuo
 
 
 ## O amanhecer (§51): a mancha recua e as criaturas vivas dissolvem-se. Devolve
@@ -142,6 +169,8 @@ func dissolve() -> PackedInt32Array:
 	cooldowns = PackedFloat32Array()
 	coin_drops = PackedInt32Array()
 	loot_slots = PackedInt32Array()
+	masses = PackedInt32Array()
+	recoils = PackedFloat32Array()
 	_por_id = {}
 	return levadas
 
@@ -160,6 +189,8 @@ func from_dict(d: Dictionary) -> void:
 	loot_slots.resize(ids.size())
 	for k in range(antes, ids.size()):
 		loot_slots[k] = NENHUM
+	masses.resize(ids.size())  # um save anterior a ADR 0034: ninguem recua
+	recoils.resize(ids.size())
 	_reindexar()
 
 
@@ -178,6 +209,8 @@ func _copiar(de: int, para: int) -> void:
 	cooldowns[para] = cooldowns[de]
 	coin_drops[para] = coin_drops[de]
 	loot_slots[para] = loot_slots[de]
+	masses[para] = masses[de]
+	recoils[para] = recoils[de]
 
 
 func _encolher() -> void:
@@ -196,6 +229,8 @@ func _encolher() -> void:
 	cooldowns.resize(n)
 	coin_drops.resize(n)
 	loot_slots.resize(n)
+	masses.resize(n)
+	recoils.resize(n)
 
 
 func _reindexar() -> void:

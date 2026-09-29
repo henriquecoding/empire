@@ -15,6 +15,7 @@ effect_params = {
 &"light_radius": 96.0,
 &"light_strength": 0.5,
 &"radius": 96.0,
+&"repel_mass": 8.0,
 &"rot_slow": 0.25,
 &"sells_torch": 1.0
 }
