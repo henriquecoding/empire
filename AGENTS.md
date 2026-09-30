@@ -185,6 +185,12 @@ src/world/wild_lands.gd     WildLands     o limiar e a terra de outro povo (§21
 src/world/wild_edge.gd      WildEdge      a borda do mundo: mar, falesia, desfiladeiro, muralha (Q-173)
 src/world/shape_art.gd      ShapeArt      formas lisas escritas como dados, e o interprete (Q-173)
 src/world/frontier_view.gd  FrontierView  a camara segue o mundo ja gerado (Q-173)
+src/world/soil_cover.gd     SoilCover     a terra por cima do subsolo, que se vai quando o rei desce (§11, Q-181)
+src/world/soil_reveal.gd    SoilReveal    quanto do subsolo se ve, e a matriz do dither_reveal (§11, §60, Q-181)
+src/world/lowland.gd        Lowland       a paisagem por cima do subsolo: os trocos e as plantas (§11, Q-181)
+src/world/lowland_layout.gd LowlandLayout os caminhos e os lagos dessa paisagem (§11, Q-181)
+src/world/lowland_art.gd    LowlandArt    essa paisagem, em pixeis (§11, §22, Q-181)
+src/world/passage_art.gd    PassageArt    a boca da passagem, e o poco quando o subsolo se ve (§11, Q-181)
 src/world/flora_art.gd      FloraArt      o que cresce, em pixeis
 src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
 src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds

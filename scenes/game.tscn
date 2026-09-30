@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://src/ui/journal_panel.gd" id="14_diario"]
 [ext_resource type="Script" path="res://src/world/fauna_view.gd" id="15_fauna"]
 [ext_resource type="Script" path="res://src/world/frontier_view.gd" id="16_fronteira"]
+[ext_resource type="Script" path="res://src/world/soil_cover.gd" id="17_terra"]
 
 [node name="Game" type="Node2D" groups=["jogo"]]
 script = ExtResource("0_game")
@@ -32,13 +33,16 @@ script = ExtResource("15_fauna")
 script = ExtResource("1_faixa")
 band = 0
 
-[node name="Superficie" type="Node2D" parent="Mundo"]
-script = ExtResource("1_faixa")
-band = 1
-
 [node name="Subsolo" type="Node2D" parent="Mundo"]
 script = ExtResource("1_faixa")
 band = 2
+
+[node name="Terra" type="Node2D" parent="Mundo"]
+script = ExtResource("17_terra")
+
+[node name="Superficie" type="Node2D" parent="Mundo"]
+script = ExtResource("1_faixa")
+band = 1
 
 [node name="Impactos" type="Node2D" parent="Mundo"]
 script = ExtResource("2_impacto")

@@ -70,6 +70,18 @@
   mostra essas terras desde o início, mas desabitadas.
 - **Decide:** tu.
 
+### Q-182 · O subsolo tapado: o que sobe de baixo, e a cavidade já achada
+- **Onde:** §11 (*«o jogador vê os dois planos ao mesmo tempo — que é o que torna a segunda camada uma tática»*;
+  *«uma cavidade não descoberta desenha-se como terra normal»*), §25 (12:00, *«um Rastejante entra pela passagem que
+  abriste»*), Q-181, ADR 0039; `SoilCover`.
+- **O que está:** o pedido da Q-181 manda o subsolo aparecer *«só ao acessar»*, e está assim. Com o rei à superfície,
+  quem está lá em baixo não se vê: nem o Cavador que vem pela passagem, nem uma tropa mandada descer. Só se vê quando
+  sobe.
+- **Proposta:** (1) quando uma criatura do subsolo chega a menos de um ecrã de uma boca aberta, a terra dessa boca
+  abre-se só à volta dela, com o mesmo dither — o aviso sem mostrar a cave toda; (2) a cavidade que o rei já visitou
+  fica com a boca aberta ao pé da passagem, e o resto tapado.
+- **Decide:** tu. As duas são reversíveis e só mexem no `SoilCover`.
+
 ## Abertas — do relatório Kingdom (29/09/2026)
 
 > As seis perguntas do `docs/recovery/ANALISE-KINGDOM-2026-09-29.md` (secção 9) que o *«aplique o relatório»* não
@@ -413,6 +425,27 @@
 - **Decide:** tu.
 
 ## Aplicadas do mundo contínuo — os pedidos do dono de 30/09/2026
+
+### Q-181 · Em baixo é só paisagem: o subsolo aparece ao descer
+- **Decidido pelo dono (30/09/2026), com uma captura das terras geradas:** *«O subsolo só fica aparente ao acessá-lo,
+  quero que tenha vegetação aparente sempre, ou lagos, caminhos, dentre outras coisas, mas o subsolo só aparece ao
+  acessar eles»*. Aplicado (ADR 0039).
+- **Onde:** §11 (*«em baixo é só paisagem»*; *«a terra dissolve-se com o shader de dither e revela o interior»*),
+  §60 (`dither_reveal`), §80 (o dither de 2 px), Q-150, Q-173. No código: `Lowland`, `LowlandLayout`, `LowlandArt`,
+  `SoilCover`, `SoilReveal`, `shaders/dither_reveal.gdshader`, `PassageArt` e `ImpactView`. O teste:
+  `tests/terra_de_cima_test.gd`.
+- **O que estava:** o corte de solo desenhava-se sempre aberto. Via-se a cave das raízes na região e o túnel de mina
+  nas terras geradas, com o rei lá em cima.
+- **O que foi feito:**
+  - **A terra.** Por cima do corte de solo há três faixas de erva que escurecem para a frente, caminhos que descem da
+    estrada, lagos com juncos e nenúfares, e as plantas do campo do bioma, com erva e pedra em todo o lado. É gerada
+    pela semente e presa ao sítio, e nas terras geradas passa de um povo para o outro como o chão delas.
+  - **Tapar e revelar.** Com o rei no subsolo a terra dissolve-se com o dither (0,45 s); com ele à superfície,
+    volta. O quadrado do dither está preso ao mundo.
+  - **A boca.** Com a terra por cima, a passagem é só a boca; aberta, é o poço até ao chão de baixo.
+  - O golpe e a orla de uma obra lá em baixo não piscam por cima da terra.
+- **Fica por fazer:** a arte (são sprites em código, como o campo) e a Q-182.
+- **Como desfazer:** tirar o nó `Terra` da `game.tscn`.
 
 ### Q-173 · O mundo contínuo: gerado ao andar, gravado, com trilhas entre os povos e uma borda no fim
 - **Decidido pelo dono (30/09/2026):** *«os personagens não devem caminhar sobre nada, o mapa deve ser gerado
