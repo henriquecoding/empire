@@ -12,3 +12,5 @@ camp_tree_px = 120.0
 citizen_cap = 3
 citizen_price = 2
 mercenary_camp_hires = 3
+arrows_per_coin = 12
+ammo_depot = &"bow_rack"

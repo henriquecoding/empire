@@ -29,6 +29,8 @@ var spirit: Spirit
 var wilds := WildSegments.new(SimFactory.segment_kit())
 ## A coroa no chao, recuperavel ate a alvorada (Q-167).
 var crown_drop := CrownDrop.new()
+## As aljavas das tropas, repostas a alvorada (Q-163).
+var supply := Supply.new()
 ## Quem o jogador pode assumir alem do rei (§08; Q-150, Q-162, Q-178).
 var roster := Roster.new(
 	SimFactory.by_id(&"classes"), SimFactory.by_id(&"units"), SimFactory.by_id(&"classes/storages")
@@ -73,6 +75,7 @@ func _init(
 	succession = Succession.new(curva.heir_training_days, curva.heir_cost_per_day)
 	if combate != null:
 		combate.guard = classes
+		combate.supply = supply
 	_combate = combate
 	_economia = economia
 	_moral = moral
@@ -190,6 +193,7 @@ func parts() -> Dictionary:
 		&"wilds": wilds,
 		&"roster": roster,
 		&"crown_drop": crown_drop,
+		&"supply": supply,
 	}
 
 

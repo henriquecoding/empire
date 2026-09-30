@@ -23,3 +23,8 @@ extends Resource
 @export var citizen_cap: int = 0
 @export var citizen_price: int = 0
 @export var mercenary_camp_hires: int = 0
+
+@export_group("Abastecimento do exercito — Q-163")
+## Quantas flechas se repoem por moeda na alvorada, e a obra que as faz.
+@export var arrows_per_coin: int = 0
+@export var ammo_depot: StringName = &""

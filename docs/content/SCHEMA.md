@@ -55,6 +55,7 @@ Script `src/sim/data/unit_data.gd` · layout `rows` · 27 linha(s) · §07 §08 
 | `tags` | Array[StringName] | v5.2 |  |
 | `job_affinity` | Dictionary | v5.2 |  |
 | `coin_capacity` | int | v5.2 |  |
+| `ammo` | int | v5.2 |  |
 | `trained_at` | StringName | v5.2 |  |
 | `train_days` | int | v5.2 |  |
 | `ability` | StringName | v5.2 |  |
@@ -424,7 +425,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §
 
 ## `rules.csv` → `data/economy/rules.tres`
 
-Script `src/sim/data/rules_curve.gd` · layout `kv` · 8 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 10 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -436,6 +437,8 @@ Script `src/sim/data/rules_curve.gd` · layout `kv` · 8 linha(s) · ADR 0041 �
 | `citizen_cap` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
 | `citizen_price` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
 | `mercenary_camp_hires` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `arrows_per_coin` | int | Abastecimento do exercito — Q-163 |  |
+| `ammo_depot` | StringName | Abastecimento do exercito — Q-163 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

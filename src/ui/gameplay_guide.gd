@@ -34,6 +34,9 @@ static func goal() -> String:
 		hunter = hunter or data.tags.has(&"hunter")
 	if not worker:
 		return _tr(&"GUIDE_WORKER")
+	var aljavas := SimLoop.field.supply.short(SimLoop.units, SimLoop.king_id) > 0
+	if aljavas and not Supply.depot(SimLoop.builds, RulesFactory.rules().ammo_depot):
+		return _tr(&"GUIDE_ARROWS")  # as flechas das tropas, a repor (Q-163)
 	for site in SimLoop.builds.slots:
 		if site.blocks and not site.mending and site.repair_cost() > 0:
 			return _tr(&"GUIDE_REPAIR")

@@ -104,6 +104,8 @@ func test_um_save_v4_sobe_com_o_rei_e_arbustos() -> void:
 	var mundo: Dictionary = d[&"world"]
 	assert_int(int(mundo[&"pilot"])).is_equal(UnitSystem.NENHUM)
 	assert_dict(mundo[&"roster"]).is_empty()
+	assert_dict(mundo[&"crown_drop"]).is_empty()  # a coroa na cabeca (Q-167)
+	assert_dict(mundo[&"supply"]).is_empty()  # as aljavas cheias (Q-163)
 	var migradas: Dictionary = mundo[&"hunting"][&"burrows"]
 	assert_array(Array(migradas[&"game"])).is_equal(["rabbit", "rabbit"])
 	assert_dict(mundo[&"hunting"][&"wounds"]).is_empty()

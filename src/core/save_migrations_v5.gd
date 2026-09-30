@@ -2,7 +2,8 @@
 # de 30/09/2026 (ADR 0041). Tirado do SaveMigrations para o passo caber inteiro.
 #
 # Tudo com o valor que reproduz o jogo antigo: conduz-se o rei, nenhuma classe chegou,
-# as tocas sao arbustos com coelhos (Q-150) e a coroa esta na cabeca do rei (Q-167).
+# as tocas sao arbustos com coelhos (Q-150), a coroa esta na cabeca do rei (Q-167) e as
+# aljavas estao cheias (Q-163).
 class_name SaveMigrationsV5
 extends RefCounted
 
@@ -19,6 +20,8 @@ static func apply(d: Dictionary) -> void:
 		mundo[&"roster"] = {}
 	if not mundo.has(&"crown_drop"):
 		mundo[&"crown_drop"] = {}  # a coroa na cabeca do rei (Q-167)
+	if not mundo.has(&"supply"):
+		mundo[&"supply"] = {}  # as aljavas cheias (Q-163)
 	var caca := _dict(mundo, &"hunting")
 	var tocas := _dict(caca, &"burrows")
 	if not tocas.is_empty() and not tocas.has(&"kinds"):

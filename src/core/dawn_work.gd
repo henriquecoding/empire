@@ -29,6 +29,7 @@ static func run(
 				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
 			else:
 				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
+	_abastecer(campo, unidades, obras, rei)  # as aljavas, depois do soldo (Q-163)
 	SpiritWatch.dawn(campo.spirit, dia, campo.upkeep.arrears())  # o soldo em atraso pesa (Q-102)
 	Camps.dawn(campo.camps, dia, unidades, estado, campo.spirit.level(dia))
 	Camps.mercenaries(campo.wilds.mercenaries(SimLoop.world_width), unidades, estado)  # Q-173
@@ -36,6 +37,24 @@ static func run(
 	campo.realm.dawn(dia, unidades, estado, rei, Vector2(nucleo.x, fork))  # Q-103
 	Assume.dawn(unidades, estado, rei, campo)  # a classe do povo conquistado chega (§13)
 	return rei
+
+
+## Q-163: com a banca do arco de pe (rules.csv, `ammo_depot`), as aljavas das tuas tropas
+## repoem-se do saco do rei, `arrows_per_coin` flechas por moeda, ate onde ele chegar.
+static func _abastecer(
+	campo: FieldWork, unidades: UnitSystem, obras: BuildSystem, rei: int
+) -> void:
+	var r := unidades.index_of(rei)
+	if r == UnitSystem.NENHUM or not unidades.alive(r):
+		return
+	var regras := RulesFactory.rules()
+	if not Supply.depot(obras, regras.ammo_depot):
+		return
+	var bolsa := unidades.carried_coins[r]
+	var gasto := campo.supply.restock(unidades, unidades.owners[r], bolsa, regras.arrows_per_coin)
+	if gasto > 0:
+		unidades.carried_coins[r] -= gasto
+		EventBus.queue(&"coin_spent", [gasto, &"arrows"])
 
 
 ## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce no castelo

@@ -51,6 +51,8 @@ var picker: TargetPicker
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
 ## Para onde foge quem larga a arma (Q-168): o nucleo. Escrito pelo FieldWork.
 var refuge := 0.0
+## As aljavas das tropas (Q-163): sem flechas nao se dispara. Sem ela, sem teto.
+var supply: Supply
 ## O que os titulos dao a quem os tem (§76, Q-102): unit_id -> {grant: valor}.
 var perks: Dictionary = {}
 
@@ -128,10 +130,14 @@ func _tropas_batem() -> void:
 		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
+		if supply != null and not supply.can_shoot(_u, i, dados):
+			continue  # a aljava vazia (Q-163): nao dispara, nem sorteia
 		var bonus: Dictionary = perks.get(unit_id, {})  # o titulo (Q-102)
 		_u.cooldowns[i] = (
 			dados.attack_interval * Posts.cadence(_postos, _u, i) / TitlePerks.rate(bonus)
 		)
+		if supply != null:
+			supply.shoot(_u, i, dados)
 		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
@@ -202,20 +208,9 @@ func _mortes_das_criaturas() -> void:
 		var c := _c.index_of(creature_id)
 		if _c.alive(c):
 			continue
-		(
-			_eventos
-			. append(
-				{
-					CHAVE: EV_MORTE,
-					DE: creature_id,
-					ONDE: _c.xs[c],
-					FAIXA: int(_c.bands[c]),
-					MOEDAS: _c.coin_drops[c],
-					CRIATURA: true,
-					QUEM: _c.data_ids[c],
-				}
-			)
-		)
+		var morte := {CHAVE: EV_MORTE, DE: creature_id, ONDE: _c.xs[c], FAIXA: int(_c.bands[c])}
+		morte.merge({MOEDAS: _c.coin_drops[c], CRIATURA: true, QUEM: _c.data_ids[c]})
+		_eventos.append(morte)
 		_c.remove(creature_id)
 
 
@@ -233,17 +228,8 @@ func _mortes_das_tropas() -> void:
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
 		_u.states[i] = UnitFsm.State.DEAD
 		picker.forget(unit_id)
-		(
-			_eventos
-			. append(
-				{
-					CHAVE: EV_MORTE,
-					DE: unit_id,
-					ONDE: _u.xs[i],
-					FAIXA: int(_u.bands[i]),
-					MOEDAS: _u.carried_coins[i],
-					LARGA: dados.drops_on_death if dados != null else [],
-					CRIATURA: false,
-				}
-			)
-		)
+		var morte := {CHAVE: EV_MORTE, DE: unit_id, ONDE: _u.xs[i], FAIXA: int(_u.bands[i])}
+		morte[MOEDAS] = _u.carried_coins[i]
+		morte[LARGA] = dados.drops_on_death if dados != null else []
+		morte[CRIATURA] = false
+		_eventos.append(morte)
