@@ -4,5 +4,5 @@ quiver,STORAGE_QUIVER,torch:1,back,2,Q-153; §08 o Arqueiro,holds|worn,"A aljava
 satchel,STORAGE_SATCHEL,torch:1,side,6,Q-153; §08 o Bardo,holds|worn,O alforge a tiracolo do Bardo.
 climbing_belt,STORAGE_CLIMBING_BELT,torch:3,hip,6,Q-153; §08 o Trepador,holds|worn,"O cinto de escalada: três archotes, mais um do que o rei, porque o Trepador é quem explora (§08, mobilidade)."
 knight_pack,STORAGE_KNIGHT_PACK,torch:2,back,6,Q-153; §08 o Cavaleiro Enterrado,holds|worn,A mochila de armadura.
-saddlebags,STORAGE_SADDLEBAGS,torch:4,saddle,6,Q-153; §08 o Cavaleiro Selado,holds|worn,"Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias."
+saddlebags,STORAGE_SADDLEBAGS,torch:4,saddle,1,Q-153; §08 o Cavaleiro Selado,holds|worn,"Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias. Q-169: também são os alforges do cavalo de tração, a primeira montaria — as 20 moedas vão no mounts.csv (saddlebag_coins), e os archotes aqui."
 dispatch_case,STORAGE_DISPATCH_CASE,torch:1,side,6,Q-153; §08 o Diplomata; §14,holds|worn,A pasta de tratados do Diplomata.

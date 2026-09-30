@@ -536,7 +536,10 @@ Script `src/sim/data/mount_data.gd` · layout `rows` · 6 linha(s) · §12 §44
 | `id` | StringName |  |  |
 | `display_key` | String |  |  |
 | `speed_multiplier` | float |  |  |
+| `run_multiplier` | float |  |  |
 | `coin_capacity_multiplier` | float |  |  |
+| `saddlebag_coins` | int |  |  |
+| `storage` | StringName |  |  |
 | `band` | Band.Kind |  |  |
 | `can_change_band` | bool |  |  |
 | `flies` | bool |  | libelula: ignora a faixa de superficie |

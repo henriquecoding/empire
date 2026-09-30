@@ -97,6 +97,18 @@ static func storage(unidades: UnitSystem, rei: int, campo: FieldWork) -> Storage
 	return campo.roster.storage_of(unidades, unidades.pilot)
 
 
+## Os alforges do cavalo vao com quem o monta (Q-169): o armazenamento dele prolonga-se
+## neles, e o de mais ninguem.
+static func saddle(unidades: UnitSystem, campo: FieldWork) -> void:
+	var monta := campo.mount.rider
+	var armazem: Storage = null
+	if monta == SimLoop.king_id:
+		armazem = campo.classes.storage
+	elif monta != UnitSystem.NENHUM:
+		armazem = campo.roster.storage_of(unidades, monta)
+	campo.mount.link(armazem)
+
+
 ## Se quem se conduz marca alvos com o gatilho direito: a classe dele tem o verbo
 ## mark_target (§24, Q-086). O rei marca pela classe dele (ClassSystem).
 static func marks(campo: FieldWork) -> bool:

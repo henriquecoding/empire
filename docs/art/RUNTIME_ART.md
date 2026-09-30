@@ -65,7 +65,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `embassy` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `heir_house` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `root_sanctuary` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `mount_stable` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `mount_stable` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `farm` | 1 | sim | procedural (`SettlementArt`) | por codigo |
 | `fishery` | 1 | sim | procedural (`SettlementArt`) | por codigo |
 | `henhouse` | 1 | sim | procedural (`SettlementArt`) | por codigo |

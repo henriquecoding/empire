@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 247 | 101 | 348 |
-| Fases 3–8 | 306 | 100 | 406 |
+| Fases 0–2 (fatia vertical) | 250 | 104 | 354 |
+| Fases 3–8 | 303 | 97 | 400 |
 | Total | 553 | 201 | 754 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 247
+## 1 · Fatia vertical — balanceamento — 250
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -75,6 +75,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `kitchen` | `max_health` | 80 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `cost` | 20 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `max_health` | 160 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `mount_stable` | `cost` | 20 | 1 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) Q-169: entra no jogo, a leste, no vão entre o sino e a bifurcação (src/world/stables.gd); a largura passa de 160 para 120, a da casa do herdeiro e do celeiro, porque é o que o vão da superfície deixa. |
+| buildings | `mount_stable` | `max_health` | 160 | 1 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) Q-169: entra no jogo, a leste, no vão entre o sino e a bifurcação (src/world/stables.gd); a largura passa de 160 para 120, a da casa do herdeiro e do celeiro, porque é o que o vão da superfície deixa. |
 | buildings | `farm` | `max_health` | 32 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `farm` | `variant_params` | yield_mult:0.75\|immune_to_rot_trail:1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `fishery` | `max_health` | 48 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura). spoil_per_day 1: o peixe que nenhuma Salga converte perde uma unidade por dia no pesqueiro (Q-012, decidida pelo dono a 28/09/2026); a Salga de pé acaba com o estrago (§06). |
@@ -116,6 +118,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | classes | `archer` | `troop` | archer | 2 | Resolve o desperdício de flechas do Kingdom (§07). |
 | storages | `royal_belt` | `holds` | torch:2 | 1 | O cinto do rei: a bolsa das moedas (§02) e os dois archotes do Q-029 — o teto que estava no rot.csv (torch_max) passou para aqui. A camada Equipments dos teus ficheiros desenha-o à cinta. |
 | storages | `quiver` | `holds` | torch:1 | 2 | A aljava às costas: um archote, porque o arqueiro vê de longe e não precisa de andar no escuro. |
+| storages | `saddlebags` | `holds` | torch:4 | 1 | Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias. Q-169: também são os alforges do cavalo de tração, a primeira montaria — as 20 moedas vão no mounts.csv (saddlebag_coins), e os archotes aqui. |
 | crafts | `grain_granary` | `cost` | 1 | 2 | +10% de vida máxima enquanto a conversão corre; duration 0 = recalculada a cada fase (§49). |
 | crafts | `grain_granary` | `magnitude` | 0.1 | 2 | +10% de vida máxima enquanto a conversão corre; duration 0 = recalculada a cada fase (§49). |
 | crafts | `grain_granary` | `duration` | 0 | 2 | +10% de vida máxima enquanto a conversão corre; duration 0 = recalculada a cada fase (§49). |
@@ -264,7 +267,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | parallax_layers | `closed_3` | `saturation_delta` | -0.03 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_4` | `saturation_delta` | -0.015 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 
-## 2 · Fatia vertical — apresentação e estrutura — 101
+## 2 · Fatia vertical — apresentação e estrutura — 104
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -309,6 +312,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `kitchen` | `job_slots` | 1 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `width_px` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `heir_house` | `shadow_width` | 120 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `mount_stable` | `width_px` | 120 | 1 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) Q-169: entra no jogo, a leste, no vão entre o sino e a bifurcação (src/world/stables.gd); a largura passa de 160 para 120, a da casa do herdeiro e do celeiro, porque é o que o vão da superfície deixa. |
+| buildings | `mount_stable` | `shadow_width` | 120 | 1 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) Q-169: entra no jogo, a leste, no vão entre o sino e a bifurcação (src/world/stables.gd); a largura passa de 160 para 120, a da casa do herdeiro e do celeiro, porque é o que o vão da superfície deixa. |
 | buildings | `farm` | `width_px` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `farm` | `shadow_width` | 96 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `farm` | `job_slots` | 1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
@@ -348,6 +353,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | peoples | `enramados` | `starting_units` | monarch\|squire\|vagrant | 1 | O povo da fatia vertical (§33). 'Madeira e caça' vira +25% na caça; arquétipo arqueiro porque dispara de cima. v6: a canção é a do §81; o marco cria raiz quando ficas com o povo (§78) — vira Amargueiro de 22 de massa e não se corta. |
 | storages | `royal_belt` | `worn` | hip | 1 | O cinto do rei: a bolsa das moedas (§02) e os dois archotes do Q-029 — o teto que estava no rot.csv (torch_max) passou para aqui. A camada Equipments dos teus ficheiros desenha-o à cinta. |
 | storages | `quiver` | `worn` | back | 2 | A aljava às costas: um archote, porque o arqueiro vê de longe e não precisa de andar no escuro. |
+| storages | `saddlebags` | `worn` | saddle | 1 | Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias. Q-169: também são os alforges do cavalo de tração, a primeira montaria — as 20 moedas vão no mounts.csv (saddlebag_coins), e os archotes aqui. |
 | biomes | `ancient_forest` | `creature_table` | crawler\|winged\|brute\|burrower\|slime_ram\|devourer | 1 | A §07 tem uma tabela única: todos os biomas usam-na até haver criaturas por bioma. Fechado (§11). 'water' é o lago do castelo-árvore. A borda do mundo depois da terra deste povo (Q-173, §21 Bordo): falésia. |
 | biomes | `ancient_forest` | `wildlife` | rabbit\|deer\|boar | 1 | A §07 tem uma tabela única: todos os biomas usam-na até haver criaturas por bioma. Fechado (§11). 'water' é o lago do castelo-árvore. A borda do mundo depois da terra deste povo (Q-173, §21 Bordo): falésia. |
 | segments | `enramados_start_base_01` | `subject` | castle_tree | 1 | 'Um por região, ao centro. É o teu castelo-árvore.' |
@@ -370,7 +376,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 
-## 3 · Fases 3 a 8 — 406
+## 3 · Fases 3 a 8 — 400
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -507,10 +513,6 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `root_sanctuary` | `max_health` | 200 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `root_sanctuary` | `width_px` | 120 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `root_sanctuary` | `shadow_width` | 120 | 6 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `mount_stable` | `cost` | 20 | 6 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `mount_stable` | `max_health` | 160 | 6 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `mount_stable` | `width_px` | 160 | 6 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `mount_stable` | `shadow_width` | 160 | 6 | Separado do estábulo de vaca (§06) até decisão — Q-009. As 30 moedas são o preço do cavalo (mounts.csv). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `cow_stable` | `max_health` | 112 | 6 | 'Ordenha manual — exige uma tropa parada' → job_slots 1, do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `cow_stable` | `width_px` | 160 | 6 | 'Ordenha manual — exige uma tropa parada' → job_slots 1, do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `cow_stable` | `shadow_width` | 160 | 6 | 'Ordenha manual — exige uma tropa parada' → job_slots 1, do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
@@ -623,8 +625,6 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | storages | `climbing_belt` | `worn` | hip | 6 | O cinto de escalada: três archotes, mais um do que o rei, porque o Trepador é quem explora (§08, mobilidade). |
 | storages | `knight_pack` | `holds` | torch:2 | 6 | A mochila de armadura. |
 | storages | `knight_pack` | `worn` | back | 6 | A mochila de armadura. |
-| storages | `saddlebags` | `holds` | torch:4 | 6 | Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias. |
-| storages | `saddlebags` | `worn` | saddle | 6 | Os alforges vão no cavalo, e o cavalo leva mais do que um homem. Se o cavalo morre (§08), o que fazem os alforges fica para quando houver montarias. |
 | storages | `dispatch_case` | `holds` | torch:1 | 6 | A pasta de tratados do Diplomata. |
 | storages | `dispatch_case` | `worn` | side | 6 | A pasta de tratados do Diplomata. |
 | crafts | `fish_saltery` | `cost` | 1 | 6 | '+50%, e o peixe deixa de estragar' — o estrago não tem regra no dossiê (Q-012). |

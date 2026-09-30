@@ -99,6 +99,7 @@ func _draw() -> void:
 	if band == Band.Kind.SURFACE:
 		HuntView.draw_on(self, _luz, _visual_time)
 	CrownView.draw_on(self, band, _luz, _visual_time)  # a coroa no chao (Q-167)
+	MountView.draw_on(self, band, _luz, _visual_time)  # o cavalo de tracao (Q-169)
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)

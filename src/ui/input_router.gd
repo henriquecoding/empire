@@ -110,9 +110,11 @@ func _process(delta: float) -> void:
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
-	# Correr (Q-149): enquanto a tecla esta premida, o rei anda ao king_run_mult.
+	# Correr (Q-149, Q-169): quem se conduz corre ao king_run_mult; montado, o cavalo anda
+	# e galopa aos dele.
 	var correr := Input.is_action_pressed(&"king_run")
-	SimLoop.units.piloted_pace = _curva_lida().king_run_mult if correr else 1.0
+	var a_pe := _curva_lida().king_run_mult
+	SimLoop.units.piloted_pace = SimLoop.field.mount.pace(Assume.driven(), correr, a_pe)
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
 	# E o tempo abranda, se o jogador nao o desligou (Q-034).
 	var roda := Input.is_action_pressed(&"king_wheel")

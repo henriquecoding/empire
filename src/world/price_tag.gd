@@ -80,6 +80,7 @@ static func _obras(
 		var falta := owed_by(vaga)
 		if falta <= 0 and SimLoop.field != null:
 			falta = SimLoop.field.training.owed(vaga, SimLoop.units)
+			falta = falta if falta > 0 else SimLoop.field.mount.owed(vaga)  # o cavalo (Q-169)
 		var madeira := SimLoop.night.amargueiros
 		var subir := vaga.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]
 		if falta <= 0 or (subir and not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira)):

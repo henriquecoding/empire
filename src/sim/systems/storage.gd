@@ -22,6 +22,9 @@ const ARCHOTE := &"torch"
 var kind: StringName = &""
 ## Onde se traz no corpo — a camada Equipments desenha-o ai.
 var worn: StringName = &""
+## Os alforges da montaria de quem o traz (Q-169): o que aqui nao cabe vai la, e o que
+## aqui falta tira-se de la. Nulo a pe.
+var spill: Storage
 
 var _tetos: Dictionary = {}  # StringName -> int
 var _itens: Dictionary = {}  # StringName -> int
@@ -32,33 +35,35 @@ func _init(dados: StorageData = null) -> void:
 		refit(dados)
 
 
-## Quantos `item` cabem aqui; zero se este armazenamento nao o leva.
+## Quantos `item` cabem aqui, alforges incluidos; zero se nao se leva.
 func cap(item: StringName) -> int:
-	return int(_tetos.get(item, 0))
+	return int(_tetos.get(item, 0)) + (spill.cap(item) if spill != null else 0)
 
 
 func count(item: StringName) -> int:
-	return int(_itens.get(item, 0))
+	return int(_itens.get(item, 0)) + (spill.count(item) if spill != null else 0)
 
 
 func room(item: StringName) -> int:
 	return maxi(0, cap(item) - count(item))
 
 
-## Guarda ate `quantos`; devolve quantos entraram.
+## Guarda ate `quantos`, aqui primeiro e o resto nos alforges; devolve quantos entraram.
 func put(item: StringName, quantos: int) -> int:
-	var entram := clampi(quantos, 0, room(item))
+	var aqui := int(_itens.get(item, 0))
+	var entram := clampi(quantos, 0, maxi(0, int(_tetos.get(item, 0)) - aqui))
 	if entram > 0:
-		_itens[item] = count(item) + entram
-	return entram
+		_itens[item] = aqui + entram
+	return entram + (spill.put(item, quantos - entram) if spill != null else 0)
 
 
-## Tira ate `quantos`; devolve quantos sairam.
+## Tira ate `quantos`, daqui primeiro; devolve quantos sairam.
 func take(item: StringName, quantos: int) -> int:
-	var saem := clampi(quantos, 0, count(item))
+	var aqui := int(_itens.get(item, 0))
+	var saem := clampi(quantos, 0, aqui)
 	if saem > 0:
-		_itens[item] = count(item) - saem
-	return saem
+		_itens[item] = aqui - saem
+	return saem + (spill.take(item, quantos - saem) if spill != null else 0)
 
 
 ## Os itens que este armazenamento leva, ordenados (§42).
@@ -66,6 +71,9 @@ func kinds() -> Array[StringName]:
 	var saida: Array[StringName] = []
 	for item in _tetos:
 		saida.append(item)
+	for item in spill.kinds() if spill != null else []:
+		if not item in saida:
+			saida.append(item)
 	saida.sort_custom(func(a: StringName, b: StringName) -> bool: return String(a) < String(b))
 	return saida
 
@@ -91,10 +99,10 @@ func refit(dados: StorageData) -> Dictionary:
 		_tetos[item] = int(dados.holds[item])
 	var caiu := {}
 	for item: StringName in _itens.keys():
-		var sobra := count(item) - cap(item)
+		var sobra := int(_itens[item]) - int(_tetos.get(item, 0))
 		if sobra > 0:
 			caiu[item] = sobra
-			_itens[item] = cap(item)
+			_itens[item] = int(_tetos.get(item, 0))
 	return caiu
 
 
@@ -107,5 +115,7 @@ func to_dict() -> Dictionary:
 func from_dict(d: Dictionary) -> void:
 	_itens = {}
 	var itens: Dictionary = d.get(&"items", {})
-	for item in itens:
-		put(StringName(item), int(itens[item]))
+	for item in itens:  # so aqui: os alforges guardam-se com a montaria (Q-169)
+		var fica := clampi(int(itens[item]), 0, int(_tetos.get(StringName(item), 0)))
+		if fica > 0:
+			_itens[StringName(item)] = fica

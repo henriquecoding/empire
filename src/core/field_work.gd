@@ -31,6 +31,11 @@ var wilds := WildSegments.new(SimFactory.segment_kit())
 var crown_drop := CrownDrop.new()
 ## As aljavas das tropas, repostas a alvorada (Q-163).
 var supply := Supply.new()
+## O cavalo de tracao e os alforges (Q-169).
+var mount := Mount.new(
+	Registry.entry(&"mounts", &"draft_horse") as MountData,
+	Registry.entry(&"classes/storages", &"saddlebags") as StorageData
+)
 ## Quem o jogador pode assumir alem do rei (§08; Q-150, Q-162, Q-178).
 var roster := Roster.new(
 	SimFactory.by_id(&"classes"), SimFactory.by_id(&"units"), SimFactory.by_id(&"classes/storages")
@@ -146,6 +151,11 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 ## conversao ja nao troca de modo com a moeda: escolhe-se (Q-115, Verbs).
 func absorb(moedas: CoinSystem, obras: BuildSystem, unidades: UnitSystem) -> void:
 	EventRelay.training(training.absorb(moedas, obras, unidades))
+	var cavalo := mount.absorb(moedas, obras)  # o cavalo, no estabulo (Q-169)
+	if cavalo > 0:
+		EventBus.queue(&"coin_spent", [cavalo, &"mount"])
+	mount.tick(unidades, Assume.driven(), obras)
+	Assume.saddle(unidades, self)  # os alforges vao com quem monta, save incluido
 	conversion.staff(obras)  # a capacidade pede o cozinheiro la dentro (Q-145)
 
 
@@ -194,6 +204,7 @@ func parts() -> Dictionary:
 		&"roster": roster,
 		&"crown_drop": crown_drop,
 		&"supply": supply,
+		&"mount": mount,
 	}
 
 
