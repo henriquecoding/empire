@@ -92,3 +92,18 @@ func test_um_save_de_agora_nao_muda_e_um_do_futuro_nao_se_toca() -> void:
 
 func test_o_save_grava_a_versao_de_agora() -> void:
 	assert_int(SaveService.SAVE_VERSION).is_equal(SaveMigrations.CURRENT)
+
+
+## v5 (ADR 0041): um save de antes das classes conduz o rei, e as tocas dele sao
+## arbustos com coelhos (Q-150).
+func test_um_save_v4_sobe_com_o_rei_e_arbustos() -> void:
+	var tocas := {&"xs": [1.0, 2.0], &"alive": PackedByteArray([1, 1])}
+	var v4 := {&"save_version": 4, &"state": {}, &"world": {&"hunting": {&"burrows": tocas}}}
+	var d := SaveMigrations.migrate(v4)
+	assert_int(int(d[&"save_version"])).is_equal(SaveMigrations.CURRENT)
+	var mundo: Dictionary = d[&"world"]
+	assert_int(int(mundo[&"pilot"])).is_equal(UnitSystem.NENHUM)
+	assert_dict(mundo[&"roster"]).is_empty()
+	var migradas: Dictionary = mundo[&"hunting"][&"burrows"]
+	assert_array(Array(migradas[&"game"])).is_equal(["rabbit", "rabbit"])
+	assert_dict(mundo[&"hunting"][&"wounds"]).is_empty()

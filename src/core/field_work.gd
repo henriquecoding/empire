@@ -55,6 +55,7 @@ func _init(
 	hunting = HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
 	)
+	hunting.wildlife = SimFactory.by_id(&"wildlife")  # o bicho de cada toca (Q-150)
 	training = SimFactory.training()
 	crown = SimFactory.crown()
 	conversion = SimFactory.conversion()

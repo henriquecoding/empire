@@ -15,9 +15,11 @@ class_name SaveMigrations
 extends RefCounted
 
 ## A versao que o jogo grava. Sobe com cada passo novo, no mesmo commit.
-const CURRENT := 4
+const CURRENT := 5
 ## A ultima versao de antes do mundo continuo (Q-173): o passo dela da as terras geradas.
 const ANTES_DO_MUNDO := 3
+## A ultima versao de antes das respostas do painel de 30/09/2026 (ADR 0041).
+const ANTES_DAS_CLASSES := 4
 
 
 ## Leva `dados` (a moldura inteira do save) ate CURRENT. Devolve o dicionario
@@ -33,6 +35,8 @@ static func migrate(dados: Dictionary) -> Dictionary:
 				_de_2_para_3(d)
 			ANTES_DO_MUNDO:
 				_de_3_para_4(d)
+			ANTES_DAS_CLASSES:
+				SaveMigrationsV5.apply(d)
 		versao += 1
 		d[&"save_version"] = versao
 	return d

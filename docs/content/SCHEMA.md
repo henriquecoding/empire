@@ -612,6 +612,7 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 3 linha(s) · §06 §
 | `shadow_width` | int |  |  |
 | `burrows_per_region` | int |  |  |
 | `burrow_wither_px` | float |  |  |
+| `sources` | Array[StringName] |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 

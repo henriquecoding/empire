@@ -18,3 +18,5 @@ extends Resource
 ## uma toca se perde (Q-106). Zero: este bicho nao sai de tocas.
 @export var burrows_per_region: int = 0
 @export var burrow_wither_px: float = 0.0
+## De onde sai (Q-150): &"bush" | &"hole" | &"rock" | &"tree" | &"lake".
+@export var sources: Array[StringName] = []
