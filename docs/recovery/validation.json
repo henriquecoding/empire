@@ -11,7 +11,7 @@
  "original_csv_unchanged": 29,
  "proposed_fields": 721,
  "proposed_phase_0_to_2": 335,
- "gdunit_discovered": 1092,
+ "gdunit_discovered": 1099,
  "gdunit_passed": 1045,
  "gdunit_skipped": 3,
  "gdunit_failures": 0,
@@ -35,7 +35,7 @@
  ],
  "clean_zip_extraction_check": "passed: run_tests.sh completo numa extracao limpa, sem cache do motor",
  "export_notes": "Linux release exportado e arrancado em headless (embed_pck=false): Empire.x86_64 + Empire.pck",
- "i18n_keys": 421,
+ "i18n_keys": 423,
  "i18n_placeholders": 0,
  "catalog_signals": 61,
  "event_bus_signals": 61
