@@ -6,7 +6,8 @@
 # dela do ganho e da perda, o preco e o do dia (ADR 0028: cresce com a producao) e
 # o impulso so pesa nas fases que faltam —, o ganho e o preco crescem ao mesmo
 # ritmo, e o retorno e o mesmo em qualquer dia. Medido no greybox de tres fontes,
-# fica abaixo do preco: a pergunta vai ao dono na Q-158.
+# a 4 moedas ficava abaixo do preco (0,83); o dono aprovou a descida para 3 (Q-158,
+# 30/09/2026), e passa a compensar.
 extends GdUnitTestSuite
 
 const SEMENTE := 20260926
@@ -59,15 +60,10 @@ func test_o_retorno_e_o_mesmo_em_qualquer_dia() -> void:
 	assert_float(_retorno(DIAS, 0.5)).is_less(referencia)
 
 
-# gdUnit4 le do_skip/skip_reason pela assinatura; o linter nao sabe disso.
-# gdlint: disable=unused-argument
 ## O §15 quer que um impulso possa valer a pena; P-M pedia que a Colheita Forcada
-## compensasse nalgum dia. Com as condicoes reais, no greybox de tres fontes, nao
-## compensa nunca: devolve menos do que custa.
-func test_a_colheita_forcada_compensa_nalgum_dia(
-	do_skip := true,
-	skip_reason := "Q-158: com o preco a crescer e a ganancia, devolve menos do que custa"
-) -> void:
+## compensasse nalgum dia. Com as condicoes reais, no greybox de tres fontes, a 4
+## moedas nao compensava nunca; a 3 (Q-158) devolve mais do que custa.
+func test_a_colheita_forcada_compensa_nalgum_dia() -> void:
 	var compensa := false
 	for d in range(1, DIAS + 1):
 		compensa = compensa or _retorno(d, 1.0) > 1.0
