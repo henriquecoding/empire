@@ -23,5 +23,6 @@ job_affinity = {
 &"wall": 1.0
 }
 coin_capacity = 11
+trained_at = &"bow_rack"
 weapon_kind = &"bow"
 head_pool = Array[StringName]([&"hood", &"cap", &"bare"])

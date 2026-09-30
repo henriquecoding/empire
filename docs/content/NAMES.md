@@ -77,6 +77,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `passage_seal` | `BUILDING_PASSAGE_SEAL` | Escora | Shoring |
 | `campfire` | `BUILDING_CAMPFIRE` | Fogueira | Campfire |
 | `tender_ward` | `BUILDING_TENDER_WARD` | Sino de Vigia | Warding Bell |
+| `bow_rack` | `BUILDING_BOW_RACK` | Banca do Arco | Bow Rack |
 
 ## walls
 

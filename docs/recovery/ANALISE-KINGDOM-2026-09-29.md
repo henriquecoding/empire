@@ -715,7 +715,7 @@ Por exemplo: `… · save: dia 3 · legado: sim`. O teste passa a ser:
 
 1. Abrir `/jogar/`, jogar até ao dia 2 e abrir a pausa de dia (grava). F5: a linha da boot diz `save: dia 2`.
 2. Esc → Recomeçar do zero → confirmar.
-3. F5. A linha da boot tem de dizer `save: nenhum` (ou `dia 1`, se o jogo novo já gravou ao perder o foco) e `legado: não`. Qualquer `dia ≥ 2` ou `legado: sim` quer dizer que o apagamento não persistiu.
+3. F5. A linha da boot tem de dizer `save: nenhum` (ou `dia 1`, se o jogo novo já gravou ao perder o foco) e `legado: nao` (sem acento, como o recibo do arranque o escreve). Qualquer `dia ≥ 2` ou `legado: sim` quer dizer que o apagamento não persistiu.
 
 O `tools/web/fumo.mjs` pode automatizar os três passos a ler a consola. Onde o browser não persiste o IndexedDB (algumas janelas privadas, cookies bloqueados), o `user://` não persiste (`OS.is_userfs_persistent()` é falso); o recomeço funciona na sessão e não há nada a apagar depois.
 

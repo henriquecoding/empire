@@ -95,7 +95,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 28 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 29 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -284,7 +284,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 9 linha(s) · §21 §4
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 121 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 125 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -395,6 +395,10 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 121 linha(s) · §06 §
 | `march_party_caps` | Dictionary | Coroa — o preco dos impulsos (Q-014) |  |
 | `march_min_party` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `march_nights` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_fortress_base` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_fortress_per_region` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_siege_per_unit` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `march_loss_chance` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `vassal_tribute` | Vector2i | Coroa — o preco dos impulsos (Q-014) |  |
 | `vassal_seeds` | Vector2i | Coroa — o preco dos impulsos (Q-014) |  |
 | `vassal_strength` | float | Coroa — o preco dos impulsos (Q-014) |  |

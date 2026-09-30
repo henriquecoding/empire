@@ -12,12 +12,17 @@
 # treino, herdeiro, soldo, impulso, conversao). A obra nao tem sinal de moeda: o
 # que ela absorveu le-se no fim de cada dia, pelo que as obras ja custaram — os
 # degraus levantados e o pago do degrau a meio — e entra como "obras".
+#
+# A ultima coluna e a gente que a moeda armou (K1 do relatorio Kingdom): quem saiu
+# de uma casa de oficio (`unit_promoted`) e os decretos da roda
+# (`royal_impulse_used`). E por ela que se ve o piloto passar dos tres arqueiros.
 class_name Contabilidade
 extends RefCounted
 
-const LINHA := "  %3d | %-40s | %-24s | %s"
+const LINHA := "  %3d | %-40s | %-24s | %-32s | %s"
 
-## dia -> {"largou": {origem: n}, "apanhou": {rei|outros: n}, "gastou": {porque: n}}
+## dia -> {"largou": {origem: n}, "apanhou": {rei|outros: n}, "gastou": {porque: n},
+## "gente": {oficio ou decreto: n}}
 static var dias: Dictionary = {}
 ## dia -> o que as obras tinham custado quando o dia comecou.
 static var _obras_no_inicio: Dictionary = {}
@@ -29,12 +34,14 @@ static func ligar() -> void:
 	EventBus.coin_dropped.connect(_largou)
 	EventBus.coin_collected.connect(_apanhou)
 	EventBus.coin_spent.connect(_gastou)
+	EventBus.unit_promoted.connect(_formou)
+	EventBus.royal_impulse_used.connect(_decretou)
 
 
 static func _dia() -> Dictionary:
 	var dia := SimLoop.state.day if SimLoop.state != null else 0
 	if not dias.has(dia):
-		dias[dia] = {"largou": {}, "apanhou": {}, "gastou": {}}
+		dias[dia] = {"largou": {}, "apanhou": {}, "gastou": {}, "gente": {}}
 		_obras_no_inicio[dia] = _nas_obras()
 	return dias[dia]
 
@@ -56,9 +63,17 @@ static func _gastou(quanto: int, porque: StringName) -> void:
 	_somar("gastou", String(porque), quanto)
 
 
-## Uma linha por dia: o que caiu por origem, quem apanhou, e os sorvedouros.
+static func _formou(_quem: int, _de: StringName, para: StringName) -> void:
+	_somar("gente", String(para), 1)
+
+
+static func _decretou(impulso: StringName) -> void:
+	_somar("gente", String(impulso), 1)
+
+
+## Uma linha por dia: o que caiu por origem, quem apanhou, os sorvedouros e a gente.
 static func imprimir() -> void:
-	print("\n  contas — dia | largadas por origem | apanhadas | gastas")
+	print("\n  contas — dia | largadas por origem | apanhadas | gastas | gente armada")
 	var ordem := dias.keys()
 	ordem.sort()
 	for k in ordem.size():
@@ -69,7 +84,10 @@ static func imprimir() -> void:
 		var obras := maxi(0, fim - int(_obras_no_inicio[dia]))
 		if obras > 0:
 			d["gastou"]["obras"] = obras
-		print(LINHA % [dia, _texto(d["largou"]), _texto(d["apanhou"]), _texto(d["gastou"])])
+		var colunas := [dia]
+		for g in [d["largou"], d["apanhou"], d["gastou"], d["gente"]]:
+			colunas.append(_texto(g))
+		print(LINHA % colunas)
 
 
 ## As moedas que as obras de pe ja absorveram: os degraus e o pago do seguinte.

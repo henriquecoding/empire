@@ -6,18 +6,20 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 210 | 93 | 303 |
-| Fases 3–8 | 272 | 98 | 370 |
-| Total | 482 | 191 | 673 |
+| Fases 0–2 (fatia vertical) | 215 | 96 | 311 |
+| Fases 3–8 | 276 | 98 | 374 |
+| Total | 491 | 194 | 685 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 210
+## 1 · Fatia vertical — balanceamento — 215
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
 | units | `vagrant` | `job_affinity` | farm:1.0\|milking:1.0\|cart:0.8 | 1 | Sem ataque: intervalo, precisão e alcance ficam no valor por omissão e não são lidos. coin_capacity 5 (Q-111, o dono a 29/09/2026): as tropas mais básicas guardam até 5 moedas e entregam-nas ao rei quando ele passa (Q-107). Escala 2, a de uma tropa (Q-097, o dono a 29/09/2026): o vagabundo pode ser convertido em tropa, por isso tem o tamanho dela e, na §74, rende como ela. |
-| units | `archer` | `job_affinity` | hunt:1.0\|wall:1.0\|tower:1.0\|farm:0.3 | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). |
+| units | `archer` | `job_affinity` | hunt:1.0\|wall:1.0\|tower:1.0\|farm:0.3 | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. |
+| units | `archer` | `trained_at` | bow_rack | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. |
+| units | `archer` | `train_days` | 0 | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. |
 | units | `spearman` | `job_affinity` | wall:1.0\|guard:0.8 | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. coin_capacity pela Q-111 (o dono a 29/09/2026): as tropas básicas guardam 5 moedas, as de combate um pouco mais — o que apanham entregam ao rei quando ele passa. |
 | units | `dragonfly` | `accuracy_open` | 1.0 | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
 | units | `dragonfly` | `targets_bands` | AERIAL\|SURFACE | 2 | move_speed 152 = 80 × 1,9 (a libélula-montaria da §12). Sem sombra de contacto: não toca o chão (§22). |
@@ -87,6 +89,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `tender_ward` | `cost` | 8 | 1 | O Sino de Vigia (Q-100, o dono a 29/09/2026: "uma construção que emita algo que impeça que ele avance, e esse recurso vai diminuindo conforme o poder da podridão se torna mais forte"): com carga, o Zelador não entra nos 200 px dele pelo lado de fora, e se lá estiver é empurrado para fora. Nasce cheio (6); cada alvorada perde 1 + 0,1 × dia; cada moeda largada nele dá 1 de carga, até ao teto. Destruído, repara-se como qualquer obra (Q-108). |
 | buildings | `tender_ward` | `max_health` | 60 | 1 | O Sino de Vigia (Q-100, o dono a 29/09/2026: "uma construção que emita algo que impeça que ele avance, e esse recurso vai diminuindo conforme o poder da podridão se torna mais forte"): com carga, o Zelador não entra nos 200 px dele pelo lado de fora, e se lá estiver é empurrado para fora. Nasce cheio (6); cada alvorada perde 1 + 0,1 × dia; cada moeda largada nele dá 1 de carga, até ao teto. Destruído, repara-se como qualquer obra (Q-108). |
 | buildings | `tender_ward` | `effect_params` | ward_radius:200\|ward_charge_max:6\|ward_per_coin:1\|ward_decay_base:1\|ward_decay_per_day:0.1 | 1 | O Sino de Vigia (Q-100, o dono a 29/09/2026: "uma construção que emita algo que impeça que ele avance, e esse recurso vai diminuindo conforme o poder da podridão se torna mais forte"): com carga, o Zelador não entra nos 200 px dele pelo lado de fora, e se lá estiver é empurrado para fora. Nasce cheio (6); cada alvorada perde 1 + 0,1 × dia; cada moeda largada nele dá 1 de carga, até ao teto. Destruído, repara-se como qualquer obra (Q-108). |
+| buildings | `bow_rack` | `cost` | 4 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `bow_rack` | `max_health` | 32 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `bow_rack` | `effect_params` | craft_cost:2 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | walls | `stakes` | `max_health_a` | 40 | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `stakes` | `guard_posts_b` | 1 | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `palisade` | `max_health_a` | 48 | 1 | O §10 diz 'Madeira reforçada / gelo'; nenhum dos seis povos é de gelo — Q-010. Caminho A = 50% da vida do B. |
@@ -227,14 +232,14 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | parallax_layers | `closed_3` | `saturation_delta` | -0.03 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_4` | `saturation_delta` | -0.015 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 
-## 2 · Fatia vertical — apresentação e estrutura — 93
+## 2 · Fatia vertical — apresentação e estrutura — 96
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
 | units | `vagrant` | `tags` | worker | 1 | Sem ataque: intervalo, precisão e alcance ficam no valor por omissão e não são lidos. coin_capacity 5 (Q-111, o dono a 29/09/2026): as tropas mais básicas guardam até 5 moedas e entregam-nas ao rei quando ele passa (Q-107). Escala 2, a de uma tropa (Q-097, o dono a 29/09/2026): o vagabundo pode ser convertido em tropa, por isso tem o tamanho dela e, na §74, rende como ela. |
 | units | `vagrant` | `head_pool` | bare\|hat_straw\|hair_black\|beard_red | 1 | Sem ataque: intervalo, precisão e alcance ficam no valor por omissão e não são lidos. coin_capacity 5 (Q-111, o dono a 29/09/2026): as tropas mais básicas guardam até 5 moedas e entregam-nas ao rei quando ele passa (Q-107). Escala 2, a de uma tropa (Q-097, o dono a 29/09/2026): o vagabundo pode ser convertido em tropa, por isso tem o tamanho dela e, na §74, rende como ela. |
-| units | `archer` | `tags` | ranged\|hunter | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). |
-| units | `archer` | `head_pool` | hood\|cap\|bare | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). |
+| units | `archer` | `tags` | ranged\|hunter | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. |
+| units | `archer` | `head_pool` | hood\|cap\|bare | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. |
 | units | `spearman` | `tags` | melee\|holds_line\|no_pursuit | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. coin_capacity pela Q-111 (o dono a 29/09/2026): as tropas básicas guardam 5 moedas, as de combate um pouco mais — o que apanham entregam ao rei quando ele passa. |
 | units | `spearman` | `head_pool` | helmet_round\|cap | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. coin_capacity pela Q-111 (o dono a 29/09/2026): as tropas básicas guardam 5 moedas, as de combate um pouco mais — o que apanham entregam ao rei quando ele passa. |
 | units | `spearman` | `layer_slots` | body\|head\|face\|weapon\|shield\|overlay | 1 | 'Segura a linha. Não persegue.' vira as tags holds_line e no_pursuit. coin_capacity pela Q-111 (o dono a 29/09/2026): as tropas básicas guardam 5 moedas, as de combate um pouco mais — o que apanham entregam ao rei quando ele passa. |
@@ -299,6 +304,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `tender_ward` | `build_work` | 16 | 1 | O Sino de Vigia (Q-100, o dono a 29/09/2026: "uma construção que emita algo que impeça que ele avance, e esse recurso vai diminuindo conforme o poder da podridão se torna mais forte"): com carga, o Zelador não entra nos 200 px dele pelo lado de fora, e se lá estiver é empurrado para fora. Nasce cheio (6); cada alvorada perde 1 + 0,1 × dia; cada moeda largada nele dá 1 de carga, até ao teto. Destruído, repara-se como qualquer obra (Q-108). |
 | buildings | `tender_ward` | `width_px` | 40 | 1 | O Sino de Vigia (Q-100, o dono a 29/09/2026: "uma construção que emita algo que impeça que ele avance, e esse recurso vai diminuindo conforme o poder da podridão se torna mais forte"): com carga, o Zelador não entra nos 200 px dele pelo lado de fora, e se lá estiver é empurrado para fora. Nasce cheio (6); cada alvorada perde 1 + 0,1 × dia; cada moeda largada nele dá 1 de carga, até ao teto. Destruído, repara-se como qualquer obra (Q-108). |
 | buildings | `tender_ward` | `shadow_width` | 40 | 1 | O Sino de Vigia (Q-100, o dono a 29/09/2026: "uma construção que emita algo que impeça que ele avance, e esse recurso vai diminuindo conforme o poder da podridão se torna mais forte"): com carga, o Zelador não entra nos 200 px dele pelo lado de fora, e se lá estiver é empurrado para fora. Nasce cheio (6); cada alvorada perde 1 + 0,1 × dia; cada moeda largada nele dá 1 de carga, até ao teto. Destruído, repara-se como qualquer obra (Q-108). |
+| buildings | `bow_rack` | `build_work` | 8 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `bow_rack` | `width_px` | 48 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `bow_rack` | `shadow_width` | 48 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | walls | `stakes` | `shadow_width` | 64 | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `stakes` | `material_by_people` | enramados:logs\|portuarios:stakes\|fenda:rock_shards\|horta:wattle\|fornalha:slag_chunks\|geada:ice_blocks\|paul:reed_bundles | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `palisade` | `shadow_width` | 64 | 1 | O §10 diz 'Madeira reforçada / gelo'; nenhum dos seis povos é de gelo — Q-010. Caminho A = 50% da vida do B. |
@@ -325,7 +333,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. |
 
-## 3 · Fases 3 a 8 — 370
+## 3 · Fases 3 a 8 — 374
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -643,7 +651,11 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `crossing_day` | `crossing_day` | 11 | 9 | Proposta (Q-135): a bifurcação abre a travessia para a região seguinte na manhã do dia 11 — depois de a partida viver as dez noites do §66 (o Cavador incluído). Antes disso, a bifurcação só diz em que dia abre. |
 | economy | `crossing_party_px` | `crossing_party_px` | 120 | 9 | Proposta (Q-135): quem é teu e está a esta distância do rei quando ele atravessa vai com ele. É o recruit_notice_px (120), a distância a que o jogo já diz que alguém pertence a um sítio. |
 | economy | `march_party_caps` | `march_party_caps` | builder:3\|ranged:4\|melee:3 | 9 | Proposta (Q-154): quem marcha tem teto por papel, como o barco do Kingdom: New Lands — 3 construtores, 4 arqueiros, 3 cavaleiros. O papel é a tag do units.csv (builder, ranged, melee). Quem não tem nenhuma destas não marcha. |
-| economy | `march_min_party` | `march_min_party` | 3 | 9 | Proposta: com menos de três, a marcha volta sem conquistar. |
+| economy | `march_min_party` | `march_min_party` | 3 | 9 | Proposta: com menos de três, a marcha não sai. Desde o cerco (Q-166), quem decide a conquista é a firmeza da fortaleza, e não quantos voltam. |
+| economy | `march_fortress_base` | `march_fortress_base` | 8 | 9 | Proposta (Q-166, o dono a 29/09/2026: «aplique o relatório»): a firmeza da fortaleza do primeiro povo do plano. Com 2 por cabeça, os três do mínimo tiram 6 e não chegam; quatro acabam-na numa marcha. |
+| economy | `march_fortress_per_region` | `march_fortress_per_region` | 4 | 9 | Proposta (Q-166): cada povo mais adiante no plano tem mais 4 de firmeza — o segundo 12, o terceiro 16. O §13 lê-a na muralha e nos defensores; até haver reis inimigos (o enemy_wall_bias do §15 está no greed_profiles.csv), é um número só. |
+| economy | `march_siege_per_unit` | `march_siege_per_unit` | 2 | 9 | Proposta (Q-166): quanto cada um que marcha tira à fortaleza por marcha. O que tira fica: a marcha seguinte começa onde esta parou. |
+| economy | `march_loss_chance` | `march_loss_chance` | 0.2 | 9 | Proposta (Q-166): a chance de cada um que marcha não voltar, sorteada no fluxo combat — a mesma semente dá as mesmas baixas. Numa marcha de cinco, perde-se um, em média. |
 | economy | `vassal_strength` | `vassal_strength` | 100 | 9 | Proposta (Q-103): a firmeza de um vassalo acabado de conquistar. |
 | economy | `vassal_erosion_per_mass` | `vassal_erosion_per_mass` | 0.02 | 9 | Proposta (Q-103): cada ponto de massa da noite tira 0,02 de firmeza a cada vassalo — com a noite a crescer depois da 10 (Q-151), um vassalo conquistado ao dia 11 aguenta umas duas semanas. |
 | economy | `spirit_levels` | `spirit_levels` | 35\|50\|65 | 9 | Proposta (Q-102): abatido abaixo de 35, a base 50, animado acima de 65. O ânimo é a base mais as memórias vivas (docs/recovery/PESQUISA-MORAL-2026-09-29.md). |

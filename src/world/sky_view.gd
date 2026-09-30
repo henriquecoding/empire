@@ -14,6 +14,10 @@
 # mesmo arco, da esquerda para a direita, como o varrimento do amanhecer: o sol
 # vem de onde a luz veio. As duracoes sao as do clock.csv — nada aqui sabe
 # quanto dura uma fase.
+#
+# A lua diz tambem a noite funda (Q-126; relatorio Kingdom, K8): na vespera nasce
+# cheia, e na propria noite vem vermelha, como a Lua de Sangue do Kingdom. A noite
+# funda nao e sorteio — o RotSystem sabe-a de vespera —, e o ceu passa a dize-la.
 class_name SkyView
 extends Node2D
 
@@ -26,6 +30,12 @@ const LUA_RAIO := 24.0
 ## Osso e nao branco: o §80 da a noite duas cores que nao sao terra, e nenhuma
 ## delas e a lua. Pintada com a luz da faixa, fica uma silhueta clara e quente.
 const LUA := Color(0.86, 0.82, 0.70)
+## A lua cheia da vespera e da noite funda, e a cor da noite funda: vermelho de
+## brasa, que a luz da faixa escurece como escurece o resto.
+const LUA_CHEIA := 1.4
+const LUA_FUNDA := Color(0.80, 0.30, 0.24)
+const RAIO := &"radius"
+const COR := &"color"
 const MEIA := 0.5
 
 @export var paint_sky := true
@@ -57,6 +67,16 @@ static func arc(t: float, largura: float) -> Vector2:
 	return Vector2(x, y)
 
 
+## A lua da noite do dia `dia`: cheia na vespera da noite funda, e cheia e vermelha
+## nela. Sem mancha (`rot` nulo) e a de sempre.
+static func moon(rot: RotSystem, dia: int) -> Dictionary:
+	if rot != null and rot.deep(dia):
+		return {RAIO: LUA_RAIO * LUA_CHEIA, COR: LUA_FUNDA}
+	if rot != null and rot.deep(dia + 1):
+		return {RAIO: LUA_RAIO * LUA_CHEIA, COR: LUA}
+	return {RAIO: LUA_RAIO, COR: LUA}
+
+
 func _process(_delta: float) -> void:
 	var camara := get_viewport().get_camera_2d()
 	if camara != null:
@@ -75,6 +95,8 @@ func _draw() -> void:
 	var onde := course(relogio.elapsed, _relogio.phase_durations)
 	var ponto := arc(onde.t, view_width)
 	if onde.moon:
-		draw_circle(ponto, LUA_RAIO, TerrainArt.paint(LUA, luz))
+		var noite := SimLoop.night
+		var lua := moon(noite.rot if noite != null else null, relogio.day)
+		draw_circle(ponto, lua[RAIO], TerrainArt.paint(lua[COR], luz))
 	else:
 		draw_circle(ponto, SOL_RAIO, TerrainArt.paint(TerrainArt.WINDOW, luz))

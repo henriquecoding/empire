@@ -6,8 +6,13 @@
 # levar o rei para a regiao seguinte: de dia, a partir do dia da marcha, o Verbo 2
 # la manda quem esta perto dele — ate ao teto de cada papel — conquistar o povo
 # seguinte do plano. Saem esta noite (§13: "o imperio fica desguarnecido"), e na
-# alvorada seguinte voltam. Com gente que chegue, o povo passa a vassalo: paga
+# alvorada seguinte voltam. Quando a fortaleza cai, o povo passa a vassalo: paga
 # tributo todos os dias (§13: 4–6 moedas) e da as Sementes da conquista.
+#
+# O cerco (Q-166; relatorio Kingdom, K6): cada marcha tira a fortaleza a firmeza dos
+# que foram, e ela nao volta; a fortaleza cai quando a conta chega a zero. Nem todos
+# voltam — um sorteio por cabeca no fluxo combat, e a mesma semente da as mesmas
+# baixas. Quem fica no campo nao volta as colunas, e o TitleSystem chora-o.
 #
 # Este ficheiro e a cola: le o SimLoop e os dados, e escreve nos dois sistemas
 # puros (March, VassalSystem).
@@ -39,24 +44,40 @@ func refusal(unidades: UnitSystem, rei: int, estado: GameState) -> StringName:
 		return &"MARCH_AWAY"
 	if next_target(estado) == March.NENHUM:
 		return &"MARCH_NOBODY_LEFT"
-	var curva := SimFactory.curve()
-	var quem := March.who(
-		unidades, SimFactory.by_id(&"units"), rei, curva.crossing_party_px, curva.march_party_caps
-	)
-	if quem.size() < curva.march_min_party:
+	if _quem(unidades, rei).size() < SimFactory.curve().march_min_party:
 		return &"MARCH_TOO_FEW"
 	return &""
+
+
+## O povo da fortaleza seguinte, ou &"" quando ja todos te pagam.
+func next_people(estado: GameState) -> StringName:
+	var alvo := next_target(estado)
+	return _povo(estado.chapters.regions[alvo]) if alvo != March.NENHUM else &""
+
+
+## O reconhecimento (§13): Vector2i(a firmeza que sobra, a inteira) da fortaleza da
+## proxima marcha; zeros quando ja nao ha quem conquistar.
+func scouted(estado: GameState) -> Vector2i:
+	var alvo := next_target(estado)
+	if alvo == March.NENHUM:
+		return Vector2i.ZERO
+	var curva := SimFactory.curve()
+	var base := curva.march_fortress_base
+	var por := curva.march_fortress_per_region
+	return Vector2i(march.firmness(alvo, base, por), March.fortress(alvo, base, por))
+
+
+## Quanto a marcha tiraria a fortaleza se saisse agora.
+func blow(unidades: UnitSystem, rei: int) -> int:
+	return _quem(unidades, rei).size() * SimFactory.curve().march_siege_per_unit
 
 
 ## O Verbo 2 na bifurcacao, com ela aberta: a marcha sai. Verdadeiro se saiu.
 func send(unidades: UnitSystem, rei: int, estado: GameState, dia: int) -> bool:
 	if not refusal(unidades, rei, estado).is_empty():
 		return false
-	var curva := SimFactory.curve()
-	var perfis := SimFactory.by_id(&"units")
-	var quem := March.who(unidades, perfis, rei, curva.crossing_party_px, curva.march_party_caps)
 	var alvo := next_target(estado)
-	march.start(unidades, quem, alvo, dia, curva.march_nights)
+	march.start(unidades, _quem(unidades, rei), alvo, dia, SimFactory.curve().march_nights)
 	EventBus.queue(&"segment_entered", [StringName(estado.chapters.regions[alvo]), &"march"])
 	return true
 
@@ -82,9 +103,13 @@ func dawn(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: Vec
 
 func _voltar(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: float) -> void:
 	var alvo := march.target
-	var voltam := march.finish()
+	var foram := march.finish()
+	var curva := SimFactory.curve()
+	var sorteios := PackedFloat32Array()
+	for _linha in foram:  # um por cabeca, pela ordem em que foram (por id, §42)
+		sorteios.append(RngService.unit_float(&"combat"))
 	var r := unidades.index_of(rei)
-	for linha in voltam:
+	for linha in March.survivors(foram, sorteios, curva.march_loss_chance):
 		var i := unidades.restore(linha)  # a mesma tropa: vida, moedas e nome (Q-146)
 		unidades.xs[i] = onde
 		unidades.target_xs[i] = onde
@@ -95,10 +120,14 @@ func _voltar(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: 
 			unidades.owners[i] = unidades.owners[r]
 		var sinal := [unidades.ids[i], unidades.data_ids[i], onde, int(Band.Kind.SURFACE)]
 		EventBus.queue(&"unit_spawned", sinal)
-	var curva := SimFactory.curve()
-	if voltam.size() < curva.march_min_party or alvo < 0:
+	if alvo < 0:
 		return
+	march.siege(alvo, foram.size() * curva.march_siege_per_unit)
+	if march.firmness(alvo, curva.march_fortress_base, curva.march_fortress_per_region) > 0:
+		return  # a fortaleza aguenta: a proxima marcha comeca onde esta parou
+	march.sieges.erase(alvo)  # se a mancha comer o vassalo, reconquista-se do principio
 	var povo := _povo(estado.chapters.regions[alvo])
+	EventBus.queue(&"fortress_conquered", [alvo, povo])
 	var tributo := RngService.int_range(&"economy", curva.vassal_tribute.x, curva.vassal_tribute.y)
 	vassals.add(povo, tributo, curva.vassal_strength, dia)
 	if not estado.conquests.has(String(povo)):
@@ -111,6 +140,12 @@ func _voltar(dia: int, unidades: UnitSystem, estado: GameState, rei: int, onde: 
 	if next_target(estado) == March.NENHUM:  # todos te pagam: o fim da campanha (§79)
 		estado.crossed = true
 		EventBus.queue(&"segment_entered", [&"", TODOS])
+
+
+func _quem(unidades: UnitSystem, rei: int) -> PackedInt32Array:
+	var curva := SimFactory.curve()
+	var perfis := SimFactory.by_id(&"units")
+	return March.who(unidades, perfis, rei, curva.crossing_party_px, curva.march_party_caps)
 
 
 static func _povo(bioma: String) -> StringName:

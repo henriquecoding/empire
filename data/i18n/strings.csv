@@ -670,9 +670,9 @@ UI_CAMPAIGN_END,Fim da campanha · {epilogue},End of the Campaign · {epilogue},
 GUIDE_CROSS,"A MARCHA PODE SAIR
 Na bifurcação a leste, manda os teus conquistar o povo seguinte","THE MARCH CAN LEAVE
 At the fork to the east, send your people to conquer the next folk",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-103 (ADR 0035)"
-CONTEXT_CROSS,"BIFURCAÇÃO · {assume} mandar a marcha
-Vão os teus que estão perto; tu ficas no reino","FORK · {assume} send the march
-Your people nearby go; you stay in the kingdom",guia contextual de jogo: a marcha (§13),160,"Q-146, Q-154 (ADR 0035)"
+CONTEXT_CROSS,"BIFURCAÇÃO · {assume} mandar os teus que estão perto; tu ficas
+{people}: fortaleza a {left}/{full}, esta marcha tira {hit}","FORK · {assume} send your people nearby; you stay
+{people}: fortress at {left}/{full}, this march takes {hit}",guia contextual de jogo: a marcha e o reconhecimento da fortaleza (§13),160,"Q-146, Q-154 (ADR 0035); Q-166: o reconhecimento do §13 — a firmeza que sobra à fortaleza seguinte e o que os que estão perto lhe tiram"
 CONTEXT_CROSS_LOCKED,"BIFURCAÇÃO · a marcha sai no dia {day}
 Aguenta até lá","FORK · the march leaves on day {day}
 Hold out until then",guia contextual de jogo: a marcha (§13),160,Q-146 (ADR 0035)
@@ -693,3 +693,9 @@ VARIANT_FARM_A,renda,yield,variante do canteiro (Q-136),24,AUD-05
 VARIANT_FARM_B,"resguardo (o rasto não o para, rende 75%)","sheltered (the trail spares it, 75% yield)",variante do canteiro (Q-136),48,AUD-05
 UI_LEGACY_FAILED,O que fica não se gravou: os saves desta partida continuam onde estavam,What remains could not be saved: this run's saves are still where they were,fim da partida: o legado não se escreveu (CONT-01),96,CONT-01
 UI_CROSSING_MEMORY,"Levas a dívida ({debt}), {peoples} povos na memória e {heir} dias de treino do herdeiro; as obras ficam","You carry the debt ({debt}), {peoples} peoples in memory and {heir} days of heir training; the buildings stay",travessia (P-K): o que a campanha leva (Q-143),112,CONT-02
+UI_FRESH_START,Recomeçar do zero…,Start Over…,pausa: apaga os saves e o legado; as opções ficam (Q-164),24,Q-164
+UI_FRESH_START_ASK,Recomeçar do zero apaga esta partida (dia {day}) e o legado — {seeds} Sementes Reais e {found} segredos. As opções ficam como estão.,Starting over erases this run (day {day}) and the legacy — {seeds} Royal Seeds and {found} secrets. Your options stay as they are.,pausa: a pergunta antes de apagar (Q-164),160,Q-164
+UI_FRESH_START_CONFIRM,Apagar tudo e recomeçar,Erase Everything and Start Over,pausa: confirmar o recomeço do zero (Q-164),32,Q-164
+UI_CANCEL,Cancelar,Cancel,pausa: voltar sem apagar (Q-164),16,Q-164
+UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada foi apagado nem recomeçou.,Could not erase everything: nothing was erased or restarted.,pausa: o recomeço do zero falhou e voltou tudo ao sítio (Q-164),72,Q-164
+BUILDING_BOW_RACK,Banca do Arco,Bow Rack,nome de conteúdo — building (Q-165),24,Q-165

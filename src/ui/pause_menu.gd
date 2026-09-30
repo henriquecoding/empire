@@ -39,6 +39,8 @@ var _titulo: Label
 var _opcoes: OptionsPanel
 var _retomar: Button
 var _novo: Button
+## Recomecar do zero, em qualquer dos tres estados do ecra (Q-164).
+var _zero: FreshStartPanel
 var _perdido := false
 ## O rei caiu com herdeiro pronto: continuar, ou deixar a coroa cair (Q-146).
 var _herdeiro := false
@@ -65,6 +67,9 @@ func _ready() -> void:
 	caixa.add_child(_opcoes)
 	_retomar = _botao(caixa, _ao_retomar)
 	_novo = _botao(caixa, _ao_recomecar)
+	_zero = FreshStartPanel.new(_fechar)
+	_zero.add_theme_constant_override("separation", MOLDURA.entre)
+	caixa.add_child(_zero)
 	_escrever()
 	hide()
 	EventBus.game_paused.connect(_na_pausa)
@@ -87,6 +92,7 @@ func open(perdido: bool) -> void:
 	_retomar.visible = not perdido
 	_novo.visible = perdido or _herdeiro
 	_opcoes.refresh()
+	_zero.close()
 	_escrever()
 	show()
 	(_novo if perdido else _retomar).grab_focus()

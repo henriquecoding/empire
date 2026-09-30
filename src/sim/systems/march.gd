@@ -12,7 +12,13 @@
 # inteira, Columns.row) e na alvorada em que a marcha acaba voltam iguais: com a
 # vida, as moedas e o id que o nome deles conhece.
 #
-# Puro: recebe as tropas, os perfis e os numeros.
+# O cerco (Q-166; relatorio Kingdom, K6): cada povo do plano tem uma fortaleza, mais
+# firme quanto mais adiante. Cada marcha tira-lhe firmeza pelos que foram, e essa
+# firmeza nao volta — o portal do Kingdom nao regenera vida. Cai quando a conta chega
+# a zero. Nem todos voltam: quem tira no sorteio (fluxo combat, no Realm) menos do
+# que a chance de baixa fica no campo.
+#
+# Puro: recebe as tropas, os perfis, os numeros e os sorteios.
 class_name March
 extends RefCounted
 
@@ -26,6 +32,8 @@ var away: Dictionary = {}
 var target: int = NENHUM
 ## O dia em cuja alvorada a marcha volta.
 var returns: int = 0
+## A firmeza ja tirada a cada fortaleza: regiao (indice no plano) -> quanto.
+var sieges: Dictionary = {}
 
 
 func marching() -> bool:
@@ -90,6 +98,33 @@ func finish() -> Array[Dictionary]:
 	return voltam
 
 
+## A firmeza inteira da fortaleza da regiao `regiao` (a 1 e o primeiro povo).
+static func fortress(regiao: int, base: int, por_regiao: int) -> int:
+	return base + por_regiao * maxi(0, regiao - 1)
+
+
+## A firmeza que ainda sobra a fortaleza da regiao, nunca abaixo de zero.
+func firmness(regiao: int, base: int, por_regiao: int) -> int:
+	return maxi(0, fortress(regiao, base, por_regiao) - int(sieges.get(regiao, 0)))
+
+
+## Uma marcha acabou de bater na fortaleza: o dano fica para a seguinte.
+func siege(regiao: int, dano: int) -> void:
+	sieges[regiao] = int(sieges.get(regiao, 0)) + maxi(0, dano)
+
+
+## Quem volta: os que tiraram no sorteio (um por linha, pela ordem de `foram`) pelo
+## menos a chance de baixa.
+static func survivors(
+	foram: Array[Dictionary], sorteios: PackedFloat32Array, chance: float
+) -> Array[Dictionary]:
+	var voltam: Array[Dictionary] = []
+	for k in foram.size():
+		if k >= sorteios.size() or sorteios[k] >= chance:
+			voltam.append(foram[k])
+	return voltam
+
+
 static func _papel(perfil: UnitData, tetos: Dictionary) -> StringName:
 	if perfil == null:
 		return &""
@@ -100,7 +135,7 @@ static func _papel(perfil: UnitData, tetos: Dictionary) -> StringName:
 
 
 func to_dict() -> Dictionary:
-	return {&"party": party, &"target": target, &"returns": returns}
+	return {&"party": party, &"target": target, &"returns": returns, &"sieges": sieges.duplicate()}
 
 
 func from_dict(d: Dictionary) -> void:
@@ -112,3 +147,8 @@ func from_dict(d: Dictionary) -> void:
 			away[int(linha.get(&"ids", NENHUM))] = true
 	target = int(d.get(&"target", NENHUM))
 	returns = int(d.get(&"returns", 0))
+	sieges = {}
+	var cercos: Variant = d.get(&"sieges", {})  # um save de antes do cerco nao o tem
+	if cercos is Dictionary:
+		for regiao: Variant in cercos:
+			sieges[int(regiao)] = int(cercos[regiao])

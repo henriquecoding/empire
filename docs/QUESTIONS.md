@@ -7,6 +7,63 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Abertas — do relatório Kingdom (29/09/2026)
+
+> As seis perguntas do `docs/recovery/ANALISE-KINGDOM-2026-09-29.md` (secção 9) que o *«aplique o relatório»* não
+> fechou: cada uma muda uma decisão tua, pede uma medição antes, ou esbarrou em alguma coisa ao aplicar (ADR 0037). As
+> outras três estão aplicadas: Q-164, Q-165 e Q-166, em *"Aplicadas do relatório Kingdom"*.
+
+### Q-167 · A coroa no chão, recuperável até à alvorada (era a Q-B do relatório)
+- **Onde:** §02 (*«as moedas caem no chão... os inimigos roubam-nas»*), §16 (ressurreição até ao amanhecer), §74,
+  ADR 0034, Q-114 (o escudo do escudeiro); `combat_system.gd`, `class_system.gd`, `squire.gd`.
+- **O que está:** a moeda já compra proteção ao rei pelo escudo do escudeiro (5 moedas, 5 golpes fracos ou 2 fortes).
+  A derrota continua binária: o rei a 0 passa ao herdeiro ou acaba.
+- **Proposta:** medir primeiro quanto o escudo segura numa partida pilotada. Se faltar tensão, a coroa cai quando o rei
+  cai e recupera-se até à alvorada, se nenhuma criatura a apanhar; na mancha, alimenta o Lume. Não acrescentar uma
+  segunda camada de moedas-armadura no saco, que duplicaria o escudeiro.
+- **Por medir:** o piloto da vistoria ainda não arma o escudeiro e cai ao dia 4 (CONT-05); a medição espera por um
+  piloto que chegue lá.
+- **Decide:** tu.
+
+### Q-168 · A tropa armada que cai larga a arma antes de morrer (era a Q-C)
+- **Onde:** §16, §50 (*«toda a morte larga»*), §74; `weapon_dropped` (§46).
+- **Proposta:** a 0 de vida, quem tem arma larga-a e foge como trabalhador; só morre quem cai sem arma. Dependia da
+  banca do arco, que já está aplicada (Q-165).
+- **Decide:** tu (é uma decisão de tom).
+
+### Q-169 · Fôlego para correr, e o cavalo de tração como primeira montaria (era a Q-D)
+- **Onde:** Q-149, §12, §02 (o cavalo de tração justifica os preços acima de 33).
+- **Proposta:** correr gasta fôlego, que volta com o rei parado; o cavalo de tração (1,7×, saco a dobrar) é a primeira
+  montaria.
+- **Porque não se aplicou:** muda a tua resposta da Q-149 (correr a 1,8 vezes, sem limite).
+- **Decide:** tu.
+
+### Q-170 · O acampamento perde-se quando o reino cresce por cima dele (era a Q-E)
+- **Onde:** Q-110, Q-122; `greybox.gd` (`ACAMPAMENTOS_X`), `camps.gd`.
+- **Proposta:** uma muralha levantada além do acampamento, ou o Amargueiro ao lado abatido, acaba com ele; as ruínas
+  aceitam uma casa de cidadãos (teto 3, recrutas mais caros).
+- **Porque não se aplicou:** muda as tuas respostas das Q-110 e Q-122 sobre de onde vem gente nova, e acrescenta uma
+  obra com números novos.
+- **Decide:** tu.
+
+### Q-171 · Alicerces: o que o decay leva deixa marca (era a Q-G)
+- **Onde:** §16, Q-134, Q-108; `legacy.gd` (`kept`), `repair_work.gd`.
+- **Proposta:** as obras que o decay não guarda ficam em ruína com degrau, caminho e variante, e reerguem-se a uma
+  fração do investido (`decay_rebuild_frac`).
+- **O que se aprendeu ao aplicar:** a ruína que já existe (Q-108) não serve tal e qual. Repará-la custa o degrau em que
+  estava, o que já é uma fração, mas pede construtores — e os construtores saem da Casa de Treino, que pode ser uma das
+  ruínas: o jogo novo ficava sem maneira de a levantar. O alicerce tem de se reerguer como obra nova, com quem estiver
+  no sítio, e aí precisa do número novo.
+- **Decide:** tu.
+
+### Q-172 · Estações e um inverno (era a Q-H)
+- **Onde:** §02 (a tabela do Two Crowns: estação de 16 dias), §05, `rot.csv` (`peak_every`).
+- **O que já foi feito:** a primeira metade da proposta, que é só apresentação: a lua do `SkyView` nasce cheia na
+  véspera da noite funda e vem vermelha nela (`tests/lua_do_pico_test.gd`).
+- **Proposta:** se quiseres uma pressão de longo prazo, estações com um inverno que para os canteiros e baixa a caça. É
+  mecânica nova: o dossiê só cita estações no §02.
+- **Decide:** tu.
+
 ## Abertas — abertas pelas respostas do painel (29/09/2026)
 
 ### Q-157 · A noite fica exponencialmente mais difícil — a partir de que noite?
@@ -49,7 +106,9 @@
   marcha ganha sempre que leva três ou mais: o preço é a noite sem eles. As classes jogáveis a ir para longe (a tua
   frase) esperam por trocar de classe (§08), que ainda não existe: por agora vai quem é teu.
 - **Proposta:** fica assim. Se a conquista deve poder falhar (e quantos voltam), é a parte a decidir a seguir.
-- **Decide:** tu.
+- **Fechada pela Q-166 (29/09/2026):** *«aplique o relatório»* — o relatório Kingdom (K6) propôs o cerco, e ficou
+  aplicado: a marcha continua no lugar da travessia, e agora pode precisar de mais do que uma ida, e quem vai pode não
+  voltar.
 
 ### Q-160 · O prato das ofertas: de que largura? (a Q-098, em palavras simples)
 - **Onde:** §75; `offer_plate_px` em `rot.csv`.
@@ -289,6 +348,67 @@
 - **Em aberto:** as carroças do §06 (a matéria não se transporta hoje: a casa consome à distância); se trocar
   de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
 - **Decide:** tu.
+
+## Aplicadas do relatório Kingdom — «aplique o relatório» (o dono, 29/09/2026)
+
+> O relatório `docs/recovery/ANALISE-KINGDOM-2026-09-29.md` trouxe nove perguntas, Q-A a Q-I. O dono respondeu
+> *«aplique o relatório»*, e aplicou-se o roteiro nas prioridades P0 e P1 (ADR 0037): estas três. São reversíveis como
+> as outras. As seis que ficaram estão nas Q-167 a Q-172.
+
+### Q-164 · Recomeçar do zero pela pausa (era a Q-I do relatório)
+- **Decidido pelo dono (29/09/2026):** o pedido — *«uma forma de poder reiniciar o jogo do 0 a qualquer momento no
+  menu»* — e depois *«aplique o relatório»*, que trazia o desenho (secção 7). Aplicado.
+- **Onde:** §16, §24, §62; `FreshStart` (`src/core/fresh_start.gd`), `FreshStartPanel` (`src/ui/fresh_start_panel.gd`),
+  `PauseMenu`, `Boot.disk_line()`; `tests/recomecar_do_zero_test.gd`.
+- **O que foi feito:** a pausa, e o ecrã da derrota, que é a mesma pausa, têm «Recomeçar do zero». Primeiro pergunta,
+  com o foco em Cancelar, e diz o que se perde: o dia do save e, quando há legado, as Sementes e os segredos.
+  Confirmado, apaga os três saves e o legado, tudo ou nada: move-os para quarentena e, se algum não sair, devolve os
+  outros e diz que falhou. Depois recomeça pelo `new_game()` de sempre, num jogo sem legado. As opções
+  (`settings.cfg`) ficam. O recibo do arranque diz o que há em disco (`save: dia N · legado: sim/nao`).
+- **Porque não fere o §16:** o *decay* continua a ser o que acontece a quem perde. Recomeçar do zero é estritamente pior
+  do que aceitar a derrota, e só acontece por escolha.
+- **Como desfazer:** tirar o `FreshStartPanel` da pausa.
+
+### Q-165 · A banca do arco: o trabalhador passa a arqueiro por 2 moedas (era a Q-A)
+- **Decidido pelo dono (29/09/2026):** *«aplique o relatório»* — a proposta K1-a, a do Kingdom. Aplicada.
+- **Onde:** §07, §09, §25 (o minuto 1:10 já mostra *«um segundo vagabundo com arco»*), §66; `buildings.csv`
+  (`bow_rack`), `units.csv` (`archer`: `trained_at`, `train_days`), `TrainingSystem`, `BowRacks`;
+  `tests/banca_do_arco_test.gd`, `tests/piloto_caminhos_reais_test.gd`.
+- **O que estava:** a região tinha três arqueiros para sempre: um vagabundo nunca passava a arqueiro, e as torres só
+  aceitam arqueiros.
+- **O que foi feito:** a banca do arco (4 moedas) é uma casa de ofício, como a Casa de Treino. A moeda larga-se nela, o
+  trabalhador teu mais perto vai buscar o arco e sai arqueiro ao chegar, sem dia de treino. O arco custa 2
+  (`craft_cost`: o arco do Kingdom, e a diferença entre o arqueiro e o vagabundo); a Casa de Treino continua ao preço
+  do ofício. A banca fica a 742 px a leste do núcleo, no vão entre a torre de arqueiros e o galinheiro, e é posta
+  depois de todas as outras obras: os ids delas não mudam, e um save de antes abre com a banca por construir. O piloto
+  da vistoria compra o arco à tarde e decreta a Chamada às Armas com gente livre (CONT-05).
+- **Números propostos** (`_proposed`): o preço, a vida, o trabalho, a largura e a sombra da obra, e o `craft_cost`.
+- **Fica por fazer:** o suporte com os arcos à vista (o *rack* do Kingdom, com teto) é arte, e `art/` não se toca daqui.
+  A banca desenha-se com a silhueta de estandarte das casas de treino.
+- **Como desfazer:** tirar a linha do `buildings.csv` e o `BowRacks.author()` do `Greybox`.
+
+### Q-166 · O cerco da marcha: a fortaleza tem firmeza, e quem marcha pode não voltar (era a Q-F; fecha a Q-159)
+- **Decidido pelo dono (29/09/2026):** *«aplique o relatório»* — o cerco do K6. Aplicado.
+- **Onde:** §13 (reconhecimento, marcha, cerco), Q-159, ADR 0035; `March` (`fortress`, `firmness`, `siege`,
+  `survivors`), `Realm`, `GuideSites.march`, `SaveMigrations` (v3), `economy.csv`; `tests/cerco_test.gd`,
+  `tests/marcha_test.gd`.
+- **O que estava:** a marcha ganhava sempre que levava três ou mais; o único preço era a noite sem eles.
+- **O que foi feito:** cada povo do plano tem uma fortaleza: 8 de firmeza o primeiro, mais 4 por cada povo adiante.
+  Cada marcha tira-lhe 2 por cabeça, e o que tira fica: a marcha seguinte começa onde esta parou, como o portal do
+  Kingdom, que não regenera vida. Com o mínimo de três, a primeira fortaleza fica de pé; quatro acabam-na. A fortaleza
+  cai quando a conta chega a zero (`fortress_conquered`, §46), e só então o povo passa a vassalo; a conta limpa-se, e
+  um vassalo que a mancha coma (Q-103) reconquista-se do princípio. Cada um que marcha tem
+  20% de não voltar, sorteado no fluxo `combat`: a mesma semente dá as mesmas baixas, e quem tinha nome é chorado pelos
+  títulos. Na bifurcação, de dia, o guia diz a firmeza que sobra e quanto os que estão perto tirariam — o reconhecimento
+  do §13. O save guarda o cerco (versão 3, com a migração); um save de antes abre com as fortalezas inteiras.
+- **Números propostos** (`_proposed`): `march_fortress_base` 8, `march_fortress_per_region` 4, `march_siege_per_unit`
+  2, `march_loss_chance` 0,2.
+- **Fica por fazer:** o §13 lê a fortaleza na muralha, nos defensores e na idade do rei inimigo, e o perfil de ganância
+  muda-a (`enemy_wall_bias` e `enemy_elite_bias` já estão no `greed_profiles.csv`); até haver reis inimigos, é um
+  número só. Os ofícios no cerco e a rendição também esperam por eles. E as baixas não mexem no ânimo do reino: o
+  `SpiritWatch` só ouve mortes de quem está nas colunas.
+- **Como desfazer:** `march_loss_chance` 0, `march_fortress_per_region` 0 e `march_fortress_base` igual a
+  `march_min_party × march_siege_per_unit` dão outra vez a marcha da ADR 0035.
 
 ## Decididas pelo dono no painel (29/09/2026)
 

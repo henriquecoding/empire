@@ -8,6 +8,7 @@ extends GdUnitTestSuite
 
 const STEP := 1.0 / 30.0
 const MEU := 1
+const LIMITE := 12
 
 var estado: GameState
 var unidades: UnitSystem
@@ -104,17 +105,21 @@ func test_no_jogo_a_marcha_conquista_o_povo_seguinte() -> void:
 	var reino := SimLoop.field.realm
 	var r := SimLoop.units.index_of(SimLoop.king_id)
 	var dono := SimLoop.units.owners[r]
-	for _k in _curva().march_min_party:
-		SimLoop.units.spawn(
-			SimLoop.state, Registry.entry(&"units", &"archer"), dono, SimLoop.units.xs[r]
-		)
 	var alvo := reino.next_target(SimLoop.state)
 	assert_int(alvo).is_equal(1)
 	var sementes := SimLoop.state.royal_seeds
-	assert_bool(reino.send(SimLoop.units, SimLoop.king_id, SimLoop.state, 11)).is_true()
 	var fork := Vector2(SimLoop.core_x, SimLoop.secrets.chapters[0])
-	reino.dawn(12, SimLoop.units, SimLoop.state, SimLoop.king_id, fork)
 	var povo := Realm._povo(SimLoop.state.chapters.regions[alvo])
+	# O cerco (Q-166): marcha-se ate a fortaleza cair, cada vez com gente nova.
+	var dia := _curva().crossing_day
+	while not reino.vassals.has(povo) and dia < _curva().crossing_day + LIMITE:
+		for _k in _curva().march_min_party:
+			SimLoop.units.spawn(
+				SimLoop.state, Registry.entry(&"units", &"archer"), dono, SimLoop.units.xs[r]
+			)
+		assert_bool(reino.send(SimLoop.units, SimLoop.king_id, SimLoop.state, dia)).is_true()
+		dia += 1
+		reino.dawn(dia, SimLoop.units, SimLoop.state, SimLoop.king_id, fork)
 	assert_bool(reino.vassals.has(povo)).is_true()
 	assert_int(SimLoop.state.royal_seeds).is_greater(sementes)
 	assert_int(reino.next_target(SimLoop.state)).is_equal(2)
@@ -123,7 +128,7 @@ func test_no_jogo_a_marcha_conquista_o_povo_seguinte() -> void:
 	# Quem foi voltou, com o mesmo id.
 	assert_int(SimLoop.units.count()).is_greater_equal(_curva().march_min_party)
 	var moedas := SimLoop.coins.count()
-	reino.dawn(13, SimLoop.units, SimLoop.state, SimLoop.king_id, fork)
+	reino.dawn(dia + 1, SimLoop.units, SimLoop.state, SimLoop.king_id, fork)
 	assert_int(SimLoop.coins.count()).is_greater(moedas)
 	var copia := Realm.new()
 	copia.from_dict(reino.to_dict())

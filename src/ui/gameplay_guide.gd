@@ -76,7 +76,7 @@ static func context(device: Glyphs.Device) -> String:
 	if units.bands[king] == int(Band.Kind.SURFACE) and Verbs.at_fork(units.xs[king]):
 		if Verbs.crossing_open(units, SimLoop.king_id):
 			var falta := SimLoop.field.realm.refusal(units, SimLoop.king_id, SimLoop.state)
-			return _tr(&"CONTEXT_CROSS" if falta.is_empty() else falta).format(values)
+			return GuideSites.march(values) if falta.is_empty() else _tr(falta).format(values)
 		values["day"] = SimFactory.curve().crossing_day
 		return _tr(&"CONTEXT_CROSS_LOCKED").format(values)
 	if units.bands[king] == int(Band.Kind.SURFACE) and Lume.at_base(units.xs[king]):
