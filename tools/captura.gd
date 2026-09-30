@@ -72,7 +72,8 @@ func _pousar_o_rei(args: Dictionary) -> void:
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	if i == UnitSystem.NENHUM:
 		return
-	var x := clampf(SimLoop.core_x + float(args["rei"]), 0.0, SimLoop.world_width)
+	var limites := Frontier.walk_limits()  # so ate a beira de cada borda (Q-173)
+	var x := clampf(SimLoop.core_x + float(args["rei"]), limites.x, limites.y)
 	SimLoop.units.xs[i] = x
 	_preparacao.append("rei posto em x=%d" % int(x))
 	if FAIXAS.has(args.get("faixa")):

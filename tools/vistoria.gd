@@ -93,14 +93,14 @@ func _vigiar() -> void:
 	_luta_sem_alvo()
 
 
-## §21: a regiao tem principio e fim. Um corpo fora dela nao se ve, nao se
-## alcanca, e continua a contar para tudo o que o tick soma.
+## §21: o mundo tem principio e fim — de beira a beira (Q-173). Um corpo fora dele nao
+## se ve, nao se alcanca, e continua a contar para tudo o que o tick soma.
 func _no_mundo(que: String, id: int, x: float) -> void:
 	if not is_finite(x):
 		_nota("%s %d tem x = %s" % [que, id, x])
 		return
-	if x < -MARGEM or x > SimLoop.world_width + MARGEM:
-		_nota("%s %d saiu da regiao: x = %.0f de %.0f" % [que, id, x, SimLoop.world_width])
+	if x < Frontier.walk_limits().x - MARGEM or x > Frontier.walk_limits().y + MARGEM:
+		_nota("%s %d saiu do mundo: x = %.0f fora de %s" % [que, id, x, Frontier.walk_limits()])
 
 
 func _vida(que: String, id: int, vida: int, tecto: int) -> void:

@@ -162,6 +162,17 @@ static func campaign_peoples() -> PackedStringArray:
 	return povos
 
 
+## O kit de segmentos do povo da regiao de partida (segments.csv): de onde saem os
+## trilhos, os limiares, as terras e as bordas do mundo continuo (Q-173).
+static func segment_kit() -> Array[SegmentData]:
+	var povo := (Registry.entry(&"segments", SEGMENTO_DE_PARTIDA) as SegmentData).people
+	var kit: Array[SegmentData] = []
+	for recurso in Registry.entries(&"segments"):
+		if (recurso as SegmentData).people == povo:
+			kit.append(recurso as SegmentData)
+	return kit
+
+
 ## O bioma do povo de um segmento: o do segmento de partida e a regiao de casa.
 static func biome_of_segment(segmento: StringName) -> StringName:
 	var povo := (Registry.entry(&"segments", segmento) as SegmentData).people

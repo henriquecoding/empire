@@ -84,6 +84,7 @@ var bando := Flock.new()
 var _tempo := 0.0
 var _centro := 0.0
 var _largura := 0.0
+var _limites := Vector2.ZERO  # onde os bichos do chao podem andar (Q-173)
 
 
 ## Quanto de um bicho se ve com `escuro` (0 de dia, 1 de noite).
@@ -96,11 +97,12 @@ static func presence(kind: int, escuro: float) -> float:
 	return 1.0
 
 
-## Solta os bichos de `lista` (triplos do Wilds) numa regiao de `largura`.
-func populate(lista: PackedFloat32Array, largura: float) -> void:
+## Solta os bichos de `lista` numa regiao de `largura`; os do chao andam nos `limites`.
+func populate(lista: PackedFloat32Array, largura: float, limites := Vector2.ZERO) -> void:
 	bichos.clear()
 	bando = Flock.new()
 	_largura = largura
+	_limites = limites if limites != Vector2.ZERO else Vector2(0.0, largura)
 	_centro = largura * MEIO
 	for i in range(0, lista.size(), Wilds.BICHO):
 		bichos.append(_novo(i, int(lista[i]), lista[i + 1], lista[i + 2]))
@@ -245,4 +247,4 @@ func _decidir(b: Bicho) -> void:
 		b.timer = lerpf(DECISAO.min, DECISAO.max, dados[1])
 		return
 	b.state = State.WALK
-	b.target = clampf(b.home.x + (dados[1] * 2 - 1) * PE.roda, 0.0, _largura)
+	b.target = clampf(b.home.x + (dados[1] * 2 - 1) * PE.roda, _limites.x, _limites.y)

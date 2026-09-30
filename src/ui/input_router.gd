@@ -174,8 +174,8 @@ func _andar(direccao: float) -> void:
 		SimLoop.king_id,
 		clampf(
 			SimLoop.units.xs[i] + direccao * SimLoop.world_width,
-			-SimLoop.wild_px,
-			SimLoop.world_width + SimLoop.wild_px
+			Frontier.walk_limits().x,  # a beira da borda de cada lado (Q-173)
+			Frontier.walk_limits().y
 		)
 	)
 

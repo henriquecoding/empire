@@ -699,3 +699,10 @@ UI_FRESH_START_CONFIRM,Apagar tudo e recomeçar,Erase Everything and Start Over,
 UI_CANCEL,Cancelar,Cancel,pausa: voltar sem apagar (Q-164),16,Q-164
 UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada foi apagado nem recomeçou.,Could not erase everything: nothing was erased or restarted.,pausa: o recomeço do zero falhou e voltou tudo ao sítio (Q-164),72,Q-164
 BUILDING_BOW_RACK,Banca do Arco,Bow Rack,nome de conteúdo — building (Q-165),24,Q-165
+CONTEXT_LAND,{people} · terra deles; a fortaleza fica na ponta,{people} · their land; the fortress stands at the far end,guia contextual de jogo: a terra de outro povo (Q-173),160,Q-173
+CONTEXT_LAND_VASSAL,{people} · terra de vassalos teus,{people} · land of your vassals,guia contextual de jogo: a terra de um povo vassalo (Q-173),160,Q-173
+CONTEXT_EDGE,O FIM DO MUNDO · {edge}: daqui não se passa,THE END OF THE WORLD · {edge}: there is no way on,guia contextual de jogo: a borda do mundo (Q-173),160,Q-173
+EDGE_SEA,o mar,the sea,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+EDGE_CLIFF,a falésia,the cliff,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+EDGE_GORGE,o desfiladeiro,the gorge,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+EDGE_WALL,a muralha de rocha,the rock wall,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173

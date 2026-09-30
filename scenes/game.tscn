@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://src/world/accessibility_filter.gd" id="13_filtro"]
 [ext_resource type="Script" path="res://src/ui/journal_panel.gd" id="14_diario"]
 [ext_resource type="Script" path="res://src/world/fauna_view.gd" id="15_fauna"]
+[ext_resource type="Script" path="res://src/world/frontier_view.gd" id="16_fronteira"]
 
 [node name="Game" type="Node2D" groups=["jogo"]]
 script = ExtResource("0_game")
@@ -53,6 +54,9 @@ script = ExtResource("3_cam")
 
 [node name="Entrada" type="Node" parent="."]
 script = ExtResource("4_input")
+
+[node name="Fronteira" type="Node" parent="."]
+script = ExtResource("16_fronteira")
 
 [node name="Filtro" type="CanvasLayer" parent="."]
 layer = 1

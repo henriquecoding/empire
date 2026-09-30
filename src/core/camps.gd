@@ -28,3 +28,25 @@ static func dawn(
 		var x := camps[(dia + k) % camps.size()]
 		var novo := unidades.spawn(estado, vagabundo, RecruitSystem.SEM_DONO, x)
 		EventBus.queue(&"unit_spawned", [novo, vagabundo.id, x, int(Band.Kind.SURFACE)])
+
+
+## Os acampamentos de mercenarios das trilhas (Q-173): em cada um espera um mercenario,
+## que se contrata ao preco dele como qualquer recruta. Contratado, a alvorada seguinte
+## traz outro — e so um de cada vez por acampamento.
+static func mercenaries(
+	sitios: PackedFloat32Array, unidades: UnitSystem, estado: GameState
+) -> void:
+	var dados := Registry.entry(&"units", &"mercenary") as UnitData
+	for x in sitios:
+		var espera := false
+		for i in unidades.count():
+			var livre := unidades.owners[i] == RecruitSystem.SEM_DONO and unidades.alive(i)
+			if (
+				livre
+				and unidades.data_ids[i] == dados.id
+				and absf(unidades.xs[i] - x) <= Frontier.CAMPO_PX
+			):
+				espera = true
+		if not espera:
+			var novo := unidades.spawn(estado, dados, RecruitSystem.SEM_DONO, x)
+			EventBus.queue(&"unit_spawned", [novo, dados.id, x, int(Band.Kind.SURFACE)])

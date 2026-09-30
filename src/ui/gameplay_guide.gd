@@ -129,7 +129,10 @@ static func context(device: Glyphs.Device) -> String:
 			units, nearest, SimLoop.recruits.price(units, nearest)
 		)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
-	return _squire(values)
+	var escudo := _squire(values)
+	if not escudo.is_empty() or units.bands[king] != int(Band.Kind.SURFACE):
+		return escudo
+	return GuideSites.wilds(units.xs[king], values)  # a terra de outro povo e a borda (Q-173)
 
 
 ## O escudo do escudeiro, se o Verbo 2 o arma agora (Q-114); "" se nao.

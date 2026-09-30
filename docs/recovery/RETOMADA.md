@@ -26,16 +26,17 @@ a cada construção._
 | v6 + auditoria | 26/09/2026 | A auditoria de gameplay (`AUDITORIA-GAMEPLAY-2026-09-26.md`) e o AUD-01: a moeda passa a ter destino resolvido no gesto (o celeiro já não troca de modo sozinho e a moeda do 0:20 recruta), retomar não repete a fase, a torre dá certeza a quem está nela, o muro a subir de degrau continua a travar, a morte do rei é derrota, grava-se ao pausar e ao fechar de dia. Q-115 a Q-120. |
 | v6 + painel | 29/09/2026 | As 66 respostas do painel de 29/09 (ADR 0036). O rei fica no reino dele e conquista pela marcha; os povos conquistados são vassalos que pagam tributo e podem cair (ADR 0035). O ânimo do reino e as bonificações dos títulos; o escudeiro com escudo, espada e investidura; a caça sai das tocas, aos poucos; as tropas guardam moedas; o soldo em atraso; o Sino de Vigia; apagar o Lume acaba o ciclo; oito das doze ofertas ligadas; o armazenamento de cada personagem jogável; as migrações do save; oito regiões baralhadas pela semente e seis ecrãs de terras bravias. As Q-157 a Q-163 ficam para o dono. |
 | v6 + Kingdom | 29/09/2026 | O relatório Kingdom (`ANALISE-KINGDOM-2026-09-29.md`) aplicado nas prioridades P0 e P1 (ADR 0037). Recomeçar do zero pela pausa, tudo ou nada (Q-164). A banca do arco: um trabalhador passa a arqueiro por 2 moedas, e a região deixa de ter três arqueiros para sempre (Q-165). O cerco do §13: a fortaleza tem firmeza que fica de marcha para marcha, e quem marcha pode não voltar (Q-166, fecha a Q-159; o save passa à versão 3). A lua diz a noite funda na véspera. O piloto da vistoria compra arcos e decreta a Chamada às Armas, e a vistoria conta a gente armada. As Q-167 a Q-172 ficam para o dono. |
+| v6 + mundo | 30/09/2026 | Os dois pedidos do dono de 30/09 (ADR 0038, Q-173; a pesquisa em `PESQUISA-MUNDO-2026-09-30.md`). O mundo passa a ser contínuo: uma linha de segmentos do §21 à volta da região de casa, gerados ao andar, como os chunks do Minecraft, e gravados no save (versão 4). Os povos da campanha ficam ao longo dele, a alternar de lado, cada um com um trilho, um limiar, a terra e a fortaleza na ponta, e o mundo acaba de cada lado numa borda: mar, falésia, desfiladeiro ou muralha. A paisagem passa em gradiente de um povo para o outro e a estrada estreita-se em trilho, sem saltos; por baixo, a cave fecha num pilar e segue o túnel. Nos trilhos há acampamentos de mendigos, mercenários à espera e masmorras com moedas na câmara. O guia diz de quem é a terra e o que há no fim. As Q-174 a Q-180 ficam para o dono. |
 | v6 + XIII | 14/09/2026 | A Parte XIII em dados: quatro tabelas novas, seis alargadas, quatro `Resource` novos, catorze testes de design, nove ADRs, 19 perguntas registadas, 53 tickets, e o texto: 64 chaves de conteúdo e os doze diários da §79 escritos. |
 
 ## Como se verificou
 
 - **Motor** — Godot 4.7.2-stable (`ed1daf0bf`, o de `.godot-version`) em *headless*: o projeto importa sem erros e
   arranca.
-- **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 29 tabelas, 222 recursos gerados.
+- **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 29 tabelas, 233 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 1048 casos, 1045 a passar, 3 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 1079 casos, 1076 a passar, 3 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save e as preferências nunca usam `load()`),
@@ -72,14 +73,14 @@ a cada construção._
 | Pasta | O que lá está |
 |---|---|
 | `data/source/` | As 29 tabelas, com `_phase`, `_src`, `_proposed` e `_notes` em cada linha. É a fonte. |
-| `data/**/*.tres` | Os 222 recursos gerados. Versionados de propósito (ADR 0004). |
+| `data/**/*.tres` | Os 233 recursos gerados. Versionados de propósito (ADR 0004). |
 | `src/sim/` | Puro: sem `Node`, sem `import` para fora. O portão G1 chumba se alguém o quebrar. |
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |
-| `docs/adr/` | 37 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros; a 0026 os reportes e as respostas às perguntas, num Supabase só do Empire; e a 0027 a 0033 as respostas do painel de 28/09 — o preço dos impulsos, as estátuas, as primeiras noites e o archote, os povos do gelo e do pântano, o Godot 4.7.2 e o recrutamento do Kingdom: New Lands; a 0034 o Lume roxo na base da Podridão e as tuas luzes que a afastam (29/09); a 0035 o reino que fica, a marcha e os vassalos; a 0036 as respostas do painel de 29/09; e a 0037 o relatório Kingdom aplicado — recomeçar do zero, a banca do arco, o cerco e a lua do pico. |
+| `docs/adr/` | 38 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros; a 0026 os reportes e as respostas às perguntas, num Supabase só do Empire; e a 0027 a 0033 as respostas do painel de 28/09 — o preço dos impulsos, as estátuas, as primeiras noites e o archote, os povos do gelo e do pântano, o Godot 4.7.2 e o recrutamento do Kingdom: New Lands; a 0034 o Lume roxo na base da Podridão e as tuas luzes que a afastam (29/09); a 0035 o reino que fica, a marcha e os vassalos; a 0036 as respostas do painel de 29/09; a 0037 o relatório Kingdom aplicado — recomeçar do zero, a banca do arco, o cerco e a lua do pico; e a 0038 o mundo contínuo — gerado ao andar, gravado, com trilhas entre os povos e a borda no fim (30/09). |
 | `docs/backlog/` | 99 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
-| `data/i18n/strings.csv` | 414 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
+| `data/i18n/strings.csv` | 421 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
 
 ## A regra que continua a valer
