@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 245 | 101 | 346 |
-| Fases 3–8 | 297 | 100 | 397 |
-| Total | 542 | 201 | 743 |
+| Fases 3–8 | 303 | 100 | 403 |
+| Total | 548 | 201 | 749 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -368,7 +368,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 
-## 3 · Fases 3 a 8 — 397
+## 3 · Fases 3 a 8 — 403
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -724,6 +724,12 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `king_leash_px` | `king_leash_px` | 1440 | 9 | Quanto o rei se afasta das bordas da região de casa, para cada lado: 50 m à escala do §22 — uma tropa de 49 px tem 1,7 m, e 50 m são 1440 px. Chega ao primeiro acampamento de cada trilho; as classes jogáveis vão até à borda do mundo. |
 | economy | `impulse_repeat_mult` | `impulse_repeat_mult` | 1.5 | 9 | Proposta (Q-014): o mesmo decreto repetido dentro de impulse_repeat_days dias custa ×1,5 por cada vez que saiu. Um impulso por dia já é a regra do §15; isto é o que impede que o melhor impulso seja o único que se usa. |
 | economy | `impulse_repeat_days` | `impulse_repeat_days` | 3 | 9 | Proposta (Q-014): três dias de memória — o reino esquece um decreto ao fim de metade da semana de uma noite funda (peak_every 6). |
+| rules | `crown_grab_px` | `crown_grab_px` | 24 | 9 | Uma criatura que chegue a 24 px da coroa leva-a: é o alcance de corpo a corpo de uma tropa (§07, 26–30 px), um pouco abaixo, para que a coroa se veja a ser levada e não caia no primeiro passo de quem passa ao lado. |
+| rules | `crown_rise_health` | `crown_rise_health` | 0.5 | 9 | O rei levanta-se a meio da vida: não é um rei novo, é um rei que caiu. O §16 tira uma fase à classe de quem ressuscita no Santuário; aqui não há santuário nem preço, e o que se perde é metade da vida e a noite. |
+| rules | `crown_lume_feed` | `crown_lume_feed` | 10 | 9 | A coroa que a mancha come vale ao Lume o mesmo que dez moedas sacrificadas (§05, rot_fed): é o maior sacrifício que se pode dar, e dá-se sem querer. |
+| rules | `decay_rebuild_frac` | `decay_rebuild_frac` | 0.5 | 9 | Reerguer um alicerce custa metade do que a obra custou em todos os degraus que tinha (Legacy.invested), e levanta-se com quem estiver no sítio, como uma obra nova — não pede construtores, porque a Casa de Treino, de onde eles saem, pode ser um dos alicerces. |
+| rules | `camp_tree_px` | `camp_tree_px` | 120 | 9 | Um Amargueiro abatido a 120 px de um acampamento acaba com ele: o alcance em que uma pessoa repara numa moeda (recruit_notice_px), que é o que o acampamento chama de «ao lado». |
+| rules | `citizen_price` | `citizen_price` | 2 | 9 | Um cidadão custa 2 moedas, o dobro do vagabundo (1): é o preço de não ter acampamento. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | paul | 6 | A «Fortaleza do pântano» do §12 é do povo do pântano, o Paul (Q-013, decidida pelo dono a 28/09/2026: «quero que haja também a população do pântano»). Antes disso a proposta era a Horta. |
 | impulses | `forced_harvest` | `coin_cost` | 3 | 6 | Preço base (Q-014, o sistema de preço pedido pelo dono a 28/09/2026): Rende ×1,8 hoje e as plantações param amanhã. A 4 moedas, medido com as condições reais (a ganância, o preço do dia e as fases que faltam), devolvia 0,83 por moeda paga em qualquer dia, e nunca compensava (Q-158); a 3 devolve perto de 1,1 com três fontes, e mais com mais fontes (tests/colheita_forcada_test.gd). O preço de cada dia é esta base a crescer com a produção (income_growth), a metade para o tirano (§15) e ×impulse_repeat_mult se o mesmo decreto saiu há menos de impulse_repeat_days dias. |

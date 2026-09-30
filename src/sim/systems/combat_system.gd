@@ -12,15 +12,9 @@
 #
 # O passo 3 evita "uma tropa morre e ainda ataca no mesmo tick" (§43).
 #
-# Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70): quem
-# chama liga-o ao fluxo `combat` e a noite reproduz-se com a semente. A §50
-# insiste que o hit sai ja decidido — "a apresentacao nunca decide se acertou".
-#
-# Os campos com um underscore a frente do nome dos sistemas valem SO durante uma
-# chamada a resolve(): sao o contexto do passo, e sao reescritos a cada um. E o
-# que permite que os metodos de dentro nao levem cinco argumentos cada.
-#
-# O que NAO esta aqui: a fila do muro (F1-06), a moral e a fuga (F1-12).
+# Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70), e a noite
+# reproduz-se com a semente: "a apresentacao nunca decide se acertou" (§50). Os campos
+# com underscore valem SO durante uma chamada a resolve(): sao o contexto do passo.
 class_name CombatSystem
 extends RefCounted
 
@@ -55,6 +49,8 @@ const QUEM := &"data_id"
 
 var picker: TargetPicker
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
+## Para onde foge quem larga a arma (Q-168): o nucleo. Escrito pelo FieldWork.
+var refuge := 0.0
 ## O que os titulos dao a quem os tem (§76, Q-102): unit_id -> {grant: valor}.
 var perks: Dictionary = {}
 
@@ -227,6 +223,9 @@ func _mortes_das_criaturas() -> void:
 ## amanhecer e o §50 diz que toda a morte larga alguma coisa. Quem a remove — ou
 ## a ressuscita — e quem chama; aqui so se anuncia, uma vez.
 func _mortes_das_tropas() -> void:
+	for e in Disarm.spare(_u, _dados_u, _dados_u.get(&"vagrant"), refuge):  # Q-168
+		picker.forget(e[DE])
+		_eventos.append(e)
 	for unit_id in TargetPicker.ids_por_ordem(_u.ids):
 		var i := _u.index_of(unit_id)
 		if _u.healths[i] > 0 or _u.states[i] == UnitFsm.State.DEAD:

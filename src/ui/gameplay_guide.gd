@@ -6,6 +6,8 @@ const CEM := 100.0
 
 
 static func goal() -> String:
+	if CrownWatch.waiting():
+		return _tr(&"GUIDE_CROWN")  # a coroa no chao, ate a alvorada (Q-167)
 	if Defeat.king_fell() and SimLoop.field.succession.possible(SimLoop.builds):
 		return _tr(&"GUIDE_HEIR")  # §16: o herdeiro assume ao amanhecer
 	var rot := SimLoop.night.rot

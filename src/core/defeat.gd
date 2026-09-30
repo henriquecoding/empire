@@ -23,9 +23,9 @@ static func happened() -> bool:
 
 
 ## O rei que estava em campo ja nao esta de pe. Sem rei posto em campo (um teste,
-## uma ferramenta) nao ha rei para cair.
+## uma ferramenta) nao ha rei para cair; com a coroa no chao, ainda nao caiu (Q-167).
 static func king_fell() -> bool:
-	if SimLoop.king_id == UnitSystem.NENHUM:
+	if SimLoop.king_id == UnitSystem.NENHUM or CrownWatch.waiting():
 		return false
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	return i == UnitSystem.NENHUM or SimLoop.units.healths[i] <= 0

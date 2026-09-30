@@ -660,6 +660,9 @@ O Cavador passa por baixo e lá em cima precisam de ti","CLIMB BEFORE NIGHTFALL
 The Burrower comes from below and you are needed above",guia contextual de jogo: o rei no subsolo à tarde (P-I),160,AUD-04
 CAPTION_CHICKENS_STOLEN,[Levaram galinhas],[Chickens taken],legenda de som (§26); o Alado que chegou vivo à alvorada (Q-129),32,AUD-04
 UI_LEGACY,"Fica: {slots} obras, {seeds} Sementes Reais, {found} segredos","Kept: {slots} buildings, {seeds} Royal Seeds, {found} secrets",derrota (§16): o que o jogo novo herda (Q-134),64,AUD-05
+GUIDE_CROWN,"A COROA CAIU
+recupera-a antes da alvorada","THE CROWN HAS FALLEN
+recover it before dawn",HUD do greybox: o rei caído com a coroa no chão (Q-167),40,"Q-167: se uma criatura a levar, o rei morre; se ninguém a levar até à alvorada, ou se a apanhares, levanta-se."
 GUIDE_HEIR,"O REI CAIU
 O herdeiro assume a coroa ao amanhecer","THE KING HAS FALLEN
 The heir takes the crown at dawn",guia contextual de jogo: a sucessão (§16),160,AUD-05 (Q-133)

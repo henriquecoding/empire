@@ -422,6 +422,21 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
 
+## `rules.csv` → `data/economy/rules.tres`
+
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 8 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `crown_grab_px` | float | Coroa no chao — Q-167 |  |
+| `crown_rise_health` | float | Coroa no chao — Q-167 |  |
+| `crown_lume_feed` | int | Coroa no chao — Q-167 |  |
+| `decay_rebuild_frac` | float | Alicerces — Q-171 |  |
+| `camp_tree_px` | float | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `citizen_cap` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `citizen_price` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `mercenary_camp_hires` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
 Script `src/sim/data/economy_profile.gd` · layout `rows` · 5 linha(s) · §06 §31 — perfis dos testes de design

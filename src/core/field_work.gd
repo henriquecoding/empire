@@ -27,6 +27,8 @@ var realm := Realm.new()
 var spirit: Spirit
 ## As terras entre os povos, geradas ao andar e guardadas (Q-173, ADR 0038).
 var wilds := WildSegments.new(SimFactory.segment_kit())
+## A coroa no chao, recuperavel ate a alvorada (Q-167).
+var crown_drop := CrownDrop.new()
 ## Quem o jogador pode assumir alem do rei (§08; Q-150, Q-162, Q-178).
 var roster := Roster.new(
 	SimFactory.by_id(&"classes"), SimFactory.by_id(&"units"), SimFactory.by_id(&"classes/storages")
@@ -110,6 +112,7 @@ func prepare(
 		_moral.perks = perks
 	if _combate != null:
 		_combate.perks = perks
+		_combate.refuge = core_x  # quem larga a arma foge para o nucleo (Q-168)
 
 
 ## A intencao do §61 que a roda do rei enfileira: um impulso por dia (§15, §24).
@@ -186,6 +189,7 @@ func parts() -> Dictionary:
 		&"spirit": spirit,
 		&"wilds": wilds,
 		&"roster": roster,
+		&"crown_drop": crown_drop,
 	}
 
 
