@@ -12,6 +12,7 @@ jobs,res://src/sim/data/job_data.gd,res://data/jobs/{id}.tres,rows,urgency_by_ph
 biomes,res://src/sim/data/biome_data.gd,res://data/biomes/{id}.tres,rows,,§11 §21 §44
 segments,res://src/sim/data/segment_data.gd,res://data/segments/{id}.tres,rows,,§21 §44 §54
 economy,res://src/sim/data/economy_curve.gd,res://data/economy/curve.tres,kv,,§06 §47 — chave/valor; um só recurso
+rules,res://src/sim/data/rules_curve.gd,res://data/economy/rules.tres,kv,,"ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)"
 economy_profiles,res://src/sim/data/economy_profile.gd,res://data/economy/profiles/{id}.tres,rows,,§06 §31 — perfis dos testes de design
 rot,res://src/sim/data/rot_profile.gd,res://data/rot/{id}.tres,rows,,§05 §44 §51 — substitui o waves.csv (§70)
 mounts,res://src/sim/data/mount_data.gd,res://data/mounts/{id}.tres,rows,,§12 §44

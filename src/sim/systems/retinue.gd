@@ -38,7 +38,9 @@ static func place(
 	var atras := PackedInt32Array()
 	var esperam := PackedInt32Array()
 	for i in unidades.count():
-		if unidades.ids[i] == king_id or unidades.owners[i] != dono or not unidades.alive(i):
+		if unidades.ids[i] in [king_id, unidades.pilot] or unidades.owners[i] != dono:
+			continue
+		if not unidades.alive(i):
 			continue
 		if unidades.job_ids[i] != UnitSystem.NENHUM:
 			continue

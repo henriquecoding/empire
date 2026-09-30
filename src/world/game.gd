@@ -108,8 +108,7 @@ func _process(delta: float) -> void:
 	_mundo.position = Vector2(RngService.float_range(RngService.VISUAL, -forca, forca), 0.0)
 
 
-## A semente da partida. O §42 manda mostra-la no ecra e deixar copiar — o
-## Inspector fa-lo — e e o melhor instrumento de depuracao que ha de graca.
+## A semente da partida. O §42 manda mostra-la no ecra e deixar copiar (o Inspector).
 func _semente() -> int:
 	return seed_from(OS.get_cmdline_user_args(), Time.get_unix_time_from_system() as int)
 
@@ -145,15 +144,16 @@ func _retomar() -> bool:
 	return true
 
 
-## A camara segue um Node2D (§59) e o monarca e uma LINHA DE COLUNAS, nao um no
-## (§52). O no "Monarca" e a ponte: um no vazio que copia o x da coluna, uma vez
-## por frame — o x que se ve, entre dois ticks (GB-10), e nao o do tick.
+## A camara segue um Node2D (§59), e quem o jogador conduz — o rei, ou a classe
+## assumida (§08) — e uma LINHA DE COLUNAS (§52). O no "Monarca" copia o x dela uma
+## vez por frame: o x que se ve, entre dois ticks (GB-10), e nao o do tick.
 func _seguir() -> void:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var quem := Assume.driven()
+	var i := SimLoop.units.index_of(quem)
 	if i == UnitSystem.NENHUM:
 		return
 	var faixa := int(SimLoop.units.bands[i])
-	var x := Smoothing.x_of(Smoothing.Group.UNITS, SimLoop.king_id, SimLoop.units.xs[i])
+	var x := Smoothing.x_of(Smoothing.Group.UNITS, quem, SimLoop.units.xs[i])
 	_monarca.position = Vector2(x, WorldPalette.ground_of(faixa))
 
 

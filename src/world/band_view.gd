@@ -98,6 +98,8 @@ func _draw() -> void:
 	_criaturas()
 	if band == Band.Kind.SURFACE:
 		HuntView.draw_on(self, _luz, _visual_time)
+	CrownView.draw_on(self, band, _luz, _visual_time)  # a coroa no chao (Q-167)
+	MountView.draw_on(self, band, _luz, _visual_time)  # o cavalo de tracao (Q-169)
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
@@ -127,8 +129,8 @@ func _fogueiras() -> void:
 			continue
 		var proprias := WorldLight.weakened(cores, WorldLight.hearth_strength(vaga))  # Q-078
 		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, proprias)
-	# O archote aceso do rei (Q-029): a mesma luz, a metade da forca, a volta dele.
-	var rei := SimLoop.units.index_of(SimLoop.king_id)
+	# O archote aceso de quem se conduz (Q-029): a mesma luz, a metade da forca.
+	var rei := SimLoop.units.index_of(Assume.driven())
 	if rei >= 0 and SimLoop.night.dark.torch.lit() and SimLoop.units.bands[rei] == int(band):
 		var chao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)))
 		RotView.lamp(

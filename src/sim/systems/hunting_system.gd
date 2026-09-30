@@ -1,5 +1,6 @@
 # src/sim/systems/hunting_system.gd — a caca (§06, §25): quem caca, o que cai e para
-# onde vai. Os bichos saem das tocas (Burrows, Q-106), aos poucos e de dia.
+# onde vai. Os bichos saem das tocas (Burrows, Q-106), aos poucos e de dia, e cada
+# toca da o bicho que faz sentido no sitio dela (Q-150): o veado leva dois tiros.
 class_name HuntingSystem
 extends RefCounted
 
@@ -7,8 +8,12 @@ extends RefCounted
 const SEM_INTRO := -1.0
 
 var day := 0
-## Os bichos que estao agora a porta das tocas, por x.
+## Os bichos que estao agora a porta das tocas, por x (coelhos e veados, Q-150).
 var rabbits: Array[float] = []
+## O dano que cada bicho a porta ja levou, por x: o veado aguenta um tiro (Q-150).
+var wounds: Dictionary = {}
+## WildlifeData por id: o bicho de cada toca. Sem ele, e o coelho.
+var wildlife: Dictionary = {}
 var intro_done := false
 ## O coelho do minuto 1:10 (§25): o da primeira toca no dia 1, junto ao castelo.
 var intro_x := SEM_INTRO
@@ -46,6 +51,7 @@ func wither(perigos: PackedFloat32Array, raio: float) -> Array[float]:
 	var perdidas := burrows.wither(perigos, raio)
 	for x in perdidas:
 		rabbits.erase(x)
+		wounds.erase(x)
 	return perdidas
 
 
@@ -141,7 +147,8 @@ func to_dict() -> Dictionary:
 		&"intro_done": intro_done,
 		&"intro_x": intro_x,
 		&"burrows": burrows.to_dict(),
-		&"bagged": bagged.duplicate()
+		&"bagged": bagged.duplicate(),
+		&"wounds": wounds.duplicate(),
 	}
 
 
@@ -153,6 +160,7 @@ func from_dict(saved: Dictionary) -> void:
 	burrows = Burrows.new()
 	burrows.from_dict(saved.get(&"burrows", {}))
 	bagged = saved.get(&"bagged", {}).duplicate()
+	wounds = saved.get(&"wounds", {}).duplicate()
 
 
 func _hunters(units: UnitSystem) -> Array[int]:
@@ -166,7 +174,7 @@ func _hunters(units: UnitSystem) -> Array[int]:
 			or not units.alive(i)
 		):
 			continue
-		if units.bands[i] != Band.Kind.SURFACE:
+		if units.bands[i] != Band.Kind.SURFACE or units.ids[i] == units.pilot:
 			continue
 		if units.states[i] in [UnitFsm.State.FIGHT, UnitFsm.State.FLEE]:
 			continue
@@ -203,14 +211,23 @@ func _intro(units: UnitSystem, hunters: Array[int], drops: Array[Dictionary]) ->
 		intro_done = true
 
 
+## Um tiro. O bicho cai quando o dano chega a vida dele (o veado, dois; Q-150), e
+## cai-lhe a caca que ele vale.
 func _kill(units: UnitSystem, i: int, prey: float, drops: Array[Dictionary]) -> void:
+	var arma := _profiles[units.data_ids[i]] as UnitData
+	units.cooldowns[i] = arma.attack_interval
+	var bicho: WildlifeData = wildlife.get(burrows.game_at(prey), _rabbit)
+	var ferida := int(wounds.get(prey, 0)) + maxi(1, arma.damage)
+	if ferida < bicho.max_health:
+		wounds[prey] = ferida
+		return
+	wounds.erase(prey)
 	rabbits.erase(prey)
-	units.cooldowns[i] = (_profiles[units.data_ids[i]] as UnitData).attack_interval
 	drops.append(
 		{
 			&"x": prey,
 			&"band": Band.Kind.SURFACE,
-			&"amount": _rabbit.coin_yield,
+			&"amount": bicho.coin_yield,
 			&"source": &"hunt",
 			&"hunter": units.ids[i]
 		}

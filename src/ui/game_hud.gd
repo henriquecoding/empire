@@ -148,7 +148,7 @@ func _atualizar() -> void:
 	var relogio := ClockService.clock
 	var fase := int(relogio.current_phase())
 	_relogio.text = HudText.clock(SimLoop.state.day, fase, relogio.phase_progress())
-	var rei := SimLoop.units.index_of(SimLoop.king_id)
+	var rei := SimLoop.units.index_of(Assume.driven())  # o saco de quem se conduz (§08)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0
 	var soldo := SimLoop.economy.upkeep(SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id))

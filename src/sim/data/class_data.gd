@@ -11,6 +11,9 @@ extends Resource
 @export var fights: bool = true
 ## O armazenamento de quem se joga com esta classe (storages.csv, Q-153).
 @export var storage: StringName = &""
+## A tropa da classe (§08): o Verbo 2 sobre uma tropa tua deste tipo fa-la o corpo
+## jogavel (`base_unit`, na escala 3, Q-162). Vazio: a classe nao tem tropa.
+@export var troop: StringName = &""
 
 @export_group("Desbloqueio")
 ## &"start" | &"royal_seed" | &"conquest" | &"secret"

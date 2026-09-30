@@ -5,7 +5,13 @@ extends Resource
 @export var id: StringName
 @export var display_key: String
 @export var speed_multiplier: float = 1.0
+## A correr, montado (Q-169); zero e sem galope — anda-se sempre a `speed_multiplier`.
+@export var run_multiplier: float = 0.0
 @export var coin_capacity_multiplier: float = 1.0
+## As moedas dos alforges, por cima do saco de quem monta (Q-169).
+@export var saddlebag_coins: int = 0
+## Os alforges (storages.csv): o que la vai alem das moedas.
+@export var storage: StringName = &""
 @export var band: Band.Kind = Band.Kind.SURFACE
 @export var can_change_band: bool = false
 @export var flies: bool = false  # libelula: ignora a faixa de superficie

@@ -159,6 +159,10 @@ func _caiu_obra(building_id: int, _x: float) -> void:
 ## vem do mundo, aqui e agora — porque e ela que diz se a noite custou alguma
 ## coisa: dez noites ganhas a 100% e dez noites ganhas a 5% sao a mesma resposta
 ## a "aguentou?" e duas respostas diferentes a "e trivial?".
+##
+## E e ao amanhecer que as aljavas voltam cheias (Q-163): o abastecimento e dado, como
+## o saco cheio do soldo — a banca do arco e a moeda sao a pergunta da economia.
 func _sobreviveu(dia: int, mortes: int, muros: int) -> void:
+	SimLoop.field.supply.spent.clear()
 	_noites += 1
 	_tabela.append({DIA: dia, MORTES: mortes, MUROS: muros, VIDA: _vida_do_nucleo()})

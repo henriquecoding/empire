@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RulesCurve" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/rules_curve.gd" id="1_6s40v"]
+
+[resource]
+script = ExtResource("1_6s40v")
+crown_grab_px = 24.0
+crown_rise_health = 0.5
+crown_lume_feed = 10
+decay_rebuild_frac = 0.5
+camp_tree_px = 120.0
+citizen_cap = 3
+citizen_price = 2
+mercenary_camp_hires = 3
+arrows_per_coin = 12
+ammo_depot = &"bow_rack"

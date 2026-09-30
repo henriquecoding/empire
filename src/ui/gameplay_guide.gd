@@ -6,6 +6,8 @@ const CEM := 100.0
 
 
 static func goal() -> String:
+	if CrownWatch.waiting():
+		return _tr(&"GUIDE_CROWN")  # a coroa no chao, ate a alvorada (Q-167)
 	if Defeat.king_fell() and SimLoop.field.succession.possible(SimLoop.builds):
 		return _tr(&"GUIDE_HEIR")  # §16: o herdeiro assume ao amanhecer
 	var rot := SimLoop.night.rot
@@ -32,6 +34,9 @@ static func goal() -> String:
 		hunter = hunter or data.tags.has(&"hunter")
 	if not worker:
 		return _tr(&"GUIDE_WORKER")
+	var aljavas := SimLoop.field.supply.short(SimLoop.units, SimLoop.king_id) > 0
+	if aljavas and not Supply.depot(SimLoop.builds, RulesFactory.rules().ammo_depot):
+		return _tr(&"GUIDE_ARROWS")  # as flechas das tropas, a repor (Q-163)
 	for site in SimLoop.builds.slots:
 		if site.blocks and not site.mending and site.repair_cost() > 0:
 			return _tr(&"GUIDE_REPAIR")
@@ -70,6 +75,8 @@ static func context(device: Glyphs.Device) -> String:
 		return ""
 	var buttons: Array = Glyphs.BOTOES[device]
 	var values := {"drop": _button(buttons[1]), "assume": _button(buttons[2])}
+	if not Assume.king():  # uma classe assumida nao gere (§08)
+		return ClassGuide.context(values)
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
 		return GuideSites.passage(king, values)
@@ -99,7 +106,7 @@ static func context(device: Glyphs.Device) -> String:
 			return _tr(&"CONTEXT_REPAIRING").format(values)
 		if site.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN] and values.cost > 0:
 			return _tr(&"CONTEXT_REPAIR").format(values)
-		if Verbs.wall_choice_open(site):
+		if KingVerbs.wall_choice_open(site):
 			values["path"] = _tr(
 				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
 			)
@@ -129,16 +136,18 @@ static func context(device: Glyphs.Device) -> String:
 			units, nearest, SimLoop.recruits.price(units, nearest)
 		)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
-	var escudo := _squire(values)
+	var assumir := ClassGuide.assume_hint(values)  # trocar de classe (§08, Q-162)
+	var escudo := _squire(values) if assumir.is_empty() else assumir
 	if not escudo.is_empty() or units.bands[king] != int(Band.Kind.SURFACE):
 		return escudo
-	return GuideSites.wilds(units.xs[king], values)  # a terra de outro povo e a borda (Q-173)
+	var trela := ClassGuide.leash(values)  # o rei nao se afasta mais do reino (Q-150)
+	return trela if not trela.is_empty() else GuideSites.wilds(units.xs[king], values)
 
 
 ## O escudo do escudeiro, se o Verbo 2 o arma agora (Q-114); "" se nao.
 static func _squire(values: Dictionary) -> String:
 	var classes := SimLoop.field.classes
-	if not Verbs.squire_wants(SimLoop.units, SimLoop.king_id, classes):
+	if not KingVerbs.squire_wants(SimLoop.units, SimLoop.king_id, classes):
 		return ""
 	values["shield"] = classes.squire.shield
 	values["max"] = classes.squire.shield_cap()

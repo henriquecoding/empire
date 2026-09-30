@@ -177,6 +177,8 @@ extends Resource
 @export_group("Andar — correr")
 ## Quanto mais depressa o rei anda com a tecla de correr premida (Q-149).
 @export var king_run_mult: float = 0.0
+## Quanto o rei se afasta das bordas da regiao de casa; as classes vao alem (Q-150).
+@export var king_leash_px: float = 0.0
 
 @export_group("Coroa — o preco dos impulsos (Q-014)")
 ## Repetir o mesmo decreto dentro de impulse_repeat_days dias multiplica o preco

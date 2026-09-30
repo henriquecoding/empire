@@ -7,13 +7,47 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Abertas — do mundo contínuo (30/09/2026)
+## Respondidas no painel (30/09/2026) — por aplicar
 
-> O que os dois pedidos do dono de 30/09/2026 (Q-173, ADR 0038) deixaram por decidir. O mundo gera-se, grava-se e
-> acaba numa borda, e os encontros das trilhas fazem o que dizem. Mas nenhum pedido diz o que o jogo faz nas terras
-> geradas além disso, e o `AGENTS.md` não deixa inventar mecânicas.
+> O dono respondeu a 26 perguntas no painel a 30/09/2026. Quinze estão aplicadas ou confirmadas (ADR 0041, em
+> *"Decididas pelo dono no painel (30/09/2026)"* e nas secções das aplicadas); estas onze têm a resposta registada e
+> esperam pela implementação, pela ordem do roteiro do ADR 0041. No painel continuam *à espera de implementação*.
+
+### Q-170 · O acampamento perde-se quando o reino cresce por cima dele (era a Q-E)
+- **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** o acampamento acaba quando o reino cresce por cima dele, e as ruínas aceitam uma casa de cidadãos.
+- **Por aplicar:** a casa de cidadãos é uma obra nova, com números novos (teto 3, recrutas mais caros) que o dossiê não dá.
+- **Onde:** Q-110, Q-122; `greybox.gd` (`ACAMPAMENTOS_X`), `camps.gd`.
+- **Proposta:** uma muralha levantada além do acampamento, ou o Amargueiro ao lado abatido, acaba com ele; as ruínas
+  aceitam uma casa de cidadãos (teto 3, recrutas mais caros).
+- **Porque não se aplicou:** muda as tuas respostas das Q-110 e Q-122 sobre de onde vem gente nova, e acrescenta uma
+  obra com números novos.
+- **Decide:** tu.
+
+### Q-171 · Alicerces: o que o decay leva deixa marca (era a Q-G)
+- **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** os alicerces: o que o decay não guarda fica em ruína que se reergue a uma fração do investido.
+- **Por aplicar:** o número novo, `decay_rebuild_frac`, e o reerguer como obra nova com quem estiver no sítio.
+- **Onde:** §16, Q-134, Q-108; `legacy.gd` (`kept`), `repair_work.gd`.
+- **Proposta:** as obras que o decay não guarda ficam em ruína com degrau, caminho e variante, e reerguem-se a uma
+  fração do investido (`decay_rebuild_frac`).
+- **O que se aprendeu ao aplicar:** a ruína que já existe (Q-108) não serve tal e qual. Repará-la custa o degrau em que
+  estava, o que já é uma fração, mas pede construtores — e os construtores saem da Casa de Treino, que pode ser uma das
+  ruínas: o jogo novo ficava sem maneira de a levantar. O alicerce tem de se reerguer como obra nova, com quem estiver
+  no sítio, e aí precisa do número novo.
+- **Decide:** tu.
+
+### Q-172 · Estações e um inverno (era a Q-H)
+- **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Adoro isso, mas deve elaborar alternativas funcionais para obter recursos, é mais dificil, mas se a pessoa se planeja, é possível passar pelo inverno»*.
+- **Por aplicar:** as estações, o inverno que para os canteiros e baixa a caça, e as alternativas que o compensam (celeiro, pesca, a caça que resta).
+- **Onde:** §02 (a tabela do Two Crowns: estação de 16 dias), §05, `rot.csv` (`peak_every`).
+- **O que já foi feito:** a primeira metade da proposta, que é só apresentação: a lua do `SkyView` nasce cheia na
+  véspera da noite funda e vem vermelha nela (`tests/lua_do_pico_test.gd`).
+- **Proposta:** se quiseres uma pressão de longo prazo, estações com um inverno que para os canteiros e baixa a caça. É
+  mecânica nova: o dossiê só cita estações no §02.
+- **Decide:** tu.
 
 ### Q-174 · Obras nas terras geradas
+- **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Outos impérios e mercenários tem obras, casas e construções únicas, tudo são ecossistemas que devem fazer sentido e funcionar individualmente»*.
+- **Por aplicar:** as obras próprias de cada povo e dos acampamentos de mercenários, a funcionar por si.
 - **Onde:** §21 (cada linha do `segments.csv` tem `build_slots`), §07, §13; `WildSegments`, `Greybox`.
 - **O que está:** as terras geradas não têm sítios de obra. Só a região de casa se constrói: os `build_slots` das
   linhas dos trilhos (1 a 3) não se usam.
@@ -22,6 +56,8 @@
 - **Decide:** tu.
 
 ### Q-175 · Cada povo com a sua tabela de segmentos
+- **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Adoro isso, mas detesto o nome Paul, deve haver um nome melhor para o povo do pântano, que nome horrível é Paul, parece um nome de alguém, não de um povo»*.
+- **Por aplicar:** uma tabela de segmentos por povo, e um nome novo para o povo do pântano (a proposta de trabalho é **a Bruma**), com o id mudado em todas as tabelas e uma migração do save.
 - **Onde:** §21 (*«pesos por região»*), §04; `segments.csv` (só há o kit dos Enramados), `SimFactory.segment_kit()`.
 - **O que está:** todos os trilhos e terras se sorteiam das linhas dos Enramados, desenhadas nas cores e nas plantas
   do bioma de cada povo. O poço, a carroça e a pedra de pé são os mesmos na terra da Geada e na da Fornalha.
@@ -31,6 +67,8 @@
 - **Decide:** tu (e a arte de cada assunto).
 
 ### Q-176 · O que há numa masmorra
+- **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Adoro isso, é importante haver variação e ter uma possibilidade da recompensa daquela masmorra ser 2 vezes ou 3 vezes o habitual para insentivar a exploração»*.
+- **Por aplicar:** o que há em cada masmorra (o monte, um guarda que leva as moedas, ou uma relíquia) e o prémio a dobrar ou a triplicar. O sorteio puro está esboçado; falta ligá-lo à fronteira.
 - **Onde:** §17 (os segredos), §21 (a ruína *«traz uma passagem para o corte de solo»*), §11; `Frontier._aplicar`.
 - **O que está:** a masmorra é uma câmara com um monte de 3 a 6 moedas, que cai só da primeira vez.
 - **Proposta:** pôr lá um dos segredos do §17, ou uma criatura que guarde as moedas. As duas coisas mudam números e
@@ -38,6 +76,8 @@
 - **Decide:** tu.
 
 ### Q-177 · O mercenário das trilhas: soldo e lealdade
+- **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** o mercenário das trilhas cobra soldo, deserta primeiro, e o acampamento esvazia-se depois de três contratados.
+- **Por aplicar:** o soldo do mercenário, a deserção por ele primeiro e o contador do acampamento.
 - **Onde:** §14, Q-144 (a deserção pelo soldo em atraso), `units.csv` (`mercenary`), `Camps.mercenaries`.
 - **O que está:** no acampamento espera sempre um mercenário, que se contrata pelo preço de recrutamento dele como
   qualquer recruta. A alvorada repõe-no quando é contratado, um de cada vez.
@@ -46,6 +86,8 @@
 - **Decide:** tu.
 
 ### Q-178 · O rei na terra de outro povo
+- **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Quem viaja são as classes, o rei fica sempre no império original, ao conquistar outros impérios que tem seus sistemas completos com tropas, defesas etc, o jogador tem a possibilidade de fazer uma viagem rápida para aquele reino, se abrigar ali durante a noite enquanto a podridão ataca, e talvez seguir para outro local no dia seguinte»*.
+- **Por aplicar:** a viagem rápida de uma classe para um reino conquistado, o abrigo lá durante a noite, e seguir no dia seguinte. Trocar de classe (Q-162) já existe e é a base.
 - **Onde:** §13 (reconhecimento, marcha, cerco), ADR 0035, Q-166; `WildLands` (a fortaleza é cenário).
 - **O que está:** o rei anda pela terra de outro povo e vê o limiar, o povoado e a fortaleza, com a bandeira dele ou a
   tua se o povo for vassalo. Nada ali reage a ele, e a conquista continua a ser a marcha da bifurcação.
@@ -54,6 +96,8 @@
 - **Decide:** tu.
 
 ### Q-179 · De onde vem a noite, agora que o mundo tem pontas
+- **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«A podridão vem de fissuras no chão, podendo vir de um só lado, ou dois dois, de forma aleatória e bem elaborada para ser equilibrada e mais branda nas primeiras noites e ir subindo a dificuldade confrme os dias passam»*.
+- **Por aplicar:** as fissuras, a noite de um lado ou dos dois, e a curva medida contra o §66.
 - **Onde:** §05, §74, ADR 0034 (a Podridão e o Lume); `NightSystem`, `Lume`.
 - **O que está:** a Podridão nasce e cresce na região, como antes. No Two Crowns o perigo vem das duas pontas da
   ilha, dos portais; aqui as pontas são bordas, e não mandam nada.
@@ -62,6 +106,7 @@
 - **Decide:** tu.
 
 ### Q-180 · O mapa revelado como legado (§16)
+- **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** o legado guarda até onde o mundo foi gerado de cada lado, e a partida seguinte mostra essas terras desabitadas.
 - **Onde:** §16 (*«ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos
   encontrados»*), a lei da travessia (*«uma região revelada do mapa volta a ficar escura, à sorte»*); `Legacy`.
 - **O que está:** o mundo gerado vai no save da partida, e o herdeiro anda no mesmo mundo. Uma partida nova depois
@@ -71,6 +116,7 @@
 - **Decide:** tu.
 
 ### Q-182 · O subsolo tapado: o que sobe de baixo, e a cavidade já achada
+- **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** a terra abre-se à volta de uma criatura do subsolo perto de uma boca aberta, e a cavidade visitada fica com a boca aberta.
 - **Onde:** §11 (*«o jogador vê os dois planos ao mesmo tempo — que é o que torna a segunda camada uma tática»*;
   *«uma cavidade não descoberta desenha-se como terra normal»*), §25 (12:00, *«um Rastejante entra pela passagem que
   abriste»*), Q-181, ADR 0039; `SoilCover`.
@@ -82,90 +128,7 @@
   fica com a boca aberta ao pé da passagem, e o resto tapado.
 - **Decide:** tu. As duas são reversíveis e só mexem no `SoilCover`.
 
-## Abertas — do relatório Kingdom (29/09/2026)
-
-> As seis perguntas do `docs/recovery/ANALISE-KINGDOM-2026-09-29.md` (secção 9) que o *«aplique o relatório»* não
-> fechou: cada uma muda uma decisão tua, pede uma medição antes, ou esbarrou em alguma coisa ao aplicar (ADR 0037). As
-> outras três estão aplicadas: Q-164, Q-165 e Q-166, em *"Aplicadas do relatório Kingdom"*.
-
-### Q-167 · A coroa no chão, recuperável até à alvorada (era a Q-B do relatório)
-- **Onde:** §02 (*«as moedas caem no chão... os inimigos roubam-nas»*), §16 (ressurreição até ao amanhecer), §74,
-  ADR 0034, Q-114 (o escudo do escudeiro); `combat_system.gd`, `class_system.gd`, `squire.gd`.
-- **O que está:** a moeda já compra proteção ao rei pelo escudo do escudeiro (5 moedas, 5 golpes fracos ou 2 fortes).
-  A derrota continua binária: o rei a 0 passa ao herdeiro ou acaba.
-- **Proposta:** medir primeiro quanto o escudo segura numa partida pilotada. Se faltar tensão, a coroa cai quando o rei
-  cai e recupera-se até à alvorada, se nenhuma criatura a apanhar; na mancha, alimenta o Lume. Não acrescentar uma
-  segunda camada de moedas-armadura no saco, que duplicaria o escudeiro.
-- **Por medir:** o piloto da vistoria ainda não arma o escudeiro e cai ao dia 4 (CONT-05); a medição espera por um
-  piloto que chegue lá.
-- **Decide:** tu.
-
-### Q-168 · A tropa armada que cai larga a arma antes de morrer (era a Q-C)
-- **Onde:** §16, §50 (*«toda a morte larga»*), §74; `weapon_dropped` (§46).
-- **Proposta:** a 0 de vida, quem tem arma larga-a e foge como trabalhador; só morre quem cai sem arma. Dependia da
-  banca do arco, que já está aplicada (Q-165).
-- **Decide:** tu (é uma decisão de tom).
-
-### Q-169 · Fôlego para correr, e o cavalo de tração como primeira montaria (era a Q-D)
-- **Onde:** Q-149, §12, §02 (o cavalo de tração justifica os preços acima de 33).
-- **Proposta:** correr gasta fôlego, que volta com o rei parado; o cavalo de tração (1,7×, saco a dobrar) é a primeira
-  montaria.
-- **Porque não se aplicou:** muda a tua resposta da Q-149 (correr a 1,8 vezes, sem limite).
-- **Decide:** tu.
-
-### Q-170 · O acampamento perde-se quando o reino cresce por cima dele (era a Q-E)
-- **Onde:** Q-110, Q-122; `greybox.gd` (`ACAMPAMENTOS_X`), `camps.gd`.
-- **Proposta:** uma muralha levantada além do acampamento, ou o Amargueiro ao lado abatido, acaba com ele; as ruínas
-  aceitam uma casa de cidadãos (teto 3, recrutas mais caros).
-- **Porque não se aplicou:** muda as tuas respostas das Q-110 e Q-122 sobre de onde vem gente nova, e acrescenta uma
-  obra com números novos.
-- **Decide:** tu.
-
-### Q-171 · Alicerces: o que o decay leva deixa marca (era a Q-G)
-- **Onde:** §16, Q-134, Q-108; `legacy.gd` (`kept`), `repair_work.gd`.
-- **Proposta:** as obras que o decay não guarda ficam em ruína com degrau, caminho e variante, e reerguem-se a uma
-  fração do investido (`decay_rebuild_frac`).
-- **O que se aprendeu ao aplicar:** a ruína que já existe (Q-108) não serve tal e qual. Repará-la custa o degrau em que
-  estava, o que já é uma fração, mas pede construtores — e os construtores saem da Casa de Treino, que pode ser uma das
-  ruínas: o jogo novo ficava sem maneira de a levantar. O alicerce tem de se reerguer como obra nova, com quem estiver
-  no sítio, e aí precisa do número novo.
-- **Decide:** tu.
-
-### Q-172 · Estações e um inverno (era a Q-H)
-- **Onde:** §02 (a tabela do Two Crowns: estação de 16 dias), §05, `rot.csv` (`peak_every`).
-- **O que já foi feito:** a primeira metade da proposta, que é só apresentação: a lua do `SkyView` nasce cheia na
-  véspera da noite funda e vem vermelha nela (`tests/lua_do_pico_test.gd`).
-- **Proposta:** se quiseres uma pressão de longo prazo, estações com um inverno que para os canteiros e baixa a caça. É
-  mecânica nova: o dossiê só cita estações no §02.
-- **Decide:** tu.
-
 ## Abertas — abertas pelas respostas do painel (29/09/2026)
-
-### Q-157 · A noite fica exponencialmente mais difícil — a partir de que noite?
-- **Onde:** Q-151, §74, §66; `mass_growth` e `growth_from_night` em `rot.csv`.
-- **O que pediste:** *«mais brando até a noite 5, depois conforme os dias passam se torna mais difícil
-  exponencialmente»*.
-- **O que foi feito:** as primeiras cinco noites continuam brandas; da 6 à 10 a massa sobe pela fórmula da §74
-  (+18 por noite); a partir da 11 multiplica-se por 1,06 a cada noite — à noite 20 pesa 1,8 vezes, à 30 pesa 3,2.
-- **Porque não começa na 6:** medido, com o crescimento logo a seguir à noite 5, qualquer ritmo a partir de 2% por
-  noite derruba no dia 10 a defesa que o §66 manda aguentar dez noites — e o §66 é o portão da Fase 1.
-- **Proposta:** fica assim, a crescer a partir da noite 11. As alternativas são começar na 6 com um ritmo mais
-  baixo e mexer no §66, ou mudar a defesa de referência do §66.
-- **Decide:** tu.
-
-### Q-158 · A Colheita Forçada devolve menos do que custa
-- **Onde:** Q-145, §15 (os impulsos), ADR 0028 (o preço cresce com a produção); `impulses.csv`,
-  `tests/colheita_forcada_test.gd`.
-- **O que é:** um impulso do rei: paga-se, e nesse dia a produção rende 1,8 vezes — mas no dia seguinte as
-  plantações param.
-- **O que se mediu:** com as condições reais — a ganância leva a parte dela, o preço é o do dia e o impulso só
-  pesa nas fases que faltam —, no *greybox* de três fontes (canteiro, galinheiro, pesqueiro) cada moeda paga
-  devolve **0,83**, em qualquer dia, porque o ganho e o preço crescem ao mesmo ritmo. Nunca compensa. O teste que
-  pede que compense nalgum dia está saltado com esta pergunta.
-- **Proposta:** baixar o preço base de 4 para 3 (devolve perto de 1,1 com três fontes, e mais com mais fontes). As
-  alternativas são subir o que ela rende (`benefit_value`), ou deixá-la como impulso de aflição: moedas já, com
-  perda.
-- **Decide:** tu.
 
 ### Q-159 · A marcha no lugar da travessia (ADR 0035) — confirma
 - **Onde:** Q-135 (aprovada: o Verbo 2 na bifurcação acaba a região, e o rei leva a comitiva), Q-146 (*«o rei
@@ -184,49 +147,6 @@
 - **Fechada pela Q-166 (29/09/2026):** *«aplique o relatório»* — o relatório Kingdom (K6) propôs o cerco, e ficou
   aplicado: a marcha continua no lugar da travessia, e agora pode precisar de mais do que uma ida, e quem vai pode não
   voltar.
-
-### Q-160 · O prato das ofertas: de que largura? (a Q-098, em palavras simples)
-- **Onde:** §75; `offer_plate_px` em `rot.csv`.
-- **O que é o prato:** quando a Podridão te faz uma oferta, à noite, põe no chão um alguidar de barro — o «prato».
-  Aceitas largando lá dentro o que ela pede; se não largares nada até o tempo acabar, é uma recusa.
-- **A dúvida:** o dossiê diz que o prato tem *«o tamanho de um slot de construção»*, mas os sítios de construção têm
-  larguras diferentes. A largura decide quão perto do prato o rei tem de estar para a moeda contar. Hoje são
-  **96 px**: a largura de um canteiro, o sítio de construção mais comum.
-- **Proposta:** ficam os 96 px, e o *playtest* diz se é preciso alargar.
-- **Decide:** tu, ou o *playtest*.
-
-### Q-161 · A árvore velha do início conta para a noite? (a Q-104, em palavras simples)
-- **Onde:** §83 (o minuto 0:00), §74, §25 (*«a noite 1 é ganha de certeza»*); `AmargueiroSystem.Fate.OLD`.
-- **O que é:** quando o jogo começa, já há uma árvore amarga (um Amargueiro) de pé, perto da estacaria da esquerda.
-  Os Amargueiros de pé tornam cada noite mais forte: +22 de massa cada um.
-- **A dúvida:** se esta árvore contasse, a primeira noite — que o §25 diz que tem de ser ganha de certeza — ficava
-  mais forte do que o dossiê manda. Por isso está como **paisagem de antes de ti**: não conta para a noite, não se
-  corta e não se consagra.
-- **Proposta:** fica como paisagem. A alternativa é contar desde o início e poder cortar-se, como as outras — e a
-  primeira noite fica mais difícil.
-- **Decide:** tu.
-
-### Q-162 · O arqueiro, o bardo e o diplomata jogáveis têm corpo de tropa
-- **Onde:** Q-097 (*«os personagens jogáveis são maiores que tropas e o rei é maior que os personagens
-  jogáveis»*), §08 (trocar de classe é o Verbo 2 sobre uma tropa da classe), §22, `units.csv`.
-- **O que está:** o Trepador e os dois cavaleiros só existem como personagens jogáveis, e ficaram na escala 3. O
-  arqueiro, o bardo e o diplomata são ao mesmo tempo tropa (ou ofício) e o corpo da classe jogável — e ficaram na
-  escala 2, a de tropa.
-- **Proposta:** cada uma destas três classes ganha um corpo jogável próprio, na escala 3, que é o que assumes com o
-  Verbo 2; a tropa do mesmo nome fica na 2. Custa três corpos de arte a mais por povo. A alternativa é aceitar a
-  excepção: estas três jogam-se do tamanho de tropa.
-- **Decide:** tu.
-
-### Q-163 · O que cada armazenamento leva além do archote
-- **Onde:** Q-153, §08, `storages.csv`, `docs/art/ASSET_BIBLE.md`.
-- **O que está:** cada personagem jogável tem o seu armazenamento, desenhado na camada `Equipments`, e hoje todos
-  levam só archotes — de 1 a 4. As moedas vão no saco do corpo. O archote é o único item que o jogo já tem para
-  levar.
-- **Proposta:** cada tipo ganha o item da classe quando o sistema dela existir: a aljava, flechas de marca (hoje o
-  arqueiro marca sem limite); o alforge do bardo, as canções que encantam; o cinto de escalada, a corda para subir
-  sem escada; os alforges, a ração do cavalo; a pasta, os tratados do §14. Os tetos ficam em `storages.csv`, como
-  os archotes.
-- **Decide:** tu.
 
 ## Abertas — balanceamento e design
 
@@ -424,9 +344,124 @@
   de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
 - **Decide:** tu.
 
+## Decididas pelo dono no painel (30/09/2026)
+
+> As respostas do painel de 30/09/2026 que estão aplicadas (ADR 0041). A Q-150 está na secção da auditoria de 27/09,
+> onde nasceu; as Q-164 a Q-166, Q-173 e Q-181, confirmadas, ficam nas secções das aplicadas.
+
+### Q-157 · A noite fica exponencialmente mais difícil — a partir de que noite?
+- **Decidido pelo dono (painel, 30/09/2026 — aprovar a proposta):** fica assim: as cinco primeiras noites brandas, a massa a crescer pela §74 da 6 à 10 e 1,06 por noite a partir da 11.
+- **Onde:** Q-151, §74, §66; `mass_growth` e `growth_from_night` em `rot.csv`.
+- **O que pediste:** *«mais brando até a noite 5, depois conforme os dias passam se torna mais difícil
+  exponencialmente»*.
+- **O que foi feito:** as primeiras cinco noites continuam brandas; da 6 à 10 a massa sobe pela fórmula da §74
+  (+18 por noite); a partir da 11 multiplica-se por 1,06 a cada noite — à noite 20 pesa 1,8 vezes, à 30 pesa 3,2.
+- **Porque não começa na 6:** medido, com o crescimento logo a seguir à noite 5, qualquer ritmo a partir de 2% por
+  noite derruba no dia 10 a defesa que o §66 manda aguentar dez noites — e o §66 é o portão da Fase 1.
+- **Proposta:** fica assim, a crescer a partir da noite 11. As alternativas são começar na 6 com um ritmo mais
+  baixo e mexer no §66, ou mudar a defesa de referência do §66.
+- **Decide:** tu.
+
+### Q-158 · A Colheita Forçada devolve menos do que custa
+- **Decidido pelo dono (painel, 30/09/2026 — aprovar a proposta):** o preço base passa de 4 para 3.
+- **Aplicado (ADR 0041):** `impulses.csv` (`coin_cost` 3); o teste `tests/colheita_forcada_test.gd` que pedia que compensasse nalgum dia deixou de estar saltado e passa: cada moeda devolve perto de 1,1.
+- **Onde:** Q-145, §15 (os impulsos), ADR 0028 (o preço cresce com a produção); `impulses.csv`,
+  `tests/colheita_forcada_test.gd`.
+- **O que é:** um impulso do rei: paga-se, e nesse dia a produção rende 1,8 vezes — mas no dia seguinte as
+  plantações param.
+- **O que se mediu:** com as condições reais — a ganância leva a parte dela, o preço é o do dia e o impulso só
+  pesa nas fases que faltam —, no *greybox* de três fontes (canteiro, galinheiro, pesqueiro) cada moeda paga
+  devolve **0,83**, em qualquer dia, porque o ganho e o preço crescem ao mesmo ritmo. Nunca compensa. O teste que
+  pede que compense nalgum dia está saltado com esta pergunta.
+- **Proposta:** baixar o preço base de 4 para 3 (devolve perto de 1,1 com três fontes, e mais com mais fontes). As
+  alternativas são subir o que ela rende (`benefit_value`), ou deixá-la como impulso de aflição: moedas já, com
+  perda.
+- **Decide:** tu.
+
+### Q-160 · O prato das ofertas: de que largura? (a Q-098, em palavras simples)
+- **Decidido pelo dono (painel, 30/09/2026 — aprovar a proposta):** ficam os 96 px; o *playtest* diz se é preciso alargar.
+- **Onde:** §75; `offer_plate_px` em `rot.csv`.
+- **O que é o prato:** quando a Podridão te faz uma oferta, à noite, põe no chão um alguidar de barro — o «prato».
+  Aceitas largando lá dentro o que ela pede; se não largares nada até o tempo acabar, é uma recusa.
+- **A dúvida:** o dossiê diz que o prato tem *«o tamanho de um slot de construção»*, mas os sítios de construção têm
+  larguras diferentes. A largura decide quão perto do prato o rei tem de estar para a moeda contar. Hoje são
+  **96 px**: a largura de um canteiro, o sítio de construção mais comum.
+- **Proposta:** ficam os 96 px, e o *playtest* diz se é preciso alargar.
+- **Decide:** tu, ou o *playtest*.
+
+### Q-161 · A árvore velha do início conta para a noite? (a Q-104, em palavras simples)
+- **Decidido pelo dono (painel, 30/09/2026 — aprovar a proposta):** a árvore velha fica paisagem de antes de ti: não conta para a noite.
+- **Onde:** §83 (o minuto 0:00), §74, §25 (*«a noite 1 é ganha de certeza»*); `AmargueiroSystem.Fate.OLD`.
+- **O que é:** quando o jogo começa, já há uma árvore amarga (um Amargueiro) de pé, perto da estacaria da esquerda.
+  Os Amargueiros de pé tornam cada noite mais forte: +22 de massa cada um.
+- **A dúvida:** se esta árvore contasse, a primeira noite — que o §25 diz que tem de ser ganha de certeza — ficava
+  mais forte do que o dossiê manda. Por isso está como **paisagem de antes de ti**: não conta para a noite, não se
+  corta e não se consagra.
+- **Proposta:** fica como paisagem. A alternativa é contar desde o início e poder cortar-se, como as outras — e a
+  primeira noite fica mais difícil.
+- **Decide:** tu.
+
+### Q-162 · O arqueiro, o bardo e o diplomata jogáveis têm corpo de tropa
+- **Decidido pelo dono (painel, 30/09/2026 — outra resposta):** *«As tropas podem ter similaridades as classes jogáveis, mas elas tem tamanho de tropa padrão, as classes jogáveis são maiores do que as tropas e normalmente os imperadores são mais altos que as classes controláveis também»*.
+- **Aplicado (ADR 0041):** o arqueiro, o bardo e o diplomata ganham corpo jogável próprio na escala 3 (`archer_hero`, `bard_hero`, `diplomat_hero`, tag `playable`); as tropas do mesmo nome ficam na 2 e o rei na 4. Trocar de classe existe: o Verbo 2 sobre uma tropa tua da classe desbloqueada passa-a ao corpo jogável e o jogador conduz esse corpo (`UnitSystem.pilot`, `Roster`, `Assume`); o Verbo 2 com o corpo ao pé do rei volta ao rei. O rei largado volta ao núcleo (§08). Testes: `assumir_classe_test`, `classe_assumida_no_jogo_test`, `corpos_jogaveis_test`.
+- **Onde:** Q-097 (*«os personagens jogáveis são maiores que tropas e o rei é maior que os personagens
+  jogáveis»*), §08 (trocar de classe é o Verbo 2 sobre uma tropa da classe), §22, `units.csv`.
+- **O que está:** o Trepador e os dois cavaleiros só existem como personagens jogáveis, e ficaram na escala 3. O
+  arqueiro, o bardo e o diplomata são ao mesmo tempo tropa (ou ofício) e o corpo da classe jogável — e ficaram na
+  escala 2, a de tropa.
+- **Proposta:** cada uma destas três classes ganha um corpo jogável próprio, na escala 3, que é o que assumes com o
+  Verbo 2; a tropa do mesmo nome fica na 2. Custa três corpos de arte a mais por povo. A alternativa é aceitar a
+  excepção: estas três jogam-se do tamanho de tropa.
+- **Decide:** tu.
+
+### Q-163 · O que cada armazenamento leva além do archote
+- **Decidido pelo dono (painel, 30/09/2026 — outra resposta):** *«as classes jogáveis não tem recursos de batalha limitados, mas faz sentido as tropas terem recursos limitados, ou um certo tipo de limitação, que tem que estar sempre a economia em dia para manter o armazenamento do exercito em dia (entre outras coisas que façam sentido)»*.
+- **Aplicado (ADR 0041):** as tropas com arco levam aljava (`units.csv`, `ammo`: 30 flechas o arqueiro e o arqueiro de copa, 25 o espreitador do caniçal); cada tiro gasta uma, e com ela vazia não disparam. Na alvorada, com a banca do arco de pé (`rules.csv`, `ammo_depot`), as aljavas repõem-se do saco do rei a 12 flechas por moeda (`arrows_per_coin`) — de 1 a 7 moedas por alvorada na defesa do décimo dia. O corpo das classes jogáveis e o rei não têm teto. Medido: o arqueiro da torre dá até 27 tiros na noite mais dura. O banco de ensaio do §66 recebe as aljavas cheias, como recebe o saco cheio do soldo (`tests/abastecimento_test.gd`). Os outros itens por classe (as canções, a corda, os tratados) ficam para quando os sistemas deles existirem.
+- **Onde:** Q-153, §08, `storages.csv`, `docs/art/ASSET_BIBLE.md`.
+- **O que está:** cada personagem jogável tem o seu armazenamento, desenhado na camada `Equipments`, e hoje todos
+  levam só archotes — de 1 a 4. As moedas vão no saco do corpo. O archote é o único item que o jogo já tem para
+  levar.
+- **Proposta:** cada tipo ganha o item da classe quando o sistema dela existir: a aljava, flechas de marca (hoje o
+  arqueiro marca sem limite); o alforge do bardo, as canções que encantam; o cinto de escalada, a corda para subir
+  sem escada; os alforges, a ração do cavalo; a pasta, os tratados do §14. Os tetos ficam em `storages.csv`, como
+  os archotes.
+- **Decide:** tu.
+
+### Q-167 · A coroa no chão, recuperável até à alvorada (era a Q-B do relatório)
+- **Decidido pelo dono (painel, 30/09/2026 — aprovar a proposta):** a coroa cai quando o rei cai e recupera-se até à alvorada, se nenhuma criatura a apanhar; na mancha, alimenta o Lume.
+- **Aplicado (ADR 0041):** `CrownDrop`, `CrownWatch`, `CrownView`; `rules.csv` (`crown_grab_px` 24, `crown_rise_health` 0,5). Só a morte em combate deixa a coroa no chão; quem o jogador conduz apanha-a e o rei levanta-se; na alvorada levanta-se se ninguém a levou (`tests/coroa_no_chao_test.gd`).
+- **Onde:** §02 (*«as moedas caem no chão... os inimigos roubam-nas»*), §16 (ressurreição até ao amanhecer), §74,
+  ADR 0034, Q-114 (o escudo do escudeiro); `combat_system.gd`, `class_system.gd`, `squire.gd`.
+- **O que está:** a moeda já compra proteção ao rei pelo escudo do escudeiro (5 moedas, 5 golpes fracos ou 2 fortes).
+  A derrota continua binária: o rei a 0 passa ao herdeiro ou acaba.
+- **Proposta:** medir primeiro quanto o escudo segura numa partida pilotada. Se faltar tensão, a coroa cai quando o rei
+  cai e recupera-se até à alvorada, se nenhuma criatura a apanhar; na mancha, alimenta o Lume. Não acrescentar uma
+  segunda camada de moedas-armadura no saco, que duplicaria o escudeiro.
+- **Por medir:** o piloto da vistoria ainda não arma o escudeiro e cai ao dia 4 (CONT-05); a medição espera por um
+  piloto que chegue lá.
+- **Decide:** tu.
+
+### Q-168 · A tropa armada que cai larga a arma antes de morrer (era a Q-C)
+- **Decidido pelo dono (painel, 30/09/2026 — aprovar a proposta):** quem tem arma larga-a a 0 de vida e foge como trabalhador; só morre quem cai sem arma.
+- **Aplicado (ADR 0041):** `Disarm`: a tropa armada que cai larga a arma (`weapon_dropped`), fica vagabundo com o saco dele e foge para o núcleo (`tests/desarmar_test.gd`).
+- **Onde:** §16, §50 (*«toda a morte larga»*), §74; `weapon_dropped` (§46).
+- **Proposta:** a 0 de vida, quem tem arma larga-a e foge como trabalhador; só morre quem cai sem arma. Dependia da
+  banca do arco, que já está aplicada (Q-165).
+- **Decide:** tu (é uma decisão de tom).
+
+### Q-169 · Fôlego para correr, e o cavalo de tração como primeira montaria (era a Q-D)
+- **Decidido pelo dono (painel, 30/09/2026 — outra resposta):** *«O personagem que o jogador controla corre a 1,8x, o cavalo deve correr a 2,1x. O jogador pode armazenar até 20 moedas na montaria ou outros itens, algo similar a red dead redemption 2»*.
+- **Aplicado (ADR 0041):** sem fôlego: correr continua sem custo, a 1,8 vezes, agora para quem se conduz (rei ou corpo de classe). O cavalo de tração compra-se no estábulo (30 moedas, largadas pelo rei no estábulo de pé), que entra na região a leste; quem se conduz monta-o ao passar lá. Montado anda a 1,7 e galopa a 2,1 (`mounts.csv`, `run_multiplier`); os alforges levam 20 moedas por cima do saco (`saddlebag_coins`) e os archotes deles prolongam o armazenamento de quem monta. Quem desce ao subsolo desmonta; se quem monta cai, o cavalo volta ao estábulo (`tests/montaria_test.gd`).
+- **Onde:** Q-149, §12, §02 (o cavalo de tração justifica os preços acima de 33).
+- **Proposta:** correr gasta fôlego, que volta com o rei parado; o cavalo de tração (1,7×, saco a dobrar) é a primeira
+  montaria.
+- **Porque não se aplicou:** muda a tua resposta da Q-149 (correr a 1,8 vezes, sem limite).
+- **Decide:** tu.
+
 ## Aplicadas do mundo contínuo — os pedidos do dono de 30/09/2026
 
 ### Q-181 · Em baixo é só paisagem: o subsolo aparece ao descer
+- **Confirmado pelo dono (painel, 30/09/2026 — aprovar):** fica assim.
 - **Decidido pelo dono (30/09/2026), com uma captura das terras geradas:** *«O subsolo só fica aparente ao acessá-lo,
   quero que tenha vegetação aparente sempre, ou lagos, caminhos, dentre outras coisas, mas o subsolo só aparece ao
   acessar eles»*. Aplicado (ADR 0039).
@@ -448,6 +483,7 @@
 - **Como desfazer:** tirar o nó `Terra` da `game.tscn`.
 
 ### Q-173 · O mundo contínuo: gerado ao andar, gravado, com trilhas entre os povos e uma borda no fim
+- **Confirmado pelo dono (painel, 30/09/2026 — aprovar):** fica assim.
 - **Decidido pelo dono (30/09/2026):** *«os personagens não devem caminhar sobre nada, o mapa deve ser gerado
   proceduralmente como minecraft, conforme a pessoa anda é gerado mapa que faz sentido, e o mapa fica salvo daquele
   jeito o resto da gameplay (…) coloque um limite saudável de até quanto pode se expandir e com algo ao fim como é em
@@ -491,6 +527,7 @@
 > as outras. As seis que ficaram estão nas Q-167 a Q-172.
 
 ### Q-164 · Recomeçar do zero pela pausa (era a Q-I do relatório)
+- **Confirmado pelo dono (painel, 30/09/2026 — aprovar):** fica assim.
 - **Decidido pelo dono (29/09/2026):** o pedido — *«uma forma de poder reiniciar o jogo do 0 a qualquer momento no
   menu»* — e depois *«aplique o relatório»*, que trazia o desenho (secção 7). Aplicado.
 - **Onde:** §16, §24, §62; `FreshStart` (`src/core/fresh_start.gd`), `FreshStartPanel` (`src/ui/fresh_start_panel.gd`),
@@ -505,6 +542,7 @@
 - **Como desfazer:** tirar o `FreshStartPanel` da pausa.
 
 ### Q-165 · A banca do arco: o trabalhador passa a arqueiro por 2 moedas (era a Q-A)
+- **Confirmado pelo dono (painel, 30/09/2026 — aprovar):** fica assim.
 - **Decidido pelo dono (29/09/2026):** *«aplique o relatório»* — a proposta K1-a, a do Kingdom. Aplicada.
 - **Onde:** §07, §09, §25 (o minuto 1:10 já mostra *«um segundo vagabundo com arco»*), §66; `buildings.csv`
   (`bow_rack`), `units.csv` (`archer`: `trained_at`, `train_days`), `TrainingSystem`, `BowRacks`;
@@ -523,6 +561,7 @@
 - **Como desfazer:** tirar a linha do `buildings.csv` e o `BowRacks.author()` do `Greybox`.
 
 ### Q-166 · O cerco da marcha: a fortaleza tem firmeza, e quem marcha pode não voltar (era a Q-F; fecha a Q-159)
+- **Confirmado pelo dono (painel, 30/09/2026 — aprovar):** fica assim.
 - **Decidido pelo dono (29/09/2026):** *«aplique o relatório»* — o cerco do K6. Aplicado.
 - **Onde:** §13 (reconhecimento, marcha, cerco), Q-159, ADR 0035; `March` (`fortress`, `firmness`, `siege`,
   `survivors`), `Realm`, `GuideSites.march`, `SaveMigrations` (v3), `economy.csv`; `tests/cerco_test.gd`,
@@ -2480,6 +2519,8 @@
   de 27/09 (§6.5) diz ser um diferencial do jogo.
 
 ### Q-150 · Um mundo mais vivo, gerado pela semente (terras bravias)
+- **Decidido pelo dono (painel, 30/09/2026 — outra resposta):** *«O rei pode sair até 50 metros ou uma distancia que faz sentido do império, quem sai mais pra longe são as classes jogáveis. As caças devem aparecer de onde faça sentido, de arbustos, de arvores, de lagos, de rochas, de buracos, etc»*.
+- **Aplicado (ADR 0041):** o rei anda até `king_leash_px` (1440 px, cerca de 50 m à escala do rei) para lá da região de casa; os corpos das classes jogáveis vão até à borda do mundo gerado. A caça nasce de sítios — arbustos, árvores, lagos, rochas e buracos (`HuntWatch.SITIOS`) —, cada bicho dos sítios onde faz sentido (`wildlife.csv`, `sources`): o coelho dos arbustos e dos buracos, o veado das árvores e dos lagos. O save passa à versão 5 (`tests/caca_dos_sitios_test.gd`). Fecha o (2) desta pergunta; fica o (3), a arte.
 - **Onde:** pedido do dono (28/09/2026: *"fazer o mundo ser mais vivo, ter mais animais, vegetação, e que se
   expanda de forma generativa, não seja limitado"*); §11 (os planos), §21 (a região), §22 (a profundidade),
   §80 (as duas frias), Q-135 (a travessia), `biomes.csv`, `src/world/wilds.gd`.

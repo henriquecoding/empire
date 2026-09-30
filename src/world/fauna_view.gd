@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 		_enxame = Wilds.swarm(_dia)
 	for faixa in _luzes.size():
 		_acender(_luzes[faixa], faixa, fase, relogio.phase_progress())
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	var rei_aqui := i != UnitSystem.NENHUM and int(SimLoop.units.bands[i]) == Band.Kind.SURFACE
 	_fauna.tick(delta, SimLoop.units.xs[i] if rei_aqui else 0.0, rei_aqui)
 	queue_redraw()

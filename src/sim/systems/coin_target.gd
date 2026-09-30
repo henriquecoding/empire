@@ -53,6 +53,22 @@ static func pays(moedas: CoinSystem, c: int, vaga: BuildSlot) -> bool:
 	return moedas.targets[c] == QUALQUER and absf(moedas.xs[c] - vaga.x) <= vaga.width * METADE
 
 
+## Apanha as moedas pousadas que pagam `vaga` (pays()), ate `falta`; devolve o valor. Os
+## ids recolhem-se antes de remover: o remove() troca com a ultima e mexe na ordem.
+static func take(moedas: CoinSystem, vaga: BuildSlot, falta: int) -> int:
+	var ids := PackedInt32Array()
+	for c in moedas.count():
+		if pays(moedas, c, vaga):
+			ids.append(moedas.ids[c])
+	var valor := 0
+	for coin_id in ids:
+		if valor >= falta:
+			break
+		valor += moedas.amounts[moedas.index_of(coin_id)]
+		moedas.remove(coin_id)
+	return valor
+
+
 ## Um save anterior ao destino nao o traz: as moedas que ja la estavam ficam sem
 ## destino, e apanham-se como as outras (§62, degradar em vez de recusar).
 static func pad(moedas: CoinSystem) -> void:

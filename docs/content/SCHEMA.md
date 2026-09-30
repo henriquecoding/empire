@@ -30,7 +30,7 @@ Script `src/sim/data/clock_data.gd` · layout `rows` · 1 linha(s) · §69: o pr
 
 ## `units.csv` → `data/units/{id}.tres`
 
-Script `src/sim/data/unit_data.gd` · layout `rows` · 24 linha(s) · §07 §08 §09 §44
+Script `src/sim/data/unit_data.gd` · layout `rows` · 27 linha(s) · §07 §08 §09 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -55,6 +55,7 @@ Script `src/sim/data/unit_data.gd` · layout `rows` · 24 linha(s) · §07 §08 
 | `tags` | Array[StringName] | v5.2 |  |
 | `job_affinity` | Dictionary | v5.2 |  |
 | `coin_capacity` | int | v5.2 |  |
+| `ammo` | int | v5.2 |  |
 | `trained_at` | StringName | v5.2 |  |
 | `train_days` | int | v5.2 |  |
 | `ability` | StringName | v5.2 |  |
@@ -184,6 +185,7 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `verb` | StringName |  | acao propria da classe (§24: arqueiro marca alvo) |
 | `fights` | bool |  |  |
 | `storage` | StringName |  |  |
+| `troop` | StringName |  |  |
 | `unlock` | StringName | Desbloqueio |  |
 | `unlock_seed_cost` | int | Desbloqueio |  |
 | `phase_count` | int | Fases |  |
@@ -285,7 +287,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 20 linha(s) · §21 §
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 130 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -417,8 +419,26 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 130 linha(s) · §06 §
 | `spirit_yield` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `spirit_vagrants` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `king_run_mult` | float | Andar — correr |  |
+| `king_leash_px` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
+
+## `rules.csv` → `data/economy/rules.tres`
+
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 10 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `crown_grab_px` | float | Coroa no chao — Q-167 |  |
+| `crown_rise_health` | float | Coroa no chao — Q-167 |  |
+| `crown_lume_feed` | int | Coroa no chao — Q-167 |  |
+| `decay_rebuild_frac` | float | Alicerces — Q-171 |  |
+| `camp_tree_px` | float | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `citizen_cap` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `citizen_price` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `mercenary_camp_hires` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
+| `arrows_per_coin` | int | Abastecimento do exercito — Q-163 |  |
+| `ammo_depot` | StringName | Abastecimento do exercito — Q-163 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
@@ -516,7 +536,10 @@ Script `src/sim/data/mount_data.gd` · layout `rows` · 6 linha(s) · §12 §44
 | `id` | StringName |  |  |
 | `display_key` | String |  |  |
 | `speed_multiplier` | float |  |  |
+| `run_multiplier` | float |  |  |
 | `coin_capacity_multiplier` | float |  |  |
+| `saddlebag_coins` | int |  |  |
+| `storage` | StringName |  |  |
 | `band` | Band.Kind |  |  |
 | `can_change_band` | bool |  |  |
 | `flies` | bool |  | libelula: ignora a faixa de superficie |
@@ -610,6 +633,7 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 3 linha(s) · §06 §
 | `shadow_width` | int |  |  |
 | `burrows_per_region` | int |  |  |
 | `burrow_wither_px` | float |  |  |
+| `sources` | Array[StringName] |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 

@@ -52,8 +52,8 @@ func _init(dados: Dictionary, curva: EconomyCurve = null) -> void:
 		rest_days = curva.deserter_rest_days
 
 
-## As tropas que a manutencao conta: tuas, vivas, sem o rei e sem quem so o
-## acompanha (a tag `follows_king`).
+## As tropas que a manutencao conta: tuas, vivas, sem o rei, sem quem so o acompanha
+## (a tag `follows_king`) e sem os corpos das classes jogaveis, que nao sao tropa (Q-162).
 func troops(unidades: UnitSystem, rei: int) -> int:
 	var n := 0
 	for i in unidades.count():
@@ -116,7 +116,7 @@ func _conta(unidades: UnitSystem, i: int, rei: int) -> bool:
 	if not unidades.alive(i) or unidades.healths[i] <= 0:
 		return false
 	var dados: UnitData = _dados.get(unidades.data_ids[i])
-	return dados == null or not dados.tags.has(&"follows_king")
+	return dados == null or not (dados.tags.has(&"follows_king") or dados.tags.has(&"playable"))
 
 
 ## A tropa mais barata sem posto; sem nenhuma, a mais barata. Empate pelo id.

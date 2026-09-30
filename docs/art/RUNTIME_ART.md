@@ -42,6 +42,9 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `climber` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `buried_knight` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
 | `sealed_knight` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
+| `archer_hero` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `bard_hero` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `diplomat_hero` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `canopy_archer` | 2 |  | `vagrant` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
 | `barge` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `counterweight_ram` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
@@ -62,7 +65,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `embassy` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `heir_house` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `root_sanctuary` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `mount_stable` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `mount_stable` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `farm` | 1 | sim | procedural (`SettlementArt`) | por codigo |
 | `fishery` | 1 | sim | procedural (`SettlementArt`) | por codigo |
 | `henhouse` | 1 | sim | procedural (`SettlementArt`) | por codigo |
