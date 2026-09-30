@@ -242,8 +242,8 @@ func _no_apanhar(unit_id: int, amount: int) -> void:
 		_dizer(HudText.coins(amount))
 
 
-## A pausa diz-se no PauseMenu, e a derrota tambem pausa: um "JOGO PAUSADO" por
-## cima de "a coroa caiu" dizia as duas coisas ao mesmo tempo (GB-16).
+## O menu mostra a pausa; o HUD deixa-lhe o cenario livre (UX-01).
 func _na_pausa(pausado: bool) -> void:
+	visible = not pausado
 	if not pausado:
 		_dizer(tr(&"TOAST_RESUMED"))

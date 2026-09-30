@@ -1597,5 +1597,19 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "UX-01": {
+  "title": "Reformular a pausa e corrigir o corte visual",
+  "porque": "O menu crescia para fora da janela e misturava opções com as ações do jogo.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/ux/UI_UX_FLOWS.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Pausa, opções, controlos e confirmação separados, com foco seguro, Voltar, pixel art e altura limitada. Compensa o canvas reduzido em telemóvel.",
+  "fora": "Novas mecânicas, cloud saves, multiplayer, áudio e remapeamento.",
+  "estado": "feito",
+  "horas": "—"
  }
 }
