@@ -34,6 +34,7 @@ fi
 
 rm -rf "$SAIDA"
 mkdir -p "$SAIDA/jogar" "$SAIDA/dossie"
+cp art/export/temporary/CREDITS.txt "$SAIDA/jogar/CREDITS.txt"
 # O Godot nao desce a build/: sem isto, o que la estiver de uma construcao
 # anterior (capturas, o proprio site) era importado e ia parar ao .pck.
 touch build/.gdignore

@@ -1,0 +1,41 @@
+Empire — arte temporaria para testes de gameplay (30/09/2026)
+
+Estes assets sao substitutos temporarios. A arte original de Henrique Passos
+continua separada em art/source/originals e art/export/enramados.
+Todos os packs abaixo foram obtidos gratuitamente, sem compras ou subscricoes.
+
+Medieval Pixel Characters (Spearman) — AnGav
+https://kiendko.itch.io/medieval-pixel-characters
+Licenca do autor: uso em projetos gratuitos e comerciais e adaptacao permitidos;
+revenda dos assets ou de versoes adaptadas proibida. Credito facultativo.
+Alteracoes no Empire: recorte uniforme, escala inteira 3x, atlas e tags.
+
+Huntress 2 — LuizMelo
+https://luizmelo.itch.io/huntress-2
+CC0-1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Alteracoes: recorte uniforme, escala 1x/2x, atlas e tags de animacao.
+
+Monsters Creatures Fantasy — LuizMelo
+https://luizmelo.itch.io/monsters-creatures-fantasy
+CC0-1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Alteracoes: recorte uniforme, escala 1x/2x, atlas e mascara de silhueta.
+
+Cave Tileset — GrafxKid
+https://grafxkid.itch.io/cave-tileset
+CC0-1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Alteracoes: selecao de tiles de superficie e ampliacao nearest 2x.
+
+Pixel Platformer — Kenney
+https://kenney.nl/assets/pixel-platformer
+CC0-1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Alteracoes: selecao de props, recorte na grelha 18x18 e ampliacao nearest 2x.
+
+Parallax Forest — ansimuz
+https://ansimuz.itch.io/parallax-forest
+CC0-1.0 no public-license.pdf incluido no pack (preservado nas fontes).
+A pagina tambem lista CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Alteracoes: selecao das camadas transparentes middle/front da versao 2 e ampliacao nearest 2x;
+composicao no parallax e iluminacao do Empire. Nao implica apoio do autor.
+
+Fontes PNG preservadas em art/source/temporary; hashes SHA-256 no manifesto.
+Exporter: tools/export_temporary.py. Os originais do Empire nao foram alterados.

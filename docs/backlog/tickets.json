@@ -1611,5 +1611,17 @@
   "fora": "Novas mecânicas, cloud saves, multiplayer, áudio e remapeamento.",
   "estado": "feito",
   "horas": "—"
+ },
+ "ART-TEMP-01": {
+  "title": "Assets gratuitos temporarios para testar a gameplay",
+  "porque": "Pedido explicito do dono: usar apenas gratuitos na main enquanto cria a arte definitiva.",
+  "spec": [
+   "docs/adr/0042-assets-gratuitos-temporarios.md"
+  ],
+  "depende": "—",
+  "feito": "Personagens, criaturas, floresta, terreno e props gratuitos integrados com creditos, testes e exports reproduziveis.",
+  "fora": "Arte definitiva e alteracoes das regras de gameplay.",
+  "estado": "feito — assets gratuitos integrados, testes, portoes e render verificados (ADR 0042).",
+  "horas": "—"
  }
 }

@@ -25,6 +25,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from temporary_art_register import temporary_assets, temporary_table
 
 RAIZ = Path(__file__).resolve().parent.parent
 MANIFESTO = RAIZ / "art/export/enramados/manifest.json"
@@ -170,7 +171,7 @@ def documento() -> str:
     manifesto = json.loads(MANIFESTO.read_text(encoding="utf-8"))
     m = mapas()
     tab_export, usos = exportacoes(manifesto, m)
-    tab_unid, faltas_unid = unidades(manifesto, m)
+    tab_unid, faltas_unid = unidades({"assets": {**manifesto["assets"], **temporary_assets()}}, m)
     tab_obras, faltas_obras = obras(manifesto, m)
     niveis = len(tabela("data/source/walls.csv"))
     faltas_obras.append(
@@ -223,7 +224,7 @@ def documento() -> str:
         f"- Estados de aprovacao presentes: {celula(estados)}. Nenhuma exportacao esta aprovada.",
         "",
     ]
-    return "\n".join(partes)
+    return "\n".join(partes + temporary_table())
 
 
 def main() -> int:

@@ -102,6 +102,7 @@ func _ridge(color: Color, offset: Vector2) -> void:
 
 
 func _distance() -> void:
+	TemporaryScenery.forest(self, _alcance(), &"temp_forest_back", BACK_GROUND)
 	_ridge(NEAR, Vector2(CELL, CELL))
 	var texture := _art.texture(&"far_keep")
 	var size := texture.get_size() * FAR_SCALE
@@ -112,6 +113,7 @@ func _distance() -> void:
 
 
 func _grove() -> void:
+	TemporaryScenery.forest(self, _alcance(), &"temp_forest_middle", MID_GROUND)
 	var texture := _art.texture(&"oak")
 	var size := texture.get_size() * FOREST_SCALE
 	for x in LANDMARKS:
@@ -136,6 +138,7 @@ func _ground() -> void:
 			draw_rect(Rect2(x, y - DETAIL, DETAIL, DETAIL), MOSS)
 	if SimLoop.field != null:  # e o chao das terras geradas, onde tambem se anda (Q-173)
 		WildGround.draw_ground(self, SimLoop.field.wilds, SimLoop.world_width)
+	TemporaryScenery.ground(self, 0.0, WIDTH, Band.GROUND_LINE)
 
 
 func _underground() -> void:
