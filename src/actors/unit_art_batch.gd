@@ -180,8 +180,9 @@ func _frame(
 ## O saco de cada um; o do escudeiro e o escudo, que e o que ele guarda (Q-114); o
 ## rei traz, alem dele, o armazenamento de quem se joga (Q-153).
 func _saco(canvas: CanvasItem, box: Rect2, units: UnitSystem, i: int) -> void:
-	if SimLoop.field != null and units.ids[i] == SimLoop.king_id:
-		Gauge.kit(canvas, box, SimLoop.field.classes.storage.count(Storage.ARCHOTE))
+	if SimLoop.field != null and units.ids[i] in [SimLoop.king_id, units.pilot]:
+		var armazem := Assume.storage(units, units.ids[i], SimLoop.field)
+		Gauge.kit(canvas, box, armazem.count(Storage.ARCHOTE))
 	var escudeiro := SimLoop.field.classes.squire if SimLoop.field != null else null
 	var dados: UnitData = _data.get(units.data_ids[i])
 	if escudeiro != null and dados != null and dados.tags.has(&"collects_coins"):

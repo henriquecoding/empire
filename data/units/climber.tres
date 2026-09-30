@@ -18,7 +18,7 @@ move_speed = 92.0
 scale_tier = 3
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
-tags = Array[StringName]([&"agile", &"climbs"])
+tags = Array[StringName]([&"agile", &"climbs", &"playable"])
 job_affinity = {
 &"hunt": 0.8,
 &"wall": 0.6

@@ -27,6 +27,10 @@ var realm := Realm.new()
 var spirit: Spirit
 ## As terras entre os povos, geradas ao andar e guardadas (Q-173, ADR 0038).
 var wilds := WildSegments.new(SimFactory.segment_kit())
+## Quem o jogador pode assumir alem do rei (§08; Q-150, Q-162, Q-178).
+var roster := Roster.new(
+	SimFactory.by_id(&"classes"), SimFactory.by_id(&"units"), SimFactory.by_id(&"classes/storages")
+)
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
@@ -128,6 +132,7 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 		Muster.plan(unidades, _perfis, _rei, _nucleo, lado, passo)
 	classes.escort(unidades, lado)
 	training.plan(unidades)
+	Assume.plan(unidades, _rei, _nucleo, self)  # quem se conduz, e o rei largado (§08)
 
 
 ## Passo 5, a seguir as obras: as moedas pousadas numa casa de oficio. A casa de
@@ -166,76 +171,43 @@ func resolve(
 	return chao
 
 
-func to_dict() -> Dictionary:
+## O que vai no save, pela chave de cada parte. Uma parte nova entra por estar aqui.
+func parts() -> Dictionary:
 	return {
-		&"hunting": hunting.to_dict(),
-		&"training": training.to_dict(),
-		&"crown": crown.to_dict(),
-		&"conversion": conversion.to_dict(),
-		&"classes": classes.to_dict(),
-		&"upkeep": upkeep.to_dict(),
-		&"succession": succession.to_dict(),
-		&"realm": realm.to_dict(),
-		&"spirit": spirit.to_dict(),
-		&"wilds": wilds.to_dict(),
+		&"hunting": hunting,
+		&"training": training,
+		&"crown": crown,
+		&"conversion": conversion,
+		&"classes": classes,
+		&"upkeep": upkeep,
+		&"succession": succession,
+		&"realm": realm,
+		&"spirit": spirit,
+		&"wilds": wilds,
+		&"roster": roster,
 	}
 
 
+func to_dict() -> Dictionary:
+	var saida := {}
+	var partes := parts()
+	for chave: StringName in partes:
+		saida[chave] = partes[chave].to_dict()
+	return saida
+
+
+## Uma parte que o save nao tem fica como um jogo novo a deixa (§62).
 func from_dict(mundo: Dictionary) -> void:
-	hunting.from_dict(mundo.get(&"hunting", {}))
-	training.from_dict(mundo.get(&"training", {}))
-	crown.from_dict(mundo.get(&"crown", {}))
-	conversion.from_dict(mundo.get(&"conversion", {}))
-	classes.from_dict(mundo.get(&"classes", {}))
-	upkeep.from_dict(mundo.get(&"upkeep", {}))
-	succession.from_dict(mundo.get(&"succession", {}))
-	realm.from_dict(mundo.get(&"realm", {}))
-	spirit.from_dict(mundo.get(&"spirit", {}))
-	wilds.from_dict(mundo.get(&"wilds", {}))
+	var partes := parts()
+	for chave: StringName in partes:
+		partes[chave].from_dict(mundo.get(chave, {}))
 	Frontier.reapply(self, SimLoop.world_width)  # os acampamentos e as masmorras voltam
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 
-## A alvorada de um dia que nao e o primeiro: a manutencao do dia que acabou, e o
-## vagabundo novo no acampamento do lado do dia (Q-122, Q-124).
+## A alvorada de um dia que nao e o primeiro (DawnWork): o rei e o novo, se houve sucessao.
 func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
-	if _obras != null:
-		_coroar(unidades, estado)
-		var treino := succession.dawn(_obras, unidades, _rei)
-		if treino > 0:
-			EventBus.queue(&"coin_spent", [treino, &"heir"])
-	if _economia != null:
-		for e in upkeep.dawn(unidades, _rei, _economia, dia):
-			if e[UpkeepSystem.CHAVE] == UpkeepSystem.EV_PAGA:
-				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
-			else:
-				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
-	SpiritWatch.dawn(spirit, dia, upkeep.arrears())  # o soldo em atraso pesa (Q-102)
-	Camps.dawn(camps, dia, unidades, estado, spirit.level(dia))
-	Camps.mercenaries(wilds.mercenaries(SimLoop.world_width), unidades, estado)  # Q-173
-	var fork := (
-		SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else _nucleo.x
-	)
-	realm.dawn(dia, unidades, estado, _rei, Vector2(_nucleo.x, fork))  # marcha e tributo (Q-103)
-
-
-## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce no castelo
-## (Q-137), sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
-func _coroar(unidades: UnitSystem, estado: GameState) -> void:
-	var i := unidades.index_of(_rei)
-	if _rei == UnitSystem.NENHUM or (i != UnitSystem.NENHUM and unidades.healths[i] > 0):
-		return
-	var monarca := Registry.entry(&"units", &"monarch") as UnitData
-	var novo := succession.crown(estado, unidades, _obras, monarca)
-	if novo == UnitSystem.NENHUM:
-		return
-	var x := unidades.xs[unidades.index_of(novo)]
-	EventBus.queue(&"unit_spawned", [novo, monarca.id, x, int(Band.Kind.SURFACE)])
-	EventBus.queue(&"king_died", [succession.owner, novo])
-	EventBus.queue(&"succession_started", [novo])
-	SimFactory.draw_greed(estado)
-	SimLoop.king_id = novo  # quem manda passa a ser ele: o Verbo, a camara, o Defeat
-	_rei = novo
+	_rei = DawnWork.run(self, dia, unidades, estado, _obras, _economia, _rei, _nucleo)
 
 
 func _do_nucleo(obras: BuildSystem) -> Vector2:

@@ -54,8 +54,8 @@ static func draw_on(
 	canvas: CanvasItem, faixa: Band.Kind, tropas: Dictionary, edificios: Dictionary
 ) -> void:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
-	if rei == UnitSystem.NENHUM or not SimLoop.units.alive(rei):
-		return
+	if rei == UnitSystem.NENHUM or not SimLoop.units.alive(rei) or not Assume.king():
+		return  # so o rei paga (§08)
 	# O rei esta numa faixa so, e o preco de uma coisa noutra faixa nao e uma
 	# coisa que ele alcance (§11).
 	if int(SimLoop.units.bands[rei]) != int(faixa):

@@ -166,7 +166,7 @@ func _hunters(units: UnitSystem) -> Array[int]:
 			or not units.alive(i)
 		):
 			continue
-		if units.bands[i] != Band.Kind.SURFACE:
+		if units.bands[i] != Band.Kind.SURFACE or units.ids[i] == units.pilot:
 			continue
 		if units.states[i] in [UnitFsm.State.FIGHT, UnitFsm.State.FLEE]:
 			continue

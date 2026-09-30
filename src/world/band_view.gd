@@ -127,8 +127,8 @@ func _fogueiras() -> void:
 			continue
 		var proprias := WorldLight.weakened(cores, WorldLight.hearth_strength(vaga))  # Q-078
 		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, proprias)
-	# O archote aceso do rei (Q-029): a mesma luz, a metade da forca, a volta dele.
-	var rei := SimLoop.units.index_of(SimLoop.king_id)
+	# O archote aceso de quem se conduz (Q-029): a mesma luz, a metade da forca.
+	var rei := SimLoop.units.index_of(Assume.driven())
 	if rei >= 0 and SimLoop.night.dark.torch.lit() and SimLoop.units.bands[rei] == int(band):
 		var chao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)))
 		RotView.lamp(

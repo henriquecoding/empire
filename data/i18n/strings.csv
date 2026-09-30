@@ -13,6 +13,9 @@ UNIT_COOK,Cozinheiro,Cook,nome de conteúdo — unit,24,
 UNIT_DIPLOMAT,Diplomata,Diplomat,nome de conteúdo — unit,24,
 UNIT_BARD,Bardo,Bard,nome de conteúdo — unit,24,
 UNIT_CLIMBER,Trepador,Climber,nome de conteúdo — unit,24,
+UNIT_ARCHER_HERO,O Arqueiro,The Archer,nome de conteúdo — unit (Q-162),24,"O corpo jogável da classe, maior do que a tropa: um arqueiro com nome de classe, e não mais um."
+UNIT_BARD_HERO,O Bardo,The Bard,nome de conteúdo — unit (Q-162),24,O corpo jogável da classe (Q-162).
+UNIT_DIPLOMAT_HERO,O Diplomata,The Diplomat,nome de conteúdo — unit (Q-162),24,O corpo jogável da classe (Q-162).
 UNIT_BURIED_KNIGHT,Cavaleiro Enterrado,Buried Knight,nome de conteúdo — unit,24,
 UNIT_SEALED_KNIGHT,Cavaleiro Selado,Sealed Knight,nome de conteúdo — unit,24,
 UNIT_CANOPY_ARCHER,Arqueiro de Copa,Canopy Archer,nome de conteúdo — unit,24,
@@ -704,6 +707,10 @@ BUILDING_BOW_RACK,Banca do Arco,Bow Rack,nome de conteúdo — building (Q-165),
 CONTEXT_LAND,{people} · terra deles; a fortaleza fica na ponta,{people} · their land; the fortress stands at the far end,guia contextual de jogo: a terra de outro povo (Q-173),160,Q-173
 CONTEXT_LAND_VASSAL,{people} · terra de vassalos teus,{people} · land of your vassals,guia contextual de jogo: a terra de um povo vassalo (Q-173),160,Q-173
 CONTEXT_EDGE,O FIM DO MUNDO · {edge}: daqui não se passa,THE END OF THE WORLD · {edge}: there is no way on,guia contextual de jogo: a borda do mundo (Q-173),160,Q-173
+CONTEXT_ASSUME,"{name} · {assume} assumir: vai onde o rei não vai","{name} · {assume} take over: go where the king does not",guia contextual de jogo: trocar de classe (§08; Q-150; Q-162),160,"O Verbo 2 do rei ao pé de uma tropa tua de uma classe desbloqueada, ou do corpo dela."
+CONTEXT_BACK_TO_KING,O REI · {assume} voltar a ele,THE KING · {assume} return to him,guia contextual de jogo: voltar ao rei (§08),160,Com uma classe assumida ao pé do rei.
+CONTEXT_KING_LEASH,"O rei não se afasta mais do reino · assume uma classe para ir além","The king goes no further from the realm · take over a class to go beyond",guia contextual de jogo: a trela do rei (Q-150),160,"Q-150 (o dono a 30/09/2026): o rei fica perto do império, as classes vão para longe."
+UI_WHEEL_KING_ONLY,Só o rei abre a roda.,Only the king opens the wheel.,painel: a roda do rei com uma classe assumida (§24),48,"§24: «Só com o monarca assumido. É o corpo dele, não um menu.»"
 EDGE_SEA,o mar,the sea,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
 EDGE_CLIFF,a falésia,the cliff,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
 EDGE_GORGE,o desfiladeiro,the gorge,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173

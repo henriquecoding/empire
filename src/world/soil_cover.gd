@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 		modulate = BandLight.ambient(_clock, int(relogio.current_phase()), relogio.phase_progress())
 	if SimLoop.state == null or SimLoop.units == null:
 		return
-	_revelar.step(delta, SoilReveal.wants_open(SimLoop.units, SimLoop.king_id))
+	_revelar.step(delta, SoilReveal.wants_open(SimLoop.units, Assume.driven()))
 	_aberto = _revelar.progress
 	_dither.set_shader_parameter(&"progress", _aberto)
 	visible = not _revelar.open()

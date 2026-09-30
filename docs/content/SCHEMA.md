@@ -30,7 +30,7 @@ Script `src/sim/data/clock_data.gd` · layout `rows` · 1 linha(s) · §69: o pr
 
 ## `units.csv` → `data/units/{id}.tres`
 
-Script `src/sim/data/unit_data.gd` · layout `rows` · 24 linha(s) · §07 §08 §09 §44
+Script `src/sim/data/unit_data.gd` · layout `rows` · 27 linha(s) · §07 §08 §09 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -184,6 +184,7 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `verb` | StringName |  | acao propria da classe (§24: arqueiro marca alvo) |
 | `fights` | bool |  |  |
 | `storage` | StringName |  |  |
+| `troop` | StringName |  |  |
 | `unlock` | StringName | Desbloqueio |  |
 | `unlock_seed_cost` | int | Desbloqueio |  |
 | `phase_count` | int | Fases |  |
@@ -285,7 +286,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 20 linha(s) · §21 §
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 130 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -417,6 +418,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 130 linha(s) · §06 §
 | `spirit_yield` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `spirit_vagrants` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `king_run_mult` | float | Andar — correr |  |
+| `king_leash_px` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
 

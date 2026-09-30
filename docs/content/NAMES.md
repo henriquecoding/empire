@@ -24,6 +24,9 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `climber` | `UNIT_CLIMBER` | Trepador | Climber |
 | `buried_knight` | `UNIT_BURIED_KNIGHT` | Cavaleiro Enterrado | Buried Knight |
 | `sealed_knight` | `UNIT_SEALED_KNIGHT` | Cavaleiro Selado | Sealed Knight |
+| `archer_hero` | `UNIT_ARCHER_HERO` | O Arqueiro | The Archer |
+| `bard_hero` | `UNIT_BARD_HERO` | O Bardo | The Bard |
+| `diplomat_hero` | `UNIT_DIPLOMAT_HERO` | O Diplomata | The Diplomat |
 | `canopy_archer` | `UNIT_CANOPY_ARCHER` | Arqueiro de Copa | Canopy Archer |
 | `barge` | `UNIT_BARGE` | Barcaça | Barge |
 | `counterweight_ram` | `UNIT_COUNTERWEIGHT_RAM` | Aríete de Contrapeso | Counterweight Ram |

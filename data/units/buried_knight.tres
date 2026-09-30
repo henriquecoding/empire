@@ -18,7 +18,7 @@ scale_tier = 3
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
 shadow_width = 22
-tags = Array[StringName]([&"heals_self", &"grows_vegetation"])
+tags = Array[StringName]([&"heals_self", &"grows_vegetation", &"playable"])
 ability = &"sit_heal"
 ability_params = {
 &"heal_per_second": 2.0,

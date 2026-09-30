@@ -27,6 +27,8 @@ const COLHEITA := &"harvest"
 ## O archote do rei (Q-029).
 const ARCHOTE := &"torch"
 const REI := &"king_id"
+## O corpo de classe que o jogador conduz, ou NENHUM (§08, Q-162).
+const PILOTO := &"pilot"
 const POSTOS := &"staffing"
 
 
@@ -52,6 +54,7 @@ static func world(
 		COLHEITA: noite.harvest.to_dict(),
 		ARCHOTE: noite.dark.torch.to_dict(),
 		REI: king_id,
+		PILOTO: unidades.pilot,
 	}
 
 
@@ -69,6 +72,7 @@ static func restore(
 	if postos != null:
 		postos.staffing.from_dict(mundo.get(POSTOS, {}))
 	unidades.from_dict(mundo.get(UNIDADES, {}))
+	unidades.pilot = int(mundo.get(PILOTO, UnitSystem.NENHUM))
 	bichos.from_dict(mundo.get(CRIATURAS, {}))
 	moedas.from_dict(mundo.get(MOEDAS, {}))
 	obras.from_dict(mundo.get(OBRAS, []))

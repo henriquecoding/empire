@@ -202,11 +202,13 @@ func _score_do_posto_atual(unidades: UnitSystem, unit_id: int, fase: int) -> flo
 
 
 ## Vivos, teus, e por id crescente. Um vagabundo por recrutar anda atras de
-## moedas e nao de postos (F1-04), e por isso nao e candidato a nada.
+## moedas e nao de postos (F1-04), e quem o jogador conduz (§08) nao tem posto.
 func _candidatos(unidades: UnitSystem) -> PackedInt32Array:
 	var lista := PackedInt32Array()
 	for i in unidades.count():
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
+			continue
+		if unidades.ids[i] == unidades.pilot:
 			continue
 		lista.append(unidades.ids[i])
 	lista.sort()

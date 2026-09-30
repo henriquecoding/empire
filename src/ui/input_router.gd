@@ -164,20 +164,16 @@ func _curva_lida() -> EconomyCurve:
 ## Mover e escrever um alvo, e nao empurrar uma posicao: o passo 5 e que leva
 ## toda a gente, e o monarca nao e excecao (§43).
 func _andar(direccao: float) -> void:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var quem := Assume.driven()  # o rei, ou o corpo de classe assumido (§08)
+	var i := SimLoop.units.index_of(quem)
 	if i == UnitSystem.NENHUM:
 		return
 	if is_zero_approx(direccao):
-		SimLoop.units.clear_target(SimLoop.king_id)
+		SimLoop.units.clear_target(quem)
 		return
-	SimLoop.units.set_target_x(
-		SimLoop.king_id,
-		clampf(
-			SimLoop.units.xs[i] + direccao * SimLoop.world_width,
-			Frontier.walk_limits().x,  # a beira da borda de cada lado (Q-173)
-			Frontier.walk_limits().y
-		)
-	)
+	var limites := Assume.limits(quem)  # a borda do mundo, e a trela do rei (Q-150)
+	var x := SimLoop.units.xs[i] + direccao * SimLoop.world_width
+	SimLoop.units.set_target_x(quem, clampf(x, limites.x, limites.y))
 
 
 ## Um impulso que nao se pode usar diz porque, no painel, e nao entra na fila
@@ -185,6 +181,9 @@ func _andar(direccao: float) -> void:
 func _impulso(indice: int) -> void:
 	var ids := SimLoop.field.crown.ids()
 	if indice >= ids.size():
+		return
+	if not Assume.king():  # a roda e o corpo do rei (§24)
+		get_tree().call_group(&"painel", &"say", tr(&"UI_WHEEL_KING_ONLY"))
 		return
 	var porque := impulse_refusal(ids[indice])
 	if porque.is_empty():
@@ -218,7 +217,7 @@ static func _stick() -> Vector2:
 
 
 func _largar() -> void:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	if i == UnitSystem.NENHUM:
 		return
 	(
@@ -241,5 +240,5 @@ func _largar() -> void:
 func _alvo_em_x(evento: InputEvent) -> float:
 	if aims_with_cursor(evento):
 		return get_viewport().get_camera_2d().get_global_mouse_position().x
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	return SimLoop.units.xs[i] if i != UnitSystem.NENHUM else SimLoop.core_x

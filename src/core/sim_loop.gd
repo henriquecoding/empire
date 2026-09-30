@@ -148,7 +148,7 @@ func step(delta: float) -> void:
 	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
 	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
 	#     atras da luz (§24, DawnCascade).
-	units.tick_movement(delta, king_id, ClockService.dawn_front())
+	units.tick_movement(delta, Assume.driven(), ClockService.dawn_front())
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
 	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
@@ -160,7 +160,7 @@ func step(delta: float) -> void:
 	field.absorb(coins, builds, units)
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
-	EventRelay.secrets(secrets.tick(units, king_id, state))
+	EventRelay.secrets(secrets.tick(units, Assume.driven(), state))
 	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
 	var luz := _fase < GameClock.Phase.DUSK
 	_largar(field.resolve(units, builds, delta, luz, ClockService.clock, king_id))
