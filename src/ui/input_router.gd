@@ -133,7 +133,7 @@ func _process(delta: float) -> void:
 		pointed = -1
 		_andar(Input.get_axis(&"move_left", &"move_right"))
 	_repeticao = maxf(0.0, _repeticao - delta)
-	if not Input.is_action_pressed(&"verb_drop"):
+	if not Input.is_action_pressed(&"verb_drop") or JournalPanel.holds_drop():
 		_repeticao = 0.0
 		return
 	if _repeticao <= 0.0:

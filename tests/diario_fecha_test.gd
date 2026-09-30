@@ -20,20 +20,69 @@ func _folha() -> JournalPanel:
 	return folha
 
 
-func test_espaco_e_esc_e_clique_fecham() -> void:
+func _tecla(fisica: Key) -> InputEventKey:
+	var e := InputEventKey.new()
+	e.physical_keycode = fisica
+	e.pressed = true
+	return e
+
+
+func _botao(indice: JoyButton) -> InputEventJoypadButton:
+	var e := InputEventJoypadButton.new()
+	e.button_index = indice
+	e.pressed = true
+	return e
+
+
+func _rato(indice: MouseButton) -> InputEventMouseButton:
+	var e := InputEventMouseButton.new()
+	e.button_index = indice
+	e.pressed = true
+	return e
+
+
+## SCREEN_REGISTER, `journal`: os verbos, o B, o Esc e um clique fecham.
+func test_os_verbos_o_b_o_esc_e_o_clique_fecham() -> void:
 	for accao in JournalPanel.FECHAM:
 		assert_bool(JournalPanel.closes(_gesto(accao))).is_true()
-	var clique := InputEventMouseButton.new()
-	clique.pressed = true
-	clique.button_index = MOUSE_BUTTON_LEFT
-	assert_bool(JournalPanel.closes(clique)).is_true()
+	assert_bool(JournalPanel.closes(_botao(JOY_BUTTON_B))).is_true()
+	assert_bool(JournalPanel.closes(_tecla(KEY_ESCAPE))).is_true()
+	assert_bool(JournalPanel.closes(_rato(MOUSE_BUTTON_LEFT))).is_true()
 	assert_bool(JournalPanel.closes(_gesto(&"move_left"))).is_false()
+
+
+## A roda do rato rola a folha, e o Start do comando pausa sempre (UI_UX_FLOWS).
+func test_a_roda_e_o_start_nao_fecham() -> void:
+	assert_bool(JournalPanel.closes(_rato(MOUSE_BUTTON_WHEEL_UP))).is_false()
+	assert_bool(JournalPanel.closes(_rato(MOUSE_BUTTON_WHEEL_DOWN))).is_false()
+	assert_bool(JournalPanel.closes(_botao(JOY_BUTTON_START))).is_false()
+
+
+## Fechar com o Verbo 1 nao larga moeda: o InputRouter pergunta ate o largarem.
+func test_fechar_com_o_verbo_1_nao_larga_moeda() -> void:
+	var folha := _folha()
+	Input.action_press(&"verb_drop")
+	folha._input(_gesto(&"verb_drop"))
+	assert_bool(folha.visible).is_false()
+	assert_bool(JournalPanel.holds_drop()).is_true()
+	Input.action_release(&"verb_drop")
+	assert_bool(JournalPanel.holds_drop()).is_false()
+
+
+## O rodape diz os botoes do dispositivo activo (§26), e nao os do teclado.
+func test_o_rodape_fala_do_comando_que_se_usa() -> void:
+	var teclado := JournalPanel.close_hint(Glyphs.Device.KEYBOARD)
+	var xbox := JournalPanel.close_hint(Glyphs.Device.XBOX)
+	assert_str(teclado).contains("ESC")
+	assert_str(xbox).contains("B")
+	assert_str(xbox).not_contains("ESC")
+	assert_str(JournalPanel.close_hint(Glyphs.Device.PLAYSTATION)).not_contains("ESC")
 
 
 func test_o_gesto_fecha_a_folha_aberta() -> void:
 	var folha := _folha()
 	assert_bool(folha.visible).is_true()
-	folha._input(_gesto(&"pause"))
+	folha._input(_tecla(KEY_ESCAPE))
 	assert_bool(folha.visible).is_false()
 
 

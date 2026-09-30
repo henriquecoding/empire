@@ -390,7 +390,7 @@ UI_OPTIONS,Opções,Options,menu,20,
 UI_CREDITS,Créditos,Credits,menu principal,20,
 UI_QUIT,Sair,Quit,menu,20,
 UI_PAUSED,Pausa,Paused,ecrã de pausa,20,
-UI_JOURNAL_CLOSE,ESPAÇO · E · ESC ou clique para fechar,SPACE · E · ESC or click to close,rodapé da folha de um diário (§79),48,O pedido do dono de 30/09/2026: a folha fecha-se à mão.
+UI_JOURNAL_CLOSE,fechar,close,rodapé da folha de um diário (§79): o que os botões antes da palavra fazem,16,"O pedido do dono de 30/09/2026: a folha fecha-se à mão. Os botões vêm antes e mudam com o dispositivo (§26)."
 UI_RESUME,Retomar,Resume,ecrã de pausa,20,
 UI_SAVE_AND_QUIT,Guardar e sair,Save & Quit,ecrã de pausa,24,
 UI_CHOOSE_PEOPLE,Escolhe o teu povo,Choose Your People,seleção de povo,28,
@@ -454,6 +454,7 @@ KEY_MOUSE_RIGHT,BOTÃO DIREITO,RIGHT CLICK,nome de botão do rato no rodapé de 
 PAD_CROSS,CRUZ,CROSS,botão ✕ de um comando PlayStation (§24),12,"GB-15. A fonte por omissão não tem ✕ ▢ △, e no browser não há fonte de sistema que os traga — por isso o nome, até haver o atlas de ícones do §26."
 PAD_SQUARE,QUADRADO,SQUARE,botão ▢ de um comando PlayStation (§24),12,GB-15
 PAD_TRIANGLE,TRIÂNGULO,TRIANGLE,botão △ de um comando PlayStation (§24),12,GB-15
+PAD_CIRCLE,CÍRCULO,CIRCLE,botão ○ de um comando PlayStation (§24),12,"GB-15. Fecha a folha de um diário (SCREEN_REGISTER, journal: B fecha)."
 OPT_TELEMETRY,Partilhar dados anónimos,Share Anonymous Data,"telemetria, desligada por omissão (§32)",32,
 UI_TELEMETRY_PROMPT,"Queres partilhar dados anónimos de jogo para ajudar a afinar o Empire? Sem nome, sem IP. Podes mudar isto nas opções.","Share anonymous gameplay data to help tune Empire? No name, no IP. You can change this in Options.",primeiro arranque (§32),160,'Empire' é codinome — substituir quando houver nome (Bíblia de nomes).
 UI_YES,Sim,Yes,confirmação,8,
