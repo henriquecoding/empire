@@ -94,6 +94,7 @@ static func draw(canvas: CanvasItem, width: float) -> void:
 	canvas.draw_rect(Rect2(0.0, FLOOR_Y - WARM_H, width, WARM_H), WARM)
 	_floor(canvas, width)
 	_bedrock(canvas, width)
+	TemporaryScenery.ground(canvas, 0.0, width, FLOOR_Y, true)
 
 
 ## As abobadas: a parede do fundo com arcos, e um pilar de pedra entre cada duas.

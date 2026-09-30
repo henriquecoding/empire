@@ -42,6 +42,7 @@ static func draw_on(
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso, tempo)
+		TemporaryScenery.building_props(canvas, vaga, luz, tempo)
 
 
 ## O alfa do convite neste instante do ecra: entre PISCAR.minimo e 1.

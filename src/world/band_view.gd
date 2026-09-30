@@ -35,6 +35,7 @@ var _visual_time := 0.0
 ## O pequeno bounce do §24 (GB-19), criado a pedido: precisa da gravidade do arco.
 var _salto: CoinBounce
 var _actors: UnitCanvas
+var _creature_skins := CreatureSkins.new()
 
 
 func _ready() -> void:
@@ -167,6 +168,7 @@ func _criaturas() -> void:
 	var bichos := SimLoop.creatures
 	var luzes := _luzes_da_noite()
 	var chao := BandLight.ground_ratio(_relogio)
+	var visible := PresentationBounds.of(self)
 	for i in bichos.count():
 		if bichos.bands[i] != int(band):
 			continue
@@ -178,16 +180,26 @@ func _criaturas() -> void:
 		var forma := Silhouette.of_creature(dados)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
 		var x := Smoothing.x_of(Smoothing.Group.CREATURES, bichos.ids[i], bichos.xs[i])
+		if not visible.has_point(Vector2(x, visible.get_center().y)):
+			continue
 		var caixa := Silhouette.body_box(forma, x, int(band), alto)
 		var aceso := WorldLight.seen(x, luzes)
 		var corpo := _luz.body(WorldPalette.BICHO, x)
 		var cor := WorldLight.reveal(corpo, aceso, chao)
-		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
-		CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
+		var view := {
+			"foot": Vector2(x, WorldPalette.ground_of(int(band))),
+			"lit": _luz.body(Color.WHITE, x),
+			"hidden_tint": cor,
+			"revealed": aceso,
+		}
+		if not _creature_skins.draw_on(self, bichos, i, view, _visual_time):
+			draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
+			CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
 		if aceso:
 			Gauge.health(
 				self, caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i]))
 			)
+	_creature_skins.forget_except(bichos.ids)
 
 
 ## As luzes em que se ve, em (x, raio): as tuas e o Lume. Com a mancha recuada e

@@ -1,0 +1,1825 @@
+{
+  "version": 1,
+  "temporary": true,
+  "assets": {
+    "temp_archer": {
+      "texture": "temp_archer.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        66,
+        45
+      ],
+      "foot": [
+        17,
+        45
+      ],
+      "body_bounds": [
+        -15,
+        -36,
+        32,
+        36
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 9
+        },
+        "walk": {
+          "from_frame": 10,
+          "to_frame": 17
+        },
+        "attack": {
+          "from_frame": 18,
+          "to_frame": 23
+        },
+        "hit": {
+          "from_frame": 24,
+          "to_frame": 26
+        },
+        "die": {
+          "from_frame": 27,
+          "to_frame": 36
+        }
+      },
+      "integer_scale": 1,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          66,
+          0
+        ],
+        [
+          132,
+          0
+        ],
+        [
+          198,
+          0
+        ],
+        [
+          264,
+          0
+        ],
+        [
+          330,
+          0
+        ],
+        [
+          396,
+          0
+        ],
+        [
+          462,
+          0
+        ],
+        [
+          528,
+          0
+        ],
+        [
+          594,
+          0
+        ],
+        [
+          660,
+          0
+        ],
+        [
+          726,
+          0
+        ],
+        [
+          792,
+          0
+        ],
+        [
+          858,
+          0
+        ],
+        [
+          924,
+          0
+        ],
+        [
+          990,
+          0
+        ],
+        [
+          1056,
+          0
+        ],
+        [
+          1122,
+          0
+        ],
+        [
+          1188,
+          0
+        ],
+        [
+          1254,
+          0
+        ],
+        [
+          1320,
+          0
+        ],
+        [
+          1386,
+          0
+        ],
+        [
+          1452,
+          0
+        ],
+        [
+          1518,
+          0
+        ],
+        [
+          1584,
+          0
+        ],
+        [
+          1650,
+          0
+        ],
+        [
+          1716,
+          0
+        ],
+        [
+          1782,
+          0
+        ],
+        [
+          1848,
+          0
+        ],
+        [
+          1914,
+          0
+        ],
+        [
+          1980,
+          0
+        ],
+        [
+          2046,
+          0
+        ],
+        [
+          2112,
+          0
+        ],
+        [
+          2178,
+          0
+        ],
+        [
+          2244,
+          0
+        ],
+        [
+          2310,
+          0
+        ],
+        [
+          2376,
+          0
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        0
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_archer_hero": {
+      "texture": "temp_archer_hero.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        132,
+        90
+      ],
+      "foot": [
+        34,
+        90
+      ],
+      "body_bounds": [
+        -30,
+        -72,
+        64,
+        72
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 9
+        },
+        "walk": {
+          "from_frame": 10,
+          "to_frame": 17
+        },
+        "attack": {
+          "from_frame": 18,
+          "to_frame": 23
+        },
+        "hit": {
+          "from_frame": 24,
+          "to_frame": 26
+        },
+        "die": {
+          "from_frame": 27,
+          "to_frame": 36
+        }
+      },
+      "integer_scale": 2,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          132,
+          0
+        ],
+        [
+          264,
+          0
+        ],
+        [
+          396,
+          0
+        ],
+        [
+          528,
+          0
+        ],
+        [
+          660,
+          0
+        ],
+        [
+          792,
+          0
+        ],
+        [
+          924,
+          0
+        ],
+        [
+          1056,
+          0
+        ],
+        [
+          1188,
+          0
+        ],
+        [
+          1320,
+          0
+        ],
+        [
+          1452,
+          0
+        ],
+        [
+          1584,
+          0
+        ],
+        [
+          1716,
+          0
+        ],
+        [
+          1848,
+          0
+        ],
+        [
+          1980,
+          0
+        ],
+        [
+          2112,
+          0
+        ],
+        [
+          2244,
+          0
+        ],
+        [
+          2376,
+          0
+        ],
+        [
+          2508,
+          0
+        ],
+        [
+          2640,
+          0
+        ],
+        [
+          2772,
+          0
+        ],
+        [
+          2904,
+          0
+        ],
+        [
+          3036,
+          0
+        ],
+        [
+          3168,
+          0
+        ],
+        [
+          3300,
+          0
+        ],
+        [
+          3432,
+          0
+        ],
+        [
+          3564,
+          0
+        ],
+        [
+          3696,
+          0
+        ],
+        [
+          3828,
+          0
+        ],
+        [
+          3960,
+          0
+        ],
+        [
+          0,
+          90
+        ],
+        [
+          132,
+          90
+        ],
+        [
+          264,
+          90
+        ],
+        [
+          396,
+          90
+        ],
+        [
+          528,
+          90
+        ],
+        [
+          660,
+          90
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        45
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_spearman": {
+      "texture": "temp_spearman.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        93,
+        57
+      ],
+      "foot": [
+        45,
+        57
+      ],
+      "body_bounds": [
+        -27,
+        -48,
+        39,
+        48
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 4
+        },
+        "walk": {
+          "from_frame": 5,
+          "to_frame": 14
+        },
+        "attack": {
+          "from_frame": 15,
+          "to_frame": 24
+        },
+        "die": {
+          "from_frame": 25,
+          "to_frame": 31
+        }
+      },
+      "integer_scale": 3,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          93,
+          0
+        ],
+        [
+          186,
+          0
+        ],
+        [
+          279,
+          0
+        ],
+        [
+          372,
+          0
+        ],
+        [
+          465,
+          0
+        ],
+        [
+          558,
+          0
+        ],
+        [
+          651,
+          0
+        ],
+        [
+          744,
+          0
+        ],
+        [
+          837,
+          0
+        ],
+        [
+          930,
+          0
+        ],
+        [
+          1023,
+          0
+        ],
+        [
+          1116,
+          0
+        ],
+        [
+          1209,
+          0
+        ],
+        [
+          1302,
+          0
+        ],
+        [
+          1395,
+          0
+        ],
+        [
+          1488,
+          0
+        ],
+        [
+          1581,
+          0
+        ],
+        [
+          1674,
+          0
+        ],
+        [
+          1767,
+          0
+        ],
+        [
+          1860,
+          0
+        ],
+        [
+          1953,
+          0
+        ],
+        [
+          2046,
+          0
+        ],
+        [
+          2139,
+          0
+        ],
+        [
+          2232,
+          0
+        ],
+        [
+          2325,
+          0
+        ],
+        [
+          2418,
+          0
+        ],
+        [
+          2511,
+          0
+        ],
+        [
+          2604,
+          0
+        ],
+        [
+          2697,
+          0
+        ],
+        [
+          2790,
+          0
+        ],
+        [
+          2883,
+          0
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        225
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_crawler": {
+      "texture": "temp_crawler.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        88,
+        46
+      ],
+      "foot": [
+        44,
+        46
+      ],
+      "body_bounds": [
+        -17,
+        -36,
+        33,
+        36
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "walk": {
+          "from_frame": 4,
+          "to_frame": 11
+        },
+        "attack": {
+          "from_frame": 12,
+          "to_frame": 19
+        },
+        "hit": {
+          "from_frame": 20,
+          "to_frame": 23
+        },
+        "die": {
+          "from_frame": 24,
+          "to_frame": 27
+        }
+      },
+      "integer_scale": 1,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          88,
+          0
+        ],
+        [
+          176,
+          0
+        ],
+        [
+          264,
+          0
+        ],
+        [
+          352,
+          0
+        ],
+        [
+          440,
+          0
+        ],
+        [
+          528,
+          0
+        ],
+        [
+          616,
+          0
+        ],
+        [
+          704,
+          0
+        ],
+        [
+          792,
+          0
+        ],
+        [
+          880,
+          0
+        ],
+        [
+          968,
+          0
+        ],
+        [
+          1056,
+          0
+        ],
+        [
+          1144,
+          0
+        ],
+        [
+          1232,
+          0
+        ],
+        [
+          1320,
+          0
+        ],
+        [
+          1408,
+          0
+        ],
+        [
+          1496,
+          0
+        ],
+        [
+          1584,
+          0
+        ],
+        [
+          1672,
+          0
+        ],
+        [
+          1760,
+          0
+        ],
+        [
+          1848,
+          0
+        ],
+        [
+          1936,
+          0
+        ],
+        [
+          2024,
+          0
+        ],
+        [
+          2112,
+          0
+        ],
+        [
+          2200,
+          0
+        ],
+        [
+          2288,
+          0
+        ],
+        [
+          2376,
+          0
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        282
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_winged": {
+      "texture": "temp_winged.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        56,
+        41
+      ],
+      "foot": [
+        25,
+        32
+      ],
+      "body_bounds": [
+        -18,
+        -31,
+        41,
+        31
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 7
+        },
+        "walk": {
+          "from_frame": 8,
+          "to_frame": 15
+        },
+        "attack": {
+          "from_frame": 16,
+          "to_frame": 23
+        },
+        "hit": {
+          "from_frame": 24,
+          "to_frame": 27
+        },
+        "die": {
+          "from_frame": 28,
+          "to_frame": 31
+        }
+      },
+      "integer_scale": 1,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          56,
+          0
+        ],
+        [
+          112,
+          0
+        ],
+        [
+          168,
+          0
+        ],
+        [
+          224,
+          0
+        ],
+        [
+          280,
+          0
+        ],
+        [
+          336,
+          0
+        ],
+        [
+          392,
+          0
+        ],
+        [
+          448,
+          0
+        ],
+        [
+          504,
+          0
+        ],
+        [
+          560,
+          0
+        ],
+        [
+          616,
+          0
+        ],
+        [
+          672,
+          0
+        ],
+        [
+          728,
+          0
+        ],
+        [
+          784,
+          0
+        ],
+        [
+          840,
+          0
+        ],
+        [
+          896,
+          0
+        ],
+        [
+          952,
+          0
+        ],
+        [
+          1008,
+          0
+        ],
+        [
+          1064,
+          0
+        ],
+        [
+          1120,
+          0
+        ],
+        [
+          1176,
+          0
+        ],
+        [
+          1232,
+          0
+        ],
+        [
+          1288,
+          0
+        ],
+        [
+          1344,
+          0
+        ],
+        [
+          1400,
+          0
+        ],
+        [
+          1456,
+          0
+        ],
+        [
+          1512,
+          0
+        ],
+        [
+          1568,
+          0
+        ],
+        [
+          1624,
+          0
+        ],
+        [
+          1680,
+          0
+        ],
+        [
+          1736,
+          0
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        328
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_brute": {
+      "texture": "temp_brute.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        142,
+        90
+      ],
+      "foot": [
+        62,
+        90
+      ],
+      "body_bounds": [
+        -22,
+        -74,
+        46,
+        74
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "walk": {
+          "from_frame": 4,
+          "to_frame": 11
+        },
+        "attack": {
+          "from_frame": 12,
+          "to_frame": 19
+        },
+        "hit": {
+          "from_frame": 20,
+          "to_frame": 23
+        },
+        "die": {
+          "from_frame": 24,
+          "to_frame": 27
+        }
+      },
+      "integer_scale": 2,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          142,
+          0
+        ],
+        [
+          284,
+          0
+        ],
+        [
+          426,
+          0
+        ],
+        [
+          568,
+          0
+        ],
+        [
+          710,
+          0
+        ],
+        [
+          852,
+          0
+        ],
+        [
+          994,
+          0
+        ],
+        [
+          1136,
+          0
+        ],
+        [
+          1278,
+          0
+        ],
+        [
+          1420,
+          0
+        ],
+        [
+          1562,
+          0
+        ],
+        [
+          1704,
+          0
+        ],
+        [
+          1846,
+          0
+        ],
+        [
+          1988,
+          0
+        ],
+        [
+          2130,
+          0
+        ],
+        [
+          2272,
+          0
+        ],
+        [
+          2414,
+          0
+        ],
+        [
+          2556,
+          0
+        ],
+        [
+          2698,
+          0
+        ],
+        [
+          2840,
+          0
+        ],
+        [
+          2982,
+          0
+        ],
+        [
+          3124,
+          0
+        ],
+        [
+          3266,
+          0
+        ],
+        [
+          3408,
+          0
+        ],
+        [
+          3550,
+          0
+        ],
+        [
+          3692,
+          0
+        ],
+        [
+          3834,
+          0
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        369
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_burrower": {
+      "texture": "temp_burrower.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        98,
+        59
+      ],
+      "foot": [
+        25,
+        57
+      ],
+      "body_bounds": [
+        -15,
+        -51,
+        45,
+        51
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "walk": {
+          "from_frame": 4,
+          "to_frame": 7
+        },
+        "attack": {
+          "from_frame": 8,
+          "to_frame": 15
+        },
+        "hit": {
+          "from_frame": 16,
+          "to_frame": 19
+        },
+        "die": {
+          "from_frame": 20,
+          "to_frame": 23
+        }
+      },
+      "integer_scale": 1,
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          98,
+          0
+        ],
+        [
+          196,
+          0
+        ],
+        [
+          294,
+          0
+        ],
+        [
+          392,
+          0
+        ],
+        [
+          490,
+          0
+        ],
+        [
+          588,
+          0
+        ],
+        [
+          686,
+          0
+        ],
+        [
+          784,
+          0
+        ],
+        [
+          882,
+          0
+        ],
+        [
+          980,
+          0
+        ],
+        [
+          1078,
+          0
+        ],
+        [
+          1176,
+          0
+        ],
+        [
+          1274,
+          0
+        ],
+        [
+          1372,
+          0
+        ],
+        [
+          1470,
+          0
+        ],
+        [
+          1568,
+          0
+        ],
+        [
+          1666,
+          0
+        ],
+        [
+          1764,
+          0
+        ],
+        [
+          1862,
+          0
+        ],
+        [
+          1960,
+          0
+        ],
+        [
+          2058,
+          0
+        ],
+        [
+          2156,
+          0
+        ],
+        [
+          2254,
+          0
+        ]
+      ],
+      "review_status": "free_temporary_gameplay_proxy",
+      "atlas_origin": [
+        0,
+        459
+      ],
+      "atlas_texture": "actors.png"
+    },
+    "temp_forest_back": {
+      "texture": "temp_forest_back.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        544,
+        320
+      ],
+      "foot": [
+        272,
+        320
+      ],
+      "body_bounds": [
+        -272,
+        -320,
+        544,
+        320
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_forest_middle": {
+      "texture": "temp_forest_middle.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        544,
+        320
+      ],
+      "foot": [
+        272,
+        320
+      ],
+      "body_bounds": [
+        -272,
+        -320,
+        544,
+        320
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_soil": {
+      "texture": "temp_soil.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        32,
+        32
+      ],
+      "foot": [
+        16,
+        32
+      ],
+      "body_bounds": [
+        -16,
+        -32,
+        32,
+        32
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_cave": {
+      "texture": "temp_cave.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        32,
+        32
+      ],
+      "foot": [
+        16,
+        32
+      ],
+      "body_bounds": [
+        -16,
+        -32,
+        32,
+        32
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_crate": {
+      "texture": "temp_crate.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_wood": {
+      "texture": "temp_wood.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_stone": {
+      "texture": "temp_stone.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_lever": {
+      "texture": "temp_lever.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_flag": {
+      "texture": "temp_flag.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_plant": {
+      "texture": "temp_plant.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_mushroom": {
+      "texture": "temp_mushroom.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_sign": {
+      "texture": "temp_sign.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    },
+    "temp_fence": {
+      "texture": "temp_fence.png",
+      "root": "res://art/export/temporary/",
+      "size": [
+        36,
+        36
+      ],
+      "foot": [
+        18,
+        36
+      ],
+      "body_bounds": [
+        -18,
+        -36,
+        36,
+        36
+      ],
+      "durations_ms": [
+        100
+      ],
+      "tags": {},
+      "integer_scale": 2,
+      "review_status": "free_temporary_gameplay_proxy"
+    }
+  },
+  "sources": {
+    "angav_spearman/Attack/Spearman_attack1.png": "c2f16c83d5b3726b7d195c8d9b6da0c4291a9a592117024b9abe4f75f80ce69e",
+    "angav_spearman/Attack/Spearman_attack10.png": "814638d033700060ddd7016196adbfbc8d8541db758c41ec94eb5a588a0fdffd",
+    "angav_spearman/Attack/Spearman_attack2.png": "341618f40b8ef6599e43094ef0cf61c721e13770326741440fa700a727147004",
+    "angav_spearman/Attack/Spearman_attack3.png": "2944b6fa9a3337c702b41d746c6f65878e34e590d71f6d81ea22d1555f59f5b6",
+    "angav_spearman/Attack/Spearman_attack4.png": "1ce8d5cbb5dac44af4fa22fd16d48792bd486716390de34ec42fa0d9ca9c8645",
+    "angav_spearman/Attack/Spearman_attack5.png": "e9934c10ba3620ac4b874bd4547ef6ba4119c38c83473740b9845c7218baf097",
+    "angav_spearman/Attack/Spearman_attack6.png": "741ec6a8072c1df72b302638701f24339dcab7a5b75bbbfe73788071edb4dd1b",
+    "angav_spearman/Attack/Spearman_attack7.png": "4985f11eaa848a5645d62eb57072ea2ed94b606e48729c4aef5afda2c3fbb324",
+    "angav_spearman/Attack/Spearman_attack8.png": "80268cd3690e4d5582ecd5a41e6e1f325d2167f6b05b2eaaa52d0c82f34e137a",
+    "angav_spearman/Attack/Spearman_attack9.png": "f6624758cb9fe712e040be14162f6558fde5610334cbefddb4d1a2ca62196fef",
+    "angav_spearman/Death/Spearman_death1.png": "a90741bcd9e87c9737a24f2684f6143beb59138b94c6809de7a437fb21aa5210",
+    "angav_spearman/Death/Spearman_death2.png": "134fe32db315fa5cb4c9fcef37498350a1266776722c46764216eba9c0520995",
+    "angav_spearman/Death/Spearman_death3.png": "952d2f42a65a00e2958f1dafd4fd3808715bf497d8eb3a10d3035fa931d44356",
+    "angav_spearman/Death/Spearman_death4.png": "c1309af9a37eae331764e74418eb8f39da3b6bdf545ae9c35d4c0975b81d1581",
+    "angav_spearman/Death/Spearman_death5.png": "aa1ff3c506a7a17cf52360d11b1829b728d0e03d448a518d5286e1631952b199",
+    "angav_spearman/Death/Spearman_death6.png": "f1287fd144f99d736123800661505f762e3e656b85e925ec468b7b13c503f59b",
+    "angav_spearman/Death/Spearman_death7.png": "f1287fd144f99d736123800661505f762e3e656b85e925ec468b7b13c503f59b",
+    "angav_spearman/Idle/Spearman_Idle1.png": "9196f60cd0cba42c80153705e9caeb6d39b7a9ae6a6311a2d8ce4a7ac3447738",
+    "angav_spearman/Idle/Spearman_Idle2.png": "fcc1d8f410209bbddee4ee4df723dbb7fe25dc90320261c402e38f8f7dec4e05",
+    "angav_spearman/Idle/Spearman_Idle3.png": "1c1ea812be24e2ceca20b7f12f2e7dfc1e909f765800ef8c02ea3524499b0c13",
+    "angav_spearman/Idle/Spearman_Idle4.png": "b761d88bf487eed2007f92509a17713c6f7990c02f41dbc54144bb2cd02c0ca5",
+    "angav_spearman/Idle/Spearman_Idle5.png": "259f43c91d1edbffb801bd388b4161b32b89dfeab4a19d15a5980c8071744d7a",
+    "angav_spearman/Run/Spearman_run1.png": "bb5014bf4bf120ce75e976846503caae31fb2b036dde14326a266ee1dfd3f922",
+    "angav_spearman/Run/Spearman_run10.png": "f80f117f875f08281acc0bc8a57f8ab3d0fc027d20411e6a81982dfc4a364175",
+    "angav_spearman/Run/Spearman_run2.png": "71f1a411dd7e73d4c57ea55c40873ece89811b149cf8c2652b9fab7a36262d3b",
+    "angav_spearman/Run/Spearman_run3.png": "d4d1e79377f000baed97966bd4535fea4d11947504b2f0623404e454965f2799",
+    "angav_spearman/Run/Spearman_run4.png": "fa9f47d12845d6da94bb60918bc446616c1a1fd9036ddefbd5fdeb88b4e85338",
+    "angav_spearman/Run/Spearman_run5.png": "8865b931bbb06352ac7744704afac306285cb20af47150ad14fcc6d33ba8f197",
+    "angav_spearman/Run/Spearman_run6.png": "1becab64bfb2f6cdac74b7d7e589ce34b9d676b08bbb75999d6179b2650ef14d",
+    "angav_spearman/Run/Spearman_run7.png": "9a7f37fc8904635c7a19b7a1c923d821cfd318177cd4a9cee5caa7fff1879e50",
+    "angav_spearman/Run/Spearman_run8.png": "92195283346b981da1a211f97ddb541f537a6073a5c12c2fa8f593dc45ff9f83",
+    "angav_spearman/Run/Spearman_run9.png": "4c330f34c3394eddd5244bb9332078fc75eff407f21741b5125913af709a91da",
+    "cave_brown.png": "238cefa0a0a0129c9c62c90e5c2873390f2d83070625efdd1cc424b0544274a7",
+    "cave_gray.png": "ed75fa44ad1bfd2e86382ac3a464f4c7348fe2c5f387f5f640699d6a4faa99e3",
+    "forest_back.png": "0c234bc3198ddf27ecf225193813d3932ef4a105231df0ca07c93b64e0d689f9",
+    "forest_middle.png": "af5a89f169cf1f43bb60ca78a4a46c9883e1a6b3922126bde7f6590fc7a85167",
+    "luizmelo/Flying eye/Attack.png": "ed1cd29ee28b368077a7c691c56d32e0b1e0dcb591478164fe15287c1f349369",
+    "luizmelo/Flying eye/Death.png": "d632ed033273ca53dde9a52059fca8f5b5cf92a9d8d57735284e307c6cb18c44",
+    "luizmelo/Flying eye/Flight.png": "0555d4ff47209478889b1cdcee7ee8b0a5ec758e679e109414530d39a9243d45",
+    "luizmelo/Flying eye/Take Hit.png": "4751aa7999e096c0b718b07393e5fd35f38832b6063ccbfc182ed3d7fa46ee46",
+    "luizmelo/Goblin/Attack.png": "e9055f50a93fc214660cdb798e65979a7cd76a9fbb9435135b39544171a43bae",
+    "luizmelo/Goblin/Death.png": "e74bdf72f128164592c455d4c5c48f0c229d18e62ee9f3abfa39a75e0c82c097",
+    "luizmelo/Goblin/Idle.png": "b4e413f6c237de96baf48879a2119a1aa3185827e78db2bd567c0992fb922860",
+    "luizmelo/Goblin/Run.png": "a93aaa44b29f9070344572c26e13843058a19df8a97838fe8727158339e88c2e",
+    "luizmelo/Goblin/Take Hit.png": "2bb34335146df28177a17b3b43925ac91e6c64157c1def70d99c39d67ccbb396",
+    "luizmelo/Huntress/Attack.png": "86baee2b370f10ae5a617e5a83885db657a666f1ad8a88fa195402e46d557484",
+    "luizmelo/Huntress/Death.png": "06dd687fb8e14ca203f9e05f559c828ea9006c1cb2c45e47e334e8579ae9102c",
+    "luizmelo/Huntress/Get Hit.png": "8f9ad64290266089fcf78d384f6ae4bae817dfb788d4f1dd321e89e36eda7e62",
+    "luizmelo/Huntress/Idle.png": "03f4c2a486b05facbc15af52acce1f30a58db22dc8f6e76043e57b5f02378057",
+    "luizmelo/Huntress/Run.png": "2edd3a19df796dae9dd698a2bd25d4fa7f144f0b1dd7b23cb76a09c6237220e3",
+    "luizmelo/Mushroom/Attack.png": "47e9ca3bc1369c27eb687397229536bd685879333c94a0e8ece73052bfca4e19",
+    "luizmelo/Mushroom/Death.png": "4eea4d6542ee507603ed6737c7d8c3826b5f09e186d250a287d7a620febff208",
+    "luizmelo/Mushroom/Idle.png": "326c6d499729f50ffb999957586b50eb86133781d180adb409fca75971090c22",
+    "luizmelo/Mushroom/Run.png": "73f72bc64033f4af2335390223965ca4b36f0ff8a6731612238058fb39d8198e",
+    "luizmelo/Mushroom/Take Hit.png": "e0a9e0e91ec564adeb55f04536e1288d1c71b2e4cfaa04564b4bc762b6a154b9",
+    "luizmelo/Skeleton/Attack.png": "0eed7488da2294bf221494cfa9f4e9836cbfd00add085a64113a2d3d0b077430",
+    "luizmelo/Skeleton/Death.png": "e137f81c473c870c9b069982389cbaaa6363d35720895b2bd3ce3708558473d1",
+    "luizmelo/Skeleton/Idle.png": "80ca8c9f59c425d064e93acb505047db0ca1e23b3dafffc0a077a42b2b73ec06",
+    "luizmelo/Skeleton/Take Hit.png": "cf3e747bf5c54a3c4adfc5c803e30ceb9e89689961d468ab471dc5c555d8f06a",
+    "luizmelo/Skeleton/Walk.png": "1f8e6db4b949ae9f4571f030d6bef34bfbcd195edf4c7ea16d9e7e00f42a39c8",
+    "props.png": "a3bbff36594baa36c803a67e9152a20a80f2faeb3c22ca84ac06e0a70f56553d"
+  },
+  "credits": "res://art/export/temporary/CREDITS.txt"
+}
