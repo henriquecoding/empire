@@ -327,8 +327,20 @@ async function main() {
     resultado(`/jogar/${q}: o carregamento acaba em menos de ${JOGO_S} s`, saiu);
     const canvas = await p.evaluate(() => { const c = document.getElementById("canvas"); return c ? [c.width, c.height] : [0, 0]; });
     resultado(`/jogar/${q}: o canvas tem tamanho`, canvas[0] > 0 && canvas[1] > 0, canvas.join("×"));
-    resultado(`/jogar/${q}: sem erros de JavaScript`, erros.length === 0, erros.slice(0, 2).join(" | "));
     violacoes.push(...(await p.evaluate(() => window.__csp)).map((v) => `/jogar/${q}: ${v}`));
+    if (saiu) {
+      await p.locator("#canvas").focus();
+      await p.keyboard.press("Escape");
+      await p.waitForTimeout(150);
+      for (let i = 0; i < 4; i++) {
+        await p.keyboard.press("ArrowDown");
+        await p.waitForTimeout(80);
+      }
+      await p.keyboard.press("Enter");
+      const voltou = await p.waitForURL(base + "/", { timeout: 10000 }).then(() => true, () => false);
+      resultado(`/jogar/${q}: a pausa volta à home pelo teclado com a CSP estrita`, voltou);
+    }
+    resultado(`/jogar/${q}: sem erros de JavaScript`, erros.length === 0, erros.slice(0, 2).join(" | "));
     pedidos.filter((u) => !u.startsWith(base) && !/^(data|blob):/.test(u)).forEach((u) => externos.add(`/jogar/ → ${u}`));
     await ctx.close();
   }

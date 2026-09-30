@@ -93,11 +93,16 @@ O jogo **não pausa** com a roda aberta — é o corpo do rei, não um menu (§0
 enquanto está aberta, desligável.
 
 ### Pausa
-`UI_PAUSED`: `UI_RESUME` (foco) · `UI_OPTIONS` · `UI_SEED_COPY` (a semente, visível e copiável, §42) ·
-`UI_SAVE_AND_QUIT`. O jogo pára de verdade (`game_paused`).
+Implementado em UX-01 (ADR 0040): `UI_PAUSED` com `UI_RESUME` (foco), `UI_OPTIONS`,
+`UI_CONTROLS`, `UI_FRESH_START` e saída. As opções e a confirmação abrem páginas
+próprias. Voltar/Esc/B sobem um nível e devolvem o foco à origem; na principal,
+retomam, salvo derrota. A confirmação começa em Cancelar. A saída grava de dia
+antes de fechar; de noite informa que o retorno usa a última gravação. No Web,
+volta à página inicial. A semente copiável (`UI_SEED_COPY`, §42) continua prevista.
+O jogo pára de verdade (`game_paused`).
 
 ### Opções
-Quatro separadores — `UI_AUDIO`, `UI_VIDEO`, `UI_CONTROLS`, `UI_ACCESSIBILITY` — e `UI_LANGUAGE`. LB/RB mudam de
+Plano completo: quatro separadores — `UI_AUDIO`, `UI_VIDEO`, `UI_CONTROLS`, `UI_ACCESSIBILITY` — e `UI_LANGUAGE`. LB/RB mudam de
 separador. Cada alteração aplica-se logo; B volta e guarda em `user://settings.cfg` (a câmara e as preferências não
 são estado de jogo, §45).
 
@@ -107,6 +112,10 @@ são estado de jogo, §45).
 | Vídeo | `OPT_FULLSCREEN`/`OPT_WINDOWED` · `OPT_CRISP_PIXELS` (escala inteira com barras, §19) |
 | Controlos | `OPT_REMAP` — remapeamento completo por `InputMap` (§26) |
 | Acessibilidade | `OPT_DAY_LENGTH` (240–540 s) · `OPT_SCREEN_SHAKE` · `OPT_FLASHES` · `OPT_COLORBLIND` · `OPT_CONTRAST` · `OPT_TEXT_SIZE` · `OPT_CAPTIONS` |
+
+Implementado em UX-01: separadores Acessibilidade (tremor, clarões, legendas,
+contraste e daltonismo) e Jogo (roda, duração do dia e idioma). Área rolável,
+Voltar fixo e aplicação imediata. Os restantes campos acima continuam previstos.
 
 ### Gravação
 Três espaços com rotação (§62): `UI_SLOT_N` com `UI_SLOT_DAY_N` (dia e povo) ou `UI_SLOT_EMPTY`. Autosave no

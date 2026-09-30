@@ -33,6 +33,13 @@ têm de acompanhar o jogo. **Antes da demo**, gera a lista exata da versão usad
 documentação oficial: <https://docs.godotengine.org/en/stable/about/complying_with_licenses.html>. É um item da
 RELEASE_CHECKLIST.
 
+### Silkscreen — menu de pausa
+
+Copyright 2001 The Silkscreen Project Authors. **SIL Open Font License 1.1**.
+A fonte do menu está em `src/ui/fonts/silkscreen.ttf`, convertida do subconjunto
+latin já usado pelo site, sem alterar os desenhos. A licença completa acompanha-a
+em `src/ui/fonts/OFL-silkscreen.txt` (ADR 0040).
+
 ## Distribuído com o site (não com o jogo)
 
 As quatro famílias de fontes do site (ADR 0025) são servidas pelo próprio site, a partir de
@@ -48,7 +55,7 @@ vendê-las sozinhas. Os ficheiros são os que o Google Fonts distribui, byte a b
 | IBM Plex Mono | Copyright © 2017 IBM Corp., com o nome reservado «Plex» | SIL OFL 1.1 |
 | Silkscreen | Copyright 2001 The Silkscreen Project Authors | SIL OFL 1.1 |
 
-Não entram no jogo: o jogo exportado não as usa, e a fonte de texto do jogo continua por decidir (Fase 0).
+A Silkscreen também entra no menu do jogo desde a ADR 0040; as restantes famílias continuam só no site.
 
 ## Só no desenvolvimento (não distribuído)
 

@@ -25,6 +25,7 @@ const CHAVES := [
 	&"UI_FRESH_START_FAILED",
 ]
 
+var confirmation: VBoxContainer
 var _abrir: Button
 var _pergunta: Label
 var _cancelar: Button
@@ -38,14 +39,20 @@ func _init(ao_sair: Callable) -> void:
 
 
 func _ready() -> void:
-	_abrir = _botao(_perguntar)
+	_abrir = PauseTheme.button(self, &"UI_FRESH_START", _perguntar)
+	confirmation = VBoxContainer.new()
+	confirmation.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	confirmation.add_theme_constant_override("separation", PauseTheme.PANEL_PADDING)
+	add_child(confirmation)
 	_pergunta = Label.new()
 	_pergunta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_pergunta.add_theme_font_size_override("font_size", LETRA)
 	_pergunta.add_theme_color_override("font_color", TINTA)
-	add_child(_pergunta)
-	_cancelar = _botao(_desistir)
-	_apagar = _botao(_confirmar)
+	confirmation.add_child(_pergunta)
+	_cancelar = PauseTheme.button(confirmation, &"UI_CANCEL", _desistir)
+	PauseTheme.primary(_cancelar)
+	_apagar = PauseTheme.button(confirmation, &"UI_FRESH_START_CONFIRM", _confirmar)
+	_apagar.add_theme_color_override("font_color", Color("ffd3ae"))
 	close()
 
 
@@ -54,19 +61,21 @@ func _ready() -> void:
 ## Espaco, que e o Verbo 1 (a mesma regra do PauseMenu._fechar).
 func close() -> void:
 	var com_foco := get_viewport().gui_get_focus_owner() if is_inside_tree() else null
-	if com_foco != null and com_foco != _abrir and is_ancestor_of(com_foco):
+	if com_foco != null and confirmation.is_ancestor_of(com_foco):
 		com_foco.release_focus()
 	_mostrar(false)
 
 
 func _perguntar() -> void:
 	_mostrar(true)
+	get_tree().call_group(&"pause_menu", &"show_confirmation")
 	_cancelar.grab_focus()
 
 
 ## Cancelar devolve o foco ao botao de onde se veio.
 func _desistir() -> void:
 	close()
+	get_tree().call_group(&"pause_menu", &"back")
 	_abrir.grab_focus()
 
 
@@ -91,6 +100,8 @@ func _depois(apagou: bool) -> void:
 ## O que se perde, pelos numeros de agora (a partida, o legado a espera, o dia).
 static func lost() -> Dictionary:
 	var estado := SimLoop.state
+	if estado == null:
+		return {"day": 1, "seeds": 0, "found": 0}
 	var acabou := Defeat.happened() or estado.crossed
 	var dia := ClockService.clock.day if ClockService.clock != null else 1
 	return counts(estado, dia, acabou, LegacyStore.pending(), LegacyStore.failed)
@@ -110,6 +121,7 @@ static func counts(
 
 
 func _mostrar(perguntar: bool) -> void:
+	confirmation.visible = perguntar
 	_abrir.visible = not perguntar
 	for controlo: Control in [_pergunta, _cancelar, _apagar]:
 		controlo.visible = perguntar

@@ -20,6 +20,9 @@ const CEM := 100.0
 const MODOS := [&"OPT_COLORBLIND_OFF", &"OPT_PROTANOPIA", &"OPT_DEUTERANOPIA", &"OPT_TRITANOPIA"]
 ## O nome de cada idioma de Preferences.LANGUAGES, nele proprio (§27).
 const NOMES_IDIOMA := [&"LANG_PT_PT", &"LANG_EN"]
+const TABS_WIDTH := 540
+const SLIDER_HEIGHT := 44
+const CHOICE_SIZE := Vector2(160, 48)
 
 var _tremor: CheckButton
 var _claroes: CheckButton
@@ -33,24 +36,61 @@ var _daltonismo_rotulo: Label
 var _daltonismo: OptionButton
 var _idioma_rotulo: Label
 var _idioma: OptionButton
+var _access: VBoxContainer
+var _game: VBoxContainer
+var _tabs: Array[Button] = []
+var _tab := 0
+var _tab_row: BoxContainer
 
 
 func _ready() -> void:
+	_tab_row = BoxContainer.new()
+	add_child(_tab_row)
+	for i in 2:
+		var tab := PauseTheme.button(
+			_tab_row, &"UI_ACCESSIBILITY" if i == 0 else &"UI_MENU_GAME", show_tab.bind(i)
+		)
+		tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		tab.toggle_mode = true
+		_tabs.append(tab)
+	_access = VBoxContainer.new()
+	add_child(_access)
+	_game = VBoxContainer.new()
+	add_child(_game)
 	_tremor = _opcao(Preferences.SCREEN_SHAKE)
 	_claroes = _opcao(Preferences.FLASHES)
 	_legendas = _opcao(Preferences.CAPTIONS)
-	_roda = _opcao(Preferences.WHEEL_SLOWDOWN)
-	var relogio := Registry.entry(&"economy", &"clock") as ClockData
-	_dia_rotulo = _rotulo(self)
-	_dia = _slider(relogio.day_seconds_min, relogio.day_seconds_max, PASSO_DIA_S, _no_dia)
 	var gama: Dictionary = AccessibilityFilter.CONTRASTE
-	_contraste_rotulo = _rotulo(self)
-	_contraste = _slider(gama.min, gama.max, gama.passo, _no_contraste)
-	_daltonismo_rotulo = _linha()
+	_contraste_rotulo = _rotulo(_access)
+	_contraste = _slider(_access, gama.min, gama.max, gama.passo, _no_contraste)
+	_daltonismo_rotulo = _linha(_access)
 	_daltonismo = _escolha(_daltonismo_rotulo, MODOS.size(), _no_daltonismo)
-	_idioma_rotulo = _linha()
+	_roda = _opcao(Preferences.WHEEL_SLOWDOWN, _game)
+	var relogio := Registry.entry(&"economy", &"clock") as ClockData
+	_dia_rotulo = _rotulo(_game)
+	_dia = _slider(_game, relogio.day_seconds_min, relogio.day_seconds_max, PASSO_DIA_S, _no_dia)
+	_idioma_rotulo = _linha(_game)
 	_idioma = _escolha(_idioma_rotulo, Preferences.LANGUAGES.size(), _no_idioma)
+	show_tab(0)
 	refresh()
+	resized.connect(_fit_tabs)
+	_fit_tabs()
+
+
+func _fit_tabs() -> void:
+	_tab_row.vertical = size.x < TABS_WIDTH
+
+
+func show_tab(index: int) -> void:
+	_tab = index
+	_access.visible = index == 0
+	_game.visible = index == 1
+	for i in _tabs.size():
+		_tabs[i].set_pressed_no_signal(i == index)
+
+
+func focus_first() -> void:
+	_tabs[_tab].grab_focus()
 
 
 ## Poe cada controlo no valor que esta gravado, sem disparar nada.
@@ -69,6 +109,8 @@ func refresh() -> void:
 
 ## Todo o texto do painel. Chamado ao abrir e sempre que o idioma muda.
 func _escrever() -> void:
+	_tabs[0].text = tr(&"UI_ACCESSIBILITY")
+	_tabs[1].text = tr(&"UI_MENU_GAME")
 	_tremor.text = tr(&"OPT_SCREEN_SHAKE")
 	_claroes.text = tr(&"OPT_FLASHES")
 	_legendas.text = tr(&"OPT_CAPTIONS")
@@ -111,38 +153,47 @@ func _no_idioma(i: int) -> void:
 	TranslationServer.set_locale(Preferences.LANGUAGES[i])
 
 
-func _opcao(preferencia: StringName) -> CheckButton:
+func _opcao(preferencia: StringName, parent: VBoxContainer = null) -> CheckButton:
+	if parent == null:
+		parent = _access
 	var opcao := CheckButton.new()
-	opcao.add_theme_font_size_override("font_size", LETRA)
+	PauseTheme.follow_pointer(opcao)
+	opcao.custom_minimum_size.y = PauseTheme.BUTTON_HEIGHT
+	opcao.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	opcao.add_theme_color_override("font_color", TINTA)
 	opcao.toggled.connect(
 		func(ligado: bool) -> void: Preferences.shared().set_enabled(preferencia, ligado)
 	)
-	add_child(opcao)
+	parent.add_child(opcao)
 	return opcao
 
 
-func _slider(de: float, ate: float, passo: float, ao_mudar: Callable) -> HSlider:
+func _slider(parent: Node, de: float, ate: float, passo: float, ao_mudar: Callable) -> HSlider:
 	var slider := HSlider.new()
+	PauseTheme.follow_pointer(slider)
+	slider.custom_minimum_size.y = SLIDER_HEIGHT
 	slider.min_value = de
 	slider.max_value = ate
 	slider.step = passo
 	slider.value_changed.connect(ao_mudar)
-	add_child(slider)
+	parent.add_child(slider)
 	return slider
 
 
 ## Uma linha com o nome a esquerda e a escolha a direita. Devolve o nome.
-func _linha() -> Label:
+func _linha(parent: Node) -> Label:
 	var linha := HBoxContainer.new()
 	var nome := _rotulo(linha)
 	nome.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	add_child(linha)
+	parent.add_child(linha)
 	return nome
 
 
 func _escolha(nome: Label, quantas: int, ao_escolher: Callable) -> OptionButton:
 	var escolha := OptionButton.new()
+	PauseTheme.follow_pointer(escolha)
+	escolha.custom_minimum_size = CHOICE_SIZE
+	escolha.fit_to_longest_item = false
 	for i in quantas:
 		escolha.add_item("")
 	escolha.item_selected.connect(ao_escolher)
@@ -152,6 +203,8 @@ func _escolha(nome: Label, quantas: int, ao_escolher: Callable) -> OptionButton:
 
 func _rotulo(onde: Container) -> Label:
 	var rotulo := Label.new()
+	rotulo.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	rotulo.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	rotulo.add_theme_font_size_override("font_size", LETRA)
 	rotulo.add_theme_color_override("font_color", TINTA)
 	onde.add_child(rotulo)

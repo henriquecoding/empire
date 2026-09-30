@@ -163,3 +163,9 @@ As XIII-05, XIII-07 e XIII-09 podem cair inteiras sem que as outras deixem de fu
 **O marco que fecha a pré-produção** (relatório mestre, §32; dossiê, §71): abrir o Empire, controlar uma personagem real
 numa *greybox*, atravessar as três faixas, construir algo com uma moeda, sobreviver à primeira noite e reproduzir o
 resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, o F1-08 e o F0-11.
+
+## Interface — correções pedidas pelo dono
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [UX-01](UX-01.md) | Reformular a pausa e corrigir o corte visual | GB-13 | feito |

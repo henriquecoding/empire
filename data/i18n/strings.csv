@@ -708,3 +708,14 @@ EDGE_SEA,o mar,the sea,guia contextual de jogo: a borda do mundo (Q-173),24,Q-17
 EDGE_CLIFF,a falésia,the cliff,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
 EDGE_GORGE,o desfiladeiro,the gorge,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
 EDGE_WALL,a muralha de rocha,the rock wall,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+UI_MENU_TITLE,Empire,Empire,nome do jogo na pausa,16,UX-01
+UI_MENU_GAME,Jogo,Game,separador das opcoes,16,UX-01
+UI_MENU_BACK,Voltar,Back,voltar a pausa,16,UX-01
+UI_MENU_OPTIONS_SAVED,As alterações são aplicadas e guardadas automaticamente.,Changes apply and save automatically.,rodape das opcoes,96,UX-01
+UI_MENU_HINT,Setas escolher · Enter confirmar · Esc voltar,Arrows choose · Enter confirm · Esc back,navegacao da pausa com teclado,96,UX-01
+UI_MENU_EXIT_WEB,Voltar ao início,Return to Home,sair do jogo Web para a pagina inicial,24,UX-01
+UI_MENU_SAVE_DAY,O progresso é guardado antes de sair.,Progress is saved before leaving.,sair durante o dia,80,UX-01
+UI_MENU_SAVE_NIGHT,"À noite, retomas a última gravação ao voltar.","At night, returning resumes your last save.",sair sem anunciar um save da noite,96,UX-01
+UI_MENU_SAVE_FAILED,Não foi possível guardar. A partida continua aberta.,Could not save. Your game remains open.,falha de gravacao ao sair,96,UX-01
+UI_MENU_HINT_PAD,D-pad escolher · {accept} confirmar · {cancel} voltar,D-pad choose · {accept} confirm · {cancel} back,navegacao da pausa com comando,96,UX-01
+PAD_CIRCLE,círculo,circle,botao de voltar do comando PlayStation,16,UX-01
