@@ -37,7 +37,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 29 tabelas, 233 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 1092 casos, 1089 a passar, 3 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 1096 casos, 1093 a passar, 3 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
 - **Portões de arquitetura** — `lint_sim` limpo em G1, G2, G4 e **G6** (o save e as preferências nunca usam `load()`),
@@ -81,7 +81,7 @@ a cada construção._
 | `docs/adr/` | 39 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros; a 0026 os reportes e as respostas às perguntas, num Supabase só do Empire; e a 0027 a 0033 as respostas do painel de 28/09 — o preço dos impulsos, as estátuas, as primeiras noites e o archote, os povos do gelo e do pântano, o Godot 4.7.2 e o recrutamento do Kingdom: New Lands; a 0034 o Lume roxo na base da Podridão e as tuas luzes que a afastam (29/09); a 0035 o reino que fica, a marcha e os vassalos; a 0036 as respostas do painel de 29/09; a 0037 o relatório Kingdom aplicado — recomeçar do zero, a banca do arco, o cerco e a lua do pico; a 0038 o mundo contínuo — gerado ao andar, gravado, com trilhas entre os povos e a borda no fim (30/09); e a 0039 a paisagem por cima do subsolo, que só se vai quando o rei desce (30/09). |
 | `docs/backlog/` | 99 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
-| `data/i18n/strings.csv` | 421 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
+| `data/i18n/strings.csv` | 422 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
 
 ## A regra que continua a valer

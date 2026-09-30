@@ -390,6 +390,7 @@ UI_OPTIONS,Opções,Options,menu,20,
 UI_CREDITS,Créditos,Credits,menu principal,20,
 UI_QUIT,Sair,Quit,menu,20,
 UI_PAUSED,Pausa,Paused,ecrã de pausa,20,
+UI_JOURNAL_CLOSE,ESPAÇO · E · ESC ou clique para fechar,SPACE · E · ESC or click to close,rodapé da folha de um diário (§79),48,O pedido do dono de 30/09/2026: a folha fecha-se à mão.
 UI_RESUME,Retomar,Resume,ecrã de pausa,20,
 UI_SAVE_AND_QUIT,Guardar e sair,Save & Quit,ecrã de pausa,24,
 UI_CHOOSE_PEOPLE,Escolhe o teu povo,Choose Your People,seleção de povo,28,

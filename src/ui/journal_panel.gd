@@ -6,7 +6,10 @@
 # para diarios no catalogo, e inventa-lo partia a regra 7.
 #
 # Nao pausa o jogo: o §17 pede que o lore nunca pare a partida. Fica o tempo de
-# ler, e sai com o Verbo 1 ou sozinho.
+# ler, e sai sozinho ou quando se quer: ESPACO, E, ESC ou um clique fecham-no, e o
+# rodape da folha di-lo. O pedido do dono de 30/09/2026 ("fica muito tempo e nao
+# da para fechar manualmente"): o gesto e apanhado no `_input`, antes do painel da
+# obra e do rei, que o comiam — e por isso fechar nao larga moeda nem pausa.
 class_name JournalPanel
 extends PanelContainer
 
@@ -14,18 +17,23 @@ const TITULO := &"title"
 const CORPO := &"body"
 const TABELA := SimFactory.TABELA_DIARIOS
 
-## O tempo de ler noventa palavras devagar. Nao vem do dossie: e leitura.
-const DURA_S := 24.0
+## O tempo de ler noventa palavras a ritmo normal. Nao vem do dossie: e leitura.
+const DURA_S := 14.0
+## Os gestos que fecham a folha antes do tempo.
+const FECHAM := [&"verb_drop", &"verb_assume", &"pause"]
+const RODAPE := &"UI_JOURNAL_CLOSE"
 ## Por baixo do HUD e acima do chao (§11): o rei anda no chao, e fica a vista.
 const CAIXA := {"x": 340.0, "y": 100.0, "w": 600.0, "h": 280.0}
 const LETRA_TITULO := 20
 const LETRA_CORPO := 14
+const LETRA_RODAPE := 12
 const PAPEL := Color(0.93, 0.88, 0.76, 0.96)
 const TINTA := Color(0.16, 0.12, 0.09)
 const MARGEM := 18
 
 var _titulo: Label
 var _corpo: Label
+var _rodape: Label
 var _falta: float = 0.0
 
 
@@ -42,8 +50,10 @@ func _ready() -> void:
 	add_child(coluna)
 	_titulo = _rotulo(LETRA_TITULO)
 	_corpo = _rotulo(LETRA_CORPO)
+	_rodape = _rotulo(LETRA_RODAPE)
 	coluna.add_child(_titulo)
 	coluna.add_child(_corpo)
+	coluna.add_child(_rodape)
 	EventBus.secret_found.connect(_no_achado)
 
 
@@ -65,6 +75,7 @@ func show_journal(id: StringName) -> void:
 		return
 	_titulo.text = texto[TITULO]
 	_corpo.text = texto[CORPO]
+	_rodape.text = TranslationServer.translate(RODAPE)
 	_falta = DURA_S
 	visible = true
 
@@ -81,9 +92,20 @@ func _process(delta: float) -> void:
 		visible = false
 
 
-func _unhandled_input(evento: InputEvent) -> void:
-	if visible and evento.is_action_pressed(&"verb_drop"):
+## Se este gesto fecha a folha: um dos FECHAM, ou um clique de rato.
+static func closes(evento: InputEvent) -> bool:
+	if evento is InputEventMouseButton:
+		return evento.pressed
+	for accao: StringName in FECHAM:
+		if evento.is_action_pressed(accao):
+			return true
+	return false
+
+
+func _input(evento: InputEvent) -> void:
+	if visible and closes(evento):
 		visible = false
+		get_viewport().set_input_as_handled()
 
 
 func _rotulo(letra: int) -> Label:
