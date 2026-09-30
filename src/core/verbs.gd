@@ -215,7 +215,7 @@ static func destination(unidades: UnitSystem, unit_id: int, passagens: PackedFlo
 	var dados := Registry.entry(TABELA_TROPAS, unidades.data_ids[i]) as UnitData
 	var em_baixo := int(unidades.bands[i]) == int(Band.Kind.UNDERGROUND)
 	var x := unidades.xs[i]
-	var boca := Passages.near(x, passagens) or em_baixo and Passages.near(x, SimLoop.passages)
+	var boca := Frontier.at_mouth(x, passagens, em_baixo)  # e as masmorras (Q-173)
 	if not dados.can_change_band or not boca:
 		return NENHUMA
 	return int(Band.Kind.SURFACE) if em_baixo else int(Band.Kind.UNDERGROUND)

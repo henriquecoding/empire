@@ -7,6 +7,69 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Abertas — do mundo contínuo (30/09/2026)
+
+> O que os dois pedidos do dono de 30/09/2026 (Q-173, ADR 0038) deixaram por decidir. O mundo gera-se, grava-se e
+> acaba numa borda, e os encontros das trilhas fazem o que dizem. Mas nenhum pedido diz o que o jogo faz nas terras
+> geradas além disso, e o `AGENTS.md` não deixa inventar mecânicas.
+
+### Q-174 · Obras nas terras geradas
+- **Onde:** §21 (cada linha do `segments.csv` tem `build_slots`), §07, §13; `WildSegments`, `Greybox`.
+- **O que está:** as terras geradas não têm sítios de obra. Só a região de casa se constrói: os `build_slots` das
+  linhas dos trilhos (1 a 3) não se usam.
+- **Proposta:** abrir os sítios dos trilhos um a um, pelo `build_slots` da linha — uma torre de vigia ou um muro
+  avançado junto a um acampamento. Cada obra fora do muro de fora é mais uma coisa que a noite pode morder.
+- **Decide:** tu.
+
+### Q-175 · Cada povo com a sua tabela de segmentos
+- **Onde:** §21 (*«pesos por região»*), §04; `segments.csv` (só há o kit dos Enramados), `SimFactory.segment_kit()`.
+- **O que está:** todos os trilhos e terras se sorteiam das linhas dos Enramados, desenhadas nas cores e nas plantas
+  do bioma de cada povo. O poço, a carroça e a pedra de pé são os mesmos na terra da Geada e na da Fornalha.
+- **Proposta:** uma tabela por povo no `segments.csv` (os mesmos tipos, com pesos e assuntos próprios: a Geada com
+  mais vazio, o Paul com mais água). O trilho entre dois povos sorteia da tabela de onde se vem na primeira metade e
+  da tabela para onde se vai na segunda.
+- **Decide:** tu (e a arte de cada assunto).
+
+### Q-176 · O que há numa masmorra
+- **Onde:** §17 (os segredos), §21 (a ruína *«traz uma passagem para o corte de solo»*), §11; `Frontier._aplicar`.
+- **O que está:** a masmorra é uma câmara com um monte de 3 a 6 moedas, que cai só da primeira vez.
+- **Proposta:** pôr lá um dos segredos do §17, ou uma criatura que guarde as moedas. As duas coisas mudam números e
+  regras que o dossiê não tem.
+- **Decide:** tu.
+
+### Q-177 · O mercenário das trilhas: soldo e lealdade
+- **Onde:** §14, Q-144 (a deserção pelo soldo em atraso), `units.csv` (`mercenary`), `Camps.mercenaries`.
+- **O que está:** no acampamento espera sempre um mercenário, que se contrata pelo preço de recrutamento dele como
+  qualquer recruta. A alvorada repõe-no quando é contratado, um de cada vez.
+- **Proposta:** o mercenário das trilhas cobra soldo por dia, como os outros, e deserta primeiro quando o soldo falha.
+  O acampamento esvazia-se depois de três contratados.
+- **Decide:** tu.
+
+### Q-178 · O rei na terra de outro povo
+- **Onde:** §13 (reconhecimento, marcha, cerco), ADR 0035, Q-166; `WildLands` (a fortaleza é cenário).
+- **O que está:** o rei anda pela terra de outro povo e vê o limiar, o povoado e a fortaleza, com a bandeira dele ou a
+  tua se o povo for vassalo. Nada ali reage a ele, e a conquista continua a ser a marcha da bifurcação.
+- **Proposta:** decidir se a terra de um povo não vassalo é perigosa (guardas, portas fechadas de noite), se a marcha
+  deve partir da própria fortaleza em vez da bifurcação, e se um vassalo dá alguma coisa a quem lá passa.
+- **Decide:** tu.
+
+### Q-179 · De onde vem a noite, agora que o mundo tem pontas
+- **Onde:** §05, §74, ADR 0034 (a Podridão e o Lume); `NightSystem`, `Lume`.
+- **O que está:** a Podridão nasce e cresce na região, como antes. No Two Crowns o perigo vem das duas pontas da
+  ilha, dos portais; aqui as pontas são bordas, e não mandam nada.
+- **Proposta:** manter a Podridão onde está: o mundo contínuo não muda a noite. Se quiseres a pressão do Kingdom, a
+  noite funda do §74 pode vir de uma das bordas. Muda a Q-151 e a curva da §66.
+- **Decide:** tu.
+
+### Q-180 · O mapa revelado como legado (§16)
+- **Onde:** §16 (*«ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos
+  encontrados»*), a lei da travessia (*«uma região revelada do mapa volta a ficar escura, à sorte»*); `Legacy`.
+- **O que está:** o mundo gerado vai no save da partida, e o herdeiro anda no mesmo mundo. Uma partida nova depois
+  da derrota tem outra semente e outro mundo, e o legado não guarda nada das terras.
+- **Proposta:** o legado guarda até onde o mundo foi gerado de cada lado. A partida seguinte, com a mesma campanha,
+  mostra essas terras desde o início, mas desabitadas.
+- **Decide:** tu.
+
 ## Abertas — do relatório Kingdom (29/09/2026)
 
 > As seis perguntas do `docs/recovery/ANALISE-KINGDOM-2026-09-29.md` (secção 9) que o *«aplique o relatório»* não
@@ -348,6 +411,45 @@
 - **Em aberto:** as carroças do §06 (a matéria não se transporta hoje: a casa consome à distância); se trocar
   de modo deve custar a moeda; e onde fica o celeiro num segmento autorado.
 - **Decide:** tu.
+
+## Aplicadas do mundo contínuo — os pedidos do dono de 30/09/2026
+
+### Q-173 · O mundo contínuo: gerado ao andar, gravado, com trilhas entre os povos e uma borda no fim
+- **Decidido pelo dono (30/09/2026):** *«os personagens não devem caminhar sobre nada, o mapa deve ser gerado
+  proceduralmente como minecraft, conforme a pessoa anda é gerado mapa que faz sentido, e o mapa fica salvo daquele
+  jeito o resto da gameplay (…) coloque um limite saudável de até quanto pode se expandir e com algo ao fim como é em
+  kingdom»*. E logo a seguir: *«entre as regiões devem haver caminhos e trilhas para fazerem transições suaves (…)
+  nesses caminhos se encontra acampamentos de mendigos, mercenarios, dungeons»*. Aplicado (ADR 0038). A pesquisa está
+  em `docs/recovery/PESQUISA-MUNDO-2026-09-30.md`.
+- **Onde:** §21, §11, §13, §62, Q-154, ADR 0035. No código: `WorldPlan`, `WildSegments`, `TrailPick`, `Frontier`,
+  `Camps.mercenaries`, `SaveMigrations` (v4), `WildGround`, `WildTunnel`, `WildSubjects`, `WildLands`, `WildEdge`,
+  `ShapeArt`, `FrontierView` e `GuideSites.wilds`. Nos dados: `segments.csv`, `biomes.csv` (`edge_subject`) e
+  `economy.csv` (grupo «Mundo contínuo»). Os testes: `tests/mundo_plano_test.gd`, `tests/mundo_segmentos_test.gd` e
+  `tests/mundo_fronteira_test.gd`.
+- **O que estava:** as terras bravias da Q-154 não tinham chão, e o rei andava sobre o céu. Os povos da campanha não
+  tinham sítio no mundo, e a marcha ia para uma fortaleza que não se via.
+- **O que foi feito:**
+  - **O mundo.** É uma linha de segmentos do §21 à volta da região de casa. Cada povo da campanha fica pela ordem do
+    plano, a alternar de lado, com um trilho, um limiar, a terra e a fortaleza na ponta. Depois do último de cada
+    lado há um trilho e a borda: mar, falésia, desfiladeiro ou muralha, a do bioma desse povo.
+  - **Gerar e gravar.** Gera-se ao andar, o que começa a um ecrã do rei, e cada segmento fica gravado no save
+    (versão 4, com a migração). Os sorteios estão presos à semente e ao sítio: o mesmo mundo sai igual, ande o rei ou
+    salte.
+  - **As transições.** A paisagem passa em gradiente de um povo para o seguinte, e a estrada estreita-se em trilho e
+    volta a alargar-se, sem degraus.
+  - **Os encontros.** Os acampamentos de mendigos entram na alvorada, e nos de mercenários espera um mercenário. A
+    ruína com passagem é uma masmorra, com um monte de moedas na câmara.
+  - **O guia.** Diz de quem é a terra e o que há no fim.
+- **Números propostos** (`_proposed`):
+  - no `economy.csv`: `world_trail_segments` 4 a 6, `world_land_segments` 4, `wild_cluster` 0,6,
+    `wild_cluster_segments` 6 e `dungeon_coins` 3 a 6;
+  - no `segments.csv`: os pesos e as regras das 11 linhas novas, e a regra da ruína (`gap=3|encounter`).
+- **Fica por fazer:**
+  - a arte: tudo o que se vê nas terras são formas lisas escritas como dados;
+  - a linha de árvores do horizonte, que continua a do bioma de casa;
+  - as Q-174 a Q-180.
+- **Como desfazer:** um plano vazio no `Greybox.region` (`WorldPlan.new()`) volta a dar só a região, e o save v4
+  continua a abrir.
 
 ## Aplicadas do relatório Kingdom — «aplique o relatório» (o dono, 29/09/2026)
 

@@ -25,6 +25,8 @@ var realm := Realm.new()
 ## O animo do reino (Q-102): memorias com prazo, que mexem na fuga, na producao e
 ## em quem chega aos acampamentos.
 var spirit: Spirit
+## As terras entre os povos, geradas ao andar e guardadas (Q-173, ADR 0038).
+var wilds := WildSegments.new(SimFactory.segment_kit())
 
 var _economia: EconomySystem
 var _moral: MoraleSystem
@@ -84,6 +86,8 @@ func prepare(
 	estado: GameState = null
 ) -> void:
 	HuntWatch.prepare(hunting, dia, core_x, largura, fase)
+	if unidades != null:
+		Frontier.grow(self, unidades, SimLoop.king_id, largura)  # o que se ve a frente (Q-173)
 	if dia != _dia and unidades != null:
 		_dia = dia
 		crown.dawn(dia, unidades)
@@ -173,6 +177,7 @@ func to_dict() -> Dictionary:
 		&"succession": succession.to_dict(),
 		&"realm": realm.to_dict(),
 		&"spirit": spirit.to_dict(),
+		&"wilds": wilds.to_dict(),
 	}
 
 
@@ -186,6 +191,8 @@ func from_dict(mundo: Dictionary) -> void:
 	succession.from_dict(mundo.get(&"succession", {}))
 	realm.from_dict(mundo.get(&"realm", {}))
 	spirit.from_dict(mundo.get(&"spirit", {}))
+	wilds.from_dict(mundo.get(&"wilds", {}))
+	Frontier.reapply(self, SimLoop.world_width)  # os acampamentos e as masmorras voltam
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 
@@ -205,6 +212,7 @@ func _alvorada(dia: int, unidades: UnitSystem, estado: GameState) -> void:
 				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
 	SpiritWatch.dawn(spirit, dia, upkeep.arrears())  # o soldo em atraso pesa (Q-102)
 	Camps.dawn(camps, dia, unidades, estado, spirit.level(dia))
+	Camps.mercenaries(wilds.mercenaries(SimLoop.world_width), unidades, estado)  # Q-173
 	var fork := (
 		SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else _nucleo.x
 	)

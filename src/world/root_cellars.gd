@@ -101,7 +101,7 @@ static func _vaults(canvas: CanvasItem, width: float) -> void:
 	var x := 0.0
 	var k := 0
 	while x < width:
-		var w: float = VAULTS[k % VAULTS.size()]
+		var w := minf(VAULTS[k % VAULTS.size()], width - x)  # a ultima acaba no bordo
 		var arco := PackedVector2Array([Vector2(x, FLOOR_Y)])
 		for p in VAULT_POINTS + 1:
 			var t := float(p) / VAULT_POINTS
@@ -121,6 +121,7 @@ static func _vaults(canvas: CanvasItem, width: float) -> void:
 		_pillar(canvas, x)
 		x += w
 		k += 1
+	_pillar(canvas, width)  # e fecha num pilar: dali para fora e o tunel (Q-173)
 
 
 static func _pillar(canvas: CanvasItem, x: float) -> void:

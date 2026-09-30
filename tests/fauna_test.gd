@@ -105,3 +105,19 @@ func test_a_faixa_de_cada_bicho_e_a_da_luz_que_o_ilumina() -> void:
 	assert_int(Fauna.FAIXA[Wilds.Animal.BAT]).is_equal(Band.Kind.UNDERGROUND)
 	assert_int(Fauna.FAIXA[Wilds.Animal.BIRD]).is_equal(Band.Kind.AERIAL)
 	assert_int(Fauna.FAIXA[Wilds.Animal.SONGBIRD]).is_equal(Band.Kind.SURFACE)
+
+
+## Q-173: o corvo das terras a oeste da regiao anda por la, dentro dos limites dados — e
+## nao e puxado para a regiao, nem passa da beira.
+func test_o_corvo_das_terras_anda_entre_os_limites() -> void:
+	var f := Fauna.new()
+	var limites := Vector2(-2000.0, REGIAO)
+	f.populate(PackedFloat32Array([Wilds.Animal.CROW, -1990.0, 0.3]), REGIAO, limites)
+	var menor := INF
+	var maior := -INF
+	for _i in int(60.0 / PASSO):
+		f.tick(PASSO, 0.0, false)
+		menor = minf(menor, f.bichos[0].x)
+		maior = maxf(maior, f.bichos[0].x)
+	assert_float(menor).is_greater_equal(limites.x)
+	assert_float(maior).is_less(limites.x + Fauna.PE.roda * 2.0)

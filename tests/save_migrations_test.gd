@@ -44,6 +44,17 @@ func test_um_save_v2_com_marcha_sobe_sem_cerco() -> void:
 	assert_bool(m.sieges.is_empty()).is_true()
 
 
+## v4 (Q-173): um save de antes do mundo continuo nao gerou terra nenhuma.
+func test_um_save_v3_sobe_sem_terras_geradas() -> void:
+	var v3 := {&"save_version": 3, &"state": {}, &"world": {&"realm": {}}}
+	var d := SaveMigrations.migrate(v3)
+	assert_int(int(d[&"save_version"])).is_equal(SaveMigrations.CURRENT)
+	assert_dict(d[&"world"][&"wilds"]).is_empty()
+	var t := WildSegments.new()
+	t.from_dict(d[&"world"][&"wilds"])
+	assert_int(t.count(WorldPlan.LESTE)).is_equal(0)
+
+
 func test_os_archotes_passam_para_o_cinto_do_rei() -> void:
 	# Q-153: os archotes deixaram de ser do archote e passaram a ser do armazenamento.
 	var mundo: Dictionary = SaveMigrations.migrate(_v1())[&"world"]

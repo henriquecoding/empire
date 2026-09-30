@@ -33,6 +33,7 @@ const RIDGE := [0, 374, 140, 350, 252, 361, 396, 322, 528, 348, 664, 329, 804, 3
 @export_range(0, LAST_PLANE) var plane := 0
 var _clock: ClockData
 var _art := OriginalArt.new()
+var _revisao := -1  # das terras geradas (Q-173): quando muda, redesenha-se
 
 
 func _ready() -> void:
@@ -46,6 +47,9 @@ func _process(_delta: float) -> void:
 		return
 	var clock := ClockService.clock
 	modulate = BandLight.ambient(_clock, int(clock.current_phase()), clock.phase_progress())
+	if SimLoop.field != null and SimLoop.field.wilds.revision != _revisao:
+		_revisao = SimLoop.field.wilds.revision
+		queue_redraw()
 
 
 func _draw() -> void:
@@ -66,13 +70,30 @@ func _draw() -> void:
 
 func _sky() -> void:
 	var height := float(Band.GROUND_LINE) / SKY_BANDS
+	var alcance := _alcance()
 	for i in SKY_BANDS:
 		var color := SKY_TOP.lerp(SKY_BOTTOM, float(i) / SKY_BANDS)
-		draw_rect(Rect2(-WIDTH, floorf(i * height), WIDTH * LAYERS, ceilf(height)), color)
+		var faixa := Rect2(alcance.x, floorf(i * height), alcance.y - alcance.x, ceilf(height))
+		draw_rect(faixa, color)
+
+
+## De onde a onde este plano tem de estar desenhado: o mundo que ja foi gerado, visto
+## ao ritmo do parallax em que o plano vive (Q-173).
+func _alcance() -> Vector2:
+	var mundo := Vector2(0.0, float(WIDTH))
+	if SimLoop.field != null:
+		mundo = SimLoop.field.wilds.extent(SimLoop.world_width)
+	var pai := get_parent() as Parallax2D
+	var escala := pai.scroll_scale.x if pai != null else 1.0
+	return Vector2(
+		minf(-WIDTH, mundo.x * escala - WIDTH), maxf(WIDTH * 2, mundo.y * escala + WIDTH)
+	)
 
 
 func _ridge(color: Color, offset: Vector2) -> void:
-	for start in range(-WIDTH, WIDTH * 2, int(RIDGE[LAST_X])):
+	var alcance := _alcance()
+	var passo := int(RIDGE[LAST_X])
+	for start in range(floori(alcance.x / passo) * passo, int(alcance.y), passo):
 		var points := PackedVector2Array([Vector2(start, Band.GROUND_LINE) + offset])
 		for i in range(0, RIDGE.size(), int(TWO)):
 			points.append(Vector2(start + RIDGE[i], RIDGE[i + 1]) + offset)
@@ -113,7 +134,11 @@ func _ground() -> void:
 		for y in range(Band.GROUND_LINE + CELL, Band.SCREEN_BOTTOM, CELL):
 			draw_rect(Rect2(x + (y % CELL), y, CELL - DETAIL, DETAIL), ROCK)
 			draw_rect(Rect2(x, y - DETAIL, DETAIL, DETAIL), MOSS)
+	if SimLoop.field != null:  # e o chao das terras geradas, onde tambem se anda (Q-173)
+		WildGround.draw_ground(self, SimLoop.field.wilds, SimLoop.world_width)
 
 
 func _underground() -> void:
 	RootCellars.draw(self, WIDTH)
+	if SimLoop.field != null:
+		WildGround.draw_underground(self, SimLoop.field.wilds, SimLoop.world_width)

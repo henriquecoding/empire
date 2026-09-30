@@ -16,7 +16,6 @@ extends RefCounted
 const SEGMENTO := &"enramados_start_base_01"
 ## §21: uma regiao tem 4 a 6 ecras. Seis dao espaco as duas muralhas de cada lado.
 const ECRAS := 6
-const BRAVIAS_ECRAS := 6  # de terra brava para la de cada base (Q-154)
 
 const CANTEIRO := &"farm"
 const PESQUEIRO := &"fishery"
@@ -96,7 +95,8 @@ static func region() -> void:
 	SimLoop.builds.clear()
 	var largura := float((Registry.entry(&"segments", SEGMENTO) as SegmentData).width_px)
 	SimLoop.world_width = largura * ECRAS
-	SimLoop.wild_px = largura * BRAVIAS_ECRAS  # o mapa muito mais largo (Q-154)
+	SimLoop.field.wilds.setup(Frontier.plan(SimLoop.state), largura)  # o mundo continuo (Q-173)
+	SimLoop.wild_px = SimLoop.field.wilds.reach(SimLoop.world_width)  # ate a beira (Q-154)
 	SimLoop.core_x = SimLoop.world_width * MEIO
 	SimLoop.passages = _deslocadas(PASSAGENS_X)
 	SimLoop.field.camps = _deslocadas(ACAMPAMENTOS_X)

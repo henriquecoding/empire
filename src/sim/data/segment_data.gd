@@ -6,7 +6,10 @@ extends Resource
 
 @export var id: StringName
 ## start_base, opening, empty, forest, water, rock, ruin, mercenary_camp,
-## fortress, chaotic, threshold, edge
+## fortress, chaotic, threshold, edge; e, nas trilhas entre povos (Q-173),
+## vagrant_camp e settlement
+## As regras que as trilhas leem: gap=N (a N segmentos do ultimo igual, no minimo),
+## not_near_base (nunca o primeiro depois da regiao) e encounter (conta como encontro).
 @export var kind: StringName
 @export var people: StringName
 @export var weight: int = 0  # §21; 0 = colocado por regra, nunca sorteado

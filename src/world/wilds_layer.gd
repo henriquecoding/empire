@@ -46,8 +46,13 @@ func _process(delta: float) -> void:
 		modulate = BandLight.ambient(_clock, int(relogio.current_phase()), relogio.phase_progress())
 	if SimLoop.state == null:
 		return
+	var revisao := SimLoop.field.wilds.revision if SimLoop.field != null else -1
 	var chave := [
-		RngService.world_seed(), SimLoop.state.region, Wilds.biome_now(), SimLoop.world_width
+		RngService.world_seed(),
+		SimLoop.state.region,
+		Wilds.biome_now(),
+		SimLoop.world_width,
+		revisao
 	]
 	if chave != _chave:
 		_chave = chave
@@ -69,11 +74,28 @@ func _gerar() -> PackedFloat32Array:
 		return dados
 	if plane == Plano.HORIZONTE:
 		var camadas := Wilds.table(Wilds.HORIZONTE, bioma)
-		var de := -largura * MARGEM
-		var ate := largura * (1.0 + MARGEM)
-		return Wilds.plants(camadas, de, ate, regiao, Wilds.SAL.horizonte, Wilds.woods())
+		var alcance := _alcance(largura)
+		return Wilds.plants(
+			camadas, alcance.x, alcance.y, regiao, Wilds.SAL.horizonte, Wilds.woods()
+		)
 	var campo := Wilds.table(Wilds.CAMPO, bioma)
-	return Wilds.plants(campo, 0.0, largura, regiao, Wilds.SAL.campo, Wilds.woods())
+	var plantas := Wilds.plants(campo, 0.0, largura, regiao, Wilds.SAL.campo, Wilds.woods())
+	if SimLoop.field != null:  # e o campo das terras geradas, povo a povo (Q-173)
+		plantas.append_array(WildGround.plants(SimLoop.field.wilds, largura, regiao))
+	return plantas
+
+
+## A linha de arvores cobre o mundo ja gerado, visto ao ritmo do parallax dela (Q-173).
+func _alcance(largura: float) -> Vector2:
+	var mundo := Vector2(0.0, largura)
+	if SimLoop.field != null:
+		mundo = SimLoop.field.wilds.extent(largura)
+	var pai := get_parent() as Parallax2D
+	var escala := pai.scroll_scale.x if pai != null else 1.0
+	var margem := largura * MARGEM
+	return Vector2(
+		minf(-margem, mundo.x * escala - margem), maxf(largura + margem, mundo.y * escala + margem)
+	)
 
 
 func _draw() -> void:
