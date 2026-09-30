@@ -71,7 +71,7 @@ static func draw_ground(canvas: CanvasItem, terras: WildSegments, largura: float
 			var topo := Vector2(
 				lerpf(TOPO_ESTRADA, TOPO_TRILHO, p.z), lerpf(TOPO_ESTRADA, TOPO_TRILHO, p.w)
 			)
-			var span := _chao_de(registo, lado, x0, terras.width)
+			var span := ground_span(registo, lado, x0, terras.width)
 			_chao(canvas, span, colors(registo, p.x), colors(registo, p.y), topo)
 			var x := terras.subject_x(lado, k, largura)
 			var aqui := colors(registo, lerpf(p.x, p.y, (x - x0) / terras.width))
@@ -95,7 +95,7 @@ static func draw_underground(canvas: CanvasItem, terras: WildSegments, largura: 
 			var boca := NAN
 			if int(registo.get(WildSegments.PASSAGEM, 0)) > 0:
 				boca = terras.subject_x(lado, k, largura)
-			var span := _chao_de(registo, lado, x0, terras.width)
+			var span := ground_span(registo, lado, x0, terras.width)
 			var semente := int(registo[WildSegments.SEMENTE])
 			WildTunnel.draw(canvas, span, colors(registo, p.x), colors(registo, p.y), semente, boca)
 
@@ -108,13 +108,13 @@ static func plants(terras: WildSegments, largura: float, regiao: int) -> PackedF
 	for lado in [WorldPlan.OESTE, WorldPlan.LESTE]:
 		for k in terras.count(lado):
 			var r := terras.at(lado, k)
-			var span := _chao_de(r, lado, terras.x_of(lado, k, largura), terras.width)
+			var span := ground_span(r, lado, terras.x_of(lado, k, largura), terras.width)
 			var p := ends(terras, lado, k)
 			for ponta in [WildSegments.DE, WildSegments.PARA]:
 				var camadas := Wilds.table(Wilds.CAMPO, StringName(r.get(ponta, &"")))
 				var todas := Wilds.plants(camadas, span.x, span.y, regiao, Wilds.SAL.campo, ruido)
 				var mistura := Vector2(p.x, p.y)
-				saida.append_array(_metade(todas, span, mistura, ponta == WildSegments.PARA))
+				saida.append_array(half(todas, span, mistura, ponta == WildSegments.PARA))
 	return saida
 
 
@@ -146,7 +146,7 @@ static func dash(
 
 ## As plantas de um dos dois biomas: a variante de cada planta (0..1) contra a mistura no
 ## x onde ela nasce decide de qual e.
-static func _metade(
+static func half(
 	plantas: PackedFloat32Array, span: Vector2, mistura: Vector2, destino: bool
 ) -> PackedFloat32Array:
 	var saida := PackedFloat32Array()
@@ -158,7 +158,7 @@ static func _metade(
 
 
 ## De onde a onde ha chao num segmento: todo, menos na borda, onde acaba na beira.
-static func _chao_de(registo: Dictionary, lado: int, x0: float, w: float) -> Vector2:
+static func ground_span(registo: Dictionary, lado: int, x0: float, w: float) -> Vector2:
 	if int(registo[WildSegments.ZONA]) != WorldPlan.Zone.EDGE:
 		return Vector2(x0, x0 + w)
 	if lado == WorldPlan.LESTE:

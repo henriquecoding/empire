@@ -121,15 +121,31 @@ static func draw_all(
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
+## Uma planta com o pe em `pe`. Deixa a transformacao posta: quem desenha muitas repoe-na
+## no fim, como o draw_all.
 static func draw_one(
-	canvas: CanvasItem, tipo: int, pe: Vector2, variante: float, nevoa: Color, mistura: float
+	canvas: CanvasItem,
+	tipo: int,
+	pe: Vector2,
+	variante: float,
+	nevoa: Color,
+	mistura: float,
+	escala: float = ESCALA
 ) -> void:
 	var cores := palette(tipo, variante)
 	var lado := 1.0 if variante < MEIO else ESPELHO
-	canvas.draw_set_transform(pe, 0.0, Vector2(ESCALA * lado, ESCALA))
+	canvas.draw_set_transform(pe, 0.0, Vector2(escala * lado, escala))
 	for r: Array in SPRITES[tipo]:
 		var cor: Color = cores[r[TOM]]
 		canvas.draw_rect(rect(r), cor.lerp(nevoa, mistura))
+
+
+## Quantos pixeis de sprite a planta sobe acima do pe (a escala 1).
+static func height(tipo: int) -> float:
+	var alto := 0.0
+	for r: Array in SPRITES[tipo]:
+		alto = maxf(alto, -float(r[1]))
+	return alto
 
 
 ## A caixa de um rectangulo de sprite (x, y, largo, alto, tom).
