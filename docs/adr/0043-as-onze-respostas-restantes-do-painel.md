@@ -1,6 +1,6 @@
 # ADR 0043 — As onze respostas restantes do painel
 
-- **Estado:** aceite, em validação (01/10/2026).
+- **Estado:** aceite e implementada (01/10/2026).
 - **Contexto:** Q-170, 171, 172, 174, 175, 176, 177, 178, 179, 180 e 182 foram
   aprovadas a 30/09/2026. As palavras do dono ficam em `docs/QUESTIONS.md`.
 
@@ -51,3 +51,5 @@ Testes de regras escritas antes da implementação e testes de integração cobr
 reservas fracionárias, soldo, remapeamento, duplicação de serras/loot, mapa
 abandonado, tesouro nativo, viagem sem mover o rei e janelas locais. Suite completa,
 portões, dados, vistoria e exportação são obrigatórios antes do merge.
+
+Verificação de 01/10: suite completa com 1176 casos, 1174 a passar, 2 saltados e zero falhas; portões e dados verdes, vistoria sem invariantes quebradas. Menu de viagem, inverno, obras locais e abertura local de boca subterrânea revistos em capturas OpenGL/llvmpipe. Exports e verificações do site/dossiê confirmados no CI; produção e painel são os últimos passos após o merge.

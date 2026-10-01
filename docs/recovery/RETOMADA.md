@@ -37,7 +37,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 30 tabelas, 399 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 1176 casos, 1155 a passar, 2 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 1176 casos, 1174 a passar, 2 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Pausa** — os casos acima combinam a suite completa sobre a `main` integrada com a execução final dos 43 testes de pausa, reinício e arquitetura. O export Web foi verificado com rato e teclado; a composição foi capturada de 320 × 568 a 1920 × 1080, em PT-PT e EN.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
@@ -75,7 +75,7 @@ a cada construção._
 | Pasta | O que lá está |
 |---|---|
 | `data/source/` | As 30 tabelas, com `_phase`, `_src`, `_proposed` e `_notes` em cada linha. É a fonte. |
-| `data/**/*.tres` | Os 237 recursos gerados. Versionados de propósito (ADR 0004). |
+| `data/**/*.tres` | Os 399 recursos gerados. Versionados de propósito (ADR 0004). |
 | `src/sim/` | Puro: sem `Node`, sem `import` para fora. O portão G1 chumba se alguém o quebrar. |
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |

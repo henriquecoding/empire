@@ -174,4 +174,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 
 | Ticket | Tarefa | Depende | Estado |
 |---|---|---|---|
-| [QP-01](QP-01.md) | Onze respostas restantes do painel | UX-01 | em curso |
+| [QP-01](QP-01.md) | Onze respostas restantes do painel | UX-01 | feito |

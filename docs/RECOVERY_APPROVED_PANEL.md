@@ -59,3 +59,9 @@ guarda de masmorra que permanece à alvorada e não duplica ao carregar, duas se
 no mesmo x, casa de cidadãos em alicerce e mapa desabitado sem recrutas/tesouro.
 Ainda faltam documentação final, suite completa, portões, verificação visual,
 CI, merge e publicação. Nenhuma resposta foi marcada aplicada no Supabase.
+
+## Checkpoint 4 e verificação final
+
+Fonte preservada no GitHub em `1129222b2ed482cd01986601fa146539f324ff32`, branch `codex/approved-panel-remaining`. A suite completa tem 1176 casos, 1174 a passar, 2 saltados e zero falhas. Portões, dados, site e vistoria confirmados; capturas de viagem, inverno, reino local e boca subterrânea visitada verificadas. CI: https://github.com/henriquecoding/empire/actions/runs/36829690212.
+
+Para finalizar a publicação: PR para main com CI verde; exigir esse commit na versão de produção; marcar apenas as onze respostas listadas acima como aplicada, condicionalmente à escolha/texto/data da aprovação original. O checkpoint mantém estas condições explícitas.

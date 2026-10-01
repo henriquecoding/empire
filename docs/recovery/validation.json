@@ -1,6 +1,6 @@
 {
- "date": "2026-09-30",
- "base": "este repositorio — Parte XIII integrada sobre o dossie v6",
+ "date": "2026-10-01",
+ "base": "Onze respostas restantes do painel — ADR 0043",
  "engine": "4.7.2.stable.official.ed1daf0bf",
  "gdunit": "6.2.1",
  "gdunit_commit": "08ffc7c",
@@ -12,7 +12,7 @@
  "proposed_fields": 1299,
  "proposed_phase_0_to_2": 873,
  "gdunit_discovered": 1176,
- "gdunit_passed": 1155,
+ "gdunit_passed": 1174,
  "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 87,
@@ -25,7 +25,6 @@
  "gpu_art_tested": false,
  "source_gaps": [
   "9 authored segment scenes",
-  "remote CI and export",
   "audio: 73 cues TODO no AUDIO_CUE_SHEET.csv"
  ],
  "new_questions": [
@@ -38,5 +37,16 @@
  "i18n_keys": 482,
  "i18n_placeholders": 0,
  "catalog_signals": 61,
- "event_bus_signals": 61
+ "event_bus_signals": 61,
+ "gdunit_runtime_cases": 1176,
+ "approved_panel_source_commit": "1129222b2ed482cd01986601fa146539f324ff32",
+ "approved_panel_visual_checks": [
+  "travel menu with scrolling",
+  "winter HUD and guide",
+  "native buildings",
+  "underground visited mouth at surface"
+ ],
+ "approved_panel_renderer": "OpenGL compatibility, Mesa llvmpipe",
+ "approved_panel_vistoria": "4 of 8 days: pilot defeated, no broken invariants",
+ "approved_panel_ci": "https://github.com/henriquecoding/empire/actions/runs/36829690212"
 }
