@@ -128,7 +128,9 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
 		if vaga.mending:
-			var quem := RepairWork.hands(unidades, vaga)
+			var quem := RepairWork.hands(
+				unidades, vaga, &"" if vaga.foundation else RepairWork.REPAIRER
+			)
 			eventos.append_array(RepairWork.tick(vaga, delta * quem))
 			continue
 		if vaga.state != BuildSlot.State.SCAFFOLD and vaga.state != BuildSlot.State.BUILDING:

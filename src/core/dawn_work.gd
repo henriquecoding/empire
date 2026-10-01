@@ -29,6 +29,11 @@ static func run(
 				EventBus.queue(&"coin_spent", [e[UpkeepSystem.QUANTO], &"upkeep"])
 			else:
 				EventBus.queue(&"unit_fled", [e[UpkeepSystem.UNIDADE], &"upkeep"])
+	if obras != null:
+		for slot in obras.standing():
+			var released := campo.seasons.release(dia, slot)
+			if released > 0:
+				SimLoop.coins.drop(estado, slot.x, slot.band, released, 0.0)
 	_abastecer(campo, unidades, obras, rei)  # as aljavas, depois do soldo (Q-163)
 	SpiritWatch.dawn(campo.spirit, dia, campo.upkeep.arrears())  # o soldo em atraso pesa (Q-102)
 	Camps.dawn(campo.camps, dia, unidades, estado, campo.spirit.level(dia))

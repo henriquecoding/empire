@@ -7,6 +7,7 @@
 class_name FieldWork
 extends RefCounted
 
+var seasons := Seasons.new(RulesFactory.rules())
 var hunting: HuntingSystem
 var training: TrainingSystem
 var crown: CrownSystem
@@ -74,6 +75,7 @@ func _init(
 		noite.dark.torch.storage = classes.storage  # os archotes vao no cinto (Q-153)
 		noite.names.away = realm.march.away  # quem marcha nao e chorado (Q-146)
 	upkeep = UpkeepSystem.new(SimFactory.by_id(&"units"), SimFactory.curve())
+	upkeep.mercenary_wage = RulesFactory.rules().mercenary_daily_wage
 	var curva := SimFactory.curve()
 	var niveis := curva.spirit_levels
 	spirit = Spirit.new(niveis[1], niveis[0], niveis[2])
@@ -86,6 +88,7 @@ func _init(
 	_moral = moral
 	if _economia != null:
 		_economia.crown = crown
+		_economia.seasons = seasons
 		_economia.conversion = conversion
 		conversion.jobs = _economia.jobs
 
@@ -100,6 +103,7 @@ func prepare(
 	fase: int = 0,
 	estado: GameState = null
 ) -> void:
+	hunting.season_mult = seasons.hunt_mult(dia)
 	HuntWatch.prepare(hunting, dia, core_x, largura, fase)
 	if unidades != null:
 		Frontier.grow(self, unidades, SimLoop.king_id, largura)  # o que se ve a frente (Q-173)
@@ -191,6 +195,7 @@ func resolve(
 ## O que vai no save, pela chave de cada parte. Uma parte nova entra por estar aqui.
 func parts() -> Dictionary:
 	return {
+		&"seasons": seasons,
 		&"hunting": hunting,
 		&"training": training,
 		&"crown": crown,

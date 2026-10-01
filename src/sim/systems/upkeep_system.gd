@@ -34,6 +34,7 @@ const UNIDADE := &"unit"
 
 ## O soldo por pagar, fracao incluida: o atraso de dias anteriores e o que ainda
 ## nao chega a uma moeda (Q-124, Q-144).
+var mercenary_wage := 0.0
 var owed := 0.0
 ## Quem desertou: id -> dia em que volta a poder ser recrutado (RecruitSystem).
 var resting: Dictionary = {}
@@ -71,7 +72,8 @@ func dawn(
 	if r == NENHUM or not unidades.alive(r):
 		return eventos
 	var tropas := troops(unidades, rei)
-	var conta := economia.upkeep(tropas)
+	var mercs := _mercenaries(unidades, rei)
+	var conta := economia.upkeep(tropas - mercs) + mercs * mercenary_wage
 	owed += conta
 	var pago := mini(int(floorf(owed + FOLGA)), unidades.carried_coins[r])
 	if pago > 0:
@@ -81,8 +83,14 @@ func dawn(
 	# Para la da tolerancia, vai-se quem o excesso paga: cada um leva o soldo que
 	# custava — o que a conta desce sem ele.
 	while owed > conta * grace_days + 1.0 - FOLGA and tropas > 0:
-		var cabeca := economia.upkeep(tropas) - economia.upkeep(tropas - 1)
 		var quem := _quem_vai(unidades, rei)
+		var selected := unidades.index_of(quem)
+		var merc := selected >= 0 and unidades.data_ids[selected] == &"mercenary"
+		var cabeca := (
+			mercenary_wage
+			if merc
+			else economia.upkeep(tropas - mercs) - economia.upkeep(tropas - mercs - 1)
+		)
 		if cabeca <= 0.0 or quem == NENHUM:
 			break
 		var i := unidades.index_of(quem)
@@ -91,6 +99,7 @@ func dawn(
 		resting[quem] = dia + rest_days
 		owed = maxf(0.0, owed - cabeca)
 		tropas -= 1
+		mercs -= 1 if merc else 0
 		eventos.append({CHAVE: EV_FOI, UNIDADE: quem})
 	return eventos
 
@@ -111,7 +120,8 @@ func from_dict(guardado: Dictionary) -> void:
 
 
 func _conta(unidades: UnitSystem, i: int, rei: int) -> bool:
-	if unidades.ids[i] == rei or unidades.owners[i] == RecruitSystem.SEM_DONO:
+	var r := unidades.index_of(rei)
+	if r < 0 or unidades.ids[i] == rei or unidades.owners[i] != unidades.owners[r]:
 		return false
 	if not unidades.alive(i) or unidades.healths[i] <= 0:
 		return false
@@ -122,11 +132,12 @@ func _conta(unidades: UnitSystem, i: int, rei: int) -> bool:
 ## A tropa mais barata sem posto; sem nenhuma, a mais barata. Empate pelo id.
 func _quem_vai(unidades: UnitSystem, rei: int) -> int:
 	var melhor := NENHUM
-	var chave := [1, INF, INF]
+	var chave := [1, 1, INF, INF]
 	for i in unidades.count():
 		if not _conta(unidades, i, rei):
 			continue
 		var candidato := [
+			0 if unidades.data_ids[i] == &"mercenary" else 1,
 			0 if unidades.job_ids[i] == UnitSystem.NENHUM else 1,
 			unidades.recruit_costs[i],
 			unidades.ids[i],
@@ -142,3 +153,11 @@ func _antes(a: Array, b: Array) -> bool:
 		if a[k] != b[k]:
 			return a[k] < b[k]
 	return false
+
+
+func _mercenaries(units: UnitSystem, king: int) -> int:
+	var count := 0
+	for i in units.count():
+		if _conta(units, i, king) and units.data_ids[i] == &"mercenary":
+			count += 1
+	return count
