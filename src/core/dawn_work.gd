@@ -36,8 +36,12 @@ static func run(
 				SimLoop.coins.drop(estado, slot.x, slot.band, released, 0.0)
 	_abastecer(campo, unidades, obras, rei)  # as aljavas, depois do soldo (Q-163)
 	SpiritWatch.dawn(campo.spirit, dia, campo.upkeep.arrears())  # o soldo em atraso pesa (Q-102)
-	Camps.dawn(campo.camps, dia, unidades, estado, campo.spirit.level(dia))
-	Camps.mercenaries(campo.wilds.mercenaries(SimLoop.world_width), unidades, estado)  # Q-173
+	SettlementWatch.dawn(campo)
+	CampWatch.dawn(campo)
+	Camps.dawn(CampWatch.active(campo), dia, unidades, estado, campo.spirit.level(dia))
+	Camps.mercenaries(
+		campo.wilds.mercenaries(SimLoop.world_width), unidades, estado, campo.camp_life
+	)  # Q-173
 	var fork := SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else nucleo.x
 	campo.realm.dawn(dia, unidades, estado, rei, Vector2(nucleo.x, fork))  # Q-103
 	Assume.dawn(unidades, estado, rei, campo)  # a classe do povo conquistado chega (§13)

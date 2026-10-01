@@ -1,18 +1,3 @@
-# src/sim/systems/wild_segments.gd — as terras entre os povos, geradas ao andar e
-# guardadas (o pedido do dono de 30/09/2026; §21; ADR 0038).
-#
-# O Minecraft gera o mundo em chunks quando o jogador se aproxima, e grava cada chunk
-# gerado: o que ja existe nao muda, nem quando o gerador muda numa versao nova. Aqui o
-# chunk e o segmento do §21 (640 px) e o mundo e uma linha — a regiao de casa ao centro
-# e, para cada lado, os segmentos do WorldPlan: trilhos, limiares, terras de outros
-# povos e a borda. Cada segmento nasce uma vez, para fora, e fica gravado com o que tem.
-#
-# Nos trilhos o tipo sorteia-se pelos pesos e regras do segments.csv (§21), com o clima
-# do sitio a juntar o bosque e a clareira: o multi-noise do Minecraft, numa dimensao.
-# Cada trilho tem pelo menos um encontro (o dono: "nesses caminhos se encontra
-# acampamentos de mendigos, mercenarios, dungeons"). O resto e do plano.
-#
-# Puro: os sorteios (pelo sitio) e o clima vem de quem chama; o kit, do segments.csv.
 class_name WildSegments
 extends RefCounted
 
@@ -48,11 +33,13 @@ var plan := WorldPlan.new()
 var width := 0.0
 ## Sobe a cada segmento novo e a cada save lido: quem desenha sabe quando redesenhar.
 var revision := 0
+var _biome_peoples: Dictionary = {}
 var _kit: Array[SegmentData] = []
 var _registos := {WorldPlan.OESTE: [], WorldPlan.LESTE: []}
 
 
-func _init(kit: Array[SegmentData] = []) -> void:
+func _init(kit: Array[SegmentData] = [], biome_peoples: Dictionary = {}) -> void:
+	_biome_peoples = biome_peoples.duplicate()
 	_kit = kit.duplicate()
 	_kit.sort_custom(
 		func(a: SegmentData, b: SegmentData) -> bool: return String(a.id) < String(b.id)
@@ -94,17 +81,24 @@ func grow(
 	var zona := plan.zone(lado, k)
 	var entre := plan.between(lado, k)
 	var bioma := _bioma(biomas, int(entre.y))
+	var native := bioma
+	if zona == WorldPlan.Zone.TRAIL and entre.z < BuildSystem.METADE:
+		native = _bioma(biomas, int(entre.x))
+	var kit: Array[SegmentData] = []
+	for data in _kit:
+		if _biome_peoples.is_empty() or data.people == _biome_peoples.get(native, &"enramados"):
+			kit.append(data)
 	var linha: SegmentData = null
 	if zona == WorldPlan.Zone.TRAIL:
 		var fim := _falta_encontro(lado, k)
 		var antes := _tipos(lado)
 		var vizinho: StringName = at(lado, k - 1)[ID] if k > 0 else &""
 		var u := [sorteios[U_TIPO], sorteios[U_VARIANTE]]
-		linha = TrailPick.choose(_kit, antes, vizinho, clima, cluster, u[0], u[1], fim)
+		linha = TrailPick.choose(kit, antes, vizinho, clima, cluster, u[0], u[1], fim)
 	elif zona == WorldPlan.Zone.EDGE:
-		linha = TrailPick.edge(_kit, StringName(bordas.get(bioma, &"")), sorteios[U_VARIANTE])
+		linha = TrailPick.edge(kit, StringName(bordas.get(bioma, &"")), sorteios[U_VARIANTE])
 	else:
-		var linhas := TrailPick.of_kind(_kit, TIPO_DA_ZONA[zona])
+		var linhas := TrailPick.of_kind(kit, TIPO_DA_ZONA[zona])
 		linha = TrailPick.variant(linhas, sorteios[U_VARIANTE], &"")
 	if linha == null:
 		return {}
@@ -164,11 +158,17 @@ func reach(largura: float) -> float:
 
 
 func camps(largura: float) -> PackedFloat32Array:
-	return _onde(largura, func(r: Dictionary) -> bool: return r[TIPO] == ACAMPAMENTO)
+	return _onde(
+		largura,
+		func(r: Dictionary) -> bool: return r[TIPO] == ACAMPAMENTO and not r.get(&"deserted", false)
+	)
 
 
 func mercenaries(largura: float) -> PackedFloat32Array:
-	return _onde(largura, func(r: Dictionary) -> bool: return r[TIPO] == MERCENARIOS)
+	return _onde(
+		largura,
+		func(r: Dictionary) -> bool: return r[TIPO] == MERCENARIOS and not r.get(&"deserted", false)
+	)
 
 
 ## As bocas das masmorras: os segmentos cuja linha traz uma passagem (§21, a ruina).

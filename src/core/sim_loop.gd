@@ -1,4 +1,3 @@
-# src/core/sim_loop.gd — os onze passos do §43, pela ordem escrita (ADR 0020).
 extends Node
 
 ## O estado autoritativo em execucao (§45). Quem o le e quem o grava passa por
@@ -101,6 +100,7 @@ func world() -> Dictionary:
 
 
 func load_world(mundo: Dictionary) -> void:
+	WorldWorks.restore(mundo.get(SimSave.OBRAS, []))
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
 	field.from_dict(mundo)
 

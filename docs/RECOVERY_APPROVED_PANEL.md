@@ -45,3 +45,17 @@ Suite completa, portões, dados, vistoria, exportação e verificação de produ
 PR com CI verde antes do merge. Só depois actualizar exactamente as onze linhas
 Q-170/171/172/174/175/176/177/178/179/180/182 para aplicada no Supabase, conservando
 texto, escolha e restantes respostas. Nenhuma já marcada neste checkpoint.
+
+## Checkpoint 2
+
+Reconstruídas as ligações ao jogo de acampamentos/casas de cidadãos, alicerces e
+mapa desabitado, kits dos oito povos e migração Bruma, reinos com tropas/obras e
+caixa própria, masmorras variáveis persistentes, fissuras e segundo lado da noite,
+viagens de classes e painel, estações no HUD, janelas locais do subsolo.
+
+Testes focados de integração: sete passam, incluindo a viagem sem mover o rei,
+reino autónomo e round-trip do tesouro, acampamento de mercenários abandonado,
+guarda de masmorra que permanece à alvorada e não duplica ao carregar, duas serras
+no mesmo x, casa de cidadãos em alicerce e mapa desabitado sem recrutas/tesouro.
+Ainda faltam documentação final, suite completa, portões, verificação visual,
+CI, merge e publicação. Nenhuma resposta foi marcada aplicada no Supabase.

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_bsrj5"]
+
+[resource]
+script = ExtResource("1_bsrj5")
+id = &"fenda_work"
+display_key = "BUILDING_FENDA_WORK"
+people = &"fenda"
+cost = 8
+material = &"ore"
+yield_per_day = 4.0
+job_slots = 1
+craft = &"work"
+max_health = 64
+build_work = 16.0
+width_px = 80
+shadow_width = 80

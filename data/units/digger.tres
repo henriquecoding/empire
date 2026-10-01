@@ -11,6 +11,7 @@ max_health = 18
 damage = 3
 accuracy_open = 1.0
 range_px = 26
+targets_bands = Array[int]([1, 2])
 recruit_cost = 8
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
 band = 2

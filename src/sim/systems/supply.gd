@@ -67,8 +67,10 @@ func restock(unidades: UnitSystem, dono: int, bolsa: int, por_moeda: int) -> int
 	ids.sort()
 	for unit_id: int in ids:
 		var i := unidades.index_of(unit_id)
-		if i == NENHUM or not unidades.alive(i) or unidades.owners[i] != dono:
+		if i == NENHUM or not unidades.alive(i):
 			spent.erase(unit_id)
+			continue
+		if unidades.owners[i] != dono:
 			continue
 		var falta := int(spent[unit_id])
 		while falta > 0:

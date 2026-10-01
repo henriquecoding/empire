@@ -11,6 +11,7 @@ biome = &"volcanic"
 architecture_source = "Ferrarias bascas (ferrerías) + construção em basalto islandês"
 roof_silhouette = "Chato e pesado, atravessado por chaminés — silhueta vertical"
 landmark = &"chimney"
+segment_kit = Array[StringName]([&"fornalha_empty_01", &"fornalha_empty_02", &"fornalha_empty_03", &"fornalha_forest_01", &"fornalha_ruin_01", &"fornalha_fortress_01", &"fornalha_edge_01", &"fornalha_vagrant_camp_01", &"fornalha_mercenary_camp_01", &"fornalha_threshold_gate", &"fornalha_threshold_bridge", &"fornalha_threshold_rock_fault", &"fornalha_threshold_ruined_wall", &"fornalha_settlement_houses", &"fornalha_settlement_farmsteads", &"fornalha_edge_sea", &"fornalha_edge_gorge", &"fornalha_edge_wall", &"fornalha_water_01"])
 palette_ramp = &"fornalha"
 wall_material = &"slag"
 economy_strength = &"metal_and_arms"
@@ -19,6 +20,9 @@ economy_modifiers = {
 }
 defense_trait = &"permanent_fire"
 unique_unit = &"war_smith"
+local_house = &"fornalha_house"
+local_work = &"fornalha_work"
+local_defense = &"fornalha_defense"
 playable_class = &"buried_knight"
 starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
 starting_buildings = Array[StringName]([&"core", &"forge"])

@@ -47,6 +47,7 @@ var steadfast := false
 var spirit := 0
 ## O que os titulos dao (§76): quem tem "nao foge" nao foge (Q-102).
 var perks: Dictionary = {}
+var refuges: Dictionary = {}
 var _curva: EconomyCurve
 var _dados: Dictionary = {}
 
@@ -68,9 +69,9 @@ func tick(unidades: UnitSystem, king_id: int, core_x: float, brecha: bool) -> Ar
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
 			continue
 		if unidades.states[i] == UnitFsm.State.FLEE:
-			_talvez_volte(unidades, i, core_x, rei_x, eventos)
+			_talvez_volte(unidades, i, float(refuges.get(unit_id, core_x)), rei_x, eventos)
 			continue
-		_talvez_fuja(unidades, i, core_x, rei_x, brecha, eventos)
+		_talvez_fuja(unidades, i, float(refuges.get(unit_id, core_x)), rei_x, brecha, eventos)
 	return eventos
 
 

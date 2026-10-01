@@ -22,12 +22,22 @@ static func goal() -> String:
 		var lado := {"side": _tr(&"SIDE_EAST" if rot.announced > 0 else &"SIDE_WEST")}
 		var funda := rot.deep(ClockService.clock.day)
 		return _tr(&"GUIDE_ROT_COMING_DEEP" if funda else &"GUIDE_ROT_COMING").format(lado)
+	if SimLoop.field.seasons.at(ClockService.clock.day) == Seasons.WINTER:
+		return _tr(&"GUIDE_WINTER")
+	if TravelWatch.at_gate():
+		return _tr(&"GUIDE_TRAVEL")
 	if ClockService.clock.day >= SimFactory.curve().crossing_day:
 		return _tr(&"GUIDE_CROSS")  # a marcha pode sair (Q-146)
 	var worker := false
 	var hunter := false
 	for i in SimLoop.units.count():
-		if not SimLoop.units.alive(i) or SimLoop.units.owners[i] == RecruitSystem.SEM_DONO:
+		if (
+			not SimLoop.units.alive(i)
+			or (
+				SimLoop.units.owners[i]
+				!= SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
+			)
+		):
 			continue
 		var data := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
 		worker = worker or data.tags.has(&"worker")
@@ -38,6 +48,8 @@ static func goal() -> String:
 	if aljavas and not Supply.depot(SimLoop.builds, RulesFactory.rules().ammo_depot):
 		return _tr(&"GUIDE_ARROWS")  # as flechas das tropas, a repor (Q-163)
 	for site in SimLoop.builds.slots:
+		if site.territory != 0:
+			continue
 		if site.blocks and not site.mending and site.repair_cost() > 0:
 			return _tr(&"GUIDE_REPAIR")
 	if not hunter:
@@ -45,6 +57,8 @@ static func goal() -> String:
 	var production := false
 	var wall := false
 	for site in SimLoop.builds.standing():
+		if site.territory != 0:
+			continue
 		production = production or site.yield_per_day > 0
 		wall = wall or site.two_paths()
 	if not production:
@@ -58,7 +72,14 @@ static func goal() -> String:
 static func troops() -> int:
 	var total := 0
 	for i in SimLoop.units.count():
-		if not SimLoop.units.alive(i) or SimLoop.units.ids[i] == SimLoop.king_id:
+		if (
+			not SimLoop.units.alive(i)
+			or SimLoop.units.ids[i] == SimLoop.king_id
+			or (
+				SimLoop.units.owners[i]
+				!= SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
+			)
+		):
 			continue
 		var dados := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
 		if dados.tags.has(ClassSystem.COLHE):

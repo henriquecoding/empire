@@ -60,3 +60,17 @@ static func impulse_cost_mult(ganancia: int) -> float:
 		if ganancia >= perfil.greed_range.x and ganancia <= perfil.greed_range.y:
 			return perfil.impulse_cost_mult
 	return 1.0
+
+
+static func segment_kits() -> Array[SegmentData]:
+	var result: Array[SegmentData] = []
+	for data in Registry.entries(&"segments"):
+		result.append(data as SegmentData)
+	return result
+
+
+static func biome_peoples() -> Dictionary:
+	var result := {}
+	for data: PeopleData in Registry.entries(&"peoples"):
+		result[data.biome] = data.id
+	return result

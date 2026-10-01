@@ -44,8 +44,8 @@ static func plan(estado: GameState) -> WorldPlan:
 
 
 ## Passo 3: o que falta a frente do rei, de cada lado, e o que cada segmento novo traz.
-static func grow(campo: FieldWork, unidades: UnitSystem, rei: int, largura: float) -> void:
-	var i := unidades.index_of(rei)
+static func grow(campo: FieldWork, unidades: UnitSystem, _rei: int, largura: float) -> void:
+	var i := unidades.index_of(Assume.driven())
 	if i == UnitSystem.NENHUM or campo.wilds.width <= 0.0 or SimLoop.state == null:
 		return
 	for lado in [WorldPlan.OESTE, WorldPlan.LESTE]:
@@ -99,18 +99,17 @@ static func _crescer(campo: FieldWork, lado: int, largura: float) -> bool:
 ## `u_monte` >= 0 so quando o segmento acabou de nascer: e dai que sai o monte da masmorra.
 static func _aplicar(campo: FieldWork, lado: int, k: int, largura: float, u_monte: float) -> void:
 	var registo := campo.wilds.at(lado, k)
+	SettlementWatch.author(campo, lado, k, u_monte < 0.0)
+	DungeonWatch.author(campo, lado, k, u_monte < 0.0)
 	var x := campo.wilds.subject_x(lado, k, largura)
+	if registo.get(&"deserted", false):
+		return
 	if registo[WildSegments.TIPO] == WildSegments.ACAMPAMENTO and not campo.camps.has(x):
 		campo.camps.append(x)
 	if u_monte < 0.0:
 		return
 	if registo[WildSegments.TIPO] == WildSegments.MERCENARIOS:
-		Camps.mercenaries(PackedFloat32Array([x]), SimLoop.units, SimLoop.state)
-	if int(registo.get(WildSegments.PASSAGEM, 0)) > 0:
-		var gama := SimFactory.curve().dungeon_coins
-		var quanto := gama.x + mini(floori(u_monte * float(gama.y - gama.x + 1)), gama.y - gama.x)
-		SimLoop.coins.drop(SimLoop.state, x, Band.Kind.UNDERGROUND, quanto, 0.0)
-		EventBus.queue(&"coin_dropped", [x, int(Band.Kind.UNDERGROUND), quanto, MASMORRA])
+		Camps.mercenaries(PackedFloat32Array([x]), SimLoop.units, SimLoop.state, campo.camp_life)
 
 
 ## A borda de cada bioma (biomes.csv, edge_subject).
@@ -120,3 +119,16 @@ static func _bordas() -> Dictionary:
 		var dados := Registry.entry(TABELA_BIOMAS, StringName(id)) as BiomeData
 		saida[StringName(id)] = dados.edge_subject
 	return saida
+
+
+static func reveal(field: FieldWork, realm: int) -> void:
+	for side in [WorldPlan.OESTE, WorldPlan.LESTE]:
+		for k in field.wilds.plan.size(side):
+			if (
+				field.wilds.plan.zone(side, k) == WorldPlan.Zone.FORTRESS
+				and field.wilds.plan.people(side, k) == realm
+			):
+				while field.wilds.count(side) <= k:
+					if not _crescer(field, side, SimLoop.world_width):
+						break
+				return

@@ -6,7 +6,7 @@
 script = ExtResource("1_yp0wo")
 id = &"marsh"
 display_key = "BIOME_MARSH"
-people = &"paul"
+people = &"bruma"
 creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
 resources = Array[StringName]([&"water", &"fertile"])
 atmosphere_preset = &"closed"

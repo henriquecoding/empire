@@ -79,6 +79,7 @@ func _ready() -> void:
 		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
 	_escrever_fixos()
 	add_child(ContextPanel.new())
+	add_child(TravelPanel.new())
 	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.game_paused.connect(_na_pausa)
 	for sinal: StringName in HudText.AVISOS:
@@ -147,7 +148,11 @@ func _draw() -> void:
 func _atualizar() -> void:
 	var relogio := ClockService.clock
 	var fase := int(relogio.current_phase())
-	_relogio.text = HudText.clock(SimLoop.state.day, fase, relogio.phase_progress())
+	_relogio.text = (
+		HudText.clock(SimLoop.state.day, fase, relogio.phase_progress())
+		+ " · "
+		+ SeasonText.of(SimLoop.field, SimLoop.state.day)
+	)
 	var rei := SimLoop.units.index_of(Assume.driven())  # o saco de quem se conduz (§08)
 	var saco := SimLoop.units.carried_coins[rei] if rei >= 0 else 0
 	var cabem := SimLoop.units.coin_capacities[rei] if rei >= 0 else 0

@@ -1,24 +1,3 @@
-# src/ui/input_router.gd — a entrada, e o contrato do §61 numa frase: "a entrada
-# nunca muda estado diretamente".
-#
-# Nenhuma linha deste ficheiro chama drop_coin, mata ninguem ou constroi coisa
-# alguma. Cada tecla enfileira uma INTENCAO, e o inicio do tick seguinte
-# consome-a. E o que faz o jogo determinista apesar de haver um humano: dada a
-# mesma seed e a mesma sequencia de intencoes, a partida repete-se exatamente.
-#
-# O mapa de comando e o do §24, e as accoes ja estavam declaradas no
-# project.godot desde o F0-02 — cinco delas sem ninguem a le-las. Este ficheiro
-# e quem passou a ler.
-#
-# Duas coisas correm no frame e nao no tick, e e de proposito: andar e marcar
-# alvo sao GESTOS, e um gesto lido a 60 Hz fixos chega sempre um bocado depois
-# da mao. O que se escreve continua a ser um alvo e uma intencao — o passo 5 do
-# §43 e que leva a gente — e por isso o frame nao muda o que a simulacao faz,
-# so quando ela fica a saber.
-#
-# O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos
-# seis sistemas que os seus segmentos abrem (Fase 2). Do gesto dela ja ha o que
-# o impulso pede: manter Y, apontar o stick e largar (§24; CONT-08, Q-148).
 class_name InputRouter
 extends Node
 
@@ -46,6 +25,8 @@ var _marcar := false
 
 
 func _unhandled_input(evento: InputEvent) -> void:
+	if TravelPanel.active:
+		return
 	if evento.is_action_pressed(&"pause"):
 		if not Defeat.happened():
 			SimLoop.set_paused(SimLoop.running())
@@ -59,7 +40,10 @@ func _unhandled_input(evento: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if evento.is_action_pressed(&"verb_assume"):
-		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+		if TravelWatch.at_gate():
+			get_tree().call_group(&"travel_menu", &"open")
+		else:
+			SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		get_viewport().set_input_as_handled()
 	elif evento.is_action(&"mark_target"):
 		var marca := rising(evento, _marcar)
@@ -107,6 +91,10 @@ static func aims_with_cursor(evento: InputEvent) -> bool:
 
 
 func _process(delta: float) -> void:
+	if TravelPanel.active:
+		_andar(0.0)
+		_repeticao = 0.0
+		return
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return

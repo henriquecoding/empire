@@ -50,6 +50,7 @@ func _ready() -> void:
 		# §16: o que a partida perdida deixou (Q-134), ou quem atravessou com o rei
 		# (Q-135). Sem legado, nao muda nada.
 		var legado := LegacyStore.pending()
+		DecayWork.restore(legado)
 		Legacy.apply(legado, SimLoop.state, SimLoop.builds, SimLoop.field.classes)
 		var tropas := SimFactory.by_id(&"units")
 		Legacy.arrive(legado, SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, SimLoop.core_x)
@@ -110,7 +111,8 @@ func _process(delta: float) -> void:
 
 ## A semente da partida. O §42 manda mostra-la no ecra e deixar copiar (o Inspector).
 func _semente() -> int:
-	return seed_from(OS.get_cmdline_user_args(), Time.get_unix_time_from_system() as int)
+	var legacy := LegacyStore.pending()
+	return int(legacy[&"map_seed"]) if legacy.has(&"map_seed") else seed_from(OS.get_cmdline_user_args(), Time.get_unix_time_from_system() as int)
 
 
 ## A semente pedida na linha de comandos, ou `omissao` se nao ha uma valida.
@@ -211,8 +213,7 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 
 func _acabar() -> void:
 	_tremer()
-	var fica := SimFactory.curve().decay_structures_kept
-	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica))
+		_fim(DecayWork.of())
 
 
 ## O que fica escreve-se antes de a pausa abrir o ecra que o diz (§16, Q-134). Um

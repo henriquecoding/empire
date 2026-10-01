@@ -22,6 +22,7 @@ const CHAMA_CAVADORES := &"attracts_burrowers"
 ## O que o escuro recebe no lugar da fase quando a noite ja nao tem Podridao.
 const SEM_NOITE := -1
 
+var other_rot: RotSystem
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
 var voice: OfferWatch
@@ -45,6 +46,7 @@ var _criaturas: Dictionary
 ## BuildSystem (§55), e o preco de uma oferta cai no prato (§75).
 func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: JobBoard) -> void:
 	rot = SimFactory.rot()
+	other_rot = SimFactory.rot()
 	amargueiros = SimFactory.amargueiros()
 	voice = OfferWatch.new(moedas, tropas, obras)
 	names = SimFactory.titles()
@@ -71,6 +73,7 @@ func tick(
 	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.
 	dark.tick(delta, fase if rot.active() else SEM_NOITE, estado, bichos, _obras, mundo.x)
 	bichos.set_lights(LightWard.of(_obras, dark.ward()), SimFactory.rot_profile().light_recoil_s)
+	RiftWatch.tick(self, delta, estado, bichos, mundo.x)
 	CrownWatch.tick(bichos, rot)  # a coroa no chao (Q-167)
 	if not rot.active():
 		return
@@ -174,6 +177,8 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		if not voice.before_spawn(rot, estado.day):
 			return  # §75: a decima segunda fechou o ciclo
 		rot.spawn(estado.day, lado, mundo.y)
+		RiftWatch.spawn(self, estado, mundo)
+		SettlementWatch.night(SimLoop.field)
 		voice.after_spawn(rot)
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
 		return
@@ -186,7 +191,8 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		rot.retreat()
 		EventBus.queue(&"rot_retreated", [estado.day])
 	_roubos(bichos)
-	for creature_id in bichos.dissolve():
+	other_rot.retreat()
+	for creature_id in bichos.dissolve(DungeonWatch.guardians(SimLoop.field)):
 		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 
 

@@ -160,7 +160,7 @@ func _obra_atingida(slot_id: int) -> void:
 	if i == BuildSystem.NENHUM:
 		return
 	var vaga := SimLoop.builds.slots[i]
-	if SoilCover.covers(int(vaga.band)):  # com a terra por cima, nao se ve (ADR 0039)
+	if SoilCover.covers(int(vaga.band), vaga.x):  # com a terra por cima, nao se ve (ADR 0039)
 		return
 	var forma := Silhouette.of_slot(vaga, _tabela(&"buildings"))
 	var pontos := BuildView.drawn_shape(vaga, forma)
@@ -201,7 +201,7 @@ func _caixa_de(id: int) -> Rect2:
 ## O mesmo rectangulo que o BandView desenha, e nao um parecido: o flash e o
 ## corpo a piscar, e um flash com outra altura era um segundo corpo por cima.
 func _caixa(x: float, faixa: int, dados: Resource) -> Rect2:
-	if dados == null or SoilCover.covers(faixa):
+	if dados == null or SoilCover.covers(faixa, x):
 		return SEM_CORPO
 	var escala: int = dados.get(&"scale_tier")
 	var alto := WorldPalette.DEGRAU * maxi(1, escala)
