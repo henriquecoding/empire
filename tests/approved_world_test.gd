@@ -157,9 +157,7 @@ func test_dungeon_guardian_survives_dawn_and_pays_when_defeated() -> void:
 	var i := SimLoop.creatures.index_of(guardian)
 	var x := SimLoop.creatures.xs[i]
 	SimLoop.creatures.healths[i] = 0.0
-	var deaths := SimLoop.combat.resolve(
-		SimLoop.units, SimLoop.creatures, SimLoop.builds, func() -> float: return 0.0
-	)
+	var deaths := SimLoop.combat.resolve(SimLoop.units, SimLoop.creatures, SimLoop.builds, _roll)
 	SimLoop._largar(EventRelay.combat(deaths))
 	for coin in SimLoop.coins.count():
 		SimLoop.coins.vxs[coin] = 0.0
@@ -167,3 +165,7 @@ func test_dungeon_guardian_survives_dawn_and_pays_when_defeated() -> void:
 	var collected := SimLoop.coins.collect(x, Band.Kind.UNDERGROUND, 11)
 	assert_int(collected.size()).is_equal(11)
 	assert_int(SimLoop.coins.collect(x, Band.Kind.UNDERGROUND, 11).size()).is_equal(7)
+
+
+func _roll() -> float:
+	return 0.0

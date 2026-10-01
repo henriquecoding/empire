@@ -55,6 +55,7 @@ func _ready() -> void:
 	_relogio = _label("", RELOGIO, TEXT)
 	_recursos = _label("", RECURSOS, MUTED)
 	_objectivo = _label("", OBJECTIVO, MINT)
+	_objectivo.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_dica = _label("", DICA, MUTED)
 	_aviso = _label("", AVISO, GOLD)
 	_topo = _faixa()

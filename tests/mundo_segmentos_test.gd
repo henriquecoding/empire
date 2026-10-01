@@ -24,7 +24,7 @@ const BIOMAS := [
 	"glacier",
 	"marsh"
 ]
-const TRILHOS := [&"empty", &"forest", &"ruin", &"vagrant_camp", &"mercenary_camp"]
+const TRILHOS := [&"water", &"empty", &"forest", &"ruin", &"vagrant_camp", &"mercenary_camp"]
 const ENCONTROS := [&"ruin", &"vagrant_camp", &"mercenary_camp"]
 const Z := WorldPlan.Zone
 
