@@ -145,7 +145,7 @@ export const TEXTOS = {
       leg_feito: "feitos", leg_parcial: "parciais", leg_falta: "por fazer",
       trilhos: {
         F0: "Fase 0 · Fundação", F1: "Fase 1 · Núcleo jogável", F2: "Fase 2 · Fatia vertical", GB: "Greybox", XIII: "Parte XIII · a candeia e a colheita",
-        CD: "Conteúdo", ART: "Arte", NB: "Nomes", PUB: "Publicação", AUD: "Auditoria de gameplay", CONT: "Continuidade da campanha", UX: "Interface",
+        CD: "Conteúdo", ART: "Arte", NB: "Nomes", PUB: "Publicação", AUD: "Auditoria de gameplay", CONT: "Continuidade da campanha", UX: "Interface", QP: "Decisões do painel",
       },
       lista: "Ver os tickets numa lista",
       cab: ["Ticket", "Título", "Estado"],
@@ -327,7 +327,7 @@ export const TEXTOS = {
         fornalha: { pt: "7446a3f9", nome: "Fornalha", terreno: "Volcanic", constroi: "Foundries, chimneys, slag walls", economia: "Metal and weapons", defesa: "Permanent fire on the walls", tropa: "War smith — repairs walls in combat" },
         sobraiz: { pt: "f08333c0", nome: "Sob-Raiz", terreno: "Underground", constroi: "Tunnels, chambers, mushroom farms", economia: "Fungi and secrets", defesa: "No walls — a labyrinth instead", tropa: "Digger — opens passages between bands" },
         geada: { pt: "3579ad28", nome: "Geada", terreno: "Glacier", constroi: "Igloos, stone shepherd shelters, an ice palisade", economia: "Cold that keeps — nothing spoils", defesa: "Frozen ground: the Rot slows down", tropa: "Ice Warden — slows whoever it strikes" },
-        paul: { pt: "146e8468", nome: "Paul", terreno: "Marsh", constroi: "Thatched reed huts and houses on stilts", economia: "Reeds and eels; mounts recover twice as fast", defesa: "Mud that holds", tropa: "Reed Stalker — reaches the dragonflies" },
+        bruma: { pt: "9dc576d3", nome: "Bruma", terreno: "Marsh", constroi: "Thatched reed huts and houses on stilts", economia: "Reeds and eels; mounts recover twice as fast", defesa: "Mud that holds", tropa: "Reed Stalker — reaches the dragonflies" },
       },
     },
     controlos: {
@@ -369,7 +369,7 @@ export const TEXTOS = {
       leg_feito: "done", leg_parcial: "partial", leg_falta: "to do",
       trilhos: {
         F0: "Phase 0 · Foundation", F1: "Phase 1 · Playable core", F2: "Phase 2 · Vertical slice", GB: "Greybox", XIII: "Part XIII · the lantern and the harvest",
-        CD: "Content", ART: "Art", NB: "Naming", PUB: "Publishing", AUD: "Gameplay audit", CONT: "Campaign continuity", UX: "Interface",
+        CD: "Content", ART: "Art", NB: "Naming", PUB: "Publishing", AUD: "Gameplay audit", CONT: "Campaign continuity", UX: "Interface", QP: "Panel decisions",
       },
       lista: "See the tickets as a list",
       cab: ["Ticket", "Title", "State"],

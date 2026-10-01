@@ -30,12 +30,12 @@ class Moita:
 
 
 const MAX_WINDOWS := 32
-static var _windows := PackedVector4Array()
 const SHADER := "res://shaders/dither_reveal.gdshader"
 
 ## Quanto o corte de solo se ve agora, de 0 a 1: e o que a boca da passagem e os golpes
 ## la em baixo perguntam. Um so no o escreve; sem ele na cena, nada tapa o subsolo.
 static var _aberto := 1.0
+static var _windows := PackedVector4Array()
 
 var _clock: ClockData
 var _revelar := SoilReveal.new()
@@ -84,7 +84,7 @@ func _process(delta: float) -> void:
 	_dither.set_shader_parameter(&"progress", _aberto)
 	var player := SimLoop.units.index_of(Assume.driven())
 	if SimLoop.field != null and player >= 0:
-		var mouths := SimLoop.passages.duplicate()
+		var mouths := Passages.open(SimLoop.passages, SimLoop.builds)
 		mouths.append_array(SimLoop.field.wilds.dungeons(SimLoop.world_width))
 		_windows = SimLoop.field.underground_sight.windows(
 			mouths, SimLoop.creatures, SimLoop.units.xs[player], RulesFactory.rules()

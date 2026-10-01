@@ -1,8 +1,6 @@
-# src/ui/game_hud.gd — o painel de quem joga (§24).
 class_name GameHud
 extends Control
 
-## O texto e todo por chave, e compoe-se no HudText (§27, GB-27).
 const INK := Color(0.08, 0.07, 0.06)
 const PAPER := Color(0.12, 0.10, 0.10, 0.88)
 const PAPER_LIGHT := Color(0.20, 0.16, 0.13, 0.94)
@@ -13,11 +11,8 @@ const MUTED := Color(0.73, 0.67, 0.56)
 const JADE := Color(0.33, 0.53, 0.45)
 const RODAPE_LINHA := Color(0.32, 0.26, 0.20)
 
-## O ecra de base (§67). A composicao e fixa: o greybox joga-se a 1280x720, e um
-## painel que se reorganiza sozinho e uma decisao de arte que ainda nao existe.
 const ECRA := {"largura": 1280.0, "altura": 720.0}
 
-## Cada rotulo: canto, tamanho da caixa e corpo da letra.
 const TITULO := {"x": 36.0, "y": 24.0, "w": 160.0, "h": 32.0, "letra": 22}
 const RELOGIO := {"x": 232.0, "y": 20.0, "w": 540.0, "h": 28.0, "letra": 19}
 const RECURSOS := {"x": 232.0, "y": 44.0, "w": 540.0, "h": 24.0, "letra": 13}
@@ -25,7 +20,6 @@ const OBJECTIVO := {"x": 844.0, "y": 23.0, "w": 390.0, "h": 44.0, "letra": 13}
 const DICA := {"x": 40.0, "y": 0.0, "acima": 44.0, "w": 1120.0, "h": 26.0, "letra": 13}
 const AVISO := {"x": 400.0, "y": 112.0, "w": 480.0, "h": 30.0, "letra": 16}
 
-## Os tres paineis do topo, a barra da fase e o rodape das teclas.
 const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 180.0, "h": 56.0}
 const PAINEL_MEIO := {"x": 216.0, "y": 16.0, "w": 586.0, "h": 56.0}
 const PAINEL_DIR := {"recuo": 456.0, "y": 16.0, "w": 436.0, "h": 56.0}
@@ -35,11 +29,8 @@ const AVISO_CAIXA := {"x": 390.0, "y": 108.0, "w": 500.0, "h": 38.0}
 
 const TRACO := {"painel": 2.0, "rodape": 1.0, "contorno": 3}
 
-## As duas faixas que este painel ocupa: a de cima acaba onde o painel acaba, e
-## a de baixo e o rodape das teclas.
 const FAIXA_TOPO := 72.0
 
-## Quanto tempo um aviso fica no ecra, e a percentagem em que tudo se le.
 const AVISO_S := 2.0
 const CEM := 100.0
 const SEM_NUCLEO := -1.0
@@ -87,7 +78,6 @@ func _ready() -> void:
 		EventBus.connect(sinal, _dizer_chave.bind(aviso).unbind(_argumentos(sinal)))
 
 
-## Troca o rodape quando muda a mao (GB-15). So observa: nao consome nada.
 func _input(evento: InputEvent) -> void:
 	var nome := ""
 	if evento is InputEventJoypadButton or evento is InputEventJoypadMotion:
@@ -98,14 +88,11 @@ func _input(evento: InputEvent) -> void:
 		_dica.text = Glyphs.hint(novo, _marca())
 
 
-## O que so se escreve uma vez. Volta a escrever-se quando o idioma muda na
-## pausa (§27, GB-28) — o resto do painel ja se escreve a cada frame.
 func _escrever_fixos() -> void:
 	_titulo.text = tr(&"GAME_CODENAME")
 	_dica.text = Glyphs.hint(_dispositivo, _marca())
 
 
-## Se o gatilho direito faz alguma coisa a esta classe (Q-086).
 func _marca() -> bool:
 	return SimLoop.field == null or SimLoop.field.classes.marks()
 
@@ -170,8 +157,6 @@ func _atualizar() -> void:
 	_rodape.size = Vector2(size.x, RODAPE.h)
 
 
-## A vida do nucleo em percentagem (§10: "se cair, cai a partida"). Sem nucleo
-## nenhum de pe a conta nao existe, e o que se mostra e zero.
 func _vida_nucleo() -> int:
 	var melhor := SEM_NUCLEO
 	for vaga in SimLoop.builds.slots:
@@ -194,9 +179,6 @@ func _label(conteudo: String, caixa: Dictionary, cor: Color) -> Label:
 	return label
 
 
-## Uma faixa do ecra que este painel ocupa. Nao se ve nada nela — quem a le e
-## quem MEDE a imagem: a regra das duas frias do §80 conta pixeis do MUNDO, e
-## medi-la por cima de um painel de texto media o painel (GB-03, tools/captura).
 func _faixa() -> Control:
 	var faixa := Control.new()
 	faixa.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -205,7 +187,6 @@ func _faixa() -> Control:
 	return faixa
 
 
-## Uma tabela de canto e tamanho, em rectangulo.
 static func _caixa(medida: Dictionary) -> Rect2:
 	return Rect2(medida.x, medida.y, medida.w, medida.h)
 
@@ -220,7 +201,6 @@ func _dizer_chave(chave: StringName) -> void:
 	_dizer(tr(chave))
 
 
-## Quantos argumentos traz um sinal do catalogo — o que o unbind tem de largar.
 static func _argumentos(sinal: StringName) -> int:
 	for s in EventBus.get_signal_list():
 		if s.name == sinal:
@@ -228,8 +208,6 @@ static func _argumentos(sinal: StringName) -> int:
 	return 0
 
 
-## O que outra parte da interface quer dizer no aviso (grupo "painel"): o impulso
-## recusado diz o que lhe falta (Q-113).
 func say(mensagem: String) -> void:
 	_dizer(mensagem)
 
@@ -240,14 +218,11 @@ func _dizer(mensagem: String) -> void:
 	_aviso.visible = true
 
 
-## So o que entra no TEU saco: o arqueiro sem dono que apanha a moeda da caca
-## (§25, 1:10) nao te deu nada, e um "+1" ali mentia sobre o saco.
 func _no_apanhar(unit_id: int, amount: int) -> void:
 	if unit_id == SimLoop.king_id:
 		_dizer(HudText.coins(amount))
 
 
-## O menu mostra a pausa; o HUD deixa-lhe o cenario livre (UX-01).
 func _na_pausa(pausado: bool) -> void:
 	visible = not pausado
 	if not pausado:

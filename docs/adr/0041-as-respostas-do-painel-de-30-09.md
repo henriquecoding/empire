@@ -23,11 +23,11 @@ Aplica-se por respostas inteiras, uma por commit, cada uma com teste:
 O save passa à **versão 5** (`SaveMigrationsV5`): quem se conduz, as classes, as tocas por sítio, a coroa, as
 aljavas e o cavalo entram com o valor que reproduz o jogo antigo.
 
-## Por aplicar
+## Continuação pela ADR 0043
 
 Q-170, Q-171, Q-172, Q-174, Q-175, Q-176, Q-177, Q-178, Q-179, Q-180 e Q-182 têm a resposta registada em
 `docs/QUESTIONS.md` (*"Respondidas no painel (30/09/2026) — por aplicar"*) e continuam no painel à espera de
-implementação.
+implementação na data desta ADR. A ADR 0043 integra este lote e documenta o estado actual.
 
 ## Consequências
 

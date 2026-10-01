@@ -6,6 +6,7 @@ const EDGE := 24
 const FONT := 22
 const GAP := 12
 const TEXT_WIDTH := 412.0
+const LIST_HEIGHT := 280.0
 
 static var active := false
 var _rows: VBoxContainer
@@ -39,6 +40,13 @@ func open() -> void:
 	_buttons.clear()
 	_label(tr(&"TRAVEL_TITLE"))
 	_label(tr(&"TRAVEL_HINT"))
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(TEXT_WIDTH, LIST_HEIGHT)
+	_rows.add_child(scroll)
+	var choices := VBoxContainer.new()
+	choices.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	choices.add_theme_constant_override("separation", GAP)
+	scroll.add_child(choices)
 	for id in TravelWatch.destinations():
 		var button := Button.new()
 		button.text = (
@@ -56,7 +64,7 @@ func open() -> void:
 		)
 		button.disabled = not TravelWatch.daylight()
 		button.pressed.connect(_go.bind(id))
-		_rows.add_child(button)
+		choices.add_child(button)
 		_buttons.append(button)
 	var cancel := Button.new()
 	cancel.text = tr(&"TRAVEL_CANCEL")

@@ -113,11 +113,10 @@ func test_local_realm_has_own_workers_defenses_treasury_and_night_attack() -> vo
 
 func test_mercenary_camp_is_physically_abandoned_after_three_hires() -> void:
 	Frontier.reveal(SimLoop.field, 1)
-	var id := -1
-	for candidate: int in SimLoop.field.settlements.records:
-		if SimLoop.field.settlements.records[candidate].has(&"camp"):
-			id = candidate
-	assert_int(id).is_greater(0)
+	var entry := SimLoop.field.wilds.at(WorldPlan.LESTE, 0)
+	entry[WildSegments.TIPO] = WildSegments.MERCENARIOS
+	SettlementWatch.author(SimLoop.field, WorldPlan.LESTE, 0, false)
+	var id := SettlementWatch.CAMP_BASE + 1
 	var record: Dictionary = SimLoop.field.settlements.records[id]
 	var x := float(record[&"camp"])
 	for k in 3:
@@ -154,3 +153,17 @@ func test_dungeon_guardian_survives_dawn_and_pays_when_defeated() -> void:
 	SimLoop.load_world(saved)
 	assert_int(SimLoop.creatures.count()).is_equal(count)
 	assert_int(SimLoop.creatures.index_of(guardian)).is_greater_equal(0)
+
+	var i := SimLoop.creatures.index_of(guardian)
+	var x := SimLoop.creatures.xs[i]
+	SimLoop.creatures.healths[i] = 0.0
+	var deaths := SimLoop.combat.resolve(
+		SimLoop.units, SimLoop.creatures, SimLoop.builds, func() -> float: return 0.0
+	)
+	SimLoop._largar(EventRelay.combat(deaths))
+	for coin in SimLoop.coins.count():
+		SimLoop.coins.vxs[coin] = 0.0
+	SimLoop.coins.tick(2.0)
+	var collected := SimLoop.coins.collect(x, Band.Kind.UNDERGROUND, 11)
+	assert_int(collected.size()).is_equal(11)
+	assert_int(SimLoop.coins.collect(x, Band.Kind.UNDERGROUND, 11).size()).is_equal(7)

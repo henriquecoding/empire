@@ -34,10 +34,10 @@ a cada construção._
 
 - **Motor** — Godot 4.7.2-stable (`ed1daf0bf`, o de `.godot-version`) em *headless*: o projeto importa sem erros e
   arranca.
-- **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 30 tabelas, 237 recursos gerados.
+- **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 30 tabelas, 399 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 197 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 1157 casos, 1155 a passar, 2 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 1176 casos, 1155 a passar, 2 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Pausa** — os casos acima combinam a suite completa sobre a `main` integrada com a execução final dos 43 testes de pausa, reinício e arquitetura. O export Web foi verificado com rato e teclado; a composição foi capturada de 320 × 568 a 1920 × 1080, em PT-PT e EN.
 - **Estilo** — `gdformat --check` e `gdlint` limpos sobre `src/`, `tests/` e `tools/`.
@@ -79,10 +79,10 @@ a cada construção._
 | `src/sim/` | Puro: sem `Node`, sem `import` para fora. O portão G1 chumba se alguém o quebrar. |
 | `tests/` | Arquitetura (G1, G2, G4), dados (tabelas, referências, chaves de texto) e design (§07, §31, §84). |
 | `docs/design/` | Este dossiê partido por secção, 87 ficheiros, gerado por `tools/split_dossie.py`. |
-| `docs/adr/` | 42 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros; a 0026 os reportes e as respostas às perguntas, num Supabase só do Empire; e a 0027 a 0033 as respostas do painel de 28/09 — o preço dos impulsos, as estátuas, as primeiras noites e o archote, os povos do gelo e do pântano, o Godot 4.7.2 e o recrutamento do Kingdom: New Lands; a 0034 o Lume roxo na base da Podridão e as tuas luzes que a afastam (29/09); a 0035 o reino que fica, a marcha e os vassalos; a 0036 as respostas do painel de 29/09; a 0037 o relatório Kingdom aplicado — recomeçar do zero, a banca do arco, o cerco e a lua do pico; a 0038 o mundo contínuo — gerado ao andar, gravado, com trilhas entre os povos e a borda no fim (30/09); a 0039 a paisagem por cima do subsolo, que só se vai quando o rei desce; e a 0040 o menu de pausa com páginas separadas, foco visível e composição que cabe na janela (30/09); e a 0041 as respostas do painel de 30/09 — trocar de classe, a caça por sítios, a coroa no chão, as aljavas e o cavalo; e a 0042 os assets gratuitos temporários para testar a gameplay. |
-| `docs/backlog/` | 101 tickets, um ficheiro cada, no formato da §34. |
+| `docs/adr/` | 43 decisões. A 0011 fecha a noite castanha; a 0012 a 0019 são a Parte XIII; a 0020 é a ordem do tick, a 0021 a lei da travessia do §21, a 0022 o sítio onde o jogo se publicava (o GitHub Pages), a 0023 o dia da primeira oferta, a 0024 a Vercel, que substitui a 0022, e a 0025 o site como página do jogo — lido do repositório, em duas línguas, sem terceiros; a 0026 os reportes e as respostas às perguntas, num Supabase só do Empire; e a 0027 a 0033 as respostas do painel de 28/09 — o preço dos impulsos, as estátuas, as primeiras noites e o archote, os povos do gelo e do pântano, o Godot 4.7.2 e o recrutamento do Kingdom: New Lands; a 0034 o Lume roxo na base da Podridão e as tuas luzes que a afastam (29/09); a 0035 o reino que fica, a marcha e os vassalos; a 0036 as respostas do painel de 29/09; a 0037 o relatório Kingdom aplicado — recomeçar do zero, a banca do arco, o cerco e a lua do pico; a 0038 o mundo contínuo — gerado ao andar, gravado, com trilhas entre os povos e a borda no fim (30/09); a 0039 a paisagem por cima do subsolo, que só se vai quando o rei desce; e a 0040 o menu de pausa com páginas separadas, foco visível e composição que cabe na janela (30/09); e a 0041 as respostas do painel de 30/09 — trocar de classe, a caça por sítios, a coroa no chão, as aljavas e o cavalo; e a 0042 os assets gratuitos temporários para testar a gameplay. |
+| `docs/backlog/` | 102 tickets, um ficheiro cada, no formato da §34. |
 | `docs/content/` | Esquema, propostas, a Podridão dia a dia, os nomes. Tudo gerado. |
-| `data/i18n/strings.csv` | 443 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
+| `data/i18n/strings.csv` | 482 chaves PT-PT e EN, zero por escrever. É o `strings.csv` único da §27. |
 | `ferramentas/` | A camada de uso do dossiê: construtor, extrator e os dois portões. |
 
 ## A regra que continua a valer

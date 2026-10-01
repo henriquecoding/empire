@@ -1,6 +1,7 @@
 class_name DungeonWatch
 extends RefCounted
 const SAL := 223
+const ROLLS := 3
 const WIDTH := 64.0
 
 
@@ -12,7 +13,7 @@ static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void
 	if not entry.has(&"dungeon"):
 		if restoring:
 			return  # old saves already contain their original pile; never duplicate it
-		var rolls := RngService.scatter(hash([SAL, side, k]), 3)
+		var rolls := RngService.scatter(hash([SAL, side, k]), ROLLS)
 		entry[&"dungeon"] = DungeonLoot.draw(RulesFactory.rules(), rolls[0], rolls[1], rolls[2])
 	var reward: Dictionary = entry[&"dungeon"]
 	if reward[&"kind"] == &"relic":
@@ -31,7 +32,8 @@ static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void
 			SimLoop.creatures.coin_drops[i] = int(reward[&"coins"])
 			reward[&"guardian"] = id
 		else:
-			SimLoop.coins.drop(SimLoop.state, x, Band.Kind.UNDERGROUND, int(reward[&"coins"]), 0.0)
+			for _coin in int(reward[&"coins"]):
+				SimLoop.coins.drop(SimLoop.state, x, Band.Kind.UNDERGROUND, 1, 0.0)
 			EventBus.queue(
 				&"coin_dropped", [x, int(Band.Kind.UNDERGROUND), int(reward[&"coins"]), &"dungeon"]
 			)

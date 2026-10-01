@@ -19,7 +19,7 @@ enramados_settlement_farmsteads,settlement,enramados,0,,640,0,0,0,,in_land,0,0,0
 enramados_edge_sea,edge,enramados,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,"§21 Bordo: 'uma região tem de terminar em alguma coisa — falésia, mar, muralha, desfiladeiro'",build_slots,"A borda do mundo em mar (Q-173): a do lado cujo último povo tem este bioma (biomes.csv, edge_subject)."
 enramados_edge_gorge,edge,enramados,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,"§21 Bordo: 'uma região tem de terminar em alguma coisa — falésia, mar, muralha, desfiladeiro'",build_slots,"A borda do mundo em desfiladeiro (Q-173): a do lado cujo último povo tem este bioma (biomes.csv, edge_subject)."
 enramados_edge_wall,edge,enramados,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,"§21 Bordo: 'uma região tem de terminar em alguma coisa — falésia, mar, muralha, desfiladeiro'",build_slots,"A borda do mundo em muralha (Q-173): a do lado cujo último povo tem este bioma (biomes.csv, edge_subject)."
-enramados_water_01,empty,enramados,8,,640,0,0,0,water,,0,0,0,forest_pool,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+enramados_water_01,water,enramados,8,,640,0,0,0,water,,0,0,0,forest_pool,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
 portuarios_empty_01,empty,portuarios,30,,640,3,0,0,,,3,0,0,tidal_boat,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 portuarios_empty_02,empty,portuarios,30,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 portuarios_empty_03,empty,portuarios,30,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -38,7 +38,7 @@ portuarios_settlement_farmsteads,settlement,portuarios,0,,640,0,0,0,,in_land,0,0
 portuarios_edge_sea,edge,portuarios,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 portuarios_edge_gorge,edge,portuarios,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 portuarios_edge_wall,edge,portuarios,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-portuarios_water_01,empty,portuarios,35,,640,0,0,0,water,,0,0,0,tidal_boat,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+portuarios_water_01,water,portuarios,35,,640,0,0,0,water,,0,0,0,tidal_boat,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
 fenda_empty_01,empty,fenda,30,,640,3,0,0,,,3,0,0,stone_door,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fenda_empty_02,empty,fenda,30,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fenda_empty_03,empty,fenda,30,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -57,7 +57,7 @@ fenda_settlement_farmsteads,settlement,fenda,0,,640,0,0,0,,in_land,0,0,0,farmste
 fenda_edge_sea,edge,fenda,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fenda_edge_gorge,edge,fenda,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fenda_edge_wall,edge,fenda,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-fenda_water_01,empty,fenda,8,,640,0,0,0,water,,0,0,0,stone_door,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+fenda_water_01,water,fenda,8,,640,0,0,0,water,,0,0,0,stone_door,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
 horta_empty_01,empty,horta,30,,640,3,0,0,,,3,0,0,irrigation_gate,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 horta_empty_02,empty,horta,30,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 horta_empty_03,empty,horta,30,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -76,7 +76,7 @@ horta_settlement_farmsteads,settlement,horta,0,,640,0,0,0,,in_land,0,0,0,farmste
 horta_edge_sea,edge,horta,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 horta_edge_gorge,edge,horta,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 horta_edge_wall,edge,horta,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-horta_water_01,empty,horta,8,,640,0,0,0,water,,0,0,0,irrigation_gate,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+horta_water_01,water,horta,8,,640,0,0,0,water,,0,0,0,irrigation_gate,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
 fornalha_empty_01,empty,fornalha,30,,640,3,0,0,,,3,0,0,slag_heap,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fornalha_empty_02,empty,fornalha,30,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fornalha_empty_03,empty,fornalha,30,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -95,7 +95,7 @@ fornalha_settlement_farmsteads,settlement,fornalha,0,,640,0,0,0,,in_land,0,0,0,f
 fornalha_edge_sea,edge,fornalha,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fornalha_edge_gorge,edge,fornalha,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 fornalha_edge_wall,edge,fornalha,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-fornalha_water_01,empty,fornalha,8,,640,0,0,0,water,,0,0,0,slag_heap,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+fornalha_water_01,water,fornalha,8,,640,0,0,0,water,,0,0,0,slag_heap,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
 sobraiz_empty_01,empty,sobraiz,30,,640,3,0,0,,,3,0,0,fungal_niche,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 sobraiz_empty_02,empty,sobraiz,30,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 sobraiz_empty_03,empty,sobraiz,30,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -114,10 +114,10 @@ sobraiz_settlement_farmsteads,settlement,sobraiz,0,,640,0,0,0,,in_land,0,0,0,far
 sobraiz_edge_sea,edge,sobraiz,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 sobraiz_edge_gorge,edge,sobraiz,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 sobraiz_edge_wall,edge,sobraiz,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-sobraiz_water_01,empty,sobraiz,8,,640,0,0,0,water,,0,0,0,fungal_niche,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
-geada_empty_01,empty,geada,48,,640,3,0,0,,,3,0,0,ice_cairn,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-geada_empty_02,empty,geada,48,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-geada_empty_03,empty,geada,48,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
+sobraiz_water_01,water,sobraiz,8,,640,0,0,0,water,,0,0,0,fungal_niche,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+geada_empty_01,empty,geada,48,,640,3,0,0,,,3,0,0,ice_cairn,false,1,Q-175 — kit próprio do povo,build_slots|subject|weight,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
+geada_empty_02,empty,geada,48,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject|weight,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
+geada_empty_03,empty,geada,48,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject|weight,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 geada_forest_01,forest,geada,25,,640,2,1,0,forest,,0,0,0,fallen_giant,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 geada_ruin_01,ruin,geada,12,,640,1,1,1,,gap=3|encounter,0,0,0,collapsed_arch,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject|rules,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 geada_fortress_01,fortress,geada,6,,640,4,1,0,,not_adjacent=fortress|at_region_end,0,0,0,enemy_keep,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -133,7 +133,7 @@ geada_settlement_farmsteads,settlement,geada,0,,640,0,0,0,,in_land,0,0,0,farmste
 geada_edge_sea,edge,geada,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 geada_edge_gorge,edge,geada,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 geada_edge_wall,edge,geada,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-geada_water_01,empty,geada,8,,640,0,0,0,water,,0,0,0,ice_cairn,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+geada_water_01,water,geada,8,,640,0,0,0,water,,0,0,0,ice_cairn,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
 bruma_empty_01,empty,bruma,30,,640,3,0,0,,,3,0,0,reed_pool,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 bruma_empty_02,empty,bruma,30,,640,3,0,0,,,3,0,0,broken_cart,false,1,Q-175 — kit próprio do povo,build_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 bruma_empty_03,empty,bruma,30,,640,3,1,0,,,3,0,0,standing_stone,false,1,Q-175 — kit próprio do povo,build_slots|cavity_slots|subject,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
@@ -152,4 +152,4 @@ bruma_settlement_farmsteads,settlement,bruma,0,,640,0,0,0,,in_land,0,0,0,farmste
 bruma_edge_sea,edge,bruma,0,,640,0,0,0,,at_region_end,1,1,0,sea,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 bruma_edge_gorge,edge,bruma,0,,640,0,0,0,,at_region_end,1,1,0,gorge,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
 bruma_edge_wall,edge,bruma,0,,640,0,0,0,,at_region_end,1,1,0,wall,false,1,Q-175 — kit próprio do povo,build_slots,Kit de trabalho com os encontros comuns e assunto próprio do bioma.
-bruma_water_01,empty,bruma,42,,640,0,0,0,water,,0,0,0,reed_pool,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.
+bruma_water_01,water,bruma,42,,640,0,0,0,water,,0,0,0,reed_pool,false,1,Q-175 — diversidade,weight,Peso de trabalho ajustável.

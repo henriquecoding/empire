@@ -14,7 +14,7 @@ func test_two_rifts_conserve_budget_and_leave_early_nights_unchanged() -> void:
 	assert_bool(RiftPlan.two(10, 0.0, RulesFactory.rules(), 12)).is_false()
 	assert_bool(RiftPlan.two(12, 0.0, RulesFactory.rules(), 12)).is_true()
 	var shares := RiftPlan.shares(47, true)
-	assert_int(shares.x + shares.y).is_equal(47)
+	assert_float(shares.x + shares.y).is_equal(47.0)
 
 
 func test_visiting_only_opens_local_mouth_and_nearby_creature() -> void:

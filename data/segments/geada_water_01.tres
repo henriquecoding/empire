@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_tgc5e")
 id = &"geada_water_01"
-kind = &"empty"
+kind = &"water"
 people = &"geada"
 weight = 8
 width_px = 640

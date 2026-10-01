@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_htmcv")
 id = &"horta_water_01"
-kind = &"empty"
+kind = &"water"
 people = &"horta"
 weight = 8
 width_px = 640

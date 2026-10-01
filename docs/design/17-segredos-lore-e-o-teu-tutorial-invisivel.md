@@ -42,3 +42,5 @@ Não são níveis — são modificadores de rota. Regiões onde eventos e criatu
 - Várzea Invertida — a gravidade das faixas troca: a faixa aérea passa a andar-se, a superfície voa-se.
 - Sulco Cego — sem luz; só o Cavaleiro Selado se orienta, porque já não usava os olhos.
 - Mercado dos Ossos — mercenários a metade do preço, dívida ao dobro do juro.
+
+Painel de 30/09/2026 — ADR 0043. Cada masmorra tem tesouro, guarda ou relíquia, com recompensa normal, dupla ou tripla. O sorteio persiste e o guarda não desaparece à alvorada. Não há reposição de loot ao carregar (Q-176). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.

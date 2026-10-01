@@ -87,6 +87,34 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `campfire` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `tender_ward` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 | `bow_rack` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `citizen_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `enramados_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `enramados_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `enramados_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `portuarios_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `portuarios_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `portuarios_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `fenda_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `fenda_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `fenda_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `horta_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `horta_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `horta_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `fornalha_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `fornalha_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `fornalha_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `sobraiz_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `sobraiz_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `sobraiz_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `geada_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `geada_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `geada_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `bruma_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `bruma_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `bruma_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `mercenary_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `mercenary_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `mercenary_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 

@@ -1623,5 +1623,21 @@
   "fora": "Arte definitiva e alteracoes das regras de gameplay.",
   "estado": "feito — assets gratuitos integrados, testes, portoes e render verificados (ADR 0042).",
   "horas": "—"
+ },
+ "QP-01": {
+  "title": "Aplicar as onze respostas restantes do painel",
+  "porque": "Respostas aprovadas ainda por implementar",
+  "spec": [
+   "docs/adr/0043-as-onze-respostas-restantes-do-painel.md"
+  ],
+  "depende": "UX-01",
+  "feito": "Onze decisões integradas, validadas, publicadas e painel atualizado",
+  "fora": "Assets, áudio, quinze respostas anteriores",
+  "estado": "em curso",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-170/171/172/174/175/176/177/178/179/180/182"
+  ]
  }
 }

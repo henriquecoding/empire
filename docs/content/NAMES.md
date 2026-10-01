@@ -81,6 +81,34 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `campfire` | `BUILDING_CAMPFIRE` | Fogueira | Campfire |
 | `tender_ward` | `BUILDING_TENDER_WARD` | Sino de Vigia | Warding Bell |
 | `bow_rack` | `BUILDING_BOW_RACK` | Banca do Arco | Bow Rack |
+| `citizen_house` | `BUILDING_CITIZEN_HOUSE` | Casa de cidadãos | Citizen house |
+| `enramados_house` | `BUILDING_ENRAMADOS_HOUSE` | Casa · Enramados | House · Enramados |
+| `enramados_work` | `BUILDING_ENRAMADOS_WORK` | Oficina · Enramados | Workshop · Enramados |
+| `enramados_defense` | `BUILDING_ENRAMADOS_DEFENSE` | Defesa · Enramados | Defense · Enramados |
+| `portuarios_house` | `BUILDING_PORTUARIOS_HOUSE` | Casa · Portuários | House · Portuários |
+| `portuarios_work` | `BUILDING_PORTUARIOS_WORK` | Oficina · Portuários | Workshop · Portuários |
+| `portuarios_defense` | `BUILDING_PORTUARIOS_DEFENSE` | Defesa · Portuários | Defense · Portuários |
+| `fenda_house` | `BUILDING_FENDA_HOUSE` | Casa · Fenda | House · Fenda |
+| `fenda_work` | `BUILDING_FENDA_WORK` | Oficina · Fenda | Workshop · Fenda |
+| `fenda_defense` | `BUILDING_FENDA_DEFENSE` | Defesa · Fenda | Defense · Fenda |
+| `horta_house` | `BUILDING_HORTA_HOUSE` | Casa · Horta | House · Horta |
+| `horta_work` | `BUILDING_HORTA_WORK` | Oficina · Horta | Workshop · Horta |
+| `horta_defense` | `BUILDING_HORTA_DEFENSE` | Defesa · Horta | Defense · Horta |
+| `fornalha_house` | `BUILDING_FORNALHA_HOUSE` | Casa · Fornalha | House · Fornalha |
+| `fornalha_work` | `BUILDING_FORNALHA_WORK` | Oficina · Fornalha | Workshop · Fornalha |
+| `fornalha_defense` | `BUILDING_FORNALHA_DEFENSE` | Defesa · Fornalha | Defense · Fornalha |
+| `sobraiz_house` | `BUILDING_SOBRAIZ_HOUSE` | Casa · SobRaiz | House · SobRaiz |
+| `sobraiz_work` | `BUILDING_SOBRAIZ_WORK` | Oficina · SobRaiz | Workshop · SobRaiz |
+| `sobraiz_defense` | `BUILDING_SOBRAIZ_DEFENSE` | Defesa · SobRaiz | Defense · SobRaiz |
+| `geada_house` | `BUILDING_GEADA_HOUSE` | Casa · Geada | House · Geada |
+| `geada_work` | `BUILDING_GEADA_WORK` | Oficina · Geada | Workshop · Geada |
+| `geada_defense` | `BUILDING_GEADA_DEFENSE` | Defesa · Geada | Defense · Geada |
+| `bruma_house` | `BUILDING_BRUMA_HOUSE` | Casa · Bruma | House · Bruma |
+| `bruma_work` | `BUILDING_BRUMA_WORK` | Oficina · Bruma | Workshop · Bruma |
+| `bruma_defense` | `BUILDING_BRUMA_DEFENSE` | Defesa · Bruma | Defense · Bruma |
+| `mercenary_house` | `BUILDING_MERCENARY_HOUSE` | Casa · Mercenários | House · Mercenários |
+| `mercenary_work` | `BUILDING_MERCENARY_WORK` | Oficina · Mercenários | Workshop · Mercenários |
+| `mercenary_defense` | `BUILDING_MERCENARY_DEFENSE` | Defesa · Mercenários | Defense · Mercenários |
 
 ## walls
 
@@ -103,7 +131,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `fornalha` | `PEOPLE_FORNALHA` | Fornalha | Fornalha |
 | `sobraiz` | `PEOPLE_SOBRAIZ` | Sob-Raiz | Sob-Raiz |
 | `geada` | `PEOPLE_GEADA` | Geada | Geada |
-| `paul` | `PEOPLE_PAUL` | Paul | Paul |
+| `bruma` | `PEOPLE_BRUMA` | Bruma | Bruma |
 
 ## classes
 
@@ -169,7 +197,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `volcanic` | `BIOME_VOLCANIC` | Terras Vulcânicas | Volcanic Lands |
 | `subterranean` | `BIOME_SUBTERRANEAN` | Subterrâneo | Underground |
 | `glacier` | `BIOME_GLACIER` | Glaciar | Glacier |
-| `marsh` | `BIOME_MARSH` | Paul | Marsh |
+| `marsh` | `BIOME_MARSH` | Bruma | Marsh |
 
 ## mounts
 

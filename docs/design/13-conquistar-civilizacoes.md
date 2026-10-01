@@ -37,3 +37,5 @@ Se a muralha cair e o rei inimigo estiver ausente, os defensores rendem-se e pas
 > **A escolha que define o jogador**
 >
 > Matar o rei inimigo dá 40 a 160 moedas, uma vez. Deixá-lo fugir dá-te o povo dele e uma rota de comércio que rende para sempre (§06). O jogo nunca te diz qual é a certa — mas a conta é fazível, e por volta do dia 20 a rota já pagou o saque várias vezes. Os dois caminhos levam a epílogos diferentes (§17).
+
+Painel de 30/09/2026 — ADR 0043. Cada outro reino tem casa, oficina, defesas, trabalhadores, construtor, guarnição e tesouro próprio; produz, paga soldo, repõe flechas, substitui baixas, repara e enfrenta a Podridão de noite. Classes viajam de dia da bifurcação ou fortaleza vassala a um destino conquistado com defesas de pé. O rei permanece no reino original (Q-174, Q-178). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.

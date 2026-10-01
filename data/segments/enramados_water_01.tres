@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_bugus")
 id = &"enramados_water_01"
-kind = &"empty"
+kind = &"water"
 people = &"enramados"
 weight = 8
 width_px = 640

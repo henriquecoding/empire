@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 250 | 104 | 354 |
-| Fases 3–8 | 303 | 97 | 400 |
-| Total | 553 | 201 | 754 |
+| Fases 0–2 (fatia vertical) | 581 | 292 | 873 |
+| Fases 3–8 | 329 | 97 | 426 |
+| Total | 910 | 389 | 1299 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 250
+## 1 · Fatia vertical — balanceamento — 581
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -81,7 +81,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `farm` | `variant_params` | yield_mult:0.75\|immune_to_rot_trail:1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'resguardo' — o rasto da Podridão não a arrasa nem a para, e rende 75%. A variante A é o canteiro de sempre. |
 | buildings | `fishery` | `max_health` | 48 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura). spoil_per_day 1: o peixe que nenhuma Salga converte perde uma unidade por dia no pesqueiro (Q-012, decidida pelo dono a 28/09/2026); a Salga de pé acaba com o estrago (§06). |
 | buildings | `henhouse` | `max_health` | 64 | 1 | 'Galinhas roubáveis à noite' (§06). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `ore_pit` | `max_health` | 96 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo |
+| buildings | `ore_pit` | `max_health` | 96 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo que são rocha. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `granary` | `max_health` | 80 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `archer_tower` | `max_health` | 144 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
 | buildings | `archer_tower` | `variant_params` | range_bonus:0\|cadence:0.75 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
@@ -99,6 +99,116 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `bow_rack` | `cost` | 4 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `bow_rack` | `max_health` | 32 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `bow_rack` | `effect_params` | craft_cost:2 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `citizen_house` | `cost` | 8 | 1 | Casa nas ruínas do acampamento; números de trabalho ajustáveis. |
+| buildings | `citizen_house` | `max_health` | 64 | 1 | Casa nas ruínas do acampamento; números de trabalho ajustáveis. |
+| buildings | `enramados_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `yield_per_day` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `yield_per_day` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `yield_per_day` | 4 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `yield_per_day` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `yield_per_day` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `yield_per_day` | 4 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `yield_per_day` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `yield_per_day` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `yield_per_day` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `contact_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `cost` | 8 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `max_health` | 64 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `yield_per_day` |  | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `contact_slots` | 3 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
 | walls | `stakes` | `max_health_a` | 40 | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `stakes` | `guard_posts_b` | 1 | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `palisade` | `max_health_a` | 48 | 1 | O §10 diz 'Madeira reforçada / gelo'; nenhum dos seis povos é de gelo — Q-010. Caminho A = 50% da vida do B. |
@@ -202,7 +312,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | segments | `enramados_ruin_01` | `build_slots` | 1 | 1 | 'Traz uma passagem para o corte de solo.' Nas trilhas entre povos é a masmorra (o dono, 30/09/2026): a passagem leva a uma câmara no corte de solo com um monte de moedas; conta como encontro do trilho (Q-173). |
 | segments | `enramados_ruin_01` | `cavity_slots` | 1 | 1 | 'Traz uma passagem para o corte de solo.' Nas trilhas entre povos é a masmorra (o dono, 30/09/2026): a passagem leva a uma câmara no corte de solo com um monte de moedas; conta como encontro do trilho (Q-173). |
 | segments | `enramados_ruin_01` | `rules` | gap=3\|encounter | 1 | 'Traz uma passagem para o corte de solo.' Nas trilhas entre povos é a masmorra (o dono, 30/09/2026): a passagem leva a uma câmara no corte de solo com um monte de moedas; conta como encontro do trilho (Q-173). |
-| segments | `enramados_fortress_01` | `build_slots` | 0 | 1 | 'Nunca duas adjacentes. Uma nas extremidades da região.' |
+| segments | `enramados_fortress_01` | `build_slots` | 4 | 1 | 'Nunca duas adjacentes. Uma nas extremidades da região.' |
 | segments | `enramados_fortress_01` | `cavity_slots` | 1 | 1 | 'Nunca duas adjacentes. Uma nas extremidades da região.' |
 | segments | `enramados_edge_01` | `build_slots` | 0 | 1 | O tipo edge vem da lição do Chef RPG (§21), que pede um segmento dedicado; não está na tabela de pesos. |
 | segments | `enramados_vagrant_camp_01` | `weight` | 10 | 1 | Acampamento de mendigos (Q-173): entra na lista de acampamentos, e o vagabundo de cada alvorada (Q-122) também pode chegar aqui. O teto de livres é o mesmo: muda onde a gente aparece, não quanta. |
@@ -223,6 +333,227 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | segments | `enramados_edge_sea` | `build_slots` | 0 | 1 | A borda do mundo em mar (Q-173): a do lado cujo último povo tem este bioma (biomes.csv, edge_subject). |
 | segments | `enramados_edge_gorge` | `build_slots` | 0 | 1 | A borda do mundo em desfiladeiro (Q-173): a do lado cujo último povo tem este bioma (biomes.csv, edge_subject). |
 | segments | `enramados_edge_wall` | `build_slots` | 0 | 1 | A borda do mundo em muralha (Q-173): a do lado cujo último povo tem este bioma (biomes.csv, edge_subject). |
+| segments | `enramados_water_01` | `weight` | 8 | 1 | Peso de trabalho ajustável. |
+| segments | `portuarios_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_water_01` | `weight` | 35 | 1 | Peso de trabalho ajustável. |
+| segments | `fenda_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_water_01` | `weight` | 8 | 1 | Peso de trabalho ajustável. |
+| segments | `horta_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_water_01` | `weight` | 8 | 1 | Peso de trabalho ajustável. |
+| segments | `fornalha_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_water_01` | `weight` | 8 | 1 | Peso de trabalho ajustável. |
+| segments | `sobraiz_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_water_01` | `weight` | 8 | 1 | Peso de trabalho ajustável. |
+| segments | `geada_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_01` | `weight` | 48 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_02` | `weight` | 48 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_03` | `weight` | 48 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_water_01` | `weight` | 8 | 1 | Peso de trabalho ajustável. |
+| segments | `bruma_empty_01` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_empty_02` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_empty_03` | `build_slots` | 3 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_empty_03` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_forest_01` | `build_slots` | 2 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_forest_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_ruin_01` | `build_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_ruin_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_ruin_01` | `rules` | gap=3\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_fortress_01` | `build_slots` | 4 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_fortress_01` | `cavity_slots` | 1 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_edge_01` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_vagrant_camp_01` | `weight` | 10 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_vagrant_camp_01` | `rules` | gap=4\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_mercenary_camp_01` | `rules` | gap=4\|not_near_base\|encounter | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_gate` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_gate` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_bridge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_bridge` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_rock_fault` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_rock_fault` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_ruined_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_threshold_ruined_wall` | `rules` | at_land_start | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_settlement_houses` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_settlement_houses` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_settlement_farmsteads` | `weight` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_settlement_farmsteads` | `rules` | in_land | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_edge_sea` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_edge_gorge` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_edge_wall` | `build_slots` | 0 | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_water_01` | `weight` | 42 | 1 | Peso de trabalho ajustável. |
 | rot | `default` | `sacrifice_mass_per_animal` | 8 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-094). O prato da oferta tem 'o tamanho de um slot de construção' e o dossiê não diz de qual: 96 px, o do canteiro (Q-098). AUD-03 (Q-126): o ritmo da noite — de seis em seis noites uma noite funda (massa ×1,3), e a seguir uma calma (×0,6), como a Lua de Sangue do Kingdom e o relaxe do AI Director; anunciada à tarde. AUD-04 (Q-131): o poço de minério 'atrai Cavadores' (§06) — com um de pé, o Cavador vem mine_lure_days noites mais cedo (do dia 7 em vez do 10). As primeiras noites (Q-017, Q-068, decididas pelo dono a 28/09/2026): a noite 1 tem os três Rastejantes do §25 (opening_mass 24 = 3 × 8) e a massa do calendário sobe em linha recta até à §74, que manda por inteiro a partir da noite ramp_nights (5 — a noite 5 do §07 já é a de sempre). «Começa leve e vai intensificando com o passar das noites.» skipped_mass_carry 1: a noite saltada pela oferta «O que brilha, e nada mais» não se perde — a massa dela vem inteira na noite seguinte (Q-040: «saltar o jogo gera consequências»). O escuro e o archote (Q-029, pedido do dono a 28/09/2026): o archote compra-se numa fogueira por uma moeda, levam-se dois (o teto passou para o armazenamento de cada personagem, storages.csv, Q-153), arde 60 s no escuro (mais de meia noite de 105 s) e alumia 96 px; no escuro e sem ele, de 8 em 8 s nasce um Rastejante a 90 px do rei, até seis por noite — «podem aparecer inimigos de qualquer lugar». O Lume (ADR 0034, o dono a 29/09/2026): a candeia deixa de atravessar o campo e fica na base de onde a Podridão nasce, a arder em roxo (as três paragens passaram de âmbar a violeta; o âmbar ficou para o fogo que é teu — fire_tint). As tuas luzes afastam-na: quem entra numa luz que o aguenta recua light_recoil_s (3 s); mais forte do que ela, só abranda. O archote aguenta até massa 8 (Rastejantes). Tudo o que a Podridão consome alimenta o Lume: cada unidade vale lume_mass_per_fuel de massa nas noites seguintes. mass_growth 1,06 e growth_from_night 10 (Q-151, o dono a 29/09/2026: "mais brando até a noite 5, depois, conforme os dias passam, torna-se mais difícil exponencialmente"): da noite 6 à 10 a massa sobe pela fórmula da §74 (+18 por noite); depois da noite 10 multiplica-se por 1,06 a cada noite — a 20 pesa 1,8×, a 30 pesa 3,2×. Medido: com o crescimento logo depois da noite 5, qualquer razão de 1,02 para cima derruba a defesa do décimo dia no dia 10 — e o §66 é o portão da Fase 1 —, por isso o exponencial começa depois do horizonte do §66. Ver Q-157. union_peoples_released e dominion_peoples_kept 5 (Q-152, o dono a 29/09/2026: a campanha passa a oito regiões): os 4 de 6 da §79 são dois terços, e dois terços de oito arredondam a 5. |
 | rot | `default` | `sacrifice_mass_per_troop` | 14 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-094). O prato da oferta tem 'o tamanho de um slot de construção' e o dossiê não diz de qual: 96 px, o do canteiro (Q-098). AUD-03 (Q-126): o ritmo da noite — de seis em seis noites uma noite funda (massa ×1,3), e a seguir uma calma (×0,6), como a Lua de Sangue do Kingdom e o relaxe do AI Director; anunciada à tarde. AUD-04 (Q-131): o poço de minério 'atrai Cavadores' (§06) — com um de pé, o Cavador vem mine_lure_days noites mais cedo (do dia 7 em vez do 10). As primeiras noites (Q-017, Q-068, decididas pelo dono a 28/09/2026): a noite 1 tem os três Rastejantes do §25 (opening_mass 24 = 3 × 8) e a massa do calendário sobe em linha recta até à §74, que manda por inteiro a partir da noite ramp_nights (5 — a noite 5 do §07 já é a de sempre). «Começa leve e vai intensificando com o passar das noites.» skipped_mass_carry 1: a noite saltada pela oferta «O que brilha, e nada mais» não se perde — a massa dela vem inteira na noite seguinte (Q-040: «saltar o jogo gera consequências»). O escuro e o archote (Q-029, pedido do dono a 28/09/2026): o archote compra-se numa fogueira por uma moeda, levam-se dois (o teto passou para o armazenamento de cada personagem, storages.csv, Q-153), arde 60 s no escuro (mais de meia noite de 105 s) e alumia 96 px; no escuro e sem ele, de 8 em 8 s nasce um Rastejante a 90 px do rei, até seis por noite — «podem aparecer inimigos de qualquer lugar». O Lume (ADR 0034, o dono a 29/09/2026): a candeia deixa de atravessar o campo e fica na base de onde a Podridão nasce, a arder em roxo (as três paragens passaram de âmbar a violeta; o âmbar ficou para o fogo que é teu — fire_tint). As tuas luzes afastam-na: quem entra numa luz que o aguenta recua light_recoil_s (3 s); mais forte do que ela, só abranda. O archote aguenta até massa 8 (Rastejantes). Tudo o que a Podridão consome alimenta o Lume: cada unidade vale lume_mass_per_fuel de massa nas noites seguintes. mass_growth 1,06 e growth_from_night 10 (Q-151, o dono a 29/09/2026: "mais brando até a noite 5, depois, conforme os dias passam, torna-se mais difícil exponencialmente"): da noite 6 à 10 a massa sobe pela fórmula da §74 (+18 por noite); depois da noite 10 multiplica-se por 1,06 a cada noite — a 20 pesa 1,8×, a 30 pesa 3,2×. Medido: com o crescimento logo depois da noite 5, qualquer razão de 1,02 para cima derruba a defesa do décimo dia no dia 10 — e o §66 é o portão da Fase 1 —, por isso o exponencial começa depois do horizonte do §66. Ver Q-157. union_peoples_released e dominion_peoples_kept 5 (Q-152, o dono a 29/09/2026: a campanha passa a oito regiões): os 4 de 6 da §79 são dois terços, e dois terços de oito arredondam a 5. |
 | rot | `default` | `width_start` | 160 | 1 | Animal = 8 de massa (um Rastejante a menos); tropa = 14 (um Alado a menos). A largura inicial não está no dossiê. v6: a base, o termo do dia e o das fortalezas descem (60→40, 26→18, 40→30) e entram os Amargueiros e as recusas (§74). A tabela do §74 confere: campo limpo ao dia 20 = 400 (D-01). As tres paragens da luz e o dither de 2 px sao do §80 e o check_dossie_vs_csv confere-os contra o dossie — por isso o lantern_tint saiu de _proposed. A base do Amargueiro (32 px, a do barril de fogo) é onde a moeda cai nele e quem o corta tem de estar — o dossiê não a escreve (Q-094). O prato da oferta tem 'o tamanho de um slot de construção' e o dossiê não diz de qual: 96 px, o do canteiro (Q-098). AUD-03 (Q-126): o ritmo da noite — de seis em seis noites uma noite funda (massa ×1,3), e a seguir uma calma (×0,6), como a Lua de Sangue do Kingdom e o relaxe do AI Director; anunciada à tarde. AUD-04 (Q-131): o poço de minério 'atrai Cavadores' (§06) — com um de pé, o Cavador vem mine_lure_days noites mais cedo (do dia 7 em vez do 10). As primeiras noites (Q-017, Q-068, decididas pelo dono a 28/09/2026): a noite 1 tem os três Rastejantes do §25 (opening_mass 24 = 3 × 8) e a massa do calendário sobe em linha recta até à §74, que manda por inteiro a partir da noite ramp_nights (5 — a noite 5 do §07 já é a de sempre). «Começa leve e vai intensificando com o passar das noites.» skipped_mass_carry 1: a noite saltada pela oferta «O que brilha, e nada mais» não se perde — a massa dela vem inteira na noite seguinte (Q-040: «saltar o jogo gera consequências»). O escuro e o archote (Q-029, pedido do dono a 28/09/2026): o archote compra-se numa fogueira por uma moeda, levam-se dois (o teto passou para o armazenamento de cada personagem, storages.csv, Q-153), arde 60 s no escuro (mais de meia noite de 105 s) e alumia 96 px; no escuro e sem ele, de 8 em 8 s nasce um Rastejante a 90 px do rei, até seis por noite — «podem aparecer inimigos de qualquer lugar». O Lume (ADR 0034, o dono a 29/09/2026): a candeia deixa de atravessar o campo e fica na base de onde a Podridão nasce, a arder em roxo (as três paragens passaram de âmbar a violeta; o âmbar ficou para o fogo que é teu — fire_tint). As tuas luzes afastam-na: quem entra numa luz que o aguenta recua light_recoil_s (3 s); mais forte do que ela, só abranda. O archote aguenta até massa 8 (Rastejantes). Tudo o que a Podridão consome alimenta o Lume: cada unidade vale lume_mass_per_fuel de massa nas noites seguintes. mass_growth 1,06 e growth_from_night 10 (Q-151, o dono a 29/09/2026: "mais brando até a noite 5, depois, conforme os dias passam, torna-se mais difícil exponencialmente"): da noite 6 à 10 a massa sobe pela fórmula da §74 (+18 por noite); depois da noite 10 multiplica-se por 1,06 a cada noite — a 20 pesa 1,8×, a 30 pesa 3,2×. Medido: com o crescimento logo depois da noite 5, qualquer razão de 1,02 para cima derruba a defesa do décimo dia no dia 10 — e o §66 é o portão da Fase 1 —, por isso o exponencial começa depois do horizonte do §66. Ver Q-157. union_peoples_released e dominion_peoples_kept 5 (Q-152, o dono a 29/09/2026: a campanha passa a oito regiões): os 4 de 6 da §79 são dois terços, e dois terços de oito arredondam a 5. |
@@ -267,7 +598,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | parallax_layers | `closed_3` | `saturation_delta` | -0.03 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 | parallax_layers | `closed_4` | `saturation_delta` | -0.015 | 0 | Valor invertido (o fundo escurece); saturação a 15% do delta aberto — '15%' é proposta. |
 
-## 2 · Fatia vertical — apresentação e estrutura — 104
+## 2 · Fatia vertical — apresentação e estrutura — 292
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -322,9 +653,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `fishery` | `job_slots` | 1 | 1 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura). spoil_per_day 1: o peixe que nenhuma Salga converte perde uma unidade por dia no pesqueiro (Q-012, decidida pelo dono a 28/09/2026); a Salga de pé acaba com o estrago (§06). |
 | buildings | `henhouse` | `width_px` | 96 | 1 | 'Galinhas roubáveis à noite' (§06). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `henhouse` | `shadow_width` | 96 | 1 | 'Galinhas roubáveis à noite' (§06). Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
-| buildings | `ore_pit` | `width_px` | 120 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo |
-| buildings | `ore_pit` | `shadow_width` | 120 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo |
-| buildings | `ore_pit` | `job_slots` | 1 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo |
+| buildings | `ore_pit` | `width_px` | 120 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo que são rocha. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `ore_pit` | `shadow_width` | 120 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo que são rocha. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `ore_pit` | `job_slots` | 1 | 1 | AUD-04 (Q-130): entra na Fase 1 nas cavidades do subsolo que são rocha. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `granary` | `width_px` | 120 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `granary` | `shadow_width` | 120 | 2 | Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `archer_tower` | `width_px` | 64 | 1 | 2 postos elevados, +40% alcance, precisão ≈100% — do dossiê. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) AUD-05 (Q-136): a variante B, 'cadência' — sem os 40% de alcance, dispara com 75% do intervalo (um terço mais tiros). A variante A é a torre de sempre. |
@@ -345,11 +676,122 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | buildings | `bow_rack` | `build_work` | 8 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `bow_rack` | `width_px` | 48 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
 | buildings | `bow_rack` | `shadow_width` | 48 | 1 | Q-165 (o dono, 29/09/2026: «aplique o relatório»): a banca do arco. A moeda larga-se nela como na Casa de Treino e o trabalhador teu mais perto pega no arco e sai arqueiro, sem dia de treino. craft_cost 2 é o arco do Kingdom (§02) — a diferença entre o arqueiro (3) e o vagabundo (1). Sem ela a região tinha três arqueiros para sempre. Regra proposta: max_health = 8 × custo; build_work = 2 s × custo; shadow_width = largura (§22: a sombra escala com a largura) |
+| buildings | `citizen_house` | `build_work` | 16 | 1 | Casa nas ruínas do acampamento; números de trabalho ajustáveis. |
+| buildings | `citizen_house` | `width_px` | 96 | 1 | Casa nas ruínas do acampamento; números de trabalho ajustáveis. |
+| buildings | `citizen_house` | `shadow_width` | 96 | 1 | Casa nas ruínas do acampamento; números de trabalho ajustáveis. |
+| buildings | `enramados_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `enramados_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `portuarios_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fenda_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `horta_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `fornalha_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `sobraiz_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `geada_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `bruma_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_house` | `job_slots` | 0 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_work` | `job_slots` | 1 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `build_work` | 16 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `width_px` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `shadow_width` | 80 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
+| buildings | `mercenary_defense` | `job_slots` | 2 | 1 | Obra local do povo, com tesouro e trabalhadores próprios; valores ajustáveis. |
 | walls | `stakes` | `shadow_width` | 64 | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
-| walls | `stakes` | `material_by_people` | enramados:logs\|portuarios:stakes\|fenda:rock_shards\|horta:wattle\|fornalha:slag_chunks\|geada:ice_blocks\|paul:reed_bundles | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
+| walls | `stakes` | `material_by_people` | enramados:logs\|portuarios:stakes\|fenda:rock_shards\|horta:wattle\|fornalha:slag_chunks\|geada:ice_blocks\|bruma:reed_bundles | 1 | Nível 1 é a base comum aos dois caminhos. Materiais de Horta e Fornalha propostos; os três primeiros são do §10. |
 | walls | `palisade` | `shadow_width` | 64 | 1 | O §10 diz 'Madeira reforçada / gelo'; nenhum dos seis povos é de gelo — Q-010. Caminho A = 50% da vida do B. |
 | walls | `stone_wall` | `shadow_width` | 64 | 2 | 'Pedra / basalto / coral' (§10) repartidos por povo: a atribuição é proposta. |
-| walls | `stone_wall` | `material_by_people` | enramados:stone\|portuarios:coral\|fenda:stone\|horta:stone\|fornalha:basalt\|geada:packed_ice\|paul:stone | 2 | 'Pedra / basalto / coral' (§10) repartidos por povo: a atribuição é proposta. |
+| walls | `stone_wall` | `material_by_people` | enramados:stone\|portuarios:coral\|fenda:stone\|horta:stone\|fornalha:basalt\|geada:packed_ice\|bruma:stone | 2 | 'Pedra / basalto / coral' (§10) repartidos por povo: a atribuição é proposta. |
 | peoples | `enramados` | `starting_units` | monarch\|squire\|vagrant | 1 | O povo da fatia vertical (§33). 'Madeira e caça' vira +25% na caça; arquétipo arqueiro porque dispara de cima. v6: a canção é a do §81; o marco cria raiz quando ficas com o povo (§78) — vira Amargueiro de 22 de massa e não se corta. |
 | storages | `royal_belt` | `worn` | hip | 1 | O cinto do rei: a bolsa das moedas (§02) e os dois archotes do Q-029 — o teto que estava no rot.csv (torch_max) passou para aqui. A camada Equipments dos teus ficheiros desenha-o à cinta. |
 | storages | `quiver` | `worn` | back | 2 | A aljava às costas: um archote, porque o arqueiro vê de longe e não precisa de andar no escuro. |
@@ -369,6 +811,83 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | segments | `enramados_mercenary_camp_01` | `subject` | mercenary_tents | 1 | 'Um a cada 4–7 segmentos. Nunca adjacente à base inicial.' (§21). Tem sempre um mercenário à espera, reposto à alvorada, que se contrata ao preço dele (units.csv, recruit_cost), como qualquer recruta (Q-173). |
 | segments | `enramados_settlement_houses` | `subject` | houses | 1 | A terra de outro povo, entre o limiar e a fortaleza (Q-173). Até cada povo ter o seu kit, a terra desenha-se com as cores e as plantas do bioma dele. |
 | segments | `enramados_settlement_farmsteads` | `subject` | farmsteads | 1 | A terra de outro povo, entre o limiar e a fortaleza (Q-173). Até cada povo ter o seu kit, a terra desenha-se com as cores e as plantas do bioma dele. |
+| segments | `portuarios_empty_01` | `subject` | tidal_boat | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `portuarios_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_empty_01` | `subject` | stone_door | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fenda_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_empty_01` | `subject` | irrigation_gate | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `horta_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_empty_01` | `subject` | slag_heap | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `fornalha_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_empty_01` | `subject` | fungal_niche | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `sobraiz_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_01` | `subject` | ice_cairn | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `geada_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_empty_01` | `subject` | reed_pool | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_empty_02` | `subject` | broken_cart | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_empty_03` | `subject` | standing_stone | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_forest_01` | `subject` | fallen_giant | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_ruin_01` | `subject` | collapsed_arch | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_fortress_01` | `subject` | enemy_keep | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_edge_01` | `subject` | cliff | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_vagrant_camp_01` | `subject` | vagrant_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_mercenary_camp_01` | `subject` | mercenary_tents | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_settlement_houses` | `subject` | houses | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
+| segments | `bruma_settlement_farmsteads` | `subject` | farmsteads | 1 | Kit de trabalho com os encontros comuns e assunto próprio do bioma. |
 | wildlife | `rabbit` | `per_segment_max` | 2 | 1 | Vida 4 = um só acerto de arqueiro (dano 4). As tocas (Q-106 e Q-120, o dono a 29/09/2026: "como em Kingdom, os coelhos saem de arbustos; os arbustos geram aos poucos os coelhos; se perderes o arbusto, deixa de os gerar"): quatro tocas por região, e cada uma põe um coelho à porta de cada vez, com o período que dá a caça média do hunt_yield (economy.csv) em luz do dia — a receita média não muda, reparte-se. Uma toca perde-se se um Amargueiro criar raiz a 48 px dela (burrow_wither_px): deixar mortos fora das muralhas custa a caça. Q-150: o coelho sai dos arbustos, dos buracos e das rochas. |
 | wildlife | `rabbit` | `shadow_width` | 10 | 1 | Vida 4 = um só acerto de arqueiro (dano 4). As tocas (Q-106 e Q-120, o dono a 29/09/2026: "como em Kingdom, os coelhos saem de arbustos; os arbustos geram aos poucos os coelhos; se perderes o arbusto, deixa de os gerar"): quatro tocas por região, e cada uma põe um coelho à porta de cada vez, com o período que dá a caça média do hunt_yield (economy.csv) em luz do dia — a receita média não muda, reparte-se. Uma toca perde-se se um Amargueiro criar raiz a 48 px dela (burrow_wither_px): deixar mortos fora das muralhas custa a caça. Q-150: o coelho sai dos arbustos, dos buracos e das rochas. |
 | wildlife | `deer` | `per_segment_max` | 1 | 1 | Vida 8 = dois acertos de arqueiro, como no Kingdom (§02). Q-150 (o dono a 30/09/2026: «as caças devem aparecer de onde faça sentido, de arbustos, de árvores, de lagos, de rochas, de buracos»): o veado sai das árvores e vem beber ao lago — dois sítios por região, como o Kingdom: Two Crowns o põe junto às árvores. A caça média do dia continua a do hunt_yield: o período reparte-a pelas moedas de cada bicho, e o veado dá 3 onde o coelho dá 1. |
@@ -376,7 +895,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 
-## 3 · Fases 3 a 8 — 400
+## 3 · Fases 3 a 8 — 426
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -398,7 +917,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | units | `climber` | `damage` | 5 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
 | units | `climber` | `attack_interval` | 1.0 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
 | units | `climber` | `range_px` | 26 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
-| units | `climber` | `targets_bands` | SURFACE\|AERIAL | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
+| units | `climber` | `targets_bands` | SURFACE\|AERIAL\|UNDERGROUND | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
 | units | `climber` | `recruit_cost` | 6 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
 | units | `climber` | `move_speed` | 92 | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
 | units | `climber` | `tags` | agile\|climbs\|playable | 6 | Proposta ancorada no arqueiro (vida 14–16) com dano de lanceiro reduzido; é mobilidade, não linha. Escala 3: personagem jogável, maior do que uma tropa e menor do que o rei (Q-097). |
@@ -586,18 +1105,18 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | peoples | `geada` | `starting_buildings` | core | 7 | O povo do gelo (Q-010). Características únicas propostas: o frio guarda — nada estraga na região deles (spoil_mult 0, o contrário do peixe da Q-012) — e o chão gelado abranda a Podridão 15% (rot_speed_mult). A paliçada de gelo do §10 é deles (wall_material ice). A classe é provisória (a do Trepador, que sobe o gelo) e está na Q-152 com o resto. |
 | peoples | `geada` | `song_texture` | Voz grave e bater de pés na neve, sem instrumento — os cantares de Janeiras da Beira | 7 | O povo do gelo (Q-010). Características únicas propostas: o frio guarda — nada estraga na região deles (spoil_mult 0, o contrário do peixe da Q-012) — e o chão gelado abranda a Podridão 15% (rot_speed_mult). A paliçada de gelo do §10 é deles (wall_material ice). A classe é provisória (a do Trepador, que sobe o gelo) e está na Q-152 com o resto. |
 | peoples | `geada` | `colheita_song` | Cantam para dentro, com a boca fechada | 7 | O povo do gelo (Q-010). Características únicas propostas: o frio guarda — nada estraga na região deles (spoil_mult 0, o contrário do peixe da Q-012) — e o chão gelado abranda a Podridão 15% (rot_speed_mult). A paliçada de gelo do §10 é deles (wall_material ice). A classe é provisória (a do Trepador, que sobe o gelo) e está na Q-152 com o resto. |
-| peoples | `paul` | `architecture_source` | Palheiros de colmo do Paul do Boquilobo + casas sobre estacas do Tonlé Sap + passadiços de junco | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `roof_silhouette` | Colmo alto e inclinado, a pingar, sobre estacas | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `landmark` | reed_tower | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `economy_strength` | reeds_and_eels | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `economy_modifiers` | trail_immune_mult:1.0\|mount_heal_days_mult:0.5 | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `defense_trait` | mire | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `unique_unit` | reed_stalker | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `playable_class` | diplomat | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `starting_units` | monarch\|squire\|vagrant | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `starting_buildings` | core\|fishery | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `song_texture` | Toadas de barqueiro com canas e água a bater no casco — o Tejo dos avieiros | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| peoples | `paul` | `colheita_song` | A canção afunda-se a meio | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `architecture_source` | Palheiros de colmo do Paul do Boquilobo + casas sobre estacas do Tonlé Sap + passadiços de junco | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `roof_silhouette` | Colmo alto e inclinado, a pingar, sobre estacas | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `landmark` | reed_tower | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `economy_strength` | reeds_and_eels | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `economy_modifiers` | trail_immune_mult:1.0\|mount_heal_days_mult:0.5 | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `defense_trait` | mire | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `unique_unit` | reed_stalker | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `playable_class` | diplomat | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `starting_units` | monarch\|squire\|vagrant | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `starting_buildings` | core\|fishery | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `song_texture` | Toadas de barqueiro com canas e água a bater no casco — o Tejo dos avieiros | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
+| peoples | `bruma` | `colheita_song` | A canção afunda-se a meio | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
 | classes | `bard` | `phase1_params` | max_target_health:14\|duration:30\|speed_boost:0.1 | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. |
 | classes | `bard` | `base_unit` | bard_hero | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. |
 | classes | `bard` | `troop` | bard | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. |
@@ -735,8 +1254,34 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | rules | `citizen_price` | `citizen_price` | 2 | 9 | Um cidadão custa 2 moedas, o dobro do vagabundo (1): é o preço de não ter acampamento. |
 | rules | `arrows_per_coin` | `arrows_per_coin` | 12 | 9 | Na alvorada a banca do arco repõe as aljavas a 12 flechas por moeda, do saco do rei. Medido na defesa do décimo dia (12 arqueiros): de 9 a 79 tiros por noite, ou seja de 1 a 7 moedas por alvorada — a mesma ordem da manutenção dos 20 soldados do §06 (6 por dia), e abaixo da produção de base (17 com as sete fontes). |
 | rules | `ammo_depot` | `ammo_depot` | bow_rack | 9 | Quem faz as flechas é a banca do arco: sem ela de pé, as aljavas não se repõem. |
+| rules | `season_days` | `season_days` | 16 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `winter_hunt_mult` | `winter_hunt_mult` | 0.35 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `granary_reserve_frac` | `granary_reserve_frac` | 0.25 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `granary_reserve_cap` | `granary_reserve_cap` | 64 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `granary_release_daily` | `granary_release_daily` | 4 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `mercenary_daily_wage` | `mercenary_daily_wage` | 1 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_coin_min` | `dungeon_coin_min` | 3 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_coin_max` | `dungeon_coin_max` | 6 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_treasure_chance` | `dungeon_treasure_chance` | 0.6 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_relic_chance` | `dungeon_relic_chance` | 0.15 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_double_chance` | `dungeon_double_chance` | 0.15 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_triple_chance` | `dungeon_triple_chance` | 0.05 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `dungeon_relic_seeds` | `dungeon_relic_seeds` | 1 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `rift_both_chance` | `rift_both_chance` | 0.5 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `und_notice_px` | `und_notice_px` | 1280 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `und_visited_px` | `und_visited_px` | 80 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `und_creature_px` | `und_creature_px` | 160 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_start_coins` | `realm_start_coins` | 30 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_work_offset` | `realm_work_offset` | 120 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_wall_offset` | `realm_wall_offset` | 240 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_guard_count` | `realm_guard_count` | 3 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_citizen_count` | `realm_citizen_count` | 2 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_guard_wage` | `realm_guard_wage` | 0.3 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_guard_price` | `realm_guard_price` | 3 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_night_share` | `realm_night_share` | 0.5 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `realm_night_cap` | `realm_night_cap` | 6 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
-| mounts | `dragonfly_mount` | `obtain_ref` | paul | 6 | A «Fortaleza do pântano» do §12 é do povo do pântano, o Paul (Q-013, decidida pelo dono a 28/09/2026: «quero que haja também a população do pântano»). Antes disso a proposta era a Horta. |
+| mounts | `dragonfly_mount` | `obtain_ref` | bruma | 6 | A «Fortaleza do pântano» do §12 é do povo do pântano, o Bruma (Q-013, decidida pelo dono a 28/09/2026: «quero que haja também a população do pântano»). Antes disso a proposta era a Horta. |
 | impulses | `forced_harvest` | `coin_cost` | 3 | 6 | Preço base (Q-014, o sistema de preço pedido pelo dono a 28/09/2026): Rende ×1,8 hoje e as plantações param amanhã. A 4 moedas, medido com as condições reais (a ganância, o preço do dia e as fases que faltam), devolvia 0,83 por moeda paga em qualquer dia, e nunca compensava (Q-158); a 3 devolve perto de 1,1 com três fontes, e mais com mais fontes (tests/colheita_forcada_test.gd). O preço de cada dia é esta base a crescer com a produção (income_growth), a metade para o tirano (§15) e ×impulse_repeat_mult se o mesmo decreto saiu há menos de impulse_repeat_days dias. |
 | impulses | `forced_harvest` | `icon` | sickle | 6 | Preço base (Q-014, o sistema de preço pedido pelo dono a 28/09/2026): Rende ×1,8 hoje e as plantações param amanhã. A 4 moedas, medido com as condições reais (a ganância, o preço do dia e as fases que faltam), devolvia 0,83 por moeda paga em qualquer dia, e nunca compensava (Q-158); a 3 devolve perto de 1,1 com três fontes, e mais com mais fontes (tests/colheita_forcada_test.gd). O preço de cada dia é esta base a crescer com a produção (income_growth), a metade para o tirano (§15) e ×impulse_repeat_mult se o mesmo decreto saiu há menos de impulse_repeat_days dias. |
 | impulses | `call_to_arms` | `coin_cost` | 4 | 6 | Preço base (Q-014, o sistema de preço pedido pelo dono a 28/09/2026): Até quatro vagabundos (o vagrant_camp_cap) viram lanceiros, que valem 4 moedas de recrutamento cada, e a produção de hoje vai a zero. O preço é o de um lanceiro: vale a pena com o acampamento cheio, não com um vagabundo só. O preço de cada dia é esta base a crescer com a produção (income_growth), a metade para o tirano (§15) e ×impulse_repeat_mult se o mesmo decreto saiu há menos de impulse_repeat_days dias. |

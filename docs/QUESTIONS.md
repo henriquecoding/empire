@@ -7,126 +7,64 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Respondidas no painel (30/09/2026) — por aplicar
+## Resolvidas — respostas do painel de 30/09/2026 (ADR 0043)
 
-> O dono respondeu a 26 perguntas no painel a 30/09/2026. Quinze estão aplicadas ou confirmadas (ADR 0041, em
-> *"Decididas pelo dono no painel (30/09/2026)"* e nas secções das aplicadas); estas onze têm a resposta registada e
-> esperam pela implementação, pela ordem do roteiro do ADR 0041. No painel continuam *à espera de implementação*.
+As onze respostas restantes foram implementadas como lote integrado. Os checkpoints e a validação constam da ADR 0043; o painel só recebe `aplicada` depois de merge e publicação. As quinze anteriores ficam como na ADR 0041.
 
 ### Q-170 · O acampamento perde-se quando o reino cresce por cima dele (era a Q-E)
 - **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** o acampamento acaba quando o reino cresce por cima dele, e as ruínas aceitam uma casa de cidadãos.
-- **Por aplicar:** a casa de cidadãos é uma obra nova, com números novos (teto 3, recrutas mais caros) que o dossiê não dá.
-- **Onde:** Q-110, Q-122; `greybox.gd` (`ACAMPAMENTOS_X`), `camps.gd`.
-- **Proposta:** uma muralha levantada além do acampamento, ou o Amargueiro ao lado abatido, acaba com ele; as ruínas
-  aceitam uma casa de cidadãos (teto 3, recrutas mais caros).
-- **Porque não se aplicou:** muda as tuas respostas das Q-110 e Q-122 sobre de onde vem gente nova, e acrescenta uma
-  obra com números novos.
-- **Decide:** tu.
+- **Implementação:** Muralha própria além do acampamento ou Amargueiro próximo abatido fecha-o. No sítio pode construir-se uma casa de cidadãos: até três à espera, mais caros. `CampLife`, `CampWatch`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-171 · Alicerces: o que o decay leva deixa marca (era a Q-G)
 - **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** os alicerces: o que o decay não guarda fica em ruína que se reergue a uma fração do investido.
-- **Por aplicar:** o número novo, `decay_rebuild_frac`, e o reerguer como obra nova com quem estiver no sítio.
-- **Onde:** §16, Q-134, Q-108; `legacy.gd` (`kept`), `repair_work.gd`.
-- **Proposta:** as obras que o decay não guarda ficam em ruína com degrau, caminho e variante, e reerguem-se a uma
-  fração do investido (`decay_rebuild_frac`).
-- **O que se aprendeu ao aplicar:** a ruína que já existe (Q-108) não serve tal e qual. Repará-la custa o degrau em que
-  estava, o que já é uma fração, mas pede construtores — e os construtores saem da Casa de Treino, que pode ser uma das
-  ruínas: o jogo novo ficava sem maneira de a levantar. O alicerce tem de se reerguer como obra nova, com quem estiver
-  no sítio, e aí precisa do número novo.
-- **Decide:** tu.
+- **Implementação:** O que o decay não mantém fica em alicerce com nível, caminho e variante; reergue-se por fracção do investido com qualquer mão própria presente. Estruturas dinâmicas repõem-se por tipo e posição. `Legacy`, `DecayWork`, `RepairWork`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-172 · Estações e um inverno (era a Q-H)
 - **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Adoro isso, mas deve elaborar alternativas funcionais para obter recursos, é mais dificil, mas se a pessoa se planeja, é possível passar pelo inverno»*.
-- **Por aplicar:** as estações, o inverno que para os canteiros e baixa a caça, e as alternativas que o compensam (celeiro, pesca, a caça que resta).
-- **Onde:** §02 (a tabela do Two Crowns: estação de 16 dias), §05, `rot.csv` (`peak_every`).
-- **O que já foi feito:** a primeira metade da proposta, que é só apresentação: a lua do `SkyView` nasce cheia na
-  véspera da noite funda e vem vermelha nela (`tests/lua_do_pico_test.gd`).
-- **Proposta:** se quiseres uma pressão de longo prazo, estações com um inverno que para os canteiros e baixa a caça. É
-  mecânica nova: o dossiê só cita estações no §02.
-- **Decide:** tu.
+- **Implementação:** Quatro estações no HUD; canteiros param e caça abranda no inverno. Pesca e galinhas continuam, e celeiros reservam parte do grão novo para libertar no inverno. `Seasons`, `EconomySystem`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-174 · Obras nas terras geradas
 - **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Outos impérios e mercenários tem obras, casas e construções únicas, tudo são ecossistemas que devem fazer sentido e funcionar individualmente»*.
-- **Por aplicar:** as obras próprias de cada povo e dos acampamentos de mercenários, a funcionar por si.
-- **Onde:** §21 (cada linha do `segments.csv` tem `build_slots`), §07, §13; `WildSegments`, `Greybox`.
-- **O que está:** as terras geradas não têm sítios de obra. Só a região de casa se constrói: os `build_slots` das
-  linhas dos trilhos (1 a 3) não se usam.
-- **Proposta:** abrir os sítios dos trilhos um a um, pelo `build_slots` da linha — uma torre de vigia ou um muro
-  avançado junto a um acampamento. Cada obra fora do muro de fora é mais uma coisa que a noite pode morder.
-- **Decide:** tu.
+- **Implementação:** Fortalezas e acampamentos mercenários têm casa, oficina, defesas, trabalhadores, construtor, guarnição e tesouro próprio. Pagam soldo, repõem flechas, substituem baixas, reparam obras e enfrentam noites locais. `Settlements`, `SettlementWatch`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-175 · Cada povo com a sua tabela de segmentos
 - **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Adoro isso, mas detesto o nome Paul, deve haver um nome melhor para o povo do pântano, que nome horrível é Paul, parece um nome de alguém, não de um povo»*.
-- **Por aplicar:** uma tabela de segmentos por povo, e um nome novo para o povo do pântano (a proposta de trabalho é **a Bruma**), com o id mudado em todas as tabelas e uma migração do save.
-- **Onde:** §21 (*«pesos por região»*), §04; `segments.csv` (só há o kit dos Enramados), `SimFactory.segment_kit()`.
-- **O que está:** todos os trilhos e terras se sorteiam das linhas dos Enramados, desenhadas nas cores e nas plantas
-  do bioma de cada povo. O poço, a carroça e a pedra de pé são os mesmos na terra da Geada e na da Fornalha.
-- **Proposta:** uma tabela por povo no `segments.csv` (os mesmos tipos, com pesos e assuntos próprios: a Geada com
-  mais vazio, o Paul com mais água). O trilho entre dois povos sorteia da tabela de onde se vem na primeira metade e
-  da tabela para onde se vai na segunda.
-- **Decide:** tu (e a arte de cada assunto).
+- **Implementação:** Kits e assuntos próprios dos oito povos, mais três tipos de obra local por povo. O nome de trabalho do povo do pântano é **Bruma**, ajustável; o identificador antigo migra nos saves. A fonte real Paul do Boquilobo mantém o nome.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-176 · O que há numa masmorra
 - **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Adoro isso, é importante haver variação e ter uma possibilidade da recompensa daquela masmorra ser 2 vezes ou 3 vezes o habitual para insentivar a exploração»*.
-- **Por aplicar:** o que há em cada masmorra (o monte, um guarda que leva as moedas, ou uma relíquia) e o prémio a dobrar ou a triplicar. O sorteio puro está esboçado; falta ligá-lo à fronteira.
-- **Onde:** §17 (os segredos), §21 (a ruína *«traz uma passagem para o corte de solo»*), §11; `Frontier._aplicar`.
-- **O que está:** a masmorra é uma câmara com um monte de 3 a 6 moedas, que cai só da primeira vez.
-- **Proposta:** pôr lá um dos segredos do §17, ou uma criatura que guarde as moedas. As duas coisas mudam números e
-  regras que o dossiê não tem.
-- **Decide:** tu.
+- **Implementação:** Masmorras sorteiam tesouro, guarda ou relíquia; prémio normal, duplo ou triplo. O guarda permanece à alvorada e entrega as moedas ao cair. Saves não voltam a gerar loot. `DungeonLoot`, `DungeonWatch`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-177 · O mercenário das trilhas: soldo e lealdade
 - **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** o mercenário das trilhas cobra soldo, deserta primeiro, e o acampamento esvazia-se depois de três contratados.
-- **Por aplicar:** o soldo do mercenário, a deserção por ele primeiro e o contador do acampamento.
-- **Onde:** §14, Q-144 (a deserção pelo soldo em atraso), `units.csv` (`mercenary`), `Camps.mercenaries`.
-- **O que está:** no acampamento espera sempre um mercenário, que se contrata pelo preço de recrutamento dele como
-  qualquer recruta. A alvorada repõe-no quando é contratado, um de cada vez.
-- **Proposta:** o mercenário das trilhas cobra soldo por dia, como os outros, e deserta primeiro quando o soldo falha.
-  O acampamento esvazia-se depois de três contratados.
-- **Decide:** tu.
+- **Implementação:** Soldo mercenário mesmo abaixo do limiar gratuito regular; deserção primeiro. Após três contratações não nasce outro e o acampamento abandona-se, com obras em ruína. `UpkeepSystem`, `CampLife`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-178 · O rei na terra de outro povo
 - **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«Quem viaja são as classes, o rei fica sempre no império original, ao conquistar outros impérios que tem seus sistemas completos com tropas, defesas etc, o jogador tem a possibilidade de fazer uma viagem rápida para aquele reino, se abrigar ali durante a noite enquanto a podridão ataca, e talvez seguir para outro local no dia seguinte»*.
-- **Por aplicar:** a viagem rápida de uma classe para um reino conquistado, o abrigo lá durante a noite, e seguir no dia seguinte. Trocar de classe (Q-162) já existe e é a base.
-- **Onde:** §13 (reconhecimento, marcha, cerco), ADR 0035, Q-166; `WildLands` (a fortaleza é cenário).
-- **O que está:** o rei anda pela terra de outro povo e vê o limiar, o povoado e a fortaleza, com a bandeira dele ou a
-  tua se o povo for vassalo. Nada ali reage a ele, e a conquista continua a ser a marcha da bifurcação.
-- **Proposta:** decidir se a terra de um povo não vassalo é perigosa (guardas, portas fechadas de noite), se a marcha
-  deve partir da própria fortaleza em vez da bifurcação, e se um vassalo dá alguma coisa a quem lá passa.
-- **Decide:** tu.
+- **Implementação:** Painel de viagem rápida das classes na bifurcação e nas fortalezas vassalas; só de dia e para destino com defesas de pé. O rei permanece em casa. Guarda e ataque locais durante a noite; saída no dia seguinte. `TravelWatch`, `TravelPanel`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-179 · De onde vem a noite, agora que o mundo tem pontas
 - **Respondida pelo dono (painel, 30/09/2026 — outra resposta):** *«A podridão vem de fissuras no chão, podendo vir de um só lado, ou dois dois, de forma aleatória e bem elaborada para ser equilibrada e mais branda nas primeiras noites e ir subindo a dificuldade confrme os dias passam»*.
-- **Por aplicar:** as fissuras, a noite de um lado ou dos dois, e a curva medida contra o §66.
-- **Onde:** §05, §74, ADR 0034 (a Podridão e o Lume); `NightSystem`, `Lume`.
-- **O que está:** a Podridão nasce e cresce na região, como antes. No Two Crowns o perigo vem das duas pontas da
-  ilha, dos portais; aqui as pontas são bordas, e não mandam nada.
-- **Proposta:** manter a Podridão onde está: o mundo contínuo não muda a noite. Se quiseres a pressão do Kingdom, a
-  noite funda do §74 pode vir de uma das bordas. Muda a Q-151 e a curva da §66.
-- **Decide:** tu.
+- **Implementação:** Fissuras no chão; um ou dois lados sorteados por noite com massa total conservada. Mantém-se o limiar do dia 12 já existente e a curva/sequência das primeiras dez noites. `RiftPlan`, `RiftWatch`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-180 · O mapa revelado como legado (§16)
 - **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** o legado guarda até onde o mundo foi gerado de cada lado, e a partida seguinte mostra essas terras desabitadas.
-- **Onde:** §16 (*«ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos
-  encontrados»*), a lei da travessia (*«uma região revelada do mapa volta a ficar escura, à sorte»*); `Legacy`.
-- **O que está:** o mundo gerado vai no save da partida, e o herdeiro anda no mesmo mundo. Uma partida nova depois
-  da derrota tem outra semente e outro mundo, e o legado não guarda nada das terras.
-- **Proposta:** o legado guarda até onde o mundo foi gerado de cada lado. A partida seguinte, com a mesma campanha,
-  mostra essas terras desde o início, mas desabitadas.
-- **Decide:** tu.
+- **Implementação:** O legado grava semente e todo o mapa gerado. No recomeço as terras reveladas ficam desabitadas, sem novos recrutas ou recompensas. `DecayWork`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ### Q-182 · O subsolo tapado: o que sobe de baixo, e a cavidade já achada
 - **Respondida pelo dono (painel, 30/09/2026 — aprovar a proposta):** a terra abre-se à volta de uma criatura do subsolo perto de uma boca aberta, e a cavidade visitada fica com a boca aberta.
-- **Onde:** §11 (*«o jogador vê os dois planos ao mesmo tempo — que é o que torna a segunda camada uma tática»*;
-  *«uma cavidade não descoberta desenha-se como terra normal»*), §25 (12:00, *«um Rastejante entra pela passagem que
-  abriste»*), Q-181, ADR 0039; `SoilCover`.
-- **O que está:** o pedido da Q-181 manda o subsolo aparecer *«só ao acessar»*, e está assim. Com o rei à superfície,
-  quem está lá em baixo não se vê: nem o Cavador que vem pela passagem, nem uma tropa mandada descer. Só se vê quando
-  sobe.
-- **Proposta:** (1) quando uma criatura do subsolo chega a menos de um ecrã de uma boca aberta, a terra dessa boca
-  abre-se só à volta dela, com o mesmo dither — o aviso sem mostrar a cave toda; (2) a cavidade que o rei já visitou
-  fica com a boca aberta ao pé da passagem, e o resto tapado.
-- **Decide:** tu. As duas são reversíveis e só mexem no `SoilCover`.
+- **Implementação:** Dither em janelas locais à volta das criaturas subterrâneas perto de boca aberta; bocas visitadas ficam localmente abertas. Visitas persistem no save. `UndergroundSight`, `SoilCover`.
+- **Números de trabalho:** os novos valores em `_proposed` nas tabelas são propostas ajustáveis, não números aprovados implicitamente. Ver a lista da ADR 0043.
 
 ## Abertas — abertas pelas respostas do painel (29/09/2026)
 

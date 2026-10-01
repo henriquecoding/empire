@@ -75,3 +75,5 @@ Densidade = número médio de cores distintas numa janela de 16×16 px na grelha
 > **A decisão arquitetónica mais importante do projeto**
 >
 > Cada entidade precisa de um campo faixa: enum {AEREA, SUPERFICIE, SUBSOLO} desde a primeira linha de código, e as colisões usam collision layers separadas por faixa. O corte de terra é um TileMapLayer com máscara de revelação. Se isto entrar no dia 200 em vez do dia 1, reescreves o jogo. Agora é barato, porque não há segunda câmara — há composição.
+
+Painel de 30/09/2026 — ADR 0043. À superfície o corte continua tapado. Perto de uma boca aberta, uma criatura subterrânea abre apenas uma janela local de dither; a boca visitada permanece localmente aberta. As visitas entram no save (Q-182). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.
