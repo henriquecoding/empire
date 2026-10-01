@@ -11,3 +11,5 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 > **Decay em vez de reset**
 >
 > Segue o Two Crowns, não o Kingdom original. Ao cair, o jogador mantém: Sementes Reais, classes desbloqueadas, mapas revelados, segredos encontrados, e 40% das estruturas do império principal. Van den Berg mudou para este modelo depois de descobrir que "há grande satisfação em construir de forma permanente". Perder tem de doer sem apagar meses de jogo — e o decay resolve isso melhor do que qualquer sistema de save.
+
+Painel de 30/09/2026 — ADR 0043. O decay mantém as obras escolhidas e deixa as outras próprias em alicerce, com nível, caminho e variante; quaisquer mãos próprias podem reerguê-las por uma fração do investido. Semente e mapa revelado também ficam: as terras anteriores reaparecem desabitadas, sem recrutas novos ou loot (Q-171, Q-180). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.

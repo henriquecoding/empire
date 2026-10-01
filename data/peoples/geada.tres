@@ -11,6 +11,7 @@ biome = &"glacier"
 architecture_source = "Iglus inuítes + abrigos de pastor da Serra da Estrela + armazéns de gelo (neveiros) da Serra de Montejunto"
 roof_silhouette = "Cúpulas baixas e redondas, com a neve a desenhar o contorno"
 landmark = &"ice_well"
+segment_kit = Array[StringName]([&"geada_empty_01", &"geada_empty_02", &"geada_empty_03", &"geada_forest_01", &"geada_ruin_01", &"geada_fortress_01", &"geada_edge_01", &"geada_vagrant_camp_01", &"geada_mercenary_camp_01", &"geada_threshold_gate", &"geada_threshold_bridge", &"geada_threshold_rock_fault", &"geada_threshold_ruined_wall", &"geada_settlement_houses", &"geada_settlement_farmsteads", &"geada_edge_sea", &"geada_edge_gorge", &"geada_edge_wall", &"geada_water_01"])
 palette_ramp = &"geada"
 wall_material = &"ice"
 economy_strength = &"cold_storage"
@@ -20,6 +21,9 @@ economy_modifiers = {
 }
 defense_trait = &"frozen_ground"
 unique_unit = &"ice_warden"
+local_house = &"geada_house"
+local_work = &"geada_work"
+local_defense = &"geada_defense"
 playable_class = &"climber"
 starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
 starting_buildings = Array[StringName]([&"core"])

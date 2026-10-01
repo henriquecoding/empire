@@ -10,6 +10,7 @@ people = &"enramados"
 weight = 6
 scene = "res://scenes/segments/enramados/enramados_fortress_01.tscn"
 width_px = 640
+build_slots = 4
 cavity_slots = 1
 rules = Array[StringName]([&"not_adjacent=fortress", &"at_region_end"])
 subject = &"enemy_keep"

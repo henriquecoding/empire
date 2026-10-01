@@ -11,6 +11,7 @@ biome = &"subterranean"
 architecture_source = "Derinkuyu (Capadócia) + Coober Pedy"
 roof_silhouette = "Não há telhado — o povo lê-se pelo corte, não pelo alçado"
 landmark = &"shaft"
+segment_kit = Array[StringName]([&"sobraiz_empty_01", &"sobraiz_empty_02", &"sobraiz_empty_03", &"sobraiz_forest_01", &"sobraiz_ruin_01", &"sobraiz_fortress_01", &"sobraiz_edge_01", &"sobraiz_vagrant_camp_01", &"sobraiz_mercenary_camp_01", &"sobraiz_threshold_gate", &"sobraiz_threshold_bridge", &"sobraiz_threshold_rock_fault", &"sobraiz_threshold_ruined_wall", &"sobraiz_settlement_houses", &"sobraiz_settlement_farmsteads", &"sobraiz_edge_sea", &"sobraiz_edge_gorge", &"sobraiz_edge_wall", &"sobraiz_water_01"])
 palette_ramp = &"sobraiz"
 has_walls = false
 economy_strength = &"fungi_and_secrets"
@@ -19,6 +20,9 @@ economy_modifiers = {
 }
 defense_trait = &"labyrinth"
 unique_unit = &"digger"
+local_house = &"sobraiz_house"
+local_work = &"sobraiz_work"
+local_defense = &"sobraiz_defense"
 playable_class = &"sealed_knight"
 starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
 starting_buildings = Array[StringName]([&"core"])

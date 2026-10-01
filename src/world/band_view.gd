@@ -117,6 +117,10 @@ func _passagens() -> void:
 ## so e nao cabiam aqui sem passar as 250 linhas do §28 (F1-17).
 func _podridao() -> void:
 	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day, _luz)
+	RotView.draw_on(self, SimLoop.night.other_rot, _podre, SimLoop.state.day, _luz)
+	for record: Dictionary in SimLoop.field.settlements.records.values():
+		for x: float in record[&"rifts"]:
+			RotView.fissure(self, x, WorldLight.stops(_podre)[2])
 
 
 ## As luzes que sao tuas (§10, coluna `light_radius`): fogueiras, farol e o

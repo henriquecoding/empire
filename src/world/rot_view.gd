@@ -17,6 +17,15 @@ const AVISO := 0.35
 const AVISO_FUNDO := 0.6
 const AVISO_ALFA := 0.5
 ## O braseiro do Lume, em greybox: um poste com a chama no topo (ADR 0034).
+const FISSURE := [
+	Vector2(-46, 0),
+	Vector2(-24, -5),
+	Vector2(-8, 2),
+	Vector2(10, -4),
+	Vector2(30, 3),
+	Vector2(48, -2)
+]
+const FISSURE_LINE := 6.0
 const BRASEIRO := Vector2(8.0, 28.0)
 
 
@@ -80,11 +89,7 @@ static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia
 	var celula := perfil.lantern_dither_px
 	for canto in WorldLight.dither(centro, raio, celula):
 		canvas.draw_rect(Rect2(canto, Vector2(celula, celula)), cores[0])
-	var poste := Rect2(centro - Vector2(BRASEIRO.x * WorldPalette.MEIA, BRASEIRO.y), BRASEIRO)
-	canvas.draw_rect(poste, WorldPalette.MANCHA)
-	canvas.draw_circle(
-		poste.position + Vector2(BRASEIRO.x * WorldPalette.MEIA, 0.0), BRASEIRO.x, cores[2]
-	)
+	fissure(canvas, centro.x, cores[2])
 
 
 ## A tarde diz de que lado vem a noite (Q-125): o Lume acende-se na base dela, no
@@ -99,3 +104,10 @@ static func _aviso(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: 
 	for i in cores.size():
 		cores[i] = Color(cores[i], cores[i].a * AVISO_ALFA)
 	lamp(canvas, Vector2(x, float(Band.HORIZON)), raio, cores)
+
+
+static func fissure(canvas: CanvasItem, x: float, color: Color) -> void:
+	var points := PackedVector2Array()
+	for point: Vector2 in FISSURE:
+		points.append(Vector2(x, WorldPalette.ground_of(int(Band.Kind.SURFACE))) + point)
+	canvas.draw_polyline(points, color, FISSURE_LINE)

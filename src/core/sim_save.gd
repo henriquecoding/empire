@@ -48,6 +48,7 @@ static func world(
 		MOEDAS: moedas.to_dict(),
 		OBRAS: obras.to_dict(),
 		PODRIDAO: noite.rot.to_dict(),
+		&"other_rot": noite.other_rot.to_dict(),
 		AMARGUEIROS: noite.amargueiros.to_dict(obras),
 		VOZ: noite.voice.to_dict(),
 		NOMES: noite.names.to_dict(),
@@ -77,6 +78,7 @@ static func restore(
 	moedas.from_dict(mundo.get(MOEDAS, {}))
 	obras.from_dict(mundo.get(OBRAS, []))
 	noite.rot.from_dict(mundo.get(PODRIDAO, {}))
+	noite.other_rot.from_dict(mundo.get(&"other_rot", {}))
 	# Depois das obras, e nao antes: as serras voltam com ids novos, e as obras
 	# autoradas ja tem de estar no sitio para os velhos nao lhes caberem (§62).
 	noite.amargueiros.from_dict(mundo.get(AMARGUEIROS, {}), obras)

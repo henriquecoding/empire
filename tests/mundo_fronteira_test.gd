@@ -145,14 +145,30 @@ func test_o_acampamento_de_mercenarios_tem_um_a_espera() -> void:
 
 ## A masmorra: uma boca que o Verbo 2 desce, e um monte de moedas na camara. As bocas
 ## das masmorras nao entram nas passagens que a noite le (Q-132: escorar fecha o lado).
-func test_a_masmorra_tem_uma_boca_e_moedas_la_em_baixo() -> void:
+func test_a_masmorra_tem_boca_e_a_recompensa_sorteada() -> void:
 	var passagens := SimLoop.passages.size()
 	_gerar_tudo()
 	var bocas := _terras().dungeons(SimLoop.world_width)
 	assert_bool(bocas.is_empty()).is_false()
-	var gama := SimFactory.curve().dungeon_coins
-	for x in bocas:
-		assert_int(_moedas_em(x, Band.Kind.UNDERGROUND)).is_between(gama.x, gama.y)
+	for side in [WorldPlan.OESTE, WorldPlan.LESTE]:
+		for k in _terras().count(side):
+			var entry := _terras().at(side, k)
+			if int(entry.get(WildSegments.PASSAGEM, 0)) <= 0:
+				continue
+			var reward: Dictionary = entry[&"dungeon"]
+			var x := _terras().subject_x(side, k, SimLoop.world_width)
+			if reward[&"kind"] == &"treasure":
+				assert_int(_moedas_em(x, Band.Kind.UNDERGROUND)).is_equal(int(reward[&"coins"]))
+			elif reward[&"kind"] == &"guardian":
+				var i := SimLoop.creatures.index_of(int(reward[&"guardian"]))
+				assert_int(i).is_greater_equal(0)
+				assert_int(SimLoop.creatures.coin_drops[i]).is_equal(int(reward[&"coins"]))
+			else:
+				assert_str(String(reward[&"kind"])).is_equal("relic")
+				(
+					assert_bool(SimLoop.secrets.ids.has(StringName("dungeon_%s_%s" % [side, k])))
+					. is_true()
+				)
 	SimLoop.units.xs[_rei()] = bocas[0]
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	var desce := Verbs.destination(SimLoop.units, SimLoop.king_id, abertas)

@@ -38,13 +38,38 @@ const SACO := &"purse"
 
 
 ## O que o jogo novo herda desta partida.
-static func of(estado: GameState, obras: BuildSystem, fracao: float) -> Dictionary:
+static func of(
+	estado: GameState, obras: BuildSystem, fracao: float, rebuild_frac := 0.0
+) -> Dictionary:
 	var ficam := []
 	for obra in kept(obras, fracao):
 		ficam.append(
-			{ID: obra.id, NIVEL: obra.level, CAMINHO: int(obra.path), VARIANTE: obra.variant}
+			{
+				ID: obra.id,
+				NIVEL: obra.level,
+				CAMINHO: int(obra.path),
+				VARIANTE: obra.variant,
+				&"kind": obra.kind,
+				&"x": obra.x,
+				&"band": int(obra.band)
+			}
 		)
+	var ruins := []
+	if rebuild_frac > 0.0:
+		var retained := kept(obras, fracao)
+		for slot in obras.slots:
+			if (
+				slot.territory != 0
+				or slot.kind in [BuildSlot.NUCLEO, AmargueiroSystem.CORTE]
+				or slot.level <= 0
+				or slot in retained
+			):
+				continue
+			var record := slot.to_dict()
+			record[&"rebuild_cost"] = maxi(1, ceili(invested(slot) * rebuild_frac))
+			ruins.append(record)
 	return {
+		&"foundations": ruins,
 		SEMENTES: estado.royal_seeds,
 		ACHADOS: estado.found,
 		CONQUISTAS: estado.conquests,
@@ -98,13 +123,20 @@ static func end_campaign(d: Dictionary) -> void:
 	d[REGIAO] = 0
 	d.erase(PLANO)
 	d.erase(CLASSE)
+	d.erase(&"revealed_map")
+	d.erase(&"map_seed")
 
 
 ## As obras que ficam, das mais caras para as mais baratas.
 static func kept(obras: BuildSystem, fracao: float) -> Array[BuildSlot]:
 	var de_pe: Array[BuildSlot] = []
 	for obra in obras.standing():
-		if obra.kind != BuildSlot.NUCLEO and obra.kind != AmargueiroSystem.CORTE and obra.level > 0:
+		if (
+			obra.territory == 0
+			and obra.kind != BuildSlot.NUCLEO
+			and obra.kind != AmargueiroSystem.CORTE
+			and obra.level > 0
+		):
 			de_pe.append(obra)
 	de_pe.sort_custom(
 		func(a: BuildSlot, b: BuildSlot) -> bool:
@@ -150,6 +182,19 @@ static func apply(
 		obra.progress = 0.0
 		obra.paid = 0
 		obra.health = obra.max_health()
+
+	for record: Dictionary in d.get(&"foundations", []):
+		var i := obras.index_of(int(record.get(ID, BuildSlot.NENHUM)))
+		if i < 0:
+			continue
+		var slot := obras.slots[i]
+		slot.from_dict(record)
+		slot.foundation = true
+		slot.state = BuildSlot.State.RUIN
+		slot.health = 0
+		slot.progress = 0.0
+		slot.paid = 0
+		slot.mending = false
 
 
 ## A comitiva e o saco da travessia chegam com o rei ao nucleo da regiao nova.

@@ -152,27 +152,16 @@ func set_lights(zonas: Array[Vector4], recuo: float) -> void:
 ## O amanhecer (§51): a mancha recua e as criaturas vivas dissolvem-se. Devolve
 ## os ids levados, por ordem crescente, para quem chama anunciar cada uma — uma
 # criatura que desaparece em silencio e um defeito que ninguem consegue ler.
-func dissolve() -> PackedInt32Array:
-	var levadas := ids.duplicate()
-	levadas.sort()
-	ids = PackedInt32Array()
-	data_ids = []
-	xs = PackedFloat32Array()
-	bands = PackedByteArray()
-	healths = PackedInt32Array()
-	max_healths = PackedInt32Array()
-	speeds = PackedFloat32Array()
-	target_xs = PackedFloat32Array()
-	goal_xs = PackedFloat32Array()
-	target_ids = PackedInt32Array()
-	target_slots = PackedInt32Array()
-	cooldowns = PackedFloat32Array()
-	coin_drops = PackedInt32Array()
-	loot_slots = PackedInt32Array()
-	masses = PackedInt32Array()
-	recoils = PackedFloat32Array()
-	_por_id = {}
-	return levadas
+func dissolve(keep := PackedInt32Array()) -> PackedInt32Array:
+	var removed := PackedInt32Array()
+	var ordered := ids.duplicate()
+	ordered.sort()
+	for id in ordered:
+		if keep.has(id) and healths[index_of(id)] > 0:
+			continue
+		remove(id)
+		removed.append(id)
+	return removed
 
 
 ## As colunas em tipos base, para o save (§62). Sem Object nenhum.

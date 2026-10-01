@@ -123,6 +123,8 @@ const SAL := 73
 
 static func draw(canvas: CanvasItem, registo: Dictionary, x: float, x0: float, w: float) -> void:
 	var assunto: StringName = registo.get(WildSegments.ASSUNTO, &"")
+	if PeopleSubjects.draw(canvas, assunto, x):
+		return
 	if assunto == BOSQUE:
 		_bosque(canvas, int(registo[WildSegments.SEMENTE]), x0, w)
 	ShapeArt.draw(canvas, ASSUNTOS.get(assunto, []), Vector2(x, PE))

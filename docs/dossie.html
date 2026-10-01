@@ -756,7 +756,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   </div>
 
   <h4>Os seis povos, e mais dois</h4>
-  <p>Nomes provisórios. A Geada e o Paul entraram pelo painel (ADR 0031) e ficam fora da campanha até à Q-152. O que interessa é a lógica: <strong>terreno → arquitetura → economia → defesa → tropa única</strong>. Nunca inventes um povo sem preencher as cinco colunas.</p>
+  <p>Nomes provisórios. A Geada e a Bruma entraram pelo painel (ADR 0031) e ficam fora da campanha até à Q-152. O que interessa é a lógica: <strong>terreno → arquitetura → economia → defesa → tropa única</strong>. Nunca inventes um povo sem preencher as cinco colunas.</p>
   <div class="tw"><table>
     <thead><tr><th>Povo</th><th>Terreno</th><th>Constrói</th><th>Economia forte</th><th>Defesa</th><th>Tropa única</th></tr></thead>
     <tbody>
@@ -767,7 +767,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Fornalha</td><td>Vulcânico</td><td>Fundições, chaminés, muros de escória</td><td>Metal e armas</td><td>Fogo permanente nas muralhas</td><td>Ferreiro de guerra — repara muros em combate</td></tr>
       <tr><td>Sob-Raiz</td><td>Subterrâneo</td><td>Túneis, câmaras, cogumelares</td><td>Fungos e segredos</td><td>Não tem muralhas — tem labirinto</td><td>Escavador — abre passagens entre faixas</td></tr>
       <tr><td>Geada <span class="mark">(ADR 0031, fora da campanha)</span></td><td>Glaciar</td><td>Iglus, abrigos de pastor de pedra, paliçada de gelo</td><td>Frio que guarda — nada estraga</td><td>Chão gelado: a Podridão abranda</td><td>Guarda do Gelo — abranda quem golpeia</td></tr>
-      <tr><td>Paul <span class="mark">(ADR 0031, fora da campanha)</span></td><td>Pântano</td><td>Palheiros de colmo e casas sobre estacas</td><td>Caniço e enguias; as montarias recuperam ao dobro</td><td>Lodo que prende</td><td>Caçador do Caniçal — chega às libélulas</td></tr>
+      <tr><td>Bruma <span class="mark">(ADR 0031, fora da campanha)</span></td><td>Pântano</td><td>Palheiros de colmo e casas sobre estacas</td><td>Caniço e enguias; as montarias recuperam ao dobro</td><td>Lodo que prende</td><td>Caçador do Caniçal — chega às libélulas</td></tr>
     </tbody>
   </table></div>
 
@@ -901,6 +901,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <div class="note risk"><span class="lbl">Regra inegociável</span>
     <p>Se aparecer um terceiro verbo, uma mecânica está mal desenhada. O menu de gestão do rei conta como Verbo 2 — assumes o rei, o menu é o corpo dele. Isto mantém o jogo jogável em comando e no Steam Deck sem UI de rato (§24, §26).</p>
   </div>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> As fissuras no chão podem vir de um lado ou de dois, à sorte, conservando o orçamento total. O limiar de dois lados continua no dia 12 e as primeiras dez noites mantêm a curva anterior (Q-179, ADR 0043). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s06">
@@ -1342,6 +1344,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <div class="note risk"><span class="lbl">A decisão arquitetónica mais importante do projeto</span>
     <p>Cada entidade precisa de um campo <code>faixa: enum {AEREA, SUPERFICIE, SUBSOLO}</code> <strong>desde a primeira linha de código</strong>, e as colisões usam <em>collision layers</em> separadas por faixa. O corte de terra é um <code>TileMapLayer</code> com máscara de revelação. Se isto entrar no dia 200 em vez do dia 1, reescreves o jogo. Agora é barato, porque não há segunda câmara — há composição.</p>
   </div>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> À superfície o corte continua tapado. Perto de uma boca aberta, uma criatura subterrânea abre apenas uma janela local de dither; a boca visitada permanece localmente aberta. As visitas entram no save (Q-182). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s12">
@@ -1390,6 +1394,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <div class="note night"><span class="lbl">A escolha que define o jogador</span>
     <p>Matar o rei inimigo dá <strong>40 a 160 moedas, uma vez</strong>. Deixá-lo fugir dá-te o povo dele <em>e uma rota de comércio que rende para sempre</em> (§06). O jogo nunca te diz qual é a certa — mas a conta é fazível, e por volta do dia 20 a rota já pagou o saque várias vezes. Os dois caminhos levam a epílogos diferentes (§17).</p>
   </div>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> Cada outro reino tem casa, oficina, defesas, trabalhadores, construtor, guarnição e tesouro próprio; produz, paga soldo, repõe flechas, substitui baixas, repara e enfrenta a Podridão de noite. Classes viajam de dia da bifurcação ou fortaleza vassala a um destino conquistado com defesas de pé. O rei permanece no reino original (Q-174, Q-178). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s14">
@@ -1424,6 +1430,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 
   <h4>Diplomata nível 2 — assimilação</h4>
   <p>A cada <strong>8 dias</strong> pode assimilar um império vizinho: o império inteiro passa a ser teu, com tropas, edifícios e produção — sem combate. Requer 60 de Favor e que o império alvo tenha um rei jovem ou fraco. <strong>É a rota pacifista, e deve ser tão viável quanto a militar.</strong> Um jogador que termine a campanha sem uma única batalha ofensiva é um jogador que vai escrever sobre o teu jogo.</p>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> O mercenário das trilhas cobra soldo mesmo abaixo do limiar gratuito das tropas regulares e deserta primeiro. Depois de três contratações o acampamento fica abandonado e as obras em ruína (Q-177). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s15">
@@ -1480,6 +1488,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <div class="note dec"><span class="lbl">Decay em vez de reset</span>
     <p>Segue o Two Crowns, não o Kingdom original. Ao cair, o jogador mantém: <strong>Sementes Reais, classes desbloqueadas, mapas revelados, segredos encontrados, e 40% das estruturas do império principal.</strong> Van den Berg mudou para este modelo depois de descobrir que <em>"há grande satisfação em construir de forma permanente"</em>. Perder tem de doer sem apagar meses de jogo — e o decay resolve isso melhor do que qualquer sistema de save.</p>
   </div>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> O decay mantém as obras escolhidas e deixa as outras próprias em alicerce, com nível, caminho e variante; quaisquer mãos próprias podem reerguê-las por uma fração do investido. Semente e mapa revelado também ficam: as terras anteriores reaparecem desabitadas, sem recrutas novos ou loot (Q-171, Q-180). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s17">
@@ -1523,6 +1533,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <li><strong>Sulco Cego</strong> — sem luz; só o Cavaleiro Selado se orienta, porque já não usava os olhos.</li>
     <li><strong>Mercado dos Ossos</strong> — mercenários a metade do preço, dívida ao dobro do juro.</li>
   </ul>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> Cada masmorra tem tesouro, guarda ou relíquia, com recompensa normal, dupla ou tripla. O sorteio persiste e o guarda não desaparece à alvorada. Não há reposição de loot ao carregar (Q-176). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s18">
@@ -1795,6 +1807,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <p>Com pixel art desenhada à mão, ruído procedural produz paisagens sem intenção. Segmentos autorados dão controlo de composição, reaproveitam os teus tilesets, e permitem <strong>slots de construção pré-definidos</strong> à maneira do Thronefall — forçar posições arriscadas em vez de deixar o jogador amontoar tudo no sítio seguro. Uma única seed reproduz tudo: guarda-a no save e mostra-a ao jogador.</p>
   <div class="note spec"><span class="lbl">Como autorar o primeiro segmento</span><p>Não comeces por desenhar. <strong>Constrói um segmento de 640 px inteiramente com formas lisas de cor</strong> — retângulos para edifícios, uma barra para o chão, blocos para cavidades — e joga-o. Um segmento greybox leva vinte minutos a fazer e diz-te em cinco se a densidade está certa. Só depois de teres seis ou oito segmentos que se jogam bem é que vale a pena pintar algum: pintar um segmento com a composição errada custa-te um dia e não conserta nada.</p></div>
   </div>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> Os oito povos têm kits, assuntos e obras locais próprios. O povo do pântano chama-se Bruma, nome de trabalho ajustável; os identificadores anteriores migram nos saves. Uma muralha própria além de um acampamento ou uma árvore vizinha abatida acaba com ele; no sítio pode erguer-se uma casa de cidadãos, até três à espera e mais caros (Q-170, Q-175). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 
 <section id="s22">
@@ -5182,6 +5196,8 @@ M = 40 + 18 * dia + 30 * fortalezas
   <div class="note night"><span class="lbl">O que isto custa a construir</span>
     <p>Um <code>AmargueiroSystem</code> pequeno pendurado no sinal de alvorada que o <code>GameClock</code> já emite (§48), um termo novo na fórmula do <code>RotSystem</code> (§51), um recurso <code>Lenho Amargo</code> na tabela da §44, um <em>slot</em> de destino no <code>BuildSystem</code> (§55, que já trata moeda física em <em>slots</em> pré-definidos), e um <em>sprite</em> de tronco por escala que reaproveita o <em>slot</em> <code>face</code> das personagens que já desenhaste. Estimativa: <strong>11 h de código, 3 h de arte</strong>, e os dois testes que impedem a exploração voltar (D-02 e D-03) estão orçamentados na §84. É o melhor rácio da parte inteira.</p>
   </div>
+
+  <p class="note"><strong>Painel de 30/09/2026 — ADR 0043.</strong> Primavera, verão, outono e inverno: os canteiros param no inverno e a caça abranda. A pesca, as galinhas e o celeiro preparado com reservas permitem sobreviver. Só grão novo é reservado, antes da conversão; o inverno liberta reservas de celeiros de pé (Q-172). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.</p>
 </section>
 <section id="s75">
   <span class="sec-no">75 — Voz · <span style="color:var(--ember)">novo</span></span>

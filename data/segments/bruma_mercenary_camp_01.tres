@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_nx16d"]
+
+[resource]
+script = ExtResource("1_nx16d")
+id = &"bruma_mercenary_camp_01"
+kind = &"mercenary_camp"
+people = &"bruma"
+weight = 8
+width_px = 640
+rules = Array[StringName]([&"gap=4", &"not_near_base", &"encounter"])
+subject = &"mercenary_tents"

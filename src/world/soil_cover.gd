@@ -29,11 +29,13 @@ class Moita:
 		LowlandArt.plants(self, plantas)
 
 
+const MAX_WINDOWS := 32
 const SHADER := "res://shaders/dither_reveal.gdshader"
 
 ## Quanto o corte de solo se ve agora, de 0 a 1: e o que a boca da passagem e os golpes
 ## la em baixo perguntam. Um so no o escreve; sem ele na cena, nada tapa o subsolo.
 static var _aberto := 1.0
+static var _windows := PackedVector4Array()
 
 var _clock: ClockData
 var _revelar := SoilReveal.new()
@@ -50,7 +52,10 @@ static func opened() -> float:
 
 
 ## Se o que esta nesta faixa esta tapado pela terra: so o subsolo, e so fechado de todo.
-static func covers(faixa: int) -> bool:
+static func covers(faixa: int, x := INF) -> bool:
+	for window in _windows:
+		if absf(x - window.x) < window.y * BuildSystem.METADE:
+			return false
 	return faixa == int(Band.Kind.UNDERGROUND) and _aberto <= 0.0
 
 
@@ -65,6 +70,7 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	_aberto = 1.0
+	_windows = PackedVector4Array()
 
 
 func _process(delta: float) -> void:
@@ -76,6 +82,18 @@ func _process(delta: float) -> void:
 	_revelar.step(delta, SoilReveal.wants_open(SimLoop.units, Assume.driven()))
 	_aberto = _revelar.progress
 	_dither.set_shader_parameter(&"progress", _aberto)
+	var player := SimLoop.units.index_of(Assume.driven())
+	if SimLoop.field != null and player >= 0:
+		var mouths := Passages.open(SimLoop.passages, SimLoop.builds)
+		mouths.append_array(SimLoop.field.wilds.dungeons(SimLoop.world_width))
+		_windows = SimLoop.field.underground_sight.windows(
+			mouths, SimLoop.creatures, SimLoop.units.xs[player], RulesFactory.rules()
+		)
+		_windows = _windows.slice(0, MAX_WINDOWS)
+		_dither.set_shader_parameter(&"window_count", _windows.size())
+		var padded := _windows.duplicate()
+		padded.resize(MAX_WINDOWS)
+		_dither.set_shader_parameter(&"windows", padded)
 	visible = not _revelar.open()
 	var revisao := SimLoop.field.wilds.revision if SimLoop.field != null else -1
 	var mundo := [RngService.world_seed(), SimLoop.state.region, SimLoop.world_width]

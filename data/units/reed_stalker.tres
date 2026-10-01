@@ -6,7 +6,7 @@
 script = ExtResource("1_8y3m4")
 id = &"reed_stalker"
 display_key = "UNIT_REED_STALKER"
-people = &"paul"
+people = &"bruma"
 max_health = 12
 damage = 3
 range_px = 120

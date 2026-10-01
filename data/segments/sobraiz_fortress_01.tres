@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_ai4qo"]
+
+[resource]
+script = ExtResource("1_ai4qo")
+id = &"sobraiz_fortress_01"
+kind = &"fortress"
+people = &"sobraiz"
+weight = 6
+width_px = 640
+build_slots = 4
+cavity_slots = 1
+rules = Array[StringName]([&"not_adjacent=fortress", &"at_region_end"])
+subject = &"enemy_keep"

@@ -45,7 +45,12 @@ static func read(bosque: AmargueiroSystem, d: Dictionary, obras: BuildSystem) ->
 		var guardada: Dictionary = serras[i] if i < serras.size() else {}
 		if guardada.is_empty():
 			continue
-		var vaga := obras.post(bosque.saw(k))
+		var prototype := bosque.saw(k)
+		var restored := obras.index_of(int(guardada.get(&"id", BuildSlot.NENHUM)))
+		var vaga := obras.slots[restored] if restored >= 0 else obras.post(prototype)
+		vaga.costs = prototype.costs
+		vaga.works = prototype.works
+		vaga.width = prototype.width
 		var estado := guardada.duplicate()
 		estado.erase(&"id")
 		vaga.from_dict(estado)

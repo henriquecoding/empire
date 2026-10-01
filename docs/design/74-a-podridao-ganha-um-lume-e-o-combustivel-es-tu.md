@@ -100,3 +100,5 @@ Sempre com o Verbo 1. A moeda que largas é que decide, e a decisão é a mesma 
 > **O que isto custa a construir**
 >
 > Um AmargueiroSystem pequeno pendurado no sinal de alvorada que o GameClock já emite (§48), um termo novo na fórmula do RotSystem (§51), um recurso Lenho Amargo na tabela da §44, um slot de destino no BuildSystem (§55, que já trata moeda física em slots pré-definidos), e um sprite de tronco por escala que reaproveita o slot face das personagens que já desenhaste. Estimativa: 11 h de código, 3 h de arte, e os dois testes que impedem a exploração voltar (D-02 e D-03) estão orçamentados na §84. É o melhor rácio da parte inteira.
+
+Painel de 30/09/2026 — ADR 0043. Primavera, verão, outono e inverno: os canteiros param no inverno e a caça abranda. A pesca, as galinhas e o celeiro preparado com reservas permitem sobreviver. Só grão novo é reservado, antes da conversão; o inverno liberta reservas de celeiros de pé (Q-172). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.

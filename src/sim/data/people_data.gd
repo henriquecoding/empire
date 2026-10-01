@@ -22,6 +22,9 @@ extends Resource
 @export var economy_modifiers: Dictionary = {}
 @export var defense_trait: StringName
 @export var unique_unit: StringName
+@export var local_house: StringName
+@export var local_work: StringName
+@export var local_defense: StringName
 @export var playable_class: StringName
 
 @export_group("Inicio")

@@ -104,7 +104,7 @@ BIOME_COAST,Costa,Coast,nome de conteúdo — biome,24,
 BIOME_CANYON,Desfiladeiro,Canyon,nome de conteúdo — biome,24,
 BIOME_FLOODPLAIN,Várzea,Floodplain,nome de conteúdo — biome,24,
 BIOME_GLACIER,Glaciar,Glacier,nome de conteúdo — biome (Q-010),24,
-BIOME_MARSH,Paul,Marsh,nome de conteúdo — biome (Q-013),24,
+BIOME_MARSH,Bruma,Marsh,nome de conteúdo — biome (Q-013),24,
 BIOME_VOLCANIC,Terras Vulcânicas,Volcanic Lands,nome de conteúdo — biome,24,
 BIOME_SUBTERRANEAN,Subterrâneo,Underground,nome de conteúdo — biome,24,
 MOUNT_ON_FOOT,A pé,On Foot,nome de conteúdo — mount,24,
@@ -144,7 +144,7 @@ PEOPLE_PORTUARIOS,Portuários,Portuários,nome de povo,16,Nome provisório (§04
 PEOPLE_FENDA,Fenda,Fenda,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_HORTA,Horta,Horta,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_GEADA,Geada,Geada,nome de povo (Q-010),16,Nome provisório: o povo do gelo. Fica igual em EN até a Bíblia de nomes decidir.
-PEOPLE_PAUL,Paul,Paul,nome de povo (Q-013),16,Nome provisório: o povo do pântano (paul = terra alagada). Fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_BRUMA,Bruma,Bruma,nome de povo (Q-013),16,Nome de trabalho para o povo do pântano (Q-175), ajustável; Bruma é a névoa sobre a água.
 PEOPLE_FORNALHA,Fornalha,Fornalha,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_SOBRAIZ,Sob-Raiz,Sob-Raiz,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 JOURNAL_01_TITLE,Lista dos nichos de estrada,The roadside shrine list,título de diário,32,Ato 1 (§79). Seis aldeias pagavam para o mesmo fundo.
@@ -393,7 +393,7 @@ UI_OPTIONS,Opções,Options,menu,20,
 UI_CREDITS,Créditos,Credits,menu principal,20,
 UI_QUIT,Sair,Quit,menu,20,
 UI_PAUSED,Pausa,Paused,ecrã de pausa,20,
-UI_JOURNAL_CLOSE,fechar,close,rodapé da folha de um diário (§79): o que os botões antes da palavra fazem,16,"O pedido do dono de 30/09/2026: a folha fecha-se à mão. Os botões vêm antes e mudam com o dispositivo (§26)."
+UI_JOURNAL_CLOSE,fechar,close,rodapé da folha de um diário (§79): o que os botões antes da palavra fazem,16,O pedido do dono de 30/09/2026: a folha fecha-se à mão. Os botões vêm antes e mudam com o dispositivo (§26).
 UI_RESUME,Retomar,Resume,ecrã de pausa,20,
 UI_SAVE_AND_QUIT,Guardar e sair,Save & Quit,ecrã de pausa,24,
 UI_CHOOSE_PEOPLE,Escolhe o teu povo,Choose Your People,seleção de povo,28,
@@ -713,9 +713,9 @@ BUILDING_BOW_RACK,Banca do Arco,Bow Rack,nome de conteúdo — building (Q-165),
 CONTEXT_LAND,{people} · terra deles; a fortaleza fica na ponta,{people} · their land; the fortress stands at the far end,guia contextual de jogo: a terra de outro povo (Q-173),160,Q-173
 CONTEXT_LAND_VASSAL,{people} · terra de vassalos teus,{people} · land of your vassals,guia contextual de jogo: a terra de um povo vassalo (Q-173),160,Q-173
 CONTEXT_EDGE,O FIM DO MUNDO · {edge}: daqui não se passa,THE END OF THE WORLD · {edge}: there is no way on,guia contextual de jogo: a borda do mundo (Q-173),160,Q-173
-CONTEXT_ASSUME,"{name} · {assume} assumir: vai onde o rei não vai","{name} · {assume} take over: go where the king does not",guia contextual de jogo: trocar de classe (§08; Q-150; Q-162),160,"O Verbo 2 do rei ao pé de uma tropa tua de uma classe desbloqueada, ou do corpo dela."
+CONTEXT_ASSUME,{name} · {assume} assumir: vai onde o rei não vai,{name} · {assume} take over: go where the king does not,guia contextual de jogo: trocar de classe (§08; Q-150; Q-162),160,"O Verbo 2 do rei ao pé de uma tropa tua de uma classe desbloqueada, ou do corpo dela."
 CONTEXT_BACK_TO_KING,O REI · {assume} voltar a ele,THE KING · {assume} return to him,guia contextual de jogo: voltar ao rei (§08),160,Com uma classe assumida ao pé do rei.
-CONTEXT_KING_LEASH,"O rei não se afasta mais do reino · assume uma classe para ir além","The king goes no further from the realm · take over a class to go beyond",guia contextual de jogo: a trela do rei (Q-150),160,"Q-150 (o dono a 30/09/2026): o rei fica perto do império, as classes vão para longe."
+CONTEXT_KING_LEASH,O rei não se afasta mais do reino · assume uma classe para ir além,The king goes no further from the realm · take over a class to go beyond,guia contextual de jogo: a trela do rei (Q-150),160,"Q-150 (o dono a 30/09/2026): o rei fica perto do império, as classes vão para longe."
 UI_WHEEL_KING_ONLY,Só o rei abre a roda.,Only the king opens the wheel.,painel: a roda do rei com uma classe assumida (§24),48,"§24: «Só com o monarca assumido. É o corpo dele, não um menu.»"
 EDGE_SEA,o mar,the sea,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
 EDGE_CLIFF,a falésia,the cliff,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
@@ -732,3 +732,42 @@ UI_MENU_SAVE_NIGHT,"À noite, retomas a última gravação ao voltar.","At night
 UI_MENU_SAVE_FAILED,Não foi possível guardar. A partida continua aberta.,Could not save. Your game remains open.,falha de gravacao ao sair,96,UX-01
 UI_MENU_HINT_PAD,D-pad escolher · {accept} confirmar · {cancel} voltar,D-pad choose · {accept} confirm · {cancel} back,navegacao da pausa com comando,96,UX-01
 PAD_CIRCLE,círculo,circle,botao de voltar do comando PlayStation,16,UX-01
+BUILDING_CITIZEN_HOUSE,Casa de cidadãos,Citizen house,Q-170,40,
+BUILDING_ENRAMADOS_HOUSE,Casa · Enramados,House · Enramados,Q-174,60,
+BUILDING_ENRAMADOS_WORK,Oficina · Enramados,Workshop · Enramados,Q-174,60,
+BUILDING_ENRAMADOS_DEFENSE,Defesa · Enramados,Defense · Enramados,Q-174,60,
+BUILDING_PORTUARIOS_HOUSE,Casa · Portuários,House · Portuários,Q-174,60,
+BUILDING_PORTUARIOS_WORK,Oficina · Portuários,Workshop · Portuários,Q-174,60,
+BUILDING_PORTUARIOS_DEFENSE,Defesa · Portuários,Defense · Portuários,Q-174,60,
+BUILDING_FENDA_HOUSE,Casa · Fenda,House · Fenda,Q-174,60,
+BUILDING_FENDA_WORK,Oficina · Fenda,Workshop · Fenda,Q-174,60,
+BUILDING_FENDA_DEFENSE,Defesa · Fenda,Defense · Fenda,Q-174,60,
+BUILDING_HORTA_HOUSE,Casa · Horta,House · Horta,Q-174,60,
+BUILDING_HORTA_WORK,Oficina · Horta,Workshop · Horta,Q-174,60,
+BUILDING_HORTA_DEFENSE,Defesa · Horta,Defense · Horta,Q-174,60,
+BUILDING_FORNALHA_HOUSE,Casa · Fornalha,House · Fornalha,Q-174,60,
+BUILDING_FORNALHA_WORK,Oficina · Fornalha,Workshop · Fornalha,Q-174,60,
+BUILDING_FORNALHA_DEFENSE,Defesa · Fornalha,Defense · Fornalha,Q-174,60,
+BUILDING_SOBRAIZ_HOUSE,Casa · SobRaiz,House · SobRaiz,Q-174,60,
+BUILDING_SOBRAIZ_WORK,Oficina · SobRaiz,Workshop · SobRaiz,Q-174,60,
+BUILDING_SOBRAIZ_DEFENSE,Defesa · SobRaiz,Defense · SobRaiz,Q-174,60,
+BUILDING_GEADA_HOUSE,Casa · Geada,House · Geada,Q-174,60,
+BUILDING_GEADA_WORK,Oficina · Geada,Workshop · Geada,Q-174,60,
+BUILDING_GEADA_DEFENSE,Defesa · Geada,Defense · Geada,Q-174,60,
+BUILDING_BRUMA_HOUSE,Casa · Bruma,House · Bruma,Q-174,60,
+BUILDING_BRUMA_WORK,Oficina · Bruma,Workshop · Bruma,Q-174,60,
+BUILDING_BRUMA_DEFENSE,Defesa · Bruma,Defense · Bruma,Q-174,60,
+BUILDING_MERCENARY_HOUSE,Casa · Mercenários,House · Mercenários,Q-174,60,
+BUILDING_MERCENARY_WORK,Oficina · Mercenários,Workshop · Mercenários,Q-174,60,
+BUILDING_MERCENARY_DEFENSE,Defesa · Mercenários,Defense · Mercenários,Q-174,60,
+TRAVEL_TITLE,Viajar com a classe,Travel with your class,ADR 0043,160,
+TRAVEL_HINT,"De dia, para um reino conquistado com defesas de pé. O rei fica em casa.","By day, to a conquered realm with standing defenses. The king stays home.",ADR 0043,160,
+TRAVEL_HOME,Voltar ao reino de casa,Return to your home realm,ADR 0043,160,
+TRAVEL_CANCEL,Fechar,Close,ADR 0043,160,
+SEASON_SPRING,Primavera,Spring,ADR 0043,160,
+SEASON_SUMMER,Verão,Summer,ADR 0043,160,
+SEASON_AUTUMN,Outono,Autumn,ADR 0043,160,
+SEASON_WINTER,Inverno,Winter,ADR 0043,160,
+HUD_SEASON,{season} · {days} dias,{season} · {days} days,ADR 0043,160,
+GUIDE_WINTER,"No inverno os canteiros param. Pesca, galinhas e caça ainda rendem; o celeiro solta as reservas que guardaste.","In winter farms stop. Fish, hens and hunting still yield; the granary releases the reserves you stored.",ADR 0043,160,
+GUIDE_TRAVEL,"Verbo 2: viajar para um reino conquistado, de dia. Abriga-te nas defesas dele à noite.",Verb 2: travel to a conquered realm by day. Shelter behind its defenses at night.,ADR 0043,160,

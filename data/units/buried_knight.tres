@@ -11,6 +11,7 @@ damage = 9
 attack_interval = 1.3
 accuracy_open = 1.0
 range_px = 30
+targets_bands = Array[int]([1, 2])
 recruit_cost = 0
 drops_on_death = Array[StringName]([&"weapon", &"corpse"])
 move_speed = 68.0

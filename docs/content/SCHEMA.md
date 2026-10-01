@@ -96,7 +96,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 29 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 57 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -171,6 +171,9 @@ Script `src/sim/data/people_data.gd` · layout `rows` · 8 linha(s) · §04 §22
 | `song_texture` | String | v6 · a cancao e o marco (§78, §81) |  |
 | `colheita_song` | String | v6 · a cancao e o marco (§78, §81) |  |
 | `landmark_roots` | bool | v6 · a cancao e o marco (§78, §81) |  |
+| `local_house` | StringName | Jogo |  |
+| `local_work` | StringName | Jogo |  |
+| `local_defense` | StringName | Jogo |  |
 
 ## `classes.csv` → `data/classes/{id}.tres`
 
@@ -264,7 +267,7 @@ Script `src/sim/data/biome_data.gd` · layout `rows` · 8 linha(s) · §11 §21 
 
 ## `segments.csv` → `data/segments/{id}.tres`
 
-Script `src/sim/data/segment_data.gd` · layout `rows` · 20 linha(s) · §21 §44 §54
+Script `src/sim/data/segment_data.gd` · layout `rows` · 154 linha(s) · §21 §44 §54
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -425,7 +428,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §
 
 ## `rules.csv` → `data/economy/rules.tres`
 
-Script `src/sim/data/rules_curve.gd` · layout `kv` · 10 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 36 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -439,6 +442,32 @@ Script `src/sim/data/rules_curve.gd` · layout `kv` · 10 linha(s) · ADR 0041 �
 | `mercenary_camp_hires` | int | Acampamentos e casas de cidadaos — Q-170, Q-177 |  |
 | `arrows_per_coin` | int | Abastecimento do exercito — Q-163 |  |
 | `ammo_depot` | StringName | Abastecimento do exercito — Q-163 |  |
+| `season_days` | int | Mundo e estações — ADR 0043 |  |
+| `winter_hunt_mult` | float | Mundo e estações — ADR 0043 |  |
+| `granary_reserve_frac` | float | Mundo e estações — ADR 0043 |  |
+| `granary_reserve_cap` | int | Mundo e estações — ADR 0043 |  |
+| `granary_release_daily` | int | Mundo e estações — ADR 0043 |  |
+| `mercenary_daily_wage` | int | Mundo e estações — ADR 0043 |  |
+| `dungeon_coin_min` | int | Mundo e estações — ADR 0043 |  |
+| `dungeon_coin_max` | int | Mundo e estações — ADR 0043 |  |
+| `dungeon_treasure_chance` | float | Mundo e estações — ADR 0043 |  |
+| `dungeon_relic_chance` | float | Mundo e estações — ADR 0043 |  |
+| `dungeon_double_chance` | float | Mundo e estações — ADR 0043 |  |
+| `dungeon_triple_chance` | float | Mundo e estações — ADR 0043 |  |
+| `dungeon_relic_seeds` | int | Mundo e estações — ADR 0043 |  |
+| `rift_both_chance` | float | Mundo e estações — ADR 0043 |  |
+| `und_notice_px` | int | Mundo e estações — ADR 0043 |  |
+| `und_visited_px` | int | Mundo e estações — ADR 0043 |  |
+| `und_creature_px` | int | Mundo e estações — ADR 0043 |  |
+| `realm_start_coins` | int | Mundo e estações — ADR 0043 |  |
+| `realm_work_offset` | int | Mundo e estações — ADR 0043 |  |
+| `realm_wall_offset` | int | Mundo e estações — ADR 0043 |  |
+| `realm_guard_count` | int | Mundo e estações — ADR 0043 |  |
+| `realm_citizen_count` | int | Mundo e estações — ADR 0043 |  |
+| `realm_guard_wage` | float | Mundo e estações — ADR 0043 |  |
+| `realm_guard_price` | int | Mundo e estações — ADR 0043 |  |
+| `realm_night_share` | float | Mundo e estações — ADR 0043 |  |
+| `realm_night_cap` | int | Mundo e estações — ADR 0043 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

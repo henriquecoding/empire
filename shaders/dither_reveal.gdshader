@@ -8,6 +8,8 @@
 // dissolucao, o padrao fica onde esta em vez de rastejar pela terra.
 shader_type canvas_item;
 
+uniform vec4 windows[32];
+uniform int window_count = 0;
 uniform float progress : hint_range(0.0, 1.0) = 0.0;
 uniform sampler2D matrix : filter_nearest, repeat_enable;
 
@@ -23,7 +25,12 @@ void vertex() {
 void fragment() {
 	vec2 lado = vec2(textureSize(matrix, 0));
 	vec2 celula = mod(floor(mundo / QUADRADO), lado);
-	if (texture(matrix, (celula + 0.5) / lado).r < progress) {
+	float reveal = progress;
+	for (int i = 0; i < window_count; i++) {
+		float distance = abs(mundo.x - windows[i].x);
+		reveal = max(reveal, 1.0 - smoothstep(windows[i].y * 0.5, windows[i].y, distance));
+	}
+	if (texture(matrix, (celula + 0.5) / lado).r < reveal) {
 		discard;
 	}
 }

@@ -7,6 +7,7 @@ extends RefCounted
 ## Sem coelho de abertura: um x negativo, que nenhuma clareira tem (HuntWatch).
 const SEM_INTRO := -1.0
 
+var season_mult := 1.0
 var day := 0
 ## Os bichos que estao agora a porta das tocas, por x (coelhos e veados, Q-150).
 var rabbits: Array[float] = []
@@ -43,7 +44,7 @@ func open_day(number: int) -> void:
 ## `delta` segundos: de dia, as tocas vivas poem bichos a porta, um de cada vez.
 func grow(delta: float, daylight: bool, periodo: float) -> void:
 	if daylight:
-		rabbits.append_array(burrows.grow(delta, periodo, rabbits))
+		rabbits.append_array(burrows.grow(delta * season_mult, periodo, rabbits))
 
 
 ## As tocas a `raio` destes x perdem-se, e o bicho que estava a porta foge com elas.

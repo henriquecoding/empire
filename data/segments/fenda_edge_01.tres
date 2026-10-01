@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_vqyjb"]
+
+[resource]
+script = ExtResource("1_vqyjb")
+id = &"fenda_edge_01"
+kind = &"edge"
+people = &"fenda"
+width_px = 640
+rules = Array[StringName]([&"at_region_end"])
+min_per_region = 1
+max_per_region = 1
+subject = &"cliff"

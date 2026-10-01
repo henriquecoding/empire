@@ -32,7 +32,11 @@ static func armed(dados: UnitData) -> bool:
 ## resto cai.
 ## Devolve um acontecimento por cada uma, por id crescente (§42).
 static func spare(
-	unidades: UnitSystem, dados: Dictionary, trabalhador: UnitData, refugio: float
+	unidades: UnitSystem,
+	dados: Dictionary,
+	trabalhador: UnitData,
+	refugio: float,
+	refuges: Dictionary = {}
 ) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	if trabalhador == null:
@@ -70,5 +74,5 @@ static func spare(
 		unidades.job_ids[i] = NENHUM
 		unidades.cooldowns[i] = 0.0
 		unidades.states[i] = UnitFsm.State.FLEE
-		unidades.set_target_x(unit_id, refugio)
+		unidades.set_target_x(unit_id, float(refuges.get(unit_id, refugio)))
 	return eventos

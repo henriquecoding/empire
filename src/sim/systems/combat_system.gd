@@ -50,6 +50,7 @@ const QUEM := &"data_id"
 var picker: TargetPicker
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
 ## Para onde foge quem larga a arma (Q-168): o nucleo. Escrito pelo FieldWork.
+var refuges: Dictionary = {}
 var refuge := 0.0
 ## As aljavas das tropas (Q-163): sem flechas nao se dispara. Sem ela, sem teto.
 var supply: Supply
@@ -218,7 +219,7 @@ func _mortes_das_criaturas() -> void:
 ## amanhecer e o §50 diz que toda a morte larga alguma coisa. Quem a remove — ou
 ## a ressuscita — e quem chama; aqui so se anuncia, uma vez.
 func _mortes_das_tropas() -> void:
-	for e in Disarm.spare(_u, _dados_u, _dados_u.get(&"vagrant"), refuge):  # Q-168
+	for e in Disarm.spare(_u, _dados_u, _dados_u.get(&"vagrant"), refuge, refuges):  # Q-168
 		picker.forget(e[DE])
 		_eventos.append(e)
 	for unit_id in TargetPicker.ids_por_ordem(_u.ids):

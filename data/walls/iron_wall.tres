@@ -12,12 +12,12 @@ max_health_b = 450
 guard_posts_a = 6
 contact_slots = 6
 material_by_people = {
+&"bruma": &"iron",
 &"enramados": &"iron",
 &"fenda": &"iron",
 &"fornalha": &"slag",
 &"geada": &"iron",
 &"horta": &"iron",
-&"paul": &"iron",
 &"portuarios": &"iron"
 }
 max_health_a = 225

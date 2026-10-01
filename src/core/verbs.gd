@@ -56,6 +56,8 @@ static func consume(
 					mark(unidades, bichos, combate, args[&"x"], quem)
 			IntentQueue.Kind.DAY_LENGTH:
 				day_length(args[&"seconds"])
+			IntentQueue.Kind.TRAVEL:
+				TravelWatch.go(int(args.get(&"realm", 0)))
 			IntentQueue.Kind.IMPULSE:
 				if campo != null and quem == king_id:  # so com o monarca assumido (§24)
 					campo.impulse(args[&"id"], unidades, king_id)
@@ -74,6 +76,13 @@ static func _assumir(
 	campo: FieldWork
 ) -> void:
 	if assume(unidades, quem, passagens):
+		var i := unidades.index_of(quem)
+		if campo != null and unidades.bands[i] == Band.Kind.UNDERGROUND:
+			var mouths := passagens.duplicate()
+			mouths.append_array(campo.wilds.dungeons(SimLoop.world_width))
+			for mouth in mouths:
+				if Passages.near(unidades.xs[i], PackedFloat32Array([mouth])):
+					campo.underground_sight.visit(mouth)
 		return
 	if quem != king_id:
 		Assume.switch(unidades, king_id, campo)
