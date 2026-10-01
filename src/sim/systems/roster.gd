@@ -20,6 +20,9 @@ extends RefCounted
 const NENHUM := -1
 const REI := &"monarch"
 const INICIO := &"start"
+const STARTERS: Array[StringName] = [&"monarch", &"archer", &"bard"]
+
+var starting_class: StringName = &""
 
 ## As classes cujo corpo ja chegou pela conquista, por id.
 var arrived := PackedStringArray()
@@ -82,6 +85,26 @@ func body(unidades: UnitSystem, classe: StringName, dono: int) -> int:
 func driven(unidades: UnitSystem, rei: int) -> int:
 	var i := unidades.index_of(unidades.pilot)
 	return unidades.pilot if i != NENHUM and unidades.alive(i) else rei
+
+
+## A escolha do primeiro corpo; o rei e o saco do reino continuam no nucleo.
+func begin(unidades: UnitSystem, estado: GameState, rei: int, classe: StringName) -> int:
+	var r := unidades.index_of(rei)
+	if not STARTERS.has(classe) or r == NENHUM or not unidades.alive(r):
+		return NENHUM
+	if starting_class != &"":
+		return driven(unidades, rei)
+	starting_class = classe
+	if classe == REI:
+		unidades.pilot = NENHUM
+		return rei
+	var dados: ClassData = _classes.get(classe)
+	var quem := body(unidades, classe, unidades.owners[r])
+	if quem == NENHUM:
+		quem = unidades.spawn(estado, _tropas[dados.base_unit], unidades.owners[r], unidades.xs[r])
+	unidades.pilot = quem
+	storage_of(unidades, quem)
+	return quem
 
 
 ## O Verbo 2 do rei: o corpo jogavel ou a tropa tua mais perto (a `alcance`, na faixa
@@ -189,11 +212,12 @@ func to_dict() -> Dictionary:
 	var armazens := {}
 	for unit_id: int in storages:
 		armazens[unit_id] = (storages[unit_id] as Storage).to_dict()
-	return {&"arrived": arrived, &"storages": armazens}
+	return {&"arrived": arrived, &"storages": armazens, &"starting_class": starting_class}
 
 
 ## Um save de antes das classes nao tem nada disto: ninguem chegou, nada se leva.
 func from_dict(d: Dictionary) -> void:
+	starting_class = StringName(d.get(&"starting_class", &"monarch"))
 	arrived = PackedStringArray(d.get(&"arrived", PackedStringArray()))
 	storages = {}
 	var armazens: Variant = d.get(&"storages", {})

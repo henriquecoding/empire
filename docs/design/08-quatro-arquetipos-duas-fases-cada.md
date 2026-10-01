@@ -4,6 +4,10 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
 As classes são arquétipos, não personagens fixos. Cada povo tem a sua versão do mesmo arquétipo — o arqueiro dos Enramados dispara de uma copa, o dos Portuários de um mastro. Mesma função, corpo e silhueta diferentes. É assim que tens 24 personagens jogáveis com o trabalho de quatro.
 
+## A primeira escolha
+
+Ao iniciar uma partida nova, o jogador escolhe entre Monarca, Arqueiro e Bardo antes de o tempo começar a correr. A escolha apresenta a habilidade base, a evolução e os controlos de cada um. Arqueiro e Bardo começam num corpo próprio junto do monarca; o rei permanece no império, com a coroa e as moedas. O Verbo 2 permite voltar a assumi-lo para gerir. Continuar uma partida mantém o corpo escolhido e a progressão das classes. O Trepador permanece entre os arquétipos previstos e não integra estas três opções iniciais. Pedido do dono de 01/10/2026; ADR 0044.
+
 | Arquétipo | Base | Evolução | Papel |
 | --- | --- | --- | --- |
 | Monarca | Tanque. +10% defesa às tropas num raio. Dano fraco. Escudeiro acompanha e apanha moedas caídas — a dupla que já desenhaste na varanda. | O boost passa a +25% e aplica-se ao império inteiro; o escudeiro cresce e torna-se tropa de combate. | Monarca-guerreiro. A escolha segura. |

@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 581 | 292 | 873 |
-| Fases 3–8 | 329 | 97 | 426 |
-| Total | 910 | 389 | 1299 |
+| Fases 3–8 | 330 | 97 | 427 |
+| Total | 911 | 389 | 1300 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -895,7 +895,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 
-## 3 · Fases 3 a 8 — 426
+## 3 · Fases 3 a 8 — 427
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1117,9 +1117,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | peoples | `bruma` | `starting_buildings` | core\|fishery | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
 | peoples | `bruma` | `song_texture` | Toadas de barqueiro com canas e água a bater no casco — o Tejo dos avieiros | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
 | peoples | `bruma` | `colheita_song` | A canção afunda-se a meio | 7 | O povo do pântano (Q-013): é a «Fortaleza do pântano» de onde vem a libélula-montaria (§12). Características propostas: o lodo prende — a Podridão e as criaturas atolam-se (defense_trait mire) —, as montarias recuperam no dobro da velocidade, e o que produzem não para no rasto. A classe é provisória (o Diplomata, a única que nenhum dos seis tinha) e está na Q-152. |
-| classes | `bard` | `phase1_params` | max_target_health:14\|duration:30\|speed_boost:0.1 | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. |
-| classes | `bard` | `base_unit` | bard_hero | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. |
-| classes | `bard` | `troop` | bard | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. |
+| classes | `bard` | `phase1_params` | max_target_health:14\|duration:30\|speed_boost:0.1 | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. Q-183: promoção reversível para versões superiores já existentes (arqueiro de copa e mercenário), sem criar estatísticas novas. |
+| classes | `bard` | `base_unit` | bard_hero | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. Q-183: promoção reversível para versões superiores já existentes (arqueiro de copa e mercenário), sem criar estatísticas novas. |
+| classes | `bard` | `troop` | bard | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. Q-183: promoção reversível para versões superiores já existentes (arqueiro de copa e mercenário), sem criar estatísticas novas. |
+| classes | `bard` | `promotion_targets` | archer:canopy_archer\|spearman:mercenary | 6 | 'Fracos' = vida ≤ 14: Rastejante e Alado (§07). A condição 15 é do dossiê. Q-183: promoção reversível para versões superiores já existentes (arqueiro de copa e mercenário), sem criar estatísticas novas. |
 | classes | `climber` | `phase2_params` | duration:20\|max_target_health_ratio:0.2 | 6 | 'Quase mortas' = 20% de vida (proposta); os 20 s são do dossiê. |
 | classes | `climber` | `evolve_condition` | climbs | 6 | 'Quase mortas' = 20% de vida (proposta); os 20 s são do dossiê. |
 | classes | `climber` | `evolve_condition_value` | 20 | 6 | 'Quase mortas' = 20% de vida (proposta); os 20 s são do dossiê. |

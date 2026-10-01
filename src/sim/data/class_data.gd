@@ -14,6 +14,7 @@ extends Resource
 ## A tropa da classe (§08): o Verbo 2 sobre uma tropa tua deste tipo fa-la o corpo
 ## jogavel (`base_unit`, na escala 3, Q-162). Vazio: a classe nao tem tropa.
 @export var troop: StringName = &""
+@export var promotion_targets: Dictionary = {}
 
 @export_group("Desbloqueio")
 ## &"start" | &"royal_seed" | &"conquest" | &"secret"

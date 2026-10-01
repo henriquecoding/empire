@@ -19,6 +19,8 @@ func _ready() -> void:
 
 
 func _unhandled_input(evento: InputEvent) -> void:
+	if ClassSelection.active:
+		return
 	if not evento.is_action(&"king_wheel") or evento.is_echo():
 		return
 	# No comando a roda e manter e largar (§24, Q-148): o painel abre com o Y e fecha

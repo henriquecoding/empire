@@ -1,8 +1,6 @@
 # src/sim/systems/unit_system.gd — as tropas em colunas, nao em objetos (§52, §63).
 #
-# Uma unidade e um INDICE, nao um objeto: trezentas a 60 fps (§63) nao cabem num
-# objeto cada. PackedArrays: memoria contigua, sem alocacao por tick.
-#
+# PackedArrays: memoria contigua, sem alocacao por tick (§63).
 # Puro: nao e Node, nao conhece o Registry nem o EventBus. Os campos quentes de
 # UnitData sao COPIADOS para colunas no spawn — assim o ciclo de cada tick nao
 # faz uma unica pesquisa de recurso.
@@ -167,11 +165,13 @@ func tick_decisions(tick: int) -> Array[Dictionary]:
 ## contexto **Sempre** (Q-085) — o rei, ou o corpo de classe em `pilot` (§08).
 ## `frente` e a luz do amanhecer (§24, DawnCascade): quem tem posto e a luz ainda
 ## nao apanhou espera por ela. Quem foge nao espera por luz nenhuma (§07).
-func tick_movement(delta: float, piloted: int = NENHUM, frente: float = INF) -> void:
+func tick_movement(
+	delta: float, piloted: int = NENHUM, frente: float = INF, class_pace: float = 1.0
+) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 		if walking(i, piloted, frente):
-			var passo := piloted_pace if ids[i] == piloted else 1.0
+			var passo := piloted_pace * class_pace if ids[i] == piloted else 1.0
 			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * passo * delta)
 
 

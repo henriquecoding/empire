@@ -192,7 +192,9 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		EventBus.queue(&"rot_retreated", [estado.day])
 	_roubos(bichos)
 	other_rot.retreat()
-	for creature_id in bichos.dissolve(DungeonWatch.guardians(SimLoop.field)):
+	var keep := DungeonWatch.guardians(SimLoop.field)
+	keep.append_array(SimLoop.field.song.permanent())
+	for creature_id in bichos.dissolve(keep):
 		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 
 

@@ -25,7 +25,7 @@ var _marcar := false
 
 
 func _unhandled_input(evento: InputEvent) -> void:
-	if TravelPanel.active:
+	if ClassSelection.active or TravelPanel.active:
 		return
 	if evento.is_action_pressed(&"pause"):
 		if not Defeat.happened():
@@ -123,6 +123,10 @@ func _process(delta: float) -> void:
 		pointed = -1
 		_andar(Input.get_axis(&"move_left", &"move_right"))
 	_repeticao = maxf(0.0, _repeticao - delta)
+	if ClassSelection.release_pending:
+		if Input.is_action_pressed(&"verb_drop"):
+			return
+		ClassSelection.release_pending = false
 	if not Input.is_action_pressed(&"verb_drop") or JournalPanel.holds_drop():
 		_repeticao = 0.0
 		return

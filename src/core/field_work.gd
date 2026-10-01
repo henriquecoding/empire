@@ -11,6 +11,11 @@ var training: TrainingSystem
 var crown: CrownSystem
 var conversion: ConversionSystem
 var classes: ClassSystem
+var hero_progress := HeroProgress.new(SimFactory.by_id(&"classes"))
+var focus := ArcherFocus.new(Registry.entry(&"classes", &"archer"), SimFactory.by_id(&"units"))
+var song := BardSong.new(
+	Registry.entry(&"classes", &"bard"), SimFactory.by_id(&"units"), SimFactory.by_id(&"creatures")
+)
 var upkeep: UpkeepSystem
 var succession: Succession
 var camps: PackedFloat32Array = PackedFloat32Array()
@@ -181,6 +186,9 @@ func parts() -> Dictionary:
 		&"crown": crown,
 		&"conversion": conversion,
 		&"classes": classes,
+		&"hero_progress": hero_progress,
+		&"focus": focus,
+		&"song": song,
 		&"upkeep": upkeep,
 		&"succession": succession,
 		&"realm": realm,

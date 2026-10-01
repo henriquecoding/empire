@@ -12,6 +12,7 @@ static var _recomecar := false
 var _tremor: float = 0.0
 var _acabou := false
 var _chegada := false
+var _selector: ClassSelection
 
 @onready var _camara: CameraRig = $CameraRig
 @onready var _mundo: Node2D = $Mundo
@@ -23,7 +24,8 @@ func _ready() -> void:
 	Smoothing.reset()
 	Registry.load_all()
 	LegacyStore.settle()  # um fim ou um comeco que um fecho interrompeu (CONT-01)
-	if not _retomar():
+	var fresh := not _retomar()
+	if fresh:
 		SimLoop.start(_semente())
 		Greybox.build()
 		var legado := LegacyStore.pending()
@@ -47,11 +49,16 @@ func _ready() -> void:
 	EventBus.game_paused.connect(_na_pausa)
 	if PauseMenu.heir_waits():  # retomado com a escolha do herdeiro por fazer (Q-146)
 		SimLoop.set_paused(true)
+	if fresh:
+		_starting_choice()
 	print(_recibo())
 
 
 func _notification(what: int) -> void:
-	if what in [NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_APPLICATION_PAUSED]:
+	if (
+		not ClassSelection.active
+		and what in [NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_APPLICATION_PAUSED]
+	):
 		SavePoint.now()
 
 
@@ -62,6 +69,8 @@ func _na_pausa(pausado: bool) -> void:
 
 func _physics_process(_delta: float) -> void:
 	Smoothing.record_all()
+	if ClassSelection.active:
+		return
 	if _chegada:
 		_chegada = false
 		if SavePoint.now() >= 0:
@@ -179,6 +188,30 @@ func _fim(legado: Dictionary) -> void:
 func new_game() -> void:
 	_recomecar = true
 	get_tree().reload_current_scene()
+
+
+func _starting_choice() -> void:
+	var args := OS.get_cmdline_user_args()
+	var index := args.find("--classe")
+	if index >= 0 and index + 1 < args.size() and Roster.STARTERS.has(StringName(args[index + 1])):
+		_chosen(StringName(args[index + 1]))
+		return
+	SimLoop.stop()
+	_selector = ClassSelection.new(_chosen)
+	$Interface.add_child(_selector)
+
+
+func _chosen(id: StringName) -> void:
+	var hero := SimLoop.field.roster.begin(SimLoop.units, SimLoop.state, SimLoop.king_id, id)
+	if hero == UnitSystem.NENHUM:
+		return
+	if _selector != null:
+		_selector.hide()
+		_selector.queue_free()
+	ClassSelection.active = false
+	SimLoop.set_paused(false)
+	if SimLoop.autosave_enabled:
+		SavePoint.now()
 
 
 func _recibo() -> String:

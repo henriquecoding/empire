@@ -103,6 +103,7 @@ func step(delta: float) -> void:
 	state.tick += 1
 	var abertas := Passages.open(passages, builds)  # a escora fecha a boca (Q-132)
 	_largar(Verbs.consume(intents, units, creatures, combat, king_id, abertas, builds, field))
+	HeroWatch.tick(delta)
 
 	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
 	var mudou := _mudanca_de_fase()
@@ -124,7 +125,7 @@ func step(delta: float) -> void:
 	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
 	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
 	#     atras da luz (§24, DawnCascade).
-	units.tick_movement(delta, Assume.driven(), ClockService.dawn_front())
+	units.tick_movement(delta, Assume.driven(), ClockService.dawn_front(), HeroWatch.pace())
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
 	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
@@ -137,7 +138,8 @@ func step(delta: float) -> void:
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, Assume.driven(), state))
-	_largar(EventRelay.combat(night.feats(combat.resolve(units, creatures, builds, _roll))))  # 6
+	var strikes := HeroWatch.resolved(combat.resolve(units, creatures, builds, _roll))
+	_largar(EventRelay.combat(night.feats(strikes)))  # 6
 	var luz := _fase < GameClock.Phase.DUSK
 	_largar(field.resolve(units, builds, delta, luz, ClockService.clock, king_id))
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
