@@ -48,6 +48,7 @@ const EVENTOS := &"events"
 const QUEM := &"data_id"
 
 var picker: TargetPicker
+var focus: ArcherFocus
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
 ## Para onde foge quem larga a arma (Q-168): o nucleo. Escrito pelo FieldWork.
 var refuges: Dictionary = {}
@@ -143,7 +144,11 @@ func _tropas_batem() -> void:
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
 			var dano := dados.damage + TitlePerks.vs_siege(bonus, _c, _dados_c, alvo)
-			_golpes.append({DE: unit_id, PARA: alvo, QUANTO: dano, CRIATURA: true})
+			var targets: Array[int] = [alvo]
+			if focus != null and focus.piercing.has(unit_id):
+				targets = focus.pierced(_u, _c, unit_id, alvo)
+			for target in targets:
+				_golpes.append({DE: unit_id, PARA: target, QUANTO: dano, CRIATURA: true})
 
 
 func _criaturas_batem() -> void:
@@ -165,7 +170,7 @@ func _criaturas_batem() -> void:
 						DE: creature_id,
 						PARA: alvo,
 						QUANTO: dados.damage,
-						CRIATURA: false,
+						CRIATURA: _c.index_of(alvo) != NENHUM,
 						OBRA: _c.target_slots[c],
 					}
 				)

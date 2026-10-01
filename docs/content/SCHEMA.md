@@ -189,6 +189,7 @@ Script `src/sim/data/class_data.gd` · layout `rows` · 7 linha(s) · §08 §44
 | `fights` | bool |  |  |
 | `storage` | StringName |  |  |
 | `troop` | StringName |  |  |
+| `promotion_targets` | Dictionary |  |  |
 | `unlock` | StringName | Desbloqueio |  |
 | `unlock_seed_cost` | int | Desbloqueio |  |
 | `phase_count` | int | Fases |  |

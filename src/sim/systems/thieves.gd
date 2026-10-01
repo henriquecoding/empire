@@ -36,6 +36,8 @@ static func plan(
 ) -> void:
 	var alvos := _roubaveis(obras, edificios)
 	for creature_id in TargetPicker.ids_por_ordem(bichos.ids):
+		if bichos.allies.has(creature_id):
+			continue
 		var c := bichos.index_of(creature_id)
 		var dados: CreatureData = criaturas.get(bichos.data_ids[c])
 		if not bichos.alive(c) or dados == null or not dados.tags.has(QUEM_VOA):
@@ -59,6 +61,8 @@ static func plan(
 static func escape(bichos: CreatureSystem, obras: BuildSystem, materia: float) -> Array[Dictionary]:
 	var perdas: Array[Dictionary] = []
 	for creature_id in TargetPicker.ids_por_ordem(bichos.ids):
+		if bichos.allies.has(creature_id):
+			continue
 		var c := bichos.index_of(creature_id)
 		var i := obras.index_of(bichos.loot_slots[c])
 		if not bichos.alive(c) or i == NENHUM:

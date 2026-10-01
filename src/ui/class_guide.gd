@@ -13,6 +13,11 @@ static func context(values: Dictionary) -> String:
 	var i := units.index_of(quem)
 	if i < 0:
 		return ""
+	if HeroWatch.evolve_ready():
+		var data := Registry.entry(&"classes", HeroWatch.current()) as ClassData
+		values["seeds"] = data.evolve_seed_cost
+		values["name"] = _tr(StringName(data.display_key))
+		return _tr(&"CONTEXT_HERO_EVOLVE").format(values)
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, quem, abertas) != Verbs.NENHUMA:
 		return GuideSites.passage(i, values)
@@ -20,7 +25,25 @@ static func context(values: Dictionary) -> String:
 	if r >= 0 and units.alive(r) and units.bands[r] == units.bands[i]:
 		if absf(units.xs[r] - units.xs[i]) <= Assume.reach():
 			return _tr(&"CONTEXT_BACK_TO_KING").format(values)
-	return GuideSites.wilds(units.xs[i], values)
+	var wilds := GuideSites.wilds(units.xs[i], values)
+	return wilds if not wilds.is_empty() else status()
+
+
+static func status() -> String:
+	var id := HeroWatch.current()
+	if id not in [&"archer", &"bard"]:
+		return ""
+	var data := Registry.entry(&"classes", id) as ClassData
+	var progress := SimLoop.field.hero_progress
+	return _tr(&"CLASS_STATUS").format(
+		{
+			"name": _tr(StringName(data.display_key)),
+			"phase": progress.phase_of(id),
+			"feat": progress.feat_of(id),
+			"goal": data.evolve_condition_value,
+			"action": _tr(&"HINT_CHARM" if id == &"bard" else &"HINT_MARK")
+		}
+	)
 
 
 ## O rei ao pe de um corpo ou de uma tropa tua de uma classe desbloqueada: o Verbo 2

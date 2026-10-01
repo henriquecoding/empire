@@ -79,6 +79,8 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 					time
 				)
 				TitleView.draw_on(canvas, box, id, light)
+				if data.tags.has(&"bard"):
+					BardArt.draw_on(canvas, box, units.cooldowns[i])
 				if units.alive(i):
 					_saco(canvas, box, units, i)
 			continue

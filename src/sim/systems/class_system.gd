@@ -87,7 +87,7 @@ func soak(unidades: UnitSystem, unit_id: int, quanto: int) -> int:
 ## Um tick: quem e o rei, e se esta noite ja houve combate teu dentro da aura.
 func watch(unidades: UnitSystem, rei: int, noite: bool) -> void:
 	_rei = rei
-	if not noite or _defendida:
+	if not noite or _defendida or unidades.pilot != NENHUM:
 		return
 	var r := unidades.index_of(rei)
 	if r == NENHUM or not unidades.alive(r):

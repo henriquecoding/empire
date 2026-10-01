@@ -7,6 +7,15 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Três escolhas iniciais — 01/10/2026 (ADR 0044)
+
+### Q-183 · Completar as três classes sem inventar uma regra definitiva de balanceamento
+- **Pedido do dono:** escolher três classes no primeiro início, com a jogabilidade do dossiê, e pesquisar também na web.
+- **Aplicado:** Monarca, Arqueiro e Bardo são as três escolhas iniciais, pela ordem do §08. Arqueiro/Bardo recebem um corpo junto do rei, que permanece com a coroa e as moedas. Só o Monarca gere. O Trepador não integra esta seleção; mantém-se o sistema existente de corpos e conquistas.
+- **Números de trabalho:** usam-se as propostas já registadas em `classes.csv`: marca 10 s, raio evoluído 96 px, feito do Arqueiro 30 abates; encanto 30 s, vida máxima base 14, velocidade +10%; feito do Monarca 5 noites. As 15 conversões do Bardo e a Semente Real são do §08. Não se atribui aprovação implícita aos campos `_proposed`.
+- **Lacuna:** o §08 manda o Maestro promover para uma versão superior, sem identificar os destinos. Proposta reversível: `archer → canopy_archer` e `spearman → mercenary`, usando corpos existentes e preservando a proporção de vida. Os destinos estão no CSV e em `_proposed`; ficam à decisão do dono.
+- **Execução reversível:** cantar reutiliza botão direito/RT; em Maestro o cursor escolhe promover tropa própria ou converter inimigo. Cadência é o intervalo existente do corpo; só habilidades manuais do corpo conduzido. O Bardo largado usa encanto por IA. A evolução usa E/X no núcleo com o feito cumprido. As habilidades têm alcance e respeitam a faixa; não há uma nova regra de alcance entre faixas.
+
 ## Resolvidas — respostas do painel de 30/09/2026 (ADR 0043)
 
 As onze respostas restantes foram implementadas como lote integrado. Os checkpoints e a validação constam da ADR 0043; o painel só recebe `aplicada` depois de merge e publicação. As quinze anteriores ficam como na ADR 0041.
@@ -2500,4 +2509,3 @@ As onze respostas restantes foram implementadas como lote integrado. Os checkpoi
 | # | O quê | Decisão | Onde |
 |---|---|---|---|
 | Q-037 | A noite é azul profunda (§05) ou castanha (§80)? | **castanha** — 32° · 0,22 · 0,16, chão em 0,11 | ADR 0011, `clock.csv` |
-

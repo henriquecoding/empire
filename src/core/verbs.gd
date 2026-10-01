@@ -52,7 +52,9 @@ static func consume(
 			IntentQueue.Kind.ASSUME:
 				_assumir(unidades, king_id, quem, passagens, obras, campo)
 			IntentQueue.Kind.MARK_TARGET:
-				if campo == null or Assume.marks(campo):  # so quem tem arco (Q-086)
+				if campo != null:
+					HeroWatch.action(args[&"x"])
+				elif campo == null:
 					mark(unidades, bichos, combate, args[&"x"], quem)
 			IntentQueue.Kind.DAY_LENGTH:
 				day_length(args[&"seconds"])
@@ -85,7 +87,8 @@ static func _assumir(
 					campo.underground_sight.visit(mouth)
 		return
 	if quem != king_id:
-		Assume.switch(unidades, king_id, campo)
+		if not HeroWatch.evolve():
+			Assume.switch(unidades, king_id, campo)
 		return
 	if cross(unidades, king_id, campo) or Lume.extinguish(unidades, king_id):
 		return  # a marcha, e o fim do ciclo pela luz (Q-156)

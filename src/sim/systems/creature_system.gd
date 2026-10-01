@@ -17,6 +17,9 @@ const NENHUM := -1
 ## So a superficie tem as tuas luzes (LightWard).
 const SUPERFICIE := int(Band.Kind.SURFACE)
 
+# Reconstruido do BardSong em cada tick; o canto e a fonte persistida.
+var allies: Dictionary = {}
+
 var ids: PackedInt32Array = PackedInt32Array()
 var data_ids: Array[StringName] = []
 var xs: PackedFloat32Array = PackedFloat32Array()
@@ -129,6 +132,10 @@ func tick_movement(delta: float) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 		if engaged(i) or healths[i] <= 0:
+			continue
+		if allies.has(ids[i]):
+			recoils[i] = 0.0
+			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * delta)
 			continue
 		var luz := (
 			LightWard.at(xs[i], masses[i], _luzes) if bands[i] == SUPERFICIE else Vector2.ZERO

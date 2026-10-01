@@ -1639,5 +1639,24 @@
   "notas": [
    "Q-170/171/172/174/175/176/177/178/179/180/182"
   ]
+ },
+ "CLASSES-01": {
+  "title": "Três classes na primeira escolha",
+  "porque": "O dono pediu escolha inicial e a jogabilidade completa do §08.",
+  "spec": [
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "Q-114, Q-140, Q-150, Q-162, Q-163",
+  "feito": "Escolha inicial de Monarca, Arqueiro e Bardo; habilidades e evoluções, save e verificação de combate e interface.",
+  "fora": "Trepador, novas classes e arte final.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [
+   "Escolha pausada com confirmação",
+   "Completar marca, perfuração, encanto e conversão",
+   "Evolução e promoção pelos dados",
+   "Testes e export Web"
+  ]
  }
 }

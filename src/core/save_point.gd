@@ -15,6 +15,8 @@ extends RefCounted
 ## por travessia, Q-135 — a pausa do fim nao pode refazer o save que o fim apagou),
 ## e e de dia.
 static func allowed() -> bool:
+	if ClassSelection.active:
+		return false
 	if SimLoop.state == null or SimLoop.king_id == UnitSystem.NENHUM or Defeat.happened():
 		return false
 	if SimLoop.state.crossed:

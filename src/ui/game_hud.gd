@@ -95,7 +95,7 @@ func _escrever_fixos() -> void:
 
 
 func _marca() -> bool:
-	return SimLoop.field == null or SimLoop.field.classes.marks()
+	return SimLoop.field == null or Assume.marks(SimLoop.field) or HeroWatch.current() == &"bard"
 
 
 func _notification(o_que: int) -> void:
@@ -134,6 +134,8 @@ func _draw() -> void:
 
 
 func _atualizar() -> void:
+	var ability := &"HINT_CHARM" if HeroWatch.current() == &"bard" else &"HINT_MARK"
+	_dica.text = Glyphs.hint(_dispositivo, _marca(), ability)
 	var relogio := ClockService.clock
 	var fase := int(relogio.current_phase())
 	_relogio.text = (

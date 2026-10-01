@@ -187,12 +187,13 @@ func _criaturas() -> void:
 		if not visible.has_point(Vector2(x, visible.get_center().y)):
 			continue
 		var caixa := Silhouette.body_box(forma, x, int(band), alto)
-		var aceso := WorldLight.seen(x, luzes)
+		var allied := SimLoop.field.song.allies.has(bichos.ids[i])
+		var aceso := WorldLight.seen(x, luzes) or allied
 		var corpo := _luz.body(WorldPalette.BICHO, x)
-		var cor := WorldLight.reveal(corpo, aceso, chao)
+		var cor := ClassEffects.ALLY if allied else WorldLight.reveal(corpo, aceso, chao)
 		var view := {
 			"foot": Vector2(x, WorldPalette.ground_of(int(band))),
-			"lit": _luz.body(Color.WHITE, x),
+			"lit": ClassEffects.ALLY if allied else _luz.body(Color.WHITE, x),
 			"hidden_tint": cor,
 			"revealed": aceso,
 		}
@@ -204,6 +205,7 @@ func _criaturas() -> void:
 				self, caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i]))
 			)
 	_creature_skins.forget_except(bichos.ids)
+	ClassEffects.draw_on(self, band)
 
 
 ## As luzes em que se ve, em (x, raio): as tuas e o Lume. Com a mancha recuada e
