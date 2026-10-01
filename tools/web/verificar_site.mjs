@@ -320,6 +320,10 @@ async function main() {
     const controlos = html.match(/<div class="controlos">[\s\S]*?<\/dl><\/div>/)?.[0] || "";
     resultado(`/jogar/${q}: os controlos do project.godot estão lá`, (controlos.match(/<dt>/g) || []).length === TEXTOS.pt.controlos.acoes.length);
     const { ctx, p, erros, pedidos } = await nova(b, base, 1280, "dark");
+    const classes = [];
+    p.on("console", (msg) => {
+      if (msg.text().includes("Empire · classe inicial ")) classes.push(msg.text());
+    });
     await p.goto(base + "/jogar/" + q, { waitUntil: "load" });
     resultado(`/jogar/${q}: a língua é ${q ? "en" : "pt-PT"}`, (await p.evaluate(() => document.documentElement.lang)) === (q ? "en" : "pt-PT"));
     const saiu = await p.waitForFunction(() => !document.getElementById("status"), null, { timeout: JOGO_S * 1000 })
@@ -330,6 +334,14 @@ async function main() {
     violacoes.push(...(await p.evaluate(() => window.__csp)).map((v) => `/jogar/${q}: ${v}`));
     if (saiu) {
       await p.locator("#canvas").focus();
+      await p.waitForTimeout(200);
+      for (let i = 0; i < 3; i++) {
+        await p.keyboard.press("Tab");
+        await p.waitForTimeout(80);
+      }
+      await p.keyboard.press("Enter");
+      await p.waitForTimeout(150);
+      resultado(`/jogar/${q}: a primeira classe confirma-se pelo teclado`, classes.some((msg) => msg.includes("classe inicial monarch")));
       await p.keyboard.press("Escape");
       await p.waitForTimeout(150);
       for (let i = 0; i < 4; i++) {

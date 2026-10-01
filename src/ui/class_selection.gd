@@ -4,7 +4,7 @@ extends Control
 const WIDTH := 760.0
 const MAX_WIDTH := 1000.0
 const MARGIN := 28
-const CARD_HEIGHT := 188
+const CARD_HEIGHT := 212
 const OVERLAY := Color("161917")
 const SELECTION := Color("ead0a0")
 const PERCENT := 100.0
@@ -18,6 +18,7 @@ var start_button: Button
 var _choose: Callable
 var _grid: GridContainer
 var _layout: VBoxContainer
+var _scroll: ScrollContainer
 var _margin: MarginContainer
 var _title: Label
 var _base: Label
@@ -46,14 +47,13 @@ func _ready() -> void:
 	add_child(_margin)
 	_layout = VBoxContainer.new()
 	_margin.add_child(_layout)
-	var scroll := ScrollContainer.new()
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.follow_focus = true
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	_layout.add_child(scroll)
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_layout.add_child(_scroll)
 	var body := VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(body)
+	_scroll.add_child(body)
 	var brand := PauseTheme.label(body, &"UI_MENU_TITLE")
 	PauseTheme.title(brand, PauseTheme.BRAND_SIZE)
 	var heading := PauseTheme.label(body, &"CLASS_CHOOSE_TITLE")
@@ -82,7 +82,13 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(fit)
 	fit()
 	select(selected)
-	cards[0].call_deferred(&"grab_focus")
+	get_tree().process_frame.connect(_initial_focus, CONNECT_ONE_SHOT)
+
+
+func _initial_focus() -> void:
+	cards[0].grab_focus()
+	_scroll.set_deferred(&"follow_focus", true)
+	_scroll.set_deferred(&"scroll_vertical", 0)
 
 
 func _card(id: StringName) -> void:

@@ -56,6 +56,8 @@ func test_o_jogo_novo_espera_sem_andar_o_tempo_e_sem_gravar_uma_escolha_vazia() 
 	var tick := SimLoop.state.tick
 	await get_tree().create_timer(0.05).timeout
 	assert_int(SimLoop.state.tick).is_equal(tick)
+	assert_int(picker._scroll.scroll_vertical).is_zero()
+	assert_bool(picker.cards[0].has_focus()).is_true()
 	picker.select(&"archer")
 	var pending := SimLoop.intents.pending()
 	Input.action_press(&"verb_drop")  # A/espaco confirmam, mas nao largam uma moeda

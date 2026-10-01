@@ -205,6 +205,7 @@ func _chosen(id: StringName) -> void:
 	var hero := SimLoop.field.roster.begin(SimLoop.units, SimLoop.state, SimLoop.king_id, id)
 	if hero == UnitSystem.NENHUM:
 		return
+	print("Empire · classe inicial %s" % id)
 	if _selector != null:
 		_selector.hide()
 		_selector.queue_free()
