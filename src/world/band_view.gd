@@ -61,7 +61,8 @@ var _visual_time := 0.0
 var _salto: CoinBounce
 var _actors: UnitCanvas
 var _bichos_vista := CreatureView.new()
-var _obras := Obras.new()
+## Criado no _ready, como o _actors: um no criado antes da arvore fica orfao.
+var _obras: Obras
 
 
 func _ready() -> void:
@@ -72,6 +73,7 @@ func _ready() -> void:
 	_actors = UnitCanvas.new()
 	_actors.band = band
 	_actors.light = _luz
+	_obras = Obras.new()
 	_obras.band = band
 	_obras.edificios = _edificios
 	_obras.show_behind_parent = true
