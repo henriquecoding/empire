@@ -25,6 +25,9 @@ var phase_durations: PackedFloat32Array = PackedFloat32Array([15.0, 85.0, 40.0, 
 @export var phase_tint_val: PackedFloat32Array = PackedFloat32Array()
 ## O chao da noite desce abaixo do ambiente: 0,11 (§80).
 @export var night_value_floor: float = 0.0
+## O olho habitua-se ao escuro (ADR 0048): o valor da luz que chega ao mundo nao
+## desce abaixo disto. A cor da noite e a da ADR 0011; isto e quanto dela se ve.
+@export var night_vision: float = 0.0
 
 @export_group("§24 · o amanhecer")
 ## "Amanhecer — varrimento de luz da esquerda para a direita a 900 px/s + as

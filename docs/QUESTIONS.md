@@ -7,6 +7,50 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A noite que se vê e o bestiário — 02/10/2026 (ADR 0048, ADR 0049)
+
+### Q-189 · A noite é difícil de ver, e não impossível; as luzes alumiam
+- **Pedido do dono (02/10/2026):** *«a iluminação à noite deve existir, adoro o clima difícil de ver, mas não quero que
+  seja impossível; os pontos de luz devem existir para afastar as criaturas e iluminar, e o brilho do jogo não pode ser
+  tão nulo ao ponto de não ver nada como está»*. Aplicado (ADR 0048).
+- **Onde:** §22, §74, §80, ADR 0011, ADR 0034. No código: `BandLight.seen`, `Lighting`, `Glow`, `Flicker`,
+  `LightField`, `SceneryLight` e o shader `world_light`, `FlameArt`, `HearthArt`, o `BandView` (as obras num canvas que
+  leva a luz pixel a pixel), o `SkyView` (lua e estrelas). Os testes: `tests/night_vision_test.gd`,
+  `tests/glow_test.gd`, `tests/light_field_test.gd`.
+- **O que estava:** o fundo da noite a luminância 14 de 255; as luzes eram discos opacos pintados por cima do mundo (e
+  viam-se ao meio-dia); a fogueira desenhava-se como uma torre; quem estava dentro da luz de uma fogueira continuava
+  preto, porque os corpos só olhavam para o Lume.
+- **O que foi feito:** o olho habitua-se ao escuro — a noite continua castanha e a fase mais escura, mas a luz não desce
+  abaixo de `night_vision` (0,42); as luzes somam-se ao ambiente e alumiam o cenário pixel a pixel e os corpos no sítio
+  deles, em três paragens com dither de 2 px; o fogo cintila; as chamas não levam luz; a lareira do núcleo acende-se.
+- **Escolhas minhas, reversíveis:** `night_vision` 0,42 (em `_proposed`); o ganho e o tecto das luzes, o alcance por
+  plano e a força da lareira (0,4), que são composição e não jogo; estrelas e a lua a brilhar por si.
+- **Como desfazer:** `night_vision` a 0 no `clock.csv` devolve o escuro de antes; os planos voltam ao `modulate`.
+- **Decide:** tu, se o escuro ficou claro de mais ou ainda escuro de mais — é um número só.
+
+### Q-190 · A lareira do núcleo afasta a Podridão?
+- **Onde:** ADR 0034 (só o fogo que compras afasta), ADR 0048, `LightField.LAREIRA`, `Torchlight.in_dark`.
+- **O que está:** a volta do núcleo já não era escuro para o archote (meia largura do núcleo), e agora acende-se — é o
+  fogo do centro do acampamento do Kingdom. Alumia e revela, mas **não afasta ninguém**: não tem `repel_mass` nem
+  `rot_slow`, e por isso o nível de dificuldade não mudou.
+- **Proposta:** se quiseres que afaste, dá-lhe no `buildings.csv` (linha `core`) `light_radius` e `repel_mass` como à
+  fogueira — um Rastejante deixava de chegar ao núcleo, e as noites do princípio ficavam mais fáceis.
+- **Decide:** tu.
+
+### Q-191 · Sete criaturas, uma família, sete portes
+- **Pedido do dono (02/10/2026):** *«a variedade, formato e tamanho dos inimigos deve ser mesmo bem feita»*. Aplicado
+  (ADR 0049).
+- **Onde:** §07, §22, §25, §51, §74, §75, ADR 0042. No código: `Bestiary`, `BeastPen`, `BeastsSmall`, `BeastsLarge`,
+  `BeastsGiant`, `CreatureView`, `OfferView` (o Zelador), `DeathBurst`. O teste: `tests/bestiary_test.gd`.
+- **O que estava:** quatro sprites de dois packs (goblin, olho voador, cogumelo, esqueleto) e três polígonos; o
+  Devorador mais baixo do que o rei.
+- **O que foi feito:** as sete desenhadas em pixeis, numa família (carne pisada, osso, olhos roxos acesos), cada uma com
+  o seu porte — do Rastejante pelo joelho de uma tropa ao Devorador com quase duas vezes o rei — e a sua animação. Os
+  sprites temporários das criaturas saem de uso; os do arqueiro e do lanceiro ficam.
+- **Escolhas minhas, reversíveis:** os portes (greybox, Q-079), as anatomias e as cores; os olhos âmbar de um bicho
+  encantado pelo Bardo.
+- **Decide:** tu, a arte definitiva (ART-01); e se algum porte não conta a história que querias.
+
 ## Jogar com os dedos — 02/10/2026 (ADR 0047)
 
 ### Q-187 · O toque é o quarto dispositivo: a alavanca, os botões e o mundo

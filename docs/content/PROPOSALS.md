@@ -6,16 +6,17 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 583 | 292 | 875 |
+| Fases 0–2 (fatia vertical) | 584 | 292 | 876 |
 | Fases 3–8 | 334 | 97 | 431 |
-| Total | 917 | 389 | 1306 |
+| Total | 918 | 389 | 1307 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 583
+## 1 · Fatia vertical — balanceamento — 584
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
+| clock | `default` | `night_vision` | 0.42 | 0 | As 8 primeiras colunas são as da §69. day_seconds é redundante de propósito (o teste compara com a soma); min/max vêm do slider de acessibilidade da §26. v6: os seis tints da §80. A noite é castanha (32 · 0,22 · 0,16) com chão em 0,11 — decidido na ADR 0011, 13/09/2026, e a tabela da §05 já foi corrigida. wheel_time_scale 0,5: a roda do rei abranda o tempo a metade enquanto está aberta, e desliga-se nas opções (Q-034, aprovada pelo dono a 28/09/2026). night_vision 0,42 (o dono, 02/10/2026: "adoro o clima difícil de ver, mas não quero que seja impossível"; ADR 0048): o olho habitua-se ao escuro. A cor da noite continua a da ADR 0011 — matiz, saturação e o chão em razão do ambiente —, mas o valor da luz que chega ao mundo não desce abaixo deste piso. É a «Hollywood darkness»: parecer escuro sem o ser. As luzes somam-se por cima. |
 | units | `vagrant` | `job_affinity` | farm:1.0\|milking:1.0\|cart:0.8 | 1 | Sem ataque: intervalo, precisão e alcance ficam no valor por omissão e não são lidos. coin_capacity 5 (Q-111, o dono a 29/09/2026): as tropas mais básicas guardam até 5 moedas e entregam-nas ao rei quando ele passa (Q-107). Escala 2, a de uma tropa (Q-097, o dono a 29/09/2026): o vagabundo pode ser convertido em tropa, por isso tem o tamanho dela e, na §74, rende como ela. |
 | units | `archer` | `job_affinity` | hunt:1.0\|wall:1.0\|tower:1.0\|farm:0.3 | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. Q-162: a tropa já não traz o armazenamento da classe (a camada storage), que é do corpo jogável. Q-163 (o dono a 30/09/2026): a aljava leva 30 flechas; cada tiro gasta uma, e com ela vazia não dispara. Medido na defesa do décimo dia (dez_dias_test, 12 arqueiros): o arqueiro mais ocupado, o da torre, dá até 27 tiros na noite mais dura; a aljava cheia chega a essa noite, e a seguinte sem reposição já não. A banca do arco repõe-na na alvorada (rules.csv, arrows_per_coin). |
 | units | `archer` | `trained_at` | bow_rack | 1 | Faixa aérea só ao alcance em altura (torre alta, §10) — ver Q-006. coin_capacity 11 = arqueiro do Kingdom (§02). Q-165: forma-se na banca do arco (bow_rack), sem dia de treino — o arco do Kingdom apanha-se e usa-se. Q-162: a tropa já não traz o armazenamento da classe (a camada storage), que é do corpo jogável. Q-163 (o dono a 30/09/2026): a aljava leva 30 flechas; cada tiro gasta uma, e com ela vazia não dispara. Medido na defesa do décimo dia (dez_dias_test, 12 arqueiros): o arqueiro mais ocupado, o da torre, dá até 27 tiros na noite mais dura; a aljava cheia chega a essa noite, e a seguinte sem reposição já não. A banca do arco repõe-na na alvorada (rules.csv, arrows_per_coin). |

@@ -21,6 +21,7 @@ const ESCALA := {"fractional": 0, "integer": 1}
 const FILTRO := {"nearest": 0, "linear": 1}
 const FAIXAS := {"surface": Band.Kind.SURFACE, "underground": Band.Kind.UNDERGROUND}
 const Obras := preload("res://tools/captura_obras.gd")
+const Bichos := preload("res://tools/captura_bichos.gd")
 
 var _restam: int = 0
 var _saida: String = SAIDA
@@ -49,6 +50,7 @@ func _ready() -> void:
 	_avancar(float(args.get("avancar", 0.0)))
 	_pousar_o_rei(args)
 	_preparacao.append_array(_obras.prepare(String(args.get("obras", ""))))
+	_preparacao.append_array(Bichos.new().prepare(String(args.get("bichos", ""))))
 
 
 ## `--esticar`, `--escala` e `--filtro` trocam o modo de ecra so nesta

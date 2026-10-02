@@ -41,6 +41,25 @@ static func ambient(dados: ClockData, fase: int, progresso: float) -> Color:
 	return _cor(dados, fase).lerp(_cor(dados, (fase + 1) % fases), t - MEIO)
 
 
+## A luz que o olho VE: a cor do ambiente com o valor levantado ate ao
+## `night_vision` (ADR 0048). O matiz e a saturacao sao os da ADR 0011 — a noite
+## continua castanha —, e de dia nada muda, porque o dia ja esta acima do piso.
+##
+## E a "Hollywood darkness" do cinema e dos jogos: parecer escuro sem o ser. Com
+## o valor da tabela (0,16) e o chao a 0,11, o plano de jogo saia a luminancia 14
+## de 255 numa captura — escuro de nao se ver nada, que e o que o dono recusou.
+static func seen(dados: ClockData, fase: int, progresso: float) -> Color:
+	var cor := ambient(dados, fase, progresso)
+	if cor.v >= dados.night_vision:
+		return cor
+	return Color.from_hsv(cor.h, cor.s, dados.night_vision, cor.a)
+
+
+## O mesmo, posto no plano de uma faixa (`plane`): o que o cenario recebe.
+static func seen_of(dados: ClockData, faixa: Band.Kind, fase: int, progresso: float) -> Color:
+	return WorldPalette.dim(seen(dados, fase, progresso), plane(dados, faixa))
+
+
 ## A cor do TERRENO desta faixa. O §80 da UM numero para isto — "o chao da noite
 ## desce abaixo do ambiente: 0,11" contra os 0,16 do ambiente — e nao da outro.
 ##

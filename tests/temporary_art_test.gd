@@ -42,11 +42,3 @@ func test_playable_archer_is_larger_than_troop_and_smaller_than_monarch() -> voi
 		art.body_box(&"temp_archer_hero", Vector2.ZERO).size.y
 	)
 	assert_float(art.body_box(&"temp_archer_hero", Vector2.ZERO).size.y).is_less(king.size.y)
-
-
-func test_creatures_show_death_and_hit_before_movement_and_combat() -> void:
-	assert_int(CreatureSkins.action_for(false, true, true, true)).is_equal(ActorAction.Kind.DIE)
-	assert_int(CreatureSkins.action_for(true, true, true, true)).is_equal(ActorAction.Kind.HIT)
-	assert_int(CreatureSkins.action_for(true, true, true, false)).is_equal(ActorAction.Kind.ATTACK)
-	assert_int(CreatureSkins.action_for(true, true, false, false)).is_equal(ActorAction.Kind.WALK)
-	assert_int(CreatureSkins.action_for(true, false, false, false)).is_equal(ActorAction.Kind.IDLE)

@@ -30,6 +30,17 @@ const FOREST_SCALE := 1.0
 const LANDMARKS := [340.0, 1110.0, 2770.0, 3510.0]
 const RIDGE := [0, 374, 140, 350, 252, 361, 396, 322, 528, 348, 664, 329, 804, 366, 960, 343]
 
+## Que luz leva cada plano (SceneryLight): o ceu, os dois fundos, o bosque, o chao
+## e o subsolo, pela ordem do `plane`.
+const LUZ_DO_PLANO := [
+	SceneryLight.Depth.SKY,
+	SceneryLight.Depth.FAR,
+	SceneryLight.Depth.FAR,
+	SceneryLight.Depth.MID,
+	SceneryLight.Depth.GROUND,
+	SceneryLight.Depth.BELOW,
+]
+
 @export_range(0, LAST_PLANE) var plane := 0
 var _clock: ClockData
 var _art := OriginalArt.new()
@@ -39,14 +50,14 @@ var _revisao := Vector2i(-1, -1)  # das terras (Q-173) e dos sitios do subsolo (
 func _ready() -> void:
 	_clock = Registry.entry(&"economy", &"clock") as ClockData
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	material = SceneryLight.material(LUZ_DO_PLANO[plane])
 	queue_redraw()
 
 
 func _process(_delta: float) -> void:
 	if _clock == null or ClockService.clock == null:
 		return
-	var clock := ClockService.clock
-	modulate = BandLight.ambient(_clock, int(clock.current_phase()), clock.phase_progress())
+	SceneryLight.refresh(self)  # a luz ja nao e o `modulate`: e o shader (ADR 0048)
 	if SimLoop.field != null:
 		var revisao := Vector2i(SimLoop.field.wilds.revision, SimLoop.field.under.revision)
 		if revisao != _revisao:

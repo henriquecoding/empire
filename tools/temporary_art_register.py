@@ -24,6 +24,7 @@ def temporary_table():
         actions = ', '.join(f'`{tag}`' for tag in item['tags']) or '—'
         rows.append(f"| `{name}` | {item['size'][0]}x{item['size'][1]} "
                     f"| {item['integer_scale']} | {actions} |")
-    rows.extend(['', 'Atores: OriginalArt/UnitArtBatch. Criaturas: CreatureSkins/BandView. '
+    rows.extend(['', 'Atores: OriginalArt/UnitArtBatch. Criaturas: Bestiary/CreatureView (ADR 0049; '
+                 'os sprites temporarios de criatura ficam no export, fora de uso). '
                  'Cenario e props: TemporaryScenery/EnramadosLayer/RootCellars/BuildView.', ''])
     return rows

@@ -179,4 +179,4 @@ Proxies para gameplay, autorizados pelo dono (ADR 0042). Fontes preservadas em `
 | `temp_winged` | 56x41 | 1 | `idle`, `walk`, `attack`, `hit`, `die` |
 | `temp_wood` | 36x36 | 2 | — |
 
-Atores: OriginalArt/UnitArtBatch. Criaturas: CreatureSkins/BandView. Cenario e props: TemporaryScenery/EnramadosLayer/RootCellars/BuildView.
+Atores: OriginalArt/UnitArtBatch. Criaturas: Bestiary/CreatureView (ADR 0049; os sprites temporarios de criatura ficam no export, fora de uso). Cenario e props: TemporaryScenery/EnramadosLayer/RootCellars/BuildView.

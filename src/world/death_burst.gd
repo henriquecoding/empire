@@ -55,6 +55,7 @@ func burst(visto: Array, sentido: float, agora: float, sorteio: Callable) -> voi
 	var corpo := {
 		"caixa": caixa, "forma": visto[LastSeen.FORMA], "cor": cor, "t0": agora, "pele": pele
 	}
+	corpo["frente"] = visto[LastSeen.FRENTE] if visto.size() > LastSeen.FRENTE else 1.0
 	corpo["dura"] = SEGURA_S + DESFAZ_S
 	if not pele.is_empty():
 		corpo["dura"] = (
@@ -130,12 +131,10 @@ func draw(canvas: CanvasItem, agora: float) -> void:
 		var caixa: Rect2 = corpo.caixa
 		if dt < SEGURA_S:
 			var branco: Color = BRANCO if Preferences.on(Preferences.FLASHES) else corpo.cor
-			canvas.draw_colored_polygon(Outline.shape(corpo.forma, caixa, 0), branco)
+			_forma(canvas, corpo, caixa, branco)
 			continue
 		var p := clampf((dt - SEGURA_S) / DESFAZ_S, 0.0, 1.0)
-		canvas.draw_colored_polygon(
-			Outline.shape(corpo.forma, flatten(caixa, p), 0), Color(corpo.cor, 1.0 - p)
-		)
+		_forma(canvas, corpo, flatten(caixa, p), Color(corpo.cor, 1.0 - p))
 	for pedaco in _pedacos:
 		var dt := agora - float(pedaco.t0)
 		if dt < 0.0:
@@ -152,6 +151,14 @@ func draw(canvas: CanvasItem, agora: float) -> void:
 		var cor: Color = PO.cor
 		cor.a *= 1.0 - p
 		canvas.draw_circle(nuvem.p, lerpf(PO.raio.x, PO.raio.y, sqrt(p)), cor)
+
+
+## O corpo numa cor so, na forma dele: a do bestiario (ADR 0049), ou o contorno.
+static func _forma(canvas: CanvasItem, corpo: Dictionary, caixa: Rect2, cor: Color) -> void:
+	if Bestiary.handles(corpo.forma):
+		Bestiary.silhouette(canvas, corpo.forma, caixa, cor, corpo.frente, 0.0)
+	else:
+		canvas.draw_colored_polygon(Outline.shape(corpo.forma, caixa, 0), cor)
 
 
 ## A morte com pele: branca no hitstop, depois a animacao `die`, e apaga-se.

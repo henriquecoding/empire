@@ -58,6 +58,9 @@ static func _obra(
 	pulso: float,
 	tempo: float
 ) -> void:
+	if HearthArt.handles(vaga.kind):  # a fogueira e o farol sao fogo, nao torres
+		HearthArt.draw_on(canvas, vaga, luz, tempo)
+		return
 	if NativeArt.handles(vaga.kind):
 		NativeArt.draw_on(canvas, vaga, luz, tempo)
 		return
@@ -101,6 +104,8 @@ static func _obra(
 ## do que se ve, e adivinhar esse topo era ter duas respostas para uma pergunta
 ## que so tem uma.
 static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
+	if HearthArt.handles(vaga.kind):
+		return HearthArt.box(vaga)
 	if NativeArt.handles(vaga.kind):
 		return NativeArt.box(vaga)
 	var skin := BuildingSkins.profile(vaga.kind)
