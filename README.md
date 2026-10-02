@@ -75,7 +75,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.7.2: 1362 testes (2 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.7.2: 1377 testes (2 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
 - A base de dados tem **30 tabelas** e 399 recursos com todos os números do dossiê, Parte XIII incluída; o que o

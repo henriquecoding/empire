@@ -62,59 +62,59 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `training_house` | 1 | sim | `training_house` | 1 frame; estados por codigo |
 | `forge` | 2 |  | `workshop` — partilhada com `kitchen` | 1 frame; estados por codigo |
 | `kitchen` | 2 | sim | `workshop` — partilhada com `forge` | 1 frame; estados por codigo |
-| `embassy` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `heir_house` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `root_sanctuary` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `mount_stable` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `farm` | 1 | sim | procedural (`SettlementArt`) | por codigo |
-| `fishery` | 1 | sim | procedural (`SettlementArt`) | por codigo |
-| `henhouse` | 1 | sim | procedural (`SettlementArt`) | por codigo |
-| `cow_stable` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `lumber_camp` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `ore_pit` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `embassy` | 6 |  | pintada (`PaintedArt`): `manor` — partilhada com `heir_house` | 1 imagem; estados por codigo |
+| `heir_house` | 1 | sim | pintada (`PaintedArt`): `manor` — partilhada com `embassy` | 1 imagem; estados por codigo |
+| `root_sanctuary` | 6 |  | pintada (`PaintedArt`): `altar` — partilhada com `consecrated_altar` | 1 imagem; estados por codigo |
+| `mount_stable` | 1 |  | pintada (`PaintedArt`): `stable` — partilhada com `cow_stable` | 1 imagem; estados por codigo |
+| `farm` | 1 | sim | pintada (`PaintedArt`): `farm` | 1 imagem; estados por codigo |
+| `fishery` | 1 | sim | pintada (`PaintedArt`): `fishery` | 1 imagem; estados por codigo |
+| `henhouse` | 1 | sim | pintada (`PaintedArt`): `henhouse` | 1 imagem; estados por codigo |
+| `cow_stable` | 6 |  | pintada (`PaintedArt`): `stable` — partilhada com `mount_stable` | 1 imagem; estados por codigo |
+| `lumber_camp` | 6 |  | pintada (`PaintedArt`): `lumber` — partilhada com `sawmill` | 1 imagem; estados por codigo |
+| `ore_pit` | 1 | sim | pintada (`PaintedArt`): `mine` | 1 imagem; estados por codigo |
 | `granary` | 2 | sim | `storehouse` — partilhada com `pen`, `saltery` | 1 frame; estados por codigo |
 | `saltery` | 6 |  | `storehouse` — partilhada com `granary`, `pen` | 1 frame; estados por codigo |
 | `pen` | 6 |  | `storehouse` — partilhada com `granary`, `saltery` | 1 frame; estados por codigo |
-| `sawmill` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `smelter` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `archer_tower` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `high_tower` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fire_barrel` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `root_moat` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `lighthouse` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `consecrated_altar` | 6 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `passage_seal` | 1 | sim | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `campfire` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `tender_ward` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `bow_rack` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `citizen_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `enramados_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `enramados_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `enramados_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `portuarios_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `portuarios_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `portuarios_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fenda_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fenda_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fenda_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `horta_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `horta_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `horta_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fornalha_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fornalha_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `fornalha_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `sobraiz_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `sobraiz_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `sobraiz_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `geada_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `geada_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `geada_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `bruma_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `bruma_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `bruma_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `mercenary_house` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `mercenary_work` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
-| `mercenary_defense` | 1 |  | procedural (`Silhouette`/`StructureArt`) | por codigo |
+| `sawmill` | 6 |  | pintada (`PaintedArt`): `lumber` — partilhada com `lumber_camp` | 1 imagem; estados por codigo |
+| `smelter` | 6 |  | pintada (`PaintedArt`): `furnace` | 1 imagem; estados por codigo |
+| `archer_tower` | 1 | sim | pintada (`PaintedArt`): `archer_tower` | 1 imagem; estados por codigo |
+| `high_tower` | 1 | sim | pintada (`PaintedArt`): `high_tower` | 1 imagem; estados por codigo |
+| `fire_barrel` | 1 |  | pintada (`PaintedArt`): `barrel` | 1 imagem; estados por codigo |
+| `root_moat` | 6 |  | pintada (`PaintedArt`): `spikes` | 1 imagem; estados por codigo |
+| `lighthouse` | 6 |  | procedural (`HearthArt`) | por codigo |
+| `consecrated_altar` | 6 |  | pintada (`PaintedArt`): `altar` — partilhada com `root_sanctuary` | 1 imagem; estados por codigo |
+| `passage_seal` | 1 | sim | pintada (`PaintedArt`): `seal` | 1 imagem; estados por codigo |
+| `campfire` | 1 |  | procedural (`HearthArt`) | por codigo |
+| `tender_ward` | 1 |  | pintada (`PaintedArt`): `bell` | 1 imagem; estados por codigo |
+| `bow_rack` | 1 |  | pintada (`PaintedArt`): `bow_rack` | 1 imagem; estados por codigo |
+| `citizen_house` | 1 |  | pintada (`PaintedArt`): `cottage` | 1 imagem; estados por codigo |
+| `enramados_house` | 1 |  | pintada (`NativeSprites`): `native_enramados_house` | 1 imagem; estados por codigo |
+| `enramados_work` | 1 |  | pintada (`NativeSprites`): `native_enramados_work` | 1 imagem; estados por codigo |
+| `enramados_defense` | 1 |  | pintada (`NativeSprites`): `native_enramados_defense` | 1 imagem; estados por codigo |
+| `portuarios_house` | 1 |  | pintada (`NativeSprites`): `native_portuarios_house` | 1 imagem; estados por codigo |
+| `portuarios_work` | 1 |  | pintada (`NativeSprites`): `native_portuarios_work` | 1 imagem; estados por codigo |
+| `portuarios_defense` | 1 |  | pintada (`NativeSprites`): `native_portuarios_defense` | 1 imagem; estados por codigo |
+| `fenda_house` | 1 |  | pintada (`NativeSprites`): `native_fenda_house` | 1 imagem; estados por codigo |
+| `fenda_work` | 1 |  | pintada (`NativeSprites`): `native_fenda_work` | 1 imagem; estados por codigo |
+| `fenda_defense` | 1 |  | pintada (`NativeSprites`): `native_fenda_defense` | 1 imagem; estados por codigo |
+| `horta_house` | 1 |  | pintada (`NativeSprites`): `native_horta_house` | 1 imagem; estados por codigo |
+| `horta_work` | 1 |  | pintada (`NativeSprites`): `native_horta_work` | 1 imagem; estados por codigo |
+| `horta_defense` | 1 |  | pintada (`NativeSprites`): `native_horta_defense` | 1 imagem; estados por codigo |
+| `fornalha_house` | 1 |  | pintada (`NativeSprites`): `native_fornalha_house` | 1 imagem; estados por codigo |
+| `fornalha_work` | 1 |  | pintada (`NativeSprites`): `native_fornalha_work` | 1 imagem; estados por codigo |
+| `fornalha_defense` | 1 |  | pintada (`NativeSprites`): `native_fornalha_defense` | 1 imagem; estados por codigo |
+| `sobraiz_house` | 1 |  | pintada (`NativeSprites`): `native_sobraiz_house` | 1 imagem; estados por codigo |
+| `sobraiz_work` | 1 |  | pintada (`NativeSprites`): `native_sobraiz_work` | 1 imagem; estados por codigo |
+| `sobraiz_defense` | 1 |  | pintada (`NativeSprites`): `native_sobraiz_defense` | 1 imagem; estados por codigo |
+| `geada_house` | 1 |  | pintada (`NativeSprites`): `native_geada_house` | 1 imagem; estados por codigo |
+| `geada_work` | 1 |  | pintada (`NativeSprites`): `native_geada_work` | 1 imagem; estados por codigo |
+| `geada_defense` | 1 |  | pintada (`NativeSprites`): `native_geada_defense` | 1 imagem; estados por codigo |
+| `bruma_house` | 1 |  | pintada (`NativeSprites`): `native_bruma_house` | 1 imagem; estados por codigo |
+| `bruma_work` | 1 |  | pintada (`NativeSprites`): `native_bruma_work` | 1 imagem; estados por codigo |
+| `bruma_defense` | 1 |  | pintada (`NativeSprites`): `native_bruma_defense` | 1 imagem; estados por codigo |
+| `mercenary_house` | 1 |  | pintada (`NativeSprites`): `native_mercenary_house` | 1 imagem; estados por codigo |
+| `mercenary_work` | 1 |  | pintada (`NativeSprites`): `native_mercenary_work` | 1 imagem; estados por codigo |
+| `mercenary_defense` | 1 |  | pintada (`NativeSprites`): `native_mercenary_defense` | 1 imagem; estados por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 
@@ -135,16 +135,16 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 - `core`: `tree_castle`; 1 frame; estados por codigo
 - `training_house`: `training_house`; 1 frame; estados por codigo
 - `kitchen`: `workshop` — partilhada com `forge`; 1 frame; estados por codigo
-- `heir_house`: procedural (`Silhouette`/`StructureArt`); por codigo
-- `farm`: procedural (`SettlementArt`); por codigo
-- `fishery`: procedural (`SettlementArt`); por codigo
-- `henhouse`: procedural (`SettlementArt`); por codigo
-- `ore_pit`: procedural (`Silhouette`/`StructureArt`); por codigo
+- `heir_house`: pintada (`PaintedArt`): `manor` — partilhada com `embassy`; 1 imagem; estados por codigo
+- `farm`: pintada (`PaintedArt`): `farm`; 1 imagem; estados por codigo
+- `fishery`: pintada (`PaintedArt`): `fishery`; 1 imagem; estados por codigo
+- `henhouse`: pintada (`PaintedArt`): `henhouse`; 1 imagem; estados por codigo
+- `ore_pit`: pintada (`PaintedArt`): `mine`; 1 imagem; estados por codigo
 - `granary`: `storehouse` — partilhada com `pen`, `saltery`; 1 frame; estados por codigo
-- `archer_tower`: procedural (`Silhouette`/`StructureArt`); por codigo
-- `high_tower`: procedural (`Silhouette`/`StructureArt`); por codigo
-- `passage_seal`: procedural (`Silhouette`/`StructureArt`); por codigo
-- muralha (`walls.csv`, 5 niveis): procedural (`Silhouette`/`StructureArt`); por codigo
+- `archer_tower`: pintada (`PaintedArt`): `archer_tower`; 1 imagem; estados por codigo
+- `high_tower`: pintada (`PaintedArt`): `high_tower`; 1 imagem; estados por codigo
+- `passage_seal`: pintada (`PaintedArt`): `seal`; 1 imagem; estados por codigo
+- muralha (`walls.csv`, 5 niveis): pintada (`WallSprites`): `wall_1`, `wall_2`, `wall_3`, `wall_4`, `wall_5`; 1 imagem por nivel, estados por codigo
 
 **Exportacoes**
 

@@ -7,6 +7,38 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## O CORRER no toque e as obras que se vêem — 02/10/2026 (UX-04, ADR 0051)
+
+### Q-193 · O botão CORRER é um interruptor
+- **Pedido do dono (02/10/2026):** *«No mobile deve ter um botão para correr também»*. Aplicado (UX-04, adenda da
+  ADR 0047).
+- **Onde:** §24, ADR 0047. No código: `TouchLayout` (`Role.RUN`), `TouchPad.running` e `runs()`, `TouchView`,
+  `TouchArt` (o ícone `corre`). O teste: `tests/toque_correr_test.gd`.
+- **O que foi feito:** um botão CORRER no arco da direita, em baixo e para o meio. Tocado, quem anda corre com qualquer
+  inclinação da alavanca, até se tocar outra vez; aceso a ouro enquanto está ligado. Arrastar até ao fim continua a
+  correr.
+- **Escolhas minhas, reversíveis:** **interruptor e não manter premido** — o polegar da direita fica livre para a
+  moeda enquanto se corre, e o da esquerda não sai da alavanca; o sítio (410 × 92 px do canto, raio 38); desligar na
+  pausa e nos menus.
+- **Decide:** tu, se preferes manter premido para correr (é trocar o `lift` do `TouchPad` por um `holds`), e se o sítio
+  está à mão no teu telemóvel.
+
+### Q-194 · As obras que não tinham arte, pintadas no estilo da tua; o sítio vazio à vista
+- **Pedido do dono (02/10/2026):** *«faça as casas e construções terem de fato sprites, agora estão todas
+  invisíveis»*. Aplicado (ADR 0051).
+- **Onde:** §10, §21, §22, §25, §55. No código: `PixelPainter`, `PaintedArt`, `WallSprites`, `TowerSprites`,
+  `FarmSprites`, `HouseSprites`, `NativeSprites`, `BuildingSkins`, `BuildView`. O teste: `tests/obras_sprite_test.gd`.
+- **O que estava:** quatro obras com arte tua; o resto polígonos lisos; o sítio por construir a 18 %, que de madrugada
+  não se via.
+- **O que foi feito:** um sprite para cada obra e cada nível do muro, pintado em píxeis no teu estilo (contorno preto,
+  reboco creme, enxaimel, telhado azul); o sítio vazio é a obra inteira a 32–55 %, a respirar.
+- **Escolhas minhas, reversíveis:** os desenhos e os tamanhos (a torre alta com 236 px, o bastião com 132, o solar com
+  144); que obra partilha que sprite (herdeiro e embaixada; estábulo de montada e de vacas; lenha e serração; os dois
+  altares); a casa de quem vem dos acampamentos ser uma casa térrea azul e não a dos Enramados; a opacidade do convite;
+  não usar a exportação `gate` (é um recorte do castelo, largo demais para o sítio de uma torre).
+- **Fora:** a arte definitiva (ART-01) — trocar um pintado por um teu é uma linha no `BuildingSkins.ORIGINAIS`.
+- **Decide:** tu, se o estilo serve até haver a tua arte, e se o sítio vazio deve ser mais ou menos visível.
+
 ## As moedas que se vêem — 02/10/2026 (ADR 0050)
 
 ### Q-192 · A moeda grande, com física e com cara de moeda; a coroa que cai

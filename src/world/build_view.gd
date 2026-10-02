@@ -61,13 +61,7 @@ static func _obra(
 	if HearthArt.handles(vaga.kind):  # a fogueira e o farol sao fogo, nao torres
 		HearthArt.draw_on(canvas, vaga, luz, tempo)
 		return
-	if NativeArt.handles(vaga.kind):
-		NativeArt.draw_on(canvas, vaga, luz, tempo)
-		return
-	if BuildingSkins.draw_on(canvas, vaga, luz, tempo):
-		return
-	if SettlementArt.handles(vaga.kind):
-		SettlementArt.draw_on(canvas, vaga, luz, tempo)
+	if BuildingSkins.draw_on(canvas, vaga, forma, luz, tempo):  # com sprite (ADR 0051)
 		return
 	var x := vaga.x
 	var caixa := drawn_box(vaga, forma)
@@ -106,13 +100,11 @@ static func _obra(
 static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
 	if HearthArt.handles(vaga.kind):
 		return HearthArt.box(vaga)
-	if NativeArt.handles(vaga.kind):
-		return NativeArt.box(vaga)
-	var skin := BuildingSkins.profile(vaga.kind)
+	var skin := BuildingSkins.profile(vaga, forma)
 	if skin != &"":
 		var foot := Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band)))
-		var native_box := BuildingSkins.art.box(skin, foot)
-		return _rente(native_box) if vaga.state == BuildSlot.State.RUIN else native_box
+		var sprite := BuildingSkins.box(skin, foot)
+		return _rente(sprite) if vaga.state == BuildSlot.State.RUIN else sprite
 	if vaga.standing():
 		return _caixa(vaga, forma, vaga.level)
 	if vaga.state == BuildSlot.State.RUIN:

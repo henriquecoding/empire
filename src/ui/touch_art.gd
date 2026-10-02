@@ -42,6 +42,13 @@ const ICONES := {
 		["l", Vector2(-0.6, -0.05), Vector2(0.6, -0.05), 1.0],
 		["l", Vector2(0, 0), Vector2(0, 1), 0.6],
 	],
+	&"corre":
+	[
+		["l", Vector2(-0.9, -0.7), Vector2(-0.2, 0), 0.8],
+		["l", Vector2(-0.2, 0), Vector2(-0.9, 0.7), 0.8],
+		["l", Vector2(0.1, -0.7), Vector2(0.8, 0), 0.8],
+		["l", Vector2(0.8, 0), Vector2(0.1, 0.7), 0.8],
+	],
 	&"espada":
 	[["l", Vector2(-1, 1), Vector2(1, -1), 1.0], ["l", Vector2(-0.8, 0), Vector2(0, 0.8), 1.0]],
 	&"flecha":

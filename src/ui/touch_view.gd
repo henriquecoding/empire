@@ -20,7 +20,7 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 	var l := pad.layout
 	var raio := l.stick_radius()
 	if pad.stick.held:
-		TouchArt.stick(ci, pad.stick.base, raio, pad.stick.offset, pad.stick.runs())
+		TouchArt.stick(ci, pad.stick.base, raio, pad.stick.offset, pad.runs())
 	else:
 		TouchArt.stick(ci, l.stick_home(), raio, 0.0, false)
 	# O FIXAR (UX-03): aceso a ouro com a alavanca fixa, que e quando o ecra espreita.
@@ -31,6 +31,14 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		&"cor": GameHud.GOLD if l.fixed else GameHud.TEXT,
 	}
 	TouchArt.button(ci, l.centre(TouchLayout.Role.FIX), l.radius(TouchLayout.Role.FIX), fixa)
+	# O CORRER e um interruptor, como o FIXAR: aceso a ouro enquanto esta ligado.
+	var corre := {
+		&"premido": pad.running,
+		&"icone": &"corre",
+		&"rotulo": _nome(&"TOUCH_RUN"),
+		&"cor": GameHud.GOLD if pad.running else GameHud.TEXT,
+	}
+	TouchArt.button(ci, l.centre(TouchLayout.Role.RUN), l.radius(TouchLayout.Role.RUN), corre)
 	var classe := HeroWatch.current()
 	var rei := Assume.king()
 	for papel: TouchLayout.Role in TouchPad.ACCOES.keys() + [TouchLayout.Role.PAUSE]:
