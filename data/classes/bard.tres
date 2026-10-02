@@ -7,8 +7,14 @@ script = ExtResource("1_fy83y")
 id = &"bard"
 display_key = "CLASS_BARD"
 archetype = &"bard"
-base_unit = &"bard"
+base_unit = &"bard_hero"
+verb = &"charm_weak"
 storage = &"satchel"
+troop = &"bard"
+promotion_targets = {
+&"archer": &"canopy_archer",
+&"spearman": &"mercenary"
+}
 evolve_seed_cost = 1
 evolve_condition = &"converted_enemies"
 evolve_condition_value = 15

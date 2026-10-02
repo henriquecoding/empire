@@ -13,6 +13,9 @@ UNIT_COOK,Cozinheiro,Cook,nome de conteúdo — unit,24,
 UNIT_DIPLOMAT,Diplomata,Diplomat,nome de conteúdo — unit,24,
 UNIT_BARD,Bardo,Bard,nome de conteúdo — unit,24,
 UNIT_CLIMBER,Trepador,Climber,nome de conteúdo — unit,24,
+UNIT_ARCHER_HERO,O Arqueiro,The Archer,nome de conteúdo — unit (Q-162),24,"O corpo jogável da classe, maior do que a tropa: um arqueiro com nome de classe, e não mais um."
+UNIT_BARD_HERO,O Bardo,The Bard,nome de conteúdo — unit (Q-162),24,O corpo jogável da classe (Q-162).
+UNIT_DIPLOMAT_HERO,O Diplomata,The Diplomat,nome de conteúdo — unit (Q-162),24,O corpo jogável da classe (Q-162).
 UNIT_BURIED_KNIGHT,Cavaleiro Enterrado,Buried Knight,nome de conteúdo — unit,24,
 UNIT_SEALED_KNIGHT,Cavaleiro Selado,Sealed Knight,nome de conteúdo — unit,24,
 UNIT_CANOPY_ARCHER,Arqueiro de Copa,Canopy Archer,nome de conteúdo — unit,24,
@@ -101,7 +104,7 @@ BIOME_COAST,Costa,Coast,nome de conteúdo — biome,24,
 BIOME_CANYON,Desfiladeiro,Canyon,nome de conteúdo — biome,24,
 BIOME_FLOODPLAIN,Várzea,Floodplain,nome de conteúdo — biome,24,
 BIOME_GLACIER,Glaciar,Glacier,nome de conteúdo — biome (Q-010),24,
-BIOME_MARSH,Paul,Marsh,nome de conteúdo — biome (Q-013),24,
+BIOME_MARSH,Bruma,Marsh,nome de conteúdo — biome (Q-013),24,
 BIOME_VOLCANIC,Terras Vulcânicas,Volcanic Lands,nome de conteúdo — biome,24,
 BIOME_SUBTERRANEAN,Subterrâneo,Underground,nome de conteúdo — biome,24,
 MOUNT_ON_FOOT,A pé,On Foot,nome de conteúdo — mount,24,
@@ -141,7 +144,7 @@ PEOPLE_PORTUARIOS,Portuários,Portuários,nome de povo,16,Nome provisório (§04
 PEOPLE_FENDA,Fenda,Fenda,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_HORTA,Horta,Horta,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_GEADA,Geada,Geada,nome de povo (Q-010),16,Nome provisório: o povo do gelo. Fica igual em EN até a Bíblia de nomes decidir.
-PEOPLE_PAUL,Paul,Paul,nome de povo (Q-013),16,Nome provisório: o povo do pântano (paul = terra alagada). Fica igual em EN até a Bíblia de nomes decidir.
+PEOPLE_BRUMA,Bruma,Bruma,nome de povo (Q-013),16,Nome de trabalho para o povo do pântano (Q-175), ajustável; Bruma é a névoa sobre a água.
 PEOPLE_FORNALHA,Fornalha,Fornalha,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 PEOPLE_SOBRAIZ,Sob-Raiz,Sob-Raiz,nome de povo,16,Nome provisório (§04). Nome próprio: fica igual em EN até a Bíblia de nomes decidir.
 JOURNAL_01_TITLE,Lista dos nichos de estrada,The roadside shrine list,título de diário,32,Ato 1 (§79). Seis aldeias pagavam para o mesmo fundo.
@@ -390,6 +393,7 @@ UI_OPTIONS,Opções,Options,menu,20,
 UI_CREDITS,Créditos,Credits,menu principal,20,
 UI_QUIT,Sair,Quit,menu,20,
 UI_PAUSED,Pausa,Paused,ecrã de pausa,20,
+UI_JOURNAL_CLOSE,fechar,close,rodapé da folha de um diário (§79): o que os botões antes da palavra fazem,16,O pedido do dono de 30/09/2026: a folha fecha-se à mão. Os botões vêm antes e mudam com o dispositivo (§26).
 UI_RESUME,Retomar,Resume,ecrã de pausa,20,
 UI_SAVE_AND_QUIT,Guardar e sair,Save & Quit,ecrã de pausa,24,
 UI_CHOOSE_PEOPLE,Escolhe o teu povo,Choose Your People,seleção de povo,28,
@@ -443,16 +447,17 @@ TOAST_RESUMED,JOGO RETOMADO,RESUMED,aviso do HUD (game_paused falso),24,GB-27
 LANG_PT_PT,Português,Português,"nome do idioma, no próprio idioma (§27)",16,GB-28. Endónimo: não se traduz.
 LANG_EN,English,English,"nome do idioma, no próprio idioma (§27)",16,GB-28. Endónimo: não se traduz.
 HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O glifo da tecla vem antes e muda com o dispositivo (§26).
-HINT_DROP,largar (manter: em contínuo),drop (hold: continuous),rodapé de comandos (§24): Verbo 1,32,GB-15
-HINT_ASSUME,passagem,passage,rodapé de comandos (§24): Verbo 2,16,GB-15. Hoje o Verbo 2 só entra em passagens (Q-066).
-HINT_MARK,alvo,target,rodapé de comandos (§24): marcar alvo,16,GB-15
-HINT_WHEEL,estado · +1–6 impulso,status · +1–6 impulse,rodapé de comandos (§24): a roda do rei,32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
+HINT_DROP,moeda,coin,rodapé de comandos (§24): Verbo 1,32,GB-15
+HINT_ASSUME,interagir,interact,rodapé de comandos (§24): Verbo 2,16,GB-15. Hoje o Verbo 2 só entra em passagens (Q-066).
+HINT_MARK,habilidade,ability,rodapé de comandos (§24): marcar alvo,16,GB-15
+HINT_WHEEL,impulsos,impulses,rodapé de comandos (§24): a roda do rei,32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
 HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
 KEY_SPACE,ESPAÇO,SPACE,nome de tecla no rodapé de comandos,16,GB-15
 KEY_MOUSE_RIGHT,BOTÃO DIREITO,RIGHT CLICK,nome de botão do rato no rodapé de comandos,16,GB-15
 PAD_CROSS,CRUZ,CROSS,botão ✕ de um comando PlayStation (§24),12,"GB-15. A fonte por omissão não tem ✕ ▢ △, e no browser não há fonte de sistema que os traga — por isso o nome, até haver o atlas de ícones do §26."
 PAD_SQUARE,QUADRADO,SQUARE,botão ▢ de um comando PlayStation (§24),12,GB-15
 PAD_TRIANGLE,TRIÂNGULO,TRIANGLE,botão △ de um comando PlayStation (§24),12,GB-15
+PAD_CIRCLE,CÍRCULO,CIRCLE,botão ○ de um comando PlayStation (§24),12,"GB-15. Fecha a folha de um diário (SCREEN_REGISTER, journal: B fecha)."
 OPT_TELEMETRY,Partilhar dados anónimos,Share Anonymous Data,"telemetria, desligada por omissão (§32)",32,
 UI_TELEMETRY_PROMPT,"Queres partilhar dados anónimos de jogo para ajudar a afinar o Empire? Sem nome, sem IP. Podes mudar isto nas opções.","Share anonymous gameplay data to help tune Empire? No name, no IP. You can change this in Options.",primeiro arranque (§32),160,'Empire' é codinome — substituir quando houver nome (Bíblia de nomes).
 UI_YES,Sim,Yes,confirmação,8,
@@ -655,6 +660,12 @@ O Cavador passa por baixo e lá em cima precisam de ti","CLIMB BEFORE NIGHTFALL
 The Burrower comes from below and you are needed above",guia contextual de jogo: o rei no subsolo à tarde (P-I),160,AUD-04
 CAPTION_CHICKENS_STOLEN,[Levaram galinhas],[Chickens taken],legenda de som (§26); o Alado que chegou vivo à alvorada (Q-129),32,AUD-04
 UI_LEGACY,"Fica: {slots} obras, {seeds} Sementes Reais, {found} segredos","Kept: {slots} buildings, {seeds} Royal Seeds, {found} secrets",derrota (§16): o que o jogo novo herda (Q-134),64,AUD-05
+GUIDE_CROWN,"A COROA CAIU
+recupera-a antes da alvorada","THE CROWN HAS FALLEN
+recover it before dawn",guia contextual de jogo: o rei caído com a coroa no chão (Q-167),160,"Q-167: se uma criatura a levar, o rei morre; se ninguém a levar até à alvorada, ou se a apanhares, levanta-se."
+GUIDE_ARROWS,"AS ALJAVAS ESVAZIAM
+levanta a banca do arco: repõe-as na alvorada","QUIVERS ARE EMPTYING
+raise the bow rack: it refills them at dawn",guia contextual de jogo: as flechas das tropas (Q-163),160,"Q-163: cada tiro de uma tropa gasta uma flecha; a banca do arco de pé repõe as aljavas na alvorada, a moedas do saco do rei."
 GUIDE_HEIR,"O REI CAIU
 O herdeiro assume a coroa ao amanhecer","THE KING HAS FALLEN
 The heir takes the crown at dawn",guia contextual de jogo: a sucessão (§16),160,AUD-05 (Q-133)
@@ -699,3 +710,104 @@ UI_FRESH_START_CONFIRM,Apagar tudo e recomeçar,Erase Everything and Start Over,
 UI_CANCEL,Cancelar,Cancel,pausa: voltar sem apagar (Q-164),16,Q-164
 UI_FRESH_START_FAILED,Não foi possível apagar tudo: nada foi apagado nem recomeçou.,Could not erase everything: nothing was erased or restarted.,pausa: o recomeço do zero falhou e voltou tudo ao sítio (Q-164),72,Q-164
 BUILDING_BOW_RACK,Banca do Arco,Bow Rack,nome de conteúdo — building (Q-165),24,Q-165
+CONTEXT_LAND,{people} · terra deles; a fortaleza fica na ponta,{people} · their land; the fortress stands at the far end,guia contextual de jogo: a terra de outro povo (Q-173),160,Q-173
+CONTEXT_LAND_VASSAL,{people} · terra de vassalos teus,{people} · land of your vassals,guia contextual de jogo: a terra de um povo vassalo (Q-173),160,Q-173
+CONTEXT_EDGE,O FIM DO MUNDO · {edge}: daqui não se passa,THE END OF THE WORLD · {edge}: there is no way on,guia contextual de jogo: a borda do mundo (Q-173),160,Q-173
+CONTEXT_ASSUME,{name} · {assume} assumir: vai onde o rei não vai,{name} · {assume} take over: go where the king does not,guia contextual de jogo: trocar de classe (§08; Q-150; Q-162),160,"O Verbo 2 do rei ao pé de uma tropa tua de uma classe desbloqueada, ou do corpo dela."
+CONTEXT_BACK_TO_KING,O REI · {assume} voltar a ele,THE KING · {assume} return to him,guia contextual de jogo: voltar ao rei (§08),160,Com uma classe assumida ao pé do rei.
+CONTEXT_KING_LEASH,O rei não se afasta mais do reino · assume uma classe para ir além,The king goes no further from the realm · take over a class to go beyond,guia contextual de jogo: a trela do rei (Q-150),160,"Q-150 (o dono a 30/09/2026): o rei fica perto do império, as classes vão para longe."
+UI_WHEEL_KING_ONLY,Só o rei abre a roda.,Only the king opens the wheel.,painel: a roda do rei com uma classe assumida (§24),48,"§24: «Só com o monarca assumido. É o corpo dele, não um menu.»"
+EDGE_SEA,o mar,the sea,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+EDGE_CLIFF,a falésia,the cliff,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+EDGE_GORGE,o desfiladeiro,the gorge,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+EDGE_WALL,a muralha de rocha,the rock wall,guia contextual de jogo: a borda do mundo (Q-173),24,Q-173
+UI_MENU_TITLE,Empire,Empire,nome do jogo na pausa,16,UX-01
+UI_MENU_GAME,Jogo,Game,separador das opcoes,16,UX-01
+UI_MENU_BACK,Voltar,Back,voltar a pausa,16,UX-01
+UI_MENU_OPTIONS_SAVED,As alterações são aplicadas e guardadas automaticamente.,Changes apply and save automatically.,rodape das opcoes,96,UX-01
+UI_MENU_HINT,Setas escolher · Enter confirmar · Esc voltar,Arrows choose · Enter confirm · Esc back,navegacao da pausa com teclado,96,UX-01
+UI_MENU_EXIT_WEB,Voltar ao início,Return to Home,sair do jogo Web para a pagina inicial,24,UX-01
+UI_MENU_SAVE_DAY,O progresso é guardado antes de sair.,Progress is saved before leaving.,sair durante o dia,80,UX-01
+UI_MENU_SAVE_NIGHT,"À noite, retomas a última gravação ao voltar.","At night, returning resumes your last save.",sair sem anunciar um save da noite,96,UX-01
+UI_MENU_SAVE_FAILED,Não foi possível guardar. A partida continua aberta.,Could not save. Your game remains open.,falha de gravacao ao sair,96,UX-01
+UI_MENU_HINT_PAD,D-pad escolher · {accept} confirmar · {cancel} voltar,D-pad choose · {accept} confirm · {cancel} back,navegacao da pausa com comando,96,UX-01
+PAD_CIRCLE,círculo,circle,botao de voltar do comando PlayStation,16,UX-01
+BUILDING_CITIZEN_HOUSE,Casa de cidadãos,Citizen house,Q-170,40,
+BUILDING_ENRAMADOS_HOUSE,Casa · Enramados,House · Enramados,Q-174,60,
+BUILDING_ENRAMADOS_WORK,Oficina · Enramados,Workshop · Enramados,Q-174,60,
+BUILDING_ENRAMADOS_DEFENSE,Defesa · Enramados,Defense · Enramados,Q-174,60,
+BUILDING_PORTUARIOS_HOUSE,Casa · Portuários,House · Portuários,Q-174,60,
+BUILDING_PORTUARIOS_WORK,Oficina · Portuários,Workshop · Portuários,Q-174,60,
+BUILDING_PORTUARIOS_DEFENSE,Defesa · Portuários,Defense · Portuários,Q-174,60,
+BUILDING_FENDA_HOUSE,Casa · Fenda,House · Fenda,Q-174,60,
+BUILDING_FENDA_WORK,Oficina · Fenda,Workshop · Fenda,Q-174,60,
+BUILDING_FENDA_DEFENSE,Defesa · Fenda,Defense · Fenda,Q-174,60,
+BUILDING_HORTA_HOUSE,Casa · Horta,House · Horta,Q-174,60,
+BUILDING_HORTA_WORK,Oficina · Horta,Workshop · Horta,Q-174,60,
+BUILDING_HORTA_DEFENSE,Defesa · Horta,Defense · Horta,Q-174,60,
+BUILDING_FORNALHA_HOUSE,Casa · Fornalha,House · Fornalha,Q-174,60,
+BUILDING_FORNALHA_WORK,Oficina · Fornalha,Workshop · Fornalha,Q-174,60,
+BUILDING_FORNALHA_DEFENSE,Defesa · Fornalha,Defense · Fornalha,Q-174,60,
+BUILDING_SOBRAIZ_HOUSE,Casa · SobRaiz,House · SobRaiz,Q-174,60,
+BUILDING_SOBRAIZ_WORK,Oficina · SobRaiz,Workshop · SobRaiz,Q-174,60,
+BUILDING_SOBRAIZ_DEFENSE,Defesa · SobRaiz,Defense · SobRaiz,Q-174,60,
+BUILDING_GEADA_HOUSE,Casa · Geada,House · Geada,Q-174,60,
+BUILDING_GEADA_WORK,Oficina · Geada,Workshop · Geada,Q-174,60,
+BUILDING_GEADA_DEFENSE,Defesa · Geada,Defense · Geada,Q-174,60,
+BUILDING_BRUMA_HOUSE,Casa · Bruma,House · Bruma,Q-174,60,
+BUILDING_BRUMA_WORK,Oficina · Bruma,Workshop · Bruma,Q-174,60,
+BUILDING_BRUMA_DEFENSE,Defesa · Bruma,Defense · Bruma,Q-174,60,
+BUILDING_MERCENARY_HOUSE,Casa · Mercenários,House · Mercenários,Q-174,60,
+BUILDING_MERCENARY_WORK,Oficina · Mercenários,Workshop · Mercenários,Q-174,60,
+BUILDING_MERCENARY_DEFENSE,Defesa · Mercenários,Defense · Mercenários,Q-174,60,
+TRAVEL_TITLE,Viajar com a classe,Travel with your class,ADR 0043,160,
+TRAVEL_HINT,"De dia, para um reino conquistado com defesas de pé. O rei fica em casa.","By day, to a conquered realm with standing defenses. The king stays home.",ADR 0043,160,
+TRAVEL_HOME,Voltar ao reino de casa,Return to your home realm,ADR 0043,160,
+TRAVEL_CANCEL,Fechar,Close,ADR 0043,160,
+SEASON_SPRING,Primavera,Spring,ADR 0043,160,
+SEASON_SUMMER,Verão,Summer,ADR 0043,160,
+SEASON_AUTUMN,Outono,Autumn,ADR 0043,160,
+SEASON_WINTER,Inverno,Winter,ADR 0043,160,
+HUD_SEASON,{season} · {days} dias,{season} · {days} days,ADR 0043,160,
+GUIDE_WINTER,"No inverno os canteiros param. Pesca, galinhas e caça ainda rendem; o celeiro solta as reservas que guardaste.","In winter farms stop. Fish, hens and hunting still yield; the granary releases the reserves you stored.",ADR 0043,160,
+GUIDE_TRAVEL,"Verbo 2: viajar para um reino conquistado, de dia. Abriga-te nas defesas dele à noite.",Verb 2: travel to a conquered realm by day. Shelter behind its defenses at night.,ADR 0043,160,
+CLASS_CHOOSE_TITLE,Qual será o teu primeiro papel?,Who will you play first?,classes — início e habilidades (§08),1200,
+CLASS_CHOOSE_INTRO,"Escolhe como entrar no reino. Cada classe tem uma maneira própria de defender, explorar e evoluir.","Choose how to enter the realm. Each class defends, explores and evolves in its own way.",classes — início e habilidades (§08),1200,
+CLASS_CHOOSE_RULE,"A escolha é o teu ponto de partida. Podes assumir outros corpos durante o jogo. Só o Monarca constrói, contrata e melhora o império: aproxima-te dele e usa E / X para voltar a gerir.","This is your starting role. You can take over other bodies during play. Only the Monarch builds, recruits and upgrades the empire: approach the Monarch and press E / X to rule again.",classes — início e habilidades (§08),1200,
+CLASS_BEGIN,Começar com {name},Begin as {name},classes — início e habilidades (§08),1200,
+CLASS_ROLE_MONARCH,Defender e governar,Defend and rule,classes — início e habilidades (§08),1200,
+CLASS_ROLE_ARCHER,Explorar e concentrar fogo,Explore and focus fire,classes — início e habilidades (§08),1200,
+CLASS_ROLE_BARD,Encantar e mudar a batalha,Charm and turn the battle,classes — início e habilidades (§08),1200,
+CLASS_BASE_MONARCH,BASE · Combate próximo e defesa. As tropas ao teu redor recebem +{defense}% de defesa. O escudeiro acompanha-te: dá-lhe moedas para armar o escudo; ele apanha moedas caídas para obter a espada.,BASE · Close combat and defence. Nearby troops gain +{defense}% defence. Your squire follows: give coins to arm the shield; the squire collects fallen coins to earn a sword.,classes — início e habilidades (§08),1200,
+CLASS_EVOLVED_MONARCH,EVOLUÇÃO · A defesa sobe para +{defense}% em todo o império e o escudeiro torna-se cavaleiro. Exige {seeds} Semente Real e {feat} noites defendidas em pessoa.,EVOLUTION · Defence rises to +{defense}% across the empire and the squire becomes a knight. Requires {seeds} Royal Seed and {feat} nights defended in person.,classes — início e habilidades (§08),1200,
+CLASS_CONTROLS_MONARCH,Clique esquerdo / F / RB: espada · Botão direito / R / RT: Vigília (impulso pago). A aura de defesa é passiva · Tab / Y: outros impulsos · Espaço / A: moedas · E / X: interagir.,Left click / F / RB: sword · Right click / R / RT: Vigil (paid impulse). The defence aura is passive · Tab / Y: other impulses · Space / A: coins · E / X: interact.,classes — início e habilidades (§08),1200,
+CLASS_BASE_ARCHER,BASE · Dispara à distância sem limite de flechas. Marca um inimigo para as tuas tropas concentrarem fogo nele. Precisas de o ter ao alcance e na tua faixa.,BASE · Shoot at range with unlimited arrows. Mark an enemy so your troops focus fire on it. The target must be within range and in your band.,classes — início e habilidades (§08),1200,
+CLASS_EVOLVED_ARCHER,EVOLUÇÃO · A flecha atravessa a coluna de inimigos à tua frente e a marca passa a abranger uma área. Exige {seeds} Semente Real e {feat} inimigos marcados abatidos.,EVOLUTION · Your arrow pierces the enemy column ahead and the mark covers an area. Requires {seeds} Royal Seed and {feat} marked enemies defeated.,classes — início e habilidades (§08),1200,
+CLASS_CONTROLS_ARCHER,Clique esquerdo / F / RB: disparar (manter para repetir) · Botão direito / R / RT: marcar. Mira com o rato ou vira-te com A/D ou o direcional. E / X junto do rei: assumir o Monarca.,Left click / F / RB: shoot (hold to repeat) · Right click / R / RT: mark. Aim with the mouse or face a direction with A/D or D-pad. E / X beside the king: take over the Monarch.,classes — início e habilidades (§08),1200,
+CLASS_BASE_BARD,"BASE · Encanta criaturas fracas, que lutam por ti temporariamente. Tens um pequeno aumento de velocidade. O canto tem alcance e intervalo entre utilizações, mas não consome moedas nem munição.","BASE · Charm weak creatures into temporary allies. You gain a small speed increase. Songs have a range and interval between uses, but consume no coins or ammunition.",classes — início e habilidades (§08),1200,
+CLASS_EVOLVED_BARD,"EVOLUÇÃO · Após converter {feat} inimigos e gastar {seeds} Semente Real, tornas-te Maestro: convertes criaturas poderosas permanentemente e promoves tropas aliadas para versões superiores.","EVOLUTION · After converting {feat} enemies and spending {seeds} Royal Seed, become the Maestro: permanently convert powerful creatures and promote allied troops to superior versions.",classes — início e habilidades (§08),1200,
+CLASS_CONTROLS_BARD,"Clique esquerdo / F / RB: golpe de alaúde · Botão direito / R / RT: encantar; como Maestro, aponta a uma tropa para promover. Ataque e canto têm recargas separadas · E / X: interagir e evoluir.","Left click / F / RB: lute strike · Right click / R / RT: charm; as Maestro, aim at a troop to promote it. Attack and song recover separately · E / X: interact and evolve.",classes — início e habilidades (§08),1200,
+CONTEXT_HERO_EVOLVE,{assume} Evoluir {name} · {seeds} Semente Real · o feito já está cumprido,{assume} Evolve {name} · {seeds} Royal Seed · feat complete,classes — início e habilidades (§08),1200,
+CLASS_STATUS,{name} · fase {phase} · feitos {feat}/{goal} · {action},{name} · phase {phase} · feats {feat}/{goal} · {action},classes — início e habilidades (§08),1200,
+HINT_CHARM,encantar / promover,charm / promote,classes — início e habilidades (§08),1200,
+HINT_ATTACK,atacar,attack,combate manual — ADR 0045,1200,
+HINT_SKILL,habilidade,ability,combate manual — ADR 0045,1200,
+KEY_ATTACK,F / ESQ.,F / LEFT,combate manual — ADR 0045,1200,
+KEY_SKILL,R / DIR.,R / RIGHT,combate manual — ADR 0045,1200,
+COMBAT_TITLE,Combate,Combat,combate manual — ADR 0045,1200,
+COMBAT_READY,Pronto,Ready,combate manual — ADR 0045,1200,
+COMBAT_RECOVERING,Recarga {seconds}s,Recovering {seconds}s,combate manual — ADR 0045,1200,
+COMBAT_SWORD,Espada,Sword,combate manual — ADR 0045,1200,
+COMBAT_ARROW,Disparar,Shoot,combate manual — ADR 0045,1200,
+COMBAT_LUTE,Alaúde,Lute,combate manual — ADR 0045,1200,
+COMBAT_MARK,Marcar,Mark,combate manual — ADR 0045,1200,
+COMBAT_CHARM,Encantar,Charm,combate manual — ADR 0045,1200,
+COMBAT_ATTACK_HELP,Ataca para o lado da mira. Mantém premido para repetir ao ritmo da arma. O risco no chão mostra o alcance.,Attack toward your aim. Hold to repeat at your weapon’s pace. The ground line shows your reach.,combate manual — ADR 0045,1200,
+COMBAT_VIGIL_HELP,Vigília: as tropas não fogem esta noite. Custa moedas e deixa-as a 70% de vida amanhã. A tua aura de defesa permanece ativa.,Vigil: troops do not flee tonight. Costs coins and leaves them at 70% health tomorrow. Your defence aura remains active.,combate manual — ADR 0045,1200,
+COMBAT_MARK_HELP,Marca um inimigo ao alcance: as tuas tropas concentram fogo nele. A marca não dispara a tua flecha.,Mark an enemy in reach: your troops focus fire on it. Marking does not fire your arrow.,combate manual — ADR 0045,1200,
+COMBAT_CHARM_HELP,"Encanta uma criatura fraca ao alcance. Como Maestro, converte criaturas poderosas e promove a tropa para que apontares.","Charm a weak creature in reach. As Maestro, convert powerful creatures and promote the troop you aim at.",combate manual — ADR 0045,1200,
+COMBAT_NO_ABILITY_TARGET,Sem alvo válido na tua faixa e ao alcance da habilidade.,No valid target within ability reach in your band.,combate manual — ADR 0045,1200,
+COMBAT_SKILL_RECOVERING,O canto ainda está a recuperar.,Your song is still recovering.,combate manual — ADR 0045,1200,
+COMBAT_MARKED,Alvo marcado: as tuas tropas concentram fogo.,Target marked: your troops focus fire.,combate manual — ADR 0045,1200,
+COMBAT_CHARMED,Criatura encantada: luta agora por ti.,Creature charmed: it now fights for you.,combate manual — ADR 0045,1200,
+COMBAT_PROMOTED,Tropa promovida.,Troop promoted.,combate manual — ADR 0045,1200,

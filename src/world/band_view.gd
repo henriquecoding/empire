@@ -23,7 +23,6 @@ extends Node2D
 @export var band: Band.Kind = Band.Kind.SURFACE
 
 var _tropas: Dictionary = {}
-var _bichos: Dictionary = {}
 var _edificios: Dictionary = {}
 var _relogio: ClockData
 var _podre: RotProfile
@@ -35,11 +34,11 @@ var _visual_time := 0.0
 ## O pequeno bounce do §24 (GB-19), criado a pedido: precisa da gravidade do arco.
 var _salto: CoinBounce
 var _actors: UnitCanvas
+var _bichos_vista := CreatureView.new()
 
 
 func _ready() -> void:
 	_tropas = SimFactory.by_id(&"units")
-	_bichos = SimFactory.by_id(&"creatures")
 	_edificios = SimFactory.by_id(&"buildings")
 	_relogio = Registry.entry(&"economy", &"clock") as ClockData
 	_podre = SimFactory.rot_profile()
@@ -98,6 +97,8 @@ func _draw() -> void:
 	_criaturas()
 	if band == Band.Kind.SURFACE:
 		HuntView.draw_on(self, _luz, _visual_time)
+	CrownView.draw_on(self, band, _luz, _visual_time)  # a coroa no chao (Q-167)
+	MountView.draw_on(self, band, _luz, _visual_time)  # o cavalo de tracao (Q-169)
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
@@ -114,6 +115,10 @@ func _passagens() -> void:
 ## so e nao cabiam aqui sem passar as 250 linhas do §28 (F1-17).
 func _podridao() -> void:
 	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day, _luz)
+	RotView.draw_on(self, SimLoop.night.other_rot, _podre, SimLoop.state.day, _luz)
+	for record: Dictionary in SimLoop.field.settlements.records.values():
+		for x: float in record[&"rifts"]:
+			RotView.fissure(self, x, WorldLight.stops(_podre)[2])
 
 
 ## As luzes que sao tuas (§10, coluna `light_radius`): fogueiras, farol e o
@@ -127,8 +132,8 @@ func _fogueiras() -> void:
 			continue
 		var proprias := WorldLight.weakened(cores, WorldLight.hearth_strength(vaga))  # Q-078
 		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, proprias)
-	# O archote aceso do rei (Q-029): a mesma luz, a metade da forca, a volta dele.
-	var rei := SimLoop.units.index_of(SimLoop.king_id)
+	# O archote aceso de quem se conduz (Q-029): a mesma luz, a metade da forca.
+	var rei := SimLoop.units.index_of(Assume.driven())
 	if rei >= 0 and SimLoop.night.dark.torch.lit() and SimLoop.units.bands[rei] == int(band):
 		var chao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)))
 		RotView.lamp(
@@ -158,72 +163,12 @@ func _moedas() -> void:
 		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
 
 
-## O que a noite traz so se ve dentro de uma luz: as tuas (as obras que alumiam e
-## o archote) e o Lume roxo na base dela (ADR 0034). Fora, o corpo e silhueta — a
-## mesma cor com a luz que chega ao chao (§80), e nao uma cor nova.
+## O que a noite traz so se ve dentro de uma luz (ADR 0034); quem o desenha, com
+## o golpe, a pele e o contorno, e o CreatureView.
 func _criaturas() -> void:
-	var bichos := SimLoop.creatures
 	var luzes := _luzes_da_noite()
-	var chao := BandLight.ground_ratio(_relogio)
-	for i in bichos.count():
-		if bichos.bands[i] != int(band):
-			continue
-		var dados: CreatureData = _bichos.get(bichos.data_ids[i])
-		if dados == null:
-			continue
-		# A forma e o porte sao a diferenca entre "vem ai uma coisa" e "vem ai um
-		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
-		var forma := Silhouette.of_creature(dados)
-		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var id := bichos.ids[i]
-		var x := Smoothing.x_of(Smoothing.Group.CREATURES, id, bichos.xs[i])
-		# O golpe que se ve (StrikePose): arma-se nos ultimos instantes do cooldown
-		# de quem esta engajado, avanca quando bate e e empurrado quando leva.
-		var estilo := StrikePose.of_creature(dados)
-		CombatFx.observe(id, bichos.cooldowns[i], estilo)
-		var frente := _frente(bichos, i)
-		var falta := bichos.cooldowns[i] if bichos.engaged(i) else StrikePose.NUNCA
-		var pose := CombatFx.body(id, estilo, falta, frente)
-		var caixa := stretched(Silhouette.body_box(forma, x + pose.x, int(band), alto), pose)
-		var aceso := WorldLight.seen(x, luzes)
-		var cor := WorldLight.reveal(_luz.body(WorldPalette.BICHO, x), aceso, chao)
-		CombatFx.remember(id, caixa, forma, cor)
-		cor = cor.lerp(Color.WHITE, CombatFx.flash(id))
-		# As formas olham para a direita; quem vai para a esquerda e espelhado.
-		var centro := caixa.get_center().x
-		draw_set_transform_matrix(
-			Transform2D(0.0, Vector2(frente, 1.0), 0.0, Vector2(centro - centro * frente, 0.0))
-		)
-		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
-		CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
-		draw_set_transform_matrix(Transform2D.IDENTITY)
-		if aceso:
-			Gauge.health(
-				self, caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i]))
-			)
-
-
-## Uma caixa esticada pela pose (CombatFx.body), com os pes onde estavam.
-static func stretched(caixa: Rect2, pose: Vector4) -> Rect2:
-	var tamanho := Vector2(caixa.size.x * pose.y, caixa.size.y * pose.z)
-	var canto := Vector2(
-		caixa.get_center().x - tamanho.x * WorldPalette.MEIA, caixa.end.y - tamanho.y
-	)
-	return Rect2(canto, tamanho)
-
-
-## Para onde um bicho olha: para quem bate, para a obra que come, ou para onde
-## vai. Nunca zero — um bicho de lado nenhum nao se espelha.
-func _frente(bichos: CreatureSystem, i: int) -> float:
-	var para := bichos.goal_xs[i]
-	var u := SimLoop.units.index_of(bichos.target_ids[i])
-	if u != UnitSystem.NENHUM:
-		para = SimLoop.units.xs[u]
-	else:
-		var k := SimLoop.builds.index_of(bichos.target_slots[i])
-		if k != BuildSystem.NENHUM:
-			para = SimLoop.builds.slots[k].x
-	return -1.0 if para < bichos.xs[i] else 1.0
+	_bichos_vista.draw_on(self, band, _luz, luzes, BandLight.ground_ratio(_relogio), _visual_time)
+	ClassEffects.draw_on(self, band)
 
 
 ## As luzes em que se ve, em (x, raio): as tuas e o Lume. Com a mancha recuada e

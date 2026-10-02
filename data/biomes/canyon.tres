@@ -12,3 +12,4 @@ resources = Array[StringName]([&"rock"])
 region_screens = Vector2i(4, 6)
 music_profile = &"music_canyon"
 wildlife = Array[StringName]([&"rabbit"])
+edge_subject = &"gorge"

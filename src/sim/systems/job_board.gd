@@ -1,21 +1,15 @@
-# src/sim/systems/job_board.gd — a camada A da §52: quem trabalha onde.
 class_name JobBoard
 extends RefCounted
 
 const NENHUM := -1
 
-## Abaixo disto ninguem e atribuido. Zero e o que sai de um posto sem urgencia
-## nesta fase (a plantacao a noite) ou de quem nao serve para ele: em qualquer
-## dos casos, por la alguem era pior do que deixar a vaga aberta.
 const SCORE_MINIMO := 0.0
 
-## Metade. Nao e afinacao: e o centro de uma largura e o centro de um passo.
 const MEIO := 0.5
-## O posto da obra paga para reparar (jobs.csv, §09, Q-108).
 const REPARAR := &"repair"
 
+var territories: Dictionary = {}
 var slots: Array[JobSlot] = []
-## Quem esteve no posto na fase que acabou: e o que faz uma obra render (Q-121).
 var staffing: Staffing
 
 var _publicadas: Array = []
@@ -26,8 +20,6 @@ var _dados: Dictionary = {}
 var _anterior: Dictionary = {}
 
 
-## `postos` e JobData por id; `dados` e UnitData por id. Os dois entram de fora
-## porque a simulacao nao conhece o indice de recursos (§70).
 func _init(curva: EconomyCurve, postos: Dictionary, dados: Dictionary) -> void:
 	assert(curva != null, "o JobBoard precisa de um EconomyCurve")
 	_curva = curva
@@ -36,7 +28,6 @@ func _init(curva: EconomyCurve, postos: Dictionary, dados: Dictionary) -> void:
 	staffing = Staffing.new(postos)
 
 
-## Publica uma vaga e devolve-a, ja com o id que a coluna job_ids vai guardar.
 func post(vaga: JobSlot) -> JobSlot:
 	vaga.id = slots.size()
 	vaga.unit_id = NENHUM
@@ -44,9 +35,6 @@ func post(vaga: JobSlot) -> JobSlot:
 	return vaga
 
 
-## Esquece as vagas e quem estava nelas. E o que um segmento novo, ou um muro
-## que caiu, obrigam: uma vaga que deixou de existir nao pode continuar a
-## prender uma tropa.
 func clear() -> void:
 	slots = []
 	_anterior = {}
@@ -54,12 +42,6 @@ func clear() -> void:
 	_roster = []
 
 
-## As vagas que as obras de pe publicam (§20: "postos publicam vagas"). Chamada
-## uma vez por fase, antes do assign().
-##
-## So reconstroi o quadro quando ele mudou MESMO. Refaze-lo a cada fase apagava
-## a memoria da histerese e punha as tropas a trocar de posto de fase em fase —
-## exatamente o que ela existe para evitar.
 func publish(obras: BuildSystem) -> void:
 	var querem: Array = []
 	for obra in obras.slots:
@@ -81,12 +63,12 @@ func publish(obras: BuildSystem) -> void:
 			var na_obra := job in [&"build", REPARAR]
 			var x := obra.x if na_obra else _lugar(obra, k)
 			var vaga := post(JobSlot.new(job, x, obra.band))
+			vaga.territory = obra.territory
 			if not na_obra:
 				vaga.grants(obra)
 	_publicadas = querem
 
 
-## Reage a recrutamento, morte, faixa e classe sem reatribuir a cada movimento.
 func refresh(obras: BuildSystem, unidades: UnitSystem, fase: int) -> void:
 	publish(obras)
 	var roster: Array = [fase]
@@ -106,9 +88,6 @@ func refresh(obras: BuildSystem, unidades: UnitSystem, fase: int) -> void:
 	staffing.observe(slots, unidades, fase)
 
 
-## Onde fica a k-esima vaga de uma obra: repartidas pela largura dela, e nao
-## todas em cima do mesmo pixel. E a mesma regra da fila do §50 — posicoes
-## ATRIBUIDAS e nao emergentes, para que nao vibrem nem se empurrem.
 func _lugar(obra: BuildSlot, k: int) -> float:
 	var quantos := obra.posts()
 	if quantos <= 1:
@@ -117,8 +96,6 @@ func _lugar(obra: BuildSlot, k: int) -> float:
 	return obra.x - obra.width * MEIO + passo * (k + MEIO)
 
 
-## A vaga com este id, ou null. E o que o combate pergunta para saber se quem
-## dispara esta numa torre — "a torre nao da dano, da certeza" (§07).
 func slot_of(job_id: int) -> JobSlot:
 	return slots[job_id] if job_id >= 0 and job_id < slots.size() else null
 
@@ -131,12 +108,6 @@ func free_slots() -> int:
 	return n
 
 
-## Uma passagem, uma vez por fase (passo 3 do §43). Devolve unit_id -> id da
-## vaga, e escreve a coluna job_ids e o alvo de quem foi atribuido.
-##
-## As vagas sao percorridas por prioridade decrescente (§52) e as tropas por id
-## crescente (§42): a ordem das colunas nao e estavel e uma atribuicao que
-## dependesse dela mudava a cada morte.
 func assign(unidades: UnitSystem, fase: int) -> Dictionary:
 	var ordem := _vagas_por_prioridade()
 	var candidatos := _candidatos(unidades)
@@ -163,11 +134,10 @@ func assign(unidades: UnitSystem, fase: int) -> Dictionary:
 	return novo
 
 
-## A adequacao ao posto vezes a proximidade vezes a urgencia da fase. Os tres
-## termos sao dados: job_affinity em units.csv, job_proximity_px na curva,
-## urgency_by_phase em jobs.csv. Nenhum esta escrito aqui.
 func _score(unidades: UnitSystem, i: int, vaga: JobSlot, fase: int) -> float:
 	if i == NENHUM or unidades.bands[i] != int(vaga.band):
+		return SCORE_MINIMO
+	if int(territories.get(unidades.ids[i], 0)) != vaga.territory:
 		return SCORE_MINIMO
 	var posto: JobData = _postos.get(vaga.job_id)
 	var dados: UnitData = _dados.get(unidades.data_ids[i])
@@ -183,17 +153,12 @@ func _score(unidades: UnitSystem, i: int, vaga: JobSlot, fase: int) -> float:
 	return adequacao * proximidade * posto.urgency_by_phase[fase]
 
 
-## A histerese do prompt 4. Quem ja la esta fica sem ter de se provar outra vez;
-## quem vem de outro posto tem de superar o seu em mais de job_hysteresis.
 func _pode_mudar(unidades: UnitSystem, unit_id: int, vaga_id: int, score: float, fase: int) -> bool:
 	if not _anterior.has(unit_id) or _anterior[unit_id] == vaga_id:
 		return true
 	return score > _score_do_posto_atual(unidades, unit_id, fase) * (1.0 + _curva.job_hysteresis)
 
 
-## Quanto vale o posto que ele ja tem, NESTA fase. Recalculado e nao lembrado: o
-## que faz uma tropa mudar de posto e a fase ter mudado, e um score guardado da
-## fase anterior comparava duas coisas diferentes.
 func _score_do_posto_atual(unidades: UnitSystem, unit_id: int, fase: int) -> float:
 	var vaga_id: int = _anterior.get(unit_id, NENHUM)
 	if vaga_id < 0 or vaga_id >= slots.size():
@@ -201,12 +166,12 @@ func _score_do_posto_atual(unidades: UnitSystem, unit_id: int, fase: int) -> flo
 	return _score(unidades, unidades.index_of(unit_id), slots[vaga_id], fase)
 
 
-## Vivos, teus, e por id crescente. Um vagabundo por recrutar anda atras de
-## moedas e nao de postos (F1-04), e por isso nao e candidato a nada.
 func _candidatos(unidades: UnitSystem) -> PackedInt32Array:
 	var lista := PackedInt32Array()
 	for i in unidades.count():
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
+			continue
+		if unidades.ids[i] == unidades.pilot:
 			continue
 		lista.append(unidades.ids[i])
 	lista.sort()
@@ -229,8 +194,6 @@ func _prioridade(vaga: JobSlot) -> float:
 	return posto.priority if posto != null else SCORE_MINIMO
 
 
-## Escreve o resultado nas colunas: o posto de quem foi atribuido e o alvo em x
-## que o passo 5 vai percorrer, e NENHUM para quem ficou sem nada.
 func _escrever(unidades: UnitSystem, candidatos: PackedInt32Array, novo: Dictionary) -> void:
 	for unit_id in candidatos:
 		var i := unidades.index_of(unit_id)

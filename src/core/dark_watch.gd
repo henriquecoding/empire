@@ -33,7 +33,7 @@ func tick(
 	nucleo_x: float
 ) -> void:
 	var tropas := SimLoop.units
-	var r := tropas.index_of(SimLoop.king_id)
+	var r := tropas.index_of(Assume.driven())  # quem o jogador conduz no escuro (§08)
 	if r == NENHUM or not tropas.alive(r):
 		return
 	var noite := fase == GameClock.Phase.NIGHT
@@ -50,7 +50,7 @@ func tick(
 
 ## A luz do archote aceso, como zona do LightWard (ADR 0034); vazia se apagado.
 func ward() -> Vector4:
-	var r := SimLoop.units.index_of(SimLoop.king_id)
+	var r := SimLoop.units.index_of(Assume.driven())
 	if r == NENHUM or not torch.lit():
 		return Vector4.ZERO
 	var x := SimLoop.units.xs[r]

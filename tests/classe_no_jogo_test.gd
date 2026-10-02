@@ -114,6 +114,6 @@ func test_o_escudeiro_junta_a_caida_para_a_espada_e_o_rei_da_lhe_o_escudo() -> v
 	assert_int(SimLoop.units.carried_coins[e]).is_equal(0)
 	SimLoop.units.xs[_rei()] = x
 	SimLoop.units.carried_coins[_rei()] = 3
-	assert_bool(Verbs.arm_squire(SimLoop.units, SimLoop.king_id, SimLoop.field)).is_true()
+	assert_bool(KingVerbs.arm_squire(SimLoop.units, SimLoop.king_id, SimLoop.field)).is_true()
 	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(2)
 	assert_bool(escudeiro.shielded()).is_true()

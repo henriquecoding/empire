@@ -75,6 +75,14 @@ func test_o_guia_diz_o_estado_efectivo_e_nao_so_o_modo_guardado() -> void:
 
 func _correr(segundos: float) -> void:
 	for _t in int(segundos / STEP):
+		# O teste económico atravessa a noite. O rei agora precisa do gesto de
+		# defesa que antes era automático, tal como o jogador (ADR 0045).
+		var who := Assume.driven()
+		var target := SimLoop.creatures.index_of(SimLoop.combat.target_of(who))
+		var i := SimLoop.units.index_of(who)
+		if target >= 0 and i >= 0:
+			var direction := signf(SimLoop.creatures.xs[target] - SimLoop.units.xs[i])
+			SimLoop.intents.queue(IntentQueue.Kind.ATTACK, {&"who": who, &"direction": direction})
 		SimLoop.step(STEP)
 
 

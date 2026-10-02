@@ -54,8 +54,8 @@ static func draw_on(
 	canvas: CanvasItem, faixa: Band.Kind, tropas: Dictionary, edificios: Dictionary
 ) -> void:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
-	if rei == UnitSystem.NENHUM or not SimLoop.units.alive(rei):
-		return
+	if rei == UnitSystem.NENHUM or not SimLoop.units.alive(rei) or not Assume.king():
+		return  # so o rei paga (§08)
 	# O rei esta numa faixa so, e o preco de uma coisa noutra faixa nao e uma
 	# coisa que ele alcance (§11).
 	if int(SimLoop.units.bands[rei]) != int(faixa):
@@ -80,6 +80,7 @@ static func _obras(
 		var falta := owed_by(vaga)
 		if falta <= 0 and SimLoop.field != null:
 			falta = SimLoop.field.training.owed(vaga, SimLoop.units)
+			falta = falta if falta > 0 else SimLoop.field.mount.owed(vaga)  # o cavalo (Q-169)
 		var madeira := SimLoop.night.amargueiros
 		var subir := vaga.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]
 		if falta <= 0 or (subir and not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira)):

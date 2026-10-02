@@ -98,3 +98,17 @@ func test_o_estilo_sai_da_arma_e_do_porte() -> void:
 	assert_int(StrikePose.of_creature(Registry.entry(&"creatures", &"slime_ram"))).is_equal(S.HEAVY)
 	assert_int(StrikePose.of_creature(Registry.entry(&"creatures", &"brute"))).is_equal(S.HEAVY)
 	assert_int(StrikePose.of_unit(null)).is_equal(S.MELEE)
+
+
+## A animacao `attack` de um sprite acompanha o golpe: comeca a armar, passa o
+## impacto quando a simulacao o faz cair, e acaba em repouso.
+func test_a_linha_do_golpe_vai_de_armar_a_voltar() -> void:
+	var total := StrikePose.WINDUP_S + StrikePose.STRIKE_S + StrikePose.RECOVER_S
+	assert_float(StrikePose.timeline(StrikePose.NUNCA, StrikePose.NUNCA)).is_equal(-1.0)
+	var comeco := StrikePose.timeline(StrikePose.NUNCA, StrikePose.WINDUP_S - 0.0001)
+	assert_float(comeco).is_equal_approx(0.0, 0.001)
+	var impacto := StrikePose.timeline(0.0, StrikePose.NUNCA)
+	assert_float(impacto).is_equal_approx(StrikePose.WINDUP_S / total, 0.001)
+	assert_float(StrikePose.timeline(StrikePose.NUNCA, 0.0001)).is_equal_approx(impacto, 0.001)
+	var quase := StrikePose.timeline(StrikePose.STRIKE_S + StrikePose.RECOVER_S - 0.001, 9.0)
+	assert_float(quase).is_equal_approx(1.0, 0.01)

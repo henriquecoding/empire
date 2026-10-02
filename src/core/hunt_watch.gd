@@ -7,8 +7,22 @@
 class_name HuntWatch
 extends RefCounted
 
-## Os sitios das tocas, em torno do nucleo (§21). A primeira e o coelho do §25.
-const BUSHES := [-160.0, 770.0, -880.0, 1040.0, -1450.0, 1440.0, -1040.0, 910.0]
+## Os sitios das tocas, em torno do nucleo (§21), e de que sao (Q-150): o arbusto, o
+## buraco e a rocha dao coelhos, a arvore e o lago dao veados. O primeiro e o coelho
+## do §25, ao pe do castelo; o lago e o do pesqueiro, a leste.
+const SITIOS := [
+	[-160.0, &"bush"],
+	[770.0, &"bush"],
+	[-880.0, &"hole"],
+	[1040.0, &"rock"],
+	[-1450.0, &"tree"],
+	[1440.0, &"lake"],
+	[-1040.0, &"hole"],
+	[910.0, &"bush"],
+]
+## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
+## `economy`, que as do coelho ja gastavam antes da Q-150.
+const SAL_ESPERA := 150
 const INTRO_SECONDS := 70.0  # §25, minuto 1:10; encenacao, nao afinacao de combate.
 const BICHO := &"rabbit"
 const METADE := 0.5
@@ -43,34 +57,69 @@ static func prepare(
 
 ## As tocas da regiao, e o tempo ate ao primeiro bicho de cada uma — espalhado
 ## pelo periodo, para nao darem todas ao mesmo tempo (Q-120). A primeira da ja:
-## e o coelho do 1:10.
+## e o coelho do 1:10. Cada sitio fica para o primeiro bicho do bioma que sai dele e
+## ainda tem tocas por pôr (Q-150).
 static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
-	var dados := Registry.entry(&"wildlife", BICHO) as WildlifeData
 	var periodo := period(ClockService.clock.day_seconds() if ClockService.clock else 0.0)
+	var falta := {}
+	for dados in _bichos():
+		falta[dados.id] = dados.burrows_per_region
 	var onde: Array[float] = []
 	var esperas: Array[float] = []
-	for k in mini(dados.burrows_per_region, BUSHES.size()):
-		onde.append(clampf(core_x + BUSHES[k], 0.0, width))
-		esperas.append(0.0 if k == 0 else RngService.float_range(&"economy", 0.0, periodo))
-	hunt.burrows.place(onde, esperas)
+	var fontes := PackedStringArray()
+	var caca := PackedStringArray()
+	for sitio: Array in SITIOS:
+		for dados in _bichos():
+			if int(falta[dados.id]) <= 0 or not dados.sources.has(sitio[1]):
+				continue
+			falta[dados.id] = int(falta[dados.id]) - 1
+			var k := onde.size()
+			onde.append(clampf(core_x + float(sitio[0]), 0.0, width))
+			fontes.append(String(sitio[1]))
+			caca.append(String(dados.id))
+			if dados.id != BICHO:
+				esperas.append(RngService.scatter(hash([SAL_ESPERA, k]), 1)[0] * periodo)
+			else:
+				esperas.append(0.0 if k == 0 else RngService.float_range(&"economy", 0.0, periodo))
+			break
+	hunt.burrows.place(onde, esperas, fontes, caca)
+	hunt.wildlife = SimFactory.by_id(&"wildlife")
 
 
-## Segundos de luz entre dois bichos da mesma toca: a luz do dia vezes as tocas,
-## a dividir pela caca media do dia (hunt_yield). `dia_s` e a duracao escolhida.
+## Segundos de luz entre dois bichos da mesma toca: a luz do dia vezes as moedas que
+## as tocas todas dao de uma vez (o veado da 3, o coelho 1), a dividir pela caca media
+## do dia (hunt_yield). `dia_s` e a duracao escolhida.
 static func period(dia_s: float) -> float:
 	if _periodo.has(dia_s):
 		return _periodo[dia_s]
 	var relogio := Registry.entry(&"economy", &"clock") as ClockData
-	var dados := Registry.entry(&"wildlife", BICHO) as WildlifeData
 	var media := (SimFactory.curve().hunt_yield.x + SimFactory.curve().hunt_yield.y) * METADE
-	if media <= 0.0 or dados.burrows_per_region <= 0:
+	var moedas := 0.0
+	for dados in _bichos():
+		moedas += dados.burrows_per_region * dados.coin_yield
+	if media <= 0.0 or moedas <= 0.0:
 		return 0.0
 	var luz := 0.0
 	for fase in LUZ:
 		luz += relogio.phase_durations[fase]
 	var escala := dia_s / relogio.day_seconds if dia_s > 0.0 else 1.0
-	_periodo[dia_s] = luz * escala * dados.burrows_per_region / media
+	_periodo[dia_s] = luz * escala * moedas / media
 	return _periodo[dia_s]
+
+
+## Os bichos com tocas no bioma da regiao de casa, o coelho primeiro (o do 1:10).
+static func _bichos() -> Array[WildlifeData]:
+	var bioma := SimFactory.biome_of_segment(SimFactory.SEGMENTO_DE_PARTIDA)
+	var saida: Array[WildlifeData] = []
+	for recurso in Registry.entries(&"wildlife"):
+		var dados := recurso as WildlifeData
+		if dados.burrows_per_region > 0 and dados.biomes.has(bioma):
+			saida.append(dados)
+	saida.sort_custom(
+		func(a: WildlifeData, b: WildlifeData) -> bool:
+			return a.id == BICHO or (b.id != BICHO and String(a.id) < String(b.id))
+	)
+	return saida
 
 
 ## Um Amargueiro de pe perto de uma toca mata-a (Q-106): e o "fazer algo errado".

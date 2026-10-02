@@ -18,6 +18,9 @@ addons/**       !filter !diff !merge text=auto
 art/export/_placeholder/** -filter -diff -merge binary
 art/export/enramados/** -filter -diff -merge binary
 art/source/originals/** -filter -diff -merge binary
+# Proxies gratuitos pequenos: o CI e o site fazem checkout sem LFS.
+art/export/temporary/*.png -filter -diff -merge binary
+art/source/temporary/**/*.png -filter -diff -merge binary
 
 # Ficheiros do Godot sao texto: tem de dar diff legivel numa revisao
 *.gd    text eol=lf

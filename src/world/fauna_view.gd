@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 		_enxame = Wilds.swarm(_dia)
 	for faixa in _luzes.size():
 		_acender(_luzes[faixa], faixa, fase, relogio.phase_progress())
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	var rei_aqui := i != UnitSystem.NENHUM and int(SimLoop.units.bands[i]) == Band.Kind.SURFACE
 	_fauna.tick(delta, SimLoop.units.xs[i] if rei_aqui else 0.0, rei_aqui)
 	queue_redraw()
@@ -61,13 +61,13 @@ func _soltar() -> void:
 	if chave == _chave:
 		return
 	_chave = chave
-	var de := -SimLoop.wild_px  # e nas terras bravias (Q-154)
-	var largura := SimLoop.world_width + SimLoop.wild_px
+	var limites := Frontier.walk_limits()  # e nas terras, ate a beira de cada borda (Q-173)
 	var regiao := SimLoop.state.region
 	var campo := Wilds.table(Wilds.CAMPO, bioma)
-	var plantas := Wilds.plants(campo, de, largura, regiao, Wilds.SAL.campo, Wilds.woods())
-	var lista := Wilds.animals(Wilds.table(Wilds.FAUNA, bioma), de, largura, regiao, plantas)
-	_fauna.populate(lista, largura)
+	var plantas := Wilds.plants(campo, limites.x, limites.y, regiao, Wilds.SAL.campo, Wilds.woods())
+	var fauna := Wilds.table(Wilds.FAUNA, bioma)
+	var lista := Wilds.animals(fauna, limites.x, limites.y, regiao, plantas)
+	_fauna.populate(lista, SimLoop.world_width, limites)
 
 
 func _draw() -> void:

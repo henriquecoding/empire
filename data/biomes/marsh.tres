@@ -6,10 +6,11 @@
 script = ExtResource("1_yp0wo")
 id = &"marsh"
 display_key = "BIOME_MARSH"
-people = &"paul"
+people = &"bruma"
 creature_table = Array[StringName]([&"crawler", &"winged", &"brute", &"burrower", &"slime_ram", &"devourer"])
 resources = Array[StringName]([&"water", &"fertile"])
 atmosphere_preset = &"closed"
 parallax_preset = &"closed"
 region_screens = Vector2i(4, 6)
 music_profile = &"music_marsh"
+edge_subject = &"sea"

@@ -1597,5 +1597,85 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "UX-01": {
+  "title": "Reformular a pausa e corrigir o corte visual",
+  "porque": "O menu crescia para fora da janela e misturava opções com as ações do jogo.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/26-acessibilidade-e-steam-deck-verified.md",
+   "docs/ux/UI_UX_FLOWS.md"
+  ],
+  "depende": "GB-13",
+  "feito": "Pausa, opções, controlos e confirmação separados, com foco seguro, Voltar, pixel art e altura limitada. Compensa o canvas reduzido em telemóvel.",
+  "fora": "Novas mecânicas, cloud saves, multiplayer, áudio e remapeamento.",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "ART-TEMP-01": {
+  "title": "Assets gratuitos temporarios para testar a gameplay",
+  "porque": "Pedido explicito do dono: usar apenas gratuitos na main enquanto cria a arte definitiva.",
+  "spec": [
+   "docs/adr/0042-assets-gratuitos-temporarios.md"
+  ],
+  "depende": "—",
+  "feito": "Personagens, criaturas, floresta, terreno e props gratuitos integrados com creditos, testes e exports reproduziveis.",
+  "fora": "Arte definitiva e alteracoes das regras de gameplay.",
+  "estado": "feito — assets gratuitos integrados, testes, portoes e render verificados (ADR 0042).",
+  "horas": "—"
+ },
+ "QP-01": {
+  "title": "Aplicar as onze respostas restantes do painel",
+  "porque": "Respostas aprovadas ainda por implementar",
+  "spec": [
+   "docs/adr/0043-as-onze-respostas-restantes-do-painel.md"
+  ],
+  "depende": "UX-01",
+  "feito": "Onze decisões integradas, validadas, publicadas e painel atualizado",
+  "fora": "Assets, áudio, quinze respostas anteriores",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-170/171/172/174/175/176/177/178/179/180/182"
+  ]
+ },
+ "CLASSES-01": {
+  "title": "Três classes na primeira escolha",
+  "porque": "O dono pediu escolha inicial e a jogabilidade completa do §08.",
+  "spec": [
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "Q-114, Q-140, Q-150, Q-162, Q-163",
+  "feito": "Escolha inicial de Monarca, Arqueiro e Bardo; habilidades e evoluções, save e verificação de combate e interface.",
+  "fora": "Trepador, novas classes e arte final.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [
+   "Escolha pausada com confirmação",
+   "Completar marca, perfuração, encanto e conversão",
+   "Evolução e promoção pelos dados",
+   "Testes e export Web"
+  ]
+ },
+ "COMBAT-01": {
+  "title": "Combate direto das classes",
+  "porque": "Ataque e habilidade precisam de botões e resposta clara ao jogador.",
+  "spec": [
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "CLASSES-01",
+  "feito": "Ataque manual, habilidade separada, mira, recarga e verificação de combate.",
+  "fora": "Novas classes e arte final.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [
+   "Ataque determinista por intenção",
+   "Habilidades com comandos próprios",
+   "Botões e efeitos de combate",
+   "Testes, export, PR e publicação"
+  ]
  }
 }

@@ -14,7 +14,7 @@ targets_bands = Array[int]([1, 0])
 recruit_cost = 3
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
 move_speed = 80.0
-layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"ranged", &"hunter"])
 job_affinity = {
 &"farm": 0.3,
@@ -23,6 +23,7 @@ job_affinity = {
 &"wall": 1.0
 }
 coin_capacity = 11
+ammo = 30
 trained_at = &"bow_rack"
 weapon_kind = &"bow"
 head_pool = Array[StringName]([&"hood", &"cap", &"bare"])

@@ -39,6 +39,8 @@ extends Resource
 @export var job_affinity: Dictionary = {}
 ## Moedas que transporta; largadas na morte (§07, regra 4).
 @export var coin_capacity: int = 0
+## Quantos tiros leva a aljava da tropa (Q-163); 0 e sem teto, como as classes jogaveis.
+@export var ammo: int = 0
 ## Onde se treina e quantos dias demora (§09, §10). Vazio = recrutamento direto.
 @export var trained_at: StringName = &""
 @export var train_days: int = 0

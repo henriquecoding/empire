@@ -11,6 +11,7 @@ const NENHUM := -1
 const HALF := 0.5
 
 ## A chave do JobData: &"wall", &"farm", &"tower". Nao e texto para o ecra.
+var territory := 0
 var job_id: StringName = &""
 var x: float = 0.0
 var band: Band.Kind = Band.Kind.SURFACE

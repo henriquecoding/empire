@@ -1,20 +1,4 @@
-# src/sim/systems/target_picker.gd — "Escolher alvos", que e o passo do §50 com
-# regra propria, e por isso e ficheiro proprio.
-#
-# A ordem de prioridade e a da §50, tal e qual, e nao se reordena:
-#
-#   alvo marcado pelo Arqueiro > alvo atual se ainda vivo e em alcance >
-#   mais proximo em faixa atingivel
-#
-# O termo do meio e o que interessa: "nunca reescolher se o alvo atual serve —
-# e o que evita o desperdicio de flechas que o Kingdom tem". E por isso que a
-# escolha tem memoria e nao e uma funcao de uma linha.
-#
-# Corre no passo 4 do §43, que e o passo que escreve "estado, alvo, intencao de
-# movimento" — e um alvo e exatamente isso. Quem resolve os golpes e o
-# CombatSystem, no passo 6.
-#
-# Puro e determinista: nao sorteia nada. Por id crescente (§42).
+# §50: marca > alvo ainda em alcance > mais proximo. Nunca depende da ordem das colunas.
 class_name TargetPicker
 extends RefCounted
 
@@ -29,6 +13,9 @@ const MEIO := 0.5
 
 ## A fila de contacto do §50: quem engaja e quem espera.
 var fila: ContactQueue
+var focused: Dictionary = {}
+var song: BardSong
+var controlled := UnitSystem.NENHUM
 
 var _postos: JobBoard
 var _unidades: Dictionary = {}
@@ -71,6 +58,8 @@ func choose(
 	passagens: PackedFloat32Array = PackedFloat32Array()
 ) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
+	if song != null:
+		song.plan(unidades, criaturas)
 	for unit_id in ids_por_ordem(unidades.ids):
 		var i := unidades.index_of(unit_id)
 		if not unidades.alive(i) or unidades.owners[i] == RecruitSystem.SEM_DONO:
@@ -79,7 +68,8 @@ func choose(
 		if dados == null or dados.damage <= SEM_DANO:
 			continue
 		_alvos[unit_id] = _da_tropa(unidades, i, dados, criaturas)
-		_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
+		if unit_id != controlled:
+			_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
 	for subiu in Passages.surface(criaturas, _criaturas, passagens):
 		(
 			eventos
@@ -105,6 +95,9 @@ static func ids_por_ordem(ids: PackedInt32Array) -> PackedInt32Array:
 
 func _da_tropa(unidades: UnitSystem, i: int, dados: UnitData, criaturas: CreatureSystem) -> int:
 	var unit_id := unidades.ids[i]
+	for target: int in focused.get(unidades.owners[i], PackedInt32Array()):
+		if _serve(unidades, i, dados, criaturas, target):
+			return target
 	var marcado: int = _marcados.get(unit_id, NENHUM)
 	if _serve(unidades, i, dados, criaturas, marcado):
 		return marcado
@@ -118,7 +111,7 @@ func _da_tropa(unidades: UnitSystem, i: int, dados: UnitData, criaturas: Creatur
 func _serve(
 	unidades: UnitSystem, i: int, dados: UnitData, criaturas: CreatureSystem, alvo: int
 ) -> bool:
-	if alvo == NENHUM:
+	if alvo == NENHUM or song != null and song.allies.has(alvo):
 		return false
 	var c := criaturas.index_of(alvo)
 	if c == NENHUM or not criaturas.alive(c):
@@ -132,7 +125,7 @@ func _mais_proxima(unidades: UnitSystem, i: int, dados: UnitData, criaturas: Cre
 	var melhor := NENHUM
 	var melhor_d := Posts.range_px(_postos, unidades, i, dados)
 	for c in criaturas.count():
-		if not criaturas.alive(c):
+		if not criaturas.alive(c) or song != null and song.allies.has(criaturas.ids[c]):
 			continue
 		if not Posts.reaches(_postos, unidades, i, dados, int(criaturas.bands[c])):
 			continue
@@ -169,6 +162,8 @@ func _das_criaturas(
 ) -> Array[Dictionary]:
 	var por_muro := {}
 	for creature_id in ids_por_ordem(criaturas.ids):
+		if song != null and song.allies.has(creature_id):
+			continue
 		var c := criaturas.index_of(creature_id)
 		if not criaturas.alive(c):
 			continue
@@ -178,6 +173,11 @@ func _das_criaturas(
 		if dados == null or dados.damage <= SEM_DANO:
 			continue
 		var muro := _muro_que_trava(criaturas, c, obras)
+		if muro != null and song != null and dados.target_priority == MAIS_PROXIMO:
+			var ally := song.defender(criaturas, c, dados, NENHUM, INF, muro)
+			if ally != NENHUM:
+				criaturas.target_ids[c] = ally
+				continue
 		if muro == null:
 			if dados.target_priority == MAIS_PROXIMO:
 				criaturas.target_ids[c] = _tropa_mais_proxima(unidades, criaturas, c, dados)
@@ -244,4 +244,6 @@ func _tropa_mais_proxima(
 		if d <= melhor_d:
 			melhor_d = d
 			melhor = unidades.ids[i]
+	if song != null:
+		return song.defender(criaturas, c, dados, melhor, melhor_d)
 	return melhor

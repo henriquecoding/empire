@@ -78,7 +78,7 @@ static func _destino(loop: Node, rei: int, onde: float) -> float:
 	# largar ficava preso a largar e a apanhar a mesma, no mesmo sitio, o dia
 	# inteiro — foi o que ele fez na primeira corrida.
 	if saco <= 0:
-		return _moeda_mais_perto(loop, onde)
+		return _moeda_mais_perto(loop, rei, onde)
 	# Recruta quem passa ao lado — e o minuto 0:20 do §25, e nao custa desvio
 	# nenhum — e no resto do tempo paga a obra mais perto que o saco chega para
 	# levantar. Sem isto o piloto gastava as seis moedas da partida em gente e
@@ -94,14 +94,18 @@ static func _destino(loop: Node, rei: int, onde: float) -> float:
 		return obra
 	if not is_inf(gente):
 		return gente
-	return _moeda_mais_perto(loop, onde)
+	return _moeda_mais_perto(loop, rei, onde)
 
 
-static func _moeda_mais_perto(loop: Node, onde: float) -> float:
+## So as da faixa do rei: as moedas de uma masmorra estao la em baixo (Q-173), e um
+## piloto que fosse ao x delas a superficie ficava parado por cima delas o dia todo.
+static func _moeda_mais_perto(loop: Node, rei: int, onde: float) -> float:
 	var melhor := INF
 	var moedas: CoinSystem = loop.coins
 	for i in moedas.count():
 		var x: float = moedas.xs[i]
+		if int(moedas.bands[i]) != int(loop.units.bands[rei]):
+			continue
 		if is_inf(melhor) or absf(x - onde) < absf(melhor - onde):
 			melhor = x
 	return melhor

@@ -12,12 +12,12 @@ max_health_b = 210
 guard_posts_a = 4
 contact_slots = 4
 material_by_people = {
+&"bruma": &"stone",
 &"enramados": &"stone",
 &"fenda": &"stone",
 &"fornalha": &"basalt",
 &"geada": &"packed_ice",
 &"horta": &"stone",
-&"paul": &"stone",
 &"portuarios": &"coral"
 }
 max_health_a = 105

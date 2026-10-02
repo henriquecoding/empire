@@ -8,13 +8,18 @@ extends GdUnitTestSuite
 const CAIXA := Rect2(100.0, 470.0, 24.0, 30.0)
 
 
+## Como o CombatFx o guarda: [t, caixa, forma, cor, pele].
+func _visto(pele: Array = []) -> Array:
+	return [0.0, CAIXA, Silhouette.Form.BRUTO, Color.RED, pele]
+
+
 func _meio(de: float, ate: float) -> float:
 	return (de + ate) * 0.5
 
 
 func test_uma_morte_deixa_pedacos_e_depois_nada() -> void:
 	var m := DeathBurst.new()
-	m.burst(CAIXA, Silhouette.Form.BRUTO, Color.RED, 1.0, 0.0, _meio)
+	m.burst(_visto(), 1.0, 0.0, _meio)
 	var n := m.pieces().size()
 	assert_int(n).is_between(DeathBurst.PEDACOS.min, DeathBurst.PEDACOS.max)
 	var t := 0.0
@@ -27,7 +32,7 @@ func test_uma_morte_deixa_pedacos_e_depois_nada() -> void:
 ## Os pedacos vao para o lado do golpe, saltam, e nunca atravessam o chao.
 func test_os_pedacos_saltam_para_o_lado_do_golpe_e_ficam_no_chao() -> void:
 	var m := DeathBurst.new()
-	m.burst(CAIXA, Silhouette.Form.BRUTO, Color.RED, -1.0, 0.0, _meio)
+	m.burst(_visto(), -1.0, 0.0, _meio)
 	var t := 0.0
 	for k in 30:
 		t += 1.0 / 60.0
@@ -52,4 +57,17 @@ func test_o_po_de_uma_tropa_caida_assenta() -> void:
 	m.dust(Vector2(10.0, 500.0), 0.0)
 	assert_int(m.live()).is_greater(0)
 	m.step(0.1, DeathBurst.VIDA_S + 1.0)
+	assert_int(m.live()).is_equal(0)
+
+
+## Com pele, a morte e a animacao `die` dela: dura o que a tag dura, e acaba.
+func test_com_pele_a_morte_passa_a_animacao_die() -> void:
+	var m := DeathBurst.new()
+	var arte := OriginalArt.new()
+	var die := arte.action_seconds(&"temp_brute", &"die")
+	assert_float(die).is_greater(0.0)
+	m.burst(_visto([&"temp_brute", -1.0, Color.WHITE, true]), 1.0, 0.0, _meio)
+	m.step(0.1, DeathBurst.SEGURA_S + die * 0.5)
+	assert_int(m.live()).is_greater(0)
+	m.step(0.1, DeathBurst.SEGURA_S + die + DeathBurst.DESFAZ_S + DeathBurst.VIDA_S)
 	assert_int(m.live()).is_equal(0)

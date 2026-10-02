@@ -11,6 +11,7 @@ biome = &"floodplain"
 architecture_source = "Lezíria do Tejo + celeiros de estrutura de madeira ingleses"
 roof_silhouette = "Enorme e liso, com uma única inclinação"
 landmark = &"silo"
+segment_kit = Array[StringName]([&"horta_empty_01", &"horta_empty_02", &"horta_empty_03", &"horta_forest_01", &"horta_ruin_01", &"horta_fortress_01", &"horta_edge_01", &"horta_vagrant_camp_01", &"horta_mercenary_camp_01", &"horta_threshold_gate", &"horta_threshold_bridge", &"horta_threshold_rock_fault", &"horta_threshold_ruined_wall", &"horta_settlement_houses", &"horta_settlement_farmsteads", &"horta_edge_sea", &"horta_edge_gorge", &"horta_edge_wall", &"horta_water_01"])
 palette_ramp = &"horta"
 wall_material = &"wattle"
 economy_strength = &"farming"
@@ -20,6 +21,9 @@ economy_modifiers = {
 }
 defense_trait = &"numbers"
 unique_unit = &"sower"
+local_house = &"horta_house"
+local_work = &"horta_work"
+local_defense = &"horta_defense"
 playable_class = &"bard"
 starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant", &"vagrant"])
 starting_buildings = Array[StringName]([&"core", &"farm"])

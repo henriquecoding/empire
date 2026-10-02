@@ -65,7 +65,7 @@ func _nucleo() -> int:
 
 
 func _saco() -> int:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	return SimLoop.units.carried_coins[i] if i != UnitSystem.NENHUM else 0
 
 

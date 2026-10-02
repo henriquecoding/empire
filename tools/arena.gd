@@ -5,8 +5,11 @@
 # Isto poe tropas tuas e criaturas frente a frente, de dia e ao pe do rei, e
 # grava um PNG a cada `--cada` frames, recortado a volta da luta.
 #
-#   xvfb-run -a godot --path . tools/arena.tscn -- --novo --semente 7 \
+#   xvfb-run -a godot --path . tools/arena.tscn -- --novo --semente 7 --classe monarch \
 #     --saida build/arena --quadros 24 --cada 3 [--avancar 310] [--registo]
+#
+# O `--classe` salta a escolha inicial de classe (ADR 0045), que de outro modo
+# parava a partida a espera de quem escolhe.
 #
 # O estado e preparado a mao e nao natural: serve para ver a apresentacao, e
 # nao mede balanceamento nenhum.

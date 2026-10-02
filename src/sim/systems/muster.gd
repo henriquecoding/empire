@@ -29,7 +29,9 @@ static func plan(
 		dono = unidades.owners[r]
 	var lutam: Array[int] = []
 	for i in unidades.count():
-		if unidades.ids[i] == rei or unidades.owners[i] != dono or not unidades.alive(i):
+		if unidades.ids[i] in [rei, unidades.pilot] or unidades.owners[i] != dono:
+			continue
+		if not unidades.alive(i):
 			continue
 		if unidades.job_ids[i] != UnitSystem.NENHUM:
 			continue

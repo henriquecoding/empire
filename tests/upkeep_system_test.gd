@@ -109,3 +109,17 @@ func test_vai_no_save() -> void:
 	copia.from_dict(manutencao.to_dict())
 	assert_float(copia.owed).is_equal(0.5)
 	assert_int(int(copia.resting[7])).is_equal(4)
+
+
+func test_mercenary_is_paid_even_below_free_troop_threshold() -> void:
+	manutencao.mercenary_wage = 1.0
+	_tropas(&"mercenary", 1)
+	unidades.carried_coins[unidades.index_of(rei)] = 5
+	manutencao.dawn(unidades, rei, economia, 2)
+	assert_int(unidades.carried_coins[unidades.index_of(rei)]).is_equal(4)
+
+
+func test_foreign_armies_are_not_charged_to_the_king() -> void:
+	for k in 20:
+		unidades.spawn(estado, Registry.entry(&"units", &"archer"), 100, float(k))
+	assert_int(manutencao.troops(unidades, rei)).is_equal(0)

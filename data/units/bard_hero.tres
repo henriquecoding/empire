@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_5f7vo"]
+
+[resource]
+script = ExtResource("1_5f7vo")
+id = &"bard_hero"
+display_key = "UNIT_BARD_HERO"
+max_health = 12
+recruit_cost = 0
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+move_speed = 80.0
+scale_tier = 3
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
+tags = Array[StringName]([&"craft", &"bard", &"charm", &"playable"])
+job_affinity = {
+&"perform": 1.0
+}
+coin_capacity = 5
+ability = &"charm_weak"
+ability_params = {
+&"duration": 30.0,
+&"manual_buffer": 0.18,
+&"manual_damage": 2.0,
+&"manual_interval": 1.2,
+&"manual_range": 28.0,
+&"radius": 120.0
+}
+head_pool = Array[StringName]([&"hat_bard"])

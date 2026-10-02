@@ -51,6 +51,10 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		var moving := not is_equal_approx(x, old_x)
 		if moving:
 			_facing[id] = signf(x - old_x)
+		if id == Assume.driven():
+			_facing[id] = CombatInput.aim_direction()
+		if CombatView.attacks.has(id):
+			_facing[id] = CombatView.attacks[id][&"direction"]
 		_previous[id] = x
 		if units.healths[i] < int(_health.get(id, units.healths[i])):
 			_hit_until[id] = time + HIT_SECONDS
@@ -59,22 +63,35 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		var estilo := StrikePose.of_unit(data)
 		CombatFx.observe(id, units.cooldowns[i], estilo)
 		var luta := units.states[i] == UnitFsm.State.FIGHT
-		if luta:
+		var manual := id == Assume.driven() or CombatView.attacks.has(id)
+		if luta and not manual:  # quem se conduz aponta com a mira (ADR 0045)
 			_facing[id] = CombatFx.facing(id, x, _facing.get(id, 1.0))
 		var facing: float = _facing.get(id, 1.0)
-		var pose := CombatFx.body(id, estilo, units.cooldowns[i] if luta else INF, facing)
-		var angle := CombatFx.fall(id) if not units.alive(i) else 0.0
+		var falta := units.cooldowns[i] if luta else INF
+		var pose := CombatFx.body(id, estilo, falta, facing)
 		if not visible.has_point(Vector2(x, visible.get_center().y)):
 			continue
 		var profile := OriginalArt.unit_profile(units.data_ids[i])
+		# Sem a animacao `die`, quem cai roda para o chao; com ela, e ela que cai.
+		var morto := not units.alive(i) and not _art.has_action(profile, &"die")
+		var angle := CombatFx.fall(id) if morto else 0.0
 		var foot := Vector2(x + pose.x, WorldPalette.ground_of(int(band)))
 		if profile.is_empty():
 			_procedural(canvas, data, {"i": i, "foot": foot, "pose": pose}, light, time)
 			continue
 		var hit := time < float(_hit_until.get(id, 0.0))
 		var kind := ActorAction.of(units.states[i] as UnitFsm.State, moving, hit)
+		if units.alive(i) and not hit and CombatView.attacks.has(id):
+			kind = ActorAction.Kind.ATTACK
+		# A animacao `attack` acompanha o golpe da simulacao (CombatFx), e entre
+		# dois golpes o corpo descansa: e o ritmo que diz quando vem o proximo.
+		var golpe := CombatFx.attack_frame(_art, profile, id, falta)
+		if kind == ActorAction.Kind.ATTACK and golpe < 0 and not CombatView.attacks.has(id):
+			kind = ActorAction.Kind.WALK if moving else ActorAction.Kind.IDLE
 		var shown := ActorAction.shown(_art, profile, kind)
 		var frame := _frame(id, profile, kind, shown, time)
+		if kind == ActorAction.Kind.ATTACK and golpe >= 0:
+			frame = golpe
 		# Sem ciclo de caminhada desenhado, o baloico de um pixel e o que diz que
 		# anda; com ele, e a arte que o diz.
 		var animated := shown in [ActorAction.Kind.WALK, ActorAction.Kind.FLEE]
@@ -190,6 +207,8 @@ func _procedural(
 	)
 	var cor := light.body(WorldPalette.unit_color(units, i), foot.x)
 	ActorArt.draw_unit(canvas, box, data, units, i, cor, time)
+	if data.tags.has(&"bard"):
+		BardArt.draw_on(canvas, box, float(SimLoop.field.song.cooldowns.get(units.ids[i], 0.0)))
 	var branco := CombatFx.flash(units.ids[i])
 	if branco > 0.0:
 		canvas.draw_rect(box, Color(WorldPalette.FLASH, WorldPalette.FLASH.a * branco))
@@ -217,8 +236,9 @@ func _frame(
 ## O saco de cada um; o do escudeiro e o escudo, que e o que ele guarda (Q-114); o
 ## rei traz, alem dele, o armazenamento de quem se joga (Q-153).
 func _saco(canvas: CanvasItem, box: Rect2, units: UnitSystem, i: int) -> void:
-	if SimLoop.field != null and units.ids[i] == SimLoop.king_id:
-		Gauge.kit(canvas, box, SimLoop.field.classes.storage.count(Storage.ARCHOTE))
+	if SimLoop.field != null and units.ids[i] in [SimLoop.king_id, units.pilot]:
+		var armazem := Assume.storage(units, units.ids[i], SimLoop.field)
+		Gauge.kit(canvas, box, armazem.count(Storage.ARCHOTE))
 	var escudeiro := SimLoop.field.classes.squire if SimLoop.field != null else null
 	var dados: UnitData = _data.get(units.data_ids[i])
 	if escudeiro != null and dados != null and dados.tags.has(&"collects_coins"):

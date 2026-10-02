@@ -320,6 +320,10 @@ async function main() {
     const controlos = html.match(/<div class="controlos">[\s\S]*?<\/dl><\/div>/)?.[0] || "";
     resultado(`/jogar/${q}: os controlos do project.godot estão lá`, (controlos.match(/<dt>/g) || []).length === TEXTOS.pt.controlos.acoes.length);
     const { ctx, p, erros, pedidos } = await nova(b, base, 1280, "dark");
+    const classes = [];
+    p.on("console", (msg) => {
+      if (msg.text().includes("Empire · classe inicial ")) classes.push(msg.text());
+    });
     await p.goto(base + "/jogar/" + q, { waitUntil: "load" });
     resultado(`/jogar/${q}: a língua é ${q ? "en" : "pt-PT"}`, (await p.evaluate(() => document.documentElement.lang)) === (q ? "en" : "pt-PT"));
     const saiu = await p.waitForFunction(() => !document.getElementById("status"), null, { timeout: JOGO_S * 1000 })
@@ -327,8 +331,28 @@ async function main() {
     resultado(`/jogar/${q}: o carregamento acaba em menos de ${JOGO_S} s`, saiu);
     const canvas = await p.evaluate(() => { const c = document.getElementById("canvas"); return c ? [c.width, c.height] : [0, 0]; });
     resultado(`/jogar/${q}: o canvas tem tamanho`, canvas[0] > 0 && canvas[1] > 0, canvas.join("×"));
-    resultado(`/jogar/${q}: sem erros de JavaScript`, erros.length === 0, erros.slice(0, 2).join(" | "));
     violacoes.push(...(await p.evaluate(() => window.__csp)).map((v) => `/jogar/${q}: ${v}`));
+    if (saiu) {
+      await p.locator("#canvas").focus();
+      await p.waitForTimeout(200);
+      for (let i = 0; i < 3; i++) {
+        await p.keyboard.press("Tab");
+        await p.waitForTimeout(80);
+      }
+      await p.keyboard.press("Enter");
+      await p.waitForTimeout(150);
+      resultado(`/jogar/${q}: a primeira classe confirma-se pelo teclado`, classes.some((msg) => msg.includes("classe inicial monarch")));
+      await p.keyboard.press("Escape");
+      await p.waitForTimeout(150);
+      for (let i = 0; i < 4; i++) {
+        await p.keyboard.press("ArrowDown");
+        await p.waitForTimeout(80);
+      }
+      await p.keyboard.press("Enter");
+      const voltou = await p.waitForURL(base + "/", { timeout: 10000 }).then(() => true, () => false);
+      resultado(`/jogar/${q}: a pausa volta à home pelo teclado com a CSP estrita`, voltou);
+    }
+    resultado(`/jogar/${q}: sem erros de JavaScript`, erros.length === 0, erros.slice(0, 2).join(" | "));
     pedidos.filter((u) => !u.startsWith(base) && !/^(data|blob):/.test(u)).forEach((u) => externos.add(`/jogar/ → ${u}`));
     await ctx.close();
   }

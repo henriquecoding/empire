@@ -11,14 +11,14 @@ damage = 5
 attack_interval = 1.0
 accuracy_open = 1.0
 range_px = 26
-targets_bands = Array[int]([1, 0])
+targets_bands = Array[int]([1, 0, 2])
 recruit_cost = 6
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
 move_speed = 92.0
 scale_tier = 3
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
-tags = Array[StringName]([&"agile", &"climbs"])
+tags = Array[StringName]([&"agile", &"climbs", &"playable"])
 job_affinity = {
 &"hunt": 0.8,
 &"wall": 0.6

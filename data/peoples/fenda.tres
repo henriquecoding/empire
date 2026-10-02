@@ -11,6 +11,7 @@ biome = &"canyon"
 architecture_source = "Petra + celeiros dogon da falésia de Bandiagara + aldeias de xisto da Serra da Lousã"
 roof_silhouette = "Não há — a silhueta é o negativo do desfiladeiro"
 landmark = &"carved_gate"
+segment_kit = Array[StringName]([&"fenda_empty_01", &"fenda_empty_02", &"fenda_empty_03", &"fenda_forest_01", &"fenda_ruin_01", &"fenda_fortress_01", &"fenda_edge_01", &"fenda_vagrant_camp_01", &"fenda_mercenary_camp_01", &"fenda_threshold_gate", &"fenda_threshold_bridge", &"fenda_threshold_rock_fault", &"fenda_threshold_ruined_wall", &"fenda_settlement_houses", &"fenda_settlement_farmsteads", &"fenda_edge_sea", &"fenda_edge_gorge", &"fenda_edge_wall", &"fenda_water_01"])
 palette_ramp = &"fenda"
 wall_material = &"rock_shards"
 economy_strength = &"stone_and_ore"
@@ -19,6 +20,9 @@ economy_modifiers = {
 }
 defense_trait = &"chokepoint"
 unique_unit = &"counterweight_ram"
+local_house = &"fenda_house"
+local_work = &"fenda_work"
+local_defense = &"fenda_defense"
 playable_class = &"monarch"
 starting_units = Array[StringName]([&"monarch", &"squire", &"vagrant"])
 starting_buildings = Array[StringName]([&"core"])

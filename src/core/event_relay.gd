@@ -64,6 +64,10 @@ static func combat(eventos: Array[Dictionary]) -> Array[Dictionary]:
 			CombatSystem.EV_FAIXA:
 				var faixas: Array = e[CombatSystem.PARA]
 				EventBus.queue(&"passage_used", [e[CombatSystem.DE], faixas[0], faixas[1]])
+			Disarm.EV:  # largou a arma e foge como trabalhador (Q-168)
+				EventBus.queue(&"weapon_dropped", [e[CombatSystem.ONDE], e[CombatSystem.FAIXA], 1])
+				EventBus.queue(&"unit_fled", [e[CombatSystem.DE], &"disarmed"])
+				_sobra(e, larga)
 	return larga
 
 
@@ -158,6 +162,16 @@ static func _dano(e: Dictionary) -> void:
 	)
 
 
+## O que ja nao cabe no saco de quem largou a arma cai onde ele caiu (§50).
+static func _sobra(e: Dictionary, larga: Array[Dictionary]) -> void:
+	var moedas: int = e.get(CombatSystem.MOEDAS, 0)
+	if moedas > 0:
+		var onde: float = e[CombatSystem.ONDE]
+		larga.append(
+			{ONDE: onde, FAIXA: e[CombatSystem.FAIXA], QUANTO: moedas, PORQUE: FONTE_MORTE}
+		)
+
+
 static func _morte(e: Dictionary, larga: Array[Dictionary]) -> void:
 	var moedas: int = e[CombatSystem.MOEDAS]
 	if moedas > 0:
@@ -177,6 +191,8 @@ static func _morte(e: Dictionary, larga: Array[Dictionary]) -> void:
 			&"creature_died", [e[CombatSystem.DE], e[CombatSystem.ONDE], e[CombatSystem.FAIXA]]
 		)
 		return
+	if CrownWatch.fell(e):
+		return  # o rei caiu e a coroa esta no chao: a morte fica por anunciar (Q-167)
 	var drops := PackedStringArray()
 	for d in e.get(CombatSystem.LARGA, []):
 		drops.append(String(d))

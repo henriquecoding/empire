@@ -1,31 +1,30 @@
 {
- "date": "2026-09-29",
- "base": "este repositorio — Parte XIII integrada sobre o dossie v6",
+ "date": "2026-10-02",
+ "base": "COMBAT-01 — ataque manual e habilidade de classe, ADR 0045",
  "engine": "4.7.2.stable.official.ed1daf0bf",
  "gdunit": "6.2.1",
  "gdunit_commit": "08ffc7c",
  "godot_import": "passed",
  "boot_headless": "passed",
- "csv_tables": 29,
- "generated_resources": 222,
- "original_csv_unchanged": 29,
- "proposed_fields": 685,
- "proposed_phase_0_to_2": 311,
- "gdunit_discovered": 1087,
- "gdunit_passed": 1045,
- "gdunit_skipped": 3,
+ "csv_tables": 30,
+ "generated_resources": 399,
+ "original_csv_unchanged": 30,
+ "proposed_fields": 1303,
+ "proposed_phase_0_to_2": 875,
+ "gdunit_discovered": 1254,
+ "gdunit_passed": 1211,
+ "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 87,
- "adrs": 37,
+ "adrs": 45,
  "portable_checks_passed": 15,
  "numeric_comparisons": 197,
  "cli_isolation_tests_passed": 3,
  "export_tested": true,
- "gameplay_tested": false,
+ "gameplay_tested": true,
  "gpu_art_tested": false,
  "source_gaps": [
   "9 authored segment scenes",
-  "remote CI and export",
   "audio: 73 cues TODO no AUDIO_CUE_SHEET.csv"
  ],
  "new_questions": [
@@ -35,8 +34,39 @@
  ],
  "clean_zip_extraction_check": "passed: run_tests.sh completo numa extracao limpa, sem cache do motor",
  "export_notes": "Linux release exportado e arrancado em headless (embed_pck=false): Empire.x86_64 + Empire.pck",
- "i18n_keys": 414,
+ "i18n_keys": 522,
  "i18n_placeholders": 0,
  "catalog_signals": 61,
- "event_bus_signals": 61
+ "event_bus_signals": 61,
+ "gdunit_runtime_cases": 1213,
+ "approved_panel_source_commit": "1129222b2ed482cd01986601fa146539f324ff32",
+ "approved_panel_visual_checks": [
+  "travel menu with scrolling",
+  "winter HUD and guide",
+  "native buildings",
+  "underground visited mouth at surface"
+ ],
+ "approved_panel_renderer": "OpenGL compatibility, Mesa llvmpipe",
+ "approved_panel_vistoria": "4 of 8 days: pilot defeated, no broken invariants",
+ "approved_panel_ci": "https://github.com/henriquecoding/empire/actions/runs/36829690212",
+ "manual_combat_verification": {
+  "full_suite_cases": 1212,
+  "initial_failed_cases": [
+   "celeiro_no_jogo_test: defence depended on automatic king attacks",
+   "minuto_0_20_test: timing budget under concurrent builds"
+  ],
+  "rechecked_cases": 47,
+  "rechecked_failures": 0,
+  "tick_300_units_us": 2197.2,
+  "browser_sizes": [
+   "1280x720",
+   "800x600",
+   "390x844"
+  ],
+  "browser_languages": [
+   "pt-PT",
+   "en"
+  ],
+  "vistoria": "3 of 8 days; core defeated; no broken invariants"
+ }
 }

@@ -10,6 +10,7 @@ max_health = 60
 damage = 3
 accuracy_open = 1.0
 range_px = 30
+targets_bands = Array[int]([1, 2])
 recruit_cost = 0
 drops_on_death = Array[StringName]([&"coins", &"corpse"])
 move_speed = 80.0
@@ -19,5 +20,8 @@ layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon
 shadow_width = 22
 tags = Array[StringName]([&"king", &"tank"])
 coin_capacity = 33
+ability_params = {
+&"manual_buffer": 0.18
+}
 weapon_kind = &"sword"
 head_pool = Array[StringName]([&"crown_crooked"])

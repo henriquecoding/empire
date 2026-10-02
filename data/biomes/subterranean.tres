@@ -13,3 +13,4 @@ atmosphere_preset = &"closed"
 parallax_preset = &"closed"
 region_screens = Vector2i(4, 6)
 music_profile = &"music_subterranean"
+edge_subject = &"wall"

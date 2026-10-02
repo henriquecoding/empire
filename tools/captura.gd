@@ -9,11 +9,7 @@
 # Corre como CENA e nao com `-s`: o modo de script nao carrega autoloads, e sem
 # eles nao ha SimLoop nenhum para fotografar.
 #
-# Ao lado do PNG fica a ficha (.json): o que o planejamento de 26/09 (§8) pede
-# para que duas imagens se possam comparar — commit, motor, renderer que CORREU,
-# resolucao, escala, semente, dia e fase, onde estava o rei, e se o estado foi
-# natural ou preparado a mao. Um ecra virtual sem Vulkan cai para OpenGL: o
-# renderer escrito no project.godot nao e prova de nada, o da ficha e.
+# Ao lado do PNG fica a ficha com motor, renderer real, resolucao, seed e fase.
 extends Node
 
 const JOGO := "res://scenes/game.tscn"
@@ -39,7 +35,13 @@ func _ready() -> void:
 	if _restam <= 0:
 		_restam = int(SEGUNDOS * Engine.physics_ticks_per_second)
 	_ecra(args)
-	add_child(load(JOGO).instantiate())
+	var game := load(JOGO).instantiate() as Game
+	add_child(game)
+	if game._selector != null:
+		if args.get("escolha", "") == "true":
+			game._selector.select(StringName(args.get("perfil", "monarch")))
+		else:
+			game._chosen(&"monarch")  # as fotografias do mundo passam o novo arranque
 	if not OS.get_cmdline_user_args().has(Game.NOVO):
 		_preparacao.append("retomado do save")
 	# Avancar a simulacao a mao, e nao esperar pelo relogio: fotografar a noite
@@ -72,7 +74,8 @@ func _pousar_o_rei(args: Dictionary) -> void:
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	if i == UnitSystem.NENHUM:
 		return
-	var x := clampf(SimLoop.core_x + float(args["rei"]), 0.0, SimLoop.world_width)
+	var limites := Frontier.walk_limits()  # so ate a beira de cada borda (Q-173)
+	var x := clampf(SimLoop.core_x + float(args["rei"]), limites.x, limites.y)
 	SimLoop.units.xs[i] = x
 	_preparacao.append("rei posto em x=%d" % int(x))
 	if FAIXAS.has(args.get("faixa")):

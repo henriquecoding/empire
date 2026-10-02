@@ -1,6 +1,6 @@
 # src/ui/guide_sites.gd — o que o guia diz nalguns sitios: a boca de uma passagem,
-# a casa do herdeiro e a bifurcacao. Tirado do GameplayGuide, que chegou as 250
-# linhas do §28.
+# a casa do herdeiro, a bifurcacao e as terras geradas. Tirado do GameplayGuide, que
+# chegou as 250 linhas do §28.
 class_name GuideSites
 extends RefCounted
 
@@ -43,3 +43,29 @@ static func march(values: Dictionary) -> String:
 	values["full"] = visto.y
 	values["hit"] = reino.blow(SimLoop.units, SimLoop.king_id)
 	return TranslationServer.translate(&"CONTEXT_CROSS").format(values)
+
+
+## As terras geradas (Q-173): na terra de outro povo, de quem e (e se e teu vassalo); na
+## borda, o que la ha. Num trilho, ou fora delas, nao diz nada.
+static func wilds(x: float, values: Dictionary) -> String:
+	var terras := SimLoop.field.wilds
+	var onde := terras.find(x, SimLoop.world_width)
+	if onde.y < 0:
+		return ""
+	var registo := terras.at(onde.x, onde.y)
+	var zona := int(registo[WildSegments.ZONA])
+	if zona == WorldPlan.Zone.EDGE:
+		var borda := "EDGE_" + String(registo[WildSegments.ASSUNTO]).to_upper()
+		values["edge"] = TranslationServer.translate(StringName(borda))
+		return TranslationServer.translate(&"CONTEXT_EDGE").format(values)
+	var bioma := Registry.entry(&"biomes", StringName(registo[WildSegments.PARA])) as BiomeData
+	if zona == WorldPlan.Zone.TRAIL or bioma == null:
+		return ""
+	var povo := Registry.entry(&"peoples", bioma.people) as PeopleData
+	if povo == null:
+		return ""
+	values["people"] = TranslationServer.translate(povo.display_key)
+	var teu := SimLoop.field.realm.vassals.has(bioma.people)
+	return TranslationServer.translate(&"CONTEXT_LAND_VASSAL" if teu else &"CONTEXT_LAND").format(
+		values
+	)

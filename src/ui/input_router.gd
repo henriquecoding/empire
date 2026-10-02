@@ -1,24 +1,3 @@
-# src/ui/input_router.gd — a entrada, e o contrato do §61 numa frase: "a entrada
-# nunca muda estado diretamente".
-#
-# Nenhuma linha deste ficheiro chama drop_coin, mata ninguem ou constroi coisa
-# alguma. Cada tecla enfileira uma INTENCAO, e o inicio do tick seguinte
-# consome-a. E o que faz o jogo determinista apesar de haver um humano: dada a
-# mesma seed e a mesma sequencia de intencoes, a partida repete-se exatamente.
-#
-# O mapa de comando e o do §24, e as accoes ja estavam declaradas no
-# project.godot desde o F0-02 — cinco delas sem ninguem a le-las. Este ficheiro
-# e quem passou a ler.
-#
-# Duas coisas correm no frame e nao no tick, e e de proposito: andar e marcar
-# alvo sao GESTOS, e um gesto lido a 60 Hz fixos chega sempre um bocado depois
-# da mao. O que se escreve continua a ser um alvo e uma intencao — o passo 5 do
-# §43 e que leva a gente — e por isso o frame nao muda o que a simulacao faz,
-# so quando ela fica a saber.
-#
-# O que continua por ligar, e nao e esquecimento: a roda do rei espera pelos
-# seis sistemas que os seus segmentos abrem (Fase 2). Do gesto dela ja ha o que
-# o impulso pede: manter Y, apontar o stick e largar (§24; CONT-08, Q-148).
 class_name InputRouter
 extends Node
 
@@ -46,6 +25,8 @@ var _marcar := false
 
 
 func _unhandled_input(evento: InputEvent) -> void:
+	if ClassSelection.active or TravelPanel.active:
+		return
 	if evento.is_action_pressed(&"pause"):
 		if not Defeat.happened():
 			SimLoop.set_paused(SimLoop.running())
@@ -59,13 +40,10 @@ func _unhandled_input(evento: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if evento.is_action_pressed(&"verb_assume"):
-		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
-		get_viewport().set_input_as_handled()
-	elif evento.is_action(&"mark_target"):
-		var marca := rising(evento, _marcar)
-		_marcar = held(evento, _marcar)
-		if marca:
-			SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _alvo_em_x(evento)})
+		if TravelWatch.at_gate():
+			get_tree().call_group(&"travel_menu", &"open")
+		else:
+			SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		get_viewport().set_input_as_handled()
 
 
@@ -107,12 +85,18 @@ static func aims_with_cursor(evento: InputEvent) -> bool:
 
 
 func _process(delta: float) -> void:
+	if TravelPanel.active:
+		_andar(0.0)
+		_repeticao = 0.0
+		return
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
-	# Correr (Q-149): enquanto a tecla esta premida, o rei anda ao king_run_mult.
+	# Correr (Q-149, Q-169): quem se conduz corre ao king_run_mult; montado, o cavalo anda
+	# e galopa aos dele.
 	var correr := Input.is_action_pressed(&"king_run")
-	SimLoop.units.piloted_pace = _curva_lida().king_run_mult if correr else 1.0
+	var a_pe := _curva_lida().king_run_mult
+	SimLoop.units.piloted_pace = SimLoop.field.mount.pace(Assume.driven(), correr, a_pe)
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
 	# E o tempo abranda, se o jogador nao o desligou (Q-034).
 	var roda := Input.is_action_pressed(&"king_wheel")
@@ -133,7 +117,11 @@ func _process(delta: float) -> void:
 		pointed = -1
 		_andar(Input.get_axis(&"move_left", &"move_right"))
 	_repeticao = maxf(0.0, _repeticao - delta)
-	if not Input.is_action_pressed(&"verb_drop"):
+	if ClassSelection.release_pending:
+		if Input.is_action_pressed(&"verb_drop"):
+			return
+		ClassSelection.release_pending = false
+	if not Input.is_action_pressed(&"verb_drop") or JournalPanel.holds_drop():
 		_repeticao = 0.0
 		return
 	if _repeticao <= 0.0:
@@ -164,20 +152,16 @@ func _curva_lida() -> EconomyCurve:
 ## Mover e escrever um alvo, e nao empurrar uma posicao: o passo 5 e que leva
 ## toda a gente, e o monarca nao e excecao (§43).
 func _andar(direccao: float) -> void:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var quem := Assume.driven()  # o rei, ou o corpo de classe assumido (§08)
+	var i := SimLoop.units.index_of(quem)
 	if i == UnitSystem.NENHUM:
 		return
 	if is_zero_approx(direccao):
-		SimLoop.units.clear_target(SimLoop.king_id)
+		SimLoop.units.clear_target(quem)
 		return
-	SimLoop.units.set_target_x(
-		SimLoop.king_id,
-		clampf(
-			SimLoop.units.xs[i] + direccao * SimLoop.world_width,
-			-SimLoop.wild_px,
-			SimLoop.world_width + SimLoop.wild_px
-		)
-	)
+	var limites := Assume.limits(quem)  # a borda do mundo, e a trela do rei (Q-150)
+	var x := SimLoop.units.xs[i] + direccao * SimLoop.world_width
+	SimLoop.units.set_target_x(quem, clampf(x, limites.x, limites.y))
 
 
 ## Um impulso que nao se pode usar diz porque, no painel, e nao entra na fila
@@ -185,6 +169,9 @@ func _andar(direccao: float) -> void:
 func _impulso(indice: int) -> void:
 	var ids := SimLoop.field.crown.ids()
 	if indice >= ids.size():
+		return
+	if not Assume.king():  # a roda e o corpo do rei (§24)
+		get_tree().call_group(&"painel", &"say", tr(&"UI_WHEEL_KING_ONLY"))
 		return
 	var porque := impulse_refusal(ids[indice])
 	if porque.is_empty():
@@ -218,7 +205,7 @@ static func _stick() -> Vector2:
 
 
 func _largar() -> void:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	if i == UnitSystem.NENHUM:
 		return
 	(
@@ -241,5 +228,5 @@ func _largar() -> void:
 func _alvo_em_x(evento: InputEvent) -> float:
 	if aims_with_cursor(evento):
 		return get_viewport().get_camera_2d().get_global_mouse_position().x
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	return SimLoop.units.xs[i] if i != UnitSystem.NENHUM else SimLoop.core_x

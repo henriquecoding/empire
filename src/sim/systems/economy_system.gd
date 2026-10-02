@@ -43,6 +43,7 @@ const FAIXA := &"band"
 
 ## Os impulsos reais (§15) e o dia em que se esta: a Colheita Forcada e a Chamada
 ## as Armas mexem no que cada obra rende hoje. Sem coroa, rende o que rendia.
+var seasons: Seasons
 var crown: CrownSystem
 var today := 1
 ## O circuito 2 (§06, §49): com a casa de conversao de pe, a materia vai para ela.
@@ -148,7 +149,7 @@ func suffocation_day(perfil: EconomyProfile, dias: int) -> int:
 func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in obras.standing():
-		if vaga.yield_per_day <= 0.0:
+		if vaga.yield_per_day <= 0.0 or vaga.territory != 0:
 			continue
 		# A variante da melhoria (Q-136): o canteiro resguardado nao para no rasto.
 		var efeitos := SlotVariant.effects(vaga)
@@ -157,7 +158,11 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 			continue
 		var fator := crown.yield_mult(today, vaga.kind) if crown != null else 1.0
 		fator *= efeitos.get(&"yield_mult", 1.0)
-		vaga.stock += vaga.yield_per_day / _fases * fator * _hoje(vaga)
+		var produced := vaga.yield_per_day / _fases * fator * _hoje(vaga)
+		if seasons != null:
+			produced *= seasons.yield_mult(today, vaga.kind)
+			produced = seasons.store(today, vaga.kind, produced, obras)
+		vaga.stock += produced
 		if conversion != null and conversion.claims(vaga, obras):
 			continue
 		vaga.stock = maxf(0.0, vaga.stock - float(spoil.get(vaga.kind, 0.0)) / _fases)

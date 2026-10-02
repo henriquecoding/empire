@@ -13,4 +13,5 @@ width_px = 640
 build_slots = 1
 cavity_slots = 1
 passages = 1
+rules = Array[StringName]([&"gap=3", &"encounter"])
 subject = &"collapsed_arch"

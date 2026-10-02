@@ -44,6 +44,17 @@ func test_um_save_v2_com_marcha_sobe_sem_cerco() -> void:
 	assert_bool(m.sieges.is_empty()).is_true()
 
 
+## v4 (Q-173): um save de antes do mundo continuo nao gerou terra nenhuma.
+func test_um_save_v3_sobe_sem_terras_geradas() -> void:
+	var v3 := {&"save_version": 3, &"state": {}, &"world": {&"realm": {}}}
+	var d := SaveMigrations.migrate(v3)
+	assert_int(int(d[&"save_version"])).is_equal(SaveMigrations.CURRENT)
+	assert_dict(d[&"world"][&"wilds"]).is_empty()
+	var t := WildSegments.new()
+	t.from_dict(d[&"world"][&"wilds"])
+	assert_int(t.count(WorldPlan.LESTE)).is_equal(0)
+
+
 func test_os_archotes_passam_para_o_cinto_do_rei() -> void:
 	# Q-153: os archotes deixaram de ser do archote e passaram a ser do armazenamento.
 	var mundo: Dictionary = SaveMigrations.migrate(_v1())[&"world"]
@@ -81,3 +92,20 @@ func test_um_save_de_agora_nao_muda_e_um_do_futuro_nao_se_toca() -> void:
 
 func test_o_save_grava_a_versao_de_agora() -> void:
 	assert_int(SaveService.SAVE_VERSION).is_equal(SaveMigrations.CURRENT)
+
+
+## v5 (ADR 0041): um save de antes das classes conduz o rei, e as tocas dele sao
+## arbustos com coelhos (Q-150).
+func test_um_save_v4_sobe_com_o_rei_e_arbustos() -> void:
+	var tocas := {&"xs": [1.0, 2.0], &"alive": PackedByteArray([1, 1])}
+	var v4 := {&"save_version": 4, &"state": {}, &"world": {&"hunting": {&"burrows": tocas}}}
+	var d := SaveMigrations.migrate(v4)
+	assert_int(int(d[&"save_version"])).is_equal(SaveMigrations.CURRENT)
+	var mundo: Dictionary = d[&"world"]
+	assert_int(int(mundo[&"pilot"])).is_equal(UnitSystem.NENHUM)
+	assert_dict(mundo[&"roster"]).is_empty()
+	assert_dict(mundo[&"crown_drop"]).is_empty()  # a coroa na cabeca (Q-167)
+	assert_dict(mundo[&"supply"]).is_empty()  # as aljavas cheias (Q-163)
+	var migradas: Dictionary = mundo[&"hunting"][&"burrows"]
+	assert_array(Array(migradas[&"game"])).is_equal(["rabbit", "rabbit"])
+	assert_dict(mundo[&"hunting"][&"wounds"]).is_empty()

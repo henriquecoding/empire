@@ -94,13 +94,14 @@ func _expect_in(value: String, pool: Array, where: String, allow_empty: bool) ->
 	assert_bool(value in pool).override_failure_message(msg).is_true()
 
 
-func test_segmentos_do_mesmo_tipo_coincidem() -> void:
+func test_variantes_do_mesmo_tipo_e_povo_coincidem() -> void:
 	var seen := {}
 	for s in _rows("segments"):
 		var sig := "%s/%s" % [s["weight"], s["rules"]]
-		if seen.has(s["kind"]):
-			assert_str(sig).override_failure_message(s["id"]).is_equal(seen[s["kind"]])
-		seen[s["kind"]] = sig
+		var key := "%s/%s" % [s["people"], s["kind"]]
+		if seen.has(key):
+			assert_str(sig).override_failure_message(s["id"]).is_equal(seen[key])
+		seen[key] = sig
 
 
 func test_relogio_do_05() -> void:

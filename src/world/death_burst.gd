@@ -30,17 +30,26 @@ const RESSALTO := {"vy": -0.35, "vx": 0.5}
 const PO := {"raio": Vector2(2.0, 9.0), "cor": Color(0.62, 0.55, 0.45, 0.5), "quantos": 3}
 const BRANCO := Color(1.0, 1.0, 1.0, 0.9)
 
+var _art := OriginalArt.new()
 var _corpos: Array[Dictionary] = []
 var _pedacos: Array[Dictionary] = []
 var _po: Array[Dictionary] = []
 
 
-## Uma criatura morreu dentro de `caixa`, com a forma e a cor que tinha.
+## Uma criatura morreu como foi vista pela ultima vez (CombatFx.seen): dentro da
+## caixa, com a forma, a cor e, se tinha pele, o perfil e o lado para onde olhava
+## — e com pele, o que se ve e a animacao `die` dela, que de outro modo nunca
+## chegava a passar: o corpo sai das colunas no tick em que morre.
 ## `sorteio(de, ate) -> float` e o fluxo visual.
-func burst(
-	caixa: Rect2, forma: int, cor: Color, sentido: float, agora: float, sorteio: Callable
-) -> void:
-	_corpos.append({"caixa": caixa, "forma": forma, "cor": cor, "t0": agora})
+func burst(visto: Array, sentido: float, agora: float, sorteio: Callable) -> void:
+	var caixa: Rect2 = visto[1]
+	var cor: Color = visto[3]
+	var pele: Array = visto[4] if visto.size() > 4 else []
+	var corpo := {"caixa": caixa, "forma": visto[2], "cor": cor, "t0": agora, "pele": pele}
+	corpo["dura"] = SEGURA_S + DESFAZ_S
+	if not pele.is_empty():
+		corpo["dura"] = SEGURA_S + _art.action_seconds(pele[0], &"die") + DESFAZ_S
+	_corpos.append(corpo)
 	var area := caixa.size.x * caixa.size.y
 	var n := clampi(int(area * PEDACOS.por_px2), PEDACOS.min, PEDACOS.max)
 	for k in n:
@@ -103,6 +112,9 @@ func step(delta: float, agora: float) -> void:
 
 func draw(canvas: CanvasItem, agora: float) -> void:
 	for corpo in _corpos:
+		if not corpo.pele.is_empty():
+			_pele(canvas, corpo, agora)
+			continue
 		var dt := agora - float(corpo.t0)
 		var caixa: Rect2 = corpo.caixa
 		if dt < SEGURA_S:
@@ -129,6 +141,26 @@ func draw(canvas: CanvasItem, agora: float) -> void:
 		var cor: Color = PO.cor
 		cor.a *= 1.0 - p
 		canvas.draw_circle(nuvem.p, lerpf(PO.raio.x, PO.raio.y, sqrt(p)), cor)
+
+
+## A morte com pele: branca no hitstop, depois a animacao `die`, e apaga-se.
+func _pele(canvas: CanvasItem, corpo: Dictionary, agora: float) -> void:
+	var perfil: StringName = corpo.pele[0]
+	var caixa: Rect2 = corpo.caixa
+	var pose := OriginalArt.posed(Vector2(caixa.get_center().x, caixa.end.y), corpo.pele[1])
+	var dt := agora - float(corpo.t0)
+	if dt < SEGURA_S:
+		var branco: Color = BRANCO if Preferences.on(Preferences.FLASHES) else corpo.cor
+		_art.mask_posed(canvas, perfil, branco, _art.frame_at(perfil, 0.0, &"die", false), pose)
+		return
+	var frame := _art.frame_at(perfil, dt - SEGURA_S, &"die", false)
+	var alfa := clampf((float(corpo.dura) - dt) / DESFAZ_S, 0.0, 1.0)
+	var tinta: Color = corpo.pele[2]
+	tinta.a *= alfa
+	if corpo.pele[3]:
+		_art.draw_posed(canvas, perfil, tinta, frame, pose)
+	else:
+		_art.mask_posed(canvas, perfil, tinta, frame, pose)
 
 
 ## Um corpo espalmado contra o chao: baixa e alarga, com os pes onde estavam.

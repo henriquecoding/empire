@@ -1,14 +1,11 @@
 # src/sim/systems/unit_system.gd — as tropas em colunas, nao em objetos (§52, §63).
 #
-# Uma unidade e um INDICE, nao um objeto: trezentas a 60 fps (§63) nao cabem num
-# objeto cada. PackedArrays: memoria contigua, sem alocacao por tick.
-#
+# PackedArrays: memoria contigua, sem alocacao por tick (§63).
 # Puro: nao e Node, nao conhece o Registry nem o EventBus. Os campos quentes de
 # UnitData sao COPIADOS para colunas no spawn — assim o ciclo de cada tick nao
 # faz uma unica pesquisa de recurso.
 #
-# tick_decisions() e o passo 4 do §43, fatiado; tick_movement() e o passo 5, para
-# todos. Dois metodos porque sao dois passos, e a ordem e a da ADR 0020.
+# tick_decisions() e o passo 4 do §43, fatiado; tick_movement() e o passo 5 (ADR 0020).
 class_name UnitSystem
 extends RefCounted
 
@@ -38,6 +35,9 @@ var recruit_costs: PackedInt32Array = PackedInt32Array()
 
 ## O passo de quem e conduzido: 1, ou o king_run_mult com a tecla de correr (Q-149).
 var piloted_pace: float = 1.0
+## O corpo de classe que o jogador conduz, ou NENHUM quando conduz o rei (§08, Q-162):
+## os sistemas de IA deixam-no em paz. Grava-se no SimSave.
+var pilot: int = NENHUM
 var _por_id: Dictionary = {}
 
 
@@ -155,23 +155,23 @@ func tick_decisions(tick: int) -> Array[Dictionary]:
 	return mudancas
 
 
-## Passo 5 do §43, todos os ticks. O mundo e uma linha: o movimento e em X e
-## aterra exatamente no alvo, e e por isso que a FSM nao precisa de tolerancia
-## nenhuma para saber que chegou.
+## Passo 5 do §43, todos os ticks. O mundo e uma linha: o movimento e em X e aterra
+## exatamente no alvo, e a FSM nao precisa de tolerancia para saber que chegou.
 ##
 ## Quem esta em FIGHT nao anda (§52: "resolucao de combate", nenhum movimento),
 ## mesmo com um posto do outro lado do mapa. Quem esta em DEAD tambem nao.
 ##
-## `piloted` e a excepcao: a regra de cima e sobre quem a §52 CONDUZ, e este e
-## conduzido por uma pessoa — o §24 da ao "Mover" o contexto **Sempre** (Q-085).
-## Parametro e nao coluna: e quem o conduz agora, e isso vive no SimLoop (§45).
+## `piloted` e a excepcao: e conduzido por uma pessoa, e o §24 da ao "Mover" o
+## contexto **Sempre** (Q-085) — o rei, ou o corpo de classe em `pilot` (§08).
 ## `frente` e a luz do amanhecer (§24, DawnCascade): quem tem posto e a luz ainda
 ## nao apanhou espera por ela. Quem foge nao espera por luz nenhuma (§07).
-func tick_movement(delta: float, piloted: int = NENHUM, frente: float = INF) -> void:
+func tick_movement(
+	delta: float, piloted: int = NENHUM, frente: float = INF, class_pace: float = 1.0
+) -> void:
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 		if walking(i, piloted, frente):
-			var passo := piloted_pace if ids[i] == piloted else 1.0
+			var passo := piloted_pace * class_pace if ids[i] == piloted else 1.0
 			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * passo * delta)
 
 

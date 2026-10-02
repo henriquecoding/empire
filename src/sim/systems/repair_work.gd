@@ -70,6 +70,7 @@ static func tick(vaga: BuildSlot, maos: float) -> Array[Dictionary]:
 	vaga.health = vaga.max_health()
 	vaga.progress = 0.0
 	vaga.mending = false
+	vaga.foundation = false
 	return [{BuildSystem.CHAVE: BuildSystem.EV_REPARADA, BuildSystem.VAGA: vaga}]
 
 

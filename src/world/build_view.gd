@@ -42,6 +42,7 @@ static func draw_on(
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso, tempo)
+		TemporaryScenery.building_props(canvas, vaga, luz, tempo)
 
 
 ## O alfa do convite neste instante do ecra: entre PISCAR.minimo e 1.
@@ -57,6 +58,9 @@ static func _obra(
 	pulso: float,
 	tempo: float
 ) -> void:
+	if NativeArt.handles(vaga.kind):
+		NativeArt.draw_on(canvas, vaga, luz, tempo)
+		return
 	if BuildingSkins.draw_on(canvas, vaga, luz, tempo):
 		return
 	if SettlementArt.handles(vaga.kind):
@@ -97,6 +101,8 @@ static func _obra(
 ## do que se ve, e adivinhar esse topo era ter duas respostas para uma pergunta
 ## que so tem uma.
 static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
+	if NativeArt.handles(vaga.kind):
+		return NativeArt.box(vaga)
 	var skin := BuildingSkins.profile(vaga.kind)
 	if skin != &"":
 		var foot := Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band)))

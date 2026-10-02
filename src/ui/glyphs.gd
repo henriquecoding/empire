@@ -17,15 +17,22 @@ enum Device { KEYBOARD, XBOX, PLAYSTATION }
 
 ## O que se diz de cada gesto, pela ordem do rodape.
 const ACCOES := [
-	&"HINT_MOVE", &"HINT_DROP", &"HINT_ASSUME", &"HINT_MARK", &"HINT_WHEEL", &"HINT_PAUSE"
+	&"HINT_MOVE",
+	&"HINT_DROP",
+	&"HINT_ASSUME",
+	&"HINT_MARK",
+	&"HINT_WHEEL",
+	&"HINT_PAUSE",
+	&"HINT_ATTACK"
 ]
 
 ## O botao de cada gesto, por dispositivo, na ordem de ACCOES. Um StringName e
 ## uma chave a traduzir; uma String e o nome tal e qual.
 const BOTOES := {
-	Device.KEYBOARD: ["A/D", &"KEY_SPACE", "E", &"KEY_MOUSE_RIGHT", "TAB", "ESC"],
-	Device.XBOX: ["D-PAD", "A", "X", "RT", "Y", "START"],
-	Device.PLAYSTATION: ["D-PAD", &"PAD_CROSS", &"PAD_SQUARE", "R2", &"PAD_TRIANGLE", "OPTIONS"],
+	Device.KEYBOARD: ["A/D", &"KEY_SPACE", "E", &"KEY_SKILL", "TAB", "ESC", &"KEY_ATTACK"],
+	Device.XBOX: ["D-PAD", "A", "X", "RT", "Y", "START", "RB"],
+	Device.PLAYSTATION:
+	["D-PAD", &"PAD_CROSS", &"PAD_SQUARE", "R2", &"PAD_TRIANGLE", "OPTIONS", "R1"],
 }
 
 ## Os nomes que o motor da a um comando PlayStation. O resto — o Steam Deck, o
@@ -60,13 +67,16 @@ static func pad_of(nome: String) -> Device:
 
 ## O rodape inteiro: "BOTAO gesto · BOTAO gesto · ...". Sem `marca` o gatilho
 ## direito nao aparece: so uma classe de arco marca alvos (Q-086).
-static func hint(dispositivo: Device, marca: bool = true) -> String:
+static func hint(
+	dispositivo: Device, marca: bool = true, ability: StringName = &"HINT_MARK"
+) -> String:
 	var partes := PackedStringArray()
 	var botoes: Array = BOTOES[dispositivo]
 	for i in ACCOES.size():
 		if ACCOES[i] == &"HINT_MARK" and not marca:
 			continue
-		partes.append("%s %s" % [_nome(botoes[i]), TranslationServer.translate(ACCOES[i])])
+		var key: StringName = ability if ACCOES[i] == &"HINT_MARK" else ACCOES[i]
+		partes.append("%s %s" % [_nome(botoes[i]), TranslationServer.translate(key)])
 	return SEPARADOR.join(partes)
 
 

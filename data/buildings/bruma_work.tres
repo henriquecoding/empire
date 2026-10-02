@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_spbm8"]
+
+[resource]
+script = ExtResource("1_spbm8")
+id = &"bruma_work"
+display_key = "BUILDING_BRUMA_WORK"
+people = &"bruma"
+cost = 8
+material = &"fish"
+yield_per_day = 3.0
+job_slots = 1
+craft = &"work"
+max_health = 64
+build_work = 16.0
+width_px = 80
+shadow_width = 80

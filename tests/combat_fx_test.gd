@@ -1,4 +1,4 @@
-# tests/combat_fx_test.gd — o que um corpo mostra de um golpe (§24, Q-084, Q-173).
+# tests/combat_fx_test.gd — o que um corpo mostra de um golpe (§24, Q-084, Q-185).
 #
 # O que importa provar e o contrato com a simulacao: o empurrao e so do ecra e
 # acaba SEMPRE na posicao dela; o hitstop e de quem bate e de quem leva, e nao

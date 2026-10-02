@@ -151,14 +151,19 @@ func test_uma_toca_perdida_nao_da_mais_nada() -> void:
 	assert_int(dia.burrows.living()).is_equal(1)
 
 
-## A media do dia continua a do hunt_yield: o periodo reparte-a pela luz.
+## A media do dia continua a do hunt_yield: o periodo reparte-a pela luz e pelas
+## moedas de cada bicho — o veado da 3 onde o coelho da 1 (Q-150).
 func test_o_periodo_da_a_caca_media_do_dia() -> void:
 	var relogio := Registry.entry(&"economy", &"clock") as ClockData
-	var dados := Registry.entry(&"wildlife", &"rabbit") as WildlifeData
+	var bioma := SimFactory.biome_of_segment(SimFactory.SEGMENTO_DE_PARTIDA)
+	var moedas := 0.0
+	for dados: WildlifeData in Registry.entries(&"wildlife"):
+		if dados.biomes.has(bioma):
+			moedas += dados.burrows_per_region * dados.coin_yield
 	var luz := 0.0
 	for fase in HuntWatch.LUZ:
 		luz += relogio.phase_durations[fase]
-	var por_dia := luz / HuntWatch.period(relogio.day_seconds) * dados.burrows_per_region
+	var por_dia := luz / HuntWatch.period(relogio.day_seconds) * moedas
 	var curva := SimFactory.curve()
 	assert_float(por_dia).is_equal_approx((curva.hunt_yield.x + curva.hunt_yield.y) * 0.5, 0.01)
 	assert_float(HuntWatch.period(relogio.day_seconds * 1.5)).is_equal_approx(

@@ -15,7 +15,12 @@ class_name SaveMigrations
 extends RefCounted
 
 ## A versao que o jogo grava. Sobe com cada passo novo, no mesmo commit.
-const CURRENT := 3
+const CURRENT := 6
+const ANTES_DOS_REINOS := 5
+## A ultima versao de antes do mundo continuo (Q-173): o passo dela da as terras geradas.
+const ANTES_DO_MUNDO := 3
+## A ultima versao de antes das respostas do painel de 30/09/2026 (ADR 0041).
+const ANTES_DAS_CLASSES := 4
 
 
 ## Leva `dados` (a moldura inteira do save) ate CURRENT. Devolve o dicionario
@@ -29,6 +34,12 @@ static func migrate(dados: Dictionary) -> Dictionary:
 				_de_1_para_2(d)
 			2:
 				_de_2_para_3(d)
+			ANTES_DO_MUNDO:
+				_de_3_para_4(d)
+			ANTES_DAS_CLASSES:
+				SaveMigrationsV5.apply(d)
+			ANTES_DOS_REINOS:
+				SaveMigrationsV6.apply(d)
 		versao += 1
 		d[&"save_version"] = versao
 	return d
@@ -89,6 +100,16 @@ static func _de_2_para_3(d: Dictionary) -> void:
 		marcha[&"sieges"] = {}
 	reino[&"march"] = marcha
 	mundo[&"realm"] = reino
+	d[&"world"] = mundo
+
+
+## v4 — o mundo continuo (Q-173, ADR 0038): as terras geradas ao andar. Um save de antes
+## nao gerou nenhuma; o plano faz-se de novo pela semente, e gera-se ao andar.
+static func _de_3_para_4(d: Dictionary) -> void:
+	var mundo := _dict(d, &"world")
+	if mundo.is_empty() or mundo.has(&"wilds"):
+		return
+	mundo[&"wilds"] = {}
 	d[&"world"] = mundo
 
 

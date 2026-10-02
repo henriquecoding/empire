@@ -2,22 +2,32 @@ class_name OriginalArt
 extends RefCounted
 
 const ROOT := "res://art/export/enramados/"
+const TEMPORARY_ROOT := "res://art/export/temporary/"
 const MILLISECONDS := 1000.0
 const BODY_HEIGHT_INDEX := 3
 const IDLE := &"idle"
 static var _manifest: Dictionary = {}
+static var _temporary: Dictionary = {}
 static var _textures: Dictionary = {}
 
 
 func entry(id: StringName) -> Dictionary:
 	if _manifest.is_empty():
 		_manifest = JSON.parse_string(FileAccess.get_file_as_string(ROOT + "manifest.json"))
-	return _manifest.assets.get(String(id), {})
+	var original: Dictionary = _manifest.assets.get(String(id), {})
+	if not original.is_empty():
+		return original
+	if _temporary.is_empty():
+		_temporary = JSON.parse_string(
+			FileAccess.get_file_as_string(TEMPORARY_ROOT + "manifest.json")
+		)
+	return _temporary.assets.get(String(id), {})
 
 
 func texture(id: StringName) -> Texture2D:
 	if not _textures.has(id):
-		_textures[id] = load(ROOT + String(entry(id).texture))
+		var item := entry(id)
+		_textures[id] = load(String(item.get("root", ROOT)) + String(item.texture))
 	return _textures[id]
 
 
@@ -31,6 +41,18 @@ func frame_at(id: StringName, time: float, action: StringName = IDLE, loop: bool
 	var first := int(tag.get("from_frame", 0))
 	var last := int(tag.get("to_frame", durations.size() - 1))
 	return frame_in(durations, first, last, time * MILLISECONDS, loop)
+
+
+## Quanto dura a tag `action` de `id`, em segundos (0 se a arte nao a tem).
+func action_seconds(id: StringName, action: StringName) -> float:
+	var item := entry(id)
+	var tag: Dictionary = item.get("tags", {}).get(String(action), {})
+	if tag.is_empty():
+		return 0.0
+	var total := 0.0
+	for k in range(int(tag.from_frame), int(tag.to_frame) + 1):
+		total += float(item.durations_ms[k])
+	return total / MILLISECONDS
 
 
 ## Se a arte de `id` tem a tag `action` no manifesto.
@@ -88,12 +110,19 @@ func draw_posed(
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])
 	var source := Rect2(Vector2(size.x * frame, 0.0), size)
-	var sheet := texture(id)
+	if item.has("frame_origins"):
+		source.position = Vector2(item.frame_origins[frame][0], item.frame_origins[frame][1])
+	var sheet: Texture2D
 	if item.has("atlas_origin"):
 		source.position += Vector2(item.atlas_origin[0], item.atlas_origin[1])
-		if not _textures.has(&"actors"):
-			_textures[&"actors"] = load(ROOT + "actors.png")
-		sheet = _textures[&"actors"]
+		var atlas := (
+			String(item.get("root", ROOT)) + String(item.get("atlas_texture", "actors.png"))
+		)
+		if not _textures.has(atlas):
+			_textures[atlas] = load(atlas)
+		sheet = _textures[atlas]
+	else:
+		sheet = texture(id)
 	canvas.draw_set_transform_matrix(pose)
 	canvas.draw_texture_rect_region(sheet, box(id, Vector2.ZERO), source, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
@@ -106,14 +135,41 @@ static func posed(
 	return Transform2D(angulo, Vector2(facing * escala.x, escala.y), 0.0, foot.floor())
 
 
+## A mesma transparencia e os mesmos frames, a uma cor so, fora das luzes da noite.
+func mask_on(
+	canvas: CanvasItem, id: StringName, foot: Vector2, tint: Color, frame: int, facing: float
+) -> void:
+	mask_posed(canvas, id, tint, frame, posed(foot, facing))
+
+
+## A mascara com a pose do golpe e da queda: a silhueta da noite mexe-se igual.
+func mask_posed(
+	canvas: CanvasItem, id: StringName, tint: Color, frame: int, pose: Transform2D
+) -> void:
+	var item := entry(id)
+	var size := Vector2(item.size[0], item.size[1])
+	var origin := Vector2(item.atlas_origin[0], item.atlas_origin[1])
+	var frame_origin := Vector2(item.frame_origins[frame][0], item.frame_origins[frame][1])
+	var source := Rect2(origin + frame_origin, size)
+	var path := TEMPORARY_ROOT + "actors_mask.png"
+	if not _textures.has(path):
+		_textures[path] = load(path)
+	canvas.draw_set_transform_matrix(pose)
+	canvas.draw_texture_rect_region(_textures[path], box(id, Vector2.ZERO), source, tint)
+	canvas.draw_set_transform(Vector2.ZERO)
+
+
 static func unit_profile(data_id: StringName) -> StringName:
 	match data_id:
 		&"monarch":
 			return &"monarch"
-		&"archer", &"canopy_archer":
-			# Rejected concept is archived; the reference troop body is a temporary proxy.
-			return &"vagrant"
-		&"vagrant", &"builder", &"spearman":
+		&"archer", &"canopy_archer", &"reed_stalker":
+			return &"temp_archer"
+		&"archer_hero":
+			return &"temp_archer_hero"
+		&"spearman", &"ice_warden":
+			return &"temp_spearman"
+		&"vagrant", &"builder":
 			return &"vagrant"
 		&"cook":
 			return &"cook"

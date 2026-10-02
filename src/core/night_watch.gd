@@ -22,6 +22,7 @@ const CHAMA_CAVADORES := &"attracts_burrowers"
 ## O que o escuro recebe no lugar da fase quando a noite ja nao tem Podridao.
 const SEM_NOITE := -1
 
+var other_rot: RotSystem
 var rot: RotSystem
 var amargueiros: AmargueiroSystem
 var voice: OfferWatch
@@ -45,6 +46,7 @@ var _criaturas: Dictionary
 ## BuildSystem (§55), e o preco de uma oferta cai no prato (§75).
 func _init(tropas: UnitSystem, obras: BuildSystem, moedas: CoinSystem, postos: JobBoard) -> void:
 	rot = SimFactory.rot()
+	other_rot = SimFactory.rot()
 	amargueiros = SimFactory.amargueiros()
 	voice = OfferWatch.new(moedas, tropas, obras)
 	names = SimFactory.titles()
@@ -71,10 +73,12 @@ func tick(
 	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.
 	dark.tick(delta, fase if rot.active() else SEM_NOITE, estado, bichos, _obras, mundo.x)
 	bichos.set_lights(LightWard.of(_obras, dark.ward()), SimFactory.rot_profile().light_recoil_s)
+	RiftWatch.tick(self, delta, estado, bichos, mundo.x)
+	CrownWatch.tick(bichos, rot)  # a coroa no chao (Q-167)
 	if not rot.active():
 		return
 	if Discoveries.known(estado, &"sacrifice"):  # a Estatua da Oferenda (Q-016)
-		_alimentar()
+		Sacrifice.feed(rot, voice, _moedas)
 	var borda := mundo.y if rot.state.side > 0 else 0.0
 	Thieves.plan(bichos, _criaturas, _obras, _edificios, borda)  # o Alado (Q-129)
 	if voice.paused(delta):
@@ -151,6 +155,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		# Os nomes leem-se ANTES de os corpos se levantarem: uma arvore nomeada e a
 		# cara de alguem que tinha titulo (§74, §76), e o titulo so depois vai de luto.
 		var dia := ClockService.clock.day
+		CrownWatch.dawn()  # a coroa que ninguem levou volta, antes das raizes (Q-167)
 		amargueiros.at_dawn(dia, _tropas, _obras, mundo.x, mundo.y, names.by_unit())
 		names.at_dawn(dia, _tropas, _postos)
 		harvest.at_dawn()
@@ -172,6 +177,8 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		if not voice.before_spawn(rot, estado.day):
 			return  # §75: a decima segunda fechou o ciclo
 		rot.spawn(estado.day, lado, mundo.y)
+		RiftWatch.spawn(self, estado, mundo)
+		SettlementWatch.night(SimLoop.field)
 		voice.after_spawn(rot)
 		EventBus.queue(&"rot_spawned", [rot.position_x(), rot.state.width, rot.mass(), lado])
 		return
@@ -184,7 +191,10 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		rot.retreat()
 		EventBus.queue(&"rot_retreated", [estado.day])
 	_roubos(bichos)
-	for creature_id in bichos.dissolve():
+	other_rot.retreat()
+	var keep := DungeonWatch.guardians(SimLoop.field)
+	keep.append_array(SimLoop.field.song.permanent())
+	for creature_id in bichos.dissolve(keep):
 		EventBus.queue(&"creature_died", [creature_id, rot.position_x(), int(Band.Kind.SURFACE)])
 
 
@@ -215,35 +225,3 @@ func _chama() -> bool:
 
 func _sortear_lado() -> int:
 	return 1 if RngService.int_range(&"rot", 0, 1) == 1 else -1
-
-
-## §05: "Alimentar — deixar sacrificios (animais, tropas fracas, ouro) reduz a
-## massa. Sinistro, eficaz, e mecanicamente honesto" (Q-127). As moedas que o REI
-## largou sem outro destino, pousadas dentro da mancha, somem nela. A do prato de
-## uma oferta aberta e da oferta; a que caiu de quem morreu nao e sacrificio.
-func _alimentar() -> void:
-	var meia := rot.state.width * BuildSystem.METADE
-	var prato := voice.offers
-	var meio_prato := SimFactory.rot_profile().offer_plate_px * BuildSystem.METADE
-	var comidas := PackedInt32Array()
-	var valor := 0
-	for c in _moedas.count():
-		if _moedas.settled[c] == 0 or _moedas.from_king[c] == 0 or _moedas.targets[c] >= 0:
-			continue
-		if _moedas.bands[c] != int(Band.Kind.SURFACE):
-			continue
-		if absf(_moedas.xs[c] - rot.position_x()) > meia:
-			continue
-		var aberto := prato.phase == OfferSystem.Phase.OPEN
-		if aberto and absf(_moedas.xs[c] - prato.plate_x) <= meio_prato:
-			continue
-		comidas.append(_moedas.ids[c])
-		valor += _moedas.amounts[c]
-	if comidas.is_empty():
-		return
-	for coin_id in comidas:
-		_moedas.remove(coin_id)
-	var tirada := minf(rot.state.mass, valor * SimFactory.rot_profile().sacrifice_mass_per_coin)
-	rot.state.mass -= tirada
-	voice.debt.feed_lume(valor)  # compra a noite de hoje e alimenta o Lume (ADR 0034)
-	EventBus.queue(&"rot_fed", [tirada, &"coins"])

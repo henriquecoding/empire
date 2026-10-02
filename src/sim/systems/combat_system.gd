@@ -5,22 +5,11 @@
 # noite da resultados diferentes e a promessa da seed morre". Por isso a ordem
 # esta escrita, por esta ordem, e nao emerge de nada:
 #
-#   1 · escolher alvos      — o TargetPicker, no passo 4 do §43
-#   2 · resolver ataques    — resolve(), no passo 6
-#   3 · aplicar dano        — tudo de uma vez, no fim
-#   4 · mortes e o que cai  — depois do dano, nunca a meio
-#
 # O passo 3 evita "uma tropa morre e ainda ataca no mesmo tick" (§43).
 #
-# Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70): quem
-# chama liga-o ao fluxo `combat` e a noite reproduz-se com a semente. A §50
-# insiste que o hit sai ja decidido — "a apresentacao nunca decide se acertou".
-#
-# Os campos com um underscore a frente do nome dos sistemas valem SO durante uma
-# chamada a resolve(): sao o contexto do passo, e sao reescritos a cada um. E o
-# que permite que os metodos de dentro nao levem cinco argumentos cada.
-#
-# O que NAO esta aqui: a fila do muro (F1-06), a moral e a fuga (F1-12).
+# Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70), e a noite
+# reproduz-se com a semente: "a apresentacao nunca decide se acertou" (§50). Os campos
+# com underscore valem SO durante uma chamada a resolve(): sao o contexto do passo.
 class_name CombatSystem
 extends RefCounted
 
@@ -54,7 +43,14 @@ const EVENTOS := &"events"
 const QUEM := &"data_id"
 
 var picker: TargetPicker
+var focus: ArcherFocus
+var manual: PlayerStrike
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
+## Para onde foge quem larga a arma (Q-168): o nucleo. Escrito pelo FieldWork.
+var refuges: Dictionary = {}
+var refuge := 0.0
+## As aljavas das tropas (Q-163): sem flechas nao se dispara. Sem ela, sem teto.
+var supply: Supply
 ## O que os titulos dao a quem os tem (§76, Q-102): unit_id -> {grant: valor}.
 var perks: Dictionary = {}
 
@@ -78,6 +74,7 @@ func _init(
 	_dados_c = criaturas
 	_postos = postos
 	picker = TargetPicker.new(unidades, criaturas, contacto, postos)
+	manual = PlayerStrike.new(unidades, postos)
 
 
 func target_of(unit_id: int) -> int:
@@ -96,6 +93,7 @@ func choose(
 	obras: BuildSystem,
 	passagens: PackedFloat32Array = PackedFloat32Array()
 ) -> Array[Dictionary]:
+	picker.controlled = manual.controlled
 	return picker.choose(unidades, criaturas, obras, passagens)
 
 
@@ -110,6 +108,11 @@ func resolve(
 	_sorteio = sorteio
 	_eventos = []
 	_golpes = []
+	for event in manual.resolve(unidades, criaturas):
+		if event[CHAVE] == EV_DANO:
+			_golpes.append(event)
+		else:
+			_eventos.append(event)
 	_tropas_batem()
 	_criaturas_batem()
 	_aplicar()
@@ -127,20 +130,30 @@ func _a_recarregar(cooldown: float) -> bool:
 
 func _tropas_batem() -> void:
 	for unit_id in TargetPicker.ids_por_ordem(_u.ids):
+		if unit_id == manual.controlled:
+			continue
 		var alvo := picker.target_of(unit_id)
 		var i := _u.index_of(unit_id)
 		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
+		if supply != null and not supply.can_shoot(_u, i, dados):
+			continue  # a aljava vazia (Q-163): nao dispara, nem sorteia
 		var bonus: Dictionary = perks.get(unit_id, {})  # o titulo (Q-102)
 		_u.cooldowns[i] = (
 			dados.attack_interval * Posts.cadence(_postos, _u, i) / TitlePerks.rate(bonus)
 		)
+		if supply != null:
+			supply.shoot(_u, i, dados)
 		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
 			var dano := dados.damage + TitlePerks.vs_siege(bonus, _c, _dados_c, alvo)
-			_golpes.append({DE: unit_id, PARA: alvo, QUANTO: dano, CRIATURA: true})
+			var targets: Array[int] = [alvo]
+			if focus != null and focus.piercing.has(unit_id):
+				targets = focus.pierced(_u, _c, unit_id, alvo)
+			for target in targets:
+				_golpes.append({DE: unit_id, PARA: target, QUANTO: dano, CRIATURA: true})
 
 
 func _criaturas_batem() -> void:
@@ -162,7 +175,7 @@ func _criaturas_batem() -> void:
 						DE: creature_id,
 						PARA: alvo,
 						QUANTO: dados.damage,
-						CRIATURA: false,
+						CRIATURA: _c.index_of(alvo) != NENHUM,
 						OBRA: _c.target_slots[c],
 					}
 				)
@@ -206,20 +219,9 @@ func _mortes_das_criaturas() -> void:
 		var c := _c.index_of(creature_id)
 		if _c.alive(c):
 			continue
-		(
-			_eventos
-			. append(
-				{
-					CHAVE: EV_MORTE,
-					DE: creature_id,
-					ONDE: _c.xs[c],
-					FAIXA: int(_c.bands[c]),
-					MOEDAS: _c.coin_drops[c],
-					CRIATURA: true,
-					QUEM: _c.data_ids[c],
-				}
-			)
-		)
+		var morte := {CHAVE: EV_MORTE, DE: creature_id, ONDE: _c.xs[c], FAIXA: int(_c.bands[c])}
+		morte.merge({MOEDAS: _c.coin_drops[c], CRIATURA: true, QUEM: _c.data_ids[c]})
+		_eventos.append(morte)
 		_c.remove(creature_id)
 
 
@@ -227,6 +229,9 @@ func _mortes_das_criaturas() -> void:
 ## amanhecer e o §50 diz que toda a morte larga alguma coisa. Quem a remove — ou
 ## a ressuscita — e quem chama; aqui so se anuncia, uma vez.
 func _mortes_das_tropas() -> void:
+	for e in Disarm.spare(_u, _dados_u, _dados_u.get(&"vagrant"), refuge, refuges):  # Q-168
+		picker.forget(e[DE])
+		_eventos.append(e)
 	for unit_id in TargetPicker.ids_por_ordem(_u.ids):
 		var i := _u.index_of(unit_id)
 		if _u.healths[i] > 0 or _u.states[i] == UnitFsm.State.DEAD:
@@ -234,17 +239,8 @@ func _mortes_das_tropas() -> void:
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
 		_u.states[i] = UnitFsm.State.DEAD
 		picker.forget(unit_id)
-		(
-			_eventos
-			. append(
-				{
-					CHAVE: EV_MORTE,
-					DE: unit_id,
-					ONDE: _u.xs[i],
-					FAIXA: int(_u.bands[i]),
-					MOEDAS: _u.carried_coins[i],
-					LARGA: dados.drops_on_death if dados != null else [],
-					CRIATURA: false,
-				}
-			)
-		)
+		var morte := {CHAVE: EV_MORTE, DE: unit_id, ONDE: _u.xs[i], FAIXA: int(_u.bands[i])}
+		morte[MOEDAS] = _u.carried_coins[i]
+		morte[LARGA] = dados.drops_on_death if dados != null else []
+		morte[CRIATURA] = false
+		_eventos.append(morte)

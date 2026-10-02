@@ -44,7 +44,7 @@ static var _ataques: Dictionary = {}  # id -> [t, paragem]
 static var _golpes: Dictionary = {}  # id -> [t, sentido, forca, paragem]
 static var _quedas: Dictionary = {}  # id -> [t, sentido]
 static var _cooldowns: Dictionary = {}  # id -> [t, o ultimo cooldown visto]
-static var _vistos: Dictionary = {}  # id -> [t, caixa, forma, cor]
+static var _vistos: Dictionary = {}  # id -> [t, caixa, forma, cor, pele]
 static var _tabelas: Dictionary = {}
 static var _poda := 0.0
 
@@ -192,10 +192,28 @@ static func facing(id: int, x: float, antes: float) -> float:
 	return antes if is_equal_approx(para, x) else signf(para - x)
 
 
+## O frame da animacao `attack` que acompanha o golpe de `id`, ou -1 se ele esta
+## em repouso ou a arte nao tem a tag: sem isto a animacao repetia-se sem ligar ao
+## golpe, e o arco soltava a corda quando a flecha ja tinha saido.
+static func attack_frame(art: OriginalArt, perfil: StringName, id: int, falta: float) -> int:
+	var p := StrikePose.timeline(since_attack(id), falta)
+	var dura := art.action_seconds(perfil, &"attack")
+	if p < 0.0 or dura <= 0.0:
+		return -1
+	return art.frame_at(perfil, p * dura, &"attack", false)
+
+
+## A pele de uma criatura — o perfil da arte, para onde olha, a cor e se estava a
+## luz —, para a morte a desfazer com a animacao `die` dela em vez do contorno.
+static func dress(id: int, perfil: StringName, frente: float, tinta: Color, aceso: bool) -> void:
+	if _vistos.has(id):
+		_vistos[id][4] = [perfil, frente, tinta, aceso]
+
+
 ## O ultimo desenho de uma criatura, para a morte a poder desfazer no sitio
 ## onde estava: o `creature_died` traz o x, e a forma ja saiu das colunas.
 static func remember(id: int, caixa: Rect2, forma: int, cor: Color) -> void:
-	_vistos[id] = [clock, caixa, forma, cor]
+	_vistos[id] = [clock, caixa, forma, cor, []]
 
 
 static func seen(id: int) -> Array:

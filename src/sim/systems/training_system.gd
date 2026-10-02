@@ -191,14 +191,4 @@ func _candidato(unidades: UnitSystem, vaga: BuildSlot) -> int:
 ## Tira do chao, em cima da casa, ate `falta` moedas pousadas. Ids primeiro: o
 ## remove() do CoinSystem troca com a ultima.
 func _apanhar(moedas: CoinSystem, vaga: BuildSlot, falta: int) -> int:
-	var ids := PackedInt32Array()
-	for c in moedas.count():
-		if CoinTarget.pays(moedas, c, vaga):
-			ids.append(moedas.ids[c])
-	var valor := 0
-	for coin_id in ids:
-		if valor >= falta:
-			break
-		valor += moedas.amounts[moedas.index_of(coin_id)]
-		moedas.remove(coin_id)
-	return valor
+	return CoinTarget.take(moedas, vaga, falta)

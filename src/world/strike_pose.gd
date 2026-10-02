@@ -125,6 +125,20 @@ static func swing(estilo: Style, desde: float, falta: float) -> float:
 	return 0.0
 
 
+## Onde vai o golpe inteiro, de 0 (comeca a armar) a 1 (acabou de voltar), ou -1
+## em repouso. E por aqui que a animacao `attack` de um sprite acompanha o golpe
+## da simulacao, em vez de se repetir sem ligar a ele: o impacto cai a
+## WINDUP_S do comeco, e uma animacao que arma e bate le-se no sitio certo.
+static func timeline(desde: float, falta: float) -> float:
+	var total := WINDUP_S + STRIKE_S + RECOVER_S
+	match phase(desde, falta):
+		Phase.WINDUP:
+			return (WINDUP_S - clampf(falta, 0.0, WINDUP_S)) / total
+		Phase.STRIKE, Phase.RECOVER:
+			return (WINDUP_S + desde) / total
+	return -1.0
+
+
 static func strength(estilo: Style) -> float:
 	return FORCA[estilo]
 

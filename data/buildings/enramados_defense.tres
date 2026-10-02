@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_21e2p"]
+
+[resource]
+script = ExtResource("1_21e2p")
+id = &"enramados_defense"
+display_key = "BUILDING_ENRAMADOS_DEFENSE"
+people = &"enramados"
+category = &"defense"
+cost = 8
+job_slots = 2
+craft = &"guard"
+max_health = 64
+contact_slots = 3
+build_work = 16.0
+width_px = 80
+shadow_width = 80

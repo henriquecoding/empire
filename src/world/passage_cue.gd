@@ -40,11 +40,11 @@ const COR := Color(0.62, 0.86, 0.94)
 ## A seta da faixa do rei, se ele estiver onde o Verbo 2 pega. `tempo` e o do
 ## ecra, e nao o do jogo: o pulso e derivado e descartavel (§45).
 static func draw_on(canvas: CanvasItem, faixa: Band.Kind, tempo: float) -> void:
-	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var i := SimLoop.units.index_of(Assume.driven())
 	if i == UnitSystem.NENHUM or int(SimLoop.units.bands[i]) != int(faixa):
 		return
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)  # a escora fecha (Q-132)
-	var para := Verbs.destination(SimLoop.units, SimLoop.king_id, abertas)
+	var para := Verbs.destination(SimLoop.units, Assume.driven(), abertas)
 	if para == Verbs.NENHUMA:
 		return
 	var x := nearest(SimLoop.units.xs[i], SimLoop.passages)

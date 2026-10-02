@@ -6,6 +6,11 @@ class_name RulesFactory
 extends RefCounted
 
 
+## As regras das respostas do painel de 30/09/2026 (rules.csv, ADR 0041).
+static func rules() -> RulesCurve:
+	return Registry.entry(&"economy", &"rules") as RulesCurve
+
+
 ## O RecruitSystem com o desconto do povo de cada regiao (§04, Q-007), a ler a
 ## regiao do estado em que se joga, e quem anda atras do rei (Q-063).
 static func recruits(estado: GameState) -> RecruitSystem:
@@ -55,3 +60,17 @@ static func impulse_cost_mult(ganancia: int) -> float:
 		if ganancia >= perfil.greed_range.x and ganancia <= perfil.greed_range.y:
 			return perfil.impulse_cost_mult
 	return 1.0
+
+
+static func segment_kits() -> Array[SegmentData]:
+	var result: Array[SegmentData] = []
+	for data in Registry.entries(&"segments"):
+		result.append(data as SegmentData)
+	return result
+
+
+static func biome_peoples() -> Dictionary:
+	var result := {}
+	for data: PeopleData in Registry.entries(&"peoples"):
+		result[data.biome] = data.id
+	return result

@@ -51,8 +51,8 @@ static func leave(legado: Dictionary) -> bool:
 static func pending() -> Dictionary:
 	var moldura := _ler(PATH)
 	if moldura.has(VERSAO) and typeof(moldura.get(LEGADO)) == TYPE_DICTIONARY:
-		return moldura[LEGADO]
-	return moldura
+		return SaveMigrationsV6.rename(moldura[LEGADO])
+	return SaveMigrationsV6.rename(moldura)
 
 
 ## A sequencia de save a partir da qual um slot e do jogo novo; 0 sem legado.

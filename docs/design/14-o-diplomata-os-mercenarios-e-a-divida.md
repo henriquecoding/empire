@@ -31,3 +31,5 @@ As probabilidades deslocam-se com o nível do diplomata e o Favor acumulado: cad
 ## Diplomata nível 2 — assimilação
 
 A cada 8 dias pode assimilar um império vizinho: o império inteiro passa a ser teu, com tropas, edifícios e produção — sem combate. Requer 60 de Favor e que o império alvo tenha um rei jovem ou fraco. É a rota pacifista, e deve ser tão viável quanto a militar. Um jogador que termine a campanha sem uma única batalha ofensiva é um jogador que vai escrever sobre o teu jogo.
+
+Painel de 30/09/2026 — ADR 0043. O mercenário das trilhas cobra soldo mesmo abaixo do limiar gratuito das tropas regulares e deserta primeiro. Depois de três contratações o acampamento fica abandonado e as obras em ruína (Q-177). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.

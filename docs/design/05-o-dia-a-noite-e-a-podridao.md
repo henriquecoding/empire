@@ -50,3 +50,5 @@ Trocar de personagem controlado (rei ↔ classe), montar, entrar e sair da camad
 > **Regra inegociável**
 >
 > Se aparecer um terceiro verbo, uma mecânica está mal desenhada. O menu de gestão do rei conta como Verbo 2 — assumes o rei, o menu é o corpo dele. Isto mantém o jogo jogável em comando e no Steam Deck sem UI de rato (§24, §26).
+
+Painel de 30/09/2026 — ADR 0043. As fissuras no chão podem vir de um lado ou de dois, à sorte, conservando o orçamento total. O limiar de dois lados continua no dia 12 e as primeiras dez noites mantêm a curva anterior (Q-179, ADR 0043). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.

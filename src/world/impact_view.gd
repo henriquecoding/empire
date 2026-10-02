@@ -12,7 +12,7 @@
 # As tres, e nenhuma mexe na simulacao. O knockback de 3 px e uma mola do ecra
 # que acaba sempre na posicao da simulacao (CombatFx): empurrar a POSICAO tirava
 # o corpo da fila de contacto do §50 sem que o §50 desse por isso, e um empurrao
-# que o save nao conhece torna a partida irreproduzivel (§61) — Q-084, Q-173.
+# que o save nao conhece torna a partida irreproduzivel (§61) — Q-084, Q-185.
 # O flash pinta-se no desenho de cada corpo, com a forma dele (CombatFx.flash);
 # aqui ficam a particula e a orla das obras.
 #
@@ -120,10 +120,11 @@ func _process(delta: float) -> void:
 ## §46, `attack_launched(from_id, to_id, hit)`. So o que ACERTA pisca: o §07 da
 ## ao arqueiro em campo aberto uma precisao de 0,34, e piscar as falhas dizia
 ## que ele acertou duas vezes em tres. O que vem de longe pisca quando a flecha
-## chega, e quem o entrega e o CombatView.
+## chega, e quem o entrega e o BattleView.
 func _no_golpe(from_id: int, to_id: int, acertou: bool) -> void:
 	var estilo := CombatFx.style_of(from_id)
-	if not acertou or estilo == StrikePose.Style.RANGED:
+	var conduzido := from_id == Assume.driven()  # o tiro manual acerta ja (ADR 0045)
+	if not acertou or (estilo == StrikePose.Style.RANGED and not conduzido):
 		return
 	var de := _caixa_de(from_id)
 	var para := _caixa_de(to_id)
@@ -132,7 +133,8 @@ func _no_golpe(from_id: int, to_id: int, acertou: bool) -> void:
 	var sentido := 1.0
 	if de.size != Vector2.ZERO:
 		sentido = aim(de.get_center().x, para.get_center().x)
-	hit(to_id, sentido, false, StrikePose.strength(estilo), StrikePose.STRIKE_S)
+	var atraso := 0.0 if estilo == StrikePose.Style.RANGED else StrikePose.STRIKE_S
+	hit(to_id, sentido, false, StrikePose.strength(estilo), atraso)
 
 
 ## §46, `building_damaged(building_id, ratio)`. E o sinal que uma noite do
@@ -170,6 +172,8 @@ func _obra_atingida(slot_id: int) -> void:
 	if i == BuildSystem.NENHUM:
 		return
 	var vaga := SimLoop.builds.slots[i]
+	if SoilCover.covers(int(vaga.band), vaga.x):  # com a terra por cima, nao se ve (ADR 0039)
+		return
 	var forma := Silhouette.of_slot(vaga, _tabela(&"buildings"))
 	var pontos := BuildView.drawn_shape(vaga, forma)
 	if pontos.size() < 2:
@@ -209,7 +213,7 @@ func _caixa_de(id: int) -> Rect2:
 ## O mesmo rectangulo que o BandView desenha, e nao um parecido: o flash e o
 ## corpo a piscar, e um flash com outra altura era um segundo corpo por cima.
 func _caixa(x: float, faixa: int, dados: Resource) -> Rect2:
-	if dados == null:
+	if dados == null or SoilCover.covers(faixa, x):
 		return SEM_CORPO
 	var escala: int = dados.get(&"scale_tier")
 	var alto := WorldPalette.DEGRAU * maxi(1, escala)

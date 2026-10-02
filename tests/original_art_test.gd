@@ -24,6 +24,6 @@ func test_rejected_archer_is_not_a_runtime_profile_or_export() -> void:
 	assert_bool(art.entry(&"archer").is_empty()).is_true()
 	assert_bool(FileAccess.file_exists(OriginalArt.ROOT + "archer.png")).is_false()
 	for role in [&"archer", &"canopy_archer"]:
-		assert_str(String(OriginalArt.unit_profile(role))).is_equal("vagrant")
+		assert_str(String(OriginalArt.unit_profile(role))).is_equal("temp_archer")
 	assert_str(String(art.entry(&"knight").review_status)).is_equal("near_complete_reference")
 	assert_str(String(art.entry(&"monarch").review_status)).is_equal("redesign_required")

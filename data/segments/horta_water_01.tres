@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_htmcv"]
+
+[resource]
+script = ExtResource("1_htmcv")
+id = &"horta_water_01"
+kind = &"water"
+people = &"horta"
+weight = 8
+width_px = 640
+resource = &"water"
+subject = &"irrigation_gate"

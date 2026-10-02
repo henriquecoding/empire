@@ -177,6 +177,8 @@ extends Resource
 @export_group("Andar — correr")
 ## Quanto mais depressa o rei anda com a tecla de correr premida (Q-149).
 @export var king_run_mult: float = 0.0
+## Quanto o rei se afasta das bordas da regiao de casa; as classes vao alem (Q-150).
+@export var king_leash_px: float = 0.0
 
 @export_group("Coroa — o preco dos impulsos (Q-014)")
 ## Repetir o mesmo decreto dentro de impulse_repeat_days dias multiplica o preco
@@ -200,6 +202,14 @@ extends Resource
 @export var march_fortress_per_region: int = 0
 @export var march_siege_per_unit: int = 0
 @export var march_loss_chance: float = 0.0
+## O mundo continuo (Q-173; ADR 0038): quanto mede cada trilho entre terras, a terra de
+## cada outro povo, quanto o clima junta o bosque e de quantos em quantos segmentos,
+## e o monte de moedas de uma masmorra.
+@export var world_trail_segments: Vector2i = Vector2i()
+@export var world_land_segments: int = 0
+@export var wild_cluster: float = 0.0
+@export var wild_cluster_segments: int = 0
+@export var dungeon_coins: Vector2i = Vector2i()
 @export var vassal_tribute: Vector2i = Vector2i()
 @export var vassal_seeds: Vector2i = Vector2i()
 @export var vassal_strength: float = 0.0

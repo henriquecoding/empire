@@ -19,6 +19,7 @@ move_speed = 80.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"ranged", &"elevated"])
 coin_capacity = 5
+ammo = 30
 ability = &"shoot_from_canopy"
 ability_params = {
 &"accuracy_in_canopy": 1.0

@@ -27,6 +27,8 @@ const COLHEITA := &"harvest"
 ## O archote do rei (Q-029).
 const ARCHOTE := &"torch"
 const REI := &"king_id"
+## O corpo de classe que o jogador conduz, ou NENHUM (§08, Q-162).
+const PILOTO := &"pilot"
 const POSTOS := &"staffing"
 
 
@@ -46,12 +48,14 @@ static func world(
 		MOEDAS: moedas.to_dict(),
 		OBRAS: obras.to_dict(),
 		PODRIDAO: noite.rot.to_dict(),
+		&"other_rot": noite.other_rot.to_dict(),
 		AMARGUEIROS: noite.amargueiros.to_dict(obras),
 		VOZ: noite.voice.to_dict(),
 		NOMES: noite.names.to_dict(),
 		COLHEITA: noite.harvest.to_dict(),
 		ARCHOTE: noite.dark.torch.to_dict(),
 		REI: king_id,
+		PILOTO: unidades.pilot,
 	}
 
 
@@ -69,10 +73,12 @@ static func restore(
 	if postos != null:
 		postos.staffing.from_dict(mundo.get(POSTOS, {}))
 	unidades.from_dict(mundo.get(UNIDADES, {}))
+	unidades.pilot = int(mundo.get(PILOTO, UnitSystem.NENHUM))
 	bichos.from_dict(mundo.get(CRIATURAS, {}))
 	moedas.from_dict(mundo.get(MOEDAS, {}))
 	obras.from_dict(mundo.get(OBRAS, []))
 	noite.rot.from_dict(mundo.get(PODRIDAO, {}))
+	noite.other_rot.from_dict(mundo.get(&"other_rot", {}))
 	# Depois das obras, e nao antes: as serras voltam com ids novos, e as obras
 	# autoradas ja tem de estar no sitio para os velhos nao lhes caberem (§62).
 	noite.amargueiros.from_dict(mundo.get(AMARGUEIROS, {}), obras)

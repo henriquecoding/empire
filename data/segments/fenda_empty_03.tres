@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/segment_data.gd" id="1_kk2db"]
+
+[resource]
+script = ExtResource("1_kk2db")
+id = &"fenda_empty_03"
+kind = &"empty"
+people = &"fenda"
+weight = 30
+width_px = 640
+build_slots = 3
+cavity_slots = 1
+min_per_region = 3
+subject = &"standing_stone"

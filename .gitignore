@@ -25,6 +25,7 @@
 # desce, exclui o conteudo um a um, e a excecao do _placeholder/ vale.
 art/export/*
 !art/export/_placeholder/
+!art/export/temporary/
 
 # ---- Dados gerados por tools/csv_to_tres.gd ----
 # ADR 0004: os .tres SAO versionados — o export precisa deles e o CI nao tem de

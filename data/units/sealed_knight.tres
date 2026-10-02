@@ -16,7 +16,7 @@ move_speed = 80.0
 scale_tier = 3
 layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
 shadow_width = 22
-tags = Array[StringName]([&"mounted", &"blind_without_mount"])
+tags = Array[StringName]([&"mounted", &"blind_without_mount", &"playable"])
 ability = &"sees_through_mount"
 ability_params = {
 &"blind_range_px": 28.0,

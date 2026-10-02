@@ -6,7 +6,7 @@
 script = ExtResource("1_8y3m4")
 id = &"reed_stalker"
 display_key = "UNIT_REED_STALKER"
-people = &"paul"
+people = &"bruma"
 max_health = 12
 damage = 3
 range_px = 120
@@ -17,6 +17,7 @@ move_speed = 86.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"ranged", &"hides_in_reeds"])
 coin_capacity = 5
+ammo = 25
 ability = &"ambush_from_reeds"
 ability_params = {
 &"first_hit_mult": 2.0
