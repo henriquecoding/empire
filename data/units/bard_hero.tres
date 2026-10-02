@@ -21,6 +21,10 @@ coin_capacity = 5
 ability = &"charm_weak"
 ability_params = {
 &"duration": 30.0,
+&"manual_buffer": 0.18,
+&"manual_damage": 2.0,
+&"manual_interval": 1.2,
+&"manual_range": 28.0,
 &"radius": 120.0
 }
 head_pool = Array[StringName]([&"hat_bard"])

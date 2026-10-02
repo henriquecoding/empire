@@ -5,11 +5,6 @@
 # noite da resultados diferentes e a promessa da seed morre". Por isso a ordem
 # esta escrita, por esta ordem, e nao emerge de nada:
 #
-#   1 · escolher alvos      — o TargetPicker, no passo 4 do §43
-#   2 · resolver ataques    — resolve(), no passo 6
-#   3 · aplicar dano        — tudo de uma vez, no fim
-#   4 · mortes e o que cai  — depois do dano, nunca a meio
-#
 # O passo 3 evita "uma tropa morre e ainda ataca no mesmo tick" (§43).
 #
 # Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70), e a noite
@@ -49,6 +44,7 @@ const QUEM := &"data_id"
 
 var picker: TargetPicker
 var focus: ArcherFocus
+var manual: PlayerStrike
 var guard: ClassSystem  # a defesa da classe do rei (§08); sem ela, o golpe passa
 ## Para onde foge quem larga a arma (Q-168): o nucleo. Escrito pelo FieldWork.
 var refuges: Dictionary = {}
@@ -78,6 +74,7 @@ func _init(
 	_dados_c = criaturas
 	_postos = postos
 	picker = TargetPicker.new(unidades, criaturas, contacto, postos)
+	manual = PlayerStrike.new(unidades, postos)
 
 
 func target_of(unit_id: int) -> int:
@@ -96,6 +93,7 @@ func choose(
 	obras: BuildSystem,
 	passagens: PackedFloat32Array = PackedFloat32Array()
 ) -> Array[Dictionary]:
+	picker.controlled = manual.controlled
 	return picker.choose(unidades, criaturas, obras, passagens)
 
 
@@ -110,6 +108,11 @@ func resolve(
 	_sorteio = sorteio
 	_eventos = []
 	_golpes = []
+	for event in manual.resolve(unidades, criaturas):
+		if event[CHAVE] == EV_DANO:
+			_golpes.append(event)
+		else:
+			_eventos.append(event)
 	_tropas_batem()
 	_criaturas_batem()
 	_aplicar()
@@ -127,6 +130,8 @@ func _a_recarregar(cooldown: float) -> bool:
 
 func _tropas_batem() -> void:
 	for unit_id in TargetPicker.ids_por_ordem(_u.ids):
+		if unit_id == manual.controlled:
+			continue
 		var alvo := picker.target_of(unit_id)
 		var i := _u.index_of(unit_id)
 		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):

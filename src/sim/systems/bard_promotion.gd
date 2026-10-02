@@ -1,12 +1,23 @@
 class_name BardPromotionRules
 extends RefCounted
 
+const LEGACY_CLOCK := -1.0
+
 
 static func at(
-	units: UnitSystem, bard: int, x: float, data: ClassData, bodies: Dictionary, phase: int
+	units: UnitSystem,
+	bard: int,
+	x: float,
+	data: ClassData,
+	bodies: Dictionary,
+	phase: int,
+	ability_cooldown: float = LEGACY_CLOCK
 ) -> int:
 	var b := units.index_of(bard)
-	if b < 0 or phase < 2 or not units.alive(b) or units.cooldowns[b] > 0.0:
+	if b < 0 or phase < 2 or not units.alive(b):
+		return -1
+	var cooldown := units.cooldowns[b] if ability_cooldown < 0.0 else ability_cooldown
+	if cooldown > 0.0:
 		return -1
 	var body: UnitData = bodies.get(units.data_ids[b])
 	var radius := float(body.ability_params.get(&"radius", 0.0)) if body != null else 0.0
@@ -35,5 +46,6 @@ static func at(
 	TrainingSystem.retrain(units, best, upper)
 	units.healths[best] = maxi(1, roundi(upper.max_health * ratio))
 	units.job_ids[best] = UnitSystem.NENHUM
-	units.cooldowns[b] = body.attack_interval
+	if ability_cooldown < 0.0:
+		units.cooldowns[b] = body.attack_interval
 	return units.ids[best]

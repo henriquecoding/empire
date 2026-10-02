@@ -55,6 +55,10 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		var moving := not is_equal_approx(x, old_x)
 		if moving:
 			_facing[id] = signf(x - old_x)
+		if id == Assume.driven():
+			_facing[id] = CombatInput.aim_direction()
+		if CombatView.attacks.has(id):
+			_facing[id] = CombatView.attacks[id][&"direction"]
 		_previous[id] = x
 		if units.healths[i] < int(_health.get(id, units.healths[i])):
 			_hit_until[id] = time + HIT_SECONDS
@@ -80,12 +84,16 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 				)
 				TitleView.draw_on(canvas, box, id, light)
 				if data.tags.has(&"bard"):
-					BardArt.draw_on(canvas, box, units.cooldowns[i])
+					BardArt.draw_on(
+						canvas, box, float(SimLoop.field.song.cooldowns.get(units.ids[i], 0.0))
+					)
 				if units.alive(i):
 					_saco(canvas, box, units, i)
 			continue
 		var hit := time < float(_hit_until.get(id, 0.0))
 		var kind := ActorAction.of(units.states[i] as UnitFsm.State, moving, hit)
+		if units.alive(i) and not hit and CombatView.attacks.has(id):
+			kind = ActorAction.Kind.ATTACK
 		var shown := ActorAction.shown(_art, profile, kind)
 		var frame := _frame(id, profile, kind, shown, time)
 		# Sem ciclo de caminhada desenhado, o baloico de um pixel e o que diz que

@@ -17,15 +17,22 @@ enum Device { KEYBOARD, XBOX, PLAYSTATION }
 
 ## O que se diz de cada gesto, pela ordem do rodape.
 const ACCOES := [
-	&"HINT_MOVE", &"HINT_DROP", &"HINT_ASSUME", &"HINT_MARK", &"HINT_WHEEL", &"HINT_PAUSE"
+	&"HINT_MOVE",
+	&"HINT_DROP",
+	&"HINT_ASSUME",
+	&"HINT_MARK",
+	&"HINT_WHEEL",
+	&"HINT_PAUSE",
+	&"HINT_ATTACK"
 ]
 
 ## O botao de cada gesto, por dispositivo, na ordem de ACCOES. Um StringName e
 ## uma chave a traduzir; uma String e o nome tal e qual.
 const BOTOES := {
-	Device.KEYBOARD: ["A/D", &"KEY_SPACE", "E", &"KEY_MOUSE_RIGHT", "TAB", "ESC"],
-	Device.XBOX: ["D-PAD", "A", "X", "RT", "Y", "START"],
-	Device.PLAYSTATION: ["D-PAD", &"PAD_CROSS", &"PAD_SQUARE", "R2", &"PAD_TRIANGLE", "OPTIONS"],
+	Device.KEYBOARD: ["A/D", &"KEY_SPACE", "E", &"KEY_SKILL", "TAB", "ESC", &"KEY_ATTACK"],
+	Device.XBOX: ["D-PAD", "A", "X", "RT", "Y", "START", "RB"],
+	Device.PLAYSTATION:
+	["D-PAD", &"PAD_CROSS", &"PAD_SQUARE", "R2", &"PAD_TRIANGLE", "OPTIONS", "R1"],
 }
 
 ## Os nomes que o motor da a um comando PlayStation. O resto — o Steam Deck, o

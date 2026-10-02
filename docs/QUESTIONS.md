@@ -7,6 +7,15 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Combate direto — 01/10/2026 (ADR 0045)
+
+### Q-184 · Ataque e habilidade separados nas classes controladas
+- **Pedido do dono:** o personagem deve atacar e usar a habilidade por botão; refinar o combate que antes só deixava as tropas atacar automaticamente.
+- **Aplicado:** ataque em F/botão esquerdo/RB/R1 e habilidade em R/botão direito/RT/R2, com dois botões visíveis. O corpo controlado só ataca por intenção explícita; tropas e corpos largados conservam a IA. Segurar ataque repete à cadência da arma. A direção e o alcance são revalidados no tick do golpe, sem fogo amigo entre criaturas encantadas.
+- **Classes:** Monarca usa a espada e um atalho para a Vigília já existente, com os mesmos custos e consequências; aura continua passiva. Arqueiro separa flecha e marca. Bardo separa golpe curto de alaúde e canto; o canto tem relógio independente e persistente.
+- **Propostas ajustáveis, por decidir:** o dossiê não define o ataque básico do Bardo nem tolerância de entrada. Para cumprir o pedido, o CSV propõe golpe de 2 de dano, alcance 28 px, intervalo 1,2 s e tolerância de 0,18 s para um ataque premido perto do fim da recarga. Estes campos continuam em `_proposed`; não alteram o dano zero do Bardo por IA. Valores podem ser afinados sem mudar código.
+- **Regra reversível:** um ataque manual bem apontado acerta o primeiro inimigo ao alcance, dispensando o sorteio de precisão da IA. Perfuração evoluída mantém a regra existente. Pausar e trocar de corpo cancelam ordens pendentes.
+
 ## Três escolhas iniciais — 01/10/2026 (ADR 0044)
 
 ### Q-183 · Completar as três classes sem inventar uma regra definitiva de balanceamento

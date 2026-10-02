@@ -56,6 +56,7 @@ func test_a_flecha_evoluida_causa_dano_em_toda_a_coluna_mas_nao_atras() -> void:
 	var back := _enemy(&"brute", _x(hero) - 100.0)
 	HeroWatch.tick(0.0)
 	HeroWatch.action(_x(hero) + 60.0)
+	SimLoop.combat.manual.request(hero, 1.0)
 	SimLoop.combat.choose(SimLoop.units, SimLoop.creatures, SimLoop.builds)
 	SimLoop.combat.resolve(
 		SimLoop.units, SimLoop.creatures, SimLoop.builds, func() -> float: return 0.0
@@ -98,7 +99,7 @@ func test_reencantar_a_mesma_criatura_nao_repete_o_feito() -> void:
 	HeroWatch.action(_x(bard) + 60.0)
 	assert_int(SimLoop.field.hero_progress.feat_of(&"bard")).is_equal(1)
 	SimLoop.field.song.tick(30.0, SimLoop.creatures)
-	SimLoop.units.cooldowns[SimLoop.units.index_of(bard)] = 0.0
+	SimLoop.field.song.cooldowns.erase(bard)
 	HeroWatch.action(_x(bard) + 60.0)
 	assert_bool(SimLoop.field.song.allies.has(target)).is_true()
 	assert_int(SimLoop.field.hero_progress.feat_of(&"bard")).is_equal(1)
