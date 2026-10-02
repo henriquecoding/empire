@@ -157,6 +157,7 @@ func test_o_mundo_e_o_que_sobra() -> void:
 
 func test_arrastar_no_mundo_espreita_e_largar_devolve_a_camara() -> void:
 	var p := _pad()
+	p.layout.fixed = true  # so com a alavanca fixa e que o mundo se arrasta (UX-03)
 	p.press_world(5, Vector2(640.0, 300.0))
 	p.drag(5, Vector2(600.0, 300.0), Vector2(-40.0, 0.0))
 	p.drag(5, Vector2(560.0, 310.0), Vector2(-40.0, 10.0))

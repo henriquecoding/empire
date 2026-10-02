@@ -12,7 +12,7 @@
 class_name TouchLayout
 extends RefCounted
 
-enum Role { NONE, STICK, DROP, ATTACK, ASSUME, SKILL, WHEEL, PAUSE, WORLD }
+enum Role { NONE, STICK, DROP, ATTACK, ASSUME, SKILL, WHEEL, PAUSE, WORLD, FIX }
 
 const BASE := Vector2(1280.0, 720.0)
 ## Cada botao: x e y do centro contados do canto de baixo do lado do polegar, e o raio.
@@ -32,9 +32,11 @@ const FOLGA := 14.0
 const ENTRE_PAINEL := 18.0
 ## A alavanca em repouso (do canto de baixo do lado dela), o raio e a margem ao ecra.
 const ALAVANCA := {"x": 190.0, "y": 140.0, "raio": 96.0, "margem": 12.0}
-## A zona onde o polegar pousa para andar: a fraccao da largura do lado dele, e de onde
-## para baixo. Acima e o mundo: o ceu, o castelo, os bichos.
-const ZONA := {"largura": 0.42, "topo": 0.40}
+## O FIXAR: por cima da alavanca, do lado dela, contado como ela (UX-03).
+const FIXAR := Vector3(190.0, 320.0, 38.0)
+## Solta, a alavanca e a metade do ecra do lado do polegar, por baixo do HUD: o polegar
+## que pousa um pouco mais acima ou mais ao centro anda, e nao espreita (UX-03).
+const ZONA := 0.5
 ## O tamanho que se escolhe nas opcoes (§45).
 const ESCALA := {"min": 0.8, "max": 1.4}
 
@@ -45,6 +47,8 @@ var left_handed := false
 var screen := BASE
 ## A escala da interface: o painel de combate cresce num canvas pequeno (Q-186).
 var ui_scale := 1.0
+## A alavanca fixa no sitio: so o circulo dela anda, e o resto do ecra espreita (UX-03).
+var fixed := false
 
 
 func centre(papel: Role) -> Vector2:
@@ -52,6 +56,9 @@ func centre(papel: Role) -> Vector2:
 		var painel := CombatBar.place(screen, ui_scale)
 		var y := maxf(PAUSA.y, painel.end.y + ENTRE_PAINEL + PAUSA.z)
 		return Vector2(screen.x - PAUSA.x, y)
+	if papel == Role.FIX:
+		var x := FIXAR.x * scale
+		return Vector2(screen.x - x if left_handed else x, screen.y - FIXAR.y * scale)
 	if not BOTOES.has(papel):
 		return Vector2.ZERO
 	var b: Vector3 = BOTOES[papel]
@@ -61,6 +68,8 @@ func centre(papel: Role) -> Vector2:
 func radius(papel: Role) -> float:
 	if papel == Role.PAUSE:
 		return PAUSA.z
+	if papel == Role.FIX:
+		return FIXAR.z * scale
 	return (BOTOES[papel] as Vector3).z * scale if BOTOES.has(papel) else 0.0
 
 
@@ -69,11 +78,12 @@ func reach(papel: Role) -> float:
 	return radius(papel) + FOLGA * (1.0 if papel == Role.PAUSE else scale)
 
 
-## Quem e o dedo que pousa em `p`: a pausa, o botao mais perto (pela fraccao do raio,
-## para as folgas de dois botoes nao se roubarem), a zona da alavanca, ou o mundo.
+## Quem e o dedo que pousa em `p`: a pausa, o FIXAR, o botao mais perto (pela fraccao do
+## raio, para as folgas de dois botoes nao se roubarem), a alavanca, ou o mundo.
 func role_at(p: Vector2) -> Role:
-	if p.distance_to(centre(Role.PAUSE)) <= reach(Role.PAUSE):
-		return Role.PAUSE
+	for toque: Role in [Role.PAUSE, Role.FIX]:
+		if p.distance_to(centre(toque)) <= reach(toque):
+			return toque
 	var melhor := Role.NONE
 	var perto := 1.0
 	for papel: Role in BOTOES:
@@ -87,9 +97,11 @@ func role_at(p: Vector2) -> Role:
 
 
 func in_stick_zone(p: Vector2) -> bool:
-	var borda := screen.x * ZONA.largura
+	if fixed:
+		return p.distance_to(stick_home()) <= stick_radius() + FOLGA * scale
+	var borda := screen.x * ZONA
 	var do_lado := p.x > screen.x - borda if left_handed else p.x < borda
-	return do_lado and p.y > screen.y * ZONA.topo
+	return do_lado and p.y > GameHud.FAIXA_TOPO
 
 
 func stick_radius() -> float:

@@ -26,6 +26,11 @@
   de trocar os glifos. Os controlos aparecem com o primeiro toque e somem com a primeira tecla ou comando. Na pausa, um
   separador *Toque*: tamanho, canhoto e vibração. A casca arranca com um toque (som, ecrã inteiro e horizontal onde o
   browser deixa), pede para virar o telemóvel quando está ao alto, e o jogo pausa nessa altura e ao sair da aplicação.
+- **Depois de jogar (02/10/2026, UX-03):** *«a câmera está andando demais só por eu mover o personagem, o arrastar a
+  tela está entrando em conflito com o andar, o arrastar a tela no mobile só funciona se a pessoa clicar num botão para
+  fixar o analogico de andar»*, e o ecrã inteiro na pausa. Aplicado: a alavanca é solta por omissão, em toda a metade
+  do ecrã do lado do polegar, e arrastar não espreita; o FIXAR prende-a no sítio, e só então arrastar o mundo espreita.
+  A pausa entra e sai do ecrã inteiro; no iPhone, que não o dá a páginas, ensina o «Adicionar ao ecrã principal».
 - **Escolhas minhas, reversíveis:** os botões em vez de gestos soltos (o Kingdom no telemóvel só tem um verbo);
   arrastar até ao fim para correr (o do Kingdom); tocar no mundo aponta a habilidade do Arqueiro e do Bardo, e não faz
   nada ao Monarca (a Vigília não aponta); o diário fecha-se com MOEDA ou INTERAGIR, como no comando.

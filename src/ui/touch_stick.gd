@@ -6,6 +6,9 @@
 # e o "drag all the way" do Kingdom no telemovel, e o king_run do §24 (Q-149). Se o
 # dedo passa da borda, o centro vai atras dele: voltar para o outro lado custa so o
 # caminho de volta, e nao o caminho todo.
+#
+# Fixa (UX-03), e uma alavanca de sempre: o centro e o da base, que nao sai do sitio, e
+# pousar o polegar ao lado dela ja anda.
 class_name TouchStick
 extends RefCounted
 
@@ -22,22 +25,29 @@ var offset := 0.0
 var held := false
 var _zero := 0.0
 var _morta := MORTA
+var _fixa := false
 
 
 ## O polegar pousou em `p`; a base desenha-se em `onde`, com o raio e a escala dados.
-func begin(p: Vector2, onde: Vector2, raio: float, escala: float) -> void:
+## Fixa, o centro e o da base; solta, e onde o polegar pousou.
+func begin(p: Vector2, onde: Vector2, raio: float, escala: float, fixa: bool = false) -> void:
 	held = true
 	base = onde
 	radius = raio
-	_zero = p.x
+	_fixa = fixa
+	_zero = onde.x if fixa else p.x
 	_morta = MORTA * escala
 	offset = 0.0
+	move(p)
 
 
 func move(p: Vector2) -> void:
 	if not held:
 		return
 	var dx := p.x - _zero
+	if _fixa:
+		offset = clampf(dx, -radius, radius)
+		return
 	if absf(dx) > radius:
 		var excesso := dx - signf(dx) * radius
 		_zero += excesso

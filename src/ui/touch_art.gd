@@ -36,6 +36,12 @@ const LADOS := [-1.0, 1.0]
 ## cheios ["c", centro, raio] e aros a tinta ["a", centro, raio].
 const ICONES := {
 	&"moeda": [["c", Vector2.ZERO, 1.0], ["a", Vector2.ZERO, 0.6]],
+	&"pino":
+	[
+		["c", Vector2(0, -0.5), 0.45],
+		["l", Vector2(-0.6, -0.05), Vector2(0.6, -0.05), 1.0],
+		["l", Vector2(0, 0), Vector2(0, 1), 0.6],
+	],
 	&"espada":
 	[["l", Vector2(-1, 1), Vector2(1, -1), 1.0], ["l", Vector2(-0.8, 0), Vector2(0, 0.8), 1.0]],
 	&"flecha":

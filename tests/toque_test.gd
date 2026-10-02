@@ -107,8 +107,12 @@ func test_cada_sitio_do_ecra_tem_um_papel() -> void:
 	assert_int(l.role_at(l.stick_home())).is_equal(TouchLayout.Role.STICK)
 	# O polegar pousado na barra preta da esquerda de um telemovel continua a ser a alavanca.
 	assert_int(l.role_at(Vector2(-40.0, 600.0))).is_equal(TouchLayout.Role.STICK)
-	assert_int(l.role_at(Vector2(640.0, 300.0))).is_equal(TouchLayout.Role.WORLD)
-	assert_int(l.role_at(Vector2(120.0, 160.0))).is_equal(TouchLayout.Role.WORLD)
+	# Solta (por omissao), a alavanca e a metade do polegar inteira, por baixo do HUD: o
+	# polegar que pousa um pouco mais acima ou mais ao centro anda, e nao espreita.
+	assert_int(l.role_at(Vector2(120.0, 160.0))).is_equal(TouchLayout.Role.STICK)
+	assert_int(l.role_at(Vector2(600.0, 300.0))).is_equal(TouchLayout.Role.STICK)
+	assert_int(l.role_at(Vector2(700.0, 300.0))).is_equal(TouchLayout.Role.WORLD)
+	assert_int(l.role_at(Vector2(120.0, 40.0))).is_equal(TouchLayout.Role.WORLD)
 
 
 func test_o_canhoto_troca_os_lados_da_alavanca() -> void:

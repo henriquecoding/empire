@@ -48,6 +48,7 @@ var _toque_rotulo: Label
 var _toque: HSlider
 var _canhoto: CheckButton
 var _vibrar: CheckButton
+var _fixa: CheckButton
 var _tabs: Array[Button] = []
 var _tab := 0
 var _tab_row: BoxContainer
@@ -86,6 +87,7 @@ func _ready() -> void:
 	_toque = _slider(_touch, escala.min, escala.max, PASSO_TOQUE, _no_toque)
 	_canhoto = _opcao(Preferences.TOUCH_LEFT, _touch)
 	_vibrar = _opcao(Preferences.TOUCH_HAPTICS, _touch)
+	_fixa = _opcao(Preferences.TOUCH_FIXED, _touch)
 	show_tab(0)
 	refresh()
 	resized.connect(_fit_tabs)
@@ -123,6 +125,7 @@ func refresh() -> void:
 	_toque.set_value_no_signal(prefs.number(Preferences.TOUCH_SCALE))
 	_canhoto.set_pressed_no_signal(prefs.enabled(Preferences.TOUCH_LEFT))
 	_vibrar.set_pressed_no_signal(prefs.enabled(Preferences.TOUCH_HAPTICS))
+	_fixa.set_pressed_no_signal(prefs.enabled(Preferences.TOUCH_FIXED))
 	# O separador do toque so onde ha toque: num teclado era uma pagina que nao faz nada.
 	_tabs[TOQUE].visible = TouchControls.active or DisplayServer.is_touchscreen_available()
 	if _tab == TOQUE and not _tabs[TOQUE].visible:
@@ -144,6 +147,7 @@ func _escrever() -> void:
 	_toque_rotulo.text = "%s · %d%%" % [tr(&"OPT_TOUCH_SIZE"), roundi(_toque.value * CEM)]
 	_canhoto.text = tr(&"OPT_TOUCH_LEFT")
 	_vibrar.text = tr(&"OPT_TOUCH_HAPTICS")
+	_fixa.text = tr(&"OPT_TOUCH_FIXED")
 	_idioma_rotulo.text = tr(&"UI_LANGUAGE")
 	for i in MODOS.size():
 		_daltonismo.set_item_text(i, tr(MODOS[i]))

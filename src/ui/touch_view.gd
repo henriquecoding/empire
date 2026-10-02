@@ -23,6 +23,14 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		TouchArt.stick(ci, pad.stick.base, raio, pad.stick.offset, pad.stick.runs())
 	else:
 		TouchArt.stick(ci, l.stick_home(), raio, 0.0, false)
+	# O FIXAR (UX-03): aceso a ouro com a alavanca fixa, que e quando o ecra espreita.
+	var fixa := {
+		&"premido": l.fixed,
+		&"icone": &"pino",
+		&"rotulo": _nome(&"TOUCH_FIX"),
+		&"cor": GameHud.GOLD if l.fixed else GameHud.TEXT,
+	}
+	TouchArt.button(ci, l.centre(TouchLayout.Role.FIX), l.radius(TouchLayout.Role.FIX), fixa)
 	var classe := HeroWatch.current()
 	var rei := Assume.king()
 	for papel: TouchLayout.Role in TouchPad.ACCOES.keys() + [TouchLayout.Role.PAUSE]:

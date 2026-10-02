@@ -346,7 +346,9 @@ async function main() {
       resultado(`/jogar/${q}: a primeira classe confirma-se pelo teclado`, classes.some((msg) => msg.includes("classe inicial monarch")));
       await p.keyboard.press("Escape");
       await p.waitForTimeout(150);
-      for (let i = 0; i < 4; i++) {
+      // Retomar, Opções, Controlos, [Ecrã inteiro, onde o browser o dá (UX-03)], Recomeçar, Voltar.
+      const ecra = await p.evaluate(() => Boolean(window.empireEcra && window.empireEcra.pode()));
+      for (let i = 0; i < 4 + (ecra ? 1 : 0); i++) {
         await p.keyboard.press("ArrowDown");
         await p.waitForTimeout(80);
       }
