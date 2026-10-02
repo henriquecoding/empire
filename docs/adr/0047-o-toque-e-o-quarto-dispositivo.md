@@ -41,7 +41,8 @@ comando. O `InputRouter` e o `CombatInput` continuam a ser os únicos que fazem 
   que ali há alguma coisa a fazer com ele; a habilidade da classe; e IMPULSOS, a roda do rei: manter, arrastar para o
   segmento e largar — o gesto do stick do §24, com os segmentos desenhados à volta do dedo.
 - **A pausa** num botão no canto de cima à direita, por baixo do painel de combate.
-- **O resto do ecrã é mundo**: arrastar espreita (a câmara livre do §24, que volta sozinha em 2 s quando o dedo sai);
+- **O resto do ecrã é mundo**: arrastar espreita (a câmara livre do §24, que volta sozinha em 2 s quando o dedo sai
+  — desde o UX-03, só com a alavanca fixa: ver a adenda);
   tocar aponta a habilidade de quem mira — o Arqueiro marca, o Bardo encanta —, como o botão direito do rato.
 - **Um rato emulado do toque não é um rato.** O ataque, a câmara na margem e os glifos ignoram-no. Os menus (pausa,
   escolha de classe, viagem) continuam a recebê-lo: é por ele que se tocam, e não se desliga a emulação.
@@ -76,3 +77,17 @@ comando. O `InputRouter` e o `CombatInput` continuam a ser os únicos que fazem 
   aspecto no telemóvel (Q-188).
 - Reverter é tirar o nó `Toque` da `game.tscn` e o `Device.TOUCH` dos glifos; o filtro do rato emulado fica, porque
   sem ele um toque volta a ser um ataque.
+
+## Adenda — UX-03 (02/10/2026): a alavanca solta, o FIXAR e o ecrã inteiro
+O dono jogou isto num iPhone e pediu: *«a câmera está andando demais só por eu mover o personagem, o arrastar a tela
+está entrando em conflito com o andar, o arrastar a tela no mobile só funciona se a pessoa clicar num botão para fixar
+o analogico de andar»*, e *«no menu é possível tirar da tela cheia»*. A alavanca só nascia num canto (42% × 60% do
+ecrã): um polegar que pousava um pouco acima ou mais ao centro era um arrastar no mundo, e a câmara fugia.
+- **Solta (por omissão)**: a alavanca é a metade do ecrã do lado do polegar, abaixo do HUD de cima, e nasce onde ele
+  pousa; os botões e a pausa ganham-lhe. Arrastar nunca mexe a câmara; tocar no mundo continua a apontar.
+- **Fixa**: o botão FIXAR, por cima da alavanca, prende-a no sítio; o centro passa a ser o da base, e pousar ao lado
+  dela já anda. Só aí arrastar o resto do ecrã espreita, como na decisão acima. É a preferência `touch_fixed` (§45),
+  também no separador *Toque*.
+- **O ecrã inteiro** é o da página, pedido pela casca (`window.empireEcra`), e a pausa tem o botão para entrar e sair
+  (`ScreenRow`, `WebScreen`). O iPhone não o dá a uma página em browser nenhum — o Chrome dele é o mesmo WebKit, que só
+  põe vídeos em ecrã inteiro —, e lá a pausa e o ecrã de arranque dizem o caminho: Adicionar ao ecrã principal.

@@ -37,6 +37,8 @@ var pan := 0.0
 ## Um dedo deixou o mundo depois de o arrastar: a camara pode voltar.
 var let_go := false
 var pause_tapped := false
+## O FIXAR foi tocado: a alavanca troca entre solta e fixa (UX-03).
+var fix_tapped := false
 
 var _papel := {}
 var _origem := {}
@@ -78,12 +80,15 @@ func drag(i: int, p: Vector2, relativo: Vector2) -> bool:
 	match _papel[i]:
 		TouchLayout.Role.STICK:
 			stick.move(p)
-			stick.base = layout.stick_base(stick.base)
+			if not layout.fixed:
+				stick.base = layout.stick_base(stick.base)
 		TouchLayout.Role.WHEEL:
 			var c := layout.centre(TouchLayout.Role.WHEEL)
 			aim = (p - c) / (RODA_PX * layout.scale)
 		TouchLayout.Role.WORLD:
-			pan -= relativo.x
+			# So com a alavanca fixa: solta, arrastar e andar, e nunca espreitar (UX-03).
+			if layout.fixed:
+				pan -= relativo.x
 	return true
 
 
@@ -99,13 +104,14 @@ func lift(i: int, p: Vector2) -> bool:
 			if not holds(TouchLayout.Role.STICK):
 				stick.end()
 		TouchLayout.Role.PAUSE:
-			var c := layout.centre(TouchLayout.Role.PAUSE)
-			pause_tapped = pause_tapped or p.distance_to(c) <= layout.reach(TouchLayout.Role.PAUSE)
+			pause_tapped = pause_tapped or _dentro(p, papel)
+		TouchLayout.Role.FIX:
+			fix_tapped = fix_tapped or _dentro(p, papel)
 		TouchLayout.Role.WORLD:
 			if p.distance_to(de) < TOQUE_PX:
 				taps.append(p)
 			else:
-				let_go = true
+				let_go = layout.fixed
 	return true
 
 
@@ -129,6 +135,7 @@ func take() -> void:
 	pan = 0.0
 	let_go = false
 	pause_tapped = false
+	fix_tapped = false
 
 
 ## A pausa, um menu ou outra mao: ninguem fica com nada premido.
@@ -146,8 +153,14 @@ func _registar(i: int, p: Vector2, papel: TouchLayout.Role) -> void:
 	_papel[i] = papel
 	_origem[i] = p
 	if papel == TouchLayout.Role.STICK:
-		stick.begin(p, layout.stick_base(p), layout.stick_radius(), layout.scale)
+		var onde := layout.stick_home() if layout.fixed else layout.stick_base(p)
+		stick.begin(p, onde, layout.stick_radius(), layout.scale, layout.fixed)
 	elif papel == TouchLayout.Role.WHEEL:
 		aim = Vector2.ZERO
 	if ACCOES.has(papel):
 		_premidas[ACCOES[papel]] = true
+
+
+## Um toque que acaba onde comecou: o dedo levantou-se ainda em cima do botao.
+func _dentro(p: Vector2, papel: TouchLayout.Role) -> bool:
+	return p.distance_to(layout.centre(papel)) <= layout.reach(papel)

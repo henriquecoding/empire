@@ -100,6 +100,8 @@ func _process(delta: float) -> void:
 	_premir(pad.wanted())
 	if pad.pause_tapped:
 		_emitir(&"pause", true)
+	if pad.fix_tapped:
+		_fixar(not pad.layout.fixed)
 	for toque: Vector2 in pad.taps:
 		_apontar(toque)
 	if not is_zero_approx(pad.pan):
@@ -153,6 +155,16 @@ func _largar_tudo() -> void:
 	aim = Vector2.ZERO
 	_corria = false
 	_devolver_camara()
+
+
+## Fixar ou soltar a alavanca (UX-03). Fica nas preferencias, como o canhoto; ao soltar,
+## a camara que estava a espreitar volta.
+func _fixar(fixa: bool) -> void:
+	Preferences.shared().set_enabled(Preferences.TOUCH_FIXED, fixa)
+	pad.layout.fixed = fixa
+	_vibrar(VIBRA_MS.botao)
+	if not fixa:
+		_devolver_camara()
 
 
 ## Um dedo que saiu do mundo, ou que um menu levou a meio do arrastar: a camara volta.
@@ -213,6 +225,7 @@ func _medir() -> void:
 	pad.layout.ui_scale = maxf(1.0, 1.0 / factor)
 	pad.layout.scale = prefs.number(Preferences.TOUCH_SCALE) * pad.layout.ui_scale
 	pad.layout.left_handed = prefs.enabled(Preferences.TOUCH_LEFT)
+	pad.layout.fixed = prefs.enabled(Preferences.TOUCH_FIXED)
 
 
 ## So o Android vibra no browser; o iPhone nao tem a API, e o motor queixava-se a cada toque.

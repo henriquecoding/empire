@@ -170,6 +170,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 |---|---|---|---|
 | [UX-01](UX-01.md) | Reformular a pausa e corrigir o corte visual | GB-13 | feito |
 | [UX-02](UX-02.md) | Jogar com os dedos: os controlos por toque | UX-01 | feito |
+| [UX-03](UX-03.md) | A alavanca solta, o FIXAR e o ecrã inteiro | UX-02 | feito |
 
 ## Respostas aprovadas no painel
 

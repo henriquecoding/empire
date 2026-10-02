@@ -43,6 +43,7 @@ func _ready() -> void:
 	_novo = PauseTheme.button(_frame.actions, &"UI_NEW_GAME", _ao_recomecar)
 	_options_button = PauseTheme.button(_frame.actions, &"UI_OPTIONS", show_options)
 	_controls_button = PauseTheme.button(_frame.actions, &"UI_CONTROLS", _show_controls)
+	_frame.actions.add_child(ScreenRow.new())  # o ecra inteiro do browser (UX-03)
 	_zero = FreshStartPanel.new(_fechar)
 	_frame.actions.add_child(_zero)
 	_exit_button = PauseTheme.button(_frame.actions, &"UI_SAVE_AND_QUIT", _leave)

@@ -39,6 +39,8 @@ const LANGUAGE := &"language"
 const TOUCH_SCALE := &"touch_scale"
 const TOUCH_LEFT := &"touch_left"
 const TOUCH_HAPTICS := &"touch_haptics"
+## A alavanca fixa no sitio: so assim arrastar o ecra espreita (UX-03). Solta por omissao.
+const TOUCH_FIXED := &"touch_fixed"
 ## Os idiomas que o strings.csv tem (§27). A boot e a pausa leem esta lista.
 const LANGUAGES := ["pt_PT", "en"]
 
@@ -57,6 +59,7 @@ const POR_OMISSAO := {
 	TOUCH_SCALE: 1.0,
 	TOUCH_LEFT: false,
 	TOUCH_HAPTICS: true,
+	TOUCH_FIXED: false,
 }
 
 static var _partilhadas: Preferences

@@ -143,10 +143,10 @@ $GODOT_HEAD_INCLUDE
     </div>
     <p id="estado" role="status" aria-live="polite"></p>
     <div class="toque" id="toque">
-      <span lang="pt-PT">Joga-se com os dedos, com o telemóvel deitado. À esquerda, a <strong>alavanca</strong>: arrasta para andar, até ao fim para correr. À direita, a <strong>moeda</strong> e os outros botões. Arrasta no mundo para espreitar.</span>
-      <span lang="en">Play with your fingers, phone held sideways. On the left, the <strong>stick</strong>: drag to walk, all the way to run. On the right, the <strong>coin</strong> and the other buttons. Drag the world to look around.</span>
+      <span lang="pt-PT">Joga-se com os dedos, com o telemóvel deitado. Na metade esquerda, a <strong>alavanca</strong>: pousa o polegar onde quiseres e arrasta para andar, até ao fim para correr. À direita, a <strong>moeda</strong> e os outros botões. Para espreitar, toca em <strong>fixar</strong> e arrasta o mundo.</span>
+      <span lang="en">Play with your fingers, phone held sideways. On the left half, the <strong>stick</strong>: put your thumb anywhere and drag to walk, all the way to run. On the right, the <strong>coin</strong> and the other buttons. To look around, tap <strong>pin</strong> and drag the world.</span>
       <br><button type="button" id="jogar-toque"><span lang="pt-PT">Jogar</span><span lang="en">Play</span></button>
-      <p class="dica"><span lang="pt-PT">No iPhone, o Safari não deixa um jogo ocupar o ecrã inteiro. Para jogar sem as barras: Partilhar → Adicionar ao ecrã principal, e abre-o daí.</span><span lang="en">On iPhone, Safari won't let a game fill the whole screen. To play without the bars: Share → Add to Home Screen, and open it from there.</span></p>
+      <p class="dica"><span lang="pt-PT">No iPhone, nenhum browser deixa uma página ocupar o ecrã inteiro — nem o Safari, nem o Chrome. Para jogar sem as barras: Partilhar → Adicionar ao ecrã principal, e abre o Empire de lá.</span><span lang="en">On iPhone, no browser lets a web page fill the whole screen — not Safari, not Chrome. To play without the bars: Share → Add to Home Screen, then open Empire from there.</span></p>
     </div>
     <div id="status-notice" role="alert"></div>
     <!--EMPIRE:CONTROLOS-->
@@ -243,11 +243,17 @@ const engine = new Engine(GODOT_CONFIG);
 
   // O ecra inteiro, e no Android a horizontal: o browser so tranca a orientacao em
   // ecra inteiro, e as duas so a partir de um gesto. O iPhone nao tem nenhuma das
-  // duas para um canvas (ADR 0047) — falhar aqui e calado, e o jogo arranca na mesma.
+  // duas para uma pagina, em browser nenhum — o Chrome dele e o mesmo WebKit, que so
+  // poe videos em ecra inteiro (ADR 0047, UX-03). La, o caminho e o ecra principal.
   const raiz = document.documentElement;
   const pedirEcra = raiz.requestFullscreen || raiz.webkitRequestFullscreen;
+  const iphone = /iPhone|iPod/.test(navigator.userAgent);
+  const instalado = navigator.standalone === true
+    || window.matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches;
+  const podeEcra = !!pedirEcra && !iphone;
+  const emEcra = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
   function ecraInteiro() {
-    if (!pedirEcra) return;
+    if (!podeEcra) return;
     const deitar = () => {
       if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
     };
@@ -257,6 +263,19 @@ const engine = new Engine(GODOT_CONFIG);
       else deitar();
     } catch (e) { /* sem ecra inteiro: joga-se na janela */ }
   }
+  function alternarEcra() {
+    if (emEcra()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else ecraInteiro();
+  }
+  // A pausa do jogo pergunta aqui (WebScreen, UX-03): o ecra inteiro e o da pagina
+  // toda, e o do motor so conhece o canvas. O browser deixa-o a um gesto recente, e o
+  // frame em que o botao da pausa responde ao dedo ainda conta como um.
+  window.empireEcra = {
+    pode: () => podeEcra,
+    ativo: emEcra,
+    iphone: () => iphone && !instalado,
+    alternar: alternarEcra,
+  };
 
   // Depois de arrancar: o voltar e o ecra inteiro aparecem quatro segundos, e
   // voltam quando o rato passa perto de cima — ou quando o dedo toca la em cima,
@@ -264,11 +283,9 @@ const engine = new Engine(GODOT_CONFIG);
   function ferramentas() {
     const barra = document.getElementById('ferramentas');
     const botao = document.getElementById('ecra-inteiro');
-    if (!pedirEcra) botao.remove();
+    if (!podeEcra) botao.remove();
     else botao.addEventListener('click', () => {
-      if (document.fullscreenElement || document.webkitFullscreenElement) {
-        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-      } else ecraInteiro();
+      alternarEcra();
       document.getElementById('canvas').focus();
     });
     barra.hidden = false;
@@ -309,8 +326,7 @@ const engine = new Engine(GODOT_CONFIG);
   // exige para o som, o ecra inteiro e a horizontal. Ate la, o ecra ensina os dedos.
   const soToque = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (soToque) {
-    const instalado = navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
-    if (!pedirEcra && !instalado) toque.classList.add('iphone');
+    if ((iphone || !pedirEcra) && !instalado) toque.classList.add('iphone');
     setMode('touch');
     document.getElementById('jogar-toque').addEventListener('click', () => { ecraInteiro(); start(); }, { once: true });
   } else {
