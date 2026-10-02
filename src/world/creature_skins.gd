@@ -68,7 +68,7 @@ func draw_on(
 	if is_zero_approx(facing):
 		facing = 1.0
 	var tint: Color = view.lit if view.revealed else view.hidden_tint
-	CombatFx.dress(id, profile, facing, tint, view.revealed)
+	LastSeen.dress(id, profile, facing, tint, view.revealed)
 	if not creatures.alive(i):
 		tint.a *= DEAD_ALPHA
 	var posed := OriginalArt.posed(foot, facing, Vector2(pose.y, pose.z))

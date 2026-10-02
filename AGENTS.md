@@ -164,6 +164,8 @@ src/world/impact_view.gd    ImpactView    o golpe que se ve: flash e particula (
 src/world/strike_pose.gd    StrikePose    o golpe em tres tempos: preparar, bater, voltar (§24, Q-185)
 src/world/combat_fx.gd      CombatFx      o que um corpo mostra de um golpe: pose, empurrao, hitstop, flash (Q-084)
 src/world/battle_view.gd    BattleView    as flechas no ar e o que fica de uma morte (§07, §50, Q-185)
+src/world/creature_view.gd  CreatureView  os bichos da noite, desenhados: pose, pele ou contorno (§07, §51, §80)
+src/world/last_seen.gd      LastSeen      o ultimo desenho de cada criatura, para a morte e a flecha (§07, §50)
 src/world/volley.gd         Volley        as flechas que se veem voar, e as que se cravam (§07, §50)
 src/world/death_burst.gd    DeathBurst    uma morte que se ve: branco, espalmar e pedacos (§07)
 src/world/screen_shake.gd   ScreenShake   o tremor de ecra por trauma, 4 px no maximo (§24, §26)

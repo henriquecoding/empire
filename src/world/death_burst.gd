@@ -29,6 +29,13 @@ const SALTO := {"vx": Vector2(30.0, 150.0), "espalha": 70.0, "vy": Vector2(140.0
 const RESSALTO := {"vy": -0.35, "vx": 0.5}
 const PO := {"raio": Vector2(2.0, 9.0), "cor": Color(0.62, 0.55, 0.45, 0.5), "quantos": 3}
 const BRANCO := Color(1.0, 1.0, 1.0, 0.9)
+## Um pedaco em cada `cada` sai mais escuro, para o monte ter volume.
+const TOM := {"escurece": 0.35, "cada": 3}
+## Os pedacos apagam-se nesta fraccao final da vida; o corpo espalmado alarga isto.
+const APAGA := 0.4
+const ALARGA := 0.3
+## O po levanta-se em tres nuvens, uma atras da outra.
+const PO_PASSO_S := 0.03
 
 var _art := OriginalArt.new()
 var _corpos: Array[Dictionary] = []
@@ -42,13 +49,17 @@ var _po: Array[Dictionary] = []
 ## chegava a passar: o corpo sai das colunas no tick em que morre.
 ## `sorteio(de, ate) -> float` e o fluxo visual.
 func burst(visto: Array, sentido: float, agora: float, sorteio: Callable) -> void:
-	var caixa: Rect2 = visto[1]
-	var cor: Color = visto[3]
-	var pele: Array = visto[4] if visto.size() > 4 else []
-	var corpo := {"caixa": caixa, "forma": visto[2], "cor": cor, "t0": agora, "pele": pele}
+	var caixa: Rect2 = visto[LastSeen.CAIXA]
+	var cor: Color = visto[LastSeen.COR]
+	var pele: Array = visto[LastSeen.PELE] if visto.size() > LastSeen.PELE else []
+	var corpo := {
+		"caixa": caixa, "forma": visto[LastSeen.FORMA], "cor": cor, "t0": agora, "pele": pele
+	}
 	corpo["dura"] = SEGURA_S + DESFAZ_S
 	if not pele.is_empty():
-		corpo["dura"] = SEGURA_S + _art.action_seconds(pele[0], &"die") + DESFAZ_S
+		corpo["dura"] = (
+			SEGURA_S + _art.action_seconds(pele[LastSeen.PELE_PERFIL], &"die") + DESFAZ_S
+		)
 	_corpos.append(corpo)
 	var area := caixa.size.x * caixa.size.y
 	var n := clampi(int(area * PEDACOS.por_px2), PEDACOS.min, PEDACOS.max)
@@ -61,7 +72,7 @@ func burst(visto: Array, sentido: float, agora: float, sorteio: Callable) -> voi
 		vx += sorteio.call(-SALTO.espalha, SALTO.espalha)
 		var vy: float = -sorteio.call(SALTO.vy.x, SALTO.vy.y)
 		var lado: float = sorteio.call(PEDACOS.lado_min, PEDACOS.lado_max)
-		var tom := cor.darkened(0.35) if k % 3 == 0 else cor
+		var tom := cor.darkened(TOM.escurece) if k % TOM.cada == 0 else cor
 		_pedacos.append(
 			{
 				"p": p,
@@ -80,7 +91,7 @@ func burst(visto: Array, sentido: float, agora: float, sorteio: Callable) -> voi
 func dust(pe: Vector2, agora: float) -> void:
 	for k in PO.quantos:
 		var dx := (float(k) - 1.0) * PO.raio.y
-		_po.append({"p": pe + Vector2(dx, 0.0), "t0": agora + float(k) * 0.03})
+		_po.append({"p": pe + Vector2(dx, 0.0), "t0": agora + float(k) * PO_PASSO_S})
 
 
 ## Os pedacos no ar e no chao: {p, v, lado, cor, chao, t0, bateu}. Para medir.
@@ -129,7 +140,7 @@ func draw(canvas: CanvasItem, agora: float) -> void:
 		var dt := agora - float(pedaco.t0)
 		if dt < 0.0:
 			continue
-		var alfa := clampf((VIDA_S - dt) / (VIDA_S * 0.4), 0.0, 1.0)
+		var alfa := clampf((VIDA_S - dt) / (VIDA_S * APAGA), 0.0, 1.0)
 		var lado: float = pedaco.lado
 		var canto: Vector2 = pedaco.p - Vector2(lado, lado) * WorldPalette.MEIA
 		canvas.draw_rect(Rect2(canto, Vector2(lado, lado)), Color(pedaco.cor, alfa))
@@ -145,9 +156,11 @@ func draw(canvas: CanvasItem, agora: float) -> void:
 
 ## A morte com pele: branca no hitstop, depois a animacao `die`, e apaga-se.
 func _pele(canvas: CanvasItem, corpo: Dictionary, agora: float) -> void:
-	var perfil: StringName = corpo.pele[0]
+	var perfil: StringName = corpo.pele[LastSeen.PELE_PERFIL]
 	var caixa: Rect2 = corpo.caixa
-	var pose := OriginalArt.posed(Vector2(caixa.get_center().x, caixa.end.y), corpo.pele[1])
+	var pose := OriginalArt.posed(
+		Vector2(caixa.get_center().x, caixa.end.y), corpo.pele[LastSeen.PELE_FRENTE]
+	)
 	var dt := agora - float(corpo.t0)
 	if dt < SEGURA_S:
 		var branco: Color = BRANCO if Preferences.on(Preferences.FLASHES) else corpo.cor
@@ -155,9 +168,9 @@ func _pele(canvas: CanvasItem, corpo: Dictionary, agora: float) -> void:
 		return
 	var frame := _art.frame_at(perfil, dt - SEGURA_S, &"die", false)
 	var alfa := clampf((float(corpo.dura) - dt) / DESFAZ_S, 0.0, 1.0)
-	var tinta: Color = corpo.pele[2]
+	var tinta: Color = corpo.pele[LastSeen.PELE_TINTA]
 	tinta.a *= alfa
-	if corpo.pele[3]:
+	if corpo.pele[LastSeen.PELE_ACESO]:
 		_art.draw_posed(canvas, perfil, tinta, frame, pose)
 	else:
 		_art.mask_posed(canvas, perfil, tinta, frame, pose)
@@ -166,6 +179,6 @@ func _pele(canvas: CanvasItem, corpo: Dictionary, agora: float) -> void:
 ## Um corpo espalmado contra o chao: baixa e alarga, com os pes onde estavam.
 static func flatten(caixa: Rect2, p: float) -> Rect2:
 	var alto := maxf(1.0, caixa.size.y * (1.0 - p))
-	var largo := caixa.size.x * (1.0 + 0.3 * p)
+	var largo := caixa.size.x * (1.0 + ALARGA * p)
 	var x := caixa.get_center().x - largo * WorldPalette.MEIA
 	return Rect2(x, caixa.end.y - alto, largo, alto)

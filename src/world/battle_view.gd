@@ -18,8 +18,9 @@ extends Node2D
 const ARCO := Vector2(10.0, -30.0)
 ## Para onde uma flecha aponta no corpo de quem a leva: um pouco acima do meio.
 const PEITO := -0.15
-## Uma falha cai entre isto e o dobro disto ao lado do alvo, para um lado ou outro.
-const FALHA_PX := 16.0
+## Uma falha cai entre estes px ao lado do alvo, para um lado ou para o outro.
+const FALHA_PX := Vector2(16.0, 32.0)
+const LADOS: Array[float] = [-1.0, 1.0]
 ## Uma criatura vista ha mais do que isto ja nao esta ali para ser seguida.
 const VISTA_S := 0.25
 ## O peso de uma flecha a chegar: um golpe de longe empurra menos.
@@ -83,8 +84,8 @@ func _no_ataque(from_id: int, to_id: int, acertou: bool) -> void:
 	var de := Vector2(x + lado * ARCO.x, chao + ARCO.y)
 	var desvio := 0.0
 	if not acertou:
-		desvio = RngService.float_range(RngService.VISUAL, FALHA_PX, FALHA_PX * 2.0)
-		desvio *= -1.0 if RngService.unit_float(RngService.VISUAL) < 0.5 else 1.0
+		desvio = RngService.float_range(RngService.VISUAL, FALHA_PX.x, FALHA_PX.y)
+		desvio *= LADOS[RngService.int_range(RngService.VISUAL, 0, 1)]
 		alvo = Vector2(alvo.x, chao)
 	_flechas.launch(de, to_id, alvo, acertou, CombatFx.clock, desvio)
 
@@ -92,7 +93,7 @@ func _no_ataque(from_id: int, to_id: int, acertou: bool) -> void:
 ## A criatura saiu das colunas neste tick; o ultimo desenho dela ficou no
 ## CombatFx, e e esse que se desfaz — no sitio e com a cor que tinha.
 func _na_morte_de_criatura(creature_id: int, _x: float, _faixa: int) -> void:
-	var visto := CombatFx.seen(creature_id)
+	var visto := LastSeen.seen(creature_id)
 	if visto.is_empty():
 		return
 	var sorteio := func(de: float, ate: float) -> float:
@@ -125,9 +126,9 @@ func _na_dentada(building_id: int, _ratio: float) -> void:
 ## Onde esta AGORA o corpo `id`, para uma flecha o seguir: a criatura pelo seu
 ## ultimo desenho, a tropa pelo x que se ve. Vector2.INF se ja nao ha corpo.
 func _onde(id: int) -> Vector2:
-	var visto := CombatFx.seen(id)
-	if not visto.is_empty() and CombatFx.clock - float(visto[0]) < VISTA_S:
-		var caixa: Rect2 = visto[1]
+	var visto := LastSeen.seen(id)
+	if not visto.is_empty() and CombatFx.clock - float(visto[LastSeen.QUANDO]) < VISTA_S:
+		var caixa: Rect2 = visto[LastSeen.CAIXA]
 		return caixa.get_center() + Vector2(0.0, caixa.size.y * PEITO)
 	var i := SimLoop.units.index_of(id)
 	if i == UnitSystem.NENHUM:

@@ -38,13 +38,26 @@ const QUEDA_S := 0.3
 const ESQUECE_S := 2.0
 ## Um cooldown que SOBE e um ataque que acabou de sair (o muro nao tem sinal).
 const SALTO := 0.05
+## A queda: a curva com que se cai, e o pequeno ressalto no fim (rad, e a partir
+## de que fraccao da queda).
+const QUEDA := {"curva": 3.0, "ressalto": 0.08, "desde": 0.7}
+## O flash fica cheio na primeira metade dos 80 ms (o dobro da fraccao que falta).
+const FLASH_CHEIO := 2.0
+## O hitstop guarda o golpe no seu ultimo instante, e nao no seguinte.
+const QUASE := 0.999
+## Um seno que passa por zero nao tem sinal: um empurrao minimo para um lado.
+const DESEMPATE := 0.001
+## O que um golpe guardou: [quando, de que lado, com que forca, quanto treme].
+const G_T := 0
+const G_SENTIDO := 1
+const G_FORCA := 2
+const G_PARAGEM := 3
 
 static var clock := 0.0
 static var _ataques: Dictionary = {}  # id -> [t, paragem]
 static var _golpes: Dictionary = {}  # id -> [t, sentido, forca, paragem]
 static var _quedas: Dictionary = {}  # id -> [t, sentido]
 static var _cooldowns: Dictionary = {}  # id -> [t, o ultimo cooldown visto]
-static var _vistos: Dictionary = {}  # id -> [t, caixa, forma, cor, pele]
 static var _tabelas: Dictionary = {}
 static var _poda := 0.0
 
@@ -55,7 +68,7 @@ static func reset() -> void:
 	_golpes.clear()
 	_quedas.clear()
 	_cooldowns.clear()
-	_vistos.clear()
+	LastSeen.reset()
 	_poda = 0.0
 
 
@@ -64,7 +77,8 @@ static func advance(delta: float) -> void:
 	if clock - _poda < 1.0:
 		return
 	_poda = clock
-	for memoria: Dictionary in [_ataques, _golpes, _cooldowns, _vistos]:
+	LastSeen.forget_before(clock - ESQUECE_S)
+	for memoria: Dictionary in [_ataques, _golpes, _cooldowns]:
 		for id in memoria.keys():
 			if clock - float(memoria[id][0]) > ESQUECE_S:
 				memoria.erase(id)
@@ -99,7 +113,7 @@ static func struck(id: int, sentido: float, forca: float, atraso: float = 0.0) -
 ## De que lado veio o ultimo golpe que `id` levou (1 se nao levou nenhum): e para
 ## esse lado que uma morte espalha e que um corpo cai.
 static func side(id: int) -> float:
-	var sentido: float = _golpes.get(id, [0.0, 1.0])[1]
+	var sentido: float = _golpes.get(id, [0.0, 1.0])[G_SENTIDO]
 	return sentido if not is_zero_approx(sentido) else 1.0
 
 
@@ -119,7 +133,7 @@ static func since_attack(id: int) -> float:
 	if desde < StrikePose.STRIKE_S:
 		return desde
 	if desde < StrikePose.STRIKE_S + paragem:
-		return StrikePose.STRIKE_S * 0.999
+		return StrikePose.STRIKE_S * QUASE
 	return desde - paragem
 
 
@@ -141,12 +155,12 @@ static func recoil(id: int) -> float:
 	var dt := clock - float(g[0])
 	if dt < 0.0:
 		return 0.0
-	var forca: float = g[2]
-	if dt < float(g[3]):
-		return TREME.px * signf(sin(dt * TAU * TREME.hz) + 0.001)
-	dt -= float(g[3])
+	var forca: float = g[G_FORCA]
+	if dt < float(g[G_PARAGEM]):
+		return TREME.px * signf(sin(dt * TAU * TREME.hz) + DESEMPATE)
+	dt -= float(g[G_PARAGEM])
 	var mola := exp(-MOLA.amortece * dt) * cos(MOLA.freq * dt)
-	return RECUO_PX * forca * float(g[1]) * mola
+	return RECUO_PX * forca * float(g[G_SENTIDO]) * mola
 
 
 ## O aperto de quem levou: mais estreito e mais alto, e solta-se.
@@ -156,7 +170,7 @@ static func squash(id: int) -> Vector2:
 	var dt := clock - float(_golpes[id][0])
 	if dt < 0.0 or dt > AMASSA.dura:
 		return Vector2.ONE
-	var k: float = AMASSA.quanto * float(_golpes[id][2]) * exp(-AMASSA.solta * dt)
+	var k: float = AMASSA.quanto * float(_golpes[id][G_FORCA]) * exp(-AMASSA.solta * dt)
 	return Vector2(1.0 - k, 1.0 + k * WorldPalette.MEIA)
 
 
@@ -167,7 +181,7 @@ static func flash(id: int) -> float:
 	var dt := clock - float(_golpes[id][0])
 	if dt < 0.0 or dt >= FLASH_S:
 		return 0.0
-	return minf(1.0, 2.0 * (1.0 - dt / FLASH_S))
+	return minf(1.0, FLASH_CHEIO * (1.0 - dt / FLASH_S))
 
 
 ## O angulo de quem caiu (rad), do lado para onde foi empurrado. Um baque com um
@@ -176,8 +190,8 @@ static func fall(id: int) -> float:
 	if not _quedas.has(id):
 		return 0.0
 	var p := clampf((clock - float(_quedas[id][0])) / QUEDA_S, 0.0, 1.0)
-	var queda := 1.0 - pow(1.0 - p, 3.0)
-	queda -= sin(p * PI) * 0.08 if p > 0.7 else 0.0
+	var queda := 1.0 - pow(1.0 - p, QUEDA.curva)
+	queda -= sin(p * PI) * QUEDA.ressalto if p > QUEDA.desde else 0.0
 	return float(_quedas[id][1]) * PI * WorldPalette.MEIA * queda
 
 
@@ -201,23 +215,6 @@ static func attack_frame(art: OriginalArt, perfil: StringName, id: int, falta: f
 	if p < 0.0 or dura <= 0.0:
 		return -1
 	return art.frame_at(perfil, p * dura, &"attack", false)
-
-
-## A pele de uma criatura — o perfil da arte, para onde olha, a cor e se estava a
-## luz —, para a morte a desfazer com a animacao `die` dela em vez do contorno.
-static func dress(id: int, perfil: StringName, frente: float, tinta: Color, aceso: bool) -> void:
-	if _vistos.has(id):
-		_vistos[id][4] = [perfil, frente, tinta, aceso]
-
-
-## O ultimo desenho de uma criatura, para a morte a poder desfazer no sitio
-## onde estava: o `creature_died` traz o x, e a forma ja saiu das colunas.
-static func remember(id: int, caixa: Rect2, forma: int, cor: Color) -> void:
-	_vistos[id] = [clock, caixa, forma, cor, []]
-
-
-static func seen(id: int) -> Array:
-	return _vistos.get(id, [])
 
 
 ## O estilo de quem tem este id, tropa ou criatura (os ids sao do mesmo

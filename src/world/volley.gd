@@ -34,6 +34,8 @@ const FLECHA := {"haste": 9.0, "rasto": 16.0, "enterra": 0.4, "traco": 1.0, "pen
 const HASTE := Color(0.93, 0.88, 0.76)
 const PENA := Color(0.78, 0.31, 0.24)
 const RASTO := Color(0.93, 0.88, 0.76, 0.35)
+## Uma parabola 4u(1-u) tem altura 1 a meio do voo.
+const PARABOLA := 4.0
 
 ## As chaves de uma chegada.
 const ALVO := &"alvo"
@@ -99,13 +101,13 @@ func step(agora: float, onde: Callable) -> Array[Dictionary]:
 ## Onde esta uma flecha, a fraccao `u` do voo: uma parabola entre os dois pontos.
 static func point(de: Vector2, para: Vector2, u: float) -> Vector2:
 	var alto := minf(absf(para.x - de.x) * ARCO.fraccao, ARCO.tecto)
-	return de.lerp(para, u) - Vector2(0.0, alto * 4.0 * u * (1.0 - u))
+	return de.lerp(para, u) - Vector2(0.0, alto * PARABOLA * u * (1.0 - u))
 
 
 ## Para onde aponta, que e a tangente da parabola.
 static func heading(de: Vector2, para: Vector2, u: float) -> Vector2:
 	var alto := minf(absf(para.x - de.x) * ARCO.fraccao, ARCO.tecto)
-	var d := (para - de) - Vector2(0.0, alto * 4.0 * (1.0 - 2.0 * u))
+	var d := (para - de) - Vector2(0.0, alto * PARABOLA * (1.0 - 2 * u))
 	return d.normalized() if d.length() > 0.0 else Vector2.RIGHT
 
 
@@ -124,7 +126,7 @@ func draw(canvas: CanvasItem, agora: float) -> void:
 ## A corda puxada: a flecha encostada ao arco, a recuar com a preparacao. E a
 ## antecipacao de quem dispara — o aviso de que uma flecha vai sair.
 static func draw_nocked(canvas: CanvasItem, mao: Vector2, lado: float, puxado: float) -> void:
-	var ponta := mao + Vector2(lado * FLECHA.haste * (1.0 - puxado * 0.5), 0.0)
+	var ponta := mao + Vector2(lado * FLECHA.haste * (1.0 - puxado * WorldPalette.MEIA), 0.0)
 	_flecha(canvas, ponta, Vector2(lado, 0.0), 1.0)
 
 
