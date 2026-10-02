@@ -21,7 +21,9 @@
 //    9 · SEM CLARÃO — um tema guardado está aplicado antes do primeiro pixel.
 //   10 · MOVIMENTO REDUZIDO — nada fica escondido, e o dia não anda sozinho.
 //   11 · O JOGO — /jogar/ carrega, o ecrã de carregamento sai e o canvas fica,
-//        com a CSP estrita e os controlos lidos do project.godot.
+//        com a CSP estrita e os controlos lidos do project.godot. E num telemóvel
+//        (ADR 0047): arranca com um toque, a classe escolhe-se com o dedo, os
+//        controlos ligam-se, e ao alto pede-se para virar o telemóvel.
 //   12 · PRIVACIDADE — nenhuma página pede nada a outra origem (§32).
 //   13 · CSP — cada página tem a sua, e nenhuma é violada.
 //   14 · AS DUAS LÍNGUAS — a mesma forma: as mesmas secções, os mesmos cartões.
@@ -354,6 +356,43 @@ async function main() {
     }
     resultado(`/jogar/${q}: sem erros de JavaScript`, erros.length === 0, erros.slice(0, 2).join(" | "));
     pedidos.filter((u) => !u.startsWith(base) && !/^(data|blob):/.test(u)).forEach((u) => externos.add(`/jogar/ → ${u}`));
+    await ctx.close();
+  }
+
+  console.log("\n11 · o jogo ao toque (ADR 0047)");
+  {
+    // Um telemóvel deitado: 844 × 390, como um iPhone de 6,1", com toque e sem rato.
+    const LARGO = { width: 844, height: 390 };
+    const { ctx, p, erros } = await nova(b, base, LARGO.width, "dark", {
+      viewport: LARGO, isMobile: true, hasTouch: true, deviceScaleFactor: 2,
+    });
+    const linhas = [];
+    p.on("console", (m) => linhas.push(m.text()));
+    await p.goto(base + "/jogar/", { waitUntil: "load" });
+    const botao = await p.locator("#jogar-toque").isVisible();
+    resultado("/jogar/ ao toque: arranca com um toque, e não diz que não há controlos", botao
+      && !(await p.content()).includes("ainda não há controlos"));
+    if (botao) {
+      await p.tap("#jogar-toque");
+      const saiu = await p.waitForFunction(() => !document.getElementById("status"), null, { timeout: JOGO_S * 1000 })
+        .then(() => true, () => false);
+      resultado("/jogar/ ao toque: o motor arranca depois do toque", saiu);
+      if (saiu) {
+        await p.waitForTimeout(1500);
+        // O botão de começar fica ao fundo, ao meio, na escolha de classe (ADR 0044).
+        await p.touchscreen.tap(LARGO.width / 2, LARGO.height - 29);
+        const escolheu = await p.waitForEvent("console", { predicate: (m) => m.text().includes("classe inicial"), timeout: 8000 })
+          .then(() => true, () => linhas.some((l) => l.includes("classe inicial")));
+        resultado("/jogar/ ao toque: a classe escolhe-se com o dedo", escolheu, linhas.slice(-3).join(" | "));
+        resultado("/jogar/ ao toque: os controlos ligam-se com o primeiro toque",
+          linhas.some((l) => l.includes("toque: controlos no ecra")));
+        await p.setViewportSize({ width: LARGO.height, height: LARGO.width });
+        await p.waitForTimeout(400);
+        const rodar = await p.evaluate(() => getComputedStyle(document.getElementById("rodar")).display);
+        resultado("/jogar/ ao toque: ao alto, pede para virar o telemóvel", rodar === "flex", rodar);
+      }
+    }
+    resultado("/jogar/ ao toque: sem erros de JavaScript", erros.length === 0, erros.slice(0, 2).join(" | "));
     await ctx.close();
   }
 

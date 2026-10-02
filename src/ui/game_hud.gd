@@ -66,9 +66,7 @@ func _ready() -> void:
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	# §26: os glifos sao os do dispositivo activo. Um Steam Deck nao tem teclado,
 	# e por isso um comando ligado ao arrancar e o comando que se esta a usar.
-	var comandos := Input.get_connected_joypads()
-	if not comandos.is_empty():
-		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
+	_dispositivo = Glyphs.initial()
 	_escrever_fixos()
 	add_child(ContextPanel.new())
 	add_child(TravelPanel.new())
@@ -125,10 +123,12 @@ func _draw() -> void:
 	if ClockService.clock != null:
 		var feito := BARRA.w * ClockService.clock.phase_progress()
 		draw_rect(Rect2(BARRA.x, BARRA.y, feito, BARRA.h), GOLD)
+	# No toque nao ha rodape de teclas: os botoes no ecra dizem o que fazem (ADR 0047).
 	var rodape := altura - RODAPE.acima
-	draw_rect(Rect2(RODAPE.x, rodape, largura - RODAPE.margem, RODAPE.h), PAPER)
-	var fim := Vector2(largura - RODAPE.x, rodape)
-	draw_line(Vector2(RODAPE.x, rodape), fim, RODAPE_LINHA, TRACO.rodape)
+	if not _dica.text.is_empty():
+		draw_rect(Rect2(RODAPE.x, rodape, largura - RODAPE.margem, RODAPE.h), PAPER)
+		var fim := Vector2(largura - RODAPE.x, rodape)
+		draw_line(Vector2(RODAPE.x, rodape), fim, RODAPE_LINHA, TRACO.rodape)
 	# A pausa e a derrota ja nao se desenham aqui: sao o PauseMenu (GB-13, GB-16).
 	if _aviso.visible:
 		_painel(_caixa(AVISO_CAIXA), PAPER_LIGHT, GOLD)

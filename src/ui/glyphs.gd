@@ -10,10 +10,13 @@
 # Os botoes sao os do mapa de comando do §24, pela ordem dele. As palavras do que
 # cada um faz sao chaves de data/i18n/strings.csv; os nomes de botao que nao
 # mudam de lingua (A, RT, TAB) ficam aqui, como o §24 os escreve.
+#
+# O toque e o quarto dispositivo (ADR 0047): os nomes dele sao os dos botoes que se
+# desenham no ecra, e o rodape de teclas esconde-se, porque os botoes dizem o que fazem.
 class_name Glyphs
 extends RefCounted
 
-enum Device { KEYBOARD, XBOX, PLAYSTATION }
+enum Device { KEYBOARD, XBOX, PLAYSTATION, TOUCH }
 
 ## O que se diz de cada gesto, pela ordem do rodape.
 const ACCOES := [
@@ -33,6 +36,16 @@ const BOTOES := {
 	Device.XBOX: ["D-PAD", "A", "X", "RT", "Y", "START", "RB"],
 	Device.PLAYSTATION:
 	["D-PAD", &"PAD_CROSS", &"PAD_SQUARE", "R2", &"PAD_TRIANGLE", "OPTIONS", "R1"],
+	Device.TOUCH:
+	[
+		&"TOUCH_STICK",
+		&"TOUCH_DROP",
+		&"TOUCH_ASSUME",
+		&"TOUCH_SKILL",
+		&"TOUCH_WHEEL",
+		&"TOUCH_PAUSE",
+		&"TOUCH_ATTACK",
+	],
 }
 
 ## Os nomes que o motor da a um comando PlayStation. O resto — o Steam Deck, o
@@ -48,6 +61,10 @@ const SEPARADOR := "  ·  "
 ## O dispositivo depois deste evento. `nome` e o Input.get_joy_name() do comando
 ## que o mandou — vem de fora para que isto se possa testar sem um comando.
 static func device_of(evento: InputEvent, anterior: Device, nome: String) -> Device:
+	if evento is InputEventScreenTouch or evento is InputEventScreenDrag:
+		return Device.TOUCH
+	if emulated(evento):
+		return anterior
 	if evento is InputEventKey or evento is InputEventMouseButton:
 		return Device.KEYBOARD
 	if evento is InputEventJoypadButton:
@@ -55,6 +72,22 @@ static func device_of(evento: InputEvent, anterior: Device, nome: String) -> Dev
 	if evento is InputEventJoypadMotion and absf(evento.axis_value) >= DERIVA:
 		return pad_of(nome)
 	return anterior
+
+
+## O motor transforma cada toque num clique de rato com device -1, e manda-o ANTES do
+## toque (medido no 4.7.2; ADR 0047). Esse clique e o que faz os menus responderem ao
+## dedo; para o jogo nao e um rato: nao ataca, nao mexe a camara, nao troca os glifos.
+static func emulated(evento: InputEvent) -> bool:
+	return evento is InputEventMouse and evento.device == InputEvent.DEVICE_ID_EMULATION
+
+
+## A mao com que se comeca: um comando ligado, um ecra tactil, ou o teclado. Um Steam
+## Deck nao tem teclado, e um telemovel tambem nao.
+static func initial() -> Device:
+	var comandos := Input.get_connected_joypads()
+	if not comandos.is_empty():
+		return pad_of(Input.get_joy_name(comandos[0]))
+	return Device.TOUCH if DisplayServer.is_touchscreen_available() else Device.KEYBOARD
 
 
 static func pad_of(nome: String) -> Device:
@@ -70,6 +103,8 @@ static func pad_of(nome: String) -> Device:
 static func hint(
 	dispositivo: Device, marca: bool = true, ability: StringName = &"HINT_MARK"
 ) -> String:
+	if dispositivo == Device.TOUCH:
+		return ""
 	var partes := PackedStringArray()
 	var botoes: Array = BOTOES[dispositivo]
 	for i in ACCOES.size():

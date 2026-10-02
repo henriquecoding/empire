@@ -195,7 +195,7 @@ static func impulse_refusal(id: StringName) -> String:
 
 ## O stick esquerdo de quem o estiver a usar: o que mais saiu do centro.
 static func _stick() -> Vector2:
-	var melhor := Vector2.ZERO
+	var melhor := TouchControls.aim  # o dedo na roda e um stick (ADR 0047)
 	for d in Input.get_connected_joypads():
 		var v := Vector2(
 			Input.get_joy_axis(d, JOY_AXIS_LEFT_X), Input.get_joy_axis(d, JOY_AXIS_LEFT_Y)

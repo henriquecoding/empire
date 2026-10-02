@@ -14,6 +14,7 @@ func _ready() -> void:
 	EventBus.game_paused.connect(_paused)
 	facing = 1.0
 	cursor_aim = false
+	device = Glyphs.initial()
 
 
 func _paused(_value: bool) -> void:
@@ -23,7 +24,9 @@ func _paused(_value: bool) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if blocked() or _release or event.is_echo():
+	# O clique que o motor faz de cada toque tem o botao esquerdo, que e o attack: sem
+	# isto, cada toque no ecra de um telemovel era um golpe (ADR 0047).
+	if blocked() or _release or event.is_echo() or Glyphs.emulated(event):
 		return
 	if event.is_action(&"attack"):
 		var held := event.is_action_pressed(&"attack")

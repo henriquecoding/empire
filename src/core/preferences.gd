@@ -34,6 +34,11 @@ const CONTRAST := &"contrast"
 const COLORBLIND := &"colorblind"
 ## O idioma escolhido na pausa (§27). Vazio e "o do sistema", como a boot fazia.
 const LANGUAGE := &"language"
+## Os controlos por toque (ADR 0047): o tamanho (1 e o da TouchLayout), o canhoto, que
+## espelha os lados, e a vibracao, que so o Android tem no browser.
+const TOUCH_SCALE := &"touch_scale"
+const TOUCH_LEFT := &"touch_left"
+const TOUCH_HAPTICS := &"touch_haptics"
 ## Os idiomas que o strings.csv tem (§27). A boot e a pausa leem esta lista.
 const LANGUAGES := ["pt_PT", "en"]
 
@@ -49,6 +54,9 @@ const POR_OMISSAO := {
 	CONTRAST: 1.0,
 	COLORBLIND: 0,
 	LANGUAGE: "",
+	TOUCH_SCALE: 1.0,
+	TOUCH_LEFT: false,
+	TOUCH_HAPTICS: true,
 }
 
 static var _partilhadas: Preferences

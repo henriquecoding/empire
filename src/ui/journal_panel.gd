@@ -29,6 +29,7 @@ const BOTOES := {
 	Glyphs.Device.KEYBOARD: [&"KEY_SPACE", "E", "ESC"],
 	Glyphs.Device.XBOX: ["A", "X", "B"],
 	Glyphs.Device.PLAYSTATION: [&"PAD_CROSS", &"PAD_SQUARE", &"PAD_CIRCLE"],
+	Glyphs.Device.TOUCH: [&"TOUCH_DROP", &"TOUCH_ASSUME"],
 }
 const RODAPE := &"UI_JOURNAL_CLOSE"
 const ENTRE := " / "
@@ -69,9 +70,7 @@ func _ready() -> void:
 	coluna.add_child(_corpo)
 	coluna.add_child(_rodape)
 	EventBus.secret_found.connect(_no_achado)
-	var comandos := Input.get_connected_joypads()
-	if not comandos.is_empty():
-		_dispositivo = Glyphs.pad_of(Input.get_joy_name(comandos[0]))
+	_dispositivo = Glyphs.initial()
 
 
 ## O titulo e o corpo de um diario, ja traduzidos; vazio se o id nao e de um
@@ -112,7 +111,9 @@ func _process(delta: float) -> void:
 ## Se este gesto fecha a folha: um dos verbos, o B, o Esc ou um clique (e nao a roda).
 static func closes(evento: InputEvent) -> bool:
 	if evento is InputEventMouseButton:
-		return evento.pressed and evento.button_index in CLIQUES
+		# O clique que o motor faz de cada toque nao e um clique: no toque fecham os
+		# botoes MOEDA e INTERAGIR, como no comando (ADR 0047).
+		return not Glyphs.emulated(evento) and evento.pressed and evento.button_index in CLIQUES
 	if evento is InputEventJoypadButton:
 		if evento.pressed and evento.button_index == JOY_BUTTON_B:
 			return true

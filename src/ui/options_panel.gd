@@ -20,6 +20,11 @@ const CEM := 100.0
 const MODOS := [&"OPT_COLORBLIND_OFF", &"OPT_PROTANOPIA", &"OPT_DEUTERANOPIA", &"OPT_TRITANOPIA"]
 ## O nome de cada idioma de Preferences.LANGUAGES, nele proprio (§27).
 const NOMES_IDIOMA := [&"LANG_PT_PT", &"LANG_EN"]
+## Os separadores, pela ordem: o terceiro so aparece onde ha toque (ADR 0047).
+const SEPARADORES := [&"UI_ACCESSIBILITY", &"UI_MENU_GAME", &"UI_MENU_TOUCH"]
+const TOQUE := 2
+## De quanto em quanto anda o tamanho dos controlos de toque.
+const PASSO_TOQUE := 0.1
 const TABS_WIDTH := 540
 const SLIDER_HEIGHT := 44
 const CHOICE_SIZE := Vector2(160, 48)
@@ -38,6 +43,11 @@ var _idioma_rotulo: Label
 var _idioma: OptionButton
 var _access: VBoxContainer
 var _game: VBoxContainer
+var _touch: VBoxContainer
+var _toque_rotulo: Label
+var _toque: HSlider
+var _canhoto: CheckButton
+var _vibrar: CheckButton
 var _tabs: Array[Button] = []
 var _tab := 0
 var _tab_row: BoxContainer
@@ -46,10 +56,8 @@ var _tab_row: BoxContainer
 func _ready() -> void:
 	_tab_row = BoxContainer.new()
 	add_child(_tab_row)
-	for i in 2:
-		var tab := PauseTheme.button(
-			_tab_row, &"UI_ACCESSIBILITY" if i == 0 else &"UI_MENU_GAME", show_tab.bind(i)
-		)
+	for i in SEPARADORES.size():
+		var tab := PauseTheme.button(_tab_row, SEPARADORES[i], show_tab.bind(i))
 		tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tab.toggle_mode = true
 		_tabs.append(tab)
@@ -57,6 +65,8 @@ func _ready() -> void:
 	add_child(_access)
 	_game = VBoxContainer.new()
 	add_child(_game)
+	_touch = VBoxContainer.new()
+	add_child(_touch)
 	_tremor = _opcao(Preferences.SCREEN_SHAKE)
 	_claroes = _opcao(Preferences.FLASHES)
 	_legendas = _opcao(Preferences.CAPTIONS)
@@ -71,6 +81,11 @@ func _ready() -> void:
 	_dia = _slider(_game, relogio.day_seconds_min, relogio.day_seconds_max, PASSO_DIA_S, _no_dia)
 	_idioma_rotulo = _linha(_game)
 	_idioma = _escolha(_idioma_rotulo, Preferences.LANGUAGES.size(), _no_idioma)
+	var escala: Dictionary = TouchLayout.ESCALA
+	_toque_rotulo = _rotulo(_touch)
+	_toque = _slider(_touch, escala.min, escala.max, PASSO_TOQUE, _no_toque)
+	_canhoto = _opcao(Preferences.TOUCH_LEFT, _touch)
+	_vibrar = _opcao(Preferences.TOUCH_HAPTICS, _touch)
 	show_tab(0)
 	refresh()
 	resized.connect(_fit_tabs)
@@ -85,6 +100,7 @@ func show_tab(index: int) -> void:
 	_tab = index
 	_access.visible = index == 0
 	_game.visible = index == 1
+	_touch.visible = index == TOQUE
 	for i in _tabs.size():
 		_tabs[i].set_pressed_no_signal(i == index)
 
@@ -104,13 +120,20 @@ func refresh() -> void:
 	_contraste.set_value_no_signal(prefs.number(Preferences.CONTRAST))
 	_daltonismo.select(int(prefs.number(Preferences.COLORBLIND)))
 	_idioma.select(maxi(0, Preferences.LANGUAGES.find(TranslationServer.get_locale())))
+	_toque.set_value_no_signal(prefs.number(Preferences.TOUCH_SCALE))
+	_canhoto.set_pressed_no_signal(prefs.enabled(Preferences.TOUCH_LEFT))
+	_vibrar.set_pressed_no_signal(prefs.enabled(Preferences.TOUCH_HAPTICS))
+	# O separador do toque so onde ha toque: num teclado era uma pagina que nao faz nada.
+	_tabs[TOQUE].visible = TouchControls.active or DisplayServer.is_touchscreen_available()
+	if _tab == TOQUE and not _tabs[TOQUE].visible:
+		show_tab(0)
 	_escrever()
 
 
 ## Todo o texto do painel. Chamado ao abrir e sempre que o idioma muda.
 func _escrever() -> void:
-	_tabs[0].text = tr(&"UI_ACCESSIBILITY")
-	_tabs[1].text = tr(&"UI_MENU_GAME")
+	for i in SEPARADORES.size():
+		_tabs[i].text = tr(SEPARADORES[i])
 	_tremor.text = tr(&"OPT_SCREEN_SHAKE")
 	_claroes.text = tr(&"OPT_FLASHES")
 	_legendas.text = tr(&"OPT_CAPTIONS")
@@ -118,6 +141,9 @@ func _escrever() -> void:
 	_dia_rotulo.text = "%s · %d s" % [tr(&"OPT_DAY_LENGTH"), int(_dia.value)]
 	_contraste_rotulo.text = "%s · %d%%" % [tr(&"OPT_CONTRAST"), roundi(_contraste.value * CEM)]
 	_daltonismo_rotulo.text = tr(&"OPT_COLORBLIND")
+	_toque_rotulo.text = "%s · %d%%" % [tr(&"OPT_TOUCH_SIZE"), roundi(_toque.value * CEM)]
+	_canhoto.text = tr(&"OPT_TOUCH_LEFT")
+	_vibrar.text = tr(&"OPT_TOUCH_HAPTICS")
 	_idioma_rotulo.text = tr(&"UI_LANGUAGE")
 	for i in MODOS.size():
 		_daltonismo.set_item_text(i, tr(MODOS[i]))
@@ -140,6 +166,11 @@ func _no_dia(segundos: float) -> void:
 
 func _no_contraste(valor: float) -> void:
 	Preferences.shared().set_number(Preferences.CONTRAST, valor)
+	_escrever()
+
+
+func _no_toque(valor: float) -> void:
+	Preferences.shared().set_number(Preferences.TOUCH_SCALE, valor)
 	_escrever()
 
 

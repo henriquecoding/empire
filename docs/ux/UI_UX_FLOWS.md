@@ -41,7 +41,8 @@ flowchart LR
 | Comando primeiro | Todo o ecrã se navega com D-pad/stick, **A confirma, B volta**. Nenhum ecrã exige rato | §24, §26 |
 | Foco sempre visível | O elemento com foco tem o realce de madeira entalhada + contorno de 2 px; o rato, ao passar, **move o foco** — não há um "hover" diferente do foco | §26 |
 | Teclado | Setas / WASD navegam, Enter/Espaço confirmam, Esc volta | §24 |
-| Glifos | Os glifos no ecrã correspondem ao dispositivo ativo (teclado, Xbox, PlayStation, Deck) — troca de atlas por `Input.get_joy_name` | §26 |
+| Glifos | Os glifos no ecrã correspondem ao dispositivo ativo (teclado, Xbox, PlayStation, Deck, toque) — troca de atlas por `Input.get_joy_name` | §26 |
+| Toque | O quarto dispositivo (ADR 0047): os menus tocam-se pelo rato emulado do motor; no jogo, alavanca à esquerda e botões à direita, que premem as mesmas acções do InputMap. Os controlos aparecem com o primeiro toque e somem com o teclado ou o comando | §24, §26, §61 |
 | Texto | ≥ 12 px de altura de carácter a 1280 × 720; nada abaixo de 9 px a 1280 × 800 | §26 |
 | Texto de entrada | Só o nome do save, e pela API de teclado do Steamworks no Deck | §26 |
 | Palavras | Dentro do jogo, ícones; nos menus, texto por chave (`data/i18n/strings.csv`). Nunca concatenar frases | §24, §27 |
@@ -84,6 +85,13 @@ pausa (§42). No comando: stick para cima/baixo muda dígitos.
 
 ### Jogo
 O mundo é a interface (secção 4). Entradas: os dois verbos, a roda do rei, câmara livre e pausa (§24).
+
+**Ao toque** (ADR 0047), com o telemóvel deitado: à esquerda, a alavanca flutuante (nasce onde o polegar pousa;
+arrastar anda, até ao fim corre); à direita, MOEDA (tocar larga uma, manter larga em contínuo), a arma da classe,
+INTERAGIR (pulsa quando o guia o usa), a habilidade e IMPULSOS (manter, arrastar até ao segmento, largar); a pausa
+em cima, por baixo do painel de combate. O resto do ecrã é mundo: arrastar espreita e volta em 2 s; tocar aponta a
+habilidade do Arqueiro e do Bardo. O rodapé de teclas esconde-se. Ao alto ou ao sair da aplicação, o jogo pausa.
+Na pausa, Opções → Toque: tamanho (80–140%), canhoto, vibração.
 
 ### Roda do rei
 Manter **Y / Tab** com o monarca assumido. Vitral de seis segmentos: *construir · recrutar · ofícios · impulso ·
