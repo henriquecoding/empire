@@ -9,7 +9,7 @@
 #
 # Um no, na cena de jogo, entre a faixa do subsolo e a da superficie: tapa a cave, o
 # tunel, as masmorras, quem esta la em baixo e os morcegos, e fica por baixo de quem
-# anda em cima dela. A luz vem do `modulate` do ambiente, como o chao de cima. Com o rei
+# anda em cima dela. A luz e a do cenario (SceneryLight), como o chao de cima. Com o rei
 # la em baixo, o dither_reveal da §60 dissolve-a; com ele ca em cima, volta.
 #
 # O chao, os caminhos e os lagos desenham-se aqui; as plantas, num filho por troco (a
@@ -85,8 +85,8 @@ func _exit_tree() -> void:
 
 func _process(delta: float) -> void:
 	if _clock != null and ClockService.clock != null:
-		var relogio := ClockService.clock
-		modulate = BandLight.ambient(_clock, int(relogio.current_phase()), relogio.phase_progress())
+		SceneryLight.refresh(self)  # a luz e a do cenario, no mesmo shader (ADR 0048)
+		SceneryLight.feed(_dither, SceneryLight.Depth.BELOW)
 	if SimLoop.state == null or SimLoop.units == null:
 		return
 	_revelar.step(delta, SoilReveal.wants_open(SimLoop.units, Assume.driven()))

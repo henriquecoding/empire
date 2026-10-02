@@ -10,7 +10,12 @@
 // Cada janela e (meio, largura, orla, forca). Aberta de todo ate meia largura do meio, e
 // fecha-se ao longo da orla; sem orla (0), a orla e meia largura. A forca (0 = cheia) e o
 // progresso da janela de um sitio do subsolo (Q-186): a terra vai-se so ali.
+//
+// E leva a luz do cenario (world_light.gdshaderinc, ADR 0048): a terra e o primeiro plano,
+// e uma fogueira a beira do caminho alumia-a como alumia o chao de cima.
 shader_type canvas_item;
+
+#include "res://shaders/world_light.gdshaderinc"
 
 uniform vec4 windows[32];
 uniform int window_count = 0;
@@ -24,6 +29,7 @@ varying vec2 mundo;
 
 void vertex() {
 	mundo = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+	LUZ_VERTEX
 }
 
 void fragment() {
@@ -40,4 +46,6 @@ void fragment() {
 	if (texture(matrix, (celula + 0.5) / lado).r < reveal) {
 		discard;
 	}
+	vec4 cor = texture(TEXTURE, UV) * COLOR;
+	COLOR = vec4(cor.rgb * luz_aqui(ecra_luz, mundo_luz), cor.a);
 }

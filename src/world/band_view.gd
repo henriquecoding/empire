@@ -20,6 +20,32 @@
 class_name BandView
 extends Node2D
 
+
+## As obras desta faixa, num canvas que leva a luz do cenario pixel a pixel
+## (SceneryLight, ADR 0048): o castelo-arvore tem 750 px de largo, e uma cor so
+## para ele inteiro punha-o todo aceso ou todo apagado. Assim a lareira alumia a
+## porta e as torres ficam no escuro. Fica por tras do resto da faixa
+## (`show_behind_parent`): o que anda passa a frente das obras.
+class Obras:
+	extends Node2D
+
+	var band := Band.Kind.SURFACE
+	var edificios: Dictionary = {}
+	var tempo := 0.0
+	## Sem luz nenhuma: e o shader que a poe. O corpo sai na cor dele.
+	var neutra := Lighting.new()
+
+	func _draw() -> void:
+		if SimLoop.state == null:
+			return
+		Gauge.adiar = true  # a barra nao leva luz: o BandView pinta-a por cima
+		BuildView.draw_on(self, band, edificios, neutra, tempo)
+		Gauge.adiar = false
+
+
+## A chama do archote, em vezes a de uma fogueira: arde numa mao.
+const ARCHOTE := 0.55
+
 @export var band: Band.Kind = Band.Kind.SURFACE
 
 var _tropas: Dictionary = {}
@@ -35,6 +61,8 @@ var _visual_time := 0.0
 var _salto: CoinBounce
 var _actors: UnitCanvas
 var _bichos_vista := CreatureView.new()
+## Criado no _ready, como o _actors: um no criado antes da arvore fica orfao.
+var _obras: Obras
 
 
 func _ready() -> void:
@@ -45,6 +73,13 @@ func _ready() -> void:
 	_actors = UnitCanvas.new()
 	_actors.band = band
 	_actors.light = _luz
+	_obras = Obras.new()
+	_obras.band = band
+	_obras.edificios = _edificios
+	_obras.show_behind_parent = true
+	_obras.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_obras.material = SceneryLight.material(SceneryLight.Depth.GROUND)
+	add_child(_obras)
 	add_child(_actors)
 
 
@@ -57,29 +92,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_visual_time += delta
 	var relogio := ClockService.clock
-	_luz.set_phase(_relogio, int(relogio.current_phase()), relogio.phase_progress())
-	var rot := SimLoop.night.rot if SimLoop.state != null else null
-	var raio := _raio_nesta_faixa(rot)
-	if raio > 0.0:
-		_luz.set_lamp(
-			WorldLight.nest_x(rot), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1]
-		)
-	else:
-		_luz.clear_lamp()
+	_luz.light(_relogio, int(band), int(relogio.current_phase()), relogio.phase_progress())
+	SceneryLight.refresh(self)
+	_obras.tempo = _visual_time
+	_obras.queue_redraw()  # antes do pai: as barras que adia sao pintadas por ele
 	queue_redraw()
 	_actors.time = _visual_time
 	_actors.queue_redraw()
-
-
-## A candeia e o mostrador da Divida (§74, §75): na faixa da mancha e o raio do
-## dia; nas outras so chega o que a Divida ja deixou chegar.
-func _raio_nesta_faixa(rot: RotSystem) -> float:
-	if rot == null or not rot.active():
-		return 0.0
-	var raio := WorldLight.radius(_podre, SimLoop.state.day)
-	if band == Band.Kind.SURFACE:
-		return raio
-	return raio * WorldLight.debt_reach(SimLoop.night.voice.debt.tier())
 
 
 func _draw() -> void:
@@ -88,10 +107,9 @@ func _draw() -> void:
 	if band == Band.Kind.SURFACE:
 		_passagens()
 		_podridao()
-		OfferView.draw_on(self, _luz)  # §75: o prato, a frase e o Zelador
+		OfferView.draw_on(self, _luz, _visual_time)  # §75: o prato, a frase e o Zelador
 	_fogueiras()
 	SiteView.draw_on(self, band, _luz)
-	BuildView.draw_on(self, band, _edificios, _luz, _visual_time)
 	AmargueiroView.draw_on(self, band, _luz)  # §74: o que a noite deixou
 	_moedas()
 	_criaturas()
@@ -103,6 +121,7 @@ func _draw() -> void:
 	# corpo desenhado depois dele tapava-o.
 	PriceTag.draw_on(self, band, _tropas, _edificios)
 	PassageCue.draw_on(self, band, _visual_time)
+	Gauge.flush(self)  # as barras das obras, que nao levam luz (Q-080)
 
 
 ## §11: onde se muda de faixa. Desenhada na superficie porque e de la que se
@@ -114,53 +133,58 @@ func _passagens() -> void:
 ## A arte da mancha vive no RotView: a massa, o rasto e a candeia sao um assunto
 ## so e nao cabiam aqui sem passar as 250 linhas do §28 (F1-17).
 func _podridao() -> void:
-	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day, _luz)
-	RotView.draw_on(self, SimLoop.night.other_rot, _podre, SimLoop.state.day, _luz)
+	RotView.draw_on(self, SimLoop.night.rot, _podre, SimLoop.state.day, _luz, _visual_time)
+	RotView.draw_on(self, SimLoop.night.other_rot, _podre, SimLoop.state.day, _luz, _visual_time)
 	for record: Dictionary in SimLoop.field.settlements.records.values():
 		for x: float in record[&"rifts"]:
 			RotView.fissure(self, x, WorldLight.stops(_podre)[2])
 
 
-## As luzes que sao tuas (§10, coluna `light_radius`): fogueiras, farol e o
-## archote. Levam as mesmas tres paragens do §80, mas em ambar — o roxo e do Lume,
-## e de longe tem de se saber de quem e cada luz (ADR 0034).
+## O fogo que e teu: a chama da fogueira e do farol (HearthArt) e a do archote na
+## mao de quem se conduz (Q-029). So a chama — a luz que dao ao mundo esta no
+## LightField —, e aqui, num canvas sem luz, porque a chama e ela a luz (§80).
 func _fogueiras() -> void:
-	var cores := WorldLight.fire_stops(_podre)  # ambar: o fogo e teu (ADR 0034)
-	for vaga in SimLoop.builds.slots:
-		var raio := WorldLight.hearth_radius(vaga)
-		if vaga.band != band or raio <= 0.0:
-			continue
-		var proprias := WorldLight.weakened(cores, WorldLight.hearth_strength(vaga))  # Q-078
-		RotView.lamp(self, Vector2(vaga.x, WorldPalette.ground_of(int(vaga.band))), raio, proprias)
-	# O archote aceso de quem se conduz (Q-029): a mesma luz, a metade da forca.
+	HearthArt.flames(self, int(band), _visual_time)
 	var rei := SimLoop.units.index_of(Assume.driven())
-	if rei >= 0 and SimLoop.night.dark.torch.lit() and SimLoop.units.bands[rei] == int(band):
-		var chao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)))
-		RotView.lamp(
-			self, chao, _podre.torch_radius_px, WorldLight.weakened(cores, WorldLight.MEIA)
-		)
+	if rei < 0 or not SimLoop.night.dark.torch.lit() or SimLoop.units.bands[rei] != int(band):
+		return
+	var mao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)) - LightField.MAO)
+	FlameArt.draw_on(self, mao, ARCHOTE, WorldLight.fire_stops(_podre), _visual_time)
 
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
-## milhares de vezes por partida: e a animacao mais importante do jogo." O arco
-## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos, e o salto
-## ao pousar (GB-19) e so do ecra — a moeda fica onde a simulacao a pos.
+## milhares de vezes por partida: e a animacao mais importante do jogo." O arco e
+## da simulacao; o que o ecra lhe acrescenta — sair da mao, girar, ressaltar,
+## balancar e subir quando e levada — e do CoinBounce, e a moeda (ou a pilha, ou o
+## saco) e do CoinArt. O x e sempre o da simulacao (§55).
 func _moedas() -> void:
 	var moedas := SimLoop.coins
-	var apice := moedas.apex_px()
+	var curva := SimFactory.curve()
 	if _salto == null:
-		_salto = CoinBounce.new(SimFactory.curve().coin_gravity_px_s2)
-	_salto.forget_except(moedas.ids)
+		_salto = CoinBounce.new(curva.coin_gravity_px_s2)
+	_salto.forget_except(moedas.ids, _visual_time)
+	var chao := WorldPalette.ground_of(int(band))
+	var queda := moedas.apex_px() + CoinBounce.MAO
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
-		var onde := Smoothing.coin(moedas.ids[i], moedas.xs[i], moedas.heights[i])
-		_salto.observe(moedas.ids[i], onde.y, _visual_time)
-		onde.y += _salto.offset(moedas.ids[i], _visual_time)
-		Shadow.drop(self, onde.x, int(band), WorldPalette.MOEDA_R, onde.y, apice)
-		var y := WorldPalette.ground_of(int(band)) - onde.y - WorldPalette.MOEDA_R
-		var cor := _luz.body(WorldPalette.MOEDA, onde.x)
-		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
+		var id := moedas.ids[i]
+		var onde := Smoothing.coin(id, moedas.xs[i], moedas.heights[i])
+		_salto.observe(id, onde.y, _visual_time, Vector2(onde.x, chao))
+		var acima := onde.y + _salto.offset(id, _visual_time)
+		if moedas.settled[i] == 0:  # sai da mao e desce ate ao arco (CoinBounce.hand)
+			acima += CoinBounce.MAO * CoinBounce.hand(moedas.vys[i], curva.coin_drop_speed_px_s)
+		var largo := CoinArt.size_of(moedas.amounts[i]).x
+		Shadow.drop(self, onde.x, int(band), largo * WorldPalette.MEIA, acima, queda)
+		var brilho := CoinArt.glint(id, _visual_time) if moedas.settled[i] == 1 else 0.0
+		var face := _salto.face(id, _visual_time)
+		var pe := Vector2(onde.x, chao - acima)
+		CoinArt.draw_on(self, pe, moedas.amounts[i], face, CoinArt.lit(_luz, onde.x), brilho)
+	for levada: Array in _salto.taken(_visual_time):  # apanhada, ou paga a uma obra
+		var subiu: float = levada[1]
+		var pe: Vector2 = levada[0] - Vector2(0.0, CoinBounce.LEVADA.sobe * subiu)
+		var some := func(c: Color) -> Color: return Color(c, 1.0 - subiu)
+		CoinArt.draw_on(self, pe, 1, 1.0, some, 0.0)
 
 
 ## O que a noite traz so se ve dentro de uma luz (ADR 0034); quem o desenha, com
@@ -171,14 +195,12 @@ func _criaturas() -> void:
 	ClassEffects.draw_on(self, band)
 
 
-## As luzes em que se ve, em (x, raio): as tuas e o Lume. Com a mancha recuada e
-## dia, e esta tudo aceso.
+## As luzes em que se ve, em (x, raio): as tuas e o Lume (LightField). Com a
+## mancha recuada e dia, e esta tudo aceso.
 func _luzes_da_noite() -> Array[Vector2]:
-	var rot := SimLoop.night.rot
-	if not rot.active():
+	if not SimLoop.night.rot.active():
 		return [Vector2(0.0, INF)]
 	var luzes: Array[Vector2] = []
-	if band == Band.Kind.SURFACE:  # as tuas luzes so alumiam a faixa delas
-		luzes = WorldLight.hearths(SimLoop.builds, SimLoop.night.dark.ward())
-	luzes.append(Vector2(WorldLight.nest_x(rot), WorldLight.radius(_podre, SimLoop.state.day)))
+	for luz in _luz.glows:
+		luzes.append(Vector2(luz.center.x, luz.radius))
 	return luzes

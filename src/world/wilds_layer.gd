@@ -27,6 +27,10 @@ const NUVEM := [[-14, 0, 28, 2, 1], [-12, -3, 24, 3, 0], [-8, -6, 16, 3, 0], [-3
 const NUVEM_COR := [Color(0.93, 0.86, 0.73, 0.85), Color(0.79, 0.71, 0.56, 0.85)]
 const SAL_NUVEM := 61
 
+## Que luz leva cada plano (SceneryLight): o campo e o chao do jogo, o horizonte
+## e o meio, e as nuvens sao ceu.
+const LUZ_DO_PLANO := [SceneryLight.Depth.GROUND, SceneryLight.Depth.MID, SceneryLight.Depth.SKY]
+
 @export var plane: Plano = Plano.CAMPO
 
 var _clock: ClockData
@@ -38,12 +42,12 @@ var _tempo := 0.0
 func _ready() -> void:
 	_clock = Registry.entry(&"economy", &"clock") as ClockData
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	material = SceneryLight.material(LUZ_DO_PLANO[plane])
 
 
 func _process(delta: float) -> void:
 	if _clock != null and ClockService.clock != null:
-		var relogio := ClockService.clock
-		modulate = BandLight.ambient(_clock, int(relogio.current_phase()), relogio.phase_progress())
+		SceneryLight.refresh(self)  # a luz ja nao e o `modulate`: e o shader (ADR 0048)
 	if SimLoop.state == null:
 		return
 	var revisao := SimLoop.field.wilds.revision if SimLoop.field != null else -1

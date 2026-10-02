@@ -5,7 +5,8 @@
 # chao, a borda dela, do tamanho de um slot de construcao — um alvo, nao um menu.
 #
 # E o Zelador: uma figura alta e fina que anda atras da mancha, nao ataca, e olha
-# para o teu nucleo. No greybox e uma forma que se le; a arte e do ART-04.
+# para o teu nucleo. Desenha-o o bestiario (ADR 0049), como a criatura `tender`;
+# a arte final e do ART-04.
 #
 # A frase sai por chave de data/i18n/strings.csv e nunca como texto escrito aqui.
 # Nao ha contador nenhum: nem o tempo que falta, nem a Divida (§75).
@@ -15,19 +16,16 @@ extends RefCounted
 ## O barro do alguidar, e a fala: o ambar da candeia, que e a voz dela.
 const BARRO := Color(0.55, 0.33, 0.20)
 const FALA := Color(0.96, 0.85, 0.61)
-const ZELADOR := Color(0.12, 0.10, 0.09)
-const OLHAR := Color(0.91, 0.66, 0.31)
 
 ## Em fraccoes da caixa de uma tropa (ActorArt.ESCALA.caixa).
 const PRATO := {"alto": 0.18, "fundo": 0.7}
-const FIGURA := {"alto": 2.2, "largo": 0.28, "olho": 3.0, "olhos_y": 0.1}
 const LETRA := {"tamanho": 16, "acima": 0.62}
 
 
-static func draw_on(canvas: CanvasItem, luz: Lighting) -> void:
+static func draw_on(canvas: CanvasItem, luz: Lighting, tempo: float = 0.0) -> void:
 	var voz := SimLoop.night.voice
 	if voz.tender.active:
-		_zelador(canvas, voz.tender.x, luz)
+		_zelador(canvas, voz.tender.x, luz, tempo)
 	if voz.offers.phase != OfferSystem.Phase.OPEN:
 		return
 	var oferta := voz.offers.offer()
@@ -61,14 +59,11 @@ static func _frase(canvas: CanvasItem, x: float, chave: String) -> void:
 	canvas.draw_string(fonte, onde, texto, HORIZONTAL_ALIGNMENT_LEFT, -1, tamanho, FALA)
 
 
-static func _zelador(canvas: CanvasItem, x: float, luz: Lighting) -> void:
-	var unidade: float = ActorArt.ESCALA.caixa
-	var alto: float = unidade * FIGURA.alto
-	var largo: float = unidade * FIGURA.largo
-	var chao := WorldPalette.ground_of(int(Band.Kind.SURFACE))
-	var corpo := Rect2(x - largo * WorldPalette.MEIA, chao - alto, largo, alto)
-	canvas.draw_rect(corpo, luz.body(ZELADOR, x))
-	var olho := Vector2(FIGURA.olho, FIGURA.olho)
-	var y: float = corpo.position.y + alto * FIGURA.olhos_y
-	canvas.draw_rect(Rect2(Vector2(x - FIGURA.olho, y), olho), OLHAR)
-	canvas.draw_rect(Rect2(Vector2(x + 1.0, y), olho), OLHAR)
+static func _zelador(canvas: CanvasItem, x: float, luz: Lighting, tempo: float) -> void:
+	var forma := Silhouette.Form.ZELADOR
+	var caixa := Bestiary.box(forma, x, int(Band.Kind.SURFACE))
+	var tons := Bestiary.tones(forma, func(c: Color) -> Color: return luz.body(c, x))
+	var roxo := WorldLight.stops(SimFactory.rot_profile())
+	var olhos := PackedColorArray([roxo[1], roxo[2]])
+	var frente := signf(SimLoop.core_x - x)  # olha para o teu nucleo (§75)
+	Bestiary.draw(canvas, forma, caixa, tons, olhos, tempo, frente, 0.0, 0.0)

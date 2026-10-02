@@ -34,13 +34,22 @@ extends RefCounted
 ## As moedas de um preco, empilhadas. Nao sao balanceamento — sao geometria de
 ## greybox, como as alturas do Silhouette, e vao-se embora com a arte.
 ##
-## O RAIO nao e o `WorldPalette.MOEDA_R` da moeda no chao, e isso e deliberado:
-## uma moeda no chao e uma COISA, que se apanha e que tem o tamanho que tem;
-## isto e um preco, e um preco tem de se ler de relance do outro lado do ecra. A
-## moeda do chao tem 6 px de diametro num ecra de 1280 e desaparece.
-const RAIO := 5.0
+## Cada moeda do preco e uma moeda (CoinArt), mais pequena do que a do chao:
+## aquela e uma COISA, que se apanha e tem o tamanho que tem; isto e um preco, que
+## tem de se ler de relance e de caber por cima da obra. ORLA e o raio do escuro
+## por baixo dela.
+const MOEDA := [
+	" ##### ",
+	"#o+ooo#",
+	"#++oo.#",
+	"#o+oo.#",
+	"#oooo.#",
+	"#oo...#",
+	" ##### ",
+]
+const ORLA := 8.0
 const POR_FILA := 10
-const PASSO := 13.0
+const PASSO := 16.0
 const ACIMA := 14.0
 const MEIA := 0.5
 ## Quanto resta da cor de uma moeda que ainda nao podes pagar. Apagada e nao
@@ -155,15 +164,16 @@ static func _gente(
 ## Contam-se: e para isso que ha uma por moeda e nao um algarismo.
 static func _moedas(canvas: CanvasItem, x: float, topo: float, falta: int, saco: int) -> void:
 	var base := topo - ACIMA
+	var ouro := CoinArt.tones(func(c: Color) -> Color: return c)
+	var apagado := CoinArt.tones(func(c: Color) -> Color: return WorldPalette.dim(c, APAGADA))
+	var metade := float(MOEDA.size()) * CoinArt.PIXEL * MEIA
 	for n in falta:
 		var fila := n / POR_FILA
 		var nesta := mini(falta - fila * POR_FILA, POR_FILA)
 		var coluna := n % POR_FILA
 		var centro := Vector2(x + (float(coluna) - (nesta - 1) * MEIA) * PASSO, base - fila * PASSO)
-		var cor := WorldPalette.MOEDA
-		if n >= saco:
-			cor = WorldPalette.dim(WorldPalette.MOEDA, APAGADA)
+		var tons := ouro if n < saco else apagado
 		# A orla escura por baixo: sem ela um preco dourado sobre o ceu do
 		# meio-dia e um preco cinzento sobre o solo somem os dois (§80).
-		canvas.draw_circle(centro, RAIO + 1.0, WorldPalette.SILHUETA)
-		canvas.draw_circle(centro, RAIO, cor)
+		canvas.draw_circle(centro, ORLA, WorldPalette.SILHUETA)
+		CoinArt.paint(canvas, centro + Vector2(0.0, metade), MOEDA, 1.0, tons)

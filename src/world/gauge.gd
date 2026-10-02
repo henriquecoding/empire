@@ -13,6 +13,12 @@
 class_name Gauge
 extends RefCounted
 
+## Um instrumento nao leva luz (Q-080). As obras desenham-se num canvas que leva a
+## luz do cenario pixel a pixel (ADR 0048), e por isso a barra delas fica para o
+## fim: quem desenha com `adiar` ligado guarda-a, e o BandView pinta-a por cima.
+static var adiar := false
+static var _adiadas: Array = []
+
 
 ## A vida de uma coisa, por cima dela. Cheia nao se desenha — um ecra com uma
 ## barra por cima de cada tropa viva e ruido, e o que interessa e quem esta a
@@ -22,9 +28,21 @@ static func health(canvas: CanvasItem, caixa: Rect2, racio: float) -> void:
 		return
 	var topo := caixa.position - Vector2(0.0, WorldPalette.BARRA * WorldPalette.CONTORNO)
 	var calha := Rect2(topo, Vector2(caixa.size.x, WorldPalette.BARRA))
-	canvas.draw_rect(calha, WorldPalette.VAZIO)
 	var largo := caixa.size.x * clampf(racio, 0.0, 1.0)
-	canvas.draw_rect(Rect2(topo, Vector2(largo, WorldPalette.BARRA)), WorldPalette.VIDA)
+	var cheia := Rect2(topo, Vector2(largo, WorldPalette.BARRA))
+	if adiar:
+		_adiadas.append([calha, cheia])
+		return
+	canvas.draw_rect(calha, WorldPalette.VAZIO)
+	canvas.draw_rect(cheia, WorldPalette.VIDA)
+
+
+## As barras que ficaram para o fim, pintadas agora e esquecidas.
+static func flush(canvas: CanvasItem) -> void:
+	for par: Array in _adiadas:
+		canvas.draw_rect(par[0], WorldPalette.VAZIO)
+		canvas.draw_rect(par[1], WorldPalette.VIDA)
+	_adiadas.clear()
 
 
 ## §24: "o saco do personagem enche visivelmente; moedas caem quando esta

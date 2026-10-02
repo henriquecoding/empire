@@ -18,9 +18,8 @@ const POR_SABER := -1.0
 
 var _fauna := Fauna.new()
 var _clock: ClockData
-## Uma luz por faixa: a candeia chega a cada uma com o alcance dela (BandView).
+## Uma luz por faixa: as luzes de cada uma (LightField), como no BandView.
 var _luzes: Array[Lighting] = [Lighting.new(), Lighting.new(), Lighting.new()]
-var _podre: RotProfile
 var _tempo := 0.0
 var _escuro := POR_SABER
 var _chave: Array = []
@@ -30,7 +29,6 @@ var _dia := -1
 
 func _ready() -> void:
 	_clock = Registry.entry(&"economy", &"clock") as ClockData
-	_podre = SimFactory.rot_profile()
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 
@@ -78,15 +76,7 @@ func _draw() -> void:
 		FaunaArt.draw_on(self, b, _luzes[Fauna.FAIXA[b.kind]], alfa, _tempo)
 
 
-## O ambiente da fase e, se a mancha anda, a candeia dela: toda na superficie,
-## e nas outras faixas so o que a Divida ja deixou chegar (a regra do BandView).
+## O ambiente da fase e as luzes da faixa: as tuas e o Lume (LightField), pela
+## mesma regra do BandView.
 func _acender(luz: Lighting, faixa: int, fase: int, progresso: float) -> void:
-	luz.set_phase(_clock, fase, progresso)
-	var rot := SimLoop.night.rot
-	if rot == null or not rot.active():
-		luz.clear_lamp()
-		return
-	var raio := WorldLight.radius(_podre, SimLoop.state.day)
-	if faixa != Band.Kind.SURFACE:
-		raio *= WorldLight.debt_reach(SimLoop.night.voice.debt.tier())
-	luz.set_lamp(WorldLight.nest_x(rot), raio, WorldLight.stops(_podre)[WorldLight.PARAGENS - 1])
+	luz.light(_clock, faixa, fase, progresso)

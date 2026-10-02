@@ -14,38 +14,58 @@
 #       34: a fonte de luz ficava MAIS ESCURA do que o fundo. O §80 diz o
 #       contrario, e diz-lo em duas palavras — "ambar e luz".
 #
-# Isto e o sitio onde as tres se separam. Nao ha aqui `draw_` nenhum e nao ha
-# nenhum numero: o ambiente sai do clock.tres pelo BandLight, o raio e as
-# paragens saem do rot.tres pelo WorldLight.
+# Isto e o sitio onde as tres se separam. Nao ha aqui `draw_` nenhum: o ambiente
+# sai do clock.tres pelo BandLight, as luzes do LightField, as paragens do
+# rot.tres.
+#
+# ADR 0048: o ambiente e o que o olho VE (BandLight.seen), e nao a tinta crua da
+# noite, e ja nao ha uma candeia so — ha todas as luzes da faixa, e somam-se. A
+# conta de cada uma e a do Glow, e e a mesma que o shader do cenario faz.
 class_name Lighting
 extends RefCounted
 
-## O LUT de hora do dia (§22 degrau 3). Igual em todo o ecra, a qualquer hora.
-var ambient: Color = Color.WHITE
+## Quanto uma luz soma ao ambiente na noite funda. As cores sao as do rot.csv;
+## isto e a exposicao delas. Passa de 1 para o nucleo de uma fogueira sair mais
+## claro do que o que o rodeia mesmo com forca 0,5 — "ambar e luz" (§80).
+const GANHO := 1.25
+## Duas luzes somadas nao queimam a cor em branco.
+const TETO := 1.6
+## A altura do meio de um corpo, a contar do chao: e la que a luz o apanha.
+const CORPO := 24.0
 
-## A luz pontual que domina o ecra (§80 §3: "uma luz domina por ecra"). Hoje e
-## sempre a candeia da Podridao — o farol e Fase 6, e a Q-078 e sobre qual das
-## duas ganha quando as duas existirem.
-var lamp_x: float = 0.0
-var lamp_radius: float = 0.0
-var lamp_core: Color = Color.WHITE
+## O que o olho ve da hora do dia (§22 degrau 3, ADR 0048). Igual em todo o ecra.
+var ambient: Color = Color.WHITE
+## Quanto as luzes contam: 0 ao meio-dia, 1 na noite funda. Uma fogueira ao sol
+## nao alumia nada que se veja.
+var dark := 0.0
+## As luzes desta faixa, ja a cintilar (LightField).
+var glows: Array[Glow] = []
+var _chao := float(Band.GROUND_LINE)
 
 
 ## O ambiente da fase. `progresso` e o phase_progress() do relogio.
 func set_phase(dados: ClockData, fase: int, progresso: float) -> void:
-	ambient = BandLight.ambient(dados, fase, progresso)
+	ambient = BandLight.seen(dados, fase, progresso)
+	dark = darkness(dados, ambient)
 
 
-## Onde esta a luz que domina, e que raio tem. Sem luz nenhuma o alcance e zero
-## em todo o lado, e entao so ha ambiente — que e o que um dia e.
-func set_lamp(x: float, raio: float, nucleo: Color) -> void:
-	lamp_x = x
-	lamp_radius = raio
-	lamp_core = nucleo
+## A fase e as luzes de uma faixa, de uma vez: e o que cada desenho pede.
+func light(dados: ClockData, faixa: int, fase: int, progresso: float) -> void:
+	set_phase(dados, fase, progresso)
+	set_glows(LightField.of(faixa), WorldPalette.ground_of(faixa))
 
 
-func clear_lamp() -> void:
-	set_lamp(0.0, 0.0, Color.WHITE)
+func set_glows(lista: Array[Glow], chao: float) -> void:
+	glows = lista
+	_chao = chao
+
+
+## 0 com o dia inteiro, 1 com o olho no piso da noite.
+static func darkness(dados: ClockData, vista: Color) -> float:
+	var piso := dados.night_vision
+	if piso >= 1.0:
+		return 0.0
+	return clampf((1.0 - vista.v) / (1.0 - piso), 0.0, 1.0)
 
 
 ## A luz que chega ao CENARIO de um plano. O `plano` e o tecto de valores do
@@ -54,26 +74,43 @@ func scenery(plano: float) -> Color:
 	return WorldPalette.dim(ambient, plano)
 
 
-## A luz que chega a um CORPO em x. No centro da candeia e a candeia; no bordo e
-## o ambiente; pelo meio e a passagem de uma para o outro.
+## A luz num ponto do mundo: o ambiente, mais o que cada luz la deixa.
+func at(p: Vector2) -> Color:
+	var soma := Vector3(ambient.r, ambient.g, ambient.b)
+	var ganho := GANHO * dark
+	for luz in glows:
+		var cor := luz.light_at(p)
+		soma += Vector3(cor.r, cor.g, cor.b) * ganho
+	return Color(minf(soma.x, TETO), minf(soma.y, TETO), minf(soma.z, TETO))
+
+
+## A luz que chega a um CORPO em x, a meia altura dele.
 func on(x: float) -> Color:
-	return ambient.lerp(lamp_core, WorldLight.reach(x, lamp_x, lamp_radius))
+	return at(Vector2(x, _chao - CORPO))
 
 
-## A cor com que um corpo se ve. O §80 §3 da duas respostas e esta funcao e as
+## Quanto um corpo em x esta dentro de uma luz: 1 no nucleo, 0 fora de todas.
+func reach(x: float) -> float:
+	var p := Vector2(x, _chao - CORPO)
+	var perto := 0.0
+	for luz in glows:
+		perto = maxf(perto, luz.reach_at(p))
+	return perto
+
+
+## A cor com que um corpo se ve. O §80 da duas respostas e esta funcao e as
 ## duas: PERTO da luz ve-se cor e volume — a cor dele, com a luz que la chega —,
 ## e LONGE ve-se silhueta, que e um valor escuro so, igual para toda a gente.
 ##
 ## A segunda metade nao e gosto, e o defeito que a obrigou mede-se: escurecer a
 ## cor de cada um pelo ambiente deixava um vagabundo (0,93 0,85 0,61) a
 ## luminancia 31 contra um ceu a 34. A mesma mancha, e nao se via. Com a
-## silhueta fica a 16 contra 34 — ve-se a FORMA, e a forma e que diz o que ele e
-## (§22). Quem se aproxima da candeia recupera a cor, e e isso que faz da luz o
-## assunto da noite em vez de um efeito.
+## silhueta ve-se a FORMA, e a forma e que diz o que ele e (§22). Quem se
+## aproxima de uma luz recupera a cor, e e isso que faz da luz o assunto da
+## noite em vez de um efeito.
 func body(cor: Color, x: float) -> Color:
-	var perto := WorldLight.reach(x, lamp_x, lamp_radius)
-	var iluminado := WorldPalette.tint(cor, ambient.lerp(lamp_core, perto))
-	return WorldPalette.SILHUETA.lerp(iluminado, maxf(ambient.v, perto))
+	var iluminado := WorldPalette.tint(cor, on(x))
+	return WorldPalette.SILHUETA.lerp(iluminado, maxf(ambient.v, reach(x)))
 
 
 ## A luz de uma LUZ: ela propria, a qualquer hora. Existe como funcao e nao como

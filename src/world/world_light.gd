@@ -136,6 +136,14 @@ static func dominates(
 	return true
 
 
+## A paragem que acende a esta distancia, ou -1 fora da luz: 2 e o nucleo, 0 o
+## bordo. E a pergunta que o Glow faz por ponto, e o shader por pixel.
+static func stop_at(raio: float, d: float) -> int:
+	if raio <= 0.0 or d > raio:
+		return -1
+	return _paragem(raio, d)
+
+
 ## A paragem que acende a esta distancia de uma luz deste raio: 0 e o bordo.
 static func _paragem(raio: float, d: float) -> int:
 	for p in range(PARAGENS - 1, -1, -1):

@@ -96,7 +96,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		# anda; com ele, e a arte que o diz.
 		var animated := shown in [ActorAction.Kind.WALK, ActorAction.Kind.FLEE]
 		var bob := float(int(time / STEP_SECONDS) % 2) if moving and not animated else 0.0
-		var color := light.body(Color.WHITE, x)
+		var color := light.on(x)  # a luz pura: a silhueta e do SpriteLighting (ADR 0048)
 		if hit:
 			color = HIT_TINT
 		if not units.alive(i):

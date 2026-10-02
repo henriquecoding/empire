@@ -8,13 +8,15 @@
 class_name LastSeen
 extends RefCounted
 
-## [quando, caixa, forma, cor, pele]; a pele e [perfil, para onde olha, tinta, se
-## estava a luz], ou vazia quando a criatura e um contorno.
+## [quando, caixa, forma, cor, pele, frente]; a pele e [perfil, para onde olha,
+## tinta, se estava a luz], ou vazia quando a criatura nao e um sprite; a frente e
+## para onde olhava, para a morte a desfazer virada para o mesmo lado.
 const QUANDO := 0
 const CAIXA := 1
 const FORMA := 2
 const COR := 3
 const PELE := 4
+const FRENTE := 5
 const PELE_PERFIL := 0
 const PELE_FRENTE := 1
 const PELE_TINTA := 2
@@ -34,8 +36,8 @@ static func forget_before(t: float) -> void:
 			_vistos.erase(id)
 
 
-static func remember(id: int, caixa: Rect2, forma: int, cor: Color) -> void:
-	_vistos[id] = [CombatFx.clock, caixa, forma, cor, []]
+static func remember(id: int, caixa: Rect2, forma: int, cor: Color, frente := 1.0) -> void:
+	_vistos[id] = [CombatFx.clock, caixa, forma, cor, [], frente]
 
 
 ## A pele de uma criatura, para a morte a desfazer com a animacao `die` dela em

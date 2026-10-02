@@ -11,11 +11,12 @@
 class_name RotView
 extends RefCounted
 
-## O aviso da tarde: que fraccao da candeia se ve no horizonte, e com que alfa.
-## Geometria de greybox, como o resto deste ficheiro — vai-se com a arte.
-const AVISO := 0.35
-const AVISO_FUNDO := 0.6
-const AVISO_ALFA := 0.5
+## O aviso da tarde: a chama do Lume no horizonte, em vezes a de uma fogueira —
+## maior numa noite funda. A luz dela no ceu e do LightField. Greybox.
+const AVISO := 0.8
+const AVISO_FUNDO := 1.3
+## O Lume: o fogo roxo na base, maior do que qualquer fogueira tua (§80).
+const LUME := 2.0
 ## O braseiro do Lume, em greybox: um poste com a chama no topo (ADR 0034).
 const FISSURE := [
 	Vector2(-46, 0),
@@ -33,25 +34,20 @@ const BRASEIRO := Vector2(8.0, 28.0)
 ## nasceu e fica la (ADR 0034): a mancha que atravessa o campo e escuridao, e a
 ## unica luz dela e o fogo roxo la atras — o unico que a aquece.
 static func draw_on(
-	canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int, luz: Lighting
+	canvas: CanvasItem,
+	rot: RotSystem,
+	perfil: RotProfile,
+	dia: int,
+	luz: Lighting,
+	tempo: float = 0.0
 ) -> void:
 	if not rot.active():
-		_aviso(canvas, rot, perfil, dia)
+		_aviso(canvas, rot, perfil, dia, tempo)
 		return
 	# O Lume NAO leva ambiente: e uma luz, e o §80 diz que a luz e o assunto.
-	_candeia(canvas, rot, perfil, dia)
+	_candeia(canvas, rot, perfil, tempo)
 	_rasto(canvas, rot, luz)
 	_mancha(canvas, rot, luz)
-
-
-## §74: "uma so, quente, no meio da mancha". §80: tres paragens e nunca um
-## gradiente, e depois um dither a dissolver para o ambiente.
-##
-## Pinta-se de fora para dentro — bordo, meio, nucleo — porque e uma luz e nao
-## tres discos. O dither vem por ultimo, por cima do bordo.
-static func lamp(canvas: CanvasItem, centro: Vector2, raio: float, cores: PackedColorArray) -> void:
-	for i in cores.size():
-		canvas.draw_circle(centro, WorldLight.stop_radius(raio, i), cores[i])
 
 
 ## A massa que atravessa o campo, do HORIZONTE a LINHA DE CHAO — que e o plano
@@ -81,29 +77,29 @@ static func _rasto(canvas: CanvasItem, rot: RotSystem, luz: Lighting) -> void:
 	canvas.draw_rect(caixa, WorldPalette.tint(WorldPalette.TRILHO, luz.scenery(1.0)))
 
 
-static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int) -> void:
+## O Lume: o fogo roxo na base dela (ADR 0034), e a fissura de onde ela sai. A
+## luz que ele da ao mundo — as tres paragens e o dither do §80 — esta no
+## LightField, e e o cenario e os corpos que a recebem; aqui fica so o fogo.
+static func _candeia(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, tempo: float) -> void:
 	var centro := Vector2(WorldLight.nest_x(rot), WorldPalette.ground_of(int(Band.Kind.SURFACE)))
-	var raio := WorldLight.radius(perfil, dia)
 	var cores := WorldLight.stops(perfil)
-	lamp(canvas, centro, raio, cores)
-	var celula := perfil.lantern_dither_px
-	for canto in WorldLight.dither(centro, raio, celula):
-		canvas.draw_rect(Rect2(canto, Vector2(celula, celula)), cores[0])
 	fissure(canvas, centro.x, cores[2])
+	FlameArt.draw_on(canvas, centro, LUME, cores, tempo)
 
 
 ## A tarde diz de que lado vem a noite (Q-125): o Lume acende-se na base dela, no
 ## horizonte dessa borda, antes de a mancha nascer (ADR 0034) — ve-se de longe e nao
 ## diz um numero. Numa noite funda (Q-126) arde maior.
-static func _aviso(canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int) -> void:
+static func _aviso(
+	canvas: CanvasItem, rot: RotSystem, perfil: RotProfile, dia: int, tempo: float
+) -> void:
 	if rot.announced == 0:
 		return
 	var x := SimLoop.world_width if rot.announced > 0 else 0.0
-	var raio := perfil.lantern_radius_base * (AVISO_FUNDO if rot.deep(dia) else AVISO)
-	var cores := WorldLight.stops(perfil)
-	for i in cores.size():
-		cores[i] = Color(cores[i], cores[i].a * AVISO_ALFA)
-	lamp(canvas, Vector2(x, float(Band.HORIZON)), raio, cores)
+	var escala := AVISO_FUNDO if rot.deep(dia) else AVISO
+	FlameArt.draw_on(
+		canvas, Vector2(x, float(Band.HORIZON)), escala, WorldLight.stops(perfil), tempo
+	)
 
 
 static func fissure(canvas: CanvasItem, x: float, color: Color) -> void:
