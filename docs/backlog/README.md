@@ -207,9 +207,9 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UN-24](UN-24.md) | Viagem da comitiva, montarias e sítios | UN-03, UN-17, UN-20 | por fazer |
 | [UN-25](UN-25.md) | Ofícios, evolução e produção animal | UN-19, UN-20, UN-21, UN-22 | por fazer |
 | [UN-26](UN-26.md) | Pontes, torres e um evento de bioma | UN-22, UN-24, UN-25 | por fazer |
-| [UN-27](UN-27.md) | Lore e apresentação dos encontros | UN-09 a UN-17, UN-23, UN-24 | por fazer |
+| [UN-27](UN-27.md) | Lore e apresentação dos encontros | UN-09, UN-10, UN-11, UN-12, UN-13, UN-14, UN-15, UN-16, UN-17, UN-23, UN-24 | por fazer |
 | [UN-28](UN-28.md) | O primeiro ciclo e a acessibilidade | UN-04, UN-10, UN-14, UN-17, UN-18 | por fazer |
-| [UN-29](UN-29.md) | Coop local | UN-17 a UN-23 | por fazer |
+| [UN-29](UN-29.md) | Coop local | UN-17, UN-18, UN-19, UN-20, UN-21, UN-22, UN-23 | por fazer |
 | [UN-30](UN-30.md) | Dois reinos e a vitória | UN-22, UN-23, UN-29 | por fazer |
 | [UN-31](UN-31.md) | Spike e integração de rede | UN-29, UN-30 | por fazer |
 

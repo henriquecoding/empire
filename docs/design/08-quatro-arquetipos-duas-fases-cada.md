@@ -8,7 +8,7 @@ As classes são arquétipos, não personagens fixos. Cada povo tem a sua versão
 
 Numa campanha nova, o jogador escolhe o monarca que governará o seu reino: o Rei guerreiro defensivo, a Imperatriz Nia ou o Imperador Arqueiro. Cada escolha reúne identidade, combate, autoridade da coroa e um companheiro próprio. Todos podem contratar, construir, melhorar, decretar e explorar. A autoridade pertence ao titular da coroa, não ao nome da classe de combate nem ao porte do personagem. O tempo só começa a correr depois de confirmar. Pedido do dono de 02/10/2026; ADR 0052, que substitui a escolha de Monarca, Arqueiro e Bardo da ADR 0044.
 
-Tropas, ofícios, diplomatas e companheiros não recebem controle direto. O jogador pode trocar para outro imperador quando ele estiver desbloqueado e for encontrado vivo e disponível na campanha; o desbloqueio não teletransporta esse imperador. A troca preserva vida, ferimentos, progressão, moedas, flechas e companhia de cada pessoa, e não cria uma segunda coroa (Q-196).
+Tropas, ofícios, diplomatas e companheiros não recebem controle direto. O jogador pode trocar para outro imperador quando ele estiver desbloqueado e for encontrado vivo e disponível na campanha; o desbloqueio não teletransporta esse imperador. A troca preserva vida, ferimentos, progressão, moedas, flechas e companhia de cada pessoa. O que acontece ao governo numa troca está por decidir; a proposta da Q-196 é uma transferência atómica, sem segunda coroa.
 
 | Monarca | Combate | Companheiro | Evolução |
 | --- | --- | --- | --- |
@@ -27,7 +27,7 @@ Pedido do dono de 02/10/2026 — ADR 0052. A morte definitiva de um monarca sem 
 | Trepador | Ágil. Sobe a plataformas, ramos e pontes sem escadas — desenhado para a tua arquitetura vertical. | Sobe em criaturas enormes quase mortas e controla-as 20 s, usando-as como aríete. | Mobilidade, e a tua ideia mais espetacular. |
 
 
-Combate direto — ADR 0045. O corpo controlado ataca por botão: F, botão esquerdo do rato ou RB/R1. A habilidade é independente: R, botão direito ou RT/R2. A espada do Monarca, a flecha do Arqueiro e o golpe curto proposto do Bardo seguem a direção escolhida e o alcance da arma. Segurar ataque repete à cadência; tropas continuam automáticas. A marca não dispara uma flecha e o canto tem recarga própria. O Monarca usa a Vigília existente por esse atalho; a aura permanece passiva. Botões visíveis mostram ataque, habilidade e recuperação (Q-184).
+Combate direto — ADR 0045, ADR 0052. O monarca controlado ataca por botão: F, botão esquerdo do rato ou RB/R1. A habilidade é independente: R, botão direito ou RT/R2. A espada do Rei, o golpe curto e rápido da Nia e a flecha do Imperador Arqueiro seguem a direção escolhida e o alcance da arma. Segurar ataque repete à cadência; tropas, ofícios e companheiros continuam automáticos — o Bardo, a tropa ou a companhia da Nia, só canta por IA ou por ordem paga. A marca não dispara uma flecha e o canto tem recarga própria. O Rei usa a Vigília existente por esse atalho; a aura permanece passiva. Botões visíveis mostram ataque, habilidade e recuperação (Q-184).
 
 Subsolo delimitado — ADR 0046. O painel do ataque e da habilidade fica no canto de cima, à direita, por baixo do objetivo e acima do aviso e das legendas: no fundo do ecrã tapava o chão do subsolo (Q-186).
 
@@ -36,7 +36,7 @@ Subsolo delimitado — ADR 0046. O painel do ataque e da habilidade fica no cant
 | Classe | Gancho | Mecânica única |
 | --- | --- | --- |
 | Cavaleiro Enterrado | Armadura completa, aspeto sombrio, passado triste | Único personagem que se cura sozinho — sentando-se no chão. Sempre que o faz, nasce vegetação à volta que abranda A Podridão nessa faixa. Cura e terraformação são a mesma ação. |
-| Cavaleiro Selado | O elmo tapa-lhe os olhos desde que teve o coração partido; o cavalo vê pelos dois | Inseparável da montaria. Se o cavalo morre, fica cego: o alcance cai para corpo a corpo e o jogador perde visão periférica no ecrã até arranjar nova montaria (§24). |
+| Cavaleiro Selado | O elmo tapa-lhe os olhos desde que teve o coração partido; o cavalo vê pelos dois | Inseparável da montaria. Se o cavalo morre, fica cego: o alcance cai para corpo a corpo até arranjar nova montaria. É tropa sob IA (ADR 0052): a vinheta de cegueira do §24 era do corpo jogável e não se aplica. |
 | Diplomata | Negociador do reino | Ver §14. Não combate. |
 | Companheiro | A criatura verde ao lado do trono — o teu Healing Frog.aseprite | Não é súbdito nem obedece a ouro — segue quem o alimentar. Ver caixa abaixo. |
 

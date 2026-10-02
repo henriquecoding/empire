@@ -1747,7 +1747,7 @@
    "docs/design/44-os-recursos-com-todos-os-campos.md"
   ],
   "depende": "UN-00",
-  "feito": "Tabela de monarcas no pipeline CSV → .tres, validada pelo csv_to_tres e pelo content_report; IDs canónicos na NAMING_BIBLE; o `monarch` continua a ser o Rei, e Nia e o Arqueiro imperial têm IDs próprios",
+  "feito": "Tabela de monarcas no pipeline CSV → .tres, validada pelo csv_to_tres e pelo content_report; IDs canónicos na NAMING_BIBLE; o `monarch` continua a ser o Rei; Nia, o Arqueiro imperial e os companheiros novos já com uma unidade mínima nos dados (os números de bancada ficam em _proposed e afinam-se no UN-09 e no UN-13), para o UN-04 poder pôr qualquer dupla em campo",
   "fora": "Renomear archer_hero ou bard_hero por alias; o companions.csv já é a mascote (§08) e não muda de sentido.",
   "estado": "por fazer",
   "horas": "—"
@@ -1777,7 +1777,7 @@
    "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
   ],
   "depende": "UN-02",
-  "feito": "Um companheiro por pessoa, por ID, gravado no save; perda e cargas preservadas; o companheiro segue o patrono e não a câmara; morto fica perdido até reposição paga",
+  "feito": "Um companheiro por pessoa, por ID, gravado no save; cargas preservadas; o companheiro segue o patrono e não a câmara; um companheiro morto fica marcado como perdido (a reposição é a proposta da Q-205, por aprovar)",
   "fora": "A mascote do trono, que é outro sistema.",
   "estado": "por fazer",
   "horas": "—"
@@ -1838,7 +1838,7 @@
    "docs/design/16-morte-ressurreicao-e-derrota.md"
   ],
   "depende": "UN-02, UN-03",
-  "feito": "Os três perfis caem, deixam a coroa recuperável e morrem de vez da mesma maneira; o herdeiro nasce com o perfil do titular, nome próprio e o vínculo do companheiro sobrevivente; sem sucessor válido, a campanha acaba",
+  "feito": "Os três perfis caem, deixam a coroa recuperável e morrem de vez da mesma maneira; o herdeiro tem nome próprio e herda o vínculo do companheiro sobrevivente; sem sucessor válido, a campanha acaba. Perfil e força do herdeiro: a opção mais simples e reversível da Q-202 (segue o perfil de quem reinava), marcada como proposta até à decisão",
   "fora": "Escolher outro arquétipo para o herdeiro (Q-202).",
   "estado": "por fazer",
   "horas": "—"
@@ -2131,7 +2131,7 @@
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
    "docs/design/17-segredos-lore-e-o-teu-tutorial-invisivel.md"
   ],
-  "depende": "UN-09 a UN-17, UN-23, UN-24",
+  "depende": "UN-09, UN-10, UN-11, UN-12, UN-13, UN-14, UN-15, UN-16, UN-17, UN-23, UN-24",
   "feito": "História, bandeira e identidade persistem; o Bardo morto não canta em cena; a sucessora não se chama Nia",
   "fora": "Editar art/ ou audio/.",
   "estado": "por fazer",
@@ -2160,7 +2160,7 @@
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
    "docs/design/18-dois-modos-ambos-na-fase-8.md"
   ],
-  "depende": "UN-17 a UN-23",
+  "depende": "UN-17, UN-18, UN-19, UN-20, UN-21, UN-22, UN-23",
   "feito": "Dois imperadores com recursos, decretos e morte corretos; pessoa nunca controlada pelos dois",
   "fora": "Rede (UN-31).",
   "estado": "por fazer",

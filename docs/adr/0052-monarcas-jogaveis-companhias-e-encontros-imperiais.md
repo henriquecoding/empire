@@ -64,7 +64,7 @@ A matriz MU-01 a MU-28 do plano é o registo completo. As substituições que mu
 | Jogáveis com recursos de batalha ilimitados (Q-163) | O Arqueiro imperial gasta flechas pagas; a aljava das tropas e a banca do arco continuam |
 | Escudeiro identificado pela tag `collects_coins` (ClassSystem) | Vínculo explícito entre o monarca e o companheiro |
 | A habilidade de quem é rei é sempre a Vigília (ADR 0045) | A habilidade depende do perfil; os decretos continuam pela coroa |
-| O sucessor nasce sempre de `units/monarch` | O sucessor usa o perfil do titular, com identidade própria |
+| O sucessor nasce sempre de `units/monarch` | O sucessor tem identidade própria; o perfil do titular é a proposta da Q-202 |
 | Sem herdeiro: interregno de três dias (§16) | Sem sucessor válido, a morte definitiva encerra a campanha ativa |
 | Diplomata exige duas Sementes Reais para o acesso básico | Básico contratável em qualquer império; evolução continua a pedir progresso |
 | Verbo 2 assume uma tropa de classe (Q-162, §08) | Não há troca com tropa; o Verbo 2 só troca com imperador elegível presente |

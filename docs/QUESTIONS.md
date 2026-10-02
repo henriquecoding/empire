@@ -12,7 +12,7 @@
 > Plano-fonte: `docs/recovery/PLANO-MONARCAS-2026-10-02.md`. A Q-195 regista as tuas direções (D); as Q-196 a Q-205 são
 > as propostas (P) do plano que precisam da tua decisão ou de medição. Nenhuma P entra no painel como resposta tua.
 
-### Q-195 · O que o dono decidiu: três monarcas, só imperadores controláveis, flechas pagas
+### Q-195 · Resolvida — o que o dono decidiu: três monarcas, só imperadores controláveis, flechas pagas
 - **Pedido do dono (02/10/2026):** unificar a escolha inicial e a identidade do governante — começar como **Rei**
   guerreiro defensivo (gordo, lento, ataque curto, escudeiro pago), **Imperatriz Nia** (mulher negra, pequena, rápida,
   pouco dano por golpe e alta cadência; inspiração de ritmo na Berserker e de trajetória em Joana d'Arc; um Bardo com a
@@ -31,6 +31,7 @@
 - **Onde:** §08, §09, §13, §14, §15, §16, §18, §24, §99. Execução em `docs/backlog/UN-00.md` a `UN-31.md`.
 - **Estado:** decidido. A execução segue por fases (ADR 0052); o painel só passa a «aplicada» por fase, depois de
   merge e publicação.
+- **Decide:** já decidido por ti (02/10/2026); a execução segue por fases, UN-01 em diante.
 
 ### Q-196 · A troca imperial transfere o governo, ou só o controlo?
 - **Onde:** plano §7.5; ADR 0052; UN-17.
@@ -45,8 +46,7 @@
 - **Onde:** plano §7.6, §9.3; UN-07, UN-16.
 - **Proposta (P):** só quando designado e preparado antes da morte. Sem preparação, aparecer no desbloqueio global não
   o torna herdeiro — preparar continuidade continua a importar.
-- **Decide:** tu, se preferes que qualquer imperador aliado encontrado seja continuidade automática (isso substitui a
-  regra de morte sem sucessor).
+- **Decide:** tu, se preferes que qualquer imperador aliado encontrado seja continuidade automática (substitui a regra de morte sem sucessor).
 
 ### Q-198 · Os números de bancada de Nia e do Imperador Arqueiro
 - **Onde:** plano §4.4; `units.csv` (`_proposed`); UN-09, UN-13.
@@ -74,7 +74,8 @@
 - **Sem flechas (P):** o imperador governa, recua, contrata e troca; pode usar um golpe de emergência fraco, sem
   sangramento.
 - **Nome:** o teu pedido diz «escudeiro do Arqueiro»; o plano propôs «intendente de flechas» como nome de função
-  provisório. **Decide:** tu, o nome e os três números.
+  provisório.
+- **Decide:** tu, o nome e os três números.
 
 ### Q-201 · O sangramento
 - **Onde:** plano §14.2–§14.4; UN-15.
@@ -120,6 +121,16 @@
   fica fora da unificação; a **reserva doméstica** (soldo e treino com o monarca longe) pede um tesouro local
   explícito (UN-19).
 - **Decide:** tu, por linha.
+
+### Q-206 · O imperador que não reina, e morre
+- **Onde:** plano §7.5, §9.5, §10.4; §16; UN-16, UN-17. Apontado na revisão do PR do contrato (ADR 0052).
+- **O que falta:** depois de uma troca (UN-17), o imperador anterior fica vivo sob IA, sem a coroa. Se morrer, a regra do
+  §16 só cobre tropas, companheiros e o monarca que reina: não diz se essa pessoa se pode ressuscitar no Santuário,
+  se continua disponível para trocas ou para sucessão, ou se sai da campanha para sempre.
+- **Proposta (P):** é uma pessoa como as outras — cai, fica no mapa até à alvorada e pode ser levada ao Santuário pelo
+  ritual do §16 (3 Sementes ou 120 moedas, perde uma fase); morta de vez, sai do roster de encontrados e não volta por
+  desbloqueio. A morte dele não é derrota enquanto a coroa tiver continuidade.
+- **Decide:** tu, antes do UN-16.
 
 ## O CORRER no toque e as obras que se vêem — 02/10/2026 (UX-04, ADR 0051)
 

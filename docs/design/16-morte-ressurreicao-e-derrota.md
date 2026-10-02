@@ -3,10 +3,10 @@
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
 - **Morte de tropa** — Permanente. Larga a arma (recolhível pelo Ferreiro n2) e as moedas que carregava.
-- **Morte de tropa ou companheiro** — Cai e fica no mapa até ao amanhecer. Nenhuma tropa se assume para o substituir: só imperadores se jogam (ADR 0052). O companheiro de um monarca repõe-se com custo, sem cargas grátis.
+- **Morte de tropa ou companheiro** — Cai e fica no mapa até ao amanhecer. Nenhuma tropa se assume para o substituir: só imperadores se jogam (ADR 0052). Se e como o companheiro de um monarca se repõe está por decidir (Q-205); um imperador que não reina e morre, na Q-206.
 - **Ressurreição** — Levar o corpo ao Santuário das Raízes antes do amanhecer. Custa 3 Sementes Reais ou 120 moedas. O ressuscitado perde uma fase de evolução.
 - **Queda do monarca** — A vida chega a zero e a coroa fica no chão, recuperável até à alvorada (Q-167). Não é morte definitiva. Ninguém assume uma tropa para a ir buscar.
-- **Morte do monarca** — Coroa roubada ou consumida. Se houver sucessor pronto e a sede de pé, o jogador pode continuar: ele é coroado ao amanhecer, com o perfil do monarca que reinava (ADR 0052). Sem sucessor válido, a campanha ativa acaba — não há interregno automático.
+- **Morte do monarca** — Coroa roubada ou consumida. Se houver sucessor pronto e a sede de pé, o jogador pode continuar: ele é coroado ao amanhecer (ADR 0052; o perfil do herdeiro é a proposta da Q-202). Sem sucessor válido, a campanha ativa acaba — não há interregno automático.
 - **Derrota** — A sede caiu, ou a coroa acabou sem continuidade válida. O legado do decay continua; «Recomeçar do zero» é outro fluxo (Q-164).
 
 > **Decay em vez de reset**
