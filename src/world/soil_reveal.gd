@@ -13,6 +13,9 @@ extends RefCounted
 
 ## Quanto leva a terra a ir-se (ou a voltar), em segundos de ecra.
 const SEGUNDOS := 0.45
+## A orla da janela de um sitio (Q-186): quanto a terra leva a voltar a fechar-se para la
+## das paredes dele, em px de mundo.
+const ORLA_PX := 48.0
 ## A matriz de Bayer 4x4, por linhas: a ordem em que cada quadrado se vai.
 const BAYER := [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5]
 const LADO := 4
@@ -50,6 +53,13 @@ static func wants_open(unidades: UnitSystem, rei: int) -> bool:
 	if i == UnitSystem.NENHUM or not unidades.alive(i):
 		return false
 	return int(unidades.bands[i]) == int(Band.Kind.UNDERGROUND)
+
+
+## A janela do dither_reveal por cima de um sitio do subsolo (Q-186, ADR 0046): o meio,
+## a largura (aberta de parede a parede), a orla e a forca, que e o progresso — a terra
+## vai-se so ali, ao mesmo ritmo, e o resto continua paisagem.
+static func site_window(sitio: Vector2, aberto: float) -> Vector4:
+	return Vector4((sitio.x + sitio.y) * MEIO, sitio.y - sitio.x, ORLA_PX, aberto)
 
 
 ## Os limiares da matriz, por linhas, entre 0 e 1 (exclusive).

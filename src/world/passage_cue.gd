@@ -47,7 +47,10 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, tempo: float) -> void:
 	var para := Verbs.destination(SimLoop.units, Assume.driven(), abertas)
 	if para == Verbs.NENHUMA:
 		return
-	var x := nearest(SimLoop.units.xs[i], SimLoop.passages)
+	var bocas := SimLoop.passages.duplicate()
+	if SimLoop.field != null:  # as ruinas e o alcapao do castelo (Q-173, Q-186)
+		bocas.append_array(UnderWatch.mouths(SimLoop.field))
+	var x := nearest(SimLoop.units.xs[i], bocas)
 	var centro := Vector2(x, WorldPalette.ground_of(int(faixa)) - ACIMA)
 	var cor := COR
 	cor.a = lerpf(MINIMO, 1.0, MEIA + MEIA * sin(tempo * PULSO_RAD_S))

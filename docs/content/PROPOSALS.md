@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 583 | 292 | 875 |
-| Fases 3–8 | 331 | 97 | 428 |
-| Total | 914 | 389 | 1303 |
+| Fases 3–8 | 334 | 97 | 431 |
+| Total | 917 | 389 | 1306 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -897,7 +897,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 
-## 3 · Fases 3 a 8 — 428
+## 3 · Fases 3 a 8 — 431
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1284,6 +1284,9 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | rules | `realm_guard_price` | `realm_guard_price` | 3 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
 | rules | `realm_night_share` | `realm_night_share` | 0.5 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
 | rules | `realm_night_cap` | `realm_night_cap` | 6 | 9 | Valor de trabalho ajustável; a regra foi aprovada, este número é uma proposta. |
+| rules | `und_room_min_px` | `und_room_min_px` | 120 | 9 | A sala mais estreita de um subsolo, em px: a largura do poço de minério (120), para que uma sala se leia como sala e não como corredor. |
+| rules | `und_room_max_px` | `und_room_max_px` | 240 | 9 | A sala mais larga: metade do núcleo (480). Duas salas destas seguidas já são um ecrã de subsolo. |
+| rules | `und_extra_rooms` | `und_extra_rooms` | 3 | 9 | Quantas salas um subsolo pode ter a mais do que as que precisa para cobrir o que lá está, sorteadas de 0 a este número na primeira descida. O tecto do sítio (os muros, o castelo, o segmento) corta antes, se for preciso. |
 | economy_profiles | `two_routes` | `expect_suffocation` | 14\|16 | 6 | O modelo dá o dia 15 (11 + 4). O intervalo ±1 é proposta. |
 | mounts | `dragonfly_mount` | `obtain_ref` | bruma | 6 | A «Fortaleza do pântano» do §12 é do povo do pântano, o Bruma (Q-013, decidida pelo dono a 28/09/2026: «quero que haja também a população do pântano»). Antes disso a proposta era a Horta. |
 | impulses | `forced_harvest` | `coin_cost` | 3 | 6 | Preço base (Q-014, o sistema de preço pedido pelo dono a 28/09/2026): Rende ×1,8 hoje e as plantações param amanhã. A 4 moedas, medido com as condições reais (a ganância, o preço do dia e as fases que faltam), devolvia 0,83 por moeda paga em qualquer dia, e nunca compensava (Q-158); a 3 devolve perto de 1,1 com três fontes, e mais com mais fontes (tests/colheita_forcada_test.gd). O preço de cada dia é esta base a crescer com a produção (income_growth), a metade para o tirano (§15) e ×impulse_repeat_mult se o mesmo decreto saiu há menos de impulse_repeat_days dias. |

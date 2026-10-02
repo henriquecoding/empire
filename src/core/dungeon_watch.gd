@@ -7,7 +7,10 @@ const WIDTH := 64.0
 
 static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void:
 	var entry := field.wilds.at(side, k)
-	if int(entry.get(WildSegments.PASSAGEM, 0)) <= 0 or entry.get(&"deserted", false):
+	if int(entry.get(WildSegments.PASSAGEM, 0)) <= 0:
+		return
+	UnderWatch.author_dungeon(field, side, k)  # a masmorra e um sitio, e acaba (Q-186)
+	if entry.get(&"deserted", false):
 		return
 	var x := field.wilds.subject_x(side, k, SimLoop.world_width)
 	if not entry.has(&"dungeon"):

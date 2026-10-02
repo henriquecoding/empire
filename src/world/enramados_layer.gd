@@ -33,7 +33,7 @@ const RIDGE := [0, 374, 140, 350, 252, 361, 396, 322, 528, 348, 664, 329, 804, 3
 @export_range(0, LAST_PLANE) var plane := 0
 var _clock: ClockData
 var _art := OriginalArt.new()
-var _revisao := -1  # das terras geradas (Q-173): quando muda, redesenha-se
+var _revisao := Vector2i(-1, -1)  # das terras (Q-173) e dos sitios do subsolo (Q-186)
 
 
 func _ready() -> void:
@@ -47,9 +47,11 @@ func _process(_delta: float) -> void:
 		return
 	var clock := ClockService.clock
 	modulate = BandLight.ambient(_clock, int(clock.current_phase()), clock.phase_progress())
-	if SimLoop.field != null and SimLoop.field.wilds.revision != _revisao:
-		_revisao = SimLoop.field.wilds.revision
-		queue_redraw()
+	if SimLoop.field != null:
+		var revisao := Vector2i(SimLoop.field.wilds.revision, SimLoop.field.under.revision)
+		if revisao != _revisao:
+			_revisao = revisao
+			queue_redraw()
 
 
 func _draw() -> void:
@@ -145,3 +147,4 @@ func _underground() -> void:
 	RootCellars.draw(self, WIDTH)
 	if SimLoop.field != null:
 		WildGround.draw_underground(self, SimLoop.field.wilds, SimLoop.world_width)
+		UnderArt.draw(self, SimLoop.field.under)  # so onde ha sitio, e acaba (Q-186)

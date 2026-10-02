@@ -80,6 +80,8 @@ func _pousar_o_rei(args: Dictionary) -> void:
 	_preparacao.append("rei posto em x=%d" % int(x))
 	if FAIXAS.has(args.get("faixa")):
 		SimLoop.units.bands[i] = FAIXAS[args["faixa"]]
+		if FAIXAS[args["faixa"]] == Band.Kind.UNDERGROUND:
+			UnderWatch.enter(x, INF)  # o sitio da boca mais perto nasce (Q-186)
 		_preparacao.append("rei posto na faixa %s" % args["faixa"])
 	SimLoop.units.clear_target(SimLoop.king_id)
 	# A camara segue com atraso e antecipa na direccao do salto; uma fotografia

@@ -1,14 +1,14 @@
 # src/world/root_cellars.gd — o corte do subsolo dos Enramados (§11, §25 10:00).
 #
-# "A terra dissolve-se" e por baixo ha um lugar, e nao uma faixa escura com
-# pilares a intervalos iguais. O que se le aqui, da esquerda para a direita:
-# abobadas de larguras diferentes, as raizes do castelo-arvore a descer no meio,
-# escoras de madeira e uma lanterna em cada passagem (onde se desce, §11), arcos
-# de pedra antiga meio enterrados (os segredos do §17), lume de cogumelos, e a
-# rocha de baixo em estratos.
+# "A maior parte do corte e terra" (§11), e o dono a 02/10/2026: "o subsolo nao e
+# infinito acompanhando o piso de cima, e sempre algo delimitado" (Q-186, ADR 0046).
+# Por isso a regiao, por baixo, e terra maciça: as raizes do castelo-arvore a descer no
+# meio, arcos de pedra antiga meio enterrados (os segredos do §17) e a rocha de baixo
+# em estratos. As salas so existem onde ha um sitio (UndergroundSites), e quem as
+# escava e a UnderArt, com as pecas daqui: a abobada, o pilar, o chao, a escora e o
+# lume de cogumelos.
 #
-# Coordenadas de mundo, como o resto do segmento autorado. O nucleo e as
-# passagens vem do Greybox, para o desenho nao divergir do sitio onde se desce.
+# Coordenadas de mundo, como o resto do segmento autorado.
 class_name RootCellars
 extends RefCounted
 
@@ -36,9 +36,10 @@ const FLOOR_Y := 620.0
 const BOTTOM := 720.0
 const HALF := 0.5
 
-## Larguras das abobadas, em ciclo. Diferentes de proposito: um ritmo igual le-se
-## como grelha, e a grelha era o defeito (captura de 26/09).
-const VAULTS := [236.0, 172.0, 290.0, 204.0, 150.0, 262.0, 188.0]
+## A terra maciça e os torroes dela: de quantos em quantos px, o ciclo e o tamanho.
+const EARTH := Color("4a3b29")
+const CLOD := Color("3e3222")
+const CLODS := {"passo": 53.0, "ciclo": 7, "w": 9.0, "h": 4.0, "alto": 11.0}
 const VAULT_RISE := 30.0
 const VAULT_POINTS := 10
 ## As pedras da parede do fundo, em cada abobada: onde (fraccao da largura e px
@@ -68,8 +69,7 @@ const SHORING := {"meia": 34.0, "poste": 8.0, "verga": 10.0, "lanterna": 5.0, "h
 const RUINS := [-1500.0, 1380.0]
 const RUIN := {"meia": 30.0, "alto": 62.0, "traco": 6.0, "chave": 9.0}
 
-## Os cogumelos que dao o lume da cave, em px a contar do nucleo.
-const SHROOMS := [-1720.0, -1180.0, -640.0, -310.0, 420.0, 760.0, 1190.0, 1650.0]
+## O cogumelo que da o lume da cave.
 const CAP := {"raio": 4.0, "haste": 5.0, "irmao": 7.0, "halo": 18.0}
 
 ## O chao da cave e as pedras soltas nele: de quantos em quantos px, e o salto.
@@ -81,51 +81,39 @@ const STRATA_WAVE := {"passo": 64.0, "alto": 4.0}
 
 static func draw(canvas: CanvasItem, width: float) -> void:
 	var core := width * HALF
-	canvas.draw_rect(Rect2(0.0, TOP, width, FLOOR_Y - TOP), WALL_FAR)
-	_vaults(canvas, width)
+	canvas.draw_rect(Rect2(0.0, TOP, width, FLOOR_Y - TOP), EARTH)
+	_clods(canvas, width)
 	for x in RUINS:
 		_ruin(canvas, core + x)
 	_core_roots(canvas, core)
 	_stray_roots(canvas)
-	for x in SHROOMS:
-		_shroom(canvas, core + x)
-	for x in Greybox.PASSAGENS_X:
-		_shoring(canvas, core + x)
-	canvas.draw_rect(Rect2(0.0, FLOOR_Y - WARM_H, width, WARM_H), WARM)
-	_floor(canvas, width)
-	_bedrock(canvas, width)
-	TemporaryScenery.ground(canvas, 0.0, width, FLOOR_Y, true)
+	bedrock(canvas, Vector2(0.0, width))
 
 
-## As abobadas: a parede do fundo com arcos, e um pilar de pedra entre cada duas.
-static func _vaults(canvas: CanvasItem, width: float) -> void:
-	var x := 0.0
-	var k := 0
-	while x < width:
-		var w := minf(VAULTS[k % VAULTS.size()], width - x)  # a ultima acaba no bordo
-		var arco := PackedVector2Array([Vector2(x, FLOOR_Y)])
-		for p in VAULT_POINTS + 1:
-			var t := float(p) / VAULT_POINTS
-			var y := TOP + VAULT_RISE * (1.0 - sin(t * PI))
-			arco.append(Vector2(x + w * t, y))
-		arco.append(Vector2(x + w, FLOOR_Y))
-		canvas.draw_colored_polygon(arco, WALL)
-		for s in range(0, STONES.size(), STONE_FIELDS):
-			var pedra := Rect2(
-				x + w * float(STONES[s]),
-				FLOOR_Y - float(STONES[s + 1]),
-				STONES[s + 2],
-				STONES[s + STONE_H]
-			)
-			canvas.draw_rect(pedra, STONE_WALL)
-		canvas.draw_polyline(arco.slice(1, arco.size() - 1), VAULT, PILLAR.edge)
-		_pillar(canvas, x)
-		x += w
-		k += 1
-	_pillar(canvas, width)  # e fecha num pilar: dali para fora e o tunel (Q-173)
+## Uma sala escavada de `a` a `b`: a parede do fundo com o arco da abobada e as pedras.
+## A UnderArt chama-a por sala; `wall` e `edge` sao as cores do sitio (porao ou masmorra).
+static func vault(canvas: CanvasItem, a: float, b: float, wall: Color, edge: Color) -> void:
+	var w := b - a
+	canvas.draw_rect(Rect2(a, TOP, w, FLOOR_Y - TOP), WALL_FAR)
+	var arco := PackedVector2Array([Vector2(a, FLOOR_Y)])
+	for p in VAULT_POINTS + 1:
+		var t := float(p) / VAULT_POINTS
+		arco.append(Vector2(a + w * t, TOP + VAULT_RISE * (1.0 - sin(t * PI))))
+	arco.append(Vector2(b, FLOOR_Y))
+	canvas.draw_colored_polygon(arco, wall)
+	for s in range(0, STONES.size(), STONE_FIELDS):
+		var pedra := Rect2(
+			a + w * float(STONES[s]),
+			FLOOR_Y - float(STONES[s + 1]),
+			STONES[s + 2],
+			STONES[s + STONE_H]
+		)
+		canvas.draw_rect(pedra, STONE_WALL)
+	canvas.draw_polyline(arco.slice(1, arco.size() - 1), edge, PILLAR.edge)
 
 
-static func _pillar(canvas: CanvasItem, x: float) -> void:
+## O pilar de pedra entre duas salas, ou na boca de uma.
+static func pillar(canvas: CanvasItem, x: float) -> void:
 	var corpo := Rect2(x - PILLAR.w * HALF, TOP, PILLAR.w, FLOOR_Y - TOP)
 	canvas.draw_rect(corpo, ROCK)
 	canvas.draw_rect(Rect2(corpo.position, Vector2(PILLAR.edge, corpo.size.y)), ROCK_LIGHT)
@@ -164,7 +152,7 @@ static func _stray_roots(canvas: CanvasItem) -> void:
 
 
 ## Uma escora de mina a volta da passagem, e a lanterna que a mostra de longe.
-static func _shoring(canvas: CanvasItem, x: float) -> void:
+static func shoring(canvas: CanvasItem, x: float) -> void:
 	var meia: float = SHORING.meia
 	for lado in SIDES:
 		var poste := Rect2(
@@ -200,7 +188,8 @@ static func _ruin(canvas: CanvasItem, x: float) -> void:
 	)
 
 
-static func _shroom(canvas: CanvasItem, x: float) -> void:
+## Um par de cogumelos com o lume deles, no chao de uma sala.
+static func shroom(canvas: CanvasItem, x: float) -> void:
 	var pe := Vector2(x, FLOOR_Y)
 	canvas.draw_circle(pe - Vector2(0.0, CAP.haste), CAP.halo, SHROOM_GLOW)
 	for dx in [0.0, CAP.irmao]:
@@ -209,12 +198,14 @@ static func _shroom(canvas: CanvasItem, x: float) -> void:
 		canvas.draw_circle(chapeu, CAP.raio, SHROOM)
 
 
-## O chao onde se anda, com pedra solta: e a linha que as tropas pisam (§11).
-static func _floor(canvas: CanvasItem, width: float) -> void:
-	canvas.draw_rect(Rect2(0.0, FLOOR_Y - FLOOR_H * HALF, width, FLOOR_H), FLOOR)
-	var x := 0.0
+## O chao de uma sala, de `a` a `b`, com o lume a aquece-lo e pedra solta: e a linha
+## que se pisa la em baixo (§11).
+static func floor_strip(canvas: CanvasItem, a: float, b: float) -> void:
+	canvas.draw_rect(Rect2(a, FLOOR_Y - WARM_H, b - a, WARM_H), WARM)
+	canvas.draw_rect(Rect2(a, FLOOR_Y - FLOOR_H * HALF, b - a, FLOOR_H), FLOOR)
+	var x := a
 	var k := 0
-	while x < width:
+	while x < b - PEBBLES.w:
 		var y := FLOOR_Y + float(k % PEBBLES.ciclo) * PEBBLES.alto
 		canvas.draw_rect(Rect2(x, y, PEBBLES.w, PEBBLES.h), PEBBLE)
 		x += PEBBLES.passo + float(k % PEBBLES.ciclo) * PEBBLES.w
@@ -222,17 +213,29 @@ static func _floor(canvas: CanvasItem, width: float) -> void:
 
 
 ## A rocha de baixo, em estratos com onda — e o fundo que diz que isto e fundo.
-static func _bedrock(canvas: CanvasItem, width: float) -> void:
+static func bedrock(canvas: CanvasItem, span: Vector2) -> void:
 	var y := FLOOR_Y + FLOOR_H * HALF
 	for i in STRATA.size():
 		var h: float = STRATA_H[i] if i < STRATA_H.size() - 1 else BOTTOM - y
-		canvas.draw_rect(Rect2(0.0, y, width, h), STRATA[i])
+		canvas.draw_rect(Rect2(span.x, y, span.y - span.x, h), STRATA[i])
 		var onda := PackedVector2Array()
-		var x := 0.0
+		var x := span.x
 		var k := 0
-		while x <= width:
+		while x <= span.y:
 			onda.append(Vector2(x, y + float(k % 2) * STRATA_WAVE.alto))
 			x += STRATA_WAVE.passo
 			k += 1
 		canvas.draw_polyline(onda, ROCK, 1.0)
 		y += h
+
+
+## Os torroes da terra maciça: e o que a faz ler-se como terra e nao como uma parede.
+static func _clods(canvas: CanvasItem, width: float) -> void:
+	var x := 0.0
+	var k := 0
+	while x < width:
+		var ciclo: int = CLODS.ciclo
+		var y := TOP + CLODS.alto * float(1 + k % ciclo)
+		canvas.draw_rect(Rect2(x, y, CLODS.w, CLODS.h), CLOD)
+		x += CLODS.passo + float(k % ciclo) * CLODS.w
+		k += 1

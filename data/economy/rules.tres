@@ -40,3 +40,6 @@ realm_guard_wage = 0.3
 realm_guard_price = 3
 realm_night_share = 0.5
 realm_night_cap = 6
+und_room_min_px = 120.0
+und_room_max_px = 240.0
+und_extra_rooms = 3

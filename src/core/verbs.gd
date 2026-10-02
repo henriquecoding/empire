@@ -86,7 +86,7 @@ static func _assumir(
 		var i := unidades.index_of(quem)
 		if campo != null and unidades.bands[i] == Band.Kind.UNDERGROUND:
 			var mouths := passagens.duplicate()
-			mouths.append_array(campo.wilds.dungeons(SimLoop.world_width))
+			mouths.append_array(UnderWatch.mouths(campo))  # as ruinas e o alcapao
 			for mouth in mouths:
 				if Passages.near(unidades.xs[i], PackedFloat32Array([mouth])):
 					campo.underground_sight.visit(mouth)
@@ -149,6 +149,8 @@ static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32A
 	var i := unidades.index_of(king_id)
 	var de := int(unidades.bands[i])
 	unidades.bands[i] = para
+	if para == int(Band.Kind.UNDERGROUND):
+		UnderWatch.enter(unidades.xs[i])  # o sitio nasce na primeira descida (Q-186)
 	EventBus.queue(&"passage_used", [king_id, de, para])
 	return true
 

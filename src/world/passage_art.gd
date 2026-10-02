@@ -2,12 +2,15 @@
 #
 # Com a terra por cima do corte de solo (SoilCover), ve-se so a boca: a moldura e os
 # primeiros degraus a descer para o escuro. Com o rei la em baixo o poco abre ate ao
-# chao do subsolo, ao ritmo da terra a ir-se (ADR 0039).
+# chao do subsolo, ao ritmo da terra a ir-se (ADR 0039) — e so o do sitio onde ele esta
+# (Q-186). O alcapao da sala secreta do castelo so se ve depois de achado: ate la, e o
+# sinal do Verbo 2 (PassageCue) que o denuncia a quem passa por cima.
 class_name PassageArt
 extends RefCounted
 
 const SIDES := [-1.0, 1.0]
 const WIDTH := 28.0
+const HATCH_WIDTH := 18.0
 const HALF := 0.5
 const RUNG := 8
 const RAIL := 3.0
@@ -19,21 +22,28 @@ const FRAME := Color("716143")
 
 
 static func draw_on(canvas: CanvasItem, light: Lighting) -> void:
-	var top := WorldPalette.ground_of(int(Band.Kind.SURFACE))
-	var fundo := bottom(SoilCover.opened())
 	for x in SimLoop.passages:
-		var rect := Rect2(x - WIDTH * HALF, top, WIDTH, fundo - top)
-		canvas.draw_rect(rect.grow(RAIL), light.body(FRAME, x))
-		canvas.draw_rect(rect, light.body(SHAFT, x))
-		for side in SIDES:
-			var rail_x: float = x + side * (WIDTH * HALF - RAIL)
-			canvas.draw_line(
-				Vector2(rail_x, top), Vector2(rail_x, fundo), light.body(WOOD, x), RAIL
-			)
-		for y in range(int(top), int(fundo), RUNG):
-			canvas.draw_line(
-				Vector2(rect.position.x, y), Vector2(rect.end.x, y), light.body(WOOD, x), RAIL
-			)
+		_shaft(canvas, light, x, WIDTH)
+	if SimLoop.field == null:
+		return
+	for x in SimLoop.field.under.hatches():
+		if SimLoop.field.underground_sight.visited.has(x):
+			_shaft(canvas, light, x, HATCH_WIDTH)
+
+
+static func _shaft(canvas: CanvasItem, light: Lighting, x: float, largura: float) -> void:
+	var top := WorldPalette.ground_of(int(Band.Kind.SURFACE))
+	var fundo := bottom(SoilCover.opened_at(x))
+	var rect := Rect2(x - largura * HALF, top, largura, fundo - top)
+	canvas.draw_rect(rect.grow(RAIL), light.body(FRAME, x))
+	canvas.draw_rect(rect, light.body(SHAFT, x))
+	for side in SIDES:
+		var rail_x: float = x + side * (largura * HALF - RAIL)
+		canvas.draw_line(Vector2(rail_x, top), Vector2(rail_x, fundo), light.body(WOOD, x), RAIL)
+	for y in range(int(top), int(fundo), RUNG):
+		canvas.draw_line(
+			Vector2(rect.position.x, y), Vector2(rect.end.x, y), light.body(WOOD, x), RAIL
+		)
 
 
 ## Ate onde desce o poco: a boca com a terra por cima (`aberto` 0), o chao do subsolo

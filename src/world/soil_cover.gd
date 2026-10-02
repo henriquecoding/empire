@@ -51,6 +51,16 @@ static func opened() -> float:
 	return _aberto
 
 
+## Quanto o corte de solo se ve neste x: o de todo o lado, ou o de uma janela que o
+## apanhe (o sitio onde o rei esta, uma boca visitada, Q-182, Q-186).
+static func opened_at(x: float) -> float:
+	var aberto := _aberto
+	for window in _windows:
+		if absf(x - window.x) <= window.y * BuildSystem.METADE:
+			aberto = maxf(aberto, window.w if window.w > 0.0 else 1.0)
+	return aberto
+
+
 ## Se o que esta nesta faixa esta tapado pela terra: so o subsolo, e so fechado de todo.
 static func covers(faixa: int, x := INF) -> bool:
 	for window in _windows:
@@ -80,21 +90,24 @@ func _process(delta: float) -> void:
 	if SimLoop.state == null or SimLoop.units == null:
 		return
 	_revelar.step(delta, SoilReveal.wants_open(SimLoop.units, Assume.driven()))
-	_aberto = _revelar.progress
-	_dither.set_shader_parameter(&"progress", _aberto)
 	var player := SimLoop.units.index_of(Assume.driven())
+	var sitio := _sitio(player)
+	_aberto = _revelar.progress if is_nan(sitio.x) else 0.0  # so ali, se ha sitio (Q-186)
+	_dither.set_shader_parameter(&"progress", _aberto)
 	if SimLoop.field != null and player >= 0:
 		var mouths := Passages.open(SimLoop.passages, SimLoop.builds)
-		mouths.append_array(SimLoop.field.wilds.dungeons(SimLoop.world_width))
+		mouths.append_array(UnderWatch.mouths(SimLoop.field))
 		_windows = SimLoop.field.underground_sight.windows(
 			mouths, SimLoop.creatures, SimLoop.units.xs[player], RulesFactory.rules()
 		)
+		if not is_nan(sitio.x) and _revelar.progress > 0.0:
+			_windows.insert(0, SoilReveal.site_window(sitio, _revelar.progress))
 		_windows = _windows.slice(0, MAX_WINDOWS)
 		_dither.set_shader_parameter(&"window_count", _windows.size())
 		var padded := _windows.duplicate()
 		padded.resize(MAX_WINDOWS)
 		_dither.set_shader_parameter(&"windows", padded)
-	visible = not _revelar.open()
+	visible = _aberto < 1.0
 	var revisao := SimLoop.field.wilds.revision if SimLoop.field != null else -1
 	var mundo := [RngService.world_seed(), SimLoop.state.region, SimLoop.world_width]
 	var chave := [mundo, Wilds.biome_now(), revisao]
@@ -104,6 +117,18 @@ func _process(delta: float) -> void:
 		_cache.clear()
 	_chave = chave
 	_refazer()
+
+
+## As paredes do sitio onde esta quem se conduz, se esta la em baixo dentro de um; NAN se
+## nao (sem sitio, a terra vai-se toda, como antes da Q-186).
+func _sitio(player: int) -> Vector2:
+	var nada := Vector2(NAN, NAN)
+	if SimLoop.field == null or player < 0:
+		return nada
+	if int(SimLoop.units.bands[player]) != int(Band.Kind.UNDERGROUND):
+		return nada
+	var i := SimLoop.field.under.site_at(SimLoop.units.xs[player])
+	return nada if i == UndergroundSites.NONE else SimLoop.field.under.span(i)
 
 
 ## A terra de novo, com as plantas dos trocos que ja estavam feitos tiradas da cache.

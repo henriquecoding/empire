@@ -7,6 +7,47 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Subsolo delimitado — 02/10/2026 (ADR 0046)
+
+### Q-186 · O subsolo é um sítio, e acaba
+- **Pedido do dono (02/10/2026), com uma captura do porão com o painel do combate por cima:** *«O subsolo não é
+  infinito acompanhando o piso de cima, é sempre algo delimitado, pode ser grande, mas nunca infinito, é gerado
+  proceduralmente e a primeira vez que é acessado naquela jogatina é algo distinto, o local onde aparece é aleatório,
+  mas coerente com o local, nos impérios é comum ter subsolos com locais de onde se pode armazenar coisas ou com uma
+  sala secreta no imperador. Esses botões não devem estar ali na frente atrapalhando, pois ao entrar no subsolo eles
+  ficam por cima.»* Aplicado (ADR 0046). A pesquisa está em `docs/recovery/PESQUISA-SUBSOLO-2026-10-02.md`.
+- **Onde:** §11, §17, §21, §24, §53, Q-173, Q-176, Q-181, Q-182, ADR 0045. No código: `UndergroundSites`, `UnderWatch`,
+  `UnderArt`, `UnderProps`, `RootCellars`, `WildTunnel`, `SoilCover`, `SoilReveal`, `PassageArt`, `PassageCue`,
+  `CombatBar`. Os testes: `tests/subsolo_delimitado_test.gd`, `tests/subsolo_sitios_test.gd`,
+  `tests/painel_combate_test.gd`.
+- **O que estava:** a cave da região e o túnel das terras eram uma faixa de ponta a ponta do mundo, e o rei andava lá
+  em baixo até à borda. A terra ia-se toda quando ele descia. O painel do combate ficava em cima do chão do subsolo.
+- **O que foi feito:**
+  - **Sítios, e não uma faixa.** Cada boca leva a um sítio: uma fila de salas entre duas paredes de rocha, que nunca
+    passa do tecto do lugar nem de 12 salas. O resto do corte é terra maciça.
+  - **Coerente com o lugar.** Cada passagem do império dá para um porão — armazém, adega ou celeiro — entre os dois
+    muros dela, grande o bastante para o poço de minério e a câmara da Semente Real que lá estão. Debaixo do castelo
+    há uma sala secreta, com o alçapão num sítio sorteado do chão dele. Cada ruína das terras é uma masmorra presa ao
+    segmento dela: cripta, desabamento, cisterna, ossário.
+  - **Gerado na primeira descida.** As salas nascem quando alguém desce pela primeira vez, pela semente e pela chave
+    do sítio: outra partida, outro porão. Ficam no save. Um save antigo abre, e os sítios nascem na descida seguinte.
+  - **As paredes seguram.** Lá em baixo não se passa delas; o Cavador continua a cavar pela terra.
+  - **A terra abre-se só por cima do sítio**, de parede a parede, com o dither de sempre; o resto continua paisagem.
+  - **O painel do combate** passa ao canto de cima, à direita, mais baixo, e não entra no corte de solo.
+- **Números propostos** (`_proposed`, no `rules.csv`): `und_room_min_px` 120, `und_room_max_px` 240 e
+  `und_extra_rooms` 3.
+- **Em aberto, para o dono:**
+  - **O tesouro da sala secreta.** Na primeira descida caem 3 a 6 moedas, com a chance de dobro ou triplo das
+    masmorras (Q-176). A alternativa é a sala secreta não dar nada, ou dar outra coisa (um fragmento de diário, uma
+    Semente Real).
+  - **O armazém que guarda mesmo.** O porão é armazém, adega ou celeiro só no desenho. Pode passar a guardar moedas
+    que a noite não leva, como o banqueiro do Kingdom (§02). É uma mecânica nova de economia.
+  - **As outras possibilidades da pesquisa:** pisos (como Derinkuyu), chave e porta (como o Unexplored), a saída do
+    soberano da sala secreta para o porão (o *Passetto*), a cisterna que dá uma capacidade, e masmorras maiores
+    quanto mais longe da casa.
+- **Como desfazer:** tirar o `field.under.confine` do `SimLoop.step` e o `UnderWatch.enter` do `Verbs.assume`.
+- **Decide:** tu.
+
 ## Combate direto — 01/10/2026 (ADR 0045)
 
 ### Q-184 · Ataque e habilidade separados nas classes controladas
