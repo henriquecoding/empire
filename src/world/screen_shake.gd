@@ -21,6 +21,9 @@ const DECAI := 1.4
 ## As velocidades do ruido (rad/s). Na vertical abana a metade.
 const RITMO := Vector2(29.0, 37.0)
 const VERTICAL := 0.5
+## Dois senos por eixo: o peso de cada um, e quanto mais depressa vai o segundo.
+const MISTURA := Vector2(0.6, 0.4)
+const HARMONICO := Vector2(2.3, 1.7)
 
 var trauma := 0.0
 var _t := 0.0
@@ -42,6 +45,8 @@ func step(delta: float) -> Vector2:
 	if trauma <= 0.0:
 		return Vector2.ZERO
 	var forca := MAX_PX * trauma * trauma
-	var x := 0.6 * sin(_t * RITMO.x + _fases.x) + 0.4 * sin(_t * RITMO.x * 2.3 + _fases.y)
-	var y := 0.6 * sin(_t * RITMO.y + _fases.z) + 0.4 * sin(_t * RITMO.y * 1.7 + _fases.w)
+	var x := MISTURA.x * sin(_t * RITMO.x + _fases.x)
+	x += MISTURA.y * sin(_t * RITMO.x * HARMONICO.x + _fases.y)
+	var y := MISTURA.x * sin(_t * RITMO.y + _fases.z)
+	y += MISTURA.y * sin(_t * RITMO.y * HARMONICO.y + _fases.w)
 	return Vector2(x, y * VERTICAL) * forca

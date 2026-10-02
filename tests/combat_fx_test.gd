@@ -115,9 +115,9 @@ func test_quem_cai_cai_para_o_lado_do_golpe_e_fica_deitado() -> void:
 func test_o_que_passou_sai_da_memoria() -> void:
 	CombatFx.struck(9, -1.0, 1.0)
 	CombatFx.attacked(9, S.MELEE)
-	CombatFx.remember(9, Rect2(0, 0, 8, 8), 0, Color.WHITE)
+	LastSeen.remember(9, Rect2(0, 0, 8, 8), 0, Color.WHITE)
 	for k in 4:
 		CombatFx.advance(CombatFx.ESQUECE_S)
 	assert_float(CombatFx.side(9)).is_equal(1.0)
 	assert_float(CombatFx.since_attack(9)).is_equal(StrikePose.NUNCA)
-	assert_bool(CombatFx.seen(9).is_empty()).is_true()
+	assert_bool(LastSeen.seen(9).is_empty()).is_true()

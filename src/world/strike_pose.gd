@@ -22,6 +22,8 @@ enum Phase { REST, WINDUP, STRIKE, RECOVER }
 
 ## Sem golpe recente, ou sem proximo golpe: o tempo que nunca chega.
 const NUNCA := INF
+## A linha do golpe (timeline) de quem esta em repouso.
+const REPOUSO := -1.0
 
 ## A antecipacao tem de durar o tempo de um olho a ler (~250 ms, GDKeys); o golpe
 ## tem de ser "instantaneo"; a recuperacao devolve o corpo antes do seguinte.
@@ -136,7 +138,7 @@ static func timeline(desde: float, falta: float) -> float:
 			return (WINDUP_S - clampf(falta, 0.0, WINDUP_S)) / total
 		Phase.STRIKE, Phase.RECOVER:
 			return (WINDUP_S + desde) / total
-	return -1.0
+	return REPOUSO
 
 
 static func strength(estilo: Style) -> float:

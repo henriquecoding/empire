@@ -68,7 +68,7 @@ func test_a_flecha_entrega_o_golpe_ao_chegar() -> void:
 ## levanta po.
 func test_quem_morre_deixa_rasto() -> void:
 	var vista := _vista()
-	CombatFx.remember(999, Rect2(10, 470, 20, 30), Silhouette.Form.BRUTO, Color.RED)
+	LastSeen.remember(999, Rect2(10, 470, 20, 30), Silhouette.Form.BRUTO, Color.RED)
 	EventBus.queue(&"creature_died", [999, 20.0, int(Band.Kind.SURFACE)])
 	EventBus.flush()
 	assert_int(vista.bursts().pieces().size()).is_greater(0)

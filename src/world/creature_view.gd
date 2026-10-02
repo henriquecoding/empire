@@ -52,7 +52,7 @@ func draw_on(
 		var aceso := WorldLight.seen(x, luzes) or allied
 		var corpo := luz.body(WorldPalette.BICHO, x)
 		var cor := ClassEffects.ALLY if allied else WorldLight.reveal(corpo, aceso, chao)
-		CombatFx.remember(id, caixa, forma, cor)
+		LastSeen.remember(id, caixa, forma, cor)
 		var view := {
 			"foot": Vector2(x + pose.x, WorldPalette.ground_of(int(band))),
 			"lit": ClassEffects.ALLY if allied else luz.body(Color.WHITE, x),
@@ -93,7 +93,8 @@ static func facing(bichos: CreatureSystem, i: int) -> float:
 		var k := SimLoop.builds.index_of(bichos.target_slots[i])
 		if k != BuildSystem.NENHUM:
 			para = SimLoop.builds.slots[k].x
-	return -1.0 if para < bichos.xs[i] else 1.0
+	var lado := signf(para - bichos.xs[i])
+	return lado if lado != 0.0 else 1.0
 
 
 ## O bicho sem pele: o contorno e o que o faz mexer. As formas olham para a
