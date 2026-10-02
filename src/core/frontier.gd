@@ -67,10 +67,7 @@ static func reapply(campo: FieldWork, largura: float) -> void:
 static func at_mouth(x: float, passagens: PackedFloat32Array, em_baixo: bool) -> bool:
 	if Passages.near(x, passagens) or em_baixo and Passages.near(x, SimLoop.passages):
 		return true
-	return (
-		SimLoop.field != null
-		and Passages.near(x, SimLoop.field.wilds.dungeons(SimLoop.world_width))
-	)
+	return SimLoop.field != null and Passages.near(x, UnderWatch.mouths(SimLoop.field))
 
 
 ## Onde se pode andar: da beira de uma borda a beira da outra.

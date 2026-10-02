@@ -1,23 +1,31 @@
+# src/ui/combat_bar.gd — o ataque e a habilidade de quem se conduz (ADR 0045), no canto.
+#
+# Estava ao fundo do ecra, ao meio, por cima do rodape — e o fundo do ecra e o corte de
+# solo: com o rei la em baixo, os botoes tapavam o sitio onde ele anda. O dono, a
+# 02/10/2026: "esses botoes nao devem estar ali na frente atrapalhando, pois ao entrar no
+# subsolo eles ficam por cima" (Q-186). Passa ao canto de cima, a direita, logo abaixo do
+# painel do objectivo e acima da linha do aviso e das legendas: e ceu, onde nao ha jogo.
 class_name CombatBar
 extends PanelContainer
 
 const PANEL_COLOR := Color(0.10, 0.08, 0.07, 0.94)
-const HALF := 0.5
-const FOOTER_GAP := 58.0
 const MIN_SCALE := 0.1
 const SCREEN_MARGIN := 24.0
+## O canto: a margem da direita do painel do objectivo, e por baixo da faixa de cima.
+const RIGHT_MARGIN := 20.0
+const TOP := GameHud.FAIXA_TOPO + 8.0
 const CORNER := 6
-const PADDING := 10
-const FONT_SIZE := 14
-const META_SIZE := 13
+const PADDING := 6
+const FONT_SIZE := 12
+const META_SIZE := 12
 const TRACK_SIZE := 3
-const BUTTON_HEIGHT := 44
+const BUTTON_HEIGHT := 28
 const BUTTON_CORNER := 4
 const MIN_INTERVAL := 0.01
 
-const WIDTH := 450.0
-const HEIGHT := 104.0
-const GAP := 8
+const WIDTH := 340.0
+const HEIGHT := 66.0
+const GAP := 4
 const INK := Color("201b19")
 const GOLD := Color("efc278")
 const GREEN := Color("97d1ab")
@@ -74,12 +82,17 @@ func _fit() -> void:
 	var factor := maxf(MIN_SCALE, get_viewport().get_final_transform().get_scale().x)
 	var ui_scale := maxf(1.0, 1.0 / factor)
 	scale = Vector2.ONE * ui_scale
-	var area := get_viewport_rect().size
+	var caixa := place(get_viewport_rect().size, ui_scale)
+	size = caixa.size
+	position = caixa.position
+
+
+## Onde fica o painel num ecra `area` com a escala `ui_scale`: no canto de cima a direita,
+## e o tamanho antes da escala. Estatica para se poder medir sem ecra.
+static func place(area: Vector2, ui_scale: float) -> Rect2:
 	var width := minf(WIDTH, area.x / ui_scale - SCREEN_MARGIN)
-	size = Vector2(width, HEIGHT)
-	position = Vector2(
-		(area.x - width * ui_scale) * HALF, area.y - (HEIGHT + FOOTER_GAP) * ui_scale
-	)
+	var x := area.x - (width + RIGHT_MARGIN) * ui_scale
+	return Rect2(Vector2(x, TOP * ui_scale), Vector2(width, HEIGHT))
 
 
 func _column(parent: Control) -> VBoxContainer:

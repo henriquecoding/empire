@@ -85,19 +85,16 @@ static func draw_ground(canvas: CanvasItem, terras: WildSegments, largura: float
 					WildLands.draw(canvas, registo, x, tinta, lado)
 
 
-## O subsolo de todos os segmentos: a terra, o tunel e as camaras das masmorras.
+## O subsolo de todos os segmentos: terra maciça. As masmorras escava-as a UnderArt.
 static func draw_underground(canvas: CanvasItem, terras: WildSegments, largura: float) -> void:
 	for lado in [WorldPlan.OESTE, WorldPlan.LESTE]:
 		for k in terras.count(lado):
 			var registo := terras.at(lado, k)
 			var x0 := terras.x_of(lado, k, largura)
 			var p := ends(terras, lado, k)
-			var boca := NAN
-			if int(registo.get(WildSegments.PASSAGEM, 0)) > 0:
-				boca = terras.subject_x(lado, k, largura)
 			var span := ground_span(registo, lado, x0, terras.width)
 			var semente := int(registo[WildSegments.SEMENTE])
-			WildTunnel.draw(canvas, span, colors(registo, p.x), colors(registo, p.y), semente, boca)
+			WildTunnel.draw(canvas, span, colors(registo, p.x), colors(registo, p.y), semente)
 
 
 ## As plantas do campo das terras geradas: as tabelas do bioma de onde se vem e do bioma

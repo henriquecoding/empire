@@ -429,7 +429,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §
 
 ## `rules.csv` → `data/economy/rules.tres`
 
-Script `src/sim/data/rules_curve.gd` · layout `kv` · 36 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 39 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -469,6 +469,9 @@ Script `src/sim/data/rules_curve.gd` · layout `kv` · 36 linha(s) · ADR 0041 �
 | `realm_guard_price` | int | Mundo e estações — ADR 0043 |  |
 | `realm_night_share` | float | Mundo e estações — ADR 0043 |  |
 | `realm_night_cap` | int | Mundo e estações — ADR 0043 |  |
+| `und_room_min_px` | float | Subsolo delimitado — Q-186 |  |
+| `und_room_max_px` | float | Subsolo delimitado — Q-186 |  |
+| `und_extra_rooms` | int | Subsolo delimitado — Q-186 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

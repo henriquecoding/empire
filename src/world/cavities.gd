@@ -35,3 +35,7 @@ static func author() -> void:
 	var escora := Registry.entry(&"buildings", Passages.ESCORA) as BuildingData
 	for x in SimLoop.passages:
 		SimLoop.builds.post(Greybox.slot_of(escora, x))
+	var muros := PackedFloat32Array()
+	for x in Greybox.MUROS_X:
+		muros.append(SimLoop.core_x + x)
+	UnderWatch.author_home(SimLoop.passages, muros)  # os poroes e a sala secreta (Q-186)

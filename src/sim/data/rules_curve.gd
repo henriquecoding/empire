@@ -56,3 +56,10 @@ extends Resource
 @export var realm_guard_price: int = 0
 @export var realm_night_share: float = 0.0
 @export var realm_night_cap: int = 0
+
+@export_group("Subsolo delimitado — Q-186")
+## As salas de um subsolo: a mais estreita e a mais larga, e quantas pode ter a mais do
+## que as que precisa (ADR 0046).
+@export var und_room_min_px: float = 0.0
+@export var und_room_max_px: float = 0.0
+@export var und_extra_rooms: int = 0

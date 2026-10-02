@@ -4,6 +4,7 @@ extends RefCounted
 var settlements := Settlements.new()
 var local_homes: Dictionary = {}
 var underground_sight := UndergroundSight.new()
+var under := UndergroundSites.new()  # o subsolo e um sitio, e acaba (Q-186)
 var camp_life := CampLife.new()
 var seasons := Seasons.new(RulesFactory.rules())
 var hunting: HuntingSystem
@@ -179,6 +180,7 @@ func parts() -> Dictionary:
 	return {
 		&"settlements": settlements,
 		&"underground_sight": underground_sight,
+		&"under": under,
 		&"camp_life": camp_life,
 		&"seasons": seasons,
 		&"hunting": hunting,
