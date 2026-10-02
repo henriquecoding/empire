@@ -386,10 +386,15 @@ async function main() {
         resultado("/jogar/ ao toque: a classe escolhe-se com o dedo", escolheu, linhas.slice(-3).join(" | "));
         resultado("/jogar/ ao toque: os controlos ligam-se com o primeiro toque",
           linhas.some((l) => l.includes("toque: controlos no ecra")));
-        await p.setViewportSize({ width: LARGO.height, height: LARGO.width });
+        // O toque em «Jogar» pede o ecrã inteiro, e um Chromium recente dá-o: uma janela
+        // em ecrã inteiro não se redimensiona. Sai-se dele, como quem roda o telemóvel.
+        await p.evaluate(() => document.fullscreenElement && document.exitFullscreen().catch(() => {}));
+        await p.waitForFunction(() => !document.fullscreenElement, null, { timeout: 5000 }).catch(() => {});
+        const rodou = await p.setViewportSize({ width: LARGO.height, height: LARGO.width })
+          .then(() => "", (e) => String(e.message || e).split("\n")[0]);
         await p.waitForTimeout(400);
         const rodar = await p.evaluate(() => getComputedStyle(document.getElementById("rodar")).display);
-        resultado("/jogar/ ao toque: ao alto, pede para virar o telemóvel", rodar === "flex", rodar);
+        resultado("/jogar/ ao toque: ao alto, pede para virar o telemóvel", !rodou && rodar === "flex", rodou || rodar);
       }
     }
     resultado("/jogar/ ao toque: sem erros de JavaScript", erros.length === 0, erros.slice(0, 2).join(" | "));
