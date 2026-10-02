@@ -53,6 +53,17 @@ func test_nenhuma_forma_desenha_a_mesma_coisa_que_outra() -> void:
 		assert_int(pontos.size()).override_failure_message(solta).is_greater_equal(3)
 
 
+## O `draw_colored_polygon` triangula o que recebe e, se nao consegue, nao
+## desenha nada — so deixa um erro no registo. Foi o que escondeu o corpo do
+## Alado durante noites inteiras: um contorno que se cruzava a si proprio.
+func test_toda_a_forma_se_consegue_pintar() -> void:
+	for forma in Silhouette.Form.values():
+		var pontos := Outline.shape(forma, CAIXA, Outline.DENTES_MIN)
+		var porque := "a forma %d cruza-se e nao se pinta" % forma
+		var triangulos := Geometry2D.triangulate_polygon(pontos)
+		assert_bool(triangulos.is_empty()).override_failure_message(porque).is_false()
+
+
 func test_toda_a_forma_cabe_na_caixa_que_lhe_deram() -> void:
 	# A caixa e o contrato entre quem escolhe a altura e quem desenha. Uma forma
 	# que saia dela tapa a tropa que esta a frente — e o greybox existe para se

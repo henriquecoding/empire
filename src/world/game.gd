@@ -12,10 +12,10 @@ class_name Game
 extends Node2D
 
 ## §24: "so para o muro a cair e o Ariete a acertar. Nunca para golpes normais.
-## Amplitude max. 4 px, e com opcao de desligar (§26)."
-const TREMOR_PX := 4.0
-const TREMOR_S := 0.25
-const MEIO := 0.5
+## Amplitude max. 4 px, e com opcao de desligar (§26)." O trauma e o ScreenShake;
+## o do Ariete vem do CombatView, e o muro a cair e a derrota sao estes.
+const TREMOR_MURO := 0.9
+const TREMOR_FIM := 1.0
 ## `godot --path . -- --novo` comeca uma partida do zero mesmo havendo save.
 const NOVO := "--novo"
 ## `-- --semente 42` fixa a semente de um jogo novo. Uma captura que nao a fixa
@@ -26,7 +26,7 @@ const SEMENTE := "--semente"
 ## `--novo` da linha de comandos, dito pelo botao da derrota (GB-16).
 static var _recomecar := false
 
-var _tremor: float = 0.0
+var _tremor := ScreenShake.new()
 var _acabou := false
 ## O legado aplicado espera pelo primeiro save do jogo novo para se gastar (CONT-01).
 var _chegada := false
@@ -74,6 +74,8 @@ func _ready() -> void:
 	EventBus.game_paused.connect(_na_pausa)
 	if PauseMenu.heir_waits():  # retomado com a escolha do herdeiro por fazer (Q-146)
 		SimLoop.set_paused(true)
+	var fase := func() -> float: return RngService.float_range(RngService.VISUAL, 0.0, TAU)
+	_tremor = ScreenShake.new(Vector4(fase.call(), fase.call(), fase.call(), fase.call()))
 	print(_recibo())
 
 
@@ -101,11 +103,7 @@ func _physics_process(_delta: float) -> void:
 
 func _process(delta: float) -> void:
 	_seguir()
-	if _tremor <= 0.0:
-		return
-	_tremor = maxf(0.0, _tremor - delta)
-	var forca := TREMOR_PX * (_tremor / TREMOR_S)
-	_mundo.position = Vector2(RngService.float_range(RngService.VISUAL, -forca, forca), 0.0)
+	_mundo.position = _tremor.step(delta)
 
 
 ## A semente da partida. O §42 manda mostra-la no ecra e deixar copiar — o
@@ -158,14 +156,15 @@ func _seguir() -> void:
 
 
 func _no_rompimento(_wall_id: int) -> void:
-	_tremer()
+	shake(TREMOR_MURO)
 
 
 ## §24: "com opcao de desligar (§26)". Pergunta-se a cada vez e nao se guarda:
-## desligar na pausa vale ja para o muro seguinte (GB-13).
-func _tremer() -> void:
+## desligar na pausa vale ja para o muro seguinte (GB-13). Publico: o Ariete a
+## acertar chega pelo grupo `jogo`, do CombatView.
+func shake(trauma: float) -> void:
 	if Preferences.on(Preferences.SCREEN_SHAKE):
-		_tremor = TREMOR_S
+		_tremor.add(trauma)
 
 
 ## §10, numa frase: "se cair, cai a partida". O §46 nao tem sinal de derrota (regra
@@ -210,7 +209,7 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 
 
 func _acabar() -> void:
-	_tremer()
+	shake(TREMOR_FIM)
 	var fica := SimFactory.curve().decay_structures_kept
 	_fim(Legacy.of(SimLoop.state, SimLoop.builds, fica))
 

@@ -80,7 +80,10 @@ const C_ABOBADA := [0, 100, 0, 50, 15, 15, 50, 0, 85, 15, 100, 50, 100, 100]
 const C_RASTEJO := [0, 100, 20, 0, 42, 35, 58, 35, 80, 0, 100, 100]
 
 ## O Alado: corpo estreito e duas asas abertas. §07 — "obriga a torre alta".
-const C_ASA := [36, 100, 36, 50, 0, 0, 30, 62, 50, 35, 70, 62, 100, 0, 64, 50, 64, 100]
+## A asa sai por baixo do ombro e volta por cima dele: ao contrario, o contorno
+## cruzava-se a si proprio, o Godot nao o triangulava, e o corpo do Alado nunca
+## chegou a ser desenhado — so as asas e os olhos do CreatureArt.
+const C_ASA := [36, 100, 36, 62, 0, 0, 40, 45, 50, 35, 60, 45, 100, 0, 64, 62, 64, 100]
 
 ## O Bruto: ombros largos e cabeca pequena. O que se le dele e o peso.
 const C_BRUTO := [12, 100, 12, 35, 0, 28, 22, 0, 78, 0, 100, 28, 88, 35, 88, 100]

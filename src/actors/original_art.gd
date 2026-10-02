@@ -77,6 +77,14 @@ func draw_on(
 	frame: int = 0,
 	facing: float = 1.0,
 ) -> void:
+	draw_posed(canvas, id, tint, frame, posed(foot, facing))
+
+
+## O mesmo, com uma pose: o golpe estica e a queda roda (CombatFx), sempre em
+## volta dos pes — um corpo esticado ou caido continua pousado onde estava.
+func draw_posed(
+	canvas: CanvasItem, id: StringName, tint: Color, frame: int, pose: Transform2D
+) -> void:
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])
 	var source := Rect2(Vector2(size.x * frame, 0.0), size)
@@ -86,9 +94,16 @@ func draw_on(
 		if not _textures.has(&"actors"):
 			_textures[&"actors"] = load(ROOT + "actors.png")
 		sheet = _textures[&"actors"]
-	canvas.draw_set_transform(foot.floor(), 0.0, Vector2(facing, 1.0))
+	canvas.draw_set_transform_matrix(pose)
 	canvas.draw_texture_rect_region(sheet, box(id, Vector2.ZERO), source, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
+
+
+## A pose de um corpo com os pes em `foot`: virado, esticado e rodado.
+static func posed(
+	foot: Vector2, facing: float, escala: Vector2 = Vector2.ONE, angulo: float = 0.0
+) -> Transform2D:
+	return Transform2D(angulo, Vector2(facing * escala.x, escala.y), 0.0, foot.floor())
 
 
 static func unit_profile(data_id: StringName) -> StringName:

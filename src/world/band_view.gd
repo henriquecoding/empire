@@ -175,17 +175,55 @@ func _criaturas() -> void:
 		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
 		var forma := Silhouette.of_creature(dados)
 		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var x := Smoothing.x_of(Smoothing.Group.CREATURES, bichos.ids[i], bichos.xs[i])
-		var caixa := Silhouette.body_box(forma, x, int(band), alto)
+		var id := bichos.ids[i]
+		var x := Smoothing.x_of(Smoothing.Group.CREATURES, id, bichos.xs[i])
+		# O golpe que se ve (StrikePose): arma-se nos ultimos instantes do cooldown
+		# de quem esta engajado, avanca quando bate e e empurrado quando leva.
+		var estilo := StrikePose.of_creature(dados)
+		CombatFx.observe(id, bichos.cooldowns[i], estilo)
+		var frente := _frente(bichos, i)
+		var falta := bichos.cooldowns[i] if bichos.engaged(i) else StrikePose.NUNCA
+		var pose := CombatFx.body(id, estilo, falta, frente)
+		var caixa := stretched(Silhouette.body_box(forma, x + pose.x, int(band), alto), pose)
 		var aceso := WorldLight.seen(x, luzes)
-		var corpo := _luz.body(WorldPalette.BICHO, x)
-		var cor := WorldLight.reveal(corpo, aceso, chao)
+		var cor := WorldLight.reveal(_luz.body(WorldPalette.BICHO, x), aceso, chao)
+		CombatFx.remember(id, caixa, forma, cor)
+		cor = cor.lerp(Color.WHITE, CombatFx.flash(id))
+		# As formas olham para a direita; quem vai para a esquerda e espelhado.
+		var centro := caixa.get_center().x
+		draw_set_transform_matrix(
+			Transform2D(0.0, Vector2(frente, 1.0), 0.0, Vector2(centro - centro * frente, 0.0))
+		)
 		draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
 		CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
+		draw_set_transform_matrix(Transform2D.IDENTITY)
 		if aceso:
 			Gauge.health(
 				self, caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i]))
 			)
+
+
+## Uma caixa esticada pela pose (CombatFx.body), com os pes onde estavam.
+static func stretched(caixa: Rect2, pose: Vector4) -> Rect2:
+	var tamanho := Vector2(caixa.size.x * pose.y, caixa.size.y * pose.z)
+	var canto := Vector2(
+		caixa.get_center().x - tamanho.x * WorldPalette.MEIA, caixa.end.y - tamanho.y
+	)
+	return Rect2(canto, tamanho)
+
+
+## Para onde um bicho olha: para quem bate, para a obra que come, ou para onde
+## vai. Nunca zero — um bicho de lado nenhum nao se espelha.
+func _frente(bichos: CreatureSystem, i: int) -> float:
+	var para := bichos.goal_xs[i]
+	var u := SimLoop.units.index_of(bichos.target_ids[i])
+	if u != UnitSystem.NENHUM:
+		para = SimLoop.units.xs[u]
+	else:
+		var k := SimLoop.builds.index_of(bichos.target_slots[i])
+		if k != BuildSystem.NENHUM:
+			para = SimLoop.builds.slots[k].x
+	return -1.0 if para < bichos.xs[i] else 1.0
 
 
 ## As luzes em que se ve, em (x, raio): as tuas e o Lume. Com a mancha recuada e
