@@ -106,6 +106,55 @@ As onze respostas restantes foram implementadas como lote integrado. Os checkpoi
 
 ## Abertas — balanceamento e design
 
+### Q-185 · O combate que se vê: o que ficou feito no ecrã e o que o «sistema completo» da Q-084 pede à simulação
+- **Pedido do dono (02/10/2026):** *«o combate ainda é péssimo e a animação não se nota nada, melhore as mecânicas
+  de tudo»*.
+- **Onde:** §07 (sem números no ecrã; *«nada desaparece silenciosamente»*), §24 (flash de 80 ms, 3 px de knockback,
+  partícula, *screen shake* só no muro e no Aríete, máx. 4 px), §26 (clarões e tremor desligáveis), §45, §50
+  (*«a apresentação nunca decide se acertou»*), Q-084.
+- **O que estava:** um golpe não tinha corpo. A arte só tem a tag `idle`, e o `ActorAction` caía para o repouso; a
+  flecha do arqueiro não existia (o flash acendia-se no alvo no tick do disparo, a 200 px); a criatura morta saía das
+  colunas e desaparecia no frame seguinte; o flash era um rectângulo branco por cima de um sprite com outra forma; e o
+  contorno do **Alado** cruzava-se a si próprio, o Godot não o triangulava e o corpo dele nunca chegou a ser desenhado.
+- **O que ficou feito — tudo na apresentação, nenhum número de `data/` mudou:**
+  - o golpe em três tempos (`StrikePose`): antecipação nos últimos 240 ms do cooldown de quem está engajado — é o que
+    deixa ler uma criatura a armar-se —, golpe de 70 ms e recuperação de 260 ms; corpo-a-corpo avança, o arco dá um
+    coice, os pesados (Bruto, Aríete, Consumidora, o rei) vão mais longe e param mais tempo no impacto;
+  - quem luta olha para o alvo; as criaturas espelham-se para o lado para onde vão ou batem;
+  - flechas em arco (`Volley`): a que acertou segue o alvo e entrega o golpe **quando chega**; a que falhou crava-se
+    no chão 1,4 s — o 0,34 do arqueiro em campo lê-se no chão;
+  - o impacto (`CombatFx`): hitstop por corpo (quem bate fica no frame do impacto, quem leva treme 1 px, 50 ms num
+    golpe normal e ~90 num pesado — as Capcom de 1989–93 andam pelos 6 frames), flash branco **com a forma do sprite**,
+    e os 3 px do §24 como uma mola que acaba sempre na posição da simulação;
+  - a morte (`DeathBurst`): a criatura fica branca 60 ms, espalma-se e larga pedaços para o lado do golpe; a tropa
+    cai para o lado do golpe e levanta pó;
+  - o tremor por trauma (`ScreenShake`, Eiserloh 2016): o muro a cair, a derrota e o Aríete a acertar somam trauma, o
+    tremor é o quadrado dele, e continua com o tecto de 4 px do §24.
+- **Ao juntar a `main` de 02/10 (sprites temporários, peles de criaturas, combate manual — ADR 0045):**
+  - a animação `attack` dos sprites repetia-se em ciclo enquanto a tropa estava em FIGHT, sem ligar ao golpe. Agora
+    acompanha-o (`CombatFx.attack_frame`): começa a armar 240 ms antes, o impacto cai quando a simulação o faz cair,
+    e entre dois golpes o corpo descansa — é o ritmo que diz quando vem o próximo;
+  - a animação `die` das criaturas com pele nunca se via: o corpo sai das colunas no tick em que morre. Agora a
+    `DeathBurst` toca-a no sítio onde ele estava; uma tropa com `die` cai pela animação, sem a rotação;
+  - o flash branco da pele é a máscara (`actors_mask.png`, branca), com a forma exacta do sprite;
+  - o `CombatView` do ADR 0045 desenhava o arco e o traço dourados em **cada** ataque de **qualquer** tropa: com as
+    flechas, eram duas flechas por tiro, e o dourado dizia "é teu" do que não era. Ficou só para o corpo conduzido;
+    o tiro manual acerta já, com o traço, e não espera por flecha nenhuma. **Reversível** — se querias o dourado
+    nas tropas, é uma linha em `src/world/combat_view.gd`.
+- **Porque é que nada disto foi para `src/sim/`:** o empurrão a sério muda uma posição e tira o corpo da fila de
+  contacto do §50; e o hitstop do jogo todo (o `Engine.time_scale`) mudava o `delta` do passo fixo, que é o que a
+  semente reproduz (§42, §61). Numa noite de trezentas pancadas, parar o jogo a cada uma seria um soluço contínuo — o
+  hitstop por corpo é o que os jogos de multidão fazem.
+- **Por decidir — tu:**
+  1. o «sistema completo» da Q-084: o empurrão na simulação. A pergunta continua a ser a dela — é do atacante
+     (massa) ou do golpe (dano)? —, e agora há onde o ver: com ele, um Bruto que empurra um Rastejante abre-lhe um
+     buraco na fila do §50, e a tabela de tempo-até-matar do §07 deixa de ser a mesma;
+  2. os números da apresentação (240/70/260 ms, 3 px, 50–90 ms de hitstop, 520 px/s da flecha) estão nos scripts como
+     os 80 ms do `ImpactView` sempre estiveram, porque não mexem no que a simulação decide. Se os quiseres afinar sem
+     tocar em código, passam para um CSV de apresentação.
+- **Para ver:** `xvfb-run -a godot --path . tools/arena.tscn -- --novo --semente 7 --classe monarch --saida
+  build/arena` grava uma escaramuça preparada frame a frame.
+
 ### Q-006 · Quem atinge a faixa aérea? — **fechada pelo F1-07**
 - **Onde:** §07 (Libélula: "só atacável por arqueiros e torres altas"; Alado: "obriga a torre alta") e §10.
 - **O que divergia:** se os arqueiros atingem a faixa aérea, o Alado não obriga a nada.
@@ -2028,6 +2077,9 @@ As onze respostas restantes foram implementadas como lote integrado. Os checkpoi
   no passo 6 do §43, a seguir à resolução do combate e antes do movimento.
 - **Decide:** tu. A pergunta é se o empurrão é do atacante (massa) ou do golpe (dano), porque disso depende se
   ele vive no `CombatSystem` ou numa coluna nova.
+- **Depois (02/10/2026):** os 3 px ficaram feitos **no ecrã**, como uma mola que acaba na posição da simulação
+  (`CombatFx`), com o hitstop por corpo e o golpe em três tempos. O empurrão na simulação continua por decidir — ver
+  Q-185.
 
 ### Q-085 · O §52 diz que quem luta não anda; o §24 diz que o comando "Mover" vale sempre
 - **Decidido pelo dono (painel, 28/09/2026 — aprovar a proposta):** quem uma pessoa conduz anda mesmo em FIGHT.

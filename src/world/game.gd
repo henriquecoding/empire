@@ -1,15 +1,17 @@
 class_name Game
 extends Node2D
 
-const TREMOR_PX := 4.0
-const TREMOR_S := 0.25
-const MEIO := 0.5
+## §24: "so para o muro a cair e o Ariete a acertar. Nunca para golpes normais.
+## Amplitude max. 4 px, e com opcao de desligar (§26)." O trauma e o ScreenShake;
+## o do Ariete vem do BattleView, e o muro a cair e a derrota sao estes.
+const TREMOR_MURO := 0.9
+const TREMOR_FIM := 1.0
 const NOVO := "--novo"
 const SEMENTE := "--semente"
 
 static var _recomecar := false
 
-var _tremor: float = 0.0
+var _tremor := ScreenShake.new()
 var _acabou := false
 var _chegada := false
 var _selector: ClassSelection
@@ -49,6 +51,8 @@ func _ready() -> void:
 	EventBus.game_paused.connect(_na_pausa)
 	if PauseMenu.heir_waits():  # retomado com a escolha do herdeiro por fazer (Q-146)
 		SimLoop.set_paused(true)
+	var fase := func() -> float: return RngService.float_range(RngService.VISUAL, 0.0, TAU)
+	_tremor = ScreenShake.new(Vector4(fase.call(), fase.call(), fase.call(), fase.call()))
 	if fresh:
 		_starting_choice()
 	print(_recibo())
@@ -79,11 +83,7 @@ func _physics_process(_delta: float) -> void:
 
 func _process(delta: float) -> void:
 	_seguir()
-	if _tremor <= 0.0:
-		return
-	_tremor = maxf(0.0, _tremor - delta)
-	var forca := TREMOR_PX * (_tremor / TREMOR_S)
-	_mundo.position = Vector2(RngService.float_range(RngService.VISUAL, -forca, forca), 0.0)
+	_mundo.position = _tremor.step(delta)
 
 
 func _semente() -> int:
@@ -130,12 +130,15 @@ func _seguir() -> void:
 
 
 func _no_rompimento(_wall_id: int) -> void:
-	_tremer()
+	shake(TREMOR_MURO)
 
 
-func _tremer() -> void:
+## §24: "com opcao de desligar (§26)". Pergunta-se a cada vez e nao se guarda:
+## desligar na pausa vale ja para o muro seguinte (GB-13). Publico: o Ariete a
+## acertar chega pelo grupo `jogo`, do BattleView.
+func shake(trauma: float) -> void:
 	if Preferences.on(Preferences.SCREEN_SHAKE):
-		_tremor = TREMOR_S
+		_tremor.add(trauma)
 
 
 func _no_desabamento(_building_id: int, _x: float) -> void:
@@ -172,7 +175,7 @@ func _na_travessia(_segmento: StringName, tipo: StringName) -> void:
 
 
 func _acabar() -> void:
-	_tremer()
+	shake(TREMOR_FIM)
 	_fim(DecayWork.of())
 
 

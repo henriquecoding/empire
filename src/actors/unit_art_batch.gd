@@ -5,13 +5,6 @@ const HALF := 0.5
 const STEP_SECONDS := 0.12
 const HIT_SECONDS := 0.12
 const HIT_TINT := Color(1.0, 0.82, 0.60)
-const DEAD_ALPHA := 0.35
-## Q-096 (o dono, 29/09/2026): "cria raizes nas tropas caidas, e elas somem
-## suavemente a seguir". O corpo que sai das colunas na alvorada desvanece neste
-## tempo, com raizes a crescer-lhe por baixo.
-const FADE_SECONDS := 1.6
-const ROOT := Color("2b1d14")
-const ROOTS := [Vector2(-6, 3), Vector2(-2, 5), Vector2(3, 4), Vector2(7, 2)]
 const SHADOW_HEIGHT := 6.0
 const IDLE_SECONDS := 0.65
 ## O chapeu de quem e teu (§25, 0:20): pousa um pouco abaixo do topo da cabeca,
@@ -20,7 +13,12 @@ const HAT_DROP := 6.0
 const HAT_SCALE := 48.0
 const SHADOW_TEXTURE := preload("res://art/export/_placeholder/contact_shadow_18.png")
 
+## Os flashes deste frame, para a camada branca do UnitCanvas os pintar com a
+## forma do sprite (§24): [perfil, frame, pose, alfa].
+var flashes: Array[Array] = []
+
 var _art := OriginalArt.new()
+var _fallen := FallenArt.new()
 var _data: Dictionary = {}
 var _previous: Dictionary = {}
 var _health: Dictionary = {}
@@ -31,14 +29,12 @@ var _phase: Dictionary = {}
 ## primeiro frame (a preparacao de um golpe nao entra a meio).
 var _action: Dictionary = {}
 var _since: Dictionary = {}
-## Os corpos que se veem (id -> o ultimo desenho), e os que estao a desvanecer.
-var _bodies: Dictionary = {}
-var _fading: Dictionary = {}
 
 
 func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) -> void:
 	if _data.is_empty():
 		_data = SimFactory.by_id(&"units")
+	flashes.clear()
 	var units := SimLoop.units
 	var visible := PresentationBounds.of(canvas)
 	var live: Dictionary = {}
@@ -63,39 +59,39 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		if units.healths[i] < int(_health.get(id, units.healths[i])):
 			_hit_until[id] = time + HIT_SECONDS
 		_health[id] = units.healths[i]
+		var data: UnitData = _data.get(units.data_ids[i])
+		var estilo := StrikePose.of_unit(data)
+		CombatFx.observe(id, units.cooldowns[i], estilo)
+		var luta := units.states[i] == UnitFsm.State.FIGHT
+		var manual := id == Assume.driven() or CombatView.attacks.has(id)
+		if luta and not manual:  # quem se conduz aponta com a mira (ADR 0045)
+			_facing[id] = CombatFx.facing(id, x, _facing.get(id, 1.0))
+		var facing: float = _facing.get(id, 1.0)
+		var falta := units.cooldowns[i] if luta else INF
+		var pose := CombatFx.body(id, estilo, falta, facing)
 		if not visible.has_point(Vector2(x, visible.get_center().y)):
 			continue
 		var profile := OriginalArt.unit_profile(units.data_ids[i])
-		var foot := Vector2(x, WorldPalette.ground_of(int(band)))
+		# Sem a animacao `die`, quem cai roda para o chao; com ela, e ela que cai.
+		var morto := not units.alive(i) and not _art.has_action(profile, &"die")
+		var angle := CombatFx.fall(id) if morto else 0.0
+		var foot := Vector2(x + pose.x, WorldPalette.ground_of(int(band)))
 		if profile.is_empty():
-			var data: UnitData = _data.get(units.data_ids[i])
-			if data != null:
-				var box := Silhouette.body_box(
-					Silhouette.Form.CAIXA, x, int(band), WorldPalette.DEGRAU * data.scale_tier
-				)
-				ActorArt.draw_unit(
-					canvas,
-					box,
-					data,
-					units,
-					i,
-					light.body(WorldPalette.unit_color(units, i), x),
-					time
-				)
-				TitleView.draw_on(canvas, box, id, light)
-				if data.tags.has(&"bard"):
-					BardArt.draw_on(
-						canvas, box, float(SimLoop.field.song.cooldowns.get(units.ids[i], 0.0))
-					)
-				if units.alive(i):
-					_saco(canvas, box, units, i)
+			_procedural(canvas, data, {"i": i, "foot": foot, "pose": pose}, light, time)
 			continue
 		var hit := time < float(_hit_until.get(id, 0.0))
 		var kind := ActorAction.of(units.states[i] as UnitFsm.State, moving, hit)
 		if units.alive(i) and not hit and CombatView.attacks.has(id):
 			kind = ActorAction.Kind.ATTACK
+		# A animacao `attack` acompanha o golpe da simulacao (CombatFx), e entre
+		# dois golpes o corpo descansa: e o ritmo que diz quando vem o proximo.
+		var golpe := CombatFx.attack_frame(_art, profile, id, falta)
+		if kind == ActorAction.Kind.ATTACK and golpe < 0 and not CombatView.attacks.has(id):
+			kind = ActorAction.Kind.WALK if moving else ActorAction.Kind.IDLE
 		var shown := ActorAction.shown(_art, profile, kind)
 		var frame := _frame(id, profile, kind, shown, time)
+		if kind == ActorAction.Kind.ATTACK and golpe >= 0:
+			frame = golpe
 		# Sem ciclo de caminhada desenhado, o baloico de um pixel e o que diz que
 		# anda; com ele, e a arte que o diz.
 		var animated := shown in [ActorAction.Kind.WALK, ActorAction.Kind.FLEE]
@@ -104,19 +100,32 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		if hit:
 			color = HIT_TINT
 		if not units.alive(i):
-			color.a = DEAD_ALPHA
+			color.a = FallenArt.DEAD_ALPHA
 			bob = 0.0
-			_bodies[id] = {"profile": profile, "foot": foot, "frame": frame, "band": int(band)}
-		draws.append(
-			{
-				"profile": profile,
-				"foot": foot,
-				"bob": bob,
-				"color": color,
-				"id": id,
-				"i": i,
-				"frame": frame
-			}
+			var corpo := {"profile": profile, "foot": foot, "frame": frame, "band": int(band)}
+			corpo["angle"] = angle
+			_fallen.keep(id, corpo)
+		var escala := Vector2(pose.y, pose.z)
+		var posed := OriginalArt.posed(foot - Vector2(0.0, bob), facing, escala, angle)
+		var branco := CombatFx.flash(id)
+		if branco > 0.0:
+			flashes.append([profile, frame, posed, branco])
+		(
+			draws
+			. append(
+				{
+					"profile": profile,
+					"foot": foot,
+					"bob": bob,
+					"color": color,
+					"id": id,
+					"i": i,
+					"frame": frame,
+					"pose": pose,
+					"posed": posed,
+					"style": estilo,
+				}
+			)
 		)
 	# Two passes keep the shared shadow texture and actor atlas batchable.
 	for item in draws:
@@ -126,50 +135,87 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		)
 		canvas.draw_texture_rect(SHADOW_TEXTURE, rect, false, WorldPalette.SOMBRA)
 	for item in draws:
-		_art.draw_on(
-			canvas,
-			item.profile,
-			item.foot - Vector2(0.0, item.bob),
-			item.color,
-			item.frame,
-			_facing.get(item.id, 1.0)
-		)
+		_art.draw_posed(canvas, item.profile, item.color, item.frame, item.posed)
 	for item in draws:
 		var i: int = item.i
+		if not units.alive(i):
+			continue
 		var dados: UnitData = _data.get(units.data_ids[i])
-		var arma: bool = dados != null and dados.weapon_kind != &"" and item.profile == &"vagrant"
-		if units.alive(i) and arma:
-			ActorArt.draw_weapon(
-				canvas,
-				_art.body_box(item.profile, item.foot - Vector2(0.0, item.bob)),
-				_data[units.data_ids[i]],
-				units,
-				i,
-				light.body(ActorArt.WOOD_LIGHT, item.foot.x),
-				_facing.get(item.id, 1.0)
-			)
-		if units.alive(i):
-			var box := _art.body_box(item.profile, item.foot)
-			if item.profile == &"vagrant":
-				var cabeca := Vector2(box.get_center().x, box.position.y + HAT_DROP)
-				ActorArt.draw_hat(canvas, cabeca, box, units, i, box.size.y / HAT_SCALE)
-			TitleView.draw_on(canvas, box, item.id, light)
-			_saco(canvas, box, units, i)
-			Gauge.health(
-				canvas,
-				_art.box(item.profile, item.foot),
-				float(units.healths[i]) / units.max_healths[i]
-			)
-	_fade(canvas, band, live, time)
+		var box := _art.body_box(item.profile, item.foot - Vector2(0.0, item.bob))
+		if dados != null and dados.weapon_kind != &"" and item.profile == &"vagrant":
+			_weapon(canvas, box, dados, item, light)
+		box = _art.body_box(item.profile, item.foot)
+		if item.profile == &"vagrant":
+			var cabeca := Vector2(box.get_center().x, box.position.y + HAT_DROP)
+			ActorArt.draw_hat(canvas, cabeca, box, units, i, box.size.y / HAT_SCALE)
+		TitleView.draw_on(canvas, box, item.id, light)
+		_saco(canvas, box, units, i)
+		Gauge.health(
+			canvas,
+			_art.box(item.profile, item.foot),
+			float(units.healths[i]) / units.max_healths[i]
+		)
+	_fallen.draw(canvas, band, live, time)
 	for id in _previous.keys():
 		if not live.has(id):
-			_previous.erase(id)
-			_health.erase(id)
-			_facing.erase(id)
-			_hit_until.erase(id)
-			_phase.erase(id)
-			_action.erase(id)
-			_since.erase(id)
+			for memoria in [_previous, _health, _facing, _hit_until, _phase, _action, _since]:
+				memoria.erase(id)
+			CombatFx.forget(id)
+
+
+## A arma de quem a tem na mao, a rodar em volta da mao com o golpe (StrikePose):
+## sobe para tras a armar e passa para a frente a bater. O arqueiro nao roda o
+## arco: puxa a corda, e a flecha ve-se encostada antes de sair.
+func _weapon(
+	canvas: CanvasItem, box: Rect2, dados: UnitData, item: Dictionary, light: Lighting
+) -> void:
+	var units := SimLoop.units
+	var i: int = item.i
+	var lado: float = _facing.get(item.id, 1.0)
+	var mao := Vector2(
+		box.get_center().x + lado * box.size.x * ActorArt.MAO.x,
+		box.position.y + box.size.y * ActorArt.MAO.y
+	)
+	var pose: Vector4 = item.pose
+	canvas.draw_set_transform_matrix(Transform2D(lado * pose.w, mao) * Transform2D(0.0, -mao))
+	var cor := light.body(ActorArt.WOOD_LIGHT, item.foot.x)
+	ActorArt.draw_weapon(canvas, box, dados, units, i, cor, lado)
+	canvas.draw_set_transform_matrix(Transform2D.IDENTITY)
+	if item.style != StrikePose.Style.RANGED or units.states[i] != UnitFsm.State.FIGHT:
+		return
+	var falta := units.cooldowns[i]
+	if StrikePose.phase(CombatFx.since_attack(item.id), falta) == StrikePose.Phase.WINDUP:
+		Volley.draw_nocked(canvas, mao, lado, 1.0 - falta / StrikePose.WINDUP_S)
+
+
+## Uma tropa sem arte original (ActorArt), com a mesma pose, em volta dos pes.
+func _procedural(
+	canvas: CanvasItem, data: UnitData, item: Dictionary, light: Lighting, time: float
+) -> void:
+	if data == null:
+		return
+	var units := SimLoop.units
+	var i: int = item.i
+	var foot: Vector2 = item.foot
+	var pose: Vector4 = item.pose
+	var box := Silhouette.body_box(
+		Silhouette.Form.CAIXA, foot.x, int(units.bands[i]), WorldPalette.DEGRAU * data.scale_tier
+	)
+	# Sem rotacao de queda: o ActorArt ja desenha quem caiu deitado (§16).
+	canvas.draw_set_transform_matrix(
+		Transform2D(0.0, Vector2(pose.y, pose.z), 0.0, foot) * Transform2D(0.0, -foot)
+	)
+	var cor := light.body(WorldPalette.unit_color(units, i), foot.x)
+	ActorArt.draw_unit(canvas, box, data, units, i, cor, time)
+	if data.tags.has(&"bard"):
+		BardArt.draw_on(canvas, box, float(SimLoop.field.song.cooldowns.get(units.ids[i], 0.0)))
+	var branco := CombatFx.flash(units.ids[i])
+	if branco > 0.0:
+		canvas.draw_rect(box, Color(WorldPalette.FLASH, WorldPalette.FLASH.a * branco))
+	canvas.draw_set_transform_matrix(Transform2D.IDENTITY)
+	TitleView.draw_on(canvas, box, units.ids[i], light)
+	if units.alive(i):
+		_saco(canvas, box, units, i)
 
 
 ## O frame que a unidade mostra: o da accao que a arte tem, contado desde que a
@@ -199,25 +245,3 @@ func _saco(canvas: CanvasItem, box: Rect2, units: UnitSystem, i: int) -> void:
 		Gauge.purse(canvas, box, escudeiro.shield, escudeiro.shield_cap())
 		return
 	Gauge.purse(canvas, box, units.carried_coins[i], units.coin_capacities[i])
-
-
-## Os corpos que a alvorada levou desvanecem, com as raizes por baixo (Q-096).
-func _fade(canvas: CanvasItem, band: Band.Kind, live: Dictionary, time: float) -> void:
-	for id in _bodies.keys():
-		if not live.has(id) and _bodies[id]["band"] == int(band):
-			_fading[id] = _bodies[id]
-			_fading[id]["t0"] = time
-			_bodies.erase(id)
-	for id in _fading.keys():
-		var corpo: Dictionary = _fading[id]
-		if corpo["band"] != int(band):
-			continue
-		var resto := 1.0 - (time - float(corpo["t0"])) / FADE_SECONDS
-		if resto <= 0.0:
-			_fading.erase(id)
-			continue
-		var cor := Color(1.0, 1.0, 1.0, DEAD_ALPHA * resto)
-		_art.draw_on(canvas, corpo["profile"], corpo["foot"], cor, corpo["frame"], 1.0)
-		var raiz := Color(ROOT, 1.0 - resto)
-		for ponta: Vector2 in ROOTS:
-			canvas.draw_line(corpo["foot"], corpo["foot"] + ponta, raiz)

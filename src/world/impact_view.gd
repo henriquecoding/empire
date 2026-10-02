@@ -9,11 +9,12 @@
 # A linha do §24, tal e qual: "Impacto — flash branco de 80 ms, 3 px de
 # knockback, particula de 4 px na direcao do golpe."
 #
-# Duas das tres. O knockback de 3 px mexe numa POSICAO, e posicoes sao a
-# simulacao (§45): empurrar um corpo daqui tirava-o da fila de contacto do §50
-# sem que o §50 desse por isso, e um empurrao que o save nao conhece torna a
-# partida irreproduzivel (§61). Fica para quem lhe der numero em data/ e sistema
-# em src/sim/ — ver docs/QUESTIONS.md, Q-084.
+# As tres, e nenhuma mexe na simulacao. O knockback de 3 px e uma mola do ecra
+# que acaba sempre na posicao da simulacao (CombatFx): empurrar a POSICAO tirava
+# o corpo da fila de contacto do §50 sem que o §50 desse por isso, e um empurrao
+# que o save nao conhece torna a partida irreproduzivel (§61) — Q-084, Q-185.
+# O flash pinta-se no desenho de cada corpo, com a forma dele (CombatFx.flash);
+# aqui ficam a particula e a orla das obras.
 #
 # Um no, com estado, e isso e deliberado: 80 ms sao TEMPO, e tempo nao se deriva
 # do estado da simulacao. E o mesmo que a `game.gd` ja faz com o tremor de ecra
@@ -66,9 +67,15 @@ func _ready() -> void:
 
 
 ## Marca um golpe que acertou. Publico para se poder medir sem esperar por
-## frames nem por uma noite — a mesma razao do `advance()` da camara.
-func hit(target_id: int, sentido: float, obra: bool = false) -> void:
-	_golpes.append([target_id, sentido, FLASH_S, obra])
+## frames nem por uma noite — a mesma razao do `advance()` da camara. `forca` e o
+## peso de quem bateu (StrikePose) e `atraso` o que falta para a arma la chegar:
+## o corpo reage com o CombatFx, e a particula sai quando a pancada cai.
+func hit(
+	target_id: int, sentido: float, obra: bool = false, forca: float = 1.0, atraso: float = 0.0
+) -> void:
+	_golpes.append([target_id, sentido, FLASH_S + atraso, obra])
+	if not obra:
+		CombatFx.struck(target_id, sentido, forca, atraso)
 
 
 func count() -> int:
@@ -112,9 +119,12 @@ func _process(delta: float) -> void:
 
 ## §46, `attack_launched(from_id, to_id, hit)`. So o que ACERTA pisca: o §07 da
 ## ao arqueiro em campo aberto uma precisao de 0,34, e piscar as falhas dizia
-## que ele acertou duas vezes em tres.
+## que ele acertou duas vezes em tres. O que vem de longe pisca quando a flecha
+## chega, e quem o entrega e o BattleView.
 func _no_golpe(from_id: int, to_id: int, acertou: bool) -> void:
-	if not acertou:
+	var estilo := CombatFx.style_of(from_id)
+	var conduzido := from_id == Assume.driven()  # o tiro manual acerta ja (ADR 0045)
+	if not acertou or (estilo == StrikePose.Style.RANGED and not conduzido):
 		return
 	var de := _caixa_de(from_id)
 	var para := _caixa_de(to_id)
@@ -123,7 +133,8 @@ func _no_golpe(from_id: int, to_id: int, acertou: bool) -> void:
 	var sentido := 1.0
 	if de.size != Vector2.ZERO:
 		sentido = aim(de.get_center().x, para.get_center().x)
-	hit(to_id, sentido)
+	var atraso := 0.0 if estilo == StrikePose.Style.RANGED else StrikePose.STRIKE_S
+	hit(to_id, sentido, false, StrikePose.strength(estilo), atraso)
 
 
 ## §46, `building_damaged(building_id, ratio)`. E o sinal que uma noite do
@@ -134,12 +145,14 @@ func _na_dentada(building_id: int, _ratio: float) -> void:
 	_golpes.append([building_id, SEM_SENTIDO, FLASH_S, true])
 
 
-## Com os claroes desligados (§26, "obrigatorio para fotossensibilidade") fica a
-## particula: 4 px a afastar-se nao sao um clarao, e sao a unica coisa que diz de
-## que lado veio o golpe (GB-13).
+## O corpo pisca no desenho dele (CombatFx.flash), com a forma que tem; aqui fica
+## a particula, que e a unica coisa que diz de que lado veio o golpe e por isso
+## fica mesmo com os claroes desligados (§26, GB-13), e a orla das obras.
 func _draw() -> void:
 	var clarao := Preferences.on(Preferences.FLASHES)
 	for golpe in _golpes:
+		if golpe[RESTA] > FLASH_S:
+			continue  # a arma ainda nao chegou
 		if golpe[OBRA]:
 			if clarao:
 				_obra_atingida(golpe[ALVO])
@@ -147,8 +160,7 @@ func _draw() -> void:
 		var caixa := _caixa_de(golpe[ALVO])
 		if caixa.size == Vector2.ZERO:
 			continue
-		if clarao:
-			draw_rect(caixa, WorldPalette.FLASH)
+		caixa.position.x += CombatFx.recoil(golpe[ALVO])
 		_particula(caixa, golpe[SENTIDO], golpe[RESTA])
 
 

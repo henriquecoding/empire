@@ -23,7 +23,6 @@ extends Node2D
 @export var band: Band.Kind = Band.Kind.SURFACE
 
 var _tropas: Dictionary = {}
-var _bichos: Dictionary = {}
 var _edificios: Dictionary = {}
 var _relogio: ClockData
 var _podre: RotProfile
@@ -35,12 +34,11 @@ var _visual_time := 0.0
 ## O pequeno bounce do §24 (GB-19), criado a pedido: precisa da gravidade do arco.
 var _salto: CoinBounce
 var _actors: UnitCanvas
-var _creature_skins := CreatureSkins.new()
+var _bichos_vista := CreatureView.new()
 
 
 func _ready() -> void:
 	_tropas = SimFactory.by_id(&"units")
-	_bichos = SimFactory.by_id(&"creatures")
 	_edificios = SimFactory.by_id(&"buildings")
 	_relogio = Registry.entry(&"economy", &"clock") as ClockData
 	_podre = SimFactory.rot_profile()
@@ -165,46 +163,11 @@ func _moedas() -> void:
 		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
 
 
-## O que a noite traz so se ve dentro de uma luz: as tuas (as obras que alumiam e
-## o archote) e o Lume roxo na base dela (ADR 0034). Fora, o corpo e silhueta — a
-## mesma cor com a luz que chega ao chao (§80), e nao uma cor nova.
+## O que a noite traz so se ve dentro de uma luz (ADR 0034); quem o desenha, com
+## o golpe, a pele e o contorno, e o CreatureView.
 func _criaturas() -> void:
-	var bichos := SimLoop.creatures
 	var luzes := _luzes_da_noite()
-	var chao := BandLight.ground_ratio(_relogio)
-	var visible := PresentationBounds.of(self)
-	for i in bichos.count():
-		if bichos.bands[i] != int(band):
-			continue
-		var dados: CreatureData = _bichos.get(bichos.data_ids[i])
-		if dados == null:
-			continue
-		# A forma e o porte sao a diferenca entre "vem ai uma coisa" e "vem ai um
-		# Ariete de lodo, e eu tenho o muro do lado errado" (§07, §51).
-		var forma := Silhouette.of_creature(dados)
-		var alto := WorldPalette.DEGRAU * maxi(1, dados.scale_tier)
-		var x := Smoothing.x_of(Smoothing.Group.CREATURES, bichos.ids[i], bichos.xs[i])
-		if not visible.has_point(Vector2(x, visible.get_center().y)):
-			continue
-		var caixa := Silhouette.body_box(forma, x, int(band), alto)
-		var allied := SimLoop.field.song.allies.has(bichos.ids[i])
-		var aceso := WorldLight.seen(x, luzes) or allied
-		var corpo := _luz.body(WorldPalette.BICHO, x)
-		var cor := ClassEffects.ALLY if allied else WorldLight.reveal(corpo, aceso, chao)
-		var view := {
-			"foot": Vector2(x, WorldPalette.ground_of(int(band))),
-			"lit": ClassEffects.ALLY if allied else _luz.body(Color.WHITE, x),
-			"hidden_tint": cor,
-			"revealed": aceso,
-		}
-		if not _creature_skins.draw_on(self, bichos, i, view, _visual_time):
-			draw_colored_polygon(Outline.shape(forma, caixa, 0), cor)
-			CreatureArt.draw_on(self, caixa, forma, cor, _visual_time)
-		if aceso:
-			Gauge.health(
-				self, caixa, float(bichos.healths[i]) / maxf(1.0, float(bichos.max_healths[i]))
-			)
-	_creature_skins.forget_except(bichos.ids)
+	_bichos_vista.draw_on(self, band, _luz, luzes, BandLight.ground_ratio(_relogio), _visual_time)
 	ClassEffects.draw_on(self, band)
 
 

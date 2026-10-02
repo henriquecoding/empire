@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://src/world/game.gd" id="0_game"]
 [ext_resource type="Script" path="res://src/world/band_view.gd" id="1_faixa"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://src/world/soil_cover.gd" id="17_terra"]
 [ext_resource type="Script" path="res://src/ui/combat_input.gd" id="18_combat_input"]
 [ext_resource type="Script" path="res://src/world/combat_view.gd" id="19_combat_view"]
+[ext_resource type="Script" path="res://src/world/battle_view.gd" id="20_batalha"]
 
 [node name="Game" type="Node2D" groups=["jogo"]]
 script = ExtResource("0_game")
@@ -51,6 +52,9 @@ script = ExtResource("2_impacto")
 
 [node name="Combate" type="Node2D" parent="Mundo"]
 script = ExtResource("19_combat_view")
+
+[node name="Batalha" type="Node2D" parent="Mundo"]
+script = ExtResource("20_batalha")
 
 [node name="Alvorada" type="Node2D" parent="Mundo"]
 script = ExtResource("10_alvorada")

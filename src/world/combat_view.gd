@@ -37,10 +37,13 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 
+## So o corpo que se conduz: e o gesto do combate manual (ADR 0045). As tropas
+## mostram o golpe no corpo e as flechas voam no BattleView (Q-185) — um traco
+## dourado em cada tropa dizia "e teu" do que nao e, e dava duas flechas por tiro.
 func _launched(who: int, target: int, hit: bool) -> void:
 	var units := SimLoop.units
 	var i := units.index_of(who)
-	if i < 0:
+	if i < 0 or who != Assume.driven():
 		return
 	var body := Registry.entry(&"units", units.data_ids[i]) as UnitData
 	var manual := SimLoop.combat.manual.last

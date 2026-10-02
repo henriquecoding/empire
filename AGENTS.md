@@ -161,6 +161,13 @@ src/world/site_marks.gd     SiteMarks     moedas pagas, andaime, fissuras e repa
 src/actors/actor_action.gd  ActorAction   que tag da arte mostra o que a unidade faz
 src/world/price_tag.gd      PriceTag      o preco do que esta debaixo do rei (§24, §55, GB-05)
 src/world/impact_view.gd    ImpactView    o golpe que se ve: flash e particula (§24, GB-08)
+src/world/strike_pose.gd    StrikePose    o golpe em tres tempos: preparar, bater, voltar (§24, Q-185)
+src/world/combat_fx.gd      CombatFx      o que um corpo mostra de um golpe: pose, empurrao, hitstop, flash (Q-084)
+src/world/battle_view.gd    BattleView    as flechas no ar e o que fica de uma morte (§07, §50, Q-185)
+src/world/volley.gd         Volley        as flechas que se veem voar, e as que se cravam (§07, §50)
+src/world/death_burst.gd    DeathBurst    uma morte que se ve: branco, espalmar e pedacos (§07)
+src/world/screen_shake.gd   ScreenShake   o tremor de ecra por trauma, 4 px no maximo (§24, §26)
+src/actors/fallen_art.gd    FallenArt     os corpos que a alvorada leva, com raizes (Q-096)
 src/world/shadow.gd         Shadow        a sombra de contacto (§22, §24, GB-09)
 src/world/smoothing.gd      Smoothing     o render interpola entre dois ticks (§40 I5, GB-10)
 src/world/passage_cue.gd    PassageCue    onde o Verbo 2 pega, dito no sitio (§11, §25, GB-14)
