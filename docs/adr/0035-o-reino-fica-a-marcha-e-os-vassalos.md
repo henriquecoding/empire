@@ -4,6 +4,9 @@
 - Data: 2026-09-29
 - Secção do dossiê: §13, §16, §21, §79, §83
 - Actualiza: a travessia da Q-135 (AUD-05)
+- **Nota de precedência (ADR 0052, 02/10/2026):** a premissa «o rei nunca sai» foi substituída — todos os
+  monarcas podem explorar e viajar, e sair é uma escolha de risco. A marcha delegada, a firmeza e os vassalos
+  continuam a valer; a incursão nova passa a ser liderada por um Diplomata (UN-20).
 
 ## Contexto
 A Q-135 (aprovada no painel de 29/09/2026) acabava a região com o rei a atravessar a bifurcação com a comitiva. No

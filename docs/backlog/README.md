@@ -173,6 +173,46 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UX-03](UX-03.md) | A alavanca solta, o FIXAR e o ecrã inteiro | UX-02 | feito |
 | [UX-04](UX-04.md) | O CORRER no toque e as obras com sprite | UX-03 | feito |
 
+## Monarcas, companhias e controlo imperial — ADR 0052
+
+> O plano de 02/10/2026 (`docs/recovery/PLANO-MONARCAS-2026-10-02.md`): começar como um de três monarcas, só
+> imperadores controláveis, flechas imperiais pagas. Nove fases; cada uma entra por PR próprio.
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [UN-00](UN-00.md) | Consolidar as regras dos monarcas e a ADR | — | feito |
+| [UN-01](UN-01.md) | Esquema de monarcas e companheiros | UN-00 | por fazer |
+| [UN-02](UN-02.md) | Autoridade por reino e por pessoa | UN-01 | por fazer |
+| [UN-03](UN-03.md) | Vínculo de companhia | UN-02 | por fazer |
+| [UN-04](UN-04.md) | Seleção imperial e autoria inicial | UN-01, UN-02, UN-03 | por fazer |
+| [UN-05](UN-05.md) | Retirar o controlo de tropas | UN-02 | por fazer |
+| [UN-06](UN-06.md) | Migração das campanhas antigas | UN-03, UN-04, UN-05 | por fazer |
+| [UN-07](UN-07.md) | Generalizar a morte e a sucessão | UN-02, UN-03 | por fazer |
+| [UN-08](UN-08.md) | Despacho do combate e da habilidade | UN-04, UN-05 | por fazer |
+| [UN-09](UN-09.md) | A Imperatriz Nia e os números de bancada | UN-08 | por fazer |
+| [UN-10](UN-10.md) | O Bardo real pago | UN-03, UN-09 | por fazer |
+| [UN-11](UN-11.md) | Conversão e hostilidade | UN-10 | por fazer |
+| [UN-12](UN-12.md) | Promoção e evolução de Nia | UN-10, UN-11 | por fazer |
+| [UN-13](UN-13.md) | O Imperador Arqueiro e a aljava | UN-08 | por fazer |
+| [UN-14](UN-14.md) | O escudeiro que fornece flechas | UN-03, UN-13 | por fazer |
+| [UN-15](UN-15.md) | O sangramento | UN-13 | por fazer |
+| [UN-16](UN-16.md) | Encontros e roster imperial | UN-05, UN-06, UN-07 | por fazer |
+| [UN-17](UN-17.md) | Troca imperial transacional | UN-16 | por fazer |
+| [UN-18](UN-18.md) | Diplomata universal sob IA | UN-05 | por fazer |
+| [UN-19](UN-19.md) | Tesouro local e defesa na ausência | UN-02, UN-07 | por fazer |
+| [UN-20](UN-20.md) | Incursões com Diplomata | UN-18, UN-19 | por fazer |
+| [UN-21](UN-21.md) | Captura, resgate e dívida | UN-20 | por fazer |
+| [UN-22](UN-22.md) | Alvo de unidade e de obra, e conquista | UN-11, UN-20 | por fazer |
+| [UN-23](UN-23.md) | Governo inimigo e assimilação | UN-07, UN-18, UN-22 | por fazer |
+| [UN-24](UN-24.md) | Viagem da comitiva, montarias e sítios | UN-03, UN-17, UN-20 | por fazer |
+| [UN-25](UN-25.md) | Ofícios, evolução e produção animal | UN-19, UN-20, UN-21, UN-22 | por fazer |
+| [UN-26](UN-26.md) | Pontes, torres e um evento de bioma | UN-22, UN-24, UN-25 | por fazer |
+| [UN-27](UN-27.md) | Lore e apresentação dos encontros | UN-09 a UN-17, UN-23, UN-24 | por fazer |
+| [UN-28](UN-28.md) | O primeiro ciclo e a acessibilidade | UN-04, UN-10, UN-14, UN-17, UN-18 | por fazer |
+| [UN-29](UN-29.md) | Coop local | UN-17 a UN-23 | por fazer |
+| [UN-30](UN-30.md) | Dois reinos e a vitória | UN-22, UN-23, UN-29 | por fazer |
+| [UN-31](UN-31.md) | Spike e integração de rede | UN-29, UN-30 | por fazer |
+
 ## Respostas aprovadas no painel
 
 | Ticket | Tarefa | Depende | Estado |

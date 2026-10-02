@@ -4,7 +4,7 @@ Vale para qualquer agente. O CLAUDE.md tem tres linhas a apontar para aqui.
 Se leres um unico ficheiro deste repositorio, e este.
 
 ## O que e
-Kingdom-builder 2D em pixel art. Godot 4.6, GDScript. Mundo 1.5D com tres
+Kingdom-builder 2D em pixel art. Godot 4.7.2 (o pin de .godot-version), GDScript. Mundo 1.5D com tres
 faixas verticais: AERIAL, SURFACE, UNDERGROUND.
 
 ## Onde esta a verdade

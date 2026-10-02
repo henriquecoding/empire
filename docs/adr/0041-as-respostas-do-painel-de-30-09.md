@@ -3,6 +3,10 @@
 - **Estado:** aceite, em curso (30/09/2026)
 - **Contexto:** o dono respondeu a 26 perguntas no painel (Q-150, Q-157 a Q-182). O `AGENTS.md` manda aplicar o
   que foi decidido, pela opção mais simples e reversível, e registar o resto em `docs/QUESTIONS.md`.
+- **Nota de precedência (ADR 0052, 02/10/2026):** duas cláusulas deixam de valer. Da **Q-162**, assumir uma
+  tropa pelo Verbo 2 — só imperadores são controláveis. Da **Q-150**, a trela `king_leash_px` — todos os monarcas
+  exploram até às bordas reais. A caça dos sítios (Q-150) e a aljava das tropas (Q-163) continuam; da Q-163 sai só
+  «as classes jogáveis têm recursos ilimitados»: o Arqueiro imperial paga as flechas.
 
 ## Decisão
 

@@ -45,7 +45,7 @@ A tua ideia de "uma sombra que vai de encontro ao império invocando inimigos at
 
 **Verbo 1 — Largar moeda** — Recrutar, construir, melhorar, pagar, alimentar, subornar. O contexto define o efeito. Toda a economia passa por aqui. É o verbo do Kingdom, herdado inteiro.
 
-Trocar de personagem controlado (rei ↔ classe), montar, entrar e sair da camada subterrânea, subir numa criatura enorme. Um botão, sempre contextual, sempre o mesmo botão.
+Trocar de imperador controlado (só com outro imperador desbloqueado e encontrado, ADR 0052), montar, entrar e sair da camada subterrânea, ordenar a uma tropa que suba numa criatura enorme. Um botão, sempre contextual, sempre o mesmo botão. Nenhuma tropa se assume.
 
 > **Regra inegociável**
 >

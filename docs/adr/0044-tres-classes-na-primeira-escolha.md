@@ -1,6 +1,7 @@
 # ADR 0044 — Três classes na primeira escolha
 
-- **Estado:** aceite para o pedido de 01/10/2026; números propostos continuam ajustáveis.
+- **Estado:** substituída pela ADR 0052 (02/10/2026) na escolha inicial e no controlo de corpos de classe. A marca,
+  a perfuração, o canto, a conversão e a promoção continuam — passam a servir o Imperador Arqueiro e o Bardo da Nia.
 - **Contexto:** o dono pediu três escolhas iniciais com a jogabilidade já descrita no §08 e pesquisa na web. Existiam corpos assumíveis, mas não uma escolha de início nem as habilidades completas de Arqueiro e Bardo.
 
 ## Decisão

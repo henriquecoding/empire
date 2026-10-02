@@ -7,6 +7,120 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Monarcas, companhias e controlo imperial — 02/10/2026 (ADR 0052)
+
+> Plano-fonte: `docs/recovery/PLANO-MONARCAS-2026-10-02.md`. A Q-195 regista as tuas direções (D); as Q-196 a Q-205 são
+> as propostas (P) do plano que precisam da tua decisão ou de medição. Nenhuma P entra no painel como resposta tua.
+
+### Q-195 · O que o dono decidiu: três monarcas, só imperadores controláveis, flechas pagas
+- **Pedido do dono (02/10/2026):** unificar a escolha inicial e a identidade do governante — começar como **Rei**
+  guerreiro defensivo (gordo, lento, ataque curto, escudeiro pago), **Imperatriz Nia** (mulher negra, pequena, rápida,
+  pouco dano por golpe e alta cadência; inspiração de ritmo na Berserker e de trajetória em Joana d'Arc; um Bardo com a
+  bandeira às costas que recebe moedas para encantar inimigos e incentivar aliados) ou **Imperador Arqueiro**
+  (flechas com chance de sangramento). Todos governam, exploram e podem morrer. E a correção a seguir: *«somente
+  imperadores são controláveis. Troca exige imperador desbloqueado e encontrado na campanha; tropas, ofícios,
+  diplomatas e companheiros permanecem sob IA. O escudeiro do Arqueiro fornece flechas enquanto recebe moedas do
+  próprio imperador; sem moedas, não há novo fornecimento.»*
+- **Mais, do mesmo pedido:** a morte definitiva do monarca sem sucessor encerra a campanha ativa; o Diplomata básico
+  compra-se em qualquer império e lidera incursões quando o imperador não quer explorar; Nia é pequena e continua
+  reconhecível como imperatriz.
+- **O que isto substitui, por cláusula** (ADR 0052): a escolha da ADR 0044; assumir tropas (Q-162); a trela do rei
+  (Q-150 — a caça dos sítios fica); «o rei nunca sai» (Q-146, ADR 0035); «só as classes viajam» (Q-178 — de dia e para
+  destino seguro fica); recursos ilimitados dos jogáveis (Q-163 — a aljava das tropas e a banca ficam); o interregno de
+  três dias do §16; a Semente Real no acesso básico ao Diplomata; o coop de «uma classe por jogador» (§18).
+- **Onde:** §08, §09, §13, §14, §15, §16, §18, §24, §99. Execução em `docs/backlog/UN-00.md` a `UN-31.md`.
+- **Estado:** decidido. A execução segue por fases (ADR 0052); o painel só passa a «aplicada» por fase, depois de
+  merge e publicação.
+
+### Q-196 · A troca imperial transfere o governo, ou só o controlo?
+- **Onde:** plano §7.5; ADR 0052; UN-17.
+- **O que falta:** a tua direção diz *quem* pode ser controlado, e não diz o que acontece à coroa numa troca.
+- **Proposta (P):** em solo, a troca presencial transfere o governo de forma voluntária e atómica — o novo imperador
+  governa e luta, e o anterior fica protegido na sede, sob IA, com a sua pessoa, as suas moedas e a sua companhia.
+  Não nascem duas coroas soberanas. Recusada durante queda, roubo da coroa ou sucessão pendente.
+- **Alternativa:** mudar só o controlo e manter o titular político; o HUD passa a mostrar quem governa e quem joga.
+- **Decide:** tu.
+
+### Q-197 · Outro imperador encontrado serve de sucessor?
+- **Onde:** plano §7.6, §9.3; UN-07, UN-16.
+- **Proposta (P):** só quando designado e preparado antes da morte. Sem preparação, aparecer no desbloqueio global não
+  o torna herdeiro — preparar continuidade continua a importar.
+- **Decide:** tu, se preferes que qualquer imperador aliado encontrado seja continuidade automática (isso substitui a
+  regra de morte sem sucessor).
+
+### Q-198 · Os números de bancada de Nia e do Imperador Arqueiro
+- **Onde:** plano §4.4; `units.csv` (`_proposed`); UN-09, UN-13.
+- **Proposta (P), contra o Rei atual (60 de vida, 80 px/s, dano 3, 1,2 s, 30 px):** Nia 32 de vida, 108 px/s, dano 2,
+  0,45 s, 26 px; o Arqueiro imperial 40 de vida, 88 px/s, dano 4, 1,4 s, 200 px. Contra um Rastejante de 10 de vida,
+  o rei precisa de quatro golpes, Nia de cinco e o arqueiro de três — cálculo, não um TTK medido.
+- **Por medir:** o primeiro dia/noite com a mesma semente e os três monarcas (plano §22.2). Mudar um número de cada vez.
+- **Decide:** tu, depois do primeiro playtest.
+
+### Q-199 · O Bardo da Nia: o que custa, quanto leva e o que faz
+- **Onde:** plano §5.3, §5.4; UN-10 a UN-12.
+- **Proposta (P):** a imperatriz paga ao Bardo, que só canta vivo, perto, na faixa dela, pronto e pago. Preços de
+  bancada: encanto fraco 1 moeda, incentivo de grupo 1, conversão permanente 3, promoção 3; orçamento transportável até
+  5 moedas. Até dois encantados temporários na fase base. O incentivo não cura; dois bardos não somam, conta o maior.
+  Uma ordem paga e que já não pode ocorrer antes do compromisso devolve a moeda; depois de válida, não há reembolso.
+- **Feito de Nia (P):** as 15 conversões distintas do Bardo, com a imperatriz presente — não 15 reencantos da mesma.
+- **Decide:** tu, os preços e o limite de aliados permanentes (ponderado pela massa, não por cabeça).
+
+### Q-200 · A aljava do Imperador Arqueiro e o escudeiro que a abastece
+- **Onde:** plano §5.5, §4.3; UN-13, UN-14. A tua regra (pagamento pessoal, sem moedas sem flechas) é D.
+- **Proposta (P):** aljava de 30, com 12 flechas no início; 12 flechas por moeda (o `arrows_per_coin` das tropas). Com a
+  aljava quase cheia, o lote que não cabe fica pago e registado para a reposição seguinte — nunca se cobra um lote e
+  se deita fora o excedente. Sem estoque físico no escudeiro na primeira versão: as moedas e a aljava já cumprem a
+  mecânica. A banca do arco continua a repor as tropas, e não o imperador.
+- **Sem flechas (P):** o imperador governa, recua, contrata e troca; pode usar um golpe de emergência fraco, sem
+  sangramento.
+- **Nome:** o teu pedido diz «escudeiro do Arqueiro»; o plano propôs «intendente de flechas» como nome de função
+  provisório. **Decide:** tu, o nome e os três números.
+
+### Q-201 · O sangramento
+- **Onde:** plano §14.2–§14.4; UN-15.
+- **Proposta (P):** só o Arqueiro imperial; 20% por impacto que causou dano; 4 s; 1 de dano por segundo, o primeiro um
+  segundo depois; uma instância por alvo — um proc novo renova a duração, não soma. Sorteio no fluxo `combat` do
+  RngService, só em impacto válido. Fonte, alvo, prazo e autoria vão no save. Alvos sem sangue (mineral, substância,
+  espectro, muralha, a Candeia) não sangram, pelos dados. Converter um alvo remove o sangramento hostil.
+- **Limite:** 20% × 4 pontos ≈ 0,8 de dano extra por impacto isolado. Não é o DPS real.
+- **Decide:** tu, os números; a medição diz se o arqueiro fica forte de mais.
+
+### Q-202 · O herdeiro: que perfil, e com que força
+- **Onde:** plano §8.3, §9.4; UN-07.
+- **Proposta (P):** o herdeiro segue o arquétipo do titular quando o treino foi definido, com nome e identidade
+  próprios (a sucessora de Nia não se chama Nia). Preserva a fase tecnológica do império e aplica 60% (§15) só aos
+  bónus passivos herdáveis listados — uma aura de 25% começa em 15% —, sem cortar vida, dano ou alcance. Escolher outro
+  arquétipo fica para depois, antes do treino.
+- **Decide:** tu.
+
+### Q-203 · O Diplomata universal: acesso, missões, captura e resgate
+- **Onde:** plano §11; §14; UN-18 a UN-21.
+- **Proposta (P):** uma banca de emissários junto da sede contrata o básico; a Embaixada treina e evolui. As duas
+  Sementes Reais saem do acesso básico e passam à evolução; quem já as pagou não perde nada. Uma missão ativa por
+  diplomata. A dívida de mercenários fica num registo próprio, separado da Dívida da Candeia.
+- **Lacuna:** a fórmula `40 + 18 × mercenários` não diz quanto custa resgatar alguém sem mercenários contratados; e o
+  pagamento parcial que reinicia o prazo em três dias deixa adiar a execução para sempre com uma moeda.
+- **Proposta (P):** preço de resgate próprio nos dados; o pagamento parcial reduz o saldo mas a execução tem uma data
+  limite independente.
+- **Decide:** tu.
+
+### Q-204 · Os dois multiplayer com imperadores
+- **Onde:** §18; plano §17; UN-29 a UN-31.
+- **Proposta (P):** coop com um império, dois imperadores — um titular soberano e um com autoridade delegada —, bolsas
+  pessoais e tesouro partilhado, um decreto por reino e por dia. Competitivo com dois reinos nas pontas; vence quem
+  derrubar a sede rival ou acabar com a continuidade dele. Primeiro dois comandos na mesma máquina, depois rede.
+- **Decide:** tu, se preferes duas coroas equivalentes no coop (pede regra própria de herança e decretos).
+
+### Q-205 · O resto do que o plano deixa aberto
+- **Onde:** plano §24.
+- **Propostas (P):** o **quarto monarca** fica aberto — não se inventa um para encher a vaga; a **Ganância** não se
+  sorteia de novo numa troca (só na sucessão, Q-143); a **companhia pode morrer** e repõe-se com custo, sem cargas
+  grátis; o **resgate da coroa** sem outro imperador é por ordem de IA e pela janela da Q-167, nunca por controlo de
+  tropa; a **morte canónica de Nia** é ramificação, não destino de toda a campanha; a **flecha física com colisão**
+  fica fora da unificação; a **reserva doméstica** (soldo e treino com o monarca longe) pede um tesouro local
+  explícito (UN-19).
+- **Decide:** tu, por linha.
+
 ## O CORRER no toque e as obras que se vêem — 02/10/2026 (UX-04, ADR 0051)
 
 ### Q-193 · O botão CORRER é um interruptor

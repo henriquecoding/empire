@@ -3,6 +3,8 @@
 - **Estado:** aceite e implementada (01/10/2026).
 - **Contexto:** Q-170, 171, 172, 174, 175, 176, 177, 178, 179, 180 e 182 foram
   aprovadas a 30/09/2026. As palavras do dono ficam em `docs/QUESTIONS.md`.
+- **Nota de precedência (ADR 0052, 02/10/2026):** da **Q-178** sai «só as classes viajam; o rei fica em casa» —
+  os monarcas também viajam. Ficam a viagem de dia e o destino vassalo com defesas de pé.
 
 ## Decisão
 

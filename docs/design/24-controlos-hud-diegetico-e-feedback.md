@@ -11,11 +11,11 @@ A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 m
 | Mover | Stick esquerdo / D-pad | A · D · ← → | Sempre |
 | Verbo 1 — Largar moeda | A / ✕ (toque) | Espaço | Sempre. Contexto define o alvo. |
 | Largar em contínuo | A / ✕ (manter) | Espaço (manter) | Pagar vários níveis de uma vez |
-| Verbo 2 — Assumir | X / ▢ | E | Trocar de classe, montar, entrar em passagem, subir em criatura |
+| Verbo 2 — Assumir | X / ▢ | E | Trocar de imperador (só com outro encontrado e disponível), montar, entrar em passagem, pagar ao companheiro |
 | Descer / subir de faixa | Verbo 2 sobre passagem | E sobre passagem | Só onde há passagem descoberta |
-| Roda do rei | Y / △ (manter) | Tab (manter) | Só com o monarca assumido. É o corpo dele, não um menu. |
+| Roda do rei | Y / △ (manter) | Tab (manter) | Só com o titular da coroa. É o corpo dele, não um menu. |
 | Atacar | RB / R1 | F / botão esq. do rato | Corpo controlado; manter repete à cadência da arma |
-| Habilidade da classe | RT / R2 | R / botão dir. do rato | Monarca: Vigília; Arqueiro: marca; Bardo: canto (ADR 0045) |
+| Habilidade do monarca | RT / R2 | R / botão dir. do rato | Rei: Vigília; Nia: o canto pago do Bardo; Arqueiro: marca (ADR 0045, ADR 0052) |
 | Impulso real | Roda do rei → segmento | Tab → 1–5 | Um por dia (§15) |
 | Câmara livre | Stick direito | Q · Z ou rato na margem | Reconhecimento; volta sozinha em 2 s |
 | Pausa / opções | Start | Esc | Sempre |

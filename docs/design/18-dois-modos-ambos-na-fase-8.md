@@ -2,7 +2,7 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-**Cooperativo — duas coroas** — Dois jogadores, um império, classes diferentes. Um pode estar em expedição enquanto o outro defende. Ecrã dividido local e online.
+**Cooperativo — duas coroas** — Dois jogadores, um império, imperadores diferentes — nenhum joga uma tropa (ADR 0052). Um pode estar em expedição enquanto o outro defende. Proposta: um titular e um com autoridade delegada, bolsas pessoais e um decreto por reino e por dia (Q-204). Ecrã dividido local e online.
 
 Começam nas extremidades opostas do mapa e conquistam em direção um ao outro. Vence quem tomar o império adversário ou sobreviver mais dias após a Podridão dupla.
 
