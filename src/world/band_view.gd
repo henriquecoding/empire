@@ -151,25 +151,38 @@ func _fogueiras() -> void:
 
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
-## milhares de vezes por partida: e a animacao mais importante do jogo." O arco
-## ja ca estava; a sombra e o que faz dele um arco e nao dois circulos, e o salto
-## ao pousar (GB-19) e so do ecra — a moeda fica onde a simulacao a pos.
+## milhares de vezes por partida: e a animacao mais importante do jogo." O arco e
+## da simulacao; o que o ecra lhe acrescenta — sair da mao, girar, ressaltar,
+## balancar e subir quando e levada — e do CoinBounce, e a moeda (ou a pilha, ou o
+## saco) e do CoinArt. O x e sempre o da simulacao (§55).
 func _moedas() -> void:
 	var moedas := SimLoop.coins
-	var apice := moedas.apex_px()
+	var curva := SimFactory.curve()
 	if _salto == null:
-		_salto = CoinBounce.new(SimFactory.curve().coin_gravity_px_s2)
-	_salto.forget_except(moedas.ids)
+		_salto = CoinBounce.new(curva.coin_gravity_px_s2)
+	_salto.forget_except(moedas.ids, _visual_time)
+	var chao := WorldPalette.ground_of(int(band))
+	var queda := moedas.apex_px() + CoinBounce.MAO
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
-		var onde := Smoothing.coin(moedas.ids[i], moedas.xs[i], moedas.heights[i])
-		_salto.observe(moedas.ids[i], onde.y, _visual_time)
-		onde.y += _salto.offset(moedas.ids[i], _visual_time)
-		Shadow.drop(self, onde.x, int(band), WorldPalette.MOEDA_R, onde.y, apice)
-		var y := WorldPalette.ground_of(int(band)) - onde.y - WorldPalette.MOEDA_R
-		var cor := _luz.body(WorldPalette.MOEDA, onde.x)
-		draw_circle(Vector2(onde.x, y), WorldPalette.MOEDA_R, cor)
+		var id := moedas.ids[i]
+		var onde := Smoothing.coin(id, moedas.xs[i], moedas.heights[i])
+		_salto.observe(id, onde.y, _visual_time, Vector2(onde.x, chao))
+		var acima := onde.y + _salto.offset(id, _visual_time)
+		if moedas.settled[i] == 0:  # sai da mao e desce ate ao arco (CoinBounce.hand)
+			acima += CoinBounce.MAO * CoinBounce.hand(moedas.vys[i], curva.coin_drop_speed_px_s)
+		var largo := CoinArt.size_of(moedas.amounts[i]).x
+		Shadow.drop(self, onde.x, int(band), largo * WorldPalette.MEIA, acima, queda)
+		var brilho := CoinArt.glint(id, _visual_time) if moedas.settled[i] == 1 else 0.0
+		var face := _salto.face(id, _visual_time)
+		var pe := Vector2(onde.x, chao - acima)
+		CoinArt.draw_on(self, pe, moedas.amounts[i], face, CoinArt.lit(_luz, onde.x), brilho)
+	for levada: Array in _salto.taken(_visual_time):  # apanhada, ou paga a uma obra
+		var subiu: float = levada[1]
+		var pe: Vector2 = levada[0] - Vector2(0.0, CoinBounce.LEVADA.sobe * subiu)
+		var some := func(c: Color) -> Color: return Color(c, 1.0 - subiu)
+		CoinArt.draw_on(self, pe, 1, 1.0, some, 0.0)
 
 
 ## O que a noite traz so se ve dentro de uma luz (ADR 0034); quem o desenha, com

@@ -22,11 +22,14 @@ const FILTRO := {"nearest": 0, "linear": 1}
 const FAIXAS := {"surface": Band.Kind.SURFACE, "underground": Band.Kind.UNDERGROUND}
 const Obras := preload("res://tools/captura_obras.gd")
 const Bichos := preload("res://tools/captura_bichos.gd")
+const Moedas := preload("res://tools/captura_moedas.gd")
+const Mancha := preload("res://tools/captura_mancha.gd")
 
 var _restam: int = 0
 var _saida: String = SAIDA
 var _preparacao: PackedStringArray = PackedStringArray()
 var _obras := Obras.new()
+var _moedas := Moedas.new()
 
 
 func _ready() -> void:
@@ -51,6 +54,8 @@ func _ready() -> void:
 	_pousar_o_rei(args)
 	_preparacao.append_array(_obras.prepare(String(args.get("obras", ""))))
 	_preparacao.append_array(Bichos.new().prepare(String(args.get("bichos", ""))))
+	var antes := int(args.get("moedas_antes", 0))
+	_preparacao.append_array(_moedas.prepare(String(args.get("moedas", "")), antes))
 
 
 ## `--esticar`, `--escala` e `--filtro` trocam o modo de ecra so nesta
@@ -97,6 +102,7 @@ func _pousar_o_rei(args: Dictionary) -> void:
 
 func _process(delta: float) -> void:
 	_obras.advance(delta)
+	_moedas.step(_restam)
 	_restam -= 1
 	if _restam > 0:
 		return
@@ -122,7 +128,7 @@ func _ficha(imagem: Image) -> void:
 		"dia": SimLoop.state.day if SimLoop.state != null else 0,
 		"fase": int(relogio.current_phase()),
 		"progresso_fase": snappedf(relogio.phase_progress(), 0.001),
-		"mancha": _mancha(),
+		"mancha": Mancha.on_screen(get_viewport()),
 		"instrumentos": _instrumentos(),
 		"semente": RngService.world_seed(),
 		"rei": _rei(),
@@ -187,24 +193,6 @@ func _camara_x() -> float:
 	return snappedf((t.affine_inverse() * (get_viewport().get_visible_rect().size * 0.5)).x, 0.1)
 
 
-## Onde a mancha e o rasto dela estao NO ECRA, em rectangulos. A camara so anda
-## em x, mas quem converte e a transformacao do canvas: repetir a conta aqui era
-## ter dois sitios a decidir onde uma coisa aparece.
-func _mancha() -> Array:
-	var rot := SimLoop.night.rot if SimLoop.state != null else null
-	if rot == null or not rot.active():
-		return []
-	var t := get_viewport().get_canvas_transform()
-	var largura := maxf(rot.state.width, WorldPalette.DEGRAU)
-	var meia := largura * WorldPalette.MEIA
-	var chao := WorldPalette.ground_of(int(Band.Kind.SURFACE))
-	var massa := Rect2(rot.position_x() - meia, float(Band.HORIZON), largura, chao - Band.HORIZON)
-	var de := minf(rot.state.trail_from, rot.state.trail_to)
-	var ate := maxf(rot.state.trail_from, rot.state.trail_to)
-	var rasto := Rect2(de, chao - WorldPalette.RASTO, ate - de, WorldPalette.RASTO)
-	return [_no_ecra(t, massa), _no_ecra(t, rasto)]
-
-
 ## Onde estao os INSTRUMENTOS do greybox no ecra (§67, GB-03). Quem mede a
 ## imagem tem de os saltar: sao texto branco, e uma regra sobre a luz do mundo
 ## medida por cima de um painel de texto media o painel.
@@ -216,12 +204,6 @@ func _instrumentos() -> Array:
 			var r := control.get_global_rect()
 			fora.append([r.position.x, r.position.y, r.size.x, r.size.y])
 	return fora
-
-
-func _no_ecra(t: Transform2D, caixa: Rect2) -> Array:
-	var canto := t * caixa.position
-	var fim := t * caixa.end
-	return [canto.x, canto.y, fim.x - canto.x, fim.y - canto.y]
 
 
 ## Corre `segundos` de simulacao ao passo fixo, sem render. E o mesmo step() que

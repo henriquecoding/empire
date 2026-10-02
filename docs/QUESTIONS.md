@@ -7,6 +7,23 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## As moedas que se vêem — 02/10/2026 (ADR 0050)
+
+### Q-192 · A moeda grande, com física e com cara de moeda; a coroa que cai
+- **Pedido do dono (02/10/2026):** *«as moedas e itens que são dropados devem ser bem grandes para serem bem vistos como é
+  em Kingdom e devem ter física e se parecerem com o que são»*. Aplicado (ADR 0050).
+- **Onde:** §02, §16, §24, §55, §80, GB-19, Q-167. No código: `CoinArt`, `CoinBounce`, `CrownView`, `PriceTag`, o
+  `BandView` (`_moedas`). Os testes: `tests/coin_bounce_test.gd`, `tests/coin_art_test.gd`.
+- **O que estava:** a moeda no chão era um círculo de 6 px; saía do chão e dava um salto de 4 px; uma de 12 era igual a
+  uma de 1; a coroa aparecia no chão sem cair.
+- **O que foi feito:** a moeda de 18 px em píxeis (uma de pé, a pilha, o saco), que sai da mão, gira, ressalta até
+  parar, balança, pisca no chão e sobe ao ser levada; a coroa de 30 px que cai da cabeça do rei; o preço em moedas.
+- **Escolhas minhas, reversíveis:** os tamanhos (18 px a moeda, 30 a coroa, 14 a do preço), a altura da mão (30 px), o
+  primeiro ressalto (12 px) e a restituição (0,5), o ritmo do brilho e quanto o ouro guarda da sua cor no escuro (40 %).
+  Tudo de ecrã; nada mexe em onde a moeda pousa (§55).
+- **Fora:** o som com pitch variável (`audio/` não se toca); a arte definitiva (ART-01).
+- **Decide:** tu, se o tamanho ficou certo ao lado do rei, e se a moeda deve saltar mais ou menos.
+
 ## A noite que se vê e o bestiário — 02/10/2026 (ADR 0048, ADR 0049)
 
 ### Q-189 · A noite é difícil de ver, e não impossível; as luzes alumiam
