@@ -26,8 +26,8 @@ func _unhandled_input(evento: InputEvent) -> void:
 	# No comando a roda e manter e largar (§24, Q-148): o painel abre com o Y e fecha
 	# com ele, para que o apontado se veja em cada gesto. No teclado continua a
 	# alternar com o Tab (Q-067).
-	if evento is InputEventJoypadButton:
-		visible = evento.is_pressed()
+	if evento is InputEventJoypadButton or evento is InputEventAction:
+		visible = evento.is_pressed()  # o comando, e o dedo na roda (ADR 0047)
 	elif evento.is_pressed():
 		visible = not visible
 	get_viewport().set_input_as_handled()

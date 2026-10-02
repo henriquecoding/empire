@@ -22,6 +22,9 @@ const PARADO := 0.01
 ## Os dois lados da margem do rato, na mesma unidade do `pan()`.
 const ESQUERDA := -1.0
 const DIREITA := 1.0
+## Quem arrasta a camara com o dedo chama-a por aqui: a interface nao importa do mundo
+## (§70), e o pedido vai pelo grupo, como o do PauseMenu a cena de jogo (ADR 0047).
+const GRUPO := &"camara"
 
 ## Largura do enquadramento, em px de mundo. Sai do viewport no _ready(); um
 ## teste poe-a a mao para nao precisar de janela.
@@ -47,6 +50,7 @@ var _rato_dentro: bool = false
 func _ready() -> void:
 	_dados = Registry.entry(&"camera", &"default") as CameraData
 	view_width = get_viewport_rect().size.x
+	add_to_group(GRUPO)
 
 
 ## Quem seguir. Passar null deixa a camara onde esta.
@@ -79,6 +83,18 @@ func pan(direcao: float, delta: float) -> void:
 	_livre += direcao * _dados.free_speed_px_s * delta
 	# Recomeca a contagem do regresso a cada comando: a velocidade de recuo sai
 	# de onde a camara ficou, para que os 2 s do §24 sejam mesmo 2 s.
+	_recuo_px_s = absf(_livre) / _dados.free_return_seconds
+
+
+## O dedo agarra o mundo (ADR 0047): a camara anda `px` e fica enquanto ele estiver
+## pousado. Nunca mais do que um ecra — alem disso o largar demorava a ver-se.
+func drag(px: float) -> void:
+	_livre = clampf(_livre + px, -view_width, view_width)
+	_recuo_px_s = 0.0
+
+
+## O dedo saiu: a camara volta sozinha, nos mesmos 2 s da camara livre do §24.
+func let_go() -> void:
 	_recuo_px_s = absf(_livre) / _dados.free_return_seconds
 
 
@@ -120,7 +136,11 @@ static func edge(rato_x: float, largura: float, fracao: float) -> float:
 
 
 func _input(evento: InputEvent) -> void:
-	if evento is InputEventMouseMotion:
+	# O rato que o motor faz de cada toque fica onde o dedo saiu: se contasse, o ultimo
+	# polegar pousado na alavanca deixava a camara a fugir para a margem (ADR 0047).
+	if evento is InputEventScreenTouch or evento is InputEventScreenDrag:
+		_rato_dentro = false
+	elif evento is InputEventMouseMotion and evento.device != InputEvent.DEVICE_ID_EMULATION:
 		_rato_dentro = true
 
 

@@ -89,3 +89,17 @@ func test_uma_preferencia_que_nao_existe_nao_se_grava() -> void:
 func test_o_ficheiro_e_o_da_seccao_45() -> void:
 	assert_str(Preferences.FICHEIRO).is_equal("user://settings.cfg")
 	assert_str(Preferences.shared().path).is_equal(Preferences.FICHEIRO)
+
+
+## ADR 0047: o tamanho dos controlos, o canhoto e a vibracao sao preferencias da §45 —
+## mudam o que se ve e o que se sente na mao, nunca o que acontece.
+func test_as_preferencias_do_toque() -> void:
+	var p := Preferences.new(FICHEIRO)
+	assert_float(p.number(Preferences.TOUCH_SCALE)).is_equal(1.0)
+	assert_bool(p.enabled(Preferences.TOUCH_LEFT)).is_false()
+	assert_bool(p.enabled(Preferences.TOUCH_HAPTICS)).is_true()
+	assert_bool(p.set_number(Preferences.TOUCH_SCALE, 1.2)).is_true()
+	assert_bool(p.set_enabled(Preferences.TOUCH_LEFT, true)).is_true()
+	var outra := Preferences.new(FICHEIRO)
+	assert_float(outra.number(Preferences.TOUCH_SCALE)).is_equal_approx(1.2, 0.001)
+	assert_bool(outra.enabled(Preferences.TOUCH_LEFT)).is_true()

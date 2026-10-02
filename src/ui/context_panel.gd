@@ -23,9 +23,7 @@ func _ready() -> void:
 	panel.content_margin_right = EDGE
 	add_theme_stylebox_override("normal", panel)
 	add_to_group(&"instrumentos")
-	var pads := Input.get_connected_joypads()
-	if not pads.is_empty():
-		device = Glyphs.pad_of(Input.get_joy_name(pads[0]))
+	device = Glyphs.initial()
 
 
 func _input(event: InputEvent) -> void:

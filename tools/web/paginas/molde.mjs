@@ -353,7 +353,7 @@ function controlos({ t, d }) {
     });
     const teclado = y ? [...juntar(x.teclas, y.teclas, l), ...juntar(x.rato, y.rato, l)] : [...kbd(x.teclas), ...kbd(x.rato)];
     const comando = y ? juntar(x.comando, y.comando, l) : kbd(x.comando);
-    return `<tr><th scope="row">${a.t}</th><td>${teclado.join(ou) || "—"}</td><td>${comando.join(ou) || "—"}</td></tr>`;
+    return `<tr><th scope="row">${a.t}</th><td>${teclado.join(ou) || "—"}</td><td>${comando.join(ou) || "—"}</td><td>${a.toque}</td></tr>`;
   }).join("\n            ");
   return `<section class="secao" id="controlos" aria-labelledby="controlos-t">
   <div class="envolve">

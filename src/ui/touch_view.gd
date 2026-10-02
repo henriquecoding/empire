@@ -1,0 +1,85 @@
+# src/ui/touch_view.gd — o que os controlos de toque mostram, botao a botao (ADR 0047).
+#
+# O TouchArt sabe desenhar um botao; isto sabe o que cada um diz agora: a arma e a
+# habilidade de quem se conduz (ADR 0045), a recarga, o INTERAGIR a pulsar quando o
+# guia diz que ha que fazer, e a roda apagada quando nao e o rei que a tem (§24).
+class_name TouchView
+extends RefCounted
+
+const ICONES := {
+	TouchLayout.Role.DROP: &"moeda",
+	TouchLayout.Role.ASSUME: &"passar",
+	TouchLayout.Role.WHEEL: &"coroa",
+	TouchLayout.Role.PAUSE: &"pausa",
+}
+const ARMAS := {&"monarch": &"espada", &"archer": &"flecha", &"bard": &"alaude"}
+const DONS := {&"monarch": &"vigilia", &"archer": &"mira", &"bard": &"canto"}
+
+
+static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
+	var l := pad.layout
+	var raio := l.stick_radius()
+	if pad.stick.held:
+		TouchArt.stick(ci, pad.stick.base, raio, pad.stick.offset, pad.stick.runs())
+	else:
+		TouchArt.stick(ci, l.stick_home(), raio, 0.0, false)
+	var classe := HeroWatch.current()
+	var rei := Assume.king()
+	for papel: TouchLayout.Role in TouchPad.ACCOES.keys() + [TouchLayout.Role.PAUSE]:
+		var estado := {
+			&"premido": pad.holds(papel),
+			&"icone": ICONES.get(papel, &""),
+			&"rotulo": _nome(Glyphs.BOTOES[Glyphs.Device.TOUCH][_glifo(papel)]),
+			&"cor": GameHud.GOLD if papel == TouchLayout.Role.DROP else GameHud.TEXT,
+		}
+		match papel:
+			TouchLayout.Role.ATTACK:
+				estado[&"icone"] = ARMAS.get(classe, &"espada")
+				estado[&"rotulo"] = _nome(CombatGlyphs.attack_name(classe))
+				estado[&"pronto"] = _pronto()
+			TouchLayout.Role.SKILL:
+				estado[&"icone"] = DONS.get(classe, &"mira")
+				estado[&"rotulo"] = _nome(CombatGlyphs.skill_name(classe))
+				estado[&"apagado"] = not DONS.has(classe)
+			TouchLayout.Role.ASSUME:
+				estado[&"brilho"] = brilho
+			TouchLayout.Role.WHEEL:
+				estado[&"apagado"] = not rei
+			TouchLayout.Role.PAUSE:
+				estado[&"rotulo"] = ""
+		TouchArt.button(ci, l.centre(papel), l.radius(papel), estado)
+	if pad.holds(TouchLayout.Role.WHEEL) and rei:
+		var n := SimLoop.field.crown.ids().size()
+		var alcance := TouchPad.RODA_PX * l.scale
+		TouchArt.wheel(ci, l.centre(TouchLayout.Role.WHEEL), alcance, n, InputRouter.pointed)
+
+
+## A linha de Glyphs.ACCOES que diz o nome deste botao.
+static func _glifo(papel: TouchLayout.Role) -> int:
+	match papel:
+		TouchLayout.Role.DROP:
+			return Glyphs.ACCOES.find(&"HINT_DROP")
+		TouchLayout.Role.ASSUME:
+			return Glyphs.ACCOES.find(&"HINT_ASSUME")
+		TouchLayout.Role.WHEEL:
+			return Glyphs.ACCOES.find(&"HINT_WHEEL")
+		TouchLayout.Role.ATTACK:
+			return Glyphs.ACCOES.find(&"HINT_ATTACK")
+		TouchLayout.Role.SKILL:
+			return Glyphs.ACCOES.find(&"HINT_MARK")
+	return Glyphs.ACCOES.find(&"HINT_PAUSE")
+
+
+## Quanto da recarga da arma ja passou, como o painel de combate o mostra (ADR 0045).
+static func _pronto() -> float:
+	var quem := Assume.driven()
+	var i := SimLoop.units.index_of(quem)
+	var perfil := SimLoop.combat.manual.profile(SimLoop.units, quem)
+	if i < 0 or perfil.is_empty():
+		return 1.0
+	var intervalo := maxf(CombatBar.MIN_INTERVAL, float(perfil.get(&"interval", 1.0)))
+	return clampf(1.0 - SimLoop.units.cooldowns[i] / intervalo, 0.0, 1.0)
+
+
+static func _nome(chave: StringName) -> String:
+	return TranslationServer.translate(chave).to_upper()

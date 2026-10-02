@@ -8,6 +8,11 @@ static func buttons(device: Glyphs.Device) -> PackedStringArray:
 			return ["RB", "RT"]
 		Glyphs.Device.PLAYSTATION:
 			return ["R1", "R2"]
+		Glyphs.Device.TOUCH:
+			return [
+				TranslationServer.translate(&"TOUCH_ATTACK"),
+				TranslationServer.translate(&"TOUCH_SKILL"),
+			]
 	return [TranslationServer.translate(&"KEY_ATTACK"), TranslationServer.translate(&"KEY_SKILL")]
 
 

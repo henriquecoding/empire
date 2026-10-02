@@ -76,7 +76,9 @@ func _ready() -> void:
 	_evolved = PauseTheme.label(details)
 	_controls = PauseTheme.label(details)
 	_controls.add_theme_color_override("font_color", PauseTheme.GOLD)
-	PauseTheme.label(body, &"CLASS_CHOOSE_RULE")
+	PauseTheme.label(
+		body, &"CLASS_CHOOSE_RULE_TOUCH" if TouchControls.active else &"CLASS_CHOOSE_RULE"
+	)
 	start_button = PauseTheme.button(_layout, &"CLASS_BEGIN", begin)
 	PauseTheme.primary(start_button)
 	get_viewport().size_changed.connect(fit)
@@ -142,7 +144,8 @@ func select(id: StringName) -> void:
 			}
 		)
 	)
-	_controls.text = tr(StringName("CLASS_CONTROLS_" + String(id).to_upper()))
+	var mao := "CLASS_CONTROLS_TOUCH_" if TouchControls.active else "CLASS_CONTROLS_"  # ADR 0047
+	_controls.text = tr(StringName(mao + String(id).to_upper()))
 	start_button.text = tr(&"CLASS_BEGIN").format({"name": _title.text})
 
 

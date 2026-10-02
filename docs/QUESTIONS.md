@@ -7,6 +7,42 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Jogar com os dedos — 02/10/2026 (ADR 0047)
+
+### Q-187 · O toque é o quarto dispositivo: a alavanca, os botões e o mundo
+- **Pedido do dono (02/10/2026):** *«implemente a jogabilidade por dispositivos mobile, no navegador também, com
+  touchscreen e todo o necessário, isso deve ser bem feito e elaborado»*. Aplicado (ADR 0047).
+- **Onde:** §24, §26, §45, §61, ADR 0024, ADR 0040, ADR 0045. No código: `TouchLayout`, `TouchStick`, `TouchPad`,
+  `TouchControls`, `TouchArt`, `Glyphs` (`Device.TOUCH`), `CameraRig.drag`, `CombatInput`, `Inspector`, `OptionsPanel`,
+  `Preferences`, a casca `tools/web/shell.html`. Os testes: `tests/toque_test.gd`, `tests/toque_pad_test.gd`,
+  `tests/glyphs_test.gd`, `tests/camera_rig_test.gd`.
+- **O que estava:** a casca dizia a quem chegava num telemóvel que não havia controlos por toque. E na `main` cada
+  toque era um ataque: o motor transforma o toque num clique de rato emulado, e o `attack` tem o botão esquerdo (ADR
+  0045).
+- **O que foi feito:** à esquerda, uma alavanca flutuante, só horizontal, que corre quando se arrasta até ao fim; à
+  direita, MOEDA (tocar larga uma, manter larga em contínuo), ATAQUE, INTERAGIR, a habilidade da classe e IMPULSOS (a
+  roda: manter, arrastar, largar); a pausa no canto de cima. O resto do ecrã é mundo: arrastar espreita, tocar aponta a
+  habilidade de quem mira. Tudo passa pelas acções do InputMap, e o rato emulado deixou de atacar, de mexer a câmara e
+  de trocar os glifos. Os controlos aparecem com o primeiro toque e somem com a primeira tecla ou comando. Na pausa, um
+  separador *Toque*: tamanho, canhoto e vibração. A casca arranca com um toque (som, ecrã inteiro e horizontal onde o
+  browser deixa), pede para virar o telemóvel quando está ao alto, e o jogo pausa nessa altura e ao sair da aplicação.
+- **Escolhas minhas, reversíveis:** os botões em vez de gestos soltos (o Kingdom no telemóvel só tem um verbo);
+  arrastar até ao fim para correr (o do Kingdom); tocar no mundo aponta a habilidade do Arqueiro e do Bardo, e não faz
+  nada ao Monarca (a Vigília não aponta); o diário fecha-se com MOEDA ou INTERAGIR, como no comando.
+- **Como desfazer:** tirar o nó `Toque` da `game.tscn` e o `Device.TOUCH` dos glifos.
+- **Decide:** tu, se alguma das escolhas acima não for a que querias.
+
+### Q-188 · No telemóvel, o mundo pode encher o ecrã?
+- **Onde:** ADR 0001 (proposta: a largura visível limitada a 1,25× o 16:9), §19, `project.godot` (aspecto `keep`),
+  ADR 0040 (a pausa e a escolha de classe já passam a `expand` enquanto estão abertas).
+- **O que está:** um telemóvel de 19,5:9 ou 20:9 mostra o jogo a 16:9 com barras pretas dos lados — e é aí que os
+  polegares pousam. Os controlos por toque ficam por cima do mundo, nos cantos do 16:9.
+- **Proposta:** no toque, `expand` até ao limite da ADR 0001. Um 20:9 é exactamente 1,25× o 16:9, e os botões passavam
+  para as zonas que hoje são barras.
+- **Porque não se aplicou:** muda quanto mundo se vê, e por isso quando a Podridão aparece — é a decisão que a ADR 0001
+  deixou por fechar (F0-09).
+- **Decide:** tu.
+
 ## Subsolo delimitado — 02/10/2026 (ADR 0046)
 
 ### Q-186 · O subsolo é um sítio, e acaba

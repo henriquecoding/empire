@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, viewport-fit=cover">
 <!--EMPIRE:CSP-->
 <meta name="theme-color" content="#15120c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="Empire — um kingdom-builder em pixel art, a correr no browser. Greybox jogável.">
 <!--EMPIRE:ROBOTS-->
 <title>A jogar · Empire</title>
@@ -37,8 +40,11 @@
 }
 html[lang="en"] [lang="pt-PT"],html[lang="pt-PT"] [lang="en"]{display:none!important}
 html,body,#canvas{margin:0;padding:0;border:0}
-body{color:var(--papel);background:var(--noite);overflow:hidden;touch-action:none;font-family:var(--f-corpo)}
-#canvas{display:block}
+body{color:var(--papel);background:var(--noite);overflow:hidden;touch-action:none;font-family:var(--f-corpo);
+  overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+/* O dedo e do jogo (ADR 0047): sem zoom de dois toques, sem o menu do toque longo,
+   sem selecionar texto nem arrastar o canvas como uma imagem. */
+#canvas{display:block;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 #canvas:focus{outline:none}
 :focus-visible{outline:2px solid var(--luz);outline-offset:3px}
 
@@ -72,10 +78,26 @@ body{color:var(--papel);background:var(--noite);overflow:hidden;touch-action:non
   padding:16px 20px;text-align:left;font-size:16px}
 #status-notice strong{font-family:var(--f-px);font-weight:400;font-size:12px;letter-spacing:.12em;display:block;margin-bottom:8px;
   color:var(--erro);text-transform:uppercase}
-.toque{display:none;max-width:44ch;color:var(--papel-2);font-size:16px;line-height:1.45}
+.toque{display:none;max-width:46ch;color:var(--papel-2);font-size:16px;line-height:1.45}
+.toque strong{color:var(--papel);font-weight:600}
 .toque button,.ecra-inteiro{min-height:44px;font-family:var(--f-px);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
   background:transparent;color:var(--papel);border:1px solid var(--papel-2);padding:10px 16px;cursor:pointer}
-.toque button{margin-top:14px}
+.toque button{margin-top:18px;min-height:52px;padding:12px 24px;font-size:14px;background:var(--luz);color:var(--noite);border-color:var(--luz)}
+.toque .dica{display:none;margin-top:14px;font-size:14px;color:var(--baixo)}
+.toque.iphone .dica{display:block}
+
+/* Ao alto, um telemovel mostra o jogo numa tira: pede-se para o virar, e o jogo
+   pausa sozinho enquanto isso (TouchControls). So depois de o jogo arrancar. */
+#rodar{display:none;position:fixed;inset:0;z-index:10;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  padding:24px;text-align:center;background:var(--noite);color:var(--papel)}
+#rodar p{margin:0;max-width:30ch;font-size:17px;line-height:1.45}
+#rodar p+p{font-size:14px;color:var(--papel-2)}
+#rodar svg{width:72px;height:72px;animation:vira 2.4s var(--ease) infinite}
+@keyframes vira{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+@media (orientation:portrait) and (pointer:coarse){html.a-jogar #rodar{display:flex}}
+/* Um telemovel deitado tem 360 a 430 px de altura: o titulo encolhe e o lema sai,
+   para o botao de jogar caber sem rolar. */
+@media (max-height:500px){.centro{gap:12px;padding:8px 20px 16px}.marca{font-size:32px}.lema{display:none}.toque button{margin-top:12px}}
 
 /* Os controlos, lidos do project.godot na construcao do site (pagina.mjs). */
 .controlos{width:min(620px,92vw);margin-top:6px;border-top:1px solid var(--linha);padding-top:18px}
@@ -98,7 +120,7 @@ kbd{font-family:var(--f-mono);font-size:12px;color:var(--papel);background:#2722
 .ferramentas a{font-family:var(--f-px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;min-height:44px;display:inline-flex;
   align-items:center;padding:0 14px;color:var(--papel);text-decoration:none;border:1px solid var(--papel-2)}
 .ferramentas[hidden]{display:none}
-@media (prefers-reduced-motion:reduce){#status-progress:indeterminate{animation:none}.ferramentas{transition:none}}
+@media (prefers-reduced-motion:reduce){#status-progress:indeterminate{animation:none}.ferramentas{transition:none}#rodar svg{animation:none}}
 </style>
 $GODOT_HEAD_INCLUDE
 </head>
@@ -121,13 +143,19 @@ $GODOT_HEAD_INCLUDE
     </div>
     <p id="estado" role="status" aria-live="polite"></p>
     <div class="toque" id="toque">
-      <span lang="pt-PT">O Empire joga-se com <strong>teclado</strong> ou com um <strong>comando</strong>. Num ecrã tátil podes vê-lo arrancar, mas ainda não há controlos por toque.</span>
-      <span lang="en">Empire is played with a <strong>keyboard</strong> or a <strong>gamepad</strong>. On a touch screen you can watch it start, but there are no touch controls yet.</span>
-      <br><button type="button" id="mesmo-assim"><span lang="pt-PT">Arrancar mesmo assim</span><span lang="en">Start anyway</span></button>
+      <span lang="pt-PT">Joga-se com os dedos, com o telemóvel deitado. À esquerda, a <strong>alavanca</strong>: arrasta para andar, até ao fim para correr. À direita, a <strong>moeda</strong> e os outros botões. Arrasta no mundo para espreitar.</span>
+      <span lang="en">Play with your fingers, phone held sideways. On the left, the <strong>stick</strong>: drag to walk, all the way to run. On the right, the <strong>coin</strong> and the other buttons. Drag the world to look around.</span>
+      <br><button type="button" id="jogar-toque"><span lang="pt-PT">Jogar</span><span lang="en">Play</span></button>
+      <p class="dica"><span lang="pt-PT">No iPhone, o Safari não deixa um jogo ocupar o ecrã inteiro. Para jogar sem as barras: Partilhar → Adicionar ao ecrã principal, e abre-o daí.</span><span lang="en">On iPhone, Safari won't let a game fill the whole screen. To play without the bars: Share → Add to Home Screen, and open it from there.</span></p>
     </div>
     <div id="status-notice" role="alert"></div>
     <!--EMPIRE:CONTROLOS-->
   </div>
+</div>
+<div id="rodar" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></svg>
+  <p><span lang="pt-PT">Vira o telemóvel para o lado.</span><span lang="en">Turn your phone sideways.</span></p>
+  <p><span lang="pt-PT">O jogo fica em pausa até lá.</span><span lang="en">The game waits, paused.</span></p>
 </div>
 <div class="ferramentas" id="ferramentas" hidden>
   <a href="/"><span lang="pt-PT">← Empire</span><span lang="en">← Empire</span></a>
@@ -170,7 +198,11 @@ const engine = new Engine(GODOT_CONFIG);
 
   function setMode(m) {
     if (mode === m || !initializing) return;
-    if (m === 'hidden') { overlay.remove(); initializing = false; ferramentas(); return; }
+    if (m === 'hidden') {
+      overlay.remove(); initializing = false;
+      document.documentElement.classList.add('a-jogar');
+      ferramentas(); return;
+    }
     overlay.style.visibility = 'visible';
     solo.style.display = m === 'progress' ? 'block' : 'none';
     estado.style.display = m === 'progress' ? 'block' : 'none';
@@ -209,17 +241,34 @@ const engine = new Engine(GODOT_CONFIG);
     }, LENTO);
   }
 
+  // O ecra inteiro, e no Android a horizontal: o browser so tranca a orientacao em
+  // ecra inteiro, e as duas so a partir de um gesto. O iPhone nao tem nenhuma das
+  // duas para um canvas (ADR 0047) — falhar aqui e calado, e o jogo arranca na mesma.
+  const raiz = document.documentElement;
+  const pedirEcra = raiz.requestFullscreen || raiz.webkitRequestFullscreen;
+  function ecraInteiro() {
+    if (!pedirEcra) return;
+    const deitar = () => {
+      if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+    };
+    try {
+      const p = pedirEcra.call(raiz, { navigationUI: 'hide' });
+      if (p && p.then) p.then(deitar, () => {});
+      else deitar();
+    } catch (e) { /* sem ecra inteiro: joga-se na janela */ }
+  }
+
   // Depois de arrancar: o voltar e o ecra inteiro aparecem quatro segundos, e
-  // voltam quando o rato passa perto de cima. Sem a API de ecra inteiro, o
-  // botao nem aparece.
+  // voltam quando o rato passa perto de cima — ou quando o dedo toca la em cima,
+  // que num telemovel nao ha rato. Sem a API de ecra inteiro, o botao nem aparece.
   function ferramentas() {
     const barra = document.getElementById('ferramentas');
     const botao = document.getElementById('ecra-inteiro');
-    const raiz = document.documentElement;
-    if (!raiz.requestFullscreen) botao.remove();
+    if (!pedirEcra) botao.remove();
     else botao.addEventListener('click', () => {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else raiz.requestFullscreen().catch(() => {});
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else ecraInteiro();
       document.getElementById('canvas').focus();
     });
     barra.hidden = false;
@@ -231,6 +280,7 @@ const engine = new Engine(GODOT_CONFIG);
     };
     requestAnimationFrame(mostrar);
     window.addEventListener('mousemove', (e) => { if (e.clientY < 80) mostrar(); }, { passive: true });
+    window.addEventListener('touchstart', (e) => { if (e.touches[0] && e.touches[0].clientY < 60) mostrar(); }, { passive: true });
   }
 
   function start() {
@@ -255,11 +305,14 @@ const engine = new Engine(GODOT_CONFIG);
     fail(T.falta + '\n' + missing.join('\n') + '\n' + T.experimenta);
     return;
   }
-  // Sem rato nem teclado provavel: avisa, e deixa arrancar se a pessoa quiser.
+  // Num ecra de toque arranca-se com um toque (ADR 0047): e o gesto que o browser
+  // exige para o som, o ecra inteiro e a horizontal. Ate la, o ecra ensina os dedos.
   const soToque = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (soToque) {
+    const instalado = navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    if (!pedirEcra && !instalado) toque.classList.add('iphone');
     setMode('touch');
-    document.getElementById('mesmo-assim').addEventListener('click', start, { once: true });
+    document.getElementById('jogar-toque').addEventListener('click', () => { ecraInteiro(); start(); }, { once: true });
   } else {
     start();
   }
