@@ -93,6 +93,10 @@ func running() -> bool:
 
 
 func set_paused(pausado: bool) -> void:
+	if pausado:
+		intents.clear()
+		if combat != null:
+			combat.manual.cancel()
 	_running = not pausado
 	ClockService.running = not pausado
 	EventBus.queue(&"game_paused", [pausado])

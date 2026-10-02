@@ -15,6 +15,7 @@ const MEIO := 0.5
 var fila: ContactQueue
 var focused: Dictionary = {}
 var song: BardSong
+var controlled := UnitSystem.NENHUM
 
 var _postos: JobBoard
 var _unidades: Dictionary = {}
@@ -67,7 +68,8 @@ func choose(
 		if dados == null or dados.damage <= SEM_DANO:
 			continue
 		_alvos[unit_id] = _da_tropa(unidades, i, dados, criaturas)
-		_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
+		if unit_id != controlled:
+			_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
 	for subiu in Passages.surface(criaturas, _criaturas, passagens):
 		(
 			eventos

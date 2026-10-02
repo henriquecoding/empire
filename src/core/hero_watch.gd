@@ -1,6 +1,9 @@
 class_name HeroWatch
 extends RefCounted
 
+static var feedback: StringName = &""
+static var feedback_serial := 0
+
 
 static func current() -> StringName:
 	var i := SimLoop.units.index_of(Assume.driven())
@@ -9,6 +12,10 @@ static func current() -> StringName:
 
 static func tick(delta: float) -> void:
 	var field := SimLoop.field
+	SimLoop.combat.manual.controlled = Assume.driven()
+	SimLoop.combat.manual.allies = field.song.allies
+	SimLoop.combat.manual.focus = field.focus
+	SimLoop.combat.manual.tick(delta)
 	field.song.tick(delta, SimLoop.creatures)
 	SimLoop.creatures.allies = field.song.allies
 	field.focus.allies = field.song.allies
@@ -34,18 +41,29 @@ static func tick(delta: float) -> void:
 				_charm(SimLoop.units.ids[i], SimLoop.units.xs[i])
 
 
-static func action(x: float) -> void:
+static func action(x: float) -> bool:
+	feedback_serial += 1
+	feedback = &"COMBAT_NO_ABILITY_TARGET"
 	var who := Assume.driven()
 	var field := SimLoop.field
 	match current():
 		&"archer":
 			var phase := field.hero_progress.phase_of(&"archer")
-			for id in field.focus.aim(SimLoop.units, SimLoop.creatures, who, x, phase):
+			var hits := field.focus.aim(SimLoop.units, SimLoop.creatures, who, x, phase)
+			for id in hits:
 				EventBus.queue(&"target_marked", [id, who])
+			feedback = &"COMBAT_MARKED" if not hits.is_empty() else &"COMBAT_NO_ABILITY_TARGET"
+			return not hits.is_empty()
 		&"bard":
+			if float(field.song.cooldowns.get(who, 0.0)) > 0.0:
+				feedback = &"COMBAT_SKILL_RECOVERING"
+				return false
 			var promoted := BardPromotion.at(who, x)
-			if not promoted:
-				_charm(who, x)
+			var success := promoted or _charm(who, x)
+			if success:
+				feedback = &"COMBAT_PROMOTED" if promoted else &"COMBAT_CHARMED"
+			return success
+	return false
 
 
 static func pace() -> float:
@@ -88,7 +106,7 @@ static func resolved(events: Array[Dictionary]) -> Array[Dictionary]:
 	return events
 
 
-static func _charm(who: int, x: float) -> void:
+static func _charm(who: int, x: float) -> bool:
 	var song := SimLoop.field.song
 	var converted := song.conversions()
 	var phase := SimLoop.field.hero_progress.phase_of(&"bard")
@@ -97,3 +115,4 @@ static func _charm(who: int, x: float) -> void:
 		if song.conversions() > converted:
 			SimLoop.field.hero_progress.record(&"bard")
 		EventBus.queue(&"target_marked", [target, who])
+	return target >= 0

@@ -72,6 +72,7 @@ func _ready() -> void:
 	_escrever_fixos()
 	add_child(ContextPanel.new())
 	add_child(TravelPanel.new())
+	add_child(CombatBar.new())
 	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.game_paused.connect(_na_pausa)
 	for sinal: StringName in HudText.AVISOS:

@@ -35,9 +35,14 @@ static func at(who: int, x: float) -> bool:
 	var old: Dictionary = {}
 	for i in units.count():
 		old[units.ids[i]] = units.data_ids[i]
-	var promoted := BardPromotionRules.at(units, who, x, data, SimFactory.by_id(&"units"), phase)
+	var cooldown := float(field.song.cooldowns.get(who, 0.0))
+	var promoted := BardPromotionRules.at(
+		units, who, x, data, SimFactory.by_id(&"units"), phase, cooldown
+	)
 	if promoted < 0:
 		return false
+	var body := Registry.entry(&"units", units.data_ids[b]) as UnitData
+	field.song.cooldowns[who] = body.attack_interval
 	EventBus.queue(
 		&"unit_promoted", [promoted, old[promoted], units.data_ids[units.index_of(promoted)]]
 	)

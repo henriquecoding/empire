@@ -1658,5 +1658,24 @@
    "Evolução e promoção pelos dados",
    "Testes e export Web"
   ]
+ },
+ "COMBAT-01": {
+  "title": "Combate direto das classes",
+  "porque": "Ataque e habilidade precisam de botões e resposta clara ao jogador.",
+  "spec": [
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "CLASSES-01",
+  "feito": "Ataque manual, habilidade separada, mira, recarga e verificação de combate.",
+  "fora": "Novas classes e arte final.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [
+   "Ataque determinista por intenção",
+   "Habilidades com comandos próprios",
+   "Botões e efeitos de combate",
+   "Testes, export, PR e publicação"
+  ]
  }
 }

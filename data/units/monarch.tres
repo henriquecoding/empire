@@ -20,5 +20,8 @@ layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon
 shadow_width = 22
 tags = Array[StringName]([&"king", &"tank"])
 coin_capacity = 33
+ability_params = {
+&"manual_buffer": 0.18
+}
 weapon_kind = &"sword"
 head_pool = Array[StringName]([&"crown_crooked"])

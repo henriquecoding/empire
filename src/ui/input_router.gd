@@ -45,12 +45,6 @@ func _unhandled_input(evento: InputEvent) -> void:
 		else:
 			SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		get_viewport().set_input_as_handled()
-	elif evento.is_action(&"mark_target"):
-		var marca := rising(evento, _marcar)
-		_marcar = held(evento, _marcar)
-		if marca:
-			SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"x": _alvo_em_x(evento)})
-		get_viewport().set_input_as_handled()
 
 
 ## §24: "Tab (manter) -> 1-5". Com a roda premida, a tecla de numero escolhe o

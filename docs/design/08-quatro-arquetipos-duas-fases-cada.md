@@ -16,6 +16,8 @@ Ao iniciar uma partida nova, o jogador escolhe entre Monarca, Arqueiro e Bardo a
 | Trepador | Ágil. Sobe a plataformas, ramos e pontes sem escadas — desenhado para a tua arquitetura vertical. | Sobe em criaturas enormes quase mortas e controla-as 20 s, usando-as como aríete. | Mobilidade, e a tua ideia mais espetacular. |
 
 
+Combate direto — ADR 0045. O corpo controlado ataca por botão: F, botão esquerdo do rato ou RB/R1. A habilidade é independente: R, botão direito ou RT/R2. A espada do Monarca, a flecha do Arqueiro e o golpe curto proposto do Bardo seguem a direção escolhida e o alcance da arma. Segurar ataque repete à cadência; tropas continuam automáticas. A marca não dispara uma flecha e o canto tem recarga própria. O Monarca usa a Vigília existente por esse atalho; a aura permanece passiva. Botões visíveis mostram ataque, habilidade e recuperação (Q-184).
+
 ## Classes desbloqueáveis
 
 | Classe | Gancho | Mecânica única |

@@ -40,8 +40,8 @@ static func consume(
 	campo: FieldWork = null
 ) -> Array[Dictionary]:
 	var larga: Array[Dictionary] = []
-	var quem := king_id if campo == null else campo.roster.driven(unidades, king_id)
 	for intencao in fila.take():
+		var quem := king_id if campo == null else campo.roster.driven(unidades, king_id)
 		var args: Dictionary = intencao[1]
 		match int(intencao[0]):
 			IntentQueue.Kind.DROP_COIN:
@@ -53,13 +53,18 @@ static func consume(
 				_assumir(unidades, king_id, quem, passagens, obras, campo)
 			IntentQueue.Kind.MARK_TARGET:
 				if campo != null:
-					HeroWatch.action(args[&"x"])
+					if int(args.get(&"who", quem)) == quem:
+						HeroWatch.action(args[&"x"])
 				elif campo == null:
 					mark(unidades, bichos, combate, args[&"x"], quem)
 			IntentQueue.Kind.DAY_LENGTH:
 				day_length(args[&"seconds"])
 			IntentQueue.Kind.TRAVEL:
 				TravelWatch.go(int(args.get(&"realm", 0)))
+			IntentQueue.Kind.ATTACK:
+				if campo != null and int(args.get(&"who", quem)) == quem:
+					combate.manual.controlled = quem
+					combate.manual.request(quem, float(args[&"direction"]))
 			IntentQueue.Kind.IMPULSE:
 				if campo != null and quem == king_id:  # so com o monarca assumido (§24)
 					campo.impulse(args[&"id"], unidades, king_id)

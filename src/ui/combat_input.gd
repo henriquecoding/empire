@@ -1,0 +1,138 @@
+class_name CombatInput
+extends Node
+
+static var facing := 1.0
+static var cursor_aim := false
+static var device := Glyphs.Device.KEYBOARD
+
+var _skill_held := false
+var _attack_held := false
+var _release := false
+
+
+func _ready() -> void:
+	EventBus.game_paused.connect(_paused)
+	facing = 1.0
+	cursor_aim = false
+
+
+func _paused(_value: bool) -> void:
+	_release = true
+	_skill_held = false
+	_attack_held = false
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if blocked() or _release or event.is_echo():
+		return
+	if event.is_action(&"attack"):
+		var held := event.is_action_pressed(&"attack")
+		if held and not _attack_held:
+			cursor_aim = event is InputEventMouseButton
+			queue_attack(aim_direction())
+		_attack_held = held
+		get_viewport().set_input_as_handled()
+	elif event.is_action(&"mark_target"):
+		var held := event.is_action_pressed(&"mark_target")
+		if held and not _skill_held:
+			cursor_aim = event is InputEventMouseButton
+			queue_skill(aim_x())
+		_skill_held = held
+		get_viewport().set_input_as_handled()
+
+
+func _input(event: InputEvent) -> void:
+	var name := ""
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		name = Input.get_joy_name(event.device)
+	device = Glyphs.device_of(event, device, name)
+
+
+func _process(_delta: float) -> void:
+	if _release:
+		if not Input.is_action_pressed(&"attack") and not Input.is_action_pressed(&"mark_target"):
+			_release = false
+		return
+	if blocked():
+		_release = _attack_held or _skill_held
+		return
+	var move := Input.get_axis(&"move_left", &"move_right")
+	if not is_zero_approx(move):
+		facing = signf(move)
+	if _attack_held and not Input.is_action_pressed(&"attack"):
+		_attack_held = false
+	# Holding is still a deliberate attack command, with the CSV weapon cadence.
+	if _attack_held:
+		var who := Assume.driven()
+		var i := SimLoop.units.index_of(who)
+		var manual := SimLoop.combat.manual
+		var stats := manual.profile(SimLoop.units, who)
+		if i >= 0 and not stats.is_empty() and not manual.pending(who):
+			if SimLoop.units.cooldowns[i] <= float(stats[&"buffer"]):
+				queue_attack(aim_direction())
+
+
+static func blocked() -> bool:
+	return (
+		ClassSelection.active
+		or TravelPanel.active
+		or not SimLoop.running()
+		or Input.is_action_pressed(&"king_wheel")
+	)
+
+
+static func aim_direction() -> float:
+	if not cursor_aim or SimLoop.units == null:
+		return facing
+	var i := SimLoop.units.index_of(Assume.driven())
+	var camera := SimLoop.get_viewport().get_camera_2d()
+	if i < 0 or camera == null:
+		return facing
+	var delta := camera.get_global_mouse_position().x - SimLoop.units.xs[i]
+	return facing if is_zero_approx(delta) else signf(delta)
+
+
+static func aim_x() -> float:
+	var units := SimLoop.units
+	var i := units.index_of(Assume.driven())
+	if i < 0:
+		return SimLoop.core_x
+	var camera := SimLoop.get_viewport().get_camera_2d()
+	if cursor_aim and camera != null:
+		return camera.get_global_mouse_position().x
+	var body := Registry.entry(&"units", units.data_ids[i]) as UnitData
+	var radius := float(body.ability_params.get(&"radius", body.range_px))
+	var best := -1
+	var gap := radius
+	for id in TargetPicker.ids_por_ordem(SimLoop.creatures.ids):
+		var c := SimLoop.creatures.index_of(id)
+		if not SimLoop.creatures.alive(c):
+			continue
+		if SimLoop.creatures.bands[c] != units.bands[i] or SimLoop.field.song.allies.has(id):
+			continue
+		var distance := (SimLoop.creatures.xs[c] - units.xs[i]) * facing
+		if distance >= 0.0 and distance <= gap:
+			best = c
+			gap = distance
+	return SimLoop.creatures.xs[best] if best >= 0 else units.xs[i] + facing * radius
+
+
+static func queue_attack(direction: float) -> void:
+	if blocked():
+		return
+	SimLoop.intents.queue(
+		IntentQueue.Kind.ATTACK, {&"who": Assume.driven(), &"direction": direction}
+	)
+
+
+static func queue_skill(x: float) -> void:
+	if blocked():
+		return
+	if Assume.king():
+		var refusal := InputRouter.impulse_refusal(&"vigil")
+		if refusal.is_empty():
+			SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": &"vigil"})
+		else:
+			SimLoop.get_tree().call_group(&"painel", &"say", refusal)
+		return
+	SimLoop.intents.queue(IntentQueue.Kind.MARK_TARGET, {&"who": Assume.driven(), &"x": x})

@@ -2,6 +2,7 @@ class_name BardSong
 extends RefCounted
 
 var allies: Dictionary = {}
+var cooldowns: Dictionary = {}
 var _converted := PackedInt32Array()
 var _class: ClassData
 var _units: Dictionary
@@ -16,7 +17,12 @@ func _init(data: ClassData, units: Dictionary, creatures: Dictionary) -> void:
 
 func cast(units: UnitSystem, creatures: CreatureSystem, bard: int, x: float, phase: int) -> int:
 	var i := units.index_of(bard)
-	if i < 0 or not units.alive(i) or units.healths[i] <= 0 or units.cooldowns[i] > 0.0:
+	if (
+		i < 0
+		or not units.alive(i)
+		or units.healths[i] <= 0
+		or float(cooldowns.get(bard, 0.0)) > 0.0
+	):
 		return -1
 	var body: UnitData = _units.get(units.data_ids[i])
 	if body == null:
@@ -49,7 +55,7 @@ func cast(units: UnitSystem, creatures: CreatureSystem, bard: int, x: float, pha
 		&"remaining": float(_class.phase1_params.get(&"duration", 0.0))
 	}
 	creatures.allies = allies
-	units.cooldowns[i] = body.attack_interval
+	cooldowns[bard] = body.attack_interval
 	if not _converted.has(best):
 		_converted.append(best)
 	var c := creatures.index_of(best)
@@ -68,6 +74,10 @@ func conversions() -> int:
 
 
 func tick(delta: float, creatures: CreatureSystem) -> void:
+	for bard: int in cooldowns.keys():
+		cooldowns[bard] = maxf(0.0, float(cooldowns[bard]) - delta)
+		if is_zero_approx(float(cooldowns[bard])):
+			cooldowns.erase(bard)
 	for id: int in allies.keys():
 		var c := creatures.index_of(id)
 		if c < 0 or not creatures.alive(c):
@@ -158,9 +168,14 @@ func defender(
 
 
 func to_dict() -> Dictionary:
-	return {&"allies": allies.duplicate(true), &"converted": _converted.duplicate()}
+	return {
+		&"allies": allies.duplicate(true),
+		&"converted": _converted.duplicate(),
+		&"cooldowns": cooldowns.duplicate()
+	}
 
 
 func from_dict(data: Dictionary) -> void:
 	allies = data.get(&"allies", {}).duplicate(true)
 	_converted = PackedInt32Array(data.get(&"converted", PackedInt32Array()))
+	cooldowns = data.get(&"cooldowns", {}).duplicate()
