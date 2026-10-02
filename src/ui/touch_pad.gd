@@ -39,6 +39,8 @@ var let_go := false
 var pause_tapped := false
 ## O FIXAR foi tocado: a alavanca troca entre solta e fixa (UX-03).
 var fix_tapped := false
+## O CORRER esta ligado: quem anda corre, ate se tocar outra vez nele.
+var running := false
 
 var _papel := {}
 var _origem := {}
@@ -107,6 +109,8 @@ func lift(i: int, p: Vector2) -> bool:
 			pause_tapped = pause_tapped or _dentro(p, papel)
 		TouchLayout.Role.FIX:
 			fix_tapped = fix_tapped or _dentro(p, papel)
+		TouchLayout.Role.RUN:
+			running = running != _dentro(p, papel)
 		TouchLayout.Role.WORLD:
 			if p.distance_to(de) < TOQUE_PX:
 				taps.append(p)
@@ -124,8 +128,13 @@ func wanted() -> Dictionary:
 	var eixo := stick.axis()
 	quer[&"move_left"] = eixo < 0.0
 	quer[&"move_right"] = eixo > 0.0
-	quer[&"king_run"] = eixo != 0.0 and stick.runs()
+	quer[&"king_run"] = runs()
 	return quer
+
+
+## Se quem anda corre: a alavanca ate ao fim, ou qualquer passo com o CORRER ligado.
+func runs() -> bool:
+	return stick.axis() != 0.0 and (running or stick.runs())
 
 
 ## O frame acabou: o que foi pedido ao mundo ja foi entregue.
@@ -144,6 +153,7 @@ func reset() -> void:
 	_origem.clear()
 	stick.end()
 	aim = Vector2.ZERO
+	running = false
 	take()
 
 

@@ -91,3 +91,10 @@ ecrã): um polegar que pousava um pouco acima ou mais ao centro era um arrastar 
 - **O ecrã inteiro** é o da página, pedido pela casca (`window.empireEcra`), e a pausa tem o botão para entrar e sair
   (`ScreenRow`, `WebScreen`). O iPhone não o dá a uma página em browser nenhum — o Chrome dele é o mesmo WebKit, que só
   põe vídeos em ecrã inteiro —, e lá a pausa e o ecrã de arranque dizem o caminho: Adicionar ao ecrã principal.
+
+## Adenda — UX-04 (02/10/2026): o botão CORRER
+O dono, a 02/10/2026: *«No mobile deve ter um botão para correr também»*. Arrastar a alavanca até ao fim continua a
+correr; o **CORRER** é um interruptor no arco dos botões, em baixo e para o meio, para o polegar que não anda: tocado
+uma vez, quem anda corre — com qualquer inclinação da alavanca — até se tocar outra vez. Aceso a ouro, como o FIXAR, e
+a alavanca acende o aro de ouro enquanto corre. Parado não se corre; a pausa, um menu ou outra mão desligam-no, como
+largam tudo o resto. É um toque como o FIXAR (escorregar para fora não troca). `tests/toque_correr_test.gd`.

@@ -1706,5 +1706,20 @@
   "fora": "O ecrã inteiro no iPhone (o WebKit não o dá a páginas), remapear o toque e gestos de dois dedos.",
   "estado": "feito",
   "horas": "—"
+ },
+ "UX-04": {
+  "title": "O CORRER no toque e as obras com sprite",
+  "porque": "No telemóvel só se corria arrastando a alavanca até ao fim, e o dono pediu um botão. E as obras sem arte do dono eram polígonos lisos, e o sítio por construir um contorno ou a arte a 18 %: no começo de uma partida, as torres, os muros e as casas não se viam.",
+  "spec": [
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "UX-03",
+  "feito": "O botão CORRER no arco dos botões de toque: tocado, quem anda corre até se tocar outra vez (tests/toque_correr_test.gd). Cada obra de buildings.csv e cada nível do muro tem sprite: a arte do dono onde existe, e as outras pintadas pelo PixelPainter no estilo dela (ADR 0051); o sítio vazio é a obra inteira a respirar entre 32 e 55 % (tests/obras_sprite_test.gd).",
+  "fora": "A arte definitiva (ART-01), sprites animados das obras e remapear o toque.",
+  "estado": "feito",
+  "horas": "—"
  }
 }

@@ -3,7 +3,8 @@
 # O polegar mora nos cantos de baixo. A esquerda, a zona da alavanca: ela nasce onde o
 # polegar pousa. A direita, um arco de botoes a volta do maior, a MOEDA — o Verbo 1 e o
 # gesto que acontece milhares de vezes por partida (§24). A pausa fica no canto de
-# cima, por baixo do painel de combate (Q-186), e nao muda de lado nem de tamanho.
+# cima, por baixo do painel de combate (Q-186), e nao muda de lado nem de tamanho. O
+# CORRER fica no arco, em baixo e para o meio: e do polegar que nao anda.
 #
 # Tudo e contado a 1280x720, o ecra de base (§67), a partir do canto do lado do
 # polegar: o canhoto e o espelho, e o tamanho escala os botoes e o afastamento ao
@@ -12,18 +13,20 @@
 class_name TouchLayout
 extends RefCounted
 
-enum Role { NONE, STICK, DROP, ATTACK, ASSUME, SKILL, WHEEL, PAUSE, WORLD, FIX }
+enum Role { NONE, STICK, DROP, ATTACK, ASSUME, SKILL, WHEEL, PAUSE, WORLD, FIX, RUN }
 
 const BASE := Vector2(1280.0, 720.0)
 ## Cada botao: x e y do centro contados do canto de baixo do lado do polegar, e o raio.
 ## A MOEDA e o centro do arco; ATAQUE, INTERAGIR e a habilidade estao a 150 px dela, a
-## esquerda, a diagonal e em cima; a roda, que se usa uma vez por dia, mais longe.
+## esquerda, a diagonal e em cima; a roda, que se usa uma vez por dia, mais longe. O
+## CORRER, um interruptor, fica a esquerda do ATAQUE e mais em baixo.
 const BOTOES := {
 	Role.DROP: Vector3(130.0, 130.0, 62.0),
 	Role.ATTACK: Vector3(280.0, 130.0, 52.0),
 	Role.ASSUME: Vector3(236.0, 236.0, 44.0),
 	Role.SKILL: Vector3(130.0, 280.0, 42.0),
 	Role.WHEEL: Vector3(393.0, 226.0, 40.0),
+	Role.RUN: Vector3(410.0, 92.0, 38.0),
 }
 ## A pausa: x contado da direita e y de cima. Por baixo do painel de combate.
 const PAUSA := Vector3(58.0, 196.0, 32.0)

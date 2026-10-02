@@ -7,9 +7,9 @@ castelo-arvore, a tropa, o rei e o cozinheiro ja la estao, pelo manifesto de
 art/export/enramados/. O planejamento de 26/09 (§4.5) pede que se registe em
 separado fonte, export, chamada em runtime, accoes disponiveis e aprovacao, e
 que nada passe a "concluido" por existir uma textura. E isso que isto faz, lido
-do repositorio — o manifesto, os CSV, e as quatro funcoes que ligam dados a arte
-(OriginalArt.unit_profile, BuildingSkins.profile, SettlementArt.handles e as
-texturas do cenario) — e escrito em docs/art/RUNTIME_ART.md.
+do repositorio — o manifesto, os CSV, e o que liga dados a arte
+(OriginalArt.unit_profile, as tabelas do BuildingSkins e do PaintedArt, os povos
+do NativeSprites e as texturas do cenario) — e escrito em docs/art/RUNTIME_ART.md.
 
     python3 tools/inventario_arte.py            # reescreve docs/art/RUNTIME_ART.md
     python3 tools/inventario_arte.py --check    # chumba se o ficheiro nao estiver em dia
@@ -61,6 +61,12 @@ def ramos(fonte: str, cabeca: str, constantes: dict[str, str]) -> dict[str, str]
     return saida
 
 
+def pares(fonte: str, const: str, chave: str = r'&"(\w+)"') -> dict[str, str]:
+    """Uma constante `const NOME := {chave: &"valor", ...}` de um script, como dicionario."""
+    bloco = re.search(rf"const {const} := \{{(.*?)\n\}}", fonte, re.S).group(1)
+    return dict(re.findall(rf'{chave}: &"(\w+)"', bloco))
+
+
 def mapas() -> dict:
     nucleo = re.search(r'const NUCLEO := &"(\w+)"', ler("src/sim/state/build_slot.gd")).group(1)
     # O subsolo e a boca das passagens (AUD-04) montam-se no Cavities, e a escora
@@ -82,12 +88,20 @@ def mapas() -> dict:
         for asset in re.findall(r'\.texture\(&"(\w+)"\)', f.read_text(encoding="utf-8")):
             cenario.setdefault(asset, []).append(f.relative_to(RAIZ).as_posix())
     acao = ler("src/actors/actor_action.gd")
+    skins = ler("src/world/building_skins.gd")
+    silhueta = ler("src/world/silhouette.gd")
+    nativas = ler("src/world/sprites_native.gd")
     return {
         "unidades": ramos(ler("src/actors/original_art.gd"), "static func unit_profile", {}),
-        "obras": ramos(
-            ler("src/world/building_skins.gd"), "static func profile", {"BuildSlot.NUCLEO": nucleo}
-        ),
-        "povoado": re.findall(r'&"(\w+)"', corpo(ler("src/world/settlement_art.gd"), "static func handles")),
+        "obras": {nucleo: "tree_castle", **pares(skins, "ORIGINAIS")},
+        "pintadas": pares(ler("src/world/painted_art.gd"), "OBRAS"),
+        "por_forma": pares(skins, "POR_FORMA", r"Silhouette\.Form\.(\w+)"),
+        "categorias": pares(silhueta, "POR_CATEGORIA").keys(),
+        "forma": {c: f for c, f in re.findall(r'&"(\w+)": Form\.(\w+)', silhueta)},
+        "fogo": re.findall(r'const FOGUEIRA := &"(\w+)"', ler("src/world/hearth_art.gd"))
+        + re.findall(r'const FAROL := &"(\w+)"', ler("src/core/lume.gd")),
+        "povos": re.findall(r'&"(\w+)": Color', ler("src/world/sprites_native.gd")),
+        "tipos": re.findall(r'&"(\w+)"', re.search(r"const TIPOS := (\[.*?\])", nativas).group(1)),
         "cenario": cenario,
         "accoes": re.findall(r'Kind\.\w+: &"(\w+)"', acao),
         "no_marco": no_marco,
@@ -153,12 +167,27 @@ def obras(manifesto: dict, m: dict) -> tuple[list[str], list[str]]:
     for b in tabela("data/source/buildings.csv"):
         marco = "sim" if b["id"] in m["no_marco"] else ""
         perfil = m["obras"].get(b["id"], "")
-        if perfil:
+        pintada = m["pintadas"].get(b["id"], "")
+        povo, _, tipo = b["id"].rpartition("_")
+        forma = "MASTRO" if "anti_air" in b["tags"].split("|") else m["forma"].get(b["category"], "")
+        pela_forma = m["por_forma"].get(forma, "")
+        if b["id"] in m["fogo"]:
+            arte, estados = "procedural (`HearthArt`)", "por codigo"
+        elif perfil:
             partilhada = [o for o, p in m["obras"].items() if p == perfil and o != b["id"]]
             arte = f"`{perfil}`" + (f" — partilhada com {celula(partilhada)}" if partilhada else "")
             estados = f"{len(manifesto['assets'][perfil]['durations_ms'])} frame; estados por codigo"
-        elif b["id"] in m["povoado"]:
-            arte, estados = "procedural (`SettlementArt`)", "por codigo"
+        elif pintada:
+            partilhada = [o for o, p in m["pintadas"].items() if p == pintada and o != b["id"]]
+            arte = f"pintada (`PaintedArt`): `{pintada}`" + (
+                f" — partilhada com {celula(partilhada)}" if partilhada else ""
+            )
+            estados = "1 imagem; estados por codigo"
+        elif povo in m["povos"] and tipo in m["tipos"]:
+            arte, estados = f"pintada (`NativeSprites`): `native_{b['id']}`", "1 imagem; estados por codigo"
+        elif pela_forma:
+            origem = "" if pela_forma in manifesto["assets"] else "pintada, "
+            arte, estados = f"{origem}pela forma `{forma}`: `{pela_forma}`", "1 imagem; estados por codigo"
         else:
             arte, estados = "procedural (`Silhouette`/`StructureArt`)", "por codigo"
         linhas.append(f"| `{b['id']}` | {b['_phase']} | {marco} | {arte} | {estados} |")
@@ -175,7 +204,8 @@ def documento() -> str:
     tab_obras, faltas_obras = obras(manifesto, m)
     niveis = len(tabela("data/source/walls.csv"))
     faltas_obras.append(
-        f"muralha (`walls.csv`, {niveis} niveis): procedural (`Silhouette`/`StructureArt`); por codigo"
+        f"muralha (`walls.csv`, {niveis} niveis): pintada (`WallSprites`): "
+        f"{celula([f'wall_{n}' for n in range(1, niveis + 1)])}; 1 imagem por nivel, estados por codigo"
     )
     sem_uso = [a for a in manifesto["assets"] if a not in usos and a not in m["cenario"]]
     estados = sorted({i["review_status"] for i in manifesto["assets"].values()})
