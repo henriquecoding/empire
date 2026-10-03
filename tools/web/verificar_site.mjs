@@ -22,7 +22,7 @@
 //   10 · MOVIMENTO REDUZIDO — nada fica escondido, e o dia não anda sozinho.
 //   11 · O JOGO — /jogar/ carrega, o ecrã de carregamento sai e o canvas fica,
 //        com a CSP estrita e os controlos lidos do project.godot. E num telemóvel
-//        (ADR 0047): arranca com um toque, a classe escolhe-se com o dedo, os
+//        (ADR 0047): arranca com um toque, o monarca escolhe-se com o dedo, os
 //        controlos ligam-se, e ao alto pede-se para virar o telemóvel.
 //   12 · PRIVACIDADE — nenhuma página pede nada a outra origem (§32).
 //   13 · CSP — cada página tem a sua, e nenhuma é violada.
@@ -324,7 +324,7 @@ async function main() {
     const { ctx, p, erros, pedidos } = await nova(b, base, 1280, "dark");
     const classes = [];
     p.on("console", (msg) => {
-      if (msg.text().includes("Empire · classe inicial ")) classes.push(msg.text());
+      if (msg.text().includes("Empire · monarca inicial ")) classes.push(msg.text());
     });
     await p.goto(base + "/jogar/" + q, { waitUntil: "load" });
     resultado(`/jogar/${q}: a língua é ${q ? "en" : "pt-PT"}`, (await p.evaluate(() => document.documentElement.lang)) === (q ? "en" : "pt-PT"));
@@ -343,7 +343,7 @@ async function main() {
       }
       await p.keyboard.press("Enter");
       await p.waitForTimeout(150);
-      resultado(`/jogar/${q}: a primeira classe confirma-se pelo teclado`, classes.some((msg) => msg.includes("classe inicial monarch")));
+      resultado(`/jogar/${q}: o primeiro monarca confirma-se pelo teclado`, classes.some((msg) => msg.includes("monarca inicial monarch")));
       await p.keyboard.press("Escape");
       await p.waitForTimeout(150);
       // Retomar, Opções, Controlos, [Ecrã inteiro, onde o browser o dá (UX-03)], Recomeçar, Voltar.
@@ -381,11 +381,11 @@ async function main() {
       resultado("/jogar/ ao toque: o motor arranca depois do toque", saiu);
       if (saiu) {
         await p.waitForTimeout(1500);
-        // O botão de começar fica ao fundo, ao meio, na escolha de classe (ADR 0044).
+        // O botão de começar fica ao fundo, ao meio, na escolha do monarca (ADR 0044, ADR 0052).
         await p.touchscreen.tap(LARGO.width / 2, LARGO.height - 29);
-        const escolheu = await p.waitForEvent("console", { predicate: (m) => m.text().includes("classe inicial"), timeout: 8000 })
-          .then(() => true, () => linhas.some((l) => l.includes("classe inicial")));
-        resultado("/jogar/ ao toque: a classe escolhe-se com o dedo", escolheu, linhas.slice(-3).join(" | "));
+        const escolheu = await p.waitForEvent("console", { predicate: (m) => m.text().includes("monarca inicial"), timeout: 8000 })
+          .then(() => true, () => linhas.some((l) => l.includes("monarca inicial")));
+        resultado("/jogar/ ao toque: o monarca escolhe-se com o dedo", escolheu, linhas.slice(-3).join(" | "));
         resultado("/jogar/ ao toque: os controlos ligam-se com o primeiro toque",
           linhas.some((l) => l.includes("toque: controlos no ecra")));
         // O toque em «Jogar» pede o ecrã inteiro, e um Chromium recente dá-o: uma janela
