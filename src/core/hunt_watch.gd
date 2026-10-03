@@ -76,13 +76,23 @@ static func tick(
 	return chao
 
 
-## Os bichos andam, fogem ou carregam (ADR 0057). Corre antes do combate do tick, para
-## que a morte de quem o javali matou passe pelo combate como as outras.
+## Os bichos andam, fogem ou carregam, e fogem da Podridao (ADR 0057). Corre antes do
+## combate do tick, para que a morte de quem o javali matou passe pelo combate.
 static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
 	var hunt := field.hunting
 	var ameacas := Herd.threats_of(unidades)
+	var feras := SimFactory.by_id(&"creatures")
+	if SimLoop.creatures != null:
+		hunt.herd.predators = Herd.predators_of(SimLoop.creatures, feras, field.song.allies)
 	for g in Herd.bite(unidades, hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)):
 		EventBus.queue(&"unit_damaged", [g[Herd.QUEM], g[Herd.DANO], Herd.NENHUM])  # o javali
+	for toca in hunt.herd.caught:  # a Podridao apanhou-o: levanta-se teu inimigo
+		var onde := hunt.herd.where(toca)
+		var bicho := hunt.lose(toca)
+		var criatura: CreatureData = feras.get(bicho.rots_into)
+		if criatura != null and SimLoop.creatures != null:
+			SimLoop.creatures.spawn(SimLoop.state, criatura, onde, SimLoop.core_x)
+			EventBus.queue(&"rot_summoned", [criatura.id, onde, 0.0])
 
 
 ## Poe as tocas na primeira vez, e abre o dia.

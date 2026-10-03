@@ -29,6 +29,11 @@ var variants: Dictionary = {}
 var cooldowns: Dictionary = {}
 ## Os bichos que nao fogem e ja foram feridos: esses carregam.
 var provoked: Dictionary = {}
+## As criaturas da Podridao a superficie (id -> Vector2(x, alcance)): de noite os bichos
+## fogem delas, e a que chega ao alcance apanha o bicho (o dono, 03/10/2026).
+var predators: Dictionary = {}
+## As tocas dos bichos que a Podridao apanhou no ultimo passo: levantam-se inimigos.
+var caught: Array[float] = []
 ## Quantos bichos ja sairam das tocas: a semente do sorteio do raro.
 var born := 0
 var _golpes: Array[Dictionary] = []
@@ -73,11 +78,20 @@ func step(
 	delta: float, homes: Array[float], species: Callable, threats: Dictionary
 ) -> Array[Dictionary]:
 	_golpes = []
+	caught = []
 	for home in homes:
 		var bicho: WildlifeData = species.call(home)
 		if bicho == null:
 			continue
 		var x := where(home)
+		var fera := _nearest_predator(x)
+		if fera != Vector2.INF and absf(fera.x - x) <= fera.y:
+			caught.append(home)
+			continue
+		if fera != Vector2.INF and bicho.flees and absf(fera.x - x) <= bicho.notice_px:
+			x = _threatened(home, x, bicho, NENHUM, fera.x, delta)
+			xs[home] = clampf(x, home - bicho.flee_px, home + bicho.flee_px)
+			continue
 		var quem := _nearest(threats, x)
 		cooldowns[home] = maxf(0.0, float(cooldowns.get(home, 0.0)) - delta)
 		var sabe := bicho.flees or provoked.has(home)
@@ -87,6 +101,21 @@ func step(
 			x = _graze(home, x, bicho, delta)
 		xs[home] = clampf(x, home - bicho.flee_px, home + bicho.flee_px)
 	return _golpes
+
+
+## As criaturas que cacam os bichos: vivas, a superficie, e nao convertidas (`allies`).
+static func predators_of(
+	creatures: CreatureSystem, dados: Dictionary, allies: Dictionary = {}
+) -> Dictionary:
+	var saida := {}
+	for c in creatures.count():
+		var id := creatures.ids[c]
+		var ficha: CreatureData = dados.get(creatures.data_ids[c])
+		if ficha == null or allies.has(id) or not creatures.alive(c):
+			continue
+		if creatures.bands[c] == Band.Kind.SURFACE:
+			saida[id] = Vector2(creatures.xs[c], ficha.range_px)
+	return saida
 
 
 ## Os golpes de quem carrega, na vida de quem os leva. Devolve os golpes que pegaram.
@@ -156,6 +185,14 @@ func _graze(home: float, x: float, bicho: WildlifeData, delta: float) -> float:
 		return alvo
 	facing[home] = signf(alvo - x)
 	return x + facing[home] * passo
+
+
+func _nearest_predator(x: float) -> Vector2:
+	var melhor := Vector2.INF
+	for fera: Vector2 in predators.values():
+		if melhor == Vector2.INF or absf(fera.x - x) < absf(melhor.x - x):
+			melhor = fera
+	return melhor
 
 
 static func _nearest(threats: Dictionary, x: float) -> int:

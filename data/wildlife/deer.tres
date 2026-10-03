@@ -19,3 +19,4 @@ graze_speed = 12.0
 roam_px = 40.0
 notice_px = 88.0
 flee_px = 128.0
+rots_into = &"brute"

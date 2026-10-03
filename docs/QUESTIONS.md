@@ -37,6 +37,9 @@
   estão em jogo, como os da ADR 0054. Coelho: pasta a 24 px, dá por ti a 56 px, foge até 72 px. Veado: 40, 88, 128.
   Faisão: 1 acerto, 1 moeda, dá por ti a 64 px. Raposa: 6 de vida, 2 moedas. Javali: uma toca, carrega ferido até
   120 px e bate 6 a cada 1,5 s. Cervo branco: 8 % das saídas das tocas de veado, 16 de vida, 12 moedas.
+  Apanhado de noite pela Podridão, o bicho levanta-se como `rots_into` (coelho, faisão e raposa: Rastejante; veado,
+  cervo branco e javali: Bruto). O lanceiro, o mercenário, o berserker de raiz e o guarda do gelo ganham a tag
+  `hunter` e caçam de dia como o arqueiro.
 - **Decide:** tu, se os aprovas ou os mudas no painel; mudá-los é só o CSV.
 
 ## O refinamento da jogabilidade — 03/10/2026 (ADR 0054)

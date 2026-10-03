@@ -19,3 +19,4 @@ graze_speed = 10.0
 roam_px = 24.0
 notice_px = 56.0
 flee_px = 72.0
+rots_into = &"crawler"

@@ -43,6 +43,16 @@
    pisar (`Gleaning`): o imperador apanha-a ao passar, e as tuas tropas guardam-na e entregam-ta (Q-111). A dos
    arqueiros continua a ir para o saco deles, como o dono decidiu na Q-111.
 
+6. **De noite, a Podridão caça os bichos** (o dono, 03/10/2026: *«à noite as criaturas fogem da Podridão e, se são
+   apanhadas, podem converter-se após morrer em Podridão e virar meu inimigo»*). Os bichos fogem das criaturas da
+   Podridão à superfície como fogem de ti; a criatura que chega ao alcance dela apanha o bicho, que morre sem deixar
+   caça e se levanta como `rots_into` (o coelho, o faisão e a raposa como Rastejante; o veado, o cervo branco e o
+   javali como Bruto), a caminho do teu núcleo. Uma noite com caça fora das tocas é uma noite com mais inimigos.
+7. **As tuas tropas caçam sozinhas** (o dono, 03/10/2026: *«as minhas tropas atacam automaticamente as criaturas e
+   farmam moedas para mim»*). O lanceiro, o mercenário, o berserker de raiz e o guarda do gelo ganham a tag `hunter`:
+   de dia, sem posto, caçam como o arqueiro — os de perto correm atrás do bicho até o encurralarem — e guardam a caça
+   no saco para ta entregar (Q-111).
+
 ## O que não muda
 
 - A **caça média do dia** continua a do `hunt_yield` (economy.csv): o período das tocas reparte-a pelas moedas de

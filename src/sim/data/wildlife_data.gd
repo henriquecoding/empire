@@ -32,3 +32,5 @@ extends Resource
 ## O raro: sai, com `rare_chance`, de uma toca do bicho `rare_of`, no lugar dele.
 @export var rare_of: StringName = &""
 @export var rare_chance: float = 0.0
+## A criatura da Podridao em que o bicho se levanta, se uma o apanhar de noite.
+@export var rots_into: StringName = &""

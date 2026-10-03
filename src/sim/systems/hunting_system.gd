@@ -212,6 +212,16 @@ func hurt(prey: float, damage: int, hunter: int, ground := false) -> Array[Dicti
 	return moedas
 
 
+## O bicho da toca `prey` sai do mundo sem deixar caca: a Podridao apanhou-o. Devolve o
+## bicho que era, para se levantar como criatura (WildlifeData.rots_into).
+func lose(prey: float) -> WildlifeData:
+	var bicho := species_at(prey)
+	wounds.erase(prey)
+	rabbits.erase(prey)
+	herd.forget(prey)
+	return bicho
+
+
 func _kill(units: UnitSystem, i: int, prey: float, drops: Array[Dictionary]) -> void:
 	var arma := _profiles[units.data_ids[i]] as UnitData
 	units.cooldowns[i] = arma.attack_interval

@@ -14,7 +14,7 @@ recruit_cost = 4
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
 move_speed = 80.0
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"shield", &"overlay"])
-tags = Array[StringName]([&"melee", &"holds_line", &"no_pursuit"])
+tags = Array[StringName]([&"melee", &"holds_line", &"no_pursuit", &"hunter"])
 job_affinity = {
 &"guard": 0.8,
 &"wall": 1.0
