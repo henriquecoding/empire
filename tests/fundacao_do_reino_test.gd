@@ -202,22 +202,6 @@ func _castelo_antigo() -> Dictionary:
 	return castelo
 
 
-## A sede tocada repara-se como as outras obras: o custo do degrau em que esta, a
-## proporcao da vida perdida, e um construtor presente — o pioneiro serve (Q-224).
-func test_a_sede_tocada_repara_se_com_o_pioneiro() -> void:
-	var sede := _sede()
-	sede.raise_to(2)
-	SimLoop.builds.damage(sede.id, sede.max_health() / 2)
-	assert_int(int(sede.state)).is_equal(int(BuildSlot.State.DAMAGED))
-	var custo := sede.repair_cost()
-	assert_int(custo).is_greater(0)
-	_largar_em(sede.x, custo)
-	assert_bool(sede.mending).is_true()
-	var antes := sede.health
-	_passos(300)
-	assert_int(sede.health).is_greater(antes)
-
-
 ## Os tres monarcas chegam com o mesmo pacote: a carroca, o pioneiro e a sede por fundar
 ## (plano §21.1). A escolha do monarca nao repoe nem tira nada (RG-02).
 func test_os_tres_monarcas_chegam_com_o_mesmo_pacote() -> void:

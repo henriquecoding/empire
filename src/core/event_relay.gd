@@ -203,11 +203,13 @@ static func _morte(e: Dictionary, larga: Array[Dictionary]) -> void:
 
 ## §55: cada subida de muro emite wall_upgraded, que muda material, silhueta e
 ## numero de slots de contacto — os tres ao mesmo tempo, porque sao a mesma
-## decisao de design. O primeiro nivel e uma obra nova, e por isso leva os dois.
+## decisao de design. O primeiro nivel e uma obra nova, e por isso leva os dois. A
+## sede tambem trava, mas nao e um muro: cada estagio dela e uma obra acabada (ADR 0059).
 static func _completa(vaga: BuildSlot, nivel: int) -> void:
-	if nivel == 1:
+	var sede := vaga.kind == BuildSlot.NUCLEO
+	if nivel == 1 or sede:
 		EventBus.queue(&"build_completed", [vaga.id])
-	if vaga.blocks:
+	if vaga.blocks and not sede:
 		EventBus.queue(&"wall_upgraded", [vaga.id, nivel])
 
 
