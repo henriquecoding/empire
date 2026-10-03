@@ -7,6 +7,21 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A caça longe do reino — 03/10/2026 (ADR 0061)
+
+### Q-228 · A caça vive fora da primeira muralha
+- **Pedido do dono (03/10/2026):** *«As criaturas estão com o respawn colado com o reino, está tudo muito em cima, deve
+  ser algo melhor elaborado como é em Kingdom»*.
+- **Onde:** `HuntWatch.SITIOS`, `HuntWatch.reconcile`; `wildlife.csv` (`burrows_per_region` do coelho e do faisão). Os
+  testes: `tests/caca_dos_sitios_test.gd`, `tests/caca_viva_regras_test.gd`.
+- **O que estava:** quatro tocas a 60–180 px do castelo (três arbustos e uma rocha), cada uma a dar um bicho a cada
+  60–75 s de luz.
+- **Decisão (aplicada, reversível):** nenhuma toca dentro da primeira muralha. Em casa ficam o coelho a −830 px (o do
+  1:10), o veado a −1692, a raposa a −1860 e o javali a +1656; o resto vive nas terras dos dois lados (Q-217). O coelho
+  passa a 1 toca por região (eram 4) e o faisão a 0 (era 1), em `_proposed`. Os saves antigos perdem as tocas da porta.
+- **Decide:** tu, se a caça de casa deve ter mais tocas nos arrabaldes (o chão livre entre as obras de fora é pouco:
+  dois vãos de ~80 px a oeste) ou se basta a das terras.
+
 ## A fundação do reino e a escada da sede — 03/10/2026 (ADR 0059)
 
 > Pedido do dono (03/10/2026), sobre o plano `docs/recovery/PLANO-REINO-2026-10-03.md`: *«aplique esse relatório»*.

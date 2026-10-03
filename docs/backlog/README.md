@@ -253,3 +253,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [QP-03](QP-03.md) | O baú da sala secreta | QP-02 | por fazer |
 | [QP-04](QP-04.md) | O refinamento da jogabilidade de 03/10/2026 | QP-02 | feito |
 | [QP-05](QP-05.md) | A caça a sério | QP-04 | feito |
+| [QP-06](QP-06.md) | A caça longe do reino | QP-05 | feito |

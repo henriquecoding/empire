@@ -2632,5 +2632,21 @@
   "fora": "Capital e nova cadeia tecnológica",
   "estado": "feito",
   "horas": "—"
+ },
+ "QP-06": {
+  "title": "A caça longe do reino",
+  "porque": "O dono jogou o dia 1 e viu os bichos colados ao castelo; quer a caça como no Kingdom, fora do reino.",
+  "spec": [
+   "docs/adr/0061-a-caca-longe-do-reino.md"
+  ],
+  "depende": "QP-05",
+  "feito": "Nenhuma toca de casa dentro da primeira muralha; a caça de casa fica nos arrabaldes e o resto nas terras; os saves antigos perdem as tocas da porta; tudo com teste",
+  "fora": "Mais tocas nos arrabaldes (Q-228).",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-228 fica por decidir. Ver a ADR 0061: o que se aplicou e como desfazer."
+  ]
  }
 }
