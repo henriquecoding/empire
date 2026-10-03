@@ -70,7 +70,7 @@ static func draw(
 			if j + POR_TOCA > sorteios.size():
 				break
 			var sitio: StringName = dele[mini(floori(sorteios[j] * dele.size()), dele.size() - 1)]
-			var order := -1.0 if garantido and tocas.is_empty() else sorteios[j + 1]
+			var order := -INF if garantido and tocas.is_empty() else sorteios[j + 1]
 			tocas.append({BICHO: dados.id, SITIO: sitio, &"ordem": order})
 	return _por_no_chao(tocas, inicio, largura, sujeito, sorteios)
 
