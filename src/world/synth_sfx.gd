@@ -16,6 +16,15 @@ const TAXA := 22050
 const PICO := 0.8
 ## O fim de cada som desce a zero neste tempo: um corte seco estala.
 const FECHO_S := 0.01
+## O ataque de uma receita que nao diz o seu: um clique, sem estalo.
+const ATAQUE_S := 0.003
+## O indice do atraso num parcial [Hz, amplitude, decaimento, atraso].
+const ATRASO := 3
+## O maior valor de uma amostra de 16 bits, e o intervalo de uma amostra.
+const S16 := 32767.0
+const UM := 1.0
+## O hash do ruido: as constantes classicas do "random" dos shaders, sem sorteio.
+const HASH := Vector2(12.9898, 43758.5453)
 
 const RECEITAS := {
 	&"sfx_coin_drop":
@@ -122,7 +131,7 @@ class Sintese:
 		ate = mini(n, j + quantas)
 		while j < ate:
 			saida[j] *= escala
-			dados.encode_s16(j * 2, int(clampf(saida[j], -1.0, 1.0) * 32767.0))
+			dados.encode_s16(j * 2, int(clampf(saida[j], -UM, UM) * S16))
 			j += 1
 		return j >= n
 
@@ -173,7 +182,7 @@ static func samples(receita: Dictionary) -> PackedFloat32Array:
 static func sample(receita: Dictionary, i: int, fases: PackedFloat32Array, s: Sintese) -> float:
 	var parts: Array = receita.parts
 	var ruido: Array = receita.get("noise", [0.0, 1.0, 1.0])
-	var ataque: float = maxf(receita.get("attack", 0.003), 1.0 / TAXA)
+	var ataque: float = maxf(receita.get("attack", ATAQUE_S), 1.0 / TAXA)
 	var vibrato: Array = receita.get("vibrato", [0.0, 0.0])
 	var t := float(i) / TAXA
 	var tom := lerpf(1.0, receita.get("glide", 1.0), t / float(receita.dur))
@@ -181,7 +190,7 @@ static func sample(receita: Dictionary, i: int, fases: PackedFloat32Array, s: Si
 	var v := 0.0
 	for k in parts.size():
 		var p: Array = parts[k]
-		var atraso: float = p[3] if p.size() > 3 else 0.0
+		var atraso: float = p[ATRASO] if p.size() > ATRASO else 0.0
 		fases[k] += TAU * float(p[0]) * tom / TAXA
 		if t >= atraso:
 			v += float(p[1]) * sin(fases[k]) * _envolvente(t - atraso, ataque, p[2])
@@ -196,7 +205,7 @@ static func _envolvente(t: float, ataque: float, decai: float) -> float:
 
 ## Ruido branco sem sorteio: um hash do indice da amostra, sempre o mesmo som.
 static func _ruido(i: int) -> float:
-	return fposmod(sin(float(i) * 12.9898) * 43758.5453, 1.0) * 2.0 - 1.0
+	return lerpf(-UM, UM, fposmod(sin(float(i) * HASH.x) * HASH.y, UM))
 
 
 static func _wav(dados: PackedByteArray) -> AudioStreamWAV:
