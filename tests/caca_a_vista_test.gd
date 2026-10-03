@@ -93,3 +93,36 @@ func test_o_imperador_parado_acerta_no_corpo() -> void:
 	units.xs[0] = 100.0 + nia.range_px + meia - 1.0
 	RoyalHunt.idle(h, units, perfis, UnitSystem.NENHUM, true)
 	assert_bool(h.wounds.has(100.0)).is_true()
+
+
+## Quem se levanta de um bicho (rots_into, ADR 0057) nao e mais pequeno do que ele: o
+## coelho que a Podridao apanha nao volta como uma coisa que ele tapava (Q-219).
+func test_a_criatura_que_se_levanta_nao_e_mais_pequena_do_que_o_bicho() -> void:
+	for recurso in Registry.entries(&"wildlife"):
+		var bicho := recurso as WildlifeData
+		var criatura := Registry.entry(&"creatures", bicho.rots_into) as CreatureData
+		if criatura == null:
+			continue
+		var forma := Silhouette.of_creature(criatura)
+		var caixa := Bestiary.box(forma, 0.0, int(Band.Kind.SURFACE))
+		var altura := _altura(bicho.id) * bicho.sprite_scale
+		assert_float(caixa.size.y).override_failure_message(String(bicho.id)).is_greater_equal(
+			altura
+		)
+
+
+## A sombra de cada criatura do chao e o corpo dela no chao: acompanha o desenho (Q-219).
+func test_a_sombra_da_criatura_acompanha_o_corpo() -> void:
+	for recurso in Registry.entries(&"creatures"):
+		var dados := recurso as CreatureData
+		if dados.band != Band.Kind.SURFACE or dados.shadow_width <= 0:
+			continue
+		var forma := Silhouette.of_creature(dados)
+		var largura := Bestiary.box(forma, 0.0, int(Band.Kind.SURFACE)).size.x
+		var nome := String(dados.id)
+		assert_float(float(dados.shadow_width)).override_failure_message(nome).is_greater_equal(
+			largura * 0.4
+		)
+		assert_float(float(dados.shadow_width)).override_failure_message(nome).is_less_equal(
+			largura
+		)

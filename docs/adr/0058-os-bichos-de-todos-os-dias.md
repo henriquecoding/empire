@@ -1,4 +1,4 @@
-# ADR 0058 — Os bichos de todos os dias: o ritmo de cada bicho, a caça das terras, o tamanho e o fôlego
+# ADR 0058 — Os bichos de todos os dias: o ritmo de cada bicho, a caça das terras, o tamanho das criaturas e o fôlego
 
 - **Estado:** aceite, reversível (03/10/2026)
 - **Contexto:** o dono jogou e escreveu: *«O rei está cansando extremamente rápido, deve demorar e se recuperar um
@@ -68,6 +68,19 @@ geradas ao andar (Q-173) não tinham caça nenhuma: só a região de casa tinha 
    - **As tocas de casa.** Com o chão que as tocas grandes pedem, a região de casa só tem lugar para oito sem pisar uma
      obra (Q-207): quatro à porta do castelo, como os tufos de erva da praça do Kingdom, e quatro nos chãos livres. O
      veado fica com uma toca em casa (eram duas), e as tocas das terras ficam a 96 px umas das outras.
+
+8. **Q-219 — as criaturas da Podridão à mesma escala.** O dono: *«quero que os inimigos da Podridão sigam essa lógica
+   também, o menor tem que ter um tamanho aceitável para que o combate faça sentido em base 64x64»*.
+   - **O tamanho.** O bestiário (ADR 0049) ganha um pixel por forma (`Bestiary.PIXEL`). As pequenas desenham-se a 2×:
+     o Rastejante passa a 112×56, da altura de uma tropa; o Cavador a 120×80; o Alado a 160×104. As grandes desenham-se
+     a 1,5×, para a ordem se manter: o Bruto passa a 120×120, o Zelador a 48×144, o Ariete a 210×90 e o Devorador a
+     276×246.
+   - **O corpo no chão.** O `shadow_width` das criaturas, que não se usava, passa a ser o corpo no chão ao tamanho novo.
+     O `CreatureView` desenha-o como sombra de contacto.
+   - **O golpe.** O golpe de quem joga e o varrimento de perto chegam à pele (`PlayerStrike.target`,
+     `MeleeSweep.half_body`); o golpe de perto apanha também a criatura que lhe está por cima, e a flecha só vai à
+     frente. As tropas da IA lutam pelo alcance de sempre.
+   - Nenhuma criatura que se levanta de um bicho é mais pequena do que ele.
 
 ## O que mudou na economia (medido)
 

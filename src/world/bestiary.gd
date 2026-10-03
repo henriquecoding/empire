@@ -6,24 +6,27 @@
 # dono (02/10/2026): "a variedade, formato e tamanho dos inimigos deve ser mesmo
 # bem feita". Aqui sao uma familia so — a mesma carne pisada, o mesmo osso, os
 # mesmos olhos roxos (ADR 0034: roxo e dela) — e cada uma com um tamanho que se
-# le contra uma tropa de 47 px e um rei de 94:
+# le contra uma tropa de 47 px, um rei de 94 e o sprite de 64x64 deles. Desde a Q-219 (o
+# dono, 03/10/2026: «o menor tem que ter um tamanho aceitavel para que o combate faca
+# sentido em base 64x64») as pequenas desenham-se ao dobro e as grandes a 1,5x:
 #
-#   Rastejante  56 x 28   pelo joelho de uma tropa; sao muitos
-#   Cavador     60 x 40   pelo peito; vem de baixo
-#   Alado       80 x 52   de asa aberta, no ceu
-#   Bruto       80 x 80   mais alto do que uma tropa, mais baixo do que o rei
-#   Zelador     32 x 96   da altura do rei, e fino
-#   Ariete     140 x 60   comprido e baixo: uma viga de lodo
-#   Devorador  184 x 164  quase duas vezes o rei; sobe-se a ele
+#   Rastejante 112 x 56   mais largo do que um sprite e da altura de uma tropa; sao muitos
+#   Cavador    120 x 80   mais alto do que uma tropa; vem de baixo
+#   Alado      160 x 104  de asa aberta, no ceu
+#   Bruto      120 x 120  passa o rei
+#   Zelador     48 x 144  alto e fino
+#   Ariete     210 x 90   comprido e baixo: uma viga de lodo
+#   Devorador  276 x 246  mais de duas vezes o rei; sobe-se a ele
 #
-# Os tamanhos sao greybox, como as alturas do Silhouette (Q-079): nao mudam nada na
-# simulacao. Quem desenha cada uma sao os BeastsSmall, BeastsLarge e BeastsGiant.
+# Os tamanhos sao greybox, como as alturas do Silhouette (Q-079). A simulacao so sabe do
+# corpo no chao, o shadow_width do creatures.csv, que e ate onde o golpe acerta (Q-219).
+# Quem desenha cada uma sao os BeastsSmall, BeastsLarge e BeastsGiant.
 class_name Bestiary
 extends RefCounted
 
 const F := Silhouette.Form
 
-## O tamanho de cada criatura em pixeis dela; um pixel e BeastPen.PIXEL px de mundo.
+## O tamanho de cada criatura em pixeis dela; um pixel e PIXEL[forma] px de mundo.
 const TAMANHO := {
 	F.RASTEJO: Vector2(28, 14),
 	F.ASA: Vector2(40, 26),
@@ -32,6 +35,18 @@ const TAMANHO := {
 	F.ZELADOR: Vector2(16, 48),
 	F.ARIETE: Vector2(70, 30),
 	F.COLOSSO: Vector2(92, 82),
+}
+
+## Quantos px de mundo vale um pixel de cada uma (Q-219): as pequenas ao dobro do pixel
+## de descanso, as grandes a 1,5x. Sempre inteiro, para o pixel ficar pixel.
+const PIXEL := {
+	F.RASTEJO: 4.0,
+	F.ASA: 4.0,
+	F.BROCA: 4.0,
+	F.BRUTO: 3.0,
+	F.ZELADOR: 3.0,
+	F.ARIETE: 3.0,
+	F.COLOSSO: 3.0,
 }
 
 ## As cores de cada uma, por papel (BeastPen.Tone): escuro, corpo, luz, osso e a
@@ -91,9 +106,14 @@ static func handles(forma: Silhouette.Form) -> bool:
 
 ## A caixa de uma criatura em x, pousada na linha de chao da faixa dela.
 static func box(forma: Silhouette.Form, x: float, faixa: int) -> Rect2:
-	var tamanho: Vector2 = TAMANHO.get(forma, Vector2.ONE) * BeastPen.PIXEL
+	var tamanho: Vector2 = TAMANHO.get(forma, Vector2.ONE) * pixel_of(forma)
 	var chao := WorldPalette.ground_of(faixa)
 	return Rect2(Vector2(x - tamanho.x * WorldPalette.MEIA, chao - tamanho.y), tamanho)
+
+
+## Quantos px de mundo vale um pixel da forma (Q-219).
+static func pixel_of(forma: Silhouette.Form) -> float:
+	return float(PIXEL.get(forma, BeastPen.PIXEL))
 
 
 ## As cores de uma forma, cada uma pintada por `pintar(cor) -> Color` — a luz da

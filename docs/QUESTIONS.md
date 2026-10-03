@@ -13,7 +13,8 @@
 > um pouco mais rápido, além disso não aparece criatura e animal nenhum, eles devem spawnar logo ao lado do meu império
 > dos dois lados e depois de forma mais orgânica e aleatoriamente pelo mundo»*; *«à noite os bichos não nascem, só ficam
 > os que já estavam»*; *«as criaturas e animais para caçar e farmar dinheiro devem aparecer todos os dias, várias vezes
-> ao dia»*; e depois *«as criaturas estão microscópicas»*. Aplicado diretamente (ADR 0058); os números novos são
+> ao dia»*; depois *«as criaturas estão microscópicas»*; e *«o menor [inimigo da Podridão] tem que ter um tamanho
+> aceitável para que o combate faça sentido em base 64x64»*. Aplicado diretamente (ADR 0058); os números novos são
 > propostas (`_proposed`), reversíveis no CSV.
 
 ### Q-216 · O fôlego: cansar mais devagar, recuperar mais depressa
@@ -72,6 +73,32 @@
     - O veado passa a ter uma toca em casa (eram duas), e o resto da caça vive nas terras logo ao lado (Q-217).
     - No mundo gerado, as tocas ficam a 96 px umas das outras.
 - **Decide:** tu, as escalas (3× e 2×) e o lugar das tocas de casa.
+
+### Q-219 · As criaturas da Podridão à escala do sprite de 64 px
+- **Pedido do dono (03/10/2026):** *«Quero que os inimigos da Podridão sigam essa lógica também, o menor tem que ter um
+  tamanho aceitável para que o combate faça sentido em base 64x64»*.
+- **Onde:** §07, §22, ADR 0049; `Bestiary.PIXEL`, `creatures.csv` (`shadow_width`), `PlayerStrike.target`,
+  `MeleeSweep`, `CreatureView`. Os testes: `tests/bestiary_test.gd`, `tests/combate_no_corpo_test.gd`,
+  `tests/caca_a_vista_test.gd`.
+- **O que estava:** o Rastejante tinha 56×28 px, pelo joelho de uma tropa de 47, e era mais pequeno do que o coelho
+  de que se levanta desde a Q-218. O golpe de quem joga só acertava se o meio da criatura estivesse à frente, ao
+  alcance da arma.
+- **Decisão (aplicada, reversível):**
+  - **As pequenas a 2×.** O Rastejante, o Cavador e o Alado desenham-se a 2× do pixel de descanso:
+    - o Rastejante passa a 112×56, da altura de uma tropa;
+    - o Cavador a 120×80;
+    - o Alado a 160×104.
+  - **As grandes a 1,5×, para a ordem não se perder:**
+    - o Bruto passa a 120×120 e passa o rei;
+    - o Zelador a 48×144;
+    - o Ariete a 210×90;
+    - o Devorador a 276×246, mais de duas vezes o rei.
+  - **Quem se levanta de um bicho nunca é mais pequeno do que ele.**
+  - **O corpo no chão.** O `shadow_width` de cada criatura passa a ser o corpo no chão ao tamanho novo. Desenha-se como
+    sombra de contacto, e é até onde o golpe acerta.
+  - **O golpe.** O golpe de quem joga chega à pele (meia sombra para lá do alcance). O golpe de perto apanha também a
+    criatura que lhe está por cima; a flecha só vai à frente. As tropas da IA continuam a lutar pelo alcance de sempre.
+- **Decide:** tu, as escalas (2× e 1,5×) e a largura de cada corpo.
 
 ## A caça a sério — 03/10/2026 (ADR 0057)
 
