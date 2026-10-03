@@ -25,6 +25,7 @@ ammo = 30
 ability_params = {
 &"bleed_chance": 0.2,
 &"bleed_damage": 1.0,
+&"bleed_interval": 1.0,
 &"bleed_seconds": 4.0,
 &"emergency_damage": 1.0,
 &"emergency_range": 24.0,

@@ -56,7 +56,9 @@ func test_sangra_um_ponto_por_segundo_durante_o_prazo_e_acaba() -> void:
 	_abrir(alvo, &"brute", 0.0)
 	var p := _arco()
 	assert_int(_correr(0.9)).is_equal(0)
-	var esperado := int(p[&"bleed_damage"]) * roundi(float(p[&"bleed_seconds"]))
+	var esperado := (
+		int(p[&"bleed_damage"]) * floori(float(p[&"bleed_seconds"]) / float(p[&"bleed_interval"]))
+	)
 	assert_int(_correr(float(p[&"bleed_seconds"]))).is_equal(esperado)
 	assert_bool(_ferida.wounds.has(alvo)).is_false()
 
