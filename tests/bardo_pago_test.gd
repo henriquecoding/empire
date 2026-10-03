@@ -176,3 +176,38 @@ func test_o_bardo_de_ia_nao_faz_o_feito_da_nia() -> void:
 	_rastejante(SimLoop.units.xs[SimLoop.units.index_of(tropa)] - SimLoop.units.xs[_nia()] + 10.0)
 	HeroWatch.tick(PASSO)
 	assert_int(SimLoop.field.hero_progress.feat_of(&"bard")).is_equal(0)
+
+
+## Como Maestro, uma tropa tua e um inimigo a mesma distancia da mira: promove-se a tropa,
+## e o empate nao a troca por um encanto.
+func test_no_empate_o_maestro_promove_e_nao_encanta() -> void:
+	_junto()
+	SimLoop.field.hero_progress.phases[&"bard"] = 2
+	SimLoop.units.carried_coins[_nia()] = 10
+	var x := SimLoop.units.xs[_nia()] + 30.0
+	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
+	var tropa := SimLoop.units.spawn(SimLoop.state, arqueiro, Greybox.MEU_IMPERIO, x)
+	var bicho := _rastejante(30.0)
+	SimLoop.units.xs[SimLoop.units.index_of(tropa)] = x
+	SimLoop.creatures.xs[SimLoop.creatures.index_of(bicho)] = x
+	assert_bool(HeroWatch.action(x)).is_true()
+	assert_str(String(SimLoop.units.data_ids[SimLoop.units.index_of(tropa)])).is_equal(
+		"canopy_archer"
+	)
+	assert_bool(SimLoop.field.song.allies.has(bicho)).is_false()
+
+
+## Sem rato, a mira do canto parte do Bardo, que pode estar a passos da Nia: o alvo e o
+## que ele alcanca, nao o que ela alcancaria.
+func test_a_mira_do_canto_parte_do_bardo() -> void:
+	var raio := float(_preco(&"radius"))
+	SimLoop.units.xs[_bardo()] = SimLoop.units.xs[_nia()] + raio * 0.75
+	var alvo := _rastejante(raio * 1.5)
+	var mira := CombatInput.cursor_aim
+	var lado := CombatInput.facing
+	CombatInput.cursor_aim = false
+	CombatInput.facing = 1.0
+	var x := CombatInput.aim_x()
+	CombatInput.cursor_aim = mira
+	CombatInput.facing = lado
+	assert_float(x).is_equal_approx(SimLoop.creatures.xs[SimLoop.creatures.index_of(alvo)], 0.5)

@@ -28,10 +28,14 @@ static func order(x: float) -> bool:
 		HeroWatch.feedback = &"COMBAT_SKILL_RECOVERING"
 		return false
 	var fase := campo.hero_progress.phase_of(BARDO)
-	if _inimigo_mais_perto(units, b, x):
-		return _encantar(units, b, x, fase)
-	if fase > 1 and _promover(units, b, x):
+	var inimigo := _inimigo(units, b, x)
+	var tropa := _tropa(units, b, x)
+	# Como Maestro, uma tropa tua tao perto da mira como o inimigo e promovida primeiro: um
+	# empate nao troca a promocao por um encanto sem dizer nada.
+	if fase > 1 and tropa <= inimigo and _promover(units, b, x):
 		return true
+	if inimigo < INF and inimigo <= tropa:
+		return _encantar(units, b, x, fase)
 	return _incentivar(units, b)
 
 
@@ -60,7 +64,7 @@ static func _encantar(units: UnitSystem, b: int, x: float, fase: int) -> bool:
 
 static func _promover(units: UnitSystem, b: int, x: float) -> bool:
 	var preco := int(_params(units, b).get(&"promote_cost", 0))
-	if not _paga(units, b, preco, false) or not BardPromotion.at(units.ids[b], x):
+	if not _paga(units, b, preco, false) or not BardPromotion.at(units.ids[b], x, true):
 		return false
 	_paga(units, b, preco, true)
 	HeroWatch.feedback = &"COMBAT_PROMOTED"
@@ -84,8 +88,8 @@ static func _incentivar(units: UnitSystem, b: int) -> bool:
 	return true
 
 
-## Se a mira esta mais perto de um inimigo, ao alcance do canto, do que de uma tropa tua.
-static func _inimigo_mais_perto(units: UnitSystem, b: int, x: float) -> bool:
+## A distancia da mira ao inimigo mais perto dela, ao alcance do canto (INF se nenhum).
+static func _inimigo(units: UnitSystem, b: int, x: float) -> float:
 	var bichos := SimLoop.creatures
 	var raio := float(_params(units, b).get(&"radius", 0.0))
 	var inimigo := INF
@@ -95,13 +99,18 @@ static func _inimigo_mais_perto(units: UnitSystem, b: int, x: float) -> bool:
 		if SimLoop.field.song.allies.has(bichos.ids[c]) or absf(bichos.xs[c] - units.xs[b]) > raio:
 			continue
 		inimigo = minf(inimigo, absf(bichos.xs[c] - x))
+	return inimigo
+
+
+## A distancia da mira a tropa tua mais perto dela, na faixa do Bardo (INF se nenhuma).
+static func _tropa(units: UnitSystem, b: int, x: float) -> float:
 	var tropa := INF
 	for i in units.count():
 		if i == b or units.ids[i] == SimLoop.king_id or not units.alive(i):
 			continue
 		if units.owners[i] == units.owners[b] and units.bands[i] == units.bands[b]:
 			tropa = minf(tropa, absf(units.xs[i] - x))
-	return inimigo < INF and inimigo <= tropa
+	return tropa
 
 
 ## Quanto este bardo ja tem encantado: os temporarios contam por cabeca (fase base); os

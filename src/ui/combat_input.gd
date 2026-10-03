@@ -106,6 +106,8 @@ static func aim_x() -> float:
 	var body := Registry.entry(&"units", units.data_ids[i]) as UnitData
 	if Assume.king() and MonarchWatch.skill() == MonarchWatch.CANTO:  # canta o Bardo da Nia
 		body = Registry.entry(&"units", MonarchWatch.data().companion) as UnitData
+		var b := SimLoop.field.monarchy.companion_index(units, SimLoop.king_id)
+		i = b if b >= 0 else i  # o alcance e a faixa sao os dele, de onde ele esta
 	var radius := float(body.ability_params.get(&"radius", body.range_px))
 	var best := -1
 	var gap := radius

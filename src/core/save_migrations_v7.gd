@@ -56,8 +56,12 @@ static func _escudeiro(unidades: Dictionary, rei: int) -> int:
 	return melhor
 
 
+## O save real guarda os data_ids como PackedStringArray (Columns._base); os testes
+## antigos, como Array. As duas formas contam.
 static func _tamanho(valor: Variant) -> int:
-	if valor is Array or valor is PackedInt32Array or valor is PackedByteArray:
+	if valor is Array or valor is PackedStringArray:
+		return valor.size()
+	if valor is PackedInt32Array or valor is PackedByteArray:
 		return valor.size()
 	return 0
 

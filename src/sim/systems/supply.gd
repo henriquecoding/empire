@@ -82,11 +82,14 @@ func refill(unidades: UnitSystem, i: int, dados: UnitData, por_moeda: int) -> in
 	return gasto
 
 
-## Quantas tropas vivas do dono do `rei` ja gastaram flechas: o guia pede a banca.
+## Quantas tropas vivas do dono do `rei` ja gastaram flechas: o guia pede a banca. A
+## aljava pessoal do Imperador Arqueiro nao conta — a banca nao a repoe.
 func short(unidades: UnitSystem, rei: int) -> int:
 	var r := unidades.index_of(rei)
 	var n := 0
 	for unit_id: int in spent if r != NENHUM else {}:
+		if personal.has(unit_id):
+			continue
 		var i := unidades.index_of(unit_id)
 		if i != NENHUM and unidades.alive(i) and unidades.owners[i] == unidades.owners[r]:
 			n += 1

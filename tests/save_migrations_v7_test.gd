@@ -14,7 +14,8 @@ const ARQUEIRO := 20
 func _v6(piloto: int = ARQUEIRO, classe: StringName = &"archer") -> Dictionary:
 	var unidades := {
 		&"ids": PackedInt32Array([REI, 11, ESCUDEIRO, ARQUEIRO, 30]),
-		&"data_ids": [&"monarch", &"vagrant", &"squire", &"archer_hero", &"squire"],
+		# Como o save real o guarda (Columns._base): um Array[StringName] vai como texto.
+		&"data_ids": PackedStringArray(["monarch", "vagrant", "squire", "archer_hero", "squire"]),
 		&"owners": PackedInt32Array([1, 1, 1, 1, 2]),
 		&"states": PackedByteArray([0, 0, 0, 0, 0]),
 		&"carried_coins": PackedInt32Array([6, 0, 0, 4, 0]),
@@ -50,6 +51,17 @@ func test_o_escudeiro_do_rei_passa_a_vinculo_e_o_de_outro_reino_nao() -> void:
 	assert_int(vinculos.size()).is_equal(1)
 
 
+## Os testes de antes guardavam os data_ids como Array: a forma tambem conta.
+func test_os_data_ids_em_array_tambem_dao_o_vinculo() -> void:
+	var antigo := _v6()
+	var nomes: Array = []
+	for nome in antigo[&"world"][&"units"][&"data_ids"]:
+		nomes.append(StringName(nome))
+	antigo[&"world"][&"units"][&"data_ids"] = nomes
+	var mundo: Dictionary = SaveMigrations.migrate(antigo)[&"world"]
+	assert_int(int(mundo[&"monarchy"][&"bonds"].get(REI, -1))).is_equal(ESCUDEIRO)
+
+
 func test_sem_escudeiro_vivo_nao_nasce_vinculo() -> void:
 	var antigo := _v6()
 	antigo[&"world"][&"units"][&"states"] = PackedByteArray([0, 0, UnitFsm.State.DEAD, 0, 0])
@@ -79,7 +91,9 @@ func test_o_save_migrado_carrega_com_o_rei_conduzido_e_o_escudeiro_ligado() -> v
 	SimLoop.load_world(d[&"world"])
 	assert_int(Assume.driven()).is_equal(SimLoop.king_id)
 	assert_str(String(SimLoop.field.monarchy.current())).is_equal("monarch")
+	assert_bool(SimLoop.field.monarchy.bonds.has(SimLoop.king_id)).is_true()
 	var e := SimLoop.field.classes.squire_index(SimLoop.units, SimLoop.king_id)
+	assert_int(e).is_not_equal(-1)
 	assert_str(String(SimLoop.units.data_ids[e])).is_equal("squire")
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true

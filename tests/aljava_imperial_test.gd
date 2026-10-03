@@ -101,3 +101,15 @@ func test_a_aljava_e_o_credito_voltam_do_save() -> void:
 	assert_int(outra.left(_u, i, dados)).is_equal(_s.left(_u, i, dados))
 	assert_dict(outra.credit).is_equal(_s.credit)
 	assert_dict(outra.personal).is_equal(_s.personal)
+
+
+## O guia pede a banca do arco por aljavas de tropas; a do Imperador nao conta, porque a
+## banca nao a repoe.
+func test_a_aljava_do_imperador_nao_pede_a_banca() -> void:
+	var i := _imperador(12, 0)
+	_s.shoot(_u, i, _dados(&"archer_emperor"))
+	assert_int(_s.short(_u, _u.ids[i])).is_equal(0)
+	var arqueiro := _dados(&"archer")
+	var tropa := _u.index_of(_u.spawn(_estado, arqueiro, MEU, 0.0))
+	_s.shoot(_u, tropa, arqueiro)
+	assert_int(_s.short(_u, _u.ids[i])).is_equal(1)
