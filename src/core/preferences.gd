@@ -27,6 +27,8 @@ const FLASHES := &"flashes"
 const CAPTIONS := &"captions"
 ## A roda do rei abranda o tempo enquanto esta aberta (§24, Q-034). Desliga-se.
 const WHEEL_SLOWDOWN := &"wheel_slowdown"
+## Os sons provisorios do SynthSfx (ADR 0054): ligados, e desligam-se na pausa.
+const SOUND := &"sound"
 ## A duracao do dia do §26, em segundos. Zero e a do clock.csv.
 const DAY_SECONDS := &"day_seconds"
 ## O contraste (1 e o da §80) e o modo para daltonismo (0 e nenhum), do §26.
@@ -52,6 +54,7 @@ const POR_OMISSAO := {
 	FLASHES: true,
 	CAPTIONS: false,
 	WHEEL_SLOWDOWN: true,
+	SOUND: true,
 	DAY_SECONDS: 0.0,
 	CONTRAST: 1.0,
 	COLORBLIND: 0,

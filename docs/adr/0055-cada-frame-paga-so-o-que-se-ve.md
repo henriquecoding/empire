@@ -1,4 +1,4 @@
-# ADR 0054 — Cada frame paga só o que se vê; e a moeda menor, por cima de quem a larga
+# ADR 0055 — Cada frame paga só o que se vê; e a moeda menor, por cima de quem a larga
 
 - Estado: aceite
 - Data: 2026-10-03

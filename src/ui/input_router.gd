@@ -88,6 +88,7 @@ func _process(delta: float) -> void:
 	if TravelPanel.active:
 		_andar(0.0)
 		SimLoop.field.stamina.wants = false
+		SimLoop.field.stamina.still = true  # parado no menu, recupera depressa (Q-208)
 		_repeticao = 0.0
 		return
 	if not SimLoop.running():
@@ -100,6 +101,7 @@ func _process(delta: float) -> void:
 	# passo contam-se no tick (SimLoop.step, MonarchWatch.pace).
 	var anda := Input.get_axis(&"move_left", &"move_right") != 0.0 and not roda
 	SimLoop.field.stamina.wants = Input.is_action_pressed(&"king_run") and anda
+	SimLoop.field.stamina.still = not anda  # parado recupera depressa (Q-208)
 	Pace.scale = (
 		_relogio_lido().wheel_time_scale
 		if roda and Preferences.on(Preferences.WHEEL_SLOWDOWN)

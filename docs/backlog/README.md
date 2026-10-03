@@ -223,3 +223,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [QP-01](QP-01.md) | Onze respostas restantes do painel | UX-01 | feito |
 | [QP-02](QP-02.md) | As respostas do painel de 02 e 03/10/2026 | UX-04 | feito |
 | [QP-03](QP-03.md) | O baú da sala secreta | QP-02 | por fazer |
+| [QP-04](QP-04.md) | O refinamento da jogabilidade de 03/10/2026 | QP-02 | feito |

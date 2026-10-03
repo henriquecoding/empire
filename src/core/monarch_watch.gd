@@ -178,7 +178,8 @@ static func runs(quer: bool, dt: float) -> bool:
 	var c := SimFactory.curve()
 	var montado := campo.mount.rider != UnitSystem.NENHUM and campo.mount.rider == Assume.driven()
 	var cap := c.king_run_stamina_s * (c.king_run_evolved_mult if evolved(campo) else 1.0)
-	var corre := campo.stamina.step(quer and not montado, dt, cap, c.king_run_refill_s)
+	var refill := c.king_run_rest_refill_s if campo.stamina.still else c.king_run_refill_s
+	var corre := campo.stamina.step(quer and not montado, dt, cap, refill)
 	return quer if montado else corre
 
 

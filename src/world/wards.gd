@@ -8,8 +8,8 @@
 class_name Wards
 extends RefCounted
 
-const SINOS_X := [-1560.0, 1560.0]
-const FAROIS_X := [-1760.0]
+const SINOS_X := [-1628.0, 1716.0]
+const FAROIS_X := [-1800.0]
 
 
 ## Depois de todas as outras obras: os ids delas nao mudam (§45).

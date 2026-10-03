@@ -4,7 +4,8 @@
 # limite, depois de certo periodo fica cansado e tem que andar normalmente ate se
 # recuperar, o imperador evoluido tem a resistencia maior tambem". Correr gasta um
 # segundo de folego por segundo; esgotado, quem se conduz fica cansado e so volta a
-# correr com o folego cheio. Andar ou parar recupera-o. Os numeros vem do economy.csv.
+# correr com o folego cheio. Andar recupera-o, e parar mais depressa, como a montaria do
+# Kingdom a pastar (Q-208). Os numeros vem do economy.csv.
 class_name Stamina
 extends RefCounted
 
@@ -17,6 +18,8 @@ var left: float = POR_MEDIR
 var tired := false
 ## A tecla de correr, com quem se conduz a andar: escrita pela entrada, lida no passo.
 var wants := false
+## Quem se conduz esta parado: recupera ao ritmo de quem descansa (Q-208).
+var still := false
 
 
 ## Um passo. `quer` e a tecla de correr com quem se conduz a andar. `cap` e quantos

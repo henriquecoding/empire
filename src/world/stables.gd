@@ -8,7 +8,7 @@ class_name Stables
 extends RefCounted
 
 const ESTABULO := &"mount_stable"
-const ESTABULOS_X := [1740.0]
+const ESTABULOS_X := [1820.0]
 
 
 ## Depois da banca do arco: os ids das outras obras nao mudam (§45), e um save de antes
