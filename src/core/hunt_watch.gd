@@ -9,21 +9,21 @@ extends RefCounted
 
 ## Os sitios das tocas, em torno do nucleo (§21), e de que sao (Q-150): o arbusto, o
 ## buraco e a rocha dao coelhos, a arvore e o lago dao veados. O primeiro e o coelho
-## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207): a leste
-## nao sobra chao entre elas, e os coelhos de la ficam ao pe do castelo, como o do §25;
-## a arvore fica entre a fogueira e a torre alta, e o lago a beira, la para la do farol.
-## A ultima arvore e a toca do javali (ADR 0057), no unico chao livre a leste: entre o
-## celeiro e o sino de vigia.
+## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207), com a
+## toca ao dobro e o bicho a escala dele (Q-218): so cabem oito. Quatro a porta do
+## castelo, como os tufos de erva da praca do Kingdom; o buraco entre o galinheiro e a
+## torre de oeste; a arvore do veado entre o farol e o sino de vigia; o buraco da raposa
+## na beira de oeste; e a arvore do javali (ADR 0057) no unico chao livre a leste, entre o
+## celeiro e o sino de vigia. O resto da caca vive nas terras, logo ao lado (Q-217).
 const SITIOS := [
-	[-160.0, &"bush"],
-	[196.0, &"bush"],
-	[-1092.0, &"hole"],
-	[120.0, &"rock"],
-	[-1238.0, &"tree"],
-	[-1862.0, &"lake"],
-	[-1334.0, &"hole"],
-	[-100.0, &"bush"],
-	[1640.0, &"tree"],
+	[-170.0, &"bush"],
+	[180.0, &"bush"],
+	[-830.0, &"hole"],
+	[60.0, &"rock"],
+	[-1692.0, &"tree"],
+	[-60.0, &"bush"],
+	[-1860.0, &"hole"],
+	[1656.0, &"tree"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
 ## `economy`, que as do coelho ja gastavam antes da Q-150.

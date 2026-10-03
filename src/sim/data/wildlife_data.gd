@@ -37,3 +37,6 @@ extends Resource
 ## Os segundos de luz entre dois bichos da mesma toca (Q-217): o bicho volta varias
 ## vezes por dia. Zero: a toca segue o periodo da caca media (hunt_yield, Q-106).
 @export var respawn_s: float = 0.0
+## A escala do desenho (Q-218): os bichos leem-se contra os sprites de 64x64 das
+## tropas. Inteira, para o pixel ficar pixel.
+@export var sprite_scale: int = 1

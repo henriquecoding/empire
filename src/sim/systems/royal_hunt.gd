@@ -11,10 +11,12 @@ extends RefCounted
 
 ## A tag de quem e imperador (units.csv): os tres monarcas da ADR 0052.
 const IMPERADOR := &"king"
+const METADE := 0.5
 
 
 ## O golpe falhado `golpe` (PlayerStrike.last) no bicho mais perto a frente, ao
-## alcance. Devolve as moedas que caem.
+## alcance. O golpe acerta no corpo (Q-218): ate meia sombra do bicho para la do alcance
+## e para tras de quem bate. Devolve as moedas que caem.
 static func swing(hunt: HuntingSystem, golpe: Dictionary) -> Array[Dictionary]:
 	if int(golpe.get(&"band", Band.Kind.SURFACE)) != Band.Kind.SURFACE:
 		return []
@@ -25,7 +27,8 @@ static func swing(hunt: HuntingSystem, golpe: Dictionary) -> Array[Dictionary]:
 	var perto := INF
 	for prey in hunt.rabbits:
 		var frente := (hunt.herd.where(prey) - de) * lado
-		if frente >= 0.0 and frente <= alcance and frente < perto:
+		var meia := _meia(hunt, prey)
+		if frente >= -meia and frente <= alcance + meia and frente < perto:
 			melhor = prey
 			perto = frente
 	if perto == INF or int(golpe.get(&"damage", 0)) <= 0:
@@ -68,12 +71,18 @@ static func idle(
 	return moedas
 
 
+## O bicho mais perto de `x` com a pele ao `alcance` (Q-218).
 static func _reach(hunt: HuntingSystem, x: float, alcance: float) -> float:
 	var melhor := HuntingSystem.SEM_INTRO
-	var perto := alcance
+	var perto := INF
 	for prey in hunt.rabbits:
 		var gap := absf(hunt.herd.where(prey) - x)
-		if gap <= perto:
+		if gap <= alcance + _meia(hunt, prey) and gap < perto:
 			melhor = prey
 			perto = gap
 	return melhor
+
+
+## Meio corpo do bicho da toca `prey`, no chao: a sombra de contacto dele (Q-218).
+static func _meia(hunt: HuntingSystem, prey: float) -> float:
+	return float(hunt.species_at(prey).shadow_width) * METADE

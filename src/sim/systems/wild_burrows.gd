@@ -20,8 +20,8 @@ const POR_TOCA := 3
 ## ruina, a boca da masmorra), para a toca nao lhe ficar em cima.
 const MARGEM_PX := 40.0
 const SUJEITO_PX := 72.0
-## O chao minimo entre duas tocas.
-const FOLGA_PX := 40.0
+## O chao minimo entre duas tocas: a toca ao dobro e o bicho a escala dele (Q-218).
+const FOLGA_PX := 96.0
 const METADE := 0.5
 ## As chaves de cada toca.
 const X := &"x"

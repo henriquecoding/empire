@@ -1,4 +1,4 @@
-# ADR 0058 — Os bichos de todos os dias: o ritmo de cada bicho, a caça das terras e o fôlego
+# ADR 0058 — Os bichos de todos os dias: o ritmo de cada bicho, a caça das terras, o tamanho e o fôlego
 
 - **Estado:** aceite, reversível (03/10/2026)
 - **Contexto:** o dono jogou e escreveu: *«O rei está cansando extremamente rápido, deve demorar e se recuperar um
@@ -43,7 +43,7 @@ geradas ao andar (Q-173) não tinham caça nenhuma: só a região de casa tinha 
    segmento tem: o campo tem arbustos, rochas e buracos; a floresta árvores, arbustos e buracos; a água o lago; a ruína
    rochas e buracos; os acampamentos arbustos. Os povos, as fortalezas, os limiares e as bordas não têm caça. O sorteio
    é o `RngService.scatter` com o sítio (lado e índice), como o resto do segmento: o mesmo segmento dá as mesmas tocas
-   venha o rei quando vier. As tocas ficam afastadas umas das outras (40 px) e do assunto do segmento (72 px). A metade
+   venha o rei quando vier. As tocas ficam afastadas umas das outras (96 px, Q-218) e do assunto do segmento (72 px). A metade
    de perto de um trilho tem os bichos do povo de onde se vem; a de longe, os do outro.
 3. **Logo ao lado do império, dos dois lados.** O primeiro segmento de cada lado tem sempre pelo menos uma toca de cada
    bicho que lá cabe, mesmo que o sorteio diga nenhuma. Os seguintes são o sorteio: uns cheios, outros vazios.
@@ -56,11 +56,24 @@ geradas ao andar (Q-173) não tinham caça nenhuma: só a região de casa tinha 
    `king_run_refill_s` de 10 s a 8 s e `king_run_rest_refill_s` de 4 s a 3 s. Corre-se mais tempo do que se leva a
    recuperar a andar; o evoluído corre 21 s. As regras da Q-193 e da Q-208 não mudam.
 
+7. **Q-218 — os bichos do tamanho certo.** O dono: *«as criaturas estão microscópicas, têm que ser pelo menos 2 ou 3
+   vezes o tamanho, com base em 64x64 pixels de sprite, para fazerem sentido em imagem e dar para bater»*.
+   - **O tamanho.** O coelho, o faisão, a raposa e o javali desenham-se a 3× (`sprite_scale`, wildlife.csv); o veado e o
+     cervo branco a 2×, porque já são altos. Cada bicho fica entre meio sprite de 64 px e dois.
+   - **As tocas e a sombra.** As tocas desenham-se ao dobro, e cada bicho tem a sua sombra de contacto (`shadow_width`, à
+     escala).
+   - **O golpe.** Acerta no corpo e não só no meio dele: até meia sombra para lá do alcance e para trás de quem bate
+     (`RoyalHunt`).
+   - **O pastar.** `roam_px` e `graze_speed` dobram com o corpo, e o vaivém leva o mesmo tempo.
+   - **As tocas de casa.** Com o chão que as tocas grandes pedem, a região de casa só tem lugar para oito sem pisar uma
+     obra (Q-207): quatro à porta do castelo, como os tufos de erva da praça do Kingdom, e quatro nos chãos livres. O
+     veado fica com uma toca em casa (eram duas), e as tocas das terras ficam a 96 px umas das outras.
+
 ## O que mudou na economia (medido)
 
-Numa partida simulada com três arqueiros e dois lanceiros teus, sem mais ninguém a jogar: saem **21 a 25 bichos por dia**
-na região de casa e a caça rende **cerca de 30 moedas por dia** (37 no primeiro dia, com as tocas todas cheias), contra
-as 6 do `hunt_yield`. O dono pediu-o: a caça passa a ser uma fonte de dinheiro a sério, como no Kingdom. O modelo de
+Numa partida simulada com três arqueiros e dois lanceiros teus, sem mais ninguém a jogar, e com as oito tocas de casa
+da Q-218: saem **cerca de 23 bichos por dia** na região de casa e a caça rende **27 a 28 moedas por dia**, contra as 6 do
+`hunt_yield`. O dono pediu-o: a caça passa a ser uma fonte de dinheiro a sério, como no Kingdom. O modelo de
 economia da §06 (o dia da asfixia, `economia_jogada_test`) continua a contar a caça pelo `hunt_yield`; se o modelo deve
 passar a contar a caça nova, é a Q-217. As terras geradas acrescentam, por cima, o que o imperador lá caçar.
 
@@ -72,5 +85,6 @@ passar a contar a caça nova, é a Q-217. As terras geradas acrescentam, por cim
 - O `HuntView` desenha só o que está no ecrã (ADR 0055): o mundo inteiro tem caça. O `Herd` ordena quem assusta os
   bichos uma vez por passo, e não uma vez por bicho.
 - O `_rare` do `HuntingSystem` passou para o `Herd.rare`, para o `HuntingSystem` caber nas 250 linhas.
-- Reverter: `respawn_s` a 0 no wildlife.csv volta ao período do `hunt_yield`; `per_segment_max` a 0 tira a caça das
+- Reverter: `sprite_scale` a 1 e o `shadow_width` de antes voltam ao tamanho de antes; `respawn_s` a 0 no
+  wildlife.csv volta ao período do `hunt_yield`; `per_segment_max` a 0 tira a caça das
   terras; os três números do fôlego voltam a 8, 10 e 4 no economy.csv.
