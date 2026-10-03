@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RealmSiteData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_site_data.gd" id="1_sslx8"]
+
+[resource]
+script = ExtResource("1_sslx8")
+id = &"tender_ward"
+placement = &"frontier"
+wall_level = 1

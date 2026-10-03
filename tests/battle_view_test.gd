@@ -11,6 +11,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(20260916)
 	Greybox.build()
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"archer"), 1, SimLoop.core_x)
 
 
 func after_test() -> void:

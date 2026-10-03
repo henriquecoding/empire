@@ -115,11 +115,9 @@ func test_no_jogo_a_banca_repoe_na_alvorada() -> void:
 		if porque == &"arrows":
 			gastos.append(quanto)
 	EventBus.coin_spent.connect(ouvir)
-	var arqueiro := UnitSystem.NENHUM
-	for i in SimLoop.units.count():
-		if SimLoop.units.data_ids[i] == &"archer" and arqueiro == UnitSystem.NENHUM:
-			arqueiro = SimLoop.units.ids[i]
-	SimLoop.units.owners[SimLoop.units.index_of(arqueiro)] = Greybox.MEU_IMPERIO
+	var arqueiro := SimLoop.units.spawn(
+		SimLoop.state, Registry.entry(&"units", &"archer"), Greybox.MEU_IMPERIO, SimLoop.core_x
+	)
 	for vaga in SimLoop.builds.slots:
 		if vaga.kind == RulesFactory.rules().ammo_depot:
 			vaga.level = 1

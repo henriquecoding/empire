@@ -52,13 +52,13 @@ static func profile_at(slot: BuildSlot, forma: Silhouette.Form, nivel: int) -> S
 	return pintada if not pintada.is_empty() else POR_FORMA.get(forma, &"")
 
 
-## O degrau que se ve: o de pe, o que se ergue, o que caiu, ou — vazio — o topo da escada,
-## que e o que o convite promete (§25: um sitio de muro promete o Bastiao).
+## O degrau que se ve: o de pe, o que se ergue, o que caiu; vazio promete
+## a primeira construcao, nunca o Bastiao numa Clareira (ADR 0060).
 static func shown_level(slot: BuildSlot) -> int:
 	match slot.state:
 		BuildSlot.State.EMPTY:
 			# A Clareira promete o Acampamento, e nao a Fortaleza (ADR 0059).
-			return 1 if slot.kind == BuildSlot.NUCLEO else maxi(1, slot.costs.size())
+			return 1
 		BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING:
 			return slot.level if slot.mending else slot.level + 1
 	return maxi(1, slot.level)

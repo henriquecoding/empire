@@ -5,10 +5,7 @@
 # a volta, dao um JOGO — largar uma moeda recruta, largar numa obra constroi-a,
 # o crepusculo traz a mancha, a noite traz criaturas, e o amanhecer leva-as.
 #
-# Corre em headless, ao passo fixo, como o §31 pede ("corre em headless com
-# delta fixo"). Nao abre janela e nao le uma tecla: o que o jogador faz entra
-# pela fila de intencoes do §61, que e exactamente o que o router de input
-# escreve.
+# Corre em headless ao passo fixo; gestos entram pela fila de intencoes (§61).
 extends GdUnitTestSuite
 
 const Sede := preload("res://tests/support/sede.gd")
@@ -140,7 +137,9 @@ func test_um_arqueiro_custa_tres_moedas_e_nao_uma() -> void:
 	# §07 da um preco a cada tropa e o §25 poe "um vagabundo COM ARCO" no minuto
 	# 1:10. O saco dele tem de chegar ao preco: uma moeda apanha-se e nao
 	# compra nada — o que acontece no Kingdom e o que o §25 desenha.
-	var quem := _por_recrutar(&"archer")
+	var quem := SimLoop.units.spawn(
+		SimLoop.state, Registry.entry(&"units", &"archer"), RecruitSystem.SEM_DONO, _longe_de_tudo()
+	)
 	var i := SimLoop.units.index_of(quem)
 	SimLoop.units.xs[i] = _longe_de_tudo()
 	var preco := SimLoop.units.recruit_costs[i]
@@ -181,6 +180,9 @@ func test_o_rei_apanha_o_que_pisa() -> void:
 
 func test_moedas_num_sitio_de_obra_pagam_na_e_alguem_a_levanta() -> void:
 	var canteiro := _obra(&"farm")
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths():
+			muro.raise_to(1)
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	SimLoop.units.xs[rei] = canteiro.x  # o construtor tem de estar la (§55)
 	for _k in canteiro.next_cost():

@@ -6,7 +6,7 @@
 # estagio e o nivel do nucleo, pago e levantado como os degraus de um muro (§55); aqui
 # fica so a pergunta que as outras obras fazem: o estagio de agora ja as deixa pagar?
 #
-# Uma obra que nenhum estagio lista abre com a fundacao. O muro abre por nivel: a
+# Uma obra que nenhum estagio lista fica fechada. O muro abre por nivel: a
 # estacaria no Acampamento, a palicada no Povoado, e assim por diante. O estagio
 # soma-se ao resto do que um degrau pede — a estatua, a conquista, o Lenho —, nao o
 # substitui (plano §17.1).
@@ -18,7 +18,7 @@ extends RefCounted
 const NENHUM := -1
 ## O nucleo por fundar: o nivel 0 do nucleo.
 const CLAREIRA := 0
-## O Acampamento: o estagio que pede uma obra que nenhum estagio lista.
+## O Acampamento: a primeira sede fundada.
 const FUNDADO := 1
 
 ## obra ou nivel de muro (o id do walls.csv) -> o estagio que a abre.
@@ -55,10 +55,13 @@ static func required(vaga: BuildSlot) -> int:
 	var chave := vaga.kind
 	if vaga.two_paths() and vaga.level < wall_levels.size():
 		chave = StringName(wall_levels[vaga.level])
-	return int(gates.get(chave, FUNDADO))
+	return int(gates.get(chave, NENHUM))
 
 
 ## Se o degrau seguinte desta obra ja se pode pagar com a sede no estagio de agora.
 static func allows(obras: BuildSystem, vaga: BuildSlot) -> bool:
 	var agora := stage(obras)
-	return agora == NENHUM or agora >= required(vaga)
+	if agora == NENHUM or vaga.territory > 0:
+		return true
+	var precisa := required(vaga)
+	return precisa != NENHUM and agora >= precisa

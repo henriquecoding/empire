@@ -113,6 +113,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `mercenary_house` | `BUILDING_MERCENARY_HOUSE` | Casa · Mercenários | House · Mercenários |
 | `mercenary_work` | `BUILDING_MERCENARY_WORK` | Oficina · Mercenários | Workshop · Mercenários |
 | `mercenary_defense` | `BUILDING_MERCENARY_DEFENSE` | Defesa · Mercenários | Defense · Mercenários |
+| `hammer_rack` | `BUILDING_HAMMER_RACK` | Banca do Martelo | Hammer Rack |
 
 ## walls
 

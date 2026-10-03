@@ -79,7 +79,7 @@ func test_a_comitiva_e_so_de_quem_esta_na_faixa_do_rei() -> void:
 	SimLoop.units.bands[SimLoop.units.index_of(em_baixo)] = int(Band.Kind.UNDERGROUND)
 	var sem := Legacy.crossing(SimLoop.state, SimLoop.units, tropas, SimLoop.king_id, 1.0)
 	var quantos := (sem[Legacy.COMITIVA] as PackedStringArray).count(String(vagabundo.id))
-	assert_int(quantos).is_equal(1 + Greybox.JA_TEUS)  # os dois do inicio esperam no nucleo
+	assert_int(quantos).is_equal(1)  # so o recrutado deste teste atravessa
 	assert_int(em_cima).is_not_equal(em_baixo)
 
 

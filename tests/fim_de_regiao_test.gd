@@ -127,9 +127,8 @@ func test_o_rei_leva_o_saco_quem_esta_perto_e_quem_espera_sem_posto() -> void:
 		SimLoop.king_id,
 		SimFactory.curve().crossing_party_px
 	)
-	# Os dois sem funcao do inicio (Q-110) e o construtor pioneiro (ADR 0059) esperam no
-	# nucleo, e tambem vao.
-	var comitiva := ["vagrant", "vagrant", "builder", "archer", "archer"]
+	# So a gente contratada deste teste vai; os vagabundos iniciais sao neutros.
+	var comitiva := ["archer", "archer"]
 	assert_array(Array(legado[Legacy.COMITIVA])).is_equal(comitiva)
 	assert_int(int(legado[Legacy.SACO])).is_equal(9)
 	assert_int(int(legado[Legacy.REGIAO])).is_equal(1)

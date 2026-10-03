@@ -29,6 +29,8 @@ extends Resource
 
 @export_group("Arte")
 @export var sprite_frames: SpriteFrames
+## Base visual em pixeis; nao altera o porte, o alcance nem a massa da simulacao.
+@export var sprite_base_px: int = 0
 @export var layer_slots: Array[StringName] = [&"body", &"face", &"weapon"]
 @export var shadow_width: int = 18  # largura da elipse de contacto
 

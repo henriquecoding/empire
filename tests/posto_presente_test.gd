@@ -6,8 +6,9 @@
 extends GdUnitTestSuite
 
 const SEMENTE := 20260926
-const O_ARQUEIRO := 7
 const LONGE := 500.0
+
+var _arqueiro: int
 
 
 func before_test() -> void:
@@ -15,6 +16,9 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	_arqueiro = SimLoop.units.spawn(
+		SimLoop.state, Registry.entry(&"units", &"archer"), 1, SimLoop.core_x
+	)
 
 
 func after_test() -> void:
@@ -31,7 +35,7 @@ func _arqueiro_na_torre(id_torre: StringName) -> Array:
 	torre.level = 1
 	torre.state = BuildSlot.State.DONE
 	torre.health = torre.max_health()
-	var i := SimLoop.units.index_of(O_ARQUEIRO)
+	var i := SimLoop.units.index_of(_arqueiro)
 	SimLoop.units.owners[i] = SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
 	SimLoop.units.xs[i] = torre.x
 	SimLoop.jobs.refresh(SimLoop.builds, SimLoop.units, GameClock.Phase.NIGHT)

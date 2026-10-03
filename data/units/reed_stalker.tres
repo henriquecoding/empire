@@ -14,6 +14,7 @@ targets_bands = Array[int]([1, 0])
 recruit_cost = 6
 drops_on_death = Array[StringName]([&"weapon", &"coins", &"corpse"])
 move_speed = 86.0
+sprite_base_px = 64
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 tags = Array[StringName]([&"ranged", &"hides_in_reeds"])
 coin_capacity = 5

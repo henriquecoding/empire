@@ -549,9 +549,9 @@ CREATURE_TENDER,Zelador,Tender,nome de conteúdo — creature,24,"Nasce da Dívi
 GUIDE_WORKER,"RECRUTA UM TRABALHADOR
 Larga uma moeda junto de um vagabundo","RECRUIT A WORKER
 Drop a coin beside a vagrant",guia contextual de jogo,160,
-GUIDE_HUNTER,"CONTRATA UM ARQUEIRO
-A caça financia o teu reino","HIRE AN ARCHER
-Hunting funds your kingdom",guia contextual de jogo,160,
+GUIDE_HUNTER,"FORMA UM ARQUEIRO
+Recruta um vagabundo e paga o arco na banca","TRAIN AN ARCHER
+Recruit a vagrant and buy a bow at the rack",guia contextual de jogo,160,
 GUIDE_FARM,"CRIA RENDA
 Recolhe a caça e paga um canteiro","GROW YOUR INCOME
 Collect hunting coins and fund a farm",guia contextual de jogo,160,
@@ -878,8 +878,8 @@ CONTEXT_SEAT_FOUND,"{stage} · Fundar o reino: faltam {cost} moedas
 {drop} fundar · obras e ofícios pagam-se à parte","{stage} · Found the realm: {cost} coins remaining
 {drop} found · buildings and crafts are paid separately",guia contextual de jogo,160,ADR 0059; plano do reino §6.1 e §23.1
 CONTEXT_SEAT_UPGRADE,"{stage} · Melhorar para {next}: faltam {cost} moedas
-Abre: {opens} · pagam-se à parte","{stage} · Upgrade to {next}: {cost} coins remaining
-Opens: {opens} · paid separately",guia contextual de jogo,160,ADR 0059; plano do reino §23.1: o benefício e o compromisso
+Abre: {opens}. Expande as muralhas para revelar as obras.","{stage} · Upgrade to {next}: {cost} coins remaining
+Opens: {opens}. Expand your walls to reveal building sites.",guia contextual de jogo,160,ADR 0059; plano do reino §23.1: o benefício e o compromisso
 CONTEXT_SEAT_BUILDING,"{stage} · A erguer: {next}
 Quem está no marco levanta-a; até lá, serve o que já há","{stage} · Raising: {next}
 Whoever stands at the marker builds it; until then, what you have still works",guia contextual de jogo,160,ADR 0059; plano do reino §16.3
@@ -890,3 +890,11 @@ CONTEXT_STAGE_LOCKED,{name} · Abre com a sede em {stage},{name} · Opens when t
 GUIDE_FOUND,"FUNDA O REINO
 larga moedas no marco","FOUND THE REALM
 drop coins on the marker",HUD: objectivo antes da fundação,40,ADR 0059. Duas linhas.
+
+BUILDING_HAMMER_RACK,Banca do Martelo,Hammer Rack,nome de conteúdo — building,24,ADR 0060
+GUIDE_BUILDER,"FORMA UM CONSTRUTOR
+Recruta outro vagabundo e paga o martelo na banca","TRAIN A BUILDER
+Recruit another vagrant and buy a hammer at the rack",guia contextual de jogo,160,ADR 0060
+CONTEXT_TRAIN_CAP,"{name} · O primeiro construtor já está formado
+A Casa de Treino forma os seguintes","{name} · The first builder is already trained
+The Training House trains additional builders",guia contextual de jogo,160,ADR 0060

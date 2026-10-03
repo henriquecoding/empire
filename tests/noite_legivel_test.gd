@@ -5,7 +5,7 @@ extends GdUnitTestSuite
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
 const ASSENTAR := 45
-const O_ARQUEIRO := 7
+const O_ARQUEIRO := 3
 const O_VAGABUNDO := 2
 
 var _fed := 0.0
@@ -115,6 +115,7 @@ func test_ao_crepusculo_quem_luta_vai_para_a_borda_do_lado_da_noite() -> void:
 	var dono := SimLoop.units.owners[_rei()]
 	var arqueiro := SimLoop.units.index_of(O_ARQUEIRO)
 	SimLoop.units.owners[arqueiro] = dono
+	TrainingSystem.retrain(SimLoop.units, arqueiro, Registry.entry(&"units", &"archer"))
 	SimLoop.units.owners[SimLoop.units.index_of(O_VAGABUNDO)] = dono
 	_ate(GameClock.Phase.DUSK)
 	for _t in 3:

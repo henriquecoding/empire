@@ -50,6 +50,7 @@ Script `src/sim/data/unit_data.gd` · layout `rows` · 31 linha(s) · §07 §08 
 | `band` | Band.Kind | Mundo |  |
 | `move_speed` | float | Mundo | px/s |
 | `scale_tier` | int | Mundo | 1 a 4 — §22; o rei e o 4 (Q-097) |
+| `sprite_base_px` | int | Arte |  |
 | `can_change_band` | bool | Mundo |  |
 | `layer_slots` | Array[StringName] | Arte |  |
 | `shadow_width` | int | Arte | largura da elipse de contacto |
@@ -97,7 +98,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 57 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 58 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -113,6 +114,7 @@ Script `src/sim/data/building_data.gd` · layout `rows` · 57 linha(s) · §06 �
 | `destroyed_by_rot_trail` | bool | Economia | §49: plantacoes destruidas, o resto para |
 | `job_slots` | int | Economia | postos que publica (§20) |
 | `craft` | StringName | Economia | oficio que trabalha aqui |
+| `tool_rack` | bool | Economia |  |
 | `max_health` | int | Construcao |  |
 | `contact_slots` | int | Construcao |  |
 | `build_work` | float | Construcao | segundos de construtor presente (§55) |
@@ -871,4 +873,15 @@ Script `src/sim/data/realm_stage_data.gd` · layout `rows` · 6 linha(s) · ADR 
 | `width_px` | int |  |  |
 | `contact_slots` | int |  |  |
 | `unlocks` | Array[StringName] |  |  |
+
+## `realm_sites.csv` → `data/realm_sites/{id}.tres`
+
+Script `src/sim/data/realm_site_data.gd` · layout `rows` · 60 linha(s) · ADR 0060 — o território e a produção de apoio de cada construção
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | StringName |  |  |
+| `placement` | StringName |  |  |
+| `wall_level` | int |  |  |
+| `requires_any` | Array[StringName] |  |  |
 

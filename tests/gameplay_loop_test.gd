@@ -26,7 +26,7 @@ func _run(seconds: float) -> void:
 func test_paid_farm_completes_with_worker_while_the_king_explores() -> void:
 	var site: BuildSlot
 	for candidate in SimLoop.builds.slots:
-		if candidate.kind == &"farm":
+		if candidate.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, candidate):
 			site = candidate
 			break
 	# Isolate the complete payment -> assignment -> walking -> building flow.
@@ -111,10 +111,13 @@ func test_the_context_only_offers_the_wall_path_the_verb_accepts() -> void:
 func test_the_coin_toast_is_the_kings_and_troops_do_not_count_him() -> void:
 	var hud: GameHud = auto_free(GameHud.new())
 	add_child(hud)
-	# Os dois do inicio (Q-110) e o construtor pioneiro (ADR 0059).
-	var iniciais := Greybox.JA_TEUS + RulesFactory.rules().founder_pioneers
+	# ADR 0060: sem servos de inicio. A tropa deste teste e explicita.
+	var iniciais := 0
 	assert_int(GameplayGuide.troops()).is_equal(iniciais)
-	var archer := SimLoop.units.index_of(7)
+	var id := SimLoop.units.spawn(
+		SimLoop.state, Registry.entry(&"units", &"archer"), 0, SimLoop.core_x
+	)
+	var archer := SimLoop.units.index_of(id)
 	SimLoop.units.owners[archer] = SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
 	assert_int(GameplayGuide.troops()).is_equal(iniciais + 1)
 	EventBus.coin_collected.emit(SimLoop.units.ids[archer], 1)

@@ -1,9 +1,9 @@
 # src/core/foundation_watch.gd — a fundacao do reino, no jogo (ADR 0059).
 #
 # O plano do reino de 03/10/2026, aplicado pelo dono (*«aplique esse relatorio»*): o
-# monarca chega a uma Clareira com a companhia dele, dois trabalhadores sem oficio e um
-# construtor pioneiro; ha uma carroca de provisoes ao pe do marco; e a primeira moeda
-# que importa funda o reino. A fundacao ergue tambem a banca do arco, uma vez — a
+# monarca chega a uma Clareira com a companhia e dois vagabundos neutros (ADR 0060);
+# ha uma carroca de provisoes ao pe do marco; a primeira moeda funda o reino.
+# A fundacao ergue as bancas do arco e do martelo, uma vez — a
 # bancada fundadora (plano §6). Muralhas, torres, canteiros e Casa de Treino pagam-se
 # como sempre.
 #
@@ -15,6 +15,7 @@ extends RefCounted
 
 const CONSTRUTOR := &"builder"
 const BANCA := &"bow_rack"
+const MARTELOS := &"hammer_rack"
 ## A chave da sede no save do mundo.
 const SEDE := &"seat"
 ## Onde fica a carroca e onde chega o pioneiro, a partir do nucleo. Sao autoria de nivel,
@@ -97,15 +98,21 @@ static func aims_monarch() -> bool:
 
 ## A banca do arco por levantar passa a estar de pe, sem moeda: a bancada fundadora.
 static func _bancada() -> Array[Dictionary]:
+	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
-		if vaga.kind != BANCA or vaga.level != 0 or vaga.state != BuildSlot.State.EMPTY:
+		if vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
+			continue
+		if vaga.state != BuildSlot.State.EMPTY:
 			continue
 		vaga.raise_to(RealmLadder.FUNDADO)
-		return [
-			{
-				BuildSystem.CHAVE: BuildSystem.EV_COMPLETA,
-				BuildSystem.VAGA: vaga,
-				BuildSystem.NIVEL: vaga.level,
-			}
-		]
-	return []
+		(
+			eventos
+			. append(
+				{
+					BuildSystem.CHAVE: BuildSystem.EV_COMPLETA,
+					BuildSystem.VAGA: vaga,
+					BuildSystem.NIVEL: vaga.level,
+				}
+			)
+		)
+	return eventos

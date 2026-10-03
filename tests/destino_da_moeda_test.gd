@@ -12,7 +12,7 @@ const Sede := preload("res://tests/support/sede.gd")
 
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
-## O vagabundo de um acampamento: os dois do castelo ja sao teus (Q-110).
+## O vagabundo de um acampamento; os dois próximos também aguardam recrutamento.
 const O_VAGABUNDO := 4
 const ASSENTAR := 45
 
@@ -124,7 +124,9 @@ func test_o_rei_em_cima_de_uma_obra_paga_essa_obra() -> void:
 		if obra.kind == BuildSlot.NUCLEO:
 			continue
 		var alvo := CoinTarget.slot_at(SimLoop.builds, obra.x, int(obra.band))
-		assert_int(alvo).is_equal(obra.id)
+		assert_int(alvo).is_equal(
+			obra.id if RealmGrowth.visible(SimLoop.builds, obra) else CoinTarget.NENHUM
+		)
 
 
 func test_a_moeda_da_producao_nao_paga_a_obra_onde_cai() -> void:
@@ -140,7 +142,12 @@ func test_a_moeda_da_producao_nao_paga_a_obra_onde_cai() -> void:
 
 
 func test_a_moeda_do_jogador_em_cima_da_obra_paga_a() -> void:
-	var canteiro := _obra(&"farm")
+	var canteiro: BuildSlot = null
+	for obra in SimLoop.builds.slots:
+		if obra.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, obra):
+			canteiro = obra
+			break
+	assert_object(canteiro).is_not_null()
 	SimLoop.units.xs[_rei()] = canteiro.x
 	_largar_do_rei()
 	_parado_em(canteiro.x, ASSENTAR)

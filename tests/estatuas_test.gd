@@ -41,6 +41,12 @@ func test_sem_a_achar_a_forja_nao_aceita_moeda_e_achada_aceita() -> void:
 	var forja := BuildSlot.new()
 	forja.kind = &"forge"
 	forja.costs = PackedInt32Array([12])
+	forja.x = SimLoop.core_x + 500.0
+	for vaga in SimLoop.builds.slots:
+		if vaga.two_paths():
+			vaga.raise_to(3)
+		if vaga.kind == &"training_house":
+			vaga.raise_to(1)
 	assert_bool(SimLoop.builds.can_climb(forja, SimLoop.state, null)).is_false()
 	SimLoop.state.found.append("buried_statue")
 	assert_bool(SimLoop.builds.can_climb(forja, SimLoop.state, null)).is_true()

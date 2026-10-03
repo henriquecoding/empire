@@ -12,4 +12,4 @@ build_work = 16.0
 max_health = 350
 width_px = 240
 contact_slots = 4
-unlocks = Array[StringName]([&"training_house", &"henhouse", &"fishery", &"archer_tower", &"high_tower", &"citizen_house", &"palisade"])
+unlocks = Array[StringName]([&"training_house", &"henhouse", &"fishery", &"archer_tower", &"high_tower", &"citizen_house", &"palisade", &"enramados_house", &"enramados_defense", &"portuarios_house", &"portuarios_defense", &"fenda_house", &"fenda_defense", &"horta_house", &"horta_defense", &"fornalha_house", &"fornalha_defense", &"sobraiz_house", &"sobraiz_defense", &"geada_house", &"geada_defense", &"bruma_house", &"bruma_defense", &"mercenary_house", &"mercenary_defense"])

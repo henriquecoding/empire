@@ -6,18 +6,18 @@
       "texture": "temp_archer.png",
       "root": "res://art/export/temporary/",
       "size": [
-        66,
-        45
+        117,
+        80
       ],
       "foot": [
-        17,
-        45
+        30,
+        80
       ],
       "body_bounds": [
-        -15,
-        -36,
-        32,
-        36
+        -27,
+        -64,
+        57,
+        64
       ],
       "durations_ms": [
         150,
@@ -87,151 +87,156 @@
           0
         ],
         [
-          66,
+          117,
           0
         ],
         [
-          132,
+          234,
           0
         ],
         [
-          198,
+          351,
           0
         ],
         [
-          264,
+          468,
           0
         ],
         [
-          330,
+          585,
           0
         ],
         [
-          396,
+          702,
           0
         ],
         [
-          462,
+          819,
           0
         ],
         [
-          528,
+          936,
           0
         ],
         [
-          594,
+          1053,
           0
         ],
         [
-          660,
+          1170,
           0
         ],
         [
-          726,
+          1287,
           0
         ],
         [
-          792,
+          1404,
           0
         ],
         [
-          858,
+          1521,
           0
         ],
         [
-          924,
+          1638,
           0
         ],
         [
-          990,
+          1755,
           0
         ],
         [
-          1056,
+          1872,
           0
         ],
         [
-          1122,
+          1989,
           0
         ],
         [
-          1188,
+          2106,
           0
         ],
         [
-          1254,
+          2223,
           0
         ],
         [
-          1320,
+          2340,
           0
         ],
         [
-          1386,
+          2457,
           0
         ],
         [
-          1452,
+          2574,
           0
         ],
         [
-          1518,
+          2691,
           0
         ],
         [
-          1584,
+          2808,
           0
         ],
         [
-          1650,
+          2925,
           0
         ],
         [
-          1716,
+          3042,
           0
         ],
         [
-          1782,
+          3159,
           0
         ],
         [
-          1848,
+          3276,
           0
         ],
         [
-          1914,
+          3393,
           0
         ],
         [
-          1980,
+          3510,
           0
         ],
         [
-          2046,
+          3627,
           0
         ],
         [
-          2112,
+          3744,
           0
         ],
         [
-          2178,
+          3861,
           0
         ],
         [
-          2244,
+          3978,
           0
         ],
         [
-          2310,
-          0
+          0,
+          80
         ],
         [
-          2376,
-          0
+          117,
+          80
         ]
       ],
       "review_status": "free_temporary_gameplay_proxy",
+      "base_size": [
+        64,
+        64
+      ],
+      "source_resample": 1.7777777777777777,
       "atlas_origin": [
         0,
         0
@@ -470,7 +475,7 @@
       "review_status": "free_temporary_gameplay_proxy",
       "atlas_origin": [
         0,
-        45
+        160
       ],
       "atlas_texture": "actors.png"
     },
@@ -677,7 +682,7 @@
       "review_status": "free_temporary_gameplay_proxy",
       "atlas_origin": [
         0,
-        225
+        340
       ],
       "atlas_texture": "actors.png"
     },
@@ -868,7 +873,7 @@
       "review_status": "free_temporary_gameplay_proxy",
       "atlas_origin": [
         0,
-        282
+        397
       ],
       "atlas_texture": "actors.png"
     },
@@ -1079,7 +1084,7 @@
       "review_status": "free_temporary_gameplay_proxy",
       "atlas_origin": [
         0,
-        328
+        443
       ],
       "atlas_texture": "actors.png"
     },
@@ -1270,7 +1275,7 @@
       "review_status": "free_temporary_gameplay_proxy",
       "atlas_origin": [
         0,
-        369
+        484
       ],
       "atlas_texture": "actors.png"
     },
@@ -1441,7 +1446,7 @@
       "review_status": "free_temporary_gameplay_proxy",
       "atlas_origin": [
         0,
-        459
+        574
       ],
       "atlas_texture": "actors.png"
     },

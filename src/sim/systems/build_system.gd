@@ -5,8 +5,7 @@
 # PRESENTE, e nao por tempo: uma obra paga e abandonada fica em andaime.
 #
 # Puro: nao e Node, nao conhece o catalogo de eventos e nao sorteia nada.
-# Devolve o que aconteceu; quem chama e que anuncia (§43, passo 11). Reparar
-# esta no RepairWork (Q-108); quem conta como presente, na Q-064.
+# Devolve acontecimentos para o passo 11; reparacao no RepairWork (Q-108, Q-064).
 class_name BuildSystem
 extends RefCounted
 
@@ -106,7 +105,11 @@ func absorb(
 ## levantar (§10, §74). Uma moeda largada num degrau que nao sobe fica no chao.
 func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
 	# Uma estatua por achar (Q-016), ou a sede num estagio abaixo do que a abre (ADR 0059).
-	if not Discoveries.known(estado, vaga.kind) or not RealmLadder.allows(self, vaga):
+	if (
+		not Discoveries.known(estado, vaga.kind)
+		or not RealmLadder.allows(self, vaga)
+		or not RealmGrowth.allows(self, vaga)
+	):
 		return false
 	if estado == null or madeira == null:
 		return true

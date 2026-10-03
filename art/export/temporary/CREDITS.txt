@@ -13,7 +13,8 @@ Alteracoes no Empire: recorte uniforme, escala inteira 3x, atlas e tags.
 Huntress 2 — LuizMelo
 https://luizmelo.itch.io/huntress-2
 CC0-1.0 — https://creativecommons.org/publicdomain/zero/1.0/
-Alteracoes: recorte uniforme, escala 1x/2x, atlas e tags de animacao.
+Alteracoes: recorte uniforme, tropa normalizada em base 64x64 com Nearest;
+heroi 2x; canvas comum com margem para armas, atlas e tags de animacao.
 
 Monsters Creatures Fantasy — LuizMelo
 https://luizmelo.itch.io/monsters-creatures-fantasy

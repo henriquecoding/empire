@@ -1,5 +1,6 @@
 """Export the free gameplay proxies without changing Henrique's originals."""
 import argparse
+import csv
 import hashlib
 import json
 import re
@@ -46,7 +47,7 @@ def export(destination):
     destination.mkdir(parents=True, exist_ok=True)
     assets, images = {}, {}
 
-    def animated(name, actions, foot, scale):
+    def animated(name, actions, foot, scale, base_px=0):
         frames, durations, tags = [], [], {}
         for tag in ['idle', 'walk', 'attack', 'hit', 'die']:
             if tag not in actions:
@@ -58,7 +59,9 @@ def export(destination):
         bounds = [frame.getbbox() for frame in frames if frame.getbbox()]
         crop = (min(b[0] for b in bounds), min(b[1] for b in bounds),
                 max(b[2] for b in bounds), max(b[3] for b in bounds))
-        width, height = (crop[2] - crop[0]) * scale, (crop[3] - crop[1]) * scale
+        body = actions['idle'][0].getbbox()
+        ratio = base_px / (body[3] - body[1]) if base_px else scale
+        width, height = round((crop[2] - crop[0]) * ratio), round((crop[3] - crop[1]) * ratio)
         columns = min(len(frames), 4096 // width)
         rows = (len(frames) + columns - 1) // columns
         sheet = Image.new('RGBA', (width * columns, height * rows))
@@ -68,20 +71,26 @@ def export(destination):
             origin = (i % columns * width, i // columns * height)
             origins.append(list(origin))
             sheet.alpha_composite(resized, origin)
-        body = actions['idle'][0].getbbox()
         assets[name] = {'texture': f'{name}.png', 'root': RESOURCE_ROOT,
-            'size': [width, height], 'foot': [(foot[0] - crop[0]) * scale,
-                                             (foot[1] - crop[1]) * scale],
-            'body_bounds': [(body[0] - foot[0]) * scale, (body[1] - foot[1]) * scale,
-                            (body[2] - body[0]) * scale, (body[3] - body[1]) * scale],
+            'size': [width, height], 'foot': [round((foot[0] - crop[0]) * ratio),
+                                             round((foot[1] - crop[1]) * ratio)],
+            'body_bounds': [round((body[0] - foot[0]) * ratio), round((body[1] - foot[1]) * ratio),
+                            round((body[2] - body[0]) * ratio), round((body[3] - body[1]) * ratio)],
             'durations_ms': durations, 'tags': tags, 'integer_scale': scale,
             'frame_origins': origins,
             'review_status': 'free_temporary_gameplay_proxy'}
+        if base_px:
+            # The body occupies this base. Weapons and death poses retain their
+            # full union canvas; no runtime scaling or frame-specific trimming.
+            assets[name]['base_size'] = [base_px, base_px]
+            assets[name]['source_resample'] = ratio
         images[name] = sheet
 
     archer = strips(SOURCE / 'luizmelo/Huntress', 100)
     spear = individual(SOURCE / 'angav_spearman')
-    animated('temp_archer', archer, (50, 67), 1)
+    with (ROOT / 'data/source/units.csv').open() as source:
+        base = int(next(row for row in csv.DictReader(source) if row['id'] == 'archer')['sprite_base_px'])
+    animated('temp_archer', archer, (50, 67), 1, base)
     animated('temp_archer_hero', archer, (50, 67), 2)
     animated('temp_spearman', spear, (16, 32), 3)
     for name, folder, scale, foot in [

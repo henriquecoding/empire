@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RealmSiteData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_site_data.gd" id="1_ut1ap"]
+
+[resource]
+script = ExtResource("1_ut1ap")
+id = &"sawmill"
+wall_level = 2
+requires_any = Array[StringName]([&"lumber_camp"])

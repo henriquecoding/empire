@@ -52,6 +52,8 @@ static func context(device: Glyphs.Device) -> String:
 	for site in SimLoop.builds.slots:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.catch_half():
 			continue
+		if not RealmGrowth.visible(SimLoop.builds, site, SimLoop.state):
+			continue
 		if site.kind == BuildSlot.NUCLEO:  # fundar, melhorar, ou o monarca (ADR 0059)
 			return SeatGuide.context(site, values)
 		values["name"] = _building_name(site)
@@ -151,6 +153,8 @@ static func _training(site: BuildSlot, values: Dictionary) -> String:
 			return _tr(&"CONTEXT_TRAINING").format(values)
 	values["cost"] = treino.owed(site, SimLoop.units)
 	if values.cost <= 0:
+		if treino.cap_reached(site, SimLoop.units):
+			return _tr(&"CONTEXT_TRAIN_CAP").format(values)
 		return _tr(&"CONTEXT_TRAIN_NOBODY").format(values)
 	return _tr(&"CONTEXT_TRAIN").format(values)
 

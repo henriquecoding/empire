@@ -31,6 +31,7 @@ func test_a_muralha_tocada_repara_se_com_gestos_e_um_trabalhador() -> void:
 	var trabalhador := SimLoop.units.index_of(2)
 	SimLoop.units.owners[trabalhador] = SimLoop.units.owners[_rei()]
 	SimLoop.units.xs[_rei()] = muro.x
+	TrainingSystem.retrain(SimLoop.units, trabalhador, Registry.entry(&"units", &"builder"))
 	var custo := muro.repair_cost()
 	assert_str(GameplayGuide.goal()).is_equal(TranslationServer.translate(&"GUIDE_REPAIR"))
 	var painel := GameplayGuide.context(Glyphs.Device.KEYBOARD)
@@ -43,7 +44,6 @@ func test_a_muralha_tocada_repara_se_com_gestos_e_um_trabalhador() -> void:
 			}
 		)
 	)
-	TrainingSystem.retrain(SimLoop.units, trabalhador, Registry.entry(&"units", &"builder"))
 	var espera := 0
 	for _t in 600:
 		if muro.mending:
