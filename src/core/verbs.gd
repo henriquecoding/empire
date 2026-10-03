@@ -71,9 +71,9 @@ static func consume(
 	return larga
 
 
-## O Verbo 2 de quem se conduz, pela ordem dos contextos (§24): a passagem primeiro.
-## Um corpo de classe so troca de classe; o rei gere, e troca de classe antes de dar
-## moedas ao escudeiro, que e o Verbo 2 sem mais nada onde pegar (Q-114).
+## O Verbo 2 de quem se conduz, pela ordem dos contextos (§24): a passagem primeiro. O
+## monarca gere; e pagar ao companheiro dele e o Verbo 2 sem mais nada onde pegar (Q-114,
+## ADR 0052). Nenhuma tropa se assume: so imperadores se jogam.
 static func _assumir(
 	unidades: UnitSystem,
 	king_id: int,
@@ -92,17 +92,15 @@ static func _assumir(
 					campo.underground_sight.visit(mouth)
 		return
 	if quem != king_id:
-		if not HeroWatch.evolve():
-			Assume.switch(unidades, king_id, campo)
 		return
 	if cross(unidades, king_id, campo) or Lume.extinguish(unidades, king_id):
 		return  # a marcha, e o fim do ciclo pela luz (Q-156)
 	var i := unidades.index_of(king_id)
 	if i >= 0 and Passages.unseal(obras, unidades.xs[i], unidades.bands[i]):
 		return  # a escora das tuas desmonta-se (Q-138)
-	if KingVerbs.place(unidades, king_id, obras, campo) or Assume.switch(unidades, king_id, campo):
+	if KingVerbs.place(unidades, king_id, obras, campo):
 		return
-	KingVerbs.arm_squire(unidades, king_id, campo)
+	MonarchWatch.pay(unidades, king_id, campo)  # o escudeiro, o Bardo ou as flechas
 
 
 ## Tirar do saco para largar. O Verbo 1 nao cria moeda do nada: sai do que o

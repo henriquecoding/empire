@@ -25,6 +25,8 @@ var spirit: Spirit
 var wilds := WildSegments.new(RulesFactory.segment_kits(), RulesFactory.biome_peoples())
 var crown_drop := CrownDrop.new()
 var supply := Supply.new()
+var monarchy := Monarchy.new()  # quem reina, e o companheiro dele (ADR 0052)
+var bleeding := Bleeding.new()  # a ferida da flecha imperial (Q-201)
 var mount := Mount.new(
 	Registry.entry(&"mounts", &"draft_horse") as MountData,
 	Registry.entry(&"classes/storages", &"saddlebags") as StorageData
@@ -74,6 +76,7 @@ func _init(
 	if combate != null:
 		combate.guard = classes
 		combate.supply = supply
+		combate.manual.supply = supply  # a aljava do Imperador Arqueiro (Q-200)
 	_combate = combate
 	_economia = economia
 	_moral = moral
@@ -161,6 +164,7 @@ func resolve(
 	classes.watch(unidades, rei, not luz)
 	conversion.bind(unidades)
 	conversion.apply(unidades, conversion.active)
+	monarchy.boost(unidades)  # o incentivo do Bardo da Nia, por cima do passo (Q-199)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
 	var intro := relogio.elapsed >= HuntWatch.intro_at(relogio.day_seconds())
 	hunting.grow(delta, luz, HuntWatch.period(relogio.day_seconds()))
@@ -200,6 +204,8 @@ func parts() -> Dictionary:
 		&"crown_drop": crown_drop,
 		&"supply": supply,
 		&"mount": mount,
+		&"monarchy": monarchy,
+		&"bleeding": bleeding,
 	}
 
 
@@ -217,6 +223,8 @@ func from_dict(mundo: Dictionary) -> void:
 		partes[chave].from_dict(mundo.get(chave, {}))
 	Frontier.reapply(self, SimLoop.world_width)
 	SettlementWatch.plan(self)  # os acampamentos e as masmorras voltam
+	if SimLoop.field == self:
+		MonarchWatch.sync()  # o escudeiro do vinculo e a classe do Rei, ja no load
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 
 

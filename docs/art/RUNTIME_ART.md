@@ -13,7 +13,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `cook.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/actors/unit_art_batch.gd` | unidade cook | `near_complete_reference` |
 | `far_keep.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/enramados_layer.gd` | — | `author_base_needs_refinement` |
 | `gate.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
-| `knight.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | `src/actors/unit_art_batch.gd` | unidade buried_knight, unidade mercenary, unidade sealed_knight, unidade squire | `near_complete_reference` |
+| `knight.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | `src/actors/unit_art_batch.gd` | unidade buried_knight, unidade mercenary, unidade quiver_squire, unidade sealed_knight, unidade squire | `near_complete_reference` |
 | `monarch.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/actors/unit_art_batch.gd` | unidade monarch | `redesign_required` |
 | `oak.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/enramados_layer.gd` | — | `author_base_needs_refinement` |
 | `storehouse.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/building_skins.gd` | obra granary, obra pen, obra saltery | `author_base_needs_refinement` |
@@ -53,6 +53,10 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `digger` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `ice_warden` | 7 |  | `temp_spearman` — emprestado | `attack`, `die`, `idle`, `walk` | `flee`, `hit`, `work` |
 | `reed_stalker` | 7 |  | `temp_archer` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
+| `nia` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `archer_emperor` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `bard_banner` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `quiver_squire` | 1 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
 
 ## Obras
 

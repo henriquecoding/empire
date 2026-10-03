@@ -104,6 +104,8 @@ static func aim_x() -> float:
 	if cursor_aim and camera != null:
 		return camera.get_global_mouse_position().x
 	var body := Registry.entry(&"units", units.data_ids[i]) as UnitData
+	if Assume.king() and MonarchWatch.skill() == MonarchWatch.CANTO:  # canta o Bardo da Nia
+		body = Registry.entry(&"units", MonarchWatch.data().companion) as UnitData
 	var radius := float(body.ability_params.get(&"radius", body.range_px))
 	var best := -1
 	var gap := radius
@@ -128,10 +130,12 @@ static func queue_attack(direction: float) -> void:
 	)
 
 
+## A habilidade depende do perfil (ADR 0052): o Rei decreta a Vigilia, a Nia manda cantar
+## o Bardo dela e o Imperador Arqueiro marca. O decreto e da coroa; o resto e intencao.
 static func queue_skill(x: float) -> void:
 	if blocked():
 		return
-	if Assume.king():
+	if Assume.king() and MonarchWatch.skill() == &"vigil":
 		var refusal := InputRouter.impulse_refusal(&"vigil")
 		if refusal.is_empty():
 			SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": &"vigil"})

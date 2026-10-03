@@ -30,17 +30,29 @@ func test_cada_classe_tem_um_corpo_jogavel_maior_do_que_a_tropa() -> void:
 		assert_bool(corpo.tags.has(&"playable")).is_true()
 
 
-func test_quem_e_jogavel_e_o_corpo_de_uma_classe() -> void:
+## Jogavel e o corpo de uma classe ou de um monarca (ADR 0052: so imperadores se jogam).
+func test_quem_e_jogavel_e_o_corpo_de_uma_classe_ou_de_um_monarca() -> void:
 	var corpos := {}
 	for classe: ClassData in Registry.entries(&"classes"):
 		corpos[classe.base_unit] = true
+	for monarca: MonarchData in Registry.entries(&"monarchs"):
+		corpos[monarca.unit] = true
 	for unidade: UnitData in Registry.entries(&"units"):
 		if unidade.tags.has(&"playable"):
 			assert_bool(corpos.has(unidade.id)).is_true()
 
 
-func test_o_rei_e_o_maior_de_todos() -> void:
+## Q-162: "os imperadores mais altos que as classes". Quem nao e imperador e mais baixo
+## que o Rei; os imperadores nao passam dele. A Nia e a excecao que o dono pediu (ADR 0052,
+## MU-16): pequena, e reconhecivel como imperatriz pela coroa e pela bandeira.
+func test_os_imperadores_sao_os_maiores_de_todos() -> void:
 	var rei := Registry.entry(&"units", &"monarch") as UnitData
 	for unidade: UnitData in Registry.entries(&"units"):
-		if unidade.id != rei.id:
+		if unidade.id == rei.id:
+			continue
+		if unidade.tags.has(&"king"):
+			assert_int(unidade.scale_tier).is_less_equal(rei.scale_tier)
+		else:
 			assert_int(unidade.scale_tier).is_less(rei.scale_tier)
+	var nia := Registry.entry(&"units", &"nia") as UnitData
+	assert_int(nia.scale_tier).is_less(rei.scale_tier)

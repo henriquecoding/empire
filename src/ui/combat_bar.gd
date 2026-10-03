@@ -162,20 +162,16 @@ func _process(_delta: float) -> void:
 	_skill.text = "%s · %s" % [keys[1], tr(CombatGlyphs.skill_name(current))]
 	_attack.tooltip_text = tr(&"COMBAT_ATTACK_HELP")
 	_skill.tooltip_text = tr(CombatGlyphs.skill_help(current))
-	var data := Registry.entry(&"classes", current) as ClassData
-	_title.text = tr(StringName(data.display_key)) if data != null else tr(&"COMBAT_TITLE")
+	_title.text = MonarchHud.title()  # quem reina, ou o herdeiro (ADR 0052)
 	var cooldown := SimLoop.units.cooldowns[i]
 	_state.text = (
 		tr(&"COMBAT_RECOVERING").format({"seconds": "%.1f" % cooldown})
 		if cooldown > 0
 		else tr(&"COMBAT_READY")
 	)
+	_state.text += MonarchHud.arrows(who)  # a aljava do Imperador Arqueiro (Q-200)
 	_attack_progress.value = 1.0 - cooldown / maxf(MIN_INTERVAL, float(stats.get(&"interval", 1.0)))
-	var skill_cooldown := (
-		float(SimLoop.field.song.cooldowns.get(who, 0.0)) if current == &"bard" else 0.0
-	)
-	var body := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
-	_skill_progress.value = 1.0 - skill_cooldown / maxf(MIN_INTERVAL, body.attack_interval)
+	_skill_progress.value = MonarchHud.skill_ready(who)  # o canto e do Bardo da Nia
 	if current == &"monarch":
 		var refusal := InputRouter.impulse_refusal(&"vigil")
 		var price := SimLoop.field.crown.price(

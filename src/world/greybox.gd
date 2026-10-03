@@ -227,9 +227,9 @@ static func _gente() -> int:
 		SimLoop.units.owners[SimLoop.units.index_of(rei + 1 + k)] = MEU_IMPERIO
 	_por_recrutar(&"archer", ARQUEIROS_X)
 	_por_recrutar(&"spearman", LANCEIROS_X)
-	# §08: "Escudeiro acompanha e apanha moedas caidas" — nasce com o Monarca, e
-	# por ultimo: os ids de quem ja la estava nao mudam (os saves e os testes).
-	SimLoop.units.spawn(estado, Registry.entry(&"units", ESCUDEIRO), MEU_IMPERIO, SimLoop.core_x)
+	# §08: o companheiro nasce com o monarca, por ultimo, e liga-se a ele (ADR 0052).
+	var escudeiro := Registry.entry(&"units", ESCUDEIRO) as UnitData
+	MonarchWatch.bond(rei, SimLoop.units.spawn(estado, escudeiro, MEU_IMPERIO, SimLoop.core_x))
 	return rei
 
 

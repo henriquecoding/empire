@@ -1749,7 +1749,7 @@
   "depende": "UN-00",
   "feito": "Tabela de monarcas no pipeline CSV → .tres, validada pelo csv_to_tres e pelo content_report; IDs canónicos na NAMING_BIBLE; o `monarch` continua a ser o Rei; Nia, o Arqueiro imperial e os companheiros novos já com uma unidade mínima nos dados (os números de bancada ficam em _proposed e afinam-se no UN-09 e no UN-13), para o UN-04 poder pôr qualquer dupla em campo",
   "fora": "Renomear archer_hero ou bard_hero por alias; o companions.csv já é a mascote (§08) e não muda de sentido.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-02": {
@@ -1765,7 +1765,7 @@
   "depende": "UN-01",
   "feito": "Gerir, decretar e abrir a roda dependem do titular da coroa, não do data_id nem do porte; os três monarcas iniciais têm essa autoridade; um teste por perfil",
   "fora": "Coop e duas coroas (UN-29).",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-03": {
@@ -1779,7 +1779,7 @@
   "depende": "UN-02",
   "feito": "Um companheiro por pessoa, por ID, gravado no save; cargas preservadas; o companheiro segue o patrono e não a câmara; um companheiro morto fica marcado como perdido (a reposição é a proposta da Q-205, por aprovar)",
   "fora": "A mascote do trono, que é outro sistema.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-04": {
@@ -1795,7 +1795,7 @@
   "depende": "UN-01, UN-02, UN-03",
   "feito": "Três opções — Rei, Nia, Arqueiro — com papel, companheiro, vantagem, custo e evolução; uma dupla só em campo; nenhum rei escondido; tempo parado até confirmar; rato, comando e toque",
   "fora": "Escolha de Ganância no primeiro ecrã (plano §6.1).",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-05": {
@@ -1811,7 +1811,7 @@
   "depende": "UN-02",
   "feito": "Nenhum contexto, atalho ou resgate assume ofício ou soldado; sem trela para os monarcas; a viagem aceita o monarca; o rei largado deixa de existir como caso",
   "fora": "A troca imperial (UN-17).",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-06": {
@@ -1825,7 +1825,7 @@
   "depende": "UN-03, UN-04, UN-05",
   "feito": "Save de versão 6 sobe à 7: mundo, pessoas e itens preservados; o corpo de classe vira unidade de IA; o controlo volta ao rei vivo; o escudeiro passa a vínculo; migrar duas vezes dá o mesmo",
   "fora": "Converter uma campanha antiga em Nia ou no Arqueiro por equivalência de nomes.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-07": {
@@ -1840,7 +1840,7 @@
   "depende": "UN-02, UN-03",
   "feito": "Os três perfis caem, deixam a coroa recuperável e morrem de vez da mesma maneira; o herdeiro tem nome próprio e herda o vínculo do companheiro sobrevivente; sem sucessor válido, a campanha acaba. Perfil e força do herdeiro: a opção mais simples e reversível da Q-202 (segue o perfil de quem reinava), marcada como proposta até à decisão",
   "fora": "Escolher outro arquétipo para o herdeiro (Q-202).",
-  "estado": "por fazer",
+  "estado": "feito — o herdeiro segue o perfil de quem reinava, a proposta da Q-202 por aprovar",
   "horas": "—"
  },
  "UN-08": {
@@ -1855,7 +1855,7 @@
   "depende": "UN-04, UN-05",
   "feito": "Ataque por ator; R/RT/botão direito pelo perfil (Rei: Vigília; Nia: canto pago; Arqueiro: marca); pausa, troca e morte cancelam a intenção; segurar não repete gastos",
   "fora": "Novas habilidades além das três.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-09": {
@@ -1869,7 +1869,7 @@
   "depende": "UN-08",
   "feito": "Unidade própria nos dados, com tags de rei; ritmo rápido e golpe baixo em _proposed; governa, explora e morre como os outros",
   "fora": "Arte final (art/ não se toca).",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-10": {
@@ -1883,7 +1883,7 @@
   "depende": "UN-03, UN-09",
   "feito": "Modo, orçamento, alcance, recusa e efeito únicos; sem companhia ou sem moedas não há débito; a reserva volta se a ação deixar de poder ocorrer antes do compromisso",
   "fora": "Automatização sem orçamento autorizado.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-11": {
@@ -1898,7 +1898,7 @@
   "depende": "UN-10",
   "feito": "Um convertido não rouba a coroa nem recebe fogo amigo; só criaturas vivas e hostis levam a coroa",
   "fora": "Relações entre reinos humanos (UN-22).",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-12": {
@@ -1912,7 +1912,7 @@
   "depende": "UN-10, UN-11",
   "feito": "Promoção mantém a proporção de vida e custa uma vez; o feito conta criaturas distintas com Nia presente; limite de aliados",
   "fora": "Conversões de criaturas gigantes sem peso.",
-  "estado": "por fazer",
+  "estado": "feito — os tetos de encantados e de convertidos são propostas da Q-199 por aprovar",
   "horas": "—"
  },
  "UN-13": {
@@ -1927,7 +1927,7 @@
   "depende": "UN-08",
   "feito": "Unidade própria; cada disparo gasta uma flecha; aljava e bolsa por pessoa; sem flechas não dispara a flecha",
   "fora": "Flecha física com colisão.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-14": {
@@ -1941,7 +1941,7 @@
   "depende": "UN-03, UN-13",
   "feito": "Sem moedas pessoais, nenhuma flecha nova; sem espaço, sem cobrança; o lote que não cabe fica registado; tesouro, colega e banca do arco não pagam por ele",
   "fora": "Estoque físico do escudeiro.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-15": {
@@ -1955,7 +1955,7 @@
   "depende": "UN-13",
   "feito": "Chance, ticks e fonte no save; uma instância por alvo que renova; uma morte e uma recompensa quando golpe e sangramento matam no mesmo tick; sorteio no fluxo combat",
   "fora": "Sangramento nos arqueiros comuns.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—"
  },
  "UN-16": {

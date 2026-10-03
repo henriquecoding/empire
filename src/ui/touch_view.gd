@@ -12,8 +12,19 @@ const ICONES := {
 	TouchLayout.Role.WHEEL: &"coroa",
 	TouchLayout.Role.PAUSE: &"pausa",
 }
-const ARMAS := {&"monarch": &"espada", &"archer": &"flecha", &"bard": &"alaude"}
-const DONS := {&"monarch": &"vigilia", &"archer": &"mira", &"bard": &"canto"}
+## O icone de cada nome de ataque e de habilidade (CombatGlyphs; ADR 0045, ADR 0052).
+const ARMAS := {
+	&"COMBAT_SWORD": &"espada",
+	&"COMBAT_HATCHETS": &"espada",
+	&"COMBAT_ARROW": &"flecha",
+	&"COMBAT_LUTE": &"alaude",
+}
+const DONS := {
+	&"IMPULSE_VIGIL": &"vigilia",
+	&"COMBAT_MARK": &"mira",
+	&"COMBAT_CHARM": &"canto",
+	&"COMBAT_ROYAL_SONG": &"canto",
+}
 
 
 static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
@@ -50,13 +61,15 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		}
 		match papel:
 			TouchLayout.Role.ATTACK:
-				estado[&"icone"] = ARMAS.get(classe, &"espada")
-				estado[&"rotulo"] = _nome(CombatGlyphs.attack_name(classe))
+				var arma := CombatGlyphs.attack_name(classe)
+				estado[&"icone"] = ARMAS.get(arma, &"espada")
+				estado[&"rotulo"] = _nome(arma)
 				estado[&"pronto"] = _pronto()
 			TouchLayout.Role.SKILL:
-				estado[&"icone"] = DONS.get(classe, &"mira")
-				estado[&"rotulo"] = _nome(CombatGlyphs.skill_name(classe))
-				estado[&"apagado"] = not DONS.has(classe)
+				var dom := CombatGlyphs.skill_name(classe)
+				estado[&"icone"] = DONS.get(dom, &"mira")
+				estado[&"rotulo"] = _nome(dom)
+				estado[&"apagado"] = not DONS.has(dom)
 			TouchLayout.Role.ASSUME:
 				estado[&"brilho"] = brilho
 			TouchLayout.Role.WHEEL:

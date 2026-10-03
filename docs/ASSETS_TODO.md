@@ -9,6 +9,10 @@
 |---|---|---|---|---|---|
 | `art/export/_placeholder/unit_scale2_placeholder.png` | 24 × 47 | `scenes/boot.tscn` | `enramados_villager_body` (ASSET_REGISTER) | 2026-09-11 | em uso |
 | `art/export/_placeholder/contact_shadow_18.png` | 18 × 6 | `scenes/boot.tscn` | `shadow_18` | 2026-09-11 | em uso |
+| procedural — `ActorArt`, coroa e pele própria | escala 3 | unidade `nia` (`src/actors/unit_art_batch.gd`) | a Imperatriz Nia: pequena, negra, coroa, machadinhas (ADR 0052; plano §16.5) — a registar | 2026-10-02 | em uso |
+| procedural — `ActorArt`, coroa e arco | escala 4 | unidade `archer_emperor` | o Imperador Arqueiro: arco, aljava, coroa e a mão de tiro (plano §16.5) — a registar | 2026-10-02 | em uso |
+| procedural — `ActorArt` + `BardArt.banner` | escala 2 | unidade `bard_banner` | o Bardo da Nia com a bandeira às costas (plano §16.3) — a registar | 2026-10-02 | em uso |
+| `knight.png` emprestado (o escudeiro) | escala 1 | unidade `quiver_squire` | o escudeiro das flechas do Imperador Arqueiro: aljava e pagamento (plano §16.5) — a registar | 2026-10-02 | em uso |
 
 ## Como se acrescenta
 

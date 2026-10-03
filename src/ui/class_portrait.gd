@@ -9,8 +9,11 @@ const FLOOR_HALF_WIDTH := 40
 const STROKE := 2.0
 const BODY_HALF := 0.3
 const BODY_WIDTH := 0.6
-const COLORS := {&"monarch": Color("d9b46b"), &"archer": Color("9db589"), &"bard": Color("aaa0ce")}
-var class_id: StringName = &"monarch"
+const COLORS := {
+	&"monarch": Color("d9b46b"), &"nia": Color("aaa0ce"), &"archer_emperor": Color("9db589")
+}
+## O monarca do retrato (monarchs.csv, ADR 0052).
+var monarch_id: StringName = &"monarch"
 var _art := OriginalArt.new()
 var _units := UnitSystem.new()
 var _data: UnitData
@@ -20,8 +23,8 @@ func _ready() -> void:
 	custom_minimum_size.y = HEIGHT
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var data := Registry.entry(&"classes", class_id) as ClassData
-	_data = Registry.entry(&"units", data.base_unit) as UnitData
+	var data := Registry.entry(&"monarchs", monarch_id) as MonarchData
+	_data = Registry.entry(&"units", data.unit) as UnitData
 	_units.spawn(GameState.new(), _data, 1, 0.0)
 
 
@@ -43,5 +46,4 @@ func _draw() -> void:
 		var box := Rect2(
 			foot - Vector2(height * BODY_HALF, height), Vector2(height * BODY_WIDTH, height)
 		)
-		ActorArt.draw_unit(self, box, _data, _units, 0, COLORS.get(class_id, Color.WHITE), 0.0)
-		BardArt.draw_on(self, box, 0.0)
+		ActorArt.draw_unit(self, box, _data, _units, 0, COLORS.get(monarch_id, Color.WHITE), 0.0)

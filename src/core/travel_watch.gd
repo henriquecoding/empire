@@ -8,14 +8,21 @@ static func daylight() -> bool:
 	return ClockService.clock != null and ClockService.clock.current_phase() < GameClock.Phase.DUSK
 
 
+## O monarca tambem viaja (ADR 0052, MU-04): de dia, de um portao, para destino seguro.
+## Sem destino seguro alem de casa nao ha viagem, e na bifurcacao a marcha aberta manda —
+## o Verbo 2 dela continua a ser a marcha (Q-146).
 static func at_gate() -> bool:
-	if Assume.king() or SimLoop.state == null:
+	if SimLoop.state == null:
 		return false
 	var units := SimLoop.units
 	var i := units.index_of(Assume.driven())
 	if i < 0 or not units.alive(i) or units.bands[i] != Band.Kind.SURFACE:
 		return false
+	if Assume.king() and destinations().size() <= 1:
+		return false
 	var x := units.xs[i]
+	if Assume.king() and Verbs.at_fork(x) and Verbs.crossing_open(units, SimLoop.king_id):
+		return false
 	for fork in SimLoop.secrets.chapters:
 		if absf(x - fork) <= GATE_PX:
 			return true
@@ -68,7 +75,11 @@ static func go(id: int) -> bool:
 	)
 	var units := SimLoop.units
 	var hero := Assume.driven()
+	var companheiro := MonarchWatch.at_hand(units, hero)  # vai com ele quem esta a mao
 	units.xs[units.index_of(hero)] = x
 	units.clear_target(hero)
+	if companheiro != UnitSystem.NENHUM:
+		units.xs[companheiro] = x
+		units.clear_target(units.ids[companheiro])
 	EventBus.queue(&"segment_entered", [StringName(SimLoop.state.chapters.regions[id]), TRAVEL])
 	return true

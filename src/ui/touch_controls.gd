@@ -177,7 +177,7 @@ func _devolver_camara() -> void:
 ## Tocar num bicho aponta a habilidade de quem mira (ADR 0045): o Arqueiro marca, o Bardo
 ## encanta. A Vigilia do Monarca nao aponta, e por isso um toque no mundo nao a gasta.
 func _apontar(toque: Vector2) -> void:
-	if Assume.king() or not HeroWatch.current() in MIRAM:
+	if not HeroWatch.current() in MIRAM:  # o Rei decreta a Vigilia, que nao aponta
 		return
 	var x := (get_viewport().get_canvas_transform().affine_inverse() * toque).x
 	CombatInput.cursor_aim = false

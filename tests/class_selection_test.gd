@@ -1,3 +1,4 @@
+# tests/class_selection_test.gd — a escolha do monarca numa partida nova (§08; ADR 0052).
 extends GdUnitTestSuite
 
 
@@ -22,26 +23,32 @@ func test_escolher_um_cartao_nao_comeca_antes_de_confirmar() -> void:
 	)
 	add_child(picker)
 	assert_int(picker.cards.size()).is_equal(3)
-	picker.cards[2].pressed.emit()
-	assert_str(String(picker.selected)).is_equal("bard")
-	assert_bool(picker.cards[2].button_pressed).is_true()
+	picker.cards[1].pressed.emit()
+	assert_str(String(picker.selected)).is_equal("nia")
+	assert_bool(picker.cards[1].button_pressed).is_true()
 	assert_bool(picker.cards[0].button_pressed).is_false()
 	assert_array(chosen).is_empty()
-	assert_str(picker.start_button.text).contains(tr(&"CLASS_BARD"))
+	assert_str(picker.start_button.text).contains(tr(&"MONARCH_NIA"))
 	picker.begin()
-	assert_array(chosen).contains(["bard"])
+	assert_array(chosen).contains(["nia"])
 
 
-func test_as_tres_classes_explicam_a_base_a_evolucao_e_os_controlos() -> void:
+## Plano §6.1: a escolha mostra a dupla — o papel, o companheiro, a base, a evolucao e os
+## controlos — e nao so tres retratos. So os tres monarcas; um oficio nao e escolha.
+func test_os_tres_monarcas_explicam_o_companheiro_a_base_a_evolucao_e_os_controlos() -> void:
 	var picker: ClassSelection = auto_free(ClassSelection.new())
 	add_child(picker)
-	for id in Roster.STARTERS:
+	var ids: Array[StringName] = []
+	for dados in MonarchWatch.choices():
+		ids.append(dados.id)
+	assert_array(ids).is_equal([&"monarch", &"nia", &"archer_emperor"])
+	for id in ids:
 		picker.select(id)
-		for label in [picker._base, picker._evolved, picker._controls]:
+		for label in [picker._companion, picker._base, picker._evolved, picker._controls]:
 			assert_str(label.text).is_not_empty()
-			assert_str(label.text).not_contains("CLASS_")
+			assert_str(label.text).not_contains("MONARCH_")
 	picker.select(&"diplomat")
-	assert_str(String(picker.selected)).is_equal("bard")
+	assert_str(String(picker.selected)).is_equal("archer_emperor")
 
 
 func test_o_jogo_novo_espera_sem_andar_o_tempo_e_sem_gravar_uma_escolha_vazia() -> void:
@@ -58,7 +65,7 @@ func test_o_jogo_novo_espera_sem_andar_o_tempo_e_sem_gravar_uma_escolha_vazia() 
 	assert_int(SimLoop.state.tick).is_equal(tick)
 	assert_int(picker._scroll.scroll_vertical).is_zero()
 	assert_bool(picker.cards[0].has_focus()).is_true()
-	picker.select(&"archer")
+	picker.select(&"archer_emperor")
 	var pending := SimLoop.intents.pending()
 	Input.action_press(&"verb_drop")  # A/espaco confirmam, mas nao largam uma moeda
 	picker.begin()
@@ -66,7 +73,10 @@ func test_o_jogo_novo_espera_sem_andar_o_tempo_e_sem_gravar_uma_escolha_vazia() 
 	assert_int(SimLoop.intents.pending()).is_equal(pending)
 	assert_bool(ClassSelection.active).is_false()
 	assert_bool(SimLoop.running()).is_true()
-	var i := SimLoop.units.index_of(Assume.driven())
-	assert_str(String(SimLoop.units.data_ids[i])).is_equal("archer_hero")
-	assert_str(String(SimLoop.field.roster.starting_class)).is_equal("archer")
+	# Um so monarca, o escolhido, e e ele que se conduz: nenhum rei escondido (UN-04).
+	assert_int(Assume.driven()).is_equal(SimLoop.king_id)
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	assert_str(String(SimLoop.units.data_ids[i])).is_equal("archer_emperor")
+	assert_int(SimLoop.units.data_ids.count(&"monarch")).is_equal(0)
+	assert_str(String(SimLoop.field.monarchy.profile)).is_equal("archer_emperor")
 	SimLoop.stop()

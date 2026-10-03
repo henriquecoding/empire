@@ -183,8 +183,8 @@ jobs:
       - name: Escolha inicial · desktop e janela compacta
         run: |
           xvfb-run -a make captura CAPTURA=build/classes-monarca.png EXTRA="--novo --escolha true"
-          xvfb-run -a make captura CAPTURA=build/classes-bardo.png EXTRA="--novo --escolha true --perfil bard"
-          xvfb-run -a godot --path . --resolution 390x844 tools/captura.tscn -- --novo --segundos 3 --escolha true --perfil archer --saida build/classes-compacta.png
+          xvfb-run -a make captura CAPTURA=build/classes-nia.png EXTRA="--novo --escolha true --perfil nia"
+          xvfb-run -a godot --path . --resolution 390x844 tools/captura.tscn -- --novo --segundos 3 --escolha true --perfil archer_emperor --saida build/classes-compacta.png
 
       # Sai sempre, passe ou chumbe: quando chumba, a fotografia e a primeira
       # coisa que alguem quer ver, e sem ela a percentagem nao diz onde.

@@ -33,6 +33,8 @@ func test_so_quem_se_joga_traz_o_armazenamento() -> void:
 	var jogaveis := {}
 	for classe: ClassData in Registry.entries(&"classes"):
 		jogaveis[classe.base_unit] = true
+	for monarca: MonarchData in Registry.entries(&"monarchs"):  # ADR 0052
+		jogaveis[monarca.unit] = true
 	for tropa: UnitData in Registry.entries(&"units"):
 		var traz := &"storage" in tropa.layer_slots
 		var porque := "%s: storage so para quem se joga" % tropa.id

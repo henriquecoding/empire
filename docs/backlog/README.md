@@ -181,21 +181,21 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | Ticket | Tarefa | Depende | Estado |
 |---|---|---|---|
 | [UN-00](UN-00.md) | Consolidar as regras dos monarcas e a ADR | — | feito |
-| [UN-01](UN-01.md) | Esquema de monarcas e companheiros | UN-00 | por fazer |
-| [UN-02](UN-02.md) | Autoridade por reino e por pessoa | UN-01 | por fazer |
-| [UN-03](UN-03.md) | Vínculo de companhia | UN-02 | por fazer |
-| [UN-04](UN-04.md) | Seleção imperial e autoria inicial | UN-01, UN-02, UN-03 | por fazer |
-| [UN-05](UN-05.md) | Retirar o controlo de tropas | UN-02 | por fazer |
-| [UN-06](UN-06.md) | Migração das campanhas antigas | UN-03, UN-04, UN-05 | por fazer |
-| [UN-07](UN-07.md) | Generalizar a morte e a sucessão | UN-02, UN-03 | por fazer |
-| [UN-08](UN-08.md) | Despacho do combate e da habilidade | UN-04, UN-05 | por fazer |
-| [UN-09](UN-09.md) | A Imperatriz Nia e os números de bancada | UN-08 | por fazer |
-| [UN-10](UN-10.md) | O Bardo real pago | UN-03, UN-09 | por fazer |
-| [UN-11](UN-11.md) | Conversão e hostilidade | UN-10 | por fazer |
-| [UN-12](UN-12.md) | Promoção e evolução de Nia | UN-10, UN-11 | por fazer |
-| [UN-13](UN-13.md) | O Imperador Arqueiro e a aljava | UN-08 | por fazer |
-| [UN-14](UN-14.md) | O escudeiro que fornece flechas | UN-03, UN-13 | por fazer |
-| [UN-15](UN-15.md) | O sangramento | UN-13 | por fazer |
+| [UN-01](UN-01.md) | Esquema de monarcas e companheiros | UN-00 | feito |
+| [UN-02](UN-02.md) | Autoridade por reino e por pessoa | UN-01 | feito |
+| [UN-03](UN-03.md) | Vínculo de companhia | UN-02 | feito |
+| [UN-04](UN-04.md) | Seleção imperial e autoria inicial | UN-01, UN-02, UN-03 | feito |
+| [UN-05](UN-05.md) | Retirar o controlo de tropas | UN-02 | feito |
+| [UN-06](UN-06.md) | Migração das campanhas antigas | UN-03, UN-04, UN-05 | feito |
+| [UN-07](UN-07.md) | Generalizar a morte e a sucessão | UN-02, UN-03 | feito — o herdeiro segue o perfil de quem reinava, a proposta da Q-202 por aprovar |
+| [UN-08](UN-08.md) | Despacho do combate e da habilidade | UN-04, UN-05 | feito |
+| [UN-09](UN-09.md) | A Imperatriz Nia e os números de bancada | UN-08 | feito |
+| [UN-10](UN-10.md) | O Bardo real pago | UN-03, UN-09 | feito |
+| [UN-11](UN-11.md) | Conversão e hostilidade | UN-10 | feito |
+| [UN-12](UN-12.md) | Promoção e evolução de Nia | UN-10, UN-11 | feito — os tetos de encantados e de convertidos são propostas da Q-199 por aprovar |
+| [UN-13](UN-13.md) | O Imperador Arqueiro e a aljava | UN-08 | feito |
+| [UN-14](UN-14.md) | O escudeiro que fornece flechas | UN-03, UN-13 | feito |
+| [UN-15](UN-15.md) | O sangramento | UN-13 | feito |
 | [UN-16](UN-16.md) | Encontros e roster imperial | UN-05, UN-06, UN-07 | por fazer |
 | [UN-17](UN-17.md) | Troca imperial transacional | UN-16 | por fazer |
 | [UN-18](UN-18.md) | Diplomata universal sob IA | UN-05 | por fazer |

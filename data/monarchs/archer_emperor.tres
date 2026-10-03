@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MonarchData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/monarch_data.gd" id="1_sjvyc"]
+
+[resource]
+script = ExtResource("1_sjvyc")
+id = &"archer_emperor"
+display_key = "MONARCH_ARCHER_EMPEROR"
+heir_key = "MONARCH_HEIR_ARCHER_EMPEROR"
+order = 3
+unit = &"archer_emperor"
+skill_class = &"archer"
+skill = &"mark"
+attack_key = "COMBAT_ARROW"
+companion = &"quiver_squire"
+service = &"arrows"

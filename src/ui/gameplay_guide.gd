@@ -22,7 +22,7 @@ static func troops() -> int:
 		):
 			continue
 		var dados := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
-		if dados.tags.has(ClassSystem.COLHE):
+		if dados.tags.has(&"follows_king"):  # o companheiro do monarca nao e tropa
 			continue
 		if SimLoop.units.owners[i] != RecruitSystem.SEM_DONO:
 			total += 1
@@ -36,8 +36,8 @@ static func context(device: Glyphs.Device) -> String:
 		return ""
 	var buttons: Array = Glyphs.BOTOES[device]
 	var values := {"drop": _button(buttons[1]), "assume": _button(buttons[2])}
-	if not Assume.king():  # uma classe assumida nao gere (§08)
-		return ClassGuide.context(values)
+	if not Assume.king():  # so o titular da coroa gere (§08, ADR 0052)
+		return ""
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
 		return GuideSites.passage(king, values)
@@ -54,7 +54,7 @@ static func context(device: Glyphs.Device) -> String:
 		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
 			continue
 		if site.kind == BuildSlot.NUCLEO:
-			if SimLoop.field.classes.can_evolve(SimLoop.state.royal_seeds):
+			if MonarchWatch.can_evolve(SimLoop.field, SimLoop.state.royal_seeds):
 				return _evolve(site, values)
 			continue
 		values["name"] = _building_name(site)
@@ -97,26 +97,20 @@ static func context(device: Glyphs.Device) -> String:
 			units, nearest, SimLoop.recruits.price(units, nearest)
 		)
 		return _tr(&"CONTEXT_RECRUIT").format(values)
-	var assumir := ClassGuide.assume_hint(values)  # trocar de classe (§08, Q-162)
-	var escudo := _squire(values) if assumir.is_empty() else assumir
-	if not escudo.is_empty() or units.bands[king] != int(Band.Kind.SURFACE):
-		return escudo
-	var trela := ClassGuide.leash(values)  # o rei nao se afasta mais do reino (Q-150)
-	return trela if not trela.is_empty() else GuideSites.wilds(units.xs[king], values)
-
-
-static func _squire(values: Dictionary) -> String:
-	var classes := SimLoop.field.classes
-	if not KingVerbs.squire_wants(SimLoop.units, SimLoop.king_id, classes):
-		return ""
-	values["shield"] = classes.squire.shield
-	values["max"] = classes.squire.shield_cap()
-	return _tr(&"CONTEXT_SQUIRE").format(values)
+	var companhia := ClassGuide.companion(values)  # pagar ao companheiro (ADR 0052)
+	if not companhia.is_empty() or units.bands[king] != int(Band.Kind.SURFACE):
+		return companhia
+	var terras := GuideSites.wilds(units.xs[king], values)
+	return terras if not terras.is_empty() else ClassGuide.status()
 
 
 static func _evolve(site: BuildSlot, values: Dictionary) -> String:
-	var classe := Registry.entry(&"classes", &"monarch") as ClassData
+	var classe := Registry.entry(&"classes", MonarchWatch.skill_class()) as ClassData
 	values["name"] = _building_name(site)
+	if classe.id != Monarchy.REI:  # a Nia e o Arqueiro evoluem pela classe do perfil
+		values["monarch"] = TranslationServer.translate(MonarchWatch.data().display_key)
+		values["seeds"] = classe.evolve_seed_cost
+		return _tr(&"CONTEXT_MONARCH_EVOLVE").format(values)
 	values["pct"] = roundi(float(classe.phase2_params.get(ClassSystem.DEFESA, 0.0)) * CEM)
 	values["seeds"] = classe.evolve_seed_cost
 	return _tr(&"CONTEXT_EVOLVE").format(values)
@@ -149,8 +143,8 @@ static func _training(site: BuildSlot, values: Dictionary) -> String:
 	var treino := SimLoop.field.training
 	var oficio := treino.craft_of(site)
 	if oficio == null or not site.standing():
-		var escudo := _squire(values)  # o Verbo 2 aqui arma o escudeiro (Verbs.consume)
-		return escudo if not escudo.is_empty() else _tr(&"CONTEXT_DONE").format(values)
+		var paga := ClassGuide.companion(values)  # o Verbo 2 aqui paga ao companheiro
+		return paga if not paga.is_empty() else _tr(&"CONTEXT_DONE").format(values)
 	values["craft"] = _tr(oficio.display_key)
 	for quem in treino.trainees:
 		if treino.trainees[quem][0] == site.id:
