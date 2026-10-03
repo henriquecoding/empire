@@ -14,17 +14,6 @@ extends RefCounted
 
 const TAXA := 22050
 const PICO := 0.8
-## O fim de cada som desce a zero neste tempo: um corte seco estala.
-const FECHO_S := 0.01
-## O ataque de uma receita que nao diz o seu: um clique, sem estalo.
-const ATAQUE_S := 0.003
-## O indice do atraso num parcial [Hz, amplitude, decaimento, atraso].
-const ATRASO := 3
-## O maior valor de uma amostra de 16 bits, e o intervalo de uma amostra.
-const S16 := 32767.0
-const UM := 1.0
-## O hash do ruido: as constantes classicas do "random" dos shaders, sem sorteio.
-const HASH := Vector2(12.9898, 43758.5453)
 
 const RECEITAS := {
 	&"sfx_coin_drop":
@@ -96,52 +85,15 @@ const RECEITAS := {
 const POR_FRAME := 800
 
 static var _feitos := {}
-static var _a_fazer: Sintese
+static var _a_fazer: SynthTake
 ## As pistas que alguem pediu antes de estarem feitas: passam a frente das outras.
 static var _pressa: Array[StringName] = []
-
-
-## Uma receita a meio: sintetiza-se aos bocados, e depois passa-se a 16 bits.
-class Sintese:
-	var receita: Dictionary
-	var n := 0
-	var i := 0
-	var j := 0
-	var fases := PackedFloat32Array()
-	var saida := PackedFloat32Array()
-	var dados := PackedByteArray()
-	var filtrado := 0.0
-	var pico := 0.0
-
-	func _init(r: Dictionary) -> void:
-		receita = r
-		n = int(float(r.dur) * TAXA)
-		fases.resize((r.parts as Array).size())
-		saida.resize(n)
-		dados.resize(n * 2)
-
-	## Avanca `quantas` amostras; devolve se acabou (sintese e conversao).
-	func advance(quantas: int) -> bool:
-		var ate := mini(n, i + quantas)
-		while i < ate:
-			saida[i] = SynthSfx.sample(receita, i, fases, self)
-			pico = maxf(pico, absf(saida[i]))
-			i += 1
-		if i < n:
-			return false
-		var escala := PICO / pico if pico > 0.0 else 0.0
-		ate = mini(n, j + quantas)
-		while j < ate:
-			saida[j] *= escala
-			dados.encode_s16(j * 2, int(clampf(saida[j], -UM, UM) * S16))
-			j += 1
-		return j >= n
 
 
 ## O som da pista, feito por inteiro se o aquecimento ainda la nao chegou.
 static func stream(cue: StringName) -> AudioStreamWAV:
 	if not _feitos.has(cue):
-		var s := Sintese.new(RECEITAS[cue])
+		var s := SynthTake.new(RECEITAS[cue])
 		s.advance(s.n)
 		_feitos[cue] = _wav(s.dados)
 	return _feitos[cue]
@@ -183,7 +135,7 @@ static func warm(quantas: int = POR_FRAME) -> bool:
 		var cue := _proxima()
 		if cue == &"":
 			return true
-		_a_fazer = Sintese.new(RECEITAS[cue])
+		_a_fazer = SynthTake.new(RECEITAS[cue])
 		_a_fazer.set_meta(&"cue", cue)
 	if _a_fazer.advance(quantas):
 		_feitos[_a_fazer.get_meta(&"cue")] = _wav(_a_fazer.dados)
@@ -204,39 +156,9 @@ static func _proxima() -> StringName:
 
 ## As amostras de uma receita, de -PICO a PICO.
 static func samples(receita: Dictionary) -> PackedFloat32Array:
-	var s := Sintese.new(receita)
+	var s := SynthTake.new(receita)
 	s.advance(s.n)
 	return s.saida
-
-
-## A amostra `i` de uma receita, por normalizar. `fases` e `s` levam o estado.
-static func sample(receita: Dictionary, i: int, fases: PackedFloat32Array, s: Sintese) -> float:
-	var parts: Array = receita.parts
-	var ruido: Array = receita.get("noise", [0.0, 1.0, 1.0])
-	var ataque: float = maxf(receita.get("attack", ATAQUE_S), 1.0 / TAXA)
-	var vibrato: Array = receita.get("vibrato", [0.0, 0.0])
-	var t := float(i) / TAXA
-	var tom := lerpf(1.0, receita.get("glide", 1.0), t / float(receita.dur))
-	tom *= 1.0 + float(vibrato[1]) * sin(TAU * float(vibrato[0]) * t)
-	var v := 0.0
-	for k in parts.size():
-		var p: Array = parts[k]
-		var atraso: float = p[ATRASO] if p.size() > ATRASO else 0.0
-		fases[k] += TAU * float(p[0]) * tom / TAXA
-		if t >= atraso:
-			v += float(p[1]) * sin(fases[k]) * _envolvente(t - atraso, ataque, p[2])
-	s.filtrado = lerpf(s.filtrado, _ruido(i), float(ruido[2]))
-	v += float(ruido[0]) * s.filtrado * exp(-t / float(ruido[1]))
-	return v * clampf((float(receita.dur) - t) / FECHO_S, 0.0, 1.0)
-
-
-static func _envolvente(t: float, ataque: float, decai: float) -> float:
-	return minf(1.0, t / ataque) * exp(-t / decai)
-
-
-## Ruido branco sem sorteio: um hash do indice da amostra, sempre o mesmo som.
-static func _ruido(i: int) -> float:
-	return lerpf(-UM, UM, fposmod(sin(float(i) * HASH.x) * HASH.y, UM))
 
 
 static func _wav(dados: PackedByteArray) -> AudioStreamWAV:

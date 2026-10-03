@@ -121,6 +121,19 @@ static func draw_all(
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
+## As plantas do Wilds repartidas em talhoes de `talhao` px pelo x de cada uma, pela
+## ordem em que estavam: o x do inicio do talhao -> as plantas dele. Cada talhao num no
+## seu, e o motor deixa de fora os que estao longe da camara (03/10/2026).
+static func chunks(plantas: PackedFloat32Array, talhao: float) -> Dictionary:
+	var saida := {}
+	for i in range(0, plantas.size(), Wilds.PLANTA):
+		var de := floorf(plantas[i + 1] / talhao) * talhao
+		if not saida.has(de):
+			saida[de] = PackedFloat32Array()
+		saida[de].append_array(plantas.slice(i, i + Wilds.PLANTA))
+	return saida
+
+
 ## Uma planta com o pe em `pe`. Deixa a transformacao posta: quem desenha muitas repoe-na
 ## no fim, como o draw_all.
 static func draw_one(

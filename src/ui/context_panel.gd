@@ -5,8 +5,11 @@ const POSITION := Vector2(280, 152)
 const BOX := Vector2(720, 56)
 const FONT := 16
 const EDGE := 8
+## O guia refaz-se dez vezes por segundo, como os textos do GameHud.
+const TEXTO_S := GameHud.TEXTO_S
 
 var device := Glyphs.Device.KEYBOARD
+var _texto_em := 0.0
 
 
 func _ready() -> void:
@@ -33,8 +36,11 @@ func _input(event: InputEvent) -> void:
 	device = Glyphs.device_of(event, device, name)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if SimLoop.state == null:
 		return
-	text = GameplayGuide.context(device)
+	_texto_em -= delta
+	if _texto_em <= 0.0:
+		_texto_em = TEXTO_S
+		text = GameplayGuide.context(device)
 	visible = not text.is_empty() and SimLoop.running()

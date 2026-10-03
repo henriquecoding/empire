@@ -9,10 +9,28 @@
 # O horizonte e as nuvens vivem dentro de um Parallax2D: a camara ve-os mais
 # devagar, e por isso sao desenhados para la da regiao, para um lado e para o
 # outro — como a serra do EnramadosLayer.
+#
+# O campo e o horizonte desenham-se em talhoes (FloraArt.chunks), um filho por talhao:
+# o motor deixa de fora os que estao longe da camara, e quando nasce um segmento so se
+# refazem os talhoes que mudaram. Eram o mundo gerado inteiro num no so (03/10/2026).
 class_name WildsLayer
 extends Node2D
 
 enum Plano { CAMPO, HORIZONTE, NUVENS }
+
+
+## As plantas de um talhao. Usa o material do pai: a luz do plano e a mesma.
+class Talhao:
+	extends Node2D
+
+	var plantas := PackedFloat32Array()
+	var frente := 0.0
+	var tras := 0.0
+	var nevoa := Color.WHITE
+
+	func _draw() -> void:
+		FloraArt.draw_all(self, plantas, frente, tras, nevoa)
+
 
 ## O pe das plantas do campo, da frente (junto ao caminho) ao fundo; o do
 ## horizonte fica meio enterrado no campo, que se desenha por cima.
@@ -20,6 +38,8 @@ const CAMPO_Y := {"frente": 492.0, "tras": 436.0}
 const HORIZONTE_Y := {"frente": 430.0, "tras": 425.0}
 ## Quantas larguras de regiao se desenham para cada lado do que esta em parallax.
 const MARGEM := 1.0
+## A largura de um talhao, em px do plano.
+const TALHAO := 1024.0
 
 ## As nuvens: quantas, a que altura, o vento, e o sprite (x, y, largo, alto, tom).
 const NUVENS := {"quantas": 18, "de_y": 40.0, "ate_y": 210.0, "vento": 6.0, "escala": 2.0}
@@ -37,6 +57,7 @@ var _clock: ClockData
 var _chave: Array = []
 var _plantas := PackedFloat32Array()
 var _tempo := 0.0
+var _talhoes: Dictionary = {}
 
 
 func _ready() -> void:
@@ -61,7 +82,7 @@ func _process(delta: float) -> void:
 	if chave != _chave:
 		_chave = chave
 		_plantas = _gerar()
-		queue_redraw()
+		_repartir()
 	if plane == Plano.NUVENS:
 		_tempo += delta
 		queue_redraw()
@@ -103,14 +124,35 @@ func _alcance(largura: float) -> Vector2:
 
 
 func _draw() -> void:
-	match plane:
-		Plano.CAMPO:
-			FloraArt.draw_all(self, _plantas, CAMPO_Y.frente, CAMPO_Y.tras, EnramadosLayer.FIELD)
-		Plano.HORIZONTE:
-			var nevoa := EnramadosLayer.NEAR
-			FloraArt.draw_all(self, _plantas, HORIZONTE_Y.frente, HORIZONTE_Y.tras, nevoa)
-		Plano.NUVENS:
-			_nuvens()
+	if plane == Plano.NUVENS:
+		_nuvens()
+
+
+## As plantas pelos talhoes: so se redesenha o que mudou, e o que ja nao ha sai.
+func _repartir() -> void:
+	if plane == Plano.NUVENS:
+		queue_redraw()
+		return
+	var campo := plane == Plano.CAMPO
+	var pe: Dictionary = CAMPO_Y if campo else HORIZONTE_Y
+	var partes := FloraArt.chunks(_plantas, TALHAO)
+	for de: float in partes:
+		var talhao: Talhao = _talhoes.get(de)
+		if talhao == null:
+			talhao = Talhao.new()
+			talhao.use_parent_material = true
+			talhao.frente = pe.frente
+			talhao.tras = pe.tras
+			talhao.nevoa = EnramadosLayer.FIELD if campo else EnramadosLayer.NEAR
+			add_child(talhao)
+			_talhoes[de] = talhao
+		if talhao.plantas != partes[de]:
+			talhao.plantas = partes[de]
+			talhao.queue_redraw()
+	for de: float in _talhoes.keys():
+		if not partes.has(de):
+			(_talhoes[de] as Talhao).queue_free()
+			_talhoes.erase(de)
 
 
 ## Cada nuvem tem o seu sitio, altura e velocidade, tirados da semente uma vez

@@ -43,6 +43,22 @@ class Obras:
 		Gauge.adiar = false
 
 
+## As moedas desta faixa, por cima de quem anda: largadas aos pes do rei, ficavam por
+## tras dele e do escudeiro, e o saco esvaziava sem se ver moeda nenhuma (o dono,
+## 03/10/2026: "a moeda nao esta sendo dropada"). A sombra fica no chao, por baixo.
+class Moedas:
+	extends Node2D
+
+	enum { PE, QUANTIA, FACE, COR, BRILHO }
+
+	## [pe, quantia, face, cor, brilho] de cada moeda, postas pelo BandView neste frame.
+	var vistas: Array[Array] = []
+
+	func _draw() -> void:
+		for m: Array in vistas:
+			CoinArt.draw_on(self, m[PE], m[QUANTIA], m[FACE], m[COR], m[BRILHO])
+
+
 ## A chama do archote, em vezes a de uma fogueira: arde numa mao.
 const ARCHOTE := 0.55
 
@@ -61,8 +77,9 @@ var _visual_time := 0.0
 var _salto: CoinBounce
 var _actors: UnitCanvas
 var _bichos_vista := CreatureView.new()
-## Criado no _ready, como o _actors: um no criado antes da arvore fica orfao.
+## Criados no _ready, como o _actors: um no criado antes da arvore fica orfao.
 var _obras: Obras
+var _moedas_vista: Moedas
 
 
 func _ready() -> void:
@@ -81,6 +98,9 @@ func _ready() -> void:
 	_obras.material = SceneryLight.material(SceneryLight.Depth.GROUND)
 	add_child(_obras)
 	add_child(_actors)
+	_moedas_vista = Moedas.new()
+	_moedas_vista.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(_moedas_vista)
 
 
 ## O ambiente vinha no `modulate` do no, e um `modulate` multiplica tudo o que o
@@ -99,6 +119,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 	_actors.time = _visual_time
 	_actors.queue_redraw()
+	_moedas_vista.queue_redraw()  # depois do pai: e o _draw dele que as poe
 
 
 func _draw() -> void:
@@ -165,12 +186,16 @@ func _moedas() -> void:
 	_salto.forget_except(moedas.ids, _visual_time)
 	var chao := WorldPalette.ground_of(int(band))
 	var queda := moedas.apex_px() + CoinBounce.MAO
+	var vista := PresentationBounds.of(self)
+	var vistas: Array[Array] = []
 	for i in moedas.count():
 		if moedas.bands[i] != int(band):
 			continue
 		var id := moedas.ids[i]
 		var onde := Smoothing.coin(id, moedas.xs[i], moedas.heights[i])
 		_salto.observe(id, onde.y, _visual_time, Vector2(onde.x, chao))
+		if not PresentationBounds.sees(vista, onde.x):
+			continue
 		var acima := onde.y + _salto.offset(id, _visual_time)
 		if moedas.settled[i] == 0:  # sai da mao e desce ate ao arco (CoinBounce.hand)
 			acima += CoinBounce.MAO * CoinBounce.hand(moedas.vys[i], curva.coin_drop_speed_px_s)
@@ -179,12 +204,13 @@ func _moedas() -> void:
 		var brilho := CoinArt.glint(id, _visual_time) if moedas.settled[i] == 1 else 0.0
 		var face := _salto.face(id, _visual_time)
 		var pe := Vector2(onde.x, chao - acima)
-		CoinArt.draw_on(self, pe, moedas.amounts[i], face, CoinArt.lit(_luz, onde.x), brilho)
+		vistas.append([pe, moedas.amounts[i], face, CoinArt.lit(_luz, onde.x), brilho])
 	for levada: Array in _salto.taken(_visual_time):  # apanhada, ou paga a uma obra
 		var subiu: float = levada[1]
 		var pe: Vector2 = levada[0] - Vector2(0.0, CoinBounce.LEVADA.sobe * subiu)
 		var some := func(c: Color) -> Color: return Color(c, 1.0 - subiu)
-		CoinArt.draw_on(self, pe, 1, 1.0, some, 0.0)
+		vistas.append([pe, 1, 1.0, some, 0.0])
+	_moedas_vista.vistas = vistas
 
 
 ## O que a noite traz so se ve dentro de uma luz (ADR 0034); quem o desenha, com

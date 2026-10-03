@@ -36,6 +36,13 @@ const OLHO_GRANDE := 2.0
 const QUADRADO := 2.0
 const NUMEROS := 2
 const ESQUERDA := -1.0
+## Os codigos do que se grava (record): ate POLIGONO e o papel de um rectangulo, ate ao
+## olho o de um poligono, e os tres do olho, que nao levam papel nem luz.
+const POLIGONO := 8
+const HALO_OLHO := 16
+const NUCLEO_OLHO := 17
+const BRILHO_OLHO := 18
+const OLHO_TONS := 2
 ## Os numeros de um traco, pela ordem em que se escrevem.
 const A := 0
 const B := 1
@@ -57,6 +64,7 @@ var eye := PackedColorArray()
 ## Tudo numa cor so: o branco do golpe e o corpo que se espalma (DeathBurst).
 var flat := false
 var flat_color := Color.WHITE
+var _gravado: Array = []
 
 
 func _init(onde: CanvasItem, pes: Vector2, tamanho: Vector2, lado: float) -> void:
@@ -70,12 +78,22 @@ func tone(papel: Tone) -> Color:
 	return flat_color if flat else tones.get(papel, Color.MAGENTA)
 
 
-## Os tracos de uma criatura, com os sinais deste instante.
+## Os tracos de uma criatura, com os sinais deste instante: gravar e pintar.
 func strokes(lista: Array, sinais: PackedFloat32Array) -> void:
+	replay(record(lista, sinais))
+
+
+## Os tracos em pixeis dela, gravados sem cor nem subida: [codigo, Rect2 ou pontos, ...].
+## O codigo e o papel, o papel mais POLIGONO, ou um dos tres do olho. Sao as mesmas contas
+## para a mesma pose, e o Bestiary guarda-as: uma pose rasteriza-se uma vez (03/10/2026).
+func record(lista: Array, sinais: PackedFloat32Array) -> Array:
+	_gravado = []
+	var n := PackedFloat32Array()
 	for traco: Array in lista:
-		var n := PackedFloat32Array()
-		for termo: Variant in traco.slice(NUMEROS):
-			n.append(value(termo, sinais))
+		n.clear()
+		for k in range(NUMEROS, traco.size()):
+			var termo: Variant = traco[k]
+			n.append(value(termo, sinais) if termo is Array else float(termo))
 		var papel: Tone = traco[1]
 		match int(traco[0]):
 			Stroke.RECT:
@@ -91,6 +109,30 @@ func strokes(lista: Array, sinais: PackedFloat32Array) -> void:
 				poly(pontos, papel)
 			Stroke.GLOW:
 				glow(n[A], n[B], n[C] if n.size() > C else 1.0)
+	return _gravado
+
+
+## O que se gravou, com as cores e a subida deste pen. O `at()` vai numa transformacao so:
+## era uma conta de px de mundo por canto de cada rectangulo, centenas por criatura.
+func replay(gravado: Array) -> void:
+	canvas.draw_set_transform(foot, 0.0, Vector2(facing * escala.x, -escala.y))
+	var cores: Array[Color] = []
+	for papel: Tone in Tone.values():
+		cores.append(tone(papel))
+	var olhos := not flat and eye.size() >= OLHO_TONS
+	var cima := Vector2(0.0, subida)
+	for i in range(0, gravado.size(), NUMEROS):
+		var codigo: int = gravado[i]
+		if codigo < POLIGONO:
+			var caixa: Rect2 = gravado[i + 1]
+			canvas.draw_rect(Rect2(caixa.position + cima, caixa.size), cores[codigo])
+		elif codigo < HALO_OLHO:
+			var pontos: PackedVector2Array = gravado[i + 1]
+			canvas.draw_colored_polygon(Transform2D(0.0, cima) * pontos, cores[codigo - POLIGONO])
+		elif olhos:
+			var caixa: Rect2 = gravado[i + 1]
+			canvas.draw_rect(Rect2(caixa.position + cima, caixa.size), _olho(codigo))
+	canvas.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
 ## Um numero de um traco: ele proprio, ou a base mais k vezes cada sinal.
@@ -110,53 +152,57 @@ func at(x: float, y: float) -> Vector2:
 
 ## Um rectangulo de pixeis, com o canto de tras e de baixo em (x, y).
 func rect(x: float, y: float, w: float, h: float, papel: Tone) -> void:
-	_caixa(x, y, w, h, tone(papel))
+	_caixa(x, y, w, h, papel)
 
 
 ## Uma massa oval, linha a linha: o corpo de quase tudo o que a noite traz.
 func blob(cx: float, cy: float, rx: float, ry: float, papel: Tone) -> void:
-	var cor := tone(papel)
 	var linhas := maxi(1, roundi(ry))
 	for j in range(-linhas, linhas + 1):
 		var meia := rx * sqrt(maxf(0.0, 1.0 - pow(float(j) / maxf(ry, MEIO), QUADRADO)))
 		if meia < MEIO:
 			continue
-		_caixa(roundf(cx - meia), cy + float(j), roundf(meia * QUADRADO), 1.0, cor)
+		_caixa(roundf(cx - meia), cy + float(j), roundf(meia * QUADRADO), 1.0, papel)
 
 
 ## Uma linha de pixeis com `grosso` de espessura: patas, chifres, dedos.
 func line(x0: float, y0: float, x1: float, y1: float, papel: Tone, grosso := 1.0) -> void:
-	var cor := tone(papel)
 	var passos := maxi(1, roundi(maxf(absf(x1 - x0), absf(y1 - y0))))
 	for i in passos + 1:
 		var t := float(i) / float(passos)
 		var x := roundf(lerpf(x0, x1, t) - grosso * MEIO)
 		var y := roundf(lerpf(y0, y1, t) - grosso * MEIO)
-		_caixa(x, y, grosso, grosso, cor)
+		_caixa(x, y, grosso, grosso, papel)
 
 
 ## Um poligono de pixeis: asas, capuz, a broca. Os vertices prendem-se a grelha.
 func poly(pontos: PackedVector2Array, papel: Tone) -> void:
-	var mundo := PackedVector2Array()
+	var dela := PackedVector2Array()
 	for p in pontos:
-		mundo.append(at(roundf(p.x), roundf(p.y)))
-	canvas.draw_colored_polygon(mundo, tone(papel))
+		dela.append(Vector2(roundf(p.x), roundf(p.y)))
+	_gravado.append_array([int(papel) + POLIGONO, dela])
 
 
-## Um olho aceso: o nucleo claro, o roxo a volta e um halo fraco. Nao leva luz.
+## Um olho aceso: o nucleo claro, o roxo a volta e um halo fraco. Nao leva luz: a cor
+## e a do olho de quem o pinta, e sem olho (o branco, a morte) nao se pinta.
 func glow(x: float, y: float, lado := 1.0) -> void:
-	if flat or eye.size() < 2:
-		return
-	_caixa(x - 1.0, y - 1.0, lado + OLHO_GRANDE, lado + OLHO_GRANDE, Color(eye[0], HALO))
-	_caixa(x, y, lado, lado, eye[0])
+	_caixa(x - 1.0, y - 1.0, lado + OLHO_GRANDE, lado + OLHO_GRANDE, HALO_OLHO)
+	_caixa(x, y, lado, lado, NUCLEO_OLHO)
 	var brilho := y + lado - 1.0 if lado >= OLHO_GRANDE else y
-	_caixa(x, brilho, 1.0, 1.0, eye[1])
+	_caixa(x, brilho, 1.0, 1.0, BRILHO_OLHO)
 
 
-func _caixa(x: float, y: float, w: float, h: float, cor: Color) -> void:
+## Um rectangulo em pixeis dela, gravado com o codigo do que o pinta.
+func _caixa(x: float, y: float, w: float, h: float, codigo: int) -> void:
 	if w <= 0.0 or h <= 0.0:
 		return
-	var a := at(x, y + h)
-	var b := at(x + w, y)
-	var canto := Vector2(minf(a.x, b.x), minf(a.y, b.y))
-	canvas.draw_rect(Rect2(canto, (b - a).abs()), cor)
+	_gravado.append_array([codigo, Rect2(x, y, w, h)])
+
+
+func _olho(codigo: int) -> Color:
+	match codigo:
+		HALO_OLHO:
+			return Color(eye[0], HALO)
+		NUCLEO_OLHO:
+			return eye[0]
+	return eye[1]

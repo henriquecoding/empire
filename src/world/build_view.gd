@@ -24,6 +24,9 @@ extends RefCounted
 const RUINA := 0.30
 
 const MEIA := 0.5
+## Quanto uma obra pode passar do sitio dela para cada lado, com o que tem a volta: o
+## castelo-arvore tem 750 px num nucleo de 480. Fora do ecra mais isto, nao se desenha.
+const ALEM := 320.0
 
 ## §25, minuto 3:30: "primeira estacaria construivel — silhueta fantasma a
 ## piscar". Um pulso lento, que nunca apaga: o convite que desaparece metade do
@@ -37,9 +40,12 @@ static func draw_on(
 	canvas: CanvasItem, faixa: Band.Kind, edificios: Dictionary, luz: Lighting, tempo: float = 0.0
 ) -> void:
 	var pulso := blink(tempo)
+	var vista := PresentationBounds.of(canvas)
 	for vaga in SimLoop.builds.slots:
 		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
+			continue
+		if not PresentationBounds.sees(vista, vaga.x, vaga.width * MEIA + ALEM):
 			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso, tempo)
 		TemporaryScenery.building_props(canvas, vaga, luz, tempo)

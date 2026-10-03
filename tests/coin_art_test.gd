@@ -6,18 +6,23 @@
 extends GdUnitTestSuite
 
 
+## Menos 30 % a 03/10/2026 (o dono): continua a ver-se — perto de metade de uma tropa.
 func test_uma_moeda_se_ve_ao_lado_de_uma_tropa() -> void:
 	var tropa: float = OriginalArt.new().box(&"vagrant", Vector2.ZERO).size.y
 	var moeda := CoinArt.size_of(1)
-	assert_float(moeda.y).is_greater(tropa / 2.0)
+	assert_float(moeda.y).is_greater(tropa * 0.45)
 	assert_float(moeda.y).is_less(tropa)
 	assert_float(moeda.x).is_greater(WorldPalette.MOEDA_R * 2.0 * 2.0)
 
 
 ## O dono, a 03/10/2026 (Q-192): "quero que o tamanho seja o dobro do atual". Era de 18 px.
-func test_a_moeda_tem_o_dobro_do_tamanho() -> void:
-	assert_float(CoinArt.size_of(1).x).is_equal(36.0)
+## E no mesmo dia, depois: "diminua o tamanho da moeda em 30%" — de 36 px para 25,2. A
+## coroa nao e moeda, e fica no dobro.
+func test_a_moeda_tem_menos_30_por_cento_do_dobro() -> void:
 	assert_float(CoinArt.CHAO).is_equal(CoinArt.PIXEL * 2.0)
+	assert_float(CoinArt.MOEDA).is_equal_approx(CoinArt.CHAO * 0.7, 0.0001)
+	assert_float(CoinArt.size_of(1).x).is_equal_approx(36.0 * 0.7, 0.0001)
+	assert_float(CoinArt.size_of(CoinArt.SACO_DE).x).is_equal_approx(13.0 * 2.8, 0.0001)
 
 
 func test_a_quantia_le_se_pela_forma() -> void:
