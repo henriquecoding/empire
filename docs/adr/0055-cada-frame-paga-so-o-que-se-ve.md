@@ -2,7 +2,7 @@
 
 - Estado: aceite
 - Data: 2026-10-03
-- Secção do dossiê: §02, §11, §22, §24, §63, §80
+- Secção do dossiê: §02, §11, §22, §23, §24, §63, §80
 - Actualiza: ADR 0050 e Q-192 (o tamanho da moeda), ADR 0048 (o que o shader do cenário recebe), ADR 0049 (como o
   bestiário se pinta)
 
@@ -54,6 +54,9 @@ quem anda, e é 30 % menor.
   anda aos saltos de `Flock.LONGE_S` (0,2 s).
 - **O painel**: os textos do `GameHud` e o guia do `ContextPanel` refazem-se dez vezes por segundo (`TEXTO_S`); a barra
   da fase continua a cada frame.
+- **O som** (ADR 0054, chegado à `main` a meio deste trabalho): o aquecimento do `SynthSfx` custava 2,1 ms por frame
+  durante 962 frames, porque cada amostra relia a receita. A síntese passa ao `SynthTake`, que a lê uma vez para
+  colunas: 0,7 ms por frame, e os 22 sons saem iguais bit a bit.
 
 **Depois**, nas mesmas condições (média por frame):
 
