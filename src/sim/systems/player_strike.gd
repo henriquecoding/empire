@@ -89,15 +89,18 @@ func target(units: UnitSystem, creatures: CreatureSystem, who: int, direction: f
 		return UnitSystem.NENHUM
 	var data: UnitData = _profiles[units.data_ids[i]]
 	var best := UnitSystem.NENHUM
-	var gap: float = stats[&"range"]
+	var gap := INF
 	for id in TargetPicker.ids_por_ordem(creatures.ids):
 		var c := creatures.index_of(id)
 		if allies.has(id) or not creatures.alive(c):
 			continue
 		if not Posts.reaches(_posts, units, i, data, int(creatures.bands[c])):
 			continue
+		# Q-219: ate a pele, e a de perto apanha a que lhe esta por cima.
+		var meia := MeleeSweep.half_body(creature_data, creatures, c)
+		var atras := 0.0 if bool(stats[&"arrow"]) else meia
 		var distance := (creatures.xs[c] - units.xs[i]) * direction
-		if distance >= 0.0 and distance <= gap and (best < 0 or distance < gap):
+		if distance >= -atras and distance <= float(stats[&"range"]) + meia and distance < gap:
 			best = id
 			gap = distance
 	return best
@@ -160,7 +163,9 @@ func resolve(
 	if focus != null and focus.piercing.has(who) and bool(stats[&"arrow"]):
 		hits = focus.pierced(units, creatures, who, enemy)
 	elif not bool(stats[&"arrow"]) and MeleeSweep.melee(data):  # Q-185
-		hits = MeleeSweep.targets(creatures, units.xs[i], band, stats[&"range"], enemy, allies)
+		hits = MeleeSweep.targets(
+			creatures, units.xs[i], band, stats[&"range"], enemy, allies, creature_data
+		)
 	if bool(stats[&"arrow"]):
 		for hit in hits:
 			_wound(creatures, hit, who, data, roll)

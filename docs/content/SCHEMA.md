@@ -687,6 +687,8 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 6 linha(s) · §06 §
 | `rare_of` | StringName |  |  |
 | `rare_chance` | float |  |  |
 | `rots_into` | StringName |  |  |
+| `respawn_s` | float |  |  |
+| `sprite_scale` | int |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 

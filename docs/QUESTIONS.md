@@ -7,6 +7,99 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Os bichos de todos os dias e o fôlego — 03/10/2026 (ADR 0058)
+
+> Pedido do dono (03/10/2026), depois de jogar: *«O rei está cansando extremamente rápido, deve demorar e se recuperar
+> um pouco mais rápido, além disso não aparece criatura e animal nenhum, eles devem spawnar logo ao lado do meu império
+> dos dois lados e depois de forma mais orgânica e aleatoriamente pelo mundo»*; *«à noite os bichos não nascem, só ficam
+> os que já estavam»*; *«as criaturas e animais para caçar e farmar dinheiro devem aparecer todos os dias, várias vezes
+> ao dia»*; depois *«as criaturas estão microscópicas»*; e *«o menor [inimigo da Podridão] tem que ter um tamanho
+> aceitável para que o combate faça sentido em base 64x64»*. Aplicado diretamente (ADR 0058); os números novos são
+> propostas (`_proposed`), reversíveis no CSV.
+
+### Q-216 · O fôlego: cansar mais devagar, recuperar mais depressa
+- **Onde:** Q-193, Q-208; `economy.csv` (`king_run_stamina_s`, `king_run_refill_s`, `king_run_rest_refill_s`). O teste:
+  `tests/folego_test.gd`.
+- **Da pesquisa:** no Kingdom o cavalo de base galopa uns 13 a 15 s; parado recupera muito mais depressa do que a andar.
+- **Decisão (aplicada, reversível):** corre-se 14 s (eram 8), recupera-se em 8 s a andar (eram 10) e em 3 s parado (eram
+  4). O evoluído corre 21 s. Corre-se mais tempo do que se leva a recuperar a andar.
+- **Decide:** tu, se os 14/8/3 chegam.
+
+### Q-217 · Os bichos de todos os dias, em casa e pelo mundo
+- **Onde:** §06, §21, §25, Q-106, Q-120, Q-150, Q-213; `wildlife.csv` (`respawn_s`, `per_segment_max`). No código:
+  `Burrows`, `WildBurrows`, `WildHunt`, `HuntingSystem.home`. Os testes: `tests/caca_todos_os_dias_test.gd`,
+  `tests/caca_das_terras_test.gd`.
+- **O que estava:** cada toca dava um bicho a cada 825 s de luz (quase quatro dias), o período que reparte o
+  `hunt_yield` pelas tocas; em toda a região havia um a três bichos de cada vez, e as terras geradas não tinham caça.
+- **Decisão (aplicada, reversível):** a toca vazia volta a dar o seu bicho `respawn_s` segundos de luz depois de ele
+  sair, e nunca de noite — coelho 60 s, faisão 75, raposa 90, veado 112, javali 200 (de quatro vezes a uma vez por dia).
+  Cada segmento de trilho gerado ao andar ganha até `per_segment_max` tocas de cada bicho do bioma dele, nos sítios
+  do tipo de segmento, sorteadas pelo sítio; o primeiro de cada lado tem sempre pelo menos uma de cada bicho que lá
+  cabe. Os bichos das terras já lá estão quando o rei chega. Os caçadores de casa caçam só na região de casa.
+- **Medido:** com três arqueiros e dois lanceiros teus, saem cerca de 23 bichos por dia em casa e a caça rende 27 a 28
+  moedas por dia (o `hunt_yield` dizia 6).
+- **Fica por decidir:**
+  - os seis `respawn_s` e os `per_segment_max` (mudá-los é só o CSV);
+  - se o modelo de economia da §06 (o dia da asfixia) deve contar a caça nova em vez do `hunt_yield` — isto fecha a
+    Q-213;
+  - os biomas sem caça no CSV: o vulcânico, o subterrâneo, o glaciar e o pântano não têm nenhum bicho, e os trilhos para
+    esses povos só têm caça na metade de perto de casa.
+- **Decide:** tu.
+
+### Q-218 · Os bichos do tamanho de um sprite de 64 px
+- **Pedido do dono (03/10/2026):** *«As criaturas estão microscópicas, elas têm que ser pelo menos 2 ou 3 vezes o tamanho
+  que estão, com base em 64x64 pixels de sprite, para que possam fazer sentido em imagem, e dar para bater»*.
+- **Onde:** `wildlife.csv` (`sprite_scale`, `shadow_width`, `roam_px`, `graze_speed`, o `reach_px` do javali e o
+  `burrows_per_region` do veado); `HuntView`, `RoyalHunt`, `HuntWatch.SITIOS`, `WildBurrows.FOLGA_PX`. Os testes:
+  `tests/caca_a_vista_test.gd`, `tests/obras_com_folga_test.gd`.
+- **O que estava:** o coelho tinha 18 px de altura, o faisão e a raposa 14, contra tropas de 47 px e um rei de 94. O
+  golpe só acertava se o meio do bicho estivesse à frente de quem batia, ao alcance da arma.
+- **Decisão (aplicada, reversível):**
+  - O tamanho do desenho:
+    - O coelho, o faisão, a raposa e o javali desenham-se a 3×.
+    - O veado e o cervo branco desenham-se a 2×, porque já são altos: o veado passa a 74 px, entre uma tropa e o rei.
+    - A escala é sempre inteira, para o pixel ficar pixel.
+  - A sombra e o golpe:
+    - As tocas desenham-se ao dobro, e cada bicho tem a sua sombra de contacto (`shadow_width`, à escala).
+    - O golpe acerta no corpo, até meia sombra para lá do alcance e para trás de quem bate. Vale para o golpe de quem
+      joga e para o imperador que ninguém conduz.
+  - O pastar acompanha o corpo: `roam_px` e `graze_speed` dobram, e o vaivém leva o mesmo tempo. O javali chega a 28 px
+    para bater (eram 14).
+  - Onde ficam as tocas:
+    - Com as tocas ao dobro, só cabem oito na região de casa sem pisar uma obra (Q-207).
+    - Quatro ficam à porta do castelo, como os tufos de erva da praça do Kingdom.
+    - As outras quatro ficam nos poucos chãos livres: um buraco a oeste, a árvore do veado ao pé do farol, o buraco da
+      raposa na beira e a árvore do javali a leste.
+    - O veado passa a ter uma toca em casa (eram duas), e o resto da caça vive nas terras logo ao lado (Q-217).
+    - No mundo gerado, as tocas ficam a 96 px umas das outras.
+- **Decide:** tu, as escalas (3× e 2×) e o lugar das tocas de casa.
+
+### Q-219 · As criaturas da Podridão à escala do sprite de 64 px
+- **Pedido do dono (03/10/2026):** *«Quero que os inimigos da Podridão sigam essa lógica também, o menor tem que ter um
+  tamanho aceitável para que o combate faça sentido em base 64x64»*.
+- **Onde:** §07, §22, ADR 0049; `Bestiary.PIXEL`, `creatures.csv` (`shadow_width`), `PlayerStrike.target`,
+  `MeleeSweep`, `CreatureView`. Os testes: `tests/bestiary_test.gd`, `tests/combate_no_corpo_test.gd`,
+  `tests/caca_a_vista_test.gd`.
+- **O que estava:** o Rastejante tinha 56×28 px, pelo joelho de uma tropa de 47, e era mais pequeno do que o coelho
+  de que se levanta desde a Q-218. O golpe de quem joga só acertava se o meio da criatura estivesse à frente, ao
+  alcance da arma.
+- **Decisão (aplicada, reversível):**
+  - **As pequenas a 2×.** O Rastejante, o Cavador e o Alado desenham-se a 2× do pixel de descanso:
+    - o Rastejante passa a 112×56, da altura de uma tropa;
+    - o Cavador a 120×80;
+    - o Alado a 160×104.
+  - **As grandes a 1,5×, para a ordem não se perder:**
+    - o Bruto passa a 120×120 e passa o rei;
+    - o Zelador a 48×144;
+    - o Ariete a 210×90;
+    - o Devorador a 276×246, mais de duas vezes o rei.
+  - **Quem se levanta de um bicho nunca é mais pequeno do que ele.**
+  - **O corpo no chão.** O `shadow_width` de cada criatura passa a ser o corpo no chão ao tamanho novo. Desenha-se como
+    sombra de contacto, e é até onde o golpe acerta.
+  - **O golpe.** O golpe de quem joga chega à pele (meia sombra para lá do alcance). O golpe de perto apanha também a
+    criatura que lhe está por cima; a flecha só vai à frente. As tropas da IA continuam a lutar pelo alcance de sempre.
+- **Decide:** tu, as escalas (2× e 1,5×) e a largura de cada corpo.
+
 ## A caça a sério — 03/10/2026 (ADR 0057)
 
 > Pedido do dono (03/10/2026): *«A caça e criaturas deve ser desenvolvida e trabalhada a sério, deve haver variedades e
@@ -21,6 +114,9 @@
   dá mais devagar (o período reparte a mesma média por mais moedas). O imperador a caçar e o cervo branco põem mais
   moedas no chão do que antes, mas a renda média das tocas é a mesma.
 - **Proposta:** se o farm deve render mais, subir o `hunt_yield`; não aplicado porque é o teu número de economia.
+- **Em parte respondida pelo dono (03/10/2026):** *«as criaturas e animais para caçar e farmar dinheiro devem aparecer
+  todos os dias, várias vezes ao dia»*. As tocas deixaram de seguir o `hunt_yield` e passaram ao ritmo de cada bicho
+  (Q-217, ADR 0058). Fica a parte do modelo da §06, na Q-217.
 - **Decide:** tu.
 
 ### Q-214 · O javali e a noite

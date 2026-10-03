@@ -1,29 +1,29 @@
 # src/core/hunt_watch.gd — onde ficam as tocas, e a que ritmo dao (§06, §25, Q-106).
 #
 # O HuntingSystem e puro; isto le os dados, o relogio e o sorteio. As tocas ficam
-# em sitios autorados do segmento, e cada uma da um bicho de cada vez, com o
-# periodo que faz a media do dia ser a do hunt_yield (economy.csv) — a caca deixa
-# de ser um stock que se esgota em meio minuto e passa a render o dia inteiro.
+# em sitios autorados do segmento, e cada uma da um bicho de cada vez, ao ritmo dele
+# (respawn_s, Q-217): o bicho volta varias vezes por dia, e nunca de noite. Quem nao
+# tem ritmo segue o periodo que faz a media do dia ser a do hunt_yield (Q-106).
 class_name HuntWatch
 extends RefCounted
 
 ## Os sitios das tocas, em torno do nucleo (§21), e de que sao (Q-150): o arbusto, o
 ## buraco e a rocha dao coelhos, a arvore e o lago dao veados. O primeiro e o coelho
-## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207): a leste
-## nao sobra chao entre elas, e os coelhos de la ficam ao pe do castelo, como o do §25;
-## a arvore fica entre a fogueira e a torre alta, e o lago a beira, la para la do farol.
-## A ultima arvore e a toca do javali (ADR 0057), no unico chao livre a leste: entre o
-## celeiro e o sino de vigia.
+## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207), com a
+## toca ao dobro e o bicho a escala dele (Q-218): so cabem oito. Quatro a porta do
+## castelo, como os tufos de erva da praca do Kingdom; o buraco entre o galinheiro e a
+## torre de oeste; a arvore do veado entre o farol e o sino de vigia; o buraco da raposa
+## na beira de oeste; e a arvore do javali (ADR 0057) no unico chao livre a leste, entre o
+## celeiro e o sino de vigia. O resto da caca vive nas terras, logo ao lado (Q-217).
 const SITIOS := [
-	[-160.0, &"bush"],
-	[196.0, &"bush"],
-	[-1092.0, &"hole"],
-	[120.0, &"rock"],
-	[-1238.0, &"tree"],
-	[-1862.0, &"lake"],
-	[-1334.0, &"hole"],
-	[-100.0, &"bush"],
-	[1640.0, &"tree"],
+	[-170.0, &"bush"],
+	[180.0, &"bush"],
+	[-830.0, &"hole"],
+	[60.0, &"rock"],
+	[-1692.0, &"tree"],
+	[-60.0, &"bush"],
+	[-1860.0, &"hole"],
+	[1656.0, &"tree"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
 ## `economy`, que as do coelho ja gastavam antes da Q-150.
@@ -57,7 +57,9 @@ static func tick(
 	var hunt := field.hunting
 	var intro := relogio.elapsed >= intro_at(relogio.day_seconds())
 	var raro := func() -> float: return RngService.scatter(hash([SAL_RARO, hunt.herd.born]), 1)[0]
-	hunt.grow(delta, luz, period(relogio.day_seconds()), raro)
+	hunt.grow(
+		delta, luz, period(relogio.day_seconds()), raro, WildHunt.rhythms(relogio.day_seconds())
+	)
 	var caca := hunt.resolve(unidades, luz, intro)
 	if SimLoop.combat != null and SimLoop.field == field:
 		for golpe in SimLoop.combat.manual.take_missed():
@@ -124,11 +126,13 @@ static func prepare(
 
 
 ## As tocas da regiao, e o tempo ate ao primeiro bicho de cada uma — espalhado
-## pelo periodo, para nao darem todas ao mesmo tempo (Q-120). A primeira da ja:
-## e o coelho do 1:10. Cada sitio fica para o primeiro bicho do bioma que sai dele e
+## pelo ritmo dele (Q-217), para nao darem todas ao mesmo tempo (Q-120). A primeira da
+## ja: e o coelho do 1:10. Cada sitio fica para o primeiro bicho do bioma que sai dele e
 ## ainda tem tocas por pôr (Q-150).
 static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
-	var periodo := period(ClockService.clock.day_seconds() if ClockService.clock else 0.0)
+	var dia_s := ClockService.clock.day_seconds() if ClockService.clock else 0.0
+	var ritmos := WildHunt.rhythms(dia_s)
+	var periodo := period(dia_s)
 	var falta := {}
 	for dados in _bichos():
 		falta[dados.id] = dados.burrows_per_region
@@ -145,10 +149,11 @@ static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 			onde.append(clampf(core_x + float(sitio[0]), 0.0, width))
 			fontes.append(String(sitio[1]))
 			caca.append(String(dados.id))
+			var ritmo := float(ritmos.get(dados.id, periodo))
 			if dados.id != BICHO:
-				esperas.append(RngService.scatter(hash([SAL_ESPERA, k]), 1)[0] * periodo)
+				esperas.append(RngService.scatter(hash([SAL_ESPERA, k]), 1)[0] * ritmo)
 			else:
-				esperas.append(0.0 if k == 0 else RngService.float_range(&"economy", 0.0, periodo))
+				esperas.append(0.0 if k == 0 else RngService.float_range(&"economy", 0.0, ritmo))
 			break
 	hunt.burrows.place(onde, esperas, fontes, caca)
 	hunt.wildlife = SimFactory.by_id(&"wildlife")
@@ -158,10 +163,14 @@ static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 ## que faltam ate cada bicho ter as suas, sem mexer nas que ja la estao.
 static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	hunt.burrows.checked = true
-	var periodo := period(ClockService.clock.day_seconds() if ClockService.clock else 0.0)
+	var dia_s := ClockService.clock.day_seconds() if ClockService.clock else 0.0
+	var ritmos := WildHunt.rhythms(dia_s)
+	var periodo := period(dia_s)
 	var tem := {}
-	for bicho in hunt.burrows.game:
-		tem[bicho] = int(tem.get(bicho, 0)) + 1
+	for k in hunt.burrows.game.size():  # so as de casa: as das terras sao do segmento
+		var x := hunt.burrows.xs[k]
+		if x >= 0.0 and x <= width:
+			tem[hunt.burrows.game[k]] = int(tem.get(hunt.burrows.game[k], 0)) + 1
 	for sitio: Array in SITIOS:
 		var x := clampf(core_x + float(sitio[0]), 0.0, width)
 		if hunt.burrows.xs.has(x):
@@ -172,7 +181,8 @@ static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
 				continue
 			tem[id] = int(tem.get(id, 0)) + 1
 			var espera := RngService.scatter(hash([SAL_ESPERA, hunt.burrows.xs.size()]), 1)[0]
-			hunt.burrows.add(x, espera * periodo, String(sitio[1]), id)
+			var ritmo := float(ritmos.get(dados.id, periodo))
+			hunt.burrows.add(x, espera * ritmo, String(sitio[1]), id)
 			break
 
 
@@ -206,7 +216,7 @@ static func _bichos() -> Array[WildlifeData]:
 		var dados := recurso as WildlifeData
 		if dados.burrows_per_region > 0 and dados.biomes.has(bioma):
 			saida.append(dados)
-	saida.sort_custom(_antes)
+	saida.sort_custom(cheaper)
 	return saida
 
 
@@ -223,7 +233,8 @@ static func wither(hunt: HuntingSystem, arvores: AmargueiroSystem) -> Array[floa
 	return hunt.wither(perigos, dados.burrow_wither_px)
 
 
-static func _antes(a: WildlifeData, b: WildlifeData) -> bool:
+## O coelho primeiro (o do 1:10), e depois do que vale menos para o que vale mais.
+static func cheaper(a: WildlifeData, b: WildlifeData) -> bool:
 	if a.id == BICHO or b.id == BICHO:
 		return a.id == BICHO and b.id != BICHO
 	if a.coin_yield != b.coin_yield:

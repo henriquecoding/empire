@@ -98,7 +98,7 @@ func prepare(
 ) -> void:
 	hunting.season_mult = seasons.hunt_mult(dia)
 	CampWatch.tick(self)
-	HuntWatch.prepare(hunting, dia, core_x, largura, fase)
+	WildHunt.prepare(self, dia, core_x, largura, fase)  # as tocas de casa e das terras
 	if unidades != null:
 		Frontier.grow(self, unidades, SimLoop.king_id, largura)  # o que se ve a frente (Q-173)
 	if dia != _dia and unidades != null:

@@ -14,6 +14,10 @@
 class_name CreatureView
 extends RefCounted
 
+## Meia largura da maior (o Devorador, Q-219): a que tem so o rabo no ecra tambem se ve.
+const MEIA_MAIOR := 140.0
+const METADE := 0.5
+
 var _dados: Dictionary = {}
 ## O ultimo x de cada bicho: e por ele que se sabe se anda.
 var _xs: Dictionary = {}
@@ -51,7 +55,7 @@ func draw_on(
 		var x := Smoothing.x_of(Smoothing.Group.CREATURES, id, bichos.xs[i])
 		var anda := 0.0 if is_equal_approx(float(_xs.get(id, x)), x) else 1.0
 		_xs[id] = x
-		if not visible.has_point(Vector2(x, visible.get_center().y)):
+		if not PresentationBounds.sees(visible, x, MEIA_MAIOR):
 			continue
 		var estilo := StrikePose.of_creature(dados)
 		CombatFx.observe(id, bichos.cooldowns[i], estilo)
@@ -65,6 +69,7 @@ func draw_on(
 		var cor := ClassEffects.ALLY if allied else WorldLight.reveal(corpo, aceso, chao)
 		LastSeen.remember(id, caixa, forma, cor, frente)
 		var branco := CombatFx.flash(id)
+		Shadow.drop(canvas, x + pose.x, int(band), dados.shadow_width * METADE, 0.0, 0.0)  # Q-219
 		if Bestiary.handles(forma):
 			var pintar := func(c: Color) -> Color:
 				if allied:

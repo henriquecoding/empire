@@ -13,6 +13,7 @@ extends RefCounted
 
 ## O que um golpe de perto leva para o empurrao: o x de quem bateu.
 const DE_X := &"melee_from"
+const METADE := 0.5
 
 
 ## Se este corpo bate de perto: sem aljava e sem a tag ranged.
@@ -20,14 +21,23 @@ static func melee(dados: UnitData) -> bool:
 	return dados != null and dados.ammo <= 0 and not dados.tags.has(&"ranged")
 
 
-## Os alvos de um golpe que acertou `alvo`. `aliados` sao as criaturas do teu lado.
+## Meio corpo da criatura `c` no chao: metade do shadow_width dela (Q-219). `dados` e o
+## CreatureData por id de dados; sem ele, um ponto.
+static func half_body(dados: Dictionary, criaturas: CreatureSystem, c: int) -> float:
+	var ficha: CreatureData = dados.get(criaturas.data_ids[c])
+	return float(ficha.shadow_width) * METADE if ficha != null else 0.0
+
+
+## Os alvos de um golpe que acertou `alvo`. `aliados` sao as criaturas do teu lado. O
+## golpe chega a pele de cada uma (Q-219): `dados` e o CreatureData por id de dados.
 static func targets(
 	criaturas: CreatureSystem,
 	x: float,
 	faixa: int,
 	alcance: float,
 	alvo: int,
-	aliados: Dictionary = {}
+	aliados: Dictionary = {},
+	dados: Dictionary = {}
 ) -> Array[int]:
 	var todos: Array[int] = [alvo]
 	var a := criaturas.index_of(alvo)
@@ -41,7 +51,10 @@ static func targets(
 		if int(criaturas.bands[c]) != faixa:
 			continue
 		var d := criaturas.xs[c] - x
-		if absf(d) <= alcance and (lado == 0.0 or signf(d) != -lado):
+		if (
+			absf(d) <= alcance + half_body(dados, criaturas, c)
+			and (lado == 0.0 or signf(d) != -lado)
+		):
 			todos.append(id)
 	return todos
 

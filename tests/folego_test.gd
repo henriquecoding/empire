@@ -75,6 +75,17 @@ func test_parado_recupera_mais_depressa_do_que_a_andar() -> void:
 	assert_float(c.king_run_rest_refill_s).is_less(c.king_run_refill_s)
 
 
+## Q-216 (o dono, 03/10/2026: «o rei esta a cansar extremamente rapido, deve demorar e
+## se recuperar um pouco mais rapido»): corre-se mais tempo do que se leva a recuperar a
+## andar, e o folego do evoluido chega ao galope do Kingdom (Q-193).
+func test_cansa_devagar_e_recupera_depressa() -> void:
+	var c := SimFactory.curve()
+	assert_float(c.king_run_stamina_s).is_greater(c.king_run_refill_s)
+	assert_float(c.king_run_refill_s).is_greater(c.king_run_rest_refill_s)
+	var recupera := _correr(Stamina.new(), 60.0, c.king_run_stamina_s, c.king_run_refill_s)
+	assert_float(recupera * DT).is_greater(60.0 * 0.5)
+
+
 ## Pelo passo do jogo: cansado e parado, o folego enche no tempo de quem descansa.
 func test_no_jogo_parar_enche_o_folego_no_tempo_do_descanso() -> void:
 	SimLoop.autosave_enabled = false

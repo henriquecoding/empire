@@ -54,7 +54,8 @@ func test_uma_toca_acrescenta_se_viva() -> void:
 
 
 ## Um save de antes da ADR 0057 so tinha coelhos e veados: ao carregar, as tocas que
-## faltam entram nos sitios livres, e as que la estavam ficam como estavam.
+## faltam entram nos sitios livres, e as que la estavam ficam como estavam. Desde a Q-218
+## os sitios sao oito: quatro coelhos e o veado nos cinco primeiros.
 func test_um_save_antigo_ganha_as_tocas_novas() -> void:
 	SimLoop.autosave_enabled = false
 	SimLoop.start(20261003)
@@ -64,14 +65,14 @@ func test_um_save_antigo_ganha_as_tocas_novas() -> void:
 	var fontes := PackedStringArray()
 	var bichos := PackedStringArray()
 	var esperas: Array[float] = []
-	for k in 6:
+	for k in 5:
 		antigas.append(SimLoop.core_x + float(HuntWatch.SITIOS[k][0]))
 		fontes.append(String(HuntWatch.SITIOS[k][1]))
 		bichos.append("rabbit" if k < 4 else "deer")
 		esperas.append(0.0)
 	hunt.burrows = Burrows.new()
 	hunt.burrows.from_dict(
-		{&"xs": antigas, &"alive": PackedByteArray([1, 1, 1, 1, 1, 1]), &"kinds": fontes}
+		{&"xs": antigas, &"alive": PackedByteArray([1, 1, 1, 1, 1]), &"kinds": fontes}
 	)
 	hunt.burrows.game = bichos
 	HuntWatch.prepare(hunt, 2, SimLoop.core_x, SimLoop.world_width)
@@ -79,7 +80,7 @@ func test_um_save_antigo_ganha_as_tocas_novas() -> void:
 	for id in ["pheasant", "fox", "boar"]:
 		assert_bool(hunt.burrows.game.has(id)).override_failure_message(id).is_true()
 	assert_int(Array(hunt.burrows.game).count("rabbit")).is_equal(4)
-	assert_array(hunt.burrows.xs.slice(0, 6)).is_equal(antigas)
+	assert_array(hunt.burrows.xs.slice(0, 5)).is_equal(antigas)
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
 

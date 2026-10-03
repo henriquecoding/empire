@@ -77,17 +77,23 @@ func game_at(x: float) -> StringName:
 
 
 ## `delta` segundos de luz. Devolve os x onde saiu um bicho agora. `fora` sao os
-## bichos que ja estao a porta: uma toca com o seu la fora nao da outro.
-func grow(delta: float, periodo: float, fora: Array[float]) -> Array[float]:
+## bichos que ja estao a porta: uma toca com o seu la fora nao da outro. `ritmos` e o
+## tempo de cada bicho entre dois (id -> s, Q-217); quem nao o tem espera o `periodo`.
+func grow(
+	delta: float, periodo: float, fora: Array[float], ritmos: Dictionary = {}
+) -> Array[float]:
 	var sairam: Array[float] = []
-	if periodo <= 0.0:
-		return sairam
+	var la_fora := {}
+	for x in fora:
+		la_fora[x] = true
 	for k in xs.size():
-		if alive[k] == 0 or fora.has(xs[k]):
+		var ritmo := float(ritmos.get(StringName(game[k]), 0.0)) if k < game.size() else 0.0
+		var p := ritmo if ritmo > 0.0 else periodo
+		if p <= 0.0 or alive[k] == 0 or la_fora.has(xs[k]):
 			continue
 		waits[k] -= delta
 		if waits[k] <= 0.0:
-			waits[k] += periodo
+			waits[k] += p
 			sairam.append(xs[k])
 	return sairam
 
