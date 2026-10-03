@@ -182,6 +182,14 @@ static func runs(quer: bool, dt: float) -> bool:
 	return quer if montado else corre
 
 
+## O passo de quem se conduz neste tick: a pe, 1 ou o king_run_mult com folego; montado,
+## os do cavalo (Q-149, Q-169, Q-193).
+static func pace(dt: float) -> float:
+	var campo := SimLoop.field
+	var corre := runs(campo.stamina.wants, dt)
+	return campo.mount.pace(Assume.driven(), corre, SimFactory.curve().king_run_mult)
+
+
 ## Se o monarca em jogo ja evoluiu: o Rei pela classe dele, os outros pelo perfil.
 static func evolved(campo: FieldWork) -> bool:
 	var classe := skill_class()

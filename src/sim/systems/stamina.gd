@@ -15,6 +15,8 @@ const POR_MEDIR := -1.0
 var left: float = POR_MEDIR
 ## Esgotou o folego: anda ate o recuperar todo.
 var tired := false
+## A tecla de correr, com quem se conduz a andar: escrita pela entrada, lida no passo.
+var wants := false
 
 
 ## Um passo. `quer` e a tecla de correr com quem se conduz a andar. `cap` e quantos

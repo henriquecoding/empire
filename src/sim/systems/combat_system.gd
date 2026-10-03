@@ -151,12 +151,12 @@ func _tropas_batem() -> void:
 		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
-			var dano := dados.damage + TitlePerks.vs_siege(bonus, _c, _dados_c, alvo)
-			var golpe := {DE: unit_id, QUANTO: dano, CRIATURA: true}
+			var golpe := {DE: unit_id, CRIATURA: true}
 			if MeleeSweep.melee(dados):  # de perto, tudo o que alcanca (Q-185)
 				golpe[MeleeSweep.DE_X] = _u.xs[i]
 			for target in MeleeSweep.hits(_u, _c, i, dados, alvo, focus, manual.allies):
-				_golpes.append(golpe.merged({PARA: target}))
+				var dano := dados.damage + TitlePerks.vs_siege(bonus, _c, _dados_c, target)
+				_golpes.append(golpe.merged({PARA: target, QUANTO: dano}))
 
 
 func _criaturas_batem() -> void:

@@ -66,7 +66,7 @@ static func _gather(tempo: float) -> Dictionary:
 			)
 		elif vaga.kind == BuildSlot.NUCLEO and vaga.standing() and SimLoop.night.dark.hearth.lit:
 			var porta := onde - Vector2(0.0, LAREIRA.alto)
-			var meia := vaga.width * BuildSystem.METADE
+			var meia := RulesFactory.rules().hearth_radius_px  # o chao que ela guarda (Q-190)
 			faixas[vaga.band].append(
 				Glow.new(porta, vaga.band, meia, LAREIRA.forca, fogo, Flicker.Kind.FIRE)
 			)

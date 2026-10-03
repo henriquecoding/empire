@@ -87,20 +87,19 @@ static func aims_with_cursor(evento: InputEvent) -> bool:
 func _process(delta: float) -> void:
 	if TravelPanel.active:
 		_andar(0.0)
+		SimLoop.field.stamina.wants = false
 		_repeticao = 0.0
 		return
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
-	# Correr (Q-149, Q-169, Q-193): quem se conduz corre ao king_run_mult enquanto tiver
-	# folego; montado, o cavalo anda e galopa aos dele.
-	var anda := Input.get_axis(&"move_left", &"move_right") != 0.0
-	var correr := MonarchWatch.runs(Input.is_action_pressed(&"king_run") and anda, delta)
-	var a_pe := _curva_lida().king_run_mult
-	SimLoop.units.piloted_pace = SimLoop.field.mount.pace(Assume.driven(), correr, a_pe)
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
 	# E o tempo abranda, se o jogador nao o desligou (Q-034).
 	var roda := Input.is_action_pressed(&"king_wheel")
+	# Correr (Q-149, Q-169, Q-193): a tecla, com quem se conduz a andar; o folego e o
+	# passo contam-se no tick (SimLoop.step, MonarchWatch.pace).
+	var anda := Input.get_axis(&"move_left", &"move_right") != 0.0 and not roda
+	SimLoop.field.stamina.wants = Input.is_action_pressed(&"king_run") and anda
 	Pace.scale = (
 		_relogio_lido().wheel_time_scale
 		if roda and Preferences.on(Preferences.WHEEL_SLOWDOWN)

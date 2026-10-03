@@ -162,7 +162,6 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		Ward.dawn(_obras, dia)  # o sino perde carga, mais quanto mais tarde (Q-100)
 		dark.hearth.dawn()  # a lareira apaga-se; acende-se paga ao crepusculo (Q-190)
 	if fase == GameClock.Phase.DUSK:
-		dark.kindle()
 		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
 		# O marco de um povo que ficou cria raiz e nao se corta (§78): e mais uma.
 		rot.amargueiros = amargueiros.anonymous() + harvest.landmarks()
@@ -178,6 +177,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		rot.underground_open = not Passages.sealed_side(SimLoop.passages, _obras, mundo.x, lado)
 		if not voice.before_spawn(rot, estado.day):
 			return  # §75: a decima segunda fechou o ciclo
+		dark.kindle()  # so ha lareira a pagar numa noite que vem (Q-190)
 		rot.spawn(estado.day, lado, mundo.y)
 		RiftWatch.spawn(self, estado, mundo)
 		SettlementWatch.night(SimLoop.field)
