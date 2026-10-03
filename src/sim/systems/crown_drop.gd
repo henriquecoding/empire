@@ -9,6 +9,9 @@
 # Se quem o jogador conduz a apanha, o rei levanta-se ja; e se a alvorada chega com ela
 # no chao, levanta-se na alvorada (§16: "ressurreicao ate ao amanhecer").
 #
+# So a leva uma criatura viva e hostil: a que a Nia converteu (as `aliadas` do BardSong) e
+# do reino da coroa, e nao a rouba (ADR 0052, UN-11).
+#
 # Puro: as criaturas, a mancha, quem a apanha e os numeros entram de fora.
 class_name CrownDrop
 extends RefCounted
@@ -31,20 +34,25 @@ func fall(onde: float, faixa: int) -> void:
 	band = faixa
 
 
-## Um tick com a coroa no chao: uma criatura a `alcance` dela leva-a; a mancha entre
-## `mancha.x` e `mancha.y` come-a; quem se conduz (`quem`, de pe e na faixa dela) a
-## `apanha` apanha-a. Por esta ordem: quem chega primeiro e o bicho.
+## Um tick com a coroa no chao: uma criatura viva e hostil a `alcance` dela leva-a — as
+## de `aliadas` nao —; a mancha entre `mancha.x` e `mancha.y` come-a; quem se conduz
+## (`quem`, de pe e na faixa dela) a `apanha` apanha-a. Por esta ordem: quem chega
+## primeiro e o bicho. `alcance` e `apanha` vem em `raios` (x e y).
 func tick(
 	bichos: CreatureSystem,
-	alcance: float,
+	raios: Vector2,
 	mancha: Vector2,
 	unidades: UnitSystem,
 	quem: int,
-	apanha: float
+	aliadas: Dictionary = {}
 ) -> Fate:
 	if not down:
 		return Fate.NONE
+	var alcance := raios.x
+	var apanha := raios.y
 	for c in bichos.count():
+		if not bichos.alive(c) or aliadas.has(bichos.ids[c]):
+			continue
 		if bichos.bands[c] == band and absf(bichos.xs[c] - x) <= alcance:
 			down = false
 			return Fate.TAKEN

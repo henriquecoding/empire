@@ -2,8 +2,9 @@
 # 30/09/2026; relatorio Kingdom, K2).
 #
 # A cola entre o CrownDrop (puro) e o SimLoop. Quando o combate mata o rei, a morte
-# dele nao se anuncia: a coroa cai ao pe do corpo, e quem o jogador conduz passa a ser
-# o corpo de classe mais perto, se houver (§16: "podes assumir outro imediatamente").
+# dele nao se anuncia: a coroa cai ao pe do corpo. Nenhuma tropa passa a ser conduzida
+# para a ir buscar (ADR 0052: so imperadores se jogam); sem ninguem que a apanhe, o rei
+# levanta-se na alvorada, se nenhuma criatura hostil a levou (Q-167).
 # Se uma criatura leva a coroa, ou a mancha a come (e o Lume come-a com ela), o rei
 # morre de vez: o unit_died sai entao, e o resto do §16 — o herdeiro ou o fim — segue
 # como sempre. Se quem se conduz a apanha, ou se a alvorada chega com ela no chao, o
@@ -23,7 +24,6 @@ static func fell(e: Dictionary) -> bool:
 	if coroa.down:
 		return false
 	coroa.fall(float(e[CombatSystem.ONDE]), int(e[CombatSystem.FAIXA]))
-	_outro(SimLoop.units, SimLoop.field.roster, coroa.x)
 	return true
 
 
@@ -37,9 +37,9 @@ static func tick(bichos: CreatureSystem, rot: RotSystem) -> void:
 	if rot.active():
 		var meia := rot.state.width * METADE
 		mancha = Vector2(rot.position_x() - meia, rot.position_x() + meia)
-	var apanha := SimFactory.curve().coin_pickup_px
-	var quem := Assume.driven()
-	match coroa.tick(bichos, regras.crown_grab_px, mancha, SimLoop.units, quem, apanha):
+	var raios := Vector2(regras.crown_grab_px, SimFactory.curve().coin_pickup_px)
+	var aliadas := SimLoop.field.song.allies  # o convertido nao rouba a coroa (UN-11)
+	match coroa.tick(bichos, raios, mancha, SimLoop.units, Assume.driven(), aliadas):
 		CrownDrop.Fate.TAKEN:
 			_perdida(coroa)
 		CrownDrop.Fate.CONSUMED:
@@ -65,29 +65,13 @@ static func _levantar() -> void:
 		EventBus.queue(&"unit_revived", [SimLoop.king_id])
 
 
-## O rei morre de vez, no sitio onde caiu: e a morte que o combate nao anunciou.
+## O rei morre de vez, no sitio onde caiu: e a morte que o combate nao anunciou. Larga o
+## que o corpo dele larga — o do Rei, da Nia ou do Arqueiro (ADR 0052).
 static func _perdida(coroa: CrownDrop) -> void:
-	var dados := Registry.entry(&"units", &"monarch") as UnitData
+	var i := SimLoop.units.index_of(SimLoop.king_id)
+	var corpo := SimLoop.units.data_ids[i] if i != UnitSystem.NENHUM else Monarchy.REI
+	var dados := Registry.entry(&"units", corpo) as UnitData
 	var larga := PackedStringArray()
 	for d in dados.drops_on_death:
 		larga.append(String(d))
 	EventBus.queue(&"unit_died", [SimLoop.king_id, coroa.x, coroa.band, larga])
-
-
-## Quem o jogador conduz passa ao corpo de classe teu mais perto de `x`, vivo — se nao
-## conduzia ja um.
-static func _outro(unidades: UnitSystem, roster: Roster, x: float) -> void:
-	var r := unidades.index_of(SimLoop.king_id)
-	if unidades.pilot != UnitSystem.NENHUM or r == UnitSystem.NENHUM:
-		return
-	var melhor := UnitSystem.NENHUM
-	for i in unidades.count():
-		if i == r or not unidades.alive(i) or unidades.owners[i] != unidades.owners[r]:
-			continue
-		var classe := roster.class_of_body(unidades.data_ids[i])
-		if classe == &"" or classe == Roster.REI:
-			continue
-		if melhor == UnitSystem.NENHUM or absf(unidades.xs[i] - x) < absf(unidades.xs[melhor] - x):
-			melhor = i
-	if melhor != UnitSystem.NENHUM:
-		unidades.pilot = unidades.ids[melhor]

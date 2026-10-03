@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_0vb62"]
+
+[resource]
+script = ExtResource("1_0vb62")
+id = &"bard_banner"
+display_key = "UNIT_BARD_BANNER"
+max_health = 12
+recruit_cost = 0
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+move_speed = 108.0
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 16
+tags = Array[StringName]([&"follows_king", &"bard", &"companion"])
+ability = &"royal_song"
+ability_params = {
+&"budget_cap": 5.0,
+&"charm_cost": 1.0,
+&"convert_cost": 3.0,
+&"encourage_boost": 0.1,
+&"encourage_cost": 1.0,
+&"encourage_radius": 120.0,
+&"encourage_seconds": 10.0,
+&"max_permanent_mass": 48.0,
+&"max_temporary": 2.0,
+&"promote_cost": 3.0,
+&"radius": 120.0
+}
+head_pool = Array[StringName]([&"hat_bard"])

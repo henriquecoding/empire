@@ -1,6 +1,9 @@
+# tests/player_combat_test.gd — o ataque manual do monarca (ADR 0045, ADR 0052).
 extends GdUnitTestSuite
 
 const STEP := 1.0 / 60.0
+## A classe do ataque -> o monarca que a tem desde a ADR 0052.
+const MONARCAS := {&"monarch": &"monarch", &"archer": &"archer_emperor", &"bard": &"nia"}
 
 
 func before_test() -> void:
@@ -17,7 +20,8 @@ func after_test() -> void:
 
 
 func _hero(id: StringName) -> int:
-	var who := SimLoop.field.roster.begin(SimLoop.units, SimLoop.state, SimLoop.king_id, id)
+	MonarchWatch.begin(MONARCAS[id])
+	var who := SimLoop.king_id
 	HeroWatch.tick(0.0)
 	for i in SimLoop.units.count():
 		if SimLoop.units.ids[i] != who:
@@ -55,7 +59,9 @@ func _attack(who: int, direction: float = 1.0) -> void:
 
 func test_o_personagem_controlado_nao_ataca_automaticamente() -> void:
 	for class_id in [&"monarch", &"archer", &"bard"]:
-		SimLoop.field.roster.starting_class = &""
+		SimLoop.stop()
+		SimLoop.start(20261001)
+		Greybox.build()
 		var who := _hero(class_id)
 		var enemy := _enemy(_x(who) + 15.0)
 		_resolve()
@@ -143,14 +149,18 @@ func test_um_clique_antigo_nao_dispara_muito_depois() -> void:
 	assert_int(_health(enemy)).is_equal(32)
 
 
+## Trocar de imperador (UN-17) cancela o ataque de quem se largou: o gesto e de quem o fez.
 func test_trocar_de_corpo_cancela_o_ataque_pendente() -> void:
 	var who := _hero(&"archer")
 	var enemy := _enemy(_x(who) + 100.0)
+	var outro := SimLoop.units.spawn(
+		SimLoop.state, Registry.entry(&"units", &"nia"), Greybox.MEU_IMPERIO, _x(who)
+	)
 	_attack(who)
-	SimLoop.units.pilot = UnitSystem.NENHUM
+	SimLoop.units.pilot = outro
 	HeroWatch.tick(0.0)
 	assert_bool(SimLoop.combat.manual.pending(who)).is_false()
-	SimLoop.units.pilot = who
+	SimLoop.units.pilot = UnitSystem.NENHUM
 	HeroWatch.tick(0.0)
 	_resolve()
 	assert_int(_health(enemy)).is_equal(32)
@@ -171,7 +181,7 @@ func test_pausar_cancela_o_ataque_sem_o_disparar_ao_retomar() -> void:
 
 func test_o_perfil_usado_no_hud_tem_o_alcance_e_dano_do_csv() -> void:
 	var who := _hero(&"archer")
-	var data := Registry.entry(&"units", &"archer_hero") as UnitData
+	var data := Registry.entry(&"units", &"archer_emperor") as UnitData
 	var stats := SimLoop.combat.manual.profile(SimLoop.units, who)
 	assert_int(stats[&"damage"]).is_equal(data.damage)
 	assert_float(stats[&"range"]).is_equal(float(data.range_px))

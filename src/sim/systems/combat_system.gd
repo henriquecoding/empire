@@ -75,6 +75,7 @@ func _init(
 	_postos = postos
 	picker = TargetPicker.new(unidades, criaturas, contacto, postos)
 	manual = PlayerStrike.new(unidades, postos)
+	manual.creature_data = criaturas
 
 
 func target_of(unit_id: int) -> int:
@@ -108,7 +109,7 @@ func resolve(
 	_sorteio = sorteio
 	_eventos = []
 	_golpes = []
-	for event in manual.resolve(unidades, criaturas):
+	for event in manual.resolve(unidades, criaturas, sorteio):
 		if event[CHAVE] == EV_DANO:
 			_golpes.append(event)
 		else:

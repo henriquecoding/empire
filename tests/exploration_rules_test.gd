@@ -54,6 +54,6 @@ func test_v5_migration_renames_people_and_nested_ids() -> void:
 			&"world": {&"wilds": {&"east": [{&"id": &"paul_empty_01", &"people": &"paul"}]}}
 		}
 	)
-	assert_int(int(result[&"save_version"])).is_equal(6)
+	assert_int(int(result[&"save_version"])).is_equal(SaveMigrations.CURRENT)
 	assert_str(String(result[&"state"][&"conquests"][0])).is_equal("bruma")
 	assert_str(String(result[&"world"][&"wilds"][&"east"][0][&"id"])).is_equal("bruma_empty_01")

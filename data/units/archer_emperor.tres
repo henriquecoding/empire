@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/unit_data.gd" id="1_xqb3r"]
+
+[resource]
+script = ExtResource("1_xqb3r")
+id = &"archer_emperor"
+display_key = "UNIT_ARCHER_EMPEROR"
+max_health = 40
+damage = 4
+attack_interval = 1.4
+accuracy_open = 1.0
+range_px = 200
+targets_bands = Array[int]([1, 0, 2])
+recruit_cost = 0
+drops_on_death = Array[StringName]([&"coins", &"corpse"])
+move_speed = 88.0
+scale_tier = 4
+can_change_band = true
+layer_slots = Array[StringName]([&"body", &"storage", &"head", &"face", &"weapon", &"overlay"])
+shadow_width = 22
+tags = Array[StringName]([&"king", &"ranged", &"playable"])
+coin_capacity = 33
+ammo = 30
+ability_params = {
+&"bleed_chance": 0.2,
+&"bleed_damage": 1.0,
+&"bleed_interval": 1.0,
+&"bleed_seconds": 4.0,
+&"emergency_damage": 1.0,
+&"emergency_range": 24.0,
+&"manual_buffer": 0.18,
+&"start_ammo": 12.0
+}
+weapon_kind = &"bow"
+head_pool = Array[StringName]([&"crown_crooked"])

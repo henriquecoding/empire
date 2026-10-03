@@ -49,7 +49,8 @@ static func run(
 
 
 ## Q-163: com a banca do arco de pe (rules.csv, `ammo_depot`), as aljavas das tuas tropas
-## repoem-se do saco do rei, `arrows_per_coin` flechas por moeda, ate onde ele chegar.
+## repoem-se do saco do rei, `arrows_per_coin` flechas por moeda, ate onde ele chegar. A do
+## Imperador Arqueiro e pessoal, e a banca nao a repoe (Q-200).
 static func _abastecer(
 	campo: FieldWork, unidades: UnitSystem, obras: BuildSystem, rei: int
 ) -> void:
@@ -67,14 +68,16 @@ static func _abastecer(
 
 
 ## §16: "se houver sucessor, ele assume no amanhecer". O rei novo nasce no castelo
-## (Q-137), sem moedas, e a ganancia sorteia-se de novo (§15, Q-133).
+## (Q-137), sem moedas, e a ganancia sorteia-se de novo (§15, Q-133). Nasce com o corpo do
+## perfil de quem reinava — a proposta da Q-202 —, herda o companheiro que sobreviveu, e a
+## linhagem conta mais uma geracao (ADR 0052).
 static func _coroar(
 	campo: FieldWork, unidades: UnitSystem, estado: GameState, obras: BuildSystem, rei: int
 ) -> int:
 	var i := unidades.index_of(rei)
 	if rei == UnitSystem.NENHUM or (i != UnitSystem.NENHUM and unidades.healths[i] > 0):
 		return rei
-	var monarca := Registry.entry(&"units", &"monarch") as UnitData
+	var monarca := Registry.entry(&"units", MonarchWatch.data().unit) as UnitData
 	var novo := campo.succession.crown(estado, unidades, obras, monarca)
 	if novo == UnitSystem.NENHUM:
 		return rei
@@ -84,4 +87,5 @@ static func _coroar(
 	EventBus.queue(&"succession_started", [novo])
 	SimFactory.draw_greed(estado)
 	SimLoop.king_id = novo  # quem manda passa a ser ele: o Verbo, a camara, o Defeat
+	MonarchWatch.crowned(rei, novo)
 	return novo

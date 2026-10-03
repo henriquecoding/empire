@@ -20,7 +20,8 @@ func after_test() -> void:
 ## ADR 0047: o motor converte cada toque num clique esquerdo com device -1, e o attack
 ## tem o botao esquerdo. Sem o filtro, cada toque no ecra do telemovel era um golpe.
 func test_um_toque_no_ecra_nao_e_um_ataque() -> void:
-	var who := SimLoop.field.roster.begin(SimLoop.units, SimLoop.state, SimLoop.king_id, &"monarch")
+	MonarchWatch.begin(&"monarch")
+	var who := SimLoop.king_id
 	HeroWatch.tick(0.0)
 	var entrada: CombatInput = auto_free(CombatInput.new())
 	add_child(entrada)

@@ -1,43 +1,55 @@
-# src/ui/class_guide.gd — o que o guia diz a quem conduz uma classe, e ao rei ao pe de
-# quem ele pode assumir (§08, §24; Q-150, Q-162, Q-178). Tirado do GameplayGuide, que
-# chegou as 250 linhas do §28.
+# src/ui/class_guide.gd — o que o guia diz do companheiro do monarca e da evolucao dele
+# (§08, §24; Q-114, Q-199, Q-200; ADR 0052). Tirado do GameplayGuide, que chegou as 250
+# linhas do §28.
+#
+# Ate a ADR 0052 era aqui que o guia dizia "assumir" ao pe de uma tropa de classe, e a
+# trela do rei. As duas sairam: so imperadores se jogam, e todos exploram.
 class_name ClassGuide
 extends RefCounted
 
 
-## Com um corpo de classe assumido: a passagem, o rei ao pe (para voltar a ele) e as
-## terras geradas. O corpo nao gere (§08), e por isso as obras nao lhe dizem nada.
-static func context(values: Dictionary) -> String:
+## O companheiro a mao do monarca, e o que o Verbo 2 lhe compra: o escudo do escudeiro, o
+## orcamento do Bardo, as flechas do escudeiro do Arqueiro. "" se nao ha que dizer.
+static func companion(values: Dictionary) -> String:
 	var units := SimLoop.units
-	var quem := Assume.driven()
-	var i := units.index_of(quem)
-	if i < 0:
-		return ""
-	if HeroWatch.evolve_ready():
-		var data := Registry.entry(&"classes", HeroWatch.current()) as ClassData
-		values["seeds"] = data.evolve_seed_cost
-		values["name"] = _tr(StringName(data.display_key))
-		return _tr(&"CONTEXT_HERO_EVOLVE").format(values)
-	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
-	if Verbs.destination(units, quem, abertas) != Verbs.NENHUMA:
-		return GuideSites.passage(i, values)
-	var r := units.index_of(SimLoop.king_id)
-	if r >= 0 and units.alive(r) and units.bands[r] == units.bands[i]:
-		if absf(units.xs[r] - units.xs[i]) <= Assume.reach():
-			return _tr(&"CONTEXT_BACK_TO_KING").format(values)
-	var wilds := GuideSites.wilds(units.xs[i], values)
-	return wilds if not wilds.is_empty() else status()
+	var rei := SimLoop.king_id
+	var r := units.index_of(rei)
+	match MonarchWatch.data().service:
+		MonarchWatch.ESCUDO:
+			var classes := SimLoop.field.classes
+			if not KingVerbs.squire_wants(units, rei, classes):
+				return ""
+			values["shield"] = classes.squire.shield
+			values["max"] = classes.squire.shield_cap()
+			return _tr(&"CONTEXT_SQUIRE").format(values)
+		MonarchWatch.CANTO:
+			var b := MonarchWatch.at_hand(units, rei)
+			if b < 0 or r < 0:
+				return ""
+			var corpo := Registry.entry(&"units", units.data_ids[b]) as UnitData
+			values["budget"] = SimLoop.field.monarchy.budget_of(units.ids[b])
+			values["max"] = int(corpo.ability_params.get(&"budget_cap", 0))
+			if int(values["budget"]) >= int(values["max"]) or units.carried_coins[r] <= 0:
+				return ""
+			return _tr(&"CONTEXT_BARD").format(values)
+		MonarchWatch.FLECHAS:
+			return _quiver(units, r, values)
+	return ""
 
 
+## O estado da evolucao do monarca que nao e o Rei: a classe do perfil, a fase e o feito.
 static func status() -> String:
 	var id := HeroWatch.current()
 	if id not in [&"archer", &"bard"]:
 		return ""
 	var data := Registry.entry(&"classes", id) as ClassData
 	var progress := SimLoop.field.hero_progress
+	var nome := data.display_key
+	if id == MonarchWatch.skill_class():
+		nome = MonarchWatch.data().display_key
 	return _tr(&"CLASS_STATUS").format(
 		{
-			"name": _tr(StringName(data.display_key)),
+			"name": _tr(StringName(nome)),
 			"phase": progress.phase_of(id),
 			"feat": progress.feat_of(id),
 			"goal": data.evolve_condition_value,
@@ -46,46 +58,21 @@ static func status() -> String:
 	)
 
 
-## O rei ao pe de um corpo ou de uma tropa tua de uma classe desbloqueada: o Verbo 2
-## assume-a. "" se nao ha quem.
-static func assume_hint(values: Dictionary) -> String:
-	var units := SimLoop.units
-	var r := units.index_of(SimLoop.king_id)
-	if r < 0:
+## O escudeiro do Arqueiro a mao: compra um lote por uma moeda da bolsa do imperador — ou
+## diz que sem moedas nao ha flechas novas (Q-200). Com a aljava cheia, nada.
+static func _quiver(units: UnitSystem, r: int, values: Dictionary) -> String:
+	if r < 0 or MonarchWatch.at_hand(units, SimLoop.king_id) < 0:
 		return ""
-	var roster := SimLoop.field.roster
-	var desbloqueadas := Assume.unlocked()
-	for i in units.count():
-		if i == r or not units.alive(i) or units.owners[i] != units.owners[r]:
-			continue
-		if units.bands[i] != units.bands[r] or absf(units.xs[i] - units.xs[r]) > Assume.reach():
-			continue
-		var classe := roster.class_of_body(units.data_ids[i])
-		if classe == &"":
-			classe = roster.class_of_troop(units.data_ids[i])
-			if classe != &"" and roster.body(units, classe, units.owners[r]) != UnitSystem.NENHUM:
-				continue
-		if classe == &"" or classe == Roster.REI or not desbloqueadas.has(String(classe)):
-			continue
-		var dados := Registry.entry(&"classes", classe) as ClassData
-		values["name"] = _tr(dados.display_key)
-		return _tr(&"CONTEXT_ASSUME").format(values)
-	return ""
-
-
-## O rei chegou a trela (Q-150): daqui para la vao as classes.
-static func leash(values: Dictionary) -> String:
-	var units := SimLoop.units
-	var r := units.index_of(SimLoop.king_id)
-	if r < 0 or not Assume.king():
+	var corpo := Registry.entry(&"units", units.data_ids[r]) as UnitData
+	values["left"] = SimLoop.field.supply.left(units, r, corpo)
+	values["max"] = corpo.ammo
+	values["lot"] = RulesFactory.rules().arrows_per_coin
+	if int(values["left"]) >= corpo.ammo:
 		return ""
-	var limites := Assume.limits(SimLoop.king_id)
-	var x := units.xs[r]
-	if minf(absf(x - limites.x), absf(x - limites.y)) > Assume.reach():
-		return ""
-	if Frontier.walk_limits() == limites:
-		return ""
-	return _tr(&"CONTEXT_KING_LEASH").format(values)
+	var credito := int(SimLoop.field.supply.credit.get(units.ids[r], 0))
+	if units.carried_coins[r] <= 0 and credito <= 0:
+		return _tr(&"CONTEXT_QUIVER_NO_COINS").format(values)
+	return _tr(&"CONTEXT_QUIVER").format(values)
 
 
 static func _tr(chave: StringName) -> String:

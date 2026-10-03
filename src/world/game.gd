@@ -196,7 +196,7 @@ func new_game() -> void:
 func _starting_choice() -> void:
 	var args := OS.get_cmdline_user_args()
 	var index := args.find("--classe")
-	if index >= 0 and index + 1 < args.size() and Roster.STARTERS.has(StringName(args[index + 1])):
+	if index >= 0 and index + 1 < args.size() and Registry.has_entry(&"monarchs", args[index + 1]):
 		_chosen(StringName(args[index + 1]))
 		return
 	SimLoop.stop()
@@ -205,10 +205,9 @@ func _starting_choice() -> void:
 
 
 func _chosen(id: StringName) -> void:
-	var hero := SimLoop.field.roster.begin(SimLoop.units, SimLoop.state, SimLoop.king_id, id)
-	if hero == UnitSystem.NENHUM:
+	if not MonarchWatch.begin(id):
 		return
-	print("Empire · classe inicial %s" % id)
+	print("Empire · monarca inicial %s" % id)
 	if _selector != null:
 		_selector.hide()
 		_selector.queue_free()

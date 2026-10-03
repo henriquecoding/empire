@@ -1,6 +1,9 @@
+# tests/classes_gameplay_test.gd — a marca e o canto no jogo, agora do Imperador Arqueiro e
+# do Bardo pago da Nia (ADR 0044, ADR 0052).
 extends GdUnitTestSuite
 
 const PASSO := 1.0 / 60.0
+const MONARCAS := {&"archer": &"archer_emperor", &"bard": &"nia"}
 
 
 func before_test() -> void:
@@ -17,7 +20,8 @@ func after_test() -> void:
 
 
 func _begin(id: StringName) -> int:
-	return SimLoop.field.roster.begin(SimLoop.units, SimLoop.state, SimLoop.king_id, id)
+	MonarchWatch.begin(MONARCAS[id])
+	return SimLoop.king_id
 
 
 func _enemy(id: StringName, x: float) -> int:
@@ -62,7 +66,7 @@ func test_a_flecha_evoluida_causa_dano_em_toda_a_coluna_mas_nao_atras() -> void:
 		SimLoop.units, SimLoop.creatures, SimLoop.builds, func() -> float: return 0.0
 	)
 	var creatures := SimLoop.creatures
-	var data := Registry.entry(&"units", &"archer_hero") as UnitData
+	var data := Registry.entry(&"units", &"archer_emperor") as UnitData
 	assert_int(creatures.healths[creatures.index_of(front)]).is_equal(32 - data.damage)
 	assert_int(creatures.healths[creatures.index_of(next)]).is_equal(32 - data.damage)
 	assert_int(creatures.healths[creatures.index_of(back)]).is_equal(32)
@@ -99,25 +103,32 @@ func test_reencantar_a_mesma_criatura_nao_repete_o_feito() -> void:
 	HeroWatch.action(_x(bard) + 60.0)
 	assert_int(SimLoop.field.hero_progress.feat_of(&"bard")).is_equal(1)
 	SimLoop.field.song.tick(30.0, SimLoop.creatures)
-	SimLoop.field.song.cooldowns.erase(bard)
+	SimLoop.field.song.cooldowns.clear()  # o canto e do Bardo da Nia
 	HeroWatch.action(_x(bard) + 60.0)
 	assert_bool(SimLoop.field.song.allies.has(target)).is_true()
 	assert_int(SimLoop.field.hero_progress.feat_of(&"bard")).is_equal(1)
 
 
-func test_o_verbo_2_evolui_no_nucleo_com_semente_e_quinze_conversoes() -> void:
-	var bard := _begin(&"bard")
+## A Nia evolui como o Rei: o Verbo 1 no nucleo, com a Semente e o feito (ADR 0052). A
+## moeda volta ao saco.
+func test_o_verbo_1_no_nucleo_evolui_a_nia_com_semente_e_quinze_conversoes() -> void:
+	var nia := _begin(&"bard")
 	for _n in 15:
 		SimLoop.field.hero_progress.record(&"bard")
 	SimLoop.state.royal_seeds = 1
-	var coins := SimLoop.units.carried_coins[SimLoop.units.index_of(bard)]
-	assert_bool(HeroWatch.evolve_ready()).is_true()
-	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	var i := SimLoop.units.index_of(nia)
+	SimLoop.units.xs[i] = SimLoop.core_x
+	SimLoop.units.clear_target(nia)
+	var coins := SimLoop.units.carried_coins[i]
+	assert_bool(MonarchWatch.can_evolve(SimLoop.field, 1)).is_true()
+	var args := {&"x": SimLoop.core_x, &"band": Band.Kind.SURFACE, &"amount": 1}
+	args[&"source"] = Verbs.JOGADOR
+	SimLoop.intents.queue(IntentQueue.Kind.DROP_COIN, args)
 	SimLoop.step(PASSO)
-	assert_int(Assume.driven()).is_equal(bard)
 	assert_int(SimLoop.field.hero_progress.phase_of(&"bard")).is_equal(2)
 	assert_int(SimLoop.state.royal_seeds).is_equal(0)
-	assert_int(SimLoop.units.carried_coins[SimLoop.units.index_of(bard)]).is_equal(coins)
+	assert_int(SimLoop.units.carried_coins[i]).is_equal(coins)
+	assert_int(SimLoop.field.classes.phase).is_equal(1)
 
 
 func test_o_maestro_promove_preservando_a_vida_e_so_tropas_do_seu_dono() -> void:
@@ -128,8 +139,13 @@ func test_o_maestro_promove_preservando_a_vida_e_so_tropas_do_seu_dono() -> void
 	var other := SimLoop.units.spawn(SimLoop.state, data, 99, _x(bard) + 35.0)
 	var i := SimLoop.units.index_of(ally)
 	SimLoop.units.healths[i] = data.max_health / 2
+	var r := SimLoop.units.index_of(bard)
+	var bolsa := SimLoop.units.carried_coins[r]
 	HeroWatch.action(_x(ally))
 	assert_str(String(SimLoop.units.data_ids[i])).is_equal("canopy_archer")
+	var bardo := Registry.entry(&"units", &"bard_banner") as UnitData
+	var preco := int(bardo.ability_params[&"promote_cost"])
+	assert_int(SimLoop.units.carried_coins[r]).is_equal(bolsa - preco)
 	assert_int(SimLoop.units.healths[i]).is_equal(data.max_health / 2)
 	assert_str(String(SimLoop.units.data_ids[SimLoop.units.index_of(other)])).is_equal("archer")
 

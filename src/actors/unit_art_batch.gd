@@ -209,6 +209,8 @@ func _procedural(
 	ActorArt.draw_unit(canvas, box, data, units, i, cor, time)
 	if data.tags.has(&"bard"):
 		BardArt.draw_on(canvas, box, float(SimLoop.field.song.cooldowns.get(units.ids[i], 0.0)))
+		if data.tags.has(&"companion"):
+			BardArt.banner(canvas, box)  # o Bardo da Nia leva a bandeira (ADR 0052)
 	var branco := CombatFx.flash(units.ids[i])
 	if branco > 0.0:
 		canvas.draw_rect(box, Color(WorldPalette.FLASH, WorldPalette.FLASH.a * branco))

@@ -56,3 +56,8 @@ horta,PEOPLE_HORTA,Horta,Horta,horta,povo (§04),16,f,—,—,yes,
 fornalha,PEOPLE_FORNALHA,Fornalha,Fornalha,fornalha,povo (§04),16,f,—,—,yes,
 sobraiz,PEOPLE_SOBRAIZ,Sob-Raiz,Sob-Raiz,sobraiz,povo (§04),16,m,—,—,yes,
 codename,,Empire,Empire,—,codinome do projeto (§36),—,—,—,—,yes,Nunca em texto de loja; substituir quando houver nome.
+nia,UNIT_NIA,Nia,Nia,nia,"a Imperatriz Nia, um dos três monarcas da escolha inicial (§08, ADR 0052)",12,f,—,—,yes,Nome próprio. A sucessora não se chama Nia (Q-202): MONARCH_HEIR_NIA.
+archer_emperor,UNIT_ARCHER_EMPEROR,Imperador Arqueiro,Archer Emperor,archer_emperor,"o monarca das flechas e do sangramento (§08, ADR 0052)",24,m,Imperadores Arqueiros,Archer Emperors,no,Não é o Arqueiro (classe) nem o arqueiro (tropa).
+bard_banner,UNIT_BARD_BANNER,Bardo da bandeira,Banner Bard,bard_banner,"o companheiro da Nia, que canta pago (§08, Q-199)",24,m,Bardos da bandeira,Banner Bards,no,"Companheiro, não tropa: não tem posto nem soldo."
+quiver_squire,UNIT_QUIVER_SQUIRE,escudeiro das flechas,quiver squire,quiver_squire,"o companheiro do Imperador Arqueiro, que vende flechas (§08, Q-200)",24,m,escudeiros das flechas,quiver squires,no,O plano chamou-lhe «intendente de flechas»; o nome final é do dono (Q-200).
+companion_bond,,companheiro,companion,Monarchy.bonds,"o companheiro real de um monarca, ligado por id (ADR 0052)",12,m,companheiros,companions,no,"Não confundir com o companheiro do trono (companions.csv, a mascote)."

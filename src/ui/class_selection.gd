@@ -1,3 +1,8 @@
+# src/ui/class_selection.gd — a escolha do monarca, numa partida nova (§08; ADR 0052).
+#
+# "A interface inicial precisa mostrar a dupla, nao apenas tres retratos de classes"
+# (plano §6.1): cada cartao diz o papel, o companheiro, a base, a evolucao e os controlos.
+# O tempo fica parado ate confirmar, e a escolha usa-se com rato, comando ou toque.
 class_name ClassSelection
 extends Control
 
@@ -23,12 +28,16 @@ var _margin: MarginContainer
 var _title: Label
 var _base: Label
 var _evolved: Label
+var _companion: Label
 var _controls: Label
+var _choices: Array[StringName] = []
 var _aspect: Window.ContentScaleAspect
 
 
 func _init(choose: Callable = Callable()) -> void:
 	_choose = choose
+	for dados in MonarchWatch.choices():
+		_choices.append(dados.id)
 
 
 func _ready() -> void:
@@ -56,15 +65,15 @@ func _ready() -> void:
 	_scroll.add_child(body)
 	var brand := PauseTheme.label(body, &"UI_MENU_TITLE")
 	PauseTheme.title(brand, PauseTheme.BRAND_SIZE)
-	var heading := PauseTheme.label(body, &"CLASS_CHOOSE_TITLE")
+	var heading := PauseTheme.label(body, &"MONARCH_CHOOSE_TITLE")
 	PauseTheme.title(heading)
-	PauseTheme.label(body, &"CLASS_CHOOSE_INTRO")
+	PauseTheme.label(body, &"MONARCH_CHOOSE_INTRO")
 	_grid = GridContainer.new()
-	_grid.columns = Roster.STARTERS.size()
+	_grid.columns = _choices.size()
 	_grid.add_theme_constant_override("h_separation", PauseTheme.COLUMN_GAP)
 	_grid.add_theme_constant_override("v_separation", PauseTheme.ROW_GAP)
 	body.add_child(_grid)
-	for id in Roster.STARTERS:
+	for id in _choices:
 		_card(id)
 	var profile := PanelContainer.new()
 	body.add_child(profile)
@@ -72,12 +81,13 @@ func _ready() -> void:
 	profile.add_child(details)
 	_title = PauseTheme.label(details)
 	PauseTheme.title(_title)
+	_companion = PauseTheme.label(details)
 	_base = PauseTheme.label(details)
 	_evolved = PauseTheme.label(details)
 	_controls = PauseTheme.label(details)
 	_controls.add_theme_color_override("font_color", PauseTheme.GOLD)
 	PauseTheme.label(
-		body, &"CLASS_CHOOSE_RULE_TOUCH" if TouchControls.active else &"CLASS_CHOOSE_RULE"
+		body, &"MONARCH_CHOOSE_RULE_TOUCH" if TouchControls.active else &"MONARCH_CHOOSE_RULE"
 	)
 	start_button = PauseTheme.button(_layout, &"CLASS_BEGIN", begin)
 	PauseTheme.primary(start_button)
@@ -94,7 +104,7 @@ func _initial_focus() -> void:
 
 
 func _card(id: StringName) -> void:
-	var data := Registry.entry(&"classes", id) as ClassData
+	var data := Registry.entry(&"monarchs", id) as MonarchData
 	var card := Button.new()
 	card.toggle_mode = true
 	card.custom_minimum_size.y = CARD_HEIGHT
@@ -110,32 +120,34 @@ func _card(id: StringName) -> void:
 	column.offset_right = -PauseTheme.ROW_GAP
 	card.add_child(column)
 	var portrait := ClassPortrait.new()
-	portrait.class_id = id
+	portrait.monarch_id = id
 	column.add_child(portrait)
 	var name := PauseTheme.label(column, StringName(data.display_key))
 	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	PauseTheme.title(name, PauseTheme.ACTION_SIZE)
-	var role := PauseTheme.label(column, StringName("CLASS_ROLE_" + String(id).to_upper()))
+	var role := PauseTheme.label(column, _key("ROLE", id))
 	role.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	role.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	role.add_theme_font_size_override("font_size", PauseTheme.SMALL_SIZE)
 
 
 func select(id: StringName) -> void:
-	if not Roster.STARTERS.has(id):
+	if not _choices.has(id):
 		return
 	selected = id
 	for i in cards.size():
-		cards[i].modulate = SELECTION if Roster.STARTERS[i] == id else Color.WHITE
-		cards[i].button_pressed = Roster.STARTERS[i] == id
-	var data := Registry.entry(&"classes", id) as ClassData
-	_title.text = tr(StringName(data.display_key))
-	_base.text = tr(StringName("CLASS_BASE_" + String(id).to_upper())).format(
+		cards[i].modulate = SELECTION if _choices[i] == id else Color.WHITE
+		cards[i].button_pressed = _choices[i] == id
+	var monarca := Registry.entry(&"monarchs", id) as MonarchData
+	var data := Registry.entry(&"classes", monarca.skill_class) as ClassData
+	_title.text = tr(StringName(monarca.display_key))
+	_companion.text = tr(_key("COMPANION", id))
+	_base.text = tr(_key("BASE", id)).format(
 		{"defense": roundi(float(data.phase1_params.get(&"defense", 0.0)) * PERCENT)}
 	)
 	_evolved.text = (
-		tr(StringName("CLASS_EVOLVED_" + String(id).to_upper()))
+		tr(_key("EVOLVED", id))
 		. format(
 			{
 				"defense": roundi(float(data.phase2_params.get(&"defense", 0.0)) * PERCENT),
@@ -144,8 +156,7 @@ func select(id: StringName) -> void:
 			}
 		)
 	)
-	var mao := "CLASS_CONTROLS_TOUCH_" if TouchControls.active else "CLASS_CONTROLS_"  # ADR 0047
-	_controls.text = tr(StringName(mao + String(id).to_upper()))
+	_controls.text = tr(_key("CONTROLS_TOUCH" if TouchControls.active else "CONTROLS", id))
 	start_button.text = tr(&"CLASS_BEGIN").format({"name": _title.text})
 
 
@@ -165,9 +176,14 @@ func fit() -> void:
 		_margin.add_theme_constant_override("margin_" + side, int(inset))
 	for side: String in ["top", "bottom"]:
 		_margin.add_theme_constant_override("margin_" + side, MARGIN)
-	_grid.columns = Roster.STARTERS.size() if size.x >= WIDTH else 1
+	_grid.columns = _choices.size() if size.x >= WIDTH else 1
 
 
 func _exit_tree() -> void:
 	active = false
 	get_tree().root.content_scale_aspect = _aspect
+
+
+## A chave de texto de um pedaco do cartao: MONARCH_<pedaco>_<ID> (ADR 0052).
+static func _key(pedaco: String, id: StringName) -> StringName:
+	return StringName("MONARCH_%s_%s" % [pedaco, String(id).to_upper()])

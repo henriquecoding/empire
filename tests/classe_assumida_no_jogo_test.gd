@@ -1,10 +1,11 @@
-# tests/classe_assumida_no_jogo_test.gd — trocar de classe pelo SimLoop (§08, §24;
-# Q-150, Q-162, Q-178).
+# tests/classe_assumida_no_jogo_test.gd — so imperadores se jogam, pelo SimLoop (§08, §24;
+# ADR 0052, o dono a 02/10/2026).
 #
-# O Roster prova-se sozinho no assumir_classe_test; aqui prova-se o jogo inteiro: o
-# Verbo 2 do rei ao pe de um arqueiro teu faz dele o Arqueiro, na escala 3, e e ele que
-# anda; o rei fica, e so ele vai ate a trela (Q-150); a moeda da classe nao paga obra
-# (§08: "so o rei gere"); a roda e so do rei; e o save guarda quem se conduz.
+# Ate a ADR 0052 este ficheiro provava que o Verbo 2 do rei ao pe de um arqueiro teu fazia
+# dele o corpo conduzido. O dono: "somente imperadores sao controlaveis [...] tropas,
+# oficios, diplomatas e companheiros permanecem sob IA". Prova-se agora o contrario (T03
+# do plano): ao pe de um arqueiro, de um bardo ou de um diplomata teus, o Verbo 2 nao
+# assume ninguem; o guia nao o oferece; o monarca nao tem trela; e paga ao companheiro.
 extends GdUnitTestSuite
 
 const SEMENTE := 20260930
@@ -28,98 +29,97 @@ func _rei() -> int:
 	return SimLoop.units.index_of(SimLoop.king_id)
 
 
-## Um arqueiro teu ao lado do rei, e o Verbo 2.
-func _assumir_arqueiro() -> int:
-	var arqueiro := Registry.entry(&"units", &"archer") as UnitData
+func _ao_lado(id: StringName) -> int:
+	var dados := Registry.entry(&"units", id) as UnitData
 	var x := SimLoop.units.xs[_rei()] + LADO
-	var novo := SimLoop.units.spawn(SimLoop.state, arqueiro, Greybox.MEU_IMPERIO, x)
-	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
-	SimLoop.step(PASSO)
-	return novo
+	return SimLoop.units.spawn(SimLoop.state, dados, Greybox.MEU_IMPERIO, x)
 
 
-func test_o_verbo_2_ao_pe_de_um_arqueiro_teu_assume_o_arqueiro() -> void:
-	var guia := GameplayGuide.context(Glyphs.Device.KEYBOARD)
-	var novo := _assumir_arqueiro()
-	assert_str(guia).is_not_empty()
-	assert_int(Assume.driven()).is_equal(novo)
-	var i := SimLoop.units.index_of(novo)
-	assert_str(String(SimLoop.units.data_ids[i])).is_equal("archer_hero")
-	var corpo := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
-	var tropa := Registry.entry(&"units", &"archer") as UnitData
-	assert_int(corpo.scale_tier).is_greater(tropa.scale_tier)
-
-
-## Quem o jogador conduz nao recebe posto nem vai a caca: e ele que o jogador leva.
-func test_quem_se_conduz_nao_recebe_posto() -> void:
-	var novo := _assumir_arqueiro()
-	for _t in 60:
+func test_o_verbo_2_ao_pe_de_uma_tropa_tua_nao_a_assume() -> void:
+	for id: StringName in [&"archer", &"bard", &"diplomat"]:
+		var tropa := _ao_lado(id)
+		SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		SimLoop.step(PASSO)
-	var i := SimLoop.units.index_of(novo)
-	assert_int(SimLoop.units.job_ids[i]).is_equal(UnitSystem.NENHUM)
+		assert_int(Assume.driven()).is_equal(SimLoop.king_id)
+		assert_int(SimLoop.units.pilot).is_equal(UnitSystem.NENHUM)
+		var i := SimLoop.units.index_of(tropa)
+		assert_str(String(SimLoop.units.data_ids[i])).is_equal(String(id))
 
 
-## O rei so se afasta `king_leash_px` alem das bordas da regiao; a classe vai ate a
-## borda do mundo (Q-150).
-func test_o_rei_tem_trela_e_a_classe_nao() -> void:
+## O texto de assumir uma tropa deixou de existir: o guia nao o pode oferecer.
+func test_o_guia_nao_oferece_assumir_uma_tropa() -> void:
+	_ao_lado(&"archer")
+	GameplayGuide.context(Glyphs.Device.KEYBOARD)
+	for chave: StringName in [&"CONTEXT_ASSUME", &"CONTEXT_BACK_TO_KING", &"CONTEXT_KING_LEASH"]:
+		assert_str(TranslationServer.translate(chave)).is_equal(String(chave))
+
+
+## MU-02: todos os monarcas exploram ate as bordas reais — a trela do rei (Q-150) saiu.
+func test_o_monarca_nao_tem_trela() -> void:
+	assert_bool(Assume.limits(SimLoop.king_id) == Frontier.walk_limits()).is_true()
+	var limites := Assume.limits(SimLoop.king_id)
 	var trela := SimFactory.curve().king_leash_px
-	var rei := Assume.limits(SimLoop.king_id)
-	assert_float(rei.y).is_equal_approx(SimLoop.world_width + trela, 0.5)
-	assert_float(rei.x).is_equal_approx(-trela, 0.5)
-	var novo := _assumir_arqueiro()
-	var classe := Assume.limits(novo)
-	assert_float(classe.y).is_greater(rei.y)
-	assert_float(classe.x).is_less(rei.x)
+	assert_bool(limites.y > SimLoop.world_width + trela or limites.x < -trela).is_true()
 
 
-## So o rei gere (§08): a moeda largada pela classe cai, e nao paga a obra onde cai.
-func test_a_moeda_da_classe_nao_paga_obra() -> void:
-	var novo := _assumir_arqueiro()
-	var i := SimLoop.units.index_of(novo)
-	SimLoop.units.carried_coins[i] = 3
-	var args := {&"x": SimLoop.units.xs[i], &"band": Band.Kind.SURFACE, &"amount": 1}
-	args[&"source"] = Verbs.JOGADOR
-	SimLoop.intents.queue(IntentQueue.Kind.DROP_COIN, args)
-	SimLoop.step(PASSO)
-	assert_int(SimLoop.units.carried_coins[i]).is_equal(2)
-	var c := SimLoop.coins.count() - 1
-	assert_int(SimLoop.coins.from_king[c]).is_equal(0)
-	assert_int(SimLoop.coins.targets[c]).is_equal(CoinTarget.NENHUM)
-
-
-## A roda e o corpo do rei (§24): com a classe assumida, o impulso nao se usa.
-func test_com_a_classe_o_impulso_nao_se_usa() -> void:
-	_assumir_arqueiro()
-	SimLoop.units.carried_coins[_rei()] = 30
-	var antes := SimLoop.units.carried_coins[_rei()]
-	SimLoop.intents.queue(IntentQueue.Kind.IMPULSE, {&"id": &"forced_harvest"})
-	SimLoop.step(PASSO)
-	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(antes)
-
-
-## O Verbo 2 do Arqueiro ao pe do rei volta ao rei; e o rei largado volta ao nucleo.
-func test_volta_se_ao_rei_e_o_rei_largado_vai_para_casa() -> void:
-	SimLoop.units.xs[_rei()] = SimLoop.core_x + 600.0
-	var novo := _assumir_arqueiro()
-	for _t in 3:
-		SimLoop.step(PASSO)
-	assert_float(SimLoop.units.target_xs[_rei()]).is_equal_approx(SimLoop.core_x, 0.5)
-	var i := SimLoop.units.index_of(novo)
-	SimLoop.units.xs[i] = SimLoop.units.xs[_rei()] + LADO
+## O Verbo 2 sem mais nada onde pegar paga ao companheiro: o escudeiro do Rei arma o escudo.
+func test_o_verbo_2_paga_ao_companheiro() -> void:
+	MonarchWatch.begin(&"monarch")
+	var e := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
+	SimLoop.units.xs[e] = SimLoop.units.xs[_rei()]
+	var bolsa := SimLoop.units.carried_coins[_rei()]
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 	SimLoop.step(PASSO)
-	assert_int(Assume.driven()).is_equal(SimLoop.king_id)
+	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(bolsa - 1)
+	assert_int(SimLoop.field.classes.squire.shield).is_greater(0)
 
 
-## O save guarda quem se conduz, e o armazenamento da classe.
-func test_o_save_guarda_quem_se_conduz() -> void:
-	var novo := _assumir_arqueiro()
-	var aljava := Assume.storage(SimLoop.units, novo, SimLoop.field)
-	aljava.put(Storage.ARCHOTE, 1)
-	var mundo := SimLoop.world()
-	SimLoop.units.pilot = UnitSystem.NENHUM
-	SimLoop.field.roster.storages.clear()
-	SimLoop.load_world(mundo)
-	assert_int(Assume.driven()).is_equal(novo)
-	var outra := Assume.storage(SimLoop.units, novo, SimLoop.field)
-	assert_int(outra.count(Storage.ARCHOTE)).is_equal(1)
+## A Nia da uma moeda ao orcamento do Bardo dela, ate ao teto.
+func test_a_nia_paga_ao_bardo_dela() -> void:
+	MonarchWatch.begin(&"nia")
+	var b := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
+	SimLoop.units.xs[b] = SimLoop.units.xs[_rei()]
+	var bolsa := SimLoop.units.carried_coins[_rei()]
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(PASSO)
+	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(bolsa - 1)
+	assert_int(SimLoop.field.monarchy.budget_of(SimLoop.units.ids[b])).is_equal(1)
+
+
+## O escudeiro do Arqueiro vende um lote por uma moeda da bolsa dele; sem moedas, nada.
+func test_o_arqueiro_compra_flechas_so_com_moedas_dele() -> void:
+	MonarchWatch.begin(&"archer_emperor")
+	var e := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
+	SimLoop.units.xs[e] = SimLoop.units.xs[_rei()]
+	var corpo := Registry.entry(&"units", &"archer_emperor") as UnitData
+	var antes := SimLoop.field.supply.left(SimLoop.units, _rei(), corpo)
+	SimLoop.units.carried_coins[_rei()] = 0
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(PASSO)
+	assert_int(SimLoop.field.supply.left(SimLoop.units, _rei(), corpo)).is_equal(antes)
+	SimLoop.units.carried_coins[_rei()] = 1
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
+	SimLoop.step(PASSO)
+	var lote := RulesFactory.rules().arrows_per_coin
+	assert_int(SimLoop.field.supply.left(SimLoop.units, _rei(), corpo)).is_equal(antes + lote)
+	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(0)
+
+
+## MU-04: o monarca tambem viaja, de dia, para destino seguro — e o companheiro que esta a
+## mao vai com ele. Sem destino alem de casa, nao ha portao.
+func test_o_monarca_viaja_com_o_companheiro_a_mao() -> void:
+	MonarchWatch.begin(&"nia")
+	var r := _rei()
+	var b := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
+	SimLoop.units.xs[r] = SimLoop.secrets.chapters[0]
+	SimLoop.units.xs[b] = SimLoop.secrets.chapters[0]
+	assert_bool(TravelWatch.at_gate()).is_false()
+	var bioma := StringName(SimLoop.state.chapters.regions[1])
+	var povo := StringName(RulesFactory.biome_peoples()[bioma])
+	SimLoop.field.realm.vassals.add(povo, 4, 100.0, 1)
+	assert_bool(TravelWatch.at_gate()).is_true()
+	assert_bool(TravelWatch.go(1)).is_true()
+	var destino := float(SimLoop.field.settlements.records[1][&"x"])
+	assert_float(SimLoop.units.xs[_rei()]).is_equal_approx(destino, 0.5)
+	b = SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
+	assert_float(SimLoop.units.xs[b]).is_equal_approx(destino, 0.5)

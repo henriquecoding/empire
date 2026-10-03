@@ -2,7 +2,10 @@ class_name BardPromotion
 extends RefCounted
 
 
-static func at(who: int, x: float) -> bool:
+## `tropa_primeiro`: no empate entre um inimigo e uma tropa elegivel, promove (o Bardo da
+## Nia, plano §5: nao trocar sem dizer uma promocao por um encanto). Sem ele, o cursor
+## sobre um inimigo continua a cantar para ele, mesmo com tropa ao lado.
+static func at(who: int, x: float, tropa_primeiro: bool = false) -> bool:
 	var field := SimLoop.field
 	var phase := field.hero_progress.phase_of(&"bard")
 	if phase < 2:
@@ -30,7 +33,7 @@ static func at(who: int, x: float) -> bool:
 		):
 			if data.promotion_targets.has(units.data_ids[i]):
 				target_gap = minf(target_gap, absf(units.xs[i] - x))
-	if target_gap >= enemy_gap:
+	if target_gap > enemy_gap or (target_gap == enemy_gap and not tropa_primeiro):
 		return false
 	var old: Dictionary = {}
 	for i in units.count():

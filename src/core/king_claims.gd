@@ -5,7 +5,8 @@ extends RefCounted
 
 
 ## Uma moeda do rei com outro alvo que o chao: uma arvore a consagrar (§74) ou
-## o nucleo, para a classe evoluir (§08, Q-114). Nos dois a moeda volta ao saco.
+## o nucleo, para o monarca evoluir — o Rei pela classe dele, a Nia pelo Bardo e o
+## Arqueiro pela marca (§08, Q-114, ADR 0052). Nos dois a moeda volta ao saco.
 static func of(
 	campo: FieldWork,
 	largada: Dictionary,
@@ -17,9 +18,9 @@ static func of(
 ) -> bool:
 	if noite.consecrate_at(estado, largada, rei) or noite.dark.buy_at(largada, obras):
 		return true  # uma arvore a consagrar, ou archotes numa fogueira (Q-029)
-	if not campo.classes.can_evolve(estado.royal_seeds) or not _no_nucleo(largada, obras):
+	if not MonarchWatch.can_evolve(campo, estado.royal_seeds) or not _no_nucleo(largada, obras):
 		return false
-	campo.classes.evolve(estado)
+	MonarchWatch.evolve(campo, estado)
 	var i := unidades.index_of(rei)
 	if i != UnitSystem.NENHUM:
 		unidades.carried_coins[i] += int(largada[EventRelay.QUANTO])

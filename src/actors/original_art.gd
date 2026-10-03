@@ -173,6 +173,6 @@ static func unit_profile(data_id: StringName) -> StringName:
 			return &"vagrant"
 		&"cook":
 			return &"cook"
-		&"squire", &"buried_knight", &"sealed_knight", &"mercenary":
+		&"squire", &"quiver_squire", &"buried_knight", &"sealed_knight", &"mercenary":
 			return &"knight"
 	return &""

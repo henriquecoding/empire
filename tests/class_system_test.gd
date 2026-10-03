@@ -140,6 +140,7 @@ func test_o_save_leva_o_que_muda_o_proximo_golpe() -> void:
 func test_o_escudeiro_leva_o_golpe_do_rei_e_revida_com_a_espada() -> void:
 	var dados := Registry.entry(&"units", &"squire") as UnitData
 	var e := unidades.spawn(estado, dados, MEU, 1000.0 + 20.0)
+	classes.squire_id = e  # o vinculo do Monarchy (ADR 0052)
 	classes.watch(unidades, rei, false)
 	assert_int(classes.squire_index(unidades)).is_equal(unidades.index_of(e))
 	assert_int(classes.soak(unidades, rei, 4)).is_equal(4)
@@ -155,7 +156,7 @@ func test_o_escudeiro_leva_o_golpe_do_rei_e_revida_com_a_espada() -> void:
 
 func test_o_escudeiro_longe_do_rei_nao_lhe_apara_o_golpe() -> void:
 	var dados := Registry.entry(&"units", &"squire") as UnitData
-	unidades.spawn(estado, dados, MEU, 1000.0 + LONGE)
+	classes.squire_id = unidades.spawn(estado, dados, MEU, 1000.0 + LONGE)
 	classes.watch(unidades, rei, false)
 	classes.squire.arm(5)
 	var escudo := classes.squire.shield
@@ -166,6 +167,7 @@ func test_o_escudeiro_longe_do_rei_nao_lhe_apara_o_golpe() -> void:
 func test_o_escudeiro_vai_a_frente_com_escudo_e_atras_sem_ele() -> void:
 	var dados := Registry.entry(&"units", &"squire") as UnitData
 	var e := unidades.spawn(estado, dados, MEU, 1000.0)
+	classes.squire_id = e
 	classes.watch(unidades, rei, false)
 	var r := unidades.index_of(rei)
 	var perto := classes.squire.escort_px()
@@ -174,6 +176,24 @@ func test_o_escudeiro_vai_a_frente_com_escudo_e_atras_sem_ele() -> void:
 	classes.squire.arm(1)
 	classes.escort(unidades, 1)
 	assert_float(unidades.target_xs[unidades.index_of(e)]).is_equal(unidades.xs[r] + perto)
+
+
+## ADR 0052 (MU-19): o escudeiro e o do vinculo; quem apanha moedas sem vinculo nao o e.
+func test_sem_vinculo_um_coletor_de_moedas_nao_e_escudeiro() -> void:
+	unidades.spawn(estado, Registry.entry(&"units", &"squire") as UnitData, MEU, 1000.0)
+	classes.watch(unidades, rei, false)
+	assert_int(classes.squire_index(unidades)).is_equal(ClassSystem.NENHUM)
+
+
+## ADR 0052 (MU-22): a aura, as noites e a evolucao do Rei nao passam a Nia nem ao
+## Arqueiro — com outro monarca no trono a classe do Rei fica parada.
+func test_sem_o_rei_no_trono_nao_ha_aura_nem_evolucao() -> void:
+	var tropa := _tropa(1000.0 + 10.0)
+	classes.active = false
+	classes.watch(unidades, rei, false)
+	assert_float(classes.defense_of(unidades, unidades.index_of(tropa))).is_equal(0.0)
+	classes.nights_defended = _monarca().evolve_condition_value
+	assert_bool(classes.can_evolve(_monarca().evolve_seed_cost)).is_false()
 
 
 func test_a_fase_2_investe_o_escudeiro_cavaleiro() -> void:

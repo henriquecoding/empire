@@ -35,6 +35,10 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `digger` | `UNIT_DIGGER` | Escavador | Digger |
 | `ice_warden` | `UNIT_ICE_WARDEN` | Guarda do Gelo | Ice Warden |
 | `reed_stalker` | `UNIT_REED_STALKER` | Caçador do Caniçal | Reed Stalker |
+| `nia` | `UNIT_NIA` | Nia | Nia |
+| `archer_emperor` | `UNIT_ARCHER_EMPEROR` | Imperador Arqueiro | Archer Emperor |
+| `bard_banner` | `UNIT_BARD_BANNER` | Bardo da bandeira | Banner Bard |
+| `quiver_squire` | `UNIT_QUIVER_SQUIRE` | Escudeiro das flechas | Quiver Squire |
 
 ## creatures
 
@@ -319,4 +323,12 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `spore_field` | `CHAPTER_SPORE_FIELD` | O Campo de Esporos | The Spore Field |
 | `bridge_of_returners` | `CHAPTER_BRIDGE_OF_RETURNERS` | A Ponte dos Que Voltaram | The Bridge of Those Who Came Back |
 | `endless_siege` | `CHAPTER_ENDLESS_SIEGE` | O Cerco Que Não Acaba | The Siege That Does Not End |
+
+## monarchs
+
+| id | chave | PT-PT | EN |
+|---|---|---|---|
+| `monarch` | `MONARCH_KING` | Rei | King |
+| `nia` | `MONARCH_NIA` | Imperatriz Nia | Empress Nia |
+| `archer_emperor` | `MONARCH_ARCHER_EMPEROR` | Imperador Arqueiro | Archer Emperor |
 

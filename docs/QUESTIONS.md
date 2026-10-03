@@ -31,6 +31,11 @@
 - **Onde:** §08, §09, §13, §14, §15, §16, §18, §24, §99. Execução em `docs/backlog/UN-00.md` a `UN-31.md`.
 - **Estado:** decidido. A execução segue por fases (ADR 0052); o painel só passa a «aplicada» por fase, depois de
   merge e publicação.
+- **Aplicado — Fases 1 a 3 (03/10/2026, UN-01 a UN-15):** a escolha dos três monarcas, a autoridade da coroa por
+  pessoa, o companheiro por ID, o fim de assumir tropas e da trela, a migração dos saves para a versão 7, a morte e a
+  sucessão dos três perfis, a Nia com o Bardo pago, e o Imperador Arqueiro com a aljava paga e o sangramento. A troca
+  imperial, os encontros e o Diplomata universal (Fases 4 a 8, UN-16 a UN-31) continuam por fazer. Os números são os
+  das propostas Q-198 a Q-202, em `_proposed`.
 - **Decide:** já decidido por ti (02/10/2026); a execução segue por fases, UN-01 em diante.
 
 ### Q-196 · A troca imperial transfere o governo, ou só o controlo?
@@ -63,6 +68,8 @@
   5 moedas. Até dois encantados temporários na fase base. O incentivo não cura; dois bardos não somam, conta o maior.
   Uma ordem paga e que já não pode ocorrer antes do compromisso devolve a moeda; depois de válida, não há reembolso.
 - **Feito de Nia (P):** as 15 conversões distintas do Bardo, com a imperatriz presente — não 15 reencantos da mesma.
+- **Limite de aliados permanentes (P, aplicado em `_proposed`):** 48 de massa convertida viva por Bardo (a
+  `mass_cost` da Podridão: seis Rastejantes, dois Brutos ou um Aríete); a conversão que passa o teto é a última.
 - **Decide:** tu, os preços e o limite de aliados permanentes (ponderado pela massa, não por cabeça).
 
 ### Q-200 · A aljava do Imperador Arqueiro e o escudeiro que a abastece

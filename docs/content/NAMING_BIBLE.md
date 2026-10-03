@@ -78,6 +78,15 @@ Nada disto está no dossiê; são propostas para a fase de cada povo.
   de marés e de barcos; Fenda — pedras; Horta — legumes e festas agrícolas; Fornalha — metais; Sob-Raiz — fungos e
   palavras da terra. Quinze por povo chegam para a fatia vertical.
 - **Títulos:** Rei / Rainha · Herdeiro / Herdeira · Regente (durante o interregno, §16).
+- **Os três monarcas iniciais** (ADR 0052) têm IDs canónicos em `data/source/monarchs.csv`; o perfil e o corpo
+  partilham o id, e o companheiro tem o seu. O herdeiro de qualquer um deles chama-se pela chave `MONARCH_HEIR_*`
+  — a sucessora de Nia não é a Nia.
+
+  | Perfil (id) | PT-PT | EN | Companheiro (id) |
+  |---|---|---|---|
+  | `monarch` | Rei | King | `squire` — Escudeiro |
+  | `nia` | Imperatriz Nia | Empress Nia | `bard_banner` — Bardo da bandeira |
+  | `archer_emperor` | Imperador Arqueiro | Archer Emperor | `quiver_squire` — Escudeiro das flechas |
 
 ## 4 · Terminologia fixa
 
@@ -106,7 +115,7 @@ completa, com contexto, género e plural, está no `GLOSSARY.csv`.
 |---|---|---|
 | Identificadores de conteúdo | inglês, `snake_case`, únicos na tabela | `root_berserker`, `granary` |
 | Povos | o `id` de `peoples.csv`, sem acentos | `sobraiz` |
-| Chaves de texto | `UPPER_SNAKE` com prefixo por tipo | `UNIT_` `CREATURE_` `BUILDING_` `WALL_` `PEOPLE_` `CLASS_` `CRAFT_` `JOB_` `BIOME_` `MOUNT_` `IMPULSE_` `GREED_` `SECRET_` `JOURNAL_` `WILDLIFE_` `COMPANION_` `CHAOS_` `UI_` `OPT_` `CAPTION_` `EPILOGUE_` `CURRENCY_` |
+| Chaves de texto | `UPPER_SNAKE` com prefixo por tipo | `UNIT_` `MONARCH_` `CREATURE_` `BUILDING_` `WALL_` `PEOPLE_` `CLASS_` `CRAFT_` `JOB_` `BIOME_` `MOUNT_` `IMPULSE_` `GREED_` `SECRET_` `JOURNAL_` `WILDLIFE_` `COMPANION_` `CHAOS_` `UI_` `OPT_` `CAPTION_` `EPILOGUE_` `CURRENCY_` |
 | Chaves com número | a chave inteira com marcador, nunca concatenação | `DAY_N` → `Dia %d` (§27) |
 | Classes | `PascalCase`; recursos de definição terminam em `Data`, `Profile` ou `Curve` (§44) | `UnitData`, `RotProfile` |
 | Sinais | só os 61 da §46 | `unit_died`, nunca `unit_dead` |

@@ -11,6 +11,8 @@ const WOOD := Color(0.43, 0.25, 0.13)
 const WOOD_LIGHT := Color(0.68, 0.41, 0.19)
 const EYE := Color(0.98, 0.88, 0.59)
 const SOMBRA := Color(0.03, 0.03, 0.04, 0.30)
+## A pele de quem a tem propria, inteira e nao misturada: a Imperatriz Nia (ADR 0052).
+const PELE := {&"nia": Color(0.36, 0.22, 0.14)}
 
 ## A caixa do tamanho 1 tem 48 px (§01: quatro degraus). Nada encolhe abaixo de
 ## `minima` — por baixo disso a cara junta-se ao corpo e deixa de se ler.
@@ -139,7 +141,7 @@ static func _cara(
 	scale: float
 ) -> void:
 	var raio := maxf(TRACO.raio, box.size.x * CORPO.raio)
-	canvas.draw_circle(center, raio, cor.lerp(SKIN, MISTURA.pele))
+	canvas.draw_circle(center, raio, PELE.get(units.data_ids[index], cor.lerp(SKIN, MISTURA.pele)))
 	var queixo := Rect2(
 		center.x - box.size.x * CARA.x,
 		center.y + box.size.y * CARA.y,

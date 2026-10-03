@@ -107,3 +107,40 @@ imperador e tropa controláveis; a troca não cura, não teletransporta, não du
   — passam a perguntar pelo titular e pelo perfil.
 - Proibido: oferecer «Assumir» numa tropa; criar flechas, cura ou moedas por trocar de corpo, viajar ou carregar.
 - Reverter exige repor o Roster de classes, a trela do rei e o despacho único da Vigília, e migrar os saves de volta.
+
+## Implementação — Fases 1 a 3 (03/10/2026)
+
+O primeiro ciclo completo dos três monarcas (UN-01 a UN-15). Os números novos estão todos em `_proposed`.
+
+- **Dados (UN-01, UN-09, UN-13).** `monarchs.csv` (`MonarchData`): corpo, classe das fases, habilidade, nome do ataque
+  e companheiro com o serviço que vende. Unidades novas em `units.csv`: `nia`, `archer_emperor`, `bard_banner` e
+  `quiver_squire`, com os números de bancada do plano. O `monarch` continua a ser o Rei, sem números mexidos.
+- **Autoridade e vínculo (UN-02, UN-03).** `Monarchy` guarda o perfil, a geração e o vínculo patrono → companheiro
+  por id; o `ClassSystem` deixa de achar o escudeiro pela tag `collects_coins` e só tem aura, noites e evolução com
+  o Rei no trono. Gerir continua a ser do `SimLoop.king_id`: de quem tem a coroa, qualquer que seja o corpo.
+- **Escolha (UN-04).** O escudeiro nasce ligado ao rei; `MonarchWatch.begin` passa os dois corpos ao perfil, sem
+  nascer ninguém. A escolha mostra papel, companheiro, base, evolução e controlos de cada um.
+- **Só imperadores (UN-05).** O `Roster` perdeu `take`, `back` e `begin`; o `Assume` perdeu a troca e a trela; a
+  coroa caída não passa o controlo a nenhuma tropa; a viagem aceita o monarca — com o companheiro à mão — quando há
+  destino seguro, sem roubar a marcha na bifurcação.
+- **Migração (UN-06).** O save sobe à versão 7 (`SaveMigrationsV7`): conduz-se o rei, o perfil é o Rei, o escudeiro
+  vivo passa a vínculo, os corpos de classe ficam no mundo sob IA com o que levavam.
+- **Morte e sucessão (UN-07).** A coroa no chão, a morte de vez e a coroação valem para os três; o herdeiro nasce com
+  o corpo do perfil de quem reinava (a opção mais simples da Q-202), herda o companheiro vivo, e o painel dá-lhe o
+  nome de herdeiro com a geração. O companheiro morto fica perdido, sem substituto grátis.
+- **Habilidade (UN-08).** O botão direito despacha pelo perfil: Vigília, canto pago ou marca.
+- **Bardo pago (UN-10 a UN-12).** `RoyalSong`: o Bardo só canta vivo, à mão, pronto e pago — encantar, incentivar
+  (passo, com o maior a valer) ou promover —, do orçamento dele e depois da bolsa da Nia, uma vez, no tick em que
+  acontece. O convertido não rouba a coroa (`CrownDrop`). O feito da Nia é do Bardo dela, e não do Bardo de IA.
+  Tetos (Q-199): dois encantados temporários na fase base; como Maestro, 48 de massa convertida viva.
+- **Flechas e ferida (UN-13 a UN-15).** A aljava do Imperador Arqueiro é pessoal (`Supply.personal`): começa com as
+  flechas iniciais, cada disparo gasta uma, a banca não a repõe, e só o escudeiro a enche por uma moeda da bolsa dele
+  — o que não cabe fica em crédito. Sem flechas, um golpe de emergência fraco. `Bleeding`: sangramento com o
+  sorteio do fluxo `combat`, uma ferida por alvo, no save, e a morte uma só pelo lote comum do combate.
+- **Apresentação.** A Nia e o Arqueiro desenham-se pelo `ActorArt` (coroa, pele própria da Nia), o Bardo leva a
+  bandeira às costas, o escudeiro das flechas empresta o sprite do escudeiro; tudo registado em
+  `docs/ASSETS_TODO.md`. Nenhum ficheiro de `art/` ou `audio/` mudou.
+
+Ficam para as fases seguintes: o roster de imperadores encontrados e a troca (UN-16, UN-17), o Diplomata universal
+e as incursões (UN-18 a UN-21), a conquista física (UN-22, UN-23), o conteúdo (UN-24 a UN-28) e o multiplayer
+(UN-29 a UN-31).

@@ -1,3 +1,6 @@
+# src/core/hero_watch.gd — as habilidades de quem se conduz, e dos bardos e arqueiros de IA
+# (ADR 0044, ADR 0045). Desde a ADR 0052 conduz-se sempre o monarca: a classe dele e a do
+# perfil (MonarchWatch) — o Rei, a Nia pelo Bardo dela, o Arqueiro imperial pela marca.
 class_name HeroWatch
 extends RefCounted
 
@@ -6,13 +9,18 @@ static var feedback_serial := 0
 
 
 static func current() -> StringName:
+	if Assume.driven() == SimLoop.king_id:
+		return MonarchWatch.skill_class()
 	var i := SimLoop.units.index_of(Assume.driven())
 	return SimLoop.field.roster.class_of_body(SimLoop.units.data_ids[i]) if i >= 0 else &""
 
 
 static func tick(delta: float) -> void:
 	var field := SimLoop.field
+	MonarchWatch.tick(delta)
 	SimLoop.combat.manual.controlled = Assume.driven()
+	SimLoop.combat.manual.bleeding = field.bleeding
+	field.bleeding.tick(delta, SimLoop.creatures, field.song.allies)  # Q-201
 	SimLoop.combat.manual.allies = field.song.allies
 	SimLoop.combat.manual.focus = field.focus
 	SimLoop.combat.manual.tick(delta)
@@ -26,6 +34,8 @@ static func tick(delta: float) -> void:
 	field.focus.piercing.clear()
 	var archer := (Registry.entry(&"classes", &"archer") as ClassData).base_unit
 	var evolved := field.hero_progress.phase_of(&"archer") > 1
+	if evolved and MonarchWatch.skill_class() == &"archer":
+		field.focus.piercing.append(SimLoop.king_id)  # o Imperador Arqueiro (ADR 0052)
 	if not evolved:
 		if SimLoop.creatures.count() == 0:
 			return
@@ -55,6 +65,8 @@ static func action(x: float) -> bool:
 			feedback = &"COMBAT_MARKED" if not hits.is_empty() else &"COMBAT_NO_ABILITY_TARGET"
 			return not hits.is_empty()
 		&"bard":
+			if who == SimLoop.king_id:
+				return RoyalSong.order(x)  # a Nia manda, o Bardo dela canta (Q-199)
 			if float(field.song.cooldowns.get(who, 0.0)) > 0.0:
 				feedback = &"COMBAT_SKILL_RECOVERING"
 				return false
@@ -112,7 +124,8 @@ static func _charm(who: int, x: float) -> bool:
 	var phase := SimLoop.field.hero_progress.phase_of(&"bard")
 	var target := song.cast(SimLoop.units, SimLoop.creatures, who, x, phase)
 	if target >= 0:
-		if song.conversions() > converted:
+		# Com a Nia no trono, o feito do Bardo e dela: o bardo de IA nao o faz por ela.
+		if song.conversions() > converted and MonarchWatch.skill_class() != &"bard":
 			SimLoop.field.hero_progress.record(&"bard")
 		EventBus.queue(&"target_marked", [target, who])
 	return target >= 0

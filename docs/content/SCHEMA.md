@@ -31,7 +31,7 @@ Script `src/sim/data/clock_data.gd` · layout `rows` · 1 linha(s) · §69: o pr
 
 ## `units.csv` → `data/units/{id}.tres`
 
-Script `src/sim/data/unit_data.gd` · layout `rows` · 27 linha(s) · §07 §08 §09 §44
+Script `src/sim/data/unit_data.gd` · layout `rows` · 31 linha(s) · §07 §08 §09 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -813,4 +813,21 @@ Script `src/sim/data/camera_data.gd` · layout `rows` · 1 linha(s) · §19 §24
 | `free_speed_px_s` | float |  |  |
 | `free_return_seconds` | float |  |  |
 | `edge_pan_frac` | float |  |  |
+
+## `monarchs.csv` → `data/monarchs/{id}.tres`
+
+Script `src/sim/data/monarch_data.gd` · layout `rows` · 3 linha(s) · ADR 0052 — os monarcas da escolha inicial: corpo, classe, habilidade e companheiro (§08)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | StringName |  |  |
+| `display_key` | String |  |  |
+| `heir_key` | String |  |  |
+| `order` | int |  |  |
+| `unit` | StringName |  |  |
+| `skill_class` | StringName |  |  |
+| `skill` | StringName |  |  |
+| `attack_key` | String |  |  |
+| `companion` | StringName |  |  |
+| `service` | StringName |  |  |
 

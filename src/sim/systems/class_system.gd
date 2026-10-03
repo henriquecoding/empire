@@ -21,8 +21,6 @@ const PRIMEIRA := 1
 ## A chave dos parametros de cada fase (classes.csv, `phase*_params`).
 const DEFESA := &"defense"
 const RAIO := &"radius"
-## A tag do escudeiro em units.csv (§08): apanha moedas caidas.
-const COLHE := &"collects_coins"
 
 var phase: int = PRIMEIRA
 var nights_defended: int = 0
@@ -32,9 +30,13 @@ var squire: Squire
 var locked := false
 ## O armazenamento de quem se joga (Q-153): o cinto do rei, com os archotes.
 var storage: Storage
+## O escudeiro do rei por vinculo (Monarchy), e nao por apanhar moedas (ADR 0052, MU-19).
+var squire_id: int = NENHUM
+## Se e o Rei quem reina: a aura, as noites e esta evolucao sao so dele (ADR 0052, MU-22).
+var active := true
 
 var _dados: ClassData
-## UnitData por id: quem tem a tag de apanhar moedas e o escudeiro.
+## UnitData por id: os numeros do escudeiro saem dele.
 var _tropas: Dictionary
 var _rei: int = NENHUM
 var _defendida := false
@@ -56,7 +58,7 @@ func _init(dados: ClassData, tropas: Dictionary = {}, armazem: Storage = null) -
 ## esta dentro da aura (fase 1) ou em qualquer sitio (fase 2). Nunca o proprio rei.
 func defense_of(unidades: UnitSystem, i: int) -> float:
 	var r := unidades.index_of(_rei)
-	if r == NENHUM or i == r or not unidades.alive(r) or not unidades.alive(i):
+	if not active or r == NENHUM or i == r or not unidades.alive(r) or not unidades.alive(i):
 		return 0.0
 	if unidades.owners[i] != unidades.owners[r]:
 		return 0.0
@@ -87,7 +89,7 @@ func soak(unidades: UnitSystem, unit_id: int, quanto: int) -> int:
 ## Um tick: quem e o rei, e se esta noite ja houve combate teu dentro da aura.
 func watch(unidades: UnitSystem, rei: int, noite: bool) -> void:
 	_rei = rei
-	if not noite or _defendida or unidades.pilot != NENHUM:
+	if not active or not noite or _defendida or unidades.pilot != NENHUM:
 		return
 	var r := unidades.index_of(rei)
 	if r == NENHUM or not unidades.alive(r):
@@ -116,15 +118,15 @@ func riposte() -> int:
 
 
 ## O escudeiro do rei vivo, na faixa dele, ou NENHUM. `rei` por omissao e o que o
-## ultimo tick viu.
+## ultimo tick viu. E o do vinculo (`squire_id`): coletar moedas nao faz escudeiro.
 func squire_index(unidades: UnitSystem, rei: int = NENHUM) -> int:
 	var r := unidades.index_of(_rei if rei == NENHUM else rei)
-	if r == NENHUM or not unidades.alive(r):
+	var e := unidades.index_of(squire_id)
+	if r == NENHUM or e == NENHUM or e == r or not unidades.alive(r) or not unidades.alive(e):
 		return NENHUM
-	for i in unidades.count():
-		if i != r and _escudeiro(unidades, i, r):
-			return i
-	return NENHUM
+	if unidades.owners[e] != unidades.owners[r] or unidades.bands[e] != unidades.bands[r]:
+		return NENHUM
+	return e
 
 
 ## Se o escudeiro esta ao pe do rei — no raio de presenca dele (§07) — para lhe
@@ -159,7 +161,9 @@ func marks() -> bool:
 
 
 func can_evolve(sementes: int) -> bool:
-	if locked or phase >= _dados.phase_count or sementes < _dados.evolve_seed_cost:
+	if not active or locked or phase >= _dados.phase_count:
+		return false
+	if sementes < _dados.evolve_seed_cost:
 		return false
 	return nights_defended >= _dados.evolve_condition_value
 
@@ -215,15 +219,6 @@ func from_dict(guardado: Dictionary) -> void:
 
 func _params() -> Dictionary:
 	return _dados.phase1_params if phase == PRIMEIRA else _dados.phase2_params
-
-
-func _escudeiro(unidades: UnitSystem, i: int, r: int) -> bool:
-	if not unidades.alive(i) or unidades.owners[i] != unidades.owners[r]:
-		return false
-	if unidades.bands[i] != unidades.bands[r]:
-		return false
-	var dados: UnitData = _tropas.get(unidades.data_ids[i])
-	return dados != null and dados.tags.has(COLHE)
 
 
 func _na_aura(unidades: UnitSystem, i: int, r: int, raio: float) -> bool:

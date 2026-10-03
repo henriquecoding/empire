@@ -10,6 +10,8 @@ extends GdUnitTestSuite
 const X := 300.0
 const ALCANCE := 24.0
 const APANHA := 12.0
+## O alcance da criatura e o de quem a apanha, juntos (o CrownDrop.tick).
+const RAIOS := Vector2(ALCANCE, APANHA)
 const SEM_MANCHA := Vector2.ZERO
 
 var _estado := GameState.new()
@@ -34,19 +36,37 @@ func test_a_criatura_que_lhe_chega_leva_a() -> void:
 	var bichos := CreatureSystem.new()
 	var u := UnitSystem.new()
 	_bicho(bichos, X + ALCANCE * 3.0)
-	var fim := coroa.tick(bichos, ALCANCE, SEM_MANCHA, u, CrownDrop.NENHUM, APANHA)
+	var fim := coroa.tick(bichos, RAIOS, SEM_MANCHA, u, CrownDrop.NENHUM)
 	assert_int(fim).is_equal(CrownDrop.Fate.NONE)
 	assert_bool(coroa.down).is_true()
 	bichos.xs[0] = X + ALCANCE * 0.5
-	fim = coroa.tick(bichos, ALCANCE, SEM_MANCHA, u, CrownDrop.NENHUM, APANHA)
+	fim = coroa.tick(bichos, RAIOS, SEM_MANCHA, u, CrownDrop.NENHUM)
 	assert_int(fim).is_equal(CrownDrop.Fate.TAKEN)
 	assert_bool(coroa.down).is_false()
+
+
+## ADR 0052 (UN-11, T11 do plano): a criatura que a Nia converteu nao rouba a coroa do
+## reino dela; e uma criatura morta nao leva nada.
+func test_a_convertida_e_a_morta_nao_levam_a_coroa() -> void:
+	var coroa := _caida()
+	var bichos := CreatureSystem.new()
+	var u := UnitSystem.new()
+	_bicho(bichos, X)
+	var convertida := {bichos.ids[0]: {&"permanent": true}}
+	assert_int(coroa.tick(bichos, RAIOS, SEM_MANCHA, u, CrownDrop.NENHUM, convertida)).is_equal(
+		CrownDrop.Fate.NONE
+	)
+	bichos.healths[0] = 0
+	assert_int(coroa.tick(bichos, RAIOS, SEM_MANCHA, u, CrownDrop.NENHUM)).is_equal(
+		CrownDrop.Fate.NONE
+	)
+	assert_bool(coroa.down).is_true()
 
 
 func test_na_mancha_alimenta_o_lume() -> void:
 	var coroa := _caida()
 	var fim := coroa.tick(
-		CreatureSystem.new(), ALCANCE, Vector2(X - 50.0, X + 50.0), UnitSystem.new(), -1, APANHA
+		CreatureSystem.new(), RAIOS, Vector2(X - 50.0, X + 50.0), UnitSystem.new(), -1
 	)
 	assert_int(fim).is_equal(CrownDrop.Fate.CONSUMED)
 
@@ -56,18 +76,14 @@ func test_quem_se_conduz_apanha_a_e_o_rei_levanta_se() -> void:
 	var u := UnitSystem.new()
 	var rei := u.spawn(_estado, Registry.entry(&"units", &"monarch") as UnitData, 1, X)
 	var classe := u.spawn(
-		_estado, Registry.entry(&"units", &"archer_hero") as UnitData, 1, X + 80.0
+		_estado, Registry.entry(&"units", &"archer_emperor") as UnitData, 1, X + 80.0
 	)
 	u.healths[u.index_of(rei)] = 0
 	u.states[u.index_of(rei)] = UnitFsm.State.DEAD
 	var bichos := CreatureSystem.new()
-	assert_int(coroa.tick(bichos, ALCANCE, SEM_MANCHA, u, classe, APANHA)).is_equal(
-		CrownDrop.Fate.NONE
-	)
+	assert_int(coroa.tick(bichos, RAIOS, SEM_MANCHA, u, classe)).is_equal(CrownDrop.Fate.NONE)
 	u.xs[u.index_of(classe)] = X + APANHA * 0.5
-	assert_int(coroa.tick(bichos, ALCANCE, SEM_MANCHA, u, classe, APANHA)).is_equal(
-		CrownDrop.Fate.RECOVERED
-	)
+	assert_int(coroa.tick(bichos, RAIOS, SEM_MANCHA, u, classe)).is_equal(CrownDrop.Fate.RECOVERED)
 	assert_bool(CrownDrop.rise(u, rei, 0.5)).is_true()
 	var i := u.index_of(rei)
 	assert_bool(u.alive(i)).is_true()
@@ -91,7 +107,7 @@ func test_o_save_guarda_a_coroa_no_chao() -> void:
 
 ## No jogo: o combate que mata o rei deixa a coroa no chao, e a partida ainda nao
 ## acabou; a alvorada levanta-o, se nenhuma criatura a levou.
-func test_no_jogo_o_rei_caido_levanta_se_na_alvorada() -> void:
+func test_no_jogo_o_rei_caido_levanta_se_na_alvorada_sem_ninguem_assumir_tropa() -> void:
 	SimLoop.autosave_enabled = false
 	EventBus.reset()
 	SimLoop.start(20260930)
@@ -116,6 +132,7 @@ func test_no_jogo_o_rei_caido_levanta_se_na_alvorada() -> void:
 	assert_bool(SimLoop.field.crown_drop.down).is_true()
 	assert_bool(Defeat.happened()).is_false()
 	assert_array(mortes).is_empty()
+	assert_int(SimLoop.units.pilot).is_equal(UnitSystem.NENHUM)  # ADR 0052: so imperadores
 	while ClockService.clock.day < 2:
 		SimLoop.step(1.0 / 30.0)
 	SimLoop.step(1.0 / 30.0)
