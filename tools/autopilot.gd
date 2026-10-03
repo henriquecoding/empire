@@ -73,15 +73,13 @@ static func _destino(loop: Node, rei: int, onde: float) -> float:
 		var lado := signf(loop.night.rot.position_x() - loop.core_x)
 		return loop.core_x + (-lado if cauteloso else lado) * _meio_nucleo(loop)
 	var saco: int = loop.units.carried_coins[rei]
-	# A carroca de provisoes da chegada (ADR 0059): e o primeiro dinheiro, e esta a porta.
-	if loop.seat.cart_coins > 0 and saco < loop.units.coin_capacities[rei]:
-		return loop.seat.cart_x
 	# Com o saco vazio nao ha nada a fazer senao ir buscar moeda. Com moeda na
 	# mao vai-se GASTAR: um piloto que corresse atras da moeda que acabou de
 	# largar ficava preso a largar e a apanhar a mesma, no mesmo sitio, o dia
 	# inteiro — foi o que ele fez na primeira corrida.
 	if saco <= 0:
-		return _moeda_mais_perto(loop, rei, onde)
+		# A carroca de provisoes da chegada (ADR 0059) e dinheiro que esta a porta.
+		return loop.seat.cart_x if loop.seat.cart_coins > 0 else _moeda_mais_perto(loop, rei, onde)
 	# Recruta quem passa ao lado — e o minuto 0:20 do §25, e nao custa desvio
 	# nenhum — e no resto do tempo paga a obra mais perto que o saco chega para
 	# levantar. Sem isto o piloto gastava as seis moedas da partida em gente e

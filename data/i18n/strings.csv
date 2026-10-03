@@ -888,5 +888,5 @@ CONTEXT_SEAT_TO_MONARCH,{assume} a moeda para evoluir o monarca,{assume} send th
 CONTEXT_SEAT_TO_SEAT,{assume} a moeda volta para a sede,{assume} send the coin back to the seat,guia contextual de jogo,160,ADR 0059; plano do reino §23.2
 CONTEXT_STAGE_LOCKED,{name} · Abre com a sede em {stage},{name} · Opens when the seat is a {stage},guia contextual de jogo,160,"ADR 0059; plano do reino §17.1: o motivo, e não só «bloqueado»"
 GUIDE_FOUND,"FUNDA O REINO
-moedas no marco · provisões na carroça","FOUND THE REALM
-coins on the marker · supplies in the cart",HUD: objectivo antes da fundação,40,ADR 0059. Duas linhas.
+larga moedas no marco","FOUND THE REALM
+drop coins on the marker",HUD: objectivo antes da fundação,40,ADR 0059. Duas linhas.
