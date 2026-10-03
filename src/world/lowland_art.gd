@@ -10,6 +10,9 @@
 class_name LowlandArt
 extends RefCounted
 
+## As partes da terra, pela ordem em que se pintam (parts).
+enum Parte { CHAO, AGUA, MATO }
+
 const AGUA := Color("56716f")
 const AGUA_FUNDA := Color("3b5153")
 const REFLEXO := Color("a3b6ab")
@@ -48,18 +51,59 @@ const SAL := 101
 const MEIO := 0.5
 
 
-## O chao de todos os trocos, e por cima dele os caminhos e os lagos. As plantas vem
-## depois, por troco (`plants`), para nenhuma ficar debaixo do chao do troco seguinte.
-static func ground(canvas: CanvasItem, terra: Dictionary) -> void:
+## O que cada talhao da terra desenha, por parte e pela ordem em que as partes se pintam:
+## o chao dos trocos, e por cima dele os caminhos e os lagos, e as plantas por ultimo, para
+## nenhuma ficar debaixo do chao do troco seguinte. Uma passagem so pelas coisas todas:
+## talhao (Vector3: parte, de, ate) -> o que la cai. O SoilCover desenha cada talhao num
+## no seu, e o motor deixa de fora os que estao longe da camara (o dono, 03/10/2026:
+## "esta muito lento" — eram 220 draw calls por frame, para a regiao inteira).
+static func parts(terra: Dictionary, talhao: float) -> Dictionary:
+	var saida := {}
 	if terra.is_empty():
-		return
+		return saida
 	var trocos: Array = terra[Lowland.TROCOS]
 	for s: Dictionary in trocos:
-		_chao(canvas, s)
+		var x := floorf(float(s[Lowland.A]) / talhao) * talhao
+		while x < float(s[Lowland.B]):
+			var corte := Vector2(maxf(s[Lowland.A], x), minf(s[Lowland.B], x + talhao))
+			_por(saida, Parte.CHAO, x, talhao).append([s, corte])
+			x += talhao
 	for c: Vector3 in terra[Lowland.CAMINHOS]:
-		_caminho(canvas, c, Lowland.colors_at(trocos, c.x))
+		_por(saida, Parte.AGUA, c.x, talhao).append([c, Lowland.colors_at(trocos, c.x)])
 	for l: Vector4 in terra[Lowland.LAGOS]:
-		_lago(canvas, l, Lowland.colors_at(trocos, l.x))
+		_por(saida, Parte.AGUA, l.x, talhao).append([l, Lowland.colors_at(trocos, l.x)])
+	for lista: PackedFloat32Array in terra[Lowland.PLANTAS]:
+		var matos := FloraArt.chunks(lista, talhao)
+		for de: float in matos:
+			_por(saida, Parte.MATO, de, talhao).append(matos[de])
+	return saida
+
+
+## Um talhao: o que o `parts` lhe deu.
+static func draw_part(canvas: CanvasItem, parte: Parte, dados: Array) -> void:
+	if parte == Parte.MATO:
+		for plantas: PackedFloat32Array in dados:
+			plants(canvas, plantas)
+		return
+	for d: Array in dados:
+		if parte == Parte.CHAO:
+			_chao(canvas, d[0], d[1])
+		elif d[0] is Vector3:
+			_caminho(canvas, d[0], d[1])
+		else:
+			_lago(canvas, d[0], d[1])
+
+
+static func _talhao(parte: Parte, x: float, talhao: float) -> Vector3:
+	var de := floorf(x / talhao) * talhao
+	return Vector3(parte, de, de + talhao)
+
+
+static func _por(saida: Dictionary, parte: Parte, x: float, talhao: float) -> Array:
+	var chave := _talhao(parte, x, talhao)
+	if not saida.has(chave):
+		saida[chave] = []
+	return saida[chave]
 
 
 ## As plantas de um troco, de tras para a frente, cada uma a escala da fila dela.
@@ -74,15 +118,16 @@ static func plants(canvas: CanvasItem, plantas: PackedFloat32Array) -> void:
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
-## As tres faixas de erva de um troco, e a beira da estrada por cima delas.
-static func _chao(canvas: CanvasItem, s: Dictionary) -> void:
+## As tres faixas de erva de um troco, e a beira da estrada por cima delas, so entre
+## `corte.x` e `corte.y`: as cores vao de uma ponta do troco a outra, cortado ou nao.
+static func _chao(canvas: CanvasItem, s: Dictionary, corte: Vector2) -> void:
 	var span := Vector2(s[Lowland.A], s[Lowland.B])
 	var esq: Array = s[Lowland.ESQ]
 	var dir: Array = s[Lowland.DIR]
 	var escuro: Array = FAIXAS.escuro
 	for i in escuro.size():
-		var pontos := _fronteira(span, i - 1)
-		var baixo := _fronteira(span, i)
+		var pontos := _fronteira(corte, i - 1)
+		var baixo := _fronteira(corte, i)
 		baixo.reverse()
 		pontos.append_array(baixo)
 		var c0 := (esq[WildGround.CAMPO] as Color).darkened(escuro[i])
@@ -94,7 +139,9 @@ static func _chao(canvas: CanvasItem, s: Dictionary) -> void:
 	var linha := float(Band.GROUND_LINE)
 	var t0 := (esq[WildGround.TERRA] as Color).darkened(BEIRA.escuro)
 	var t1 := (dir[WildGround.TERRA] as Color).darkened(BEIRA.escuro)
-	WildGround.band(canvas, span, Vector2(linha, linha), linha + BEIRA.alto, t0, t1)
+	var de := t0.lerp(t1, clampf(inverse_lerp(span.x, span.y, corte.x), 0.0, 1.0))
+	var ate := t0.lerp(t1, clampf(inverse_lerp(span.x, span.y, corte.y), 0.0, 1.0))
+	WildGround.band(canvas, corte, Vector2(linha, linha), linha + BEIRA.alto, de, ate)
 
 
 ## A fronteira de cima da faixa `i + 1`: a linha do chao, uma onda, ou o fundo do ecra.

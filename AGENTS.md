@@ -239,6 +239,7 @@ src/world/fauna_view.gd     FaunaView     os bichos de cenario, a mexer
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
 src/world/synth_sfx.gd      SynthSfx      os sons provisorios, sintetizados aos bocados (ADR 0054, Q-209)
+src/world/synth_take.gd     SynthTake     um som do SynthSfx a fazer-se, amostra a amostra (ADR 0055)
 src/world/sfx_cues.gd       SfxCues       as pistas que ja tocam, iguais a folha de pistas de docs/audio/
 src/world/sfx_director.gd   SfxDirector   ouve o EventBus e toca as pistas; a moeda na obra sobe de tom
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)

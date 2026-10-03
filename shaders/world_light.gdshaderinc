@@ -49,7 +49,12 @@ float luz_limiar(vec2 quadrado) {
 
 // A luz que chega a este pixel: o ambiente, mais o que as luzes la deixam.
 // Chama-se do fragment() com os dois varyings: luz_aqui(ecra_luz, mundo_luz).
+// Sem luz nenhuma no ecra (o dia, ou longe de todas) e so o ambiente: o SceneryLight so
+// manda as que se veem, e cada plano deixa de pagar o dither em cada pixel (03/10/2026).
 vec3 luz_aqui(vec2 ecra, vec2 mundo) {
+	if (luzes <= 0 || alcance <= 0.0) {
+		return min(ambiente, vec3(teto));
+	}
 	vec2 quadrado = floor(mundo / luz_celula);
 	vec2 centro = (quadrado + 0.5) * luz_celula;
 	vec2 p = ecra + (centro - mundo) * escala;

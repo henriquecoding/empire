@@ -15,6 +15,10 @@ const ESCURO := {GameClock.Phase.DAWN: 0.4, GameClock.Phase.DUSK: 0.6, GameClock
 const ESCURECER := 0.25
 ## Antes do primeiro frame o escuro e o da fase, sem transicao.
 const POR_SABER := -1.0
+## Quanto alem do ecra os bichos ainda andam, em px de mundo: quem vai entrar ja vem a
+## mexer, e o resto da regiao fica parado ate a camara chegar (o dono, 03/10/2026: "esta
+## muito lento" — eram 732 bichos a andar e 555 a desenhar por frame, para um terco no ecra).
+const ANDAM := 640.0
 
 var _fauna := Fauna.new()
 var _clock: ClockData
@@ -48,6 +52,7 @@ func _process(delta: float) -> void:
 		_acender(_luzes[faixa], faixa, fase, relogio.phase_progress())
 	var i := SimLoop.units.index_of(Assume.driven())
 	var rei_aqui := i != UnitSystem.NENHUM and int(SimLoop.units.bands[i]) == Band.Kind.SURFACE
+	_fauna.vista = PresentationBounds.of(self).grow(ANDAM)
 	_fauna.tick(delta, SimLoop.units.xs[i] if rei_aqui else 0.0, rei_aqui)
 	queue_redraw()
 
@@ -69,7 +74,12 @@ func _soltar() -> void:
 
 
 func _draw() -> void:
+	var vista := PresentationBounds.of(self)
+	var de := vista.position.x
+	var ate := vista.end.x
 	for b in _fauna.bichos:
+		if b.x < de or b.x > ate:
+			continue
 		var alfa := Fauna.presence(b.kind, _escuro)
 		if b.kind == Wilds.Animal.FIREFLY and b.variant > _enxame:
 			continue

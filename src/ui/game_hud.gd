@@ -32,6 +32,9 @@ const TRACO := {"painel": 2.0, "rodape": 1.0, "contorno": 3}
 const FAIXA_TOPO := 72.0
 
 const AVISO_S := 2.0
+## De quanto em quanto tempo os textos se refazem: o guia e as contas custavam meio ms por
+## frame, e um numero que muda dez vezes por segundo ja se le como imediato (03/10/2026).
+const TEXTO_S := 0.1
 const CEM := 100.0
 const SEM_NUCLEO := -1.0
 
@@ -45,6 +48,7 @@ var _topo: Control
 var _rodape: Control
 var _moldura_aviso: Control
 var _aviso_ate := 0.0
+var _texto_em := 0.0
 var _dispositivo := Glyphs.Device.KEYBOARD
 
 
@@ -105,7 +109,11 @@ func _notification(o_que: int) -> void:
 func _process(delta: float) -> void:
 	if SimLoop.state == null or ClockService.clock == null:
 		return
-	_atualizar()
+	_texto_em -= delta
+	if _texto_em <= 0.0:
+		_texto_em = TEXTO_S
+		_atualizar()
+	_dispor()
 	_aviso_ate = maxf(0.0, _aviso_ate - delta)
 	_aviso.visible = _aviso_ate > 0.0
 	_moldura_aviso.visible = _aviso.visible
@@ -155,6 +163,9 @@ func _atualizar() -> void:
 	var animo := SimLoop.field.spirit.value(ClockService.clock.day)  # Q-102
 	_recursos.text += HudText.extras(archotes, animo, SimLoop.state.royal_seeds)  # Q-095
 	_objectivo.text = GameplayGuide.goal()
+
+
+func _dispor() -> void:
 	_dica.position = Vector2(DICA.x, size.y - DICA.acima)
 	_topo.size = Vector2(size.x, FAIXA_TOPO)
 	_rodape.position = Vector2(0.0, size.y - RODAPE.acima)
