@@ -12,24 +12,29 @@
 # anda em cima dela. A luz e a do cenario (SceneryLight), como o chao de cima. Com o rei
 # la em baixo, o dither_reveal da §60 dissolve-a; com ele ca em cima, volta.
 #
-# O chao, os caminhos e os lagos desenham-se aqui; as plantas, num filho por troco (a
-# Moita), que so se redesenha quando o troco dele muda — quando nasce um segmento, so o
-# dele se faz — e que o motor deixa de fora quando esta longe da camara.
+# O chao, os caminhos e os lagos, e as plantas, desenham-se em talhoes de TALHAO px, um
+# no por talhao e por parte (LowlandArt.parts): so se redesenha o talhao que mudou —
+# quando nasce um segmento, so os dele se fazem — e o motor deixa de fora os que estao
+# longe da camara. Era um no so com o chao do mundo inteiro: 220 draw calls por frame.
 class_name SoilCover
 extends Node2D
 
 
-## As plantas de um troco. Usa o material do pai: o dither e o mesmo.
-class Moita:
+## Uma parte de um talhao. Usa o material do pai: o dither e o mesmo.
+class Talhao:
 	extends Node2D
 
-	var plantas := PackedFloat32Array()
+	var parte := LowlandArt.Parte.CHAO
+	var dados: Array = []
 
 	func _draw() -> void:
-		LowlandArt.plants(self, plantas)
+		LowlandArt.draw_part(self, parte, dados)
 
 
 const MAX_WINDOWS := 32
+## A largura de um talhao, em px de mundo: um multiplo do passo das faixas de erva, para o
+## corte cair num ponto que a faixa ja tinha. Um ecra e pouco mais de um talhao.
+const TALHAO := 1024.0
 const SHADER := "res://shaders/dither_reveal.gdshader"
 
 ## Quanto o corte de solo se ve agora, de 0 a 1: e o que a boca da passagem e os golpes
@@ -43,7 +48,9 @@ var _dither: ShaderMaterial
 var _chave: Array = []
 var _terra: Dictionary = {}
 var _cache: Dictionary = {}
-var _moitas: Dictionary = {}
+## Um no por parte, pela ordem em que se pintam; e os talhoes, por Vector3(parte, de, ate).
+var _partes: Array[Node2D] = []
+var _talhoes: Dictionary = {}
 
 
 ## Quanto do corte de solo se ve: 0 tapado, 1 aberto.
@@ -76,6 +83,11 @@ func _ready() -> void:
 	_dither.shader = load(SHADER)
 	_dither.set_shader_parameter(&"matrix", SoilReveal.matrix())
 	material = _dither
+	for _parte: int in LowlandArt.Parte.values():
+		var no := Node2D.new()
+		no.use_parent_material = true
+		add_child(no)
+		_partes.append(no)
 
 
 func _exit_tree() -> void:
@@ -137,27 +149,19 @@ func _refazer() -> void:
 	var regiao := SimLoop.state.region
 	var largura := SimLoop.world_width
 	_terra = Lowland.of(terras, largura, regiao, Wilds.biome_now(), Lowland.avoided(), _cache)
-	var trocos: Array = _terra[Lowland.TROCOS]
-	var plantas: Array = _terra[Lowland.PLANTAS]
-	var vistas := {}
-	for i in trocos.size():
-		var onde: float = trocos[i][Lowland.A]
-		vistas[onde] = true
-		if not _moitas.has(onde):
-			var nova := Moita.new()
-			nova.use_parent_material = true
-			add_child(nova)
-			_moitas[onde] = nova
-		var moita: Moita = _moitas[onde]
-		if moita.plantas != plantas[i]:
-			moita.plantas = plantas[i]
-			moita.queue_redraw()
-	for onde: float in _moitas.keys():
-		if not vistas.has(onde):
-			(_moitas[onde] as Moita).queue_free()
-			_moitas.erase(onde)
-	queue_redraw()
-
-
-func _draw() -> void:
-	LowlandArt.ground(self, _terra)
+	var partes := LowlandArt.parts(_terra, TALHAO)
+	for chave: Vector3 in partes:
+		var talhao: Talhao = _talhoes.get(chave)
+		if talhao == null:
+			talhao = Talhao.new()
+			talhao.parte = int(chave.x) as LowlandArt.Parte
+			talhao.use_parent_material = true
+			_partes[int(chave.x)].add_child(talhao)
+			_talhoes[chave] = talhao
+		if talhao.dados != partes[chave]:
+			talhao.dados = partes[chave]
+			talhao.queue_redraw()
+	for chave: Vector3 in _talhoes.keys():
+		if not partes.has(chave):
+			(_talhoes[chave] as Talhao).queue_free()
+			_talhoes.erase(chave)

@@ -1,15 +1,12 @@
 # src/world/fauna.gd — os bichos de cenario de uma regiao, e o que cada um faz.
 #
-# Nao sao as criaturas da Podridao nem a caca do HuntingSystem: essas estao na
-# simulacao. Estes sao cenario que se mexe, e nada do que fazem toca no jogo.
-# Quatro maneiras de estar vivo:
-#   · POISO — o pardal no arbusto. O rei chega perto, ele levanta voo para longe
-#     e, quando o rei se vai, volta ao mesmo arbusto (Kingdom Two Crowns).
+# Nao sao as criaturas da Podridao nem a caca do HuntingSystem: sao cenario que se
+# mexe, e nada do que fazem toca no jogo. Quatro maneiras de estar vivo:
+#   · POISO — o pardal no arbusto: o rei chega, voa, e volta ao mesmo (Kingdom).
 #   · CHAO  — o corvo no caminho: anda, para, e se o rei vem, voa e pousa longe.
 #   · PAIRA — borboleta, pirilampo, morcego, gaivota: um oito a volta de casa.
 #   · BANDO — os passaros do ceu, pelo Flock.
-# As decisoes (parar ou andar, para onde) saem do RngService.scatter() com a
-# chave do bicho e o numero da decisao: nada de fluxo gasto.
+# As decisoes saem do RngService.scatter(), com a chave do bicho: nada de fluxo gasto.
 class_name Fauna
 extends RefCounted
 
@@ -20,8 +17,7 @@ const DIA := 1
 const NOITE := 2
 const SEMPRE := 3
 
-## Por bicho, na ordem do Wilds.Animal: como vive, quando, e a que alturas tem
-## casa (y de mundo; o pardal tira-a do arbusto e o corvo do chao).
+## Por bicho (Wilds.Animal): como vive, quando, e a que y tem casa (o pardal e o corvo nao).
 const MODO := [Modo.POISO, Modo.CHAO, Modo.PAIRA, Modo.PAIRA, Modo.BANDO, Modo.PAIRA, Modo.PAIRA]
 const TURNO := [DIA, DIA, DIA, NOITE, DIA, SEMPRE, DIA]
 ## A faixa de cada um (Band.Kind: 0 ar, 1 superficie, 2 subsolo), para a luz.
@@ -51,8 +47,7 @@ const PE := {"anda": 16.0, "roda": 70.0}
 const ARBUSTO_ALTO := 20.0
 ## Pastar ou andar: abaixo de `parar` fica, acima anda. A espera e em segundos.
 const DECISAO := {"parar": 0.45, "min": 1.5, "max": 6.0}
-## Fugir leva a `alcance` vezes o medo, e dura `segundos`; voa-se a `subida`
-## px/s ate `teto` (y de mundo).
+## Fugir leva a `alcance` vezes o medo e dura `segundos`; sobe a `subida` px/s ate `teto`.
 const FUGA := {"alcance": 2.0, "segundos": 3.0, "subida": 80.0, "teto": 330.0, "volta": 0.6}
 ## O rumo do bando: da volta a regiao devagar, a meia altura do ceu.
 const RUMO := {"ritmo": 0.035, "largo": 0.42, "alto": 170.0, "onda": 40.0}
@@ -81,6 +76,7 @@ class Bicho:
 
 var bichos: Array[Bicho] = []
 var bando := Flock.new()
+var vista := PresentationBounds.TUDO  # so anda quem esta perto do ecra; o bando, aos saltos
 var _tempo := 0.0
 var _centro := 0.0
 var _largura := 0.0
@@ -116,8 +112,12 @@ func tick(delta: float, rei_x: float, rei_aqui: bool) -> void:
 			_centro + sin(_tempo * RUMO.ritmo * TAU) * _largura * RUMO.largo,
 			RUMO.alto + sin(_tempo * RUMO.ritmo * TAU * 2) * RUMO.onda
 		)
-		bando.step(delta, rumo)
+		bando.advance(delta, rumo, vista)
+	var de := vista.position.x
+	var ate := vista.end.x
 	for b in bichos:
+		if b.flock_index < 0 and (b.x < de or b.x > ate):
+			continue
 		match int(MODO[b.kind]):
 			Modo.POISO:
 				_poiso(b, ESPANTO[b.kind], delta, rei_x, rei_aqui)

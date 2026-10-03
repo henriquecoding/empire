@@ -74,6 +74,15 @@ const DESFASE_ONDA := 0.6
 ## O golpe a bater vai ate aqui (StrikePose.SEGUE do pesado).
 const GOLPE := 0.6
 const MEIO := 0.5
+## As poses ja rasterizadas (BeastPen.record), pela forma e pelos sinais em 1/PASSOS da
+## amplitude: um sinal de k pixeis mexe de k/PASSOS em k/PASSOS, abaixo de meio px de
+## mundo. Um enxame de Rastejantes era rasterizado traco a traco, criatura a criatura e
+## frame a frame — 0,3 ms cada um, medido a 03/10/2026; agora a pose faz-se uma vez.
+const PASSOS := 16
+const LADO_CHAVE := 33
+const POSES_MAX := 4096
+
+static var _poses: Dictionary = {}
 
 
 static func handles(forma: Silhouette.Form) -> bool:
@@ -139,9 +148,20 @@ static func _corpo(
 	pen: BeastPen, forma: Silhouette.Form, t: float, anda: float, golpe: float
 ) -> void:
 	var sinais := signals(forma, t, anda, golpe)
+	var chave := int(forma)
+	for k in sinais.size():
+		var degrau := roundi(sinais[k] * PASSOS)
+		sinais[k] = float(degrau) / PASSOS
+		chave = chave * LADO_CHAVE + degrau + PASSOS
 	var subida: Vector2 = SUBIDA.get(forma, Vector2.ZERO)
 	pen.subida = subida.y * sinais[int(subida.x)]
-	pen.strokes(strokes(forma), sinais)
+	var gravado: Array = _poses.get(chave, [])
+	if gravado.is_empty():
+		if _poses.size() >= POSES_MAX:
+			_poses.clear()
+		gravado = pen.record(strokes(forma), sinais)
+		_poses[chave] = gravado
+	pen.replay(gravado)
 
 
 ## Os sinais de um instante (BeastPen.Sinal): o passo e o contra-passo so a andar,

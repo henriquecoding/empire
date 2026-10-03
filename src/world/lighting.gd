@@ -34,13 +34,27 @@ const TETO := 1.6
 const CORPO := 24.0
 
 ## O que o olho ve da hora do dia (§22 degrau 3, ADR 0048). Igual em todo o ecra.
-var ambient: Color = Color.WHITE
+var ambient: Color = Color.WHITE:
+	set(cor):
+		ambient = cor
+		_visto_x = NAN
 ## Quanto as luzes contam: 0 ao meio-dia, 1 na noite funda. Uma fogueira ao sol
 ## nao alumia nada que se veja.
-var dark := 0.0
+var dark := 0.0:
+	set(escuro):
+		dark = escuro
+		_visto_x = NAN
 ## As luzes desta faixa, ja a cintilar (LightField).
-var glows: Array[Glow] = []
+var glows: Array[Glow] = []:
+	set(lista):
+		glows = lista
+		_visto_x = NAN
 var _chao := float(Band.GROUND_LINE)
+## A luz do ultimo x que um corpo pediu: um sprite pede-a uma vez por rectangulo, todos
+## no mesmo x, e cada pedido percorria as luzes todas duas vezes (03/10/2026).
+var _visto_x := NAN
+var _visto_luz := Color.WHITE
+var _visto_perto := 0.0
 
 
 ## O ambiente da fase. `progresso` e o phase_progress() do relogio.
@@ -58,6 +72,7 @@ func light(dados: ClockData, faixa: int, fase: int, progresso: float) -> void:
 func set_glows(lista: Array[Glow], chao: float) -> void:
 	glows = lista
 	_chao = chao
+	_visto_x = NAN
 
 
 ## 0 com o dia inteiro, 1 com o olho no piso da noite.
@@ -109,8 +124,11 @@ func reach(x: float) -> float:
 ## aproxima de uma luz recupera a cor, e e isso que faz da luz o assunto da
 ## noite em vez de um efeito.
 func body(cor: Color, x: float) -> Color:
-	var iluminado := WorldPalette.tint(cor, on(x))
-	return WorldPalette.SILHUETA.lerp(iluminado, maxf(ambient.v, reach(x)))
+	if x != _visto_x:  # NAN nunca e igual: o primeiro pedido, ou a luz mudou
+		_visto_x = x
+		_visto_luz = on(x)
+		_visto_perto = maxf(ambient.v, reach(x))
+	return WorldPalette.SILHUETA.lerp(WorldPalette.tint(cor, _visto_luz), _visto_perto)
 
 
 ## A luz de uma LUZ: ela propria, a qualquer hora. Existe como funcao e nao como

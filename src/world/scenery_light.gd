@@ -18,6 +18,9 @@ enum Depth { SKY, FAR, MID, GROUND, BELOW }
 
 const SHADER := preload("res://shaders/world_light.gdshader")
 const MAX_LUZES := 16
+## Ate onde, em raios, uma luz ainda chega a um pixel: o bordo dissolve-se um pouco
+## para la do raio (o `dissolve` do shader), e isto e com folga.
+const ALCANCE := 1.5
 ## Por plano: quanto as luzes chegam (x) e quantas vezes leva a razao do chao (y).
 ## Greybox, como as alturas do Silhouette (Q-079): sao a composicao, nao o jogo.
 const PLANOS := {
@@ -56,7 +59,8 @@ static func refresh(no: CanvasItem) -> void:
 	var relogio := ClockService.clock
 	var sup := int(Band.Kind.SURFACE)
 	_luz.light(_clock, sup, int(relogio.current_phase()), relogio.phase_progress())
-	_comum = uniforms(_luz, no.get_viewport_transform())  # com a escala do ecra
+	var transformada := no.get_viewport_transform()  # com a escala do ecra
+	_comum = uniforms(_luz, transformada, transformada * PresentationBounds.of(no))
 	_comum[&"luz_celula"] = float(SimFactory.rot_profile().lantern_dither_px)  # §80: 2 px
 	for plano: Depth in _materiais:
 		feed(_materiais[plano], plano)
@@ -77,8 +81,12 @@ static func feed(alvo: ShaderMaterial, plano: Depth) -> void:
 
 
 ## As luzes de uma Lighting, postas em px de ecra pela transformada do canvas. E
-## publica porque e a conta que se testa: o shader so a aplica.
-static func uniforms(luz: Lighting, canvas: Transform2D) -> Dictionary:
+## publica porque e a conta que se testa: o shader so a aplica. So vao as que se veem:
+## cada pixel de cada plano percorre a lista, e de dia (forca zero) ou fora do `ecra`
+## uma luz custava o mesmo e nao dava nada (o dono, 03/10/2026: "esta muito lento").
+static func uniforms(
+	luz: Lighting, canvas: Transform2D, ecra := PresentationBounds.TUDO
+) -> Dictionary:
 	var onde := PackedVector4Array()
 	var nucleo := PackedVector3Array()
 	var meio := PackedVector3Array()
@@ -89,17 +97,21 @@ static func uniforms(luz: Lighting, canvas: Transform2D) -> Dictionary:
 		if onde.size() >= MAX_LUZES or glow.stops.size() < WorldLight.PARAGENS:
 			break
 		var p := canvas * glow.center
-		onde.append(Vector4(p.x, p.y, glow.radius * escala, glow.strength * forca))
+		var raio := glow.radius * escala
+		if glow.strength * forca <= 0.0 or not ecra.grow(raio * ALCANCE).has_point(p):
+			continue
+		onde.append(Vector4(p.x, p.y, raio, glow.strength * forca))
 		bordo.append(_vec(glow.stops[0]))
 		meio.append(_vec(glow.stops[1]))
 		nucleo.append(_vec(glow.stops[2]))
+	var acesas := onde.size()
 	while onde.size() < MAX_LUZES:  # o shader declara 16: um array mais curto nao chega la
 		onde.append(Vector4.ZERO)
 		nucleo.append(Vector3.ZERO)
 		meio.append(Vector3.ZERO)
 		bordo.append(Vector3.ZERO)
 	return {
-		&"luzes": mini(luz.glows.size(), MAX_LUZES),
+		&"luzes": acesas,
 		&"onde": onde,
 		&"nucleo": nucleo,
 		&"meio": meio,

@@ -201,6 +201,11 @@
 ## As moedas que se vêem — 02/10/2026 (ADR 0050)
 
 ### Q-192 · A moeda grande, com física e com cara de moeda; a coroa que cai
+- **Pedido do dono (03/10/2026, depois do painel):** *«diminua o tamanho da moeda em 30%»*. **Aplicado (ADR 0054):** a
+  moeda, a pilha e o saco em pixeis de 2,8 (`CoinArt.MOEDA`, 70 % do `CoinArt.CHAO`): a moeda de 36 para 25,2 px. A coroa
+  não é moeda e fica nos 60 px. A física não muda. E a moeda passou a desenhar-se por cima de quem anda: largada aos
+  pés do rei, ficava por trás dele e do escudeiro, e o saco esvaziava sem se ver moeda nenhuma (*«a moeda não está sendo
+  dropada»*). Teste: `tests/coin_art_test.gd`, `tests/desempenho_test.gd`.
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Quero que o tamanho seja o dobro do atual, a física atual já está boa»*.
 - **Aplicado (03/10/2026, ADR 0053):** a moeda, a pilha, o saco e a coroa no chão em pixeis de 4 (`CoinArt.CHAO`): a moeda de 36 px, a coroa de 60. A física fica. Teste: `tests/coin_art_test.gd`.
 - **Pedido do dono (02/10/2026):** *«as moedas e itens que são dropados devem ser bem grandes para serem bem vistos como é

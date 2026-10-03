@@ -5,8 +5,9 @@
 # "as moedas e itens que sao dropados devem ser bem grandes para serem bem vistos
 # como e em Kingdom, e devem ter fisica e parecer-se com o que sao".
 #
-# Aqui e uma moeda: um disco de ouro de 36 px em pixeis de 4 (o dobro, Q-192) — o aro
-# escuro, a face, o brilho de cima e a sombra de baixo, e um cunho ao meio. Gira no ar
+# Aqui e uma moeda: um disco de ouro de 25 px em pixeis de 2,8 (o dobro da Q-192, e depois
+# menos 30 %) — o aro escuro, a face, o brilho de cima e a sombra de baixo, e um cunho ao
+# meio. Gira no ar
 # (a largura da face vem do CoinBounce) e, de lado, e so o aro. Duas a nove moedas juntas sao uma
 # PILHA de moedas deitadas; dez ou mais sao um SACO. No chao, de vez em quando, a
 # moeda pisca — e esse brilho nao leva luz, como uma chama (§80): e por ele que se
@@ -22,6 +23,9 @@ const PIXEL := 2.0
 ## O pixel do que cai no chao: o dobro do PIXEL. O dono, a 03/10/2026 (Q-192): "quero
 ## que o tamanho seja o dobro do atual". O preco (PriceTag) continua no PIXEL.
 const CHAO := 4.0
+## O pixel da moeda, da pilha e do saco: 70 % do CHAO. O dono, a 03/10/2026: "diminua o
+## tamanho da moeda em 30%" — de 36 px para 25,2. A coroa (CrownView) fica no CHAO.
+const MOEDA := 2.8
 ## A moeda de pe, de frente: aro (#), face (o), brilho (+), sombra (.), cunho (=); o
 ## espaco e vazio.
 const FACE := [
@@ -94,7 +98,7 @@ static func size_of(quantia: int) -> Vector2:
 	var alto := float(mapa.size())
 	if quantia > 1 and quantia < SACO_DE:
 		alto += PILHA_PASSO * float(mini(quantia, PILHA_MAX) - 1)
-	return Vector2(float(String(mapa[0]).length()), alto) * CHAO
+	return Vector2(float(String(mapa[0]).length()), alto) * MOEDA
 
 
 ## Uma moeda (ou pilha, ou saco) com o pe em `pe`. `face` e a largura que se ve (1
@@ -106,19 +110,19 @@ static func draw_on(
 	var tons := tones(cor)
 	if quantia > 1 and quantia < SACO_DE:
 		for k in mini(quantia, PILHA_MAX):
-			var desvio := float(PILHA_DESVIO[k % PILHA_DESVIO.size()]) * CHAO
-			var em := pe + Vector2(desvio, -PILHA_PASSO * CHAO * float(k))
-			paint(canvas, em, mapa, 1.0, tons, CHAO)
+			var desvio := float(PILHA_DESVIO[k % PILHA_DESVIO.size()]) * MOEDA
+			var em := pe + Vector2(desvio, -PILHA_PASSO * MOEDA * float(k))
+			paint(canvas, em, mapa, 1.0, tons, MOEDA)
 	elif face < DE_LADO and quantia <= 1:
-		var alto := float(FACE.size()) * CHAO
-		canvas.draw_rect(Rect2(pe - Vector2(CHAO * MEIO, alto), Vector2(CHAO, alto)), tons["#"])
+		var alto := float(FACE.size()) * MOEDA
+		canvas.draw_rect(Rect2(pe - Vector2(MOEDA * MEIO, alto), Vector2(MOEDA, alto)), tons["#"])
 	elif quantia >= SACO_DE:
-		paint(canvas, pe, mapa, 1.0, tons, CHAO)  # um saco nao gira: tomba
+		paint(canvas, pe, mapa, 1.0, tons, MOEDA)  # um saco nao gira: tomba
 	else:
-		paint(canvas, pe, mapa, maxf(face, DE_LADO), tons, CHAO)
+		paint(canvas, pe, mapa, maxf(face, DE_LADO), tons, MOEDA)
 	if brilho > 0.0:
 		var topo := pe - Vector2(size_of(quantia).x * MEIO * MEIO, size_of(quantia).y * MEIO)
-		sparkle(canvas, topo, brilho, CHAO)
+		sparkle(canvas, topo, brilho, MOEDA)
 
 
 ## Quanto brilha agora uma moeda pousada (0 a 1): de BRILHO.cada em BRILHO.cada
@@ -178,13 +182,13 @@ static func paint(
 
 
 ## Os trocos da mesma letra numa linha do mapa: (inicio, largura, 0). Calcula-se uma
-## vez por mapa e fica.
+## vez por linha e fica — pelo texto dela, que e tudo o que a conta le: formatar uma chave
+## por linha, por moeda e por frame custava mais do que a conta (03/10/2026).
 static func _linha(mapa: Array, linha: int) -> Array[Vector3i]:
-	var chave := "%d:%s" % [linha, mapa[linha]]
-	if _spans.has(chave):
-		return _spans[chave]
-	var spans: Array[Vector3i] = []
 	var texto := String(mapa[linha])
+	if _spans.has(texto):
+		return _spans[texto]
+	var spans: Array[Vector3i] = []
 	var i := 0
 	while i < texto.length():
 		var j := i
@@ -193,5 +197,5 @@ static func _linha(mapa: Array, linha: int) -> Array[Vector3i]:
 		if texto[i] != " ":
 			spans.append(Vector3i(i, j - i, 0))
 		i = j
-	_spans[chave] = spans
+	_spans[texto] = spans
 	return spans
