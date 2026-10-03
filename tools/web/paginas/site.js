@@ -156,10 +156,21 @@
       if (!parado && t - f.inicio >= f.dura * 0.4) carregar(fases[(fases.indexOf(f) + 1) % fases.length].id);
       if (f.id === ativa) return;
       carregar(f.id);
-      quadros[ativa].classList.remove("ativo");
-      quadros[ativa].setAttribute("aria-hidden", "true");
-      quadros[f.id].classList.add("ativo");
-      quadros[f.id].removeAttribute("aria-hidden");
+      // O que sai fica à vista por baixo do que entra até este ter chegado (e
+      // acabado de aparecer): saltar para uma fase ainda por descarregar não
+      // deixa o palco às escuras, nem com o movimento reduzido.
+      var sai = quadros[ativa], entra = quadros[f.id];
+      Object.keys(quadros).forEach(function (k) { quadros[k].classList.remove("anterior"); });
+      sai.classList.remove("ativo");
+      sai.classList.add("anterior");
+      sai.setAttribute("aria-hidden", "true");
+      entra.classList.add("ativo");
+      entra.removeAttribute("aria-hidden");
+      var largar = function () {
+        setTimeout(function () { if (!sai.classList.contains("ativo")) sai.classList.remove("anterior"); }, reduz ? 0 : 1100);
+      };
+      if (entra.complete && entra.naturalWidth) largar();
+      else entra.addEventListener("load", largar, { once: true });
       ativa = f.id;
       agora.textContent = fmt(palco.dataset.agora, { dia: 1, fase: f.nome });
     }

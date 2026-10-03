@@ -257,6 +257,11 @@ const semRotulo = (s) => s.replace(/^[^·]+·\s*/, "");
 // o papel, o companheiro, o que faz de base e a evolução — o texto do
 // strings.csv, com os números da classe dele no classes.csv, preenchidos pela
 // mesma regra. Um monarca novo no monarchs.csv aparece no site sozinho.
+//
+// O que depende de um campo em `_proposed` não se publica como decidido
+// (AGENTS.md, regra 10): a base ou a evolução que leiam um número por aprovar —
+// ou que sejam de um monarca cuja classe ainda é proposta — saem `null`, e a
+// página diz «por decidir». Aprovado o campo, o texto do jogo aparece sozinho.
 function monarcas(raiz) {
   const falas = Object.fromEntries(lerCsv(raiz, "data/i18n/strings.csv").map((l) => [l.keys, l]));
   const classes = Object.fromEntries(lerCsv(raiz, "data/source/classes.csv").map((c) => [c.id, c]));
@@ -273,13 +278,23 @@ function monarcas(raiz) {
     const p1 = parametros(c.phase1_params), p2 = parametros(c.phase2_params);
     const pc = (x) => Math.round((x || 0) * 100);
     const sem = (t) => ({ pt: semRotulo(t.pt), en: semRotulo(t.en) });
+    const propostos = new Set(String(c._proposed || "").split("|").filter(Boolean));
+    const classePorAprovar = String(m._proposed || "").split("|").includes("skill_class");
+    const decidido = (chave, campos) => {
+      const usa = /\{\w+\}/.test(falas[chave]?.pt_PT || "");
+      return !(usa && (classePorAprovar || campos.some((k) => propostos.has(k))));
+    };
+    const baseKey = `MONARCH_BASE_${id}`, evoKey = `MONARCH_EVOLVED_${id}`;
+    const evoCampos = ["phase2_params", "evolve_seed_cost", "evolve_condition", "evolve_condition_value"];
     return {
       id: m.id,
       nome: texto(m.display_key),
       papel: texto(`MONARCH_ROLE_${id}`),
-      base: sem(texto(`MONARCH_BASE_${id}`, { defense: pc(p1.defense) })),
+      base: decidido(baseKey, ["phase1_params"]) ? sem(texto(baseKey, { defense: pc(p1.defense) })) : null,
       companheiro: sem(texto(`MONARCH_COMPANION_${id}`)),
-      evolucao: sem(texto(`MONARCH_EVOLVED_${id}`, { defense: pc(p2.defense), seeds: c.evolve_seed_cost, feat: c.evolve_condition_value })),
+      evolucao: decidido(evoKey, evoCampos)
+        ? sem(texto(evoKey, { defense: pc(p2.defense), seeds: c.evolve_seed_cost, feat: c.evolve_condition_value }))
+        : null,
     };
   });
   if (!lista.length) falha("monarchs.csv: não há monarcas");

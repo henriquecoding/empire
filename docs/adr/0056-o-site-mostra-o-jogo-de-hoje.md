@@ -37,7 +37,9 @@ diferença numa frase, e ler-se na diagonal — rótulos curtos, cartões, nada 
    JavaScript, o dia fica parado na manhã e não se descarregam cinco imagens que ninguém vê.
 3. **Os monarcas lêem-se do ecrã de escolha do jogo**: o título, a introdução e a regra (`MONARCH_CHOOSE_*`), e o
    papel, a base, o companheiro e a evolução de cada um, com os números do `classes.csv` preenchidos pela mesma regra
-   do `class_selection.gd`. Um monarca novo no `monarchs.csv` aparece sozinho.
+   do `class_selection.gd`. Um monarca novo no `monarchs.csv` aparece sozinho. O que lê um campo em `_proposed` — hoje,
+   as três condições de evolução e a classe da Nia e do Imperador Arqueiro — não se publica como decidido (regra 10):
+   o cartão diz «por decidir», e o texto do jogo aparece sozinho quando o campo for aprovado.
 4. **O povo de partida é o do segmento onde a partida começa** (`SimFactory.SEGMENTO_DE_PARTIDA`), e a construção
    chumba se não for exatamente um. **O roxo é do Lume e o âmbar do fogo**, os dois do `rot.csv`.
 5. **As últimas decisões são as últimas ADR**, lidas de `docs/adr/` com o título e a data: o diário do projeto que
@@ -45,7 +47,8 @@ diferença numa frase, e ler-se na diagonal — rótulos curtos, cartões, nada 
 6. **Uma letra para a interface.** A IBM Plex Mono passa a fazer os botões, os rótulos, o menu e os números; a
    Silkscreen, de píxel, fica no nome e no 404 — em corpo 12, maiúsculas e espaçada, era um efeito que não se lia. O
    topo é escuro com qualquer tema, como a abertura que vem a seguir.
-7. **O portão mede o que a página nova diz**: os monarcas e o texto deles, o povo de partida, o âmbar, uma tecla ou
+7. **O portão mede o que a página nova diz**: os monarcas e o texto deles (e quantos ficam por decidir), o povo de
+   partida, o âmbar, uma tecla ou
    um botão por acção, as últimas ADR, o ecrã na língua da página, e as fotografias pedidas a pedido entram na
    conferência das ligações.
 

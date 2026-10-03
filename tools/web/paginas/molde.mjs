@@ -249,14 +249,17 @@ function monarcas({ t, d }) {
   const s = t.monarcas;
   const l = lingua(t);
   const m = d.monarcas;
+  // `null` é um texto que lê um número ainda em `_proposed` (dados.mjs): diz-se
+  // que está por decidir, e não se publica a proposta como se fosse o jogo.
+  const dd = (x) => (x ? `<dd>${esc(x[l])}</dd>` : `<dd class="por-decidir">${s.por_decidir}</dd>`);
   const cartoes = m.lista.map((x, i) => `<li class="monarca">
         <p class="monarca-n">${COROA}<span>${fmt(s.ordem, { n: i + 1 })}</span></p>
         <h3>${esc(x.nome[l])}</h3>
         <p class="monarca-papel">${esc(x.papel[l])}</p>
         <dl>
-          <div><dt>${s.base}</dt><dd>${esc(x.base[l])}</dd></div>
-          <div><dt>${s.companheiro}</dt><dd>${esc(x.companheiro[l])}</dd></div>
-          <div><dt>${s.evolucao}</dt><dd>${esc(x.evolucao[l])}</dd></div>
+          <div><dt>${s.base}</dt>${dd(x.base)}</div>
+          <div><dt>${s.companheiro}</dt>${dd(x.companheiro)}</div>
+          <div><dt>${s.evolucao}</dt>${dd(x.evolucao)}</div>
         </dl>
       </li>`).join("\n      ");
   return `<section class="secao secao-alt" id="monarcas" aria-labelledby="monarcas-t">

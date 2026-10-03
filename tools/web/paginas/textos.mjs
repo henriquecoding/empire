@@ -68,7 +68,8 @@ export const TEXTOS = {
       base: "Como joga",
       companheiro: "Companheiro",
       evolucao: "Evolução",
-      fonte: "O texto é o do ecrã de escolha do jogo (strings.csv), com os números de cada classe no classes.csv — lido em cada publicação.",
+      por_decidir: "Por decidir: a condição ainda é uma proposta, à espera de aprovação.",
+      fonte: "O texto é o do ecrã de escolha do jogo (strings.csv), com os números de cada classe no classes.csv — lido em cada publicação. O que depende de um número ainda proposto fica por decidir.",
     },
     dia: {
       n: "Dia e noite",
@@ -290,7 +291,8 @@ export const TEXTOS = {
       base: "How they play",
       companheiro: "Companion",
       evolucao: "Evolution",
-      fonte: "The text is the game's own choice screen (strings.csv), with each class's numbers from classes.csv — read on every publish.",
+      por_decidir: "To be decided: the requirement is still a proposal awaiting approval.",
+      fonte: "The text is the game's own choice screen (strings.csv), with each class's numbers from classes.csv — read on every publish. Anything that depends on a number still under proposal is left to be decided.",
     },
     dia: {
       n: "Day and night",

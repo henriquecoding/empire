@@ -460,6 +460,7 @@ async function main() {
       ambar: document.querySelector(".ex-ambar code")?.textContent,
       monarcas: [...document.querySelectorAll(".monarca h3")].map((e) => e.textContent.trim()),
       monarcasTexto: [...document.querySelectorAll(".monarca dd")].map((e) => e.textContent.trim()),
+      porDecidir: document.querySelectorAll(".monarca dd.por-decidir").length,
       teclas: [...document.querySelectorAll(".teclas-tabela tbody tr")].map((tr) => [...tr.querySelectorAll("td")].slice(0, 2).map((td) => td.textContent.trim())),
       decisoes: [...document.querySelectorAll(".decisoes .adr-n")].map((e) => e.textContent.trim()),
       ecra: document.querySelector(".ecra img")?.getAttribute("src"),
@@ -475,6 +476,9 @@ async function main() {
     resultado("os monarcas são os do monarchs.csv, pela ordem dele", pag.monarcas.join() === d.monarcas.lista.map((m) => m.nome.pt).join(), pag.monarcas.join());
     resultado("e o texto deles é o do ecrã de escolha, sem marcadores por preencher",
       pag.monarcasTexto.length === d.monarcas.lista.length * 3 && pag.monarcasTexto.every((x) => x && !/[{}]/.test(x)), pag.monarcasTexto.find((x) => /[{}]/.test(x)) || "");
+    const porDecidir = d.monarcas.lista.flatMap((m) => [m.base, m.companheiro, m.evolucao]).filter((x) => !x).length;
+    resultado(`o que lê um número em _proposed não se publica: ${porDecidir} «por decidir» (AGENTS.md, regra 10)`,
+      pag.porDecidir === porDecidir, String(pag.porDecidir));
     resultado("cada acção da tabela tem pelo menos uma tecla ou um botão do project.godot",
       pag.teclas.every(([t, c]) => t !== "—" || c !== "—"), JSON.stringify(pag.teclas.find(([t, c]) => t === "—" && c === "—")));
     resultado("as últimas decisões são as últimas ADR de docs/adr/", pag.decisoes.join() === d.decisoes.map((x) => `ADR ${x.n}`).join(), pag.decisoes.join());
