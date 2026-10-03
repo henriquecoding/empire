@@ -27,10 +27,12 @@
 //   12 · PRIVACIDADE — nenhuma página pede nada a outra origem (§32).
 //   13 · CSP — cada página tem a sua, e nenhuma é violada.
 //   14 · AS DUAS LÍNGUAS — a mesma forma: as mesmas secções, os mesmos cartões.
-//   15 · OS DADOS — o que a página diz é o que o repositório tem.
+//   15 · OS DADOS — o que a página diz é o que o repositório tem: o dia, os
+//        tickets, os povos e o de partida, os monarcas do ecrã de escolha, as
+//        falas, as duas exceções da noite, os controlos e as últimas ADR.
 //   16 · O DIA — pausa (WCAG 2.2.2), deslizador pelo teclado, um quadro só à vista.
 //   17 · O MENU — num ecrã estreito abre, fecha e fecha com Esc.
-//   18 · A CANDEIA — as contas do instrumento são as do rot.csv.
+//   18 · O LUME — as contas do instrumento são as do rot.csv (a candeia, ADR 0034).
 //   19 · ORÇAMENTO — o peso da página de entrada, e o do caminho crítico.
 //
 //   node tools/web/verificar_site.mjs [build/site]
@@ -220,7 +222,8 @@ async function main() {
     await p.goto(base + rota, { waitUntil: "load" });
     const refs = await p.evaluate(() => ({
       hrefs: [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")),
-      srcs: [...document.querySelectorAll("[src], link[href]")].map((e) => e.getAttribute("src") || e.getAttribute("href")),
+      // As fotografias da abertura que o site.js pede a meio do dia vêm em data-src.
+      srcs: [...document.querySelectorAll("[src], [data-src], link[href]")].map((e) => e.getAttribute("src") || e.dataset.src || e.getAttribute("href")),
       ids: [...document.querySelectorAll("[id]")].map((e) => e.id),
     }));
     const internos = [...new Set([...refs.hrefs, ...refs.srcs])].filter((h) => h && h.startsWith("/"));
@@ -428,7 +431,8 @@ async function main() {
       await p.goto(base + rota, { waitUntil: "load" });
       const f = await p.evaluate(() => ({
         seccoes: [...document.querySelectorAll("main > section")].map((s) => s.id || s.className),
-        contas: [".pilares li", ".cartao-fase", ".povo", ".teclas-tabela tbody tr", ".cela", ".roteiro li", ".perguntas details", ".falas li", ".numero"]
+        contas: [".pilares li", ".monarca", ".cartao-fase", ".cartao-fase .mini", ".povo", ".verbo", ".teclas-tabela tbody tr", ".cela", ".roteiro li",
+          ".decisoes li", ".perguntas details", ".falas li", ".numero"]
           .map((s) => `${s}=${document.querySelectorAll(s).length}`),
       }));
       await ctx.close();
@@ -453,16 +457,31 @@ async function main() {
       hoje: [...document.querySelectorAll(".povo.hoje h3")].map((e) => e.textContent.trim()),
       falas: [...document.querySelectorAll(".falas q")].map((e) => e.textContent.trim()),
       violeta: document.querySelector(".ex-violeta code")?.textContent,
+      ambar: document.querySelector(".ex-ambar code")?.textContent,
+      monarcas: [...document.querySelectorAll(".monarca h3")].map((e) => e.textContent.trim()),
+      monarcasTexto: [...document.querySelectorAll(".monarca dd")].map((e) => e.textContent.trim()),
+      teclas: [...document.querySelectorAll(".teclas-tabela tbody tr")].map((tr) => [...tr.querySelectorAll("td")].slice(0, 2).map((td) => td.textContent.trim())),
+      decisoes: [...document.querySelectorAll(".decisoes .adr-n")].map((e) => e.textContent.trim()),
+      ecra: document.querySelector(".ecra img")?.getAttribute("src"),
     }));
     resultado(`o dia tem ${d.relogio.dia} s, como o clock.csv`, pag.h2dia.includes(String(d.relogio.dia)), pag.h2dia);
     resultado("as seis durações são as do clock.csv", pag.duracoes.join() === d.relogio.fases.map((f) => f.dura).join(), pag.duracoes.join());
     resultado(`um quadrado por ticket (${d.tickets.total}), e ${d.tickets.feitos} feitos`, pag.celas === d.tickets.total && pag.feitos === d.tickets.feitos, `${pag.celas}, ${pag.feitos}`);
     resultado("os números do estado são os do tickets.json e do validation.json",
       pag.numeros.join() === [d.tickets.feitos, d.contas.testes, d.contas.adrs, d.contas.conferidos].join(), pag.numeros.join());
-    resultado("os seis povos são os do §04", pag.povos.join() === d.povos.linhas.map((x) => x.nome).join(), pag.povos.join());
-    resultado("o povo de hoje é o que tem segmentos", pag.hoje.join() === d.povos.linhas.filter((x) => x.hoje).map((x) => x.nome).join());
+    resultado(`os ${d.povos.linhas.length} povos são os do §04`, pag.povos.join() === d.povos.linhas.map((x) => x.nome).join(), pag.povos.join());
+    resultado("só o povo de partida diz «começas aqui», e é o do segmento de partida",
+      pag.hoje.length === 1 && pag.hoje.join() === d.povos.linhas.filter((x) => x.hoje).map((x) => x.nome).join(), pag.hoje.join());
+    resultado("os monarcas são os do monarchs.csv, pela ordem dele", pag.monarcas.join() === d.monarcas.lista.map((m) => m.nome.pt).join(), pag.monarcas.join());
+    resultado("e o texto deles é o do ecrã de escolha, sem marcadores por preencher",
+      pag.monarcasTexto.length === d.monarcas.lista.length * 3 && pag.monarcasTexto.every((x) => x && !/[{}]/.test(x)), pag.monarcasTexto.find((x) => /[{}]/.test(x)) || "");
+    resultado("cada acção da tabela tem pelo menos uma tecla ou um botão do project.godot",
+      pag.teclas.every(([t, c]) => t !== "—" || c !== "—"), JSON.stringify(pag.teclas.find(([t, c]) => t === "—" && c === "—")));
+    resultado("as últimas decisões são as últimas ADR de docs/adr/", pag.decisoes.join() === d.decisoes.map((x) => `ADR ${x.n}`).join(), pag.decisoes.join());
+    resultado("o ecrã com a interface é o da língua da página", pag.ecra === "/img/ecra-pt.webp", String(pag.ecra));
     resultado("as falas são as do strings.csv", pag.falas.join("|") === d.podridao.falas.map((f) => f.pt).join("|"), pag.falas.join(" | "));
     resultado(`o violeta é o do WorldPalette (${d.podridao.violeta})`, pag.violeta === d.podridao.violeta, String(pag.violeta));
+    resultado(`o âmbar é o do fogo, no rot.csv (${d.podridao.fogo.meio})`, pag.ambar === d.podridao.fogo.meio.toUpperCase(), String(pag.ambar));
     await ctx.close();
   }
 
@@ -504,7 +523,7 @@ async function main() {
     await ctx.close();
   }
 
-  console.log("\n18 · a candeia");
+  console.log("\n18 · o Lume");
   {
     const { ctx, p } = await nova(b, base, 1440, "dark");
     await p.goto(base + "/", { waitUntil: "load" });

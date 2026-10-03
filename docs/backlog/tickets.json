@@ -1598,6 +1598,21 @@
   "passos": [],
   "notas": []
  },
+ "PUB-04": {
+  "title": "O site mostra o jogo de hoje",
+  "porque": "As fotografias eram do greybox de 25/09, os oito povos diziam todos que eram o de hoje, «Atacar» não tinha tecla, o Lume era descrito cor de brasa, e os monarcas, o combate e o subsolo não apareciam. O dono pediu o site refinado e a informação em dia.",
+  "spec": [
+   "docs/design/36-wishlists-pagina-demo-e-trailer.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md",
+   "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
+  ],
+  "depende": "PUB-02",
+  "feito": "As fotografias são o jogo de hoje, sem a interface, e o ecrã com ela em cada língua; o jogo acima da dobra; os monarcas lidos do ecrã de escolha; as últimas ADR; o povo de partida, o roxo do Lume e o âmbar do fogo lidos dos dados; o portão do site mede tudo isto (ADR 0056).",
+  "fora": "Um domínio próprio. Um devlog ou um press kit. A página de Steam. A casca do jogo e o painel do dono. O nome final e o logótipo (NB-01).",
+  "estado": "feito",
+  "horas": "—"
+ },
  "UX-01": {
   "title": "Reformular a pausa e corrigir o corte visual",
   "porque": "O menu crescia para fora da janela e misturava opções com as ações do jogo.",

@@ -75,6 +75,11 @@
       var s = document.getElementById(id);
       if (s) vistas.observe(s);
     });
+    // De volta à abertura, nenhuma secção do menu está a ser lida.
+    var cimo = document.querySelector(".abertura");
+    if (cimo) new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) Object.keys(ligacoes).forEach(function (k) { ligacoes[k].removeAttribute("aria-current"); });
+    }, { rootMargin: "-45% 0px -50% 0px" }).observe(cimo);
   }
 
   // ── 4 · entradas e contagens ───────────────────────────────────────────
@@ -110,6 +115,10 @@
   // sítio, e o que muda entre elas é só a luz — que é o que o §23 quer que se
   // leia. Pára quando sai do ecrã ou do separador, e com movimento reduzido
   // não arranca sozinho: fica na manhã, e a fita escolhe-se à mão.
+  //
+  // Só a manhã vem com `src`. As outras pedem-se a meio da fase anterior (ou
+  // logo, quando se salta para elas): quem lê a página sem a ver passar não
+  // descarrega cinco fotografias, e quem a vê passar tem a seguinte a tempo.
   var palco = document.getElementById("palco");
   if (palco) (function () {
     var DIA = +palco.dataset.dia, ESCALA = 15;
@@ -121,6 +130,10 @@
     });
     var quadros = {};
     palco.querySelectorAll(".quadro").forEach(function (img) { quadros[img.dataset.fase] = img; });
+    function carregar(id) {
+      var img = quadros[id];
+      if (img && img.dataset.src && !img.getAttribute("src")) img.setAttribute("src", img.dataset.src);
+    }
     var ativa = palco.querySelector(".quadro.ativo").dataset.fase;
     var t = fases.filter(function (f) { return f.id === ativa; })[0].inicio;
     var parado = reduz, fora = false, ultimo = 0, pedido = 0;
@@ -140,7 +153,9 @@
       var f = faseEm(t);
       fita.setAttribute("aria-valuenow", String(Math.round(t)));
       fita.setAttribute("aria-valuetext", f.nome + " · " + Math.round(t) + " s");
+      if (!parado && t - f.inicio >= f.dura * 0.4) carregar(fases[(fases.indexOf(f) + 1) % fases.length].id);
       if (f.id === ativa) return;
+      carregar(f.id);
       quadros[ativa].classList.remove("ativo");
       quadros[ativa].setAttribute("aria-hidden", "true");
       quadros[f.id].classList.add("ativo");

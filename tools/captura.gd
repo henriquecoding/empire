@@ -48,6 +48,10 @@ func _ready() -> void:
 			game._chosen(&"monarch")  # as fotografias do mundo passam o novo arranque
 	if not OS.get_cmdline_user_args().has(Game.NOVO):
 		_preparacao.append("retomado do save")
+	# `--limpo true`: so o mundo, sem a interface por cima (as fotografias do site).
+	if args.get("limpo", "") == "true":
+		(game.get_node(^"Interface") as CanvasLayer).visible = false
+		_preparacao.append("sem a interface")
 	# Avancar a simulacao a mao, e nao esperar pelo relogio: fotografar a noite
 	# custava 340 segundos de espera por causa das seis fases do §48.
 	_avancar(float(args.get("avancar", 0.0)))

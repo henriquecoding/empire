@@ -14,10 +14,11 @@ a noite tira-se a NOITE_FRACCAO dela — e confere-se na ficha da captura que a
 mancha esta mesmo dentro do ecra. Se um dia a Podridao andar mais devagar e nao
 chegar ao quadro, isto chumba em vez de publicar uma noite vazia.
 
-Os instrumentos do greybox (os paineis de cima e a linha de teclas de baixo)
-saem pelo recorte, que tambem se le da ficha: e o rectangulo entre eles. Uma
-imagem fica inteira, com os instrumentos, porque o site tambem tem de mostrar o
-ecra como ele e hoje.
+As seis fases tiram-se com `--limpo true`: so o mundo, sem a interface por
+cima — o quadro inteiro, 16:9, como o jogo o desenha. O ecra com a interface
+tira-se a parte, uma vez por lingua (a do LANG, que e a que o jogo escolhe ao
+arrancar sem preferencia gravada), porque o site tambem tem de mostrar o ecra
+como ele e hoje, e a pagina portuguesa nao mostra um painel em ingles.
 
 WebP sem perdas: e pixel art, e uma compressao com perdas borra o degrau de
 2 px que o §22 mede.
@@ -51,9 +52,8 @@ FASES = ("alvorada", "manha", "meiodia", "tarde", "crepusculo", "noite")
 COLUNAS = ("dawn", "morning", "noon", "afternoon", "dusk", "night")
 NOITE_FRACCAO = 0.71
 INTEIRA = "manha"
-# O painel de baixo tem sombra por cima dele: medido na captura de 1280x720,
-# as linhas 654-671 sao uma faixa escura de ponta a ponta que nao e o jogo.
-SOMBRA_PX = 24
+# O ecra com a interface, uma vez por lingua do site: o LANG de cada corrida.
+LINGUAS = {"pt": "pt_PT.UTF-8", "en": "en_US.UTF-8"}
 
 
 def instantes() -> dict[str, float]:
@@ -69,24 +69,24 @@ def instantes() -> dict[str, float]:
     return saida
 
 
-def fotografar(fase: str, segundo: float) -> dict:
-    png = TRABALHO / f"{fase}.png"
+def fotografar(nome: str, segundo: float, limpo: bool = True, lingua: str = "pt") -> dict:
+    png = TRABALHO / f"{nome}.png"
     comando = [
         GODOT, "--path", str(RAIZ), "--resolution", "1280x720", "tools/captura.tscn", "--",
         "--segundos", "2", "--avancar", str(segundo), "--saida", str(png), "--novo",
     ]
-    subprocess.run(comando, check=True, capture_output=True, timeout=240)
+    if limpo:
+        comando += ["--limpo", "true"]
+    ambiente = {**os.environ, "LANG": LINGUAS[lingua], "LC_ALL": LINGUAS[lingua], "LANGUAGE": ""}
+    subprocess.run(comando, check=True, capture_output=True, timeout=240, env=ambiente)
     ficha = json.loads(png.with_suffix(".json").read_text(encoding="utf-8"))
     ficha["segundo"] = segundo
     return ficha
 
 
-def recorte(ficha: dict) -> tuple[int, int, int, int]:
-    """O rectangulo entre os instrumentos de cima e os de baixo, a largura toda."""
-    altura = int(ficha["altura"])
-    cima = max([int(y + h) for x, y, w, h in ficha["instrumentos"] if y <= 0] or [0])
-    baixo = min([int(y) for x, y, w, h in ficha["instrumentos"] if y + h >= altura - 24] or [altura])
-    return (0, cima, int(ficha["largura"]), baixo - SOMBRA_PX)
+def quadro(ficha: dict) -> tuple[int, int, int, int]:
+    """O quadro inteiro: sem interface, nao ha nada a cortar."""
+    return (0, 0, int(ficha["largura"]), int(ficha["altura"]))
 
 
 def conferir_noite(ficha: dict, caixa: tuple[int, int, int, int]) -> None:
@@ -116,10 +116,14 @@ def foco(ficha: dict, caixa: tuple[int, int, int, int]) -> float:
     return round(centro / largura, 3)
 
 
-def gravar(png: Path, destino: Path, caixa: tuple[int, int, int, int] | None) -> int:
+def gravar(png: Path, destino: Path, caixa: tuple[int, int, int, int] | None, metade: bool = False) -> int:
     imagem = Image.open(png).convert("RGB")
     if caixa is not None:
         imagem = imagem.crop(caixa)
+    if metade:
+        # A miniatura dos cartoes das fases: meio tamanho, pelo vizinho mais
+        # proximo — o pixel do jogo tem 2 px de ecra (§22), e assim fica com 1.
+        imagem = imagem.resize((imagem.width // 2, imagem.height // 2), Image.NEAREST)
     imagem.save(destino, "WEBP", lossless=True, quality=100, method=6)
     return destino.stat().st_size
 
@@ -159,20 +163,24 @@ def main() -> int:
         esperada = FASES.index(fase)
         if int(ficha["fase"]) != esperada:
             sys.exit(f"capturas: {fase} saiu na fase {ficha['fase']}, e nao na {esperada}")
-    caixa = recorte(fichas["manha"])
+    caixa = quadro(fichas["manha"])
     conferir_noite(fichas["noite"], caixa)
     quadros = {}
     for fase in FASES:
         n = gravar(TRABALHO / f"{fase}.png", SAIDA / f"dia-{fase}.webp", caixa)
+        gravar(TRABALHO / f"{fase}.png", SAIDA / f"mini-{fase}.webp", caixa, metade=True)
         quadros[fase] = {
             "segundo": fichas[fase]["segundo"],
             "dia": fichas[fase]["dia"],
             "bytes": n,
             "foco": foco(fichas[fase], caixa),
         }
-        print(f"capturas: dia-{fase}.webp · {n / 1024:.0f} KB · {fichas[fase]['segundo']} s")
-    n = gravar(TRABALHO / f"{INTEIRA}.png", SAIDA / "ecra.webp", None)
-    print(f"capturas: ecra.webp · {n / 1024:.0f} KB · com os instrumentos")
+        print(f"capturas: dia-{fase}.webp e mini-{fase}.webp · {n / 1024:.0f} KB · {fichas[fase]['segundo']} s")
+    segundo = instantes()[INTEIRA]
+    for lingua in LINGUAS:
+        fichas[f"ecra-{lingua}"] = fotografar(f"ecra-{lingua}", segundo, limpo=False, lingua=lingua)
+        n = gravar(TRABALHO / f"ecra-{lingua}.png", SAIDA / f"ecra-{lingua}.webp", None)
+        print(f"capturas: ecra-{lingua}.webp · {n / 1024:.0f} KB · com a interface, em {lingua}")
     ficha = {
         "commit": git("rev-parse", "HEAD"),
         "aparencia": aparencia(),
@@ -180,7 +188,7 @@ def main() -> int:
         "godot": (RAIZ / ".godot-version").read_text(encoding="utf-8").strip(),
         "largura": caixa[2] - caixa[0],
         "altura": caixa[3] - caixa[1],
-        "ecra": [int(fichas[INTEIRA]["largura"]), int(fichas[INTEIRA]["altura"])],
+        "ecra": [int(fichas["ecra-pt"]["largura"]), int(fichas["ecra-pt"]["altura"])],
         "recorte": list(caixa),
         "noite_fraccao": NOITE_FRACCAO,
         "quadros": quadros,
