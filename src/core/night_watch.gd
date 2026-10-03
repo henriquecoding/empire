@@ -72,7 +72,7 @@ func tick(
 	voice.tick(delta, rot, estado.day, mundo, amargueiros)
 	# Uma noite saltada ou acabada pela Oferta ja nao tem escuro que chame ninguem.
 	dark.tick(delta, fase if rot.active() else SEM_NOITE, estado, bichos, _obras, mundo.x)
-	bichos.set_lights(LightWard.of(_obras, dark.ward()), SimFactory.rot_profile().light_recoil_s)
+	bichos.set_lights(dark.wards(_obras, mundo.x), SimFactory.rot_profile().light_recoil_s)
 	RiftWatch.tick(self, delta, estado, bichos, mundo.x)
 	CrownWatch.tick(bichos, rot)  # a coroa no chao (Q-167)
 	if not rot.active():
@@ -160,7 +160,9 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 		names.at_dawn(dia, _tropas, _postos)
 		harvest.at_dawn()
 		Ward.dawn(_obras, dia)  # o sino perde carga, mais quanto mais tarde (Q-100)
+		dark.hearth.dawn()  # a lareira apaga-se; acende-se paga ao crepusculo (Q-190)
 	if fase == GameClock.Phase.DUSK:
+		dark.kindle()
 		# O que o jogador escreveu de dia (§74): cada arvore de pe e massa.
 		# O marco de um povo que ficou cria raiz e nao se corta (§78): e mais uma.
 		rot.amargueiros = amargueiros.anonymous() + harvest.landmarks()

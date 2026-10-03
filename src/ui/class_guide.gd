@@ -61,12 +61,13 @@ static func status() -> String:
 ## O escudeiro do Arqueiro a mao: compra um lote por uma moeda da bolsa do imperador — ou
 ## diz que sem moedas nao ha flechas novas (Q-200). Com a aljava cheia, nada.
 static func _quiver(units: UnitSystem, r: int, values: Dictionary) -> String:
-	if r < 0 or MonarchWatch.at_hand(units, SimLoop.king_id) < 0:
+	var e := MonarchWatch.at_hand(units, SimLoop.king_id)
+	if r < 0 or e < 0:
 		return ""
 	var corpo := Registry.entry(&"units", units.data_ids[r]) as UnitData
 	values["left"] = SimLoop.field.supply.left(units, r, corpo)
 	values["max"] = corpo.ammo
-	values["lot"] = RulesFactory.rules().arrows_per_coin
+	values["lot"] = MonarchWatch.squire_lot(units.data_ids[e])
 	if int(values["left"]) >= corpo.ammo:
 		return ""
 	var credito := int(SimLoop.field.supply.credit.get(units.ids[r], 0))

@@ -41,6 +41,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	active = Glyphs.initial() == Glyphs.Device.TOUCH
 	aim = Vector2.ZERO
+	WideTouch.apply(get_tree().root, active)
 	_medir()
 	EventBus.game_paused.connect(func(_pausa: bool) -> void: _largar_tudo())
 	get_tree().root.size_changed.connect(_ao_rodar)
@@ -194,6 +195,7 @@ func _mao(evento: InputEvent) -> void:
 	if agora == active:
 		return
 	active = agora
+	WideTouch.apply(get_tree().root, active)
 	if not active:
 		_largar_tudo()
 
@@ -206,6 +208,7 @@ func _notification(o_que: int) -> void:
 
 
 func _ao_rodar() -> void:
+	WideTouch.apply(get_tree().root, active)
 	var janela := DisplayServer.window_get_size()
 	if janela.y > janela.x:
 		_pausar()

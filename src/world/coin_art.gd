@@ -5,9 +5,9 @@
 # "as moedas e itens que sao dropados devem ser bem grandes para serem bem vistos
 # como e em Kingdom, e devem ter fisica e parecer-se com o que sao".
 #
-# Aqui e uma moeda: um disco de ouro de 18 px em pixeis de 2 — o aro escuro, a face,
-# o brilho de cima e a sombra de baixo, e um cunho ao meio. Gira no ar (a largura da
-# face vem do CoinBounce) e, de lado, e so o aro. Duas a nove moedas juntas sao uma
+# Aqui e uma moeda: um disco de ouro de 36 px em pixeis de 4 (o dobro, Q-192) — o aro
+# escuro, a face, o brilho de cima e a sombra de baixo, e um cunho ao meio. Gira no ar
+# (a largura da face vem do CoinBounce) e, de lado, e so o aro. Duas a nove moedas juntas sao uma
 # PILHA de moedas deitadas; dez ou mais sao um SACO. No chao, de vez em quando, a
 # moeda pisca — e esse brilho nao leva luz, como uma chama (§80): e por ele que se
 # da com uma moeda no escuro. O ouro apanha a luz que houver, e guarda um pouco do
@@ -19,6 +19,9 @@ class_name CoinArt
 extends RefCounted
 
 const PIXEL := 2.0
+## O pixel do que cai no chao: o dobro do PIXEL. O dono, a 03/10/2026 (Q-192): "quero
+## que o tamanho seja o dobro do atual". O preco (PriceTag) continua no PIXEL.
+const CHAO := 4.0
 ## A moeda de pe, de frente: aro (#), face (o), brilho (+), sombra (.), cunho (=); o
 ## espaco e vazio.
 const FACE := [
@@ -91,7 +94,7 @@ static func size_of(quantia: int) -> Vector2:
 	var alto := float(mapa.size())
 	if quantia > 1 and quantia < SACO_DE:
 		alto += PILHA_PASSO * float(mini(quantia, PILHA_MAX) - 1)
-	return Vector2(float(String(mapa[0]).length()), alto) * PIXEL
+	return Vector2(float(String(mapa[0]).length()), alto) * CHAO
 
 
 ## Uma moeda (ou pilha, ou saco) com o pe em `pe`. `face` e a largura que se ve (1
@@ -103,18 +106,19 @@ static func draw_on(
 	var tons := tones(cor)
 	if quantia > 1 and quantia < SACO_DE:
 		for k in mini(quantia, PILHA_MAX):
-			var desvio := float(PILHA_DESVIO[k % PILHA_DESVIO.size()]) * PIXEL
-			paint(canvas, pe + Vector2(desvio, -PILHA_PASSO * PIXEL * float(k)), mapa, 1.0, tons)
+			var desvio := float(PILHA_DESVIO[k % PILHA_DESVIO.size()]) * CHAO
+			var em := pe + Vector2(desvio, -PILHA_PASSO * CHAO * float(k))
+			paint(canvas, em, mapa, 1.0, tons, CHAO)
 	elif face < DE_LADO and quantia <= 1:
-		var alto := float(FACE.size()) * PIXEL
-		canvas.draw_rect(Rect2(pe - Vector2(PIXEL * MEIO, alto), Vector2(PIXEL, alto)), tons["#"])
+		var alto := float(FACE.size()) * CHAO
+		canvas.draw_rect(Rect2(pe - Vector2(CHAO * MEIO, alto), Vector2(CHAO, alto)), tons["#"])
 	elif quantia >= SACO_DE:
-		paint(canvas, pe, mapa, 1.0, tons)  # um saco nao gira: tomba
+		paint(canvas, pe, mapa, 1.0, tons, CHAO)  # um saco nao gira: tomba
 	else:
-		paint(canvas, pe, mapa, maxf(face, DE_LADO), tons)
+		paint(canvas, pe, mapa, maxf(face, DE_LADO), tons, CHAO)
 	if brilho > 0.0:
 		var topo := pe - Vector2(size_of(quantia).x * MEIO * MEIO, size_of(quantia).y * MEIO)
-		sparkle(canvas, topo, brilho)
+		sparkle(canvas, topo, brilho, CHAO)
 
 
 ## Quanto brilha agora uma moeda pousada (0 a 1): de BRILHO.cada em BRILHO.cada
@@ -127,12 +131,12 @@ static func glint(coin_id: int, agora: float) -> float:
 
 
 ## A faisca: uma cruz de quatro pontas, maior no meio do brilho. Nao leva luz.
-static func sparkle(canvas: CanvasItem, centro: Vector2, forca: float) -> void:
+static func sparkle(canvas: CanvasItem, centro: Vector2, forca: float, px := PIXEL) -> void:
 	var cor := Color(FAISCA, forca)
-	var braco := roundf(forca * PIXEL * PIXEL)
-	canvas.draw_rect(Rect2(centro - Vector2(PIXEL, PIXEL) * MEIO, Vector2(PIXEL, PIXEL)), cor)
-	canvas.draw_rect(Rect2(centro - Vector2(braco, PIXEL * MEIO), Vector2(braco * 2, PIXEL)), cor)
-	canvas.draw_rect(Rect2(centro - Vector2(PIXEL * MEIO, braco), Vector2(PIXEL, braco * 2)), cor)
+	var braco := roundf(forca * px * px)
+	canvas.draw_rect(Rect2(centro - Vector2(px, px) * MEIO, Vector2(px, px)), cor)
+	canvas.draw_rect(Rect2(centro - Vector2(braco, px * MEIO), Vector2(braco * 2, px)), cor)
+	canvas.draw_rect(Rect2(centro - Vector2(px * MEIO, braco), Vector2(px, braco * 2)), cor)
 
 
 ## A cor de um tom de ouro com a luz da noite: a que la chega, sem nunca perder
@@ -155,21 +159,21 @@ static func _mapa(quantia: int) -> Array:
 	return DEITADA if quantia > 1 else FACE
 
 
-## Um mapa com o pe ao meio de baixo, apertado na largura por `face`. As letras que
-## nao estao em `tons` sao vazio.
+## Um mapa com o pe ao meio de baixo, apertado na largura por `face`, em pixeis de `px`.
+## As letras que nao estao em `tons` sao vazio.
 static func paint(
-	canvas: CanvasItem, pe: Vector2, mapa: Array, face: float, tons: Dictionary
+	canvas: CanvasItem, pe: Vector2, mapa: Array, face: float, tons: Dictionary, px := PIXEL
 ) -> void:
 	var largo := float(String(mapa[0]).length())
 	var alto := float(mapa.size())
 	canvas.draw_set_transform(pe.round(), 0.0, Vector2(face, 1.0))
 	for linha in mapa.size():
-		var y := (float(linha) - alto) * PIXEL
+		var y := (float(linha) - alto) * px
 		for span: Vector3i in _linha(mapa, linha):
-			var x := (float(span.x) - largo * MEIO) * PIXEL
+			var x := (float(span.x) - largo * MEIO) * px
 			var letra := String(mapa[linha])[span.x]
 			if tons.has(letra):
-				canvas.draw_rect(Rect2(x, y, float(span.y) * PIXEL, PIXEL), tons[letra])
+				canvas.draw_rect(Rect2(x, y, float(span.y) * px, px), tons[letra])
 	canvas.draw_set_transform(Vector2.ZERO)
 
 

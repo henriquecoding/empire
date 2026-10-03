@@ -7,9 +7,8 @@
 #
 # Junta-se tambem a LAREIRA do nucleo. Nao e uma regra nova: o Torchlight ja diz
 # que a volta do nucleo nao e escuro (`in_dark`, meia largura dele), e o Kingdom
-# acende o mesmo fogo no centro do acampamento. O que faltava era ver-se. Nao
-# afasta ninguem — so o fogo que compras afasta (ADR 0034); se a lareira o deve
-# fazer e a Q-190.
+# acende o mesmo fogo no centro do acampamento. O que faltava era ver-se. Desde a
+# Q-190 (03/10/2026) e fogo que se compra: arde, e afasta, so na noite paga (Hearth).
 #
 # Calcula-se uma vez por frame, e todos leem a mesma lista.
 class_name LightField
@@ -65,7 +64,7 @@ static func _gather(tempo: float) -> Dictionary:
 			faixas[vaga.band].append(
 				Glow.new(onde, vaga.band, raio, forca, fogo, Flicker.Kind.FIRE)
 			)
-		elif vaga.kind == BuildSlot.NUCLEO and vaga.standing():
+		elif vaga.kind == BuildSlot.NUCLEO and vaga.standing() and SimLoop.night.dark.hearth.lit:
 			var porta := onde - Vector2(0.0, LAREIRA.alto)
 			var meia := vaga.width * BuildSystem.METADE
 			faixas[vaga.band].append(

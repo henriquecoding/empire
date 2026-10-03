@@ -27,6 +27,7 @@ var crown_drop := CrownDrop.new()
 var supply := Supply.new()
 var monarchy := Monarchy.new()  # quem reina, e o companheiro dele (ADR 0052)
 var bleeding := Bleeding.new()  # a ferida da flecha imperial (Q-201)
+var stamina := Stamina.new()  # o folego de quem corre a pe (Q-193)
 var mount := Mount.new(
 	Registry.entry(&"mounts", &"draft_horse") as MountData,
 	Registry.entry(&"classes/storages", &"saddlebags") as StorageData

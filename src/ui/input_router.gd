@@ -92,9 +92,10 @@ func _process(delta: float) -> void:
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
-	# Correr (Q-149, Q-169): quem se conduz corre ao king_run_mult; montado, o cavalo anda
-	# e galopa aos dele.
-	var correr := Input.is_action_pressed(&"king_run")
+	# Correr (Q-149, Q-169, Q-193): quem se conduz corre ao king_run_mult enquanto tiver
+	# folego; montado, o cavalo anda e galopa aos dele.
+	var anda := Input.get_axis(&"move_left", &"move_right") != 0.0
+	var correr := MonarchWatch.runs(Input.is_action_pressed(&"king_run") and anda, delta)
 	var a_pe := _curva_lida().king_run_mult
 	SimLoop.units.piloted_pace = SimLoop.field.mount.pace(Assume.driven(), correr, a_pe)
 	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).

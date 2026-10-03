@@ -3,9 +3,9 @@
 # Era uma forma lisa de 18 px, a espera de arte. O dono, a 02/10/2026, das moedas "e
 # itens que sao dropados": grandes, para se verem como no Kingdom, com fisica, e a
 # parecer-se com o que sao. A coroa e o item que mais importa apanhar — e a vida do
-# reino (§16) —, e e por isso desenhada como a moeda (CoinArt): em pixeis de 2, as
-# tres pontas com a bola de ouro, o aro com as pedras, o brilho em cima e a sombra
-# em baixo, 30 px de largo.
+# reino (§16) —, e e por isso desenhada como a moeda (CoinArt): em pixeis de 4 (o dobro,
+# como a moeda, Q-192), as tres pontas com a bola de ouro, o aro com as pedras, o brilho
+# em cima e a sombra em baixo, 60 px de largo.
 #
 # E CAI: da cabeca do rei ate ao chao na gravidade da moeda, ressalta e balanca como
 # ela (CoinBounce), e depois fica a piscar de vez em quando — o brilho que nao leva
@@ -31,7 +31,7 @@ const PEDRA := Color("b8352a")
 ## A altura da cabeca do rei, de onde cai, em px acima do chao.
 const QUEDA := 56.0
 ## O brilho da ponta do meio, e o id dela para o CoinBounce e para o brilho.
-const PONTA := Vector2(0.0, -17.0)
+const PONTA := Vector2(0.0, -34.0)
 const ID := -1
 ## Ainda nao se viu cair.
 const NUNCA := -1.0
@@ -56,17 +56,17 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: 
 	_salto.observe(ID, altura, tempo)
 	var acima := altura + _salto.offset(ID, tempo)
 	var pe := Vector2(coroa.x, WorldPalette.ground_of(int(faixa)))
-	var largo := float(String(COROA[0]).length()) * CoinArt.PIXEL
+	var largo := float(String(COROA[0]).length()) * CoinArt.CHAO
 	Shadow.drop(canvas, coroa.x, int(faixa), largo * MEIO, acima, QUEDA)
 	var cor := CoinArt.lit(luz, coroa.x)
 	var tons := CoinArt.tones(cor)
 	tons["r"] = cor.call(PEDRA)
 	var face := maxf(_salto.face(ID, tempo), CoinArt.DE_LADO)
-	CoinArt.paint(canvas, pe - Vector2(0.0, acima), COROA, face, tons)
+	CoinArt.paint(canvas, pe - Vector2(0.0, acima), COROA, face, tons, CoinArt.CHAO)
 	if acima <= 0.0:
 		var brilho := CoinArt.glint(ID, tempo)
 		if brilho > 0.0:
-			CoinArt.sparkle(canvas, pe + PONTA, brilho)
+			CoinArt.sparkle(canvas, pe + PONTA, brilho, CoinArt.CHAO)
 
 
 ## A altura da coroa `t` segundos depois de cair, na `gravidade` da moeda: de QUEDA

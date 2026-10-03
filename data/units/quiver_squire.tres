@@ -16,4 +16,7 @@ layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])
 shadow_width = 14
 tags = Array[StringName]([&"follows_king", &"companion"])
 ability = &"arrow_supply"
+ability_params = {
+&"arrows_per_coin": 6.0
+}
 head_pool = Array[StringName]([&"helmet_big"])

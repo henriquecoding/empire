@@ -63,3 +63,13 @@ extends Resource
 @export var und_room_min_px: float = 0.0
 @export var und_room_max_px: float = 0.0
 @export var und_extra_rooms: int = 0
+## O empurrao do golpe de perto (Q-185): quanto recua uma criatura pequena, e ate que
+## scale_tier ela e pequena.
+@export var melee_knockback_px: float = 0.0
+@export var melee_knockback_max_tier: int = 0
+## A lareira do nucleo (Q-190): o preco de cada noite, o raio, a massa que faz recuar e
+## quanto abranda as outras.
+@export var hearth_night_cost: int = 0
+@export var hearth_radius_px: float = 0.0
+@export var hearth_repel_mass: int = 0
+@export var hearth_rot_slow: float = 0.0

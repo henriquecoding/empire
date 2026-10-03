@@ -113,3 +113,14 @@ func test_a_aljava_do_imperador_nao_pede_a_banca() -> void:
 	var tropa := _u.index_of(_u.spawn(_estado, arqueiro, MEU, 0.0))
 	_s.shoot(_u, tropa, arqueiro)
 	assert_int(_s.short(_u, _u.ids[i])).is_equal(1)
+
+
+## O dono, a 03/10/2026 (Q-200): "pagar o escudeiro so da 6 flechas". A banca das tropas
+## continua com o lote dela.
+func test_o_escudeiro_da_seis_flechas_por_moeda() -> void:
+	assert_int(MonarchWatch.squire_lot(&"quiver_squire")).is_equal(6)
+	assert_int(MonarchWatch.squire_lot(&"quiver_squire")).is_less(_lote())
+	var dados := _dados(&"archer_emperor")
+	var i := _imperador(0, 1)
+	assert_int(_s.refill(_u, i, dados, MonarchWatch.squire_lot(&"quiver_squire"))).is_equal(1)
+	assert_int(_s.left(_u, i, dados)).is_equal(6)

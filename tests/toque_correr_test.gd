@@ -1,8 +1,8 @@
-# tests/toque_correr_test.gd — o botao CORRER do toque (ADR 0047, adenda de 02/10).
+# tests/toque_correr_test.gd — o botao CORRER do toque (ADR 0047, UX-04, Q-193).
 #
-# O dono, a 02/10/2026: "No mobile deve ter um botao para correr tambem". Arrastar a
-# alavanca ate ao fim continua a correr; o CORRER e um interruptor do lado dos botoes,
-# para o polegar que nao anda: tocado uma vez, quem anda corre ate se tocar outra vez.
+# O dono, a 02/10/2026: "No mobile deve ter um botao para correr tambem". E a 03/10/2026,
+# no painel (Q-193): "so corre ao manter o botao apertado". O CORRER e o Shift do toque:
+# premido, quem anda corre; levantado o dedo, anda. A alavanca ate ao fim ja nao corre.
 # Os dedos constroem-se e nao se injectam (ADR 0009).
 extends GdUnitTestSuite
 
@@ -33,62 +33,72 @@ func test_o_correr_e_um_botao_do_lado_dos_botoes() -> void:
 		assert_bool((c.x > BASE.x / 2) != canhoto).is_true()
 
 
-func test_tocar_liga_e_tocar_outra_vez_desliga() -> void:
+func test_corre_so_enquanto_se_prime() -> void:
 	var p := _pad()
 	var correr := p.layout.centre(R.RUN)
 	assert_bool(p.running).is_false()
-	_tocar(p, 3, correr)
+	p.press(3, correr)
 	assert_bool(p.running).is_true()
-	_tocar(p, 3, correr)
+	p.lift(3, correr)
 	assert_bool(p.running).is_false()
 
 
-## Ligado, andar um pouco ja corre: o polegar da alavanca nao precisa de ir ao fim.
-func test_ligado_andar_corre() -> void:
+## Um toque nao liga nada: nao ha interruptor.
+func test_um_toque_nao_fica_ligado() -> void:
+	var p := _pad()
+	_tocar(p, 3, p.layout.centre(R.RUN))
+	assert_bool(p.running).is_false()
+
+
+## Premido, andar um pouco ja corre: o polegar da alavanca nao precisa de ir ao fim.
+func test_premido_andar_corre() -> void:
 	var p := _pad()
 	var casa := p.layout.stick_home()
 	p.press(0, casa)
 	p.drag(0, casa + Vector2(30.0, 0.0), Vector2(30.0, 0.0))
 	assert_bool(p.wanted()[&"move_right"]).is_true()
 	assert_bool(p.wanted()[&"king_run"]).is_false()
-	_tocar(p, 1, p.layout.centre(R.RUN))
+	p.press(1, p.layout.centre(R.RUN))
 	assert_bool(p.wanted()[&"king_run"]).is_true()
 	assert_bool(p.runs()).is_true()
+	p.lift(1, p.layout.centre(R.RUN))
+	assert_bool(p.wanted()[&"king_run"]).is_false()
 
 
-## Parado nao se corre: o interruptor diz como se anda, e nao que se anda.
+## Parado nao se corre: o botao diz como se anda, e nao que se anda.
 func test_parado_nao_corre() -> void:
 	var p := _pad()
-	_tocar(p, 1, p.layout.centre(R.RUN))
+	p.press(1, p.layout.centre(R.RUN))
 	assert_bool(p.wanted()[&"king_run"]).is_false()
 	assert_bool(p.wanted()[&"move_left"]).is_false()
 	assert_bool(p.wanted()[&"move_right"]).is_false()
 
 
-## Arrastar ate ao fim continua a correr, sem o botao (o "drag all the way" do Kingdom).
-func test_sem_o_botao_ate_ao_fim_continua_a_correr() -> void:
+## Sem o botao, a alavanca ate ao fim anda e nao corre: o correr e um gesto so (Q-193).
+func test_sem_o_botao_ate_ao_fim_nao_corre() -> void:
 	var p := _pad()
 	var casa := p.layout.stick_home()
 	p.press(0, casa)
 	p.drag(0, casa + Vector2(200.0, 0.0), Vector2(200.0, 0.0))
-	assert_bool(p.running).is_false()
-	assert_bool(p.wanted()[&"king_run"]).is_true()
+	assert_bool(p.wanted()[&"move_right"]).is_true()
+	assert_bool(p.wanted()[&"king_run"]).is_false()
 
 
-## Um dedo que escorrega para fora antes de levantar nao troca nada, como no FIXAR.
-func test_escorregar_para_fora_nao_troca() -> void:
+## O dedo que escorrega para fora continua a segurar: largar e levantar.
+func test_escorregar_para_fora_continua_a_correr() -> void:
 	var p := _pad()
 	var correr := p.layout.centre(R.RUN)
 	p.press(2, correr)
 	p.drag(2, correr - Vector2(0.0, 200.0), Vector2(0.0, -200.0))
+	assert_bool(p.running).is_true()
 	p.lift(2, correr - Vector2(0.0, 200.0))
 	assert_bool(p.running).is_false()
 
 
-## A pausa, um menu ou outra mao largam tudo: o interruptor tambem.
-func test_reset_desliga() -> void:
+## A pausa, um menu ou outra mao largam tudo: o correr tambem.
+func test_reset_larga() -> void:
 	var p := _pad()
-	_tocar(p, 1, p.layout.centre(R.RUN))
+	p.press(1, p.layout.centre(R.RUN))
 	p.reset()
 	assert_bool(p.running).is_false()
 

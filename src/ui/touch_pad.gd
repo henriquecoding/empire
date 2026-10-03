@@ -39,7 +39,7 @@ var let_go := false
 var pause_tapped := false
 ## O FIXAR foi tocado: a alavanca troca entre solta e fixa (UX-03).
 var fix_tapped := false
-## O CORRER esta ligado: quem anda corre, ate se tocar outra vez nele.
+## O CORRER esta premido: quem anda corre so enquanto um dedo o segura (Q-193).
 var running := false
 
 var _papel := {}
@@ -110,7 +110,7 @@ func lift(i: int, p: Vector2) -> bool:
 		TouchLayout.Role.FIX:
 			fix_tapped = fix_tapped or _dentro(p, papel)
 		TouchLayout.Role.RUN:
-			running = running != _dentro(p, papel)
+			running = holds(papel)
 		TouchLayout.Role.WORLD:
 			if p.distance_to(de) < TOQUE_PX:
 				taps.append(p)
@@ -132,9 +132,10 @@ func wanted() -> Dictionary:
 	return quer
 
 
-## Se quem anda corre: a alavanca ate ao fim, ou qualquer passo com o CORRER ligado.
+## Se quem anda corre: so com o CORRER premido, como o Shift no teclado (Q-193). A
+## alavanca ate ao fim ja nao corre: o dono quer o correr num gesto so.
 func runs() -> bool:
-	return stick.axis() != 0.0 and (running or stick.runs())
+	return stick.axis() != 0.0 and running
 
 
 ## O frame acabou: o que foi pedido ao mundo ja foi entregue.
@@ -167,6 +168,8 @@ func _registar(i: int, p: Vector2, papel: TouchLayout.Role) -> void:
 		stick.begin(p, onde, layout.stick_radius(), layout.scale, layout.fixed)
 	elif papel == TouchLayout.Role.WHEEL:
 		aim = Vector2.ZERO
+	elif papel == TouchLayout.Role.RUN:
+		running = true
 	if ACCOES.has(papel):
 		_premidas[ACCOES[papel]] = true
 

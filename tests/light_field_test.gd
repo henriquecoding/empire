@@ -36,8 +36,10 @@ func _perto(luzes: Array[Glow], x: float) -> Glow:
 	return null
 
 
+## Paga ao crepusculo (Q-190), a lareira alumia o que a regra do escuro ja poupava.
 func test_a_lareira_alumia_o_que_o_escuro_ja_poupava() -> void:
 	var nucleo := _nucleo()
+	SimLoop.night.dark.hearth.kindle(99, 1)
 	var lareira := _perto(LightField.of(int(Band.Kind.SURFACE)), nucleo.x)
 	assert_object(lareira).is_not_null()
 	var meia := nucleo.width * BuildSystem.METADE
@@ -47,6 +49,12 @@ func test_a_lareira_alumia_o_que_o_escuro_ja_poupava() -> void:
 	assert_float(lareira.strength).is_between(forca * 0.9, forca * 1.1)
 	var obras := SimLoop.builds
 	assert_bool(Torchlight.in_dark(nucleo.x + meia * 0.9, obras, nucleo.x, meia)).is_false()
+
+
+## Sem as moedas da noite, a lareira fica apagada (Q-190).
+func test_a_lareira_por_pagar_nao_arde() -> void:
+	SimLoop.night.dark.hearth.kindle(0, 5)
+	assert_object(_perto(LightField.of(int(Band.Kind.SURFACE)), _nucleo().x)).is_null()
 
 
 func test_a_fogueira_de_pe_alumia_com_o_raio_do_csv() -> void:

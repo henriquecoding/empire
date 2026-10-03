@@ -53,6 +53,8 @@ var refuge := 0.0
 var supply: Supply
 ## O que os titulos dao a quem os tem (§76, Q-102): unit_id -> {grant: valor}.
 var perks: Dictionary = {}
+## O empurrao do golpe de perto (Q-185): px, e o scale_tier mais alto que recua.
+var knockback := Vector2.ZERO
 
 var _dados_u: Dictionary = {}
 var _dados_c: Dictionary = {}
@@ -150,11 +152,11 @@ func _tropas_batem() -> void:
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:
 			var dano := dados.damage + TitlePerks.vs_siege(bonus, _c, _dados_c, alvo)
-			var targets: Array[int] = [alvo]
-			if focus != null and focus.piercing.has(unit_id):
-				targets = focus.pierced(_u, _c, unit_id, alvo)
-			for target in targets:
-				_golpes.append({DE: unit_id, PARA: target, QUANTO: dano, CRIATURA: true})
+			var golpe := {DE: unit_id, QUANTO: dano, CRIATURA: true}
+			if MeleeSweep.melee(dados):  # de perto, tudo o que alcanca (Q-185)
+				golpe[MeleeSweep.DE_X] = _u.xs[i]
+			for target in MeleeSweep.hits(_u, _c, i, dados, alvo, focus, manual.allies):
+				_golpes.append(golpe.merged({PARA: target}))
 
 
 func _criaturas_batem() -> void:
@@ -189,6 +191,7 @@ func _aplicar() -> void:
 	for golpe in _golpes:
 		if golpe[CRIATURA]:
 			_c.damage(golpe[PARA], golpe[QUANTO])
+			MeleeSweep.knock(_c, _dados_c, golpe, knockback)
 			_eventos.append(_dano(golpe, true))
 			continue
 		if golpe[OBRA] != NENHUM:

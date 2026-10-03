@@ -58,7 +58,7 @@ func test_fixa_o_centro_e_o_da_base() -> void:
 	assert_bool(p.wanted()[&"move_right"]).is_true()
 	assert_vector(p.stick.base).is_equal(casa)
 	p.drag(0, casa + Vector2(400.0, 0.0), Vector2(330.0, 0.0))
-	assert_bool(p.wanted()[&"king_run"]).is_true()
+	assert_bool(p.wanted()[&"move_right"]).is_true()
 	assert_vector(p.stick.base).is_equal(casa)
 	p.drag(0, casa - Vector2(40.0, 0.0), Vector2(-440.0, 0.0))
 	assert_bool(p.wanted()[&"move_left"]).is_true()

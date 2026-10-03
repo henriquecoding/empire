@@ -149,13 +149,42 @@ static func _ao_bardo(units: UnitSystem, rei: int, campo: FieldWork) -> bool:
 
 
 ## Um lote de flechas do escudeiro, pago com uma moeda da bolsa do imperador (Q-200).
+## O lote e o do escudeiro (6), e nao o da banca do arco (12).
 static func _flechas(units: UnitSystem, rei: int, campo: FieldWork) -> bool:
 	var r := units.index_of(rei)
-	if at_hand(units, rei) == UnitSystem.NENHUM or r == UnitSystem.NENHUM:
+	var e := at_hand(units, rei)
+	if e == UnitSystem.NENHUM or r == UnitSystem.NENHUM:
 		return false
 	var corpo := Registry.entry(&"units", units.data_ids[r]) as UnitData
 	var antes := campo.supply.left(units, r, corpo)
-	var gasto := campo.supply.refill(units, r, corpo, RulesFactory.rules().arrows_per_coin)
+	var gasto := campo.supply.refill(units, r, corpo, squire_lot(units.data_ids[e]))
 	if gasto > 0:
 		EventBus.queue(&"coin_spent", [gasto, ALJAVA])
 	return campo.supply.left(units, r, corpo) > antes
+
+
+## Quantas flechas o escudeiro da por uma moeda (Q-200); sem o parametro, o da banca.
+static func squire_lot(squire: StringName) -> int:
+	var dados := Registry.entry(&"units", squire) as UnitData
+	if dados != null and dados.ability_params.has(&"arrows_per_coin"):
+		return int(dados.ability_params[&"arrows_per_coin"])
+	return RulesFactory.rules().arrows_per_coin
+
+
+## Se quem se conduz corre neste passo: a tecla, com o folego dele (Q-193). Montado, o
+## cavalo galopa sem folego, e o do monarca recupera.
+static func runs(quer: bool, dt: float) -> bool:
+	var campo := SimLoop.field
+	var c := SimFactory.curve()
+	var montado := campo.mount.rider != UnitSystem.NENHUM and campo.mount.rider == Assume.driven()
+	var cap := c.king_run_stamina_s * (c.king_run_evolved_mult if evolved(campo) else 1.0)
+	var corre := campo.stamina.step(quer and not montado, dt, cap, c.king_run_refill_s)
+	return quer if montado else corre
+
+
+## Se o monarca em jogo ja evoluiu: o Rei pela classe dele, os outros pelo perfil.
+static func evolved(campo: FieldWork) -> bool:
+	var classe := skill_class()
+	if classe == Monarchy.REI:
+		return campo.classes != null and campo.classes.phase > ClassSystem.PRIMEIRA
+	return campo.hero_progress.phase_of(classe) > 1
