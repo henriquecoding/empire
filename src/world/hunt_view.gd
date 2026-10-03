@@ -52,12 +52,16 @@ static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 		canvas.draw_set_transform(Vector2(bx, Band.GROUND_LINE))
 		_sitio(canvas, sitio, light, bx)
 	canvas.draw_set_transform(Vector2.ZERO)
-	for x in SimLoop.hunting.rabbits:
-		var bob := floorf(sin(time * BREATH + x))
-		canvas.draw_set_transform(Vector2(x, Band.GROUND_LINE + bob))
-		if SimLoop.hunting.burrows.game_at(x) == &"deer":
+	var manada := SimLoop.hunting.herd
+	for toca in SimLoop.hunting.rabbits:
+		var x := manada.where(toca)
+		var bob := floorf(sin(time * BREATH + toca))
+		var lado := Vector2(float(manada.facing.get(toca, 1.0)), 1.0)  # ADR 0057
+		canvas.draw_set_transform(Vector2(x, Band.GROUND_LINE + bob), 0.0, lado)
+		var bicho := SimLoop.hunting.species_at(toca).id
+		if bicho == &"deer":
 			_veado(canvas, light, x)
-		else:
+		elif not GameArt.draw(canvas, bicho, light, x):
 			_coelho(canvas, light, x)
 		canvas.draw_set_transform(Vector2.ZERO)
 

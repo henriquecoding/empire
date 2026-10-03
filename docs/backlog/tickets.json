@@ -2320,5 +2320,21 @@
   "notas": [
    "Q-207 a Q-212. Ver a ADR 0054: o que se aplicou e como desfazer. O painel só recebe «aplicada» depois de merge e publicação."
   ]
+ },
+ "QP-05": {
+  "title": "A caça a sério",
+  "porque": "O dono pediu caça e criaturas trabalhadas a sério: variedade, farm com as moedas que caem, imperadores que caçam e apanham.",
+  "spec": [
+   "docs/adr/0057-a-caca-a-serio.md"
+  ],
+  "depende": "QP-04",
+  "feito": "Os bichos pastam, fogem e encurralam-se; o javali carrega e bate; faisão, raposa e cervo branco raro; o golpe do imperador caça e a caça dele cai no chão; de noite a Podridão caça os bichos e eles levantam-se inimigos; as tropas de combate caçam sozinhas; tudo com teste",
+  "fora": "A caça média com mais bichos (Q-213), o javali e a noite (Q-214), tocas nas terras geradas.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-213 a Q-215 ficam por decidir. Ver a ADR 0057: o que se aplicou e como desfazer."
+  ]
  }
 }

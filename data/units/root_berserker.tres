@@ -17,7 +17,7 @@ move_speed = 80.0
 scale_tier = 3
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"weapon", &"overlay"])
 shadow_width = 22
-tags = Array[StringName]([&"melee", &"always_advance", &"no_retreat", &"elite"])
+tags = Array[StringName]([&"melee", &"always_advance", &"no_retreat", &"elite", &"hunter"])
 job_affinity = {
 &"wall": 1.0
 }

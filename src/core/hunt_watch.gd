@@ -12,6 +12,8 @@ extends RefCounted
 ## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207): a leste
 ## nao sobra chao entre elas, e os coelhos de la ficam ao pe do castelo, como o do §25;
 ## a arvore fica entre a fogueira e a torre alta, e o lago a beira, la para la do farol.
+## A ultima arvore e a toca do javali (ADR 0057), no unico chao livre a leste: entre o
+## celeiro e o sino de vigia.
 const SITIOS := [
 	[-160.0, &"bush"],
 	[196.0, &"bush"],
@@ -21,10 +23,13 @@ const SITIOS := [
 	[-1862.0, &"lake"],
 	[-1334.0, &"hole"],
 	[-100.0, &"bush"],
+	[1640.0, &"tree"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
 ## `economy`, que as do coelho ja gastavam antes da Q-150.
 const SAL_ESPERA := 150
+## A chave do sorteio do bicho raro (ADR 0057): tambem fora do fluxo `economy`.
+const SAL_RARO := 157
 const INTRO_SECONDS := 70.0  # §25, minuto 1:10; encenacao, nao afinacao de combate.
 const BICHO := &"rabbit"
 const METADE := 0.5
@@ -44,6 +49,65 @@ static func intro_at(dia_s: float) -> float:
 	return INTRO_SECONDS * dia_s / base
 
 
+## O tick da caca (ADR 0057): as tocas dao, os bichos andam e fogem ou carregam, os
+## cacadores e os imperadores batem, e o saco entrega ao rei. Devolve o que cai no chao.
+static func tick(
+	field: FieldWork, unidades: UnitSystem, delta: float, luz: bool, relogio: GameClock, rei: int
+) -> Array[Dictionary]:
+	var hunt := field.hunting
+	var intro := relogio.elapsed >= intro_at(relogio.day_seconds())
+	var raro := func() -> float: return RngService.scatter(hash([SAL_RARO, hunt.herd.born]), 1)[0]
+	hunt.grow(delta, luz, period(relogio.day_seconds()), raro)
+	var caca := hunt.resolve(unidades, luz, intro)
+	if SimLoop.combat != null and SimLoop.field == field:
+		for golpe in SimLoop.combat.manual.take_missed():
+			caca.append_array(RoyalHunt.swing(hunt, golpe))
+	var perfis := SimFactory.by_id(&"units")
+	var aljava := field.supply  # a flecha do Imperador Arqueiro, mesmo sem condutor (Q-200)
+	caca.append_array(RoyalHunt.idle(hunt, unidades, perfis, Assume.driven(), luz, aljava))
+	var chao := HuntBag.bag(hunt.bagged, unidades, caca)
+	for d in caca:
+		if not d in chao:
+			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
+	var alcance := SimFactory.curve().recruit_notice_px
+	var entregue := HuntBag.deliver(hunt.bagged, unidades, rei, alcance)  # o escudeiro (Q-114)
+	if entregue > 0:
+		EventBus.queue(&"coin_collected", [rei, entregue])
+	return chao
+
+
+## Os bichos andam, fogem ou carregam, e fogem da Podridao (ADR 0057). Corre antes do
+## combate do tick, para que a morte de quem o javali matou passe pelo combate.
+static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
+	var hunt := field.hunting
+	var ameacas := Herd.threats_of(unidades)
+	var feras := SimFactory.by_id(&"creatures")
+	if SimLoop.creatures != null:
+		hunt.herd.predators = Herd.predators_of(SimLoop.creatures, feras, field.song.allies)
+	for g in Herd.bite(unidades, hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)):
+		EventBus.queue(&"unit_damaged", [g[Herd.QUEM], g[Herd.DANO], Herd.NENHUM])  # o javali
+	for toca in hunt.herd.caught:  # a Podridao apanhou-o: levanta-se teu inimigo
+		var onde := hunt.herd.where(toca)
+		var bicho := hunt.lose(toca)
+		var criatura: CreatureData = feras.get(bicho.rots_into)
+		if criatura != null and SimLoop.creatures != null and _paid(criatura):
+			SimLoop.creatures.spawn(SimLoop.state, criatura, onde, SimLoop.core_x)
+			EventBus.queue(&"rot_summoned", [criatura.id, onde, 0.0])
+
+
+## A Podridao e a unica fonte de criaturas e gasta um orcamento (§05, §51): o bicho que
+## ela apanha so se levanta se a mancha tiver massa para ele e o dia ja o deixar, e
+## essa massa sai da noite. Sem ela, o bicho morre e nao volta.
+static func _paid(criatura: CreatureData) -> bool:
+	if SimLoop.night == null or criatura.min_day > SimLoop.state.day:
+		return false
+	for rot: RotSystem in [SimLoop.night.rot, SimLoop.night.other_rot]:
+		if rot != null and rot.active() and rot.state.mass >= criatura.mass_cost:
+			rot.state.mass -= criatura.mass_cost
+			return true
+	return false
+
+
 ## Poe as tocas na primeira vez, e abre o dia.
 static func prepare(
 	hunt: HuntingSystem, day: int, core_x: float, width: float, _fase: int = 0
@@ -52,6 +116,8 @@ static func prepare(
 		return
 	if not hunt.burrows.placed():
 		place(hunt, core_x, width)
+	elif not hunt.burrows.checked:
+		reconcile(hunt, core_x, width)
 	if day > hunt.day and SimLoop.night != null:
 		wither(hunt, SimLoop.night.amargueiros)
 	hunt.open_day(day)
@@ -88,6 +154,28 @@ static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	hunt.wildlife = SimFactory.by_id(&"wildlife")
 
 
+## Um save de antes da ADR 0057 traz as tocas de entao: acrescenta, sitio a sitio, as
+## que faltam ate cada bicho ter as suas, sem mexer nas que ja la estao.
+static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
+	hunt.burrows.checked = true
+	var periodo := period(ClockService.clock.day_seconds() if ClockService.clock else 0.0)
+	var tem := {}
+	for bicho in hunt.burrows.game:
+		tem[bicho] = int(tem.get(bicho, 0)) + 1
+	for sitio: Array in SITIOS:
+		var x := clampf(core_x + float(sitio[0]), 0.0, width)
+		if hunt.burrows.xs.has(x):
+			continue
+		for dados in _bichos():
+			var id := String(dados.id)
+			if int(tem.get(id, 0)) >= dados.burrows_per_region or not dados.sources.has(sitio[1]):
+				continue
+			tem[id] = int(tem.get(id, 0)) + 1
+			var espera := RngService.scatter(hash([SAL_ESPERA, hunt.burrows.xs.size()]), 1)[0]
+			hunt.burrows.add(x, espera * periodo, String(sitio[1]), id)
+			break
+
+
 ## Segundos de luz entre dois bichos da mesma toca: a luz do dia vezes as moedas que
 ## as tocas todas dao de uma vez (o veado da 3, o coelho 1), a dividir pela caca media
 ## do dia (hunt_yield). `dia_s` e a duracao escolhida.
@@ -109,7 +197,8 @@ static func period(dia_s: float) -> float:
 	return _periodo[dia_s]
 
 
-## Os bichos com tocas no bioma da regiao de casa, o coelho primeiro (o do 1:10).
+## Os bichos com tocas no bioma da regiao de casa, o coelho primeiro (o do 1:10), e
+## depois do que vale menos para o que vale mais: cada sitio fica para o mais miudo.
 static func _bichos() -> Array[WildlifeData]:
 	var bioma := SimFactory.biome_of_segment(SimFactory.SEGMENTO_DE_PARTIDA)
 	var saida: Array[WildlifeData] = []
@@ -117,10 +206,7 @@ static func _bichos() -> Array[WildlifeData]:
 		var dados := recurso as WildlifeData
 		if dados.burrows_per_region > 0 and dados.biomes.has(bioma):
 			saida.append(dados)
-	saida.sort_custom(
-		func(a: WildlifeData, b: WildlifeData) -> bool:
-			return a.id == BICHO or (b.id != BICHO and String(a.id) < String(b.id))
-	)
+	saida.sort_custom(_antes)
 	return saida
 
 
@@ -135,3 +221,11 @@ static func wither(hunt: HuntingSystem, arvores: AmargueiroSystem) -> Array[floa
 		if de_pe and arvores.bands[k] == int(Band.Kind.SURFACE):
 			perigos.append(arvores.xs[k])
 	return hunt.wither(perigos, dados.burrow_wither_px)
+
+
+static func _antes(a: WildlifeData, b: WildlifeData) -> bool:
+	if a.id == BICHO or b.id == BICHO:
+		return a.id == BICHO and b.id != BICHO
+	if a.coin_yield != b.coin_yield:
+		return a.coin_yield < b.coin_yield
+	return String(a.id) < String(b.id)

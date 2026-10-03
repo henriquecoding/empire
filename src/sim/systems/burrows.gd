@@ -31,6 +31,9 @@ var waits: PackedFloat32Array = PackedFloat32Array()
 ## O sitio de cada toca (Q-150) e o bicho que dela sai.
 var kinds := PackedStringArray()
 var game := PackedStringArray()
+## Se as tocas ja foram conferidas com os sitios de agora (ADR 0057). Nao vai no save:
+## um save carregado confere-se outra vez.
+var checked := false
 
 
 func placed() -> bool:
@@ -45,6 +48,7 @@ func place(
 	fontes := PackedStringArray(),
 	caca := PackedStringArray()
 ) -> void:
+	checked = true
 	xs = onde.duplicate()
 	alive = PackedByteArray()
 	waits = PackedFloat32Array()
@@ -55,6 +59,15 @@ func place(
 		waits.append(esperas[k] if k < esperas.size() else 0.0)
 		kinds.append(fontes[k] if k < fontes.size() else String(ARBUSTO))
 		game.append(caca[k] if k < caca.size() else String(COELHO))
+
+
+## Uma toca a mais em `x`, viva, com a espera ate ao primeiro bicho, o sitio e o bicho.
+func add(x: float, espera: float, fonte: String, bicho: String) -> void:
+	xs.append(x)
+	alive.append(1)
+	waits.append(espera)
+	kinds.append(fonte)
+	game.append(bicho)
 
 
 ## O bicho da toca em `x`, ou o coelho se nao ha toca ali.

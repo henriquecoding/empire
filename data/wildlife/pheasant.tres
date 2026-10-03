@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="WildlifeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wildlife_data.gd" id="1_6rayv"]
+
+[resource]
+script = ExtResource("1_6rayv")
+id = &"pheasant"
+display_key = "WILDLIFE_PHEASANT"
+max_health = 2
+move_speed = 64.0
+coin_yield = 1
+biomes = Array[StringName]([&"ancient_forest", &"floodplain", &"coast"])
+per_segment_max = 1
+shadow_width = 8
+burrows_per_region = 1
+burrow_wither_px = 48.0
+sources = Array[StringName]([&"bush"])
+graze_speed = 14.0
+roam_px = 20.0
+notice_px = 64.0
+flee_px = 96.0
+rots_into = &"crawler"

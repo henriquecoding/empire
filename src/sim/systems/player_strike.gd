@@ -17,6 +17,8 @@ var bleeding: Bleeding
 ## CreatureData por id: quem tem sangue.
 var creature_data: Dictionary = {}
 var last: Dictionary = {}
+## Os golpes que nao acharam criatura: vao a caca a frente de quem bateu (ADR 0057).
+var missed: Array[Dictionary] = []
 var _requests: Dictionary = {}
 var _profiles: Dictionary
 var _posts: JobBoard
@@ -39,6 +41,13 @@ func pending(who: int) -> bool:
 
 func cancel() -> void:
 	_requests.clear()
+
+
+## Os golpes falhados desde a ultima vez, e esquece-os.
+func take_missed() -> Array[Dictionary]:
+	var saida := missed
+	missed = []
+	return saida
 
 
 func tick(delta: float) -> void:
@@ -127,6 +136,7 @@ func resolve(
 		&"direction": direction,
 		&"range": stats[&"range"],
 		&"target": enemy,
+		&"damage": stats[&"damage"],
 		&"target_x":
 		(
 			creatures.xs[creatures.index_of(enemy)]
@@ -143,6 +153,7 @@ func resolve(
 		}
 	)
 	if enemy < 0:
+		missed.append(last)
 		return events
 	var hits: Array[int] = [enemy]
 	var band := int(units.bands[i])

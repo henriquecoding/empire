@@ -61,9 +61,9 @@ func test_o_que_a_tropa_guardou_chega_ao_rei_quando_ele_passa() -> void:
 	var rei := unidades.spawn(estado, Registry.entry(&"units", &"monarch"), MEU, X + 2000.0)
 	_pousar(X, 3)
 	Gleaning.sweep(unidades, moedas, rei, caca.bagged)
-	assert_int(caca.deliver(unidades, rei, 120.0)).is_equal(0)
+	assert_int(HuntBag.deliver(caca.bagged, unidades, rei, 120.0)).is_equal(0)
 	unidades.xs[unidades.index_of(rei)] = X + 50.0
-	assert_int(caca.deliver(unidades, rei, 120.0)).is_equal(3)
+	assert_int(HuntBag.deliver(caca.bagged, unidades, rei, 120.0)).is_equal(3)
 	assert_int(unidades.carried_coins[unidades.index_of(quem)]).is_equal(0)
 
 
