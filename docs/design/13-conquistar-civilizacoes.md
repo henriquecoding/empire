@@ -8,7 +8,7 @@ Em Kingdom, avançar destrói portais e acabou. Aqui, avançar é absorver uma c
 
 Uma unidade que só aquele povo tem: a barcaça dos Portuários, o escavador dos Sob-Raiz, o aríete da Fenda.
 
-Um novo personagem controlável, com a silhueta daquele povo. É assim que a lista de classes cresce sem inventares classes do nada.
+Uma tropa ou um ofício com a silhueta daquele povo, sob IA. Um imperador desbloqueado só se joga depois de encontrado vivo na campanha (ADR 0052). É assim que a lista cresce sem inventares classes do nada.
 
 1 a 3 Sementes, mais a revelação da região adjacente e 1–2 cavidades marcadas no corte de solo.
 
@@ -39,3 +39,5 @@ Se a muralha cair e o rei inimigo estiver ausente, os defensores rendem-se e pas
 > Matar o rei inimigo dá 40 a 160 moedas, uma vez. Deixá-lo fugir dá-te o povo dele e uma rota de comércio que rende para sempre (§06). O jogo nunca te diz qual é a certa — mas a conta é fazível, e por volta do dia 20 a rota já pagou o saque várias vezes. Os dois caminhos levam a epílogos diferentes (§17).
 
 Painel de 30/09/2026 — ADR 0043. Cada outro reino tem casa, oficina, defesas, trabalhadores, construtor, guarnição e tesouro próprio; produz, paga soldo, repõe flechas, substitui baixas, repara e enfrenta a Podridão de noite. Classes viajam de dia da bifurcação ou fortaleza vassala a um destino conquistado com defesas de pé. O rei permanece no reino original (Q-174, Q-178). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.
+
+Pedido do dono de 02/10/2026 — ADR 0052. Todos os monarcas exploram e podem liderar uma expedição presencial; quem prefere ficar em casa envia uma incursão liderada por um Diplomata, sob IA. A viagem de dia para destino seguro continua, agora também para o monarca e a comitiva que está com ele. Cerco delegado, conquista presencial e assimilação diplomática terão um resultado comum, com uma recompensa só por objetivo (UN-20, UN-22). Desbloquear o arquétipo de um imperador não o cria: ele tem de ser encontrado.

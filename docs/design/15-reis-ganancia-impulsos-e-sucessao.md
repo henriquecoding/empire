@@ -36,3 +36,5 @@ O preço em moedas (Q-014). Cada impulso tem uma base, na medida do que vale: a 
 - **Herança** — O sucessor herda 60% dos boosts e 100% dos desbloqueios. A Ganância é sorteada de novo.
 - **Vulnerabilidade** — Impérios com sucessor jovem no trono são mais fáceis de dominar — e isso vale para ti e para os inimigos. Atacar logo a seguir à morte de um rei inimigo é a janela ideal.
 - **Atalho** — O diplomata n2 treina um sucessor em 5 dias em vez de 10.
+
+Pedido do dono de 02/10/2026 — ADR 0052. O sucessor tem nome e identidade próprios: a sucessora de Nia não volta a chamar-se Nia. Os desbloqueios, as dívidas e as consequências ficam. Os decretos são do reino: ter três imperadores não dá três decretos por dia. Por aprovar: que o herdeiro siga o perfil de quem reinava e que os 60% se apliquem só aos bónus passivos herdáveis são propostas da Q-202; que uma troca de imperador não sorteie a Ganância de novo é proposta da Q-205.

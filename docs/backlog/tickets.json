@@ -1721,5 +1721,477 @@
   "fora": "A arte definitiva (ART-01), sprites animados das obras e remapear o toque.",
   "estado": "feito",
   "horas": "—"
+ },
+ "UN-00": {
+  "title": "Consolidar as regras dos monarcas e a ADR",
+  "porque": "A escolha inicial dava um corpo de classe ao lado de um rei escondido, e o dono pediu a unificação e só imperadores controláveis.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md"
+  ],
+  "depende": "—",
+  "feito": "MU-01 a MU-28 rastreadas na ADR 0052; o dossiê (§08, §09, §13–§16, §18, §24, §99) diz a regra nova; as direções do dono na Q-195 e as propostas nas Q-196 a Q-205, D separado de P; os 32 tickets no backlog",
+  "fora": "Código, CSV e balanceamento: são as fases seguintes.",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "UN-01": {
+  "title": "Esquema de monarcas e companheiros",
+  "porque": "Um monarca precisa de unidade, perfil de combate, evolução, companheiro e armazenamento numa só definição, sem testar o nome «monarch».",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/44-os-recursos-com-todos-os-campos.md"
+  ],
+  "depende": "UN-00",
+  "feito": "Tabela de monarcas no pipeline CSV → .tres, validada pelo csv_to_tres e pelo content_report; IDs canónicos na NAMING_BIBLE; o `monarch` continua a ser o Rei; Nia, o Arqueiro imperial e os companheiros novos já com uma unidade mínima nos dados (os números de bancada ficam em _proposed e afinam-se no UN-09 e no UN-13), para o UN-04 poder pôr qualquer dupla em campo",
+  "fora": "Renomear archer_hero ou bard_hero por alias; o companions.csv já é a mascote (§08) e não muda de sentido.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-02": {
+  "title": "Autoridade por reino e por pessoa",
+  "porque": "A gestão, a derrota e a sucessão perguntavam «é o corpo do rei gordo?».",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md"
+  ],
+  "depende": "UN-01",
+  "feito": "Gerir, decretar e abrir a roda dependem do titular da coroa, não do data_id nem do porte; os três monarcas iniciais têm essa autoridade; um teste por perfil",
+  "fora": "Coop e duas coroas (UN-29).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-03": {
+  "title": "Vínculo de companhia",
+  "porque": "O ClassSystem encontrava o escudeiro pela tag de apanhar moedas: qualquer coletor podia passar a escudeiro.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-02",
+  "feito": "Um companheiro por pessoa, por ID, gravado no save; cargas preservadas; o companheiro segue o patrono e não a câmara; um companheiro morto fica marcado como perdido (a reposição é a proposta da Q-205, por aprovar)",
+  "fora": "A mascote do trono, que é outro sistema.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-04": {
+  "title": "Seleção imperial e autoria inicial",
+  "porque": "Escolher Nia ou o Arqueiro não podia deixar outro rei com a coroa.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "UN-01, UN-02, UN-03",
+  "feito": "Três opções — Rei, Nia, Arqueiro — com papel, companheiro, vantagem, custo e evolução; uma dupla só em campo; nenhum rei escondido; tempo parado até confirmar; rato, comando e toque",
+  "fora": "Escolha de Ganância no primeiro ecrã (plano §6.1).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-05": {
+  "title": "Retirar o controlo de tropas",
+  "porque": "O Verbo 2, a coroa caída e a viagem ainda deixavam assumir uma tropa de classe.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "UN-02",
+  "feito": "Nenhum contexto, atalho ou resgate assume ofício ou soldado; sem trela para os monarcas; a viagem aceita o monarca; o rei largado deixa de existir como caso",
+  "fora": "A troca imperial (UN-17).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-06": {
+  "title": "Migração das campanhas antigas",
+  "porque": "Um save com Arqueiro ou Bardo assumido não pode começar um mapa novo nem perder o que levava.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/62-esquema-versoes-e-a-regra-de-seguranca.md"
+  ],
+  "depende": "UN-03, UN-04, UN-05",
+  "feito": "Save de versão 6 sobe à 7: mundo, pessoas e itens preservados; o corpo de classe vira unidade de IA; o controlo volta ao rei vivo; o escudeiro passa a vínculo; migrar duas vezes dá o mesmo",
+  "fora": "Converter uma campanha antiga em Nia ou no Arqueiro por equivalência de nomes.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-07": {
+  "title": "Generalizar a morte e a sucessão",
+  "porque": "A coroação criava sempre um units/monarch, e a morte do Arqueiro ou da Nia caía no rei por omissão.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md"
+  ],
+  "depende": "UN-02, UN-03",
+  "feito": "Os três perfis caem, deixam a coroa recuperável e morrem de vez da mesma maneira; o herdeiro tem nome próprio e herda o vínculo do companheiro sobrevivente; sem sucessor válido, a campanha acaba. Perfil e força do herdeiro: a opção mais simples e reversível da Q-202 (segue o perfil de quem reinava), marcada como proposta até à decisão",
+  "fora": "Escolher outro arquétipo para o herdeiro (Q-202).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-08": {
+  "title": "Despacho do combate e da habilidade",
+  "porque": "A habilidade de quem é rei era sempre a Vigília.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "UN-04, UN-05",
+  "feito": "Ataque por ator; R/RT/botão direito pelo perfil (Rei: Vigília; Nia: canto pago; Arqueiro: marca); pausa, troca e morte cancelam a intenção; segurar não repete gastos",
+  "fora": "Novas habilidades além das três.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-09": {
+  "title": "A Imperatriz Nia e os números de bancada",
+  "porque": "Nia é a escolha rápida e frágil: pouco dano por golpe, alta cadência.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-08",
+  "feito": "Unidade própria nos dados, com tags de rei; ritmo rápido e golpe baixo em _proposed; governa, explora e morre como os outros",
+  "fora": "Arte final (art/ não se toca).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-10": {
+  "title": "O Bardo real pago",
+  "porque": "Nia não canta: pede ao Bardo, que só canta vivo, perto, pronto e pago.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-03, UN-09",
+  "feito": "Modo, orçamento, alcance, recusa e efeito únicos; sem companhia ou sem moedas não há débito; a reserva volta se a ação deixar de poder ocorrer antes do compromisso",
+  "fora": "Automatização sem orçamento autorizado.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-11": {
+  "title": "Conversão e hostilidade",
+  "porque": "Uma criatura convertida podia roubar a coroa caída, porque o CrownDrop não perguntava pela hostilidade.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md"
+  ],
+  "depende": "UN-10",
+  "feito": "Um convertido não rouba a coroa nem recebe fogo amigo; só criaturas vivas e hostis levam a coroa",
+  "fora": "Relações entre reinos humanos (UN-22).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-12": {
+  "title": "Promoção e evolução de Nia",
+  "porque": "O Maestro precisa de um feito de Nia e de uma promoção que não cure.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-10, UN-11",
+  "feito": "Promoção mantém a proporção de vida e custa uma vez; o feito conta criaturas distintas com Nia presente; limite de aliados",
+  "fora": "Conversões de criaturas gigantes sem peso.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-13": {
+  "title": "O Imperador Arqueiro e a aljava",
+  "porque": "O arqueiro imperial gasta flechas: as jogáveis deixaram de ter recursos ilimitados.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
+  ],
+  "depende": "UN-08",
+  "feito": "Unidade própria; cada disparo gasta uma flecha; aljava e bolsa por pessoa; sem flechas não dispara a flecha",
+  "fora": "Flecha física com colisão.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-14": {
+  "title": "O escudeiro que fornece flechas",
+  "porque": "As flechas do imperador vêm do escudeiro dele, pagas com as moedas pessoais dele.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-03, UN-13",
+  "feito": "Sem moedas pessoais, nenhuma flecha nova; sem espaço, sem cobrança; o lote que não cabe fica registado; tesouro, colega e banca do arco não pagam por ele",
+  "fora": "Estoque físico do escudeiro.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-15": {
+  "title": "O sangramento",
+  "porque": "A flecha imperial pode ferir e fazer perder vida aos poucos.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
+  ],
+  "depende": "UN-13",
+  "feito": "Chance, ticks e fonte no save; uma instância por alvo que renova; uma morte e uma recompensa quando golpe e sangramento matam no mesmo tick; sorteio no fluxo combat",
+  "fora": "Sangramento nos arqueiros comuns.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-16": {
+  "title": "Encontros e roster imperial",
+  "porque": "Desbloquear um imperador não pode criá-lo no menu.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/13-conquistar-civilizacoes.md",
+   "docs/design/17-segredos-lore-e-o-teu-tutorial-invisivel.md"
+  ],
+  "depende": "UN-05, UN-06, UN-07",
+  "feito": "Desbloqueado, encontrado e disponível são três estados gravados; o encontro é uma pessoa no mundo, persistente, que não volta com vida cheia",
+  "fora": "Gerador de encontros por toda a campanha.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-17": {
+  "title": "Troca imperial transacional",
+  "porque": "A troca não pode curar, teletransportar, repor flechas nem criar uma segunda coroa.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-16",
+  "feito": "Validação e revalidação; estado de cada pessoa preservado; intenções antigas canceladas; recusada em queda ou sucessão pendente; sem duas coroas em solo",
+  "fora": "Troca à distância pelo menu.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-18": {
+  "title": "Diplomata universal sob IA",
+  "porque": "O Diplomata básico pedia duas Sementes Reais e podia ser corpo jogável.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/09-as-tropas-que-fazem-o-reino-andar.md",
+   "docs/design/14-o-diplomata-os-mercenarios-e-a-divida.md"
+  ],
+  "depende": "UN-05",
+  "feito": "Acesso básico em todos os impérios; reposição possível sem a Embaixada; nunca corpo jogável; quem já pagou as Sementes não perde nada",
+  "fora": "As missões (UN-20).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-19": {
+  "title": "Tesouro local e defesa na ausência",
+  "porque": "Soldo, flechas e treino saíam do saco do rei, mesmo com ele longe.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/06-producao-conversao-e-comercio.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md"
+  ],
+  "depende": "UN-02, UN-07",
+  "feito": "Reserva doméstica finita, com depósito e retirada explícitos; o reino fora da câmara continua simulado; aviso doméstico em níveis",
+  "fora": "Débito remoto silencioso.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-20": {
+  "title": "Incursões com Diplomata",
+  "porque": "O monarca que fica em casa precisa de uma maneira de conquistar sem controlar tropas.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/13-conquistar-civilizacoes.md",
+   "docs/design/14-o-diplomata-os-mercenarios-e-a-divida.md"
+  ],
+  "depende": "UN-18, UN-19",
+  "feito": "Líder, grupo, orçamento, partida, regresso e perdas gravados; a marcha antiga em curso conclui pelo contrato antigo",
+  "fora": "Controlo do Diplomata ou da tropa durante a missão.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-21": {
+  "title": "Captura, resgate e dívida",
+  "porque": "A dívida dos mercenários e o resgate não podem confundir-se com a Dívida da Candeia.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/14-o-diplomata-os-mercenarios-e-a-divida.md"
+  ],
+  "depende": "UN-20",
+  "feito": "Prazo, execução e pagamento aplicados uma vez; o load não volta a sortear nem reinicia o prazo; registo separado da Candeia",
+  "fora": "Perdão Real sobre a Candeia.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-22": {
+  "title": "Alvo de unidade e de obra, e conquista",
+  "porque": "O ataque escolhia só criaturas; a conquista presencial precisa de alvos de outro reino.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md",
+   "docs/design/13-conquistar-civilizacoes.md"
+  ],
+  "depende": "UN-11, UN-20",
+  "feito": "Combate entre reinos por relação; um ID de conquista com uma transição e uma recompensa, mesmo que cerco delegado e combate físico resolvam o mesmo alvo",
+  "fora": "Saque como consequência implícita.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-23": {
+  "title": "Governo inimigo e assimilação",
+  "porque": "Os assentamentos não tinham governante, companhia nem herdeiro.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/13-conquistar-civilizacoes.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md"
+  ],
+  "depende": "UN-07, UN-18, UN-22",
+  "feito": "Sede, governante, companhia e sucessor por reino; a janela de sucessão vê-se no mundo; assimilação pelo mesmo resultado da conquista",
+  "fora": "Tornar o governante derrubado uma tropa assumível.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-24": {
+  "title": "Viagem da comitiva, montarias e sítios",
+  "porque": "A viagem levava só o corpo conduzido.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/12-montarias.md",
+   "docs/design/13-conquistar-civilizacoes.md"
+  ],
+  "depende": "UN-03, UN-17, UN-20",
+  "feito": "Transporte atómico de quem está no ponto; companhia separada fica com aviso; a viagem não atravessa um sítio subterrâneo; nada se duplica no destino",
+  "fora": "Tiro montado sem contrato próprio.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-25": {
+  "title": "Ofícios, evolução e produção animal",
+  "porque": "Os ofícios evoluem por contribuição real, sob IA.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/06-producao-conversao-e-comercio.md",
+   "docs/design/09-as-tropas-que-fazem-o-reino-andar.md"
+  ],
+  "depende": "UN-19, UN-20, UN-21, UN-22",
+  "feito": "Ordens de IA; evolução por tarefa real; animal por ID com calendário; cozinhar consome uma vez e acaba a produção",
+  "fora": "Controlo direto de ofícios.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-26": {
+  "title": "Pontes, torres e um evento de bioma",
+  "porque": "Fugir para o alto pede alcance vertical com contra-jogo.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md"
+  ],
+  "depende": "UN-22, UN-24, UN-25",
+  "feito": "Alcance vertical e resposta do inimigo testados; torre vazia não dispara; um evento de bioma com aviso, duração e persistência",
+  "fora": "Física vertical completa.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-27": {
+  "title": "Lore e apresentação dos encontros",
+  "porque": "Nia e os encontros precisam de história que o estado do jogo respeite.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/17-segredos-lore-e-o-teu-tutorial-invisivel.md"
+  ],
+  "depende": "UN-09, UN-10, UN-11, UN-12, UN-13, UN-14, UN-15, UN-16, UN-17, UN-23, UN-24",
+  "feito": "História, bandeira e identidade persistem; o Bardo morto não canta em cena; a sucessora não se chama Nia",
+  "fora": "Editar art/ ou audio/.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-28": {
+  "title": "O primeiro ciclo e a acessibilidade",
+  "porque": "Os três monarcas ensinam-se pelo mesmo método de entrada.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "UN-04, UN-10, UN-14, UN-17, UN-18",
+  "feito": "Primeiro dia ensina cada dupla sem gastar o jogador; preço, prazo e sucessão não dependem só de som ou cor; rato, comando e toque",
+  "fora": "Explicação externa ao jogo.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-29": {
+  "title": "Coop local",
+  "porque": "Dois jogadores, dois imperadores, um reino.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/18-dois-modos-ambos-na-fase-8.md"
+  ],
+  "depende": "UN-17, UN-18, UN-19, UN-20, UN-21, UN-22, UN-23",
+  "feito": "Dois imperadores com recursos, decretos e morte corretos; pessoa nunca controlada pelos dois",
+  "fora": "Rede (UN-31).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-30": {
+  "title": "Dois reinos e a vitória",
+  "porque": "O competitivo pede relações, conquista e continuidade por reino.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/18-dois-modos-ambos-na-fase-8.md"
+  ],
+  "depende": "UN-22, UN-23, UN-29",
+  "feito": "Relações e vitória por sede ou continuidade; Vigília e conversão só no reino emissor; lados invertidos medidos",
+  "fora": "Domínio territorial como vitória misturada.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "UN-31": {
+  "title": "Spike e integração de rede",
+  "porque": "O multiplayer online pede transporte compatível com o browser.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/design/18-dois-modos-ambos-na-fase-8.md"
+  ],
+  "depende": "UN-29, UN-30",
+  "feito": "Transporte compatível com o export; o host valida autor e ator; reconectar devolve a mesma pessoa, companhia e moedas",
+  "fora": "Backend novo sem prova local.",
+  "estado": "por fazer",
+  "horas": "—"
  }
 }
