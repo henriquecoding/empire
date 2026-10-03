@@ -8,7 +8,7 @@ class_name Campfires
 extends RefCounted
 
 const FOGUEIRA := &"campfire"
-const FOGUEIRAS_X := [-1230.0, 1000.0]
+const FOGUEIRAS_X := [-1300.0, 1104.0]
 
 
 ## Depois das obras da superficie e do subsolo: os ids delas nao mudam (§45).

@@ -292,7 +292,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 154 linha(s) · §21 �
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 134 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 135 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -426,6 +426,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 134 linha(s) · §06 §
 | `king_run_mult` | float | Andar — correr |  |
 | `king_run_stamina_s` | float | Andar — correr |  |
 | `king_run_refill_s` | float | Andar — correr |  |
+| `king_run_rest_refill_s` | float | Andar — correr |  |
 | `king_run_evolved_mult` | float | Andar — correr |  |
 | `king_leash_px` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |

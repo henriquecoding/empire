@@ -29,34 +29,34 @@ const ESCUDEIRO := &"squire"
 
 # Posicoes, relativas ao nucleo. Sao autoria de nivel e nao balanceamento: sao a
 # resposta a "onde", e o §21 diz que essa resposta e do segmento.
-# O nucleo tem 480 px; o resto a volta dele, de dentro para fora (§25: 3:30).
-const MUROS_X := [-1300.0, -600.0, 600.0, 1300.0]
+# O nucleo tem 480 px e o resto a volta, sempre com chao livre entre obras (Q-207).
+const MUROS_X := [-1408.0, -680.0, 680.0, 1408.0]
 # A Casa de Treino e unica por imperio; do outro lado, a cozinha do cozinheiro (§09).
-const TREINOS_X := [-300.0]
-const COZINHAS_X := [300.0]
+const TREINOS_X := [-324.0]
+const COZINHAS_X := [324.0]
 # O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
 # render e tambem a de mandar o cozinheiro ao sitio arriscado (§21).
-const CELEIROS_X := [1450.0]
+const CELEIROS_X := [1524.0]
 # E a casa do herdeiro (§15) do outro lado, a oeste: o rei novo nasce la (Q-133).
-const HERDEIROS_X := [-1450.0]
-const CANTEIROS_X := [-520.0, -420.0, 420.0, 520.0]
-const TORRES_X := [-680.0, 680.0]
-const GALINHEIROS_X := [-820.0, 820.0]
+const HERDEIROS_X := [-1524.0]
+const CANTEIROS_X := [-576.0, -456.0, 456.0, 576.0]
+const TORRES_X := [-768.0, 768.0]
+const GALINHEIROS_X := [-944.0, 944.0]
 # UM pesqueiro, e por duas razoes que coincidem: o segmento tem uma agua e nao
 # duas (segments.csv, coluna `resource`), e com ele a regiao fica com as SETE
 # fontes do perfil `balanced` do §06 — quatro canteiros, dois galinheiros e um
 # pesqueiro. E isso que faz do dia da asfixia medido aqui um numero sobre ESTE
 # jogo e nao sobre um slider. Fica entre a torre alta e o muro de fora.
-const PESQUEIROS_X := [1200.0]
-const TORRES_ALTAS_X := [-1100.0, 1100.0]
-const PASSAGENS_X := [-950.0, 950.0]
+const PESQUEIROS_X := [1292.0]
+const TORRES_ALTAS_X := [-1176.0, 1176.0]
+const PASSAGENS_X := [-1040.0, 1040.0]
 # Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
 # estatua meio enterrada; ao 11:00, a camara atras da passagem de fora, com a
 # Semente Real. E a bifurcacao a leste onde cai o capitulo revelado (§83).
-const SEGREDOS_X := {&"under_vegetation": 360.0, &"behind_passage": -1180.0}
+const SEGREDOS_X := {&"under_vegetation": 396.0, &"behind_passage": -1290.0}
 const CAMARA_W := 64.0
-const BIFURCACAO_X := 1800.0
-const RUINA_X := -360.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
+const BIFURCACAO_X := 1904.0
+const RUINA_X := -396.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
 # §25: gente por recrutar, ao preco do §07 (1, 3 e 4), e nunca dentro de um sitio
 # de obra (auditoria de 26/09, D5). Q-110 (o dono, 29/09/2026): "os vagabundos nao
 # sao meus trabalhadores, devo procura-los em acampamentos; ao iniciar o imperio
@@ -64,13 +64,13 @@ const RUINA_X := -360.0  # §79: o diario 1, "numa ruina dentro das tuas muralha
 # outros dois estao nos acampamentos, fora das muralhas de fora.
 const VAGABUNDOS_X := [-230.0, 230.0, -1650.0, 1650.0]
 const JA_TEUS := 2
-const ARQUEIROS_X := [-740.0, -180.0, 180.0]
-const LANCEIROS_X := [-990.0, 1040.0]
+const ARQUEIROS_X := [-724.0, -180.0, 180.0]
+const LANCEIROS_X := [-1080.0, 1130.0]
 const ACAMPAMENTOS_X := [-1650.0, 1650.0]  # o vagabundo de cada alvorada (Q-122)
 # §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
 # casca." Logo depois da estacaria de dentro, entre a torre e o galinheiro, com a
 # escala de uma tropa (§22).
-const AMARGUEIRO_VELHO_X := -750.0
+const AMARGUEIRO_VELHO_X := -840.0
 const AMARGUEIRO_VELHO_ESCALA := 2
 
 const POSTO_CANTEIRO := &"farm"

@@ -12,7 +12,8 @@ const PERTO_PX := 24.0
 const ENTRE_MOEDAS := 15
 const O_VAGABUNDO := 2
 const O_ARQUEIRO := 7
-const O_CANTEIRO := 1500.0
+## O canteiro de dentro a oeste, o mais perto do castelo do lado de onde se comeca.
+const O_CANTEIRO := 1
 ## O §25 mede a primeira moeda largada em menos de 40 s (first_coin_dropped):
 ## recrutar os dois do lado do castelo nao pode levar mais do que isso.
 const RECRUTAR_S := 40.0
@@ -55,7 +56,7 @@ func test_sem_ninguem_a_jogar_o_coelho_do_1_10_cai_junto_ao_castelo_uma_so_vez()
 func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	_recrutar(O_VAGABUNDO)
 	_recrutar(O_ARQUEIRO)
-	var canteiro := _obra(O_CANTEIRO)
+	var canteiro := _obra(SimLoop.core_x + Greybox.CANTEIROS_X[O_CANTEIRO])
 	var preco := canteiro.next_cost()
 	# A caca abre em vagas pela luz (Q-106): o canteiro paga-se antes do crepusculo.
 	var limite := _fase_em(GameClock.Phase.DUSK)

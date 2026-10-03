@@ -2289,5 +2289,21 @@
    "**D (Q-186):** *«A sala secreta que há no império tem um baú onde o imperador pode deixar armazenado o excedente da sua riqueza, que caso alguém ou algum inimigo invada pode ter acesso àquilo e roubar, pode não ter nada ou pode ter coisas bem valiosas, a do jogador começa vazia, mas pode ser preenchida conforme ele planejar, os outros impérios na campanha há sempre algo nessa sala secreta.»*",
    "**Substitui:** as 3 a 6 moedas da primeira descida à sala secreta do jogador (ADR 0046)."
   ]
+ },
+ "QP-04": {
+  "title": "O refinamento da jogabilidade de 03/10/2026",
+  "porque": "O dono pediu um refinamento grande da jogabilidade, com pesquisa na web, e espaço entre as construções.",
+  "spec": [
+   "docs/adr/0054-o-refinamento-de-03-10-espaco-folego-e-som.md"
+  ],
+  "depende": "QP-02",
+  "feito": "As obras da região têm 24 px livres entre si; parado, o fôlego enche em 4 s; o jogo toca os sons provisórios das 22 pistas com sinal; tudo com teste; as propostas por decidir ficam no QUESTIONS.md",
+  "fora": "Reparar sem micro-gestão (Q-210), o alcance da torre (Q-211), o bem alimentado (Q-212), as gravações de audio/.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-207 a Q-212. Ver a ADR 0054: o que se aplicou e como desfazer. O painel só recebe «aplicada» depois de merge e publicação."
+  ]
  }
 }

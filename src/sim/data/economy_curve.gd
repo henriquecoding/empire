@@ -181,6 +181,8 @@ extends Resource
 @export var king_run_stamina_s: float = 0.0
 ## Quantos segundos a andar enchem o folego do zero (Q-193).
 @export var king_run_refill_s: float = 0.0
+## Quantos segundos parado enchem o folego do zero: parar recupera depressa (Q-208).
+@export var king_run_rest_refill_s: float = 0.0
 ## Quanto mais folego tem o monarca evoluido (Q-193).
 @export var king_run_evolved_mult: float = 1.0
 ## Quanto o rei se afasta das bordas da regiao de casa; as classes vao alem (Q-150).

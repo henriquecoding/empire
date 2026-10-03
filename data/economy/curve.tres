@@ -108,6 +108,7 @@ crossing_party_px = 120.0
 king_run_mult = 1.8
 king_run_stamina_s = 8.0
 king_run_refill_s = 10.0
+king_run_rest_refill_s = 4.0
 king_run_evolved_mult = 1.5
 king_leash_px = 1440.0
 impulse_repeat_mult = 1.5

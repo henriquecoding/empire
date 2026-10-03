@@ -53,6 +53,7 @@ func _ready() -> void:
 		SimLoop.set_paused(true)
 	var fase := func() -> float: return RngService.float_range(RngService.VISUAL, 0.0, TAU)
 	_tremor = ScreenShake.new(Vector4(fase.call(), fase.call(), fase.call(), fase.call()))
+	add_child(SfxDirector.new())  # os sons provisorios (ADR 0054)
 	if fresh:
 		_starting_choice()
 	print(_recibo())

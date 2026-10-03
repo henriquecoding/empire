@@ -50,7 +50,7 @@ BASE = (1280, 720)
 VISTAS = {"oeste": -1280, "centro": 0, "leste": 1280}
 # As duas passagens do Greybox (PASSAGENS_X). Se mudarem la, a ficha apanha: a
 # prancha confere que o rei ficou na faixa de baixo e onde a camara ficou.
-PASSAGENS = {"passagem-oeste": -950, "passagem-leste": 950}
+PASSAGENS = {"passagem-oeste": -1040, "passagem-leste": 1040}
 FASES = ("dawn", "morning", "noon", "afternoon", "dusk", "night")
 MOMENTOS = {"dia": "noon", "crepusculo": "dusk", "noite": "night"}
 # A camara antecipa ate 120 px (camera.csv); mais do que isto e outro enquadramento.

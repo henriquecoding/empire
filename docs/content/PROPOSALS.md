@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 592 | 293 | 885 |
-| Fases 3–8 | 343 | 97 | 440 |
-| Total | 935 | 390 | 1325 |
+| Fases 3–8 | 344 | 97 | 441 |
+| Total | 936 | 390 | 1326 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -907,7 +907,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | wildlife | `boar` | `per_segment_max` | 1 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 | wildlife | `boar` | `shadow_width` | 24 | 2 | Topo do intervalo da §06 (9). Carrega contra quem o caça: é o risco de 'sair das muralhas de dia'. Q-150: sairia das árvores; sem tocas por região até haver quem lhe resista (carrega contra o caçador). |
 
-## 3 · Fases 3 a 8 — 440
+## 3 · Fases 3 a 8 — 441
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1259,6 +1259,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `spirit_vagrants` | `spirit_vagrants` | 1 | 9 | Proposta (Q-102): animado, chega mais um vagabundo por alvorada aos acampamentos; abatido, não chega nenhum — a gente vem para onde se vive bem (Stronghold). |
 | economy | `king_run_stamina_s` | `king_run_stamina_s` | 8.0 | 9 | Proposta (Q-193): quantos segundos o monarca corre a pé com o fôlego cheio. 8 s a 144 px/s são 1150 px — um terço do mapa de casa. Esgotado, fica cansado: anda a 1× até recuperar o fôlego todo. Montado, quem cansa é o cavalo, e o cavalo não tem fôlego (Q-169). |
 | economy | `king_run_refill_s` | `king_run_refill_s` | 10.0 | 9 | Proposta (Q-193): quantos segundos a andar ou parado se leva a encher o fôlego do zero. Recuperar é mais lento do que gastar, para o cansaço pesar. |
+| economy | `king_run_rest_refill_s` | `king_run_rest_refill_s` | 4.0 | 9 | Proposta (Q-208): quantos segundos PARADO se leva a encher o fôlego do zero. Parar é a forma de recuperar depressa; a andar continua o king_run_refill_s. |
 | economy | `king_run_evolved_mult` | `king_run_evolved_mult` | 1.5 | 9 | Proposta (Q-193): o monarca evoluído (a fase 2 da classe dele) corre 1,5× mais tempo — 12 s em vez de 8. Recupera ao mesmo ritmo por segundo de fôlego. |
 | economy | `king_leash_px` | `king_leash_px` | 1440 | 9 | Quanto o rei se afasta das bordas da região de casa, para cada lado: 50 m à escala do §22 — uma tropa de 49 px tem 1,7 m, e 50 m são 1440 px. Chega ao primeiro acampamento de cada trilho; as classes jogáveis vão até à borda do mundo. |
 | economy | `impulse_repeat_mult` | `impulse_repeat_mult` | 1.5 | 9 | Proposta (Q-014): o mesmo decreto repetido dentro de impulse_repeat_days dias custa ×1,5 por cada vez que saiu. Um impulso por dia já é a regra do §15; isto é o que impede que o melhor impulso seja o único que se usa. |
@@ -1327,8 +1328,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | greed_profiles | `tyrant` | `enemy_elite_bias` | 1.5 | 6 | 'Muralhas fracas, tropas de elite. Cerco rápido com aríete.' O 0,45 do §20 (fortify) está na EconomyCurve. |
 | greed_profiles | `tyrant` | `enemy_attack_unit` | counterweight_ram | 6 | 'Muralhas fracas, tropas de elite. Cerco rápido com aríete.' O 0,45 do §20 (fortify) está na EconomyCurve. |
 | secrets | `buried_statue` | `teaches` | forge | 3 | A Estátua do Ferreiro (§17: 'ensina o sistema de armas'): guarda a Forja, a oficina do ferreiro. Sem a achar, a Forja não aceita moeda (Q-016, decidida pelo dono a 28/09/2026: o que só se acha a explorar só existe depois de achado). É a do minuto 2:00 do §25, meio visível perto do castelo. |
-| secrets | `statue_offering` | `place_px` | 1550 | 3 | A Estátua da Oferenda: guarda o sacrifício de moedas à Podridão (Q-127). Sem a achar, as moedas largadas na mancha não lhe tiram massa. Fora da muralha de fora, a leste — achá-la custa sair das muralhas. |
-| secrets | `statue_seal` | `place_px` | -1560 | 3 | A Estátua do Mineiro: guarda a escora que fecha a passagem para o subsolo (Q-132). Sem a achar, a escora não aceita moeda. Fora da muralha de fora, a oeste. |
+| secrets | `statue_offering` | `place_px` | 1640 | 3 | A Estátua da Oferenda: guarda o sacrifício de moedas à Podridão (Q-127). Sem a achar, as moedas largadas na mancha não lhe tiram massa. Fora da muralha de fora, a leste — achá-la custa sair das muralhas. |
+| secrets | `statue_seal` | `place_px` | -1712 | 3 | A Estátua do Mineiro: guarda a escora que fecha a passagem para o subsolo (Q-132). Sem a achar, a escora não aceita moeda. Fora da muralha de fora, a oeste. |
 | companions | `sniffer` | `rule_params` | radius:320 | 6 | O Healing Frog (§01) é o primeiro candidato: cura pouco, todos os dias (§08 'a cura vem do companheiro'). |
 | companions | `sniffer` | `heal_per_day` | 2 | 6 | O Healing Frog (§01) é o primeiro candidato: cura pouco, todos os dias (§08 'a cura vem do companheiro'). |
 | companions | `sniffer` | `growth_stages` | 3 | 6 | O Healing Frog (§01) é o primeiro candidato: cura pouco, todos os dias (§08 'a cura vem do companheiro'). |
