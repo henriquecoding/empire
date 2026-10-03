@@ -4,10 +4,11 @@
 // mão — vale aqui para mais do que números. A duração de cada fase e a cor da
 // luz saem do clock.csv; o raio da candeia, a velocidade e a massa da Podridão
 // do rot.csv; as falas dela do strings.csv, nas duas línguas; os controlos do
-// mapa de entrada do project.godot; os seis povos, o ciclo e o roteiro das
-// tabelas do dossiê (§04, §05, §33); o estado do tickets.json e do
-// validation.json. O site passa a ser uma leitura do repositório, e não uma
-// segunda cópia dele que diverge no primeiro commit.
+// mapa de entrada do project.godot; os povos, o ciclo e o roteiro das tabelas
+// do dossiê (§04, §05, §33); os monarcas do ecrã de escolha do jogo (ADR 0052);
+// as últimas ADR; o estado do tickets.json e do validation.json. O site passa
+// a ser uma leitura do repositório, e não uma segunda cópia dele que diverge no
+// primeiro commit.
 //
 // Tudo o que não se consegue ler chumba a construção, com o nome do ficheiro:
 // uma página com um buraco é pior do que nenhuma.
@@ -124,6 +125,9 @@ function podridao(raiz) {
       return { id: o.id, dia: Number(o.min_day), pt: f.pt_PT, en: f.en };
     });
   if (!primeiras.length) falha("offers.csv: não há ofertas com dia mínimo");
+  for (const k of ["lantern_tint", "lantern_tint_mid", "lantern_tint_edge", "fire_tint", "fire_tint_mid", "fire_tint_edge"]) {
+    if (!/^#[0-9A-Fa-f]{6}$/.test(r[k] || "")) falha(`rot.csv: ${k} não é uma cor («${r[k]}»)`);
+  }
   // O violeta da mancha é uma cor do greybox e não um número de balanceamento:
   // vive no WorldPalette, e é de lá que se lê — é o #59386B do §80.
   const paleta = readFileSync(join(raiz, "src/world/world_palette.gd"), "utf8");
@@ -137,6 +141,8 @@ function podridao(raiz) {
     doisLados: n("two_sided_from_day"),
     raio: { base: n("lantern_radius_base"), porDia: n("lantern_radius_per_day"), teto: n("lantern_radius_max") },
     paragens: { nucleo: r.lantern_tint, meio: r.lantern_tint_mid, bordo: r.lantern_tint_edge },
+    // ADR 0034: o roxo é dela (o Lume), o âmbar é teu (as fogueiras e o farol).
+    fogo: { nucleo: r.fire_tint, meio: r.fire_tint_mid, bordo: r.fire_tint_edge },
     dither: n("lantern_dither_px"),
     primeiraOferta: primeiras[0].dia,
     falas: primeiras,
@@ -175,9 +181,12 @@ function controlos(raiz) {
   const acoes = {};
   for (const [, nome, corpo] of seccao.matchAll(/^([a-z_]+)=\{([\s\S]*?)^\}/gm)) {
     const teclas = [], comando = [], rato = [];
-    // Um evento acaba em `"script":null)`; os Vector2(0, 0) do rato têm
-    // parênteses lá dentro, e por isso não se corta no primeiro «)».
-    for (const [, tipo, campos] of corpo.matchAll(/Object\(InputEvent(\w+),(.*?)"script":null\)/gs)) {
+    // Um evento acaba no «)» que vem antes da vírgula do seguinte ou do «]» da
+    // lista — e não no primeiro «)»: os Vector2(0, 0) do rato têm parênteses lá
+    // dentro. O editor grava os eventos por extenso, com `"script":null`; os
+    // escritos à mão vêm só com o campo que conta (`"physical_keycode":70`), e
+    // valem o mesmo.
+    for (const [, tipo, campos] of corpo.matchAll(/Object\(InputEvent(\w+),(.*?)\)(?=\s*,\s*Object\(|\s*\])/gs)) {
       const v = (k) => campos.match(new RegExp(`"${k}":(-?[0-9.]+)`))?.[1];
       if (tipo === "Key") {
         const c = Number(v("physical_keycode") || v("keycode"));
@@ -194,9 +203,20 @@ function controlos(raiz) {
 
 // ── Os povos (§04) e o roteiro (§33) ─────────────────────────────────────
 
+// O segmento onde a partida começa é o do SimFactory; o povo de partida é o que
+// o tem no kit. Os outros já têm segmentos — as terras deles geram-se ao andar
+// (ADR 0038) —, e por isso «ter segmentos» deixou de dizer qual se joga.
+function segmentoDePartida(raiz) {
+  const f = "src/core/sim_factory.gd";
+  const m = readFileSync(join(raiz, f), "utf8").match(/^const SEGMENTO_DE_PARTIDA := &"([a-z0-9_]+)"/m);
+  if (!m) falha(`${f}: não há const SEGMENTO_DE_PARTIDA := &"..."`);
+  return m[1];
+}
+
 function povos(raiz) {
   const t = tabelaDoDossie(raiz, "04-", "Povo");
   const csvPovos = lerCsv(raiz, "data/source/peoples.csv");
+  const partida = segmentoDePartida(raiz);
   const chave = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z]/g, "");
   const linhas = t.linhas.map((l) => {
     // «Enramados (a tua cena)» e «Horta (os legumes)»: o parêntese fala com o
@@ -204,14 +224,13 @@ function povos(raiz) {
     const nome = l.Povo.replace(/\s*\(.*\)\s*$/, "");
     const p = csvPovos.find((x) => chave(x.id) === chave(nome));
     if (!p) falha(`${t.ficheiro}: o povo «${nome}» não está no peoples.csv`);
-    // O povo que se joga hoje é o que já tem segmentos: os outros cinco ainda
-    // não têm chão onde se pisar (§33, a fatia vertical é de um povo só).
     return {
       id: p.id, nome, terreno: l.Terreno, constroi: l["Constrói"], economia: l["Economia forte"],
-      defesa: l.Defesa, tropa: l["Tropa única"], hoje: p.segment_kit.trim() !== "",
+      defesa: l.Defesa, tropa: l["Tropa única"], hoje: p.segment_kit.split("|").includes(partida),
     };
   });
   if (linhas.length !== csvPovos.length) falha(`${t.ficheiro}: ${linhas.length} povos, o peoples.csv tem ${csvPovos.length}`);
+  if (linhas.filter((l) => l.hoje).length !== 1) falha(`peoples.csv: o segmento de partida ${partida} tem de estar no kit de um povo, e de um só`);
   return { linhas, fonte: t.ficheiro };
 }
 
@@ -220,6 +239,84 @@ function roteiro(raiz) {
   return t.linhas.map((l) => {
     const [n, nome] = l.Fase.split(" · ");
     return { n: Number(n), nome, meses: l["Duração"], feito: l["O que fica feito"], criterio: l["Critério de saída"] };
+  });
+}
+
+// ── Os monarcas (§08, ADR 0052) ──────────────────────────────────────────
+
+/** `defense:0.1|radius:260` → { defense: 0.1, radius: 260 } */
+const parametros = (s) => Object.fromEntries(String(s || "").split("|").filter(Boolean).map((x) => {
+  const [k, v] = x.split(":");
+  return [k, Number(v)];
+}));
+
+/** «BASE · Gordo e lento…» → «Gordo e lento…»: o rótulo é do ecrã do jogo, o site tem os dele. */
+const semRotulo = (s) => s.replace(/^[^·]+·\s*/, "");
+
+// A escolha do começo, como o jogo a mostra (src/ui/class_selection.gd): o nome,
+// o papel, o companheiro, o que faz de base e a evolução — o texto do
+// strings.csv, com os números da classe dele no classes.csv, preenchidos pela
+// mesma regra. Um monarca novo no monarchs.csv aparece no site sozinho.
+//
+// O que depende de um campo em `_proposed` não se publica como decidido
+// (AGENTS.md, regra 10): a base ou a evolução que leiam um número por aprovar —
+// ou que sejam de um monarca cuja classe ainda é proposta — saem `null`, e a
+// página diz «por decidir». Aprovado o campo, o texto do jogo aparece sozinho.
+function monarcas(raiz) {
+  const falas = Object.fromEntries(lerCsv(raiz, "data/i18n/strings.csv").map((l) => [l.keys, l]));
+  const classes = Object.fromEntries(lerCsv(raiz, "data/source/classes.csv").map((c) => [c.id, c]));
+  const texto = (k, v = {}) => {
+    const l = falas[k];
+    if (!l) falha(`strings.csv: falta ${k}`);
+    const f = (s) => s.replace(/\{(\w+)\}/g, (m, x) => (x in v ? v[x] : m));
+    return { pt: f(l.pt_PT), en: f(l.en) };
+  };
+  const lista = lerCsv(raiz, "data/source/monarchs.csv").sort((a, b) => Number(a.order) - Number(b.order)).map((m) => {
+    const c = classes[m.skill_class];
+    if (!c) falha(`monarchs.csv: ${m.id} pede a classe ${m.skill_class}, que o classes.csv não tem`);
+    const id = m.id.toUpperCase();
+    const p1 = parametros(c.phase1_params), p2 = parametros(c.phase2_params);
+    const pc = (x) => Math.round((x || 0) * 100);
+    const sem = (t) => ({ pt: semRotulo(t.pt), en: semRotulo(t.en) });
+    const propostos = new Set(String(c._proposed || "").split("|").filter(Boolean));
+    const classePorAprovar = String(m._proposed || "").split("|").includes("skill_class");
+    const decidido = (chave, campos) => {
+      const usa = /\{\w+\}/.test(falas[chave]?.pt_PT || "");
+      return !(usa && (classePorAprovar || campos.some((k) => propostos.has(k))));
+    };
+    const baseKey = `MONARCH_BASE_${id}`, evoKey = `MONARCH_EVOLVED_${id}`;
+    const evoCampos = ["phase2_params", "evolve_seed_cost", "evolve_condition", "evolve_condition_value"];
+    return {
+      id: m.id,
+      nome: texto(m.display_key),
+      papel: texto(`MONARCH_ROLE_${id}`),
+      base: decidido(baseKey, ["phase1_params"]) ? sem(texto(baseKey, { defense: pc(p1.defense) })) : null,
+      companheiro: sem(texto(`MONARCH_COMPANION_${id}`)),
+      evolucao: decidido(evoKey, evoCampos)
+        ? sem(texto(evoKey, { defense: pc(p2.defense), seeds: c.evolve_seed_cost, feat: c.evolve_condition_value }))
+        : null,
+    };
+  });
+  if (!lista.length) falha("monarchs.csv: não há monarcas");
+  return { lista, titulo: texto("MONARCH_CHOOSE_TITLE"), intro: texto("MONARCH_CHOOSE_INTRO"), regra: texto("MONARCH_CHOOSE_RULE") };
+}
+
+// ── As últimas decisões (docs/adr/) ──────────────────────────────────────
+
+// O título e a data de cada ADR, as mais recentes primeiro. É o diário do
+// projeto que já existe: o site lê-o, e não escreve um segundo.
+function decisoes(raiz, quantas = 6) {
+  const pasta = join(raiz, "docs", "adr");
+  return readdirSync(pasta).filter((f) => /^\d{4}-.*\.md$/.test(f) && !f.startsWith("0000-")).sort().reverse().slice(0, quantas).map((f) => {
+    const texto = readFileSync(join(pasta, f), "utf8");
+    const m = texto.match(/^# ADR (\d{4}) — (.+)$/m);
+    if (!m) falha(`docs/adr/${f}: a primeira linha não é «# ADR NNNN — título»`);
+    // A data vem escrita de várias maneiras: a primeira das oito primeiras linhas.
+    const cabeca = texto.split("\n").slice(0, 8).join("\n");
+    const iso = cabeca.match(/(\d{4})-(\d{2})-(\d{2})/);
+    const pt = cabeca.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    const data = iso ? iso[0] : pt ? `${pt[3]}-${pt[2]}-${pt[1]}` : "";
+    return { n: m[1], titulo: m[2].trim(), ficheiro: f, data };
   });
 }
 
@@ -300,6 +397,8 @@ export function ler(raiz) {
     controlos: controlos(raiz),
     povos: povos(raiz),
     roteiro: roteiro(raiz),
+    monarcas: monarcas(raiz),
+    decisoes: decisoes(raiz),
     tickets: tickets(raiz),
     capturas: JSON.parse(readFileSync(capturas, "utf8")),
     aparencia: aparencia(raiz),

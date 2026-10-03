@@ -1,56 +1,57 @@
 {
-  "commit": "b7f8689d270d9c87aa4211c7e9181a41f80363b2",
-  "tiradas": "2026-09-25",
-  "godot": "4.6-stable",
+  "commit": "8a509e74df5a81cce3308beeb4f9202e9dbf6214",
+  "aparencia": "f96077d98d8dd54ce4996def420bbd013d281d55b1a946fad34c757d8657934f",
+  "tiradas": "2026-10-03",
+  "godot": "4.7.2-stable",
   "largura": 1280,
-  "altura": 560,
+  "altura": 720,
   "ecra": [
     1280,
     720
   ],
   "recorte": [
     0,
-    88,
+    0,
     1280,
-    648
+    720
   ],
   "noite_fraccao": 0.71,
   "quadros": {
     "alvorada": {
       "segundo": 7.5,
       "dia": 1,
-      "bytes": 5182,
+      "bytes": 41630,
       "foco": 0.5
     },
     "manha": {
       "segundo": 57.5,
       "dia": 1,
-      "bytes": 5318,
+      "bytes": 41650,
       "foco": 0.5
     },
     "meiodia": {
       "segundo": 120.0,
       "dia": 1,
-      "bytes": 5196,
+      "bytes": 43490,
       "foco": 0.5
     },
     "tarde": {
       "segundo": 182.5,
       "dia": 1,
-      "bytes": 5266,
+      "bytes": 44330,
       "foco": 0.5
     },
     "crepusculo": {
       "segundo": 240.0,
       "dia": 1,
-      "bytes": 5138,
+      "bytes": 48278,
       "foco": 0.5
     },
     "noite": {
       "segundo": 329.55,
       "dia": 1,
-      "bytes": 6292,
-      "foco": 0.221
+      "bytes": 47146,
+      "foco": 0.777
     }
   }
 }

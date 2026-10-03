@@ -7,9 +7,15 @@
 // depende dos dados e seria um `style` (a largura de cada fase, a cor da luz, o
 // foco do recorte) sai numa folha gerada — ver `cssDosDados`.
 //
-// Tudo o que vem do repositório passa por `esc`: o texto do dossiê e os títulos
-// dos tickets são dados, e não marcação. O que vem de textos.mjs pode trazer
-// marcação (um <em>, uma ligação), porque é escrito aqui e revisto como código.
+// Tudo o que vem do repositório passa por `esc`: o texto do dossiê, os títulos
+// dos tickets e das ADR e o texto do jogo são dados, e não marcação. O que vem
+// de textos.mjs pode trazer marcação (um <em>, uma ligação), porque é escrito
+// aqui e revisto como código.
+//
+// A página, de cima para baixo: a abertura (o dia a passar no jogo), o que é o
+// jogo, os monarcas, o dia e a noite, a Podridão, os povos, como se joga, onde
+// está e as perguntas. A ordem é a de quem chega: primeiro ver, depois perceber,
+// e só no fim os números de quem o faz.
 
 export const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -35,6 +41,8 @@ const SOL = `<svg class="sol" viewBox="0 0 16 16" aria-hidden="true"><circle cx=
 const PLAY = `<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1l11 6-11 6z" fill="currentColor"/></svg>`;
 const PAUSA = `<svg class="i-pausa" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1h3v12H3zM8 1h3v12H8z" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z" fill="currentColor"/></svg>`;
 const SETA = `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>`;
+// A coroa dos cartões dos monarcas: a do favicon é a árvore; esta é a coroa do rei, em píxeis.
+const COROA = `<svg viewBox="0 0 16 12" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M0 2h2v2h2V2h2V0h4v2h2v2h2V2h2v10H0z"/><path class="joia" d="M3 7h2v2H3zm4-1h2v3H7zm4 1h2v2h-2z"/></svg>`;
 
 // ── A folha dos dados ────────────────────────────────────────────────────
 
@@ -45,8 +53,10 @@ export function cssDosDados(d) {
   for (const [fase, q] of Object.entries(d.capturas.quadros)) r.push(`.q-${fase}{--foco:${(q.foco * 100).toFixed(1)}%}`);
   const t = d.tickets;
   r.push(`.b-feito{flex-grow:${t.feitos}}.b-parcial{flex-grow:${t.parciais}}.b-falta{flex-grow:${t.faltam}}`);
-  r.push(`:root{--violeta:${d.podridao.violeta};--nucleo:${d.podridao.paragens.nucleo};--meio:${d.podridao.paragens.meio};`
-    + `--bordo:${d.podridao.paragens.bordo};--terra:${d.relogio.fases.at(-1).tinta}}`);
+  const p = d.podridao;
+  r.push(`:root{--violeta:${p.violeta};--nucleo:${p.paragens.nucleo};--meio:${p.paragens.meio};--bordo:${p.paragens.bordo};`
+    + `--fogo-nucleo:${p.fogo.nucleo};--fogo-meio:${p.fogo.meio};--fogo-bordo:${p.fogo.bordo};`
+    + `--terra:${d.relogio.fases.at(-1).tinta};--quadro:${d.capturas.largura}/${d.capturas.altura};--ecra:${d.capturas.ecra[0]}/${d.capturas.ecra[1]}}`);
   return `/* Gerado de data/ e docs/ por tools/web/paginas/molde.mjs */\n${r.join("\n")}\n`;
 }
 
@@ -64,29 +74,29 @@ export function cabeca({ t, v, titulo, descricao, robots, canonico, alternativas
 <meta name="description" content="${esc(descricao)}">
 <meta name="robots" content="${robots}">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#ebe6d6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15120c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#110e09">
 ${canonico ? `<link rel="canonical" href="${canonico}">\n` : ""}${alt}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icone-180.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/fontes/fraunces-400-900-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fontes/source-serif-4-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${extra}<link rel="stylesheet" href="${v.css}">
 <script src="${v.tema}"></script>
 <script src="${v.js}" defer></script>
 ${og || ""}</head>`;
 }
 
+// O topo é escuro com qualquer tema, como a abertura que vem logo a seguir: é
+// a barra de cima de um jogo, e não um cabeçalho de documento.
 export function topo({ t, v, ancoras }) {
   const n = t.nav;
   const itens = ancoras
-    ? [["#jogo", n.jogo], ["#dia", n.dia], ["#povos", n.povos], ["#controlos", n.controlos], ["#estado", n.estado]]
+    ? [["#jogo", n.jogo], ["#monarcas", n.monarcas], ["#dia", n.dia], ["#povos", n.povos], ["#controlos", n.controlos], ["#estado", n.estado]]
     : [];
   itens.push(["/dossie/", n.dossie]);
   const outraHref = t.nav.outra.lingua === "en" ? "/en/" : "/";
   return `<a class="salto" href="#conteudo">${n.saltar}</a>
-<header class="topo" id="topo">
+<header class="topo escura" id="topo">
   <div class="envolve topo-barra">
     <a class="marca" href="${t.caminho}" aria-label="${n.inicio}">${ICONE}<span>EMPIRE</span></a>
     <nav class="menu" id="menu" aria-label="${n.rotulo}">
@@ -95,7 +105,7 @@ export function topo({ t, v, ancoras }) {
     <div class="topo-accoes">
       <a class="lingua" href="${outraHref}" hreflang="${n.outra.lingua}" lang="${n.outra.lingua}" title="${n.outra.titulo}" aria-label="${n.outra.titulo}">${n.outra.texto}</a>
       <button class="tema" id="tema" type="button" aria-label="${n.tema_escuro}" data-claro="${n.tema_claro}" data-escuro="${n.tema_escuro}">${LUA}${SOL}</button>
-      <a class="botao-jogar" href="${v.jogar}">${n.jogar}</a>
+      <a class="botao-jogar" href="${v.jogar}">${PLAY}<span>${n.jogar}</span></a>
       <button class="abre-menu" id="abre-menu" type="button" aria-expanded="false" aria-controls="menu" data-abrir="${n.menu}" data-fechar="${n.fechar}"><span class="traco" aria-hidden="true"></span><span class="rotulo">${n.menu}</span></button>
     </div>
   </div>
@@ -127,8 +137,11 @@ export function rodape({ t, d, v }) {
 
 // ── A página de entrada ──────────────────────────────────────────────────
 
+const pt = (t) => t.lingua === "pt-PT";
+const lingua = (t) => (pt(t) ? "pt" : "en");
+
 function nomeFase(t, f) {
-  return t.lingua === "pt-PT" ? f.nome : t.dia.fases[f.id].nome;
+  return pt(t) ? f.nome : t.dia.fases[f.id].nome;
 }
 
 // De onde vêm as imagens: o commit e o dia em que foram tiradas. E, se o que o
@@ -149,16 +162,29 @@ function antigas(t, d) {
   return ` <strong>${fmt(t.abertura.antigas, { publicado })}</strong>`;
 }
 
-function abertura({ t, d, v, mb }) {
+function cabecaSeccao(id, s, extra = "") {
+  return `<header class="cabeca revela">
+      <p class="n">${s.n}</p>
+      <h2 id="${id}-t">${s.h2}</h2>${s.intro ? `<p class="intro">${s.intro}</p>` : ""}${extra}
+    </header>`;
+}
+
+// O palco: as seis fotografias do mesmo sítio, uma por fase, e a linha do dia
+// por baixo, como a barra de um vídeo. Só a da manhã vem no HTML com `src`: as
+// outras trazem o endereço em `data-src`, e o site.js pede cada uma pouco antes
+// de ser precisa. Sem JavaScript, o dia fica parado na manhã — e a página não
+// descarrega cinco imagens que ninguém vai ver.
+function palco({ t, d }) {
   const a = t.abertura;
   const cap = d.capturas;
   const quadros = d.relogio.fases.map((f) => {
     const img = FASE_IMG[f.id];
     const ativo = f.id === INICIAL;
     const alt = f.id === "night" ? a.alt_noite : fmt(a.alt, { fase: nomeFase(t, f).toLowerCase() });
-    return `<img class="quadro q-${img}${ativo ? " ativo" : ""}" src="/img/dia-${img}.webp" width="${cap.largura}" height="${cap.altura}"`
-      + ` alt="${esc(alt)}" decoding="async" data-fase="${f.id}"${ativo ? ' fetchpriority="high"' : ' fetchpriority="low" aria-hidden="true"'}>`;
-  }).join("\n        ");
+    const fonte = `/img/dia-${img}.webp`;
+    return `<img class="quadro q-${img}${ativo ? " ativo" : ""}" ${ativo ? `src="${fonte}" fetchpriority="high"` : `data-src="${fonte}" aria-hidden="true"`}`
+      + ` width="${cap.largura}" height="${cap.altura}" alt="${esc(alt)}" decoding="async" data-fase="${f.id}">`;
+  }).join("\n          ");
   // A fita não é uma fila de botões: a alvorada é 4% do dia e, num telemóvel,
   // um botão com 10 px de largura. É um controlo só — um deslizador que o
   // site.js liga (role="slider", setas do teclado), e o rótulo de cada fase só
@@ -166,6 +192,25 @@ function abertura({ t, d, v, mb }) {
   const fases = d.relogio.fases.map((f) => `<li class="f-${f.id}${f.dura / d.relogio.dia < 0.1 ? " estreita" : ""}" data-fase="${f.id}" data-inicio="${f.inicio}" data-dura="${f.dura}"`
     + ` data-nome="${esc(nomeFase(t, f))}"><span>${esc(nomeFase(t, f))}</span></li>`).join("");
   const inicial = d.relogio.fases.find((f) => f.id === INICIAL);
+  return `<figure class="palco" id="palco" aria-label="${a.palco}" data-dia="${d.relogio.dia}" data-agora="${modelo(a.agora)}" data-pausar="${a.pausar}" data-continuar="${a.continuar}">
+    <div class="envolve-largo">
+      <div class="ecra-jogo">
+        <div class="quadros">
+          ${quadros}
+        </div>
+        <div class="linha-do-dia">
+          <button class="pausa" id="pausa" type="button" aria-pressed="false" aria-label="${a.pausar}">${PAUSA}</button>
+          <div class="fases-palco" id="fita-palco" data-rotulo="${esc(t.dia.rotulo)}"><ol class="fases" aria-hidden="true">${fases}</ol><i class="agulha" aria-hidden="true"></i></div>
+          <p class="agora" id="agora" aria-hidden="true">${esc(fmt(a.agora, { dia: 1, fase: nomeFase(t, inicial) }))}</p>
+        </div>
+      </div>
+      <figcaption>${proveniencia(t, d, a.legenda)}${antigas(t, d)}</figcaption>
+    </div>
+  </figure>`;
+}
+
+function abertura({ t, d, v, mb }) {
+  const a = t.abertura;
   return `<section class="abertura escura" aria-labelledby="titulo">
   <div class="envolve abertura-grelha">
     <div class="abertura-titulo">
@@ -182,28 +227,8 @@ function abertura({ t, d, v, mb }) {
       <p class="so-toque">${a.toque}</p>
     </div>
   </div>
-  <figure class="palco" id="palco" aria-label="${a.palco}" data-dia="${d.relogio.dia}" data-agora="${modelo(a.agora)}" data-pausar="${a.pausar}" data-continuar="${a.continuar}">
-    <div class="envolve-largo">
-      <div class="quadros">
-        ${quadros}
-      </div>
-      <div class="linha-do-dia">
-        <button class="pausa" id="pausa" type="button" aria-pressed="false" aria-label="${a.pausar}">${PAUSA}</button>
-        <div class="fases-palco" id="fita-palco" data-rotulo="${esc(t.dia.rotulo)}"><ol class="fases" aria-hidden="true">${fases}</ol><i class="agulha" aria-hidden="true"></i></div>
-        <p class="agora" id="agora" aria-hidden="true">${esc(fmt(a.agora, { dia: 1, fase: nomeFase(t, inicial) }))}</p>
-      </div>
-      <figcaption>${proveniencia(t, d, a.legenda)}${antigas(t, d)}</figcaption>
-    </div>
-  </figure>
-  <div class="solo" aria-hidden="true"></div>
+  ${palco({ t, d })}
 </section>`;
-}
-
-function cabecaSeccao(id, s, extra = "") {
-  return `<header class="cabeca revela">
-      <p class="n">${s.n}</p>
-      <div><h2 id="${id}-t">${s.h2}</h2>${s.intro ? `<p>${s.intro}</p>` : ""}${extra}</div>
-    </header>`;
 }
 
 function pilares({ t }) {
@@ -218,23 +243,57 @@ function pilares({ t }) {
 </section>`;
 }
 
+// Os monarcas: o título, a introdução e a regra são as frases do ecrã de
+// escolha do jogo; cada cartão é o que esse ecrã mostra de cada um.
+function monarcas({ t, d }) {
+  const s = t.monarcas;
+  const l = lingua(t);
+  const m = d.monarcas;
+  // `null` é um texto que lê um número ainda em `_proposed` (dados.mjs): diz-se
+  // que está por decidir, e não se publica a proposta como se fosse o jogo.
+  const dd = (x) => (x ? `<dd>${esc(x[l])}</dd>` : `<dd class="por-decidir">${s.por_decidir}</dd>`);
+  const cartoes = m.lista.map((x, i) => `<li class="monarca">
+        <p class="monarca-n">${COROA}<span>${fmt(s.ordem, { n: i + 1 })}</span></p>
+        <h3>${esc(x.nome[l])}</h3>
+        <p class="monarca-papel">${esc(x.papel[l])}</p>
+        <dl>
+          <div><dt>${s.base}</dt>${dd(x.base)}</div>
+          <div><dt>${s.companheiro}</dt>${dd(x.companheiro)}</div>
+          <div><dt>${s.evolucao}</dt>${dd(x.evolucao)}</div>
+        </dl>
+      </li>`).join("\n      ");
+  return `<section class="secao secao-alt" id="monarcas" aria-labelledby="monarcas-t">
+  <div class="envolve">
+    ${cabecaSeccao("monarcas", { n: s.n, h2: esc(m.titulo[l]), intro: esc(m.intro[l]) })}
+    <ol class="monarcas revela">
+      ${cartoes}
+    </ol>
+    <p class="regra-monarcas">${esc(m.regra[l])}</p>
+    <p class="fonte">${s.fonte}</p>
+  </div>
+</section>`;
+}
+
 function dia({ t, d }) {
   const s = t.dia;
   const fases = d.relogio.fases;
-  const texto = (f) => (t.lingua === "pt-PT" ? f : { ...f, ...s.fases[f.id] });
+  const texto = (f) => (pt(t) ? f : { ...f, ...s.fases[f.id] });
   const rotulo = `${s.rotulo}: ${fases.map((f) => `${nomeFase(t, f)} ${f.dura} s`).join(", ")}`;
   return `<section class="secao" id="dia" aria-labelledby="dia-t">
   <div class="envolve">
     ${cabecaSeccao("dia", { ...s, h2: fmt(s.h2, { dia: d.relogio.dia }) })}
-    <div class="corpo revela">
+    <div class="revela">
       <div class="fita" role="img" aria-label="${esc(rotulo)}">${fases.map((f) => `<span class="f-${f.id}${f.dura / d.relogio.dia < 0.1 ? " estreita" : ""}"><b>${esc(nomeFase(t, f))}</b><small>${f.dura} s</small></span>`).join("")}</div>
       <ol class="fases-cartoes">
         ${fases.map((f0) => {
           const f = texto(f0);
-          return `<li class="cartao-fase f-${f.id}"><span class="amostra" aria-hidden="true"></span>
-          <h3>${esc(f.nome)} <span class="dur">${fmt(s.segundos, { s: f.dura })}</span></h3>
-          <p>${esc(f.funcao)}</p>
-          <p class="tropas"><span>${s.tropas}</span> ${esc(f.tropas)}</p></li>`;
+          return `<li class="cartao-fase f-${f.id}">
+          <img class="mini" src="/img/mini-${FASE_IMG[f.id]}.webp" width="${d.capturas.largura / 2}" height="${d.capturas.altura / 2}" loading="lazy" decoding="async" alt="${esc(fmt(s.mini, { fase: nomeFase(t, f0).toLowerCase() }))}">
+          <div class="cartao-corpo">
+            <h3>${esc(f.nome)} <span class="dur">${fmt(s.segundos, { s: f.dura })}</span></h3>
+            <p>${esc(f.funcao)}</p>
+            <p class="tropas"><span>${s.tropas}</span> ${esc(f.tropas)}</p>
+          </div></li>`;
         }).join("\n        ")}
       </ol>
       <p class="fonte">${s.fonte}</p>
@@ -252,13 +311,19 @@ function candeia(p, dia) {
   };
 }
 
+function ordinalEn(n) {
+  const r = n % 100;
+  if (r >= 11 && r <= 13) return "th";
+  return { 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th";
+}
+
 function noite({ t, d }) {
   const s = t.noite;
   const p = d.podridao;
   const num = new Intl.NumberFormat(t.lingua, { maximumFractionDigits: 1 });
   const c = candeia(p, 1);
-  const ordinal = t.lingua === "pt-PT" ? `${p.primeiraOferta}.º` : `${p.primeiraOferta}${ordinalEn(p.primeiraOferta)}`;
-  const falas = p.falas.map((f) => `<li><q>${esc(t.lingua === "pt-PT" ? f.pt : f.en)}</q> <span>${fmt(s.falas_dia, { dia: f.dia })}</span></li>`).join("");
+  const ordinal = pt(t) ? `${p.primeiraOferta}.º` : `${p.primeiraOferta}${ordinalEn(p.primeiraOferta)}`;
+  const falas = p.falas.map((f) => `<li><q>${esc(pt(t) ? f.pt : f.en)}</q> <span>${fmt(s.falas_dia, { dia: f.dia })}</span></li>`).join("");
   const formula = (base, porDia, extra = "") => `${num.format(base)} + ${num.format(porDia)} × ${s.inst_dia.toLowerCase()}${extra}`;
   const dados = [
     ["raio-base", p.raio.base], ["raio-dia", p.raio.porDia], ["raio-teto", p.raio.teto], ["vel-base", p.velocidade.base],
@@ -268,10 +333,11 @@ function noite({ t, d }) {
   return `<section class="secao escura" id="noite" aria-labelledby="noite-t">
   <div class="envolve">
     ${cabecaSeccao("noite", s)}
-    <div class="noite-grelha corpo revela">
+    <div class="noite-grelha revela">
       <div class="noite-texto">
         <p>${fmt(s.p1, { oferta: ordinal })}</p>
         <p>${s.p2}</p>
+        <p>${s.p3}</p>
         <figure class="falas"><figcaption>${s.falas}</figcaption><ul>${falas}</ul></figure>
       </div>
       <div class="instrumento" id="candeia" ${dados}>
@@ -292,7 +358,7 @@ function noite({ t, d }) {
       <h3>${s.regra}</h3>
       <ul>
         <li class="ex-violeta"><span class="amostra" aria-hidden="true"></span><code>${p.violeta}</code><p>${s.violeta}</p></li>
-        <li class="ex-ambar"><span class="amostra" aria-hidden="true"></span><code>${p.paragens.nucleo}</code><p>${s.ambar}</p></li>
+        <li class="ex-ambar"><span class="amostra" aria-hidden="true"></span><code>${p.fogo.meio.toUpperCase()}</code><p>${s.ambar}</p></li>
         <li class="ex-terra"><span class="amostra" aria-hidden="true"></span><code>${d.relogio.fases.at(-1).tinta.toUpperCase()}</code><p>${s.terra}</p></li>
       </ul>
     </div>
@@ -300,21 +366,15 @@ function noite({ t, d }) {
 </section>`;
 }
 
-function ordinalEn(n) {
-  const r = n % 100;
-  if (r >= 11 && r <= 13) return "th";
-  return { 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th";
-}
-
 function povos({ t, d }) {
   const s = t.povos;
-  const linhas = d.povos.linhas.map((p) => (t.lingua === "pt-PT" ? p : { ...p, ...s.linhas[p.id] }));
+  const linhas = d.povos.linhas.map((p) => (pt(t) ? p : { ...p, ...s.linhas[p.id] }));
   return `<section class="secao" id="povos" aria-labelledby="povos-t">
   <div class="envolve">
     ${cabecaSeccao("povos", s)}
     <ul class="povos revela">
       ${linhas.map((p, i) => `<li class="povo${p.hoje ? " hoje" : ""}">
-        <p class="povo-n">${String(i + 1).padStart(2, "0")}${p.hoje ? ` <span class="selo">${s.hoje}</span>` : ""}</p>
+        <p class="povo-n"><span>${String(i + 1).padStart(2, "0")}</span>${p.hoje ? ` <span class="selo">${s.hoje}</span>` : ""}</p>
         <h3>${esc(p.nome)}</h3>
         <p class="povo-terreno"><span class="sr">${s.terreno}: </span>${esc(p.terreno)}</p>
         <dl>
@@ -342,7 +402,7 @@ function juntar(esq, dir, l) {
 
 function controlos({ t, d }) {
   const s = t.controlos;
-  const l = t.lingua === "pt-PT" ? "pt" : "en";
+  const l = lingua(t);
   const ou = ` <span class="ou">${s.ou}</span> `;
   const kbd = (xs) => xs.map((x) => `<kbd>${esc(x[l])}</kbd>`);
   const linhas = s.acoes.map((a) => {
@@ -353,31 +413,31 @@ function controlos({ t, d }) {
     });
     const teclado = y ? [...juntar(x.teclas, y.teclas, l), ...juntar(x.rato, y.rato, l)] : [...kbd(x.teclas), ...kbd(x.rato)];
     const comando = y ? juntar(x.comando, y.comando, l) : kbd(x.comando);
+    if (!teclado.length && !comando.length) throw new Error(`molde: a acção ${a.de.join("/")} não tem nem tecla nem botão lido do project.godot`);
     return `<tr><th scope="row">${a.t}</th><td>${teclado.join(ou) || "—"}</td><td>${comando.join(ou) || "—"}</td><td>${a.toque}</td></tr>`;
   }).join("\n            ");
+  const [w, h] = d.capturas.ecra;
   return `<section class="secao" id="controlos" aria-labelledby="controlos-t">
   <div class="envolve">
     ${cabecaSeccao("controlos", s)}
-    <div class="corpo">
-      <div class="verbos revela">
-        ${s.verbos.map((x) => `<div class="verbo"><h3>${x.t}</h3><p>${x.p}</p></div>`).join("\n        ")}
-      </div>
-      <div class="controlos-grelha revela">
-        <div class="tabela-rola" tabindex="0" role="region" aria-label="${s.tabela}">
-          <table class="teclas-tabela">
-            <caption>${s.tabela}</caption>
-            <thead><tr>${s.cab.map((c) => `<th scope="col">${c}</th>`).join("")}</tr></thead>
-            <tbody>
+    <ol class="verbos revela">
+      ${s.verbos.map((x, i) => `<li class="verbo"><span class="verbo-n" aria-hidden="true">${i + 1}</span><h3>${x.t}</h3><p>${x.p}</p></li>`).join("\n      ")}
+    </ol>
+    <div class="controlos-grelha revela">
+      <div class="tabela-rola" tabindex="0" role="region" aria-label="${s.tabela}">
+        <table class="teclas-tabela">
+          <caption>${s.tabela}</caption>
+          <thead><tr>${s.cab.map((c) => `<th scope="col">${c}</th>`).join("")}</tr></thead>
+          <tbody>
             ${linhas}
-            </tbody>
-          </table>
-          <p class="fonte">${s.fonte}</p>
-        </div>
-        <figure class="ecra">
-          <div class="moldura"><img src="/img/ecra.webp" width="${d.capturas.ecra[0]}" height="${d.capturas.ecra[1]}" loading="lazy" decoding="async" alt="${esc(proveniencia(t, d, s.ecra, false))}"></div>
-          <figcaption>${proveniencia(t, d, s.ecra)}${antigas(t, d)}</figcaption>
-        </figure>
+          </tbody>
+        </table>
+        <p class="fonte">${s.fonte}</p>
       </div>
+      <figure class="ecra">
+        <div class="moldura"><img src="/img/ecra-${l}.webp" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(proveniencia(t, d, s.ecra, false))}"></div>
+        <figcaption>${proveniencia(t, d, s.ecra)}${antigas(t, d)}</figcaption>
+      </figure>
     </div>
   </div>
 </section>`;
@@ -389,22 +449,23 @@ function estado({ t, d }) {
   const num = new Intl.NumberFormat(t.lingua);
   const sha = `<a href="${d.repo}/commit/${d.sha}"><code>${d.sha.slice(0, 7)}</code></a>`;
   const rotEstado = { feito: s.feito, parcial: s.parcial, falta: s.falta };
+  const legEstado = { feito: s.leg_feito, parcial: s.leg_parcial, falta: s.leg_falta };
   // A ordem dos trilhos é a de textos.mjs (o plano primeiro, o resto depois), e
   // um trilho novo no tickets.json sem nome lá chumba a construção.
   for (const tr of tk.trilhos) if (!s.trilhos[tr.id]) throw new Error(`molde: o trilho ${tr.id} não tem nome em textos.mjs (estado.trilhos)`);
   const ordem = Object.keys(s.trilhos);
+  // Cada quadrado é um ticket, e a cor diz o estado; o que cada um é está na
+  // lista logo abaixo, e o resumo de cada trilho, por extenso, para quem não vê.
   const trilhos = [...tk.trilhos].sort((a, b) => ordem.indexOf(a.id) - ordem.indexOf(b.id)).map((tr) => {
-    const nome = s.trilhos[tr.id];
     const feitos = tr.tickets.filter((x) => x.estado === "feito").length;
-    const legEstado = { feito: s.leg_feito, parcial: s.leg_parcial, falta: s.leg_falta };
     const resumo = ["feito", "parcial", "falta"].map((e) => `${tr.tickets.filter((x) => x.estado === e).length} ${legEstado[e]}`).join(", ");
-    return `<div class="trilho"><p class="trilho-nome">${nome} <span>${feitos}/${tr.tickets.length}</span><span class="sr">: ${resumo}</span></p>
-          <ol class="celas" aria-hidden="true">${tr.tickets.map((x) => `<li class="cela c-${x.estado}" title="${esc(`${x.id} · ${x.titulo} — ${rotEstado[x.estado]}`)}"></li>`).join("")}</ol></div>`;
+    return `<div class="trilho"><p class="trilho-nome">${s.trilhos[tr.id]} <span>${feitos}/${tr.tickets.length}</span><span class="sr">: ${resumo}</span></p>
+          <ol class="celas" aria-hidden="true">${tr.tickets.map((x) => `<li class="cela c-${x.estado}"></li>`).join("")}</ol></div>`;
   }).join("\n        ");
   const lista = tk.lista.map((x) => `<tr><th scope="row"><a href="${d.repo}/blob/main/docs/backlog/${x.id}.md">${x.id}</a></th><td lang="pt-PT">${esc(x.titulo)}</td><td><span class="estado e-${x.estado}">${rotEstado[x.estado]}</span></td></tr>`).join("\n              ");
   const porFase = (n) => tk.trilhos.find((tr) => tr.id === `F${n}`)?.tickets;
   const roteiro = d.roteiro.map((r0) => {
-    const r = t.lingua === "pt-PT" ? r0 : { ...r0, ...s.fases[r0.n] };
+    const r = pt(t) ? r0 : { ...r0, ...s.fases[r0.n] };
     const tks = porFase(r.n);
     const feitos = tks ? tks.filter((x) => x.estado === "feito").length : 0;
     const classe = !tks ? "r-futuro" : feitos === tks.length ? "r-feito" : "r-curso";
@@ -414,39 +475,33 @@ function estado({ t, d }) {
           <p class="criterio"><span>${s.criterio}</span> ${esc(r.criterio)}</p></div>
           <p class="r-estado">${est}</p></li>`;
   }).join("\n        ");
-  const ler = [["/dossie/", s.ler[0]], [`${d.repo}/tree/main/docs/backlog`, s.ler[1]], [`${d.repo}/blob/main/docs/QUESTIONS.md`, s.ler[2]], [d.repo, s.ler[3]]];
-  return `<section class="secao" id="estado" aria-labelledby="estado-t">
+  // «3 out.» e «Oct 3»: o dia e o mês, sem o ano, que é o de todas.
+  const quando = (iso) => {
+    if (!iso) return "";
+    const data = new Date(`${iso}T00:00:00Z`);
+    const mes = new Intl.DateTimeFormat(t.lingua, { month: "short", timeZone: "UTC" }).format(data);
+    return pt(t) ? `${data.getUTCDate()} ${mes}` : `${mes} ${data.getUTCDate()}`;
+  };
+  const decisoes = d.decisoes.map((x) => `<li><a href="${d.repo}/blob/main/docs/adr/${x.ficheiro}"><span class="adr-n">ADR ${x.n}</span><span class="adr-t" lang="pt-PT">${esc(x.titulo)}</span>`
+    + `${x.data ? `<time datetime="${x.data}">${quando(x.data)}</time>` : ""}</a></li>`).join("\n          ");
+  const ler = [["/dossie/", s.ler[0]], [`${d.repo}/tree/main/docs/backlog`, s.ler[1]], [`${d.repo}/blob/main/docs/QUESTIONS.md`, s.ler[2]],
+    [`${d.repo}/tree/main/docs/adr`, s.ler[3]], [d.repo, s.ler[4]]];
+  return `<section class="secao secao-alt" id="estado" aria-labelledby="estado-t">
   <div class="envolve">
     ${cabecaSeccao("estado", { ...s, intro: fmt(s.intro, { sha }) })}
-    <div class="corpo">
-      <div class="numeros revela">
-        <div class="numero"><b data-conta="${tk.feitos}">${num.format(tk.feitos)}</b><span>${fmt(s.feitos, { total: tk.total })}</span></div>
-        <div class="numero"><b data-conta="${d.contas.testes}">${num.format(d.contas.testes)}</b><span>${s.testes}</span></div>
-        <div class="numero"><b data-conta="${d.contas.adrs}">${num.format(d.contas.adrs)}</b><span>${s.adrs}</span></div>
-        <div class="numero"><b data-conta="${d.contas.conferidos}">${num.format(d.contas.conferidos)}</b><span>${s.conferidos}</span></div>
-      </div>
-      <div class="barra revela" role="img" aria-label="${esc(fmt(s.barra, { feitos: tk.feitos, parciais: tk.parciais, faltam: tk.faltam, total: tk.total }))}"><i class="b-feito"></i><i class="b-parcial"></i><i class="b-falta"></i></div>
-      <ul class="legenda">
-        <li><i class="c-feito" aria-hidden="true"></i>${tk.feitos} ${s.leg_feito}</li>
-        <li><i class="c-parcial" aria-hidden="true"></i>${tk.parciais} ${s.leg_parcial}</li>
-        <li><i class="c-falta" aria-hidden="true"></i>${tk.faltam} ${s.leg_falta}</li>
-      </ul>
-      <div class="quadro-tickets revela">
-        <h3>${fmt(s.quadro, { total: tk.total })}</h3>
-        ${t.lingua === "pt-PT" ? "" : `<p class="fonte">${s.quadro_nota}</p>`}
-        ${trilhos}
-        <details class="lista">
-          <summary>${s.lista}</summary>
-          <div class="tabela-rola" tabindex="0" role="region" aria-label="${s.lista}">
-            <table>
-              <thead><tr>${s.cab.map((c) => `<th scope="col">${c}</th>`).join("")}</tr></thead>
-              <tbody>
-              ${lista}
-              </tbody>
-            </table>
-          </div>
-        </details>
-      </div>
+    <div class="numeros revela">
+      <div class="numero"><b data-conta="${tk.feitos}">${num.format(tk.feitos)}</b><span>${fmt(s.feitos, { total: tk.total })}</span></div>
+      <div class="numero"><b data-conta="${d.contas.testes}">${num.format(d.contas.testes)}</b><span>${s.testes}</span></div>
+      <div class="numero"><b data-conta="${d.contas.adrs}">${num.format(d.contas.adrs)}</b><span>${s.adrs}</span></div>
+      <div class="numero"><b data-conta="${d.contas.conferidos}">${num.format(d.contas.conferidos)}</b><span>${s.conferidos}</span></div>
+    </div>
+    <div class="barra revela" role="img" aria-label="${esc(fmt(s.barra, { feitos: tk.feitos, parciais: tk.parciais, faltam: tk.faltam, total: tk.total }))}"><i class="b-feito"></i><i class="b-parcial"></i><i class="b-falta"></i></div>
+    <ul class="legenda">
+      <li><i class="c-feito" aria-hidden="true"></i>${tk.feitos} ${s.leg_feito}</li>
+      <li><i class="c-parcial" aria-hidden="true"></i>${tk.parciais} ${s.leg_parcial}</li>
+      <li><i class="c-falta" aria-hidden="true"></i>${tk.faltam} ${s.leg_falta}</li>
+    </ul>
+    <div class="estado-grelha">
       <div class="roteiro revela">
         <h3>${s.roteiro}</h3>
         <ol>
@@ -454,8 +509,33 @@ function estado({ t, d }) {
         </ol>
         <p class="fonte">${s.roteiro_nota}</p>
       </div>
-      <div class="ler">${ler.map(([h, x]) => `<a class="botao" href="${h}">${x}${SETA}</a>`).join("")}</div>
+      <div class="estado-lado">
+        <div class="decisoes revela">
+          <h3>${s.decisoes}</h3>
+          <ol>
+          ${decisoes}
+          </ol>
+          <p class="fonte">${s.decisoes_nota}</p>
+        </div>
+        <div class="quadro-tickets revela">
+          <h3>${fmt(s.quadro, { total: tk.total })}</h3>
+          ${pt(t) ? "" : `<p class="fonte">${s.quadro_nota}</p>`}
+          ${trilhos}
+          <details class="lista">
+            <summary>${s.lista}</summary>
+            <div class="tabela-rola" tabindex="0" role="region" aria-label="${s.lista}">
+              <table>
+                <thead><tr>${s.cab.map((c) => `<th scope="col">${c}</th>`).join("")}</tr></thead>
+                <tbody>
+              ${lista}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </div>
     </div>
+    <div class="ler">${ler.map(([h, x]) => `<a class="botao" href="${h}">${x}${SETA}</a>`).join("")}</div>
   </div>
 </section>`;
 }
@@ -471,9 +551,9 @@ function perguntas({ t, d }) {
     fase_demo: fase ? fase.n : "?",
   };
   return `<section class="secao" id="perguntas" aria-labelledby="perguntas-t">
-  <div class="envolve">
+  <div class="envolve perguntas-grelha">
     ${cabecaSeccao("perguntas", s)}
-    <div class="perguntas corpo revela">
+    <div class="perguntas revela">
       ${s.itens.map((x) => `<details><summary>${x.q}</summary><div>${fmt(x.r, v)}</div></details>`).join("\n      ")}
     </div>
   </div>
@@ -485,7 +565,7 @@ function jsonLd({ t, d, url, og }) {
     "@context": "https://schema.org",
     "@type": "VideoGame",
     name: "Empire",
-    alternateName: t.lingua === "pt-PT" ? "Empire (nome de trabalho)" : "Empire (working title)",
+    alternateName: pt(t) ? "Empire (nome de trabalho)" : "Empire (working title)",
     description: t.meta.descricao,
     inLanguage: t.lingua,
     url: url ? `${url}${t.caminho}` : undefined,
@@ -504,7 +584,7 @@ function jsonLd({ t, d, url, og }) {
 export function entrada({ t, d, v, mb, url, robots }) {
   const canonico = url ? `${url}${t.caminho}` : "";
   const base = url || "";
-  const og = url ? `${url}/img/partilha-${t.lingua === "pt-PT" ? "pt" : "en"}.png` : `/img/partilha-${t.lingua === "pt-PT" ? "pt" : "en"}.png`;
+  const og = `${url || ""}/img/partilha-${lingua(t)}.png`;
   const ogTags = `<meta property="og:type" content="website">
 <meta property="og:site_name" content="Empire">
 <meta property="og:title" content="${esc(t.meta.og_titulo)}">
@@ -530,6 +610,7 @@ ${topo({ t, v, ancoras: true })}
 <main id="conteudo">
 ${abertura({ t, d, v, mb })}
 ${pilares({ t })}
+${monarcas({ t, d })}
 ${dia({ t, d })}
 ${noite({ t, d })}
 ${povos({ t, d })}

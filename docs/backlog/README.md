@@ -90,6 +90,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [CD-01](CD-01.md) | A base de dados de conteúdo, uma tabela por sessão | F0-03 | feito |
 | [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | feito |
 | [PUB-02](PUB-02.md) | O site passa a ser a página do jogo | PUB-01 | feito |
+| [PUB-04](PUB-04.md) | O site mostra o jogo de hoje | PUB-02 | feito |
 
 ## Fase 2 — Fatia vertical
 
