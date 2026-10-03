@@ -134,4 +134,5 @@ static func _todas() -> Dictionary:
 		]:
 			_definicoes.merge(fonte)
 		_definicoes.merge(NativeSprites.all())
+		_definicoes.merge(SeatSprites.all())  # a sede por estagio e a carroca (ADR 0059)
 	return _definicoes

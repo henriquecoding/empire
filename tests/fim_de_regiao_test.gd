@@ -7,6 +7,8 @@
 # ciclo acaba quando todos te pagam ou o Lume se apaga — com o legado de sempre.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
 const LONGE := 1000.0
@@ -21,6 +23,7 @@ func before_test() -> void:
 	EventBus.segment_entered.connect(_entrou)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	SimLoop.step(STEP)
 
 
@@ -124,8 +127,9 @@ func test_o_rei_leva_o_saco_quem_esta_perto_e_quem_espera_sem_posto() -> void:
 		SimLoop.king_id,
 		SimFactory.curve().crossing_party_px
 	)
-	# Os dois sem funcao do inicio (Q-110) esperam no nucleo, e tambem vao.
-	var comitiva := ["vagrant", "vagrant", "archer", "archer"]
+	# Os dois sem funcao do inicio (Q-110) e o construtor pioneiro (ADR 0059) esperam no
+	# nucleo, e tambem vao.
+	var comitiva := ["vagrant", "vagrant", "builder", "archer", "archer"]
 	assert_array(Array(legado[Legacy.COMITIVA])).is_equal(comitiva)
 	assert_int(int(legado[Legacy.SACO])).is_equal(9)
 	assert_int(int(legado[Legacy.REGIAO])).is_equal(1)
@@ -141,6 +145,7 @@ func test_a_regiao_seguinte_recebe_a_comitiva_e_o_saco() -> void:
 	SimLoop.stop()
 	SimLoop.start(SEMENTE + 1)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	var antes := SimLoop.units.carried_coins[_rei()]
 	var tropas := SimFactory.by_id(&"units")
 	Legacy.apply(legado, SimLoop.state, SimLoop.builds)

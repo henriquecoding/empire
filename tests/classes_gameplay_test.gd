@@ -109,8 +109,8 @@ func test_reencantar_a_mesma_criatura_nao_repete_o_feito() -> void:
 	assert_int(SimLoop.field.hero_progress.feat_of(&"bard")).is_equal(1)
 
 
-## A Nia evolui como o Rei: o Verbo 1 no nucleo, com a Semente e o feito (ADR 0052). A
-## moeda volta ao saco.
+## A Nia evolui como o Rei: o Verbo 1 no nucleo, com a Semente e o feito (ADR 0052), com o
+## monarca escolhido no marco pelo Verbo 2 (ADR 0059). A moeda volta ao saco.
 func test_o_verbo_1_no_nucleo_evolui_a_nia_com_semente_e_quinze_conversoes() -> void:
 	var nia := _begin(&"bard")
 	for _n in 15:
@@ -121,6 +121,8 @@ func test_o_verbo_1_no_nucleo_evolui_a_nia_com_semente_e_quinze_conversoes() -> 
 	SimLoop.units.clear_target(nia)
 	var coins := SimLoop.units.carried_coins[i]
 	assert_bool(MonarchWatch.can_evolve(SimLoop.field, 1)).is_true()
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})  # o monarca, e nao a sede (ADR 0059)
+	SimLoop.step(PASSO)
 	var args := {&"x": SimLoop.core_x, &"band": Band.Kind.SURFACE, &"amount": 1}
 	args[&"source"] = Verbs.JOGADOR
 	SimLoop.intents.queue(IntentQueue.Kind.DROP_COIN, args)

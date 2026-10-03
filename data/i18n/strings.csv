@@ -868,3 +868,25 @@ No coins in your purse, no new arrows",guia contextual de jogo,160,o dono a 02/1
 CONTEXT_MONARCH_EVOLVE,"{name} · {drop} evoluir {monarch}
 O feito está cumprido · {seeds} Semente Real","{name} · {drop} evolve {monarch}
 The feat is complete · {seeds} Royal Seed",guia contextual de jogo,160,"ADR 0052: a Nia e o Arqueiro evoluem pelo Verbo 1 no núcleo, como o Rei"
+REALM_STAGE_CLEARING,Clareira,Clearing,nome de conteúdo — estágio da sede (ADR 0059),24,ADR 0059
+REALM_STAGE_ENCAMPMENT,Acampamento,Encampment,nome de conteúdo — estágio da sede (ADR 0059),24,ADR 0059
+REALM_STAGE_HAMLET,Povoado,Hamlet,nome de conteúdo — estágio da sede (ADR 0059),24,ADR 0059
+REALM_STAGE_VILLAGE,Vila,Village,nome de conteúdo — estágio da sede (ADR 0059),24,ADR 0059
+REALM_STAGE_WALLED_VILLAGE,Vila Fortificada,Walled Village,nome de conteúdo — estágio da sede (ADR 0059),24,ADR 0059
+REALM_STAGE_FORTRESS,Fortaleza,Fortress,nome de conteúdo — estágio da sede (ADR 0059),24,ADR 0059: o castelo-árvore de antes
+CONTEXT_SEAT_FOUND,"{stage} · Fundar o reino: faltam {cost} moedas
+{drop} fundar · obras e ofícios pagam-se à parte","{stage} · Found the realm: {cost} coins remaining
+{drop} found · buildings and crafts are paid separately",guia contextual de jogo,160,ADR 0059; plano do reino §6.1 e §23.1
+CONTEXT_SEAT_UPGRADE,"{stage} · Melhorar para {next}: faltam {cost} moedas
+Abre: {opens} · pagam-se à parte","{stage} · Upgrade to {next}: {cost} coins remaining
+Opens: {opens} · paid separately",guia contextual de jogo,160,ADR 0059; plano do reino §23.1: o benefício e o compromisso
+CONTEXT_SEAT_BUILDING,"{stage} · A erguer: {next}
+Quem está no marco levanta-a; até lá, serve o que já há","{stage} · Raising: {next}
+Whoever stands at the marker builds it; until then, what you have still works",guia contextual de jogo,160,ADR 0059; plano do reino §16.3
+CONTEXT_SEAT_TOP,{stage} · A sede mais alta por agora,{stage} · The highest seat for now,guia contextual de jogo,160,ADR 0059: a Capital entra com o RG-14
+CONTEXT_SEAT_TO_MONARCH,{assume} a moeda para evoluir o monarca,{assume} send the coin to evolve the monarch,guia contextual de jogo,160,ADR 0059; plano do reino §23.2: o alvo da moeda no núcleo
+CONTEXT_SEAT_TO_SEAT,{assume} a moeda volta para a sede,{assume} send the coin back to the seat,guia contextual de jogo,160,ADR 0059; plano do reino §23.2
+CONTEXT_STAGE_LOCKED,{name} · Abre com a sede em {stage},{name} · Opens when the seat is a {stage},guia contextual de jogo,160,"ADR 0059; plano do reino §17.1: o motivo, e não só «bloqueado»"
+GUIDE_FOUND,"FUNDA O REINO
+moedas no marco · provisões na carroça","FOUND THE REALM
+coins on the marker · supplies in the cart",HUD: objectivo antes da fundação,40,ADR 0059. Duas linhas.

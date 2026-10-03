@@ -6,6 +6,8 @@
 # fechar so se faz de dia, com a partida viva.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
 const SLOT_LIVRE := 0
@@ -18,6 +20,7 @@ func before_test() -> void:
 		SaveService.delete_slot(slot)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 
 
 func after_test() -> void:

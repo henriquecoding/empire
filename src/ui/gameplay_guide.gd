@@ -1,7 +1,6 @@
 class_name GameplayGuide
 extends RefCounted
 
-const HALF := 0.5
 const CEM := 100.0
 
 
@@ -51,12 +50,10 @@ static func context(device: Glyphs.Device) -> String:
 		var falta := Lume.refusal(units, SimLoop.king_id)  # o fim pela luz (Q-156)
 		return _tr(&"CONTEXT_LUME" if falta.is_empty() else falta).format(values)
 	for site in SimLoop.builds.slots:
-		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.width * HALF:
+		if site.band != units.bands[king] or absf(site.x - units.xs[king]) > site.catch_half():
 			continue
-		if site.kind == BuildSlot.NUCLEO:
-			if MonarchWatch.can_evolve(SimLoop.field, SimLoop.state.royal_seeds):
-				return _evolve(site, values)
-			continue
+		if site.kind == BuildSlot.NUCLEO:  # fundar, melhorar, ou o monarca (ADR 0059)
+			return SeatGuide.context(site, values)
 		values["name"] = _building_name(site)
 		if site.kind == Succession.CASA and site.standing():
 			return GuideSites.heir(values)
@@ -67,6 +64,8 @@ static func context(device: Glyphs.Device) -> String:
 			return _tr(&"CONTEXT_REPAIRING").format(values)
 		if site.state in [BuildSlot.State.DAMAGED, BuildSlot.State.RUIN] and values.cost > 0:
 			return _tr(&"CONTEXT_REPAIR").format(values)
+		if values.cost > 0 and not RealmLadder.allows(SimLoop.builds, site):
+			return SeatGuide.locked(site, values)  # o estagio da sede que a abre (ADR 0059)
 		if KingVerbs.wall_choice_open(site):
 			values["path"] = _tr(
 				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
@@ -104,9 +103,10 @@ static func context(device: Glyphs.Device) -> String:
 	return terras if not terras.is_empty() else ClassGuide.status()
 
 
-static func _evolve(site: BuildSlot, values: Dictionary) -> String:
+## O monarca a evoluir no nucleo: o Rei pela classe, a Nia e o Arqueiro pelo perfil.
+static func evolve(site: BuildSlot, values: Dictionary) -> String:
 	var classe := Registry.entry(&"classes", MonarchWatch.skill_class()) as ClassData
-	values["name"] = _building_name(site)
+	values["name"] = SeatGuide.stage_name(site.level)
 	if classe.id != Monarchy.REI:  # a Nia e o Arqueiro evoluem pela classe do perfil
 		values["monarch"] = TranslationServer.translate(MonarchWatch.data().display_key)
 		values["seeds"] = classe.evolve_seed_cost

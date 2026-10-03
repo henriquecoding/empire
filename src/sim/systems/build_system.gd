@@ -105,8 +105,9 @@ func absorb(
 ## guardado e, sendo unico por imperio, nenhuma outra muralha o tem nem o esta a
 ## levantar (§10, §74). Uma moeda largada num degrau que nao sobe fica no chao.
 func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
-	if not Discoveries.known(estado, vaga.kind):
-		return false  # uma estatua guarda esta obra, e ainda ninguem a achou (Q-016)
+	# Uma estatua por achar (Q-016), ou a sede num estagio abaixo do que a abre (ADR 0059).
+	if not Discoveries.known(estado, vaga.kind) or not RealmLadder.allows(self, vaga):
+		return false
 	if estado == null or madeira == null:
 		return true
 	var lenho := vaga.woods_for_next(estado.conquests)
@@ -144,10 +145,12 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 		if vaga.progress < trabalho:
 			eventos.append({CHAVE: EV_PROGRESSO, VAGA: vaga, RACIO: vaga.progress / trabalho})
 			continue
+		var antes := vaga.max_health()
 		vaga.level += 1
 		vaga.progress = 0.0
 		vaga.state = BuildSlot.State.DONE
-		vaga.health = vaga.max_health()
+		vaga.health = vaga.raised_health(antes)  # a sede sobe sem se curar (ADR 0059)
+		vaga.fit()
 		vaga.charge = Ward.cap(vaga) if vaga.kind == Ward.SINO else vaga.charge
 		eventos.append({CHAVE: EV_COMPLETA, VAGA: vaga, NIVEL: vaga.level})
 	return eventos
@@ -193,10 +196,12 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	return achada
 
 
-## Uma obra deste tipo ja nao esta de pe: "se o nucleo cair, cai a partida" (§10).
+## Uma obra deste tipo levantou-se e ja nao esta de pe: "se o nucleo cair, cai a
+## partida" (§10). A sede por fundar nao caiu, e a que sobe de estagio continua de pe
+## (ADR 0059).
 func fallen(kind: StringName) -> bool:
 	for vaga in slots:
-		if vaga.kind == kind and not vaga.standing():
+		if vaga.kind == kind and vaga.level > 0 and not vaga.holds():
 			return true
 	return false
 

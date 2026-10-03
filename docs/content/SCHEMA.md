@@ -434,7 +434,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 135 linha(s) · §06 §
 
 ## `rules.csv` → `data/economy/rules.tres`
 
-Script `src/sim/data/rules_curve.gd` · layout `kv` · 45 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 49 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -483,6 +483,10 @@ Script `src/sim/data/rules_curve.gd` · layout `kv` · 45 linha(s) · ADR 0041 �
 | `hearth_radius_px` | float | Subsolo delimitado — Q-186 |  |
 | `hearth_repel_mass` | int | Subsolo delimitado — Q-186 |  |
 | `hearth_rot_slow` | float | Subsolo delimitado — Q-186 |  |
+| `founder_provisions` | int | Fundacao do reino — ADR 0059 |  |
+| `founder_pioneers` | int | Fundacao do reino — ADR 0059 |  |
+| `founder_bow_rack` | int | Fundacao do reino — ADR 0059 |  |
+| `provisions_grab_px` | float | Fundacao do reino — ADR 0059 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 
@@ -851,4 +855,20 @@ Script `src/sim/data/monarch_data.gd` · layout `rows` · 3 linha(s) · ADR 0052
 | `attack_key` | String |  |  |
 | `companion` | StringName |  |  |
 | `service` | StringName |  |  |
+
+## `realm_stages.csv` → `data/realm_stages/{id}.tres`
+
+Script `src/sim/data/realm_stage_data.gd` · layout `rows` · 6 linha(s) · ADR 0059 — a escada da sede: da Clareira à Fortaleza, e o que cada estágio abre
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | StringName |  |  |
+| `display_key` | String |  |  |
+| `order` | int |  |  |
+| `cost` | int |  |  |
+| `build_work` | float |  |  |
+| `max_health` | int |  |  |
+| `width_px` | int |  |  |
+| `contact_slots` | int |  |  |
+| `unlocks` | Array[StringName] |  |  |
 

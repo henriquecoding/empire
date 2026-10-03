@@ -17,6 +17,8 @@ const O_CANTEIRO := 1
 ## O §25 mede a primeira moeda largada em menos de 40 s (first_coin_dropped):
 ## recrutar os dois do lado do castelo nao pode levar mais do que isso.
 const RECRUTAR_S := 40.0
+## O plano do reino (§31.2) pede o Acampamento de pe ate cerca de 90 s de jogo.
+const FUNDAR_S := 90.0
 
 var _origens: Array[StringName] = []
 var _caca: Array[float] = []
@@ -57,6 +59,7 @@ func test_sem_ninguem_a_jogar_o_coelho_do_1_10_cai_junto_ao_castelo_uma_so_vez()
 
 
 func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
+	_fundar()
 	_recrutar(O_VAGABUNDO)
 	_recrutar(O_ARQUEIRO)
 	var canteiro := _obra(SimLoop.core_x + Greybox.CANTEIROS_X[O_CANTEIRO])
@@ -89,6 +92,18 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	var fisicas := [Verbs.JOGADOR, &"hunt", &"production", EventRelay.FONTE_MORTE]
 	for origem in _origens:
 		assert_bool(origem in fisicas).override_failure_message(String(origem)).is_true()
+
+
+## A fundacao com gestos (ADR 0059): as moedas no marco da Clareira, e quem la esta levanta
+## o Acampamento. Antes dela nenhuma obra aceita moeda.
+func _fundar() -> void:
+	var sede := RealmLadder.seat(SimLoop.builds)
+	while sede.state == BuildSlot.State.EMPTY:
+		assert_float(ClockService.clock.elapsed).is_less(FUNDAR_S)
+		_passo(sede.x, true)
+	while sede.level == RealmLadder.CLAREIRA:
+		assert_float(ClockService.clock.elapsed).is_less(FUNDAR_S)
+		_passo(sede.x)
 
 
 func _recrutar(id: int) -> void:

@@ -20,6 +20,8 @@ static func goal() -> String:
 		var lado := {"side": _tr(&"SIDE_EAST" if rot.announced > 0 else &"SIDE_WEST")}
 		var funda := rot.deep(ClockService.clock.day)
 		return _tr(&"GUIDE_ROT_COMING_DEEP" if funda else &"GUIDE_ROT_COMING").format(lado)
+	if not RealmLadder.founded(SimLoop.builds):
+		return _tr(&"GUIDE_FOUND")  # a Clareira, por fundar (ADR 0059)
 	if SimLoop.field.seasons.at(ClockService.clock.day) == Seasons.WINTER:
 		return _tr(&"GUIDE_WINTER")
 	if TravelWatch.at_gate():

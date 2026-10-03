@@ -56,13 +56,19 @@ func test_largar_no_nucleo_sem_o_feito_e_so_largar() -> void:
 	assert_int(SimLoop.coins.count()).is_equal(moedas + 1)
 
 
+## Com o feito e a Semente, a moeda no marco continua a ser da sede ate o Verbo 2
+## escolher o monarca (ADR 0059): uma intencao nao faz a outra por ordem do codigo.
 func test_com_o_feito_e_a_semente_o_verbo_1_no_nucleo_evolui() -> void:
 	SimLoop.field.classes.nights_defended = _classe().evolve_condition_value
 	SimLoop.state.royal_seeds = _classe().evolve_seed_cost
 	SimLoop.units.xs[_rei()] = SimLoop.core_x
+	SimLoop.units.clear_target(SimLoop.king_id)
 	assert_str(GameplayGuide.context(Glyphs.Device.KEYBOARD)).contains(
-		TranslationServer.translate(&"BUILDING_CORE")
+		TranslationServer.translate(&"REALM_STAGE_CLEARING")
 	)
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
+	SimLoop.step(PASSO)
+	assert_bool(SimLoop.seat.monarch_aim).is_true()
 	var saco := SimLoop.units.carried_coins[_rei()]
 	var moedas := SimLoop.coins.count()
 	_largar_no_nucleo()
@@ -93,8 +99,9 @@ func test_o_escudeiro_nasce_com_o_rei_e_e_teu() -> void:
 	assert_int(e).is_not_equal(UnitSystem.NENHUM)
 	assert_int(SimLoop.units.owners[e]).is_equal(SimLoop.units.owners[_rei()])
 	# Nao e uma tropa ate a classe evoluir: o painel nao o conta — so os dois sem
-	# funcao com que o reino comeca (Q-110).
-	assert_int(GameplayGuide.troops()).is_equal(Greybox.JA_TEUS)
+	# funcao com que o reino comeca (Q-110) e o construtor pioneiro (ADR 0059).
+	var pioneiros := RulesFactory.rules().founder_pioneers
+	assert_int(GameplayGuide.troops()).is_equal(Greybox.JA_TEUS + pioneiros)
 
 
 ## Q-114 (o dono, 29/09/2026): a moeda caida vai para a espada do escudeiro, e o

@@ -2336,5 +2336,288 @@
   "notas": [
    "Q-213 a Q-215 ficam por decidir. Ver a ADR 0057: o que se aplicou e como desfazer."
   ]
+ },
+ "RG-00": {
+  "title": "O contrato do plano do reino",
+  "porque": "O dono pediu um reino que nasce acampamento e cresce por decisões, e aprovou o plano de 03/10 com «aplique esse relatório».",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "—",
+  "feito": "O plano-fonte em docs/recovery; a ADR 0059 com as dezasseis recomendações e onde ficaram; o dossiê (§09, §10, §24, §25, §62) com a regra nova; as Q-220 a Q-226; os dezanove tickets RG",
+  "fora": "Código, CSV e balanceamento: são os tickets seguintes.",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "RG-01": {
+  "title": "O contrato da sede",
+  "porque": "O núcleo nascia castelo de pé; documentos, dados e código tinham de concordar sobre quando o reino é estabelecido.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "RG-00",
+  "feito": "O núcleo começa na Clareira (nível 0: sem vida, não trava, não se ataca, não conta como caído); a derrota só depois de fundada; subir de estágio mantém a proporção de vida; a sede repara-se como as outras obras",
+  "fora": "A Capital (RG-14).",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "RG-02": {
+  "title": "O pacote e o início",
+  "porque": "O começo precisa de decisões reais sem depender da sorte na caça: provisões, um construtor para reparar cedo e a banca do arco.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/09-as-tropas-que-fazem-o-reino-andar.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "RG-01",
+  "feito": "Os três monarcas chegam com a companhia, os dois trabalhadores e um construtor pioneiro; a carroça de provisões com 8 ao pé do marco, levada ao passar; a fundação ergue a banca do arco uma vez; carregar não repõe nada; o piloto da vistoria leva a carroça e funda",
+  "fora": "A posição da bancada dentro do acampamento (RG-16, Q-221).",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "RG-03": {
+  "title": "A escada da sede, do Acampamento à Fortaleza",
+  "porque": "Cada melhoria da sede abre possibilidades; as obras laterais continuam a pedir investimento.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
+  ],
+  "depende": "RG-01",
+  "feito": "realm_stages.csv no pipeline CSV → .tres; o nível do núcleo é o estágio, pago e levantado pelo BuildSystem; o RealmLadder soma o estágio às guardas do can_climb; cada estágio desenhado (ADR 0051); a obra fechada diz o estágio que falta",
+  "fora": "A Capital (RG-14); as variantes por povo (RG-16).",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "RG-04": {
+  "title": "O contexto do núcleo",
+  "porque": "Uma moeda destinada ao povoado não pode evoluir o monarca por prioridade de código.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md",
+   "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md"
+  ],
+  "depende": "RG-01",
+  "feito": "A moeda no marco é da sede por omissão; o Verbo 2 no marco troca para o monarca quando ele pode evoluir, e o painel diz o alvo antes de a moeda sair; o PriceTag não mostra o preço da sede com o monarca escolhido",
+  "fora": "A roda adaptada (Q-223).",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "RG-05": {
+  "title": "Empregos e reposição",
+  "porque": "Formar tira gente de outra função; perder o pioneiro não pode fechar a partida.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/09-as-tropas-que-fazem-o-reino-andar.md",
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md"
+  ],
+  "depende": "RG-02, RG-03",
+  "feito": "A reposição do construtor perdido pela Casa de Treino (Povoado); a IA prefere um trabalhador ocioso e próximo e mostra o posto que fica vazio antes de pagar; a trajetória «pioneiro perdido» recupera sem recomeçar",
+  "fora": "Habitação e limite de população (RG-D08).",
+  "estado": "parcial — o pioneiro repara e a Casa de Treino abre no Povoado; falta a IA preferir o ocioso e o aviso do posto que fica vazio",
+  "horas": "—"
+ },
+ "RG-06": {
+  "title": "A economia de trajetória",
+  "porque": "O modelo de sete fontes não é o orçamento do primeiro minuto; as três rotas da primeira noite pedem medição.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/06-producao-conversao-e-comercio.md",
+   "docs/design/49-economysystem-tres-circuitos-uma-passagem-por-fa.md",
+   "docs/design/25-os-primeiros-doze-minutos.md"
+  ],
+  "depende": "RG-02, RG-03",
+  "feito": "Perfis de trajetória por semente e monarca (defensiva, económica, lareira, pioneiro perdido, arqueiro impreciso, Nia com serviços, expansão unilateral, inverno cedo); compras, produção efetiva, Ganância, lareira, flechas e recuperação medidos",
+  "fora": "Mudar números para esconder divergências.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-07": {
+  "title": "A primeira defesa aérea",
+  "porque": "A §10 pede a torre alta a partir do dia 4; tem de haver resposta acessível antes da ameaça.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md"
+  ],
+  "depende": "RG-03",
+  "feito": "A torre alta abre no Povoado; medir se as 30 moedas chegam antes do primeiro Alado nas trajetórias do RG-06; se não chegarem, a pergunta sobre a janela da ameaça",
+  "fora": "Um arqueiro de chão a atingir AERIAL sem regra de combate.",
+  "estado": "parcial — a torre alta abre no Povoado; a viabilidade das 30 moedas antes do dia 4 por medir",
+  "horas": "—"
+ },
+ "RG-08": {
+  "title": "A interface do benefício e do compromisso",
+  "porque": "O jogador tem de distinguir comprar a sede de comprar um serviço, e ver porque uma obra parou.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "RG-03, RG-04",
+  "feito": "O painel da sede diz o estágio, o seguinte, o preço e o que abre; a obra fechada diz o estágio que falta; o objetivo pede a fundação; falta de pessoa, lareira prevista contra a bolsa e a preparação noturna curta",
+  "fora": "Uma nota «defesa 42/100».",
+  "estado": "parcial — o painel da sede, a obra fechada e o objetivo da fundação; faltam a falta de pessoa, a lareira prevista e a preparação noturna",
+  "horas": "—"
+ },
+ "RG-09": {
+  "title": "Frentes e refúgios",
+  "porque": "Construir mais não pode piorar a IA: a guarnição segue a frente ameaçada e há recuo coerente.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/52-jobsystem-e-unitsystem-previsivel-vence-intelige.md"
+  ],
+  "depende": "RG-05, RG-06, RG-07, RG-08",
+  "feito": "A frente operacional de cada lado; reserva de recuo; torres sem função de frente reconhecidas; recuo por rota válida quando a defesa de fora cai",
+  "fora": "Teletransportar tropas.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-10": {
+  "title": "Expansão e acampamentos",
+  "porque": "Expandir muda o recrutamento; o aviso tem de vir antes.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/21-geracao-procedural-do-territorio.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md"
+  ],
+  "depende": "RG-09",
+  "feito": "A nova defesa liga-se ao efeito no acampamento; o aviso concreto antes de pagar («este avanço substituirá o acampamento…»); a casa de cidadãos persiste nas ruínas",
+  "fora": "Preservar acampamentos arborizados dentro da muralha (alternativa posterior, RG-D10).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-11": {
+  "title": "A Vila Fortificada e a Fortaleza",
+  "porque": "Os estágios F4 e F5 têm de abrir infraestrutura de campo e indústria, preservando descobertas e recursos especiais.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/06-producao-conversao-e-comercio.md"
+  ],
+  "depende": "RG-09",
+  "feito": "F4 e F5 abrem as obras que já existem (fosso, embaixada, serração, estábulo de vacas, poço, farol, muralha de ferro; fundição, altar, bastião); a infraestrutura de campo e a indústria novas, e a preparação de cerco",
+  "fora": "Fabricar conquistas retroativamente.",
+  "estado": "parcial — os dois estágios abrem as obras que já existem; a infraestrutura de campo e a indústria novas por fazer",
+  "horas": "—"
+ },
+ "RG-12": {
+  "title": "O primeiro posto",
+  "porque": "Avançar para um recurso tem de criar benefício e obrigação persistentes.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/21-geracao-procedural-do-territorio.md",
+   "docs/design/13-conquistar-civilizacoes.md"
+  ],
+  "depende": "RG-10, RG-11",
+  "feito": "Um posto com identidade, posição, refúgio, defesas locais, pessoas atribuídas, função e ligação à sede, sem ser um segundo núcleo cuja queda é derrota",
+  "fora": "Impostos territoriais.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-13": {
+  "title": "A primeira rota física",
+  "porque": "O trade_income é uma fórmula; uma rota a sério tem estados visíveis.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/06-producao-conversao-e-comercio.md",
+   "docs/design/13-conquistar-civilizacoes.md"
+  ],
+  "depende": "RG-12",
+  "feito": "Uma rota completa: negociada, a preparar, em viagem, entregue (credita uma vez), interrompida",
+  "fora": "Rotas com várias paragens.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-14": {
+  "title": "A Capital",
+  "porque": "A Capital tem de administrar algo que existe; sem postos e rotas seria um degrau só de vida.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md"
+  ],
+  "depende": "RG-12, RG-13",
+  "feito": "A linha capital no realm_stages.csv (88 moedas no plano), com função administrativa sobre postos e rotas reais; não dá vitória",
+  "fora": "Vitória automática (RG-D12).",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-15": {
+  "title": "Integração e ausência",
+  "porque": "A base continua a funcionar com saldos, pessoas e regras locais coerentes enquanto o monarca está fora.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/13-conquistar-civilizacoes.md"
+  ],
+  "depende": "RG-13",
+  "feito": "Gastos locais ligados ao saldo deixado; serviços sem pessoas a operar dois sítios; a troca de controlo de território é atómica",
+  "fora": "Dinheiro remoto ilimitado.",
+  "estado": "por fazer",
+  "horas": "—"
+ },
+ "RG-16": {
+  "title": "Arte por estágio e por povo",
+  "porque": "O desenvolvimento tem de parecer construído, e cada povo tem a sua fundação.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md",
+   "docs/design/04-cada-imperio-e-um-povo-diferente.md"
+  ],
+  "depende": "RG-03",
+  "feito": "Os estágios pintados (ADR 0051) e a carroça; as variantes por povo (Enramados, Portuários, Fenda, Horta, Fornalha, Sob-Raiz); os sete estados mínimos de cada peça; a bancada dentro do acampamento; a arte do dono quando vier",
+  "fora": "Tocar em art/ (AGENTS.md, regra 9).",
+  "estado": "parcial — o Acampamento, o Povoado, a Vila, a Vila Fortificada e a carroça pintados em formas lisas; faltam as variantes por povo e a arte do dono",
+  "horas": "—"
+ },
+ "RG-17": {
+  "title": "Migração",
+  "porque": "Os saves anteriores não podem virar acampamentos nem ganhar o pacote fundador.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/62-esquema-versoes-e-a-regra-de-seguranca.md"
+  ],
+  "depende": "RG-01",
+  "feito": "O castelo herdado é a Fortaleza com a vida que tinha (v8); pagamentos parciais, obras e pessoas persistidas sem bónus ao carregar",
+  "fora": "Inventar o estágio máximo para uma versão desconhecida.",
+  "estado": "parcial — o castelo herdado é a Fortaleza (v8, com teste); a matriz de pagamentos parciais, obras e pessoas por medir",
+  "horas": "—"
+ },
+ "RG-18": {
+  "title": "Desempenho e mobile",
+  "porque": "Cenas maiores e mais obras não podem custar frames nem tornar o toque ilegível.",
+  "spec": [
+   "docs/recovery/PLANO-REINO-2026-10-03.md",
+   "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
+   "docs/design/63-orcamentos-e-como-se-medem.md",
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "RG-16",
+  "feito": "Medir as sedes grandes, a atividade fora de câmara, o painel e os controlos de toque; invalidar cálculos por evento e não por frame",
+  "fora": "Otimizar o que não se mediu.",
+  "estado": "por fazer",
+  "horas": "—"
  }
 }

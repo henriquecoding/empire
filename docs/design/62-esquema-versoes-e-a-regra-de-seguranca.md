@@ -27,6 +27,10 @@ Como a simulação é pura, o save é quase trivial: serializa GameState, mais o
 | Campos desconhecidos são ignorados, não são erro | Permite ler um save de uma versão futura sem rebentar — degrada em vez de recusar. |
 
 
+> **Versão 8 — a fundação (ADR 0059)**
+>
+> Um save de antes trazia o castelo de pé. Na escada nova o castelo é a Fortaleza: a migração passa o núcleo para esse estágio com a vida que tinha e marca a sede como herdada. Nada mais se inventa: nem o pioneiro, nem a carroça de provisões, nem a banca de graça. Carregar não repõe a carroça nem refaz a fundação.
+
 > **A migração escreve-se quando se muda o campo, não quando se lança**
 >
 > Cada alteração ao GameState acrescenta uma função _migrate_N_to_N1(d: Dictionary) no mesmo commit. Deixar as migrações para o fim é como deixar os testes para o fim: nunca acontece, e a dívida é paga com saves de jogadores.

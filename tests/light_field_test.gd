@@ -6,6 +6,8 @@
 # exactamente o que a regra do escuro ja dizia que nao e escuro.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const SEMENTE := 20261002
 
 
@@ -13,6 +15,7 @@ func before_test() -> void:
 	SimLoop.autosave_enabled = false
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	LightField.reset()
 
 

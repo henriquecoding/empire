@@ -21,6 +21,8 @@ var field: FieldWork
 var hunting: HuntingSystem
 
 var intents := IntentQueue.new()
+## A sede: a carroca da chegada e o alvo da moeda no nucleo (ADR 0059).
+var seat := RealmSeat.new()
 
 var king_id: int = UnitSystem.NENHUM
 
@@ -74,6 +76,7 @@ func resume(estado: GameState, rng_states: Dictionary) -> void:
 func world() -> Dictionary:
 	var saved := SimSave.world(units, creatures, coins, builds, night, king_id, jobs)
 	saved.merge(field.to_dict())
+	saved[FoundationWatch.SEDE] = seat.to_dict()
 	return saved
 
 
@@ -81,6 +84,7 @@ func load_world(mundo: Dictionary) -> void:
 	WorldWorks.restore(mundo.get(SimSave.OBRAS, []))
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
 	field.from_dict(mundo)
+	seat.from_dict(mundo.get(FoundationWatch.SEDE, {}))
 
 
 func stop() -> void:
@@ -143,6 +147,7 @@ func step(delta: float) -> void:
 	field.absorb(coins, builds, units)
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
+	FoundationWatch.collect()  # a carroca de provisoes da chegada (ADR 0059)
 	EventRelay.secrets(secrets.tick(units, Assume.driven(), state))
 	HuntWatch.stir(field, units, delta)  # 5 · a caca anda; o javali bate antes das mortes
 	var strikes := HeroWatch.resolved(combat.resolve(units, creatures, builds, _roll))
@@ -151,7 +156,7 @@ func step(delta: float) -> void:
 	_largar(field.resolve(units, builds, delta, luz, ClockService.clock, king_id))
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
-	EventRelay.builds(builds.tick(delta, units))  # 8 · BuildSystem — todo o tick
+	EventRelay.builds(FoundationWatch.after(builds.tick(delta, units)))  # 8 · BuildSystem
 	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
 	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
 
@@ -182,6 +187,7 @@ func _montar() -> void:
 	recruits.resting = field.upkeep.resting  # quem desertou nao volta logo (Q-144)
 	hunting = field.hunting
 	tally.reset()
+	seat = RealmSeat.new()
 	_fase = UnitSystem.NENHUM
 	_brecha = false
 	intents.clear()

@@ -1,5 +1,7 @@
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 
 
@@ -8,6 +10,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(20260926)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 
 
 func after_test() -> void:
@@ -108,10 +111,12 @@ func test_the_context_only_offers_the_wall_path_the_verb_accepts() -> void:
 func test_the_coin_toast_is_the_kings_and_troops_do_not_count_him() -> void:
 	var hud: GameHud = auto_free(GameHud.new())
 	add_child(hud)
-	assert_int(GameplayGuide.troops()).is_equal(Greybox.JA_TEUS)  # os dois do inicio (Q-110)
+	# Os dois do inicio (Q-110) e o construtor pioneiro (ADR 0059).
+	var iniciais := Greybox.JA_TEUS + RulesFactory.rules().founder_pioneers
+	assert_int(GameplayGuide.troops()).is_equal(iniciais)
 	var archer := SimLoop.units.index_of(7)
 	SimLoop.units.owners[archer] = SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
-	assert_int(GameplayGuide.troops()).is_equal(Greybox.JA_TEUS + 1)
+	assert_int(GameplayGuide.troops()).is_equal(iniciais + 1)
 	EventBus.coin_collected.emit(SimLoop.units.ids[archer], 1)
 	assert_str(hud._aviso.text).is_empty()
 	EventBus.coin_collected.emit(SimLoop.king_id, 1)

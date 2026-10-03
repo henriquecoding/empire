@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RealmStageData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_stage_data.gd" id="1_jjobt"]
+
+[resource]
+script = ExtResource("1_jjobt")
+id = &"fortress"
+display_key = "REALM_STAGE_FORTRESS"
+order = 5
+cost = 56
+build_work = 112.0
+max_health = 1000
+width_px = 480
+contact_slots = 7
+unlocks = Array[StringName]([&"smelter", &"consecrated_altar", &"bastion"])

@@ -11,6 +11,8 @@
 # escreve.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const Posto := preload("res://tests/support/posto.gd")
 
 const SEMENTE := 20260915
@@ -72,6 +74,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 
 
 func after_test() -> void:

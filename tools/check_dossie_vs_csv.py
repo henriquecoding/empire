@@ -97,6 +97,11 @@ CHECKS = [
      {"Torre de arqueiros": "archer_tower", "Torre alta": "high_tower", "Barril de fogo": "fire_barrel",
       "Fosso de raízes": "root_moat", "Farol": "lighthouse", "Altar consagrado": "consecrated_altar"},
      {"Custo": "cost"}),
+    ("s10", "Estágio", "realm_stages",
+     # "Vila Fortificada" antes de "Vila": o nome casa pelo comeco da celula.
+     {"Acampamento": "encampment", "Povoado": "hamlet", "Vila Fortificada": "walled_village",
+      "Vila": "village", "Fortaleza": "fortress"},
+     {"Custo": "cost", "Vida": "max_health", "Largura": "width_px"}),
     ("s12", "Montaria", "mounts",
      {"A pé": "on_foot", "Cavalo de tração": "draft_horse", "Javali": "boar", "Lagarto": "lizard",
       "Libélula": "dragonfly_mount", "Alce da Podridão": "rot_elk"},

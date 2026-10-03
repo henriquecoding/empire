@@ -8,6 +8,7 @@ enum Path { NENHUMA, GUARNICAO, FORTIFICACAO }
 const NENHUM := -1
 
 const NUCLEO := &"core"
+const METADE := 0.5
 
 var territory := 0
 var foundation := false
@@ -34,6 +35,7 @@ var path: Path = Path.NENHUMA
 var contact: PackedInt32Array = PackedInt32Array()
 
 var width: float = 0.0
+var widths: PackedFloat32Array = PackedFloat32Array()
 
 var blocks: bool = false
 
@@ -166,6 +168,31 @@ func from_dict(d: Dictionary) -> void:
 	variant = d.get(&"variant", variant)
 	contact = d.get(&"contact", contact)
 	charge = d.get(&"charge", charge)
+	fit()
+
+
+func fit() -> void:
+	if not widths.is_empty():
+		width = widths[clampi(level, 0, widths.size() - 1)]
+
+
+func raise_to(nivel: int) -> void:
+	level = clampi(nivel, 0, costs.size())
+	paid = 0
+	progress = 0.0
+	state = State.DONE if level > 0 else State.EMPTY
+	health = max_health()
+	fit()
+
+
+func raised_health(antes: int) -> int:
+	if kind != NUCLEO or antes <= 0:
+		return max_health()
+	return ceili(float(health) * max_health() / antes)
+
+
+func catch_half() -> float:
+	return (widths[0] if not widths.is_empty() else width) * METADE
 
 
 func two_paths() -> bool:

@@ -73,3 +73,12 @@ extends Resource
 @export var hearth_radius_px: float = 0.0
 @export var hearth_repel_mass: int = 0
 @export var hearth_rot_slow: float = 0.0
+
+@export_group("Fundacao do reino — ADR 0059")
+## A bolsa da carroca de provisoes, o numero de construtores que chegam com o monarca, se
+## a fundacao ergue a banca do arco de graca (1) ou nao (0), e o alcance a que o monarca
+## leva a bolsa.
+@export var founder_provisions: int = 0
+@export var founder_pioneers: int = 0
+@export var founder_bow_rack: int = 0
+@export var provisions_grab_px: float = 0.0

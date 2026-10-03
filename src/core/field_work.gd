@@ -56,6 +56,7 @@ func _init(
 	_noite = noite
 	_perfis = SimFactory.by_id(&"units")
 	Discoveries.gates = RulesFactory.discovery_gates()  # as estatuas (Q-016)
+	RulesFactory.install_realm_gates()  # o que cada estagio da sede abre (ADR 0059)
 	hunting = HuntingSystem.new(
 		SimFactory.by_id(&"units"), Registry.entry(&"wildlife", &"rabbit") as WildlifeData
 	)

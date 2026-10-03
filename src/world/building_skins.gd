@@ -45,7 +45,7 @@ static func profile(slot: BuildSlot, forma: Silhouette.Form) -> StringName:
 
 static func profile_at(slot: BuildSlot, forma: Silhouette.Form, nivel: int) -> StringName:
 	if slot.kind == BuildSlot.NUCLEO:
-		return &"tree_castle"
+		return SeatSprites.profile(nivel)  # a sede pelo estagio dela (ADR 0059)
 	if ORIGINAIS.has(slot.kind):
 		return ORIGINAIS[slot.kind]
 	var pintada := PaintedArt.profile(slot, nivel)
@@ -57,7 +57,8 @@ static func profile_at(slot: BuildSlot, forma: Silhouette.Form, nivel: int) -> S
 static func shown_level(slot: BuildSlot) -> int:
 	match slot.state:
 		BuildSlot.State.EMPTY:
-			return maxi(1, slot.costs.size())
+			# A Clareira promete o Acampamento, e nao a Fortaleza (ADR 0059).
+			return 1 if slot.kind == BuildSlot.NUCLEO else maxi(1, slot.costs.size())
 		BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING:
 			return slot.level if slot.mending else slot.level + 1
 	return maxi(1, slot.level)

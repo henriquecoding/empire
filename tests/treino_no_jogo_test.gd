@@ -3,6 +3,8 @@
 # o save a meio nao perde nem repete nada.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 const ESPERA := 10
 const O_TRABALHADOR := 2
@@ -15,6 +17,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(20260926)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	EventBus.unit_promoted.connect(_promovido)
 
 

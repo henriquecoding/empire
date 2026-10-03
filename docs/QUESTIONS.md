@@ -7,6 +7,100 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A fundação do reino e a escada da sede — 03/10/2026 (ADR 0059)
+
+> Pedido do dono (03/10/2026), sobre o plano `docs/recovery/PLANO-REINO-2026-10-03.md`: *«aplique esse relatório»*.
+> O plano pedia que o jogador estabelecesse um acampamento, começasse com poucos recursos e os trabalhos essenciais,
+> ganhasse dinheiro, expandisse o território e fortalecesse o reino aos poucos. Aplicou-se o Lote A (RG-01 a RG-04) e
+> o que do Lote B cabia nele (ADR 0059); as dezasseis recomendações do plano (RG-D01 a RG-D16) contam como aprovadas
+> pelo «aplique», e os números novos ficam em `_proposed`, reversíveis no CSV. O resto do roteiro está no backlog
+> (RG-05 a RG-18).
+
+### Q-220 · A fundação e a escada da sede: da Clareira à Fortaleza
+- **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — RG-D01, RG-D02, RG-D03, RG-D11, RG-D12 e RG-D16.
+  Aplicado.
+- **Onde:** §10, §25, §55; `realm_stages.csv`, `SeatSite`, `RealmLadder`, `BuildSystem.can_climb`,
+  `BuildSystem.fallen`, `BuildSlot.raised_health`, `Greybox._nucleo`. Os testes: `tests/escada_da_sede_test.gd`,
+  `tests/fundacao_do_reino_test.gd`, `tests/abertura_natural_test.gd`.
+- **O que estava:** o núcleo nascia castelo, de pé, com 1000 de vida, e todos os sítios aceitavam moeda desde o
+  primeiro tick.
+- **O que foi feito:** o núcleo começa na Clareira (nível 0: sem vida, não trava, não se ataca, não conta como caído).
+  Cada estágio é um degrau do núcleo, pago e levantado como um muro: o Acampamento por 2, o Povoado por 8, a Vila por
+  18, a Vila Fortificada por 32 e a Fortaleza por 56 (116 só na sede). A vida sobe de 200 a 1000, a largura de 160 a
+  480 px e os slots de contacto de 3 a 7; a Fortaleza é o castelo de antes. Subir mantém a proporção de vida.
+- **Números propostos** (`_proposed`): os preços (os do plano), o trabalho (2 s por moeda, a regra dos edifícios), e a
+  vida, a largura e os slots de contacto de cada estágio, que o plano não fixou. O plano não mediu o tempo até à
+  Fortaleza.
+- **Fica por decidir:** se a vida do Acampamento (200) aguenta a primeira noite nas três rotas do plano (RG-06); a
+  Capital (Q-226).
+- **Como desfazer:** no `Greybox._nucleo`, `raise_to` da sede até à Fortaleza; o resto continua a funcionar.
+- **Decide:** tu, os números.
+
+### Q-221 · O pacote fundador: a carroça, o pioneiro e a bancada
+- **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — RG-D04, RG-D05, RG-D06 e RG-D07. Aplicado.
+- **Onde:** §09, §10, §25; `rules.csv` (`founder_provisions`, `founder_pioneers`, `founder_bow_rack`,
+  `provisions_grab_px`), `FoundationWatch`, `RealmSeat`, `DarkWatch.kindle`.
+- **O que foi feito:** o monarca chega com a companhia, os dois trabalhadores de antes (Q-110) e um construtor; uma
+  carroça com 8 moedas fica 150 px a oeste do marco, e o monarca leva o que lhe cabe no saco ao passar a 24 px dela. A
+  fundação ergue a banca do arco da região de graça, uma vez. Sem sede, a lareira não acende nem cobra.
+- **Fica por decidir:**
+  - o 8 da carroça (o plano manda testar), o pioneiro único e a bancada de graça;
+  - a banca fundadora continua no sítio da Q-165 (848 px a leste), e não dentro do acampamento como o plano a
+    descreve: mudá-la de sítio é autoria da região e arte (RG-16);
+  - uma região nova depois de atravessar a bifurcação (Q-135) é um jogo novo com legado e recebe outra fundação, com
+    carroça e pioneiro. O plano proíbe duplicar o pacote *na mesma campanha* (§21.6, §27.5) e não diz se a travessia
+    é a mesma campanha.
+- **Decide:** tu.
+
+### Q-222 · O que cada estágio abre
+- **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — a tabela do plano (§9, §14.1) e o RG-D09. Aplicado.
+- **Onde:** §10; `realm_stages.csv` (`unlocks`), `RealmLadder.required`, `GameplayGuide`, `SeatGuide.locked`.
+- **O que foi feito:** o Acampamento abre o canteiro, a fogueira, a banca do arco e a estacaria; o Povoado a Casa de
+  Treino, o galinheiro, o pesqueiro, as duas torres, a casa de cidadãos e a paliçada; a Vila a cozinha, a forja, o
+  celeiro, a salga, o curral, o corte de madeira, o estábulo, a casa do herdeiro, o santuário, o barril e o muro de
+  pedra; a Vila Fortificada o fosso, a embaixada, a serração, o estábulo de vacas, o poço de minério, o farol e a
+  muralha de ferro; a Fortaleza a fundição, o altar e o bastião. Uma obra que nenhum estágio lista — as casas dos
+  povos, o sino de vigia, a escora — abre com a fundação. O painel diz o estágio que falta, e não só «bloqueado».
+- **Fica por decidir:** a tabela inteira; se a casa do herdeiro na Vila (plano §21.3) não atrasa de mais a sucessão
+  (Q-133); se as casas dos povos devem pedir algum estágio (plano §9: «não aplicar o mesmo bloqueio retroativamente»).
+- **Decide:** tu.
+
+### Q-223 · A moeda no marco: a sede ou o monarca
+- **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — o RG-04 e o §23.2 do plano. Aplicado.
+- **Onde:** §24, Q-114; `CoinTarget.slot_at`, `KingClaims.of`, `FoundationWatch.toggle`, `Verbs._assumir`,
+  `SeatGuide.context`, `PriceTag`.
+- **O que estava:** a moeda largada no núcleo evoluía o monarca sempre que ele podia, por ordem do código.
+- **O que foi feito:** a moeda é da sede por omissão. Com o monarca a poder evoluir, o painel diz «{Verbo 2} a moeda
+  para evoluir o monarca», e o Verbo 2 no marco troca o alvo (e volta). Sem ele a poder evoluir, não há troca. No marco,
+  esse Verbo 2 vem antes de pagar ao companheiro. O marco tem a largura da Clareira (160 px) em todos os estágios.
+- **Fica por decidir:** se o Verbo 2 no marco deve continuar a ser o gesto (o plano pede a roda adaptada, §23.2).
+- **Decide:** tu.
+
+### Q-224 · A sede repara-se
+- **Onde:** §10, §55, Q-108; `BuildSlot.repair_cost`, `RepairWork`.
+- **O que mudou sem ser pedido:** o castelo de antes tinha custo 0 e não se reparava. Com a escada, a sede tocada
+  repara-se como as outras obras: pelo custo do degrau em que está, à proporção da vida perdida, com um construtor
+  presente. Uma sede em ruína continua a ser a derrota.
+- **Proposta:** fica assim — é o que o plano pede quando separa dano, serviço e conhecimento (§16.8).
+- **Decide:** tu, se fica.
+
+### Q-225 · Os saves de antes da fundação
+- **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — o RG-D13 e o §27 do plano. Aplicado.
+- **Onde:** §62; `SaveMigrationsV8`, `RealmSeat.inherited`. O teste: `tests/fundacao_do_reino_test.gd`.
+- **O que foi feito:** o save sobe para a versão 8. O núcleo de pé passa à Fortaleza com a vida que tinha, e a sede
+  fica marcada como herdada; não se cria pioneiro, carroça nem banca. Todas as obras que havia continuam a abrir.
+- **Decide:** nada a decidir; reverte-se com a ADR.
+
+### Q-226 · A Capital, e o que fica para depois
+- **O plano propõe** a Capital (F6, 88 moedas) para administrar postos e rotas.
+- **Proposta (aplicada, reversível):** a Capital não entra ainda. Sem postos avançados (RG-12) nem rotas físicas
+  (RG-13) seria um degrau só de vida, que o próprio plano rejeita (§4.1, §32.2). Entra com o RG-14, por uma linha no
+  `realm_stages.csv`.
+- **Ficam como estão, como o plano recomenda:** sem limite de casas (RG-D08); o fecho dos acampamentos pela muralha
+  continua, e o aviso antes de expandir é o RG-10 (RG-D10); a reserva é o baú vulnerável da sala secreta, no QP-03
+  (RG-D14).
+- **Decide:** tu.
+
 ## Os bichos de todos os dias e o fôlego — 03/10/2026 (ADR 0058)
 
 > Pedido do dono (03/10/2026), depois de jogar: *«O rei está cansando extremamente rápido, deve demorar e se recuperar
