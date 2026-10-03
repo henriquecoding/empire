@@ -58,15 +58,13 @@ static func tick(
 	var intro := relogio.elapsed >= intro_at(relogio.day_seconds())
 	var raro := func() -> float: return RngService.scatter(hash([SAL_RARO, hunt.herd.born]), 1)[0]
 	hunt.grow(delta, luz, period(relogio.day_seconds()), raro)
-	var ameacas := Herd.threats_of(unidades)
-	for g in Herd.bite(unidades, hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)):
-		EventBus.queue(&"unit_damaged", [g[Herd.QUEM], g[Herd.DANO], Herd.NENHUM])  # o javali
 	var caca := hunt.resolve(unidades, luz, intro)
 	if SimLoop.combat != null and SimLoop.field == field:
 		for golpe in SimLoop.combat.manual.take_missed():
 			caca.append_array(RoyalHunt.swing(hunt, golpe))
 	var perfis := SimFactory.by_id(&"units")
-	caca.append_array(RoyalHunt.idle(hunt, unidades, perfis, Assume.driven(), luz))
+	var aljava := field.supply  # a flecha do Imperador Arqueiro, mesmo sem condutor (Q-200)
+	caca.append_array(RoyalHunt.idle(hunt, unidades, perfis, Assume.driven(), luz, aljava))
 	var chao := HuntBag.bag(hunt.bagged, unidades, caca)
 	for d in caca:
 		if not d in chao:
@@ -78,6 +76,15 @@ static func tick(
 	return chao
 
 
+## Os bichos andam, fogem ou carregam (ADR 0057). Corre antes do combate do tick, para
+## que a morte de quem o javali matou passe pelo combate como as outras.
+static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
+	var hunt := field.hunting
+	var ameacas := Herd.threats_of(unidades)
+	for g in Herd.bite(unidades, hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)):
+		EventBus.queue(&"unit_damaged", [g[Herd.QUEM], g[Herd.DANO], Herd.NENHUM])  # o javali
+
+
 ## Poe as tocas na primeira vez, e abre o dia.
 static func prepare(
 	hunt: HuntingSystem, day: int, core_x: float, width: float, _fase: int = 0
@@ -86,6 +93,8 @@ static func prepare(
 		return
 	if not hunt.burrows.placed():
 		place(hunt, core_x, width)
+	elif not hunt.burrows.checked:
+		reconcile(hunt, core_x, width)
 	if day > hunt.day and SimLoop.night != null:
 		wither(hunt, SimLoop.night.amargueiros)
 	hunt.open_day(day)
@@ -120,6 +129,28 @@ static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 			break
 	hunt.burrows.place(onde, esperas, fontes, caca)
 	hunt.wildlife = SimFactory.by_id(&"wildlife")
+
+
+## Um save de antes da ADR 0057 traz as tocas de entao: acrescenta, sitio a sitio, as
+## que faltam ate cada bicho ter as suas, sem mexer nas que ja la estao.
+static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
+	hunt.burrows.checked = true
+	var periodo := period(ClockService.clock.day_seconds() if ClockService.clock else 0.0)
+	var tem := {}
+	for bicho in hunt.burrows.game:
+		tem[bicho] = int(tem.get(bicho, 0)) + 1
+	for sitio: Array in SITIOS:
+		var x := clampf(core_x + float(sitio[0]), 0.0, width)
+		if hunt.burrows.xs.has(x):
+			continue
+		for dados in _bichos():
+			var id := String(dados.id)
+			if int(tem.get(id, 0)) >= dados.burrows_per_region or not dados.sources.has(sitio[1]):
+				continue
+			tem[id] = int(tem.get(id, 0)) + 1
+			var espera := RngService.scatter(hash([SAL_ESPERA, hunt.burrows.xs.size()]), 1)[0]
+			hunt.burrows.add(x, espera * periodo, String(sitio[1]), id)
+			break
 
 
 ## Segundos de luz entre dois bichos da mesma toca: a luz do dia vezes as moedas que

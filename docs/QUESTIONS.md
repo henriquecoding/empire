@@ -13,7 +13,7 @@
 > deve ser possível fazer farm com as moedas que caem; os imperadores também devem conseguir atacar e colher esse
 > dinheiro»*. Aplicado diretamente (ADR 0057): bichos que pastam, fogem e se encurralam, o javali que carrega, o
 > faisão, a raposa e o cervo branco raro, o golpe do imperador que caça e a caça dele a cair no chão. Os números novos
-> são propostas (`_proposed` no `wildlife.csv`). Ficam duas perguntas.
+> são propostas (`_proposed` no `wildlife.csv`), aplicadas de forma reversível. Ficam três perguntas.
 
 ### Q-213 · A caça média com mais bichos
 - **Onde:** §06, `hunt_yield` (economy.csv), `HuntWatch.period`.
@@ -29,6 +29,15 @@
   noite.
 - **Proposta:** o javali que persegue alguém até ao muro fica atordoado uns segundos. Não aplicado: é mecânica nova.
 - **Decide:** tu.
+
+### Q-215 · Os números da caça viva
+- **Onde:** `wildlife.csv`, colunas `graze_speed`, `roam_px`, `notice_px`, `flee_px`, `reach_px`, `attack_interval`,
+  `rare_of`, `rare_chance`; as linhas `pheasant`, `fox` e `white_stag`; a toca do `boar`. Todos em `_proposed`.
+- **O que está (aplicado, reversível):** o pedido do dono foi implementar diretamente, por isso estes números já
+  estão em jogo, como os da ADR 0054. Coelho: pasta a 24 px, dá por ti a 56 px, foge até 72 px. Veado: 40, 88, 128.
+  Faisão: 1 acerto, 1 moeda, dá por ti a 64 px. Raposa: 6 de vida, 2 moedas. Javali: uma toca, carrega ferido até
+  120 px e bate 6 a cada 1,5 s. Cervo branco: 8 % das saídas das tocas de veado, 16 de vida, 12 moedas.
+- **Decide:** tu, se os aprovas ou os mudas no painel; mudá-los é só o CSV.
 
 ## O refinamento da jogabilidade — 03/10/2026 (ADR 0054)
 

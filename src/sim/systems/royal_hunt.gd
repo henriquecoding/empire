@@ -33,9 +33,15 @@ static func swing(hunt: HuntingSystem, golpe: Dictionary) -> Array[Dictionary]:
 	return hunt.hurt(melhor, int(golpe[&"damage"]), int(golpe[&"who"]), true)
 
 
-## Os imperadores que ninguem conduz, de dia, batem no bicho que tenham ao alcance.
+## Os imperadores que ninguem conduz, de dia, batem no bicho que tenham ao alcance. Quem
+## dispara flechas gasta-as da aljava dele (`supply`, Q-200), e sem flechas nao caca.
 static func idle(
-	hunt: HuntingSystem, units: UnitSystem, profiles: Dictionary, driven: int, daylight: bool
+	hunt: HuntingSystem,
+	units: UnitSystem,
+	profiles: Dictionary,
+	driven: int,
+	daylight: bool,
+	supply: Supply = null
 ) -> Array[Dictionary]:
 	var moedas: Array[Dictionary] = []
 	if not daylight or hunt.rabbits.is_empty():
@@ -53,6 +59,10 @@ static func idle(
 		var golpe := _reach(hunt, units.xs[i], dados.range_px)
 		if golpe == HuntingSystem.SEM_INTRO:
 			continue
+		if dados.ammo > 0:
+			if supply == null or not supply.can_shoot(units, i, dados):
+				continue
+			supply.shoot(units, i, dados)
 		units.cooldowns[i] = dados.attack_interval
 		moedas.append_array(hunt.hurt(golpe, maxi(1, dados.damage), units.ids[i], true))
 	return moedas

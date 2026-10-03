@@ -144,6 +144,7 @@ func step(delta: float) -> void:
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
 	EventRelay.secrets(secrets.tick(units, Assume.driven(), state))
+	HuntWatch.stir(field, units, delta)  # 5 · a caca anda; o javali bate antes das mortes
 	var strikes := HeroWatch.resolved(combat.resolve(units, creatures, builds, _roll))
 	_largar(EventRelay.combat(night.feats(strikes)))  # 6
 	var luz := _fase < GameClock.Phase.DUSK

@@ -61,7 +61,7 @@ ou não, por isso os imperadores que chegarem com essas fases caçam e apanham p
 ## Números novos (propostas, `_proposed` no wildlife.csv)
 
 `graze_speed`, `roam_px`, `notice_px`, `flee_px`, `reach_px`, `attack_interval`, `rare_of`, `rare_chance`, as três
-linhas novas (faisão, raposa, cervo branco) e a toca do javali. Nenhum número antigo mudou.
+linhas novas (faisão, raposa, cervo branco) e a toca do javali. Nenhum número antigo mudou. Estão aplicados de forma reversível, e a aprovação deles é a Q-215.
 
 ## Consequências
 
