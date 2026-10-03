@@ -40,3 +40,6 @@ extends Resource
 ## A escala do desenho (Q-218): os bichos leem-se contra os sprites de 64x64 das
 ## tropas. Inteira, para o pixel ficar pixel.
 @export var sprite_scale: int = 1
+## Distancia minima entre a Clareira e o alcance inteiro do habitat (ADR 0061).
+## Inclui pastar, fuga e meia largura do corpo; zero nao limita um perfil de teste.
+@export var habitat_min_px: float = 0.0

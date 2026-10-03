@@ -15,7 +15,8 @@ class_name SaveMigrations
 extends RefCounted
 
 ## A versao que o jogo grava. Sobe com cada passo novo, no mesmo commit.
-const CURRENT := 8
+const CURRENT := 9
+const ANTES_DOS_HABITATS := 8
 const ANTES_DOS_REINOS := 5
 ## A ultima versao de antes dos monarcas jogaveis (ADR 0052): so imperadores se jogam.
 const ANTES_DOS_MONARCAS := 6
@@ -48,6 +49,8 @@ static func migrate(dados: Dictionary) -> Dictionary:
 				SaveMigrationsV7.apply(d)
 			ANTES_DA_FUNDACAO:
 				SaveMigrationsV8.apply(d)
+			ANTES_DOS_HABITATS:
+				SaveMigrationsV9.apply(d)
 		versao += 1
 		d[&"save_version"] = versao
 	return d

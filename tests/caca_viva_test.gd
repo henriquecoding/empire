@@ -48,6 +48,7 @@ func test_ha_variedade_de_caca_na_regiao_de_casa() -> void:
 			com_toca.append(String(dados.id))
 	for id in ["rabbit", "pheasant", "fox", "deer", "boar"]:
 		assert_bool(com_toca.has(id)).override_failure_message(id).is_true()
+	assert_int(_bicho(&"boar").burrows_per_region).is_equal(0)
 	assert_str(String(_bicho(&"white_stag").rare_of)).is_equal("deer")
 	assert_float(_bicho(&"white_stag").rare_chance).is_greater(0.0)
 	assert_int(_bicho(&"white_stag").coin_yield).is_greater(_bicho(&"deer").coin_yield)

@@ -11,7 +11,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | Export | Fonte | Frames | Tags (accoes) | Chamada em runtime | Quem a usa | Aprovacao |
 |---|---|---:|---|---|---|---|
 | `cook.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/actors/unit_art_batch.gd` | unidade cook | `near_complete_reference` |
-| `far_keep.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/enramados_layer.gd` | — | `author_base_needs_refinement` |
+| `far_keep.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
 | `gate.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
 | `knight.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | `src/actors/unit_art_batch.gd` | unidade buried_knight, unidade mercenary, unidade quiver_squire, unidade sealed_knight, unidade squire | `near_complete_reference` |
 | `monarch.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/actors/unit_art_batch.gd` | unidade monarch | `redesign_required` |
@@ -151,7 +151,7 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 
 **Exportacoes**
 
-- Sem chamada em runtime: `gate`.
+- Sem chamada em runtime: `far_keep`, `gate`.
 - Estados de aprovacao presentes: `author_base_needs_refinement`, `derived_temporary`, `near_complete_reference`, `redesign_required`. Nenhuma exportacao esta aprovada.
 
 

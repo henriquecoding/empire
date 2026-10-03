@@ -84,9 +84,10 @@ func _chao_da_toca(x: float, sitio: StringName) -> Vector2:
 	return Vector2(x - HuntView.BUSH_SIDE * HuntView.TOCA - meia, x + direita)
 
 
-## Q-207: as tocas da caca tambem tem o seu chao, e nao ficam por cima de uma obra nem
-## umas das outras. O castelo-arvore e a excepcao do §25: o coelho do 1:10 sai-lhe do pe.
+## ADR 0062: um sitio futuro nao ocupa chao ainda. A expansao encerra os habitats antes
+## das obras ali; conferem-se as coisas que realmente coexistem, nao uma cidade fantasma.
 func test_as_tocas_da_caca_nao_ficam_por_cima_de_uma_obra() -> void:
+	SimLoop.step(1.0 / 30.0)
 	var chaos: Array[Vector2] = []
 	for sitio: Array in HuntWatch.SITIOS:
 		chaos.append(_chao_da_toca(SimLoop.core_x + float(sitio[0]), sitio[1]))
@@ -96,7 +97,7 @@ func test_as_tocas_da_caca_nao_ficam_por_cima_de_uma_obra() -> void:
 		assert_float(c.x).override_failure_message(nome).is_greater_equal(0.0)
 		assert_float(c.y).override_failure_message(nome).is_less_equal(SimLoop.world_width)
 		for vaga in _obras(Band.Kind.SURFACE):
-			if vaga.kind == &"core":
+			if not vaga.holds():
 				continue
 			var longe := maxf(c.x - (vaga.x + vaga.width * 0.5), (vaga.x - vaga.width * 0.5) - c.y)
 			(

@@ -2620,6 +2620,19 @@
   "estado": "por fazer",
   "horas": "—"
  },
+ "RG-20": {
+  "title": "Uma clareira, prados de caça e floresta de exploração",
+  "porque": "O exterior continuava denso e a expansão não fechava os habitats de caça.",
+  "spec": [
+   "docs/adr/0062-a-abertura-tem-clareira-prado-e-floresta.md",
+   "docs/recovery/ABERTURA-KINGDOM-2026-10-04.md"
+  ],
+  "depende": "RG-19, QP-06",
+  "feito": "Distribuição por habitat, ocupação, densidade, migração e guia do começo",
+  "fora": "Novos portais, arte original e nova cadeia tecnológica",
+  "estado": "parcial — implementação em validação",
+  "horas": "—"
+ },
  "RG-19": {
   "title": "Construções e recrutamento acompanham a expansão",
   "porque": "A sede evoluía, mas o mundo mostrava todos os convites e entregava gente pronta.",

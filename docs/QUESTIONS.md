@@ -7,6 +7,21 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A abertura pesquisada e implementada — 04/10/2026 (ADR 0062)
+
+### Q-229 · Distâncias, densidade e ocupação dos habitats
+- **Pedido do dono:** pesquisar Kingdom e implementar o relatório da abertura.
+- **Aplicado:** RG-20; ADR 0062. Preserva o coelho único a oeste e o faisão exterior da
+  PR #80; distribui fauna por distância e bioma; deixa de garantir cada espécie em cada
+  primeiro trecho; encerra respawn em recinto próprio e obras ocupadas; migração v9.
+- **Propostas reversíveis:** `habitat_min_px` de cada espécie, em `wildlife.csv._proposed`.
+  Javali apenas no exterior; margem inclui deslocamento e corpo. A folga de 192 px entre
+  centros é geometria de composição dos trechos, como suas posições e margens existentes.
+- **Quem decide:** o dono confirma os valores após playtest, sem bloquear a implementação
+  autorizada. A quota regional de coelho da Q-228 não foi aumentada nesta entrega.
+- **Como afinar:** editar os CSV e regenerar recursos; preservar ids, progressão e migração.
+- **Evidência:** testes de geometria, ocupação e save; abertura por gestos; resultados no PR.
+
 ## A caça longe do reino — 03/10/2026 (ADR 0061)
 
 ### Q-228 · A caça vive fora da primeira muralha

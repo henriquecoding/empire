@@ -7,18 +7,13 @@
 class_name HuntWatch
 extends RefCounted
 
-## Os sitios das tocas da regiao de casa, e de que sao (Q-150). Como no Kingdom, a caca
-## vive longe do reino (o dono, 03/10/2026: «as criaturas estao com o respawn colado com o
-## reino»): nenhuma toca a porta do castelo nem entre as obras do centro. A de casa fica
-## nos arrabaldes, no chao que as obras deixam livre (Q-207) — o buraco do coelho entre o
-## galinheiro e a torre de oeste, que e o coelho do 1:10 do §25; a arvore do veado entre o
-## farol e o sino de vigia; o buraco da raposa na beira de oeste; a arvore do javali entre o
-## celeiro e o sino de vigia —, e o resto vive nas terras, para la das muralhas (Q-217).
+## ADR 0062: preserva os arrabaldes da ADR 0061. O coelho inicia a renda a oeste;
+## veado e raposa vivem no bosque da borda. O javali pertence a floresta exterior.
+## Obras futuras so ocupam estes habitats quando sao pagas ou ficam entre muralhas.
 const SITIOS := [
 	[-830.0, &"hole"],
 	[-1692.0, &"tree"],
 	[-1860.0, &"hole"],
-	[1656.0, &"tree"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
 ## `economy`, que as do coelho ja gastavam antes da Q-150.

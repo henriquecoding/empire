@@ -20,3 +20,4 @@ rare_of = &"deer"
 rare_chance = 0.08
 rots_into = &"brute"
 sprite_scale = 2
+habitat_min_px = 1440.0

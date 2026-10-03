@@ -85,8 +85,9 @@ func test_um_save_antigo_ganha_as_tocas_novas() -> void:
 		assert_bool(hunt.rabbits.has(antigas[k])).is_false()
 	assert_int(hunt.burrows.alive[4]).is_equal(1)
 	assert_bool(hunt.rabbits.has(antigas[4])).is_true()
-	for id in ["rabbit", "fox", "boar"]:
+	for id in ["rabbit", "fox"]:
 		assert_bool(hunt.burrows.game.slice(5).has(id)).override_failure_message(id).is_true()
+	assert_bool(hunt.burrows.game.has("boar")).is_false()
 	assert_int(hunt.burrows.living()).is_equal(HuntWatch.SITIOS.size())
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true

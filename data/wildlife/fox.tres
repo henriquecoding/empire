@@ -22,3 +22,4 @@ flee_px = 112.0
 rots_into = &"crawler"
 respawn_s = 90.0
 sprite_scale = 3
+habitat_min_px = 1600.0
