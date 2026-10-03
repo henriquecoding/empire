@@ -37,13 +37,14 @@ func _so(bicho: WildlifeData) -> Callable:
 	return func(_toca: float) -> WildlifeData: return bicho
 
 
-## Ha variedade: na regiao de casa saem coelhos, faisoes, raposas, veados e o javali,
-## e o cervo branco e o raro que sai das tocas do veado.
+## Ha variedade: em casa e nas terras logo ao lado saem coelhos, faisoes, raposas,
+## veados e o javali, e o cervo branco e o raro que sai das tocas do veado.
 func test_ha_variedade_de_caca_na_regiao_de_casa() -> void:
 	var bioma := SimFactory.biome_of_segment(SimFactory.SEGMENTO_DE_PARTIDA)
 	var com_toca: Array[String] = []
 	for dados: WildlifeData in Registry.entries(&"wildlife"):
-		if dados.biomes.has(bioma) and dados.burrows_per_region > 0:
+		var tem := dados.burrows_per_region > 0 or dados.per_segment_max > 0
+		if dados.biomes.has(bioma) and tem:
 			com_toca.append(String(dados.id))
 	for id in ["rabbit", "pheasant", "fox", "deer", "boar"]:
 		assert_bool(com_toca.has(id)).override_failure_message(id).is_true()

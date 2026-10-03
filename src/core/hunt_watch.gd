@@ -7,21 +7,16 @@
 class_name HuntWatch
 extends RefCounted
 
-## Os sitios das tocas, em torno do nucleo (§21), e de que sao (Q-150): o arbusto, o
-## buraco e a rocha dao coelhos, a arvore e o lago dao veados. O primeiro e o coelho
-## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207), com a
-## toca ao dobro e o bicho a escala dele (Q-218): so cabem oito. Quatro a porta do
-## castelo, como os tufos de erva da praca do Kingdom; o buraco entre o galinheiro e a
-## torre de oeste; a arvore do veado entre o farol e o sino de vigia; o buraco da raposa
-## na beira de oeste; e a arvore do javali (ADR 0057) no unico chao livre a leste, entre o
-## celeiro e o sino de vigia. O resto da caca vive nas terras, logo ao lado (Q-217).
+## Os sitios das tocas da regiao de casa, e de que sao (Q-150). Como no Kingdom, a caca
+## vive longe do reino (o dono, 03/10/2026: «as criaturas estao com o respawn colado com o
+## reino»): nenhuma toca a porta do castelo nem entre as obras do centro. A de casa fica
+## nos arrabaldes, no chao que as obras deixam livre (Q-207) — o buraco do coelho entre o
+## galinheiro e a torre de oeste, que e o coelho do 1:10 do §25; a arvore do veado entre o
+## farol e o sino de vigia; o buraco da raposa na beira de oeste; a arvore do javali entre o
+## celeiro e o sino de vigia —, e o resto vive nas terras, para la das muralhas (Q-217).
 const SITIOS := [
-	[-170.0, &"bush"],
-	[180.0, &"bush"],
 	[-830.0, &"hole"],
-	[60.0, &"rock"],
 	[-1692.0, &"tree"],
-	[-60.0, &"bush"],
 	[-1860.0, &"hole"],
 	[1656.0, &"tree"],
 ]
@@ -159,17 +154,25 @@ static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	hunt.wildlife = SimFactory.by_id(&"wildlife")
 
 
-## Um save de antes da ADR 0057 traz as tocas de entao: acrescenta, sitio a sitio, as
-## que faltam ate cada bicho ter as suas, sem mexer nas que ja la estao.
+## Um save antigo traz as tocas de entao: perde as de casa que ja nao sao sitio (as da
+## porta do castelo), e acrescenta, sitio a sitio, as que faltam ate cada bicho ter as suas.
 static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	hunt.burrows.checked = true
+	var sitios := {}
+	for sitio: Array in SITIOS:
+		sitios[clampf(core_x + float(sitio[0]), 0.0, width)] = true
+	var fora := PackedFloat32Array()  # as tocas de casa que ja nao sao sitio (a porta)
+	for x in hunt.burrows.xs:
+		if x >= 0.0 and x <= width and not sitios.has(x):
+			fora.append(x)
+	hunt.wither(fora, 0.0)
 	var dia_s := ClockService.clock.day_seconds() if ClockService.clock else 0.0
 	var ritmos := WildHunt.rhythms(dia_s)
 	var periodo := period(dia_s)
 	var tem := {}
-	for k in hunt.burrows.game.size():  # so as de casa: as das terras sao do segmento
+	for k in hunt.burrows.game.size():  # so as dos sitios de casa
 		var x := hunt.burrows.xs[k]
-		if x >= 0.0 and x <= width:
+		if sitios.has(x):
 			tem[hunt.burrows.game[k]] = int(tem.get(hunt.burrows.game[k], 0)) + 1
 	for sitio: Array in SITIOS:
 		var x := clampf(core_x + float(sitio[0]), 0.0, width)

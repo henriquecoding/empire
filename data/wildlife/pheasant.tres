@@ -12,7 +12,6 @@ coin_yield = 1
 biomes = Array[StringName]([&"ancient_forest", &"floodplain", &"coast"])
 per_segment_max = 1
 shadow_width = 24
-burrows_per_region = 1
 burrow_wither_px = 48.0
 sources = Array[StringName]([&"bush"])
 graze_speed = 28.0

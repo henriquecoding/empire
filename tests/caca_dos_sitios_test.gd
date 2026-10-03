@@ -62,3 +62,22 @@ func test_um_save_de_antes_tem_arbustos_com_coelhos() -> void:
 	tocas.from_dict({&"xs": [1.0, 2.0], &"alive": PackedByteArray([1, 1])})
 	assert_array(Array(tocas.kinds)).is_equal(["bush", "bush"])
 	assert_array(Array(tocas.game)).is_equal(["rabbit", "rabbit"])
+
+
+## ADR 0061 (o dono, 03/10/2026: «as criaturas estao com o respawn colado com o reino…
+## como e em Kingdom»): a caca vive longe do reino. Nenhuma toca de casa fica dentro da
+## primeira muralha (a estacaria mais perto do castelo, de cada lado).
+func test_a_caca_de_casa_vive_fora_da_primeira_muralha() -> void:
+	SimLoop.autosave_enabled = false
+	SimLoop.start(20261003)
+	Greybox.build()
+	var muralha := INF
+	for vaga in SimLoop.builds.slots:
+		if vaga.kind == &"stakes" and vaga.band == Band.Kind.SURFACE:
+			muralha = minf(muralha, absf(vaga.x - SimLoop.core_x) + vaga.width * 0.5)
+	assert_float(muralha).is_less(INF)
+	HuntWatch.place(SimLoop.hunting, SimLoop.core_x, SimLoop.world_width)
+	for x in SimLoop.hunting.burrows.xs:
+		assert_float(absf(x - SimLoop.core_x)).is_greater(muralha)
+	SimLoop.stop()
+	SimLoop.autosave_enabled = true
