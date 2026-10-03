@@ -76,13 +76,38 @@ func test_o_coelho_apanhado_levanta_se_inimigo() -> void:
 	hunt.herd.arrive(x)
 	var feras := SimFactory.by_id(&"creatures")
 	SimLoop.creatures.spawn(SimLoop.state, feras[&"crawler"], x + 2.0, x + 2.0)
-	var antes := SimLoop.creatures.count()
+	var rot := SimLoop.night.rot
+	rot.state.active = true
+	rot.state.mass = 100.0
+	var antes := _perto(x)
 	SimLoop.step(0.1)
 	assert_bool(hunt.rabbits.has(x)).is_false()
-	assert_int(SimLoop.creatures.count()).is_equal(antes + 1)
-	assert_str(String(SimLoop.creatures.data_ids[-1])).is_equal(String(_bicho(&"rabbit").rots_into))
+	assert_int(_perto(x)).is_equal(antes + 1)
+	var levantou := feras[_bicho(&"rabbit").rots_into] as CreatureData
+	assert_float(rot.state.mass).is_less_equal(100.0 - levantou.mass_cost)
+	# Sem massa na mancha, o bicho apanhado morre e nao se levanta (§51).
+	var y := x - 40.0
+	hunt.rabbits.append(y)
+	hunt.burrows.add(y, 99.0, "bush", "rabbit")
+	hunt.herd.arrive(y)
+	SimLoop.creatures.spawn(SimLoop.state, feras[&"crawler"], y + 2.0, y + 2.0)
+	rot.state.mass = 0.0
+	SimLoop.night.other_rot.state.mass = 0.0
+	antes = _perto(y)
+	SimLoop.step(0.1)
+	assert_bool(hunt.rabbits.has(y)).is_false()
+	assert_int(_perto(y)).is_equal(antes)
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
+
+
+## Quantas criaturas vivas andam a 30 px de `x`: as da mancha nascem longe, na borda.
+func _perto(x: float) -> int:
+	var n := 0
+	for c in SimLoop.creatures.count():
+		if SimLoop.creatures.alive(c) and absf(SimLoop.creatures.xs[c] - x) <= 30.0:
+			n += 1
+	return n
 
 
 ## As tuas tropas de combate cacam sozinhas, como o arqueiro, e guardam a caca para ti.

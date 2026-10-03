@@ -90,9 +90,22 @@ static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
 		var onde := hunt.herd.where(toca)
 		var bicho := hunt.lose(toca)
 		var criatura: CreatureData = feras.get(bicho.rots_into)
-		if criatura != null and SimLoop.creatures != null:
+		if criatura != null and SimLoop.creatures != null and _paid(criatura):
 			SimLoop.creatures.spawn(SimLoop.state, criatura, onde, SimLoop.core_x)
 			EventBus.queue(&"rot_summoned", [criatura.id, onde, 0.0])
+
+
+## A Podridao e a unica fonte de criaturas e gasta um orcamento (§05, §51): o bicho que
+## ela apanha so se levanta se a mancha tiver massa para ele e o dia ja o deixar, e
+## essa massa sai da noite. Sem ela, o bicho morre e nao volta.
+static func _paid(criatura: CreatureData) -> bool:
+	if SimLoop.night == null or criatura.min_day > SimLoop.state.day:
+		return false
+	for rot: RotSystem in [SimLoop.night.rot, SimLoop.night.other_rot]:
+		if rot != null and rot.active() and rot.state.mass >= criatura.mass_cost:
+			rot.state.mass -= criatura.mass_cost
+			return true
+	return false
 
 
 ## Poe as tocas na primeira vez, e abre o dia.

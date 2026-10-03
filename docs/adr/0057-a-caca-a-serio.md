@@ -47,7 +47,11 @@
    apanhadas, podem converter-se após morrer em Podridão e virar meu inimigo»*). Os bichos fogem das criaturas da
    Podridão à superfície como fogem de ti; a criatura que chega ao alcance dela apanha o bicho, que morre sem deixar
    caça e se levanta como `rots_into` (o coelho, o faisão e a raposa como Rastejante; o veado, o cervo branco e o
-   javali como Bruto), a caminho do teu núcleo. Uma noite com caça fora das tocas é uma noite com mais inimigos.
+   javali como Bruto), a caminho do teu núcleo. A Podridão continua a ser a única fonte de criaturas, com o
+   orçamento dela (§05, §51): o bicho só se levanta se a mancha tiver massa para a criatura e o dia já a deixar
+   (`min_day`), e essa massa sai da noite; sem ela, o bicho morre e não volta. Assim a caça fora das tocas dá à
+   Podridão inimigos onde tu não os esperas, mas não lhe dá mais do que a curva da §74 (o critério dos dez dias,
+   §66, continua de pé).
 7. **As tuas tropas caçam sozinhas** (o dono, 03/10/2026: *«as minhas tropas atacam automaticamente as criaturas e
    farmam moedas para mim»*). O lanceiro, o mercenário, o berserker de raiz e o guarda do gelo ganham a tag `hunter`:
    de dia, sem posto, caçam como o arqueiro — os de perto correm atrás do bicho até o encurralarem — e guardam a caça
