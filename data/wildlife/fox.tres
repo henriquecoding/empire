@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WildlifeData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/wildlife_data.gd" id="1_c618b"]
+
+[resource]
+script = ExtResource("1_c618b")
+id = &"fox"
+display_key = "WILDLIFE_FOX"
+max_health = 6
+move_speed = 56.0
+coin_yield = 2
+biomes = Array[StringName]([&"ancient_forest", &"canyon"])
+per_segment_max = 1
+shadow_width = 12
+burrows_per_region = 1
+burrow_wither_px = 48.0
+sources = Array[StringName]([&"hole", &"rock"])
+graze_speed = 16.0
+roam_px = 36.0
+notice_px = 72.0
+flee_px = 112.0

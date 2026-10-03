@@ -12,6 +12,8 @@ extends RefCounted
 ## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207): a leste
 ## nao sobra chao entre elas, e os coelhos de la ficam ao pe do castelo, como o do §25;
 ## a arvore fica entre a fogueira e a torre alta, e o lago a beira, la para la do farol.
+## A ultima arvore e a toca do javali (ADR 0057), no unico chao livre a leste: entre o
+## celeiro e o sino de vigia.
 const SITIOS := [
 	[-160.0, &"bush"],
 	[196.0, &"bush"],
@@ -21,10 +23,13 @@ const SITIOS := [
 	[-1862.0, &"lake"],
 	[-1334.0, &"hole"],
 	[-100.0, &"bush"],
+	[1640.0, &"tree"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
 ## `economy`, que as do coelho ja gastavam antes da Q-150.
 const SAL_ESPERA := 150
+## A chave do sorteio do bicho raro (ADR 0057): tambem fora do fluxo `economy`.
+const SAL_RARO := 157
 const INTRO_SECONDS := 70.0  # §25, minuto 1:10; encenacao, nao afinacao de combate.
 const BICHO := &"rabbit"
 const METADE := 0.5
@@ -42,6 +47,35 @@ static var _periodo := {}
 static func intro_at(dia_s: float) -> float:
 	var base := (Registry.entry(&"economy", &"clock") as ClockData).day_seconds
 	return INTRO_SECONDS * dia_s / base
+
+
+## O tick da caca (ADR 0057): as tocas dao, os bichos andam e fogem ou carregam, os
+## cacadores e os imperadores batem, e o saco entrega ao rei. Devolve o que cai no chao.
+static func tick(
+	field: FieldWork, unidades: UnitSystem, delta: float, luz: bool, relogio: GameClock, rei: int
+) -> Array[Dictionary]:
+	var hunt := field.hunting
+	var intro := relogio.elapsed >= intro_at(relogio.day_seconds())
+	var raro := func() -> float: return RngService.scatter(hash([SAL_RARO, hunt.herd.born]), 1)[0]
+	hunt.grow(delta, luz, period(relogio.day_seconds()), raro)
+	var ameacas := Herd.threats_of(unidades)
+	for g in Herd.bite(unidades, hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)):
+		EventBus.queue(&"unit_damaged", [g[Herd.QUEM], g[Herd.DANO], Herd.NENHUM])  # o javali
+	var caca := hunt.resolve(unidades, luz, intro)
+	if SimLoop.combat != null and SimLoop.field == field:
+		for golpe in SimLoop.combat.manual.take_missed():
+			caca.append_array(RoyalHunt.swing(hunt, golpe))
+	var perfis := SimFactory.by_id(&"units")
+	caca.append_array(RoyalHunt.idle(hunt, unidades, perfis, Assume.driven(), luz))
+	var chao := HuntBag.bag(hunt.bagged, unidades, caca)
+	for d in caca:
+		if not d in chao:
+			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
+	var alcance := SimFactory.curve().recruit_notice_px
+	var entregue := HuntBag.deliver(hunt.bagged, unidades, rei, alcance)  # o escudeiro (Q-114)
+	if entregue > 0:
+		EventBus.queue(&"coin_collected", [rei, entregue])
+	return chao
 
 
 ## Poe as tocas na primeira vez, e abre o dia.
@@ -109,7 +143,8 @@ static func period(dia_s: float) -> float:
 	return _periodo[dia_s]
 
 
-## Os bichos com tocas no bioma da regiao de casa, o coelho primeiro (o do 1:10).
+## Os bichos com tocas no bioma da regiao de casa, o coelho primeiro (o do 1:10), e
+## depois do que vale menos para o que vale mais: cada sitio fica para o mais miudo.
 static func _bichos() -> Array[WildlifeData]:
 	var bioma := SimFactory.biome_of_segment(SimFactory.SEGMENTO_DE_PARTIDA)
 	var saida: Array[WildlifeData] = []
@@ -117,10 +152,7 @@ static func _bichos() -> Array[WildlifeData]:
 		var dados := recurso as WildlifeData
 		if dados.burrows_per_region > 0 and dados.biomes.has(bioma):
 			saida.append(dados)
-	saida.sort_custom(
-		func(a: WildlifeData, b: WildlifeData) -> bool:
-			return a.id == BICHO or (b.id != BICHO and String(a.id) < String(b.id))
-	)
+	saida.sort_custom(_antes)
 	return saida
 
 
@@ -135,3 +167,11 @@ static func wither(hunt: HuntingSystem, arvores: AmargueiroSystem) -> Array[floa
 		if de_pe and arvores.bands[k] == int(Band.Kind.SURFACE):
 			perigos.append(arvores.xs[k])
 	return hunt.wither(perigos, dados.burrow_wither_px)
+
+
+static func _antes(a: WildlifeData, b: WildlifeData) -> bool:
+	if a.id == BICHO or b.id == BICHO:
+		return a.id == BICHO and b.id != BICHO
+	if a.coin_yield != b.coin_yield:
+		return a.coin_yield < b.coin_yield
+	return String(a.id) < String(b.id)

@@ -7,6 +7,29 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A caça a sério — 03/10/2026 (ADR 0057)
+
+> Pedido do dono (03/10/2026): *«A caça e criaturas deve ser desenvolvida e trabalhada a sério, deve haver variedades e
+> deve ser possível fazer farm com as moedas que caem; os imperadores também devem conseguir atacar e colher esse
+> dinheiro»*. Aplicado diretamente (ADR 0057): bichos que pastam, fogem e se encurralam, o javali que carrega, o
+> faisão, a raposa e o cervo branco raro, o golpe do imperador que caça e a caça dele a cair no chão. Os números novos
+> são propostas (`_proposed` no `wildlife.csv`). Ficam duas perguntas.
+
+### Q-213 · A caça média com mais bichos
+- **Onde:** §06, `hunt_yield` (economy.csv), `HuntWatch.period`.
+- **O que está:** a caça média do dia continua a do `hunt_yield`; com cinco bichos com toca em vez de dois, cada toca
+  dá mais devagar (o período reparte a mesma média por mais moedas). O imperador a caçar e o cervo branco põem mais
+  moedas no chão do que antes, mas a renda média das tocas é a mesma.
+- **Proposta:** se o farm deve render mais, subir o `hunt_yield`; não aplicado porque é o teu número de economia.
+- **Decide:** tu.
+
+### Q-214 · O javali e a noite
+- **Da pesquisa:** no Kingdom, o javali atrai-se de noite para o muro, onde fica atordoado e os arqueiros o abatem.
+- **O que está:** o javali carrega contra quem lhe chega perto e volta à toca; não interage com o muro nem com a
+  noite.
+- **Proposta:** o javali que persegue alguém até ao muro fica atordoado uns segundos. Não aplicado: é mecânica nova.
+- **Decide:** tu.
+
 ## O refinamento da jogabilidade — 03/10/2026 (ADR 0054)
 
 > Pedido do dono (03/10/2026): *«Quero que refine bastante a gameplay, pesquise intensamente para isso na web, as

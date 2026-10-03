@@ -661,7 +661,7 @@ Script `src/sim/data/journal_data.gd` · layout `rows` · 12 linha(s) · §17
 
 ## `wildlife.csv` → `data/wildlife/{id}.tres`
 
-Script `src/sim/data/wildlife_data.gd` · layout `rows` · 3 linha(s) · §06 §25
+Script `src/sim/data/wildlife_data.gd` · layout `rows` · 6 linha(s) · §06 §25
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -678,6 +678,14 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 3 linha(s) · §06 §
 | `burrows_per_region` | int |  |  |
 | `burrow_wither_px` | float |  |  |
 | `sources` | Array[StringName] |  |  |
+| `graze_speed` | float |  |  |
+| `roam_px` | float |  |  |
+| `notice_px` | float |  |  |
+| `flee_px` | float |  |  |
+| `reach_px` | float |  |  |
+| `attack_interval` | float |  |  |
+| `rare_of` | StringName |  |  |
+| `rare_chance` | float |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 

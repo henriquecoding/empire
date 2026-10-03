@@ -13,6 +13,10 @@
 | procedural — `ActorArt`, coroa e arco | escala 4 | unidade `archer_emperor` | o Imperador Arqueiro: arco, aljava, coroa e a mão de tiro (plano §16.5) — a registar | 2026-10-02 | em uso |
 | procedural — `ActorArt` + `BardArt.banner` | escala 2 | unidade `bard_banner` | o Bardo da Nia com a bandeira às costas (plano §16.3) — a registar | 2026-10-02 | em uso |
 | `knight.png` emprestado (o escudeiro) | escala 1 | unidade `quiver_squire` | o escudeiro das flechas do Imperador Arqueiro: aljava e pagamento (plano §16.5) — a registar | 2026-10-02 | em uso |
+| procedural — `GameArt`, formas lisas | 16 × 14 | caça `pheasant` (`src/world/game_art.gd`) | o faisão: corpo castanho, pescoço verde, barbela vermelha (ADR 0057) — a registar | 2026-10-03 | em uso |
+| procedural — `GameArt`, formas lisas | 30 × 14 | caça `fox` | a raposa: laranja, ponta da cauda clara (ADR 0057) — a registar | 2026-10-03 | em uso |
+| procedural — `GameArt`, formas lisas | 29 × 17 | caça `boar` | o javali: escuro, crina e presas (ADR 0057) — a registar | 2026-10-03 | em uso |
+| procedural — `GameArt`, formas lisas | 28 × 41 | caça `white_stag` | o cervo branco: o veado em branco, hastes douradas (ADR 0057) — a registar | 2026-10-03 | em uso |
 
 ## Como se acrescenta
 

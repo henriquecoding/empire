@@ -167,18 +167,7 @@ func resolve(
 	conversion.apply(unidades, conversion.active)
 	monarchy.boost(unidades)  # o incentivo do Bardo da Nia, por cima do passo (Q-199)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
-	var intro := relogio.elapsed >= HuntWatch.intro_at(relogio.day_seconds())
-	hunting.grow(delta, luz, HuntWatch.period(relogio.day_seconds()))
-	var caca := hunting.resolve(unidades, luz, intro)
-	var chao := hunting.bag(unidades, caca)
-	for d in caca:
-		if not d in chao:
-			EventBus.queue(&"coin_collected", [d[&"hunter"], d[&"amount"]])
-	var alcance := SimFactory.curve().recruit_notice_px
-	var entregue := hunting.deliver(unidades, rei, alcance)  # o escudeiro guarda (Q-114)
-	if entregue > 0:
-		EventBus.queue(&"coin_collected", [rei, entregue])
-	return chao
+	return HuntWatch.tick(self, unidades, delta, luz, relogio, rei)  # a caca viva (ADR 0057)
 
 
 func parts() -> Dictionary:

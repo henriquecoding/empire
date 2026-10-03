@@ -174,13 +174,13 @@ func test_o_periodo_da_a_caca_media_do_dia() -> void:
 func test_o_cacador_teu_guarda_a_caca_no_saco_e_o_sem_dono_larga_a() -> void:
 	var meu := _archer()
 	var drops := hunt.resolve(units, true, true)
-	var chao := hunt.bag(units, drops)
+	var chao := HuntBag.bag(hunt.bagged, units, drops)
 	assert_array(chao).is_empty()
 	assert_int(units.carried_coins[units.index_of(meu)]).is_equal(1)
 	assert_int(hunt.bagged[meu]).is_equal(1)
 	var livre := units.spawn(state, Registry.entry(&"units", &"archer"), 0, 120.0)
 	var so_dele: Array[Dictionary] = [{&"x": 120.0, &"amount": 1, &"hunter": livre}]
-	assert_int(hunt.bag(units, so_dele).size()).is_equal(1)
+	assert_int(HuntBag.bag(hunt.bagged, units, so_dele).size()).is_equal(1)
 
 
 func test_entrega_ao_rei_so_o_que_cacou_e_so_perto_dele() -> void:
@@ -190,9 +190,9 @@ func test_entrega_ao_rei_so_o_que_cacou_e_so_perto_dele() -> void:
 	hunt.bagged[meu] = 2
 	units.carried_coins[i] += 2
 	var rei := units.spawn(state, Registry.entry(&"units", &"monarch"), 1, 900.0)
-	assert_int(hunt.deliver(units, rei, 120.0)).is_equal(0)
+	assert_int(HuntBag.deliver(hunt.bagged, units, rei, 120.0)).is_equal(0)
 	units.xs[units.index_of(rei)] = 60.0
-	assert_int(hunt.deliver(units, rei, 120.0)).is_equal(2)
+	assert_int(HuntBag.deliver(hunt.bagged, units, rei, 120.0)).is_equal(2)
 	assert_int(units.carried_coins[i]).is_equal(3)
 	assert_int(units.carried_coins[units.index_of(rei)]).is_equal(2)
 	assert_bool(hunt.bagged.has(meu)).is_false()

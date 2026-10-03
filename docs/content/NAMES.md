@@ -250,8 +250,11 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | id | chave | PT-PT | EN |
 |---|---|---|---|
 | `rabbit` | `WILDLIFE_RABBIT` | Coelho | Rabbit |
+| `pheasant` | `WILDLIFE_PHEASANT` | Faisão | Pheasant |
+| `fox` | `WILDLIFE_FOX` | Raposa | Fox |
 | `deer` | `WILDLIFE_DEER` | Veado | Deer |
 | `boar` | `WILDLIFE_BOAR` | Javali | Boar |
+| `white_stag` | `WILDLIFE_WHITE_STAG` | Cervo branco | White stag |
 
 ## companions
 

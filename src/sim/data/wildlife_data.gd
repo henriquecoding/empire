@@ -20,3 +20,15 @@ extends Resource
 @export var burrow_wither_px: float = 0.0
 ## De onde sai (Q-150): &"bush" | &"hole" | &"rock" | &"tree" | &"lake".
 @export var sources: Array[StringName] = []
+## A caca viva (ADR 0057): pasta a `graze_speed` ate `roam_px` da toca; quem chega a
+## `notice_px` faz-o fugir ate `flee_px` da toca, ou carregar, se nao foge.
+@export var graze_speed: float = 0.0
+@export var roam_px: float = 0.0
+@export var notice_px: float = 0.0
+@export var flee_px: float = 0.0
+## O bicho que carrega bate `damage` a `reach_px`, a cada `attack_interval`.
+@export var reach_px: float = 0.0
+@export var attack_interval: float = 0.0
+## O raro: sai, com `rare_chance`, de uma toca do bicho `rare_of`, no lugar dele.
+@export var rare_of: StringName = &""
+@export var rare_chance: float = 0.0

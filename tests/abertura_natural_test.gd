@@ -46,7 +46,10 @@ func test_sem_ninguem_a_jogar_o_coelho_do_1_10_cai_junto_ao_castelo_uma_so_vez()
 	assert_array(_caca).is_empty()
 	_correr_ate(HuntWatch.INTRO_SECONDS + 2.0)
 	assert_int(_caca.size()).is_equal(1)
-	assert_float(_caca[0]).is_equal(SimLoop.core_x + float(HuntWatch.SITIOS[0][0]))
+	# O coelho anda a volta da toca (ADR 0057): cai no terreno dele, e nao a porta.
+	var toca := SimLoop.core_x + float(HuntWatch.SITIOS[0][0])
+	var coelho := Registry.entry(&"wildlife", &"rabbit") as WildlifeData
+	assert_float(_caca[0]).is_equal_approx(toca, coelho.flee_px)
 	var salvo := SimLoop.world()
 	SimLoop.load_world(salvo)
 	_correr_ate(HuntWatch.INTRO_SECONDS + 30.0)
