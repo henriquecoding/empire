@@ -45,6 +45,8 @@ static func draw_on(
 		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
+		if not RealmGrowth.visible(SimLoop.builds, vaga, SimLoop.state):
+			continue
 		if not PresentationBounds.sees(vista, vaga.x, vaga.width * MEIA + ALEM):
 			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso, tempo)
@@ -128,7 +130,7 @@ static func drawn_box(vaga: BuildSlot, forma: Silhouette.Form) -> Rect2:
 		return _caixa(vaga, forma, vaga.level + 1)
 	# §25: "a silhueta e o convite" — o sitio vazio mostra o TOPO da escada, e nao
 	# o primeiro degrau: um sitio de muro promete o Bastiao, nao a estacaria.
-	return _caixa(vaga, forma, maxi(1, vaga.costs.size()))
+	return _caixa(vaga, forma, 1)
 
 
 ## O contorno que esta obra tem no ecra agora: a caixa dela, na forma dela, com

@@ -44,8 +44,9 @@ func _largar_em(x: float, n: int) -> void:
 
 ## A sede tocada repara-se como as outras obras: o custo do degrau em que esta, a
 ## proporcao da vida perdida, e um construtor presente — o pioneiro serve (Q-224).
-func test_a_sede_tocada_repara_se_com_o_pioneiro() -> void:
+func test_a_sede_tocada_repara_se_com_construtor_contratado() -> void:
 	var sede := _sede()
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, sede.x)
 	sede.raise_to(2)
 	SimLoop.builds.damage(sede.id, sede.max_health() / 2)
 	assert_int(int(sede.state)).is_equal(int(BuildSlot.State.DAMAGED))

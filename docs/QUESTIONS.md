@@ -16,6 +16,19 @@
 > pelo «aplique», e os números novos ficam em `_proposed`, reversíveis no CSV. O resto do roteiro está no backlog
 > (RG-05 a RG-18).
 
+### Q-227 · O reino cresce com território e pessoas recrutadas
+- **Decidido pelo dono (03/10/2026):** construções devem acompanhar o nível e a expansão do reino;
+  arqueiros em base 64×64; começo sem servos próprios, com dois vagabundos próximos e demais em acampamentos.
+- **Aplicado:** ADR 0060; RG-19. Substitui Q-110/Q-221 no pacote de pessoas; desconhecidos não abrem
+  por omissão. Estágio, território e apoio ficam em CSV; convites invisíveis não capturam moedas.
+- **Propostas reversíveis:** níveis mínimos de defesa por categoria; banca do martelo com custo de
+  reconstrução 4, trabalho 8, vida 32 e largura 48, ferramenta por 3, formação imediata e teto de
+  um construtor vivo. O pedido autoriza a implementação; os valores novos são decisões de abertura
+  para testar, registrados em `_proposed`, sem aprovação de balanceamento presumida.
+- **Como desfazer:** ajustar `realm_sites.csv` e `buildings.csv` e regenerar os recursos; não mexer
+  nos ids publicados. A companhia do monarca conserva o contrato próprio e não conta como tropa.
+- **Validação:** abertura por moedas e movimento; suite, vistoria, export e inspeção visual no PR.
+
 ### Q-220 · A fundação e a escada da sede: da Clareira à Fortaleza
 - **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — RG-D01, RG-D02, RG-D03, RG-D11, RG-D12 e RG-D16.
   Aplicado.

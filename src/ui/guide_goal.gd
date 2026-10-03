@@ -30,6 +30,7 @@ static func goal() -> String:
 		return _tr(&"GUIDE_CROSS")  # a marcha pode sair (Q-146)
 	var worker := false
 	var hunter := false
+	var builder := false
 	for i in SimLoop.units.count():
 		if (
 			not SimLoop.units.alive(i)
@@ -42,7 +43,8 @@ static func goal() -> String:
 		var data := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
 		worker = worker or data.tags.has(&"worker")
 		hunter = hunter or data.tags.has(&"hunter")
-	if not worker:
+		builder = builder or data.tags.has(&"builder")
+	if not worker and not hunter and not builder:
 		return _tr(&"GUIDE_WORKER")
 	var aljavas := SimLoop.field.supply.short(SimLoop.units, SimLoop.king_id) > 0
 	if aljavas and not Supply.depot(SimLoop.builds, RulesFactory.rules().ammo_depot):
@@ -53,7 +55,9 @@ static func goal() -> String:
 		if site.blocks and not site.mending and site.repair_cost() > 0:
 			return _tr(&"GUIDE_REPAIR")
 	if not hunter:
-		return _tr(&"GUIDE_HUNTER")
+		return _tr(&"GUIDE_HUNTER" if worker else &"GUIDE_WORKER")
+	if not builder:
+		return _tr(&"GUIDE_BUILDER" if worker else &"GUIDE_WORKER")
 	var production := false
 	var wall := false
 	for site in SimLoop.builds.standing():

@@ -119,6 +119,9 @@ func test_o_acampamento_de_mendigos_recebe_o_vagabundo_da_alvorada() -> void:
 	assert_bool(novos.is_empty()).is_false()
 	for x in novos:
 		assert_int(SimLoop.field.camps.count(x)).is_equal(1)
+	for i in SimLoop.units.count():
+		if SimLoop.units.data_ids[i] == &"vagrant":
+			SimLoop.units.owners[i] = 1  # esvaziar o teto global antes de medir reposicao
 	var antes := SimLoop.units.count()
 	Camps.dawn(PackedFloat32Array([novos[0]]), 2, SimLoop.units, SimLoop.state)
 	assert_int(SimLoop.units.count()).is_equal(antes + 1)

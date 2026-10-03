@@ -86,6 +86,9 @@ func test_ha_uma_escora_por_construir_em_cada_boca_de_passagem() -> void:
 func test_o_rei_la_em_baixo_paga_e_levanta_o_poco() -> void:
 	var rei := _rei()
 	var mina := _minas()[0]
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths():
+			muro.raise_to(2)
 	SimLoop.units.xs[rei] = SimLoop.passages[0]
 	assert_bool(Verbs.assume(SimLoop.units, SimLoop.king_id, SimLoop.passages)).is_true()
 	SimLoop.units.xs[rei] = mina.x

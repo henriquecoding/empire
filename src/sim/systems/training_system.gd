@@ -50,6 +50,8 @@ func owed(vaga: BuildSlot, unidades: UnitSystem = null) -> int:
 	var oficio := craft_of(vaga)
 	if oficio == null or not vaga.standing() or _ocupada(vaga.id):
 		return 0
+	if unidades != null and cap_reached(vaga, unidades):
+		return 0
 	if unidades != null and _candidato(unidades, vaga) == NENHUM:
 		return 0
 	return maxi(0, _preco(vaga, oficio) - int(paid.get(vaga.id, 0)))
@@ -111,7 +113,8 @@ func tick(delta: float, unidades: UnitSystem, obras: BuildSystem, dia: float) ->
 			continue
 		trainees[quem][1] += delta
 		var oficio := craft_of(casa)
-		if trainees[quem][1] < oficio.train_days * dia:
+		var dias := float(casa.effects.get(&"train_days", oficio.train_days))
+		if trainees[quem][1] < dias * dia:
 			continue
 		trainees.erase(quem)
 		var antes := unidades.data_ids[i]
@@ -155,6 +158,23 @@ func to_dict() -> Dictionary:
 func from_dict(guardado: Dictionary) -> void:
 	paid = guardado.get(&"paid", {}).duplicate()
 	trainees = guardado.get(&"trainees", {}).duplicate(true)
+
+
+## A bancada fundadora repoe o primeiro construtor; a casa forma os seguintes.
+func cap_reached(vaga: BuildSlot, unidades: UnitSystem) -> bool:
+	var teto := int(vaga.effects.get(&"craft_cap", 0))
+	var oficio := craft_of(vaga)
+	if teto <= 0 or oficio == null:
+		return false
+	var vivos := 0
+	for i in unidades.count():
+		if (
+			unidades.alive(i)
+			and unidades.healths[i] > 0
+			and unidades.owners[i] != RecruitSystem.SEM_DONO
+		):
+			vivos += 1 if unidades.data_ids[i] == oficio.id else 0
+	return vivos >= teto
 
 
 ## O preco de um treino nesta casa: o `craft_cost` da obra, se o tiver — a banca do

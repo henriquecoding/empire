@@ -71,10 +71,10 @@ func test_cada_estagio_abre_o_que_a_coluna_unlocks_diz() -> void:
 	assert_bool(RealmLadder.allows(povoado, _obra(&"kitchen"))).is_false()
 
 
-## Uma obra que nenhum estagio lista abre com a fundacao: as casas dos povos, o sino.
-func test_o_que_nenhum_estagio_lista_abre_com_a_fundacao() -> void:
-	assert_int(RealmLadder.required(_obra(&"tender_ward"))).is_equal(RealmLadder.FUNDADO)
-	assert_int(RealmLadder.required(_obra(&"enramados_house"))).is_equal(RealmLadder.FUNDADO)
+## Cada tipo fica listado num estagio; nenhum abre por omissao.
+func test_servicos_e_casas_dos_povos_tem_estagio_explicito() -> void:
+	assert_int(RealmLadder.required(_obra(&"tender_ward"))).is_equal(3)
+	assert_int(RealmLadder.required(_obra(&"enramados_house"))).is_equal(2)
 
 
 ## O muro abre por nivel: o degrau seguinte e o que se pergunta.

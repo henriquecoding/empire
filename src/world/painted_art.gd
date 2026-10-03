@@ -71,6 +71,7 @@ const OBRAS := {
 	&"citizen_house": &"cottage",
 	&"tender_ward": &"bell",
 	&"bow_rack": &"bow_rack",
+	&"hammer_rack": &"hammer_rack",
 	&"mount_stable": &"stable",
 	&"cow_stable": &"stable",
 	&"lumber_camp": &"lumber",

@@ -25,9 +25,11 @@ const QUALQUER := -2
 ## O sitio de obra que o Verbo 1 paga quando largado em `x`, ou NENHUM. A sede tambem
 ## e um sitio (ADR 0059): paga-se no marco dela, que tem a largura da Clareira em todos os
 ## estagios. A moeda que evolui o monarca, essa, leva-a o KingClaims.of() antes de cair.
-static func slot_at(obras: BuildSystem, x: float, faixa: int) -> int:
+static func slot_at(obras: BuildSystem, x: float, faixa: int, estado: GameState = null) -> int:
 	for vaga in obras.slots:
 		if int(vaga.band) != faixa:
+			continue
+		if not RealmGrowth.visible(obras, vaga, estado):
 			continue
 		if absf(vaga.x - x) <= vaga.catch_half():
 			return vaga.id
@@ -37,10 +39,12 @@ static func slot_at(obras: BuildSystem, x: float, faixa: int) -> int:
 ## Carimba o destino de uma moeda acabada de largar em `x`: a obra debaixo de
 ## quem a largou, se foi o rei; NENHUM se caiu de outra coisa — da venda, da
 ## caca, de quem morreu (§02: so o jogador paga).
-static func aim(moedas: CoinSystem, coin_id: int, obras: BuildSystem, do_rei: bool) -> void:
+static func aim(
+	moedas: CoinSystem, coin_id: int, obras: BuildSystem, do_rei: bool, estado: GameState = null
+) -> void:
 	var i := moedas.index_of(coin_id)
 	var faixa := int(moedas.bands[i])
-	moedas.targets[i] = slot_at(obras, moedas.xs[i], faixa) if do_rei else NENHUM
+	moedas.targets[i] = slot_at(obras, moedas.xs[i], faixa, estado) if do_rei else NENHUM
 
 
 ## Se a moeda `c`, pousada, paga a obra `vaga`: foi largada para ela, ou foi

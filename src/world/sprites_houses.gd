@@ -166,6 +166,12 @@ const TAMANHOS := {
 	&"bow_rack": Vector2i(52, 48),
 }
 
+const MARTELO := [
+	["o", -1, -35, 3, 26, "log_light"],
+	["o", -5, -39, 11, 7, "iron"],
+	["r", -4, -39, 9, 2, "iron_light"],
+]
+
 
 static func all() -> Dictionary:
 	return {
@@ -175,7 +181,22 @@ static func all() -> Dictionary:
 		&"furnace": {"size": TAMANHOS[&"furnace"], "strokes": FURNACE},
 		&"altar": {"size": TAMANHOS[&"altar"], "strokes": ALTAR},
 		&"bow_rack": {"size": TAMANHOS[&"bow_rack"], "strokes": BOW_RACK + _arcos()},
+		&"hammer_rack":
+		{
+			"size": TAMANHOS[&"bow_rack"],
+			"strokes": BOW_RACK + _martelos(),
+		},
 	}
+
+
+static func _martelos() -> Array:
+	var tracos := []
+	for x in ARCOS:
+		for traco in MARTELO:
+			var novo: Array = traco.duplicate()
+			novo[1] += x
+			tracos.append(novo)
+	return tracos
 
 
 static func _arcos() -> Array:

@@ -214,7 +214,7 @@ static func training() -> TrainingSystem:
 	for recurso in Registry.entries(&"buildings"):
 		var obra := recurso as BuildingData
 		var oficio: UnitData = tropas.get(obra.craft)
-		if oficio != null and oficio.trained_at == obra.id:
+		if oficio != null and (oficio.trained_at == obra.id or obra.tool_rack):
 			casas[obra.id] = oficio.id
 	return TrainingSystem.new(tropas, casas)
 

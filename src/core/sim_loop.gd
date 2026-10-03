@@ -167,7 +167,7 @@ func step(delta: float) -> void:
 func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> int:
 	var desvio := RngService.float_range(&"economy", -CoinSystem.DESVIO_MAX, CoinSystem.DESVIO_MAX)
 	var coin_id := coins.drop(state, x, faixa, quanto, desvio, origem == Verbs.JOGADOR)
-	CoinTarget.aim(coins, coin_id, builds, origem == Verbs.JOGADOR)
+	CoinTarget.aim(coins, coin_id, builds, origem == Verbs.JOGADOR, state)
 	EventBus.queue(&"coin_dropped", [x, int(faixa), quanto, origem])
 	return coin_id
 

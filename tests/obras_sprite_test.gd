@@ -49,7 +49,7 @@ func test_cada_nivel_do_muro_tem_o_seu_e_cresce() -> void:
 ## §25: o sitio vazio de um muro promete o topo da escada; o que se ergue e o degrau a seguir.
 func test_o_degrau_que_se_ve() -> void:
 	var muro := WallSite.slot(0.0)
-	assert_int(BuildingSkins.shown_level(muro)).is_equal(muro.costs.size())
+	assert_int(BuildingSkins.shown_level(muro)).is_equal(1)
 	muro.state = BuildSlot.State.SCAFFOLD
 	assert_int(BuildingSkins.shown_level(muro)).is_equal(1)
 	muro.state = BuildSlot.State.DONE

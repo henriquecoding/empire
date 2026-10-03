@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RealmSiteData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_site_data.gd" id="1_twp3j"]
+
+[resource]
+script = ExtResource("1_twp3j")
+id = &"archer_tower"
+placement = &"frontier"
+wall_level = 1

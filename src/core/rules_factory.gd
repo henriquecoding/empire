@@ -107,3 +107,4 @@ static func install_realm_gates() -> void:
 	for nivel in SimFactory.walls_by_level():
 		niveis.append(String(nivel.id))
 	RealmLadder.wall_levels = niveis
+	RealmGrowth.sites = SimFactory.by_id(&"realm_sites")

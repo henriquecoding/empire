@@ -24,6 +24,7 @@ const Obras := preload("res://tools/captura_obras.gd")
 const Bichos := preload("res://tools/captura_bichos.gd")
 const Moedas := preload("res://tools/captura_moedas.gd")
 const Mancha := preload("res://tools/captura_mancha.gd")
+const Tropas := preload("res://tools/captura_tropas.gd")
 
 var _restam: int = 0
 var _saida: String = SAIDA
@@ -58,6 +59,7 @@ func _ready() -> void:
 	_pousar_o_rei(args)
 	_preparacao.append_array(_obras.prepare(String(args.get("obras", ""))))
 	_preparacao.append_array(Bichos.new().prepare(String(args.get("bichos", ""))))
+	_preparacao.append_array(Tropas.prepare(String(args.get("tropas", ""))))
 	var antes := int(args.get("moedas_antes", 0))
 	_preparacao.append_array(_moedas.prepare(String(args.get("moedas", "")), antes))
 

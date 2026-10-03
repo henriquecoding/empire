@@ -53,6 +53,9 @@ func test_a_torre_e_o_canteiro_tem_outra_variante_e_o_galinheiro_nao() -> void:
 
 func test_o_verbo_2_troca_a_variante_enquanto_o_sitio_esta_vazio() -> void:
 	var torre := _sitio(TORRE)
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths():
+			muro.raise_to(1)
 	_rei_em(torre)
 	_verbo_2()
 	assert_int(torre.variant).is_equal(SlotVariant.B)
@@ -107,6 +110,9 @@ func test_a_variante_vai_no_save() -> void:
 func test_o_painel_diz_a_variante_e_como_se_troca() -> void:
 	TranslationServer.set_locale("pt_PT")
 	var torre := _sitio(TORRE)
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths():
+			muro.raise_to(1)
 	_rei_em(torre)
 	torre.variant = SlotVariant.B
 	assert_str(GameplayGuide.context(Glyphs.Device.KEYBOARD)).contains("cadência")

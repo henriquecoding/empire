@@ -23,6 +23,8 @@ extends Resource
 @export var destroyed_by_rot_trail: bool = false  # §49: plantacoes destruidas, o resto para
 @export var job_slots: int = 0  # postos que publica (§20)
 @export var craft: StringName = &""  # oficio que trabalha aqui
+## Uma bancada de ferramentas pode formar o oficio que trabalha na casa maior.
+@export var tool_rack: bool = false
 
 @export_group("Construcao")
 @export var max_health: int = 0

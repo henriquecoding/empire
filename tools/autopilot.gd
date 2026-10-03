@@ -13,7 +13,7 @@
 #
 # Arma-se pelos caminhos reais de gente (CONT-05; relatorio Kingdom, K1): a tarde
 # compra o arco na banca (Q-165) e decreta a Chamada as Armas quando ha gente livre
-# (Q-110). Sem isto nunca passava dos tres arqueiros com que a regiao comeca.
+# (Q-110). Na abertura forma o primeiro arqueiro e construtor (ADR 0060).
 #
 # Passa pelo mesmo caminho que um humano: enfileira intencoes (§61) e escreve um
 # alvo de movimento, exactamente como o `input_router.gd`. Um piloto que chamasse
@@ -168,12 +168,22 @@ static func _obra(loop: Node, onde: float, saco: int) -> float:
 ## trabalhador teu a quem dar o arco e o preco no saco, leva a moeda — largada em
 ## cima dela, o gesto do humano.
 static func _arco(loop: Node, saco: int) -> float:
-	if int(ClockService.clock.current_phase()) != int(GameClock.Phase.AFTERNOON):
-		return INF
+	var arqueiros := 0
+	var construtores := 0
+	for i in loop.units.count():
+		if loop.units.owners[i] == RecruitSystem.SEM_DONO or not loop.units.alive(i):
+			continue
+		arqueiros += 1 if loop.units.data_ids[i] == ARQUEIRO else 0
+		construtores += 1 if loop.units.data_ids[i] == &"builder" else 0
+	var tarde := int(ClockService.clock.current_phase()) == int(GameClock.Phase.AFTERNOON)
 	var treino: TrainingSystem = loop.field.training
 	for vaga in loop.builds.standing():
 		var oficio := treino.craft_of(vaga)
-		if oficio == null or oficio.id != ARQUEIRO:
+		if oficio == null:
+			continue
+		var arco := oficio.id == ARQUEIRO and (arqueiros == 0 or tarde)
+		var martelo := oficio.id == &"builder" and construtores == 0 and arqueiros > 0
+		if not arco and not martelo:
 			continue
 		var falta := treino.owed(vaga, loop.units)
 		if falta > 0 and falta <= saco:

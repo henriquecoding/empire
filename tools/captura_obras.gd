@@ -45,6 +45,9 @@ func _obra(tipo: StringName, n: int) -> BuildSlot:
 
 
 func _preparar(vaga: BuildSlot, etapa: String) -> void:
+	if etapa.begins_with("level:"):
+		vaga.raise_to(etapa.get_slice(":", 1).to_int())
+		return
 	var de_pe := etapa in ["operating", "damaged", "mending", "ruin"]
 	vaga.level = 1 if de_pe else 0
 	vaga.state = BuildSlot.State.EMPTY

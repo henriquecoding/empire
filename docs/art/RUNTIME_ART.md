@@ -27,8 +27,8 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | Unidade | Fase | No marco | Arte | Accoes desenhadas | Accoes em falta |
 |---|---:|---|---|---|---|
 | `vagrant` | 1 | sim | `vagrant` | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `archer` | 1 | sim | `temp_archer` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
-| `spearman` | 1 | sim | `temp_spearman` — emprestado | `attack`, `die`, `idle`, `walk` | `flee`, `hit`, `work` |
+| `archer` | 1 |  | `temp_archer` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
+| `spearman` | 1 |  | `temp_spearman` — emprestado | `attack`, `die`, `idle`, `walk` | `flee`, `hit`, `work` |
 | `dragonfly` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `root_berserker` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `mercenary` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
@@ -119,6 +119,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `mercenary_house` | 1 |  | pintada (`NativeSprites`): `native_mercenary_house` | 1 imagem; estados por codigo |
 | `mercenary_work` | 1 |  | pintada (`NativeSprites`): `native_mercenary_work` | 1 imagem; estados por codigo |
 | `mercenary_defense` | 1 |  | pintada (`NativeSprites`): `native_mercenary_defense` | 1 imagem; estados por codigo |
+| `hammer_rack` | 1 |  | pintada (`PaintedArt`): `hammer_rack` | 1 imagem; estados por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 
@@ -127,8 +128,6 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 **Unidades**
 
 - `vagrant`: `vagrant`; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
-- `archer`: `temp_archer` — emprestado; faltam `flee`, `work`
-- `spearman`: `temp_spearman` — emprestado; faltam `flee`, `hit`, `work`
 - `monarch`: `monarch`; faltam `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work`
 - `squire`: `knight` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
 - `builder`: `vagrant` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
@@ -162,7 +161,7 @@ Proxies para gameplay, autorizados pelo dono (ADR 0042). Fontes preservadas em `
 
 | Perfil | Frame exportado | Escala inteira | Tags |
 |---|---|---:|---|
-| `temp_archer` | 66x45 | 1 | `idle`, `walk`, `attack`, `hit`, `die` |
+| `temp_archer` | 117x80 | 1 | `idle`, `walk`, `attack`, `hit`, `die` |
 | `temp_archer_hero` | 132x90 | 2 | `idle`, `walk`, `attack`, `hit`, `die` |
 | `temp_brute` | 142x90 | 2 | `idle`, `walk`, `attack`, `hit`, `die` |
 | `temp_burrower` | 98x59 | 1 | `idle`, `walk`, `attack`, `hit`, `die` |

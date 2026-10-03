@@ -43,6 +43,7 @@ func after_test() -> void:
 ## teu e o preco no saco, o piloto vai la, larga as moedas e sai um arqueiro.
 func test_a_tarde_o_piloto_compra_o_arco_na_banca() -> void:
 	var banca := _banca_de_pe()
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"vagrant"), 1, banca.x)
 	_ate(GameClock.Phase.AFTERNOON)
 	var rei := _rei()
 	SimLoop.units.xs[rei] = banca.x
@@ -52,8 +53,11 @@ func test_a_tarde_o_piloto_compra_o_arco_na_banca() -> void:
 
 
 ## De manha a moeda vai para o que rende, como antes: o arco espera pela tarde.
-func test_de_manha_o_arco_espera() -> void:
+func test_de_manha_o_arco_seguinte_espera() -> void:
 	var banca := _banca_de_pe()
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"archer"), 1, banca.x)
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, banca.x)
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"vagrant"), 1, banca.x)
 	_ate(GameClock.Phase.MORNING)
 	var rei := _rei()
 	SimLoop.units.xs[rei] = banca.x

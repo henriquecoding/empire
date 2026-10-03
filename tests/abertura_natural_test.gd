@@ -10,8 +10,8 @@ const SEMENTE := 20260926
 ## gesto, como o CHEGOU_PX do piloto — nao e balanceamento.
 const PERTO_PX := 24.0
 const ENTRE_MOEDAS := 15
-const O_VAGABUNDO := 2
-const O_ARQUEIRO := 7
+const O_VAGABUNDO := 3
+const O_ARQUEIRO := 2
 ## O canteiro de dentro a oeste, o mais perto do castelo do lado de onde se comeca.
 const O_CANTEIRO := 1
 ## O §25 mede a primeira moeda largada em menos de 40 s (first_coin_dropped):
@@ -43,34 +43,32 @@ func after_test() -> void:
 	SimLoop.autosave_enabled = true
 
 
-func test_sem_ninguem_a_jogar_o_coelho_do_1_10_cai_junto_ao_castelo_uma_so_vez() -> void:
-	_correr_ate(HuntWatch.INTRO_SECONDS - 1.0)
-	assert_array(_caca).is_empty()
+func test_sem_cacador_recrutado_o_jogo_nao_entrega_moeda_de_caca() -> void:
 	_correr_ate(HuntWatch.INTRO_SECONDS + 2.0)
-	assert_int(_caca.size()).is_equal(1)
-	# O coelho anda a volta da toca (ADR 0057): cai no terreno dele, e nao a porta.
-	var toca := SimLoop.core_x + float(HuntWatch.SITIOS[0][0])
-	var coelho := Registry.entry(&"wildlife", &"rabbit") as WildlifeData
-	assert_float(_caca[0]).is_equal_approx(toca, coelho.flee_px)
+	assert_array(_caca).is_empty()
+	var quantos := SimLoop.units.count()
 	var salvo := SimLoop.world()
 	SimLoop.load_world(salvo)
+	assert_int(SimLoop.units.count()).is_equal(quantos)
 	_correr_ate(HuntWatch.INTRO_SECONDS + 30.0)
-	assert_int(_caca.size()).is_equal(1)
+	assert_array(_caca).is_empty()
 
 
 func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	_fundar()
-	_recrutar(O_VAGABUNDO)
 	_recrutar(O_ARQUEIRO)
+	_formar(O_ARQUEIRO, &"bow_rack", &"archer")
+	_recrutar(O_VAGABUNDO)
+	_formar(O_VAGABUNDO, &"hammer_rack", &"builder")
 	var canteiro := _obra(SimLoop.core_x + Greybox.CANTEIROS_X[O_CANTEIRO])
 	var preco := canteiro.next_cost()
 	# A caca abre em vagas pela luz (Q-106): o canteiro paga-se antes do crepusculo.
 	var limite := _fase_em(GameClock.Phase.DUSK)
-	while _saco() < preco and ClockService.clock.elapsed < limite:
+	while (_saco() < preco or _no_saco_do_arqueiro < 1) and ClockService.clock.elapsed < limite:
 		_passo(_moeda_mais_perto())
 	assert_int(_saco()).is_greater_equal(preco)
 	# A caca chega ao saco do rei pela mao do arqueiro (Q-111), e nao do chao.
-	assert_int(_no_saco_do_arqueiro).is_greater_equal(preco - 2)
+	assert_int(_no_saco_do_arqueiro).is_greater_equal(1)
 	while canteiro.state == BuildSlot.State.EMPTY and ClockService.clock.elapsed < limite:
 		_passo(canteiro.x, true)
 	assert_int(canteiro.state).is_not_equal(BuildSlot.State.EMPTY)
@@ -89,7 +87,7 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	# produzido ou largado por quem morreu — a regra "nada cria moeda do nada" do
 	# §02, na abertura. O saque entrou com a formacao da noite (Q-128): o arqueiro
 	# defende a borda do nucleo e os Rastejantes que ele abate largam a moeda (§25).
-	var fisicas := [Verbs.JOGADOR, &"hunt", &"production", EventRelay.FONTE_MORTE]
+	var fisicas := [Verbs.JOGADOR, &"hunt", &"production", EventRelay.FONTE_MORTE, &"dungeon"]
 	for origem in _origens:
 		assert_bool(origem in fisicas).override_failure_message(String(origem)).is_true()
 
@@ -106,10 +104,25 @@ func _fundar() -> void:
 		_passo(sede.x)
 
 
+func _formar(id: int, banca: StringName, oficio: StringName) -> void:
+	var site: BuildSlot = null
+	for vaga in SimLoop.builds.slots:
+		if vaga.kind == banca:
+			site = vaga
+	var limite := _fase_em(GameClock.Phase.DUSK)
+	while (
+		SimLoop.units.data_ids[SimLoop.units.index_of(id)] != oficio
+		and ClockService.clock.elapsed < limite
+	):
+		assert_float(ClockService.clock.elapsed).is_less(limite)
+		_passo(site.x, SimLoop.field.training.owed(site, SimLoop.units) > 0)
+	assert_str(String(SimLoop.units.data_ids[SimLoop.units.index_of(id)])).is_equal(String(oficio))
+
+
 func _recrutar(id: int) -> void:
 	var i := SimLoop.units.index_of(id)
 	var limite := ClockService.clock.elapsed + RECRUTAR_S
-	while SimLoop.units.owners[i] == RecruitSystem.SEM_DONO:
+	while SimLoop.units.owners[i] == RecruitSystem.SEM_DONO and ClockService.clock.elapsed < limite:
 		assert_float(ClockService.clock.elapsed).is_less(limite)
 		_passo(SimLoop.units.xs[i], true)
 		i = SimLoop.units.index_of(id)

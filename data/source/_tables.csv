@@ -31,3 +31,4 @@ chapters,res://src/sim/data/chapter_data.gd,res://data/world/chapters/{id}.tres,
 camera,res://src/sim/data/camera_data.gd,res://data/camera/{id}.tres,rows,,§19 §24 §59 — a camara como dados; um so numero vem do dossie (Q-057)
 monarchs,res://src/sim/data/monarch_data.gd,res://data/monarchs/{id}.tres,rows,,"ADR 0052 — os monarcas da escolha inicial: corpo, classe, habilidade e companheiro (§08)"
 realm_stages,res://src/sim/data/realm_stage_data.gd,res://data/realm_stages/{id}.tres,rows,,"ADR 0059 — a escada da sede: da Clareira à Fortaleza, e o que cada estágio abre"
+realm_sites,res://src/sim/data/realm_site_data.gd,res://data/realm_sites/{id}.tres,rows,,"ADR 0060 — o território e a produção de apoio de cada construção"

@@ -108,13 +108,13 @@ func test_cada_arco_e_mais_um_arqueiro() -> void:
 
 ## Na regiao: a banca existe, a superficie, e nasce depois de todas as obras de antes
 ## dela — os ids de antes nao mudam e um save antigo continua a abrir (§45). So o
-## estabulo do cavalo (Q-169), que veio depois, nasce a seguir.
+## estabulo do cavalo (Q-169), o martelo e as muralhas novas nascem a seguir.
 func test_a_banca_esta_na_regiao_e_nasce_por_ultimo() -> void:
 	SimLoop.autosave_enabled = false
 	SimLoop.start(20260929)
 	Greybox.build()
-	assert_str(String(SimLoop.builds.slots[-1].kind)).is_equal(String(Stables.ESTABULO))
-	var ultima: BuildSlot = SimLoop.builds.slots[-2]
+	assert_str(String(SimLoop.builds.slots[-4].kind)).is_equal(String(Stables.ESTABULO))
+	var ultima: BuildSlot = SimLoop.builds.slots[-5]
 	assert_str(String(ultima.kind)).is_equal(String(BowRacks.BANCA))
 	assert_int(int(ultima.band)).is_equal(int(Band.Kind.SURFACE))
 	assert_float(ultima.x - SimLoop.core_x).is_equal(BowRacks.BANCAS_X[0])
@@ -130,12 +130,13 @@ func test_no_jogo_um_trabalhador_passa_a_arqueiro_pela_banca() -> void:
 	SimLoop.start(20260929)
 	Greybox.build()
 	EventBus.unit_promoted.connect(_promovido)
-	var casa: BuildSlot = SimLoop.builds.slots[-2]  # a banca; o estabulo vem a seguir (Q-169)
+	var casa: BuildSlot = SimLoop.builds.slots[-5]  # a banca; o estabulo vem a seguir (Q-169)
 	assert_str(String(casa.kind)).is_equal(String(BowRacks.BANCA))
 	casa.level = 1
 	casa.state = BuildSlot.State.DONE
 	casa.health = casa.max_health()
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"vagrant"), 1, casa.x)
 	SimLoop.units.carried_coins[rei] = SimLoop.field.training.owed(casa, SimLoop.units)
 	SimLoop.units.xs[rei] = casa.x
 	var espera := 0

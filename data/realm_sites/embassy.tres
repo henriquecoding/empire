@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RealmSiteData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_site_data.gd" id="1_scdt4"]
+
+[resource]
+script = ExtResource("1_scdt4")
+id = &"embassy"
+wall_level = 2
+requires_any = Array[StringName]([&"training_house"])

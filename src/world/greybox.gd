@@ -57,15 +57,9 @@ const SEGREDOS_X := {&"under_vegetation": 396.0, &"behind_passage": -1290.0}
 const CAMARA_W := 64.0
 const BIFURCACAO_X := 1904.0
 const RUINA_X := -396.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
-# §25: gente por recrutar, ao preco do §07 (1, 3 e 4), e nunca dentro de um sitio
-# de obra (auditoria de 26/09, D5). Q-110 (o dono, 29/09/2026): "os vagabundos nao
-# sao meus trabalhadores, devo procura-los em acampamentos; ao iniciar o imperio
-# tera algumas tropas sem funcoes". Os dois ao pe do castelo ja sao teus; os
-# outros dois estao nos acampamentos, fora das muralhas de fora.
+# ADR 0060: dois vagabundos neutros ao pe da Clareira. Os outros pertencem
+# aos acampamentos; nenhum trabalhador ou combatente pronto pertence ao rei.
 const VAGABUNDOS_X := [-230.0, 230.0, -1650.0, 1650.0]
-const JA_TEUS := 2
-const ARQUEIROS_X := [-724.0, -180.0, 180.0]
-const LANCEIROS_X := [-1080.0, 1130.0]
 const ACAMPAMENTOS_X := [-1650.0, 1650.0]  # o vagabundo de cada alvorada (Q-122)
 # §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
 # casca." Logo depois da estacaria de dentro, entre a torre e o galinheiro, com a
@@ -131,6 +125,7 @@ static func region() -> void:
 	Wards.author()  # os sinos que afastam o Zelador (Q-100)
 	BowRacks.author()  # a banca do arco (Q-165)
 	Stables.author()  # e o estabulo do cavalo, por ultimo (Q-169)
+	RealmOutskirts.author()  # acrescentados no fim: nenhum id antigo muda (ADR 0060)
 
 
 static func _segredos() -> void:
@@ -218,10 +213,6 @@ static func _gente() -> int:
 	SimLoop.units.carried_coins[SimLoop.units.index_of(rei)] = SimFactory.curve().start_coins
 
 	_por_recrutar(&"vagrant", VAGABUNDOS_X)
-	for k in JA_TEUS:  # os primeiros, sem funcao, ja sao teus (Q-110)
-		SimLoop.units.owners[SimLoop.units.index_of(rei + 1 + k)] = MEU_IMPERIO
-	_por_recrutar(&"archer", ARQUEIROS_X)
-	_por_recrutar(&"spearman", LANCEIROS_X)
 	# §08: o companheiro nasce com o monarca, por ultimo, e liga-se a ele (ADR 0052).
 	var escudeiro := Registry.entry(&"units", ESCUDEIRO) as UnitData
 	MonarchWatch.bond(rei, SimLoop.units.spawn(estado, escudeiro, MEU_IMPERIO, SimLoop.core_x))

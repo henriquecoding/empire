@@ -2619,5 +2619,18 @@
   "fora": "Otimizar o que não se mediu.",
   "estado": "por fazer",
   "horas": "—"
+ },
+ "RG-19": {
+  "title": "Construções e recrutamento acompanham a expansão",
+  "porque": "A sede evoluía, mas o mundo mostrava todos os convites e entregava gente pronta.",
+  "spec": [
+   "docs/adr/0060-o-reino-cresce-pelo-territorio-e-pela-gente.md",
+   "docs/recovery/PROGRESSAO-TERRITORIO-2026-10-03.md"
+  ],
+  "depende": "RG-01 a RG-04",
+  "feito": "Convites por estágio, frente e apoio; dois vagabundos neutros; formação por ferramentas; arqueiros base 64×64; saves preservados",
+  "fora": "Capital e nova cadeia tecnológica",
+  "estado": "feito",
+  "horas": "—"
  }
 }
