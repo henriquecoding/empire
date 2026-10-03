@@ -292,7 +292,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 154 linha(s) · §21 �
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 134 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -424,13 +424,16 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 131 linha(s) · §06 §
 | `spirit_yield` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `spirit_vagrants` | int | Coroa — o preco dos impulsos (Q-014) |  |
 | `king_run_mult` | float | Andar — correr |  |
+| `king_run_stamina_s` | float | Andar — correr |  |
+| `king_run_refill_s` | float | Andar — correr |  |
+| `king_run_evolved_mult` | float | Andar — correr |  |
 | `king_leash_px` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
 
 ## `rules.csv` → `data/economy/rules.tres`
 
-Script `src/sim/data/rules_curve.gd` · layout `kv` · 39 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
+Script `src/sim/data/rules_curve.gd` · layout `kv` · 45 linha(s) · ADR 0041 — as regras das respostas do painel de 30/09/2026; chave/valor, um só recurso, ao lado da curva (que chegou às 250 linhas)
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -473,6 +476,12 @@ Script `src/sim/data/rules_curve.gd` · layout `kv` · 39 linha(s) · ADR 0041 �
 | `und_room_min_px` | float | Subsolo delimitado — Q-186 |  |
 | `und_room_max_px` | float | Subsolo delimitado — Q-186 |  |
 | `und_extra_rooms` | int | Subsolo delimitado — Q-186 |  |
+| `melee_knockback_px` | float | Subsolo delimitado — Q-186 |  |
+| `melee_knockback_max_tier` | int | Subsolo delimitado — Q-186 |  |
+| `hearth_night_cost` | int | Subsolo delimitado — Q-186 |  |
+| `hearth_radius_px` | float | Subsolo delimitado — Q-186 |  |
+| `hearth_repel_mass` | int | Subsolo delimitado — Q-186 |  |
+| `hearth_rot_slow` | float | Subsolo delimitado — Q-186 |  |
 
 ## `economy_profiles.csv` → `data/economy/profiles/{id}.tres`
 

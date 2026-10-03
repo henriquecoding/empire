@@ -70,7 +70,10 @@ static func job_board() -> JobBoard:
 ## (§07), e quem esta numa torre so se sabe perguntando ao posto que ocupa.
 static func combat(postos: JobBoard) -> CombatSystem:
 	var contacto := ContactQueue.new(curve())
-	return CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS), contacto, postos)
+	var c := CombatSystem.new(by_id(TABELA_TROPAS), by_id(TABELA_CRIATURAS), contacto, postos)
+	var r := RulesFactory.rules()
+	c.knockback = Vector2(r.melee_knockback_px, r.melee_knockback_max_tier)
+	return c
 
 
 static func morale() -> MoraleSystem:

@@ -130,6 +130,7 @@ func step(delta: float) -> void:
 	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
 	#     atras da luz (§24, DawnCascade).
 	field.under.confine(units)  # 5 · la em baixo, ninguem passa das paredes (Q-186)
+	units.piloted_pace = MonarchWatch.pace(delta)  # 5 · correr, com folego (Q-193)
 	units.tick_movement(delta, Assume.driven(), ClockService.dawn_front(), HeroWatch.pace())
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao

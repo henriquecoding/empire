@@ -13,6 +13,8 @@
 > as propostas (P) do plano que precisam da tua decisão ou de medição. Nenhuma P entra no painel como resposta tua.
 
 ### Q-195 · Resolvida — o que o dono decidiu: três monarcas, só imperadores controláveis, flechas pagas
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Vai começar com 3 imperadores, para a pessoa escolher, mas minha intenção é criar vários futuramente que a pessoa desbloqueia ao explorar o mundo e ao reiniciar o jogo do 0 pode escolher também esses novos imperadores encontrados. Mesclei as classes com os imperadores para simplificar meu jogo. Cada imperador é único e tem gameplay diferenciada e minha intenção é que cada um tenha vantagens e desvantagens para tornar o jogo interessante»*.
+- **Por aplicar (UN-16):** os imperadores encontrados desbloqueiam-se para a campanha e para o recomeço do zero.
 - **Pedido do dono (02/10/2026):** unificar a escolha inicial e a identidade do governante — começar como **Rei**
   guerreiro defensivo (gordo, lento, ataque curto, escudeiro pago), **Imperatriz Nia** (mulher negra, pequena, rápida,
   pouco dano por golpe e alta cadência; inspiração de ritmo na Berserker e de trajetória em Joana d'Arc; um Bardo com a
@@ -39,6 +41,8 @@
 - **Decide:** já decidido por ti (02/10/2026); a execução segue por fases, UN-01 em diante.
 
 ### Q-196 · A troca imperial transfere o governo, ou só o controlo?
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«O sistema de sucessão do herdeiro é a chave para essa troca, quando o sucessor já está preparado, o jogador pode ir onde ele foi treinado e escolher outro imperador para jogar, porém o ciclo do herdeiro se reinicia e o jogador fica vulnerável, se morrer morre de vez a menos que o novo herdeiro já tivesse concluído o treinamento. O sistema de herdeiro e sucessor é uma segunda chance, ou também uma oportunidade de gameplay diferente, não é barato pagar para ter um herdeiro e o custo para manter é o mais alto do jogo, o jogador tem que pensar se vale a pena ter, manter e que construções construir para gerar receita para isso. O único jeito de nascerem outras coroas soberanas é se estiver em um modo com mais jogadores que pretendo criar futuramente, se for um jogo solo ter mais de uma coroa soberana é recusada durante queda, roubo da coroa ou sucessão pendente»*.
+- **Por aplicar (UN-32):** a troca faz-se pelo herdeiro preparado, no sítio onde treinou; o ciclo dele recomeça. Muda o UN-17.
 - **Onde:** plano §7.5; ADR 0052; UN-17.
 - **O que falta:** a tua direção diz *quem* pode ser controlado, e não diz o que acontece à coroa numa troca.
 - **Proposta (P):** em solo, a troca presencial transfere o governo de forma voluntária e atómica — o novo imperador
@@ -48,12 +52,16 @@
 - **Decide:** tu.
 
 ### Q-197 · Outro imperador encontrado serve de sucessor?
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Já expliquei isso na Q-195, os imperadores encontrados são desbloqueados para a campanha, podem já ser selecionados para trocar se o herdeiro já estiver preparado ou ao reiniciar do 0 o jogo»*.
+- **Por aplicar (UN-16, UN-32):** o imperador encontrado é escolha para a troca com o herdeiro pronto, ou para o recomeço do zero.
 - **Onde:** plano §7.6, §9.3; UN-07, UN-16.
 - **Proposta (P):** só quando designado e preparado antes da morte. Sem preparação, aparecer no desbloqueio global não
   o torna herdeiro — preparar continuidade continua a importar.
 - **Decide:** tu, se preferes que qualquer imperador aliado encontrado seja continuidade automática (substitui a regra de morte sem sucessor).
 
 ### Q-198 · Os números de bancada de Nia e do Imperador Arqueiro
+- **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
+- **Aplicado (03/10/2026, ADR 0053):** os números de bancada da Nia e do Imperador Arqueiro saem do `_proposed` do `units.csv`.
 - **Onde:** plano §4.4; `units.csv` (`_proposed`); UN-09, UN-13.
 - **Proposta (P), contra o Rei atual (60 de vida, 80 px/s, dano 3, 1,2 s, 30 px):** Nia 32 de vida, 108 px/s, dano 2,
   0,45 s, 26 px; o Arqueiro imperial 40 de vida, 88 px/s, dano 4, 1,4 s, 200 px. Contra um Rastejante de 10 de vida,
@@ -62,6 +70,8 @@
 - **Decide:** tu, depois do primeiro playtest.
 
 ### Q-199 · O Bardo da Nia: o que custa, quanto leva e o que faz
+- **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
+- **Aplicado (03/10/2026, ADR 0053):** os preços, o orçamento e o limite de 48 de massa do Bardo saem do `_proposed`.
 - **Onde:** plano §5.3, §5.4; UN-10 a UN-12.
 - **Proposta (P):** a imperatriz paga ao Bardo, que só canta vivo, perto, na faixa dela, pronto e pago. Preços de
   bancada: encanto fraco 1 moeda, incentivo de grupo 1, conversão permanente 3, promoção 3; orçamento transportável até
@@ -73,6 +83,8 @@
 - **Decide:** tu, os preços e o limite de aliados permanentes (ponderado pela massa, não por cabeça).
 
 ### Q-200 · A aljava do Imperador Arqueiro e o escudeiro que a abastece
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Para tornar mais equilibrado pagar o escudeiro só dá 6 flechas. Na evolução dele ele também ataca os inimigos com flechas»*.
+- **Aplicado (03/10/2026, ADR 0053):** 6 flechas por moeda (`arrows_per_coin:6` no `quiver_squire`); a banca continua a dar 12 às tropas. Teste: `tests/aljava_imperial_test.gd`. **Por aplicar (UN-34):** o escudeiro evoluído que dispara.
 - **Onde:** plano §5.5, §4.3; UN-13, UN-14. A tua regra (pagamento pessoal, sem moedas sem flechas) é D.
 - **Proposta (P):** aljava de 30, com 12 flechas no início; 12 flechas por moeda (o `arrows_per_coin` das tropas). Com a
   aljava quase cheia, o lote que não cabe fica pago e registado para a reposição seguinte — nunca se cobra um lote e
@@ -85,6 +97,8 @@
 - **Decide:** tu, o nome e os três números.
 
 ### Q-201 · O sangramento
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Por enquanto somente esse imperador tem essa habilidade»*.
+- **Fechada (ADR 0053):** o sangramento fica só do Imperador Arqueiro, com os números da proposta.
 - **Onde:** plano §14.2–§14.4; UN-15.
 - **Proposta (P):** só o Arqueiro imperial; 20% por impacto que causou dano; 4 s; 1 de dano por segundo, o primeiro um
   segundo depois; uma instância por alvo — um proc novo renova a duração, não soma. Sorteio no fluxo `combat` do
@@ -94,6 +108,8 @@
 - **Decide:** tu, os números; a medição diz se o arqueiro fica forte de mais.
 
 ### Q-202 · O herdeiro: que perfil, e com que força
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«O herdeiro(a) é algo neutro porque até estar pronto não é definido, como custa manter, às vezes o jogador não consegue manter e ele simplesmente desaparece, e o jogador tem que pagar novamente por ele. Quando pronto o jogador pode selecionar dentre os imperadores desbloqueados para poder trocar, assumindo assim um novo imperador. Um herdeiro realmente começa com os bónus reduzidos que são recuperados depois de 5 noites»*.
+- **Por aplicar (UN-32):** o herdeiro neutro, a manutenção que o faz desaparecer, a escolha do imperador quando pronto, e os bónus reduzidos que voltam em 5 noites. Hoje o herdeiro segue o perfil de quem reinava (UN-07).
 - **Onde:** plano §8.3, §9.4; UN-07.
 - **Proposta (P):** o herdeiro segue o arquétipo do titular quando o treino foi definido, com nome e identidade
   próprios (a sucessora de Nia não se chama Nia). Preserva a fase tecnológica do império e aplica 60% (§15) só aos
@@ -102,6 +118,8 @@
 - **Decide:** tu.
 
 ### Q-203 · O Diplomata universal: acesso, missões, captura e resgate
+- **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
+- **Por aplicar (UN-18 a UN-21):** a proposta passa a contrato.
 - **Onde:** plano §11; §14; UN-18 a UN-21.
 - **Proposta (P):** uma banca de emissários junto da sede contrata o básico; a Embaixada treina e evolui. As duas
   Sementes Reais saem do acesso básico e passam à evolução; quem já as pagou não perde nada. Uma missão ativa por
@@ -113,6 +131,8 @@
 - **Decide:** tu.
 
 ### Q-204 · Os dois multiplayer com imperadores
+- **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
+- **Por aplicar (UN-29 a UN-31):** a proposta passa a contrato.
 - **Onde:** §18; plano §17; UN-29 a UN-31.
 - **Proposta (P):** coop com um império, dois imperadores — um titular soberano e um com autoridade delegada —, bolsas
   pessoais e tesouro partilhado, um decreto por reino e por dia. Competitivo com dois reinos nas pontas; vence quem
@@ -120,6 +140,8 @@
 - **Decide:** tu, se preferes duas coroas equivalentes no coop (pede regra própria de herança e decretos).
 
 ### Q-205 · O resto do que o plano deixa aberto
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«O quarto imperador é bem grande e tem uma armadura completa, parece obscuro, mas tem um passado triste, consegue recuperar a vida sozinho se se sentar ao chão, sempre que faz isso cresce vegetação ao seu redor. A sua escudeira é uma mulher que dança para tentar alegrá-lo, isso aumenta a força dele e das outras tropas, a evolução da escudeira faz os inimigos ganharem lentidão, pois ficam admirados com ela»*.
+- **Por aplicar (UN-33):** o quarto imperador e a escudeira que dança. As outras linhas da Q-205 ficam como propostas.
 - **Onde:** plano §24.
 - **Propostas (P):** o **quarto monarca** fica aberto — não se inventa um para encher a vaga; a **Ganância** não se
   sorteia de novo numa troca (só na sucessão, Q-143); a **companhia pode morrer** e repõe-se com custo, sem cargas
@@ -130,6 +152,8 @@
 - **Decide:** tu, por linha.
 
 ### Q-206 · O imperador que não reina, e morre
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Me parece bem, durante aquela campanha se não conseguir levar o rei caído para o santuário pelo ritual não consegue mais jogar com aquele imperador, somente se recomeçar o jogo do 0»*.
+- **Por aplicar (UN-16):** a proposta, com o fim do dono — sem o ritual, o imperador sai da campanha e volta só num recomeço do zero.
 - **Onde:** plano §7.5, §9.5, §10.4; §16; UN-16, UN-17. Apontado na revisão do PR do contrato (ADR 0052).
 - **O que falta:** depois de uma troca (UN-17), o imperador anterior fica vivo sob IA, sem a coroa. Se morrer, a regra do
   §16 só cobre tropas, companheiros e o monarca que reina: não diz se essa pessoa se pode ressuscitar no Santuário,
@@ -142,6 +166,8 @@
 ## O CORRER no toque e as obras que se vêem — 02/10/2026 (UX-04, ADR 0051)
 
 ### Q-193 · O botão CORRER é um interruptor
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Exato, só corre ao manter o botão apertado e assim como Kingdom tem um limite, depois de certo período fica cansado e tem que andar normalmente até se recuperar, o imperador evoluído tem a resistência maior também»*.
+- **Aplicado (03/10/2026, ADR 0053):** o CORRER corre só premido, e a alavanca até ao fim já não corre; a pé corre-se `king_run_stamina_s` (8 s) e, cansado, anda-se até recuperar o fôlego todo em `king_run_refill_s` (10 s); o evoluído corre 1,5× mais (`Stamina`). Testes: `tests/toque_correr_test.gd`, `tests/folego_test.gd`.
 - **Pedido do dono (02/10/2026):** *«No mobile deve ter um botão para correr também»*. Aplicado (UX-04, adenda da
   ADR 0047).
 - **Onde:** §24, ADR 0047. No código: `TouchLayout` (`Role.RUN`), `TouchPad.running` e `runs()`, `TouchView`,
@@ -156,6 +182,7 @@
   está à mão no teu telemóvel.
 
 ### Q-194 · As obras que não tinham arte, pintadas no estilo da tua; o sítio vazio à vista
+- **Adiada pelo dono (painel, 03/10/2026).** Fica aberta.
 - **Pedido do dono (02/10/2026):** *«faça as casas e construções terem de fato sprites, agora estão todas
   invisíveis»*. Aplicado (ADR 0051).
 - **Onde:** §10, §21, §22, §25, §55. No código: `PixelPainter`, `PaintedArt`, `WallSprites`, `TowerSprites`,
@@ -174,6 +201,8 @@
 ## As moedas que se vêem — 02/10/2026 (ADR 0050)
 
 ### Q-192 · A moeda grande, com física e com cara de moeda; a coroa que cai
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Quero que o tamanho seja o dobro do atual, a física atual já está boa»*.
+- **Aplicado (03/10/2026, ADR 0053):** a moeda, a pilha, o saco e a coroa no chão em pixeis de 4 (`CoinArt.CHAO`): a moeda de 36 px, a coroa de 60. A física fica. Teste: `tests/coin_art_test.gd`.
 - **Pedido do dono (02/10/2026):** *«as moedas e itens que são dropados devem ser bem grandes para serem bem vistos como é
   em Kingdom e devem ter física e se parecerem com o que são»*. Aplicado (ADR 0050).
 - **Onde:** §02, §16, §24, §55, §80, GB-19, Q-167. No código: `CoinArt`, `CoinBounce`, `CrownView`, `PriceTag`, o
@@ -191,6 +220,8 @@
 ## A noite que se vê e o bestiário — 02/10/2026 (ADR 0048, ADR 0049)
 
 ### Q-189 · A noite é difícil de ver, e não impossível; as luzes alumiam
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Gosto da alteração que foi feita, agora está como queria»*.
+- **Fechada (ADR 0053):** fica como está; `night_vision` sai do `_proposed`.
 - **Pedido do dono (02/10/2026):** *«a iluminação à noite deve existir, adoro o clima difícil de ver, mas não quero que
   seja impossível; os pontos de luz devem existir para afastar as criaturas e iluminar, e o brilho do jogo não pode ser
   tão nulo ao ponto de não ver nada como está»*. Aplicado (ADR 0048).
@@ -210,6 +241,8 @@
 - **Decide:** tu, se o escuro ficou claro de mais ou ainda escuro de mais — é um número só.
 
 ### Q-190 · A lareira do núcleo afasta a Podridão?
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Há um custo para manter ela acesa, não é barato, o jogador tem que conseguir recursos e administrar bem seu dinheiro para manter isso funcionando»*.
+- **Aplicado (03/10/2026, ADR 0053):** a lareira afasta, e paga-se. Ao crepúsculo come `hearth_night_cost` (5) da bolsa de quem reina; paga, arde e faz recuar a `hearth_radius_px` (240) do núcleo quem tem até `hearth_repel_mass` (8), e abranda os outros; sem as 5, fica apagada nessa noite (`Hearth`). Teste: `tests/lareira_test.gd`.
 - **Onde:** ADR 0034 (só o fogo que compras afasta), ADR 0048, `LightField.LAREIRA`, `Torchlight.in_dark`.
 - **O que está:** a volta do núcleo já não era escuro para o archote (meia largura do núcleo), e agora acende-se — é o
   fogo do centro do acampamento do Kingdom. Alumia e revela, mas **não afasta ninguém**: não tem `repel_mass` nem
@@ -219,6 +252,7 @@
 - **Decide:** tu.
 
 ### Q-191 · Sete criaturas, uma família, sete portes
+- **Adiada pelo dono (painel, 03/10/2026).** Fica aberta.
 - **Pedido do dono (02/10/2026):** *«a variedade, formato e tamanho dos inimigos deve ser mesmo bem feita»*. Aplicado
   (ADR 0049).
 - **Onde:** §07, §22, §25, §51, §74, §75, ADR 0042. No código: `Bestiary`, `BeastPen`, `BeastsSmall`, `BeastsLarge`,
@@ -235,6 +269,8 @@
 ## Jogar com os dedos — 02/10/2026 (ADR 0047)
 
 ### Q-187 · O toque é o quarto dispositivo: a alavanca, os botões e o mundo
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«No telemóvel as ações são feitas ao pressionar os botões, tudo o que há no desktop há no mobile, mas tudo é planejado e adaptado para o jogador ter praticamente a mesma experiência, independente da plataforma»*.
+- **Fechada (ADR 0053):** fica a regra — tudo o que há no computador há no toque, adaptado; o UN-28 confere-a. Daqui saiu o CORRER premido da Q-193.
 - **Pedido do dono (02/10/2026):** *«implemente a jogabilidade por dispositivos mobile, no navegador também, com
   touchscreen e todo o necessário, isso deve ser bem feito e elaborado»*. Aplicado (ADR 0047).
 - **Onde:** §24, §26, §45, §61, ADR 0024, ADR 0040, ADR 0045. No código: `TouchLayout`, `TouchStick`, `TouchPad`,
@@ -263,6 +299,8 @@
 - **Decide:** tu, se alguma das escolhas acima não for a que querias.
 
 ### Q-188 · No telemóvel, o mundo pode encher o ecrã?
+- **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
+- **Aplicado (03/10/2026, ADR 0053):** no toque, o canvas alarga-se até 1,25× o 16:9 (`WideTouch`); com teclado ou comando, o 16:9 de sempre. Teste: `tests/toque_ecra_largo_test.gd`.
 - **Onde:** ADR 0001 (proposta: a largura visível limitada a 1,25× o 16:9), §19, `project.godot` (aspecto `keep`),
   ADR 0040 (a pausa e a escolha de classe já passam a `expand` enquanto estão abertas).
 - **O que está:** um telemóvel de 19,5:9 ou 20:9 mostra o jogo a 16:9 com barras pretas dos lados — e é aí que os
@@ -276,6 +314,8 @@
 ## Subsolo delimitado — 02/10/2026 (ADR 0046)
 
 ### Q-186 · O subsolo é um sítio, e acaba
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«A sala secreta que há no império tem um baú onde o imperador pode deixar armazenado o excedente da sua riqueza, que caso alguém ou algum inimigo invada pode ter acesso àquilo e roubar, pode não ter nada ou pode ter coisas bem valiosas, a do jogador começa vazia, mas pode ser preenchida conforme ele planejar, os outros impérios na campanha há sempre algo nessa sala secreta»*.
+- **Por aplicar (QP-03):** o baú da sala secreta — guardar, roubar, e o dos outros impérios sempre com alguma coisa. Substitui o tesouro de 3 a 6 moedas da primeira descida.
 - **Pedido do dono (02/10/2026), com uma captura do porão com o painel do combate por cima:** *«O subsolo não é
   infinito acompanhando o piso de cima, é sempre algo delimitado, pode ser grande, mas nunca infinito, é gerado
   proceduralmente e a primeira vez que é acessado naquela jogatina é algo distinto, o local onde aparece é aleatório,
@@ -317,6 +357,8 @@
 ## Combate direto — 01/10/2026 (ADR 0045)
 
 ### Q-184 · Ataque e habilidade separados nas classes controladas
+- **Respondida pelo dono (painel, 02/10/2026 — outra resposta):** *«Por mim está bem como fez»*.
+- **Fechada (ADR 0053):** fica como está; os números em `_proposed` continuam afináveis no CSV.
 - **Pedido do dono:** o personagem deve atacar e usar a habilidade por botão; refinar o combate que antes só deixava as tropas atacar automaticamente.
 - **Aplicado:** ataque em F/botão esquerdo/RB/R1 e habilidade em R/botão direito/RT/R2, com dois botões visíveis. O corpo controlado só ataca por intenção explícita; tropas e corpos largados conservam a IA. Segurar ataque repete à cadência da arma. A direção e o alcance são revalidados no tick do golpe, sem fogo amigo entre criaturas encantadas.
 - **Classes:** Monarca usa a espada e um atalho para a Vigília já existente, com os mesmos custos e consequências; aura continua passiva. Arqueiro separa flecha e marca. Bardo separa golpe curto de alaúde e canto; o canto tem relógio independente e persistente.
@@ -326,6 +368,8 @@
 ## Três escolhas iniciais — 01/10/2026 (ADR 0044)
 
 ### Q-183 · Completar as três classes sem inventar uma regra definitiva de balanceamento
+- **Respondida pelo dono (painel, 02/10/2026 — outra resposta):** *«Já há um novo sistema definido»*.
+- **Fechada (ADR 0053):** a escolha das três classes foi substituída pelos três monarcas da ADR 0052.
 - **Pedido do dono:** escolher três classes no primeiro início, com a jogabilidade do dossiê, e pesquisar também na web.
 - **Aplicado:** Monarca, Arqueiro e Bardo são as três escolhas iniciais, pela ordem do §08. Arqueiro/Bardo recebem um corpo junto do rei, que permanece com a coroa e as moedas. Só o Monarca gere. O Trepador não integra esta seleção; mantém-se o sistema existente de corpos e conquistas.
 - **Números de trabalho:** usam-se as propostas já registadas em `classes.csv`: marca 10 s, raio evoluído 96 px, feito do Arqueiro 30 abates; encanto 30 s, vida máxima base 14, velocidade +10%; feito do Monarca 5 noites. As 15 conversões do Bardo e a Semente Real são do §08. Não se atribui aprovação implícita aos campos `_proposed`.
@@ -414,6 +458,8 @@ As onze respostas restantes foram implementadas como lote integrado. Os checkpoi
 ## Abertas — balanceamento e design
 
 ### Q-185 · O combate que se vê: o que ficou feito no ecrã e o que o «sistema completo» da Q-084 pede à simulação
+- **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Os ataques corpo a corpo atingem aquilo que está ao seu alcance e dá dano nas criaturas que atingiu, se for criaturas pequenas são jogadas um pouco para trás, criaturas grandes continuam inabaladas, arqueiros e ataques à distância acertam um inimigo por vez»*.
+- **Aplicado (03/10/2026, ADR 0053):** o golpe de perto fere todas as criaturas da faixa, do lado do golpe, até ao alcance da arma (`MeleeSweep`); a pequena que sobrevive recua `melee_knockback_px` (12 px) até ao porte `melee_knockback_max_tier` (2); as grandes não se mexem; a distância, um alvo por flecha. O empurrão é da simulação, e responde à pergunta 1 desta questão: é do golpe de perto, pelo porte do alvo. Teste: `tests/golpe_de_perto_test.gd`.
 - **Pedido do dono (02/10/2026):** *«o combate ainda é péssimo e a animação não se nota nada, melhore as mecânicas
   de tudo»*.
 - **Onde:** §07 (sem números no ecrã; *«nada desaparece silenciosamente»*), §24 (flash de 80 ms, 3 px de knockback,

@@ -42,12 +42,13 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		&"cor": GameHud.GOLD if l.fixed else GameHud.TEXT,
 	}
 	TouchArt.button(ci, l.centre(TouchLayout.Role.FIX), l.radius(TouchLayout.Role.FIX), fixa)
-	# O CORRER e um interruptor, como o FIXAR: aceso a ouro enquanto esta ligado.
+	# O CORRER acende-se a ouro enquanto se prime; cansado, apaga-se (Q-193).
+	var cansado := SimLoop.field != null and SimLoop.field.stamina.tired
 	var corre := {
-		&"premido": pad.running,
+		&"premido": pad.running and not cansado,
 		&"icone": &"corre",
 		&"rotulo": _nome(&"TOUCH_RUN"),
-		&"cor": GameHud.GOLD if pad.running else GameHud.TEXT,
+		&"cor": GameHud.MUTED if cansado else GameHud.GOLD if pad.running else GameHud.TEXT,
 	}
 	TouchArt.button(ci, l.centre(TouchLayout.Role.RUN), l.radius(TouchLayout.Role.RUN), corre)
 	var classe := HeroWatch.current()

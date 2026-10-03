@@ -177,6 +177,12 @@ extends Resource
 @export_group("Andar — correr")
 ## Quanto mais depressa o rei anda com a tecla de correr premida (Q-149).
 @export var king_run_mult: float = 0.0
+## Quantos segundos se corre a pe com o folego cheio; 0 corre sem limite (Q-193).
+@export var king_run_stamina_s: float = 0.0
+## Quantos segundos a andar enchem o folego do zero (Q-193).
+@export var king_run_refill_s: float = 0.0
+## Quanto mais folego tem o monarca evoluido (Q-193).
+@export var king_run_evolved_mult: float = 1.0
 ## Quanto o rei se afasta das bordas da regiao de casa; as classes vao alem (Q-150).
 @export var king_leash_px: float = 0.0
 

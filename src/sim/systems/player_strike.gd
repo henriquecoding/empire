@@ -145,21 +145,29 @@ func resolve(
 	if enemy < 0:
 		return events
 	var hits: Array[int] = [enemy]
+	var band := int(units.bands[i])
 	if focus != null and focus.piercing.has(who) and bool(stats[&"arrow"]):
 		hits = focus.pierced(units, creatures, who, enemy)
+	elif not bool(stats[&"arrow"]) and MeleeSweep.melee(data):  # Q-185
+		hits = MeleeSweep.targets(creatures, units.xs[i], band, stats[&"range"], enemy, allies)
 	if bool(stats[&"arrow"]):
 		for hit in hits:
 			_wound(creatures, hit, who, data, roll)
 	for hit in hits:
-		events.append(
-			{
-				CombatSystem.CHAVE: CombatSystem.EV_DANO,
-				CombatSystem.DE: who,
-				CombatSystem.PARA: hit,
-				CombatSystem.QUANTO: stats[&"damage"],
-				CombatSystem.CRIATURA: true
-			}
+		(
+			events
+			. append(
+				{
+					CombatSystem.CHAVE: CombatSystem.EV_DANO,
+					CombatSystem.DE: who,
+					CombatSystem.PARA: hit,
+					CombatSystem.QUANTO: stats[&"damage"],
+					CombatSystem.CRIATURA: true,
+				}
+			)
 		)
+		if not bool(stats[&"arrow"]) and MeleeSweep.melee(data):
+			events[-1][MeleeSweep.DE_X] = units.xs[i]
 	return events
 
 

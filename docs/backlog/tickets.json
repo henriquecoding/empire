@@ -2193,5 +2193,101 @@
   "fora": "Backend novo sem prova local.",
   "estado": "por fazer",
   "horas": "—"
+ },
+ "UN-32": {
+  "title": "O herdeiro neutro, caro, e a chave da troca",
+  "porque": "O dono decidiu a 03/10/2026 que a troca de imperador passa pelo herdeiro preparado, e não por dois imperadores vivos.",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/adr/0053-as-respostas-do-painel-de-03-10.md",
+   "docs/design/15-reis-ganancia-impulsos-e-sucessao.md",
+   "docs/design/16-morte-ressurreicao-e-derrota.md"
+  ],
+  "depende": "UN-07, UN-16",
+  "feito": "O herdeiro é neutro até estar pronto; a manutenção dele é a mais alta do jogo e, por pagar, ele desaparece e paga-se de novo; pronto, no sítio onde treinou, o jogador escolhe um dos imperadores desbloqueados e o ciclo recomeça, vulnerável; o herdeiro começa com os bónus reduzidos e recupera-os em 5 noites; em solo nunca há duas coroas soberanas",
+  "fora": "Coroas soberanas a mais (só no multiplayer, UN-29 a UN-31).",
+  "estado": "por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "**D (Q-196):** *«O sistema de sucessão do herdeiro é a chave para essa troca, quando o sucessor já está preparado, o jogador pode ir onde ele foi treinado e escolher outro imperador para jogar, porém o ciclo do herdeiro se reinicia e o jogador fica vulnerável, se morrer morre de vez a menos que o novo herdeiro já tivesse concluído o treinamento. [...] não é barato pagar para ter um herdeiro e o custo para manter é o mais alto do jogo [...] se for um jogo solo ter mais de uma coroa soberana é recusada durante queda, roubo da coroa ou sucessão pendente.»*",
+   "**D (Q-202):** *«O herdeiro(a) é algo neutro porque até estar pronto não é definido, como custa manter, às vezes o jogador não consegue manter e ele simplesmente desaparece, e o jogador tem que pagar novamente por ele. Quando pronto o jogador pode selecionar dentre os imperadores desbloqueados para poder trocar, assumindo assim um novo imperador. Um herdeiro realmente começa com os bónus reduzidos que são recuperados depois de 5 noites.»*",
+   "**D (Q-197):** os imperadores encontrados desbloqueiam-se para a campanha e servem para a troca quando o herdeiro está pronto.",
+   "**Muda:** o UN-07 (o herdeiro seguia o perfil de quem reinava) e o UN-17 (a troca era presencial entre dois imperadores vivos)."
+  ]
+ },
+ "UN-33": {
+  "title": "O quarto imperador e a escudeira que dança",
+  "porque": "O dono descreveu a 03/10/2026 o quarto monarca, que o plano deixava em aberto (Q-205).",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
+   "docs/adr/0053-as-respostas-do-painel-de-03-10.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-16",
+  "feito": "Um imperador grande, de armadura completa, que sentado no chão recupera vida e faz crescer vegetação à volta; a escudeira dança e dá força a ele e às tropas; evoluída, abranda os inimigos; desbloqueia-se como os outros, por encontro",
+  "fora": "Arte definitiva (ART-01); áudio.",
+  "estado": "por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "**D (Q-205):** *«O quarto imperador é bem grande e tem uma armadura completa, parece obscuro, mas tem um passado triste, consegue recuperar a vida sozinho se se sentar ao chão, sempre que faz isso cresce vegetação ao seu redor. A sua escudeira é uma mulher que dança para tentar alegrá-lo, isso aumenta a força dele e das outras tropas, a evolução da escudeira faz os inimigos ganharem lentidão, pois ficam admirados com ela.»*",
+   "**As outras linhas da Q-205** (a Ganância não se sorteia numa troca, a companhia pode morrer e repõe-se com custo, o resgate da coroa por IA, a morte de Nia como ramificação, a flecha física fora, a reserva doméstica) ficam como propostas do plano."
+  ]
+ },
+ "UN-34": {
+  "title": "O escudeiro evoluído dispara flechas",
+  "porque": "O dono decidiu a 03/10/2026 que, na evolução, o escudeiro do Arqueiro também ataca com flechas (Q-200).",
+  "spec": [
+   "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
+   "docs/adr/0053-as-respostas-do-painel-de-03-10.md",
+   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+  ],
+  "depende": "UN-14",
+  "feito": "Com o Imperador Arqueiro evoluído, o escudeiro dispara contra os inimigos ao alcance, das flechas que vende; sem flechas, não dispara",
+  "fora": "Flecha física com colisão.",
+  "estado": "por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "**D (Q-200):** *«Para tornar mais equilibrado pagar o escudeiro só dá 6 flechas. Na evolução dele ele também ataca os inimigos com flechas.»* As 6 flechas por moeda já estão (QP-02)."
+  ]
+ },
+ "QP-02": {
+  "title": "As respostas do painel de 02 e 03/10/2026",
+  "porque": "Vinte e quatro respostas novas no painel, das Q-183 às Q-206.",
+  "spec": [
+   "docs/adr/0053-as-respostas-do-painel-de-03-10.md"
+  ],
+  "depende": "UX-04",
+  "feito": "O golpe de perto, a lareira paga, a moeda grande, o fôlego, o ecrã largo no toque e as 6 flechas funcionam no jogo, com teste; o resto passa a tickets",
+  "fora": "O herdeiro e a troca (UN-32), o quarto imperador (UN-33), o escudeiro que dispara (UN-34), o baú (QP-03).",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-183/184/185/186/187/188/189/190/192/193/195 a 206. Ver a ADR 0053: o que se aplicou, como desfazer, e o que passou a ticket. O painel só recebe «aplicada» depois de merge e publicação."
+  ]
+ },
+ "QP-03": {
+  "title": "O baú da sala secreta",
+  "porque": "O dono decidiu a 03/10/2026 o que guarda a sala secreta do império (Q-186).",
+  "spec": [
+   "docs/adr/0053-as-respostas-do-painel-de-03-10.md",
+   "docs/adr/0046-o-subsolo-e-um-sitio-e-acaba.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md"
+  ],
+  "depende": "QP-02",
+  "feito": "A sala secreta debaixo do castelo tem um baú onde o imperador guarda o excedente; o do jogador começa vazio e enche-se como ele quiser; quem invade a sala pode levar o que lá está; os outros impérios da campanha têm sempre alguma coisa no deles; grava-se",
+  "fora": "Pisos, chaves e portas do subsolo.",
+  "estado": "por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "**D (Q-186):** *«A sala secreta que há no império tem um baú onde o imperador pode deixar armazenado o excedente da sua riqueza, que caso alguém ou algum inimigo invada pode ter acesso àquilo e roubar, pode não ter nada ou pode ter coisas bem valiosas, a do jogador começa vazia, mas pode ser preenchida conforme ele planejar, os outros impérios na campanha há sempre algo nessa sala secreta.»*",
+   "**Substitui:** as 3 a 6 moedas da primeira descida à sala secreta do jogador (ADR 0046)."
+  ]
  }
 }

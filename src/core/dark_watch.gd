@@ -11,8 +11,10 @@ const NENHUM := -1
 const METADE := 0.5
 ## O proposito do coin_spent de uma moeda que ficou numa fogueira (§46).
 const ARCHOTE := &"torch"
+const LAREIRA := &"hearth"
 
 var torch: Torchlight
+var hearth := Hearth.new()  # a lareira do nucleo, paga a noite (Q-190)
 var _perfil: RotProfile
 
 
@@ -80,3 +82,23 @@ func _meia(obras: BuildSystem) -> float:
 		if obra.kind == BuildSlot.NUCLEO:
 			return obra.width * BuildSystem.METADE
 	return 0.0
+
+
+## As luzes que afastam: as obras, o archote e a lareira acesa (ADR 0034, Q-190).
+func wards(obras: BuildSystem, nucleo_x: float) -> Array[Vector4]:
+	var zonas := LightWard.of(obras, ward())
+	var r := RulesFactory.rules()
+	var lar := hearth.zone(nucleo_x, r.hearth_radius_px, r.hearth_repel_mass, r.hearth_rot_slow)
+	if lar.y > lar.x:
+		zonas.append(lar)
+	return zonas
+
+
+## Ao crepusculo, a lareira come o preco da noite da bolsa de quem reina (Q-190).
+func kindle() -> void:
+	var r := SimLoop.units.index_of(SimLoop.king_id)
+	var bolsa := SimLoop.units.carried_coins[r] if r != NENHUM else 0
+	var gasto := hearth.kindle(bolsa, RulesFactory.rules().hearth_night_cost)
+	if gasto > 0:
+		SimLoop.units.carried_coins[r] -= gasto
+		EventBus.queue(&"coin_spent", [gasto, LAREIRA])

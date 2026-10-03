@@ -38,6 +38,8 @@ func test_a_alavanca_anda_e_corre() -> void:
 	assert_bool(quer[&"move_left"]).is_false()
 	assert_bool(quer[&"king_run"]).is_false()
 	p.drag(0, casa + Vector2(200.0, 0.0), Vector2(160.0, 0.0))
+	assert_bool(p.wanted()[&"king_run"]).is_false()
+	p.press(1, p.layout.centre(R.RUN))
 	assert_bool(p.wanted()[&"king_run"]).is_true()
 	p.lift(0, casa + Vector2(200.0, 0.0))
 	assert_bool(p.wanted()[&"move_right"]).is_false()

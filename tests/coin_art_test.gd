@@ -9,9 +9,15 @@ extends GdUnitTestSuite
 func test_uma_moeda_se_ve_ao_lado_de_uma_tropa() -> void:
 	var tropa: float = OriginalArt.new().box(&"vagrant", Vector2.ZERO).size.y
 	var moeda := CoinArt.size_of(1)
-	assert_float(moeda.y).is_greater(tropa / 4.0)
-	assert_float(moeda.y).is_less(tropa / 2.0)
+	assert_float(moeda.y).is_greater(tropa / 2.0)
+	assert_float(moeda.y).is_less(tropa)
 	assert_float(moeda.x).is_greater(WorldPalette.MOEDA_R * 2.0 * 2.0)
+
+
+## O dono, a 03/10/2026 (Q-192): "quero que o tamanho seja o dobro do atual". Era de 18 px.
+func test_a_moeda_tem_o_dobro_do_tamanho() -> void:
+	assert_float(CoinArt.size_of(1).x).is_equal(36.0)
+	assert_float(CoinArt.CHAO).is_equal(CoinArt.PIXEL * 2.0)
 
 
 func test_a_quantia_le_se_pela_forma() -> void:
@@ -58,7 +64,7 @@ func test_o_ouro_nunca_se_apaga_de_todo() -> void:
 
 func test_a_coroa_e_maior_que_uma_moeda_e_so_usa_a_paleta() -> void:
 	var largo := String(CrownView.COROA[0]).length()
-	assert_float(float(largo) * CoinArt.PIXEL).is_greater(CoinArt.size_of(1).x)
+	assert_float(float(largo) * CoinArt.CHAO).is_greater(CoinArt.size_of(1).x)
 	for linha: String in CrownView.COROA:
 		assert_int(linha.length()).is_equal(largo)
 		for letra in linha:
