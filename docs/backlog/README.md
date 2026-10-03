@@ -212,9 +212,14 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UN-29](UN-29.md) | Coop local | UN-17, UN-18, UN-19, UN-20, UN-21, UN-22, UN-23 | por fazer |
 | [UN-30](UN-30.md) | Dois reinos e a vitória | UN-22, UN-23, UN-29 | por fazer |
 | [UN-31](UN-31.md) | Spike e integração de rede | UN-29, UN-30 | por fazer |
+| [UN-32](UN-32.md) | O herdeiro neutro, caro, e a chave da troca | UN-07, UN-16 | por fazer |
+| [UN-33](UN-33.md) | O quarto imperador e a escudeira que dança | UN-16 | por fazer |
+| [UN-34](UN-34.md) | O escudeiro evoluído dispara flechas | UN-14 | por fazer |
 
 ## Respostas aprovadas no painel
 
 | Ticket | Tarefa | Depende | Estado |
 |---|---|---|---|
 | [QP-01](QP-01.md) | Onze respostas restantes do painel | UX-01 | feito |
+| [QP-02](QP-02.md) | As respostas do painel de 02 e 03/10/2026 | UX-04 | feito |
+| [QP-03](QP-03.md) | O baú da sala secreta | QP-02 | por fazer |
