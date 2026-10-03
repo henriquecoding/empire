@@ -34,3 +34,6 @@ extends Resource
 @export var rare_chance: float = 0.0
 ## A criatura da Podridao em que o bicho se levanta, se uma o apanhar de noite.
 @export var rots_into: StringName = &""
+## Os segundos de luz entre dois bichos da mesma toca (Q-217): o bicho volta varias
+## vezes por dia. Zero: a toca segue o periodo da caca media (hunt_yield, Q-106).
+@export var respawn_s: float = 0.0

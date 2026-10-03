@@ -61,6 +61,20 @@ func forget(home: float) -> void:
 		registo.erase(home)
 
 
+## O raro que sai no lugar de `base`, se o sorteio `roll` (0..1) o der (o cervo branco,
+## ADR 0057); `bichos` e o WildlifeData por id. Sem sorteio, nunca sai o raro.
+static func rare(bichos: Dictionary, base: StringName, roll: Callable) -> StringName:
+	if not roll.is_valid():
+		return &""
+	var ids := bichos.keys()
+	ids.sort()
+	for id: StringName in ids:
+		var dados: WildlifeData = bichos[id]
+		if dados.rare_of == base and dados.rare_chance > 0.0 and roll.call() < dados.rare_chance:
+			return id
+	return &""
+
+
 ## Quem assusta a caca: os teus, vivos, na superficie (id -> x).
 static func threats_of(units: UnitSystem) -> Dictionary:
 	var saida := {}
@@ -79,6 +93,8 @@ func step(
 ) -> Array[Dictionary]:
 	_golpes = []
 	caught = []
+	var ids := threats.keys()
+	ids.sort()
 	for home in homes:
 		var bicho: WildlifeData = species.call(home)
 		if bicho == null:
@@ -92,7 +108,7 @@ func step(
 			x = _threatened(home, x, bicho, NENHUM, fera.x, delta)
 			xs[home] = clampf(x, home - bicho.flee_px, home + bicho.flee_px)
 			continue
-		var quem := _nearest(threats, x)
+		var quem := _nearest(threats, x, ids)
 		cooldowns[home] = maxf(0.0, float(cooldowns.get(home, 0.0)) - delta)
 		var sabe := bicho.flees or provoked.has(home)
 		if sabe and quem != NENHUM and absf(float(threats[quem]) - x) <= bicho.notice_px:
@@ -195,10 +211,9 @@ func _nearest_predator(x: float) -> Vector2:
 	return melhor
 
 
-static func _nearest(threats: Dictionary, x: float) -> int:
+## `ids` sao as chaves de `threats`, ja ordenadas: ordena-se uma vez por passo.
+static func _nearest(threats: Dictionary, x: float, ids: Array) -> int:
 	var melhor := NENHUM
-	var ids := threats.keys()
-	ids.sort()
 	for quem: int in ids:
 		if melhor == NENHUM or absf(float(threats[quem]) - x) < absf(float(threats[melhor]) - x):
 			melhor = quem

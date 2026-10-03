@@ -24,3 +24,4 @@ flee_px = 120.0
 reach_px = 14.0
 attack_interval = 1.5
 rots_into = &"brute"
+respawn_s = 200.0

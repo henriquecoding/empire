@@ -98,6 +98,7 @@ static func _aplicar(campo: FieldWork, lado: int, k: int, largura: float, u_mont
 	var registo := campo.wilds.at(lado, k)
 	SettlementWatch.author(campo, lado, k, u_monte < 0.0)
 	DungeonWatch.author(campo, lado, k, u_monte < 0.0)
+	WildHunt.author(campo, lado, k, largura)  # a caca do segmento (Q-217)
 	var x := campo.wilds.subject_x(lado, k, largura)
 	if registo.get(&"deserted", false):
 		return

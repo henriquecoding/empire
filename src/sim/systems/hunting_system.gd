@@ -29,6 +29,9 @@ var herd := Herd.new()
 ## Quanto de caca cada cacador teu leva no saco (id -> moedas). So isto se entrega
 ## ao rei: o preco que pagaste para o recrutar fica com ele (Q-111).
 var bagged: Dictionary = {}
+## Onde os cacadores vao atras da caca: a regiao de casa (Q-217). Os bichos das terras
+## geradas sao de quem la passa.
+var home := Vector2(-INF, INF)
 var _profiles: Dictionary
 var _rabbit: WildlifeData
 
@@ -48,13 +51,16 @@ func open_day(number: int) -> void:
 
 
 ## `delta` segundos: de dia, as tocas vivas poem bichos a porta, um de cada vez. `roll`
-## da o sorteio do raro (0..1) de cada bicho que sai; sem ele, nunca sai o raro.
-func grow(delta: float, daylight: bool, periodo: float, roll := Callable()) -> void:
+## da o sorteio do raro (0..1) de cada bicho que sai; sem ele, nunca sai o raro. `ritmos`
+## e o tempo de cada bicho entre dois (Q-217); sem ele, o `periodo`.
+func grow(
+	delta: float, daylight: bool, periodo: float, roll := Callable(), ritmos: Dictionary = {}
+) -> void:
 	if not daylight:
 		return
-	for x in burrows.grow(delta * season_mult, periodo, rabbits):
+	for x in burrows.grow(delta * season_mult, periodo, rabbits, ritmos):
 		rabbits.append(x)
-		herd.arrive(x, _rare(burrows.game_at(x), roll))
+		herd.arrive(x, Herd.rare(wildlife, burrows.game_at(x), roll))
 
 
 ## O bicho da toca `x`: o raro que de la saiu, ou o de sempre.
@@ -81,7 +87,10 @@ func plan(units: UnitSystem, daylight: bool) -> void:
 		var i := units.index_of(id)
 		if units.owners[i] == RecruitSystem.SEM_DONO or units.job_ids[i] != UnitSystem.NENHUM:
 			continue
-		var prey := herd.where(_nearest(units.xs[i]))
+		var toca := _nearest(units.xs[i], true)
+		if is_nan(toca):
+			continue
+		var prey := herd.where(toca)
 		var data: UnitData = _profiles[units.data_ids[i]]
 		if absf(prey - units.xs[i]) > data.range_px:
 			units.set_target_x(id, prey)
@@ -156,11 +165,14 @@ func _hunters(units: UnitSystem) -> Array[int]:
 	return ids
 
 
-## A toca do bicho mais perto de `x`, pelo sitio onde ele anda agora.
-func _nearest(x: float) -> float:
-	var nearest := rabbits[0]
+## A toca do bicho mais perto de `x`, pelo sitio onde ele anda agora; `em_casa`, so os
+## de casa (NAN se nao ha nenhum).
+func _nearest(x: float, em_casa := false) -> float:
+	var nearest := NAN
 	for prey in rabbits:
-		if absf(herd.where(prey) - x) < absf(herd.where(nearest) - x):
+		if em_casa and (prey < home.x or prey > home.y):
+			continue
+		if is_nan(nearest) or absf(herd.where(prey) - x) < absf(herd.where(nearest) - x):
 			nearest = prey
 	return nearest
 
@@ -226,19 +238,6 @@ func _kill(units: UnitSystem, i: int, prey: float, drops: Array[Dictionary]) -> 
 	var arma := _profiles[units.data_ids[i]] as UnitData
 	units.cooldowns[i] = arma.attack_interval
 	drops.append_array(hurt(prey, arma.damage, units.ids[i]))
-
-
-## O raro que sai no lugar de `base`, se o sorteio o der (o cervo branco, ADR 0057).
-func _rare(base: StringName, roll: Callable) -> StringName:
-	if not roll.is_valid():
-		return &""
-	var ids := wildlife.keys()
-	ids.sort()
-	for id: StringName in ids:
-		var dados: WildlifeData = wildlife[id]
-		if dados.rare_of == base and dados.rare_chance > 0.0 and roll.call() < dados.rare_chance:
-			return id
-	return &""
 
 
 func _range(units: UnitSystem, i: int) -> float:

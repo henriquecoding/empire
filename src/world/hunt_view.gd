@@ -38,14 +38,17 @@ const POND := Rect2(-26, -3, 52, 5)
 const POND_GLINT := Rect2(-12, -2, 9, 1)
 ## A toca fica ao lado de onde o bicho se senta, e nao por baixo dele.
 const BUSH_SIDE := 18.0
+## Meia largura do maior desenho (o lago, o veado): o que esta fora do ecra nao se pinta.
+const LARGO := 48.0
 
 
 static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 	if SimLoop.hunting == null:
 		return
 	var tocas := SimLoop.hunting.burrows
+	var vista := PresentationBounds.of(canvas)  # o mundo inteiro tem caca (Q-217)
 	for k in tocas.xs.size():
-		if tocas.alive[k] == 0:
+		if tocas.alive[k] == 0 or not PresentationBounds.sees(vista, tocas.xs[k], LARGO):
 			continue
 		var bx: float = tocas.xs[k] - BUSH_SIDE
 		var sitio := StringName(tocas.kinds[k]) if k < tocas.kinds.size() else &"bush"
@@ -55,6 +58,8 @@ static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 	var manada := SimLoop.hunting.herd
 	for toca in SimLoop.hunting.rabbits:
 		var x := manada.where(toca)
+		if not PresentationBounds.sees(vista, x, LARGO):
+			continue
 		var bob := floorf(sin(time * BREATH + toca))
 		var lado := Vector2(float(manada.facing.get(toca, 1.0)), 1.0)  # ADR 0057
 		canvas.draw_set_transform(Vector2(x, Band.GROUND_LINE + bob), 0.0, lado)
