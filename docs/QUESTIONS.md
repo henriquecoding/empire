@@ -18,14 +18,16 @@
 - **Pedido do dono (03/10/2026):** *«as construções devem ter um pequeno espaço também, estão muito juntas uma da
   outras»*.
 - **Onde:** §21, §25, §55. No código: `Greybox`, `Campfires`, `Wards`, `BowRacks`, `Stables`, `Cavities`,
-  `secrets.csv`. O teste: `tests/obras_com_folga_test.gd`.
+  `HuntWatch`, `secrets.csv`. O teste: `tests/obras_com_folga_test.gd`.
 - **O que estava:** das 29 obras da superfície, nove pares a 16 px ou menos, e dois colados — o canteiro de fora
   contra a estacaria de dentro, e a cozinha contra o castelo-árvore. A torre, a banca do arco e o galinheiro de leste
   ficavam a 6 px uns dos outros.
 - **Decisão (aplicada, reversível):** 24 px de chão livre entre duas obras vizinhas, e entre as estátuas e as obras. A
   ordem é a mesma e o que estava dentro de um muro continua dentro: os muros vão para ±680 e ±1408, as passagens para
-  ±1040, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar.
-- **Decide:** tu, se os 24 px chegam (é uma constante do teste e as posições do `Greybox`).
+  ±1040, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar. As tocas da caça (Q-150) também
+  ficam no seu chão, fora das obras: a leste não sobra chão entre as obras, por isso os dois coelhos de lá saem ao pé
+  do castelo-árvore, como o do §25; a árvore fica entre a fogueira e a torre alta de oeste, e o lago para lá do farol.
+- **Decide:** tu, se os 24 px chegam (é uma constante do teste e as posições do `Greybox`) e onde ficam as tocas.
 
 ### Q-208 · Parado, o fôlego volta mais depressa
 - **Da pesquisa:** no Kingdom a montaria recupera o fôlego a pastar, parada, e muito mais depressa do que a andar; a

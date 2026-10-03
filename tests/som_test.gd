@@ -6,10 +6,23 @@
 extends GdUnitTestSuite
 
 const FOLHA := "res://docs/audio/AUDIO_CUE_SHEET.csv"
+## As preferencias do teste: nunca as de quem corre a suite (user://settings.cfg).
+const FICHEIRO := "user://som_test.cfg"
+const DT := 1.0 / 60.0
+
+
+func before_test() -> void:
+	Preferences.set_shared(Preferences.new(FICHEIRO))
 
 
 func after_test() -> void:
-	Preferences.shared().set_enabled(Preferences.SOUND, true)
+	Preferences.set_shared(null)
+	for f in [FICHEIRO, FICHEIRO + ".tmp"]:
+		if FileAccess.file_exists(f):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(f))
+	if SimLoop.running():
+		SimLoop.stop()
+	SimLoop.autosave_enabled = true
 
 
 func _folha() -> Dictionary:
@@ -131,3 +144,47 @@ func test_o_aquecimento_faz_tudo_aos_bocados() -> void:
 	for cue: StringName in SynthSfx.RECEITAS:
 		assert_bool(SynthSfx.ready(cue)).is_true()
 	assert_bool(SynthSfx.warm()).is_true()
+
+
+## O sino da primeira alvorada sai no primeiro tick, antes de o aquecimento la chegar:
+## nao se perde, passa a frente e toca assim que esta feito.
+func test_a_pista_pedida_a_frio_toca_quando_fica_feita() -> void:
+	SynthSfx.forget()
+	var d: SfxDirector = auto_free(SfxDirector.new())
+	add_child(d)
+	EventBus.dawn_broke.emit(1)
+	assert_str(String(d.last_cue)).is_equal("")
+	var voltas := 0
+	while d.last_cue == &"" and voltas < SynthSfx.RECEITAS.size() * SynthSfx.TAXA:
+		d._process(0.0)
+		voltas += 1
+	assert_str(String(d.last_cue)).is_equal("stg_dawn_bell")
+	# Faz-se e passa-se a 16 bits aos bocados: duas voltas por bocado, e nenhuma outra
+	# pista antes dela.
+	var sino := int(SynthSfx.duration(&"stg_dawn_bell") * SynthSfx.TAXA)
+	assert_int(voltas).is_less_equal(2 * ceili(float(sino) / SynthSfx.POR_FRAME) + 1)
+
+
+## A moeda pedida a frio que so fica feita depois de passar o que duraria ja nao toca.
+func test_a_pista_que_ja_nao_vai_a_tempo_nao_toca() -> void:
+	SynthSfx.forget()
+	var d: SfxDirector = auto_free(SfxDirector.new())
+	add_child(d)
+	d.play(&"sfx_coin_drop", NAN)
+	while not SynthSfx.ready(&"sfx_coin_drop"):
+		d._process(SynthSfx.duration(&"sfx_coin_drop"))
+	d._process(0.0)
+	assert_str(String(d.last_cue)).is_equal("")
+
+
+## A ultima moeda de uma obra: o absorb tira-lhe o custo e o pago volta a zero, mas a
+## obra arranca (build_started) e a moeda ouve-se, a mais aguda.
+func test_a_moeda_que_paga_a_obra_tambem_toca() -> void:
+	SimLoop.autosave_enabled = false
+	SimLoop.start(20261003)
+	Greybox.build()
+	var d := _diretor()
+	var vaga: BuildSlot = SimLoop.builds.slots[0]
+	d._process(DT)
+	EventBus.build_started.emit(vaga.id, vaga.kind)
+	assert_str(String(d.last_cue)).is_equal(String(SfxDirector.MOEDA))

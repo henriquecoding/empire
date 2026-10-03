@@ -8,6 +8,10 @@
 # A moeda que entra numa obra e a unica que nao vem de um sinal: o §55 paga pela moeda
 # no chao, sem evento. Ve-se o `paid` de cada obra subir, e cada moeda toca um pouco
 # mais aguda do que a anterior, ate a obra ficar paga — o tilintar que conta do Kingdom.
+# A ultima nao se ve (o pago volta a zero quando a obra arranca): e o build_started.
+#
+# Uma pista pedida antes de o aquecimento a fazer nao se perde: passa a frente e toca
+# quando estiver feita, se ainda for a tempo — antes de passar o que ela duraria.
 class_name SfxDirector
 extends Node
 
@@ -27,6 +31,8 @@ var _vozes: Array[AudioStreamPlayer] = []
 var _pistas: Array[StringName] = []
 var _pago := {}
 var _martelo := 0.0
+## As pistas a espera do aquecimento: cue -> [x, tom, segundos a espera].
+var _adiadas := {}
 
 
 func _ready() -> void:
@@ -62,6 +68,7 @@ func _ready() -> void:
 		func(_id: int, x: float, _b: int) -> void: play(&"sfx_death_creature", x)
 	)
 	EventBus.build_progressed.connect(_na_obra)
+	EventBus.build_started.connect(_obra_paga.unbind(1))
 	EventBus.build_completed.connect(func(id: int) -> void: play(&"sfx_build_complete", _obra(id)))
 	EventBus.building_destroyed.connect(
 		func(_id: int, x: float) -> void: play(&"sfx_building_destroyed", x)
@@ -77,14 +84,19 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_martelo = maxf(0.0, _martelo - delta)
 	SynthSfx.warm()  # aos bocados, para nao travar o arranque nem a web
+	_tocar_adiadas(delta)
 	if SimLoop.builds != null:
 		_moedas_nas_obras()
 
 
 ## Toca a pista `cue` vinda de `x` (NAN = de todo o lado). Devolve se tocou.
 func play(cue: StringName, x: float = NAN, tom: float = 1.0) -> bool:
-	if not Preferences.on(Preferences.SOUND) or not SynthSfx.ready(cue):
-		return false  # desligado, ou o aquecimento ainda nao chegou a esta pista
+	if not Preferences.on(Preferences.SOUND):
+		return false
+	if not SynthSfx.ready(cue):
+		_adiadas[cue] = [x, tom, 0.0]  # o aquecimento ainda nao chegou a esta pista
+		SynthSfx.hurry(cue)
+		return false
 	var pista := SfxCues.of(cue)
 	var volume := volume_at(pista, x, _camara_x())
 	if is_nan(volume) or _tocando(cue) >= int(pista[SfxCues.MAXIMO]):
@@ -157,6 +169,27 @@ func _na_obra(id: int, _racio: float) -> void:
 func _obra(id: int) -> float:
 	var i := SimLoop.builds.index_of(id) if SimLoop.builds != null else BuildSystem.NENHUM
 	return SimLoop.builds.slots[i].x if i != BuildSystem.NENHUM else NAN
+
+
+## A obra ficou paga: o absorb ja lhe tirou o custo, e a sondagem nao via a moeda.
+func _obra_paga(id: int) -> void:
+	var i := SimLoop.builds.index_of(id) if SimLoop.builds != null else BuildSystem.NENHUM
+	if i == BuildSystem.NENHUM:
+		return
+	var vaga: BuildSlot = SimLoop.builds.slots[i]
+	_pago[id] = vaga.paid
+	play(MOEDA, vaga.x, 1.0 + SUBIDA)
+
+
+func _tocar_adiadas(delta: float) -> void:
+	for cue: StringName in _adiadas.keys():
+		var pedido: Array = _adiadas[cue]
+		pedido[2] += delta
+		if pedido[2] > SynthSfx.duration(cue):
+			_adiadas.erase(cue)  # ja nao vai a tempo
+		elif SynthSfx.ready(cue):
+			_adiadas.erase(cue)
+			play(cue, pedido[0], pedido[1])
 
 
 func _moedas_nas_obras() -> void:

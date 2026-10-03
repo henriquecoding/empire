@@ -9,16 +9,18 @@ extends RefCounted
 
 ## Os sitios das tocas, em torno do nucleo (§21), e de que sao (Q-150): o arbusto, o
 ## buraco e a rocha dao coelhos, a arvore e o lago dao veados. O primeiro e o coelho
-## do §25, ao pe do castelo; o lago e o do pesqueiro, a leste.
+## do §25, ao pe do castelo. Cada sitio tem o seu chao, fora das obras (Q-207): a leste
+## nao sobra chao entre elas, e os coelhos de la ficam ao pe do castelo, como o do §25;
+## a arvore fica entre a fogueira e a torre alta, e o lago a beira, la para la do farol.
 const SITIOS := [
 	[-160.0, &"bush"],
-	[770.0, &"bush"],
-	[-880.0, &"hole"],
-	[1000.0, &"rock"],
-	[-1450.0, &"tree"],
-	[1440.0, &"lake"],
-	[-1000.0, &"hole"],
-	[910.0, &"bush"],
+	[196.0, &"bush"],
+	[-1092.0, &"hole"],
+	[120.0, &"rock"],
+	[-1238.0, &"tree"],
+	[-1862.0, &"lake"],
+	[-1334.0, &"hole"],
+	[-100.0, &"bush"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
 ## `economy`, que as do coelho ja gastavam antes da Q-150.

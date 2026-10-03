@@ -15,7 +15,8 @@
   estava dentro de um muro continua dentro dele. Os muros passam de ±600/±1300 para ±680/±1408, as passagens de ±950
   para ±1040, a bifurcação de 1800 para 1904, e o resto acompanha (`Greybox`, `Campfires`, `Wards`, `BowRacks`,
   `Stables`, `Cavities`, `secrets.csv`). O `tests/obras_com_folga_test.gd` conta a folga, para que nenhuma obra nova
-  volte a colar.
+  volte a colar. As tocas da caça (`HuntWatch.SITIOS`) também saem de cima das obras: a leste não sobra chão, e os
+  coelhos de lá passam para o pé do castelo-árvore (como o do §25); a árvore e o lago ficam a oeste.
 - **Q-208 — parado, o fôlego volta depressa.** Andar recupera-o em `king_run_refill_s` (10 s), como estava; parado,
   em `king_run_rest_refill_s` (4 s, proposto). É a montaria do Kingdom a pastar, e responde à queixa mais comum ao
   fôlego do Kingdom: atravessar a própria base cansado. A decisão da Q-193 (só corre premido, cansa, o evoluído aguenta
@@ -25,7 +26,8 @@
   pistas que têm sinal na §46 — as moedas, o sino da alvorada, o aviso do crepúsculo, a noite, os golpes, as mortes, as
   obras, o muro a romper, a coroa. O `SfxDirector` ouve o `EventBus` e toca-as com o volume, a variação de tom, o máximo
   de vozes e a distância à câmara da folha (`SfxCues`, conferido pelo `tests/som_test.gd`). A moeda que entra numa
-  obra sobe de tom a cada moeda, até a obra ficar paga. Os sons fazem-se aos bocados por frame (a web não tem fios),
+  obra sobe de tom a cada moeda, até a obra ficar paga (a última é a do `build_started`). Uma pista pedida antes de
+  estar feita passa à frente no aquecimento e toca quando fica pronta, se ainda for a tempo (o sino da 1.ª alvorada). Os sons fazem-se aos bocados por frame (a web não tem fios),
   as moedas primeiro. Liga-se e desliga-se nas opções (`Preferences.SOUND`, ligado). Sem dependências novas: é o
   `AudioStreamWAV` do motor. Quando uma gravação chegar a `audio/`, toma o lugar da pista sintetizada.
 

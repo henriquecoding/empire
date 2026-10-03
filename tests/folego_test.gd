@@ -96,3 +96,20 @@ func test_no_jogo_parar_enche_o_folego_no_tempo_do_descanso() -> void:
 	assert_bool(f.tired).is_true()
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
+
+
+## Com o menu de viagem aberto o rei esta parado: recupera como quem descansa, mesmo
+## que viesse a andar quando o menu abriu.
+func test_com_o_menu_de_viagem_aberto_o_rei_esta_parado() -> void:
+	SimLoop.autosave_enabled = false
+	SimLoop.start(20261003)
+	Greybox.build()
+	var router: InputRouter = auto_free(InputRouter.new())
+	SimLoop.field.stamina.still = false
+	TravelPanel.active = true
+	router._process(DT)
+	TravelPanel.active = false
+	assert_bool(SimLoop.field.stamina.still).is_true()
+	assert_bool(SimLoop.field.stamina.wants).is_false()
+	SimLoop.stop()
+	SimLoop.autosave_enabled = true

@@ -97,6 +97,8 @@ const POR_FRAME := 800
 
 static var _feitos := {}
 static var _a_fazer: Sintese
+## As pistas que alguem pediu antes de estarem feitas: passam a frente das outras.
+static var _pressa: Array[StringName] = []
 
 
 ## Uma receita a meio: sintetiza-se aos bocados, e depois passa-se a 16 bits.
@@ -154,21 +156,50 @@ static func ready(cue: StringName) -> bool:
 	return _feitos.has(cue)
 
 
-## Um bocado do aquecimento: POR_FRAME amostras da proxima pista por fazer, pela
-## ordem das RECEITAS (as moedas primeiro). Devolve se ja esta tudo feito.
+## Quanto dura o som da pista, em segundos.
+static func duration(cue: StringName) -> float:
+	return float(RECEITAS[cue].dur)
+
+
+## Poe a pista a frente no aquecimento: alguem ja a quis ouvir (o sino da primeira
+## alvorada sai no primeiro tick, antes de o aquecimento la chegar pela ordem).
+static func hurry(cue: StringName) -> void:
+	if RECEITAS.has(cue) and not _feitos.has(cue) and not _pressa.has(cue):
+		_pressa.append(cue)
+
+
+## Esquece os sons feitos: o aquecimento recomeca do zero (os testes).
+static func forget() -> void:
+	_feitos.clear()
+	_pressa.clear()
+	_a_fazer = null
+
+
+## Um bocado do aquecimento: POR_FRAME amostras da proxima pista por fazer — as que
+## tem pressa primeiro, depois pela ordem das RECEITAS (as moedas primeiro). Devolve
+## se ja esta tudo feito.
 static func warm(quantas: int = POR_FRAME) -> bool:
 	if _a_fazer == null:
-		for cue: StringName in RECEITAS:
-			if not _feitos.has(cue):
-				_a_fazer = Sintese.new(RECEITAS[cue])
-				_a_fazer.set_meta(&"cue", cue)
-				break
-		if _a_fazer == null:
+		var cue := _proxima()
+		if cue == &"":
 			return true
+		_a_fazer = Sintese.new(RECEITAS[cue])
+		_a_fazer.set_meta(&"cue", cue)
 	if _a_fazer.advance(quantas):
 		_feitos[_a_fazer.get_meta(&"cue")] = _wav(_a_fazer.dados)
 		_a_fazer = null
 	return false
+
+
+static func _proxima() -> StringName:
+	while not _pressa.is_empty():
+		var cue: StringName = _pressa.pop_front()
+		if not _feitos.has(cue):
+			return cue
+	for cue: StringName in RECEITAS:
+		if not _feitos.has(cue):
+			return cue
+	return &""
 
 
 ## As amostras de uma receita, de -PICO a PICO.

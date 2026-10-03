@@ -88,6 +88,7 @@ func _process(delta: float) -> void:
 	if TravelPanel.active:
 		_andar(0.0)
 		SimLoop.field.stamina.wants = false
+		SimLoop.field.stamina.still = true  # parado no menu, recupera depressa (Q-208)
 		_repeticao = 0.0
 		return
 	if not SimLoop.running():
