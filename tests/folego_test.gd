@@ -66,3 +66,33 @@ func test_evoluido_tem_mais_folego() -> void:
 func test_sem_limite_corre_sempre() -> void:
 	var f := Stamina.new()
 	assert_int(_correr(f, 30.0, 0.0, 0.0)).is_equal(int(round(30.0 / DT)))
+
+
+## Q-208: parado recupera mais depressa do que a andar, como a montaria do Kingdom a pastar.
+func test_parado_recupera_mais_depressa_do_que_a_andar() -> void:
+	var c := SimFactory.curve()
+	assert_float(c.king_run_rest_refill_s).is_greater(0.0)
+	assert_float(c.king_run_rest_refill_s).is_less(c.king_run_refill_s)
+
+
+## Pelo passo do jogo: cansado e parado, o folego enche no tempo de quem descansa.
+func test_no_jogo_parar_enche_o_folego_no_tempo_do_descanso() -> void:
+	SimLoop.autosave_enabled = false
+	SimLoop.start(20261003)
+	Greybox.build()
+	var c := SimFactory.curve()
+	var f := SimLoop.field.stamina
+	f.left = 0.0
+	f.tired = true
+	f.still = true
+	for _k in int(ceil((c.king_run_rest_refill_s + 0.1) / DT)):
+		MonarchWatch.runs(false, DT)
+	assert_bool(f.tired).is_false()
+	f.left = 0.0
+	f.tired = true
+	f.still = false
+	for _k in int(ceil((c.king_run_rest_refill_s + 0.1) / DT)):
+		MonarchWatch.runs(false, DT)
+	assert_bool(f.tired).is_true()
+	SimLoop.stop()
+	SimLoop.autosave_enabled = true

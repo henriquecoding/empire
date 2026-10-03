@@ -425,6 +425,7 @@ OPT_TRITANOPIA,Tritanopia,Tritanopia,modo para daltonismo (§26): azul,16,GB-26
 OPT_CONTRAST,Contraste,Contrast,acessibilidade,24,
 OPT_CAPTIONS,Legendas de sons,Sound Captions,acessibilidade (§26),24,
 OPT_WHEEL_SLOWDOWN,Roda abranda o tempo,Wheel slows time,a roda do rei abranda o tempo a metade (§24; Q-034),24,Desligável: com isto desligado a roda não mexe no tempo.
+OPT_SOUND,Som,Sound,os sons provisórios do jogo (ADR 0054; Q-209),24,Ligado por omissão.
 OPT_TEXT_SIZE,Tamanho do texto,Text Size,acessibilidade,24,
 OPT_REMAP,Remapear comandos,Remap Controls,controlos,28,
 GAME_CODENAME,EMPIRE,EMPIRE,título no HUD do greybox,16,Codinome (NB-01): substitui-se quando houver nome.

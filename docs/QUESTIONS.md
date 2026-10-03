@@ -7,6 +7,70 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## O refinamento da jogabilidade — 03/10/2026 (ADR 0054)
+
+> Pedido do dono (03/10/2026): *«Quero que refine bastante a gameplay, pesquise intensamente para isso na web, as
+> construções devem ter um pequeno espaço também, estão muito juntas uma da outras»*. A pesquisa comparou o jogo com o
+> Kingdom Two Crowns, o Thronefall, guias de *game feel* e as queixas mais repetidas dos jogadores no Steam. As Q-207 a
+> Q-209 estão aplicadas e são reversíveis; as Q-210 a Q-212 são propostas por decidir.
+
+### Q-207 · As obras com chão livre entre elas
+- **Pedido do dono (03/10/2026):** *«as construções devem ter um pequeno espaço também, estão muito juntas uma da
+  outras»*.
+- **Onde:** §21, §25, §55. No código: `Greybox`, `Campfires`, `Wards`, `BowRacks`, `Stables`, `Cavities`,
+  `secrets.csv`. O teste: `tests/obras_com_folga_test.gd`.
+- **O que estava:** das 29 obras da superfície, nove pares a 16 px ou menos, e dois colados — o canteiro de fora
+  contra a estacaria de dentro, e a cozinha contra o castelo-árvore. A torre, a banca do arco e o galinheiro de leste
+  ficavam a 6 px uns dos outros.
+- **Decisão (aplicada, reversível):** 24 px de chão livre entre duas obras vizinhas, e entre as estátuas e as obras. A
+  ordem é a mesma e o que estava dentro de um muro continua dentro: os muros vão para ±680 e ±1408, as passagens para
+  ±1040, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar.
+- **Decide:** tu, se os 24 px chegam (é uma constante do teste e as posições do `Greybox`).
+
+### Q-208 · Parado, o fôlego volta mais depressa
+- **Da pesquisa:** no Kingdom a montaria recupera o fôlego a pastar, parada, e muito mais depressa do que a andar; a
+  queixa mais repetida ao fôlego é atravessar a própria base cansado.
+- **Onde:** §24, Q-193. No código: `Stamina.still`, `MonarchWatch.runs`, `InputRouter`. O teste: `tests/folego_test.gd`.
+- **Decisão (aplicada, reversível):** a andar, o fôlego enche em `king_run_refill_s` (10 s), como estava; parado, em
+  `king_run_rest_refill_s` (4 s, no `_proposed`). Correr só premido, cansar e o evoluído aguentar mais (Q-193) não
+  mudam.
+- **Decide:** tu, os 4 s.
+
+### Q-209 · Os sons provisórios
+- **O que estava:** o jogo não tocava um único som. A folha de pistas (`docs/audio/AUDIO_CUE_SHEET.csv`) tinha tudo
+  desenhado e nenhuma gravação; o `AGENTS.md` não deixa tocar em `audio/`.
+- **Da pesquisa:** o som é uma das três coisas que mais pesam no que um golpe ou uma moeda "sentem" (com o *hitstop* e a
+  câmara, que o jogo já tem), e o Kingdom vive do tilintar de cada moeda.
+- **Onde:** §23, §24, §46; ADR 0054. No código: `SynthSfx`, `SfxDirector`, `SfxCues`, `Preferences.SOUND`. O teste:
+  `tests/som_test.gd`.
+- **Decisão (aplicada, reversível):** 22 pistas da folha sintetizadas em código (senos e ruído, como o `PaintedArt`
+  pinta a arte que falta): as moedas, o sino da alvorada, o aviso do crepúsculo, a noite, os golpes, as mortes, as
+  obras, o muro a romper, a conquista e a sucessão, com o volume, a variação de tom, o máximo de vozes e a distância da
+  folha. A moeda que entra numa obra sobe de tom até a obra ficar paga. Liga-se e desliga-se em Opções → Jogo → Som.
+- **Decide:** tu, se gostas do timbre; quando houver gravações em `audio/`, entram no lugar destas.
+
+### Q-210 · Reparar sem micro-gestão
+- **Da pesquisa:** no Kingdom Two Crowns, a queixa mais dura é *«passo 80% do tempo a gerir muros e unidades»*; o
+  Thronefall resolveu-a com obras que se levantam sozinhas de manhã (mas não rendem nesse dia).
+- **Onde:** §10, §55, Q-108 (`RepairWork`).
+- **O que está:** uma obra tocada só se repara com moedas largadas em cima e um construtor presente.
+- **Proposta:** a obra tocada que não caiu repara-se sozinha na alvorada se houver um construtor livre, e não produz
+  nesse dia; a que caiu continua a pedir moedas. Não aplicado: muda o custo das noites e a Q-108.
+- **Decide:** tu.
+
+### Q-211 · O alcance da torre à vista
+- **Da pesquisa:** uma das críticas mais repetidas ao Thronefall é não se ver o alcance das torres antes de as pagar.
+- **Onde:** §07 (*«a torre não dá dano — dá certeza»*), `PriceTag`.
+- **Proposta:** com o monarca ao pé de uma torre (de pé ou por construir), o chão mostra até onde ela alcança, num
+  traço discreto que some ao afastar. Só apresentação; não aplicado porque mexe no ecrã do teu jogo.
+- **Decide:** tu.
+
+### Q-212 · O "bem alimentado"
+- **Da pesquisa:** no Kingdom, a montaria que acaba de pastar ganha um fôlego maior durante 45 s.
+- **Onde:** Q-193, Q-208.
+- **Proposta:** quem enche o fôlego parado corre 1,5× mais tempo na corrida seguinte. Não aplicado: é mecânica nova.
+- **Decide:** tu.
+
 ## Monarcas, companhias e controlo imperial — 02/10/2026 (ADR 0052)
 
 > Plano-fonte: `docs/recovery/PLANO-MONARCAS-2026-10-02.md`. A Q-195 regista as tuas direções (D); as Q-196 a Q-205 são

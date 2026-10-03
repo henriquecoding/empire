@@ -14,10 +14,10 @@ const SITIOS := [
 	[-160.0, &"bush"],
 	[770.0, &"bush"],
 	[-880.0, &"hole"],
-	[1040.0, &"rock"],
+	[1000.0, &"rock"],
 	[-1450.0, &"tree"],
 	[1440.0, &"lake"],
-	[-1040.0, &"hole"],
+	[-1000.0, &"hole"],
 	[910.0, &"bush"],
 ]
 ## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo

@@ -97,7 +97,7 @@ src/sim/systems/bleeding.gd Bleeding      a ferida da flecha do Imperador Arquei
 src/sim/systems/discoveries.gd Discoveries o que so se sabe fazer depois de achar a estatua (§17, Q-016)
 src/sim/systems/torchlight.gd Torchlight  o archote do rei, que vai no armazenamento, e o escuro (Q-029)
 src/sim/systems/hearth.gd   Hearth        a lareira do nucleo: paga ao crepusculo, afasta ate a alvorada (Q-190)
-src/sim/systems/stamina.gd  Stamina       o folego de quem corre a pe; o evoluido aguenta mais (Q-193)
+src/sim/systems/stamina.gd  Stamina       o folego de quem corre a pe; parado volta depressa (Q-193, Q-208)
 src/sim/systems/melee_sweep.gd MeleeSweep o golpe de perto fere tudo o que alcanca e empurra os pequenos (Q-185)
 src/sim/systems/burrows.gd  Burrows       as tocas de onde sai a caca, aos poucos (Q-106, Q-120)
 src/sim/systems/fire_zones.gd FireZones   fogueiras e barris abrandam a Podridao (§05, Q-029)
@@ -238,6 +238,9 @@ src/world/fauna_art.gd      FaunaArt      o que um bicho de cenario E, em pixeis
 src/world/fauna_view.gd     FaunaView     os bichos de cenario, a mexer
 src/world/band_layers.gd    BandLayers    camadas e mascaras de fisica
 src/world/camera_rig.gd     CameraRig     camara unica
+src/world/synth_sfx.gd      SynthSfx      os sons provisorios, sintetizados aos bocados (ADR 0054, Q-209)
+src/world/sfx_cues.gd       SfxCues       as pistas que ja tocam, iguais a folha de pistas de docs/audio/
+src/world/sfx_director.gd   SfxDirector   ouve o EventBus e toca as pistas; a moeda na obra sobe de tom
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)
 src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
 src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)

@@ -18,9 +18,9 @@ class_name Cavities
 extends RefCounted
 
 const MINA := &"ore_pit"
-## Relativas ao nucleo: entre a passagem (+-950) e o muro de fora (+-1300), e
-## fora da camara da Semente Real (-1180).
-const CAVIDADES_X := [-1060.0, 1060.0]
+## Relativas ao nucleo: entre a passagem (+-1040) e o muro de fora (+-1408), e
+## fora da camara da Semente Real (-1290).
+const CAVIDADES_X := [-1160.0, 1160.0]
 
 
 ## Depois das obras da superficie: os ids das que ja existiam nao mudam (§45).

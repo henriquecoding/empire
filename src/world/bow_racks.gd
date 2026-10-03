@@ -10,7 +10,7 @@ class_name BowRacks
 extends RefCounted
 
 const BANCA := &"bow_rack"
-const BANCAS_X := [742.0]
+const BANCAS_X := [848.0]
 
 
 ## Depois de todas as outras obras, sinos incluidos: os ids delas nao mudam (§45), e
