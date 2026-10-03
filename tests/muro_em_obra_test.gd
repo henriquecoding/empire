@@ -6,6 +6,8 @@
 # abria a porta a noite, e o jogador nao tinha como o saber.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
 const ASSENTAR := 60
@@ -19,6 +21,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	for obra in SimLoop.builds.slots:
 		if obra.two_paths() and obra.x > SimLoop.core_x:
 			_muro = obra

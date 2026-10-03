@@ -74,3 +74,36 @@ static func biome_peoples() -> Dictionary:
 	for data: PeopleData in Registry.entries(&"peoples"):
 		result[data.biome] = data.id
 	return result
+
+
+## Os estagios da sede (realm_stages.csv), pela ordem: da Clareira a Fortaleza (ADR 0059).
+static func realm_stages() -> Array[RealmStageData]:
+	var estagios: Array[RealmStageData] = []
+	for recurso in Registry.entries(&"realm_stages"):
+		estagios.append(recurso as RealmStageData)
+	estagios.sort_custom(
+		func(a: RealmStageData, b: RealmStageData) -> bool: return a.order < b.order
+	)
+	return estagios
+
+
+## O estagio de realm_stages.csv com esta ordem, ou null.
+static func realm_stage(ordem: int) -> RealmStageData:
+	for estagio in realm_stages():
+		if estagio.order == ordem:
+			return estagio
+	return null
+
+
+## O que cada estagio abre (a coluna `unlocks`), e o id de cada nivel do muro, para o
+## RealmLadder perguntar pelo degrau seguinte de qualquer obra (ADR 0059).
+static func install_realm_gates() -> void:
+	var gates := {}
+	for estagio in realm_stages():
+		for chave in estagio.unlocks:
+			gates[chave] = estagio.order
+	RealmLadder.gates = gates
+	var niveis := PackedStringArray()
+	for nivel in SimFactory.walls_by_level():
+		niveis.append(String(nivel.id))
+	RealmLadder.wall_levels = niveis

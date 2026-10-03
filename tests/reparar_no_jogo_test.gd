@@ -3,6 +3,8 @@
 # (Q-108) vai la e poe-na inteira sem o rei ao pe.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 const ESPERA := 15
 
@@ -12,6 +14,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(20260926)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 
 
 func after_test() -> void:

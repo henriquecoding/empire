@@ -11,6 +11,10 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 | Bardo | Ver §08 — ofício de IA e companheiro da Imperatriz Nia; nunca corpo jogável (ADR 0052). | — | 18 |
 
 
+> **O construtor pioneiro (ADR 0059)**
+>
+> O monarca chega com um construtor, além dos dois trabalhadores sem ofício. Reparar pede o ofício, e sem ele a primeira estacaria tocada custava a Casa de Treino e o construtor (22 moedas) antes de se poder reparar. O pioneiro não baixa o preço dos que vêm depois e não chega evoluído; se morrer, a Casa de Treino abre no Povoado e forma outro.
+
 > **O dilema do artesão — o teu melhor gerador de histórias**
 >
 > Todos os ofícios trabalham por ordens e IA: nenhum se assume (ADR 0052). Um ofício que fica no império evolui em ~14 dias. Um ofício que vai a combate evolui em ~4 dias — mas pode morrer, e a morte é permanente. Perder um cozinheiro no dia 12, a dois dias da evolução, é a história que o jogador vai contar a outra pessoa. Custa quase nada a implementar: é um contador com dois ritmos. É o modelo do Bad North, e é a razão pela qual as unidades daquele jogo são memoráveis e as do Kingdom não.

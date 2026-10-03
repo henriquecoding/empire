@@ -49,3 +49,7 @@ hearth_night_cost = 5
 hearth_radius_px = 240.0
 hearth_repel_mass = 8
 hearth_rot_slow = 0.25
+founder_provisions = 8
+founder_pioneers = 1
+founder_bow_rack = 1
+provisions_grab_px = 24.0

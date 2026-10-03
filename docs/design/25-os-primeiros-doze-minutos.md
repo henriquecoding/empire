@@ -20,6 +20,23 @@ Dois dias de jogo. É neste tempo que se decide se alguém escreve uma análise 
 | 12:00 | Noite 2: um Rastejante entra pela passagem que abriste. | Toda a decisão tem custo | A lição central do jogo, ensinada por perda, ao minuto doze. |
 
 
+> **A abertura com fundação (ADR 0059) — substitui os minutos 0:00 a 3:30**
+>
+> O monarca chega a uma Clareira, e não a um castelo. Os tempos são do relógio de 360 s por dia (a noite começa aos 255 s) e são uma sequência de aprendizagem, não instruções.
+
+| Momento | O que acontece | O que ensina | Decisão |
+| --- | --- | --- | --- |
+| 0:00–0:30 | Chegada à Clareira com dois trabalhadores, o construtor pioneiro e a companhia; a carroça de provisões ao pé do marco | Aqui posso fundar o reino | Fundar já |
+| 0:30–1:15 | Duas moedas no marco; quem está lá levanta o Acampamento, e a banca do arco fica de pé | A moeda produz trabalho e mudança física | O primeiro arco, ou explorar |
+| 1:15–2:30 | A primeira caça e o primeiro recrutamento | Pessoas e combate financiam a base | Mais gente, ou dinheiro guardado |
+| 2:30–3:45 | A primeira obra do lado ameaçado | Defender pede moeda, pessoa e tempo | Estacaria, ou renda |
+| 3:45–6:00 | Crepúsculo, regresso e a primeira noite | Monarca, companhia e tropas têm papéis distintos | Lareira paga, ou investimento permanente |
+| 6:00–9:30 | Contas da noite, reparação e o Povoado | Um povoado organiza novos ofícios | Formar, ou um canteiro novo |
+| 9:30–12:00 | Preparar o flanco seguinte e a segunda noite | A decisão de antes aparece na batalha | Aprender com a falta de gente, luz ou renda |
+
+
+Com 6 moedas no saco e 8 na carroça há 14 acessíveis: a fundação leva 2 e o primeiro arco 2. O que sobra decide a primeira noite — uma estacaria (6), a lareira (5) ou um canteiro (4). As três rotas pedem simulação e playtest contra a mesma ameaça (RG-06).
+
 > **Revisto na Parte XIII**
 >
 > Esta tabela mantém-se inteira e é estendida até aos vinte minutos na §83, para que o Amargueiro, a candeia e a primeira Oferta cheguem antes de o jogador formar opinião.

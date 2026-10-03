@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RealmStageData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_stage_data.gd" id="1_vnix1"]
+
+[resource]
+script = ExtResource("1_vnix1")
+id = &"walled_village"
+display_key = "REALM_STAGE_WALLED_VILLAGE"
+order = 4
+cost = 32
+build_work = 64.0
+max_health = 750
+width_px = 400
+contact_slots = 6
+unlocks = Array[StringName]([&"root_moat", &"embassy", &"sawmill", &"cow_stable", &"ore_pit", &"lighthouse", &"iron_wall"])

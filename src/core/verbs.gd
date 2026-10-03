@@ -100,6 +100,8 @@ static func _assumir(
 		return  # a escora das tuas desmonta-se (Q-138)
 	if KingVerbs.place(unidades, king_id, obras, campo):
 		return
+	if FoundationWatch.toggle(unidades, king_id, obras, campo):
+		return  # no marco da sede: a moeda para a sede ou para o monarca (ADR 0059)
 	MonarchWatch.pay(unidades, king_id, campo)  # o escudeiro, o Bardo ou as flechas
 
 

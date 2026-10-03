@@ -8,6 +8,8 @@
 # pela roda (Q-110). Nao joga melhor por isso — so passa por onde o jogo passa.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const PASSO := 1.0 / 30.0
 const SEMENTE := 20260929
 const TICKS := 2400
@@ -25,6 +27,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	EventBus.unit_promoted.connect(_promovido)
 	EventBus.royal_impulse_used.connect(_decretou)
 

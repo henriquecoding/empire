@@ -96,6 +96,8 @@ func wards(obras: BuildSystem, nucleo_x: float) -> Array[Vector4]:
 
 ## Ao crepusculo, a lareira come o preco da noite da bolsa de quem reina (Q-190).
 func kindle() -> void:
+	if not RealmLadder.founded(SimLoop.builds):
+		return  # sem sede fundada nao ha lareira a acender (ADR 0059)
 	var r := SimLoop.units.index_of(SimLoop.king_id)
 	var bolsa := SimLoop.units.carried_coins[r] if r != NENHUM else 0
 	var gasto := hearth.kindle(bolsa, RulesFactory.rules().hearth_night_cost)

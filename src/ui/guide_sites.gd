@@ -11,7 +11,7 @@ static func passage(king: int, values: Dictionary) -> String:
 	for site in SimLoop.builds.slots:
 		if site.kind != Passages.ESCORA or site.band != SimLoop.units.bands[king]:
 			continue
-		if absf(site.x - SimLoop.units.xs[king]) > site.width * GameplayGuide.HALF:
+		if absf(site.x - SimLoop.units.xs[king]) > site.catch_half():
 			continue
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state == BuildSlot.State.EMPTY and values.cost > 0:

@@ -86,6 +86,8 @@ static func _obras(
 	for vaga in SimLoop.builds.slots:
 		if vaga.band != faixa or not over(vaga, x):
 			continue
+		if vaga.kind == BuildSlot.NUCLEO and FoundationWatch.aims_monarch():
+			continue  # a moeda vai evoluir o monarca, e nao pagar a sede (ADR 0059)
 		var falta := owed_by(vaga)
 		if falta <= 0 and SimLoop.field != null:
 			falta = SimLoop.field.training.owed(vaga, SimLoop.units)
@@ -104,7 +106,7 @@ static func _obras(
 ## BuildSystem a absorve (§55), perguntada de fora para que o preco apareca
 ## exactamente onde o gesto pega.
 static func over(vaga: BuildSlot, x: float) -> bool:
-	return absf(vaga.x - x) <= vaga.width * MEIA
+	return absf(vaga.x - x) <= vaga.catch_half()
 
 
 ## Quanto falta pagar do degrau seguinte — ou da reparacao, se esta tocada ou

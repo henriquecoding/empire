@@ -99,7 +99,9 @@ jobs:
   testes:
     name: Dados e suite gdUnit4
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # A suite leva cerca de 14–16 minutos; a importacao e a vistoria de oito
+    # dias tambem cabem neste job. Quinze minutos cortavam a vistoria apos a suite passar.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:

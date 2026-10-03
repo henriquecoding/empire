@@ -7,6 +7,8 @@
 # a levou, o rei levanta-se tambem.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const X := 300.0
 const ALCANCE := 24.0
 const APANHA := 12.0
@@ -112,6 +114,7 @@ func test_no_jogo_o_rei_caido_levanta_se_na_alvorada_sem_ninguem_assumir_tropa()
 	EventBus.reset()
 	SimLoop.start(20260930)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	var mortes: Array = []
 	var ouvir := func(quem: int, _x: float, _f: int, _l: PackedStringArray) -> void:
 		mortes.append(quem)

@@ -1195,6 +1195,10 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     </tbody>
   </table></div>
 
+  <div class="note dec"><span class="lbl">O construtor pioneiro (ADR 0059)</span>
+    <p>O monarca chega com <strong>um</strong> construtor, além dos dois trabalhadores sem ofício. Reparar pede o ofício, e sem ele a primeira estacaria tocada custava a Casa de Treino e o construtor (22 moedas) antes de se poder reparar. O pioneiro não baixa o preço dos que vêm depois e não chega evoluído; se morrer, a Casa de Treino abre no Povoado e forma outro.</p>
+  </div>
+
   <div class="note risk"><span class="lbl">O dilema do artesão — o teu melhor gerador de histórias</span>
     <p>Todos os ofícios trabalham por ordens e IA: nenhum se assume (ADR 0052). Um ofício que fica no império evolui em <strong>~14 dias</strong>. Um ofício que vai a combate evolui em <strong>~4 dias</strong> — mas pode morrer, e a morte é permanente. Perder um cozinheiro no dia 12, a dois dias da evolução, é a história que o jogador vai contar a outra pessoa. Custa quase nada a implementar: é um contador com dois ritmos. É o modelo do Bad North, e é a razão pela qual as unidades daquele jogo são memoráveis e as do Kingdom não.</p>
   </div>
@@ -1203,7 +1207,21 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 <section id="s10">
   <span class="sec-no">10 — Construção</span>
   <h3>Muralhas, torres e a Casa de Treino</h3>
-  <p class="lede">A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo não é construído nem destruído. É o que defendes. Se cair, cai a partida.</p>
+  <p class="lede">A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a <strong>sede</strong>: o monarca funda-a numa Clareira e ela sobe por estágios, paga e levantada como um muro (ADR 0059). É o que defendes. Se cair, cai a partida.</p>
+
+  <h4>A sede: da Clareira à Fortaleza</h4>
+  <p>O reino não nasce castelo. O monarca chega a uma <strong>Clareira</strong> com a companhia dele, dois trabalhadores sem ofício e um construtor pioneiro, e larga no marco as moedas da fundação. Cada estágio é um degrau do núcleo: paga-se inteiro, quem está presente levanta-o (§55), e o estágio de antes continua a servir enquanto o seguinte se ergue. Subir não cura: a sede passa ao estágio novo com a mesma proporção de vida. Cada estágio <em>abre</em> obras — não as ergue: as obras, os ofícios e as armas pagam-se à parte. O estágio soma-se ao que um degrau já pedia (a estátua, a conquista, o Lenho), não o substitui. O castelo-árvore de antes é a Fortaleza.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Estágio</th><th class="n">Custo</th><th class="n">Vida</th><th class="n">Largura</th><th>Abre</th></tr></thead>
+    <tbody>
+      <tr><td>Acampamento</td><td class="n">2</td><td class="n">200</td><td class="n">160</td><td>Plantação, Fogueira, Banca do Arco, Estacaria</td></tr>
+      <tr><td>Povoado</td><td class="n">8</td><td class="n">350</td><td class="n">240</td><td>Casa de Treino, Galinheiro, Pesqueiro, Torre de Arqueiros, Torre Alta, Casa de cidadãos, Paliçada</td></tr>
+      <tr><td>Vila</td><td class="n">18</td><td class="n">550</td><td class="n">320</td><td>Cozinha, Forja, Celeiro, Salga, Curral, Corte de Madeira, Estábulo, Casa do Herdeiro, Santuário das Raízes, Barril de Fogo, Muro de Pedra</td></tr>
+      <tr><td>Vila Fortificada</td><td class="n">32</td><td class="n">750</td><td class="n">400</td><td>Fosso de Raízes, Embaixada, Serração, Estábulo de Vacas, Poço de Minério, Farol, Muralha de Ferro</td></tr>
+      <tr><td>Fortaleza</td><td class="n">56</td><td class="n">1000</td><td class="n">480</td><td>Fundição, Altar Consagrado, Bastião</td></tr>
+    </tbody>
+  </table></div>
+  <p>Uma obra que nenhum estágio lista abre com a fundação. A Capital (F6) entra quando houver postos e rotas a administrar (RG-14): sem eles seria um degrau só de vida. A moeda no marco é da sede; com o monarca a poder evoluir, o Verbo 2 no marco troca o alvo (§24).</p>
 
   <h4>Os dois caminhos da muralha</h4>
   <p>Cada segmento oferece <strong>duas melhorias mutuamente exclusivas por nível</strong>. Nunca dá para ter as duas — e essa é a decisão.</p>
@@ -2200,6 +2218,9 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     <li><strong>Conquista</strong> — o kit de arquitetura novo aparece na roda do rei com o ícone a ser entalhado em madeira em 6 frames.</li>
     <li><strong>Cegueira do Cavaleiro Selado</strong> — vinheta que fecha até 40% do ecrã, som abafado, e a câmara deixa de antecipar o movimento. A perda tem de <em>sentir-se</em>.</li>
   </ul>
+  <div class="note dec"><span class="lbl">A moeda no marco da sede (ADR 0059)</span>
+    <p>O núcleo tem dois alvos e o jogador escolhe: a <strong>sede</strong>, por omissão — fundar, subir de estágio, reparar —, ou o <strong>monarca</strong>, quando ele pode evoluir. O painel de contexto diz para onde vai a moeda antes de ela sair da mão, e o Verbo 2 no marco troca o alvo. Uma moeda para a sede nunca evolui o monarca por ordem do código, e sem o monarca a poder evoluir não há troca a fazer. O marco tem a largura da Clareira em todos os estágios: à volta do castelo grande continua a haver gente por recrutar.</p>
+  </div>
 </section>
 
 <section id="s25">
@@ -2224,6 +2245,23 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td class="n">12:00</td><td><strong>Noite 2:</strong> um Rastejante entra pela passagem que abriste.</td><td>Toda a decisão tem custo</td><td>A lição central do jogo, ensinada por perda, ao minuto doze.</td></tr>
     </tbody>
   </table></div>
+
+  <div class="note dec"><span class="lbl">A abertura com fundação (ADR 0059) — substitui os minutos 0:00 a 3:30</span>
+    <p>O monarca chega a uma Clareira, e não a um castelo. Os tempos são do relógio de 360 s por dia (a noite começa aos 255 s) e são uma sequência de aprendizagem, não instruções.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Momento</th><th>O que acontece</th><th>O que ensina</th><th>Decisão</th></tr></thead>
+    <tbody>
+      <tr><td>0:00–0:30</td><td>Chegada à Clareira com dois trabalhadores, o construtor pioneiro e a companhia; a carroça de provisões ao pé do marco</td><td>Aqui posso fundar o reino</td><td>Fundar já</td></tr>
+      <tr><td>0:30–1:15</td><td>Duas moedas no marco; quem está lá levanta o Acampamento, e a banca do arco fica de pé</td><td>A moeda produz trabalho e mudança física</td><td>O primeiro arco, ou explorar</td></tr>
+      <tr><td>1:15–2:30</td><td>A primeira caça e o primeiro recrutamento</td><td>Pessoas e combate financiam a base</td><td>Mais gente, ou dinheiro guardado</td></tr>
+      <tr><td>2:30–3:45</td><td>A primeira obra do lado ameaçado</td><td>Defender pede moeda, pessoa e tempo</td><td>Estacaria, ou renda</td></tr>
+      <tr><td>3:45–6:00</td><td>Crepúsculo, regresso e a primeira noite</td><td>Monarca, companhia e tropas têm papéis distintos</td><td>Lareira paga, ou investimento permanente</td></tr>
+      <tr><td>6:00–9:30</td><td>Contas da noite, reparação e o Povoado</td><td>Um povoado organiza novos ofícios</td><td>Formar, ou um canteiro novo</td></tr>
+      <tr><td>9:30–12:00</td><td>Preparar o flanco seguinte e a segunda noite</td><td>A decisão de antes aparece na batalha</td><td>Aprender com a falta de gente, luz ou renda</td></tr>
+    </tbody>
+  </table></div>
+  <p>Com 6 moedas no saco e 8 na carroça há 14 acessíveis: a fundação leva 2 e o primeiro arco 2. O que sobra decide a primeira noite — uma estacaria (6), a lareira (5) ou um canteiro (4). As três rotas pedem simulação e playtest contra a mesma ameaça (RG-06).</p>
 
   <div class="note night"><span class="lbl">Revisto na Parte XIII</span><p>Esta tabela mantém-se inteira e é estendida até aos vinte minutos na <a href="#s83">§83</a>, para que o Amargueiro, a candeia e a primeira Oferta cheguem antes de o jogador formar opinião.</p></div>
 <div class="note risk"><span class="lbl">A regra que faz isto funcionar</span>
@@ -4071,6 +4109,10 @@ jobs:
       <tr><td>Campos desconhecidos são ignorados, não são erro</td><td>Permite ler um save de uma versão futura sem rebentar — degrada em vez de recusar.</td></tr>
     </tbody>
   </table></div>
+
+  <div class="note dec"><span class="lbl">Versão 8 — a fundação (ADR 0059)</span>
+    <p>Um save de antes trazia o castelo de pé. Na escada nova o castelo é a Fortaleza: a migração passa o núcleo para esse estágio com a vida que tinha e marca a sede como herdada. Nada mais se inventa: nem o pioneiro, nem a carroça de provisões, nem a banca de graça. Carregar não repõe a carroça nem refaz a fundação.</p>
+  </div>
 
   <div class="note dec"><span class="lbl">A migração escreve-se quando se muda o campo, não quando se lança</span>
     <p>Cada alteração ao <code>GameState</code> acrescenta uma função <code>_migrate_N_to_N1(d: Dictionary)</code> no mesmo <em>commit</em>. Deixar as migrações para o fim é como deixar os testes para o fim: nunca acontece, e a dívida é paga com saves de jogadores.</p>

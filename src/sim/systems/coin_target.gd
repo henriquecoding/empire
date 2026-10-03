@@ -20,16 +20,16 @@ const NENHUM := -1
 ## Qualquer obra em cujo raio caia. E o que o CoinSystem.drop() da a quem nao diz
 ## o destino — os testes de um sistema so, que nao passam pelo Verbo 1.
 const QUALQUER := -2
-const METADE := 0.5
 
 
-## O sitio de obra que o Verbo 1 paga quando largado em `x`, ou NENHUM. O nucleo
-## nao e sitio de obra (§10): o que ele leva, leva-o o KingClaims.of().
+## O sitio de obra que o Verbo 1 paga quando largado em `x`, ou NENHUM. A sede tambem
+## e um sitio (ADR 0059): paga-se no marco dela, que tem a largura da Clareira em todos os
+## estagios. A moeda que evolui o monarca, essa, leva-a o KingClaims.of() antes de cair.
 static func slot_at(obras: BuildSystem, x: float, faixa: int) -> int:
 	for vaga in obras.slots:
-		if vaga.kind == BuildSlot.NUCLEO or int(vaga.band) != faixa:
+		if int(vaga.band) != faixa:
 			continue
-		if absf(vaga.x - x) <= vaga.width * METADE:
+		if absf(vaga.x - x) <= vaga.catch_half():
 			return vaga.id
 	return NENHUM
 
@@ -50,7 +50,7 @@ static func pays(moedas: CoinSystem, c: int, vaga: BuildSlot) -> bool:
 		return false
 	if moedas.targets[c] == vaga.id:
 		return true
-	return moedas.targets[c] == QUALQUER and absf(moedas.xs[c] - vaga.x) <= vaga.width * METADE
+	return moedas.targets[c] == QUALQUER and absf(moedas.xs[c] - vaga.x) <= vaga.catch_half()
 
 
 ## Apanha as moedas pousadas que pagam `vaga` (pays()), ate `falta`; devolve o valor. Os

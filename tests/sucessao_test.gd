@@ -5,6 +5,8 @@
 # a ser a derrota (D6).
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const STEP := 1.0 / 30.0
 const SEMENTE := 20260926
 const SACO := 100
@@ -22,6 +24,7 @@ func before_test() -> void:
 	EventBus.succession_started.connect(_coroou)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	SimLoop.step(STEP)
 
 

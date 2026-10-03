@@ -61,3 +61,9 @@ archer_emperor,UNIT_ARCHER_EMPEROR,Imperador Arqueiro,Archer Emperor,archer_empe
 bard_banner,UNIT_BARD_BANNER,Bardo da bandeira,Banner Bard,bard_banner,"o companheiro da Nia, que canta pago (§08, Q-199)",24,m,Bardos da bandeira,Banner Bards,no,"Companheiro, não tropa: não tem posto nem soldo."
 quiver_squire,UNIT_QUIVER_SQUIRE,escudeiro das flechas,quiver squire,quiver_squire,"o companheiro do Imperador Arqueiro, que vende flechas (§08, Q-200)",24,m,escudeiros das flechas,quiver squires,no,O plano chamou-lhe «intendente de flechas»; o nome final é do dono (Q-200).
 companion_bond,,companheiro,companion,Monarchy.bonds,"o companheiro real de um monarca, ligado por id (ADR 0052)",12,m,companheiros,companions,no,"Não confundir com o companheiro do trono (companions.csv, a mascote)."
+realm_seat,,sede,seat,RealmLadder.seat,"o núcleo como escada de estágios, fundado pelo monarca (ADR 0059)",12,f,sedes,seats,no,"Não é o castelo: o castelo-árvore é a Fortaleza, o estágio F5."
+realm_stage,,estágio da sede,seat stage,realm_stages,"Clareira, Acampamento, Povoado, Vila, Vila Fortificada, Fortaleza (ADR 0059)",24,m,estágios da sede,seat stages,no,
+encampment,REALM_STAGE_ENCAMPMENT,Acampamento,Encampment,encampment,"o estágio F1 da sede, depois da fundação (ADR 0059)",24,m,Acampamentos,Encampments,no,"Não é o acampamento de recrutamento (camp, Q-110)."
+founding,,fundação,founding,RealmLadder.FUNDADO,a primeira moeda que importa: as moedas no marco da Clareira levantam o Acampamento (ADR 0059),16,f,fundações,foundings,no,
+provisions_cart,,carroça de provisões,supply cart,RealmSeat.cart_coins,"a bolsa única da chegada, ao pé da Clareira (ADR 0059)",24,f,carroças de provisões,supply carts,no,Não é o baú da sala secreta (ADR 0053).
+pioneer,,construtor pioneiro,pioneer builder,FoundationWatch.arrive,o construtor que chega com o monarca (ADR 0059),24,m,construtores pioneiros,pioneer builders,no,É um construtor como os outros: não chega evoluído.

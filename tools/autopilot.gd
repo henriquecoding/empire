@@ -78,11 +78,16 @@ static func _destino(loop: Node, rei: int, onde: float) -> float:
 	# largar ficava preso a largar e a apanhar a mesma, no mesmo sitio, o dia
 	# inteiro — foi o que ele fez na primeira corrida.
 	if saco <= 0:
-		return _moeda_mais_perto(loop, rei, onde)
+		# A carroca de provisoes da chegada (ADR 0059) e dinheiro que esta a porta.
+		return loop.seat.cart_x if loop.seat.cart_coins > 0 else _moeda_mais_perto(loop, rei, onde)
 	# Recruta quem passa ao lado — e o minuto 0:20 do §25, e nao custa desvio
 	# nenhum — e no resto do tempo paga a obra mais perto que o saco chega para
 	# levantar. Sem isto o piloto gastava as seis moedas da partida em gente e
 	# ficava sem renda nenhuma: ao dia 2 nao tinha com que fazer mais nada.
+	var sede := RealmLadder.seat(loop.builds)
+	var por_fundar := sede != null and sede.state == BuildSlot.State.EMPTY
+	if por_fundar and sede.level == RealmLadder.CLAREIRA and sede.next_cost() <= saco:
+		return sede.x  # fundar primeiro: antes disso nenhuma obra aceita moeda (ADR 0059)
 	var gente := _por_recrutar(loop, onde)
 	if not is_inf(gente) and absf(gente - onde) <= PERTO_PX:
 		return gente
@@ -139,13 +144,17 @@ static func _obra(loop: Node, onde: float, saco: int) -> float:
 	var treino: TrainingSystem = loop.field.training
 	for vaga in loop.builds.slots:
 		var custo: int = vaga.next_cost()
-		if vaga.kind == BuildSlot.NUCLEO or custo <= 0 or custo > saco:
+		if custo <= 0 or custo - vaga.paid > saco or int(vaga.band) != faixa:
 			continue
-		if int(vaga.band) != faixa:
+		if not vaga.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]:
 			continue
+		if not loop.builds.can_climb(vaga, loop.state, loop.night.amargueiros):
+			continue  # uma estatua, ou um estagio da sede, ainda a guarda (ADR 0059)
 		var oficio := treino.craft_of(vaga)
 		var arma := oficio != null and oficio.id == ARQUEIRO
-		var da_renda: bool = (vaga.blocks or arma) if tarde else vaga.yield_per_day > 0.0
+		# A sede abre as obras de amanha: conta como o que rende (ADR 0059).
+		var sede: bool = vaga.kind == BuildSlot.NUCLEO
+		var da_renda: bool = (vaga.blocks or arma) if tarde else vaga.yield_per_day > 0.0 or sede
 		if rende and not da_renda:
 			continue
 		var troca := da_renda and not rende

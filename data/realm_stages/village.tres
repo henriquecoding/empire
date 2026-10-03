@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RealmStageData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/realm_stage_data.gd" id="1_d6ytc"]
+
+[resource]
+script = ExtResource("1_d6ytc")
+id = &"village"
+display_key = "REALM_STAGE_VILLAGE"
+order = 3
+cost = 18
+build_work = 36.0
+max_health = 550
+width_px = 320
+contact_slots = 5
+unlocks = Array[StringName]([&"kitchen", &"forge", &"granary", &"saltery", &"pen", &"lumber_camp", &"mount_stable", &"heir_house", &"root_sanctuary", &"fire_barrel", &"stone_wall"])

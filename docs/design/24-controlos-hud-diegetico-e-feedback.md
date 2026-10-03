@@ -51,3 +51,7 @@ Num jogo sem UI, o feedback é a interface. Cada item abaixo é barato e cada um
 - Amanhecer — sino + varrimento de luz da esquerda para a direita a 900 px/s + as tropas a saírem dos postos em cascata, não todas ao mesmo tempo.
 - Conquista — o kit de arquitetura novo aparece na roda do rei com o ícone a ser entalhado em madeira em 6 frames.
 - Cegueira do Cavaleiro Selado — vinheta que fecha até 40% do ecrã, som abafado, e a câmara deixa de antecipar o movimento. A perda tem de sentir-se.
+
+> **A moeda no marco da sede (ADR 0059)**
+>
+> O núcleo tem dois alvos e o jogador escolhe: a sede, por omissão — fundar, subir de estágio, reparar —, ou o monarca, quando ele pode evoluir. O painel de contexto diz para onde vai a moeda antes de ela sair da mão, e o Verbo 2 no marco troca o alvo. Uma moeda para a sede nunca evolui o monarca por ordem do código, e sem o monarca a poder evoluir não há troca a fazer. O marco tem a largura da Clareira em todos os estágios: à volta do castelo grande continua a haver gente por recrutar.

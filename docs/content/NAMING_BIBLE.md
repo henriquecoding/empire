@@ -88,6 +88,20 @@ Nada disto está no dossiê; são propostas para a fase de cada povo.
   | `nia` | Imperatriz Nia | Empress Nia | `bard_banner` — Bardo da bandeira |
   | `archer_emperor` | Imperador Arqueiro | Archer Emperor | `quiver_squire` — Escudeiro das flechas |
 
+- **Os estágios da sede** (ADR 0059) têm IDs canónicos em `data/source/realm_stages.csv`. «Acampamento» é o estágio
+  F1 da sede e não se confunde com os acampamentos de recrutamento (`camps`, Q-110), onde nasce o vagabundo de cada
+  alvorada: no código o estágio é `encampment` e o sítio de recrutamento é `camp`. A carroça de provisões da chegada é
+  `cart` no código (`RealmSeat.cart_*`) e não é o baú da sala secreta (ADR 0053).
+
+  | Estágio (id) | PT-PT | EN |
+  |---|---|---|
+  | `clearing` | Clareira | Clearing |
+  | `encampment` | Acampamento | Encampment |
+  | `hamlet` | Povoado | Hamlet |
+  | `village` | Vila | Village |
+  | `walled_village` | Vila Fortificada | Walled Village |
+  | `fortress` | Fortaleza | Fortress |
+
 ## 4 · Terminologia fixa
 
 Estes termos não se traduzem de maneira diferente de sessão para sessão — nem pelo código, nem pelo texto. A lista

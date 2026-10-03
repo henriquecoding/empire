@@ -3,6 +3,8 @@
 # Verbo 2 no celeiro escolhe a vida das tropas em vez da moeda (Q-112, Q-115).
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const Posto := preload("res://tests/support/posto.gd")
 
 const STEP := 1.0 / 30.0
@@ -15,6 +17,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(20260926)
 	Greybox.build()
+	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
 	EventBus.coin_dropped.connect(_caiu)
 	_celeiro = _obra(&"granary")
 	for obra in [_celeiro, _obra(&"farm")]:

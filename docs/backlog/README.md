@@ -217,6 +217,33 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UN-33](UN-33.md) | O quarto imperador e a escudeira que dança | UN-16 | por fazer |
 | [UN-34](UN-34.md) | O escudeiro evoluído dispara flechas | UN-14 | por fazer |
 
+## Da Clareira ao reino — ADR 0059
+
+> O plano do reino de 03/10/2026 (`docs/recovery/PLANO-REINO-2026-10-03.md`), aplicado pelo dono. O Lote A (RG-01 a
+> RG-04) está feito; a ordem é A → B → validação jogável → C → validação de expansão → D → acabamento (plano §29).
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [RG-00](RG-00.md) | O contrato do plano do reino | — | feito |
+| [RG-01](RG-01.md) | O contrato da sede | RG-00 | feito |
+| [RG-02](RG-02.md) | O pacote e o início | RG-01 | feito |
+| [RG-03](RG-03.md) | A escada da sede, do Acampamento à Fortaleza | RG-01 | feito |
+| [RG-04](RG-04.md) | O contexto do núcleo | RG-01 | feito |
+| [RG-05](RG-05.md) | Empregos e reposição | RG-02, RG-03 | parcial — o pioneiro repara e a Casa de Treino abre no Povoado; falta a IA preferir o ocioso e o aviso do posto que fica vazio |
+| [RG-06](RG-06.md) | A economia de trajetória | RG-02, RG-03 | por fazer |
+| [RG-07](RG-07.md) | A primeira defesa aérea | RG-03 | parcial — a torre alta abre no Povoado; a viabilidade das 30 moedas antes do dia 4 por medir |
+| [RG-08](RG-08.md) | A interface do benefício e do compromisso | RG-03, RG-04 | parcial — o painel da sede, a obra fechada e o objetivo da fundação; faltam a falta de pessoa, a lareira prevista e a preparação noturna |
+| [RG-09](RG-09.md) | Frentes e refúgios | RG-05, RG-06, RG-07, RG-08 | por fazer |
+| [RG-10](RG-10.md) | Expansão e acampamentos | RG-09 | por fazer |
+| [RG-11](RG-11.md) | A Vila Fortificada e a Fortaleza | RG-09 | parcial — os dois estágios abrem as obras que já existem; a infraestrutura de campo e a indústria novas por fazer |
+| [RG-12](RG-12.md) | O primeiro posto | RG-10, RG-11 | por fazer |
+| [RG-13](RG-13.md) | A primeira rota física | RG-12 | por fazer |
+| [RG-14](RG-14.md) | A Capital | RG-12, RG-13 | por fazer |
+| [RG-15](RG-15.md) | Integração e ausência | RG-13 | por fazer |
+| [RG-16](RG-16.md) | Arte por estágio e por povo | RG-03 | parcial — o Acampamento, o Povoado, a Vila, a Vila Fortificada e a carroça pintados em formas lisas; faltam as variantes por povo e a arte do dono |
+| [RG-17](RG-17.md) | Migração | RG-01 | parcial — o castelo herdado é a Fortaleza (v8, com teste); a matriz de pagamentos parciais, obras e pessoas por medir |
+| [RG-18](RG-18.md) | Desempenho e mobile | RG-16 | por fazer |
+
 ## Respostas aprovadas no painel
 
 | Ticket | Tarefa | Depende | Estado |

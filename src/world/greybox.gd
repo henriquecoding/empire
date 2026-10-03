@@ -85,7 +85,9 @@ static func build() -> int:
 	var faixa := int(Band.Kind.SURFACE)
 	var x := SimLoop.core_x + AMARGUEIRO_VELHO_X
 	SimLoop.night.amargueiros.plant_old(x, faixa, AMARGUEIRO_VELHO_ESCALA)
-	return _gente()
+	var rei := _gente()
+	FoundationWatch.arrive(rei)  # o pioneiro e a carroca de provisoes (ADR 0059)
+	return rei
 
 
 ## SO o que o segmento autora: a largura, os sitios de obra e as passagens
@@ -158,17 +160,10 @@ static func recurso() -> StringName:
 	return (Registry.entry(&"segments", SEGMENTO) as SegmentData).resource
 
 
-## O castelo-arvore. Nao e construido nem destruido pelo jogador (§10) — nasce
-## de pe, e se cair, cai a partida. Trava as criaturas porque e o que elas vem
-## procurar: sem isto atravessavam-no como se fosse um desenho.
+## A sede, por fundar: a Clareira (ADR 0059). Ate 03/10/2026 nascia castelo de pe; agora
+## o monarca funda-a com moedas, e ela sobe pelos estagios de realm_stages.csv.
 static func _nucleo() -> void:
-	var dados := Registry.entry(&"buildings", BuildSlot.NUCLEO) as BuildingData
-	var vaga := slot_of(dados, SimLoop.core_x)
-	vaga.blocks = true
-	SimLoop.builds.post(vaga)
-	vaga.level = 1
-	vaga.state = BuildSlot.State.DONE
-	vaga.health = vaga.max_health()
+	SimLoop.builds.post(SeatSite.slot(SimLoop.core_x))
 
 
 ## Um sitio de muro, vazio. Os cinco niveis do §10 sao os cinco degraus da

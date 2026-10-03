@@ -335,3 +335,14 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `nia` | `MONARCH_NIA` | Imperatriz Nia | Empress Nia |
 | `archer_emperor` | `MONARCH_ARCHER_EMPEROR` | Imperador Arqueiro | Archer Emperor |
 
+## realm_stages
+
+| id | chave | PT-PT | EN |
+|---|---|---|---|
+| `clearing` | `REALM_STAGE_CLEARING` | Clareira | Clearing |
+| `encampment` | `REALM_STAGE_ENCAMPMENT` | Acampamento | Encampment |
+| `hamlet` | `REALM_STAGE_HAMLET` | Povoado | Hamlet |
+| `village` | `REALM_STAGE_VILLAGE` | Vila | Village |
+| `walled_village` | `REALM_STAGE_WALLED_VILLAGE` | Vila Fortificada | Walled Village |
+| `fortress` | `REALM_STAGE_FORTRESS` | Fortaleza | Fortress |
+
