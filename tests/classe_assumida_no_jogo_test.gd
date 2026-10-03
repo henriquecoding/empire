@@ -100,7 +100,7 @@ func test_o_arqueiro_compra_flechas_so_com_moedas_dele() -> void:
 	SimLoop.units.carried_coins[_rei()] = 1
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 	SimLoop.step(PASSO)
-	var lote := RulesFactory.rules().arrows_per_coin
+	var lote := MonarchWatch.squire_lot(SimLoop.units.data_ids[e])  # 6, Q-200
 	assert_int(SimLoop.field.supply.left(SimLoop.units, _rei(), corpo)).is_equal(antes + lote)
 	assert_int(SimLoop.units.carried_coins[_rei()]).is_equal(0)
 
