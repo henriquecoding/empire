@@ -27,6 +27,7 @@ coin_drop_speed_px_s = 180.0
 coin_drop_spread_px_s = 40.0
 coin_drop_repeat_s = 0.12
 recruit_notice_px = 120.0
+recruit_run_mult = 2.0
 follow_distance_px = 30.0
 follow_spacing_px = 18.0
 favor_decay_per_day = 0.1

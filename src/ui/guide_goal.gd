@@ -54,10 +54,10 @@ static func goal() -> String:
 			continue
 		if site.blocks and not site.mending and site.repair_cost() > 0:
 			return _tr(&"GUIDE_REPAIR")
-	if not hunter:
-		return _tr(&"GUIDE_HUNTER" if worker else &"GUIDE_WORKER")
 	if not builder:
 		return _tr(&"GUIDE_BUILDER" if worker else &"GUIDE_WORKER")
+	if not hunter:
+		return _tr(&"GUIDE_HUNTER" if worker else &"GUIDE_WORKER")
 	var production := false
 	var wall := false
 	for site in SimLoop.builds.standing():

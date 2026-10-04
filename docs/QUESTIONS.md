@@ -7,6 +7,19 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A corrida por moeda e o martelo inicial — 04/10/2026 (ADR 0063)
+
+### Q-230 · O ritmo da corrida pelo recrutamento
+- **Decidido pelo dono:** o vagabundo corre para apanhar a moeda, é contratado ao
+  apanhá-la e precisa da banca inicial para se tornar construtor antes da muralha.
+- **Aplicado:** RG-21; ADR 0063. O raio conserva os 120 px existentes. A banca
+  aparece junto do acampamento desde a chegada; nenhum construtor nasce pronto.
+- **Proposta reversível:** `recruit_run_mult=2` em `economy.csv._proposed`, para
+  destacar a corrida sem alterar a velocidade base ou os dados gravados.
+- **Quem decide:** o dono pode afinar a intensidade após playtest. Não se presume
+  aprovação numérica nem se bloqueia a implementação do comportamento pedido.
+- **Conservado:** martelo por 3, escada de muralhas e requisitos da sede e materiais.
+
 ## A abertura pesquisada e implementada — 04/10/2026 (ADR 0062)
 
 ### Q-229 · Distâncias, densidade e ocupação dos habitats

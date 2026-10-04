@@ -42,6 +42,8 @@ var followers: Dictionary = {}
 ## Quem desertou por soldo em atraso: id -> o dia a partir do qual volta a poder ser
 ## recrutado (Q-144). Partilhado com o UpkeepSystem, que o escreve e o grava.
 var resting: Dictionary = {}
+## Ritmo derivado do alvo deste tick; nao altera velocidades nem entra no save.
+var rush: Dictionary = {}
 
 var _curva: EconomyCurve
 
@@ -67,26 +69,30 @@ func _init(curva: EconomyCurve) -> void:
 ## 300 vagabundos e 60 moedas — a simulacao inteira do §63 tem 4,0. O §63 diz
 ## qual e a alavanca antes de se optimizar codigo, e e esta.
 ##
-## Uma moeda apanhada por outro deixa quem vinha a caminho a andar para um
-## sitio vazio durante ate cinco ticks. E um sexto de segundo, e e o mesmo
-## atraso que a §52 ja aceita para tudo o resto.
+## Escolher e fatiado; perder a moeda cancela o movimento ja neste tick.
 func seek_coins(unidades: UnitSystem, moedas: CoinSystem, tick: int) -> void:
-	if moedas.count() == 0:
-		return
+	rush.clear()
 	for i in unidades.count():
 		if unidades.owners[i] != SEM_DONO or not unidades.alive(i):
 			continue
-		if not UnitFsm.decides(unidades.ids[i], tick) or resting_now(unidades.ids[i]):
-			continue
-		var alvo := _moeda_mais_proxima(moedas, unidades.xs[i], unidades.bands[i])
+		var alvo := moedas.index_of(unidades.target_ids[i])
+		if alvo != NENHUM and not _eligible(moedas, alvo, unidades, i):
+			alvo = NENHUM
+		if resting.has(unidades.ids[i]) and resting_now(unidades.ids[i]):
+			alvo = NENHUM
+		elif UnitFsm.decides(unidades.ids[i], tick):
+			alvo = _moeda_mais_proxima(moedas, unidades, i)
 		if alvo == NENHUM:
 			unidades.target_ids[i] = UnitSystem.NENHUM
+			if unidades.has_targets[i] != 0:
+				unidades.clear_target(unidades.ids[i])
 			continue
 		# QUAL moeda, e nao so para onde: o passo 5 apanha a moeda por que se
 		# veio, e nao varre o chao todo a procura de uma. E o target_ids do §45,
 		# que estava na coluna a espera de quem o escrevesse.
 		unidades.target_ids[i] = moedas.ids[alvo]
 		unidades.set_target_x(unidades.ids[i], moedas.xs[alvo])
+		rush[unidades.ids[i]] = _curva.recruit_run_mult
 
 
 ## Passo 4 tambem: quem ja e teu e ainda nao tem posto. O escudeiro anda atras
@@ -112,6 +118,7 @@ func hire(unidades: UnitSystem, unit_id: int, dono: int, pago: int, preco: int) 
 	if dono == SEM_DONO or pago < preco or resting_now(unit_id):
 		return false
 	unidades.owners[i] = dono
+	rush.erase(unit_id)
 	return true
 
 
@@ -158,6 +165,9 @@ func _apanhar(
 	var espaco := unidades.coin_capacities[i] - unidades.carried_coins[i]
 	if espaco <= 0:
 		return {}
+	var c := moedas.index_of(moeda)
+	if not _eligible(moedas, c, unidades, i):
+		return {}
 	var era_de_ninguem := vagrant(unidades, i)
 	var apanhado := moedas.collect_one(
 		moeda, unidades.xs[i], unidades.bands[i] as Band.Kind, espaco
@@ -165,6 +175,8 @@ func _apanhar(
 	if apanhado <= 0:
 		return {}
 	unidades.target_ids[i] = UnitSystem.NENHUM
+	unidades.clear_target(unit_id)
+	rush.erase(unit_id)
 	unidades.carried_coins[i] += apanhado
 	var preco := price(unidades, i)
 	# Conta o SACO e nao a moeda que acabou de apanhar. O §07 da precos de 1 a
@@ -208,14 +220,30 @@ func vagrant(unidades: UnitSystem, i: int) -> bool:
 
 ## A moeda pousada mais proxima dentro do raio de reparo, ou NENHUM. Empate pelo
 ## indice menor, que e estavel porque as colunas sao percorridas por ordem.
-func _moeda_mais_proxima(moedas: CoinSystem, x: float, faixa: int) -> int:
+func _moeda_mais_proxima(moedas: CoinSystem, unidades: UnitSystem, i: int) -> int:
 	var melhor := NENHUM
 	var melhor_d := _curva.recruit_notice_px
+	var x := unidades.xs[i]
+	var faixa := unidades.bands[i]
+	var espaco := unidades.coin_capacities[i] - unidades.carried_coins[i]
 	for c in moedas.count():
-		if moedas.settled[c] == 0 or moedas.bands[c] != faixa:
+		if moedas.settled[c] == 0 or moedas.bands[c] != faixa or moedas.targets[c] >= 0:
 			continue
 		var d := absf(moedas.xs[c] - x)
-		if d < melhor_d:
-			melhor_d = d
-			melhor = c
+		if d > melhor_d or moedas.amounts[c] > espaco:
+			continue
+		if d == melhor_d and melhor != NENHUM and moedas.ids[c] > moedas.ids[melhor]:
+			continue
+		melhor_d = d
+		melhor = c
 	return melhor
+
+
+func _eligible(moedas: CoinSystem, c: int, unidades: UnitSystem, i: int) -> bool:
+	return (
+		c != NENHUM
+		and moedas.settled[c] != 0
+		and moedas.targets[c] < 0
+		and moedas.bands[c] == unidades.bands[i]
+		and moedas.amounts[c] <= unidades.coin_capacities[i] - unidades.carried_coins[i]
+	)

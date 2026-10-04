@@ -31,6 +31,9 @@ static func slot_at(obras: BuildSystem, x: float, faixa: int, estado: GameState 
 			continue
 		if not RealmGrowth.visible(obras, vaga, estado):
 			continue
+		if vaga.two_paths() and obras.workforce != null:
+			if not WallCrew.available(obras.workforce, vaga.band, obras.crew_owner):
+				continue
 		if absf(vaga.x - x) <= vaga.catch_half():
 			return vaga.id
 	return NENHUM

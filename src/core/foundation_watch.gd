@@ -3,8 +3,8 @@
 # O plano do reino de 03/10/2026, aplicado pelo dono (*«aplique esse relatorio»*): o
 # monarca chega a uma Clareira com a companhia e dois vagabundos neutros (ADR 0060);
 # ha uma carroca de provisoes ao pe do marco; a primeira moeda funda o reino.
-# A fundacao ergue as bancas do arco e do martelo, uma vez — a
-# bancada fundadora (plano §6). Muralhas, torres, canteiros e Casa de Treino pagam-se
+# O martelo esta pronto na chegada (ADR 0063), o arco vem com a fundacao, uma vez.
+# Muralhas, torres, canteiros e Casa de Treino pagam-se
 # como sempre.
 #
 # Aqui vive tambem o alvo da moeda no nucleo (plano §3.6, §23.2): a sede, por omissao,
@@ -36,6 +36,16 @@ static func arrive(rei: int) -> void:
 	for _k in regras.founder_pioneers:
 		SimLoop.units.spawn(SimLoop.state, construtor, dono, SimLoop.core_x + PIONEIRO_X)
 	SimLoop.seat.place_cart(SimLoop.core_x + CARROCA_X, regras.founder_provisions)
+	camp_tools()
+
+
+## A ferramenta inicial existe antes de fundar; saves antigos mantem pagos e ruinas.
+static func camp_tools() -> void:
+	for vaga in SimLoop.builds.slots:
+		if vaga.kind != MARTELOS or vaga.territory != 0 or vaga.level > 0:
+			continue
+		if vaga.state == BuildSlot.State.EMPTY and vaga.paid == 0:
+			vaga.raise_to(RealmLadder.FUNDADO)
 
 
 ## O monarca passa pela carroca e leva o que lhe cabe no saco. E apanhar, e por isso

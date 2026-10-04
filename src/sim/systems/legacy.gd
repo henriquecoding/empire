@@ -35,6 +35,8 @@ const CLASSE := &"class_phase"
 const REGIAO := &"region"
 const COMITIVA := &"party"
 const SACO := &"purse"
+## A banca inicial volta com a chegada; nao ocupa a quota das obras preservadas.
+const STARTER_TOOLS := &"hammer_rack"
 
 
 ## O que o jogo novo herda desta partida.
@@ -60,7 +62,7 @@ static func of(
 		for slot in obras.slots:
 			if (
 				slot.territory != 0
-				or slot.kind in [BuildSlot.NUCLEO, AmargueiroSystem.CORTE]
+				or slot.kind in [BuildSlot.NUCLEO, AmargueiroSystem.CORTE, STARTER_TOOLS]
 				or slot.level <= 0
 				or slot in retained
 			):
@@ -135,6 +137,7 @@ static func kept(obras: BuildSystem, fracao: float) -> Array[BuildSlot]:
 			obra.territory == 0
 			and obra.kind != BuildSlot.NUCLEO
 			and obra.kind != AmargueiroSystem.CORTE
+			and obra.kind != STARTER_TOOLS
 			and obra.level > 0
 		):
 			de_pe.append(obra)

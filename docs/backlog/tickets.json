@@ -2661,5 +2661,17 @@
   "notas": [
    "Q-228 fica por decidir. Ver a ADR 0061: o que se aplicou e como desfazer."
   ]
+ },
+ "RG-21": {
+  "title": "Recrutamento por corrida e primeira muralha pelo construtor",
+  "porque": "Moeda não provocava corrida, martelo estava fora do começo e qualquer aliado construía muro.",
+  "spec": [
+   "docs/adr/0063-a-moeda-o-martelo-e-a-primeira-muralha.md"
+  ],
+  "depende": "RG-19, RG-20",
+  "feito": "Corrida transitória, banca inicial no acampamento, muralha paga e construída com construtor, guia por etapa, compatibilidade de saves",
+  "fora": "Novos custos de muralha, outros ofícios, arte original e construção das demais obras",
+  "estado": "em curso",
+  "horas": "—"
  }
 }

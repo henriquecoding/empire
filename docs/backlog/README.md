@@ -244,6 +244,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-17](RG-17.md) | Migração | RG-01 | parcial — o castelo herdado é a Fortaleza (v8, com teste); a matriz de pagamentos parciais, obras e pessoas por medir |
 | [RG-18](RG-18.md) | Desempenho e mobile | RG-16 | por fazer |
 | [RG-20](RG-20.md) | Uma clareira, prados de caça e floresta de exploração | RG-19, QP-06 | feito |
+| [RG-21](RG-21.md) | Recrutamento por corrida e primeira muralha pelo construtor | RG-19, RG-20 | em curso |
 
 ## Respostas aprovadas no painel
 

@@ -64,6 +64,7 @@ func publish(obras: BuildSystem) -> void:
 			var x := obra.x if na_obra else _lugar(obra, k)
 			var vaga := post(JobSlot.new(job, x, obra.band))
 			vaga.territory = obra.territory
+			vaga.builder_only = na_obra and obra.two_paths()
 			if not na_obra:
 				vaga.grants(obra)
 	_publicadas = querem
@@ -142,6 +143,8 @@ func _score(unidades: UnitSystem, i: int, vaga: JobSlot, fase: int) -> float:
 	var posto: JobData = _postos.get(vaga.job_id)
 	var dados: UnitData = _dados.get(unidades.data_ids[i])
 	if posto == null or dados == null or fase >= posto.urgency_by_phase.size():
+		return SCORE_MINIMO
+	if vaga.builder_only and dados.id != RepairWork.REPAIRER:
 		return SCORE_MINIMO
 	var adequacao: float = dados.job_affinity.get(vaga.job_id, SCORE_MINIMO)
 	if vaga.job_id == &"build" and dados.tags.has(&"worker"):
