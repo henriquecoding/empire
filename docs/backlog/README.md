@@ -245,7 +245,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-18](RG-18.md) | Desempenho e mobile | RG-16 | por fazer |
 | [RG-20](RG-20.md) | Uma clareira, prados de caça e floresta de exploração | RG-19, QP-06 | feito |
 | [RG-21](RG-21.md) | Recrutamento por corrida, fundação na lareira e cidade dentro das muralhas | RG-19, RG-20 | feito |
-| [RG-22](RG-22.md) | A Última Carroça: relatório completo e decisões atuais do painel | RG-21 | parcial — implementação concluída; validação e percepção humana por medir |
+| [RG-22](RG-22.md) | A Última Carroça: relatório completo e decisões atuais do painel | RG-21 | feito — protótipo e validação técnica; percepção humana por medir |
 
 ## Respostas aprovadas no painel
 

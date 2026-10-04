@@ -42,6 +42,8 @@ static func draw_on(
 	var pulso := blink(tempo)
 	var vista := PresentationBounds.of(canvas)
 	for vaga in SimLoop.builds.slots:
+		if vaga.kind in [CompanionWatch.POST, CellarWatch.EXCAVATION]:
+			continue
 		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue

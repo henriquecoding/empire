@@ -46,3 +46,22 @@ Se ninguém usar renda alternativa/resgate, não concluir que há três estraté
 porque três comandos existem. Rever textos, exposição do recurso e acessibilidade.
 Guardar os resultados com a versão; afinar os parâmetros em `arrival.csv` e regenerar
 recursos. O protocolo não autoriza contato ou envio de mensagens em nome do dono.
+
+## Validação técnica do protótipo
+
+A revisão `2c29b50026eb97795c28d35ccf3b58a4bf1e18ee` passou todos os jobs da
+[CI 37206947318](https://github.com/henriquecoding/empire/actions/runs/37206947318):
+suíte completa, dados, portões estáticos, camada de uso do dossiê, site, silhueta
+noturna e exportações Linux/Windows/Web. As contagens reais e a duração estão em
+`docs/recovery/validation.json`, no campo `last_cart_verification`.
+
+O fluxo no navegador confirmou movimento por teclado, fundação gratuita no bosque,
+contratação de habitante, renda por coleta, resgate com retorno físico das provisões,
+pagamento das sete moedas e chegada do mesmo habitante ao posto de companheiro.
+O JSON baixado pela pausa registra esses eventos, sem erros de JavaScript. A captura
+gráfica usa OpenGL com Mesa
+llvmpipe. A vistoria terminou com derrota do piloto no quarto dia, sem quebra de
+invariantes; isso não demonstra equilíbrio nem sobrevivência durante oito dias.
+
+Essas verificações demonstram funcionamento técnico. Compreensão da decisão,
+motivo da fundação e semelhança percebida com Kingdom aguardam as sessões acima.

@@ -12,7 +12,7 @@
  "proposed_fields": 1515,
  "proposed_phase_0_to_2": 1057,
  "gdunit_discovered": 1654,
- "gdunit_passed": 1582,
+ "gdunit_passed": 1652,
  "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 88,
@@ -38,7 +38,7 @@
  "i18n_placeholders": 0,
  "catalog_signals": 61,
  "event_bus_signals": 61,
- "gdunit_runtime_cases": 1584,
+ "gdunit_runtime_cases": 1654,
  "approved_panel_source_commit": "1129222b2ed482cd01986601fa146539f324ff32",
  "approved_panel_visual_checks": [
   "travel menu with scrolling",
@@ -69,6 +69,55 @@
   "manual_graphical_playtest": "not completed: remote browser lacks WebGL2; local graphical server unavailable",
   "vistoria": "4 of 8 days; pilot defeated; no broken invariants",
   "balance_values": "proposed in CSV; Q-229 awaits playtest"
+ },
+ "last_cart_verification": {
+  "source_commit": "2c29b50026eb97795c28d35ccf3b58a4bf1e18ee",
+  "ci": "https://github.com/henriquecoding/empire/actions/runs/37206947318",
+  "full_suite_cases": 1654,
+  "passed": 1652,
+  "skipped": 2,
+  "errors": 0,
+  "failures": 0,
+  "flaky": 0,
+  "orphans": 0,
+  "duration": "18min 50s 471ms",
+  "static_gates": "passed",
+  "csv_resources": "passed",
+  "exports": "Linux, Windows and Web passed; Linux headless boot passed",
+  "site": "passed: PT/EN, keyboard, touch, accessibility, CSP, privacy, responsive layout",
+  "native_visual": "OpenGL compatibility, Mesa llvmpipe; night silhouette passed",
+  "browser_foundation": "real keyboard input, free Grove foundation and local JSON download passed",
+  "vistoria": "4 of 8 days; pilot defeated; no broken invariants",
+  "human_playtest": "not completed; 5–8 sessions specified in docs/qa/ultima-carroca-playtest.md",
+  "balance_values": "proposed fields in arrival.csv; Q-232 and Q-233 remain open",
+  "browser_labor": {
+   "result": "passed",
+   "javascript_errors": 0,
+   "seed": 1791130019,
+   "choice": "grove",
+   "events": {
+    "first_worker_assignment": {
+     "seconds": 16.6333333333333,
+     "value": "forage"
+    },
+    "first_income": {
+     "seconds": 49.6333333333331,
+     "value": "forage"
+    },
+    "provisions_rescued": {
+     "seconds": 98.0666666666637,
+     "value": true
+    },
+    "companion_hired": {
+     "seconds": 133.933333333328,
+     "value": true
+    },
+    "rot_warning_shown": {
+     "seconds": 144.899999999994,
+     "value": true
+    }
+   }
+  }
  },
  "manual_combat_verification": {
   "full_suite_cases": 1212,
