@@ -2661,5 +2661,19 @@
   "notas": [
    "Q-228 fica por decidir. Ver a ADR 0061: o que se aplicou e como desfazer."
   ]
+ },
+ "RG-21": {
+  "title": "Fundação na lareira e expansão dentro das muralhas",
+  "porque": "As bancas fundadoras estavam fora das muralhas e serviços surgiam em terreno exterior.",
+  "spec": [
+   "docs/adr/0063-a-cidade-nasce-na-lareira-e-cresce-dentro-das-muralhas.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/21-geracao-procedural-do-territorio.md"
+  ],
+  "depende": "RG-19, RG-20",
+  "feito": "Lareira como fundação; bancas interiores só após conclusão; obras por nível e recinto; novas linhas por estágio e flanco; ids e progresso preservados.",
+  "fora": "Custos novos, Capital, alteração do fogo noturno e arte original.",
+  "estado": "feito",
+  "horas": "—"
  }
 }

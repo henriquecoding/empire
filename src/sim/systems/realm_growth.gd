@@ -123,7 +123,6 @@ static func _next(obras: BuildSystem, x: float, centro: float) -> BuildSlot:
 	return proxima
 
 
-
 ## As ferramentas fundadoras cabem no traçado da primeira muralha, mesmo por erguer.
 ## Sem esta excecao nao ha como formar quem levanta a primeira defesa.
 static func _camp_plot(obras: BuildSystem, vaga: BuildSlot, sede: BuildSlot) -> bool:

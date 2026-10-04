@@ -7,6 +7,7 @@ script = ExtResource("1_d6ytc")
 id = &"village"
 display_key = "REALM_STAGE_VILLAGE"
 order = 3
+wall_rings = 3
 cost = 18
 build_work = 36.0
 max_health = 550

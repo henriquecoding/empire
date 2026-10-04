@@ -5,5 +5,4 @@
 [resource]
 script = ExtResource("1_t7f12")
 id = &"farm"
-placement = &"starter"
 wall_level = 1

@@ -43,6 +43,7 @@ jobs:
           PY
       - name: Provar que a regressão falha na main anterior
         run: |
+          git fetch --no-tags --depth=1 origin d087a08550050575772781a869cea371969e9ca6
           git worktree add --detach /tmp/realm-before d087a08550050575772781a869cea371969e9ca6
           cp tests/recinto_fundador_test.gd /tmp/realm-before/tests/
           godot --headless --import --path /tmp/realm-before >/dev/null 2>&1 || true

@@ -7,6 +7,7 @@ script = ExtResource("1_jjobt")
 id = &"fortress"
 display_key = "REALM_STAGE_FORTRESS"
 order = 5
+wall_rings = 3
 cost = 56
 build_work = 112.0
 max_health = 1000

@@ -53,18 +53,16 @@ func test_as_bancas_cabem_inteiras_no_primeiro_recinto_sem_sobrepor_outras_obras
 			if outra == banca or outra.band != banca.band:
 				continue
 			var largura := outra.widths[-1] if outra == sede else outra.width
-			assert_float(absf(outra.x - banca.x)).override_failure_message(
-				"%s / %s" % [banca.kind, outra.kind]
-			).is_greater((largura + banca.width) * 0.5)
+			(
+				assert_float(absf(outra.x - banca.x))
+				. override_failure_message("%s / %s" % [banca.kind, outra.kind])
+				. is_greater((largura + banca.width) * 0.5)
+			)
 
 
 func test_a_fundacao_nao_ergue_bancas_exteriores_ou_de_outro_territorio() -> void:
-	var fora := SimLoop.builds.post(
-		Greybox.slot_of(_data(&"hammer_rack"), SimLoop.core_x - 2080.0)
-	)
-	var vizinha := SimLoop.builds.post(
-		Greybox.slot_of(_data(&"bow_rack"), SimLoop.core_x + 300.0)
-	)
+	var fora := SimLoop.builds.post(Greybox.slot_of(_data(&"hammer_rack"), SimLoop.core_x - 2080.0))
+	var vizinha := SimLoop.builds.post(Greybox.slot_of(_data(&"bow_rack"), SimLoop.core_x + 300.0))
 	vizinha.territory = 1
 	var sede := RealmLadder.seat(SimLoop.builds)
 	sede.raise_to(RealmLadder.FUNDADO)
@@ -103,9 +101,11 @@ func test_evoluir_a_sede_sozinha_nao_publica_edificios_fora_das_muralhas() -> vo
 		var politica := RealmGrowth.policy(vaga)
 		if politica == null or politica.placement in [&"native", &"wilderness"]:
 			continue
-		assert_bool(RealmGrowth.visible(SimLoop.builds, vaga)).override_failure_message(
-			String(vaga.kind)
-		).is_false()
+		(
+			assert_bool(RealmGrowth.visible(SimLoop.builds, vaga))
+			. override_failure_message(String(vaga.kind))
+			. is_false()
+		)
 
 
 func test_construir_o_muro_revela_so_os_canteiros_do_espaco_protegido() -> void:
