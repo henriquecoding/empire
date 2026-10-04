@@ -143,6 +143,9 @@ func test_a_moeda_da_producao_nao_paga_a_obra_onde_cai() -> void:
 
 
 func test_a_moeda_do_jogador_em_cima_da_obra_paga_a() -> void:
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths() and absf(muro.x - SimLoop.core_x) == absf(Greybox.MUROS_X[1]):
+			muro.raise_to(1)  # o canteiro so se oferece atras da primeira muralha (ADR 0064)
 	var canteiro: BuildSlot = null
 	for obra in SimLoop.builds.slots:
 		if obra.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, obra):

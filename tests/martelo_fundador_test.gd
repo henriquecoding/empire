@@ -46,7 +46,7 @@ func test_treino_retomado_segue_a_banca_no_sitio_atual() -> void:
 	var i := unidades.index_of(quem)
 	assert_float(unidades.target_xs[i]).is_equal(banca.x)
 	assert_int(treino.trainees.size()).is_equal(1)
-	unidades.tick_movement(5.0)
+	unidades.tick_movement(absf(500.0 - banca.x) / unidades.speeds[i] + 1.0)
 	treino.tick(1.0 / 30.0, unidades, obras, 360.0)
 	assert_str(String(unidades.data_ids[i])).is_equal("builder")
 	assert_int(unidades.owners[i]).is_equal(1)

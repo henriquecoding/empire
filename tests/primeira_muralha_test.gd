@@ -171,7 +171,10 @@ func test_recrutar_comprar_martelo_e_erguer_o_primeiro_muro_so_com_gestos() -> v
 	var bench := _bench()
 	_walk(bench.x)
 	_pay_here(int(bench.effects[&"craft_cost"]))
-	_steps(180)
+	for _tick in 600:
+		if SimLoop.units.data_ids[worker] == &"builder":
+			break
+		_steps(1)
 	assert_str(String(SimLoop.units.data_ids[worker])).is_equal("builder")
 	var wall := _wall()
 	_walk(wall.x)

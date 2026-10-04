@@ -14,9 +14,6 @@ static var wall_rings: Dictionary = {}
 ## O mundo conserva os slots e os ids; so publica o convite quando faz sentido.
 ## Obra paga, em curso ou herdada nunca desaparece por uma muralha cair.
 static func visible(obras: BuildSystem, vaga: BuildSlot, estado: GameState = null) -> bool:
-	if vaga.territory == 0 and vaga.kind in [&"bow_rack", &"hammer_rack"]:
-		if not RealmLadder.founded(obras):
-			return false
 	if vaga.kind == BuildSlot.NUCLEO or vaga.level > 0 or vaga.paid > 0:
 		return true
 	if vaga.state != BuildSlot.State.EMPTY:
