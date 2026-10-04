@@ -725,7 +725,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_sites | `heir_house` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `root_sanctuary` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `mount_stable` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
-| realm_sites | `farm` | `wall_level` | 1 | 1 | O primeiro canteiro de cada lado pode começar sem muralha; os seguintes pedem área protegida. |
+| realm_sites | `farm` | `wall_level` | 1 | 1 | Todo canteiro pede área protegida; os exteriores só aparecem depois de expandir os muros. |
 | realm_sites | `fishery` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `henhouse` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `cow_stable` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |

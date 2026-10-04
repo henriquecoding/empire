@@ -5,5 +5,4 @@
 [resource]
 script = ExtResource("1_74g36")
 id = &"lighthouse"
-placement = &"frontier"
 wall_level = 2

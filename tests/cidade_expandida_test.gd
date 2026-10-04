@@ -37,9 +37,7 @@ func _walls(side: int) -> Array[BuildSlot]:
 func _found() -> void:
 	var seat := RealmLadder.seat(SimLoop.builds)
 	seat.raise_to(RealmLadder.FUNDADO)
-	FoundationWatch.after(
-		[{BuildSystem.CHAVE: BuildSystem.EV_COMPLETA, BuildSystem.VAGA: seat}]
-	)
+	FoundationWatch.after([{BuildSystem.CHAVE: BuildSystem.EV_COMPLETA, BuildSystem.VAGA: seat}])
 
 
 func test_as_duas_bancas_so_aparecem_depois_de_fundar_dentro_do_primeiro_recinto() -> void:
@@ -141,6 +139,8 @@ func test_todos_os_convites_da_cidade_cabem_em_area_defendida_em_cada_estagio() 
 			if policy == null or policy.placement in [&"wilderness", &"native"]:
 				continue
 			if RealmGrowth.visible(SimLoop.builds, slot, SimLoop.state):
-				assert_bool(RealmGrowth.protected(SimLoop.builds, slot)).override_failure_message(
-					"%s no estagio %d" % [slot.kind, stage]
-				).is_true()
+				(
+					assert_bool(RealmGrowth.protected(SimLoop.builds, slot))
+					. override_failure_message("%s no estagio %d" % [slot.kind, stage])
+					. is_true()
+				)

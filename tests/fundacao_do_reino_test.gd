@@ -133,6 +133,7 @@ func test_o_acampamento_so_abre_o_canteiro_depois_da_primeira_muralha() -> void:
 	assert_int(casa.paid).is_equal(0)
 	assert_bool(RealmGrowth.visible(SimLoop.builds, casa)).is_false()
 
+
 func test_o_povoado_abre_a_casa_de_treino() -> void:
 	_sede().raise_to(2)
 	var casa := _obra(&"training_house")

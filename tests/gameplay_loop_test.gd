@@ -87,9 +87,7 @@ func test_wall_path_can_be_chosen_with_the_real_intent_and_is_saved() -> void:
 
 
 func test_the_context_only_offers_the_wall_path_the_verb_accepts() -> void:
-	SimLoop.units.spawn(
-		SimLoop.state, Registry.entry(&"units", &"builder"), 1, SimLoop.core_x
-	)
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, SimLoop.core_x)
 	var site := SimLoop.builds.slots[1]
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	var paths := [

@@ -46,13 +46,12 @@ func test_a_banca_do_martelo_esta_pronta_so_depois_da_fundacao() -> void:
 	assert_bool(bench.standing()).is_false()
 	var seat := RealmLadder.seat(SimLoop.builds)
 	seat.raise_to(RealmLadder.FUNDADO)
-	FoundationWatch.after(
-		[{BuildSystem.CHAVE: BuildSystem.EV_COMPLETA, BuildSystem.VAGA: seat}]
-	)
+	FoundationWatch.after([{BuildSystem.CHAVE: BuildSystem.EV_COMPLETA, BuildSystem.VAGA: seat}])
 	assert_bool(bench.standing()).is_true()
 	assert_bool(RealmGrowth.visible(SimLoop.builds, bench)).is_true()
 	assert_float(absf(bench.x - SimLoop.core_x)).is_less(absf(Greybox.MUROS_X[1]))
 	assert_int(bench.paid).is_equal(0)
+
 
 func test_sem_construtor_o_rei_nao_paga_nem_constroi_a_muralha() -> void:
 	RealmLadder.seat(SimLoop.builds).raise_to(RealmLadder.FUNDADO)

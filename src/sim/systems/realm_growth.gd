@@ -63,10 +63,7 @@ static func protected(obras: BuildSystem, vaga: BuildSlot, nivel: int = 1) -> bo
 			continue
 		if (muro.x - sede.x) * (vaga.x - sede.x) <= 0.0:
 			continue
-		if (
-			absf(muro.x - sede.x) - muro.width * HALF
-			>= absf(vaga.x - sede.x) + vaga.width * HALF
-		):
+		if absf(muro.x - sede.x) - muro.width * HALF >= absf(vaga.x - sede.x) + vaga.width * HALF:
 			return true
 	return false
 
@@ -121,4 +118,3 @@ static func _next(obras: BuildSystem, x: float, centro: float) -> BuildSlot:
 		if proxima == null or distancia < absf(proxima.x - centro):
 			proxima = muro
 	return proxima
-
