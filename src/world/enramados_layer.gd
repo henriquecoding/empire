@@ -25,7 +25,6 @@ const CELL := 64
 const DETAIL := 4
 const MID_GROUND := 490.0
 const BACK_GROUND := 421.0
-const FAR_SCALE := 0.25
 const FOREST_SCALE := 1.0
 const LANDMARKS := [340.0, 1110.0, 2770.0, 3510.0]
 const RIDGE := [0, 374, 140, 350, 252, 361, 396, 322, 528, 348, 664, 329, 804, 366, 960, 343]
@@ -117,12 +116,6 @@ func _ridge(color: Color, offset: Vector2) -> void:
 func _distance() -> void:
 	TemporaryScenery.forest(self, _alcance(), &"temp_forest_back", BACK_GROUND)
 	_ridge(NEAR, Vector2(CELL, CELL))
-	var texture := _art.texture(&"far_keep")
-	var size := texture.get_size() * FAR_SCALE
-	for x in LANDMARKS:
-		draw_texture_rect(
-			texture, Rect2(Vector2(x, BACK_GROUND) - Vector2(0.0, size.y), size), false, FAR
-		)
 
 
 func _grove() -> void:

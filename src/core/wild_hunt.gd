@@ -19,11 +19,12 @@ static var _ritmos := {}
 
 
 ## O HuntWatch.prepare, e a seguir as terras que ja existiam ganham as tocas delas: as
-## de casa vem primeiro, porque a primeira toca e a do coelho do 1:10 (§25).
+## de casa vem primeiro: o coelho inicia a renda nos prados, fora da Clareira (ADR 0062).
 static func prepare(campo: FieldWork, dia: int, core_x: float, largura: float, fase: int) -> void:
 	var antes := campo.hunting.burrows.placed()
 	HuntWatch.prepare(campo.hunting, dia, core_x, largura, fase)
 	campo.hunting.home = Vector2(0.0, largura)
+	HuntHabitats.reserve(campo.hunting, SimLoop.builds)
 	if antes or not campo.hunting.burrows.placed():
 		return
 	for lado in [WorldPlan.OESTE, WorldPlan.LESTE]:
@@ -40,12 +41,18 @@ static func author(campo: FieldWork, lado: int, k: int, largura: float) -> void:
 	var registo := terras.at(lado, k)
 	if int(registo[WildSegments.ZONA]) != WorldPlan.Zone.TRAIL:
 		return
+	var inicio := terras.x_of(lado, k, largura)
+	var span := Vector2(inicio, inicio + terras.width)
+	var bichos: Array[WildlifeData] = []
+	for dados in species(_bioma(registo)):
+		if HuntHabitats.supports(dados, span, largura * METADE):
+			bichos.append(dados)
 	var tocas := WildBurrows.draw(
-		terras.x_of(lado, k, largura),
+		inicio,
 		terras.width,
 		terras.subject_x(lado, k, largura),
 		StringName(registo[WildSegments.TIPO]),
-		species(_bioma(registo)),
+		bichos,
 		RngService.scatter(hash([SAL, lado, k]), WildBurrows.SORTEIOS),
 		k == 0
 	)
@@ -56,6 +63,9 @@ static func author(campo: FieldWork, lado: int, k: int, largura: float) -> void:
 			continue
 		var bicho := StringName(toca[WildBurrows.BICHO])
 		hunt.burrows.add(x, float(ritmos.get(bicho, 0.0)), String(toca[WildBurrows.SITIO]), bicho)
+		HuntHabitats.reserve(hunt, SimLoop.builds)
+		if hunt.burrows.alive[hunt.burrows.xs.size() - 1] == 0:
+			continue
 		if not hunt.rabbits.has(x):
 			hunt.rabbits.append(x)
 			hunt.herd.arrive(x)

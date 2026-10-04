@@ -92,8 +92,7 @@ func test_cada_bicho_no_seu_sitio_e_no_seu_maximo() -> void:
 			assert_int(int(conta[dados.id])).is_less_equal(dados.per_segment_max)
 
 
-## Logo ao lado do imperio ha sempre caca: no primeiro segmento de cada lado, cada bicho
-## que la cabe tem pelo menos uma toca, mesmo com o sorteio a dizer nenhuma.
+## ADR 0062: o primeiro segmento garante uma fonte de caca, nao todas as especies.
 func test_o_primeiro_segmento_tem_sempre_caca() -> void:
 	var bichos := _bichos(["rabbit", "pheasant", "fox"])
 	(
@@ -101,13 +100,29 @@ func test_o_primeiro_segmento_tem_sempre_caca() -> void:
 		. is_empty()
 	)
 	var garantidas := WildBurrows.draw(0.0, 640.0, 320.0, &"empty", bichos, _sorteios(0.0), true)
-	assert_int(garantidas.size()).is_equal(3)
+	assert_int(garantidas.size()).is_equal(1)
+	assert_str(String(garantidas[0][WildBurrows.BICHO])).is_equal("rabbit")
 	(
 		assert_array(
 			WildBurrows.draw(0.0, 640.0, 320.0, &"settlement", bichos, _sorteios(0.9), true)
 		)
 		. is_empty()
 	)
+
+
+func test_o_limite_de_densidade_nao_elimina_a_fonte_pequena_garantida() -> void:
+	var bichos := _bichos(["rabbit", "pheasant", "fox"])
+	var u := _sorteios(0.999)
+	u[0] = 0.0  # o coelho depende da garantia, os outros tentam ocupar o trecho
+	u[WildBurrows.MAX_BICHOS + 1] = 0.999
+	u[WildBurrows.MAX_BICHOS + WildBurrows.POR_TOCA + 1] = 0.0
+	u[WildBurrows.MAX_BICHOS + WildBurrows.POR_TOCA * 2 + 1] = 0.001
+	var tocas := WildBurrows.draw(0.0, 640.0, 320.0, &"empty", bichos, u, true)
+	var rabbit := false
+	for toca in tocas:
+		rabbit = rabbit or toca[WildBurrows.BICHO] == &"rabbit"
+	assert_bool(rabbit).is_true()
+	assert_int(tocas.size()).is_less_equal(2)
 
 
 ## O mesmo segmento da as mesmas tocas: o mundo e o mesmo venha o rei quando vier.

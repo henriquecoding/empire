@@ -5,7 +5,7 @@
 # vive para la das tuas muralhas: cada segmento de trilho que nasce ao andar traz as
 # suas tocas, nos sitios que o segmento tem (a floresta tem arvores, o lago tem agua,
 # Q-150), com ate `per_segment_max` tocas de cada bicho. O primeiro segmento de cada lado
-# tem sempre pelo menos uma de cada bicho que la cabe: e o que esta logo ao lado.
+# garante caca pequena, nao uma toca de todas as especies (ADR 0062).
 #
 # Puro e sem sorteio proprio: os numeros chegam de fora (o RngService.scatter pelo sitio),
 # e o mesmo segmento da as mesmas tocas venha o rei quando vier.
@@ -21,7 +21,7 @@ const POR_TOCA := 3
 const MARGEM_PX := 40.0
 const SUJEITO_PX := 72.0
 ## O chao minimo entre duas tocas: a toca ao dobro e o bicho a escala dele (Q-218).
-const FOLGA_PX := 96.0
+const FOLGA_PX := 192.0
 const METADE := 0.5
 ## As chaves de cada toca.
 const X := &"x"
@@ -43,7 +43,7 @@ const SITIOS := {
 
 ## As tocas do segmento que comeca em `inicio`, com `largura` px, de tipo `tipo` e o
 ## assunto em `sujeito`. `bichos` sao os do bioma dele, do mais miudo para o mais caro;
-## `garantido` poe pelo menos uma toca de cada um que la cabe.
+## `garantido` poe uma primeira toca, nunca obriga todas as especies a coexistirem.
 static func draw(
 	inicio: float,
 	largura: float,
@@ -63,12 +63,15 @@ static func draw(
 		if dados.per_segment_max <= 0 or dele.is_empty():
 			continue
 		var n := mini(floori(sorteios[b] * float(dados.per_segment_max + 1)), dados.per_segment_max)
-		for _k in maxi(n, 1) if garantido else n:
+		if garantido and tocas.is_empty():
+			n = maxi(n, 1)
+		for _k in n:
 			var j := MAX_BICHOS + POR_TOCA * tocas.size()
 			if j + POR_TOCA > sorteios.size():
 				break
 			var sitio: StringName = dele[mini(floori(sorteios[j] * dele.size()), dele.size() - 1)]
-			tocas.append({BICHO: dados.id, SITIO: sitio, &"ordem": sorteios[j + 1]})
+			var order := -INF if garantido and tocas.is_empty() else sorteios[j + 1]
+			tocas.append({BICHO: dados.id, SITIO: sitio, &"ordem": order})
 	return _por_no_chao(tocas, inicio, largura, sujeito, sorteios)
 
 

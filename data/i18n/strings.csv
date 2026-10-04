@@ -553,8 +553,8 @@ GUIDE_HUNTER,"FORMA UM ARQUEIRO
 Recruta um vagabundo e paga o arco na banca","TRAIN AN ARCHER
 Recruit a vagrant and buy a bow at the rack",guia contextual de jogo,160,
 GUIDE_FARM,"CRIA RENDA
-Recolhe a caça e paga um canteiro","GROW YOUR INCOME
-Collect hunting coins and fund a farm",guia contextual de jogo,160,
+Os arqueiros caçam nos prados; recolhe as moedas","GROW YOUR INCOME
+Archers hunt in the meadows; collect their coins",guia contextual de jogo,160,ADR 0062: a caca fica fora da Clareira.
 GUIDE_WALL,"PREPARA A DEFESA
 Ergue uma muralha antes da noite","PREPARE YOUR DEFENCE
 Build a wall before nightfall",guia contextual de jogo,160,

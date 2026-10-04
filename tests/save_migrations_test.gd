@@ -106,6 +106,6 @@ func test_um_save_v4_sobe_com_o_rei_e_arbustos() -> void:
 	assert_dict(mundo[&"roster"]).is_empty()
 	assert_dict(mundo[&"crown_drop"]).is_empty()  # a coroa na cabeca (Q-167)
 	assert_dict(mundo[&"supply"]).is_empty()  # as aljavas cheias (Q-163)
-	var migradas: Dictionary = mundo[&"hunting"][&"burrows"]
-	assert_array(Array(migradas[&"game"])).is_equal(["rabbit", "rabbit"])
+	# v9 reautora os habitats de qualquer versao anterior, depois dos passos antigos.
+	assert_dict(mundo[&"hunting"][&"burrows"]).is_empty()
 	assert_dict(mundo[&"hunting"][&"wounds"]).is_empty()

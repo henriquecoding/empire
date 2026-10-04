@@ -695,6 +695,7 @@ Script `src/sim/data/wildlife_data.gd` · layout `rows` · 6 linha(s) · §06 §
 | `rots_into` | StringName |  |  |
 | `respawn_s` | float |  |  |
 | `sprite_scale` | int |  |  |
+| `habitat_min_px` | float |  |  |
 
 ## `companions.csv` → `data/companions/{id}.tres`
 
