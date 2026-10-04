@@ -56,7 +56,7 @@ func test_o_rei_levado_na_alvorada_continua_a_ser_derrota() -> void:
 
 func test_o_nucleo_caido_acaba_a_partida() -> void:
 	var nucleo := SimLoop.builds.slots[0]
-	SimLoop.builds.damage(nucleo.id, nucleo.health)
+	SimLoop.builds.damage(nucleo.id, nucleo.health * 2)
 	assert_bool(Defeat.happened()).is_true()
 
 

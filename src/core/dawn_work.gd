@@ -19,6 +19,7 @@ static func run(
 	nucleo: Vector2
 ) -> int:
 	if obras != null:
+		DawnRepair.plan(obras)
 		rei = _coroar(campo, unidades, estado, obras, rei)
 		var treino := campo.succession.dawn(obras, unidades, rei)
 		if treino > 0:

@@ -54,6 +54,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # a medicao comeca depois de escolher territorio
 
 
 func after_test() -> void:

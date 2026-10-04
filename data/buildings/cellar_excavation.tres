@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_qd6gd"]
+
+[resource]
+script = ExtResource("1_qd6gd")
+id = &"cellar_excavation"
+display_key = "BUILDING_CELLAR_EXCAVATION"
+category = &"special"
+cost = 3
+max_health = 32
+build_work = 8.0
+width_px = 24
+unique_per_kingdom = true
+shadow_width = 24

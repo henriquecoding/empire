@@ -64,6 +64,8 @@ static func plan(field: FieldWork) -> void:
 	ids.sort()
 	for id: int in ids:
 		var record: Dictionary = field.settlements.records[id]
+		SimLoop.builds.work_owners[id] = OWNER_BASE + id
+		CellarWatch.foreign(field, id, record)
 		for k in (record[&"units"] as PackedInt32Array).size():
 			var unit := int(record[&"units"][k])
 			var i := units.index_of(unit)
@@ -104,16 +106,19 @@ static func dawn(field: FieldWork) -> void:
 					field.supply.spent.erase(unit)
 		for site in record[&"sites"]:
 			var slot := SimLoop.builds.slots[SimLoop.builds.index_of(site)]
-			if slot.standing():
+			if slot.standing() and not slot.mending and slot.rest_day != SimLoop.state.day:
 				field.settlements.earn(
 					id, slot.yield_per_day * field.seasons.yield_mult(SimLoop.state.day, slot.kind)
 				)
 			if (
 				slot.health < slot.max_health()
+				and not slot.mending
 				and field.settlements.spend(id, maxi(1, slot.repair_cost()))
 			):
-				slot.state = BuildSlot.State.DONE
-				slot.health = slot.max_health()
+				slot.mending = true
+				slot.progress = 0.0
+				if slot.state == BuildSlot.State.RUIN:
+					slot.state = BuildSlot.State.SCAFFOLD
 		if (
 			guards < rules.realm_guard_count
 			and field.settlements.spend(id, rules.realm_guard_price)

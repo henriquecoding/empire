@@ -245,6 +245,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-18](RG-18.md) | Desempenho e mobile | RG-16 | por fazer |
 | [RG-20](RG-20.md) | Uma clareira, prados de caça e floresta de exploração | RG-19, QP-06 | feito |
 | [RG-21](RG-21.md) | Recrutamento por corrida, fundação na lareira e cidade dentro das muralhas | RG-19, RG-20 | feito |
+| [RG-22](RG-22.md) | A Última Carroça: relatório completo e decisões atuais do painel | RG-21 | parcial — implementação concluída; validação e percepção humana por medir |
 
 ## Respostas aprovadas no painel
 
@@ -252,7 +253,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 |---|---|---|---|
 | [QP-01](QP-01.md) | Onze respostas restantes do painel | UX-01 | feito |
 | [QP-02](QP-02.md) | As respostas do painel de 02 e 03/10/2026 | UX-04 | feito |
-| [QP-03](QP-03.md) | O baú da sala secreta | QP-02 | por fazer |
+| [QP-03](QP-03.md) | O baú da sala secreta | QP-02 | feito — RG-22; ADR 0065 |
 | [QP-04](QP-04.md) | O refinamento da jogabilidade de 03/10/2026 | QP-02 | feito |
 | [QP-05](QP-05.md) | A caça a sério | QP-04 | feito |
 | [QP-06](QP-06.md) | A caça longe do reino | QP-05 | feito |

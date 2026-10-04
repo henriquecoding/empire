@@ -69,8 +69,16 @@ func test_subir_a_sede_e_uma_obra_acabada_e_nao_um_muro() -> void:
 	EventBus.wall_upgraded.connect(ouvir_muro)
 	EventBus.build_completed.connect(ouvir_obra)
 	var sede := _sede()
+	LastCartWatch.claim(&"road")
+	SimLoop.units.xs[SimLoop.units.index_of(SimLoop.king_id)] = sede.x
 	for estagio in [RealmLadder.FUNDADO, RealmLadder.FUNDADO + 1]:
-		_largar_em(sede.x, sede.next_cost())
+		if estagio > RealmLadder.FUNDADO:
+			SimLoop.arrival.survived = true
+			SimLoop.arrival.record(&"first_income", &"forage")
+			for wall in SimLoop.builds.slots:
+				if wall.two_paths() and absf(wall.x - sede.x) == 680.0:
+					wall.raise_to(1)
+			_largar_em(sede.x, sede.next_cost())
 		_passos(ceili(sede.works[estagio - 1] / PASSO) + 60)
 		assert_int(sede.level).is_equal(estagio)
 	EventBus.wall_upgraded.disconnect(ouvir_muro)

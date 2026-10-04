@@ -16,6 +16,7 @@ func before_test() -> void:
 	Greybox.build()
 	SimLoop.step(PASSO)
 	MonarchWatch.begin(&"nia")
+	preload("res://tests/support/sede.gd").companhia()
 	HeroWatch.tick(0.0)
 
 

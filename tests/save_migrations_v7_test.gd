@@ -84,7 +84,9 @@ func test_o_save_migrado_carrega_com_o_rei_conduzido_e_o_escudeiro_ligado() -> v
 	EventBus.reset()
 	SimLoop.start(20261002)
 	Greybox.build()
+	preload("res://tests/support/sede.gd").companhia()
 	var mundo := SimLoop.world()
+	mundo.erase(&"arrival")
 	mundo.erase(&"monarchy")
 	(mundo[&"roster"] as Dictionary)[&"starting_class"] = &"archer"
 	var d := SaveMigrations.migrate({&"save_version": 6, &"state": {}, &"world": mundo})

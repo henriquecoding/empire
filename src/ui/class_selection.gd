@@ -67,7 +67,7 @@ func _ready() -> void:
 	PauseTheme.title(brand, PauseTheme.BRAND_SIZE)
 	var heading := PauseTheme.label(body, &"MONARCH_CHOOSE_TITLE")
 	PauseTheme.title(heading)
-	PauseTheme.label(body, &"MONARCH_CHOOSE_INTRO")
+	PauseTheme.label(body, &"ARRIVAL_CHOOSE_INTRO")
 	_grid = GridContainer.new()
 	_grid.columns = _choices.size()
 	_grid.add_theme_constant_override("h_separation", PauseTheme.COLUMN_GAP)
@@ -147,12 +147,13 @@ func select(id: StringName) -> void:
 		{"defense": roundi(float(data.phase1_params.get(&"defense", 0.0)) * PERCENT)}
 	)
 	_evolved.text = (
-		tr(_key("EVOLVED", id))
+		tr(_key("ARRIVAL_EVOLVED", id))
 		. format(
 			{
 				"defense": roundi(float(data.phase2_params.get(&"defense", 0.0)) * PERCENT),
 				"seeds": data.evolve_seed_cost,
 				"feat": data.evolve_condition_value,
+				"wins": LastCartWatch.rules().battle_evolve_count,
 			}
 		)
 	)

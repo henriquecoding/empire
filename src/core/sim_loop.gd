@@ -1,40 +1,30 @@
 extends Node
-
 var state: GameState
-
 var units: UnitSystem
 var creatures: CreatureSystem
-
 var builds: BuildSystem
 var jobs: JobBoard
 var secrets := SecretSites.new()
-
 var combat: CombatSystem
 var morale: MoraleSystem
 var economy: EconomySystem
-
 var night: NightWatch
-
 var coins: CoinSystem
 var recruits: RecruitSystem
 var field: FieldWork
 var hunting: HuntingSystem
-
 var intents := IntentQueue.new()
-## A sede: a carroca da chegada e o alvo da moeda no nucleo (ADR 0059).
 var seat := RealmSeat.new()
-
+var arrival := LastCart.new()
+var companion := CompanionJourney.new()
+var treasury := Treasury.new()
 var king_id: int = UnitSystem.NENHUM
-
 var core_x: float = 0.0
 var world_width: float = 0.0
 var wild_px: float = 0.0
 var passages: PackedFloat32Array = PackedFloat32Array()
-
 var autosave_enabled: bool = true
-
 var tally := NightTally.new()
-
 var _running: bool = false
 var _fase: int = UnitSystem.NENHUM
 var _brecha: bool = false
@@ -48,7 +38,6 @@ func _ready() -> void:
 	EventBus.dawn_broke.connect(_no_amanhecer)
 	tally.listen()
 	SpiritWatch.listen()  # o animo do reino (Q-102)
-	# §07: a brecha poe a fugir quem esta fraco; conta no tick seguinte (passo 11).
 	EventBus.wall_breached.connect(func(_wall_id: int) -> void: _brecha = true)
 
 
@@ -77,15 +66,25 @@ func world() -> Dictionary:
 	var saved := SimSave.world(units, creatures, coins, builds, night, king_id, jobs)
 	saved.merge(field.to_dict())
 	saved[FoundationWatch.SEDE] = seat.to_dict()
+	saved[&"arrival"] = arrival.to_dict()
+	saved[&"companion_journey"] = companion.to_dict()
+	saved[&"treasury"] = treasury.to_dict()
 	return saved
 
 
 func load_world(mundo: Dictionary) -> void:
+	arrival.from_dict(mundo.get(&"arrival", {}))
+	companion.from_dict(mundo.get(&"companion_journey", {}))
+	treasury.from_dict(mundo.get(&"treasury", {}))
+	var home := arrival.origin + arrival.offset if arrival.active else world_width / 2
+	LastCartWatch.reanchor(home - core_x)
+	builds.foundation_committed = not arrival.active or arrival.choice != &""
 	WorldWorks.restore(mundo.get(SimSave.OBRAS, []))
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
 	field.from_dict(mundo)
 	seat.from_dict(mundo.get(FoundationWatch.SEDE, {}))
 	FoundationWatch.founded_tools()
+	CellarWatch.sync()
 
 
 func stop() -> void:
@@ -111,58 +110,61 @@ func set_paused(pausado: bool) -> void:
 func step(delta: float) -> void:
 	state.tick += 1
 	builds.crew_owner = recruits.owner_of(units, king_id)
+	RealmMilestones.sync()
 	var abertas := Passages.open(passages, builds)  # a escora fecha a boca (Q-132)
 	_largar(Verbs.consume(intents, units, creatures, combat, king_id, abertas, builds, field))
 	HeroWatch.tick(delta)
 
-	ClockService.step(delta)  # 1 · GameClock.advance — todo o tick
+	if not arrival.active or arrival.choice != &"":
+		ClockService.step(delta)  # o primeiro dia começa com o estandarte
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
+	ArrivalLabor.reserve()
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
 	field.prepare(ClockService.clock.day, core_x, world_width, units, _fase, state)
-	# 4 · recrutamento, espera e combate escrevem alvo antes da FSM.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id, core_x)
 	field.plan(units, _fase < GameClock.Phase.DUSK)
+	ArrivalLabor.plan(_fase)
+	CompanionWatch.plan()
 	EventRelay.combat(combat.choose(units, creatures, builds, abertas))
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
-	# 5 · quem se conduz anda em combate; a alvorada solta os postos atras da luz.
 	field.under.confine(units)  # 5 · la em baixo, ninguem passa das paredes (Q-186)
 	units.piloted_pace = MonarchWatch.pace(delta)  # 5 · correr, com folego (Q-193)
 	units.tick_movement(
 		delta, Assume.driven(), ClockService.dawn_front(), HeroWatch.pace(), recruits.rush
 	)
 	creatures.tick_movement(delta)
+	CellarWatch.steal()
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
-	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
-	#     chegada — da moeda ou de quem a vai buscar — e por isso vem a seguir ao
-	#     movimento e nao no passo do sistema que os trata (Q-063, Q-064). A obra
-	#     e servida primeiro: o §55 diz que ela existe quando uma moeda CAI nela,
-	#     e quem larga uma moeda em cima de um canteiro nao a quer de volta.
 	EventRelay.builds(builds.absorb(coins, state, night.amargueiros))
 	field.absorb(coins, builds, units)
 	EventRelay.pickup(recruits.pickup(units, coins, king_id))
 	Verbs.sweep(units, coins, king_id)
+	LastCartWatch.tick(delta, _fase, mudou)
 	FoundationWatch.collect()  # a carroca de provisoes da chegada (ADR 0059)
 	EventRelay.secrets(secrets.tick(units, Assume.driven(), state))
 	HuntWatch.stir(field, units, delta)  # 5 · a caca anda; o javali bate antes das mortes
 	var strikes := HeroWatch.resolved(combat.resolve(units, creatures, builds, _roll))
+	CompanionWatch.battles(strikes)
 	_largar(EventRelay.combat(night.feats(strikes)))  # 6
 	var luz := _fase < GameClock.Phase.DUSK
 	_largar(field.resolve(units, builds, delta, luz, ClockService.clock, king_id))
 	if mudou:  # 7 · EconomySystem — uma vez por fase, e nunca por frame
 		_largar(EventRelay.economy(economy.on_phase(builds, _fase, night.trail()), builds))
+	builds.work_day = ClockService.clock.day
 	EventRelay.builds(FoundationWatch.after(builds.tick(delta, units)))  # 8 · BuildSystem
-	# 9 · DebtSystem e DiplomacySystem — uma vez por dia ... XIII-04, F2
-	# 10 · KingAISystem — uma vez por dia, por imperio ..... F2
+	CellarWatch.sync()
 
 	_espelhar_relogio()
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado
 
 
 func drop_coin(x: float, faixa: Band.Kind, quanto: int, origem: StringName) -> int:
+	if origem in [&"hunt", &"production", &"forage"]:
+		arrival.record(&"first_income", origem)
 	var desvio := RngService.float_range(&"economy", -CoinSystem.DESVIO_MAX, CoinSystem.DESVIO_MAX)
 	var coin_id := coins.drop(state, x, faixa, quanto, desvio, origem == Verbs.JOGADOR)
 	CoinTarget.aim(coins, coin_id, builds, origem == Verbs.JOGADOR, state)
@@ -175,6 +177,7 @@ func _montar() -> void:
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
 	builds.workforce = units
+	builds.repair_speed = LastCartWatch.rules().standing_repair_mult
 	jobs = SimFactory.job_board()
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()
@@ -187,6 +190,9 @@ func _montar() -> void:
 	hunting = field.hunting
 	tally.reset()
 	seat = RealmSeat.new()
+	arrival = LastCart.new()
+	companion = CompanionJourney.new()
+	treasury = Treasury.new()
 	_fase = UnitSystem.NENHUM
 	_brecha = false
 	intents.clear()
@@ -238,6 +244,5 @@ func _no_amanhecer(dia: int) -> void:
 	var noite := tally.of_night(dia)
 	if _running and not noite.is_empty():
 		EventBus.queue(&"night_survived", noite)
-	# O dia 1 e o amanhecer com que o jogo comeca: gravar ai nao guarda nada.
 	if autosave_enabled and _running and dia > 1:
 		SaveService.autosave(state, RngService.snapshot(), world())

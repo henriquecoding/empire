@@ -349,9 +349,9 @@ async function main() {
       resultado(`/jogar/${q}: o primeiro monarca confirma-se pelo teclado`, classes.some((msg) => msg.includes("monarca inicial monarch")));
       await p.keyboard.press("Escape");
       await p.waitForTimeout(150);
-      // Retomar, Opções, Controlos, [Ecrã inteiro, onde o browser o dá (UX-03)], Recomeçar, Voltar.
+      // Retomar, Opções, Controlos, [Ecrã inteiro], Recomeçar, Exportar abertura, Voltar.
       const ecra = await p.evaluate(() => Boolean(window.empireEcra && window.empireEcra.pode()));
-      for (let i = 0; i < 4 + (ecra ? 1 : 0); i++) {
+      for (let i = 0; i < 5 + (ecra ? 1 : 0); i++) {
         await p.keyboard.press("ArrowDown");
         await p.waitForTimeout(80);
       }

@@ -19,6 +19,7 @@ func before_test() -> void:
 	EventBus.coin_dropped.connect(_caiu)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # esta suite mede o mundo depois da escolha territorial
 
 
 func after_test() -> void:

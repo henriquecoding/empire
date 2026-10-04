@@ -24,6 +24,7 @@ func before_test() -> void:
 	EventBus.material_consumed.connect(_levou)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # esta suite mede o mundo depois da escolha territorial
 	SimLoop.builds.slots[0].health = 1000000  # a pergunta sao as galinhas
 
 

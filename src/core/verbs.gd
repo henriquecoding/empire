@@ -41,11 +41,14 @@ static func consume(
 ) -> Array[Dictionary]:
 	var larga: Array[Dictionary] = []
 	for intencao in fila.take():
+		SimLoop.arrival.record(&"first_input")
 		var quem := king_id if campo == null else campo.roster.driven(unidades, king_id)
 		var args: Dictionary = intencao[1]
 		match int(intencao[0]):
 			IntentQueue.Kind.DROP_COIN:
 				if spend(unidades, quem, args[&"amount"]):
+					if quem == king_id:
+						SimLoop.arrival.record(&"first_coin_spent")
 					if quem != king_id:
 						args[EventRelay.PORQUE] = DE_CLASSE  # so o rei gere (§08)
 					larga.append(args)
@@ -82,6 +85,8 @@ static func _assumir(
 	obras: BuildSystem,
 	campo: FieldWork
 ) -> void:
+	if quem == king_id and (CellarWatch.take() or LastCartWatch.use()):
+		return
 	if assume(unidades, quem, passagens):
 		var i := unidades.index_of(quem)
 		if campo != null and unidades.bands[i] == Band.Kind.UNDERGROUND:
@@ -150,7 +155,8 @@ static func assume(unidades: UnitSystem, king_id: int, passagens: PackedFloat32A
 	var de := int(unidades.bands[i])
 	unidades.bands[i] = para
 	if para == int(Band.Kind.UNDERGROUND):
-		UnderWatch.enter(unidades.xs[i])  # o sitio nasce na primeira descida (Q-186)
+		UnderWatch.enter(unidades.xs[i])
+		SimLoop.arrival.record(&"underground_discovered")  # o sitio nasce na primeira descida (Q-186)
 	EventBus.queue(&"passage_used", [king_id, de, para])
 	return true
 

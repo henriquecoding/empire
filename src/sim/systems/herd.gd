@@ -29,6 +29,7 @@ var variants: Dictionary = {}
 var cooldowns: Dictionary = {}
 ## Os bichos que nao fogem e ja foram feridos: esses carregam.
 var provoked: Dictionary = {}
+var stunned: Dictionary = {}
 ## As criaturas da Podridao a superficie (id -> Vector2(x, alcance)): de noite os bichos
 ## fogem delas, e a que chega ao alcance apanha o bicho (o dono, 03/10/2026).
 var predators: Dictionary = {}
@@ -57,7 +58,7 @@ func arrive(home: float, variant: StringName = &"") -> void:
 
 
 func forget(home: float) -> void:
-	for registo: Dictionary in [xs, facing, ages, variants, cooldowns, provoked]:
+	for registo: Dictionary in [xs, facing, ages, variants, cooldowns, provoked, stunned]:
 		registo.erase(home)
 
 
@@ -99,6 +100,9 @@ func step(
 		var bicho: WildlifeData = species.call(home)
 		if bicho == null:
 			continue
+		if float(stunned.get(home, 0.0)) > 0.0:
+			stunned[home] = maxf(0.0, float(stunned[home]) - delta)
+			continue
 		var x := where(home)
 		var fera := _nearest_predator(x)
 		if fera != Vector2.INF and absf(fera.x - x) <= fera.y:
@@ -115,7 +119,11 @@ func step(
 			x = _threatened(home, x, bicho, quem, float(threats[quem]), delta)
 		else:
 			x = _graze(home, x, bicho, delta)
-		xs[home] = clampf(x, home - bicho.flee_px, home + bicho.flee_px)
+		xs[home] = (
+			x
+			if not bicho.flees and provoked.has(home)
+			else clampf(x, home - bicho.flee_px, home + bicho.flee_px)
+		)
 	return _golpes
 
 
@@ -154,6 +162,7 @@ func to_dict() -> Dictionary:
 		&"variants": variants.duplicate(),
 		&"cooldowns": cooldowns.duplicate(),
 		&"provoked": provoked.duplicate(),
+		&"stunned": stunned.duplicate(),
 		&"born": born,
 	}
 
@@ -166,6 +175,7 @@ func from_dict(d: Dictionary) -> void:
 	variants = d.get(&"variants", {}).duplicate()
 	cooldowns = d.get(&"cooldowns", {}).duplicate()
 	provoked = d.get(&"provoked", {}).duplicate()
+	stunned = d.get(&"stunned", {}).duplicate()
 	born = int(d.get(&"born", 0))
 
 

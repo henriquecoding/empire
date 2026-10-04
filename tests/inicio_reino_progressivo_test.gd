@@ -13,7 +13,7 @@ func after_test() -> void:
 	SimLoop.autosave_enabled = true
 
 
-func test_so_dois_vagabundos_recrutaveis_perto_do_marco_sem_servos_prontos() -> void:
+func test_so_tres_vagabundos_recrutaveis_perto_do_marco_sem_servos_prontos() -> void:
 	var perto := 0
 	var servos := 0
 	for i in SimLoop.units.count():
@@ -26,7 +26,7 @@ func test_so_dois_vagabundos_recrutaveis_perto_do_marco_sem_servos_prontos() -> 
 			perto += 1
 			assert_str(String(dados.id)).is_equal("vagrant")
 			assert_int(SimLoop.units.owners[i]).is_equal(RecruitSystem.SEM_DONO)
-	assert_int(perto).is_equal(2)
+	assert_int(perto).is_equal(3)
 	assert_int(servos).is_equal(0)
 
 

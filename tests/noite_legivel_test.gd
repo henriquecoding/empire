@@ -18,6 +18,7 @@ func before_test() -> void:
 	EventBus.rot_fed.connect(_comeu)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # esta suite mede o mundo depois da escolha territorial
 	SimLoop.builds.slots[0].health = 1000000  # a pergunta e a noite, nao o nucleo
 
 
@@ -65,6 +66,7 @@ func test_o_lado_dito_vai_no_save() -> void:
 
 func test_o_guia_da_tarde_diz_o_lado() -> void:
 	TranslationServer.set_locale("pt_PT")
+	preload("res://tests/support/sede.gd").erguer()
 	_ate(GameClock.Phase.AFTERNOON)
 	SimLoop.step(STEP)
 	var lado := "LESTE" if SimLoop.night.rot.announced > 0 else "OESTE"

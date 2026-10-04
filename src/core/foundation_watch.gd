@@ -1,15 +1,8 @@
 # src/core/foundation_watch.gd — a fundacao do reino, no jogo (ADR 0059).
 #
-# O plano do reino de 03/10/2026, aplicado pelo dono (*«aplique esse relatorio»*): o
-# monarca chega a uma Clareira com a companhia e dois vagabundos neutros (ADR 0060);
-# ha uma carroca de provisoes ao pe do marco; a primeira moeda funda o reino.
-# O martelo e o arco aparecem juntos depois de fundar a cidade (ADR 0064).
-# Muralhas, torres, canteiros e Casa de Treino pagam-se
-# como sempre.
-#
-# Aqui vive tambem o alvo da moeda no nucleo (plano §3.6, §23.2): a sede, por omissao,
-# ou o monarca, escolhido pelo Verbo 2 no marco quando ele pode evoluir. Uma moeda para
-# a sede nunca evolui o monarca por ordem do codigo.
+# ADR 0065: o estandarte funda; a reserva abre depois da escolha.
+# A companhia exige contratacao; ferramentas aparecem quando o Acampamento acaba.
+# O alvo pago de evolucao conserva compatibilidade com campanhas anteriores.
 class_name FoundationWatch
 extends RefCounted
 
@@ -78,7 +71,7 @@ static func after(eventos: Array[Dictionary]) -> Array[Dictionary]:
 ## O Verbo 2 no marco da sede, com o monarca a poder evoluir: troca o alvo da moeda entre
 ## a sede e o monarca. Verdadeiro se trocou; sem escolha, o Verbo 2 segue para o resto.
 static func toggle(unidades: UnitSystem, rei: int, obras: BuildSystem, campo: FieldWork) -> bool:
-	if campo == null or not at_seat(unidades, rei, obras):
+	if SimLoop.arrival.active or campo == null or not at_seat(unidades, rei, obras):
 		return false
 	var pode := MonarchWatch.can_evolve(campo, SimLoop.state.royal_seeds)
 	if not pode:
@@ -106,7 +99,11 @@ static func aims_monarch() -> bool:
 static func _bancada() -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
-		if vaga.territory != 0 or vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
+		if (
+			vaga.territory != 0
+			or vaga.kind not in [BANCA, MARTELOS, CompanionWatch.POST]
+			or vaga.level != 0
+		):
 			continue
 		if vaga.state != BuildSlot.State.EMPTY or vaga.paid != 0:
 			continue

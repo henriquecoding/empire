@@ -23,6 +23,9 @@
 | procedural — `SeatSprites`, `PixelPainter` | 412 × 164 | sede `walled_village` | a Vila Fortificada: a vila entre palicadas, com a guarita (ADR 0059) — a registar | 2026-10-03 | em uso |
 | procedural — `SeatSprites`, `PixelPainter` | 72 × 48 | carroça de provisões | a carroça da chegada com a bolsa (ADR 0059) — a registar | 2026-10-03 | em uso |
 
+| procedural — `ArrivalView`, formas lisas | coordenadas em constantes | estandartes, carga exposta, cicatriz e baús | marcos da Última Carroça; arte final só depois do playtest (ADR 0065) | 2026-10-04 | em uso |
+| procedural — `ArrivalView` e `BuildView` | 24 px de frente | posto da companhia e serviço de escavação | serviços da chegada, a registar (ADR 0065) | 2026-10-04 | em uso |
+
 ## Como se acrescenta
 
 ```text

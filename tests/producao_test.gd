@@ -84,6 +84,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # a medicao comeca depois de escolher territorio
 
 
 func after_test() -> void:
@@ -132,6 +133,7 @@ func test_uma_obra_de_pe_larga_por_dia_o_que_o_csv_lhe_da() -> void:
 		SimLoop.stop()
 		SimLoop.start(SEMENTE)
 		Greybox.build()
+		LastCartWatch.claim(&"road")  # a medicao comeca depois de escolher territorio
 		var vaga := _levantar(id)
 		var dados := _edificio(id)
 		assert_int(_moedas_de(vaga, 1)).is_equal(int(dados.yield_per_day - dados.spoil_per_day))

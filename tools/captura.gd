@@ -220,6 +220,12 @@ func _instrumentos() -> Array:
 ## o chama a mao tem de olhar, senao continua a andar com um jogo ja acabado e a
 ## fotografia mostra um mundo que nunca existiu.
 func _avancar(segundos: float) -> void:
+	if segundos > 0.0 and SimLoop.arrival.active and SimLoop.arrival.choice == &"":
+		LastCartWatch.claim(&"road")
+		var r := SimLoop.units.index_of(SimLoop.king_id)
+		SimLoop.units.xs[r] = SimLoop.core_x
+		SimLoop.units.clear_target(SimLoop.king_id)
+		_preparacao.append("rei no estandarte da estrada escolhido para avancar o dia")
 	for _i in int(segundos / PASSO):
 		if not SimLoop.running():
 			return

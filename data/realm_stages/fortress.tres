@@ -13,4 +13,6 @@ build_work = 112.0
 max_health = 1000
 width_px = 480
 contact_slots = 7
-unlocks = Array[StringName]([&"smelter", &"consecrated_altar", &"bastion"])
+unlocks = Array[StringName]([&"smelter", &"consecrated_altar", &"bastion", &"heir_house"])
+maturity = Array[StringName]([&"walls", &"production", &"subsoil"])
+defense = 0.25

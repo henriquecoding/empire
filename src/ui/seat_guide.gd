@@ -17,7 +17,10 @@ const SEPARADOR := ", "
 ## O texto do marco da sede: fundar, melhorar, a obra em curso, a reparacao, ou o
 ## monarca a evoluir, com a troca de alvo quando ha escolha.
 static func context(site: BuildSlot, values: Dictionary) -> String:
-	var pode := MonarchWatch.can_evolve(SimLoop.field, SimLoop.state.royal_seeds)
+	var pode := (
+		not SimLoop.arrival.active
+		and MonarchWatch.can_evolve(SimLoop.field, SimLoop.state.royal_seeds)
+	)
 	if FoundationWatch.aims_monarch():
 		var evolui := GameplayGuide.evolve(site, values)
 		return evolui + "\n" + _tr(&"CONTEXT_SEAT_TO_SEAT").format(values)
@@ -53,6 +56,10 @@ static func _seat(site: BuildSlot, values: Dictionary) -> String:
 		return _tr(&"CONTEXT_SEAT_TOP").format(values)
 	if site.level == RealmLadder.CLAREIRA:
 		return _tr(&"CONTEXT_SEAT_FOUND").format(values)
+	var missing := RealmMilestones.missing()
+	if missing != &"":
+		values["feat"] = _tr(&"ARRIVAL_MATURITY_" + String(missing).to_upper())
+		return _tr(&"ARRIVAL_MATURITY").format(values)
 	values["opens"] = opens(site.level + 1)
 	var texto := _tr(&"CONTEXT_SEAT_UPGRADE").format(values)
 	var atual := RulesFactory.realm_stage(site.level)

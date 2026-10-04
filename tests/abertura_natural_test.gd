@@ -103,9 +103,13 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 ## o Acampamento. Antes dela nenhuma obra aceita moeda.
 func _fundar() -> void:
 	var sede := RealmLadder.seat(SimLoop.builds)
-	while sede.state == BuildSlot.State.EMPTY:
-		assert_float(ClockService.clock.elapsed).is_less(FUNDAR_S)
-		_passo(sede.x, true)
+	for _k in 600:
+		if SimLoop.arrival.choice != &"":
+			break
+		_passo(sede.x)
+		if absf(_x_do_rei() - sede.x) <= PERTO_PX:
+			SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
+	assert_str(String(SimLoop.arrival.choice)).is_equal("road")
 	while sede.level == RealmLadder.CLAREIRA:
 		assert_float(ClockService.clock.elapsed).is_less(FUNDAR_S)
 		_passo(sede.x)
@@ -154,6 +158,8 @@ func _passo(x: float, larga: bool = false) -> void:
 
 
 func _correr_ate(segundos: float) -> void:
+	if SimLoop.arrival.choice == &"":
+		_fundar()
 	while ClockService.clock.elapsed < segundos:
 		SimLoop.step(STEP)
 

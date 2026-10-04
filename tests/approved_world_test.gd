@@ -107,7 +107,9 @@ func test_local_realm_has_own_workers_defenses_treasury_and_night_attack() -> vo
 	SimLoop.start(20260930)
 	Greybox.region()
 	SimLoop.load_world(saved)
-	assert_float(SimLoop.field.settlements.treasury(1)).is_equal(treasury)
+	SettlementWatch.plan(SimLoop.field)  # autoriza o bau estrangeiro antes de medir
+	var stored := SimLoop.treasury.amount("realm_hatch_1")
+	assert_float(SimLoop.field.settlements.treasury(1) + stored).is_equal(treasury)
 	assert_int(SimLoop.field.settlements.records[1][&"sites"].size()).is_equal(4)
 
 

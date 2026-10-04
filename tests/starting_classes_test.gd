@@ -28,7 +28,7 @@ func _corpo(unit_id: int) -> StringName:
 	return SimLoop.units.data_ids[SimLoop.units.index_of(unit_id)]
 
 
-func test_cada_monarca_e_o_titular_com_o_seu_companheiro_sem_rei_escondido() -> void:
+func test_cada_monarca_e_o_titular_sem_companhia_gratis_ou_rei_escondido() -> void:
 	for id: StringName in [&"monarch", &"nia", &"archer_emperor"]:
 		SimLoop.stop()
 		SimLoop.start(20261001)
@@ -39,7 +39,7 @@ func test_cada_monarca_e_o_titular_com_o_seu_companheiro_sem_rei_escondido() -> 
 		assert_int(Assume.driven()).is_equal(SimLoop.king_id)
 		assert_str(String(_corpo(SimLoop.king_id))).is_equal(String(_dados(id).unit))
 		var c := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
-		assert_str(String(SimLoop.units.data_ids[c])).is_equal(String(_dados(id).companion))
+		assert_int(c).is_equal(-1)
 		var reis := 0
 		for i in SimLoop.units.count():
 			var dados := Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData
@@ -66,6 +66,8 @@ func test_so_o_rei_tem_a_aura_e_o_escudeiro_do_escudo() -> void:
 	MonarchWatch.begin(&"monarch")
 	SimLoop.step(PASSO)
 	assert_bool(SimLoop.field.classes.active).is_true()
+	assert_int(SimLoop.field.classes.squire_index(SimLoop.units)).is_equal(-1)
+	preload("res://tests/support/sede.gd").companhia()
 	assert_int(SimLoop.field.classes.squire_index(SimLoop.units)).is_not_equal(-1)
 	SimLoop.stop()
 	SimLoop.start(20261001)
@@ -93,5 +95,5 @@ func test_a_escolha_persiste_no_save_sem_duplicar_ninguem() -> void:
 	assert_str(String(SimLoop.field.monarchy.profile)).is_equal("nia")
 	assert_int(SimLoop.units.count()).is_equal(count)
 	var c := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
-	assert_str(String(SimLoop.units.data_ids[c])).is_equal("bard_banner")
+	assert_int(c).is_equal(-1)
 	assert_bool(MonarchWatch.begin(&"monarch")).is_false()

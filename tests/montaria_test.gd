@@ -156,7 +156,7 @@ func test_o_estabulo_esta_na_regiao() -> void:
 	SimLoop.autosave_enabled = false
 	SimLoop.start(20260930)
 	Greybox.build()
-	var ultima: BuildSlot = SimLoop.builds.slots[-4]
+	var ultima := _estabulo_real()
 	assert_str(String(ultima.kind)).is_equal(String(Stables.ESTABULO))
 	assert_int(int(ultima.band)).is_equal(int(Band.Kind.SURFACE))
 	assert_float(ultima.x - SimLoop.core_x).is_equal(Stables.ESTABULOS_X[0])
@@ -171,7 +171,7 @@ func test_no_jogo_o_rei_compra_e_monta_o_cavalo() -> void:
 	EventBus.reset()
 	SimLoop.start(20260930)
 	Greybox.build()
-	var casa: BuildSlot = SimLoop.builds.slots[-4]
+	var casa := _estabulo_real()
 	casa.level = 1
 	casa.state = BuildSlot.State.DONE
 	casa.health = casa.max_health()
@@ -198,3 +198,10 @@ func test_no_jogo_o_rei_compra_e_monta_o_cavalo() -> void:
 	assert_int(SimLoop.units.coin_capacities[rei]).is_equal(saco + _cavalo().saddlebag_coins)
 	SimLoop.stop()
 	SimLoop.autosave_enabled = true
+
+
+func _estabulo_real() -> BuildSlot:
+	for slot in SimLoop.builds.slots:
+		if slot.kind == Stables.ESTABULO and slot.territory == 0:
+			return slot
+	return null

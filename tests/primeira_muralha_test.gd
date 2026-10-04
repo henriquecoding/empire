@@ -91,6 +91,7 @@ func test_o_construtor_de_outro_reino_nao_paga_nem_constroi_a_muralha() -> void:
 
 
 func test_o_construtor_vai_ate_a_muralha_paga_e_constroi_sem_o_rei() -> void:
+	LastCartWatch.claim(&"road")
 	RealmLadder.seat(SimLoop.builds).raise_to(RealmLadder.FUNDADO)
 	var wall := _wall()
 	var builder := SimLoop.units.spawn(
@@ -151,12 +152,12 @@ func _pay_here(amount: int) -> void:
 
 
 func test_recrutar_comprar_martelo_e_erguer_o_primeiro_muro_so_com_gestos() -> void:
-	_walk(SimLoop.seat.cart_x)
 	var seat := RealmLadder.seat(SimLoop.builds)
 	_walk(seat.x)
-	_pay_here(seat.next_cost())
-	_steps(180)
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
+	_steps(200)
 	assert_bool(seat.standing()).is_true()
+	_walk(SimLoop.seat.cart_x)
 	var id := UnitSystem.NENHUM
 	for i in SimLoop.units.count():
 		if SimLoop.units.data_ids[i] == &"vagrant" and SimLoop.units.xs[i] < seat.x:
@@ -164,7 +165,7 @@ func test_recrutar_comprar_martelo_e_erguer_o_primeiro_muro_so_com_gestos() -> v
 				id = SimLoop.units.ids[i]
 	assert_int(id).is_not_equal(UnitSystem.NENHUM)
 	var worker := SimLoop.units.index_of(id)
-	_walk(SimLoop.units.xs[worker] + 70.0)
+	_walk(SimLoop.units.xs[worker])
 	_pay_here(1)
 	_steps(60)
 	assert_int(SimLoop.units.owners[worker]).is_equal(1)

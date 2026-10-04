@@ -43,6 +43,7 @@ func after_test() -> void:
 func _jogar_ate_ao_dia(dia: int) -> void:
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")
 	var canteiro: BuildSlot = null
 	for vaga in SimLoop.builds.slots:
 		if vaga.kind == &"farm":

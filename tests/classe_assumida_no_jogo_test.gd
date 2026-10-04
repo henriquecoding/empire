@@ -8,6 +8,8 @@
 # assume ninguem; o guia nao o oferece; o monarca nao tem trela; e paga ao companheiro.
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const SEMENTE := 20260930
 const PASSO := 1.0 / 30.0
 const LADO := 30.0
@@ -18,6 +20,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	Sede.erguer()
 
 
 func after_test() -> void:
@@ -65,6 +68,7 @@ func test_o_monarca_nao_tem_trela() -> void:
 ## O Verbo 2 sem mais nada onde pegar paga ao companheiro: o escudeiro do Rei arma o escudo.
 func test_o_verbo_2_paga_ao_companheiro() -> void:
 	MonarchWatch.begin(&"monarch")
+	Sede.companhia()
 	var e := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
 	SimLoop.units.xs[e] = SimLoop.units.xs[_rei()]
 	var bolsa := SimLoop.units.carried_coins[_rei()]
@@ -77,6 +81,7 @@ func test_o_verbo_2_paga_ao_companheiro() -> void:
 ## A Nia da uma moeda ao orcamento do Bardo dela, ate ao teto.
 func test_a_nia_paga_ao_bardo_dela() -> void:
 	MonarchWatch.begin(&"nia")
+	Sede.companhia()
 	var b := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
 	SimLoop.units.xs[b] = SimLoop.units.xs[_rei()]
 	var bolsa := SimLoop.units.carried_coins[_rei()]
@@ -89,6 +94,7 @@ func test_a_nia_paga_ao_bardo_dela() -> void:
 ## O escudeiro do Arqueiro vende um lote por uma moeda da bolsa dele; sem moedas, nada.
 func test_o_arqueiro_compra_flechas_so_com_moedas_dele() -> void:
 	MonarchWatch.begin(&"archer_emperor")
+	Sede.companhia()
 	var e := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
 	SimLoop.units.xs[e] = SimLoop.units.xs[_rei()]
 	var corpo := Registry.entry(&"units", &"archer_emperor") as UnitData
@@ -109,6 +115,7 @@ func test_o_arqueiro_compra_flechas_so_com_moedas_dele() -> void:
 ## mao vai com ele. Sem destino alem de casa, nao ha portao.
 func test_o_monarca_viaja_com_o_companheiro_a_mao() -> void:
 	MonarchWatch.begin(&"nia")
+	Sede.companhia()
 	var r := _rei()
 	var b := SimLoop.field.monarchy.companion_index(SimLoop.units, SimLoop.king_id)
 	SimLoop.units.xs[r] = SimLoop.secrets.chapters[0]

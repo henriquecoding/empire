@@ -51,6 +51,7 @@ const ORLA := 8.0
 const POR_FILA := 10
 const PASSO := 16.0
 const ACIMA := 14.0
+const POST_ACIMA := 70.0
 const MEIA := 0.5
 ## Quanto resta da cor de uma moeda que ainda nao podes pagar. Apagada e nao
 ## cinzenta: continua a ser uma moeda, e o que lhe falta e a tua luz.
@@ -88,6 +89,16 @@ static func _obras(
 			continue
 		if vaga.kind == BuildSlot.NUCLEO and FoundationWatch.aims_monarch():
 			continue  # a moeda vai evoluir o monarca, e nao pagar a sede (ADR 0059)
+		if vaga.kind == CompanionWatch.POST and vaga.standing() and CompanionWatch.available():
+			_moedas(
+				canvas,
+				vaga.x,
+				WorldPalette.ground_of(faixa) - POST_ACIMA,
+				maxi(0, LastCartWatch.rules().companion_cost - SimLoop.companion.paid),
+				saco
+			)
+			cobrou = true
+			continue
 		var falta := owed_by(vaga)
 		if falta <= 0 and SimLoop.field != null:
 			falta = SimLoop.field.training.owed(vaga, SimLoop.units)

@@ -117,7 +117,7 @@ func test_o_save_v8_corrige_os_habitats_sem_apagar_o_reino_ou_a_receita() -> voi
 	}
 	var migrated := SaveMigrations.migrate(old)
 	var hunt: Dictionary = migrated[&"world"][&"hunting"]
-	assert_int(int(migrated[&"save_version"])).is_equal(9)
+	assert_int(int(migrated[&"save_version"])).is_equal(SaveMigrations.CURRENT)
 	assert_array(hunt[&"rabbits"]).is_empty()
 	assert_dict(hunt[&"burrows"]).is_empty()
 	assert_dict(hunt[&"wounds"]).is_empty()

@@ -149,7 +149,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 	# A tarde diz de que lado vem a noite (Q-125): e o mesmo sorteio que o
 	# crepusculo fazia, so mais cedo — nada do fluxo `rot` corre entre os dois.
 	if fase == GameClock.Phase.AFTERNOON and rot.announced == 0:
-		rot.announced = _sortear_lado()
+		rot.announced = -1 if SimLoop.arrival.active and estado.day == 1 else _sortear_lado()
 	if fase == GameClock.Phase.DAWN:
 		# O dia do relogio e nao o do GameState: esse so e espelhado no fim do tick.
 		# Os nomes leem-se ANTES de os corpos se levantarem: uma arvore nomeada e a
@@ -204,7 +204,7 @@ func _invocar(
 	pedido: SpawnRequest, estado: GameState, bichos: CreatureSystem, nucleo: float
 ) -> void:
 	var dados := Registry.entry(TABELA_CRIATURAS, pedido.creature_id) as CreatureData
-	bichos.spawn(estado, dados, pedido.x, nucleo)
+	bichos.spawn(estado, dados, pedido.x, LastCartWatch.first_night_target(nucleo))
 	EventRelay.summoned(pedido, rot.mass())
 
 

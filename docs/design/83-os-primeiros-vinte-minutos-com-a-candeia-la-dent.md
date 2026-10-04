@@ -2,6 +2,10 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+> **Abertura atual — ADR 0065**
+>
+> A Última Carroça da §25 substitui a cadência de fundação paga, arco e primeira parede desta cronologia anterior. O que segue conserva referências de conteúdo tardio; não é um roteiro obrigatório para o jogador novo. A primeira noite testa mantimentos, luz e território; a descoberta do subsolo continua assinatura da sessão.
+
 A §25 é a melhor secção de onboarding que este dossiê tem: doze minutos, dois dias, nada explicado, nenhuma caixa de texto, e uma lição por minuto. Nove sistemas novos sem uma linha sobre quando o jogador os conhece seria a lacuna mais grave desta parte — um jogador que descubra o Amargueiro à hora e meia já formou a opinião dele sobre o jogo. Esta secção estende a tabela até aos vinte minutos e três dias. As doze linhas originais ficam intactas; há oito novas e duas alteradas.
 
 > **A decisão que faz isto funcionar: o Amargueiro está lá desde o segundo zero**

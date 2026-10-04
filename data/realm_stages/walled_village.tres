@@ -14,3 +14,5 @@ max_health = 750
 width_px = 400
 contact_slots = 6
 unlocks = Array[StringName]([&"root_moat", &"embassy", &"sawmill", &"cow_stable", &"ore_pit", &"lighthouse", &"iron_wall"])
+maturity = Array[StringName]([&"walls", &"production"])
+defense = 0.2

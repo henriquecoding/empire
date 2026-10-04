@@ -49,6 +49,8 @@ static func step(loop: Node) -> void:
 	var rei: int = loop.units.index_of(loop.king_id)
 	if rei == UnitSystem.NENHUM or not loop.units.alive(rei):
 		return
+	if ArrivalPilot.step(loop):
+		return
 	_decretar(loop)
 	var onde: float = loop.units.xs[rei]
 	var alvo := _destino(loop, rei, onde)
