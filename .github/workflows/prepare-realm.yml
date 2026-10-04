@@ -79,8 +79,8 @@ jobs:
           from pathlib import Path
           p = Path("tests/abertura_natural_test.gd")
           s = p.read_text()
-          s = s.replace('_defender_canteiro(preco)\\n', '_defender_canteiro(preco)\\n\\tprint("EMPIRE_OPENING_WALL ", ClockService.clock.elapsed, " coins ", _saco())\\n')
-          s = s.replace('assert_int(_saco()).is_greater_equal(muro.next_cost() + reserva)', 'print("EMPIRE_OPENING_RESERVE ", ClockService.clock.elapsed, " coins ", _saco(), " hunt ", _no_saco_do_arqueiro, " units ", SimLoop.units.xs, " jobs ", SimLoop.units.job_ids)\\n\\tassert_int(_saco()).is_greater_equal(muro.next_cost() + reserva)')
+          s = s.replace('_defender_canteiro(preco)\n', '_defender_canteiro(preco)\n\tprint("EMPIRE_OPENING_WALL ", ClockService.clock.elapsed, " coins ", _saco())\n')
+          s = s.replace('assert_int(_saco()).is_greater_equal(muro.next_cost() + reserva)', 'print("EMPIRE_OPENING_RESERVE ", ClockService.clock.elapsed, " coins ", _saco(), " hunt ", _no_saco_do_arqueiro, " units ", SimLoop.units.xs, " jobs ", SimLoop.units.job_ids)\n\tassert_int(_saco()).is_greater_equal(muro.next_cost() + reserva)')
           p.write_text(s)
           PY
           godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests/obras_com_folga_test.gd -a tests/obras_sprite_test.gd -a tests/recinto_fundador_test.gd -a tests/expansao_das_obras_test.gd -a tests/fundacao_do_reino_test.gd -a tests/banca_do_arco_test.gd -a tests/martelo_fundador_test.gd -a tests/escada_da_sede_test.gd -a tests/abertura_natural_test.gd
