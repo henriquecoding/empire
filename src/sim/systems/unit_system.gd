@@ -165,12 +165,13 @@ func tick_movement(
 	class_pace: float = 1.0,
 	rush: Dictionary = {}
 ) -> void:
+	var corre := not rush.is_empty()
 	for i in ids.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 		if walking(i, piloted, frente):
-			var passo := (
-				piloted_pace * class_pace if ids[i] == piloted else float(rush.get(ids[i], 1.0))
-			)
+			var passo := piloted_pace * class_pace if ids[i] == piloted else 1.0
+			if corre and ids[i] != piloted:
+				passo = float(rush.get(ids[i], 1.0))
 			xs[i] = move_toward(xs[i], target_xs[i], speeds[i] * passo * delta)
 
 
