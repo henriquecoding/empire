@@ -51,7 +51,7 @@ const GALINHEIROS_X := [-944.0, 944.0]
 # jogo e nao sobre um slider. Fica entre a torre alta e o muro de fora.
 const PESQUEIROS_X := [1292.0]
 const TORRES_ALTAS_X := [-1176.0, 1176.0]
-const PASSAGENS_X := [-1040.0, 1040.0]
+const PASSAGENS_X := [-848.0, 848.0]
 # Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
 # estatua meio enterrada; ao 11:00, a camara atras da passagem de fora, com a
 # Semente Real. E a bifurcacao a leste onde cai o capitulo revelado (§83).

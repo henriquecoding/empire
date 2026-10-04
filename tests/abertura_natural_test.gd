@@ -181,11 +181,15 @@ func _apanhou(quem: int, quanto: int) -> void:
 
 func _moeda_mais_perto() -> float:
 	var rei := _x_do_rei()
-	var melhor := rei
+	var arqueiro := SimLoop.units.index_of(O_ARQUEIRO)
+	# A caca fica no saco do arqueiro: o rei tem de ir ter com ele para a receber.
+	var melhor := SimLoop.units.xs[arqueiro] if SimLoop.units.alive(arqueiro) else rei
+	var ha_moeda := false
 	for c in SimLoop.coins.count():
 		var x := SimLoop.coins.xs[c]
-		if SimLoop.coins.settled[c] != 0 and (melhor == rei or absf(x - rei) < absf(melhor - rei)):
+		if SimLoop.coins.settled[c] != 0 and (not ha_moeda or absf(x - rei) < absf(melhor - rei)):
 			melhor = x
+			ha_moeda = true
 	return melhor
 
 
