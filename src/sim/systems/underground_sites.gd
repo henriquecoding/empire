@@ -1,28 +1,9 @@
-# src/sim/systems/underground_sites.gd — o subsolo e um sitio, e acaba (o pedido do dono
-# de 02/10/2026; §11, §21; Q-186, ADR 0046).
-#
-# O dono: "o subsolo nao e infinito acompanhando o piso de cima, e sempre algo
-# delimitado, pode ser grande, mas nunca infinito, e gerado proceduralmente e a primeira
-# vez que e acedido naquela jogatina e algo distinto". A §11 ja o dizia: "a maior parte
-# do corte e terra; onde ha caverna, dungeon ou porao, a terra e recortada".
-#
-# Cada sitio tem duas metades, como as zonas do Caves of Qud: a AUTORADA (a boca, o que
-# tem de caber, o tecto que nunca passa e de que e feito), que quem monta o mundo poe de
-# cada vez que o monta; e a GERADA (as salas), que so nasce na primeira descida e vai no
-# save. As salas sao uma fila — o mundo e uma linha —, a entrada na boca e as outras a
-# crescer para os lados ate cobrir o que tem de caber, mais umas quantas sorteadas, e
-# nunca alem do tecto nem de MAX_ROOMS: e isso que o faz delimitado.
-#
-# Puro: os sorteios entram como parametro (o RngService e de cima, §42).
 class_name UndergroundSites
 extends RefCounted
 
-## De que e feito: o porao de uma passagem do imperio, a sala secreta debaixo do castelo,
-## e a masmorra de uma ruina das terras.
 const CELLAR := &"cellar"
 const HATCH := &"hatch"
 const DUNGEON := &"dungeon"
-## Os campos de uma sala, e os do registo autorado.
 const A := &"a"
 const B := &"b"
 const KIND := &"kind"
@@ -33,8 +14,6 @@ const MOUTH := &"mouth"
 const NEED := &"need"
 const CAP := &"cap"
 const SPEC := &"spec"
-## Os campos da receita: larguras das salas, quantas a mais no maximo, de que tipos, a
-## sala da entrada (e a largura minima dela) e o que esta la e dita a sala onde cai.
 const ROOM := &"room"
 const EXTRA := &"extra"
 const POOL := &"pool"
@@ -42,24 +21,18 @@ const ENTRANCE := &"entrance"
 const ENTRANCE_PX := &"entrance_px"
 const FEATURES := &"features"
 const LAYOUTS := &"layouts"
-## Nenhum sitio passa disto, mesmo sem tecto: o "nunca infinito".
 const MAX_ROOMS := 12
-## Por sala: a largura, o tipo e o lado para onde cresce.
 const PER_ROOM := 3
 const ROLLS := 1 + MAX_ROOMS * PER_ROOM
-## Apertada pelo tecto, uma sala tem de guardar pelo menos esta fraccao da mais estreita.
 const FIT := 0.5
 const HALF := 0.5
 const NONE := -1
 
 var sites: Array[Dictionary] = []
 var layouts: Dictionary = {}
-## Sobe quando nasce ou volta do save uma sala: e o que a arte vigia para se redesenhar.
 var revision := 0
 
 
-## Autora um sitio (ou volta a autora-lo, ao retomar): a chave e o que liga as salas
-## gravadas ao sitio, e por isso um segundo `post` com a mesma chave substitui o primeiro.
 func post(
 	key: String, kind: StringName, mouth: float, need: Vector2, cap: Vector2, spec: Dictionary
 ) -> void:
@@ -75,7 +48,6 @@ func count() -> int:
 	return sites.size()
 
 
-## O sitio cuja boca esta mais perto de `x`, ate `alcance`; NONE se nenhuma la chega.
 func find(x: float, alcance: float) -> int:
 	var melhor := NONE
 	var perto := alcance
@@ -91,7 +63,6 @@ func generated(i: int) -> bool:
 	return layouts.has(key_of(i))
 
 
-## Gera as salas do sitio `i`, se ainda nao as tem. Verdadeiro se nasceram agora.
 func generate(i: int, rolls: PackedFloat32Array) -> bool:
 	if generated(i):
 		return false
@@ -101,11 +72,21 @@ func generate(i: int, rolls: PackedFloat32Array) -> bool:
 	return true
 
 
+func excavate(i: int, cap: Vector2) -> bool:
+	if not generated(i) or rooms(i).size() >= MAX_ROOMS:
+		return false
+	var limit := span(i)
+	if cap.y <= limit.y:
+		return false
+	rooms(i).append(_sala(limit.y, cap.y, &"storage", HALF))
+	revision += 1
+	return true
+
+
 func rooms(i: int) -> Array:
 	return layouts.get(key_of(i), [])
 
 
-## Da parede de um lado a parede do outro, ou NAN se ainda nao foi gerado.
 func span(i: int) -> Vector2:
 	var salas := rooms(i)
 	if salas.is_empty():
@@ -125,7 +106,6 @@ func mouth_of(i: int) -> float:
 	return sites[i][MOUTH]
 
 
-## O sitio gerado onde `x` cai, ou NONE.
 func site_at(x: float) -> int:
 	for i in sites.size():
 		var lim := span(i)
@@ -134,8 +114,6 @@ func site_at(x: float) -> int:
 	return NONE
 
 
-## Passo 5, antes do movimento: quem esta la em baixo dentro de um sitio nao tem alvo
-## para la das paredes dele. Quem cava (as criaturas) nao passa por aqui.
 func confine(unidades: UnitSystem) -> void:
 	for i in unidades.count():
 		if int(unidades.bands[i]) != int(Band.Kind.UNDERGROUND):
@@ -147,7 +125,6 @@ func confine(unidades: UnitSystem) -> void:
 		unidades.target_xs[i] = clampf(unidades.target_xs[i], lim.x, lim.y)
 
 
-## As bocas que nao sao passagens nem ruinas: os alcapoes das salas secretas.
 func hatches() -> PackedFloat32Array:
 	var saida := PackedFloat32Array()
 	for s in sites:
@@ -156,7 +133,6 @@ func hatches() -> PackedFloat32Array:
 	return saida
 
 
-## So a metade gerada vai no save: a autorada volta a ser posta por quem monta o mundo.
 func to_dict() -> Dictionary:
 	return {LAYOUTS: layouts.duplicate(true)}
 
@@ -166,9 +142,6 @@ func from_dict(d: Dictionary) -> void:
 	revision += 1
 
 
-## As salas de um sitio, da esquerda para a direita. A entrada fica na boca; depois
-## crescem salas para os lados ate cobrir `need`, e mais ate `spec.extra` sorteadas, sem
-## nunca sair de `cap` nem passar de MAX_ROOMS.
 static func lay_out(
 	mouth: float, need: Vector2, cap: Vector2, rolls: PackedFloat32Array, spec: Dictionary
 ) -> Array[Dictionary]:
@@ -196,7 +169,6 @@ static func lay_out(
 	return salas
 
 
-## Uma sala nova do lado `lado`. Falso se ja ha MAX_ROOMS ou o tecto nao a deixa caber.
 static func _juntar(
 	salas: Array[Dictionary], lado: int, cap: Vector2, rolls: PackedFloat32Array, spec: Dictionary
 ) -> bool:

@@ -22,7 +22,8 @@ static var _ritmos := {}
 ## de casa vem primeiro: o coelho inicia a renda nos prados, fora da Clareira (ADR 0062).
 static func prepare(campo: FieldWork, dia: int, core_x: float, largura: float, fase: int) -> void:
 	var antes := campo.hunting.burrows.placed()
-	HuntWatch.prepare(campo.hunting, dia, core_x, largura, fase)
+	var origin := SimLoop.arrival.origin if SimLoop.arrival.active else core_x
+	HuntWatch.prepare(campo.hunting, dia, origin, largura, fase)
 	campo.hunting.home = Vector2(0.0, largura)
 	HuntHabitats.reserve(campo.hunting, SimLoop.builds)
 	if antes or not campo.hunting.burrows.placed():

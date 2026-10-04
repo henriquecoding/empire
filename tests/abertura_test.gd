@@ -21,19 +21,14 @@ func after_test() -> void:
 	SimLoop.autosave_enabled = true
 
 
-func test_ao_minuto_zero_ha_um_amargueiro_velho_fora_do_muro_a_esquerda() -> void:
+func test_ao_minuto_zero_a_cicatriz_ecologica_cabe_na_primeira_vista() -> void:
 	SimLoop.start(SEMENTE)
 	Greybox.build()
 	var bosque := SimLoop.night.amargueiros
 	assert_int(bosque.count()).is_equal(1)
 	assert_int(bosque.fates[0]).is_equal(AmargueiroSystem.Fate.OLD)
-	# "Fora do muro": para la da primeira muralha a esquerda do nucleo — a
-	# estacaria do minuto 3:30 (§25) —, e na mesma regiao.
-	var primeiro_muro := 0.0
-	for vaga in SimLoop.builds.slots:
-		if vaga.two_paths() and vaga.x < SimLoop.core_x:
-			primeiro_muro = maxf(primeiro_muro, vaga.x - vaga.width * BuildSystem.METADE)
-	assert_float(bosque.xs[0]).is_less(primeiro_muro)
+	var king := SimLoop.units.index_of(SimLoop.king_id)
+	assert_float(absf(bosque.xs[0] - SimLoop.units.xs[king])).is_less(640.0)
 	assert_float(bosque.xs[0]).is_greater(0.0)
 
 

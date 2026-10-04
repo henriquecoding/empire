@@ -13,4 +13,6 @@ build_work = 36.0
 max_health = 550
 width_px = 320
 contact_slots = 5
-unlocks = Array[StringName]([&"kitchen", &"forge", &"granary", &"saltery", &"pen", &"lumber_camp", &"mount_stable", &"heir_house", &"root_sanctuary", &"fire_barrel", &"stone_wall", &"tender_ward", &"enramados_work", &"portuarios_work", &"fenda_work", &"horta_work", &"fornalha_work", &"sobraiz_work", &"geada_work", &"bruma_work", &"mercenary_work"])
+unlocks = Array[StringName]([&"kitchen", &"forge", &"granary", &"saltery", &"pen", &"lumber_camp", &"mount_stable", &"root_sanctuary", &"fire_barrel", &"stone_wall", &"tender_ward", &"enramados_work", &"portuarios_work", &"fenda_work", &"horta_work", &"fornalha_work", &"sobraiz_work", &"geada_work", &"bruma_work", &"mercenary_work"])
+maturity = Array[StringName]([&"people", &"production", &"subsoil"])
+defense = 0.15000000000000002

@@ -17,6 +17,7 @@ func before_test() -> void:
 	SimLoop.start(20261002)
 	Greybox.build()
 	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
+	Sede.companhia()
 
 
 func after_test() -> void:

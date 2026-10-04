@@ -130,6 +130,8 @@ func _draw() -> void:
 		_podridao()
 		OfferView.draw_on(self, _luz, _visual_time)  # §75: o prato, a frase e o Zelador
 	_fogueiras()
+	ArrivalView.draw(self, band, _luz, _visual_time)
+	TowerPreview.draw(self, band)
 	SiteView.draw_on(self, band, _luz)
 	AmargueiroView.draw_on(self, band, _luz)  # §74: o que a noite deixou
 	_moedas()

@@ -21,6 +21,7 @@ func after_test() -> void:
 
 func _hero(id: StringName) -> int:
 	MonarchWatch.begin(MONARCAS[id])
+	preload("res://tests/support/sede.gd").companhia()
 	var who := SimLoop.king_id
 	HeroWatch.tick(0.0)
 	for i in SimLoop.units.count():

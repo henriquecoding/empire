@@ -42,6 +42,8 @@ static func draw_on(
 	var pulso := blink(tempo)
 	var vista := PresentationBounds.of(canvas)
 	for vaga in SimLoop.builds.slots:
+		if vaga.kind in [CompanionWatch.POST, CellarWatch.EXCAVATION]:
+			continue
 		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
@@ -56,7 +58,7 @@ static func draw_on(
 
 ## A carroca de provisoes da chegada, enquanto leva moedas (ADR 0059).
 static func _carroca(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting) -> void:
-	if faixa != Band.Kind.SURFACE or SimLoop.seat.cart_coins <= 0:
+	if faixa != Band.Kind.SURFACE or (SimLoop.seat.cart_coins <= 0 and not SimLoop.arrival.active):
 		return
 	var pe := Vector2(SimLoop.seat.cart_x, WorldPalette.ground_of(int(faixa)))
 	BuildingSkins.painted.draw_on(canvas, SeatSprites.CARROCA, pe, luz.body(Color.WHITE, pe.x))

@@ -167,6 +167,12 @@ static func _flechas(units: UnitSystem, rei: int, campo: FieldWork) -> bool:
 static func squire_lot(squire: StringName) -> int:
 	var dados := Registry.entry(&"units", squire) as UnitData
 	if dados != null and dados.ability_params.has(&"arrows_per_coin"):
+		if squire == data().companion and evolved(SimLoop.field):
+			return int(
+				dados.ability_params.get(
+					&"evolved_arrows_per_coin", dados.ability_params[&"arrows_per_coin"]
+				)
+			)
 		return int(dados.ability_params[&"arrows_per_coin"])
 	return RulesFactory.rules().arrows_per_coin
 
@@ -179,7 +185,9 @@ static func runs(quer: bool, dt: float) -> bool:
 	var montado := campo.mount.rider != UnitSystem.NENHUM and campo.mount.rider == Assume.driven()
 	var cap := c.king_run_stamina_s * (c.king_run_evolved_mult if evolved(campo) else 1.0)
 	var refill := c.king_run_rest_refill_s if campo.stamina.still else c.king_run_refill_s
-	var corre := campo.stamina.step(quer and not montado, dt, cap, refill)
+	var corre := campo.stamina.step(
+		quer and not montado, dt, cap, refill, LastCartWatch.rules().rested_run_mult
+	)
 	return quer if montado else corre
 
 

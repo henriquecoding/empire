@@ -50,6 +50,7 @@ func _retomar() -> void:
 func _arrancar_com_producao() -> void:
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # esta suite mede o mundo depois da escolha territorial
 	for obra in SimLoop.builds.slots:
 		if obra.yield_per_day > 0.0:
 			obra.level = 1

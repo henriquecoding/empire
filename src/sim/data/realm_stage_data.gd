@@ -18,3 +18,5 @@ extends Resource
 @export var contact_slots: int = 0
 ## As obras (buildings.csv) e os niveis de muro (walls.csv) que este estagio abre.
 @export var unlocks: Array[StringName] = []
+@export var maturity: Array[StringName] = []
+@export var defense := 0.0

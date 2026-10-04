@@ -113,8 +113,8 @@ func test_a_banca_esta_na_regiao_e_nasce_por_ultimo() -> void:
 	SimLoop.autosave_enabled = false
 	SimLoop.start(20260929)
 	Greybox.build()
-	assert_str(String(SimLoop.builds.slots[-4].kind)).is_equal(String(Stables.ESTABULO))
-	var ultima: BuildSlot = SimLoop.builds.slots[-5]
+	assert_str(String(SimLoop.builds.slots[-6].kind)).is_equal(String(Stables.ESTABULO))
+	var ultima: BuildSlot = SimLoop.builds.slots[-7]
 	assert_str(String(ultima.kind)).is_equal(String(BowRacks.BANCA))
 	assert_int(int(ultima.band)).is_equal(int(Band.Kind.SURFACE))
 	assert_float(ultima.x - SimLoop.core_x).is_equal(BowRacks.BANCAS_X[0])
@@ -130,7 +130,7 @@ func test_no_jogo_um_trabalhador_passa_a_arqueiro_pela_banca() -> void:
 	SimLoop.start(20260929)
 	Greybox.build()
 	EventBus.unit_promoted.connect(_promovido)
-	var casa: BuildSlot = SimLoop.builds.slots[-5]  # a banca; o estabulo vem a seguir (Q-169)
+	var casa: BuildSlot = SimLoop.builds.slots[-7]  # a banca; o estabulo vem a seguir (Q-169)
 	assert_str(String(casa.kind)).is_equal(String(BowRacks.BANCA))
 	casa.level = 1
 	casa.state = BuildSlot.State.DONE

@@ -8,10 +8,15 @@ static func goal() -> String:
 		return _tr(&"GUIDE_CROWN")  # a coroa no chao, ate a alvorada (Q-167)
 	if Defeat.king_fell() and SimLoop.field.succession.possible(SimLoop.builds):
 		return _tr(&"GUIDE_HEIR")  # §16: o herdeiro assume ao amanhecer
+	if SimLoop.arrival.active and SimLoop.arrival.choice == &"":
+		return ArrivalGuide.goal()
 	var rot := SimLoop.night.rot
 	var tarde := ClockService.clock.current_phase() >= GameClock.Phase.AFTERNOON
+	var arrival_goal := ArrivalGuide.goal()
 	if _rei_em_baixo() and (tarde or rot.active()):
 		return _tr(&"GUIDE_CLIMB")  # P-I: o subsolo e de dia
+	if SimLoop.arrival.active and not SimLoop.arrival.survived and tarde and arrival_goal != "":
+		return arrival_goal
 	if rot.active():
 		if _rei_na_mancha():
 			return _tr(&"GUIDE_ROT_FED")
@@ -20,6 +25,8 @@ static func goal() -> String:
 		var lado := {"side": _tr(&"SIDE_EAST" if rot.announced > 0 else &"SIDE_WEST")}
 		var funda := rot.deep(ClockService.clock.day)
 		return _tr(&"GUIDE_ROT_COMING_DEEP" if funda else &"GUIDE_ROT_COMING").format(lado)
+	if not arrival_goal.is_empty():
+		return arrival_goal
 	if not RealmLadder.founded(SimLoop.builds):
 		return _tr(&"GUIDE_FOUND")  # a Clareira, por fundar (ADR 0059)
 	if SimLoop.field.seasons.at(ClockService.clock.day) == Seasons.WINTER:

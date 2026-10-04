@@ -12,6 +12,7 @@ const METADE := 0.5
 
 var territory := 0
 var foundation := false
+var builder_work := false
 var rebuild_cost := 0
 var id: int = NENHUM
 var x: float = 0.0
@@ -22,6 +23,7 @@ var kind: StringName = &""
 var costs: PackedInt32Array = PackedInt32Array()
 var works: PackedFloat32Array = PackedFloat32Array()
 var healths: PackedInt32Array = PackedInt32Array()
+var defenses := PackedFloat32Array()
 
 var healths_a: PackedInt32Array = PackedInt32Array()
 var posts_a: PackedInt32Array = PackedInt32Array()
@@ -57,6 +59,7 @@ var paid: int = 0
 var progress: float = 0.0
 var health: int = 0
 var mending := false
+var rest_day := 0
 var soaked: float = 0.0
 
 
@@ -97,7 +100,9 @@ func repair_cost() -> int:
 
 
 func soak(quanto: int, defesa: float) -> int:
-	if not two_paths() or defesa <= 0.0:
+	if kind == NUCLEO and level > 0 and level <= defenses.size():
+		defesa = defenses[level - 1]
+	if (not two_paths() and kind != NUCLEO) or defesa <= 0.0:
 		return quanto
 	soaked += quanto * defesa / (1.0 + defesa)
 	var poupado := mini(quanto, int(soaked))
@@ -143,6 +148,7 @@ func to_dict() -> Dictionary:
 		&"progress": progress,
 		&"health": health,
 		&"mending": mending,
+		&"rest_day": rest_day,
 		&"soaked": soaked,
 		&"stock": stock,
 		&"path": int(path),
@@ -162,6 +168,7 @@ func from_dict(d: Dictionary) -> void:
 	progress = d.get(&"progress", progress)
 	health = d.get(&"health", health)
 	mending = d.get(&"mending", mending)
+	rest_day = int(d.get(&"rest_day", 0))
 	soaked = d.get(&"soaked", soaked)
 	stock = d.get(&"stock", stock)
 	path = d.get(&"path", int(path)) as Path

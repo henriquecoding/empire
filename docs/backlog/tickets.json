@@ -2297,7 +2297,7 @@
   "depende": "QP-02",
   "feito": "A sala secreta debaixo do castelo tem um baú onde o imperador guarda o excedente; o do jogador começa vazio e enche-se como ele quiser; quem invade a sala pode levar o que lá está; os outros impérios da campanha têm sempre alguma coisa no deles; grava-se",
   "fora": "Pisos, chaves e portas do subsolo.",
-  "estado": "por fazer",
+  "estado": "feito — RG-22; ADR 0065",
   "horas": "—",
   "passos": [],
   "notas": [
@@ -2675,6 +2675,19 @@
   "feito": "Corrida transitória, muralha paga e construída só com construtor, guia por etapa; lareira como fundação, bancas interiores só após conclusão, obras por nível e recinto, novas linhas por estágio e flanco; ids, progresso e saves preservados.",
   "fora": "Novos preços de muralha, outros ofícios, Capital, alteração do fogo noturno, arte original e novas tecnologias da sede.",
   "estado": "feito",
+  "horas": "—"
+ },
+ "RG-22": {
+  "title": "A Última Carroça: relatório completo e decisões atuais do painel",
+  "porque": "A ordem dos verbos confundia a identidade de Empire com Kingdom.",
+  "spec": [
+   "docs/adr/0065-a-ultima-carroca.md",
+   "docs/design/25-a-ultima-carroca-os-primeiros-quinze-minutos.md"
+  ],
+  "depende": "RG-21",
+  "feito": "Fundação espacial gratuita, trabalho e logística, ecologia, consequência, subsolo, maturidade e companhia; testes e exportação local.",
+  "fora": "Arte final e conclusão de percepção humana; rede de postos e Capital posteriores.",
+  "estado": "feito — protótipo e validação técnica; percepção humana por medir",
   "horas": "—"
  }
 }

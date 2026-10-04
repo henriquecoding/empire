@@ -149,7 +149,7 @@ func suffocation_day(perfil: EconomyProfile, dias: int) -> int:
 func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in obras.standing():
-		if vaga.yield_per_day <= 0.0 or vaga.territory != 0:
+		if vaga.yield_per_day <= 0.0 or vaga.territory != 0 or vaga.rest_day == today:
 			continue
 		# A variante da melhoria (Q-136): o canteiro resguardado nao para no rasto.
 		var efeitos := SlotVariant.effects(vaga)

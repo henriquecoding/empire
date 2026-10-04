@@ -7,6 +7,28 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A Última Carroça — 04/10/2026 (ADR 0065)
+
+### Q-232 · Ritmo, exposição e evolução do protótipo
+- **Autorizado:** implementar os vários eixos do relatório com as respostas do painel.
+- **Decidido:** companhia por sete; três vagabundos; corrida 30/50 s; repouso 1,5×;
+  martelo três; construtor presente; Capital posterior; herdeiro na Fortaleza.
+- **Provisório em `arrival.csv._proposed`:** velocidade da carroça 48 px/s, trabalho
+  30 s, coleta de até três moedas/dia, três moedas da reserva expostas, cinco vitórias
+  conjuntas, saúde da companhia ×1,5, reparo ×2, atordoamento quatro segundos e dano
+  seis. São parâmetros reversíveis de teste, não respostas numéricas do dono.
+- **Por medir:** duas estratégias viáveis, razões da fundação e semelhança percebida
+  com 5–8 jogadores; usar `docs/qa/ultima-carroca-playtest.md` antes de arte final.
+
+### Q-233 · Maturidade, escavação e repetição territorial
+- **Decidido:** subir saúde/defesa; pequeno subsolo que pede moeda e construtor;
+  estágio máximo para herdeiro; baú próprio vazio e estrangeiro com riqueza existente.
+- **Provisório:** feitos por estágio (`realm_stages.csv.maturity`), população quatro,
+  defesa de 5% a 25%, escavação três moedas/oito segundos/96 px por degrau, partilha
+  de até cinco moedas do tesouro estrangeiro. Tudo em `_proposed`; ajustes por CSV.
+- **Limite:** ritual em novos postos, rede de rotas e Capital dependem de RG-12/RG-13/
+  RG-14; não foram considerados aprovados nem concluídos só pela nova abertura.
+
 ## A corrida por moeda e o martelo inicial — 04/10/2026 (ADR 0063)
 
 ### Q-230 · O ritmo da corrida pelo recrutamento

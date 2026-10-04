@@ -26,9 +26,13 @@ func test_a_clareira_e_uma_lareira_apagada_sem_bancas_nem_convites_do_reino() ->
 		assert_int(CoinTarget.slot_at(SimLoop.builds, vaga.x, int(vaga.band))).is_equal(-1)
 
 
-func test_pagar_a_lareira_so_publica_as_duas_bancas_quando_a_fundacao_acaba() -> void:
+func test_o_estandarte_so_publica_as_bancas_quando_a_fundacao_acaba() -> void:
 	var sede := RealmLadder.seat(SimLoop.builds)
-	_pagar(sede)
+	var r := SimLoop.units.index_of(SimLoop.king_id)
+	SimLoop.units.xs[r] = sede.x
+	SimLoop.units.clear_target(SimLoop.king_id)
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
+	SimLoop.step(STEP)
 	for kind in RACKS:
 		assert_bool(RealmGrowth.visible(SimLoop.builds, _site(kind))).is_false()
 	for _k in ceili(sede.works[0] / STEP) + 30:
@@ -99,7 +103,7 @@ func test_evoluir_a_sede_sozinha_nao_publica_edificios_fora_das_muralhas() -> vo
 		if vaga.kind in RACKS or vaga.kind == BuildSlot.NUCLEO or vaga.two_paths():
 			continue
 		var politica := RealmGrowth.policy(vaga)
-		if politica == null or politica.placement in [&"native", &"wilderness"]:
+		if politica == null or politica.placement in [&"native", &"wilderness", &"camp"]:
 			continue
 		(
 			assert_bool(RealmGrowth.visible(SimLoop.builds, vaga))

@@ -2,6 +2,8 @@
 # do Bardo pago da Nia (ADR 0044, ADR 0052).
 extends GdUnitTestSuite
 
+const Sede := preload("res://tests/support/sede.gd")
+
 const PASSO := 1.0 / 60.0
 const MONARCAS := {&"archer": &"archer_emperor", &"bard": &"nia"}
 
@@ -21,6 +23,7 @@ func after_test() -> void:
 
 func _begin(id: StringName) -> int:
 	MonarchWatch.begin(MONARCAS[id])
+	Sede.companhia()
 	return SimLoop.king_id
 
 
@@ -113,6 +116,7 @@ func test_reencantar_a_mesma_criatura_nao_repete_o_feito() -> void:
 ## monarca escolhido no marco pelo Verbo 2 (ADR 0059). A moeda volta ao saco.
 func test_o_verbo_1_no_nucleo_evolui_a_nia_com_semente_e_quinze_conversoes() -> void:
 	var nia := _begin(&"bard")
+	Sede.campanha_anterior()
 	for _n in 15:
 		SimLoop.field.hero_progress.record(&"bard")
 	SimLoop.state.royal_seeds = 1

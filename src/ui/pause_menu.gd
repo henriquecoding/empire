@@ -17,6 +17,7 @@ var _zero: FreshStartPanel
 var _options_button: Button
 var _controls_button: Button
 var _exit_button: Button
+var _export_button: Button
 var _save_note: Label
 var _frame: PauseLayout
 var _pages := PausePages.new()
@@ -46,6 +47,9 @@ func _ready() -> void:
 	_frame.actions.add_child(ScreenRow.new())  # o ecra inteiro do browser (UX-03)
 	_zero = FreshStartPanel.new(_fechar)
 	_frame.actions.add_child(_zero)
+	_export_button = PauseTheme.button(
+		_frame.actions, &"ARRIVAL_EXPORT", ArrivalTelemetry.export_local
+	)
 	_exit_button = PauseTheme.button(_frame.actions, &"UI_SAVE_AND_QUIT", _leave)
 	_save_note = PauseTheme.label(_frame.actions)
 	_save_note.add_theme_font_size_override("font_size", PauseTheme.SMALL_SIZE)
@@ -143,6 +147,7 @@ func _escrever() -> void:
 	_frame.context.text = _frame.status.text
 	_options_button.text = tr(&"UI_OPTIONS")
 	_controls_button.text = tr(&"UI_CONTROLS")
+	_export_button.text = tr(&"ARRIVAL_EXPORT")
 	_exit_button.text = (
 		tr(&"UI_MENU_EXIT_WEB") if OS.has_feature("web") else tr(&"UI_SAVE_AND_QUIT")
 	)

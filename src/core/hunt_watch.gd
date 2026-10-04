@@ -1,24 +1,12 @@
-# src/core/hunt_watch.gd — onde ficam as tocas, e a que ritmo dao (§06, §25, Q-106).
-#
-# O HuntingSystem e puro; isto le os dados, o relogio e o sorteio. As tocas ficam
-# em sitios autorados do segmento, e cada uma da um bicho de cada vez, ao ritmo dele
-# (respawn_s, Q-217): o bicho volta varias vezes por dia, e nunca de noite. Quem nao
-# tem ritmo segue o periodo que faz a media do dia ser a do hunt_yield (Q-106).
 class_name HuntWatch
 extends RefCounted
 
-## ADR 0062: preserva os arrabaldes da ADR 0061. O coelho inicia a renda a oeste;
-## veado e raposa vivem no bosque da borda. O javali pertence a floresta exterior.
-## Obras futuras so ocupam estes habitats quando sao pagas ou ficam entre muralhas.
 const SITIOS := [
 	[-830.0, &"hole"],
 	[-1692.0, &"tree"],
 	[-1860.0, &"hole"],
 ]
-## A chave do scatter das esperas das tocas que nao sao de coelho: nao gastam o fluxo
-## `economy`, que as do coelho ja gastavam antes da Q-150.
 const SAL_ESPERA := 150
-## A chave do sorteio do bicho raro (ADR 0057): tambem fora do fluxo `economy`.
 const SAL_RARO := 157
 const INTRO_SECONDS := 70.0  # §25, minuto 1:10; encenacao, nao afinacao de combate.
 const BICHO := &"rabbit"
@@ -27,20 +15,14 @@ const LUZ := [
 	GameClock.Phase.DAWN, GameClock.Phase.MORNING, GameClock.Phase.NOON, GameClock.Phase.AFTERNOON
 ]
 
-## O periodo por duracao do dia: pedido a cada tick, lido dos dados uma vez.
 static var _periodo := {}
 
 
-## O segundo do dia em que cai o coelho do 1:10, no dia que o jogador escolheu
-## (§26, 240–540 s). O 1:10 e o de um dia do clock.csv; num dia mais longo ou mais
-## curto cai no mesmo PONTO do dia, e nao ao mesmo segundo (auditoria, D10).
 static func intro_at(dia_s: float) -> float:
 	var base := (Registry.entry(&"economy", &"clock") as ClockData).day_seconds
 	return INTRO_SECONDS * dia_s / base
 
 
-## O tick da caca (ADR 0057): as tocas dao, os bichos andam e fogem ou carregam, os
-## cacadores e os imperadores batem, e o saco entrega ao rei. Devolve o que cai no chao.
 static func tick(
 	field: FieldWork, unidades: UnitSystem, delta: float, luz: bool, relogio: GameClock, rei: int
 ) -> Array[Dictionary]:
@@ -68,15 +50,32 @@ static func tick(
 	return chao
 
 
-## Os bichos andam, fogem ou carregam, e fogem da Podridao (ADR 0057). Corre antes do
-## combate do tick, para que a morte de quem o javali matou passe pelo combate.
 static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
 	var hunt := field.hunting
 	var ameacas := Herd.threats_of(unidades)
 	var feras := SimFactory.by_id(&"creatures")
 	if SimLoop.creatures != null:
 		hunt.herd.predators = Herd.predators_of(SimLoop.creatures, feras, field.song.allies)
-	for g in Herd.bite(unidades, hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)):
+	var before := hunt.herd.xs.duplicate()
+	var strikes := hunt.herd.step(delta, hunt.rabbits, hunt.species_at, ameacas)
+	var rules := LastCartWatch.rules()
+	EventRelay.builds(
+		BoarWalls.collide(
+			hunt.herd,
+			before,
+			hunt.species_at,
+			SimLoop.builds,
+			rules.boar_stun_s,
+			rules.boar_wall_damage
+		)
+	)
+	strikes = strikes.filter(
+		func(g: Dictionary) -> bool:
+			return (
+				not hunt.herd.stunned.has(g[Herd.DE]) or float(hunt.herd.stunned[g[Herd.DE]]) <= 0.0
+			)
+	)
+	for g in Herd.bite(unidades, strikes):
 		EventBus.queue(&"unit_damaged", [g[Herd.QUEM], g[Herd.DANO], Herd.NENHUM])  # o javali
 	for toca in hunt.herd.caught:  # a Podridao apanhou-o: levanta-se teu inimigo
 		var onde := hunt.herd.where(toca)
@@ -87,9 +86,6 @@ static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
 			EventBus.queue(&"rot_summoned", [criatura.id, onde, 0.0])
 
 
-## A Podridao e a unica fonte de criaturas e gasta um orcamento (§05, §51): o bicho que
-## ela apanha so se levanta se a mancha tiver massa para ele e o dia ja o deixar, e
-## essa massa sai da noite. Sem ela, o bicho morre e nao volta.
 static func _paid(criatura: CreatureData) -> bool:
 	if SimLoop.night == null or criatura.min_day > SimLoop.state.day:
 		return false
@@ -100,7 +96,6 @@ static func _paid(criatura: CreatureData) -> bool:
 	return false
 
 
-## Poe as tocas na primeira vez, e abre o dia.
 static func prepare(
 	hunt: HuntingSystem, day: int, core_x: float, width: float, _fase: int = 0
 ) -> void:
@@ -115,10 +110,6 @@ static func prepare(
 	hunt.open_day(day)
 
 
-## As tocas da regiao, e o tempo ate ao primeiro bicho de cada uma — espalhado
-## pelo ritmo dele (Q-217), para nao darem todas ao mesmo tempo (Q-120). A primeira da
-## ja: e o coelho do 1:10. Cada sitio fica para o primeiro bicho do bioma que sai dele e
-## ainda tem tocas por pôr (Q-150).
 static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	var dia_s := ClockService.clock.day_seconds() if ClockService.clock else 0.0
 	var ritmos := WildHunt.rhythms(dia_s)
@@ -149,8 +140,6 @@ static func place(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	hunt.wildlife = SimFactory.by_id(&"wildlife")
 
 
-## Um save antigo traz as tocas de entao: perde as de casa que ja nao sao sitio (as da
-## porta do castelo), e acrescenta, sitio a sitio, as que faltam ate cada bicho ter as suas.
 static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
 	hunt.burrows.checked = true
 	var sitios := {}
@@ -184,9 +173,6 @@ static func reconcile(hunt: HuntingSystem, core_x: float, width: float) -> void:
 			break
 
 
-## Segundos de luz entre dois bichos da mesma toca: a luz do dia vezes as moedas que
-## as tocas todas dao de uma vez (o veado da 3, o coelho 1), a dividir pela caca media
-## do dia (hunt_yield). `dia_s` e a duracao escolhida.
 static func period(dia_s: float) -> float:
 	if _periodo.has(dia_s):
 		return _periodo[dia_s]
@@ -205,8 +191,6 @@ static func period(dia_s: float) -> float:
 	return _periodo[dia_s]
 
 
-## Os bichos com tocas no bioma da regiao de casa, o coelho primeiro (o do 1:10), e
-## depois do que vale menos para o que vale mais: cada sitio fica para o mais miudo.
 static func _bichos() -> Array[WildlifeData]:
 	var bioma := SimFactory.biome_of_segment(SimFactory.SEGMENTO_DE_PARTIDA)
 	var saida: Array[WildlifeData] = []
@@ -218,7 +202,6 @@ static func _bichos() -> Array[WildlifeData]:
 	return saida
 
 
-## Um Amargueiro de pe perto de uma toca mata-a (Q-106): e o "fazer algo errado".
 static func wither(hunt: HuntingSystem, arvores: AmargueiroSystem) -> Array[float]:
 	var dados := Registry.entry(&"wildlife", BICHO) as WildlifeData
 	if arvores == null or dados.burrow_wither_px <= 0.0:
@@ -231,7 +214,6 @@ static func wither(hunt: HuntingSystem, arvores: AmargueiroSystem) -> Array[floa
 	return hunt.wither(perigos, dados.burrow_wither_px)
 
 
-## O coelho primeiro (o do 1:10), e depois do que vale menos para o que vale mais.
 static func cheaper(a: WildlifeData, b: WildlifeData) -> bool:
 	if a.id == BICHO or b.id == BICHO:
 		return a.id == BICHO and b.id != BICHO

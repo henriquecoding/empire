@@ -76,10 +76,18 @@ static func tick(vaga: BuildSlot, maos: float) -> Array[Dictionary]:
 
 ## Maos presentes: construtor para muralhas e reparacao; demais obras Q-064.
 ## `oficio` vazio aceita qualquer tropa; `dono` restringe ao reino da obra.
-static func hands(unidades: UnitSystem, vaga: BuildSlot, oficio := REPAIRER, dono: int = 0) -> int:
+static func hands(
+	unidades: UnitSystem,
+	vaga: BuildSlot,
+	oficio := REPAIRER,
+	dono: int = 0,
+	excluded := PackedInt32Array()
+) -> int:
 	var maos := 0
 	var raio := vaga.width * BuildSystem.METADE
 	for i in unidades.count():
+		if unidades.ids[i] in excluded:
+			continue
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
 			continue
 		if unidades.healths[i] <= 0:

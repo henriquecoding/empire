@@ -28,7 +28,7 @@ A fonte unica e o dossie; estes ficheiros existem para o agente os ler.
 - [22 — Arte · Pipeline de pixel art e a paleta mestra](22-pipeline-de-pixel-art-e-a-paleta-mestra.md)
 - [23 — Áudio · Camadas que respondem ao dia](23-camadas-que-respondem-ao-dia.md)
 - [24 — Interface · novo · Controlos, HUD diegético e feedback](24-controlos-hud-diegetico-e-feedback.md)
-- [25 — Onboarding · novo · Os primeiros doze minutos](25-os-primeiros-doze-minutos.md)
+- [25 — Onboarding · ADR 0065 · A Última Carroça: os primeiros quinze minutos](25-a-ultima-carroca-os-primeiros-quinze-minutos.md)
 - [26 — Acessibilidade · novo · Acessibilidade e Steam Deck Verified](26-acessibilidade-e-steam-deck-verified.md)
 - [27 — Localização · novo · Idiomas, e porque é que quase não precisas deles](27-idiomas-e-porque-e-que-quase-nao-precisas-deles.md)
 - [28 — Repositório · Como fazer a IA construir isto](28-como-fazer-a-ia-construir-isto.md)

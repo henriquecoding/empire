@@ -98,7 +98,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 58 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 60 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -872,14 +872,16 @@ Script `src/sim/data/realm_stage_data.gd` · layout `rows` · 6 linha(s) · ADR 
 | `wall_rings` | int |  |  |
 | `cost` | int |  |  |
 | `build_work` | float |  |  |
+| `defense` | **sem propriedade** | — | a ferramenta vai falhar |
 | `max_health` | int |  |  |
 | `width_px` | int |  |  |
 | `contact_slots` | int |  |  |
 | `unlocks` | Array[StringName] |  |  |
+| `maturity` | Array[StringName] |  |  |
 
 ## `realm_sites.csv` → `data/realm_sites/{id}.tres`
 
-Script `src/sim/data/realm_site_data.gd` · layout `rows` · 60 linha(s) · ADR 0060 — o território e a produção de apoio de cada construção
+Script `src/sim/data/realm_site_data.gd` · layout `rows` · 62 linha(s) · ADR 0060 — o território e a produção de apoio de cada construção
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -887,4 +889,27 @@ Script `src/sim/data/realm_site_data.gd` · layout `rows` · 60 linha(s) · ADR 
 | `placement` | StringName |  |  |
 | `wall_level` | int |  |  |
 | `requires_any` | Array[StringName] |  |  |
+
+## `arrival.csv` → `data/economy/arrival.tres`
+
+Script `src/sim/data/arrival_rules.gd` · layout `kv` · 16 linha(s) · ADR 0065 — A Última Carroça e decisões do painel de 04/10/2026
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `cart_speed` | float |  |  |
+| `worker_work_s` | float |  |  |
+| `forage_daily_cap` | int |  |  |
+| `exposed_provisions` | int |  |  |
+| `companion_cost` | int |  |  |
+| `rested_run_mult` | float |  |  |
+| `standing_repair_mult` | float |  |  |
+| `boar_stun_s` | float |  |  |
+| `boar_wall_damage` | int |  |  |
+| `cellar_cost` | int |  |  |
+| `cellar_work_s` | float |  |  |
+| `cellar_step_px` | float |  |  |
+| `battle_evolve_count` | **sem propriedade** | — | a ferramenta vai falhar |
+| `maturity_people` | **sem propriedade** | — | a ferramenta vai falhar |
+| `foreign_chest_coins` | **sem propriedade** | — | a ferramenta vai falhar |
+| `companion_evolved_health_mult` | **sem propriedade** | — | a ferramenta vai falhar |
 

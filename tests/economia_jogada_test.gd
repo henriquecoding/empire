@@ -24,6 +24,7 @@ func before_test() -> void:
 	EventBus.coin_spent.connect(_gastou)
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	LastCartWatch.claim(&"road")  # esta suite mede o mundo depois da escolha territorial
 
 
 func after_test() -> void:
@@ -193,9 +194,13 @@ func test_sem_moedas_para_a_manutencao_as_tropas_acabam_por_ir_embora() -> void:
 
 func test_um_vagabundo_novo_por_alvorada_num_acampamento() -> void:
 	SimLoop.step(STEP)
-	# O greybox nasce com o teto cheio: o acampamento repoe quem recrutaste.
+	# Depois da chegada, abre uma vaga sob o teto global do acampamento.
 	var dono := SimLoop.units.owners[SimLoop.units.index_of(SimLoop.king_id)]
-	SimLoop.units.owners[SimLoop.units.index_of(2)] = dono
+	for i in SimLoop.units.count():
+		if _por_recrutar() < _curva().vagrant_camp_cap:
+			break
+		if SimLoop.units.owners[i] == RecruitSystem.SEM_DONO:
+			SimLoop.units.owners[i] = dono
 	var antes := _por_recrutar()
 	_alvorada()
 	assert_int(_por_recrutar()).is_equal(antes + _curva().vagrants_per_dawn)

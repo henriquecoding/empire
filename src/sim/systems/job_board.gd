@@ -9,6 +9,7 @@ const MEIO := 0.5
 const REPARAR := &"repair"
 
 var territories: Dictionary = {}
+var excluded := PackedInt32Array()
 var slots: Array[JobSlot] = []
 var staffing: Staffing
 
@@ -64,7 +65,9 @@ func publish(obras: BuildSystem) -> void:
 			var x := obra.x if na_obra else _lugar(obra, k)
 			var vaga := post(JobSlot.new(job, x, obra.band))
 			vaga.territory = obra.territory
-			vaga.builder_only = na_obra and obra.two_paths()
+			vaga.builder_only = (
+				job == REPARAR or (na_obra and (obra.two_paths() or obra.builder_work))
+			)
 			if not na_obra:
 				vaga.grants(obra)
 	_publicadas = querem
@@ -72,7 +75,7 @@ func publish(obras: BuildSystem) -> void:
 
 func refresh(obras: BuildSystem, unidades: UnitSystem, fase: int) -> void:
 	publish(obras)
-	var roster: Array = [fase]
+	var roster: Array = [fase, excluded]
 	for i in unidades.count():
 		roster.append(
 			[
@@ -174,7 +177,7 @@ func _candidatos(unidades: UnitSystem) -> PackedInt32Array:
 	for i in unidades.count():
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
 			continue
-		if unidades.ids[i] == unidades.pilot:
+		if unidades.ids[i] == unidades.pilot or unidades.ids[i] in excluded:
 			continue
 		lista.append(unidades.ids[i])
 	lista.sort()

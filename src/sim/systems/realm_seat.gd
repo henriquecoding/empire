@@ -19,6 +19,7 @@ extends RefCounted
 ## Onde esta a carroca, e o que ainda leva.
 var cart_x := 0.0
 var cart_coins := 0
+var cart_open := true
 ## Verdadeiro quando o jogador escolheu evoluir o monarca no nucleo.
 var monarch_aim := false
 ## A sede veio de um save de antes da fundacao.
@@ -34,7 +35,7 @@ func place_cart(x: float, moedas: int) -> void:
 ## O monarca em `x` leva da carroca o que lhe cabe no saco (`espaco`), se estiver ao
 ## `alcance` dela. Devolve quanto levou; o resto fica na carroca.
 func take_cart(x: float, alcance: float, espaco: int) -> int:
-	if cart_coins <= 0 or espaco <= 0 or absf(x - cart_x) > alcance:
+	if not cart_open or cart_coins <= 0 or espaco <= 0 or absf(x - cart_x) > alcance:
 		return 0
 	var levou := mini(cart_coins, espaco)
 	cart_coins -= levou
@@ -57,6 +58,7 @@ func to_dict() -> Dictionary:
 	return {
 		&"cart_x": cart_x,
 		&"cart_coins": cart_coins,
+		&"cart_open": cart_open,
 		&"monarch_aim": monarch_aim,
 		&"inherited": inherited,
 	}
@@ -67,5 +69,6 @@ func to_dict() -> Dictionary:
 func from_dict(d: Dictionary) -> void:
 	cart_x = float(d.get(&"cart_x", cart_x))
 	cart_coins = int(d.get(&"cart_coins", cart_coins))
+	cart_open = d.get(&"cart_open", true) == true
 	monarch_aim = d.get(&"monarch_aim", monarch_aim) == true
 	inherited = d.get(&"inherited", inherited) == true

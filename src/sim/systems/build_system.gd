@@ -1,8 +1,3 @@
-# src/sim/systems/build_system.gd — construir e pagar com moeda fisica (§55).
-#
-# Moedas fisicas pagam a obra (§55, §61); sem maos presentes fica em andaime.
-# Muralhas precisam de construtor, as outras obras conservam a Q-064 (ADR 0063).
-# Puro: nao e Node, nao conhece o catalogo de eventos e nao sorteia nada.
 class_name BuildSystem
 extends RefCounted
 
@@ -28,7 +23,12 @@ const METADE := 0.5
 var slots: Array[BuildSlot] = []
 var workforce: UnitSystem
 var crew_owner: int = 0
-## A defesa das muralhas que um construtor teu da (§09); escrita a cada tick.
+var work_owners: Dictionary = {}
+var foundation_committed := true
+var maturity_ready := true
+var repair_speed := 1.0
+var work_day := 1
+var reserved := PackedInt32Array()
 var wall_defense := 0.0
 
 
@@ -43,8 +43,6 @@ func index_of(slot_id: int) -> int:
 	return NENHUM
 
 
-## Publica um sitio onde se pode construir. Os slots sao autorados (§21): e o
-## segmento que decide onde, e por isso e de fora que eles entram.
 func post(vaga: BuildSlot) -> BuildSlot:
 	vaga.id = slots.size()
 	slots.append(vaga)
@@ -55,7 +53,6 @@ func clear() -> void:
 	slots = []
 
 
-## As moedas pousadas que cairam numa obra passam a ser dela (§55).
 func absorb(
 	moedas: CoinSystem, estado: GameState = null, madeira: AmargueiroSystem = null
 ) -> Array[Dictionary]:
@@ -89,15 +86,24 @@ func absorb(
 	return eventos
 
 
-## Se o degrau seguinte desta obra se pode pagar ja: o Lenho que pede esta
-## guardado e, sendo unico por imperio, nenhuma outra muralha o tem nem o esta a
-## levantar (§10, §74). Uma moeda largada num degrau que nao sobe fica no chao.
 func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
-	var crew := workforce == null or not vaga.two_paths()
+	var seat := RealmLadder.seat(self)
+	var closed := (
+		vaga.kind == BuildSlot.NUCLEO
+		and (
+			(vaga.level == 0 and not foundation_committed)
+			or (vaga.level > 0 and not maturity_ready)
+		)
+	)
+	closed = (
+		closed or (vaga.kind == &"cellar_excavation" and seat != null and vaga.level >= seat.level)
+	)
+	var crew := workforce == null or not (vaga.two_paths() or vaga.builder_work)
 	crew = crew or WallCrew.available(workforce, vaga.band, crew_owner)
 	# Uma estatua por achar (Q-016), ou a sede num estagio abaixo do que a abre (ADR 0059).
 	if (
-		not Discoveries.known(estado, vaga.kind)
+		closed
+		or not Discoveries.known(estado, vaga.kind)
 		or not RealmLadder.allows(self, vaga)
 		or not RealmGrowth.allows(self, vaga)
 		or not crew
@@ -119,26 +125,25 @@ func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) ->
 	return true
 
 
-## Passo 8: muralhas exigem construtor; as outras obras conservam a Q-064.
 func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
+		var owner := int(work_owners.get(vaga.territory, crew_owner if vaga.territory == 0 else 0))
 		if vaga.mending:
-			var quem := RepairWork.hands(
-				unidades,
-				vaga,
-				&"" if vaga.foundation and not vaga.two_paths() else RepairWork.REPAIRER,
-				crew_owner if vaga.two_paths() else 0
-			)
-			eventos.append_array(RepairWork.tick(vaga, delta * quem))
+			var quem := RepairWork.hands(unidades, vaga, RepairWork.REPAIRER, owner, reserved)
+			if quem > 0:
+				vaga.rest_day = work_day
+			var speed := repair_speed if vaga.state == BuildSlot.State.DAMAGED else 1.0
+			eventos.append_array(RepairWork.tick(vaga, delta * quem * speed))
 			continue
 		if vaga.state != BuildSlot.State.SCAFFOLD and vaga.state != BuildSlot.State.BUILDING:
 			continue
 		var maos := RepairWork.hands(
 			unidades,
 			vaga,
-			RepairWork.REPAIRER if vaga.two_paths() else &"",
-			crew_owner if vaga.two_paths() else 0
+			RepairWork.REPAIRER if vaga.two_paths() or vaga.builder_work else &"",
+			owner if vaga.two_paths() or vaga.builder_work else 0,
+			reserved
 		)
 		if maos == 0:
 			continue
@@ -159,8 +164,6 @@ func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	return eventos
 
 
-## Bater numa obra. So o que esta de pe leva dano — uma ruina ja caiu. Um muro a
-## subir de degrau perde vida e continua a obra: acabar repoe-na toda.
 func damage(slot_id: int, quanto: int) -> Array[Dictionary]:
 	var i := index_of(slot_id)
 	if i == NENHUM or not slots[i].holds():
@@ -181,9 +184,6 @@ func damage(slot_id: int, quanto: int) -> Array[Dictionary]:
 	return eventos
 
 
-## A primeira obra de pe que trava quem vai de `de` para `para` nesta faixa, ou
-## null. E o que faz um muro valer o que custa: sem isto uma criatura atravessa
-## a muralha como se ela fosse um desenho.
 func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	var achada: BuildSlot = null
 	var mais_perto := INF
@@ -199,9 +199,6 @@ func barrier(de: float, para: float, faixa: Band.Kind) -> BuildSlot:
 	return achada
 
 
-## Uma obra deste tipo levantou-se e ja nao esta de pe: "se o nucleo cair, cai a
-## partida" (§10). A sede por fundar nao caiu, e a que sobe de estagio continua de pe
-## (ADR 0059).
 func fallen(kind: StringName) -> bool:
 	for vaga in slots:
 		if vaga.kind == kind and vaga.level > 0 and not vaga.holds():
@@ -209,7 +206,6 @@ func fallen(kind: StringName) -> bool:
 	return false
 
 
-## As obras de pe, por id crescente: quem produz, publica posto ou desenha.
 func standing() -> Array[BuildSlot]:
 	var saida: Array[BuildSlot] = []
 	for vaga in slots:
@@ -218,8 +214,6 @@ func standing() -> Array[BuildSlot]:
 	return saida
 
 
-## O estado de cada obra, por id. As obras em si sao autoradas e voltam a ser
-## postas por quem monta o mundo; o que o save leva e o que aconteceu a elas.
 func to_dict() -> Array:
 	var saida := []
 	for vaga in slots:
@@ -227,8 +221,6 @@ func to_dict() -> Array:
 	return saida
 
 
-## Repoe sobre as obras JA POSTAS. Uma obra que o save tem e o mundo nao e
-## ignorada — e o mesmo degradar do §62, e nao um save recusado.
 func from_dict(guardadas: Array) -> void:
 	for d in guardadas:
 		var i := index_of(d.get(&"id", NENHUM))
@@ -240,8 +232,6 @@ func _aceita(vaga: BuildSlot) -> bool:
 	return vaga.state == BuildSlot.State.EMPTY or vaga.state == BuildSlot.State.DONE
 
 
-## Os ids das moedas pousadas que cairam em cima desta obra. Recolhidos antes de
-## remover nenhuma: o remove() do CoinSystem troca com a ultima e mexe na ordem.
 func _moedas_na_obra(moedas: CoinSystem, vaga: BuildSlot) -> PackedInt32Array:
 	var apanhadas := PackedInt32Array()
 	for c in moedas.count():

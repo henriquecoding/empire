@@ -37,6 +37,9 @@ static func context(device: Glyphs.Device) -> String:
 	var values := {"drop": _button(buttons[1]), "assume": _button(buttons[2])}
 	if not Assume.king():  # so o titular da coroa gere (§08, ADR 0052)
 		return ""
+	var arrival := ArrivalGuide.context(units.xs[king], units.bands[king], values)
+	if not arrival.is_empty():
+		return arrival
 	var abertas := Passages.open(SimLoop.passages, SimLoop.builds)
 	if Verbs.destination(units, SimLoop.king_id, abertas) != Verbs.NENHUMA:
 		return GuideSites.passage(king, values)
@@ -54,6 +57,10 @@ static func context(device: Glyphs.Device) -> String:
 			continue
 		if not RealmGrowth.visible(SimLoop.builds, site, SimLoop.state):
 			continue
+		if site.kind == CompanionWatch.POST and site.standing():
+			return ArrivalGuide.companion(values)
+		if site.kind == CellarWatch.EXCAVATION and site.level >= RealmLadder.stage(SimLoop.builds):
+			return _tr(&"ARRIVAL_CELLAR_STAGE")
 		if site.kind == BuildSlot.NUCLEO:  # fundar, melhorar, ou o monarca (ADR 0059)
 			return SeatGuide.context(site, values)
 		values["name"] = _building_name(site)

@@ -124,17 +124,8 @@ static func mouths(campo: FieldWork) -> PackedFloat32Array:
 	return bocas
 
 
-static func _tesouro(campo: FieldWork, i: int, chave: String) -> void:
-	var u := RngService.scatter(hash([SAL_TESOURO, chave]), 2)
-	var premio := DungeonLoot.draw(RulesFactory.rules(), 0.0, u[0], u[1])
-	var onde := campo.under.mouth_of(i)
-	for sala: Dictionary in campo.under.rooms(i):
-		if sala[UndergroundSites.KIND] == &"treasury":
-			onde = (float(sala[UndergroundSites.A]) + float(sala[UndergroundSites.B])) * MEIO
-	var moedas := int(premio[&"coins"])
-	for _m in moedas:
-		SimLoop.coins.drop(SimLoop.state, onde, Band.Kind.UNDERGROUND, 1, 0.0)
-	EventBus.queue(&"coin_dropped", [onde, int(Band.Kind.UNDERGROUND), moedas, &"secret_room"])
+static func _tesouro(_campo: FieldWork, _i: int, chave: String) -> void:
+	SimLoop.treasury.open(chave, 0)
 
 
 ## Entre o muro de cada lado da boca, com folga; sem muro de um lado, a beira da regiao.

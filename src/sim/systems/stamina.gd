@@ -20,25 +20,36 @@ var tired := false
 var wants := false
 ## Quem se conduz esta parado: recupera ao ritmo de quem descansa (Q-208).
 var still := false
+var rested := false
+var boost := 1.0
 
 
 ## Um passo. `quer` e a tecla de correr com quem se conduz a andar. `cap` e quantos
 ## segundos se corre com o folego cheio; `refill` quantos se leva a enche-lo do zero.
 ## Devolve se corre neste passo.
-func step(quer: bool, dt: float, cap: float, refill: float) -> bool:
+func step(quer: bool, dt: float, cap: float, refill: float, rest_mult := 1.0) -> bool:
 	if cap <= 0.0:
 		return quer
-	if left == POR_MEDIR or left > cap:
+	if left == POR_MEDIR:
 		left = cap
+	if quer and not tired and rested:
+		boost = rest_mult
+		left = cap * boost
+		rested = false
+	var limit := cap * boost
+	var recovering := left < limit
 	var corre := quer and not tired
 	if corre:
 		left = maxf(0.0, left - dt)
 		if left <= 0.0:
 			tired = true
+			boost = 1.0
 	else:
-		left = minf(cap, left + (cap / refill * dt if refill > 0.0 else cap))
-		if tired and left >= cap:
+		left = minf(limit, left + (limit / refill * dt if refill > 0.0 else limit))
+		if left >= limit:
 			tired = false
+			if still and recovering:
+				rested = true
 	return corre
 
 
@@ -46,4 +57,17 @@ func step(quer: bool, dt: float, cap: float, refill: float) -> bool:
 func ratio(cap: float) -> float:
 	if cap <= 0.0 or left == POR_MEDIR:
 		return 1.0
-	return clampf(left / cap, 0.0, 1.0)
+	return clampf(left / (cap * boost), 0.0, 1.0)
+
+
+func to_dict() -> Dictionary:
+	return {&"left": left, &"tired": tired, &"rested": rested, &"boost": boost}
+
+
+func from_dict(saved: Dictionary) -> void:
+	left = float(saved.get(&"left", POR_MEDIR))
+	tired = bool(saved.get(&"tired", false))
+	rested = bool(saved.get(&"rested", false))
+	boost = maxf(1.0, float(saved.get(&"boost", 1.0)))
+	wants = false
+	still = false

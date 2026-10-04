@@ -14,6 +14,7 @@ func before_test() -> void:
 	EventBus.reset()
 	SimLoop.start(SEMENTE)
 	Greybox.build()
+	preload("res://tests/support/sede.gd").campanha_anterior()
 
 
 func after_test() -> void:
@@ -94,7 +95,7 @@ func _escudeiro() -> int:
 	return UnitSystem.NENHUM
 
 
-func test_o_escudeiro_nasce_com_o_rei_e_e_teu() -> void:
+func test_o_escudeiro_contratado_da_campanha_anterior_e_teu() -> void:
 	var e := _escudeiro()
 	assert_int(e).is_not_equal(UnitSystem.NENHUM)
 	assert_int(SimLoop.units.owners[e]).is_equal(SimLoop.units.owners[_rei()])

@@ -59,14 +59,12 @@ const SEGREDOS_X := {&"under_vegetation": 396.0, &"behind_passage": -1290.0}
 const CAMARA_W := 64.0
 const BIFURCACAO_X := 1904.0
 const RUINA_X := -396.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
-# ADR 0060: dois vagabundos neutros ao pe da Clareira. Os outros pertencem
+# ADR 0065: tres vagabundos neutros na chegada. Os outros pertencem
 # aos acampamentos; nenhum trabalhador ou combatente pronto pertence ao rei.
-const VAGABUNDOS_X := [-230.0, 230.0, -1650.0, 1650.0]
+const VAGABUNDOS_X := [-230.0, 230.0, -1650.0, 1650.0, -350.0]
 const ACAMPAMENTOS_X := [-1650.0, 1650.0]  # o vagabundo de cada alvorada (Q-122)
-# §83: "Um pouco a esquerda, fora do muro, esta uma arvore preta com uma cara na
-# casca." Logo depois da estacaria de dentro, entre a torre e o galinheiro, com a
-# escala de uma tropa (§22).
-const AMARGUEIRO_VELHO_X := -840.0
+# ADR 0065: a cicatriz ecologica esta dentro da primeira vista da chegada.
+const AMARGUEIRO_VELHO_X := -620.0
 const AMARGUEIRO_VELHO_ESCALA := 2
 
 const POSTO_CANTEIRO := &"farm"
@@ -82,7 +80,8 @@ static func build() -> int:
 	var x := SimLoop.core_x + AMARGUEIRO_VELHO_X
 	SimLoop.night.amargueiros.plant_old(x, faixa, AMARGUEIRO_VELHO_ESCALA)
 	var rei := _gente()
-	FoundationWatch.arrive(rei)  # o pioneiro e a carroca de provisoes (ADR 0059)
+	FoundationWatch.arrive(rei)
+	LastCartWatch.arrive()
 	return rei
 
 
@@ -128,6 +127,8 @@ static func region() -> void:
 	BowRacks.author()  # a banca do arco (Q-165)
 	Stables.author()  # e o estabulo do cavalo, por ultimo (Q-169)
 	RealmOutskirts.author()  # acrescentados no fim: nenhum id antigo muda (ADR 0060)
+	CompanionWatch.author()
+	CellarWatch.author()
 
 
 static func _segredos() -> void:
@@ -158,7 +159,7 @@ static func recurso() -> StringName:
 
 
 ## A sede, por fundar: a Clareira (ADR 0059). Ate 03/10/2026 nascia castelo de pe; agora
-## o monarca funda-a com moedas, e ela sobe pelos estagios de realm_stages.csv.
+## o monarca escolhe o estandarte; a sede sobe pelos estagios de realm_stages.csv.
 static func _nucleo() -> void:
 	SimLoop.builds.post(SeatSite.slot(SimLoop.core_x))
 
@@ -215,9 +216,6 @@ static func _gente() -> int:
 	SimLoop.units.carried_coins[SimLoop.units.index_of(rei)] = SimFactory.curve().start_coins
 
 	_por_recrutar(&"vagrant", VAGABUNDOS_X)
-	# §08: o companheiro nasce com o monarca, por ultimo, e liga-se a ele (ADR 0052).
-	var escudeiro := Registry.entry(&"units", ESCUDEIRO) as UnitData
-	MonarchWatch.bond(rei, SimLoop.units.spawn(estado, escudeiro, MEU_IMPERIO, SimLoop.core_x))
 	return rei
 
 

@@ -1,8 +1,8 @@
 # tests/fundacao_do_reino_test.gd — a fundacao do reino, pelo jogo inteiro (ADR 0059).
 #
 # O dono, a 03/10/2026, sobre o plano do reino: *«aplique esse relatorio»*. O monarca
-# chega a uma Clareira com dois trabalhadores, um construtor pioneiro e a companhia, ha
-# uma carroca de provisoes ao pe do marco, e a primeira moeda que importa funda o reino.
+# chega com três vagabundos e uma reserva fechada. O estandarte funda gratuitamente;
+# ofícios e companhia só existem depois de contratar e pagar (ADR 0065).
 extends GdUnitTestSuite
 
 const SEMENTE := 20261003
@@ -71,17 +71,23 @@ func test_a_chegada_traz_o_pioneiro_e_a_carroca() -> void:
 		if SimLoop.units.data_ids[i] == FoundationWatch.CONSTRUTOR:
 			construtores += 1 if SimLoop.units.owners[i] == dono else 0
 	assert_int(construtores).is_equal(RulesFactory.rules().founder_pioneers)
-	assert_int(SimLoop.seat.cart_coins).is_equal(RulesFactory.rules().founder_provisions)
+	assert_int(SimLoop.seat.cart_coins + SimLoop.arrival.cache_coins).is_equal(
+		RulesFactory.rules().founder_provisions
+	)
 
 
-func test_o_rei_leva_a_carroca_ao_passar_por_ela() -> void:
+func test_o_rei_leva_a_carroca_aberta_ao_passar_por_ela() -> void:
+	_fincar()
+	_passos(200)
 	var i := _rei()
 	var antes := SimLoop.units.carried_coins[i]
 	SimLoop.units.xs[i] = SimLoop.seat.cart_x
 	SimLoop.units.clear_target(SimLoop.king_id)
 	_passos(2)
 	var regras := RulesFactory.rules()
-	assert_int(SimLoop.units.carried_coins[i]).is_equal(antes + regras.founder_provisions)
+	assert_int(SimLoop.units.carried_coins[i]).is_equal(
+		antes + regras.founder_provisions - SimLoop.arrival.cache_coins
+	)
 	assert_int(SimLoop.seat.cart_coins).is_equal(0)
 
 
@@ -92,9 +98,9 @@ func test_antes_de_fundar_o_canteiro_nao_aceita_moeda() -> void:
 	assert_int(int(canteiro.state)).is_equal(int(BuildSlot.State.EMPTY))
 
 
-func test_fundar_custa_duas_moedas_e_quem_esta_la_levanta_o_acampamento() -> void:
+func test_fundar_e_gratuito_e_quem_esta_la_levanta_o_acampamento() -> void:
 	var sede := _sede()
-	_largar_em(sede.x, sede.next_cost())
+	_fincar()
 	assert_bool(sede.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]).is_true()
 	_passos(ceili(sede.works[0] / PASSO) + 30)
 	assert_int(sede.level).is_equal(RealmLadder.FUNDADO)
@@ -108,7 +114,7 @@ func test_a_fundacao_ergue_a_banca_do_arco() -> void:
 	var banca := _obra(FoundationWatch.BANCA)
 	assert_bool(banca.standing()).is_false()
 	var sede := _sede()
-	_largar_em(sede.x, sede.next_cost())
+	_fincar()
 	_passos(ceili(sede.works[0] / PASSO) + 30)
 	assert_bool(banca.standing()).is_true()
 	assert_int(banca.paid).is_equal(0)
@@ -158,23 +164,23 @@ func test_sem_sede_a_lareira_nao_cobra() -> void:
 
 ## A moeda no marco paga a sede, mesmo com o monarca a poder evoluir; so com o monarca
 ## escolhido pelo Verbo 2 e que ela o evolui (plano §3.6, §23.2).
-func test_a_moeda_no_marco_e_da_sede_ate_o_jogador_escolher_o_monarca() -> void:
+func test_a_moeda_no_marco_nao_evolui_o_monarca_na_nova_abertura() -> void:
 	var classe := Registry.entry(&"classes", &"monarch") as ClassData
 	SimLoop.field.classes.nights_defended = classe.evolve_condition_value
 	SimLoop.state.royal_seeds = classe.evolve_seed_cost
-	var sede := _sede()
-	_largar_em(sede.x, 1)
-	assert_int(SimLoop.field.classes.phase).is_equal(1)
-	assert_int(sede.paid).is_equal(1)
+	_fincar()
+	_passos(150)
+	_largar_em(_sede().x, 1)
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
 	_passos(1)
-	assert_bool(SimLoop.seat.monarch_aim).is_true()
-	_largar_em(sede.x, 1)
-	assert_int(SimLoop.field.classes.phase).is_equal(2)
-	assert_int(sede.paid).is_equal(1)
+	assert_bool(SimLoop.seat.monarch_aim).is_false()
+	assert_int(SimLoop.field.classes.phase).is_equal(1)
+	assert_int(SimLoop.state.royal_seeds).is_equal(classe.evolve_seed_cost)
 
 
 func test_a_sede_e_a_carroca_vao_no_save_e_nao_voltam_ao_carregar() -> void:
+	_fincar()
+	_passos(200)
 	var i := _rei()
 	SimLoop.units.xs[i] = SimLoop.seat.cart_x
 	_passos(2)
@@ -222,7 +228,9 @@ func test_os_tres_monarcas_chegam_com_o_mesmo_pacote() -> void:
 		Greybox.build()
 		assert_bool(MonarchWatch.begin(StringName(perfil))).is_true()
 		var regras := RulesFactory.rules()
-		assert_int(SimLoop.seat.cart_coins).is_equal(regras.founder_provisions)
+		assert_int(SimLoop.seat.cart_coins + SimLoop.arrival.cache_coins).is_equal(
+			regras.founder_provisions
+		)
 		assert_int(_sede().level).is_equal(RealmLadder.CLAREIRA)
 		var dono := SimLoop.units.owners[_rei()]
 		var construtores := 0
@@ -232,3 +240,11 @@ func test_os_tres_monarcas_chegam_com_o_mesmo_pacote() -> void:
 				1 if meu and SimLoop.units.data_ids[i] == FoundationWatch.CONSTRUTOR else 0
 			)
 		assert_int(construtores).override_failure_message(perfil).is_equal(regras.founder_pioneers)
+
+
+func _fincar() -> void:
+	var r := _rei()
+	SimLoop.units.xs[r] = SimLoop.arrival.origin
+	SimLoop.units.clear_target(SimLoop.king_id)
+	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
+	_passos(1)

@@ -17,6 +17,8 @@ static func of(
 	unidades: UnitSystem,
 	rei: int
 ) -> bool:
+	if CellarWatch.deposit(largada) or CompanionWatch.pay(largada):
+		return true
 	if noite.consecrate_at(estado, largada, rei) or noite.dark.buy_at(largada, obras):
 		return true  # uma arvore a consagrar, ou archotes numa fogueira (Q-029)
 	if not FoundationWatch.aims_monarch() or not _no_nucleo(largada, obras):

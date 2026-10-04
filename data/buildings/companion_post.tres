@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/building_data.gd" id="1_b7dkm"]
+
+[resource]
+script = ExtResource("1_b7dkm")
+id = &"companion_post"
+display_key = "BUILDING_COMPANION_POST"
+category = &"training"
+max_health = 32
+width_px = 24
+unique_per_kingdom = true
+shadow_width = 24

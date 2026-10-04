@@ -4,27 +4,15 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
 Vais ter dez playtesters, não dez mil. Isso significa que os números têm de responder a perguntas que a observação não responde — e que a observação continua a valer mais do que os números.
 
-## Os doze eventos, e o que cada um responde
+## Agência na abertura — ADR 0065
 
-| Evento | Propriedades | A pergunta que responde |
-| --- | --- | --- |
-| session_start | build, plataforma, idioma, dispositivo | Quem está a jogar e em quê |
-| session_end | duração, dia atingido, motivo de saída | Onde é que as pessoas desistem |
-| first_coin_dropped | segundos desde o início | Perceberam o Verbo 1? Alvo: < 40 s |
-| first_wall_built | segundos, dia | Perceberam construção? Alvo: < 4 min |
-| underground_discovered | segundos, dia, como (passagem/ruína) | Encontraram a tua maior diferenciação? Alvo: < 14 min |
-| night_survived | dia, mortes, muro caiu, tropas restantes | A curva de dificuldade está certa? |
-| night_lost | dia, composição da defesa, criatura que rompeu | Qual criatura mata mais gente e porquê |
-| economy_snapshot | dia, tesouro, rendimento, sorvedouros, ganância | O dia da asfixia real vs. o modelo (§06) |
-| fortress_attacked | dia, resultado, rei morto ou poupado | Quantos escolhem cada epílogo |
-| class_switched | de, para, dia | Que classes ninguém usa — candidatas a corte |
-| craft_evolved | ofício, dias que demorou, morreu antes | O dilema do artesão está calibrado? |
-| run_ended | dia final, causa, sementes acumuladas | Quanto dura uma partida |
+O protótipo mede localmente movimento, marco inspecionado, escolha e ID de fundação, primeira tarefa, primeira moeda, percepção contextual da contaminação, tarefa ao crepúsculo, sobrevivência, perda, mudança de tarefa após a noite e descoberta do subsolo. A pausa exporta JSON; nada é enviado a terceiros.
 
+foundation_reason_posttest e kingdom_similarity_timestamp são observações humanas, separadas dos eventos automáticos. A estratégia observada também inclui muro e luz; o campo automático registra somente a tarefa. Metas e limitações estão em docs/qa/ultima-carroca-playtest.md. Não se toma um teste de código como prova de compreensão ou identidade.
 
-> **Privacidade — decide antes de escreveres a primeira linha**
+> **Hipóteses de playtest**
 >
-> Sem dados pessoais. Um ID aleatório gerado localmente, sem IP, sem nome, sem perfil de Steam. Consentimento explícito no primeiro arranque, desligado por omissão na versão pública. É a decisão certa, e para ti, em Portugal, também é a única compatível com o RGPD sem trabalho de conformidade. Durante os playtests fechados, com testers que sabem, podes ser mais generoso.
+> Primeiro controle <10 s; decisão de fundação <120 s; primeira atribuição <180 s; subsolo <14–15 min. Nenhuma opção deve dominar mais de 75% sem intenção. Fazer 5–8 sessões antes de arte final. Os tempos são hipóteses do relatório, não novos valores obrigatórios de produção.
 
 ## O protocolo de playtest que funciona com dez pessoas
 

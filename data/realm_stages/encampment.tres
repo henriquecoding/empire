@@ -13,4 +13,5 @@ build_work = 4.0
 max_health = 200
 width_px = 160
 contact_slots = 3
-unlocks = Array[StringName]([&"farm", &"campfire", &"bow_rack", &"stakes", &"hammer_rack", &"passage_seal", &"amargueiro"])
+unlocks = Array[StringName]([&"farm", &"campfire", &"bow_rack", &"stakes", &"hammer_rack", &"passage_seal", &"amargueiro", &"companion_post", &"cellar_excavation"])
+defense = 0.05

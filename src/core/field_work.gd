@@ -197,6 +197,7 @@ func parts() -> Dictionary:
 		&"mount": mount,
 		&"monarchy": monarchy,
 		&"bleeding": bleeding,
+		&"stamina": stamina,
 	}
 
 

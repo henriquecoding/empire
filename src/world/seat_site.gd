@@ -30,6 +30,7 @@ static func slot(x: float) -> BuildSlot:
 		vaga.costs.append(estagio.cost)
 		vaga.works.append(estagio.build_work)
 		vaga.healths.append(estagio.max_health)
+		vaga.defenses.append(estagio.defense)
 		vaga.contacts.append(estagio.contact_slots)
 	vaga.fit()
 	return vaga

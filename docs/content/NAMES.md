@@ -114,6 +114,8 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `mercenary_work` | `BUILDING_MERCENARY_WORK` | Oficina · Mercenários | Workshop · Mercenários |
 | `mercenary_defense` | `BUILDING_MERCENARY_DEFENSE` | Defesa · Mercenários | Defense · Mercenários |
 | `hammer_rack` | `BUILDING_HAMMER_RACK` | Banca do Martelo | Hammer Rack |
+| `companion_post` | `BUILDING_COMPANION_POST` | Posto da companhia | Companion post |
+| `cellar_excavation` | `BUILDING_CELLAR_EXCAVATION` | Escavação do subsolo | Cellar excavation |
 
 ## walls
 

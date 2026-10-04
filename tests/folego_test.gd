@@ -56,9 +56,11 @@ func test_parar_a_meio_recupera() -> void:
 ## Quem evoluiu corre mais tempo: o limite multiplica-se.
 func test_evoluido_tem_mais_folego() -> void:
 	var c := SimFactory.curve()
-	var normal := _correr(Stamina.new(), 60.0, c.king_run_stamina_s, c.king_run_refill_s)
+	var normal := _correr(
+		Stamina.new(), c.king_run_stamina_s + 1.0, c.king_run_stamina_s, c.king_run_refill_s
+	)
 	var forte := c.king_run_stamina_s * c.king_run_evolved_mult
-	var evoluido := _correr(Stamina.new(), 60.0, forte, c.king_run_refill_s)
+	var evoluido := _correr(Stamina.new(), c.king_run_stamina_s + 1.0, forte, c.king_run_refill_s)
 	assert_int(evoluido).is_greater(normal)
 
 

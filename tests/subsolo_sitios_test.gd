@@ -115,7 +115,7 @@ func test_outra_jogatina_outro_porao_e_a_mesma_semente_o_mesmo() -> void:
 	assert_bool(diferente).is_true()
 
 
-func test_a_sala_secreta_abre_no_castelo_e_o_tesouro_cai_uma_vez() -> void:
+func test_o_bau_proprio_abre_vazio_sem_recompensa_ao_descer() -> void:
 	var alcapao := SimLoop.field.under.hatches()[0]
 	SimLoop.units.xs[_rei()] = alcapao
 	var para := Verbs.destination(SimLoop.units, SimLoop.king_id, SimLoop.passages)
@@ -125,7 +125,8 @@ func test_a_sala_secreta_abre_no_castelo_e_o_tesouro_cai_uma_vez() -> void:
 	var i := _sitio(UnderWatch.HATCH_KEY)
 	assert_bool(SimLoop.field.under.generated(i)).is_true()
 	var caidas := SimLoop.coins.count() - antes
-	assert_int(caidas).is_greater_equal(RulesFactory.rules().dungeon_coin_min)
+	assert_int(caidas).is_equal(0)
+	assert_int(SimLoop.treasury.amount(UnderWatch.HATCH_KEY)).is_equal(0)
 	var limites := SimLoop.field.under.span(i)
 	var nucleo := Registry.entry(&"buildings", BuildSlot.NUCLEO) as BuildingData
 	assert_float(limites.x).is_greater_equal(SimLoop.core_x - nucleo.width_px * 0.5)
