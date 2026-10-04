@@ -120,6 +120,7 @@ func test_ninguem_por_recrutar_nasce_dentro_de_uma_obra() -> void:
 
 
 func test_o_rei_em_cima_de_uma_obra_paga_essa_obra() -> void:
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, SimLoop.core_x)
 	for obra in SimLoop.builds.slots:
 		if obra.kind == BuildSlot.NUCLEO:
 			continue
@@ -142,6 +143,9 @@ func test_a_moeda_da_producao_nao_paga_a_obra_onde_cai() -> void:
 
 
 func test_a_moeda_do_jogador_em_cima_da_obra_paga_a() -> void:
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths() and absf(muro.x - SimLoop.core_x) == absf(Greybox.MUROS_X[1]):
+			muro.raise_to(1)  # o canteiro so se oferece atras da primeira muralha (ADR 0064)
 	var canteiro: BuildSlot = null
 	for obra in SimLoop.builds.slots:
 		if obra.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, obra):

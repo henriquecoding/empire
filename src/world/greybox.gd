@@ -14,7 +14,7 @@ class_name Greybox
 extends RefCounted
 
 const SEGMENTO := &"enramados_start_base_01"
-## §21: uma regiao tem 4 a 6 ecras. Seis dao espaco as duas muralhas de cada lado.
+## §21: uma regiao tem 4 a 6 ecras. Os arrabaldes prolongam as linhas de muralhas.
 const ECRAS := 6
 
 const CANTEIRO := &"farm"
@@ -34,12 +34,14 @@ const MUROS_X := [-1408.0, -680.0, 680.0, 1408.0]
 # A Casa de Treino e unica por imperio; do outro lado, a cozinha do cozinheiro (§09).
 const TREINOS_X := [-324.0]
 const COZINHAS_X := [324.0]
-# O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
-# render e tambem a de mandar o cozinheiro ao sitio arriscado (§21).
+# O celeiro do §06 (circuito 2) fica no terceiro recinto: so se oferece depois
+# de concluir a muralha exterior e cumprir o nivel e o apoio produtivo (ADR 0064).
 const CELEIROS_X := [1524.0]
 # E a casa do herdeiro (§15) do outro lado, a oeste: o rei novo nasce la (Q-133).
 const HERDEIROS_X := [-1524.0]
-const CANTEIROS_X := [-576.0, -456.0, 456.0, 576.0]
+## Um canteiro por flanco no primeiro recinto; o segundo pertence a expansao.
+## Os ids conservam a ordem de antes. O espaco inicial liberto recebe as bancas.
+const CANTEIROS_X := [-1068.0, -456.0, 456.0, 1068.0]
 const TORRES_X := [-768.0, 768.0]
 const GALINHEIROS_X := [-944.0, 944.0]
 # UM pesqueiro, e por duas razoes que coincidem: o segmento tem uma agua e nao
@@ -49,7 +51,7 @@ const GALINHEIROS_X := [-944.0, 944.0]
 # jogo e nao sobre um slider. Fica entre a torre alta e o muro de fora.
 const PESQUEIROS_X := [1292.0]
 const TORRES_ALTAS_X := [-1176.0, 1176.0]
-const PASSAGENS_X := [-1040.0, 1040.0]
+const PASSAGENS_X := [-848.0, 848.0]
 # Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
 # estatua meio enterrada; ao 11:00, a camara atras da passagem de fora, com a
 # Semente Real. E a bifurcacao a leste onde cai o capitulo revelado (§83).

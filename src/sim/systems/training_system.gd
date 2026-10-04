@@ -109,6 +109,7 @@ func tick(delta: float, unidades: UnitSystem, obras: BuildSystem, dia: float) ->
 		if casa == null or casa.state == BuildSlot.State.RUIN:
 			trainees.erase(quem)
 			continue
+		trainees[quem][2] = casa.x
 		if not casa.standing() or absf(unidades.xs[i] - casa.x) > casa.width * METADE:
 			continue
 		trainees[quem][1] += delta

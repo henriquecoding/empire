@@ -24,6 +24,9 @@ func _run(seconds: float) -> void:
 
 
 func test_paid_farm_completes_with_worker_while_the_king_explores() -> void:
+	for wall in SimLoop.builds.slots:
+		if wall.two_paths() and absf(wall.x - SimLoop.core_x) == absf(Greybox.MUROS_X[1]):
+			wall.raise_to(1)
 	var site: BuildSlot
 	for candidate in SimLoop.builds.slots:
 		if candidate.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, candidate):
@@ -84,6 +87,7 @@ func test_wall_path_can_be_chosen_with_the_real_intent_and_is_saved() -> void:
 
 
 func test_the_context_only_offers_the_wall_path_the_verb_accepts() -> void:
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, SimLoop.core_x)
 	var site := SimLoop.builds.slots[1]
 	var i := SimLoop.units.index_of(SimLoop.king_id)
 	var paths := [

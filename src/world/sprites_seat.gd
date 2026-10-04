@@ -17,6 +17,14 @@ const POR_ESTAGIO := [
 const CARROCA := &"provisions_cart"
 const PALETA := {"tent": Color("d8c8a0"), "tent_dark": Color("a8956a")}
 
+## A fundacao paga-se nesta lareira apagada; tendas e bancas aparecem depois.
+const CLEARING := [
+	["E", -14, -3, 5, 3, "stone_shade"],
+	["E", 14, -3, 5, 3, "stone_shade"],
+	["E", 0, -2, 5, 2, "stone"],
+	["l", -11, -5, 11, -10, "log"],
+	["l", -11, -10, 11, -5, "log"],
+]
 const ENCAMPMENT := [
 	["E", 0, -2, 80, 3, "soil"],
 	["p", [-78, 0, -52, -46, -26, 0], "tent"],
@@ -130,6 +138,7 @@ const GUARITA := [
 const ESTACAS := [-204, -196, -188, -180, 174, 182, 190, 198]
 const ESTACA := {"largura": 7, "alto": 58, "bico": 6}
 const TAMANHOS := {
+	&"seat_clearing": Vector2i(48, 24),
 	&"seat_encampment": Vector2i(168, 64),
 	&"seat_hamlet": Vector2i(248, 80),
 	&"seat_village": Vector2i(328, 120),
@@ -155,11 +164,14 @@ const CART := [
 
 ## O sprite da sede no estagio `nivel` (1 e o Acampamento).
 static func profile(nivel: int) -> StringName:
+	if nivel == RealmLadder.CLAREIRA:
+		return &"seat_clearing"
 	return POR_ESTAGIO[clampi(nivel, RealmLadder.FUNDADO, POR_ESTAGIO.size()) - 1]
 
 
 static func all() -> Dictionary:
 	return {
+		&"seat_clearing": _def(&"seat_clearing", CLEARING),
 		&"seat_encampment": _def(&"seat_encampment", ENCAMPMENT),
 		&"seat_hamlet": _def(&"seat_hamlet", HAMLET),
 		&"seat_village": _def(&"seat_village", VILLAGE),

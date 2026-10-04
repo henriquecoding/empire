@@ -22,6 +22,7 @@ func before_test() -> void:
 	SimLoop.start(SEMENTE)
 	Greybox.build()
 	Sede.erguer()  # o castelo de antes e a Fortaleza (ADR 0059)
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, SimLoop.core_x)
 	for obra in SimLoop.builds.slots:
 		if obra.two_paths() and obra.x > SimLoop.core_x:
 			_muro = obra
@@ -98,8 +99,8 @@ func test_acabada_a_obra_o_muro_fica_com_a_vida_do_degrau_novo() -> void:
 	assert_int(_muro.health).is_equal(_muro.max_health())
 
 
-## Uma tropa tua em cima do muro, para a obra andar sem esperar pela fila.
+## Um construtor teu em cima do muro, para a obra andar sem esperar pela fila.
 func _maos() -> UnitSystem:
 	var u := UnitSystem.new()
-	u.spawn(GameState.new(), Registry.entry(&"units", &"vagrant"), 1, _muro.x)
+	u.spawn(GameState.new(), Registry.entry(&"units", &"builder"), 1, _muro.x)
 	return u

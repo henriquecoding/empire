@@ -1,10 +1,10 @@
 extends GdUnitTestSuite
 
 
-func test_paid_site_sends_a_worker_without_waiting_for_the_next_phase() -> void:
+func test_paid_site_sends_a_builder_without_waiting_for_the_next_phase() -> void:
 	var state := GameState.new()
 	var units := UnitSystem.new()
-	var data := Registry.entry(&"units", &"vagrant") as UnitData
+	var data := Registry.entry(&"units", &"builder") as UnitData
 	var worker := units.spawn(state, data, 1, 0.0)
 	var builds := BuildSystem.new()
 	var site := builds.post(WallSite.slot(300.0))

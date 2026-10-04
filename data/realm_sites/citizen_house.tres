@@ -5,4 +5,4 @@
 [resource]
 script = ExtResource("1_s0glx")
 id = &"citizen_house"
-placement = &"wilderness"
+wall_level = 1

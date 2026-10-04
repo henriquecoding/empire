@@ -5,5 +5,4 @@
 [resource]
 script = ExtResource("1_sslx8")
 id = &"tender_ward"
-placement = &"frontier"
 wall_level = 1

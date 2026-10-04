@@ -54,7 +54,12 @@ static func _seat(site: BuildSlot, values: Dictionary) -> String:
 	if site.level == RealmLadder.CLAREIRA:
 		return _tr(&"CONTEXT_SEAT_FOUND").format(values)
 	values["opens"] = opens(site.level + 1)
-	return _tr(&"CONTEXT_SEAT_UPGRADE").format(values)
+	var texto := _tr(&"CONTEXT_SEAT_UPGRADE").format(values)
+	var atual := RulesFactory.realm_stage(site.level)
+	var proximo := RulesFactory.realm_stage(site.level + 1)
+	if atual != null and proximo != null and proximo.wall_rings > atual.wall_rings:
+		texto += "\n" + _tr(&"CONTEXT_SEAT_NEW_WALLS")
+	return texto
 
 
 ## As primeiras obras que o estagio abre, pelos nomes, e reticencias se ha mais.

@@ -85,6 +85,7 @@ func load_world(mundo: Dictionary) -> void:
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
 	field.from_dict(mundo)
 	seat.from_dict(mundo.get(FoundationWatch.SEDE, {}))
+	FoundationWatch.founded_tools()
 
 
 func stop() -> void:
@@ -109,6 +110,7 @@ func set_paused(pausado: bool) -> void:
 
 func step(delta: float) -> void:
 	state.tick += 1
+	builds.crew_owner = recruits.owner_of(units, king_id)
 	var abertas := Passages.open(passages, builds)  # a escora fecha a boca (Q-132)
 	_largar(Verbs.consume(intents, units, creatures, combat, king_id, abertas, builds, field))
 	HeroWatch.tick(delta)
@@ -118,10 +120,7 @@ func step(delta: float) -> void:
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	jobs.refresh(builds, units, _fase)  # 3 · fase, obras ou recrutamento alterados
 	field.prepare(ClockService.clock.day, core_x, world_width, units, _fase, state)
-	# 4 · quem quer a moeda, quem espera no nucleo e quem luta: os tres ESCREVEM
-	#     alvo, que e o que o passo 4 escreve ("estado, alvo, intencao de
-	#     movimento"). Vem antes da FSM para que ela ja decida sobre o alvo deste
-	#     tick.
+	# 4 · recrutamento, espera e combate escrevem alvo antes da FSM.
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id, core_x)
 	field.plan(units, _fase < GameClock.Phase.DUSK)
@@ -129,13 +128,12 @@ func step(delta: float) -> void:
 	EventRelay.morale(morale.tick(units, king_id, core_x, _brecha))  # 4 · §07
 	_brecha = false
 	EventRelay.units(units.tick_decisions(state.tick))  # 4 · FSM, 1/6 por tick
-	# 5 · MovementSystem — todo o tick. O king_id vai junto porque o §24 da ao
-	#     comando "Mover" o contexto "Sempre": quem uma pessoa conduz nao fica
-	#     preso em FIGHT como fica quem a §52 conduz. A alvorada solta os postos
-	#     atras da luz (§24, DawnCascade).
+	# 5 · quem se conduz anda em combate; a alvorada solta os postos atras da luz.
 	field.under.confine(units)  # 5 · la em baixo, ninguem passa das paredes (Q-186)
 	units.piloted_pace = MonarchWatch.pace(delta)  # 5 · correr, com folego (Q-193)
-	units.tick_movement(delta, Assume.driven(), ClockService.dawn_front(), HeroWatch.pace())
+	units.tick_movement(
+		delta, Assume.driven(), ClockService.dawn_front(), HeroWatch.pace(), recruits.rush
+	)
 	creatures.tick_movement(delta)
 	coins.tick(delta)  # 5 · o arco e a queda, antes de alguem ler o chao
 	# 5 · apanhar, pagar uma obra e ser recrutado sao os tres consequencia de uma
@@ -176,6 +174,7 @@ func _montar() -> void:
 	units = UnitSystem.new()
 	creatures = CreatureSystem.new()
 	builds = BuildSystem.new()
+	builds.workforce = units
 	jobs = SimFactory.job_board()
 	combat = SimFactory.combat(jobs)
 	morale = SimFactory.morale()

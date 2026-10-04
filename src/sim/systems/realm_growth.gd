@@ -7,6 +7,8 @@ const HALF := 0.5
 
 ## Politicas geradas de realm_sites.csv, instaladas pelo RulesFactory.
 static var sites: Dictionary = {}
+## Estagio da sede -> quantidade de linhas de muralhas, por flanco.
+static var wall_rings: Dictionary = {}
 
 
 ## O mundo conserva os slots e os ids; so publica o convite quando faz sentido.
@@ -38,22 +40,12 @@ static func refusal(obras: BuildSystem, vaga: BuildSlot) -> Need:
 	if not supplied(obras, politica.requires_any):
 		return Need.SUPPLY
 	match politica.placement:
-		&"camp", &"wilderness", &"native":
+		&"wilderness", &"native":
 			return Need.NONE
 		&"wall":
 			return Need.NONE if next_wall(obras, vaga) else Need.FRONTIER
-		&"starter":
-			if _first_plot(obras, vaga, sede):
-				return Need.NONE
-		&"frontier":
-			if protected(obras, vaga, politica.wall_level):
-				return Need.NONE
-			var frente := _front(obras, vaga.x, sede.x)
-			var proxima := _next(obras, vaga.x, sede.x)
-			if frente != null and frente.level >= politica.wall_level and proxima != null:
-				if absf(vaga.x - sede.x) + vaga.width * HALF < absf(proxima.x - sede.x):
-					return Need.NONE
-			return Need.FRONTIER
+		&"camp":
+			return Need.NONE if _camp_plot(obras, vaga, sede) else Need.WALL
 	return Need.NONE if protected(obras, vaga, politica.wall_level) else Need.WALL
 
 
@@ -72,17 +64,25 @@ static func protected(obras: BuildSystem, vaga: BuildSlot, nivel: int = 1) -> bo
 			continue
 		if (muro.x - sede.x) * (vaga.x - sede.x) <= 0.0:
 			continue
-		if absf(muro.x - sede.x) > absf(vaga.x - sede.x) + vaga.width * HALF:
+		if _inside(muro, vaga, sede):
 			return true
 	return false
 
 
-## So o proximo marco de cada lado se oferece; nao se salta o reino inteiro.
+## Cada estagio da sede abre um recinto por lado; so se oferece o proximo marco.
 static func next_wall(obras: BuildSystem, vaga: BuildSlot) -> bool:
 	var sede := RealmLadder.seat(obras)
 	if sede == null or vaga.level > 0:
 		return true
-	return _next(obras, vaga.x, sede.x) == vaga
+	if _next(obras, vaga.x, sede.x) != vaga:
+		return false
+	var ring := 0
+	for muro in obras.slots:
+		if not _wall(muro) or (muro.x - sede.x) * (vaga.x - sede.x) <= 0.0:
+			continue
+		if absf(muro.x - sede.x) < absf(vaga.x - sede.x):
+			ring += 1
+	return ring < int(wall_rings.get(RealmLadder.stage(obras), 0))
 
 
 static func supplied(obras: BuildSystem, fontes: Array[StringName]) -> bool:
@@ -123,11 +123,18 @@ static func _next(obras: BuildSystem, x: float, centro: float) -> BuildSlot:
 	return proxima
 
 
-static func _first_plot(obras: BuildSystem, vaga: BuildSlot, sede: BuildSlot) -> bool:
-	for outra in obras.slots:
-		if outra == vaga or outra.kind != vaga.kind or outra.territory != vaga.territory:
+## As ferramentas fundadoras cabem no traçado da primeira muralha, mesmo por erguer.
+## Sem esta excecao nao ha como formar quem levanta a primeira defesa.
+static func _camp_plot(obras: BuildSystem, vaga: BuildSlot, sede: BuildSlot) -> bool:
+	var primeiro: BuildSlot = null
+	for muro in obras.slots:
+		if not _wall(muro) or (muro.x - sede.x) * (vaga.x - sede.x) <= 0.0:
 			continue
-		if (outra.x - sede.x) * (vaga.x - sede.x) > 0.0:
-			if absf(outra.x - sede.x) < absf(vaga.x - sede.x):
-				return false
-	return true
+		if primeiro == null or absf(muro.x - sede.x) < absf(primeiro.x - sede.x):
+			primeiro = muro
+	return primeiro != null and _inside(primeiro, vaga, sede)
+
+
+static func _inside(muro: BuildSlot, vaga: BuildSlot, sede: BuildSlot) -> bool:
+	var limite := absf(muro.x - sede.x) - muro.width * HALF
+	return absf(vaga.x - sede.x) + vaga.width * HALF < limite

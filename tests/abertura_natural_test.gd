@@ -61,7 +61,8 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	_recrutar(O_VAGABUNDO)
 	_formar(O_VAGABUNDO, &"hammer_rack", &"builder")
 	var canteiro := _obra(SimLoop.core_x + Greybox.CANTEIROS_X[O_CANTEIRO])
-	var preco := canteiro.next_cost()
+	var wall := _obra(SimLoop.core_x + Greybox.MUROS_X[1])
+	var preco := wall.next_cost() + canteiro.next_cost()
 	# A caca abre em vagas pela luz (Q-106): o canteiro paga-se antes do crepusculo.
 	var limite := _fase_em(GameClock.Phase.DUSK)
 	while (_saco() < preco or _no_saco_do_arqueiro < 1) and ClockService.clock.elapsed < limite:
@@ -69,6 +70,12 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	assert_int(_saco()).is_greater_equal(preco)
 	# A caca chega ao saco do rei pela mao do arqueiro (Q-111), e nao do chao.
 	assert_int(_no_saco_do_arqueiro).is_greater_equal(1)
+	while wall.state == BuildSlot.State.EMPTY and ClockService.clock.elapsed < limite:
+		_passo(wall.x, true)
+	while not wall.standing() and ClockService.clock.elapsed < limite:
+		_passo(canteiro.x)
+	assert_bool(wall.standing()).is_true()
+	assert_bool(RealmGrowth.visible(SimLoop.builds, canteiro)).is_true()
 	while canteiro.state == BuildSlot.State.EMPTY and ClockService.clock.elapsed < limite:
 		_passo(canteiro.x, true)
 	assert_int(canteiro.state).is_not_equal(BuildSlot.State.EMPTY)

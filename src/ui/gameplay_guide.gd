@@ -61,6 +61,8 @@ static func context(device: Glyphs.Device) -> String:
 			return GuideSites.heir(values)
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state in [BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING]:
+			if site.two_paths():
+				return WallGuide.building(site, values)
 			return _tr(&"CONTEXT_BUILDING").format(values)
 		if site.mending:
 			return _tr(&"CONTEXT_REPAIRING").format(values)
@@ -68,11 +70,8 @@ static func context(device: Glyphs.Device) -> String:
 			return _tr(&"CONTEXT_REPAIR").format(values)
 		if values.cost > 0 and not RealmLadder.allows(SimLoop.builds, site):
 			return SeatGuide.locked(site, values)  # o estagio da sede que a abre (ADR 0059)
-		if KingVerbs.wall_choice_open(site):
-			values["path"] = _tr(
-				&"PATH_GARRISON" if site.path == BuildSlot.Path.GUARNICAO else &"PATH_FORTIFY"
-			)
-			return _tr(&"CONTEXT_WALL").format(values)
+		if site.two_paths() and values.cost > 0:
+			return WallGuide.offer(site, values)
 		if SlotVariant.open(site):  # P-N: a variante escolhe-se antes da moeda (Q-136)
 			var chave := "VARIANT_%s_%s" % [String(site.kind).to_upper(), "AB"[site.variant]]
 			values["variant"] = _tr(StringName(chave))

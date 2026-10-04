@@ -1,5 +1,5 @@
 id,placement,wall_level,requires_any,_phase,_src,_proposed,_notes
-wall,wall,0,,1,ADR 0060,,Só o próximo marco por lado. A subida de nível continua na escada da sede.
+wall,wall,0,,1,ADR 0064,,Cada estágio da sede abre o próximo recinto de cada lado. A subida de nível continua na escada da sede.
 core,camp,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 training_house,protected,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 forge,protected,3,training_house,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
@@ -8,7 +8,7 @@ embassy,protected,2,training_house,1,ADR 0060 — estágio + território + apoio
 heir_house,protected,2,training_house,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 root_sanctuary,protected,2,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 mount_stable,protected,2,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-farm,starter,1,,1,ADR 0060 — estágio + território + apoio,wall_level,O primeiro canteiro de cada lado pode começar sem muralha; os seguintes pedem área protegida.
+farm,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,Todo canteiro pede área protegida; os exteriores só aparecem depois de expandir os muros.
 fishery,protected,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 henhouse,protected,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 cow_stable,protected,2,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
@@ -19,17 +19,17 @@ saltery,protected,2,fishery,1,ADR 0060 — estágio + território + apoio,wall_l
 pen,protected,2,henhouse|cow_stable,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 sawmill,protected,2,lumber_camp,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 smelter,protected,3,ore_pit,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-archer_tower,frontier,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-high_tower,frontier,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-fire_barrel,frontier,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-root_moat,frontier,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-lighthouse,frontier,2,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+archer_tower,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+high_tower,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+fire_barrel,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+root_moat,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+lighthouse,protected,2,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 consecrated_altar,protected,3,root_sanctuary,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 passage_seal,wilderness,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-campfire,frontier,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-tender_ward,frontier,1,,1,ADR 0060 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+campfire,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+tender_ward,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 bow_rack,camp,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
-citizen_house,wilderness,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
+citizen_house,protected,1,,1,ADR 0064 — estágio + território + apoio,wall_level,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 enramados_house,native,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 enramados_work,native,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."
 enramados_defense,native,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."

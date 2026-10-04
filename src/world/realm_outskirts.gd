@@ -1,10 +1,10 @@
 class_name RealmOutskirts
 extends RefCounted
 
-## Autoria do nivel: banca a oeste da ultima frente, no chao livre junto da trilha.
-const MARTELO_X := -2080.0
+## Autoria do nivel: a banca fundadora, dentro do primeiro recinto (ADR 0064).
+const MARTELO_X := -552.0
 ## O ultimo recinto protege o celeiro, a casa do herdeiro e os servicos de expedicao.
-const MUROS_X := [-1960.0, 1960.0]
+const MUROS_X := [-1960.0, 2040.0]
 
 
 static func author() -> void:

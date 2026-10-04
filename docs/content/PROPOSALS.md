@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 728 | 311 | 1039 |
-| Fases 3–8 | 347 | 98 | 445 |
-| Total | 1075 | 409 | 1484 |
+| Fases 0–2 (fatia vertical) | 734 | 311 | 1045 |
+| Fases 3–8 | 348 | 98 | 446 |
+| Total | 1082 | 409 | 1491 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 728
+## 1 · Fatia vertical — balanceamento — 734
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -704,20 +704,25 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_stages | `encampment` | `cost` | 2 | 1 | O custo 2 é o da fundação do plano (RG-D03). Regra proposta: build_work = 2 s × custo, a dos edifícios (Q-064). A vida, a largura e os slots de contacto sobem com o estágio até aos do castelo de antes, na Fortaleza (1000, 480 e 7): o acampamento não é um castelo disfarçado (plano §32.2). O que o Acampamento abre é o que o plano põe em F1 (§9): o canteiro, a fogueira, a banca do arco e a estacaria. ADR 0060: só abre o que está listado; a banca do martelo permite formar um construtor a partir de um trabalhador contratado. Não há pioneiro pronto. |
 | realm_stages | `encampment` | `max_health` | 200 | 1 | O custo 2 é o da fundação do plano (RG-D03). Regra proposta: build_work = 2 s × custo, a dos edifícios (Q-064). A vida, a largura e os slots de contacto sobem com o estágio até aos do castelo de antes, na Fortaleza (1000, 480 e 7): o acampamento não é um castelo disfarçado (plano §32.2). O que o Acampamento abre é o que o plano põe em F1 (§9): o canteiro, a fogueira, a banca do arco e a estacaria. ADR 0060: só abre o que está listado; a banca do martelo permite formar um construtor a partir de um trabalhador contratado. Não há pioneiro pronto. |
 | realm_stages | `encampment` | `contact_slots` | 3 | 1 | O custo 2 é o da fundação do plano (RG-D03). Regra proposta: build_work = 2 s × custo, a dos edifícios (Q-064). A vida, a largura e os slots de contacto sobem com o estágio até aos do castelo de antes, na Fortaleza (1000, 480 e 7): o acampamento não é um castelo disfarçado (plano §32.2). O que o Acampamento abre é o que o plano põe em F1 (§9): o canteiro, a fogueira, a banca do arco e a estacaria. ADR 0060: só abre o que está listado; a banca do martelo permite formar um construtor a partir de um trabalhador contratado. Não há pioneiro pronto. |
+| realm_stages | `encampment` | `wall_rings` | 1 | 1 | O custo 2 é o da fundação do plano (RG-D03). Regra proposta: build_work = 2 s × custo, a dos edifícios (Q-064). A vida, a largura e os slots de contacto sobem com o estágio até aos do castelo de antes, na Fortaleza (1000, 480 e 7): o acampamento não é um castelo disfarçado (plano §32.2). O que o Acampamento abre é o que o plano põe em F1 (§9): o canteiro, a fogueira, a banca do arco e a estacaria. ADR 0060: só abre o que está listado; a banca do martelo permite formar um construtor a partir de um trabalhador contratado. Não há pioneiro pronto. |
 | realm_stages | `hamlet` | `cost` | 8 | 1 | A torre alta abre já aqui (RG-D09): a §10 pede-a a partir do dia 4, e na Fortaleza chegava tarde de mais. A casa de cidadãos também (plano §9): é a recuperação do recrutamento, e não pode ficar atrás da coisa que se perdeu. |
 | realm_stages | `hamlet` | `max_health` | 350 | 1 | A torre alta abre já aqui (RG-D09): a §10 pede-a a partir do dia 4, e na Fortaleza chegava tarde de mais. A casa de cidadãos também (plano §9): é a recuperação do recrutamento, e não pode ficar atrás da coisa que se perdeu. |
 | realm_stages | `hamlet` | `contact_slots` | 4 | 1 | A torre alta abre já aqui (RG-D09): a §10 pede-a a partir do dia 4, e na Fortaleza chegava tarde de mais. A casa de cidadãos também (plano §9): é a recuperação do recrutamento, e não pode ficar atrás da coisa que se perdeu. |
 | realm_stages | `hamlet` | `unlocks` | training_house\|henhouse\|fishery\|archer_tower\|high_tower\|citizen_house\|palisade\|enramados_house\|enramados_defense\|portuarios_house\|portuarios_defense\|fenda_house\|fenda_defense\|horta_house\|horta_defense\|fornalha_house\|fornalha_defense\|sobraiz_house\|sobraiz_defense\|geada_house\|geada_defense\|bruma_house\|bruma_defense\|mercenary_house\|mercenary_defense | 1 | A torre alta abre já aqui (RG-D09): a §10 pede-a a partir do dia 4, e na Fortaleza chegava tarde de mais. A casa de cidadãos também (plano §9): é a recuperação do recrutamento, e não pode ficar atrás da coisa que se perdeu. |
+| realm_stages | `hamlet` | `wall_rings` | 2 | 1 | A torre alta abre já aqui (RG-D09): a §10 pede-a a partir do dia 4, e na Fortaleza chegava tarde de mais. A casa de cidadãos também (plano §9): é a recuperação do recrutamento, e não pode ficar atrás da coisa que se perdeu. |
 | realm_stages | `village` | `cost` | 18 | 1 | A Forja continua a pedir a estátua dela (Q-016): o estágio soma-se à descoberta, não a dispensa (plano §17.1). A casa do herdeiro abre aqui (plano §21.3). |
 | realm_stages | `village` | `max_health` | 550 | 1 | A Forja continua a pedir a estátua dela (Q-016): o estágio soma-se à descoberta, não a dispensa (plano §17.1). A casa do herdeiro abre aqui (plano §21.3). |
 | realm_stages | `village` | `contact_slots` | 5 | 1 | A Forja continua a pedir a estátua dela (Q-016): o estágio soma-se à descoberta, não a dispensa (plano §17.1). A casa do herdeiro abre aqui (plano §21.3). |
 | realm_stages | `village` | `unlocks` | kitchen\|forge\|granary\|saltery\|pen\|lumber_camp\|mount_stable\|heir_house\|root_sanctuary\|fire_barrel\|stone_wall\|tender_ward\|enramados_work\|portuarios_work\|fenda_work\|horta_work\|fornalha_work\|sobraiz_work\|geada_work\|bruma_work\|mercenary_work | 1 | A Forja continua a pedir a estátua dela (Q-016): o estágio soma-se à descoberta, não a dispensa (plano §17.1). A casa do herdeiro abre aqui (plano §21.3). |
+| realm_stages | `village` | `wall_rings` | 3 | 1 | A Forja continua a pedir a estátua dela (Q-016): o estágio soma-se à descoberta, não a dispensa (plano §17.1). A casa do herdeiro abre aqui (plano §21.3). |
 | realm_stages | `walled_village` | `cost` | 32 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). |
 | realm_stages | `walled_village` | `max_health` | 750 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). |
 | realm_stages | `walled_village` | `contact_slots` | 6 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). |
 | realm_stages | `walled_village` | `unlocks` | root_moat\|embassy\|sawmill\|cow_stable\|ore_pit\|lighthouse\|iron_wall | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). |
+| realm_stages | `walled_village` | `wall_rings` | 3 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). |
 | realm_stages | `fortress` | `cost` | 56 | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). |
 | realm_stages | `fortress` | `unlocks` | smelter\|consecrated_altar\|bastion | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). |
+| realm_stages | `fortress` | `wall_rings` | 3 | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). |
 | realm_sites | `training_house` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `forge` | `wall_level` | 3 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `kitchen` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
@@ -725,7 +730,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_sites | `heir_house` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `root_sanctuary` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `mount_stable` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
-| realm_sites | `farm` | `wall_level` | 1 | 1 | O primeiro canteiro de cada lado pode começar sem muralha; os seguintes pedem área protegida. |
+| realm_sites | `farm` | `wall_level` | 1 | 1 | Todo canteiro pede área protegida; os exteriores só aparecem depois de expandir os muros. |
 | realm_sites | `fishery` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `henhouse` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `cow_stable` | `wall_level` | 2 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
@@ -744,6 +749,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_sites | `consecrated_altar` | `wall_level` | 3 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `campfire` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `tender_ward` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
+| realm_sites | `citizen_house` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 
 ## 2 · Fatia vertical — apresentação e estrutura — 311
 
@@ -1061,7 +1067,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_stages | `walled_village` | `width_px` | 400 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). |
 | realm_stages | `fortress` | `build_work` | 112 | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). |
 
-## 3 · Fases 3 a 8 — 445
+## 3 · Fases 3 a 8 — 446
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1384,6 +1390,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | economy | `coin_pickup_px` | `coin_pickup_px` | 12 | 9 | Proposta: a apanha é por distância, não por colisão. A medir no F1-01. |
 | economy | `coin_drop_repeat_s` | `coin_drop_repeat_s` | 0.12 | 9 | Proposta: o §24 manda largar em contínuo e não diz a que ritmo. 0,12 s dão pouco mais de oito moedas por segundo — depressa o bastante para encher uma obra sem martelar a tecla, devagar o bastante para se ver cada moeda a cair e para se parar a tempo. O Bastião de 65 sai em 8 s de tecla premida em vez de 65 toques. Ver Q-083. |
 | economy | `recruit_notice_px` | `recruit_notice_px` | 120 | 9 | Proposta: «perto» não tem número no dossiê. 120 é o limite exterior da fila do §50 — a distância a que o jogo já diz que alguém pertence a um sítio. O vagabundo corre para a moeda que cai a esta distância, como no Kingdom: New Lands (Q-063, 28/09/2026). |
+| economy | `recruit_run_mult` | `recruit_run_mult` | 2.0 | 9 | Proposta reversível: corre ao dobro do passo enquanto persegue uma moeda disponível dentro do raio existente. A velocidade base e os saves não mudam; apanhar a moeda ou perdê-la termina a corrida. |
 | economy | `follow_distance_px` | `follow_distance_px` | 30 | 9 | Proposta ancorada no queue_min_px do §50 (30): a que distância uma pessoa espera por outra. Desde a Q-063 só o escudeiro (follows_king) anda atrás do rei; quem é recrutado vai para a vila, como no Kingdom: New Lands. |
 | economy | `follow_spacing_px` | `follow_spacing_px` | 18 | 9 | Proposta ancorada no queue_spacing_px do §50 (18), para o jogo ter UMA regra de espaçamento e não duas: é o passo da fila atrás do rei e o passo de quem espera à volta do centro do núcleo (Q-063). |
 | economy | `unstaffed_yield` | `unstaffed_yield` | 0.25 | 9 | Proposta (Q-121): uma obra com posto rende inteiro com quem lá trabalha, e esta fracção sem ninguém — nas fases em que o posto é urgente (jobs.csv). O galinheiro, sem posto, rende sozinho: é a diferença entre as fontes. |

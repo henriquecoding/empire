@@ -13,20 +13,23 @@ func before_test() -> void:
 	sede.raise_to(RealmLadder.FUNDADO)
 
 
-func test_camp_tem_ferramentas_primeiro_canteiro_e_so_o_proximo_muro_de_cada_lado() -> void:
+func test_camp_tem_ferramentas_e_canteiros_so_depois_da_primeira_muralha() -> void:
 	var perto := _site(&"farm", 200.0)
 	var longe := _site(&"farm", 400.0)
 	var oeste := _wall(-700.0)
 	var leste := _wall(700.0)
 	var fora := _wall(1400.0)
 	assert_bool(RealmGrowth.visible(obras, _site(&"hammer_rack", -500.0))).is_true()
-	assert_bool(RealmGrowth.visible(obras, perto)).is_true()
+	assert_bool(RealmGrowth.visible(obras, perto)).is_false()
 	assert_bool(RealmGrowth.visible(obras, longe)).is_false()
 	assert_bool(RealmGrowth.next_wall(obras, oeste)).is_true()
 	assert_bool(RealmGrowth.next_wall(obras, leste)).is_true()
 	assert_bool(RealmGrowth.next_wall(obras, fora)).is_false()
 	leste.raise_to(1)
+	assert_bool(RealmGrowth.visible(obras, perto)).is_true()
 	assert_bool(RealmGrowth.visible(obras, longe)).is_true()
+	assert_bool(RealmGrowth.next_wall(obras, fora)).is_false()
+	sede.raise_to(2)
 	assert_bool(RealmGrowth.next_wall(obras, fora)).is_true()
 
 
@@ -37,7 +40,7 @@ func test_povoado_pede_area_defendida_do_lado_certo_com_edificio_inteiro() -> vo
 	muro.raise_to(1)
 	assert_int(RealmGrowth.refusal(obras, treino)).is_equal(RealmGrowth.Need.WALL)
 	assert_bool(obras.can_climb(treino, estado, null)).is_false()
-	muro.x = treino.x + treino.width * 0.5 - 1.0
+	muro.x = treino.x + (treino.width + muro.width) * 0.5 - 1.0
 	assert_bool(RealmGrowth.protected(obras, treino)).is_false()
 	muro.x += 2.0
 	assert_bool(RealmGrowth.protected(obras, treino)).is_true()
@@ -60,16 +63,19 @@ func test_defesa_em_obra_ruina_torre_ou_povo_vizinho_nao_reivindica_territorio()
 	assert_bool(RealmGrowth.protected(obras, treino)).is_false()
 
 
-func test_torre_avanca_apenas_ate_a_proxima_frente_com_muro_de_pe() -> void:
+func test_torre_so_aparece_dentro_de_uma_frente_concluida() -> void:
 	sede.raise_to(2)
 	var dentro := _site(&"archer_tower", 900.0)
 	var fora := _site(&"archer_tower", 1500.0)
 	var muro := _wall(700.0)
-	_wall(1400.0)
+	var proximo := _wall(1400.0)
 	assert_bool(RealmGrowth.allows(obras, dentro)).is_false()
 	muro.raise_to(1)
+	assert_bool(RealmGrowth.allows(obras, dentro)).is_false()
+	assert_int(RealmGrowth.refusal(obras, fora)).is_equal(RealmGrowth.Need.WALL)
+	proximo.raise_to(1)
 	assert_bool(RealmGrowth.allows(obras, dentro)).is_true()
-	assert_int(RealmGrowth.refusal(obras, fora)).is_equal(RealmGrowth.Need.FRONTIER)
+	assert_bool(RealmGrowth.allows(obras, fora)).is_false()
 
 
 func test_vila_combina_estagio_palicada_e_producao_de_apoio() -> void:
