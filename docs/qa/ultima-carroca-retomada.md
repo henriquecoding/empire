@@ -3,7 +3,23 @@
 Data: 2026-10-04. Base analisada: `main`, commit
 `c3bdec896adb7adf9227dc7c05075d089c8d8ac7`.
 
-**Estado: bloqueado por indisponibilidade do ambiente de execução.**
+**Estado atual: recuperado, integrado na main e publicado em 04/10/2026.**
+
+O [PR #84](https://github.com/henriquecoding/empire/pull/84) integra o código do
+protótipo no commit `0d04d3a2f710134b86ad2848e4cc8d66cdea6ba8`.
+A [CI final 37216619611](https://github.com/henriquecoding/empire/actions/runs/37216619611)
+passou os sete jobs, com 1.652 testes aprovados e dois previamente ignorados.
+A produção https://empire-phi-eight.vercel.app confirmou esse SHA em
+`/versao.json` e passou `make site-fumo`. As 23 decisões atendidas foram
+marcadas aplicada no painel, conservando escolha, texto, título, data e autoria.
+O fluxo de fundação, coleta, resgate e companheiro pago passou no navegador.
+O protocolo de observação humana continua pendente, assim como a arte final
+e as dependências futuras de Capital/expansão registradas em RG-12/RG-13.
+
+**Registro histórico do bloqueio anterior — não é o estado atual:**
+O conteúdo abaixo preserva o checkpoint feito durante a indisponibilidade.
+
+**Estado no checkpoint: bloqueado por indisponibilidade do ambiente de execução.**
 Este ramo contém um registro de retomada. Não contém o código do protótipo,
 não constitui uma entrega do jogo e não deve ser integrado como se concluísse
 a implementação.
