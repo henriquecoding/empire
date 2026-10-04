@@ -5,5 +5,4 @@
 [resource]
 script = ExtResource("1_mtj8v")
 id = &"campfire"
-placement = &"frontier"
 wall_level = 1

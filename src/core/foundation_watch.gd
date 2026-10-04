@@ -3,8 +3,8 @@
 # O plano do reino de 03/10/2026, aplicado pelo dono (*«aplique esse relatorio»*): o
 # monarca chega a uma Clareira com a companhia e dois vagabundos neutros (ADR 0060);
 # ha uma carroca de provisoes ao pe do marco; a primeira moeda funda o reino.
-# A fundacao ergue as bancas do arco e do martelo, uma vez — a
-# bancada fundadora (plano §6). Muralhas, torres, canteiros e Casa de Treino pagam-se
+# O martelo e o arco aparecem juntos depois de fundar a cidade (ADR 0063).
+# Muralhas, torres, canteiros e Casa de Treino pagam-se
 # como sempre.
 #
 # Aqui vive tambem o alvo da moeda no nucleo (plano §3.6, §23.2): a sede, por omissao,
@@ -38,6 +38,12 @@ static func arrive(rei: int) -> void:
 	SimLoop.seat.place_cart(SimLoop.core_x + CARROCA_X, regras.founder_provisions)
 
 
+## Ao retomar uma sede fundada, completa bancas antigas vazias sem repetir treinos.
+static func founded_tools() -> void:
+	if RealmLadder.founded(SimLoop.builds):
+		_bancada()
+
+
 ## O monarca passa pela carroca e leva o que lhe cabe no saco. E apanhar, e por isso
 ## corre no passo 5, ao lado de quem apanha moedas.
 static func collect() -> void:
@@ -55,7 +61,7 @@ static func collect() -> void:
 
 
 ## Os acontecimentos das obras deste tick, e o que a fundacao lhes acrescenta: a sede que
-## chega ao Acampamento ergue a banca do arco de graca (plano §6.3). Acontece uma vez:
+## chega ao Acampamento ergue as duas bancas de graca (plano §6.3). Acontece uma vez:
 ## o nucleo so passa pelo nivel 1 uma vez, e carregar um save nao repete o acontecimento.
 static func after(eventos: Array[Dictionary]) -> Array[Dictionary]:
 	var mais: Array[Dictionary] = []
@@ -96,13 +102,13 @@ static func aims_monarch() -> bool:
 	return SimLoop.seat.aims_monarch(pode)
 
 
-## A banca do arco por levantar passa a estar de pe, sem moeda: a bancada fundadora.
+## As duas bancas por levantar passam a estar de pe, sem moeda, depois da fundacao.
 static func _bancada() -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
-		if vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
+		if vaga.territory != 0 or vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
 			continue
-		if vaga.state != BuildSlot.State.EMPTY:
+		if vaga.state != BuildSlot.State.EMPTY or vaga.paid != 0:
 			continue
 		vaga.raise_to(RealmLadder.FUNDADO)
 		(

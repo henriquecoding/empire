@@ -12,6 +12,9 @@ static var sites: Dictionary = {}
 ## O mundo conserva os slots e os ids; so publica o convite quando faz sentido.
 ## Obra paga, em curso ou herdada nunca desaparece por uma muralha cair.
 static func visible(obras: BuildSystem, vaga: BuildSlot, estado: GameState = null) -> bool:
+	if vaga.territory == 0 and vaga.kind in [&"bow_rack", &"hammer_rack"]:
+		if not RealmLadder.founded(obras):
+			return false
 	if vaga.kind == BuildSlot.NUCLEO or vaga.level > 0 or vaga.paid > 0:
 		return true
 	if vaga.state != BuildSlot.State.EMPTY:
@@ -42,18 +45,6 @@ static func refusal(obras: BuildSystem, vaga: BuildSlot) -> Need:
 			return Need.NONE
 		&"wall":
 			return Need.NONE if next_wall(obras, vaga) else Need.FRONTIER
-		&"starter":
-			if _first_plot(obras, vaga, sede):
-				return Need.NONE
-		&"frontier":
-			if protected(obras, vaga, politica.wall_level):
-				return Need.NONE
-			var frente := _front(obras, vaga.x, sede.x)
-			var proxima := _next(obras, vaga.x, sede.x)
-			if frente != null and frente.level >= politica.wall_level and proxima != null:
-				if absf(vaga.x - sede.x) + vaga.width * HALF < absf(proxima.x - sede.x):
-					return Need.NONE
-			return Need.FRONTIER
 	return Need.NONE if protected(obras, vaga, politica.wall_level) else Need.WALL
 
 
@@ -72,17 +63,23 @@ static func protected(obras: BuildSystem, vaga: BuildSlot, nivel: int = 1) -> bo
 			continue
 		if (muro.x - sede.x) * (vaga.x - sede.x) <= 0.0:
 			continue
-		if absf(muro.x - sede.x) > absf(vaga.x - sede.x) + vaga.width * HALF:
+		if absf(muro.x - sede.x) - muro.width * HALF >= absf(vaga.x - sede.x) + vaga.width * HALF:
 			return true
 	return false
 
 
-## So o proximo marco de cada lado se oferece; nao se salta o reino inteiro.
+## Cada estagio da sede abre um recinto por lado; so se oferece o proximo marco.
 static func next_wall(obras: BuildSystem, vaga: BuildSlot) -> bool:
 	var sede := RealmLadder.seat(obras)
 	if sede == null or vaga.level > 0:
 		return true
-	return _next(obras, vaga.x, sede.x) == vaga
+	var rank := 1
+	for muro in obras.slots:
+		if not _wall(muro) or (muro.x - sede.x) * (vaga.x - sede.x) <= 0.0:
+			continue
+		if absf(muro.x - sede.x) < absf(vaga.x - sede.x):
+			rank += 1
+	return sede.level >= rank and _next(obras, vaga.x, sede.x) == vaga
 
 
 static func supplied(obras: BuildSystem, fontes: Array[StringName]) -> bool:
@@ -121,13 +118,3 @@ static func _next(obras: BuildSystem, x: float, centro: float) -> BuildSlot:
 		if proxima == null or distancia < absf(proxima.x - centro):
 			proxima = muro
 	return proxima
-
-
-static func _first_plot(obras: BuildSystem, vaga: BuildSlot, sede: BuildSlot) -> bool:
-	for outra in obras.slots:
-		if outra == vaga or outra.kind != vaga.kind or outra.territory != vaga.territory:
-			continue
-		if (outra.x - sede.x) * (vaga.x - sede.x) > 0.0:
-			if absf(outra.x - sede.x) < absf(vaga.x - sede.x):
-				return false
-	return true

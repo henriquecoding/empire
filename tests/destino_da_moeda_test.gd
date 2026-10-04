@@ -120,6 +120,7 @@ func test_ninguem_por_recrutar_nasce_dentro_de_uma_obra() -> void:
 
 
 func test_o_rei_em_cima_de_uma_obra_paga_essa_obra() -> void:
+	SimLoop.units.spawn(SimLoop.state, Registry.entry(&"units", &"builder"), 1, SimLoop.core_x)
 	for obra in SimLoop.builds.slots:
 		if obra.kind == BuildSlot.NUCLEO:
 			continue

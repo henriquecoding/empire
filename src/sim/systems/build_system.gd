@@ -1,17 +1,13 @@
 # src/sim/systems/build_system.gd — construir e pagar com moeda fisica (§55).
 #
-# "Uma obra existe quando uma moeda cai num BuildSlot": sem menu nem dialogo, o
-# mesmo Verbo 1 que recruta (§61). O progresso avanca enquanto alguem estiver
-# PRESENTE, e nao por tempo: uma obra paga e abandonada fica em andaime.
-#
+# Moedas fisicas pagam a obra (§55, §61); sem maos presentes fica em andaime.
+# Muralhas precisam de construtor, as outras obras conservam a Q-064 (ADR 0063).
 # Puro: nao e Node, nao conhece o catalogo de eventos e nao sorteia nada.
-# Devolve acontecimentos para o passo 11; reparacao no RepairWork (Q-108, Q-064).
 class_name BuildSystem
 extends RefCounted
 
 const NENHUM := -1
 
-## Os acontecimentos devolvidos: chaves, e nao sinais — quem chama traduz (§46).
 const EV_PAGA := 0
 const EV_INICIADA := 1
 const EV_PROGRESSO := 2
@@ -27,11 +23,11 @@ const QUANTO := &"amount"
 const RACIO := &"ratio"
 const NIVEL := &"level"
 
-## O raio de uma obra e meia largura: uma moeda cai "nela" quando cai em cima
-## dela, e quem constroi tem de estar la. A largura vem de data/, por peca.
 const METADE := 0.5
 
 var slots: Array[BuildSlot] = []
+var workforce: UnitSystem
+var crew_owner: int = 0
 ## A defesa das muralhas que um construtor teu da (§09); escrita a cada tick.
 var wall_defense := 0.0
 
@@ -59,14 +55,7 @@ func clear() -> void:
 	slots = []
 
 
-## As moedas pousadas que cairam numa obra passam a ser dela. E o §55 inteiro:
-## nao ha outro caminho para pagar uma construcao.
-##
-## So em EMPTY ou DONE (o degrau seguinte), ou tocada e em ruina (a reparacao).
-## Uma obra a meio nao aceita moeda: quem a faz andar e quem esta la.
-##
-## `estado` traz as conquistas e `madeira` o Lenho (§74); sem eles, so contam as
-## moedas. Um degrau que pede Lenho gasta-o quando a obra comeca.
+## As moedas pousadas que cairam numa obra passam a ser dela (§55).
 func absorb(
 	moedas: CoinSystem, estado: GameState = null, madeira: AmargueiroSystem = null
 ) -> Array[Dictionary]:
@@ -104,11 +93,14 @@ func absorb(
 ## guardado e, sendo unico por imperio, nenhuma outra muralha o tem nem o esta a
 ## levantar (§10, §74). Uma moeda largada num degrau que nao sobe fica no chao.
 func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
+	var crew := workforce == null or not vaga.two_paths()
+	crew = crew or WallCrew.available(workforce, vaga.band, crew_owner)
 	# Uma estatua por achar (Q-016), ou a sede num estagio abaixo do que a abre (ADR 0059).
 	if (
 		not Discoveries.known(estado, vaga.kind)
 		or not RealmLadder.allows(self, vaga)
 		or not RealmGrowth.allows(self, vaga)
+		or not crew
 	):
 		return false
 	if estado == null or madeira == null:
@@ -127,19 +119,27 @@ func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) ->
 	return true
 
 
-## Passo 8 do §43, todos os ticks. Avanca as obras que tem gente em cima.
+## Passo 8: muralhas exigem construtor; as outras obras conservam a Q-064.
 func tick(delta: float, unidades: UnitSystem) -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in slots:
 		if vaga.mending:
 			var quem := RepairWork.hands(
-				unidades, vaga, &"" if vaga.foundation else RepairWork.REPAIRER
+				unidades,
+				vaga,
+				&"" if vaga.foundation and not vaga.two_paths() else RepairWork.REPAIRER,
+				crew_owner if vaga.two_paths() else 0
 			)
 			eventos.append_array(RepairWork.tick(vaga, delta * quem))
 			continue
 		if vaga.state != BuildSlot.State.SCAFFOLD and vaga.state != BuildSlot.State.BUILDING:
 			continue
-		var maos := RepairWork.hands(unidades, vaga, &"")
+		var maos := RepairWork.hands(
+			unidades,
+			vaga,
+			RepairWork.REPAIRER if vaga.two_paths() else &"",
+			crew_owner if vaga.two_paths() else 0
+		)
 		if maos == 0:
 			continue
 		var trabalho := vaga.works[vaga.level]

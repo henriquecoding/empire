@@ -51,7 +51,7 @@ func _vaga_de_canteiro(x: float) -> BuildSlot:
 
 
 func _obreiro(unidades: UnitSystem, estado: GameState, x: float) -> int:
-	return unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), MEU_IMPERIO, x)
+	return unidades.spawn(estado, Registry.entry(&"units", &"builder"), MEU_IMPERIO, x)
 
 
 func _pagar(obras: BuildSystem, vaga: BuildSlot, quanto: int) -> Array[Dictionary]:

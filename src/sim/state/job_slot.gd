@@ -25,6 +25,7 @@ var id: int = NENHUM
 
 ## A obra que publicou esta vaga, ou NENHUM.
 var source: int = NENHUM
+var builder_only: bool = false
 
 # Os efeitos do posto, COPIADOS da obra quando ela publica (§10, effect_params).
 # "A torre nao da dano — da certeza" (§07): quem esta nela dispara com esta

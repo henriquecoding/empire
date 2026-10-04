@@ -49,6 +49,7 @@ extends Resource
 ## do §50 de proposito: a que distancia uma pessoa espera por outra ja tem
 ## resposta neste jogo, e ter duas seria ter duas.
 @export var recruit_notice_px: float = 0.0
+@export var recruit_run_mult: float = 1.0
 @export var follow_distance_px: float = 0.0
 @export var follow_spacing_px: float = 0.0
 

@@ -294,7 +294,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 154 linha(s) · §21 �
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 135 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 136 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -393,6 +393,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 135 linha(s) · §06 §
 | `coin_drop_spread_px_s` | float | Moeda fisica — §02, §61, F1-01 |  |
 | `coin_drop_repeat_s` | float | Moeda fisica — §02, §61, F1-01 |  |
 | `recruit_notice_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
+| `recruit_run_mult` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 | `follow_distance_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 | `follow_spacing_px` | float | Recrutamento — §25 minuto 0:20, F1-04 |  |
 | `unstaffed_yield` | float | Auditoria de gameplay — AUD-02 |  |

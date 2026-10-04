@@ -55,7 +55,7 @@ static func sweep(
 static func awaited(unidades: UnitSystem, moedas: CoinSystem, i: int) -> bool:
 	var curva := SimFactory.curve()
 	for c in moedas.count():
-		if moedas.from_king[c] == 0 or moedas.settled[c] == 0:
+		if moedas.from_king[c] == 0 or moedas.settled[c] == 0 or moedas.targets[c] >= 0:
 			continue
 		if moedas.bands[c] != unidades.bands[i]:
 			continue

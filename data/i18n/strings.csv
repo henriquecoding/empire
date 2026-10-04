@@ -565,8 +565,8 @@ CONTEXT_PASSAGE,PASSAGEM · {assume} para mudar de faixa,PASSAGE · {assume} to 
 CONTEXT_BUILDING,"{name} · Obra paga
 O trabalhador vem construir; podes explorar","{name} · Construction funded
 A worker is on the way; you can explore",guia contextual de jogo,160,
-CONTEXT_WALL,"MURALHA · {cost} moedas · {path}
-{assume} escolher caminho · {drop} investir","WALL · {cost} coins · {path}
+CONTEXT_WALL,"{name} · Nível {level} · {cost} moedas · {path}
+{assume} escolher caminho · {drop} investir","{name} · Level {level} · {cost} coins · {path}
 {assume} choose path · {drop} invest",guia contextual de jogo,160,
 PATH_GARRISON,Guarnição: mais postos,Garrison: more posts,guia contextual de jogo,160,
 PATH_FORTIFY,Fortificação: mais resistência,Fortification: more health,guia contextual de jogo,160,
@@ -893,8 +893,20 @@ drop coins on the marker",HUD: objectivo antes da fundação,40,ADR 0059. Duas l
 
 BUILDING_HAMMER_RACK,Banca do Martelo,Hammer Rack,nome de conteúdo — building,24,ADR 0060
 GUIDE_BUILDER,"FORMA UM CONSTRUTOR
-Recruta outro vagabundo e paga o martelo na banca","TRAIN A BUILDER
-Recruit another vagrant and buy a hammer at the rack",guia contextual de jogo,160,ADR 0060
+Paga o martelo na banca junto do acampamento","TRAIN A BUILDER
+Buy a hammer at the rack beside the camp",guia contextual de jogo,160,ADR 0060
 CONTEXT_TRAIN_CAP,"{name} · O primeiro construtor já está formado
 A Casa de Treino forma os seguintes","{name} · The first builder is already trained
 The Training House trains additional builders",guia contextual de jogo,160,ADR 0060
+CONTEXT_WALL_BUILDER,"MURALHA · Precisas de um construtor
+Recruta um vagabundo e compra o martelo na banca","WALL · A builder is required
+Recruit a vagrant and buy a hammer at the rack",guia contextual de jogo,160,ADR 0063
+CONTEXT_WALL_BUILDING,"{name} · Obra paga
+O construtor vem construir; podes explorar","{name} · Construction funded
+The builder is on the way; you can explore",guia contextual de jogo,160,ADR 0063
+CONTEXT_WALL_WAITING,"{name} · Obra paga à espera de construtor
+Compra um martelo para retomar a construção","{name} · Funded; waiting for a builder
+Buy a hammer to resume construction",guia contextual de jogo,160,ADR 0063
+CONTEXT_WALL_UPGRADE,"{name} · Nível {level} · Faltam {cost} moedas
+{drop} investir; o construtor faz a melhoria","{name} · Level {level} · {cost} coins remaining
+{drop} invest; the builder makes the upgrade",guia contextual de jogo,160,ADR 0063

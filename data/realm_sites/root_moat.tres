@@ -5,5 +5,4 @@
 [resource]
 script = ExtResource("1_4pwi1")
 id = &"root_moat"
-placement = &"frontier"
 wall_level = 1

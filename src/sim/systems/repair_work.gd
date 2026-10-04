@@ -74,14 +74,17 @@ static func tick(vaga: BuildSlot, maos: float) -> Array[Dictionary]:
 	return [{BuildSystem.CHAVE: BuildSystem.EV_REPARADA, BuildSystem.VAGA: vaga}]
 
 
-## Quantas maos estao em cima da obra. Numa obra nova, qualquer tropa tua conta,
-## e por igual (Q-064); numa reparacao, so os construtores (Q-108). `oficio`
-## vazio e qualquer um.
-static func hands(unidades: UnitSystem, vaga: BuildSlot, oficio := REPAIRER) -> int:
+## Maos presentes: construtor para muralhas e reparacao; demais obras Q-064.
+## `oficio` vazio aceita qualquer tropa; `dono` restringe ao reino da obra.
+static func hands(unidades: UnitSystem, vaga: BuildSlot, oficio := REPAIRER, dono: int = 0) -> int:
 	var maos := 0
 	var raio := vaga.width * BuildSystem.METADE
 	for i in unidades.count():
 		if unidades.owners[i] == RecruitSystem.SEM_DONO or not unidades.alive(i):
+			continue
+		if unidades.healths[i] <= 0:
+			continue
+		if dono > 0 and unidades.owners[i] != dono:
 			continue
 		if unidades.bands[i] != int(vaga.band):
 			continue

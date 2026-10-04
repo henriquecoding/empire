@@ -5,5 +5,4 @@
 [resource]
 script = ExtResource("1_twp3j")
 id = &"archer_tower"
-placement = &"frontier"
 wall_level = 1
