@@ -85,7 +85,7 @@ func load_world(mundo: Dictionary) -> void:
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
 	field.from_dict(mundo)
 	seat.from_dict(mundo.get(FoundationWatch.SEDE, {}))
-	FoundationWatch.camp_tools()
+	FoundationWatch.founded_tools()
 
 
 func stop() -> void:

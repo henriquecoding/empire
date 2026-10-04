@@ -75,6 +75,7 @@ func seek_coins(unidades: UnitSystem, moedas: CoinSystem, tick: int) -> void:
 	for i in unidades.count():
 		if unidades.owners[i] != SEM_DONO or not unidades.alive(i):
 			continue
+		var had_coin := unidades.target_ids[i] != UnitSystem.NENHUM
 		var alvo := moedas.index_of(unidades.target_ids[i])
 		if alvo != NENHUM and not _eligible(moedas, alvo, unidades, i):
 			alvo = NENHUM
@@ -84,7 +85,7 @@ func seek_coins(unidades: UnitSystem, moedas: CoinSystem, tick: int) -> void:
 			alvo = _moeda_mais_proxima(moedas, unidades, i)
 		if alvo == NENHUM:
 			unidades.target_ids[i] = UnitSystem.NENHUM
-			if unidades.has_targets[i] != 0:
+			if had_coin and unidades.has_targets[i] != 0:
 				unidades.clear_target(unidades.ids[i])
 			continue
 		# QUAL moeda, e nao so para onde: o passo 5 apanha a moeda por que se
@@ -219,7 +220,7 @@ func vagrant(unidades: UnitSystem, i: int) -> bool:
 
 
 ## A moeda pousada mais proxima dentro do raio de reparo, ou NENHUM. Empate pelo
-## indice menor, que e estavel porque as colunas sao percorridas por ordem.
+## id menor, mesmo quando a remocao troca a ordem das colunas.
 func _moeda_mais_proxima(moedas: CoinSystem, unidades: UnitSystem, i: int) -> int:
 	var melhor := NENHUM
 	var melhor_d := _curva.recruit_notice_px

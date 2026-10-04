@@ -89,7 +89,7 @@ func test_cada_estagio_abre_so_a_proxima_muralha_de_cada_lado() -> void:
 func test_o_andaime_exterior_nao_publica_obras_ate_o_muro_ficar_de_pe() -> void:
 	_found()
 	RealmLadder.seat(SimLoop.builds).raise_to(2)
-	var walls := _walls(1)
+	var walls := _walls(-1)
 	walls[0].raise_to(1)
 	var tower := _site(&"archer_tower")
 	var hens := _site(&"henhouse")

@@ -32,14 +32,13 @@ const ESCUDEIRO := &"squire"
 # O nucleo tem 480 px e o resto a volta, sempre com chao livre entre obras (Q-207).
 const MUROS_X := [-1408.0, -680.0, 680.0, 1408.0]
 # A Casa de Treino e unica por imperio; do outro lado, a cozinha do cozinheiro (§09).
-const TREINOS_X := [-324.0]
-const COZINHAS_X := [324.0]
-# O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
-# render e tambem a de mandar o cozinheiro ao sitio arriscado (§21).
+const TREINOS_X := [-432.0]
+const COZINHAS_X := [432.0]
+# O celeiro do §06 (circuito 2) so se oferece depois de fechar o ultimo recinto.
 const CELEIROS_X := [1524.0]
 # E a casa do herdeiro (§15) do outro lado, a oeste: o rei novo nasce la (Q-133).
 const HERDEIROS_X := [-1524.0]
-const CANTEIROS_X := [-576.0, -456.0, 456.0, 576.0]
+const CANTEIROS_X := [-1960.0, -576.0, 576.0, 1960.0]
 const TORRES_X := [-768.0, 768.0]
 const GALINHEIROS_X := [-944.0, 944.0]
 # UM pesqueiro, e por duas razoes que coincidem: o segmento tem uma agua e nao
@@ -53,10 +52,10 @@ const PASSAGENS_X := [-1040.0, 1040.0]
 # Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
 # estatua meio enterrada; ao 11:00, a camara atras da passagem de fora, com a
 # Semente Real. E a bifurcacao a leste onde cai o capitulo revelado (§83).
-const SEGREDOS_X := {&"under_vegetation": 396.0, &"behind_passage": -1290.0}
+const SEGREDOS_X := {&"under_vegetation": 344.0, &"behind_passage": -1290.0}
 const CAMARA_W := 64.0
 const BIFURCACAO_X := 1904.0
-const RUINA_X := -396.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
+const RUINA_X := -344.0  # §79: o diario 1, "numa ruina dentro das tuas muralhas"
 # ADR 0060: dois vagabundos neutros ao pe da Clareira. Os outros pertencem
 # aos acampamentos; nenhum trabalhador ou combatente pronto pertence ao rei.
 const VAGABUNDOS_X := [-230.0, 230.0, -1650.0, 1650.0]

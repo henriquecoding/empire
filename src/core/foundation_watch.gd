@@ -3,7 +3,7 @@
 # O plano do reino de 03/10/2026, aplicado pelo dono (*«aplique esse relatorio»*): o
 # monarca chega a uma Clareira com a companhia e dois vagabundos neutros (ADR 0060);
 # ha uma carroca de provisoes ao pe do marco; a primeira moeda funda o reino.
-# O martelo esta pronto na chegada (ADR 0063), o arco vem com a fundacao, uma vez.
+# O martelo e o arco aparecem juntos depois de fundar a cidade (ADR 0063).
 # Muralhas, torres, canteiros e Casa de Treino pagam-se
 # como sempre.
 #
@@ -36,16 +36,12 @@ static func arrive(rei: int) -> void:
 	for _k in regras.founder_pioneers:
 		SimLoop.units.spawn(SimLoop.state, construtor, dono, SimLoop.core_x + PIONEIRO_X)
 	SimLoop.seat.place_cart(SimLoop.core_x + CARROCA_X, regras.founder_provisions)
-	camp_tools()
 
 
-## A ferramenta inicial existe antes de fundar; saves antigos mantem pagos e ruinas.
-static func camp_tools() -> void:
-	for vaga in SimLoop.builds.slots:
-		if vaga.kind != MARTELOS or vaga.territory != 0 or vaga.level > 0:
-			continue
-		if vaga.state == BuildSlot.State.EMPTY and vaga.paid == 0:
-			vaga.raise_to(RealmLadder.FUNDADO)
+## Ao retomar uma sede fundada, completa bancas antigas vazias sem repetir treinos.
+static func founded_tools() -> void:
+	if RealmLadder.founded(SimLoop.builds):
+		_bancada()
 
 
 ## O monarca passa pela carroca e leva o que lhe cabe no saco. E apanhar, e por isso
@@ -65,7 +61,7 @@ static func collect() -> void:
 
 
 ## Os acontecimentos das obras deste tick, e o que a fundacao lhes acrescenta: a sede que
-## chega ao Acampamento ergue a banca do arco de graca (plano §6.3). Acontece uma vez:
+## chega ao Acampamento ergue as duas bancas de graca (plano §6.3). Acontece uma vez:
 ## o nucleo so passa pelo nivel 1 uma vez, e carregar um save nao repete o acontecimento.
 static func after(eventos: Array[Dictionary]) -> Array[Dictionary]:
 	var mais: Array[Dictionary] = []
@@ -106,13 +102,13 @@ static func aims_monarch() -> bool:
 	return SimLoop.seat.aims_monarch(pode)
 
 
-## A banca do arco por levantar passa a estar de pe, sem moeda: a bancada fundadora.
+## As duas bancas por levantar passam a estar de pe, sem moeda, depois da fundacao.
 static func _bancada() -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
-		if vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
+		if vaga.territory != 0 or vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
 			continue
-		if vaga.state != BuildSlot.State.EMPTY:
+		if vaga.state != BuildSlot.State.EMPTY or vaga.paid != 0:
 			continue
 		vaga.raise_to(RealmLadder.FUNDADO)
 		(

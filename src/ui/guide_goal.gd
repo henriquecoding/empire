@@ -65,9 +65,9 @@ static func goal() -> String:
 			continue
 		production = production or site.yield_per_day > 0
 		wall = wall or site.two_paths()
-	if not production:
-		return _tr(&"GUIDE_FARM")
-	return _tr(&"GUIDE_EXPLORE" if wall else &"GUIDE_WALL")
+	if not wall:
+		return _tr(&"GUIDE_WALL")
+	return _tr(&"GUIDE_EXPLORE" if production else &"GUIDE_FARM")
 
 
 static func _rei_em_baixo() -> bool:

@@ -13,7 +13,9 @@
 - **Decidido pelo dono:** o vagabundo corre para apanhar a moeda, é contratado ao
   apanhá-la e precisa da banca inicial para se tornar construtor antes da muralha.
 - **Aplicado:** RG-21; ADR 0063. O raio conserva os 120 px existentes. A banca
-  aparece junto do acampamento desde a chegada; nenhum construtor nasce pronto.
+  e a banca do arco aparecem apenas após fundar, dentro do primeiro recinto.
+  Evoluir a sede oferece o próximo recinto; concluí-lo abre obras dentro dos muros.
+  Nenhum construtor nasce pronto.
 - **Proposta reversível:** `recruit_run_mult=2` em `economy.csv._proposed`, para
   destacar a corrida sem alterar a velocidade base ou os dados gravados.
 - **Quem decide:** o dono pode afinar a intensidade após playtest. Não se presume

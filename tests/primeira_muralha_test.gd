@@ -41,13 +41,18 @@ func _drop(slot: BuildSlot, amount: int) -> void:
 	_steps(1)
 
 
-func test_a_banca_do_martelo_esta_pronta_no_acampamento_desde_a_chegada() -> void:
+func test_a_banca_do_martelo_esta_pronta_so_depois_da_fundacao() -> void:
 	var bench := _bench()
+	assert_bool(bench.standing()).is_false()
+	var seat := RealmLadder.seat(SimLoop.builds)
+	seat.raise_to(RealmLadder.FUNDADO)
+	FoundationWatch.after(
+		[{BuildSystem.CHAVE: BuildSystem.EV_COMPLETA, BuildSystem.VAGA: seat}]
+	)
 	assert_bool(bench.standing()).is_true()
 	assert_bool(RealmGrowth.visible(SimLoop.builds, bench)).is_true()
-	assert_float(absf(bench.x - SimLoop.core_x)).is_less(160.0)
+	assert_float(absf(bench.x - SimLoop.core_x)).is_less(absf(Greybox.MUROS_X[1]))
 	assert_int(bench.paid).is_equal(0)
-
 
 func test_sem_construtor_o_rei_nao_paga_nem_constroi_a_muralha() -> void:
 	RealmLadder.seat(SimLoop.builds).raise_to(RealmLadder.FUNDADO)
@@ -188,6 +193,8 @@ func test_recrutar_comprar_martelo_e_erguer_o_primeiro_muro_so_com_gestos() -> v
 
 
 func test_retomar_nao_ressuscita_a_banca_destruida() -> void:
+	RealmLadder.seat(SimLoop.builds).raise_to(RealmLadder.FUNDADO)
+	FoundationWatch.founded_tools()
 	var bench := _bench()
 	SimLoop.builds.damage(bench.id, bench.max_health())
 	SimLoop.load_world(SimLoop.world())

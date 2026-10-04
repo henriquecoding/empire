@@ -114,19 +114,24 @@ func test_a_fundacao_ergue_a_banca_do_arco() -> void:
 	assert_int(banca.paid).is_equal(0)
 
 
-func test_o_acampamento_abre_o_canteiro_e_nao_a_casa_de_treino() -> void:
+func test_o_acampamento_so_abre_o_canteiro_depois_da_primeira_muralha() -> void:
 	_sede().raise_to(RealmLadder.FUNDADO)
 	var canteiro: BuildSlot = null
 	for vaga in SimLoop.builds.slots:
-		if vaga.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, vaga):
+		if vaga.kind == &"farm" and vaga.x == SimLoop.core_x + Greybox.CANTEIROS_X[1]:
 			canteiro = vaga
+	_largar_em(canteiro.x, 1)
+	assert_int(canteiro.paid).is_equal(0)
+	assert_bool(RealmGrowth.visible(SimLoop.builds, canteiro)).is_false()
+	for wall in SimLoop.builds.slots:
+		if wall.two_paths() and wall.x == SimLoop.core_x + Greybox.MUROS_X[1]:
+			wall.raise_to(1)
 	_largar_em(canteiro.x, canteiro.next_cost())
 	assert_bool(canteiro.state != BuildSlot.State.EMPTY).is_true()
 	var casa := _obra(&"training_house")
 	_largar_em(casa.x, 1)
 	assert_int(casa.paid).is_equal(0)
 	assert_bool(RealmGrowth.visible(SimLoop.builds, casa)).is_false()
-
 
 func test_o_povoado_abre_a_casa_de_treino() -> void:
 	_sede().raise_to(2)

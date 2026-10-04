@@ -3,14 +3,14 @@
 #
 # A regiao tinha tres arqueiros para sempre. No Kingdom o arco custa 2 e qualquer
 # aldeao o apanha; aqui a banca e uma casa de oficio (TrainingSystem) que forma
-# arqueiros sem dia de treino. Fica a leste, ao pe da torre de arqueiros, no unico
-# vao da superficie perto do nucleo — entre a torre (768) e o galinheiro (944). A
-# posicao e autoria de nivel, como as do Greybox; os numeros sao do buildings.csv.
+# arqueiros sem dia de treino. Depois da fundacao fica a leste da sede, dentro
+# do primeiro recinto e com chao livre para a largura final do castelo (ADR 0063).
+# A posicao e autoria de nivel; os numeros sao do buildings.csv.
 class_name BowRacks
 extends RefCounted
 
 const BANCA := &"bow_rack"
-const BANCAS_X := [848.0]
+const BANCAS_X := [288.0]
 
 
 ## Depois de todas as outras obras, sinos incluidos: os ids delas nao mudam (§45), e
