@@ -27,3 +27,28 @@ func test_martelo_converte_um_recrutado_sem_criar_gente_e_reabre_quando_ele_cai(
 	unidades.states[unidades.index_of(quem)] = UnitFsm.State.DEAD
 	assert_bool(treino.cap_reached(banca, unidades)).is_false()
 	assert_int(treino.owed(banca, unidades)).is_equal(custo)
+
+
+func test_treino_retomado_segue_a_banca_no_sitio_atual() -> void:
+	var estado := GameState.new()
+	var unidades := UnitSystem.new()
+	var obras := BuildSystem.new()
+	var dados := Registry.entry(&"buildings", &"hammer_rack") as BuildingData
+	var banca := obras.post(Greybox.slot_of(dados, 0.0))
+	banca.raise_to(1)
+	var quem := unidades.spawn(estado, Registry.entry(&"units", &"vagrant"), 1, 500.0)
+	var anterior := SimFactory.training()
+	anterior.trainees[quem] = [banca.id, 0.0, 500.0]
+	var treino := SimFactory.training()
+	treino.from_dict(anterior.to_dict())
+	treino.tick(1.0 / 30.0, unidades, obras, 360.0)
+	treino.plan(unidades)
+	var i := unidades.index_of(quem)
+	assert_float(unidades.target_xs[i]).is_equal(banca.x)
+	assert_int(treino.trainees.size()).is_equal(1)
+	unidades.tick_movement(5.0)
+	treino.tick(1.0 / 30.0, unidades, obras, 360.0)
+	assert_str(String(unidades.data_ids[i])).is_equal("builder")
+	assert_int(unidades.owners[i]).is_equal(1)
+	assert_int(unidades.count()).is_equal(1)
+	assert_dict(treino.trainees).is_empty()
