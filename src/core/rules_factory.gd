@@ -99,7 +99,9 @@ static func realm_stage(ordem: int) -> RealmStageData:
 ## RealmLadder perguntar pelo degrau seguinte de qualquer obra (ADR 0059).
 static func install_realm_gates() -> void:
 	var gates := {}
+	var rings := {}
 	for estagio in realm_stages():
+		rings[estagio.order] = estagio.wall_rings
 		for chave in estagio.unlocks:
 			gates[chave] = estagio.order
 	RealmLadder.gates = gates
@@ -108,3 +110,4 @@ static func install_realm_gates() -> void:
 		niveis.append(String(nivel.id))
 	RealmLadder.wall_levels = niveis
 	RealmGrowth.sites = SimFactory.by_id(&"realm_sites")
+	RealmGrowth.wall_rings = rings

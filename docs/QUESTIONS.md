@@ -12,15 +12,31 @@
 ### Q-230 · O ritmo da corrida pelo recrutamento
 - **Decidido pelo dono:** o vagabundo corre para apanhar a moeda, é contratado ao
   apanhá-la e precisa da banca inicial para se tornar construtor antes da muralha.
-- **Aplicado:** RG-21; ADR 0063. O raio conserva os 120 px existentes. A banca
-  e a banca do arco aparecem apenas após fundar, dentro do primeiro recinto.
-  Evoluir a sede oferece o próximo recinto; concluí-lo abre obras dentro dos muros.
-  Nenhum construtor nasce pronto.
+- **Aplicado:** RG-21; ADR 0063. O raio conserva os 120 px existentes. Só um
+  construtor permite pagar e levantar muralhas. Nenhum construtor nasce pronto.
+  Onde ficam as bancas e quando aparecem está na Q-231 (ADR 0064).
 - **Proposta reversível:** `recruit_run_mult=2` em `economy.csv._proposed`, para
   destacar a corrida sem alterar a velocidade base ou os dados gravados.
 - **Quem decide:** o dono pode afinar a intensidade após playtest. Não se presume
   aprovação numérica nem se bloqueia a implementação do comportamento pedido.
 - **Conservado:** martelo por 3, escada de muralhas e requisitos da sede e materiais.
+
+## Fundação e expansão dentro das muralhas — 04/10/2026 (ADR 0064)
+
+### Q-231 · Traçado fundador e linhas de expansão por estágio
+- **Pedido do dono:** bancas de arco e construtor dentro das muralhas, apenas ao fundar
+  pagando uma lareira; possibilidades de construção no novo espaço conforme o nível.
+- **Aplicado:** RG-21; ADR 0064. Bancas em ±552 px; canteiros exteriores em ±1068 px;
+  demais edifícios novos exigem a face interior de uma muralha própria concluída.
+- **Exceção necessária:** as bancas cabem no primeiro traçado mesmo antes de construir
+  as muralhas, para poder formar o construtor. Elas não aparecem antes da fundação.
+- **Proposta reversível:** `realm_stages.csv.wall_rings`: primeira linha no Acampamento,
+  segunda no Povoado e terceira na Vila. A implementação está autorizada pelo pedido;
+  a associação exata é para playtest e pode ser ajustada no CSV.
+- **Saves:** mesma ordem e ids; posições vêm da autoria atual. Níveis, trabalho,
+  pagamentos, formação e ruínas existentes conservam-se.
+- **Como afinar:** editar o CSV e gerar os recursos; alterar posições só na autoria
+  sem reordenar slots. Os preços atuais da sede e das muralhas não foram alterados.
 
 ## A abertura pesquisada e implementada — 04/10/2026 (ADR 0062)
 
@@ -307,7 +323,7 @@
   ficavam a 6 px uns dos outros.
 - **Decisão (aplicada, reversível):** 24 px de chão livre entre duas obras vizinhas, e entre as estátuas e as obras. A
   ordem é a mesma e o que estava dentro de um muro continua dentro: os muros vão para ±680 e ±1408, as passagens para
-  ±1040, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar. As tocas da caça (Q-150) também
+  ±1068, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar. As tocas da caça (Q-150) também
   ficam no seu chão, fora das obras: a leste não sobra chão entre as obras, por isso os dois coelhos de lá saem ao pé
   do castelo-árvore, como o do §25; a árvore fica entre a fogueira e a torre alta de oeste, e o lago para lá do farol.
 - **Decide:** tu, se os 24 px chegam (é uma constante do teste e as posições do `Greybox`) e onde ficam as tocas.

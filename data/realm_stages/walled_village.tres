@@ -7,6 +7,7 @@ script = ExtResource("1_vnix1")
 id = &"walled_village"
 display_key = "REALM_STAGE_WALLED_VILLAGE"
 order = 4
+wall_rings = 3
 cost = 32
 build_work = 64.0
 max_health = 750

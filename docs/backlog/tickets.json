@@ -2663,15 +2663,18 @@
   ]
  },
  "RG-21": {
-  "title": "Recrutamento por corrida e primeira muralha pelo construtor",
-  "porque": "Moeda não provocava corrida, martelo estava fora do começo e qualquer aliado construía muro.",
+  "title": "Recrutamento por corrida, fundação na lareira e cidade dentro das muralhas",
+  "porque": "Moeda não provocava corrida, qualquer aliado construía muro, as bancas fundadoras estavam fora das muralhas e serviços surgiam em terreno exterior.",
   "spec": [
-   "docs/adr/0063-a-moeda-o-martelo-e-a-primeira-muralha.md"
+   "docs/adr/0063-a-moeda-o-martelo-e-a-primeira-muralha.md",
+   "docs/adr/0064-a-cidade-nasce-na-lareira-e-cresce-dentro-das-muralhas.md",
+   "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
+   "docs/design/21-geracao-procedural-do-territorio.md"
   ],
   "depende": "RG-19, RG-20",
-  "feito": "Corrida transitória, banca inicial no acampamento, muralha paga e construída com construtor, guia por etapa, compatibilidade de saves",
-  "fora": "Novos custos de muralha, outros ofícios, arte original e construção das demais obras",
-  "estado": "em curso",
+  "feito": "Corrida transitória, muralha paga e construída só com construtor, guia por etapa; lareira como fundação, bancas interiores só após conclusão, obras por nível e recinto, novas linhas por estágio e flanco; ids, progresso e saves preservados.",
+  "fora": "Novos preços de muralha, outros ofícios, Capital, alteração do fogo noturno, arte original e novas tecnologias da sede.",
+  "estado": "feito",
   "horas": "—"
  }
 }

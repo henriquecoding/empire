@@ -869,6 +869,7 @@ Script `src/sim/data/realm_stage_data.gd` · layout `rows` · 6 linha(s) · ADR 
 | `id` | StringName |  |  |
 | `display_key` | String |  |  |
 | `order` | int |  |  |
+| `wall_rings` | int |  |  |
 | `cost` | int |  |  |
 | `build_work` | float |  |  |
 | `max_health` | int |  |  |

@@ -57,6 +57,8 @@ static func profile_at(slot: BuildSlot, forma: Silhouette.Form, nivel: int) -> S
 static func shown_level(slot: BuildSlot) -> int:
 	match slot.state:
 		BuildSlot.State.EMPTY:
+			if slot.kind == BuildSlot.NUCLEO and slot.level == RealmLadder.CLAREIRA:
+				return RealmLadder.CLAREIRA
 			# A Clareira promete o Acampamento, e nao a Fortaleza (ADR 0059).
 			return 1
 		BuildSlot.State.SCAFFOLD, BuildSlot.State.BUILDING:

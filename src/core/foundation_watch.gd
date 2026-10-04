@@ -3,7 +3,7 @@
 # O plano do reino de 03/10/2026, aplicado pelo dono (*«aplique esse relatorio»*): o
 # monarca chega a uma Clareira com a companhia e dois vagabundos neutros (ADR 0060);
 # ha uma carroca de provisoes ao pe do marco; a primeira moeda funda o reino.
-# O martelo e o arco aparecem juntos depois de fundar a cidade (ADR 0063).
+# O martelo e o arco aparecem juntos depois de fundar a cidade (ADR 0064).
 # Muralhas, torres, canteiros e Casa de Treino pagam-se
 # como sempre.
 #
@@ -109,6 +109,8 @@ static func _bancada() -> Array[Dictionary]:
 		if vaga.territory != 0 or vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
 			continue
 		if vaga.state != BuildSlot.State.EMPTY or vaga.paid != 0:
+			continue
+		if not RealmGrowth.visible(SimLoop.builds, vaga):
 			continue
 		vaga.raise_to(RealmLadder.FUNDADO)
 		(
