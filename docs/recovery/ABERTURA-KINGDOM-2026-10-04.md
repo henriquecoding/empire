@@ -28,6 +28,11 @@ carregou na sessão: não se afirma ter assistido integralmente ao vídeo nem te
 pixels. As capturas do usuário foram inspecionadas visualmente. As fontes distinguem
 New Lands, Kingdom original e Two Crowns; diferenças entre versões não viram regras universais.
 
+Na verificação da implementação, o navegador remoto informou falta de WebGL2. A captura
+local também não pôde iniciar seu servidor gráfico no ambiente atual. Portanto, não se
+declara concluído um playtest gráfico manual da nova versão. A exportação, os testes de
+simulação e os portões gráficos já existentes no CI são evidências distintas desse playtest.
+
 ## O que a referência ensina
 
 ### A moeda comunica uma intenção
@@ -124,7 +129,7 @@ animal e metade da largura do seu corpo. `habitat_min_px` fica em CSV e `_propos
 | Javali | 2240 | Floresta exterior; sem toca na chegada |
 
 As posições regionais existentes de coelho, veado e raposa foram mantidas. Os segmentos
-gerados filtram espécies pela distância e pelo bioma. A composição deixa 192 px entre
+gerados filtram espécies pela distância e pelo bioma. A composição dos segmentos deixa 192 px entre
 centros de tocas; um trecho de 640 px com seu assunto comporta no máximo duas. A primeira
 fonte pequena é garantida; as demais não aparecem obrigatoriamente em cada trecho.
 
@@ -162,9 +167,19 @@ retiradas; relevo, floresta, construções próprias e fortalezas reais continua
 | Expansão encerra respawn | Reserva territorial e de obras | Obra vazia/paga, flancos, ruína, estrangeiro e subsolo |
 | Economia compreensível | Circuito existente e guia dos prados | Abertura apenas por movimento e moedas |
 | Compatibilidade | Migração v9 e persistência de habitats encerrados | Progresso conservado e reino expandido carregado |
-| Chegada visualmente honesta | Retirada de fortalezas decorativas | Exportação e inspeção do jogo |
+| Chegada visualmente honesta | Retirada de fortalezas decorativas | Exportação; revisão visual manual pendente |
 
 ## Critério de conclusão e playtest
+
+Evidência local final após integrar a main: 1584 casos, 1582 a passar, 2 saltados,
+zero erros, falhas, casos instáveis ou órfãos (13min 15s 101ms). Portões estáticos e
+sincronia CSV/recursos passaram. O teste da renda natural financia um canteiro apenas
+por gestos, sem acrescentar dinheiro ou pessoas ao arranque.
+
+A [execução CI do código](https://github.com/henriquecoding/empire/actions/runs/37163201449)
+confirmou exportação de Linux/Windows/Web, portões estáticos, dossiê, arranque no Chromium,
+PT/EN, teclado, toque e silhueta noturna. A vistoria local terminou com derrota do piloto
+no dia 4 de 8, sem invariantes quebradas: isso é sinal para playtest, não prova de equilíbrio.
 
 A entrega exige a suite completa após integrar a main, portões estáticos, recursos
 sincronizados, vistoria e export web. O PR guarda a evidência da execução e o commit
