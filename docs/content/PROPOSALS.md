@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 728 | 311 | 1039 |
+| Fases 0–2 (fatia vertical) | 729 | 311 | 1040 |
 | Fases 3–8 | 348 | 98 | 446 |
-| Total | 1076 | 409 | 1485 |
+| Total | 1077 | 409 | 1486 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 728
+## 1 · Fatia vertical — balanceamento — 729
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -744,6 +744,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_sites | `consecrated_altar` | `wall_level` | 3 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `campfire` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `tender_ward` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
+| realm_sites | `citizen_house` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 
 ## 2 · Fatia vertical — apresentação e estrutura — 311
 
