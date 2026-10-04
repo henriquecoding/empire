@@ -898,5 +898,4 @@ Recruit another vagrant and buy a hammer at the rack",guia contextual de jogo,16
 CONTEXT_TRAIN_CAP,"{name} · O primeiro construtor já está formado
 A Casa de Treino forma os seguintes","{name} · The first builder is already trained
 The Training House trains additional builders",guia contextual de jogo,160,ADR 0060
-
 CONTEXT_SEAT_NEW_WALLS,Nova linha de muralhas em cada flanco.,A new wall line on each flank.,guia contextual de expansão,80,ADR 0063

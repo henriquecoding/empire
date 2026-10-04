@@ -12,7 +12,7 @@
 ### Q-230 · Traçado fundador e linhas de expansão por estágio
 - **Pedido do dono:** bancas de arco e construtor dentro das muralhas, apenas ao fundar
   pagando uma lareira; possibilidades de construção no novo espaço conforme o nível.
-- **Aplicado:** RG-21; ADR 0063. Bancas em ±548 px; canteiros exteriores em ±1040 px;
+- **Aplicado:** RG-21; ADR 0063. Bancas em ±552 px; canteiros exteriores em ±1068 px;
   demais edifícios novos exigem a face interior de uma muralha própria concluída.
 - **Exceção necessária:** as bancas cabem no primeiro traçado mesmo antes de construir
   as muralhas, para poder formar o construtor. Elas não aparecem antes da fundação.
@@ -309,7 +309,7 @@
   ficavam a 6 px uns dos outros.
 - **Decisão (aplicada, reversível):** 24 px de chão livre entre duas obras vizinhas, e entre as estátuas e as obras. A
   ordem é a mesma e o que estava dentro de um muro continua dentro: os muros vão para ±680 e ±1408, as passagens para
-  ±1040, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar. As tocas da caça (Q-150) também
+  ±1068, a bifurcação para 1904. O teste chumba se uma obra nova voltar a colar. As tocas da caça (Q-150) também
   ficam no seu chão, fora das obras: a leste não sobra chão entre as obras, por isso os dois coelhos de lá saem ao pé
   do castelo-árvore, como o do §25; a árvore fica entre a fogueira e a torre alta de oeste, e o lago para lá do farol.
 - **Decide:** tu, se os 24 px chegam (é uma constante do teste e as posições do `Greybox`) e onde ficam as tocas.

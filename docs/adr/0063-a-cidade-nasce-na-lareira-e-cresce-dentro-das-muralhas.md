@@ -19,8 +19,8 @@ sem relação entre a expansão territorial e o nível da sede.
    sem tendas nem bancas. O mesmo pagamento existente da sede funda o Acampamento;
    as duas bancas surgem somente no evento de conclusão. O custo permanece em dados.
    Acender a fundação não concede gratuitamente o efeito de proteção noturna da Q-190.
-2. **Ferramentas dentro do primeiro traçado.** O martelo fica a −548 px e o arco a
-   +548 px. A largura inteira cabe entre a sede, os canteiros e a face interior da
+2. **Ferramentas dentro do primeiro traçado.** O martelo fica a −552 px e o arco a
+   +552 px. A largura inteira cabe entre a sede, os canteiros e a face interior da
    primeira muralha. A fundação não levanta ferramentas de outro território nem bancas
    colocadas fora desse traçado. São a única exceção que dispensa uma muralha de pé:
    exigir o muro primeiro impediria formar quem o constrói.
@@ -36,10 +36,12 @@ sem relação entre a expansão territorial e o nível da sede.
    O próximo marco só aparece quando a linha anterior desse lado está de pé e a sede
    permite essa expansão. Subir a sede não ergue muralhas nem revela edifícios exteriores.
 5. **Um canteiro por flanco no arranque.** Os dois canteiros mais externos da primeira
-   autoria passam para ±1040 px, no segundo recinto. Os canteiros em ±456 px continuam
+   autoria passam para ±1068 px, no segundo recinto. Os canteiros em ±456 px continuam
    no recinto fundador; as posições libertas recebem as ferramentas. Preserva-se a
    ordem dos slots e todos os ids, níveis, moedas pagas, trabalho, saúde e formação.
-   Ao retomar, a autoria atual reposiciona esses quatro sítios pelo id; não se duplica
+   A fogueira oriental passa para +1640 px, no recinto exterior, libertando a folga
+   de 24 px entre o segundo canteiro, o galinheiro e a torre alta.
+   Ao retomar, a autoria atual reposiciona esses sítios pelo id; não se duplica
    conteúdo nem se reinicia a partida. Nenhum custo foi modificado para satisfazer testes.
 6. **O guia explica a expansão.** A lareira anuncia as duas bancas. Uma melhoria que
    libera outra linha informa que cada flanco ganha uma nova frente; os pagamentos

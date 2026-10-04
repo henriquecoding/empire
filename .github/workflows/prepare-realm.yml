@@ -29,6 +29,23 @@ jobs:
           python3 tools/content_report.py
           python3 tools/inventario_arte.py
           python3 tools/check_claims.py --write
+          python3 - <<'PY'
+          import re, sys
+          from pathlib import Path
+          sys.path.insert(0, "tools")
+          import check_claims
+          counts = check_claims.medir()
+          for name, pattern, key in check_claims.AFIRMACOES:
+              path = Path(name)
+              text = path.read_text(encoding="utf-8")
+              def counted(match):
+                  value = match.group(0)
+                  a, b = match.span(1)
+                  return value[:a-match.start()] + str(counts[key]) + value[b-match.start():]
+              text, matches = re.subn(pattern, counted, text)
+              assert matches, (name, key)
+              path.write_text(text, encoding="utf-8")
+          PY
           if [ -f tests/recinto_fundador_test.gd.uid ]; then git add -N tests/recinto_fundador_test.gd.uid; fi
       - name: Publicar o patch gerado para a revisão
         if: always()
@@ -53,9 +70,9 @@ jobs:
           set -e
           tail -100 /tmp/realm-red.log
           test "$RESULT" -ne 0
-          if rg 'SCRIPT ERROR|Parse Error' /tmp/realm-red.log; then exit 1; fi
+          if grep -E 'SCRIPT ERROR|Parse Error' /tmp/realm-red.log; then exit 1; fi
       - name: Portões estáticos e recursos gerados em sincronia
         run: make portoes dados
       - name: Fundação, expansão, ferramentas, sede e abertura natural
         run: |
-          godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests/recinto_fundador_test.gd -a tests/expansao_das_obras_test.gd -a tests/fundacao_do_reino_test.gd -a tests/banca_do_arco_test.gd -a tests/martelo_fundador_test.gd -a tests/escada_da_sede_test.gd -a tests/abertura_natural_test.gd
+          godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests/obras_com_folga_test.gd -a tests/obras_sprite_test.gd -a tests/recinto_fundador_test.gd -a tests/expansao_das_obras_test.gd -a tests/fundacao_do_reino_test.gd -a tests/banca_do_arco_test.gd -a tests/martelo_fundador_test.gd -a tests/escada_da_sede_test.gd -a tests/abertura_natural_test.gd
