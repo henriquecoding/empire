@@ -39,7 +39,9 @@ const COZINHAS_X := [324.0]
 const CELEIROS_X := [1524.0]
 # E a casa do herdeiro (§15) do outro lado, a oeste: o rei novo nasce la (Q-133).
 const HERDEIROS_X := [-1524.0]
-const CANTEIROS_X := [-576.0, -456.0, 456.0, 576.0]
+## Um canteiro por flanco no primeiro recinto; o segundo pertence a expansao.
+## Os ids conservam a ordem de antes. O espaco inicial liberto recebe as bancas.
+const CANTEIROS_X := [-1040.0, -456.0, 456.0, 1040.0]
 const TORRES_X := [-768.0, 768.0]
 const GALINHEIROS_X := [-944.0, 944.0]
 # UM pesqueiro, e por duas razoes que coincidem: o segmento tem uma agua e nao

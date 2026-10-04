@@ -1,0 +1,60 @@
+name: Prepare realm resources
+on:
+  push:
+    branches: ["codex/founded-walled-realm"]
+permissions:
+  contents: read
+concurrency:
+  group: prepare-realm-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  prepare:
+    name: Gerar recursos e validar o recinto
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - uses: ./.github/actions/godot
+      - name: Preparar fontes e recursos pelos geradores existentes
+        run: |
+          make ferramentas-python
+          gdformat src/ tests/ tools/
+          make importar
+          make dados-gerar
+          python3 tools/content_report.py
+          python3 tools/inventario_arte.py
+          python3 tools/check_claims.py --write
+          if [ -f tests/recinto_fundador_test.gd.uid ]; then git add -N tests/recinto_fundador_test.gd.uid; fi
+      - name: Publicar o patch gerado para a revisão
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import base64, subprocess, textwrap
+          patch = subprocess.check_output(["git", "diff", "--no-ext-diff", "--binary"])
+          print("EMPIRE_PATCH_BEGIN")
+          for line in textwrap.wrap(base64.b64encode(patch).decode("ascii"), 4000):
+              print("EMPIRE_PATCH_DATA " + line)
+          print("EMPIRE_PATCH_END")
+          PY
+      - name: Provar que a regressão falha na main anterior
+        run: |
+          git worktree add --detach /tmp/realm-before d087a08550050575772781a869cea371969e9ca6
+          cp tests/recinto_fundador_test.gd /tmp/realm-before/tests/
+          godot --headless --import --path /tmp/realm-before >/dev/null 2>&1 || true
+          set +e
+          godot --headless --path /tmp/realm-before -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests/recinto_fundador_test.gd > /tmp/realm-red.log 2>&1
+          RESULT=$?
+          set -e
+          tail -100 /tmp/realm-red.log
+          test "$RESULT" -ne 0
+          if rg 'SCRIPT ERROR|Parse Error' /tmp/realm-red.log; then exit 1; fi
+      - name: Portões estáticos e recursos gerados em sincronia
+        run: make portoes dados
+      - name: Fundação, expansão, ferramentas, sede e abertura natural
+        run: |
+          godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests/recinto_fundador_test.gd -a tests/expansao_das_obras_test.gd -a tests/fundacao_do_reino_test.gd -a tests/banca_do_arco_test.gd -a tests/martelo_fundador_test.gd -a tests/escada_da_sede_test.gd -a tests/abertura_natural_test.gd

@@ -100,9 +100,9 @@ static func aims_monarch() -> bool:
 static func _bancada() -> Array[Dictionary]:
 	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
-		if vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0:
+		if vaga.kind not in [BANCA, MARTELOS] or vaga.level != 0 or vaga.territory != 0:
 			continue
-		if vaga.state != BuildSlot.State.EMPTY:
+		if vaga.state != BuildSlot.State.EMPTY or not RealmGrowth.visible(SimLoop.builds, vaga):
 			continue
 		vaga.raise_to(RealmLadder.FUNDADO)
 		(

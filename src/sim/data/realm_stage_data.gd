@@ -8,6 +8,8 @@ extends Resource
 @export var display_key: String
 ## A posicao na escada: 0 e a Clareira, por fundar.
 @export var order: int = 0
+## Linhas de muralhas que este estagio permite expandir, por flanco.
+@export var wall_rings: int = 0
 ## O que custa chegar a este estagio a partir do anterior.
 @export var cost: int = 0
 @export var build_work: float = 0.0

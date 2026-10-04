@@ -60,6 +60,7 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	_formar(O_ARQUEIRO, &"bow_rack", &"archer")
 	_recrutar(O_VAGABUNDO)
 	_formar(O_VAGABUNDO, &"hammer_rack", &"builder")
+	_defender_canteiro()
 	var canteiro := _obra(SimLoop.core_x + Greybox.CANTEIROS_X[O_CANTEIRO])
 	var preco := canteiro.next_cost()
 	# A caca abre em vagas pela luz (Q-106): o canteiro paga-se antes do crepusculo.
@@ -102,6 +103,20 @@ func _fundar() -> void:
 	while sede.level == RealmLadder.CLAREIRA:
 		assert_float(ClockService.clock.elapsed).is_less(FUNDAR_S)
 		_passo(sede.x)
+
+
+## A renda comeca dentro do recinto, depois de pagar e concluir a primeira defesa.
+func _defender_canteiro() -> void:
+	var muro := _obra(SimLoop.core_x - 680.0)
+	var limite := _fase_em(GameClock.Phase.DUSK)
+	while _saco() < muro.next_cost() and ClockService.clock.elapsed < limite:
+		_passo(_moeda_mais_perto())
+	assert_int(_saco()).is_greater_equal(muro.next_cost())
+	while muro.state == BuildSlot.State.EMPTY and ClockService.clock.elapsed < limite:
+		_passo(muro.x, true)
+	while muro.level == 0 and ClockService.clock.elapsed < limite:
+		_passo(SimLoop.core_x)
+	assert_bool(muro.standing()).is_true()
 
 
 func _formar(id: int, banca: StringName, oficio: StringName) -> void:

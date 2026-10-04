@@ -7,6 +7,23 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Fundação e expansão dentro das muralhas — 04/10/2026 (ADR 0063)
+
+### Q-230 · Traçado fundador e linhas de expansão por estágio
+- **Pedido do dono:** bancas de arco e construtor dentro das muralhas, apenas ao fundar
+  pagando uma lareira; possibilidades de construção no novo espaço conforme o nível.
+- **Aplicado:** RG-21; ADR 0063. Bancas em ±548 px; canteiros exteriores em ±1040 px;
+  demais edifícios novos exigem a face interior de uma muralha própria concluída.
+- **Exceção necessária:** as bancas cabem no primeiro traçado mesmo antes de construir
+  as muralhas, para poder formar o construtor. Elas não aparecem antes da fundação.
+- **Proposta reversível:** `realm_stages.csv.wall_rings`: primeira linha no Acampamento,
+  segunda no Povoado e terceira na Vila. A implementação está autorizada pelo pedido;
+  a associação exata é para playtest e pode ser ajustada no CSV.
+- **Saves:** mesma ordem e ids; posições vêm da autoria atual. Níveis, trabalho,
+  pagamentos, formação e ruínas existentes conservam-se.
+- **Como afinar:** editar o CSV e gerar os recursos; alterar posições só na autoria
+  sem reordenar slots. Os preços atuais da sede e das muralhas não foram alterados.
+
 ## A abertura pesquisada e implementada — 04/10/2026 (ADR 0062)
 
 ### Q-229 · Distâncias, densidade e ocupação dos habitats

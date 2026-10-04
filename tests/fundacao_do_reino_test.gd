@@ -116,6 +116,9 @@ func test_a_fundacao_ergue_a_banca_do_arco() -> void:
 
 func test_o_acampamento_abre_o_canteiro_e_nao_a_casa_de_treino() -> void:
 	_sede().raise_to(RealmLadder.FUNDADO)
+	for muro in SimLoop.builds.slots:
+		if muro.two_paths() and is_equal_approx(muro.x, SimLoop.core_x - 680.0):
+			muro.raise_to(1)
 	var canteiro: BuildSlot = null
 	for vaga in SimLoop.builds.slots:
 		if vaga.kind == &"farm" and RealmGrowth.visible(SimLoop.builds, vaga):
