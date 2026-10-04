@@ -37,7 +37,9 @@ static func pay(drop: Dictionary) -> bool:
 	SimLoop.units.carried_coins[r] += offered - spent
 	if spent > 0:
 		EventBus.queue(&"coin_spent", [spent, POST])
-	SimLoop.companion.enroll(who, LastCartWatch.rules().companion_cost)
+	if SimLoop.companion.enroll(who, LastCartWatch.rules().companion_cost):
+		if SimLoop.arrival.worker == who:
+			SimLoop.arrival.assign(LastCart.NONE, &"")
 	return true
 
 

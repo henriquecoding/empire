@@ -105,6 +105,32 @@ func test_companion_requires_payment_and_arrival_for_each_monarch() -> void:
 	assert_str(String(u.data_ids[1])).is_equal(String(MonarchWatch.data().companion))
 
 
+func test_companion_training_takes_the_worker_out_of_existing_labor() -> void:
+	LastCartWatch.claim(&"road")
+	RealmLadder.seat(SimLoop.builds).raise_to(1)
+	FoundationWatch.founded_tools()
+	var u := SimLoop.units
+	u.owners[1] = u.owners[0]
+	assert_bool(ArrivalLabor.assign(LastCart.FORAGE)).is_true()
+	var worker := SimLoop.arrival.worker
+	var post := CompanionWatch.site()
+	var offer := {EventRelay.ONDE: post.x, EventRelay.FAIXA: post.band, EventRelay.QUANTO: 6}
+	CompanionWatch.pay(offer)
+	assert_int(SimLoop.arrival.worker).is_equal(worker)
+	assert_str(String(SimLoop.arrival.task)).is_equal("forage")
+	offer[EventRelay.QUANTO] = 1
+	CompanionWatch.pay(offer)
+	assert_int(SimLoop.companion.worker).is_equal(worker)
+	assert_int(SimLoop.arrival.worker).is_equal(LastCart.NONE)
+	assert_str(String(SimLoop.arrival.task)).is_equal("")
+	ArrivalLabor.reserve()
+	assert_bool(SimLoop.jobs.excluded.has(worker)).is_true()
+	u.xs[u.index_of(worker)] = SimLoop.arrival.cache_x
+	ArrivalLabor.tick(30.0, GameClock.Phase.MORNING)
+	assert_int(SimLoop.arrival.earned).is_equal(0)
+	assert_int(SimLoop.coins.count()).is_equal(0)
+
+
 func test_save_v9_preserves_legacy_campaign_and_never_replays_arrival() -> void:
 	var save := {&"save_version": 9, &"world": {&"seat": {&"cart_coins": 5}}}
 	var migrated := SaveMigrations.migrate(save)
