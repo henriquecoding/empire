@@ -57,31 +57,31 @@ func _init(curva: EconomyCurve) -> void:
 ##
 ## Quem ainda nao e de ninguem anda para a moeda pousada mais proxima. "Perto"
 ## e o recruit_notice_px: sem tecto, um vagabundo do outro lado do mapa punha-se
-## a caminho de uma moeda que o jogador largou para outra pessoa.
-##
-## So moedas POUSADAS: uma moeda ainda no ar nao e um destino, e persegui-la
-## dava-lhe uma corrida atras de um arco.
+## a caminho de uma moeda que o jogador largou para outra pessoa. So moedas
+## POUSADAS: uma moeda ainda no ar nao e um destino.
 ##
 ## FATIADO pelo mesmo criterio da FSM (§52), e nao por economia cega: escolher
 ## para que moeda se anda E uma decisao, e "o movimento e o combate continuam a
 ## correr todos os ticks — e so a DECISAO que e fatiada". O custo aqui e o
 ## PRODUTO de unidades por moedas, e medido sem fatiar dava 3,9 ms por tick com
 ## 300 vagabundos e 60 moedas — a simulacao inteira do §63 tem 4,0. O §63 diz
-## qual e a alavanca antes de se optimizar codigo, e e esta.
-##
-## Escolher e fatiado; perder a moeda cancela o movimento ja neste tick.
+## qual e a alavanca antes de se optimizar codigo, e e esta. Quem nao decide e nao
+## persegue moeda sai logo; perder a moeda cancela o movimento ja neste tick.
 func seek_coins(unidades: UnitSystem, moedas: CoinSystem, tick: int) -> void:
 	rush.clear()
 	for i in unidades.count():
 		if unidades.owners[i] != SEM_DONO or not unidades.alive(i):
 			continue
 		var had_coin := unidades.target_ids[i] != UnitSystem.NENHUM
-		var alvo := moedas.index_of(unidades.target_ids[i])
+		var decide := UnitFsm.decides(unidades.ids[i], tick)
+		if not had_coin and not decide:
+			continue
+		var alvo := moedas.index_of(unidades.target_ids[i]) if had_coin else NENHUM
 		if alvo != NENHUM and not _eligible(moedas, alvo, unidades, i):
 			alvo = NENHUM
 		if resting.has(unidades.ids[i]) and resting_now(unidades.ids[i]):
 			alvo = NENHUM
-		elif UnitFsm.decides(unidades.ids[i], tick):
+		elif decide:
 			alvo = _moeda_mais_proxima(moedas, unidades, i)
 		if alvo == NENHUM:
 			unidades.target_ids[i] = UnitSystem.NENHUM
@@ -228,10 +228,10 @@ func _moeda_mais_proxima(moedas: CoinSystem, unidades: UnitSystem, i: int) -> in
 	var faixa := unidades.bands[i]
 	var espaco := unidades.coin_capacities[i] - unidades.carried_coins[i]
 	for c in moedas.count():
-		if moedas.settled[c] == 0 or moedas.bands[c] != faixa or moedas.targets[c] >= 0:
-			continue
 		var d := absf(moedas.xs[c] - x)
-		if d > melhor_d or moedas.amounts[c] > espaco:
+		if d > melhor_d or moedas.settled[c] == 0 or moedas.bands[c] != faixa:
+			continue
+		if moedas.targets[c] >= 0 or moedas.amounts[c] > espaco:
 			continue
 		if d == melhor_d and melhor != NENHUM and moedas.ids[c] > moedas.ids[melhor]:
 			continue
