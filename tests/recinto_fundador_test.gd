@@ -77,7 +77,7 @@ func test_nivel_e_frente_concluida_abrem_uma_linha_de_muralhas_por_flanco() -> v
 	sede.raise_to(1)
 	var primeira := _wall(680.0)
 	var segunda := _wall(1408.0)
-	var terceira := _wall(1960.0)
+	var terceira := _wall(2040.0)
 	assert_bool(RealmGrowth.visible(SimLoop.builds, primeira)).is_true()
 	primeira.state = BuildSlot.State.BUILDING
 	assert_bool(RealmGrowth.visible(SimLoop.builds, segunda)).is_false()

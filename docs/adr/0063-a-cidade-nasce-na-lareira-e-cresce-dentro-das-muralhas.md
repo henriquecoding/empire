@@ -39,8 +39,10 @@ sem relação entre a expansão territorial e o nível da sede.
    autoria passam para ±1068 px, no segundo recinto. Os canteiros em ±456 px continuam
    no recinto fundador; as posições libertas recebem as ferramentas. Preserva-se a
    ordem dos slots e todos os ids, níveis, moedas pagas, trabalho, saúde e formação.
-   A fogueira oriental passa para +1640 px, no recinto exterior, libertando a folga
-   de 24 px entre o segundo canteiro, o galinheiro e a torre alta.
+   A fogueira oriental passa para +1936 px e o muro exterior oriental para +2040 px;
+   preserva-se a folga de 24 px entre obras e o espaço da estátua da oferenda.
+   As entradas do subsolo passam para ±848 px, entre a torre e o galinheiro,
+   sem tocar nos canteiros.
    Ao retomar, a autoria atual reposiciona esses sítios pelo id; não se duplica
    conteúdo nem se reinicia a partida. Nenhum custo foi modificado para satisfazer testes.
 6. **O guia explica a expansão.** A lareira anuncia as duas bancas. Uma melhoria que

@@ -14,7 +14,7 @@ class_name Greybox
 extends RefCounted
 
 const SEGMENTO := &"enramados_start_base_01"
-## §21: uma regiao tem 4 a 6 ecras. Seis dao espaco as duas muralhas de cada lado.
+## §21: uma regiao tem 4 a 6 ecras. Os arrabaldes prolongam as linhas de muralhas.
 const ECRAS := 6
 
 const CANTEIRO := &"farm"
@@ -34,8 +34,8 @@ const MUROS_X := [-1408.0, -680.0, 680.0, 1408.0]
 # A Casa de Treino e unica por imperio; do outro lado, a cozinha do cozinheiro (§09).
 const TREINOS_X := [-324.0]
 const COZINHAS_X := [324.0]
-# O celeiro do §06 (circuito 2) fica FORA do muro de fora: a decisao de o pôr a
-# render e tambem a de mandar o cozinheiro ao sitio arriscado (§21).
+# O celeiro do §06 (circuito 2) fica no terceiro recinto: so se oferece depois
+# de concluir a muralha exterior e cumprir o nivel e o apoio produtivo (ADR 0063).
 const CELEIROS_X := [1524.0]
 # E a casa do herdeiro (§15) do outro lado, a oeste: o rei novo nasce la (Q-133).
 const HERDEIROS_X := [-1524.0]
