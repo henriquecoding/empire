@@ -1,6 +1,6 @@
 {
- "date": "2026-10-04",
- "base": "RG-22 — A Última Carroça e decisões do painel, ADR 0065",
+ "date": "2026-10-05",
+ "base": "RG-23 — relatório mestre e fundação livre Solo, ADR 0066–0069",
  "engine": "4.7.2.stable.official.ed1daf0bf",
  "gdunit": "6.2.1",
  "gdunit_commit": "08ffc7c",
@@ -12,7 +12,7 @@
  "proposed_fields": 1486,
  "proposed_phase_0_to_2": 1041,
  "gdunit_discovered": 1660,
- "gdunit_passed": 1652,
+ "gdunit_passed": 1658,
  "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 88,
@@ -38,7 +38,7 @@
  "i18n_placeholders": 0,
  "catalog_signals": 61,
  "event_bus_signals": 61,
- "gdunit_runtime_cases": 1654,
+ "gdunit_runtime_cases": 1660,
  "approved_panel_source_commit": "1129222b2ed482cd01986601fa146539f324ff32",
  "approved_panel_visual_checks": [
   "travel menu with scrolling",
@@ -147,6 +147,18 @@
   "vistoria": "4 of 8 days; pilot defeated; no broken invariants",
   "web_export": "passed",
   "local_browser": "blocked: Chromium terminates with SIGSEGV at Godot initialization; web acceptance must pass in CI",
-  "runtime_validation": "See the RG-23 pull request and its CI for the complete suite and published SHA; prior entries are historical evidence."
+  "runtime_validation": "See the RG-23 pull request and its CI for the complete suite and published SHA; prior entries are historical evidence.",
+  "full_suite_cases": 1660,
+  "passed": 1658,
+  "skipped": 2,
+  "errors": 0,
+  "failures": 0,
+  "flaky": 0,
+  "orphans": 0,
+  "duration": "15min 28s 957ms",
+  "web_tests": {
+   "passed": 20,
+   "failed": 0
+  }
  }
 }

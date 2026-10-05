@@ -37,7 +37,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 34 tabelas, 481 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 212 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Testes** — gdUnit4 6.2.1: 1660 casos, 1582 a passar, 2 saltados **com a razão escrita no próprio teste**,
+- **Testes** — gdUnit4 6.2.1: 1660 casos, 1658 a passar, 2 saltados **com a razão escrita no próprio teste**,
   zero falhas, zero *orphans*. Eram 43 casos antes do F0-07 e 173 antes do núcleo jogável.
 - **Abertura atual** — a suite completa da RG-20 correu após integrar a `main` (ADR 0062).
   Distância, densidade, ocupação, migração e renda só por gestos passaram. O CI confirmou o
