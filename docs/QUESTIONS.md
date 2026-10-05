@@ -7,6 +7,33 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## O subsolo tem chão para além da escada — 05/10/2026 (ADR 0072)
+
+> Pedido do dono (05/10/2026): *«Implemente esse relatório»* — o relatório de armazéns, subsolos, masmorras e
+> cavernas (`docs/reports/SUBSOLO-ARMAZENS-DUNGEONS.md`), que partia de dois pedidos: nenhum subsolo acessível pode ser
+> só a escada, e nenhuma cave ou masmorra aparece só porque saiu num sorteio. Aplicado no RG-27.
+
+### Q-244 · Os números do contrato de área útil e do tecto de entradas
+- **Aplicado:** o contrato (chegada, folga, baía e margens), a reserva de chão antes de publicar, a largura habitável
+  inicial da cave real, o baú na baía, o tecto de entradas opcionais por povo e a carga do ladrão (ADR 0072).
+- **Propostas reversíveis**, todas valores de ensaio do §6.2 do relatório, em `underground.csv._proposed`: chegada 64 px,
+  folga 48, baía 128, margens 32 (o envelope de 272 px); cave real inicial 288 px; o baú a 32 px da ponta da baía; até 3
+  entradas opcionais por povo e uma por 1920 px de trilho e limiar; o ladrão leva até 5 moedas.
+- **Escolhas minhas, reversíveis:** a baía fica do lado que pede menos chão (num empate, a direita); uma ruína escolhe a
+  função entre cripta, depósito e cisterna com a mesma probabilidade; a caverna só nasce numa falha de rocha de um limiar
+  e nunca guarda tesouro; os porões e a reserva real são obrigatórios — publicam-se sempre e o inspetor diz porquê se
+  não cabem; o cofre estrangeiro é opcional e, sem chão, não abre nem tira moedas ao reino dele.
+- **Decide:** tu, os números depois de jogar, e a densidade (o relatório pede comparar baixa, média e a atual).
+
+### Q-245 · O que o relatório propõe e fica por decidir
+- **Por fazer, à espera de desenho:** o tempo de preparação e a regra de fuga do ladrão (§9.6); que criaturas roubam,
+  que só guardam e que são fauna (§9.6, §10.4); a fauna das cavernas; o transporte de uma categoria por trabalhadores e a
+  recuperação de um depósito vazio (§9.4, §10.3); as reservas do celeiro desenhadas como recipientes (SUB-15).
+- **Em aberto:** se uma ruína sem interior deve mostrar que não tem boca (hoje só não tem o sinal do Verbo 2); se a sede
+  deve reservar chão para o porão quando as muralhas de uma fundação livre o apertam (hoje publica-se e regista-se).
+- **Onde:** RG-27, `UnderFit`, `UnderReserve`, `DungeonWatch`, `CellarWatch`.
+- **Decide:** tu.
+
 ## Os inimigos e a curva da noite — 05/10/2026 (ADR 0071)
 
 > Pedido do dono (05/10/2026): *«Quero que faça uma densa pesquisa na web e no meu projeto atual para tornar os inimigos

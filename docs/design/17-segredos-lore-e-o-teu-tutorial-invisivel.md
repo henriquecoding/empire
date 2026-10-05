@@ -44,3 +44,5 @@ Não são níveis — são modificadores de rota. Regiões onde eventos e criatu
 - Mercado dos Ossos — mercenários a metade do preço, dívida ao dobro do juro.
 
 Painel de 30/09/2026 — ADR 0043. Cada masmorra tem tesouro, guarda ou relíquia, com recompensa normal, dupla ou tripla. O sorteio persiste e o guarda não desaparece à alvorada. Não há reposição de loot ao carregar (Q-176). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.
+
+Entradas com causa — ADR 0072. Uma ruína só tem interior se o povo dela ainda tem tecto de entradas opcionais (optional_max, uma por optional_spacing_px de trilho e limiar); decide-se quando o segmento nasce e fica. Uma ruína sem interior continua a ser ruína. A falha de rocha de um limiar pode abrir uma caverna natural, sem tesouro. O sorteio da recompensa continua a ser feito quando o segmento nasce, mas a recompensa só se materializa no meio da baía, na primeira descida, e uma vez.

@@ -157,7 +157,10 @@ func test_a_masmorra_fica_no_seu_segmento() -> void:
 	SimLoop.units.xs[rei] = limites.y
 	SimLoop.units.clear_target(SimLoop.king_id)
 	SimLoop.step(PASSO)
-	var bocas := SimLoop.field.wilds.dungeons(SimLoop.world_width)
+	var bocas := PackedFloat32Array()
+	for x in SimLoop.field.wilds.dungeons(SimLoop.world_width):
+		if Passages.near(x, UnderWatch.mouths(SimLoop.field)):
+			bocas.append(x)  # so as ruinas com interior (ADR 0072)
 	if bocas.is_empty():
 		return
 	SimLoop.units.xs[rei] = bocas[0]

@@ -2,6 +2,9 @@ class_name Treasury
 extends RefCounted
 
 var chests: Dictionary = {}
+## O que cada ladrao leva de um bau, pelo id dele: valor que saiu do bau e ainda existe
+## (cai onde ele morrer). So se perde se ele sair vivo (ADR 0072, §9.6).
+var carried: Dictionary = {}
 
 
 func open(key: String, initial: int) -> void:
@@ -29,9 +32,18 @@ func steal(key: String, capacity: int) -> int:
 	return withdraw(key, capacity)
 
 
+func carried_by(thief: int) -> int:
+	return int(carried.get(thief, 0))
+
+
+func carry(thief: int, coins: int) -> void:
+	carried[thief] = carried_by(thief) + maxi(0, coins)
+
+
 func to_dict() -> Dictionary:
-	return {&"chests": chests.duplicate()}
+	return {&"chests": chests.duplicate(), &"carried": carried.duplicate()}
 
 
 func from_dict(saved: Dictionary) -> void:
 	chests = (saved.get(&"chests", {}) as Dictionary).duplicate()
+	carried = (saved.get(&"carried", {}) as Dictionary).duplicate()

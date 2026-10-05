@@ -19,6 +19,8 @@ const RACIO := &"ratio"
 const NIVEL := &"level"
 
 const METADE := 0.5
+## Sem vizinho a tapar, a escavacao da cave real so para no estagio da sede.
+const ROOM_OPEN := 1 << 20
 
 var slots: Array[BuildSlot] = []
 var workforce: UnitSystem
@@ -26,6 +28,8 @@ var crew_owner: int = 0
 var work_owners: Dictionary = {}
 var foundation_committed := true
 var maturity_ready := true
+## Quantos estagios de escavacao da cave real ainda cabem sem tocar noutro sitio (ADR 0072).
+var cellar_room := ROOM_OPEN
 var repair_speed := 1.0
 var work_day := 1
 var reserved := PackedInt32Array()
@@ -95,8 +99,10 @@ func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) ->
 			or (vaga.level > 0 and not maturity_ready)
 		)
 	)
+	var cave := vaga.kind == &"cellar_excavation"
 	closed = (
-		closed or (vaga.kind == &"cellar_excavation" and seat != null and vaga.level >= seat.level)
+		closed
+		or (cave and (seat != null and vaga.level >= seat.level or vaga.level >= cellar_room))
 	)
 	var crew := workforce == null or not (vaga.two_paths() or vaga.builder_work)
 	crew = crew or WallCrew.available(workforce, vaga.band, crew_owner)

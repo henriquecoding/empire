@@ -125,9 +125,10 @@ static func _chests(canvas: CanvasItem, light: Lighting) -> void:
 	var under := SimLoop.field.under
 	var ground := WorldPalette.ground_of(Band.Kind.UNDERGROUND)
 	for k in under.count():
-		if under.kind_of(k) != UndergroundSites.HATCH or not under.generated(k):
+		var x := UnderReserve.chest_x(under, k)
+		if under.kind_of(k) != UndergroundSites.HATCH or not under.generated(k) or is_nan(x):
 			continue
-		var foot := Vector2(under.mouth_of(k), ground)
+		var foot := Vector2(x, ground)  # na baia, e nao na boca: outro alvo (SUB-12)
 		canvas.draw_rect(
 			Rect2(foot + CHEST.position, CHEST.size), light.body(Color("81694b"), foot.x)
 		)

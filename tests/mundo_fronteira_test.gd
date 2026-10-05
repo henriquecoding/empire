@@ -148,18 +148,20 @@ func test_o_acampamento_de_mercenarios_tem_um_a_espera() -> void:
 
 ## A masmorra: uma boca que o Verbo 2 desce, e um monte de moedas na camara. As bocas
 ## das masmorras nao entram nas passagens que a noite le (Q-132: escorar fecha o lado).
+## A recompensa nasce dentro, no meio da baia, na primeira descida (ADR 0072).
 func test_a_masmorra_tem_boca_e_a_recompensa_sorteada() -> void:
 	var passagens := SimLoop.passages.size()
 	_gerar_tudo()
-	var bocas := _terras().dungeons(SimLoop.world_width)
+	var bocas := UnderWatch.mouths(SimLoop.field)
 	assert_bool(bocas.is_empty()).is_false()
 	for side in [WorldPlan.OESTE, WorldPlan.LESTE]:
 		for k in _terras().count(side):
 			var entry := _terras().at(side, k)
-			if int(entry.get(WildSegments.PASSAGEM, 0)) <= 0:
+			if int(entry.get(WildSegments.PASSAGEM, 0)) <= 0 or not entry.has(&"dungeon"):
 				continue
 			var reward: Dictionary = entry[&"dungeon"]
-			var x := _terras().subject_x(side, k, SimLoop.world_width)
+			UnderWatch.enter(_terras().subject_x(side, k, SimLoop.world_width), Band.PASSAGE_PX)
+			var x := float(reward[DungeonWatch.POSTA])
 			if reward[&"kind"] == &"treasure":
 				assert_int(_moedas_em(x, Band.Kind.UNDERGROUND)).is_equal(int(reward[&"coins"]))
 			elif reward[&"kind"] == &"guardian":

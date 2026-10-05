@@ -5,8 +5,13 @@
 # pipas deitadas; o celeiro, grao e anforas; a galeria, escoras e veios; a camara da
 # Semente Real, raizes; a sala secreta, o estandarte e a arca; o tesouro, arcas e
 # moedas; a fuga, as frestas; a cripta, nichos e um sarcofago; o desabamento, pedra
-# caida; a cisterna, agua entre colunas; o ossario, caveiras. Formas lisas escritas como
-# dados (ShapeArt), em px a contar do pe, a espera de arte a serio.
+# caida; a cisterna, agua entre colunas; o ossario, caveiras. A caverna (ADR 0072): a
+# boca de rocha sem escada, a cavidade com sedimento e a marca da agua, as raizes que
+# descem e o nicho. Formas lisas escritas como dados (ShapeArt), em px a contar do pe, a
+# espera de arte a serio.
+#
+# O que esta numa sala (o poco, a camara da Semente Real) e uma feature dela e ja nao lhe
+# apaga a funcao (SUB-10): desenha-se ao meio, e o recheio da sala ao lado, se couber.
 class_name UnderProps
 extends RefCounted
 
@@ -165,9 +170,35 @@ const PECAS := {
 		[C, OSSO, 20, -36, 4],
 		[C, OSSO, 32, -36, 4],
 	],
+	&"maw":
+	[
+		[P, PEDRA_ESCURA, -40, 0, -30, -10, -14, -16, 0, -12, 14, -18, 30, -8, 40, 0],
+		[P, PEDRA, -46, -58, -36, -86, -20, -96, -26, -70],
+		[P, PEDRA, 46, -58, 36, -84, 22, -96, 28, -72],
+	],
+	&"hollow":
+	[
+		[P, BARRO, -48, 0, -30, -8, -10, -6, 6, -12, 24, -6, 48, 0],
+		[L, AGUA_CLARA, 1, -40, -50, 40, -50],
+		[L, AGUA_CLARA, 1, -32, -44, 30, -44],
+	],
+	&"roots":
+	[
+		[L, RAIZ, 3, -30, -96, -26, -60],
+		[L, RAIZ, 2, -10, -96, -14, -70],
+		[L, RAIZ, 3, 12, -96, 16, -54],
+		[L, RAIZ, 2, 30, -96, 26, -72],
+	],
+	&"niche":
+	[
+		[P, NICHO, -24, -20, -20, -46, 0, -54, 20, -46, 24, -20],
+		[P, PEDRA_ESCURA, -30, 0, -24, -20, 24, -20, 30, 0],
+	],
 }
 ## Os tipos onde nasce um cogumelo com o lume dele, se o sorteio da sala o quiser.
-const COM_COGUMELOS := [&"crypt", &"collapsed", &"cistern", &"ossuary", &"mine", &"seed", &"hall"]
+const COM_COGUMELOS := [
+	&"crypt", &"collapsed", &"cistern", &"ossuary", &"mine", &"seed", &"hall", &"hollow", &"niche"
+]
 
 
 ## O recheio da sala, perto do meio dela e a fugir para um lado pelo sorteio da sala.
@@ -178,6 +209,14 @@ static func draw(canvas: CanvasItem, sala: Dictionary, chao: float) -> void:
 	var tipo: StringName = sala[UndergroundSites.KIND]
 	var sobra := maxf(0.0, (b - a) - RECHEIO_PX)
 	var x := (a + b) * MEIO + (u - MEIO) * sobra * FUGA
+	var feats: Array = sala.get(UndergroundSites.FEATS, [])
+	for f: StringName in feats:
+		ShapeArt.draw(canvas, PECAS.get(f, []), Vector2(x, chao))
+	if not feats.is_empty():
+		var lado := RECHEIO_PX if x - a < b - x else -RECHEIO_PX
+		x += lado
+		if x - a < RECHEIO_PX * MEIO or b - x < RECHEIO_PX * MEIO:
+			return
 	ShapeArt.draw(canvas, PECAS.get(tipo, []), Vector2(x, chao))
 	if tipo in COM_COGUMELOS and u < MEIO:
 		RootCellars.shroom(canvas, lerpf(a, b, COGUMELO + u))
