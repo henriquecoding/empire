@@ -99,6 +99,13 @@ def rot_md():
     pe = int(rot.get("peak_every") or 0)
     pm, cm = float(rot.get("peak_mass_mult") or 1), float(rot.get("calm_mass_mult") or 1)
     mg, gf = float(rot.get("mass_growth") or 1), int(rot.get("growth_from_night") or 0)
+    ds = int(rot.get("debut_step") or 0)
+    rw = str(rot.get("ramp_written") or "").lower() == "true"
+
+    def estreia(c, d):
+        # ADR 0071 (Q-240): quem abre vem ds vezes na primeira noite, e mais ds a cada noite.
+        abre = int(c["min_day"])
+        return None if ds <= 0 or abre <= 1 else max(0, d - abre + 1) * ds
 
     def calendario(d):
         # Q-017, Q-068: a noite 1 com os tres Rastejantes do §25 e a rampa ate a §74.
@@ -140,27 +147,38 @@ def rot_md():
            "- Depois (Q-151): mais difícil exponencialmente — a fórmula multiplica-se por %g a cada noite "
            "depois da noite %d\n" % (mg, gf),
            "- Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou\n",
+           "- Estreia (ADR 0071, Q-240): na n-ésima noite em que pode vir, uma espécie vem no máximo %d × n "
+           "vezes — o primeiro Alado é um. A da noite 1 não estreia, e o que sobra da massa paga as mais "
+           "baratas\n" % ds,
+           "- O que escreveste de dia (árvores, recusas, o Lume) %s (ADR 0071, Q-239)\n" % (
+               "pesa com a rampa: nada na noite 1, metade na noite %d, inteiro a partir da noite %d" % (
+                   (rn + 1) // 2, rn) if rw and rn > 1 else "pesa inteiro desde a noite 1"),
            "- Lado duplo a partir do dia %s\n" % rot["two_sided_from_day"],
            "- Ritmo (Q-126): de %d em %d noites uma **funda** (massa × %g), e a seguinte **calma** (× %g). "
            "O lado de cada noite diz-se à tarde (Q-125)\n\n" % (pe, pe, pm, cm),
            "| dia | velocidade px/s | massa (0 fort.) | massa (2 fort.) | criatura mais cara disponível | "
-           "invocações até esgotar (0 fort.) | lados |\n|---|---|---|---|---|---|---|\n"]
+           "invocações até esgotar (0 fort.) | o que a massa paga (0 fort.) | lados |\n"
+           "|---|---|---|---|---|---|---|---|\n"]
     for d in range(1, 31):
         mult, nota = ritmo(d)
         mass = calendario(d) * mult
         avail = [c for c in creatures if int(c["min_day"]) <= d]
         top = max(avail, key=lambda c: int(c["mass_cost"]))
-        m, n = mass, 0
+        m, n, vieram = mass, 0, {}
         while True:
-            fit = [c for c in avail if int(c["mass_cost"]) <= m]
+            fit = [c for c in avail if int(c["mass_cost"]) <= m
+                   and (estreia(c, d) is None or vieram.get(c["id"], 0) < estreia(c, d))]
             if not fit:
                 break
-            m -= int(max(fit, key=lambda c: int(c["mass_cost"]))["mass_cost"])
+            escolhida = max(fit, key=lambda c: int(c["mass_cost"]))
+            m -= int(escolhida["mass_cost"])
+            vieram[escolhida["id"]] = vieram.get(escolhida["id"], 0) + 1
             n += 1
+        paga = " · ".join("%s %d" % (c["id"], vieram[c["id"]]) for c in reversed(creatures) if c["id"] in vieram)
         sides = "2" if d >= int(rot["two_sided_from_day"]) else "1"
-        out.append("| %d%s | %.1f | %g | %g | %s (%s) | %d | %s |\n" % (
+        out.append("| %d%s | %.1f | %g | %g | %s (%s) | %d | %s | %s |\n" % (
             d, nota, sb + sd * d, round(mass, 1), round((calendario(d) + 2 * mf) * mult, 1), top["id"],
-            top["mass_cost"], n, sides))
+            top["mass_cost"], n, paga, sides))
     out.append("\n**Leitura:** a coluna \"invocações até esgotar\" é o que a massa paga; o tempo ativo limita-a "
                "a %d–%d. Quando a primeira passa a segunda, sobra massa ao amanhecer — a noite deixa de ser limitada "
                "pela massa e passa a ser limitada pelo relógio. Ver Q-017 em docs/QUESTIONS.md.\n" % (

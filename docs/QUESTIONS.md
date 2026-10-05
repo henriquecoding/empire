@@ -7,6 +7,75 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Os inimigos e a curva da noite — 05/10/2026 (ADR 0071)
+
+> Pedido do dono (05/10/2026): *«Quero que faça uma densa pesquisa na web e no meu projeto atual para tornar os inimigos
+> e os sistemas de inimigos bem mais fundamentados e bem implementados no meu jogo, que a dificuldade seja natural e
+> faça sentido, na primeira noite está aparecendo diversos inimigos e inimigos muito fortes, isso tem que ser
+> balanceado»*. O relatório (pesquisa, medição antes e depois, fontes) é o
+> `docs/recovery/PESQUISA-INIMIGOS-2026-10-05.md`. As Q-239 a Q-241 corrigem regras e estão aplicadas, reversíveis no
+> CSV; as Q-242 e Q-243 são números teus, com a medição ao lado.
+
+### Q-239 · A rampa das primeiras noites pesa também o que escreveste de dia
+- **Onde:** §74, Q-017, Q-151, Q-157; `rot.csv` (`ramp_written`), `RotProfile.written_weight`, `RotSystem._massa_do_dia`,
+  `OfferWatch.after_spawn`. O teste: `tests/noite_que_se_aprende_test.gd`.
+- **O que estava:** a rampa só valia para o calendário. As árvores (+22), as recusas (+8) e o Lume entravam inteiros
+  desde a noite 1. Medido: uma árvore e uma recusa levavam a noite 3 de 59 a 89 (+51%).
+- **Decisão (aplicada, reversível):** o que se escreve de dia pesa com o mesmo `t` da rampa — nada na noite 1, um quarto
+  na 2, metade na 3, três quartos na 4, inteiro a partir da 5. A tabela da §74 (noites 5, 10, 20) e o teto das recusas
+  (D-04) não mudam; a noite saltada (Q-040) continua inteira.
+- **Porquê:** o teu *«mais brando até a noite 5»* (Q-151) e *«as cinco primeiras noites brandas»* (Q-157) é a noite
+  inteira. Sem isto, quem perde gente na noite 2 tem uma noite 3 mais pesada: a espiral da morte das retroações
+  positivas.
+- **Decide:** tu, se fica (`ramp_written = false` desfaz).
+
+### Q-240 · Uma espécie nova estreia com poucos
+- **Onde:** §51, Q-019, Q-131; `rot.csv` (`debut_step`), `RotPick`, `RotState.came`, `RotSystem.afford`. Os testes:
+  `tests/noite_que_se_aprende_test.gd`.
+- **O que estava:** «a mais cara que cabe» fazia de cada noite em que uma espécie abria uma monocultura. Medido: noite 4
+  com nove Alados e nenhum Rastejante, noite 7 com sete Brutos, noite 8 com doze. Na noite 4 o Alado matava o rei em
+  quatro de cinco sementes: o monarca e o lanceiro não chegam ao ar.
+- **Decisão (aplicada, reversível):** numa noite, uma espécie vem no máximo `debut_step × n` vezes, sendo n a noite dela
+  (1 na primeira). Com 1: o primeiro Alado é um, depois dois, três… A do dia 1 não estreia. A massa que sobra paga as
+  mais baratas. Vale para tudo o que a Podridão paga: o que invoca, o bicho que levanta e quem o escuro traz. A
+  composição de cada noite está no `ROT_BY_DAY.md`.
+- **Da pesquisa:** o Mindustry põe uma unidade na primeira vaga de cada tipo; o Kingdom traz os Floaters e os Breeders
+  aos poucos; e o ensino de inimigos começa por um, sozinho.
+- **Decide:** tu, o `debut_step` (0 desliga).
+
+### Q-241 · O escuro paga-se, e só morde a partir da noite 3
+- **Onde:** Q-029, §05, §25; `rot.csv` (`dark_from_night`, `dark_ambush_px`), `DarkWatch.tick`, `NightWatch.pay`. Os
+  testes: `tests/escuro_pago_test.gd`.
+- **O que estava:** no escuro e sem archote, um Rastejante de 8 em 8 s, até seis por noite, a 90 px do rei, de graça e
+  desde a noite 1. Medido na `main` em `417369e`: com o rei no escuro, a noite 1 tinha nove Rastejantes (três da
+  mancha, seis do escuro).
+- **Decisão (aplicada, reversível):**
+  - quem o escuro traz paga-se da massa da mancha, como o bicho que ela levanta — a Podridão é a única fonte (§05);
+  - antes da noite `dark_from_night` (3) o escuro não traz ninguém;
+  - a emboscada nasce a 180 px e não a 90 (dentro do corpo de 112 px do Rastejante, Q-219).
+- **Da pesquisa:** o *AI Director* do Left 4 Dead nunca faz nascer à vista; o Kingdom faz nascer a Greed só dos portais.
+- **Decide:** tu, os dois números (`dark_from_night = 0` e `dark_ambush_px = 90` voltam ao de antes, mas pago).
+
+### Q-242 · A curva das noites 2 a 6 com o reino que começa numa Clareira
+- **Onde:** §74, Q-017, Q-157, ADR 0059, RG-06; `rot.csv` (`opening_mass`, `ramp_nights`, `mass_base`, `mass_per_day`).
+- **O que está:** o calendário das primeiras noites é 24, 37, 59, 90, 130 — **+50% por noite** — e a noite 6 é funda
+  (192). Foi afinado na Q-157 (30/09), quando o reino começava num castelo de pé com 1000 de vida. Desde a ADR 0059
+  (03/10) começa numa Clareira, e a Q-220 deixou em aberto se o Acampamento aguenta.
+- **Medido:** _(ver o relatório, secção 7)_.
+- **Da pesquisa:** nos *tower defense* a vida cresce 8–12% por vaga e a vaga tem de caber no que a defesa anterior
+  pagou; a primeira Lua de Sangue do Kingdom vem semanas depois do começo.
+- **Proposta (não aplicada):** _(ver o relatório, secção 7)_.
+- **Decide:** tu — são números teus (Q-157) e do dossiê (§74).
+
+### Q-243 · A primeira noite funda logo a seguir à rampa
+- **Onde:** Q-126; `rot.csv` (`peak_every`, `peak_mass_mult`, `calm_mass_mult`).
+- **O que está:** a primeira noite funda é a 6 (×1,3), a noite a seguir ao fim da rampa: 130 → 192.
+- **Da pesquisa:** no Left 4 Dead o pico vem depois de um *build up* e é seguido de *relax*; no Kingdom a primeira Lua de
+  Sangue vem perto da primeira mudança de estação, e não na primeira semana.
+- **Proposta (não aplicada):** a primeira funda na noite 12 (`2 × peak_every`), e daí de seis em seis. É código novo (uma
+  coluna `peak_from_night`) e muda a tua Q-126; por isso fica aqui.
+- **Decide:** tu.
+
 ## A floresta como território — 05/10/2026 (ADR 0070)
 
 ### Q-237 · Fundar onde se para, e a carroça que alcança (verificação do PR #85)

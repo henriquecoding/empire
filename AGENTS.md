@@ -119,6 +119,7 @@ src/sim/systems/influence.gd Influence    as regras de vizinhanca: origem, desti
 src/sim/systems/site_validator.gd SiteValidator o chao valido da fundacao e a flora que ela limpa (ADR 0066)
 src/sim/systems/fire_zones.gd FireZones   fogueiras e barris abrandam a Podridao (§05, Q-029)
 src/sim/systems/light_ward.gd LightWard   as tuas luzes fazem recuar ou abrandar a noite (ADR 0034)
+src/sim/systems/rot_pick.gd RotPick      o que a Podridao paga e escolhe: a mais cara que cabe e a estreia (§51, ADR 0071)
 src/sim/systems/class_system.gd ClassSystem a classe do rei: a aura e a evolucao (§08)
 src/sim/systems/squire.gd   Squire        o escudeiro: escudo, espada e investidura (§08, Q-114)
 src/sim/systems/storage.gd  Storage       o armazenamento de cada personagem jogavel (§08, §58, Q-153)
@@ -317,6 +318,7 @@ src/ui/*.gd                 InputRouter, Hud...    apresentacao  core/, sim/
 scenes/boot.tscn            (cena principal)       cenas         tudo
 tools/*.gd, tools/*.py      ferramentas            fora do jogo  tudo; nunca exportado
 tools/vistoria.gd           Vistoria/Autopilot     fora do jogo  uma partida longa, vigiada
+tools/noites.gd             (script)               fora do jogo  as noites de uma partida pilotada: quem vem e de onde (ADR 0071)
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado
 tools/web/**                o site (ADR 0024, 0025)  fora do jogo  le data/, docs/ e o project.godot; nunca exportado
 

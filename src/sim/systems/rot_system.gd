@@ -27,8 +27,6 @@ const NAO_ARMADA := -1.0
 const RECUSAS_MAX := 5
 
 const SEM_CRIATURA := &""
-## A tag da criatura que o poco de minerio chama mais cedo (§06, Q-131).
-const ATRAIDA := &"attracted_by_mine"
 
 var state := RotState.new()
 
@@ -80,6 +78,7 @@ func spawn(day: int, side: int, map_width: float) -> void:
 	state.next_summon_at = NAO_ARMADA
 	state.trail_from = state.x
 	state.trail_to = state.x
+	state.came = {}  # a estreia conta por noite (Q-240)
 
 
 ## Verdadeiro quando falta o intervalo ate a proxima invocacao. Quem chama tira-o
@@ -125,7 +124,7 @@ func tick(
 	state.next_summon_at = NAO_ARMADA
 	var escolhida := _escolher()
 	if escolhida != null:
-		state.mass -= escolhida.mass_cost
+		RotPick.take(state, escolhida)
 		pedidos.append(SpawnRequest.new(escolhida.id, state.x, escolhida.band))
 	return pedidos
 
@@ -145,6 +144,19 @@ func position_x() -> float:
 
 func active() -> bool:
 	return state.active
+
+
+## Paga o que nao invoca — o bicho que levanta, quem o escuro traz — pelas regras da escolha.
+func afford(dados: CreatureData) -> bool:
+	if not state.active or not RotPick.fits(dados, _perfil, _dia, state, lure_days):
+		return false
+	RotPick.take(state, dados)
+	return true
+
+
+## O peso do que o jogador escreveu de dia nesta noite (Q-239).
+func written_weight() -> float:
+	return _perfil.written_weight(_dia)
 
 
 ## Quem a alimenta compra tempo: 0,5 de massa por moeda, mais por animal ou
@@ -210,19 +222,13 @@ func _massa_do_dia() -> float:
 		+ _perfil.mass_per_named_amargueiro * named_amargueiros
 	)
 	var recusas := _perfil.refusal_mass * mini(refusals, RECUSAS_MAX)
-	return (base + arvores + minf(recusas, _perfil.refusal_cap)) * rhythm(_dia)
+	var escrito := (arvores + minf(recusas, _perfil.refusal_cap)) * written_weight()
+	return (base + escrito) * rhythm(_dia)
 
 
-## O ritmo da noite (Q-126): de peak_every em peak_every noites uma funda, e a
-## seguinte calma. Nao e sorteio: a noite funda sabe-se de vespera.
+## O ritmo da noite (Q-126): a funda e a calma, que se sabem de vespera.
 func rhythm(dia: int) -> float:
-	if _perfil.peak_every <= 0 or dia <= 0:
-		return 1.0
-	if dia % _perfil.peak_every == 0:
-		return _perfil.peak_mass_mult
-	if dia > 1 and (dia - 1) % _perfil.peak_every == 0:
-		return _perfil.calm_mass_mult
-	return 1.0
+	return _perfil.rhythm(dia)
 
 
 ## Se a noite deste dia e funda (Q-126).
@@ -230,15 +236,10 @@ func deep(dia: int) -> bool:
 	return rhythm(dia) > 1.0
 
 
-## A mais cara que cabe e cujo dia minimo ja passou (§51, Q-019). A tabela ja
-## esta por custo decrescente, por isso a primeira que serve e a escolhida.
+## A mais cara que cabe, cujo dia minimo ja passou e que ainda cabe na estreia (§51,
+## Q-019, Q-240). A tabela ja esta por custo decrescente.
 func _escolher() -> CreatureData:
-	for c in _tabela:
-		var cedo := lure_days if c.tags.has(ATRAIDA) else 0
-		var fechado := c.band == Band.Kind.UNDERGROUND and not underground_open
-		if c.min_day - cedo <= _dia and c.mass_cost <= state.mass and not fechado:
-			return c
-	return null
+	return RotPick.choose(_tabela, _perfil, _dia, state, lure_days, underground_open)
 
 
 func _sobre_consagrado(x: float, faixas: Array[Vector2]) -> bool:

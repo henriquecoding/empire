@@ -3,6 +3,9 @@
 class_name RotProfile
 extends Resource
 
+## O que debut_cap devolve a quem nao estreia (ADR 0071).
+const SEM_TETO := -1
+
 @export var speed_base: float = 14.0  # px/s
 @export var speed_per_day: float = 0.9
 @export var mass_base: float = 60.0
@@ -149,6 +152,18 @@ extends Resource
 @export var mass_growth: float = 1.0
 @export var growth_from_night: int = 0
 
+@export_group("A noite que se aprende — ADR 0071")
+## Q-239: o que escreveste de dia (arvores, recusas, o Lume) pesa com a rampa das primeiras
+## noites, e nao so o calendario — "mais brando ate a noite 5" (Q-151) e a noite inteira.
+## Falso pesa-o inteiro desde a noite 1.
+@export var ramp_written: bool = false
+## Q-240: numa noite, uma especie que estreia vem no maximo debut_step x n vezes, sendo n a
+## noite dela (1 na primeira em que pode vir). A da noite 1 nao estreia. Zero desliga.
+@export var debut_step: int = 0
+## Q-241: antes desta noite o escuro nao traz ninguem ao rei; a partir dela traz, e a
+## Podridao paga-o da massa. Zero ou um: desde a primeira.
+@export var dark_from_night: int = 0
+
 
 ## A parte do calendario da massa (§74: base + dia), com as primeiras noites em
 ## rampa (Q-017, Q-068) e, depois da noite `growth_from_night`, a subir de noite
@@ -161,3 +176,30 @@ func calendar_mass(dia: int) -> float:
 		return cheia
 	var t := float(maxi(dia, 1) - 1) / float(ramp_nights - 1)
 	return opening_mass + (cheia - opening_mass) * t
+
+
+## O ritmo da noite (Q-126): de peak_every em peak_every noites uma funda, e a
+## seguinte calma. Nao e sorteio: a noite funda sabe-se de vespera.
+func rhythm(dia: int) -> float:
+	if peak_every <= 0 or dia <= 0:
+		return 1.0
+	if dia % peak_every == 0:
+		return peak_mass_mult
+	if dia > 1 and (dia - 1) % peak_every == 0:
+		return calm_mass_mult
+	return 1.0
+
+
+## O peso do que escreveste de dia nesta noite (Q-239): o t da rampa, e 1 depois dela.
+func written_weight(dia: int) -> float:
+	if not ramp_written or ramp_nights <= 1 or dia >= ramp_nights:
+		return 1.0
+	return float(maxi(dia, 1) - 1) / float(ramp_nights - 1)
+
+
+## Quantas de uma especie que abre na noite `abre` cabem na noite `dia` (Q-240):
+## debut_step na primeira, e mais debut_step a cada noite. SEM_TETO a quem nao estreia.
+func debut_cap(dia: int, abre: int) -> int:
+	if debut_step <= 0 or abre <= 1:
+		return SEM_TETO
+	return maxi(0, dia - abre + 1) * debut_step

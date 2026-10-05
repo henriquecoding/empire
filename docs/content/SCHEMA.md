@@ -577,6 +577,9 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `mine_lure_days` | int | Auditoria de gameplay — AUD-04 |  |
 | `mass_growth` | float | O Lume e as tuas luzes — ADR 0034 |  |
 | `growth_from_night` | int | O Lume e as tuas luzes — ADR 0034 |  |
+| `ramp_written` | bool | A noite que se aprende — ADR 0071 |  |
+| `debut_step` | int | A noite que se aprende — ADR 0071 |  |
+| `dark_from_night` | int | A noite que se aprende — ADR 0071 |  |
 
 ## `mounts.csv` → `data/mounts/{id}.tres`
 

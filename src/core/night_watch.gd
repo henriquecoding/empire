@@ -95,6 +95,16 @@ func tick(
 	EventBus.queue(&"rot_moved", [rot.position_x(), rot.state.width])
 
 
+## A Podridao e a unica fonte de criaturas, e paga-as da massa (§05, §51): o bicho que
+## ela levanta e quem o escuro traz ao rei saem da mancha que tiver com que, pelas regras
+## da escolha — o dia, a massa e a estreia (ADR 0071). Verdadeiro se alguma pagou.
+func pay(dados: CreatureData) -> bool:
+	for mancha: RotSystem in [rot, other_rot]:
+		if mancha.afford(dados):
+			return true
+	return false
+
+
 ## Passo 6: o que o combate devolveu passa pelo registo dos feitos (§76) — quem
 ## abateu o que — e segue tal e qual para o EventRelay.
 func feats(eventos: Array[Dictionary]) -> Array[Dictionary]:
