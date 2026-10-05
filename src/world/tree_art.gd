@@ -116,6 +116,9 @@ static func draw(
 ) -> void:
 	if estado == Woodland.State.CLEARED:
 		return
+	if estado != Woodland.State.FELLED:
+		RenewalTrees.draw(canvas, pe, especie, estado, estacao, tempo, id, luz)
+		return
 	var escala := scale_of(especie)
 	var lado := 1.0 if id % 2 == 0 else ESPELHO
 	canvas.draw_set_transform(pe, 0.0, Vector2(escala * lado, escala))

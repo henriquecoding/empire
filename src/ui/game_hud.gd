@@ -2,8 +2,8 @@ class_name GameHud
 extends Control
 
 const INK := Color(0.08, 0.07, 0.06)
-const PAPER := Color(0.12, 0.10, 0.10, 0.88)
-const PAPER_LIGHT := Color(0.20, 0.16, 0.13, 0.94)
+const PAPER := Color(0.07, 0.13, 0.13, 0.92)
+const PAPER_LIGHT := Color(0.11, 0.19, 0.18, 0.96)
 const GOLD := Color(0.95, 0.67, 0.27)
 const MINT := Color(0.53, 0.79, 0.57)
 const TEXT := Color(0.96, 0.92, 0.81)
@@ -13,27 +13,25 @@ const RODAPE_LINHA := Color(0.32, 0.26, 0.20)
 
 const ECRA := {"largura": 1280.0, "altura": 720.0}
 
-const TITULO := {"x": 36.0, "y": 24.0, "w": 160.0, "h": 32.0, "letra": 22}
-const RELOGIO := {"x": 232.0, "y": 20.0, "w": 540.0, "h": 28.0, "letra": 19}
-const RECURSOS := {"x": 232.0, "y": 44.0, "w": 540.0, "h": 24.0, "letra": 13}
-const OBJECTIVO := {"x": 844.0, "y": 23.0, "w": 390.0, "h": 44.0, "letra": 13}
+const TITULO := {"x": 34.0, "y": 36.0, "w": 112.0, "h": 32.0, "letra": 20}
+const RELOGIO := {"x": 174.0, "y": 22.0, "w": 696.0, "h": 24.0, "letra": 17}
+const RECURSOS := {"x": 174.0, "y": 47.0, "w": 696.0, "h": 22.0, "letra": 12}
+const OBJECTIVO := {"x": 928.0, "y": 27.0, "w": 308.0, "h": 50.0, "letra": 13}
 const DICA := {"x": 40.0, "y": 0.0, "acima": 44.0, "w": 1120.0, "h": 26.0, "letra": 13}
 const AVISO := {"x": 400.0, "y": 112.0, "w": 480.0, "h": 30.0, "letra": 16}
 
-const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 180.0, "h": 56.0}
-const PAINEL_MEIO := {"x": 216.0, "y": 16.0, "w": 586.0, "h": 56.0}
-const PAINEL_DIR := {"recuo": 456.0, "y": 16.0, "w": 436.0, "h": 56.0}
-const BARRA := {"x": 228.0, "y": 69.0, "w": 562.0, "h": 3.0}
+const PAINEL_ESQ := {"x": 20.0, "y": 16.0, "w": 126.0, "h": 76.0}
+const PAINEL_MEIO := {"x": 158.0, "y": 16.0, "w": 740.0, "h": 76.0}
+const PAINEL_DIR := {"recuo": 368.0, "y": 16.0, "w": 348.0, "h": 76.0}
+const BARRA := {"x": 174.0, "y": 88.0, "w": 708.0, "h": 2.0}
 const RODAPE := {"x": 20.0, "acima": 48.0, "margem": 40.0, "h": 30.0}
 const AVISO_CAIXA := {"x": 390.0, "y": 108.0, "w": 500.0, "h": 38.0}
 
 const TRACO := {"painel": 2.0, "rodape": 1.0, "contorno": 3}
 
-const FAIXA_TOPO := 72.0
+const FAIXA_TOPO := 92.0
 
 const AVISO_S := 2.0
-## De quanto em quanto tempo os textos se refazem: o guia e as contas custavam meio ms por
-## frame, e um numero que muda dez vezes por segundo ja se le como imediato (03/10/2026).
 const TEXTO_S := 0.1
 const CEM := 100.0
 const SEM_NUCLEO := -1.0
@@ -42,6 +40,7 @@ var _titulo: Label
 var _relogio: Label
 var _recursos: Label
 var _objectivo: Label
+var _extras: Label
 var _dica: Label
 var _aviso: Label
 var _topo: Control
@@ -58,6 +57,7 @@ func _ready() -> void:
 	_titulo = _label("", TITULO, GOLD)
 	_relogio = _label("", RELOGIO, TEXT)
 	_recursos = _label("", RECURSOS, MUTED)
+	_extras = _label("", {"x": 174.0, "y": 67.0, "w": 696.0, "h": 20.0, "letra": 12}, MUTED)
 	_objectivo = _label("", OBJECTIVO, MINT)
 	_objectivo.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_dica = _label("", DICA, MUTED)
@@ -68,8 +68,6 @@ func _ready() -> void:
 	_moldura_aviso.position = _caixa(AVISO_CAIXA).position
 	_moldura_aviso.size = _caixa(AVISO_CAIXA).size
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	# §26: os glifos sao os do dispositivo activo. Um Steam Deck nao tem teclado,
-	# e por isso um comando ligado ao arrancar e o comando que se esta a usar.
 	_dispositivo = Glyphs.initial()
 	_escrever_fixos()
 	add_child(ContextPanel.new())
@@ -131,13 +129,11 @@ func _draw() -> void:
 	if ClockService.clock != null:
 		var feito := BARRA.w * ClockService.clock.phase_progress()
 		draw_rect(Rect2(BARRA.x, BARRA.y, feito, BARRA.h), GOLD)
-	# No toque nao ha rodape de teclas: os botoes no ecra dizem o que fazem (ADR 0047).
 	var rodape := altura - RODAPE.acima
 	if not _dica.text.is_empty():
 		draw_rect(Rect2(RODAPE.x, rodape, largura - RODAPE.margem, RODAPE.h), PAPER)
 		var fim := Vector2(largura - RODAPE.x, rodape)
 		draw_line(Vector2(RODAPE.x, rodape), fim, RODAPE_LINHA, TRACO.rodape)
-	# A pausa e a derrota ja nao se desenham aqui: sao o PauseMenu (GB-13, GB-16).
 	if _aviso.visible:
 		_painel(_caixa(AVISO_CAIXA), PAPER_LIGHT, GOLD)
 
@@ -161,7 +157,7 @@ func _atualizar() -> void:
 	)
 	var archotes := SimLoop.night.dark.torch.torches  # Q-029
 	var animo := SimLoop.field.spirit.value(ClockService.clock.day)  # Q-102
-	_recursos.text += HudText.extras(archotes, animo, SimLoop.state.royal_seeds)  # Q-095
+	_extras.text = HudText.extras(archotes, animo, SimLoop.state.royal_seeds)  # Q-095
 	_objectivo.text = GameplayGuide.goal()
 
 
@@ -184,6 +180,7 @@ func _vida_nucleo() -> int:
 func _label(conteudo: String, caixa: Dictionary, cor: Color) -> Label:
 	var label := Label.new()
 	label.text = conteudo
+	label.clip_text = true
 	label.position = Vector2(caixa.x, caixa.y)
 	label.size = Vector2(caixa.w, caixa.h)
 	label.add_theme_font_size_override("font_size", caixa.letra)

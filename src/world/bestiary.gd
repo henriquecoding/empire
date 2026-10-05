@@ -150,6 +150,9 @@ static func draw(
 static func silhouette(
 	canvas: CanvasItem, forma: Silhouette.Form, caixa: Rect2, cor: Color, frente: float, t: float
 ) -> void:
+	if RenewalBeasts.handles(forma):
+		RenewalBeasts.silhouette(canvas, forma, caixa, cor, frente)
+		return
 	var pen := _pen(canvas, forma, caixa, frente)
 	pen.flat = true
 	pen.flat_color = cor

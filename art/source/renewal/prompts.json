@@ -1,0 +1,13 @@
+{
+  "record_type": "generation_briefs",
+  "note": "Resumos das instrucoes de geracao desta sessao; nao sao transcricoes integrais dos prompts.",
+  "royals": "Quatro ciclos de caminhada de quatro poses: Monarca corpulento ruivo com coroa e tunica teal; Nia de cabelo preto encaracolado, pele castanha e dois machados; arqueiro encapuzado; pequeno escudeiro com escudo de madeira. Contorno umbro, duas sombras por material, fundo transparente, perfis voltados a direita.",
+  "citizens": "Habitante, arqueiro, lanceiro e cozinheiro, cada um com quatro poses de caminhada. Roupa marfim, couro castanho e verde, silhuetas expressivas em comum com o elenco real.",
+  "crew": "Bardo com cabelo encaracolado, alaude e estandarte vinho; escudeiro de aljava com capuz bege; ferreiro calvo de bigode e avental; cavaleiro de elmo redondo com espada e escudo. Quatro poses por personagem.",
+  "rot": "Rastejante, alado, bruto e cavador de casca e raizes torcidas, musgo oliva, sombras ameixa e olhos ambar, quatro poses por especie.",
+  "rot_large": "Ariete horizontal com testa de madeira clara; Devorador colossal de tronco, grandes bracos e boca oca; Zelador alto e estreito com fibras de casca e cajado. Mesma familia aprovada da Podridao, quatro poses por especie.",
+  "settlement": "Carroca coberta, casa de treino, forja, cozinha, celeiro, salao, fortaleza e carvalho isolados. Madeira dourada, reboco marfim, telhados teal, pedra clara e pequenos candeeiros ambar.",
+  "village": "Progressao em cinco estagios: duas tendas e circulo de fogueira apagada; duas cabanas e sino; vila de reboco e madeira; vila com palicada e guarita; castelo-carvalho integrado numa grande arvore viva. Tambem pinheiro, arbusto e fetos floridos.",
+  "trees": "Quatro especies lado a lado: carvalho de copa redonda, salgueiro pendente, pinheiro costeiro inclinado e arvore de raizes altas. Segunda fila de variantes de inverno, mantendo as agulhas do pinheiro perene. Pixeis agrupados, casca quente, sombra teal e luz amarelo-verde.",
+  "valley": "Panorama natural diurno sem construcoes: ceu azul claro, nuvens quentes, serras em profundidade, lago e florestas. Sem sol fixo, para conservar o ciclo horario do jogo."
+}

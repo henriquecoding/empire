@@ -2729,5 +2729,25 @@
   "porque": "Aplicar o relatório de vegetação, estações e biomas e verificar a fundação livre",
   "feito": "Árvores com estado e save, corte pago, duas regras de influência com pré-visualização, estações na copa, janela da sede e carroça que alcança.",
   "fora": "Meteorologia, regeneração, horizonte, arte final e desempenho medido."
+ },
+ "ART-RENEWAL-01": {
+  "title": "Renovacao visual do reino",
+  "porque": "O dono pediu arte coerente com as novas referencias e aprovou a familia da Podridao.",
+  "spec": [
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "—",
+  "feito": "Fontes e exports integrados, suite e portoes verdes, capturas revistas e merge na main.",
+  "fora": "Alterar balanceamento, regras da floresta ou saves.",
+  "estado": "em curso — arte integrada; validacao visual e CI em andamento.",
+  "horas": "—",
+  "passos": [
+   "Gerar o elenco e os cenarios a partir das referencias.",
+   "Integrar atlas, emissao, perfis e estados de construcao.",
+   "Verificar animacao, luz, interface e publicacao."
+  ],
+  "notas": [
+   "ADR 0072; docs/art/ART_DIRECTION_2026-10-05.md."
+  ]
  }
 }

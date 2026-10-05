@@ -23,7 +23,7 @@ const ESPELHO := -1.0
 ## Onde, em cada rectangulo de sprite, esta o tom (os quatro primeiros sao a caixa).
 const TOM := 4
 
-const VERDE := [Color("3f4a2c"), Color("5a6a38"), Color("86955a")]
+const VERDE := [Color("3b593e"), Color("68864a"), Color("a1b96b")]
 const SECO := [Color("5b4f33"), Color("7a6a45"), Color("9a8660")]
 const PEDRA := [Color("5d594a"), Color("8b8570"), Color("b0a98f")]
 const CASCA := [Color("4a3522"), Color("6e4a2a"), Color("8a6440")]
@@ -145,6 +145,8 @@ static func draw_one(
 	mistura: float,
 	escala: float = ESCALA
 ) -> void:
+	if RenewalFlora.draw_one(canvas, tipo, pe, variante, mistura, escala):
+		return
 	var cores := palette(tipo, variante)
 	var lado := 1.0 if variante < MEIO else ESPELHO
 	canvas.draw_set_transform(pe, 0.0, Vector2(escala * lado, escala))

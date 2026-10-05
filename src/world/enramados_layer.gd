@@ -3,13 +3,13 @@ extends Node2D
 
 ## Authored world coordinates. Parallax affects scenery only, never passages.
 const WIDTH := 3840
-const SKY_TOP := Color("776455")
-const SKY_BOTTOM := Color("e7c587")
-const FAR := Color("6f7059")
-const NEAR := Color("454d3c")
-const GROVE := Color("343c29")
-const FIELD := Color("6e7546")
-const PATH := Color("b09a68")
+const SKY_TOP := Color("74b1c3")
+const SKY_BOTTOM := Color("d4dfbd")
+const FAR := Color("94b9ac")
+const NEAR := Color("557d64")
+const GROVE := Color("88a578")
+const FIELD := Color("789553")
+const PATH := Color("c1a77c")
 const SOIL := Color("483b2a")
 const ROCK := Color("65543a")
 const MOSS := Color("505433")
@@ -27,6 +27,8 @@ const MID_GROUND := 490.0
 const BACK_GROUND := 421.0
 const FOREST_SCALE := 1.0
 const LANDMARKS := [340.0, 1110.0, 2770.0, 3510.0]
+const VALLEY := preload("res://art/export/renewal/valley.png")
+const PANORAMA_WIDTH := 1536
 const RIDGE := [0, 374, 140, 350, 252, 361, 396, 322, 528, 348, 664, 329, 804, 366, 960, 343]
 
 ## Que luz leva cada plano (SceneryLight): o ceu, os dois fundos, o bosque, o chao
@@ -69,7 +71,7 @@ func _draw() -> void:
 		0:
 			_sky()
 		1:
-			_ridge(FAR, Vector2.ZERO)
+			_panorama()
 		2:
 			_distance()
 		GROVE_PLANE:
@@ -114,20 +116,30 @@ func _ridge(color: Color, offset: Vector2) -> void:
 
 
 func _distance() -> void:
-	TemporaryScenery.forest(self, _alcance(), &"temp_forest_back", BACK_GROUND)
-	_ridge(NEAR, Vector2(CELL, CELL))
+	# Distant vegetation belongs to the panorama; keep the lake visible.
+	pass
+
+
+func _panorama() -> void:
+	var extent := _alcance()
+	for tile in range(floori(extent.x / PANORAMA_WIDTH), ceili(extent.y / PANORAMA_WIDTH)):
+		var box := Rect2(tile * PANORAMA_WIDTH, 0, PANORAMA_WIDTH, 512)
+		# Mirrored neighbours share their edge, with no jump at the join.
+		if posmod(tile, 2) == 1:
+			box.position.x += PANORAMA_WIDTH
+			box.size.x = -box.size.x
+		draw_texture_rect(VALLEY, box, false)
 
 
 func _grove() -> void:
-	TemporaryScenery.forest(self, _alcance(), &"temp_forest_middle", MID_GROUND)
-	var texture := _art.texture(&"oak")
+	var texture := _art.texture(&"royal_oak")
 	var size := texture.get_size() * FOREST_SCALE
 	for x in LANDMARKS:
 		draw_texture_rect(
 			texture,
 			Rect2(Vector2(x, MID_GROUND) - Vector2(size.x * HALF, size.y), size),
 			false,
-			GROVE
+			Color.WHITE
 		)
 
 
@@ -144,7 +156,6 @@ func _ground() -> void:
 			draw_rect(Rect2(x, y - DETAIL, DETAIL, DETAIL), MOSS)
 	if SimLoop.field != null:  # e o chao das terras geradas, onde tambem se anda (Q-173)
 		WildGround.draw_ground(self, SimLoop.field.wilds, SimLoop.world_width)
-	TemporaryScenery.ground(self, 0.0, WIDTH, Band.GROUND_LINE)
 
 
 func _underground() -> void:

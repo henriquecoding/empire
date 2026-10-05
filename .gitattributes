@@ -27,3 +27,7 @@ art/source/temporary/**/*.png -filter -diff -merge binary
 *.tres  text eol=lf
 *.tscn  text eol=lf
 *.godot text eol=lf
+
+# Generated production art must be available to CI without LFS.
+art/source/renewal/*.png -filter -diff -merge binary
+art/export/renewal/*.png -filter -diff -merge binary

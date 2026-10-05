@@ -10,62 +10,62 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 
 | Export | Fonte | Frames | Tags (accoes) | Chamada em runtime | Quem a usa | Aprovacao |
 |---|---|---:|---|---|---|---|
-| `cook.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/actors/unit_art_batch.gd` | unidade cook | `near_complete_reference` |
+| `cook.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `near_complete_reference` |
 | `far_keep.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
 | `gate.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
-| `knight.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | `src/actors/unit_art_batch.gd` | unidade buried_knight, unidade mercenary, unidade quiver_squire, unidade sealed_knight, unidade squire | `near_complete_reference` |
-| `monarch.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/actors/unit_art_batch.gd` | unidade monarch | `redesign_required` |
-| `oak.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/enramados_layer.gd` | — | `author_base_needs_refinement` |
-| `storehouse.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/building_skins.gd` | obra granary, obra pen, obra saltery | `author_base_needs_refinement` |
-| `training_house.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/building_skins.gd` | obra training_house | `author_base_needs_refinement` |
-| `tree_castle.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/building_skins.gd` | obra core | `author_base_needs_refinement` |
-| `vagrant.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | `src/actors/unit_art_batch.gd` | unidade builder, unidade vagrant | `derived_temporary` |
-| `workshop.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/building_skins.gd` | obra forge, obra kitchen | `author_base_needs_refinement` |
+| `knight.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | — | — | `near_complete_reference` |
+| `monarch.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `redesign_required` |
+| `oak.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
+| `storehouse.png` | `art/source/originals/concept.aseprite` | 1 | — | `src/world/building_skins.gd` | obra pen | `author_base_needs_refinement` |
+| `training_house.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
+| `tree_castle.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
+| `vagrant.png` | `art/source/originals/troop.aseprite` | 6 | `idle` | — | — | `derived_temporary` |
+| `workshop.png` | `art/source/originals/concept.aseprite` | 1 | — | — | — | `author_base_needs_refinement` |
 
 ## Unidades
 
 | Unidade | Fase | No marco | Arte | Accoes desenhadas | Accoes em falta |
 |---|---:|---|---|---|---|
-| `vagrant` | 1 | sim | `vagrant` | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `archer` | 1 |  | `temp_archer` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
-| `spearman` | 1 |  | `temp_spearman` — emprestado | `attack`, `die`, `idle`, `walk` | `flee`, `hit`, `work` |
+| `vagrant` | 1 | sim | `royal_citizen` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `archer` | 1 |  | `royal_bowman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `spearman` | 1 |  | `royal_spearman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `dragonfly` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `root_berserker` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `mercenary` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `monarch` | 1 | sim | `monarch` | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `squire` | 1 | sim | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `builder` | 1 | sim | `vagrant` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `smith` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `cook` | 2 | sim | `cook` | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `mercenary` | 6 |  | `royal_knight` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `monarch` | 1 | sim | `royal_king` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `squire` | 1 | sim | `royal_squire` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `builder` | 1 | sim | `royal_smith` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `smith` | 2 |  | `royal_smith` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `cook` | 2 | sim | `royal_cook` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `diplomat` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `bard` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `bard` | 6 |  | `royal_bard` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `climber` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `buried_knight` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `sealed_knight` | 6 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
-| `archer_hero` | 1 |  | `temp_archer_hero` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
-| `bard_hero` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `buried_knight` | 6 |  | `royal_knight` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `sealed_knight` | 6 |  | `royal_knight` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `archer_hero` | 1 |  | `royal_archer` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `bard_hero` | 6 |  | `royal_bard` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `diplomat_hero` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `canopy_archer` | 2 |  | `temp_archer` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
+| `canopy_archer` | 2 |  | `royal_bowman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `barge` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `counterweight_ram` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `sower` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `war_smith` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
+| `war_smith` | 7 |  | `royal_smith` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `digger` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `ice_warden` | 7 |  | `temp_spearman` — emprestado | `attack`, `die`, `idle`, `walk` | `flee`, `hit`, `work` |
-| `reed_stalker` | 7 |  | `temp_archer` — emprestado | `attack`, `die`, `hit`, `idle`, `walk` | `flee`, `work` |
-| `nia` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `archer_emperor` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `bard_banner` | 1 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `quiver_squire` | 1 |  | `knight` — emprestado | `idle` | `attack`, `die`, `flee`, `hit`, `walk`, `work` |
+| `ice_warden` | 7 |  | `royal_spearman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `reed_stalker` | 7 |  | `royal_bowman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `nia` | 1 |  | `royal_nia` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `archer_emperor` | 1 |  | `royal_archer` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `bard_banner` | 1 |  | `royal_bard` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `quiver_squire` | 1 |  | `royal_quiver` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 
 ## Obras
 
 | Obra | Fase | No marco | Arte | Estados |
 |---|---:|---|---|---|
-| `core` | 1 | sim | `tree_castle` | 1 frame; estados por codigo |
-| `training_house` | 1 | sim | `training_house` | 1 frame; estados por codigo |
-| `forge` | 2 |  | `workshop` — partilhada com `kitchen` | 1 frame; estados por codigo |
-| `kitchen` | 2 | sim | `workshop` — partilhada com `forge` | 1 frame; estados por codigo |
+| `core` | 1 | sim | `royal_tree_castle` | 1 frame; estados por codigo |
+| `training_house` | 1 | sim | `royal_training` | 1 frame; estados por codigo |
+| `forge` | 2 |  | `royal_forge` | 1 frame; estados por codigo |
+| `kitchen` | 2 | sim | `royal_kitchen` | 1 frame; estados por codigo |
 | `embassy` | 6 |  | pintada (`PaintedArt`): `manor` — partilhada com `heir_house` | 1 imagem; estados por codigo |
 | `heir_house` | 1 | sim | pintada (`PaintedArt`): `manor` — partilhada com `embassy` | 1 imagem; estados por codigo |
 | `root_sanctuary` | 6 |  | pintada (`PaintedArt`): `altar` — partilhada com `consecrated_altar` | 1 imagem; estados por codigo |
@@ -76,9 +76,9 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `cow_stable` | 6 |  | pintada (`PaintedArt`): `stable` — partilhada com `mount_stable` | 1 imagem; estados por codigo |
 | `lumber_camp` | 6 |  | pintada (`PaintedArt`): `lumber` — partilhada com `sawmill` | 1 imagem; estados por codigo |
 | `ore_pit` | 1 | sim | pintada (`PaintedArt`): `mine` | 1 imagem; estados por codigo |
-| `granary` | 2 | sim | `storehouse` — partilhada com `pen`, `saltery` | 1 frame; estados por codigo |
-| `saltery` | 6 |  | `storehouse` — partilhada com `granary`, `pen` | 1 frame; estados por codigo |
-| `pen` | 6 |  | `storehouse` — partilhada com `granary`, `saltery` | 1 frame; estados por codigo |
+| `granary` | 2 | sim | `royal_granary` — partilhada com `saltery` | 1 frame; estados por codigo |
+| `saltery` | 6 |  | `royal_granary` — partilhada com `granary` | 1 frame; estados por codigo |
+| `pen` | 6 |  | `storehouse` | 1 frame; estados por codigo |
 | `sawmill` | 6 |  | pintada (`PaintedArt`): `lumber` — partilhada com `lumber_camp` | 1 imagem; estados por codigo |
 | `smelter` | 6 |  | pintada (`PaintedArt`): `furnace` | 1 imagem; estados por codigo |
 | `archer_tower` | 1 | sim | pintada (`PaintedArt`): `archer_tower` | 1 imagem; estados por codigo |
@@ -129,23 +129,23 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 
 **Unidades**
 
-- `vagrant`: `vagrant`; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
-- `monarch`: `monarch`; faltam `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work`
-- `squire`: `knight` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
-- `builder`: `vagrant` — emprestado; faltam `attack`, `die`, `flee`, `hit`, `walk`, `work`
-- `cook`: `cook`; faltam `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work`
+- `vagrant`: `royal_citizen` — emprestado; faltam `attack`, `die`, `hit`, `work`
+- `monarch`: `royal_king` — emprestado; faltam `attack`, `die`, `hit`, `work`
+- `squire`: `royal_squire` — emprestado; faltam `attack`, `die`, `hit`, `work`
+- `builder`: `royal_smith` — emprestado; faltam `attack`, `die`, `hit`, `work`
+- `cook`: `royal_cook` — emprestado; faltam `attack`, `die`, `hit`, `work`
 
 **Obras**
 
-- `core`: `tree_castle`; 1 frame; estados por codigo
-- `training_house`: `training_house`; 1 frame; estados por codigo
-- `kitchen`: `workshop` — partilhada com `forge`; 1 frame; estados por codigo
+- `core`: `royal_tree_castle`; 1 frame; estados por codigo
+- `training_house`: `royal_training`; 1 frame; estados por codigo
+- `kitchen`: `royal_kitchen`; 1 frame; estados por codigo
 - `heir_house`: pintada (`PaintedArt`): `manor` — partilhada com `embassy`; 1 imagem; estados por codigo
 - `farm`: pintada (`PaintedArt`): `farm`; 1 imagem; estados por codigo
 - `fishery`: pintada (`PaintedArt`): `fishery`; 1 imagem; estados por codigo
 - `henhouse`: pintada (`PaintedArt`): `henhouse`; 1 imagem; estados por codigo
 - `ore_pit`: pintada (`PaintedArt`): `mine`; 1 imagem; estados por codigo
-- `granary`: `storehouse` — partilhada com `pen`, `saltery`; 1 frame; estados por codigo
+- `granary`: `royal_granary` — partilhada com `saltery`; 1 frame; estados por codigo
 - `archer_tower`: pintada (`PaintedArt`): `archer_tower`; 1 imagem; estados por codigo
 - `high_tower`: pintada (`PaintedArt`): `high_tower`; 1 imagem; estados por codigo
 - `passage_seal`: pintada (`PaintedArt`): `seal`; 1 imagem; estados por codigo
@@ -153,7 +153,7 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 
 **Exportacoes**
 
-- Sem chamada em runtime: `far_keep`, `gate`.
+- Sem chamada em runtime: `cook`, `far_keep`, `gate`, `knight`, `monarch`, `oak`, `training_house`, `tree_castle`, `vagrant`, `workshop`.
 - Estados de aprovacao presentes: `author_base_needs_refinement`, `derived_temporary`, `near_complete_reference`, `redesign_required`. Nenhuma exportacao esta aprovada.
 
 
@@ -185,3 +185,56 @@ Proxies para gameplay, autorizados pelo dono (ADR 0042). Fontes preservadas em `
 | `temp_wood` | 36x36 | 2 | — |
 
 Atores: OriginalArt/UnitArtBatch. Criaturas: Bestiary/CreatureView (ADR 0049; os sprites temporarios de criatura ficam no export, fora de uso). Cenario e props: TemporaryScenery/EnramadosLayer/RootCellars/BuildView.
+
+
+## Renovacao visual — direcao confirmada em 05/10/2026
+
+Fontes integrais: `art/source/renewal/`. Export deterministico: `tools/export_renewal.py`. Referencias, aprovacoes e limites: `docs/art/ART_DIRECTION_2026-10-05.md` (ADR 0072).
+
+| Perfil | Tamanho do frame | Frames | Accoes |
+|---|---|---:|---|
+| `royal_archer` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_bard` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_bowman` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_brute` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_burrower` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_bush` | 80 x 50 | 1 | idle |
+| `royal_cart` | 166 x 134 | 1 | idle |
+| `royal_citizen` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_cook` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_crawler` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_devourer` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_encampment` | 186 x 100 | 1 | idle |
+| `royal_forge` | 216 x 168 | 1 | idle |
+| `royal_granary` | 180 x 152 | 1 | idle |
+| `royal_hall` | 240 x 192 | 1 | idle |
+| `royal_hamlet` | 254 x 132 | 1 | idle |
+| `royal_keep` | 308 x 272 | 1 | idle |
+| `royal_king` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_kitchen` | 194 x 184 | 1 | idle |
+| `royal_knight` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_meadow` | 60 x 28 | 1 | idle |
+| `royal_nia` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_oak` | 326 x 316 | 1 | idle |
+| `royal_pine` | 152 x 196 | 1 | idle |
+| `royal_quiver` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_ram` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_smith` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_spearman` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_squire` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_tender` | 192 x 192 | 4 | idle, walk, flee |
+| `royal_training` | 220 x 172 | 1 | idle |
+| `royal_tree_castle` | 522 x 348 | 1 | idle |
+| `royal_tree_coast_pine` | 202 x 184 | 1 | idle |
+| `royal_tree_coast_pine_bare` | 202 x 184 | 1 | idle |
+| `royal_tree_oak` | 200 x 184 | 1 | idle |
+| `royal_tree_oak_bare` | 196 x 184 | 1 | idle |
+| `royal_tree_roots` | 190 x 184 | 1 | idle |
+| `royal_tree_roots_bare` | 190 x 184 | 1 | idle |
+| `royal_tree_willow` | 196 x 184 | 1 | idle |
+| `royal_tree_willow_bare` | 192 x 184 | 1 | idle |
+| `royal_village` | 288 x 190 | 1 | idle |
+| `royal_walled` | 352 x 220 | 1 | idle |
+| `royal_winged` | 192 x 192 | 4 | idle, walk, flee |
+
+Os ataques, golpes recebidos e quedas usam poses do combate. Caminhadas com quatro frames; nao se declaram ciclos de ataque completos. Edificios conservam estados de pagamento, construcao, reparacao e ruina. Todas as especies da Podridao usam sprites desta familia e olhos emissivos.

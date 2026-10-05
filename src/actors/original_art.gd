@@ -12,6 +12,9 @@ static var _textures: Dictionary = {}
 
 
 func entry(id: StringName) -> Dictionary:
+	var renewal := RenewalArt.entry(id)
+	if not renewal.is_empty():
+		return renewal
 	if _manifest.is_empty():
 		_manifest = JSON.parse_string(FileAccess.get_file_as_string(ROOT + "manifest.json"))
 	var original: Dictionary = _manifest.assets.get(String(id), {})
@@ -144,14 +147,21 @@ func mask_on(
 
 ## A mascara com a pose do golpe e da queda: a silhueta da noite mexe-se igual.
 func mask_posed(
-	canvas: CanvasItem, id: StringName, tint: Color, frame: int, pose: Transform2D
+	canvas: CanvasItem,
+	id: StringName,
+	tint: Color,
+	frame: int,
+	pose: Transform2D,
+	channel: String = "mask_texture"
 ) -> void:
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])
 	var origin := Vector2(item.atlas_origin[0], item.atlas_origin[1])
 	var frame_origin := Vector2(item.frame_origins[frame][0], item.frame_origins[frame][1])
 	var source := Rect2(origin + frame_origin, size)
-	var path := TEMPORARY_ROOT + "actors_mask.png"
+	var path := (
+		String(item.get("root", TEMPORARY_ROOT)) + String(item.get(channel, "actors_mask.png"))
+	)
 	if not _textures.has(path):
 		_textures[path] = load(path)
 	canvas.draw_set_transform_matrix(pose)
@@ -160,6 +170,9 @@ func mask_posed(
 
 
 static func unit_profile(data_id: StringName) -> StringName:
+	var renewal := RenewalArt.unit_profile(data_id)
+	if not renewal.is_empty():
+		return renewal
 	match data_id:
 		&"monarch":
 			return &"monarch"

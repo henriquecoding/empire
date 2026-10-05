@@ -1,0 +1,2094 @@
+{
+  "version": 1,
+  "sources": {
+    "citizens.png": "46aaaf2c6f91c03fc42d8dab968eed66ceac5dd92343f864e819c8418ae2215c",
+    "portrait_king.png": "448e00ff3fa0bcbe220f67e62db89db34c96bf65de3836f74093b6bbb2957222",
+    "rot.png": "78253a6a764e6a2a221a98b1947fdc1d9711ae269f9f8f3b81279fe28408edc8",
+    "portrait_nia.png": "52cd21de237608be951454e15ea37b119305c65f0509d13a24e5e9860b57ddc8",
+    "rot_large.png": "1538ad11887624627a20958840f9dc6dbb6e5bb829c0d7483ae3e0531b2cee4c",
+    "valley.png": "b7679663ea4d95a56b3cdbb92beaa13661f0917615a26c3c726b7ccbf3222f5f",
+    "village.png": "2d36ef81df343768aafbad1a8907069f4ca78e8930dddf0e8ec1d5b21d5dd76b",
+    "trees.png": "4c2684ce6fbb73bb767b2e4332f9152f429d39d20664350f996aad882938653b",
+    "settlement.png": "9b5b711dd58dca09d53092ffa4749dd360b0bb3f2d51d8a4edd8b5b71521e7bb",
+    "crew.png": "97132fd028e5a94c4580d610e3ca0f9631e91b4cfa13b2ae3ab57ff8bbe1e0fa",
+    "royals.png": "196470cb5f510deced9d9262a48877994051706b8e9f8416372ff533046d105a",
+    "portrait_archer.png": "4a656018a6625f6163425053529cc5c425264e5dc70af7a455f62c4eb42bc310"
+  },
+  "assets": {
+    "royal_ram": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_ram.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -74,
+        -85,
+        148,
+        85
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        0
+      ]
+    },
+    "royal_devourer": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_devourer.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -76,
+        -176,
+        152,
+        176
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        192
+      ]
+    },
+    "royal_tender": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tender.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -54,
+        -134,
+        107,
+        134
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        384
+      ]
+    },
+    "royal_bard": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_bard.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -30,
+        -67,
+        60,
+        67
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        576
+      ]
+    },
+    "royal_quiver": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_quiver.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -20,
+        -48,
+        40,
+        48
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        768
+      ]
+    },
+    "royal_smith": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_smith.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -29,
+        -57,
+        58,
+        57
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        960
+      ]
+    },
+    "royal_knight": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_knight.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -35,
+        -62,
+        69,
+        62
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        1152
+      ]
+    },
+    "royal_king": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_king.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -41,
+        -77,
+        82,
+        77
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        1344
+      ]
+    },
+    "royal_nia": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_nia.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -33,
+        -68,
+        65,
+        68
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        1536
+      ]
+    },
+    "royal_archer": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_archer.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -34,
+        -73,
+        68,
+        73
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        1728
+      ]
+    },
+    "royal_squire": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_squire.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -24,
+        -48,
+        47,
+        48
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        1920
+      ]
+    },
+    "royal_citizen": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_citizen.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -18,
+        -49,
+        35,
+        49
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        2112
+      ]
+    },
+    "royal_bowman": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_bowman.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -23,
+        -54,
+        45,
+        54
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        2304
+      ]
+    },
+    "royal_spearman": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_spearman.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -24,
+        -60,
+        48,
+        60
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        2496
+      ]
+    },
+    "royal_cook": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_cook.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -23,
+        -59,
+        46,
+        59
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        2688
+      ]
+    },
+    "royal_crawler": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_crawler.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -38,
+        -51,
+        75,
+        51
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        2880
+      ]
+    },
+    "royal_winged": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_winged.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -43,
+        -74,
+        85,
+        74
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        3072
+      ]
+    },
+    "royal_brute": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_brute.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -57,
+        -112,
+        113,
+        112
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        3264
+      ]
+    },
+    "royal_burrower": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_burrower.png",
+      "size": [
+        192,
+        192
+      ],
+      "foot": [
+        96,
+        184
+      ],
+      "body_bounds": [
+        -60,
+        -56,
+        120,
+        56
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        },
+        "walk": {
+          "from_frame": 0,
+          "to_frame": 3
+        },
+        "flee": {
+          "from_frame": 0,
+          "to_frame": 3
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ],
+        [
+          192,
+          0
+        ],
+        [
+          384,
+          0
+        ],
+        [
+          576,
+          0
+        ]
+      ],
+      "atlas_texture": "actors.png",
+      "mask_texture": "actors_mask.png",
+      "eyes_texture": "actors_eyes.png",
+      "atlas_origin": [
+        0,
+        3456
+      ]
+    },
+    "royal_cart": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_cart.png",
+      "size": [
+        166,
+        134
+      ],
+      "foot": [
+        83,
+        130
+      ],
+      "body_bounds": [
+        -83,
+        -130,
+        166,
+        130
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_training": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_training.png",
+      "size": [
+        220,
+        172
+      ],
+      "foot": [
+        110,
+        168
+      ],
+      "body_bounds": [
+        -110,
+        -168,
+        220,
+        168
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_forge": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_forge.png",
+      "size": [
+        216,
+        168
+      ],
+      "foot": [
+        108,
+        164
+      ],
+      "body_bounds": [
+        -108,
+        -164,
+        216,
+        164
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_kitchen": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_kitchen.png",
+      "size": [
+        194,
+        184
+      ],
+      "foot": [
+        97,
+        180
+      ],
+      "body_bounds": [
+        -97,
+        -180,
+        194,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_granary": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_granary.png",
+      "size": [
+        180,
+        152
+      ],
+      "foot": [
+        90,
+        148
+      ],
+      "body_bounds": [
+        -90,
+        -148,
+        180,
+        148
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_hall": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_hall.png",
+      "size": [
+        240,
+        192
+      ],
+      "foot": [
+        120,
+        188
+      ],
+      "body_bounds": [
+        -120,
+        -188,
+        240,
+        188
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_keep": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_keep.png",
+      "size": [
+        308,
+        272
+      ],
+      "foot": [
+        154,
+        268
+      ],
+      "body_bounds": [
+        -154,
+        -268,
+        308,
+        268
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_oak": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_oak.png",
+      "size": [
+        326,
+        316
+      ],
+      "foot": [
+        163,
+        312
+      ],
+      "body_bounds": [
+        -163,
+        -312,
+        326,
+        312
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_encampment": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_encampment.png",
+      "size": [
+        186,
+        100
+      ],
+      "foot": [
+        93,
+        96
+      ],
+      "body_bounds": [
+        -93,
+        -96,
+        186,
+        96
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_hamlet": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_hamlet.png",
+      "size": [
+        254,
+        132
+      ],
+      "foot": [
+        127,
+        128
+      ],
+      "body_bounds": [
+        -127,
+        -128,
+        254,
+        128
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_village": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_village.png",
+      "size": [
+        288,
+        190
+      ],
+      "foot": [
+        144,
+        186
+      ],
+      "body_bounds": [
+        -144,
+        -186,
+        288,
+        186
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_walled": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_walled.png",
+      "size": [
+        352,
+        220
+      ],
+      "foot": [
+        176,
+        216
+      ],
+      "body_bounds": [
+        -176,
+        -216,
+        352,
+        216
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_castle": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_castle.png",
+      "size": [
+        522,
+        348
+      ],
+      "foot": [
+        261,
+        344
+      ],
+      "body_bounds": [
+        -261,
+        -344,
+        522,
+        344
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_pine": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_pine.png",
+      "size": [
+        152,
+        196
+      ],
+      "foot": [
+        76,
+        192
+      ],
+      "body_bounds": [
+        -76,
+        -192,
+        152,
+        192
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_bush": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_bush.png",
+      "size": [
+        80,
+        50
+      ],
+      "foot": [
+        40,
+        46
+      ],
+      "body_bounds": [
+        -40,
+        -46,
+        80,
+        46
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_meadow": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_meadow.png",
+      "size": [
+        60,
+        28
+      ],
+      "foot": [
+        30,
+        24
+      ],
+      "body_bounds": [
+        -30,
+        -24,
+        60,
+        24
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_oak": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_oak.png",
+      "size": [
+        200,
+        184
+      ],
+      "foot": [
+        100,
+        180
+      ],
+      "body_bounds": [
+        -100,
+        -180,
+        200,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_willow": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_willow.png",
+      "size": [
+        196,
+        184
+      ],
+      "foot": [
+        98,
+        180
+      ],
+      "body_bounds": [
+        -98,
+        -180,
+        196,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_coast_pine": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_coast_pine.png",
+      "size": [
+        202,
+        184
+      ],
+      "foot": [
+        101,
+        180
+      ],
+      "body_bounds": [
+        -101,
+        -180,
+        202,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_roots": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_roots.png",
+      "size": [
+        190,
+        184
+      ],
+      "foot": [
+        95,
+        180
+      ],
+      "body_bounds": [
+        -95,
+        -180,
+        190,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_oak_bare": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_oak_bare.png",
+      "size": [
+        196,
+        184
+      ],
+      "foot": [
+        98,
+        180
+      ],
+      "body_bounds": [
+        -98,
+        -180,
+        196,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_willow_bare": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_willow_bare.png",
+      "size": [
+        192,
+        184
+      ],
+      "foot": [
+        96,
+        180
+      ],
+      "body_bounds": [
+        -96,
+        -180,
+        192,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_coast_pine_bare": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_coast_pine_bare.png",
+      "size": [
+        202,
+        184
+      ],
+      "foot": [
+        101,
+        180
+      ],
+      "body_bounds": [
+        -101,
+        -180,
+        202,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "royal_tree_roots_bare": {
+      "root": "res://art/export/renewal/",
+      "texture": "royal_tree_roots_bare.png",
+      "size": [
+        190,
+        184
+      ],
+      "foot": [
+        95,
+        180
+      ],
+      "body_bounds": [
+        -95,
+        -180,
+        190,
+        180
+      ],
+      "durations_ms": [
+        160
+      ],
+      "tags": {
+        "idle": {
+          "from_frame": 0,
+          "to_frame": 0
+        }
+      },
+      "review_status": "direction_confirmed_2026_10_05",
+      "source": "art/source/renewal",
+      "frame_origins": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  }
+}
