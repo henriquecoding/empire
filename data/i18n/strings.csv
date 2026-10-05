@@ -913,7 +913,7 @@ CONTEXT_WALL_UPGRADE,"{name} · Nível {level} · Faltam {cost} moedas
 CONTEXT_SEAT_NEW_WALLS,Nova linha de muralhas em cada flanco.,A new wall line on each flank.,guia contextual de expansão,80,ADR 0064
 BUILDING_COMPANION_POST,Posto da companhia,Companion post,A Última Carroça — ADR 0065,,
 BUILDING_CELLAR_EXCAVATION,Escavação do subsolo,Cellar excavation,A Última Carroça — ADR 0065,,
-ARRIVAL_GOAL_CHOOSE,Escolhe onde o reino cria raízes. Usa uma das bandeiras para fincar o estandarte.,Choose where the realm takes root. Use either flag to plant the banner.,A Última Carroça — ADR 0065,,
+ARRIVAL_GOAL_CHOOSE,Explora com a caravana. Para num local adequado e escolhe onde fundar o Império.,Explore with the caravan. Stop at a suitable site and choose where to found the Empire.,A Última Carroça — ADR 0065,,
 ARRIVAL_GOAL_CART,A carroça aproxima-se do estandarte. A reserva abrirá na chegada.,The cart is moving to the banner. Supplies open on arrival.,A Última Carroça — ADR 0065,,
 ARRIVAL_GOAL_BUILD,O estandarte marcou a terra. Fica perto para levantar o acampamento.,The banner claimed the land. Stay close to raise the camp.,A Última Carroça — ADR 0065,,
 ARRIVAL_GOAL_PEOPLE,"Contrata uma pessoa com uma moeda. Ela poderá construir, recolher ou explorar.","Hire someone with one coin. They can build, gather or scout.",A Última Carroça — ADR 0065,,
@@ -925,7 +925,7 @@ ARRIVAL_CHOICE_ROAD,Estrada: caça fora do primeiro recinto; provisões longe da
 ARRIVAL_CHOICE_GROVE,Bosque: provisões perto da luz; recinto ocupa o habitat da caça próxima. {assume}: estandarte gratuito.,Grove: supplies near light; enclosure occupies nearby hunting habitat. {assume}: free banner.,A Última Carroça — ADR 0065,,
 ARRIVAL_CACHE,Provisões expostas: {coins} moedas. {assume}: inspecionar ou reservar uma pessoa para resgatar.,Exposed supplies: {coins} coins. {assume}: inspect or assign someone to rescue.,A Última Carroça — ADR 0065,,
 ARRIVAL_SCAR,A coleta morreu aqui. A marca fica; a sede e a reserva resgatada continuam.,Gathering died here. The scar remains; the seat and rescued supplies endure.,A Última Carroça — ADR 0065,,
-ARRIVAL_CART_CLOSED,A reserva está fechada. Escolhe o estandarte primeiro.,Supplies are locked. Choose the banner first.,A Última Carroça — ADR 0065,,
+ARRIVAL_CART_CLOSED,A reserva acompanha a caravana. Funda o Império para a abrir.,Supplies travel with the caravan. Found the Empire to open them.,A Última Carroça — ADR 0065,,
 ARRIVAL_CART_WORK,Carroça: {work}. {assume}: alternar coleta e reconhecimento; a pessoa deixa o trabalho anterior.,Cart: {work}. {assume}: switch gathering and scouting; the person leaves the previous job.,A Última Carroça — ADR 0065,,
 ARRIVAL_TASK_NONE,sem tarefa,unassigned,A Última Carroça — ADR 0065,,
 ARRIVAL_TASK_FORAGE,coleta limitada por dia,gathering limited each day,A Última Carroça — ADR 0065,,
@@ -955,3 +955,4 @@ MONARCH_ARRIVAL_EVOLVED_NIA,"EVOLUÇÃO · Vence {wins} batalhas distintas junto
 MONARCH_ARRIVAL_EVOLVED_ARCHER_EMPEROR,"EVOLUÇÃO · Vence {wins} batalhas distintas junto da tua companhia. Ambos evoluem: flecha perfurante, marca em área e companhia mais resistente.","EVOLUTION · Win {wins} distinct battles alongside your companion. Both evolve: piercing arrow, area mark and a tougher companion.",A Última Carroça — ADR 0065,1200,
 ARRIVAL_OLD_SCAR,Raízes negras,Black roots,A Última Carroça — ADR 0065,,
 ARRIVAL_ROOTS_CONTEXT,A Podridão passou por aqui. {assume}: observar as raízes; escolhe o que proteger antes da noite.,Rot passed through here. {assume}: inspect the roots; choose what to protect before night.,A Última Carroça — ADR 0065,,
+ARRIVAL_FOUND_HERE,Fundar o Império aqui? {assume}: Fundar,Found the Empire here? {assume}: Found,ADR 0066,,

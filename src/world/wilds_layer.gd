@@ -77,7 +77,8 @@ func _process(delta: float) -> void:
 		SimLoop.state.region,
 		Wilds.biome_now(),
 		SimLoop.world_width,
-		revisao
+		revisao,
+		SimLoop.arrival.clear_manifest
 	]
 	if chave != _chave:
 		_chave = chave
@@ -107,7 +108,7 @@ func _gerar() -> PackedFloat32Array:
 	var plantas := Wilds.plants(campo, 0.0, largura, regiao, Wilds.SAL.campo, Wilds.woods())
 	if SimLoop.field != null:  # e o campo das terras geradas, povo a povo (Q-173)
 		plantas.append_array(WildGround.plants(SimLoop.field.wilds, largura, regiao))
-	return plantas
+	return SiteValidator.flora(plantas, SimLoop.arrival.clear_manifest)
 
 
 ## A linha de arvores cobre o mundo ja gerado, visto ao ritmo do parallax dela (Q-173).

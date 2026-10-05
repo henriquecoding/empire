@@ -29,48 +29,55 @@ static func arrive() -> void:
 		if u.data_ids[i] != &"vagrant" or absf(u.xs[i] - o.origin) >= NEARBY_PX:
 			continue
 		var target := u.xs[i]
+		o.citizens.append(u.ids[i])
 		u.xs[i] = o.origin + KING_X + float(ARRIVAL_OFFSETS[u.ids[i] % ARRIVAL_OFFSETS.size()])
 		u.set_target_x(u.ids[i], target)
 
 
 static func choice_at(x: float) -> StringName:
-	var o := SimLoop.arrival
-	if not o.active or o.choice != &"":
-		return &""
-	for id: StringName in CHOICES:
-		if absf(x - o.origin - float(CHOICES[id])) <= Band.PASSAGE_PX:
-			return id
-	return &""
+	var r := SimLoop.units.index_of(SimLoop.king_id)
+	return (
+		&"free"
+		if r >= 0 and is_equal_approx(x, SimLoop.units.xs[r]) and FoundationChoice.ready()
+		else &""
+	)
 
 
 static func claim(id: StringName) -> bool:
 	if not CHOICES.has(id) or not SimLoop.arrival.claim(id, float(CHOICES[id])):
 		return false
 	reanchor(SimLoop.arrival.offset)
+	commit()
+	return true
+
+
+static func commit() -> void:
 	SimLoop.builds.foundation_committed = true
 	var seat := RealmLadder.seat(SimLoop.builds)
 	seat.state = BuildSlot.State.SCAFFOLD
 	EventBus.queue(&"build_started", [seat.id, seat.kind])
 	SimLoop.seat.monarch_aim = false
-	EventBus.queue(&"segment_entered", [id, &"foundation"])
-	return true
+	if SimLoop.arrival.free_site:
+		SimLoop.seat.cart_open = true
+	EventBus.queue(&"segment_entered", [SimLoop.arrival.choice, &"foundation"])
 
 
-static func reanchor(shift: float) -> void:
+static func reanchor(shift: float, terrain := true) -> void:
 	if is_zero_approx(shift):
 		return
 	SimLoop.core_x += shift
 	for site in SimLoop.builds.slots:
 		if site.territory == 0 and site.kind != AmargueiroSystem.CORTE:
 			site.x += shift
-	for k in SimLoop.passages.size():
-		SimLoop.passages[k] += shift
-	for k in SimLoop.field.camps.size():
-		SimLoop.field.camps[k] += shift
-	for k in SimLoop.secrets.xs.size():
-		SimLoop.secrets.xs[k] += shift
-	for k in SimLoop.secrets.chapters.size():
-		SimLoop.secrets.chapters[k] += shift
+	if terrain:
+		for k in SimLoop.passages.size():
+			SimLoop.passages[k] += shift
+		for k in SimLoop.field.camps.size():
+			SimLoop.field.camps[k] += shift
+		for k in SimLoop.secrets.xs.size():
+			SimLoop.secrets.xs[k] += shift
+		for k in SimLoop.secrets.chapters.size():
+			SimLoop.secrets.chapters[k] += shift
 	var walls := PackedFloat32Array()
 	for site in SimLoop.builds.slots:
 		if site.two_paths() and site.territory == 0:
@@ -85,9 +92,6 @@ static func use() -> bool:
 	var r := u.index_of(SimLoop.king_id)
 	if r < 0 or not u.alive(r) or u.bands[r] != Band.Kind.SURFACE:
 		return false
-	var choice := choice_at(u.xs[r])
-	if choice != &"":
-		return claim(choice)
 	var o := SimLoop.arrival
 	if not o.active:
 		return false
@@ -106,7 +110,9 @@ static func use() -> bool:
 			o.record(&"rot_first_noticed", &"supplies")
 		if o.choice == &"":
 			return true
-	if o.choice == &"" or not SimLoop.seat.cart_open:
+	if o.choice == &"":
+		return FoundationChoice.claim(u.xs[r])
+	if not SimLoop.seat.cart_open:
 		return false
 	if o.cache_coins > 0 and absf(u.xs[r] - o.cache_x) <= Band.PASSAGE_PX:
 		return ArrivalLabor.assign(LastCart.RESCUE)
@@ -119,12 +125,13 @@ static func tick(delta: float, phase: int, changed: bool) -> void:
 	var o := SimLoop.arrival
 	if not o.active:
 		return
+	CaravanWatch.tick(delta)
 	o.seconds += delta
 	var r := SimLoop.units.index_of(SimLoop.king_id)
 	if r >= 0 and absf(SimLoop.units.xs[r] - o.origin - KING_X) > 1.0:
 		o.record(&"first_input")
 	var target := SimLoop.core_x + CART_X
-	if o.choice != &"":
+	if o.choice != &"" and not o.free_site:
 		SimLoop.seat.cart_x = move_toward(SimLoop.seat.cart_x, target, rules().cart_speed * delta)
 	if o.choice != &"" and is_equal_approx(SimLoop.seat.cart_x, target):
 		SimLoop.seat.cart_open = true

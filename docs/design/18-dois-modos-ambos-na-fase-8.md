@@ -2,18 +2,21 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-**Cooperativo — duas coroas** — Dois jogadores, um império, imperadores diferentes — nenhum joga uma tropa (ADR 0052). Um pode estar em expedição enquanto o outro defende. Proposta: um titular e um com autoridade delegada, bolsas pessoais e um decreto por reino e por dia (Q-204). Ecrã dividido local e online.
+O relatório mestre e ADR 0067/0068 definem o contrato atual. Solo funda um reino; Coop partilha um reino; PvP começa com dois reinos independentes. A implementação online continua pendente.
 
-Começam nas extremidades opostas do mapa e conquistam em direção um ao outro. Vence quem tomar o império adversário ou sobreviver mais dias após a Podridão dupla.
+**Cooperativo — um império** — Dois jogadores e monarcas distintos, população e economia do mesmo reino. Apenas P1, criador da sala, confirma a fundação. P2 pode explorar e sugerir um local. A saída de P1 antes de fundar não transfere automaticamente essa permissão. O servidor mantém a partida e permite reconexão ao mesmo PlayerSlot.
 
-| Opção | Viabilidade | Nota |
+P1 começa a Oeste e P2 a Este, cada qual com caravana, tesouro, conhecimento e fundação próprios. A vitória exige soberania total sobre o reino adversário. Captura, transferência de soberania, graça competitiva e desconexão precisam de regras explícitas antes da implementação (Q-236).
+
+| Componente | Contrato | Estado |
 | --- | --- | --- |
-| Ecrã dividido local | Alta | Dois SubViewport. Faz-se em duas semanas. Começa por aqui. |
-| Online via Steam Sockets | Média | GodotSteam traz NAT traversal e relays. É a opção testada em produção para jogos Steam. |
-| Online via ENet puro | Média-baixa | Irrelevante para 2 jogadores, mas exige port forwarding ou relay próprio. |
-| Autoridade | — | Host-autoritativo. O MultiplayerSynchronizer só replica primitivos; centenas de unidades exigem serialização manual em PackedByteArray. |
+| Cliente Godot Web/native | Envia intenções identificadas; recebe snapshot e atualizações. Não decide saldo, combate, fundação ou vitória. | Cliente Solo existente; rede por fazer. |
+| Servidor dedicado Godot | Autentica jogadores, valida permissões, ordena intenções e simula o mundo. Sobrevive à saída do criador da sala. | Por fazer, RG-25/UN-31. |
+| Vercel | Distribui site, painel e export Web; não executa o loop autoritativo da partida. | Site existente. |
+| Supabase | Persistência e serviços de apoio, com permissões verificadas no servidor; o painel de decisões já utiliza RLS. | Painel existente; integração de partidas por fazer. |
+| Protótipo local | Testa permissões e isolamento por reino; não conclui aceitação online. | UN-29/UN-30 por fazer. |
 
 
-> **Aviso do próprio criador do Kingdom**
+> **Prioridade e aceitação**
 >
-> Depois do Kingdom, van den Berg tentou o Garbage Country, um MMO com mundos colaborativos persistentes, e abandonou-o: problemas técnicos com o SpatialOS e questões de jogabilidade por resolver. Salvou um simulador de plantas e fez o Cloud Gardens em dois anos. Ele próprio nota que "mundos persistentes e complexidade de multijogador provaram ser difíceis de prototipar rapidamente". Faz o jogo single-player completo primeiro. Se o multijogador falhar, tens um jogo. Se o fizeres a meio, não tens nada.
+> Estas regras substituem a proposta anterior de titular/delegado, vitória alternativa por sobrevivência e autoridade do host-cliente. Online só está concluído com dois clientes, servidor dedicado, snapshots, reconexão e comandos idempotentes testados sob latência e perda. Transporte e hospedagem do servidor são decisões pendentes, não uma dependência já instalada.

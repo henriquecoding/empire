@@ -26,11 +26,12 @@ func test_a_clareira_e_uma_lareira_apagada_sem_bancas_nem_convites_do_reino() ->
 		assert_int(CoinTarget.slot_at(SimLoop.builds, vaga.x, int(vaga.band))).is_equal(-1)
 
 
-func test_o_estandarte_so_publica_as_bancas_quando_a_fundacao_acaba() -> void:
+func test_a_fundacao_livre_so_publica_as_bancas_quando_acaba() -> void:
 	var sede := RealmLadder.seat(SimLoop.builds)
 	var r := SimLoop.units.index_of(SimLoop.king_id)
-	SimLoop.units.xs[r] = sede.x
+	SimLoop.units.xs[r] = sede.x + 83.0
 	SimLoop.units.clear_target(SimLoop.king_id)
+	SimLoop.step(LastCartWatch.rules().foundation_stop_s)
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
 	SimLoop.step(STEP)
 	for kind in RACKS:

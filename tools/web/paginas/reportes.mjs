@@ -95,6 +95,7 @@ ${topo({ t, v, ancoras: false })}
     <p class="kicker"><span>Commit ${esc(d.sha.slice(0, 7))} · Centro de decisões</span></p>
     <h1>Vamos dar forma ao Empire.</h1>
     <p class="painel-intro">Entende o que está em causa, avalia a proposta e decide o próximo passo do jogo. Uma decisão de cada vez.</p>
+    <p class="painel-intro">O <a href="https://github.com/henriquecoding/empire/blob/${esc(d.sha)}/docs/reports/EMPIRE-MASTER.md">relatório mestre</a> tem preferência nos conflitos de design. A <a href="https://github.com/henriquecoding/empire/blob/${esc(d.sha)}/docs/reports/PANEL-RECONCILIATION.md">reconciliação das respostas</a> distingue decisões aprovadas, alterações implementadas e trabalho pendente.</p>
 
     <section class="entrar" id="entrar" aria-labelledby="entrar-t">
       <h2 id="entrar-t">Entrar</h2>

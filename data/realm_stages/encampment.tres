@@ -8,7 +8,6 @@ id = &"encampment"
 display_key = "REALM_STAGE_ENCAMPMENT"
 order = 1
 wall_rings = 1
-cost = 2
 build_work = 4.0
 max_health = 200
 width_px = 160

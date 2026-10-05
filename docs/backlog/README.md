@@ -210,9 +210,9 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UN-26](UN-26.md) | Pontes, torres e um evento de bioma | UN-22, UN-24, UN-25 | por fazer |
 | [UN-27](UN-27.md) | Lore e apresentação dos encontros | UN-09, UN-10, UN-11, UN-12, UN-13, UN-14, UN-15, UN-16, UN-17, UN-23, UN-24 | por fazer |
 | [UN-28](UN-28.md) | O primeiro ciclo e a acessibilidade | UN-04, UN-10, UN-14, UN-17, UN-18 | por fazer |
-| [UN-29](UN-29.md) | Coop local | UN-17, UN-18, UN-19, UN-20, UN-21, UN-22, UN-23 | por fazer |
-| [UN-30](UN-30.md) | Dois reinos e a vitória | UN-22, UN-23, UN-29 | por fazer |
-| [UN-31](UN-31.md) | Spike e integração de rede | UN-29, UN-30 | por fazer |
+| [UN-29](UN-29.md) | Coop: permissões de um reino | UN-17, UN-18, UN-19, UN-20, UN-21, UN-22, UN-23, RG-23 | por fazer |
+| [UN-30](UN-30.md) | PvP: soberania total | UN-22, UN-23, RG-23 | por fazer |
+| [UN-31](UN-31.md) | Servidor e reconexão | UN-29, UN-30, RG-25 | por fazer |
 | [UN-32](UN-32.md) | O herdeiro neutro, caro, e a chave da troca | UN-07, UN-16 | por fazer |
 | [UN-33](UN-33.md) | O quarto imperador e a escudeira que dança | UN-16 | por fazer |
 | [UN-34](UN-34.md) | O escudeiro evoluído dispara flechas | UN-14 | por fazer |
@@ -246,6 +246,9 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-20](RG-20.md) | Uma clareira, prados de caça e floresta de exploração | RG-19, QP-06 | feito |
 | [RG-21](RG-21.md) | Recrutamento por corrida, fundação na lareira e cidade dentro das muralhas | RG-19, RG-20 | feito |
 | [RG-22](RG-22.md) | A Última Carroça: relatório completo e decisões atuais do painel | RG-21 | feito — protótipo e validação técnica; percepção humana por medir |
+| [RG-23](RG-23.md) | Relatório mestre e fundação livre Solo | RG-22 | feito — protótipo Solo; visão completa depende de RG-24/RG-25 |
+| [RG-24](RG-24.md) | Identidade territorial e despertar social | RG-23 | por fazer |
+| [RG-25](RG-25.md) | Servidor autoritativo e modos online | RG-23, UN-29, UN-30 | por fazer |
 
 ## Respostas aprovadas no painel
 

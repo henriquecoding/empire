@@ -11,9 +11,9 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 | Bardo | Ver §08 — ofício de IA e companheiro da Imperatriz Nia; nunca corpo jogável (ADR 0052). | — | 18 |
 
 
-> **O construtor pioneiro (ADR 0059)**
+> **Cidadãos da caravana — ADR 0066**
 >
-> O monarca chega com um construtor, além dos dois trabalhadores sem ofício. Reparar pede o ofício, e sem ele a primeira estacaria tocada custava a Casa de Treino e o construtor (22 moedas) antes de se poder reparar. O pioneiro não baixa o preço dos que vêm depois e não chega evoluído; se morrer, a Casa de Treino abre no Povoado e forma outro.
+> O monarca começa com três cidadãos sem ofício, que acompanham a caravana e passam a pertencer ao reino fundado. A fundação não oferece um construtor: formação, recrutamento externo e equipamento continuam pagos. O pioneiro de ADR 0059 é comportamento histórico de saves antigos, preservado pela migração.
 
 > **O dilema do artesão — o teu melhor gerador de histórias**
 >

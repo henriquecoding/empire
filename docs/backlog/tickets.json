@@ -2689,5 +2689,35 @@
   "fora": "Arte final e conclusão de percepção humana; rede de postos e Capital posteriores.",
   "estado": "feito — protótipo e validação técnica; percepção humana por medir",
   "horas": "—"
+ },
+ "RG-23": {
+  "estado": "feito — protótipo Solo; visão completa depende de RG-24/RG-25",
+  "depende": "RG-22",
+  "spec": "docs/reports/EMPIRE-MASTER.md",
+  "horas": "—",
+  "title": "Adaptar relatório mestre e fundação livre Solo",
+  "porque": "Adaptar relatório mestre e fundação livre Solo",
+  "feito": "Caravana móvel, fundação livre, persistência e relatório reconciliado.",
+  "fora": "Rede, clima completo e despertar social: RG-24/RG-25."
+ },
+ "RG-24": {
+  "estado": "por fazer",
+  "depende": "RG-23",
+  "spec": "docs/reports/EMPIRE-MASTER.md",
+  "horas": "—",
+  "title": "Identidade territorial e despertar social",
+  "porque": "Identidade territorial e despertar social",
+  "feito": "Contrato e testes de aceitação descritos no ficheiro do ticket.",
+  "fora": "Não implementado nesta entrega."
+ },
+ "RG-25": {
+  "estado": "por fazer",
+  "depende": "RG-23, UN-29, UN-30",
+  "spec": "docs/reports/EMPIRE-MASTER.md",
+  "horas": "—",
+  "title": "Servidor autoritativo e modos online",
+  "porque": "Servidor autoritativo e modos online",
+  "feito": "Contrato e testes de aceitação descritos no ficheiro do ticket.",
+  "fora": "Não implementado nesta entrega."
  }
 }
