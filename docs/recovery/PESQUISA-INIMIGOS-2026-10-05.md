@@ -147,10 +147,36 @@ O que se lê:
 - **Ninguém nasce dentro das muralhas de pé** (`tests/porta_da_noite_test.gd`), e os cinco testes do §66 passam: a
   defesa do décimo dia aguenta dez noites com o castelo inteiro; recusar todas as ofertas derruba-a; a receita do §07
   cai; sem torres cai; o núcleo pode ser atacado.
-- **O piloto, 15 partidas de 12 dias** (cinco sementes × `casa`, `cauteloso`, `fora`): ver a tabela abaixo. Com o rei
-  `fora`, a partida dura mais (o escuro já não o mata na noite 2); com o rei à porta do núcleo, a noite 4 continua a
-  matá-lo, agora com Rastejantes. Em todas as variantes o piloto acaba entre o dia 2 e o 5, porque a defesa dele não
-  cresce — a mesma conclusão com a rampa até à noite 7 (média 3,9 dias) ou 9 (4,0).
+- **O piloto, 15 partidas de 12 dias** (cinco sementes × rei em `casa`, `cauteloso` e `fora`), a `main` contra este
+  ramo:
+
+| política | semente | `main` | ADR 0071 |
+|---|---|---|---|
+| casa | 20260916 | dia 4 (o rei) | dia 4 (o rei) |
+| casa | 7 | dia 3 (a sede) | dia 3 (a sede) |
+| casa | 11 | dia 4 (o rei) | dia 4 (o rei) |
+| casa | 42 | dia 4 (o rei) | dia 4 (o rei) |
+| casa | 1234 | dia 4 (o rei) | dia 4 (o rei) |
+| cauteloso | 20260916 | dia 5 (o rei) | dia 5 (o rei) |
+| cauteloso | 7 | dia 3 (a sede) | dia 3 (a sede) |
+| cauteloso | 11 | dia 5 (o rei) | dia 4 (a sede) |
+| cauteloso | 42 | dia 3 (a sede) | dia 3 (a sede) |
+| cauteloso | 1234 | dia 5 (o rei) | dia 5 (a sede) |
+| fora | 20260916 | dia 3 (a sede) | dia 4 (o rei) |
+| fora | 7 | **dia 2 (o rei)** | dia 3 (o rei) |
+| fora | 11 | dia 4 (o rei) | dia 4 (o rei) |
+| fora | 42 | dia 4 (o rei) | dia 4 (o rei) |
+| fora | 1234 | **dia 2 (o rei)** | dia 3 (o rei) |
+
+  Médias de 3,7 e 3,8 dias. Lê-se assim:
+  - **Fora, o escuro já não mata o rei na noite 2.** Semente 7: na `main` as noites 1 e 2 trazem seis e quatro
+    Rastejantes do escuro e o rei cai na 2; agora nenhum, e ele aguenta até à noite 3.
+  - **À porta do núcleo, a noite 4 continua a matar o rei** — agora com sete Rastejantes e três Alados, em vez de seis
+    ou sete Alados que só os arqueiros podiam bater. A massa é a mesma; deixou de ser invencível para quem está no chão.
+  - **A defesa do piloto não cresce** na abertura nova (2 arqueiros e 1–2 muros do dia 1 ao 4), e por isso nenhuma
+    variante passa do dia 5 — nem com a rampa até à noite 7 (média 3,9) ou 9 (4,0). A curva só se afina contra a
+    defesa que um jogador consegue ter: é a Q-242.
+- **A suíte inteira:** 1725 casos, 0 falhas, 2 saltados (os de sempre).
 
 ## 8. O que fica para decidires
 
