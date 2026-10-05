@@ -15,7 +15,9 @@ class_name SaveMigrations
 extends RefCounted
 
 ## A versao que o jogo grava. Sobe com cada passo novo, no mesmo commit.
-const CURRENT := 11
+const CURRENT := 12
+## A ultima versao de antes da floresta (ADR 0070): as arvores plantam-se ao carregar.
+const ANTES_DA_FLORESTA := 11
 const ANTES_DA_FUNDACAO_LIVRE := 10
 const ANTES_DA_CARROCA := 9
 const ANTES_DOS_HABITATS := 8
@@ -57,6 +59,8 @@ static func migrate(dados: Dictionary) -> Dictionary:
 				SaveMigrationsV10.apply(d)
 			ANTES_DA_FUNDACAO_LIVRE:
 				SaveMigrationsV11.apply(d)
+			ANTES_DA_FLORESTA:
+				SaveMigrationsV12.apply(d)
 		versao += 1
 		d[&"save_version"] = versao
 	return d

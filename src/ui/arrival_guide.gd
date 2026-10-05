@@ -46,7 +46,8 @@ static func context(x: float, band: int, values: Dictionary) -> String:
 			return _tr(&"ARRIVAL_ROOTS_CONTEXT").format(values)
 	if absf(x - o.cache_x) <= Band.PASSAGE_PX:
 		values["coins"] = o.cache_coins
-		return _tr(&"ARRIVAL_SCAR" if o.scar else &"ARRIVAL_CACHE").format(values)
+		var bosque := ForestGuide.grove(values)  # o bosque apoia a coleta (ADR 0070)
+		return _tr(&"ARRIVAL_SCAR" if o.scar else &"ARRIVAL_CACHE").format(values) + bosque
 	if absf(x - SimLoop.seat.cart_x) <= Band.PASSAGE_PX:
 		if not SimLoop.seat.cart_open:
 			return _tr(&"ARRIVAL_CART_CLOSED")

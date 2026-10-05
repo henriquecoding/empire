@@ -122,7 +122,7 @@ func _process(delta: float) -> void:
 	visible = _aberto < 1.0
 	var revisao := SimLoop.field.wilds.revision if SimLoop.field != null else -1
 	var mundo := [RngService.world_seed(), SimLoop.state.region, SimLoop.world_width]
-	var chave := [mundo, Wilds.biome_now(), revisao, SimLoop.arrival.clear_manifest]
+	var chave := [mundo, Wilds.biome_now(), revisao, ForestView.flora_key()]
 	if chave == _chave:
 		return
 	if _chave.is_empty() or _chave[0] != mundo:
@@ -151,7 +151,7 @@ func _refazer() -> void:
 	_terra = Lowland.of(terras, largura, regiao, Wilds.biome_now(), Lowland.avoided(), _cache)
 	var plants: Array = _terra[Lowland.PLANTAS]
 	for k in plants.size():
-		plants[k] = SiteValidator.flora(plants[k], SimLoop.arrival.clear_manifest)
+		plants[k] = ForestView.field_flora(plants[k])
 	var partes := LowlandArt.parts(_terra, TALHAO)
 	for chave: Vector3 in partes:
 		var talhao: Talhao = _talhoes.get(chave)

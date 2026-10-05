@@ -107,6 +107,9 @@ static func context(device: Glyphs.Device) -> String:
 	var companhia := ClassGuide.companion(values)  # pagar ao companheiro (ADR 0052)
 	if not companhia.is_empty() or units.bands[king] != int(Band.Kind.SURFACE):
 		return companhia
+	var arvore := ForestGuide.context(units.xs[king], values)  # a floresta (ADR 0070)
+	if not arvore.is_empty():
+		return arvore
 	var terras := GuideSites.wilds(units.xs[king], values)
 	return terras if not terras.is_empty() else ClassGuide.status()
 

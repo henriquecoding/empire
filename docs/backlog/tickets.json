@@ -2719,5 +2719,15 @@
   "porque": "Servidor autoritativo e modos online",
   "feito": "Contrato e testes de aceitação descritos no ficheiro do ticket.",
   "fora": "Não implementado nesta entrega."
+ },
+ "RG-26": {
+  "estado": "feito — protótipo P0–P4; arte final, meteorologia e P5 por fazer",
+  "depende": "RG-23, QP-06",
+  "spec": "docs/reports/VEGETACAO-BIOMAS.md",
+  "horas": "—",
+  "title": "A floresta como território",
+  "porque": "Aplicar o relatório de vegetação, estações e biomas e verificar a fundação livre",
+  "feito": "Árvores com estado e save, corte pago, duas regras de influência com pré-visualização, estações na copa, janela da sede e carroça que alcança.",
+  "fora": "Meteorologia, regeneração, horizonte, arte final e desempenho medido."
  }
 }

@@ -20,3 +20,7 @@ extends Resource
 @export var maturity_people := 4
 @export var foreign_chest_coins := 5
 @export var companion_evolved_health_mult := 1.5
+## Verificacao da fundacao livre (ADR 0070): a janela da sede e a carroca que alcanca.
+@export var foundation_window_px := 448.0
+@export var caravan_catch_up_px := 320.0
+@export var caravan_catch_up_mult := 2.0

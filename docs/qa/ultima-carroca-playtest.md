@@ -69,3 +69,20 @@ motivo da fundação e semelhança percebida com Kingdom aguardam as sessões ac
 ## Migração de 05/10 — ADR 0066
 
 A caravana segue; a fundação é livre e gratuita, parado e sem interação prioritária. O grupo fundador sem ofício passa ao reino. Verificar flora removida dentro do footprint e conservada fora, entradas protegidas, reload sem limpeza adicional e o guia nos quatro dispositivos. A assinatura mínima não prova clima, arquitetura adaptada nem consequências ambientais completas. O mundo social dormente, Coop/PvP e rede continuam por fazer. Os resultados históricos acima não validam automaticamente esta revisão.
+
+## A floresta como território — ADR 0070
+
+Verificar, além dos testes: fundar perto e longe do bosque e observar a clareira (sem moeda);
+pagar o corte de uma árvore com e sem construtor; o cepo e a flora que sai com o tronco; o
+painel ao pé de uma árvore que serve a coleta ou o veado, antes e depois de cair; a copa no
+outono e no inverno; recarregar e mudar de estação sem a árvore voltar. A sede só nasce perto
+do centro da região de casa e a carroça alcança o monarca (Q-237).
+
+Perguntas da sessão (§10.3 do relatório de vegetação), a registar sem inferir:
+
+- consegue explicar porque quer preservar ou cortar uma árvore?
+- reconhece o ambiente sem depender de uma legenda?
+- antecipa a mudança de estação antes de ficar sem alternativa?
+- compreende porque é que a coleta ganha ou perde o apoio do bosque?
+- distingue uma condição no próprio sítio de um efeito de vizinhança?
+- quando regressa, reconhece o território como o mesmo lugar?

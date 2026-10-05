@@ -30,6 +30,11 @@ static func tick(delta: float) -> void:
 	if moving:
 		o.facing = signf(u.target_xs[king] - u.xs[king])
 	var target := u.xs[king] - o.facing * SimFactory.curve().follow_distance_px
-	SimLoop.seat.cart_x = move_toward(
-		SimLoop.seat.cart_x, target, LastCartWatch.rules().cart_speed * delta
-	)
+	SimLoop.seat.cart_x = move_toward(SimLoop.seat.cart_x, target, speed(u.xs[king]) * delta)
+
+
+## A carroca anda ao passo dela; longe do monarca, apressa-se (ADR 0070).
+static func speed(king_x: float) -> float:
+	var regras := LastCartWatch.rules()
+	var longe := absf(SimLoop.seat.cart_x - king_x) > regras.caravan_catch_up_px
+	return regras.cart_speed * (regras.caravan_catch_up_mult if longe else 1.0)

@@ -78,7 +78,7 @@ func _process(delta: float) -> void:
 		Wilds.biome_now(),
 		SimLoop.world_width,
 		revisao,
-		SimLoop.arrival.clear_manifest
+		ForestView.flora_key()
 	]
 	if chave != _chave:
 		_chave = chave
@@ -108,7 +108,7 @@ func _gerar() -> PackedFloat32Array:
 	var plantas := Wilds.plants(campo, 0.0, largura, regiao, Wilds.SAL.campo, Wilds.woods())
 	if SimLoop.field != null:  # e o campo das terras geradas, povo a povo (Q-173)
 		plantas.append_array(WildGround.plants(SimLoop.field.wilds, largura, regiao))
-	return SiteValidator.flora(plantas, SimLoop.arrival.clear_manifest)
+	return ForestView.field_flora(plantas)  # a clareira e as estacoes (ADR 0066, 0070)
 
 
 ## A linha de arvores cobre o mundo ja gerado, visto ao ritmo do parallax dela (Q-173).

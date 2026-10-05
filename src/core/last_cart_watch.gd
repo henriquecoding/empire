@@ -53,6 +53,8 @@ static func claim(id: StringName) -> bool:
 
 static func commit() -> void:
 	SimLoop.builds.foundation_committed = true
+	var raio := rules().foundation_clear_radius  # as arvores saem sem madeira (ADR 0070)
+	SimLoop.field.woodland.clear(SimLoop.core_x - raio, SimLoop.core_x + raio)
 	var seat := RealmLadder.seat(SimLoop.builds)
 	seat.state = BuildSlot.State.SCAFFOLD
 	EventBus.queue(&"build_started", [seat.id, seat.kind])
@@ -131,8 +133,9 @@ static func tick(delta: float, phase: int, changed: bool) -> void:
 	if r >= 0 and absf(SimLoop.units.xs[r] - o.origin - KING_X) > 1.0:
 		o.record(&"first_input")
 	var target := SimLoop.core_x + CART_X
-	if o.choice != &"" and not o.free_site:
-		SimLoop.seat.cart_x = move_toward(SimLoop.seat.cart_x, target, rules().cart_speed * delta)
+	if o.choice != &"":  # fundada, a carroca ancora-se ao reino (ADR 0070)
+		var passo := CaravanWatch.speed(target) * delta
+		SimLoop.seat.cart_x = move_toward(SimLoop.seat.cart_x, target, passo)
 	if o.choice != &"" and is_equal_approx(SimLoop.seat.cart_x, target):
 		SimLoop.seat.cart_open = true
 	if changed and phase == GameClock.Phase.AFTERNOON:

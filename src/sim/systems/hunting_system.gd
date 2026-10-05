@@ -15,6 +15,8 @@ var season_mult := 1.0
 var day := 0
 ## Os bichos que estao agora fora das tocas, pelo x da toca (Q-150, ADR 0057).
 var rabbits: Array[float] = []
+## As tocas sem abrigo (ADR 0070): nao dao bicho enquanto a floresta nao as cobrir.
+var unsheltered: Array[float] = []
 ## O dano que cada bicho a porta ja levou, por x: o veado aguenta um tiro (Q-150).
 var wounds: Dictionary = {}
 ## WildlifeData por id: o bicho de cada toca. Sem ele, e o coelho.
@@ -58,7 +60,9 @@ func grow(
 ) -> void:
 	if not daylight:
 		return
-	for x in burrows.grow(delta * season_mult, periodo, rabbits, ritmos):
+	var fora: Array[float] = rabbits.duplicate()
+	fora.append_array(unsheltered)  # uma toca sem abrigo nao da bicho (ADR 0070)
+	for x in burrows.grow(delta * season_mult, periodo, fora, ritmos):
 		rabbits.append(x)
 		herd.arrive(x, Herd.rare(wildlife, burrows.game_at(x), roll))
 

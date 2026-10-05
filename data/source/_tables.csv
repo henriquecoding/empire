@@ -33,3 +33,5 @@ monarchs,res://src/sim/data/monarch_data.gd,res://data/monarchs/{id}.tres,rows,,
 realm_stages,res://src/sim/data/realm_stage_data.gd,res://data/realm_stages/{id}.tres,rows,,"ADR 0059 — a escada da sede: da Clareira à Fortaleza, e o que cada estágio abre"
 realm_sites,res://src/sim/data/realm_site_data.gd,res://data/realm_sites/{id}.tres,rows,,"ADR 0060 — o território e a produção de apoio de cada construção"
 arrival,res://src/sim/data/arrival_rules.gd,res://data/economy/arrival.tres,kv,,ADR 0065 — A Última Carroça e decisões do painel de 04/10/2026
+flora,res://src/sim/data/flora_data.gd,res://data/flora/{id}.tres,rows,,"ADR 0070 — as espécies de árvore, por bioma, e o que fazem a quem está perto"
+forest,res://src/sim/data/forest_rules.gd,res://data/economy/forest.tres,kv,,"ADR 0070 — a floresta como território: corte, alcance e regras de influência"

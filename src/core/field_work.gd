@@ -28,6 +28,7 @@ var supply := Supply.new()
 var monarchy := Monarchy.new()  # quem reina, e o companheiro dele (ADR 0052)
 var bleeding := Bleeding.new()  # a ferida da flecha imperial (Q-201)
 var stamina := Stamina.new()  # o folego de quem corre a pe (Q-193)
+var woodland := Woodland.new()  # as arvores do mundo, uma a uma (ADR 0070)
 var mount := Mount.new(
 	Registry.entry(&"mounts", &"draft_horse") as MountData,
 	Registry.entry(&"classes/storages", &"saddlebags") as StorageData
@@ -100,6 +101,7 @@ func prepare(
 	hunting.season_mult = seasons.hunt_mult(dia)
 	CampWatch.tick(self)
 	WildHunt.prepare(self, dia, core_x, largura, fase)  # as tocas de casa e das terras
+	ForestWatch.ensure(self)  # a floresta de casa, uma vez (ADR 0070)
 	if unidades != null:
 		Frontier.grow(self, unidades, SimLoop.king_id, largura)  # o que se ve a frente (Q-173)
 	if dia != _dia and unidades != null:
@@ -143,6 +145,7 @@ func plan(unidades: UnitSystem, luz: bool) -> void:
 	classes.escort(unidades, lado)
 	training.plan(unidades)
 	SettlementWatch.plan(self)
+	ForestWork.plan(self, unidades, luz)  # quem abate as arvores pagas (ADR 0070)
 	Assume.plan(unidades, _rei, _nucleo, self)  # quem se conduz, e o rei largado (§08)
 
 
@@ -168,6 +171,7 @@ func resolve(
 	conversion.apply(unidades, conversion.active)
 	monarchy.boost(unidades)  # o incentivo do Bardo da Nia, por cima do passo (Q-199)
 	EventRelay.training(training.tick(delta, unidades, obras, relogio.day_seconds()))
+	ForestWork.work(self, unidades, delta, luz)
 	return HuntWatch.tick(self, unidades, delta, luz, relogio, rei)  # a caca viva (ADR 0057)
 
 
@@ -198,6 +202,7 @@ func parts() -> Dictionary:
 		&"monarchy": monarchy,
 		&"bleeding": bleeding,
 		&"stamina": stamina,
+		&"woodland": woodland,
 	}
 
 

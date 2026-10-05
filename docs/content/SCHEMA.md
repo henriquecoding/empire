@@ -892,7 +892,7 @@ Script `src/sim/data/realm_site_data.gd` · layout `rows` · 62 linha(s) · ADR 
 
 ## `arrival.csv` → `data/economy/arrival.tres`
 
-Script `src/sim/data/arrival_rules.gd` · layout `kv` · 18 linha(s) · ADR 0065 — A Última Carroça e decisões do painel de 04/10/2026
+Script `src/sim/data/arrival_rules.gd` · layout `kv` · 21 linha(s) · ADR 0065 — A Última Carroça e decisões do painel de 04/10/2026
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -914,4 +914,43 @@ Script `src/sim/data/arrival_rules.gd` · layout `kv` · 18 linha(s) · ADR 0065
 | `companion_evolved_health_mult` | **sem propriedade** | — | a ferramenta vai falhar |
 | `foundation_stop_s` | float |  |  |
 | `foundation_clear_radius` | float |  |  |
+| `foundation_window_px` | **sem propriedade** | — | a ferramenta vai falhar |
+| `caravan_catch_up_px` | **sem propriedade** | — | a ferramenta vai falhar |
+| `caravan_catch_up_mult` | **sem propriedade** | — | a ferramenta vai falhar |
+
+## `flora.csv` → `data/flora/{id}.tres`
+
+Script `src/sim/data/flora_data.gd` · layout `rows` · 5 linha(s) · ADR 0070 — as espécies de árvore, por bioma, e o que fazem a quem está perto
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `id` | StringName |  |  |
+| `display_key` | String |  |  |
+| `biomes` | Array[StringName] |  |  |
+| `evergreen` | bool |  |  |
+| `tags` | Array[StringName] |  |  |
+| `density_min` | float |  |  |
+| `fell_work_s` | float |  |  |
+| `fell_coins` | int |  |  |
+| `height_px` | float |  |  |
+| `crown` | StringName |  |  |
+
+## `forest.csv` → `data/economy/forest.tres`
+
+Script `src/sim/data/forest_rules.gd` · layout `kv` · 12 linha(s) · ADR 0070 — a floresta como território: corte, alcance e regras de influência
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `generator_version` | int |  |  |
+| `tree_step_px` | float |  |  |
+| `reserve_px` | float |  |  |
+| `fell_cost` | int |  |  |
+| `tree_reach_px` | float |  |  |
+| `flora_clear_px` | float |  |  |
+| `grove_feeds_radius` | float |  |  |
+| `grove_feeds_min` | int |  |  |
+| `grove_feeds_bonus` | int |  |  |
+| `grove_feeds_cap` | int |  |  |
+| `shelter_radius` | float |  |  |
+| `shelter_min` | int |  |  |
 

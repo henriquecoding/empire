@@ -349,3 +349,13 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `walled_village` | `REALM_STAGE_WALLED_VILLAGE` | Vila Fortificada | Walled Village |
 | `fortress` | `REALM_STAGE_FORTRESS` | Fortaleza | Fortress |
 
+## flora
+
+| id | chave | PT-PT | EN |
+|---|---|---|---|
+| `oak` | `FLORA_OAK` | Carvalho | Oak |
+| `pine` | `FLORA_PINE` | Pinheiro | Pine |
+| `willow` | `FLORA_WILLOW` | Salgueiro | Willow |
+| `coast_pine` | `FLORA_COAST_PINE` | Pinheiro da costa | Coast pine |
+| `root_tree` | `FLORA_ROOT_TREE` | Árvore-das-raízes | Root tree |
+

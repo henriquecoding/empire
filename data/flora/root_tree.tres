@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FloraData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/flora_data.gd" id="1_sxlag"]
+
+[resource]
+script = ExtResource("1_sxlag")
+id = &"root_tree"
+display_key = "FLORA_ROOT_TREE"
+biomes = Array[StringName]([&"marsh", &"subterranean"])
+evergreen = true
+tags = Array[StringName]([&"forage"])
+density_min = 0.4
+fell_work_s = 16.0
+fell_coins = 2
+height_px = 128.0
+crown = &"roots"

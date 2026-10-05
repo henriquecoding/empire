@@ -7,6 +7,32 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A floresta como território — 05/10/2026 (ADR 0070)
+
+### Q-237 · A janela da fundação e a carroça que alcança (verificação do PR #85)
+- **Encontrado ao verificar o deploy `64c7e73`:** a fundação livre aceitava todo o mundo gerado; fundar 2 500 px a
+  leste da região punha muros em terras de outro povo, deixava passagens e subsolo para trás e a noite, que nasce nas
+  bordas da região, chegava pelo lado errado. E a carroça, a 48 px/s, ficava para trás sem fim e não se ancorava à sede.
+- **Corrigido (reversível):** a sede nasce no centro da região de casa ± `foundation_window_px` (448), o que mantém o
+  segundo recinto dentro das bordas; a carroça apressa-se ×`caravan_catch_up_mult` (2) a mais de
+  `caravan_catch_up_px` (320) e ancora-se ao reino depois de fundar. Tudo em `arrival.csv._proposed`.
+- **Em aberto:** alargar a janela a qualquer ponto do mundo pede noite, Lume e subsolo relativos ao reino (RG-24).
+- **Onde:** `FoundationChoice.window`, `CaravanWatch.speed`, `LastCartWatch.tick`; `tests/foundation_window_test.gd`.
+- **Decide:** tu, a largura da janela e se a noite deve passar a nascer em relação ao reino.
+
+### Q-238 · Os números e as regras da floresta
+- **Pedido do dono (05/10/2026):** *«implemente também o que coloquei nesse relatório»* — o relatório de vegetação.
+- **Aplicado:** árvores com estado no save, corte pago a um construtor, duas regras de influência com pré-visualização,
+  estações na copa e na flor, transições de bioma pelas duas pontas (ADR 0070, RG-26).
+- **Propostas reversíveis:** em `flora.csv` as cinco espécies, os biomas, a densidade mínima, o trabalho (10–16 s) e as
+  moedas do tronco (1–2); em `forest.csv` a célula (56 px), a folga do que o mapa precisa (56), o custo do corte (1), o
+  alcance (28), a flora que sai com o tronco (32), o bosque da coleta (240 px, 3 árvores, +1 por dia, máximo 1) e o
+  abrigo do veado (200 px, 2 árvores).
+- **Escolhas minhas, reversíveis:** um muro não corta a influência; a obra tem prioridade sobre a árvore no mesmo sítio
+  e limpa o chão sem moeda; o corte só depois de fundar e com construtor; a toca que vive de árvores nasce sempre com o
+  abrigo mínimo; as flores somem no outono e no inverno.
+- **Decide:** tu, os números depois de jogar; e se o corte deve também abrir espaço novo para obras, como no Kingdom.
+
 ## Relatório mestre prioritário — 05/10/2026 (ADR 0066–0069)
 
 ### Q-234 · Limiar de paragem e footprint da fundação livre

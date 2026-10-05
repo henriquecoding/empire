@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FloraData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/flora_data.gd" id="1_v21mc"]
+
+[resource]
+script = ExtResource("1_v21mc")
+id = &"oak"
+display_key = "FLORA_OAK"
+biomes = Array[StringName]([&"ancient_forest", &"floodplain"])
+tags = Array[StringName]([&"shelter", &"forage"])
+density_min = 0.38
+fell_work_s = 12.0
+fell_coins = 2
+height_px = 132.0

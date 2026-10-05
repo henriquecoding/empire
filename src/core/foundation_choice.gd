@@ -2,6 +2,7 @@ class_name FoundationChoice
 extends RefCounted
 
 const DOMINANT_SHARE := 0.5
+const MEIO := 0.5
 
 
 static func ready() -> bool:
@@ -54,8 +55,17 @@ static func valid(x: float) -> bool:
 		var at := SimLoop.night.amargueiros.xs[k]
 		protected.append(Vector2(at, at))
 	return SiteValidator.valid(
-		x, LastCartWatch.rules().foundation_clear_radius, Frontier.walk_limits(), protected
+		x, LastCartWatch.rules().foundation_clear_radius, window(), protected
 	)
+
+
+## Onde o chao da sede pode ficar: a volta do centro da regiao de casa, porque a noite
+## nasce nas bordas dela (ADR 0070). O resto do mundo gerado nao e chao de fundacao.
+static func window() -> Vector2:
+	var regras := LastCartWatch.rules()
+	var meio := SimLoop.world_width * MEIO
+	var folga := regras.foundation_window_px + regras.foundation_clear_radius
+	return Vector2(maxf(0.0, meio - folga), minf(SimLoop.world_width, meio + folga))
 
 
 static func claim(x: float) -> bool:
