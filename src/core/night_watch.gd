@@ -95,6 +95,16 @@ func tick(
 	EventBus.queue(&"rot_moved", [rot.position_x(), rot.state.width])
 
 
+## A Podridao e a unica fonte de criaturas, e paga-as da massa (§05, §51): o bicho que
+## ela levanta e quem o escuro traz ao rei saem da mancha que tiver com que, pelas regras
+## da escolha — o dia, a massa e a estreia (ADR 0071). Verdadeiro se alguma pagou.
+func pay(dados: CreatureData) -> bool:
+	for mancha: RotSystem in [rot, other_rot]:
+		if mancha.afford(dados, SimLoop.state.day):
+			return true
+	return false
+
+
 ## Passo 6: o que o combate devolveu passa pelo registo dos feitos (§76) — quem
 ## abateu o que — e segue tal e qual para o EventRelay.
 func feats(eventos: Array[Dictionary]) -> Array[Dictionary]:
@@ -205,8 +215,16 @@ func _invocar(
 	pedido: SpawnRequest, estado: GameState, bichos: CreatureSystem, nucleo: float
 ) -> void:
 	var dados := Registry.entry(TABELA_CRIATURAS, pedido.creature_id) as CreatureData
+	pedido.x = door(rot, pedido, nucleo)  # a porta, e nao dentro dos muros (ADR 0071)
 	bichos.spawn(estado, dados, pedido.x, LastCartWatch.first_night_target(nucleo))
 	EventRelay.summoned(pedido, rot.mass())
+
+
+## Onde nasce o que `mancha` pediu: a porta da muralha mais exterior do lado dela.
+static func door(mancha: RotSystem, pedido: SpawnRequest, nucleo: float) -> float:
+	var lado := mancha.state.side
+	var borda := RealmFrame.edge(lado)
+	return RotPick.door(pedido.x, lado, borda, nucleo, SimLoop.builds, pedido.band)
 
 
 ## Quem chegou vivo a alvorada com uma galinha levou-a (Q-129).

@@ -66,7 +66,11 @@ static func rot_mass(
 		r.mass_per_amargueiro * amargueiros + r.mass_per_named_amargueiro * named_amargueiros
 	)
 	var refused := r.refusal_mass * mini(refusals, int(r.refusal_cap / maxf(r.refusal_mass, 1.0)))
-	return base + trees + minf(refused, r.refusal_cap)
+	var written := trees + minf(refused, r.refusal_cap)
+	if r.ramp_written and r.ramp_nights > 1 and day < r.ramp_nights:
+		# O que se escreve de dia pesa com o t da rampa (ADR 0071, Q-239).
+		written *= float(maxi(day, 1) - 1) / float(r.ramp_nights - 1)
+	return base + written
 
 
 ## Tempo medio ate matar (§07): golpes necessarios x intervalo / precisao.

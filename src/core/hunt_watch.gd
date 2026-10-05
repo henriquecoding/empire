@@ -86,14 +86,9 @@ static func stir(field: FieldWork, unidades: UnitSystem, delta: float) -> void:
 			EventBus.queue(&"rot_summoned", [criatura.id, onde, 0.0])
 
 
+## So se levanta se a mancha o pagar: o dia, a massa e a estreia (NightWatch.pay, ADR 0071).
 static func _paid(criatura: CreatureData) -> bool:
-	if SimLoop.night == null or criatura.min_day > SimLoop.state.day:
-		return false
-	for rot: RotSystem in [SimLoop.night.rot, SimLoop.night.other_rot]:
-		if rot != null and rot.active() and rot.state.mass >= criatura.mass_cost:
-			rot.state.mass -= criatura.mass_cost
-			return true
-	return false
+	return SimLoop.night != null and SimLoop.night.pay(criatura)
 
 
 static func prepare(

@@ -44,5 +44,6 @@ static func tick(
 		var interval := SimFactory.rot_window()
 		other.arm(RngService.float_range(&"rot", interval.x, interval.y))
 	for request in other.tick(delta, night.amargueiros.consecrated(), FireZones.of(SimLoop.builds)):
+		request.x = NightWatch.door(other, request, core)  # a porta (ADR 0071)
 		creatures.spawn(state, Registry.entry(&"creatures", request.creature_id), request.x, core)
 		EventRelay.summoned(request, other.mass())

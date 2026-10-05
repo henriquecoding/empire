@@ -2,8 +2,10 @@
 #
 # A ponte que a pureza obriga: o Torchlight (sim) diz QUANDO o escuro traz
 # alguem; isto sorteia o lado no fluxo `rot` (§42), vai buscar a criatura ao
-# Registry e invoca-a ao lado do rei. E vende o archote: uma moeda do rei largada
-# numa fogueira de pe (`sells_torch`) e um archote no saco dele.
+# Registry e invoca-a ao lado do rei — paga da massa da mancha, como tudo o que a
+# Podridao traz, e so a partir da noite `dark_from_night` (ADR 0071, Q-241). E vende
+# o archote: uma moeda do rei largada numa fogueira de pe (`sells_torch`) e um
+# archote no saco dele.
 class_name DarkWatch
 extends RefCounted
 
@@ -41,11 +43,13 @@ func tick(
 	var noite := fase == GameClock.Phase.NIGHT
 	var sup := tropas.bands[r] == int(Band.Kind.SURFACE)
 	var escuro := sup and Torchlight.in_dark(tropas.xs[r], obras, nucleo_x, _meia(obras))
-	if not torch.tick(delta, noite, escuro):
-		return
+	if not torch.tick(delta, noite, escuro) or estado.day < _perfil.dark_from_night:
+		return  # as primeiras noites ensinam o escuro antes de ele morder (Q-241)
+	var dados := Registry.entry(&"creatures", _perfil.dark_creature) as CreatureData
+	if not SimLoop.night.pay(dados):
+		return  # a Podridao ja gastou o que tinha: o escuro chamou e ninguem veio
 	var lado := signf(RngService.unit_float(&"rot") - METADE)  # de qualquer lado
 	var x := tropas.xs[r] + lado * _perfil.dark_ambush_px
-	var dados := Registry.entry(&"creatures", _perfil.dark_creature) as CreatureData
 	bichos.spawn(estado, dados, x, nucleo_x)
 	EventRelay.summoned(SpawnRequest.new(dados.id, x, Band.Kind.SURFACE), 0.0)
 

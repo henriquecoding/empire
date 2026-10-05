@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         manifesto escala marco obras inventario-arte afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
+        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria noites exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -155,6 +155,14 @@ DIAS ?= 8
 
 vistoria:  ## Uma partida longa com piloto, vigiada tick a tick
 	$(GODOT) --headless --path . scenes/tests/vistoria.tscn -- --dias $(DIAS)
+
+# A tabela das noites (ADR 0071): quem vem, de onde, contra que defesa. Mede, nao
+# chumba. POLITICA= casa | cauteloso | fora | longe; SEMENTE= outra partida.
+POLITICA ?= casa
+SEMENTE ?= 20260916
+
+noites:  ## As noites de uma partida pilotada: criaturas por porta e especie, e a defesa
+	$(GODOT) --headless --path . scenes/tests/noites.tscn -- --dias $(DIAS) --politica $(POLITICA) --semente $(SEMENTE)
 
 exportar:  ## Exporta o Linux e confirma que o binario arranca
 	mkdir -p build

@@ -30,6 +30,10 @@ var next_summon_at: float = 0.0
 var trail_from: float = 0.0
 var trail_to: float = 0.0
 
+## Quantas de cada especie ja vieram nesta noite, por id: e o que a estreia conta
+## (ADR 0071, Q-240). Volta a vazio a cada crepusculo.
+var came: Dictionary = {}
+
 
 ## So tipos base, para o save (§62). O perfil e a tabela de criaturas nao entram:
 ## sao dados do jogo, e o jogo carrega-os outra vez.
@@ -43,6 +47,7 @@ func to_dict() -> Dictionary:
 		&"next_summon_at": next_summon_at,
 		&"trail_from": trail_from,
 		&"trail_to": trail_to,
+		&"came": came.duplicate(),
 	}
 
 
@@ -55,3 +60,4 @@ func from_dict(d: Dictionary) -> void:
 	next_summon_at = d.get(&"next_summon_at", next_summon_at)
 	trail_from = d.get(&"trail_from", trail_from)
 	trail_to = d.get(&"trail_to", trail_to)
+	came = (d.get(&"came", {}) as Dictionary).duplicate()  # um save de antes: ninguem veio
