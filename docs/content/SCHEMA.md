@@ -956,3 +956,20 @@ Script `src/sim/data/forest_rules.gd` · layout `kv` · 12 linha(s) · ADR 0070 
 | `shelter_radius` | float |  |  |
 | `shelter_min` | int |  |  |
 
+## `underground.csv` → `data/economy/underground.tres`
+
+Script `src/sim/data/under_rules.gd` · layout `kv` · 10 linha(s) · ADR 0072 — o subsolo tem chão para além da escada: o contrato de área útil, a cave real, os sítios opcionais e o ladrão
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `generator_version` | int |  |  |
+| `arrival_px` | float |  |  |
+| `clear_px` | float |  |  |
+| `bay_px` | float |  |  |
+| `margin_px` | float |  |  |
+| `cellar_base_px` | float |  |  |
+| `chest_px` | float |  |  |
+| `optional_max` | int |  |  |
+| `optional_spacing_px` | float |  |  |
+| `thief_carry` | int |  |  |
+

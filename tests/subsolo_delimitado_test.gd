@@ -40,9 +40,7 @@ func _sorteios(valor: float) -> PackedFloat32Array:
 func test_um_sitio_cobre_o_que_precisa_e_nunca_sai_do_tecto() -> void:
 	var cap := Vector2(600.0, 1400.0)
 	for u in [0.0, 0.3, 0.7, 0.99]:
-		var salas := UndergroundSites.lay_out(
-			BOCA, Vector2(850.0, 1150.0), cap, _sorteios(u), _spec(3)
-		)
+		var salas := UnderLayout.lay_out(BOCA, Vector2(850.0, 1150.0), cap, _sorteios(u), _spec(3))
 		var a: float = salas.front()[UndergroundSites.A]
 		var b: float = salas.back()[UndergroundSites.B]
 		assert_float(a).is_less_equal(850.0)
@@ -53,7 +51,7 @@ func test_um_sitio_cobre_o_que_precisa_e_nunca_sai_do_tecto() -> void:
 
 
 func test_as_salas_sao_seguidas_e_a_boca_fica_na_da_entrada() -> void:
-	var salas := UndergroundSites.lay_out(
+	var salas := UnderLayout.lay_out(
 		BOCA, Vector2(BOCA, BOCA), Vector2(0.0, 3000.0), _sorteios(0.6), _spec(3)
 	)
 	assert_int(salas.size()).is_greater(1)
@@ -69,7 +67,7 @@ func test_as_salas_sao_seguidas_e_a_boca_fica_na_da_entrada() -> void:
 
 
 func test_sem_tecto_largo_o_sitio_continua_delimitado() -> void:
-	var salas := UndergroundSites.lay_out(
+	var salas := UnderLayout.lay_out(
 		BOCA, Vector2(BOCA, BOCA), Vector2(-INF, INF), _sorteios(0.99), _spec(100)
 	)
 	assert_int(salas.size()).is_less_equal(UndergroundSites.MAX_ROOMS)
@@ -79,22 +77,25 @@ func test_sem_tecto_largo_o_sitio_continua_delimitado() -> void:
 
 func test_sorteios_diferentes_dao_sitios_diferentes_e_os_mesmos_o_mesmo() -> void:
 	var cap := Vector2(0.0, 3000.0)
-	var um := UndergroundSites.lay_out(BOCA, Vector2(BOCA, BOCA), cap, _sorteios(0.2), _spec(3))
-	var outro := UndergroundSites.lay_out(BOCA, Vector2(BOCA, BOCA), cap, _sorteios(0.8), _spec(3))
-	var igual := UndergroundSites.lay_out(BOCA, Vector2(BOCA, BOCA), cap, _sorteios(0.2), _spec(3))
+	var um := UnderLayout.lay_out(BOCA, Vector2(BOCA, BOCA), cap, _sorteios(0.2), _spec(3))
+	var outro := UnderLayout.lay_out(BOCA, Vector2(BOCA, BOCA), cap, _sorteios(0.8), _spec(3))
+	var igual := UnderLayout.lay_out(BOCA, Vector2(BOCA, BOCA), cap, _sorteios(0.2), _spec(3))
 	assert_bool(um == outro).is_false()
 	assert_bool(um == igual).is_true()
 
 
-func test_o_que_esta_la_dita_a_sala() -> void:
+## O que esta la entra nas features da sala e ja nao lhe apaga a funcao (ADR 0072, SUB-10).
+func test_o_que_esta_la_fica_na_sala_sem_lhe_apagar_a_funcao() -> void:
 	var features := [[1180.0, &"mine"]]
-	var salas := UndergroundSites.lay_out(
+	var salas := UnderLayout.lay_out(
 		BOCA, Vector2(BOCA, 1200.0), Vector2(0.0, 3000.0), _sorteios(0.5), _spec(0, features)
 	)
 	var achou := false
 	for sala: Dictionary in salas:
 		if sala[UndergroundSites.A] <= 1180.0 and sala[UndergroundSites.B] >= 1180.0:
-			achou = sala[UndergroundSites.KIND] == &"mine"
+			achou = (sala[UndergroundSites.FEATS] as Array).has(&"mine")
+			assert_str(String(sala[UndergroundSites.KIND])).is_not_equal("mine")
+			assert_bool([&"stair", &"storage", &"wine"].has(sala[UndergroundSites.KIND])).is_true()
 	assert_bool(achou).is_true()
 
 

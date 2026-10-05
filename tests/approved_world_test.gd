@@ -138,12 +138,16 @@ func test_dungeon_guardian_survives_dawn_and_pays_when_defeated() -> void:
 	var side := WorldPlan.LESTE
 	var index := -1
 	for k in SimLoop.field.wilds.count(side):
-		if int(SimLoop.field.wilds.at(side, k).get(WildSegments.PASSAGEM, 0)) > 0:
-			entry = SimLoop.field.wilds.at(side, k)
+		var candidate := SimLoop.field.wilds.at(side, k)
+		var open: bool = candidate.get(DungeonWatch.ENTRADA) == DungeonWatch.ABERTA
+		if int(candidate.get(WildSegments.PASSAGEM, 0)) > 0 and open:
+			entry = candidate
 			index = k
 	assert_int(index).is_greater_equal(0)
-	entry[&"dungeon"] = {&"kind": &"guardian", &"coins": 18, &"bonus": 3}
+	entry[&"dungeon"] = {&"kind": &"guardian", &"coins": 18, &"bonus": 3, &"pending": true}
 	DungeonWatch.author(SimLoop.field, side, index, false)
+	var mouth := SimLoop.field.wilds.subject_x(side, index, SimLoop.world_width)
+	UnderWatch.enter(mouth, Band.PASSAGE_PX)  # the reward is placed inside, once (ADR 0072)
 	var guardian := int(entry[&"dungeon"][&"guardian"])
 	SimLoop.creatures.dissolve(DungeonWatch.guardians(SimLoop.field))
 	assert_int(SimLoop.creatures.index_of(guardian)).is_greater_equal(0)

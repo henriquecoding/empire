@@ -8,9 +8,15 @@
 #     muros que a passagem tem de cada lado, e grande o bastante para o poco de minerio
 #     e a camara da Semente Real que la estao (§25 11:00);
 #   · a sala secreta debaixo do castelo, com um alcapao num sitio sorteado do chao dele;
-#   · a masmorra de cada ruina das terras, dentro do segmento dela.
+#   · a masmorra de cada ruina das terras, dentro do segmento dela;
+#   · a cavidade natural de cada falha de rocha de um limiar (ADR 0072).
 # E a cola: le o SimLoop e o RngService e escreve no UndergroundSites, que e puro. As
 # salas so nascem na primeira descida (`enter`), pela semente e pela chave do sitio.
+#
+# ADR 0072 (o relatorio de 05/10/2026): cada sitio tem uma causa que se ve — a passagem,
+# a sede, o arco caido, a falha — e uma familia que diz que salas lhe cabem. Uma ruina
+# escolhe a funcao que teve (cripta, deposito, cisterna) e so leva salas dessa funcao; a
+# reserva real ja nao traz arcas nem frestas que nao respondem; a caverna nao tem escada.
 class_name UnderWatch
 extends RefCounted
 
@@ -19,6 +25,13 @@ const SAL_TESOURO := 233
 const HATCH_KEY := "hatch"
 const CELLAR_KEY := "cellar_%d"
 const DUNGEON_KEY := "dungeon_%d_%d"
+const CAVE_KEY := "cave_%d_%d"
+const SAL_USO := 241
+## O assunto de limiar que e uma formacao de rocha: a ancora de uma caverna (§7.2).
+const FALHA := &"rock_fault"
+## A boca da caverna abre no pe da rocha da direita da falha (WildLands.FALHA, 18 a 104 px
+## do assunto): ve-se de onde vem, e nao tapa o que o guia diz do limiar no assunto.
+const FALHA_BOCA_PX := 60.0
 ## O alcapao abre a esta distancia do meio do castelo: nunca no meio (onde o rei nasce e o
 ## escudeiro espera) e nunca fora dele.
 const ALCAPAO_PX := Vector2(70.0, 190.0)
@@ -33,11 +46,25 @@ const ENTRADAS := {
 	UndergroundSites.CELLAR: &"stair",
 	UndergroundSites.HATCH: &"vault",
 	UndergroundSites.DUNGEON: &"hall",
+	UndergroundSites.CAVE: &"maw",
 }
 const TIPOS := {
 	UndergroundSites.CELLAR: [&"storage", &"wine", &"granary"],
-	UndergroundSites.HATCH: [&"treasury", &"escape"],
+	UndergroundSites.HATCH: [&"storage", &"granary"],
 	UndergroundSites.DUNGEON: [&"crypt", &"collapsed", &"cistern", &"ossuary"],
+	UndergroundSites.CAVE: [&"hollow", &"roots", &"niche"],
+}
+const FAMILIAS := {
+	UndergroundSites.CELLAR: &"home_cellar",
+	UndergroundSites.HATCH: &"royal_reserve",
+	UndergroundSites.DUNGEON: &"ruin",
+	UndergroundSites.CAVE: &"cave",
+}
+## A funcao que a ruina teve escolhe as salas que lhe cabem (§5 do relatorio).
+const USOS := {
+	&"crypt": [&"crypt", &"ossuary", &"collapsed"],
+	&"store": [&"storage", &"wine", &"collapsed"],
+	&"cistern": [&"cistern", &"collapsed"],
 }
 
 
@@ -56,12 +83,12 @@ static func author_home(passagens: PackedFloat32Array, muros: PackedFloat32Array
 		for obra in SimLoop.builds.slots:
 			if int(obra.band) == int(Band.Kind.UNDERGROUND) and _cabe(obra.x, tecto):
 				precisa = _alargar(precisa, obra.x, obra.width)
-				dentro.append([obra.x, MINA])
+				dentro.append([obra.x, MINA, obra.width])
 		var segredos := SimLoop.secrets
 		for s in segredos.ids.size():
 			if segredos.bands[s] == int(Band.Kind.UNDERGROUND) and _cabe(segredos.xs[s], tecto):
 				precisa = _alargar(precisa, segredos.xs[s], segredos.widths[s])
-				dentro.append([segredos.xs[s], SEMENTE])
+				dentro.append([segredos.xs[s], SEMENTE, segredos.widths[s]])
 		var receita := spec(UndergroundSites.CELLAR, 0.0, dentro)
 		var chave := CELLAR_KEY % k
 		SimLoop.field.under.post(chave, UndergroundSites.CELLAR, boca, precisa, tecto, receita)
@@ -77,15 +104,28 @@ static func author_home(passagens: PackedFloat32Array, muros: PackedFloat32Array
 	SimLoop.field.under.post(HATCH_KEY, UndergroundSites.HATCH, alcapao, aqui, castelo, secreta)
 
 
-## A masmorra da ruina do segmento (`lado`, `k`), presa a ele.
-static func author_dungeon(campo: FieldWork, lado: int, k: int) -> void:
+## A masmorra da ruina do segmento (`lado`, `k`), presa a ele; ou, numa falha de rocha,
+## a cavidade natural. `recusa` nao vazia: o sitio fica registado, mas sem entrada.
+static func author_dungeon(campo: FieldWork, lado: int, k: int, recusa := &"") -> void:
 	var x := campo.wilds.subject_x(lado, k, SimLoop.world_width)
 	var x0 := campo.wilds.x_of(lado, k, SimLoop.world_width)
 	var tecto := Vector2(x0 + FOLGA, x0 + campo.wilds.width - FOLGA)
-	var precisa := Vector2(x - CAMARA_PX * MEIO, x + CAMARA_PX * MEIO)
-	var receita := spec(UndergroundSites.DUNGEON, CAMARA_PX, [])
-	var chave := DUNGEON_KEY % [lado, k]
-	campo.under.post(chave, UndergroundSites.DUNGEON, x, precisa, tecto, receita)
+	var gruta: bool = campo.wilds.at(lado, k).get(WildSegments.ASSUNTO) == FALHA
+	if gruta:
+		x += FALHA_BOCA_PX
+	var tipo := UndergroundSites.CAVE if gruta else UndergroundSites.DUNGEON
+	var precisa := Vector2(x, x) if gruta else Vector2(x - CAMARA_PX * MEIO, x + CAMARA_PX * MEIO)
+	var receita := spec(tipo, 0.0 if gruta else CAMARA_PX, [])
+	if not gruta:
+		var u := RngService.scatter(hash([SAL_USO, lado, k]), 1)[0]
+		var uso: StringName = USOS.keys()[mini(floori(u * USOS.size()), USOS.size() - 1)]
+		receita[UndergroundSites.POOL] = USOS[uso]
+		receita[&"use"] = uso
+	receita[UndergroundSites.SEGMENT] = Vector2i(lado, k)
+	if recusa != &"":
+		receita[UndergroundSites.DENY] = recusa
+	var chave := (CAVE_KEY if gruta else DUNGEON_KEY) % [lado, k]
+	campo.under.post(chave, tipo, x, precisa, tecto, receita)
 
 
 ## A receita de um sitio, com as larguras e o numero de salas do rules.csv.
@@ -98,12 +138,20 @@ static func spec(tipo: StringName, entrada_px: float, dentro: Array) -> Dictiona
 		UndergroundSites.ENTRANCE: ENTRADAS[tipo],
 		UndergroundSites.ENTRANCE_PX: entrada_px,
 		UndergroundSites.FEATURES: dentro,
+		UndergroundSites.RULES: rules(),
+		UndergroundSites.FAMILY: FAMILIAS[tipo],
+		UndergroundSites.MANDATORY: tipo in [UndergroundSites.CELLAR, UndergroundSites.HATCH],
 	}
 
 
+## O contrato de area util e os limites dos sitios opcionais (ADR 0072).
+static func rules() -> UnderRules:
+	return Registry.entry(&"economy", &"underground") as UnderRules
+
+
 ## A primeira descida por uma boca: o sitio dela nasce, pela semente e pela chave — a
-## mesma jogatina da sempre o mesmo, outra jogatina da outro. A sala secreta guarda o
-## tesouro do imperador, que cai uma vez (as moedas vao no save, como as da masmorra).
+## mesma jogatina da sempre o mesmo, outra jogatina da outro. A reserva real abre o bau
+## vazio dela; a masmorra poe a recompensa no meio da baia, uma vez.
 static func enter(x: float, alcance := Band.PASSAGE_PX) -> void:
 	var campo := SimLoop.field
 	if campo == null:
@@ -113,15 +161,20 @@ static func enter(x: float, alcance := Band.PASSAGE_PX) -> void:
 		return
 	var chave := campo.under.key_of(i)
 	var sorteios := RngService.scatter(hash([SAL, chave]), UndergroundSites.ROLLS)
-	if campo.under.generate(i, sorteios) and campo.under.kind_of(i) == UndergroundSites.HATCH:
-		_tesouro(campo, i, chave)
+	if not campo.under.generate(i, sorteios):
+		return
+	match campo.under.kind_of(i):
+		UndergroundSites.HATCH:
+			_tesouro(campo, i, chave)
+			CellarWatch.sync()  # a cave real nasce ja com a largura habitavel inteira
+		UndergroundSites.DUNGEON:
+			DungeonWatch.place(campo, i)  # a recompensa nasce dentro, e nao na boca (SUB-11)
 
 
-## As bocas que nao sao passagens: as ruinas das terras e o alcapao do castelo.
+## As bocas que nao sao passagens: as ruinas e as cavernas das terras e o alcapao do
+## castelo — so as que levam a algum lado (ADR 0072).
 static func mouths(campo: FieldWork) -> PackedFloat32Array:
-	var bocas := campo.wilds.dungeons(SimLoop.world_width)
-	bocas.append_array(campo.under.hatches())
-	return bocas
+	return campo.under.mouths()
 
 
 static func _tesouro(_campo: FieldWork, _i: int, chave: String) -> void:

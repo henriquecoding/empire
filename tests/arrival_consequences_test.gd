@@ -112,13 +112,14 @@ func test_foreign_chest_uses_existing_wealth_and_player_chest_starts_empty() -> 
 	CellarWatch.foreign(SimLoop.field, 2, record)
 	assert_float(SimLoop.field.settlements.treasury(2)).is_equal(5.0)
 	var r := SimLoop.units.index_of(SimLoop.king_id)
+	var chest := UnderReserve.chest_x(under, own)  # na baia, longe da subida (ADR 0072)
 	SimLoop.units.bands[r] = Band.Kind.UNDERGROUND
-	SimLoop.units.xs[r] = mouth
+	SimLoop.units.xs[r] = chest
 	SimLoop.units.clear_target(SimLoop.king_id)
 	var purse := SimLoop.units.carried_coins[r]
 	SimLoop.intents.queue(
 		IntentQueue.Kind.DROP_COIN,
-		{&"x": mouth, &"band": Band.Kind.UNDERGROUND, &"amount": 2, &"source": Verbs.JOGADOR}
+		{&"x": chest, &"band": Band.Kind.UNDERGROUND, &"amount": 2, &"source": Verbs.JOGADOR}
 	)
 	SimLoop.step(1.0 / 30.0)
 	assert_int(SimLoop.treasury.amount(UnderWatch.HATCH_KEY)).is_equal(2)
@@ -128,11 +129,12 @@ func test_foreign_chest_uses_existing_wealth_and_player_chest_starts_empty() -> 
 	assert_int(SimLoop.units.carried_coins[r]).is_equal(purse)
 	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, 3)
 	var foe := SimLoop.creatures.spawn(
-		SimLoop.state, Registry.entry(&"creatures", &"burrower"), mouth, mouth
+		SimLoop.state, Registry.entry(&"creatures", &"burrower"), chest, chest
 	)
 	SimLoop.creatures.bands[SimLoop.creatures.index_of(foe)] = Band.Kind.UNDERGROUND
 	CellarWatch.steal()
 	assert_int(SimLoop.treasury.amount(UnderWatch.HATCH_KEY)).is_equal(0)
+	assert_int(SimLoop.treasury.carried_by(foe)).is_equal(3)
 	SimLoop.load_world(SimLoop.world())
 	assert_int(SimLoop.treasury.amount(UnderWatch.HATCH_KEY)).is_equal(0)
 

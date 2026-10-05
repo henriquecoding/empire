@@ -51,6 +51,7 @@ func _process(_delta: float) -> void:
 				"OBRAS   " + _obras(),
 				"POSTOS  " + _postos(),
 				"NOITE   " + _noite(),
+				"SUBSOLO " + _subsolo(),
 				"",
 				"IMPULSOS (TAB + numero, ou Y + stick e largar; um por dia)",
 				_impulsos(),
@@ -113,6 +114,38 @@ func _noite() -> String:
 	return (
 		"x=%d · massa %.0f · velocidade %.1f px/s · invoca %s"
 		% [int(rot.position_x()), rot.mass(), rot.speed(), _proxima(rot)]
+	)
+
+
+## O diagnostico do relatorio do subsolo (§17.5, ADR 0072): o sitio mais perto do rei —
+## chave, familia, porque nao serve, a baia e a versao — e quantos ficaram sem entrada.
+func _subsolo() -> String:
+	var under := SimLoop.field.under if SimLoop.field != null else null
+	var r := SimLoop.units.index_of(SimLoop.king_id)
+	if under == null or r < 0:
+		return NENHUM
+	var recusados := 0
+	for k in under.count():
+		recusados += 0 if under.usable(k) else 1
+	var i := under.site_at(SimLoop.units.xs[r])
+	if i == UndergroundSites.NONE:
+		i = under.find(SimLoop.units.xs[r], INF)
+	if i == UndergroundSites.NONE:
+		return "%d sitios · %d sem entrada" % [under.count(), recusados]
+	var spec: Dictionary = under.sites[i][UndergroundSites.SPEC]
+	var regras := UnderLayout.rules(spec)
+	var baia := UnderFit.bay(under.span(i), under.mouth_of(i), UnderLayout.blocked(spec), regras)
+	var dados: Dictionary = under.meta.get(under.key_of(i), {})
+	return (
+		"%s · %s · %s · baia %d px · v%d · %d sem entrada"
+		% [
+			under.key_of(i),
+			spec.get(UndergroundSites.FAMILY, NENHUM),
+			under.why(i) if under.why(i) != UnderFit.OK else "ok",
+			0 if is_nan(baia.x) else int(baia.y - baia.x),
+			int(dados.get(UndergroundSites.VERSION, 0)),
+			recusados,
+		]
 	)
 
 

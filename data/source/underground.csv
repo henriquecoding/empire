@@ -1,0 +1,11 @@
+key,value,_src,_proposed,_notes
+generator_version,2,ADR 0072,,"A versão do gerador de sítios do subsolo. Cada sítio gerado guarda a sua; a 1 é a de antes do contrato de área útil, e um sítio dela é reparado uma vez ao carregar (§15 do relatório)."
+arrival_px,64,ADR 0072,arrival_px,"A chegada: a escada ou o alçapão e onde se pousa ao descer (§6.2 do relatório). Valor de ensaio."
+clear_px,48,ADR 0072,clear_px,"A folga de circulação de cada lado da chegada: sair dela, voltar-se e seguir. Valor de ensaio."
+bay_px,128,ADR 0072,bay_px,"A baía útil: o intervalo contíguo, fora da chegada e do que lá está, que todo o sítio acessível tem de ter. Vazio é válido; escada sem chão não. Valor de ensaio."
+margin_px,32,ADR 0072,margin_px,"As margens acumuladas: metade junto a cada parede. Valor de ensaio."
+cellar_base_px,288,ADR 0072,cellar_base_px,"A largura habitável inicial da cave real, separada do passo de escavação de 96 px (§6.4 do relatório). Valor de ensaio."
+chest_px,32,ADR 0072,chest_px,"O baú fica na baía, a esta distância da ponta dela que dá para a chegada: o alvo do baú nunca é o da subida (§12.2). Valor de ensaio."
+optional_max,3,ADR 0072,optional_max,"O tecto de entradas opcionais (ruínas com interior e cavernas) por povo, de cada lado (§7.3). Um tecto e não uma quota: pode sair zero."
+optional_spacing_px,1920,ADR 0072,optional_spacing_px,"Uma entrada opcional por este comprimento de trilho e limiar desse povo, no máximo (§7.3). Calibrar pelo tempo de viagem, não só por píxeis."
+thief_carry,5,ADR 0072,thief_carry,"Quantas moedas um ladrão leva de um baú. O que leva vai com ele e cai onde ele morrer; só se perde se ele sair vivo (§9.6). Valor de ensaio."

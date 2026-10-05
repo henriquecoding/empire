@@ -27,19 +27,25 @@ func hunt_mult(day: int) -> float:
 	return _rules.winter_hunt_mult if at(day) == WINTER else 1.0
 
 
+## A parte da colheita que fica para o inverno, pelos celeiros proprios de pe, por ordem
+## de id: um celeiro cheio passa o resto ao seguinte em vez de o deitar fora (SUB-14).
 func store(day: int, kind: StringName, produced: float, builds: BuildSystem) -> float:
 	if at(day) == WINTER or kind != &"farm" or produced <= 0.0:
 		return produced
-	for slot in builds.standing():
-		if slot.kind != &"granary" or slot.territory != 0:
-			continue
+	var falta := produced * _rules.granary_reserve_frac
+	var celeiros := builds.standing().filter(
+		func(s: BuildSlot) -> bool: return s.kind == &"granary" and s.territory == 0
+	)
+	celeiros.sort_custom(func(a: BuildSlot, b: BuildSlot) -> bool: return a.id < b.id)
+	var guardado := 0.0
+	for slot: BuildSlot in celeiros:
 		var held := float(reserves.get(slot.id, 0.0))
-		var amount := minf(
-			produced * _rules.granary_reserve_frac, maxf(0.0, _rules.granary_reserve_cap - held)
-		)
+		var amount := minf(falta - guardado, maxf(0.0, _rules.granary_reserve_cap - held))
+		if amount <= 0.0:
+			continue
 		reserves[slot.id] = held + amount
-		return produced - amount
-	return produced
+		guardado += amount
+	return produced - guardado
 
 
 func release(day: int, slot: BuildSlot) -> int:

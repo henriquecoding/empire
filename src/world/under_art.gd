@@ -15,7 +15,10 @@ const PAREDES := {
 	UndergroundSites.CELLAR: [RootCellars.WALL, RootCellars.VAULT],
 	UndergroundSites.HATCH: [Color("4b3a2c"), Color("b08a4a")],
 	UndergroundSites.DUNGEON: [Color("3f3e39"), Color("85826f")],
+	UndergroundSites.CAVE: [Color("3b3025"), Color("6e5c46")],
 }
+## O tecto de uma cavidade natural: quanto desce em cada ponto, por ordem (ADR 0072).
+const GRUTA := [0.0, 14.0, 6.0, 20.0, 9.0, 16.0, 4.0, 18.0, 8.0, 12.0, 0.0]
 ## A parede de rocha que fecha o sitio: a grossura, quanto o dente entra e quantos dentes.
 const FECHO := {"largo": 16.0, "dente": 6.0, "dentes": 6}
 const PAR := 2
@@ -32,13 +35,17 @@ static func draw(canvas: CanvasItem, sitios: UndergroundSites) -> void:
 			continue
 		var cores: Array = PAREDES.get(sitios.kind_of(i), PAREDES[UndergroundSites.CELLAR])
 		var salas := sitios.rooms(i)
+		var natural := sitios.kind_of(i) == UndergroundSites.CAVE
 		for sala: Dictionary in salas:
 			var a: float = sala[UndergroundSites.A]
 			var b: float = sala[UndergroundSites.B]
-			RootCellars.vault(canvas, a, b, cores[0], cores[1])
+			if natural:
+				_gruta(canvas, a, b, cores[0], cores[1])
+			else:
+				RootCellars.vault(canvas, a, b, cores[0], cores[1])
 			RootCellars.floor_strip(canvas, a, b)
 			UnderProps.draw(canvas, sala, chao)
-		for k in range(1, salas.size()):
+		for k in range(1, 0 if natural else salas.size()):
 			RootCellars.pillar(canvas, salas[k][UndergroundSites.A])
 		_entrada(canvas, sitios, i, chao)
 		var lim := sitios.span(i)
@@ -53,6 +60,20 @@ static func _entrada(canvas: CanvasItem, sitios: UndergroundSites, i: int, chao:
 			RootCellars.shoring(canvas, boca)
 		UndergroundSites.DUNGEON:
 			ShapeArt.draw(canvas, WildTunnel.CAMARA, Vector2(boca, chao))
+
+
+## Uma cavidade natural de `a` a `b`: sem abobada nem pedra aparelhada, o tecto aos
+## dentes — construido e natural leem-se diferentes (§12.1 do relatorio).
+static func _gruta(canvas: CanvasItem, a: float, b: float, wall: Color, edge: Color) -> void:
+	var topo := RootCellars.TOP
+	canvas.draw_rect(Rect2(a, topo, b - a, RootCellars.FLOOR_Y - topo), RootCellars.WALL_FAR)
+	var tecto := PackedVector2Array([Vector2(a, topo)])
+	for p in GRUTA.size():
+		var t := float(p) / float(GRUTA.size() - 1)
+		tecto.append(Vector2(lerpf(a, b, t), topo + float(GRUTA[p])))
+	tecto.append(Vector2(b, topo))
+	canvas.draw_colored_polygon(tecto, wall)
+	canvas.draw_polyline(tecto.slice(1, tecto.size() - 1), edge, 1.0)
 
 
 ## A parede de rocha numa ponta do sitio. `dentro` e +1 se o sitio fica a direita de `x`.

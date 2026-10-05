@@ -221,6 +221,9 @@ func from_dict(mundo: Dictionary) -> void:
 	Frontier.reapply(self, SimLoop.world_width)
 	SettlementWatch.plan(self)  # os acampamentos e as masmorras voltam
 	if SimLoop.field == self:
+		CellarWatch.sync()
+	UnderReserve.mend(under)  # os sitios de antes do contrato de area util (ADR 0072)
+	if SimLoop.field == self:
 		MonarchWatch.sync()  # o escudeiro do vinculo e a classe do Rei, ja no load
 	_dia = ClockService.clock.day if ClockService.clock != null else 0
 

@@ -2729,5 +2729,15 @@
   "porque": "Aplicar o relatório de vegetação, estações e biomas e verificar a fundação livre",
   "feito": "Árvores com estado e save, corte pago, duas regras de influência com pré-visualização, estações na copa, janela da sede e carroça que alcança.",
   "fora": "Meteorologia, regeneração, horizonte, arte final e desempenho medido."
+ },
+ "RG-27": {
+  "estado": "feito — P0 (SUB-01 a SUB-07) e P1 de geração, recompensas, baú, celeiros e roubo; logística e ensaios por fazer",
+  "depende": "Q-186, ADR 0046, ADR 0065",
+  "spec": "docs/reports/SUBSOLO-ARMAZENS-DUNGEONS.md",
+  "horas": "—",
+  "title": "O subsolo tem chão para além da escada",
+  "porque": "Aplicar o relatório de armazéns, subsolos, masmorras e cavernas: nenhum subsolo é só a escada, e nenhuma entrada existe só porque saiu num sorteio",
+  "feito": "Contrato de área útil, reserva de chão antes de publicar, base habitável da cave real, baú longe da subida, famílias com causa (caverna nas falhas), tecto por povo, recompensa no interior, reparação de saves antigos, celeiros e ladrão com carga recuperável.",
+  "fora": "Transporte, recuperação de depósitos, reservas no cenário, preparação e fuga do ladrão, encontros por papel, ensaios Web e com pessoas."
  }
 }
