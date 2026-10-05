@@ -52,16 +52,7 @@ static func draw(canvas: CanvasItem, band: int, light: Lighting, time: float) ->
 	for k in trees.count():
 		if trees.fates[k] == AmargueiroSystem.Fate.OLD:
 			_label(canvas, Vector2(trees.xs[k], ground) + SCAR_LABEL, &"ARRIVAL_OLD_SCAR")
-	if o.choice == &"":
-		for id: StringName in LastCartWatch.CHOICES:
-			_flag(
-				canvas,
-				Vector2(o.origin + float(LastCartWatch.CHOICES[id]), ground),
-				id,
-				time,
-				light
-			)
-	else:
+	if o.choice != &"":
 		_flag(canvas, Vector2(SimLoop.core_x, ground), o.choice, time, light, true)
 	var foot := Vector2(o.cache_x, ground)
 	var color := ROOT if o.scar or o.tainted else LEAF

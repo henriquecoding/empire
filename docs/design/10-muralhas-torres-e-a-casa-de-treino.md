@@ -2,15 +2,15 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a sede: o monarca funda-a numa Clareira e ela sobe por estágios, paga e levantada como um muro (ADR 0059). É o que defendes. Se cair, cai a partida.
+A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a sede: o monarca escolhe livremente um local válido e funda sem custo; depois a sede sobe por estágios pagos e levantados como um muro (ADR 0066). É o que defendes. Se cair, cai a partida.
 
 ## A sede: da Clareira à Fortaleza
 
-O reino não nasce castelo. O monarca chega a uma Clareira com a companhia dele, dois trabalhadores sem ofício e um construtor pioneiro, e larga no marco as moedas da fundação. Cada estágio é um degrau do núcleo: paga-se inteiro, quem está presente levanta-o (§55), e o estágio de antes continua a servir enquanto o seguinte se ergue. Subir não cura: a sede passa ao estágio novo com a mesma proporção de vida. Cada estágio abre obras — não as ergue: as obras, os ofícios e as armas pagam-se à parte. O estágio soma-se ao que um degrau já pedia (a estátua, a conquista, o Lenho), não o substitui. O castelo-árvore de antes é a Fortaleza.
+O reino não nasce castelo. O monarca explora com a caravana e três cidadãos sem ofício. Ao parar num local válido, sem outra interação prioritária, pode confirmar a fundação gratuita. A sede e as bancas passam a usar essa coordenada, sem deslocar as ruínas e passagens do terreno. Cada melhoria posterior é um degrau do núcleo: paga-se inteira, quem está presente levanta-a (§55), e o estágio de antes continua a servir enquanto o seguinte se ergue. Subir não cura: a sede passa ao estágio novo com a mesma proporção de vida. Cada estágio abre obras — não as ergue: as obras, os ofícios e as armas pagam-se à parte. O estágio soma-se ao que um degrau já pedia (a estátua, a conquista, o Lenho), não o substitui. O castelo-árvore de antes é a Fortaleza.
 
 | Estágio | Custo | Vida | Largura | Abre |
 | --- | --- | --- | --- | --- |
-| Acampamento | 2 | 200 | 160 | Plantação, Fogueira, Banca do Arco, Estacaria |
+| Acampamento | 0 | 200 | 160 | Plantação, Fogueira, Banca do Arco, Estacaria |
 | Povoado | 8 | 350 | 240 | Casa de Treino, Galinheiro, Pesqueiro, Torre de Arqueiros, Torre Alta, Casa de cidadãos, Paliçada |
 | Vila | 18 | 550 | 320 | Cozinha, Forja, Celeiro, Salga, Curral, Corte de Madeira, Estábulo, Casa do Herdeiro, Santuário das Raízes, Barril de Fogo, Muro de Pedra |
 | Vila Fortificada | 32 | 750 | 400 | Fosso de Raízes, Embaixada, Serração, Estábulo de Vacas, Poço de Minério, Farol, Muralha de Ferro |

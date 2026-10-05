@@ -2,6 +2,8 @@ class_name ArrivalRules
 extends Resource
 
 @export var cart_speed: float = 48.0
+@export var foundation_stop_s: float = 0.35
+@export var foundation_clear_radius: float = 240.0
 @export var worker_work_s: float = 30.0
 @export var forage_daily_cap: int = 3
 @export var exposed_provisions: int = 3

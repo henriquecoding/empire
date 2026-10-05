@@ -25,6 +25,12 @@ var consolidated := false
 var earned := 0
 var earned_day := 1
 var events: Dictionary = {}
+var citizens := PackedInt32Array()
+var clear_manifest: Array[Vector2] = []
+var site_signature: Dictionary = {}
+var free_site := false
+var stationary_s := 0.0
+var facing := 1.0
 
 
 func begin(x: float, cache: float, coins: int) -> void:
@@ -98,6 +104,11 @@ func to_dict() -> Dictionary:
 		&"earned": earned,
 		&"earned_day": earned_day,
 		&"events": events.duplicate(true),
+		&"citizens": citizens,
+		&"clear_manifest": clear_manifest.duplicate(),
+		&"site_signature": site_signature.duplicate(true),
+		&"free_site": free_site,
+		&"facing": facing,
 	}
 
 
@@ -120,3 +131,9 @@ func from_dict(d: Dictionary) -> void:
 	earned = int(d.get(&"earned", 0))
 	earned_day = int(d.get(&"earned_day", 1))
 	events = d.get(&"events", {}).duplicate(true)
+	citizens = PackedInt32Array(d.get(&"citizens", []))
+	clear_manifest.assign(d.get(&"clear_manifest", []))
+	site_signature = d.get(&"site_signature", {}).duplicate(true)
+	free_site = d.get(&"free_site", false) == true
+	facing = float(d.get(&"facing", 1.0))
+	stationary_s = 0.0

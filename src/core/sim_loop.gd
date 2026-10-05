@@ -77,7 +77,7 @@ func load_world(mundo: Dictionary) -> void:
 	companion.from_dict(mundo.get(&"companion_journey", {}))
 	treasury.from_dict(mundo.get(&"treasury", {}))
 	var home := arrival.origin + arrival.offset if arrival.active else world_width / 2
-	LastCartWatch.reanchor(home - core_x)
+	LastCartWatch.reanchor(home - core_x, not arrival.free_site)
 	builds.foundation_committed = not arrival.active or arrival.choice != &""
 	WorldWorks.restore(mundo.get(SimSave.OBRAS, []))
 	king_id = SimSave.restore(units, creatures, coins, builds, night, mundo, jobs)
@@ -125,6 +125,7 @@ func step(delta: float) -> void:
 	recruits.seek_coins(units, coins, state.tick)
 	recruits.follow(units, king_id, core_x)
 	field.plan(units, _fase < GameClock.Phase.DUSK)
+	CaravanWatch.plan()
 	ArrivalLabor.plan(_fase)
 	CompanionWatch.plan()
 	EventRelay.combat(combat.choose(units, creatures, builds, abertas))

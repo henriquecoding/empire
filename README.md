@@ -73,9 +73,17 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 | `tests/` | gdUnit4: arquitetura, dados, design |
 | `art/` · `audio/` | `art/source/` em Git LFS; `art/export/` é gerado (menos `_placeholder/`) |
 
+## Relatório mestre atual
+
+O [relatório mestre](docs/reports/EMPIRE-MASTER.md) e a
+[reconciliação do painel](docs/reports/PANEL-RECONCILIATION.md) aplicam o pedido de
+05/10/2026: o relatório prevalece nos conflitos de design. A migração Solo usa
+caravana móvel, três cidadãos sem ofício e fundação livre/gratuita; Coop/PvP,
+servidor dedicado, clima completo e despertar social ficam em RG-24/RG-25.
+
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.7.2: 1654 testes (2 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.7.2: 1660 testes (2 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
 - A base de dados tem **34 tabelas** e 481 recursos com todos os números do dossiê, Parte XIII incluída; o que o

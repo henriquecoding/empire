@@ -13,16 +13,17 @@ func after_test() -> void:
 	SimLoop.autosave_enabled = true
 
 
-func test_banner_starts_free_camp_and_opens_existing_reserve() -> void:
+func test_stopped_free_site_starts_camp_and_opens_existing_reserve() -> void:
 	var r := SimLoop.units.index_of(SimLoop.king_id)
 	var money := SimLoop.units.carried_coins[r]
 	SimLoop.step(10.0)
 	assert_float(ClockService.clock.elapsed).is_equal(0.0)
-	SimLoop.units.xs[r] = SimLoop.arrival.origin - 256.0
+	SimLoop.units.xs[r] = SimLoop.arrival.origin + 83.0
 	SimLoop.units.target_xs[r] = SimLoop.units.xs[r]
+	SimLoop.step(LastCartWatch.rules().foundation_stop_s)
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
 	SimLoop.step(5.0)
-	assert_str(String(SimLoop.arrival.choice)).is_equal("grove")
+	assert_str(String(SimLoop.arrival.choice)).is_equal("free")
 	assert_int(RealmLadder.stage(SimLoop.builds)).is_equal(1)
 	assert_bool(SimLoop.seat.cart_open).is_true()
 	assert_int(SimLoop.units.carried_coins[r]).is_equal(money)

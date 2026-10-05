@@ -1,8 +1,6 @@
-# tests/fundacao_do_reino_test.gd — a fundacao do reino, pelo jogo inteiro (ADR 0059).
-#
-# O dono, a 03/10/2026, sobre o plano do reino: *«aplique esse relatorio»*. O monarca
-# chega com três vagabundos e uma reserva fechada. O estandarte funda gratuitamente;
-# ofícios e companhia só existem depois de contratar e pagar (ADR 0065).
+# A fundação do reino pelo jogo: três cidadãos sem ofício e reserva fechada.
+# O local livre funda
+# gratuitamente; ofícios e companhia continuam pagos (ADR 0066).
 extends GdUnitTestSuite
 
 const SEMENTE := 20261003
@@ -246,5 +244,6 @@ func _fincar() -> void:
 	var r := _rei()
 	SimLoop.units.xs[r] = SimLoop.arrival.origin
 	SimLoop.units.clear_target(SimLoop.king_id)
+	_passos(ceili(LastCartWatch.rules().foundation_stop_s / PASSO))
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
 	_passos(1)

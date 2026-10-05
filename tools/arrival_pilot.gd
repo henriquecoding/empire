@@ -14,9 +14,16 @@ static func step(loop: Node) -> bool:
 	var r: int = loop.units.index_of(loop.king_id)
 	var x: float = loop.units.xs[r]
 	if o.choice == &"":
-		var target := o.origin + float(LastCartWatch.CHOICES[&"grove"])
+		var target := o.origin
+		for offset: float in [0.0, -256.0, -83.0, 83.0, 512.0, -512.0]:
+			var site := o.origin + offset
+			if FoundationChoice.valid(site) and not FoundationChoice.priority_at(site):
+				target = site
+				break
 		loop.units.set_target_x(loop.king_id, target)
-		if absf(x - target) <= Band.PASSAGE_PX:
+		if is_equal_approx(x, target):
+			loop.units.clear_target(loop.king_id)
+		if FoundationChoice.ready():
 			loop.intents.queue(IntentQueue.Kind.ASSUME, {})
 		return true
 	if not RealmLadder.founded(loop.builds):

@@ -15,14 +15,18 @@ O Kingdom usa "blocos de construção modulares dispostos aleatoriamente, com ve
 
 | Tipo de segmento | Peso | Restrição |
 | --- | --- | --- |
-| base_inicial | — | Um por região, ao centro. É o teu castelo-árvore. |
+| base_inicial | — | Blueprint técnica da sede. O jogador escolhe a coordenada válida de fundação; não nasce um castelo ao centro (ADR 0066). |
 | vazio | 30 | Terreno livre para o jogador construir. Nunca menos de 3 por região. |
 | bosque / agua / rocha | 25 | Define a especialidade económica disponível. agua exige um vazio antes. |
 | ruina | 12 | Traz uma passagem para o corte de solo. |
-| acampamento_mercenario | 8 | Um a cada 4–7 segmentos. Nunca adjacente à base inicial. |
-| fortaleza | 6 | Nunca duas adjacentes. Uma nas extremidades da região. |
+| acampamento_mercenario | 8 | Gerador atual: um a cada 4–7 segmentos. Contrato novo: mercenários móveis depois da fundação; migração pendente em RG-24. |
+| fortaleza | 6 | Gerador atual: nunca duas adjacentes. Contrato novo: sociedades surgem de sementes depois da fundação, sem fortaleza organizada no dia 1; RG-24 pendente. |
 | caotico | 4 | Só a partir da segunda região. |
 
+
+> **Mundo natural e despertar social — ADR 0069**
+>
+> No contrato do relatório, dia 1 é natural: clima, biomas, fauna, ruínas e perigos. Depois da fundação e da primeira noite territorial, a alvorada seguinte ativa sementes de civilização por dia global. O gerador de sociedades prontas descrito abaixo ainda é a implementação antiga: RG-24 deve migrá-lo com determinismo, saves e níveis de simulação. A fundação livre Solo já funciona; clima e despertar social ainda não.
 
 ## O conflito que as referências levantam — e como se resolve
 

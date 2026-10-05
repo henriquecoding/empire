@@ -7,25 +7,43 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## A Última Carroça — 04/10/2026 (ADR 0065)
+## Relatório mestre prioritário — 05/10/2026 (ADR 0066–0069)
+
+### Q-234 · Limiar de paragem e footprint da fundação livre
+- **Decidido:** parar, sem interação prioritária, fundar em qualquer ponto válido; limpeza sem loot e conteúdo protegido.
+- **Proposta reversível:** `foundation_stop_s=0.35` e `foundation_clear_radius=240` em `arrival.csv`, para o protótipo Solo.
+- **Em aberto:** valores finais depois de observar movimento, leitura do terreno e escala; não bloqueia a migração autorizada.
+- **Onde:** `FoundationChoice`, `SiteValidator`, `CaravanWatch`; RG-23.
+
+### Q-235 · Clima, identidade e despertar social
+- **Decidido:** assinatura territorial completa e sociedades que crescem depois da fundação/primeira noite/amanhecer.
+- **Em aberto:** modelo climático, dimensões, densidade final, variantes de arquitetura e LOD; RG-24.
+- **Onde:** relatório mestre e ADR 0069. A assinatura mínima Solo está feita; a ecologia completa e o mundo dormente estão por fazer.
+
+### Q-236 · Transporte, reconexão e regras competitivas
+- **Decidido:** servidor autoritativo; Coop só P1 funda; PvP dois reinos nos extremos e soberania total.
+- **Em aberto:** provedor, transporte Web/nativo, snapshots, janelas de reconexão/fundação, captura e fairness; RG-25/UN-29–31.
+- **Onde:** ADR 0067/0068. Não há modo online implementado nesta entrega.
+
+## A Última Carroça — aprovações de 05/10/2026 (ADR 0066)
 
 ### Q-232 · Ritmo, exposição e evolução do protótipo
 - **Autorizado:** implementar os vários eixos do relatório com as respostas do painel.
 - **Decidido:** companhia por sete; três vagabundos; corrida 30/50 s; repouso 1,5×;
   martelo três; construtor presente; Capital posterior; herdeiro na Fortaleza.
-- **Provisório em `arrival.csv._proposed`:** velocidade da carroça 48 px/s, trabalho
+- **Aprovado no painel em 05/10/2026:** velocidade da carroça 48 px/s, trabalho
   30 s, coleta de até três moedas/dia, três moedas da reserva expostas, cinco vitórias
   conjuntas, saúde da companhia ×1,5, reparo ×2, atordoamento quatro segundos e dano
-  seis. São parâmetros reversíveis de teste, não respostas numéricas do dono.
+  seis. São os parâmetros apresentados cuja proposta foi aprovada; continuam afináveis por dados. O relatório prevalece nos conflitos de ritmo, fundação e mundo social.
 - **Por medir:** duas estratégias viáveis, razões da fundação e semelhança percebida
   com 5–8 jogadores; usar `docs/qa/ultima-carroca-playtest.md` antes de arte final.
 
 ### Q-233 · Maturidade, escavação e repetição territorial
 - **Decidido:** subir saúde/defesa; pequeno subsolo que pede moeda e construtor;
   estágio máximo para herdeiro; baú próprio vazio e estrangeiro com riqueza existente.
-- **Provisório:** feitos por estágio (`realm_stages.csv.maturity`), população quatro,
+- **Aprovado em 05/10:** feitos por estágio (`realm_stages.csv.maturity`), população quatro,
   defesa de 5% a 25%, escavação três moedas/oito segundos/96 px por degrau, partilha
-  de até cinco moedas do tesouro estrangeiro. Tudo em `_proposed`; ajustes por CSV.
+  de até cinco moedas do tesouro estrangeiro. Os campos apresentados saem de `_proposed`; ajustes posteriores por CSV mantêm rastreabilidade.
 - **Limite:** ritual em novos postos, rede de rotas e Capital dependem de RG-12/RG-13/
   RG-14; não foram considerados aprovados nem concluídos só pela nova abertura.
 
@@ -34,31 +52,30 @@
 ### Q-230 · O ritmo da corrida pelo recrutamento
 - **Decidido pelo dono:** o vagabundo corre para apanhar a moeda, é contratado ao
   apanhá-la e precisa da banca inicial para se tornar construtor antes da muralha.
-- **Aplicado:** RG-21; ADR 0063. O raio conserva os 120 px existentes. Só um
+- **Aplicado:** RG-21; ADR 0063. O raio conserva os 120 px existentes. O grupo fundador pertence ao reino ao fundar; esta contratação por moeda aplica-se aos recém-chegados. Só um
   construtor permite pagar e levantar muralhas. Nenhum construtor nasce pronto.
   Onde ficam as bancas e quando aparecem está na Q-231 (ADR 0064).
-- **Proposta reversível:** `recruit_run_mult=2` em `economy.csv._proposed`, para
+- **Aprovado em 05/10:** `recruit_run_mult=2` em `economy.csv`, para
   destacar a corrida sem alterar a velocidade base ou os dados gravados.
-- **Quem decide:** o dono pode afinar a intensidade após playtest. Não se presume
-  aprovação numérica nem se bloqueia a implementação do comportamento pedido.
+- **Quem decide:** o dono pode afinar a intensidade após playtest. A aprovação guardada cobre este parâmetro; novas afinações não se presumem aprovadas.
 - **Conservado:** martelo por 3, escada de muralhas e requisitos da sede e materiais.
 
 ## Fundação e expansão dentro das muralhas — 04/10/2026 (ADR 0064)
 
 ### Q-231 · Traçado fundador e linhas de expansão por estágio
 - **Pedido do dono:** bancas de arco e construtor dentro das muralhas, apenas ao fundar
-  pagando uma lareira; possibilidades de construção no novo espaço conforme o nível.
-- **Aplicado:** RG-21; ADR 0064. Bancas em ±552 px; canteiros exteriores em ±1068 px;
+  pagando uma lareira (pedido anterior, substituído pelo relatório mestre); possibilidades de construção no novo espaço conforme o nível.
+- **Decisão atual:** ADR 0066 aplica a prioridade do relatório mestre: fundação livre e gratuita; bancas relativas à sede escolhida, sem estandartes obrigatórios. A geometria anterior conserva-se na blueprint: bancas em ±552 px; canteiros exteriores em ±1068 px;
   demais edifícios novos exigem a face interior de uma muralha própria concluída.
 - **Exceção necessária:** as bancas cabem no primeiro traçado mesmo antes de construir
   as muralhas, para poder formar o construtor. Elas não aparecem antes da fundação.
-- **Proposta reversível:** `realm_stages.csv.wall_rings`: primeira linha no Acampamento,
+- **Aprovado em 05/10:** `realm_stages.csv.wall_rings`: primeira linha no Acampamento,
   segunda no Povoado e terceira na Vila. A implementação está autorizada pelo pedido;
-  a associação exata é para playtest e pode ser ajustada no CSV.
+  a associação apresentada foi aprovada e pode voltar a ser afinada no CSV.
 - **Saves:** mesma ordem e ids; posições vêm da autoria atual. Níveis, trabalho,
   pagamentos, formação e ruínas existentes conservam-se.
 - **Como afinar:** editar o CSV e gerar os recursos; alterar posições só na autoria
-  sem reordenar slots. Os preços atuais da sede e das muralhas não foram alterados.
+  sem reordenar slots. As melhorias da sede e muralhas conservam preços; o primeiro Acampamento tem custo zero conforme o relatório.
 
 ## A abertura pesquisada e implementada — 04/10/2026 (ADR 0062)
 
@@ -431,12 +448,10 @@
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«O sistema de sucessão do herdeiro é a chave para essa troca, quando o sucessor já está preparado, o jogador pode ir onde ele foi treinado e escolher outro imperador para jogar, porém o ciclo do herdeiro se reinicia e o jogador fica vulnerável, se morrer morre de vez a menos que o novo herdeiro já tivesse concluído o treinamento. O sistema de herdeiro e sucessor é uma segunda chance, ou também uma oportunidade de gameplay diferente, não é barato pagar para ter um herdeiro e o custo para manter é o mais alto do jogo, o jogador tem que pensar se vale a pena ter, manter e que construções construir para gerar receita para isso. O único jeito de nascerem outras coroas soberanas é se estiver em um modo com mais jogadores que pretendo criar futuramente, se for um jogo solo ter mais de uma coroa soberana é recusada durante queda, roubo da coroa ou sucessão pendente»*.
 - **Por aplicar (UN-32):** a troca faz-se pelo herdeiro preparado, no sítio onde treinou; o ciclo dele recomeça. Muda o UN-17.
 - **Onde:** plano §7.5; ADR 0052; UN-17.
-- **O que falta:** a tua direção diz *quem* pode ser controlado, e não diz o que acontece à coroa numa troca.
-- **Proposta (P):** em solo, a troca presencial transfere o governo de forma voluntária e atómica — o novo imperador
-  governa e luta, e o anterior fica protegido na sede, sob IA, com a sua pessoa, as suas moedas e a sua companhia.
-  Não nascem duas coroas soberanas. Recusada durante queda, roubo da coroa ou sucessão pendente.
-- **Alternativa:** mudar só o controlo e manter o titular político; o HUD passa a mostrar quem governa e quem joga.
-- **Decide:** tu.
+
+- **Histórico substituído:** a proposta anterior fica na ADR 0052; aplica-se a resposta do dono no UN-32.
+
+- **Decidido:** herdeiro preparado, escolha de imperador desbloqueado e reinício do ciclo, conforme resposta guardada; por implementar.
 
 ### Q-197 · Outro imperador encontrado serve de sucessor?
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Já expliquei isso na Q-195, os imperadores encontrados são desbloqueados para a campanha, podem já ser selecionados para trocar se o herdeiro já estiver preparado ou ao reiniciar do 0 o jogo»*.
@@ -473,7 +488,7 @@
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Para tornar mais equilibrado pagar o escudeiro só dá 6 flechas. Na evolução dele ele também ataca os inimigos com flechas»*.
 - **Aplicado (03/10/2026, ADR 0053):** 6 flechas por moeda (`arrows_per_coin:6` no `quiver_squire`); a banca continua a dar 12 às tropas. Teste: `tests/aljava_imperial_test.gd`. **Por aplicar (UN-34):** o escudeiro evoluído que dispara.
 - **Onde:** plano §5.5, §4.3; UN-13, UN-14. A tua regra (pagamento pessoal, sem moedas sem flechas) é D.
-- **Proposta (P):** aljava de 30, com 12 flechas no início; 12 flechas por moeda (o `arrows_per_coin` das tropas). Com a
+- **Proposta (P):** aljava de 30, com 12 flechas no início; 6 flechas por moeda no escudeiro (decisão do dono); a banca fornece 12 às tropas. Com a
   aljava quase cheia, o lote que não cabe fica pago e registado para a reposição seguinte — nunca se cobra um lote e
   se deita fora o excedente. Sem estoque físico no escudeiro na primeira versão: as moedas e a aljava já cumprem a
   mecânica. A banca do arco continua a repor as tropas, e não o imperador.
@@ -498,11 +513,8 @@
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«O herdeiro(a) é algo neutro porque até estar pronto não é definido, como custa manter, às vezes o jogador não consegue manter e ele simplesmente desaparece, e o jogador tem que pagar novamente por ele. Quando pronto o jogador pode selecionar dentre os imperadores desbloqueados para poder trocar, assumindo assim um novo imperador. Um herdeiro realmente começa com os bónus reduzidos que são recuperados depois de 5 noites»*.
 - **Por aplicar (UN-32):** o herdeiro neutro, a manutenção que o faz desaparecer, a escolha do imperador quando pronto, e os bónus reduzidos que voltam em 5 noites. Hoje o herdeiro segue o perfil de quem reinava (UN-07).
 - **Onde:** plano §8.3, §9.4; UN-07.
-- **Proposta (P):** o herdeiro segue o arquétipo do titular quando o treino foi definido, com nome e identidade
-  próprios (a sucessora de Nia não se chama Nia). Preserva a fase tecnológica do império e aplica 60% (§15) só aos
-  bónus passivos herdáveis listados — uma aura de 25% começa em 15% —, sem cortar vida, dano ou alcance. Escolher outro
-  arquétipo fica para depois, antes do treino.
-- **Decide:** tu.
+- **Histórico substituído:** a proposta anterior fica na ADR 0052; aplica-se a resposta do dono no UN-32.
+- **Decidido:** herdeiro preparado, escolha de imperador desbloqueado e reinício do ciclo, conforme resposta guardada; por implementar.
 
 ### Q-203 · O Diplomata universal: acesso, missões, captura e resgate
 - **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
@@ -518,13 +530,11 @@
 - **Decide:** tu.
 
 ### Q-204 · Os dois multiplayer com imperadores
-- **Respondida pelo dono (painel, 03/10/2026 — aprovar a proposta).**
-- **Por aplicar (UN-29 a UN-31):** a proposta passa a contrato.
-- **Onde:** §18; plano §17; UN-29 a UN-31.
-- **Proposta (P):** coop com um império, dois imperadores — um titular soberano e um com autoridade delegada —, bolsas
-  pessoais e tesouro partilhado, um decreto por reino e por dia. Competitivo com dois reinos nas pontas; vence quem
-  derrubar a sede rival ou acabar com a continuidade dele. Primeiro dois comandos na mesma máquina, depois rede.
-- **Decide:** tu, se preferes duas coroas equivalentes no coop (pede regra própria de herança e decretos).
+- **Respondida pelo dono:** aprovada em 03/10; adaptada em 05/10 pela preferência expressa pelo relatório mestre.
+- **Decisão atual:** Coop com um reino, população e economia partilhadas; só o criador da sala funda. P2 pode sugerir, sem delegação automática da fundação. PvP inicial com dois reinos/caravanas nos extremos Oeste/Este e vitória por soberania total. O servidor autentica intenções, valida permissões e simula; dinheiro, combate, fundação e vitória não são autoridade do cliente.
+- **Implementação pendente:** UN-29 a UN-31/RG-25; modos, PlayerSlot, ownership, snapshots, servidor dedicado e reconexão. Um protótipo local não conclui o modo online.
+- **Onde:** §18; ADR 0067/0068; `docs/reports/EMPIRE-MASTER.md`.
+- **Histórico substituído:** autoridade delegada de fundação, alternativa de simples perda de continuidade e dois comandos locais como entrega final. A resposta guardada é preservada; esta migração tem rastreabilidade.
 
 ### Q-205 · O resto do que o plano deixa aberto
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«O quarto imperador é bem grande e tem uma armadura completa, parece obscuro, mas tem um passado triste, consegue recuperar a vida sozinho se se sentar ao chão, sempre que faz isso cresce vegetação ao seu redor. A sua escudeira é uma mulher que dança para tentar alegrá-lo, isso aumenta a força dele e das outras tropas, a evolução da escudeira faz os inimigos ganharem lentidão, pois ficam admirados com ela»*.

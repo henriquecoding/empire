@@ -129,11 +129,14 @@ func test_perder_o_construtor_pausa_a_obra_e_outro_retoma() -> void:
 func _walk(x: float) -> void:
 	for _tick in 1200:
 		var i := SimLoop.units.index_of(SimLoop.king_id)
-		if SimLoop.units.xs[i] == x:
+		if is_equal_approx(SimLoop.units.xs[i], x):
 			return
 		SimLoop.units.set_target_x(SimLoop.king_id, x)
 		_steps(1)
-	assert_float(SimLoop.units.xs[SimLoop.units.index_of(SimLoop.king_id)]).is_equal(x)
+	(
+		assert_bool(is_equal_approx(SimLoop.units.xs[SimLoop.units.index_of(SimLoop.king_id)], x))
+		. is_true()
+	)
 
 
 func _pay_here(amount: int) -> void:
@@ -153,7 +156,9 @@ func _pay_here(amount: int) -> void:
 
 func test_recrutar_comprar_martelo_e_erguer_o_primeiro_muro_so_com_gestos() -> void:
 	var seat := RealmLadder.seat(SimLoop.builds)
-	_walk(seat.x)
+	_walk(seat.x + 83.0)
+	SimLoop.units.clear_target(SimLoop.king_id)
+	_steps(ceili(LastCartWatch.rules().foundation_stop_s / STEP))
 	SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
 	_steps(200)
 	assert_bool(seat.standing()).is_true()

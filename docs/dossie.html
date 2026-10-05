@@ -1195,8 +1195,8 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
     </tbody>
   </table></div>
 
-  <div class="note dec"><span class="lbl">O construtor pioneiro (ADR 0059)</span>
-    <p>O monarca chega com <strong>um</strong> construtor, além dos dois trabalhadores sem ofício. Reparar pede o ofício, e sem ele a primeira estacaria tocada custava a Casa de Treino e o construtor (22 moedas) antes de se poder reparar. O pioneiro não baixa o preço dos que vêm depois e não chega evoluído; se morrer, a Casa de Treino abre no Povoado e forma outro.</p>
+  <div class="note dec"><span class="lbl">Cidadãos da caravana — ADR 0066</span>
+    <p>O monarca começa com três cidadãos sem ofício, que acompanham a caravana e passam a pertencer ao reino fundado. A fundação não oferece um construtor: formação, recrutamento externo e equipamento continuam pagos. O pioneiro de ADR 0059 é comportamento histórico de saves antigos, preservado pela migração.</p>
   </div>
 
   <div class="note risk"><span class="lbl">O dilema do artesão — o teu melhor gerador de histórias</span>
@@ -1207,14 +1207,14 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 <section id="s10">
   <span class="sec-no">10 — Construção</span>
   <h3>Muralhas, torres e a Casa de Treino</h3>
-  <p class="lede">A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a <strong>sede</strong>: o monarca funda-a numa Clareira e ela sobe por estágios, paga e levantada como um muro (ADR 0059). É o que defendes. Se cair, cai a partida.</p>
+  <p class="lede">A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a <strong>sede</strong>: o monarca escolhe livremente um local válido e funda sem custo; depois a sede sobe por estágios pagos e levantados como um muro (ADR 0066). É o que defendes. Se cair, cai a partida.</p>
 
   <h4>A sede: da Clareira à Fortaleza</h4>
-  <p>O reino não nasce castelo. O monarca chega a uma <strong>Clareira</strong> com a companhia dele, dois trabalhadores sem ofício e um construtor pioneiro, e larga no marco as moedas da fundação. Cada estágio é um degrau do núcleo: paga-se inteiro, quem está presente levanta-o (§55), e o estágio de antes continua a servir enquanto o seguinte se ergue. Subir não cura: a sede passa ao estágio novo com a mesma proporção de vida. Cada estágio <em>abre</em> obras — não as ergue: as obras, os ofícios e as armas pagam-se à parte. O estágio soma-se ao que um degrau já pedia (a estátua, a conquista, o Lenho), não o substitui. O castelo-árvore de antes é a Fortaleza.</p>
+  <p>O reino não nasce castelo. O monarca explora com a caravana e três cidadãos sem ofício. Ao parar num local válido, sem outra interação prioritária, pode confirmar a fundação gratuita. A sede e as bancas passam a usar essa coordenada, sem deslocar as ruínas e passagens do terreno. Cada melhoria posterior é um degrau do núcleo: paga-se inteira, quem está presente levanta-a (§55), e o estágio de antes continua a servir enquanto o seguinte se ergue. Subir não cura: a sede passa ao estágio novo com a mesma proporção de vida. Cada estágio <em>abre</em> obras — não as ergue: as obras, os ofícios e as armas pagam-se à parte. O estágio soma-se ao que um degrau já pedia (a estátua, a conquista, o Lenho), não o substitui. O castelo-árvore de antes é a Fortaleza.</p>
   <div class="tw"><table>
     <thead><tr><th>Estágio</th><th class="n">Custo</th><th class="n">Vida</th><th class="n">Largura</th><th>Abre</th></tr></thead>
     <tbody>
-      <tr><td>Acampamento</td><td class="n">2</td><td class="n">200</td><td class="n">160</td><td>Plantação, Fogueira, Banca do Arco, Estacaria</td></tr>
+      <tr><td>Acampamento</td><td class="n">0</td><td class="n">200</td><td class="n">160</td><td>Plantação, Fogueira, Banca do Arco, Estacaria</td></tr>
       <tr><td>Povoado</td><td class="n">8</td><td class="n">350</td><td class="n">240</td><td>Casa de Treino, Galinheiro, Pesqueiro, Torre de Arqueiros, Torre Alta, Casa de cidadãos, Paliçada</td></tr>
       <tr><td>Vila</td><td class="n">18</td><td class="n">550</td><td class="n">320</td><td>Cozinha, Forja, Celeiro, Salga, Curral, Corte de Madeira, Estábulo, Casa do Herdeiro, Santuário das Raízes, Barril de Fogo, Muro de Pedra</td></tr>
       <tr><td>Vila Fortificada</td><td class="n">32</td><td class="n">750</td><td class="n">400</td><td>Fosso de Raízes, Embaixada, Serração, Estábulo de Vacas, Poço de Minério, Farol, Muralha de Ferro</td></tr>
@@ -1581,24 +1581,22 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 <section id="s18">
   <span class="sec-no">18 — Multijogador</span>
   <h3>Dois modos, ambos na Fase 8</h3>
+  <p class="lede">O relatório mestre e ADR 0067/0068 definem o contrato atual. Solo funda um reino; Coop partilha um reino; PvP começa com dois reinos independentes. A implementação online continua pendente.</p>
   <div class="grid g2">
-    <div class="cell"><h6>Cooperativo — duas coroas</h6><p>Dois jogadores, um império, <strong>imperadores</strong> diferentes — nenhum joga uma tropa (ADR 0052). Um pode estar em expedição enquanto o outro defende. Proposta: um titular e um com autoridade delegada, bolsas pessoais e um decreto por reino e por dia (Q-204). Ecrã dividido local e online.</p></div>
-    <div class="cell"><h6>Competitivo — dois impérios</h6><p>Começam nas extremidades opostas do mapa e conquistam em direção um ao outro. Vence quem tomar o império adversário ou sobreviver mais dias após a Podridão dupla.</p></div>
+    <div class="cell"><h6>Cooperativo — um império</h6><p>Dois jogadores e monarcas distintos, população e economia do mesmo reino. Apenas P1, criador da sala, confirma a fundação. P2 pode explorar e sugerir um local. A saída de P1 antes de fundar não transfere automaticamente essa permissão. O servidor mantém a partida e permite reconexão ao mesmo PlayerSlot.</p></div>
+    <div class="cell"><h6>Competitivo — dois impérios</h6><p>P1 começa a Oeste e P2 a Este, cada qual com caravana, tesouro, conhecimento e fundação próprios. A vitória exige soberania total sobre o reino adversário. Captura, transferência de soberania, graça competitiva e desconexão precisam de regras explícitas antes da implementação (Q-236).</p></div>
   </div>
-
   <div class="tw"><table>
-    <thead><tr><th>Opção</th><th>Viabilidade</th><th>Nota</th></tr></thead>
+    <thead><tr><th>Componente</th><th>Contrato</th><th>Estado</th></tr></thead>
     <tbody>
-      <tr><td>Ecrã dividido local</td><td>Alta</td><td>Dois <code>SubViewport</code>. Faz-se em duas semanas. <strong>Começa por aqui.</strong></td></tr>
-      <tr><td>Online via Steam Sockets</td><td>Média</td><td>GodotSteam traz NAT traversal e relays. É a opção testada em produção para jogos Steam.</td></tr>
-      <tr><td>Online via ENet puro</td><td>Média-baixa</td><td>Irrelevante para 2 jogadores, mas exige port forwarding ou relay próprio.</td></tr>
-      <tr><td>Autoridade</td><td>—</td><td>Host-autoritativo. O <code>MultiplayerSynchronizer</code> só replica primitivos; centenas de unidades exigem serialização manual em <code>PackedByteArray</code>.</td></tr>
+      <tr><td>Cliente Godot Web/native</td><td>Envia intenções identificadas; recebe snapshot e atualizações. Não decide saldo, combate, fundação ou vitória.</td><td>Cliente Solo existente; rede por fazer.</td></tr>
+      <tr><td>Servidor dedicado Godot</td><td>Autentica jogadores, valida permissões, ordena intenções e simula o mundo. Sobrevive à saída do criador da sala.</td><td>Por fazer, RG-25/UN-31.</td></tr>
+      <tr><td>Vercel</td><td>Distribui site, painel e export Web; não executa o loop autoritativo da partida.</td><td>Site existente.</td></tr>
+      <tr><td>Supabase</td><td>Persistência e serviços de apoio, com permissões verificadas no servidor; o painel de decisões já utiliza RLS.</td><td>Painel existente; integração de partidas por fazer.</td></tr>
+      <tr><td>Protótipo local</td><td>Testa permissões e isolamento por reino; não conclui aceitação online.</td><td>UN-29/UN-30 por fazer.</td></tr>
     </tbody>
   </table></div>
-
-  <div class="note risk"><span class="lbl">Aviso do próprio criador do Kingdom</span>
-    <p>Depois do Kingdom, van den Berg tentou o <em>Garbage Country</em>, um MMO com mundos colaborativos persistentes, e abandonou-o: problemas técnicos com o SpatialOS e questões de jogabilidade por resolver. Salvou um simulador de plantas e fez o Cloud Gardens em dois anos. Ele próprio nota que <em>"mundos persistentes e complexidade de multijogador provaram ser difíceis de prototipar rapidamente"</em>. <strong>Faz o jogo single-player completo primeiro.</strong> Se o multijogador falhar, tens um jogo. Se o fizeres a meio, não tens nada.</p>
-  </div>
+  <div class="note dec"><span class="lbl">Prioridade e aceitação</span><p>Estas regras substituem a proposta anterior de titular/delegado, vitória alternativa por sobrevivência e autoridade do host-cliente. Online só está concluído com dois clientes, servidor dedicado, snapshots, reconexão e comandos idempotentes testados sob latência e perda. Transporte e hospedagem do servidor são decisões pendentes, não uma dependência já instalada.</p></div>
 </section>
 
 <div class="part">
@@ -1793,16 +1791,17 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
   <div class="tw"><table>
     <thead><tr><th>Tipo de segmento</th><th class="n">Peso</th><th>Restrição</th></tr></thead>
     <tbody>
-      <tr><td><code>base_inicial</code></td><td class="n">—</td><td>Um por região, ao centro. É o teu castelo-árvore.</td></tr>
+      <tr><td><code>base_inicial</code></td><td class="n">—</td><td>Blueprint técnica da sede. O jogador escolhe a coordenada válida de fundação; não nasce um castelo ao centro (ADR 0066).</td></tr>
       <tr><td><code>vazio</code></td><td class="n">30</td><td>Terreno livre para o jogador construir. Nunca menos de 3 por região.</td></tr>
       <tr><td><code>bosque</code> / <code>agua</code> / <code>rocha</code></td><td class="n">25</td><td>Define a especialidade económica disponível. <code>agua</code> exige um <code>vazio</code> antes.</td></tr>
       <tr><td><code>ruina</code></td><td class="n">12</td><td>Traz uma passagem para o corte de solo.</td></tr>
-      <tr><td><code>acampamento_mercenario</code></td><td class="n">8</td><td>Um a cada 4–7 segmentos. Nunca adjacente à base inicial.</td></tr>
-      <tr><td><code>fortaleza</code></td><td class="n">6</td><td>Nunca duas adjacentes. Uma nas extremidades da região.</td></tr>
+      <tr><td><code>acampamento_mercenario</code></td><td class="n">8</td><td>Gerador atual: um a cada 4–7 segmentos. Contrato novo: mercenários móveis depois da fundação; migração pendente em RG-24.</td></tr>
+      <tr><td><code>fortaleza</code></td><td class="n">6</td><td>Gerador atual: nunca duas adjacentes. Contrato novo: sociedades surgem de sementes depois da fundação, sem fortaleza organizada no dia 1; RG-24 pendente.</td></tr>
       <tr><td><code>caotico</code></td><td class="n">4</td><td>Só a partir da segunda região.</td></tr>
     </tbody>
   </table></div>
 
+  <div class="note dec"><span class="lbl">Mundo natural e despertar social — ADR 0069</span><p>No contrato do relatório, dia 1 é natural: clima, biomas, fauna, ruínas e perigos. Depois da fundação e da primeira noite territorial, a alvorada seguinte ativa sementes de civilização por dia global. O gerador de sociedades prontas descrito abaixo ainda é a implementação antiga: RG-24 deve migrá-lo com determinismo, saves e níveis de simulação. A fundação livre Solo já funciona; clima e despertar social ainda não.</p></div>
   <h4>O conflito que as referências levantam — e como se resolve</h4>
   <p>Há aqui uma contradição que este documento nunca tinha nomeado, e as três referências obrigam a nomeá-la agora.</p>
   <div class="note risk"><span class="lbl">Nomear o problema</span>
@@ -2224,15 +2223,15 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 </section>
 
 <section id="s25">
-  <span class="sec-no">25 — Onboarding · ADR 0065</span>
+  <span class="sec-no">25 — Onboarding · ADR 0066</span>
   <h3>A Última Carroça: os primeiros quinze minutos</h3>
-  <p class="lede">A chegada ensina território, pessoas e consequência. O monarca tem controlo depois da escolha do perfil; três vagabundos neutros acompanham a marcha, sem construtor nem companheiro gratuitos. Uma árvore amarga aparece no primeiro ecrã. A primeira decisão é onde criar raízes.</p>
+  <p class="lede">A chegada ensina território, pessoas e consequência. O monarca tem controlo depois da escolha do perfil; três cidadãos sem ofício acompanham a caravana móvel, sem construtor nem companhia pronta. Na fundação, o grupo passa a pertencer ao reino; recém-chegados continuam recrutáveis por moeda. Uma árvore amarga aparece no primeiro ecrã. A primeira decisão é onde criar raízes.</p>
   <div class="tw"><table>
     <thead><tr><th>Momento</th><th>Transformação</th><th>Escolha real</th></tr></thead>
     <tbody>
-      <tr><td>Chegada</td><td>Carroça fechada; estrada e bosque marcados</td><td>Estrada conserva caça fora do primeiro recinto; bosque aproxima a reserva da luz mas ocupa o habitat próximo</td></tr>
-      <tr><td>Estandarte</td><td>O Verbo 2 reivindica a terra sem gastar moeda; trabalho presente ergue o Acampamento</td><td>A posição desloca a sede, obras e passagens, mantendo os recursos físicos do terreno</td></tr>
-      <tr><td>Reserva</td><td>A carroça chega e abre: parte das oito moedas continua em provisões expostas</td><td>Contratar, formar um ofício ou reservar uma pessoa para resgate, coleta e reconhecimento</td></tr>
+      <tr><td>Chegada</td><td>Carroça e cidadãos seguem o monarca; regiões interessantes orientam sem restringir</td><td>Comparar recursos, bioma, água, perigo e acesso; qualquer coordenada territorialmente válida pode ser escolhida</td></tr>
+      <tr><td>Fundação livre</td><td>Parado, sem outra interação prioritária: “Fundar o Império aqui?”. O Verbo 2 confirma sem moeda e a autoridade revalida</td><td>A sede nasce no local escolhido; limpa flora comum sem loot e preserva entradas e segredos. Trabalho presente ergue o Acampamento</td></tr>
+      <tr><td>Reserva</td><td>A carroça ancora e abre: parte das oito moedas continua em provisões expostas</td><td>Contratar, formar um ofício ou reservar uma pessoa para resgate, coleta e reconhecimento</td></tr>
       <tr><td>Trabalho</td><td>A mesma pessoa caminha e trabalha num único sítio; coleta produz moeda física limitada por dia</td><td>Trocar a tarefa interrompe a anterior. Ninguém constrói e coleta simultaneamente</td></tr>
       <tr><td>Tarde</td><td>A Podridão escurece e suspende a coleta exposta antes da primeira criatura</td><td>Resgatar, levantar uma defesa ou preparar luz; inspecionar o perigo regista percepção, sem inferir que o jogador o viu</td></tr>
       <tr><td>Noite 1</td><td>A ameaça vem de oeste e alcança a zona das provisões</td><td>Luz e muralha protegem; recurso exposto pode perder-se. A sede não é o único objetivo</td></tr>
@@ -2241,12 +2240,12 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
       <tr><td>Companhia</td><td>O posto aparece após a fundação; uma pessoa contratada transforma-se por sete moedas</td><td>Monarca e companhia evoluem vencendo batalhas próximos; nenhum novo corpo nasce de graça</td></tr>
     </tbody>
   </table></div>
-  <p>A escada Clareira → Acampamento → Povoado → Vila → Vila Fortificada → Fortaleza permanece. A casa do herdeiro abre na Fortaleza; a Capital continua posterior, quando houver uma rede a administrar (Q-222, Q-226). Os castelos antigos continuam Fortalezas (Q-225). O custo histórico de fundação permanece nos dados para compatibilidade; numa partida nova o estandarte inicia o Acampamento gratuitamente.</p>
+  <p>A escada Clareira → Acampamento → Povoado → Vila → Vila Fortificada → Fortaleza permanece. A casa do herdeiro abre na Fortaleza; a Capital continua posterior, quando houver uma rede a administrar (Q-222, Q-226). Os castelos antigos continuam Fortalezas (Q-225). O custo histórico de fundação permanece nos dados para compatibilidade; numa partida nova a confirmação territorial inicia o Acampamento gratuitamente. Estrada e Bosque são apenas formatos históricos de saves antigos.</p>
   <div class="note spec"><span class="lbl">Provas do protótipo, sem prometer tempos medidos</span>
-    <p>Medir <code>first_input</code>, <code>first_landmark_inspected</code>, <code>foundation_choice_committed</code>, <code>first_worker_assignment</code>, <code>first_coin_spent</code>, <code>rot_first_noticed</code>, <code>pre_night_strategy</code>, <code>night_one_survived</code>, <code>night_one_loss_type</code> e <code>underground_discovered</code>. Os registos ficam locais e podem ser exportados na pausa; não há envio externo. Metas e protocolo de 5–8 jogadores estão em <code>docs/qa/ultima-carroca-playtest.md</code>. Antes disso, os desenhos continuam provisórios.</p>
+    <p>Medir <code>first_input</code>, <code>first_landmark_inspected</code>, <code>foundation_choice_committed</code>, <code>first_worker_assignment</code>, <code>first_coin_spent</code>, <code>rot_first_noticed</code>, <code>pre_night_strategy</code>, <code>night_one_survived</code>, <code>night_one_loss_type</code> e <code>underground_discovered</code>. Os registos ficam locais e podem ser exportados na pausa; não há envio externo. Metas e protocolo estão em <code>docs/qa/ultima-carroca-playtest.md</code>. A especificação completa e o estado de execução estão em <code>docs/reports/EMPIRE-MASTER.md</code>; a assinatura mínima não substitui o modelo climático futuro. Antes disso, os desenhos continuam provisórios.</p>
   </div>
   <div class="note risk"><span class="lbl">Autoria e valores reversíveis</span>
-    <p>Duas posições autoradas bastam para comparar estratégias. Tempos de trabalho, coleta, defesa e escavação vivem em CSV, com propostas identificadas; não são novas aprovações atribuídas ao dono. As três outras aberturas do relatório são alternativas mutuamente exclusivas, não fases adicionais desta partida.</p>
+    <p>O relatório mestre fornecido tem preferência sobre respostas antigas incompatíveis. As regiões garantidas pelo gerador são oportunidades, não os únicos locais autorizados para fundar. Tempos de trabalho, coleta, defesa e escavação vivem em CSV. Q-230 a Q-233 foram aprovadas em 05/10; novos limiares de paragem e limpeza permanecem propostas identificadas. As três outras aberturas do relatório são alternativas mutuamente exclusivas, não fases adicionais desta partida.</p>
   </div>
 </section>
 
@@ -2829,7 +2828,7 @@ jobs:
   <h4>Agência na abertura — ADR 0065</h4>
   <p>O protótipo mede localmente movimento, marco inspecionado, escolha e ID de fundação, primeira tarefa, primeira moeda, percepção contextual da contaminação, tarefa ao crepúsculo, sobrevivência, perda, mudança de tarefa após a noite e descoberta do subsolo. A pausa exporta JSON; nada é enviado a terceiros.</p>
   <p><code>foundation_reason_posttest</code> e <code>kingdom_similarity_timestamp</code> são observações humanas, separadas dos eventos automáticos. A estratégia observada também inclui muro e luz; o campo automático registra somente a tarefa. Metas e limitações estão em <code>docs/qa/ultima-carroca-playtest.md</code>. Não se toma um teste de código como prova de compreensão ou identidade.</p>
-  <div class="note dec"><span class="lbl">Hipóteses de playtest</span><p>Primeiro controle &lt;10 s; decisão de fundação &lt;120 s; primeira atribuição &lt;180 s; subsolo &lt;14–15 min. Nenhuma opção deve dominar mais de 75% sem intenção. Fazer 5–8 sessões antes de arte final. Os tempos são hipóteses do relatório, não novos valores obrigatórios de produção.</p></div>
+  <div class="note dec"><span class="lbl">Hipóteses de playtest</span><p>Primeiro controlo &lt;10 s; landmark &lt;60 s; boa região de fundação &lt;8 min; fundação típica exploratória em 16–20 min. Fundar cedo ou tarde continua permitido: são hipóteses de observação, nunca prazos obrigatórios. Fazer 5–8 sessões antes de arte final. Os tempos são hipóteses do relatório, não novos valores obrigatórios de produção.</p></div>
 
   <h4>O protocolo de playtest que funciona com dez pessoas</h4>
   <div class="steps">

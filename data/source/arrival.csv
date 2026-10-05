@@ -1,17 +1,19 @@
 key,value,_src,_proposed,_notes
-cart_speed,48,ADR 0065,cart_speed,Provisório para teste de chegada
-worker_work_s,30,ADR 0065,worker_work_s,Trabalho físico reservado de um trabalhador
-forage_daily_cap,3,ADR 0065,forage_daily_cap,Renda alternativa diária limitada
-exposed_provisions,3,ADR 0065,exposed_provisions,Parte da reserva existente; não cria moedas
+cart_speed,48,ADR 0065,,Provisório para teste de chegada Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+worker_work_s,30,ADR 0065,,Trabalho físico reservado de um trabalhador Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+forage_daily_cap,3,ADR 0065,,Renda alternativa diária limitada Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+exposed_provisions,3,ADR 0065,,Parte da reserva existente; não cria moedas Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
 companion_cost,7,Q-223,,Decisão explícita do dono
 rested_run_mult,1.5,Q-212,,Recuperação completa parado prepara a próxima corrida
-standing_repair_mult,2,Q-210,standing_repair_mult,Reparo mais rápido com construtor presente
-boar_stun_s,4,Q-214,boar_stun_s,Atordoamento por colisão
-boar_wall_damage,6,Q-214,boar_wall_damage,Estrago reparável; calibrar em playtest
-cellar_cost,3,Q-220,cellar_cost,Custo por etapa de escavação
-cellar_work_s,8,Q-220,cellar_work_s,Trabalho presencial do construtor
-cellar_step_px,96,Q-220,cellar_step_px,Expansão limitada ao estágio da sede
-battle_evolve_count,5,Q-223,battle_evolve_count,Vitórias próximas com monarca e companheiro vivos; calibrar em playtest
-maturity_people,4,ADR 0065,maturity_people,Monarca e três pessoas contratadas para consolidar a Vila
-foreign_chest_coins,5,Q-186,foreign_chest_coins,Reserva transferida da economia do reino vizinho; não duplica dinheiro
-companion_evolved_health_mult,1.5,Q-223,companion_evolved_health_mult,Companhia evolui junto; conserva a proporção de vida
+standing_repair_mult,2,Q-210,,Reparo mais rápido com construtor presente Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+boar_stun_s,4,Q-214,,Atordoamento por colisão Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+boar_wall_damage,6,Q-214,,Estrago reparável; calibrar em playtest Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+cellar_cost,3,Q-220,,Custo por etapa de escavação Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+cellar_work_s,8,Q-220,,Trabalho presencial do construtor Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+cellar_step_px,96,Q-220,,Expansão limitada ao estágio da sede Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+battle_evolve_count,5,Q-223,,Vitórias próximas com monarca e companheiro vivos; calibrar em playtest Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+maturity_people,4,ADR 0065,,Monarca e três pessoas contratadas para consolidar a Vila Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+foreign_chest_coins,5,Q-186,,Reserva transferida da economia do reino vizinho; não duplica dinheiro Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+companion_evolved_health_mult,1.5,Q-223,,Companhia evolui junto; conserva a proporção de vida Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
+foundation_stop_s,0.35,ADR 0066,foundation_stop_s,Limiar reversível de apresentação; não bloqueia exploração
+foundation_clear_radius,240,ADR 0066,foundation_clear_radius,Footprint inicial da Clareira; não concede recursos

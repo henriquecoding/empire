@@ -53,6 +53,7 @@ Thumbs.db
 
 # ---- Relatorios do gdUnit4 (gerados por run_tests.sh) ----
 reports/
+!docs/reports/
 
 # ---- Camada de uso do dossie (ferramentas/) ----
 # O construtor escreve para saida/; o node_modules e da maquina, nao do projeto.

@@ -12,7 +12,7 @@ foundation_reason_posttest e kingdom_similarity_timestamp são observações hum
 
 > **Hipóteses de playtest**
 >
-> Primeiro controle <10 s; decisão de fundação <120 s; primeira atribuição <180 s; subsolo <14–15 min. Nenhuma opção deve dominar mais de 75% sem intenção. Fazer 5–8 sessões antes de arte final. Os tempos são hipóteses do relatório, não novos valores obrigatórios de produção.
+> Primeiro controlo <10 s; landmark <60 s; boa região de fundação <8 min; fundação típica exploratória em 16–20 min. Fundar cedo ou tarde continua permitido: são hipóteses de observação, nunca prazos obrigatórios. Fazer 5–8 sessões antes de arte final. Os tempos são hipóteses do relatório, não novos valores obrigatórios de produção.
 
 ## O protocolo de playtest que funciona com dez pessoas
 

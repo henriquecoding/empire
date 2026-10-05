@@ -63,6 +63,7 @@ function contextoDe(atual, corpo) {
   const pendencia = ler(/por decidir|em aberto|continua aberto/i);
   const decisao = ler(/^Decidid|^Decisão|^O que foi decidido|^Fechada/i);
   const proposta = ler(/^Proposta|^Recomenda/i);
+  const implementacao = ler(/^Por aplicar|^Implementação pendente/i);
   const encerrada = /fechada pelo/i.test(atual.titulo) || partes.some(p => /^Fechada/i.test(p.nome));
   const tipo = encerrada ? "encerrada" : pendencia ? "decidir"
     : decisao && !proposta ? "confirmar" : proposta ? "escolher" : "decidir";
@@ -71,7 +72,7 @@ function contextoDe(atual, corpo) {
   return {
     onde, pendencia, decisao, contexto: resumo,
     proposta: proposta || (!pendencia ? decisao : ""),
-    aprovavel: !encerrada && !pendencia && Boolean(proposta || decisao),
+    aprovavel: !encerrada && !pendencia && !implementacao && Boolean(proposta || decisao),
     bloqueio: ler(/^Bloqueia$/i), tipo,
     fonte: `https://github.com/henriquecoding/empire/blob/main/docs/QUESTIONS.md#L${atual.numero}`,
     seccoes: [...new Set([...corpo.matchAll(/§(\d{2})/g)].map(m => m[1]))],

@@ -9,14 +9,14 @@
  "csv_tables": 34,
  "generated_resources": 481,
  "original_csv_unchanged": 34,
- "proposed_fields": 1515,
- "proposed_phase_0_to_2": 1057,
- "gdunit_discovered": 1654,
+ "proposed_fields": 1486,
+ "proposed_phase_0_to_2": 1041,
+ "gdunit_discovered": 1660,
  "gdunit_passed": 1652,
  "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 88,
- "adrs": 65,
+ "adrs": 69,
  "portable_checks_passed": 15,
  "numeric_comparisons": 212,
  "cli_isolation_tests_passed": 3,
@@ -34,7 +34,7 @@
  ],
  "clean_zip_extraction_check": "passed: run_tests.sh completo numa extracao limpa, sem cache do motor",
  "export_notes": "Linux release exportado e arrancado em headless (embed_pck=false): Empire.x86_64 + Empire.pck",
- "i18n_keys": 638,
+ "i18n_keys": 639,
  "i18n_placeholders": 0,
  "catalog_signals": 61,
  "event_bus_signals": 61,
@@ -138,5 +138,15 @@
    "en"
   ],
   "vistoria": "3 of 8 days; core defeated; no broken invariants"
+ },
+ "master_report_verification": {
+  "task": "RG-23",
+  "baseline": "0d04d3a2f710134b86ad2848e4cc8d66cdea6ba8",
+  "static_gates": "passed",
+  "csv_resources": "passed",
+  "vistoria": "4 of 8 days; pilot defeated; no broken invariants",
+  "web_export": "passed",
+  "local_browser": "blocked: Chromium terminates with SIGSEGV at Godot initialization; web acceptance must pass in CI",
+  "runtime_validation": "See the RG-23 pull request and its CI for the complete suite and published SHA; prior entries are historical evidence."
  }
 }

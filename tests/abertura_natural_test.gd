@@ -10,13 +10,8 @@ const SEMENTE := 20260926
 ## gesto, como o CHEGOU_PX do piloto — nao e balanceamento.
 const PERTO_PX := 24.0
 const ENTRE_MOEDAS := 15
-const O_VAGABUNDO := 3
-const O_ARQUEIRO := 2
 ## O canteiro de dentro a oeste, o mais perto do castelo do lado de onde se comeca.
 const O_CANTEIRO := 1
-## O §25 mede a primeira moeda largada em menos de 40 s (first_coin_dropped):
-## recrutar os dois do lado do castelo nao pode levar mais do que isso.
-const RECRUTAR_S := 40.0
 ## O plano do reino (§31.2) pede o Acampamento de pe ate cerca de 90 s de jogo.
 const FUNDAR_S := 90.0
 
@@ -25,6 +20,7 @@ var _caca: Array[float] = []
 var _producao: Array[float] = []
 var _espera := 0
 var _no_saco_do_arqueiro := 0
+var _arqueiro := UnitSystem.NENHUM
 
 
 func before_test() -> void:
@@ -56,10 +52,8 @@ func test_sem_cacador_recrutado_o_jogo_nao_entrega_moeda_de_caca() -> void:
 
 func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 	_fundar()
-	_recrutar(O_ARQUEIRO)
-	_formar(O_ARQUEIRO, &"bow_rack", &"archer")
-	_recrutar(O_VAGABUNDO)
-	_formar(O_VAGABUNDO, &"hammer_rack", &"builder")
+	_arqueiro = _formar(&"bow_rack", &"archer")
+	assert_int(_formar(&"hammer_rack", &"builder")).is_not_equal(UnitSystem.NENHUM)
 	var canteiro := _obra(SimLoop.core_x + Greybox.CANTEIROS_X[O_CANTEIRO])
 	var wall := _obra(SimLoop.core_x + Greybox.MUROS_X[1])
 	var preco := wall.next_cost() + canteiro.next_cost()
@@ -99,7 +93,7 @@ func test_a_abertura_financia_um_canteiro_so_com_gestos() -> void:
 		assert_bool(origem in fisicas).override_failure_message(String(origem)).is_true()
 
 
-## A fundacao com gestos (ADR 0059): as moedas no marco da Clareira, e quem la esta levanta
+## A fundacao livre com gestos (ADR 0066): o rei confirma parado, e quem la esta levanta
 ## o Acampamento. Antes dela nenhuma obra aceita moeda.
 func _fundar() -> void:
 	var sede := RealmLadder.seat(SimLoop.builds)
@@ -109,34 +103,25 @@ func _fundar() -> void:
 		_passo(sede.x)
 		if absf(_x_do_rei() - sede.x) <= PERTO_PX:
 			SimLoop.intents.queue(IntentQueue.Kind.ASSUME, {})
-	assert_str(String(SimLoop.arrival.choice)).is_equal("road")
+	assert_str(String(SimLoop.arrival.choice)).is_equal("free")
 	while sede.level == RealmLadder.CLAREIRA:
 		assert_float(ClockService.clock.elapsed).is_less(FUNDAR_S)
 		_passo(sede.x)
 
 
-func _formar(id: int, banca: StringName, oficio: StringName) -> void:
+func _formar(banca: StringName, oficio: StringName) -> int:
 	var site: BuildSlot = null
 	for vaga in SimLoop.builds.slots:
 		if vaga.kind == banca:
 			site = vaga
 	var limite := _fase_em(GameClock.Phase.DUSK)
-	while (
-		SimLoop.units.data_ids[SimLoop.units.index_of(id)] != oficio
-		and ClockService.clock.elapsed < limite
-	):
-		assert_float(ClockService.clock.elapsed).is_less(limite)
+	while ClockService.clock.elapsed < limite:
+		for i in SimLoop.units.count():
+			if SimLoop.units.data_ids[i] == oficio and SimLoop.units.owners[i] == 1:
+				return SimLoop.units.ids[i]
 		_passo(site.x, SimLoop.field.training.owed(site, SimLoop.units) > 0)
-	assert_str(String(SimLoop.units.data_ids[SimLoop.units.index_of(id)])).is_equal(String(oficio))
-
-
-func _recrutar(id: int) -> void:
-	var i := SimLoop.units.index_of(id)
-	var limite := ClockService.clock.elapsed + RECRUTAR_S
-	while SimLoop.units.owners[i] == RecruitSystem.SEM_DONO and ClockService.clock.elapsed < limite:
-		assert_float(ClockService.clock.elapsed).is_less(limite)
-		_passo(SimLoop.units.xs[i], true)
-		i = SimLoop.units.index_of(id)
+	assert_float(ClockService.clock.elapsed).is_less(limite)
+	return UnitSystem.NENHUM
 
 
 ## Um tick de quem joga: o rei anda para x e, se ja la esta e deve largar, larga
@@ -173,7 +158,7 @@ func _caiu(x: float, _faixa: int, _quanto: int, origem: StringName) -> void:
 
 
 func _apanhou(quem: int, quanto: int) -> void:
-	if quem == O_ARQUEIRO and SimLoop.units.owners[SimLoop.units.index_of(quem)] != 0:
+	if quem == _arqueiro and SimLoop.units.owners[SimLoop.units.index_of(quem)] != 0:
 		_no_saco_do_arqueiro += quanto
 
 
