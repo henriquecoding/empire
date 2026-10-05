@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FloraData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/flora_data.gd" id="1_oq251"]
+
+[resource]
+script = ExtResource("1_oq251")
+id = &"willow"
+display_key = "FLORA_WILLOW"
+biomes = Array[StringName]([&"floodplain", &"marsh"])
+tags = Array[StringName]([&"forage"])
+density_min = 0.36
+fell_work_s = 10.0
+fell_coins = 1
+height_px = 118.0
+crown = &"droop"

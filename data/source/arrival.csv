@@ -17,3 +17,5 @@ foreign_chest_coins,5,Q-186,,Reserva transferida da economia do reino vizinho; n
 companion_evolved_health_mult,1.5,Q-223,,Companhia evolui junto; conserva a proporção de vida Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066).
 foundation_stop_s,0.35,ADR 0066,foundation_stop_s,Limiar reversível de apresentação; não bloqueia exploração
 foundation_clear_radius,240,ADR 0066,foundation_clear_radius,Footprint inicial da Clareira; não concede recursos
+caravan_catch_up_px,320,ADR 0070 — verificação da ADR 0066,caravan_catch_up_px,"A partir desta distância do monarca a carroça apressa-se: não fica para trás sem fim."
+caravan_catch_up_mult,2,ADR 0070 — verificação da ADR 0066,caravan_catch_up_mult,"Quanto mais depressa anda a carroça atrasada (×cart_speed)."

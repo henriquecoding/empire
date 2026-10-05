@@ -21,6 +21,8 @@ static func of(
 		return true
 	if noite.consecrate_at(estado, largada, rei) or noite.dark.buy_at(largada, obras):
 		return true  # uma arvore a consagrar, ou archotes numa fogueira (Q-029)
+	if ForestWork.mark(largada):
+		return true  # uma arvore para um construtor abater (ADR 0070)
 	if not FoundationWatch.aims_monarch() or not _no_nucleo(largada, obras):
 		return false  # sem o monarca escolhido no marco, a moeda e da sede (ADR 0059)
 	MonarchWatch.evolve(campo, estado)

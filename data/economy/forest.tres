@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ForestRules" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/forest_rules.gd" id="1_7ohpq"]
+
+[resource]
+script = ExtResource("1_7ohpq")

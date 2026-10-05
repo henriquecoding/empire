@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FloraData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/flora_data.gd" id="1_x7sx3"]
+
+[resource]
+script = ExtResource("1_x7sx3")
+id = &"pine"
+display_key = "FLORA_PINE"
+biomes = Array[StringName]([&"ancient_forest", &"glacier", &"canyon", &"volcanic"])
+evergreen = true
+tags = Array[StringName]([&"shelter"])
+density_min = 0.42
+fell_work_s = 14.0
+fell_coins = 2
+height_px = 156.0
+crown = &"cone"

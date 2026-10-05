@@ -6,13 +6,13 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
-| Fases 0–2 (fatia vertical) | 729 | 312 | 1041 |
-| Fases 3–8 | 347 | 98 | 445 |
-| Total | 1076 | 410 | 1486 |
+| Fases 0–2 (fatia vertical) | 749 | 312 | 1061 |
+| Fases 3–8 | 360 | 98 | 458 |
+| Total | 1109 | 410 | 1519 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
-## 1 · Fatia vertical — balanceamento — 729
+## 1 · Fatia vertical — balanceamento — 749
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -745,6 +745,26 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_sites | `campfire` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `tender_ward` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
 | realm_sites | `citizen_house` | `wall_level` | 1 | 1 | Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas. |
+| flora | `oak` | `density_min` | 0.38 | 1 | Caducifólia: perde a copa no inverno e mantém o tronco. Abriga o veado e apoia a coleta (bosque da ribeira, §9 do relatório). |
+| flora | `oak` | `fell_work_s` | 12 | 1 | Caducifólia: perde a copa no inverno e mantém o tronco. Abriga o veado e apoia a coleta (bosque da ribeira, §9 do relatório). |
+| flora | `oak` | `fell_coins` | 2 | 1 | Caducifólia: perde a copa no inverno e mantém o tronco. Abriga o veado e apoia a coleta (bosque da ribeira, §9 do relatório). |
+| flora | `oak` | `height_px` | 132 | 1 | Caducifólia: perde a copa no inverno e mantém o tronco. Abriga o veado e apoia a coleta (bosque da ribeira, §9 do relatório). |
+| flora | `pine` | `density_min` | 0.42 | 1 | Perene: a silhueta do lugar no inverno. Abriga o veado; não alimenta a coleta. |
+| flora | `pine` | `fell_work_s` | 14 | 1 | Perene: a silhueta do lugar no inverno. Abriga o veado; não alimenta a coleta. |
+| flora | `pine` | `fell_coins` | 2 | 1 | Perene: a silhueta do lugar no inverno. Abriga o veado; não alimenta a coleta. |
+| flora | `pine` | `height_px` | 156 | 1 | Perene: a silhueta do lugar no inverno. Abriga o veado; não alimenta a coleta. |
+| flora | `willow` | `density_min` | 0.36 | 1 | Junto à água: copa caída, apoia a coleta e não abriga caça grande. |
+| flora | `willow` | `fell_work_s` | 10 | 1 | Junto à água: copa caída, apoia a coleta e não abriga caça grande. |
+| flora | `willow` | `fell_coins` | 1 | 1 | Junto à água: copa caída, apoia a coleta e não abriga caça grande. |
+| flora | `willow` | `height_px` | 118 | 1 | Junto à água: copa caída, apoia a coleta e não abriga caça grande. |
+| flora | `coast_pine` | `density_min` | 0.46 | 1 | Costa das árvores baixas: inclinadas pelo vento, espaçadas, abrigo baixo. |
+| flora | `coast_pine` | `fell_work_s` | 10 | 1 | Costa das árvores baixas: inclinadas pelo vento, espaçadas, abrigo baixo. |
+| flora | `coast_pine` | `fell_coins` | 1 | 1 | Costa das árvores baixas: inclinadas pelo vento, espaçadas, abrigo baixo. |
+| flora | `coast_pine` | `height_px` | 92 | 1 | Costa das árvores baixas: inclinadas pelo vento, espaçadas, abrigo baixo. |
+| flora | `root_tree` | `density_min` | 0.4 | 1 | Charco das raízes: raízes altas e luz fraca nas folhas; apoia a coleta, sem abrigo. |
+| flora | `root_tree` | `fell_work_s` | 16 | 1 | Charco das raízes: raízes altas e luz fraca nas folhas; apoia a coleta, sem abrigo. |
+| flora | `root_tree` | `fell_coins` | 2 | 1 | Charco das raízes: raízes altas e luz fraca nas folhas; apoia a coleta, sem abrigo. |
+| flora | `root_tree` | `height_px` | 128 | 1 | Charco das raízes: raízes altas e luz fraca nas folhas; apoia a coleta, sem abrigo. |
 
 ## 2 · Fatia vertical — apresentação e estrutura — 312
 
@@ -1063,7 +1083,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_stages | `walled_village` | `width_px` | 400 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). ADR 0065: feito de maturidade proposto para o protótipo solicitado; regras explicitadas no contexto. Q-220: defesa crescente; percentuais provisórios. Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066). |
 | realm_stages | `fortress` | `build_work` | 112 | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). Q-222: casa do herdeiro no estágio máximo disponível; Capital permanece posterior (Q-226). ADR 0065: feito de maturidade proposto para o protótipo solicitado; regras explicitadas no contexto. Q-220: defesa crescente; percentuais provisórios. Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066). |
 
-## 3 · Fases 3 a 8 — 445
+## 3 · Fases 3 a 8 — 458
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1512,4 +1532,17 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | titles | `the_one_with_the_same_spear` | `ribbon_color` | #A35A2A | 4 | 'Não largou' — manteve a mesma arma 10 dias. A arma sobe um nível. |
 | arrival | `foundation_stop_s` | `foundation_stop_s` | 0.35 | 9 | Limiar reversível de apresentação; não bloqueia exploração |
 | arrival | `foundation_clear_radius` | `foundation_clear_radius` | 240 | 9 | Footprint inicial da Clareira; não concede recursos |
+| arrival | `caravan_catch_up_px` | `caravan_catch_up_px` | 320 | 9 | A partir desta distância do monarca a carroça apressa-se: não fica para trás sem fim. |
+| arrival | `caravan_catch_up_mult` | `caravan_catch_up_mult` | 2 | 9 | Quanto mais depressa anda a carroça atrasada (×cart_speed). |
+| forest | `tree_step_px` | `tree_step_px` | 56 | 9 | Uma árvore no máximo por célula: o espaçamento mínimo da floresta. |
+| forest | `reserve_px` | `reserve_px` | 56 | 9 | Folga à volta de passagens, acampamentos, provisões, raízes, estátuas e tocas: a floresta nunca tapa o que o mapa precisa (§8.2). |
+| forest | `fell_cost` | `fell_cost` | 1 | 9 | A moeda que o monarca larga numa árvore para um construtor a abater (Kingdom). |
+| forest | `tree_reach_px` | `tree_reach_px` | 28 | 9 | A que distância do tronco o monarca paga e o construtor trabalha. |
+| forest | `flora_clear_px` | `flora_clear_px` | 32 | 9 | A flora comum que sai com o tronco: a clareira lê-se, não só o objeto. |
+| forest | `grove_feeds_radius` | `grove_feeds_radius` | 240 | 9 | Regra 1 — origem: árvores com a etiqueta forage; destino: a coleta nas provisões; alcance: distância no mundo. |
+| forest | `grove_feeds_min` | `grove_feeds_min` | 3 | 9 | Regra 1 — condição: árvores vivas no alcance. |
+| forest | `grove_feeds_bonus` | `grove_feeds_bonus` | 1 | 9 | Regra 1 — efeito: moedas de coleta a mais por dia. |
+| forest | `grove_feeds_cap` | `grove_feeds_cap` | 1 | 9 | Regra 1 — acumulação: máximo, nunca soma; centenas de árvores não pagam mais. |
+| forest | `shelter_radius` | `shelter_radius` | 200 | 9 | Regra 2 — origem: árvores com a etiqueta shelter; destino: tocas da caça que sai de árvores; alcance: distância. |
+| forest | `shelter_min` | `shelter_min` | 2 | 9 | Regra 2 — condição: abaixo disto a toca adormece (não sai bicho) até haver abrigo. |
 

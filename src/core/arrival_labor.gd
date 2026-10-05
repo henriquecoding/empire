@@ -88,7 +88,8 @@ static func tick(delta: float, phase: int) -> void:
 			if o.earned_day != ClockService.clock.day:
 				o.earned_day = ClockService.clock.day
 				o.earned = 0
-			if not o.scar and o.earned < LastCartWatch.rules().forage_daily_cap:
+			var teto := LastCartWatch.rules().forage_daily_cap + ForestWork.forage_bonus()
+			if not o.scar and o.earned < teto:  # o bosque apoia a coleta (ADR 0070)
 				o.earned += 1
 				SimLoop.drop_coin(o.cache_x, Band.Kind.SURFACE, 1, &"forage")
 				o.record(&"first_income", &"forage")

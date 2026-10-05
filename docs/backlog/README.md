@@ -249,6 +249,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-23](RG-23.md) | Relatório mestre e fundação livre Solo | RG-22 | feito — protótipo Solo; visão completa depende de RG-24/RG-25 |
 | [RG-24](RG-24.md) | Identidade territorial e despertar social | RG-23 | por fazer |
 | [RG-25](RG-25.md) | Servidor autoritativo e modos online | RG-23, UN-29, UN-30 | por fazer |
+| [RG-26](RG-26.md) | A floresta como território (relatório de vegetação) e verificação da fundação livre | RG-23, QP-06 | feito — protótipo P0–P4; arte final, meteorologia e P5 por fazer |
 
 ## Respostas aprovadas no painel
 

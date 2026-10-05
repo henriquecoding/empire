@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FloraData" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/flora_data.gd" id="1_sw2y4"]
+
+[resource]
+script = ExtResource("1_sw2y4")
+id = &"coast_pine"
+display_key = "FLORA_COAST_PINE"
+biomes = Array[StringName]([&"coast"])
+evergreen = true
+tags = Array[StringName]([&"shelter"])
+density_min = 0.46
+fell_work_s = 10.0
+fell_coins = 1
+height_px = 92.0
+crown = &"low"

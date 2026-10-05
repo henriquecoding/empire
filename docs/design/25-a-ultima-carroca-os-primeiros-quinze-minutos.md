@@ -7,7 +7,7 @@ A chegada ensina território, pessoas e consequência. O monarca tem controlo de
 | Momento | Transformação | Escolha real |
 | --- | --- | --- |
 | Chegada | Carroça e cidadãos seguem o monarca; regiões interessantes orientam sem restringir | Comparar recursos, bioma, água, perigo e acesso; qualquer coordenada territorialmente válida pode ser escolhida |
-| Fundação livre | Parado, sem outra interação prioritária: “Fundar o Império aqui?”. O Verbo 2 confirma sem moeda e a autoridade revalida | A sede nasce no local escolhido; limpa flora comum sem loot e preserva entradas e segredos. Trabalho presente ergue o Acampamento |
+| Fundação livre | Parado, sem outra interação prioritária: “Fundar o Império aqui?”. O Verbo 2 confirma sem moeda e a autoridade revalida | A sede nasce onde se parou, em qualquer lado do mundo, desde que o chão dela esteja livre; o que está perto é consequência e o painel di-lo antes de fundar (Q-237). A noite e o Lume nascem nas bordas do reino. Limpa flora e árvores sem loot e preserva entradas e segredos. Trabalho presente ergue o Acampamento |
 | Reserva | A carroça ancora e abre: parte das oito moedas continua em provisões expostas | Contratar, formar um ofício ou reservar uma pessoa para resgate, coleta e reconhecimento |
 | Trabalho | A mesma pessoa caminha e trabalha num único sítio; coleta produz moeda física limitada por dia | Trocar a tarefa interrompe a anterior. Ninguém constrói e coleta simultaneamente |
 | Tarde | A Podridão escurece e suspende a coleta exposta antes da primeira criatura | Resgatar, levantar uma defesa ou preparar luz; inspecionar o perigo regista percepção, sem inferir que o jogador o viu |

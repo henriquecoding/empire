@@ -7,6 +7,38 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A floresta como território — 05/10/2026 (ADR 0070)
+
+### Q-237 · Fundar onde se para, e a carroça que alcança (verificação do PR #85)
+- **Encontrado ao verificar o deploy `64c7e73` e reportado pelo dono** (*«não estou conseguindo fundar o império em
+  lugar algum»*): o validador recusava qualquer sítio a 240 px (`foundation_clear_radius`) de uma estátua, de uma raiz
+  da Podridão ou de uma boca de subsolo. Com a semente 20261005 só 37 em 241 pontos da região serviam (16 %), com zonas
+  mortas de mais de 600 px. A carroça, a 48 px/s, ficava para trás sem fim e não se ancorava à sede.
+- **Corrigido como os relatórios pedem:** parado e sem nada no próprio chão da sede, funda-se, em qualquer lado do
+  mundo. O que fica perto é consequência e não proibição: a clareira conserva estátuas, raízes e passagens, tira a flora
+  comum sem madeira, e o painel diz antes de fundar quantas árvores sai, se isso tira o bosque da coleta ou o abrigo da
+  toca, e o que fica dentro do reino (`FoundationGuide`). A noite e o Lume nascem nas bordas do reino — o centro é a sede
+  numa fundação livre, a região numa fundação antiga (`RealmFrame`). A carroça apressa-se ×`caravan_catch_up_mult` (2) a
+  mais de `caravan_catch_up_px` (320) e ancora-se ao reino. Números em `arrival.csv._proposed`.
+- **Em aberto:** o subsolo e as passagens da região continuam onde a semente os pôs; fundar longe deixa-os longe (é uma
+  consequência, e o painel não a mede ainda). O subsolo relativo ao reino fica em RG-24.
+- **Onde:** `FoundationChoice.valid`, `RealmFrame`, `FoundationGuide`, `CaravanWatch.speed`, `LastCartWatch.tick`;
+  `tests/foundation_window_test.gd`.
+- **Decide:** tu, se alguma consequência deve voltar a ser proibição, e a largura do reino que a noite usa.
+
+### Q-238 · Os números e as regras da floresta
+- **Pedido do dono (05/10/2026):** *«implemente também o que coloquei nesse relatório»* — o relatório de vegetação.
+- **Aplicado:** árvores com estado no save, corte pago a um construtor, duas regras de influência com pré-visualização,
+  estações na copa e na flor, transições de bioma pelas duas pontas (ADR 0070, RG-26).
+- **Propostas reversíveis:** em `flora.csv` as cinco espécies, os biomas, a densidade mínima, o trabalho (10–16 s) e as
+  moedas do tronco (1–2); em `forest.csv` a célula (56 px), a folga do que o mapa precisa (56), o custo do corte (1), o
+  alcance (28), a flora que sai com o tronco (32), o bosque da coleta (240 px, 3 árvores, +1 por dia, máximo 1) e o
+  abrigo do veado (200 px, 2 árvores).
+- **Escolhas minhas, reversíveis:** um muro não corta a influência; a obra tem prioridade sobre a árvore no mesmo sítio
+  e limpa o chão sem moeda; o corte só depois de fundar e com construtor; a toca que vive de árvores nasce sempre com o
+  abrigo mínimo; as flores somem no outono e no inverno.
+- **Decide:** tu, os números depois de jogar; e se o corte deve também abrir espaço novo para obras, como no Kingdom.
+
 ## Relatório mestre prioritário — 05/10/2026 (ADR 0066–0069)
 
 ### Q-234 · Limiar de paragem e footprint da fundação livre

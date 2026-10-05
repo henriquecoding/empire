@@ -1,0 +1,13 @@
+key,value,_src,_proposed,_notes
+generator_version,1,ADR 0070,,"Versão do gerador de árvores: a semente sozinha não basta depois de mudar o algoritmo (§8.7 do relatório)."
+tree_step_px,56,ADR 0070,tree_step_px,"Uma árvore no máximo por célula: o espaçamento mínimo da floresta."
+reserve_px,56,ADR 0070,reserve_px,"Folga à volta de passagens, acampamentos, provisões, raízes, estátuas e tocas: a floresta nunca tapa o que o mapa precisa (§8.2)."
+fell_cost,1,ADR 0070,fell_cost,"A moeda que o monarca larga numa árvore para um construtor a abater (Kingdom)."
+tree_reach_px,28,ADR 0070,tree_reach_px,"A que distância do tronco o monarca paga e o construtor trabalha."
+flora_clear_px,32,ADR 0070,flora_clear_px,"A flora comum que sai com o tronco: a clareira lê-se, não só o objeto."
+grove_feeds_radius,240,ADR 0070,grove_feeds_radius,"Regra 1 — origem: árvores com a etiqueta forage; destino: a coleta nas provisões; alcance: distância no mundo."
+grove_feeds_min,3,ADR 0070,grove_feeds_min,"Regra 1 — condição: árvores vivas no alcance."
+grove_feeds_bonus,1,ADR 0070,grove_feeds_bonus,"Regra 1 — efeito: moedas de coleta a mais por dia."
+grove_feeds_cap,1,ADR 0070,grove_feeds_cap,"Regra 1 — acumulação: máximo, nunca soma; centenas de árvores não pagam mais."
+shelter_radius,200,ADR 0070,shelter_radius,"Regra 2 — origem: árvores com a etiqueta shelter; destino: tocas da caça que sai de árvores; alcance: distância."
+shelter_min,2,ADR 0070,shelter_min,"Regra 2 — condição: abaixo disto a toca adormece (não sai bicho) até haver abrigo."

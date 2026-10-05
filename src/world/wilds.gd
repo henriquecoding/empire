@@ -51,8 +51,6 @@ const TREMOR := {"de": 0.15, "largo": 0.7}
 ## Quanto acima do limiar o ruido tem de ir para a planta ser certa, e o minimo
 ## de probabilidade logo acima dele — sem isto a borda de um bosque e uma linha.
 const ORLA := {"largo": 0.35, "piso": 0.15}
-## O ruido do motor anda em [-0,75, 0,65]; isto abre-o a [0, 1].
-const RUIDO := {"frequencia": 0.0021, "oitavas": 3, "ganho": 0.8}
 
 ## Por bioma, as camadas do campo: (tipo, passo em px, limiar de densidade).
 const CAMPO := {
@@ -122,15 +120,15 @@ const BANDO_PX := 60.0
 const ENXAME := {"de": 0.3, "ate": 1.0}
 
 
-## A densidade do bosque em x, de 0 a 1, para `ruido` ja semeado.
+## A densidade do bosque em x, de 0 a 1, para `ruido` ja semeado (Woods, ADR 0070).
 static func density(ruido: Noise, x: float) -> float:
-	return clampf(MEIO + ruido.get_noise_1d(x) * RUIDO.ganho, 0.0, 1.0)
+	return Woods.density(ruido, x)
 
 
-## O ruido do bosque para esta semente. Um so para todas as camadas: e isso que
-## poe o feto e o arbusto no mesmo bosque, e a clareira vazia dos dois.
+## O ruido do bosque para esta semente. Um so para todas as camadas e para as arvores
+## (Woods): e isso que poe o feto, o arbusto e o carvalho no mesmo bosque.
 static func woods() -> FastNoiseLite:
-	return RngService.noise(SAL.campo, RUIDO.frequencia, RUIDO.oitavas)
+	return Woods.noise()
 
 
 ## O bioma de uma tabela, ou o de omissao se o bioma nao tiver entrada nela.

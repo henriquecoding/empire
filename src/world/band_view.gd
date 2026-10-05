@@ -39,6 +39,7 @@ class Obras:
 		if SimLoop.state == null:
 			return
 		Gauge.adiar = true  # a barra nao leva luz: o BandView pinta-a por cima
+		ForestView.draw_on(self, band, neutra, tempo)  # por tras das obras (ADR 0070)
 		BuildView.draw_on(self, band, edificios, neutra, tempo)
 		Gauge.adiar = false
 

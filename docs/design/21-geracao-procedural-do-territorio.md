@@ -28,6 +28,10 @@ O Kingdom usa "blocos de construção modulares dispostos aleatoriamente, com ve
 >
 > No contrato do relatório, dia 1 é natural: clima, biomas, fauna, ruínas e perigos. Depois da fundação e da primeira noite territorial, a alvorada seguinte ativa sementes de civilização por dia global. O gerador de sociedades prontas descrito abaixo ainda é a implementação antiga: RG-24 deve migrá-lo com determinismo, saves e níveis de simulação. A fundação livre Solo já funciona; clima e despertar social ainda não.
 
+> **A floresta é território — ADR 0070**
+>
+> Cada árvore é uma coisa do mundo, com id, espécie e estado no save. Primeiro reserva-se o que o mapa precisa (passagens, provisões, acampamentos, estátuas, raízes, tocas e obras erguidas); depois a densidade do bosque e a espécie do bioma enchem o resto, uma árvore por célula. Cinco silhuetas — carvalho, pinheiro, salgueiro, pinheiro da costa e árvore-das-raízes — e, num segmento de transição, a espécie e a densidade pesam as duas pontas. Uma moeda numa árvore paga a um construtor para a abater: o tronco dá moedas e fica o cepo; a fundação e as obras limpam o chão sem moeda. Duas regras com origem, destino e alcance escritos: o bosque apoia a coleta nas provisões e a floresta abriga a toca do veado. A estação muda a copa, nunca a existência: o que se corta não volta. Números em flora.csv e forest.csv, propostos (Q-238).
+
 ## O conflito que as referências levantam — e como se resolve
 
 Há aqui uma contradição que este documento nunca tinha nomeado, e as três referências obrigam a nomeá-la agora.

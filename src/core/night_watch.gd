@@ -179,6 +179,7 @@ func _virar(fase: int, estado: GameState, bichos: CreatureSystem, mundo: Vector2
 			return  # §75: a decima segunda fechou o ciclo
 		dark.kindle()  # so ha lareira a pagar numa noite que vem (Q-190)
 		rot.spawn(estado.day, lado, mundo.y)
+		RealmFrame.place(rot)  # a noite vem de fora do reino, onde ele estiver (ADR 0070)
 		RiftWatch.spawn(self, estado, mundo)
 		SettlementWatch.night(SimLoop.field)
 		voice.after_spawn(rot)
