@@ -19,7 +19,8 @@ const FAROL := &"lighthouse"
 
 ## Se o rei esta ao pe do Lume numa das bordas.
 static func at_base(x: float) -> bool:
-	return absf(x) <= Band.PASSAGE_PX or absf(x - SimLoop.world_width) <= Band.PASSAGE_PX
+	var bordas := RealmFrame.edges()  # as bordas do reino (ADR 0070)
+	return absf(x - bordas.x) <= Band.PASSAGE_PX or absf(x - bordas.y) <= Band.PASSAGE_PX
 
 
 ## Porque e que nao se apaga agora, ou &"" se se apaga (o guia di-lo).

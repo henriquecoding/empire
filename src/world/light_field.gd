@@ -102,7 +102,7 @@ static func _lume(faixas: Dictionary, rot: RotSystem, perfil: RotProfile) -> voi
 	if not rot.active():
 		if rot.announced == 0:
 			return
-		var x := SimLoop.world_width if rot.announced > 0 else 0.0
+		var x := RealmFrame.edge(rot.announced)
 		var parte: float = AVISO.fundo if rot.deep(dia) else AVISO.raio
 		var horizonte := Vector2(x, float(Band.HORIZON))
 		var raio := perfil.lantern_radius_base * parte

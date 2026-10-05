@@ -39,7 +39,8 @@ static func context(x: float, band: int, values: Dictionary) -> String:
 		return ""
 	var choice := LastCartWatch.choice_at(x)
 	if choice != &"":
-		return _tr(&"ARRIVAL_FOUND_HERE").format(values)
+		# O que fundar aqui leva e deixa: consequencia, nunca proibicao (ADR 0070).
+		return _tr(&"ARRIVAL_FOUND_HERE").format(values) + FoundationGuide.reading(x, values)
 	var trees := SimLoop.night.amargueiros
 	for k in trees.count():
 		if trees.fates[k] == AmargueiroSystem.Fate.OLD and absf(x - trees.xs[k]) <= Band.PASSAGE_PX:

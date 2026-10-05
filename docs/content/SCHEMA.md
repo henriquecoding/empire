@@ -892,7 +892,7 @@ Script `src/sim/data/realm_site_data.gd` · layout `rows` · 62 linha(s) · ADR 
 
 ## `arrival.csv` → `data/economy/arrival.tres`
 
-Script `src/sim/data/arrival_rules.gd` · layout `kv` · 21 linha(s) · ADR 0065 — A Última Carroça e decisões do painel de 04/10/2026
+Script `src/sim/data/arrival_rules.gd` · layout `kv` · 20 linha(s) · ADR 0065 — A Última Carroça e decisões do painel de 04/10/2026
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -914,7 +914,6 @@ Script `src/sim/data/arrival_rules.gd` · layout `kv` · 21 linha(s) · ADR 0065
 | `companion_evolved_health_mult` | **sem propriedade** | — | a ferramenta vai falhar |
 | `foundation_stop_s` | float |  |  |
 | `foundation_clear_radius` | float |  |  |
-| `foundation_window_px` | **sem propriedade** | — | a ferramenta vai falhar |
 | `caravan_catch_up_px` | **sem propriedade** | — | a ferramenta vai falhar |
 | `caravan_catch_up_mult` | **sem propriedade** | — | a ferramenta vai falhar |
 

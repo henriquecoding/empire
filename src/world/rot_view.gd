@@ -95,7 +95,7 @@ static func _aviso(
 ) -> void:
 	if rot.announced == 0:
 		return
-	var x := SimLoop.world_width if rot.announced > 0 else 0.0
+	var x := RealmFrame.edge(rot.announced)
 	var escala := AVISO_FUNDO if rot.deep(dia) else AVISO
 	FlameArt.draw_on(
 		canvas, Vector2(x, float(Band.HORIZON)), escala, WorldLight.stops(perfil), tempo

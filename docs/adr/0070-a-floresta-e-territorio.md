@@ -52,12 +52,17 @@ cobertura, estação e intervenção, manter as alterações e explicar poucas r
 O deploy de produção serve o commit `64c7e73` e o teste de fumo passa. A verificação encontrou
 dois defeitos reproduzidos com a mesma semente, corrigidos aqui:
 
-- **A sede podia nascer fora da região de casa.** O validador aceitava todo o mundo gerado
-  (`Frontier.walk_limits()`); fundar 2 500 px a leste da região punha os muros em terras de outro
-  povo, deixava passagens e subsolo para trás e a noite, que nasce nas bordas da região, chegava
-  pelo lado errado. A janela passa a ser o centro da região ± `foundation_window_px` (448, proposta
-  em `arrival.csv`), que mantém o segundo recinto dentro das bordas. Alargá-la pede noite, Lume e
-  subsolo relativos ao reino (RG-24).
+- **Quase nenhum sítio servia para fundar.** O validador recusava qualquer ponto a
+  `foundation_clear_radius` (240 px) de uma estátua, de uma raiz ou de uma boca de subsolo: com a
+  mesma semente, só 16 % da região servia, com zonas mortas de mais de 600 px. O dono reportou-o
+  («não estou conseguindo fundar o império em lugar algum»). Os relatórios pedem o contrário:
+  parado e sem nada ali, funda-se, e o que está perto é consequência. Agora só o chão da própria
+  sede tem de estar livre (`FoundationChoice.valid`); a clareira conserva o que é protegido e o
+  painel lê, antes de fundar, o que se perde e o que fica (`FoundationGuide`).
+- **A noite não seguia o reino.** Nascia nas bordas da região de casa: fundar longe dela trazia-a
+  pelo lado errado e o Lume ficava longe. Agora a noite e as bases do Lume nascem a meia largura
+  da sede numa fundação livre, e exatamente onde sempre nasceram numa fundação antiga
+  (`RealmFrame`).
 - **A carroça ficava perdida.** Andava a 48 px/s atrás de um monarca mais rápido e, fundado o
   reino num sítio livre, ficava onde estava, com as moedas e o grupo a milhares de píxeis. Agora
   apressa-se (`caravan_catch_up_mult`) a partir de `caravan_catch_up_px` e, fundado o reino,

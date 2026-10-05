@@ -75,8 +75,10 @@ A caravana segue; a fundação é livre e gratuita, parado e sem interação pri
 Verificar, além dos testes: fundar perto e longe do bosque e observar a clareira (sem moeda);
 pagar o corte de uma árvore com e sem construtor; o cepo e a flora que sai com o tronco; o
 painel ao pé de uma árvore que serve a coleta ou o veado, antes e depois de cair; a copa no
-outono e no inverno; recarregar e mudar de estação sem a árvore voltar. A sede só nasce perto
-do centro da região de casa e a carroça alcança o monarca (Q-237).
+outono e no inverno; recarregar e mudar de estação sem a árvore voltar. Parar em sítios ao acaso,
+perto de estátuas, raízes e bocas, e confirmar que se funda em todos os que têm o chão livre, com
+o painel a dizer o que se perde e o que fica; fundar longe da região e ver a noite chegar pelas
+bordas do reino; a carroça alcança o monarca (Q-237).
 
 Perguntas da sessão (§10.3 do relatório de vegetação), a registar sem inferir:
 

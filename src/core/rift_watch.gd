@@ -22,6 +22,7 @@ static func spawn(night: NightWatch, state: GameState, world: Vector2) -> void:
 		SimLoop.passages, SimLoop.builds, world.x, -rot.state.side
 	)
 	other.spawn(day, -rot.state.side, world.y)
+	RealmFrame.place(other)
 	var shares := RiftPlan.shares(rot.mass(), true)
 	rot.state.mass = shares.x
 	other.state.mass = shares.y

@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 749 | 312 | 1061 |
-| Fases 3–8 | 361 | 98 | 459 |
-| Total | 1110 | 410 | 1520 |
+| Fases 3–8 | 360 | 98 | 458 |
+| Total | 1109 | 410 | 1519 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -1083,7 +1083,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_stages | `walled_village` | `width_px` | 400 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). ADR 0065: feito de maturidade proposto para o protótipo solicitado; regras explicitadas no contexto. Q-220: defesa crescente; percentuais provisórios. Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066). |
 | realm_stages | `fortress` | `build_work` | 112 | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). Q-222: casa do herdeiro no estágio máximo disponível; Capital permanece posterior (Q-226). ADR 0065: feito de maturidade proposto para o protótipo solicitado; regras explicitadas no contexto. Q-220: defesa crescente; percentuais provisórios. Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066). |
 
-## 3 · Fases 3 a 8 — 459
+## 3 · Fases 3 a 8 — 458
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1532,7 +1532,6 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | titles | `the_one_with_the_same_spear` | `ribbon_color` | #A35A2A | 4 | 'Não largou' — manteve a mesma arma 10 dias. A arma sobe um nível. |
 | arrival | `foundation_stop_s` | `foundation_stop_s` | 0.35 | 9 | Limiar reversível de apresentação; não bloqueia exploração |
 | arrival | `foundation_clear_radius` | `foundation_clear_radius` | 240 | 9 | Footprint inicial da Clareira; não concede recursos |
-| arrival | `foundation_window_px` | `foundation_window_px` | 448 | 9 | Quanto a sede pode sair do centro da região de casa: a noite nasce nas bordas dela e o segundo recinto tem de ficar dentro. Alargar pede noite e Lume relativos ao reino (RG-24). |
 | arrival | `caravan_catch_up_px` | `caravan_catch_up_px` | 320 | 9 | A partir desta distância do monarca a carroça apressa-se: não fica para trás sem fim. |
 | arrival | `caravan_catch_up_mult` | `caravan_catch_up_mult` | 2 | 9 | Quanto mais depressa anda a carroça atrasada (×cart_speed). |
 | forest | `tree_step_px` | `tree_step_px` | 56 | 9 | Uma árvore no máximo por célula: o espaçamento mínimo da floresta. |
