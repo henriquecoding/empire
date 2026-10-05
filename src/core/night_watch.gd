@@ -100,7 +100,7 @@ func tick(
 ## da escolha — o dia, a massa e a estreia (ADR 0071). Verdadeiro se alguma pagou.
 func pay(dados: CreatureData) -> bool:
 	for mancha: RotSystem in [rot, other_rot]:
-		if mancha.afford(dados):
+		if mancha.afford(dados, SimLoop.state.day):
 			return true
 	return false
 
@@ -215,8 +215,16 @@ func _invocar(
 	pedido: SpawnRequest, estado: GameState, bichos: CreatureSystem, nucleo: float
 ) -> void:
 	var dados := Registry.entry(TABELA_CRIATURAS, pedido.creature_id) as CreatureData
+	pedido.x = door(rot, pedido, nucleo)  # a porta, e nao dentro dos muros (ADR 0071)
 	bichos.spawn(estado, dados, pedido.x, LastCartWatch.first_night_target(nucleo))
 	EventRelay.summoned(pedido, rot.mass())
+
+
+## Onde nasce o que `mancha` pediu: a porta da muralha mais exterior do lado dela.
+static func door(mancha: RotSystem, pedido: SpawnRequest, nucleo: float) -> float:
+	var lado := mancha.state.side
+	var borda := RealmFrame.edge(lado)
+	return RotPick.door(pedido.x, lado, borda, nucleo, SimLoop.builds, pedido.band)
 
 
 ## Quem chegou vivo a alvorada com uma galinha levou-a (Q-129).

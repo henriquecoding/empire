@@ -146,9 +146,9 @@ func active() -> bool:
 	return state.active
 
 
-## Paga o que nao invoca — o bicho que levanta, quem o escuro traz — pelas regras da escolha.
-func afford(dados: CreatureData) -> bool:
-	if not state.active or not RotPick.fits(dados, _perfil, _dia, state, lure_days):
+## Paga o que nao invoca — o bicho que levanta, quem o escuro traz — no `dia` do relogio.
+func afford(dados: CreatureData, dia: int) -> bool:
+	if not state.active or not RotPick.fits(dados, _perfil, dia, state, lure_days):
 		return false
 	RotPick.take(state, dados)
 	return true

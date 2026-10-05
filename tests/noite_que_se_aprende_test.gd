@@ -106,10 +106,11 @@ func test_depois_da_rampa_a_tabela_da_74_nao_muda() -> void:
 # ─── Q-240: uma especie estreia com poucos ───────────────────────────────────
 
 
-func test_a_estreia_comeca_num_e_sobe_um_por_noite() -> void:
+func test_a_estreia_comeca_com_um_passo_e_sobe_um_passo_por_noite() -> void:
 	var p := _perfil()
-	assert_int(p.debut_cap(4, 4)).is_equal(1)
-	assert_int(p.debut_cap(6, 4)).is_equal(3)
+	assert_int(p.debut_step).is_greater(0)
+	assert_int(p.debut_cap(4, 4)).is_equal(p.debut_step)
+	assert_int(p.debut_cap(6, 4)).is_equal(3 * p.debut_step)
 	assert_int(p.debut_cap(3, 4)).is_equal(0)
 	assert_int(p.debut_cap(9, 1)).is_equal(RotProfile.SEM_TETO)  # a da noite 1 nao estreia
 
@@ -126,21 +127,22 @@ func test_a_primeira_noite_sao_os_tres_rastejantes() -> void:
 	assert_dict(_invocar_tudo(rot)).is_equal({&"crawler": 3})
 
 
-func test_a_noite_4_traz_um_alado_e_o_resto_em_rastejantes() -> void:
+func test_a_noite_4_traz_os_primeiros_alados_e_o_resto_em_rastejantes() -> void:
 	var rot := _mancha()
 	rot.spawn(4, DIREITA, LARGURA)
 	var vieram := _invocar_tudo(rot)
-	assert_int(int(vieram.get(&"winged", 0))).is_equal(1)
-	assert_int(int(vieram.get(&"crawler", 0))).is_greater(1)
+	assert_int(int(vieram.get(&"winged", 0))).is_equal(_perfil().debut_step)
+	assert_int(int(vieram.get(&"crawler", 0))).is_greater(int(vieram.get(&"winged", 0)))
 
 
-func test_a_noite_7_traz_um_bruto_e_nao_sete() -> void:
+func test_a_noite_7_traz_os_primeiros_brutos_e_nao_a_noite_inteira() -> void:
+	var passo := _perfil().debut_step
 	var rot := _mancha()
 	rot.spawn(7, DIREITA, LARGURA)
 	rot.state.mass = SEM_FUNDO
 	var vieram := _invocar_tudo(rot)
-	assert_int(int(vieram.get(&"brute", 0))).is_equal(1)
-	assert_int(int(vieram.get(&"winged", 0))).is_equal(4)  # a quarta noite do Alado
+	assert_int(int(vieram.get(&"brute", 0))).is_equal(passo)
+	assert_int(int(vieram.get(&"winged", 0))).is_equal(4 * passo)  # a quarta noite do Alado
 
 
 func test_a_estreia_conta_por_noite_e_recomeca_ao_crepusculo() -> void:
@@ -148,7 +150,7 @@ func test_a_estreia_conta_por_noite_e_recomeca_ao_crepusculo() -> void:
 	for _noite in 2:
 		rot.spawn(8, DIREITA, LARGURA)
 		rot.state.mass = SEM_FUNDO
-		assert_int(int(_invocar_tudo(rot).get(&"brute", 0))).is_equal(2)
+		assert_int(int(_invocar_tudo(rot).get(&"brute", 0))).is_equal(2 * _perfil().debut_step)
 		rot.retreat()
 
 
@@ -158,33 +160,37 @@ func test_o_cavador_chamado_pelo_poco_estreia_na_noite_em_que_abre() -> void:
 	var abre := _bicho(&"burrower").min_day - rot.lure_days
 	rot.spawn(abre, DIREITA, LARGURA)
 	rot.state.mass = SEM_FUNDO
-	assert_int(int(_invocar_tudo(rot).get(&"burrower", 0))).is_equal(1)
+	assert_int(int(_invocar_tudo(rot).get(&"burrower", 0))).is_equal(_perfil().debut_step)
 
 
 func test_pagar_respeita_o_dia_a_massa_e_a_estreia() -> void:
 	var rot := _mancha()
 	var bruto := _bicho(&"brute")
-	assert_bool(rot.afford(bruto)).is_false()  # ainda nao nasceu: nada a pagar
+	var dia := bruto.min_day
+	assert_bool(rot.afford(bruto, dia)).is_false()  # ainda nao nasceu: nada a pagar
 	rot.spawn(3, DIREITA, LARGURA)
-	assert_bool(rot.afford(bruto)).is_false()  # o dia dele ainda nao chegou
+	assert_bool(rot.afford(bruto, 3)).is_false()  # o dia dele ainda nao chegou
 	rot.retreat()
-	rot.spawn(bruto.min_day, DIREITA, LARGURA)
-	var antes := rot.mass()
-	assert_bool(rot.afford(bruto)).is_true()
-	assert_float(rot.mass()).is_equal(antes - bruto.mass_cost)
-	assert_bool(rot.afford(bruto)).is_false()  # um so, na primeira noite dele
+	rot.spawn(dia, DIREITA, LARGURA)
+	rot.state.mass = SEM_FUNDO
+	for _k in _perfil().debut_step:
+		assert_bool(rot.afford(bruto, dia)).is_true()
+	assert_float(rot.mass()).is_equal(SEM_FUNDO - _perfil().debut_step * bruto.mass_cost)
+	assert_bool(rot.afford(bruto, dia)).is_false()  # a estreia: so um passo na primeira noite
 	rot.state.mass = 0.0
-	assert_bool(rot.afford(_bicho(&"crawler"))).is_false()
+	assert_bool(rot.afford(_bicho(&"crawler"), dia)).is_false()
 
 
 func test_o_save_guarda_quantas_ja_vieram_nesta_noite() -> void:
 	var rot := _mancha()
 	var bruto := _bicho(&"brute")
 	rot.spawn(bruto.min_day, DIREITA, LARGURA)
-	assert_bool(rot.afford(bruto)).is_true()
+	rot.state.mass = SEM_FUNDO
+	for _k in _perfil().debut_step:
+		assert_bool(rot.afford(bruto, bruto.min_day)).is_true()
 	var lida := _mancha()
 	lida.from_dict(rot.to_dict())
-	assert_bool(lida.afford(bruto)).is_false()
+	assert_bool(lida.afford(bruto, bruto.min_day)).is_false()
 
 
 # ─── O RotPick, peca a peca ──────────────────────────────────────────────────
@@ -208,6 +214,7 @@ func test_cabe_pelo_dia_pela_massa_e_pela_estreia() -> void:
 	RotPick.take(estado, bruto)
 	assert_float(estado.mass).is_equal(0.0)
 	assert_int(int(estado.came[bruto.id])).is_equal(1)
+	estado.came[bruto.id] = p.debut_step
 	estado.mass = SEM_FUNDO
 	assert_bool(RotPick.fits(bruto, p, bruto.min_day, estado, 0)).is_false()  # a estreia
 	assert_bool(RotPick.fits(bruto, p, bruto.min_day + 1, estado, 0)).is_true()

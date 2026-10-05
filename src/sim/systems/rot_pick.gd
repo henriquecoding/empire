@@ -12,6 +12,7 @@ extends RefCounted
 
 ## A tag da criatura que o poco de minerio chama mais cedo (§06, Q-131).
 const ATRAIDA := &"attracted_by_mine"
+const METADE := 0.5
 
 
 ## A mais cara que cabe, cujo dia ja passou, que ainda tem lugar na estreia e cuja
@@ -46,6 +47,19 @@ static func fits(
 ## poco a chama (Q-131).
 static func opens(c: CreatureData, lure_days: int) -> int:
 	return c.min_day - (lure_days if c.tags.has(ATRAIDA) else 0)
+
+
+## Onde nasce quem a mancha invoca: onde ela esta, ou a porta da muralha mais exterior do
+## lado dela (`side`, da `borda` para o `nucleo`) se ja passou por cima. A noite vem de fora
+## do reino (ADR 0070); dentro dos muros nao nasce ninguem (ADR 0071).
+static func door(
+	x: float, side: int, borda: float, nucleo: float, obras: BuildSystem, faixa: Band.Kind
+) -> float:
+	var muro := obras.barrier(borda, nucleo, faixa)
+	if muro == null:
+		return x
+	var face := muro.x + side * muro.width * METADE
+	return maxf(x, face) if side > 0 else minf(x, face)
 
 
 ## Paga-a: a massa sai, e a especie conta mais uma nesta noite.

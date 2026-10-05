@@ -58,5 +58,5 @@ lume_mass_per_fuel = 0.25
 mass_growth = 1.06
 growth_from_night = 10
 ramp_written = true
-debut_step = 1
+debut_step = 3
 dark_from_night = 3
