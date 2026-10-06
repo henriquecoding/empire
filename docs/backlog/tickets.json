@@ -2739,5 +2739,15 @@
   "porque": "Aplicar o relatório de armazéns, subsolos, masmorras e cavernas: nenhum subsolo é só a escada, e nenhuma entrada existe só porque saiu num sorteio",
   "feito": "Contrato de área útil, reserva de chão antes de publicar, base habitável da cave real, baú longe da subida, famílias com causa (caverna nas falhas), tecto por povo, recompensa no interior, reparação de saves antigos, celeiros e ladrão com carga recuperável.",
   "fora": "Transporte, recuperação de depósitos, reservas no cenário, preparação e fuga do ladrão, encontros por papel, ensaios Web e com pessoas."
+ },
+ "UX-05": {
+  "estado": "feito — implementação e provas locais; confirmação final no CI do PR",
+  "depende": "UX-03, UX-04, ADR 0053",
+  "spec": "docs/ux/HUD-MOBILE.md",
+  "horas": "—",
+  "title": "HUD legível e compacta no telemóvel",
+  "porque": "Corrigir a hierarquia, legibilidade e duplicação de controlos da captura móvel.",
+  "feito": "Cartões responsivos, contexto variável, ações compactas, flechas visíveis e estado do reino na pausa.",
+  "fora": "Simulação, balanceamento, arte e validação física num iPhone."
  }
 }

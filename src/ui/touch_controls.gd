@@ -37,6 +37,7 @@ var _espreita := false
 
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	active = Glyphs.initial() == Glyphs.Device.TOUCH

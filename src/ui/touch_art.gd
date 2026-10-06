@@ -10,10 +10,10 @@
 class_name TouchArt
 extends RefCounted
 
-const PAPEL := Color(0.12, 0.10, 0.10, 0.42)
+const PAPEL := Color(0.12, 0.10, 0.10, 0.80)
 const PAPEL_PREMIDO := Color(0.20, 0.16, 0.13, 0.78)
 const TINTA := Color(0.08, 0.07, 0.06, 0.9)
-const TRACO := 3.0
+const TRACO := 1.5
 const ICONE := 4.0
 const MEIO := 0.5
 ## Fraccoes do raio: o icone, onde ele e o rotulo ficam, o botao premido, e a largura
@@ -21,12 +21,10 @@ const MEIO := 0.5
 const MEDIDA := {"icone": 0.26, "alto": 0.2, "rotulo": 0.42, "premido": 0.94, "texto": 1.72}
 ## §26: nenhum caracter abaixo de 12 px a 1280x720.
 const LETRA := {"corpo": 13, "min": 12, "contorno": 4}
-## Um botao que hoje nao faz nada (a roda sem o rei) apaga-se; o INTERAGIR pulsa quando
-## o guia diz que ali ha alguma coisa a fazer com ele.
+## Um botao que hoje nao faz nada apaga-se; o INTERAGIR ganha um aro quando ha um alvo.
 const APAGADO := 0.35
 ## O botao premido enche-se da cor do aro: o polegar tapa-o, e a borda e o que se ve.
 const PREMIDO := 0.3
-const PULSO := {"hz": 1.5, "ms": 0.001}
 const ALAVANCA := {"seta": 0.78, "ponta": 0.14, "polegar": 0.42, "repouso": 0.7, "aro": 0.8}
 const ROSCA := {"raio": 1.25, "bolha": 17.0, "letra": 14, "aro": 2.0}
 const SEGMENTOS := 48
@@ -125,9 +123,7 @@ static func button(ci: CanvasItem, c: Vector2, r: float, estado: Dictionary) -> 
 		ci.draw_circle(c, raio, _alfa(cor, PREMIDO * alfa))
 	ci.draw_arc(c, raio, 0.0, TAU, SEGMENTOS, _alfa(cor, alfa), TRACO, true)
 	if estado.get(&"brilho", false):
-		var fase := Time.get_ticks_msec() * PULSO.ms * TAU * PULSO.hz
-		var pulso := (sin(fase) + 1.0) * MEIO
-		ci.draw_arc(c, raio + TRACO * 2, 0.0, TAU, SEGMENTOS, _alfa(GameHud.MINT, pulso), TRACO)
+		ci.draw_arc(c, raio + 4, 0.0, TAU, SEGMENTOS, GameHud.MINT, 2.0)
 	var pronto: float = estado.get(&"pronto", 1.0)
 	if pronto < 1.0:
 		var de := -PI * MEIO
@@ -142,9 +138,11 @@ static func button(ci: CanvasItem, c: Vector2, r: float, estado: Dictionary) -> 
 static func label(ci: CanvasItem, texto: String, em: Vector2, raio: float, alfa: float) -> void:
 	if texto.is_empty():
 		return
-	var letra := ThemeDB.fallback_font
-	var corpo: int = LETRA.corpo
-	while corpo > LETRA.min and letra.get_string_size(texto, 0, -1, corpo).x > raio * MEDIDA.texto:
+	var letra := HudStyle.font()
+	var factor := ci.get_viewport().get_final_transform().get_scale().x
+	var corpo := roundi(LETRA.corpo * HudLayout.scale_for(factor))
+	var minimum := roundi(LETRA.min * HudLayout.scale_for(factor))
+	while corpo > minimum and letra.get_string_size(texto, 0, -1, corpo).x > raio * MEDIDA.texto:
 		corpo -= 1
 	var largura := raio * 2
 	var onde := em + Vector2(-raio, letra.get_ascent(corpo) * MEIO)

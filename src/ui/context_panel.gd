@@ -1,11 +1,7 @@
 class_name ContextPanel
 extends Label
 
-const POSITION := Vector2(280, 152)
-const BOX := Vector2(720, 56)
 const FONT := 16
-const EDGE := 8
-## O guia refaz-se dez vezes por segundo, como os textos do GameHud.
 const TEXTO_S := GameHud.TEXTO_S
 
 var device := Glyphs.Device.KEYBOARD
@@ -13,34 +9,49 @@ var _texto_em := 0.0
 
 
 func _ready() -> void:
-	position = POSITION
-	size = BOX
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_theme_font_size_override("font_size", FONT)
-	add_theme_color_override("font_color", GameHud.TEXT)
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = GameHud.PAPER
-	panel.content_margin_left = EDGE
-	panel.content_margin_right = EDGE
+	add_theme_font_override("font", HudStyle.font())
+	add_theme_color_override("font_color", HudStyle.TEXT)
+	var panel := HudStyle.panel()
+	panel.set_content_margin_all(8)
 	add_theme_stylebox_override("normal", panel)
 	add_to_group(&"instrumentos")
+	add_to_group(&"hud_context")
 	device = Glyphs.initial()
 
 
 func _input(event: InputEvent) -> void:
-	var name := ""
+	var device_name := ""
 	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
-		name = Input.get_joy_name(event.device)
-	device = Glyphs.device_of(event, device, name)
+		device_name = Input.get_joy_name(event.device)
+	device = Glyphs.device_of(event, device, device_name)
 
 
 func _process(delta: float) -> void:
 	if SimLoop.state == null:
 		return
+	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var area := get_viewport_rect().size / zoom
+	scale = Vector2.ONE * zoom
 	_texto_em -= delta
 	if _texto_em <= 0.0:
 		_texto_em = TEXTO_S
 		text = GameplayGuide.context(device)
+		if text.is_empty() and area.x < HudLayout.GOAL_MIN_WIDTH:
+			text = GameplayGuide.goal()
 	visible = not text.is_empty() and SimLoop.running()
+	var available := area
+	if not TouchControls.active and area.x >= 960:
+		available.x -= CombatBar.WIDTH + 40
+	var frame := HudLayout.context(available, 0)
+	if not TouchControls.active and area.x < 960:
+		frame.position.y = CombatBar.TOP + CombatBar.HEIGHT + 12
+	for header: Control in get_tree().get_nodes_in_group(&"hud_header"):
+		frame.position.y = maxf(frame.position.y, header.get_global_rect().end.y / zoom + 12)
+	size = Vector2(frame.size.x, 0)
+	position = frame.position * zoom

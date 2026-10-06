@@ -1,7 +1,7 @@
 # src/ui/touch_view.gd — o que os controlos de toque mostram, botao a botao (ADR 0047).
 #
 # O TouchArt sabe desenhar um botao; isto sabe o que cada um diz agora: a arma e a
-# habilidade de quem se conduz (ADR 0045), a recarga, o INTERAGIR a pulsar quando o
+# habilidade de quem se conduz (ADR 0045), a recarga, o INTERAGIR destacado quando o
 # guia diz que ha que fazer, e a roda apagada quando nao e o rei que a tem (§24).
 class_name TouchView
 extends RefCounted
@@ -71,6 +71,11 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 				estado[&"icone"] = DONS.get(dom, &"mira")
 				estado[&"rotulo"] = _nome(dom)
 				estado[&"apagado"] = not DONS.has(dom)
+				estado[&"pronto"] = MonarchHud.skill_ready(Assume.driven())
+				if classe == &"monarch":
+					estado[&"pronto"] = (
+						1.0 if InputRouter.impulse_refusal(&"vigil").is_empty() else 0.0
+					)
 			TouchLayout.Role.ASSUME:
 				estado[&"brilho"] = brilho
 			TouchLayout.Role.WHEEL:
@@ -112,4 +117,4 @@ static func _pronto() -> float:
 
 
 static func _nome(chave: StringName) -> String:
-	return TranslationServer.translate(chave).to_upper()
+	return TranslationServer.translate(chave).capitalize()

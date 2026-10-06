@@ -23,8 +23,7 @@ func test_o_painel_nunca_entra_no_corte_de_solo() -> void:
 
 func test_o_painel_nao_tapa_o_aviso_nem_as_legendas() -> void:
 	var caixa := _no_ecra(ECRA, 1.0)
-	var aviso := GameHud.AVISO_CAIXA
-	var moldura := Rect2(aviso.x, aviso.y, aviso.w, aviso.h)
+	var moldura := HudLayout.context(Vector2(ECRA.x - CombatBar.WIDTH - 40, ECRA.y), 24)
 	assert_bool(caixa.intersects(moldura)).is_false()
 	assert_float(caixa.end.y).is_less_equal(Captions.CAIXA.topo)
 	assert_float(caixa.end.x).is_less_equal(ECRA.x)
