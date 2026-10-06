@@ -40,6 +40,8 @@ var _mancha_vista := false
 
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	add_theme_font_override("font", HudStyle.font())
 	# Antes do primeiro frame: o sino da alvorada do dia 1 chega no primeiro tick.
 	enabled = Preferences.on(Preferences.CAPTIONS)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -96,9 +98,18 @@ static func in_view(x: float, largura: float, ecra: Vector2) -> bool:
 
 func _process(delta: float) -> void:
 	enabled = Preferences.on(Preferences.CAPTIONS)
-	var ecra := get_viewport_rect().size
-	position = Vector2(0.0, CAIXA.topo)
-	size = Vector2(ecra.x, CAIXA.alto)
+	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var area := get_viewport_rect().size / zoom
+	var top := HudLayout.CONTEXT_TOP * zoom
+	for group: StringName in [&"hud_context", &"hud_notice"]:
+		for control: Control in get_tree().get_nodes_in_group(group):
+			if control.is_visible_in_tree():
+				top = maxf(top, control.get_global_rect().end.y + HudLayout.GAP * zoom)
+	var width := minf(HudLayout.CONTEXT_WIDTH, area.x - HudLayout.MARGIN * 2)
+	scale = Vector2.ONE * zoom
+	position = Vector2((area.x - width) * MEIA * zoom, top)
+	size = Vector2(width, CAIXA.alto)
+	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	advance(delta)
 
 

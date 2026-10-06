@@ -349,9 +349,15 @@ async function main() {
       resultado(`/jogar/${q}: o primeiro monarca confirma-se pelo teclado`, classes.some((msg) => msg.includes("monarca inicial monarch")));
       await p.keyboard.press("Escape");
       await p.waitForTimeout(150);
-      // Retomar, Opções, Controlos, [Ecrã inteiro], Recomeçar, Exportar abertura, Voltar.
+      // Estado do reino abre sem retomar e Escape devolve o foco à mesma ação (UX-05).
+      await p.keyboard.press("ArrowDown");
+      await p.keyboard.press("Enter");
+      await p.waitForTimeout(150);
+      await p.keyboard.press("Escape");
+      await p.keyboard.press("ArrowUp"); // Retomar, o ponto de partida da travessia.
+      // Retomar, Estado do reino, Opções, Controlos, [Ecrã inteiro], Recomeçar, Exportar, Voltar.
       const ecra = await p.evaluate(() => Boolean(window.empireEcra && window.empireEcra.pode()));
-      for (let i = 0; i < 5 + (ecra ? 1 : 0); i++) {
+      for (let i = 0; i < 6 + (ecra ? 1 : 0); i++) {
         await p.keyboard.press("ArrowDown");
         await p.waitForTimeout(80);
       }

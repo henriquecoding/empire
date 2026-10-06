@@ -3,7 +3,7 @@
 # O polegar mora nos cantos de baixo. A esquerda, a zona da alavanca: ela nasce onde o
 # polegar pousa. A direita, um arco de botoes a volta do maior, a MOEDA — o Verbo 1 e o
 # gesto que acontece milhares de vezes por partida (§24). A pausa fica no canto de
-# cima, por baixo do painel de combate (Q-186), e nao muda de lado nem de tamanho. O
+# cima, junto ao relogio e ao objectivo, e nao muda de lado nem de tamanho. O
 # CORRER fica no arco, em baixo e para o meio: e do polegar que nao anda.
 #
 # Tudo e contado a 1280x720, o ecra de base (§67), a partir do canto do lado do
@@ -17,26 +17,24 @@ enum Role { NONE, STICK, DROP, ATTACK, ASSUME, SKILL, WHEEL, PAUSE, WORLD, FIX, 
 
 const BASE := Vector2(1280.0, 720.0)
 ## Cada botao: x e y do centro contados do canto de baixo do lado do polegar, e o raio.
-## A MOEDA e o centro do arco; ATAQUE, INTERAGIR e a habilidade estao a 150 px dela, a
-## esquerda, a diagonal e em cima; a roda, que se usa uma vez por dia, mais longe. O
-## CORRER, um interruptor, fica a esquerda do ATAQUE e mais em baixo.
+## Duas filas compactas deixam o centro livre; o CORRER fica junto ao ATAQUE.
+## A corrida dura enquanto o dedo prime, como no teclado (Q-193).
 const BOTOES := {
-	Role.DROP: Vector3(130.0, 130.0, 62.0),
-	Role.ATTACK: Vector3(280.0, 130.0, 52.0),
-	Role.ASSUME: Vector3(236.0, 236.0, 44.0),
-	Role.SKILL: Vector3(130.0, 280.0, 42.0),
-	Role.WHEEL: Vector3(393.0, 226.0, 40.0),
-	Role.RUN: Vector3(410.0, 92.0, 38.0),
+	Role.DROP: Vector3(84.0, 92.0, 52.0),
+	Role.ATTACK: Vector3(206.0, 92.0, 44.0),
+	Role.ASSUME: Vector3(86.0, 214.0, 42.0),
+	Role.SKILL: Vector3(204.0, 204.0, 38.0),
+	Role.WHEEL: Vector3(320.0, 198.0, 38.0),
+	Role.RUN: Vector3(322.0, 82.0, 38.0),
 }
-## A pausa: x contado da direita e y de cima. Por baixo do painel de combate.
-const PAUSA := Vector3(58.0, 196.0, 32.0)
+## A pausa: x contado da direita e y de cima, na faixa do cabecalho.
+const PAUSA := Vector3(42.0, 40.0, 26.0)
 ## Quanto o dedo pode errar para fora do desenho e ainda ser o botao.
 const FOLGA := 14.0
-const ENTRE_PAINEL := 18.0
 ## A alavanca em repouso (do canto de baixo do lado dela), o raio e a margem ao ecra.
-const ALAVANCA := {"x": 190.0, "y": 140.0, "raio": 96.0, "margem": 12.0}
+const ALAVANCA := {"x": 136.0, "y": 110.0, "raio": 80.0, "margem": 12.0}
 ## O FIXAR: por cima da alavanca, do lado dela, contado como ela (UX-03).
-const FIXAR := Vector3(190.0, 320.0, 38.0)
+const FIXAR := Vector3(136.0, 242.0, 38.0)
 ## Solta, a alavanca e a metade do ecra do lado do polegar, por baixo do HUD: o polegar
 ## que pousa um pouco mais acima ou mais ao centro anda, e nao espreita (UX-03).
 const ZONA := 0.5
@@ -56,9 +54,7 @@ var fixed := false
 
 func centre(papel: Role) -> Vector2:
 	if papel == Role.PAUSE:
-		var painel := CombatBar.place(screen, ui_scale)
-		var y := maxf(PAUSA.y, painel.end.y + ENTRE_PAINEL + PAUSA.z)
-		return Vector2(screen.x - PAUSA.x, y)
+		return Vector2(screen.x - PAUSA.x * ui_scale, PAUSA.y * ui_scale)
 	if papel == Role.FIX:
 		var x := FIXAR.x * scale
 		return Vector2(screen.x - x if left_handed else x, screen.y - FIXAR.y * scale)
@@ -70,7 +66,7 @@ func centre(papel: Role) -> Vector2:
 
 func radius(papel: Role) -> float:
 	if papel == Role.PAUSE:
-		return PAUSA.z
+		return PAUSA.z * ui_scale
 	if papel == Role.FIX:
 		return FIXAR.z * scale
 	return (BOTOES[papel] as Vector3).z * scale if BOTOES.has(papel) else 0.0
@@ -78,7 +74,7 @@ func radius(papel: Role) -> float:
 
 ## O raio que o dedo acerta: o desenho e a folga.
 func reach(papel: Role) -> float:
-	return radius(papel) + FOLGA * (1.0 if papel == Role.PAUSE else scale)
+	return radius(papel) + FOLGA * (ui_scale if papel == Role.PAUSE else scale)
 
 
 ## Quem e o dedo que pousa em `p`: a pausa, o FIXAR, o botao mais perto (pela fraccao do
@@ -104,7 +100,7 @@ func in_stick_zone(p: Vector2) -> bool:
 		return p.distance_to(stick_home()) <= stick_radius() + FOLGA * scale
 	var borda := screen.x * ZONA
 	var do_lado := p.x > screen.x - borda if left_handed else p.x < borda
-	return do_lado and p.y > GameHud.FAIXA_TOPO
+	return do_lado and p.y > GameHud.FAIXA_TOPO * ui_scale
 
 
 func stick_radius() -> float:

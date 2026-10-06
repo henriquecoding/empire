@@ -3,6 +3,8 @@ extends RefCounted
 
 var options: VBoxContainer
 var controls: VBoxContainer
+var realm: VBoxContainer
+var overview: Label
 var reset: VBoxContainer
 var option_panel: OptionsPanel
 var help: PauseHelp
@@ -25,11 +27,17 @@ func build(layout: PauseLayout, back: Callable, zero: FreshStartPanel) -> void:
 	controls.get_child(1).get_child(0).add_child(help)
 	reset = _page(layout, &"UI_FRESH_START", back)
 	zero.confirmation.reparent(reset.get_child(1).get_child(0))
+	realm = _page(layout, &"UI_REALM_STATUS", back)
+	overview = PauseTheme.label(realm.get_child(1).get_child(0))
+	overview.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	overview.add_theme_constant_override("line_spacing", PauseTheme.ROW_GAP)
 	refresh()
 
 
 func refresh() -> void:
-	var keys := [&"UI_OPTIONS", &"UI_CONTROLS", &"UI_FRESH_START"]
+	if overview != null:
+		overview.text = RealmReadout.overview()
+	var keys := [&"UI_OPTIONS", &"UI_CONTROLS", &"UI_FRESH_START", &"UI_REALM_STATUS"]
 	for i in _titles.size():
 		_titles[i].text = TranslationServer.translate(keys[i])
 	for button: Button in _backs:

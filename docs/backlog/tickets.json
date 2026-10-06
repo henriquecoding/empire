@@ -2755,5 +2755,15 @@
   "notas": [
    "Q-246 regista os números provisórios do escudeiro evoluído."
   ]
+ },
+ "UX-05": {
+  "estado": "feito — implementação e provas locais; confirmação final no CI do PR",
+  "depende": "UX-03, UX-04, ADR 0053",
+  "spec": "docs/ux/HUD-MOBILE.md",
+  "horas": "—",
+  "title": "HUD legível e compacta no telemóvel",
+  "porque": "Corrigir a hierarquia, legibilidade e duplicação de controlos da captura móvel.",
+  "feito": "Cartões responsivos, contexto variável, ações compactas, flechas visíveis e estado do reino na pausa.",
+  "fora": "Simulação, balanceamento, arte e validação física num iPhone."
  }
 }

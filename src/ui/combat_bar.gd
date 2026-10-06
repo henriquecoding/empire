@@ -140,10 +140,18 @@ func _progress(parent: Control, color: Color) -> ProgressBar:
 
 
 func _process(_delta: float) -> void:
-	_fit()
-	visible = SimLoop.field != null and not ClassSelection.active and not TravelPanel.active
+	visible = (
+		SimLoop.field != null
+		and not ClassSelection.active
+		and not TravelPanel.active
+		and not TouchControls.active
+	)
+	if HeroWatch.feedback_serial != _feedback_serial:
+		_feedback_serial = HeroWatch.feedback_serial
+		get_tree().call_group(&"painel", &"say", tr(HeroWatch.feedback))
 	if not visible:
 		return
+	_fit()
 	var who := Assume.driven()
 	var i := SimLoop.units.index_of(who)
 	if i < 0:
@@ -184,9 +192,6 @@ func _process(_delta: float) -> void:
 		if not refusal.is_empty():
 			_skill.tooltip_text += "\n" + refusal
 		_skill_progress.value = 1.0 if refusal.is_empty() else 0.0
-	if HeroWatch.feedback_serial != _feedback_serial:
-		_feedback_serial = HeroWatch.feedback_serial
-		get_tree().call_group(&"painel", &"say", tr(HeroWatch.feedback))
 
 
 func _press_attack() -> void:

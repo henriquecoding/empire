@@ -73,7 +73,7 @@ func test_nada_fica_por_baixo_do_hud_nem_do_painel_de_combate() -> void:
 	var painel := CombatBar.place(BASE, 1.0)
 	for escala: float in ESCALAS:
 		var l := _layout(escala)
-		for a: int in BOTOES + [TouchLayout.Role.PAUSE]:
+		for a: int in BOTOES:
 			var caixa := Rect2(l.centre(a), Vector2.ZERO).grow(l.radius(a))
 			assert_bool(caixa.intersects(painel)).override_failure_message(str(a)).is_false()
 			assert_float(caixa.position.y).override_failure_message(str(a)).is_greater(
