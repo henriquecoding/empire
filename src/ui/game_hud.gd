@@ -79,13 +79,12 @@ func _dispor() -> void:
 	_dica.position = Vector2(HINT.margin, get_viewport_rect().size.y - HINT.bottom * zoom)
 	_dica.size = Vector2(area.x - HINT.margin * 2, HINT.height)
 	_dica.clip_text = true
-	var faixa := HudLayout.band(get_viewport_rect().size.x, zoom, NOTICE.width)
-	_aviso.scale = Vector2.ONE * zoom
-	_aviso.size = Vector2(faixa.y, 0)
+	var ecra := get_viewport_rect().size
 	var top := (
 		_context.get_global_rect().end.y if _context.visible else HudLayout.CONTEXT_TOP * zoom
 	)
-	_aviso.position = Vector2(faixa.x, top + HudLayout.GAP * zoom)
+	HudLayout.fit_label(_aviso, ecra.x, zoom, NOTICE.width, top + HudLayout.GAP * zoom)
+	HudLayout.keep_on_screen(_aviso, ecra.y)
 
 
 func _dizer_chave(chave: StringName) -> void:

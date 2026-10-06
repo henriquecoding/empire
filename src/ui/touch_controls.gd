@@ -231,7 +231,7 @@ func _medir() -> void:
 	l.scale = prefs.number(Preferences.TOUCH_SCALE) * minf(l.ui_scale, TouchLayout.TETO)
 	l.left_handed = prefs.enabled(Preferences.TOUCH_LEFT)
 	l.fixed = prefs.enabled(Preferences.TOUCH_FIXED)
-	TouchLayout.span = l.free_span()
+	TouchLayout.circles = l.circles_now()
 
 
 ## So o Android vibra no browser; o iPhone nao tem a API, e o motor queixava-se a cada toque.

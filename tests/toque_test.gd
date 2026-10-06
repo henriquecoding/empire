@@ -124,7 +124,7 @@ func test_o_canhoto_troca_os_lados_da_alavanca() -> void:
 
 func test_o_tamanho_fica_entre_os_limites() -> void:
 	var l := _layout(3.0)
-	assert_float(l.scale).is_equal(TouchLayout.ESCALA.max * TouchLayout.TETO)
+	assert_float(l.scale).is_equal(TouchLayout.MAXIMO)
 	l.scale = 0.1
 	assert_float(l.scale).is_equal(TouchLayout.ESCALA.min)
 
@@ -220,7 +220,7 @@ func test_o_meio_livre_nao_toca_em_nenhum_controlo() -> void:
 	for canhoto: bool in [false, true]:
 		var l := _layout(1.4, canhoto)
 		l.screen = Vector2(1558.0, 720.0)
-		var livre := l.free_span()
+		var livre := TouchLayout.free_between(l.circles_now(), l.screen.x, l.screen.y)
 		assert_float(livre.y).is_greater(livre.x)
 		for papel: TouchLayout.Role in [TouchLayout.Role.FIX] + TouchLayout.BOTOES.keys():
 			var c := l.centre(papel)

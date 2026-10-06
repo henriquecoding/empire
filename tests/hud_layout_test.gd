@@ -56,15 +56,31 @@ func test_interface_counts_points_not_pixels_on_dense_screens() -> void:
 	assert_float(HudLayout.zoom_for(2.0, 0.0)).is_equal(1.0)
 
 
-## UX-06: no toque o contexto, os avisos e as legendas ficam entre os controlos.
-func test_touch_panels_stay_between_the_controls() -> void:
-	var antes := TouchLayout.span
+## UX-06: no toque um texto so estreita se descesse por cima de um controlo, e nunca
+## abaixo de MIN_BAND; sem controlos a altura dele fica centrado e largo.
+func test_touch_text_moves_off_the_controls_only_when_it_would_cover_them() -> void:
+	var antes := TouchLayout.circles
 	TouchControls.active = true
-	TouchLayout.span = Vector2(320.0, 1040.0)
-	var faixa := HudLayout.band(1558.0, 2.12, 480.0)
-	assert_float(faixa.x).is_greater_equal(320.0)
-	assert_float(faixa.x + faixa.y * 2.12).is_less_equal(1040.0)
+	var texto: Label = auto_free(Label.new())
+	texto.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	texto.text = "Vagabundo · Moedas em falta: 1\nMOEDA largar para recrutar"
+	add_child(texto)
+	var baixos: Array[Vector3] = [Vector3(200, 680, 30), Vector3(1350, 680, 30)]
+	TouchLayout.circles = baixos
+	HudLayout.fit_label(texto, 1558.0, 2.12, 480.0, 170.0)
+	assert_float(texto.size.x).is_equal_approx(480.0, 0.01)
+	var altos: Array[Vector3] = [Vector3(250, 300, 90), Vector3(1300, 300, 90)]
+	TouchLayout.circles = altos
+	HudLayout.fit_label(texto, 1558.0, 2.12, 480.0, 170.0)
+	assert_float(texto.position.x).is_greater_equal(340.0)
+	assert_float(texto.position.x + texto.size.x * 2.12).is_less_equal(1210.0)
+	assert_float(texto.size.x).is_greater_equal(HudLayout.MIN_BAND)
+	var apertados: Array[Vector3] = [Vector3(700, 300, 90), Vector3(860, 300, 90)]
+	TouchLayout.circles = apertados
+	HudLayout.fit_label(texto, 1558.0, 2.12, 480.0, 170.0)
+	assert_float(texto.size.x).is_equal_approx(480.0, 0.01)
+	HudLayout.keep_on_screen(texto, 200.0)
+	var alto := HudLayout.text_height(texto, texto.size.x) * 2.12
+	assert_float(texto.position.y + alto).is_less_equal(200.01)
 	TouchControls.active = false
-	var largo := HudLayout.band(1558.0, 2.12, 480.0)
-	assert_float(largo.y).is_equal(480.0)
-	TouchLayout.span = antes
+	TouchLayout.circles = antes
