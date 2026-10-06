@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 
 
 func _dispor() -> void:
-	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var zoom := HudLayout.zoom(get_viewport())
 	var area := get_viewport_rect().size / zoom
 	_dica.scale = Vector2.ONE * zoom
 	_dica.position = Vector2(HINT.margin, get_viewport_rect().size.y - HINT.bottom * zoom)

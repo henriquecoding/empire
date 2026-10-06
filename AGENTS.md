@@ -259,6 +259,11 @@ src/world/lowland_art.gd    LowlandArt    essa paisagem, em pixeis (§11, §22, 
 src/world/passage_art.gd    PassageArt    a boca da passagem, e o poco quando o subsolo se ve (§11, Q-181)
 src/world/flora_art.gd      FloraArt      o que cresce, em pixeis
 src/world/tree_art.gd       TreeArt       as arvores em pixeis: silhueta por especie, copa por estacao, vento (ADR 0070)
+src/world/renewal_art.gd    RenewalArt    os perfis da arte renovada: elenco, obras, sede e criaturas (ADR 0075)
+src/world/renewal_trees.gd  RenewalTrees  as arvores da arte renovada, com copa, estacao e fita (ADR 0075)
+src/world/renewal_flora.gd  RenewalFlora  os arbustos e as arvores do fundo da arte renovada (ADR 0075)
+src/world/renewal_beasts.gd RenewalBeasts as criaturas da Podridao da arte renovada, com os olhos (ADR 0075)
+src/world/world_text.gd     WorldText     as letras escritas no mundo, legiveis no telemovel (UX-06)
 src/world/forest_view.gd    ForestView    a floresta no plano de accao, a quem serve e o chao que ficou vazio (ADR 0070)
 src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
 src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds
@@ -287,6 +292,7 @@ src/ui/touch_stick.gd       TouchStick    a alavanca, solta ou fixa: andar; corr
 src/ui/wide_touch.gd        WideTouch     no toque, o mundo enche o ecra ate 1,25x o 16:9 (Q-188)
 src/ui/touch_view.gd        TouchView     o que cada botao de toque diz agora (ADR 0047)
 src/ui/touch_art.gd         TouchArt      os controlos de toque, desenhados em formas lisas (ADR 0047)
+src/ui/royal_backdrop.gd    RoyalBackdrop o vale por tras do ecra de escolha do monarca (ADR 0075)
 src/ui/web_screen.gd        WebScreen     o ecra inteiro do browser, pedido a casca (UX-03)
 src/ui/screen_row.gd        ScreenRow     o ecra inteiro na pausa: entrar, sair, ou como no iPhone (UX-03)
 src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)

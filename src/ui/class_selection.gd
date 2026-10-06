@@ -168,8 +168,7 @@ func begin() -> void:
 
 
 func fit() -> void:
-	var factor := maxf(PauseLayout.MIN_SCALE, get_viewport().get_final_transform().get_scale().x)
-	var ui_scale := maxf(1.0, 1.0 / factor)
+	var ui_scale := HudLayout.zoom(get_viewport())
 	scale = Vector2.ONE * ui_scale
 	size = get_viewport_rect().size / ui_scale
 	var inset := maxf(MARGIN, (size.x - MAX_WIDTH) * HALF)

@@ -44,3 +44,13 @@ func test_touch_actions_leave_more_of_the_world_free() -> void:
 	for role: TouchLayout.Role in TouchLayout.BOTOES:
 		var left_edge := layout.centre(role).x - layout.radius(role)
 		assert_float(left_edge).is_greater(900.0)
+
+
+## UX-06: o iPhone da tres pixeis por ponto; a interface conta pontos, e nao pixeis.
+func test_interface_counts_points_not_pixels_on_dense_screens() -> void:
+	var iphone := HudLayout.zoom_for(1170.0 / 720.0, 3.0)
+	assert_float(iphone).is_equal_approx(HudLayout.zoom_for(390.0 / 720.0, 1.0), 0.001)
+	assert_float(iphone * 1170.0 / 720.0 / 3.0).is_equal_approx(1.0, 0.001)
+	assert_float(HudLayout.zoom_for(1.0, 1.0)).is_equal(1.0)
+	assert_float(HudLayout.zoom_for(2.5, 2.0)).is_equal(1.0)
+	assert_float(HudLayout.zoom_for(2.0, 0.0)).is_equal(1.0)

@@ -56,6 +56,6 @@ static func draw(canvas: CanvasItem, band: int) -> void:
 			text,
 			HORIZONTAL_ALIGNMENT_LEFT,
 			-1,
-			FONT_PX,
+			WorldText.px(canvas, FONT_PX),
 			color
 		)

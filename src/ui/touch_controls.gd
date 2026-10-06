@@ -224,9 +224,8 @@ func _pausar() -> void:
 ## reduzido os botoes crescem como a pausa cresce (ADR 0040), ate ao maximo da TouchLayout.
 func _medir() -> void:
 	var prefs := Preferences.shared()
-	var factor := maxf(PauseLayout.MIN_SCALE, get_viewport().get_final_transform().get_scale().x)
 	pad.layout.screen = get_viewport_rect().size
-	pad.layout.ui_scale = maxf(1.0, 1.0 / factor)
+	pad.layout.ui_scale = HudLayout.zoom(get_viewport())
 	pad.layout.scale = prefs.number(Preferences.TOUCH_SCALE) * pad.layout.ui_scale
 	pad.layout.left_handed = prefs.enabled(Preferences.TOUCH_LEFT)
 	pad.layout.fixed = prefs.enabled(Preferences.TOUCH_FIXED)

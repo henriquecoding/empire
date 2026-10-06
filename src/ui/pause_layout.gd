@@ -9,7 +9,6 @@ const WIDE_MARGIN := 48
 const SHORT_HEIGHT := 500
 const FOOTER_HEIGHT := 430
 const REALM_GAP := 64
-const MIN_SCALE := 0.01
 
 var header: VBoxContainer
 var actions: VBoxContainer
@@ -71,8 +70,7 @@ func _ready() -> void:
 
 ## A interface compensa o canvas reduzido: num telefone os alvos continuam a 52 px.
 func fit() -> void:
-	var factor := maxf(MIN_SCALE, get_viewport().get_final_transform().get_scale().x)
-	var ui_scale := maxf(1.0, 1.0 / factor)
+	var ui_scale := HudLayout.zoom(get_viewport())
 	scale = Vector2.ONE * ui_scale
 	size = get_viewport_rect().size / ui_scale
 	var compact := size.x < WIDE_WIDTH

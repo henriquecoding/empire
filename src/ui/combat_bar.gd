@@ -9,7 +9,6 @@ class_name CombatBar
 extends PanelContainer
 
 const PANEL_COLOR := Color(0.10, 0.08, 0.07, 0.94)
-const MIN_SCALE := 0.1
 const SCREEN_MARGIN := 24.0
 ## O canto: a margem da direita do painel do objectivo, e por baixo da faixa de cima.
 const RIGHT_MARGIN := 20.0
@@ -79,8 +78,7 @@ func _ready() -> void:
 
 
 func _fit() -> void:
-	var factor := maxf(MIN_SCALE, get_viewport().get_final_transform().get_scale().x)
-	var ui_scale := maxf(1.0, 1.0 / factor)
+	var ui_scale := HudLayout.zoom(get_viewport())
 	scale = Vector2.ONE * ui_scale
 	var caixa := place(get_viewport_rect().size, ui_scale)
 	size = caixa.size

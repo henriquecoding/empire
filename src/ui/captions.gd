@@ -98,7 +98,7 @@ static func in_view(x: float, largura: float, ecra: Vector2) -> bool:
 
 func _process(delta: float) -> void:
 	enabled = Preferences.on(Preferences.CAPTIONS)
-	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var zoom := HudLayout.zoom(get_viewport())
 	var area := get_viewport_rect().size / zoom
 	var top := HudLayout.CONTEXT_TOP * zoom
 	for group: StringName in [&"hud_context", &"hud_notice"]:

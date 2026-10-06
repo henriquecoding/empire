@@ -93,3 +93,22 @@ Linux/Windows/Web, arranque web, idiomas, teclado, toque e silhueta noturna. A m
 contraste por paleta e os testes de retângulos não substituem uma sessão num iPhone real.
 Ficam para essa sessão o conforto prolongado, a legibilidade exterior, os recortes do ecrã
 e a interação com as barras do Safari. Não se declara essa validação física como realizada.
+
+## UX-06 — a HUD conta pontos, e não píxeis (06/10/2026)
+
+A captura do dono num iPhone mostrou a HUD de UX-05 a um terço do tamanho desenhado. A causa
+era uma conta só: a escala da interface dividia pelos píxeis da janela, e o browser do
+telemóvel dá três píxeis por ponto (`devicePixelRatio`). Num iPhone deitado a janela tem
+2532 × 1170 píxeis, a escala dava 1,0 e cada unidade de 1280 × 720 ficava com 0,54 pontos:
+a letra de 14 lia-se a 7,6 pontos e os botões tinham 41 pontos de diâmetro.
+
+`HudLayout.zoom()` passa a dividir pela densidade do ecrã (`DisplayServer.screen_get_scale()`)
+e a pedir, no toque, 1,15 pontos por unidade. Todos os painéis usam esta mesma conta: a
+faixa, o contexto, a dica, os avisos, as legendas, a pausa, a escolha do monarca, o painel
+de combate e os botões de toque (estes até ao teto da `TouchLayout`). O rótulo de cada botão
+encolhe pelo raio dele, para caber dentro do círculo. As letras escritas no mundo (o nome das
+provisões, o alcance de uma torre) crescem com `WorldText`, até 1,6 ×.
+
+Uma captura a 844 × 390 com densidade 1 é o que o iPhone passa a mostrar a 2532 × 1170 com
+densidade 3; `tests/hud_layout_test.gd` prova a igualdade das duas contas. Num desktop a
+densidade é 1 e nada muda; num Mac com ecrã Retina a janela grande continua a 1,0.
