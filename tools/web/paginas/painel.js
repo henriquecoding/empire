@@ -133,7 +133,10 @@
   });
   $("sair").addEventListener("click", () => {
     if (sujas.size) return dizer($("lote-estado"), "Tens decisões por guardar. Guarda-as ou usa «Descartar rascunho» nas fichas antes de sair.", "aviso");
-    M.sair(); location.reload();
+    M.sair().then(r => {
+      if (!r.remoto) try { sessionStorage.setItem("empire.painel.saida", "local"); } catch (_) { /* fica só o fecho local */ }
+      location.reload();
+    });
   });
   function separador(qual) {
     ["perguntas", "reportes"].forEach(s => { $("tab-" + s).setAttribute("aria-selected", String(s === qual)); $("tab-" + s).tabIndex = s === qual ? 0 : -1; $(s).hidden = s !== qual; });
@@ -223,6 +226,12 @@
   });
   window.addEventListener("beforeunload", ev => { if (sujas.size) { ev.preventDefault(); ev.returnValue = ""; } });
   if (!document.body.dataset.sbUrl) { $("entrar-desligado").hidden = false; $("entrar-form").hidden = true; return; }
+  try {
+    if (sessionStorage.getItem("empire.painel.saida")) {
+      sessionStorage.removeItem("empire.painel.saida");
+      dizer($("entrar-estado"), "Saíste neste dispositivo, mas o servidor não confirmou o fim da sessão. Num dispositivo partilhado, entra e sai outra vez com ligação.", "aviso");
+    }
+  } catch (_) { /* sem armazenamento não há aviso a mostrar */ }
   if (M.sessao()) M.pedir("/rest/v1/rpc/empire_e_admin", { metodo: "POST", corpo: {} }).then(admin => {
     if (admin === true) abrir(); else M.sair();
   }, e => { if (!e.sessaoExpirada) dizer($("entrar-estado"), "Não foi possível confirmar o acesso. Verifica a ligação e tenta entrar novamente.", "erro"); });

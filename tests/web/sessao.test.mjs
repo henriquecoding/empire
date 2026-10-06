@@ -116,8 +116,36 @@ test('sair durante uma renovação não ressuscita a sessão nem envia a escrita
   const gate = new Promise(r => { release = r; });
   const { M, requests } = boot(session({ expira: 1 }), async () => { await gate; return reply(200, tokens); });
   const pending = assert.rejects(M.pedir('/rest/v1/empire_respostas'));
-  await new Promise(r => setImmediate(r)); M.sair(); release(); await pending;
-  assert.equal(M.sessao(), null); assert.equal(requests.length, 1);
+  await new Promise(r => setImmediate(r)); const saida = M.sair(); release(); await pending; await saida;
+  assert.equal(M.sessao(), null);
+  assert.equal(requests.filter(r => !r.url.includes('/auth/v1/logout')).length, 1);
+});
+
+test('sair revoga a sessão no servidor, só esta, e depois pede autenticação (BUG-05)', async () => {
+  const { M, requests, storage } = boot(session(), () => reply(204, null));
+  const r = await M.sair();
+  assert.equal(r.remoto, true);
+  assert.equal(M.sessao(), null); assert.equal(storage.has(key), false);
+  assert.equal(requests.length, 1);
+  assert.match(requests[0].url, /\/auth\/v1\/logout\?scope=local$/);
+  assert.equal(requests[0].method, 'POST');
+  assert.equal(requests[0].headers.Authorization, 'Bearer old');
+  await assert.rejects(M.pedir('/rest/v1/empire_respostas'), expired);
+});
+
+test('sair com o token vencido renova uma vez só para revogar', async () => {
+  const { M, requests } = boot(session(), req => refresh(req) ? reply(200, tokens)
+    : req.headers.Authorization === 'Bearer old' ? reply(401, { message: 'JWT expired' }) : reply(204, null));
+  assert.equal((await M.sair()).remoto, true);
+  assert.equal(requests.length, 3);
+  assert.equal(requests[2].headers.Authorization, 'Bearer new');
+  assert.equal(M.sessao(), null);
+});
+
+test('sem rede, sair fecha na mesma a sessão local e diz que o servidor não confirmou', async () => {
+  const { M } = boot(session(), async () => { throw new TypeError('Failed to fetch'); });
+  assert.equal((await M.sair()).remoto, false);
+  assert.equal(M.sessao(), null);
 });
 
 test('armazenamento bloqueado mantém a sessão em memória', async () => {
