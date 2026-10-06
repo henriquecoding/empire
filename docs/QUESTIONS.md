@@ -7,6 +7,25 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## A tocha na mão e o relatório de auditoria — 06/10/2026 (ADR 0076)
+
+> Pedidos do dono (06/10/2026): *«os imperadores carregam tochas ou algo luminoso na mão para não ficar tão
+> escuro o jogo»*, e aplicar o relatório mestre de auditoria de 06/10/2026.
+
+### Q-247 · A tocha da mão também afasta a emboscada do escuro?
+- **Aplicado (ADR 0076):** a tocha é só luz. Não se gasta e não conta para o `Torchlight.in_dark`; de noite, sem
+  o archote comprado, o escuro continua a trazer emboscadas (Q-029).
+- **Alternativa:** a tocha da mão contar como luz para o `in_dark`. Tornaria o archote inútil, por isso não se fez.
+- **Decide:** tu.
+
+### Q-248 · As árvores que os saves de antes já perderam
+- **Aplicado:** a limpeza da floresta à volta das obras volta a correr quando nasce uma árvore nova (BUG-04 do
+  relatório). Uma árvore que nasceu dentro do chão de uma obra é limpa já na partida que a gerou, e a retoma fica
+  igual à partida contínua.
+- **Em aberto:** um save gravado antes disto pode ter uma árvore de pé dentro de uma obra; ao abrir, a limpeza
+  remove-a (como já acontecia). Não se repõe nem se paga nada por ela.
+- **Decide:** tu, se esses saves precisam de outra regra.
+
 ## O subsolo tem chão para além da escada — 05/10/2026 (ADR 0072)
 
 > Pedido do dono (05/10/2026): *«Implemente esse relatório»* — o relatório de armazéns, subsolos, masmorras e

@@ -170,10 +170,14 @@ func _podridao() -> void:
 func _fogueiras() -> void:
 	HearthArt.flames(self, int(band), _visual_time)
 	var rei := SimLoop.units.index_of(Assume.driven())
-	if rei < 0 or not SimLoop.night.dark.torch.lit() or SimLoop.units.bands[rei] != int(band):
+	if rei < 0 or SimLoop.units.bands[rei] != int(band) or not SimLoop.units.alive(rei):
 		return
-	var mao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)) - LightField.MAO)
-	FlameArt.draw_on(self, mao, ARCHOTE, WorldLight.fire_stops(_podre), _visual_time)
+	var fogo := WorldLight.fire_stops(_podre)
+	if SimLoop.night.dark.torch.lit():
+		var mao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)) - LightField.MAO)
+		FlameArt.draw_on(self, mao, ARCHOTE, fogo, _visual_time)
+	elif HandLight.carried(HandLight.dark_now(), false):  # a tocha da mao (UX-07)
+		HandLight.draw_on(self, HandLight.tip(rei), fogo, _visual_time)
 
 
 ## §24: "Moeda largada — arco parabolico, pequeno bounce e sombra. Isto acontece
