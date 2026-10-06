@@ -83,8 +83,7 @@ func _dispor() -> void:
 	var top := (
 		_context.get_global_rect().end.y if _context.visible else HudLayout.CONTEXT_TOP * zoom
 	)
-	HudLayout.fit_label(_aviso, ecra.x, zoom, NOTICE.width, top + HudLayout.GAP * zoom)
-	HudLayout.keep_on_screen(_aviso, ecra.y)
+	HudLayout.fit_label(_aviso, ecra, zoom, NOTICE.width, top + HudLayout.GAP * zoom)
 
 
 func _dizer_chave(chave: StringName) -> void:

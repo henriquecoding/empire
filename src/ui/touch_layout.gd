@@ -122,12 +122,12 @@ func stick_home() -> Vector2:
 	return Vector2(screen.x - x if left_handed else x, screen.y - ALAVANCA.y * scale)
 
 
-## Os botoes, o FIXAR e a alavanca em repouso: (x, y, alcance) de cada um.
+## Os botoes, o FIXAR e a alavanca em repouso: (x, y, raio desenhado) de cada um.
 func circles_now() -> Array[Vector3]:
 	var lista: Array[Vector3] = []
 	for papel: Role in [Role.FIX] + BOTOES.keys():
 		var c := centre(papel)
-		lista.append(Vector3(c.x, c.y, reach(papel)))
+		lista.append(Vector3(c.x, c.y, radius(papel)))
 	var base := stick_home()
 	lista.append(Vector3(base.x, base.y, stick_radius() + ALAVANCA.margem))
 	return lista

@@ -224,6 +224,6 @@ func test_o_meio_livre_nao_toca_em_nenhum_controlo() -> void:
 		assert_float(livre.y).is_greater(livre.x)
 		for papel: TouchLayout.Role in [TouchLayout.Role.FIX] + TouchLayout.BOTOES.keys():
 			var c := l.centre(papel)
-			var r := l.reach(papel)
+			var r := l.radius(papel)
 			# O Vector2 guarda em 32 bits: um centesimo de px de folga na comparacao.
 			assert_bool(c.x + r <= livre.x + 0.01 or c.x - r >= livre.y - 0.01).is_true()

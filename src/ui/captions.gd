@@ -105,8 +105,9 @@ func _process(delta: float) -> void:
 		for control: Control in get_tree().get_nodes_in_group(group):
 			if control.is_visible_in_tree():
 				top = maxf(top, control.get_global_rect().end.y + HudLayout.GAP * zoom)
-	HudLayout.fit_label(self, area.x * zoom, zoom, HudLayout.CONTEXT_WIDTH, top, CAIXA.alto)
-	HudLayout.keep_on_screen(self, area.y * zoom, CAIXA.alto)
+	# A caixa guarda tres linhas, mas e o texto que tem de caber e de nao tapar um botao.
+	HudLayout.fit_label(self, area * zoom, zoom, HudLayout.CONTEXT_WIDTH, top)
+	size.y = maxf(size.y, CAIXA.alto)
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	advance(delta)
 

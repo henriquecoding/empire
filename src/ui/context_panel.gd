@@ -56,7 +56,7 @@ func _process(delta: float) -> void:
 			frame.position.y, header.get_global_rect().end.y / zoom + HudLayout.PADDING
 		)
 	if TouchControls.active:
-		HudLayout.fit_label(self, area.x * zoom, zoom, frame.size.x, frame.position.y * zoom)
+		HudLayout.fit_label(self, area * zoom, zoom, frame.size.x, frame.position.y * zoom)
 		return
 	size = Vector2(frame.size.x, 0)
 	position = frame.position * zoom

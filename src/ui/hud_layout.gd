@@ -14,7 +14,7 @@ const TOUCH_POINTS := 1.15
 ## O mais estreito que um texto fica para se desviar dos controlos de toque, e quantas
 ## vezes se reve a largura (estreitar faz o texto mais alto, e pode descer mais).
 const MIN_BAND := 140.0
-const ROUNDS := 2
+const ROUNDS := 4
 const COMBAT_MIN_WIDTH := 960.0
 const COMBAT_GAP := 40.0
 const PURSE := Rect2(16, 12, 132, 56)
@@ -54,42 +54,38 @@ static func zoom_for(pixels: float, density: float, touch := false) -> float:
 	return scale_for(points / (TOUCH_POINTS if touch else 1.0))
 
 
-## Poe um texto que se dobra centrado num ecra de `px` de largura, com `largura`
-## unidades, a partir de `top` px e com pelo menos `alto` unidades de altura. No toque,
-## se assim descesse por cima de um controlo, estreita para o x livre entre os controlos
-## dos dois lados que lhe chegam a altura — so se ainda se ler (MIN_BAND); estreito de
-## mais, fica como estava. No telemovel o contexto, o aviso e as legendas desciam por
-## cima dos botoes (UX-06).
+## Poe um texto que se dobra centrado num `ecra` (px), com `largura` unidades, a partir
+## de `top` px e com pelo menos `alto` unidades de altura. No toque, se assim tapasse um
+## controlo, tenta a largura do x livre entre os controlos dos dois lados que lhe chegam a
+## altura — e so a usa se, ja com a altura nova, nao tapar controlo nenhum, couber no ecra
+## e se ler (MIN_BAND). Senao fica largo, como antes: nunca pior (UX-06).
 static func fit_label(
-	label: Label, px: float, zoom: float, largura: float, top: float, alto := 0.0
+	label: Label, ecra: Vector2, zoom: float, largura: float, top: float, alto := 0.0
 ) -> void:
-	var cabe := minf(largura, px / zoom - MARGIN * 2)
-	_place(label, (px - cabe * zoom) * HALF, cabe, zoom, Vector2(top, alto))
-	if not TouchControls.active or TouchLayout.circles.is_empty():
+	var cabe := minf(largura, ecra.x / zoom - MARGIN * 2)
+	var largo := Rect2((ecra.x - cabe * zoom) * HALF, top, cabe, alto)
+	_place(label, largo, zoom)
+	var controlos := TouchLayout.circles
+	if not TouchControls.active or controlos.is_empty() or _clear(label, largo, zoom, ecra.y):
 		return
+	var estreito := largo
 	for _vez in ROUNDS:
-		var fundo := top + maxf(alto, text_height(label, label.size.x)) * zoom
-		var livre := TouchLayout.free_between(TouchLayout.circles, px, fundo)
-		var de := label.position.x
-		if livre.x <= de and livre.y >= de + label.size.x * zoom:
-			return
+		var fundo := top + maxf(alto, text_height(label, estreito.size.x)) * zoom
+		var livre := TouchLayout.free_between(controlos, ecra.x, fundo)
 		var util := minf(largura, (livre.y - livre.x) / zoom - MARGIN * 2)
 		if util < minf(largura, MIN_BAND):
 			return
-		_place(label, (livre.x + livre.y - util * zoom) * HALF, util, zoom, Vector2(top, alto))
-
-
-## No toque, um painel que passaria o fundo do ecra (`altura` px) sobe ate caber.
-static func keep_on_screen(label: Label, altura: float, alto := 0.0) -> void:
-	if not TouchControls.active:
-		return
-	var fundo := maxf(alto, text_height(label, label.size.x)) * label.scale.y
-	if label.position.y + fundo > altura:
-		label.position.y = maxf(0.0, altura - fundo)
+		var novo := Rect2((livre.x + livre.y - util * zoom) * HALF, top, util, alto)
+		if novo.is_equal_approx(estreito):
+			break
+		estreito = novo
+	if _clear(label, estreito, zoom, ecra.y):
+		_place(label, estreito, zoom)
 
 
 ## A altura, em unidades, do texto de `label` dobrado a `largura`: o Label so a sabe no
-## frame seguinte, e um painel que muda de largura tem de a saber ja.
+## frame seguinte, e um painel que muda de largura tem de a saber ja. Conta o espaco
+## entre linhas do Label, que a fonte nao conta.
 static func text_height(label: Label, largura: float) -> float:
 	var caixa := label.get_theme_stylebox(&"normal")
 	var margem := caixa.get_minimum_size() if caixa != null else Vector2.ZERO
@@ -101,13 +97,29 @@ static func text_height(label: Label, largura: float) -> float:
 	var texto := letra.get_multiline_string_size(
 		label.text, HORIZONTAL_ALIGNMENT_LEFT, largura - margem.x, tamanho, -1, dobra
 	)
-	return texto.y + margem.y
+	var linhas := roundf(texto.y / maxf(1.0, letra.get_height(tamanho)))
+	var entre := label.get_theme_constant(&"line_spacing") * maxf(0.0, linhas - 1.0)
+	return texto.y + entre + margem.y
 
 
-static func _place(label: Control, x: float, largura: float, zoom: float, onde: Vector2) -> void:
+## Se o texto posto em `onde` (x e y em px, largura e alto em unidades) cabe no ecra de
+## `altura` px e nao toca em controlo nenhum.
+static func _clear(label: Label, onde: Rect2, zoom: float, altura: float) -> bool:
+	var alto := maxf(onde.size.y, text_height(label, onde.size.x)) * zoom
+	var caixa := Rect2(onde.position, Vector2(onde.size.x * zoom, alto))
+	if caixa.end.y > altura:
+		return false
+	for c: Vector3 in TouchLayout.circles:
+		var perto := Vector2(c.x, c.y).clamp(caixa.position, caixa.end)
+		if perto.distance_to(Vector2(c.x, c.y)) < c.z:
+			return false
+	return true
+
+
+static func _place(label: Control, onde: Rect2, zoom: float) -> void:
 	label.scale = Vector2.ONE * zoom
-	label.size = Vector2(largura, onde.y)
-	label.position = Vector2(x, onde.x)
+	label.size = onde.size
+	label.position = onde.position
 
 
 ## A escala da interface neste ecra: um painel, um botao ou a pausa chamam isto.

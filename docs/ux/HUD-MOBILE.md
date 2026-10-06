@@ -117,10 +117,11 @@ Revisão antes do merge (06/10/2026). Com a escala nova, dois efeitos ficaram à
 corrigidos. O tamanho dos controlos escolhido nas opções voltava a não contar no telemóvel:
 a densidade empurrava qualquer escolha para o máximo. Agora a densidade cresce os botões até
 `TouchLayout.TETO` e a escolha multiplica isso, até `TouchLayout.MAXIMO`. O contexto, os
-avisos e as legendas desciam por cima dos botões; no toque, um texto que fosse descer por
-cima de um controlo estreita para o x livre entre os controlos dos dois lados que lhe chegam
-à altura (`HudLayout.fit_label()`), mas nunca abaixo de `HudLayout.MIN_BAND`: um painel de
-uma letra por linha é pior do que tapar o topo de um botão. Um painel que passaria o fundo do
-ecrã sobe até caber. Nos tamanhos normais, em 640 × 360, 667 × 375 canhoto, 844 × 390 e
-1024 × 768, nada tapa os botões; só com o tamanho máximo dos controlos num ecrã estreito o
-texto volta a ficar largo.
+avisos e as legendas desciam por cima dos botões; no toque, um texto que tapasse um controlo
+tenta a largura do x livre entre os controlos dos dois lados que lhe chegam à altura
+(`HudLayout.fit_label()`), e só a usa se, já com a altura nova (medida com a fonte e o espaço
+entre linhas), não tapar controlo nenhum, couber no ecrã e tiver pelo menos
+`HudLayout.MIN_BAND` unidades. Senão fica largo, como na `main`: nunca fica pior. Nos tamanhos
+normais, em 640 × 360, 667 × 375 canhoto, 844 × 390 e 1024 × 768, o aviso e o contexto não
+tapam os botões; com duas legendas de uma vez num 16:9, ou com os controlos no tamanho
+máximo, o texto pode ficar largo e tapar o topo de um botão.
