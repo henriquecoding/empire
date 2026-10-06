@@ -8,10 +8,10 @@
 -- e não ligado: este ficheiro não toca em base de dados nenhuma do Recibo Certo.
 --
 -- COMO SE USA
---   1. Cria um projeto no Supabase (ou usa um que já tenhas). Depois desta, corre
---      a 002_empire_reportes_teto.sql (a hora do servidor e o teto do envio).
+--   1. Cria um projeto no Supabase (ou usa um que já tenhas).
 --   2. SQL Editor → cola este ficheiro inteiro → Run. É idempotente: correr
---      outra vez não estraga nada.
+--      outra vez não estraga nada. Depois, da mesma maneira, a
+--      002_empire_reportes_teto.sql (a hora do servidor e o teto do envio).
 --   3. Authentication → Users → Add user: o teu email e uma palavra-passe.
 --   4. Torna-te administrador (troca o email):
 --        insert into public.empire_admins (user_id)
