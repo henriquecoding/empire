@@ -3,6 +3,7 @@
   "use strict";
   var M = window.EmpireMotor, $ = function (id) { return document.getElementById(id); };
   if (!M) return;
+  var T = window.EmpireTrabalho, conta = null;
   var todas = Array.from(document.querySelectorAll("article.pergunta"));
   var botoes = Array.from(document.querySelectorAll(".fila-item"));
   var respostas = {}, visiveis = [], atual = null, pronto = false, sujas = new Set(), retomar = null;
@@ -15,7 +16,7 @@
   var rotulos = { por: "Por decidir", aplicada: "Aplicada", adiada: "Adiada", respondida: "À espera de implementação", encerrada: "Encerrada no projeto" };
   function pintar(a, preencher) {
     var r = respostas[a.id], e = estado(a), b = botoes.find(b => b.dataset.pergunta === a.id);
-    a.dataset.estado = e;
+    a.dataset.estado = e; T.resposta(a, r);
     a.querySelector(".p-estado").textContent = pronto ? rotulos[e] : "A carregar resposta…";
     b.querySelector(".fila-estado").textContent = pronto ? rotulos[e] : "A carregar";
     var f = a.querySelector("form");
@@ -42,25 +43,31 @@
       else b.removeAttribute("aria-current");
     });
     var i = visiveis.indexOf(atual);
+    $("escolher-decisao").value = atual?.id || "";
     $("posicao").textContent = atual ? (i + 1) + " de " + visiveis.length : "";
     $("anterior").disabled = i <= 0; $("seguinte").disabled = i < 0 || i >= visiveis.length - 1;
     document.querySelector(".decisao-palco").hidden = !atual;
+    if (atual) history.replaceState(null, "", "#" + atual.id);
     if (atual && foco) {
-      history.replaceState(null, "", "#" + atual.id);
       atual.querySelector("h3").focus({ preventScroll: true });
-      atual.scrollIntoView({ block: "start" });
+      document.querySelector(".decisao-navegacao").scrollIntoView({ block: "start" });
     }
   }
   function filtrar(preferida) {
     var normal = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     var txt = normal($("f-texto").value.trim());
     visiveis = todas.filter(a => (!$('f-tipo').value || a.dataset.tipo === $('f-tipo').value)
-      && (!$('f-estado').value || estado(a) === $('f-estado').value)
+      && (!$('f-estado').value || estado(a) === $('f-estado').value || ($('f-estado').value === 'concluida' && ['aplicada', 'encerrada'].includes(estado(a))))
       && (!$('f-grupo').value || a.dataset.grupo === $('f-grupo').value)
       && (!txt || normal(a.textContent).includes(txt)));
     botoes.forEach(b => { b.hidden = !visiveis.some(a => a.id === b.dataset.pergunta); });
     $("sem-resultados").hidden = visiveis.length > 0;
     $("fila-contagem").textContent = visiveis.length + " decisões nesta lista";
+    $("escolher-decisao").replaceChildren(...visiveis.map(a => new Option(a.id + " · " + a.dataset.titulo, a.id)));
+    $("escolher-decisao").disabled = !visiveis.length;
+    document.querySelectorAll("[data-filtro]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filtro === $("f-estado").value)));
+    var extras = ["f-tipo", "f-grupo"].filter(id => $(id).value).length;
+    $("filtros-ativos").textContent = extras ? "(" + extras + ")" : "";
     selecionar(preferida || (atual && atual.id), false);
   }
   function recibo(a) {
@@ -74,17 +81,23 @@
   }
   function habilitar(valor) {
     todas.forEach(a => a.querySelectorAll("fieldset, textarea, button[type=submit]").forEach(e => { e.disabled = !valor; }));
-    $("copiar").disabled = !valor;
+    $("copiar").disabled = !valor; $("descarregar").disabled = !valor;
+    document.querySelectorAll("[data-filtro]").forEach(b => { b.disabled = !valor; });
   }
   function carregar() {
-    pronto = false; habilitar(false); $("recarregar").hidden = true;
+    pronto = false; habilitar(false); $("recarregar").hidden = true; $("resumo").setAttribute("aria-busy", "true");
     dizer($("lote-estado"), "A carregar respostas…");
     M.pedir("/rest/v1/empire_respostas?select=pergunta,escolha,texto,estado,atualizado_em").then(linhas => {
       respostas = {}; (linhas || []).forEach(r => { respostas[r.pergunta] = r; });
-      pronto = true; habilitar(true); todas.forEach(a => pintar(a, !sujas.has(a.id))); contar();
+      pronto = true; habilitar(true); todas.forEach(a => {
+        pintar(a, !sujas.has(a.id));
+        if (T.repor(a)) { sujas.add(a.id); recibo(a); a.querySelector(".descartar").hidden = false;
+          dizer(a.querySelector(".p-guardado"), "Rascunho recuperado nesta aba. Revê e guarda quando estiver pronto.", "aviso"); }
+      }); contar(); $("resumo").setAttribute("aria-busy", "false");
       var id = retomar || location.hash.slice(1);
       if (todas.some(a => a.id === id)) $("f-estado").value = "";
-      filtrar(id); dizer($("lote-estado"), "Respostas atualizadas. Escolhe uma decisão para começar.");
+      filtrar(id); dizer($("lote-estado"), sujas.size ? sujas.size + " rascunho(s) por guardar nesta aba." : "Respostas atualizadas.");
+      if (id && atual?.id === id) selecionar(id, true);
       if (retomar) {
         retomar = null; selecionar(id, true);
         dizer($("lote-estado"), "Sessão recuperada. As alterações por guardar continuam aqui. Revê a resposta e carrega em Guardar decisão.");
@@ -93,7 +106,14 @@
   }
   function abrir() {
     $("entrar").hidden = true; $("entrar-ajuda").hidden = true; $("area").hidden = false;
+    var email = M.sessao()?.email || "";
+    if (conta !== email) {
+      sujas.clear(); conta = email; respostas = {}; pronto = false;
+      todas.forEach(a => { pintar(a, true); var d = a.querySelector('.descartar'); if (d) d.hidden = true; });
+    }
+    T.abrir(email);
     $("sessao").textContent = "Sessão de administração · " + (M.sessao()?.email || "Empire"); carregar();
+    if (!$("reportes").hidden) window.EmpireReportes.carregar();
   }
   window.addEventListener("empire:sessao-expirada", ev => {
     pronto = false; habilitar(false);
@@ -112,7 +132,7 @@
       e => dizer($("entrar-estado"), "Não foi possível entrar: " + e.message, "erro")).finally(() => { b.disabled = false; });
   });
   $("sair").addEventListener("click", () => {
-    if (sujas.size) return dizer($("lote-estado"), "Tens decisões por guardar. Guarda-as antes de sair ou recarrega a página para as descartar.", "aviso");
+    if (sujas.size) return dizer($("lote-estado"), "Tens decisões por guardar. Guarda-as ou usa «Descartar rascunho» nas fichas antes de sair.", "aviso");
     M.sair(); location.reload();
   });
   function separador(qual) {
@@ -129,34 +149,59 @@
   });
   ["f-texto", "f-tipo", "f-estado", "f-grupo"].forEach(id => $(id).addEventListener(id === "f-texto" ? "input" : "change", () => filtrar()));
   $("limpar-filtros").addEventListener("click", () => { ["f-texto", "f-tipo", "f-estado", "f-grupo"].forEach(id => { $(id).value = ""; }); filtrar(); });
+  document.querySelectorAll("[data-filtro]").forEach(b => b.addEventListener("click", () => {
+    ["f-texto", "f-tipo", "f-grupo"].forEach(id => { $(id).value = ""; }); $("f-estado").value = b.dataset.filtro; filtrar();
+  }));
+  $("escolher-decisao").addEventListener("change", ev => selecionar(ev.target.value, true));
+  window.addEventListener("hashchange", () => {
+    var id = location.hash.slice(1); if (!pronto || !todas.some(a => a.id === id)) return;
+    ["f-texto", "f-tipo", "f-estado", "f-grupo"].forEach(id => { $(id).value = ""; }); filtrar(id); selecionar(id, true);
+  });
   botoes.forEach(b => b.addEventListener("click", () => selecionar(b.dataset.pergunta, true)));
   $("anterior").addEventListener("click", () => selecionar(visiveis[visiveis.indexOf(atual) - 1]?.id, true));
   $("seguinte").addEventListener("click", () => selecionar(visiveis[visiveis.indexOf(atual) + 1]?.id, true));
   $("recarregar").addEventListener("click", carregar);
   todas.forEach(a => {
     var f = a.querySelector("form"); if (!f) return;
-    f.addEventListener("input", () => { sujas.add(a.id); recibo(a); dizer(a.querySelector(".p-guardado"), "Alterações por guardar."); });
+    a.querySelector(".ir-resposta").addEventListener("click", () => {
+      f.scrollIntoView({ block: "start" }); f.querySelector("input[type=radio]")?.focus({ preventScroll: true });
+    });
+    f.addEventListener("input", () => { sujas.add(a.id); recibo(a); f.querySelector(".descartar").hidden = false;
+      dizer(a.querySelector(".p-guardado"), T.guardar(a) ? "Rascunho guardado nesta aba. Falta enviar a decisão." : "Alterações por guardar. Mantém esta aba aberta."); });
+    f.querySelector(".descartar").addEventListener("click", () => {
+      T.remover(a.id); sujas.delete(a.id); pintar(a, true); f.querySelector(".descartar").hidden = true;
+      dizer(a.querySelector(".p-guardado"), "Rascunho descartado. A resposta guardada foi reposta.");
+    });
     f.addEventListener("submit", ev => {
       ev.preventDefault(); if (!pronto || f.dataset.enviando) return;
+      var avancar = ev.submitter?.name === "avancar", proxima = visiveis[visiveis.indexOf(a) + 1]?.id;
       var r = f.querySelector("input:checked"), nota = f.querySelector("textarea").value, aviso = a.querySelector(".p-guardado");
       if (!r) return dizer(aviso, "Escolhe como queres responder.", "erro");
       if (r.value === "aprovar" && a.dataset.aprovavel !== "true") return;
       if (M.contemCodigo(nota)) return dizer(aviso, "Escreve a decisão sem código HTML.", "erro");
       var texto = M.sanitizar(nota);
       if (r.value === "outra" && !texto) return dizer(aviso, "Escreve a tua decisão.", "erro");
+      var anterior = respostas[a.id];
+      if (anterior && anterior.escolha === r.value && (anterior.texto || "") === texto) {
+        sujas.delete(a.id); T.remover(a.id); f.querySelector(".descartar").hidden = true;
+        dizer(aviso, "Sem alterações. A resposta guardada mantém-se.", "feito");
+        if (avancar) selecionar(proxima, true); return;
+      }
       f.dataset.enviando = "true"; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = true; });
       dizer(aviso, "A guardar…");
       M.pedir("/rest/v1/empire_respostas?on_conflict=pergunta", { metodo: "POST", cabecalhos: { Prefer: "resolution=merge-duplicates,return=representation" },
         corpo: [{ pergunta: a.id, escolha: r.value, texto: texto || null, titulo: a.dataset.titulo.slice(0, 300), estado: "nova" }],
       }).then(gravadas => {
         if (!gravadas?.some(x => x.pergunta === a.id)) throw new Error("O servidor não confirmou a resposta.");
-        gravadas.forEach(x => { respostas[x.pergunta] = x; }); sujas.delete(a.id); pintar(a, false); contar();
+        gravadas.forEach(x => { respostas[x.pergunta] = x; }); sujas.delete(a.id); T.remover(a.id); f.querySelector(".descartar").hidden = true; pintar(a, false); contar();
         dizer(aviso, r.value === "adiar" ? "Adiada. Podes retomá-la no filtro «Adiadas»." : "Decisão guardada. Aguarda implementação no jogo.", "feito");
+        dizer($("lote-estado"), a.id + " · " + aviso.textContent, "feito");
+        filtrar(avancar ? proxima : a.id); if (avancar || atual !== a) selecionar(atual?.id, true);
       }).catch(e => dizer(aviso, "Não foi guardada. A tua resposta continua aqui. " + e.message, "erro"))
         .finally(() => { delete f.dataset.enviando; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = !pronto; }); });
     });
   });
-  $("copiar").addEventListener("click", () => {
+  function exportar(descarregar) {
     var linhas = ["# Decisões do Empire", ""];
     todas.forEach(a => { var r = respostas[a.id]; if (!r) return;
       linhas.push("## " + a.id + " · " + a.dataset.titulo, "Escolha: " + r.escolha + " · Estado: " + r.estado);
@@ -165,8 +210,16 @@
       if (r.texto) linhas.push("Resposta: " + r.texto); linhas.push("");
     });
     var md = linhas.join("\n");
+    if (descarregar) { T.descarregar(md); return dizer($("lote-estado"), "Exportação preparada com as respostas guardadas.", "feito"); }
     if (!navigator.clipboard) return dizer($("lote-estado"), "O navegador não permite copiar nesta ligação.", "erro");
     navigator.clipboard.writeText(md).then(() => dizer($("lote-estado"), "Decisões copiadas.", "feito"), () => dizer($("lote-estado"), "Não foi possível copiar. Permite o acesso à área de transferência.", "erro"));
+  }
+  $("copiar").addEventListener("click", () => exportar(false));
+  $("descarregar").addEventListener("click", () => exportar(true));
+  document.addEventListener("keydown", ev => {
+    if ((ev.ctrlKey || ev.metaKey) && ev.key === "s" && pronto && !$("perguntas").hidden && atual?.querySelector("form")) {
+      ev.preventDefault(); atual.querySelector("form").requestSubmit();
+    }
   });
   window.addEventListener("beforeunload", ev => { if (sujas.size) { ev.preventDefault(); ev.returnValue = ""; } });
   if (!document.body.dataset.sbUrl) { $("entrar-desligado").hidden = false; $("entrar-form").hidden = true; return; }

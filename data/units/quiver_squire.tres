@@ -7,6 +7,10 @@ script = ExtResource("1_5dx3u")
 id = &"quiver_squire"
 display_key = "UNIT_QUIVER_SQUIRE"
 max_health = 8
+damage = 4
+attack_interval = 1.4
+range_px = 200
+targets_bands = Array[int]([1, 0])
 recruit_cost = 0
 drops_on_death = Array[StringName]([&"coins", &"corpse"])
 move_speed = 88.0
@@ -14,9 +18,10 @@ scale_tier = 1
 can_change_band = true
 layer_slots = Array[StringName]([&"body", &"head", &"face", &"overlay"])
 shadow_width = 14
-tags = Array[StringName]([&"follows_king", &"companion"])
+tags = Array[StringName]([&"follows_king", &"companion", &"ranged"])
 ability = &"arrow_supply"
 ability_params = {
 &"arrows_per_coin": 6.0
 }
+weapon_kind = &"bow"
 head_pool = Array[StringName]([&"helmet_big"])

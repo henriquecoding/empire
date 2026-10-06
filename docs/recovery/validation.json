@@ -1,5 +1,5 @@
 {
- "date": "2026-10-05",
+ "date": "2026-10-06",
  "base": "RG-23 — relatório mestre e fundação livre Solo, ADR 0066–0069",
  "engine": "4.7.2.stable.official.ed1daf0bf",
  "gdunit": "6.2.1",
@@ -9,14 +9,14 @@
  "csv_tables": 37,
  "generated_resources": 488,
  "original_csv_unchanged": 37,
- "proposed_fields": 1531,
- "proposed_phase_0_to_2": 1064,
- "gdunit_discovered": 1750,
- "gdunit_passed": 1658,
+ "proposed_fields": 1510,
+ "proposed_phase_0_to_2": 1054,
+ "gdunit_discovered": 1754,
+ "gdunit_passed": 1752,
  "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 88,
- "adrs": 72,
+ "adrs": 73,
  "portable_checks_passed": 15,
  "numeric_comparisons": 212,
  "cli_isolation_tests_passed": 3,
@@ -38,7 +38,7 @@
  "i18n_placeholders": 0,
  "catalog_signals": 61,
  "event_bus_signals": 61,
- "gdunit_runtime_cases": 1660,
+ "gdunit_runtime_cases": 1754,
  "approved_panel_source_commit": "1129222b2ed482cd01986601fa146539f324ff32",
  "approved_panel_visual_checks": [
   "travel menu with scrolling",
@@ -160,5 +160,35 @@
    "passed": 20,
    "failed": 0
   }
+ },
+ "panel_ux_verification": {
+  "task": "QP-07 / UN-34 / Q-238",
+  "baseline": "1a0587abafad7efdc4e08d9140c35a0d140b6f37",
+  "static_gates": "passed",
+  "csv_resources": "passed",
+  "web_export": "passed",
+  "web_tests": {
+   "passed": 20,
+   "failed": 0
+  },
+  "panel_browser": "passed: 320/360/768/1440, light/dark, axe, drafts, login recovery, filters, save-and-next, report drafts and confirmed writes",
+  "site_browser": "passed: verificar_site: tudo passa; PT/EN, keyboard/touch, CSP and privacy",
+  "quiver_cases": 4,
+  "quiver_failures": 0,
+  "full_suite_initial_cases": 1723,
+  "full_suite_initial_failures": [
+   "classes_gameplay_test: imperial-arrow fixture also received evolved escort damage"
+  ],
+  "corrected_fixture_cases": 8,
+  "corrected_fixture_failures": 0,
+  "runtime_gate": "Complete local suite passed on the latest main plus this implementation (reports/report_7/results.xml); PR CI must also pass before merge.",
+  "vistoria": "4 of 8 days; king defeated; no broken invariants",
+  "source_commit": "6545c419a4c684d99120bd2c431566ede9d34985",
+  "full_suite_cases": 1754,
+  "passed": 1752,
+  "skipped": 2,
+  "failures": 0,
+  "errors": 0,
+  "flaky": 0
  }
 }

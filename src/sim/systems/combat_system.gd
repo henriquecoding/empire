@@ -1,15 +1,3 @@
-# src/sim/systems/combat_system.gd — legivel antes de emocionante (§50, §07).
-#
-# As quatro regras do §07 sao de design. A que manda neste ficheiro e de
-# implementacao, e o §50 escreve-a sem rodeios: "sem uma ordem fixa, a mesma
-# noite da resultados diferentes e a promessa da seed morre". Por isso a ordem
-# esta escrita, por esta ordem, e nao emerge de nada:
-#
-# O passo 3 evita "uma tropa morre e ainda ataca no mesmo tick" (§43).
-#
-# Puro. O roll de precisao entra de fora, como o desvio do arco (§42, §70), e a noite
-# reproduz-se com a semente: "a apresentacao nunca decide se acertou" (§50). Os campos
-# com underscore valem SO durante uma chamada a resolve(): sao o contexto do passo.
 class_name CombatSystem
 extends RefCounted
 
@@ -140,14 +128,18 @@ func _tropas_batem() -> void:
 		if alvo == NENHUM or i == NENHUM or _a_recarregar(_u.cooldowns[i]):
 			continue
 		var dados: UnitData = _dados_u.get(_u.data_ids[i])
-		if supply != null and not supply.can_shoot(_u, i, dados):
+		var ammo := EscortArms.source(_u, i, dados, picker.escorts)
+		if ammo < 0 or not _u.alive(i):
+			continue
+		var municao: UnitData = _dados_u.get(_u.data_ids[ammo])
+		if supply != null and not supply.can_shoot(_u, ammo, municao):
 			continue  # a aljava vazia (Q-163): nao dispara, nem sorteia
 		var bonus: Dictionary = perks.get(unit_id, {})  # o titulo (Q-102)
 		_u.cooldowns[i] = (
 			dados.attack_interval * Posts.cadence(_postos, _u, i) / TitlePerks.rate(bonus)
 		)
 		if supply != null:
-			supply.shoot(_u, i, dados)
+			supply.shoot(_u, ammo, municao)
 		var acertou: bool = _sorteio.call() < Posts.accuracy(_postos, _u, i, dados)
 		_eventos.append({CHAVE: EV_ATAQUE, DE: unit_id, PARA: alvo, ACERTOU: acertou})
 		if acertou:

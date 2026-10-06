@@ -79,6 +79,10 @@ static func sync() -> void:
 	campo.classes.active = dados.skill_class == Monarchy.REI
 	var escudeiro := int(campo.monarchy.bonds.get(SimLoop.king_id, UnitSystem.NENHUM))
 	campo.classes.squire_id = escudeiro if dados.service == ESCUDO else UnitSystem.NENHUM
+	if SimLoop.combat != null:
+		SimLoop.combat.picker.escorts.clear()
+		if dados.service == FLECHAS and escudeiro != UnitSystem.NENHUM and evolved(campo):
+			SimLoop.combat.picker.escorts[escudeiro] = SimLoop.king_id
 
 
 ## O Verbo 2 sem mais nada onde pegar: pagar ao companheiro (Q-114, Q-199, Q-200).
