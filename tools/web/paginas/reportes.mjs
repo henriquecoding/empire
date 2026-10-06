@@ -84,7 +84,7 @@ export function painel({ textos, d, v, sb, perguntas }) {
   const cab = cabeca({
     t, v, titulo: "Painel · Empire", descricao: "As perguntas do QUESTIONS.md e os reportes, para o dono responder.",
     robots: "noindex, nofollow", canonico: "", alternativas: [], csp: cspCom(sb.url),
-    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
+    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painelTrabalho}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
   }).replace("</head>", `<link rel="stylesheet" href="${v.painelCss}">\n</head>`);
   const n = (tipo) => perguntas.filter((q) => q.tipo === tipo).length;
   return `${cab}
@@ -92,10 +92,15 @@ export function painel({ textos, d, v, sb, perguntas }) {
 ${topo({ t, v, ancoras: false })}
 <main id="conteudo" class="painel">
   <div class="envolve">
-    <p class="kicker"><span>Commit ${esc(d.sha.slice(0, 7))} · Centro de decisões</span></p>
-    <h1>Vamos dar forma ao Empire.</h1>
-    <p class="painel-intro">Entende o que está em causa, avalia a proposta e decide o próximo passo do jogo. Uma decisão de cada vez.</p>
-    <p class="painel-intro">O <a href="https://github.com/henriquecoding/empire/blob/${esc(d.sha)}/docs/reports/EMPIRE-MASTER.md">relatório mestre</a> tem preferência nos conflitos de design. A <a href="https://github.com/henriquecoding/empire/blob/${esc(d.sha)}/docs/reports/PANEL-RECONCILIATION.md">reconciliação das respostas</a> distingue decisões aprovadas, alterações implementadas e trabalho pendente.</p>
+    <header class="painel-cabecalho">
+      <div><p class="kicker"><span>Centro de decisões</span></p><h1>Painel do Empire</h1>
+        <p class="painel-intro">Decide o próximo passo e acompanha o que chega ao jogo.</p></div>
+      <details class="painel-contexto"><summary>Como funciona</summary>
+        <p>Guardar regista a tua decisão. A implementação é acompanhada separadamente.</p>
+        <p>O <a href="https://github.com/henriquecoding/empire/blob/${esc(d.sha)}/docs/reports/EMPIRE-MASTER.md">relatório mestre</a> tem preferência nos conflitos de design. Consulta a <a href="https://github.com/henriquecoding/empire/blob/${esc(d.sha)}/docs/reports/PANEL-RECONCILIATION.md">reconciliação das respostas</a>.</p>
+        <small>Versão ${esc(d.sha.slice(0, 7))}</small>
+      </details>
+    </header>
 
     <section class="entrar" id="entrar" aria-labelledby="entrar-t">
       <h2 id="entrar-t">Entrar</h2>
@@ -122,29 +127,33 @@ ${topo({ t, v, ancoras: false })}
 
       <section id="perguntas" role="tabpanel" aria-labelledby="tab-perguntas">
         <div class="resumo" id="resumo" aria-label="Estado das decisões">
-          <p><strong id="c-por">—</strong><span>Por decidir</span></p>
-          <p><strong id="c-respondidas">—</strong><span>À espera de implementação</span></p>
-          <p><strong id="c-adiadas">—</strong><span>Adiadas</span></p>
-          <p><strong id="c-aplicadas">—</strong><span>Aplicadas ou encerradas</span></p>
+          <button type="button" data-filtro="por" aria-pressed="true"><strong id="c-por">—</strong><span>Por decidir</span></button>
+          <button type="button" data-filtro="respondida" aria-pressed="false"><strong id="c-respondidas">—</strong><span>À espera de implementação</span></button>
+          <button type="button" data-filtro="adiada" aria-pressed="false"><strong id="c-adiadas">—</strong><span>Adiadas</span></button>
+          <button type="button" data-filtro="concluida" aria-pressed="false"><strong id="c-aplicadas">—</strong><span>Aplicadas ou encerradas</span></button>
         </div>
-        <div class="painel-agora"><div><p class="eyebrow">O próximo passo</p><h2>Uma escolha informada começa pelo contexto.</h2><p>À esquerda, escolhe uma questão. Na ficha, vê a proposta completa e o que ainda está em aberto.</p></div><button class="botao" id="copiar" type="button" disabled>Copiar decisões guardadas</button></div>
         <div class="estado-carregamento"><p id="lote-estado" role="status" aria-live="polite">A carregar respostas…</p><button class="botao" id="recarregar" type="button" hidden>Tentar novamente</button></div>
         <div class="filtros">
           <label class="campo"><span>Procurar</span><input id="f-texto" type="search" placeholder="Q-143, herdeiro, soldo…"></label>
+          <label class="campo"><span>Estado</span><select id="f-estado">
+            <option value="">Todas</option><option value="por" selected>Por decidir</option>
+            <option value="concluida">Aplicadas ou encerradas</option><option value="respondida">À espera de implementação</option><option value="adiada">Adiadas</option><option value="aplicada">Aplicadas</option><option value="encerrada">Encerradas no projeto</option></select></label>
+          <details class="filtros-avancados"><summary>Mais filtros <span id="filtros-ativos"></span></summary><div class="filtros-extra">
           <label class="campo"><span>Tipo</span><select id="f-tipo">
             <option value="">Todos</option><option value="confirmar">Rever decisão (${n("confirmar")})</option>
             <option value="escolher">Avaliar proposta (${n("escolher")})</option><option value="decidir">Decidir (${n("decidir")})</option></select></label>
-          <label class="campo"><span>Estado</span><select id="f-estado">
-            <option value="">Todas</option><option value="por" selected>Por decidir</option>
-            <option value="respondida">À espera de implementação</option><option value="adiada">Adiadas</option><option value="aplicada">Aplicadas</option><option value="encerrada">Encerradas no projeto</option></select></label>
           <label class="campo"><span>Secção</span><select id="f-grupo"><option value="">Todas</option>
             ${grupos.map((g) => `<option>${esc(g)}</option>`).join("")}</select></label>
+          </div></details>
         </div>
-        <div class="fila-barra"><p id="fila-contagem" role="status"></p><button class="botao" id="limpar-filtros" type="button">Limpar filtros</button></div>
+        <div class="fila-barra"><p id="fila-contagem" role="status"></p><div class="fila-ferramentas">
+          <button class="botao" id="limpar-filtros" type="button">Limpar filtros</button>
+          <button class="botao" id="copiar" type="button" disabled>Copiar decisões</button>
+          <button class="botao" id="descarregar" type="button" disabled>Exportar .md</button></div></div>
         <p class="vazio" id="sem-resultados" hidden>Nenhuma decisão corresponde aos filtros. Altera a pesquisa ou limpa os filtros para ver todas.</p>
         <div class="decisoes-layout">
           <nav class="fila-decisoes" aria-label="Escolher uma decisão">${perguntas.map(filaPergunta).join('')}</nav>
-          <div class="decisao-palco"><div class="decisao-navegacao"><button class="botao" id="anterior" type="button">← Anterior</button><span id="posicao"></span><button class="botao" id="seguinte" type="button">Seguinte →</button></div>
+          <div class="decisao-palco"><div class="decisao-navegacao"><button class="botao" id="anterior" type="button" aria-label="Decisão anterior">← <span class="nav-texto">Anterior</span></button><span id="posicao"></span><label class="campo seletor-movel"><span class="sr-only">Escolher decisão</span><select id="escolher-decisao"></select></label><button class="botao" id="seguinte" type="button" aria-label="Decisão seguinte"><span class="nav-texto">Seguinte</span> →</button></div>
             <div class="lista-perguntas">${perguntas.map(cartaoPergunta).join('')}</div>
           </div>
         </div>

@@ -10,11 +10,14 @@ export function cartaoPergunta(q) {
     <header class="decisao-cabeca">
       <p class="p-meta"><span class="p-id">${q.id}</span><span class="chip chip-${q.tipo}">${TIPOS[q.tipo]}</span><span class="p-estado">A carregar resposta…</span></p>
       <h3 tabindex="-1">${esc(q.titulo)}</h3><p class="p-grupo">${esc(q.grupo)}</p>
+      ${!encerrada ? '<button type="button" class="botao ir-resposta">Ir à resposta ↓</button>' : ''}
     </header>
+    <div class="resposta-guardada" hidden><strong>A tua resposta guardada</strong><p></p><small></small></div>
     <div class="decisao-conteudo">
       ${bloco('O que está em causa', q.resumo || q.contexto)}
       ${q.decisao && q.pendencia ? bloco('O que já foi decidido', q.decisao) : ''}
       ${bloco('O que falta decidir', q.pendencia, 'pendencia')}
+      ${bloco('O que falta implementar', q.implementacao, 'trabalho-pendente')}
       ${bloco(encerrada ? 'Decisão registada' : q.tipo === 'confirmar' ? 'Decisão provisória para rever' : 'Proposta em análise', q.proposta, 'proposta')}
       ${bloco('Na prática', q.impacto)}
       ${bloco('O que depende disto', q.bloqueio)}
@@ -36,7 +39,7 @@ export function cartaoPergunta(q) {
       <label class="campo"><span>Nota ou decisão <span class="nota-obrigatoria">(opcional)</span></span><textarea name="texto" rows="3" maxlength="4000" disabled placeholder="Que comportamento queres no jogo? O que deve mudar?"></textarea></label>
       <div class="decisao-recibo" hidden><strong>Vais guardar</strong><p></p></div>
       <p class="decisao-ajuda">Guardar regista a tua resposta. A alteração só chega ao jogo depois de ser implementada e publicada.</p>
-      <div class="accoes"><button class="botao principal" type="submit" disabled>Guardar decisão</button><span class="p-guardado" role="status" aria-live="polite"></span></div>
+      <div class="accoes"><button class="botao principal" type="submit" disabled>Guardar decisão</button><button class="botao" type="submit" name="avancar" disabled>Guardar e seguinte →</button><button class="botao descartar" type="button" hidden>Descartar rascunho</button><span class="p-guardado" role="status" aria-live="polite"></span></div>
       <span class="objeto-aprovacao" hidden>${esc(objeto)}</span>
     </form>`}
   </article>`;

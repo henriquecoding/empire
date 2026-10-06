@@ -8,7 +8,6 @@ const SEM_DANO := 0
 ## muralha, e por isso nem olha para quem esta atras dela.
 const MAIS_PROXIMO := &"nearest"
 
-## Metade. Nao e afinacao: e onde fica a face de uma coisa com largura.
 const MEIO := 0.5
 
 ## A fila de contacto do §50: quem engaja e quem espera.
@@ -16,6 +15,7 @@ var fila: ContactQueue
 var focused: Dictionary = {}
 var song: BardSong
 var controlled := UnitSystem.NENHUM
+var escorts: Dictionary = {}
 
 var _postos: JobBoard
 var _unidades: Dictionary = {}
@@ -67,6 +67,9 @@ func choose(
 		var dados: UnitData = _unidades.get(unidades.data_ids[i])
 		if dados == null or dados.damage <= SEM_DANO:
 			continue
+		if EscortArms.source(unidades, i, dados, escorts) < 0:
+			forget(unit_id)
+			continue
 		_alvos[unit_id] = _da_tropa(unidades, i, dados, criaturas)
 		if unit_id != controlled:
 			_estado(unidades, i, _alvos[unit_id] != NENHUM, eventos)
@@ -85,8 +88,6 @@ func choose(
 	return eventos
 
 
-## Por id crescente (§42): a ordem das colunas nao e estavel — o remove() troca
-## com a ultima — e uma noite que dependesse dela nao se reproduzia.
 static func ids_por_ordem(ids: PackedInt32Array) -> PackedInt32Array:
 	var ordem := ids.duplicate()
 	ordem.sort()

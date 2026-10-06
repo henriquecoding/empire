@@ -215,7 +215,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UN-31](UN-31.md) | Servidor e reconexão | UN-29, UN-30, RG-25 | por fazer |
 | [UN-32](UN-32.md) | O herdeiro neutro, caro, e a chave da troca | UN-07, UN-16 | por fazer |
 | [UN-33](UN-33.md) | O quarto imperador e a escudeira que dança | UN-16 | por fazer |
-| [UN-34](UN-34.md) | O escudeiro evoluído dispara flechas | UN-14 | por fazer |
+| [UN-34](UN-34.md) | O escudeiro evoluído dispara flechas | UN-14 | feito |
 
 ## Da Clareira ao reino — ADR 0059
 
@@ -262,3 +262,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [QP-04](QP-04.md) | O refinamento da jogabilidade de 03/10/2026 | QP-02 | feito |
 | [QP-05](QP-05.md) | A caça a sério | QP-04 | feito |
 | [QP-06](QP-06.md) | A caça longe do reino | QP-05 | feito |
+| [QP-07](QP-07.md) | Usar o Painel no desktop e no mobile | QP-02, UN-34, RG-26 | feito |

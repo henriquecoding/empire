@@ -103,13 +103,14 @@ function escreverAssets(saida, d) {
     ["reportar", "js", readFileSync(join(PAGINAS, "reportar.js"), "utf8")],
     ["painelCss", "css", minificarCss(readFileSync(join(PAGINAS, "painel.css"), "utf8"))],
     ["painelReportes", "js", readFileSync(join(PAGINAS, "painel-reportes.js"), "utf8")],
+    ["painelTrabalho", "js", readFileSync(join(PAGINAS, "painel-trabalho.js"), "utf8")],
     ["painel", "js", readFileSync(join(PAGINAS, "painel.js"), "utf8")],
   ]) {
     const f = `${nome}.${hash(texto)}.${ext}`;
     writeFileSync(join(dir, f), texto);
     saidas[nome] = `/assets/${f}`;
   }
-  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site, motor: saidas.motor, reportar: saidas.reportar, painel: saidas.painel, painelCss: saidas.painelCss, painelReportes: saidas.painelReportes };
+  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site, motor: saidas.motor, reportar: saidas.reportar, painel: saidas.painel, painelTrabalho: saidas.painelTrabalho, painelCss: saidas.painelCss, painelReportes: saidas.painelReportes };
 }
 
 // O Supabase do Empire (ADR 0026): o ambiente manda, e o config.json é o de

@@ -9,14 +9,14 @@
  "csv_tables": 37,
  "generated_resources": 488,
  "original_csv_unchanged": 37,
- "proposed_fields": 1531,
- "proposed_phase_0_to_2": 1064,
- "gdunit_discovered": 1750,
+ "proposed_fields": 1510,
+ "proposed_phase_0_to_2": 1054,
+ "gdunit_discovered": 1754,
  "gdunit_passed": 1658,
  "gdunit_skipped": 2,
  "gdunit_failures": 0,
  "spec_sections": 88,
- "adrs": 72,
+ "adrs": 73,
  "portable_checks_passed": 15,
  "numeric_comparisons": 212,
  "cli_isolation_tests_passed": 3,
@@ -160,5 +160,28 @@
    "passed": 20,
    "failed": 0
   }
+ },
+ "panel_ux_verification": {
+  "task": "QP-07 / UN-34 / Q-238",
+  "baseline": "d2103f9ac7a8f218cc9c9397dfb087eeffb857c9",
+  "static_gates": "passed",
+  "csv_resources": "passed",
+  "web_export": "passed",
+  "web_tests": {
+   "passed": 20,
+   "failed": 0
+  },
+  "panel_browser": "passed: 320/360/768/1440, light/dark, axe, drafts, login recovery, filters, save-and-next, report drafts and confirmed writes",
+  "site_browser": "passed: verificar_site: tudo passa; PT/EN, keyboard/touch, CSP and privacy",
+  "quiver_cases": 4,
+  "quiver_failures": 0,
+  "full_suite_initial_cases": 1723,
+  "full_suite_initial_failures": [
+   "classes_gameplay_test: imperial-arrow fixture also received evolved escort damage"
+  ],
+  "corrected_fixture_cases": 8,
+  "corrected_fixture_failures": 0,
+  "runtime_gate": "Complete suite runs again in the PR CI before merge. The initial local run is retained above, not claimed as wholly green.",
+  "vistoria": "4 of 8 days; king defeated; no broken invariants"
  }
 }

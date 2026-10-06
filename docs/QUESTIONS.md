@@ -120,6 +120,15 @@
   coluna `peak_from_night`) e muda a tua Q-126; por isso fica aqui.
 - **Decide:** tu.
 
+## O escudeiro evoluído — 05/10/2026 (ADR 0073)
+
+### Q-246 · O combate do escudeiro Arqueiro evoluído
+- **Decidido:** o escudeiro evoluído também dispara (Q-200).
+- **Aplicado (ADR 0073, UN-34):** só evoluído e com patrono vivo na mesma faixa; cada disparo usa uma flecha da aljava paga que o escudeiro abastece. Sem flechas, não dispara nem cobra automaticamente.
+- **Proposta reversível:** números do arqueiro de tropa: dano 4, intervalo 1,4 s, precisão em campo 0,34 e alcance 200 px. Continuam em `_proposed` no `quiver_squire`.
+- **Em aberto:** validar a força adicional da dupla no playtest; manter uma aljava partilhada ou dar uma reserva paga própria ao escudeiro.
+- **Onde:** `EscortArms`, `TargetPicker`, `CombatSystem`; `quiver_escort_test`.
+
 ## A floresta como território — 05/10/2026 (ADR 0070)
 
 ### Q-237 · Fundar onde se para, e a carroça que alcança (verificação do PR #85)
@@ -140,17 +149,19 @@
 - **Decide:** tu, se alguma consequência deve voltar a ser proibição, e a largura do reino que a noite usa.
 
 ### Q-238 · Os números e as regras da floresta
+- **Aprovada pelo dono (painel, 05/10/2026 às 16:45 UTC):** a proposta apresentada.
+- **Aplicado (ADR 0073):** densidade, trabalho, moedas e regras de `forest.csv` confirmados; valores preservados, sem nova mecânica presumida.
 - **Pedido do dono (05/10/2026):** *«implemente também o que coloquei nesse relatório»* — o relatório de vegetação.
 - **Aplicado:** árvores com estado no save, corte pago a um construtor, duas regras de influência com pré-visualização,
   estações na copa e na flor, transições de bioma pelas duas pontas (ADR 0070, RG-26).
-- **Propostas reversíveis:** em `flora.csv` as cinco espécies, os biomas, a densidade mínima, o trabalho (10–16 s) e as
+- **Proposta aprovada:** em `flora.csv` as cinco espécies, os biomas, a densidade mínima, o trabalho (10–16 s) e as
   moedas do tronco (1–2); em `forest.csv` a célula (56 px), a folga do que o mapa precisa (56), o custo do corte (1), o
   alcance (28), a flora que sai com o tronco (32), o bosque da coleta (240 px, 3 árvores, +1 por dia, máximo 1) e o
   abrigo do veado (200 px, 2 árvores).
-- **Escolhas minhas, reversíveis:** um muro não corta a influência; a obra tem prioridade sobre a árvore no mesmo sítio
+- **Regras aprovadas:** um muro não corta a influência; a obra tem prioridade sobre a árvore no mesmo sítio
   e limpa o chão sem moeda; o corte só depois de fundar e com construtor; a toca que vive de árvores nasce sempre com o
   abrigo mínimo; as flores somem no outono e no inverno.
-- **Decide:** tu, os números depois de jogar; e se o corte deve também abrir espaço novo para obras, como no Kingdom.
+- **Seguimento:** os valores aprovados podem ser afinados depois de jogar; uma mecânica adicional de expansão territorial será registada numa pergunta própria. A altura visual continua proposta.
 
 ## Relatório mestre prioritário — 05/10/2026 (ADR 0066–0069)
 
@@ -631,7 +642,7 @@
 
 ### Q-200 · A aljava do Imperador Arqueiro e o escudeiro que a abastece
 - **Respondida pelo dono (painel, 03/10/2026 — outra resposta):** *«Para tornar mais equilibrado pagar o escudeiro só dá 6 flechas. Na evolução dele ele também ataca os inimigos com flechas»*.
-- **Aplicado (03/10/2026, ADR 0053):** 6 flechas por moeda (`arrows_per_coin:6` no `quiver_squire`); a banca continua a dar 12 às tropas. Teste: `tests/aljava_imperial_test.gd`. **Por aplicar (UN-34):** o escudeiro evoluído que dispara.
+- **Aplicado (03/10/2026, ADR 0053):** 6 flechas por moeda (`arrows_per_coin:6` no `quiver_squire`); a banca continua a dar 12 às tropas. Teste: `tests/aljava_imperial_test.gd`. **Aplicado (ADR 0073, UN-34):** o escudeiro evoluído dispara das flechas pagas da aljava do patrono; não dispara sem flechas nem cobra automaticamente. Afinação nova na Q-246.
 - **Onde:** plano §5.5, §4.3; UN-13, UN-14. A tua regra (pagamento pessoal, sem moedas sem flechas) é D.
 - **Proposta (P):** aljava de 30, com 12 flechas no início; 6 flechas por moeda no escudeiro (decisão do dono); a banca fornece 12 às tropas. Com a
   aljava quase cheia, o lote que não cabe fica pago e registado para a reposição seguinte — nunca se cobra um lote e
