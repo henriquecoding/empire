@@ -1,13 +1,13 @@
 extends GdUnitTestSuite
 
 
-func test_temporary_combatants_replace_proxies_but_keep_author_originals() -> void:
-	assert_str(String(OriginalArt.unit_profile(&"archer"))).is_equal("temp_archer")
-	assert_str(String(OriginalArt.unit_profile(&"spearman"))).is_equal("temp_spearman")
-	assert_str(String(OriginalArt.unit_profile(&"archer_hero"))).is_equal("temp_archer_hero")
-	assert_str(String(OriginalArt.unit_profile(&"monarch"))).is_equal("monarch")
-	assert_str(String(OriginalArt.unit_profile(&"cook"))).is_equal("cook")
-	assert_str(String(OriginalArt.unit_profile(&"vagrant"))).is_equal("vagrant")
+func test_live_profiles_follow_the_new_art_direction() -> void:
+	assert_str(String(OriginalArt.unit_profile(&"archer"))).is_equal("royal_bowman")
+	assert_str(String(OriginalArt.unit_profile(&"spearman"))).is_equal("royal_spearman")
+	assert_str(String(OriginalArt.unit_profile(&"archer_hero"))).is_equal("royal_archer")
+	assert_str(String(OriginalArt.unit_profile(&"monarch"))).is_equal("royal_king")
+	assert_str(String(OriginalArt.unit_profile(&"cook"))).is_equal("royal_cook")
+	assert_str(String(OriginalArt.unit_profile(&"vagrant"))).is_equal("royal_citizen")
 
 
 func test_imported_combatants_have_actions_and_frames_inside_their_texture() -> void:

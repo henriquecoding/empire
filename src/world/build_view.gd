@@ -61,7 +61,7 @@ static func _carroca(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting) -> voi
 	if faixa != Band.Kind.SURFACE or (SimLoop.seat.cart_coins <= 0 and not SimLoop.arrival.active):
 		return
 	var pe := Vector2(SimLoop.seat.cart_x, WorldPalette.ground_of(int(faixa)))
-	BuildingSkins.painted.draw_on(canvas, SeatSprites.CARROCA, pe, luz.body(Color.WHITE, pe.x))
+	BuildingSkins.art.draw_on(canvas, &"royal_cart", pe, luz.body(Color.WHITE, pe.x))
 
 
 ## O alfa do convite neste instante do ecra: entre PISCAR.minimo e 1.

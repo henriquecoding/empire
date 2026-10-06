@@ -129,7 +129,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		)
 	# Two passes keep the shared shadow texture and actor atlas batchable.
 	for item in draws:
-		var width := float(_art.entry(item.profile).size[0]) * HALF
+		var width := _art.body_box(item.profile, Vector2.ZERO).size.x * HALF
 		var rect := Rect2(
 			item.foot - Vector2(width * HALF, SHADOW_HEIGHT * HALF), Vector2(width, SHADOW_HEIGHT)
 		)
@@ -142,19 +142,19 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 			continue
 		var dados: UnitData = _data.get(units.data_ids[i])
 		var box := _art.body_box(item.profile, item.foot - Vector2(0.0, item.bob))
-		if dados != null and dados.weapon_kind != &"" and item.profile == &"vagrant":
+		if (
+			dados != null
+			and dados.weapon_kind != &""
+			and item.profile in [&"vagrant", &"royal_citizen"]
+		):
 			_weapon(canvas, box, dados, item, light)
 		box = _art.body_box(item.profile, item.foot)
-		if item.profile == &"vagrant":
+		if item.profile in [&"vagrant", &"royal_citizen"]:
 			var cabeca := Vector2(box.get_center().x, box.position.y + HAT_DROP)
 			ActorArt.draw_hat(canvas, cabeca, box, units, i, box.size.y / HAT_SCALE)
 		TitleView.draw_on(canvas, box, item.id, light)
 		_saco(canvas, box, units, i)
-		Gauge.health(
-			canvas,
-			_art.box(item.profile, item.foot),
-			float(units.healths[i]) / units.max_healths[i]
-		)
+		Gauge.health(canvas, box, float(units.healths[i]) / units.max_healths[i])
 	_fallen.draw(canvas, band, live, time)
 	for id in _previous.keys():
 		if not live.has(id):

@@ -70,7 +70,26 @@ func draw_on(
 		LastSeen.remember(id, caixa, forma, cor, frente)
 		var branco := CombatFx.flash(id)
 		Shadow.drop(canvas, x + pose.x, int(band), dados.shadow_width * METADE, 0.0, 0.0)  # Q-219
-		if Bestiary.handles(forma):
+		if RenewalBeasts.handles(forma):
+			var tint := WorldLight.reveal(luz.on(x), aceso, chao)
+			if allied:
+				tint = WorldPalette.tint(tint, ClassEffects.ALLY)
+			(
+				RenewalBeasts
+				. draw(
+					canvas,
+					forma,
+					caixa,
+					frente,
+					{
+						"time": tempo + float(id) * Bestiary.DESFASE,
+						"moving": anda > 0.0 or forma == Silhouette.Form.ASA,
+						"tint": tint,
+						"flash": branco,
+					}
+				)
+			)
+		elif Bestiary.handles(forma):
 			var pintar := func(c: Color) -> Color:
 				if allied:
 					return WorldPalette.tint(c, ClassEffects.ALLY)

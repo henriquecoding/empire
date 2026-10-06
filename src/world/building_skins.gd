@@ -44,8 +44,12 @@ static func profile(slot: BuildSlot, forma: Silhouette.Form) -> StringName:
 
 
 static func profile_at(slot: BuildSlot, forma: Silhouette.Form, nivel: int) -> StringName:
+	if RenewalArt.BUILDINGS.has(slot.kind):
+		return RenewalArt.BUILDINGS[slot.kind]
 	if slot.kind == BuildSlot.NUCLEO:
-		return SeatSprites.profile(nivel)  # a sede pelo estagio dela (ADR 0059)
+		if nivel > RealmLadder.CLAREIRA:
+			return RenewalArt.SEATS[clampi(nivel - 1, 0, RenewalArt.SEATS.size() - 1)]
+		return SeatSprites.profile(nivel)
 	if ORIGINAIS.has(slot.kind):
 		return ORIGINAIS[slot.kind]
 	var pintada := PaintedArt.profile(slot, nivel)
