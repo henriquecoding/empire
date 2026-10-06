@@ -87,3 +87,10 @@ func test_a_save_from_before_the_forest_is_unplanted_and_legacy() -> void:
 	assert_bool(c.legacy).is_true()
 	assert_int(c.count()).is_equal(0)
 	assert_bool(Woodland.new().legacy).is_false()
+
+
+func test_a_new_tree_forgets_the_cleared_buildings() -> void:
+	var w := Woodland.new()
+	w.cleared_slots[7] = true
+	assert_bool(w.plant(1, 10.0, &"pine")).is_true()
+	assert_bool(w.cleared_slots.is_empty()).is_true()

@@ -192,6 +192,7 @@ static func _zone_reserved(field: FieldWork, side: int, k: int, folga: float) ->
 	r.append(Vector2(x - casas, x + casas))
 	for boca in UnderWatch.mouths(field):
 		r.append(Vector2(boca - folga, boca + folga))
+	r.append_array(_built_reserved())  # uma obra perto da ponta tambem tapa o segmento (BUG-04)
 	return r
 
 

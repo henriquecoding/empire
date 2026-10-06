@@ -32,6 +32,8 @@ var zones: Dictionary = {}
 ## Sobe a cada mudanca: e a chave de quem desenha. Nao conta como estado do mundo.
 var revision := 0
 ## Do momento, sem save: as obras cujo chao ja se limpou, e a chave do abrigo das tocas.
+## Uma arvore nova esquece as obras limpas: o chao delas volta a ver-se com ela, como
+## se ve ao reabrir o save, que nao leva isto (BUG-04).
 var cleared_slots: Dictionary = {}
 var shelter_key := Vector2i(-1, -1)
 var _por_id: Dictionary = {}
@@ -47,6 +49,7 @@ func plant(id: int, x: float, kind: StringName) -> bool:
 	species.append(String(kind))
 	states.append(State.STANDING)
 	progress.append(0.0)
+	cleared_slots.clear()
 	revision += 1
 	return true
 
