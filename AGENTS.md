@@ -133,7 +133,7 @@ src/sim/systems/staffing.gd Staffing      quem esteve no posto na fase que acabo
 src/sim/systems/upkeep_system.gd UpkeepSystem a manutencao do exercito, a alvorada (§06, Q-124)
 src/sim/systems/muster.gd   Muster        a formacao da noite de quem nao tem posto (§05, Q-128)
 src/sim/systems/thieves.gd  Thieves       o Alado rouba galinhas e leva-as a alvorada (§06, §07, Q-129)
-src/sim/systems/escort_arms.gd EscortArms o escudeiro evoluido usa as flechas pagas do patrono (Q-200, ADR 0071)
+src/sim/systems/escort_arms.gd EscortArms o escudeiro evoluido usa as flechas pagas do patrono (Q-200, ADR 0073)
 src/sim/systems/succession.gd Succession  o herdeiro: treino na casa e a coroa a alvorada (§15, §16, Q-133)
 src/sim/systems/march.gd    March         quem vai na marcha, e quando volta (§13, ADR 0035)
 src/sim/systems/world_plan.gd WorldPlan   quem mora onde no mundo continuo, e as misturas (§21, Q-173)
