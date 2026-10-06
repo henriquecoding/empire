@@ -221,14 +221,17 @@ func _pausar() -> void:
 
 
 ## O ecra, o tamanho e o lado, lidos a cada frame: mudar nas opcoes vale ja. Num canvas
-## reduzido os botoes crescem como a pausa cresce (ADR 0040), ate ao maximo da TouchLayout.
+## reduzido os botoes crescem como a pausa cresce (ADR 0040), ate ao TETO da TouchLayout,
+## e o tamanho escolhido multiplica isso: no telemovel tambem muda alguma coisa (UX-06).
 func _medir() -> void:
 	var prefs := Preferences.shared()
-	pad.layout.screen = get_viewport_rect().size
-	pad.layout.ui_scale = HudLayout.zoom(get_viewport())
-	pad.layout.scale = prefs.number(Preferences.TOUCH_SCALE) * pad.layout.ui_scale
-	pad.layout.left_handed = prefs.enabled(Preferences.TOUCH_LEFT)
-	pad.layout.fixed = prefs.enabled(Preferences.TOUCH_FIXED)
+	var l := pad.layout
+	l.screen = get_viewport_rect().size
+	l.ui_scale = HudLayout.zoom(get_viewport())
+	l.scale = prefs.number(Preferences.TOUCH_SCALE) * minf(l.ui_scale, TouchLayout.TETO)
+	l.left_handed = prefs.enabled(Preferences.TOUCH_LEFT)
+	l.fixed = prefs.enabled(Preferences.TOUCH_FIXED)
+	TouchLayout.span = l.free_span()
 
 
 ## So o Android vibra no browser; o iPhone nao tem a API, e o motor queixava-se a cada toque.

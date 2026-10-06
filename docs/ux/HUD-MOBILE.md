@@ -112,3 +112,10 @@ provisões, o alcance de uma torre) crescem com `WorldText`, até 1,6 ×.
 Uma captura a 844 × 390 com densidade 1 é o que o iPhone passa a mostrar a 2532 × 1170 com
 densidade 3; `tests/hud_layout_test.gd` prova a igualdade das duas contas. Num desktop a
 densidade é 1 e nada muda; num Mac com ecrã Retina a janela grande continua a 1,0.
+
+Revisão antes do merge (06/10/2026). Com a escala nova, dois efeitos ficaram à vista e estão
+corrigidos. O tamanho dos controlos escolhido nas opções voltava a não contar no telemóvel:
+a densidade empurrava qualquer escolha para o máximo. Agora a densidade cresce os botões até
+`TouchLayout.TETO` e a escolha multiplica isso. O contexto, os avisos e as legendas desciam
+por cima dos botões; no toque passam a ficar no x livre entre os controlos dos dois lados
+(`TouchLayout.free_span()`, `HudLayout.band()`), no destro e no canhoto.

@@ -54,3 +54,17 @@ func test_interface_counts_points_not_pixels_on_dense_screens() -> void:
 	assert_float(HudLayout.zoom_for(1.0, 1.0)).is_equal(1.0)
 	assert_float(HudLayout.zoom_for(2.5, 2.0)).is_equal(1.0)
 	assert_float(HudLayout.zoom_for(2.0, 0.0)).is_equal(1.0)
+
+
+## UX-06: no toque o contexto, os avisos e as legendas ficam entre os controlos.
+func test_touch_panels_stay_between_the_controls() -> void:
+	var antes := TouchLayout.span
+	TouchControls.active = true
+	TouchLayout.span = Vector2(320.0, 1040.0)
+	var faixa := HudLayout.band(1558.0, 2.12, 480.0)
+	assert_float(faixa.x).is_greater_equal(320.0)
+	assert_float(faixa.x + faixa.y * 2.12).is_less_equal(1040.0)
+	TouchControls.active = false
+	var largo := HudLayout.band(1558.0, 2.12, 480.0)
+	assert_float(largo.y).is_equal(480.0)
+	TouchLayout.span = antes

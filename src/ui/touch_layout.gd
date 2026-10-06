@@ -40,10 +40,17 @@ const FIXAR := Vector3(136.0, 242.0, 38.0)
 const ZONA := 0.5
 ## O tamanho que se escolhe nas opcoes (§45).
 const ESCALA := {"min": 0.8, "max": 1.4}
+## Quanto a densidade do ecra pode crescer os botoes, por cima do tamanho escolhido: o
+## tamanho das opcoes multiplica isto, e por isso conta tambem no telemovel (UX-06).
+const TETO := 1.4
+
+## O x livre entre os controlos dos dois lados, em px do canvas, do ultimo frame: por
+## ali passam o contexto, os avisos e as legendas no toque, sem tapar um botao (UX-06).
+static var span := Vector2.ZERO
 
 var scale: float = 1.0:
 	set(valor):
-		scale = clampf(valor, ESCALA.min, ESCALA.max)
+		scale = clampf(valor, ESCALA.min, ESCALA.max * TETO)
 var left_handed := false
 var screen := BASE
 ## A escala da interface: o painel de combate cresce num canvas pequeno (Q-186).
@@ -111,6 +118,22 @@ func stick_radius() -> float:
 func stick_home() -> Vector2:
 	var x := ALAVANCA.x * scale
 	return Vector2(screen.x - x if left_handed else x, screen.y - ALAVANCA.y * scale)
+
+
+## O x livre entre os botoes, o FIXAR e a alavanca em repouso dos dois lados.
+func free_span() -> Vector2:
+	var de := 0.0
+	var ate := screen.x
+	var meio := screen.x * ZONA
+	var papeis: Array = [Role.FIX, Role.STICK] + BOTOES.keys()
+	for papel: Role in papeis:
+		var x := stick_home().x if papel == Role.STICK else centre(papel).x
+		var r := stick_radius() + ALAVANCA.margem if papel == Role.STICK else reach(papel)
+		if x < meio:
+			de = maxf(de, x + r)
+		else:
+			ate = minf(ate, x - r)
+	return Vector2(de, ate)
 
 
 ## A base desenhada para um polegar em `p`: o mais perto dele que cabe no ecra.

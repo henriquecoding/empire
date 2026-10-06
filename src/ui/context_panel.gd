@@ -55,5 +55,9 @@ func _process(delta: float) -> void:
 		frame.position.y = maxf(
 			frame.position.y, header.get_global_rect().end.y / zoom + HudLayout.PADDING
 		)
+	if TouchControls.active:
+		var faixa := HudLayout.band(area.x * zoom, zoom, frame.size.x)
+		frame.position.x = faixa.x / zoom
+		frame.size.x = faixa.y
 	size = Vector2(frame.size.x, 0)
 	position = frame.position * zoom

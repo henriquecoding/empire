@@ -133,7 +133,10 @@
   });
   $("sair").addEventListener("click", () => {
     if (sujas.size) return dizer($("lote-estado"), "Tens decisões por guardar. Guarda-as ou usa «Descartar rascunho» nas fichas antes de sair.", "aviso");
-    M.sair().then(r => {
+    if ($("sair").disabled) return;
+    $("sair").disabled = true;  // um segundo clique recarregava a meio da revogação
+    // Sem resposta do servidor em 5 s, sai na mesma: a sessão local já está fechada.
+    Promise.race([M.sair(), new Promise(r => setTimeout(() => r({ remoto: false }), 5000))]).then(r => {
       if (!r.remoto) try { sessionStorage.setItem("empire.painel.saida", "local"); } catch (_) { /* fica só o fecho local */ }
       location.reload();
     });

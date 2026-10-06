@@ -108,3 +108,14 @@ func test_uma_partida_acabada_nao_volta_atras_por_um_save_velho() -> void:
 	SaveService.save(1, SimLoop.state, RngService.snapshot(), SimLoop.world())
 	SimLoop.stop()
 	assert_bool(Resume.latest()).is_false()
+
+
+func test_um_save_novo_que_nem_se_le_tambem_avisa() -> void:
+	_partida()
+	SaveService.save(0, SimLoop.state, RngService.snapshot(), SimLoop.world())
+	var f := FileAccess.open(SaveService.caminho(1), FileAccess.WRITE)
+	f.store_buffer(PackedByteArray([1, 2, 3, 4, 5]))
+	f.close()
+	SimLoop.stop()
+	assert_bool(Resume.latest()).is_true()
+	assert_bool(Resume.recovered).is_true()

@@ -76,11 +76,19 @@
     var revogar = function (token) {
       return enviar("/auth/v1/logout?scope=local", { metodo: "POST" }, token);
     };
-    return revogar(s.token).catch(function (e) {
-      if (e.estado !== 401 || !s.refresh) throw e;
+    // Com o token vencido o Auth responde 403 (bad_jwt), e não 401: renova-se uma vez
+    // só para revogar, antes ou depois de uma recusa.
+    var renovarERevogar = function () {
+      if (!s.refresh) return Promise.reject(new Error("sem refresh"));
       return enviar("/auth/v1/token?grant_type=refresh_token", { metodo: "POST", corpo: { refresh_token: s.refresh } })
         .then(function (d) { return revogar(d && d.access_token); });
-    }).then(function () { return { remoto: true }; }, function () { return { remoto: false }; });
+    };
+    var vencido = s.expira && s.expira <= Date.now() + 60000;
+    var pedido = vencido ? renovarERevogar() : revogar(s.token).catch(function (e) {
+      if (e.estado !== 401 && e.estado !== 403) throw e;
+      return renovarERevogar();
+    });
+    return pedido.then(function () { return { remoto: true }; }, function () { return { remoto: false }; });
   }
 
   function expirada() {

@@ -105,10 +105,10 @@ func _process(delta: float) -> void:
 		for control: Control in get_tree().get_nodes_in_group(group):
 			if control.is_visible_in_tree():
 				top = maxf(top, control.get_global_rect().end.y + HudLayout.GAP * zoom)
-	var width := minf(HudLayout.CONTEXT_WIDTH, area.x - HudLayout.MARGIN * 2)
+	var faixa := HudLayout.band(area.x * zoom, zoom, HudLayout.CONTEXT_WIDTH)
 	scale = Vector2.ONE * zoom
-	position = Vector2((area.x - width) * MEIA * zoom, top)
-	size = Vector2(width, CAIXA.alto)
+	position = Vector2(faixa.x, top)
+	size = Vector2(faixa.y, CAIXA.alto)
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	advance(delta)
 

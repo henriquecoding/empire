@@ -118,7 +118,7 @@ test('sair durante uma renovação não ressuscita a sessão nem envia a escrita
   const pending = assert.rejects(M.pedir('/rest/v1/empire_respostas'));
   await new Promise(r => setImmediate(r)); const saida = M.sair(); release(); await pending; await saida;
   assert.equal(M.sessao(), null);
-  assert.equal(requests.filter(r => !r.url.includes('/auth/v1/logout')).length, 1);
+  assert.equal(requests.filter(r => r.url.includes('/rest/v1/')).length, 0);
 });
 
 test('sair revoga a sessão no servidor, só esta, e depois pede autenticação (BUG-05)', async () => {
@@ -140,6 +140,23 @@ test('sair com o token vencido renova uma vez só para revogar', async () => {
   assert.equal(requests.length, 3);
   assert.equal(requests[2].headers.Authorization, 'Bearer new');
   assert.equal(M.sessao(), null);
+});
+
+test('o Auth recusa o token vencido com 403: sair renova uma vez e revoga', async () => {
+  const { M, requests } = boot(session(), req => refresh(req) ? reply(200, tokens)
+    : req.headers.Authorization === 'Bearer old' ? reply(403, { error_code: 'bad_jwt' }) : reply(204, null));
+  assert.equal((await M.sair()).remoto, true);
+  assert.equal(requests.length, 3);
+  assert.equal(requests[2].headers.Authorization, 'Bearer new');
+});
+
+test('com a sessão já vencida, sair renova primeiro e revoga com o token novo', async () => {
+  const { M, requests } = boot(session({ expira: 1 }), req => refresh(req) ? reply(200, tokens) : reply(204, null));
+  assert.equal((await M.sair()).remoto, true);
+  assert.equal(requests.length, 2);
+  assert.ok(refresh(requests[0]));
+  assert.match(requests[1].url, /\/auth\/v1\/logout\?scope=local$/);
+  assert.equal(requests[1].headers.Authorization, 'Bearer new');
 });
 
 test('sem rede, sair fecha na mesma a sessão local e diz que o servidor não confirmou', async () => {

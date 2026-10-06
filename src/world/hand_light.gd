@@ -27,7 +27,6 @@ const CAIXA := Vector2(24.0, 48.0)
 const HALF := 0.5
 
 static var _clock: ClockData
-static var _lado := {"x": NAN, "lado": 1.0}
 static var _art := OriginalArt.new()
 
 
@@ -55,26 +54,26 @@ static func tip(rei: int) -> Vector2:
 	var corpo := Rect2(foot - Vector2(CAIXA.x * HALF, CAIXA.y), CAIXA)
 	if perfil != &"":
 		corpo = _art.body_box(perfil, foot)
-	var lado := facing(units.xs[rei])
+	var lado := facing(units.ids[rei])
 	var mao := Vector2(
 		corpo.get_center().x + lado * corpo.size.x * MAO.x, corpo.position.y + corpo.size.y * MAO.y
 	)
 	return mao + Vector2(lado * CABO.y, -CABO.x)
 
 
-## Para onde olha quem se conduz: para onde andou da ultima vez.
-static func facing(x: float) -> float:
-	if not is_nan(_lado.x) and not is_equal_approx(x, _lado.x):
-		_lado.lado = signf(x - _lado.x)
-	_lado.x = x
-	return _lado.lado
+## Para onde olha quem se conduz: o lado para onde o sprite dele esta virado, pela mesma
+## conta do UnitArtBatch (o golpe em curso, senao a mira), para a tocha estar na mao.
+static func facing(id: int) -> float:
+	if CombatView.attacks.has(id):
+		return float(CombatView.attacks[id][&"direction"])
+	return CombatInput.aim_direction()
 
 
 ## O cabo e a chama, num canvas sem luz: a chama e ela a luz (§80).
 static func draw_on(
 	canvas: CanvasItem, ponta: Vector2, cores: PackedColorArray, tempo: float
 ) -> void:
-	var lado := float(_lado.lado)
+	var lado := facing(Assume.driven())
 	var mao := ponta - Vector2(lado * CABO.y, -CABO.x)
 	canvas.draw_line(mao, ponta, MADEIRA, CABO.z)
 	FlameArt.draw_on(canvas, ponta, CHAMA, cores, tempo)

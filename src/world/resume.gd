@@ -21,11 +21,9 @@ static func latest() -> bool:
 	for slot in lista:
 		match open(slot):
 			Outcome.RESUMED:
-				recovered = slot != lista[0]
+				recovered = slot != lista[0] or _unreadable(lista)
 				if recovered:
-					push_warning(
-						"save: o slot %d estava estragado; retomado o %d" % [lista[0], slot]
-					)
+					push_warning("save: havia um save estragado; retomado o slot %d" % slot)
 				return true
 			Outcome.ENDED:
 				return false
@@ -45,3 +43,12 @@ static func open(slot: int) -> Outcome:
 	if Defeat.happened() or SimLoop.state.crossed:
 		return Outcome.ENDED
 	return Outcome.RESUMED if SimLoop.units.count() > 0 else Outcome.BROKEN
+
+
+## Um slot com ficheiro que nem a moldura deixa ler: o by_recency() ja o deixou de fora,
+## e por isso nao se sabe a sequencia dele — mas houve um save que se perdeu, e diz-se.
+static func _unreadable(lista: Array[int]) -> bool:
+	for slot in SaveService.SLOTS:
+		if SaveService.has_slot(slot) and not lista.has(slot):
+			return true
+	return false

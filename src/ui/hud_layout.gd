@@ -50,6 +50,21 @@ static func zoom_for(pixels: float, density: float, touch := false) -> float:
 	return scale_for(points / (TOUCH_POINTS if touch else 1.0))
 
 
+## Onde fica, em x, um painel de `largura` unidades centrado no ecra de `px` de largura:
+## devolve o x em px e a largura em unidades. No toque so cabe entre os controlos dos
+## dois lados (TouchLayout.span): no telemovel o contexto, o aviso e as legendas
+## desciam por cima dos botoes (UX-06).
+static func band(px: float, zoom: float, largura: float) -> Vector2:
+	var de := 0.0
+	var ate := px
+	var livre := TouchLayout.span
+	if TouchControls.active and livre.y > livre.x:
+		de = maxf(de, livre.x)
+		ate = minf(ate, livre.y)
+	var cabe := minf(largura, (ate - de) / zoom - MARGIN * 2)
+	return Vector2((de + ate - cabe * zoom) * HALF, cabe)
+
+
 ## A escala da interface neste ecra: um painel, um botao ou a pausa chamam isto.
 static func zoom(viewport: Viewport) -> float:
 	var pixels := viewport.get_final_transform().get_scale().x
