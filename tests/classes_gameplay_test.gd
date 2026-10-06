@@ -58,6 +58,10 @@ func test_a_marca_faz_as_tropas_aliadas_priorizarem_o_mesmo_alvo() -> void:
 func test_a_flecha_evoluida_causa_dano_em_toda_a_coluna_mas_nao_atras() -> void:
 	var hero := _begin(&"archer")
 	SimLoop.field.hero_progress.phases[&"archer"] = 2
+	# A companhia evoluida tambem dispara; aqui mede-se so a flecha imperial.
+	var companion := SimLoop.field.monarchy.companion_index(SimLoop.units, hero)
+	var escort := Registry.entry(&"units", &"quiver_squire") as UnitData
+	SimLoop.units.xs[companion] = _x(hero) - 2.0 * escort.range_px
 	var front := _enemy(&"brute", _x(hero) + 60.0)
 	var next := _enemy(&"brute", _x(hero) + 110.0)
 	var back := _enemy(&"brute", _x(hero) - 100.0)

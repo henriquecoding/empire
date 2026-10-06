@@ -70,7 +70,7 @@ function contextoDe(atual, corpo) {
   const contexto = ler(/^O que (diverg|est|aconte|há)|^A contradição|^O custo/i);
   const resumo = contexto || onde || decisao || pendencia || limpo(corpo);
   return {
-    onde, pendencia, decisao, contexto: resumo,
+    onde, pendencia, decisao, implementacao, contexto: resumo,
     proposta: proposta || (!pendencia ? decisao : ""),
     aprovavel: !encerrada && !pendencia && !implementacao && Boolean(proposta || decisao),
     bloqueio: ler(/^Bloqueia$/i), tipo,

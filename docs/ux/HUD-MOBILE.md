@@ -2,7 +2,7 @@
 
 Revisão de 06/10/2026. Base: `1a0587a`, captura móvel fornecida pelo dono e código efetivamente
 usado por `scenes/game.tscn`. Implementação: [UX-05](../backlog/UX-05.md) e
-[ADR 0073](../adr/0073-hud-mobile.md).
+[ADR 0074](../adr/0074-hud-mobile.md).
 
 ## Diagnóstico da captura
 

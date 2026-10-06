@@ -2,7 +2,7 @@
 
 Esta matriz preserva todas as respostas lidas, separando aprovação de implementação. O relatório tem preferência nos conflitos. Nenhuma resposta é marcada aplicada antes de merge e publicação da alteração correspondente.
 
-## Respostas ainda marcadas novas
+## Respostas lidas como novas em 05/10/2026
 
 | Pergunta | Escolha guardada | Tratamento |
 |---|---|---|
@@ -22,21 +22,21 @@ Esta matriz preserva todas as respostas lidas, separando aprovação de implemen
 | Q-182 — O subsolo tapado: o que sobe de baixo, e a cavidade já achada | aprovar | Já documentada/implementada na baseline; conferir evidência do ticket antes de atualizar o painel. |
 | Q-183 — Completar as três classes sem inventar uma regra definitiva de balanceamento | outra | Encerrada pela unificação dos monarcas; não restaurar classes controláveis antigas. |
 | Q-184 — Ataque e habilidade separados nas classes controladas | outra | Conservar implementação aceite; ajustar somente números ainda propostos. |
-| Q-185 — O combate que se vê: o que ficou feito no ecrã e o que o «sistema completo» da Q-084 pede à simulação | outra | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
+| Q-185 — O combate que se vê: o que ficou feito no ecrã e o que o «sistema completo» da Q-084 pede à simulação | outra | Implementada em QP-02/ADR 0053: `MeleeSweep` e `tests/golpe_de_perto_test.gd`. Marcar aplicada após conferir a publicação. |
 | Q-187 — O toque é o quarto dispositivo: a alavanca, os botões e o mundo | outra | Regra de paridade de ações entre desktop/toque; testes de dispositivo continuam obrigatórios. |
-| Q-188 — No telemóvel, o mundo pode encher o ecrã? | aprovar | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
+| Q-188 — No telemóvel, o mundo pode encher o ecrã? | aprovar | Implementada em QP-02/ADR 0053: `WideTouch` e `tests/toque_ecra_largo_test.gd`. Marcar aplicada após conferir a publicação. |
 | Q-189 — A noite é difícil de ver, e não impossível; as luzes alumiam | outra | Conservar alteração de luz aceite; não reabrir por ausência de aplicada no banco. |
-| Q-190 — A lareira do núcleo afasta a Podridão? | outra | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
+| Q-190 — A lareira do núcleo afasta a Podridão? | outra | Implementada em QP-02/ADR 0053: `Hearth` e `tests/lareira_test.gd`. Marcar aplicada após conferir a publicação. |
 | Q-191 — Sete criaturas, uma família, sete portes | adiar | Adiamento conservado; não implementar nesta alteração. |
-| Q-192 — A moeda grande, com física e com cara de moeda; a coroa que cai | outra | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
-| Q-193 — O botão CORRER é um interruptor | outra | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
+| Q-192 — A moeda grande, com física e com cara de moeda; a coroa que cai | outra | Implementada em QP-02/ADR 0053: `CoinArt.CHAO` e `tests/coin_art_test.gd`. Marcar aplicada após conferir a publicação. |
+| Q-193 — O botão CORRER é um interruptor | outra | Implementada em QP-02/ADR 0053: `Stamina`, `tests/folego_test.gd`, `tests/toque_correr_test.gd`; afinação posterior Q-216 preservada. Marcar aplicada. |
 | Q-194 — As obras que não tinham arte, pintadas no estilo da tua; o sítio vazio à vista | adiar | Adiamento conservado; não implementar nesta alteração. |
 | Q-195 — Resolvida — o que o dono decidiu: três monarcas, só imperadores controláveis, flechas pagas | outra | Conservar três monarcas iniciais e desbloqueios; não quatro iniciais. |
 | Q-196 — A troca imperial transfere o governo, ou só o controlo? | outra | Decisão de sucessão própria; UN-32 continua por concluir. |
 | Q-197 — Outro imperador encontrado serve de sucessor? | outra | Desbloqueio não dispensa herdeiro pronto; complementar UN-32. |
-| Q-198 — Os números de bancada de Nia e do Imperador Arqueiro | aprovar | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
-| Q-199 — O Bardo da Nia: o que custa, quanto leva e o que faz | aprovar | Decisão compatível conservada; estado real é o do respetivo ticket/teste, não a aprovação. |
-| Q-200 — A aljava do Imperador Arqueiro e o escudeiro que a abastece | outra | Seis flechas na reposição, não proposta antiga de doze; UN-34 por concluir. |
+| Q-198 — Os números de bancada de Nia e do Imperador Arqueiro | aprovar | Números aprovados aplicados em QP-02/ADR 0053, nos CSV `units`, `monarchs` e `monarch_rules`; a proposta do escudeiro evoluído é outra, Q-246. Marcar aplicada. |
+| Q-199 — O Bardo da Nia: o que custa, quanto leva e o que faz | aprovar | Bardo pago implementado em ADR 0052/0053: `RoyalSong`, `tests/bardo_pago_test.gd` e valores aprovados nos CSV. Marcar aplicada. |
+| Q-200 — A aljava do Imperador Arqueiro e o escudeiro que a abastece | outra | Concluída por UN-34/ADR 0073: reposição continua a seis flechas por moeda; escudeiro evoluído dispara da aljava paga, com testes em `quiver_escort_test.gd`. Marcar aplicada só após publicação deste PR. |
 | Q-201 — O sangramento | outra | Encerrada: sangramento só do Arqueiro imperial. |
 | Q-202 — O herdeiro: que perfil, e com que força | outra | Herdeiro neutro até preparado; escolha de desbloqueados e cinco noites. UN-32. |
 | Q-203 — O Diplomata universal: acesso, missões, captura e resgate | aprovar | Diplomata universal aprovado; UN-18 a UN-21 ainda não completos. |
@@ -47,6 +47,16 @@ Esta matriz preserva todas as respostas lidas, separando aprovação de implemen
 | Q-231 — Traçado fundador e linhas de expansão por estágio | aprovar | Parcialmente substituída: fundação livre/gratuita; recintos e bancas conservados. |
 | Q-232 — Ritmo, exposição e evolução do protótipo | aprovar | Aprovação dos parâmetros existentes; ritmo do relatório prevalece, sem prazo de fundação. |
 | Q-233 — Maturidade, escavação e repetição territorial | aprovar | Parâmetros de maturidade/escavação aprovados; repetição territorial continua futura. |
+
+| Q-238 — Os números e as regras da floresta | aprovar | Aprovação das 16:45 UTC aplicada na ADR 0073: campos apresentados saem de `_proposed`, sem mudar valores; altura visual continua proposta. Marcar aplicada só após publicação deste PR. |
+
+## Fecho desta entrega (QP-07)
+
+A reconciliação altera apenas `estado` das Q-185, Q-188, Q-190, Q-192, Q-193, Q-198, Q-199, Q-200 e Q-238, depois de a `main` correspondente estar publicada. A escrita confere escolha, texto e data da leitura: uma resposta entretanto editada fica pendente para revisão, sem sobrescrever a decisão do dono. Os cinco adiamentos são preservados.
+
+As Q-195, Q-196, Q-197, Q-202, Q-203, Q-204, Q-205 e Q-206 continuam à espera de implementação. UN-16/UN-32 dependem do roster, ritual e sucessão escolhida; UN-18–21 do acesso universal e ciclo completo de missões; UN-33 do quarto imperador; UN-29–31/RG-25 da arquitetura e serviço online ainda abertos na Q-236. Esta entrega não encerra esses contratos.
+
+Q-246 regista explicitamente o balanceamento provisório do novo ataque do escudeiro. As perguntas da curva da noite Q-239–243, recebidas da `main` d2103f9, são preservadas sem decidir pelo dono.
 
 ## Respostas já marcadas aplicadas
 

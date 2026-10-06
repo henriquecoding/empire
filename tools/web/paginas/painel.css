@@ -1,7 +1,7 @@
 /* Painel: hierarquia de trabalho do Recibo Certo, cores e títulos do Empire. */
 .pagina-painel{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.6}
 .pagina-painel::before{display:none}
-.painel{padding-block:40px 64px}
+.painel{padding-block:20px 48px}
 .painel>.envolve{max-width:1320px}
 .painel h1{max-width:none;font-size:clamp(30px,4vw,44px);letter-spacing:-.035em;margin:12px 0}
 .painel-intro{font-size:16px;max-width:76ch}
@@ -19,11 +19,11 @@
 .painel-barra #sair{order:3}
 .separadores{padding:4px;border:1px solid var(--linha);border-radius:16px;background:var(--papel-3)}
 .painel .separador[aria-selected=true]{border-color:var(--linha);background:var(--papel-2);box-shadow:0 2px 5px #0000000a}
-.painel .resumo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
-.painel .resumo p{border:1px solid var(--linha);border-radius:20px;background:var(--papel-2);padding:18px 20px;display:grid;gap:6px;font-size:13px;line-height:1.4}
-.painel .resumo strong{font-family:inherit;font-size:32px;letter-spacing:-.05em;font-weight:600;line-height:1}
-.painel .resumo p:first-child{border-color:var(--folha)}
-.painel .resumo p:first-child strong{color:var(--folha)}
+.painel .resumo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.painel .resumo button{border:1px solid var(--linha);border-radius:20px;background:var(--papel-2);padding:12px 16px;color:var(--tinta);font:inherit;text-align:left;cursor:pointer;display:grid;gap:6px;font-size:13px;line-height:1.4}
+.painel .resumo strong{font-family:inherit;font-size:26px;letter-spacing:-.05em;font-weight:600;line-height:1}
+.painel .resumo button:first-child{border-color:var(--folha)}
+.painel .resumo button:first-child strong{color:var(--folha)}
 .painel-agora{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 26px;border-radius:22px;background:var(--papel-2);border:1px solid var(--linha);border-left:4px solid var(--folha)}
 .painel-agora h2{max-width:none;font-weight:600;line-height:1.35;margin:3px 0 6px;font-family:inherit;font-size:19px}
 .painel-agora p{margin:0;color:var(--tinta-2);font-size:14px;max-width:72ch}
@@ -31,7 +31,7 @@
 .painel-agora .botao{flex-shrink:0}
 .estado-carregamento{display:flex;align-items:center;gap:12px;margin:14px 0}
 .estado-carregamento p{margin:0;font-size:13px;color:var(--baixo)}
-.painel .filtros{grid-template-columns:2fr 1.2fr 1.5fr 1.2fr;gap:12px;margin:24px 0 6px}
+.painel .filtros{grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:12px;margin:12px 0 6px;align-items:end}
 .fila-barra{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;color:var(--baixo);font-size:13px}
 .fila-barra p{margin:0}
 .fila-barra .botao{border:0;background:transparent;padding-right:0}
@@ -87,10 +87,10 @@
 @media(max-width:1050px){.decisoes-layout{grid-template-columns:245px minmax(0,1fr);gap:16px}.painel .filtros{grid-template-columns:1fr 1fr}.painel-agora{align-items:flex-start;flex-direction:column;gap:16px}.painel-barra .sessao{display:none}}
 @media(max-width:760px){
   .painel{padding-top:24px}.painel>.envolve{width:100%;padding-inline:16px}
-  .painel .resumo{grid-template-columns:1fr 1fr;gap:8px}.painel .resumo p{padding:16px;border-radius:16px;font-size:12px}
+  .painel .resumo{grid-template-columns:1fr 1fr;gap:8px}.painel .resumo button{padding:16px;border-radius:16px;font-size:12px}
   .painel .resumo strong{font-size:28px}.painel-agora{padding:20px}.painel .filtros{gap:10px}.painel .filtros .campo:first-child{grid-column:1/-1}
   .decisoes-layout{grid-template-columns:minmax(0,1fr)}
-  .fila-decisoes{position:static;display:flex;max-height:none;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x proximity}
+  .fila-decisoes{display:none}
   .fila-item{flex:0 0 240px;scroll-snap-align:start;border-color:var(--linha);padding:14px}.fila-item strong{font-size:13px}
   .decisao-cabeca,.decisao-conteudo,.painel .resposta{padding:22px 18px}.painel .pergunta{border-radius:20px}
   .painel .p-estado{margin-left:0;flex-basis:100%}.painel .pergunta h3{font-size:25px}.decisao-bloco p{font-size:15px}
@@ -98,3 +98,35 @@
   .painel .resposta .accoes{align-items:stretch;flex-direction:column}.painel .resposta .principal{width:100%}
 }
 @media(prefers-reduced-motion:reduce){.pagina-painel *{scroll-behavior:auto;transition:none!important}}
+
+.painel-cabecalho{display:flex;align-items:start;justify-content:space-between;gap:24px}
+.painel-cabecalho .kicker{margin:0;padding:0;border:0}.painel-cabecalho h1{font-size:32px;margin:4px 0}
+.painel-intro{margin:0;color:var(--tinta-2);font-size:14px}
+.painel-contexto{max-width:440px;font-size:13px}.painel-contexto summary{min-height:44px;cursor:pointer;display:flex;align-items:center;text-decoration:underline}
+.painel-contexto p{margin:8px 0}.painel-contexto small{color:var(--baixo)}
+.painel-barra{margin-top:12px;padding-block:8px}.painel-barra p{margin:0}
+.painel .resumo button[aria-pressed=true]{border-color:var(--folha);box-shadow:inset 0 -3px var(--folha)}
+.painel .resumo button:hover{background:var(--papel-3)}
+.estado-carregamento{margin:8px 0;min-height:22px}.estado-carregamento p.erro{color:var(--erro)}
+.filtros-avancados{position:relative;align-self:end}.filtros-avancados summary{min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 12px;border:1px solid var(--linha);border-radius:12px}
+.filtros-extra{position:absolute;right:0;top:100%;width:340px;max-width:calc(100vw - 32px);z-index:5;background:var(--papel-2);border:1px solid var(--linha);border-radius:14px;padding:16px;box-shadow:var(--sombra-leve);display:grid;gap:12px}
+.fila-barra{margin:6px 0 12px;gap:8px}.fila-ferramentas{display:flex;gap:8px;flex-wrap:wrap}.fila-barra .botao{padding:8px;font-size:12px}
+.seletor-movel{display:none}.decisao-navegacao{scroll-margin-top:90px}
+.resposta-guardada{padding:16px 30px;background:var(--papel-3);border-bottom:1px solid var(--linha)}
+.resposta-guardada strong{font-size:12px;color:var(--tinta)}.resposta-guardada p{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0;font-size:14px}.resposta-guardada small{color:var(--baixo)}
+.painel .resposta .accoes{flex-wrap:wrap;gap:10px}.painel .resposta .p-guardado{flex-basis:100%;font-size:13px}
+.pagina-painel :focus-visible{outline:3px solid var(--folha);outline-offset:3px}
+@media(max-width:1050px){.painel .filtros{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}}
+@media(max-width:760px){
+  .painel{padding-top:12px}.painel-cabecalho{gap:8px;flex-wrap:wrap;align-items:center}.painel-cabecalho h1{font-size:26px}.painel-cabecalho .kicker,.painel-cabecalho .painel-intro{display:none}.painel-contexto{max-width:none}.painel-contexto[open]{width:100%}.painel-contexto summary{min-height:44px}
+  .painel .resumo{margin:10px 0}.painel .resumo button{padding:10px;gap:8px;font-size:12px;border-radius:14px;grid-template-columns:auto minmax(0,1fr);align-items:center;min-height:64px}.painel .resumo strong{font-size:24px}
+  .painel .filtros{grid-template-columns:minmax(0,1fr) auto;gap:8px}.painel .filtros .campo:first-child{grid-column:1/-1}
+  .filtros-extra{width:calc(100vw - 32px)}.fila-barra{flex-wrap:wrap}.fila-ferramentas{width:100%;justify-content:space-between;gap:0}
+  .seletor-movel{display:grid;margin:0;min-width:0;flex:1}.seletor-movel select{width:100%;text-overflow:ellipsis}.decisao-navegacao .nav-texto,.decisao-navegacao #posicao{display:none}.decisao-navegacao .botao{width:44px;padding:8px}.seletor-movel .sr-only{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+  .painel-barra{display:grid;grid-template-columns:minmax(0,1fr) auto}.separadores{display:flex}.painel .separador{flex:1;padding:8px 6px;font-size:12px}
+  .resposta-guardada{padding:14px 18px}.painel .resposta .accoes{align-items:stretch}.decisao-cabeca{padding:18px}.decisao-conteudo{padding:20px 18px;gap:18px}
+}
+
+.decisao-navegacao{position:sticky;top:64px;z-index:2;background:var(--papel);padding-block:8px}
+.painel .resposta{scroll-margin-top:140px}.painel .ir-resposta{margin-top:12px;font-size:12px;padding:8px 12px}
+.painel .pergunta[data-estado=aplicada] .trabalho-pendente{display:none}

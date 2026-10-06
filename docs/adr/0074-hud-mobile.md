@@ -1,4 +1,4 @@
-# ADR 0073 — Uma HUD compacta com detalhe a pedido
+# ADR 0074 — Uma HUD compacta com detalhe a pedido
 
 - **Estado:** aceite no âmbito do pedido de revisão da HUD do dono, 05–06/10/2026.
 - **Tarefa:** [UX-05](../backlog/UX-05.md).

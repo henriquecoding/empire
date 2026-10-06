@@ -2263,7 +2263,7 @@
   "depende": "UN-14",
   "feito": "Com o Imperador Arqueiro evoluído, o escudeiro dispara contra os inimigos ao alcance, das flechas que vende; sem flechas, não dispara",
   "fora": "Flecha física com colisão.",
-  "estado": "por fazer",
+  "estado": "feito",
   "horas": "—",
   "passos": [],
   "notas": [
@@ -2739,6 +2739,22 @@
   "porque": "Aplicar o relatório de armazéns, subsolos, masmorras e cavernas: nenhum subsolo é só a escada, e nenhuma entrada existe só porque saiu num sorteio",
   "feito": "Contrato de área útil, reserva de chão antes de publicar, base habitável da cave real, baú longe da subida, famílias com causa (caverna nas falhas), tecto por povo, recompensa no interior, reparação de saves antigos, celeiros e ladrão com carga recuperável.",
   "fora": "Transporte, recuperação de depósitos, reservas no cenário, preparação e fuga do ladrão, encontros por papel, ensaios Web e com pessoas."
+ },
+ "QP-07": {
+  "title": "Usar o Painel no desktop e no mobile",
+  "porque": "O cabeçalho ocupava o primeiro ecrã; a navegação mobile e os rascunhos dificultavam responder e acompanhar a implementação.",
+  "spec": [
+   "docs/adr/0073-painel-de-trabalho-e-escudeiro-arqueiro.md"
+  ],
+  "depende": "QP-02, UN-34, RG-26",
+  "feito": "Filtros por contador, navegação responsiva, resposta guardada, rascunhos por conta e aba, guardar e seguinte e exportação; reconciliação verificável das pendências.",
+  "fora": "Sucessão/roster, Diplomata, quarto imperador e online continuam nos respetivos tickets.",
+  "estado": "feito",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Q-246 regista os números provisórios do escudeiro evoluído."
+  ]
  },
  "UX-05": {
   "estado": "feito — implementação e provas locais; confirmação final no CI do PR",
