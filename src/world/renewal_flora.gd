@@ -7,6 +7,8 @@ const PROFILES := {
 	Wilds.Plant.FAR_PINE: &"royal_pine",
 	Wilds.Plant.FAR_OAK: &"royal_oak",
 }
+const HALF := 0.5
+const MIRROR := -1.0
 static var _art := OriginalArt.new()
 
 
@@ -19,7 +21,7 @@ static func draw_one(
 	var height := FloraArt.height(kind) * scale_factor
 	var body := _art.body_box(id, Vector2.ZERO)
 	var size_factor := height / body.size.y
-	var facing := 1.0 if variant < 0.5 else -1.0
+	var facing := 1.0 if variant < HALF else MIRROR
 	var shade := Color.WHITE.lerp(EnramadosLayer.GROVE, mist)
 	_art.draw_posed(
 		canvas, id, shade, 0, OriginalArt.posed(foot, facing, Vector2.ONE * size_factor)

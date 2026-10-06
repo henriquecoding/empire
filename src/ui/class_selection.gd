@@ -13,6 +13,8 @@ const CARD_HEIGHT := 240
 const OVERLAY := Color("161917")
 const SELECTION := Color("ead0a0")
 const PERCENT := 100.0
+const BODY_GAP := 8
+const DETAIL_GAP := 4
 const HALF := 0.5
 static var active := false
 static var release_pending := false
@@ -57,7 +59,7 @@ func _ready() -> void:
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_layout.add_child(_scroll)
 	var body := VBoxContainer.new()
-	body.add_theme_constant_override("separation", 8)
+	body.add_theme_constant_override("separation", BODY_GAP)
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.add_child(body)
 	var brand := PauseTheme.label(body, &"UI_MENU_TITLE")
@@ -75,7 +77,7 @@ func _ready() -> void:
 	var profile := PanelContainer.new()
 	body.add_child(profile)
 	var details := VBoxContainer.new()
-	details.add_theme_constant_override("separation", 4)
+	details.add_theme_constant_override("separation", DETAIL_GAP)
 	profile.add_child(details)
 	_title = PauseTheme.label(details)
 	PauseTheme.title(_title, PauseTheme.ACTION_SIZE)

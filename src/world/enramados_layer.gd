@@ -29,6 +29,7 @@ const FOREST_SCALE := 1.0
 const LANDMARKS := [340.0, 1110.0, 2770.0, 3510.0]
 const VALLEY := preload("res://art/export/renewal/valley.png")
 const PANORAMA_WIDTH := 1536
+const MIRROR := -1.0
 const RIDGE := [0, 374, 140, 350, 252, 361, 396, 322, 528, 348, 664, 329, 804, 366, 960, 343]
 
 ## Que luz leva cada plano (SceneryLight): o ceu, os dois fundos, o bosque, o chao
@@ -120,15 +121,18 @@ func _distance() -> void:
 	pass
 
 
+## Os vizinhos espelhados partilham a borda, sem salto na junta. O espelho e uma
+## transformada e nunca uma largura negativa: com ela o Godot cortava o painel pelo
+## retangulo errado, e a paisagem abria buracos ao andar a camara (PR #91).
 func _panorama() -> void:
 	var extent := _alcance()
+	var box := Rect2(Vector2.ZERO, VALLEY.get_size())
 	for tile in range(floori(extent.x / PANORAMA_WIDTH), ceili(extent.y / PANORAMA_WIDTH)):
-		var box := Rect2(tile * PANORAMA_WIDTH, 0, PANORAMA_WIDTH, 512)
-		# Mirrored neighbours share their edge, with no jump at the join.
-		if posmod(tile, 2) == 1:
-			box.position.x += PANORAMA_WIDTH
-			box.size.x = -box.size.x
+		var mirrored := posmod(tile, 2) == 1
+		var left := (tile + int(mirrored)) * PANORAMA_WIDTH
+		draw_set_transform(Vector2(left, 0.0), 0.0, Vector2(MIRROR if mirrored else 1.0, 1.0))
 		draw_texture_rect(VALLEY, box, false)
+	draw_set_transform(Vector2.ZERO)
 
 
 func _grove() -> void:
