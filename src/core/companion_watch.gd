@@ -83,13 +83,14 @@ static func battles(events: Array[Dictionary]) -> void:
 			or not bool(event.get(CombatSystem.CRIATURA, false))
 		):
 			continue
+		# A criatura ja saiu das colunas quando isto corre: o sitio, a faixa e se era
+		# aliada vem no proprio evento da morte (BUG-02).
 		var id := int(event[CombatSystem.DE])
-		if SimLoop.field.song.allies.has(id):
+		if bool(event.get(CombatSystem.ALIADA, false)) or SimLoop.field.song.allies.has(id):
 			continue
-		var foe := SimLoop.creatures.index_of(id)
-		if foe < 0 or SimLoop.creatures.bands[foe] != units.bands[r]:
+		if int(event.get(CombatSystem.FAIXA, -1)) != units.bands[r]:
 			continue
-		if absf(SimLoop.creatures.xs[foe] - units.xs[r]) > radius:
+		if absf(float(event.get(CombatSystem.ONDE, INF)) - units.xs[r]) > radius:
 			continue
 		SimLoop.companion.victory(id, together)
 	if SimLoop.companion.battles.size() < LastCartWatch.rules().battle_evolve_count:
