@@ -60,6 +60,7 @@ src/core/event_bus.gd       EventBus      autoload; os 61 sinais da §46
 src/core/rng_service.gd     RngService    autoload; os seis fluxos (§42)
 src/core/registry.gd        Registry      autoload; os .tres por StringName
 src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
+src/core/save_file.gd       SaveFile      gravar um save como transacao: escrever, confirmar, promover (BUG-01)
 src/core/sim_factory.gd     SimFactory    monta os sistemas puros a partir do Registry
 src/core/rules_factory.gd   RulesFactory  o que as respostas do painel trouxeram: precos, estatuas, estrago (ADR 0027)
 src/core/pace.gd            Pace          a roda abranda o tempo saltando passos (Q-034)
@@ -170,6 +171,7 @@ src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/core/preferences.gd     Preferences   o tremor e os claroes, em user://settings.cfg (§26, §45)
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
+src/world/resume.gd         Resume        retomar pelo save mais novo que se abre; a partida acabada nao volta atras (BUG-03)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
 src/world/band_view.gd      BandView      desenha UMA faixa, e leva a luz dela
 src/world/terrain_backdrop.gd TerrainBackdrop o cenario da faixa, so quando a luz muda

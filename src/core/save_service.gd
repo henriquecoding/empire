@@ -13,8 +13,8 @@
 # ║ Qualquer diff que toque neste ficheiro leva revisao obrigatoria.          ║
 # ╚═══════════════════════════════════════════════════════════════════════════╝
 #
-# Escreve-se para um temporario e so depois se renomeia. Renomear e atomico;
-# escrever nao e. Um crash a meio da escrita nao pode destruir o save anterior.
+# Escreve-se para um temporario, confirma-se e so depois se renomeia (SaveFile). Uma
+# escrita a meio nao pode destruir o save anterior nem passar por sucesso (BUG-01).
 extends Node
 
 ## Desde a v1, com migracoes explicitas (SaveMigrations, Q-091). Nao ha v0 (§62).
@@ -56,22 +56,7 @@ func save(
 		&"world": mundo,
 	}
 
-	var final := caminho(slot)
-	var temporario := final + ".tmp"
-	var f := FileAccess.open(temporario, FileAccess.WRITE)
-	if f == null:
-		push_error("save: nao abre %s (%d)" % [temporario, FileAccess.get_open_error()])
-		return false
-	f.store_var(dados, false)  # false = allow_objects desligado. ADR 0007.
-	f.close()
-
-	var erro := DirAccess.rename_absolute(
-		ProjectSettings.globalize_path(temporario), ProjectSettings.globalize_path(final)
-	)
-	if erro != OK:
-		push_error("save: rename de %s falhou (%d)" % [temporario, erro])
-		return false
-	return true
+	return SaveFile.write(caminho(slot), dados)
 
 
 ## Le. Devolve null se o slot nao existe, esta corrompido, ou nao e um save.
@@ -148,17 +133,32 @@ func _maior_seq() -> int:
 ## mesma razao da rotacao: o created_utc tem resolucao de um segundo e tres
 ## autosaves no mesmo segundo empatavam.
 func latest_slot() -> int:
-	var escolhido := -1
-	var maior := -1
+	var lista := by_recency()
+	return lista[0] if not lista.is_empty() else -1
+
+
+## Os slots cuja moldura se le, do mais novo para o mais velho: a ordem por que a
+## retoma os tenta, para um save novo estragado nao esconder um velho bom (BUG-03).
+func by_recency() -> Array[int]:
+	var seqs := {}
 	for slot in SLOTS:
 		var dados := _ler_cru(slot)
-		if dados.is_empty():
-			continue
-		var seq: int = dados.get(&"autosave_seq", 0)
-		if seq > maior:
-			maior = seq
-			escolhido = slot
-	return escolhido
+		if not dados.is_empty():
+			seqs[slot] = int(dados.get(&"autosave_seq", 0))
+	var lista: Array[int] = []
+	lista.assign(seqs.keys())
+	lista.sort_custom(func(a: int, b: int) -> bool: return seqs[a] > seqs[b])
+	return lista
+
+
+## Se o slot traz um mundo com que se retome: tropas, e o relogio no estado. Uma
+## moldura que se le mas vem sem mundo e um save estragado, e nao uma partida.
+func playable(slot: int) -> bool:
+	var tropas: Variant = restore_world(slot).get(&"units", {})
+	if typeof(tropas) != TYPE_DICTIONARY:
+		return false
+	var ids: Variant = (tropas as Dictionary).get(&"ids", PackedInt32Array())
+	return ids is PackedInt32Array and not (ids as PackedInt32Array).is_empty()
 
 
 func has_slot(slot: int) -> bool:
