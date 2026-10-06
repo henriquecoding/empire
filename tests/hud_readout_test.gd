@@ -78,7 +78,8 @@ func test_compact_keyboard_context_does_not_cover_combat() -> void:
 
 func test_long_objective_grows_its_card_and_moves_context_below_it() -> void:
 	var viewport: SubViewport = auto_free(SubViewport.new())
-	viewport.size = Vector2i(760, 390)
+	# 760 unidades de interface: no toque cada uma vale TOUCH_POINTS pontos (UX-06).
+	viewport.size = Vector2i(ceili(HudLayout.GOAL_MIN_WIDTH * HudLayout.TOUCH_POINTS), 390)
 	add_child(viewport)
 	TouchControls.active = true
 	var ribbon := HudRibbon.new()

@@ -1,6 +1,6 @@
 # ART-RENEWAL-01 — Renovacao visual do reino
 
-Estado em curso — arte integrada; validacao visual e CI em andamento.
+Estado    feito — arte integrada na main com a HUD da UX-05; a paisagem espelhada sem buracos (ADR 0075)
 
 Pedido direto do dono em 05/10/2026: gerar e implementar personagens, sprites e
 cenarios seguindo as novas referencias; aprovacao expressa da familia da Podridao.

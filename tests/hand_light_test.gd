@@ -20,4 +20,3 @@ func test_the_bought_torch_takes_its_place() -> void:
 func test_gives_less_light_than_the_bought_torch() -> void:
 	assert_float(HandLight.LUZ.raio).is_less(1.0)
 	assert_float(HandLight.LUZ.forca).is_less(WorldLight.MEIA)
-

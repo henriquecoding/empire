@@ -42,9 +42,9 @@ static func scale_for(factor: float) -> float:
 ## A escala da interface para `pixels` de janela por unidade de 1280x720, num ecra com
 ## `density` pixeis por ponto. A interface quer pelo menos um ponto por unidade: e o
 ## tamanho a que foi desenhada, e no toque um pouco mais, porque o telemovel se le
-## mais longe do que parece e o polegar tapa. O browser do telemovel da dois ou tres pixeis por ponto
-## (o devicePixelRatio), e a conta so pelos pixeis deixava a HUD, os botoes e a pausa a
-## um terco disso no iPhone — a captura do dono de 06/10/2026 (UX-06).
+## mais longe do que parece e o polegar tapa. O browser do telemovel da dois ou tres
+## pixeis por ponto (o devicePixelRatio), e a conta so pelos pixeis deixava a HUD, os
+## botoes e a pausa a um terco disso no iPhone — a captura do dono de 06/10/2026 (UX-06).
 static func zoom_for(pixels: float, density: float, touch := false) -> float:
 	var points := pixels / maxf(1.0, density)
 	return scale_for(points / (TOUCH_POINTS if touch else 1.0))

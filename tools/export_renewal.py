@@ -187,7 +187,7 @@ def export(directory):
             portrait = portrait.crop((0, 0, 1000, portrait.height))
         portrait = cut(portrait, (0, 0, portrait.width, portrait.height))
         save_png(sized(portrait, 360), directory / ('portrait_' + who + '.png'))
-    sources = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in SOURCE.glob('*.png')}
+    sources = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(SOURCE.glob('*.png'))}
     (directory / 'manifest.json').write_text(json.dumps(dict(version=1, sources=sources, assets=assets),
                                                        ensure_ascii=False, indent=2) + '\n')
 

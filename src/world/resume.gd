@@ -23,7 +23,9 @@ static func latest() -> bool:
 			Outcome.RESUMED:
 				recovered = slot != lista[0]
 				if recovered:
-					push_warning("save: o slot %d estava estragado; retomado o %d" % [lista[0], slot])
+					push_warning(
+						"save: o slot %d estava estragado; retomado o %d" % [lista[0], slot]
+					)
 				return true
 			Outcome.ENDED:
 				return false

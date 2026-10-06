@@ -2,17 +2,17 @@
   "version": 1,
   "sources": {
     "citizens.png": "46aaaf2c6f91c03fc42d8dab968eed66ceac5dd92343f864e819c8418ae2215c",
-    "portrait_king.png": "448e00ff3fa0bcbe220f67e62db89db34c96bf65de3836f74093b6bbb2957222",
-    "rot.png": "78253a6a764e6a2a221a98b1947fdc1d9711ae269f9f8f3b81279fe28408edc8",
-    "portrait_nia.png": "52cd21de237608be951454e15ea37b119305c65f0509d13a24e5e9860b57ddc8",
-    "rot_large.png": "1538ad11887624627a20958840f9dc6dbb6e5bb829c0d7483ae3e0531b2cee4c",
-    "valley.png": "b7679663ea4d95a56b3cdbb92beaa13661f0917615a26c3c726b7ccbf3222f5f",
-    "village.png": "2d36ef81df343768aafbad1a8907069f4ca78e8930dddf0e8ec1d5b21d5dd76b",
-    "trees.png": "4c2684ce6fbb73bb767b2e4332f9152f429d39d20664350f996aad882938653b",
-    "settlement.png": "9b5b711dd58dca09d53092ffa4749dd360b0bb3f2d51d8a4edd8b5b71521e7bb",
     "crew.png": "97132fd028e5a94c4580d610e3ca0f9631e91b4cfa13b2ae3ab57ff8bbe1e0fa",
+    "portrait_archer.png": "4a656018a6625f6163425053529cc5c425264e5dc70af7a455f62c4eb42bc310",
+    "portrait_king.png": "448e00ff3fa0bcbe220f67e62db89db34c96bf65de3836f74093b6bbb2957222",
+    "portrait_nia.png": "52cd21de237608be951454e15ea37b119305c65f0509d13a24e5e9860b57ddc8",
+    "rot.png": "78253a6a764e6a2a221a98b1947fdc1d9711ae269f9f8f3b81279fe28408edc8",
+    "rot_large.png": "1538ad11887624627a20958840f9dc6dbb6e5bb829c0d7483ae3e0531b2cee4c",
     "royals.png": "196470cb5f510deced9d9262a48877994051706b8e9f8416372ff533046d105a",
-    "portrait_archer.png": "4a656018a6625f6163425053529cc5c425264e5dc70af7a455f62c4eb42bc310"
+    "settlement.png": "9b5b711dd58dca09d53092ffa4749dd360b0bb3f2d51d8a4edd8b5b71521e7bb",
+    "trees.png": "4c2684ce6fbb73bb767b2e4332f9152f429d39d20664350f996aad882938653b",
+    "valley.png": "b7679663ea4d95a56b3cdbb92beaa13661f0917615a26c3c726b7ccbf3222f5f",
+    "village.png": "2d36ef81df343768aafbad1a8907069f4ca78e8930dddf0e8ec1d5b21d5dd76b"
   },
   "assets": {
     "royal_ram": {

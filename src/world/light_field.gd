@@ -92,7 +92,7 @@ static func _archote(faixas: Dictionary, perfil: RotProfile, fogo: PackedColorAr
 	var raio := perfil.torch_radius_px
 	var forca := WorldLight.MEIA
 	if not SimLoop.night.dark.torch.lit():
-		if not HandLight.carried(HandLight.dark_now(), false):
+		if not SimLoop.units.alive(rei) or not HandLight.carried(HandLight.dark_now(), false):
 			return
 		onde = HandLight.tip(rei)
 		raio *= HandLight.LUZ.raio

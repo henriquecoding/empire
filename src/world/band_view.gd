@@ -174,7 +174,9 @@ func _fogueiras() -> void:
 		return
 	var fogo := WorldLight.fire_stops(_podre)
 	if SimLoop.night.dark.torch.lit():
-		var mao := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)) - LightField.MAO)
+		var mao := Vector2(
+			SimLoop.units.xs[rei], WorldPalette.ground_of(int(band)) - LightField.MAO
+		)
 		FlameArt.draw_on(self, mao, ARCHOTE, fogo, _visual_time)
 	elif HandLight.carried(HandLight.dark_now(), false):  # a tocha da mao (UX-07)
 		HandLight.draw_on(self, HandLight.tip(rei), fogo, _visual_time)

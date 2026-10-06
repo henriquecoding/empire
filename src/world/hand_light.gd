@@ -57,8 +57,7 @@ static func tip(rei: int) -> Vector2:
 		corpo = _art.body_box(perfil, foot)
 	var lado := facing(units.xs[rei])
 	var mao := Vector2(
-		corpo.get_center().x + lado * corpo.size.x * MAO.x,
-		corpo.position.y + corpo.size.y * MAO.y
+		corpo.get_center().x + lado * corpo.size.x * MAO.x, corpo.position.y + corpo.size.y * MAO.y
 	)
 	return mao + Vector2(lado * CABO.y, -CABO.x)
 

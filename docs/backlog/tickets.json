@@ -2775,7 +2775,7 @@
   "depende": "—",
   "feito": "Fontes e exports integrados, suite e portoes verdes, capturas revistas e merge na main.",
   "fora": "Alterar balanceamento, regras da floresta ou saves.",
-  "estado": "feito",
+  "estado": "feito — arte integrada na main com a HUD da UX-05; a paisagem espelhada sem buracos (ADR 0075)",
   "horas": "—",
   "passos": [
    "Gerar o elenco e os cenarios a partir das referencias.",
