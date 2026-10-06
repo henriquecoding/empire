@@ -18,7 +18,7 @@ func _ready() -> void:
 	add_theme_font_override("font", HudStyle.font())
 	add_theme_color_override("font_color", HudStyle.TEXT)
 	var panel := HudStyle.panel()
-	panel.set_content_margin_all(8)
+	panel.set_content_margin_all(HudLayout.GAP)
 	add_theme_stylebox_override("normal", panel)
 	add_to_group(&"instrumentos")
 	add_to_group(&"hud_context")
@@ -46,12 +46,14 @@ func _process(delta: float) -> void:
 			text = GameplayGuide.goal()
 	visible = not text.is_empty() and SimLoop.running()
 	var available := area
-	if not TouchControls.active and area.x >= 960:
-		available.x -= CombatBar.WIDTH + 40
+	if not TouchControls.active and area.x >= HudLayout.COMBAT_MIN_WIDTH:
+		available.x -= CombatBar.WIDTH + HudLayout.COMBAT_GAP
 	var frame := HudLayout.context(available, 0)
-	if not TouchControls.active and area.x < 960:
-		frame.position.y = CombatBar.TOP + CombatBar.HEIGHT + 12
+	if not TouchControls.active and area.x < HudLayout.COMBAT_MIN_WIDTH:
+		frame.position.y = CombatBar.TOP + CombatBar.HEIGHT + HudLayout.PADDING
 	for header: Control in get_tree().get_nodes_in_group(&"hud_header"):
-		frame.position.y = maxf(frame.position.y, header.get_global_rect().end.y / zoom + 12)
+		frame.position.y = maxf(
+			frame.position.y, header.get_global_rect().end.y / zoom + HudLayout.PADDING
+		)
 	size = Vector2(frame.size.x, 0)
 	position = frame.position * zoom

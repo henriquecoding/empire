@@ -12,6 +12,8 @@ const JADE := Color(0.33, 0.53, 0.45)
 const FAIXA_TOPO := 72.0
 const AVISO_S := 3.0
 const TEXTO_S := 0.1
+const HINT := {"font": 14, "margin": 28.0, "height": 28.0, "bottom": 44.0}
+const NOTICE := {"font": 16, "width": 480.0}
 
 var _ribbon: HudRibbon
 var _context: ContextPanel
@@ -29,10 +31,10 @@ func _ready() -> void:
 	add_child(_ribbon)
 	_context = ContextPanel.new()
 	add_child(_context)
-	_dica = HudStyle.label(self, 14, HudStyle.MUTED)
+	_dica = HudStyle.label(self, HINT.font, HudStyle.MUTED)
 	_dica.add_theme_stylebox_override("normal", HudStyle.panel())
 	_dica.add_to_group(&"instrumentos")
-	_aviso = HudStyle.label(self, 16, HudStyle.GOLD)
+	_aviso = HudStyle.label(self, NOTICE.font, HudStyle.GOLD)
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_aviso.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_aviso.add_theme_stylebox_override("normal", HudStyle.panel())
@@ -74,14 +76,16 @@ func _dispor() -> void:
 	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
 	var area := get_viewport_rect().size / zoom
 	_dica.scale = Vector2.ONE * zoom
-	_dica.position = Vector2(28, get_viewport_rect().size.y - 44 * zoom)
-	_dica.size = Vector2(area.x - 56, 28)
+	_dica.position = Vector2(HINT.margin, get_viewport_rect().size.y - HINT.bottom * zoom)
+	_dica.size = Vector2(area.x - HINT.margin * 2, HINT.height)
 	_dica.clip_text = true
-	var width := minf(480, area.x - 32)
+	var width := minf(NOTICE.width, area.x - HudLayout.MARGIN * 2)
 	_aviso.scale = Vector2.ONE * zoom
 	_aviso.size = Vector2(width, 0)
-	var top := _context.get_global_rect().end.y if _context.visible else 80.0 * zoom
-	_aviso.position = Vector2((area.x - width) * 0.5 * zoom, top + 8 * zoom)
+	var top := (
+		_context.get_global_rect().end.y if _context.visible else HudLayout.CONTEXT_TOP * zoom
+	)
+	_aviso.position = Vector2((area.x - width) * HudLayout.HALF * zoom, top + HudLayout.GAP * zoom)
 
 
 func _dizer_chave(chave: StringName) -> void:

@@ -30,7 +30,7 @@ func build(layout: PauseLayout, back: Callable, zero: FreshStartPanel) -> void:
 	realm = _page(layout, &"UI_REALM_STATUS", back)
 	overview = PauseTheme.label(realm.get_child(1).get_child(0))
 	overview.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	overview.add_theme_constant_override("line_spacing", 12)
+	overview.add_theme_constant_override("line_spacing", PauseTheme.ROW_GAP)
 	refresh()
 
 

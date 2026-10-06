@@ -104,10 +104,10 @@ func _process(delta: float) -> void:
 	for group: StringName in [&"hud_context", &"hud_notice"]:
 		for control: Control in get_tree().get_nodes_in_group(group):
 			if control.is_visible_in_tree():
-				top = maxf(top, control.get_global_rect().end.y + 8 * zoom)
-	var width := minf(520, area.x - 32)
+				top = maxf(top, control.get_global_rect().end.y + HudLayout.GAP * zoom)
+	var width := minf(HudLayout.CONTEXT_WIDTH, area.x - HudLayout.MARGIN * 2)
 	scale = Vector2.ONE * zoom
-	position = Vector2((area.x - width) * 0.5 * zoom, top)
+	position = Vector2((area.x - width) * MEIA * zoom, top)
 	size = Vector2(width, CAIXA.alto)
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	advance(delta)

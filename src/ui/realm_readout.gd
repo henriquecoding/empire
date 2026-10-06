@@ -1,6 +1,8 @@
 class_name RealmReadout
 extends RefCounted
 
+const PERCENT := 100.0
+
 
 static func purse() -> Vector2i:
 	if SimLoop.units == null:
@@ -12,13 +14,13 @@ static func purse() -> Vector2i:
 
 
 static func core_health() -> int:
-	var best := -1.0
+	var best := float(-1)
 	if SimLoop.builds == null or not RealmLadder.founded(SimLoop.builds):
 		return -1
 	for slot: BuildSlot in SimLoop.builds.slots:
 		if slot.kind == BuildSlot.NUCLEO:
 			best = maxf(best, float(slot.health) / maxf(1.0, float(slot.max_health())))
-	return roundi(best * 100.0) if best >= 0.0 else -1
+	return roundi(best * PERCENT) if best >= 0.0 else -1
 
 
 static func overview() -> String:

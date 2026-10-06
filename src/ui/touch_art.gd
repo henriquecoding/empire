@@ -25,6 +25,7 @@ const LETRA := {"corpo": 13, "min": 12, "contorno": 4}
 const APAGADO := 0.35
 ## O botao premido enche-se da cor do aro: o polegar tapa-o, e a borda e o que se ve.
 const PREMIDO := 0.3
+const FOCUS_RING := {"gap": 4, "stroke": 2.0}
 const ALAVANCA := {"seta": 0.78, "ponta": 0.14, "polegar": 0.42, "repouso": 0.7, "aro": 0.8}
 const ROSCA := {"raio": 1.25, "bolha": 17.0, "letra": 14, "aro": 2.0}
 const SEGMENTOS := 48
@@ -123,7 +124,7 @@ static func button(ci: CanvasItem, c: Vector2, r: float, estado: Dictionary) -> 
 		ci.draw_circle(c, raio, _alfa(cor, PREMIDO * alfa))
 	ci.draw_arc(c, raio, 0.0, TAU, SEGMENTOS, _alfa(cor, alfa), TRACO, true)
 	if estado.get(&"brilho", false):
-		ci.draw_arc(c, raio + 4, 0.0, TAU, SEGMENTOS, GameHud.MINT, 2.0)
+		ci.draw_arc(c, raio + FOCUS_RING.gap, 0.0, TAU, SEGMENTOS, GameHud.MINT, FOCUS_RING.stroke)
 	var pronto: float = estado.get(&"pronto", 1.0)
 	if pronto < 1.0:
 		var de := -PI * MEIO
