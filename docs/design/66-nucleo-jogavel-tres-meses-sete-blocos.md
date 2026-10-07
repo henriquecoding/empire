@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Critério de saída: sobreviver 10 dias é possível e não é trivial. Cenário em blocos de cor lisa; personagens já animadas por cima. Ao sábado, arranca o cenário da Fase 2 em paralelo.
 
 | Bloco | Ficheiros | Critério de aceitação |

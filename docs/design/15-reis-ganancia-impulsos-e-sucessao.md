@@ -30,11 +30,22 @@ Um impulso por dia. Cada um tem vantagem e desvantagem — nunca só vantagem. �
 
 O preço em moedas (Q-014). Cada impulso tem uma base, na medida do que vale: a Colheita Forçada 3 (Q-158), a Chamada às Armas 4, a Rota Protegida 5, a Feira Livre e a Vigília 6, o Perdão Real 10. O preço de cada dia é essa base a crescer com a produção — ao mesmo ritmo que ela (§06) —, e por isso custa sempre o mesmo em dias de trabalho. O tirano paga metade. Repetir o mesmo decreto dentro de três dias custa uma vez e meia por cada vez que ele saiu: o reino cansa-se da mesma ordem, e o melhor impulso deixa de ser o único que se usa.
 
-## Sucessão
+## Sucessão: preparação, escolha e risco
 
-- **Treino** — 10 dias na Casa do Herdeiro. Custa 5 moedas/dia.
-- **Herança** — O sucessor herda 60% dos boosts e 100% dos desbloqueios. A Ganância é sorteada de novo.
-- **Vulnerabilidade** — Impérios com sucessor jovem no trono são mais fáceis de dominar — e isso vale para ti e para os inimigos. Atacar logo a seguir à morte de um rei inimigo é a janela ideal.
-- **Atalho** — O diplomata n2 treina um sucessor em 5 dias em vez de 10.
+A Casa do Herdeiro abre na Fortaleza (Q-222). O herdeiro permanece neutro enquanto se prepara. Pronto, o jogador vai à casa e escolhe um dos imperadores desbloqueados e elegíveis. A transferência do governo reinicia a preparação: sem outro sucessor pronto, a morte pode encerrar a campanha. Solo mantém uma única coroa soberana em todos estes estados (Q-196/Q-197/Q-202).
 
-Pedido do dono de 02/10/2026 — ADR 0052. O sucessor tem nome e identidade próprios: a sucessora de Nia não volta a chamar-se Nia. Os desbloqueios, as dívidas e as consequências ficam. Os decretos são do reino: ter três imperadores não dá três decretos por dia. Por aprovar: que o herdeiro siga o perfil de quem reinava e que os 60% se apliquem só aos bónus passivos herdáveis são propostas da Q-202; que uma troca de imperador não sorteie a Ganância de novo é proposta da Q-205.
+| Situação | Regra decidida | Estado de execução |
+| --- | --- | --- |
+| Em preparação | Identidade ainda neutra; investimento e manutenção elevados | UN-32 precisa de substituir o ciclo antigo |
+| Falta de pagamento | Desaparece; começar novamente exige novo pagamento | Não confundir com apenas pausar um dia |
+| Pronto | Escolha de perfil desbloqueado na casa onde treinou | Não é troca livre junto de outro corpo |
+| Novo monarca | Bónus reduzidos recuperam ao longo de cinco noites | Percentagens/afinação têm âmbito próprio |
+| Governo transferido | Dívidas, desbloqueios, território e consequências continuam | Não duplica decretos ou recursos |
+| Perda sem continuidade | Campanha termina conforme §16 | Um perfil descoberto não equivale a sucessor preparado |
+
+
+A Q-133 aprovava dez dias de treino, cinco moedas por dia e o atalho do Diplomata evoluído. As Q-196/Q-202 alteram o contrato: a manutenção deve ser a mais alta do jogo, e o incumprimento elimina o herdeiro. Os números da baseline não provam que o requisito novo esteja satisfeito; afinação em UN-32. Não se fixa outro preço nesta revisão.
+
+A ganância é sorteada na sucessão por morte segundo Q-133. O comportamento da ganância numa troca voluntária continua aberto: a resposta à Q-205 descreveu o quarto imperador, sem aprovar todas as outras propostas dessa pergunta. O nome próprio e o perfil imperial são coisas diferentes; um sucessor pode ter identidade própria sem criar uma quarta classe inicial.
+
+A §89 descreve os estados e testes. Preparar o herdeiro, mantê-lo e escolher o sucessor têm de ser uma sequência jogável, persistente e legível, não apenas uma alteração direta no estado de desenvolvimento.

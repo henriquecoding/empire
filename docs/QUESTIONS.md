@@ -68,18 +68,47 @@
 > escuro o jogo»*, e aplicar o relatório mestre de auditoria de 06/10/2026.
 
 ### Q-247 · A tocha da mão também afasta a emboscada do escuro?
+- **Decisão posterior (painel, 07/10/2026; síntese):** iluminação inicialmente sem desgaste; um acordo desfavorável futuro poderá corromper a tocha e introduzir consumo. Gatilho, consumo e recuperação não especificados. A resposta não resolve explicitamente proteção contra emboscadas; baseline abaixo mantém-se até decisão própria.
 - **Aplicado (ADR 0076):** a tocha é só luz. Não se gasta e não conta para o `Torchlight.in_dark`; de noite, sem
   o archote comprado, o escuro continua a trazer emboscadas (Q-029).
 - **Alternativa:** a tocha da mão contar como luz para o `in_dark`. Tornaria o archote inútil, por isso não se fez.
 - **Decide:** tu.
 
 ### Q-248 · As árvores que os saves de antes já perderam
+- **Confirmado (painel, 07/10/2026; síntese):** árvores/elementos removidos ao fundar continuam ausentes nesse save; construções realizadas persistem. Sem reposição ou compensação retroativa. A dúvida histórica abaixo fica resolvida nesse âmbito.
 - **Aplicado:** a limpeza da floresta à volta das obras volta a correr quando nasce uma árvore nova (BUG-04 do
   relatório). Uma árvore que nasceu dentro do chão de uma obra é limpa já na partida que a gerou, e a retoma fica
   igual à partida contínua.
 - **Em aberto:** um save gravado antes disto pode ter uma árvore de pé dentro de uma obra; ao abrir, a limpeza
   remove-a (como já acontecia). Não se repõe nem se paga nada por ela.
 - **Decide:** tu, se esses saves precisam de outra regra.
+
+## Consolidação documental — 06/10/2026 (ADR 0078)
+
+A §91 do dossiê e `docs/reports/DECISOES-DOSSIE-2026-10-07.json` conservam as sínteses e referências das decisões consultadas. O texto histórico das perguntas abaixo continua a explicar a proposta original. As atualizações seguintes prevalecem na cláusula afetada; não alteram o estado remoto no painel.
+
+| Pergunta | Resposta mais recente e efeito |
+|---|---|
+| Q-221 | Bancas só depois da fundação e dentro do primeiro traçado; mudar de bioma não inicia outra partida. Não aprova novamente o antigo pacote fundador. |
+| Q-235 | Clima geralmente quente e agradável, variação em alguns biomas, autoria baseada em 64×64; restantes parâmetros sociais/climáticos continuam abertos. |
+| Q-237 | Compatibilizar o subsolo existente com a cave/armazém da sede; falta especificar resolução de conflito e migração sem perda de conteúdo protegido. |
+| Q-238 | Relações funcionais da floresta aprovadas; parâmetros visuais não abrangidos mantêm `_proposed`. |
+| Q-239 | Aprovação da pressão acumulada também sujeita à rampa. |
+| Q-240 | O dono considera a escalada 3/6/9 agressiva. O valor atual não deve aparecer como decisão final; afinação conjunta com Q-242/Q-243. |
+| Q-241 | Aprovação das emboscadas pagas e do início na noite três. |
+| Q-242 | Aprovação da proposta de rampa sete no contexto do playtest apresentado; ainda não aplicada aos CSV nesta revisão. |
+| Q-243 | Aprovação de primeira funda na noite doze, depois de seis em seis; implementação pendente. |
+
+As Q-196/Q-197/Q-202 já definem a troca por herdeiro neutro e preparado. A Q-205 responde apenas ao conceito do quarto imperador: não fecha ganância na troca, reposição da companhia ou outras propostas. Q-206 define indisponibilidade na campanha salvo ritual, com nova escolha possível num novo começo. Os adiamentos consultados mantêm-se, incluindo a Q-245 respondida em 07/10.
+
+### Q-253 · Como medir afinidade regional sem a confundir com influência local?
+
+- **Origem:** aprofundamento documental solicitado em 06/10/2026, §87; as relações de floresta existentes não mudam.
+- **Decidido:** tornar território, recursos e transformações relevantes; relações locais explícitas e limitadas conforme Q-238.
+- **Proposta desta revisão:** medir cobertura elegível / cobertura utilizável num intervalo regional, com curva limitada em dados; comparar uma primeira relação regional com a regra local existente.
+- **Falta decidir:** o intervalo, denominador, sobreposições, água inacessível, fronteiras políticas, curvas e primeira atividade beneficiada. Não há coeficientes aprovados.
+- **Bloqueia:** apenas a nova afinidade regional, não a consolidação do dossiê nem os sistemas locais aprovados.
+- **Decide:** dono, depois de proposta concreta e ensaio. Não implementar multiplicadores por inferência.
 
 ## O subsolo tem chão para além da escada — 05/10/2026 (ADR 0072)
 
@@ -100,6 +129,7 @@
 - **Decide:** tu, os números depois de jogar, e a densidade (o relatório pede comparar baixa, média e a atual).
 
 ### Q-245 · O que o relatório propõe e fica por decidir
+- **Adiado pelo dono (painel, 07/10/2026):** as extensões listadas abaixo não recebem aprovação por serem incluídas nas §§92–96.
 - **Por fazer, à espera de desenho:** o tempo de preparação e a regra de fuga do ladrão (§9.6); que criaturas roubam,
   que só guardam e que são fauna (§9.6, §10.4); a fauna das cavernas; o transporte de uma categoria por trabalhadores e a
   recuperação de um depósito vazio (§9.4, §10.3); as reservas do celeiro desenhadas como recipientes (SUB-15).

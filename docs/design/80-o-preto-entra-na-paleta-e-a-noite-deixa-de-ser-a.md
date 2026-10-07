@@ -42,7 +42,7 @@ A §05 mandava "Azul profundo" na noite. A tua paleta tem 30 cores de madeira e 
 
 > **A regra das duas exceções**
 >
-> Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: violeta (#59386B, o teu token --rot) é A Podridão e tudo o que é dela, a começar pelo Lume que arde roxo na base de onde ela nasce; âmbar (#F6D89B ao núcleo) é a tua luz — fogueira, farol, archote — e a tua luz afasta-a. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance: roxo é dela, âmbar é teu. (ADR 0034, o dono a 29/09/2026: até aqui a candeia dela também era âmbar, e o ecrã dizia que a luz era dela.) É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.
+> Com a noite castanha, o ecrã noturno tem exatamente duas cores que não são terra, e cada uma delas quer dizer uma coisa: violeta (#59386B, o teu token --rot) é A Podridão e tudo o que é dela, a começar pelo Lume que arde roxo na base de onde ela nasce; âmbar (#F6D89B ao núcleo) é a tua luz — fogueira, farol, archote e tocha na mão. Os efeitos de proteção pertencem às regras de cada fonte: a tocha gratuita da ADR 0076 apenas ilumina e não afasta emboscadas; a cor, por si, não concede proteção. Um jogador aprende isto em duas noites sem que ninguém lho diga, e a partir daí lê o ecrã inteiro de relance: roxo é dela, âmbar é teu. (ADR 0034, o dono a 29/09/2026: até aqui a candeia dela também era âmbar, e o ecrã dizia que a luz era dela.) É a coisa que o azul profundo torna impossível, porque o azul é frio como o violeta e as duas coisas fundem-se.
 
 ## 3 · A luz é o assunto, e desenha-se com três paragens
 

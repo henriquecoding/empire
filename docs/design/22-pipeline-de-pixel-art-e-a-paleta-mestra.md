@@ -2,6 +2,10 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Direção atual do dono (Q-235): objetos e sprites são elaborados com base em 64×64 píxeis. Esta é a referência de autoria, não uma obrigação de todos os edifícios, silhuetas, colisões ou animações terem a mesma caixa. As medidas técnicas e de ocupação continuam explícitas nos dados; assets e ampliações respeitam a grelha. A direção visual da ADR 0075 está integrada na base publicada pelo PR #92.
+
+Família visual atual: Monarca corpulento, Nia de cabelo encaracolado e dois machados, Imperador Arqueiro encapuzado; a Podridão partilha madeira apodrecida, musgo, sombras ameixa e olhos âmbar. A sede cresce da fogueira para tendas, povoado, vila, vila fortificada e castelo-carvalho. A paisagem natural não antecipa uma cidade construída. A floresta funcional preserva espécies, estações, marca de abate e cepos. As quatro poses de caminhada e as lacunas de unidades especializadas e obras menores continuam explícitas no inventário artístico; direção aprovada não equivale a aprovação final de cada asset.
+
 Esta secção foi reescrita à volta das três referências que deste. A especificação continua a derivar de como desenhas (§01) e a paleta continua a ser a tua — mas agora há três coisas que não havia: a lei da escala dupla, a pilha de iluminação, e a fonte arquitetónica de cada povo. O plano de produção foi refeito em consequência, e o cenário encolheu.
 
 ## As três alavancas — o que cada referência ensina, e qual delas é tua
@@ -47,7 +51,7 @@ O que muda não é a resolução — é a densidade de desenho dentro dela. E o 
 | Grelha de tile | 32 px | Autora em 64×64 como já fazes; 64 = 2×2 tiles |
 | Escala 1 — escudeiro | 32–36 px | Escudeiro do trono |
 | Escala 2 — aldeão/tropa | 46–52 px | Empire troop de 47 px |
-| Escala 3 — personagem jogável/elite | 56–62 px | As classes jogáveis (§08) e a elite |
+| Escala 3 — personagem jogável/elite | 56–62 px | Referência técnica histórica dos perfis imperiais (§08) e da elite; a autoria atual rege-se pela Q-235 e ADR 0075 |
 | Escala 4 — o rei | 64–70 px | O rei é o maior: tropa < personagem jogável < rei; o vagabundo tem o tamanho de uma tropa, porque pode ser convertido numa (Q-097) |
 | Casa pequena | ≈ 120 × 130 px | Ferreiro da panorâmica — indicativo, a confirmar em jogo |
 | Animação | 10 fps | Idle 6 frames (como já fazes) · andar 8 · ataque 5 · morte 7 |

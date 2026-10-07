@@ -1,0 +1,3557 @@
+{
+  "revisao": "2026-10-07",
+  "tipo": "Mapa editorial de decisões de design; não é uma exportação do painel",
+  "baseline": "5b4b24a7eab6fc9c033711dac973a6c527732aca",
+  "decisoes": [
+    {
+      "pergunta": "Q-001",
+      "decisao": "Adotada a proposta documentada em Q-001, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-002",
+      "decisao": "Adotada a proposta documentada em Q-002, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-003",
+      "decisao": "Adotada a proposta documentada em Q-003, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-004",
+      "decisao": "Adotada a proposta documentada em Q-004, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-005",
+      "decisao": "Adotada a proposta documentada em Q-005, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-007",
+      "decisao": "Adotada a proposta documentada em Q-007, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-008",
+      "decisao": "Adotada a proposta documentada em Q-008, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-009",
+      "decisao": "Adotada a proposta documentada em Q-009, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-010",
+      "decisao": "Incluir um povo do gelo com identidade e características próprias.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-011",
+      "decisao": "Os abates devem produzir moedas, com recompensa ajustada à dificuldade do inimigo.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-012",
+      "decisao": "Manter a mecânica proposta, coerente com a presença da Podridão.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-013",
+      "decisao": "Incluir também um povo do pântano na campanha.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-014",
+      "decisao": "Desenvolver o sistema proposto com coerência e detalhe; o pedido não fixa os parâmetros em falta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-015",
+      "decisao": "Rever a cadência da tropa de elite: três dias foi considerado rápido; cinco ou sete foram sugeridos, sem fixar um único valor definitivo.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-016",
+      "decisao": "A exploração pode revelar mecânicas e habilidades que só ficam disponíveis após a descoberta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-017",
+      "decisao": "A ameaça noturna começa moderada e ganha intensidade ao longo das noites.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-018",
+      "decisao": "Adotada a proposta documentada em Q-018, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-024",
+      "decisao": "Equipamento e cabeça são camadas diferentes do personagem.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-025",
+      "decisao": "Adotar Godot 4.7.2 estável como versão do projeto.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-028",
+      "decisao": "Adotada a proposta documentada em Q-028, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "A antiga classe por povo foi substituída por imperadores controláveis (Q-195).",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-029",
+      "decisao": "Disponibilizar luz portátil comprada e temporária para exploração noturna; fora da proteção, podem surgir emboscadas de várias direções.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-030",
+      "decisao": "Adotada a proposta documentada em Q-030, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-031",
+      "decisao": "Adotada a proposta documentada em Q-031, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-033",
+      "decisao": "Usar F1-16 como critério de verificação do cenário proposto.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-034",
+      "decisao": "Adotada a proposta documentada em Q-034, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-035",
+      "decisao": "Adotada a proposta documentada em Q-035, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-036",
+      "decisao": "Adotada a proposta documentada em Q-036, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-038",
+      "decisao": "Adotada a proposta documentada em Q-038, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-039",
+      "decisao": "Rever a associação do efeito a uma fornalha; outra origem poderá fazer sentido, mas não ficou definida nesta resposta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-040",
+      "decisao": "Avançar ou saltar tempo deve conservar consequências e o peso das escolhas.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-041",
+      "decisao": "Adotada a proposta documentada em Q-041, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-042",
+      "decisao": "Adotada a proposta documentada em Q-042, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-043",
+      "decisao": "Adotada a proposta documentada em Q-043, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-044",
+      "decisao": "Adotada a proposta documentada em Q-044, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-045",
+      "decisao": "Adotada a proposta documentada em Q-045, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-046",
+      "decisao": "Adotada a proposta documentada em Q-046, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-047",
+      "decisao": "Cadenciar a pressão económica para permitir uma campanha prolongada, tomando Kingdom: New Lands como referência.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-048",
+      "decisao": "Adotada a proposta documentada em Q-048, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-049",
+      "decisao": "Adotada a proposta documentada em Q-049, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-050",
+      "decisao": "Adotada a proposta documentada em Q-050, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-051",
+      "decisao": "Adotada a proposta documentada em Q-051, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-052",
+      "decisao": "Adotada a proposta documentada em Q-052, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-053",
+      "decisao": "Adotada a proposta documentada em Q-053, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-054",
+      "decisao": "Adotada a proposta documentada em Q-054, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-055",
+      "decisao": "Adotada a proposta documentada em Q-055, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-056",
+      "decisao": "Aplicar a solução apresentada na pergunta, no seu âmbito.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-057",
+      "decisao": "Adotada a proposta documentada em Q-057, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-058",
+      "decisao": "Adotada a proposta documentada em Q-058, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-059",
+      "decisao": "Adotada a proposta documentada em Q-059, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-060",
+      "decisao": "Adotada a proposta documentada em Q-060, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-061",
+      "decisao": "Adotada a proposta documentada em Q-061, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-063",
+      "decisao": "Usar o funcionamento de Kingdom: New Lands como referência de investigação para o sistema descrito.",
+      "alcance": "Números e guião antigos da abertura subordinados à Última Carroça (§25).",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-064",
+      "decisao": "Adotada a proposta documentada em Q-064, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-065",
+      "decisao": "Adotada a proposta documentada em Q-065, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-066",
+      "decisao": "Adotada a proposta documentada em Q-066, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-067",
+      "decisao": "Adotada a proposta documentada em Q-067, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-068",
+      "decisao": "A abertura deve começar com três criaturas no primeiro dia, no contexto da proposta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-069",
+      "decisao": "Adotada a proposta documentada em Q-069, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-070",
+      "decisao": "Adotada a proposta documentada em Q-070, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-071",
+      "decisao": "Adotada a proposta documentada em Q-071, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-072",
+      "decisao": "Adotada a proposta documentada em Q-072, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-073",
+      "decisao": "Um posto comporta apenas a sua capacidade; aumentar o número de ocupantes exige evoluir a estrutura.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-074",
+      "decisao": "Adotada a proposta documentada em Q-074, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-075",
+      "decisao": "Adotada a proposta documentada em Q-075, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-078",
+      "decisao": "Adotada a proposta documentada em Q-078, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-079",
+      "decisao": "Adotada a proposta documentada em Q-079, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-080",
+      "decisao": "Adotada a proposta documentada em Q-080, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-081",
+      "decisao": "Decisão adiada; não executar por inferência ou por aprovação de outro assunto.",
+      "alcance": "Adiada; não executada por esta revisão.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-082",
+      "decisao": "A travessia estimada depende do desenho de cada região; não é um comprimento universal obrigatório.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-083",
+      "decisao": "Manter o pagamento contínuo enquanto o botão estiver premido e houver dinheiro disponível.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-084",
+      "decisao": "Aceitar provisoriamente o impacto existente, mantendo a intenção de completar o combate posteriormente.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-085",
+      "decisao": "Adotada a proposta documentada em Q-085, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-086",
+      "decisao": "A marca pode servir o perfil Arqueiro e futuros perfis com funcionamento semelhante; a unificação posterior limita o controlo a imperadores.",
+      "alcance": "Arqueiro é agora perfil imperial; ataque e marca são ações separadas.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-087",
+      "decisao": "Usar o tamanho do ecrã como referência no comportamento de câmara descrito na pergunta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-089",
+      "decisao": "A dispersão ao amanhecer é gradual, em cascata, suave e sem demora excessiva.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-090",
+      "decisao": "Adotada a proposta documentada em Q-090, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-091",
+      "decisao": "Desenvolver integralmente o sistema de duração do dia descrito na proposta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-092",
+      "decisao": "Adotada a proposta documentada em Q-092, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-093",
+      "decisao": "Adotada a proposta documentada em Q-093, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-094",
+      "decisao": "A dimensão visual em discussão depende da arte final; não foi fixado um novo valor nesta resposta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-095",
+      "decisao": "Completar o sistema apresentado na pergunta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-096",
+      "decisao": "As tropas caídas criam raízes e desaparecem progressivamente.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-097",
+      "decisao": "Vagabundos têm escala de tropa; personagens controlados destacam-se pela dimensão. A antiga hierarquia de classes fica sujeita à unificação imperial posterior.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-098",
+      "decisao": "A expressão relativa ao tamanho do prato não foi compreendida; esta resposta não aprova uma dimensão.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-099",
+      "decisao": "Reconciliar as ofertas com as decisões posteriores sobre a candeia e o Lume.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-100",
+      "decisao": "Explorar uma construção que contenha o avanço do Zelador, com capacidade e manutenção pressionadas pelo crescimento da Podridão; os parâmetros precisam de desenho próprio.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-101",
+      "decisao": "Fundamentar e equilibrar a relação entre ofertas, defesa e consequências das escolhas.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-102",
+      "decisao": "Aprofundar moral, feitos e bonificações num sistema coerente com Empire.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-103",
+      "decisao": "Reinos conquistados continuam a funcionar como vassalos, pagam tributo e podem perder-se para outros inimigos; o reino fundador mantém a sua identidade.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-104",
+      "decisao": "A pergunta sobre a abertura não foi compreendida; não se considera uma aprovação dos seus parâmetros.",
+      "alcance": "A resposta não confirmou o guião antigo; Q-161 clarifica a árvore inicial. Não impõe morte no tutorial.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-105",
+      "decisao": "Manter a lore da campanha com regiões geradas proceduralmente, sem sequência espacial fixa.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-106",
+      "decisao": "A caça nasce progressivamente de habitats; destruir a origem pode eliminar essa receita.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-107",
+      "decisao": "Moedas no chão podem recrutar vagabundos ou ser guardadas por tropas; a capacidade básica indicada é cinco moedas.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-108",
+      "decisao": "Reparar danos exige a presença e o trabalho de um construtor.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-109",
+      "decisao": "O apoio dos construtores aumenta a resistência das muralhas em dois por cento por construtor, até dez por cento.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-110",
+      "decisao": "Vagabundos são encontrados e recrutados no mundo; a abertura começa pequena, com pessoas sem função a quem se atribuem ferramentas e trabalho.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-111",
+      "decisao": "A capacidade de moedas varia por tropa; as básicas guardam cinco e entregam ao jogador quando este passa.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-112",
+      "decisao": "Decisão adiada; não executar por inferência ou por aprovação de outro assunto.",
+      "alcance": "Adiada; não executada por esta revisão.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-113",
+      "decisao": "Uma ação indisponível explica ao jogador quais os requisitos em falta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-114",
+      "decisao": "Escudeiro pago protege pela frente e recua sem escudo. O contrato inicial prevê cinco moedas para cinco golpes fracos ou dois fortes; três moedas de abates permitem espada de três golpes. A investidura reforça escudo e espada, esta até cinco golpes. A companhia não entrega automaticamente as suas moedas; a evolução imperial posterior segue as decisões de batalha.",
+      "alcance": "Companhia e escudo mantêm contratos próprios; evolução imperial atual é por batalha (Q-223/Q-232).",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-115",
+      "decisao": "Mudanças de modo exigem escolha explícita do jogador; uma moeda largada não deve selecionar silenciosamente outro destino.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-116",
+      "decisao": "Adotada a proposta documentada em Q-116, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-117",
+      "decisao": "Adotada a proposta documentada em Q-117, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-118",
+      "decisao": "Adotada a proposta documentada em Q-118, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-119",
+      "decisao": "Adotada a proposta documentada em Q-119, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-120",
+      "decisao": "A caça surge de forma distribuída, gradual e natural, em vez de todo o stock aparecer simultaneamente.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-121",
+      "decisao": "Adotada a proposta documentada em Q-121, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-122",
+      "decisao": "Adotada a proposta documentada em Q-122, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-123",
+      "decisao": "Adotada a proposta documentada em Q-123, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-124",
+      "decisao": "Adotada a proposta documentada em Q-124, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-125",
+      "decisao": "Adotada a proposta documentada em Q-125, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-126",
+      "decisao": "Atualizar o ritmo noturno à luz do novo conceito de candeia e Lume.",
+      "alcance": "Primeira noite funda alterada pela Q-243; não conservar a estreia na noite seis como decisão final.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-127",
+      "decisao": "Adotada a proposta documentada em Q-127, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-128",
+      "decisao": "Adotada a proposta documentada em Q-128, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-129",
+      "decisao": "Adotada a proposta documentada em Q-129, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-130",
+      "decisao": "Adotada a proposta documentada em Q-130, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-131",
+      "decisao": "Adotada a proposta documentada em Q-131, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-132",
+      "decisao": "Adotada a proposta documentada em Q-132, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-133",
+      "decisao": "Adotada a proposta documentada em Q-133, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Substituição parcial por Q-196/Q-202: herdeiro neutro, incumprimento elimina, escolha quando pronto.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-134",
+      "decisao": "Adotada a proposta documentada em Q-134, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-135",
+      "decisao": "Adotada a proposta documentada em Q-135, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Marcha/viagem mantêm-se; monarca pode sair conforme ADR 0052, substituindo a restrição antiga.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-136",
+      "decisao": "Adotada a proposta documentada em Q-136, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-137",
+      "decisao": "A continuidade depende de sucessor existente e sede válida; sem sucessor a partida termina. A Casa do Herdeiro rege-se pelo estágio definido posteriormente.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-138",
+      "decisao": "Distinguir acessos subterrâneos de construções, que podem ser fechados, das entradas que devem permanecer abertas.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-139",
+      "decisao": "Adotada a proposta documentada em Q-139, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-140",
+      "decisao": "O desbloqueio de um perfil pode passar para uma nova campanha; a sua evolução tem de ser novamente conquistada.",
+      "alcance": "Perfil/desbloqueio persiste; evolução volta a ser conquistada num jogo novo.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-141",
+      "decisao": "Adotada a proposta documentada em Q-141, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-142",
+      "decisao": "Adotada a proposta documentada em Q-142, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-143",
+      "decisao": "O sucessor continua a mesma campanha e herda dívidas e consequências; não constitui um reinício.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-144",
+      "decisao": "Desenvolver o sistema de soldo em atraso a partir da direção proposta; detalhes não especificados continuam pendentes.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-145",
+      "decisao": "Prosseguir com o sistema de celeiro e Colheita Forçada apresentado na pergunta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-146",
+      "decisao": "O herdeiro preparado permite optar por continuar após a morte do soberano. A antiga separação entre rei em casa e classes em expedição foi substituída pela unificação imperial.",
+      "alcance": "A restrição antiga do rei em casa foi substituída pela ADR 0052; sucessão segue Q-196/Q-202.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-147",
+      "decisao": "Decisão adiada; não executar por inferência ou por aprovação de outro assunto.",
+      "alcance": "Adiada; não executada por esta revisão.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-148",
+      "decisao": "Adotada a proposta documentada em Q-148, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-149",
+      "decisao": "A corrida do personagem pode atingir 1,8 vezes a velocidade normal.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-150",
+      "decisao": "Os habitats de caça devem ter origem ambiental plausível. A antiga restrição de deslocação do rei foi superada pelo mundo contínuo e pelos imperadores controláveis.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-151",
+      "decisao": "Uma abertura mais moderada até à quinta noite é aceitável, seguida de dificuldade crescente; as decisões posteriores refinam a rampa e os picos.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-152",
+      "decisao": "Integrar gelo e pântano, num total de oito regiões/povos no mesmo sistema de campanha.",
+      "alcance": "Geada e Bruma integram a mesma campanha; não permanecem fora à espera desta pergunta.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-153",
+      "decisao": "O equipamento integra o armazenamento individual, com contrato próprio para cada perfil jogável.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-154",
+      "decisao": "A comitiva tem limite, mas não define as fronteiras do mundo; a expansão horizontal do mapa é independente da sua capacidade.",
+      "alcance": "Recrutamento permanece; fundadores atuais são três cidadãos sem ofício, Q-223.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-155",
+      "decisao": "A duração exata da travessia será ajustada ao desenho de cada região.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-156",
+      "decisao": "Adotada a proposta documentada em Q-156, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-157",
+      "decisao": "Adotada a proposta documentada em Q-157, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Abertura revista por Q-239–Q-243; tabela histórica não encerra a afinação.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-158",
+      "decisao": "Adotada a proposta documentada em Q-158, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-160",
+      "decisao": "Adotada a proposta documentada em Q-160, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-161",
+      "decisao": "Adotada a proposta documentada em Q-161, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-162",
+      "decisao": "Tropas podem partilhar linguagem visual com os perfis jogáveis, mantendo escala de tropa; a separação antiga de classes controláveis foi substituída.",
+      "alcance": "Classes controláveis antigas substituídas por perfis imperiais, Q-195.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-163",
+      "decisao": "Inventários e abastecimento das tropas devem ligar combate à economia. A exceção antiga de recursos ilimitados não supera a decisão posterior de flechas imperiais pagas.",
+      "alcance": "Inventários individuais mantêm-se; Arqueiro usa munição paga, Q-200.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-164",
+      "decisao": "Adotada a proposta documentada em Q-164, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Reset destrutivo apaga legado na baseline; distinguir do novo começo que preserva perfis, Q-195/Q-206.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-165",
+      "decisao": "Adotada a proposta documentada em Q-165, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-166",
+      "decisao": "Adotada a proposta documentada em Q-166, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-167",
+      "decisao": "Adotada a proposta documentada em Q-167, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-168",
+      "decisao": "Adotada a proposta documentada em Q-168, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-169",
+      "decisao": "Referência de corrida: personagem a 1,8 vezes e cavalo a 2,1 vezes; a montaria pode transportar vinte moedas ou outros itens, com conteúdo e integração próprios.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-170",
+      "decisao": "Adotada a proposta documentada em Q-170, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-171",
+      "decisao": "Adotada a proposta documentada em Q-171, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-172",
+      "decisao": "O inverno aumenta a dificuldade, mas deve oferecer alternativas de recursos que permitam sobreviver com planeamento.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-173",
+      "decisao": "Adotada a proposta documentada em Q-173, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-174",
+      "decisao": "Povos e mercenários têm construções e sistemas próprios que funcionam autonomamente; a origem temporal passa a seguir o despertar social.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-175",
+      "decisao": "Substituir o nome do povo do pântano; Bruma é o nome de trabalho adotado na reconciliação.",
+      "alcance": "Nome do povo é Bruma; kit cultural preservado, com migrações técnicas.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-176",
+      "decisao": "Dungeons variam e podem oferecer recompensas de duas ou três vezes o habitual; probabilidades e orçamento exigem dados explícitos.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-177",
+      "decisao": "Adotada a proposta documentada em Q-177, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-178",
+      "decisao": "Reinos conquistados funcionam como lugares de abrigo e apoio a novas expedições. A separação antiga entre rei e classes viajantes foi superada.",
+      "alcance": "Rei permanentemente em casa foi substituído pela ADR 0052; pode explorar ou delegar.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-179",
+      "decisao": "A Podridão emerge de fissuras e pode ameaçar um ou ambos os lados, com composição equilibrada e progressão moderada na abertura.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-180",
+      "decisao": "Adotada a proposta documentada em Q-180, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-181",
+      "decisao": "Adotada a proposta documentada em Q-181, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-182",
+      "decisao": "Adotada a proposta documentada em Q-182, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-183",
+      "decisao": "A proposta antiga de completar três classes foi substituída pelo novo sistema de monarcas.",
+      "alcance": "Pedido consolidado na unificação imperial: não manter corpos de classes antigos paralelos.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-184",
+      "decisao": "Aceitar a separação de ataque e habilidade implementada no contexto da pergunta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-185",
+      "decisao": "Golpes próximos atingem os inimigos ao alcance; os pequenos sofrem empurrão, os grandes resistem. Ataques à distância atingem um alvo por vez, salvo habilidades imperiais expressamente definidas.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-186",
+      "decisao": "A cave real contém um baú para riqueza física: começa vazio no reino do jogador, pode ser abastecido e saqueado. Outros reinos têm reservas próprias, sem criação arbitrária de riqueza.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-187",
+      "decisao": "Adaptar todas as ações de desktop aos botões de toque, preservando informação e experiência equivalentes entre plataformas.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-188",
+      "decisao": "Adotada a proposta documentada em Q-188, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-189",
+      "decisao": "Aceitar a direção de visibilidade noturna apresentada na pergunta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-190",
+      "decisao": "Manter a lareira acesa tem custo relevante e exige gestão económica.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-191",
+      "decisao": "Decisão adiada; não executar por inferência ou por aprovação de outro assunto.",
+      "alcance": "Adiada; não executada por esta revisão.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-192",
+      "decisao": "Aumentar a dimensão visual da moeda, preservando a física aprovada; a escala final considera as revisões visuais posteriores.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-193",
+      "decisao": "Correr exige manter o botão premido, consome fôlego e obriga a recuperar; o imperador evoluído tem maior resistência.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-194",
+      "decisao": "Decisão adiada; não executar por inferência ou por aprovação de outro assunto.",
+      "alcance": "Adiada; não executada por esta revisão.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-195",
+      "decisao": "Começar com três imperadores distintos; explorar desbloqueia outros perfis para a campanha e novos começos. Apenas imperadores são controláveis.",
+      "alcance": "Três perfis iniciais completos; só imperadores jogáveis; futuros perfis descobertos.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-196",
+      "decisao": "Trocar de soberano exige herdeiro preparado e escolha na sua casa; a transferência reinicia o treino e a vulnerabilidade. Manter sucessor é um investimento elevado. Solo conserva uma única coroa soberana; queda, roubo ou sucessão pendente impedem nova transferência.",
+      "alcance": "Troca transfere governo, exige herdeiro pronto, reinicia ciclo e preserva uma coroa Solo.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-197",
+      "decisao": "Imperadores descobertos podem ser escolhidos quando houver herdeiro preparado ou ao iniciar outra campanha.",
+      "alcance": "Descoberta desbloqueia elegibilidade; troca exige herdeiro pronto.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-198",
+      "decisao": "Adotada a proposta documentada em Q-198, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-199",
+      "decisao": "Adotada a proposta documentada em Q-199, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-200",
+      "decisao": "Uma moeda compra seis flechas; o escudeiro evoluído também participa no combate à distância.",
+      "alcance": "Seis flechas por moeda; escudeiro evoluído dispara. Q-246 conserva afinação e reserva em aberto.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-201",
+      "decisao": "O sangramento pertence, por enquanto, apenas ao Imperador Arqueiro.",
+      "alcance": "Sangramento exclusivo da flecha do Imperador Arqueiro.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-202",
+      "decisao": "O herdeiro permanece neutro durante a formação, desaparece sem manutenção e exige novo investimento. Ao assumir, começa com bónus reduzidos que recupera após cinco noites.",
+      "alcance": "Herdeiro neutro; falta de manutenção elimina; bónus recuperam em cinco noites.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-203",
+      "decisao": "Adotada a proposta documentada em Q-203, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-204",
+      "decisao": "Adotada a proposta documentada em Q-204, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Modos aceites; topologia/autoridade refinadas pelo Documento Mestre e ADR 0067/0068.",
+      "seccoes": [
+        18,
+        19,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        53,
+        62,
+        64,
+        89,
+        90
+      ]
+    },
+    {
+      "pergunta": "Q-205",
+      "decisao": "Quarto imperador futuro: grande, de armadura completa, cura ao sentar-se e faz crescer vegetação. A escudeira dança, reforça a força dele e das tropas; evoluída, abranda inimigos. Esta definição não fecha as outras pendências da pergunta.",
+      "alcance": "Só o conceito descrito do quarto imperador é decidido; restantes subperguntas não respondidas continuam abertas.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-206",
+      "decisao": "Um imperador perdido fica indisponível durante a campanha salvo ritual válido no santuário; pode voltar a ser escolhido num novo começo.",
+      "alcance": "Perfil perdido fica indisponível na campanha salvo ritual válido; novo começo permite nova escolha.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-207",
+      "decisao": "Adotada a proposta documentada em Q-207, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-208",
+      "decisao": "Adotada a proposta documentada em Q-208, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-209",
+      "decisao": "Adotada a proposta documentada em Q-209, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        19,
+        22,
+        23,
+        24,
+        26,
+        27,
+        58,
+        59,
+        60,
+        61,
+        87
+      ]
+    },
+    {
+      "pergunta": "Q-210",
+      "decisao": "Reparações, mesmo de estruturas ainda de pé, exigem construtor; não são regeneração gratuita.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-211",
+      "decisao": "Adotada a proposta documentada em Q-211, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-212",
+      "decisao": "Adotada a proposta documentada em Q-212, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-213",
+      "decisao": "Adotada a proposta documentada em Q-213, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-214",
+      "decisao": "Adotada a proposta documentada em Q-214, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-215",
+      "decisao": "Cada criatura de caça tem dificuldade e recompensa próprias, conforme o conteúdo proposto.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-216",
+      "decisao": "Direção de fôlego pedida: cerca de trinta segundos de corrida normal e cinquenta na evolução; substituir valores antigos exige correspondência em dados e validação.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-217",
+      "decisao": "Cada reino tem caça contextual próxima ou outra alternativa funcional de rendimento e recursos.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-218",
+      "decisao": "Adotada a proposta documentada em Q-218, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-219",
+      "decisao": "Adotada a proposta documentada em Q-219, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        7,
+        8,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-220",
+      "decisao": "Vida, defesa e capacidade subterrânea acompanham o estágio da sede; ampliar o espaço exige pagamento e escavação por construtor.",
+      "alcance": "Progressão da sede decidida; fundação gratuita posterior substitui custo inicial antigo.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-221",
+      "decisao": "Bancas surgem após fundar, dentro do primeiro traçado defensivo. Explorar outros biomas mantém a mesma campanha, permitindo escolher o território antes de fundar.",
+      "alcance": "Resposta mais recente: bancas apenas após fundar, dentro do primeiro traçado; mudar de bioma não reinicia o jogo.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-222",
+      "decisao": "A Casa do Herdeiro abre no nível máximo atual; outras construções dependem do estágio e do espaço protegido criado pela expansão das muralhas.",
+      "alcance": "Casa do Herdeiro no máximo da sede; desbloqueios combinam estágio e expansão.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-223",
+      "decisao": "Monarca e companhia evoluem por batalha. A companhia é formada após a fundação por sete moedas; o grupo fundador passa a três pessoas sem ofício.",
+      "alcance": "Três cidadãos iniciais, companhia por sete moedas, evolução por batalha.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-224",
+      "decisao": "Construtores reparam a sede ao amanhecer.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-225",
+      "decisao": "Adotada a proposta documentada em Q-225, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-226",
+      "decisao": "A Capital pertence à fase avançada de uma rede territorial; o início mantém-se simples e cresce progressivamente.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-227",
+      "decisao": "O custo indicado para a banca do martelo é três moedas; esta resposta parcial não aprova todos os parâmetros da pergunta.",
+      "alcance": "Aplicar apenas às cláusulas descritas; outras propostas conservam o seu estado.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-228",
+      "decisao": "Adotada a proposta documentada em Q-228, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-229",
+      "decisao": "Adotada a proposta documentada em Q-229, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-230",
+      "decisao": "Adotada a proposta documentada em Q-230, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-231",
+      "decisao": "Adotada a proposta documentada em Q-231, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-232",
+      "decisao": "Adotada a proposta documentada em Q-232, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-233",
+      "decisao": "Adotada a proposta documentada em Q-233, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Proposta da pergunta aprovada no seu âmbito; aplicar exceções e decisões posteriores.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-235",
+      "decisao": "Direção climática geralmente quente e agradável, com maior variação nalguns biomas; base de autoria visual em 64×64 píxeis. Parâmetros climáticos e sociais restantes continuam abertos.",
+      "alcance": "Clima geralmente quente/agradável e base artística 64×64; não aprova todos os parâmetros climáticos ou sociais.",
+      "seccoes": [
+        4,
+        11,
+        12,
+        13,
+        14,
+        17,
+        21,
+        54,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-237",
+      "decisao": "Ao fundar sobre subsolo existente, compatibilizar as estruturas com a futura cave e armazém reais; o algoritmo e a migração precisam de contrato explícito.",
+      "alcance": "Compatibilizar subsolo existente e cave real; algoritmo e migração precisam de contrato, sem apagar conteúdo protegido.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-238",
+      "decisao": "Adotada a proposta documentada em Q-238, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Relações funcionais da floresta aprovadas; altura visual continua proposta.",
+      "seccoes": [
+        6,
+        9,
+        10,
+        49,
+        52,
+        55,
+        87,
+        88
+      ]
+    },
+    {
+      "pergunta": "Q-239",
+      "decisao": "Adotada a proposta documentada em Q-239, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Pressão acumulada também passa pela rampa; não equivale a aprovar a agressividade da Q-240.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-240",
+      "decisao": "Reduzir a agressividade da estreia e crescimento das espécies para permitir apreciar a construção durante vários dias; a sequência 3/6/9 não é o ritmo final aceite.",
+      "alcance": "Objeção explícita à escalada 3/6/9: exige ritmo mais lento e campanha apreciável durante vários dias.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-241",
+      "decisao": "Adotada a proposta documentada em Q-241, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Emboscadas consomem orçamento da Podridão e só começam na noite três.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-242",
+      "decisao": "Adotada a proposta documentada em Q-242, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Aprovação da proposta de rampa sete no contexto condicional de playtest; baseline ainda usa cinco.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-243",
+      "decisao": "Adotada a proposta documentada em Q-243, dentro do seu âmbito e sujeita às decisões posteriores identificadas.",
+      "alcance": "Primeira noite funda na doze, depois de seis em seis; implementação ainda difere.",
+      "seccoes": [
+        15,
+        16,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        83,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-245",
+      "decisao": "Adiada a decisão sobre as extensões de subsolo, ladrão, fauna, transporte por categorias e apresentação de reservas.",
+      "alcance": "Não implementar por inferência das propostas do relatório; preserva o que já foi aprovado em Q-237/Q-244.",
+      "seccoes": [
+        11,
+        62,
+        86,
+        88,
+        95
+      ]
+    },
+    {
+      "pergunta": "Q-247",
+      "decisao": "Tocha de mão inicialmente sem desgaste; numa fase posterior um acordo desfavorável poderá corrompê-la e introduzir consumo.",
+      "alcance": "Gatilho, consumo e recuperação por especificar; a resposta não resolve explicitamente proteção contra emboscadas.",
+      "seccoes": [
+        5,
+        75,
+        80,
+        89
+      ]
+    },
+    {
+      "pergunta": "Q-248",
+      "decisao": "Elementos removidos pela fundação permanecem removidos nesse save e as construções realizadas devem persistir.",
+      "alcance": "Confirma persistência da limpeza e das obras; não concede regeneração ou compensação retroativa.",
+      "seccoes": [
+        21,
+        62,
+        87,
+        95
+      ]
+    }
+  ],
+  "consulta": "2026-10-07"
+}

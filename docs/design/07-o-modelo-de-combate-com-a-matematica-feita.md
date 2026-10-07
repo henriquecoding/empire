@@ -63,7 +63,7 @@ O mundo é 1.5D, portanto o combate acontece numa linha. Sem regras, tudo se emp
 - **Fila** — Os restantes esperam a 30–120 px, em posições estáveis atribuídas pelo sistema. Não empurram, não vibram.
 - **Substituição** — Quando um atacante morre, o mais próximo da fila ocupa o slot em 0,4 s, com passo visível.
 - **Alcance vertical** — Arqueiros em torre atingem a fila inteira dentro de 200 px, não só o slot ocupado. É por isso que a torre é o multiplicador e o muro é o denominador.
-- **Marca do arqueiro** — A classe Arqueiro (§08) — e qualquer classe de jogo parecido, a que o classes.csv dá o verbo mark_target (Q-086) — marca um alvo: todas as tropas aliadas passam a priorizá-lo. Resolve o desperdício de flechas em alvos já mortos — a falha explícita do Kingdom.
+- **Marca do arqueiro** — O Imperador Arqueiro (§08), através do verbo técnico mark_target (Q-086/Q-195), marca um alvo: todas as tropas aliadas passam a priorizá-lo. Resolve o desperdício de flechas em alvos já mortos — a falha explícita do Kingdom.
 
 ## Moral, fuga e a presença do rei
 
@@ -76,3 +76,5 @@ Um único modificador com raio, e três consequências:
 > **O que testar primeiro, na Fase 1**
 >
 > Antes de existir arte final, monta um cenário fechado: um muro, uma torre de arqueiros, seis arqueiros, uma noite de 105 s, vagas de Rastejantes crescentes. Um posto é um lugar: o muro de nível 1 tem um, e para caberem mais arqueiros evolui-se o lugar — a torre, ou o muro pelo Caminho A (Q-073). Quem não tem posto não dispara do muro. Ajusta até a noite ser ganha com 1–2 mortes no dia 5; a variante sem torre perde o muro no dia 8. Este microteste é a fundação de todo o balanceamento posterior — e cabe num único ficheiro de teste automatizado (§31).
+
+Escopo dos monarcas: só imperadores são controláveis (§08); “classe Arqueiro” em contratos técnicos refere o perfil imperial pertinente. O sangramento é exclusivo da sua flecha (Q-201). Ataque, habilidade, golpe em área e empurrão usam as decisões Q-184/Q-185. O tiro do escudeiro evoluído tem o contrato e as propostas da Q-246.

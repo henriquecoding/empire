@@ -2,7 +2,11 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-A estrutura que as tuas cenas sugerem, e que vale a pena adotar: um núcleo ao centro — o castelo com a árvore — e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a sede: o monarca escolhe livremente um local válido e funda sem custo; depois a sede sobe por estágios pagos e levantados como um muro (ADR 0066). É o que defendes. Se cair, cai a partida.
+Implantação territorial: a ADR 0077/RG-28 já faz o pagamento consultar fontes no local real; obras antigas pagas ou erguidas conservam compatibilidade explícita. A §92 amplia o contrato; água, construção de porto, operação e rota são estados distintos na §93.
+
+Leitura dos números: as tabelas refletem os CSV da baseline, incluindo campos ainda em _proposed. O estágio é apenas uma condição: território protegido, apoio populacional, materiais/desbloqueios e maturidade também contam (Q-222/Q-227/Q-233). A Casa do Herdeiro exige o máximo atual, Fortaleza. A Capital é posterior e depende de uma rede real (§88).
+
+A estrutura que as tuas cenas sugerem, e que vale a pena adotar: uma sede escolhida pelo jogador e edifícios ao longo da linha de solo, protegidos por muralhas que o jogador ergue para os dois lados. O núcleo é a sede: o monarca escolhe livremente um local válido e funda sem custo; depois a sede sobe por estágios pagos e levantados como um muro (ADR 0066). É o que defendes. Se cair, cai a partida.
 
 ## A sede: da Clareira à Fortaleza
 
@@ -10,14 +14,14 @@ O reino não nasce castelo. O monarca explora com a caravana e três cidadãos s
 
 | Estágio | Custo | Vida | Largura | Abre |
 | --- | --- | --- | --- | --- |
-| Acampamento | 0 | 200 | 160 | Plantação, Fogueira, Banca do Arco, Estacaria |
+| Acampamento | 0 | 200 | 160 | Plantação, Fogueira, Bancas do Arco e Martelo, Estacaria, Escora, Amargueiro, Posto de Companhia e Escavação da Cave |
 | Povoado | 8 | 350 | 240 | Casa de Treino, Galinheiro, Pesqueiro, Torre de Arqueiros, Torre Alta, Casa de cidadãos, Paliçada |
-| Vila | 18 | 550 | 320 | Cozinha, Forja, Celeiro, Salga, Curral, Corte de Madeira, Estábulo, Casa do Herdeiro, Santuário das Raízes, Barril de Fogo, Muro de Pedra |
+| Vila | 18 | 550 | 320 | Cozinha, Forja, Celeiro, Salga, Curral, Corte de Madeira, Estábulo, Santuário das Raízes, Barril de Fogo, Muro de Pedra |
 | Vila Fortificada | 32 | 750 | 400 | Fosso de Raízes, Embaixada, Serração, Estábulo de Vacas, Poço de Minério, Farol, Muralha de Ferro |
-| Fortaleza | 56 | 1000 | 480 | Fundição, Altar Consagrado, Bastião |
+| Fortaleza | 56 | 1000 | 480 | Fundição, Altar Consagrado, Bastião, Casa do Herdeiro |
 
 
-Uma obra que nenhum estágio lista abre com a fundação. A Capital (F6) entra quando houver postos e rotas a administrar (RG-14): sem eles seria um degrau só de vida. A moeda no marco é da sede; com o monarca a poder evoluir, o Verbo 2 no marco troca o alvo (§24).
+Uma obra que nenhum estágio lista abre com a fundação. A Capital (F6) entra quando houver postos e rotas a administrar (RG-14): sem eles seria um degrau só de vida. A moeda no marco serve as melhorias e reparações da sede; a evolução conjunta de monarca e companhia resulta de feitos de batalha (Q-223/Q-232).
 
 ## Os dois caminhos da muralha
 
@@ -53,3 +57,5 @@ O material e a silhueta mudam por povo, não por bioma. Mecanicamente idênticas
 > **Casa de Treino**
 >
 > Converte vagabundos em ofícios. Um vagabundo entra, sai construtor, ferreiro ou cozinheiro. Custa moeda e um dia. Ter uma Casa de Treino é o que separa um acampamento de um reino — e destruí-la é o objetivo prioritário dos reis inimigos a partir do dia 15 (§20). Perdê-la não acaba a partida, mas congela a tua economia de ofícios até a reconstruíres.
+
+Manutenção: reparar exige construtores disponíveis; a sede entra no trabalho de reparação ao amanhecer (Q-210/Q-224). Subir o estágio não é uma cura gratuita. Uma recomendação histórica de ter Torre Alta no dia quatro não é um prazo obrigatório: a nova abertura e a curva da noite precisam de validação conjunta.

@@ -221,7 +221,7 @@ const pt = await p.evaluate(() => {
     }),
   };
 });
-diz(pt.total === 13, `${pt.total} partes, ${pt.abertas} aberta(s)`);
+diz(pt.total === 14, `${pt.total} partes, ${pt.abertas} aberta(s)`);
 diz(pt.abertaArte && pt.abertaSemLinha, "aberta: o cabeçalho do autor aparece e a linha desaparece");
 diz(pt.fechadaLinha && pt.fechadaSemArte, `fechada: só a linha, ${pt.altura}px`);
 diz(pt.resumo.includes("§") && pt.resumo.length > 30,
@@ -232,7 +232,7 @@ diz(pt.paineisFora, "os painéis ficam FORA do acordeão");
 /* Uma âncora dentro de uma parte fechada continua a funcionar? É a
    propriedade que o acordeão mais facilmente parte, e em silêncio. */
 const salto = await p.evaluate(async () => {
-  const alvos = ["s40", "s60", "s80"];
+  const alvos = ["s40", "s60", "s80", "s87", "s91", "s92", "s93", "s94", "s95", "s96"];
   const out = [];
   for (const id of alvos) {
     const sec = document.getElementById(id);

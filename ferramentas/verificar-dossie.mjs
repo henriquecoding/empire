@@ -300,6 +300,15 @@ const PERGUNTAS = [
   ["determinismo", null],
   ["orcamento", null],
   ["clock.csv", "tabela"],
+  ["Civilization VII", null],
+  ["Manor Lords", null],
+  ["cais fluvial", null],
+  ["contrato mercenário", null],
+  ["AUD-CIV-10", null],
+  ["perfil territorial", null],
+  ["fundacao gratuita", null],
+  ["Q-240", "questao"],
+  ["DOC-01", "ticket"],
   ["zzzqqqxyw", "VAZIO"],
 ];
 

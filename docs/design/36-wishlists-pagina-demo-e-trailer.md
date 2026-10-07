@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Vinte mil jogos por ano e metade acaba com menos de dez análises. A diferença entre os que vendem e os que não vendem raramente é qualidade — é tempo de exposição acumulado. Isso começa no mês 11, não no mês 28.
 
 ## O calendário

@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Cada fase tem um critério de saída verificável. Não avanças por sentires que está pronto — avanças quando o critério passa. É a única defesa contra o problema do Thronefall: "não acabar é sempre a maior ameaça a qualquer projeto."
 
 | Fase | Duração | Acum. | O que fica feito | Critério de saída |

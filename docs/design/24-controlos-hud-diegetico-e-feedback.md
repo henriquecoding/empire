@@ -11,7 +11,7 @@ A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 m
 | Mover | Stick esquerdo / D-pad | A · D · ← → | Sempre |
 | Verbo 1 — Largar moeda | A / ✕ (toque) | Espaço | Sempre. Contexto define o alvo. |
 | Largar em contínuo | A / ✕ (manter) | Espaço (manter) | Pagar vários níveis de uma vez |
-| Verbo 2 — Assumir | X / ▢ | E | Trocar de imperador (só com outro encontrado e disponível), montar, entrar em passagem, pagar ao companheiro |
+| Verbo 2 — Assumir | X / ▢ | E | Escolher na Casa do Herdeiro com sucessor pronto; montar, entrar em passagem e pagar ao companheiro |
 | Descer / subir de faixa | Verbo 2 sobre passagem | E sobre passagem | Só onde há passagem descoberta |
 | Roda do rei | Y / △ (manter) | Tab (manter) | Só com o titular da coroa. É o corpo dele, não um menu. |
 | Atacar | RB / R1 | F / botão esq. do rato | Corpo controlado; manter repete à cadência da arma |
@@ -39,7 +39,7 @@ A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 m
 | Sementes Reais | Roda do rei, segmento de sucessão | Sob pedido |
 
 
-Um único elemento de HUD permanente — o relógio da dívida — e só quando há dívida. Tudo o resto é o mundo a dizer-te as coisas. É corajoso e é o que distingue este género.
+Prioridade à leitura do mundo. Informação necessária sobre moeda, vida, munição, fôlego, dívida e disponibilidade deve continuar legível. A intenção diegética não proíbe o HUD funcional e as opções de acessibilidade. O PR #92 integrou o HUD móvel e as letras do mundo dimensionados para a leitura, com recursos e extras separados e caixas limitadas; confirmar em equipamento real continua um critério próprio.
 
 ## Feedback — a lista de juice que não é opcional
 
@@ -52,6 +52,4 @@ Num jogo sem UI, o feedback é a interface. Cada item abaixo é barato e cada um
 - Conquista — o kit de arquitetura novo aparece na roda do rei com o ícone a ser entalhado em madeira em 6 frames.
 - Cegueira do Cavaleiro Selado — vinheta que fecha até 40% do ecrã, som abafado, e a câmara deixa de antecipar o movimento. A perda tem de sentir-se.
 
-> **A moeda no marco da sede (ADR 0059)**
->
-> O núcleo tem dois alvos e o jogador escolhe: a sede, por omissão — fundar, subir de estágio, reparar —, ou o monarca, quando ele pode evoluir. O painel de contexto diz para onde vai a moeda antes de ela sair da mão, e o Verbo 2 no marco troca o alvo. Uma moeda para a sede nunca evolui o monarca por ordem do código, e sem o monarca a poder evoluir não há troca a fazer. O marco tem a largura da Clareira em todos os estágios: à volta do castelo grande continua a haver gente por recrutar.
+A moeda no marco: melhorias e reparações da sede continuam contextuais e mostram o destinatário antes do pagamento. A evolução de monarca e companhia passou para feitos de batalha (Q-223/Q-232); não se ensina a antiga compra de evolução como regra atual. Corrida: manter o botão, soltar para parar (Q-193); todas as ações devem existir em toque, com alavanca e botões adaptados (Q-187).

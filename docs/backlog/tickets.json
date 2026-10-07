@@ -27,7 +27,7 @@
   "title": "Criar o projeto Godot 4.6 com as definições do §19",
   "porque": "A escada de resoluções e o filtro decidem-se uma vez. Mudar isto no mês seis é redesenhar arte.",
   "spec": [
-   "docs/design/19-arquitetura-godot-4-6.md"
+   "docs/design/19-arquitetura-godot-4-7-2.md"
   ],
   "depende": "F0-00",
   "feito": "Abre a 1280×720, filtro Nearest, 30 ticks de física, viewport canvas_items",
@@ -138,7 +138,7 @@
   "title": "Câmara com lookahead e limites de região",
   "porque": "Uma câmara que treme com movimento subpixel estraga a leitura de toda a arte que vier depois.",
   "spec": [
-   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/19-arquitetura-godot-4-7-2.md",
    "docs/design/59-a-pilha-de-tras-para-a-frente.md"
   ],
   "depende": "F0-05",
@@ -157,7 +157,7 @@
   "title": "Spike: decidir a escala e fechar a ADR 0001",
   "porque": "A escala decide o tamanho de todos os sprites. É a decisão mais cara de reverter do projeto.",
   "spec": [
-   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/19-arquitetura-godot-4-7-2.md",
    "docs/design/01-o-que-a-arte-ja-decidiu-e-o-que-ainda-nao.md"
   ],
   "depende": "F0-01",
@@ -340,8 +340,8 @@
   "title": "Recrutar um vagabundo por uma moeda; ele segue-te",
   "porque": "É o minuto 0:20 do §25 e do §83 — o primeiro momento em que o jogador percebe o jogo.",
   "spec": [
-   "docs/design/25-os-primeiros-doze-minutos.md",
-   "docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md",
+   "docs/design/83-aprender-pela-exploracao-sem-cronologia-imposta.md"
   ],
   "depende": "F1-01, F1-03",
   "feito": "O minuto 0:20 do §25 funciona: uma moeda, um vagabundo, e ele segue",
@@ -667,7 +667,7 @@
   "porque": "O seg_000 é cena fixa e autorada (§25, §83): é o primeiro ecrã que qualquer jogador vê.",
   "spec": [
    "docs/design/65-fundacao-seis-semanas-42-ficheiros-63-h.md",
-   "docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md"
+   "docs/design/83-aprender-pela-exploracao-sem-cronologia-imposta.md"
   ],
   "depende": "F0-10",
   "feito": "Uma greybox jogável com os obrigatórios do §83 e a árvore colossal à vista",
@@ -726,7 +726,7 @@
   "spec": [
    "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "GB-01",
   "feito": "Ao alcance de uma obra ou de quem ainda não é de ninguém, o que FALTA pagar aparece em moedas por cima dela: douradas as que o saco cobre, apagadas as outras.",
@@ -791,7 +791,7 @@
   "porque": "A invariante I5 da §40 tem duas metades: \"a simulação corre a passo fixo de 30 Hz, desacoplada do render. O render interpola; a simulação não.\" Só a primeira estava feita. Medido a 60 fps com o rei a andar: 2,67 · 0 · 2,67 · 0 px por frame — cada posição ficava dois frames parada e saltava de uma vez, e a câmara, que o segue, levava os saltos para o mundo inteiro. E o rei parado continuava a baloiçar: largar a tecla desliga o alvo e deixa o x dele onde estava.",
   "spec": [
    "docs/design/40-as-oito-regras-que-nunca-se-quebram.md",
-   "docs/design/19-arquitetura-godot-4-6.md",
+   "docs/design/19-arquitetura-godot-4-7-2.md",
    "docs/design/43-o-tick-e-o-que-corre-em-que-ordem.md",
    "docs/design/45-o-estado-autoritativo-e-o-que-nao-pertence-la.md"
   ],
@@ -821,7 +821,7 @@
   "porque": "«Câmara livre — Stick direito — Q · Z ou rato na margem» (§24). O stick e as teclas estavam ligados; o rato na margem não.",
   "spec": [
    "docs/design/24-controlos-hud-diegetico-e-feedback.md",
-   "docs/design/19-arquitetura-godot-4-6.md"
+   "docs/design/19-arquitetura-godot-4-7-2.md"
   ],
   "depende": "F0-08",
   "feito": "O rato a menos de edge_pan_px da borda empurra a câmara livre, que volta sozinha nos 2 s do §24; com o rato fora da janela, ou a janela sem foco, não empurra. edge_pan_px vive em camera.csv, marcado em _proposed (Q-087). tests/camera_rig_test.gd.",
@@ -849,7 +849,7 @@
   "spec": [
    "docs/design/11-o-mundo-em-duas-camadas.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md",
-   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md",
    "docs/design/32-medir-sem-espiar.md"
   ],
   "depende": "GB-05",
@@ -972,7 +972,7 @@
   "title": "A silhueta fantasma a piscar",
   "porque": "O §25, minuto 3:30: «Primeira estacaria construível — silhueta fantasma a piscar, 6 moedas. A silhueta é o convite. Não há botão construir.» O contorno existia e estava parado.",
   "spec": [
-   "docs/design/25-os-primeiros-doze-minutos.md",
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md",
    "docs/design/55-buildsystem-moeda-fisica-slots-pre-definidos.md"
   ],
   "depende": "GB-05",
@@ -1273,8 +1273,8 @@
   "title": "§83 · Os primeiros vinte minutos",
   "porque": "Sem isto o jogador conhece o Amargueiro tarde demais para ele significar alguma coisa.",
   "spec": [
-   "docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/83-aprender-pela-exploracao-sem-cronologia-imposta.md",
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "GB-01, XIII-03",
   "feito": "O minuto 0:00 tem a candeia e um Amargueiro velho; o 17:00 tem a primeira oferta",
@@ -1312,7 +1312,7 @@
   "spec": [
    "docs/design/36-wishlists-pagina-demo-e-trailer.md",
    "docs/design/32-medir-sem-espiar.md",
-   "docs/design/19-arquitetura-godot-4-6.md"
+   "docs/design/19-arquitetura-godot-4-7-2.md"
   ],
   "depende": "F0-04",
   "feito": "Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o dossiê em /dossie/, construídos de raiz em cada push por tools/web/construir.sh (ADR 0024, que substitui a 0022). Cada PR tem a sua pré-visualização.",
@@ -1340,7 +1340,7 @@
   "title": "A classe do Monarca: a aura e a evolução",
   "porque": "A Fase 2 pede \"1 classe\" (§33), e a do Monarca é a de quem começa: está em classes.csv desde a Fase 1 e não tinha sistema nenhum.",
   "spec": [
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md",
    "docs/design/61-dois-verbos-e-como-chegam-a-simulacao.md"
   ],
@@ -1603,7 +1603,7 @@
   "porque": "As fotografias eram do greybox de 25/09, os oito povos diziam todos que eram o de hoje, «Atacar» não tinha tecla, o Lume era descrito cor de brasa, e os monarcas, o combate e o subsolo não apareciam. O dono pediu o site refinado e a informação em dia.",
   "spec": [
    "docs/design/36-wishlists-pagina-demo-e-trailer.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md",
    "docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md"
   ],
@@ -1659,7 +1659,7 @@
   "title": "Três classes na primeira escolha",
   "porque": "O dono pediu escolha inicial e a jogabilidade completa do §08.",
   "spec": [
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md"
   ],
   "depende": "Q-114, Q-140, Q-150, Q-162, Q-163",
@@ -1678,7 +1678,7 @@
   "title": "Combate direto das classes",
   "porque": "Ataque e habilidade precisam de botões e resposta clara ao jogador.",
   "spec": [
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md"
   ],
   "depende": "CLASSES-01",
@@ -1729,7 +1729,7 @@
    "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
    "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "UX-03",
   "feito": "O botão CORRER no arco dos botões de toque: tocado, quem anda corre até se tocar outra vez (tests/toque_correr_test.gd). Cada obra de buildings.csv e cada nível do muro tem sprite: a arte do dono onde existe, e as outras pintadas pelo PixelPainter no estilo dela (ADR 0051); o sítio vazio é a obra inteira a respirar entre 32 e 55 % (tests/obras_sprite_test.gd).",
@@ -1743,7 +1743,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/16-morte-ressurreicao-e-derrota.md"
   ],
   "depende": "—",
@@ -1758,7 +1758,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/44-os-recursos-com-todos-os-campos.md"
   ],
   "depende": "UN-00",
@@ -1773,7 +1773,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/15-reis-ganancia-impulsos-e-sucessao.md",
    "docs/design/16-morte-ressurreicao-e-derrota.md"
   ],
@@ -1789,7 +1789,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-02",
   "feito": "Um companheiro por pessoa, por ID, gravado no save; cargas preservadas; o companheiro segue o patrono e não a câmara; um companheiro morto fica marcado como perdido (a reposição é a proposta da Q-205, por aprovar)",
@@ -1803,9 +1803,9 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "UN-01, UN-02, UN-03",
   "feito": "Três opções — Rei, Nia, Arqueiro — com papel, companheiro, vantagem, custo e evolução; uma dupla só em campo; nenhum rei escondido; tempo parado até confirmar; rato, comando e toque",
@@ -1819,7 +1819,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/16-morte-ressurreicao-e-derrota.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md"
   ],
@@ -1864,7 +1864,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md"
   ],
   "depende": "UN-04, UN-05",
@@ -1879,7 +1879,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-08",
   "feito": "Unidade própria nos dados, com tags de rei; ritmo rápido e golpe baixo em _proposed; governa, explora e morre como os outros",
@@ -1893,7 +1893,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-03, UN-09",
   "feito": "Modo, orçamento, alcance, recusa e efeito únicos; sem companhia ou sem moedas não há débito; a reserva volta se a ação deixar de poder ocorrer antes do compromisso",
@@ -1907,7 +1907,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/16-morte-ressurreicao-e-derrota.md"
   ],
   "depende": "UN-10",
@@ -1922,7 +1922,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-10, UN-11",
   "feito": "Promoção mantém a proporção de vida e custa uma vez; o feito conta criaturas distintas com Nia presente; limite de aliados",
@@ -1936,7 +1936,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md"
   ],
   "depende": "UN-08",
@@ -1951,7 +1951,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-03, UN-13",
   "feito": "Sem moedas pessoais, nenhuma flecha nova; sem espaço, sem cobrança; o lote que não cabe fica registado; tesouro, colega e banca do arco não pagam por ele",
@@ -1979,7 +1979,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md",
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md",
    "docs/design/13-conquistar-civilizacoes.md",
    "docs/design/17-segredos-lore-e-o-teu-tutorial-invisivel.md"
   ],
@@ -1995,7 +1995,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-16",
   "feito": "Validação e revalidação; estado de cada pessoa preservado; intenções antigas canceladas; recusada em queda ou sucessão pendente; sem duas coroas em solo",
@@ -2159,7 +2159,7 @@
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
    "docs/design/24-controlos-hud-diegetico-e-feedback.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "UN-04, UN-10, UN-14, UN-17, UN-18",
   "feito": "Primeiro dia ensina cada dupla sem gastar o jogador; preço, prazo e sucessão não dependem só de som ou cor; rato, comando e toque",
@@ -2239,7 +2239,7 @@
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0052-monarcas-jogaveis-companhias-e-encontros-imperiais.md",
    "docs/adr/0053-as-respostas-do-painel-de-03-10.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-16",
   "feito": "Um imperador grande, de armadura completa, que sentado no chão recupera vida e faz crescer vegetação à volta; a escudeira dança e dá força a ele e às tropas; evoluída, abranda os inimigos; desbloqueia-se como os outros, por encontro",
@@ -2258,7 +2258,7 @@
   "spec": [
    "docs/recovery/PLANO-MONARCAS-2026-10-02.md",
    "docs/adr/0053-as-respostas-do-painel-de-03-10.md",
-   "docs/design/08-quatro-arquetipos-duas-fases-cada.md"
+   "docs/design/08-imperadores-companhias-e-desbloqueios.md"
   ],
   "depende": "UN-14",
   "feito": "Com o Imperador Arqueiro evoluído, o escudeiro dispara contra os inimigos ao alcance, das flechas que vende; sem flechas, não dispara",
@@ -2344,7 +2344,7 @@
    "docs/recovery/PLANO-REINO-2026-10-03.md",
    "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
    "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "—",
   "feito": "O plano-fonte em docs/recovery; a ADR 0059 com as dezasseis recomendações e onde ficaram; o dossiê (§09, §10, §24, §25, §62) com a regra nova; as Q-220 a Q-226; os dezanove tickets RG",
@@ -2376,7 +2376,7 @@
    "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
    "docs/design/09-as-tropas-que-fazem-o-reino-andar.md",
    "docs/design/10-muralhas-torres-e-a-casa-de-treino.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "RG-01",
   "feito": "Os três monarcas chegam com a companhia, os dois trabalhadores e um construtor pioneiro; a carroça de provisões com 8 ao pé do marco, levada ao passar; a fundação ergue a banca do arco uma vez; carregar não repõe nada; o piloto da vistoria leva a carroça e funda",
@@ -2437,7 +2437,7 @@
    "docs/adr/0059-a-fundacao-e-a-escada-da-sede.md",
    "docs/design/06-producao-conversao-e-comercio.md",
    "docs/design/49-economysystem-tres-circuitos-uma-passagem-por-fa.md",
-   "docs/design/25-os-primeiros-doze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "RG-02, RG-03",
   "feito": "Perfis de trajetória por semente e monarca (defensiva, económica, lareira, pioneiro perdido, arqueiro impreciso, Nia com serviços, expansão unilateral, inverno cedo); compras, produção efetiva, Ganância, lareira, flechas e recuperação medidos",
@@ -2682,7 +2682,7 @@
   "porque": "A ordem dos verbos confundia a identidade de Empire com Kingdom.",
   "spec": [
    "docs/adr/0065-a-ultima-carroca.md",
-   "docs/design/25-a-ultima-carroca-os-primeiros-quinze-minutos.md"
+   "docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md"
   ],
   "depende": "RG-21",
   "feito": "Fundação espacial gratuita, trabalho e logística, ecologia, consequência, subsolo, maturidade e companhia; testes e exportação local.",
@@ -2765,6 +2765,19 @@
   "porque": "Corrigir a hierarquia, legibilidade e duplicação de controlos da captura móvel.",
   "feito": "Cartões responsivos, contexto variável, ações compactas, flechas visíveis e estado do reino na pausa.",
   "fora": "Simulação, balanceamento, arte e validação física num iPhone."
+ },
+ "DOC-01": {
+  "title": "Consolidar o dossiê com o painel e as referências territoriais",
+  "porque": "Decisões recentes não estavam integradas na especificação canónica.",
+  "spec": [
+   "docs/dossie.html",
+   "docs/adr/0078-dossie-consolidado-e-rastreabilidade-do-painel.md"
+  ],
+  "depende": "—",
+  "feito": "Regras reconciliadas, referências desenvolvidas, respostas rastreáveis e geração/portões verificados.",
+  "fora": "Implementar sistemas pendentes ou alterar respostas remotas e balanceamento.",
+  "estado": "feito",
+  "horas": "—"
  },
  "ART-RENEWAL-01": {
   "title": "Renovacao visual do reino",
