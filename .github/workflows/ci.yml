@@ -335,6 +335,7 @@ jobs:
         run: |
           node --test tests/web/*.test.mjs
           node tests/web/painel-ui.mjs
+          node tests/web/experience-ui.mjs
 
       - name: Portao · telemovel, axe, CSP, privacidade, as duas linguas, os dados e o jogo
         run: node tools/web/verificar_site.mjs

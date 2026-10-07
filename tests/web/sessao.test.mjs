@@ -12,7 +12,7 @@ function boot(initial, handler, brokenStorage = false) {
   const storage = new Map(initial ? [[key, JSON.stringify(initial)]] : []), requests = [], events = [];
   const window = { dispatchEvent: event => events.push(event) };
   runInNewContext(source, {
-    window, document: { body: { getAttribute: name => name === 'data-sb-url' ? 'https://test.supabase.co' : 'public-test' } },
+    window, AbortController, setTimeout, clearTimeout, document: { body: { getAttribute: name => name === 'data-sb-url' ? 'https://test.supabase.co' : 'public-test' } },
     sessionStorage: {
       getItem: k => { if (brokenStorage) throw Error('blocked'); return storage.get(k); },
       setItem: (k, v) => { if (brokenStorage) throw Error('blocked'); storage.set(k, v); },

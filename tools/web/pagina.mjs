@@ -25,13 +25,14 @@ import zlib, { brotliCompressSync } from "node:zlib";
 import { fileURLToPath } from "node:url";
 import { ler } from "./dados.mjs";
 import { TEXTOS, conferirParidade } from "./paginas/textos.mjs";
-import { entrada, erro, cssDosDados, controlosCasca } from "./paginas/molde.mjs";
+import { escreverAssets } from "./assets.mjs";
+import { EXPERIENCIA } from "./paginas/experiencia.mjs";
+import { entrada, erro, controlosCasca } from "./paginas/molde.mjs";
 import { reportar, painel } from "./paginas/reportes.mjs";
 import { perguntas } from "./perguntas.mjs";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SITE = join(RAIZ, "tools", "web", "site");
-const PAGINAS = join(RAIZ, "tools", "web", "paginas");
 
 const hash = (s) => createHash("sha256").update(s).digest("hex").slice(0, 10);
 
@@ -79,38 +80,6 @@ function conferirTraducoes(d) {
     for (const k of Object.keys(lista)) if (!dados.includes(k)) erros.push(`${onde}.${k}: tradução de uma linha que o dossiê já não tem`);
   }
   return erros;
-}
-
-/** A folha: as fontes, o estilo e os dados, sem comentários nem espaço a mais. */
-function minificarCss(css) {
-  return css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, " ").replace(/\s*([{}:;,>])\s*/g, "$1").replace(/;}/g, "}").trim();
-}
-
-function escreverAssets(saida, d) {
-  const dir = join(saida, "assets");
-  mkdirSync(dir, { recursive: true });
-  const css = minificarCss([
-    readFileSync(join(SITE, "fontes", "fontes.css"), "utf8"),
-    readFileSync(join(PAGINAS, "estilo.css"), "utf8"),
-    cssDosDados(d),
-  ].join("\n"));
-  const saidas = {};
-  for (const [nome, ext, texto] of [
-    ["estilo", "css", css],
-    ["tema", "js", readFileSync(join(PAGINAS, "tema.js"), "utf8")],
-    ["site", "js", readFileSync(join(PAGINAS, "site.js"), "utf8")],
-    ["motor", "js", readFileSync(join(PAGINAS, "motor.js"), "utf8")],
-    ["reportar", "js", readFileSync(join(PAGINAS, "reportar.js"), "utf8")],
-    ["painelCss", "css", minificarCss(readFileSync(join(PAGINAS, "painel.css"), "utf8"))],
-    ["painelReportes", "js", readFileSync(join(PAGINAS, "painel-reportes.js"), "utf8")],
-    ["painelTrabalho", "js", readFileSync(join(PAGINAS, "painel-trabalho.js"), "utf8")],
-    ["painel", "js", readFileSync(join(PAGINAS, "painel.js"), "utf8")],
-  ]) {
-    const f = `${nome}.${hash(texto)}.${ext}`;
-    writeFileSync(join(dir, f), texto);
-    saidas[nome] = `/assets/${f}`;
-  }
-  return { css: saidas.estilo, tema: saidas.tema, js: saidas.site, motor: saidas.motor, reportar: saidas.reportar, painel: saidas.painel, painelTrabalho: saidas.painelTrabalho, painelCss: saidas.painelCss, painelReportes: saidas.painelReportes };
 }
 
 // O Supabase do Empire (ADR 0026): o ambiente manda, e o config.json é o de
@@ -181,7 +150,7 @@ function completarCasca(saida, d, robots) {
 function main() {
   const saida = resolve(process.argv[2] || join(RAIZ, "build", "site"));
   const d = ler(RAIZ);
-  const erros = [...conferirParidade(TEXTOS.pt, TEXTOS.en), ...conferirTraducoes(d)];
+  const erros = [...conferirParidade(TEXTOS.pt, TEXTOS.en), ...conferirParidade(EXPERIENCIA.pt, EXPERIENCIA.en), ...conferirTraducoes(d)];
   if (erros.length) throw new Error(`pagina: as duas línguas não batem certo:\n  ${erros.join("\n  ")}`);
 
   // O site/ é o que se serve tal e qual; o 404 e as páginas saem do molde.

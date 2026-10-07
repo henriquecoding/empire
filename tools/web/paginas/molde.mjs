@@ -1,3 +1,4 @@
+import { EXPERIENCIA, guiaInicial, conviteFinal } from "./experiencia.mjs";
 // tools/web/paginas/molde.mjs — o HTML do site, a partir dos textos e dos dados (ADR 0025).
 //
 // Duas páginas saem daqui — a de entrada, uma por língua, e o 404 — e partilham
@@ -94,7 +95,7 @@ export function topo({ t, v, ancoras }) {
     ? [["#jogo", n.jogo], ["#monarcas", n.monarcas], ["#dia", n.dia], ["#povos", n.povos], ["#controlos", n.controlos], ["#estado", n.estado]]
     : [];
   itens.push(["/dossie/", n.dossie]);
-  const outraHref = t.nav.outra.lingua === "en" ? "/en/" : "/";
+  const outraHref = v.outra || (t.nav.outra.lingua === "en" ? "/en/" : "/");
   return `<a class="salto" href="#conteudo">${n.saltar}</a>
 <header class="topo escura" id="topo">
   <div class="envolve topo-barra">
@@ -182,8 +183,9 @@ function palco({ t, d }) {
     const ativo = f.id === INICIAL;
     const alt = f.id === "night" ? a.alt_noite : fmt(a.alt, { fase: nomeFase(t, f).toLowerCase() });
     const fonte = `/img/dia-${img}.webp`;
-    return `<img class="quadro q-${img}${ativo ? " ativo" : ""}" ${ativo ? `src="${fonte}" fetchpriority="high"` : `data-src="${fonte}" aria-hidden="true"`}`
-      + ` width="${cap.largura}" height="${cap.altura}" alt="${esc(alt)}" decoding="async" data-fase="${f.id}">`;
+    const fontes = `/img/mini-${img}.webp 640w, ${fonte} 1280w`;
+    return `<img class="quadro q-${img}${ativo ? " ativo" : ""}" ${ativo ? `src="${fonte}" srcset="${fontes}" fetchpriority="high"` : `data-src="${fonte}" data-srcset="${fontes}" aria-hidden="true"`}`
+      + ` sizes="(min-width: 1000px) 700px, (min-width: 700px) 90vw, 100vw" width="${cap.largura}" height="${cap.altura}" alt="${esc(alt)}" decoding="async" data-fase="${f.id}">`;
   }).join("\n          ");
   // A fita não é uma fila de botões: a alvorada é 4% do dia e, num telemóvel,
   // um botão com 10 px de largura. É um controlo só — um deslizador que o
@@ -194,6 +196,7 @@ function palco({ t, d }) {
   const inicial = d.relogio.fases.find((f) => f.id === INICIAL);
   return `<figure class="palco" id="palco" aria-label="${a.palco}" data-dia="${d.relogio.dia}" data-agora="${modelo(a.agora)}" data-pausar="${a.pausar}" data-continuar="${a.continuar}">
     <div class="envolve-largo">
+      <div class="palco-cabeca">${EXPERIENCIA[lingua(t)].imagem}</div>
       <div class="ecra-jogo">
         <div class="quadros">
           ${quadros}
@@ -204,30 +207,31 @@ function palco({ t, d }) {
           <p class="agora" id="agora" aria-hidden="true">${esc(fmt(a.agora, { dia: 1, fase: nomeFase(t, inicial) }))}</p>
         </div>
       </div>
-      <figcaption>${proveniencia(t, d, a.legenda)}${antigas(t, d)}</figcaption>
+      <figcaption><details class="origem-imagens"><summary>${EXPERIENCIA[lingua(t)].origem}</summary><p>${proveniencia(t, d, a.legenda)}${antigas(t, d)}</p></details></figcaption>
     </div>
   </figure>`;
 }
 
 function abertura({ t, d, v, mb }) {
-  const a = t.abertura;
+  const a = t.abertura, e = EXPERIENCIA[lingua(t)];
   return `<section class="abertura escura" aria-labelledby="titulo">
-  <div class="envolve abertura-grelha">
+  <div class="envolve abertura-composicao"><div class="abertura-grelha">
     <div class="abertura-titulo">
-      <p class="kicker">${a.kicker.map((k) => `<span>${fmt(k, { godot: d.godot })}</span>`).join("")}</p>
+      <p class="kicker"><span>${a.kicker[0]}</span><span class="identidade">${e.identidade}</span></p>
       <h1 id="titulo">${a.h1}</h1>
     </div>
     <div class="abertura-lado">
-      <p class="deck">${a.deck}</p>
+      <p class="deck">${e.deck}</p>
       <div class="accoes">
         <a class="botao principal" href="${v.jogar}">${PLAY}${a.jogar}</a>
-        <a class="botao" href="#controlos">${a.ver}</a>
+        <a class="botao" href="#comecar">${e.guia}</a>
       </div>
+      <ul class="factos-jogo">${e.factos.map(x => `<li>${x}</li>`).join("")}</ul>
       <p class="nota">${fmt(a.nota, { mb })}</p>
       <p class="so-toque">${a.toque}</p>
     </div>
   </div>
-  ${palco({ t, d })}
+  ${palco({ t, d })}</div>
 </section>`;
 }
 
@@ -288,7 +292,7 @@ function dia({ t, d }) {
         ${fases.map((f0) => {
           const f = texto(f0);
           return `<li class="cartao-fase f-${f.id}">
-          <img class="mini" src="/img/mini-${FASE_IMG[f.id]}.webp" width="${d.capturas.largura / 2}" height="${d.capturas.altura / 2}" loading="lazy" decoding="async" alt="${esc(fmt(s.mini, { fase: nomeFase(t, f0).toLowerCase() }))}">
+          <img class="mini" src="/img/cartao-${FASE_IMG[f.id]}.webp" srcset="/img/cartao-${FASE_IMG[f.id]}.webp 320w, /img/mini-${FASE_IMG[f.id]}.webp 640w" sizes="(min-width: 1000px) 300px, (min-width: 700px) 44vw, 90vw" width="${d.capturas.largura / 2}" height="${d.capturas.altura / 2}" loading="lazy" decoding="async" alt="${esc(fmt(s.mini, { fase: nomeFase(t, f0).toLowerCase() }))}">
           <div class="cartao-corpo">
             <h3>${esc(f.nome)} <span class="dur">${fmt(s.segundos, { s: f.dura })}</span></h3>
             <p>${esc(f.funcao)}</p>
@@ -598,8 +602,9 @@ ${canonico ? `<meta property="og:url" content="${canonico}">\n` : ""}<meta prope
 <meta name="twitter:card" content="summary_large_image">
 ${jsonLd({ t, d, url, og })}
 `;
-  const extra = `<link rel="preload" as="image" href="/img/dia-${FASE_IMG[INICIAL]}.webp" fetchpriority="high">
-<link rel="prefetch" href="/jogar/index.js">
+  const extra = `<link rel="preload" as="image" href="/img/dia-${FASE_IMG[INICIAL]}.webp" imagesrcset="/img/mini-${FASE_IMG[INICIAL]}.webp 640w, /img/dia-${FASE_IMG[INICIAL]}.webp 1280w" imagesizes="(min-width: 1000px) 700px, (min-width: 700px) 90vw, 100vw" fetchpriority="high">
+<script src="${v.palco}" defer></script>
+<script src="${v.candeia}" defer></script>
 `;
   return `${cabeca({
     t, v, titulo: t.meta.titulo, descricao: t.meta.descricao, robots, canonico, og: ogTags, extra,
@@ -609,6 +614,7 @@ ${jsonLd({ t, d, url, og })}
 ${topo({ t, v, ancoras: true })}
 <main id="conteudo">
 ${abertura({ t, d, v, mb })}
+${guiaInicial(t, esc)}
 ${pilares({ t })}
 ${monarcas({ t, d })}
 ${dia({ t, d })}
@@ -617,6 +623,7 @@ ${povos({ t, d })}
 ${controlos({ t, d })}
 ${estado({ t, d })}
 ${perguntas({ t, d })}
+${conviteFinal(t, v)}
 </main>
 ${rodape({ t, d, v })}
 </body>

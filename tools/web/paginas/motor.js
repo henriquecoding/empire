@@ -113,11 +113,14 @@
     var cab = { apikey: c.chave, "Content-Type": "application/json" };
     cab.Authorization = "Bearer " + (token || c.chave);
     var o = opcoes || {};
+    var controlo = new AbortController();
+    var prazo = setTimeout(function () { controlo.abort(); }, 15000);
     for (var k in o.cabecalhos || {}) cab[k] = o.cabecalhos[k];
     return fetch(c.url + caminho, {
       method: o.metodo || "GET",
       headers: cab,
       body: o.corpo === undefined ? undefined : JSON.stringify(o.corpo),
+      signal: controlo.signal,
     }).then(function (r) {
       if (r.status === 204) return null;
       return r.text().then(function (t) {
@@ -130,7 +133,14 @@
         }
         return dados;
       });
-    });
+    }).catch(function (erro) {
+      if (controlo.signal.aborted) {
+        var en = document.documentElement.lang === "en";
+        throw new Error(en ? "The connection took too long. Your text is still here; check the saved state before trying again."
+          : "A ligação demorou demasiado. O texto continua aqui; confirma o estado guardado antes de tentar novamente.");
+      }
+      throw erro;
+    }).finally(function () { clearTimeout(prazo); });
   }
 
   // O refresh roda os dois tokens. Uma única promessa evita gastá-lo em paralelo.
@@ -179,11 +189,11 @@
 
   /** Envia um reporte. Devolve {erro} se não o puder enviar — nunca rejeita. */
   function enviarReporte(e, textos) {
-    if (contemCodigo(e.mensagem) || contemCodigo(e.assunto)) return Promise.resolve({ erro: textos.codigo });
-    if (!emailValido(e.email)) return Promise.resolve({ erro: textos.email });
+    if (contemCodigo(e.mensagem) || contemCodigo(e.assunto)) return Promise.resolve({ erro: textos.codigo, campo: contemCodigo(e.mensagem) ? "r-mensagem" : "r-assunto" });
+    if (!emailValido(e.email)) return Promise.resolve({ erro: textos.email, campo: "r-email" });
     var mensagem = sanitizar(e.mensagem);
-    if (!mensagem) return Promise.resolve({ erro: textos.vazio });
-    if (mensagem.length > MAX) return Promise.resolve({ erro: textos.longo });
+    if (!mensagem) return Promise.resolve({ erro: textos.vazio, campo: "r-mensagem" });
+    if (mensagem.length > MAX) return Promise.resolve({ erro: textos.longo, campo: "r-mensagem" });
     var nulo = function (v) { v = sanitizar(v); return v ? v : null; };
     return pedir("/rest/v1/empire_feedback", {
       metodo: "POST", publico: true,

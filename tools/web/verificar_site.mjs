@@ -66,11 +66,12 @@ const ALVO_PX = 36;
 const JOGO_S = 90;
 // O orçamento da página de entrada, em KB e sem compressão (a Vercel serve com
 // brotli, e por isso o que chega é menos). O caminho crítico é o que a página
-// precisa antes do primeiro ecrã: HTML, folha, os dois scripts, as duas fontes
-// pré-carregadas e o primeiro quadro. O total é tudo o que ela pede ao abrir,
-// menos o prefetch do motor do jogo, que é para depois.
-const CRITICO_KB = 420;
-const TOTAL_KB = 800;
+// precisa antes do primeiro ecrã: HTML, folha, scripts, fontes pré-carregadas
+// e o primeiro quadro. O total inclui a rolagem inteira, a 1440px / DPR 1.
+// ADR 0079: a arte atual é mais densa; mantemos WebP sem perdas e passamos os
+// cartões de 640 a 320px. Estes tetos são explícitos, não metas de LCP.
+const CRITICO_KB = 660;
+const TOTAL_KB = 1700;
 const TIPOS = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".wasm": "application/wasm", ".css": "text/css",
   ".pck": "application/octet-stream", ".png": "image/png", ".webp": "image/webp", ".woff2": "font/woff2",
@@ -515,8 +516,10 @@ async function main() {
     await p.focus("#fita-palco");
     resultado("a fita é um deslizador", (await p.getAttribute("#fita-palco", "role")) === "slider");
     await p.keyboard.press("Home");
+    await p.waitForFunction(() => document.querySelector('.quadro.ativo')?.dataset.fase === 'dawn');
     resultado("Home leva à alvorada", (await um()).fase === "dawn", (await um()).fase);
     await p.keyboard.press("ArrowRight");
+    await p.waitForFunction(() => document.querySelector('.quadro.ativo')?.dataset.fase === 'morning');
     resultado("→ leva à fase seguinte", (await um()).fase === d.relogio.fases[1].id, (await um()).fase);
     await ctx.close();
   }
@@ -552,10 +555,15 @@ async function main() {
 
   console.log("\n19 · orçamento");
   {
-    const { ctx, p, pedidos } = await nova(b, base, 1440, "light");
+    const { ctx, p, pedidos } = await nova(b, base, 1440, "light", { reducedMotion: "reduce" });
     await p.goto(base + "/", { waitUntil: "load" });
     await revelar(p);
-    await p.waitForTimeout(800);
+    // Conta todas as imagens da página, mesmo que a rolagem rápida passe por
+    // uma antes de o browser ativar o lazy-load. A animação não altera a amostra.
+    await p.locator('img[loading="lazy"]').evaluateAll(imgs => Promise.all(imgs.map(img => {
+      img.loading = "eager"; return img.decode();
+    })));
+    await p.evaluate(() => document.fonts.ready);
     const tamanho = (u) => {
       const c = new URL(u).pathname;
       const f = join(SITE, c.endsWith("/") ? join(c, "index.html") : c);
@@ -564,7 +572,8 @@ async function main() {
     const unicos = [...new Set(pedidos.filter((u) => u.startsWith(base) && !u.includes("/jogar/")))];
     const total = unicos.reduce((n, u) => n + tamanho(u), 0) / 1024;
     const criticos = await p.evaluate(() => [location.href,
-      ...[...document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"], script[src]')].map((e) => e.href || e.src)]);
+      ...[...document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"]:not([as="image"]), script[src]')].map((e) => e.href || e.src),
+      document.querySelector('.quadro[fetchpriority="high"]').currentSrc]);
     const critico = [...new Set(criticos)].reduce((n, u) => n + tamanho(u), 0) / 1024;
     resultado(`caminho crítico ≤ ${CRITICO_KB} KB (${critico.toFixed(0)} KB)`, critico <= CRITICO_KB);
     resultado(`a página inteira ≤ ${TOTAL_KB} KB (${total.toFixed(0)} KB, ${unicos.length} pedidos)`, total <= TOTAL_KB);
