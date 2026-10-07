@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Onze ficheiros, quase todos abaixo das trinta linhas. Copia-os por esta ordem, faz um commit por onda, e o repositório fica com todos os portões antes de existir uma linha de lógica de jogo. O último — o split do dossiê — é o que fecha as referências penduradas da §68.
 
 ## 1 · .gitignore

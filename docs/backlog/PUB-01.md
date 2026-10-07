@@ -7,7 +7,7 @@ Porque    A CI exporta o Web em cada corrida verde e o resultado é um artefacto
           onde se carrega e se joga.
 Spec      docs/design/36-wishlists-pagina-demo-e-trailer.md
           docs/design/32-medir-sem-espiar.md
-          docs/design/19-arquitetura-godot-4-6.md
+          docs/design/19-arquitetura-godot-4-7-2.md
 Depende   F0-04
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     Um endereço público que serve a última main: a página de entrada, o jogo em /jogar/ e o

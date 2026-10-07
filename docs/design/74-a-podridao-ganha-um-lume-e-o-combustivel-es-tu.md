@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Decisão posterior sobre a abertura: Q-239 e Q-241 aprovam pressão acumulada sujeita à rampa e emboscadas pagas a partir da noite três. Q-240 considera agressivo o limite 3/6/9; não está aprovado como ritmo final. Q-242 aprova a proposta de rampa sete no contexto do playtest; Q-243 aprova a primeira noite funda na doze, depois de seis em seis. As tabelas seguintes preservam os números executados na baseline para comparação com CSV; §89 identifica os ajustes ainda necessários.
+
 A Podridão da v5.2 é meteorologia com orçamento: nasce, avança, gasta massa, recua. É melhor do que ondas, como diz a §05, mas tem um buraco que ninguém apontou — durante os 85 segundos da Manhã e os 85 da Tarde, não há nada que possas fazer em relação a hoje à noite. Constróis, colhes, recrutas. A noite é um número que já está decidido. Esta secção rouba a alavanca 2 da série e fecha esse buraco: a massa da noite passa a ser escrita pelo jogador, de dia, com os seus próprios mortos.
 
 ## A candeia — o Lume

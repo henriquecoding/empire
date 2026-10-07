@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Inventário histórico — os números desta secção são os de 11/09/2026. A tabela abaixo fica como registo do que a v5.2 tinha, e não se atualiza: 23 tabelas, 120 recursos, 23 testes, 75 ficheiros de especificação, 550 propostas. O estado de hoje está medido em docs/recovery/validation.json, contado em docs/recovery/RETOMADA.md, e mostrado no painel ★ Estado desta página, que o volta a contar a cada construção. Onde os dois discordarem, manda o medido.
 
 As ondas 1 e 2 da §68, e tudo o que o relatório do que faltava pedia, estão num repositório que abre no Godot 4.6: 23 testes (dois saltados, com a razão escrita), o export de Linux a arrancar, e os números deste dossiê em 23 tabelas de onde saem 120 recursos .tres. O que o dossiê não dava foi proposto e marcado — 550 valores, 265 deles na fatia vertical. Nada foi decidido em silêncio.

@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Limite dos exemplos: o encaminhamento antigo de ASSUME não autoriza assumir tropas nem trocar livremente entre imperadores. A ação contextual valida o contrato de herdeiro da §15; ataque, habilidade e corrida têm entradas separadas com paridade de toque (§24).
+
 O mapa completo de comandos está no §24. Aqui só interessa o contrato: a entrada nunca muda estado diretamente.
 
 ```gdscript

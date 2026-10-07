@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Isto é o que abres na segunda-feira. Cada linha é uma sessão de agente, no formato do §29. As Fases 0 e 1 estão completas; a partir daí escreves tu, no mesmo molde.
 
 ### Fase 0 — Fundação · 1 mês

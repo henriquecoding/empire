@@ -2,19 +2,19 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-A decisão central do teu universo, e a melhor decisão do projeto. Não é decoração: é o motor de variedade, de progressão e de marketing do jogo inteiro, e resolve cinco problemas com um único sistema.
+Os povos dão identidade à arquitetura, à economia, à defesa e às relações políticas. O território natural existe primeiro; sociedades e culturas ocupam-no e transformam-no ao longo da campanha (§88).
 
-**Variedade de bioma** — Cada região parece diferente porque é habitada por gente diferente, não porque trocaste a paleta. Isto é a diferença entre um jogo com seis biomas e um jogo com seis civilizações.
+**Variedade de bioma** — Bioma, cobertura, clima e recursos tornam a região distinta antes de existir uma sociedade. A cultura acrescenta arquitetura e usos próprios; não substitui a identidade natural.
 
 Conquistar deixa de ser "+1 recurso". Passa a ser adquirir uma cultura: o direito de construir como eles e de recrutar o que só eles têm.
 
-Começar como povo das árvores ou do porto muda a economia inicial, as defesas e a rota de expansão. Duas partidas com a mesma seed jogam-se de forma diferente só pela ordem de conquista.
+Escolher imperador e terreno de fundação muda as oportunidades iniciais. Os contactos, as conquistas e a ordem de expansão transformam essa identidade sem reiniciar o mundo.
 
-Cada povo é um kit fechado: arquitetura + 1 tropa + 1 classe + 1 especialidade + 1 gramática de muralha. É uma unidade de produção que cabe numa fase do roadmap.
+Cada povo é um kit fechado: arquitetura + tropa própria + especialidade + gramática de muralha. É uma unidade de produção que cabe numa fase do roadmap.
 
 ## Os seis povos, e mais dois
 
-Nomes provisórios. A Geada e a Bruma entraram pelo painel (ADR 0031) e ficam fora da campanha até à Q-152. O que interessa é a lógica: terreno → arquitetura → economia → defesa → tropa única. Nunca inventes um povo sem preencher as cinco colunas.
+Nomes de trabalho. A Geada e a Bruma integram a mesma campanha conforme Q-152; Bruma substitui Paul (Q-175). São oito povos, cuja implementação e crescimento social têm estados próprios. O que interessa é a lógica: terreno → arquitetura → economia → defesa → tropa única. Nunca inventes um povo sem preencher as cinco colunas.
 
 | Povo | Terreno | Constrói | Economia forte | Defesa | Tropa única |
 | --- | --- | --- | --- | --- | --- |
@@ -24,13 +24,13 @@ Nomes provisórios. A Geada e a Bruma entraram pelo painel (ADR 0031) e ficam fo
 | Horta (os legumes) | Várzea fértil | Celeiros, estufas, silos, espantalhos | Agricultura — o dobro de rendimento por canteiro | Números: tropas baratíssimas | Semeador — planta durante o combate |
 | Fornalha | Vulcânico | Fundições, chaminés, muros de escória | Metal e armas | Fogo permanente nas muralhas | Ferreiro de guerra — repara muros em combate |
 | Sob-Raiz | Subterrâneo | Túneis, câmaras, cogumelares | Fungos e segredos | Não tem muralhas — tem labirinto | Escavador — abre passagens entre faixas |
-| Geada (ADR 0031, fora da campanha) | Glaciar | Iglus, abrigos de pastor de pedra, paliçada de gelo | Frio que guarda — nada estraga | Chão gelado: a Podridão abranda | Guarda do Gelo — abranda quem golpeia |
-| Bruma (ADR 0031, fora da campanha) | Pântano | Palheiros de colmo e casas sobre estacas | Caniço e enguias; as montarias recuperam ao dobro | Lodo que prende | Caçador do Caniçal — chega às libélulas |
+| Geada (Q-152, campanha) | Glaciar | Iglus, abrigos de pastor de pedra, paliçada de gelo | Frio que guarda — nada estraga | Chão gelado: a Podridão abranda | Guarda do Gelo — abranda quem golpeia |
+| Bruma (Q-152, campanha) | Pântano | Palheiros de colmo e casas sobre estacas | Caniço e enguias; as montarias recuperam ao dobro | Lodo que prende | Caçador do Caniçal — chega às libélulas |
 
 
 > **O que um povo é, tecnicamente**
 >
-> Um PeopleData.tres com: kit de arquitetura (5–8 cenas de segmento), rampa de paleta, conjunto de muralhas (5 níveis), 1 tropa única, 1 classe, modificadores económicos, e o seu segmento de mundo para a geração procedural. Nada mais. Se um povo precisar de código próprio, o sistema está mal desenhado.
+> Um PeopleData.tres com: kit de arquitetura (5–8 cenas de segmento), rampa de paleta, conjunto de muralhas (5 níveis), tropa própria, modificadores económicos, e o seu segmento de mundo para a geração procedural. Nada mais. Se um povo precisar de código próprio, o sistema está mal desenhado.
 
 ## Os cinco pilares
 

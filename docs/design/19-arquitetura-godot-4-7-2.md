@@ -1,12 +1,14 @@
-# 19 — Engenharia · Arquitetura Godot 4.6
+# 19 — Engenharia · Arquitetura Godot 4.7.2
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
+
+Motor fixado: .godot-version define 4.7.2 na baseline consultada. Exemplos de configuração são subordinados ao projeto atual e às ADRs. Integrações Steam e multiplayer desta secção são metas de plataforma; não evidência de serviços já configurados.
 
 > **Esta secção é o esboço; a especificação está na §39**
 >
 > O que se segue são as decisões de arquitetura e as definições de projeto. O modelo de dados completo, o catálogo de eventos, a ordem do tick e os critérios de aceitação por fase estão nas §39 a §67, e é contra essas que o código se escreve e se revê.
 
-O Godot 4.6 saiu em janeiro de 2026. Nada nele muda a arquitetura abaixo — mas três coisas mudam a velocidade a que trabalhas com IA: docks móveis, previews de recursos em tempo real no Quick Open, e variáveis @export criadas por arrastar um recurso para o editor de scripts. Há também suporte para profilers de tracing (Tracy, Perfetto, Instruments), que é o que vais usar quando tiveres 300 unidades no ecrã.
+O Godot 4.7.2 saiu em janeiro de 2026. Nada nele muda a arquitetura abaixo — mas três coisas mudam a velocidade a que trabalhas com IA: docks móveis, previews de recursos em tempo real no Quick Open, e variáveis @export criadas por arrastar um recurso para o editor de scripts. Há também suporte para profilers de tracing (Tracy, Perfetto, Instruments), que é o que vais usar quando tiveres 300 unidades no ecrã.
 
 ## Configurações de projeto — copiar tal e qual
 

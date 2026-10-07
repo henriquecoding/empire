@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Persistência territorial: RG-28 mantém save v12, assinatura v2 para novas fundações e perfis derivados. A §95 define o estado futuro de água/contratos/carga e as regras de migração. Q-248 confirma que limpeza da paisagem e construções persistem; reabrir não restitui árvores nem concede madeira.
+
 Como a simulação é pura, o save é quase trivial: serializa GameState, mais o estado dos fluxos RNG. As regras à volta é que não são negociáveis.
 
 ```gdscript
@@ -34,3 +36,5 @@ Como a simulação é pura, o save é quase trivial: serializa GameState, mais o
 > **A migração escreve-se quando se muda o campo, não quando se lança**
 >
 > Cada alteração ao GameState acrescenta uma função _migrate_N_to_N1(d: Dictionary) no mesmo commit. Deixar as migrações para o fim é como deixar os testes para o fim: nunca acontece, e a dívida é paga com saves de jogadores.
+
+Persistência da revisão v7: esta atualização documental não muda o formato dos saves. Futuras alterações têm de versionar e migrar fundação, cobertura/árvores, sociedades, sucessão e propriedade por modo (§88/§89), sem duplicar coroas, recursos, recompensas ou perfis. Um cache de afinidade não substitui o estado persistido que o produz.

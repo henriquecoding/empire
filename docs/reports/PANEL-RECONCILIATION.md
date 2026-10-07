@@ -1,5 +1,7 @@
 # Reconciliação do painel — 05/10/2026
 
+> **Atualização de 06/10/2026:** a leitura abaixo é histórica. A reconciliação atual, incluindo as respostas posteriores Q-221/Q-235/Q-237/Q-239–Q-243, está nas §§86–91 do dossiê, ADR 0077 e snapshot `DECISOES-DOSSIE-2026-10-07.json`. A consulta não marcou respostas como aplicadas.
+
 Esta matriz preserva todas as respostas lidas, separando aprovação de implementação. O relatório tem preferência nos conflitos. Nenhuma resposta é marcada aplicada antes de merge e publicação da alteração correspondente.
 
 ## Respostas lidas como novas em 05/10/2026

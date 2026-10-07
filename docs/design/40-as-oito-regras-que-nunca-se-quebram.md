@@ -19,3 +19,5 @@ Cada uma existe porque violá-la custa uma reescrita, não uma correção. Cada 
 > **A que se quebra primeiro**
 >
 > É sempre a I2. Um randf() solto para escolher uma variante de sprite parece inofensivo — e é, até ao dia em que precisas de reproduzir a noite 14 de um bug report e não consegues. Aleatoriedade puramente cosmética também vai a um fluxo: o fluxo visual, que existe exatamente para isso e nunca afeta a simulação.
+
+Soberania: Solo mantém uma coroa durante controlo, queda, roubo e sucessão pendente. Coop tem um reino comum; PvP tem dois reinos segundo ADR 0067/0068. Persistência, autoridade e recompensas devem respeitar a topologia do modo (§89), sem enfraquecer as invariantes de simulação.

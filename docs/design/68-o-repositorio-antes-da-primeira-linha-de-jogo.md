@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Os primeiros ficheiros de um projeto não são os que fazem o jogo andar — são os que ficam caros de acrescentar depois. A §65 tratava do jogo e estava certa naquilo que fazia. Faltava-lhe a camada por baixo: dezanove ficheiros, quase todos de menos de trinta linhas, que decidem se o próximo ano é legível ou não.
 
 ## As três famílias, e porque é que são estas

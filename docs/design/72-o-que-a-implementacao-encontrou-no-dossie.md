@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Transformar prosa em ficheiros que correm é o teste mais duro que uma especificação pode ter. Sete ficheiros do dia zero não funcionavam como estavam escritos, trinta e cinco números ou regras estavam em falta ou não batiam entre secções, e uma regra de segurança não protegia o que prometia. Ficou tudo escrito: os ficheiros corrigidos, as contradições em perguntas com proposta, e nada decidido por omissão.
 
 ## Os sete ficheiros que não corriam como estavam escritos

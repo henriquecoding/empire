@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Atualização do gerador: a geração contínua existente mantém sementes e alterações persistentes. A sequência natural → fundação → primeira noite territorial → despertar social da §88 é o contrato adotado, ainda por completar em RG-24. A antiga distribuição de fortalezas e mercenários prontos não é o destino final.
+
 O §21 resolve o conflito entre geração e composição com uma regra: o parallax nunca é por segmento. Aqui está a consequência técnica — a geração corre em duas passagens independentes.
 
 1. Passagem 1 — a paisagemAs camadas 1 a 4 (céu, montanha, colina, fundo médio) são geradas uma vez para a região inteira a partir do fluxo world. Produzem texturas contínuas com repeat_size igual à largura da região. Nenhum segmento sabe que elas existem.

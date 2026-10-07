@@ -10,7 +10,7 @@ Porque    O dono, a 03/10/2026: «melhore o design e a experiência do site, ain
           é roxo desde a ADR 0034; os monarcas (ADR 0052), o combate manual, o subsolo em
           sítios e as tuas luzes não apareciam; e o jogo só se via abaixo da dobra.
 Spec      docs/design/36-wishlists-pagina-demo-e-trailer.md
-          docs/design/08-quatro-arquetipos-duas-fases-cada.md
+          docs/design/08-imperadores-companhias-e-desbloqueios.md
           docs/design/74-a-podridao-ganha-um-lume-e-o-combustivel-es-tu.md
           docs/design/80-o-preto-entra-na-paleta-e-a-noite-deixa-de-ser-a.md
 Depende   PUB-02

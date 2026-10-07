@@ -67,7 +67,7 @@ Estes são os valores publicados do jogo que queres superar. Usa-os para uma coi
 | --- | --- | --- |
 | Economia desequilibra no late game | Van den Berg: "alguns jogadores ficam ricos demais". O desafio desaparece. | Sorvedouros permanentes: ganância do rei, dívida com mercenários, manutenção de tropas (§06, §14, §15) |
 | Táticas num só eixo | Combate vira acumulação, não posicionamento | Duas camadas verticais + tropas voadoras (§11) |
-| Unidades sem identidade | "Arqueiro n.º 7" é descartável | Classes jogáveis, ofícios que evoluem, tropas que se tornam personagens (§08, §09) |
+| Unidades sem identidade | "Arqueiro n.º 7" é descartável | Imperadores e companhias próprios, ofícios que evoluem e tropas com identidade (§08, §09) |
 | Repetição entre corridas | O meio do jogo arrasta | Fortalezas conquistáveis que dão habilidades, kits de arquitetura e mapas (§13) |
 | Zero narrativa | Nada a descobrir além de mecânica | 12 diários de campanha, dois epílogos, segredos que ensinam (§17) |
 | Sem controlo de foco | Inimigos empilham-se e as flechas desperdiçam-se | O arqueiro marca alvos; as tropas priorizam-nos (§07, §08) |

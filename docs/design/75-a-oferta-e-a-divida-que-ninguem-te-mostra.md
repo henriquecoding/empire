@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Tocha e acordo futuro (Q-247, resposta de 07/10): a tocha de mão serve inicialmente como ferramenta de iluminação sem desgaste. Mais adiante, um acordo desfavorável poderá permitir à Podridão corrompê-la e torná-la consumível. “Metade do jogo” indica a intenção de progressão, não uma percentagem ou noite fixada. O gatilho, consumo, recuperação e relação com emboscadas ainda precisam de especificação. Na baseline, a tocha ilumina e o archote comprado protege; não se infere que a nova resposta tenha aprovado proteção gratuita.
+
 A Besta nunca ataca ninguém. Aparece a pessoas cansadas, fala em voz baixa, e faz uma proposta que naquele momento é a coisa sensata a fazer. O Lenhador aceitou-a durante anos e nem se lembra de ter escolhido. Esta é a alavanca 1, e é a que transforma A Podridão de fenómeno em personagem sem lhe acrescentar um único ponto de vida.
 
 ## Como funciona, sem um terceiro verbo

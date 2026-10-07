@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 O custo mediano de um indie ronda os 30 000–60 000 $ quando se contabiliza o custo de oportunidade, contra ganhos medianos de 5 000–15 000 $. Tu estás numa posição melhor do que a mediana por três razões: fazes a arte, fazes o design, e a IA faz a maior parte do código. O que resta é isto.
 
 | Rubrica | Magro | Realista | Confortável | Nota |

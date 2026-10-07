@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Esta secção não existia na v2 e devia. Vais gastar dois a três anos nisto. Convém saberes exatamente contra o que estás a jogar antes de escreveres a primeira linha — e, mais importante, quais são os números que tens de atingir para que valha a pena.
 
 ## O estado do Steam em 2026
