@@ -84,6 +84,7 @@ func load_world(mundo: Dictionary) -> void:
 	field.from_dict(mundo)
 	seat.from_dict(mundo.get(FoundationWatch.SEDE, {}))
 	FoundationWatch.founded_tools()
+	TerritoryWatch.apply()  # derivado do que se leu: nao vai no save (ADR 0077)
 	CellarWatch.sync()
 
 

@@ -251,6 +251,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-25](RG-25.md) | Servidor autoritativo e modos online | RG-23, UN-29, UN-30 | por fazer |
 | [RG-26](RG-26.md) | A floresta como território (relatório de vegetação) e verificação da fundação livre | RG-23, QP-06 | feito — protótipo P0–P4; arte final, meteorologia e P5 por fazer |
 | [RG-27](RG-27.md) | O subsolo tem chão para além da escada (relatório de armazéns, subsolos e masmorras) | Q-186, ADR 0046, ADR 0065 | feito — P0 e P1 de geração, recompensas, baú, celeiros e roubo; logística e ensaios por fazer |
+| [RG-28](RG-28.md) | O território decide o que se levanta (relatório territorial com Civilization VII) | RG-23, RG-26, RG-27 | feito — fases 0 e 1 e a previsão da fundação; água com tipos, porto, contratos e rotas por fazer |
 
 ## Respostas aprovadas no painel
 

@@ -1,0 +1,7 @@
+key,value,_src,_proposed,_notes
+water_half_px,96,ADR 0077,water_half_px,"Meia largura da água que o segmento de partida autora (segments.csv, resource=water): uma massa de água com sítio no mundo, e não só uma etiqueta do bioma (§7.2 do relatório de 06/10/2026). Valor de ensaio."
+wild_water_half_px,128,ADR 0077,wild_water_half_px,"Meia largura da água de um segmento de água das terras geradas, à volta do assunto dele. O mar de uma borda começa onde o caminho acaba. Valor de ensaio."
+water_reach_px,64,ADR 0077,water_reach_px,"Uma obra que precisa de água (o pesqueiro) só se levanta com o meio a esta distância, no máximo, da borda da água, na mesma faixa (§8.4). Valor de ensaio."
+forest_reach_px,160,ADR 0077,forest_reach_px,"Uma obra que precisa de floresta conta as árvores de pé a esta distância, no máximo, na mesma faixa. Nenhuma obra da região a pede hoje; fica para o corte de madeira (§10.2). Valor de ensaio."
+forest_min,3,ADR 0077,forest_min,"Quantas árvores de pé, no mínimo, fazem uma fonte de floresta: uma árvore só não é um bosque. Valor de ensaio."
+rock_reach_px,0,ADR 0077,rock_reach_px,"Uma obra que precisa de rocha (o poço de minério) tem de estar dentro de uma cavidade a que uma passagem chega: a cavidade é rocha (Q-130), e o acesso é o porão entre as muralhas à volta da passagem (§7.1, T06)."

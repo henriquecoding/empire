@@ -67,3 +67,22 @@ Q-001, Q-002, Q-003, Q-004, Q-005, Q-007, Q-008, Q-009, Q-010, Q-011, Q-012, Q-0
 ## Pergunta sem resposta na imagem
 
 Q-221 permanece sem decisão nova. O grupo sem ofício e a caravana seguem o relatório; a reserva física de oito moedas conserva a baseline, sem inventar recursos. Os novos parâmetros técnicos de paragem/limpeza estão na Q-234.
+
+## Atualização de 07/10/2026 — o relatório territorial (ADR 0077, RG-28)
+
+O relatório de 06/10/2026 (`docs/reports/TERRITORIO-CIVILIZATION-VII.md`, achado A12 e AUD-CIV-01) pediu para alinhar
+quatro pontos antes de mexer no jogo:
+
+- **Q-221.** Já não está sem resposta: o painel tem, desde 05/10/2026, uma resposta «outra» — a banca fundadora só
+  aparece com o reino fundado, dentro dele e antes da muralha; uma região nova não é um jogo novo; no primeiro dia o
+  imperador explora, vê os recursos de cada região e só então decide onde fundar. O RG-28 aplica a parte dos recursos
+  (o painel da fundação diz que obras têm fonte ao alcance em cada sítio); a posição da banca e a travessia ficam por
+  aplicar, por isso a resposta continua `nova` no painel. A secção acima («Pergunta sem resposta na imagem») é a
+  leitura de 05/10 e fica como estava.
+- **Save.** O formato atual é o **v12** (`SaveMigrations.CURRENT`, ADR 0070); o v11 do `EMPIRE-MASTER.md` era o da data
+  dele. O RG-28 não muda o formato: o que acrescenta ao estado é derivado.
+- **Ramo por omissão.** O GitHub mostra hoje `main` como ramo por omissão, como o `AGENTS.md` manda.
+- **Acampamentos.** A regra aprovada de três contratações que esgotam o acampamento continua a valer; a companhia
+  persistente do relatório espera pela Q-251.
+
+Nenhum estado do painel foi alterado nesta entrega.

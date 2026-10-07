@@ -50,6 +50,9 @@ const GALINHEIROS_X := [-944.0, 944.0]
 # pesqueiro. E isso que faz do dia da asfixia medido aqui um numero sobre ESTE
 # jogo e nao sobre um slider. Fica entre a torre alta e o muro de fora.
 const PESQUEIROS_X := [1292.0]
+# A agua do segmento (o lago do castelo-arvore, biomes.csv) tem sitio: e ao pe dela que o
+# pesqueiro fica. Ela nao anda com a sede numa fundacao livre (ADR 0077).
+const AGUAS_X := [1292.0]
 const TORRES_ALTAS_X := [-1176.0, 1176.0]
 const PASSAGENS_X := [-848.0, 848.0]
 # Os segredos do segmento, pelo `location` de secrets.csv. §25: ao minuto 2:00 a
@@ -97,6 +100,7 @@ static func region() -> void:
 	SimLoop.core_x = SimLoop.world_width * MEIO
 	SimLoop.passages = _deslocadas(PASSAGENS_X)
 	SimLoop.field.camps = _deslocadas(ACAMPAMENTOS_X)
+	SimLoop.field.waters = _deslocadas(AGUAS_X if recurso() == TerritoryWatch.AGUA else [])
 	_segredos()
 
 	_nucleo()
@@ -129,6 +133,7 @@ static func region() -> void:
 	RealmOutskirts.author()  # acrescentados no fim: nenhum id antigo muda (ADR 0060)
 	CompanionWatch.author()
 	CellarWatch.author()
+	TerritoryWatch.apply()  # cada sitio sabe se o territorio o sustenta (ADR 0077)
 
 
 static func _segredos() -> void:
@@ -143,14 +148,6 @@ static func _segredos() -> void:
 		var diario := recurso as JournalData
 		if diario.where_kind == ChapterPlan.RUINA:
 			SimLoop.secrets.post_journal(diario.id, SimLoop.core_x + RUINA_X, CAMARA_W)
-
-
-## Se o bioma deste segmento sustenta este edificio (§06, §21): sem exigencia cabe
-## em qualquer lado; com ela, so onde o segmento tem esse recurso.
-static func cabe_no_bioma(dados: BuildingData) -> bool:
-	if dados.requires_biome_feature.is_empty():
-		return true
-	return dados.requires_biome_feature == recurso()
 
 
 ## O recurso que o segmento desta regiao oferece (§21, coluna `resource`).
@@ -173,12 +170,12 @@ static func _muro(x: float) -> void:
 
 
 ## O §06 da tres edificios um bioma obrigatorio — pesqueiro/agua, corte de
-## madeira/bosque, poco de minerio/rocha — e ate aqui o requires_biome_feature
-## nao era lido por ninguem. Quem o le e quem POE: um sitio de obra que o bioma
-## nao sustenta nao chega a existir, e por isso nao ha um `if` disto no tick.
+## madeira/bosque, poco de minerio/rocha. Quem POE pergunta ao territorio se ha a fonte
+## ali (ADR 0077): um sitio sem ela no segmento nao chega a existir. Se a sede se mudar
+## para longe dela, o TerritoryWatch fecha-o, e o pagamento pergunta o mesmo.
 static func _edificio(x: float, id: StringName, posto: StringName) -> void:
 	var dados := Registry.entry(&"buildings", id) as BuildingData
-	if not cabe_no_bioma(dados):
+	if not TerritoryWatch.fits(dados, x):
 		return
 	var vaga := slot_of(dados, x)
 	vaga.job_id = posto

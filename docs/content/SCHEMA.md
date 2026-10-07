@@ -973,3 +973,16 @@ Script `src/sim/data/under_rules.gd` · layout `kv` · 10 linha(s) · ADR 0072 �
 | `optional_spacing_px` | float |  |  |
 | `thief_carry` | int |  |  |
 
+## `territory.csv` → `data/economy/territory.tres`
+
+Script `src/sim/data/territory_rules.gd` · layout `kv` · 6 linha(s) · ADR 0077 — o território decide o que se levanta: o alcance da água, da floresta e da rocha de que uma obra precisa (relatório de 06/10/2026)
+
+| coluna | tipo | grupo | nota do script |
+|---|---|---|---|
+| `water_half_px` | float |  |  |
+| `wild_water_half_px` | float |  |  |
+| `water_reach_px` | float |  |  |
+| `forest_reach_px` | float |  |  |
+| `forest_min` | int |  |  |
+| `rock_reach_px` | float |  |  |
+

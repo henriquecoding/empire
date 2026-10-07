@@ -52,6 +52,7 @@ func _process(_delta: float) -> void:
 				"POSTOS  " + _postos(),
 				"NOITE   " + _noite(),
 				"SUBSOLO " + _subsolo(),
+				"TERRA   " + _territorio(),
 				"",
 				"IMPULSOS (TAB + numero, ou Y + stick e largar; um por dia)",
 				_impulsos(),
@@ -98,6 +99,17 @@ func _obras() -> String:
 		elif vaga.state != BuildSlot.State.EMPTY:
 			em_obra += 1
 	return "%d de pe · %d em obra · %d sitios" % [de_pe, em_obra, SimLoop.builds.count()]
+
+
+## As obras que o territorio recusa, e as que um save de antes tolera (ADR 0077).
+func _territorio() -> String:
+	var partes := PackedStringArray()
+	for vaga in SimLoop.builds.slots:
+		if vaga.terrain_bar.is_empty():
+			continue
+		var estado := "fechada" if RealmGrowth.barred(vaga) else "tolerada"
+		partes.append("%s#%d %s (%s)" % [vaga.kind, vaga.id, tr(vaga.terrain_bar), estado])
+	return " · ".join(partes) if not partes.is_empty() else "todas com fonte"
 
 
 func _postos() -> String:

@@ -2785,5 +2785,15 @@
   "notas": [
    "ADR 0075; docs/art/ART_DIRECTION_2026-10-05.md."
   ]
+ },
+ "RG-28": {
+  "estado": "feito — fase 0 (reconciliação) e fase 1 (fontes, avaliador comum e reancoragem); previsão da fundação; água com tipos, porto, contratos e rotas por fazer",
+  "depende": "RG-23, RG-26, RG-27, ADR 0066, ADR 0070, Q-130",
+  "spec": "docs/reports/TERRITORIO-CIVILIZATION-VII.md",
+  "horas": "—",
+  "title": "O território decide o que se levanta",
+  "porque": "Aplicar o relatório territorial com Civilization VII como referência: o que o jogador vê ao fundar corresponde ao que pode construir, e a sede nova não herda as fontes do segmento de partida",
+  "feito": "Fontes com sítio (água autorada, água das terras e mar, árvores, porões e cavernas), avaliador comum puro, perfil derivado, reancoragem e carregar que revalidam, RealmGrowth que fecha a obra intacta sem fonte, previsão na fundação com a mesma conta, assinatura v2 e tolerância explícita do legado.",
+  "fora": "Tipos de água, cais e porto, contratos mercenários, direitos de passagem, remessas, especialização de vassalos, clima regional e despertar social."
  }
 }

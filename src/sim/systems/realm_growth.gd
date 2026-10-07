@@ -1,7 +1,7 @@
 class_name RealmGrowth
 extends RefCounted
 
-enum Need { NONE, UNLISTED, WALL, FRONTIER, SUPPLY }
+enum Need { NONE, UNLISTED, WALL, FRONTIER, SUPPLY, TERRAIN }
 
 const HALF := 0.5
 
@@ -25,12 +25,25 @@ static func visible(obras: BuildSystem, vaga: BuildSlot, estado: GameState = nul
 	)
 
 
+## O territorio recusa a obra por fazer (ADR 0077). O que ja foi pago, esta em curso ou
+## de pe num save de antes fica: tolera-se, e a tolerancia nao passa a outra obra.
+static func barred(vaga: BuildSlot) -> bool:
+	return (
+		not vaga.terrain_bar.is_empty()
+		and vaga.level == 0
+		and vaga.paid == 0
+		and vaga.state == BuildSlot.State.EMPTY
+	)
+
+
 static func allows(obras: BuildSystem, vaga: BuildSlot) -> bool:
 	return refusal(obras, vaga) == Need.NONE
 
 
 ## A causa que o guia mostra: area defendida, proxima frente ou producao de apoio.
 static func refusal(obras: BuildSystem, vaga: BuildSlot) -> Need:
+	if barred(vaga):
+		return Need.TERRAIN
 	var sede := RealmLadder.seat(obras)
 	if sede == null or vaga.territory > 0 or vaga.kind == BuildSlot.NUCLEO or vaga.level > 0:
 		return Need.NONE

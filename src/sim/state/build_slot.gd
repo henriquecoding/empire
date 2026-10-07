@@ -11,6 +11,8 @@ const NUCLEO := &"core"
 const METADE := 0.5
 
 var territory := 0
+## A razao por que o territorio recusa este sitio, ou vazia (ADR 0077). Derivada: nao vai no save.
+var terrain_bar: StringName = &""
 var foundation := false
 var builder_work := false
 var rebuild_cost := 0
