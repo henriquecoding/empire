@@ -134,3 +134,9 @@ ponto acima do normal, o muro sem construtor ficava estreito por cima do INTERAG
 contra o Label posto, em 13 telemóveis e num varrimento contínuo de larguras e escalas (mais
 de 580 mil textos estreitados, todos os do jogo em pt_PT e en), nenhum texto estreito tapa um
 controlo nem sai do ecrã.
+
+## UX-08 — o Atlas do Império (07/10/2026)
+
+As cores, o canto dos cartões, as famílias dos botões de toque e a ficha da fundação continuam em
+[ATLAS.md](ATLAS.md) (ADR 0078). A geometria desta página fica igual: os cartões, o contexto, os avisos e os
+controlos de toque mantêm os sítios e as medidas de UX-05 e UX-06.

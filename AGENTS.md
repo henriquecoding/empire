@@ -10,7 +10,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
 ## Onde esta a verdade
 - Fonte editavel de design: docs/dossie.html. Especificacao em docs/design/ —
   um ficheiro por seccao, gerado por tools/split_dossie.py. NAO editar a mao.
-  Precedencia por clausula e estados de entrega: §§86–96, ADR 0078. Respostas
+  Precedencia por clausula e estados de entrega: §§86–96, ADR 0079. Respostas
   posteriores explicitas atualizam a regra; proposta nao equivale a decisao
   e uma decisao nao equivale a implementacao/publicacao.
 - Decisoes tomadas, e porque: docs/adr/
@@ -273,6 +273,8 @@ src/world/renewal_flora.gd  RenewalFlora  os arbustos e as arvores do fundo da a
 src/world/renewal_beasts.gd RenewalBeasts as criaturas da Podridao da arte renovada, com os olhos (ADR 0075)
 src/world/world_text.gd     WorldText     as letras escritas no mundo, legiveis no telemovel (UX-06)
 src/world/forest_view.gd    ForestView    a floresta no plano de accao, a quem serve e o chao que ficou vazio (ADR 0070)
+src/world/territory_overlay.gd TerritoryOverlay o territorio que o jogo conhece, por cima do mundo, so com o inspetor aberto (CV-39, ADR 0078)
+src/world/plane_contract.gd PlaneContract os planos de profundidade de uma cena e o contrato do parallax (ADR 0078)
 src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
 src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds
 src/world/fauna_art.gd      FaunaArt      o que um bicho de cenario E, em pixeis
@@ -285,6 +287,8 @@ src/world/sfx_cues.gd       SfxCues       as pistas que ja tocam, iguais a folha
 src/world/sfx_director.gd   SfxDirector   ouve o EventBus e toca as pistas; a moeda na obra sobe de tom
 src/ui/input_router.gd      InputRouter   entrada -> intencoes; nunca muda estado (§61)
 src/ui/hud.gd               Hud           o painel do greybox, e nao o HUD do §24
+src/ui/atlas.gd             Atlas         as cores, o canto de registo e as linhas de territorio da interface (ADR 0078)
+src/ui/atlas_rule.gd        AtlasRule     as linhas de territorio como separador (ADR 0078)
 src/ui/game_hud.gd          GameHud       o painel de quem joga (§24)
 src/ui/inspector.gd         Inspector     o estado de cada sistema, a pedido (Q-067)
 src/ui/pause_menu.gd        PauseMenu     a pausa e o fim da partida (§24, §16)
@@ -292,6 +296,7 @@ src/ui/guide_sites.gd       GuideSites    o que o guia diz nos sitios: a passage
 src/ui/seat_guide.gd        SeatGuide     o que o painel diz no marco da sede: fundar, melhorar, o que abre (ADR 0059)
 src/ui/forest_guide.gd      ForestGuide   o que o painel diz ao pe de uma arvore: preco, tronco e a quem serve (ADR 0070)
 src/ui/foundation_guide.gd  FoundationGuide o que fundar aqui leva e deixa, no painel antes de fundar (ADR 0070)
+src/ui/site_sheet.gd        SiteSheet     a ficha do sitio de fundacao: ver as condicoes, fundar ou voltar (UX-08, ADR 0078)
 src/ui/glyphs.gd            Glyphs        os botoes do dispositivo activo (§26, GB-15); o toque e o quarto (ADR 0047)
 src/ui/touch_controls.gd    TouchControls jogar com os dedos: os dedos viram accoes do InputMap (ADR 0047)
 src/ui/touch_layout.gd      TouchLayout   onde esta cada controlo de toque, e o canhoto (ADR 0047)

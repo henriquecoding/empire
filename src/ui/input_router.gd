@@ -25,7 +25,7 @@ var _marcar := false
 
 
 func _unhandled_input(evento: InputEvent) -> void:
-	if ClassSelection.active or TravelPanel.active:
+	if ClassSelection.active or TravelPanel.active or SiteSheet.active:
 		return
 	if evento.is_action_pressed(&"pause"):
 		if not Defeat.happened():
@@ -42,6 +42,8 @@ func _unhandled_input(evento: InputEvent) -> void:
 	if evento.is_action_pressed(&"verb_assume"):
 		if TravelWatch.at_gate():
 			get_tree().call_group(&"travel_menu", &"open")
+		elif SiteSheet.asks():  # o sitio de fundacao abre a ficha; fundar e confirma-la (ADR 0078)
+			get_tree().call_group(&"site_sheet", &"open")
 		else:
 			SimLoop.intents.queue(IntentQueue.Kind.ASSUME)
 		get_viewport().set_input_as_handled()
@@ -85,7 +87,7 @@ static func aims_with_cursor(evento: InputEvent) -> bool:
 
 
 func _process(delta: float) -> void:
-	if TravelPanel.active:
+	if TravelPanel.active or SiteSheet.active:
 		_andar(0.0)
 		SimLoop.field.stamina.wants = false
 		SimLoop.field.stamina.still = true  # parado no menu, recupera depressa (Q-208)

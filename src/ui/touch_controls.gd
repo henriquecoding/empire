@@ -86,6 +86,7 @@ static func playing() -> bool:
 		and SimLoop.running()
 		and not ClassSelection.active
 		and not TravelPanel.active
+		and not SiteSheet.active
 		and not Defeat.happened()
 	)
 

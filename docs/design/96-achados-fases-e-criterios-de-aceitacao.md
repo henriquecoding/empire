@@ -19,7 +19,7 @@ Resultado da comparação: a consolidação anterior cobria a visão territorial
 | A09 | Despertar social | §88, §95; RG-24 | Por implementar | Calendário independente da primeira visita |
 | A10 | Logística física | §95; Q-252 | Por implementar | Conservação de carga; entrega única |
 | A11 | Clima regional | §87, §92, §95 | Direção aprovada; execução pendente | Q-235; alternativas sazonais |
-| A12 | Rastreabilidade e governação | §86, §90–§91, §96 | Consolidado documentalmente | main é agora também ramo predefinido; RG-28 e ADR 0078 |
+| A12 | Rastreabilidade e governação | §86, §90–§91, §96 | Consolidado documentalmente | main é agora também ramo predefinido; RG-28 e ADR 0079 |
 
 
 ## Evidência existente e limite dos casos territoriais

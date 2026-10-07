@@ -2228,6 +2228,7 @@ input[type=range]{width:100%;accent-color:var(--petrol)}
 <section id="s24">
   <span class="sec-no">24 — Interface · <span style="color:var(--ember)">novo</span></span>
   <h3>Controlos, HUD diegético e feedback</h3>
+<p><strong>Atualização da baseline — ADR 0078, UX-08/CV-01:</strong> o Atlas do Império unifica a linguagem da HUD. A fundação apresenta uma linha contextual; Interagir abre a ficha do sítio sem fundar nem gastar. O foco inicial é Voltar, e confirmar volta a validar pela simulação. Em janela baixa o corpo da ficha rola; a navegação mantém teclado, comando e toque. O inspetor pode mostrar fontes e alcance do território. A sua sobreposição é diagnóstico, não substitui a geografia visível.</p>
   <p class="lede">A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 mecânicas e dois botões só funciona se cada contexto estiver escrito — e o Steam Deck obriga-te a resolver isto antes da demo, não depois.</p>
 
   <h4>O mapa de comando</h4>
@@ -6367,7 +6368,7 @@ Semana trinta e três, mesma ordem.</p>
 <section id="s87">
   <span class="sec-no">87 — Território e referências</span>
   <h3>Civilization VII e Manor Lords traduzidos para Empire</h3>
-<p><strong>Complemento do relatório:</strong> §§92–96 especificam fontes concretas, hidrologia, mercenários e persistência. A referência Civilization VII conserva a data de corte do relatório; a referência Manor Lords continua a orientar trabalho, cobertura e crescimento, sem aprovar automaticamente a afinidade regional da Q-253.</p>
+<p><strong>Complemento do relatório:</strong> §§92–96 especificam fontes concretas, hidrologia, mercenários e persistência. A referência Civilization VII conserva a data de corte do relatório; a referência Manor Lords continua a orientar trabalho, cobertura e crescimento, sem aprovar automaticamente a afinidade regional da Q-258.</p>
 
 <p><strong>Âmbito:</strong> integrar os princípios territoriais já adotados nos relatórios e o pedido atual de aprofundamento. Os valores existentes aprovados mantêm-se. Extensões aqui identificadas como propostas precisam de contrato e teste próprios antes de alterar a simulação. Não se importa um sistema só porque existe num jogo de referência.</p>
 <h4>A contribuição de cada referência</h4>
@@ -6525,7 +6526,7 @@ Semana trinta e três, mesma ordem.</p>
 <p>A contagem ignora cepos, árvores limpas e plantas decorativas que não existem na simulação. Um mesmo ID não é contado duas vezes por atravessar segmentos. Geração posterior, fundação, corte, mudança de estação, restauração e expansão invalidam apenas os cálculos afetados; a cache não é autoridade persistente.</p>
 <h4>Afinidades regionais: proposta delimitada, não uma regra já aprovada</h4>
 <p>Para ampliar a influência local sem copiar os círculos de outro jogo, o protótipo seguinte pode medir a proporção de cobertura elegível de uma região. A unidade de Empire é o seu espaço lateral e as faixas utilizáveis; “área” não significa necessariamente uma área 3D.</p>
-<p>Uma hipótese de contrato é: <code>afinidade = cobertura_elegível / cobertura_utilizável</code>; a resposta económica é uma curva limitada em dados. Antes de a usar, definir precisamente os intervalos que pertencem à região, sobreposições, água inacessível, terrenos de outros reinos e atualização após conquista. Esta fórmula é uma proposta desta revisão, registada na Q-253, sem coeficientes aprovados nem efeito ativado.</p>
+<p>Uma hipótese de contrato é: <code>afinidade = cobertura_elegível / cobertura_utilizável</code>; a resposta económica é uma curva limitada em dados. Antes de a usar, definir precisamente os intervalos que pertencem à região, sobreposições, água inacessível, terrenos de outros reinos e atualização após conquista. Esta fórmula é uma proposta desta revisão, registada na Q-258, sem coeficientes aprovados nem efeito ativado.</p>
 <p>O primeiro ensaio deve acrescentar uma relação compreensível e comparar com o sistema local existente. Não criar uma cadeia de multiplicadores floresta → oficina → mercado → felicidade → toda a produção sem orçamento e explicação. Relações encadeadas precisam de impedir ciclos e dupla contagem. Se o benefício depende de uma oficina funcional, pagar uma fundação inacabada não o concede.</p>
 <h4>Recursos, trabalho e logística</h4>
 <p>Empire conserva três circuitos: produção, conversão e comércio (§06). A leitura inspirada em Manor Lords é causal: <strong>origem disponível → pessoa/ferramenta → deslocação → trabalho → recolha/armazenamento → utilização ou venda</strong>. Cada interrupção precisa de uma razão visível: sem trabalhador, sem matéria, fora do turno, trajeto indisponível, reserva cheia ou destinatário ainda bloqueado.</p>
@@ -6817,6 +6818,7 @@ Semana trinta e três, mesma ordem.</p>
 <section id="s90">
   <span class="sec-no">90 — Execução e qualidade</span>
   <h3>Matriz de entrega, aceitação e manutenção do dossiê</h3>
+<p><strong>Base final reconciliada:</strong> main/<code>f3efeac18b5732e68bad3154a0af340f9279d649</code> também inclui o PR #94 (Atlas, ficha do sítio e diagnóstico territorial). A ADR 0078 e Q-253–Q-257 desse trabalho mantêm identidade; a consolidação usa ADR 0079 e a proposta regional Q-258. Não se atribui esta implementação à revisão documental.</p>
 <p><strong>Atualização do mapa:</strong> o RG-28/ADR 0077 já implementa parte do território. A matriz A01–A12, os rascunhos AUD-CIV-01–18 e todos os critérios T01–T50 estão na §96. A ordem territorial pormenorizada complementa a sequência geral abaixo, sem declarar portos ou contratos entregues.</p>
 
 <h4>Baseline e limites da verificação</h4>
@@ -6900,7 +6902,7 @@ Semana trinta e três, mesma ordem.</p>
 <tr>
 <td>Afinidade regional nova</td>
 <td>§87</td>
-<td>Q-253: proposta delimitada, sem multiplicadores aplicados</td>
+<td>Q-258: proposta delimitada, sem multiplicadores aplicados</td>
 </tr>
 </tbody></table></div>
 <h4>Ordem de implementação</h4>
@@ -7036,7 +7038,7 @@ Semana trinta e três, mesma ordem.</p>
 <p>Os casos acima são critérios de aceitação, não uma declaração de que foram todos executados. A evidência da revisão documental, build e CI fica no PR desta entrega. Testes reais de jogo, hardware e rede exigem os ambientes correspondentes.</p>
 <h4>Como impedir nova divergência</h4>
 <p>Ao receber uma resposta, registar fonte, âmbito e texto; comparar com a proposta identificável; atualizar a regra temática; apontar a substituição na ADR/pergunta; modificar dados e código apenas se a tarefa incluir implementação; regenerar as secções; verificar referências e valores; publicar pelo fluxo do repositório. Só depois de implementação verificada se considera atualizar “aplicada” no painel, preservando resposta entretanto editada.</p>
-<p>Uma alteração documental pode ficar concluída enquanto um requisito de jogo continua por fazer. Por isso, o estado de documentação e o de implementação devem ser descritos separadamente. O histórico desta consolidação está na ADR 0078 e no registo da §91; as ADRs anteriores não são apagadas para fingir que as decisões sempre foram iguais.</p>
+<p>Uma alteração documental pode ficar concluída enquanto um requisito de jogo continua por fazer. Por isso, o estado de documentação e o de implementação devem ser descritos separadamente. O histórico desta consolidação está na ADR 0079 e no registo da §91; as ADRs anteriores não são apagadas para fingir que as decisões sempre foram iguais.</p>
 </section>
 <section id="s91"><span class="sec-no">91 — Proveniência</span><h3>Respostas do painel e alcance da integração</h3>
 <p>Foram reconciliadas <strong>229 decisões</strong> a partir da consulta de 06/10/2026, reconfirmada em 07/10/2026. Este registo editorial apresenta regras, referências e alcance, sem reproduzir comentários privados nem metadados administrativos. As perguntas sem resposta permanecem abertas. Cada entrada deve ser lida com a proposta de <strong>docs/QUESTIONS.md</strong>, as ADRs e a precedência da §86; documentação integrada não significa implementação concluída.</p>
@@ -8243,7 +8245,8 @@ Semana trinta e três, mesma ordem.</p>
 </section>
 <section id="s92">
 <span class="sec-no">92 — Território funcional</span><h3>Fontes, acessos, fundação e produção</h3>
-<p><strong>Estado em main/5b4b24a (RG-28, ADR 0077):</strong> fontes por intervalo/faixa, PlacementRules, TerritoryProfile, TerritoryWatch, reancoragem e prévia de fundação já existem. A assinatura v2 conserva o perfil do momento; o save continua v12. Acesso por caminho, direitos, capacidade sustentável partilhada e produção dependente da conectividade ainda não estão completos. O alcance atual não prova um grafo de acesso. Os números de territory.csv continuam propostas na Q-249; afinidade regional de Manor Lords fica na Q-253.</p>
+<p><strong>Limite visual conhecido — Q-257:</strong> o diagnóstico do PR #94 identificou água funcional onde o cenário ainda pinta mata/terra. O avaliador pode recusar corretamente uma obra e a paisagem continuar a induzir em erro. A concordância entre fonte física e representação permanece um critério pendente, acompanhado em CV-01/Q-257.</p>
+<p><strong>Estado em main/5b4b24a (RG-28, ADR 0077):</strong> fontes por intervalo/faixa, PlacementRules, TerritoryProfile, TerritoryWatch, reancoragem e prévia de fundação já existem. A assinatura v2 conserva o perfil do momento; o save continua v12. Acesso por caminho, direitos, capacidade sustentável partilhada e produção dependente da conectividade ainda não estão completos. O alcance atual não prova um grafo de acesso. Os números de territory.csv continuam propostas na Q-249; afinidade regional de Manor Lords fica na Q-258.</p>
 <h4>Modelo territorial recomendado</h4>
 <h5>Seis condições diferentes</h5>
 <p>Um recurso produz benefício quando passa por seis condições: <strong>existe; é conhecido; pode ser alcançado; o reino tem direito de o usar; existe capacidade de exploração; o resultado chega a quem precisa dele</strong>. A descoberta afeta a informação do jogador; a existência física não deve depender dessa descoberta.</p>
@@ -9519,7 +9522,7 @@ Semana trinta e três, mesma ordem.</p>
 <td>Rastreabilidade e governação</td>
 <td>§86, §90–§91, §96</td>
 <td>Consolidado documentalmente</td>
-<td>main é agora também ramo predefinido; RG-28 e ADR 0078</td>
+<td>main é agora também ramo predefinido; RG-28 e ADR 0079</td>
 </tr>
 </tbody></table></div>
 <h4>Evidência existente e limite dos casos territoriais</h4>

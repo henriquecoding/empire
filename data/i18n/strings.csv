@@ -770,7 +770,8 @@ SEASON_SPRING,Primavera,Spring,ADR 0043,160,
 SEASON_SUMMER,Verão,Summer,ADR 0043,160,
 SEASON_AUTUMN,Outono,Autumn,ADR 0043,160,
 SEASON_WINTER,Inverno,Winter,ADR 0043,160,
-HUD_SEASON,{season} · {days} dias,{season} · {days} days,ADR 0043,160,
+HUD_SEASON,{season} · restam {days} dias,{season} · {days} days left,ADR 0043,160,"HUD-02: Seasons.left conta os dias que faltam, hoje incluído (UX-08)"
+HUD_SEASON_LAST,{season} · último dia,{season} · last day,ADR 0043,160,HUD-02: o dia em que Seasons.left dá 1 (UX-08)
 GUIDE_WINTER,"No inverno os canteiros param. Pesca, galinhas e caça ainda rendem; o celeiro solta as reservas que guardaste.","In winter farms stop. Fish, hens and hunting still yield; the granary releases the reserves you stored.",ADR 0043,160,
 GUIDE_TRAVEL,"Verbo 2: viajar para um reino conquistado, de dia. Abriga-te nas defesas dele à noite.",Verb 2: travel to a conquered realm by day. Shelter behind its defenses at night.,ADR 0043,160,
 CLASS_BEGIN,Começar com {name},Begin as {name},classes — início e habilidades (§08),1200,
@@ -805,7 +806,7 @@ TOUCH_WHEEL,IMPULSOS,IMPULSES,controlos por toque (ADR 0047): a roda do rei,12,"
 TOUCH_PAUSE,PAUSA,PAUSE,controlos por toque (ADR 0047): o botão da pausa,12,O botão só tem o ícone; o nome é o da ajuda.
 TOUCH_ATTACK,ATAQUE,ATTACK,controlos por toque (ADR 0047): o botão do ataque,12,"O botão diz a arma de quem se conduz (Espada, Disparar, Alaúde); isto é o nome geral."
 TOUCH_FIX,FIXAR,PIN,controlos por toque (UX-03): prender a alavanca no sítio,12,"Solta, a alavanca nasce onde o polegar pousa e arrastar nunca mexe a câmara; fixa, fica no sítio e arrastar o resto do ecrã espreita."
-TOUCH_RUN,CORRER,RUN,controlos por toque (Q-193): manter premido para correr,12,"Aceso a ouro enquanto se prime e há fôlego. A alavanca só anda."
+TOUCH_RUN,CORRER,RUN,controlos por toque (Q-193): manter premido para correr,12,"Aceso enquanto se prime e há fôlego (verde de ligado, ADR 0078). A alavanca só anda."
 UI_MENU_TOUCH,Toque,Touch,separador das opções (ADR 0047),16,Só aparece onde há ecrã táctil.
 OPT_TOUCH_SIZE,Tamanho dos controlos,Control size,opções de toque (ADR 0047),28,80 a 140%.
 OPT_TOUCH_LEFT,Canhoto: alavanca à direita,Left-handed: stick on the right,opções de toque (ADR 0047),40,Espelha os lados; a pausa fica onde está.
@@ -956,7 +957,7 @@ MONARCH_ARRIVAL_EVOLVED_NIA,"EVOLUÇÃO · Vence {wins} batalhas distintas junto
 MONARCH_ARRIVAL_EVOLVED_ARCHER_EMPEROR,"EVOLUÇÃO · Vence {wins} batalhas distintas junto da tua companhia. Ambos evoluem: flecha perfurante, marca em área e companhia mais resistente.","EVOLUTION · Win {wins} distinct battles alongside your companion. Both evolve: piercing arrow, area mark and a tougher companion.",A Última Carroça — ADR 0065,1200,
 ARRIVAL_OLD_SCAR,Raízes negras,Black roots,A Última Carroça — ADR 0065,,
 ARRIVAL_ROOTS_CONTEXT,A Podridão passou por aqui. {assume}: observar as raízes; escolhe o que proteger antes da noite.,Rot passed through here. {assume}: inspect the roots; choose what to protect before night.,A Última Carroça — ADR 0065,,
-ARRIVAL_FOUND_HERE,Fundar o Império aqui? {assume}: Fundar,Found the Empire here? {assume}: Found,ADR 0066,,
+ARRIVAL_FOUND_HERE,Fundar neste local · {assume}: ver condições,Found on this site · {assume}: see conditions,"ADR 0066, 0078",,Uma linha só; o resto está na ficha (UX-08)
 FOUNDATION_CLEARS_TREES,"A clareira tira {trees} árvores, sem madeira.","The clearing takes {trees} trees, with no timber.",O que a fundação leva — ADR 0070,,
 FOUNDATION_GROVE_LOST,O bosque deixa de apoiar a coleta nas provisões.,The grove stops supporting gathering at the supplies.,O que a fundação leva — ADR 0070,,
 FOUNDATION_SHELTER_LOST,A toca do veado fica sem abrigo e não dá caça.,The deer burrow loses its shelter and gives no game.,O que a fundação leva — ADR 0070,,
@@ -964,16 +965,26 @@ FOUNDATION_KEEPS,Fica dentro do reino: {kept}.,Stays inside the realm: {kept}.,O
 FOUNDATION_NEAR_STATUE,a estátua,the statue,O que a fundação deixa — ADR 0070,24,
 FOUNDATION_NEAR_ROOTS,as raízes da Podridão,the Rot roots,O que a fundação deixa — ADR 0070,24,
 FOUNDATION_NEAR_PASSAGE,a passagem,the passage,O que a fundação deixa — ADR 0070,24,
-TERRAIN_SITE_OK,{name}: {source} ao alcance.,{name}: {source} within reach.,O que o território permite — ADR 0077,,
-TERRAIN_SITE_SOME,{name}: {ok} de {all} com {source} ao alcance.,{name}: {ok} of {all} with {source} within reach.,O que o território permite — ADR 0077,,
-TERRAIN_SITE_NONE,{name}: sem {source} ao alcance; aqui não se levanta.,{name}: no {source} within reach; it can't rise here.,O que o território não permite — ADR 0077,,
+TERRAIN_SITE_OK,{name} · {source} ao alcance,{name} · {source} within reach,O que o território permite — ADR 0077,,"Nome, depois a condição (UX-08)"
+TERRAIN_SITE_SOME,{name} · {ok} de {all} lugares com {source} ao alcance,{name} · {ok} of {all} sites with {source} within reach,O que o território permite — ADR 0077,,HUD-02: {ok} de {all} são os lugares (vagas) desta obra com a fonte ao alcance (UX-08)
+TERRAIN_SITE_NONE,{name} · sem {source} ao alcance,{name} · no {source} within reach,O que o território não permite — ADR 0077,,"Uma limitação da obra, e não da fundação (UX-08)"
 TERRAIN_SOURCE_WATER,água,water,a fonte de uma obra — ADR 0077,24,
 TERRAIN_SOURCE_FOREST,floresta,forest,a fonte de uma obra — ADR 0077,24,
-TERRAIN_SOURCE_ROCK,rocha com passagem,rock a passage reaches,a fonte de uma obra — ADR 0077,24,
+TERRAIN_SOURCE_ROCK,rocha com passagem,rock by a passage,a fonte de uma obra — ADR 0077,24,
 TERRAIN_NO_WATER,Sem água ao alcance.,No water within reach.,porque o território recusa a obra — ADR 0077,,
 TERRAIN_NO_FOREST,Sem floresta ao alcance.,No forest within reach.,porque o território recusa a obra — ADR 0077,,
 TERRAIN_NO_ROCK,Sem rocha a que uma passagem chegue.,No rock a passage reaches.,porque o território recusa a obra — ADR 0077,,
 TERRAIN_NO_SOURCE,Sem a fonte de que precisa ao alcance.,The source it needs is out of reach.,porque o território recusa a obra — ADR 0077,,
+SHEET_FOUND_TITLE,Fundar neste local,Found on this site,ficha do sítio de fundação — UX-08 e ADR 0078,32,
+SHEET_FOUND_CAN,Pode fundar-se aqui: o chão da sede está livre.,You can found here: the seat's ground is clear.,ficha do sítio de fundação — UX-08 e ADR 0078,,O mesmo teste que a confirmação refaz (FoundationChoice.valid)
+SHEET_FOUND_EFFECT,"A sede nasce aqui, o grupo fica no reino e a carroça abre a reserva. Fundar não gasta moedas; a lareira paga-se depois, no marco.","The seat is born here, the group joins the realm and the cart opens its supplies. Founding costs no coins; the hearth is paid later, at the marker.",ficha do sítio de fundação — UX-08 e ADR 0078,,O que LastCartWatch.commit faz; nenhuma moeda sai na fundação
+SHEET_CLEARING,O que a clareira leva,What the clearing takes,ficha do sítio de fundação — UX-08 e ADR 0078,40,
+SHEET_CLEARING_NONE,Nada a cortar nem a perder.,Nothing to cut or lose.,ficha do sítio de fundação — UX-08 e ADR 0078,,
+SHEET_TERRITORY,O que o território permite,What the land allows,ficha do sítio de fundação — UX-08 e ADR 0078,40,
+SHEET_TERRITORY_NONE,"Nenhuma obra que já sabes fazer depende de água, floresta ou rocha.","No building you know yet depends on water, forest or rock.",ficha do sítio de fundação — UX-08 e ADR 0078,,
+SHEET_FOUND_HINT,{assume}: fundar · {back}: voltar,{assume}: found · {back}: back,ficha do sítio de fundação — UX-08 e ADR 0078,48,
+SHEET_FOUND_CONFIRM,Fundar,Found,ficha do sítio de fundação — UX-08 e ADR 0078,16,
+SHEET_BACK,Voltar,Back,ficha do sítio de fundação — UX-08 e ADR 0078,16,
 FLORA_OAK,Carvalho,Oak,nome de conteúdo — flora (ADR 0070),24,
 FLORA_PINE,Pinheiro,Pine,nome de conteúdo — flora (ADR 0070),24,
 FLORA_WILLOW,Salgueiro,Willow,nome de conteúdo — flora (ADR 0070),24,
@@ -989,11 +1000,11 @@ FOREST_SHELTERS,Abriga a toca do veado: {have}/{min} árvores.,Shelters the deer
 FOREST_SHELTER_LOST,Abatê-la adormece a toca.,Felling it puts the den to sleep.,A floresta — ADR 0070,,
 FOREST_CACHE_GROVE,Bosque da coleta: {have}/{min} árvores; +{bonus} moeda por dia.,Gathering grove: {have}/{min} trees; +{bonus} coin a day.,A floresta — ADR 0070,,
 HUD_PURSE_VALUE,{coins} / {capacity},{coins} / {capacity},HUD compacto: saldo e capacidade,24,
-HUD_PURSE_TITLE,Moedas,Coins,HUD compacto: nome do recurso,12,
+HUD_PURSE_TITLE,Moedas / máx.,Coins / max,HUD compacto: o que é cada número do saldo,16,HUD-02: moedas no saco / capacidade do saco (UX-08)
 HUD_TIME,Dia {day} · {phase},Day {day} · {phase},HUD compacto: dia e fase sem percentagem,40,
 HUD_NOT_FOUNDED,Por fundar,Not founded,Estado da sede antes da fundação,24,
 UI_REALM_STATUS,Estado do reino,Realm overview,Página da pausa para as estatísticas completas,32,
-HUD_DETAIL_PURSE,Moedas: {bag} / {cap},Coins: {bag} / {cap},Resumo na pausa,60,
+HUD_DETAIL_PURSE,Moedas: {bag} (capacidade {cap}),Coins: {bag} (capacity {cap}),Resumo na pausa,60,HUD-02 (UX-08)
 HUD_DETAIL_TROOPS,Tropas: {troops},Troops: {troops},Resumo na pausa,60,
 HUD_DETAIL_WAGES,Soldo: {wages} moedas/dia,Wages: {wages} coins/day,Resumo na pausa,60,
 HUD_DETAIL_CORE,Núcleo: {core},Keep: {core},Resumo na pausa,60,

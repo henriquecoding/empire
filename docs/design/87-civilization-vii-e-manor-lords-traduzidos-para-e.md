@@ -2,7 +2,7 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-Complemento do relatório: §§92–96 especificam fontes concretas, hidrologia, mercenários e persistência. A referência Civilization VII conserva a data de corte do relatório; a referência Manor Lords continua a orientar trabalho, cobertura e crescimento, sem aprovar automaticamente a afinidade regional da Q-253.
+Complemento do relatório: §§92–96 especificam fontes concretas, hidrologia, mercenários e persistência. A referência Civilization VII conserva a data de corte do relatório; a referência Manor Lords continua a orientar trabalho, cobertura e crescimento, sem aprovar automaticamente a afinidade regional da Q-258.
 
 Âmbito: integrar os princípios territoriais já adotados nos relatórios e o pedido atual de aprofundamento. Os valores existentes aprovados mantêm-se. Extensões aqui identificadas como propostas precisam de contrato e teste próprios antes de alterar a simulação. Não se importa um sistema só porque existe num jogo de referência.
 
@@ -66,7 +66,7 @@ A contagem ignora cepos, árvores limpas e plantas decorativas que não existem 
 
 Para ampliar a influência local sem copiar os círculos de outro jogo, o protótipo seguinte pode medir a proporção de cobertura elegível de uma região. A unidade de Empire é o seu espaço lateral e as faixas utilizáveis; “área” não significa necessariamente uma área 3D.
 
-Uma hipótese de contrato é: afinidade = cobertura_elegível / cobertura_utilizável; a resposta económica é uma curva limitada em dados. Antes de a usar, definir precisamente os intervalos que pertencem à região, sobreposições, água inacessível, terrenos de outros reinos e atualização após conquista. Esta fórmula é uma proposta desta revisão, registada na Q-253, sem coeficientes aprovados nem efeito ativado.
+Uma hipótese de contrato é: afinidade = cobertura_elegível / cobertura_utilizável; a resposta económica é uma curva limitada em dados. Antes de a usar, definir precisamente os intervalos que pertencem à região, sobreposições, água inacessível, terrenos de outros reinos e atualização após conquista. Esta fórmula é uma proposta desta revisão, registada na Q-258, sem coeficientes aprovados nem efeito ativado.
 
 O primeiro ensaio deve acrescentar uma relação compreensível e comparar com o sistema local existente. Não criar uma cadeia de multiplicadores floresta → oficina → mercado → felicidade → toda a produção sem orçamento e explicação. Relações encadeadas precisam de impedir ciclos e dupla contagem. Se o benefício depende de uma oficina funcional, pagar uma fundação inacabada não o concede.
 

@@ -91,6 +91,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [PUB-01](PUB-01.md) | O jogo passa a jogar-se no browser | F0-04 | feito |
 | [PUB-02](PUB-02.md) | O site passa a ser a página do jogo | PUB-01 | feito |
 | [PUB-04](PUB-04.md) | O site mostra o jogo de hoje | PUB-02 | feito |
+| [CV-01](CV-01.md) | Cenários: diagnóstico reproduzível e o contrato dos planos | RG-28, ART-RENEWAL-01 | parcial — manifesto, sobreposição do território e contrato dos planos; kits de arte e trecho piloto por fazer |
 
 ## Fase 2 — Fatia vertical
 
@@ -173,6 +174,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [UX-02](UX-02.md) | Jogar com os dedos: os controlos por toque | UX-01 | feito |
 | [UX-03](UX-03.md) | A alavanca solta, o FIXAR e o ecrã inteiro | UX-02 | feito |
 | [UX-04](UX-04.md) | O CORRER no toque e as obras com sprite | UX-03 | feito |
+| [UX-08](UX-08.md) | Atlas do Império: a ficha do sítio e uma só linguagem na HUD | UX-05, RG-28 | feito — primeiro pacote do plano da HUD; fontes, selo, edifícios, armazéns, mapa e aparelhos por fazer |
 
 ## Monarcas, companhias e controlo imperial — ADR 0052
 

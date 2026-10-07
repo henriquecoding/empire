@@ -2771,7 +2771,7 @@
   "porque": "Decisões recentes não estavam integradas na especificação canónica.",
   "spec": [
    "docs/dossie.html",
-   "docs/adr/0078-dossie-consolidado-e-rastreabilidade-do-painel.md"
+   "docs/adr/0079-dossie-consolidado-e-rastreabilidade-do-painel.md"
   ],
   "depende": "—",
   "feito": "Regras reconciliadas, referências desenvolvidas, respostas rastreáveis e geração/portões verificados.",
@@ -2808,5 +2808,25 @@
   "porque": "Aplicar o relatório territorial com Civilization VII como referência: o que o jogador vê ao fundar corresponde ao que pode construir, e a sede nova não herda as fontes do segmento de partida",
   "feito": "Fontes com sítio (água autorada, água das terras e mar, árvores, porões e cavernas), avaliador comum puro, perfil derivado, reancoragem e carregar que revalidam, RealmGrowth que fecha a obra intacta sem fonte, previsão na fundação com a mesma conta, assinatura v2 e tolerância explícita do legado.",
   "fora": "Tipos de água, cais e porto, contratos mercenários, direitos de passagem, remessas, especialização de vassalos, clima regional e despertar social."
+ },
+ "UX-08": {
+  "estado": "feito — primeiro pacote do plano da HUD (§20): contexto curto, ficha voluntária com confirmação, tokens Atlas na HUD, pausa e toque, e o que cada número quer dizer; fontes, selo, edifícios, armazéns, mapa e testes em aparelhos por fazer",
+  "depende": "UX-05, RG-28, ADR 0066, ADR 0074, ADR 0077",
+  "spec": "docs/reports/HUD-UI-ATLAS.md",
+  "horas": "—",
+  "title": "Atlas do Império: a ficha do sítio e uma só linguagem na HUD",
+  "porque": "Aplicar o plano mestre da HUD: tirar o relatório da fundação do meio do ecrã, separar ação, combate e moeda, e dar à HUD, à pausa e ao toque a mesma linguagem.",
+  "feito": "Indicação curta e ficha voluntária da fundação com confirmação que revalida, secções de uma só fonte, tokens Atlas com contraste medido, canto de registo e linhas de território, famílias de comandos no toque e microcopy de 6/33, 16 dias e 1 de 2.",
+  "fora": "Fontes Alegreya e Atkinson, selo e ícones finais, fichas de edifícios e armazéns, mapa, escala de texto independente e testes em aparelhos reais."
+ },
+ "CV-01": {
+  "estado": "parcial — o que é código da etapa A do plano de cenários: manifesto de captura, sobreposição do território e contrato dos planos; o kit de arte, a separação do panorama e o trecho piloto por fazer",
+  "depende": "RG-28, ART-RENEWAL-01, ADR 0075, ADR 0077",
+  "spec": "docs/reports/CENARIOS-GODOT.md",
+  "horas": "—",
+  "title": "Cenários: diagnóstico reproduzível e o contrato dos planos",
+  "porque": "Preparar a produção de cenários do plano mestre com capturas comparáveis e o território que a simulação conhece visível por cima do mundo.",
+  "feito": "Manifesto de captura (commit, motor, renderer, stretch, semente, dia, fase, monarca), sobreposição de fontes e sítios no inspetor, lista de planos e contrato de parallax por teste.",
+  "fora": "Kits de chão, margem, cave e sede, separação do panorama, árvore monumental, água, luz e o trecho piloto: pedem arte e as referências."
  }
 }

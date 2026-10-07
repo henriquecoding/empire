@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Base final reconciliada: main/f3efeac18b5732e68bad3154a0af340f9279d649 também inclui o PR #94 (Atlas, ficha do sítio e diagnóstico territorial). A ADR 0078 e Q-253–Q-257 desse trabalho mantêm identidade; a consolidação usa ADR 0079 e a proposta regional Q-258. Não se atribui esta implementação à revisão documental.
+
 Atualização do mapa: o RG-28/ADR 0077 já implementa parte do território. A matriz A01–A12, os rascunhos AUD-CIV-01–18 e todos os critérios T01–T50 estão na §96. A ordem territorial pormenorizada complementa a sequência geral abaixo, sem declarar portos ou contratos entregues.
 
 ## Baseline e limites da verificação
@@ -29,7 +31,7 @@ A auditoria mestre de 06/10 é uma fonte histórica de defeitos e limitações, 
 | Coop/PvP e autoridade | §§18, 89 | ADR 0067/0068; RG-25, UN-29–UN-31 e Q-236 |
 | HUD/plataformas | §§24, 26 | Q-187/Q-188 e ADR 0074; hardware real continua gate próprio |
 | Gravações/progressão/painel | §§62, 89 | Correções do PR #92 integradas na baseline publicada; critérios de integridade continuam aplicáveis |
-| Afinidade regional nova | §87 | Q-253: proposta delimitada, sem multiplicadores aplicados |
+| Afinidade regional nova | §87 | Q-258: proposta delimitada, sem multiplicadores aplicados |
 
 
 ## Ordem de implementação
@@ -77,4 +79,4 @@ Os casos acima são critérios de aceitação, não uma declaração de que fora
 
 Ao receber uma resposta, registar fonte, âmbito e texto; comparar com a proposta identificável; atualizar a regra temática; apontar a substituição na ADR/pergunta; modificar dados e código apenas se a tarefa incluir implementação; regenerar as secções; verificar referências e valores; publicar pelo fluxo do repositório. Só depois de implementação verificada se considera atualizar “aplicada” no painel, preservando resposta entretanto editada.
 
-Uma alteração documental pode ficar concluída enquanto um requisito de jogo continua por fazer. Por isso, o estado de documentação e o de implementação devem ser descritos separadamente. O histórico desta consolidação está na ADR 0078 e no registo da §91; as ADRs anteriores não são apagadas para fingir que as decisões sempre foram iguais.
+Uma alteração documental pode ficar concluída enquanto um requisito de jogo continua por fazer. Por isso, o estado de documentação e o de implementação devem ser descritos separadamente. O histórico desta consolidação está na ADR 0079 e no registo da §91; as ADRs anteriores não são apagadas para fingir que as decisões sempre foram iguais.

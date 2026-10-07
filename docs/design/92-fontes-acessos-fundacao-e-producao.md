@@ -2,7 +2,9 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-Estado em main/5b4b24a (RG-28, ADR 0077): fontes por intervalo/faixa, PlacementRules, TerritoryProfile, TerritoryWatch, reancoragem e prévia de fundação já existem. A assinatura v2 conserva o perfil do momento; o save continua v12. Acesso por caminho, direitos, capacidade sustentável partilhada e produção dependente da conectividade ainda não estão completos. O alcance atual não prova um grafo de acesso. Os números de territory.csv continuam propostas na Q-249; afinidade regional de Manor Lords fica na Q-253.
+Limite visual conhecido — Q-257: o diagnóstico do PR #94 identificou água funcional onde o cenário ainda pinta mata/terra. O avaliador pode recusar corretamente uma obra e a paisagem continuar a induzir em erro. A concordância entre fonte física e representação permanece um critério pendente, acompanhado em CV-01/Q-257.
+
+Estado em main/5b4b24a (RG-28, ADR 0077): fontes por intervalo/faixa, PlacementRules, TerritoryProfile, TerritoryWatch, reancoragem e prévia de fundação já existem. A assinatura v2 conserva o perfil do momento; o save continua v12. Acesso por caminho, direitos, capacidade sustentável partilhada e produção dependente da conectividade ainda não estão completos. O alcance atual não prova um grafo de acesso. Os números de territory.csv continuam propostas na Q-249; afinidade regional de Manor Lords fica na Q-258.
 
 ## Modelo territorial recomendado
 

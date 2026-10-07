@@ -34,21 +34,22 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		TouchArt.stick(ci, pad.stick.base, raio, pad.stick.offset, pad.runs())
 	else:
 		TouchArt.stick(ci, l.stick_home(), raio, 0.0, false)
-	# O FIXAR (UX-03): aceso a ouro com a alavanca fixa, que e quando o ecra espreita.
+	# O FIXAR (UX-03): aceso com a alavanca fixa, que e quando o ecra espreita.
 	var fixa := {
 		&"premido": l.fixed,
 		&"icone": &"pino",
 		&"rotulo": _nome(&"TOUCH_FIX"),
-		&"cor": GameHud.GOLD if l.fixed else GameHud.TEXT,
+		&"cor": Atlas.VALID if l.fixed else Atlas.SECONDARY,
 	}
 	TouchArt.button(ci, l.centre(TouchLayout.Role.FIX), l.radius(TouchLayout.Role.FIX), fixa)
-	# O CORRER acende-se a ouro enquanto se prime; cansado, apaga-se (Q-193).
+	# O CORRER acende-se enquanto se prime; cansado, apaga-se (Q-193).
 	var cansado := SimLoop.field != null and SimLoop.field.stamina.tired
 	var corre := {
 		&"premido": pad.running and not cansado,
 		&"icone": &"corre",
 		&"rotulo": _nome(&"TOUCH_RUN"),
-		&"cor": GameHud.MUTED if cansado else GameHud.GOLD if pad.running else GameHud.TEXT,
+		&"cor": Atlas.VALID if pad.running and not cansado else Atlas.SECONDARY,
+		&"apagado": cansado,
 	}
 	TouchArt.button(ci, l.centre(TouchLayout.Role.RUN), l.radius(TouchLayout.Role.RUN), corre)
 	var classe := HeroWatch.current()
@@ -58,7 +59,8 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 			&"premido": pad.holds(papel),
 			&"icone": ICONES.get(papel, &""),
 			&"rotulo": _nome(Glyphs.BOTOES[Glyphs.Device.TOUCH][_glifo(papel)]),
-			&"cor": GameHud.GOLD if papel == TouchLayout.Role.DROP else GameHud.TEXT,
+			&"cor": family(papel),
+			&"duplo": combat(papel),
 		}
 		match papel:
 			TouchLayout.Role.ATTACK:
@@ -87,6 +89,25 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		var n := SimLoop.field.crown.ids().size()
 		var alcance := TouchPad.RODA_PX * l.scale
 		TouchArt.wheel(ci, l.centre(TouchLayout.Role.WHEEL), alcance, n, InputRouter.pointed)
+
+
+## A familia de cada comando (ADR 0078): a moeda e economia, o Interagir e contexto, o
+## ataque e a habilidade sao combate, e o resto navega. A cor muda o aro e o icone; o
+## sitio e o gesto de cada botao ficam onde estavam (§9.1 do plano mestre da HUD).
+static func family(papel: TouchLayout.Role) -> Color:
+	match papel:
+		TouchLayout.Role.DROP:
+			return Atlas.COIN
+		TouchLayout.Role.ASSUME:
+			return Atlas.INFO
+		TouchLayout.Role.ATTACK, TouchLayout.Role.SKILL:
+			return Atlas.TEXT
+	return Atlas.SECONDARY
+
+
+## O combate tem tambem forma propria, o aro duplo: a familia nao depende so da cor.
+static func combat(papel: TouchLayout.Role) -> bool:
+	return papel in [TouchLayout.Role.ATTACK, TouchLayout.Role.SKILL]
 
 
 ## A linha de Glyphs.ACCOES que diz o nome deste botao.

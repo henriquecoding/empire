@@ -1,6 +1,6 @@
 # Conformidade do dossiê com o relatório territorial
 
-Revisão: 07/10/2026. Pedido: verificar a consolidação face ao relatório em implementação e publicar na main. Baseline reconciliada: main/5b4b24a (PR #93, RG-28).
+Revisão: 07/10/2026. Pedido: verificar a consolidação face ao relatório em implementação e publicar na main. Baseline territorial: main/5b4b24a (PR #93, RG-28). Base final reconciliada: main/f3efeac18b5732e68bad3154a0af340f9279d649 (PR #94, Atlas/UX-08/CV-01).
 
 **Conclusão:** a revisão anterior era parcial. A revisão atual integra os contratos em §§92–96, liga-os às secções originais e preserva os critérios do relatório. Conformidade documental não equivale à implementação completa do jogo.
 
@@ -51,7 +51,7 @@ Anexo do dono idêntico a [TERRITORIO-CIVILIZATION-VII.md](TERRITORIO-CIVILIZATI
 | A09 | Despertar social | §88, §95; RG-24 | Por implementar | Calendário independente da primeira visita |
 | A10 | Logística física | §95; Q-252 | Por implementar | Conservação de carga; entrega única |
 | A11 | Clima regional | §87, §92, §95 | Direção aprovada; execução pendente | Q-235; alternativas sazonais |
-| A12 | Rastreabilidade e governação | §86, §90–§91, §96 | Consolidado documentalmente | main é agora também ramo predefinido; RG-28 e ADR 0078 |
+| A12 | Rastreabilidade e governação | §86, §90–§91, §96 | Consolidado documentalmente | main é agora também ramo predefinido; RG-28 e ADR 0079 |
 
 ## O que foi acrescentado
 
@@ -64,8 +64,12 @@ Anexo do dono idêntico a [TERRITORIO-CIVILIZATION-VII.md](TERRITORIO-CIVILIZATI
 
 ## Precedência e decisões abertas
 
-ADR 0077 e Q-249–Q-252 pertencem ao RG-28 já publicado. A consolidação usa ADR 0078; a afinidade regional antes chamada Q-249 passa a Q-253 para evitar colisão. Q-250 (água/porto), Q-251 (contratos/legado), Q-252 (sequência) e Q-253 (afinidade regional) conservam os âmbitos por decidir. Os preços exemplificativos, métricas propostas e a campanha de 1.000 sementes do relatório não são resultados medidos.
+ADR 0077 e Q-249–Q-252 pertencem ao RG-28 já publicado. A consolidação usa ADR 0079; a afinidade regional antes chamada Q-249 passa a Q-258 para evitar colisão. Q-250 (água/porto), Q-251 (contratos/legado), Q-252 (sequência) e Q-258 (afinidade regional) conservam os âmbitos por decidir. Os preços exemplificativos, métricas propostas e a campanha de 1.000 sementes do relatório não são resultados medidos.
 
 ## Verificação e entrega
 
 Regenerar docs/design a partir de docs/dossie.html; conferir valores com CSV, referências, pesquisa, âncoras e leitura móvel; executar o CI no SHA da revisão e verificar o manifesto da produção após integrar. Resultados e URLs definitivos ficam no PR, evitando afirmar aqui resultados de um commit ainda não testado. O conteúdo de gameplay do RG-28 é preservado; esta entrega modifica documentação e verificações de navegação.
+
+## Atualização recebida durante a entrega
+
+O PR #94 acrescentou o Atlas, a ficha da fundação e o diagnóstico de fontes. Preservados sem alterações. A Q-257 identifica uma divergência entre água funcional e o cenário; §§24/90/92 tornam explícito que a validação do território não prova ainda concordância visual. A ADR 0078 e Q-253–Q-257 deste trabalho mantêm os seus IDs; esta consolidação passa a ADR 0079 e afinidade regional Q-258.

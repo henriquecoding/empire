@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Atualização da baseline — ADR 0078, UX-08/CV-01: o Atlas do Império unifica a linguagem da HUD. A fundação apresenta uma linha contextual; Interagir abre a ficha do sítio sem fundar nem gastar. O foco inicial é Voltar, e confirmar volta a validar pela simulação. Em janela baixa o corpo da ficha rola; a navegação mantém teclado, comando e toque. O inspetor pode mostrar fontes e alcance do território. A sua sobreposição é diagnóstico, não substitui a geografia visível.
+
 A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 mecânicas e dois botões só funciona se cada contexto estiver escrito — e o Steam Deck obriga-te a resolver isto antes da demo, não depois.
 
 ## O mapa de comando

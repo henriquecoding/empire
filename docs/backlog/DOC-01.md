@@ -3,7 +3,7 @@
 ```text
 Porque    O desenvolvimento consulta regras antigas apesar de existirem decisões mais recentes.
 Spec      docs/dossie.html, §§00, 08, 10, 15–16, 25, 83, 86–96
-          docs/adr/0078-dossie-consolidado-e-rastreabilidade-do-painel.md
+          docs/adr/0079-dossie-consolidado-e-rastreabilidade-do-painel.md
 Depende   —
 Contrato  Pedido do dono em 06/10/2026; respostas do painel e relatórios adotados
 Feito     Regras temáticas reconciliadas; referências territoriais desenvolvidas; respostas rastreáveis; propostas e lacunas explícitas; geração e portões do dossiê verificados

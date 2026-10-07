@@ -2,10 +2,12 @@ class_name PauseTheme
 extends RefCounted
 
 const PIXELS := preload("res://src/ui/fonts/silkscreen.ttf")
-const INK := Color("efe3c5")
-const GOLD := Color("e7b665")
-const MUTED := Color("c2b398")
-const DARK := Color("142a2c")
+## As cores sao as do Atlas do Imperio (ADR 0078): a pausa e a HUD sao o mesmo jogo.
+const INK := Atlas.TEXT
+const GOLD := Atlas.COIN
+const MUTED := Atlas.SECONDARY
+const DARK := Atlas.FIELD
+const HOVER_LIGHT := 0.12
 const BODY_SIZE := 16
 const ACTION_SIZE := 18
 const TITLE_SIZE := 22
@@ -47,9 +49,9 @@ static func make() -> Theme:
 		theme.set_font(&"font", type, pixels)
 		theme.set_font_size(&"font_size", type, ACTION_SIZE)
 		for state: StringName in [&"normal", &"hover", &"pressed", &"disabled"]:
-			var fill := Color("244044") if state == &"normal" else Color("36565a")
+			var fill := Atlas.RAISED if state == &"normal" else Atlas.RAISED.lightened(HOVER_LIGHT)
 			if state == &"pressed" or state == &"disabled":
-				fill = Color("172f33")
+				fill = Atlas.FIELD
 			theme.set_stylebox(state, type, _plate(fill))
 		for color: StringName in [&"font_color", &"font_hover_color", &"font_pressed_color"]:
 			theme.set_color(color, type, INK)
@@ -57,7 +59,7 @@ static func make() -> Theme:
 		theme.set_stylebox(&"focus", type, _focus())
 	theme.set_color(&"font_color", &"Label", INK)
 	theme.set_stylebox(&"panel", &"PopupMenu", _plate(DARK))
-	theme.set_stylebox(&"hover", &"PopupMenu", _plate(Color("36565a")))
+	theme.set_stylebox(&"hover", &"PopupMenu", _plate(Atlas.RAISED.lightened(HOVER_LIGHT)))
 	theme.set_color(&"font_color", &"PopupMenu", INK)
 	theme.set_color(&"font_hover_color", &"PopupMenu", GOLD)
 	theme.set_constant(&"v_separation", &"PopupMenu", ROW_GAP)
@@ -120,7 +122,7 @@ static func label(parent: Node, key: StringName = &"") -> Label:
 static func _plate(fill: Color, margin: int = ROW_GAP) -> StyleBoxTexture:
 	var image := Image.create(PLATE_SIZE, PLATE_SIZE, false, Image.FORMAT_RGBA8)
 	image.fill(Color("161515"))
-	image.fill_rect(PLATE_EDGE, Color("7b7960"))
+	image.fill_rect(PLATE_EDGE, Atlas.LINE)
 	image.fill_rect(PLATE_FACE, fill)
 	image.fill_rect(PLATE_TOP, fill.lightened(TOP_LIGHT))
 	image.fill_rect(PLATE_LEFT, fill.lightened(SIDE_LIGHT))
@@ -153,7 +155,7 @@ static func _track(active: bool) -> StyleBoxFlat:
 static func _square(color: Color, checked: bool = true) -> Texture2D:
 	var image := Image.create(ICON_SIZE, ICON_SIZE, false, Image.FORMAT_RGBA8)
 	image.fill(Color("161515"))
-	image.fill_rect(ICON_EDGE, Color("8b6540"))
+	image.fill_rect(ICON_EDGE, Atlas.LINE)
 	image.fill_rect(ICON_FACE, DARK)
 	if checked:
 		image.fill_rect(ICON_MARK, color)

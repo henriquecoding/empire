@@ -1,4 +1,4 @@
-# ADR 0078 — Dossiê consolidado e rastreabilidade do painel
+# ADR 0079 — Dossiê consolidado e rastreabilidade do painel
 
 - Data: 2026-10-06; conclusão e reconciliação da base em 2026-10-07
 - Estado: aceite para a consolidação documental; extensões regionais são propostas
@@ -14,7 +14,7 @@ O dossiê mantinha regras incompatíveis com decisões posteriores: troca livre 
 2. Atualizar as secções temáticas e acrescentar §§86–91: precedência, território/referências, mundo vivo, contratos de campanha, execução/aceitação e respostas consultadas.
 3. Preservar a evidência literal num registo separado para o dono. O dossiê e o repositório público recebem apenas sínteses de design, IDs das perguntas, secções e alcance. Cruzar escolha, texto, pergunta e decisões posteriores; uma resposta parcial não aprova as restantes subperguntas.
 4. Uma instrução explícita posterior prevalece apenas na cláusula incompatível. Dossiê descreve intenção; CSV e código descrevem execução; deployment identifica publicação. Divergências ficam nomeadas.
-5. Desenvolver as relações entre ambiente, trabalho, crescimento e rede territorial já adotadas. A nova fórmula de afinidade regional fica proposta na Q-253, sem coeficientes ou mudanças na simulação.
+5. Desenvolver as relações entre ambiente, trabalho, crescimento e rede territorial já adotadas. A nova fórmula de afinidade regional fica proposta na Q-258, sem coeficientes ou mudanças na simulação.
 6. Manter as Q-081/Q-112/Q-147/Q-191/Q-194 adiadas e os `_proposed` não abrangidos por resposta explícita.
 7. Incorporar as respostas recentes Q-221/Q-235/Q-237/Q-239–Q-243 sem marcar os registos remotos como aplicados.
 
@@ -37,6 +37,8 @@ O portão do dossiê deve verificar a nova Parte XIV e o acesso às novas secç�
 
 O dono pediu comparação com o relatório e publicação na main. §§92–96 completam fontes, água/portos, contratos, direitos, logística, arquitetura, migração e aceitação. A matriz de conformidade está em docs/reports/CONFORMIDADE-DOSSIE-CIVILIZATION-VII-2026-10-07.md.
 
-A main avançou para 5b4b24a (PR #93/RG-28), reconciliada nesta revisão. ADR 0077 e Q-249–Q-252 da implementação conservam os IDs; esta ADR foi renumerada para 0078 e a afinidade regional para Q-253. Os estados do RG-28 não são reduzidos a «tudo pendente», nem a primeira fase é apresentada como o relatório inteiro implementado.
+A main avançou para 5b4b24a (PR #93/RG-28), reconciliada nesta revisão. ADR 0077 e Q-249–Q-252 da implementação conservam os IDs; esta ADR foi renumerada para 0078 e a afinidade regional para Q-258. Os estados do RG-28 não são reduzidos a «tudo pendente», nem a primeira fase é apresentada como o relatório inteiro implementado.
 
 A nova consulta totaliza 229 respostas: Q-245 adiada, Q-247 com corrupção/consumo futuro da tocha e Q-248 com persistência confirmada. Apenas sínteses editoriais entram no repositório. Publicação explicitamente autorizada; nenhuma resposta remota é marcada em massa como aplicada.
+
+A main avançou novamente durante a publicação: PR #94, f3efeac18b5732e68bad3154a0af340f9279d649, Atlas/UX-08/CV-01. Integração preservada. A ADR 0078 e Q-253–Q-257 pertencem a esse trabalho; a consolidação usa finalmente ADR 0079 e Q-258. As secções 24/90/92 refletem a ficha do sítio e a lacuna visual da Q-257.
