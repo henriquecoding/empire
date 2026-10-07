@@ -1,8 +1,9 @@
 # src/ui/touch_art.gd — os controlos de toque, desenhados (ADR 0047).
 #
 # Nao ha arte para isto (art/ nao se toca daqui, regra 9), e por isso sao formas lisas
-# com as cores do painel do greybox: papel escuro meio transparente, o ouro da moeda, e
-# o icone de cada gesto em tracos. O mundo continua a ver-se por baixo — o HUD do §24 e
+# com as cores do Atlas do Imperio (ADR 0078): o campo escuro meio transparente, e o aro de
+# cada familia — o latao da moeda, a informacao do Interagir, o aro duplo do combate — com o
+# icone de cada gesto em tracos. O mundo continua a ver-se por baixo — o HUD do §24 e
 # o mundo a dizer as coisas, e os botoes nao o tapam mais do que precisam.
 #
 # Os icones sao dados: formas em unidades de meia largura, que o _forma() desenha. Um
@@ -10,9 +11,11 @@
 class_name TouchArt
 extends RefCounted
 
-const PAPEL := Color(0.12, 0.10, 0.10, 0.80)
-const PAPEL_PREMIDO := Color(0.20, 0.16, 0.13, 0.78)
-const TINTA := Color(0.08, 0.07, 0.06, 0.9)
+const PAPEL := Color(Atlas.FIELD, 0.80)
+const PAPEL_PREMIDO := Color(Atlas.RAISED, 0.78)
+const TINTA := Color(Atlas.INK, 0.9)
+## O aro duplo do combate (ADR 0078): o segundo aro, para dentro, em fraccao do raio.
+const DUPLO := 0.84
 const TRACO := 1.5
 const ICONE := 4.0
 const MEIO := 0.5
@@ -123,12 +126,14 @@ static func button(ci: CanvasItem, c: Vector2, r: float, estado: Dictionary) -> 
 	if premido:
 		ci.draw_circle(c, raio, _alfa(cor, PREMIDO * alfa))
 	ci.draw_arc(c, raio, 0.0, TAU, SEGMENTOS, _alfa(cor, alfa), TRACO, true)
+	if estado.get(&"duplo", false):
+		ci.draw_arc(c, raio * DUPLO, 0.0, TAU, SEGMENTOS, _alfa(cor, alfa * MEIO), TRACO, true)
 	if estado.get(&"brilho", false):
-		ci.draw_arc(c, raio + FOCUS_RING.gap, 0.0, TAU, SEGMENTOS, GameHud.MINT, FOCUS_RING.stroke)
+		ci.draw_arc(c, raio + FOCUS_RING.gap, 0.0, TAU, SEGMENTOS, Atlas.INFO, FOCUS_RING.stroke)
 	var pronto: float = estado.get(&"pronto", 1.0)
 	if pronto < 1.0:
 		var de := -PI * MEIO
-		var arco := _alfa(GameHud.GOLD, alfa)
+		var arco := _alfa(Atlas.TEXT, alfa)
 		ci.draw_arc(c, raio - TRACO, de, de + TAU * pronto, SEGMENTOS, arco, TRACO)
 	var icone_em := c - Vector2(0.0, raio * MEDIDA.alto)
 	icon(ci, estado.get(&"icone", &""), icone_em, raio * MEDIDA.icone, _alfa(cor, alfa))
@@ -177,11 +182,11 @@ static func _forma(ci: CanvasItem, f: Array, c: Vector2, s: float, cor: Color) -
 
 
 ## A alavanca: o aro, as duas setas que dizem que so anda para os lados, e o polegar.
-## Em repouso mal se ve — ensina onde pousar o polegar; a corrida acende o aro de ouro.
+## Em repouso mal se ve — ensina onde pousar o polegar; a corrida acende o aro (ADR 0078).
 static func stick(ci: CanvasItem, base: Vector2, raio: float, desvio: float, corre: bool) -> void:
 	var alfa := ALAVANCA.repouso if is_zero_approx(desvio) and not corre else 1.0
 	ci.draw_circle(base, raio, _alfa(PAPEL, alfa))
-	var aro := GameHud.GOLD if corre else GameHud.TEXT
+	var aro := Atlas.VALID if corre else Atlas.SECONDARY
 	ci.draw_arc(base, raio, 0.0, TAU, SEGMENTOS, _alfa(aro, alfa * ALAVANCA.aro), TRACO, true)
 	for lado: float in LADOS:
 		var ponta := base + Vector2(lado * raio * ALAVANCA.seta, 0.0)

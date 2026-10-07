@@ -8,12 +8,10 @@
 class_name CombatBar
 extends PanelContainer
 
-const PANEL_COLOR := Color(0.10, 0.08, 0.07, 0.94)
 const SCREEN_MARGIN := 24.0
 ## O canto: a margem da direita do painel do objectivo, e por baixo da faixa de cima.
 const RIGHT_MARGIN := 20.0
 const TOP := GameHud.FAIXA_TOPO + 8.0
-const CORNER := 6
 const PADDING := 6
 const FONT_SIZE := 12
 const META_SIZE := 12
@@ -25,10 +23,14 @@ const MIN_INTERVAL := 0.01
 const WIDTH := 340.0
 const HEIGHT := 66.0
 const GAP := 4
-const INK := Color("201b19")
-const GOLD := Color("efc278")
-const GREEN := Color("97d1ab")
-const TEXT := Color("f4ebd6")
+## As cores do Atlas (ADR 0078): o combate e da familia do texto, como no toque, e o latao
+## fica so para a moeda; "pronto" e uma condicao cumprida.
+const INK := Atlas.RAISED
+const ATTACK := Atlas.TEXT
+const SKILL := Atlas.SECONDARY
+const READY := Atlas.VALID
+const TEXT := Atlas.TEXT
+const HOVER_LIGHT := 0.12
 
 var _attack: Button
 var _skill: Button
@@ -40,11 +42,7 @@ var _feedback_serial := 0
 
 
 func _ready() -> void:
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = PANEL_COLOR
-	panel.border_color = Color("745738")
-	panel.set_border_width_all(1)
-	panel.set_corner_radius_all(CORNER)
+	var panel := Atlas.card(Atlas.FIELD)
 	panel.set_content_margin_all(PADDING)
 	add_theme_stylebox_override("panel", panel)
 	var column := VBoxContainer.new()
@@ -58,7 +56,7 @@ func _ready() -> void:
 	_title.add_theme_font_size_override("font_size", FONT_SIZE)
 	header.add_child(_title)
 	_state = Label.new()
-	_state.add_theme_color_override("font_color", GOLD)
+	_state.add_theme_color_override("font_color", READY)
 	_state.add_theme_font_size_override("font_size", META_SIZE)
 	header.add_child(_state)
 	var row := HBoxContainer.new()
@@ -66,10 +64,10 @@ func _ready() -> void:
 	column.add_child(row)
 	var primary := _column(row)
 	var secondary := _column(row)
-	_attack = _button(primary, GOLD)
-	_skill = _button(secondary, GREEN)
-	_attack_progress = _progress(primary, GOLD)
-	_skill_progress = _progress(secondary, GREEN)
+	_attack = _button(primary, ATTACK)
+	_skill = _button(secondary, SKILL)
+	_attack_progress = _progress(primary, ATTACK)
+	_skill_progress = _progress(secondary, SKILL)
 	_attack.pressed.connect(_press_attack)
 	_skill.pressed.connect(_press_skill)
 	_feedback_serial = HeroWatch.feedback_serial
@@ -114,7 +112,7 @@ func _button(parent: Control, color: Color) -> Button:
 	style.set_corner_radius_all(BUTTON_CORNER)
 	button.add_theme_stylebox_override("normal", style)
 	var hover := style.duplicate() as StyleBoxFlat
-	hover.bg_color = Color("443522")
+	hover.bg_color = INK.lightened(HOVER_LIGHT)
 	button.add_theme_stylebox_override("hover", hover)
 	button.add_theme_stylebox_override("pressed", hover)
 	parent.add_child(button)
@@ -142,6 +140,7 @@ func _process(_delta: float) -> void:
 		SimLoop.field != null
 		and not ClassSelection.active
 		and not TravelPanel.active
+		and not SiteSheet.active
 		and not TouchControls.active
 	)
 	if HeroWatch.feedback_serial != _feedback_serial:

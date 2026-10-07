@@ -44,7 +44,8 @@ func _process(delta: float) -> void:
 		text = GameplayGuide.context(device)
 		if text.is_empty() and area.x < HudLayout.GOAL_MIN_WIDTH:
 			text = GameplayGuide.goal()
-	visible = not text.is_empty() and SimLoop.running()
+	# Com a ficha do sitio aberta a linha curta repetia-a (ADR 0078).
+	visible = not text.is_empty() and SimLoop.running() and not SiteSheet.active
 	var available := area
 	if not TouchControls.active and area.x >= HudLayout.COMBAT_MIN_WIDTH:
 		available.x -= CombatBar.WIDTH + HudLayout.COMBAT_GAP

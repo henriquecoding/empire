@@ -54,6 +54,7 @@ func _ready() -> void:
 	var fase := func() -> float: return RngService.float_range(RngService.VISUAL, 0.0, TAU)
 	_tremor = ScreenShake.new(Vector4(fase.call(), fase.call(), fase.call(), fase.call()))
 	add_child(SfxDirector.new())  # os sons provisorios (ADR 0054)
+	_mundo.add_child(TerritoryOverlay.new())  # so com o inspetor aberto (ADR 0078)
 	if fresh:
 		_starting_choice()
 	elif Resume.recovered:

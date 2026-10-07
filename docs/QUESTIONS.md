@@ -7,6 +7,56 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Atlas do Império e cenários — 07/10/2026 (ADR 0078)
+
+> Pedido do dono (07/10/2026): *«Implemente essas melhorias dos relatórios»* — o plano mestre da HUD e da UI
+> (`docs/reports/HUD-UI-ATLAS.md`) e o plano mestre de cenários no Godot (`docs/reports/CENARIOS-GODOT.md`). Aplicado
+> no UX-08 e no CV-01: o primeiro pacote da HUD e o que é código da etapa A dos cenários. O resto pede as decisões
+> abaixo, arte, ou aparelhos.
+
+### Q-253 · As fontes e o selo do Atlas
+- **Proposta do plano (§5.5, §5.2):** Alegreya nos títulos e Atkinson Hyperlegible na informação, alojadas no
+  repositório com a licença OFL; um selo do horizonte desenhado de raiz, sem coroa de biblioteca de ícones.
+- **Em aberto, e por isso não feito:** duas fontes novas são dependências (regra 8) e mudam a medida de cada texto que
+  o UX-06 verificou em 580 mil casos; o selo é arte (regra 9). Até lá a HUD conserva a fonte do motor e a pausa a
+  Silkscreen. Alternativa sem família nova: o site já aloja Fraunces e Source Serif 4 (OFL, `tools/web/site/fontes/`),
+  que podiam servir os títulos do jogo.
+- **Decide:** tu — as fontes (e a ADR que as traz) e quem desenha o selo.
+
+### Q-254 · Os fatores de parallax da cena e a linha do chão
+- **Hoje:** a cena dos Enramados usa 0,03125 · 0,12 · 0,3 · 0,5 · 0,65; o `parallax_layers.csv` diz 0,03125 · 0,125 ·
+  0,25 · 0,5 · 1,0 · 1,5 por camada, e o plano de cenários (§6.2) propõe outros intervalos. `Band.GROUND_LINE` é 517.
+- **Aplicado (só o que não muda nada):** um teste guarda que os planos andam mais devagar quanto mais longe e que nada
+  de jogo vive num `Parallax2D`; o inspetor lista os fatores.
+- **Em aberto:** que tabela manda nos fatores (a cena ou o CSV), e o A/B do chão em 517 contra ≈460 (§14.5) — mexer na
+  linha mexe em todas as vistas, sombras, moedas e no subsolo.
+- **Decide:** tu, depois de ver o A/B em movimento.
+
+### Q-255 · Fundar pede agora dois toques
+- **Aplicado (ADR 0078, reversível):** o Interagir num sítio de fundação abre a ficha; o segundo Interagir, ou o botão
+  «Fundar», funda. A ficha diz o que a fundação faz e o que a clareira leva antes de se gastar a escolha. Os pilotos e
+  os testes que fundam pela intenção `ASSUME` não mudam.
+- **Em aberto:** se outras decisões de maior consequência (a travessia, a marcha, o herdeiro) devem ter a mesma ficha,
+  e se a ficha deve pausar o relógio — hoje continua, como o painel da viagem.
+- **Decide:** tu, depois de jogar.
+
+### Q-256 · A paleta do Atlas
+- **Aplicado (ADR 0078):** a HUD deixa o castanho e passa ao campo verde-ardósia do plano (§5.4), o mesmo da pausa;
+  o «Estado do reino» lê-se em linho com tinta escura; os botões de toque têm cor por família. Os pares medem-se no
+  `atlas_test` (texto ≥ 4,5:1 mesmo com o cartão por cima do céu mais claro).
+- **Em aberto:** a aprovação artística da paleta e dos motivos em escala real (§5.7, §16.2) — o plano pede um teste
+  com jogadores sem logótipo.
+- **Decide:** tu.
+
+### Q-257 · A água que o território conta não está pintada
+- **Achado (CV-01, sobreposição do inspetor):** a água do segmento de partida (`Greybox`, 1292 px a leste do marco
+  inicial, `water_half_px` de meia largura) fica, no ecrã, debaixo do caminho, entre mata e terra; o lago pintado está
+  só no panorama do fundo. O pesqueiro vale ali e o jogador não vê a água que o justifica.
+- **Opções (§42.2 do plano de cenários):** (a) a arte põe uma margem com água nesse intervalo, a partir da mesma fonte
+  (CV-32, pede o kit de margem); (b) a fonte muda para onde o cenário já sugere água — é design, e mexe no pesqueiro
+  de todos os saves (ADR 0077).
+- **Decide:** tu.
+
 ## O território decide o que se levanta — 07/10/2026 (ADR 0077)
 
 > Pedido do dono (07/10/2026): *«Aplique esse relatório»* — o relatório mestre de auditoria e evolução territorial com

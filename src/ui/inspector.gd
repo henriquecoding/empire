@@ -13,6 +13,9 @@ extends Label
 
 const NENHUM := "—"
 
+## Se o painel esta aberto: a sobreposicao do territorio so se desenha entao (ADR 0078).
+static var shown := false
+
 
 func _ready() -> void:
 	hide()
@@ -34,6 +37,7 @@ func _unhandled_input(evento: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
+	shown = visible
 	if not visible or SimLoop.state == null:
 		return
 	text = (
@@ -52,7 +56,8 @@ func _process(_delta: float) -> void:
 				"POSTOS  " + _postos(),
 				"NOITE   " + _noite(),
 				"SUBSOLO " + _subsolo(),
-				"TERRA   " + _territorio(),
+				"TERRA   " + _territorio() + "  (barras no chao: agua, floresta, rocha)",
+				"PLANOS  " + _planos(),
 				"",
 				"IMPULSOS (TAB + numero, ou Y + stick e largar; um por dia)",
 				_impulsos(),
@@ -110,6 +115,15 @@ func _territorio() -> String:
 		var estado := "fechada" if RealmGrowth.barred(vaga) else "tolerada"
 		partes.append("%s#%d %s (%s)" % [vaga.kind, vaga.id, tr(vaga.terrain_bar), estado])
 	return " · ".join(partes) if not partes.is_empty() else "todas com fonte"
+
+
+## Os planos de profundidade e o fator de cada um, de tras para a frente (§45.5 do plano
+## de cenarios): o que desliza com a camara e o que esta preso ao mundo.
+func _planos() -> String:
+	var partes := PackedStringArray()
+	for plano: Node in get_tree().root.find_children("*", "Parallax2D", true, false):
+		partes.append("%s %.2f" % [plano.name, (plano as Parallax2D).scroll_scale.x])
+	return " · ".join(partes) if not partes.is_empty() else NENHUM
 
 
 func _postos() -> String:
