@@ -2,7 +2,7 @@
    Corre no <head>, de propósito bloqueante: sem isto a página pisca no tema
    errado (o guarda anti-clarão do Recibo Certo). É um ficheiro e não um
    <script> em linha porque a CSP do site só aceita scripts do próprio site. A
-   classe `js` diz ao CSS que as entradas animadas podem esconder-se à espera. */
+   classe `js` assinala a disponibilidade do JavaScript. */
 (function () {
   var raiz = document.documentElement;
   try {

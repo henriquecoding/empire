@@ -23,6 +23,7 @@ const corpoSb = (sb) => (sb.url ? ` data-sb-url="${esc(sb.url)}" data-sb-chave="
 export function reportar({ t, d, v, sb, robots }) {
   const r = t.reportar;
   const outra = t.lingua === "pt-PT" ? "/en/report/" : "/reportar/";
+  v = { ...v, outra };
   const cab = cabeca({
     t, v, titulo: r.titulo, descricao: r.descricao, robots,
     canonico: d.url ? `${d.url}${t.caminho}${r.caminho}` : "",
@@ -84,7 +85,7 @@ export function painel({ textos, d, v, sb, perguntas }) {
   const cab = cabeca({
     t, v, titulo: "Painel · Empire", descricao: "As perguntas do QUESTIONS.md e os reportes, para o dono responder.",
     robots: "noindex, nofollow", canonico: "", alternativas: [], csp: cspCom(sb.url),
-    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painelTrabalho}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
+    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painelTrabalho}" defer></script>\n<script src="${v.painelIndice}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
   }).replace("</head>", `<link rel="stylesheet" href="${v.painelCss}">\n</head>`);
   const n = (tipo) => perguntas.filter((q) => q.tipo === tipo).length;
   return `${cab}

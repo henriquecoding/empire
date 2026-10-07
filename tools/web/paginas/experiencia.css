@@ -1,0 +1,77 @@
+/* A entrada aproxima a promessa, o jogo real e a ação de começar (ADR 0078). */
+.abertura{padding:48px 0 40px}
+.abertura-composicao{display:grid;gap:36px;align-items:center}
+.abertura-grelha{display:block;padding:0}
+.abertura-titulo .kicker{margin:0 0 20px;gap:10px;align-items:center}
+.abertura-titulo .kicker .identidade{border:0;padding:0;color:var(--baixo)}
+.abertura-titulo .kicker .identidade::before{display:none}
+.abertura h1{font-size:clamp(42px,4.8vw,68px);max-width:13ch;line-height:1.02}
+.abertura .deck{margin:24px 0;font-size:19px;max-width:42ch}
+.abertura .nota{max-width:48ch;font-size:12px;margin-top:20px}
+.factos-jogo{display:flex;flex-wrap:wrap;gap:8px 16px;list-style:none;padding:0;margin:22px 0 0;color:var(--tinta-2);font:12px/1.5 var(--f-ui)}
+.factos-jogo li::before{content:"·";color:var(--folha);margin-right:8px}
+.abertura .palco{margin:0;padding:0;min-width:0}
+.abertura .envolve-largo{padding:0}
+.palco-cabeca{display:flex;justify-content:space-between;align-items:center;gap:16px;font:12px/1.5 var(--f-ui);color:var(--baixo);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.palco-cabeca::after{content:"";flex:1;height:1px;background:var(--linha)}
+.abertura .ecra-jogo{border-radius:6px;box-shadow:0 24px 60px -22px #0009,0 0 0 5px #efeada04;margin:0}
+.abertura .quadros{aspect-ratio:16/10}
+.abertura .quadro{image-rendering:auto}
+.abertura .linha-do-dia{gap:10px;padding:8px 10px}
+.abertura .agora{font-size:12px;min-width:12ch}
+.origem-imagens{font:12px/1.6 var(--f-ui);color:var(--baixo);margin-top:16px}
+.origem-imagens summary{cursor:pointer;min-height:36px;display:flex;align-items:center;gap:8px}
+.origem-imagens summary::before{content:"+";font-size:18px;color:var(--destaque)}
+.origem-imagens[open] summary::before{content:"−"}
+.origem-imagens summary::-webkit-details-marker{display:none}
+.origem-imagens p{margin:8px 0 0}
+.origem-imagens a{color:var(--tinta-2)}
+.guia-inicial{border-block:1px solid var(--linha);padding:34px 0 26px;background:var(--papel-2)}
+.guia-cabeca{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+.guia-cabeca .rotulo-ui{color:var(--brasa);margin:0 0 8px}
+.guia-cabeca h2,.convite-final h2{font-family:var(--f-titulo);font-weight:550;font-size:clamp(27px,3vw,38px);line-height:1.15;margin:0}
+.guia-cabeca>a,.guia-rodape>a{display:inline-flex;gap:12px;align-items:center;min-height:44px;font:13px/1.4 var(--f-ui)}
+.guia-inicial ol{list-style:none;margin:0;padding:0;display:grid;gap:24px}
+.guia-inicial li{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.guia-numero{font:22px/1.2 var(--f-titulo);color:var(--brasa);border-top:2px solid var(--brasa);padding-top:8px;min-width:30px}
+.guia-inicial h3{font-family:var(--f-titulo);font-size:21px;line-height:1.2;margin:6px 0 8px;font-weight:600}
+.guia-inicial li p{margin:0;color:var(--tinta-2);font-size:16px;line-height:1.55;max-width:42ch}
+.guia-rodape{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between;border-top:1px solid var(--linha);margin-top:28px;padding-top:16px}
+.guia-rodape p{margin:0;color:var(--baixo);font:12px/1.6 var(--f-ui)}
+.convite-final{padding:54px 0}
+.convite-final>.envolve{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:center}
+.convite-final .rotulo-ui{color:var(--destaque);margin:0 0 12px}
+.convite-final p{color:var(--tinta-2);margin:16px 0 0}
+.convite-final .botao{flex:none}
+.lingua,.tema,.abre-menu,.botao-jogar,.menu a,.pausa{min-width:44px;min-height:44px}
+.js .topo.aberto .menu{max-height:calc(100dvh - var(--topo) - env(safe-area-inset-top));overflow-y:auto;overscroll-behavior:contain}
+/* O conteúdo continua legível se um script opcional não chegar. */
+.js .revela{opacity:1;transform:none;transition:none}
+.js .barra:not(.visto) i{transform:none}
+.campo [aria-invalid="true"]{border:2px solid var(--brasa)}
+@media (min-width:760px){.guia-inicial ol{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}}
+@media (min-width:1000px){
+  .abertura-composicao{grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:44px;max-width:1360px;padding-inline:40px}
+  .abertura{padding:60px 0 52px}
+  .abertura .quadros{aspect-ratio:4/3}
+  .abertura .accoes{gap:12px}
+  .abertura .botao{padding-inline:18px;letter-spacing:.04em}
+}
+@media (max-width:699px){
+  .abertura{padding:30px 0}
+  .abertura-composicao{gap:26px}
+  .abertura h1{font-size:clamp(38px,10.5vw,60px);max-width:15ch}
+  .abertura .deck{font-size:17px;margin:18px 0 20px;line-height:1.5}
+  .abertura-titulo .kicker{margin-bottom:18px}
+  .abertura .kicker .identidade{font-size:12px;letter-spacing:0}
+  .abertura .accoes .botao{flex:1 1 auto;padding-inline:14px;font-size:12px;letter-spacing:.02em}
+  .abertura .factos-jogo{margin-top:16px;gap:4px 12px}
+  .abertura .nota{margin-top:12px}
+  .abertura .quadros{aspect-ratio:16/9}
+  .abertura .agora{display:none}
+  .guia-inicial{padding-block:28px}
+  .guia-cabeca{margin-bottom:20px;gap:8px}
+  .convite-final .botao{width:100%}
+  .so-toque{font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){.abertura .quadro{transition:none}}

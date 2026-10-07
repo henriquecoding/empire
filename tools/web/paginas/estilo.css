@@ -152,8 +152,8 @@ p{text-wrap:pretty}
   .topo-barra{flex-wrap:wrap}
   .menu{order:3;flex:1 1 100%;margin:0 0 8px}
   .menu ul{flex-wrap:wrap}
-  .js .menu{display:none}
-  .js .abre-menu{display:inline-flex}
+  .menu-pronto .menu{display:none}
+  .menu-pronto .abre-menu{display:inline-flex}
   .js .topo.aberto .menu{display:block;margin:0;padding:6px 0 14px;border-top:1px solid var(--linha-2)}
   .js .topo.aberto .menu ul{flex-direction:column;gap:0}
   .js .topo.aberto .menu a{min-height:48px;width:100%;font-size:15px;border-bottom:1px solid var(--linha-2);border-radius:0;padding:0 4px}

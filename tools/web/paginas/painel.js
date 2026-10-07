@@ -6,6 +6,7 @@
   var T = window.EmpireTrabalho, conta = null;
   var todas = Array.from(document.querySelectorAll("article.pergunta"));
   var botoes = Array.from(document.querySelectorAll(".fila-item"));
+  var porId = new Map(botoes.map(b => [b.dataset.pergunta, b])), indice = window.EmpireIndice.criar(todas);
   var respostas = {}, visiveis = [], atual = null, pronto = false, sujas = new Set(), retomar = null;
   function dizer(el, texto, tipo) { el.textContent = texto; el.className = "p-guardado " + (tipo || ""); }
   function estado(a) {
@@ -15,7 +16,8 @@
   }
   var rotulos = { por: "Por decidir", aplicada: "Aplicada", adiada: "Adiada", respondida: "À espera de implementação", encerrada: "Encerrada no projeto" };
   function pintar(a, preencher) {
-    var r = respostas[a.id], e = estado(a), b = botoes.find(b => b.dataset.pergunta === a.id);
+    var r = respostas[a.id], e = estado(a), b = porId.get(a.id);
+    indice.responder(a.id, r?.texto || "");
     a.dataset.estado = e; T.resposta(a, r);
     a.querySelector(".p-estado").textContent = pronto ? rotulos[e] : "A carregar resposta…";
     b.querySelector(".fila-estado").textContent = pronto ? rotulos[e] : "A carregar";
@@ -54,13 +56,13 @@
     }
   }
   function filtrar(preferida) {
-    var normal = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    var txt = normal($("f-texto").value.trim());
+    var encontrados = indice.procurar($("f-texto").value);
     visiveis = todas.filter(a => (!$('f-tipo').value || a.dataset.tipo === $('f-tipo').value)
       && (!$('f-estado').value || estado(a) === $('f-estado').value || ($('f-estado').value === 'concluida' && ['aplicada', 'encerrada'].includes(estado(a))))
       && (!$('f-grupo').value || a.dataset.grupo === $('f-grupo').value)
-      && (!txt || normal(a.textContent).includes(txt)));
-    botoes.forEach(b => { b.hidden = !visiveis.some(a => a.id === b.dataset.pergunta); });
+      && encontrados.has(a.id));
+    var ids = new Set(visiveis.map(a => a.id));
+    botoes.forEach(b => { b.hidden = !ids.has(b.dataset.pergunta); });
     $("sem-resultados").hidden = visiveis.length > 0;
     $("fila-contagem").textContent = visiveis.length + " decisões nesta lista";
     $("escolher-decisao").replaceChildren(...visiveis.map(a => new Option(a.id + " · " + a.dataset.titulo, a.id)));
@@ -102,7 +104,8 @@
         retomar = null; selecionar(id, true);
         dizer($("lote-estado"), "Sessão recuperada. As alterações por guardar continuam aqui. Revê a resposta e carrega em Guardar decisão.");
       }
-    }, e => { dizer($("lote-estado"), "Não foi possível ler as respostas. Tenta novamente antes de editar. " + e.message, "erro"); $("recarregar").hidden = false; });
+    }, e => { dizer($("lote-estado"), "Não foi possível ler as respostas. Tenta novamente antes de editar. " + e.message, "erro"); $("recarregar").hidden = false; })
+      .finally(() => $("resumo").setAttribute("aria-busy", "false"));
   }
   function abrir() {
     $("entrar").hidden = true; $("entrar-ajuda").hidden = true; $("area").hidden = false;

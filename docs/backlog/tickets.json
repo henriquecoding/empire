@@ -2828,5 +2828,17 @@
   "porque": "Preparar a produção de cenários do plano mestre com capturas comparáveis e o território que a simulação conhece visível por cima do mundo.",
   "feito": "Manifesto de captura (commit, motor, renderer, stretch, semente, dia, fase, monarca), sobreposição de fontes e sítios no inspetor, lista de planos e contrato de parallax por teste.",
   "fora": "Kits de chão, margem, cave e sede, separação do panorama, árvore monumental, água, luz e o trecho piloto: pedem arte e as referências."
+ },
+ "PUB-05": {
+  "title": "Primeiro contacto, desempenho e resiliência do site",
+  "porque": "Pesquisa comparativa e melhoria do site pedida pelo dono.",
+  "spec": [
+   "docs/reports/SITE-EXPERIENCE-2026-10.md"
+  ],
+  "depende": "PUB-04, UX-08",
+  "feito": "Abertura e guia PT/EN, capturas atuais responsivas, trabalho a pedido, pesquisa indexada e rede resiliente, com provas no CI.",
+  "fora": "Mecânicas, balanceamento, arte original, migrações e analytics externos.",
+  "estado": "feito",
+  "horas": "—"
  }
 }

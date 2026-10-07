@@ -116,14 +116,14 @@ def foco(ficha: dict, caixa: tuple[int, int, int, int]) -> float:
     return round(centro / largura, 3)
 
 
-def gravar(png: Path, destino: Path, caixa: tuple[int, int, int, int] | None, metade: bool = False) -> int:
+def gravar(png: Path, destino: Path, caixa: tuple[int, int, int, int] | None, divisor: int = 1) -> int:
     imagem = Image.open(png).convert("RGB")
     if caixa is not None:
         imagem = imagem.crop(caixa)
-    if metade:
+    if divisor > 1:
         # A miniatura dos cartoes das fases: meio tamanho, pelo vizinho mais
         # proximo — o pixel do jogo tem 2 px de ecra (§22), e assim fica com 1.
-        imagem = imagem.resize((imagem.width // 2, imagem.height // 2), Image.NEAREST)
+        imagem = imagem.resize((imagem.width // divisor, imagem.height // divisor), Image.NEAREST)
     imagem.save(destino, "WEBP", lossless=True, quality=100, method=6)
     return destino.stat().st_size
 
@@ -168,7 +168,8 @@ def main() -> int:
     quadros = {}
     for fase in FASES:
         n = gravar(TRABALHO / f"{fase}.png", SAIDA / f"dia-{fase}.webp", caixa)
-        gravar(TRABALHO / f"{fase}.png", SAIDA / f"mini-{fase}.webp", caixa, metade=True)
+        gravar(TRABALHO / f"{fase}.png", SAIDA / f"mini-{fase}.webp", caixa, divisor=2)
+        gravar(TRABALHO / f"{fase}.png", SAIDA / f"cartao-{fase}.webp", caixa, divisor=4)
         quadros[fase] = {
             "segundo": fichas[fase]["segundo"],
             "dia": fichas[fase]["dia"],
