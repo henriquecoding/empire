@@ -2,8 +2,8 @@
 
 ```text
 Porque    Sem isto o jogador conhece o Amargueiro tarde demais para ele significar alguma coisa.
-Spec      docs/design/83-os-primeiros-vinte-minutos-com-a-candeia-la-dent.md
-          docs/design/25-os-primeiros-doze-minutos.md
+Spec      docs/design/83-aprender-pela-exploracao-sem-cronologia-imposta.md
+          docs/design/25-a-ultima-carroca-explorar-escolher-e-fundar.md
 Depende   GB-01, XIII-03
 Contrato  o "Feito" é o contrato; os números vêm de data/ e da Spec
 Feito     O minuto 0:00 tem a candeia e um Amargueiro velho; o 17:00 tem a primeira oferta

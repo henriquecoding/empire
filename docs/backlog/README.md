@@ -268,3 +268,9 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [QP-06](QP-06.md) | A caça longe do reino | QP-05 | feito |
 | [QP-07](QP-07.md) | Usar o Painel no desktop e no mobile | QP-02, UN-34, RG-26 | feito |
 | [ART-RENEWAL-01](ART-RENEWAL-01.md) | Renovacao visual do reino | — |  |
+
+## Consolidação documental
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [DOC-01](DOC-01.md) | Consolidar dossiê, painel e referências territoriais | — | feito |

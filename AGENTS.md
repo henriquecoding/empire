@@ -8,8 +8,11 @@ Kingdom-builder 2D em pixel art. Godot 4.7.2 (o pin de .godot-version), GDScript
 faixas verticais: AERIAL, SURFACE, UNDERGROUND.
 
 ## Onde esta a verdade
-- Design e especificacao: docs/design/ — um ficheiro por seccao, gerado do
-  dossie por tools/split_dossie.py. NAO editar a mao.
+- Fonte editavel de design: docs/dossie.html. Especificacao em docs/design/ —
+  um ficheiro por seccao, gerado por tools/split_dossie.py. NAO editar a mao.
+  Precedencia por clausula e estados de entrega: §§86–96, ADR 0079. Respostas
+  posteriores explicitas atualizam a regra; proposta nao equivale a decisao
+  e uma decisao nao equivale a implementacao/publicacao.
 - Decisoes tomadas, e porque: docs/adr/
 - A tarefa desta sessao: docs/backlog/<id>.md
 - Duvida que a spec nao cobre: escreve-a em docs/QUESTIONS.md. Nao decidas tu.

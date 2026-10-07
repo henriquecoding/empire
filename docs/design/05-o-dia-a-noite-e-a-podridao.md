@@ -41,14 +41,18 @@ A tua ideia de "uma sombra que vai de encontro ao império invocando inimigos at
 >
 > Uma onda é um número que aparece. Uma mancha que avança é informação espacial contínua: o jogador olha para o horizonte e sabe quanto tempo tem. O Kingdom tem de te dizer que a noite chegou; o teu jogo mostra-a a chegar. Esta única diferença gera tensão durante 135 segundos por dia, todos os dias — e é o teu GIF de marketing (§36).
 
-## Os dois verbos — e só dois
+## Os dois gestos de gestão e as ações de combate
 
 **Verbo 1 — Largar moeda** — Recrutar, construir, melhorar, pagar, alimentar, subornar. O contexto define o efeito. Toda a economia passa por aqui. É o verbo do Kingdom, herdado inteiro.
 
-Trocar de imperador controlado (só com outro imperador desbloqueado e encontrado, ADR 0052), montar, entrar e sair da camada subterrânea, ordenar a uma tropa que suba numa criatura enorme. Um botão, sempre contextual, sempre o mesmo botão. Nenhuma tropa se assume.
+Escolher um imperador desbloqueado na Casa do Herdeiro, só com sucessor preparado (§15, Q-196/Q-202), montar, entrar e sair da camada subterrânea, ordenar a uma tropa que suba numa criatura enorme. Um botão, sempre contextual, sempre o mesmo botão. Nenhuma tropa se assume.
 
 > **Regra inegociável**
 >
-> Se aparecer um terceiro verbo, uma mecânica está mal desenhada. O menu de gestão do rei conta como Verbo 2 — assumes o rei, o menu é o corpo dele. Isto mantém o jogo jogável em comando e no Steam Deck sem UI de rato (§24, §26).
+> Moeda e interação contextual mantêm a gestão simples. Ataque, habilidade e corrida são ações próprias aprovadas (Q-184/Q-193), com paridade entre teclado, comando e toque (§24). A simplificação não pode esconder uma ação necessária.
 
 Painel de 30/09/2026 — ADR 0043. As fissuras no chão podem vir de um lado ou de dois, à sorte, conservando o orçamento total. O limiar de dois lados continua no dia 12 e as primeiras dez noites mantêm a curva anterior (Q-179, ADR 0043). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.
+
+Ritmo atual do contrato: a §89 reconcilia Q-239–Q-243. O limite de estreia 3/6/9 foi contestado; primeira noite funda na 12 e rampa de sete noites receberam aprovação no contexto da proposta. A baseline numérica ainda usa a curva anterior. Antes da fundação, dia visual e despertar social não se confundem (§25).
+
+Tocha e acordo futuro (Q-247, resposta de 07/10): a tocha de mão serve inicialmente como ferramenta de iluminação sem desgaste. Mais adiante, um acordo desfavorável poderá permitir à Podridão corrompê-la e torná-la consumível. “Metade do jogo” indica a intenção de progressão, não uma percentagem ou noite fixada. O gatilho, consumo, recuperação e relação com emboscadas ainda precisam de especificação. Na baseline, a tocha ilumina e o archote comprado protege; não se infere que a nova resposta tenha aprovado proteção gratuita.

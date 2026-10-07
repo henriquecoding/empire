@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Território e circulação: §92 especifica capacidade e produção; §95 distingue comércio abstrato de remessa com conservação de stock. O RG-28 valida implantação, mas ainda não demonstra a cadeia logística física inteira.
+
 A economia do Kingdom tem um circuito: moeda entra, coisa sai. A tua tem três, e é aí que o jogo deixa de ser um clone. O Kingdom serve-te de referência para uma coisa só — escala e legibilidade, números pequenos que são objetos físicos no chão. A estrutura é tua.
 
 > **Correção à primeira v3**
@@ -113,3 +115,5 @@ Como ler: o dia da asfixia é aquele em que a linha roxa passa a verde — o pon
 > **Como usar isto na prática**
 >
 > Estas variáveis vivem em data/economy/curve.tres. Quando um playtest disser "aos oito dias já não tinha nada a fazer", mexes num número e voltas a correr — sem tocar em código. §31 mostra o teste automático que trava a curva: se o dia da asfixia sair fora do intervalo 9–14 para os perfis padrão, o CI falha.
+
+Relações económicas e ambientais: a §87 liga os três circuitos ao lugar, à disponibilidade de pessoas, aos percursos e à perda de habitats. O armazenamento físico conserva limites. O perfil imperial pode ser desbloqueado para novo começo; evolução ganha-se de novo (§16). Não se criam novos recursos ou consumos domésticos pela analogia com Manor Lords.

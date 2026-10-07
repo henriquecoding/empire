@@ -4,11 +4,11 @@ _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
 O Kingdom usa "blocos de construção modulares dispostos aleatoriamente, com vegetação de solo colocada automaticamente e cotos estratégicos de torre e muro para evitar sobreposição". É o modelo certo para ti também.
 
-> **Correção**
+> **Estado da geração**
 >
-> A versão anterior desta secção dizia que a tua panorâmica "já é, na prática, o primeiro protótipo" do gerador e que "cada edifício está colocado com intenção". Não é e não está. É uma folha de assets com 24,5% da superfície pintada e vazios de até 400 px (§01). Ainda não existe nenhum segmento autorado — o primeiro está por fazer, e o resto desta secção é a proposta de como o fazer, não a descrição de algo que já lá está.
+> Existem segmentos, mundo contínuo e floresta persistente. O desenho de sociedades desde o Dia Um ficou ultrapassado pelo despertar social da ADR 0069, ainda pendente em RG-24. As orientações de composição seguintes continuam úteis para a autoria, sem apagar o que já está implementado.
 
-- **Região** — 4 a 6 ecrãs de largura — oito segmentos na fatia vertical, dez a doze quando uma região pedir cinco ou seis ecrãs, com ADR (Q-030). Não fixes isto pela largura da tela onde desenhaste — deriva-o do tempo de travessia: a pé (§12) atravessar uma região leva cerca de 40–60 s. É uma estimativa, e não uma lei: cada região é única e o número adapta-se a ela, e mede-se no greybox (Q-018, Q-082). A pé anda-se a 80 px/s (ADR 0021). Uma região = um povo = um império a conquistar.
+- **Região** — 4 a 6 ecrãs de largura — oito segmentos na fatia vertical, dez a doze quando uma região pedir cinco ou seis ecrãs, com ADR (Q-030). Não fixes isto pela largura da tela onde desenhaste — deriva-o do tempo de travessia: a pé (§12) atravessar uma região leva cerca de 40–60 s. É uma estimativa, e não uma lei: cada região é única e o número adapta-se a ela, e mede-se no greybox (Q-018, Q-082). A pé anda-se a 80 px/s (ADR 0021). Uma região tem identidade natural; a sua ocupação política é estado evolutivo, não uma equivalência fixa entre bioma, povo e império.
 - **Segmento** — 640 px (meio ecrã). Oito segmentos por região. Cada segmento é uma cena autorada à mão.
 - **Linha do solo** — Constante em toda a região, no valor fixado na Fase 0 (§11). O terreno não sobe nem desce — é o que torna o mundo 1.5D e o movimento das tropas trivial (§20).
 - **Corte de solo** — Gerado em paralelo com a superfície: cada segmento tem 0–2 cavidades e 0–1 passagem, dentro da altura fixada em §11.
@@ -30,7 +30,7 @@ O Kingdom usa "blocos de construção modulares dispostos aleatoriamente, com ve
 
 > **A floresta é território — ADR 0070**
 >
-> Cada árvore é uma coisa do mundo, com id, espécie e estado no save. Primeiro reserva-se o que o mapa precisa (passagens, provisões, acampamentos, estátuas, raízes, tocas e obras erguidas); depois a densidade do bosque e a espécie do bioma enchem o resto, uma árvore por célula. Cinco silhuetas — carvalho, pinheiro, salgueiro, pinheiro da costa e árvore-das-raízes — e, num segmento de transição, a espécie e a densidade pesam as duas pontas. Uma moeda numa árvore paga a um construtor para a abater: o tronco dá moedas e fica o cepo; a fundação e as obras limpam o chão sem moeda. Duas regras com origem, destino e alcance escritos: o bosque apoia a coleta nas provisões e a floresta abriga a toca do veado. A estação muda a copa, nunca a existência: o que se corta não volta. Números em flora.csv e forest.csv, propostos (Q-238).
+> Cada árvore é uma coisa do mundo, com id, espécie e estado no save. Primeiro reserva-se o que o mapa precisa (passagens, provisões, acampamentos, estátuas, raízes, tocas e obras erguidas); depois a densidade do bosque e a espécie do bioma enchem o resto, uma árvore por célula. Cinco silhuetas — carvalho, pinheiro, salgueiro, pinheiro da costa e árvore-das-raízes — e, num segmento de transição, a espécie e a densidade pesam as duas pontas. Uma moeda numa árvore paga a um construtor para a abater: o tronco dá moedas e fica o cepo; a fundação e as obras limpam o chão sem moeda. Duas regras com origem, destino e alcance escritos: o bosque apoia a coleta nas provisões e a floresta abriga a toca do veado. A estação muda a copa, nunca a existência: o que se corta não volta. As relações funcionais de floresta aprovadas na Q-238 estão discriminadas na §87; valores visuais ainda em _proposed não recebem aprovação por associação.
 
 > **O território decide o que se levanta — ADR 0077**
 >
@@ -83,3 +83,5 @@ O autor do Chef RPG é designer de arquitetura. Aplica desenho urbano a cada loc
 > Não comeces por desenhar. Constrói um segmento de 640 px inteiramente com formas lisas de cor — retângulos para edifícios, uma barra para o chão, blocos para cavidades — e joga-o. Um segmento greybox leva vinte minutos a fazer e diz-te em cinco se a densidade está certa. Só depois de teres seis ou oito segmentos que se jogam bem é que vale a pena pintar algum: pintar um segmento com a composição errada custa-te um dia e não conserta nada.
 
 Painel de 30/09/2026 — ADR 0043. Os oito povos têm kits, assuntos e obras locais próprios. O povo do pântano chama-se Bruma, nome de trabalho ajustável; os identificadores anteriores migram nos saves. Uma muralha própria além de um acampamento ou uma árvore vizinha abatida acaba com ele; no sítio pode erguer-se uma casa de cidadãos, até três à espera e mais caros (Q-170, Q-175). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.
+
+Civilization VII e Manor Lords: a §87 especifica influência local, cobertura, afinidade regional proposta e custo de transformação; a §88 especifica sociedades e rede territorial. O tempo de travessia é uma medição por região (Q-155), não uma extensão fixa. Geração e fundação devem reservar os mesmos recursos críticos, independentemente da ordem em que sejam executadas.

@@ -2,7 +2,9 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-Acampamentos de mercenários espalhados pelo caminho. Atacam sempre — não são neutros. São simultaneamente a ameaça constante e a maior oportunidade do jogo.
+Estatuto desta secção: as probabilidades e dívidas abaixo são a especificação histórica e os valores da baseline, não um motor de negociação completo. Para o desenvolvimento do relatório, ler a §94 e Q-251: serviço, efetivos finitos, oferta versionada, pagamento explícito e incumprimento previsível. Não aplicar automaticamente ao novo contrato a captura aleatória, os juros exponenciais nem o reinício ilimitado de prazo por pagamento residual. A política de companhias persistentes precisa preservar os acampamentos antigos.
+
+O recrutamento atual e a diplomacia futura são camadas diferentes. Companhias têm presença no mundo; hostilidade, serviço e lealdade exigem termos explícitos. A frase histórica “atacam sempre” não define a disponibilidade das companhias do novo modelo.
 
 ## Enviar o diplomata
 
@@ -24,7 +26,7 @@ As probabilidades deslocam-se com o nível do diplomata e o Favor acumulado: cad
 - **Atraso 5+ dias** — O acampamento marcha sobre ti com força de fortaleza
 - **Pagamento parcial** — Aceite. Reduz proporcionalmente e reinicia o prazo em 3 dias.
 
-> **Porque é que isto é o teu melhor sorvedouro**
+> **Justificação histórica da dívida — sujeita à revisão da Q-251**
 >
 > Porque não é um imposto — é uma aposta. O jogador escolhe entrar em dívida para ganhar poder agora e paga com ansiedade durante seis dias. Um relógio visível no HUD, e mais nada. Compara com a ganância do rei (§15), que é passiva: os dois em conjunto dão-te um sorvedouro que o jogador aceita e outro contra o qual se revolta. São emoções diferentes e é bom que sejam.
 
@@ -35,3 +37,5 @@ A cada 8 dias pode assimilar um império vizinho: o império inteiro passa a ser
 Painel de 30/09/2026 — ADR 0043. O mercenário das trilhas cobra soldo mesmo abaixo do limiar gratuito das tropas regulares e deserta primeiro. Depois de três contratações o acampamento fica abandonado e as obras em ruína (Q-177). Os valores novos de balanceamento são propostas ajustáveis nas tabelas.
 
 Pedido do dono de 02/10/2026 — ADR 0052. O Diplomata básico está disponível em todos os impérios: lidera incursões enquanto o monarca permanece no reino, negoceia e corre risco de captura; depois de evoluir, assimila impérios e acelera o treino de sucessores. É tropa sob IA, nunca corpo jogável. A ausência de um Diplomata evoluído não impede contratar outro básico. O resgate de prisioneiro e a dívida de mercenários ficam em registo próprio, separado da Dívida da Candeia (Q-203).
+
+Direção adotada: os acampamentos estáticos e as probabilidades desta baseline não descrevem todo o sistema futuro. Companhias móveis, contratos com outros reinos e despertar social pertencem a RG-24 (§88). Q-203 aprova o Diplomata universal e as suas missões; a implementação completa continua em UN-18–UN-21.

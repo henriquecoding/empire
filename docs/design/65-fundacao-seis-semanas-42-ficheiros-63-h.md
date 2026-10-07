@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Contexto histórico: estudos de mercado, previsões, horas, listas de arranque e estados de implementação desta versão descrevem a fase em que foram escritos. A baseline e a ordem de execução atuais estão na §90; decisões posteriores da §86 prevalecem. Exemplos antigos não são ficheiros para copiar sobre o projeto atual.
+
 Revisto na v5.1: esta lista tratava só dos ficheiros de jogo. Os do repositório — que vêm antes — estão na §68, e o conteúdo de cada um na §69; os caminhos marcados §70 foram corrigidos. Critério de saída do §33: um sprite anda nas três faixas e o CI está verde. Nada mais. A tentação é fazer combate na Fase 0; resistir a essa tentação é o que faz a Fase 1 correr bem.
 
 | Ficheiro | O que faz | Depende de | h |

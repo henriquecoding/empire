@@ -14,7 +14,7 @@ As trinta e nove secções anteriores respondem a que jogo é este e se vale a p
 
 | Assunto | Manda | Regra de conflito |
 | --- | --- | --- |
-| Design, números de balanceamento, intenção | §00 a §38 | Se uma secção de §39 a §67 contradiz um número das secções anteriores, é ela que está errada. Corrige-a. |
+| Design, números de balanceamento, intenção | Dossiê consolidado, incluindo §86–§91 | Decisões explícitas posteriores prevalecem por cláusula (§86). Os CSV mostram os valores executados; divergências entre regra aprovada e baseline têm de ficar visíveis. |
 | Nomes de classes, campos, sinais, ficheiros | §39 a §67 | Se o código não bate certo com o nome daqui, o código está errado. Sem exceções — nomes divergentes são o que quebra a geração assistida. |
 | Ordem de execução e contratos de módulo | §39 a §67 | Alterações exigem subida de versão do documento e uma linha no registo de alterações. |
 | Arte, densidade, paleta, camadas | §01, §11, §22 | Aqui só entram as consequências técnicas (nomenclatura de exportação, uniforms de shader, ordem de camadas). |
@@ -37,3 +37,5 @@ Para não ficares com a ideia de que isto fecha tudo. O mapa honesto do que exis
 > **Como um agente deve usar esta parte**
 >
 > O CLAUDE.md do repositório aponta para aqui e diz três coisas: (1) nunca inventes um nome que as §39 a §67 já definem; (2) nunca acrescentes um sinal que não esteja no catálogo da §46; (3) se precisares de algo que não está especificado, para e pergunta em vez de decidir. A terceira é a que poupa mais tempo.
+
+Contrato vivo: não existe prioridade automática de uma secção antiga por ter número menor. Atualiza-se a regra temática, a ADR, o registo da decisão, os dados quando autorizados e a documentação gerada. O catálogo técnico contém contratos históricos: nomes atuais e migrações seguem AGENTS.md e ADRs; a §90 identifica lacunas de implementação.

@@ -1,4 +1,4 @@
-# ADR 0079 — Primeiro contacto claro e trabalho a pedido
+# ADR 0080 — Primeiro contacto claro e trabalho a pedido
 
 - Estado: aceite
 - Data: 2026-10-07

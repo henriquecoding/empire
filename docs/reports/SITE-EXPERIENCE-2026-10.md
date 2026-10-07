@@ -1,6 +1,6 @@
 # Empire — pesquisa comparativa e melhoria do site
 
-Data: 07/10/2026. Tarefa: PUB-05. Decisão: ADR 0079.
+Data: 07/10/2026. Tarefa: PUB-05. Decisão: ADR 0080.
 Âmbito: página de entrada PT/EN, reportes, painel, carregamento e publicação.
 
 ## Conclusão e método
@@ -17,8 +17,9 @@ produto incluiu código, artefacto gerado, produção, capturas do jogo, tamanho
 de ficheiros e testes reais de navegador. As referências são fontes primárias;
 a comparação visual não é um benchmark de velocidade nem prova de conversão.
 
-Durante o trabalho entrou a PR #94. A base foi atualizada para `f3efeac`,
-preservando o Atlas e a HUD. O projeto observado na Vercel é `empire`; a API
+Durante o trabalho entraram as PR #94 e #95. A base foi atualizada para
+`f3ad88e`, preservando o Atlas, a HUD e a consolidação do dossiê. As capturas
+continuam válidas: a PR #95 alterou documentação e rótulos, não a arte do jogo. O projeto observado na Vercel é `empire`; a API
 usada pelo painel é a do projeto Supabase configurado no repositório. O painel
 foi testado com respostas simuladas, sem criar feedback ou alterar decisões reais.
 
@@ -74,7 +75,7 @@ críticos declarados e 1611 KiB para a página inteira**, em 1440px/DPR 1,
 ficheiros sem compressão HTTP. O teste pausa a animação e espera pela
 decodificação de todas as imagens lazy; antes, uma rolagem rápida podia omitir
 imagens da amostra. Os tetos são revistos explicitamente
-na ADR 0079 e no portão, não escondidos como uma otimização. O JSON de QA inclui
+na ADR 0080 e no portão, não escondidos como uma otimização. O JSON de QA inclui
 também os recursos realmente pedidos na entrada, por língua e largura; essa
 medição não é idêntica ao subconjunto crítico declarado pelo portão.
 

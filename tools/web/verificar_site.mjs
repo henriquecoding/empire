@@ -68,7 +68,7 @@ const JOGO_S = 90;
 // brotli, e por isso o que chega é menos). O caminho crítico é o que a página
 // precisa antes do primeiro ecrã: HTML, folha, scripts, fontes pré-carregadas
 // e o primeiro quadro. O total inclui a rolagem inteira, a 1440px / DPR 1.
-// ADR 0079: a arte atual é mais densa; mantemos WebP sem perdas e passamos os
+// ADR 0080: a arte atual é mais densa; mantemos WebP sem perdas e passamos os
 // cartões de 640 a 320px. Estes tetos são explícitos, não metas de LCP.
 const CRITICO_KB = 660;
 const TOTAL_KB = 1700;

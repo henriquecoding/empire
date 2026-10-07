@@ -9,7 +9,7 @@ Uma influência mal gerida deixa de ser influência e passa a ser fan game. As s
 | O que | Porque é bom lá | Porque é mau aqui |
 | --- | --- | --- |
 | A revelação do purgatório | Cem minutos de investimento, cobrados uma vez, e recontextualizam tudo | Quarenta horas com permadeath e decay (§16). "Afinal nada aconteceu" apaga o jogo que o jogador acabou de jogar. |
-| Os dois irmãos | Um contraste de temperamento carrega a série inteira | O Empire troca de personagem controlado com o Verbo 2 (§08). Um par fixo mata o sistema de classes e a colagem de povos. |
+| Os dois irmãos | Um contraste de temperamento carrega a série inteira | Empire permite descobrir imperadores e transferir o governo através do herdeiro (§08, §15). Um par fixo restringiria essa diversidade de soberanos e povos. |
 | A iconografia americana | É o vernáculo do país deles, com cem anos, posto fora de sítio | Não é o teu. Abóboras com cara ao lado de palafitas da Carrasqueira e de ferrarias bascas lê-se a empréstimo. §73. |
 | Dez capítulos como espinha | A série é uma viagem: a estrutura episódica é o enredo | A espinha do Empire é o ciclo dia-noite. Os capítulos (§77) são conteúdo lateral, e assim que forem obrigatórios partem o loop. |
 | O registo irónico moderno | O Wirt fala como um adolescente de 2014, e o atrito com o mundo é metade da piada | O Empire não tem protagonista falante nem texto de diálogo (§27). Sem onde assentar, a ironia vira anacronismo solto. |
