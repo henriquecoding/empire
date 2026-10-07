@@ -1,14 +1,12 @@
+# src/ui/hud_style.gd — a HUD com as cores e o canto do Atlas do Imperio (ADR 0074, 0078).
 class_name HudStyle
 extends RefCounted
 
-const BACKGROUND := Color("191713f2")
-const BORDER := Color("665a43")
-const TEXT := Color("f4ecd9")
-const MUTED := Color("c9bfa8")
-const GOLD := Color("efbe70")
-const CORNER := 8
-const SHADOW := Color(0, 0, 0, 0.18)
-const SHADOW_SIZE := 3
+const BACKGROUND := Color(Atlas.FIELD, Atlas.FIELD_ALPHA)
+const BORDER := Atlas.LINE
+const TEXT := Atlas.TEXT
+const MUTED := Atlas.SECONDARY
+const GOLD := Atlas.COIN
 
 static var _font: FontFile
 
@@ -22,14 +20,8 @@ static func font() -> FontFile:
 
 
 static func panel(accent: Color = BORDER) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = BACKGROUND
-	style.border_color = accent
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(CORNER)
+	var style := Atlas.card(Atlas.FIELD, accent)
 	style.set_content_margin_all(HudLayout.PADDING)
-	style.shadow_color = SHADOW
-	style.shadow_size = SHADOW_SIZE
 	return style
 
 

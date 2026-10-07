@@ -114,7 +114,7 @@ func test_the_caravan_catches_up_instead_of_falling_behind_forever() -> void:
 	assert_float(atraso).is_less(LastCartWatch.rules().caravan_catch_up_px + 64.0)
 
 
-func test_the_prompt_reads_what_founding_here_takes_and_keeps() -> void:
+func test_the_sheet_reads_what_founding_here_takes_and_keeps() -> void:
 	var x := _ao_lado_de(SimLoop.secrets.xs[0])
 	var raio := LastCartWatch.rules().foundation_clear_radius
 	var w := SimLoop.field.woodland
@@ -122,7 +122,9 @@ func test_the_prompt_reads_what_founding_here_takes_and_keeps() -> void:
 	for i in w.count():
 		if w.standing(i) and absf(w.xs[i] - x) <= raio:
 			arvores += 1
-	var leitura := FoundationGuide.reading(x, {})
+	# A ficha do sitio (UX-08, ADR 0078) le estas secoes; o painel curto ja nao as repete.
+	var partes := FoundationGuide.sections(x)
+	var leitura := "\n".join(partes[FoundationGuide.CLEARS] + partes[FoundationGuide.KEEPS])
 	var estatua := TranslationServer.translate(&"FOUNDATION_NEAR_STATUE")
 	assert_str(leitura).contains(estatua)  # fica dentro do reino, e diz-se
 	if arvores > 0:
@@ -131,5 +133,5 @@ func test_the_prompt_reads_what_founding_here_takes_and_keeps() -> void:
 	var o := SimLoop.arrival
 	o.stationary_s = LastCartWatch.rules().foundation_stop_s
 	var painel := ArrivalGuide.context(x, Band.Kind.SURFACE, {"assume": "E"})
-	assert_str(painel).contains(estatua)
+	assert_str(painel).not_contains(estatua)
 	assert_bool(FoundationChoice.claim(x)).is_true()  # e funda-se na mesma

@@ -31,6 +31,9 @@ func build(layout: PauseLayout, back: Callable, zero: FreshStartPanel) -> void:
 	overview = PauseTheme.label(realm.get_child(1).get_child(0))
 	overview.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	overview.add_theme_constant_override("line_spacing", PauseTheme.ROW_GAP)
+	# O estado do reino le-se com calma: a folha de linho e a tinta escura (ADR 0078).
+	(realm.get_child(1) as PanelContainer).add_theme_stylebox_override("panel", Atlas.folio())
+	overview.add_theme_color_override("font_color", Atlas.INK)
 	refresh()
 
 

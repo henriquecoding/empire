@@ -1,14 +1,16 @@
 class_name GameHud
 extends Control
 
-const INK := Color(0.08, 0.07, 0.06)
-const PAPER := Color(0.12, 0.10, 0.10, 0.94)
-const PAPER_LIGHT := Color(0.20, 0.16, 0.13, 0.94)
-const GOLD := Color(0.95, 0.67, 0.27)
-const MINT := Color(0.53, 0.79, 0.57)
-const TEXT := Color(0.96, 0.92, 0.81)
-const MUTED := Color(0.79, 0.75, 0.66)
-const JADE := Color(0.33, 0.53, 0.45)
+# As cores do painel sao as do Atlas do Imperio (ADR 0078): quem desenha a HUD, o toque e
+# a viagem le-as daqui ou do Atlas, e nao inventa outra paleta.
+const INK := Atlas.INK
+const PAPER := Color(Atlas.FIELD, Atlas.FIELD_ALPHA)
+const PAPER_LIGHT := Color(Atlas.RAISED, Atlas.FIELD_ALPHA)
+const GOLD := Atlas.COIN
+const MINT := Atlas.VALID
+const TEXT := Atlas.TEXT
+const MUTED := Atlas.SECONDARY
+const JADE := Atlas.INFO
 const FAIXA_TOPO := 72.0
 const AVISO_S := 3.0
 const TEXTO_S := 0.1
@@ -42,6 +44,7 @@ func _ready() -> void:
 	_aviso.add_to_group(&"hud_notice")
 	_dispositivo = Glyphs.initial()
 	add_child(TravelPanel.new())
+	add_child(SiteSheet.new())
 	add_child(CombatBar.new())
 	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.game_paused.connect(_na_pausa)
