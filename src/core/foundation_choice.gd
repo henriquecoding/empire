@@ -107,7 +107,10 @@ static func signature_at(x: float) -> Dictionary:
 		&"seed": SimLoop.state.seed,
 		&"position": x,
 		&"provenance": &"FOUNDATION_SAMPLED",
-		&"signature_version": 1,
+		&"signature_version": 2,
 		&"climate_band": &"PENDING_CLIMATE_MODEL",
 		&"ecosystem": biome,
+		# O que o territorio permitia ao fundar, por necessidade (ADR 0077): a fotografia
+		# fica; o perfil vivo muda com o mundo.
+		&"territory": TerritoryWatch.preview(x)[TerritoryProfile.NEEDS],
 	}

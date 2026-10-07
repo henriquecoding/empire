@@ -77,7 +77,7 @@ static func author_home(passagens: PackedFloat32Array, muros: PackedFloat32Array
 	var nucleo := SimLoop.core_x
 	for k in passagens.size():
 		var boca := passagens[k]
-		var tecto := _entre_muros(boca, muros)
+		var tecto := between_walls(boca, muros)
 		var precisa := Vector2(boca, boca)
 		var dentro := []
 		for obra in SimLoop.builds.slots:
@@ -182,7 +182,7 @@ static func _tesouro(_campo: FieldWork, _i: int, chave: String) -> void:
 
 
 ## Entre o muro de cada lado da boca, com folga; sem muro de um lado, a beira da regiao.
-static func _entre_muros(boca: float, muros: PackedFloat32Array) -> Vector2:
+static func between_walls(boca: float, muros: PackedFloat32Array) -> Vector2:
 	var tecto := Vector2(0.0, SimLoop.world_width)
 	for x in muros:
 		if x < boca:

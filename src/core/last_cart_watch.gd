@@ -76,6 +76,8 @@ static func reanchor(shift: float, terrain := true) -> void:
 			SimLoop.passages[k] += shift
 		for k in SimLoop.field.camps.size():
 			SimLoop.field.camps[k] += shift
+		for k in SimLoop.field.waters.size():
+			SimLoop.field.waters[k] += shift
 		for k in SimLoop.secrets.xs.size():
 			SimLoop.secrets.xs[k] += shift
 		for k in SimLoop.secrets.chapters.size():
@@ -85,6 +87,7 @@ static func reanchor(shift: float, terrain := true) -> void:
 		if site.two_paths() and site.territory == 0:
 			walls.append(site.x)
 	UnderWatch.author_home(SimLoop.passages, walls)
+	TerritoryWatch.apply()  # a agua e a rocha nao vem com a sede (ADR 0077, A01)
 	CellarWatch.sync()
 	SimLoop.jobs.clear()
 

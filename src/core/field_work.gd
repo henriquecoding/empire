@@ -20,6 +20,7 @@ var song := BardSong.new(
 var upkeep: UpkeepSystem
 var succession: Succession
 var camps: PackedFloat32Array = PackedFloat32Array()
+var waters: PackedFloat32Array = PackedFloat32Array()  # a agua que a regiao autora (ADR 0077)
 var realm := Realm.new()
 var spirit: Spirit
 var wilds := WildSegments.new(RulesFactory.segment_kits(), RulesFactory.biome_peoples())

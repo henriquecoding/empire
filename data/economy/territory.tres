@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="TerritoryRules" format=3]
+
+[ext_resource type="Script" path="res://src/sim/data/territory_rules.gd" id="1_4de2y"]
+
+[resource]
+script = ExtResource("1_4de2y")

@@ -7,6 +7,61 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## O território decide o que se levanta — 07/10/2026 (ADR 0077)
+
+> Pedido do dono (07/10/2026): *«Aplique esse relatório»* — o relatório mestre de auditoria e evolução territorial com
+> Civilization VII como referência (`docs/reports/TERRITORIO-CIVILIZATION-VII.md`). Aplicado no RG-28: as fases 0 e 1
+> e a previsão da fundação. O resto depende das decisões abaixo, como o próprio relatório pede (§22.3).
+
+### Q-249 · Os números do alcance das fontes, e as escolhas da primeira entrega
+- **Aplicado (ADR 0077):** uma fonte tem sítio no mundo; o pesqueiro e os poços de minério só se levantam com a fonte
+  ao alcance, na mesma faixa; a fundação livre já não os leva para longe da água e das passagens; o painel da fundação
+  diz, por obra, se a fonte está ao alcance, com a mesma conta da confirmação.
+- **Propostas reversíveis**, todas valores de ensaio, em `territory.csv._proposed`: a água do segmento de partida com
+  96 px de meia largura e a de um segmento de água das terras com 128; uma obra que precisa de água a 64 px, no máximo,
+  da borda dela; a floresta conta árvores a 160 px e pede 3; a rocha tem de estar dentro do porão (0 px).
+- **Escolhas minhas, reversíveis:** a água do segmento fica onde o pesqueiro sempre esteve (1292 px a leste do marco
+  inicial), porque o catálogo diz que é o lago do castelo-árvore; a rocha do poço é o porão entre as muralhas à volta da
+  passagem — a regra com que o `UnderWatch` já o metia lá —, e a escora fechada não a tira (T07 fica por fazer); a obra
+  intacta sem fonte fecha-se e não se mostra, em vez de ficar um sítio vazio com a razão; a que um save de antes já
+  pagou ou tem de pé fica, e o inspetor diz «tolerada»; o painel só fala das obras que já se sabem fazer (as estátuas,
+  Q-016), para não revelar o que não se achou.
+- **Decide:** tu, os números depois de jogar, e se o sítio fechado deve ver-se com a razão.
+
+### Q-250 · Os tipos de água, o cais e o porto
+- **Proposta do relatório (§8):** ribeira, rio navegável, lago, mar, estuário e pântano, com uma classe de navegação
+  (sem, leve, maior); um porto avalia-se em três estados separados — construir, operar e ter rota — e fecha-se com
+  causa (elegível, em construção, operacional, suspenso, danificado).
+- **Em aberto, e por isso não feito:** que tipo é cada água de hoje — o lago do castelo-árvore, os segmentos `water`
+  de cada povo (`forest_pool`, `tidal_boat`, `stone_door`, `irrigation_gate`…) e o mar da borda; se o primeiro cais é
+  fluvial ou marítimo; e a arte do cais e do porto, que não há.
+- **Bloqueia:** AUD-CIV-05 e AUD-CIV-06 (RG-28).
+- **Decide:** tu.
+
+### Q-251 · O contrato mercenário e os acampamentos de antes
+- **Hoje:** contratar paga um mercenário com moeda e um soldo à alvorada; o acampamento esgota-se depois de três
+  contratações (Q-110, Q-122); o mercenário das trilhas com soldo e lealdade está aprovado no painel (Q-177).
+- **Proposta do relatório (§11, §12):** companhias com efetivos finitos e memória; até três ofertas comparáveis (curto,
+  regular, com contrapartida), cada uma com identidade e validade; um contrato com serviço, efetivos, prazo,
+  mobilização, salário por período e total; falta de pagamento em aviso, limitação, suspensão e retirada, sem captura
+  aleatória, juros sem teto nem mudança de dono; livros separados para o mercenário, a diplomacia e a Dívida da Candeia.
+- **Em aberto, e por isso não feito:** (a) se a companhia persistente substitui o esgotamento de três contratações ou
+  convive com ele numa versão nova do acampamento (um save antigo esgotado fica esgotado, A08); (b) se as
+  probabilidades de dissolução e captura e os juros do dossiê caem ou ficam só para a diplomacia (UN-21, A07); (c) se o
+  primeiro período se paga ao aceitar, ao chegar ou numa fase do relógio; (d) se os primeiros serviços são a guarnição
+  e a escolta.
+- **Bloqueia:** AUD-CIV-09 a AUD-CIV-11 (RG-28).
+- **Decide:** tu.
+
+### Q-252 · O que o relatório propõe para depois
+- **Por fazer, pela ordem das fases 4 e 5 do relatório (§19.1):** direitos de passagem e de exploração (§13.1);
+  remessas com origem, destino e entrega única (§13.2, §13.3); especialização de vassalos pela terra (§13.4); jazidas
+  com identidade em vez de toda a cavidade (A04); o acesso que muda com a escora fechada (T07); clima regional com
+  alternativas (A11; a resposta do dono à Q-235 no painel: clima quente e agradável, alguns biomas mais dinâmicos);
+  feitos de exploração e diplomacia (§14.2); aprendizagem cultural limitada (§14.3); eventos com causa (§14.4). O
+  despertar social é o RG-24.
+- **Decide:** tu, a ordem.
+
 ## A tocha na mão e o relatório de auditoria — 06/10/2026 (ADR 0076)
 
 > Pedidos do dono (06/10/2026): *«os imperadores carregam tochas ou algo luminoso na mão para não ficar tão
@@ -326,6 +381,13 @@
 
 ### Q-221 · O pacote fundador: a carroça, o pioneiro e a bancada
 - **Decidido pelo dono (03/10/2026):** *«aplique esse relatório»* — RG-D04, RG-D05, RG-D06 e RG-D07. Aplicado.
+- **Respondido no painel (05/10/2026), «outra»:** a banca fundadora só aparece quando o reino é fundado, dentro dele e
+  antes da muralha; uma região ou bioma novo não é um jogo novo — explorar os biomas faz parte do jogo; no primeiro dia,
+  depois de explorar e ver os recursos e o que há em cada região, o imperador decide onde fundar.
+- **Aplicado a 07/10/2026 (ADR 0077, RG-28):** o painel da fundação diz, em cada sítio, que obras têm a fonte ao
+  alcance e quais não, com a mesma conta que a confirmação faz; a sede nova já não leva as fontes do segmento de partida.
+- **Por aplicar desta resposta:** a banca dentro do reino e antes da muralha (é a posição do RG-16); a travessia como a
+  mesma campanha (Q-135).
 - **Onde:** §09, §10, §25; `rules.csv` (`founder_provisions`, `founder_pioneers`, `founder_bow_rack`,
   `provisions_grab_px`), `FoundationWatch`, `RealmSeat`, `DarkWatch.kindle`.
 - **O que foi feito:** o monarca chega com a companhia, os dois trabalhadores de antes (Q-110) e um construtor; uma

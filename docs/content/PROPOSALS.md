@@ -7,8 +7,8 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | | balanceamento | apresentação/estrutura | total |
 |---|---|---|---|
 | Fases 0–2 (fatia vertical) | 742 | 312 | 1054 |
-| Fases 3–8 | 358 | 98 | 456 |
-| Total | 1100 | 410 | 1510 |
+| Fases 3–8 | 364 | 98 | 462 |
+| Total | 1106 | 410 | 1516 |
 
 **Por onde começar:** a primeira tabela abaixo — os números de balanceamento que a fatia vertical usa. O resto pode esperar pela fase respetiva.
 
@@ -1076,7 +1076,7 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | realm_stages | `walled_village` | `width_px` | 400 | 1 | A muralha de ferro continua a pedir a Fornalha ou o Lenho (§10, §74): a Vila Fortificada só a deixa organizar (plano §17.3). O diplomata básico continua contratável em qualquer império (ADR 0052): a embaixada é a casa dele, não a licença (plano §9). ADR 0065: feito de maturidade proposto para o protótipo solicitado; regras explicitadas no contexto. Q-220: defesa crescente; percentuais provisórios. Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066). |
 | realm_stages | `fortress` | `build_work` | 112 | 1 | A vida 1000, a largura 480 e os 7 slots de contacto são os do núcleo de antes (buildings.csv, core): o castelo dos saves anteriores é a Fortaleza, sem pagar os degraus (ADR 0059). O Bastião continua único por império e a pedir o Lenho (§10, §74). A Capital (F6, 88 moedas no plano) entra com o RG-14: sem rotas nem postos que administrar, seria um degrau só de vida (plano §4.1, §32.2). Q-222: casa do herdeiro no estágio máximo disponível; Capital permanece posterior (Q-226). ADR 0065: feito de maturidade proposto para o protótipo solicitado; regras explicitadas no contexto. Q-220: defesa crescente; percentuais provisórios. Parâmetros apresentados aprovados em 05/10/2026; relatório prioritário (ADR 0066). |
 
-## 3 · Fases 3 a 8 — 456
+## 3 · Fases 3 a 8 — 462
 
 | tabela | linha | campo | valor | fase | nota |
 |---|---|---|---|---|---|
@@ -1536,4 +1536,10 @@ Cada linha é um valor que **não está no dossiê** e foi proposto ao criar a b
 | underground | `optional_max` | `optional_max` | 3 | 9 | O tecto de entradas opcionais (ruínas com interior e cavernas) por povo, de cada lado (§7.3). Um tecto e não uma quota: pode sair zero. |
 | underground | `optional_spacing_px` | `optional_spacing_px` | 1920 | 9 | Uma entrada opcional por este comprimento de trilho e limiar desse povo, no máximo (§7.3). Calibrar pelo tempo de viagem, não só por píxeis. |
 | underground | `thief_carry` | `thief_carry` | 5 | 9 | Quantas moedas um ladrão leva de um baú. O que leva vai com ele e cai onde ele morrer; só se perde se ele sair vivo (§9.6). Valor de ensaio. |
+| territory | `water_half_px` | `water_half_px` | 96 | 9 | Meia largura da água que o segmento de partida autora (segments.csv, resource=water): uma massa de água com sítio no mundo, e não só uma etiqueta do bioma (§7.2 do relatório de 06/10/2026). Valor de ensaio. |
+| territory | `wild_water_half_px` | `wild_water_half_px` | 128 | 9 | Meia largura da água de um segmento de água das terras geradas, à volta do assunto dele. O mar de uma borda começa onde o caminho acaba. Valor de ensaio. |
+| territory | `water_reach_px` | `water_reach_px` | 64 | 9 | Uma obra que precisa de água (o pesqueiro) só se levanta com o meio a esta distância, no máximo, da borda da água, na mesma faixa (§8.4). Valor de ensaio. |
+| territory | `forest_reach_px` | `forest_reach_px` | 160 | 9 | Uma obra que precisa de floresta conta as árvores de pé a esta distância, no máximo, na mesma faixa. Nenhuma obra da região a pede hoje; fica para o corte de madeira (§10.2). Valor de ensaio. |
+| territory | `forest_min` | `forest_min` | 3 | 9 | Quantas árvores de pé, no mínimo, fazem uma fonte de floresta: uma árvore só não é um bosque. Valor de ensaio. |
+| territory | `rock_reach_px` | `rock_reach_px` | 0 | 9 | Uma obra que precisa de rocha (o poço de minério) tem de estar dentro de uma cavidade a que uma passagem chega: a cavidade é rocha (Q-130), e o acesso é o porão entre as muralhas à volta da passagem (§7.1, T06). |
 

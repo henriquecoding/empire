@@ -90,6 +90,7 @@ static func _crescer(campo: FieldWork, lado: int, largura: float) -> bool:
 	if novo.is_empty():
 		return false
 	_aplicar(campo, lado, k, largura, sorteios[WildSegments.SORTEIOS])
+	TerritoryWatch.apply()  # terra nova pode trazer agua ou rocha ao alcance (ADR 0077)
 	return true
 
 
