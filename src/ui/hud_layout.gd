@@ -15,6 +15,10 @@ const TOUCH_POINTS := 1.15
 ## vezes se reve a largura (estreitar faz o texto mais alto, e pode descer mais).
 const MIN_BAND := 140.0
 const ROUNDS := 4
+## O Control guarda a largura como fim menos inicio, em float, e um Label posto em 190
+## pode ficar com 189,99997 e dobrar uma unidade antes. Mede-se com essa folga: nunca
+## uma linha a menos do que o Label desenha.
+const FOLGA := 0.01
 const COMBAT_MIN_WIDTH := 960.0
 const COMBAT_GAP := 40.0
 const PURSE := Rect2(16, 12, 132, 56)
@@ -84,8 +88,9 @@ static func fit_label(
 
 
 ## A altura, em unidades, do texto de `label` dobrado a `largura`: o Label so a sabe no
-## frame seguinte, e um painel que muda de largura tem de a saber ja. Conta o espaco
-## entre linhas do Label, que a fonte nao conta.
+## frame seguinte, e um painel que muda de largura tem de a saber ja. Dobra como o Label
+## dobra — a largura util em unidades inteiras (menos a FOLGA), e no WORD_SMART parte a
+## palavra que nao cabe numa linha — e conta o espaco entre linhas, que a fonte nao conta.
 static func text_height(label: Label, largura: float) -> float:
 	var caixa := label.get_theme_stylebox(&"normal")
 	var margem := caixa.get_minimum_size() if caixa != null else Vector2.ZERO
@@ -94,8 +99,15 @@ static func text_height(label: Label, largura: float) -> float:
 	var letra := label.get_theme_font(&"font")
 	var tamanho := label.get_theme_font_size(&"font_size")
 	var dobra := TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND
+	if label.autowrap_mode == TextServer.AUTOWRAP_WORD_SMART:
+		dobra |= TextServer.BREAK_ADAPTIVE
 	var texto := letra.get_multiline_string_size(
-		label.text, HORIZONTAL_ALIGNMENT_LEFT, largura - margem.x, tamanho, -1, dobra
+		label.text,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		floorf(largura - margem.x - FOLGA),
+		tamanho,
+		-1,
+		dobra
 	)
 	var linhas := roundf(texto.y / maxf(1.0, letra.get_height(tamanho)))
 	var entre := label.get_theme_constant(&"line_spacing") * maxf(0.0, linhas - 1.0)

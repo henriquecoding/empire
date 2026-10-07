@@ -110,3 +110,70 @@ func test_long_touch_texts_never_end_narrow_over_a_button() -> void:
 		assert_bool(ficou_largo or HudLayout._clear(texto, onde, 2.208, 720.0)).is_true()
 	TouchControls.active = false
 	TouchLayout.circles = antes
+
+
+## UX-06: a altura que o fit_label mede e a que o Label desenha — com larguras partidas
+## (o Label dobra em unidades inteiras) e palavras maiores do que a linha (WORD_SMART).
+## Com a medida curta de uma linha, um texto estreito "livre" caia em cima do INTERAGIR.
+func test_measured_text_height_is_the_drawn_height() -> void:
+	var texto: Label = auto_free(Label.new())
+	texto.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	texto.add_theme_font_override("font", HudStyle.font())
+	texto.add_theme_font_size_override("font_size", 16)
+	var painel := HudStyle.panel()
+	painel.set_content_margin_all(HudLayout.GAP)
+	texto.add_theme_stylebox_override("normal", painel)
+	add_child(texto)
+	TranslationServer.set_locale("pt_PT")
+	var textos := [
+		tr(&"CONTEXT_WALL_BUILDER"),
+		tr(&"ARRIVAL_GOAL_PEOPLE"),
+		"Berserker de Raiz",
+		"RECRUTA UM TRABALHADOR CONSTRUTORAMENTE",
+	]
+	for t: String in textos:
+		texto.text = t
+		for largura: float in [140.5, 151.5, 233.7, 426.35, 519.9]:
+			texto.size = Vector2(largura, 0.0)
+			var real := texto.get_minimum_size().y
+			assert_float(HudLayout.text_height(texto, largura)).is_equal_approx(real, 0.5)
+	# O Control guarda a largura como fim menos inicio: pedida com 190, pode ficar com
+	# 189,99997 e o Label dobra uma unidade antes. A medida de 190 nao pode dar menos.
+	texto.text = "Arqueiro · Train a ferreiro: 12 coins remaining\nCOIN fund the training · a worker"
+	texto.text += " of yours goes in for a day"
+	texto.size = Vector2(189.99997, 0.0)
+	var desenhada := texto.get_minimum_size().y
+	assert_float(HudLayout.text_height(texto, 190.0)).is_greater_equal(desenhada)
+
+
+## UX-06: o caso do iPhone SE com o toque um pouco maior — o muro sem construtor ficava
+## estreito por cima do INTERAGIR. Medido pelo Label ja posto, nunca toca num controlo
+## se estreitou.
+func test_narrow_context_on_a_small_phone_clears_the_drawn_buttons() -> void:
+	var antes := TouchLayout.circles
+	TouchControls.active = true
+	var l := TouchLayout.new()
+	l.screen = Vector2(1280.0, 720.0)
+	l.scale = 1.54
+	TouchLayout.circles = l.circles_now()
+	var texto: Label = auto_free(Label.new())
+	texto.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	texto.add_theme_font_override("font", HudStyle.font())
+	texto.add_theme_font_size_override("font_size", 16)
+	var painel := HudStyle.panel()
+	painel.set_content_margin_all(HudLayout.GAP)
+	texto.add_theme_stylebox_override("normal", painel)
+	add_child(texto)
+	TranslationServer.set_locale("pt_PT")
+	texto.text = tr(&"CONTEXT_WALL_BUILDER")
+	HudLayout.fit_label(texto, l.screen, 2.208, HudLayout.CONTEXT_WIDTH, 176.64)
+	var largo := minf(HudLayout.CONTEXT_WIDTH, 1280.0 / 2.208 - HudLayout.MARGIN * 2)
+	if not is_equal_approx(texto.size.x, largo):
+		var caixa := Rect2(texto.position, texto.get_minimum_size() * 2.208)
+		caixa.size.x = texto.size.x * 2.208
+		assert_float(caixa.end.y).is_less_equal(720.0)
+		for c: Vector3 in TouchLayout.circles:
+			var perto := Vector2(c.x, c.y).clamp(caixa.position, caixa.end)
+			assert_float(perto.distance_to(Vector2(c.x, c.y))).is_greater_equal(c.z)
+	TouchControls.active = false
+	TouchLayout.circles = antes

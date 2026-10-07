@@ -47,6 +47,8 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	# Antes da primeira medida: o fit_label mede o texto dobrado como o Label o dobra.
+	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_theme_font_size_override("font_size", CAIXA.letra)
 	add_theme_color_override("font_color", COR)
 	add_theme_color_override("font_outline_color", TINTA)
@@ -108,7 +110,6 @@ func _process(delta: float) -> void:
 	# A caixa guarda tres linhas, mas e o texto que tem de caber e de nao tapar um botao.
 	HudLayout.fit_label(self, area * zoom, zoom, HudLayout.CONTEXT_WIDTH, top)
 	size.y = maxf(size.y, CAIXA.alto)
-	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	advance(delta)
 
 

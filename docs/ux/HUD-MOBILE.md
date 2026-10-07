@@ -119,9 +119,18 @@ a densidade empurrava qualquer escolha para o máximo. Agora a densidade cresce 
 `TouchLayout.TETO` e a escolha multiplica isso, até `TouchLayout.MAXIMO`. O contexto, os
 avisos e as legendas desciam por cima dos botões; no toque, um texto que tapasse um controlo
 tenta a largura do x livre entre os controlos dos dois lados que lhe chegam à altura
-(`HudLayout.fit_label()`), e só a usa se, já com a altura nova (medida com a fonte e o espaço
-entre linhas), não tapar controlo nenhum, couber no ecrã e tiver pelo menos
+(`HudLayout.fit_label()`), e só a usa se, já com a altura nova, não tapar controlo nenhum,
+couber no ecrã e tiver pelo menos
 `HudLayout.MIN_BAND` unidades. Senão fica largo, como na `main`: nunca fica pior. Nos tamanhos
 normais, em 640 × 360, 667 × 375 canhoto, 844 × 390 e 1024 × 768, o aviso e o contexto não
 tapam os botões; com duas legendas de uma vez num 16:9, ou com os controlos no tamanho
 máximo, o texto pode ficar largo e tapar o topo de um botão.
+
+A altura nova mede-se como o Label dobra (`HudLayout.text_height()`): a largura útil em
+unidades inteiras, com as palavras maiores do que a linha partidas (o `WORD_SMART`), o espaço
+entre linhas, e uma folga para o Control que guarda 190 como 189,99997. A primeira versão
+media com a largura partida e dava uma linha a menos; num iPhone SE com os controlos um
+ponto acima do normal, o muro sem construtor ficava estreito por cima do INTERAGIR. Medida
+contra o Label posto, em 13 telemóveis e num varrimento contínuo de larguras e escalas (mais
+de 580 mil textos estreitados, todos os do jogo em pt_PT e en), nenhum texto estreito tapa um
+controlo nem sai do ecrã.
