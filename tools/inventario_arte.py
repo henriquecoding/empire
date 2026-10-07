@@ -26,6 +26,7 @@ import re
 import sys
 from pathlib import Path
 from temporary_art_register import temporary_assets, temporary_table
+from renewal_art_register import renewal_assets, renewal_table
 
 RAIZ = Path(__file__).resolve().parent.parent
 MANIFESTO = RAIZ / "art/export/enramados/manifest.json"
@@ -92,8 +93,10 @@ def mapas() -> dict:
     silhueta = ler("src/world/silhouette.gd")
     nativas = ler("src/world/sprites_native.gd")
     return {
-        "unidades": ramos(ler("src/actors/original_art.gd"), "static func unit_profile", {}),
-        "obras": {nucleo: "tree_castle", **pares(skins, "ORIGINAIS")},
+        "unidades": {**ramos(ler("src/actors/original_art.gd"), "static func unit_profile", {}),
+                      **pares(ler("src/world/renewal_art.gd"), "UNITS")},
+        "obras": {**pares(skins, "ORIGINAIS"),
+                  **pares(ler("src/world/renewal_art.gd"), "BUILDINGS"), nucleo: "royal_tree_castle"},
         "pintadas": pares(ler("src/world/painted_art.gd"), "OBRAS"),
         "por_forma": pares(skins, "POR_FORMA", r"Silhouette\.Form\.(\w+)"),
         "categorias": pares(silhueta, "POR_CATEGORIA").keys(),
@@ -200,8 +203,9 @@ def documento() -> str:
     manifesto = json.loads(MANIFESTO.read_text(encoding="utf-8"))
     m = mapas()
     tab_export, usos = exportacoes(manifesto, m)
-    tab_unid, faltas_unid = unidades({"assets": {**manifesto["assets"], **temporary_assets()}}, m)
-    tab_obras, faltas_obras = obras(manifesto, m)
+    ativos = {"assets": {**manifesto["assets"], **temporary_assets(), **renewal_assets()}}
+    tab_unid, faltas_unid = unidades(ativos, m)
+    tab_obras, faltas_obras = obras(ativos, m)
     niveis = len(tabela("data/source/walls.csv"))
     faltas_obras.append(
         f"muralha (`walls.csv`, {niveis} niveis): pintada (`WallSprites`): "
@@ -254,7 +258,7 @@ def documento() -> str:
         f"- Estados de aprovacao presentes: {celula(estados)}. Nenhuma exportacao esta aprovada.",
         "",
     ]
-    return "\n".join(partes + temporary_table())
+    return "\n".join(partes + temporary_table() + renewal_table())
 
 
 def main() -> int:

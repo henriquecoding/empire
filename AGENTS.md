@@ -60,6 +60,7 @@ src/core/event_bus.gd       EventBus      autoload; os 61 sinais da §46
 src/core/rng_service.gd     RngService    autoload; os seis fluxos (§42)
 src/core/registry.gd        Registry      autoload; os .tres por StringName
 src/core/save_service.gd    SaveService   autoload; store_var/get_var(false)
+src/core/save_file.gd       SaveFile      gravar um save como transacao: escrever, confirmar, promover (BUG-01)
 src/core/sim_factory.gd     SimFactory    monta os sistemas puros a partir do Registry
 src/core/rules_factory.gd   RulesFactory  o que as respostas do painel trouxeram: precos, estatuas, estrago (ADR 0027)
 src/core/pace.gd            Pace          a roda abranda o tempo saltando passos (Q-034)
@@ -170,6 +171,7 @@ src/core/sim_save.gd        SimSave       que coleccoes da §45 entram no save
 src/core/preferences.gd     Preferences   o tremor e os claroes, em user://settings.cfg (§26, §45)
 src/world/boot.gd           (script)      o que a boot.tscn corre (ADR 0005)
 src/world/game.gd           Game          o que a game.tscn corre (ADR 0005)
+src/world/resume.gd         Resume        retomar pelo save mais novo que se abre; a partida acabada nao volta atras (BUG-03)
 src/world/greybox.gd        Greybox       monta a regiao enquanto nao ha segmentos (GB-01)
 src/world/band_view.gd      BandView      desenha UMA faixa, e leva a luz dela
 src/world/terrain_backdrop.gd TerrainBackdrop o cenario da faixa, so quando a luz muda
@@ -259,6 +261,11 @@ src/world/lowland_art.gd    LowlandArt    essa paisagem, em pixeis (§11, §22, 
 src/world/passage_art.gd    PassageArt    a boca da passagem, e o poco quando o subsolo se ve (§11, Q-181)
 src/world/flora_art.gd      FloraArt      o que cresce, em pixeis
 src/world/tree_art.gd       TreeArt       as arvores em pixeis: silhueta por especie, copa por estacao, vento (ADR 0070)
+src/world/renewal_art.gd    RenewalArt    os perfis da arte renovada: elenco, obras, sede e criaturas (ADR 0075)
+src/world/renewal_trees.gd  RenewalTrees  as arvores da arte renovada, com copa, estacao e fita (ADR 0075)
+src/world/renewal_flora.gd  RenewalFlora  os arbustos e as arvores do fundo da arte renovada (ADR 0075)
+src/world/renewal_beasts.gd RenewalBeasts as criaturas da Podridao da arte renovada, com os olhos (ADR 0075)
+src/world/world_text.gd     WorldText     as letras escritas no mundo, legiveis no telemovel (UX-06)
 src/world/forest_view.gd    ForestView    a floresta no plano de accao, a quem serve e o chao que ficou vazio (ADR 0070)
 src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
 src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds
@@ -287,6 +294,7 @@ src/ui/touch_stick.gd       TouchStick    a alavanca, solta ou fixa: andar; corr
 src/ui/wide_touch.gd        WideTouch     no toque, o mundo enche o ecra ate 1,25x o 16:9 (Q-188)
 src/ui/touch_view.gd        TouchView     o que cada botao de toque diz agora (ADR 0047)
 src/ui/touch_art.gd         TouchArt      os controlos de toque, desenhados em formas lisas (ADR 0047)
+src/ui/royal_backdrop.gd    RoyalBackdrop o vale por tras do ecra de escolha do monarca (ADR 0075)
 src/ui/web_screen.gd        WebScreen     o ecra inteiro do browser, pedido a casca (UX-03)
 src/ui/screen_row.gd        ScreenRow     o ecra inteiro na pausa: entrar, sair, ou como no iPhone (UX-03)
 src/ui/captions.gd          Captions      as legendas de som (§26, GB-22)

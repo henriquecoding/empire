@@ -8,6 +8,7 @@ func after_test() -> void:
 
 func test_every_monarch_and_paid_companion_evolve_only_after_distinct_shared_battles() -> void:
 	SimLoop.autosave_enabled = false
+	assert_int(Registry.ids(&"monarchs").size()).is_equal(3)
 	for profile in Registry.ids(&"monarchs"):
 		EventBus.reset()
 		SimLoop.start(20261004)
@@ -26,20 +27,22 @@ func test_every_monarch_and_paid_companion_evolve_only_after_distinct_shared_bat
 		var c := SimLoop.field.monarchy.companion_index(u, SimLoop.king_id)
 		var health := u.max_healths[c]
 		u.xs[c] = u.xs[0] + 500.0
-		var converted := _kill()
-		SimLoop.field.song.allies[int(converted[CombatSystem.DE])] = {}
 		u.xs[c] = u.xs[0]
-		CompanionWatch.battles([converted])
+		CompanionWatch.battles(_kill(0.0, true))
+		assert_int(SimLoop.companion.battles.size()).is_equal(0)
+		CompanionWatch.battles(_kill(5000.0))  # longe do rei: nao conta
 		assert_int(SimLoop.companion.battles.size()).is_equal(0)
 		u.xs[c] = u.xs[0] + 500.0
 		var first := _kill()
-		CompanionWatch.battles([first])
+		CompanionWatch.battles(first)
 		assert_bool(MonarchWatch.evolved(SimLoop.field)).is_false()
 		u.xs[c] = u.xs[0]
-		CompanionWatch.battles([first, first])
+		var twice := first.duplicate()
+		twice.append_array(first)
+		CompanionWatch.battles(twice)
 		assert_int(SimLoop.companion.battles.size()).is_equal(1)
 		for _k in LastCartWatch.rules().battle_evolve_count - 1:
-			CompanionWatch.battles([_kill()])
+			CompanionWatch.battles(_kill())
 		assert_bool(MonarchWatch.evolved(SimLoop.field)).is_true()
 		assert_int(u.max_healths[c]).is_greater(health)
 		SimLoop.load_world(SimLoop.world())
@@ -50,16 +53,29 @@ func test_every_monarch_and_paid_companion_evolve_only_after_distinct_shared_bat
 		)
 
 
-func _kill() -> Dictionary:
+## Uma morte pelo resolvedor real: a criatura sai das colunas antes de alguem ler o
+## evento, como no jogo (BUG-02). `away` afasta-a do rei; `ally` converte-a antes.
+func _kill(away := 0.0, ally := false) -> Array[Dictionary]:
 	var foe := SimLoop.creatures.spawn(
 		SimLoop.state,
 		Registry.entry(&"creatures", &"crawler"),
-		SimLoop.units.xs[0] + 20.0,
+		SimLoop.units.xs[0] + 20.0 + away,
 		SimLoop.core_x
 	)
-	return {
-		CombatSystem.CHAVE: CombatSystem.EV_MORTE, CombatSystem.DE: foe, CombatSystem.CRIATURA: true
-	}
+	if ally:
+		SimLoop.field.song.allies[foe] = {&"permanent": true}
+	SimLoop.creatures.allies = SimLoop.field.song.allies
+	SimLoop.creatures.damage(foe, 999)
+	var roll := func() -> float: return 0.0
+	var events := SimLoop.combat.resolve(SimLoop.units, SimLoop.creatures, SimLoop.builds, roll)
+	var deaths: Array[Dictionary] = []
+	for event in HeroWatch.resolved(events):
+		if event[CombatSystem.CHAVE] == CombatSystem.EV_MORTE and event[CombatSystem.DE] == foe:
+			deaths.append(event)
+	assert_int(SimLoop.creatures.index_of(foe)).is_equal(-1)
+	assert_int(deaths.size()).is_equal(1)
+	SimLoop.field.song.allies.erase(foe)
+	return deaths
 
 
 func test_seat_health_and_defense_increase_with_real_stages() -> void:

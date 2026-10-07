@@ -145,6 +145,6 @@ static func _label(canvas: CanvasItem, at: Vector2, key: StringName) -> void:
 		TranslationServer.translate(key),
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,
-		FONT_PX,
+		WorldText.px(canvas, FONT_PX),
 		GOLD
 	)

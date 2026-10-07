@@ -35,7 +35,7 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if SimLoop.state == null:
 		return
-	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var zoom := HudLayout.zoom(get_viewport())
 	var area := get_viewport_rect().size / zoom
 	scale = Vector2.ONE * zoom
 	_texto_em -= delta
@@ -55,5 +55,8 @@ func _process(delta: float) -> void:
 		frame.position.y = maxf(
 			frame.position.y, header.get_global_rect().end.y / zoom + HudLayout.PADDING
 		)
+	if TouchControls.active:
+		HudLayout.fit_label(self, area * zoom, zoom, frame.size.x, frame.position.y * zoom)
+		return
 	size = Vector2(frame.size.x, 0)
 	position = frame.position * zoom

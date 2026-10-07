@@ -34,7 +34,9 @@ const G4_SKIP := ["res://src/sim/data/", "res://src/sim/band.gd"]
 ## script embutido: load() num caminho de save e execucao remota de codigo. As
 ## preferencias (§45) sao o outro ficheiro que o jogo le de user://, e a mesma
 ## porta: o ConfigFile desserializa Object(...) e Resource(...) (GB-13).
-const G6_FILES := ["res://src/core/save_service.gd", "res://src/core/preferences.gd"]
+const G6_FILES := [
+	"res://src/core/save_service.gd", "res://src/core/save_file.gd", "res://src/core/preferences.gd"
+]
 const G6_FORBIDDEN := ["load(", "ResourceLoader", "ResourceSaver", "ConfigFile"]
 
 

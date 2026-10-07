@@ -18,9 +18,9 @@ const ICONE := 4.0
 const MEIO := 0.5
 ## Fraccoes do raio: o icone, onde ele e o rotulo ficam, o botao premido, e a largura
 ## que o rotulo pode ter antes de encolher a letra.
-const MEDIDA := {"icone": 0.26, "alto": 0.2, "rotulo": 0.42, "premido": 0.94, "texto": 1.72}
+const MEDIDA := {"icone": 0.26, "alto": 0.2, "rotulo": 0.42, "premido": 0.94, "texto": 1.55}
 ## §26: nenhum caracter abaixo de 12 px a 1280x720.
-const LETRA := {"corpo": 13, "min": 12, "contorno": 4}
+const LETRA := {"corpo": 13, "min": 12, "min_raio": 0.3, "contorno": 4}
 ## Um botao que hoje nao faz nada apaga-se; o INTERAGIR ganha um aro quando ha um alvo.
 const APAGADO := 0.35
 ## O botao premido enche-se da cor do aro: o polegar tapa-o, e a borda e o que se ve.
@@ -140,9 +140,11 @@ static func label(ci: CanvasItem, texto: String, em: Vector2, raio: float, alfa:
 	if texto.is_empty():
 		return
 	var letra := HudStyle.font()
-	var factor := ci.get_viewport().get_final_transform().get_scale().x
-	var corpo := roundi(LETRA.corpo * HudLayout.scale_for(factor))
-	var minimum := roundi(LETRA.min * HudLayout.scale_for(factor))
+	var zoom := HudLayout.zoom(ci.get_viewport())
+	var corpo := roundi(LETRA.corpo * zoom)
+	# A letra cresce com a interface; o botao tem tecto (TouchLayout.ESCALA). O minimo
+	# conta-se pelo raio, para o rotulo caber sempre dentro do circulo (UX-06).
+	var minimum := mini(corpo, maxi(LETRA.min, roundi(raio * LETRA.min_raio)))
 	while corpo > minimum and letra.get_string_size(texto, 0, -1, corpo).x > raio * MEDIDA.texto:
 		corpo -= 1
 	var largura := raio * 2

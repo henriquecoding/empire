@@ -56,6 +56,8 @@ func _ready() -> void:
 	add_child(SfxDirector.new())  # os sons provisorios (ADR 0054)
 	if fresh:
 		_starting_choice()
+	elif Resume.recovered:
+		($Interface/HUD as GameHud).say(tr(&"SAVE_RECOVERED"))
 	print(_recibo())
 
 
@@ -104,20 +106,9 @@ static func seed_from(args: PackedStringArray, omissao: int) -> int:
 
 
 func _retomar() -> bool:
-	var slot := SaveService.latest_slot()
 	var novo := _recomecar or OS.get_cmdline_user_args().has(NOVO)
 	_recomecar = false
-	if slot < 0 or novo:
-		return false
-	var estado := SaveService.restore(slot)
-	if estado == null:
-		return false
-	SimLoop.resume(estado, SaveService.restore_rng(slot))
-	Greybox.region()
-	SimLoop.load_world(SaveService.restore_world(slot))
-	if Defeat.happened() or SimLoop.state.crossed or SimLoop.units.count() == 0:
-		return false
-	return true
+	return false if novo else Resume.latest()
 
 
 func _seguir() -> void:

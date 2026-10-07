@@ -124,7 +124,7 @@ func test_o_canhoto_troca_os_lados_da_alavanca() -> void:
 
 func test_o_tamanho_fica_entre_os_limites() -> void:
 	var l := _layout(3.0)
-	assert_float(l.scale).is_equal(TouchLayout.ESCALA.max)
+	assert_float(l.scale).is_equal(TouchLayout.MAXIMO)
 	l.scale = 0.1
 	assert_float(l.scale).is_equal(TouchLayout.ESCALA.min)
 
@@ -201,3 +201,29 @@ func test_largar_para() -> void:
 	s.end()
 	assert_float(s.axis()).is_equal(0.0)
 	assert_bool(s.runs()).is_false()
+
+
+## UX-06: no telemovel a densidade cresce os botoes ate ao TETO, e o tamanho escolhido
+## nas opcoes continua a multiplicar isso — antes ficava tudo preso no maximo.
+func test_o_tamanho_das_opcoes_conta_no_telemovel() -> void:
+	var raios: Array[float] = []
+	for escolhido: float in [TouchLayout.ESCALA.min, 1.0, TouchLayout.ESCALA.max]:
+		var l := _layout()
+		l.scale = escolhido * minf(2.12, TouchLayout.TETO)
+		raios.append(l.radius(TouchLayout.Role.DROP))
+	assert_float(raios[0]).is_less(raios[1])
+	assert_float(raios[1]).is_less(raios[2])
+
+
+## UX-06: o x livre entre os controlos nao toca em nenhum botao, no destro e no canhoto.
+func test_o_meio_livre_nao_toca_em_nenhum_controlo() -> void:
+	for canhoto: bool in [false, true]:
+		var l := _layout(1.4, canhoto)
+		l.screen = Vector2(1558.0, 720.0)
+		var livre := TouchLayout.free_between(l.circles_now(), l.screen.x, l.screen.y)
+		assert_float(livre.y).is_greater(livre.x)
+		for papel: TouchLayout.Role in [TouchLayout.Role.FIX] + TouchLayout.BOTOES.keys():
+			var c := l.centre(papel)
+			var r := l.radius(papel)
+			# O Vector2 guarda em 32 bits: um centesimo de px de folga na comparacao.
+			assert_bool(c.x + r <= livre.x + 0.01 or c.x - r >= livre.y - 0.01).is_true()

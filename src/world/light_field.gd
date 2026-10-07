@@ -81,15 +81,23 @@ static func _gather(tempo: float) -> Dictionary:
 	return faixas
 
 
-## O archote aceso de quem se conduz (Q-029): metade da forca, na mao dele.
+## O archote aceso de quem se conduz (Q-029): metade da forca, na mao dele. Sem ele, e
+## com pouca luz, a tocha da mao (HandLight, UX-07): mais curta e mais fraca.
 static func _archote(faixas: Dictionary, perfil: RotProfile, fogo: PackedColorArray) -> void:
 	var rei := SimLoop.units.index_of(Assume.driven())
-	if rei < 0 or not SimLoop.night.dark.torch.lit():
+	if rei < 0:
 		return
 	var faixa := SimLoop.units.bands[rei]
 	var onde := Vector2(SimLoop.units.xs[rei], WorldPalette.ground_of(faixa) - MAO)
 	var raio := perfil.torch_radius_px
-	faixas[faixa].append(Glow.new(onde, faixa, raio, WorldLight.MEIA, fogo, Flicker.Kind.FIRE))
+	var forca := WorldLight.MEIA
+	if not SimLoop.night.dark.torch.lit():
+		if not SimLoop.units.alive(rei) or not HandLight.carried(HandLight.dark_now(), false):
+			return
+		onde = HandLight.tip(rei)
+		raio *= HandLight.LUZ.raio
+		forca = HandLight.LUZ.forca
+	faixas[faixa].append(Glow.new(onde, faixa, raio, forca, fogo, Flicker.Kind.FIRE))
 
 
 ## O Lume na base dela (ADR 0034): inteiro na superficie, e nas outras faixas so o

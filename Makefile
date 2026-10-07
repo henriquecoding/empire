@@ -83,6 +83,7 @@ manifesto:  ## O motor declarado no project.godot e o fixado no .godot-version
 inventario-arte:  ## docs/art/RUNTIME_ART.md em dia com o manifesto, os CSV e o codigo
 	python3 tools/export_temporary.py --check
 	python3 tools/inventario_arte.py --check
+	python3 tools/export_renewal.py --check
 
 afirmacoes:  ## A prosa e o validation.json contra a contagem real
 	python3 tools/check_claims.py

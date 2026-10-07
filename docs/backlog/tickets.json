@@ -2765,5 +2765,25 @@
   "porque": "Corrigir a hierarquia, legibilidade e duplicação de controlos da captura móvel.",
   "feito": "Cartões responsivos, contexto variável, ações compactas, flechas visíveis e estado do reino na pausa.",
   "fora": "Simulação, balanceamento, arte e validação física num iPhone."
+ },
+ "ART-RENEWAL-01": {
+  "title": "Renovacao visual do reino",
+  "porque": "O dono pediu arte coerente com as novas referencias e aprovou a familia da Podridao.",
+  "spec": [
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "—",
+  "feito": "Fontes e exports integrados, suite e portoes verdes, capturas revistas e merge na main.",
+  "fora": "Alterar balanceamento, regras da floresta ou saves.",
+  "estado": "feito — arte integrada na main com a HUD da UX-05; a paisagem espelhada sem buracos (ADR 0075)",
+  "horas": "—",
+  "passos": [
+   "Gerar o elenco e os cenarios a partir das referencias.",
+   "Integrar atlas, emissao, perfis e estados de construcao.",
+   "Verificar animacao, luz, interface e publicacao."
+  ],
+  "notas": [
+   "ADR 0075; docs/art/ART_DIRECTION_2026-10-05.md."
+  ]
  }
 }

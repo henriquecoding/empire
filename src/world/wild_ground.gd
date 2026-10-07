@@ -16,7 +16,7 @@ extends RefCounted
 
 ## Por bioma: campo, caminho, terra, rocha. A floresta e a do EnramadosLayer.
 const PALETA := {
-	&"ancient_forest": ["6e7546", "b09a68", "483b2a", "65543a"],
+	&"ancient_forest": ["789553", "c1a77c", "483b2a", "65543a"],
 	&"coast": ["7f8a5c", "cdb988", "5a4832", "7d6f58"],
 	&"canyon": ["8d7348", "c69c66", "6b4329", "8b5b3b"],
 	&"floodplain": ["7b8b4b", "b9a270", "4f412c", "6b5b41"],

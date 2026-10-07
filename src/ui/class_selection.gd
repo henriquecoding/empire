@@ -7,12 +7,14 @@ class_name ClassSelection
 extends Control
 
 const WIDTH := 760.0
-const MAX_WIDTH := 1000.0
-const MARGIN := 28
-const CARD_HEIGHT := 212
+const MAX_WIDTH := 1080.0
+const MARGIN := 24
+const CARD_HEIGHT := 240
 const OVERLAY := Color("161917")
 const SELECTION := Color("ead0a0")
 const PERCENT := 100.0
+const BODY_GAP := 8
+const DETAIL_GAP := 4
 const HALF := 0.5
 static var active := false
 static var release_pending := false
@@ -46,11 +48,7 @@ func _ready() -> void:
 	get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
 	set_anchors_preset(Control.PRESET_TOP_LEFT)
 	theme = PauseTheme.make()
-	var bg := ColorRect.new()
-	bg.color = OVERLAY
-	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(bg)
+	add_child(RoyalBackdrop.new())
 	_margin = MarginContainer.new()
 	_margin.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_margin)
@@ -61,6 +59,7 @@ func _ready() -> void:
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_layout.add_child(_scroll)
 	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", BODY_GAP)
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.add_child(body)
 	var brand := PauseTheme.label(body, &"UI_MENU_TITLE")
@@ -78,9 +77,10 @@ func _ready() -> void:
 	var profile := PanelContainer.new()
 	body.add_child(profile)
 	var details := VBoxContainer.new()
+	details.add_theme_constant_override("separation", DETAIL_GAP)
 	profile.add_child(details)
 	_title = PauseTheme.label(details)
-	PauseTheme.title(_title)
+	PauseTheme.title(_title, PauseTheme.ACTION_SIZE)
 	_companion = PauseTheme.label(details)
 	_base = PauseTheme.label(details)
 	_evolved = PauseTheme.label(details)
@@ -137,7 +137,7 @@ func select(id: StringName) -> void:
 		return
 	selected = id
 	for i in cards.size():
-		cards[i].modulate = SELECTION if _choices[i] == id else Color.WHITE
+		cards[i].modulate = Color.WHITE if _choices[i] == id else Color("b2c3bc")
 		cards[i].button_pressed = _choices[i] == id
 	var monarca := Registry.entry(&"monarchs", id) as MonarchData
 	var data := Registry.entry(&"classes", monarca.skill_class) as ClassData
@@ -168,8 +168,7 @@ func begin() -> void:
 
 
 func fit() -> void:
-	var factor := maxf(PauseLayout.MIN_SCALE, get_viewport().get_final_transform().get_scale().x)
-	var ui_scale := maxf(1.0, 1.0 / factor)
+	var ui_scale := HudLayout.zoom(get_viewport())
 	scale = Vector2.ONE * ui_scale
 	size = get_viewport_rect().size / ui_scale
 	var inset := maxf(MARGIN, (size.x - MAX_WIDTH) * HALF)

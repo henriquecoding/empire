@@ -1,49 +1,26 @@
 class_name ClassPortrait
 extends Control
 
-const HEIGHT := 116
-const FOOT := 98.0
-const FLOOR := Color("74614b")
+const HEIGHT := 158
 const HALF := 0.5
-const FLOOR_HALF_WIDTH := 40
-const STROKE := 2.0
-const BODY_HALF := 0.3
-const BODY_WIDTH := 0.6
-const COLORS := {
-	&"monarch": Color("d9b46b"), &"nia": Color("aaa0ce"), &"archer_emperor": Color("9db589")
+const PORTRAITS := {
+	&"monarch": preload("res://art/export/renewal/portrait_king.png"),
+	&"nia": preload("res://art/export/renewal/portrait_nia.png"),
+	&"archer_emperor": preload("res://art/export/renewal/portrait_archer.png"),
 }
-## O monarca do retrato (monarchs.csv, ADR 0052).
 var monarch_id: StringName = &"monarch"
-var _art := OriginalArt.new()
-var _units := UnitSystem.new()
-var _data: UnitData
 
 
 func _ready() -> void:
 	custom_minimum_size.y = HEIGHT
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var data := Registry.entry(&"monarchs", monarch_id) as MonarchData
-	_data = Registry.entry(&"units", data.unit) as UnitData
-	_units.spawn(GameState.new(), _data, 1, 0.0)
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	resized.connect(queue_redraw)
 
 
 func _draw() -> void:
-	if _data == null:
-		return
-	var foot := Vector2(floorf(size.x * HALF), FOOT)
-	draw_line(
-		foot + Vector2(-FLOOR_HALF_WIDTH, STROKE),
-		foot + Vector2(FLOOR_HALF_WIDTH, STROKE),
-		FLOOR,
-		STROKE
-	)
-	var profile := OriginalArt.unit_profile(_data.id)
-	if profile != &"":
-		_art.draw_on(self, profile, foot, Color.WHITE)
-	else:
-		var height := WorldPalette.DEGRAU * _data.scale_tier
-		var box := Rect2(
-			foot - Vector2(height * BODY_HALF, height), Vector2(height * BODY_WIDTH, height)
-		)
-		ActorArt.draw_unit(self, box, _data, _units, 0, COLORS.get(monarch_id, Color.WHITE), 0.0)
+	var portrait: Texture2D = PORTRAITS.get(monarch_id, PORTRAITS[&"monarch"])
+	var factor := minf(size.x / portrait.get_width(), size.y / portrait.get_height())
+	var target := portrait.get_size() * factor
+	var origin := (size - target) * HALF
+	draw_texture_rect(portrait, Rect2(origin, target), false)

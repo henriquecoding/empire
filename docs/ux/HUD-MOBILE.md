@@ -93,3 +93,44 @@ Linux/Windows/Web, arranque web, idiomas, teclado, toque e silhueta noturna. A m
 contraste por paleta e os testes de retângulos não substituem uma sessão num iPhone real.
 Ficam para essa sessão o conforto prolongado, a legibilidade exterior, os recortes do ecrã
 e a interação com as barras do Safari. Não se declara essa validação física como realizada.
+
+## UX-06 — a HUD conta pontos, e não píxeis (06/10/2026)
+
+A captura do dono num iPhone mostrou a HUD de UX-05 a um terço do tamanho desenhado. A causa
+era uma conta só: a escala da interface dividia pelos píxeis da janela, e o browser do
+telemóvel dá três píxeis por ponto (`devicePixelRatio`). Num iPhone deitado a janela tem
+2532 × 1170 píxeis, a escala dava 1,0 e cada unidade de 1280 × 720 ficava com 0,54 pontos:
+a letra de 14 lia-se a 7,6 pontos e os botões tinham 41 pontos de diâmetro.
+
+`HudLayout.zoom()` passa a dividir pela densidade do ecrã (`DisplayServer.screen_get_scale()`)
+e a pedir, no toque, 1,15 pontos por unidade. Todos os painéis usam esta mesma conta: a
+faixa, o contexto, a dica, os avisos, as legendas, a pausa, a escolha do monarca, o painel
+de combate e os botões de toque (estes até ao teto da `TouchLayout`). O rótulo de cada botão
+encolhe pelo raio dele, para caber dentro do círculo. As letras escritas no mundo (o nome das
+provisões, o alcance de uma torre) crescem com `WorldText`, até 1,6 ×.
+
+Uma captura a 844 × 390 com densidade 1 é o que o iPhone passa a mostrar a 2532 × 1170 com
+densidade 3; `tests/hud_layout_test.gd` prova a igualdade das duas contas. Num desktop a
+densidade é 1 e nada muda; num Mac com ecrã Retina a janela grande continua a 1,0.
+
+Revisão antes do merge (06/10/2026). Com a escala nova, dois efeitos ficaram à vista e estão
+corrigidos. O tamanho dos controlos escolhido nas opções voltava a não contar no telemóvel:
+a densidade empurrava qualquer escolha para o máximo. Agora a densidade cresce os botões até
+`TouchLayout.TETO` e a escolha multiplica isso, até `TouchLayout.MAXIMO`. O contexto, os
+avisos e as legendas desciam por cima dos botões; no toque, um texto que tapasse um controlo
+tenta a largura do x livre entre os controlos dos dois lados que lhe chegam à altura
+(`HudLayout.fit_label()`), e só a usa se, já com a altura nova, não tapar controlo nenhum,
+couber no ecrã e tiver pelo menos
+`HudLayout.MIN_BAND` unidades. Senão fica largo, como na `main`: nunca fica pior. Nos tamanhos
+normais, em 640 × 360, 667 × 375 canhoto, 844 × 390 e 1024 × 768, o aviso e o contexto não
+tapam os botões; com duas legendas de uma vez num 16:9, ou com os controlos no tamanho
+máximo, o texto pode ficar largo e tapar o topo de um botão.
+
+A altura nova mede-se como o Label dobra (`HudLayout.text_height()`): a largura útil em
+unidades inteiras, com as palavras maiores do que a linha partidas (o `WORD_SMART`), o espaço
+entre linhas, e uma folga para o Control que guarda 190 como 189,99997. A primeira versão
+media com a largura partida e dava uma linha a menos; num iPhone SE com os controlos um
+ponto acima do normal, o muro sem construtor ficava estreito por cima do INTERAGIR. Medida
+contra o Label posto, em 13 telemóveis e num varrimento contínuo de larguras e escalas (mais
+de 580 mil textos estreitados, todos os do jogo em pt_PT e en), nenhum texto estreito tapa um
+controlo nem sai do ecrã.

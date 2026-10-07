@@ -73,19 +73,17 @@ func _process(delta: float) -> void:
 
 
 func _dispor() -> void:
-	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var zoom := HudLayout.zoom(get_viewport())
 	var area := get_viewport_rect().size / zoom
 	_dica.scale = Vector2.ONE * zoom
 	_dica.position = Vector2(HINT.margin, get_viewport_rect().size.y - HINT.bottom * zoom)
 	_dica.size = Vector2(area.x - HINT.margin * 2, HINT.height)
 	_dica.clip_text = true
-	var width := minf(NOTICE.width, area.x - HudLayout.MARGIN * 2)
-	_aviso.scale = Vector2.ONE * zoom
-	_aviso.size = Vector2(width, 0)
+	var ecra := get_viewport_rect().size
 	var top := (
 		_context.get_global_rect().end.y if _context.visible else HudLayout.CONTEXT_TOP * zoom
 	)
-	_aviso.position = Vector2((area.x - width) * HudLayout.HALF * zoom, top + HudLayout.GAP * zoom)
+	HudLayout.fit_label(_aviso, ecra, zoom, NOTICE.width, top + HudLayout.GAP * zoom)
 
 
 func _dizer_chave(chave: StringName) -> void:

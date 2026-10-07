@@ -65,3 +65,5 @@ ferramentas/saida/
 # ---- Python ----
 # O check_claims importa o estado_tickets, e o Python deixa a cache ao lado.
 __pycache__/
+
+!art/export/renewal/

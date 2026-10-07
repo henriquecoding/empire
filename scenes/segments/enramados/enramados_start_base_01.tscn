@@ -10,10 +10,6 @@
 script = ExtResource("1")
 plane = 0
 
-[node name="SunAndMoon" type="Node2D" parent="."]
-script = ExtResource("2")
-paint_sky = false
-
 [node name="Clouds" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.03125, 1)
 
@@ -27,6 +23,10 @@ scroll_scale = Vector2(0.12, 1)
 [node name="Art" type="Node2D" parent="FarHills"]
 script = ExtResource("1")
 plane = 1
+
+[node name="SunAndMoon" type="Node2D" parent="."]
+script = ExtResource("2")
+paint_sky = false
 
 [node name="DistantRealm" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.3, 1)

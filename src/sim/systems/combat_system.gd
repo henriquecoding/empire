@@ -29,6 +29,9 @@ const OBRA := &"slot"
 const EVENTOS := &"events"
 ## O que a criatura era: o nome de um feito (§76) depende de QUEM se abateu.
 const QUEM := &"data_id"
+## Se a criatura morta era uma aliada convertida pelo Bardo: quem le a morte depois de
+## ela sair das colunas ja nao a encontra para perguntar (BUG-02).
+const ALIADA := &"ally"
 
 var picker: TargetPicker
 var focus: ArcherFocus
@@ -217,6 +220,7 @@ func _mortes_das_criaturas() -> void:
 			continue
 		var morte := {CHAVE: EV_MORTE, DE: creature_id, ONDE: _c.xs[c], FAIXA: int(_c.bands[c])}
 		morte.merge({MOEDAS: _c.coin_drops[c], CRIATURA: true, QUEM: _c.data_ids[c]})
+		morte[ALIADA] = _c.allies.has(creature_id)
 		_eventos.append(morte)
 		_c.remove(creature_id)
 

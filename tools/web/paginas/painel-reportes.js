@@ -6,7 +6,10 @@
   function dizer(el, texto, tipo) { el.textContent = texto; el.className = "estado-envio " + (tipo || ""); }
   var ESTADOS = [["novo", "Novo"], ["em_analise", "Em análise"], ["valido", "Válido"], ["resolvido", "Resolvido"], ["rejeitado", "Rejeitado"]];
   var TIPOS = { sugestao: "Sugestão", erro: "Erro", duvida: "Dúvida", mensagem: "Mensagem" };
-  var conta = null, rascunhos = {}, pedido = 0;
+  // Uma página de cada vez, e a seguinte começa depois do último mostrado, pela data
+  // e pelo id: dois reportes no mesmo instante não se perdem nem se repetem (BUG-06).
+  var PAGINA = 100;
+  var conta = null, rascunhos = {}, pedido = 0, mostrados = 0, cursor = null, mais = null;
   var chave = () => 'empire.painel.reportes.' + conta;
   function persistir() {
     try { sessionStorage.setItem(chave(), JSON.stringify(rascunhos)); return true; }
@@ -132,18 +135,44 @@
     return art;
   }
 
-  function carregarReportes() {
+  function consulta(est, depois) {
+    var q = "/rest/v1/empire_feedback?select=*&order=criado_em.desc,id.desc&limit=" + (PAGINA + 1);
+    if (est) q += "&estado=eq." + encodeURIComponent(est);
+    if (depois) {
+      var quando = '"' + depois.criado_em + '"';
+      q += "&or=" + encodeURIComponent("(criado_em.lt." + quando + ",and(criado_em.eq." + quando + ",id.lt." + depois.id + "))");
+    }
+    return q;
+  }
+
+  function carregarReportes(continuar) {
     abrirConta();
+    var seguinte = continuar === true && cursor ? cursor : null;
     var versao = ++pedido;
     var lista = $("lista-reportes");
     var est = $("fr-estado").value;
+    if (!seguinte) { mostrados = 0; cursor = null; }
     dizer($("fr-estado-msg"), "A carregar…", "");
-    M.pedir("/rest/v1/empire_feedback?select=*&order=criado_em.desc&limit=200" + (est ? "&estado=eq." + est : ""))
+    M.pedir(consulta(est, seguinte))
       .then(function (linhas) {
         if (versao !== pedido) return;
-        lista.textContent = "";
-        (linhas || []).forEach(function (r) { lista.appendChild(cartaoReporte(r)); });
-        dizer($("fr-estado-msg"), (linhas || []).length ? (linhas.length + " reporte(s).") : "Nenhum reporte com este estado.", "");
+        linhas = linhas || [];
+        var haMais = linhas.length > PAGINA;
+        if (haMais) linhas = linhas.slice(0, PAGINA);
+        if (!seguinte) lista.textContent = "";
+        if (mais) { mais.remove(); mais = null; }
+        linhas.forEach(function (r) { lista.appendChild(cartaoReporte(r)); });
+        mostrados += linhas.length;
+        if (linhas.length) cursor = linhas[linhas.length - 1];
+        if (haMais) {
+          mais = el("button", "botao", "Carregar mais reportes");
+          mais.type = "button";
+          mais.addEventListener("click", function () { carregarReportes(true); });
+          lista.appendChild(mais);
+        }
+        dizer($("fr-estado-msg"), mostrados
+          ? mostrados + " reporte(s)" + (haMais ? " — há mais; carrega no fim da lista para ver os seguintes." : ".")
+          : "Nenhum reporte com este estado.", "");
       }, function (e) {
         if (versao !== pedido) return;
         dizer($("fr-estado-msg"), "Não foi possível ler os reportes: " + e.message, "erro");

@@ -47,6 +47,8 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	# Antes da primeira medida: o fit_label mede o texto dobrado como o Label o dobra.
+	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_theme_font_size_override("font_size", CAIXA.letra)
 	add_theme_color_override("font_color", COR)
 	add_theme_color_override("font_outline_color", TINTA)
@@ -98,18 +100,16 @@ static func in_view(x: float, largura: float, ecra: Vector2) -> bool:
 
 func _process(delta: float) -> void:
 	enabled = Preferences.on(Preferences.CAPTIONS)
-	var zoom := HudLayout.scale_for(get_viewport().get_final_transform().get_scale().x)
+	var zoom := HudLayout.zoom(get_viewport())
 	var area := get_viewport_rect().size / zoom
 	var top := HudLayout.CONTEXT_TOP * zoom
 	for group: StringName in [&"hud_context", &"hud_notice"]:
 		for control: Control in get_tree().get_nodes_in_group(group):
 			if control.is_visible_in_tree():
 				top = maxf(top, control.get_global_rect().end.y + HudLayout.GAP * zoom)
-	var width := minf(HudLayout.CONTEXT_WIDTH, area.x - HudLayout.MARGIN * 2)
-	scale = Vector2.ONE * zoom
-	position = Vector2((area.x - width) * MEIA * zoom, top)
-	size = Vector2(width, CAIXA.alto)
-	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# A caixa guarda tres linhas, mas e o texto que tem de caber e de nao tapar um botao.
+	HudLayout.fit_label(self, area * zoom, zoom, HudLayout.CONTEXT_WIDTH, top)
+	size.y = maxf(size.y, CAIXA.alto)
 	advance(delta)
 
 

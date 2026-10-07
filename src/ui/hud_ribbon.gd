@@ -34,8 +34,7 @@ func _ready() -> void:
 
 
 func fit() -> void:
-	var factor := get_viewport().get_final_transform().get_scale().x
-	var zoom := HudLayout.scale_for(factor)
+	var zoom := HudLayout.zoom(get_viewport())
 	scale = Vector2.ONE * zoom
 	size = Vector2(get_viewport_rect().size.x / zoom, HudLayout.HEADER_BOTTOM)
 	_cards = HudLayout.header(size)

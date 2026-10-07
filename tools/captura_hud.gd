@@ -19,6 +19,7 @@ func _ready() -> void:
 	Preferences.shared().set_enabled(
 		Preferences.CAPTIONS, _options.get("captions", "false") == "true"
 	)
+	Preferences.shared().set_number(Preferences.TOUCH_SCALE, float(_options.get("size", "1.0")))
 	SimLoop.autosave_enabled = false
 	_game = preload("res://scenes/game.tscn").instantiate() as Game
 	add_child(_game)
@@ -42,6 +43,8 @@ func _process(_delta: float) -> void:
 	_frames -= 1
 	if _frames == 10 and _options.get("captions", "false") == "true":
 		EventBus.dusk_fell.emit(ClockService.clock.day)
+	if _frames == 10 and _options.has("notice"):
+		(_game.get_node(^"Interface/HUD") as GameHud).say(String(_options.notice))
 	if _frames > 0:
 		return
 	set_process(false)

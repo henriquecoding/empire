@@ -62,11 +62,38 @@
     } catch (e) { /* sem armazenamento: a sessão vive só nesta página */ }
   }
 
-  function sair() { geracao++; guardarSessao(null); }
+  function limpar() { geracao++; guardarSessao(null); }
+
+  /* Sair fecha a sessão aqui e revoga-a no Supabase (scope=local: só esta). A
+   * limpeza local vem primeiro, para nenhuma renovação em curso a ressuscitar; a
+   * revogação leva o token que havia. Um access token já emitido vale até expirar
+   * (é o Supabase), mas o refresh deixa de renovar. Nunca rejeita: devolve
+   * {remoto} a dizer se o servidor confirmou (BUG-05). */
+  function sair() {
+    var s = lerSessao();
+    limpar();
+    if (!s || !s.token) return Promise.resolve({ remoto: false });
+    var revogar = function (token) {
+      return enviar("/auth/v1/logout?scope=local", { metodo: "POST" }, token);
+    };
+    // Com o token vencido o Auth responde 403 (bad_jwt), e não 401: renova-se uma vez
+    // só para revogar, antes ou depois de uma recusa.
+    var renovarERevogar = function () {
+      if (!s.refresh) return Promise.reject(new Error("sem refresh"));
+      return enviar("/auth/v1/token?grant_type=refresh_token", { metodo: "POST", corpo: { refresh_token: s.refresh } })
+        .then(function (d) { return revogar(d && d.access_token); });
+    };
+    var vencido = s.expira && s.expira <= Date.now() + 60000;
+    var pedido = vencido ? renovarERevogar() : revogar(s.token).catch(function (e) {
+      if (e.estado !== 401 && e.estado !== 403) throw e;
+      return renovarERevogar();
+    });
+    return pedido.then(function () { return { remoto: true }; }, function () { return { remoto: false }; });
+  }
 
   function expirada() {
     var s = lerSessao();
-    sair();
+    limpar();
     var erro = new Error("A tua sessão de acesso terminou. Entra novamente para guardar; a resposta continua no formulário.");
     erro.sessaoExpirada = true;
     window.dispatchEvent(new CustomEvent("empire:sessao-expirada", { detail: { email: s && s.email } }));

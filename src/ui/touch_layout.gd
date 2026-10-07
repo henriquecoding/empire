@@ -40,10 +40,19 @@ const FIXAR := Vector3(136.0, 242.0, 38.0)
 const ZONA := 0.5
 ## O tamanho que se escolhe nas opcoes (§45).
 const ESCALA := {"min": 0.8, "max": 1.4}
+## Quanto a densidade do ecra pode crescer os botoes, por cima do tamanho escolhido: o
+## tamanho das opcoes multiplica isto, e por isso conta tambem no telemovel (UX-06). O
+## MAXIMO e o teto do produto: acima disso, num canvas de 1280, o meio ficava sem ar.
+const TETO := 1.4
+const MAXIMO := 1.75
+
+## Os controlos do ultimo frame, (x, y, alcance) em px do canvas: o contexto, os avisos
+## e as legendas desviam-se deles no toque (UX-06).
+static var circles: Array[Vector3] = []
 
 var scale: float = 1.0:
 	set(valor):
-		scale = clampf(valor, ESCALA.min, ESCALA.max)
+		scale = clampf(valor, ESCALA.min, MAXIMO)
 var left_handed := false
 var screen := BASE
 ## A escala da interface: o painel de combate cresce num canvas pequeno (Q-186).
@@ -111,6 +120,31 @@ func stick_radius() -> float:
 func stick_home() -> Vector2:
 	var x := ALAVANCA.x * scale
 	return Vector2(screen.x - x if left_handed else x, screen.y - ALAVANCA.y * scale)
+
+
+## Os botoes, o FIXAR e a alavanca em repouso: (x, y, raio desenhado) de cada um.
+func circles_now() -> Array[Vector3]:
+	var lista: Array[Vector3] = []
+	for papel: Role in [Role.FIX] + BOTOES.keys():
+		var c := centre(papel)
+		lista.append(Vector3(c.x, c.y, radius(papel)))
+	var base := stick_home()
+	lista.append(Vector3(base.x, base.y, stick_radius() + ALAVANCA.margem))
+	return lista
+
+
+## O x livre num ecra de `largura` px entre os controlos dos dois lados que sobem acima
+## de `y`: um controlo que fica todo abaixo de `y` nao aperta o que esta por cima dele.
+static func free_between(lista: Array[Vector3], largura: float, y: float) -> Vector2:
+	var livre := Vector2(0.0, largura)
+	for c: Vector3 in lista:
+		if c.y - c.z >= y:
+			continue
+		if c.x < largura * ZONA:
+			livre.x = maxf(livre.x, c.x + c.z)
+		else:
+			livre.y = minf(livre.y, c.x - c.z)
+	return livre
 
 
 ## A base desenhada para um polegar em `p`: o mais perto dele que cabe no ecra.
