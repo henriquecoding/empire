@@ -192,23 +192,21 @@ func test_cada_camada_tem_o_tamanho_do_manifesto() -> void:
 				continue
 			var tex := SceneryArt.texture(StringName(id), StringName(camada))
 			assert_object(tex).is_not_null()
-			var r: Array = dados[SceneryArt.RETANGULO]
+			var r := SceneryArt.rect_of(dados)
 			var s: Array = dados[SceneryArt.ESCALA]
-			assert_float(tex.get_width() * float(s[0])).is_equal(float(r[2]))
-			assert_float(tex.get_height() * float(s[1])).is_equal(float(r[3]))
+			assert_float(tex.get_width() * float(s[0])).is_equal(r.size.x)
+			assert_float(tex.get_height() * float(s[1])).is_equal(r.size.y)
 
 
 ## O chao e a terra pintados tapam de y 517 ao fundo do ecra: e o que garante que o subsolo
 ## so se ve quando se abre (ADR 0039).
 func test_a_terra_pintada_comeca_na_linha_do_chao() -> void:
 	for id in SceneryArt.scenes():
-		var debaixo := SceneryArt.layer(StringName(id), &"under")
-		var r: Array = debaixo[SceneryArt.RETANGULO]
-		assert_float(float(r[1])).is_less(float(Band.GROUND_LINE))
+		var debaixo := SceneryArt.rect_of(SceneryArt.layer(StringName(id), &"under"))
+		assert_float(debaixo.position.y).is_less(float(Band.GROUND_LINE))
 		var fundo := 0.0
 		for camada: StringName in [&"under", &"terrain", &"water", &"foreground"]:
 			var dados := SceneryArt.layer(StringName(id), camada)
 			if not dados.is_empty():
-				var q: Array = dados[SceneryArt.RETANGULO]
-				fundo = maxf(fundo, float(q[1] + q[3]))
+				fundo = maxf(fundo, SceneryArt.rect_of(dados).end.y)
 		assert_float(fundo).is_equal(float(Band.SCREEN_BOTTOM))

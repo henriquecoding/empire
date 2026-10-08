@@ -28,7 +28,11 @@ const OPACA := &"sky"
 const DEGRAU := 256.0
 const MARGEM := 512.0
 const MISTURA := SceneryMap.MISTURA
+const FAIXA := MISTURA * 2.0
 const FATIAS := 32
+## O sentido de uma faixa: o reino entra da esquerda para a direita, ou sai.
+const ENTRA := 1.0
+const SAI := -1.0
 const MEIO := 0.5
 
 @export var camada: StringName = &"far"
@@ -93,15 +97,15 @@ func _draw() -> void:
 		)
 		_pintar(_reinos[i], cheio, 1.0)
 		if i > 0:
-			_esvair(_reinos[i], de, 1.0)
+			_esvair(_reinos[i], de, ENTRA)
 		if i < _fronteiras.size() and not opaca:
-			_esvair(_reinos[i], ate, -1.0)
+			_esvair(_reinos[i], ate, SAI)
 
 
-## A faixa de uma fronteira em `x`: o reino entra (sentido 1, da esquerda para a direita)
-## ou sai (sentido -1), em FATIAS degraus de alfa.
+## A faixa de uma fronteira em `x`: o reino entra (ENTRA, da esquerda para a direita) ou
+## sai (SAI), em FATIAS degraus de alfa.
 func _esvair(cena: StringName, x: float, sentido: float) -> void:
-	var fatia := 2.0 * MISTURA / float(FATIAS)
+	var fatia := FAIXA / float(FATIAS)
 	for k in FATIAS:
 		var de := x - MISTURA + fatia * float(k)
 		var alfa := (float(k) + MEIO) / float(FATIAS)

@@ -30,6 +30,13 @@ const TRANSICAO := "transition"
 const LIMIAR_X := "threshold_x"
 ## O quadro inteiro, de cima a baixo: o que se pede sem corte.
 const TUDO := Vector2(0.0, 720.0)
+## As posicoes do retangulo no manifesto: [x, y, largura, altura], em px do quadro.
+const R_X := 0
+const R_Y := 1
+const R_LARGO := 2
+const R_ALTO := 3
+## A transformada que vira um quadro.
+const VIRAR := Vector2(-1.0, 1.0)
 
 static var _manifesto: Dictionary = {}
 static var _lido := false
@@ -90,6 +97,12 @@ static func scenes() -> PackedStringArray:
 ## O que o manifesto diz de uma camada: FICHEIRO, RETANGULO (no quadro) e ESCALA.
 static func layer(cena: StringName, camada: StringName) -> Dictionary:
 	return _camada(cena, camada)
+
+
+## O retangulo que a camada ocupa no quadro, em px do quadro.
+static func rect_of(dados: Dictionary) -> Rect2:
+	var r: Array = dados[RETANGULO]
+	return Rect2(float(r[R_X]), float(r[R_Y]), float(r[R_LARGO]), float(r[R_ALTO]))
 
 
 ## Se a cena tem esta camada.
@@ -163,13 +176,13 @@ static func _desenhar(
 	var tex := texture(cena, camada)
 	if tex == null or corte.z <= 0.0:
 		return tex
-	var r: Array = dados[RETANGULO]
+	var r := rect_of(dados)
 	var s: Array = dados[ESCALA]
-	var y0 := maxf(float(r[1]), corte.x)
-	var y1 := minf(float(r[1] + r[3]), corte.y)
+	var y0 := maxf(r.position.y, corte.x)
+	var y1 := minf(r.end.y, corte.y)
 	var espelho := modo == Mosaico.ESPELHAR
 	var aparar := float(s[0]) if espelho else 0.0
-	var largura := float(r[2]) - 2.0 * aparar
+	var largura := r.size.x - aparar - aparar
 	var periodo := largura if espelho else width(cena)
 	if y1 <= y0 or periodo <= 0.0:
 		return tex
@@ -178,19 +191,19 @@ static func _desenhar(
 	var ultimo := floori((janela.z - janela.x) / periodo) if repetir else 0
 	for n in range(primeiro, ultimo + 1):
 		var inicio := janela.x + float(n) * periodo
-		var esquerda := inicio + (0.0 if espelho else float(r[0]))
+		var esquerda := inicio + (0.0 if espelho else r.position.x)
 		# Um quadro virado desenha-se direito, numa transformada que o vira a volta do meio dele.
 		var virado := espelho and posmod(n, 2) == 1
-		var eixo := 2.0 * inicio + periodo
+		var eixo := inicio + inicio + periodo
 		var a := maxf(esquerda, eixo - janela.z if virado else janela.y)
 		var b := minf(esquerda + largura, eixo - janela.y if virado else janela.z)
 		if b <= a:
 			continue
 		if virado:
-			canvas.draw_set_transform(Vector2(eixo, 0.0), 0.0, Vector2(-1.0, 1.0))
+			canvas.draw_set_transform(Vector2(eixo, 0.0), 0.0, VIRAR)
 		var fonte := Rect2(
 			(a - esquerda + aparar) / float(s[0]),
-			(y0 - float(r[1])) / float(s[1]),
+			(y0 - r.position.y) / float(s[1]),
 			(b - a) / float(s[0]),
 			(y1 - y0) / float(s[1])
 		)

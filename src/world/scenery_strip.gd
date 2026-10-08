@@ -32,6 +32,9 @@ const MARGEM := 1920.0
 const FUNDIDO := 48.0
 const FATIAS := 12
 const MEIO := 0.5
+## Para que lado o reino entra na outra cena.
+const PARA_A_DIREITA := 1.0
+const PARA_A_ESQUERDA := -1.0
 
 @export var parte: Parte = Parte.SUPERFICIE
 
@@ -99,7 +102,7 @@ func _juntar(a: Dictionary, b: Dictionary, camada: StringName, corte: Vector2) -
 	var reino := a if not a[SceneryMap.LIMIAR] else b
 	if reino[SceneryMap.LIMIAR]:
 		return
-	var sentido := 1.0 if reino == a else -1.0
+	var sentido := PARA_A_DIREITA if reino == a else PARA_A_ESQUERDA
 	var fatia := FUNDIDO / float(FATIAS)
 	for i in FATIAS:
 		var de := x + sentido * fatia * float(i)
