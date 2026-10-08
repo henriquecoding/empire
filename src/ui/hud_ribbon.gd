@@ -17,6 +17,9 @@ var _season: Label
 var _goal: Label
 var _cards := {}
 var _progress := 0.0
+var _goal_key := &""
+var _goal_shown := true
+var _hint := HintCue.new()
 
 
 func _ready() -> void:
@@ -46,6 +49,8 @@ func fit() -> void:
 	_clock.size = CLOCK.size
 	_season.position = SEASON.position
 	_season.size = SEASON.size
+	if not _goal_shown:
+		_cards[&"goal"] = Rect2()
 	_goal.visible = (_cards[&"goal"] as Rect2).has_area()
 	if _goal.visible:
 		var box: Rect2 = _cards[&"goal"]
@@ -71,10 +76,22 @@ func refresh() -> void:
 	var ammo := MonarchHud.arrows(Assume.driven()).trim_prefix(" · ")
 	if TouchControls.active and not ammo.is_empty():
 		_season.text = ammo
-	_goal.text = GameplayGuide.goal()
+	var goal := GuideHints.goal()
+	_goal.text = goal.text
+	_goal_key = goal.key
 	_progress = ClockService.clock.phase_progress()
 	fit()
 	queue_redraw()
+
+
+func _process(delta: float) -> void:
+	var fits := (
+		get_viewport_rect().size.x / HudLayout.zoom(get_viewport()) >= HudLayout.GOAL_MIN_WIDTH
+	)
+	_goal_shown = _hint.present(
+		_goal_key, fits and InteractionFocus.still() and not SiteSheet.active, delta
+	)
+	fit()
 
 
 func _draw() -> void:

@@ -6,6 +6,8 @@ const TEXTO_S := GameHud.TEXTO_S
 
 var device := Glyphs.Device.KEYBOARD
 var _texto_em := 0.0
+var _key := &""
+var _hint := HintCue.new()
 
 
 func _ready() -> void:
@@ -41,11 +43,15 @@ func _process(delta: float) -> void:
 	_texto_em -= delta
 	if _texto_em <= 0.0:
 		_texto_em = TEXTO_S
-		text = GameplayGuide.context(device)
+		var message := GuideHints.context(device)
+		text = message.text
+		_key = message.key
 		if text.is_empty() and area.x < HudLayout.GOAL_MIN_WIDTH:
-			text = GameplayGuide.goal()
+			message = GuideHints.goal()
+			text = message.text
+			_key = message.key
 	# Com a ficha do sitio aberta a linha curta repetia-a (ADR 0078).
-	visible = not text.is_empty() and SimLoop.running() and not SiteSheet.active
+	visible = _hint.present(_key, InteractionFocus.still() and not SiteSheet.active, delta)
 	var available := area
 	if not TouchControls.active and area.x >= HudLayout.COMBAT_MIN_WIDTH:
 		available.x -= CombatBar.WIDTH + HudLayout.COMBAT_GAP

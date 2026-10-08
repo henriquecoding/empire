@@ -77,4 +77,4 @@ static func _quiver(units: UnitSystem, r: int, values: Dictionary) -> String:
 
 
 static func _tr(chave: StringName) -> String:
-	return TranslationServer.translate(chave)
+	return GuideHints.translate(chave)

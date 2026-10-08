@@ -112,7 +112,7 @@ func test_the_context_only_offers_the_wall_path_the_verb_accepts() -> void:
 	assert_int(site.path).is_not_equal(before)
 
 
-func test_the_coin_toast_is_the_kings_and_troops_do_not_count_him() -> void:
+func test_collecting_coins_is_silent_and_troops_do_not_count_the_king() -> void:
 	var hud: GameHud = auto_free(GameHud.new())
 	add_child(hud)
 	# ADR 0060: sem servos de inicio. A tropa deste teste e explicita.
@@ -127,4 +127,4 @@ func test_the_coin_toast_is_the_kings_and_troops_do_not_count_him() -> void:
 	EventBus.coin_collected.emit(SimLoop.units.ids[archer], 1)
 	assert_str(hud._aviso.text).is_empty()
 	EventBus.coin_collected.emit(SimLoop.king_id, 1)
-	assert_str(hud._aviso.text).is_equal(HudText.coins(1))
+	assert_str(hud._aviso.text).is_empty()

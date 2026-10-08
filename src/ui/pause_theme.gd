@@ -97,9 +97,16 @@ static func button(parent: Node, key: StringName, action: Callable) -> Button:
 
 ## O cursor parado ao trocar de página não tira o foco seguro de Cancelar.
 static func follow_pointer(control: Control) -> void:
+	control.mouse_filter = Control.MOUSE_FILTER_PASS
 	control.gui_input.connect(
 		func(event: InputEvent) -> void:
-			if event is InputEventMouseMotion and event.relative != Vector2.ZERO:
+			if (
+				event is InputEventMouseMotion
+				and not Glyphs.emulated(event)
+				and not TouchControls.active
+				and event.button_mask == 0
+				and event.relative != Vector2.ZERO
+			):
 				control.grab_focus()
 	)
 

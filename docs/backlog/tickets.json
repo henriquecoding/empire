@@ -2840,5 +2840,19 @@
   "fora": "Mecânicas, balanceamento, arte original, migrações e analytics externos.",
   "estado": "feito",
   "horas": "—"
+ },
+ "UX-09": {
+  "title": "Explicações breves ao parar e pausa móvel rolável",
+  "porque": "O texto contínuo quebra a imersão e a pausa móvel não rola.",
+  "spec": [
+   "docs/design/24-controlos-hud-diegetico-e-feedback.md"
+  ],
+  "depende": "UX-05, UX-08",
+  "feito": "Explicações sem repetição, espaços de moedas e rolagem por toque na pausa.",
+  "fora": "Simulação, balanceamento, arte e áudio.",
+  "estado": "feito — implementação e provas locais; confirmação final no CI do PR",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

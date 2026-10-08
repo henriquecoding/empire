@@ -91,4 +91,4 @@ static func _rei_na_mancha() -> bool:
 
 
 static func _tr(key: StringName) -> String:
-	return TranslationServer.translate(key)
+	return GuideHints.translate(key)

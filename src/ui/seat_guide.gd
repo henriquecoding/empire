@@ -92,4 +92,4 @@ static func _name_of(chave: StringName) -> String:
 
 
 static func _tr(key: StringName) -> String:
-	return TranslationServer.translate(key)
+	return GuideHints.translate(key)

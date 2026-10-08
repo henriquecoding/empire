@@ -79,4 +79,4 @@ static func _effects(w: Woodland, i: int, values: Dictionary) -> String:
 
 
 static func _tr(key: StringName) -> String:
-	return TranslationServer.translate(key)
+	return GuideHints.translate(key)
