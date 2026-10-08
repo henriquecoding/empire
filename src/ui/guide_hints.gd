@@ -1,7 +1,7 @@
 class_name GuideHints
 extends RefCounted
 
-const PREFIXES := ["CONTEXT_", "ARRIVAL_", "GUIDE_", "FOREST_", "HUD_GOAL_"]
+const PREFIXES := ["CONTEXT_", "ARRIVAL_", "GUIDE_", "FOREST_", "HUD_GOAL_", "CLASS_STATUS"]
 
 static var _key := &""
 

@@ -68,6 +68,11 @@ func test_hint_identity_survives_a_price_or_language_change() -> void:
 	assert_str(first.key).is_not_empty()
 	assert_str(second.key).is_equal(first.key)
 	assert_str(second.text).is_not_equal(first.text)
+	MonarchWatch.begin(&"nia")
+	SimLoop.units.xs[king] = 1000000.0
+	var status := GuideHints.context(Glyphs.Device.KEYBOARD)
+	assert_str(status.text).is_not_empty()
+	assert_str(status.key).is_equal("CLASS_STATUS")
 
 
 func test_coin_slots_show_payments_instead_of_the_purse_balance() -> void:
