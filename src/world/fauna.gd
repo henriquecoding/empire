@@ -76,6 +76,7 @@ class Bicho:
 
 var bichos: Array[Bicho] = []
 var bando := Flock.new()
+var grade := FaunaGrid.new()  # quem anda perto do ecra, sem percorrer a regiao inteira
 var vista := PresentationBounds.TUDO  # so anda quem esta perto do ecra; o bando, aos saltos
 var _tempo := 0.0
 var _centro := 0.0
@@ -102,6 +103,7 @@ func populate(lista: PackedFloat32Array, largura: float, limites := Vector2.ZERO
 	_centro = largura * MEIO
 	for i in range(0, lista.size(), Wilds.BICHO):
 		bichos.append(_novo(i, int(lista[i]), lista[i + 1], lista[i + 2]))
+	grade.build(bichos)
 
 
 ## Um passo. `rei_x` so assusta quem esta no chao se `rei_aqui` (o rei a superficie).
@@ -113,11 +115,9 @@ func tick(delta: float, rei_x: float, rei_aqui: bool) -> void:
 			RUMO.alto + sin(_tempo * RUMO.ritmo * TAU * 2) * RUMO.onda
 		)
 		bando.advance(delta, rumo, vista)
-	var de := vista.position.x
-	var ate := vista.end.x
-	for b in bichos:
-		if b.flock_index < 0 and (b.x < de or b.x > ate):
-			continue
+	grade.fly(bichos, bando, delta)
+	for i in grade.between(bichos, vista.position.x, vista.end.x):  # so os perto do ecra
+		var b := bichos[i]
 		match int(MODO[b.kind]):
 			Modo.POISO:
 				_poiso(b, ESPANTO[b.kind], delta, rei_x, rei_aqui)
@@ -125,12 +125,7 @@ func tick(delta: float, rei_x: float, rei_aqui: bool) -> void:
 				_chao(b, ESPANTO[b.kind], delta, rei_x, rei_aqui)
 			Modo.PAIRA:
 				_paira(b, OITO[b.kind], delta)
-			Modo.BANDO:
-				var novo := bando.positions[b.flock_index]
-				b.facing = signf(novo.x - b.x) if not is_equal_approx(novo.x, b.x) else b.facing
-				b.x = novo.x
-				b.y = novo.y
-				b.phase += delta
+		grade.moved(i, b.x)
 
 
 func _novo(i: int, tipo: int, x: float, v: float) -> Bicho:

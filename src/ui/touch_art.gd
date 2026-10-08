@@ -115,6 +115,9 @@ const ICONES := {
 	],
 }
 
+## O corpo de letra que coube, por [texto, raio, corpo pedido]: a conta e sempre a mesma.
+static var _corpos := {}
+
 
 ## Um botao redondo: o fundo, o aro, o icone, o rotulo e, se o houver, o anel de recarga.
 static func button(ci: CanvasItem, c: Vector2, r: float, estado: Dictionary) -> void:
@@ -145,19 +148,29 @@ static func label(ci: CanvasItem, texto: String, em: Vector2, raio: float, alfa:
 	if texto.is_empty():
 		return
 	var letra := HudStyle.font()
-	var zoom := HudLayout.zoom(ci.get_viewport())
-	var corpo := roundi(LETRA.corpo * zoom)
-	# A letra cresce com a interface; o botao tem tecto (TouchLayout.ESCALA). O minimo
-	# conta-se pelo raio, para o rotulo caber sempre dentro do circulo (UX-06).
-	var minimum := mini(corpo, maxi(LETRA.min, roundi(raio * LETRA.min_raio)))
-	while corpo > minimum and letra.get_string_size(texto, 0, -1, corpo).x > raio * MEDIDA.texto:
-		corpo -= 1
+	var corpo := fit(texto, raio, roundi(LETRA.corpo * HudLayout.zoom(ci.get_viewport())))
 	var largura := raio * 2
 	var onde := em + Vector2(-raio, letra.get_ascent(corpo) * MEIO)
 	var centro := HORIZONTAL_ALIGNMENT_CENTER
 	var contorno := _alfa(TINTA, alfa)
 	ci.draw_string_outline(letra, onde, texto, centro, largura, corpo, LETRA.contorno, contorno)
 	ci.draw_string(letra, onde, texto, centro, largura, corpo, _alfa(GameHud.TEXT, alfa))
+
+
+## O corpo de letra do rotulo: o pedido, ou menos ate `texto` caber no botao de `raio`. A
+## letra cresce com a interface; o botao tem tecto (TouchLayout.ESCALA). O minimo conta-se
+## pelo raio, para o rotulo caber sempre dentro do circulo (UX-06). Lembra-se: medir o
+## texto em cada tamanho, a cada redesenho, era a parte cara do botao.
+static func fit(texto: String, raio: float, corpo: int) -> int:
+	var chave := [texto, raio, corpo]
+	if not _corpos.has(chave):
+		var letra := HudStyle.font()
+		var minimum := mini(corpo, maxi(LETRA.min, roundi(raio * LETRA.min_raio)))
+		var cabe := corpo
+		while cabe > minimum and letra.get_string_size(texto, 0, -1, cabe).x > raio * MEDIDA.texto:
+			cabe -= 1
+		_corpos[chave] = cabe
+	return _corpos[chave]
 
 
 ## Um icone da tabela, centrado em `c`, com `s` de meia largura.

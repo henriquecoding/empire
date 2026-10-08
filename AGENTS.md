@@ -280,6 +280,7 @@ src/world/scenery_map.gd    SceneryMap    que cena pintada cobre cada troco do m
 src/world/scenery_plane.gd  SceneryPlane  um plano de fundo pintado, em parallax, com a fronteira projetada (ADR 0081)
 src/world/scenery_strip.gd  SceneryStrip  o chao pintado no mundo: ate a linha, e a terra por cima do subsolo (ADR 0081)
 src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
+src/world/fauna_grid.gd     FaunaGrid     os bichos de cenario por troco de x: so anda e se desenha quem esta perto do ecra
 src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds
 src/world/fauna_art.gd      FaunaArt      o que um bicho de cenario E, em pixeis
 src/world/fauna_view.gd     FaunaView     os bichos de cenario, a mexer
@@ -349,6 +350,8 @@ scenes/boot.tscn            (cena principal)       cenas         tudo
 tools/*.gd, tools/*.py      ferramentas            fora do jogo  tudo; nunca exportado
 tools/vistoria.gd           Vistoria/Autopilot     fora do jogo  uma partida longa, vigiada
 tools/noites.gd             (script)               fora do jogo  as noites de uma partida pilotada: quem vem e de onde (ADR 0071)
+tools/desempenho.gd         (script)               fora do jogo  o frame e o tick de uma partida pilotada, medidos (RG-18)
+tools/perfilador.gd         (script)               fora do jogo  o tempo de cada funcao, pelo debugger remoto do motor (RG-18)
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado
 tools/web/**                o site (ADR 0024, 0025)  fora do jogo  le data/, docs/ e o project.godot; nunca exportado
 

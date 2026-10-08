@@ -47,9 +47,10 @@ static func draw_on(
 		# A serra de um Amargueiro e um slot do §55, mas o que se ve e a arvore.
 		if vaga.band != faixa or vaga.kind == AmargueiroSystem.CORTE:
 			continue
-		if not RealmGrowth.visible(SimLoop.builds, vaga, SimLoop.state):
-			continue
+		# O ecra primeiro: o RealmGrowth percorre as obras todas, e fora do ecra nao se desenha.
 		if not PresentationBounds.sees(vista, vaga.x, vaga.width * MEIA + ALEM):
+			continue
+		if not RealmGrowth.visible(SimLoop.builds, vaga, SimLoop.state):
 			continue
 		_obra(canvas, vaga, Silhouette.of_slot(vaga, edificios), luz, pulso, tempo)
 		TemporaryScenery.building_props(canvas, vaga, luz, tempo)

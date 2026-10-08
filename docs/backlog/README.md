@@ -246,7 +246,7 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-15](RG-15.md) | Integração e ausência | RG-13 | por fazer |
 | [RG-16](RG-16.md) | Arte por estágio e por povo | RG-03 | parcial — o Acampamento, o Povoado, a Vila, a Vila Fortificada e a carroça pintados em formas lisas; faltam as variantes por povo e a arte do dono |
 | [RG-17](RG-17.md) | Migração | RG-01 | parcial — o castelo herdado é a Fortaleza (v8, com teste); a matriz de pagamentos parciais, obras e pessoas por medir |
-| [RG-18](RG-18.md) | Desempenho e mobile | RG-16 | por fazer |
+| [RG-18](RG-18.md) | Desempenho e mobile | RG-16 | parcial — medidos o tick, o frame, a fauna fora de câmara e os controlos de toque, e corrigido o que se mediu (docs/reports/DESEMPENHO-2026-10-08.md); por medir as sedes grandes e o painel; os draw calls da noite acima do orçamento da §63 |
 | [RG-20](RG-20.md) | Uma clareira, prados de caça e floresta de exploração | RG-19, QP-06 | feito |
 | [RG-21](RG-21.md) | Recrutamento por corrida, fundação na lareira e cidade dentro das muralhas | RG-19, RG-20 | feito |
 | [RG-22](RG-22.md) | A Última Carroça: relatório completo e decisões atuais do painel | RG-21 | feito — protótipo e validação técnica; percepção humana por medir |

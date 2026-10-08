@@ -75,11 +75,8 @@ func _soltar() -> void:
 
 func _draw() -> void:
 	var vista := PresentationBounds.of(self)
-	var de := vista.position.x
-	var ate := vista.end.x
-	for b in _fauna.bichos:
-		if b.x < de or b.x > ate:
-			continue
+	for i in _fauna.grade.seen(_fauna.bichos, vista.position.x, vista.end.x):
+		var b := _fauna.bichos[i]
 		var alfa := Fauna.presence(b.kind, _escuro)
 		if b.kind == Wilds.Animal.FIREFLY and b.variant > _enxame:
 			continue

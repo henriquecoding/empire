@@ -27,13 +27,17 @@ const DONS := {
 }
 
 
-static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
+## O que os controlos mostram agora, como uma lista de passos de desenho: o TouchControls
+## so redesenha quando ela muda. Parados, os botoes voltavam a medir e a desenhar o texto
+## todos os frames, e custavam mais do que o mundo que tapam (auditoria de 08/10/2026).
+static func plan(pad: TouchPad, brilho: bool, zoom: float) -> Array:
 	var l := pad.layout
 	var raio := l.stick_radius()
+	var plano: Array = [[&"", zoom]]  # a escala nao se desenha, mas muda o rotulo
 	if pad.stick.held:
-		TouchArt.stick(ci, pad.stick.base, raio, pad.stick.offset, pad.runs())
+		plano.append([&"stick", pad.stick.base, raio, pad.stick.offset, pad.runs()])
 	else:
-		TouchArt.stick(ci, l.stick_home(), raio, 0.0, false)
+		plano.append([&"stick", l.stick_home(), raio, 0.0, false])
 	# O FIXAR (UX-03): aceso com a alavanca fixa, que e quando o ecra espreita.
 	var fixa := {
 		&"premido": l.fixed,
@@ -41,7 +45,7 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		&"rotulo": _nome(&"TOUCH_FIX"),
 		&"cor": Atlas.VALID if l.fixed else Atlas.SECONDARY,
 	}
-	TouchArt.button(ci, l.centre(TouchLayout.Role.FIX), l.radius(TouchLayout.Role.FIX), fixa)
+	plano.append([&"button", l.centre(TouchLayout.Role.FIX), l.radius(TouchLayout.Role.FIX), fixa])
 	# O CORRER acende-se enquanto se prime; cansado, apaga-se (Q-193).
 	var cansado := SimLoop.field != null and SimLoop.field.stamina.tired
 	var corre := {
@@ -51,7 +55,7 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 		&"cor": Atlas.VALID if pad.running and not cansado else Atlas.SECONDARY,
 		&"apagado": cansado,
 	}
-	TouchArt.button(ci, l.centre(TouchLayout.Role.RUN), l.radius(TouchLayout.Role.RUN), corre)
+	plano.append([&"button", l.centre(TouchLayout.Role.RUN), l.radius(TouchLayout.Role.RUN), corre])
 	var classe := HeroWatch.current()
 	var rei := Assume.king()
 	for papel: TouchLayout.Role in TouchPad.ACCOES.keys() + [TouchLayout.Role.PAUSE]:
@@ -84,11 +88,20 @@ static func draw(ci: CanvasItem, pad: TouchPad, brilho: bool) -> void:
 				estado[&"apagado"] = not rei
 			TouchLayout.Role.PAUSE:
 				estado[&"rotulo"] = ""
-		TouchArt.button(ci, l.centre(papel), l.radius(papel), estado)
+		plano.append([&"button", l.centre(papel), l.radius(papel), estado])
 	if pad.holds(TouchLayout.Role.WHEEL) and rei:
 		var n := SimLoop.field.crown.ids().size()
 		var alcance := TouchPad.RODA_PX * l.scale
-		TouchArt.wheel(ci, l.centre(TouchLayout.Role.WHEEL), alcance, n, InputRouter.pointed)
+		var centro := l.centre(TouchLayout.Role.WHEEL)
+		plano.append([&"wheel", centro, alcance, n, InputRouter.pointed])
+	return plano
+
+
+## Desenha os passos de um plan(): cada um e uma funcao do TouchArt e os argumentos dela.
+static func paint(ci: CanvasItem, plano: Array) -> void:
+	for passo: Array in plano:
+		if not StringName(passo[0]).is_empty():
+			Callable(TouchArt, passo[0]).callv([ci] + passo.slice(1))
 
 
 ## A familia de cada comando (ADR 0078): a moeda e economia, o Interagir e contexto, o

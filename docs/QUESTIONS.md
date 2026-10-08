@@ -7,6 +7,22 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Desempenho — 08/10/2026 (RG-18)
+
+> Pedido do dono (08/10/2026): *«o desempenho do jogo parece estar muito pesado e mal elaborado, faça uma densa
+> auditoria e depois de perceber o que está mal aplique as correções»*. O que se mediu e corrigiu está em
+> `docs/reports/DESEMPENHO-2026-10-08.md`. O que segue muda o que se vê, e por isso não foi feito.
+
+### Q-262 · Menos pixeis e menos lotes no telemóvel
+- **Medido:** à noite o jogo faz ~160–280 draw calls, contra o orçamento de 120 do §63 — o subsolo (`RootCellars`) e o
+  chão (`PathAndSoil`) põem ~100 mesmo com a terra do `SoilCover` por cima. E o cenário pintado do CV-02 tem cerca de
+  oito planos de ecrã inteiro com o shader `world_light`, pintados à resolução nativa: 3 Mpx num iPhone deitado.
+- **Proposta:** (1) pintar uma vez numa textura as camadas vetoriais que não mudam a cada frame, como o `PaintedArt` já
+  faz às obras (ADR 0051), a começar pelo subsolo e pelo chão; (2) no toque, desenhar o mundo a uma resolução interna
+  mais baixa e escalar — o HUD e o texto ficam nítidos à resolução do ecrã.
+- **O que bloqueia:** (1) muda como as camadas se compõem e quer o teu olho em cada uma; (2) é a ADR 0001 (a escala).
+- **Decide:** tu — se avançam, e se a (2) é uma opção ou o comportamento do toque.
+
 ## Cenários em camadas — 08/10/2026 (ADR 0081)
 
 > Pedido do dono (08/10/2026): *«acesse meu google drive para ter acesso aos arquivos .zip que são o que você precisa
