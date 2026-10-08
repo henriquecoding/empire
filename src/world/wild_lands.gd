@@ -132,6 +132,11 @@ const FORTALEZA := [
 	[L, MADEIRA, 2, 0, -104, 0, -130],
 	[P, BANDEIRA, 1, -130, 22, -123, 1, -116],
 ]
+## So a bandeira do limiar, para quando o marco e o da transicao pintada (ADR 0081).
+const MASTRO := [
+	[L, MADEIRA, 2, 0, 0, 0, -112],
+	[P, BANDEIRA, 1, -112, 22, -105, 1, -98],
+]
 const FORMAS := {
 	&"gate": PORTAO,
 	&"bridge": PONTE,
@@ -159,6 +164,11 @@ static func draw(
 			PropArt.house(canvas, pe + Vector2(CASAL.x, 0.0), CASAL.escala, Color.WHITE)
 	var limiar := int(registo.get(WildSegments.ZONA, -1)) == WorldPlan.Zone.THRESHOLD
 	ShapeArt.draw(canvas, FORMAS.get(assunto, []), pe, tinta, float(lado) if limiar else 1.0)
+
+
+## A bandeira do povo do lado de la, virada para fora, sem o marco por baixo.
+static func flag(canvas: CanvasItem, x: float, tinta: Array[Color], lado: int) -> void:
+	ShapeArt.draw(canvas, MASTRO, Vector2(x, PE), tinta, float(lado))
 
 
 ## A paleta de uma coisa: as cores do bioma ali, as mais escuras e a bandeira do povo.

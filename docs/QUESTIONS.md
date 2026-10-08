@@ -7,6 +7,43 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Cenários em camadas — 08/10/2026 (ADR 0081)
+
+> Pedido do dono (08/10/2026): *«acesse meu google drive para ter acesso aos arquivos .zip que são o que você precisa
+> para implementar o design que quero no meu jogo»*. Aplicado no CV-02: os 8 reinos e as 13 transições pintam o fundo
+> e o chão do mundo inteiro. O que segue pede uma decisão tua ou arte nova.
+
+### Q-259 · Onde ficam as três propostas especiais
+- **Hoje:** o Reino Fluvial, o Porto Central e o Lago com Ponte e Cais não entram no export. O guia da entrega chama-lhes
+  *«propostas»* e não diz onde ficam no mundo; os dois primeiros repetem o fundo da Horta e dos Portuários com outra
+  composição.
+- **Proposta:** o Lago com Ponte e Cais na água do segmento de partida, que o território conta e ninguém vê (Q-257) — a
+  ponte leva o caminho de cima por cima do lago, e o cais é onde o pesqueiro faz sentido; o Porto Central e o Reino
+  Fluvial nos segmentos de água das terras dos Portuários e da Horta (`portuarios_water_01`, `horta_water_01`).
+  Cada um é um quadro de 2560 px ancorado num sítio, e não um reino em mosaico.
+- **Decide:** tu — se é isto, e se a sede e as obras devem desviar-se do lago.
+
+### Q-260 · As transições a oeste de casa
+- **Hoje:** cada transição tem o povo de onde se vem à esquerda (Mata Encharcada: Enramados → Bruma). A oeste de casa os
+  pares chegam ao contrário (Bruma à esquerda, Enramados à direita) e nenhuma das 13 serve; o guia proíbe espelhar a
+  cena inteira (a luz vira). Ali os dois reinos encontram-se no limiar com uma junta esbatida, e o limiar leva o marco
+  procedural.
+- **Opções:** (a) pintar as transições no sentido oposto, com a luz do mesmo lado — o guia sugere trocar as peças de
+  origem e destino de posição; as 6 que saem dos Enramados primeiro, porque o primeiro limiar a oeste é sempre um
+  deles; (b) aceitar o espelho só no marco, e não no chão.
+- **Decide:** tu, e quem pinta.
+
+### Q-261 · O que as cenas trazem e o jogo ainda não usa
+- **Os fundos das transições** (céu, longe, meio e perto de 1280 px) foram pintados para a câmara parada na fronteira;
+  em parallax a borda deles aparece na primeira passada. O fundo usa a mistura dos dois reinos na fronteira.
+- **O plano "perto"** dos Enramados e da SobRaiz tem a árvore monumental; repete-se a cada 5120 px de caminho. Separar a
+  árvore do resto do plano deixava-a uma vez só, atrás da sede.
+- **Juntas da própria pintura:** o plano do meio dos Portuários (e outros, como se vê no catálogo) tem uma costura
+  vertical a meio do quadro de 2560 px, onde a peça de 1280 se repete.
+- **As fachadas de baixo, as escadas e as casas de cada povo** ficam nos pacotes: só fazem sentido ligadas às passagens
+  (`PassageRec`, `UnderFit`) e às obras da simulação.
+- **Decide:** tu — o que pedir de arte, e por que ordem.
+
 ## Atlas do Império e cenários — 07/10/2026 (ADR 0078)
 
 > Pedido do dono (07/10/2026): *«Implemente essas melhorias dos relatórios»* — o plano mestre da HUD e da UI
@@ -26,6 +63,9 @@
 ### Q-254 · Os fatores de parallax da cena e a linha do chão
 - **Hoje:** a cena dos Enramados usa 0,03125 · 0,12 · 0,3 · 0,5 · 0,65; o `parallax_layers.csv` diz 0,03125 · 0,125 ·
   0,25 · 0,5 · 1,0 · 1,5 por camada, e o plano de cenários (§6.2) propõe outros intervalos. `Band.GROUND_LINE` é 517.
+- **Desde a ADR 0081 (08/10/2026):** a cena passou aos fatores das transições pintadas — céu 0,03125 · nuvens 0,07 ·
+  longe 0,125 · meio 0,25 · perto 0,5 (o bosque procedural, só de recurso, fica a 0,65) —, que batem com o CSV nos
+  planos que ele tem. As cenas novas confirmam o chão em 517 e o subsolo em 618,5.
 - **Aplicado (só o que não muda nada):** um teste guarda que os planos andam mais devagar quanto mais longe e que nada
   de jogo vive num `Parallax2D`; o inspetor lista os fatores.
 - **Em aberto:** que tabela manda nos fatores (a cena ou o CSV), e o A/B do chão em 517 contra ≈460 (§14.5) — mexer na

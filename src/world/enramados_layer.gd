@@ -68,6 +68,8 @@ func _process(_delta: float) -> void:
 
 
 func _draw() -> void:
+	if plane < GROUND_PLANE and SceneryArt.painted():
+		return  # o ceu, o panorama e o bosque sao os dos reinos pintados (ADR 0081)
 	match plane:
 		0:
 			_sky()
@@ -147,19 +149,28 @@ func _grove() -> void:
 		)
 
 
+## Com os reinos pintados, o campo e o caminho sao os deles (SceneryStrip): fica a terra
+## por baixo da linha, que so se ve quando o subsolo se abre, e o assunto de cada segmento.
 func _ground() -> void:
-	draw_rect(Rect2(0, BACK_GROUND, WIDTH, Band.GROUND_LINE - BACK_GROUND), FIELD)
-	draw_rect(Rect2(0, MID_GROUND, WIDTH, Band.GROUND_LINE - MID_GROUND), PATH)
-	for x in range(0, WIDTH, CELL):
-		draw_rect(Rect2(x, MID_GROUND + DETAIL, CELL * HALF, DETAIL), ROCK)
-		draw_rect(Rect2(x + CELL * HALF, Band.GROUND_LINE - DETAIL, CELL * HALF, DETAIL), SOIL)
+	var pintado := SceneryArt.painted()
+	if not pintado:
+		_field_and_path()
 	draw_rect(Rect2(0, Band.GROUND_LINE, WIDTH, Band.SOIL_CUT), SOIL)
 	for x in range(0, WIDTH, CELL):
 		for y in range(Band.GROUND_LINE + CELL, Band.SCREEN_BOTTOM, CELL):
 			draw_rect(Rect2(x + (y % CELL), y, CELL - DETAIL, DETAIL), ROCK)
 			draw_rect(Rect2(x, y - DETAIL, DETAIL, DETAIL), MOSS)
 	if SimLoop.field != null:  # e o chao das terras geradas, onde tambem se anda (Q-173)
-		WildGround.draw_ground(self, SimLoop.field.wilds, SimLoop.world_width)
+		var mapa := SceneryArt.map() if pintado else null
+		WildGround.draw_ground(self, SimLoop.field.wilds, SimLoop.world_width, mapa)
+
+
+func _field_and_path() -> void:
+	draw_rect(Rect2(0, BACK_GROUND, WIDTH, Band.GROUND_LINE - BACK_GROUND), FIELD)
+	draw_rect(Rect2(0, MID_GROUND, WIDTH, Band.GROUND_LINE - MID_GROUND), PATH)
+	for x in range(0, WIDTH, CELL):
+		draw_rect(Rect2(x, MID_GROUND + DETAIL, CELL * HALF, DETAIL), ROCK)
+		draw_rect(Rect2(x + CELL * HALF, Band.GROUND_LINE - DETAIL, CELL * HALF, DETAIL), SOIL)
 
 
 func _underground() -> void:

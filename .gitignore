@@ -26,6 +26,8 @@
 art/export/*
 !art/export/_placeholder/
 !art/export/temporary/
+# Os cenarios em camadas do dono: o export verificado de tools/export_scenery.py (ADR 0081).
+!art/export/scenery/
 
 # ---- Dados gerados por tools/csv_to_tres.gd ----
 # ADR 0004: os .tres SAO versionados — o export precisa deles e o CI nao tem de

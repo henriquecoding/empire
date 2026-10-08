@@ -67,6 +67,11 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# O horizonte, as nuvens e o mato do campo sao os dos reinos pintados (ADR 0081). Os
+	# passaros pousam onde pousavam: a Fauna tira os arbustos das tabelas, nao daqui.
+	visible = not SceneryArt.painted()
+	if not visible:
+		return
 	if _clock != null and ClockService.clock != null:
 		SceneryLight.refresh(self)  # a luz ja nao e o `modulate`: e o shader (ADR 0048)
 	if SimLoop.state == null:

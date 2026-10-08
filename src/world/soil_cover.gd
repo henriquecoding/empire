@@ -88,6 +88,10 @@ func _ready() -> void:
 		no.use_parent_material = true
 		add_child(no)
 		_partes.append(no)
+	var pintura := SceneryStrip.new()  # a terra dos reinos pintados, por cima (ADR 0081)
+	pintura.parte = SceneryStrip.Parte.ABAIXO
+	pintura.use_parent_material = true
+	add_child(pintura)
 
 
 func _exit_tree() -> void:
@@ -143,8 +147,14 @@ func _sitio(player: int) -> Vector2:
 	return nada if i == UndergroundSites.NONE else SimLoop.field.under.span(i)
 
 
-## A terra de novo, com as plantas dos trocos que ja estavam feitos tiradas da cache.
+## A terra de novo, com as plantas dos trocos que ja estavam feitos tiradas da cache. Com os
+## reinos pintados a terra e a deles, e a procedural nao se faz.
 func _refazer() -> void:
+	if SceneryArt.painted():
+		for chave: Vector3 in _talhoes.keys():
+			(_talhoes[chave] as Talhao).queue_free()
+		_talhoes.clear()
+		return
 	var terras: WildSegments = SimLoop.field.wilds if SimLoop.field != null else null
 	var regiao := SimLoop.state.region
 	var largura := SimLoop.world_width

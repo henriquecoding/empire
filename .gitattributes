@@ -31,3 +31,5 @@ art/source/temporary/**/*.png -filter -diff -merge binary
 # Generated production art must be available to CI without LFS.
 art/source/renewal/*.png -filter -diff -merge binary
 art/export/renewal/*.png -filter -diff -merge binary
+# Os cenarios em camadas (ADR 0081): 10 MB recortados, que o jogo, o CI e o site carregam.
+art/export/scenery/**/*.png -filter -diff -merge binary

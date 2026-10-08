@@ -25,6 +25,7 @@
 
 | procedural — `ArrivalView`, formas lisas | coordenadas em constantes | estandartes, carga exposta, cicatriz e baús | marcos da Última Carroça; arte final só depois do playtest (ADR 0065) | 2026-10-04 | em uso |
 | procedural — `ArrivalView` e `BuildView` | 24 px de frente | posto da companhia e serviço de escavação | serviços da chegada, a registar (ADR 0065) | 2026-10-04 | em uso |
+| procedural — `WildLands` (marco do limiar) e junta esbatida de 48 px (`SceneryStrip`) | 640 px de cada lado da fronteira | limiares a oeste de casa, onde nenhuma das 13 transições tem o par do lado certo | transições pintadas no sentido oposto, sem espelhar a luz (ADR 0081, Q-260) | 2026-10-08 | em uso |
 
 ## Como se acrescenta
 

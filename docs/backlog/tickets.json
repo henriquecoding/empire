@@ -2870,5 +2870,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "CV-02": {
+  "title": "Cenários em camadas: os reinos e as transições do dono no jogo",
+  "porque": "O dono entregou no Drive os 8 reinos, as 13 transições e 3 propostas especiais em camadas, feitos para a geometria do jogo, e pediu-os no jogo.",
+  "spec": [
+   "docs/adr/0081-os-cenarios-em-camadas-do-dono.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/21-geracao-procedural-do-territorio.md"
+  ],
+  "depende": "CV-01, ADR 0039, ADR 0078",
+  "feito": "Export verificado dos 21 cenários, mapa do mundo por troço e fronteira, fundo em parallax com a fronteira projetada, chão e terra pintados com o dither do subsolo, testes e capturas.",
+  "fora": "Simulação, economia, save, território, edifícios de cada povo, passagens e as propostas especiais.",
+  "estado": "parcial — os 8 reinos e as 13 transições pintam o fundo e o chão do mundo inteiro; as 3 propostas especiais e as transições a oeste de casa esperam decisão (Q-259, Q-260)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }
