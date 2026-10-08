@@ -302,6 +302,7 @@ src/ui/touch_controls.gd    TouchControls jogar com os dedos: os dedos viram acc
 src/ui/touch_layout.gd      TouchLayout   onde esta cada controlo de toque, e o canhoto (ADR 0047)
 src/ui/touch_pad.gd         TouchPad      quem e cada dedo, o que ele quer premido, e o CORRER premido (ADR 0047, UX-04, Q-193)
 src/ui/touch_stick.gd       TouchStick    a alavanca, solta ou fixa: andar; correr e so o CORRER premido (ADR 0047, UX-03, Q-193)
+src/ui/touch_scroll.gd      TouchScroll   o arraste da pausa, sem alterar a emulacao global do jogo (UX-10)
 src/ui/wide_touch.gd        WideTouch     no toque, o mundo enche o ecra ate 1,25x o 16:9 (Q-188)
 src/ui/touch_view.gd        TouchView     o que cada botao de toque diz agora (ADR 0047)
 src/ui/touch_art.gd         TouchArt      os controlos de toque, desenhados em formas lisas (ADR 0047)

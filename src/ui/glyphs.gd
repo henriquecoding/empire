@@ -61,10 +61,10 @@ const SEPARADOR := "  ·  "
 ## O dispositivo depois deste evento. `nome` e o Input.get_joy_name() do comando
 ## que o mandou — vem de fora para que isto se possa testar sem um comando.
 static func device_of(evento: InputEvent, anterior: Device, nome: String) -> Device:
-	if evento is InputEventScreenTouch or evento is InputEventScreenDrag:
-		return Device.TOUCH
 	if emulated(evento):
 		return anterior
+	if evento is InputEventScreenTouch or evento is InputEventScreenDrag:
+		return Device.TOUCH
 	if evento is InputEventKey or evento is InputEventMouseButton:
 		return Device.KEYBOARD
 	if evento is InputEventJoypadButton:
@@ -78,7 +78,9 @@ static func device_of(evento: InputEvent, anterior: Device, nome: String) -> Dev
 ## toque (medido no 4.7.2; ADR 0047). Esse clique e o que faz os menus responderem ao
 ## dedo; para o jogo nao e um rato: nao ataca, nao mexe a camara, nao troca os glifos.
 static func emulated(evento: InputEvent) -> bool:
-	return evento is InputEventMouse and evento.device == InputEvent.DEVICE_ID_EMULATION
+	var pointer := evento is InputEventMouse or evento is InputEventScreenTouch
+	pointer = pointer or evento is InputEventScreenDrag
+	return pointer and evento.device == InputEvent.DEVICE_ID_EMULATION
 
 
 ## A mao com que se comeca: um comando ligado, um ecra tactil, ou o teclado. Um Steam
