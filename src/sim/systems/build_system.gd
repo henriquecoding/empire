@@ -69,10 +69,11 @@ func absorb(
 			Ward.absorb(moedas, vaga, _moedas_na_obra(moedas, vaga))
 			continue
 		var custo := vaga.next_cost()
-		if custo == NENHUM or not _aceita(vaga) or not can_climb(vaga, estado, madeira):
+		if custo == NENHUM or not _aceita(vaga):
 			continue
+		# A moeda primeiro: can_climb e a conta mais cara do tick, e sem moeda nao paga nada.
 		var apanhadas := _moedas_na_obra(moedas, vaga)
-		if apanhadas.is_empty():
+		if apanhadas.is_empty() or not can_climb(vaga, estado, madeira):
 			continue
 		var valor := 0
 		for coin_id in apanhadas:

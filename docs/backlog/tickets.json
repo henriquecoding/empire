@@ -2617,7 +2617,7 @@
   "depende": "RG-16",
   "feito": "Medir as sedes grandes, a atividade fora de câmara, o painel e os controlos de toque; invalidar cálculos por evento e não por frame",
   "fora": "Otimizar o que não se mediu.",
-  "estado": "por fazer",
+  "estado": "parcial — medidos o tick, o frame, a fauna fora de câmara e os controlos de toque, e corrigido o que se mediu (docs/reports/DESEMPENHO-2026-10-08.md); por medir as sedes grandes e o painel; os draw calls da noite acima do orçamento da §63",
   "horas": "—"
  },
  "RG-20": {

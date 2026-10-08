@@ -118,3 +118,20 @@ func _contar_tres(caminho: String) -> int:
 			continue
 		n += _contar_tres(caminho.path_join(sub))
 	return n
+
+
+## Os ids e os recursos guardados por ordem sao os do indice, e quem os recebe nao os muda.
+func test_os_ids_ordenados_guardados_nao_mudam_por_quem_os_recebe() -> void:
+	var ids := Registry.ids(&"units")
+	var ordenados := PackedStringArray(ids)
+	ordenados.sort()
+	assert_array(ids).is_equal(ordenados)
+	var recursos := Registry.entries(&"units")
+	for i in ids.size():
+		assert_object(recursos[i]).is_same(Registry.entry(&"units", ids[i]))
+	ids.append("nao_existe")
+	recursos.clear()
+	assert_bool(Registry.ids(&"units").has("nao_existe")).is_false()
+	assert_int(Registry.entries(&"units").size()).is_equal(ordenados.size())
+	assert_array(Registry.ids(&"nao_ha_tal_tabela")).is_empty()
+	assert_array(Registry.entries(&"nao_ha_tal_tabela")).is_empty()

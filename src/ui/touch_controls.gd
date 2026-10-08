@@ -26,6 +26,7 @@ var _guia := 0.0
 var _brilho := false
 ## O dedo arrastou o mundo e a camara ainda nao foi mandada voltar.
 var _espreita := false
+var _plano: Array = []  # o que esta desenhado (TouchView.plan): so se redesenha quando muda
 
 
 func _ready() -> void:
@@ -120,7 +121,10 @@ func _process(delta: float) -> void:
 			TravelWatch.at_gate()
 			or GameplayGuide.context(Glyphs.Device.TOUCH).contains(tr(&"TOUCH_ASSUME"))
 		)
-	queue_redraw()
+	var plano := TouchView.plan(pad, _brilho, HudLayout.zoom(get_viewport()))
+	if plano != _plano:
+		_plano = plano
+		queue_redraw()
 
 
 ## Mete no Input so o que mudou. A pausa e um toque: premida num frame, largada no seguinte.
@@ -242,4 +246,4 @@ func _vibrar(ms: int) -> void:
 
 
 func _draw() -> void:
-	TouchView.draw(self, pad, _brilho)
+	TouchView.paint(self, _plano)

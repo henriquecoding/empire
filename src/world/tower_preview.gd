@@ -28,9 +28,9 @@ static func draw(canvas: CanvasItem, band: int) -> void:
 	for slot in SimLoop.builds.slots:
 		if slot.band != band or slot.kind not in [&"archer_tower", &"high_tower"]:
 			continue
-		if not RealmGrowth.visible(SimLoop.builds, slot, SimLoop.state):
-			continue
 		if absf(units.xs[r] - slot.x) > SimFactory.curve().recruit_notice_px:
+			continue
+		if not RealmGrowth.visible(SimLoop.builds, slot, SimLoop.state):
 			continue
 		var reach := range_of(slot)
 		var ground := WorldPalette.ground_of(band)

@@ -39,6 +39,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 	var visible := PresentationBounds.of(canvas)
 	var live: Dictionary = {}
 	var draws: Array[Dictionary] = []
+	var conduzido := Assume.driven()  # o mesmo para todos neste desenho
 	for i in units.count():
 		if units.bands[i] != int(band):
 			continue
@@ -51,7 +52,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		var moving := not is_equal_approx(x, old_x)
 		if moving:
 			_facing[id] = signf(x - old_x)
-		if id == Assume.driven():
+		if id == conduzido:
 			_facing[id] = CombatInput.aim_direction()
 		if CombatView.attacks.has(id):
 			_facing[id] = CombatView.attacks[id][&"direction"]
@@ -63,7 +64,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		var estilo := StrikePose.of_unit(data)
 		CombatFx.observe(id, units.cooldowns[i], estilo)
 		var luta := units.states[i] == UnitFsm.State.FIGHT
-		var manual := id == Assume.driven() or CombatView.attacks.has(id)
+		var manual := id == conduzido or CombatView.attacks.has(id)
 		if luta and not manual:  # quem se conduz aponta com a mira (ADR 0045)
 			_facing[id] = CombatFx.facing(id, x, _facing.get(id, 1.0))
 		var facing: float = _facing.get(id, 1.0)

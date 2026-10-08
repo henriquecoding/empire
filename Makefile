@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         manifesto escala marco obras inventario-arte afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria noites exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
+        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria noites desempenho perfil exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -165,6 +165,20 @@ SEMENTE ?= 20260916
 
 noites:  ## As noites de uma partida pilotada: criaturas por porta e especie, e a defesa
 	$(GODOT) --headless --path . scenes/tests/noites.tscn -- --dias $(DIAS) --politica $(POLITICA) --semente $(SEMENTE)
+
+# RG-18: o frame e o tick de uma partida pilotada, com janela e sem rasterizador — so o CPU
+# do jogo (precisa de ecra: xvfb-run num servidor). Sem janela a vista e infinita e nada
+# fica fora do ecra. AVANCAR= segundos de jogo antes de medir; EXTRA="--toque 1" no toque.
+DESEMPENHO := $(GODOT) --path . --rendering-driver dummy --fixed-fps 30 --resolution 1280x720
+
+desempenho:  ## O frame e o tick de uma partida pilotada (RG-18; precisa de ecra)
+	$(DESEMPENHO) tools/desempenho.tscn -- --novo --semente $(SEMENTE) --avancar $(AVANCAR) $(EXTRA)
+
+perfil:  ## O mesmo, com o tempo de cada funcao em build/perfil.txt (RG-18; precisa de ecra)
+	mkdir -p build
+	$(GODOT) --headless --path . -s tools/perfilador.gd -- 400 build/perfil.txt & sleep 2; \
+	$(DESEMPENHO) --remote-debug tcp://127.0.0.1:6008 tools/desempenho.tscn -- --novo \
+	  --semente $(SEMENTE) --frames 600 --avancar $(AVANCAR) $(EXTRA); wait
 
 exportar:  ## Exporta o Linux e confirma que o binario arranca
 	mkdir -p build

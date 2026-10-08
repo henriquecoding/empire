@@ -23,6 +23,10 @@ const FORA: Array[String] = ["source", "i18n"]
 
 var _tabelas: Dictionary = {}  # String -> Dictionary[String, Resource]
 var _total: int = 0
+## Os ids ordenados de cada tabela e os recursos por essa ordem, feitos a primeira vez que
+## se pedem: ids() e entries() sao perguntados varias vezes por tick, e ordenar a tabela a
+## cada pergunta pesava no tick (auditoria de desempenho de 08/10/2026).
+var _ordenadas: Dictionary = {}  # String -> [PackedStringArray, Array[Resource]]
 
 
 func _ready() -> void:
@@ -32,6 +36,7 @@ func _ready() -> void:
 ## Varre e indexa. Idempotente: chamar duas vezes nao duplica nada.
 func load_all() -> void:
 	_tabelas.clear()
+	_ordenadas.clear()
 	_total = 0
 	_varrer(RAIZ, "")
 
@@ -60,16 +65,14 @@ func ids(tabela: StringName) -> PackedStringArray:
 	var chave := String(tabela)
 	if not _tabelas.has(chave):
 		return PackedStringArray()
-	var saida := PackedStringArray(_tabelas[chave].keys())
-	saida.sort()
-	return saida
+	return (_ordem(chave)[0] as PackedStringArray).duplicate()
 
 
 ## Os recursos de uma tabela, pela mesma ordem de ids().
 func entries(tabela: StringName) -> Array[Resource]:
 	var saida: Array[Resource] = []
-	for id in ids(tabela):
-		saida.append(_tabelas[String(tabela)][id])
+	if _tabelas.has(String(tabela)):
+		saida.assign(_ordem(String(tabela))[1])
 	return saida
 
 
@@ -110,7 +113,21 @@ func _sem_remap(ficheiro: String) -> String:
 	return ficheiro.trim_suffix(".remap") if ficheiro.ends_with(".remap") else ficheiro
 
 
+## Os ids da tabela ordenados e os recursos por essa ordem. Quem os devolve copia-os: o
+## que se guarda aqui nao muda por alguem mexer no que recebeu.
+func _ordem(chave: String) -> Array:
+	if not _ordenadas.has(chave):
+		var ordenados := PackedStringArray(_tabelas[chave].keys())
+		ordenados.sort()
+		var recursos: Array[Resource] = []
+		for id in ordenados:
+			recursos.append(_tabelas[chave][id])
+		_ordenadas[chave] = [ordenados, recursos]
+	return _ordenadas[chave]
+
+
 func _indexar(tabela: String, id: String, caminho: String) -> void:
+	_ordenadas.erase(tabela)
 	if not _tabelas.has(tabela):
 		_tabelas[tabela] = {}
 	# ResourceLoader aqui e correto: sao dados do jogo, versionados connosco.

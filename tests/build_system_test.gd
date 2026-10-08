@@ -186,3 +186,31 @@ func test_esquecer_as_vagas_esvazia_o_quadro() -> void:
 
 	assert_int(obras.count()).is_equal(0)
 	assert_int(obras.index_of(0)).is_equal(BuildSlot.NENHUM)
+
+
+## Conta as perguntas do absorb: a escada e a muralha (can_climb) sao as contas mais caras
+## do tick, e so interessam a obra que tem uma moeda pousada para pagar.
+class ObrasContadas:
+	extends BuildSystem
+
+	var perguntas := 0
+
+	func can_climb(vaga: BuildSlot, estado: GameState, madeira: AmargueiroSystem) -> bool:
+		perguntas += 1
+		return super(vaga, estado, madeira)
+
+
+func test_sem_moeda_pousada_o_absorb_nao_pergunta_se_a_obra_sobe() -> void:
+	# Desempenho (auditoria de 08/10/2026): o absorb perguntava can_climb a todas as obras
+	# a cada tick, e so depois via se havia moeda em cima. Era metade do tick.
+	var obras := ObrasContadas.new()
+	var vaga := obras.post(_vaga_de_canteiro(100.0))
+	obras.post(_vaga_de_canteiro(400.0))
+	obras.post(_vaga_de_canteiro(700.0))
+
+	obras.absorb(CoinSystem.new(_curva()))
+	assert_int(obras.perguntas).is_equal(0)
+
+	_pagar(obras, vaga, 1)
+	assert_int(obras.perguntas).is_equal(1)
+	assert_int(vaga.paid).is_equal(1)
