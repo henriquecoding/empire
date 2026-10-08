@@ -35,6 +35,13 @@ func test_o_rato_emulado_do_toque_nao_e_um_rato() -> void:
 	assert_int(Glyphs.device_of(clique, Glyphs.Device.TOUCH, "")).is_equal(Glyphs.Device.KEYBOARD)
 
 
+func test_o_toque_emulado_do_rato_nao_troca_o_dispositivo() -> void:
+	var touch := _toque()
+	touch.device = InputEvent.DEVICE_ID_EMULATION
+	assert_bool(Glyphs.emulated(touch)).is_true()
+	assert_int(Glyphs.device_of(touch, Glyphs.Device.KEYBOARD, "")).is_equal(Glyphs.Device.KEYBOARD)
+
+
 func test_o_toque_tem_um_nome_por_accao_e_esconde_o_rodape() -> void:
 	var nomes: Array = Glyphs.BOTOES[Glyphs.Device.TOUCH]
 	assert_int(nomes.size()).is_equal(Glyphs.ACCOES.size())

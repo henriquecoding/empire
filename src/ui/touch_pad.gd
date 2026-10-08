@@ -94,25 +94,29 @@ func drag(i: int, p: Vector2, relativo: Vector2) -> bool:
 	return true
 
 
-func lift(i: int, p: Vector2) -> bool:
+func lift(i: int, p: Vector2, canceled := false) -> bool:
 	if not _papel.has(i):
 		return false
 	var papel: TouchLayout.Role = _papel[i]
 	var de: Vector2 = _origem[i]
 	_papel.erase(i)
 	_origem.erase(i)
+	if canceled and ACCOES.has(papel) and not holds(papel):
+		_premidas.erase(ACCOES[papel])
+		if papel == TouchLayout.Role.WHEEL:
+			aim = Vector2.ZERO
 	match papel:
 		TouchLayout.Role.STICK:
 			if not holds(TouchLayout.Role.STICK):
 				stick.end()
 		TouchLayout.Role.PAUSE:
-			pause_tapped = pause_tapped or _dentro(p, papel)
+			pause_tapped = pause_tapped or not canceled and _dentro(p, papel)
 		TouchLayout.Role.FIX:
-			fix_tapped = fix_tapped or _dentro(p, papel)
+			fix_tapped = fix_tapped or not canceled and _dentro(p, papel)
 		TouchLayout.Role.RUN:
 			running = holds(papel)
 		TouchLayout.Role.WORLD:
-			if p.distance_to(de) < TOQUE_PX:
+			if not canceled and p.distance_to(de) < TOQUE_PX:
 				taps.append(p)
 			else:
 				let_go = layout.fixed
@@ -160,7 +164,9 @@ func reset() -> void:
 
 func _registar(i: int, p: Vector2, papel: TouchLayout.Role) -> void:
 	if _papel.has(i):
-		lift(i, p)
+		lift(i, p, true)
+	if papel in [TouchLayout.Role.STICK, TouchLayout.Role.WHEEL] and holds(papel):
+		papel = TouchLayout.Role.NONE
 	_papel[i] = papel
 	_origem[i] = p
 	if papel == TouchLayout.Role.STICK:

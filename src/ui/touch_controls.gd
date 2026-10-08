@@ -1,15 +1,7 @@
 # src/ui/touch_controls.gd — jogar com os dedos (ADR 0047, UX-02).
 #
-# O toque e o quarto dispositivo do §26, e prime as mesmas accoes do InputMap que o
-# teclado e o comando: este no nao chama drop_coin nem ataca ninguem. Le os dedos,
-# pergunta ao TouchPad o que eles querem premido, e mete as diferencas no Input como
-# InputEventAction — que o InputRouter e o CombatInput leem como leriam uma tecla (§61).
-# So o mundo tem duas coisas que nenhuma tecla faz: arrastar espreita (a camara livre
-# do §24, pelo grupo dela) e tocar aponta a habilidade de quem mira, como o botao
-# direito do rato.
-#
-# Os botoes reclamam o dedo no _input, antes dos menus; o mundo e o que sobra, no
-# _unhandled_input — um toque no painel de combate e do painel, e nao do mundo.
+# O toque produz as mesmas accoes do teclado e do comando (§61). Os botoes ficam
+# com os dedos antes dos menus; o mundo recebe apenas o que nenhum menu levou.
 class_name TouchControls
 extends Control
 
@@ -49,6 +41,8 @@ func _ready() -> void:
 
 
 func _input(evento: InputEvent) -> void:
+	if Glyphs.emulated(evento):
+		return
 	_mao(evento)
 	if not active or not playing():
 		return
@@ -61,7 +55,7 @@ func _input(evento: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 			return
 		var do_mundo := pad.role_of(dedo.index) == TouchLayout.Role.WORLD
-		if pad.lift(dedo.index, dedo.position) and not do_mundo:
+		if pad.lift(dedo.index, dedo.position, dedo.canceled) and not do_mundo:
 			get_viewport().set_input_as_handled()
 	elif evento is InputEventScreenDrag:
 		var dedo := evento as InputEventScreenDrag
@@ -71,7 +65,12 @@ func _input(evento: InputEvent) -> void:
 
 ## O que nenhum botao nem menu levou e o mundo.
 func _unhandled_input(evento: InputEvent) -> void:
-	if not active or not playing() or not evento is InputEventScreenTouch:
+	if (
+		Glyphs.emulated(evento)
+		or not active
+		or not playing()
+		or not evento is InputEventScreenTouch
+	):
 		return
 	var dedo := evento as InputEventScreenTouch
 	if dedo.pressed and not pad.tracks(dedo.index):
@@ -142,8 +141,8 @@ func _emitir(accao: StringName, premida: bool) -> void:
 	e.action = accao
 	e.pressed = premida
 	e.strength = 1.0 if premida else 0.0
-	Input.parse_input_event(e)
 	_premidas[accao] = premida
+	Input.parse_input_event(e)
 
 
 ## Ninguem fica com nada premido do outro lado de um menu, nem com a roda a disparar

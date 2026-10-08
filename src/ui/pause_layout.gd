@@ -23,7 +23,6 @@ var _margin: MarginContainer
 var _row: HBoxContainer
 var _aspect: Window.ContentScaleAspect
 var _entered := false
-var _emulate_touch := false
 
 
 func _ready() -> void:
@@ -101,16 +100,12 @@ func enter() -> void:
 		_aspect = get_tree().root.content_scale_aspect
 		_entered = true
 		get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
-		_emulate_touch = Input.is_emulating_touch_from_mouse()
-		if TouchControls.active:
-			Input.set_emulate_touch_from_mouse(true)
 	fit()
 
 
 func leave() -> void:
 	if _entered:
 		get_tree().root.content_scale_aspect = _aspect
-		Input.set_emulate_touch_from_mouse(_emulate_touch)
 		_entered = false
 
 
@@ -119,7 +114,7 @@ func _exit_tree() -> void:
 
 
 static func scroll(parent: Node) -> ScrollContainer:
-	var scroll := ScrollContainer.new()
+	var scroll := TouchScroll.new()
 	scroll.set_anchors_preset(Control.PRESET_FULL_RECT)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
