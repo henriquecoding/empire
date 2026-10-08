@@ -17,13 +17,10 @@
 #    largura dela, que e o raio com que o BuildSystem absorve uma moeda caida;
 #    numa pessoa, dentro do recruit_notice_px, que e a distancia a que o §25 diz
 #    que ela repara na moeda. Se o ves, funciona; se nao funciona, nao o ves.
-#  · O QUE diz — o que FALTA, e nao o que custa: uma obra ja paga a meio mostra
-#    o resto, e um vagabundo que ja apanhou uma moeda mostra as que ainda lhe
-#    faltam para o preco do §07.
-#  · O QUE PODES pagar agora — as moedas que o teu saco cobre saem douradas e as
-#    outras ficam apagadas. E o mesmo que o Kingdom faz ao esbater o preco que
-#    nao tens, e responde a pergunta toda de relance: quanto falta, e quanto
-#    disso posso eu.
+#  · O QUE diz — um espaco por moeda do preco: vazio enquanto falta, dourado
+#    quando ja foi pago. O saldo da bolsa nao preenche uma obra por pagar.
+#  · O QUE PODES pagar agora — a orla dos espacos que o saco cobre fica mais
+#    clara. O preenchimento continua reservado ao pagamento real (UX-09).
 #
 # Nao leva luz, pela mesma razao que o Gauge nao leva (Q-080): e um instrumento,
 # e um instrumento que se apaga a noite deixa de ser um instrumento. Desaparece
@@ -47,6 +44,7 @@ const MOEDA := [
 	"#oo...#",
 	" ##### ",
 ]
+const VAZIA := [" ##### ", "#     #", "#     #", "#     #", "#     #", "#     #", " ##### "]
 const ORLA := 8.0
 const POR_FILA := 10
 const PASSO := 16.0
@@ -64,7 +62,7 @@ static func draw_on(
 	canvas: CanvasItem, faixa: Band.Kind, tropas: Dictionary, edificios: Dictionary
 ) -> void:
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
-	if rei == UnitSystem.NENHUM or not SimLoop.units.alive(rei) or not Assume.king():
+	if rei == UnitSystem.NENHUM or not Assume.king() or not InteractionFocus.still():
 		return  # so o rei paga (§08)
 	# O rei esta numa faixa so, e o preco de uma coisa noutra faixa nao e uma
 	# coisa que ele alcance (§11).
@@ -95,20 +93,25 @@ static func _obras(
 				vaga.x,
 				WorldPalette.ground_of(faixa) - POST_ACIMA,
 				maxi(0, LastCartWatch.rules().companion_cost - SimLoop.companion.paid),
-				saco
+				saco,
+				SimLoop.companion.paid
 			)
 			cobrou = true
 			continue
 		var falta := owed_by(vaga)
+		var paid := vaga.paid
 		if falta <= 0 and SimLoop.field != null:
 			falta = SimLoop.field.training.owed(vaga, SimLoop.units)
-			falta = falta if falta > 0 else SimLoop.field.mount.owed(vaga)  # o cavalo (Q-169)
+			paid = int(SimLoop.field.training.paid.get(vaga.id, 0))
+			if falta <= 0:
+				falta = SimLoop.field.mount.owed(vaga)  # o cavalo (Q-169)
+				paid = SimLoop.field.mount.paid
 		var madeira := SimLoop.night.amargueiros
 		var subir := vaga.state in [BuildSlot.State.EMPTY, BuildSlot.State.DONE]
 		if falta <= 0 or (subir and not SimLoop.builds.can_climb(vaga, SimLoop.state, madeira)):
 			continue
 		var caixa := BuildView.drawn_box(vaga, Silhouette.of_slot(vaga, edificios))
-		_moedas(canvas, vaga.x, caixa.position.y, falta, saco)
+		_moedas(canvas, vaga.x, caixa.position.y, falta, saco, paid)
 		cobrou = true
 	return cobrou
 
@@ -169,24 +172,41 @@ static func _gente(
 		var caixa := Silhouette.body_box(Silhouette.Form.CAIXA, em, int(faixa), alto)
 		# A cabeca do §25 — o chapeu — desenha-se por cima da caixa, e o preco
 		# tem de ficar acima dele para nao lhe assentar em cima.
-		_moedas(canvas, em, caixa.position.y - WorldPalette.BARRA, falta, saco)
+		_moedas(
+			canvas,
+			em,
+			caixa.position.y - WorldPalette.BARRA,
+			falta,
+			saco,
+			unidades.carried_coins[i]
+		)
 
 
-## `falta` moedas empilhadas sobre (x, topo), de baixo para cima. As primeiras
-## `saco` saem douradas — sao as que ja podes pousar ali — e as outras apagadas.
-## Contam-se: e para isso que ha uma por moeda e nao um algarismo.
-static func _moedas(canvas: CanvasItem, x: float, topo: float, falta: int, saco: int) -> void:
+## 0: espaco apagado; 1: espaco que a bolsa cobre; 2: moeda ja paga.
+static func payment_slots(owed: int, paid: int, coins: int) -> PackedInt32Array:
+	var slots := PackedInt32Array()
+	for n in maxi(0, paid) + maxi(0, owed):
+		slots.append(2 if n < paid else (1 if n - paid < coins else 0))
+	return slots
+
+
+static func _moedas(
+	canvas: CanvasItem, x: float, topo: float, falta: int, saco: int, paid: int = 0
+) -> void:
 	var base := topo - ACIMA
 	var ouro := CoinArt.tones(func(c: Color) -> Color: return c)
 	var apagado := CoinArt.tones(func(c: Color) -> Color: return WorldPalette.dim(c, APAGADA))
 	var metade := float(MOEDA.size()) * CoinArt.PIXEL * MEIA
-	for n in falta:
+	var slots := payment_slots(falta, paid, saco)
+	for n in slots.size():
 		var fila := n / POR_FILA
-		var nesta := mini(falta - fila * POR_FILA, POR_FILA)
+		var nesta := mini(slots.size() - fila * POR_FILA, POR_FILA)
 		var coluna := n % POR_FILA
 		var centro := Vector2(x + (float(coluna) - (nesta - 1) * MEIA) * PASSO, base - fila * PASSO)
-		var tons := ouro if n < saco else apagado
+		var tons := ouro if slots[n] > 0 else apagado
 		# A orla escura por baixo: sem ela um preco dourado sobre o ceu do
 		# meio-dia e um preco cinzento sobre o solo somem os dois (§80).
 		canvas.draw_circle(centro, ORLA, WorldPalette.SILHUETA)
-		CoinArt.paint(canvas, centro + Vector2(0.0, metade), MOEDA, 1.0, tons)
+		CoinArt.paint(
+			canvas, centro + Vector2(0.0, metade), MOEDA if slots[n] == 2 else VAZIA, 1.0, tons
+		)

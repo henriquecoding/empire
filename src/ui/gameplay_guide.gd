@@ -119,7 +119,7 @@ static func evolve(site: BuildSlot, values: Dictionary) -> String:
 	var classe := Registry.entry(&"classes", MonarchWatch.skill_class()) as ClassData
 	values["name"] = SeatGuide.stage_name(site.level)
 	if classe.id != Monarchy.REI:  # a Nia e o Arqueiro evoluem pela classe do perfil
-		values["monarch"] = TranslationServer.translate(MonarchWatch.data().display_key)
+		values["monarch"] = GuideHints.translate(MonarchWatch.data().display_key)
 		values["seeds"] = classe.evolve_seed_cost
 		return _tr(&"CONTEXT_MONARCH_EVOLVE").format(values)
 	values["pct"] = roundi(float(classe.phase2_params.get(ClassSystem.DEFESA, 0.0)) * CEM)
@@ -139,7 +139,7 @@ static func _button(button: Variant) -> String:
 
 
 static func _tr(key: StringName) -> String:
-	return TranslationServer.translate(key)
+	return GuideHints.translate(key)
 
 
 static func _training(site: BuildSlot, values: Dictionary) -> String:

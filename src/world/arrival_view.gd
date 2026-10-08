@@ -139,6 +139,8 @@ static func _chests(canvas: CanvasItem, light: Lighting) -> void:
 
 
 static func _label(canvas: CanvasItem, at: Vector2, key: StringName) -> void:
+	if not InteractionFocus.still():
+		return
 	canvas.draw_string(
 		ThemeDB.fallback_font,
 		at,

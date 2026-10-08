@@ -15,20 +15,20 @@ static func passage(king: int, values: Dictionary) -> String:
 			continue
 		values["cost"] = PriceTag.owed_by(site)
 		if site.state == BuildSlot.State.EMPTY and values.cost > 0:
-			return TranslationServer.translate(&"CONTEXT_PASSAGE_SEAL").format(values)
-	return TranslationServer.translate(&"CONTEXT_PASSAGE").format(values)
+			return GuideHints.translate(&"CONTEXT_PASSAGE_SEAL").format(values)
+	return GuideHints.translate(&"CONTEXT_PASSAGE").format(values)
 
 
 ## A casa do herdeiro de pe: quantos dias de treino, e o que custa cada um (§15).
 static func heir(values: Dictionary) -> String:
 	var herdeiro := SimLoop.field.succession
 	if herdeiro.ready():
-		return TranslationServer.translate(&"CONTEXT_HEIR_READY").format(values)
+		return GuideHints.translate(&"CONTEXT_HEIR_READY").format(values)
 	var curva := SimFactory.curve()
 	values["days"] = herdeiro.days
 	values["total"] = curva.heir_training_days
 	values["cost"] = curva.heir_cost_per_day
-	return TranslationServer.translate(&"CONTEXT_HEIR").format(values)
+	return GuideHints.translate(&"CONTEXT_HEIR").format(values)
 
 
 ## A bifurcacao com a marcha pronta: o reconhecimento do §13 (Q-166). O povo da
@@ -38,11 +38,11 @@ static func march(values: Dictionary) -> String:
 	var reino := SimLoop.field.realm
 	var visto := reino.scouted(SimLoop.state)
 	var povo := Registry.entry(&"peoples", reino.next_people(SimLoop.state)) as PeopleData
-	values["people"] = TranslationServer.translate(povo.display_key) if povo != null else ""
+	values["people"] = GuideHints.translate(povo.display_key) if povo != null else ""
 	values["left"] = visto.x
 	values["full"] = visto.y
 	values["hit"] = reino.blow(SimLoop.units, SimLoop.king_id)
-	return TranslationServer.translate(&"CONTEXT_CROSS").format(values)
+	return GuideHints.translate(&"CONTEXT_CROSS").format(values)
 
 
 ## As terras geradas (Q-173): na terra de outro povo, de quem e (e se e teu vassalo); na
@@ -56,16 +56,14 @@ static func wilds(x: float, values: Dictionary) -> String:
 	var zona := int(registo[WildSegments.ZONA])
 	if zona == WorldPlan.Zone.EDGE:
 		var borda := "EDGE_" + String(registo[WildSegments.ASSUNTO]).to_upper()
-		values["edge"] = TranslationServer.translate(StringName(borda))
-		return TranslationServer.translate(&"CONTEXT_EDGE").format(values)
+		values["edge"] = GuideHints.translate(StringName(borda))
+		return GuideHints.translate(&"CONTEXT_EDGE").format(values)
 	var bioma := Registry.entry(&"biomes", StringName(registo[WildSegments.PARA])) as BiomeData
 	if zona == WorldPlan.Zone.TRAIL or bioma == null:
 		return ""
 	var povo := Registry.entry(&"peoples", bioma.people) as PeopleData
 	if povo == null:
 		return ""
-	values["people"] = TranslationServer.translate(povo.display_key)
+	values["people"] = GuideHints.translate(povo.display_key)
 	var teu := SimLoop.field.realm.vassals.has(bioma.people)
-	return TranslationServer.translate(&"CONTEXT_LAND_VASSAL" if teu else &"CONTEXT_LAND").format(
-		values
-	)
+	return GuideHints.translate(&"CONTEXT_LAND_VASSAL" if teu else &"CONTEXT_LAND").format(values)

@@ -19,6 +19,8 @@ static func range_of(slot: BuildSlot) -> float:
 
 
 static func draw(canvas: CanvasItem, band: int) -> void:
+	if not InteractionFocus.still():
+		return
 	var units := SimLoop.units
 	var r := units.index_of(SimLoop.king_id)
 	if r < 0 or units.bands[r] != band:

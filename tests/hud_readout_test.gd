@@ -117,7 +117,7 @@ func test_captions_clear_context_and_visible_notice() -> void:
 	var captions: Captions = auto_free(Captions.new())
 	add_child(hud)
 	add_child(captions)
-	hud._context._process(0)
+	hud._context._process(HintCue.STOP_SECONDS)
 	hud.say(tr(&"CAPTION_DUSK_WARNING"))
 	hud._process(0)
 	captions._process(0)

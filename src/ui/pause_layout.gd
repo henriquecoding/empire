@@ -9,6 +9,7 @@ const WIDE_MARGIN := 48
 const SHORT_HEIGHT := 500
 const FOOTER_HEIGHT := 430
 const REALM_GAP := 64
+const SCROLL_DEADZONE := 8
 
 var header: VBoxContainer
 var actions: VBoxContainer
@@ -22,6 +23,7 @@ var _margin: MarginContainer
 var _row: HBoxContainer
 var _aspect: Window.ContentScaleAspect
 var _entered := false
+var _emulate_touch := false
 
 
 func _ready() -> void:
@@ -99,12 +101,16 @@ func enter() -> void:
 		_aspect = get_tree().root.content_scale_aspect
 		_entered = true
 		get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+		_emulate_touch = Input.is_emulating_touch_from_mouse()
+		if TouchControls.active:
+			Input.set_emulate_touch_from_mouse(true)
 	fit()
 
 
 func leave() -> void:
 	if _entered:
 		get_tree().root.content_scale_aspect = _aspect
+		Input.set_emulate_touch_from_mouse(_emulate_touch)
 		_entered = false
 
 
@@ -118,6 +124,7 @@ static func scroll(parent: Node) -> ScrollContainer:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.follow_focus = true
+	scroll.scroll_deadzone = SCROLL_DEADZONE
 	parent.add_child(scroll)
 	return scroll
 

@@ -24,6 +24,7 @@ var _aviso: Label
 var _aviso_ate := 0.0
 var _texto_em := 0.0
 var _dispositivo := Glyphs.Device.KEYBOARD
+var _hint := HintCue.new()
 
 
 func _ready() -> void:
@@ -46,7 +47,6 @@ func _ready() -> void:
 	add_child(TravelPanel.new())
 	add_child(SiteSheet.new())
 	add_child(CombatBar.new())
-	EventBus.coin_collected.connect(_no_apanhar)
 	EventBus.game_paused.connect(_na_pausa)
 	for sinal: StringName in HudText.AVISOS:
 		EventBus.connect(sinal, _dizer_chave.bind(HudText.AVISOS[sinal]).unbind(_argumentos(sinal)))
@@ -70,9 +70,13 @@ func _process(delta: float) -> void:
 		var mark := Assume.marks(SimLoop.field) or HeroWatch.current() == &"bard"
 		_dica.text = Glyphs.hint(_dispositivo, mark, ability)
 	_dispor()
-	_aviso_ate = maxf(0.0, _aviso_ate - delta)
-	_aviso.visible = _aviso_ate > 0.0 and SimLoop.running()
-	_dica.visible = not _dica.text.is_empty() and not TouchControls.active
+	var stopped := InteractionFocus.still() and not SiteSheet.active
+	if stopped:
+		_aviso_ate = maxf(0.0, _aviso_ate - delta)
+	_aviso.visible = _aviso_ate > 0.0 and stopped
+	var key := StringName("controls_%s_%s" % [_dispositivo, HeroWatch.current()])
+	_dica.visible = _hint.present(key, stopped and not TouchControls.active, delta)
+	_dica.visible = _dica.visible and not _dica.text.is_empty()
 
 
 func _dispor() -> void:
@@ -107,12 +111,7 @@ func say(mensagem: String) -> void:
 func _dizer(mensagem: String) -> void:
 	_aviso.text = mensagem
 	_aviso_ate = AVISO_S
-	_aviso.visible = true
-
-
-func _no_apanhar(unit_id: int, amount: int) -> void:
-	if unit_id == SimLoop.king_id:
-		_dizer(HudText.coins(amount))
+	_aviso.visible = InteractionFocus.still() and not SiteSheet.active
 
 
 func _na_pausa(pausado: bool) -> void:
