@@ -47,6 +47,7 @@ var _origem := {}
 ## As accoes que um dedo premiu desde o ultimo take(): um toque mais curto do que um
 ## frame fica premido um frame, porque o InputRouter le o verb_drop no _process.
 var _premidas := {}
+var _began := {}
 
 
 ## Um dedo pousou. Devolve o papel; o mundo nao fica registado — so o que nenhum menu
@@ -101,10 +102,12 @@ func lift(i: int, p: Vector2, canceled := false) -> bool:
 	var de: Vector2 = _origem[i]
 	_papel.erase(i)
 	_origem.erase(i)
-	if canceled and ACCOES.has(papel) and not holds(papel):
-		_premidas.erase(ACCOES[papel])
-		if papel == TouchLayout.Role.WHEEL:
-			aim = Vector2.ZERO
+	if _began.has(i):
+		if not canceled:
+			_premidas[_began[i]] = true
+		_began.erase(i)
+	if canceled and papel == TouchLayout.Role.WHEEL and not holds(papel):
+		aim = Vector2.ZERO
 	match papel:
 		TouchLayout.Role.STICK:
 			if not holds(TouchLayout.Role.STICK):
@@ -145,6 +148,7 @@ func runs() -> bool:
 ## O frame acabou: o que foi pedido ao mundo ja foi entregue.
 func take() -> void:
 	_premidas.clear()
+	_began.clear()
 	taps.clear()
 	pan = 0.0
 	let_go = false
@@ -177,7 +181,7 @@ func _registar(i: int, p: Vector2, papel: TouchLayout.Role) -> void:
 	elif papel == TouchLayout.Role.RUN:
 		running = true
 	if ACCOES.has(papel):
-		_premidas[ACCOES[papel]] = true
+		_began[i] = ACCOES[papel]
 
 
 ## Um toque que acaba onde comecou: o dedo levantou-se ainda em cima do botao.

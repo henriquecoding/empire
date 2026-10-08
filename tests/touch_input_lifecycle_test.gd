@@ -154,6 +154,18 @@ func test_a_canceled_fast_attack_does_not_fire() -> void:
 	assert_bool(Input.is_action_pressed(&"attack")).is_false()
 
 
+func test_canceling_another_finger_keeps_the_completed_coin_tap() -> void:
+	var coin := _touch.pad.layout.centre(R.DROP)
+	_finger(0, coin, true)
+	_finger(0, coin, false)
+	_finger(1, coin, true)
+	_finger(1, coin, false, true)
+	_frame()
+	assert_bool(Input.is_action_pressed(&"verb_drop")).is_true()
+	_frame()
+	assert_bool(Input.is_action_pressed(&"verb_drop")).is_false()
+
+
 func test_mouse_touch_emulation_does_not_activate_hud_buttons() -> void:
 	var event := InputEventScreenTouch.new()
 	event.device = InputEvent.DEVICE_ID_EMULATION
