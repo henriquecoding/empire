@@ -61,8 +61,12 @@ static func ends(terras: WildSegments, lado: int, k: int) -> Vector4:
 	return Vector4(m.y, m.x, t.y, t.x)
 
 
-## O chao de todos os segmentos gerados, com o assunto de cada um por cima.
-static func draw_ground(canvas: CanvasItem, terras: WildSegments, largura: float) -> void:
+## O chao de todos os segmentos gerados, com o assunto de cada um por cima. Com o cenario
+## pintado (`pintado`, ADR 0081) o chao e o dele: fica so o assunto, e um limiar que tem o
+## marco da transicao pintada leva so a bandeira do povo.
+static func draw_ground(
+	canvas: CanvasItem, terras: WildSegments, largura: float, pintado: SceneryMap = null
+) -> void:
 	for lado in [WorldPlan.OESTE, WorldPlan.LESTE]:
 		for k in terras.count(lado):
 			var registo := terras.at(lado, k)
@@ -72,7 +76,8 @@ static func draw_ground(canvas: CanvasItem, terras: WildSegments, largura: float
 				lerpf(TOPO_ESTRADA, TOPO_TRILHO, p.z), lerpf(TOPO_ESTRADA, TOPO_TRILHO, p.w)
 			)
 			var span := ground_span(registo, lado, x0, terras.width)
-			_chao(canvas, span, colors(registo, p.x), colors(registo, p.y), topo)
+			if pintado == null:
+				_chao(canvas, span, colors(registo, p.x), colors(registo, p.y), topo)
 			var x := terras.subject_x(lado, k, largura)
 			var aqui := colors(registo, lerpf(p.x, p.y, (x - x0) / terras.width))
 			var tinta := WildLands.paint(aqui, registo)
@@ -81,6 +86,8 @@ static func draw_ground(canvas: CanvasItem, terras: WildSegments, largura: float
 					WildEdge.draw(canvas, registo, lado, x0, terras.width, tinta)
 				WorldPlan.Zone.TRAIL:
 					WildSubjects.draw(canvas, registo, x, x0, terras.width)
+				WorldPlan.Zone.THRESHOLD when pintado != null and pintado.painted_border(x):
+					WildLands.flag(canvas, x, tinta, lado)
 				_:
 					WildLands.draw(canvas, registo, x, tinta, lado)
 

@@ -22,7 +22,7 @@ const GAMEPLAY := [
 	"Mundo/Combate",
 	"Mundo/Batalha",
 ]
-const GROUND := ["PathAndSoil", "Field", "RootCellars"]
+const GROUND := ["PathAndSoil", "Chao", "Field", "RootCellars"]
 
 
 ## Os planos Parallax2D da cena, pela ordem da arvore: nome e scroll_scale.x.

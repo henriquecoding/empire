@@ -27,6 +27,7 @@ import sys
 from pathlib import Path
 from temporary_art_register import temporary_assets, temporary_table
 from renewal_art_register import renewal_assets, renewal_table
+from scenery_art_register import scenery_table
 
 RAIZ = Path(__file__).resolve().parent.parent
 MANIFESTO = RAIZ / "art/export/enramados/manifest.json"
@@ -258,7 +259,7 @@ def documento() -> str:
         f"- Estados de aprovacao presentes: {celula(estados)}. Nenhuma exportacao esta aprovada.",
         "",
     ]
-    return "\n".join(partes + temporary_table() + renewal_table())
+    return "\n".join(partes + temporary_table() + renewal_table() + scenery_table())
 
 
 def main() -> int:

@@ -1,0 +1,2144 @@
+{
+ "schema": 1,
+ "generated_by": "tools/export_scenery.py",
+ "surface_y": 517,
+ "under_y": 618.5,
+ "batches": [
+  {
+   "file": "EMPIRE-8-REINOS-2026-10-08.zip",
+   "sha256": "c3a3ec3261b9d29e96163d43f9331b4e7357d0a06ea259dabd5d1971f48246b9"
+  },
+  {
+   "file": "EMPIRE-13-TRANSICOES-2026-10-08.zip",
+   "sha256": "d101a218f6158a9031c8d097d67d5d6eb60d75c07c070b9d01d363afe1fdcdcd"
+  },
+  {
+   "file": "EMPIRE-PORTO-RIO-LAGO-2026-10-08.zip",
+   "sha256": "deb65d63e15f52621e774f5f83f2f3684c80d10b4e6468aba5cb18301e855810"
+  }
+ ],
+ "scenes": {
+  "ancient_forest": {
+   "kind": "kingdom",
+   "title": "Enramados",
+   "package": "EMPIRE-ENRAMADOS-2026-10-08.zip",
+   "package_sha256": "c5d0c89888f1f741507df7fcc63bafb1f8c40c9bc999350a88512ebfab1f53a2",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/ancient_forest/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "0fc1eb81a91e99d2c517da4e9c626281df1424248b8d04f79bc006b6b3ff7131"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/ancient_forest/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/ancient_forest/far.png",
+     "rect": [
+      0,
+      200,
+      2560,
+      216
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "51bad106eeb2da16491b3f80bbbfd18866ddda9f1b6b94fd1bb7a8166268d37f"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/ancient_forest/mid.png",
+     "rect": [
+      0,
+      221,
+      2560,
+      296
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "62890195e0edc1e18d219dc6103ba040b8e7862b66a627c582aac0ddc2bbc279"
+    },
+    "near": {
+     "file": "res://art/export/scenery/ancient_forest/near.png",
+     "rect": [
+      0,
+      68,
+      2560,
+      455
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "55b22b46a5e4e8877ff1478c7b56748839dd03d42ffd3c710fd6b3d2e1dd5a5c"
+    },
+    "under": {
+     "file": "res://art/export/scenery/ancient_forest/under.png",
+     "rect": [
+      0,
+      492,
+      2560,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "23b52e5a73234fe5f5da4d049bc84acad776156fe08e74b92ba6eec4db694c34"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/ancient_forest/terrain.png",
+     "rect": [
+      0,
+      587,
+      2560,
+      133
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "7c8b69bbe070f062df63c026af0a51ffe0fdd352e246066d103030e752d08106"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/ancient_forest/foreground.png",
+     "rect": [
+      45,
+      664,
+      2515,
+      56
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "d1c7fafdd99be6d7a54f2c808e4862993b328f9690ac18ae099e08fea125c96a"
+    }
+   },
+   "biome": "ancient_forest"
+  },
+  "arriba_estratos": {
+   "kind": "transition",
+   "title": "Arriba dos Estratos",
+   "package": "EMPIRE-ARRIBA-DOS-ESTRATOS-2026-10-08.zip",
+   "package_sha256": "da933131b3fdf3457e2ac7cf62e1cd7dc7f6f6cffcdb3abd90b18ee758d44566",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/arriba_estratos/under.png",
+     "rect": [
+      0,
+      490,
+      1280,
+      141
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "cdce2e29d4c06e9b28eb73e4954c4536cfef682c877f8449e4420dbcd207ad14"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/arriba_estratos/terrain.png",
+     "rect": [
+      0,
+      588,
+      1280,
+      132
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "e80cd2adf2461d39e0be4ea41dca4472746a314d47e762c8a05574b50cd65518"
+    },
+    "water": {
+     "file": "res://art/export/scenery/arriba_estratos/water.png",
+     "rect": [
+      0,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "2e7a93d18c9db2648c0ff77ac16efb49f09797dba0c22ef09a1bce6b4277a9ee"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/arriba_estratos/foreground.png",
+     "rect": [
+      18,
+      660,
+      1262,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "158e8103d46d3f48422513fe985931eb434d4abb0361b7c8954cb51391e31cca"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/arriba_estratos/landmark.png",
+     "rect": [
+      416,
+      241,
+      448,
+      276
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "e46d27a5222b4a79264e062058430dadaab5f4924a3a3366020e0b2685ee5c22"
+    }
+   },
+   "from": "coast",
+   "to": "canyon",
+   "threshold_x": 640
+  },
+  "boca_fenda": {
+   "kind": "transition",
+   "title": "Boca da Fenda",
+   "package": "EMPIRE-BOCA-DA-FENDA-2026-10-08.zip",
+   "package_sha256": "e23b42d68a511558b1958348a14aa078fa487661eeacb7b626e8ed7feca34e41",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/boca_fenda/under.png",
+     "rect": [
+      0,
+      490,
+      1280,
+      141
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "df0811478ecadf481835b02dfda16b69b1505eaee22a9ebe39ef2ea780b24e7d"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/boca_fenda/terrain.png",
+     "rect": [
+      0,
+      588,
+      1280,
+      132
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "91288efbe556eb7c83f5b88e76f95d96b007643297854022cd6fa9a0c22c6108"
+    },
+    "water": {
+     "file": "res://art/export/scenery/boca_fenda/water.png",
+     "rect": [
+      0,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "15e933fb1cd436c4bbc0ec9409b1c1504ace745585b8dc7c8c4d88704471aa62"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/boca_fenda/foreground.png",
+     "rect": [
+      20,
+      660,
+      1260,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "b3da61f7870455cf0b84af89a0285ae9c5cfcdb715199cb2c32dcb8227ee178a"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/boca_fenda/landmark.png",
+     "rect": [
+      454,
+      217,
+      372,
+      300
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "f7f7c0660bda16b5c610bad22559e3663cde0646e637d45f86556ec5e0658a18"
+    }
+   },
+   "from": "floodplain",
+   "to": "canyon",
+   "threshold_x": 640
+  },
+  "canyon": {
+   "kind": "kingdom",
+   "title": "Fenda",
+   "package": "EMPIRE-FENDA-2026-10-08.zip",
+   "package_sha256": "72830fe91c70f75d3a5b0f2f8b04df837bd311d81057d05083b628560351ad71",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/canyon/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "0fc1eb81a91e99d2c517da4e9c626281df1424248b8d04f79bc006b6b3ff7131"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/canyon/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/canyon/far.png",
+     "rect": [
+      0,
+      196,
+      2560,
+      220
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "61e0fb547c2f92a127f339e670851f4e9a1624f36c574690a4878b7706fef659"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/canyon/mid.png",
+     "rect": [
+      0,
+      205,
+      2560,
+      312
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "12c402d11974a23030fb774a3faa6314232d7874b387af9da3092e5bac55f814"
+    },
+    "near": {
+     "file": "res://art/export/scenery/canyon/near.png",
+     "rect": [
+      0,
+      287,
+      2560,
+      230
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "227b02f3657f1d666f41525273526c5f65a437071f155d35cf35f6490ea4f7fc"
+    },
+    "under": {
+     "file": "res://art/export/scenery/canyon/under.png",
+     "rect": [
+      0,
+      492,
+      2560,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "5fa3676a7dc8b0dc4b51bb1a56bd9613aa90242be5ba4451cb669fbc1e3261f5"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/canyon/terrain.png",
+     "rect": [
+      0,
+      588,
+      2560,
+      132
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "614a345e852571e53ba9f258c5c4d25e366a4abe37113e0cc602505409c2de16"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/canyon/foreground.png",
+     "rect": [
+      47,
+      664,
+      2513,
+      56
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "dfc7851d33997082a92b80b10a9e653ea7db797547fd44fd2b9d0f56b61b3666"
+    }
+   },
+   "biome": "canyon"
+  },
+  "cicatriz_basalto": {
+   "kind": "transition",
+   "title": "Cicatriz de Basalto",
+   "package": "EMPIRE-CICATRIZ-DE-BASALTO-2026-10-08.zip",
+   "package_sha256": "97b3a27095a2f3e50f8584e60fd671f25d5e495e15e790dbf3c536a14ef9665b",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/cicatriz_basalto/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "597ccbb05b2190fc11ab07613a58feb7bf93a417faa24a2e9c22970f97f7f808"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/cicatriz_basalto/terrain.png",
+     "rect": [
+      0,
+      588,
+      1280,
+      132
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "4e7db6ce9b1b4fda6f1b29d102d58acfae783d7afb9ff8160285f55d15a7134f"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/cicatriz_basalto/foreground.png",
+     "rect": [
+      23,
+      658,
+      1254,
+      62
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "666b25f3f8c43bddecf65557b0eaadc7b7a05f45df635339865d870389cc1f3b"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/cicatriz_basalto/landmark.png",
+     "rect": [
+      422,
+      217,
+      436,
+      300
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "c0a73ef4817230f872437c1425ae304a4453fe6d5b105fdb17534ef3cdbbe936"
+    }
+   },
+   "from": "canyon",
+   "to": "volcanic",
+   "threshold_x": 640
+  },
+  "cinzas_vivas": {
+   "kind": "transition",
+   "title": "Bosque das Cinzas Vivas",
+   "package": "EMPIRE-BOSQUE-DAS-CINZAS-VIVAS-2026-10-08.zip",
+   "package_sha256": "b12419009008c1e0574c1ec8d7c01e0719cbd6696ca77a3f7f6239a8933f4988",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/cinzas_vivas/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "1b0ed8ddac06e80d3ca6abb781ab514334e75274ec2155f155bd22199173df7b"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/cinzas_vivas/terrain.png",
+     "rect": [
+      0,
+      587,
+      1280,
+      133
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "d9523804ea4cc354e4e39c022bba93dca21a96c37f16d6b21499687377f0e534"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/cinzas_vivas/foreground.png",
+     "rect": [
+      23,
+      658,
+      1254,
+      62
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "3c7a57f40a18745920c30fed5d75b5dbce79d0efd547937ff5f87e907cf9f91f"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/cinzas_vivas/landmark.png",
+     "rect": [
+      470,
+      217,
+      340,
+      300
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "99b29a6b45191041aed4c419eda5dcfc3653a4c261651db6f08c3c5667b0bd3f"
+    }
+   },
+   "from": "ancient_forest",
+   "to": "volcanic",
+   "threshold_x": 640
+  },
+  "coast": {
+   "kind": "kingdom",
+   "title": "Portuarios",
+   "package": "EMPIRE-PORTUARIOS-2026-10-08.zip",
+   "package_sha256": "bf5aae30037885349f46c36133dd15ba4d98d6a4dc4c1ce07d6c9c2543c22b71",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/coast/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "0fc1eb81a91e99d2c517da4e9c626281df1424248b8d04f79bc006b6b3ff7131"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/coast/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/coast/far.png",
+     "rect": [
+      0,
+      252,
+      2560,
+      168
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "bfe1ced8d039db904091ce9566f6ece79d2fe45a4845b1f3421f4e1258eeb29f"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/coast/mid.png",
+     "rect": [
+      0,
+      221,
+      2560,
+      296
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "09854672bb188cc6c100c19f60a2db3e15b276481a7fafe02c97afc73ee6d921"
+    },
+    "near": {
+     "file": "res://art/export/scenery/coast/near.png",
+     "rect": [
+      0,
+      311,
+      2560,
+      206
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "ce6bfe8bfdb4e4e0b368b61c37553b394ed4cd94ceea12789c3b036ec7320dcc"
+    },
+    "under": {
+     "file": "res://art/export/scenery/coast/under.png",
+     "rect": [
+      0,
+      490,
+      2560,
+      141
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "396835821db075a878651881cd57ebbff9084fd7cdaa1d55685363fdb9de0687"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/coast/terrain.png",
+     "rect": [
+      0,
+      597,
+      2560,
+      97
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "af452d3093a722e25a305d00e5d6c510ed5c406564b34a9d8a3e303fce433bc7"
+    },
+    "water": {
+     "file": "res://art/export/scenery/coast/water.png",
+     "rect": [
+      0,
+      663,
+      2560,
+      57
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "d8bf8a8861af4ea5100ae9e342bc9174438195e6430618d77e1811d1cef479d3"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/coast/foreground.png",
+     "rect": [
+      47,
+      662,
+      2513,
+      58
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "e978545f8dcba17323284ca84ec6441968294e6d3f7d55ff486d85b88d708591"
+    }
+   },
+   "biome": "coast"
+  },
+  "floodplain": {
+   "kind": "kingdom",
+   "title": "Horta",
+   "package": "EMPIRE-HORTA-2026-10-08.zip",
+   "package_sha256": "6120c03185f130306348501259295799c4c799aa62e546c70192ed02f9383050",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/floodplain/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "0fc1eb81a91e99d2c517da4e9c626281df1424248b8d04f79bc006b6b3ff7131"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/floodplain/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/floodplain/far.png",
+     "rect": [
+      0,
+      240,
+      2560,
+      180
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "da2f4fe890b8c304cf009815da5e67db0ae6c76d201da5de8489e543fcf51365"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/floodplain/mid.png",
+     "rect": [
+      0,
+      221,
+      2560,
+      296
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "06b41992c531a79e8c013507155fa5224dd84951de20784de7c7b7f5c3f91e4d"
+    },
+    "near": {
+     "file": "res://art/export/scenery/floodplain/near.png",
+     "rect": [
+      0,
+      257,
+      2560,
+      260
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "843be99545190c9dc315a1cdd154860beaa3dc07af66b2d6d3b3469ce63338eb"
+    },
+    "under": {
+     "file": "res://art/export/scenery/floodplain/under.png",
+     "rect": [
+      0,
+      490,
+      2560,
+      141
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "46a4b14e8d406572f1adabfd9fa81c33f5357e6d542bf5faf2b7c4a98ac6ddad"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/floodplain/terrain.png",
+     "rect": [
+      0,
+      598,
+      2560,
+      96
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "57892bbe646fb6ca6c4e399e9f38591a49c3cb9373305fde82abd34ba5f64e3e"
+    },
+    "water": {
+     "file": "res://art/export/scenery/floodplain/water.png",
+     "rect": [
+      0,
+      663,
+      2560,
+      57
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "ac6aa735393b7f4b880d10e471c18bc32acb00334e8f68e3c6efab68bf5088a0"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/floodplain/foreground.png",
+     "rect": [
+      47,
+      662,
+      2513,
+      58
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "b0e540900ca10c5828a41d9a0c547625ce5cfce52c19b22ce4963c9a785fd44f"
+    }
+   },
+   "biome": "floodplain"
+  },
+  "galeria_exposta": {
+   "kind": "transition",
+   "title": "Galeria Exposta",
+   "package": "EMPIRE-GALERIA-EXPOSTA-2026-10-08.zip",
+   "package_sha256": "8d3d4fdfd80813ba4d2c961ca1b3df483151d6bace9728bb8429a60f548e12f4",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/galeria_exposta/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "7c7b9e54fbf04a3ebd30448d50982aaaf3ff4a94299b975ee39c036c4e52851c"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/galeria_exposta/terrain.png",
+     "rect": [
+      0,
+      586,
+      1280,
+      134
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "5b6b7d72aeb7b84b954d9e8913456fbdedbf4fb7b9864ab23602a669b3189fcf"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/galeria_exposta/foreground.png",
+     "rect": [
+      23,
+      662,
+      1257,
+      58
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "d504e930859608ada973db35c43787c7d794f78b8def5c3515d8f6789705a94b"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/galeria_exposta/landmark.png",
+     "rect": [
+      425,
+      217,
+      430,
+      300
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "2a97022007ed66f2786dc7550427affa8707555ede3c31c825070378d63787dc"
+    }
+   },
+   "from": "canyon",
+   "to": "subterranean",
+   "threshold_x": 640
+  },
+  "glacier": {
+   "kind": "kingdom",
+   "title": "Geada",
+   "package": "EMPIRE-GEADA-2026-10-08.zip",
+   "package_sha256": "dd18b56b92be83337bf207700523923560b6b458f330af0a160140d3746cfbbb",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/glacier/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "fd1cb8265654bffa394a05afe36a9e8a970d7d1bdb0c3197e8ab2bc5fbdd72b6"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/glacier/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/glacier/far.png",
+     "rect": [
+      0,
+      200,
+      2560,
+      220
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "4f32368ed2d3d043fd3e3300794d6b474a6d82e6fb9b9b7f2f54ec2d9fc10a3d"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/glacier/mid.png",
+     "rect": [
+      0,
+      213,
+      2560,
+      304
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "f02b506f84dea21b5184d9f80ea88e2f5a783bf7dc542db86eac6322e538de19"
+    },
+    "near": {
+     "file": "res://art/export/scenery/glacier/near.png",
+     "rect": [
+      0,
+      247,
+      2560,
+      270
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "0478d4b30099553b9dbf51803a919f6debed8cee1ca47c41a03f5ae29886fe95"
+    },
+    "under": {
+     "file": "res://art/export/scenery/glacier/under.png",
+     "rect": [
+      0,
+      492,
+      2560,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "ed0159e590eda954fc61594be380bf3ad157c658eb2d30ab35f64e201874b963"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/glacier/terrain.png",
+     "rect": [
+      0,
+      596,
+      2560,
+      98
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "5ea1b132d157a01ea0ebd1dc905761a23b7f70f5f19b05db336eb3b31b718611"
+    },
+    "water": {
+     "file": "res://art/export/scenery/glacier/water.png",
+     "rect": [
+      0,
+      663,
+      2560,
+      57
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "4e50e01dd7e9ce7a8eda3d3811dc3f62a2cd3e0b72e66ab3382cf8545f2ca86f"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/glacier/foreground.png",
+     "rect": [
+      47,
+      662,
+      2513,
+      58
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "1f46601711d7f6b1efacb79d4513b63e58c75c39fe2874fab7c6e2c406bae427"
+    }
+   },
+   "biome": "glacier"
+  },
+  "limiar_raizes": {
+   "kind": "transition",
+   "title": "Limiar das Raízes",
+   "package": "EMPIRE-LIMIAR-DAS-RAIZES-2026-10-08.zip",
+   "package_sha256": "d9637fd657dc91fb4caf1f6f67c428e233859e01b72ad08bb23321493a7954be",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/limiar_raizes/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "d30b9e91a8dcee587c3b05b3c3dd400660f1b175022c1a4488d59f3cd5c8cd0e"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/limiar_raizes/terrain.png",
+     "rect": [
+      0,
+      586,
+      1280,
+      134
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "090f0be1751215fdbb4088992f366f7d076114b4178cc1d19157480a1897ba5d"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/limiar_raizes/foreground.png",
+     "rect": [
+      23,
+      662,
+      1257,
+      58
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "847d30adc1ef2c17d04639d7d84ed510788918a484e5b23f3952314f1d6c874e"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/limiar_raizes/landmark.png",
+     "rect": [
+      450,
+      219,
+      380,
+      298
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "904ea2f56fcf7d82f8d221df0d2c0aa2a59a6e9764c0480df2ce6cf06e25b5ea"
+    }
+   },
+   "from": "ancient_forest",
+   "to": "subterranean",
+   "threshold_x": 640
+  },
+  "limite_bosques": {
+   "kind": "transition",
+   "title": "Limite dos Bosques",
+   "package": "EMPIRE-LIMITE-DOS-BOSQUES-2026-10-08.zip",
+   "package_sha256": "53e62d139f7e37c7a909eb8b37f3fd41ff26ac54aabd2a2476fd98dd0b0fe932",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/limite_bosques/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "a82ed07abb120b12467238b83a91d06eff78056e89dcbd5965363eff37c431b7"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/limite_bosques/terrain.png",
+     "rect": [
+      0,
+      587,
+      1280,
+      133
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "0d5a9a6e0eaacbf0864872f01699066883d05d168533ce58fbac07b5404524b5"
+    },
+    "water": {
+     "file": "res://art/export/scenery/limite_bosques/water.png",
+     "rect": [
+      640,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "7d131942a5b744437fce3dd0051c6b70c396a84d89a0719a1e34d2159878c0b8"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/limite_bosques/foreground.png",
+     "rect": [
+      23,
+      660,
+      1257,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "584564b3e00762cbea7ed939214bbbf249b6312b18f88e5bf22636ee40458a3d"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/limite_bosques/landmark.png",
+     "rect": [
+      467,
+      219,
+      346,
+      298
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "6b495b52f13224af14622ec6e5fa39d4f98e48c659c107d35ba36e0798adb935"
+    }
+   },
+   "from": "ancient_forest",
+   "to": "glacier",
+   "threshold_x": 640
+  },
+  "marisma_estuario": {
+   "kind": "transition",
+   "title": "Marisma do Estuário",
+   "package": "EMPIRE-MARISMA-DO-ESTUARIO-2026-10-08.zip",
+   "package_sha256": "f12aabc7c5f3a0d7186973e10b370eb15d978b51e884904661a341ecfac93999",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/marisma_estuario/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "2c1e18e0ba3abf6bea905ea941003a9968e9e3dbe40ed834b90bf62f52a32e7b"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/marisma_estuario/terrain.png",
+     "rect": [
+      0,
+      598,
+      1280,
+      96
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "f3c920674530a0adcc3467a69d1aec64fb1a59843928a6cc139518c3d9a5f14e"
+    },
+    "water": {
+     "file": "res://art/export/scenery/marisma_estuario/water.png",
+     "rect": [
+      0,
+      663,
+      1280,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "4e48e2b5819f72256fda063e34c51fb098ba6b49400ffe495932e0ff5e3a91a6"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/marisma_estuario/foreground.png",
+     "rect": [
+      27,
+      658,
+      1253,
+      62
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "a4f0c6fa4ed2f5dbe2c4c0077e37698d13507c50c979ee4b1a84c2e4ac5a98e3"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/marisma_estuario/landmark.png",
+     "rect": [
+      416,
+      229,
+      448,
+      288
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "4c8bfee2aaa05aa638a88d25aee2b1e60747f3b0ddc983fa613721fbda5fa15e"
+    }
+   },
+   "from": "marsh",
+   "to": "floodplain",
+   "threshold_x": 640
+  },
+  "marisma_horta_coast": {
+   "kind": "transition",
+   "title": "Marisma do Estuário — Horta → Portuários",
+   "package": "EMPIRE-MARISMA-DO-ESTUARIO-HORTA-PORTUARIOS-2026-10-08.zip",
+   "package_sha256": "558fcc04527951c952b1528fad0c770049d5d064948e87fcd4ad1bc3872d9771",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/marisma_horta_coast/under.png",
+     "rect": [
+      0,
+      490,
+      1280,
+      141
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "7475806ec461e0e7bcccf20f466ea97199b64cef83c3d269b7627243320d94c4"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/marisma_horta_coast/terrain.png",
+     "rect": [
+      0,
+      597,
+      1280,
+      97
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "ffa1ba5684d653c21995cb466937be25bdf929e06310e485673b170a146ba440"
+    },
+    "water": {
+     "file": "res://art/export/scenery/marisma_horta_coast/water.png",
+     "rect": [
+      0,
+      663,
+      1280,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "7dbbca338f35564aa0ef4cdb5ce4af40247e25c3ccc6c615ba5f73127f826496"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/marisma_horta_coast/foreground.png",
+     "rect": [
+      20,
+      660,
+      1260,
+      60
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f4837a725cfe851c354b9b0c490e3af9fdcf46730ea1d9221fd510aca645dcec"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/marisma_horta_coast/landmark.png",
+     "rect": [
+      416,
+      229,
+      448,
+      288
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "4c8bfee2aaa05aa638a88d25aee2b1e60747f3b0ddc983fa613721fbda5fa15e"
+    }
+   },
+   "from": "floodplain",
+   "to": "coast",
+   "threshold_x": 640
+  },
+  "marsh": {
+   "kind": "kingdom",
+   "title": "Bruma",
+   "package": "EMPIRE-BRUMA-2026-10-08.zip",
+   "package_sha256": "cc306f8e47450d0218c8cf51caafb08bf814183bc6c3fb3ad110a689f1698322",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/marsh/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "8811dd1af3c3971ba7c3b70730fed7542c34ed9354ee60aa478c40b301ab0280"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/marsh/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/marsh/far.png",
+     "rect": [
+      0,
+      196,
+      2560,
+      224
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "1b4d17a8d99d5e237329ab93dbe5379db07d35d36dbf32cca47dcdc6508ba4e9"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/marsh/mid.png",
+     "rect": [
+      0,
+      221,
+      2560,
+      292
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "5142221837ce94869f632cd36eab1b501c2232c0c5a1734e5f5d62c00bd9e8c6"
+    },
+    "near": {
+     "file": "res://art/export/scenery/marsh/near.png",
+     "rect": [
+      0,
+      267,
+      2560,
+      250
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "9d5af7a6eef9c7f350a4944caf6ecc82193baeae5f1abf1be68a381874494604"
+    },
+    "under": {
+     "file": "res://art/export/scenery/marsh/under.png",
+     "rect": [
+      0,
+      492,
+      2560,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "37b8a92f9d0754d27f4cf95cc3d9112a8d01e1e58b4147926662a51abc536c98"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/marsh/terrain.png",
+     "rect": [
+      0,
+      598,
+      2560,
+      96
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "5f2557c61d6eb6975062050647f62eebeb9ae08a1e37d335c9755afebee9e5ee"
+    },
+    "water": {
+     "file": "res://art/export/scenery/marsh/water.png",
+     "rect": [
+      0,
+      663,
+      2560,
+      57
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "00575cc02c909e4af191dd25dd2cd08bb9fb771de63d1a1944cc225c17fc6cb7"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/marsh/foreground.png",
+     "rect": [
+      53,
+      660,
+      2507,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "7ea8685f9e485f08cfb3f8a539827c842536996a2e6873f0c71016c3a7b201d9"
+    }
+   },
+   "biome": "marsh"
+  },
+  "mata_encharcada": {
+   "kind": "transition",
+   "title": "Mata Encharcada",
+   "package": "EMPIRE-MATA-ENCHARCADA-2026-10-08.zip",
+   "package_sha256": "6fc36dbbd0e41dd5b567047f583878a433b97046182089ebf2d2cdea7843a5b2",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/mata_encharcada/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "e6ca8acd5ff209442a00907b62bd1c1adadc23472201ee2696fe6040c63cf231"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/mata_encharcada/terrain.png",
+     "rect": [
+      0,
+      587,
+      1280,
+      133
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "717516aa3edb3d511b5b193167dd9d4d996d0b27a67244ab280fc08e71f7d0ea"
+    },
+    "water": {
+     "file": "res://art/export/scenery/mata_encharcada/water.png",
+     "rect": [
+      640,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "b98af7aa10a39f4cc8eb630cdc042313bd92efd86ada7633eb7069a0a00dac7d"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/mata_encharcada/foreground.png",
+     "rect": [
+      23,
+      658,
+      1257,
+      62
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "d7e2caf0b4c4331e6fe4b53f4cefa3c11a1fbb75909270234d6183ce6a0b9233"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/mata_encharcada/landmark.png",
+     "rect": [
+      458,
+      217,
+      364,
+      300
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "135f5962dc6208751d2d6d7dc3a0d8c7fbcb29b1d441d043c04130bfb7078f52"
+    }
+   },
+   "from": "ancient_forest",
+   "to": "marsh",
+   "threshold_x": 640
+  },
+  "mata_mare": {
+   "kind": "transition",
+   "title": "Mata da Maré",
+   "package": "EMPIRE-MATA-DA-MARE-2026-10-08.zip",
+   "package_sha256": "ac2935211b2849ecd6ac5ac2d2ee13bad2ef7dac99eaee580b2100ac837ff5e4",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/mata_mare/under.png",
+     "rect": [
+      0,
+      490,
+      1280,
+      141
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "da78d28ec3368a5bf5d5a34311bfa0fec381e7d68c242dba15cf2aff4b00d694"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/mata_mare/terrain.png",
+     "rect": [
+      0,
+      587,
+      1280,
+      133
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "3121631b51367ff65c4321de37bf84c228b73fb0d0d329bcb2c2b0e3cebea305"
+    },
+    "water": {
+     "file": "res://art/export/scenery/mata_mare/water.png",
+     "rect": [
+      640,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "02604dd84181071ca2be3c0b1b5173d36d3fb215543b4373c687cf817e4b098b"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/mata_mare/foreground.png",
+     "rect": [
+      23,
+      660,
+      1257,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "71d88f4f9d6811e45edc7500238cf6b4f0345ef9b7bb1658e5c02d7e0f43f1a4"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/mata_mare/landmark.png",
+     "rect": [
+      455,
+      219,
+      370,
+      298
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "089d09391d0d7de38e82665e319ae4dd740c7f39f63d6c66b5e8ad2c6eb5b4b7"
+    }
+   },
+   "from": "ancient_forest",
+   "to": "coast",
+   "threshold_x": 640
+  },
+  "neve_negra": {
+   "kind": "transition",
+   "title": "Linha da Neve Negra",
+   "package": "EMPIRE-LINHA-DA-NEVE-NEGRA-2026-10-08.zip",
+   "package_sha256": "e10d6cfb844e0ad705fcb991ec0d81e7c91c8bf3521b6f0ee78d3499e932a310",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/neve_negra/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "8c5d5502ddfef3b4207ea3d608bbed38e9ab0c37274236f9386759da38dc8ebb"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/neve_negra/terrain.png",
+     "rect": [
+      0,
+      590,
+      1280,
+      130
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "50443d39d4217c07d5a431af80c9caf835286b55e83f22d1866a190002a2c182"
+    },
+    "water": {
+     "file": "res://art/export/scenery/neve_negra/water.png",
+     "rect": [
+      640,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "7d131942a5b744437fce3dd0051c6b70c396a84d89a0719a1e34d2159878c0b8"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/neve_negra/foreground.png",
+     "rect": [
+      22,
+      658,
+      1258,
+      62
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "6afeabee0aaa5e679f91fb56336342e122a508bf516cfb51088c2547ed6fd31d"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/neve_negra/landmark.png",
+     "rect": [
+      416,
+      225,
+      448,
+      292
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "e4d97223dafe97d563ed86feb56216a3e23e49e7ee1422bbffb7467f61c23680"
+    }
+   },
+   "from": "volcanic",
+   "to": "glacier",
+   "threshold_x": 640
+  },
+  "orla_campos": {
+   "kind": "transition",
+   "title": "Orla dos Campos",
+   "package": "EMPIRE-ORLA-DOS-CAMPOS-2026-10-08.zip",
+   "package_sha256": "caac8f09fb8547e0dff6b9076d65eca9a7b2297df3f374c93cc874efb3b9ad21",
+   "canvas": [
+    1280,
+    720
+   ],
+   "layers": {
+    "under": {
+     "file": "res://art/export/scenery/orla_campos/under.png",
+     "rect": [
+      0,
+      492,
+      1280,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "817415fac484bcd8e87f2c45a771faa25b75758d0dddfefeae4a06ddfab67b75"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/orla_campos/terrain.png",
+     "rect": [
+      0,
+      587,
+      1280,
+      133
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "652952437e90fc78493bb6dd8a54398f54e7bbd3b3be0e6f16765341237f98b2"
+    },
+    "water": {
+     "file": "res://art/export/scenery/orla_campos/water.png",
+     "rect": [
+      640,
+      663,
+      640,
+      57
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "708550c715e92211ac119749738f867dfe01c58b930d91a3df62449a78396784"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/orla_campos/foreground.png",
+     "rect": [
+      23,
+      660,
+      1257,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "07a85f18836115eb1848c432f7533dbdae35fd944bfb2255c23f33c8bc336caa"
+    },
+    "landmark": {
+     "file": "res://art/export/scenery/orla_campos/landmark.png",
+     "rect": [
+      426,
+      217,
+      428,
+      300
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "ac9970b423b2f9fd4c958621cc6e0b3750348ff6cdd54a58499fa0e480c3d12f"
+    }
+   },
+   "from": "ancient_forest",
+   "to": "floodplain",
+   "threshold_x": 640
+  },
+  "subterranean": {
+   "kind": "kingdom",
+   "title": "SobRaiz",
+   "package": "EMPIRE-SOBRAIZ-2026-10-08.zip",
+   "package_sha256": "8e44a457059cdf7f73485f83ea471ce7c17a651d7c6a96190efd5f0416b5daf8",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/subterranean/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "f9814def7f0faa89359946604595204810f995dc2df9b6ea41e812697f5f9a3b"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/subterranean/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/subterranean/far.png",
+     "rect": [
+      0,
+      152,
+      2560,
+      268
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "a8bdab23d48f94f091cda12e9e5230a5c06755aee96d0af57dc966f6a1ce86c3"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/subterranean/mid.png",
+     "rect": [
+      0,
+      181,
+      2560,
+      336
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "659f06090210ab04b0aeb5d4ff78acfff6f8b491bb0b07f97e6b9b5b51f1c983"
+    },
+    "near": {
+     "file": "res://art/export/scenery/subterranean/near.png",
+     "rect": [
+      0,
+      68,
+      2560,
+      455
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "4d40435dbf6e70cc86c3e326970d9bb53abcf30dfdab71a541613ac9419989bc"
+    },
+    "under": {
+     "file": "res://art/export/scenery/subterranean/under.png",
+     "rect": [
+      0,
+      492,
+      2560,
+      139
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "bc7a591c0915fd37a1c0fdfec861b388df68031d6c51375355629f0f14469cfd"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/subterranean/terrain.png",
+     "rect": [
+      0,
+      586,
+      2560,
+      134
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "8787fd563fcf346656e7854b40a7d11f50f83fc9185d4d80c847540d4ffebddc"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/subterranean/foreground.png",
+     "rect": [
+      45,
+      664,
+      2515,
+      56
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "c0108e232519afbaf682d0dc735e5e0844e95eb6a9038fec5e6b78586eb28752"
+    }
+   },
+   "biome": "subterranean"
+  },
+  "volcanic": {
+   "kind": "kingdom",
+   "title": "Caldeira",
+   "package": "EMPIRE-CALDEIRA-2026-10-08.zip",
+   "package_sha256": "481a0ea9b63cda1aa57c77d1909fc2e9148f0e98a08bfb3df20900621143bd94",
+   "canvas": [
+    2560,
+    720
+   ],
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery/volcanic/sky.png",
+     "rect": [
+      0,
+      0,
+      2560,
+      720
+     ],
+     "scale": [
+      8,
+      4
+     ],
+     "sha256": "87617a0ab7c91aafe56d141bc26f6a9368a0b1ab17c5585a4d036b007c337fd9"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery/volcanic/clouds.png",
+     "rect": [
+      90,
+      40,
+      2282,
+      215
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "fdca0bbc4c705a39087da5fb5be4da21d0ce235b82a6d439615b4509f526c56f"
+    },
+    "far": {
+     "file": "res://art/export/scenery/volcanic/far.png",
+     "rect": [
+      0,
+      196,
+      2560,
+      224
+     ],
+     "scale": [
+      4,
+      4
+     ],
+     "sha256": "a215c7d40e13790aac4e99d155297a0dc1688722b92b62c008647c1a2ee5e85d"
+    },
+    "mid": {
+     "file": "res://art/export/scenery/volcanic/mid.png",
+     "rect": [
+      0,
+      221,
+      2560,
+      296
+     ],
+     "scale": [
+      4,
+      1
+     ],
+     "sha256": "24b1142b08c06f2a98571ceafa3ed4b91b83173175874ffbfe2435848e565f89"
+    },
+    "near": {
+     "file": "res://art/export/scenery/volcanic/near.png",
+     "rect": [
+      0,
+      289,
+      2560,
+      273
+     ],
+     "scale": [
+      1,
+      1
+     ],
+     "sha256": "e73fe53936b2dbf2294244d5cc4a1b4115551fcd9c951a63765f8e55a42edbec"
+    },
+    "under": {
+     "file": "res://art/export/scenery/volcanic/under.png",
+     "rect": [
+      0,
+      494,
+      2560,
+      137
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "db0a85a490f256d553cb03ca87cb538819b47107fb78b9139c11c1ce31f1dbff"
+    },
+    "terrain": {
+     "file": "res://art/export/scenery/volcanic/terrain.png",
+     "rect": [
+      0,
+      590,
+      2560,
+      130
+     ],
+     "scale": [
+      2,
+      1
+     ],
+     "sha256": "267873d6e044cade694a94547afb8dd0de12010e6c3cbb00fe37eae4d19175f8"
+    },
+    "foreground": {
+     "file": "res://art/export/scenery/volcanic/foreground.png",
+     "rect": [
+      45,
+      660,
+      2515,
+      60
+     ],
+     "scale": [
+      1,
+      2
+     ],
+     "sha256": "525cf487ee98d1510990c7c1a1392852245b702661bdf811dcc1a7678f26816c"
+    }
+   },
+   "biome": "volcanic"
+  }
+ },
+ "proposals": [
+  {
+   "id": "reino_fluvial",
+   "title": "Reino-Fluvial",
+   "package": "EMPIRE-REINO-FLUVIAL-2026-10-08.zip"
+  },
+  {
+   "id": "porto_central",
+   "title": "Porto-Central",
+   "package": "EMPIRE-PORTO-CENTRAL-2026-10-08.zip"
+  },
+  {
+   "id": "lago_ponte",
+   "title": "Lago-Ponte-Cais",
+   "package": "EMPIRE-LAGO-PONTE-CAIS-2026-10-08.zip"
+  }
+ ]
+}

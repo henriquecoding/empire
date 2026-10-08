@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/world/enramados_layer.gd" id="1"]
 [ext_resource type="Script" path="res://src/world/sky_view.gd" id="2"]
 [ext_resource type="Script" path="res://src/world/wilds_layer.gd" id="3"]
+[ext_resource type="Script" path="res://src/world/scenery_plane.gd" id="4"]
+[ext_resource type="Script" path="res://src/world/scenery_strip.gd" id="5"]
 
 [node name="Enramados" type="Node2D"]
 
@@ -13,27 +15,46 @@ plane = 0
 [node name="Clouds" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.03125, 1)
 
+[node name="Ceu" type="Node2D" parent="Clouds"]
+script = ExtResource("4")
+camada = &"sky"
+
 [node name="Art" type="Node2D" parent="Clouds"]
 script = ExtResource("3")
 plane = 2
-
-[node name="FarHills" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0.12, 1)
-
-[node name="Art" type="Node2D" parent="FarHills"]
-script = ExtResource("1")
-plane = 1
 
 [node name="SunAndMoon" type="Node2D" parent="."]
 script = ExtResource("2")
 paint_sky = false
 
+[node name="Nuvens" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.07, 1)
+
+[node name="Art" type="Node2D" parent="Nuvens"]
+script = ExtResource("4")
+camada = &"clouds"
+
+[node name="FarHills" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.125, 1)
+
+[node name="Art" type="Node2D" parent="FarHills"]
+script = ExtResource("1")
+plane = 1
+
+[node name="Longe" type="Node2D" parent="FarHills"]
+script = ExtResource("4")
+camada = &"far"
+
 [node name="DistantRealm" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0.3, 1)
+scroll_scale = Vector2(0.25, 1)
 
 [node name="Art" type="Node2D" parent="DistantRealm"]
 script = ExtResource("1")
 plane = 2
+
+[node name="Meio" type="Node2D" parent="DistantRealm"]
+script = ExtResource("4")
+camada = &"mid"
 
 [node name="Treeline" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.5, 1)
@@ -41,6 +62,10 @@ scroll_scale = Vector2(0.5, 1)
 [node name="Art" type="Node2D" parent="Treeline"]
 script = ExtResource("3")
 plane = 1
+
+[node name="Perto" type="Node2D" parent="Treeline"]
+script = ExtResource("4")
+camada = &"near"
 
 [node name="Grove" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.65, 1)
@@ -52,6 +77,9 @@ plane = 3
 [node name="PathAndSoil" type="Node2D" parent="."]
 script = ExtResource("1")
 plane = 4
+
+[node name="Chao" type="Node2D" parent="."]
+script = ExtResource("5")
 
 [node name="Field" type="Node2D" parent="."]
 script = ExtResource("3")

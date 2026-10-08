@@ -238,3 +238,34 @@ Fontes integrais: `art/source/renewal/`. Export deterministico: `tools/export_re
 | `royal_winged` | 192 x 192 | 4 | idle, walk, flee |
 
 Os ataques, golpes recebidos e quedas usam poses do combate. Caminhadas com quatro frames; nao se declaram ciclos de ataque completos. Edificios conservam estados de pagamento, construcao, reparacao e ruina. Todas as especies da Podridao usam sprites desta familia e olhos emissivos.
+
+
+## Cenarios em camadas — entrega de 08/10/2026
+
+Os ZIPs do dono, lidos por `tools/export_scenery.py` (hashes de cada pacote conferidos com o `catalogo.json`); o export e as mesmas camadas recortadas ao alfa, sem reamostrar. Mapa e regras: ADR 0081. Chamada em runtime: `SceneryArt`, `SceneryPlane` (fundo, em parallax) e `SceneryStrip` (chao e terra, no mundo).
+
+| Cena | Tipo | Bioma ou fronteira | Quadro | Camadas |
+|---|---|---|---|---|
+| `ancient_forest` (Enramados) | kingdom | `ancient_forest` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, foreground |
+| `arriba_estratos` (Arriba dos Estratos) | transition | `coast → canyon` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `boca_fenda` (Boca da Fenda) | transition | `floodplain → canyon` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `canyon` (Fenda) | kingdom | `canyon` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, foreground |
+| `cicatriz_basalto` (Cicatriz de Basalto) | transition | `canyon → volcanic` | 1280 x 720 | under, terrain, foreground, landmark |
+| `cinzas_vivas` (Bosque das Cinzas Vivas) | transition | `ancient_forest → volcanic` | 1280 x 720 | under, terrain, foreground, landmark |
+| `coast` (Portuarios) | kingdom | `coast` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, water, foreground |
+| `floodplain` (Horta) | kingdom | `floodplain` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, water, foreground |
+| `galeria_exposta` (Galeria Exposta) | transition | `canyon → subterranean` | 1280 x 720 | under, terrain, foreground, landmark |
+| `glacier` (Geada) | kingdom | `glacier` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, water, foreground |
+| `limiar_raizes` (Limiar das Raízes) | transition | `ancient_forest → subterranean` | 1280 x 720 | under, terrain, foreground, landmark |
+| `limite_bosques` (Limite dos Bosques) | transition | `ancient_forest → glacier` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `marisma_estuario` (Marisma do Estuário) | transition | `marsh → floodplain` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `marisma_horta_coast` (Marisma do Estuário — Horta → Portuários) | transition | `floodplain → coast` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `marsh` (Bruma) | kingdom | `marsh` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, water, foreground |
+| `mata_encharcada` (Mata Encharcada) | transition | `ancient_forest → marsh` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `mata_mare` (Mata da Maré) | transition | `ancient_forest → coast` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `neve_negra` (Linha da Neve Negra) | transition | `volcanic → glacier` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `orla_campos` (Orla dos Campos) | transition | `ancient_forest → floodplain` | 1280 x 720 | under, terrain, water, foreground, landmark |
+| `subterranean` (SobRaiz) | kingdom | `subterranean` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, foreground |
+| `volcanic` (Caldeira) | kingdom | `volcanic` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, foreground |
+
+Propostas por colocar no mundo, fora do export: Reino-Fluvial (`reino_fluvial`), Porto-Central (`porto_central`), Lago-Ponte-Cais (`lago_ponte`) (Q-259). Edificios, escadas, atividades de baixo e atores de referencia ficam nos pacotes: o que se constroi e onde ha passagem decide-o a simulacao.

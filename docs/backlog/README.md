@@ -93,6 +93,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [PUB-04](PUB-04.md) | O site mostra o jogo de hoje | PUB-02 | feito |
 | [PUB-05](PUB-05.md) | Primeiro contacto, desempenho e resiliência do site | PUB-04, UX-08 | feito |
 | [CV-01](CV-01.md) | Cenários: diagnóstico reproduzível e o contrato dos planos | RG-28, ART-RENEWAL-01 | parcial — manifesto, sobreposição do território e contrato dos planos; kits de arte e trecho piloto por fazer |
+| [CV-02](CV-02.md) | Cenários em camadas: os reinos e as transições do dono no jogo | CV-01 | parcial — 8 reinos e 13 transições no jogo; propostas especiais e transições a oeste por decidir |
 
 ## Fase 2 — Fatia vertical
 

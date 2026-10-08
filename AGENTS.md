@@ -275,6 +275,10 @@ src/world/world_text.gd     WorldText     as letras escritas no mundo, legiveis 
 src/world/forest_view.gd    ForestView    a floresta no plano de accao, a quem serve e o chao que ficou vazio (ADR 0070)
 src/world/territory_overlay.gd TerritoryOverlay o territorio que o jogo conhece, por cima do mundo, so com o inspetor aberto (CV-39, ADR 0078)
 src/world/plane_contract.gd PlaneContract os planos de profundidade de uma cena e o contrato do parallax (ADR 0078)
+src/world/scenery_art.gd    SceneryArt    os cenarios pintados do dono: o manifesto, as texturas e o pincel das camadas (ADR 0081)
+src/world/scenery_map.gd    SceneryMap    que cena pintada cobre cada troco do mundo, e onde estao as fronteiras (ADR 0081)
+src/world/scenery_plane.gd  SceneryPlane  um plano de fundo pintado, em parallax, com a fronteira projetada (ADR 0081)
+src/world/scenery_strip.gd  SceneryStrip  o chao pintado no mundo: ate a linha, e a terra por cima do subsolo (ADR 0081)
 src/world/fauna.gd          Fauna         os bichos de cenario e o que fazem (nenhum e caca)
 src/world/flock.gd          Flock         um bando de passaros, pelas regras de Reynolds
 src/world/fauna_art.gd      FaunaArt      o que um bicho de cenario E, em pixeis
