@@ -1,5 +1,7 @@
 extends GdUnitTestSuite
 
+const SettledRealm := preload("res://tests/support/settled_realm.gd")
+
 
 func before_test() -> void:
 	EventBus.reset()
@@ -67,7 +69,7 @@ func test_new_map_keeps_deserted_extent_without_new_loot_or_recruits() -> void:
 
 
 func test_class_travels_to_conquered_realm_king_stays_and_night_locks_travel() -> void:
-	preload("res://tests/support/settled_realm.gd").prepare(1)
+	SettledRealm.prepare(1)
 	var kingdom := SimLoop.units.index_of(SimLoop.king_id)
 	var home := SimLoop.units.xs[kingdom]
 	var hero := SimLoop.units.spawn(
@@ -90,7 +92,7 @@ func test_class_travels_to_conquered_realm_king_stays_and_night_locks_travel() -
 
 
 func test_local_realm_has_own_workers_defenses_treasury_and_night_attack() -> void:
-	preload("res://tests/support/settled_realm.gd").prepare(1)
+	SettledRealm.prepare(1)
 	Frontier.reveal(SimLoop.field, 1)
 	var record: Dictionary = SimLoop.field.settlements.records[1]
 	assert_int(record[&"sites"].size()).is_equal(4)
