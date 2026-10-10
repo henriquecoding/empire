@@ -2,6 +2,7 @@ class_name TextScaleOption
 extends VBoxContainer
 
 const SIZES := [1.0, 1.25, 1.5]
+const PERCENT := 100.0
 var _label: Label
 var _choice: OptionButton
 
@@ -12,7 +13,7 @@ func _ready() -> void:
 	_choice.custom_minimum_size.y = PauseTheme.BUTTON_HEIGHT
 	PauseTheme.follow_pointer(_choice)
 	for factor: float in SIZES:
-		_choice.add_item("%d%%" % roundi(factor * 100.0))
+		_choice.add_item("%d%%" % roundi(factor * PERCENT))
 	add_child(_choice)
 	_choice.select(maxi(0, SIZES.find(Preferences.shared().number(Preferences.TEXT_SCALE))))
 	_choice.item_selected.connect(_select)

@@ -50,3 +50,8 @@ A validação e publicação identificam o commit; não alteram respostas guarda
   e cancelar a sucessão. Regressão da fundação: 9 casos, sem falhas.
 - O resultado definitivo da suite completa, da vistoria e dos exports é o CI
   associado ao commit do PR. Uma execução local interrompida não é uma aprovação.
+- O primeiro CI do PR encontrou cenários antigos financiados pela bolsa e sociedades
+  prontas antes do calendário. Os testes mantêm as suas verificações de combate,
+  viagem e abandono, usando agora tesouro e sociedades desenvolvidas. A prova da
+  aldeia verifica habitantes/construtor e a contratação paga do primeiro guarda.
+  Os literais de composição assinalados pelo G4 passam a constantes nomeadas.

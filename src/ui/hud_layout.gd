@@ -139,5 +139,9 @@ static func zoom(viewport: Viewport) -> float:
 	var pixels := viewport.get_final_transform().get_scale().x
 	return (
 		zoom_for(pixels, DisplayServer.screen_get_scale(), TouchControls.active)
-		* clampf(Preferences.shared().number(Preferences.TEXT_SCALE), 1.0, 1.5)
+		* clampf(
+			Preferences.shared().number(Preferences.TEXT_SCALE),
+			TextScaleOption.SIZES[0],
+			TextScaleOption.SIZES[-1]
+		)
 	)

@@ -132,6 +132,9 @@ func test_o_acampamento_de_mendigos_recebe_o_vagabundo_da_alvorada() -> void:
 ## outro — e so um de cada vez.
 func test_o_acampamento_de_mercenarios_tem_um_a_espera() -> void:
 	_gerar_tudo()
+	SimLoop.field.settlements.first_night_day = 1
+	SocialWatch.awaken(SimLoop.field, 2)
+	Camps.mercenaries(SocialWatch.camps(SimLoop.field), SimLoop.units, SimLoop.state)
 	var sitios := _terras().mercenaries(SimLoop.world_width)
 	assert_bool(sitios.is_empty()).is_false()
 	var m := _mercenario_em(sitios[0])
