@@ -103,6 +103,7 @@ const SEM_TETO := -1
 ## O ritmo da noite (Q-126): de `peak_every` em `peak_every` noites, uma funda
 ## (massa × peak_mass_mult), e a seguinte calma (× calm_mass_mult). Zero desliga.
 @export var peak_every: int = 0
+@export var first_peak_night: int = 0
 @export var peak_mass_mult: float = 0.0
 @export var calm_mass_mult: float = 0.0
 
@@ -181,11 +182,12 @@ func calendar_mass(dia: int) -> float:
 ## O ritmo da noite (Q-126): de peak_every em peak_every noites uma funda, e a
 ## seguinte calma. Nao e sorteio: a noite funda sabe-se de vespera.
 func rhythm(dia: int) -> float:
-	if peak_every <= 0 or dia <= 0:
+	var first := first_peak_night if first_peak_night > 0 else peak_every
+	if peak_every <= 0 or dia < first:
 		return 1.0
-	if dia % peak_every == 0:
+	if (dia - first) % peak_every == 0:
 		return peak_mass_mult
-	if dia > 1 and (dia - 1) % peak_every == 0:
+	if dia > first and (dia - first - 1) % peak_every == 0:
 		return calm_mass_mult
 	return 1.0
 

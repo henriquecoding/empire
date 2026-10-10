@@ -137,4 +137,7 @@ static func _place(label: Control, onde: Rect2, zoom: float) -> void:
 ## A escala da interface neste ecra: um painel, um botao ou a pausa chamam isto.
 static func zoom(viewport: Viewport) -> float:
 	var pixels := viewport.get_final_transform().get_scale().x
-	return zoom_for(pixels, DisplayServer.screen_get_scale(), TouchControls.active)
+	return (
+		zoom_for(pixels, DisplayServer.screen_get_scale(), TouchControls.active)
+		* clampf(Preferences.shared().number(Preferences.TEXT_SCALE), 1.0, 1.5)
+	)

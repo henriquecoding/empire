@@ -4,12 +4,17 @@
 > ou falha**, com o sítio onde se verifica. *"Jogável sem visão"* fica de fora, e a etiqueta da loja di-lo com
 > honestidade (§26).
 
+O estado desta matriz é de aceitação: um objetivo não equivale a certificação.
+ADR 0082 acrescenta escala de texto/painéis 100/125/150%, com capturas de opções
+a 1280 × 720 e 568 × 320; a matriz completa por dispositivo e o remapeamento
+continuam por concluir. Nenhuma declaração de loja deve antecipar essa prova.
+
 ## 1 · Os testes
 
 | # | Regra | Teste | Passa quando | Onde | Fase |
 |---|---|---|---|---|---|
 | A1 | Tamanho mínimo de texto | Medir a altura de carácter de cada fonte em cada ecrã a 1280 × 720 e 1280 × 800 | ≥ 12 px em todo o lado; **nada abaixo de 9 px** a 1280 × 800 (critério Verified) | captura + régua | 0 (decisão), 4 |
-| A2 | Escala de texto | `OPT_TEXT_SIZE` no máximo em todos os ecrãs com texto | Nada cortado nem sobreposto | SCREEN_REGISTER | 5 |
+| A2 | Escala de texto | `OPT_TEXT_SCALE` no máximo em todos os ecrãs com texto | Nada cortado nem sobreposto | SCREEN_REGISTER | 5 |
 | A3 | Contraste | `OPT_CONTRAST` no mínimo e no máximo; mancha contra o terreno ao crepúsculo | A mancha e as tropas distinguem-se do fundo nos dois extremos | cena C2 | 5 |
 | A4 | Daltonismo | Filtros de protanopia, deuteranopia e tritanopia sobre o crepúsculo e a noite | **A Podridão distingue-se do terreno em protanopia** (§26) | captura filtrada | 5 |
 | A5 | Sem informação só por cor | Rever o contrato do HUD (UI_UX_FLOWS §4) | Cada informação tem forma ou som além da cor (vida = rosto; muralha = silhueta; hora = luz **e** sol/lua) | revisão | 4 |
@@ -33,16 +38,16 @@
 | Entrada | Glifos correspondem ao dispositivo | no rodapé, por nome — teclado, Xbox/Deck, PlayStation (GB-15); falta o atlas de ícones | A12 |
 | Entrada | Texto pela API do Steamworks ou teclado próprio navegável | só o nome do save | A16 |
 | Ecrã | Corre a 1280 × 800 ou 1280 × 720 | nativo | PERFORMANCE_MATRIX |
-| Ecrã | Nenhum carácter abaixo de 9 px a 1280 × 800; recomendado 12 | **o único risco real** | A1 |
+| Ecrã | Nenhum carácter abaixo de 9 px a 1280 × 800; recomendado 12 | por verificar em hardware | A1 |
 | Continuidade | Sem avisos de incompatibilidade; sem *launcher* | sem *launcher* | QA manual |
 | Desempenho | Jogável nas definições por omissão — 30 fps a 800p | alvo 60 | PERFORMANCE_MATRIX |
 | Sistema | Sem incompatibilidades de Proton | Godot exporta Linux nativo — testar cedo | *export* do CI |
 
-## 3 · O que se declara na loja (§26)
+## 3 · Declarações-alvo da loja (§26)
 
 | Funcionalidade | Declaração | Teste que a prova |
 |---|---|---|
-| Remapeamento completo | sim | A11 |
+| Remapeamento completo | pendente; não declarar como entregue | A11 |
 | Legendas para pistas sonoras | sim | A8 |
 | Modos para daltonismo | sim | A4 |
 | Controlos de contraste | sim | A3 |
@@ -61,7 +66,7 @@ ficassem como foram desenhados. A §82 apanhou um a tempo; o outro já nascia co
 | A13 | A Dívida da Candeia não vira número | Jogar até à Dívida 12 com todas as opções de acessibilidade ligadas | Nenhum número, barra, ícone ou linha de texto em nenhum modo. O brilho da candeia é o mostrador (Q-045) | jogo | 3 |
 | A14 | O coro tem redundância visual | Soltar 3 povos e jogar com o som desligado | Três estandartes hasteados sobre o núcleo, na mesma ordem; três mastros vazios pelos que faltam (§82) | jogo | 5 |
 | A15 | A noite castanha não esconde a mancha | Filtros de protanopia, deuteranopia e tritanopia sobre a noite do dia 12 | A mancha (violeta) distingue-se do ambiente (terra) nos três filtros — é a razão de o violeta ser a única cor fria saturada da noite | captura filtrada | 2 |
-| A16 | A Oferta não exige leitura rápida | Medir o tempo de leitura das doze frases com `OPT_TEXT_SIZE` no máximo | As oito palavras lêem-se em menos de metade dos 20 s da janela; o resto do tempo é para decidir, não para ler | captura + cronómetro | 3 |
+| A16 | A Oferta não exige leitura rápida | Medir o tempo de leitura das doze frases com `OPT_TEXT_SCALE` no máximo | As oito palavras lêem-se em menos de metade dos 20 s da janela; o resto do tempo é para decidir, não para ler | captura + cronómetro | 3 |
 
 > **Porque é que a Dívida fica escondida mesmo no modo de acessibilidade**
 >

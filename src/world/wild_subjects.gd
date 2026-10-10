@@ -123,6 +123,12 @@ const SAL := 73
 
 static func draw(canvas: CanvasItem, registo: Dictionary, x: float, x0: float, w: float) -> void:
 	var assunto: StringName = registo.get(WildSegments.ASSUNTO, &"")
+	if (
+		assunto == &"mercenary_tents"
+		and SimLoop.field != null
+		and SimLoop.field.settlements.awake_day <= 0
+	):
+		return
 	if PeopleSubjects.draw(canvas, assunto, x):
 		return
 	if assunto == BOSQUE:

@@ -122,6 +122,7 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `hammer_rack` | 1 |  | pintada (`PaintedArt`): `hammer_rack` | 1 imagem; estados por codigo |
 | `companion_post` | 1 |  | pela forma `ESTANDARTE`: `training_house` | 1 imagem; estados por codigo |
 | `cellar_excavation` | 1 |  | pintada, pela forma `ABOBADA`: `manor` | 1 imagem; estados por codigo |
+| `emissary_stand` | 1 |  | pela forma `ESTANDARTE`: `training_house` | 1 imagem; estados por codigo |
 
 ## Lacunas de arte do marco dos Enramados
 

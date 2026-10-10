@@ -22,6 +22,10 @@ CACHE="${EMPIRE_CACHE:-node_modules/.cache/empire}"
 T0=$(date +%s)
 passo() { echo "── $(( $(date +%s) - T0 ))s · $*"; }
 
+passo "validar autorização de produção"
+node --test tools/web/release-gate.test.mjs
+node tools/web/release-gate.mjs
+
 passo "o motor"
 if [ -z "${GODOT:-}" ]; then
   node tools/web/obter_godot.mjs "$CACHE"
@@ -59,6 +63,10 @@ node ferramentas/construir.mjs docs/dossie.html build/dossie-dados.json "$SAIDA/
 
 passo "as paginas, e a casca do jogo completada"
 node tools/web/pagina.mjs "$SAIDA"
+
+if [ -f build/ci-release-proof.json ] && [ "${VERCEL_ENV:-}" = production ]; then
+  cp build/ci-release-proof.json "$SAIDA/ci-release-proof.json"
+fi
 
 passo "pronto"
 du -sh "$SAIDA" | sed "s/^/   /"

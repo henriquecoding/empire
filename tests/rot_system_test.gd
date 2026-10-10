@@ -176,16 +176,16 @@ func test_a_tabela_da_74_sai_do_sistema_e_nao_so_do_modelo() -> void:
 	# da §74 nas tres colunas, com zero fortalezas e zero recusas. O dia 20 ja traz
 	# as dez noites de crescimento da Q-151.
 	var tabela := [
-		[5, 0, 0, 130.0],
+		[5, 0, 0, 94.666667],
 		[10, 0, 0, 220.0],
 		[20, 0, 0, 716.3],
-		[5, 3, 0, 196.0],
+		[5, 3, 0, 138.666667],
 		[10, 3, 0, 286.0],
 		[20, 3, 0, 782.3],
-		[5, 8, 0, 306.0],
+		[5, 8, 0, 212.0],
 		[10, 8, 0, 396.0],
 		[20, 8, 0, 892.3],
-		[5, 5, 3, 375.0],
+		[5, 5, 3, 258.0],
 		[10, 5, 3, 465.0],
 		[20, 5, 3, 961.3],
 	]

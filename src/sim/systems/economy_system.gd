@@ -151,6 +151,8 @@ func on_phase(obras: BuildSystem, _fase: int, rasto: Array[Vector2]) -> Array[Di
 	for vaga in obras.standing():
 		if vaga.yield_per_day <= 0.0 or vaga.territory != 0 or vaga.rest_day == today:
 			continue
+		if not vaga.terrain_bar.is_empty():
+			continue
 		# A variante da melhoria (Q-136): o canteiro resguardado nao para no rasto.
 		var efeitos := SlotVariant.effects(vaga)
 		if _no_rasto(vaga.x, rasto) and efeitos.get(&"immune_to_rot_trail", 0.0) <= 0.0:

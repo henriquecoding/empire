@@ -84,6 +84,8 @@ func _draw() -> void:
 		for t in trocos:
 			if t[SceneryMap.LIMIAR]:
 				_guardar(SceneryArt.draw_once(self, t[SceneryMap.CENA], MARCO, _de(t), corte))
+		if SimLoop.field != null:
+			ResourceWater.draw(self, _janela)
 
 
 ## A janela de desenho de um troco: a origem do quadro e o pedaco dele que se ve.

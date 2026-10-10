@@ -97,11 +97,12 @@ static func aims_monarch() -> bool:
 
 ## As duas bancas por levantar passam a estar de pe, sem moeda, depois da fundacao.
 static func _bancada() -> Array[Dictionary]:
+	WorldWorks.post(&"emissary_stand", SimLoop.core_x + 244.0)
 	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
 		if (
 			vaga.territory != 0
-			or vaga.kind not in [BANCA, MARTELOS, CompanionWatch.POST]
+			or vaga.kind not in [BANCA, MARTELOS, CompanionWatch.POST, &"emissary_stand"]
 			or vaga.level != 0
 		):
 			continue

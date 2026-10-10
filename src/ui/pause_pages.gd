@@ -19,8 +19,7 @@ func build(layout: PauseLayout, back: Callable, zero: FreshStartPanel) -> void:
 	option_panel = OptionsPanel.new()
 	option_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	area.add_child(option_panel)
-	_tips.append(PauseTheme.label(options, &"UI_MENU_OPTIONS_SAVED"))
-	options.move_child(_tips[0], 2)
+	_tips.append(PauseTheme.label(option_panel, &"UI_MENU_OPTIONS_SAVED"))
 	controls = _page(layout, &"UI_CONTROLS", back)
 	help = PauseHelp.new()
 	help.size_flags_horizontal = Control.SIZE_EXPAND_FILL

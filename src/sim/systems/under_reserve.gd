@@ -17,6 +17,7 @@ static func reserve(u: UndergroundSites) -> void:
 		var s := u.sites[i]
 		s[UndergroundSites.PLAN] = UnderFit.NONE
 		if u.generated(i):
+			stamp(u, i)
 			continue
 		var antes: Array = []
 		for j in u.sites.size():
@@ -57,7 +58,10 @@ static func stamp(u: UndergroundSites, i: int) -> void:
 	var dados: Dictionary = u.meta.get(u.key_of(i), {UndergroundSites.VERSION: 1})
 	u.meta[u.key_of(i)] = dados  # um sitio de antes ainda nao tinha medida nenhuma
 	dados[UndergroundSites.WHY] = UnderFit.check(u.span(i), u.mouth_of(i), tapa, rules_of(u, i))
-	if u.kind_of(i) == UndergroundSites.HATCH and not dados.has(UndergroundSites.CHEST):
+	if (
+		u.kind_of(i) == UndergroundSites.HATCH
+		and not is_finite(float(dados.get(UndergroundSites.CHEST, NAN)))
+	):
 		dados[UndergroundSites.CHEST] = UnderFit.chest(
 			u.span(i), u.mouth_of(i), tapa, rules_of(u, i)
 		)

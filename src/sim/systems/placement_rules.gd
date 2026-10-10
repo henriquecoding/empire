@@ -17,6 +17,7 @@ const ID := &"id"
 const NEED := &"need"
 const BAND := &"band"
 const SPAN := &"span"
+const ACCESS := &"access"
 ## As chaves da resposta (o PlacementResult do §16.4).
 const ALLOWED := &"allowed"
 const REASONS := &"reasons"
@@ -46,16 +47,20 @@ static func evaluate(
 	if need.is_empty():
 		return {ALLOWED: true, REASONS: razoes, SOURCES: usadas, GAP: 0.0}
 	var perto := INF
+	var blocked := false
 	for fonte: Dictionary in sources:
 		if fonte[NEED] != need or int(fonte[BAND]) != band:
 			continue
 		var d := gap(x, fonte[SPAN])
 		perto = minf(perto, d)
 		if d <= reach:
-			usadas.append(String(fonte[ID]))
+			if bool(fonte.get(ACCESS, true)):
+				usadas.append(String(fonte[ID]))
+			else:
+				blocked = true
 	var cabe := usadas.size() >= maxi(1, minimum)
 	if not cabe:
-		razoes.append(MISSING.get(need, UNKNOWN))
+		razoes.append(&"TERRAIN_ACCESS_BLOCKED" if blocked else MISSING.get(need, UNKNOWN))
 	return {ALLOWED: cabe, REASONS: razoes, SOURCES: usadas, GAP: perto}
 
 
