@@ -40,7 +40,9 @@ func _unhandled_input(evento: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if evento.is_action_pressed(&"verb_assume"):
-		if TravelWatch.at_gate():
+		if ImperialSuccession.at_house():
+			get_tree().call_group(&"jogo", &"choose_successor")
+		elif TravelWatch.at_gate():
 			get_tree().call_group(&"travel_menu", &"open")
 		elif SiteSheet.asks():  # o sitio de fundacao abre a ficha; fundar e confirma-la (ADR 0078)
 			get_tree().call_group(&"site_sheet", &"open")

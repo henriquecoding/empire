@@ -113,6 +113,7 @@ func step(delta: float) -> void:
 	builds.crew_owner = recruits.owner_of(units, king_id)
 	RealmMilestones.sync()
 	var abertas := Passages.open(passages, builds)  # a escora fecha a boca (Q-132)
+	TerritoryWatch.refresh_access(abertas)
 	_largar(Verbs.consume(intents, units, creatures, combat, king_id, abertas, builds, field))
 	HeroWatch.tick(delta)
 
@@ -159,7 +160,6 @@ func step(delta: float) -> void:
 	builds.work_day = ClockService.clock.day
 	EventRelay.builds(FoundationWatch.after(builds.tick(delta, units)))  # 8 · BuildSystem
 	CellarWatch.sync()
-
 	_espelhar_relogio()
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado
 

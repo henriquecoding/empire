@@ -15,6 +15,7 @@ const SEDE := &"seat"
 ## como as posicoes do Greybox: a carroca a oeste do marco, o pioneiro a leste.
 const CARROCA_X := -150.0
 const PIONEIRO_X := 120.0
+const EMISSARY_OFFSET := 244.0
 
 
 ## O jogo novo, depois da gente do Greybox: o pioneiro e a carroca. Os ids dos que ja la
@@ -97,11 +98,12 @@ static func aims_monarch() -> bool:
 
 ## As duas bancas por levantar passam a estar de pe, sem moeda, depois da fundacao.
 static func _bancada() -> Array[Dictionary]:
+	WorldWorks.post(&"emissary_stand", SimLoop.core_x + EMISSARY_OFFSET)
 	var eventos: Array[Dictionary] = []
 	for vaga in SimLoop.builds.slots:
 		if (
 			vaga.territory != 0
-			or vaga.kind not in [BANCA, MARTELOS, CompanionWatch.POST]
+			or vaga.kind not in [BANCA, MARTELOS, CompanionWatch.POST, &"emissary_stand"]
 			or vaga.level != 0
 		):
 			continue

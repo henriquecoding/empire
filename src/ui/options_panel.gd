@@ -1,4 +1,3 @@
-# src/ui/options_panel.gd — as opcoes da pausa (§24, §26, §27).
 #
 # Sairam do PauseMenu quando ele chegou as 250 linhas do §28: o menu e a
 # moldura, o titulo e os dois botoes; isto e o que se escolhe. Cada opcao grava
@@ -72,6 +71,7 @@ func _ready() -> void:
 	_tremor = _opcao(Preferences.SCREEN_SHAKE)
 	_claroes = _opcao(Preferences.FLASHES)
 	_legendas = _opcao(Preferences.CAPTIONS)
+	_access.add_child(TextScaleOption.new())
 	var gama: Dictionary = AccessibilityFilter.CONTRASTE
 	_contraste_rotulo = _rotulo(_access)
 	_contraste = _slider(_access, gama.min, gama.max, gama.passo, _no_contraste)

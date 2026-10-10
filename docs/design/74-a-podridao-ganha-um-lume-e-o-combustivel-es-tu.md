@@ -2,7 +2,7 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
-Decisão posterior sobre a abertura: Q-239 e Q-241 aprovam pressão acumulada sujeita à rampa e emboscadas pagas a partir da noite três. Q-240 considera agressivo o limite 3/6/9; não está aprovado como ritmo final. Q-242 aprova a proposta de rampa sete no contexto do playtest; Q-243 aprova a primeira noite funda na doze, depois de seis em seis. As tabelas seguintes preservam os números executados na baseline para comparação com CSV; §89 identifica os ajustes ainda necessários.
+Decisão posterior sobre a abertura: Q-239 e Q-241 aprovam pressão acumulada sujeita à rampa e emboscadas pagas a partir da noite três. Q-240 considera agressivo o limite 3/6/9; não está aprovado como ritmo final. Q-242 aprova a proposta de rampa sete no contexto do playtest; Q-243 aprova a primeira noite funda na doze, depois de seis em seis. Os CSV e a tabela gerada ROT_BY_DAY aplicam a rampa sete e o primeiro pico doze desde a correção da auditoria de 09/10. A Q-240 continua pendente.
 
 A Podridão da v5.2 é meteorologia com orçamento: nasce, avança, gasta massa, recua. É melhor do que ondas, como diz a §05, mas tem um buraco que ninguém apontou — durante os 85 segundos da Manhã e os 85 da Tarde, não há nada que possas fazer em relação a hoje à noite. Constróis, colhes, recrutas. A noite é um número que já está decidido. Esta secção rouba a alavanca 2 da série e fecha esse buraco: a massa da noite passa a ser escrita pelo jogador, de dia, com os seus próprios mortos.
 
@@ -45,7 +45,7 @@ M = 40 + 18 * dia + 30 * fortalezas
   + 8  * min(recusas_nos_ultimos_5_dias, 5)   # §75
 ```
 
-A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 5 — começa leve e intensifica-se (Q-017, Q-068). Depois da noite 10 a parte do calendário cresce 6% por noite: conforme os dias passam, a noite fica mais difícil exponencialmente (Q-151).
+A base e o termo do dia descem de propósito. O que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. As primeiras noites sobem em rampa: a noite 1 traz os três Rastejantes do §25, e a massa do calendário sobe em linha recta até à fórmula, que manda por inteiro a partir da noite 7 — começa leve e intensifica-se (Q-017, Q-068). Depois da noite 10 a parte do calendário cresce 6% por noite: conforme os dias passam, a noite fica mais difícil exponencialmente (Q-151).
 
 | Estado do campo | Dia 5 | Dia 10 | Dia 20 | Contra a v5.2, ao dia 20 |
 | --- | --- | --- | --- | --- |

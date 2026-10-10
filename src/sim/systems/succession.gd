@@ -27,6 +27,12 @@ var owner: int = NENHUM
 ## Quem joga escolheu nao continuar com o herdeiro: "se o imperador morre e o
 ## herdeiro estiver pronto, o jogador pode optar por continuar" (Q-146).
 var declined := false
+var lost := false
+var reserve: Treasury
+var reserve_key := "hatch"
+var payment_day := 0
+var recovery_nights := 0
+var personal_stock: Dictionary = {}
 
 var _dias: int
 var _custo: int
@@ -70,14 +76,25 @@ func house(obras: BuildSystem) -> BuildSlot:
 ## Uma alvorada: com a casa de pe e o herdeiro por formar, o saco do rei paga um
 ## dia de treino. Devolve o que pagou — zero se nao havia casa, rei ou moedas.
 func dawn(obras: BuildSystem, unidades: UnitSystem, rei: int) -> int:
-	if ready() or house(obras) == null:
+	if not ready() and house(obras) == null:
 		return 0
 	var i := unidades.index_of(rei)
-	if i == NENHUM or not unidades.alive(i) or unidades.carried_coins[i] < _custo:
+	if i == NENHUM or not unidades.alive(i):
 		return 0
-	unidades.carried_coins[i] -= _custo
+	var available := reserve.amount(reserve_key) if reserve != null else unidades.carried_coins[i]
+	if available < _custo:
+		lost = days > 0 or lost
+		days = 0
+		if reserve != null:
+			reserve.pay(reserve_key, _custo, &"heir", payment_day)
+		return 0
+	if reserve != null:
+		reserve.pay(reserve_key, _custo, &"heir", payment_day)
+	else:
+		unidades.carried_coins[i] -= _custo
 	owner = unidades.owners[i]
-	days += 1
+	days = mini(days + 1, _dias)
+	lost = false
 	return _custo
 
 
@@ -93,10 +110,20 @@ func crown(estado: GameState, unidades: UnitSystem, obras: BuildSystem, monarca:
 
 
 func to_dict() -> Dictionary:
-	return {&"days": days, &"owner": owner, &"declined": declined}
+	return {
+		&"days": days,
+		&"owner": owner,
+		&"declined": declined,
+		&"lost": lost,
+		&"recovery_nights": recovery_nights,
+		&"personal_stock": personal_stock.duplicate(true)
+	}
 
 
 func from_dict(d: Dictionary) -> void:
 	days = int(d.get(&"days", 0))
 	owner = int(d.get(&"owner", NENHUM))
 	declined = bool(d.get(&"declined", false))
+	lost = bool(d.get(&"lost", false))
+	recovery_nights = int(d.get(&"recovery_nights", 0))
+	personal_stock = (d.get(&"personal_stock", {}) as Dictionary).duplicate(true)

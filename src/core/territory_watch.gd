@@ -22,6 +22,12 @@ const AGUA := &"water"
 const FLORESTA := &"forest"
 const ROCHA := &"rock"
 const MAR := &"sea"
+static var open_access := PackedFloat32Array()
+
+
+static func refresh_access(opened: PackedFloat32Array) -> void:
+	if opened != open_access:
+		apply()
 
 
 static func rules() -> TerritoryRules:
@@ -108,6 +114,7 @@ static func preview(x: float) -> Dictionary:
 static func apply() -> void:
 	if SimLoop.field == null:
 		return
+	open_access = Passages.open(SimLoop.passages, SimLoop.builds)
 	var respostas: Dictionary = profile()[TerritoryProfile.SITES]
 	for vaga in SimLoop.builds.slots:
 		var r: Dictionary = respostas.get(vaga.id, {})
@@ -172,7 +179,11 @@ static func _rocha(fontes: Array, shift: float) -> void:
 			muros.append(vaga.x + shift)
 	for k in SimLoop.passages.size():
 		var tecto := UnderWatch.between_walls(SimLoop.passages[k], muros)
-		fontes.append(PlacementRules.source(UnderWatch.CELLAR_KEY % k, ROCHA, subsolo, tecto))
+		var source := PlacementRules.source(UnderWatch.CELLAR_KEY % k, ROCHA, subsolo, tecto)
+		source[PlacementRules.ACCESS] = Passages.open(SimLoop.passages, SimLoop.builds).has(
+			SimLoop.passages[k]
+		)
+		fontes.append(source)
 	var under := SimLoop.field.under
 	for i in under.count():
 		if under.kind_of(i) != UndergroundSites.CAVE or not under.usable(i):

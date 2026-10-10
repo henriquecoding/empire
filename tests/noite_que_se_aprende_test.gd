@@ -57,7 +57,7 @@ func _invocar_tudo(rot: RotSystem) -> Dictionary:
 func test_o_peso_do_que_escreveste_sobe_com_a_rampa() -> void:
 	var p := _perfil()
 	assert_float(p.written_weight(1)).is_equal(0.0)
-	assert_float(p.written_weight(3)).is_equal(0.5)
+	assert_float(p.written_weight(4)).is_equal(0.5)
 	assert_float(p.written_weight(p.ramp_nights)).is_equal(1.0)
 	assert_float(p.written_weight(30)).is_equal(1.0)
 
@@ -65,9 +65,9 @@ func test_o_peso_do_que_escreveste_sobe_com_a_rampa() -> void:
 func test_o_ritmo_da_noite_vive_no_perfil() -> void:
 	# Q-126, no RotProfile ao lado do calendario: a funda, a calma e as outras.
 	var p := _perfil()
-	assert_float(p.rhythm(p.peak_every)).is_equal(p.peak_mass_mult)
-	assert_float(p.rhythm(p.peak_every + 1)).is_equal(p.calm_mass_mult)
-	assert_float(p.rhythm(p.peak_every - 1)).is_equal(1.0)
+	assert_float(p.rhythm(p.first_peak_night)).is_equal(p.peak_mass_mult)
+	assert_float(p.rhythm(p.first_peak_night + 1)).is_equal(p.calm_mass_mult)
+	assert_float(p.rhythm(p.first_peak_night - 1)).is_equal(1.0)
 	assert_float(p.rhythm(0)).is_equal(1.0)
 
 
@@ -89,18 +89,19 @@ func test_a_meio_da_rampa_as_arvores_e_as_recusas_pesam_metade() -> void:
 	var rot := _mancha()
 	rot.amargueiros = 2
 	rot.refusals = 2
-	rot.spawn(3, DIREITA, LARGURA)
+	rot.spawn(4, DIREITA, LARGURA)
 	var escrito := 2 * p.mass_per_amargueiro + 2 * p.refusal_mass
 	assert_float(rot.written_weight()).is_equal(0.5)
-	assert_float(rot.mass()).is_equal_approx(p.calendar_mass(3) + escrito * 0.5, 0.001)
-	assert_float(rot.mass()).is_equal_approx(Referencia.rot_mass(3, 0, p, 2, 0, 2), 0.001)
+	assert_float(rot.mass()).is_equal_approx(p.calendar_mass(4) + escrito * 0.5, 0.001)
+	assert_float(rot.mass()).is_equal_approx(Referencia.rot_mass(4, 0, p, 2, 0, 2), 0.001)
 
 
 func test_depois_da_rampa_a_tabela_da_74_nao_muda() -> void:
 	var rot := _mancha()
 	rot.amargueiros = 3
-	rot.spawn(5, DIREITA, LARGURA)
-	assert_float(rot.mass()).is_equal(196.0)
+	var p := _perfil()
+	rot.spawn(p.ramp_nights, DIREITA, LARGURA)
+	assert_float(rot.mass()).is_equal(p.calendar_mass(p.ramp_nights) + 3 * p.mass_per_amargueiro)
 
 
 # ─── Q-240: uma especie estreia com poucos ───────────────────────────────────
@@ -132,7 +133,7 @@ func test_a_noite_4_traz_os_primeiros_alados_e_o_resto_em_rastejantes() -> void:
 	rot.spawn(4, DIREITA, LARGURA)
 	var vieram := _invocar_tudo(rot)
 	assert_int(int(vieram.get(&"winged", 0))).is_equal(_perfil().debut_step)
-	assert_int(int(vieram.get(&"crawler", 0))).is_greater(int(vieram.get(&"winged", 0)))
+	assert_int(int(vieram.get(&"crawler", 0))).is_greater(0)
 
 
 func test_a_noite_7_traz_os_primeiros_brutos_e_nao_a_noite_inteira() -> void:

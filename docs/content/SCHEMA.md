@@ -98,7 +98,7 @@ Script `src/sim/data/creature_data.gd` · layout `rows` · 7 linha(s) · §07 §
 
 ## `buildings.csv` → `data/buildings/{id}.tres`
 
-Script `src/sim/data/building_data.gd` · layout `rows` · 60 linha(s) · §06 §09 §10 §44
+Script `src/sim/data/building_data.gd` · layout `rows` · 61 linha(s) · §06 §09 §10 §44
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -294,7 +294,7 @@ Script `src/sim/data/segment_data.gd` · layout `rows` · 154 linha(s) · §21 �
 
 ## `economy.csv` → `data/economy/curve.tres`
 
-Script `src/sim/data/economy_curve.gd` · layout `kv` · 136 linha(s) · §06 §47 — chave/valor; um só recurso
+Script `src/sim/data/economy_curve.gd` · layout `kv` · 137 linha(s) · §06 §47 — chave/valor; um só recurso
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|
@@ -434,6 +434,7 @@ Script `src/sim/data/economy_curve.gd` · layout `kv` · 136 linha(s) · §06 §
 | `king_leash_px` | float | Andar — correr |  |
 | `impulse_repeat_mult` | float | Coroa — o preco dos impulsos (Q-014) |  |
 | `impulse_repeat_days` | int | Coroa — o preco dos impulsos (Q-014) |  |
+| `heir_recovery_nights` | int | Coroa, morte e decay — §15, §16 |  |
 
 ## `rules.csv` → `data/economy/rules.tres`
 
@@ -561,6 +562,7 @@ Script `src/sim/data/rot_profile.gd` · layout `rows` · 1 linha(s) · §05 §44
 | `dominion_debt_min` | int | v6 · os epilogos |  |
 | `dominion_peoples_kept` | int | v6 · os epilogos |  |
 | `peak_every` | int | Auditoria de gameplay — AUD-03 |  |
+| `first_peak_night` | int | Auditoria de gameplay — AUD-03 |  |
 | `peak_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 | `calm_mass_mult` | float | Auditoria de gameplay — AUD-03 |  |
 | `skipped_mass_carry` | float | A noite saltada — Q-040 |  |
@@ -884,7 +886,7 @@ Script `src/sim/data/realm_stage_data.gd` · layout `rows` · 6 linha(s) · ADR 
 
 ## `realm_sites.csv` → `data/realm_sites/{id}.tres`
 
-Script `src/sim/data/realm_site_data.gd` · layout `rows` · 62 linha(s) · ADR 0060 — o território e a produção de apoio de cada construção
+Script `src/sim/data/realm_site_data.gd` · layout `rows` · 63 linha(s) · ADR 0060 — o território e a produção de apoio de cada construção
 
 | coluna | tipo | grupo | nota do script |
 |---|---|---|---|

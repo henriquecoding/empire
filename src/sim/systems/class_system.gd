@@ -22,6 +22,8 @@ const PRIMEIRA := 1
 const DEFESA := &"defense"
 const RAIO := &"radius"
 
+var inheritance := 1.0
+
 var phase: int = PRIMEIRA
 var nights_defended: int = 0
 ## O escudeiro do rei: escudo, espada e investidura (Q-114).
@@ -65,7 +67,7 @@ func defense_of(unidades: UnitSystem, i: int) -> float:
 	var params := _params()
 	if phase == PRIMEIRA and not _na_aura(unidades, i, r, float(params.get(RAIO, 0.0))):
 		return 0.0
-	return float(params.get(DEFESA, 0.0))
+	return float(params.get(DEFESA, 0.0)) * inheritance
 
 
 ## O dano que passa de `quanto` num golpe em `unit_id`, depois do escudeiro e da

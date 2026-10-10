@@ -37,6 +37,13 @@ static func context(x: float, band: int, values: Dictionary) -> String:
 	var o := SimLoop.arrival
 	if not o.active:
 		return ""
+	if (
+		o.choice == &""
+		and o.stationary_s >= LastCartWatch.rules().foundation_stop_s
+		and not FoundationChoice.priority_at(x)
+		and FoundationUnder.plan(x).is_empty()
+	):
+		return _tr(&"FOUNDATION_UNDER_BLOCKED")
 	var choice := LastCartWatch.choice_at(x)
 	if choice != &"":
 		# Uma linha so; o que fundar aqui leva e deixa esta na ficha, a pedido (ADR 0078).

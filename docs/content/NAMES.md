@@ -116,6 +116,7 @@ A fonte dos nomes visíveis é `data/i18n/strings.csv`; a dos ids é cada tabela
 | `hammer_rack` | `BUILDING_HAMMER_RACK` | Banca do Martelo | Hammer Rack |
 | `companion_post` | `BUILDING_COMPANION_POST` | Posto da companhia | Companion post |
 | `cellar_excavation` | `BUILDING_CELLAR_EXCAVATION` | Escavação do subsolo | Cellar excavation |
+| `emissary_stand` | `BUILDING_EMISSARY_STAND` | Banca de emissários | Emissary stand |
 
 ## walls
 

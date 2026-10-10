@@ -85,6 +85,10 @@ static func _inward(k: int, center: float) -> float:
 		var lim := under.span(k)
 		if not is_equal_approx(lim.y - mouth, mouth - lim.x):
 			return RIGHT if lim.y - mouth > mouth - lim.x else LEFT
+	var vault: Dictionary = SimLoop.arrival.site_signature.get(FoundationUnder.SIGNATURE, {})
+	if not vault.is_empty():
+		var cap: Vector2 = vault[&"cap"]
+		return RIGHT if cap.y - mouth > mouth - cap.x else LEFT
 	return toward(mouth, center)
 
 
@@ -100,9 +104,16 @@ static func chest_at(x: float) -> String:
 
 
 static func foreign(field: FieldWork, id: int, record: Dictionary) -> void:
-	if record.has(&"camp"):
+	if record.has(&"camp") or record[&"sites"].is_empty():
+		return
+	var house := SimLoop.builds.index_of(record[&"sites"][0])
+	if house < 0 or not SimLoop.builds.slots[house].standing():
 		return
 	var key := "realm_hatch_%d" % id
+	if SimLoop.treasury.chests.has(key):
+		for site: Dictionary in field.under.sites:
+			if site[UndergroundSites.KEY] == key:
+				return
 	var mouth := float(record[&"x"]) + UnderWatch.ALCAPAO_PX.x
 	var spec := UnderWatch.spec(UndergroundSites.HATCH, 0.0, [])
 	spec[UndergroundSites.MANDATORY] = false  # sem chao, o reino estrangeiro nao tem cave

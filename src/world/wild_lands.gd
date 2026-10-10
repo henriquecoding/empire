@@ -153,6 +153,8 @@ const CASAL := {"x": -40.0, "escala": 1.2}
 static func draw(
 	canvas: CanvasItem, registo: Dictionary, x: float, tinta: Array[Color], lado: int
 ) -> void:
+	if not established(registo):
+		return
 	var assunto: StringName = registo.get(WildSegments.ASSUNTO, &"")
 	var pe := Vector2(x, PE)
 	match assunto:
@@ -189,3 +191,17 @@ static func _cor_do_povo(registo: Dictionary) -> Color:
 	if bioma != null and SimLoop.field != null and SimLoop.field.realm.vassals.has(bioma.people):
 		return TEU
 	return INIMIGO
+
+
+static func established(registo: Dictionary) -> bool:
+	if SimLoop.field == null:
+		return true
+	var id := int(registo.get(WildSegments.POVO, -1))
+	var record: Dictionary = SimLoop.field.settlements.records.get(id, {})
+	if record.is_empty():
+		return false
+	for site in record[&"sites"]:
+		var index := SimLoop.builds.index_of(site)
+		if index >= 0 and SimLoop.builds.slots[index].standing():
+			return true
+	return false

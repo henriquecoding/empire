@@ -147,8 +147,8 @@ AFIRMACOES: tuple[tuple[str, str, str], ...] = (
     ("docs/recovery/RETOMADA.md", r"(\d+) tabelas, \d+ recursos gerados", "csv_tables"),
     ("docs/recovery/RETOMADA.md", r"\d+ tabelas, (\d+) recursos gerados", "generated_resources"),
     ("docs/recovery/RETOMADA.md", r"confere (\d+)\s*\n?\s*n[uú]meros do dossi", "numeric_comparisons"),
-    ("docs/recovery/RETOMADA.md", r"(\d+) casos, \d+ a passar", "gdunit_discovered"),
-    ("docs/recovery/RETOMADA.md", r"\d+ casos, \d+ a passar, (\d+) saltados", "gdunit_skipped"),
+    ("docs/recovery/RETOMADA.md", r"Inventário de testes\*\* — (\d+) casos", "gdunit_discovered"),
+    ("docs/recovery/RETOMADA.md", r"Inventário de testes\*\* — \d+ casos, (\d+) saltados", "gdunit_skipped"),
     ("docs/recovery/RETOMADA.md", r"(\d+) ficheiros, gerado por", "spec_sections"),
     ("docs/recovery/RETOMADA.md", r"`docs/adr/` \| (\d+) decis", "adrs"),
     ("docs/recovery/RETOMADA.md", r"\| (\d+) tickets, um ficheiro cada", "tickets"),
@@ -166,6 +166,14 @@ def conferir(medido: dict[str, int]) -> list[str]:
                 f"docs/recovery/validation.json: '{chave}' diz {validacao.get(chave)},"
                 f" a contagem da {medido[chave]} — corre com --write"
             )
+
+    run = validacao.get("last_execution", {})
+    if not all(key in run for key in ("date", "source_sha", "run_url", "cases", "passed", "skipped", "failed", "errors")):
+        problemas.append("validation.json: execução sem data, SHA, run ou contagens")
+    elif run["cases"] != sum(run[k] for k in ("passed", "skipped", "failed", "errors")):
+        problemas.append("validation.json: contagens da mesma execução não fecham")
+    elif not re.fullmatch(r"[0-9a-f]{40}", run["source_sha"]):
+        problemas.append("validation.json: SHA da execução inválido")
 
     # §46 e uma lista fechada: o que o EventBus declara e o que a tabela tem.
     # O event_bus_test confere nome a nome; aqui chumba tambem sem abrir o motor.

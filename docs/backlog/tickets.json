@@ -2886,5 +2886,15 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "RG-29": {
+  "estado": "parcial — correções de contratos solo e rastreabilidade implementadas; aceitação e extensões por achado no relatório",
+  "depende": "RG-23, RG-24, RG-27, RG-28",
+  "spec": "ADR 0082; auditoria mestre de 09/10/2026",
+  "horas": "—",
+  "title": "Correções da auditoria mestre de 09/10",
+  "porque": "Restaurar os contratos de fundação, tempo social, tesouro e sucessão e vincular publicação à validação.",
+  "feito": "Contratos solo, regressões e rastreabilidade descritos na matriz de implementação.",
+  "fora": "Decisões abertas, produção de arte/áudio, remapeamento, diplomacia completa e multiplayer."
  }
 }

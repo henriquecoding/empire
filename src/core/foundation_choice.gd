@@ -60,7 +60,10 @@ static func valid(x: float) -> bool:
 	# consequencia, nao proibicao, e a clareira conserva-o. Antes bastava uma estatua ou
 	# uma raiz a 240 px para recusar, e quase nenhum sitio servia.
 	var sede := RealmLadder.seat(SimLoop.builds)
-	return SiteValidator.valid(x, sede.catch_half(), Frontier.walk_limits(), protected)
+	return (
+		SiteValidator.valid(x, sede.catch_half(), Frontier.walk_limits(), protected)
+		and not FoundationUnder.plan(x).is_empty()
+	)
 
 
 static func claim(x: float) -> bool:
@@ -71,6 +74,7 @@ static func claim(x: float) -> bool:
 	if not is_equal_approx(x, SimLoop.units.xs[king]) or not valid(x):
 		return false
 	var signature := signature_at(x)
+	signature[FoundationUnder.SIGNATURE] = FoundationUnder.plan(x)
 	if not o.claim(&"free", x - o.origin):
 		return false
 	o.free_site = true
