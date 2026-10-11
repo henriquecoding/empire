@@ -37,11 +37,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           lfs: false
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.11"
 
@@ -99,11 +99,10 @@ jobs:
   testes:
     name: Dados e suite gdUnit4
     runs-on: ubuntu-latest
-    # A suite leva cerca de 14–16 minutos; a importacao e a vistoria de oito
-    # dias tambem cabem neste job. Quinze minutos cortavam a vistoria apos a suite passar.
+    # A suite, a importacao, a campanha com piloto e o benchmark cabem neste job.
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           lfs: false
 
@@ -123,12 +122,14 @@ jobs:
       - name: G1 G3 G4 G5 · suite gdUnit4
         run: make testes
 
-      # A suite prova cada sistema; isto prova os sistemas JUNTOS. Corre oito
-      # dias do greybox com um piloto e chumba se o estado deixar de fazer
-      # sentido — um corpo fora da regiao, vida fora dos limites, um id em duas
-      # coleccoes, uma fase saltada, alguem preso em FIGHT sem nada para bater.
-      - name: Vistoria · oito dias com o estado vigiado
+      # A campanha pede ate oito dias; uma derrota legitima pode termina-la antes.
+      # O JSON publica ticks, dias reais e se o pedido ficou completo. As provas
+      # de dez noites no cenario fechado continuam na suite gdUnit4.
+      - name: Vistoria · invariantes e cobertura realmente executada
         run: make vistoria
+
+      - name: Benchmark · CPU da simulacao com 300 tropas (sem certificacao fisica)
+        run: godot --headless --path . tools/benchmark_sim.tscn
 
       - name: Evidência da execução com SHA e run
         if: always()
@@ -136,12 +137,14 @@ jobs:
 
       - name: Relatorio da suite
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: relatorio-gdunit4
           path: |
             reports/
             build/test-execution.json
+            build/vistoria.json
+            build/benchmark-sim.json
           retention-days: 14
           if-no-files-found: warn
 
@@ -157,11 +160,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           lfs: false
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.11"
 
@@ -196,7 +199,7 @@ jobs:
 
       # Sai sempre, passe ou chumbe: quando chumba, a fotografia e a primeira
       # coisa que alguem quer ver, e sem ela a percentagem nao diz onde.
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: captura-da-noite
@@ -217,7 +220,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           lfs: false
 
@@ -238,7 +241,7 @@ jobs:
       - name: Exportar o Windows e o Web
         run: make exportar-windows exportar-web
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: empire-linux-debug
           path: |
@@ -246,7 +249,7 @@ jobs:
             build/empire.pck
           retention-days: 7
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: empire-windows-debug
           path: build/windows/
@@ -255,7 +258,7 @@ jobs:
       # Descarregar, descompactar, e servir a pasta de um servidor estatico
       # qualquer. O preset tem thread_support desligado: nao precisa de COOP nem
       # de COEP, e por isso `python3 -m http.server` chega.
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: empire-web
           path: build/web/
@@ -269,18 +272,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           lfs: false
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "22"
 
       - name: Playwright e o Chromium
         working-directory: ferramentas
         run: |
-          npm install --no-save --no-audit --no-fund playwright
+          npm ci --no-audit --no-fund
           npx playwright install --with-deps chromium
 
       # O inventario DERIVA das fontes; se o extrator falhar, um numero do
@@ -301,7 +304,7 @@ jobs:
         working-directory: ferramentas
         run: node verificar-novo.mjs saida/dossie-empire.html
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: dossie-construido
           path: ferramentas/saida/dossie-empire.html
@@ -318,18 +321,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           lfs: false
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "22"
 
       - name: Playwright, axe e o Chromium
         working-directory: ferramentas
         run: |
-          npm install --no-save --no-audit --no-fund playwright @axe-core/playwright
+          npm ci --no-audit --no-fund
           npx playwright install --with-deps chromium
 
       # O mesmo comando que a Vercel corre: descarrega o motor de .godot-version
@@ -346,7 +349,7 @@ jobs:
       - name: Portao · telemovel, axe, CSP, privacidade, as duas linguas, os dados e o jogo
         run: node tools/web/verificar_site.mjs
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: site

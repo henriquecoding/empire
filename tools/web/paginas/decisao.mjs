@@ -1,12 +1,14 @@
 // A ficha é gerada da mesma fonte que a fila; a aprovação nunca fica sem objeto.
 import { esc } from './molde.mjs';
+import { createHash } from 'node:crypto';
 export const TIPOS = { confirmar: 'Rever decisão', escolher: 'Avaliar proposta', decidir: 'Precisa da tua decisão', encerrada: 'Encerrada no projeto' };
 const bloco = (titulo, texto, classe = '') => texto ? `<section class="decisao-bloco ${classe}"><h4>${titulo}</h4><p>${esc(texto.replace(/[`*]/g, ''))}</p></section>` : '';
 
 export function cartaoPergunta(q) {
   const objeto = q.proposta.replace(/[`*]/g, '');
   const encerrada = q.tipo === 'encerrada';
-  return `<article class="pergunta" id="${q.id}" data-id="${q.id}" data-tipo="${q.tipo}" data-grupo="${esc(q.grupo)}" data-titulo="${esc(q.titulo)}" data-aprovavel="${q.aprovavel}" hidden>
+  const hash = createHash('sha256').update(objeto).digest('hex');
+  return `<article class="pergunta" id="${q.id}" data-id="${q.id}" data-tipo="${q.tipo}" data-grupo="${esc(q.grupo)}" data-titulo="${esc(q.titulo)}" data-aprovavel="${q.aprovavel}" data-proposta-hash="${hash}" hidden>
     <header class="decisao-cabeca">
       <p class="p-meta"><span class="p-id">${q.id}</span><span class="chip chip-${q.tipo}">${TIPOS[q.tipo]}</span><span class="p-estado">A carregar resposta…</span></p>
       <h3 tabindex="-1">${esc(q.titulo)}</h3><p class="p-grupo">${esc(q.grupo)}</p>

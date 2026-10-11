@@ -20,9 +20,9 @@ await new Promise(r => server.listen(0, '127.0.0.1', r));
 const url = `http://127.0.0.1:${server.address().port}/painel/`;
 const browser = await chromium.launch({ headless: true, ...(process.env.CHROMIUM_PATH ? {executablePath: process.env.CHROMIUM_PATH} : {}), args: ['--no-sandbox'] });
 const context = await browser.newContext();
-let rows = [{ pergunta: 'Q-001', escolha: 'aprovar', texto: null, estado: 'nova' }], writes = 0, failRead = false, failWrite = false;
+let rows = [{ pergunta: 'Q-001', escolha: 'aprovar', texto: null, estado: 'nova', revisao:1 }], writes = 0, failRead = false, failWrite = false;
 let expireWrite = false, failRefresh = false, refreshes = 0, logins = 0;
-let report = { id:'fixture-report', tipo:'erro', estado:'novo', assunto:'Reporte de teste', mensagem:'Só dados simulados.', criado_em:'2026-10-05T10:00:00Z' };
+let report = { id:'fixture-report', tipo:'erro', estado:'novo', assunto:'Reporte de teste', mensagem:'Só dados simulados.', criado_em:'2026-10-05T10:00:00Z', revisao:1 };
 let reportWrites = 0, emptyReportWrite = false;
 await context.addInitScript(() => sessionStorage.setItem('empire.painel.sessao', JSON.stringify({token:'fixture',refresh:'fixture-refresh',email:'teste@example.invalid',expira:Date.now()+3600000})));
 await context.route('https://*.supabase.co/**', async route => {
@@ -34,17 +34,24 @@ await context.route('https://*.supabase.co/**', async route => {
     return route.fulfill({json:{access_token:'fixture-new',refresh_token:'fixture-refresh-new',expires_in:3600,user:{email:'teste@example.invalid'}}});
   }
   if (path.endsWith('empire_e_admin')) return route.fulfill({json:true});
+  const query = new URL(req.url()).searchParams;
   if (path.endsWith('empire_feedback')) {
     if (req.method() === 'GET') return route.fulfill({json:[report]});
     reportWrites++;
     if (emptyReportWrite) return route.fulfill({json:[]});
-    report = {...report, ...req.postDataJSON()}; return route.fulfill({json:[report]});
+    if (query.get('revisao') !== 'eq.' + report.revisao) return route.fulfill({json:[]});
+    report = {...report, ...req.postDataJSON(), revisao:report.revisao+1}; return route.fulfill({json:[report]});
   }
-  if (req.method() === 'GET') return route.fulfill(failRead ? {status:503,json:{message:'Teste de falha de leitura'}} : {json:rows});
+  if (req.method() === 'GET') return route.fulfill(failRead ? {status:503,json:{message:'Teste de falha de leitura'}} : {json:query.get('pergunta') ? rows.filter(r=>'eq.'+r.pergunta===query.get('pergunta')) : rows});
   if (expireWrite) { expireWrite=false; return route.fulfill({status:401,json:{message:'JWT expired',code:'PGRST301'}}); }
   writes++;
   if (failWrite) return route.fulfill({status:503,json:{message:'Teste de falha de gravação'}});
-  const sent = req.postDataJSON();
+  const body = req.postDataJSON();
+  const id = query.get('pergunta')?.slice(3);
+  const prior = rows.find(r=>r.pergunta===(id || body[0].pergunta));
+  if (req.method()==='PATCH' && (!prior || query.get('revisao') !== 'eq.'+prior.revisao)) return route.fulfill({json:[]});
+  if (req.method()==='POST' && prior) return route.fulfill({json:[]});
+  const sent = req.method()==='PATCH' ? [{...prior,...body,revisao:prior.revisao+1}] : body.map(r=>({...r,revisao:1}));
   for (const row of sent) rows = [...rows.filter(r => r.pergunta !== row.pergunta), row];
   return route.fulfill({json:sent});
 });
@@ -147,6 +154,9 @@ try {
   assert.equal(await page.locator('#reportes').isVisible(),true);
   const reportCard = page.locator('[data-reporte="fixture-report"], .reporte').first();
   await reportCard.locator('textarea').fill('Nota que sobrevive à mudança de separador.');
+  assert.equal(await page.evaluate(() => { const e=new Event('beforeunload',{cancelable:true}); dispatchEvent(e); return e.defaultPrevented; }),true,'nota de reporte protege fecho');
+  await page.locator('#sair').click();
+  assert.equal(await page.locator('#area').isVisible(),true,'nota de reporte impede logout');
   await page.locator('#tab-perguntas').click(); await page.locator('#tab-reportes').click();
   await page.waitForFunction(() => document.querySelector('#fr-estado-msg').textContent === '1 reporte(s).');
   assert.equal(await reportCard.locator('textarea').inputValue(), 'Nota que sobrevive à mudança de separador.');
@@ -171,6 +181,20 @@ try {
   assert.equal(await page.locator('#Q-005 textarea').inputValue(),'Rascunho que não pode desaparecer.');
   const download = page.waitForEvent('download'); await page.locator('#descarregar').click();
   assert.match((await download).suggestedFilename(), /^empire-decisoes-.*\.md$/);
+  const tab2 = await context.newPage(); await tab2.goto(url);
+  await tab2.waitForFunction(() => !document.querySelector('#copiar').disabled);
+  await choose('Q-005'); await tab2.locator('#f-estado').selectOption(''); await tab2.locator('#f-texto').fill('Q-005'); await tab2.locator('[data-pergunta="Q-005"]').click();
+  await page.locator('#Q-005 input[value=outra]').check(); await page.locator('#Q-005 textarea').fill('Decisão da primeira aba.');
+  await tab2.locator('#Q-005 input[value=outra]').check(); await tab2.locator('#Q-005 textarea').fill('Rascunho da segunda aba.');
+  await page.locator('#Q-005 button.principal').click(); await page.locator('#Q-005 .feito').waitFor();
+  await tab2.locator('#Q-005 button.principal').click(); await tab2.locator('#Q-005 .erro').waitFor();
+  assert.equal(rows.find(r=>r.pergunta==='Q-005').texto,'Decisão da primeira aba.');
+  assert.equal(await tab2.locator('#Q-005 textarea').inputValue(),'Rascunho da segunda aba.');
+  await tab2.locator('#Q-005 .rever-conflito').click();
+  await tab2.waitForFunction(() => document.querySelector('#Q-005 .resposta-guardada p').textContent.includes('primeira aba'));
+  await tab2.locator('#Q-005 button.principal').click(); await tab2.locator('#Q-005 .feito').waitFor();
+  assert.equal(rows.find(r=>r.pergunta==='Q-005').texto,'Rascunho da segunda aba.');
+  await tab2.close();
   failRead=true; await page.reload(); await page.locator('#recarregar').waitFor({state:'visible'});
   assert.equal(await page.locator('#Q-005 button.principal[type=submit]').isDisabled(),true);
   failRead=false; await page.locator('#recarregar').click(); await page.waitForFunction(() => !document.querySelector('#copiar').disabled);

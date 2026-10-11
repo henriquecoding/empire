@@ -67,6 +67,15 @@ lado, a olhar, e fica registada aqui com as capturas.
 
 ## 5 · Registo de uma medição
 
+A CI corre também `make benchmark-sim` e publica `build/benchmark-sim.json`
+com 300 tropas, aquecimento, média, p50/p95/p99 e máximo de `SimLoop.step`.
+É um ensaio CPU headless, sem criaturas, rasterização, áudio nem o cenário C1
+completo; serve para comparar regressões no mesmo ambiente. Não preenche a
+matriz física acima nem demonstra o alvo gráfico do Steam Deck. Comparar
+medições no mesmo runner e confirmar um desvio repetido antes de otimizar.
+Cada execução da CI inclui o SHA; uma execução local sem `GITHUB_SHA` deixa
+esse campo vazio para não atribuir alterações ainda não publicadas ao commit anterior.
+
 ```text
 Data / build:     ____-__-__ / <commit>
 Máquina:          ______   Resolução: ______   Escala: ______

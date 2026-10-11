@@ -50,12 +50,7 @@ passo "importar os recursos"
 "$GODOT" --headless --path . --import >/dev/null 2>&1 || true
 
 passo "exportar o Web"
-# O export escreve uma linha por ficheiro guardado; fica so o que nao e isso.
-"$GODOT" --headless --path . --export-release "Web" "$SAIDA/jogar/index.html" 2>&1 \
-  | grep -vE 'savepack|Storing File|^\s*(at:|GDScript backtrace)|^\s*$' || true
-for f in index.html index.js index.wasm index.pck; do
-  test -s "$SAIDA/jogar/$f" || { echo "construir: falta jogar/$f — o export falhou" >&2; exit 1; }
-done
+bash tools/web/exportar.sh "$GODOT" "$SAIDA/jogar/index.html"
 
 passo "o dossie"
 node ferramentas/extrair-dados.mjs . build/dossie-dados.json

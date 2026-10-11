@@ -41,7 +41,7 @@ static func run(
 			var released := campo.seasons.release(dia, slot)
 			if released > 0:
 				SimLoop.coins.drop(estado, slot.x, slot.band, released, 0.0)
-	_abastecer(campo, unidades, obras, rei)  # as aljavas, depois do soldo (Q-163)
+	_abastecer(campo, unidades, obras, rei, dia)  # as aljavas, depois do soldo (Q-163)
 	SpiritWatch.dawn(campo.spirit, dia, campo.upkeep.arrears())  # o soldo em atraso pesa (Q-102)
 	SettlementWatch.dawn(campo)
 	CampWatch.dawn(campo)
@@ -57,7 +57,7 @@ static func run(
 ## repoem-se do saco do rei, `arrows_per_coin` flechas por moeda, ate onde ele chegar. A do
 ## Imperador Arqueiro e pessoal, e a banca nao a repoe (Q-200).
 static func _abastecer(
-	campo: FieldWork, unidades: UnitSystem, obras: BuildSystem, rei: int
+	campo: FieldWork, unidades: UnitSystem, obras: BuildSystem, rei: int, dia: int
 ) -> void:
 	var r := unidades.index_of(rei)
 	if r == UnitSystem.NENHUM or not unidades.alive(r):
@@ -72,7 +72,7 @@ static func _abastecer(
 	var gasto := campo.supply.restock(unidades, unidades.owners[r], bolsa, regras.arrows_per_coin)
 	if gasto > 0:
 		if reserve != null:
-			reserve.pay(UnderWatch.HATCH_KEY, gasto, &"arrows", SimLoop.state.day)
+			reserve.pay(UnderWatch.HATCH_KEY, gasto, &"arrows", dia)
 		else:
 			unidades.carried_coins[r] -= gasto
 		EventBus.queue(&"coin_spent", [gasto, &"arrows"])

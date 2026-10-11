@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import test from 'node:test';
+import { webcrypto } from 'node:crypto';
 
 const source = readFileSync('tools/web/paginas/motor.js', 'utf8');
 const key = 'empire.painel.sessao';
@@ -12,7 +13,7 @@ function boot(initial, handler, brokenStorage = false) {
   const storage = new Map(initial ? [[key, JSON.stringify(initial)]] : []), requests = [], events = [];
   const window = { dispatchEvent: event => events.push(event) };
   runInNewContext(source, {
-    window, AbortController, setTimeout, clearTimeout, document: { body: { getAttribute: name => name === 'data-sb-url' ? 'https://test.supabase.co' : 'public-test' } },
+    window, crypto: webcrypto, AbortController, setTimeout, clearTimeout, document: { body: { getAttribute: name => name === 'data-sb-url' ? 'https://test.supabase.co' : 'public-test' } },
     sessionStorage: {
       getItem: k => { if (brokenStorage) throw Error('blocked'); return storage.get(k); },
       setItem: (k, v) => { if (brokenStorage) throw Error('blocked'); storage.set(k, v); },
@@ -177,4 +178,19 @@ test('reporte público não depende da sessão de administração expirada', asy
   const result = await M.enviarReporte({ tipo: 'erro', mensagem: 'Um reporte' }, {});
   assert.equal(result.erro, undefined); assert.equal(requests.length, 1);
   assert.equal(requests[0].headers.Authorization, 'Bearer public-test');
+});
+
+test('um resultado de rede ambíguo reutiliza só a operação original; texto igual novo recebe outro nonce', async () => {
+  let failure = true;
+  const { M, requests } = boot(null, () => { if (failure) throw Error('offline'); return reply(201,null); });
+  const report = { tipo:'erro',mensagem:'O mesmo texto',area:'jogo' }, texts = { falhou:'Não enviou' };
+  assert.ok((await M.enviarReporte(report,texts)).erro);
+  failure = false;
+  await M.enviarReporte(report,texts);
+  assert.equal(requests[0].json.client_nonce,requests[1].json.client_nonce);
+  assert.ok(requests.every(r => r.url.endsWith('/rest/v1/empire_feedback')));
+  assert.ok(requests.every(r => r.headers.Prefer === 'return=minimal'));
+  await M.enviarReporte(report,texts);
+  assert.notEqual(requests[1].json.client_nonce,requests[2].json.client_nonce);
+  assert.match(requests[2].json.client_nonce,/^[a-f0-9-]{36}$/);
 });

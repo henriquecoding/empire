@@ -1,7 +1,6 @@
 version: 2
 
-# O Empire tem tres dependencias externas e nao mais: as actions do workflow, o
-# gdtoolkit, e o Playwright da camada de uso. O motor NAO entra aqui de
+# O Dependabot vigia as actions, o gdtoolkit e as dependencias de QA. O motor NAO entra aqui de
 # proposito — a versao esta em .godot-version e muda-la exige uma ADR (0001).
 
 updates:
@@ -29,6 +28,13 @@ updates:
     labels:
       - dependencias
 
-  # ferramentas/ instala o Playwright sem manifesto (npm install --no-save), por
-  # isso nao ha nada aqui para o dependabot vigiar. Se um dia essa camada ganhar
-  # um package.json, acrescenta-se um bloco npm com directory: /ferramentas.
+  # QA apenas: Playwright, axe e Postgres isolado, com lockfile (ADR 0080).
+  - package-ecosystem: npm
+    directory: /ferramentas
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "qa"
+    labels:
+      - dependencias

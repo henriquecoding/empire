@@ -30,10 +30,10 @@ runs:
 
     - name: Cache do motor
       id: cache-motor
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: ~/.cache/godot-bin
-        key: godot-motor-${{ runner.os }}-${{ steps.fixada.outputs.version }}
+        key: godot-motor-${{ runner.os }}-${{ steps.fixada.outputs.version }}-${{ hashFiles('tools/godot-checksums.json') }}
 
     - name: Descarregar o motor
       if: steps.cache-motor.outputs.cache-hit != 'true'
@@ -46,6 +46,7 @@ runs:
         BASE=https://github.com/godotengine/godot-builds/releases/download
         mkdir -p ~/.cache/godot-bin
         curl -fsSL --retry 3 --retry-delay 5 -o /tmp/godot.zip "$BASE/${V}/${F}.zip"
+        python3 tools/verify_godot.py archive-linux /tmp/godot.zip
         unzip -q /tmp/godot.zip -d /tmp
         mv "/tmp/${F}" ~/.cache/godot-bin/godot
         chmod +x ~/.cache/godot-bin/godot
@@ -57,12 +58,13 @@ runs:
       shell: bash
       run: |
         echo "$HOME/.cache/godot-bin" >> "$GITHUB_PATH"
+        python3 tools/verify_godot.py motor "$HOME/.cache/godot-bin/godot"
         "$HOME/.cache/godot-bin/godot" --version
 
     - name: Cache dos templates de export
       if: inputs.export-templates == 'true'
       id: cache-templates
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: ~/.local/share/godot/export_templates
         # O sufixo e a LISTA de plataformas, e nao um numero de versao a mao: o
@@ -70,7 +72,7 @@ runs:
         # que nao a tem la dentro — deixa de responder. Sem isto, um cache de
         # ontem servia um export de hoje sem o template de que ele precisa, e o
         # chumbo vinha do motor e nao do cache.
-        key: godot-templates-${{ runner.os }}-${{ steps.fixada.outputs.version }}-linux-windows-web
+        key: godot-templates-${{ runner.os }}-${{ steps.fixada.outputs.version }}-${{ hashFiles('tools/godot-checksums.json') }}-linux-windows-web
 
     # O .tpz tem 1,2 GB e traz todas as plataformas; extraem-se as tres que o
     # export_presets.cfg tem preset para, e mais nenhuma. Descarregar 1,2 GB para
@@ -87,6 +89,7 @@ runs:
         mkdir -p "$T"
         curl -fsSL --retry 3 --retry-delay 5 -o /tmp/t.tpz \
           "$BASE/${V}/Godot_v${V}_export_templates.tpz"
+        python3 tools/verify_godot.py archive-templates /tmp/t.tpz
         unzip -q -j -o /tmp/t.tpz \
           templates/linux_debug.x86_64 templates/linux_release.x86_64 \
           templates/windows_debug_x86_64.exe templates/windows_release_x86_64.exe \
@@ -94,3 +97,10 @@ runs:
           templates/version.txt -d "$T"
         rm /tmp/t.tpz
         ls -la "$T"
+
+    - name: Verificar templates, incluindo o cache
+      if: inputs.export-templates == 'true'
+      shell: bash
+      env:
+        V: ${{ steps.fixada.outputs.version }}
+      run: python3 tools/verify_godot.py templates "$HOME/.local/share/godot/export_templates/${V/-/.}"

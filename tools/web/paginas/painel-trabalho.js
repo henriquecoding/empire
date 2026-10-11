@@ -18,11 +18,12 @@
       if (!r || !f || !["aprovar", "outra", "adiar", ""].includes(r.escolha) || typeof r.texto !== "string") return false;
       f.querySelectorAll("input[type=radio]").forEach(x => { x.checked = x.value === r.escolha; });
       f.querySelector("textarea").value = r.texto.slice(0, 4000);
+      f.dataset.base = String(r.baseRevisao || 0);
       return true;
     },
     guardar: function (a) {
       var f = a.querySelector("form");
-      rascunhos[a.id] = { escolha: f.querySelector("input:checked")?.value || "", texto: f.querySelector("textarea").value };
+      rascunhos[a.id] = { escolha: f.querySelector("input:checked")?.value || "", texto: f.querySelector("textarea").value, baseRevisao: Number(f.dataset.base || 0) };
       return persistir();
     },
     remover: function (id) { delete rascunhos[id]; persistir(); },
@@ -33,6 +34,10 @@
       caixa.querySelector("p").textContent = (escolha[r.escolha] || "Resposta registada") + (r.texto ? "\n" + r.texto : "");
       var data = new Date(r.atualizado_em);
       caixa.querySelector("small").textContent = Number.isNaN(data.valueOf()) ? "" : "Guardada em " + data.toLocaleString("pt-PT");
+      if (r.escolha === 'aprovar') {
+        if (!r.proposta_hash) caixa.querySelector('small').textContent += ' · Aprovação antiga sem proposta arquivada; requer conferência.';
+        else if (r.proposta_hash !== a.dataset.propostaHash) caixa.querySelector('small').textContent += ' · A proposta mudou desde a aprovação; revê antes de aplicar.';
+      }
     },
     descarregar: function (md) {
       var url = URL.createObjectURL(new Blob([md], { type: "text/markdown;charset=utf-8" }));

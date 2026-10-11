@@ -28,6 +28,7 @@ export function escreverAssets(saida, d) {
     ...["palco", "candeia", "painelIndice"].map(nome => [nome, "js", readFileSync(join(PAGINAS, nome === "painelIndice" ? "painel-indice.js" : nome + ".js"), "utf8")]),
     ["site", "js", readFileSync(join(PAGINAS, "site.js"), "utf8")],
     ["motor", "js", readFileSync(join(PAGINAS, "motor.js"), "utf8")],
+    ["painelConcorrencia", "js", readFileSync(join(PAGINAS, "painel-concorrencia.js"), "utf8")],
     ["reportar", "js", readFileSync(join(PAGINAS, "reportar.js"), "utf8")],
     ["painelCss", "css", minificarCss(readFileSync(join(PAGINAS, "painel.css"), "utf8"))],
     ["painelReportes", "js", readFileSync(join(PAGINAS, "painel-reportes.js"), "utf8")],

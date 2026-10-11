@@ -119,6 +119,7 @@ func step(delta: float) -> void:
 
 	if not arrival.active or arrival.choice != &"":
 		ClockService.step(delta)  # o primeiro dia começa com o estandarte
+	_espelhar_relogio()  # os consumidores da alvorada leem o dia que acaba de nascer
 	var mudou := _mudanca_de_fase()
 	night.tick(delta, _fase, mudou, state, creatures, Vector2(core_x, world_width))  # 2
 	ArrivalLabor.reserve()
@@ -160,7 +161,6 @@ func step(delta: float) -> void:
 	builds.work_day = ClockService.clock.day
 	EventRelay.builds(FoundationWatch.after(builds.tick(delta, units)))  # 8 · BuildSystem
 	CellarWatch.sync()
-	_espelhar_relogio()
 	EventBus.flush()  # 11 · fim do tick, com o estado ja consolidado
 
 

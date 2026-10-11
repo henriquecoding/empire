@@ -154,11 +154,7 @@ func by_recency() -> Array[int]:
 ## Se o slot traz um mundo com que se retome: tropas, e o relogio no estado. Uma
 ## moldura que se le mas vem sem mundo e um save estragado, e nao uma partida.
 func playable(slot: int) -> bool:
-	var tropas: Variant = restore_world(slot).get(&"units", {})
-	if typeof(tropas) != TYPE_DICTIONARY:
-		return false
-	var ids: Variant = (tropas as Dictionary).get(&"ids", PackedInt32Array())
-	return ids is PackedInt32Array and not (ids as PackedInt32Array).is_empty()
+	return SaveIntegrity.playable(_ler_cru(slot))
 
 
 func has_slot(slot: int) -> bool:
@@ -223,7 +219,10 @@ func _ler_cru(slot: int) -> Dictionary:
 	if dados[&"save_version"] > SAVE_VERSION:
 		# Degrada em vez de recusar: le-se o que se reconhece (§62).
 		push_warning("save: slot %d e de uma versao futura (%d)" % [slot, dados[&"save_version"]])
-	if typeof(dados.get(&"state")) != TYPE_DICTIONARY:
-		push_error("save: slot %d sem estado" % slot)
+	var world: Variant = dados.get(&"world", {})
+	if (
+		typeof(dados.get(&"state")) != TYPE_DICTIONARY
+		or (world is Dictionary and not SaveIntegrity.structure(world))
+	):
 		return {}
 	return SaveMigrations.migrate(dados)  # uma por versao, por ordem (Q-091)
