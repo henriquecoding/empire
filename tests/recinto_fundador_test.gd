@@ -137,6 +137,7 @@ func test_guardar_e_retomar_conserva_bancas_formacao_e_expansao_sem_duplicar() -
 	var banca := _site(&"hammer_rack")
 	banca.raise_to(1)
 	banca.paid = 2
+	FoundationWatch.founded_tools()
 	var id := banca.id
 	var count := SimLoop.builds.count()
 	var salvo := SimLoop.world()

@@ -78,7 +78,7 @@ func test_ha_uma_casa_do_herdeiro_por_levantar_fora_do_muro() -> void:
 
 
 func test_sem_casa_nao_se_forma_ninguem_e_a_morte_do_rei_e_derrota() -> void:
-	SimLoop.units.carried_coins[_rei()] = SACO
+	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, SACO)
 	_alvorada(2)
 	assert_int(SimLoop.field.succession.days).is_equal(0)
 	SimLoop.units.healths[_rei()] = 0
@@ -87,7 +87,7 @@ func test_sem_casa_nao_se_forma_ninguem_e_a_morte_do_rei_e_derrota() -> void:
 
 func test_com_a_casa_de_pe_cada_alvorada_paga_um_dia_de_treino() -> void:
 	_de_pe(_casa())
-	SimLoop.units.carried_coins[_rei()] = SACO
+	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, SACO)
 	_alvorada(2)
 	_alvorada(3)
 	assert_int(SimLoop.field.succession.days).is_equal(2)
@@ -114,7 +114,7 @@ func test_com_herdeiro_formado_a_morte_do_rei_nao_e_derrota() -> void:
 func test_o_herdeiro_assume_na_alvorada_no_castelo() -> void:
 	var casa := _casa()
 	_de_pe(casa)
-	SimLoop.units.carried_coins[_rei()] = SACO
+	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, SACO)
 	_alvorada(2)
 	SimLoop.field.succession.days = _curva().heir_training_days
 	var velho := SimLoop.king_id
@@ -135,7 +135,7 @@ func test_o_herdeiro_assume_na_alvorada_no_castelo() -> void:
 
 func test_o_treino_vai_no_save() -> void:
 	_de_pe(_casa())
-	SimLoop.units.carried_coins[_rei()] = SACO
+	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, SACO)
 	_alvorada(2)
 	var copia := Succession.new(1, 1)
 	copia.from_dict(SimLoop.field.to_dict()[&"succession"])

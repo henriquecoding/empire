@@ -20,6 +20,7 @@ static var active := false
 static var release_pending := false
 
 var selected: StringName = &"monarch"
+var succession_mode := false
 var cards: Array[Button] = []
 var start_button: Button
 var _choose: Callable
@@ -64,9 +65,11 @@ func _ready() -> void:
 	_scroll.add_child(body)
 	var brand := PauseTheme.label(body, &"UI_MENU_TITLE")
 	PauseTheme.title(brand, PauseTheme.BRAND_SIZE)
-	var heading := PauseTheme.label(body, &"MONARCH_CHOOSE_TITLE")
+	var heading := PauseTheme.label(
+		body, &"HEIR_EXCHANGE_TITLE" if succession_mode else &"MONARCH_CHOOSE_TITLE"
+	)
 	PauseTheme.title(heading)
-	PauseTheme.label(body, &"ARRIVAL_CHOOSE_INTRO")
+	PauseTheme.label(body, &"HEIR_EXCHANGE_NOTE" if succession_mode else &"ARRIVAL_CHOOSE_INTRO")
 	_grid = GridContainer.new()
 	_grid.columns = _choices.size()
 	_grid.add_theme_constant_override("h_separation", PauseTheme.COLUMN_GAP)
@@ -91,6 +94,8 @@ func _ready() -> void:
 	)
 	start_button = PauseTheme.button(_layout, &"CLASS_BEGIN", begin)
 	PauseTheme.primary(start_button)
+	if succession_mode:
+		PauseTheme.button(_layout, &"UI_MENU_BACK", func() -> void: _choose.call(&""))
 	get_viewport().size_changed.connect(fit)
 	fit()
 	select(selected)
@@ -159,6 +164,9 @@ func select(id: StringName) -> void:
 	)
 	_controls.text = tr(_key("CONTROLS_TOUCH" if TouchControls.active else "CONTROLS", id))
 	start_button.text = tr(&"CLASS_BEGIN").format({"name": _title.text})
+	if succession_mode:
+		start_button.text = tr(&"HEIR_EXCHANGE_CONFIRM").format({"name": _title.text})
+		start_button.disabled = selected == MonarchWatch.data().id
 
 
 func begin() -> void:
@@ -177,6 +185,12 @@ func fit() -> void:
 	for side: String in ["top", "bottom"]:
 		_margin.add_theme_constant_override("margin_" + side, MARGIN)
 	_grid.columns = _choices.size() if size.x >= WIDTH else 1
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if succession_mode and event.is_action_pressed(&"ui_cancel"):
+		get_viewport().set_input_as_handled()
+		_choose.call(&"")
 
 
 func _exit_tree() -> void:

@@ -97,6 +97,7 @@ def rot_md():
     lo, hi = [float(x) for x in rot["summon_interval"].split("|")]
     om, rn = float(rot.get("opening_mass") or 0), int(rot.get("ramp_nights") or 0)
     pe = int(rot.get("peak_every") or 0)
+    first = int(rot.get("first_peak_night") or pe)
     pm, cm = float(rot.get("peak_mass_mult") or 1), float(rot.get("calm_mass_mult") or 1)
     mg, gf = float(rot.get("mass_growth") or 1), int(rot.get("growth_from_night") or 0)
     ds = int(rot.get("debut_step") or 0)
@@ -119,11 +120,11 @@ def rot_md():
 
     def ritmo(d):
         # Q-126: a noite funda de pe em pe noites, e a calma a seguir.
-        if pe <= 0:
+        if pe <= 0 or d < first:
             return 1.0, ""
-        if d % pe == 0:
+        if (d - first) % pe == 0:
             return pm, " (funda)"
-        if d > 1 and (d - 1) % pe == 0:
+        if d > first and (d - first - 1) % pe == 0:
             return cm, " (calma)"
         return 1.0, ""
     active = float(clock["dusk"]) + float(clock["night"])

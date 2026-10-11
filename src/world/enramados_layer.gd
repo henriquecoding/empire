@@ -44,6 +44,8 @@ const LUZ_DO_PLANO := [
 ]
 
 @export_range(0, LAST_PLANE) var plane := 0
+var _cover_key := 0
+var _social_key := 0
 var _clock: ClockData
 var _art := OriginalArt.new()
 var _revisao := Vector2i(-1, -1)  # das terras (Q-173) e dos sitios do subsolo (Q-186)
@@ -59,6 +61,17 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _clock == null or ClockService.clock == null:
 		return
+	if plane == LAST_PLANE:
+		visible = SoilCover.intersects(-INF, INF)
+		var cover_key := SoilCover.visibility_key()
+		if cover_key != _cover_key:
+			_cover_key = cover_key
+			queue_redraw()
+	if plane == GROUND_PLANE and SimLoop.field != null:
+		var social_key := SocialScenery.key()
+		if social_key != _social_key:
+			_social_key = social_key
+			queue_redraw()
 	SceneryLight.refresh(self)  # a luz ja nao e o `modulate`: e o shader (ADR 0048)
 	if SimLoop.field != null:
 		var revisao := Vector2i(SimLoop.field.wilds.revision, SimLoop.field.under.revision)
@@ -163,6 +176,8 @@ func _ground() -> void:
 	if SimLoop.field != null:  # e o chao das terras geradas, onde tambem se anda (Q-173)
 		var mapa := SceneryArt.map() if pintado else null
 		WildGround.draw_ground(self, SimLoop.field.wilds, SimLoop.world_width, mapa)
+		if not pintado:
+			ResourceWater.draw(self)
 
 
 func _field_and_path() -> void:

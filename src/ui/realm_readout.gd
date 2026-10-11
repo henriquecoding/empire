@@ -40,10 +40,13 @@ static func overview() -> String:
 		"spirit": roundi(SimLoop.field.spirit.value(ClockService.clock.day)),
 		"torches": SimLoop.night.dark.torch.torches,
 		"seeds": SimLoop.state.royal_seeds,
+		"treasury": SimLoop.treasury.amount(UnderWatch.HATCH_KEY),
+		"arrears": SimLoop.field.upkeep.arrears(),
 	}
 	var lines := PackedStringArray([SeasonText.of(SimLoop.field, SimLoop.state.day), ""])
 	for key: StringName in [
 		&"HUD_DETAIL_PURSE",
+		&"HUD_DETAIL_TREASURY",
 		&"HUD_DETAIL_TROOPS",
 		&"HUD_DETAIL_WAGES",
 		&"HUD_DETAIL_CORE",
@@ -53,6 +56,23 @@ static func overview() -> String:
 		&"HUD_DETAIL_SEEDS"
 	]:
 		lines.append(_tr(key).format(values))
+	if SimLoop.field.succession.lost:
+		lines.append(_tr(&"HEIR_LOST_FUNDS"))
+	if SimLoop.field.succession.recovery_nights > 0:
+		lines.append(
+			_tr(&"HEIR_RECOVERY").format({"nights": SimLoop.field.succession.recovery_nights})
+		)
+	for purpose: StringName in SimLoop.treasury.payments:
+		var payment: Dictionary = SimLoop.treasury.payments[purpose]
+		lines.append(
+			_tr(&"HUD_LOCAL_PAYMENT").format(
+				{
+					"name": _tr(StringName("LOCAL_" + String(purpose).to_upper())),
+					"paid": payment[&"paid"],
+					"unpaid": payment[&"unpaid"]
+				}
+			)
+		)
 	return "\n".join(lines)
 
 

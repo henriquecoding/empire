@@ -75,6 +75,9 @@ static func tick(delta: float) -> void:
 
 static func sync() -> void:
 	var campo := SimLoop.field
+	campo.classes.inheritance = ImperialSuccession.bonus()
+	campo.crown.inheritance = ImperialSuccession.bonus()
+	campo.focus.inheritance = ImperialSuccession.bonus()
 	var dados := data()
 	campo.classes.active = dados.skill_class == Monarchy.REI
 	var escudeiro := int(campo.monarchy.bonds.get(SimLoop.king_id, UnitSystem.NENHUM))
@@ -124,6 +127,7 @@ static func evolve(campo: FieldWork, estado: GameState) -> bool:
 ## herdeiro do Arqueiro traz a sua aljava, com as flechas iniciais (Q-200, Q-202).
 static func crowned(velho: int, novo: int) -> void:
 	SimLoop.field.monarchy.crown(velho, novo)
+	SimLoop.field.succession.recovery_nights = SimFactory.curve().heir_recovery_nights
 	var i := SimLoop.units.index_of(novo)
 	if i != UnitSystem.NENHUM:
 		_aljava(novo, Registry.entry(&"units", SimLoop.units.data_ids[i]) as UnitData)

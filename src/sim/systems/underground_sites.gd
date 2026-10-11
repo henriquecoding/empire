@@ -83,9 +83,9 @@ func generated(i: int) -> bool:
 	return layouts.has(key_of(i))
 
 
-## Se a entrada se publica: ja gerado, com chao reservado, ou obrigatorio.
+## Obrigatorio nao dispensa chao util: nunca publicar uma escada sem baia.
 func usable(i: int) -> bool:
-	return generated(i) or why(i) == UnderFit.OK or bool(sites[i][SPEC].get(MANDATORY, false))
+	return why(i) == UnderFit.OK
 
 
 ## Porque o sitio nao serve, ou UnderFit.OK. O de um sitio gerado e o do que nasceu.
@@ -99,8 +99,19 @@ func generate(i: int, rolls: PackedFloat32Array) -> bool:
 	if generated(i) or not usable(i):
 		return false
 	var s := sites[i]
-	var lim: Vector2 = s[LIMIT] if not is_nan(s[LIMIT].x) else s[CAP]
-	layouts[key_of(i)] = UnderLayout.lay_out(s[MOUTH], s[NEED], lim, rolls, s[SPEC])
+	var lim: Vector2 = s[LIMIT]
+	if is_nan(lim.x):
+		return false
+	var rooms_new := UnderLayout.lay_out(s[MOUTH], s[NEED], lim, rolls, s[SPEC])
+	if rooms_new.is_empty():
+		return false
+	var bounds := Vector2(rooms_new.front()[A], rooms_new.back()[B])
+	if (
+		UnderFit.check(bounds, s[MOUTH], UnderLayout.blocked(s[SPEC]), UnderLayout.rules(s[SPEC]))
+		!= UnderFit.OK
+	):
+		return false
+	layouts[key_of(i)] = rooms_new
 	meta[key_of(i)] = {VERSION: UnderLayout.rules(s[SPEC]).generator_version}
 	UnderReserve.stamp(self, i)
 	revision += 1

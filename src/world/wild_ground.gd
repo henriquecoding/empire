@@ -87,7 +87,8 @@ static func draw_ground(
 				WorldPlan.Zone.TRAIL:
 					WildSubjects.draw(canvas, registo, x, x0, terras.width)
 				WorldPlan.Zone.THRESHOLD when pintado != null and pintado.painted_border(x):
-					WildLands.flag(canvas, x, tinta, lado)
+					if WildLands.established(registo):
+						WildLands.flag(canvas, x, tinta, lado)
 				_:
 					WildLands.draw(canvas, registo, x, tinta, lado)
 
@@ -101,7 +102,8 @@ static func draw_underground(canvas: CanvasItem, terras: WildSegments, largura: 
 			var p := ends(terras, lado, k)
 			var span := ground_span(registo, lado, x0, terras.width)
 			var semente := int(registo[WildSegments.SEMENTE])
-			WildTunnel.draw(canvas, span, colors(registo, p.x), colors(registo, p.y), semente)
+			if SoilCover.intersects(span.x, span.y):
+				WildTunnel.draw(canvas, span, colors(registo, p.x), colors(registo, p.y), semente)
 
 
 ## As plantas do campo das terras geradas: as tabelas do bioma de onde se vem e do bioma

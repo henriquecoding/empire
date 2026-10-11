@@ -18,10 +18,16 @@ static func run(
 	rei: int,
 	nucleo: Vector2
 ) -> int:
+	if campo == SimLoop.field:
+		campo.upkeep.reserve = SimLoop.treasury
+		campo.succession.reserve = SimLoop.treasury
+		campo.succession.payment_day = dia
+	campo.succession.recovery_nights = maxi(0, campo.succession.recovery_nights - 1)
 	if obras != null:
 		DawnRepair.plan(obras)
+		var previous := rei
 		rei = _coroar(campo, unidades, estado, obras, rei)
-		var treino := campo.succession.dawn(obras, unidades, rei)
+		var treino := campo.succession.dawn(obras, unidades, rei) if rei == previous else 0
 		if treino > 0:
 			EventBus.queue(&"coin_spent", [treino, &"heir"])
 	if economia != null:
@@ -40,9 +46,7 @@ static func run(
 	SettlementWatch.dawn(campo)
 	CampWatch.dawn(campo)
 	Camps.dawn(CampWatch.active(campo), dia, unidades, estado, campo.spirit.level(dia))
-	Camps.mercenaries(
-		campo.wilds.mercenaries(SimLoop.world_width), unidades, estado, campo.camp_life
-	)  # Q-173
+	Camps.mercenaries(SocialWatch.camps(campo), unidades, estado, campo.camp_life)  # Q-173
 	var fork := SimLoop.secrets.chapters[0] if not SimLoop.secrets.chapters.is_empty() else nucleo.x
 	campo.realm.dawn(dia, unidades, estado, rei, Vector2(nucleo.x, fork))  # Q-103
 	Assume.dawn(unidades, estado, rei, campo)  # a classe do povo conquistado chega (§13)
@@ -61,10 +65,16 @@ static func _abastecer(
 	var regras := RulesFactory.rules()
 	if not Supply.depot(obras, regras.ammo_depot):
 		return
-	var bolsa := unidades.carried_coins[r]
+	var reserve := SimLoop.treasury if campo == SimLoop.field else null
+	var bolsa := (
+		reserve.amount(UnderWatch.HATCH_KEY) if reserve != null else unidades.carried_coins[r]
+	)
 	var gasto := campo.supply.restock(unidades, unidades.owners[r], bolsa, regras.arrows_per_coin)
 	if gasto > 0:
-		unidades.carried_coins[r] -= gasto
+		if reserve != null:
+			reserve.pay(UnderWatch.HATCH_KEY, gasto, &"arrows", SimLoop.state.day)
+		else:
+			unidades.carried_coins[r] -= gasto
 		EventBus.queue(&"coin_spent", [gasto, &"arrows"])
 
 

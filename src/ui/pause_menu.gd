@@ -152,9 +152,7 @@ func _escrever() -> void:
 	_options_button.text = tr(&"UI_OPTIONS")
 	_controls_button.text = tr(&"UI_CONTROLS")
 	_export_button.text = tr(&"ARRIVAL_EXPORT")
-	_exit_button.text = (
-		tr(&"UI_MENU_EXIT_WEB") if OS.has_feature("web") else tr(&"UI_SAVE_AND_QUIT")
-	)
+	_exit_button.text = tr(PauseSession.exit_key(OS.has_feature("web")))
 	_save_note.text = PauseSession.save_note()
 	_frame.footer.text = PauseHelp.hint(_device)
 	_pages.refresh()

@@ -197,6 +197,10 @@ func _starting_choice() -> void:
 	$Interface.add_child(_selector)
 
 
+func choose_successor() -> void:
+	HeirMenu.open($Interface)
+
+
 func _chosen(id: StringName) -> void:
 	if not MonarchWatch.begin(id):
 		return

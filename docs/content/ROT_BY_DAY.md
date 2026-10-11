@@ -9,23 +9,23 @@ O dossiê não tem ondas: A Podridão é uma entidade com massa (§05, §51), e 
 - O que a tabela mostra é o **piso**: só os dois primeiros termos. A base e o termo do dia desceram de propósito na §74 — o que a noite tem de duro deixa de vir do calendário e passa a vir de como jogaste. Duas árvores deixadas de pé (+44) valem mais do que um dia inteiro (+18).
 - O Zelador (§75) não entra nesta conta: não é invocado por massa, nasce da Dívida da Candeia ≥ 6
 - Invoca a cada 4–7 s enquanto está ativa: crepúsculo + noite = 135 s → **19 a 33 invocações** no máximo
-- As primeiras noites (Q-017, Q-068): a noite 1 tem massa 24 — os três Rastejantes do §25 — e o calendário sobe em linha recta até à fórmula de cima, que manda por inteiro a partir da noite 5
+- As primeiras noites (Q-017, Q-068): a noite 1 tem massa 24 — os três Rastejantes do §25 — e o calendário sobe em linha recta até à fórmula de cima, que manda por inteiro a partir da noite 7
 - Depois (Q-151): mais difícil exponencialmente — a fórmula multiplica-se por 1.06 a cada noite depois da noite 10
 - Escolha (§51): a criatura **mais cara que cabe** na massa e cujo dia mínimo já passou
 - Estreia (ADR 0071, Q-240): na n-ésima noite em que pode vir, uma espécie vem no máximo 3 × n vezes — o primeiro Alado é um. A da noite 1 não estreia, e o que sobra da massa paga as mais baratas
-- O que escreveste de dia (árvores, recusas, o Lume) pesa com a rampa: nada na noite 1, metade na noite 3, inteiro a partir da noite 5 (ADR 0071, Q-239)
+- O que escreveste de dia (árvores, recusas, o Lume) pesa com a rampa: nada na noite 1, metade na noite 4, inteiro a partir da noite 7 (ADR 0071, Q-239)
 - Lado duplo a partir do dia 12
 - Ritmo (Q-126): de 6 em 6 noites uma **funda** (massa × 1.3), e a seguinte **calma** (× 0.6). O lado de cada noite diz-se à tarde (Q-125)
 
 | dia | velocidade px/s | massa (0 fort.) | massa (2 fort.) | criatura mais cara disponível | invocações até esgotar (0 fort.) | o que a massa paga (0 fort.) | lados |
 |---|---|---|---|---|---|---|---|
 | 1 | 14.9 | 24 | 84 | crawler (8) | 3 | crawler 3 | 1 |
-| 2 | 15.8 | 37 | 97 | crawler (8) | 4 | crawler 4 | 1 |
-| 3 | 16.7 | 59 | 119 | crawler (8) | 7 | crawler 7 | 1 |
-| 4 | 17.6 | 90 | 150 | winged (14) | 9 | winged 3 · crawler 6 | 1 |
-| 5 | 18.5 | 130 | 190 | winged (14) | 11 | winged 6 · crawler 5 | 1 |
-| 6 (funda) | 19.4 | 192.4 | 270.4 | winged (14) | 17 | winged 9 · crawler 8 | 1 |
-| 7 (calma) | 20.3 | 99.6 | 135.6 | brute (22) | 5 | brute 3 · winged 2 | 1 |
+| 2 | 15.8 | 32.7 | 92.7 | crawler (8) | 4 | crawler 4 | 1 |
+| 3 | 16.7 | 47.3 | 107.3 | crawler (8) | 5 | crawler 5 | 1 |
+| 4 | 17.6 | 68 | 128 | winged (14) | 6 | winged 3 · crawler 3 | 1 |
+| 5 | 18.5 | 94.7 | 154.7 | winged (14) | 7 | winged 6 · crawler 1 | 1 |
+| 6 | 19.4 | 127.3 | 187.3 | winged (14) | 9 | winged 9 | 1 |
+| 7 | 20.3 | 166 | 226 | brute (22) | 10 | brute 3 · winged 7 | 1 |
 | 8 | 21.2 | 184 | 244 | brute (22) | 10 | brute 6 · winged 3 · crawler 1 | 1 |
 | 9 | 22.1 | 202 | 262 | brute (22) | 9 | brute 9 | 1 |
 | 10 | 23.0 | 220 | 280 | burrower (30) | 9 | burrower 3 · brute 5 · winged 1 | 1 |

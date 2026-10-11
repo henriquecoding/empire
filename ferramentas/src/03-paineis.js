@@ -151,6 +151,7 @@ function tip(html, x, y, topoMin) {
 function painelEstado(d) {
   const v = d.validacao;
   const testesTotal = v.gdunit_discovered;
+  const run = v.last_execution;
   const abertas = d.perguntas.filter((p) => p.estado === "aberta").length;
 
   // Os estados dos tickets vêm do texto livre de `tickets.json`. Três
@@ -176,30 +177,31 @@ function painelEstado(d) {
     `nenhum foi escrito à mão aqui.</p>` +
 
     `<div class="x-cartoes">` +
-      cartao("Testes a passar", v.gdunit_passed, "de " + testesTotal + " descobertos",
-             v.gdunit_failures === 0 ? selo("ok", "zero falhas") : selo("grave", v.gdunit_failures + " falhas")) +
+      cartao("Última execução", run.passed, "de " + run.cases + " executados em " + run.date,
+             run.failed === 0 && run.errors === 0 ? selo("ok", "zero falhas") : selo("grave", "falhas registadas")) +
+      cartao("Inventário atual", testesTotal, "testes encontrados no código; não é um resultado de execução", selo("parado", "inventário")) +
       cartao("Contratos pendentes", v.gdunit_skipped, "comportamento por implementar", selo("aviso", "por fazer")) +
       cartao("Recursos gerados", v.generated_resources, "de " + v.csv_tables + " tabelas", selo("ok", "zero divergências")) +
       cartao("Perguntas em aberto", abertas, "de " + d.perguntas.length + " registadas", selo("aviso", "decide o dono")) +
       cartao("Tickets", d.tickets.length, contas.feito + " feitos · " + contas.parcial + " parciais", selo("parado", contas.porFazer + " por fazer")) +
-      cartao("Jogabilidade", "0", "nenhum minuto jogável", selo("grave", "ainda não existe")) +
+      cartao("Campanha longa", "Por validar", "o piloto anterior terminou no dia 4 de 8", selo("aviso", "cobertura parcial")) +
     `</div>` +
 
-    `<h4 id="x-estado-testes">Os ${testesTotal} testes, e o que os ${v.gdunit_skipped} pendentes significam</h4>` +
+    `<p>Execução de <code>${esc(run.source_sha)}</code>: <a href="${esc(run.run_url)}">run do CI</a>. O inventário atual pode incluir alterações posteriores.</p>` +
+    `<h4 id="x-estado-testes">Resultados da execução identificada</h4>` +
     `<div id="x-fig-testes"></div>` +
 
     `<h4 id="x-estado-tickets">Os ${d.tickets.length} tickets, pelo estado que o ficheiro declara</h4>` +
     `<div id="x-fig-tickets"></div>` +
 
     `<h4 id="x-estado-nao">O que NÃO foi verificado</h4>` +
-    `<p>Um painel de estado que só mostrasse verdes seria um painel de marketing. Estas seis linhas ` +
-    `são a razão pela qual o dossiê continua a dizer «ainda não há gameplay»:</p>` +
+    `<p>Resultados automatizados não certificam uma campanha humana completa nem todos os dispositivos:</p>` +
     `<ul id="x-nao-verificado">` +
       naoVerificado("Exportação", v.export_tested, "Nenhum executável foi produzido.") +
       naoVerificado("GPU e arte", v.gpu_art_tested, "A medição correu sem placa gráfica; LUT, luz e silhuetas continuam por ver.") +
       naoVerificado("Playtest", v.gameplay_tested, "Ninguém jogou. Os números de balanceamento continuam a ser pontos de partida.") +
-      `<li>${selo("grave", "não corrido")} <strong>CI remoto</strong> — a suite correu localmente; o portão do GitHub nunca viu este código.</li>` +
-      `<li>${selo("grave", "não feito")} <strong>Push e deploy</strong> — o repositório não tem remoto.</li>` +
+      `<li>${selo("ok", "identificado")} <strong>CI remoto</strong> — <a href="${esc(run.run_url)}">execução e commit acima</a>.</li>` +
+      `<li>${selo("aviso", "confirmar versão")} <strong>Publicação</strong> — consultar o manifesto da versão pública; uma execução antiga não certifica outro commit.</li>` +
       `<li>${selo("aviso", "em falta")} <strong>Fontes ausentes</strong> — ${esc(v.source_gaps.join("; "))}.</li>` +
     `</ul>` +
 
@@ -234,14 +236,15 @@ function naoVerificado(nome, feito, porque) {
    ângulos; uma barra segmentada compara comprimentos, que é o que o
    olho faz bem. Cada segmento leva rótulo — a cor é o reforço. */
 
-function figuraTestes(v) {
+function figuraTestes(validation) {
+  const v = validation.last_execution;
   const partes = [
-    { n: v.gdunit_passed, rot: "Passaram", tipo: "ok", nota: "dados e infraestrutura" },
-    { n: v.gdunit_skipped, rot: "Pendentes", tipo: "aviso", nota: "16 contratos da Parte XIII + G3/EventBus" },
-    { n: v.gdunit_failures, rot: "Falharam", tipo: "grave", nota: "" },
+    { n: v.passed, rot: "Passaram", tipo: "ok", nota: "dados e infraestrutura" },
+    { n: v.skipped, rot: "Pendentes", tipo: "aviso", nota: "contratos pendentes documentados nos testes" },
+    { n: v.failed + v.errors, rot: "Falharam", tipo: "grave", nota: "" },
   ].filter((p) => p.n > 0 || p.rot === "Falharam");
-  const total = v.gdunit_discovered;
-  const rotulo = `Dos ${total} testes descobertos, ${v.gdunit_passed} passaram, ${v.gdunit_skipped} ficaram pendentes e ${v.gdunit_failures} falharam.`;
+  const total = v.cases;
+  const rotulo = `Dos ${total} casos da execução identificada, ${v.passed} passaram, ${v.skipped} foram saltados e ${v.failed + v.errors} falharam.`;
 
   const fig = el("figure", { class: "x-fig" });
   const caixa = el("div");
@@ -279,8 +282,7 @@ function figuraTestes(v) {
     `<span><i style="background:var(--grave)"></i>${ESTADO_ICO.grave} falharam</span>`), caixa);
 
   fig.appendChild(el("figcaption", {},
-    `Os ${v.gdunit_skipped} pendentes não são falhas: são contratos de comportamento cujo código ainda não existe — ` +
-    `os 16 da Parte XIII e o G3/EventBus. ${v.gdunit_discovered} descobertos não são ${v.gdunit_discovered} aprovados.`));
+    `${v.skipped} casos saltados na execução de ${esc(v.date)}. O total desta barra pertence ao mesmo SHA e à mesma execução; o inventário atual é apresentado separadamente.`));
   return fig;
 }
 

@@ -76,13 +76,13 @@ func test_o_guia_da_tarde_diz_o_lado() -> void:
 func test_de_seis_em_seis_noites_uma_funda_e_a_seguir_uma_calma() -> void:
 	var rot := SimFactory.rot()
 	var perfil := SimFactory.rot_profile()
-	assert_float(rot.rhythm(perfil.peak_every)).is_equal(perfil.peak_mass_mult)
-	assert_float(rot.rhythm(perfil.peak_every + 1)).is_equal(perfil.calm_mass_mult)
-	assert_float(rot.rhythm(perfil.peak_every - 1)).is_equal(1.0)
-	assert_bool(rot.deep(perfil.peak_every)).is_true()
-	rot.spawn(perfil.peak_every, 1, 1000.0)
+	assert_float(rot.rhythm(perfil.first_peak_night)).is_equal(perfil.peak_mass_mult)
+	assert_float(rot.rhythm(perfil.first_peak_night + 1)).is_equal(perfil.calm_mass_mult)
+	assert_float(rot.rhythm(perfil.first_peak_night - 1)).is_equal(1.0)
+	assert_bool(rot.deep(perfil.first_peak_night)).is_true()
+	rot.spawn(perfil.first_peak_night, 1, 1000.0)
 	var funda := rot.state.mass
-	rot.spawn(perfil.peak_every - 1, 1, 1000.0)
+	rot.spawn(perfil.first_peak_night - 1, 1, 1000.0)
 	assert_float(funda).is_greater(rot.state.mass)
 
 

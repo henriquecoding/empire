@@ -108,7 +108,7 @@ static func _aplicar(campo: FieldWork, lado: int, k: int, largura: float, u_mont
 		campo.camps.append(x)
 	if u_monte < 0.0:
 		return
-	if registo[WildSegments.TIPO] == WildSegments.MERCENARIOS:
+	if registo[WildSegments.TIPO] == WildSegments.MERCENARIOS and campo.settlements.awake_day > 0:
 		Camps.mercenaries(PackedFloat32Array([x]), SimLoop.units, SimLoop.state, campo.camp_life)
 
 

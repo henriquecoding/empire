@@ -77,7 +77,7 @@ static func _incentivar(units: UnitSystem, b: int) -> bool:
 	if not _paga(units, b, preco, false):
 		return false
 	var raio := float(p.get(&"encourage_radius", 0.0))
-	var boost := float(p.get(&"encourage_boost", 0.0))
+	var boost := float(p.get(&"encourage_boost", 0.0)) * ImperialSuccession.bonus()
 	var prazo := float(p.get(&"encourage_seconds", 0.0))
 	if SimLoop.field.monarchy.encourage(units, b, raio, boost, prazo) <= 0:
 		return false

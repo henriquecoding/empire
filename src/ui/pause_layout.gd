@@ -7,6 +7,7 @@ const PAGE_WIDTH := 800
 const COMPACT_MARGIN := 20
 const WIDE_MARGIN := 48
 const SHORT_HEIGHT := 500
+const SHORT_MARGIN := 8
 const FOOTER_HEIGHT := 430
 const REALM_GAP := 64
 const SCROLL_DEADZONE := 8
@@ -75,7 +76,9 @@ func fit() -> void:
 	scale = Vector2.ONE * ui_scale
 	size = get_viewport_rect().size / ui_scale
 	var compact := size.x < WIDE_WIDTH
-	var margin := COMPACT_MARGIN if compact or size.y < SHORT_HEIGHT else WIDE_MARGIN
+	var margin := COMPACT_MARGIN if compact else WIDE_MARGIN
+	if size.y < SHORT_HEIGHT:
+		margin = SHORT_MARGIN
 	for side: String in ["left", "top", "right", "bottom"]:
 		_margin.add_theme_constant_override("margin_" + side, margin)
 	actions.custom_minimum_size.x = minf(ACTION_WIDTH, size.x - margin * 2)
@@ -90,6 +93,16 @@ func fit() -> void:
 func _fit_pages() -> void:
 	for child: Control in pages.get_children():
 		if child != home:
+			child.add_theme_constant_override(
+				"separation", SHORT_MARGIN if size.y < SHORT_HEIGHT else PauseTheme.COLUMN_GAP
+			)
+			for panel in child.get_children():
+				if panel is PanelContainer:
+					var box := panel.get_theme_stylebox(&"panel").duplicate() as StyleBox
+					box.set_content_margin_all(
+						SHORT_MARGIN if size.y < SHORT_HEIGHT else PauseTheme.PANEL_PADDING
+					)
+					panel.add_theme_stylebox_override(&"panel", box)
 			var inset := maxf(0, (pages.size.x - PAGE_WIDTH) / 2)
 			child.offset_left = inset
 			child.offset_right = -inset

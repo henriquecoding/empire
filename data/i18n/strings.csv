@@ -673,12 +673,8 @@ raise the bow rack: it refills them at dawn",guia contextual de jogo: as flechas
 GUIDE_HEIR,"O REI CAIU
 O herdeiro assume a coroa ao amanhecer","THE KING HAS FALLEN
 The heir takes the crown at dawn",guia contextual de jogo: a sucessão (§16),160,AUD-05 (Q-133)
-CONTEXT_HEIR,"{name} · herdeiro {days}/{total} dias
-{cost} moedas do teu saco a cada alvorada","{name} · heir {days}/{total} days
-{cost} coins from your purse each dawn",guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
-CONTEXT_HEIR_READY,"{name} · herdeiro formado
-Se o rei cair, ele assume ao amanhecer","{name} · heir trained
-If the king falls, the heir rules at dawn",guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
+CONTEXT_HEIR,"Herdeiro neutro · {days}/{total} dias · {cost} moedas/dia do tesouro, mesmo depois de pronto","Neutral heir · {days}/{total} days · {cost} treasury coins/day, including after training",guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
+CONTEXT_HEIR_READY,Herdeiro pronto · Interage na casa para escolher outro imperador,Heir ready · Interact at the house to choose another emperor,guia contextual de jogo: a casa do herdeiro (§15),160,AUD-05 (Q-133)
 EPILOGUE_SHIFT,O Turno,The Shift,epílogo (§79),16,AUD-05: o terceiro final da ADR 0018 não tinha nome escrito
 UI_CROSSED,A região está atravessada,The Region Is Crossed,travessia (P-K): a região acabou (Q-135),32,AUD-05
 UI_CAMPAIGN_END,Fim da campanha · {epilogue},End of the Campaign · {epilogue},travessia da última região: o epílogo (§79),40,AUD-05
@@ -730,7 +726,7 @@ UI_MENU_HINT,Setas escolher · Enter confirmar · Esc voltar,Arrows choose · En
 UI_MENU_EXIT_WEB,Voltar ao início,Return to Home,sair do jogo Web para a pagina inicial,24,UX-01
 UI_MENU_SAVE_DAY,O progresso é guardado antes de sair.,Progress is saved before leaving.,sair durante o dia,80,UX-01
 UI_MENU_SAVE_NIGHT,"À noite, retomas a última gravação ao voltar.","At night, returning resumes your last save.",sair sem anunciar um save da noite,96,UX-01
-SAVE_RECOVERED,"Uma gravação estava incompleta; retomou-se a mais recente que se abre.","A save was incomplete; the latest one that opens was resumed.",save (§62),160,BUG-03 do relatório de auditoria de 06/10/2026
+SAVE_RECOVERED,Uma gravação estava incompleta; retomou-se a mais recente que se abre.,A save was incomplete; the latest one that opens was resumed.,save (§62),160,BUG-03 do relatório de auditoria de 06/10/2026
 UI_MENU_SAVE_FAILED,Não foi possível guardar. A partida continua aberta.,Could not save. Your game remains open.,falha de gravacao ao sair,96,UX-01
 UI_MENU_HINT_PAD,D-pad escolher · {accept} confirmar · {cancel} voltar,D-pad choose · {accept} confirm · {cancel} back,navegacao da pausa com comando,96,UX-01
 PAD_CIRCLE,círculo,circle,botao de voltar do comando PlayStation,16,UX-01
@@ -1012,3 +1008,20 @@ HUD_DETAIL_GREED,Nobres: {greed}%,Nobles: {greed}%,Resumo na pausa,60,
 HUD_DETAIL_SPIRIT,Ânimo: {spirit},Spirit: {spirit},Resumo na pausa,60,
 HUD_DETAIL_TORCHES,Archotes: {torches},Torches: {torches},Resumo na pausa,60,
 HUD_DETAIL_SEEDS,Sementes Reais: {seeds},Royal Seeds: {seeds},Resumo na pausa,60,
+TERRAIN_ACCESS_BLOCKED,Acesso subterrâneo fechado; reabre uma passagem.,Underground access blocked; reopen a passage.,auditoria 09/10/2026,,
+HUD_DETAIL_TREASURY,Tesouro local: {treasury} moedas · Soldo em atraso: {arrears},Local treasury: {treasury} coins · Unpaid wages: {arrears},auditoria 09/10/2026,,
+HUD_LOCAL_PAYMENT,Tesouro → {name}: {paid} pago · {unpaid} em falta,Treasury → {name}: {paid} paid · {unpaid} unpaid,auditoria 09/10/2026,,
+LOCAL_HEIR,herdeiro,heir,auditoria 09/10/2026,,
+LOCAL_UPKEEP,soldo,wages,auditoria 09/10/2026,,
+LOCAL_ARROWS,flechas das tropas,troop arrows,auditoria 09/10/2026,,
+HEIR_LOST_FUNDS,O herdeiro partiu por falta de manutenção. O próximo pagamento inicia novo treino.,The heir left because upkeep was unpaid. The next payment starts training again.,auditoria 09/10/2026,,
+HEIR_EXCHANGE_TITLE,Escolher o próximo imperador,Choose your next emperor,auditoria 09/10/2026,,
+HEIR_EXCHANGE_NOTE,"A troca consome o herdeiro preparado. Sem outro herdeiro pronto, morrer termina a campanha. A manutenção sai do tesouro local e continua após o treino.","Switching consumes the trained heir. Without another ready heir, death ends the campaign. Upkeep comes from the local treasury and continues after training.",auditoria 09/10/2026,,
+HEIR_EXCHANGE_CONFIRM,Assumir {name},Reign as {name},auditoria 09/10/2026,,
+CHECKPOINT_NONE,Ainda não há uma gravação desta campanha.,This campaign has no checkpoint yet.,auditoria 09/10/2026,,
+CHECKPOINT_DAY,Última gravação: dia {day}. O progresso desta noite não será guardado.,Last checkpoint: day {day}. This night’s progress will not be saved.,auditoria 09/10/2026,,
+HEIR_RECOVERY,Bónus herdados: {percent}% · Recuperação: {nights} noites,Inherited bonuses: {percent}% · Recovery: {nights} nights,auditoria 09/10/2026,,
+FOUNDATION_UNDER_BLOCKED,Não há espaço seguro para a cave real aqui. Afasta-te dos subsolos existentes.,There is no safe room for the royal cellar here. Move away from existing underground sites.,auditoria 09/10/2026,,
+UI_QUIT_CHECKPOINT,Sair para o último ponto guardado,Quit to last checkpoint,auditoria,64,
+OPT_TEXT_SCALE,Tamanho do texto e dos painéis,Text and panel size,acessibilidade,64,
+BUILDING_EMISSARY_STAND,Banca de emissários,Emissary stand,Q-203,24,

@@ -30,8 +30,16 @@ func _noite_ate_ao_prato(noite: NightWatch, estado: GameState) -> void:
 
 
 func before_test() -> void:
-	RngService.configure(SEMENTE)
+	SimLoop.autosave_enabled = false
 	EventBus.reset()
+	SimLoop.start(SEMENTE)
+	Greybox.build()
+	SimLoop.stop()
+
+
+func after_test() -> void:
+	SimLoop.stop()
+	SimLoop.autosave_enabled = true
 
 
 func test_as_recusas_das_ultimas_noites_pesam_no_crepusculo() -> void:

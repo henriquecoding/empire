@@ -99,6 +99,10 @@ static func author_home(passagens: PackedFloat32Array, muros: PackedFloat32Array
 	var alcapao := nucleo + lado * lerpf(ALCAPAO_PX.x, ALCAPAO_PX.y, u[1])
 	var meio := _nucleo_px() * MEIO - FOLGA
 	var castelo := Vector2(nucleo - meio, nucleo + meio)
+	var vault: Dictionary = SimLoop.arrival.site_signature.get(FoundationUnder.SIGNATURE, {})
+	if not vault.is_empty():
+		alcapao = float(vault[&"mouth"])
+		castelo = vault[&"cap"]
 	var secreta := spec(UndergroundSites.HATCH, 0.0, [])
 	var aqui := Vector2(alcapao, alcapao)
 	SimLoop.field.under.post(HATCH_KEY, UndergroundSites.HATCH, alcapao, aqui, castelo, secreta)

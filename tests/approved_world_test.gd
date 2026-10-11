@@ -1,5 +1,7 @@
 extends GdUnitTestSuite
 
+const SettledRealm := preload("res://tests/support/settled_realm.gd")
+
 
 func before_test() -> void:
 	EventBus.reset()
@@ -67,6 +69,7 @@ func test_new_map_keeps_deserted_extent_without_new_loot_or_recruits() -> void:
 
 
 func test_class_travels_to_conquered_realm_king_stays_and_night_locks_travel() -> void:
+	SettledRealm.prepare(1)
 	var kingdom := SimLoop.units.index_of(SimLoop.king_id)
 	var home := SimLoop.units.xs[kingdom]
 	var hero := SimLoop.units.spawn(
@@ -89,12 +92,15 @@ func test_class_travels_to_conquered_realm_king_stays_and_night_locks_travel() -
 
 
 func test_local_realm_has_own_workers_defenses_treasury_and_night_attack() -> void:
+	SettledRealm.prepare(1)
 	Frontier.reveal(SimLoop.field, 1)
 	var record: Dictionary = SimLoop.field.settlements.records[1]
 	assert_int(record[&"sites"].size()).is_equal(4)
-	assert_int(record[&"units"].size()).is_greater(4)
+	var citizens := RulesFactory.rules().realm_citizen_count + 1  # habitantes e construtor
+	assert_int(record[&"units"].size()).is_equal(citizens)
 	var before := SimLoop.field.settlements.treasury(1)
 	SettlementWatch.dawn(SimLoop.field)
+	assert_int(record[&"units"].size()).is_equal(citizens + 1)  # primeiro guarda pago
 	assert_float(SimLoop.field.settlements.treasury(1)).is_not_equal(before)
 	var king := SimLoop.units.index_of(SimLoop.king_id)
 	var purse := SimLoop.units.carried_coins[king]
@@ -114,6 +120,8 @@ func test_local_realm_has_own_workers_defenses_treasury_and_night_attack() -> vo
 
 
 func test_mercenary_camp_is_physically_abandoned_after_three_hires() -> void:
+	SimLoop.field.settlements.first_night_day = 1
+	SocialWatch.awaken(SimLoop.field, 2)
 	Frontier.reveal(SimLoop.field, 1)
 	var entry := SimLoop.field.wilds.at(WorldPlan.LESTE, 0)
 	entry[WildSegments.TIPO] = WildSegments.MERCENARIOS

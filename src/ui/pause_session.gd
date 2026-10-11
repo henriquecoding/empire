@@ -14,7 +14,28 @@ static func status() -> String:
 static func save_note() -> String:
 	if SavePoint.allowed():
 		return TranslationServer.translate(&"UI_MENU_SAVE_DAY")
-	return TranslationServer.translate(&"UI_MENU_SAVE_NIGHT")
+	var day := checkpoint_day(
+		SaveService.summaries(), SimLoop.state.seed if SimLoop.state != null else -1
+	)
+	return (
+		TranslationServer.translate(&"CHECKPOINT_DAY").format({"day": day})
+		if day > 0
+		else TranslationServer.translate(&"CHECKPOINT_NONE")
+	)
+
+
+static func checkpoint_day(summaries: Array[Dictionary], seed_value: int) -> int:
+	var day := 0
+	for summary in summaries:
+		if summary.get(&"exists", false) and int(summary.get(&"seed", -1)) == seed_value:
+			day = maxi(day, int(summary.get(&"day", 0)))
+	return day
+
+
+static func exit_key(web: bool) -> StringName:
+	if not SavePoint.allowed():
+		return &"UI_QUIT_CHECKPOINT"
+	return &"UI_MENU_EXIT_WEB" if web else &"UI_SAVE_AND_QUIT"
 
 
 static func leave(node: Node, note: Label) -> void:

@@ -124,7 +124,7 @@ func test_no_jogo_a_banca_repoe_na_alvorada() -> void:
 			vaga.state = BuildSlot.State.DONE
 			vaga.health = vaga.max_health()
 	SimLoop.field.supply.spent[arqueiro] = RulesFactory.rules().arrows_per_coin
-	SimLoop.units.carried_coins[SimLoop.units.index_of(SimLoop.king_id)] = 5
+	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, 5)
 	SimLoop.step(1.0 / 30.0)  # um passo do primeiro dia: o campo fica a conhecer as obras
 	SimLoop.state.day = 2  # a alvorada do segundo dia, sem a noite pelo meio
 	ClockService.seek(2, 0.0)

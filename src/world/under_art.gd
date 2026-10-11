@@ -31,7 +31,8 @@ const ESQUERDA := -1.0
 static func draw(canvas: CanvasItem, sitios: UndergroundSites) -> void:
 	var chao := WorldPalette.ground_of(int(Band.Kind.UNDERGROUND))
 	for i in sitios.count():
-		if not sitios.generated(i):
+		var span := sitios.span(i)
+		if not sitios.generated(i) or not SoilCover.intersects(span.x, span.y):
 			continue
 		var cores: Array = PAREDES.get(sitios.kind_of(i), PAREDES[UndergroundSites.CELLAR])
 		var salas := sitios.rooms(i)
@@ -39,6 +40,8 @@ static func draw(canvas: CanvasItem, sitios: UndergroundSites) -> void:
 		for sala: Dictionary in salas:
 			var a: float = sala[UndergroundSites.A]
 			var b: float = sala[UndergroundSites.B]
+			if not SoilCover.intersects(a, b):
+				continue
 			if natural:
 				_gruta(canvas, a, b, cores[0], cores[1])
 			else:

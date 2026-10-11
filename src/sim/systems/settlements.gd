@@ -1,6 +1,8 @@
 class_name Settlements
 extends RefCounted
 var records: Dictionary = {}
+var first_night_day := 0
+var awake_day := 0
 
 
 func add(id: int, people: StringName, x: float, coins: int) -> Dictionary:
@@ -34,8 +36,14 @@ func earn(id: int, amount: float) -> void:
 
 
 func to_dict() -> Dictionary:
-	return {&"records": records.duplicate(true)}
+	return {
+		&"records": records.duplicate(true),
+		&"first_night_day": first_night_day,
+		&"awake_day": awake_day
+	}
 
 
 func from_dict(saved: Dictionary) -> void:
 	records = saved.get(&"records", {}).duplicate(true)
+	first_night_day = int(saved.get(&"first_night_day", 0))
+	awake_day = int(saved.get(&"awake_day", 0 if records.is_empty() else 1))

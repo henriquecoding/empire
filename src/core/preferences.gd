@@ -32,6 +32,7 @@ const SOUND := &"sound"
 ## A duracao do dia do §26, em segundos. Zero e a do clock.csv.
 const DAY_SECONDS := &"day_seconds"
 ## O contraste (1 e o da §80) e o modo para daltonismo (0 e nenhum), do §26.
+const TEXT_SCALE := &"text_scale"
 const CONTRAST := &"contrast"
 const COLORBLIND := &"colorblind"
 ## O idioma escolhido na pausa (§27). Vazio e "o do sistema", como a boot fazia.
@@ -57,6 +58,7 @@ const POR_OMISSAO := {
 	SOUND: true,
 	DAY_SECONDS: 0.0,
 	CONTRAST: 1.0,
+	TEXT_SCALE: 1.0,
 	COLORBLIND: 0,
 	LANGUAGE: "",
 	TOUCH_SCALE: 1.0,

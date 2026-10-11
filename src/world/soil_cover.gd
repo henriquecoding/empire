@@ -76,6 +76,20 @@ static func covers(faixa: int, x := INF) -> bool:
 	return faixa == int(Band.Kind.UNDERGROUND) and _aberto <= 0.0
 
 
+static func intersects(a: float, b: float) -> bool:
+	if _aberto > 0.0:
+		return true
+	for window in _windows:
+		var half := window.y * BuildSystem.METADE
+		if b >= window.x - half and a <= window.x + half:
+			return true
+	return false
+
+
+static func visibility_key() -> int:
+	return hash([_aberto > 0.0, _windows])
+
+
 func _ready() -> void:
 	_clock = Registry.entry(&"economy", &"clock") as ClockData
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

@@ -5,7 +5,13 @@ extends Node
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	SimLoop.autosave_enabled = false
-	add_child(load("res://scenes/game.tscn").instantiate())
+	var before := Preferences.shared().number(Preferences.TEXT_SCALE)
+	if args.has("text150"):
+		Preferences.shared().set_number(Preferences.TEXT_SCALE, 1.5)
+	var game := load("res://scenes/game.tscn").instantiate() as Game
+	add_child(game)
+	if game._selector != null:
+		game._chosen(&"monarch")
 	SimLoop.set_paused(true)
 	var menu := get_child(0).get_node("Interface/Pausa") as PauseMenu
 	if args.has("options"):
@@ -20,6 +26,12 @@ func _ready() -> void:
 	TranslationServer.set_locale("pt_PT")
 	if args.has("english"):
 		TranslationServer.set_locale("en")
+	for i in 8:
+		await get_tree().process_frame
+	if args.has("textfocus"):
+		for control in menu._opcoes._access.get_children():
+			if control is TextScaleOption:
+				control._choice.grab_focus()
 	for i in 8:
 		await get_tree().process_frame
 	await RenderingServer.frame_post_draw
@@ -38,6 +50,7 @@ func _ready() -> void:
 		)
 	)
 	_validate(frame)
+	Preferences.shared().set_number(Preferences.TEXT_SCALE, before)
 	get_tree().quit()
 
 

@@ -257,6 +257,8 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [RG-27](RG-27.md) | O subsolo tem chão para além da escada (relatório de armazéns, subsolos e masmorras) | Q-186, ADR 0046, ADR 0065 | feito — P0 e P1 de geração, recompensas, baú, celeiros e roubo; logística e ensaios por fazer |
 | [RG-28](RG-28.md) | O território decide o que se levanta (relatório territorial com Civilization VII) | RG-23, RG-26, RG-27 | feito — fases 0 e 1 e a previsão da fundação; água com tipos, porto, contratos e rotas por fazer |
 
+| [RG-29](RG-29.md) | Correções da auditoria mestre de 09/10 | RG-23, RG-24, RG-27, RG-28 | parcial — correções de contratos solo e rastreabilidade implementadas; aceitação e extensões por achado no relatório |
+
 ## Respostas aprovadas no painel
 
 | Ticket | Tarefa | Depende | Estado |

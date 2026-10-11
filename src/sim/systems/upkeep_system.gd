@@ -6,7 +6,7 @@
 # (D7): a partida nao tinha sorvedouro nenhum alem das obras, e depois de o reino
 # render nao havia pergunta sobre quantos soldados sustentar.
 #
-# Paga-se do saco do rei, a alvorada (§02: nao ha inventario). A fracao que um
+# No jogo paga-se do tesouro local, a alvorada (ADR 0082). A fracao que um
 # dia nao fecha passa ao seguinte. O que nao se paga fica em atraso (Q-144, o dono
 # a 29/09/2026: "elabore um planeamento completo"): o atraso paga-se primeiro, nas
 # alvoradas seguintes, e as tropas aguentam `wage_grace_days` dias de soldo por
@@ -42,6 +42,8 @@ var resting: Dictionary = {}
 var grace_days := 1.0
 var rest_days := 2
 
+var reserve: Treasury
+var reserve_key := "hatch"
 var _dados: Dictionary
 
 
@@ -75,9 +77,13 @@ func dawn(
 	var mercs := _mercenaries(unidades, rei)
 	var conta := economia.upkeep(tropas - mercs) + mercs * mercenary_wage
 	owed += conta
-	var pago := mini(int(floorf(owed + FOLGA)), unidades.carried_coins[r])
+	var available := reserve.amount(reserve_key) if reserve != null else unidades.carried_coins[r]
+	var pago := mini(int(floorf(owed + FOLGA)), available)
 	if pago > 0:
-		unidades.carried_coins[r] -= pago
+		if reserve != null:
+			reserve.pay(reserve_key, pago, &"upkeep", dia)
+		else:
+			unidades.carried_coins[r] -= pago
 		owed -= pago
 		eventos.append({CHAVE: EV_PAGA, QUANTO: pago})
 	# Para la da tolerancia, vai-se quem o excesso paga: cada um leva o soldo que

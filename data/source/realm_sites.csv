@@ -61,3 +61,4 @@ hammer_rack,camp,0,,1,ADR 0060 — estágio + território + apoio,,"Requisitos s
 amargueiro,wilderness,0,,1,ADR 0060,,O corte conserva as regras de descoberta e consagração que já tinha.
 companion_post,camp,1,,1,Q-223; ADR 0065,,Dentro do primeiro recinto traçado; contratação continua obrigatória.
 cellar_excavation,camp,1,,1,Q-220; ADR 0065,,
+emissary_stand,camp,0,,1,Q-203; ADR 0082,,"Requisitos só para a primeira construção; preservar obras pagas, erguidas e herdadas."

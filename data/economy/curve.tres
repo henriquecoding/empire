@@ -52,6 +52,7 @@ heir_training_days = 10
 heir_training_days_diplomat = 5
 heir_cost_per_day = 5
 heir_boost_inheritance = 0.6
+heir_recovery_nights = 5
 interregnum_days = 3
 interregnum_greed = 80
 decay_structures_kept = 0.4

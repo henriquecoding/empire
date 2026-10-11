@@ -35,7 +35,8 @@ func test_overview_keeps_all_resources_in_both_languages() -> void:
 	for locale: String in ["pt_PT", "en"]:
 		TranslationServer.set_locale(locale)
 		var overview := RealmReadout.overview()
-		assert_int(overview.split("\n").size()).is_equal(10)
+		assert_int(overview.split("\n").size()).is_equal(11)
+		assert_str(overview).contains(tr(&"HUD_DETAIL_TREASURY").get_slice("{", 0))
 		assert_str(overview).not_contains("HUD_")
 		assert_str(overview).not_contains("{")
 

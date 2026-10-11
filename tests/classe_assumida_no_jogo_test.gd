@@ -114,6 +114,7 @@ func test_o_arqueiro_compra_flechas_so_com_moedas_dele() -> void:
 ## MU-04: o monarca tambem viaja, de dia, para destino seguro — e o companheiro que esta a
 ## mao vai com ele. Sem destino alem de casa, nao ha portao.
 func test_o_monarca_viaja_com_o_companheiro_a_mao() -> void:
+	preload("res://tests/support/settled_realm.gd").prepare(1)
 	MonarchWatch.begin(&"nia")
 	Sede.companhia()
 	var r := _rei()

@@ -99,15 +99,15 @@ func test_um_tecto_curto_nao_publica_a_entrada_de_um_sitio_opcional() -> void:
 	assert_bool(sitios.generated(0)).is_false()
 
 
-func test_um_sitio_obrigatorio_sem_chao_publica_mas_diz_porque() -> void:
+func test_um_sitio_obrigatorio_sem_chao_recusa_sem_publicar_entrada() -> void:
 	var curto := Vector2(BOCA - 100.0, BOCA + 100.0)
 	var sitios := UndergroundSites.new()
 	var spec := _spec(&"vault", 0, [], true)
 	sitios.post("sede", UndergroundSites.HATCH, BOCA, Vector2(BOCA, BOCA), curto, spec)
-	assert_bool(sitios.usable(0)).is_true()
+	assert_bool(sitios.usable(0)).is_false()
 	assert_str(String(sitios.why(0))).is_equal(String(UnderFit.NO_ROOM))
-	assert_bool(sitios.generate(0, _sorteios(0.5))).is_true()
-	assert_str(String(sitios.why(0))).is_equal(String(UnderFit.NO_BAY))
+	assert_bool(sitios.generate(0, _sorteios(0.5))).is_false()
+	assert_bool(sitios.hatches().is_empty()).is_true()
 
 
 func test_sem_salas_extra_o_chao_continua_garantido() -> void:

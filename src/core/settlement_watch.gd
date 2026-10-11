@@ -6,8 +6,13 @@ const NIGHT_OFFSET := 360.0
 const SAL := 211
 
 
-static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void:
-	var entry := field.wilds.at(side, k)
+static func author(
+	field: FieldWork, side: int, k: int, restoring: bool, seed_world: WildSegments = null
+) -> void:
+	if field.settlements.awake_day <= 0:
+		return
+	var world := field.wilds if seed_world == null else seed_world
+	var entry := world.at(side, k)
 	var merc: bool = entry[WildSegments.TIPO] == WildSegments.MERCENARIOS
 	if not merc and int(entry[WildSegments.ZONA]) != WorldPlan.Zone.FORTRESS:
 		return
@@ -20,8 +25,10 @@ static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void
 		if merc
 		else StringName(RulesFactory.biome_peoples().get(entry[WildSegments.PARA], &"enramados"))
 	)
-	var x := field.wilds.subject_x(side, k, SimLoop.world_width)
+	var x := world.subject_x(side, k, SimLoop.world_width)
 	var record := field.settlements.add(id, people, x, rules.realm_start_coins)
+	if not restoring:
+		record[&"born_day"] = field.settlements.awake_day
 	record[&"deserted"] = entry.get(&"deserted", false)
 	if merc:
 		record[&"camp"] = x
@@ -35,8 +42,13 @@ static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void
 		var slot := WorldWorks.post(
 			StringName(String(people) + "_" + String(site[0])), float(site[1]), id
 		)
-		slot.level = 1
-		slot.state = BuildSlot.State.RUIN if record[&"deserted"] else BuildSlot.State.DONE
+		slot.level = 1 if restoring or record[&"deserted"] else 0
+		slot.state = (
+			BuildSlot.State.RUIN
+			if record[&"deserted"]
+			else BuildSlot.State.DONE if restoring else BuildSlot.State.EMPTY
+		)
+		slot.builder_work = true
 		slot.health = 0 if record[&"deserted"] else slot.max_health()
 		record[&"sites"].append(slot.id)
 	if restoring or record[&"deserted"]:
@@ -46,16 +58,6 @@ static func author(field: FieldWork, side: int, k: int, restoring: bool) -> void
 			record, id, &"vagrant", x + Retinue.spot(index) * SimFactory.curve().follow_spacing_px
 		)
 	_spawn(record, id, &"builder", x)
-	for index in rules.realm_guard_count:
-		_spawn(
-			record,
-			id,
-			&"mercenary" if merc else &"archer",
-			x + Retinue.spot(index) * SimFactory.curve().follow_spacing_px
-		)
-	if not merc:
-		var data := Registry.entry(&"peoples", people) as PeopleData
-		_spawn(record, id, data.unique_unit, x)
 
 
 static func plan(field: FieldWork) -> void:
@@ -81,6 +83,7 @@ static func plan(field: FieldWork) -> void:
 
 
 static func dawn(field: FieldWork) -> void:
+	SocialWatch.awaken(field, SimLoop.state.day)
 	var rules := RulesFactory.rules()
 	var ids := field.settlements.records.keys()
 	ids.sort()
@@ -89,6 +92,7 @@ static func dawn(field: FieldWork) -> void:
 		record[&"rifts"] = PackedFloat32Array()
 		if record[&"deserted"]:
 			continue
+		SocialWatch.develop(field, id, record)
 		var guards := 0
 		for unit in record[&"units"]:
 			var i := SimLoop.units.index_of(unit)
@@ -111,7 +115,8 @@ static func dawn(field: FieldWork) -> void:
 					id, slot.yield_per_day * field.seasons.yield_mult(SimLoop.state.day, slot.kind)
 				)
 			if (
-				slot.health < slot.max_health()
+				slot.level > 0
+				and slot.health < slot.max_health()
 				and not slot.mending
 				and field.settlements.spend(id, maxi(1, slot.repair_cost()))
 			):
@@ -121,14 +126,19 @@ static func dawn(field: FieldWork) -> void:
 					slot.state = BuildSlot.State.SCAFFOLD
 		if (
 			guards < rules.realm_guard_count
+			and SimLoop.builds.slots[SimLoop.builds.index_of(record[&"sites"][1])].standing()
 			and field.settlements.spend(id, rules.realm_guard_price)
 		):
-			_spawn(
-				record, id, &"mercenary" if record.has(&"camp") else &"archer", float(record[&"x"])
-			)
+			var kind := &"mercenary" if record.has(&"camp") else &"archer"
+			if not record.has(&"camp") and not record.get(&"unique_recruited", false):
+				kind = (Registry.entry(&"peoples", record[&"people"]) as PeopleData).unique_unit
+				record[&"unique_recruited"] = true
+			_spawn(record, id, kind, float(record[&"x"]))
 
 
 static func night(field: FieldWork) -> void:
+	if field.settlements.first_night_day == 0 and SimLoop.builds.foundation_committed:
+		field.settlements.first_night_day = SimLoop.state.day
 	var rules := RulesFactory.rules()
 	var ids := field.settlements.records.keys()
 	ids.sort()

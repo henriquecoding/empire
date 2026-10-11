@@ -26,6 +26,7 @@ const E_ATE := 3
 
 ## O ultimo dia em que se usou um impulso.
 var used_day := 0
+var inheritance := 1.0
 ## O preco (Q-014): quanto sobe por dia — o income_growth do §06, para custar
 ## sempre o mesmo em dias de trabalho —, quanto encarece repetir o mesmo decreto,
 ## e durante quantos dias o reino se lembra dele. Escritos pelo SimFactory.
@@ -121,7 +122,7 @@ func yield_mult(dia: int, kind: StringName) -> float:
 	for e in _de(dia):
 		match e[E_CHAVE]:
 			&"production_mult_today":
-				fator *= e[E_VALOR]
+				fator *= 1.0 + (float(e[E_VALOR]) - 1.0) * inheritance
 			&"production_zero_today":
 				fator = 0.0
 			&"farms_idle_tomorrow":

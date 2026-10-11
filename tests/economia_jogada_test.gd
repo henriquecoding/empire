@@ -166,17 +166,19 @@ func _lanceiros(quantos: int) -> void:
 		SimLoop.units.spawn(SimLoop.state, dados, dono, SimLoop.core_x)
 
 
-func test_a_manutencao_paga_se_na_alvorada_do_saco_do_rei() -> void:
+func test_a_manutencao_paga_se_na_alvorada_do_tesouro_local() -> void:
 	SimLoop.step(STEP)
 	_lanceiros(12)
 	var tropas := SimLoop.field.upkeep.troops(SimLoop.units, SimLoop.king_id)
 	var rei := SimLoop.units.index_of(SimLoop.king_id)
 	SimLoop.units.carried_coins[rei] = 30
+	SimLoop.treasury.deposit(UnderWatch.HATCH_KEY, 30)
 	_alvorada()
 	var devido := int(SimLoop.economy.upkeep(tropas))
 	assert_int(devido).is_greater(0)
 	assert_int(int(_gasto.get(&"upkeep", 0))).is_equal(devido)
-	assert_int(SimLoop.units.carried_coins[rei]).is_equal(30 - devido)
+	assert_int(SimLoop.units.carried_coins[rei]).is_equal(30)
+	assert_int(SimLoop.treasury.amount(UnderWatch.HATCH_KEY)).is_equal(30 - devido)
 
 
 ## Q-144: o primeiro dia sem soldo fica em atraso; o segundo ja leva gente.

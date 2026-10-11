@@ -5,6 +5,7 @@ var targets: Dictionary = {}
 var remaining: Dictionary = {}
 var piercing := PackedInt32Array()
 var allies: Dictionary = {}
+var inheritance := 1.0
 var _class: ClassData
 var _units: Dictionary
 
@@ -46,7 +47,7 @@ func aim(
 			if absf(creatures.xs[c] - center) <= radius:
 				hits.append(id)
 	targets[units.owners[i]] = PackedInt32Array(hits)
-	remaining[units.owners[i]] = float(_class.phase1_params.get(&"duration", 0.0))
+	remaining[units.owners[i]] = float(_class.phase1_params.get(&"duration", 0.0)) * inheritance
 	return hits
 
 

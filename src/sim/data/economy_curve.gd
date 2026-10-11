@@ -80,6 +80,7 @@ extends Resource
 @export var heir_training_days_diplomat: int = 0
 @export var heir_cost_per_day: int = 0
 @export var heir_boost_inheritance: float = 0.0
+@export var heir_recovery_nights: int = 0
 @export var interregnum_days: int = 0
 @export var interregnum_greed: int = 0
 @export var decay_structures_kept: float = 0.0
