@@ -1,7 +1,7 @@
 /* Tratamento dos reportes; texto externo entra apenas por textContent. */
 (function () {
   "use strict";
-  var M = window.EmpireMotor;
+  var M = window.EmpireMotor, C = window.EmpireConcorrencia;
   var $ = function (id) { return document.getElementById(id); };
   function dizer(el, texto, tipo) { el.textContent = texto; el.className = "estado-envio " + (tipo || ""); }
   var ESTADOS = [["novo", "Novo"], ["em_analise", "Em análise"], ["valido", "Válido"], ["resolvido", "Resolvido"], ["rejeitado", "Rejeitado"]];
@@ -33,7 +33,7 @@
 
   function cartaoReporte(r) {
     var art = el("article", "reporte");
-    var autor = conta, enviando = false;
+    var autor = conta, enviando = false, base = r.revisao;
     art.dataset.reporte = r.id;
     var meta = el("p", "p-meta");
     meta.appendChild(el("span", "chip chip-" + r.tipo, TIPOS[r.tipo] || r.tipo));
@@ -83,16 +83,17 @@
 
     var draft = rascunhos[r.id];
     if (draft && ESTADOS.some(e => e[0] === draft.estado) && typeof draft.nota_admin === 'string') {
+      base = draft.baseRevisao || 0;
       sel.value = draft.estado; nota.value = draft.nota_admin.slice(0, 4000); descartar.hidden = false;
       dizer(aviso, 'Rascunho recuperado nesta aba. Falta guardar.', 'aviso');
     }
     form.addEventListener('input', () => {
-      rascunhos[r.id] = { estado: sel.value, nota_admin: nota.value }; descartar.hidden = false;
+      rascunhos[r.id] = { estado: sel.value, nota_admin: nota.value, baseRevisao: base }; descartar.hidden = false;
       dizer(aviso, persistir() ? 'Rascunho guardado nesta aba. Falta enviar.' : 'Alterações por guardar. Mantém esta aba aberta.');
     });
     descartar.addEventListener('click', () => {
       delete rascunhos[r.id]; persistir(); sel.value = r.estado; nota.value = r.nota_admin || '';
-      descartar.hidden = true; dizer(aviso, 'Rascunho descartado.');
+      base = r.revisao; descartar.hidden = true; dizer(aviso, 'Rascunho descartado.');
     });
     function bloquear(valor) {
       enviando = valor; form.querySelectorAll('button, textarea, select').forEach(e => { e.disabled = valor; });
@@ -103,16 +104,23 @@
       if (enviando) return;
       bloquear(true);
       dizer(aviso, "A guardar…", "");
-      M.pedir("/rest/v1/empire_feedback?id=eq." + encodeURIComponent(r.id), {
-        metodo: "PATCH", cabecalhos: { Prefer: "return=representation" },
-        corpo: { estado: sel.value, nota_admin: M.sanitizar(nota.value) || null },
-      }).then(function (linhas) {
+      C.escrever('empire_feedback', 'id', r.id, base, { estado: sel.value, nota_admin: M.sanitizar(nota.value) || null }).then(function (linhas) {
         var salvo = linhas?.find(x => x.id === r.id);
         if (!salvo) throw new Error('O servidor não confirmou a alteração.');
         if (autor !== conta) return;
-        r = salvo; delete rascunhos[r.id]; persistir(); descartar.hidden = true;
+        r = salvo; base = r.revisao; delete rascunhos[r.id]; persistir(); descartar.hidden = true;
         dizer(aviso, 'Guardado.', 'feito');
-      }).catch(e => dizer(aviso, 'Não guardou: ' + e.message, 'erro')).finally(() => bloquear(false));
+      }).catch(e => {
+        if (autor !== conta) return;
+        dizer(aviso, 'Não guardou: ' + e.message, 'erro');
+        if (e.conflito) C.rever(form, 'empire_feedback', 'id', r.id, novo => {
+          if (autor !== conta) return false;
+          if (!novo) { art.remove(); delete rascunhos[r.id]; persistir(); return false; }
+          r = novo; base = novo.revisao;
+          rascunhos[r.id] = { estado: sel.value, nota_admin: nota.value, baseRevisao: base }; persistir();
+          return 'Guardado: ' + r.estado + ' · ' + (r.nota_admin || 'Sem nota');
+        }, aviso);
+      }).finally(() => bloquear(false));
     });
     // Apagar pede um segundo clique: o viewer não tem confirm().
     var armado = false;
@@ -124,7 +132,7 @@
         return;
       }
       bloquear(true);
-      M.pedir("/rest/v1/empire_feedback?id=eq." + encodeURIComponent(r.id), { metodo: "DELETE", cabecalhos: { Prefer: 'return=representation' } })
+      C.escrever('empire_feedback', 'id', r.id, base, null, true)
         .then(function (linhas) {
           if (!linhas?.some(x => x.id === r.id)) throw new Error('O servidor não confirmou a remoção.');
           if (autor !== conta) return;
@@ -148,14 +156,14 @@
   function carregarReportes(continuar) {
     abrirConta();
     var seguinte = continuar === true && cursor ? cursor : null;
-    var versao = ++pedido;
+    var versao = ++pedido, autor = conta;
     var lista = $("lista-reportes");
     var est = $("fr-estado").value;
     if (!seguinte) { mostrados = 0; cursor = null; }
     dizer($("fr-estado-msg"), "A carregar…", "");
     M.pedir(consulta(est, seguinte))
       .then(function (linhas) {
-        if (versao !== pedido) return;
+        if (versao !== pedido || autor !== conta) return;
         linhas = linhas || [];
         var haMais = linhas.length > PAGINA;
         if (haMais) linhas = linhas.slice(0, PAGINA);
@@ -174,11 +182,11 @@
           ? mostrados + " reporte(s)" + (haMais ? " — há mais; carrega no fim da lista para ver os seguintes." : ".")
           : "Nenhum reporte com este estado.", "");
       }, function (e) {
-        if (versao !== pedido) return;
+        if (versao !== pedido || autor !== conta) return;
         dizer($("fr-estado-msg"), "Não foi possível ler os reportes: " + e.message, "erro");
       });
   }
   $("fr-estado").addEventListener("change", carregarReportes);
   $("fr-atualizar").addEventListener("click", carregarReportes);
-  window.EmpireReportes = { carregar: carregarReportes };
+  window.EmpireReportes = { carregar: carregarReportes, suja: () => Object.keys(rascunhos).length > 0 };
 })();

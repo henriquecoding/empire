@@ -3,7 +3,7 @@
   "use strict";
   var M = window.EmpireMotor, $ = function (id) { return document.getElementById(id); };
   if (!M) return;
-  var T = window.EmpireTrabalho, conta = null;
+  var T = window.EmpireTrabalho, C = window.EmpireConcorrencia, conta = null, pedido = 0;
   var todas = Array.from(document.querySelectorAll("article.pergunta"));
   var botoes = Array.from(document.querySelectorAll(".fila-item"));
   var porId = new Map(botoes.map(b => [b.dataset.pergunta, b])), indice = window.EmpireIndice.criar(todas);
@@ -23,6 +23,7 @@
     b.querySelector(".fila-estado").textContent = pronto ? rotulos[e] : "A carregar";
     var f = a.querySelector("form");
     if (!f || !preencher) return;
+    f.dataset.base = String(r?.revisao || 0);
     f.querySelectorAll("input[type=radio]").forEach(x => { x.checked = !!r && x.value === r.escolha; });
     f.querySelector("textarea").value = r && r.texto || "";
     if (r && r.escolha === "aprovar" && a.dataset.aprovavel !== "true")
@@ -87,9 +88,11 @@
     document.querySelectorAll("[data-filtro]").forEach(b => { b.disabled = !valor; });
   }
   function carregar() {
+    var versao = ++pedido, autor = conta;
     pronto = false; habilitar(false); $("recarregar").hidden = true; $("resumo").setAttribute("aria-busy", "true");
     dizer($("lote-estado"), "A carregar respostas…");
-    M.pedir("/rest/v1/empire_respostas?select=pergunta,escolha,texto,estado,atualizado_em").then(linhas => {
+    M.pedir("/rest/v1/empire_respostas?select=*").then(linhas => {
+      if (versao !== pedido || autor !== conta) return;
       respostas = {}; (linhas || []).forEach(r => { respostas[r.pergunta] = r; });
       pronto = true; habilitar(true); todas.forEach(a => {
         pintar(a, !sujas.has(a.id));
@@ -104,8 +107,10 @@
         retomar = null; selecionar(id, true);
         dizer($("lote-estado"), "Sessão recuperada. As alterações por guardar continuam aqui. Revê a resposta e carrega em Guardar decisão.");
       }
-    }, e => { dizer($("lote-estado"), "Não foi possível ler as respostas. Tenta novamente antes de editar. " + e.message, "erro"); $("recarregar").hidden = false; })
-      .finally(() => $("resumo").setAttribute("aria-busy", "false"));
+    }, e => {
+      if (versao !== pedido || autor !== conta) return;
+      dizer($("lote-estado"), "Não foi possível ler as respostas. Tenta novamente antes de editar. " + e.message, "erro"); $("recarregar").hidden = false;
+    }).finally(() => { if (versao === pedido && autor === conta) $("resumo").setAttribute("aria-busy", "false"); });
   }
   function abrir() {
     $("entrar").hidden = true; $("entrar-ajuda").hidden = true; $("area").hidden = false;
@@ -135,7 +140,7 @@
       e => dizer($("entrar-estado"), "Não foi possível entrar: " + e.message, "erro")).finally(() => { b.disabled = false; });
   });
   $("sair").addEventListener("click", () => {
-    if (sujas.size) return dizer($("lote-estado"), "Tens decisões por guardar. Guarda-as ou usa «Descartar rascunho» nas fichas antes de sair.", "aviso");
+    if (sujas.size || window.EmpireReportes.suja() || C.pendente()) return dizer($("lote-estado"), "Tens alterações por guardar ou um envio em curso. Guarda-as ou usa «Descartar rascunho» antes de sair.", "aviso");
     if ($("sair").disabled) return;
     $("sair").disabled = true;  // um segundo clique recarregava a meio da revogação
     // Sem resposta do servidor em 5 s, sai na mesma: a sessão local já está fechada.
@@ -191,22 +196,35 @@
       var texto = M.sanitizar(nota);
       if (r.value === "outra" && !texto) return dizer(aviso, "Escreve a tua decisão.", "erro");
       var anterior = respostas[a.id];
-      if (anterior && anterior.escolha === r.value && (anterior.texto || "") === texto) {
+      if (anterior && anterior.escolha === r.value && (anterior.texto || "") === texto
+        && (r.value !== 'aprovar' || anterior.proposta_hash === a.dataset.propostaHash)) {
         sujas.delete(a.id); T.remover(a.id); f.querySelector(".descartar").hidden = true;
         dizer(aviso, "Sem alterações. A resposta guardada mantém-se.", "feito");
         if (avancar) selecionar(proxima, true); return;
       }
       f.dataset.enviando = "true"; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = true; });
       dizer(aviso, "A guardar…");
-      M.pedir("/rest/v1/empire_respostas?on_conflict=pergunta", { metodo: "POST", cabecalhos: { Prefer: "resolution=merge-duplicates,return=representation" },
-        corpo: [{ pergunta: a.id, escolha: r.value, texto: texto || null, titulo: a.dataset.titulo.slice(0, 300), estado: "nova" }],
+      var autor = conta;
+      C.escrever('empire_respostas', 'pergunta', a.id, f.dataset.base, {
+        escolha: r.value, texto: texto || null, titulo: a.dataset.titulo.slice(0, 300), estado: 'nova',
+        proposta_texto: a.querySelector('.objeto-aprovacao').textContent, proposta_hash: a.dataset.propostaHash,
+        fonte_sha: document.body.dataset.fonteSha,
       }).then(gravadas => {
+        if (autor !== conta) return;
         if (!gravadas?.some(x => x.pergunta === a.id)) throw new Error("O servidor não confirmou a resposta.");
         gravadas.forEach(x => { respostas[x.pergunta] = x; }); sujas.delete(a.id); T.remover(a.id); f.querySelector(".descartar").hidden = true; pintar(a, false); contar();
+        f.dataset.base = String(respostas[a.id].revisao);
         dizer(aviso, r.value === "adiar" ? "Adiada. Podes retomá-la no filtro «Adiadas»." : "Decisão guardada. Aguarda implementação no jogo.", "feito");
         dizer($("lote-estado"), a.id + " · " + aviso.textContent, "feito");
         filtrar(avancar ? proxima : a.id); if (avancar || atual !== a) selecionar(atual?.id, true);
-      }).catch(e => dizer(aviso, "Não foi guardada. A tua resposta continua aqui. " + e.message, "erro"))
+      }).catch(e => {
+        if (autor !== conta) return;
+        dizer(aviso, "Não foi guardada. A tua resposta continua aqui. " + e.message, "erro");
+        if (e.conflito) C.rever(f, 'empire_respostas', 'pergunta', a.id, nova => {
+          if (autor !== conta) return false;
+          respostas[a.id] = nova; T.resposta(a, nova); f.dataset.base = String(nova?.revisao || 0); T.guardar(a);
+        }, aviso);
+      })
         .finally(() => { delete f.dataset.enviando; f.querySelectorAll("fieldset, textarea, button").forEach(e => { e.disabled = !pronto; }); });
     });
   });
@@ -214,8 +232,8 @@
     var linhas = ["# Decisões do Empire", ""];
     todas.forEach(a => { var r = respostas[a.id]; if (!r) return;
       linhas.push("## " + a.id + " · " + a.dataset.titulo, "Escolha: " + r.escolha + " · Estado: " + r.estado);
-      var objeto = a.querySelector(".objeto-aprovacao");
-      if (r.escolha === "aprovar") linhas.push("Proposta na versão consultada (conferir antes de aplicar): " + (objeto?.textContent || "Consultar a fonte; questão encerrada ou alterada."));
+      if (r.escolha === "aprovar") linhas.push(r.proposta_texto ? "Proposta aprovada: " + r.proposta_texto : "Aprovação antiga sem proposta arquivada; requer conferência.");
+      if (r.fonte_sha) linhas.push('Fonte: ' + r.fonte_sha + ' · Proposta: ' + r.proposta_hash + ' · Revisão: ' + r.revisao);
       if (r.texto) linhas.push("Resposta: " + r.texto); linhas.push("");
     });
     var md = linhas.join("\n");
@@ -230,7 +248,7 @@
       ev.preventDefault(); atual.querySelector("form").requestSubmit();
     }
   });
-  window.addEventListener("beforeunload", ev => { if (sujas.size) { ev.preventDefault(); ev.returnValue = ""; } });
+  window.addEventListener("beforeunload", ev => { if (sujas.size || window.EmpireReportes.suja() || C.pendente()) { ev.preventDefault(); ev.returnValue = ""; } });
   if (!document.body.dataset.sbUrl) { $("entrar-desligado").hidden = false; $("entrar-form").hidden = true; return; }
   try {
     if (sessionStorage.getItem("empire.painel.saida")) {

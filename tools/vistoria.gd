@@ -3,15 +3,10 @@
 #
 # A suite prova que cada sistema faz o que promete. Isto e outra coisa: monta o
 # greybox INTEIRO — a regiao, a gente, o relogio, a noite — e corre dias
-# seguidos a perguntar, a cada passo, se o estado ainda faz sentido. E o que
-# apanha o defeito que nenhum teste de unidade ve, porque nasce de dois sistemas
-# certos a falar um com o outro.
+# seguidos, com invariantes e cobertura explicitadas no relatorio.
 #
 #     godot --headless --path . scenes/tests/vistoria.tscn -- --dias 12
 #
-# Nao afina nada e nao corrige nada: imprime, e sai com 1 se encontrou alguma
-# coisa. O que ele encontra ou vira defeito e correccao, ou vira pergunta em
-# docs/QUESTIONS.md — a regra do AGENTS.md nao muda por isto ser uma ferramenta.
 extends Node
 
 const PASSO := 1.0 / 30.0
@@ -39,6 +34,7 @@ var _dias: int = DIAS
 var _ultima_linha: int = -1
 var _caiu_ao_dia := 0  # o resumo diz os dias vividos: caido no dia 1 nao sao 10
 var _causa := ""
+var _executados := 0
 
 
 func _ready() -> void:
@@ -70,6 +66,7 @@ func _correr() -> void:
 			break
 		Autopilot.step(SimLoop)
 		SimLoop.step(PASSO)
+		_executados += 1
 		_vigiar()
 		_marco()
 
@@ -232,11 +229,12 @@ func _nota(o_que: String) -> void:
 
 func _relatorio() -> void:
 	Contabilidade.imprimir()
+	var coverage := VistoriaResultado.write(_dias, _executados, PASSO, _achados)
 	var dias := "%d dias" % _dias
 	dias = "%d de %s, %s" % [_caiu_ao_dia, dias, _causa] if _caiu_ao_dia > 0 else dias
 	if _achados.is_empty():
 		print("\nvistoria: %s — sem invariantes quebradas" % dias)
-		get_tree().quit()
+		get_tree().quit(0 if coverage else 1)
 		return
 	print("\nvistoria: %s — %d coisa(s) a apontar" % [dias, _achados.size()])
 	for a in _achados:

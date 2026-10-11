@@ -20,6 +20,7 @@
   var MAX = 4000;
   var SESSAO = "empire.painel.sessao";
   var memoria = null, lida = false, geracao = 0, renovacao = null;
+  var envioPublico = null;
 
   function contemCodigo(texto) {
     return PADRAO_PERIGOSO.test(texto || "");
@@ -195,15 +196,18 @@
     if (!mensagem) return Promise.resolve({ erro: textos.vazio, campo: "r-mensagem" });
     if (mensagem.length > MAX) return Promise.resolve({ erro: textos.longo, campo: "r-mensagem" });
     var nulo = function (v) { v = sanitizar(v); return v ? v : null; };
+    var corpo = { tipo: e.tipo, mensagem: mensagem, assunto: nulo(e.assunto), area: nulo(e.area),
+      nome: nulo(e.nome), email: nulo(e.email), versao: nulo(e.versao) };
+    var identidade = JSON.stringify(corpo);
+    if (!envioPublico || envioPublico.identidade !== identidade) envioPublico = { identidade: identidade, nonce: crypto.randomUUID() };
+    var operacao = envioPublico;
+    corpo.client_nonce = operacao.nonce;
     return pedir("/rest/v1/empire_feedback", {
       metodo: "POST", publico: true,
       // Quem envia não lê a tabela (RLS): pedir a linha de volta falhava.
-      cabecalhos: { Prefer: "return=minimal" },
-      corpo: {
-        tipo: e.tipo, mensagem: mensagem, assunto: nulo(e.assunto), area: nulo(e.area),
-        nome: nulo(e.nome), email: nulo(e.email), versao: nulo(e.versao),
-      },
-    }).then(function () { return {}; }, function (x) { return { erro: textos.falhou + " (" + x.message + ")" }; });
+      // O trigger deduplica sob lock; ON CONFLICT exigiria SELECT ao visitante.
+      cabecalhos: { Prefer: "return=minimal" }, corpo: corpo,
+    }).then(function () { if (envioPublico === operacao) envioPublico = null; return {}; }, function (x) { return { erro: textos.falhou + " (" + x.message + ")" }; });
   }
 
   /** Entra com email e palavra-passe — uma conta que esteja em empire_admins. */

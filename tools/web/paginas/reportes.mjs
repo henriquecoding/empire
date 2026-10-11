@@ -85,11 +85,11 @@ export function painel({ textos, d, v, sb, perguntas }) {
   const cab = cabeca({
     t, v, titulo: "Painel · Empire", descricao: "As perguntas do QUESTIONS.md e os reportes, para o dono responder.",
     robots: "noindex, nofollow", canonico: "", alternativas: [], csp: cspCom(sb.url),
-    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painelTrabalho}" defer></script>\n<script src="${v.painelIndice}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
+    extra: `<script src="${v.motor}" defer></script>\n<script src="${v.painelConcorrencia}" defer></script>\n<script src="${v.painelReportes}" defer></script>\n<script src="${v.painelTrabalho}" defer></script>\n<script src="${v.painelIndice}" defer></script>\n<script src="${v.painel}" defer></script>\n`,
   }).replace("</head>", `<link rel="stylesheet" href="${v.painelCss}">\n</head>`);
   const n = (tipo) => perguntas.filter((q) => q.tipo === tipo).length;
   return `${cab}
-<body class="pagina-painel"${corpoSb(sb)}>
+<body class="pagina-painel"${corpoSb(sb)} data-fonte-sha="${esc(d.sha)}">
 ${topo({ t, v, ancoras: false })}
 <main id="conteudo" class="painel">
   <div class="envolve">

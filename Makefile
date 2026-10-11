@@ -31,7 +31,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .DEFAULT_GOAL := ajuda
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         manifesto escala marco obras inventario-arte afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
-        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria noites desempenho perfil exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
+        captura-noite silhueta densidade densidade-prova greybox-biomas vistoria noites desempenho benchmark-sim perfil exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
         ferramentas ferramentas-python hooks limpar
 
 ajuda:  ## Mostra os alvos
@@ -173,6 +173,9 @@ DESEMPENHO := $(GODOT) --path . --rendering-driver dummy --fixed-fps 30 --resolu
 
 desempenho:  ## O frame e o tick de uma partida pilotada (RG-18; precisa de ecra)
 	$(DESEMPENHO) tools/desempenho.tscn -- --novo --semente $(SEMENTE) --avancar $(AVANCAR) $(EXTRA)
+
+benchmark-sim:  ## CPU do tick com 300 tropas; relatorio JSON, sem certificacao fisica
+	$(GODOT) --headless --path . tools/benchmark_sim.tscn
 
 perfil:  ## O mesmo, com o tempo de cada funcao em build/perfil.txt (RG-18; precisa de ecra)
 	mkdir -p build

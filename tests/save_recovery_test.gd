@@ -119,3 +119,52 @@ func test_um_save_novo_que_nem_se_le_tambem_avisa() -> void:
 	SimLoop.stop()
 	assert_bool(Resume.latest()).is_true()
 	assert_bool(Resume.recovered).is_true()
+
+
+func _recover_broken(world: Dictionary) -> void:
+	SaveService.save(0, SimLoop.state, RngService.snapshot(), SimLoop.world())
+	SaveService.save(1, SimLoop.state, RngService.snapshot(), world)
+	assert_bool(SaveService.playable(1)).is_false()
+	var active := SimLoop.units
+	assert_int(Resume.open(1)).is_equal(Resume.Outcome.BROKEN)
+	assert_object(SimLoop.units).is_same(active)
+	SimLoop.stop()
+	assert_bool(Resume.latest()).is_true()
+	assert_bool(Resume.recovered).is_true()
+	assert_bool(SaveService.has_slot(1)).is_true()
+	SimLoop.step(1.0 / 30.0)
+
+
+func test_a_short_position_column_recovers_before_installing_the_world() -> void:
+	_partida()
+	var world := SimLoop.world().duplicate(true)
+	world[&"units"][&"xs"] = PackedFloat32Array()
+	_recover_broken(world)
+
+
+func test_duplicate_entity_ids_are_rejected() -> void:
+	_partida()
+	var world := SimLoop.world().duplicate(true)
+	world[&"units"][&"ids"][1] = world[&"units"][&"ids"][0]
+	_recover_broken(world)
+
+
+func test_a_non_finite_position_is_rejected() -> void:
+	_partida()
+	var world := SimLoop.world().duplicate(true)
+	world[&"units"][&"xs"][0] = NAN
+	_recover_broken(world)
+
+
+func test_a_missing_king_is_rejected() -> void:
+	_partida()
+	var world := SimLoop.world().duplicate(true)
+	world[&"king_id"] = SimLoop.state.next_id + 100
+	_recover_broken(world)
+
+
+func test_an_incorrect_column_type_is_rejected() -> void:
+	_partida()
+	var world := SimLoop.world().duplicate(true)
+	world[&"units"][&"bands"] = "surface"
+	_recover_broken(world)

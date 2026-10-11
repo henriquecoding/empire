@@ -7,40 +7,47 @@
 // motor tira-se o binário, e do .tpz de 1,2 GB tira-se só o template Web sem
 // threads, que é o que o preset `Web` do export_presets.cfg usa.
 //
-// Com cache: se o que lá está já tem o tamanho certo, não se volta a descarregar.
+// Com cache: só se reutilizam os ficheiros cujo SHA-256 coincide com o manifesto.
 //
 //   node tools/web/obter_godot.mjs <pasta-da-cache>   → escreve <pasta>/godot-<versão>
 //   node tools/web/obter_godot.mjs <pasta> --so-templates   → só o template (motor já há)
 
 import {
-  existsSync, readFileSync, statSync, chmodSync, mkdirSync, copyFileSync, writeFileSync,
+  existsSync, readFileSync, chmodSync, mkdirSync, copyFileSync, writeFileSync,
 } from "node:fs";
 import { join, resolve, dirname } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { extrair } from "./zip_remoto.mjs";
+import { createHash } from 'node:crypto';
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const BASE = "https://github.com/godotengine/godot-builds/releases/download";
 // O template que o preset Web pede: thread_support desligado, release.
 const TEMPLATE = "web_nothreads_release.zip";
 
-function pronto(ficheiro, minimo) {
-  return existsSync(ficheiro) && statSync(ficheiro).size >= minimo;
+function pronto(ficheiro, esperado) {
+  return existsSync(ficheiro) && createHash('sha256').update(readFileSync(ficheiro)).digest('hex') === esperado;
+}
+function verificar(ficheiro, esperado) {
+  if (!pronto(ficheiro, esperado)) throw new Error('obter_godot: SHA-256 incorreto: ' + ficheiro);
 }
 
 export async function obter(cache, { motor: comMotor = true } = {}) {
   const V = readFileSync(join(RAIZ, ".godot-version"), "utf8").trim();
   if (!V) throw new Error("obter_godot: .godot-version está vazio");
+  const hashes = JSON.parse(readFileSync(join(RAIZ, 'tools/godot-checksums.json'), 'utf8'));
+  if (hashes.version !== V) throw new Error('obter_godot: faltam hashes verificados para ' + V);
   mkdirSync(cache, { recursive: true });
 
   // O motor. 4.6-stable -> Godot_v4.6-stable_linux.x86_64 dentro do .zip.
   const motor = join(cache, `godot-${V}`);
   if (comMotor) {
-    if (!pronto(motor, 1e6)) {
+    if (!pronto(motor, hashes.motor)) {
       const nome = `Godot_v${V}_linux.x86_64`;
       await extrair(`${BASE}/${V}/${nome}.zip`, [[nome, motor]]);
     }
+    verificar(motor, hashes.motor);
     chmodSync(motor, 0o755);
   }
 
@@ -49,18 +56,20 @@ export async function obter(cache, { motor: comMotor = true } = {}) {
   const dados = process.env.XDG_DATA_HOME || join(homedir(), ".local", "share");
   const pasta = join(dados, "godot", "export_templates", V.replace("-", "."));
   const template = join(pasta, TEMPLATE);
-  if (!pronto(template, 1e6)) {
+  if (!pronto(template, hashes.templates[TEMPLATE])) {
     // Guarda-se também na cache: é o que sobrevive entre builds na Vercel.
     const guardado = join(cache, `${V}-${TEMPLATE}`);
-    if (!pronto(guardado, 1e6)) {
+    if (!pronto(guardado, hashes.templates[TEMPLATE])) {
       await extrair(`${BASE}/${V}/Godot_v${V}_export_templates.tpz`, [
         [`templates/${TEMPLATE}`, guardado],
       ]);
     }
+    verificar(guardado, hashes.templates[TEMPLATE]);
     mkdirSync(pasta, { recursive: true });
     copyFileSync(guardado, template);
     writeFileSync(join(pasta, "version.txt"), V.replace("-", ".") + "\n");
   }
+  verificar(template, hashes.templates[TEMPLATE]);
   return { versao: V, motor, template };
 }
 
