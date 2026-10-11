@@ -10,7 +10,7 @@ mantêm as respetivas fontes; as alterações abaixo corrigem execução e valid
 | A02 | Dia explícito na reposição de flechas | Mesmo teste: manutenção, herdeiro e flechas preservados no extrato e save |
 | A03 | Validação estrutural antes das migrações e da instalação de um save | `tests/save_recovery_test.gd`: coluna curta, tipo errado, NaN, IDs repetidos e rei ausente; candidato rejeitado sem substituir a simulação, slot anterior recuperado |
 | A04 | Exit code do export preservado antes de filtrar o log | `tests/web/export.test.mjs`: erro com ficheiros presentes continua a chumbar |
-| A05 | PATCH e DELETE condicionais à revisão; criação não sobrescreve uma decisão existente | Testes SQL e `tests/web/painel-ui.mjs` com dois separadores: rascunho conservado, conflito visível, revisão explícita antes da nova escrita |
+| A05 | PATCH e DELETE condicionais à revisão; criação não sobrescreve uma decisão existente; recriação continua a numeração do histórico | Testes SQL e `tests/web/painel-ui.mjs` com dois separadores: rascunho conservado, conflito visível, revisão explícita antes da nova escrita; aba anterior à eliminação não altera a resposta recriada |
 | A06 | Rascunhos de reportes e envios pendentes entram na proteção de saída | Teste de navegador: `beforeunload`, sair, guardar e descartar |
 | A07 | Texto da proposta, SHA-256 e SHA da fonte em cada resposta; histórico imutável para clientes | Hash calculado no servidor; RLS no histórico. Decisões antigas têm origem não arquivada, sem reconstrução retroativa inventada |
 | A08 | Teto público serializado por advisory lock transacional antes de contar e admitir | SQL real isolado: teto, retry no teto e ordem da deduplicação; isolamento de produção READ COMMITTED |
@@ -50,6 +50,8 @@ transacional. Arquiva a revisão atual das respostas existentes, mantendo texto,
 escolha e estado; não lhes atribui uma proposta histórica desconhecida.
 Não contém IDs gerados, credenciais nem dados pessoais. Testes de produção
 usam transação revertida; testes permanentes correm em Postgres isolado de QA.
+`004_empire_revisao_monotona.sql` permite recriar uma resposta eliminada sem
+colidir com as revisões anteriores nem reutilizar a revisão vista por uma aba antiga.
 
 ## Configuração administrativa pendente
 

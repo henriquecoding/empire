@@ -18,7 +18,7 @@ async function fixture() {
     grant execute on function auth.uid() to anon, authenticated;
     create function public.rls_auto_enable() returns event_trigger language plpgsql as $$ begin return; end $$;
     insert into auth.users values ('${ADMIN}'),('${OTHER}');`);
-  for (const file of ['001_empire_reportes.sql','002_empire_reportes_teto.sql','003_empire_auditoria_revisoes_e_seguranca.sql'])
+  for (const file of ['001_empire_reportes.sql','002_empire_reportes_teto.sql','003_empire_auditoria_revisoes_e_seguranca.sql','004_empire_revisao_monotona.sql'])
     await db.exec(readFileSync('tools/web/supabase/' + file,'utf8'));
   await db.exec(`insert into public.empire_admins(user_id) values ('${ADMIN}');`);
   return db;
@@ -41,6 +41,12 @@ test('RLS, snapshots e revisões recusam escrita e remoção de uma aba antiga',
     assert.equal((await as(db,'authenticated',ADMIN, `update public.empire_respostas set texto='aba antiga' where pergunta='Q-999' and revisao=1 returning *`)).rows.length,0);
     assert.equal((await as(db,'authenticated',ADMIN, `delete from public.empire_respostas where pergunta='Q-999' and revisao=1 returning *`)).rows.length,0);
     assert.equal((await as(db,'authenticated',ADMIN, `select * from public.empire_respostas_historico where pergunta='Q-999'`)).rows.length,2);
+    await as(db,'authenticated',ADMIN, `delete from public.empire_respostas where pergunta='Q-999' and revisao=2`);
+    const recreated = await as(db,'authenticated',ADMIN, `insert into public.empire_respostas(pergunta,escolha,proposta_texto,fonte_sha)
+      values ('Q-999','aprovar','Proposta revista',$1) returning *`, [sha]);
+    assert.equal(recreated.rows[0].revisao,3);
+    assert.equal((await as(db,'authenticated',ADMIN, `update public.empire_respostas set texto='aba anterior a eliminar' where pergunta='Q-999' and revisao=2 returning *`)).rows.length,0);
+    assert.equal((await as(db,'authenticated',ADMIN, `select * from public.empire_respostas_historico where pergunta='Q-999'`)).rows.length,3);
     assert.equal((await as(db,'authenticated',OTHER,'select * from public.empire_respostas')).rows.length,0);
     assert.equal((await as(db,'authenticated',OTHER,'select * from public.empire_respostas_historico')).rows.length,0);
     await assert.rejects(as(db,'authenticated',OTHER,`insert into public.empire_respostas(pergunta,escolha) values ('Q-998','adiar')`),/row-level security/);

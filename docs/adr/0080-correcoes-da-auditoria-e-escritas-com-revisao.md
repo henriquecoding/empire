@@ -14,6 +14,8 @@ explícita. Rascunhos incluem a revisão de origem e os de reportes também impe
 fechar/sair sem guardar. Aprovações guardam a proposta exata, SHA-256 e commit;
 aprovações antigas são identificadas como não arquivadas, sem inventar o seu texto.
 O histórico de revisões fica protegido por RLS, apenas legível pela administração.
+Recriar uma pergunta eliminada continua a numeração do histórico, conservando as
+aprovações anteriores e recusando escritas de abas anteriores à eliminação.
 
 O teto público é serializado por um lock transacional no servidor. A deduplicação
 usa um UUID aleatório por operação, reutilizado apenas no reenvio do mesmo conteúdo;
