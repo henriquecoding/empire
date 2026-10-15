@@ -31,18 +31,10 @@ func _caca(toca: float, bicho: String) -> HuntingSystem:
 	return h
 
 
-## A altura de cada desenho, em pixeis dele: do chao ao ponto mais alto (HuntView,
-## GameArt).
-func _altura(id: StringName) -> float:
-	var topo: float = {
-		&"rabbit": HuntView.EARS[0].position.y,
-		&"deer": HuntView.DEER_ANTLERS[1].position.y,
-		&"pheasant": GameArt.PHEASANT_HEAD.position.y,
-		&"fox": GameArt.FOX_EARS[0].position.y,
-		&"boar": GameArt.BOAR_MANE.position.y,
-		&"white_stag": GameArt.STAG_ANTLERS[1].position.y,
-	}[id]
-	return -topo
+## A altura de cada bicho desenhado, em px de mundo: a arte animada a escala dela, ou o
+## desenho liso (HuntView.drawn, ADR 0083).
+func _altura(dados: WildlifeData) -> float:
+	return HuntView.drawn(dados).size.y
 
 
 ## Cada bicho desenha-se pelo menos ao dobro, e le-se contra uma tropa: pelo menos meio
@@ -52,7 +44,7 @@ func test_cada_bicho_se_ve_contra_uma_tropa() -> void:
 		var dados := recurso as WildlifeData
 		var nome := String(dados.id)
 		assert_int(dados.sprite_scale).override_failure_message(nome).is_greater_equal(2)
-		var altura := _altura(dados.id) * dados.sprite_scale
+		var altura := _altura(dados)
 		assert_float(altura).override_failure_message(nome).is_greater_equal(SPRITE_PX * METADE)
 		assert_float(altura).override_failure_message(nome).is_less(SPRITE_PX * 2.0)
 		assert_int(dados.shadow_width).override_failure_message(nome).is_greater_equal(20)
@@ -96,7 +88,9 @@ func test_o_imperador_parado_acerta_no_corpo() -> void:
 
 
 ## Quem se levanta de um bicho (rots_into, ADR 0057) nao e mais pequeno do que ele: o
-## coelho que a Podridao apanha nao volta como uma coisa que ele tapava (Q-219).
+## coelho que a Podridao apanha nao volta como uma coisa que ele tapava (Q-219). Com a arte
+## do dono (ADR 0083) conta o corpo inteiro e nao so a altura: a raposa tem as orelhas 4 px
+## acima do Rastejante, que e mais largo e maior do que ela (Q-264).
 func test_a_criatura_que_se_levanta_nao_e_mais_pequena_do_que_o_bicho() -> void:
 	for recurso in Registry.entries(&"wildlife"):
 		var bicho := recurso as WildlifeData
@@ -104,11 +98,14 @@ func test_a_criatura_que_se_levanta_nao_e_mais_pequena_do_que_o_bicho() -> void:
 		if criatura == null:
 			continue
 		var forma := Silhouette.of_creature(criatura)
-		var caixa := Bestiary.box(forma, 0.0, int(Band.Kind.SURFACE))
-		var altura := _altura(bicho.id) * bicho.sprite_scale
-		assert_float(caixa.size.y).override_failure_message(String(bicho.id)).is_greater_equal(
-			altura
+		var caixa := Bestiary.box(forma, 0.0, int(Band.Kind.SURFACE)).size
+		var corpo := HuntView.drawn(bicho).size
+		var nome := String(bicho.id)
+		assert_float(caixa.x * caixa.y).override_failure_message(nome).is_greater_equal(
+			corpo.x * corpo.y
 		)
+		var tapa := corpo.x >= caixa.x and corpo.y >= caixa.y
+		assert_bool(tapa).override_failure_message(nome).is_false()
 
 
 ## A sombra de cada criatura do chao e o corpo dela no chao: acompanha o desenho (Q-219).

@@ -9,8 +9,8 @@ class_name LastSeen
 extends RefCounted
 
 ## [quando, caixa, forma, cor, pele, frente]; a pele e [perfil, para onde olha,
-## tinta, se estava a luz], ou vazia quando a criatura nao e um sprite; a frente e
-## para onde olhava, para a morte a desfazer virada para o mesmo lado.
+## tinta, se estava a luz, escala], ou vazia quando a criatura nao e um sprite; a frente
+## e para onde olhava, para a morte a desfazer virada para o mesmo lado.
 const QUANDO := 0
 const CAIXA := 1
 const FORMA := 2
@@ -21,6 +21,7 @@ const PELE_PERFIL := 0
 const PELE_FRENTE := 1
 const PELE_TINTA := 2
 const PELE_ACESO := 3
+const PELE_ESCALA := 4
 
 static var _vistos: Dictionary = {}
 
@@ -42,9 +43,11 @@ static func remember(id: int, caixa: Rect2, forma: int, cor: Color, frente := 1.
 
 ## A pele de uma criatura, para a morte a desfazer com a animacao `die` dela em
 ## vez do contorno.
-static func dress(id: int, perfil: StringName, frente: float, tinta: Color, aceso: bool) -> void:
+static func dress(
+	id: int, perfil: StringName, frente: float, tinta: Color, aceso: bool, escala := 1
+) -> void:
 	if _vistos.has(id):
-		_vistos[id][PELE] = [perfil, frente, tinta, aceso]
+		_vistos[id][PELE] = [perfil, frente, tinta, aceso, escala]
 
 
 static func seen(id: int) -> Array:

@@ -165,8 +165,10 @@ static func _forma(canvas: CanvasItem, corpo: Dictionary, caixa: Rect2, cor: Col
 func _pele(canvas: CanvasItem, corpo: Dictionary, agora: float) -> void:
 	var perfil: StringName = corpo.pele[LastSeen.PELE_PERFIL]
 	var caixa: Rect2 = corpo.caixa
+	var pele: Array = corpo.pele
+	var escala := float(pele[LastSeen.PELE_ESCALA]) if pele.size() > LastSeen.PELE_ESCALA else 1.0
 	var pose := OriginalArt.posed(
-		Vector2(caixa.get_center().x, caixa.end.y), corpo.pele[LastSeen.PELE_FRENTE]
+		Vector2(caixa.get_center().x, caixa.end.y), pele[LastSeen.PELE_FRENTE], Vector2.ONE * escala
 	)
 	var dt := agora - float(corpo.t0)
 	if dt < SEGURA_S:

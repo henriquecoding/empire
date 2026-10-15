@@ -2896,5 +2896,21 @@
   "porque": "Restaurar os contratos de fundação, tempo social, tesouro e sucessão e vincular publicação à validação.",
   "feito": "Contratos solo, regressões e rastreabilidade descritos na matriz de implementação.",
   "fora": "Decisões abertas, produção de arte/áudio, remapeamento, diplomacia completa e multiplayer."
+ },
+ "CV-03": {
+  "title": "Animais e criaturas animados: os pacotes de 64 × 64 do dono no jogo",
+  "porque": "O dono entregou os animais e as criaturas animados a 64 × 64, quadro a quadro, e pediu-os no jogo.",
+  "spec": [
+   "docs/adr/0083-os-animais-e-as-criaturas-animados-do-dono.md",
+   "docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md",
+   "docs/design/22-pipeline-de-pixel-art-e-a-paleta-mestra.md"
+  ],
+  "depende": "ADR 0049, ADR 0057, ADR 0075, Q-218, Q-219",
+  "feito": "Export verificado dos 16 recursos, as sete criaturas, a caça com arte, o cavalo, as galinhas e as vacas animados com as ações que a simulação já diz, à escala inteira, testes e capturas.",
+  "fora": "Mecânicas novas para o búfalo, o carneiro, o pavão e o Saqueador, a pose de montar, as cenas AnimatedSprite2D dos pacotes e a simulação além do sprite_scale.",
+  "estado": "parcial — as 7 criaturas, a caça com arte, o cavalo, as galinhas e as vacas animados no jogo; o búfalo, o carneiro, o pavão, o Saqueador e a pose de montar esperam decisão (Q-263 a Q-265)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

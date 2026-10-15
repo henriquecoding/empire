@@ -1,7 +1,8 @@
 # src/world/game_art.gd — a caca que a ADR 0057 trouxe, em pixeis: o faisao, a raposa,
 # o javali e o cervo branco. Desenhados virados para a direita, como o coelho e o
 # veado do HuntView; quem os desenha espelha-os para o lado para onde olham. Formas
-# lisas de placeholder, registadas em docs/ASSETS_TODO.md.
+# lisas de placeholder, registadas em docs/ASSETS_TODO.md. Desde a ADR 0083 so o faisao
+# se desenha aqui; os outros tem a arte animada do dono e ficam de recurso.
 class_name GameArt
 extends RefCounted
 

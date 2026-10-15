@@ -7,10 +7,11 @@
 #
 # Cada bicho leva a pose do golpe (StrikePose, CombatFx): arma-se nos ultimos
 # instantes do cooldown de quem esta engajado, avanca quando bate, e e empurrado
-# e pisca quando leva. Quem o desenha e o Bestiary (ADR 0049): as sete criaturas
-# numa familia so, cada uma com a sua forma e o seu porte, e os olhos acesos em
-# roxo mesmo no escuro — e no escuro e so isso que se ve delas (ADR 0048). Uma
-# forma que o bestiario nao conheca fica no contorno do Outline.
+# e pisca quando leva. Quem o desenha e a arte animada do dono (AnimatedBeasts, ADR 0083),
+# e sem ela o Bestiary (ADR 0049): as sete criaturas numa familia so, cada uma com a
+# sua forma e o seu porte, e os olhos acesos mesmo no escuro — e no escuro e so isso
+# que se ve delas (ADR 0048). Uma forma que o bestiario nao conheca fica no contorno
+# do Outline.
 class_name CreatureView
 extends RefCounted
 
@@ -21,6 +22,8 @@ const METADE := 0.5
 var _dados: Dictionary = {}
 ## O ultimo x de cada bicho: e por ele que se sabe se anda.
 var _xs: Dictionary = {}
+## As criaturas animadas do dono (ADR 0083): quem chegou, quem rouba.
+var _animadas := AnimatedBeasts.new()
 var _olhos := PackedColorArray()
 var _aliado := PackedColorArray()
 
@@ -42,6 +45,7 @@ func draw_on(
 		_aliado = PackedColorArray([ambar[1], ambar[2]])  # o encantado e teu
 	var bichos := SimLoop.creatures
 	var visible := PresentationBounds.of(canvas)
+	_animadas.observe(bichos, tempo)
 	for i in bichos.count():
 		if bichos.bands[i] != int(band):
 			continue
@@ -62,7 +66,14 @@ func draw_on(
 		var frente := facing(bichos, i)
 		var falta := bichos.cooldowns[i] if bichos.engaged(i) else StrikePose.NUNCA
 		var pose := CombatFx.body(id, estilo, falta, frente)
-		var caixa := stretched(_caixa(forma, dados, x + pose.x, int(band)), pose)
+		var animada := AnimatedBeasts.handles(forma)
+		var pe := Vector2(x + pose.x, WorldPalette.ground_of(int(band)))
+		var posta := AnimatedBeasts.pose(forma, pe, frente, Vector2(pose.y, pose.z))
+		var caixa := (
+			AnimatedArt.box(AnimatedBeasts.id_of(forma), posta)
+			if animada
+			else stretched(_caixa(forma, dados, x + pose.x, int(band)), pose)
+		)
 		var allied := SimLoop.field.song.allies.has(id)
 		var aceso := WorldLight.seen(x, luzes) or allied
 		var corpo := luz.body(WorldPalette.BICHO, x)
@@ -70,7 +81,18 @@ func draw_on(
 		LastSeen.remember(id, caixa, forma, cor, frente)
 		var branco := CombatFx.flash(id)
 		Shadow.drop(canvas, x + pose.x, int(band), dados.shadow_width * METADE, 0.0, 0.0)  # Q-219
-		if RenewalBeasts.handles(forma):
+		if animada:
+			var luz_dela := WorldLight.reveal(luz.on(x), aceso, chao)
+			if allied:
+				luz_dela = WorldPalette.tint(luz_dela, ClassEffects.ALLY)
+			var desfase := float(id) * Bestiary.DESFASE
+			var quadro := _animadas.frame_of(forma, bichos, i, anda > 0.0, falta, desfase)
+			var olhos := _aliado[1] if allied else Color.WHITE
+			var look := {"tint": luz_dela, "glow": olhos, "flash": branco}
+			AnimatedBeasts.draw(canvas, forma, quadro, posta, look)
+			var escala := AnimatedBeasts.scale_of(forma)
+			LastSeen.dress(id, AnimatedBeasts.id_of(forma), frente, luz_dela, aceso, escala)
+		elif RenewalBeasts.handles(forma):
 			var tint := WorldLight.reveal(luz.on(x), aceso, chao)
 			if allied:
 				tint = WorldPalette.tint(tint, ClassEffects.ALLY)

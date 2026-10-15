@@ -1,7 +1,7 @@
-# src/world/mount_view.gd — o cavalo de tracao (Q-169). Uma forma lisa, a espera de arte
-# (art/ nao se toca daqui): o corpo, o pescoco e a cabeca, quatro patas, a cauda e os
-# alforges. Desenha-se por tras de quem o monta — o corpo do cavaleiro vem por cima — ou
-# parado no estabulo, a espera de quem o venha buscar.
+# src/world/mount_view.gd — o cavalo de tracao (Q-169). Desde a ADR 0083 e o cavalo animado
+# do dono; sem esse export, a forma lisa de antes: o corpo, o pescoco e a cabeca, quatro
+# patas, a cauda e os alforges. Desenha-se por tras de quem o monta — o corpo do cavaleiro
+# vem por cima — ou parado no estabulo, a espera de quem o venha buscar.
 class_name MountView
 extends RefCounted
 
@@ -17,6 +17,13 @@ const PATA := Vector2(4, 16)
 const ALFORGE := Rect2(-12, -24, 11, 9)
 const PASSO := 2.0  # o baloico das patas, a andar
 const DIREITA := 1.0
+## No estabulo, de tantos em tantos segundos, pasta (ADR 0083).
+const PASTA_S := 6.0
+## Sem mudar de x durante isto, quem o monta parou (quatro ticks da simulacao).
+const PARADO_S := 0.15
+
+static var _x := NAN
+static var _mudou := -INF
 
 
 static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: float) -> void:
@@ -27,6 +34,12 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: 
 	if is_nan(onde.x):
 		return
 	var pe := Vector2(onde.x, WorldPalette.ground_of(int(faixa)))
+	var perfil: StringName = AnimatedArt.MOUNTS.get(cavalo.owned, &"")
+	if AnimatedArt.has(perfil):  # a arte animada do dono (ADR 0083)
+		var quadro := frame_of(perfil, cavalo.rider != Mount.NENHUM, onde.x, tempo)
+		var pose := AnimatedArt.posed(pe, onde.y, AnimatedArt.ANIMAL_SCALE)
+		AnimatedArt.lit(canvas, perfil, quadro, pose, luz, onde.x)
+		return
 	canvas.draw_set_transform(pe, 0.0, Vector2(onde.y, 1.0))
 	var anda := 0.0 if cavalo.rider == Mount.NENHUM else sin(tempo * TAU * PASSO)
 	for k in PATAS.size():
@@ -41,12 +54,35 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: 
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
-## Onde esta, e para que lado olha: debaixo de quem o monta, ou no estabulo.
+## O quadro do cavalo: no estabulo esta e pasta; montado anda, e corre com quem corre.
+static func frame_of(perfil: StringName, montado: bool, x: float, tempo: float) -> int:
+	if not is_equal_approx(x, _x):
+		_x = x
+		_mudou = tempo
+	if not montado:
+		var ciclo := fposmod(tempo, PASTA_S)
+		var pasta := AnimatedArt.seconds(perfil, &"feed")
+		if ciclo < pasta:
+			return AnimatedArt.frame(perfil, &"feed", ciclo)
+		return AnimatedArt.frame(perfil, &"idle", ciclo - pasta)
+	if tempo - _mudou > PARADO_S:
+		return AnimatedArt.frame(perfil, &"idle", tempo)
+	var corre := SimLoop.units != null and SimLoop.units.piloted_pace > 1.0
+	return AnimatedArt.frame(perfil, &"run" if corre else &"walk", tempo)
+
+
+## Onde esta, e para que lado olha: debaixo de quem o monta, ou no estabulo. Debaixo de
+## quem o monta, no x que se desenha dele (Smoothing) e virado para onde ele olha (a mira
+## de quem o jogador conduz, como no UnitArtBatch): o cavalo nao fica para tras nem de costas.
 static func _onde(cavalo: Mount) -> Vector2:
 	var i := SimLoop.units.index_of(cavalo.rider)
 	if i != UnitSystem.NENHUM:
 		var frente := SimLoop.units.target_xs[i] - SimLoop.units.xs[i]
-		return Vector2(SimLoop.units.xs[i], -DIREITA if frente < 0.0 else DIREITA)
+		var x := Smoothing.x_of(Smoothing.Group.UNITS, cavalo.rider, SimLoop.units.xs[i])
+		var lado := -DIREITA if frente < 0.0 else DIREITA
+		if cavalo.rider == Assume.driven():
+			lado = CombatInput.aim_direction()
+		return Vector2(x, lado)
 	for vaga in SimLoop.builds.standing():
 		if vaga.kind == Stables.ESTABULO:
 			return Vector2(vaga.x, DIREITA)

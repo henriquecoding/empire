@@ -7,6 +7,48 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Animais e criaturas animados — 15/10/2026 (ADR 0083)
+
+> Pedido do dono (15/10/2026): *«Implemente isso no meu jogo»*, com os pacotes de animais e de criaturas animados a
+> 64 × 64 de 14/10. Aplicado no CV-03: as sete criaturas, a caça com arte, o cavalo, as galinhas e as vacas desenham-se
+> com a arte do dono e as ações que a simulação já diz. O que segue pede uma decisão tua ou arte nova.
+
+### Q-263 · O que os pacotes trazem e o jogo ainda não usa
+- **Ficam nos pacotes:** o **búfalo**, o **carneiro** e o **pavão** não são caça, montaria nem bicho de obra nenhuma; o
+  **Saqueador de raízes** não é criatura do `creatures.csv` (o ladrão da cave é qualquer criatura do subsolo, ADR 0072).
+  O **faisão** da caça continua no desenho liso de sempre: o pavão não é um faisão.
+- **Ações sem gatilho:** o bote do Rastejante, o rugido do Bruto e da Consumidora, o agarrar da Consumidora (o §08 dá-lho
+  quando o trepador sobe, e esse trepador ainda não existe), o escavar e o alerta do Cavador, a cabeçada do carneiro, o
+  deitar e o cair de cada animal (a caça abatida sai das colunas no tick em que morre).
+- **Proposta:** o búfalo, o carneiro e o pavão como caça dos biomas que não têm nenhuma (o pântano, o glaciar, o
+  vulcânico — Q-217), cada um com a sua linha no `wildlife.csv`; o Saqueador como a criatura da cave que só rouba
+  (o relatório do subsolo já o pedia). São mecânicas e números teus.
+- **Decide:** tu — se entram, onde, e com que números.
+
+### Q-264 · As escalas da arte animada
+- **Aplicado (reversível):**
+  - As criaturas à escala inteira mais perto do porte da Q-219: o Rastejante e o Cavador a 2×, o Alado, o Bruto, o
+    Aríete e o Zelador a 3×, a Consumidora a 5×. Ficam a menos de 20 % das caixas do `Bestiary`.
+  - A caça e o cavalo a 2×, todos à mesma escala, para guardarem as proporções do pacote: o `sprite_scale` do coelho,
+    da raposa e do javali passou de 3 a 2 no `wildlife.csv`. A 3×, a raposa ficava da altura do veado e o javali acima
+    do rei.
+  - As galinhas e as vacas a 1:1, à escala da obra onde vivem: a 2×, a galinha ficava da altura do galinheiro.
+- **O que isto mexeu numa regra:** a da Q-219, *«quem se levanta de um bicho nunca é mais pequeno do que ele»*, conta
+  agora o corpo inteiro (a área, e nunca tapado por ele) em vez da altura só: a raposa a 2× tem as orelhas a 60 px, 4
+  acima da caixa do Rastejante, que é mais largo e maior do que ela.
+- **O que se vê:** a Consumidora a 5× tem pixeis de 5 px contra o 1 px das tropas; o ASSET_BIBLE pede às personagens
+  1 px e ao colosso uma tela de 256 × 256.
+- **Decide:** tu — as escalas, a regra, e se a Consumidora (e o Aríete) pedem uma tela maior.
+
+### Q-265 · O cavaleiro e o brilho no escuro
+- **O cavaleiro:** o pacote não tem pose de montar e o rei desenha-se de pé no chão; o cavalo vai por trás dele, como
+  ia a forma lisa. Subir o rei para a sela era um corpo de pé em cima do cavalo. **Proposta:** uma pose de montar por
+  classe e o ponto da sela em cada quadro do cavalo (o guia do pacote pede-o).
+- **O brilho:** o pacote não separa os olhos; o que se acende no escuro é a cor mais clara da paleta das criaturas
+  (`#fff4d4`), que são os olhos **e os dentes**. A arte renovada tinha uma camada só dos olhos. **Proposta:** pedir a
+  camada dos olhos com a próxima entrega.
+- **Decide:** tu, e quem desenha.
+
 ## Desempenho — 08/10/2026 (RG-18)
 
 > Pedido do dono (08/10/2026): *«o desempenho do jogo parece estar muito pesado e mal elaborado, faça uma densa

@@ -15,6 +15,9 @@ func entry(id: StringName) -> Dictionary:
 	var renewal := RenewalArt.entry(id)
 	if not renewal.is_empty():
 		return renewal
+	var animated := AnimatedArt.entry(id)  # os bichos e as criaturas a 64x64 (ADR 0083)
+	if not animated.is_empty():
+		return animated
 	if _manifest.is_empty():
 		_manifest = JSON.parse_string(FileAccess.get_file_as_string(ROOT + "manifest.json"))
 	var original: Dictionary = _manifest.assets.get(String(id), {})

@@ -66,9 +66,16 @@ static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 			continue
 		var dados := SimLoop.hunting.species_at(toca)
 		Shadow.drop(canvas, x, Band.Kind.SURFACE, dados.shadow_width * METADE, 0.0, 0.0)
+		var escala := maxi(1, dados.sprite_scale)  # Q-218: contra os sprites de 64
+		var frente := float(manada.facing.get(toca, 1.0))  # ADR 0057
+		var perfil: StringName = AnimatedArt.WILDLIFE.get(dados.id, &"")
+		if AnimatedArt.has(perfil):  # a arte animada do dono (ADR 0083)
+			var quadro := HuntPoses.frame_of(perfil, toca, x, dados, manada, time)
+			var pose := AnimatedArt.posed(Vector2(x, Band.GROUND_LINE), frente, escala)
+			AnimatedArt.lit(canvas, perfil, quadro, pose, light, x)
+			continue
 		var bob := floorf(sin(time * BREATH + toca))
-		var escala := float(maxi(1, dados.sprite_scale))  # Q-218: contra os sprites de 64
-		var lado := Vector2(float(manada.facing.get(toca, 1.0)) * escala, escala)  # ADR 0057
+		var lado := Vector2(frente * escala, escala)
 		canvas.draw_set_transform(Vector2(x, Band.GROUND_LINE + bob), 0.0, lado)
 		var bicho := dados.id
 		if bicho == &"deer":
@@ -76,6 +83,31 @@ static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 		elif not GameArt.draw(canvas, bicho, light, x):
 			_coelho(canvas, light, x)
 		canvas.draw_set_transform(Vector2.ZERO)
+	HuntPoses.keep_only(SimLoop.hunting.rabbits)
+
+
+## O corpo do bicho desenhado, virado para a direita e com os pes em (0, 0), em px de
+## mundo: a arte animada a escala dele (o que se ve), ou o desenho liso de sempre, da
+## cauda ate a cabeca contada para os dois lados (Q-218).
+static func drawn(dados: WildlifeData) -> Rect2:
+	var escala := float(maxi(1, dados.sprite_scale))
+	var perfil: StringName = AnimatedArt.WILDLIFE.get(dados.id, &"")
+	if AnimatedArt.has(perfil):
+		var corpo := AnimatedArt.body(perfil)
+		return Rect2(corpo.position * escala, corpo.size * escala)
+	var topo: float = (
+		{
+			&"rabbit": EARS[0].position.y,
+			&"deer": DEER_ANTLERS[1].position.y,
+			&"pheasant": GameArt.PHEASANT_HEAD.position.y,
+			&"fox": GameArt.FOX_EARS[0].position.y,
+			&"boar": GameArt.BOAR_MANE.position.y,
+			&"white_stag": GameArt.STAG_ANTLERS[1].position.y,
+		}
+		. get(dados.id, EARS[0].position.y)
+	)
+	var frente := DEER_HEAD.end.x if dados.id in [&"deer", &"white_stag"] else HEAD.end.x
+	return Rect2(-frente * escala, topo * escala, frente * 2.0 * escala, -topo * escala)
 
 
 static func _sitio(canvas: CanvasItem, sitio: StringName, light: Lighting, bx: float) -> void:

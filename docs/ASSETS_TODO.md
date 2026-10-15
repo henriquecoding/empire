@@ -14,9 +14,9 @@
 | procedural — `ActorArt` + `BardArt.banner` | escala 2 | unidade `bard_banner` | o Bardo da Nia com a bandeira às costas (plano §16.3) — a registar | 2026-10-02 | em uso |
 | `knight.png` emprestado (o escudeiro) | escala 1 | unidade `quiver_squire` | o escudeiro das flechas do Imperador Arqueiro: aljava e pagamento (plano §16.5) — a registar | 2026-10-02 | em uso |
 | procedural — `GameArt`, formas lisas | 16 × 14 | caça `pheasant` (`src/world/game_art.gd`) | o faisão: corpo castanho, pescoço verde, barbela vermelha (ADR 0057) — a registar | 2026-10-03 | em uso |
-| procedural — `GameArt`, formas lisas | 30 × 14 | caça `fox` | a raposa: laranja, ponta da cauda clara (ADR 0057) — a registar | 2026-10-03 | em uso |
-| procedural — `GameArt`, formas lisas | 29 × 17 | caça `boar` | o javali: escuro, crina e presas (ADR 0057) — a registar | 2026-10-03 | em uso |
-| procedural — `GameArt`, formas lisas | 28 × 41 | caça `white_stag` | o cervo branco: o veado em branco, hastes douradas (ADR 0057) — a registar | 2026-10-03 | em uso |
+| procedural — `GameArt`, formas lisas | 30 × 14 | caça `fox` | a raposa: laranja, ponta da cauda clara (ADR 0057) — a registar | 2026-10-03 | substituído pela arte animada do dono (ADR 0083); fica de recurso |
+| procedural — `GameArt`, formas lisas | 29 × 17 | caça `boar` | o javali: escuro, crina e presas (ADR 0057) — a registar | 2026-10-03 | substituído pela arte animada do dono (ADR 0083); fica de recurso |
+| procedural — `GameArt`, formas lisas | 28 × 41 | caça `white_stag` | o cervo branco: o veado em branco, hastes douradas (ADR 0057) — a registar | 2026-10-03 | substituído pela arte animada do dono (ADR 0083); fica de recurso |
 | procedural — `SeatSprites`, `PixelPainter` | 168 × 64 | sede `encampment` (`src/world/sprites_seat.gd`) | o Acampamento: duas tendas, a fogueira em brasa baixa e a bancada (ADR 0059) — a registar | 2026-10-03 | em uso |
 | procedural — `SeatSprites`, `PixelPainter` | 248 × 80 | sede `hamlet` | o Povoado: duas cabanas de troncos, o sino e a lenha (ADR 0059) — a registar | 2026-10-03 | em uso |
 | procedural — `SeatSprites`, `PixelPainter` | 328 × 120 | sede `village` | a Vila: casas de reboco à volta do salão (ADR 0059) — a registar | 2026-10-03 | em uso |
@@ -25,6 +25,8 @@
 
 | procedural — `ArrivalView`, formas lisas | coordenadas em constantes | estandartes, carga exposta, cicatriz e baús | marcos da Última Carroça; arte final só depois do playtest (ADR 0065) | 2026-10-04 | em uso |
 | procedural — `ArrivalView` e `BuildView` | 24 px de frente | posto da companhia e serviço de escavação | serviços da chegada, a registar (ADR 0065) | 2026-10-04 | em uso |
+| procedural — `MountView`, o cavaleiro de pé à frente do cavalo | o cavalo a 2× | montaria `draft_horse` (`src/world/mount_view.gd`) | uma pose de montar por classe e o ponto da sela em cada quadro do cavalo (ADR 0083, Q-265) | 2026-10-15 | em uso |
+| `art/export/animated/beast_*_glow.png` — a cor mais clara da paleta | quadros de 64 × 64 | o brilho das criaturas no escuro (`AnimatedBeasts`) | uma camada só dos olhos, sem os dentes (ADR 0083, Q-265) | 2026-10-15 | em uso |
 | procedural — `WildLands` (marco do limiar) e junta esbatida de 48 px (`SceneryStrip`) | 640 px de cada lado da fronteira | limiares a oeste de casa, onde nenhuma das 13 transições tem o par do lado certo | transições pintadas no sentido oposto, sem espelhar a luz (ADR 0081, Q-260) | 2026-10-08 | em uso |
 
 ## Como se acrescenta

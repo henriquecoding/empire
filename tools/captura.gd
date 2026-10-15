@@ -60,6 +60,7 @@ func _ready() -> void:
 	_preparacao.append_array(_obras.prepare(String(args.get("obras", ""))))
 	_preparacao.append_array(Bichos.new().prepare(String(args.get("bichos", ""))))
 	_preparacao.append_array(Tropas.prepare(String(args.get("tropas", ""))))
+	_preparacao.append_array(Tropas.mount(String(args.get("montaria", ""))))
 	var antes := int(args.get("moedas_antes", 0))
 	_preparacao.append_array(_moedas.prepare(String(args.get("moedas", "")), antes))
 
