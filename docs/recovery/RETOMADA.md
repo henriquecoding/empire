@@ -37,7 +37,7 @@ a cada construção._
 - **Dados** — `tools/csv_to_tres.gd --check` sem diferenças: 38 tabelas, 491 recursos gerados.
 - **Dossiê contra dados** — `tools/check_dossie_vs_csv.py` confere 212 números do dossiê contra as
   tabelas, e não há divergências. Eram 127 antes da Parte XIII.
-- **Inventário de testes** — 1918 casos, 2 saltados com a razão no próprio teste.
+- **Inventário de testes** — 1920 casos, 2 saltados com a razão no próprio teste.
   Esta contagem descreve a árvore; não afirma que uma execução passou.
 - **Última execução publicada** — gdUnit4 6.2.1, 1875 casos, 1873 a passar, 2 saltados;
   SHA `b419b6e2672ba7e779344034d448303c3da6b022`, CI

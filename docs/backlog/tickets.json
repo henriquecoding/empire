@@ -2908,7 +2908,7 @@
   "depende": "ADR 0049, ADR 0057, ADR 0075, Q-218, Q-219",
   "feito": "Export verificado dos 16 recursos, as sete criaturas, a caça com arte, o cavalo, as galinhas e as vacas animados com as ações que a simulação já diz, à escala inteira, testes e capturas.",
   "fora": "Mecânicas novas para o búfalo, o carneiro, o pavão e o Saqueador, a pose de montar, as cenas AnimatedSprite2D dos pacotes e a simulação além do sprite_scale.",
-  "estado": "parcial — as 7 criaturas, a caça com arte, o cavalo, as galinhas e as vacas animados no jogo; o búfalo, o carneiro, o pavão, o Saqueador e a pose de montar esperam decisão (Q-263 a Q-265)",
+  "estado": "parcial — as 7 criaturas, a caça (com o pavão no lugar do faisão), o cavalo, as galinhas e as vacas animados no jogo; o búfalo, o carneiro, o Saqueador e a pose de montar esperam decisão (Q-263 a Q-265)",
   "horas": "—",
   "passos": [],
   "notas": []

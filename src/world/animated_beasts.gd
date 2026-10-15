@@ -91,20 +91,38 @@ func frame_of(
 		var desde := _since(accao, id)
 		if desde >= 0.0 and desde < AnimatedArt.seconds(perfil, accao):
 			return AnimatedArt.frame(perfil, accao, desde)
-	return AnimatedArt.frame(perfil, loop_of(forma, bichos, i, anda), _agora + desfase)
+	var investe := false
+	if forma == Silhouette.Form.ARIETE:
+		var dados: CreatureData = CombatFx.table(&"creatures").get(bichos.data_ids[i])
+		var corpo := float(dados.shadow_width) if dados != null else 0.0
+		investe = charging(bichos, i, SimLoop.builds, corpo)
+	return AnimatedArt.frame(perfil, loop_of(forma, bichos, i, anda, investe), _agora + desfase)
 
 
-## O ciclo de quem nao esta a meio de uma accao: fugir, investir, andar ou estar.
+## O ciclo de quem nao esta a meio de uma accao: fugir, investir, andar ou estar. Quem
+## esta engajado nao anda (CreatureSystem.tick_movement): entre dois golpes esta, mesmo
+## que leve uma galinha ou que o recuo da luz tenha ficado a meio. `investe` e o Ariete no
+## ultimo corpo antes da muralha (charging).
 static func loop_of(
-	forma: Silhouette.Form, bichos: CreatureSystem, i: int, anda: bool
+	forma: Silhouette.Form, bichos: CreatureSystem, i: int, anda: bool, investe := false
 ) -> StringName:
+	if not anda or bichos.engaged(i):
+		return IDLE
 	if bichos.loot_slots[i] != NENHUM or bichos.recoils[i] > 0.0:
 		return FLEE
-	if not anda:
-		return IDLE
-	if forma == Silhouette.Form.ARIETE and bichos.target_slots[i] != NENHUM:
+	if forma == Silhouette.Form.ARIETE and investe:
 		return CHARGE
 	return WALK
+
+
+## Se ha uma muralha de pe entre a criatura e o rumo dela a menos de `corpo` px da face:
+## o Ariete so ganha a obra por alvo quando ja lhe chega, e ai deixa de andar (TargetPicker).
+static func charging(bichos: CreatureSystem, i: int, obras: BuildSystem, corpo: float) -> bool:
+	if obras == null:
+		return false
+	var x := bichos.xs[i]
+	var muro := obras.barrier(x, bichos.goal_xs[i], bichos.bands[i] as Band.Kind)
+	return muro != null and absf(muro.x - x) - muro.width * WorldPalette.MEIA <= corpo
 
 
 ## A criatura desenhada: o corpo com a tinta, o que brilha no escuro, e o branco do golpe.

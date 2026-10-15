@@ -284,6 +284,7 @@ Os dois ZIPs do dono, lidos por `tools/export_animated.py` (cada ficheiro confer
 | `animal_draft_horse` | Cavalo (`cavalo`) | 42 | idle, walk, run, graze, rear, collapse | montaria `draft_horse` (`MountView`) |
 | `animal_fox` | Raposa (`raposa`) | 40 | idle, walk, run, groom, pounce, lie_down | caca `fox` (`HuntView`, `HuntPoses`) |
 | `animal_hen` | Galinha (`galinha`) | 42 | idle, walk, run, peck, flap, collapse | obra `henhouse` (`FarmAnimals`) |
+| `animal_peacock` | Pavão (`pavao`) | 42 | idle, walk, run, preen, display, lie_down | caca `pheasant` (`HuntView`, `HuntPoses`) |
 | `animal_rabbit` | Coelho (`coelho`) | 41 | idle, walk, run, nibble, alert, collapse | caca `rabbit` (`HuntView`, `HuntPoses`) |
 | `animal_rooster` | Galo (`galo`) | 42 | idle, walk, run, peck, crow, collapse | obra `henhouse` (`FarmAnimals`) |
 | `animal_white_stag` | Cervo branco (`cervo_branco`) | 42 | idle, walk, run, graze, bellow, lie_down | caca `white_stag` (`HuntView`, `HuntPoses`) |
@@ -295,4 +296,4 @@ Os dois ZIPs do dono, lidos por `tools/export_animated.py` (cada ficheiro confer
 | `beast_tender` | Zelador (`zelador`) | 28 | idle, walk, hit, die, spawn, tend, flee | criatura `ZELADOR` (`CreatureView`, `AnimatedBeasts`); a voz da Podridao (`OfferView`) |
 | `beast_winged` | Alado de folhas (`alado`) | 32 | idle, fly, attack, hit, die, spawn, steal, flee | criatura `ASA` (`CreatureView`, `AnimatedBeasts`) |
 
-Ficam nos pacotes, sem lugar no jogo ainda: Búfalo (`bufalo`), Carneiro (`carneiro`), Pavão (`pavao`), Saqueador de raízes (`saqueador`) (Q-263).
+Ficam nos pacotes, sem lugar no jogo ainda: Búfalo (`bufalo`), Carneiro (`carneiro`), Saqueador de raízes (`saqueador`) (Q-263).

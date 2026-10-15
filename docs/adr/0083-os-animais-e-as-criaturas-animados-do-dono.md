@@ -40,19 +40,21 @@ simulação já sabe dizer. O que se faz, quando e onde, continua a ser a simula
    no escuro (ADR 0048). O `manifest.json` tem a forma que o `OriginalArt` lê (`size`, `foot`, `frame_origins`,
    `durations_ms`, `tags`), e as ações da categoria (`feed`, `special`, `down`) e os aliases do pacote (a fuga a 1,4×,
    o voo do Alado) são etiquetas também. `--check` confere o export contra o manifesto sem os ZIPs (portão
-   `inventario-arte`). São 16 recursos, 0,5 MB.
+   `inventario-arte`). São 17 recursos, 0,5 MB.
 2. **Quem é quem.** Criaturas: Rastejante → `crawler`, Alado → `winged`, Bruto → `brute`, Cavador → `burrower`, Aríete
    → `slime_ram`, Consumidora → `devourer`, Zelador → `tender`. Caça: coelho, raposa, cervo castanho (`deer`), cervo
-   branco e javali. Montaria: o cavalo de tração. Obras: a galinha e o galo à porta do galinheiro, duas vacas à porta
-   do estábulo de vacas (§06: *«as galinhas cá fora»*, *«vacas vivas»*). O búfalo, o carneiro, o pavão e o Saqueador
-   não têm lugar no jogo e ficam nos pacotes (Q-263).
+   branco, javali e o pavão no lugar do faisão — o dono, a 15/10/2026: *«ainda há o faisão, e minha intenção era
+   trocar ele pelo pavão que fiz»*. O id fica `pheasant`, que as tocas gravadas guardam; o nome que se vê passa a
+   Pavão. Montaria: o cavalo de tração. Obras: a galinha e o galo à porta do galinheiro, duas vacas à porta do
+   estábulo de vacas (§06: *«as galinhas cá fora»*, *«vacas vivas»*). O búfalo, o carneiro e o Saqueador não têm lugar
+   no jogo e ficam nos pacotes (Q-263).
 3. **A escala é sempre inteira.**
    - As criaturas à escala inteira que mais se aproxima do porte delas no `Bestiary` (Q-219): o Rastejante a 2×
      (90 × 58), o Cavador a 2×, o Alado, o Bruto, o Aríete e o Zelador a 3×, a Consumidora a 5× (275 × 245). O porte
      fica a menos de 20 % do da Q-219, e a ordem não se perde.
    - A caça e o cavalo a 2×, todos à mesma escala, para guardarem as proporções do pacote: o `sprite_scale` do coelho,
-     da raposa e do javali passa de 3 a 2 no `wildlife.csv` (a raposa a 3× ficava da altura do veado). O faisão, sem
-     arte, fica a 3× no desenho de sempre.
+     da raposa, do javali e do faisão (agora o pavão) passa de 3 a 2 no `wildlife.csv` (a raposa a 3× ficava da altura
+     do veado).
    - As galinhas e as vacas a 1:1, à escala da obra onde vivem: a 2×, a galinha ficava da altura do galinheiro.
 4. **O que cada um faz no ecrã sai da simulação.**
    - Criaturas (`AnimatedBeasts`): o golpe acompanha o da simulação (`CombatFx.attack_frame`, como nas tropas); o

@@ -14,14 +14,16 @@
 > com a arte do dono e as ações que a simulação já diz. O que segue pede uma decisão tua ou arte nova.
 
 ### Q-263 · O que os pacotes trazem e o jogo ainda não usa
-- **Ficam nos pacotes:** o **búfalo**, o **carneiro** e o **pavão** não são caça, montaria nem bicho de obra nenhuma; o
+- **Ficam nos pacotes:** o **búfalo** e o **carneiro** não são caça, montaria nem bicho de obra nenhuma; o
   **Saqueador de raízes** não é criatura do `creatures.csv` (o ladrão da cave é qualquer criatura do subsolo, ADR 0072).
-  O **faisão** da caça continua no desenho liso de sempre: o pavão não é um faisão.
+- **Respondido pelo dono (15/10/2026):** *«ainda há o faisão, e minha intenção era trocar ele pelo pavão que fiz»*. O
+  pavão animado desenha agora o bicho `pheasant`, e o nome que se vê passa a Pavão. **Fica por decidir:** se o id passa
+  também a `peacock` — pede uma migração do save, porque as tocas gravadas guardam a espécie pelo id.
 - **Ações sem gatilho:** o bote do Rastejante, o rugido do Bruto e da Consumidora, o agarrar da Consumidora (o §08 dá-lho
   quando o trepador sobe, e esse trepador ainda não existe), o escavar e o alerta do Cavador, a cabeçada do carneiro, o
   deitar e o cair de cada animal (a caça abatida sai das colunas no tick em que morre).
-- **Proposta:** o búfalo, o carneiro e o pavão como caça dos biomas que não têm nenhuma (o pântano, o glaciar, o
-  vulcânico — Q-217), cada um com a sua linha no `wildlife.csv`; o Saqueador como a criatura da cave que só rouba
+- **Proposta:** o búfalo e o carneiro como caça dos biomas que não têm nenhuma (o pântano, o glaciar, o vulcânico —
+  Q-217), cada um com a sua linha no `wildlife.csv`; o Saqueador como a criatura da cave que só rouba
   (o relatório do subsolo já o pedia). São mecânicas e números teus.
 - **Decide:** tu — se entram, onde, e com que números.
 
@@ -30,8 +32,8 @@
   - As criaturas à escala inteira mais perto do porte da Q-219: o Rastejante e o Cavador a 2×, o Alado, o Bruto, o
     Aríete e o Zelador a 3×, a Consumidora a 5×. Ficam a menos de 20 % das caixas do `Bestiary`.
   - A caça e o cavalo a 2×, todos à mesma escala, para guardarem as proporções do pacote: o `sprite_scale` do coelho,
-    da raposa e do javali passou de 3 a 2 no `wildlife.csv`. A 3×, a raposa ficava da altura do veado e o javali acima
-    do rei.
+    da raposa, do javali e do pavão (o antigo faisão) passou de 3 a 2 no `wildlife.csv`. A 3×, a raposa ficava da altura
+    do veado e o javali acima do rei.
   - As galinhas e as vacas a 1:1, à escala da obra onde vivem: a 2×, a galinha ficava da altura do galinheiro.
 - **O que isto mexeu numa regra:** a da Q-219, *«quem se levanta de um bicho nunca é mais pequeno do que ele»*, conta
   agora o corpo inteiro (a área, e nunca tapado por ele) em vez da altura só: a raposa a 2× tem as orelhas a 60 px, 4

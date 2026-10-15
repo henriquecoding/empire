@@ -52,6 +52,7 @@ ANIMALS = {
     'cervo_castanho': 'animal_deer',
     'cervo_branco': 'animal_white_stag',
     'javali': 'animal_boar',
+    'pavao': 'animal_peacock',  # no lugar do faisao (o dono, 15/10/2026)
     'cavalo': 'animal_draft_horse',
     'galinha': 'animal_hen',
     'galo': 'animal_rooster',

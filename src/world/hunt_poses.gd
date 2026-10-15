@@ -59,6 +59,11 @@ static func action_of(
 		return RUN
 	if velocidade > dados.graze_speed * DEVAGAR:
 		return WALK
+	# Parado mas acossado nao come: o javali ferido entre dois golpes, e quem fugiu ate ao
+	# fim do terreno dele (a Herd prende-o a flee_px da toca, que o pastar nunca alcanca).
+	var preso := absf(manada.where(toca) - toca) >= dados.flee_px - 1.0
+	if manada.provoked.has(toca) or (dados.flees and preso):
+		return IDLE
 	return FEED
 
 

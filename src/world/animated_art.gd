@@ -34,9 +34,11 @@ const CREATURES := {
 	Silhouette.Form.COLOSSO: &"beast_devourer",
 	Silhouette.Form.ZELADOR: &"beast_tender",
 }
-## A caca do wildlife.csv com arte; o faisao fica no desenho de sempre (Q-263).
+## A caca do wildlife.csv com arte. O pavao do dono toma o lugar do faisao (o dono, 15/10/2026):
+## o id `pheasant` fica, porque as tocas gravadas guardam a especie por ele.
 const WILDLIFE := {
 	&"rabbit": &"animal_rabbit",
+	&"pheasant": &"animal_peacock",
 	&"fox": &"animal_fox",
 	&"deer": &"animal_deer",
 	&"white_stag": &"animal_white_stag",

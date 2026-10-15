@@ -18,9 +18,13 @@ extends RefCounted
 ## Meia largura da maior (o Devorador, Q-219): a que tem so o rabo no ecra tambem se ve.
 const MEIA_MAIOR := 140.0
 const METADE := 0.5
+## Sem mudar de x durante isto, o bicho parou. Com a roda aberta (Pace) a simulacao so da
+## um passo em cada dois frames de fisica, e comparar frame a frame trocava andar e estar.
+const PARADO_S := 0.15
+const QUANDO := 1
 
 var _dados: Dictionary = {}
-## O ultimo x de cada bicho: e por ele que se sabe se anda.
+## O ultimo x de cada bicho e quando mudou: e por ele que se sabe se anda.
 var _xs: Dictionary = {}
 ## As criaturas animadas do dono (ADR 0083): quem chegou, quem rouba.
 var _animadas := AnimatedBeasts.new()
@@ -57,13 +61,20 @@ func draw_on(
 		var forma := Silhouette.of_creature(dados)
 		var id := bichos.ids[i]
 		var x := Smoothing.x_of(Smoothing.Group.CREATURES, id, bichos.xs[i])
-		var anda := 0.0 if is_equal_approx(float(_xs.get(id, x)), x) else 1.0
-		_xs[id] = x
+		var visto: Array = _xs.get(id, [x, -INF])
+		if not is_equal_approx(float(visto[0]), x):
+			visto = [x, tempo]
+			_xs[id] = visto
+		elif not _xs.has(id):
+			_xs[id] = visto
+		var anda := 1.0 if tempo - float(visto[QUANDO]) <= PARADO_S else 0.0
 		if not PresentationBounds.sees(visible, x, MEIA_MAIOR):
 			continue
 		var estilo := StrikePose.of_creature(dados)
 		CombatFx.observe(id, bichos.cooldowns[i], estilo)
 		var frente := facing(bichos, i)
+		if bichos.recoils[i] > 0.0 and not bichos.engaged(i):
+			frente = -frente  # recua da luz: olha para onde vai (ADR 0034)
 		var falta := bichos.cooldowns[i] if bichos.engaged(i) else StrikePose.NUNCA
 		var pose := CombatFx.body(id, estilo, falta, frente)
 		var animada := AnimatedBeasts.handles(forma)

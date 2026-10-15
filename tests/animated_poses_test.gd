@@ -51,21 +51,62 @@ func test_as_galinhas_passeiam_a_frente_do_galinheiro_e_voltam() -> void:
 	assert_float(outra_volta.x).is_equal_approx(inicio.x, 0.01)
 
 
-func test_quem_rouba_ou_recua_foge_e_o_ariete_investe_contra_a_obra() -> void:
+func test_quem_rouba_ou_recua_foge_e_quem_luta_esta() -> void:
 	var bichos := CreatureSystem.new()
 	var estado := GameState.new()
 	var ariete := Registry.entry(&"creatures", &"slime_ram") as CreatureData
 	bichos.spawn(estado, ariete, 100.0, 1.0)
 	assert_str(String(AnimatedBeasts.loop_of(F.ARIETE, bichos, 0, false))).is_equal("idle")
 	assert_str(String(AnimatedBeasts.loop_of(F.ARIETE, bichos, 0, true))).is_equal("walk")
-	bichos.target_slots[0] = 7
-	assert_str(String(AnimatedBeasts.loop_of(F.ARIETE, bichos, 0, true))).is_equal("charge")
 	bichos.recoils[0] = 0.5
 	assert_str(String(AnimatedBeasts.loop_of(F.ARIETE, bichos, 0, true))).is_equal("flee")
+	# engajado, nao anda (CreatureSystem.tick_movement): o recuo a meio nao o faz correr
+	bichos.target_slots[0] = 7
+	assert_str(String(AnimatedBeasts.loop_of(F.ARIETE, bichos, 0, false))).is_equal("idle")
 	var alado := Registry.entry(&"creatures", &"winged") as CreatureData
 	bichos.spawn(estado, alado, 200.0, 1.0)
 	bichos.loot_slots[1] = 3
 	assert_str(String(AnimatedBeasts.loop_of(F.ASA, bichos, 1, true))).is_equal("flee")
+	assert_str(String(AnimatedBeasts.loop_of(F.ASA, bichos, 1, false))).is_equal("idle")
+
+
+## O Ariete so tem a obra por alvo quando ja lhe chega, e ai para: investe no ultimo corpo
+## antes da muralha que tem a frente, e anda no resto do caminho.
+func test_o_ariete_investe_no_ultimo_corpo_antes_da_muralha() -> void:
+	var obras := BuildSystem.new()
+	var muro := WallSite.slot(1000.0)
+	muro.level = 1
+	muro.state = BuildSlot.State.DONE
+	muro.health = muro.max_health()
+	obras.post(muro)
+	var bichos := CreatureSystem.new()
+	var ariete := Registry.entry(&"creatures", &"slime_ram") as CreatureData
+	var corpo := float(ariete.shadow_width)
+	var face := muro.x + muro.width * 0.5
+	bichos.spawn(GameState.new(), ariete, face + corpo * 3.0, 0.0)
+	assert_bool(AnimatedBeasts.charging(bichos, 0, obras, corpo)).is_false()
+	bichos.xs[0] = face + corpo * 0.5
+	assert_bool(AnimatedBeasts.charging(bichos, 0, obras, corpo)).is_true()
+	var investe := AnimatedBeasts.loop_of(F.ARIETE, bichos, 0, true, true)
+	assert_str(String(investe)).is_equal("charge")
+	bichos.goal_xs[0] = face + corpo * 5.0  # a muralha ficou para tras
+	assert_bool(AnimatedBeasts.charging(bichos, 0, obras, corpo)).is_false()
+
+
+## Parado mas acossado nao come: o javali ferido entre golpes e o coelho encurralado no fim
+## do terreno dele ficam de pe.
+func test_quem_esta_acossado_nao_come() -> void:
+	var coelho := Registry.entry(&"wildlife", &"rabbit") as WildlifeData
+	var manada := Herd.new()
+	manada.arrive(100.0)
+	manada.xs[100.0] = 100.0 + coelho.flee_px
+	assert_str(String(HuntPoses.action_of(coelho, 0.0, manada, 100.0, 1.0))).is_equal("idle")
+	manada.xs[100.0] = 100.0 + coelho.roam_px
+	assert_str(String(HuntPoses.action_of(coelho, 0.0, manada, 100.0, 1.0))).is_equal("feed")
+	var javali := Registry.entry(&"wildlife", &"boar") as WildlifeData
+	manada.arrive(500.0)
+	manada.provoked[500.0] = true
+	assert_str(String(HuntPoses.action_of(javali, 0.0, manada, 500.0, 0.5))).is_equal("idle")
 
 
 func test_quem_aparece_a_meio_da_noite_levanta_se_e_quem_ja_la_estava_nao() -> void:
