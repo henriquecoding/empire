@@ -39,7 +39,7 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: 
 		var campo := SimLoop.field
 		var corre := campo.stamina.wants and cavalo.rider == Assume.driven()
 		var quadro := frame_of(perfil, cavalo.rider != Mount.NENHUM, corre, onde.x, tempo)
-		var pose := AnimatedArt.posed(pe, onde.y, AnimatedArt.ANIMAL_SCALE)
+		var pose := AnimatedArt.posed(pe, onde.y, AnimatedArt.scale_of(perfil))
 		AnimatedArt.lit(canvas, perfil, quadro, pose, luz, onde.x)
 		return
 	canvas.draw_set_transform(pe, 0.0, Vector2(onde.y, 1.0))

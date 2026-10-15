@@ -271,7 +271,7 @@ src/world/renewal_art.gd    RenewalArt    os perfis da arte renovada: elenco, ob
 src/world/renewal_trees.gd  RenewalTrees  as arvores da arte renovada, com copa, estacao e fita (ADR 0075)
 src/world/renewal_flora.gd  RenewalFlora  os arbustos e as arvores do fundo da arte renovada (ADR 0075)
 src/world/renewal_beasts.gd RenewalBeasts as criaturas da Podridao da arte renovada, com os olhos (ADR 0075)
-src/world/animated_art.gd   AnimatedArt   os animais e as criaturas animados do dono: o manifesto, o quadro de cada accao, a escala inteira e a luz (ADR 0083)
+src/world/animated_art.gd   AnimatedArt   os animais e as criaturas animados do dono: o manifesto, o quadro de cada accao, o porte e a escala de cada animal e a luz (ADR 0083)
 src/world/anim_clock.gd     AnimClock     o que cada corpo esta a fazer no ecra, e desde quando (ADR 0083)
 src/world/animated_beasts.gd AnimatedBeasts as criaturas animadas: o golpe, o susto, a vinda, o roubo e o recuo que a simulacao diz (ADR 0083)
 src/world/hunt_poses.gd     HuntPoses     o que a caca faz no ecra: corre a fugir, anda a pastar, come, ameaca (ADR 0083)

@@ -2,7 +2,7 @@
 #
 # O dono, a 15/10/2026: «Implemente isso no meu jogo», com os dois pacotes de 14/10. O que
 # entra no export tem quem o desenhe, cada quadro assenta nos pes, o tempo escolhe o quadro
-# certo, a escala e inteira e as proporcoes do pacote entre os bichos ficam.
+# certo e a escala e inteira. O porte de cada animal esta no porte_dos_animais_test (Q-264).
 extends GdUnitTestSuite
 
 const F := Silhouette.Form
@@ -100,36 +100,6 @@ func test_o_rastejante_continua_o_mais_baixo_e_a_consumidora_a_maior() -> void:
 	for forma: F in alturas.keys():
 		assert_float(alturas[forma]).is_greater_equal(alturas[F.RASTEJO])
 		assert_float(alturas[forma]).is_less_equal(alturas[F.COLOSSO])
-
-
-func test_os_animais_guardam_as_proporcoes_do_pacote() -> void:
-	for id: StringName in AnimatedArt.WILDLIFE.keys():
-		var dados := Registry.entry(&"wildlife", id) as WildlifeData
-		assert_int(dados.sprite_scale).override_failure_message(String(id)).is_equal(
-			AnimatedArt.ANIMAL_SCALE
-		)
-	var e := AnimatedArt.ANIMAL_SCALE
-	var crescente := [
-		&"animal_rabbit", &"animal_fox", &"animal_boar", &"animal_deer", &"animal_white_stag"
-	]
-	for k in range(1, crescente.size()):
-		assert_float(_altura(crescente[k], e)).is_greater(_altura(crescente[k - 1], e))
-	var q := AnimatedArt.FARM_SCALE
-	assert_float(_altura(&"animal_hen", q)).is_less(_altura(&"animal_rooster", q))
-	assert_float(_altura(&"animal_rooster", q)).is_less(_altura(&"animal_cow", q))
-	assert_float(_altura(&"animal_cow", e)).is_less(_altura(&"animal_draft_horse", e))
-
-
-## As galinhas e as vacas ficam a escala da obra onde vivem: nenhuma passa de metade da
-## altura do sprite dela (a 2x, a galinha ficava da altura do galinheiro).
-func test_os_bichos_da_quinta_ficam_a_escala_da_obra_deles() -> void:
-	for obra: StringName in AnimatedArt.FARM.keys():
-		var sprite: StringName = PaintedArt.OBRAS[obra]
-		var alto_da_obra := float(FarmSprites.TAMANHOS[sprite].y)
-		for id: StringName in AnimatedArt.FARM[obra]:
-			var nome := "%s em %s" % [id, obra]
-			var alto := _altura(id, AnimatedArt.FARM_SCALE)
-			assert_float(alto).override_failure_message(nome).is_less_equal(alto_da_obra * 0.5)
 
 
 func test_as_criaturas_brilham_no_escuro_e_o_branco_tem_a_forma_delas() -> void:

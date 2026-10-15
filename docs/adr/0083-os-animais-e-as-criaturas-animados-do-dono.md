@@ -15,7 +15,7 @@ O dono, a 15/10/2026: *«Implemente isso no meu jogo»*, com dois pacotes de 14/
 - **EMPIRE-ANIMAIS-ANIMADOS-64x64** — 12 espécies (cavalo, búfalo, vaca, cervo branco, javali, carneiro, cervo
   castanho, raposa, pavão, galo, galinha, coelho), seis ações cada (repouso, caminhar, correr, comer, a ação própria e
   deitar ou cair), 499 quadros de 64 × 64 com o pivô em (32, 60), uma escala por espécie e **as proporções entre as
-  espécies guardadas** (a galinha 23 × 23, o cavalo 52 × 49).
+  espécies guardadas** (a galinha 23 × 23, o cavalo 52 × 49), menos nas maiores, encolhidas para caberem no quadro.
 - **EMPIRE-CRIATURAS-ANIMADAS-64x64** — as oito criaturas aprovadas (Cavador, Aríete de raízes, Saqueador de raízes,
   Rastejante, Alado de folhas, Bruto, Consumidora, Zelador), oito ações cada (repouso, andar, golpe, susto, morte,
   vinda e duas próprias), 252 quadros com o apoio em (32, 56) e uma paleta de 32 cores. Cada criatura enche o quadro:
@@ -48,14 +48,25 @@ simulação já sabe dizer. O que se faz, quando e onde, continua a ser a simula
    Pavão. Montaria: o cavalo de tração. Obras: a galinha e o galo à porta do galinheiro, duas vacas à porta do
    estábulo de vacas (§06: *«as galinhas cá fora»*, *«vacas vivas»*). O búfalo, o carneiro e o Saqueador não têm lugar
    no jogo e ficam nos pacotes (Q-263).
-3. **A escala é sempre inteira.**
+3. **A escala.**
    - As criaturas à escala inteira que mais se aproxima do porte delas no `Bestiary` (Q-219): o Rastejante a 2×
      (90 × 58), o Cavador a 2×, o Alado, o Bruto, o Aríete e o Zelador a 3×, a Consumidora a 5× (275 × 245). O porte
      fica a menos de 20 % do da Q-219, e a ordem não se perde.
-   - A caça e o cavalo a 2×, todos à mesma escala, para guardarem as proporções do pacote: o `sprite_scale` do coelho,
-     da raposa, do javali e do faisão (agora o pavão) passa de 3 a 2 no `wildlife.csv` (a raposa a 3× ficava da altura
-     do veado).
-   - As galinhas e as vacas a 1:1, à escala da obra onde vivem: a 2×, a galinha ficava da altura do galinheiro.
+   - Os animais à escala do porte que o dono lhes deu, contra as tropas e os monarcas (Q-264). O dono, a 15/10/2026:
+     *«o coelho, o pavão e as galinhas são mesmo pequenos, o javali e o carneiro são de um tamanho adequado para as
+     tropas [...] o veado também é do tamanho do carneiro, já a vaca, o búfalo e o cervo são animais de grande porte
+     que podem ser montados pelos imperadores»*. Depois de os ver a 1×, os pequenos *«devem ser um pouco menor que as
+     tropas»* e o javali, o carneiro e o veado *«devem ter um tamanho um pouco maior que as tropas para elas poderem
+     montar eles»*.
+     - Os pequenos (o coelho, o pavão, a galinha, o galo e, por proposta, a raposa) entre 45 e 51 px: um pouco abaixo
+       da tropa do meio (57). As tropas vão de 48 a 67, o bardo com o pau da bandeira.
+     - As montarias das tropas (o javali, o carneiro e o veado) entre 63 e 71 px: um pouco acima da tropa do meio.
+     - As montarias dos imperadores (a vaca, o búfalo, o cervo branco e, por proposta, o cavalo) entre 88 e 114 px:
+       acima do rei (77), como o cavalo que ele já montava.
+     - O pacote desenhou cada espécie à sua escala, e encolheu as grandes para caberem no quadro de 64 px. Por isso cada
+       animal tem a sua escala (`AnimatedArt.ESCALA`), de 1,25× a 2,5×, em quartos.
+     - O `sprite_scale` da caça no `wildlife.csv` passa a número com casas e segue o `ESCALA`. O
+       `porte_dos_animais_test` guarda os portes contra as tropas e os monarcas.
 4. **O que cada um faz no ecrã sai da simulação.**
    - Criaturas (`AnimatedBeasts`): o golpe acompanha o da simulação (`CombatFx.attack_frame`, como nas tropas); o
      susto toca desde que o golpe chega (`CombatFx.since_struck`); quem aparece a meio da noite levanta-se do chão
@@ -83,7 +94,23 @@ simulação já sabe dizer. O que se faz, quando e onde, continua a ser a simula
   pixeis da arte de 64 × 64 ficavam de larguras diferentes. Rejeitada a favor da escala inteira mais próxima.
 - **O `sprite_scale` de antes (coelho, raposa e javali a 3×, veados a 2×)**: tinha sido escolhido para formas lisas de
   tamanhos sem relação; com a arte do dono, a raposa ficava da altura do veado e o javali acima do rei.
-- **Tudo a 2×, as galinhas incluídas**: medido na captura, a galinha ficava da altura do galinheiro.
+- **A caça e o cavalo a 2× e a quinta a 1:1:**
+  - Foi a primeira versão deste PR.
+  - O pavão ficava mais alto do que o rei e o veado mais alto do que ele.
+  - A vaca, que um imperador monta, ficava mais baixa do que um arqueiro.
+  - O dono respondeu com os portes (Q-264).
+- **Os pequenos e as montarias das tropas a 1×, as dos imperadores a 2×:**
+  - Foi a segunda versão, com escalas inteiras.
+  - O dono viu-a: o javali, o carneiro e o veado ficavam mais pequenos do que as tropas, e os pequenos *«pequenos
+    demais»*.
+- **Só escalas inteiras, cada animal na mais perto do porte:**
+  - A raposa e o galo ficavam abaixo do porte a 1× e passavam as tropas a 2×.
+  - O carneiro e o veado ficavam abaixo das tropas a 1× e passavam o rei a 2×.
+  - Fica como escolha do dono (Q-264).
+- **As montarias das tropas a 2× e as dos imperadores a 3×:**
+  - O veado a 2× passava o rei.
+  - O dorso da vaca a 3× passava a cabeça do rei.
+  - O cervo branco a 3× tapava o Bruto em que se levanta (Q-219).
 - **Instanciar as cenas `AnimatedSprite2D` dos pacotes**: o jogo desenha os corpos em lote, com a pose do golpe, a luz
   e a morte do `CombatFx`; um nó por bicho saía desse caminho. Os `SpriteFrames` ficam nos pacotes.
 - **Subir o cavaleiro para a sela**: o pacote não tem pose de montar, e um corpo de pé em cima do cavalo lê-se pior do
@@ -95,8 +122,15 @@ simulação já sabe dizer. O que se faz, quando e onde, continua a ser a simula
   deixa as formas lisas do cavalo, o `RenewalBeasts` as sete criaturas e o `OfferView` o Zelador do bestiário. Ficam
   todos como recurso.
 - A regra da Q-219 *«quem se levanta de um bicho nunca é mais pequeno do que ele»* passa a contar o corpo inteiro e não
-  só a altura: a raposa tem as orelhas 4 px acima do Rastejante, que é mais largo e maior do que ela (Q-264).
+  só a altura. Com os portes de agora, nenhum bicho passa a altura da criatura em que se levanta; a área fica de
+  guarda para um porte que suba (Q-264).
 - A Consumidora a 5× tem pixeis de 5 px contra o 1 px das tropas (o ASSET_BIBLE pede 1 px às personagens e uma tela de
   256 × 256 ao colosso).
+- Os animais a 1,25×, 1,5× e 1,75× não estão a escala inteira. A 1280 × 720, os pixeis deles não têm todos a mesma
+  largura; nos ecrãs maiores, onde o jogo inteiro já se estica, nota-se pouco.
+- O porte vai à frente da mecânica. Ninguém monta o javali, o veado, a vaca ou o cervo branco, e as tropas não montam.
+  Fica na Q-266.
+- A sombra da caça (o `shadow_width`, até onde o golpe acerta) não mudou. No pavão, na raposa, no veado e no cervo
+  branco é mais estreita do que o corpo desenhado.
 - Reverter: apagar `art/export/animated/` (ou o manifesto) devolve os desenhos de antes sem tocar em código; o
   `sprite_scale` volta no CSV.

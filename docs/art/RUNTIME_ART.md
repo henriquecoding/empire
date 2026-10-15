@@ -274,7 +274,7 @@ Propostas por colocar no mundo, fora do export: Reino-Fluvial (`reino_fluvial`),
 
 ## Animais e criaturas animados — entrega de 14/10/2026
 
-Os dois ZIPs do dono, lidos por `tools/export_animated.py` (cada ficheiro conferido com as somas do proprio pacote); a folha da direita e a mesma, byte a byte, e o export junta-lhe a mascara branca e, nas criaturas, o que brilha no escuro. Regras: ADR 0083. Quadros de 64 x 64, escala inteira: as criaturas a mais perto do porte do `Bestiary`, a caca e o cavalo a 2x, as galinhas e as vacas a 1:1.
+Os dois ZIPs do dono, lidos por `tools/export_animated.py` (cada ficheiro conferido com as somas do proprio pacote); a folha da direita e a mesma, byte a byte, e o export junta-lhe a mascara branca e, nas criaturas, o que brilha no escuro. Regras: ADR 0083. Quadros de 64 x 64, as criaturas a escala inteira mais perto do porte do `Bestiary`; os animais a escala do porte que o dono lhes deu (os pequenos um pouco abaixo das tropas, as montarias das tropas um pouco acima, as dos imperadores acima do rei; `AnimatedArt.ESCALA`, Q-264).
 
 | Export | Pacote | Quadros | Accoes | Quem o desenha |
 |---|---|---|---|---|

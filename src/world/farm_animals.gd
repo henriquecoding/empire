@@ -6,7 +6,9 @@
 # fazem toca na simulacao nem no save, e o que a obra rende continua a ser o BuildSystem.
 # Cada bicho passeia a frente da obra dele: anda de uma ponta a outra, come, descansa e
 # volta; o galo canta e a galinha bate as asas na outra ponta. Puro no tempo, sem sorteio:
-# a fase de cada um sai do x da obra e da ordem dele nela.
+# a fase de cada um sai do x da obra e da ordem dele nela. Cada um a escala do porte dele
+# (Q-264): as galinhas um pouco abaixo das tropas; as vacas, que um imperador monta, acima
+# do rei.
 class_name FarmAnimals
 extends RefCounted
 
@@ -32,7 +34,6 @@ static func draw_on(canvas: CanvasItem, luz: Lighting, tempo: float) -> void:
 	if SimLoop.builds == null:
 		return
 	var vista := PresentationBounds.of(canvas)
-	var escala := AnimatedArt.FARM_SCALE
 	for vaga in SimLoop.builds.standing():
 		var bichos: Array = AnimatedArt.FARM.get(vaga.kind, [])
 		if bichos.is_empty() or not PresentationBounds.sees(vista, vaga.x, vaga.width * PASSEIO):
@@ -43,6 +44,7 @@ static func draw_on(canvas: CanvasItem, luz: Lighting, tempo: float) -> void:
 				continue
 			var fase := tempo + float(k) * DESFASE * cycle_seconds(perfil, vaga.width) + vaga.x
 			var passo := stroll(perfil, vaga.x, vaga.width, fase)
+			var escala := AnimatedArt.scale_of(perfil)
 			var meia := AnimatedArt.body(perfil).size.x * float(escala) * SOMBRA
 			Shadow.drop(canvas, passo.x, int(Band.Kind.SURFACE), meia, 0.0, 0.0)
 			var pose := AnimatedArt.posed(Vector2(passo.x, Band.GROUND_LINE), passo.y, escala)
@@ -80,7 +82,7 @@ static func cycle_seconds(perfil: StringName, largura: float) -> float:
 ## As seis partes do passeio, [accao, segundos]: ir, comer, descansar, voltar, a accao
 ## propria (ou comer outra vez), descansar.
 static func _phases(perfil: StringName, largura: float) -> Array:
-	var passada := AnimatedArt.body(perfil).size.x * float(AnimatedArt.FARM_SCALE) * PASSADA
+	var passada := AnimatedArt.body(perfil).size.x * float(AnimatedArt.scale_of(perfil)) * PASSADA
 	var ciclo := AnimatedArt.seconds(perfil, &"walk")
 	var anda := largura * PASSEIO / maxf(1.0, passada / maxf(ciclo, CICLO_MIN))
 	var come := AnimatedArt.seconds(perfil, &"feed")

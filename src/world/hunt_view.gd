@@ -41,8 +41,8 @@ const BUSH_SIDE := 18.0
 ## As tocas desenham-se ao dobro, para o bicho a sprite_scale caber nelas (Q-218).
 const TOCA := 2.0
 const METADE := 0.5
-## Meia largura do maior desenho (o lago ao dobro, o javali a 3x): o que esta fora do
-## ecra nao se pinta.
+## Meia largura do maior desenho (o lago ao dobro, o cervo branco a 2x): o que esta fora
+## do ecra nao se pinta.
 const LARGO := 96.0
 
 
@@ -66,7 +66,7 @@ static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 			continue
 		var dados := SimLoop.hunting.species_at(toca)
 		Shadow.drop(canvas, x, Band.Kind.SURFACE, dados.shadow_width * METADE, 0.0, 0.0)
-		var escala := maxi(1, dados.sprite_scale)  # Q-218: contra os sprites de 64
+		var escala := maxf(1.0, dados.sprite_scale)  # Q-218 e Q-264: contra as tropas
 		var frente := float(manada.facing.get(toca, 1.0))  # ADR 0057
 		var perfil: StringName = AnimatedArt.WILDLIFE.get(dados.id, &"")
 		if AnimatedArt.has(perfil):  # a arte animada do dono (ADR 0083)
@@ -90,7 +90,7 @@ static func draw_on(canvas: CanvasItem, light: Lighting, time: float) -> void:
 ## mundo: a arte animada a escala dele (o que se ve), ou o desenho liso de sempre, da
 ## cauda ate a cabeca contada para os dois lados (Q-218).
 static func drawn(dados: WildlifeData) -> Rect2:
-	var escala := float(maxi(1, dados.sprite_scale))
+	var escala := maxf(1.0, dados.sprite_scale)
 	var perfil: StringName = AnimatedArt.WILDLIFE.get(dados.id, &"")
 	if AnimatedArt.has(perfil):
 		var corpo := AnimatedArt.body(perfil)

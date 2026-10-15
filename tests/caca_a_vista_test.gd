@@ -7,6 +7,8 @@ extends GdUnitTestSuite
 
 const SPRITE_PX := 64.0
 const METADE := 0.5
+## A altura do coelho que o dono achou microscopico a 03/10 (Q-218).
+const MICROSCOPICO := 18.0
 
 var units: UnitSystem
 var state: GameState
@@ -37,15 +39,16 @@ func _altura(dados: WildlifeData) -> float:
 	return HuntView.drawn(dados).size.y
 
 
-## Cada bicho desenha-se pelo menos ao dobro, e le-se contra uma tropa: pelo menos meio
-## sprite de 64 px de altura.
+## Cada bicho se ve contra uma tropa: nenhum fica tao pequeno como o coelho de 18 px que o
+## dono achou microscopico. O porte de cada um — pequeno, montaria das tropas ou dos
+## imperadores — e o que o dono lhe deu a 15/10 (porte_dos_animais_test, Q-264).
 func test_cada_bicho_se_ve_contra_uma_tropa() -> void:
 	for recurso in Registry.entries(&"wildlife"):
 		var dados := recurso as WildlifeData
 		var nome := String(dados.id)
-		assert_int(dados.sprite_scale).override_failure_message(nome).is_greater_equal(2)
+		assert_float(dados.sprite_scale).override_failure_message(nome).is_greater_equal(1.0)
 		var altura := _altura(dados)
-		assert_float(altura).override_failure_message(nome).is_greater_equal(SPRITE_PX * METADE)
+		assert_float(altura).override_failure_message(nome).is_greater(MICROSCOPICO)
 		assert_float(altura).override_failure_message(nome).is_less(SPRITE_PX * 2.0)
 		assert_int(dados.shadow_width).override_failure_message(nome).is_greater_equal(20)
 
@@ -89,8 +92,8 @@ func test_o_imperador_parado_acerta_no_corpo() -> void:
 
 ## Quem se levanta de um bicho (rots_into, ADR 0057) nao e mais pequeno do que ele: o
 ## coelho que a Podridao apanha nao volta como uma coisa que ele tapava (Q-219). Com a arte
-## do dono (ADR 0083) conta o corpo inteiro e nao so a altura: a raposa tem as orelhas 4 px
-## acima do Rastejante, que e mais largo e maior do que ela (Q-264).
+## do dono (ADR 0083) conta o corpo inteiro e nao so a altura: a area, e nunca tapado por
+## ele (Q-264).
 func test_a_criatura_que_se_levanta_nao_e_mais_pequena_do_que_o_bicho() -> void:
 	for recurso in Registry.entries(&"wildlife"):
 		var bicho := recurso as WildlifeData

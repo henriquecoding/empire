@@ -6,23 +6,60 @@
 # manifesto da forma que o OriginalArt le: as poses do golpe (CombatFx), a morte com pele
 # (DeathBurst) e a mascara branca do flash servem a arte nova sem mudar.
 #
-# Os desenhos olham para a direita e espelham-se em volta dos pes. A escala e sempre
-# inteira, para o pixel ficar pixel: as criaturas a que mais se aproxima do porte do
-# Bestiary (Q-219), os animais a uma so, para guardarem entre eles as proporcoes que o
-# pacote lhes deu (Q-264). Sem manifesto, quem desenha volta ao que desenhava antes.
+# Os desenhos olham para a direita e espelham-se em volta dos pes. As criaturas ficam a
+# escala inteira que mais se aproxima do porte do Bestiary (Q-219); os animais a escala
+# que lhes da o porte que o dono lhes deu, contra as tropas e os monarcas (Q-264). Sem
+# manifesto, quem desenha volta ao que desenhava antes.
 class_name AnimatedArt
 extends RefCounted
 
+## O porte de cada animal, como o dono o disse (15/10/2026): «o coelho, o pavao e as
+## galinhas sao mesmo pequenos, o javali e o carneiro sao de um tamanho adequado para as
+## tropas [...] o veado tambem e do tamanho do carneiro, ja a vaca, o bufalo e o cervo sao
+## animais de grande porte que podem ser montados pelos imperadores»; e depois: «devem ser
+## um pouco menor que as tropas» (os pequenos) e «devem ter um tamanho um pouco maior que
+## as tropas para elas poderem montar eles» (o javali, o carneiro e o veado).
+enum Porte { PEQUENO, TROPA, IMPERADOR }
+
 const ROOT := "res://art/export/animated/"
 const MILISSEGUNDOS := 1000.0
-## A escala dos animais que andam pelo mundo, a caca e o cavalo que a segue: e o
-## sprite_scale da caca com arte no wildlife.csv (Q-218; o animated_art_test guarda que
-## coincidem), a mesma para todos, para guardarem as proporcoes do pacote entre eles.
-const ANIMAL_SCALE := 2
-## As galinhas e as vacas ficam a escala da obra onde vivem: a 1:1, um pixel da arte e um
-## pixel do mundo, como as personagens (ASSET_BIBLE); a 2x, a galinha ficava da altura do
-## galinheiro (Q-264).
-const FARM_SCALE := 1
+## O porte de cada animal. A raposa e o cavalo o dono nao os nomeou: a raposa vai com os
+## pequenos e o cavalo, a unica montaria que ha, com as dos imperadores. O carneiro e o
+## bufalo ficam no pacote ate terem lugar no jogo (Q-263); o porte deles ja esta dito.
+const PORTE := {
+	&"animal_rabbit": Porte.PEQUENO,
+	&"animal_peacock": Porte.PEQUENO,
+	&"animal_hen": Porte.PEQUENO,
+	&"animal_rooster": Porte.PEQUENO,
+	&"animal_fox": Porte.PEQUENO,
+	&"animal_boar": Porte.TROPA,
+	&"animal_ram": Porte.TROPA,
+	&"animal_deer": Porte.TROPA,
+	&"animal_cow": Porte.IMPERADOR,
+	&"animal_buffalo": Porte.IMPERADOR,
+	&"animal_white_stag": Porte.IMPERADOR,
+	&"animal_draft_horse": Porte.IMPERADOR,
+}
+## A escala de cada animal, em quartos, para cair no porte dele (Q-264): os pequenos
+## entre 45 e 51 px, um pouco abaixo da tropa do meio (57; vao de 48 a 67); as montarias
+## das tropas entre 63 e 71, um pouco acima dela; as dos imperadores entre 88 e 114,
+## acima do rei (77).
+## O pacote desenhou cada especie a sua escala e encolheu os grandes para caberem no
+## quadro de 64 px, e por isso cada um tem a sua. A caca tem a mesma no wildlife.csv.
+const ESCALA := {
+	&"animal_rabbit": 2.0,
+	&"animal_peacock": 1.25,
+	&"animal_hen": 2.0,
+	&"animal_rooster": 1.75,
+	&"animal_fox": 1.5,
+	&"animal_boar": 1.75,
+	&"animal_ram": 1.5,
+	&"animal_deer": 1.5,
+	&"animal_cow": 2.0,
+	&"animal_buffalo": 2.5,
+	&"animal_white_stag": 2.0,
+	&"animal_draft_horse": 2.0,
+}
 const IDLE := &"idle"
 const PREFIXOS := ["beast_", "animal_"]
 const CREATURES := {
@@ -84,6 +121,11 @@ static func body(id: StringName) -> Rect2:
 	return Rect2(b[0], b[1], b[2], b[OriginalArt.BODY_HEIGHT_INDEX])
 
 
+## A escala do animal `id`, a do porte dele; 1 a quem nao a tem.
+static func scale_of(id: StringName) -> float:
+	return ESCALA.get(id, 1.0)
+
+
 ## A escala inteira que poe `id` mais perto de `altura` px de mundo; nunca menos de 1.
 static func scale_to(id: StringName, altura: float) -> int:
 	var alto := body(id).size.y
@@ -116,12 +158,12 @@ static func frame(id: StringName, action: StringName, tempo: float) -> int:
 	)
 
 
-## A pose de um corpo de `id` com os pes em `pe`, virado e a `escala` inteira; `estica`
-## e o aperto do golpe (CombatFx), que volta sempre a 1.
+## A pose de um corpo de `id` com os pes em `pe`, virado e a `escala` dele; `estica` e o
+## aperto do golpe (CombatFx), que volta sempre a 1.
 static func posed(
-	pe: Vector2, frente: float, escala: int, estica: Vector2 = Vector2.ONE
+	pe: Vector2, frente: float, escala: float, estica: Vector2 = Vector2.ONE
 ) -> Transform2D:
-	return OriginalArt.posed(pe, frente, estica * float(escala))
+	return OriginalArt.posed(pe, frente, estica * escala)
 
 
 ## A caixa do corpo desenhado com essa pose: a da vida, da sombra e da morte.

@@ -25,22 +25,88 @@
 - **Proposta:** o búfalo e o carneiro como caça dos biomas que não têm nenhuma (o pântano, o glaciar, o vulcânico —
   Q-217), cada um com a sua linha no `wildlife.csv`; o Saqueador como a criatura da cave que só rouba
   (o relatório do subsolo já o pedia). São mecânicas e números teus.
+- **O porte já está dito (15/10/2026, Q-264):** o carneiro é montaria das tropas (1,5×), o búfalo dos imperadores
+  (2,5×).
+  Entram no `AnimatedArt.PORTE`; o export deles espera que tenham lugar no jogo (Q-266).
 - **Decide:** tu — se entram, onde, e com que números.
 
 ### Q-264 · As escalas da arte animada
-- **Aplicado (reversível):**
-  - As criaturas à escala inteira mais perto do porte da Q-219: o Rastejante e o Cavador a 2×, o Alado, o Bruto, o
-    Aríete e o Zelador a 3×, a Consumidora a 5×. Ficam a menos de 20 % das caixas do `Bestiary`.
-  - A caça e o cavalo a 2×, todos à mesma escala, para guardarem as proporções do pacote: o `sprite_scale` do coelho,
-    da raposa, do javali e do pavão (o antigo faisão) passou de 3 a 2 no `wildlife.csv`. A 3×, a raposa ficava da altura
-    do veado e o javali acima do rei.
-  - As galinhas e as vacas a 1:1, à escala da obra onde vivem: a 2×, a galinha ficava da altura do galinheiro.
-- **O que isto mexeu numa regra:** a da Q-219, *«quem se levanta de um bicho nunca é mais pequeno do que ele»*, conta
-  agora o corpo inteiro (a área, e nunca tapado por ele) em vez da altura só: a raposa a 2× tem as orelhas a 60 px, 4
-  acima da caixa do Rastejante, que é mais largo e maior do que ela.
-- **O que se vê:** a Consumidora a 5× tem pixeis de 5 px contra o 1 px das tropas; o ASSET_BIBLE pede às personagens
-  1 px e ao colosso uma tela de 256 × 256.
-- **Decide:** tu — as escalas, a regra, e se a Consumidora (e o Aríete) pedem uma tela maior.
+- **Respondido pelo dono (15/10/2026), sobre os animais:**
+  - *«o coelho, o pavão e as galinhas são mesmo pequenos, o javali e o carneiro são de um tamanho adequado para as
+    tropas, eles têm que ser de um tamanho que faça sentido para ser montaria das tropas, o veado também é do tamanho
+    do carneiro, já a vaca, o búfalo e o cervo são animais de grande porte que podem ser montados pelos imperadores,
+    eles têm que ser de uma proporção que isso faça sentido»*.
+  - Visto a 1× (os pequenos e as montarias das tropas) e a 2× (as dos imperadores): *«O javali o carneiro e o veado
+    ficaram pequenos demais, eles devem ter um tamanho um pouco maior que as tropas para elas poderem montar eles, do
+    jeito que está parece que são menores que as tropas…»* e *«Os animais pequenos também ficaram pequenos demais,
+    devem ser um pouco menor que as tropas.»*
+- **Aplicado:** três portes contra a tropa do meio e os monarcas (`AnimatedArt.PORTE` e `ESCALA`):
+  - **A medida:**
+    - as tropas vão de 48 px (o escudeiro) a 67 (o bardo, com o pau da bandeira), e a do meio tem 57;
+    - dos monarcas, o rei é o mais alto, com 77.
+  - **Pequenos, um pouco abaixo da tropa do meio (45 a 51 px):**
+    - o coelho a 2× (46 px) e a galinha a 2× (46);
+    - o galo a 1,75× (51);
+    - a raposa a 1,5× (45);
+    - o pavão a 1,25× (50).
+  - **Montarias das tropas, um pouco acima da tropa do meio (63 a 71 px):**
+    - o javali a 1,75× (63);
+    - o carneiro a 1,5× (63);
+    - o veado a 1,5× (71), do tamanho do carneiro.
+  - **Montarias dos imperadores, acima do rei (88 a 114 px):**
+    - a vaca a 2× (88);
+    - o búfalo a 2,5× (90);
+    - o cervo branco a 2× (114, com as hastes);
+    - o cavalo a 2× (98), que o rei já montava.
+  - **Porque cada animal tem a sua escala:** o pacote desenhou cada espécie à sua escala, e encolheu as grandes para
+    caberem no quadro de 64 px: a 1×, o búfalo é da altura do javali e a vaca pouco mais alta. Uma escala por porte não punha os
+    cinco pequenos todos um pouco abaixo das tropas (o pavão tem quase o dobro da altura do coelho).
+  - **A escala em quartos:**
+    - Com escalas inteiras, o porte não cabia:
+      - a raposa, o galo e o pavão ficavam bem abaixo das tropas a 1×; a 2×, ficavam da altura delas, e o pavão
+        passava o rei;
+      - o carneiro e o veado ficavam abaixo das tropas a 1× e passavam o rei a 2×.
+    - Por isso a escala vai em quartos.
+    - A 1280 × 720, os pixeis de quem não está a escala inteira não têm todos a mesma largura. Em ecrãs maiores
+      (1080p e acima, onde o jogo inteiro já se estica) nota-se pouco.
+  - **O `sprite_scale` da caça no `wildlife.csv`:**
+    - passa a número com casas;
+    - o coelho 2, o pavão 1,25, a raposa 1,5, o veado 1,5, o javali 1,75 e o cervo branco 2.
+  - **A sombra e o golpe:**
+    - O `shadow_width`, até onde o golpe acerta, fica como estava.
+    - No coelho, no pavão, na raposa, no veado e no cervo branco, a sombra é mais estreita do que o corpo desenhado.
+  - **As vacas e o galinheiro:**
+    - as galinhas a 2× e o galo a 1,75× ficam mais baixos do que o galinheiro (70 px);
+    - as vacas a 2× ficam mais baixas do que o estábulo (96 px).
+  - **O teste:** `tests/porte_dos_animais_test.gd` guarda os portes pelas palavras do dono, medidos contra as tropas e
+    os monarcas que há. O carneiro e o búfalo entram nele quando forem exportados.
+  - **Onde fica justo:**
+    - o javali e o carneiro (63) passam todas as tropas menos o bardo com a bandeira (67), e o veado (71) passa-as todas;
+    - o pavão (50) e o galo (51) passam o escudeiro e o vagabundo (48 e 49), e ficam abaixo das outras tropas.
+- **Proposta (o dono não os nomeou):**
+  - a raposa com os pequenos;
+  - o cavalo de tração, a única montaria que há, com as dos imperadores, a 2×, como estava;
+  - o «cervo» lido como o cervo branco: o veado, que o pacote chama cervo castanho, o dono nomeia-o à parte.
+- **O que isto mexeu numa regra:**
+  - O *«pelo menos 2 ou 3 vezes»* da Q-218, de 03/10, dá lugar ao porte de 15/10.
+  - Fica a parte de *«dar para bater»*: a sombra é a mesma, e nenhum bicho fica tão pequeno como o coelho de 18 px de
+    então (`caca_a_vista_test`).
+  - A regra da Q-219, *«quem se levanta de um bicho nunca é mais pequeno do que ele»*, conta o corpo inteiro (a área,
+    e nunca tapado por ele).
+- **As criaturas (aplicado, reversível):**
+  - ficam à escala inteira mais perto do porte da Q-219, a menos de 20 % das caixas do `Bestiary`;
+  - o Rastejante e o Cavador a 2×;
+  - o Alado, o Bruto, o Aríete e o Zelador a 3×;
+  - a Consumidora a 5×.
+- **O que se vê:**
+  - A Consumidora a 5× tem pixeis de 5 px, e os animais têm pixeis de 1,25 a 2,5 px. Contra eles, as tropas têm pixeis
+    de 1 px.
+  - O ASSET_BIBLE pede às personagens 1 px e ao colosso uma tela de 256 × 256.
+- **Decide:** tu.
+  - Se a raposa e o cavalo ficam nesses portes.
+  - Se preferes as escalas inteiras, mesmo que o porte fique um pouco fora.
+  - Se a sombra da caça cresce com o corpo; isso alarga também o golpe.
+  - Se a Consumidora e o Aríete pedem uma tela maior.
 
 ### Q-265 · O cavaleiro e o brilho no escuro
 - **O cavaleiro:** o pacote não tem pose de montar e o rei desenha-se de pé no chão; o cavalo vai por trás dele, como
@@ -50,6 +116,34 @@
   (`#fff4d4`), que são os olhos **e os dentes**. A arte renovada tinha uma camada só dos olhos. **Proposta:** pedir a
   camada dos olhos com a próxima entrega.
 - **Decide:** tu, e quem desenha.
+
+### Q-266 · As montarias das tropas e dos imperadores
+- **O que o dono disse (15/10/2026, Q-264):**
+  - o javali e o carneiro são *«montaria das tropas»*, e o veado é do tamanho do carneiro;
+  - a vaca, o búfalo e o cervo *«podem ser montados pelos imperadores»*.
+  - Os desenhos já estão a esse porte. A mecânica ainda não existe.
+- **O que há:**
+  - **Só o monarca monta:** uma montaria por reino, um cavaleiro. Monta o corpo que se conduz, no estábulo
+    (`Mount`, `Assume.driven()`).
+  - **As tropas não montam:** nenhuma tropa monta, e não há cavalaria no dossiê. O único montado que não é monarca é o
+    Cavaleiro Selado, da fase 6, sob a IA.
+  - **O javali do §12:** é uma montaria para quem joga (`mounts.csv`, fase 6, ganha-se na caça da floresta antiga), e
+    está por fazer.
+  - **Os outros não são montarias:**
+    - a vaca é um animal de produção (§06, a ordenha);
+    - o búfalo e o carneiro não têm linha em nenhum CSV;
+    - o cervo branco é caça rara.
+  - **A pose de montar:** o pacote não tem pose de montar nem ponto de sela (Q-265).
+- **Decide:**
+  - **O javali:** continua montaria do monarca, como diz o §12, ou passa a ser só das tropas? Ao porte das tropas
+    (63 px) é mais baixo do que o rei (77). O `porte_dos_animais_test` guarda que o monarca só monta montarias de
+    imperador.
+  - **As tropas:** quais montam (todas, uma cavalaria nova, só o Cavaleiro Selado)? Como ganham a montaria e o que muda
+    com ela (velocidade, o derrubar da estacaria, as marchas)?
+  - **A vaca, o búfalo e o cervo branco:**
+    - de onde vem cada um: a vaca do estábulo, o cervo branco apanhado em vez de abatido?
+    - com que números.
+  - **A pose de montar:** que pose leva cada classe a montar (Q-265).
 
 ## Desempenho — 08/10/2026 (RG-18)
 
@@ -697,6 +791,12 @@ As Q-196/Q-197/Q-202 já definem a troca por herdeiro neutro e preparado. A Q-20
     - O veado passa a ter uma toca em casa (eram duas), e o resto da caça vive nas terras logo ao lado (Q-217).
     - No mundo gerado, as tocas ficam a 96 px umas das outras.
 - **Decide:** tu, as escalas (3× e 2×) e o lugar das tocas de casa.
+- **Depois (15/10/2026, Q-264):**
+  - Com a arte animada do dono, o tamanho do desenho segue o porte que ele deu a cada bicho:
+    - os pequenos um pouco abaixo das tropas;
+    - as montarias das tropas um pouco acima delas;
+    - as montarias dos imperadores acima do rei.
+  - A sombra e o golpe ficam como aqui.
 
 ### Q-219 · As criaturas da Podridão à escala do sprite de 64 px
 - **Pedido do dono (03/10/2026):** *«Quero que os inimigos da Podridão sigam essa lógica também, o menor tem que ter um
