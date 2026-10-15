@@ -107,7 +107,7 @@ static func drawn(dados: WildlifeData) -> Rect2:
 		. get(dados.id, EARS[0].position.y)
 	)
 	var frente := DEER_HEAD.end.x if dados.id in [&"deer", &"white_stag"] else HEAD.end.x
-	return Rect2(-frente * escala, topo * escala, frente * 2.0 * escala, -topo * escala)
+	return Rect2(-frente * escala, topo * escala, frente * 2 * escala, -topo * escala)
 
 
 static func _sitio(canvas: CanvasItem, sitio: StringName, light: Lighting, bx: float) -> void:

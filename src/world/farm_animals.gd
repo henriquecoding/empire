@@ -23,6 +23,9 @@ const PROPRIA := [&"animal_rooster", &"animal_hen"]
 const SOMBRA := 0.25
 ## As tres primeiras partes do passeio vao para a direita; as outras tres voltam.
 const IDA := 3
+const DIREITA := 1.0
+## Um ciclo de caminhada nunca dura menos do que isto (s), para a conta nao dividir por 0.
+const CICLO_MIN := 0.01
 
 
 static func draw_on(canvas: CanvasItem, luz: Lighting, tempo: float) -> void:
@@ -56,7 +59,7 @@ static func stroll(perfil: StringName, centro: float, largura: float, t: float) 
 		var dura: float = fases[k][1]
 		if c < dura or k == fases.size() - 1:
 			var ida := k < IDA
-			var frente := 1.0 if ida else -1.0
+			var frente := DIREITA if ida else -DIREITA
 			var parte := clampf(c / dura, 0.0, 1.0) if dura > 0.0 else 1.0
 			var x := centro + (meio if ida else -meio)
 			if fases[k][0] == &"walk":
@@ -79,7 +82,7 @@ static func cycle_seconds(perfil: StringName, largura: float) -> float:
 static func _phases(perfil: StringName, largura: float) -> Array:
 	var passada := AnimatedArt.body(perfil).size.x * float(AnimatedArt.FARM_SCALE) * PASSADA
 	var ciclo := AnimatedArt.seconds(perfil, &"walk")
-	var anda := largura * PASSEIO / maxf(1.0, passada / maxf(ciclo, 0.01))
+	var anda := largura * PASSEIO / maxf(1.0, passada / maxf(ciclo, CICLO_MIN))
 	var come := AnimatedArt.seconds(perfil, &"feed")
 	var outra := &"special" if perfil in PROPRIA else &"feed"
 	return [

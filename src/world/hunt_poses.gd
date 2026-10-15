@@ -14,6 +14,8 @@ const PARADO_S := 0.15
 ## Abaixo desta fraccao do graze_speed, o bicho come; acima desta, corre.
 const DEVAGAR := 0.3
 const DEPRESSA := 1.25
+## Um frame do ecra (60 por segundo): o passo mais curto que se mede.
+const FRAME_MIN_S := 1.0 / 60.0
 const IDLE := &"idle"
 const WALK := &"walk"
 const RUN := &"run"
@@ -81,7 +83,7 @@ static func _speed(toca: float, x: float, agora: float) -> float:
 		_passos[toca] = [x, agora, 0.0]
 		return 0.0
 	if not is_equal_approx(float(passo[X]), x):
-		var dt := maxf(agora - float(passo[QUANDO]), 1.0 / 60.0)
+		var dt := maxf(agora - float(passo[QUANDO]), FRAME_MIN_S)
 		passo[VELOCIDADE] = absf(x - float(passo[X])) / dt
 		passo[X] = x
 		passo[QUANDO] = agora

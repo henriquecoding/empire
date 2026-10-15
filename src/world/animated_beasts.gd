@@ -126,4 +126,4 @@ func _since(accao: StringName, id: int) -> float:
 			return _agora - float(_nascidas.get(id, -INF))
 		STEAL:
 			return _agora - float(_saques.get(id, INF))
-	return -1.0
+	return StrikePose.REPOUSO

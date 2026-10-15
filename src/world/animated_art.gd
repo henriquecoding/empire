@@ -79,7 +79,7 @@ static func has_action(id: StringName, action: StringName) -> bool:
 ## O corpo de `id` em repouso, a escala 1, com os pes em (0, 0).
 static func body(id: StringName) -> Rect2:
 	var b: Array = entry(id).get("body_bounds", [0, 0, 0, 0])
-	return Rect2(b[0], b[1], b[2], b[3])
+	return Rect2(b[0], b[1], b[2], b[OriginalArt.BODY_HEIGHT_INDEX])
 
 
 ## A escala inteira que poe `id` mais perto de `altura` px de mundo; nunca menos de 1.
