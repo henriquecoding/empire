@@ -89,12 +89,12 @@ static func _zelador(canvas: CanvasItem, zelador: Tender, luz: Lighting, tempo: 
 ## O quadro do Zelador: anda para o teu nucleo, para num muro, e quando leva a tropa da
 ## noite cuida dela (tend) uma vez.
 static func tender_frame(perfil: StringName, zelador: Tender, tempo: float) -> int:
-	if not is_equal_approx(zelador.x, _visto_x):
+	if not is_equal_approx(zelador.x, _visto_x) or tempo < _mudou:
 		_visto_x = zelador.x
 		_mudou = tempo
 	if not zelador.took:
 		_levou = INF
-	elif _levou == INF:
+	elif _levou == INF or tempo < _levou:
 		_levou = tempo
 	var cuida := tempo - _levou
 	if cuida >= 0.0 and cuida < AnimatedArt.seconds(perfil, &"tend"):

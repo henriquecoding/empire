@@ -12,10 +12,11 @@ const DESDE := 1
 var _vistos: Dictionary = {}
 
 
-## Os segundos que `chave` leva em `accao` em `agora`; uma accao nova comeca agora.
+## Os segundos que `chave` leva em `accao` em `agora`; uma accao nova comeca agora. Um
+## relogio que andou para tras (a cena recarregada num jogo novo) tambem e um comeco.
 func play(chave: Variant, accao: StringName, agora: float) -> float:
 	var visto: Array = _vistos.get(chave, [])
-	if visto.is_empty() or visto[ACCAO] != accao:
+	if visto.is_empty() or visto[ACCAO] != accao or agora < float(visto[DESDE]):
 		visto = [accao, agora]
 		_vistos[chave] = visto
 	return maxf(0.0, agora - float(visto[DESDE]))

@@ -79,7 +79,7 @@ static func keep_only(tocas: Array[float]) -> void:
 ## A velocidade que se ve: a ultima mudanca de x a dividir pelo tempo que levou.
 static func _speed(toca: float, x: float, agora: float) -> float:
 	var passo: Array = _passos.get(toca, [])
-	if passo.is_empty():
+	if passo.is_empty() or agora < float(passo[QUANDO]):  # um jogo novo: o relogio voltou a 0
 		_passos[toca] = [x, agora, 0.0]
 		return 0.0
 	if not is_equal_approx(float(passo[X]), x):

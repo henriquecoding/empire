@@ -36,7 +36,9 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: 
 	var pe := Vector2(onde.x, WorldPalette.ground_of(int(faixa)))
 	var perfil: StringName = AnimatedArt.MOUNTS.get(cavalo.owned, &"")
 	if AnimatedArt.has(perfil):  # a arte animada do dono (ADR 0083)
-		var quadro := frame_of(perfil, cavalo.rider != Mount.NENHUM, onde.x, tempo)
+		var campo := SimLoop.field
+		var corre := campo.stamina.wants and cavalo.rider == Assume.driven()
+		var quadro := frame_of(perfil, cavalo.rider != Mount.NENHUM, corre, onde.x, tempo)
 		var pose := AnimatedArt.posed(pe, onde.y, AnimatedArt.ANIMAL_SCALE)
 		AnimatedArt.lit(canvas, perfil, quadro, pose, luz, onde.x)
 		return
@@ -54,9 +56,10 @@ static func draw_on(canvas: CanvasItem, faixa: Band.Kind, luz: Lighting, tempo: 
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
-## O quadro do cavalo: no estabulo esta e pasta; montado anda, e corre com quem corre.
-static func frame_of(perfil: StringName, montado: bool, x: float, tempo: float) -> int:
-	if not is_equal_approx(x, _x):
+## O quadro do cavalo: no estabulo esta e pasta; montado anda, e galopa so com o correr
+## premido (`corre`) — o passo do cavalo ja e mais rapido do que o de quem vai a pe.
+static func frame_of(perfil: StringName, montado: bool, corre: bool, x: float, tempo: float) -> int:
+	if not is_equal_approx(x, _x) or tempo < _mudou:
 		_x = x
 		_mudou = tempo
 	if not montado:
@@ -67,7 +70,6 @@ static func frame_of(perfil: StringName, montado: bool, x: float, tempo: float) 
 		return AnimatedArt.frame(perfil, &"idle", ciclo - pasta)
 	if tempo - _mudou > PARADO_S:
 		return AnimatedArt.frame(perfil, &"idle", tempo)
-	var corre := SimLoop.units != null and SimLoop.units.piloted_pace > 1.0
 	return AnimatedArt.frame(perfil, &"run" if corre else &"walk", tempo)
 
 
