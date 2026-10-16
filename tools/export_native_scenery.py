@@ -38,6 +38,10 @@ TINTS = {
 
 def family_layers(job, legacy):
     family = job["key"]
+    # Drop superseded campaign layers and their import sidecars before rebuilding.
+    for path in (ROOT / family).glob("campaign_*.png"):
+        path.unlink()
+        path.with_suffix(".png.import").unlink(missing_ok=True)
     atlas = Image.open(SOURCE / "atlas" / (family + ".png"))
     plates = [cell(atlas, index, family) for index in range(8)]
     spans, mouths = SPLIT.get(family, ([[32, 1248]], [784]))
@@ -67,7 +71,7 @@ def family_layers(job, legacy):
         for layer in ("far", "mid", "near"):
             original = images[layer]
             wide = Image.new("RGBA", (2560, 720))
-            wide.alpha_composite(original)
+            wide.alpha_composite(original, (1280 if layer == "near" else 0, 0))
             if layer != "near":
                 wide.alpha_composite(original, (1280, 0))
             campaign[layer] = export_layer(ROOT, family, "campaign_" + layer, wide,
