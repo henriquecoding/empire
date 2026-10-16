@@ -1,6 +1,14 @@
 class_name NativeSceneryStage
 extends Node2D
 
+const FAR_Z := -50
+const Z_STEP := 10
+const BACK_WATER_Z := -15
+const HALF := 0.5
+const FLOOR_THICKNESS := 4.0
+const LADDER_WIDTH := 48.0
+const LADDER_HEIGHT := 102.0
+const WORKER_INSET := 80.0
 const PLANES := {"sky": 0.03125, "clouds": 0.07, "far": 0.125, "mid": 0.25, "near": 0.5}
 const VARIANT_SHADER := preload("res://shaders/native_scenery_variant.gdshader")
 @export var view_id := "enramados_base"
@@ -20,12 +28,12 @@ func _ready() -> void:
 	family_id = String(variant.get("family", "enramados"))
 	var data := NativeSceneryCatalog.family(family_id)
 	var recipe: Dictionary = variant.get("recipe", {})
-	var depth := -50
+	var depth := FAR_Z
 	for layer: String in PLANES:
 		var plane := Parallax2D.new()
 		plane.name = layer.capitalize()
 		plane.z_index = depth
-		depth += 10
+		depth += Z_STEP
 		plane.scroll_scale = Vector2(float(PLANES[layer]), 1.0)
 		add_child(plane)
 		_add_layer(plane, layer, data, recipe)
@@ -61,7 +69,7 @@ func _add_layer(parent: Node, layer: String, data: Dictionary, recipe: Dictionar
 	var sprite := Sprite2D.new()
 	sprite.name = layer.capitalize()
 	if layer == "water_back":
-		sprite.z_index = -15
+		sprite.z_index = BACK_WATER_Z
 	sprite.centered = false
 	sprite.texture = load(String(entry.file)) as Texture2D
 	sprite.position = Vector2(float(entry.rect[0]), float(entry.rect[1]))
@@ -88,7 +96,7 @@ func _material(recipe: Dictionary, layer: String) -> ShaderMaterial:
 
 
 func _floors(data: Dictionary) -> void:
-	_floor(0.0, 1280.0, WorldPalette.ground_of(Band.Kind.SURFACE), "SurfaceFloor")
+	_floor(0.0, NativeSceneryCatalog.CANVAS_WIDTH, WorldPalette.ground_of(Band.Kind.SURFACE), "SurfaceFloor")
 	for index in data.lower_spans.size():
 		var span: Array = data.lower_spans[index]
 		_floor(
@@ -102,12 +110,12 @@ func _floors(data: Dictionary) -> void:
 func _floor(left: float, right: float, y: float, label: String) -> void:
 	var body := StaticBody2D.new()
 	body.name = label
-	body.position = Vector2((left + right) * 0.5, y + 2.0)
+	body.position = Vector2((left + right) * HALF, y + FLOOR_THICKNESS * HALF)
 	body.collision_layer = Band.L_TERRAIN
 	body.collision_mask = 0
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
-	rect.size = Vector2(right - left, 4.0)
+	rect.size = Vector2(right - left, FLOOR_THICKNESS)
 	shape.shape = rect
 	body.add_child(shape)
 	functional.add_child(body)
@@ -119,9 +127,9 @@ func _ladders(data: Dictionary) -> void:
 		sprite.texture = load(String(data.ladder)) as Texture2D
 		sprite.centered = false
 		sprite.z_index = 1
-		sprite.position = Vector2(mouth - 24.0, 517.0)
+		sprite.position = Vector2(mouth - LADDER_WIDTH * HALF, Band.GROUND_LINE)
 		sprite.scale = Vector2(
-			48.0 / sprite.texture.get_width(), 102.0 / sprite.texture.get_height()
+			LADDER_WIDTH / sprite.texture.get_width(), LADDER_HEIGHT / sprite.texture.get_height()
 		)
 		functional.add_child(sprite)
 
@@ -130,7 +138,7 @@ func _workers(data: Dictionary) -> void:
 	for span: Array in data.lower_spans:
 		var actor := NativeSceneryActor.new()
 		actor.position = Vector2(
-			float(span[0]) + 80.0, WorldPalette.ground_of(Band.Kind.UNDERGROUND)
+			float(span[0]) + WORKER_INSET, WorldPalette.ground_of(Band.Kind.UNDERGROUND)
 		)
 		workers.add_child(actor)
 

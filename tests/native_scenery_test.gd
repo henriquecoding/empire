@@ -8,8 +8,8 @@ func test_production_catalog_has_all_views_and_native_anchors() -> void:
 	assert_int(data.get("variants", {}).size()).is_equal(24)
 	assert_float(float(data.get("surface_y", -1))).is_equal(517.0)
 	assert_float(float(data.get("underground_y", -1))).is_equal(618.5)
-	assert_array(data.get("playable_frame", [])).is_equal([64, 64])
-	assert_array(data.get("worker_frame", [])).is_equal([32, 32])
+	assert_array(data.get("playable_frame", [])).is_equal([64.0, 64.0])
+	assert_array(data.get("worker_frame", [])).is_equal([32.0, 32.0])
 
 
 func test_every_dry_lower_bank_has_a_reachable_passage() -> void:

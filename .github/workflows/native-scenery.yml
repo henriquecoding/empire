@@ -68,6 +68,10 @@ jobs:
           mkdir -p build
           godot --headless --editor --import --path . 2>&1 | tee build/native-import.log
           ! rg 'SCRIPT ERROR|Parse Error|Compile Error' build/native-import.log
+      - name: Check architecture and native catalog early
+        run: |
+          godot --headless --path . -s tools/lint_sim.gd
+          godot --headless --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a tests/native_scenery_test.gd
       - name: Exercise real physics in every production scene
         run: godot --headless --path . tools/verify_native_scenery.tscn
       - name: Virtual display

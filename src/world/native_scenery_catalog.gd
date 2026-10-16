@@ -1,6 +1,7 @@
 class_name NativeSceneryCatalog
 extends RefCounted
 
+const CANVAS_WIDTH := 1280.0
 const MANIFEST := "res://art/export/scenery_native/manifest.json"
 static var _data: Dictionary = {}
 
@@ -26,7 +27,7 @@ static func ids() -> PackedStringArray:
 
 
 static func spans(id: String, band: Band.Kind) -> Array:
-	return [[0, 1280]] if band == Band.Kind.SURFACE else family(id).get("lower_spans", [])
+	return [[0, CANVAS_WIDTH]] if band == Band.Kind.SURFACE else family(id).get("lower_spans", [])
 
 
 static func supports(id: String, x: float, band: Band.Kind, margin: float = 0.0) -> bool:
