@@ -318,5 +318,6 @@
       "mood": "Tarde fria",
       "type": "transicao"
     }
-  ]
+  ],
+  "campaign_ground_atlas": "art/source/scenery_native/ground/campaign_grounds.png"
 }

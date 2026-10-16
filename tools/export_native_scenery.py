@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from PIL import Image
 from native_scenery_pixels import (
-    cell, clean, export_layer, frame, hero, ladder, legacy_layer, legacy_campaign_layer, natural,
+    campaign_ground_layers, cell, clean, export_layer, frame, hero, ladder, legacy_layer, natural,
     palette, props, structure_group, terrain, verify_layer, warp_structures, water_layers,
 )
 
@@ -76,11 +76,15 @@ def family_layers(job, legacy):
                 wide.alpha_composite(original, (1280, 0))
             campaign[layer] = export_layer(ROOT, family, "campaign_" + layer, wide,
                                             2 if layer == "near" else 4)
-        # Preserve the existing terrain geography with quieter four-pixel clusters.
-        for layer in ("under", "terrain", "foreground"):
-            if layer in legacy["scenes"][biome]["layers"]:
-                wide = legacy_campaign_layer(legacy, biome, layer)
-                campaign[layer] = export_layer(ROOT, family, "campaign_" + layer, wide, 4)
+        ground_ids = ("enramados", "bruma", "horta", "portuarios",
+                      "fenda", "fornalha", "geada", "sobraiz")
+        ground_atlas = Image.open(SOURCE / "ground/campaign_grounds.png")
+        ground = cell(ground_atlas, ground_ids.index(family), "campaign")
+        for layer, original in campaign_ground_layers(ground).items():
+            wide = Image.new("RGBA", (2560, 720))
+            wide.alpha_composite(original)
+            wide.alpha_composite(original, (1280, 0))
+            campaign[layer] = export_layer(ROOT, family, "campaign_" + layer, wide, 2)
     return {"name": job["name"], "biome": biome, "canvas": [1280, 720],
             "campaign_layers": campaign,
             "lower_spans": spans, "passages": mouths, "layers": layers,

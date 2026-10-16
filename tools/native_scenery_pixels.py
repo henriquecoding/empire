@@ -185,3 +185,23 @@ def legacy_campaign_layer(manifest, biome, layer):
     image = Image.new("RGBA", (2560, 720))
     source = Image.open(entry["file"].removeprefix("res://"))
     return put(image, source, tuple(entry["rect"]))
+
+
+def campaign_ground_layers(plate):
+    def path_line(first, last, fallback):
+        rows = range(round(plate.height * first), round(plate.height * last))
+        def score(y):
+            return sum(a > 127 and r > 100 and g > 75 and r > g * 1.05 and g > b * 1.1
+                       for r, g, b, a in plate.crop((0, y, plate.width, y + 1)).getdata())
+        best = max(rows, key=score)
+        return best if score(best) else round(plate.height * fallback)
+    upper = path_line(.58, .73, .64)
+    lower = path_line(.80, .94, .88)
+    top = plate.getbbox()[1]
+    under = frame()
+    fringe = plate.crop((0, top, plate.width, upper + 4))
+    put(under, fringe, (0, 497, 1280, 20))
+    put(under, plate.crop((0, upper, plate.width, lower)), (0, 517, 1280, 102))
+    bottom = put(frame(), plate.crop((0, lower, plate.width, plate.height)),
+                 (0, 618, 1280, 102))
+    return {"under": under, "terrain": bottom, "foreground": frame()}

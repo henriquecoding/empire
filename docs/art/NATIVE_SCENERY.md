@@ -15,8 +15,9 @@ também tem uma cena em scenes/scenery_native.
 A galeria usa os personagens reais do projeto e um controlador de revisão.
 Não acrescenta regras de campanha, economia, personagens ou posições de rios.
 Os planos far/mid/near dos reinos entram na campanha pelo SceneryArt;
-céu e nuvens conservam o mosaico original. A textura de cobertura do solo
-usa clusters de 4 px e mantém a geografia existente;
+céu e nuvens conservam o mosaico original. A cobertura do solo usa uma fonte nova com
+massas maiores, caminhos livres e menos ruído, na grade de 2 px. Mantém
+as faixas e os sítios existentes;
 a geometria dos sítios e das passagens da campanha continua autoritativa.
 Porto, lago e rio são prefabs de produção, com pisos e acessos exercitados na galeria.
 Sua população e construção pertencem ao estado registrado do jogo.
