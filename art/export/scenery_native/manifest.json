@@ -27,42 +27,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/enramados/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/enramados/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/enramados/campaign_far.png",
           "rect": [
@@ -79,7 +43,7 @@
             640,
             97
           ],
-          "sha256": "39e921194a71de7440bb5d338f8e670100dd7d67f38e491ead7d39fad3996262"
+          "sha256": "1693411d0398ddc5e4e809e4a3453d577db737912172211fc5e0becfe8be2cfd"
         },
         "mid": {
           "file": "res://art/export/scenery_native/enramados/campaign_mid.png",
@@ -97,14 +61,14 @@
             640,
             84
           ],
-          "sha256": "b6705e3d7074e0328d3346e081005379599f97050b971866a0934240cafb8d89"
+          "sha256": "0ae15245edfd0ae305bda71133f918a87f3e95abd8433ff25d17763aa66f8007"
         },
         "near": {
           "file": "res://art/export/scenery_native/enramados/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            2042,
+            762,
             500
           ],
           "scale": [
@@ -112,10 +76,64 @@
             2
           ],
           "size": [
-            1021,
+            381,
             250
           ],
-          "sha256": "c613f79ff4a0477e2e1365b527071d069687f9c040b5e92f9e84676bb9168b10"
+          "sha256": "af7e2222fc4fcf9cfd162ff658cb902864b3e2b920771122c918d1a2d68bdd0a"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/enramados/campaign_under.png",
+          "rect": [
+            0,
+            492,
+            2560,
+            140
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            35
+          ],
+          "sha256": "f2a930fdfb91a6f8f9401c6428f2f1b15b6c74a34d5af1e6891509624801b616"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/enramados/campaign_terrain.png",
+          "rect": [
+            0,
+            588,
+            2560,
+            132
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            33
+          ],
+          "sha256": "07ed6a2a0506a0bf6330440a37e374fd337374732ca7bf8372107f69a7bb7707"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/enramados/campaign_foreground.png",
+          "rect": [
+            48,
+            664,
+            2512,
+            56
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            628,
+            14
+          ],
+          "sha256": "304df9f9893420a84c34b13e33f0af9be9481750e28bc0c7ae5a21ab719329ca"
         }
       },
       "lower_spans": [
@@ -144,7 +162,7 @@
             320,
             97
           ],
-          "sha256": "84c766f92f833ee2f8e3c91654eff25dd2f613169db2c2cbfc4dbb9782517dc7"
+          "sha256": "218cbb9339481098835a088428d9177a6e5d346df37a73f423214eaf50a97cee"
         },
         "mid": {
           "file": "res://art/export/scenery_native/enramados/mid.png",
@@ -162,7 +180,7 @@
             320,
             84
           ],
-          "sha256": "9700c3a464db1bda6ed7054f1433f2fa3d4252ad43ad047fce85d84eae55be65"
+          "sha256": "f3b0ca6d41a49fbe646cf296847b3adfa06ff50ec5376e52d2b53f3c95868a5b"
         },
         "near": {
           "file": "res://art/export/scenery_native/enramados/near.png",
@@ -198,7 +216,7 @@
             608,
             52
           ],
-          "sha256": "efbd0468395fb77d564e769512fe0e1ad80ce535761cf53c76f83239480c92ea"
+          "sha256": "eaffd0e797ac086db76bf46f44bb846ba0fbbcf42c844ddef6a61a6cf8c36ffc"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/enramados/terrain.png",
@@ -216,7 +234,7 @@
             608,
             48
           ],
-          "sha256": "3fbfa3a6b76e07ed48c617f5f16093f505538368e9a6a6997cbc4f33b1c13db7"
+          "sha256": "d3b83b3995064c0cdf94093dc4c336e40320d502d37577535cb68aaccddd3c1d"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/enramados/crossings.png",
@@ -290,6 +308,24 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/enramados/water_back.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
         "water": {
           "file": "res://art/export/scenery_native/enramados/water.png",
           "rect": [
@@ -324,7 +360,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/enramados/clouds.png",
@@ -342,7 +378,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/enramados/access_ladder.png",
@@ -357,42 +393,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/bruma/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "a1da3ec13eeedc05c0d82c0e2460181bf94c16156580490eff357ff63c9225be"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/bruma/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/bruma/campaign_far.png",
           "rect": [
@@ -409,7 +409,7 @@
             640,
             112
           ],
-          "sha256": "fb06a2812cca71723b1978d4951a42a5877f3f6be3c9ba75ea668c56cd6cbfd5"
+          "sha256": "39244fc6618db53b7778ac4b2bc0021a8d8eac46df95b96b71e6a89be75bbeaa"
         },
         "mid": {
           "file": "res://art/export/scenery_native/bruma/campaign_mid.png",
@@ -427,14 +427,14 @@
             640,
             97
           ],
-          "sha256": "2068331bc694c0b19c1f7d3462145d63319a71ac1d6a79c4460ee1966a584072"
+          "sha256": "aae454be04336946465a669b78f302022b767b5c711e11ddbd74dd09e5402b99"
         },
         "near": {
           "file": "res://art/export/scenery_native/bruma/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            2050,
+            770,
             500
           ],
           "scale": [
@@ -442,10 +442,64 @@
             2
           ],
           "size": [
-            1025,
+            385,
             250
           ],
-          "sha256": "e9c70d048a4f158f9be33b97807550715524dd5d66bb49f75fe36f77f8818faf"
+          "sha256": "4eb429f92e325ca57010e111e8e86bc7d3dc46f10bb09006fbcd7a98ef516ecd"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/bruma/campaign_under.png",
+          "rect": [
+            0,
+            492,
+            2560,
+            140
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            35
+          ],
+          "sha256": "f78d2ccc46597c43ccf98036ffb28c02de3ad4f4a1e5ee3009487651add8056a"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/bruma/campaign_terrain.png",
+          "rect": [
+            0,
+            596,
+            2560,
+            96
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            24
+          ],
+          "sha256": "6a808f14f07f6e9eedab0e27f26cf92ea82dab990ae943df454dd7a40ea526cc"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/bruma/campaign_foreground.png",
+          "rect": [
+            56,
+            664,
+            2504,
+            56
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            626,
+            14
+          ],
+          "sha256": "26c19b84b71322340f70d75cfc837ca5624d2ef833bcf07fcf9ffedd13adddb9"
         }
       },
       "lower_spans": [
@@ -479,7 +533,7 @@
             320,
             112
           ],
-          "sha256": "02bfca9f8a4e095bfad1caadfe3aacbf9e10d625a912220d5548fcb65838d102"
+          "sha256": "6fa35216c82319f05b343ef1f921367deb3880b47b97cd75df6a3c82eb97a3c3"
         },
         "mid": {
           "file": "res://art/export/scenery_native/bruma/mid.png",
@@ -497,7 +551,7 @@
             320,
             97
           ],
-          "sha256": "3db477b45e1321ca122a17c7f4d6abc8b9168e91b9bb23f13a599f71d2ecc7ed"
+          "sha256": "e14f7f87b940ff2bb4fc628fe33d1405317d71fe2f3064d9686088cd929e00c4"
         },
         "near": {
           "file": "res://art/export/scenery_native/bruma/near.png",
@@ -533,7 +587,7 @@
             608,
             52
           ],
-          "sha256": "6a73db80002afa767f3b7e89556845f5ef2c42a5612b05fb2188981dff2aff31"
+          "sha256": "a69cb22be800ba9270c7c95bad0b14b9b26ebbb062a9f499bf827074da824c92"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/bruma/terrain.png",
@@ -551,7 +605,7 @@
             608,
             23
           ],
-          "sha256": "456a1748fe0d5ca42e262578014e4dcba7703716528b735e0b2e1d4e962a77f3"
+          "sha256": "9d5e3d1ae957d5b685e90719349ca30f7a01fbcbf87b9e17a97b7888a3b85031"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/bruma/crossings.png",
@@ -625,13 +679,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/bruma/water_back.png",
+          "rect": [
+            384,
+            500,
+            624,
+            18
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            312,
+            9
+          ],
+          "sha256": "89e1e2e58af964ed5cd0a3b2c0d6b54c3a201be0c1d11c45b89c251237adb4bb"
+        },
         "water": {
           "file": "res://art/export/scenery_native/bruma/water.png",
           "rect": [
             2,
-            180,
+            518,
             1278,
-            532
+            198
           ],
           "scale": [
             2,
@@ -639,9 +711,9 @@
           ],
           "size": [
             639,
-            266
+            99
           ],
-          "sha256": "b4672f0e235f0bbfe805fb6744cd009e465fee442df318b69233ac6c0a530b55"
+          "sha256": "625c2c50c0974a475a05620a39f8a15498296e1a86b45bafb2bdacd5bf11556f"
         },
         "sky": {
           "file": "res://art/export/scenery_native/bruma/sky.png",
@@ -659,7 +731,7 @@
             320,
             180
           ],
-          "sha256": "1f931d1edb22e1deead57ba41aa550cbae9d75619d8d8da7bbb7a2b84bc9ffe2"
+          "sha256": "04e6c896bc42809ee4cae9f3d78b862714401460a9f8f463116b338d5e64da9d"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/bruma/clouds.png",
@@ -677,7 +749,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/bruma/access_ladder.png",
@@ -692,42 +764,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/horta/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/horta/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/horta/campaign_far.png",
           "rect": [
@@ -744,7 +780,7 @@
             637,
             85
           ],
-          "sha256": "6c87d8f68ed96d6c34494ce5b832013d3dac507c519133a5bf6ab705f215a963"
+          "sha256": "6e415051643d475ab6e4331c770e841859b7cf311b9fa951a19334e856ab650e"
         },
         "mid": {
           "file": "res://art/export/scenery_native/horta/campaign_mid.png",
@@ -762,14 +798,14 @@
             634,
             116
           ],
-          "sha256": "ec0cdc2fd82ef07a430d2a8c834f923019f3ac265652d12a7040f1a5a149bc73"
+          "sha256": "7c4bf8e3c1d0f2e25fce29bb7cd586961193c10b716459aecab5476101b7dbc3"
         },
         "near": {
           "file": "res://art/export/scenery_native/horta/campaign_near.png",
           "rect": [
-            16,
+            1296,
             96,
-            1916,
+            636,
             420
           ],
           "scale": [
@@ -777,10 +813,64 @@
             2
           ],
           "size": [
-            958,
+            318,
             210
           ],
-          "sha256": "930aa1ba5c1e57c99ab591763b6754f581d9a76666f58e3fb60eccdf4d8422e9"
+          "sha256": "a0c7191a95e745ea5f23be2027b3cbfcd6133cca03964ccb2ce77113acafd074"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/horta/campaign_under.png",
+          "rect": [
+            0,
+            488,
+            2560,
+            144
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            36
+          ],
+          "sha256": "71293dc64c15ab8273a14d6f94be83e1e66d19c2c0947e31c9af095b92001022"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/horta/campaign_terrain.png",
+          "rect": [
+            0,
+            596,
+            2560,
+            96
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            24
+          ],
+          "sha256": "e1e630623bf54fa86c09ad3942da8dc2ddab2ace303e3a15b84bae76d15ed523"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/horta/campaign_foreground.png",
+          "rect": [
+            48,
+            660,
+            2512,
+            60
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            628,
+            15
+          ],
+          "sha256": "22af7eb24c4afe9bc2d9be8b752098628b4f328f57e03a1bedc041b8735fdef9"
         }
       },
       "lower_spans": [
@@ -809,7 +899,7 @@
             317,
             85
           ],
-          "sha256": "579655a9e28f66a3f3b0c08c0ab81c286ed4e217f8662a33392c58f260a1a4ae"
+          "sha256": "17ec908ea5d38eb7252ecf5ea34ba5c6da0c64a067e2e0061019699992e76d6f"
         },
         "mid": {
           "file": "res://art/export/scenery_native/horta/mid.png",
@@ -827,7 +917,7 @@
             314,
             116
           ],
-          "sha256": "b1f77a445340dcb9365fa446f6aeb5bf6c9446e120a052dc53a55dd3c29f18b4"
+          "sha256": "7f6639e972bb34ccc4576a92cf39dbcb2863108b077ebfbc0d903aa5a7a5fb00"
         },
         "near": {
           "file": "res://art/export/scenery_native/horta/near.png",
@@ -863,7 +953,7 @@
             608,
             52
           ],
-          "sha256": "55d3cb837361ac2cb9958fbca3044a5093123bd3a1af385cd4c3a8ab81f44f8d"
+          "sha256": "df989addee933aeea71eaf3075e708f84f9c922fa6475f9722006a1261720b3c"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/horta/terrain.png",
@@ -881,7 +971,7 @@
             608,
             51
           ],
-          "sha256": "d0400358bf3737dc5005e46ec9b249807cbd455440598b1ed35914ddd8bf9f4a"
+          "sha256": "b84404a92fafc472332c9e19dcd1a5ea22a9413ba900cfe907dd65e2a6ec769b"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/horta/crossings.png",
@@ -955,6 +1045,24 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/horta/water_back.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
         "water": {
           "file": "res://art/export/scenery_native/horta/water.png",
           "rect": [
@@ -989,7 +1097,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/horta/clouds.png",
@@ -1007,7 +1115,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/horta/access_ladder.png",
@@ -1022,42 +1130,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/portuarios/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/portuarios/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/portuarios/campaign_far.png",
           "rect": [
@@ -1074,7 +1146,7 @@
             640,
             93
           ],
-          "sha256": "70cdd23895ebb68a7de776a591f5198c2502e6f806d93f1c3ea762fadde2da51"
+          "sha256": "244f3f8193298df4e4ff5b1589648551ae753347fcb43726b4b8b004ccb23ac0"
         },
         "mid": {
           "file": "res://art/export/scenery_native/portuarios/campaign_mid.png",
@@ -1092,14 +1164,14 @@
             638,
             90
           ],
-          "sha256": "4958b4d7d059d601453c298d0eff3d92e26445234494cdf33dba2c0031f0cc0d"
+          "sha256": "471367794e59339d0dae08de8c47390d621be6f82af24ffc7c353ec515660e86"
         },
         "near": {
           "file": "res://art/export/scenery_native/portuarios/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            2000,
+            720,
             500
           ],
           "scale": [
@@ -1107,10 +1179,64 @@
             2
           ],
           "size": [
-            1000,
+            360,
             250
           ],
-          "sha256": "ca9fb54bd4b9e4e068b862909da0a370b33e60abc2e3e8f4b275eef4b1b2d26f"
+          "sha256": "d2ba260ec225248241f0c33ce62c37375f8ad0afbbd1476b6ec013180ac09148"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_under.png",
+          "rect": [
+            0,
+            488,
+            2560,
+            144
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            36
+          ],
+          "sha256": "97c7df55c2729883c3d90b786c1c068bdbcfc0f7c1c46d6a65f232505437c47a"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_terrain.png",
+          "rect": [
+            0,
+            596,
+            2560,
+            96
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            24
+          ],
+          "sha256": "b48be36ed1005a7ea0b534e8e5bdeb926b2d0ef1dcac0ccc367a8ceae2aecf81"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_foreground.png",
+          "rect": [
+            48,
+            660,
+            2512,
+            60
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            628,
+            15
+          ],
+          "sha256": "364e44955f3b29fb817821f5ed1fc7104c6a78563a3c449ea0be92af16689881"
         }
       },
       "lower_spans": [
@@ -1139,7 +1265,7 @@
             320,
             93
           ],
-          "sha256": "ed3eae63b2b81e06a87de0885f1d684bfd0fa741298f47a2e56f9bd482d35c05"
+          "sha256": "c8f09dc20970b839371b8b8055b631612d3cb0f4afb32b396c186e92e5891497"
         },
         "mid": {
           "file": "res://art/export/scenery_native/portuarios/mid.png",
@@ -1157,7 +1283,7 @@
             318,
             90
           ],
-          "sha256": "70e5d1bd0279bf0946ff8a5f3aee92727cf0fd659cf9d4c2178835aa493b8133"
+          "sha256": "856942b3ebbf11724396dadd9548a5c3498ca9cfe7cbd3fa319de0fa3f8842bf"
         },
         "near": {
           "file": "res://art/export/scenery_native/portuarios/near.png",
@@ -1193,7 +1319,7 @@
             608,
             52
           ],
-          "sha256": "9b7cb5ecc5cd207a360e9a87992e65c6983f210b7d1274610e7c6278bfd96f76"
+          "sha256": "1bc6dc5682f1d3eb744f6b9050b2f7339dc7e1db135eebd13339c7a3d7e29eb5"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/portuarios/terrain.png",
@@ -1211,7 +1337,7 @@
             608,
             43
           ],
-          "sha256": "34e67ea9d2b2e504853351242e62e7a1ab103391c015d6c3b246bcfaa93ab5da"
+          "sha256": "8e30cb04c63da4c82f871fa499302e02adef732ca57f4f534e556c754914d949"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/portuarios/crossings.png",
@@ -1285,13 +1411,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/portuarios/water_back.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
         "water": {
           "file": "res://art/export/scenery_native/portuarios/water.png",
           "rect": [
             0,
-            288,
+            544,
             1280,
-            432
+            176
           ],
           "scale": [
             2,
@@ -1299,9 +1443,9 @@
           ],
           "size": [
             640,
-            216
+            88
           ],
-          "sha256": "45bc271d88415213980098ce67f9aaf330adaf18d1867eb4cc18f9ce899d7ceb"
+          "sha256": "9afd13d347f061e71b631037181839609386c06a122dc5d3f91f69a5b22e82d8"
         },
         "sky": {
           "file": "res://art/export/scenery_native/portuarios/sky.png",
@@ -1319,7 +1463,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/portuarios/clouds.png",
@@ -1337,7 +1481,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/portuarios/access_ladder.png",
@@ -1352,42 +1496,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/fenda/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/fenda/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/fenda/campaign_far.png",
           "rect": [
@@ -1404,7 +1512,7 @@
             637,
             120
           ],
-          "sha256": "ce050d2d837de8c7b3c9857e6c500782ab5ec614b4bdb470ae2de1d675a50199"
+          "sha256": "03791c3ee015118e00d3a4163af787d5d23cd061fafc979c8d2545967bd9bd4b"
         },
         "mid": {
           "file": "res://art/export/scenery_native/fenda/campaign_mid.png",
@@ -1422,14 +1530,14 @@
             636,
             127
           ],
-          "sha256": "9fa83e5e86a4f739d938ca7f175430656276b9064de729188c3df540b66f14e5"
+          "sha256": "4baa7f6d922de98ecd083b4c9668843833b670efee2cc234d90d4d58677f526f"
         },
         "near": {
           "file": "res://art/export/scenery_native/fenda/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            1866,
+            586,
             500
           ],
           "scale": [
@@ -1437,10 +1545,64 @@
             2
           ],
           "size": [
-            933,
+            293,
             250
           ],
-          "sha256": "628e83e16e6ec3d8657c99d7270f0c019a478f137bde6c60eaad7c21706ad07a"
+          "sha256": "7ccb328fad7bf3346910c60e56db219a94e0335a29258f6beff1fe5e091558c5"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/fenda/campaign_under.png",
+          "rect": [
+            0,
+            492,
+            2560,
+            140
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            35
+          ],
+          "sha256": "527d0f67cd1689c9eeb31b1fb929420a3b5f48a777502bb174cbf81fb8e6ff65"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/fenda/campaign_terrain.png",
+          "rect": [
+            0,
+            588,
+            2560,
+            132
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            33
+          ],
+          "sha256": "fac91dc90c33808bae3712eb0a53065f57c0a634abfd39538040b9fe72d3c813"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/fenda/campaign_foreground.png",
+          "rect": [
+            48,
+            664,
+            2512,
+            56
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            628,
+            14
+          ],
+          "sha256": "2c9b1a917b41ec3d6ac0e6f2e143831bafa7361aae373dd37b2ca513a388e655"
         }
       },
       "lower_spans": [
@@ -1474,7 +1636,7 @@
             317,
             120
           ],
-          "sha256": "83b6e975c12fb6d92e9de0a4063448470d69c385e94e99313fcd188b7fab117e"
+          "sha256": "c725ada729d4cf3079c29e4869ff12c4033dc71916f1ccd200ac743f087e82b5"
         },
         "mid": {
           "file": "res://art/export/scenery_native/fenda/mid.png",
@@ -1492,7 +1654,7 @@
             316,
             127
           ],
-          "sha256": "7cc4ca262cde4cccb9c8c17c653f7aa859b15b6f1f12b58a7dcff4060789fa9d"
+          "sha256": "809fab15b1b5bcff0ddd690ac598b97e87dadc585fa7cffc139f252aaf370fb8"
         },
         "near": {
           "file": "res://art/export/scenery_native/fenda/near.png",
@@ -1528,7 +1690,7 @@
             608,
             52
           ],
-          "sha256": "393de804e7fc8734e04ee123d278969e82d531db5899546ead5281604211f144"
+          "sha256": "3be5553e3cfed14391b986840d951d46324ebb6c8be1eb275cb1bcc403d69c1f"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/fenda/terrain.png",
@@ -1546,7 +1708,7 @@
             608,
             50
           ],
-          "sha256": "9eeb53a2d841e6c3f7dda5f5abbfc2e7de9e25b529bf60e9382cd4d1e85e9f47"
+          "sha256": "5341019236ac58951bface6900e6f3d57a1ab2f90149992726888bbc70cb75c2"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/fenda/crossings.png",
@@ -1620,13 +1782,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/fenda/water_back.png",
+          "rect": [
+            594,
+            444,
+            394,
+            74
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            197,
+            37
+          ],
+          "sha256": "623987ed4dfaee4c40e9dbc1cb9bbd6cfb6da3f30ed011dfa6c2df6b737a60b8"
+        },
         "water": {
           "file": "res://art/export/scenery_native/fenda/water.png",
           "rect": [
             10,
-            44,
+            518,
             1252,
-            676
+            202
           ],
           "scale": [
             2,
@@ -1634,9 +1814,9 @@
           ],
           "size": [
             626,
-            338
+            101
           ],
-          "sha256": "3dc00fe27411a4233e20058ba64fefa6e2d5bc78118fe45c5963c3ae0a570bc7"
+          "sha256": "71a78b9f5f96d0f578e82b9b660ec23a992dd73a5d0fd1f37229c3dfda97a3fc"
         },
         "sky": {
           "file": "res://art/export/scenery_native/fenda/sky.png",
@@ -1654,7 +1834,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/fenda/clouds.png",
@@ -1672,7 +1852,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/fenda/access_ladder.png",
@@ -1687,42 +1867,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/fornalha/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "6feade90ed4a7e79b6a97681f63ff02aab45baa02bfd94c70c54d8fb1d6cf1c2"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/fornalha/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/fornalha/campaign_far.png",
           "rect": [
@@ -1739,7 +1883,7 @@
             640,
             152
           ],
-          "sha256": "58c1d9dd85c13ed35ecf18ab59f0dde039a131c4ee402e93e0ff6a1798293bc6"
+          "sha256": "088937b483133543bdd2969a9861abc441de8afc48c587c315c099eab78f2bf9"
         },
         "mid": {
           "file": "res://art/export/scenery_native/fornalha/campaign_mid.png",
@@ -1757,14 +1901,14 @@
             640,
             85
           ],
-          "sha256": "5022af435a33fa7682d6fbe615f554800b76000224aedf598c17ba34df815f61"
+          "sha256": "1af58bf11449a8408fa2c6e63f43888016d76a97f9246ef32ff4a73d8aa60eb8"
         },
         "near": {
           "file": "res://art/export/scenery_native/fornalha/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            2050,
+            770,
             500
           ],
           "scale": [
@@ -1772,10 +1916,64 @@
             2
           ],
           "size": [
-            1025,
+            385,
             250
           ],
-          "sha256": "17b2ba94594497125d33edda30f27851afcf079ae8c486cf58f6a66605a1c96e"
+          "sha256": "8ba58f352ad9df0db6a91183bb20e6bea39776f8d43125e38597d07479400a7c"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_under.png",
+          "rect": [
+            0,
+            492,
+            2560,
+            140
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            35
+          ],
+          "sha256": "b0907e4ce7d29bd42d288e89b9a1a142788f540c2e4569e976df02ff0ed50f3f"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_terrain.png",
+          "rect": [
+            0,
+            588,
+            2560,
+            132
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            33
+          ],
+          "sha256": "b11255238cf0b6c0f9a1a78388e68d0c3c8ef86b44dd06be866fd69e4805d5fc"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_foreground.png",
+          "rect": [
+            44,
+            660,
+            2516,
+            60
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            629,
+            15
+          ],
+          "sha256": "b88133ccfb7ccd5d25f87bfb492e64f98c8443bfa1aa81b45fe70fab0f11d07f"
         }
       },
       "lower_spans": [
@@ -1804,7 +2002,7 @@
             320,
             152
           ],
-          "sha256": "14090ef7b2b195460424d8dcf62012c1aa9b2ec2d85c317c1c89198f731805e4"
+          "sha256": "29f8eb52272290ba89360a2cae9e28bc87f302a4a81751e36626becc960d3a4e"
         },
         "mid": {
           "file": "res://art/export/scenery_native/fornalha/mid.png",
@@ -1822,7 +2020,7 @@
             320,
             85
           ],
-          "sha256": "35252c84b726c596f28d47d694c7dce068e010905df094174a0d3b4efaec6630"
+          "sha256": "4b197638718ca3a07170942ba35240953e6d8284459e6a847163aebd683d4de7"
         },
         "near": {
           "file": "res://art/export/scenery_native/fornalha/near.png",
@@ -1858,7 +2056,7 @@
             608,
             52
           ],
-          "sha256": "9d0e33437558c37778a50b6bd89e113fc98d41c455c0fcdd60313403f79dd2a5"
+          "sha256": "e7c987f6821627fd402a0181b5f32b2925ead19ff17fc7225600ee2e6970d399"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/fornalha/terrain.png",
@@ -1876,7 +2074,7 @@
             608,
             39
           ],
-          "sha256": "c9e273b9295070f259657f6a6bc50046693c440228937512e37f4ab758387f8f"
+          "sha256": "248b732b324cfec609a96eeae0f1cd87ca2b5796f363dfdf4c021c34fb3fa188"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/fornalha/crossings.png",
@@ -1950,23 +2148,41 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
-        "water": {
-          "file": "res://art/export/scenery_native/fornalha/water.png",
+        "water_back": {
+          "file": "res://art/export/scenery_native/fornalha/water_back.png",
           "rect": [
-            22,
-            334,
-            1258,
-            384
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
             2,
             2
           ],
           "size": [
-            629,
-            192
+            1,
+            1
           ],
-          "sha256": "d752fb0a60d4ef83bd6746a9bced6ea9795612e14de8036e3b6d5d2e162ec2f2"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/fornalha/water.png",
+          "rect": [
+            22,
+            562,
+            1254,
+            156
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            627,
+            78
+          ],
+          "sha256": "c4fffe937172c200abbf992f0d1e5f1b0ced41eb8a2ebe667cf1f28396df6f6b"
         },
         "sky": {
           "file": "res://art/export/scenery_native/fornalha/sky.png",
@@ -1984,7 +2200,7 @@
             320,
             180
           ],
-          "sha256": "edeb61bd4c5cadfbdd0859054d4d5fc8d4d1b7bb1df295187342e02146711d4d"
+          "sha256": "8306954fe825a32aef4793ded582bdae0f2b1a4c534bbbf361af8eeb9dea7e57"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/fornalha/clouds.png",
@@ -2002,7 +2218,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/fornalha/access_ladder.png",
@@ -2017,42 +2233,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/geada/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "2bb73494203f17c92cb459a04e5ced4519a442e8cd484234694af3dd4846233f"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/geada/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/geada/campaign_far.png",
           "rect": [
@@ -2069,7 +2249,7 @@
             640,
             110
           ],
-          "sha256": "64d50998c412e0de06cebfa255fd4179078c2b49f7e81a6d596959438854d248"
+          "sha256": "ce1d2113bec22a84701661e6d205c444f537568686df9c2dafdbe09bba1d02d6"
         },
         "mid": {
           "file": "res://art/export/scenery_native/geada/campaign_mid.png",
@@ -2087,14 +2267,14 @@
             639,
             102
           ],
-          "sha256": "a9ff0da6da59a0b14217c15bc83e777ea77ce0ae07cc2669de9054d8cbfdd284"
+          "sha256": "cb75a05077dbcdc321197d8ed5e33828425ed9f72d50614b30cac60e31294efc"
         },
         "near": {
           "file": "res://art/export/scenery_native/geada/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            1802,
+            522,
             500
           ],
           "scale": [
@@ -2102,10 +2282,64 @@
             2
           ],
           "size": [
-            901,
+            261,
             250
           ],
-          "sha256": "66d29be24cc54442c3a2f8ed4f89a5aada168f9b40aec2723823d0d491e6fbf2"
+          "sha256": "60d29a4c9ad32f2f80eb3a248070ff6fd805b7201ac1a8db4c55e18bd1938669"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/geada/campaign_under.png",
+          "rect": [
+            0,
+            492,
+            2560,
+            140
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            35
+          ],
+          "sha256": "1f54aefd8bab66412a557e0bb0169e1c88ac19fa0d3b3987f45543e8a0707d0f"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/geada/campaign_terrain.png",
+          "rect": [
+            0,
+            596,
+            2560,
+            96
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            24
+          ],
+          "sha256": "b3b5f0a7cc36eada75e99048556f24fdcefb2a5037d7049333e19c1b6128f4a1"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/geada/campaign_foreground.png",
+          "rect": [
+            48,
+            660,
+            2512,
+            60
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            628,
+            15
+          ],
+          "sha256": "5d005ca4cd979a15cb80689a34fc220f94011830a115c86c8ad6171f241912e6"
         }
       },
       "lower_spans": [
@@ -2134,7 +2368,7 @@
             320,
             110
           ],
-          "sha256": "5b8243334f86aec643a9fb97efe4ff1f4b9cb25fbae384c9cb2ede3e8739fec0"
+          "sha256": "2413ec1bb5ccab5db92541d32d20318024394ec0fac452d074bb28c7d4ab8001"
         },
         "mid": {
           "file": "res://art/export/scenery_native/geada/mid.png",
@@ -2152,7 +2386,7 @@
             319,
             102
           ],
-          "sha256": "bd8475846d1d9707c77da1969e80a23316b5d45b42b6c5ea3e11c60b4a1336c8"
+          "sha256": "a6b90fce808c529095b017197149bed79dacc32c612588158f65e702ed956a5f"
         },
         "near": {
           "file": "res://art/export/scenery_native/geada/near.png",
@@ -2188,7 +2422,7 @@
             608,
             52
           ],
-          "sha256": "fcb53a21e82474b93e1c3f883b1dc2de1704a7a67a27814635719fe075bec7ca"
+          "sha256": "80219a4599ffea1a6130afc00f71d63b954ec0201016e41530f48d778b2b0ff3"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/geada/terrain.png",
@@ -2206,7 +2440,7 @@
             608,
             49
           ],
-          "sha256": "5b1a601123a2631d6859fe78ba2b780124a4d0b47d44b698aff5b821e22b9759"
+          "sha256": "d2d3b67bca9f42b69104f0300f2defa74806823c1d25410f4996223406e8a39f"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/geada/crossings.png",
@@ -2280,6 +2514,24 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/geada/water_back.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
         "water": {
           "file": "res://art/export/scenery_native/geada/water.png",
           "rect": [
@@ -2314,7 +2566,7 @@
             320,
             180
           ],
-          "sha256": "77016532249e95a2f9d5c70138884a732c0670c27377c398cd640bf656e29f1d"
+          "sha256": "04e028613a7b5e51bbd298637b74e8cbc23e8324f8044935a533d3774907a73d"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/geada/clouds.png",
@@ -2332,7 +2584,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/geada/access_ladder.png",
@@ -2347,42 +2599,6 @@
         720
       ],
       "campaign_layers": {
-        "sky": {
-          "file": "res://art/export/scenery_native/sobraiz/campaign_sky.png",
-          "rect": [
-            0,
-            0,
-            2560,
-            720
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            640,
-            180
-          ],
-          "sha256": "7a7b630d05ec14e2750fead5f33cc1a1b8688f540728d60b7acb9b559b3c0b56"
-        },
-        "clouds": {
-          "file": "res://art/export/scenery_native/sobraiz/campaign_clouds.png",
-          "rect": [
-            48,
-            40,
-            2416,
-            216
-          ],
-          "scale": [
-            4,
-            4
-          ],
-          "size": [
-            604,
-            54
-          ],
-          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
-        },
         "far": {
           "file": "res://art/export/scenery_native/sobraiz/campaign_far.png",
           "rect": [
@@ -2399,7 +2615,7 @@
             640,
             119
           ],
-          "sha256": "9c5f89cf2ddcc10ebb2d64101796237e44765f890f7677423bda608acfa8feb2"
+          "sha256": "ac3fa73b3ef9e10d96f95f6a9a4ff1b1c9da9c9dc814c59a31ddbc3a290f035e"
         },
         "mid": {
           "file": "res://art/export/scenery_native/sobraiz/campaign_mid.png",
@@ -2417,14 +2633,14 @@
             640,
             121
           ],
-          "sha256": "83fc0b1b96ae09ce31445cee61d53315d093e0cabc954042179c1836aea619f7"
+          "sha256": "b028c8b3f479266b5586b078a691cee1a115a029f5612ea57c2abd196ecd63bc"
         },
         "near": {
           "file": "res://art/export/scenery_native/sobraiz/campaign_near.png",
           "rect": [
+            1296,
             16,
-            16,
-            2020,
+            740,
             500
           ],
           "scale": [
@@ -2432,10 +2648,64 @@
             2
           ],
           "size": [
-            1010,
+            370,
             250
           ],
-          "sha256": "9937d8f7025cca54663844910a66e7483de1b7272465cfb300604aba1940c9ec"
+          "sha256": "207adb4e4eaaff1d55194adf6ecd259d939eff5c3241d53b1e83f90af1fb2ef8"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_under.png",
+          "rect": [
+            0,
+            492,
+            2560,
+            140
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            35
+          ],
+          "sha256": "13c32057122d8868feffb96dc6f40bf040d4fecad92ab7eb96a3b977b93a286c"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_terrain.png",
+          "rect": [
+            0,
+            584,
+            2560,
+            136
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            34
+          ],
+          "sha256": "73e3c5cf7e4dc0307238f508e3e03c0180641db352d03907b261d07cc4e60e61"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_foreground.png",
+          "rect": [
+            44,
+            664,
+            2516,
+            56
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            629,
+            14
+          ],
+          "sha256": "64242b5985850cc2dd4667b003041d8cea20418a1e1ca5a3c5e6cf5b0bc1dca8"
         }
       },
       "lower_spans": [
@@ -2464,7 +2734,7 @@
             320,
             119
           ],
-          "sha256": "d96152fca144fbf190df95de437fd08af06bc3b4b16598366fef6b2589b74d42"
+          "sha256": "08c129def68fc6f0b7a24537b09b8cfb105f18d05c39e3df16dd41cdc6747d76"
         },
         "mid": {
           "file": "res://art/export/scenery_native/sobraiz/mid.png",
@@ -2482,7 +2752,7 @@
             320,
             121
           ],
-          "sha256": "17525087008c8f000ea2577fa946d0bf52dacfd672b514b24ad2802b7e35906a"
+          "sha256": "e544648e476afdc5ba4fbe5ae0cf833f385486db70ba600915414adbecf0462a"
         },
         "near": {
           "file": "res://art/export/scenery_native/sobraiz/near.png",
@@ -2518,7 +2788,7 @@
             608,
             52
           ],
-          "sha256": "95dce75b8e5dc28c3da2aa33014322eda53b5b42a764602dd118f939a109f1c5"
+          "sha256": "93dd6900bff8da4f30182438570c5d97cdc1668417219fd072bc10c69b984963"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/sobraiz/terrain.png",
@@ -2536,7 +2806,7 @@
             608,
             51
           ],
-          "sha256": "bc7156833018726fb798190c1a5a0421c4eeeb82a15e6c6f0e4a2dd7b74f9fc9"
+          "sha256": "642140b75c61972a16fcd3311e00801025021341c2ade39605fce5872ca63670"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/sobraiz/crossings.png",
@@ -2610,6 +2880,24 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/sobraiz/water_back.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
         "water": {
           "file": "res://art/export/scenery_native/sobraiz/water.png",
           "rect": [
@@ -2644,7 +2932,7 @@
             320,
             180
           ],
-          "sha256": "0854b21654d7f51fa20ff20e0a2a4d545897e3ef24f5e6debcaeb2bea8100f81"
+          "sha256": "bb0ada10e646b72365382f25af21e013c36d6ee34897c3cb69b8a921ea3f6441"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/sobraiz/clouds.png",
@@ -2662,7 +2950,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/sobraiz/access_ladder.png",
@@ -2703,7 +2991,7 @@
             320,
             114
           ],
-          "sha256": "f371f2085704428283d72ae69e2bb8932d7752cf447c5b4c62fdf367ceafe1f3"
+          "sha256": "7fc10a500b1876ff3786030e903de83351ef6f49822ed70cdf50f3730bc2f420"
         },
         "mid": {
           "file": "res://art/export/scenery_native/porto/mid.png",
@@ -2721,7 +3009,7 @@
             320,
             108
           ],
-          "sha256": "d3c19519ec573f9bc73e8e191a126c6c20516f74b70eedabb6c87445ba9f3fd2"
+          "sha256": "8231a4dc76ef0056bde0a1d9b106e61565479c5ee62f89b40beddebafd082ce5"
         },
         "near": {
           "file": "res://art/export/scenery_native/porto/near.png",
@@ -2757,7 +3045,7 @@
             608,
             52
           ],
-          "sha256": "6b00a895d04bf272030d600b0760b98d9ca15ee8fcf6adb23cb6997d8160ffe5"
+          "sha256": "1657dd60b8d79e9dbcc349b9c8f92fb53640b16d133d919aed125b08dbfb4250"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/porto/terrain.png",
@@ -2775,7 +3063,7 @@
             608,
             44
           ],
-          "sha256": "f51ac4fd57582107a0d2f5f229a3f589bd5ca62259b1b5e3da55dca5bfde6a22"
+          "sha256": "7b74f579bc488d7502d27a9b27db86bc1b8e06e8985fd7ae757465c8a3191a3d"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/porto/crossings.png",
@@ -2849,13 +3137,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/porto/water_back.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
         "water": {
           "file": "res://art/export/scenery_native/porto/water.png",
           "rect": [
             0,
-            258,
+            530,
             1280,
-            462
+            190
           ],
           "scale": [
             2,
@@ -2863,9 +3169,9 @@
           ],
           "size": [
             640,
-            231
+            95
           ],
-          "sha256": "98aede350d38335666c943b29c4786a1c7bc1e2d08f6991a3ab551f0ff94249a"
+          "sha256": "38276a02c9e1b8cadce8b3b64fdf4b02512ddc186bdb9b2e6f1bb21d49fc2c53"
         },
         "sky": {
           "file": "res://art/export/scenery_native/porto/sky.png",
@@ -2883,7 +3189,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/porto/clouds.png",
@@ -2901,7 +3207,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/porto/access_ladder.png",
@@ -2947,7 +3253,7 @@
             320,
             127
           ],
-          "sha256": "728eb4b02a79748f4d4732d0e7859033420ae296604336820ea90407e9faacf9"
+          "sha256": "95ec88d90dc02307349cbb32bc69f8006d335f685bf8aed538410b8530c2902b"
         },
         "mid": {
           "file": "res://art/export/scenery_native/lago/mid.png",
@@ -2965,7 +3271,7 @@
             320,
             84
           ],
-          "sha256": "2daa942d5c36043394009d0d39dde90dead296cd147478e40ec2fe3bef17ca6e"
+          "sha256": "1af21b5d015c0b6add351c83aedc90ccbe3b934d475b64de82f4299c4650f067"
         },
         "near": {
           "file": "res://art/export/scenery_native/lago/near.png",
@@ -3001,7 +3307,7 @@
             608,
             52
           ],
-          "sha256": "23a35deab7f3fb2d70309a346f48748b046eb1bfc8d6e9433e69106d6bc7cab2"
+          "sha256": "9656a6fd02ade5a44a062ed9373e79fd3f639ce3213e67cf8054ca97ec009223"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/lago/terrain.png",
@@ -3019,7 +3325,7 @@
             608,
             51
           ],
-          "sha256": "c2563c016d5e8086c1095492480b9e596dab7bd9ccac8e1c93ccf4607b61f7b6"
+          "sha256": "d71933bffd4f20673c97fd95de2bdaff9759399a678f4ce8fa2649437c256067"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/lago/crossings.png",
@@ -3093,13 +3399,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/lago/water_back.png",
+          "rect": [
+            0,
+            464,
+            1278,
+            54
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            639,
+            27
+          ],
+          "sha256": "90fef87ff647386e08b706a04c4339053eef320fe2c8e56b88f4544e57d45b56"
+        },
         "water": {
           "file": "res://art/export/scenery_native/lago/water.png",
           "rect": [
             0,
-            92,
+            518,
             1280,
-            592
+            188
           ],
           "scale": [
             2,
@@ -3107,9 +3431,9 @@
           ],
           "size": [
             640,
-            296
+            94
           ],
-          "sha256": "0dcf76039821422152e3d5ca05bd20780af8bc2aaff4a926552941779bf5a2f9"
+          "sha256": "7f6d19870f899ad0a52ecee17842d4ddc7263d3d19a50cdcbc3e7602326d1245"
         },
         "sky": {
           "file": "res://art/export/scenery_native/lago/sky.png",
@@ -3127,7 +3451,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/lago/clouds.png",
@@ -3145,7 +3469,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/lago/access_ladder.png",
@@ -3191,7 +3515,7 @@
             320,
             87
           ],
-          "sha256": "246fba7b627f80b7fbb26c3f9dd738872243dddfd2f354d56104cbd33129c71e"
+          "sha256": "5ba75f244dd420cfd41cd2082c1abcd42bd7b8d2e5a1fe3feae60cf7017a9fa0"
         },
         "mid": {
           "file": "res://art/export/scenery_native/rio/mid.png",
@@ -3209,7 +3533,7 @@
             320,
             98
           ],
-          "sha256": "6a73b1f3d57835c113eb1ec33f398611055919f0c1f72d2f4057d123e67141c8"
+          "sha256": "d1acfcf89d36b5c53baa62279e73e3c05e9d910585f49d25b39fbd7deb938827"
         },
         "near": {
           "file": "res://art/export/scenery_native/rio/near.png",
@@ -3245,7 +3569,7 @@
             608,
             52
           ],
-          "sha256": "786d395f8325bbb971e9b2676b222de91f2e6d42edcc8af125197c1cd9ec3739"
+          "sha256": "22c9c30445bf3ea4bad16f9a03450cec94878ab060fe99be87faa19db2068564"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/rio/terrain.png",
@@ -3263,7 +3587,7 @@
             608,
             51
           ],
-          "sha256": "4484e5471c252d313aa79977086ee5219496fa089a1d070f87e0d786938ddbdc"
+          "sha256": "a92c9a0c5db5cb498f7651d6951ab317f1d0f358c8bb79b26dd7df3258971686"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/rio/crossings.png",
@@ -3337,13 +3661,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/rio/water_back.png",
+          "rect": [
+            378,
+            460,
+            460,
+            58
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            230,
+            29
+          ],
+          "sha256": "01c4c4146dc10b2500b32046e1a8a41245b63df6811ea376e16ecb03afb8ae5c"
+        },
         "water": {
           "file": "res://art/export/scenery_native/rio/water.png",
           "rect": [
             0,
-            84,
+            518,
             1280,
-            636
+            202
           ],
           "scale": [
             2,
@@ -3351,9 +3693,9 @@
           ],
           "size": [
             640,
-            318
+            101
           ],
-          "sha256": "4627315ff8a43758993c5a94e64144f31b9a62537e2407f3cfc7e812754f9726"
+          "sha256": "70292f3268bdbcc8658b22a3ddceed1fdb62484b9481ebed3241923ceba77e02"
         },
         "sky": {
           "file": "res://art/export/scenery_native/rio/sky.png",
@@ -3371,7 +3713,7 @@
             320,
             180
           ],
-          "sha256": "1f931d1edb22e1deead57ba41aa550cbae9d75619d8d8da7bbb7a2b84bc9ffe2"
+          "sha256": "04e6c896bc42809ee4cae9f3d78b862714401460a9f8f463116b338d5e64da9d"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/rio/clouds.png",
@@ -3389,7 +3731,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/rio/access_ladder.png",
@@ -3435,7 +3777,7 @@
             320,
             132
           ],
-          "sha256": "a78de537132ee6f0eb7b39a7ead3a21bf504a2ed6b37dc19c4d5c7a857931119"
+          "sha256": "5f6a3bd2b34ed43fd09da61044c2a2abf1a4057376b7b7efabafc28ef42d3ba9"
         },
         "mid": {
           "file": "res://art/export/scenery_native/enramados_bruma/mid.png",
@@ -3453,7 +3795,7 @@
             320,
             108
           ],
-          "sha256": "d67b5899cbda23a1cb50d5c0ca6b8e71bc7e64604c8a6caaeb30cf8f735d4491"
+          "sha256": "8b3eef60ae40b90960d2e0de13f4eb78c052a3cc68e2f37234ac0640f01f9f4a"
         },
         "near": {
           "file": "res://art/export/scenery_native/enramados_bruma/near.png",
@@ -3489,7 +3831,7 @@
             608,
             52
           ],
-          "sha256": "93202f5b52605a119150f46ef8cad53c6bec1083f706b6d50493b60164617698"
+          "sha256": "3468fa96f2c419387e7c1efbc39f34cbfd7b5146515a3c09106824f6f97a3431"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/enramados_bruma/terrain.png",
@@ -3507,7 +3849,7 @@
             608,
             40
           ],
-          "sha256": "c4de3b3cad09008b5de86c0957adb9335d6d7ace9f49195a71835bda054cb22f"
+          "sha256": "e5a8a62a90804ebe2541c730729266b2b5c9baf5838a0b6b7c0975e85e56df16"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/enramados_bruma/crossings.png",
@@ -3581,13 +3923,31 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
+        "water_back": {
+          "file": "res://art/export/scenery_native/enramados_bruma/water_back.png",
+          "rect": [
+            288,
+            474,
+            978,
+            44
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            489,
+            22
+          ],
+          "sha256": "db09425f4cf1fbe49c91c14e742563bd2a93f5efc3ff641bf78a895583b6d7ac"
+        },
         "water": {
           "file": "res://art/export/scenery_native/enramados_bruma/water.png",
           "rect": [
             6,
-            120,
+            518,
             1264,
-            596
+            200
           ],
           "scale": [
             2,
@@ -3595,9 +3955,9 @@
           ],
           "size": [
             632,
-            298
+            100
           ],
-          "sha256": "be2c80f83cdaa79b53c19049029d6c3804b915b9e559bd6c3cc1b2f79baa4d80"
+          "sha256": "3c18b5bf9cfbeb80d050299a76deb57ff52da71e9b3f66b74a7d563e5cd1f28b"
         },
         "sky": {
           "file": "res://art/export/scenery_native/enramados_bruma/sky.png",
@@ -3615,7 +3975,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/enramados_bruma/clouds.png",
@@ -3633,7 +3993,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/enramados_bruma/access_ladder.png",
@@ -3679,7 +4039,7 @@
             320,
             137
           ],
-          "sha256": "64c2df1d92563767fe1ae9a2a53e65bfe19774ff84dbcc3a20a4c7b333e8ebcb"
+          "sha256": "c68ba8e70cd99b78202d819f01f39187ac2b3bd013808896abd5a1a0c3b97b1c"
         },
         "mid": {
           "file": "res://art/export/scenery_native/fenda_geada/mid.png",
@@ -3697,7 +4057,7 @@
             317,
             83
           ],
-          "sha256": "79472484a92ab3c7a452a9f3df30758475dfff7d3996278681c5817e0662cfa9"
+          "sha256": "97923a7372c47c81644d5bca6c980725b43b7ea9b7c7045604c61e424fe9287d"
         },
         "near": {
           "file": "res://art/export/scenery_native/fenda_geada/near.png",
@@ -3733,7 +4093,7 @@
             608,
             52
           ],
-          "sha256": "f141f01905ffe1a3ad683fde25dc3d5c37cb0b3a4158adbe9ad45a8fb494b815"
+          "sha256": "22e4003147a027a11ffa916b74507baeea551737d8f388e2a812a233538baf19"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/fenda_geada/terrain.png",
@@ -3751,7 +4111,7 @@
             608,
             49
           ],
-          "sha256": "5b4136649d82b4e33e98c2662c269d99387e4f64c7947d7cfa8aa2c13b2cec15"
+          "sha256": "3f1464b3fb647515fb31416e08c1b5c65d6628f7f1a1c2e0c079b3ac3a8e8538"
         },
         "crossings": {
           "file": "res://art/export/scenery_native/fenda_geada/crossings.png",
@@ -3825,23 +4185,41 @@
           ],
           "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         },
-        "water": {
-          "file": "res://art/export/scenery_native/fenda_geada/water.png",
+        "water_back": {
+          "file": "res://art/export/scenery_native/fenda_geada/water_back.png",
           "rect": [
-            116,
-            58,
-            1072,
-            654
+            468,
+            450,
+            326,
+            68
           ],
           "scale": [
             2,
             2
           ],
           "size": [
-            536,
-            327
+            163,
+            34
           ],
-          "sha256": "4534b1dd4e76f1fe5a14a3c271da054d0e9e9ccb50307ec5283706152d6c118e"
+          "sha256": "f155319896190feaa78c680e4c303eb01f5aeda2dcf3e85eea16c54bc65c2d48"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/fenda_geada/water.png",
+          "rect": [
+            120,
+            518,
+            1062,
+            198
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            531,
+            99
+          ],
+          "sha256": "4bcd8bc32153ad4d23094430d68019035a1beac68b8db869c83fa51dc1723124"
         },
         "sky": {
           "file": "res://art/export/scenery_native/fenda_geada/sky.png",
@@ -3859,7 +4237,7 @@
             320,
             180
           ],
-          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+          "sha256": "0f3ba341da7284f8a86d7d6ff15c439bf610cfb4e516bd96f2254d1fd1e81f80"
         },
         "clouds": {
           "file": "res://art/export/scenery_native/fenda_geada/clouds.png",
@@ -3877,7 +4255,7 @@
             284,
             54
           ],
-          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+          "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
       "ladder": "res://art/export/scenery_native/fenda_geada/access_ladder.png",

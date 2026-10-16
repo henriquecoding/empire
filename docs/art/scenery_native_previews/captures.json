@@ -7,7 +7,7 @@
 	"captures": [
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "enramados_base",
 			"image": "enramados_base_surface.png",
 			"player": [
@@ -15,11 +15,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30375495.0
+			"texture_bytes": 30376067.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "enramados_base",
 			"image": "enramados_base_underground.png",
 			"player": [
@@ -27,11 +27,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30375495.0
+			"texture_bytes": 30376067.0
 		},
 		{
 			"constructed": false,
-			"draw_calls": 12.0,
+			"draw_calls": 14.0,
 			"id": "enramados_base",
 			"image": "enramados_base_empty.png",
 			"player": [
@@ -39,11 +39,11 @@
 				618.5
 			],
 			"state": "empty",
-			"texture_bytes": 30375495.0
+			"texture_bytes": 30376067.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "enramados_lua",
 			"image": "enramados_lua_surface.png",
 			"player": [
@@ -51,11 +51,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30375495.0
+			"texture_bytes": 30376067.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "enramados_lua",
 			"image": "enramados_lua_underground.png",
 			"player": [
@@ -63,11 +63,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30375495.0
+			"texture_bytes": 30376067.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "bruma_base",
 			"image": "bruma_base_surface.png",
 			"player": [
@@ -75,11 +75,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31051463.0
+			"texture_bytes": 30497231.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "bruma_base",
 			"image": "bruma_base_underground.png",
 			"player": [
@@ -87,11 +87,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31051463.0
+			"texture_bytes": 30497231.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "bruma_nevoa",
 			"image": "bruma_nevoa_surface.png",
 			"player": [
@@ -99,11 +99,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31051463.0
+			"texture_bytes": 30497231.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "bruma_nevoa",
 			"image": "bruma_nevoa_underground.png",
 			"player": [
@@ -111,11 +111,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31051463.0
+			"texture_bytes": 30497231.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "horta_base",
 			"image": "horta_base_surface.png",
 			"player": [
@@ -123,11 +123,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30031131.0
+			"texture_bytes": 30031703.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "horta_base",
 			"image": "horta_base_underground.png",
 			"player": [
@@ -135,11 +135,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30031131.0
+			"texture_bytes": 30031703.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "horta_colheita",
 			"image": "horta_colheita_surface.png",
 			"player": [
@@ -147,11 +147,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30031131.0
+			"texture_bytes": 30031703.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "horta_colheita",
 			"image": "horta_colheita_underground.png",
 			"player": [
@@ -159,11 +159,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30031131.0
+			"texture_bytes": 30031703.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "portuarios_base",
 			"image": "portuarios_base_surface.png",
 			"player": [
@@ -171,11 +171,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30898795.0
+			"texture_bytes": 30462487.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "portuarios_base",
 			"image": "portuarios_base_underground.png",
 			"player": [
@@ -183,11 +183,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30898795.0
+			"texture_bytes": 30462487.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "portuarios_mare_baixa",
 			"image": "portuarios_mare_baixa_surface.png",
 			"player": [
@@ -195,11 +195,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30898795.0
+			"texture_bytes": 30462487.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "portuarios_mare_baixa",
 			"image": "portuarios_mare_baixa_underground.png",
 			"player": [
@@ -207,11 +207,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30898795.0
+			"texture_bytes": 30462487.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "fenda_base",
 			"image": "fenda_base_surface.png",
 			"player": [
@@ -219,11 +219,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31259299.0
+			"texture_bytes": 30506719.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "fenda_base",
 			"image": "fenda_base_underground.png",
 			"player": [
@@ -231,11 +231,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31259299.0
+			"texture_bytes": 30506719.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "fenda_luar",
 			"image": "fenda_luar_surface.png",
 			"player": [
@@ -243,11 +243,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31259299.0
+			"texture_bytes": 30506719.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "fenda_luar",
 			"image": "fenda_luar_underground.png",
 			"player": [
@@ -255,11 +255,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31259299.0
+			"texture_bytes": 30506719.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "fornalha_base",
 			"image": "fornalha_base_surface.png",
 			"player": [
@@ -267,11 +267,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30913735.0
+			"texture_bytes": 30530519.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "fornalha_base",
 			"image": "fornalha_base_underground.png",
 			"player": [
@@ -279,11 +279,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30913735.0
+			"texture_bytes": 30530519.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "fornalha_brasas",
 			"image": "fornalha_brasas_surface.png",
 			"player": [
@@ -291,11 +291,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30913735.0
+			"texture_bytes": 30530519.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "fornalha_brasas",
 			"image": "fornalha_brasas_underground.png",
 			"player": [
@@ -303,11 +303,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30913735.0
+			"texture_bytes": 30530519.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "geada_base",
 			"image": "geada_base_surface.png",
 			"player": [
@@ -315,11 +315,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30050879.0
+			"texture_bytes": 30051451.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "geada_base",
 			"image": "geada_base_underground.png",
 			"player": [
@@ -327,11 +327,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30050879.0
+			"texture_bytes": 30051451.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "geada_aurora",
 			"image": "geada_aurora_surface.png",
 			"player": [
@@ -339,11 +339,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30050879.0
+			"texture_bytes": 30051451.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "geada_aurora",
 			"image": "geada_aurora_underground.png",
 			"player": [
@@ -351,11 +351,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30050879.0
+			"texture_bytes": 30051451.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "sobraiz_base",
 			"image": "sobraiz_base_surface.png",
 			"player": [
@@ -363,11 +363,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30393707.0
+			"texture_bytes": 30394279.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "sobraiz_base",
 			"image": "sobraiz_base_underground.png",
 			"player": [
@@ -375,11 +375,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30393707.0
+			"texture_bytes": 30394279.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "sobraiz_umida",
 			"image": "sobraiz_umida_surface.png",
 			"player": [
@@ -387,11 +387,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30393707.0
+			"texture_bytes": 30394279.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "sobraiz_umida",
 			"image": "sobraiz_umida_underground.png",
 			"player": [
@@ -399,11 +399,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30393707.0
+			"texture_bytes": 30394279.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "porto_crepusculo",
 			"image": "porto_crepusculo_surface.png",
 			"player": [
@@ -411,11 +411,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31506459.0
+			"texture_bytes": 31042711.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "porto_crepusculo",
 			"image": "porto_crepusculo_underground.png",
 			"player": [
@@ -423,11 +423,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31506459.0
+			"texture_bytes": 31042711.0
 		},
 		{
 			"constructed": false,
-			"draw_calls": 12.0,
+			"draw_calls": 14.0,
 			"id": "porto_crepusculo",
 			"image": "porto_crepusculo_empty.png",
 			"player": [
@@ -435,11 +435,11 @@
 				618.5
 			],
 			"state": "empty",
-			"texture_bytes": 31506459.0
+			"texture_bytes": 31042711.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "porto_noite",
 			"image": "porto_noite_surface.png",
 			"player": [
@@ -447,11 +447,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31506459.0
+			"texture_bytes": 31042711.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 18.0,
 			"id": "porto_noite",
 			"image": "porto_noite_underground.png",
 			"player": [
@@ -459,11 +459,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31506459.0
+			"texture_bytes": 31042711.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "lago_outono",
 			"image": "lago_outono_surface.png",
 			"player": [
@@ -471,11 +471,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31662359.0
+			"texture_bytes": 31063447.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "lago_outono",
 			"image": "lago_outono_underground.png",
 			"player": [
@@ -483,11 +483,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31662359.0
+			"texture_bytes": 31063447.0
 		},
 		{
 			"constructed": false,
-			"draw_calls": 12.0,
+			"draw_calls": 14.0,
 			"id": "lago_outono",
 			"image": "lago_outono_empty.png",
 			"player": [
@@ -495,11 +495,11 @@
 				618.5
 			],
 			"state": "empty",
-			"texture_bytes": 31662359.0
+			"texture_bytes": 31063447.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "lago_geada",
 			"image": "lago_geada_surface.png",
 			"player": [
@@ -507,11 +507,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31662359.0
+			"texture_bytes": 31063447.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "lago_geada",
 			"image": "lago_geada_underground.png",
 			"player": [
@@ -519,11 +519,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31662359.0
+			"texture_bytes": 31063447.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "rio_chuva",
 			"image": "rio_chuva_surface.png",
 			"player": [
@@ -531,11 +531,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31799655.0
+			"texture_bytes": 31094435.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "rio_chuva",
 			"image": "rio_chuva_underground.png",
 			"player": [
@@ -543,11 +543,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31799655.0
+			"texture_bytes": 31094435.0
 		},
 		{
 			"constructed": false,
-			"draw_calls": 12.0,
+			"draw_calls": 14.0,
 			"id": "rio_chuva",
 			"image": "rio_chuva_empty.png",
 			"player": [
@@ -555,11 +555,11 @@
 				618.5
 			],
 			"state": "empty",
-			"texture_bytes": 31799655.0
+			"texture_bytes": 31094435.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "rio_luar",
 			"image": "rio_luar_surface.png",
 			"player": [
@@ -567,11 +567,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31799655.0
+			"texture_bytes": 31094435.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "rio_luar",
 			"image": "rio_luar_underground.png",
 			"player": [
@@ -579,11 +579,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31799655.0
+			"texture_bytes": 31094435.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "enramados_bruma",
 			"image": "enramados_bruma_surface.png",
 			"player": [
@@ -591,11 +591,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 31077211.0
+			"texture_bytes": 30467699.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "enramados_bruma",
 			"image": "enramados_bruma_underground.png",
 			"player": [
@@ -603,11 +603,11 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 31077211.0
+			"texture_bytes": 30467699.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "fenda_geada",
 			"image": "fenda_geada_surface.png",
 			"player": [
@@ -615,11 +615,11 @@
 				517.0
 			],
 			"state": "surface",
-			"texture_bytes": 30861051.0
+			"texture_bytes": 30236663.0
 		},
 		{
 			"constructed": true,
-			"draw_calls": 14.0,
+			"draw_calls": 20.0,
 			"id": "fenda_geada",
 			"image": "fenda_geada_underground.png",
 			"player": [
@@ -627,7 +627,7 @@
 				618.5
 			],
 			"state": "underground",
-			"texture_bytes": 30861051.0
+			"texture_bytes": 30236663.0
 		}
 	],
 	"driver": "opengl3",

@@ -278,19 +278,19 @@ Os planos naturais abaixo substituem os planos homonimos da entrega anterior pel
 
 | Familia | Uso | Camadas nativas | Fonte editavel |
 |---|---|---|---|
-| Enramados (enramados) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/enramados/layers.ora |
-| Bruma (bruma) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/bruma/layers.ora |
-| Horta (horta) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/horta/layers.ora |
-| Portuários (portuarios) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/portuarios/layers.ora |
-| Fenda (fenda) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/fenda/layers.ora |
-| Fornalha (fornalha) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/fornalha/layers.ora |
-| Geada (geada) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/geada/layers.ora |
-| SobRaiz (sobraiz) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/sobraiz/layers.ora |
-| Porto Central (porto) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/porto/layers.ora |
-| Lago das Ruínas (lago) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/lago/layers.ora |
-| Rio das Azenhas (rio) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/rio/layers.ora |
-| Enramados → Bruma (enramados_bruma) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/enramados_bruma/layers.ora |
-| Fenda → Geada (fenda_geada) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water, sky, clouds | art/export/scenery_native/fenda_geada/layers.ora |
+| Enramados (enramados) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/enramados/layers.ora |
+| Bruma (bruma) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/bruma/layers.ora |
+| Horta (horta) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/horta/layers.ora |
+| Portuários (portuarios) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/portuarios/layers.ora |
+| Fenda (fenda) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fenda/layers.ora |
+| Fornalha (fornalha) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fornalha/layers.ora |
+| Geada (geada) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/geada/layers.ora |
+| SobRaiz (sobraiz) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/sobraiz/layers.ora |
+| Porto Central (porto) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/porto/layers.ora |
+| Lago das Ruínas (lago) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/lago/layers.ora |
+| Rio das Azenhas (rio) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/rio/layers.ora |
+| Enramados → Bruma (enramados_bruma) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/enramados_bruma/layers.ora |
+| Fenda → Geada (fenda_geada) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fenda_geada/layers.ora |
 
 Catalogo: 13 familias, 24 cenas. Módulos de 64 px, PNGs recortados ao alfa, export nearest de 2/4 px, paleta limitada sem dithering. Validacao executada: docs/art/scenery_native_validation.json; guia: docs/art/NATIVE_SCENERY.md.
 
