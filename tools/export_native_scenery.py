@@ -4,6 +4,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 from PIL import Image
+from native_scenery_access import close_water_border
 from native_scenery_pixels import (
     campaign_ground_layers, cell, clean, export_layer, frame, hero, ladder, legacy_layer, natural,
     palette, props, structure_group, terrain, verify_layer, warp_structures, water_layers,
@@ -49,8 +50,8 @@ def family_layers(job, legacy):
     under, bottom, crossing = terrain(plates[4], spans)
     water_back, water_front = water_layers(plates[5]) if job["water"] else (frame(), frame())
     if family == "lago":
-        # Extrude the valid water pixels over the transparent atlas border.
-        water_front.paste(water_front.crop((0, 704, 1280, 712)), (0, 712))
+        # Close transparent atlas padding and remove the warm divider bleed.
+        water_front = close_water_border(water_front)
     landmark = Image.open(SOURCE / "hero" / (HERO.get(family, family) + ".png"))
     architecture = structure_group(plates[6], family)
     if family in ARCH:

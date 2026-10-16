@@ -44,7 +44,7 @@ jobs:
           path: |
             art/export/scenery_native
             scenes/scenery_native
-          key: native-scenery-${{ hashFiles('art/source/scenery_native/**', 'tools/export_native_scenery.py', 'tools/native_scenery_pixels.py', 'tools/native_scenery_modules.py') }}
+          key: native-scenery-${{ hashFiles('art/source/scenery_native/**', 'tools/export_native_scenery.py', 'tools/native_scenery_pixels.py', 'tools/native_scenery_modules.py', 'tools/native_scenery_access.py') }}
       - name: Compile native layers, modules and editable sources
         if: steps.native-cache.outputs.cache-hit != 'true'
         run: python3 tools/export_native_scenery.py

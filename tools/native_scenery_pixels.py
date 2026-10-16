@@ -108,10 +108,8 @@ def warp_structures(plate, upper, lower):
 
 
 def ladder(plate):
-    # Atlas prop 1 is the separately generated access ladder.
-    part = plate.crop((0, 0, round(plate.width * .29), plate.height))
-    box = part.getbbox()
-    return part.crop(box).resize((24, 51), NEAREST) if box else Image.new("RGBA", (24, 51))
+    from native_scenery_access import access_ladder
+    return access_ladder(plate)
 
 
 def props(plate):
