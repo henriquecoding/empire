@@ -58,7 +58,7 @@ jobs:
           key: ${{ steps.native-cache.outputs.cache-primary-key }}
       - name: Format and lint new GDScript
         run: |
-          gdformat src/world/native*.gd src/world/scenery_art.gd tools/*native*.gd tests/native_scenery_test.gd
+          gdformat src/world/native*.gd src/world/scenery_art.gd tools/*native*.gd tools/check_scenery_export.gd tests/native_scenery_test.gd
           gdlint src/world/native*.gd tools/*native*.gd tests/native_scenery_test.gd
       - uses: ./.github/actions/godot
       - name: Import with strict script diagnostics
@@ -98,7 +98,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add --update
           git add art/export/scenery_native scenes/scenery_native docs/art/scenery_native_validation.json docs/art/scenery_native_previews
-          git add src/world/native*.gd.uid tools/*native*.gd.uid tests/native_scenery_test.gd.uid shaders/native_scenery_variant.gdshader.uid
+          git add src/world/native*.gd.uid tools/*native*.gd.uid tests/native_scenery_test.gd.uid shaders/native_scenery_variant.gdshader.uid tools/check_scenery_export.gd.uid
           if ! git diff --cached --quiet; then
             git commit -m "Exporta e verifica os cenários nativos no Godot (CV-02)"
             git push origin "HEAD:$WORK_BRANCH"

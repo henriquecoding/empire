@@ -5,6 +5,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOTS = ["art/source/scenery_native", "art/export/scenery_native", "scenes/scenery_native"]
 CODE = [
+    "tools/check_scenery_export.gd",
     "src/world/scenery_art.gd", "export_presets.cfg",
     "src/world/native_scenery_catalog.gd", "src/world/native_actor_fit.gd",
     "src/world/native_scenery_actor.gd", "src/world/native_scenery_stage.gd",

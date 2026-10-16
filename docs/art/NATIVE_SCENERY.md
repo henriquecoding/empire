@@ -65,3 +65,12 @@ com novos portos nem desempenho em um dispositivo físico.
 
 Fontes e pacotes de referência anteriores foram preservados. Não se misturou
 um ZIP antigo com a entrega nova.
+
+
+## Conteúdo do jogo exportado
+
+Os presets de Linux, Windows e Web incluem as texturas da campanha e deixam
+fora os atlas de edição, os prefabs de revisão e as cópias antigas substituídas.
+Esses materiais continuam disponíveis no projeto e no pacote de produção.
+O CI abre os três PCKs em um projeto vazio e confere a presença das texturas
+usadas pelo jogo, além da exclusão dos materiais de revisão.
