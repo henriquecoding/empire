@@ -85,55 +85,55 @@
           "file": "res://art/export/scenery_native/enramados/campaign_under.png",
           "rect": [
             0,
-            492,
+            496,
             2560,
-            140
+            122
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            35
+            1280,
+            61
           ],
-          "sha256": "f2a930fdfb91a6f8f9401c6428f2f1b15b6c74a34d5af1e6891509624801b616"
+          "sha256": "5b32d60714c6150768e9d2fbfc2b885b2d486a47d784ba742c216f57f097270a"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/enramados/campaign_terrain.png",
           "rect": [
             0,
-            588,
+            618,
             2560,
-            132
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            33
+            1280,
+            51
           ],
-          "sha256": "07ed6a2a0506a0bf6330440a37e374fd337374732ca7bf8372107f69a7bb7707"
+          "sha256": "45d0bab5002d6c313f8a7838c605dc6787bbd6041e989a4e274542ea825e98da"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/enramados/campaign_foreground.png",
           "rect": [
-            48,
-            664,
-            2512,
-            56
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            628,
-            14
+            1,
+            1
           ],
-          "sha256": "304df9f9893420a84c34b13e33f0af9be9481750e28bc0c7ae5a21ab719329ca"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -451,55 +451,55 @@
           "file": "res://art/export/scenery_native/bruma/campaign_under.png",
           "rect": [
             0,
-            492,
+            496,
             2560,
-            140
+            122
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            35
+            1280,
+            61
           ],
-          "sha256": "f78d2ccc46597c43ccf98036ffb28c02de3ad4f4a1e5ee3009487651add8056a"
+          "sha256": "1a7a5ef1444934adc868c707a227637602523947f082eb47a4c830bd9f166faa"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/bruma/campaign_terrain.png",
           "rect": [
             0,
-            596,
+            618,
             2560,
-            96
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            24
+            1280,
+            51
           ],
-          "sha256": "6a808f14f07f6e9eedab0e27f26cf92ea82dab990ae943df454dd7a40ea526cc"
+          "sha256": "7ed625a5b2be6e262e02a2379fc77ad282e35fb647603f326140bee97675b2ae"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/bruma/campaign_foreground.png",
           "rect": [
-            56,
-            664,
-            2504,
-            56
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            626,
-            14
+            1,
+            1
           ],
-          "sha256": "26c19b84b71322340f70d75cfc837ca5624d2ef833bcf07fcf9ffedd13adddb9"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -822,55 +822,55 @@
           "file": "res://art/export/scenery_native/horta/campaign_under.png",
           "rect": [
             0,
-            488,
+            514,
             2560,
-            144
+            104
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            36
+            1280,
+            52
           ],
-          "sha256": "71293dc64c15ab8273a14d6f94be83e1e66d19c2c0947e31c9af095b92001022"
+          "sha256": "f6bf6a92dd63d78f48bf1daee629c48ca16aa6e7a83a3d2bfefbe9d31ab9900a"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/horta/campaign_terrain.png",
           "rect": [
             0,
-            596,
+            618,
             2560,
-            96
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            24
+            1280,
+            51
           ],
-          "sha256": "e1e630623bf54fa86c09ad3942da8dc2ddab2ace303e3a15b84bae76d15ed523"
+          "sha256": "f05038472a3d33ce154107032c64e5319455c26b1f3dd44e7e77cce4ffa1d6ec"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/horta/campaign_foreground.png",
           "rect": [
-            48,
-            660,
-            2512,
-            60
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            628,
-            15
+            1,
+            1
           ],
-          "sha256": "22af7eb24c4afe9bc2d9be8b752098628b4f328f57e03a1bedc041b8735fdef9"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -1188,55 +1188,55 @@
           "file": "res://art/export/scenery_native/portuarios/campaign_under.png",
           "rect": [
             0,
-            488,
+            514,
             2560,
-            144
+            104
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            36
+            1280,
+            52
           ],
-          "sha256": "97c7df55c2729883c3d90b786c1c068bdbcfc0f7c1c46d6a65f232505437c47a"
+          "sha256": "97397e199329f8dd353424e16d3da949d085ee5dde4f0a34e7a38ffe4463142e"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/portuarios/campaign_terrain.png",
           "rect": [
             0,
-            596,
+            618,
             2560,
-            96
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            24
+            1280,
+            51
           ],
-          "sha256": "b48be36ed1005a7ea0b534e8e5bdeb926b2d0ef1dcac0ccc367a8ceae2aecf81"
+          "sha256": "dc52d9a19528b668ebd23491076b4c9cb8b1bb3b7f35ddeb6f1ff54a317f63d0"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/portuarios/campaign_foreground.png",
           "rect": [
-            48,
-            660,
-            2512,
-            60
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            628,
-            15
+            1,
+            1
           ],
-          "sha256": "364e44955f3b29fb817821f5ed1fc7104c6a78563a3c449ea0be92af16689881"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -1554,55 +1554,55 @@
           "file": "res://art/export/scenery_native/fenda/campaign_under.png",
           "rect": [
             0,
-            492,
+            514,
             2560,
-            140
+            104
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            35
+            1280,
+            52
           ],
-          "sha256": "527d0f67cd1689c9eeb31b1fb929420a3b5f48a777502bb174cbf81fb8e6ff65"
+          "sha256": "7e422df36089e080db1ef0da56fb8da05f58a4a454c7c3503d4505ffa71b3995"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/fenda/campaign_terrain.png",
           "rect": [
             0,
-            588,
+            618,
             2560,
-            132
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            33
+            1280,
+            51
           ],
-          "sha256": "fac91dc90c33808bae3712eb0a53065f57c0a634abfd39538040b9fe72d3c813"
+          "sha256": "8e8b97d3fa2823a15896500bf19ddb1a160b1f3e2cfd58a5729a27831ff7751e"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/fenda/campaign_foreground.png",
           "rect": [
-            48,
-            664,
-            2512,
-            56
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            628,
-            14
+            1,
+            1
           ],
-          "sha256": "2c9b1a917b41ec3d6ac0e6f2e143831bafa7361aae373dd37b2ca513a388e655"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -1925,55 +1925,55 @@
           "file": "res://art/export/scenery_native/fornalha/campaign_under.png",
           "rect": [
             0,
-            492,
+            514,
             2560,
-            140
+            104
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            35
+            1280,
+            52
           ],
-          "sha256": "b0907e4ce7d29bd42d288e89b9a1a142788f540c2e4569e976df02ff0ed50f3f"
+          "sha256": "279bac9c8c748fde041d4f1b095d806c5117ee79d4be57fd129545eb73650ea5"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/fornalha/campaign_terrain.png",
           "rect": [
             0,
-            588,
+            618,
             2560,
-            132
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            33
+            1280,
+            51
           ],
-          "sha256": "b11255238cf0b6c0f9a1a78388e68d0c3c8ef86b44dd06be866fd69e4805d5fc"
+          "sha256": "c4bafa8c8b071256b682124412e78335e7e513351c81c2fe81876f455600d2e6"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/fornalha/campaign_foreground.png",
           "rect": [
-            44,
-            660,
-            2516,
-            60
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            629,
-            15
+            1,
+            1
           ],
-          "sha256": "b88133ccfb7ccd5d25f87bfb492e64f98c8443bfa1aa81b45fe70fab0f11d07f"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -2291,55 +2291,55 @@
           "file": "res://art/export/scenery_native/geada/campaign_under.png",
           "rect": [
             0,
-            492,
+            496,
             2560,
-            140
+            122
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            35
+            1280,
+            61
           ],
-          "sha256": "1f54aefd8bab66412a557e0bb0169e1c88ac19fa0d3b3987f45543e8a0707d0f"
+          "sha256": "0c22154f78f493f7aa4a84db85cae3e464b2a8c5180d7fdc1bfeb90cab7d3a99"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/geada/campaign_terrain.png",
           "rect": [
             0,
-            596,
+            618,
             2560,
-            96
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            24
+            1280,
+            51
           ],
-          "sha256": "b3b5f0a7cc36eada75e99048556f24fdcefb2a5037d7049333e19c1b6128f4a1"
+          "sha256": "a90883017ca1904bb5a47bf5f2d8243389087e442217a8b2339f33c783b076b7"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/geada/campaign_foreground.png",
           "rect": [
-            48,
-            660,
-            2512,
-            60
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            628,
-            15
+            1,
+            1
           ],
-          "sha256": "5d005ca4cd979a15cb80689a34fc220f94011830a115c86c8ad6171f241912e6"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [
@@ -2657,55 +2657,55 @@
           "file": "res://art/export/scenery_native/sobraiz/campaign_under.png",
           "rect": [
             0,
-            492,
+            496,
             2560,
-            140
+            122
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            35
+            1280,
+            61
           ],
-          "sha256": "13c32057122d8868feffb96dc6f40bf040d4fecad92ab7eb96a3b977b93a286c"
+          "sha256": "a53e55a43531396225dbad77baf45be54a7f459f8292f7503d39379e85efbd25"
         },
         "terrain": {
           "file": "res://art/export/scenery_native/sobraiz/campaign_terrain.png",
           "rect": [
             0,
-            584,
+            618,
             2560,
-            136
+            102
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            640,
-            34
+            1280,
+            51
           ],
-          "sha256": "73e3c5cf7e4dc0307238f508e3e03c0180641db352d03907b261d07cc4e60e61"
+          "sha256": "6988b5889c417968127d2b3704fab259e0573d214b0e746f565df8c122c1a5cb"
         },
         "foreground": {
           "file": "res://art/export/scenery_native/sobraiz/campaign_foreground.png",
           "rect": [
-            44,
-            664,
-            2516,
-            56
+            0,
+            0,
+            2,
+            2
           ],
           "scale": [
-            4,
-            4
+            2,
+            2
           ],
           "size": [
-            629,
-            14
+            1,
+            1
           ],
-          "sha256": "64242b5985850cc2dd4667b003041d8cea20418a1e1ca5a3c5e6cf5b0bc1dca8"
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
         }
       },
       "lower_spans": [

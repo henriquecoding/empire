@@ -7,7 +7,7 @@
 	],
 	"camara_x": 1920.0,
 	"comando": "tools/captura.tscn -- --novo --semente 20261016 --segundos 1 --avancar 110 --limpo true --rei 0 --saida docs/art/scenery_native_previews/campaign_surface.png",
-	"commit": "29fac9d82ebc2a7bffa6634fc81067253c5b5c6e",
+	"commit": "acd0a602c4701737c55e7acdcbc130edac93bc54",
 	"dia": 1,
 	"driver": "opengl3",
 	"escala": "fractional",
@@ -61,5 +61,5 @@
 	"renderer": "gl_compatibility",
 	"semente": 20261016,
 	"sujo": true,
-	"tirada": "2026-10-16T07:56:29Z"
+	"tirada": "2026-10-16T08:08:22Z"
 }
