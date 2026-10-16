@@ -1,0 +1,95 @@
+name: Native scenery production
+
+on:
+  push:
+    branches: ["codex/scenery-native-production-20261016"]
+    paths:
+      - "art/source/scenery_native/**"
+      - "src/world/native*"
+      - "tools/*native*"
+      - "tests/native_scenery_test.gd"
+      - "shaders/native_scenery_variant.gdshader"
+      - ".github/workflows/native-scenery.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-scenery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compile:
+    name: Compile and exercise native scenery
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: github.ref == 'refs/heads/codex/scenery-native-production-20261016'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.ref }}
+          lfs: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.11"
+      - name: Existing pinned tools
+        run: make ferramentas-python
+      - name: Compile native layers, modules and editable sources
+        run: python3 tools/export_native_scenery.py
+      - name: Format and lint new GDScript
+        run: |
+          gdformat src/world/native*.gd src/world/scenery_art.gd tools/*native*.gd tests/native_scenery_test.gd
+          gdlint src/world/native*.gd tools/*native*.gd tests/native_scenery_test.gd
+      - uses: ./.github/actions/godot
+      - name: Import with strict script diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          godot --headless --editor --import --path . 2>&1 | tee build/native-import.log
+          ! rg 'SCRIPT ERROR|Parse Error|Compile Error' build/native-import.log
+      - name: Exercise real physics in every production scene
+        run: godot --headless --path . tools/verify_native_scenery.tscn
+      - name: Virtual display
+        run: |
+          if ! command -v xvfb-run >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends xvfb
+          fi
+      - name: Render both levels and empty sites
+        run: xvfb-run -a godot --path . --rendering-method gl_compatibility tools/capture_native_scenery.tscn
+      - name: Validate exports and assemble evidence
+        run: |
+          python3 tools/export_native_scenery.py --check
+          python3 tools/native_scenery_contact.py
+          python3 tools/inventario_arte.py
+          python3 tools/check_claims.py --write
+          python3 tools/package_native_scenery.py
+      - name: Version compiled output on this work branch
+        env:
+          WORK_BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --update
+          git add art/export/scenery_native scenes/scenery_native docs/art/scenery_native_validation.json docs/art/scenery_native_previews
+          git add src/world/native*.gd.uid tools/*native*.gd.uid tests/native_scenery_test.gd.uid shaders/native_scenery_variant.gdshader.uid
+          if ! git diff --cached --quiet; then
+            git commit -m "Exporta e verifica os cenários nativos no Godot (CV-02)"
+            git push origin "HEAD:$WORK_BRANCH"
+          fi
+      - name: Production pack and renderer evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: empire-native-scenery-production
+          path: |
+            build/EMPIRE-Cenarios-Producao-Nativa-2026-10-16.zip
+            build/scenery-native/
+            build/native-import.log
+            docs/art/scenery_native_validation.json
+          retention-days: 90
+          if-no-files-found: warn
