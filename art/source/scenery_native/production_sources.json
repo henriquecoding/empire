@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "canvas": [
+    1280,
+    720
+  ],
+  "surface_y": 517,
+  "underground_y": 618.5,
+  "playable_frame": [
+    64,
+    64
+  ],
+  "worker_frame": [
+    32,
+    32
+  ],
+  "module": [
+    64,
+    64
+  ],
+  "families": [
+    {
+      "key": "enramados",
+      "biome": "ancient_forest",
+      "file": "01_reinos/01-enramados_base.png",
+      "name": "Enramados",
+      "water": false
+    },
+    {
+      "key": "bruma",
+      "biome": "marsh",
+      "file": "01_reinos/03-bruma_base.png",
+      "name": "Bruma",
+      "water": true
+    },
+    {
+      "key": "horta",
+      "biome": "floodplain",
+      "file": "01_reinos/05-horta_base.png",
+      "name": "Horta",
+      "water": false
+    },
+    {
+      "key": "portuarios",
+      "biome": "coast",
+      "file": "01_reinos/07-portuarios_base.png",
+      "name": "Portuários",
+      "water": true
+    },
+    {
+      "key": "fenda",
+      "biome": "canyon",
+      "file": "01_reinos/09-fenda_base.png",
+      "name": "Fenda",
+      "water": true
+    },
+    {
+      "key": "fornalha",
+      "biome": "volcanic",
+      "file": "01_reinos/11-fornalha_base.png",
+      "name": "Fornalha",
+      "water": true
+    },
+    {
+      "key": "geada",
+      "biome": "glacier",
+      "file": "01_reinos/13-geada_base.png",
+      "name": "Geada",
+      "water": false
+    },
+    {
+      "key": "sobraiz",
+      "biome": "subterranean",
+      "file": "01_reinos/15-sobraiz_base.png",
+      "name": "SobRaiz",
+      "water": false
+    },
+    {
+      "key": "porto",
+      "file": "04_referencias_aprovadas/porto-aprovado-2026-10-15.png",
+      "name": "Porto Central",
+      "water": true,
+      "hero_ref": "portuarios"
+    },
+    {
+      "key": "lago",
+      "file": "04_referencias_aprovadas/lago-aprovado-2026-10-15.png",
+      "name": "Lago das Ruínas",
+      "water": true,
+      "hero_ref": "enramados"
+    },
+    {
+      "key": "rio",
+      "file": "04_referencias_aprovadas/rio-aprovado-2026-10-15.png",
+      "name": "Rio das Azenhas",
+      "water": true,
+      "hero_ref": "bruma"
+    },
+    {
+      "key": "enramados_bruma",
+      "file": "03_transicoes/23-enramados_bruma.png",
+      "name": "Enramados → Bruma",
+      "water": true,
+      "hero_ref": "enramados"
+    },
+    {
+      "key": "fenda_geada",
+      "file": "03_transicoes/24-fenda_geada.png",
+      "name": "Fenda → Geada",
+      "water": true,
+      "hero_ref": "fenda"
+    }
+  ],
+  "variants": [
+    {
+      "key": "enramados_base",
+      "family": "enramados",
+      "name": "Enramados",
+      "title": "Clareira do Carvalho",
+      "mood": "Manhã dourada",
+      "type": "reino"
+    },
+    {
+      "key": "enramados_lua",
+      "family": "enramados",
+      "name": "Enramados",
+      "title": "Luar na Clareira",
+      "mood": "Noite de verão",
+      "type": "variacao_reino",
+      "parent": "enramados_base"
+    },
+    {
+      "key": "bruma_base",
+      "family": "bruma",
+      "name": "Bruma",
+      "title": "Brejo dos Salgueiros",
+      "mood": "Céu encoberto",
+      "type": "reino"
+    },
+    {
+      "key": "bruma_nevoa",
+      "family": "bruma",
+      "name": "Bruma",
+      "title": "Névoa entre os Juncos",
+      "mood": "Amanhecer com neblina",
+      "type": "variacao_reino",
+      "parent": "bruma_base"
+    },
+    {
+      "key": "horta_base",
+      "family": "horta",
+      "name": "Horta",
+      "title": "Vale dos Pomares",
+      "mood": "Primavera",
+      "type": "reino"
+    },
+    {
+      "key": "horta_colheita",
+      "family": "horta",
+      "name": "Horta",
+      "title": "Pomar da Colheita",
+      "mood": "Outono após a chuva",
+      "type": "variacao_reino",
+      "parent": "horta_base"
+    },
+    {
+      "key": "portuarios_base",
+      "family": "portuarios",
+      "name": "Portuários",
+      "title": "Enseada das Salinas",
+      "mood": "Dia de vento",
+      "type": "reino"
+    },
+    {
+      "key": "portuarios_mare_baixa",
+      "family": "portuarios",
+      "name": "Portuários",
+      "title": "Salinas na Maré Baixa",
+      "mood": "Fim de tarde",
+      "type": "variacao_reino",
+      "parent": "portuarios_base"
+    },
+    {
+      "key": "fenda_base",
+      "family": "fenda",
+      "name": "Fenda",
+      "title": "Passagem dos Basaltos",
+      "mood": "Luz de tarde",
+      "type": "reino"
+    },
+    {
+      "key": "fenda_luar",
+      "family": "fenda",
+      "name": "Fenda",
+      "title": "Fenda sob o Luar",
+      "mood": "Noite fria",
+      "type": "variacao_reino",
+      "parent": "fenda_base"
+    },
+    {
+      "key": "fornalha_base",
+      "family": "fornalha",
+      "name": "Caldeira / Fornalha",
+      "title": "Terraços da Caldeira",
+      "mood": "Tarde mineral",
+      "type": "reino"
+    },
+    {
+      "key": "fornalha_brasas",
+      "family": "fornalha",
+      "name": "Caldeira / Fornalha",
+      "title": "Fornalha ao Anoitecer",
+      "mood": "Noite de brasas",
+      "type": "variacao_reino",
+      "parent": "fornalha_base"
+    },
+    {
+      "key": "geada_base",
+      "family": "geada",
+      "name": "Geada",
+      "title": "Pinhal de Inverno",
+      "mood": "Manhã de neve",
+      "type": "reino"
+    },
+    {
+      "key": "geada_aurora",
+      "family": "geada",
+      "name": "Geada",
+      "title": "Pinhal sob a Aurora",
+      "mood": "Noite polar",
+      "type": "variacao_reino",
+      "parent": "geada_base"
+    },
+    {
+      "key": "sobraiz_base",
+      "family": "sobraiz",
+      "name": "SobRaiz",
+      "title": "Galeria das Raízes",
+      "mood": "Luz entre as copas",
+      "type": "reino"
+    },
+    {
+      "key": "sobraiz_umida",
+      "family": "sobraiz",
+      "name": "SobRaiz",
+      "title": "Raízes depois da Chuva",
+      "mood": "Entardecer úmido",
+      "type": "variacao_reino",
+      "parent": "sobraiz_base"
+    },
+    {
+      "key": "porto_crepusculo",
+      "family": "porto_especial",
+      "name": "Porto Central",
+      "title": "Cais ao Pôr do Sol",
+      "mood": "Pôr do sol",
+      "type": "variacao_agua",
+      "parent": "aprovado_porto"
+    },
+    {
+      "key": "porto_noite",
+      "family": "porto_especial",
+      "name": "Porto Central",
+      "title": "Porto das Lanternas",
+      "mood": "Noite de trabalho",
+      "type": "variacao_agua",
+      "parent": "aprovado_porto"
+    },
+    {
+      "key": "lago_outono",
+      "family": "lago_especial",
+      "name": "Lago das Ruínas",
+      "title": "Lago de Cobre",
+      "mood": "Outono claro",
+      "type": "variacao_agua",
+      "parent": "aprovado_lago"
+    },
+    {
+      "key": "lago_geada",
+      "family": "lago_especial",
+      "name": "Lago das Ruínas",
+      "title": "Primeira Geada no Lago",
+      "mood": "Amanhecer frio",
+      "type": "variacao_agua",
+      "parent": "aprovado_lago"
+    },
+    {
+      "key": "rio_chuva",
+      "family": "rio_especial",
+      "name": "Rio das Azenhas",
+      "title": "Azenha depois da Chuva",
+      "mood": "Chuva passando",
+      "type": "variacao_agua",
+      "parent": "aprovado_rio"
+    },
+    {
+      "key": "rio_luar",
+      "family": "rio_especial",
+      "name": "Rio das Azenhas",
+      "title": "Azenha sob o Luar",
+      "mood": "Noite de verão",
+      "type": "variacao_agua",
+      "parent": "aprovado_rio"
+    },
+    {
+      "key": "enramados_bruma",
+      "family": "enramados_bruma",
+      "name": "Enramados → Bruma",
+      "title": "Onde a Mata Encontra o Brejo",
+      "mood": "Manhã nublada",
+      "type": "transicao"
+    },
+    {
+      "key": "fenda_geada",
+      "family": "fenda_geada",
+      "name": "Fenda → Geada",
+      "title": "O Limiar da Neve",
+      "mood": "Tarde fria",
+      "type": "transicao"
+    }
+  ]
+}
