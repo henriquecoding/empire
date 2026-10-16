@@ -78,6 +78,11 @@ jobs:
           fi
       - name: Render both levels and empty sites
         run: xvfb-run -a godot --path . --rendering-method gl_compatibility --audio-driver Dummy tools/capture_native_scenery.tscn
+      - name: Capture the actual campaign with the new natural planes
+        run: |
+          mkdir -p docs/art/scenery_native_previews
+          xvfb-run -a godot --path . --rendering-method gl_compatibility --audio-driver Dummy tools/captura.tscn -- --novo --semente 20261016 --segundos 1 --avancar 110 --limpo true --rei 0 --saida docs/art/scenery_native_previews/campaign_surface.png
+          xvfb-run -a godot --path . --rendering-method gl_compatibility --audio-driver Dummy tools/captura.tscn -- --novo --semente 20261016 --segundos 1 --avancar 110 --limpo true --rei 0 --faixa underground --saida docs/art/scenery_native_previews/campaign_underground.png
       - name: Validate exports and assemble evidence
         run: |
           python3 tools/export_native_scenery.py --check
@@ -105,7 +110,6 @@ jobs:
           name: empire-native-scenery-production
           path: |
             build/EMPIRE-Cenarios-Producao-Nativa-2026-10-16.zip
-            build/scenery-native/
             build/native-import.log
             docs/art/scenery_native_validation.json
           retention-days: 90
