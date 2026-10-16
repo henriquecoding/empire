@@ -381,7 +381,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/enramados/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/enramados.png"
     },
@@ -752,7 +753,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/bruma/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/bruma.png"
     },
@@ -1118,7 +1120,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/horta/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/horta.png"
     },
@@ -1484,7 +1487,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/portuarios/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/portuarios.png"
     },
@@ -1855,7 +1859,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/fenda/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/fenda.png"
     },
@@ -2221,7 +2226,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/fornalha/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/fornalha.png"
     },
@@ -2587,7 +2593,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/geada/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/geada.png"
     },
@@ -2953,7 +2960,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/sobraiz/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/sobraiz.png"
     },
@@ -3210,7 +3218,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/porto/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/porto.png"
     },
@@ -3423,7 +3432,7 @@
             0,
             518,
             1280,
-            188
+            196
           ],
           "scale": [
             2,
@@ -3431,9 +3440,9 @@
           ],
           "size": [
             640,
-            94
+            98
           ],
-          "sha256": "7f6d19870f899ad0a52ecee17842d4ddc7263d3d19a50cdcbc3e7602326d1245"
+          "sha256": "248a4e65a5acac49557d4f4df42e60901b21f77576a08cf7de2db5d9980017a7"
         },
         "sky": {
           "file": "res://art/export/scenery_native/lago/sky.png",
@@ -3472,7 +3481,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/lago/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/lago.png"
     },
@@ -3734,7 +3744,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/rio/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/rio.png"
     },
@@ -3996,7 +4007,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/enramados_bruma/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/enramados_bruma.png"
     },
@@ -4258,7 +4270,8 @@
           "sha256": "879e56465a3d8de48500486d0c885b5125a582262f0d6dcfbc42c19edcc5851f"
         }
       },
-      "ladder": "res://art/export/scenery_native/fenda_geada/access_ladder.png",
+      "ladder": "res://art/export/scenery_native/common/access_ladder.png",
+      "ladder_sha256": "c4b5e2d70e1ac1e71e1c09def867984bcabb011d5d5b42446eaef3a1be6b13af",
       "construction_condition": "registered_structure_exists",
       "source_atlas": "art/source/scenery_native/atlas/fenda_geada.png"
     }

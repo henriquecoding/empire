@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuew8knu4o4ro"
-path="res://.godot/imported/access_ladder.png-72a719fede6ef330d1d8ad8676357868.ctex"
+uid="uid://tgl04y128lyj"
+path="res://.godot/imported/access_ladder.png-9db5a53d4049de64311e29a047dc1074.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/export/scenery_native/geada/access_ladder.png"
-dest_files=["res://.godot/imported/access_ladder.png-72a719fede6ef330d1d8ad8676357868.ctex"]
+source_file="res://art/export/scenery_native/common/access_ladder.png"
+dest_files=["res://.godot/imported/access_ladder.png-9db5a53d4049de64311e29a047dc1074.ctex"]
 
 [params]
 
