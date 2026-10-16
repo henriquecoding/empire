@@ -39,9 +39,7 @@ func _inspect() -> void:
 			errors.append("Editor module atlas shipped: " + id)
 		if not campaign.is_empty():
 			for layer in ["sky", "clouds"]:
-				var path := (
-					"res://art/export/scenery/" + String(family.biome) + "/" + layer + ".png"
-				)
+				var path: String = "res://art/export/scenery/" + String(family.biome) + "/" + String(layer) + ".png"
 				if not ResourceLoader.exists(path):
 					errors.append("Missing campaign sky/clouds: " + path)
 	if families != 8 or textures == 0:

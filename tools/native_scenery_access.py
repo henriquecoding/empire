@@ -26,7 +26,7 @@ def access_ladder(plate):
         box = (min(xs), min(ys), max(xs) + 1, max(ys) + 1)
         w, h = box[2] - box[0], box[3] - box[1]
         wood = sum(pixels[i][0] > pixels[i][1] * 1.05 for i in component) / len(component)
-        if 2.0 <= h / w <= 9.0 and h >= height * .18 and wood > .35:
+        if 1.4 <= h / w <= 9.0 and h >= height * .18 and wood > .35:
             candidates.append((h * wood, box, component))
     assert candidates, "The generated prop atlas contains no isolated wooden ladder"
     _, box, component = max(candidates, key=lambda item: item[0])
