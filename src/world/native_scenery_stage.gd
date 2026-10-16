@@ -20,12 +20,16 @@ func _ready() -> void:
 	family_id = String(variant.get("family", "enramados"))
 	var data := NativeSceneryCatalog.family(family_id)
 	var recipe: Dictionary = variant.get("recipe", {})
+	var depth := -50
 	for layer: String in PLANES:
 		var plane := Parallax2D.new()
 		plane.name = layer.capitalize()
+		plane.z_index = depth
+		depth += 10
 		plane.scroll_scale = Vector2(float(PLANES[layer]), 1.0)
 		add_child(plane)
 		_add_layer(plane, layer, data, recipe)
+	_add_layer(self, "water_back", data, recipe)
 	var world := Node2D.new()
 	world.name = "World"
 	add_child(world)
@@ -55,6 +59,8 @@ func _add_layer(parent: Node, layer: String, data: Dictionary, recipe: Dictionar
 		return
 	var sprite := Sprite2D.new()
 	sprite.name = layer.capitalize()
+	if layer == "water_back":
+		sprite.z_index = -15
 	sprite.centered = false
 	sprite.texture = load(String(entry.file)) as Texture2D
 	sprite.position = Vector2(float(entry.rect[0]), float(entry.rect[1]))

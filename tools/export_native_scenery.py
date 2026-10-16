@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from PIL import Image
 from native_scenery_pixels import (
-    cell, clean, export_layer, frame, hero, ladder, legacy_layer, natural,
-    palette, props, structure_group, terrain, verify_layer, warp_structures,
+    cell, clean, export_layer, frame, hero, ladder, legacy_layer, legacy_campaign_layer, natural,
+    palette, props, structure_group, terrain, verify_layer, warp_structures, water_layers,
 )
 
 ROOT = Path("art/export/scenery_native")
@@ -42,6 +42,7 @@ def family_layers(job, legacy):
     plates = [cell(atlas, index, family) for index in range(8)]
     spans, mouths = SPLIT.get(family, ([[32, 1248]], [784]))
     under, bottom, crossing = terrain(plates[4], spans)
+    water_back, water_front = water_layers(plates[5]) if job["water"] else (frame(), frame())
     landmark = Image.open(SOURCE / "hero" / (HERO.get(family, family) + ".png"))
     architecture = structure_group(plates[6], family)
     if family in ARCH:
@@ -51,7 +52,7 @@ def family_layers(job, legacy):
               "near": hero(landmark, 420 if family == "horta" else 500),
               "under": under, "terrain": bottom, "crossings": crossing,
               "structures": architecture, "props": props(plates[7]), "foreground": frame(),
-              "water": natural(plates[5]) if job["water"] else frame()}
+              "water_back": water_back, "water": water_front}
     biome = job.get("biome", ALIASES.get(family))
     for layer in ("sky", "clouds"):
         images[layer] = legacy_layer(legacy, biome, layer)
@@ -63,24 +64,19 @@ def family_layers(job, legacy):
     access.save(ladder_path, optimize=True)
     campaign = {}
     if "biome" in job:
-        for layer in ("sky", "clouds", "far", "mid", "near"):
+        for layer in ("far", "mid", "near"):
             original = images[layer]
             wide = Image.new("RGBA", (2560, 720))
             wide.alpha_composite(original)
-            wide.alpha_composite(original, (1280, 0))
-            # Store a full-width campaign layer with the same integer pixel grid.
-            grid = 4 if layer != "near" else 2
-            small = palette(wide.resize((2560 // grid, 720 // grid), Image.Resampling.NEAREST))
-            box = small.getbbox()
-            cropped = small.crop(box) if box else Image.new("RGBA", (1, 1))
-            path = ROOT / family / ("campaign_" + layer + ".png")
-            cropped.save(path, optimize=True)
-            from hashlib import sha256
-            campaign[layer] = {"file": "res://" + path.as_posix(),
-                               "rect": [box[0] * grid, box[1] * grid,
-                                        cropped.width * grid, cropped.height * grid],
-                               "scale": [grid, grid], "size": list(cropped.size),
-                               "sha256": sha256(path.read_bytes()).hexdigest()}
+            if layer != "near":
+                wide.alpha_composite(original, (1280, 0))
+            campaign[layer] = export_layer(ROOT, family, "campaign_" + layer, wide,
+                                            2 if layer == "near" else 4)
+        # Preserve the existing terrain geography with quieter four-pixel clusters.
+        for layer in ("under", "terrain", "foreground"):
+            if layer in legacy["scenes"][biome]["layers"]:
+                wide = legacy_campaign_layer(legacy, biome, layer)
+                campaign[layer] = export_layer(ROOT, family, "campaign_" + layer, wide, 4)
     return {"name": job["name"], "biome": biome, "canvas": [1280, 720],
             "campaign_layers": campaign,
             "lower_spans": spans, "passages": mouths, "layers": layers,

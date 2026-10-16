@@ -77,7 +77,7 @@ def editable(folder, item):
     composite = frame()
     with ZipFile(folder / "layers.ora", "w", ZIP_DEFLATED) as archive:
         archive.writestr("mimetype", "image/openraster", compress_type=0)
-        for name in ("sky", "clouds", "far", "mid", "near", "water", "under",
+        for name in ("sky", "clouds", "far", "mid", "water_back", "near", "water", "under",
                      "terrain", "crossings", "structures", "props", "foreground"):
             layer = item["layers"][name]
             image = expanded(layer)

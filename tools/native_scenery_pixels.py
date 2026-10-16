@@ -124,17 +124,19 @@ def props(plate):
     return put(frame(), part, (1024, 485, width, 32))
 
 
-def palette(image):
+def palette(image, colors=96):
     image = clean(image)
     alpha = image.getchannel("A")
-    result = image.convert("RGB").quantize(colors=96, method=Image.Quantize.MEDIANCUT,
+    result = image.convert("RGB").quantize(colors=colors, method=Image.Quantize.MEDIANCUT,
                                           dither=Image.Dither.NONE).convert("RGBA")
     result.putalpha(alpha)
     return clean(result)
 
 
 def export_layer(root, family, layer, image, grid=2):
-    sampled = palette(image.resize((1280 // grid, 720 // grid), NEAREST))
+    name = layer.removeprefix("campaign_")
+    colors = 16 if name == "far" else 32 if name in ("mid", "sky", "clouds", "foreground") else 64 if name in ("under", "terrain") else 96
+    sampled = palette(image.resize((image.width // grid, image.height // grid), NEAREST), colors)
     box = sampled.getbbox()
     if box:
         cropped = sampled.crop(box)
@@ -168,3 +170,18 @@ def verify_layer(layer):
         assert len({p[:3] for p in pixels if p[3]}) <= 96, path
     assert layer["rect"][2:] == [n * layer["scale"][0] for n in layer["size"]], path
     return path.stat().st_size
+
+
+def water_layers(plate):
+    image = put(frame(), plate, (0, 426, 1280, 294))
+    back, front = image.copy(), image.copy()
+    back.paste((0, 0, 0, 0), (0, 518, 1280, 720))
+    front.paste((0, 0, 0, 0), (0, 0, 1280, 518))
+    return back, front
+
+
+def legacy_campaign_layer(manifest, biome, layer):
+    entry = manifest["scenes"][biome]["layers"][layer]
+    image = Image.new("RGBA", (2560, 720))
+    source = Image.open(entry["file"].removeprefix("res://"))
+    return put(image, source, tuple(entry["rect"]))

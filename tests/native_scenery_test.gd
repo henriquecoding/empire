@@ -44,7 +44,7 @@ func test_campaign_uses_the_new_natural_planes() -> void:
 		var family := NativeSceneryCatalog.family(id)
 		if family.get("campaign_layers", {}).is_empty():
 			continue
-		for layer: StringName in [&"sky", &"clouds", &"far", &"mid", &"near"]:
+		for layer: StringName in [&"far", &"mid", &"near", &"under", &"terrain"]:
 			var exported := SceneryArt.layer(StringName(family.biome), layer)
 			assert_str(String(exported.get("file", ""))).contains("scenery_native/")
 			assert_float(SceneryArt.width(StringName(family.biome))).is_equal(2560.0)

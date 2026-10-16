@@ -14,7 +14,9 @@ também tem uma cena em scenes/scenery_native.
 
 A galeria usa os personagens reais do projeto e um controlador de revisão.
 Não acrescenta regras de campanha, economia, personagens ou posições de rios.
-Os cinco planos naturais dos oito reinos entram na campanha pelo SceneryArt;
+Os planos far/mid/near dos reinos entram na campanha pelo SceneryArt;
+céu e nuvens conservam o mosaico original. A textura de cobertura do solo
+usa clusters de 4 px e mantém a geografia existente;
 a geometria dos sítios e das passagens da campanha continua autoritativa.
 Porto, lago e rio são prefabs de produção, com pisos e acessos exercitados na galeria.
 Sua população e construção pertencem ao estado registrado do jogo.
@@ -30,7 +32,9 @@ estado sem edifícios. Edifícios, objetos e PNJs ficam fora do Parallax2D.
 
 Céu, nuvens, fundo distante, plano médio e marcos próximos usam, respectivamente,
 0,03125 / 0,07 / 0,125 / 0,25 / 0,5 no eixo horizontal.
-Água, corte de solo, piso, travessias, construções e acessórios são camadas distintas.
+Água de fundo e água jogável são separadas na linha da superfície: a água não
+atravessa a copa ou o tronco das árvores. Corte de solo, piso, travessias,
+construções e acessórios também são camadas distintas.
 A campanha conserva o terreno funcional associado aos sítios existentes.
 
 PNG com alfa binário; redução de paleta sem dithering; amostragem nearest e grade

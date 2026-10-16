@@ -1,6 +1,8 @@
 class_name NativeSceneryActor
 extends Node2D
 
+const CONTACT_SHADOW := preload("res://art/export/_placeholder/contact_shadow_18.png")
+
 var controlled := false
 var walking := false
 var facing := 1.0
@@ -19,6 +21,9 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var profile := &"royal_king" if controlled else &"royal_citizen"
+	var width := NativeActorFit.bounds(profile, controlled, Vector2.ZERO).size.x * 0.45
+	draw_texture_rect(CONTACT_SHADOW, Rect2(-width * 0.5, -2.0, width, 4.0), false,
+			WorldPalette.SOMBRA)
 	var action := &"walk" if walking else &"idle"
 	var frame := _art.frame_at(profile, _time, action)
 	var pose := OriginalArt.posed(
