@@ -7,7 +7,7 @@
 	],
 	"camara_x": 1920.0,
 	"comando": "tools/captura.tscn -- --novo --semente 20261016 --segundos 1 --avancar 110 --limpo true --rei 0 --faixa underground --saida docs/art/scenery_native_previews/campaign_underground.png",
-	"commit": "d06547f0342f337a8da3cdae27e7cd88ed2baf62",
+	"commit": "167de862f51ab3576a33c93e7da501371561db1d",
 	"dia": 1,
 	"driver": "opengl3",
 	"escala": "fractional",
@@ -62,5 +62,5 @@
 	"renderer": "gl_compatibility",
 	"semente": 20261016,
 	"sujo": true,
-	"tirada": "2026-10-16T08:18:10Z"
+	"tirada": "2026-10-16T08:23:29Z"
 }
