@@ -96,7 +96,12 @@ func _material(recipe: Dictionary, layer: String) -> ShaderMaterial:
 
 
 func _floors(data: Dictionary) -> void:
-	_floor(0.0, NativeSceneryCatalog.CANVAS_WIDTH, WorldPalette.ground_of(Band.Kind.SURFACE), "SurfaceFloor")
+	_floor(
+		0.0,
+		NativeSceneryCatalog.CANVAS_WIDTH,
+		WorldPalette.ground_of(Band.Kind.SURFACE),
+		"SurfaceFloor"
+	)
 	for index in data.lower_spans.size():
 		var span: Array = data.lower_spans[index]
 		_floor(

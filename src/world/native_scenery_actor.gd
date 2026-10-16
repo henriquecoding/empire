@@ -24,9 +24,14 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var profile := &"royal_king" if controlled else &"royal_citizen"
-	var width := NativeActorFit.bounds(profile, controlled, Vector2.ZERO).size.x * SHADOW_WIDTH_RATIO
+	var width := (
+		NativeActorFit.bounds(profile, controlled, Vector2.ZERO).size.x * SHADOW_WIDTH_RATIO
+	)
 	draw_texture_rect(
-		CONTACT_SHADOW, Rect2(-width * HALF, -SHADOW_HEIGHT * HALF, width, SHADOW_HEIGHT), false, WorldPalette.SOMBRA
+		CONTACT_SHADOW,
+		Rect2(-width * HALF, -SHADOW_HEIGHT * HALF, width, SHADOW_HEIGHT),
+		false,
+		WorldPalette.SOMBRA
 	)
 	var action := &"walk" if walking else &"idle"
 	var frame := _art.frame_at(profile, _time, action)
