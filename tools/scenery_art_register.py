@@ -25,4 +25,30 @@ def scenery_table():
     rows += ['', f'Propostas por colocar no mundo, fora do export: {proposals} (Q-259). Edificios, '
              'escadas, atividades de baixo e atores de referencia ficam nos pacotes: o que se '
              'constroi e onde ha passagem decide-o a simulacao.', '']
+    return rows + native_table()
+
+
+def native_table():
+    path = ROOT / 'art/export/scenery_native/manifest.json'
+    if not path.exists():
+        return []
+    data = json.loads(path.read_text(encoding='utf-8'))
+    rows = ['', '## Producao nativa — 16/10/2026 (ADR 0084)', '',
+            'Os planos naturais abaixo substituem os planos homonimos da entrega anterior '
+            'pela chamada NativeSceneryCatalog.patch_legacy em SceneryArt. '
+            'O terreno da campanha continua associado aos sitios e passagens da simulacao. '
+            'A galeria tools/native_scenery_review.tscn monta as camadas funcionais '
+            'e as construcoes fora do parallax.', '',
+            '| Familia | Uso | Camadas nativas | Fonte editavel |',
+            '|---|---|---|---|']
+    for name, item in data['families'].items():
+        usage = ('campanha: planos naturais; prefab completo' if item.get('campaign_layers')
+                 else 'prefab completo; colocacao de campanha por decidir')
+        layers = ', '.join(item['layers'])
+        rows.append(f"| {item['name']} ({name}) | {usage} | {layers} "
+                    f"| art/export/scenery_native/{name}/layers.ora |")
+    rows += ['', f"Catalogo: {len(data['families'])} familias, {len(data['variants'])} cenas. "
+             'Módulos de 64 px, PNGs recortados ao alfa, export nearest de 2/4 px, '
+             'paleta limitada sem dithering. Validacao executada: '
+             'docs/art/scenery_native_validation.json; guia: docs/art/NATIVE_SCENERY.md.', '']
     return rows

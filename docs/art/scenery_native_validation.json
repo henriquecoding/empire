@@ -1,0 +1,201 @@
+{
+	"engine": "4.7.2-stable (official)",
+	"errors": [],
+	"passed": true,
+	"renderer": "mobile",
+	"scope": "production review scenes with actual art and CharacterBody2D traversal",
+	"views": [
+		{
+			"built_and_empty": true,
+			"family": "enramados",
+			"id": "enramados_base",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "enramados",
+			"id": "enramados_lua",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "bruma",
+			"id": "bruma_base",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "bruma",
+			"id": "bruma_nevoa",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "horta",
+			"id": "horta_base",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "horta",
+			"id": "horta_colheita",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "portuarios",
+			"id": "portuarios_base",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "portuarios",
+			"id": "portuarios_mare_baixa",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "fenda",
+			"id": "fenda_base",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "fenda",
+			"id": "fenda_luar",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "fornalha",
+			"id": "fornalha_base",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "fornalha",
+			"id": "fornalha_brasas",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "geada",
+			"id": "geada_base",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "geada",
+			"id": "geada_aurora",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "sobraiz",
+			"id": "sobraiz_base",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "sobraiz",
+			"id": "sobraiz_umida",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "porto",
+			"id": "porto_crepusculo",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "porto",
+			"id": "porto_noite",
+			"lower_spans": 1,
+			"passages": 1,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "lago",
+			"id": "lago_outono",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "lago",
+			"id": "lago_geada",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "rio",
+			"id": "rio_chuva",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "rio",
+			"id": "rio_luar",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "enramados_bruma",
+			"id": "enramados_bruma",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		},
+		{
+			"built_and_empty": true,
+			"family": "fenda_geada",
+			"id": "fenda_geada",
+			"lower_spans": 2,
+			"passages": 2,
+			"surface_y": 517.0
+		}
+	]
+}

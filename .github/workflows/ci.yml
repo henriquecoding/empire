@@ -241,12 +241,20 @@ jobs:
       - name: Exportar o Windows e o Web
         run: make exportar-windows exportar-web
 
+      - name: Campaign scenery is present and editor-only art stays out of the packs
+        run: |
+          TASK_PACK_CHECK=$(mktemp -d)
+          godot --headless --path "$TASK_PACK_CHECK" -s "$GITHUB_WORKSPACE/tools/check_scenery_export.gd" -- "$GITHUB_WORKSPACE/build/empire.pck" "$GITHUB_WORKSPACE/build/scenery-package-linux.json"
+          godot --headless --path "$TASK_PACK_CHECK" -s "$GITHUB_WORKSPACE/tools/check_scenery_export.gd" -- "$GITHUB_WORKSPACE/build/windows/empire.pck" "$GITHUB_WORKSPACE/build/scenery-package-windows.json"
+          godot --headless --path "$TASK_PACK_CHECK" -s "$GITHUB_WORKSPACE/tools/check_scenery_export.gd" -- "$GITHUB_WORKSPACE/build/web/index.pck" "$GITHUB_WORKSPACE/build/scenery-package-web.json"
+
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: empire-linux-debug
           path: |
             build/empire.x86_64
             build/empire.pck
+            build/scenery-package-*.json
           retention-days: 7
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7

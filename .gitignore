@@ -28,6 +28,8 @@ art/export/*
 !art/export/temporary/
 # Os cenarios em camadas do dono: o export verificado de tools/export_scenery.py (ADR 0081).
 !art/export/scenery/
+# Nova produção em camadas e módulos (ADR 0084).
+!art/export/scenery_native/
 # Os animais e as criaturas animados do dono: o export de tools/export_animated.py (ADR 0083).
 !art/export/animated/
 

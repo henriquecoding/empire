@@ -225,4 +225,5 @@ static func _cenas() -> Dictionary:
 		var texto := FileAccess.get_file_as_string(MANIFESTO)
 		var lido: Variant = JSON.parse_string(texto) if not texto.is_empty() else null
 		_manifesto = lido if lido is Dictionary else {}
+		NativeSceneryCatalog.patch_legacy(_manifesto)
 	return _manifesto.get(CENAS, {})

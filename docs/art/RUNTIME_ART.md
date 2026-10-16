@@ -272,6 +272,29 @@ Os ZIPs do dono, lidos por `tools/export_scenery.py` (hashes de cada pacote conf
 Propostas por colocar no mundo, fora do export: Reino-Fluvial (`reino_fluvial`), Porto-Central (`porto_central`), Lago-Ponte-Cais (`lago_ponte`) (Q-259). Edificios, escadas, atividades de baixo e atores de referencia ficam nos pacotes: o que se constroi e onde ha passagem decide-o a simulacao.
 
 
+## Producao nativa — 16/10/2026 (ADR 0084)
+
+Os planos naturais abaixo substituem os planos homonimos da entrega anterior pela chamada NativeSceneryCatalog.patch_legacy em SceneryArt. O terreno da campanha continua associado aos sitios e passagens da simulacao. A galeria tools/native_scenery_review.tscn monta as camadas funcionais e as construcoes fora do parallax.
+
+| Familia | Uso | Camadas nativas | Fonte editavel |
+|---|---|---|---|
+| Enramados (enramados) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/enramados/layers.ora |
+| Bruma (bruma) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/bruma/layers.ora |
+| Horta (horta) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/horta/layers.ora |
+| Portuários (portuarios) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/portuarios/layers.ora |
+| Fenda (fenda) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fenda/layers.ora |
+| Fornalha (fornalha) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fornalha/layers.ora |
+| Geada (geada) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/geada/layers.ora |
+| SobRaiz (sobraiz) | campanha: planos naturais; prefab completo | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/sobraiz/layers.ora |
+| Porto Central (porto) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/porto/layers.ora |
+| Lago das Ruínas (lago) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/lago/layers.ora |
+| Rio das Azenhas (rio) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/rio/layers.ora |
+| Enramados → Bruma (enramados_bruma) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/enramados_bruma/layers.ora |
+| Fenda → Geada (fenda_geada) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fenda_geada/layers.ora |
+
+Catalogo: 13 familias, 24 cenas. Módulos de 64 px, PNGs recortados ao alfa, export nearest de 2/4 px, paleta limitada sem dithering. Validacao executada: docs/art/scenery_native_validation.json; guia: docs/art/NATIVE_SCENERY.md.
+
+
 ## Animais e criaturas animados — entrega de 14/10/2026
 
 Os dois ZIPs do dono, lidos por `tools/export_animated.py` (cada ficheiro conferido com as somas do proprio pacote); a folha da direita e a mesma, byte a byte, e o export junta-lhe a mascara branca e, nas criaturas, o que brilha no escuro. Regras: ADR 0083. Quadros de 64 x 64, as criaturas a escala inteira mais perto do porte do `Bestiary`; os animais a escala do porte que o dono lhes deu (os pequenos um pouco abaixo das tropas, as montarias das tropas um pouco acima, as dos imperadores acima do rei; `AnimatedArt.ESCALA`, Q-264).
