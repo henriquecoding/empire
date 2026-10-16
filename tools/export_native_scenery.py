@@ -1,5 +1,6 @@
 """Export the approved scene compositions as reusable native Godot layers."""
 import argparse
+from hashlib import sha256
 import json
 from pathlib import Path
 from PIL import Image
@@ -47,6 +48,9 @@ def family_layers(job, legacy):
     spans, mouths = SPLIT.get(family, ([[32, 1248]], [784]))
     under, bottom, crossing = terrain(plates[4], spans)
     water_back, water_front = water_layers(plates[5]) if job["water"] else (frame(), frame())
+    if family == "lago":
+        # Extrude the valid water pixels over the transparent atlas border.
+        water_front.paste(water_front.crop((0, 704, 1280, 712)), (0, 712))
     landmark = Image.open(SOURCE / "hero" / (HERO.get(family, family) + ".png"))
     architecture = structure_group(plates[6], family)
     if family in ARCH:
@@ -63,9 +67,13 @@ def family_layers(job, legacy):
     layers = {layer: export_layer(ROOT, family, layer, image,
                                 4 if layer in ("sky", "clouds", "far", "mid") else 2)
               for layer, image in images.items()}
-    access = palette(ladder(plates[7]))
-    ladder_path = ROOT / family / "access_ladder.png"
+    access = palette(ladder(cell(Image.open(SOURCE / "atlas/lago.png"), 7, "lago")))
+    ladder_path = ROOT / "common/access_ladder.png"
+    ladder_path.parent.mkdir(parents=True, exist_ok=True)
     access.save(ladder_path, optimize=True)
+    obsolete = ROOT / family / "access_ladder.png"
+    obsolete.unlink(missing_ok=True)
+    obsolete.with_suffix(".png.import").unlink(missing_ok=True)
     campaign = {}
     if "biome" in job:
         for layer in ("far", "mid", "near"):
@@ -89,6 +97,7 @@ def family_layers(job, legacy):
             "campaign_layers": campaign,
             "lower_spans": spans, "passages": mouths, "layers": layers,
             "ladder": "res://" + ladder_path.as_posix(),
+            "ladder_sha256": sha256(ladder_path.read_bytes()).hexdigest(),
             "construction_condition": "registered_structure_exists",
             "source_atlas": (SOURCE / "atlas" / (family + ".png")).as_posix()}
 
@@ -144,7 +153,10 @@ def check():
         for left, right in item["lower_spans"]:
             assert right - left >= 128 and any(left + 32 <= x <= right - 32
                                               for x in item["passages"]), family
-        assert Path(item["ladder"].removeprefix("res://")).is_file()
+        access = Path(item["ladder"].removeprefix("res://"))
+        assert access.is_file() and sha256(access.read_bytes()).hexdigest() == item["ladder_sha256"]
+        with Image.open(access) as image:
+            assert image.size == (24, 51)
     for item in data["variants"].values():
         assert item["family"] in data["families"]
         assert Path(item["scene"].removeprefix("res://")).is_file()

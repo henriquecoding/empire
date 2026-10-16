@@ -11,6 +11,7 @@ var actor: NativeSceneryActor
 
 
 func _ready() -> void:
+	z_index = 2
 	collision_layer = Band.L_SURFACE
 	collision_mask = Band.L_TERRAIN
 	var shape := CollisionShape2D.new()

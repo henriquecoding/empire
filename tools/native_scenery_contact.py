@@ -25,13 +25,11 @@ for key in ("porto_crepusculo", "lago_outono", "rio_chuva", "enramados_base"):
         copy2(folder / (key + "_" + state + ".png"), preview)
 copy2(folder / "captures.json", preview)
 
-# Temporary textual transport for visual review through the repository connector.
+# Optional text transport lets a remote reviewer inspect real PNGs without a browser.
+import os
 from base64 import b64encode
-review = preview / "review_transport"
-review.mkdir(exist_ok=True)
-for name in ("contact", "enramados_base_underground", "porto_crepusculo_underground",
-             "lago_outono_underground", "rio_chuva_underground",
-             "campaign_surface", "campaign_underground"):
-    path = preview / (name + ".png")
-    if path.exists():
-        (review / (name + ".b64.txt")).write_text(b64encode(path.read_bytes()).decode("ascii"))
+if os.environ.get("EMPIRE_SCENERY_REVIEW") == "1":
+    for name in ("porto_crepusculo_underground", "lago_outono_underground"):
+        encoded = b64encode((preview / (name + ".png")).read_bytes()).decode("ascii")
+        for offset in range(0, len(encoded), 32768):
+            print("NATIVE_QA_CHUNK", name, encoded[offset:offset + 32768])

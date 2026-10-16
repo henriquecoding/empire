@@ -86,7 +86,7 @@ jobs:
       - name: Validate exports and assemble evidence
         run: |
           python3 tools/export_native_scenery.py --check
-          python3 tools/native_scenery_contact.py
+          EMPIRE_SCENERY_REVIEW=1 python3 tools/native_scenery_contact.py
           python3 tools/inventario_arte.py
           python3 tools/check_claims.py --write
           python3 tools/package_native_scenery.py

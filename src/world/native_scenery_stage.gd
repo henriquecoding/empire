@@ -36,6 +36,7 @@ func _ready() -> void:
 	functional = _group(world, "Functional")
 	structures = _group(world, "Structures")
 	workers = _group(world, "Workers")
+	workers.z_index = 2
 	for layer in ["water", "under", "terrain", "crossings", "foreground"]:
 		_add_layer(functional, layer, data, recipe)
 	for layer in ["structures", "props"]:
@@ -117,6 +118,7 @@ func _ladders(data: Dictionary) -> void:
 		var sprite := Sprite2D.new()
 		sprite.texture = load(String(data.ladder)) as Texture2D
 		sprite.centered = false
+		sprite.z_index = 1
 		sprite.position = Vector2(mouth - 24.0, 517.0)
 		sprite.scale = Vector2(
 			48.0 / sprite.texture.get_width(), 102.0 / sprite.texture.get_height()
