@@ -1,0 +1,65 @@
+{
+	"adaptador": "llvmpipe (LLVM 20.1.2, 256 bits)",
+	"altura": 720.0,
+	"base": [
+		1280,
+		720
+	],
+	"camara_x": 1920.0,
+	"comando": "tools/captura.tscn -- --novo --semente 20261016 --segundos 1 --avancar 110 --limpo true --rei 0 --saida docs/art/scenery_native_previews/campaign_surface.png",
+	"commit": "514f924a524301296777975d71e72cfa43163d05",
+	"dia": 1,
+	"driver": "opengl3",
+	"escala": "fractional",
+	"estado": "preparado",
+	"esticar": "canvas_items",
+	"fase": 2,
+	"fator": 1.0,
+	"filtro": "nearest",
+	"imagem": [
+		1280,
+		720
+	],
+	"instrumentos": [
+		[
+			0.0,
+			0.0,
+			1280.0,
+			68.0
+		],
+		[
+			400.0,
+			47.0,
+			480.0,
+			177.0
+		],
+		[
+			380.0,
+			80.0,
+			520.0,
+			84.0
+		]
+	],
+	"janela": [
+		1280,
+		720
+	],
+	"largura": 1280.0,
+	"mancha": [],
+	"motor": "4.7.2-stable (official)",
+	"preparacao": [
+		"sem a interface",
+		"rei no estandarte da estrada escolhido para avancar o dia",
+		"rei posto em x=1920"
+	],
+	"progresso_fase": 0.257,
+	"rei": {
+		"do_nucleo": 0.0,
+		"faixa": "surface",
+		"x": 1920.0
+	},
+	"renderer": "gl_compatibility",
+	"semente": 20261016,
+	"sujo": false,
+	"tirada": "2026-10-16T07:40:48Z"
+}
