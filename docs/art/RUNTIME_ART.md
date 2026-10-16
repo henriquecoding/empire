@@ -270,3 +270,30 @@ Os ZIPs do dono, lidos por `tools/export_scenery.py` (hashes de cada pacote conf
 | `volcanic` (Caldeira) | kingdom | `volcanic` | 2560 x 720 | sky, clouds, far, mid, near, under, terrain, foreground |
 
 Propostas por colocar no mundo, fora do export: Reino-Fluvial (`reino_fluvial`), Porto-Central (`porto_central`), Lago-Ponte-Cais (`lago_ponte`) (Q-259). Edificios, escadas, atividades de baixo e atores de referencia ficam nos pacotes: o que se constroi e onde ha passagem decide-o a simulacao.
+
+
+## Animais e criaturas animados — entrega de 14/10/2026
+
+Os dois ZIPs do dono, lidos por `tools/export_animated.py` (cada ficheiro conferido com as somas do proprio pacote); a folha da direita e a mesma, byte a byte, e o export junta-lhe a mascara branca e, nas criaturas, o que brilha no escuro. Regras: ADR 0083. Quadros de 64 x 64, as criaturas a escala inteira mais perto do porte do `Bestiary`; os animais a escala do porte que o dono lhes deu (os pequenos um pouco abaixo das tropas, as montarias das tropas um pouco acima, as dos imperadores acima do rei; `AnimatedArt.ESCALA`, Q-264).
+
+| Export | Pacote | Quadros | Accoes | Quem o desenha |
+|---|---|---|---|---|
+| `animal_boar` | Javali (`javali`) | 42 | idle, walk, run, root, threat, lie_down | caca `boar` (`HuntView`, `HuntPoses`) |
+| `animal_cow` | Vaca (`vaca`) | 42 | idle, walk, run, graze, startle, collapse | obra `cow_stable` (`FarmAnimals`) |
+| `animal_deer` | Cervo castanho (`cervo_castanho`) | 42 | idle, walk, run, graze, startle, lie_down | caca `deer` (`HuntView`, `HuntPoses`) |
+| `animal_draft_horse` | Cavalo (`cavalo`) | 42 | idle, walk, run, graze, rear, collapse | montaria `draft_horse` (`MountView`) |
+| `animal_fox` | Raposa (`raposa`) | 40 | idle, walk, run, groom, pounce, lie_down | caca `fox` (`HuntView`, `HuntPoses`) |
+| `animal_hen` | Galinha (`galinha`) | 42 | idle, walk, run, peck, flap, collapse | obra `henhouse` (`FarmAnimals`) |
+| `animal_peacock` | Pavão (`pavao`) | 42 | idle, walk, run, preen, display, lie_down | caca `pheasant` (`HuntView`, `HuntPoses`) |
+| `animal_rabbit` | Coelho (`coelho`) | 41 | idle, walk, run, nibble, alert, collapse | caca `rabbit` (`HuntView`, `HuntPoses`) |
+| `animal_rooster` | Galo (`galo`) | 42 | idle, walk, run, peck, crow, collapse | obra `henhouse` (`FarmAnimals`) |
+| `animal_white_stag` | Cervo branco (`cervo_branco`) | 42 | idle, walk, run, graze, bellow, lie_down | caca `white_stag` (`HuntView`, `HuntPoses`) |
+| `beast_brute` | Bruto (`bruto`) | 32 | idle, walk, attack, hit, die, spawn, roar, flee | criatura `BRUTO` (`CreatureView`, `AnimatedBeasts`) |
+| `beast_burrower` | Cavador (`cavador`) | 32 | idle, walk, attack, hit, die, spawn, dig, alert | criatura `BROCA` (`CreatureView`, `AnimatedBeasts`) |
+| `beast_crawler` | Rastejante (`rastejante`) | 32 | idle, walk, attack, hit, die, spawn, pounce, alert | criatura `RASTEJO` (`CreatureView`, `AnimatedBeasts`) |
+| `beast_devourer` | Consumidora (`consumidora`) | 32 | idle, walk, attack, hit, die, spawn, grab, roar | criatura `COLOSSO` (`CreatureView`, `AnimatedBeasts`) |
+| `beast_slime_ram` | Aríete de raízes (`ariete`) | 32 | idle, walk, attack, hit, die, spawn, charge, alert | criatura `ARIETE` (`CreatureView`, `AnimatedBeasts`) |
+| `beast_tender` | Zelador (`zelador`) | 28 | idle, walk, hit, die, spawn, tend, flee | criatura `ZELADOR` (`CreatureView`, `AnimatedBeasts`); a voz da Podridao (`OfferView`) |
+| `beast_winged` | Alado de folhas (`alado`) | 32 | idle, fly, attack, hit, die, spawn, steal, flee | criatura `ASA` (`CreatureView`, `AnimatedBeasts`) |
+
+Ficam nos pacotes, sem lugar no jogo ainda: Búfalo (`bufalo`), Carneiro (`carneiro`), Saqueador de raízes (`saqueador`) (Q-263).

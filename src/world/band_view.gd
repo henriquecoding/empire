@@ -139,6 +139,7 @@ func _draw() -> void:
 	_criaturas()
 	if band == Band.Kind.SURFACE:
 		HuntView.draw_on(self, _luz, _visual_time)
+		FarmAnimals.draw_on(self, _luz, _visual_time)  # as galinhas e as vacas (ADR 0083)
 	CrownView.draw_on(self, band, _luz, _visual_time)  # a coroa no chao (Q-167)
 	MountView.draw_on(self, band, _luz, _visual_time)  # o cavalo de tracao (Q-169)
 	# Por ultimo, e de proposito: o preco pousa EM CIMA do que descreve, e um

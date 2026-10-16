@@ -37,9 +37,9 @@ extends Resource
 ## Os segundos de luz entre dois bichos da mesma toca (Q-217): o bicho volta varias
 ## vezes por dia. Zero: a toca segue o periodo da caca media (hunt_yield, Q-106).
 @export var respawn_s: float = 0.0
-## A escala do desenho (Q-218): os bichos leem-se contra os sprites de 64x64 das
-## tropas. Inteira, para o pixel ficar pixel.
-@export var sprite_scale: int = 1
+## A escala do desenho (Q-218, Q-264): os bichos leem-se contra os sprites das tropas,
+## ao porte que o dono deu a cada um.
+@export var sprite_scale: float = 1.0
 ## Distancia minima entre a Clareira e o alcance inteiro do habitat (ADR 0061).
 ## Inclui pastar, fuga e meia largura do corpo; zero nao limita um perfil de teste.
 @export var habitat_min_px: float = 0.0

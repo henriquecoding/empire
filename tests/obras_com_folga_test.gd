@@ -64,8 +64,8 @@ func test_as_estatuas_nao_ficam_por_baixo_de_uma_obra() -> void:
 
 
 ## O chao que uma toca ocupa, de ponta a ponta: o sitio desenha-se BUSH_SIDE a esquerda
-## do bicho, e o bicho estende-se para a direita dele (HuntView), os dois a escala deles
-## (Q-218): a toca a HuntView.TOCA, o bicho ao sprite_scale.
+## do bicho, e o bicho estende-se para a direita dele (HuntView.drawn), os dois a escala
+## deles (Q-218): a toca a HuntView.TOCA, o bicho ao sprite_scale.
 func _chao_da_toca(x: float, sitio: StringName) -> Vector2:
 	var meia: float = (
 		{
@@ -80,7 +80,7 @@ func _chao_da_toca(x: float, sitio: StringName) -> Vector2:
 	)
 	var veado := sitio in [&"tree", &"lake"]
 	var bicho := Registry.entry(&"wildlife", &"deer" if veado else &"rabbit") as WildlifeData
-	var direita := (HuntView.DEER_HEAD.end.x if veado else HuntView.HEAD.end.x) * bicho.sprite_scale
+	var direita := HuntView.drawn(bicho).end.x
 	return Vector2(x - HuntView.BUSH_SIDE * HuntView.TOCA - meia, x + direita)
 
 

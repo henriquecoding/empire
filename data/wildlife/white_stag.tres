@@ -19,5 +19,5 @@ flee_px = 128.0
 rare_of = &"deer"
 rare_chance = 0.08
 rots_into = &"brute"
-sprite_scale = 2
+sprite_scale = 2.0
 habitat_min_px = 1440.0

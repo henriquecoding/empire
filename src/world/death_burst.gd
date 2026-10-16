@@ -100,6 +100,11 @@ func pieces() -> Array[Dictionary]:
 	return _pedacos
 
 
+## Os corpos que ainda se veem a desfazer. Para medir.
+func bodies() -> int:
+	return _corpos.size()
+
+
 func live() -> int:
 	return _corpos.size() + _pedacos.size() + _po.size()
 
@@ -117,7 +122,7 @@ func step(delta: float, agora: float) -> void:
 			else:
 				pedaco.v = Vector2(pedaco.v.x * RESSALTO.vx, pedaco.v.y * RESSALTO.vy)
 				pedaco.bateu = true
-	_corpos = _corpos.filter(func(c: Dictionary) -> bool: return agora - c.t0 < SEGURA_S + DESFAZ_S)
+	_corpos = _corpos.filter(func(c: Dictionary) -> bool: return agora - c.t0 < float(c.dura))
 	_pedacos = _pedacos.filter(func(p: Dictionary) -> bool: return agora - p.t0 < VIDA_S)
 	_po = _po.filter(func(p: Dictionary) -> bool: return agora - p.t0 < VIDA_S)
 
@@ -165,8 +170,10 @@ static func _forma(canvas: CanvasItem, corpo: Dictionary, caixa: Rect2, cor: Col
 func _pele(canvas: CanvasItem, corpo: Dictionary, agora: float) -> void:
 	var perfil: StringName = corpo.pele[LastSeen.PELE_PERFIL]
 	var caixa: Rect2 = corpo.caixa
+	var pele: Array = corpo.pele
+	var escala := float(pele[LastSeen.PELE_ESCALA]) if pele.size() > LastSeen.PELE_ESCALA else 1.0
 	var pose := OriginalArt.posed(
-		Vector2(caixa.get_center().x, caixa.end.y), corpo.pele[LastSeen.PELE_FRENTE]
+		Vector2(caixa.get_center().x, caixa.end.y), pele[LastSeen.PELE_FRENTE], Vector2.ONE * escala
 	)
 	var dt := agora - float(corpo.t0)
 	if dt < SEGURA_S:

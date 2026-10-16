@@ -71,3 +71,21 @@ func test_com_pele_a_morte_passa_a_animacao_die() -> void:
 	assert_int(m.live()).is_greater(0)
 	m.step(0.1, DeathBurst.SEGURA_S + die + DeathBurst.DESFAZ_S + DeathBurst.VIDA_S)
 	assert_int(m.live()).is_equal(0)
+
+
+## O corpo com pele fica o que a animacao `die` dura, e o branco do hitstop, e o apagar;
+## o corpo sem pele espalma-se e vai-se no tempo de sempre (ADR 0083).
+func test_o_corpo_com_pele_fica_ate_a_animacao_acabar() -> void:
+	var arte := OriginalArt.new()
+	var die := arte.action_seconds(&"temp_brute", &"die")
+	var com := DeathBurst.new()
+	com.burst(_visto([&"temp_brute", -1.0, Color.WHITE, true]), 1.0, 0.0, _meio)
+	var sem := DeathBurst.new()
+	sem.burst(_visto(), 1.0, 0.0, _meio)
+	var quase := DeathBurst.SEGURA_S + die
+	com.step(0.1, quase)
+	sem.step(0.1, quase)
+	assert_int(com.bodies()).is_equal(1)
+	assert_int(sem.bodies()).is_equal(0)
+	com.step(0.1, quase + DeathBurst.DESFAZ_S)
+	assert_int(com.bodies()).is_equal(0)

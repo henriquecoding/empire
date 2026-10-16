@@ -20,12 +20,19 @@ const FALA := Color(0.96, 0.85, 0.61)
 ## Em fraccoes da caixa de uma tropa (ActorArt.ESCALA.caixa).
 const PRATO := {"alto": 0.18, "fundo": 0.7}
 const LETRA := {"tamanho": 16, "acima": 0.62}
+## Sem mudar de x durante isto, o Zelador parou (quatro ticks da simulacao).
+const PARADO_S := 0.15
+
+## O ultimo x do Zelador e quando mudou; quando levou a desta noite (ADR 0083).
+static var _visto_x := NAN
+static var _mudou := -INF
+static var _levou := INF
 
 
 static func draw_on(canvas: CanvasItem, luz: Lighting, tempo: float = 0.0) -> void:
 	var voz := SimLoop.night.voice
 	if voz.tender.active:
-		_zelador(canvas, voz.tender.x, luz, tempo)
+		_zelador(canvas, voz.tender, luz, tempo)
 	if voz.offers.phase != OfferSystem.Phase.OPEN:
 		return
 	var oferta := voz.offers.offer()
@@ -59,11 +66,38 @@ static func _frase(canvas: CanvasItem, x: float, chave: String) -> void:
 	canvas.draw_string(fonte, onde, texto, HORIZONTAL_ALIGNMENT_LEFT, -1, tamanho, FALA)
 
 
-static func _zelador(canvas: CanvasItem, x: float, luz: Lighting, tempo: float) -> void:
+static func _zelador(canvas: CanvasItem, zelador: Tender, luz: Lighting, tempo: float) -> void:
+	var x := zelador.x
 	var forma := Silhouette.Form.ZELADOR
+	if AnimatedBeasts.handles(forma):  # o Zelador animado do dono (ADR 0083)
+		var perfil := AnimatedBeasts.id_of(forma)
+		var quadro := tender_frame(perfil, zelador, tempo)
+		var lado := signf(SimLoop.core_x - x)
+		var pe := Vector2(x, WorldPalette.ground_of(int(Band.Kind.SURFACE)))
+		var pose := AnimatedBeasts.pose(forma, pe, lado if lado != 0.0 else 1.0, Vector2.ONE)
+		AnimatedArt.lit(canvas, perfil, quadro, pose, luz, x)
+		AnimatedArt.glow(canvas, perfil, quadro, pose, Color.WHITE)
+		return
 	var caixa := Bestiary.box(forma, x, int(Band.Kind.SURFACE))
 	var tons := Bestiary.tones(forma, func(c: Color) -> Color: return luz.body(c, x))
 	var roxo := WorldLight.stops(SimFactory.rot_profile())
 	var olhos := PackedColorArray([roxo[1], roxo[2]])
 	var frente := signf(SimLoop.core_x - x)  # olha para o teu nucleo (§75)
 	Bestiary.draw(canvas, forma, caixa, tons, olhos, tempo, frente, 0.0, 0.0)
+
+
+## O quadro do Zelador: anda para o teu nucleo, para num muro, e quando leva a tropa da
+## noite cuida dela (tend) uma vez.
+static func tender_frame(perfil: StringName, zelador: Tender, tempo: float) -> int:
+	if not is_equal_approx(zelador.x, _visto_x) or tempo < _mudou:
+		_visto_x = zelador.x
+		_mudou = tempo
+	if not zelador.took:
+		_levou = INF
+	elif _levou == INF or tempo < _levou:
+		_levou = tempo
+	var cuida := tempo - _levou
+	if cuida >= 0.0 and cuida < AnimatedArt.seconds(perfil, &"tend"):
+		return AnimatedArt.frame(perfil, &"tend", cuida)
+	var anda := tempo - _mudou <= PARADO_S
+	return AnimatedArt.frame(perfil, &"walk" if anda else &"idle", tempo)

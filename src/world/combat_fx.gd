@@ -174,6 +174,11 @@ static func squash(id: int) -> Vector2:
 	return Vector2(1.0 - k, 1.0 + k * WorldPalette.MEIA)
 
 
+## Quanto tempo desde que o ultimo golpe chegou a `id` (NUNCA se nao levou nenhum).
+static func since_struck(id: int) -> float:
+	return clock - float(_golpes[id][G_T]) if _golpes.has(id) else StrikePose.NUNCA
+
+
 ## O branco do §24, de 1 a 0. Desligado nas opcoes (§26, fotossensibilidade).
 static func flash(id: int) -> float:
 	if not _golpes.has(id) or not Preferences.on(Preferences.FLASHES):
