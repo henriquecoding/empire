@@ -33,8 +33,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey:
 		if event.keycode == KEY_PAGEUP or event.keycode == KEY_PAGEDOWN:
-			_index = posmod(_index + (1 if event.keycode == KEY_PAGEDOWN else -1),
-					NativeSceneryCatalog.ids().size())
+			_index = posmod(
+				_index + (1 if event.keycode == KEY_PAGEDOWN else -1),
+				NativeSceneryCatalog.ids().size()
+			)
 			_show()
 		elif event.keycode == KEY_E:
 			_walker.use_passage()

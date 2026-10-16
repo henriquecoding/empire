@@ -74,8 +74,9 @@ func _material(recipe: Dictionary, layer: String) -> ShaderMaterial:
 	material.set_shader_parameter("autumn", plants and bool(recipe.get("autumn", false)))
 	material.set_shader_parameter("frost", plants and bool(recipe.get("frost", false)))
 	material.set_shader_parameter("aurora", layer == "sky" and bool(recipe.get("aurora", false)))
-	material.set_shader_parameter("warm_lights", layer in ["structures", "props"]
-			and bool(recipe.get("warm_lights", false)))
+	material.set_shader_parameter(
+		"warm_lights", layer in ["structures", "props"] and bool(recipe.get("warm_lights", false))
+	)
 	return material
 
 
@@ -83,8 +84,12 @@ func _floors(data: Dictionary) -> void:
 	_floor(0.0, 1280.0, WorldPalette.ground_of(Band.Kind.SURFACE), "SurfaceFloor")
 	for index in data.lower_spans.size():
 		var span: Array = data.lower_spans[index]
-		_floor(float(span[0]), float(span[1]), WorldPalette.ground_of(Band.Kind.UNDERGROUND),
-				"LowerFloor%d" % index)
+		_floor(
+			float(span[0]),
+			float(span[1]),
+			WorldPalette.ground_of(Band.Kind.UNDERGROUND),
+			"LowerFloor%d" % index
+		)
 
 
 func _floor(left: float, right: float, y: float, label: String) -> void:
@@ -107,14 +112,18 @@ func _ladders(data: Dictionary) -> void:
 		sprite.texture = load(String(data.ladder)) as Texture2D
 		sprite.centered = false
 		sprite.position = Vector2(mouth - 24.0, 517.0)
-		sprite.scale = Vector2(48.0 / sprite.texture.get_width(), 102.0 / sprite.texture.get_height())
+		sprite.scale = Vector2(
+			48.0 / sprite.texture.get_width(), 102.0 / sprite.texture.get_height()
+		)
 		functional.add_child(sprite)
 
 
 func _workers(data: Dictionary) -> void:
 	for span: Array in data.lower_spans:
 		var actor := NativeSceneryActor.new()
-		actor.position = Vector2(float(span[0]) + 80.0, WorldPalette.ground_of(Band.Kind.UNDERGROUND))
+		actor.position = Vector2(
+			float(span[0]) + 80.0, WorldPalette.ground_of(Band.Kind.UNDERGROUND)
+		)
 		workers.add_child(actor)
 
 

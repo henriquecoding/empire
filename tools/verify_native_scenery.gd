@@ -68,8 +68,7 @@ func _view(id: String) -> void:
 		walker.velocity = Vector2.ZERO
 		_check(walker.use_passage(), id + ": descend")
 		await _frames(8)
-		_check(walker.is_on_floor() and absf(walker.position.y - 618.5) < 0.1,
-				id + ": lower floor")
+		_check(walker.is_on_floor() and absf(walker.position.y - 618.5) < 0.1, id + ": lower floor")
 		var before := walker.position.x
 		walker.direction = -1.0
 		await _frames(5)
@@ -79,9 +78,15 @@ func _view(id: String) -> void:
 			walker.direction = 1.0 if mouth < 640.0 else -1.0
 			await _frames(48)
 			walker.direction = 0.0
-			_check(NativeSceneryCatalog.supports(stage.family_id, walker.position.x,
-					Band.Kind.UNDERGROUND, 16.0) and walker.is_on_floor(),
-					id + ": water gap blocks walking")
+			_check(
+				(
+					NativeSceneryCatalog.supports(
+						stage.family_id, walker.position.x, Band.Kind.UNDERGROUND, 16.0
+					)
+					and walker.is_on_floor()
+				),
+				id + ": water gap blocks walking"
+			)
 		walker.position.x = mouth
 		_check(walker.use_passage(), id + ": ascend")
 		await _frames(4)
@@ -97,11 +102,20 @@ func _view(id: String) -> void:
 	_check(stage.functional.visible, id + ": access remains")
 	stage.set_constructed(true)
 	_check(stage.structures.visible and stage.workers.visible, id + ": built state")
-	var tiles := load("res://art/export/scenery_native/" + stage.family_id + "/modules_64.tres") as TileSet
+	var tiles := (
+		load("res://art/export/scenery_native/" + stage.family_id + "/modules_64.tres") as TileSet
+	)
 	_check(tiles != null and tiles.tile_size == Vector2i(64, 64), id + ": native modules")
-	_results.append({"id": id, "family": stage.family_id,
-					 "surface_y": walker.position.y, "passages": family.passages.size(),
-					 "lower_spans": family.lower_spans.size(), "built_and_empty": true})
+	_results.append(
+		{
+			"id": id,
+			"family": stage.family_id,
+			"surface_y": walker.position.y,
+			"passages": family.passages.size(),
+			"lower_spans": family.lower_spans.size(),
+			"built_and_empty": true
+		}
+	)
 	walker.free()
 	stage.free()
 	await _frames(1)

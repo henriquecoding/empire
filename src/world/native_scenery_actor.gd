@@ -21,5 +21,7 @@ func _draw() -> void:
 	var profile := &"royal_king" if controlled else &"royal_citizen"
 	var action := &"walk" if walking else &"idle"
 	var frame := _art.frame_at(profile, _time, action)
-	var pose := OriginalArt.posed(Vector2.ZERO, facing, NativeActorFit.scale_for(profile, controlled))
+	var pose := OriginalArt.posed(
+		Vector2.ZERO, facing, NativeActorFit.scale_for(profile, controlled)
+	)
 	_art.draw_posed(self, profile, Color.WHITE, frame, pose)

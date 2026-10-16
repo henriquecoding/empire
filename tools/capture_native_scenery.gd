@@ -8,7 +8,9 @@ func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute("res://build/scenery-native")
 	get_tree().root.size = Vector2i(1280, 720)
 	get_tree().root.content_scale_size = Vector2i(1280, 720)
-	get_tree().root.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	get_tree().root.canvas_item_default_texture_filter = (
+		Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	)
 	for id: String in NativeSceneryCatalog.ids():
 		await _capture_view(id)
 	var record := {
@@ -67,10 +69,17 @@ func _save(stage: NativeSceneryStage, walker: NativeSceneryWalker, state: String
 	if error != OK:
 		push_error("capture failed: " + name)
 		get_tree().quit(1)
-	_shots.append({
-		"image": name, "id": stage.view_id, "state": state,
-		"player": [walker.position.x, walker.position.y],
-		"constructed": stage.constructed,
-		"texture_bytes": Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED),
-		"draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
-	})
+	(
+		_shots
+		. append(
+			{
+				"image": name,
+				"id": stage.view_id,
+				"state": state,
+				"player": [walker.position.x, walker.position.y],
+				"constructed": stage.constructed,
+				"texture_bytes": Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED),
+				"draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
+			}
+		)
+	)

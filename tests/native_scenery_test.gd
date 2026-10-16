@@ -18,8 +18,9 @@ func test_every_dry_lower_bank_has_a_reachable_passage() -> void:
 		for span: Array in family.lower_spans:
 			var accessible := false
 			for mouth: float in family.passages:
-				accessible = accessible or (
-					mouth >= float(span[0]) + 32.0 and mouth <= float(span[1]) - 32.0
+				accessible = (
+					accessible
+					or (mouth >= float(span[0]) + 32.0 and mouth <= float(span[1]) - 32.0)
 				)
 			assert_bool(accessible).override_failure_message(id).is_true()
 

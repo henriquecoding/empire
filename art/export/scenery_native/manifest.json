@@ -1,0 +1,4312 @@
+{
+  "schema_version": 1,
+  "canvas": [
+    1280,
+    720
+  ],
+  "surface_y": 517,
+  "underground_y": 618.5,
+  "playable_frame": [
+    64,
+    64
+  ],
+  "worker_frame": [
+    32,
+    32
+  ],
+  "module": [
+    64,
+    64
+  ],
+  "families": {
+    "enramados": {
+      "name": "Enramados",
+      "biome": "ancient_forest",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/enramados/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/enramados/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/enramados/campaign_far.png",
+          "rect": [
+            0,
+            220,
+            2560,
+            388
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            97
+          ],
+          "sha256": "39e921194a71de7440bb5d338f8e670100dd7d67f38e491ead7d39fad3996262"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/enramados/campaign_mid.png",
+          "rect": [
+            0,
+            384,
+            2560,
+            336
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            84
+          ],
+          "sha256": "b6705e3d7074e0328d3346e081005379599f97050b971866a0934240cafb8d89"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/enramados/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            2042,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1021,
+            250
+          ],
+          "sha256": "c613f79ff4a0477e2e1365b527071d069687f9c040b5e92f9e84676bb9168b10"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/enramados/far.png",
+          "rect": [
+            0,
+            220,
+            1280,
+            388
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            97
+          ],
+          "sha256": "84c766f92f833ee2f8e3c91654eff25dd2f613169db2c2cbfc4dbb9782517dc7"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/enramados/mid.png",
+          "rect": [
+            0,
+            384,
+            1280,
+            336
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            84
+          ],
+          "sha256": "9700c3a464db1bda6ed7054f1433f2fa3d4252ad43ad047fce85d84eae55be65"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/enramados/near.png",
+          "rect": [
+            16,
+            16,
+            762,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            381,
+            250
+          ],
+          "sha256": "af7e2222fc4fcf9cfd162ff658cb902864b3e2b920771122c918d1a2d68bdd0a"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/enramados/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "efbd0468395fb77d564e769512fe0e1ad80ce535761cf53c76f83239480c92ea"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/enramados/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            96
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            48
+          ],
+          "sha256": "3fbfa3a6b76e07ed48c617f5f16093f505538368e9a6a6997cbc4f33b1c13db7"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/enramados/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "0325cb76d2ac3438eb4e85d94f3bb9a19e57492db310df86948966ba361d06f4"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/enramados/structures.png",
+          "rect": [
+            96,
+            216,
+            1184,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            592,
+            150
+          ],
+          "sha256": "15323c6b92642c184ad40a2f55a637a1868f469eaeee70a93066a20461f58c08"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/enramados/props.png",
+          "rect": [
+            1024,
+            484,
+            106,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            53,
+            16
+          ],
+          "sha256": "38842aaf05eace6acc06bed6ae326020d79dbb247fee7e255746414f236be282"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/enramados/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/enramados/water.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/enramados/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/enramados/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/enramados/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/enramados.png"
+    },
+    "bruma": {
+      "name": "Bruma",
+      "biome": "marsh",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/bruma/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "a1da3ec13eeedc05c0d82c0e2460181bf94c16156580490eff357ff63c9225be"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/bruma/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/bruma/campaign_far.png",
+          "rect": [
+            0,
+            136,
+            2560,
+            448
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            112
+          ],
+          "sha256": "fb06a2812cca71723b1978d4951a42a5877f3f6be3c9ba75ea668c56cd6cbfd5"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/bruma/campaign_mid.png",
+          "rect": [
+            0,
+            332,
+            2560,
+            388
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            97
+          ],
+          "sha256": "2068331bc694c0b19c1f7d3462145d63319a71ac1d6a79c4460ee1966a584072"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/bruma/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            2050,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1025,
+            250
+          ],
+          "sha256": "e9c70d048a4f158f9be33b97807550715524dd5d66bb49f75fe36f77f8818faf"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          400
+        ],
+        [
+          896,
+          1248
+        ]
+      ],
+      "passages": [
+        272,
+        1040
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/bruma/far.png",
+          "rect": [
+            0,
+            136,
+            1280,
+            448
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            112
+          ],
+          "sha256": "02bfca9f8a4e095bfad1caadfe3aacbf9e10d625a912220d5548fcb65838d102"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/bruma/mid.png",
+          "rect": [
+            0,
+            332,
+            1280,
+            388
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            97
+          ],
+          "sha256": "3db477b45e1321ca122a17c7f4d6abc8b9168e91b9bb23f13a599f71d2ecc7ed"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/bruma/near.png",
+          "rect": [
+            16,
+            16,
+            770,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            385,
+            250
+          ],
+          "sha256": "4eb429f92e325ca57010e111e8e86bc7d3dc46f10bb09006fbcd7a98ef516ecd"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/bruma/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "6a73db80002afa767f3b7e89556845f5ef2c42a5612b05fb2188981dff2aff31"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/bruma/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            46
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            23
+          ],
+          "sha256": "456a1748fe0d5ca42e262578014e4dcba7703716528b735e0b2e1d4e962a77f3"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/bruma/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "684a34260d02edc2022eec29abef1148596897e17360248e7cc7d9c269b6ea51"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/bruma/structures.png",
+          "rect": [
+            594,
+            216,
+            686,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            343,
+            150
+          ],
+          "sha256": "4885e8363b5fe5a20d0c8bae81ae07e7c077d1067d608ba53c1a4f993ffaa4d2"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/bruma/props.png",
+          "rect": [
+            1024,
+            484,
+            82,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            41,
+            16
+          ],
+          "sha256": "25b8885719448cc097790fac612d6cde0ca26fd8ad52c10c23e55b9712efe20b"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/bruma/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/bruma/water.png",
+          "rect": [
+            2,
+            180,
+            1278,
+            532
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            639,
+            266
+          ],
+          "sha256": "b4672f0e235f0bbfe805fb6744cd009e465fee442df318b69233ac6c0a530b55"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/bruma/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "1f931d1edb22e1deead57ba41aa550cbae9d75619d8d8da7bbb7a2b84bc9ffe2"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/bruma/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/bruma/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/bruma.png"
+    },
+    "horta": {
+      "name": "Horta",
+      "biome": "floodplain",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/horta/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/horta/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/horta/campaign_far.png",
+          "rect": [
+            0,
+            248,
+            2548,
+            340
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            637,
+            85
+          ],
+          "sha256": "6c87d8f68ed96d6c34494ce5b832013d3dac507c519133a5bf6ab705f215a963"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/horta/campaign_mid.png",
+          "rect": [
+            16,
+            256,
+            2536,
+            464
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            634,
+            116
+          ],
+          "sha256": "ec0cdc2fd82ef07a430d2a8c834f923019f3ac265652d12a7040f1a5a149bc73"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/horta/campaign_near.png",
+          "rect": [
+            16,
+            96,
+            1916,
+            420
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            958,
+            210
+          ],
+          "sha256": "930aa1ba5c1e57c99ab591763b6754f581d9a76666f58e3fb60eccdf4d8422e9"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/horta/far.png",
+          "rect": [
+            0,
+            248,
+            1268,
+            340
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            317,
+            85
+          ],
+          "sha256": "579655a9e28f66a3f3b0c08c0ab81c286ed4e217f8662a33392c58f260a1a4ae"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/horta/mid.png",
+          "rect": [
+            16,
+            256,
+            1256,
+            464
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            314,
+            116
+          ],
+          "sha256": "b1f77a445340dcb9365fa446f6aeb5bf6c9446e120a052dc53a55dd3c29f18b4"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/horta/near.png",
+          "rect": [
+            16,
+            96,
+            636,
+            420
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            318,
+            210
+          ],
+          "sha256": "a0c7191a95e745ea5f23be2027b3cbfcd6133cca03964ccb2ce77113acafd074"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/horta/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "55d3cb837361ac2cb9958fbca3044a5093123bd3a1af385cd4c3a8ab81f44f8d"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/horta/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            102
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            51
+          ],
+          "sha256": "d0400358bf3737dc5005e46ec9b249807cbd455440598b1ed35914ddd8bf9f4a"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/horta/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "e54f41b5007f2d79a99515dc593de57341025b2108d502d6828fb17c8f59f1ea"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/horta/structures.png",
+          "rect": [
+            674,
+            216,
+            606,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            303,
+            150
+          ],
+          "sha256": "a1e0c7ddcf09d914b92e0821fd66bc7c8344281e1b33e53d6985d11c04a9b3be"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/horta/props.png",
+          "rect": [
+            1024,
+            484,
+            134,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            67,
+            16
+          ],
+          "sha256": "c6ec0f8e46ebdf22367b3baae1a8360ccdb24d0f3a8cc9ca9197b980d4eb3520"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/horta/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/horta/water.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/horta/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/horta/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/horta/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/horta.png"
+    },
+    "portuarios": {
+      "name": "Portuários",
+      "biome": "coast",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_far.png",
+          "rect": [
+            0,
+            224,
+            2560,
+            372
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            93
+          ],
+          "sha256": "70cdd23895ebb68a7de776a591f5198c2502e6f806d93f1c3ea762fadde2da51"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_mid.png",
+          "rect": [
+            0,
+            360,
+            2552,
+            360
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            638,
+            90
+          ],
+          "sha256": "4958b4d7d059d601453c298d0eff3d92e26445234494cdf33dba2c0031f0cc0d"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/portuarios/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            2000,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1000,
+            250
+          ],
+          "sha256": "ca9fb54bd4b9e4e068b862909da0a370b33e60abc2e3e8f4b275eef4b1b2d26f"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/portuarios/far.png",
+          "rect": [
+            0,
+            224,
+            1280,
+            372
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            93
+          ],
+          "sha256": "ed3eae63b2b81e06a87de0885f1d684bfd0fa741298f47a2e56f9bd482d35c05"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/portuarios/mid.png",
+          "rect": [
+            0,
+            360,
+            1272,
+            360
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            318,
+            90
+          ],
+          "sha256": "70e5d1bd0279bf0946ff8a5f3aee92727cf0fd659cf9d4c2178835aa493b8133"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/portuarios/near.png",
+          "rect": [
+            16,
+            16,
+            720,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            360,
+            250
+          ],
+          "sha256": "d2ba260ec225248241f0c33ce62c37375f8ad0afbbd1476b6ec013180ac09148"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/portuarios/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "9b7cb5ecc5cd207a360e9a87992e65c6983f210b7d1274610e7c6278bfd96f76"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/portuarios/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            86
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            43
+          ],
+          "sha256": "34e67ea9d2b2e504853351242e62e7a1ab103391c015d6c3b246bcfaa93ab5da"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/portuarios/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "8d71ec36273b3de0594f74efefac16900177dcbec5ea7c11aa697e8c79141000"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/portuarios/structures.png",
+          "rect": [
+            518,
+            216,
+            762,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            381,
+            150
+          ],
+          "sha256": "d9b9b13d98acfb418a4b757746ed25f5f43fe479f61c40792c99e4ac9f14e04c"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/portuarios/props.png",
+          "rect": [
+            1024,
+            486,
+            66,
+            30
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            33,
+            15
+          ],
+          "sha256": "ab76dc62bda6dbcd64afc3c97af00745512c58c35b7c42a269d4425aeb867dd8"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/portuarios/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/portuarios/water.png",
+          "rect": [
+            0,
+            288,
+            1280,
+            432
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            216
+          ],
+          "sha256": "45bc271d88415213980098ce67f9aaf330adaf18d1867eb4cc18f9ce899d7ceb"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/portuarios/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/portuarios/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/portuarios/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/portuarios.png"
+    },
+    "fenda": {
+      "name": "Fenda",
+      "biome": "canyon",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/fenda/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "9f857264dbf2f49cf0e76e64f0c106eefcdac5dd739b372d7d27b66c42bad24e"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/fenda/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/fenda/campaign_far.png",
+          "rect": [
+            0,
+            128,
+            2548,
+            480
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            637,
+            120
+          ],
+          "sha256": "ce050d2d837de8c7b3c9857e6c500782ab5ec614b4bdb470ae2de1d675a50199"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/fenda/campaign_mid.png",
+          "rect": [
+            12,
+            212,
+            2544,
+            508
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            636,
+            127
+          ],
+          "sha256": "9fa83e5e86a4f739d938ca7f175430656276b9064de729188c3df540b66f14e5"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/fenda/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            1866,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            933,
+            250
+          ],
+          "sha256": "628e83e16e6ec3d8657c99d7270f0c019a478f137bde6c60eaad7c21706ad07a"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          352
+        ],
+        [
+          928,
+          1248
+        ]
+      ],
+      "passages": [
+        224,
+        1040
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/fenda/far.png",
+          "rect": [
+            0,
+            128,
+            1268,
+            480
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            317,
+            120
+          ],
+          "sha256": "83b6e975c12fb6d92e9de0a4063448470d69c385e94e99313fcd188b7fab117e"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/fenda/mid.png",
+          "rect": [
+            12,
+            212,
+            1264,
+            508
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            316,
+            127
+          ],
+          "sha256": "7cc4ca262cde4cccb9c8c17c653f7aa859b15b6f1f12b58a7dcff4060789fa9d"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/fenda/near.png",
+          "rect": [
+            16,
+            16,
+            586,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            293,
+            250
+          ],
+          "sha256": "7ccb328fad7bf3346910c60e56db219a94e0335a29258f6beff1fe5e091558c5"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/fenda/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "393de804e7fc8734e04ee123d278969e82d531db5899546ead5281604211f144"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/fenda/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            100
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            50
+          ],
+          "sha256": "9eeb53a2d841e6c3f7dda5f5abbfc2e7de9e25b529bf60e9382cd4d1e85e9f47"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/fenda/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "297518f79f09aaaab1b88e32012fb298560eef4fad6bf9e14383154a7da73b22"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/fenda/structures.png",
+          "rect": [
+            16,
+            216,
+            588,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            294,
+            150
+          ],
+          "sha256": "9f00b9c5f05f1b6d28efde6b9c1404a871dfd246a77bf331fa7febc9adff1b15"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/fenda/props.png",
+          "rect": [
+            1024,
+            484,
+            60,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            30,
+            16
+          ],
+          "sha256": "f69a855f53e746bd4d25a7459e3f7fbcbba1c201bd6453e988b34c2d7fab267f"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/fenda/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/fenda/water.png",
+          "rect": [
+            10,
+            44,
+            1252,
+            676
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            626,
+            338
+          ],
+          "sha256": "3dc00fe27411a4233e20058ba64fefa6e2d5bc78118fe45c5963c3ae0a570bc7"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/fenda/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/fenda/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/fenda/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/fenda.png"
+    },
+    "fornalha": {
+      "name": "Fornalha",
+      "biome": "volcanic",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "6feade90ed4a7e79b6a97681f63ff02aab45baa02bfd94c70c54d8fb1d6cf1c2"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_far.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            608
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            152
+          ],
+          "sha256": "58c1d9dd85c13ed35ecf18ab59f0dde039a131c4ee402e93e0ff6a1798293bc6"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_mid.png",
+          "rect": [
+            0,
+            380,
+            2560,
+            340
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            85
+          ],
+          "sha256": "5022af435a33fa7682d6fbe615f554800b76000224aedf598c17ba34df815f61"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/fornalha/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            2050,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1025,
+            250
+          ],
+          "sha256": "17b2ba94594497125d33edda30f27851afcf079ae8c486cf58f6a66605a1c96e"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/fornalha/far.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            608
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            152
+          ],
+          "sha256": "14090ef7b2b195460424d8dcf62012c1aa9b2ec2d85c317c1c89198f731805e4"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/fornalha/mid.png",
+          "rect": [
+            0,
+            380,
+            1280,
+            340
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            85
+          ],
+          "sha256": "35252c84b726c596f28d47d694c7dce068e010905df094174a0d3b4efaec6630"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/fornalha/near.png",
+          "rect": [
+            16,
+            16,
+            770,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            385,
+            250
+          ],
+          "sha256": "8ba58f352ad9df0db6a91183bb20e6bea39776f8d43125e38597d07479400a7c"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/fornalha/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "9d0e33437558c37778a50b6bd89e113fc98d41c455c0fcdd60313403f79dd2a5"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/fornalha/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            78
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            39
+          ],
+          "sha256": "c9e273b9295070f259657f6a6bc50046693c440228937512e37f4ab758387f8f"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/fornalha/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "7702beb5271bef8099037bcbb85d826e7b03d4417d0e1333d78676a58cedf8ed"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/fornalha/structures.png",
+          "rect": [
+            532,
+            216,
+            748,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            374,
+            150
+          ],
+          "sha256": "c388098c99196efd11bd3366fa8c95790b9898a11082d48368c9252b4cd4d235"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/fornalha/props.png",
+          "rect": [
+            1024,
+            484,
+            68,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            34,
+            16
+          ],
+          "sha256": "c2b2b0f95ce2189120d9ce5182a9bd38cf8f26ec90bc7c550c09781b49858973"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/fornalha/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/fornalha/water.png",
+          "rect": [
+            22,
+            334,
+            1258,
+            384
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            629,
+            192
+          ],
+          "sha256": "d752fb0a60d4ef83bd6746a9bced6ea9795612e14de8036e3b6d5d2e162ec2f2"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/fornalha/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "edeb61bd4c5cadfbdd0859054d4d5fc8d4d1b7bb1df295187342e02146711d4d"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/fornalha/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/fornalha/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/fornalha.png"
+    },
+    "geada": {
+      "name": "Geada",
+      "biome": "glacier",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/geada/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "2bb73494203f17c92cb459a04e5ced4519a442e8cd484234694af3dd4846233f"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/geada/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/geada/campaign_far.png",
+          "rect": [
+            0,
+            168,
+            2560,
+            440
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            110
+          ],
+          "sha256": "64d50998c412e0de06cebfa255fd4179078c2b49f7e81a6d596959438854d248"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/geada/campaign_mid.png",
+          "rect": [
+            4,
+            312,
+            2556,
+            408
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            639,
+            102
+          ],
+          "sha256": "a9ff0da6da59a0b14217c15bc83e777ea77ce0ae07cc2669de9054d8cbfdd284"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/geada/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            1802,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            901,
+            250
+          ],
+          "sha256": "66d29be24cc54442c3a2f8ed4f89a5aada168f9b40aec2723823d0d491e6fbf2"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/geada/far.png",
+          "rect": [
+            0,
+            168,
+            1280,
+            440
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            110
+          ],
+          "sha256": "5b8243334f86aec643a9fb97efe4ff1f4b9cb25fbae384c9cb2ede3e8739fec0"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/geada/mid.png",
+          "rect": [
+            4,
+            312,
+            1276,
+            408
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            319,
+            102
+          ],
+          "sha256": "bd8475846d1d9707c77da1969e80a23316b5d45b42b6c5ea3e11c60b4a1336c8"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/geada/near.png",
+          "rect": [
+            16,
+            16,
+            522,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            261,
+            250
+          ],
+          "sha256": "60d29a4c9ad32f2f80eb3a248070ff6fd805b7201ac1a8db4c55e18bd1938669"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/geada/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "fcb53a21e82474b93e1c3f883b1dc2de1704a7a67a27814635719fe075bec7ca"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/geada/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            98
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            49
+          ],
+          "sha256": "5b1a601123a2631d6859fe78ba2b780124a4d0b47d44b698aff5b821e22b9759"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/geada/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "e5f74d6726a2ab58801caef0248cfab9c9f9e02e599878c4294aa91a9c3f01a6"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/geada/structures.png",
+          "rect": [
+            640,
+            216,
+            640,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            320,
+            150
+          ],
+          "sha256": "6fca1504dfc8d4bb667269a6ee14c00659d4d30fa861f609d3063ed3382e4141"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/geada/props.png",
+          "rect": [
+            1024,
+            484,
+            62,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            31,
+            16
+          ],
+          "sha256": "7168cf080a2e07f85b2eb58907e99321d09f8c49a1dce4aebefde280df047426"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/geada/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/geada/water.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/geada/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "77016532249e95a2f9d5c70138884a732c0670c27377c398cd640bf656e29f1d"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/geada/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/geada/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/geada.png"
+    },
+    "sobraiz": {
+      "name": "SobRaiz",
+      "biome": "subterranean",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {
+        "sky": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_sky.png",
+          "rect": [
+            0,
+            0,
+            2560,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            180
+          ],
+          "sha256": "7a7b630d05ec14e2750fead5f33cc1a1b8688f540728d60b7acb9b559b3c0b56"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_clouds.png",
+          "rect": [
+            48,
+            40,
+            2416,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            604,
+            54
+          ],
+          "sha256": "1927de7ba147b507f46e90f4c36a0ace2836a69b47ec067485ec914334b0f5a4"
+        },
+        "far": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_far.png",
+          "rect": [
+            0,
+            132,
+            2560,
+            476
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            119
+          ],
+          "sha256": "9c5f89cf2ddcc10ebb2d64101796237e44765f890f7677423bda608acfa8feb2"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_mid.png",
+          "rect": [
+            0,
+            236,
+            2560,
+            484
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            640,
+            121
+          ],
+          "sha256": "83fc0b1b96ae09ce31445cee61d53315d093e0cabc954042179c1836aea619f7"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/sobraiz/campaign_near.png",
+          "rect": [
+            16,
+            16,
+            2020,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1010,
+            250
+          ],
+          "sha256": "9937d8f7025cca54663844910a66e7483de1b7272465cfb300604aba1940c9ec"
+        }
+      },
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/sobraiz/far.png",
+          "rect": [
+            0,
+            132,
+            1280,
+            476
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            119
+          ],
+          "sha256": "d96152fca144fbf190df95de437fd08af06bc3b4b16598366fef6b2589b74d42"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/sobraiz/mid.png",
+          "rect": [
+            0,
+            236,
+            1280,
+            484
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            121
+          ],
+          "sha256": "17525087008c8f000ea2577fa946d0bf52dacfd672b514b24ad2802b7e35906a"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/sobraiz/near.png",
+          "rect": [
+            16,
+            16,
+            740,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            370,
+            250
+          ],
+          "sha256": "207adb4e4eaaff1d55194adf6ecd259d939eff5c3241d53b1e83f90af1fb2ef8"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/sobraiz/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "95dce75b8e5dc28c3da2aa33014322eda53b5b42a764602dd118f939a109f1c5"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/sobraiz/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            102
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            51
+          ],
+          "sha256": "bc7156833018726fb798190c1a5a0421c4eeeb82a15e6c6f0e4a2dd7b74f9fc9"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/sobraiz/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "2cf5b9547424cb9f3e649cde44d2143a4383b92835fa7a8639e743e492a97f99"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/sobraiz/structures.png",
+          "rect": [
+            284,
+            216,
+            996,
+            300
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            498,
+            150
+          ],
+          "sha256": "b9b3ec6ac14fe32c6dcffdcd4e51b115ee692946e8ee1b2a5985c7ffcdb55776"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/sobraiz/props.png",
+          "rect": [
+            1024,
+            484,
+            90,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            45,
+            16
+          ],
+          "sha256": "d8ec422eff1c118f61b9717c9ad68740b2802420fe76ca1874f5139fb863d383"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/sobraiz/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/sobraiz/water.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/sobraiz/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "0854b21654d7f51fa20ff20e0a2a4d545897e3ef24f5e6debcaeb2bea8100f81"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/sobraiz/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/sobraiz/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/sobraiz.png"
+    },
+    "porto": {
+      "name": "Porto Central",
+      "biome": "coast",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {},
+      "lower_spans": [
+        [
+          32,
+          1248
+        ]
+      ],
+      "passages": [
+        784
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/porto/far.png",
+          "rect": [
+            0,
+            152,
+            1280,
+            456
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            114
+          ],
+          "sha256": "f371f2085704428283d72ae69e2bb8932d7752cf447c5b4c62fdf367ceafe1f3"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/porto/mid.png",
+          "rect": [
+            0,
+            288,
+            1280,
+            432
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            108
+          ],
+          "sha256": "d3c19519ec573f9bc73e8e191a126c6c20516f74b70eedabb6c87445ba9f3fd2"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/porto/near.png",
+          "rect": [
+            16,
+            16,
+            720,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            360,
+            250
+          ],
+          "sha256": "d2ba260ec225248241f0c33ce62c37375f8ad0afbbd1476b6ec013180ac09148"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/porto/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "6b00a895d04bf272030d600b0760b98d9ca15ee8fcf6adb23cb6997d8160ffe5"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/porto/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            88
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            44
+          ],
+          "sha256": "f51ac4fd57582107a0d2f5f229a3f589bd5ca62259b1b5e3da55dca5bfde6a22"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/porto/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "45657a5f1e45317223df05fb18017de3fbd6c49f8c092a5b5f591837c1be82d6"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/porto/structures.png",
+          "rect": [
+            0,
+            216,
+            1278,
+            464
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            639,
+            232
+          ],
+          "sha256": "2f7591e6bdfcf5fe2eef93170673f12495e96b58561b607a2b6cd8dbccced56b"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/porto/props.png",
+          "rect": [
+            1024,
+            484,
+            52,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            26,
+            16
+          ],
+          "sha256": "9109370e7664537e7114a5b4c068745eb659909782d2601440a1a216aa0d640c"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/porto/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/porto/water.png",
+          "rect": [
+            0,
+            258,
+            1280,
+            462
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            231
+          ],
+          "sha256": "98aede350d38335666c943b29c4786a1c7bc1e2d08f6991a3ab551f0ff94249a"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/porto/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/porto/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/porto/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/porto.png"
+    },
+    "lago": {
+      "name": "Lago das Ruínas",
+      "biome": "ancient_forest",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {},
+      "lower_spans": [
+        [
+          32,
+          400
+        ],
+        [
+          896,
+          1248
+        ]
+      ],
+      "passages": [
+        288,
+        1040
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/lago/far.png",
+          "rect": [
+            0,
+            92,
+            1280,
+            508
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            127
+          ],
+          "sha256": "728eb4b02a79748f4d4732d0e7859033420ae296604336820ea90407e9faacf9"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/lago/mid.png",
+          "rect": [
+            0,
+            384,
+            1280,
+            336
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            84
+          ],
+          "sha256": "2daa942d5c36043394009d0d39dde90dead296cd147478e40ec2fe3bef17ca6e"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/lago/near.png",
+          "rect": [
+            16,
+            16,
+            762,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            381,
+            250
+          ],
+          "sha256": "af7e2222fc4fcf9cfd162ff658cb902864b3e2b920771122c918d1a2d68bdd0a"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/lago/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "23a35deab7f3fb2d70309a346f48748b046eb1bfc8d6e9433e69106d6bc7cab2"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/lago/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            102
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            51
+          ],
+          "sha256": "c2563c016d5e8086c1095492480b9e596dab7bd9ccac8e1c93ccf4607b61f7b6"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/lago/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "7ca1de1aafeb0d8eec032471242c66a8801eb4bda7ba3d3619dd13f528b8cd65"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/lago/structures.png",
+          "rect": [
+            14,
+            250,
+            1258,
+            414
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            629,
+            207
+          ],
+          "sha256": "6c3e92681023a4df451fbd76094e0fc41805bba42282ecf9663bbfa1a65692bc"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/lago/props.png",
+          "rect": [
+            1024,
+            486,
+            60,
+            30
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            30,
+            15
+          ],
+          "sha256": "1d3a6e57734a09256f144bfe29bae919d7292700992bd8de28949744d90aee7f"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/lago/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/lago/water.png",
+          "rect": [
+            0,
+            92,
+            1280,
+            592
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            296
+          ],
+          "sha256": "0dcf76039821422152e3d5ca05bd20780af8bc2aaff4a926552941779bf5a2f9"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/lago/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/lago/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/lago/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/lago.png"
+    },
+    "rio": {
+      "name": "Rio das Azenhas",
+      "biome": "marsh",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {},
+      "lower_spans": [
+        [
+          32,
+          352
+        ],
+        [
+          928,
+          1248
+        ]
+      ],
+      "passages": [
+        240,
+        1040
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/rio/far.png",
+          "rect": [
+            0,
+            260,
+            1280,
+            348
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            87
+          ],
+          "sha256": "246fba7b627f80b7fbb26c3f9dd738872243dddfd2f354d56104cbd33129c71e"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/rio/mid.png",
+          "rect": [
+            0,
+            328,
+            1280,
+            392
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            98
+          ],
+          "sha256": "6a73b1f3d57835c113eb1ec33f398611055919f0c1f72d2f4057d123e67141c8"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/rio/near.png",
+          "rect": [
+            16,
+            16,
+            770,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            385,
+            250
+          ],
+          "sha256": "4eb429f92e325ca57010e111e8e86bc7d3dc46f10bb09006fbcd7a98ef516ecd"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/rio/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "786d395f8325bbb971e9b2676b222de91f2e6d42edcc8af125197c1cd9ec3739"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/rio/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            102
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            51
+          ],
+          "sha256": "4484e5471c252d313aa79977086ee5219496fa089a1d070f87e0d786938ddbdc"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/rio/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "ed8992929bd292157a7674e7c43a96b8247ef5b9ce31b5e43966cb61be4a2ac3"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/rio/structures.png",
+          "rect": [
+            16,
+            192,
+            1252,
+            476
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            626,
+            238
+          ],
+          "sha256": "19b3a3b18feb8700f3e870ed015852b2fa8b6f3c1a396dc0d7748135d78a9aa2"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/rio/props.png",
+          "rect": [
+            1024,
+            484,
+            70,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            35,
+            16
+          ],
+          "sha256": "290d595b9c54500e5262c38de29c39467315a218345d12761d1803a6b72c55a7"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/rio/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/rio/water.png",
+          "rect": [
+            0,
+            84,
+            1280,
+            636
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            318
+          ],
+          "sha256": "4627315ff8a43758993c5a94e64144f31b9a62537e2407f3cfc7e812754f9726"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/rio/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "1f931d1edb22e1deead57ba41aa550cbae9d75619d8d8da7bbb7a2b84bc9ffe2"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/rio/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/rio/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/rio.png"
+    },
+    "enramados_bruma": {
+      "name": "Enramados → Bruma",
+      "biome": "ancient_forest",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {},
+      "lower_spans": [
+        [
+          32,
+          432
+        ],
+        [
+          896,
+          1248
+        ]
+      ],
+      "passages": [
+        304,
+        1040
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/enramados_bruma/far.png",
+          "rect": [
+            0,
+            80,
+            1280,
+            528
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            132
+          ],
+          "sha256": "a78de537132ee6f0eb7b39a7ead3a21bf504a2ed6b37dc19c4d5c7a857931119"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/enramados_bruma/mid.png",
+          "rect": [
+            0,
+            288,
+            1280,
+            432
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            108
+          ],
+          "sha256": "d67b5899cbda23a1cb50d5c0ca6b8e71bc7e64604c8a6caaeb30cf8f735d4491"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/enramados_bruma/near.png",
+          "rect": [
+            16,
+            16,
+            762,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            381,
+            250
+          ],
+          "sha256": "af7e2222fc4fcf9cfd162ff658cb902864b3e2b920771122c918d1a2d68bdd0a"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/enramados_bruma/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "93202f5b52605a119150f46ef8cad53c6bec1083f706b6d50493b60164617698"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/enramados_bruma/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            80
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            40
+          ],
+          "sha256": "c4de3b3cad09008b5de86c0957adb9335d6d7ace9f49195a71835bda054cb22f"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/enramados_bruma/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "933a0895b0d4e1993eeeb0e62c21630cb6147261eb4faf1818896b2511e8bc2f"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/enramados_bruma/structures.png",
+          "rect": [
+            728,
+            384,
+            552,
+            132
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            276,
+            66
+          ],
+          "sha256": "c356659b43aa95ab12c18730f8586a95b349aa8b0d53b1fc40332211bf80f13d"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/enramados_bruma/props.png",
+          "rect": [
+            1024,
+            484,
+            80,
+            32
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            40,
+            16
+          ],
+          "sha256": "c9f423d4b51ce904a647b240e384d505490478edbb2ccb39094520da80fd8d07"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/enramados_bruma/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/enramados_bruma/water.png",
+          "rect": [
+            6,
+            120,
+            1264,
+            596
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            632,
+            298
+          ],
+          "sha256": "be2c80f83cdaa79b53c19049029d6c3804b915b9e559bd6c3cc1b2f79baa4d80"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/enramados_bruma/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/enramados_bruma/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/enramados_bruma/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/enramados_bruma.png"
+    },
+    "fenda_geada": {
+      "name": "Fenda → Geada",
+      "biome": "canyon",
+      "canvas": [
+        1280,
+        720
+      ],
+      "campaign_layers": {},
+      "lower_spans": [
+        [
+          32,
+          352
+        ],
+        [
+          928,
+          1248
+        ]
+      ],
+      "passages": [
+        224,
+        1040
+      ],
+      "layers": {
+        "far": {
+          "file": "res://art/export/scenery_native/fenda_geada/far.png",
+          "rect": [
+            0,
+            60,
+            1280,
+            548
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            137
+          ],
+          "sha256": "64c2df1d92563767fe1ae9a2a53e65bfe19774ff84dbcc3a20a4c7b333e8ebcb"
+        },
+        "mid": {
+          "file": "res://art/export/scenery_native/fenda_geada/mid.png",
+          "rect": [
+            0,
+            388,
+            1268,
+            332
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            317,
+            83
+          ],
+          "sha256": "79472484a92ab3c7a452a9f3df30758475dfff7d3996278681c5817e0662cfa9"
+        },
+        "near": {
+          "file": "res://art/export/scenery_native/fenda_geada/near.png",
+          "rect": [
+            16,
+            16,
+            586,
+            500
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            293,
+            250
+          ],
+          "sha256": "7ccb328fad7bf3346910c60e56db219a94e0335a29258f6beff1fe5e091558c5"
+        },
+        "under": {
+          "file": "res://art/export/scenery_native/fenda_geada/under.png",
+          "rect": [
+            32,
+            516,
+            1216,
+            104
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            52
+          ],
+          "sha256": "f141f01905ffe1a3ad683fde25dc3d5c37cb0b3a4158adbe9ad45a8fb494b815"
+        },
+        "terrain": {
+          "file": "res://art/export/scenery_native/fenda_geada/terrain.png",
+          "rect": [
+            32,
+            618,
+            1216,
+            98
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            608,
+            49
+          ],
+          "sha256": "5b4136649d82b4e33e98c2662c269d99387e4f64c7947d7cfa8aa2c13b2cec15"
+        },
+        "crossings": {
+          "file": "res://art/export/scenery_native/fenda_geada/crossings.png",
+          "rect": [
+            0,
+            516,
+            1280,
+            6
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            640,
+            3
+          ],
+          "sha256": "41bc49f403673c7fb0d100c589545353559ce8c6c5b59da4323183a86c622620"
+        },
+        "structures": {
+          "file": "res://art/export/scenery_native/fenda_geada/structures.png",
+          "rect": [
+            848,
+            384,
+            432,
+            132
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            216,
+            66
+          ],
+          "sha256": "09c958c7f2b06daa58a7f3675dce15a0cf9ad9622cae2891daa88b1c0b56c61c"
+        },
+        "props": {
+          "file": "res://art/export/scenery_native/fenda_geada/props.png",
+          "rect": [
+            1024,
+            486,
+            102,
+            30
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            51,
+            15
+          ],
+          "sha256": "a901e224953e48ea106efafc0b061d651636afd85d06fcc2a9c790e668a74003"
+        },
+        "foreground": {
+          "file": "res://art/export/scenery_native/fenda_geada/foreground.png",
+          "rect": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            1,
+            1
+          ],
+          "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317"
+        },
+        "water": {
+          "file": "res://art/export/scenery_native/fenda_geada/water.png",
+          "rect": [
+            116,
+            58,
+            1072,
+            654
+          ],
+          "scale": [
+            2,
+            2
+          ],
+          "size": [
+            536,
+            327
+          ],
+          "sha256": "4534b1dd4e76f1fe5a14a3c271da054d0e9e9ccb50307ec5283706152d6c118e"
+        },
+        "sky": {
+          "file": "res://art/export/scenery_native/fenda_geada/sky.png",
+          "rect": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            320,
+            180
+          ],
+          "sha256": "8fe20c04294fb3f6a0cd247e4353a01963eb884dac1fbda552128511e0574873"
+        },
+        "clouds": {
+          "file": "res://art/export/scenery_native/fenda_geada/clouds.png",
+          "rect": [
+            48,
+            40,
+            1136,
+            216
+          ],
+          "scale": [
+            4,
+            4
+          ],
+          "size": [
+            284,
+            54
+          ],
+          "sha256": "21cfb7fa4e933a238bb6160ea9817feed07ac4330734b7ca8d714e8a0b504588"
+        }
+      },
+      "ladder": "res://art/export/scenery_native/fenda_geada/access_ladder.png",
+      "construction_condition": "registered_structure_exists",
+      "source_atlas": "art/source/scenery_native/atlas/fenda_geada.png"
+    }
+  },
+  "variants": {
+    "enramados_base": {
+      "key": "enramados_base",
+      "family": "enramados",
+      "name": "Enramados",
+      "title": "Clareira do Carvalho",
+      "mood": "Manhã dourada",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/enramados_base.tscn"
+    },
+    "enramados_lua": {
+      "key": "enramados_lua",
+      "family": "enramados",
+      "name": "Enramados",
+      "title": "Luar na Clareira",
+      "mood": "Noite de verão",
+      "type": "variacao_reino",
+      "parent": "enramados_base",
+      "recipe": {
+        "tint": "#616785",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": true,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/enramados_lua.tscn"
+    },
+    "bruma_base": {
+      "key": "bruma_base",
+      "family": "bruma",
+      "name": "Bruma",
+      "title": "Brejo dos Salgueiros",
+      "mood": "Céu encoberto",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/bruma_base.tscn"
+    },
+    "bruma_nevoa": {
+      "key": "bruma_nevoa",
+      "family": "bruma",
+      "name": "Bruma",
+      "title": "Névoa entre os Juncos",
+      "mood": "Amanhecer com neblina",
+      "type": "variacao_reino",
+      "parent": "bruma_base",
+      "recipe": {
+        "tint": "#b5c9bc",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/bruma_nevoa.tscn"
+    },
+    "horta_base": {
+      "key": "horta_base",
+      "family": "horta",
+      "name": "Horta",
+      "title": "Vale dos Pomares",
+      "mood": "Primavera",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/horta_base.tscn"
+    },
+    "horta_colheita": {
+      "key": "horta_colheita",
+      "family": "horta",
+      "name": "Horta",
+      "title": "Pomar da Colheita",
+      "mood": "Outono após a chuva",
+      "type": "variacao_reino",
+      "parent": "horta_base",
+      "recipe": {
+        "tint": "#ead3b0",
+        "autumn": true,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/horta_colheita.tscn"
+    },
+    "portuarios_base": {
+      "key": "portuarios_base",
+      "family": "portuarios",
+      "name": "Portuários",
+      "title": "Enseada das Salinas",
+      "mood": "Dia de vento",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/portuarios_base.tscn"
+    },
+    "portuarios_mare_baixa": {
+      "key": "portuarios_mare_baixa",
+      "family": "portuarios",
+      "name": "Portuários",
+      "title": "Salinas na Maré Baixa",
+      "mood": "Fim de tarde",
+      "type": "variacao_reino",
+      "parent": "portuarios_base",
+      "recipe": {
+        "tint": "#e6bd94",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 12
+      },
+      "scene": "res://scenes/scenery_native/portuarios_mare_baixa.tscn"
+    },
+    "fenda_base": {
+      "key": "fenda_base",
+      "family": "fenda",
+      "name": "Fenda",
+      "title": "Passagem dos Basaltos",
+      "mood": "Luz de tarde",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/fenda_base.tscn"
+    },
+    "fenda_luar": {
+      "key": "fenda_luar",
+      "family": "fenda",
+      "name": "Fenda",
+      "title": "Fenda sob o Luar",
+      "mood": "Noite fria",
+      "type": "variacao_reino",
+      "parent": "fenda_base",
+      "recipe": {
+        "tint": "#637085",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": true,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/fenda_luar.tscn"
+    },
+    "fornalha_base": {
+      "key": "fornalha_base",
+      "family": "fornalha",
+      "name": "Caldeira / Fornalha",
+      "title": "Terraços da Caldeira",
+      "mood": "Tarde mineral",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/fornalha_base.tscn"
+    },
+    "fornalha_brasas": {
+      "key": "fornalha_brasas",
+      "family": "fornalha",
+      "name": "Caldeira / Fornalha",
+      "title": "Fornalha ao Anoitecer",
+      "mood": "Noite de brasas",
+      "type": "variacao_reino",
+      "parent": "fornalha_base",
+      "recipe": {
+        "tint": "#8e6353",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": true,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/fornalha_brasas.tscn"
+    },
+    "geada_base": {
+      "key": "geada_base",
+      "family": "geada",
+      "name": "Geada",
+      "title": "Pinhal de Inverno",
+      "mood": "Manhã de neve",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/geada_base.tscn"
+    },
+    "geada_aurora": {
+      "key": "geada_aurora",
+      "family": "geada",
+      "name": "Geada",
+      "title": "Pinhal sob a Aurora",
+      "mood": "Noite polar",
+      "type": "variacao_reino",
+      "parent": "geada_base",
+      "recipe": {
+        "tint": "#607a86",
+        "autumn": false,
+        "frost": false,
+        "aurora": true,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/geada_aurora.tscn"
+    },
+    "sobraiz_base": {
+      "key": "sobraiz_base",
+      "family": "sobraiz",
+      "name": "SobRaiz",
+      "title": "Galeria das Raízes",
+      "mood": "Luz entre as copas",
+      "type": "reino",
+      "recipe": {
+        "tint": "#ffffff",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/sobraiz_base.tscn"
+    },
+    "sobraiz_umida": {
+      "key": "sobraiz_umida",
+      "family": "sobraiz",
+      "name": "SobRaiz",
+      "title": "Raízes depois da Chuva",
+      "mood": "Entardecer úmido",
+      "type": "variacao_reino",
+      "parent": "sobraiz_base",
+      "recipe": {
+        "tint": "#83a79b",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/sobraiz_umida.tscn"
+    },
+    "porto_crepusculo": {
+      "key": "porto_crepusculo",
+      "family": "porto",
+      "name": "Porto Central",
+      "title": "Cais ao Pôr do Sol",
+      "mood": "Pôr do sol",
+      "type": "variacao_agua",
+      "parent": "aprovado_porto",
+      "recipe": {
+        "tint": "#e0ad89",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/porto_crepusculo.tscn"
+    },
+    "porto_noite": {
+      "key": "porto_noite",
+      "family": "porto",
+      "name": "Porto Central",
+      "title": "Porto das Lanternas",
+      "mood": "Noite de trabalho",
+      "type": "variacao_agua",
+      "parent": "aprovado_porto",
+      "recipe": {
+        "tint": "#5c6986",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": true,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/porto_noite.tscn"
+    },
+    "lago_outono": {
+      "key": "lago_outono",
+      "family": "lago",
+      "name": "Lago das Ruínas",
+      "title": "Lago de Cobre",
+      "mood": "Outono claro",
+      "type": "variacao_agua",
+      "parent": "aprovado_lago",
+      "recipe": {
+        "tint": "#dfc494",
+        "autumn": true,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/lago_outono.tscn"
+    },
+    "lago_geada": {
+      "key": "lago_geada",
+      "family": "lago",
+      "name": "Lago das Ruínas",
+      "title": "Primeira Geada no Lago",
+      "mood": "Amanhecer frio",
+      "type": "variacao_agua",
+      "parent": "aprovado_lago",
+      "recipe": {
+        "tint": "#bad3da",
+        "autumn": false,
+        "frost": true,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/lago_geada.tscn"
+    },
+    "rio_chuva": {
+      "key": "rio_chuva",
+      "family": "rio",
+      "name": "Rio das Azenhas",
+      "title": "Azenha depois da Chuva",
+      "mood": "Chuva passando",
+      "type": "variacao_agua",
+      "parent": "aprovado_rio",
+      "recipe": {
+        "tint": "#98b2b5",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/rio_chuva.tscn"
+    },
+    "rio_luar": {
+      "key": "rio_luar",
+      "family": "rio",
+      "name": "Rio das Azenhas",
+      "title": "Azenha sob o Luar",
+      "mood": "Noite de verão",
+      "type": "variacao_agua",
+      "parent": "aprovado_rio",
+      "recipe": {
+        "tint": "#67758c",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": true,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/rio_luar.tscn"
+    },
+    "enramados_bruma": {
+      "key": "enramados_bruma",
+      "family": "enramados_bruma",
+      "name": "Enramados → Bruma",
+      "title": "Onde a Mata Encontra o Brejo",
+      "mood": "Manhã nublada",
+      "type": "transicao",
+      "recipe": {
+        "tint": "#b7c5ac",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/enramados_bruma.tscn"
+    },
+    "fenda_geada": {
+      "key": "fenda_geada",
+      "family": "fenda_geada",
+      "name": "Fenda → Geada",
+      "title": "O Limiar da Neve",
+      "mood": "Tarde fria",
+      "type": "transicao",
+      "recipe": {
+        "tint": "#c3d0d3",
+        "autumn": false,
+        "frost": false,
+        "aurora": false,
+        "warm_lights": false,
+        "water_offset_y": 0
+      },
+      "scene": "res://scenes/scenery_native/fenda_geada.tscn"
+    }
+  }
+}
