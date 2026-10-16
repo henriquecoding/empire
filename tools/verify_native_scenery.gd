@@ -5,7 +5,13 @@ var _results: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	get_tree().create_timer(120.0).timeout.connect(_timed_out)
 	await _run()
+
+
+func _timed_out() -> void:
+	push_error("native scenery verification exceeded its deadline")
+	get_tree().quit(1)
 
 
 func _check(condition: bool, message: String) -> void:
@@ -69,6 +75,13 @@ func _view(id: String) -> void:
 		await _frames(5)
 		walker.direction = 0.0
 		_check(walker.position.x < before - 8.0, id + ": lower walking")
+		if family.lower_spans.size() > 1:
+			walker.direction = 1.0 if mouth < 640.0 else -1.0
+			await _frames(48)
+			walker.direction = 0.0
+			_check(NativeSceneryCatalog.supports(stage.family_id, walker.position.x,
+					Band.Kind.UNDERGROUND, 16.0) and walker.is_on_floor(),
+					id + ": water gap blocks walking")
 		walker.position.x = mouth
 		_check(walker.use_passage(), id + ": ascend")
 		await _frames(4)

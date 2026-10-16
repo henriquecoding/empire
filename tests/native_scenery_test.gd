@@ -36,3 +36,14 @@ func test_actual_actor_bounds_fit_the_native_frames() -> void:
 	assert_float(maxf(king.size.x, king.size.y)).is_equal_approx(64.0, 0.01)
 	assert_float(maxf(worker.size.x, worker.size.y)).is_equal_approx(32.0, 0.01)
 	assert_float(worker.position.y).is_greater(517.0)
+
+
+func test_campaign_uses_the_new_natural_planes() -> void:
+	for id: String in NativeSceneryCatalog.manifest().get("families", {}):
+		var family := NativeSceneryCatalog.family(id)
+		if family.get("campaign_layers", {}).is_empty():
+			continue
+		for layer: StringName in [&"sky", &"clouds", &"far", &"mid", &"near"]:
+			var exported := SceneryArt.layer(StringName(family.biome), layer)
+			assert_str(String(exported.get("file", ""))).contains("scenery_native/")
+			assert_float(SceneryArt.width(StringName(family.biome))).is_equal(2560.0)

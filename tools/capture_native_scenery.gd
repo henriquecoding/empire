@@ -4,6 +4,7 @@ var _shots: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	get_tree().create_timer(120.0).timeout.connect(_timed_out)
 	DirAccess.make_dir_recursive_absolute("res://build/scenery-native")
 	get_tree().root.size = Vector2i(1280, 720)
 	get_tree().root.content_scale_size = Vector2i(1280, 720)
@@ -23,6 +24,11 @@ func _ready() -> void:
 	var file := FileAccess.open("res://build/scenery-native/captures.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(record, "\t") + "\n")
 	get_tree().quit()
+
+
+func _timed_out() -> void:
+	push_error("native scenery capture exceeded its deadline")
+	get_tree().quit(1)
 
 
 func _settle() -> void:
