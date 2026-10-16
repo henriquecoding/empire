@@ -37,8 +37,25 @@ jobs:
           python-version: "3.11"
       - name: Existing pinned tools
         run: make ferramentas-python
+      - name: Restore compiled layers
+        id: native-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            art/export/scenery_native
+            scenes/scenery_native
+          key: native-scenery-${{ hashFiles('art/source/scenery_native/**', 'tools/export_native_scenery.py', 'tools/native_scenery_pixels.py', 'tools/native_scenery_modules.py') }}
       - name: Compile native layers, modules and editable sources
+        if: steps.native-cache.outputs.cache-hit != 'true'
         run: python3 tools/export_native_scenery.py
+      - name: Save verified compiled layers
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            art/export/scenery_native
+            scenes/scenery_native
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
       - name: Format and lint new GDScript
         run: |
           gdformat src/world/native*.gd src/world/scenery_art.gd tools/*native*.gd tests/native_scenery_test.gd

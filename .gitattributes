@@ -35,3 +35,7 @@ art/export/renewal/*.png -filter -diff -merge binary
 art/export/scenery/**/*.png -filter -diff -merge binary
 # Os animais e as criaturas animados (ADR 0083): 0,5 MB que o jogo, o CI e o site carregam.
 art/export/animated/*.png -filter -diff -merge binary
+
+# Native scenery sources and exports are reviewed without an LFS fetch (ADR 0084).
+art/source/scenery_native/**/*.png -filter -diff -merge binary
+art/export/scenery_native/**/*.png -filter -diff -merge binary
