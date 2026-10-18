@@ -1,0 +1,168 @@
+{
+  "status": "technical_checks_passed",
+  "artistic_approval": false,
+  "no_source_image_resampling": true,
+  "characters": [
+    {
+      "id": "rei",
+      "size": [
+        80,
+        80
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        5,
+        2,
+        71,
+        75
+      ],
+      "opaque_colors": 28
+    },
+    {
+      "id": "escudeiro",
+      "size": [
+        64,
+        64
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        11,
+        7,
+        58,
+        61
+      ],
+      "opaque_colors": 23
+    },
+    {
+      "id": "nia",
+      "size": [
+        64,
+        64
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        6,
+        5,
+        61,
+        61
+      ],
+      "opaque_colors": 27
+    },
+    {
+      "id": "bardo",
+      "size": [
+        64,
+        64
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        15,
+        6,
+        51,
+        61
+      ],
+      "opaque_colors": 22
+    },
+    {
+      "id": "arqueiro",
+      "size": [
+        80,
+        80
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        19,
+        9,
+        71,
+        76
+      ],
+      "opaque_colors": 22
+    },
+    {
+      "id": "intendente",
+      "size": [
+        64,
+        64
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        11,
+        3,
+        55,
+        61
+      ],
+      "opaque_colors": 22
+    },
+    {
+      "id": "sombra",
+      "size": [
+        80,
+        80
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        7,
+        2,
+        73,
+        76
+      ],
+      "opaque_colors": 8
+    },
+    {
+      "id": "dancarina",
+      "size": [
+        64,
+        64
+      ],
+      "indexed": true,
+      "binary_alpha": true,
+      "head_is_body_crop": true,
+      "ase_round_trip": true,
+      "persistent_identity_layers": true,
+      "occupied_bounds": [
+        12,
+        9,
+        56,
+        61
+      ],
+      "opaque_colors": 17
+    }
+  ],
+  "seated_source_round_trip": true,
+  "flora_sources_round_trip": true,
+  "head_states": 42,
+  "game_runtime_tested": false,
+  "limits": [
+    "Static pose/face studies, not full animation cycles.",
+    "80x80 is a proposed V7 authoring envelope for the three larger emperors.",
+    "No performance, animation, gameplay or artistic approval is claimed."
+  ]
+}

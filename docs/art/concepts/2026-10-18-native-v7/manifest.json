@@ -1,0 +1,484 @@
+{
+  "version": 7,
+  "authored_at": "2026-10-18",
+  "status": "concepts_not_runtime_assets",
+  "method": "integer_authored_clusters_no_image_resampling",
+  "palette": {
+    "ink": "#14151c",
+    "skin": "#f4b57c",
+    "skin_hi": "#ffdda3",
+    "skin_sh": "#c77d55",
+    "brown_skin": "#a96b43",
+    "brown_hi": "#d39b62",
+    "brown_sh": "#704334",
+    "cream": "#ead7a2",
+    "cream_hi": "#fff0c4",
+    "cream_sh": "#baa476",
+    "wine": "#8b243d",
+    "wine_hi": "#b83d4a",
+    "wine_sh": "#541e32",
+    "navy": "#273a64",
+    "navy_hi": "#405782",
+    "navy_sh": "#17253e",
+    "steel": "#8792a6",
+    "steel_hi": "#d4d9dc",
+    "steel_sh": "#515e77",
+    "iron": "#364052",
+    "iron_hi": "#5d6d82",
+    "iron_sh": "#202533",
+    "gold": "#dfa438",
+    "gold_hi": "#ffe29a",
+    "gold_sh": "#95602d",
+    "leather": "#8d542a",
+    "leather_hi": "#b67a3a",
+    "leather_sh": "#57331f",
+    "green": "#65714c",
+    "green_hi": "#9baf75",
+    "green_sh": "#3d513d",
+    "hair": "#a34024",
+    "hair_hi": "#d26335",
+    "hair_sh": "#652c23",
+    "blackhair": "#24201f",
+    "blackhair_hi": "#3c302c",
+    "blackhair_sh": "#15151b",
+    "pants": "#34353c",
+    "pants_hi": "#51515a",
+    "white": "#fff4dc",
+    "orange": "#d17126",
+    "orange_hi": "#f2ab43",
+    "pink": "#cf6593",
+    "pink_hi": "#f3b1c7",
+    "lavender": "#9585bd",
+    "lavender_hi": "#cebee8",
+    "leaf": "#568457",
+    "leaf_hi": "#91ae65",
+    "leaf_sh": "#304e44"
+  },
+  "source_base": "5b615a3",
+  "characters": [
+    {
+      "id": "rei",
+      "label": "Rei guerreiro",
+      "canvas": [
+        80,
+        80
+      ],
+      "pivot": [
+        40,
+        75
+      ],
+      "bounds": [
+        5,
+        2,
+        71,
+        75
+      ],
+      "useful_width": 66,
+      "useful_height": 73,
+      "head_crop": [
+        24,
+        2,
+        64,
+        34
+      ],
+      "head_size": [
+        40,
+        32
+      ],
+      "opaque_colors": 28,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/rei.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "escudeiro",
+      "label": "Escudeiro protetor",
+      "canvas": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        61
+      ],
+      "bounds": [
+        11,
+        7,
+        58,
+        61
+      ],
+      "useful_width": 47,
+      "useful_height": 54,
+      "head_crop": [
+        25,
+        7,
+        49,
+        34
+      ],
+      "head_size": [
+        24,
+        27
+      ],
+      "opaque_colors": 23,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/escudeiro.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "nia",
+      "label": "Imperatriz Nia",
+      "canvas": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        61
+      ],
+      "bounds": [
+        6,
+        5,
+        61,
+        61
+      ],
+      "useful_width": 55,
+      "useful_height": 56,
+      "head_crop": [
+        23,
+        5,
+        48,
+        30
+      ],
+      "head_size": [
+        25,
+        25
+      ],
+      "opaque_colors": 27,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/nia.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "bardo",
+      "label": "Bardo da bandeira",
+      "canvas": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        61
+      ],
+      "bounds": [
+        15,
+        6,
+        51,
+        61
+      ],
+      "useful_width": 36,
+      "useful_height": 55,
+      "head_crop": [
+        23,
+        6,
+        48,
+        34
+      ],
+      "head_size": [
+        25,
+        28
+      ],
+      "opaque_colors": 22,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/bardo.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "arqueiro",
+      "label": "Imperador Arqueiro",
+      "canvas": [
+        80,
+        80
+      ],
+      "pivot": [
+        40,
+        76
+      ],
+      "bounds": [
+        19,
+        9,
+        71,
+        76
+      ],
+      "useful_width": 52,
+      "useful_height": 67,
+      "head_crop": [
+        32,
+        9,
+        56,
+        39
+      ],
+      "head_size": [
+        24,
+        30
+      ],
+      "opaque_colors": 22,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/arqueiro.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "intendente",
+      "label": "Intendente da aljava",
+      "canvas": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        61
+      ],
+      "bounds": [
+        11,
+        3,
+        55,
+        61
+      ],
+      "useful_width": 44,
+      "useful_height": 58,
+      "head_crop": [
+        25,
+        15,
+        48,
+        38
+      ],
+      "head_size": [
+        23,
+        23
+      ],
+      "opaque_colors": 22,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/intendente.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "sombra",
+      "label": "Imperador sombrio",
+      "canvas": [
+        80,
+        80
+      ],
+      "pivot": [
+        40,
+        76
+      ],
+      "bounds": [
+        7,
+        2,
+        73,
+        76
+      ],
+      "useful_width": 66,
+      "useful_height": 74,
+      "head_crop": [
+        37,
+        2,
+        55,
+        33
+      ],
+      "head_size": [
+        18,
+        31
+      ],
+      "opaque_colors": 8,
+      "states": [
+        "calma"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/sombra.aseprite",
+      "status": "concept_for_author_review"
+    },
+    {
+      "id": "dancarina",
+      "label": "Escudeira dançarina",
+      "canvas": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        61
+      ],
+      "bounds": [
+        12,
+        9,
+        56,
+        61
+      ],
+      "useful_width": 44,
+      "useful_height": 52,
+      "head_crop": [
+        23,
+        9,
+        48,
+        32
+      ],
+      "head_size": [
+        25,
+        23
+      ],
+      "opaque_colors": 17,
+      "states": [
+        "calma",
+        "foco",
+        "medo",
+        "golpe",
+        "ferido",
+        "vitoria"
+      ],
+      "pixel_pitch": 1,
+      "source": "aseprite/dancarina.aseprite",
+      "status": "concept_for_author_review"
+    }
+  ],
+  "seated": {
+    "path": "sprites/sombra_sentado.png",
+    "canvas": [
+      80,
+      80
+    ],
+    "pivot": [
+      40,
+      76
+    ]
+  },
+  "effects": [
+    {
+      "path": "fx/flora_back_0.png",
+      "canvas": [
+        128,
+        24
+      ],
+      "pivot": [
+        64,
+        23
+      ],
+      "stage": 0,
+      "layer": "back"
+    },
+    {
+      "path": "fx/flora_front_0.png",
+      "canvas": [
+        128,
+        24
+      ],
+      "pivot": [
+        64,
+        23
+      ],
+      "stage": 0,
+      "layer": "front"
+    },
+    {
+      "path": "fx/flora_back_1.png",
+      "canvas": [
+        128,
+        24
+      ],
+      "pivot": [
+        64,
+        23
+      ],
+      "stage": 1,
+      "layer": "back"
+    },
+    {
+      "path": "fx/flora_front_1.png",
+      "canvas": [
+        128,
+        24
+      ],
+      "pivot": [
+        64,
+        23
+      ],
+      "stage": 1,
+      "layer": "front"
+    },
+    {
+      "path": "fx/flora_back_2.png",
+      "canvas": [
+        128,
+        24
+      ],
+      "pivot": [
+        64,
+        23
+      ],
+      "stage": 2,
+      "layer": "back"
+    },
+    {
+      "path": "fx/flora_front_2.png",
+      "canvas": [
+        128,
+        24
+      ],
+      "pivot": [
+        64,
+        23
+      ],
+      "stage": 2,
+      "layer": "front"
+    }
+  ],
+  "animation_cycles_delivered": false,
+  "runtime_integration": false
+}
