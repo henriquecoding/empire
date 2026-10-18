@@ -1,0 +1,111 @@
+{
+  "result": "pass",
+  "scope": "Integridade e correspondência de pixels; não certifica aprovação artística.",
+  "previews_integer_scale_match": true,
+  "characters": [
+    {
+      "id": "rei",
+      "size": [
+        80,
+        80
+      ],
+      "colours": 37,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 129,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "escudeiro",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 37,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 47,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "nia",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 41,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 46,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "bardo",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 39,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 66,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "arqueiro",
+      "size": [
+        80,
+        80
+      ],
+      "colours": 42,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 59,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "intendente",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 39,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 68,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "sombra",
+      "size": [
+        80,
+        80
+      ],
+      "colours": 42,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 0,
+      "outside_face_unchanged": true
+    },
+    {
+      "id": "dancarina",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 30,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true,
+      "changed_face_pixels": 34,
+      "outside_face_unchanged": true
+    }
+  ]
+}

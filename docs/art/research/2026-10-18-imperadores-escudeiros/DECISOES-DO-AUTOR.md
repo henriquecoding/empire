@@ -2,7 +2,13 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
-## Decisão mais recente — conceitos compactos e quadros 64/80
+## Decisão mais recente — aprofundar o rosto a partir da construção do autor
+
+Henrique considerou V8 melhor, mas ainda com várias falhas. Pediu aprofundar principalmente o rosto e forneceu uma captura e `Empire Tileset.aseprite` criados por ele como base. Ressaltou que 80×80 permite detalhar mais a face e que 64×64 também comporta detalhe com modificações de construção.
+
+A [revisão facial V9](../../concepts/2026-10-18-compact-native-v9/README.md) aplica essa instrução aos sete rostos visíveis na própria grade final. O Sombra conserva o elmo fechado. V8 recebeu apreciação parcial, não aprovação final; V9 é uma nova proposta para avaliação. Permanecem a barba do bardo, os figurinos escolhidos, o par aproximado e as dimensões 64/80. A captura e a fonte editável do autor prevalecem sobre sugestões estilísticas de tutoriais externos.
+
+## Decisão anterior — conceitos compactos e quadros 64/80
 
 Henrique disse que adorou todos os novos conceitos desta conversa. Escolheu a versão do bardo com barba em preferência à correção sem barba. Pediu aproximar um pouco o figurino de Sombra e da dançarina e, depois, construir os menores em 64×64 e os maiores em 80×80. Os tamanhos 64/80 passam, portanto, a ser instrução explícita nesta etapa, substituindo o estado de simples proposta registrado abaixo.
 
