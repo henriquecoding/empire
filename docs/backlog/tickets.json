@@ -2912,5 +2912,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "ART-RESEARCH-2026-10-18": {
+  "title": "Preservar pesquisa de imperadores e escudeiros",
+  "porque": "O autor interrompeu e rejeitou a última rodada de imagens e pediu o arquivo da pesquisa para outro chat.",
+  "spec": [
+   "docs/art/research/2026-10-18-imperadores-escudeiros/README.md"
+  ],
+  "depende": "—",
+  "feito": "Pesquisa, fontes, estudos e referências preservados; rejeição e preferências registradas.",
+  "fora": "Produção ou aprovação de conceitos, animações finais e alterações no jogo.",
+  "estado": "feito — pesquisa e estudos arquivados; geração interrompida; conceitos finais permanecem pendentes",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "As imagens da última rodada foram rejeitadas pelo autor."
+  ]
  }
 }
