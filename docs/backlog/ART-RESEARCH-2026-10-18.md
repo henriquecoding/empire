@@ -1,5 +1,7 @@
 # ART-RESEARCH-2026-10-18 — preservar pesquisa e interromper conceitos
 
+Estado feito — pesquisa e estudos arquivados; geração interrompida; conceitos finais permanecem pendentes
+
 ## Pedido do autor
 
 Interromper a criação de imagens; salvar toda a pesquisa e os estudos no repositório para continuar em outro chat. A última rodada de conceitos foi rejeitada.
