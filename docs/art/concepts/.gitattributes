@@ -1,0 +1,4 @@
+# Small review sources are ordinary binary blobs; production art keeps its LFS rules.
+2026-10-18-compact-native-v8/aseprite/*.aseprite -filter -diff -merge -text
+2026-10-18-compact-native-v9/aseprite/*.aseprite -filter -diff -merge -text
+2026-10-18-game-sprites-v11/aseprite/*.aseprite -filter -diff -merge -text

@@ -1,0 +1,113 @@
+{
+  "image": "EMPIRE-ATLAS-1X-V11.png",
+  "size": {
+    "w": 320,
+    "h": 160
+  },
+  "frames": {
+    "rei": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 80
+      },
+      "pivot": {
+        "x": 40,
+        "y": 78
+      },
+      "file": "png/rei-80x80.png"
+    },
+    "escudeiro": {
+      "frame": {
+        "x": 80,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 62
+      },
+      "file": "png/escudeiro-64x64.png"
+    },
+    "nia": {
+      "frame": {
+        "x": 160,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 62
+      },
+      "file": "png/nia-64x64.png"
+    },
+    "bardo": {
+      "frame": {
+        "x": 240,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 62
+      },
+      "file": "png/bardo-64x64.png"
+    },
+    "arqueiro": {
+      "frame": {
+        "x": 0,
+        "y": 80,
+        "w": 80,
+        "h": 80
+      },
+      "pivot": {
+        "x": 40,
+        "y": 78
+      },
+      "file": "png/arqueiro-80x80.png"
+    },
+    "intendente": {
+      "frame": {
+        "x": 80,
+        "y": 80,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 62
+      },
+      "file": "png/intendente-64x64.png"
+    },
+    "sombra": {
+      "frame": {
+        "x": 160,
+        "y": 80,
+        "w": 80,
+        "h": 80
+      },
+      "pivot": {
+        "x": 40,
+        "y": 78
+      },
+      "file": "png/sombra-80x80.png"
+    },
+    "dancarina": {
+      "frame": {
+        "x": 240,
+        "y": 80,
+        "w": 64,
+        "h": 64
+      },
+      "pivot": {
+        "x": 32,
+        "y": 62
+      },
+      "file": "png/dancarina-64x64.png"
+    }
+  }
+}

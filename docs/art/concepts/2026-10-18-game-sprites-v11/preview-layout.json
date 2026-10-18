@@ -1,0 +1,110 @@
+[
+  {
+    "image": "EMPIRE-CORPOS-COMPLETOS-1X-V11.png",
+    "scale": 1,
+    "positions": {
+      "rei": {
+        "x": 8,
+        "y": 6,
+        "width": 80,
+        "height": 80
+      },
+      "escudeiro": {
+        "x": 112,
+        "y": 22,
+        "width": 64,
+        "height": 64
+      },
+      "nia": {
+        "x": 208,
+        "y": 22,
+        "width": 64,
+        "height": 64
+      },
+      "bardo": {
+        "x": 304,
+        "y": 22,
+        "width": 64,
+        "height": 64
+      },
+      "arqueiro": {
+        "x": 8,
+        "y": 118,
+        "width": 80,
+        "height": 80
+      },
+      "intendente": {
+        "x": 112,
+        "y": 134,
+        "width": 64,
+        "height": 64
+      },
+      "sombra": {
+        "x": 200,
+        "y": 118,
+        "width": 80,
+        "height": 80
+      },
+      "dancarina": {
+        "x": 304,
+        "y": 134,
+        "width": 64,
+        "height": 64
+      }
+    }
+  },
+  {
+    "image": "EMPIRE-CORPOS-COMPLETOS-3X-V11.png",
+    "scale": 3,
+    "positions": {
+      "rei": {
+        "x": 6,
+        "y": 72,
+        "width": 240,
+        "height": 240
+      },
+      "escudeiro": {
+        "x": 282,
+        "y": 120,
+        "width": 192,
+        "height": 192
+      },
+      "nia": {
+        "x": 534,
+        "y": 120,
+        "width": 192,
+        "height": 192
+      },
+      "bardo": {
+        "x": 786,
+        "y": 120,
+        "width": 192,
+        "height": 192
+      },
+      "arqueiro": {
+        "x": 6,
+        "y": 360,
+        "width": 240,
+        "height": 240
+      },
+      "intendente": {
+        "x": 282,
+        "y": 408,
+        "width": 192,
+        "height": 192
+      },
+      "sombra": {
+        "x": 510,
+        "y": 360,
+        "width": 240,
+        "height": 240
+      },
+      "dancarina": {
+        "x": 786,
+        "y": 408,
+        "width": 192,
+        "height": 192
+      }
+    }
+  }
+]

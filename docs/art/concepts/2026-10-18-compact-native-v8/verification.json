@@ -1,0 +1,99 @@
+{
+  "result": "pass",
+  "scope": "Integridade e correspondência de pixels; não certifica aprovação artística.",
+  "characters": [
+    {
+      "id": "rei",
+      "size": [
+        80,
+        80
+      ],
+      "colours": 37,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "escudeiro",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 36,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "nia",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 40,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "bardo",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 39,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "arqueiro",
+      "size": [
+        80,
+        80
+      ],
+      "colours": 42,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "intendente",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 39,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "sombra",
+      "size": [
+        80,
+        80
+      ],
+      "colours": 42,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    },
+    {
+      "id": "dancarina",
+      "size": [
+        64,
+        64
+      ],
+      "colours": 29,
+      "alpha_binary": true,
+      "aseprite_pixels_match": true,
+      "atlas_pixels_match": true
+    }
+  ],
+  "preview": {
+    "scale": 5,
+    "opaquePixelBlocksChecked": 449800,
+    "exactMatch": true
+  }
+}

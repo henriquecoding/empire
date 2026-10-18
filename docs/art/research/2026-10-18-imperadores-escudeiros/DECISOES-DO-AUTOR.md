@@ -2,6 +2,38 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
+## Decisão mais recente — animar todos e entregar ZIP
+
+Depois da V11, Henrique disse: “Está bem melhor, mas ainda há falhas, pixels que podem melhorar, preste atenção nisso e agora quero que anime todos e me entregue o arquivo.zip”. O pedido seguinte foi “Continue”. Trata-se de apreciação parcial, com continuidade autorizada para animação dos oito corpos completos; não é aprovação irrestrita do acabamento.
+
+A [V12](../../animations/2026-10-18-imperadores-v12/README.md) mantém 64×64 nos cinco menores e 80×80 em Rei, Arqueiro e Sombra. O pacote inclui ciclos comuns, ações próprias, fontes Aseprite com camadas/tags, PNGs, JSON e prévias. Os movimentos são editados na grade final, preservando a procedência da base V11. A revisão visual do autor e a integração no jogo continuam separadas da validação de arquivos.
+
+## Decisão anterior — arquivos nas medidas reais para implementar no jogo
+
+Após os estudos completos V10, Henrique reiterou: “Disse que queria em pixel arr, naquelas medidas pois eu vou implementar no jogo”. As imagens grandes não atendiam à entrega. O objetivo é receber os oito corpos completos em arquivos reais de 64×64 e 80×80.
+
+A [V11](../../concepts/2026-10-18-game-sprites-v11/README.md) fornece oito PNGs transparentes nessas dimensões, oito fontes Aseprite, atlas e prévias dos corpos inteiros em 1× e 3×. A procedência é adaptação dos conceitos com acabamento na grade final, não criação integral originalmente nessas dimensões. A V9 rejeitada não foi usada como base. Há uma pose por personagem; não há aprovação artística presumida, ciclos de animação ou integração no jogo.
+
+## Decisão anterior — V9 rejeitada; o pedido abrange os personagens completos
+
+Henrique rejeitou a V9: “Isso está tudo deformado, não foi nada do que pedi, sequer pedi somente os rostos, eu pedi os personagens vompletos”. A rejeição é artística e também corrige o escopo: aprofundar principalmente o rosto nunca significou limitar a elaboração a rostos isolados ou remendar as faces sobre corpos inalterados.
+
+Retomar os conceitos completos apreciados pelo autor, preservando identidade, proporções, roupa, equipamento e personalidade. A captura e o Aseprite do autor continuam como referência de construção, integrada à anatomia inteira. A V9 fica apenas como histórico rejeitado; seus testes técnicos não anulam a rejeição nem autorizam reutilizá-la como base aprovada.
+
+Foram gerados quatro novos pares de corpo inteiro, registrados em [estudos completos V10](../../concepts/2026-10-18-complete-character-studies-v10/README.md). São estudos grandes de 1536×1024, ainda sem avaliação do autor. A geração não respeitou a grade pedida; não são sprites nativos 64×64/80×80 e não encerram essa exigência. Não há nova aprovação presumida.
+
+## Decisão anterior — aprofundar o rosto a partir da construção do autor
+
+Henrique considerou V8 melhor, mas ainda com várias falhas. Pediu aprofundar principalmente o rosto e forneceu uma captura e `Empire Tileset.aseprite` criados por ele como base. Ressaltou que 80×80 permite detalhar mais a face e que 64×64 também comporta detalhe com modificações de construção.
+
+A [revisão facial V9](../../concepts/2026-10-18-compact-native-v9/README.md) tentou aplicar essa instrução aos sete rostos visíveis na grade final e foi posteriormente rejeitada, conforme o registro acima. O Sombra conserva o elmo fechado. V8 recebeu apreciação parcial, não aprovação final. Permanecem a barba do bardo, os figurinos escolhidos, o par aproximado e as dimensões 64/80. A captura e a fonte editável do autor prevalecem sobre sugestões estilísticas de tutoriais externos.
+
+## Decisão anterior — conceitos compactos e quadros 64/80
+
+Henrique disse que adorou todos os novos conceitos desta conversa. Escolheu a versão do bardo com barba em preferência à correção sem barba. Pediu aproximar um pouco o figurino de Sombra e da dançarina e, depois, construir os menores em 64×64 e os maiores em 80×80. Os tamanhos 64/80 passam, portanto, a ser instrução explícita nesta etapa, substituindo o estado de simples proposta registrado abaixo.
+
+A preparação correspondente está em [conceitos compactos V8](../../concepts/2026-10-18-compact-native-v8/README.md). A aprovação dos conceitos grandes não constitui aprovação automática da adaptação pequena, nem autoriza promover experimentos rejeitados V6/V7 ao jogo. O pacote V8 contém uma pose por personagem, fontes de raster e arquivos editáveis; não inclui animações ou integração.
+
 ## Continuidade posterior em outra conversa — 18/10/2026
 
 - Henrique pediu retomar a elaboração a partir deste arquivo, preservando a arte e sua identidade.
