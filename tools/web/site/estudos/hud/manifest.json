@@ -1,0 +1,122 @@
+{
+  "status": "propostas para aprovacao; composicoes, nao capturas de implementacao",
+  "base_commit": "0c351775e2c569e83fc746ca339202753cd203ae",
+  "ui_grid": [
+    640,
+    360
+  ],
+  "ui_scale": 2,
+  "font": "src/ui/fonts/silkscreen.ttf (OFL)",
+  "backgrounds": {
+    "docs/art/scenery_native_previews/enramados_base_underground.png": "32740d7d4d35dd37e9df0cfa51bb83a1b1d882b55d3cf3fcd01c661f55aa3500",
+    "tools/web/site/img/dia-noite.webp": "d2b9d5cc5c530f7db0ea89a31aa5b2c1493b3901005dbe3450bf3aeb999cf966",
+    "docs/art/scenery_native_previews/campaign_underground.png": "b01854b7e6ff962c5ce36881ab8b1ef38cce8737e8f1478125d515aa886b5869"
+  },
+  "outputs": {
+    "comparacao.png": {
+      "size": [
+        1280,
+        2256
+      ],
+      "sha256": "be53ab4ad78221f768a2c12cd079f1a511bbfe47cefb61ccd718fa62bd1b4bed"
+    },
+    "oficina-dia.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "21b26aed197592e922c55d8d30b4dce5eaecbbdf0a086465424adb5b219a6122"
+    },
+    "oficina-estados.png": {
+      "size": [
+        1280,
+        352
+      ],
+      "sha256": "b47ec48a1be8793edd14336fc36250750f6385c40161e97856dea6cc85cae61c"
+    },
+    "oficina-fundacao.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "180dd4e63a7810c7d139d5bd8d4c0b4736277e7d7b3f7efd331b43e3857659b5"
+    },
+    "oficina-noite.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "fab17e6a872eaa5e1929193c508906967be6b3c4d466f272b4d30daee7f69a56"
+    },
+    "oficina-pausa.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "abb18d61960386cee6e912a78d4dd4fb1049a9f47762742d1dee85d8a26debf7"
+    },
+    "oficina-subsolo.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b03fb2f84dd9ba252d89fedf1f16132076c559da0fb679cd246d4383d51bd962"
+    },
+    "oficina-toque.png": {
+      "size": [
+        844,
+        390
+      ],
+      "sha256": "8781f7a3207443b4f9040c11cb684d7ca8b9f2255a24895899bf7f0979addf2a"
+    },
+    "vigilia-dia.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "6df0dfd0a529f4028c5cc96bb843a9b2cf438b00bad52a693f467eb9df3f7965"
+    },
+    "vigilia-estados.png": {
+      "size": [
+        1280,
+        352
+      ],
+      "sha256": "40d3adcb1b13cb20b7714fa1aabc6e66814a1023f343f16a99a63534575d461f"
+    },
+    "vigilia-fundacao.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "6863e872407df9618fabebf94468e77af1dd2c254be99090d05a8729b2f386f8"
+    },
+    "vigilia-noite.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "011dd3fd9b0377e383d1749a000311545824cf4d5c56223d86afafa39a5fff55"
+    },
+    "vigilia-pausa.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b0e972e8280821095d0de3bb4df2650a4bdf7cabef3e85ac856c1573bf690244"
+    },
+    "vigilia-subsolo.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "a10230e589b6875a3a831063477068cddaa1c4b0e937679cee36f86228340764"
+    },
+    "vigilia-toque.png": {
+      "size": [
+        844,
+        390
+      ],
+      "sha256": "445b95bfeb3a4ad5c8b06dc4568366025fe7a6ab3123b9184979b9f51233e49f"
+    }
+  }
+}

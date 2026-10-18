@@ -1,0 +1,172 @@
+{
+  "scope": "artifact checks only; no Godot interaction or physical-device certification",
+  "images": [
+    "comparacao.png",
+    "oficina-dia.png",
+    "oficina-estados.png",
+    "oficina-fundacao.png",
+    "oficina-noite.png",
+    "oficina-pausa.png",
+    "oficina-subsolo.png",
+    "oficina-toque.png",
+    "vigilia-dia.png",
+    "vigilia-estados.png",
+    "vigilia-fundacao.png",
+    "vigilia-noite.png",
+    "vigilia-pausa.png",
+    "vigilia-subsolo.png",
+    "vigilia-toque.png"
+  ],
+  "contrast": {
+    "oficina": {
+      "text": 13.25,
+      "muted": 7.97,
+      "gold": 9.06,
+      "green": 9.21,
+      "red": 7.33,
+      "blue": 9.45
+    },
+    "vigilia": {
+      "text": 12.83,
+      "muted": 8.53,
+      "gold": 8.78,
+      "green": 8.92,
+      "red": 7.1,
+      "blue": 9.15
+    }
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Raymond Schlitter — Pixelblog 26, UX/UI Design Basics",
+      "url": "https://www.slynyrd.com/blog/2020/2/23/pixelblog-26-uxui-design-basics",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S02",
+      "title": "Raymond Schlitter — Pixelblog 1, Color Palettes",
+      "url": "https://www.slynyrd.com/blog/2018/1/10/pixelblog-1-color-palettes",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S03",
+      "title": "Raymond Schlitter — Pixelblog 2, Texture",
+      "url": "https://www.slynyrd.com/blog/2018/2/15/pixelblog-2-texture",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S04",
+      "title": "Derek Yu — Pixel Art Tutorial: Basics",
+      "url": "https://www.derekyu.com/makegames/pixelart.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S05",
+      "title": "Derek Yu — Pixel Art: Common Mistakes",
+      "url": "https://www.derekyu.com/makegames/pixelart2.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S06",
+      "title": "Godot — Multiple resolutions",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S07",
+      "title": "Godot — StyleBoxTexture",
+      "url": "https://docs.godotengine.org/en/stable/classes/class_styleboxtexture.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S08",
+      "title": "Godot — Using fonts",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/ui/gui_using_fonts.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S09",
+      "title": "Godot — CanvasLayer",
+      "url": "https://docs.godotengine.org/en/stable/classes/class_canvaslayer.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S10",
+      "title": "Microsoft — XAG 101, Text display",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S11",
+      "title": "Microsoft — XAG 102, Contrast",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/102",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S12",
+      "title": "Microsoft — XAG 107, Input",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S13",
+      "title": "W3C — Target Size Enhanced",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S14",
+      "title": "W3C — Target Size Minimum",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S15",
+      "title": "W3C — Contrast Minimum",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S16",
+      "title": "W3C — Non-text Contrast",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S17",
+      "title": "MDN — image-rendering",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/image-rendering",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S18",
+      "title": "MDN — imageSmoothingEnabled",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S19",
+      "title": "Wube — Friday Facts 238, The GUI update Part II",
+      "url": "https://factorio.com/blog/post/fff-238",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S20",
+      "title": "Kingdom — Kingdom Two Crowns",
+      "url": "https://kingdomthegame.com/kingdom-two-crowns/",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S21",
+      "title": "The Met — Door Hinge, Alemanha, século XV, 87.11.31",
+      "url": "https://www.metmuseum.org/art/collection/search/468801",
+      "consulted": "2026-10-18"
+    },
+    {
+      "id": "S22",
+      "title": "The Met — Door, Europa, século XIV, 55.61.170",
+      "url": "https://www.metmuseum.org/art/collection/search/468492",
+      "consulted": "2026-10-18"
+    }
+  ]
+}
