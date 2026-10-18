@@ -2,6 +2,8 @@
 
 Estado: **V9 rejeitada pelo autor; correção dos personagens completos em aberto.**
 
+Continuidade: [ART-GAME-SPRITES-2026-10-18](ART-GAME-SPRITES-2026-10-18.md) registra a entrega V11 de oito arquivos completos nas dimensões reais. A V9 continua rejeitada.
+
 Henrique descreveu o resultado como deformado e esclareceu que pediu personagens completos, não somente rostos. Não reutilizar a V9 como base aprovada nem considerar seus testes uma validação artística. Os novos [estudos completos V10](../art/concepts/2026-10-18-complete-character-studies-v10/README.md) mostram os oito personagens de corpo inteiro; são imagens grandes, ainda sem construção nativa 64×64/80×80 e sem aprovação do autor.
 
 Henrique considerou V8 melhor, identificou falhas e forneceu captura e Aseprite com seus próprios rostos. Pediu aprofundar sobretudo a face, mantendo quadros 64×64/80×80 e os conceitos apreciados.

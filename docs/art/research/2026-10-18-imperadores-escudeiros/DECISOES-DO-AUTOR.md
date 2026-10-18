@@ -2,7 +2,13 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
-## Decisão mais recente — V9 rejeitada; o pedido abrange os personagens completos
+## Decisão mais recente — arquivos nas medidas reais para implementar no jogo
+
+Após os estudos completos V10, Henrique reiterou: “Disse que queria em pixel arr, naquelas medidas pois eu vou implementar no jogo”. As imagens grandes não atendiam à entrega. O objetivo é receber os oito corpos completos em arquivos reais de 64×64 e 80×80.
+
+A [V11](../../concepts/2026-10-18-game-sprites-v11/README.md) fornece oito PNGs transparentes nessas dimensões, oito fontes Aseprite, atlas e prévias dos corpos inteiros em 1× e 3×. A procedência é adaptação dos conceitos com acabamento na grade final, não criação integral originalmente nessas dimensões. A V9 rejeitada não foi usada como base. Há uma pose por personagem; não há aprovação artística presumida, ciclos de animação ou integração no jogo.
+
+## Decisão anterior — V9 rejeitada; o pedido abrange os personagens completos
 
 Henrique rejeitou a V9: “Isso está tudo deformado, não foi nada do que pedi, sequer pedi somente os rostos, eu pedi os personagens vompletos”. A rejeição é artística e também corrige o escopo: aprofundar principalmente o rosto nunca significou limitar a elaboração a rostos isolados ou remendar as faces sobre corpos inalterados.
 

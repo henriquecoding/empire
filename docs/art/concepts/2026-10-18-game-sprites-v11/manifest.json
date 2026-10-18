@@ -1,0 +1,186 @@
+{
+  "version": 11,
+  "scope": "Oito personagens completos; uma pose estática cada. Sem animações ou integração no jogo.",
+  "construction": "Adaptação dos estudos gerados para as dimensões reais, paleta discreta, transparência binária e acabamento localizado na grade final.",
+  "nativeFromScratch": false,
+  "authorApproved": false,
+  "source": "source/native-pixels.json",
+  "frames": [
+    {
+      "id": "rei",
+      "file": "png/rei-80x80.png",
+      "source": "aseprite/rei-80x80.aseprite",
+      "width": 80,
+      "height": 80,
+      "frames": 1,
+      "pivot": [
+        40,
+        78
+      ],
+      "visibleBox": [
+        2,
+        4,
+        78,
+        78
+      ],
+      "colours": 40,
+      "alpha": "binary",
+      "nativeEdits": 3,
+      "sha256": "0c71e4face05cee49ecc7c05ddb9646d42e7efa98d816ee36d84c83944fcbb40"
+    },
+    {
+      "id": "escudeiro",
+      "file": "png/escudeiro-64x64.png",
+      "source": "aseprite/escudeiro-64x64.aseprite",
+      "width": 64,
+      "height": 64,
+      "frames": 1,
+      "pivot": [
+        32,
+        62
+      ],
+      "visibleBox": [
+        2,
+        5,
+        62,
+        62
+      ],
+      "colours": 42,
+      "alpha": "binary",
+      "nativeEdits": 0,
+      "sha256": "6704dfe6024b5f2d9fefd8d15692efb81f7d47b32090b253f88a9187d5606428"
+    },
+    {
+      "id": "nia",
+      "file": "png/nia-64x64.png",
+      "source": "aseprite/nia-64x64.aseprite",
+      "width": 64,
+      "height": 64,
+      "frames": 1,
+      "pivot": [
+        32,
+        62
+      ],
+      "visibleBox": [
+        5,
+        2,
+        59,
+        62
+      ],
+      "colours": 44,
+      "alpha": "binary",
+      "nativeEdits": 4,
+      "sha256": "f38ac3032ff0a329809e2a91e1df6b059c7aa806c0507dd4f6809be4a280a452"
+    },
+    {
+      "id": "bardo",
+      "file": "png/bardo-64x64.png",
+      "source": "aseprite/bardo-64x64.aseprite",
+      "width": 64,
+      "height": 64,
+      "frames": 1,
+      "pivot": [
+        32,
+        62
+      ],
+      "visibleBox": [
+        4,
+        2,
+        59,
+        62
+      ],
+      "colours": 45,
+      "alpha": "binary",
+      "nativeEdits": 27,
+      "sha256": "26b22ca355233b3822e24e1fd1cc1fa610bf0a6c8272b121710925e2a8f24ca1"
+    },
+    {
+      "id": "arqueiro",
+      "file": "png/arqueiro-80x80.png",
+      "source": "aseprite/arqueiro-80x80.aseprite",
+      "width": 80,
+      "height": 80,
+      "frames": 1,
+      "pivot": [
+        40,
+        78
+      ],
+      "visibleBox": [
+        9,
+        2,
+        71,
+        78
+      ],
+      "colours": 46,
+      "alpha": "binary",
+      "nativeEdits": 3,
+      "sha256": "1d448030215f898a9c98296c0d9d327b9457fd292393060876ac40fe25221f8a"
+    },
+    {
+      "id": "intendente",
+      "file": "png/intendente-64x64.png",
+      "source": "aseprite/intendente-64x64.aseprite",
+      "width": 64,
+      "height": 64,
+      "frames": 1,
+      "pivot": [
+        32,
+        62
+      ],
+      "visibleBox": [
+        2,
+        6,
+        62,
+        62
+      ],
+      "colours": 45,
+      "alpha": "binary",
+      "nativeEdits": 0,
+      "sha256": "3dd0ceab1cb9f786cb2dc19df23fe46f65696e893fd88e533d7870032003d004"
+    },
+    {
+      "id": "sombra",
+      "file": "png/sombra-80x80.png",
+      "source": "aseprite/sombra-80x80.aseprite",
+      "width": 80,
+      "height": 80,
+      "frames": 1,
+      "pivot": [
+        40,
+        78
+      ],
+      "visibleBox": [
+        2,
+        6,
+        78,
+        78
+      ],
+      "colours": 40,
+      "alpha": "binary",
+      "nativeEdits": 0,
+      "sha256": "d0c506b61d171bc2dda2cb1ddd038583c4301a122aae6a54688998c65407945e"
+    },
+    {
+      "id": "dancarina",
+      "file": "png/dancarina-64x64.png",
+      "source": "aseprite/dancarina-64x64.aseprite",
+      "width": 64,
+      "height": 64,
+      "frames": 1,
+      "pivot": [
+        32,
+        62
+      ],
+      "visibleBox": [
+        5,
+        2,
+        58,
+        62
+      ],
+      "colours": 32,
+      "alpha": "binary",
+      "nativeEdits": 4,
+      "sha256": "c7353894a920f0f027526f323b8a574b38c3889bbb66b6e44a917efe3d97be12"
+    }
+  ]
+}

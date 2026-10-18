@@ -2,6 +2,8 @@
 
 Estado: quatro pares de corpo inteiro apresentados na conversa. **Estudos visuais, sem aprovação do autor e sem entrega nativa 64×64/80×80.**
 
+Continuidade: o autor reiterou que precisa das medidas reais para implementar no jogo. Os arquivos pequenos estão na [V11](../2026-10-18-game-sprites-v11/README.md), com procedência de adaptação explicitada. Isso não transforma as imagens grandes desta pasta em sprites nativos.
+
 ## Motivo da revisão
 
 Henrique rejeitou a V9 como deformada e corrigiu o escopo: havia pedido personagens completos. O pedido de aprofundar os rostos não autorizava limitar a elaboração a recortes ou alterações faciais sobre o corpo anterior. A V9 permanece preservada como histórico rejeitado.
