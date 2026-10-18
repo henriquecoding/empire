@@ -81,6 +81,24 @@
       "size_bytes": 2181811,
       "sha256": "e9b2268e7e8d35844b78ed045cc7d1fee9a53c99f07d38ef47e7294ac8309970",
       "git_blob_sha": "f4632991008dee6280d7f014a59cadac107f92af"
+    },
+    {
+      "name": "personagens-compactos-64-referencia.jpeg",
+      "original_name": "FA5jMEvXMAET6d0.jpeg",
+      "library_file_id": "libfile_86659c9900b88191ac17c36f029c40f7",
+      "status": "Referência de construção compacta e acabamento; tamanho nativo de 64×64 informado por Henrique; cópia recebida JPEG 476×476; autoria não identificada",
+      "size_bytes": 41955,
+      "sha256": "fea1b7604eb347395ab7a9e2370a96c6a4052a8ad5b818aebd6b48f21e2c9cd6",
+      "git_blob_sha": "c23994347a2bfdcddfdf9369338be70b405b52cc"
+    },
+    {
+      "name": "pixellab-conceito-resultado-captura.png",
+      "original_name": "image(20261018-102243).png",
+      "library_file_id": "libfile_4e1e3a83f9d881918f8ac67122e7bf82",
+      "status": "Captura do site PixelLab fornecida por Henrique para estudar conversão de conceito em sprite; não é arte de Empire",
+      "size_bytes": 240270,
+      "sha256": "180f03a7666ef9423f66a19906f1b6047f77c96fa0ec617b850e45a60fd39d85",
+      "git_blob_sha": "76287cd46c9b7df7144a1104058a2a3ae601634b"
     }
   ]
 }

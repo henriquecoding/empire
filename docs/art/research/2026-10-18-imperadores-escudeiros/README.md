@@ -1,5 +1,7 @@
 # Empire — pesquisa de imperadores e escudeiros · 18/10/2026
 
+**Continuidade posterior em 18/10:** Henrique retomou a elaboração, rejeitou a leitura das reduções posteriores e pediu estudar personagens compactos em 64×64 e o PixelLab. Ler primeiro [Pixel art compacta e PixelLab](PIXEL-ART-COMPACTA-E-PIXELLAB.md). A nova pesquisa está concluída; os conceitos finais continuam pendentes. O estado e os pedidos abaixo preservam o encerramento da sessão anterior.
+
 **Estado: pesquisa arquivada; geração de imagens interrompida a pedido de Henrique. A última rodada visual foi rejeitada.**
 
 Este é o ponto de entrada para continuar em outro chat. Preserva a pesquisa, os estudos e as correções do autor. As observações de aprovação do assistente em documentos históricos não valem como aprovação de Henrique.

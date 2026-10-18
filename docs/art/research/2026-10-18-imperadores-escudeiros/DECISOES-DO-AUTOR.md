@@ -2,6 +2,15 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
+## Continuidade posterior em outra conversa — 18/10/2026
+
+- Henrique pediu retomar a elaboração a partir deste arquivo, preservando a arte e sua identidade.
+- Rejeitou as reconstruções geométricas e criticou as reduções posteriores como borradas e ilegíveis. Somente Rei e Sombra foram considerados razoáveis, ainda insatisfatórios.
+- Enviou uma referência de personagens compactos que descreveu como feita em 64×64, pedindo estudar como mantém detalhe e leitura.
+- Pediu estudar também o processo conceito → pixel art do PixelLab e enviou uma captura do exemplo oficial.
+- A dimensão pedida é 64×64 para Nia e companheiros, um pouco maior para os outros imperadores. 80×80, 96×96 e demais tamanhos sugeridos pelo assistente não viram aprovação por terem sido usados.
+- A pesquisa nova está em [PIXEL-ART-COMPACTA-E-PIXELLAB.md](PIXEL-ART-COMPACTA-E-PIXELLAB.md). Seu roteiro e orçamentos de pixels são propostas técnicas; não equivalem a arte aprovada.
+
 ## Instrução final desta sessão
 
 > Pare de entregar os concetos, você está alucinando, está ficando muito feio tudo, salve toda a pesquisa e o que elaborou de estudo no repositório, vou continuar a elaboração das imagens em outro chat, agora toda estão ficando horríveis e mal feitas
