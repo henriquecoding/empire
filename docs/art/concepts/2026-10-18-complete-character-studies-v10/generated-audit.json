@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-18",
+  "status": "visual-studies-native-resolution-unmet",
+  "authorApproval": false,
+  "measurement": "Image dimensions, byte size, RGBA color count among pixels with alpha >= 200, and count of alpha strictly between 0 and 255. These measurements are not an artistic assessment.",
+  "images": [
+    {
+      "pair": "rei_escudeiro",
+      "file": "exec-3f7b9827-2bc0-46ae-aa28-7f571ec810f5.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1187853,
+      "visiblePixelsAlpha200": 402432,
+      "semiTransparentPixels": 424946,
+      "distinctVisibleRGBA": 92733,
+      "nativeGridVerified": false,
+      "sha256": "707427032218eb666398abf4eb4f9178a90cb810fb727289645aeb6ea9d56943"
+    },
+    {
+      "pair": "nia_bardo",
+      "file": "exec-64c83029-8ce9-49f3-b65b-c4817a7961d3.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1327629,
+      "visiblePixelsAlpha200": 316623,
+      "semiTransparentPixels": 356495,
+      "distinctVisibleRGBA": 137081,
+      "nativeGridVerified": false,
+      "sha256": "57b7b5863f0f795cb4b6449e08ed45b1cade99b6d5b59778658a9949b24b888a"
+    },
+    {
+      "pair": "arqueiro_intendente",
+      "file": "exec-54458276-4e82-4b79-8cdd-bb304a8ff32e.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1334440,
+      "visiblePixelsAlpha200": 380137,
+      "semiTransparentPixels": 417550,
+      "distinctVisibleRGBA": 138256,
+      "nativeGridVerified": false,
+      "sha256": "1a73687d77d376cd9835379cf124c93ac50b420fd401e1fefe79d27677dde597"
+    },
+    {
+      "pair": "sombra_dancarina",
+      "file": "exec-7cc1afd2-32db-4d7e-aba8-45eef61650d5.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1420696,
+      "visiblePixelsAlpha200": 393035,
+      "semiTransparentPixels": 442017,
+      "distinctVisibleRGBA": 126178,
+      "nativeGridVerified": false,
+      "sha256": "c3ef088bc79d873b603fe30b6c949fb778d995571ea77779aaa6919dc0611da9"
+    }
+  ]
+}

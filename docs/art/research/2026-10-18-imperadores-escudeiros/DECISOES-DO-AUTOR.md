@@ -2,11 +2,19 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
-## Decisão mais recente — aprofundar o rosto a partir da construção do autor
+## Decisão mais recente — V9 rejeitada; o pedido abrange os personagens completos
+
+Henrique rejeitou a V9: “Isso está tudo deformado, não foi nada do que pedi, sequer pedi somente os rostos, eu pedi os personagens vompletos”. A rejeição é artística e também corrige o escopo: aprofundar principalmente o rosto nunca significou limitar a elaboração a rostos isolados ou remendar as faces sobre corpos inalterados.
+
+Retomar os conceitos completos apreciados pelo autor, preservando identidade, proporções, roupa, equipamento e personalidade. A captura e o Aseprite do autor continuam como referência de construção, integrada à anatomia inteira. A V9 fica apenas como histórico rejeitado; seus testes técnicos não anulam a rejeição nem autorizam reutilizá-la como base aprovada.
+
+Foram gerados quatro novos pares de corpo inteiro, registrados em [estudos completos V10](../../concepts/2026-10-18-complete-character-studies-v10/README.md). São estudos grandes de 1536×1024, ainda sem avaliação do autor. A geração não respeitou a grade pedida; não são sprites nativos 64×64/80×80 e não encerram essa exigência. Não há nova aprovação presumida.
+
+## Decisão anterior — aprofundar o rosto a partir da construção do autor
 
 Henrique considerou V8 melhor, mas ainda com várias falhas. Pediu aprofundar principalmente o rosto e forneceu uma captura e `Empire Tileset.aseprite` criados por ele como base. Ressaltou que 80×80 permite detalhar mais a face e que 64×64 também comporta detalhe com modificações de construção.
 
-A [revisão facial V9](../../concepts/2026-10-18-compact-native-v9/README.md) aplica essa instrução aos sete rostos visíveis na própria grade final. O Sombra conserva o elmo fechado. V8 recebeu apreciação parcial, não aprovação final; V9 é uma nova proposta para avaliação. Permanecem a barba do bardo, os figurinos escolhidos, o par aproximado e as dimensões 64/80. A captura e a fonte editável do autor prevalecem sobre sugestões estilísticas de tutoriais externos.
+A [revisão facial V9](../../concepts/2026-10-18-compact-native-v9/README.md) tentou aplicar essa instrução aos sete rostos visíveis na grade final e foi posteriormente rejeitada, conforme o registro acima. O Sombra conserva o elmo fechado. V8 recebeu apreciação parcial, não aprovação final. Permanecem a barba do bardo, os figurinos escolhidos, o par aproximado e as dimensões 64/80. A captura e a fonte editável do autor prevalecem sobre sugestões estilísticas de tutoriais externos.
 
 ## Decisão anterior — conceitos compactos e quadros 64/80
 

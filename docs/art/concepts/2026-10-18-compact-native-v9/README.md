@@ -1,6 +1,8 @@
 # Empire — revisão dos rostos V9 · 18/10/2026
 
-Revisão da construção facial dos sprites V8, a partir da captura e do `Empire Tileset.aseprite` criados por Henrique. O autor considerou V8 melhor, mas pediu aprofundamento sobretudo nos rostos. Esta entrega é uma proposta de revisão, sem presumir aprovação artística.
+**Estado: rejeitada pelo autor.** Henrique considerou o resultado deformado e esclareceu que pediu personagens completos, não somente rostos. Os arquivos abaixo são preservados como histórico da tentativa; não constituem base aprovada nem entrega concluída. A correção de escopo está em [estudos completos V10](../2026-10-18-complete-character-studies-v10/README.md).
+
+Esta tentativa revisou a construção facial dos sprites V8, a partir da captura e do `Empire Tileset.aseprite` criados por Henrique. O autor considerara V8 melhor, mas pedira aprofundamento sobretudo nos rostos, dentro da elaboração dos personagens inteiros. A restrição da intervenção a sete regiões faciais não atendeu ao pedido.
 
 | Quadro real | Personagens |
 | --- | --- |
@@ -21,7 +23,7 @@ Os sete rostos visíveis foram alterados por coordenadas inteiras na própria gr
 
 ## Arquivos
 
-`png/` contém os oito PNGs finais, transparentes, com alfa 0/255. `aseprite/` contém os mesmos pixels nas mesmas dimensões: camada `corpo-v8` e camada `rostos-v9`, ambas editáveis, paleta embutida e pivô nos pés. `palette/` contém paletas GPL.
+`png/` contém os oito PNGs exportados desta tentativa rejeitada, transparentes, com alfa 0/255. `aseprite/` contém os mesmos pixels nas mesmas dimensões: camada `corpo-v8` e camada `rostos-v9`, ambas editáveis, paleta embutida e pivô nos pés. `palette/` contém paletas GPL.
 
 - `EMPIRE-PREVIA-COMPACTA-2X-V9.png`: corpos completos, ampliação inteira 2×.
 - `EMPIRE-PREVIA-64-80-V9.png`: os mesmos sprites em 5×.
