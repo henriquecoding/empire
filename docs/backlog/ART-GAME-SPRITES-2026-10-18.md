@@ -1,6 +1,6 @@
 # ART-GAME-SPRITES-2026-10-18 — corpos completos nas dimensões do jogo
 
-Estado: oito poses exportadas em 64×64/80×80; avaliação artística do autor pendente.
+Estado: oito poses V11 exportadas em 64×64/80×80; autor considerou melhor e pediu animação de todos, com falhas ainda a corrigir. Continuidade em [ART-ANIMATIONS-2026-10-18](ART-ANIMATIONS-2026-10-18.md).
 
 Henrique rejeitou a V9 como deformada, corrigiu o foco indevido em rostos e reiterou que quer os arquivos em pixel art nas medidas pedidas para implementar no jogo. Estudos grandes não atendem a essa entrega.
 

@@ -1,0 +1,91 @@
+{
+  "version": 12,
+  "title": "Empire — oito personagens animados",
+  "base": "V11; conceitos adaptados antes desta animação. Não constitui arte desenhada originalmente do zero em 64/80.",
+  "nativeFrameEditing": true,
+  "artDirectionApproval": "aguarda revisão visual do autor",
+  "runtimeIntegration": false,
+  "alpha": "binary 0/255",
+  "filter": "nearest",
+  "directions": [
+    "right",
+    "left"
+  ],
+  "mirroring": "left é o espelho horizontal exato de right; equipamento também espelha",
+  "characters": [
+    {
+      "id": "rei",
+      "size": 80,
+      "frames": 126,
+      "tags": 24,
+      "metadata": "personagens/rei/animacoes.json",
+      "aseprite": "personagens/rei/rei.aseprite",
+      "atlas": "personagens/rei/atlas.png"
+    },
+    {
+      "id": "escudeiro",
+      "size": 64,
+      "frames": 116,
+      "tags": 24,
+      "metadata": "personagens/escudeiro/animacoes.json",
+      "aseprite": "personagens/escudeiro/escudeiro.aseprite",
+      "atlas": "personagens/escudeiro/atlas.png"
+    },
+    {
+      "id": "nia",
+      "size": 64,
+      "frames": 114,
+      "tags": 22,
+      "metadata": "personagens/nia/animacoes.json",
+      "aseprite": "personagens/nia/nia.aseprite",
+      "atlas": "personagens/nia/atlas.png"
+    },
+    {
+      "id": "bardo",
+      "size": 64,
+      "frames": 132,
+      "tags": 24,
+      "metadata": "personagens/bardo/animacoes.json",
+      "aseprite": "personagens/bardo/bardo.aseprite",
+      "atlas": "personagens/bardo/atlas.png"
+    },
+    {
+      "id": "arqueiro",
+      "size": 80,
+      "frames": 128,
+      "tags": 26,
+      "metadata": "personagens/arqueiro/animacoes.json",
+      "aseprite": "personagens/arqueiro/arqueiro.aseprite",
+      "atlas": "personagens/arqueiro/atlas.png"
+    },
+    {
+      "id": "intendente",
+      "size": 64,
+      "frames": 132,
+      "tags": 26,
+      "metadata": "personagens/intendente/animacoes.json",
+      "aseprite": "personagens/intendente/intendente.aseprite",
+      "atlas": "personagens/intendente/atlas.png"
+    },
+    {
+      "id": "sombra",
+      "size": 80,
+      "frames": 130,
+      "tags": 22,
+      "metadata": "personagens/sombra/animacoes.json",
+      "aseprite": "personagens/sombra/sombra.aseprite",
+      "atlas": "personagens/sombra/atlas.png"
+    },
+    {
+      "id": "dancarina",
+      "size": 64,
+      "frames": 128,
+      "tags": 24,
+      "metadata": "personagens/dancarina/animacoes.json",
+      "aseprite": "personagens/dancarina/dancarina.aseprite",
+      "atlas": "personagens/dancarina/atlas.png"
+    }
+  ],
+  "totalFrames": 1006,
+  "totalAnimationTags": 192
+}

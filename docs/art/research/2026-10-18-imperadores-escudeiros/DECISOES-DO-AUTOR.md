@@ -2,7 +2,13 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
-## Decisão mais recente — arquivos nas medidas reais para implementar no jogo
+## Decisão mais recente — animar todos e entregar ZIP
+
+Depois da V11, Henrique disse: “Está bem melhor, mas ainda há falhas, pixels que podem melhorar, preste atenção nisso e agora quero que anime todos e me entregue o arquivo.zip”. O pedido seguinte foi “Continue”. Trata-se de apreciação parcial, com continuidade autorizada para animação dos oito corpos completos; não é aprovação irrestrita do acabamento.
+
+A [V12](../../animations/2026-10-18-imperadores-v12/README.md) mantém 64×64 nos cinco menores e 80×80 em Rei, Arqueiro e Sombra. O pacote inclui ciclos comuns, ações próprias, fontes Aseprite com camadas/tags, PNGs, JSON e prévias. Os movimentos são editados na grade final, preservando a procedência da base V11. A revisão visual do autor e a integração no jogo continuam separadas da validação de arquivos.
+
+## Decisão anterior — arquivos nas medidas reais para implementar no jogo
 
 Após os estudos completos V10, Henrique reiterou: “Disse que queria em pixel arr, naquelas medidas pois eu vou implementar no jogo”. As imagens grandes não atendiam à entrega. O objetivo é receber os oito corpos completos em arquivos reais de 64×64 e 80×80.
 

@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "native_sizes": true,
+  "binary_alpha": true,
+  "ase_png_json_pixel_match": true,
+  "exact_left_mirroring": true,
+  "fixed_pivots": true,
+  "characters": [
+    {
+      "id": "rei",
+      "size": 80,
+      "frames": 126,
+      "tags": 24,
+      "distinct_full_frames_including_mirrors": 90,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "escudeiro",
+      "size": 64,
+      "frames": 116,
+      "tags": 24,
+      "distinct_full_frames_including_mirrors": 80,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "nia",
+      "size": 64,
+      "frames": 114,
+      "tags": 22,
+      "distinct_full_frames_including_mirrors": 86,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "bardo",
+      "size": 64,
+      "frames": 132,
+      "tags": 24,
+      "distinct_full_frames_including_mirrors": 98,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "arqueiro",
+      "size": 80,
+      "frames": 128,
+      "tags": 26,
+      "distinct_full_frames_including_mirrors": 98,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "intendente",
+      "size": 64,
+      "frames": 132,
+      "tags": 26,
+      "distinct_full_frames_including_mirrors": 80,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "sombra",
+      "size": 80,
+      "frames": 130,
+      "tags": 22,
+      "distinct_full_frames_including_mirrors": 86,
+      "cleaned_isolated_pixels": 0
+    },
+    {
+      "id": "dancarina",
+      "size": 64,
+      "frames": 128,
+      "tags": 24,
+      "distinct_full_frames_including_mirrors": 90,
+      "cleaned_isolated_pixels": 0
+    }
+  ],
+  "limitations": [
+    "Validação estrutural e comparação de pixels; não é aprovação artística.",
+    "Aseprite e Godot não disponíveis para abrir os arquivos nesta execução."
+  ],
+  "effect_frames": 16,
+  "total_character_frames": 1006
+}
