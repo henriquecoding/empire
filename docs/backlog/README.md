@@ -281,3 +281,9 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 |---|---|---|---|
 | [DOC-01](DOC-01.md) | Consolidar dossiê, painel e referências territoriais | — | feito |
 
+## Conceitos de personagens
+
+| Ticket | Tarefa | Depende | Estado |
+|---|---|---|---|
+| [ART-CONCEPTS-2026-10-18](ART-CONCEPTS-2026-10-18.md) | Retomar a pesquisa e construir imperadores/companhias em grelhas nativas | ART-RESEARCH-2026-10-18 | feito — conceitos nativos entregues para revisão do autor; animação e integração fora deste ticket |
+

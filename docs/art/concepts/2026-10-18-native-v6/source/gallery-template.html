@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Empire · Inspeção dos conceitos nativos V6</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f0eee7;color:#25333d;font:15px system-ui,sans-serif}main{max-width:1400px;margin:auto;padding:36px 24px}h1{font-size:30px;margin:0 0 8px}p{color:#65727b;line-height:1.5}nav{display:flex;gap:14px;flex-wrap:wrap;align-items:end;padding:20px 0}label{display:grid;gap:6px;font-size:12px;font-weight:650}select,button{font:inherit;padding:9px 12px;background:#fff;border:1px solid #bfc6c2;border-radius:4px;color:inherit}button{cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}article{background:#fffdf6;border:1px solid #d2d6cd;padding:18px}article h2{font-size:17px;margin:0 0 4px}.meta{font-size:12px;color:#65727b}.stage{background:#66717e;overflow:auto;min-height:340px;margin:14px 0;display:flex;align-items:flex-end;justify-content:center;padding:12px}.stage.light{background:#d3d5cf}.stage.dark{background:#222b39}canvas{image-rendering:pixelated;flex:none}.head{display:flex;gap:16px;align-items:center;min-height:110px}.head canvas{background:#d3d5cf}footer{font-size:13px;color:#65727b;margin-top:24px}.native{background:#e4e5dd;border-top:1px solid #d2d6cd;padding:12px;margin-top:10px;display:flex;gap:20px;align-items:center}a{color:#586c59}summary{cursor:pointer;font-size:13px}
+</style>
+<main>
+<h1>Empire / conceitos nativos</h1>
+<p>O corpo inteiro define a escala. Os rostos abaixo são recortes dos mesmos pixels. A ampliação usa apenas múltiplos inteiros.</p>
+<nav>
+<label>Ampliação<select id="zoom"><option value="1">1× · escala real</option><option value="2">2×</option><option value="4" selected>4×</option><option value="6">6×</option></select></label>
+<label>Expressão<select id="state"><option value="calma">Calma</option><option value="foco">Foco</option><option value="medo">Medo</option><option value="golpe">Golpe</option><option value="ferido">Ferido</option><option value="vitoria">Vitória</option></select></label>
+<label>Fundo<select id="bg"><option value="">Neutro</option><option value="light">Claro</option><option value="dark">Escuro</option></select></label>
+<label>Leitura<select id="mode"><option value="color">Cor</option><option value="gray">Valores</option><option value="silhouette">Silhueta</option></select></label>
+<label>Grelha<select id="grid"><option value="0">Oculta</option><option value="1">Mostrar a 4× / 6×</option></select></label>
+<button id="reset">Repor vista</button>
+</nav>
+<section class="grid" id="cards" aria-label="Oito personagens"></section>
+<footer>V6 · Conceitos para revisão do autor. 64×64: Nia e quatro companhias. 80×80: Rei, Arqueiro e Sombra. Sombra comunica pela postura do elmo fechado. As seis expressões são estudos estáticos; não constituem ciclos de animação ou integração no jogo.</footer>
+</main>
+<script>
+const DATA=__SPRITE_DATA__;
+const $=id=>document.getElementById(id), cards=$('cards');let generation=0;
+function canvas(parent,w,h,z,label){const c=document.createElement('canvas');c.width=w;c.height=h;c.style.width=w*z+'px';c.style.height=h*z+'px';c.setAttribute('role','img');c.setAttribute('aria-label',label);parent.append(c);return c;}
+async function redraw(){
+ const token=++generation;
+ const z=+$('zoom').value,state=$('state').value,mode=$('mode').value,bg=$('bg').value,grid=$('grid').value==='1';cards.replaceChildren();
+ for(const e of DATA.manifest.characters){
+  const article=document.createElement('article'),h=document.createElement('h2');h.textContent=e.label;article.append(h);
+  const m=document.createElement('div');m.className='meta';m.textContent=e.canvas.join(' × ')+' px · corpo '+e.useful_width+' × '+e.useful_height+' px · '+e.opaque_colors+' cores';article.append(m);
+  const stage=document.createElement('div');stage.className='stage '+bg;article.append(stage);
+  const c=canvas(stage,e.canvas[0],e.canvas[1],z,e.label+' corpo inteiro'),ctx=c.getContext('2d');
+  const im=new Image();im.src=DATA.images[e.id][DATA.images[e.id][state]?state:'calma'];await im.decode();if(token!==generation)return;ctx.drawImage(im,0,0);
+  if(mode!=='color'){const a=ctx.getImageData(0,0,c.width,c.height);for(let i=0;i<a.data.length;i+=4){let v=mode==='gray'?Math.round(a.data[i]*.2126+a.data[i+1]*.7152+a.data[i+2]*.0722):0;a.data[i]=a.data[i+1]=a.data[i+2]=v;}ctx.putImageData(a,0,0);}
+  if(grid&&z>=4){const scaled=document.createElement('canvas');scaled.width=c.width*z;scaled.height=c.height*z;const sc=scaled.getContext('2d');sc.imageSmoothingEnabled=false;sc.drawImage(c,0,0,scaled.width,scaled.height);sc.strokeStyle='rgba(255,255,255,.17)';sc.lineWidth=1;for(let x=0;x<=scaled.width;x+=z){sc.beginPath();sc.moveTo(x+.5,0);sc.lineTo(x+.5,scaled.height);sc.stroke();}for(let y=0;y<=scaled.height;y+=z){sc.beginPath();sc.moveTo(0,y+.5);sc.lineTo(scaled.width,y+.5);sc.stroke();}c.width=scaled.width;c.height=scaled.height;c.getContext('2d').drawImage(scaled,0,0);}
+  const head=document.createElement('div');head.className='head';article.append(head);const r=e.head_crop,hc=canvas(head,r[2]-r[0],r[3]-r[1],3,'Recorte da cabeça');hc.getContext('2d').drawImage(im,r[0],r[1],r[2]-r[0],r[3]-r[1],0,0,r[2]-r[0],r[3]-r[1]);
+  const text=document.createElement('span');text.className='meta';text.textContent='Cabeça '+e.head_size.join(' × ')+' px. Recorte exato do corpo; ampliação 3×.';head.append(text);
+  const native=document.createElement('div');native.className='native';article.append(native);const nc=canvas(native,e.canvas[0],e.canvas[1],1,'Tamanho real 1×');nc.getContext('2d').drawImage(im,0,0);const nt=document.createElement('span');nt.className='meta';nt.textContent='1× · tamanho nativo';native.append(nt);cards.append(article);
+ }
+}
+for(const id of ['zoom','state','bg','mode','grid'])$(id).addEventListener('change',redraw);
+$('reset').addEventListener('click',()=>{$('zoom').value='4';$('state').value='calma';$('bg').value='';$('mode').value='color';$('grid').value='0';redraw();});redraw();
+</script></html>
