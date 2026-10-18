@@ -2928,5 +2928,17 @@
   "notas": [
    "As imagens da última rodada foram rejeitadas pelo autor."
   ]
+ },
+ "ART-CONCEPTS-2026-10-18": {
+  "title": "Construir conceitos nativos dos imperadores e companhias",
+  "porque": "Retomar a pesquisa da outra sessão dentro das grelhas reais de pixel art pedidas pelo autor.",
+  "spec": [
+   "docs/art/concepts/2026-10-18-native-v6/README.md"
+  ],
+  "depende": "ART-RESEARCH-2026-10-18",
+  "feito": "Conceitos estáticos em 64×64/80×80, pranchas, fontes editáveis e verificações de integridade.",
+  "fora": "Aprovação artística, animações completas e integração no runtime.",
+  "estado": "feito — conceitos nativos entregues para revisão do autor; animação e integração fora deste ticket",
+  "horas": "—"
  }
 }

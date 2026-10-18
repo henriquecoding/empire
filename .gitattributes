@@ -39,3 +39,6 @@ art/export/animated/*.png -filter -diff -merge binary
 # Native scenery sources and exports are reviewed without an LFS fetch (ADR 0084).
 art/source/scenery_native/**/*.png -filter -diff -merge binary
 art/export/scenery_native/**/*.png -filter -diff -merge binary
+
+# Fontes pequenas de conceitos documentais: abrir e rever sem uma transferencia LFS.
+docs/art/concepts/**/*.aseprite -filter -diff -merge binary
