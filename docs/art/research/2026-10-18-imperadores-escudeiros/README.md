@@ -1,5 +1,7 @@
 # Empire — pesquisa de imperadores e escudeiros · 18/10/2026
 
+**Atualização mais recente:** o autor apreciou os novos conceitos compactos, preferiu o bardo com barba e pediu aproximar Sombra/dançarina e preparar quadros de 64×64 e 80×80. Ver [adaptação e fontes V8](../../concepts/2026-10-18-compact-native-v8/README.md) e a primeira seção de decisões. As interrupções e rejeições abaixo continuam como histórico das rodadas anteriores.
+
 **Continuidade posterior em 18/10:** Henrique retomou a elaboração, rejeitou a leitura das reduções posteriores e pediu estudar personagens compactos em 64×64 e o PixelLab. Ler primeiro [Pixel art compacta e PixelLab](PIXEL-ART-COMPACTA-E-PIXELLAB.md). A nova pesquisa está concluída; os conceitos finais continuam pendentes. O estado e os pedidos abaixo preservam o encerramento da sessão anterior.
 
 **Estado: pesquisa arquivada; geração de imagens interrompida a pedido de Henrique. A última rodada visual foi rejeitada.**

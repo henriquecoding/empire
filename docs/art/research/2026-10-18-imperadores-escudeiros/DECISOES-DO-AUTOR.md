@@ -2,6 +2,12 @@
 
 Registro de 18/10/2026. A instrução mais recente prevalece sobre o entusiasmo ou as avaliações do assistente.
 
+## Decisão mais recente — conceitos compactos e quadros 64/80
+
+Henrique disse que adorou todos os novos conceitos desta conversa. Escolheu a versão do bardo com barba em preferência à correção sem barba. Pediu aproximar um pouco o figurino de Sombra e da dançarina e, depois, construir os menores em 64×64 e os maiores em 80×80. Os tamanhos 64/80 passam, portanto, a ser instrução explícita nesta etapa, substituindo o estado de simples proposta registrado abaixo.
+
+A preparação correspondente está em [conceitos compactos V8](../../concepts/2026-10-18-compact-native-v8/README.md). A aprovação dos conceitos grandes não constitui aprovação automática da adaptação pequena, nem autoriza promover experimentos rejeitados V6/V7 ao jogo. O pacote V8 contém uma pose por personagem, fontes de raster e arquivos editáveis; não inclui animações ou integração.
+
 ## Continuidade posterior em outra conversa — 18/10/2026
 
 - Henrique pediu retomar a elaboração a partir deste arquivo, preservando a arte e sua identidade.
