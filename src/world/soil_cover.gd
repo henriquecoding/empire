@@ -45,6 +45,8 @@ static var _windows := PackedVector4Array()
 var _clock: ClockData
 var _revelar := SoilReveal.new()
 var _dither: ShaderMaterial
+## O mesmo dither para as vistas pintadas para uma hora, com a luz delas (ADR 0085).
+var _pintado: ShaderMaterial
 var _chave: Array = []
 var _terra: Dictionary = {}
 var _cache: Dictionary = {}
@@ -97,6 +99,7 @@ func _ready() -> void:
 	_dither.shader = load(SHADER)
 	_dither.set_shader_parameter(&"matrix", SoilReveal.matrix())
 	material = _dither
+	_pintado = _dither.duplicate() as ShaderMaterial
 	for _parte: int in LowlandArt.Parte.values():
 		var no := Node2D.new()
 		no.use_parent_material = true
@@ -105,7 +108,14 @@ func _ready() -> void:
 	var pintura := SceneryStrip.new()  # a terra dos reinos pintados, por cima (ADR 0081)
 	pintura.parte = SceneryStrip.Parte.ABAIXO
 	pintura.use_parent_material = true
+	pintura.painted_material = _pintado
 	add_child(pintura)
+
+
+## Um uniform do dither, nos dois materiais.
+func _param(nome: StringName, valor: Variant) -> void:
+	_dither.set_shader_parameter(nome, valor)
+	_pintado.set_shader_parameter(nome, valor)
 
 
 func _exit_tree() -> void:
@@ -117,13 +127,14 @@ func _process(delta: float) -> void:
 	if _clock != null and ClockService.clock != null:
 		SceneryLight.refresh(self)  # a luz e a do cenario, no mesmo shader (ADR 0048)
 		SceneryLight.feed(_dither, SceneryLight.Depth.BELOW)
+		SceneryLight.feed(_pintado, SceneryLight.Depth.BELOW, true)
 	if SimLoop.state == null or SimLoop.units == null:
 		return
 	_revelar.step(delta, SoilReveal.wants_open(SimLoop.units, Assume.driven()))
 	var player := SimLoop.units.index_of(Assume.driven())
 	var sitio := _sitio(player)
 	_aberto = _revelar.progress if is_nan(sitio.x) else 0.0  # so ali, se ha sitio (Q-186)
-	_dither.set_shader_parameter(&"progress", _aberto)
+	_param(&"progress", _aberto)
 	if SimLoop.field != null and player >= 0:
 		var mouths := Passages.open(SimLoop.passages, SimLoop.builds)
 		mouths.append_array(UnderWatch.mouths(SimLoop.field))
@@ -133,10 +144,10 @@ func _process(delta: float) -> void:
 		if not is_nan(sitio.x) and _revelar.progress > 0.0:
 			_windows.insert(0, SoilReveal.site_window(sitio, _revelar.progress))
 		_windows = _windows.slice(0, MAX_WINDOWS)
-		_dither.set_shader_parameter(&"window_count", _windows.size())
+		_param(&"window_count", _windows.size())
 		var padded := _windows.duplicate()
 		padded.resize(MAX_WINDOWS)
-		_dither.set_shader_parameter(&"windows", padded)
+		_param(&"windows", padded)
 	visible = _aberto < 1.0
 	var revisao := SimLoop.field.wilds.revision if SimLoop.field != null else -1
 	var mundo := [RngService.world_seed(), SimLoop.state.region, SimLoop.world_width]

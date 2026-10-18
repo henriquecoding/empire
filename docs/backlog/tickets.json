@@ -2912,5 +2912,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "CV-04": {
+  "title": "As composições do dono, separadas em planos, no mundo",
+  "porque": "O dono entregou as composições aprovadas do porto, do lago e do rio e as 24 vistas novas dos reinos, das águas e das transições, e pediu-as no jogo.",
+  "spec": [
+   "docs/adr/0085-as-composicoes-do-dono-no-mundo.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/21-geracao-procedural-do-territorio.md"
+  ],
+  "depende": "CV-02, ADR 0077, ADR 0081, ADR 0084",
+  "feito": "Separação das 27 pinturas em planos com os chãos do jogo, export verificado contra os ZIPs, variantes pela hora e pela estação, o porto, o lago e o rio na água do território, as duas transições, testes e capturas.",
+  "fora": "Simulação, economia, save, território, edifícios e barcos de cada povo, passagens e as escadas pintadas.",
+  "estado": "feito — os 8 reinos, as 8 variantes, o porto, o lago e o rio com as 6 variações deles e as 2 transições; o que o enchimento estimou, os mapeamentos de hora e estação e o lugar dos sítios esperam o dono (Q-267 a Q-269)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

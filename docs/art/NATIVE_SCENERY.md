@@ -1,5 +1,9 @@
 # Cenários de produção nativa — CV-02
 
+> Desde 17/10/2026 (CV-04, ADR 0085) a campanha desenha as pinturas do dono separadas em
+> planos (`art/export/scenery_owner/`). Esta produção fica na galeria de revisão, com os
+> prefabs, os módulos e as fontes editáveis; os planos de campanha dela saem dos exports.
+
 As composições aprovadas em 15/10 e as variações de 16/10 foram reconstruídas em
 camadas: oito reinos, porto, lago, rio e duas transições. As fontes estão em
 art/source/scenery_native. Os PNG de fonte são intermediários criativos; o jogo usa

@@ -7,6 +7,44 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## As composições do dono no mundo — 17/10/2026 (ADR 0085)
+
+> Pedido do dono (17/10/2026): *«Quero que implemente esses dois arquivos .zip que te enviei, o do google drive é
+> essencial que aplique»*. Aplicado no CV-04: os oito reinos, as oito variantes, o porto, o lago e o rio com as seis
+> variações e as duas transições pintam o mundo com as pinturas do dono, separadas em planos. O que segue pede uma
+> decisão tua ou arte nova.
+
+### Q-267 · O que estava por trás do que saiu
+- **Hoje:** para o Dia 1 não ter obras nem gente pintadas, saíram das pinturas os edifícios, os barcos, as pessoas, o
+  rei, as escadas e as fachadas de baixo. O que ficava por trás encheu-se com pedaços da própria pintura (e o LaMa nas
+  juntas). É verosímil, mas não é teu: onde a pintura não diz o que estava atrás de uma casa, a ferramenta adivinhou.
+- **Onde se nota mais:** atrás da casa e da grua do porto, atrás da casa do lago, atrás da quinta da Horta e da forja
+  da Fornalha; e uma faixa clara ténue sobre o mar dos Portuários, à altura do cais, onde estavam a forca e os barris.
+- **Proposta:** veres as capturas de `docs/art/owner_scenery/` e apontares o que queres repintado; a camada de cada
+  vista está em `art/export/scenery_owner/<vista>/` e repinta-se sem tocar no código (`tools/export_owner_scenery.py`).
+- **Também por decidir:** as vilas e os castelos do horizonte ficam no plano de longe, uma vez em cada dois laços. O
+  pacote pede que dependam do estado das civilizações; hoje estão sempre lá.
+- **Decide:** tu.
+
+### Q-268 · Que hora e que estação é cada variante
+- **Aplicado (reversível, em `tools/owner_scenery/views.json`):** o luar dos Enramados, da Fenda, da Geada (aurora) e o
+  do rio, de noite; a névoa da Bruma, na alvorada; a maré baixa dos Portuários, à tarde; as brasas da Fornalha, ao
+  crepúsculo e de noite; a SobRaiz húmida e o porto ao pôr do sol, no crepúsculo; o porto das lanternas, de noite; a
+  colheita da Horta e o lago de cobre, no outono; a primeira geada no lago, no inverno; o rio depois da chuva, na
+  primavera.
+- **Em aberto:** a maré e a chuva não são sistemas do jogo; aqui são só a hora e a estação. Se as queres ligadas a
+  outra coisa (o tempo, a maré do §21), é design.
+- **Decide:** tu.
+
+### Q-269 · Onde ficam o porto, o lago e o rio
+- **Aplicado (a proposta da Q-259, reversível):** o lago na água dos Enramados — a de casa (Q-257) e a de cada segmento
+  de água deles —, o porto na dos Portuários e o rio na da Bruma. O quadro de 1280 px fica com a água pintada no x da
+  fonte que o território conta, e o `ResourceWater` deixa de desenhar por cima. Onde o quadro não cabe inteiro no troco,
+  fica a água de antes.
+- **Em aberto:** a Q-259 perguntava também se a sede e as obras devem desviar-se do lago; não se mexeu no território.
+  E a Horta não tem sítio: a pintura dela já traz o rio em baixo.
+- **Decide:** tu.
+
 ## Animais e criaturas animados — 15/10/2026 (ADR 0083)
 
 > Pedido do dono (15/10/2026): *«Implemente isso no meu jogo»*, com os pacotes de animais e de criaturas animados a
@@ -176,6 +214,8 @@
   Fluvial nos segmentos de água das terras dos Portuários e da Horta (`portuarios_water_01`, `horta_water_01`).
   Cada um é um quadro de 2560 px ancorado num sítio, e não um reino em mosaico.
 - **Decide:** tu — se é isto, e se a sede e as obras devem desviar-se do lago.
+- **Aplicado a 17/10/2026 (CV-04, Q-269):** com as três vistas aprovadas a 15/10 — o lago na água dos Enramados, o
+  porto na dos Portuários e o rio na da Bruma. O desvio da sede continua por decidir.
 
 ### Q-260 · As transições a oeste de casa
 - **Hoje:** cada transição tem o povo de onde se vem à esquerda (Mata Encharcada: Enramados → Bruma). A oeste de casa os

@@ -44,11 +44,22 @@ var _chave: Array = []
 var _reinos: Array[StringName] = []
 var _fronteiras := PackedFloat32Array()
 var _usadas: Array[Texture2D] = []
+## A origem do quadro de cada reino de `_reinos`: a do mosaico, ou a de um sitio (ADR 0085).
+var _origens := PackedFloat32Array()
+var _sitios: Dictionary = {}
+## As vistas pintadas para uma hora desenham-se aqui, com a luz delas (ADR 0085).
+var _pintada: Node2D
 
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	material = SceneryLight.material(LUZ.get(camada, SceneryLight.Depth.FAR))
+	var luz: SceneryLight.Depth = LUZ.get(camada, SceneryLight.Depth.FAR)
+	material = SceneryLight.material(luz)
+	_pintada = Node2D.new()
+	_pintada.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_pintada.material = SceneryLight.material(luz, true)
+	_pintada.draw.connect(func() -> void: _desenhar(_pintada, true))
+	add_child(_pintada)
 
 
 func _process(_delta: float) -> void:
@@ -73,20 +84,33 @@ func _process(_delta: float) -> void:
 	)
 	var de_mundo := (mundo.affine_inverse() * ecra.position).x - MISTURA
 	var ate_mundo := (mundo.affine_inverse() * ecra.end).x + MISTURA
-	_reinos = [mapa.biome_at(de_mundo)]
+	var meio := (esquerda + direita) * MEIO
+	var centro := camara.get_screen_center_position().x
+	var primeiro := mapa.stretch_at(de_mundo)
+	_reinos = [primeiro.get(SceneryMap.CENA, &"")]
+	_origens = PackedFloat32Array([_origem_de(primeiro, meio, centro)])
 	_fronteiras = PackedFloat32Array()
 	for f in mapa.borders:
 		if f[SceneryMap.X] > de_mundo and f[SceneryMap.X] < ate_mundo:
 			_fronteiras.append(roundf((plano * (mundo * Vector2(f[SceneryMap.X], 0.0))).x))
 			_reinos.append(f[SceneryMap.DIREITA])
-	var chave := [_reinos.duplicate(), _fronteiras, _janela, _origem]
+			_origens.append(_origem_de(mapa.stretch_at(f[SceneryMap.X] + MEIO), meio, centro))
+	var pesos := OwnerScenery.signature(_reinos)
+	var chave := [_reinos.duplicate(), _fronteiras, _janela, _origens, pesos]
 	if chave != _chave:
 		_chave = chave
+		_usadas.clear()
 		queue_redraw()
+		_pintada.queue_redraw()
 
 
 func _draw() -> void:
-	_usadas.clear()
+	_desenhar(self, false)
+
+
+## Os reinos da esquerda para a direita, num dos dois nos: a base e as variantes de estacao
+## aqui, as pintadas para uma hora no `_pintada`.
+func _desenhar(canvas: CanvasItem, pintadas: bool) -> void:
 	var opaca := camada == OPACA
 	for i in _reinos.size():
 		var de := _fronteiras[i - 1] if i > 0 else -INF
@@ -95,36 +119,59 @@ func _draw() -> void:
 			maxf(_janela.x, de + (MISTURA if i > 0 else 0.0)),
 			minf(_janela.y, ate + (MISTURA if opaca else -MISTURA))
 		)
-		_pintar(_reinos[i], cheio, 1.0)
+		var reino := Vector2(i, 1.0 if pintadas else 0.0)
+		_pintar(canvas, reino, cheio, 1.0)
 		if i > 0:
-			_esvair(_reinos[i], de, ENTRA)
+			_esvair(canvas, reino, de, ENTRA)
 		if i < _fronteiras.size() and not opaca:
-			_esvair(_reinos[i], ate, SAI)
+			_esvair(canvas, reino, ate, SAI)
 
 
 ## A faixa de uma fronteira em `x`: o reino entra (ENTRA, da esquerda para a direita) ou
 ## sai (SAI), em FATIAS degraus de alfa.
-func _esvair(cena: StringName, x: float, sentido: float) -> void:
+func _esvair(canvas: CanvasItem, reino: Vector2, x: float, sentido: float) -> void:
 	var fatia := FAIXA / float(FATIAS)
 	for k in FATIAS:
 		var de := x - MISTURA + fatia * float(k)
 		var alfa := (float(k) + MEIO) / float(FATIAS)
-		_pintar(cena, Vector2(de, de + fatia), alfa if sentido > 0.0 else 1.0 - alfa)
+		_pintar(canvas, reino, Vector2(de, de + fatia), alfa if sentido > 0.0 else 1.0 - alfa)
 
 
-func _pintar(cena: StringName, faixa: Vector2, alfa: float) -> void:
+## `reino` e (o indice em `_reinos`, 1 se sao as variantes pintadas).
+func _pintar(canvas: CanvasItem, reino: Vector2, faixa: Vector2, alfa: float) -> void:
 	var a := maxf(faixa.x, _janela.x)
 	var b := minf(faixa.y, _janela.y)
 	if b <= a:
 		return
-	var janela := Vector3(_origem, a, b)
-	var tex: Texture2D
-	if camada == OPACA:
-		tex = SceneryArt.draw_mirrored(self, cena, camada, janela, SceneryArt.TUDO, alfa)
-	else:
-		tex = SceneryArt.draw_layer(self, cena, camada, janela, SceneryArt.TUDO, alfa)
-	if tex != null and not _usadas.has(tex):
-		_usadas.append(tex)
+	var i := int(reino.x)
+	var janela := Vector3(_origens[i], a, b)
+	var opaca := camada == OPACA
+	for c in OwnerScenery.now(_reinos[i]):
+		if c[OwnerScenery.PINTADA] != (reino.y > 0.0):
+			continue
+		var peso := alfa * OwnerScenery.alpha(c, opaca)
+		var vista: StringName = c[OwnerScenery.VISTA]
+		var tex: Texture2D
+		if opaca:
+			tex = SceneryArt.draw_mirrored(canvas, vista, camada, janela, SceneryArt.TUDO, peso)
+		else:
+			tex = SceneryArt.draw_layer(canvas, vista, camada, janela, SceneryArt.TUDO, peso)
+		if tex != null and not _usadas.has(tex):
+			_usadas.append(tex)
+
+
+## A origem do quadro de um troco: a do mosaico, ou, num sitio, a que poe o meio da agua
+## dele atras dela quando a camara la esta (como o `_ancora` faz ao reino).
+func _origem_de(troco: Dictionary, meio_agora: float, camara_x: float) -> float:
+	if not troco.has(SceneryMap.ANCORA):
+		return _origem
+	var x: float = troco[SceneryMap.ORIGEM]
+	if not _sitios.has(x):
+		var pai := get_parent() as Parallax2D
+		var escala := pai.scroll_scale.x if pai != null else 1.0
+		var ancora: float = troco[SceneryMap.ANCORA]
+		_sitios[x] = roundf(meio_agora + escala * (x + ancora - camara_x) - ancora)
+	return _sitios[x]
 
 
 ## Onde comeca o quadro, em x do plano, para o meio dele ficar atras do meio da regiao: o

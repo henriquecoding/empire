@@ -28,6 +28,7 @@
 | procedural — `MountView`, o cavaleiro de pé à frente do cavalo | o cavalo a 2× | montaria `draft_horse` (`src/world/mount_view.gd`) | uma pose de montar por classe e o ponto da sela em cada quadro do cavalo (ADR 0083, Q-265) | 2026-10-15 | em uso |
 | `art/export/animated/beast_*_glow.png` — a cor mais clara da paleta | quadros de 64 × 64 | o brilho das criaturas no escuro (`AnimatedBeasts`) | uma camada só dos olhos, sem os dentes (ADR 0083, Q-265) | 2026-10-15 | em uso |
 | procedural — `WildLands` (marco do limiar) e junta esbatida de 48 px (`SceneryStrip`) | 640 px de cada lado da fronteira | limiares a oeste de casa, onde nenhuma das 13 transições tem o par do lado certo | transições pintadas no sentido oposto, sem espelhar a luz (ADR 0081, Q-260) | 2026-10-08 | em uso |
+| `art/export/scenery_owner/*/` — o enchimento por trás do que saiu (shift-map e LaMa) | os planos de cada vista | os reinos, os sítios de água e as transições do dono (`OwnerScenery`) | o que estava atrás das casas, dos barcos e das pessoas, repintado pelo dono (ADR 0085, Q-267) | 2026-10-17 | em uso |
 
 ## Como se acrescenta
 

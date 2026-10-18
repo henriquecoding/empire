@@ -37,16 +37,30 @@ const PARA_A_DIREITA := 1.0
 const PARA_A_ESQUERDA := -1.0
 
 @export var parte: Parte = Parte.SUPERFICIE
+## O material das vistas pintadas para uma hora, na parte ABAIXO: o do SoilCover com a luz
+## delas (ADR 0085). Sem ele, a do SoilCover.
+var painted_material: Material
 
 var _janela := Vector2.ZERO
 var _mapa: SceneryMap
+var _pesos: Array = []
 var _usadas: Array[Texture2D] = []
+var _pintada: Node2D
 
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_pintada = Node2D.new()
+	_pintada.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	if parte == Parte.SUPERFICIE:
 		material = SceneryLight.material(SceneryLight.Depth.GROUND)
+		_pintada.material = SceneryLight.material(SceneryLight.Depth.GROUND, true)
+	elif painted_material != null:
+		_pintada.material = painted_material
+	else:
+		_pintada.use_parent_material = true
+	_pintada.draw.connect(func() -> void: _desenhar(_pintada, true))
+	add_child(_pintada)
 
 
 func _process(_delta: float) -> void:
@@ -63,24 +77,37 @@ func _process(_delta: float) -> void:
 		floorf((centro - MARGEM) / DEGRAU) * DEGRAU, ceilf((centro + MARGEM) / DEGRAU) * DEGRAU
 	)
 	var mapa := SceneryArt.map()
-	if janela != _janela or mapa != _mapa:
+	var cenas := mapa.within(janela.x, janela.y).map(
+		func(t: Dictionary) -> StringName: return t[SceneryMap.CENA]
+	)
+	var pesos := OwnerScenery.signature(cenas)
+	if janela != _janela or mapa != _mapa or pesos != _pesos:
 		_janela = janela
 		_mapa = mapa
+		_pesos = pesos
+		_usadas.clear()
 		queue_redraw()
+		_pintada.queue_redraw()
 
 
 func _draw() -> void:
-	_usadas.clear()
+	_desenhar(self, false)
+
+
+## O chao num dos dois nos: a base e as variantes de estacao aqui, as pintadas no `_pintada`.
+func _desenhar(canvas: CanvasItem, pintadas: bool) -> void:
 	if _mapa == null:
 		return
 	var trocos := _mapa.within(_janela.x, _janela.y)
 	var corte: Vector2 = CORTE[parte]
 	for camada: StringName in CAMADAS[parte]:
 		for t in trocos:
-			_guardar(SceneryArt.draw_layer(self, t[SceneryMap.CENA], camada, _de(t), corte))
+			_cena(
+				canvas, pintadas, t[SceneryMap.CENA], camada, _de(t), Vector3(corte.x, corte.y, 1.0)
+			)
 		for i in range(1, trocos.size()):
-			_juntar(trocos[i - 1], trocos[i], camada, corte)
-	if parte == Parte.SUPERFICIE:
+			_juntar(canvas, pintadas, trocos[i - 1], trocos[i], camada)
+	if parte == Parte.SUPERFICIE and not pintadas:
 		for t in trocos:
 			if t[SceneryMap.LIMIAR]:
 				_guardar(SceneryArt.draw_once(self, t[SceneryMap.CENA], MARCO, _de(t), corte))
@@ -95,9 +122,30 @@ func _de(t: Dictionary) -> Vector3:
 	)
 
 
+## Uma cena e as variantes dela que este no desenha (`pintadas` ou nao). Por baixo da linha
+## do chao a terra e opaca (OwnerScenery.alpha). `corte` leva as linhas e o alfa.
+func _cena(
+	canvas: CanvasItem,
+	pintadas: bool,
+	cena: StringName,
+	camada: StringName,
+	janela: Vector3,
+	corte: Vector3
+) -> void:
+	for c in OwnerScenery.now(cena):
+		if c[OwnerScenery.PINTADA] != pintadas:
+			continue
+		var vista: StringName = c[OwnerScenery.VISTA]
+		var alfa := corte.z * OwnerScenery.alpha(c, parte == Parte.ABAIXO)
+		var linhas := Vector2(corte.x, corte.y)
+		_guardar(SceneryArt.draw_layer(canvas, vista, camada, janela, linhas, alfa))
+
+
 ## A junta de dois trocos de cenas diferentes: o reino continua para dentro da outra cena,
 ## a esvair-se. Com dois reinos, entra o da esquerda; com uma transicao, entra o reino.
-func _juntar(a: Dictionary, b: Dictionary, camada: StringName, corte: Vector2) -> void:
+func _juntar(
+	canvas: CanvasItem, pintadas: bool, a: Dictionary, b: Dictionary, camada: StringName
+) -> void:
 	if a[SceneryMap.CENA] == b[SceneryMap.CENA] or a[SceneryMap.ATE] != b[SceneryMap.DE]:
 		return
 	var x: float = b[SceneryMap.DE]
@@ -110,8 +158,16 @@ func _juntar(a: Dictionary, b: Dictionary, camada: StringName, corte: Vector2) -
 		var de := x + sentido * fatia * float(i)
 		var ate := de + sentido * fatia
 		var alfa := 1.0 - (float(i) + MEIO) / float(FATIAS)
-		var janela := Vector3(0.0, minf(de, ate), maxf(de, ate))
-		_guardar(SceneryArt.draw_layer(self, reino[SceneryMap.CENA], camada, janela, corte, alfa))
+		var janela := Vector3(reino[SceneryMap.ORIGEM], minf(de, ate), maxf(de, ate))
+		var corte: Vector2 = CORTE[parte]
+		_cena(
+			canvas,
+			pintadas,
+			reino[SceneryMap.CENA],
+			camada,
+			janela,
+			Vector3(corte.x, corte.y, alfa)
+		)
 
 
 func _guardar(tex: Texture2D) -> void:

@@ -16,6 +16,8 @@ const LOWER_Y := 12.0
 static func draw(canvas: CanvasItem, window := Vector2(-INF, INF)) -> void:
 	for source: Dictionary in TerritoryWatch.sources(0.0, {TerritoryWatch.AGUA: true}):
 		var span: Vector2 = source[PlacementRules.SPAN]
+		if SceneryArt.painted() and OwnerSites.covered(span.x):
+			continue  # o sitio pintado ja mostra esta agua (ADR 0085)
 		span = Vector2(maxf(span.x, window.x), minf(span.y, window.y))
 		var width := span.y - span.x
 		if width <= 0.0:

@@ -31,6 +31,11 @@ const PLANOS := {
 	Depth.BELOW: Vector2(0.9, 2.0),
 }
 
+## As vistas pintadas para uma hora (a noite, o crepusculo) ja trazem a luz dela: levam o
+## material PINTADA, onde o ambiente nao desce e so as luzes do mundo se somam (ADR 0085).
+const PINTADA := 100
+const PINTADA_AMBIENTE := Vector3(1.0, 1.0, 1.0)
+
 static var _materiais: Dictionary = {}
 static var _frame := -1
 static var _luz := Lighting.new()
@@ -39,12 +44,13 @@ static var _comum: Dictionary = {}
 
 
 ## O material de um plano. O mesmo para todos os nos desse plano.
-static func material(plano: Depth) -> ShaderMaterial:
-	if not _materiais.has(plano):
+static func material(plano: Depth, pintada := false) -> ShaderMaterial:
+	var chave := int(plano) + (PINTADA if pintada else 0)
+	if not _materiais.has(chave):
 		var novo := ShaderMaterial.new()
 		novo.shader = SHADER
-		_materiais[plano] = novo
-	return _materiais[plano]
+		_materiais[chave] = novo
+	return _materiais[chave]
 
 
 ## Poe a luz deste frame em todos os materiais do cenario. Chamar mais de uma vez
@@ -62,13 +68,13 @@ static func refresh(no: CanvasItem) -> void:
 	var transformada := no.get_viewport_transform()  # com a escala do ecra
 	_comum = uniforms(_luz, transformada, transformada * PresentationBounds.of(no))
 	_comum[&"luz_celula"] = float(SimFactory.rot_profile().lantern_dither_px)  # §80: 2 px
-	for plano: Depth in _materiais:
-		feed(_materiais[plano], plano)
+	for chave: int in _materiais:
+		feed(_materiais[chave], (chave % PINTADA) as Depth, chave >= PINTADA)
 
 
 ## Os uniforms de um plano num material qualquer: o do cenario, ou um que ja tenha
 ## o seu shader e inclua o world_light (a terra do SoilCover).
-static func feed(alvo: ShaderMaterial, plano: Depth) -> void:
+static func feed(alvo: ShaderMaterial, plano: Depth, pintada := false) -> void:
 	if _comum.is_empty():
 		return
 	for nome: StringName in _comum:
@@ -76,7 +82,8 @@ static func feed(alvo: ShaderMaterial, plano: Depth) -> void:
 	var regra: Vector2 = PLANOS[plano]
 	var razao := pow(BandLight.ground_ratio(_clock), regra.y)
 	var tecto := lerpf(1.0, razao, _luz.dark)
-	alvo.set_shader_parameter(&"ambiente", _vec(WorldPalette.dim(_luz.ambient, tecto)))
+	var ambiente := _vec(WorldPalette.dim(_luz.ambient, tecto))
+	alvo.set_shader_parameter(&"ambiente", PINTADA_AMBIENTE if pintada else ambiente)
 	alvo.set_shader_parameter(&"alcance", regra.x)
 
 

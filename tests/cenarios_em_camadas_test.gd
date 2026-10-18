@@ -169,7 +169,7 @@ func test_cada_transicao_liga_dois_biomas_e_traz_o_marco() -> void:
 	var pares := SceneryArt.pairs()
 	var transicoes := 0
 	for id in SceneryArt.scenes():
-		transicoes += int(not biomas.has(StringName(id)))
+		transicoes += int(SceneryArt.kind(StringName(id)) == SceneryArt.TRANSICAO)
 	assert_int(pares.size()).is_equal(transicoes)
 	for chave: String in pares:
 		var lados := chave.split(">")
