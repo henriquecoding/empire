@@ -396,6 +396,13 @@ function laboratorio(raiz) {
   };
   const proposta = (k) => ({ campo: k, valor: rot[k] === "true" ? 1 : rot[k] === "false" ? 0 : num(k), proposto: rp.has(k) });
   const [clock] = lerCsv(raiz, "data/source/clock.csv");
+  const cp = propostos(clock);
+  for (const k of ["dusk", "night"]) if (cp.has(k)) falha(`clock.csv: ${k} está em _proposed e o laboratório trata-o como decidido`);
+  if (rp.has("summon_interval")) falha("rot.csv: summon_interval está em _proposed e o laboratório trata-o como decidido");
+  const [de, ate] = String(rot.summon_interval).split("|").map(Number);
+  if (!(de > 0 && ate >= de)) falha(`rot.csv: summon_interval não é «mínimo|máximo» («${rot.summon_interval}»)`);
+  const fortalezasNoMapa = lerCsv(raiz, "data/source/segments.csv").filter((s) => s.kind === "fortress").length;
+  if (!fortalezasNoMapa) falha("segments.csv: nenhum segmento fortress — a régua das fortalezas não tem fim");
   const noite = {
     base: decidido("mass_base"), porDia: decidido("mass_per_day"), porFortaleza: decidido("mass_per_fortress"),
     abertura: decidido("opening_mass"), rampa: decidido("ramp_nights"),
@@ -403,6 +410,10 @@ function laboratorio(raiz) {
     porRecusa: decidido("refusal_mass"), tetoRecusas: decidido("refusal_cap"), janela: decidido("refusal_window_days"),
     doisLados: decidido("two_sided_from_day"),
     recusasMax: constanteGd(raiz, "src/sim/systems/rot_system.gd", "RECUSAS_MAX"),
+    // Onde as réguas acabam: uma fortaleza por povo, e tantos nomes quantos há ao mesmo tempo (§76).
+    fortalezasMax: fortalezasNoMapa, nomeadosMax: eco.numero("named_cap"),
+    // O ritmo (§51): uma invocação a cada summon_interval, do crepúsculo à alvorada.
+    cadencia: { de, ate }, duracao: Number(clock.dusk) + Number(clock.night),
     regra: rot.pick_rule,
     propostas: {
       crescimento: proposta("mass_growth"), desde: proposta("growth_from_night"),

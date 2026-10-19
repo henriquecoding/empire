@@ -71,6 +71,8 @@
     var q = new URLSearchParams();
     q.set("f", ativa);
     var s = ler(paineis[ativa]);
+    // Um controlo desligado não entra na conta, e por isso também não vai na ligação.
+    paineis[ativa].querySelectorAll("input[name]:disabled").forEach(function (i) { delete s[i.name]; });
     Object.keys(s).forEach(function (k) { q.set(k, s[k]); });
     return location.pathname + location.search + "#laboratorio?" + q.toString();
   }

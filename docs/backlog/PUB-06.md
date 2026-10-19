@@ -18,8 +18,8 @@ Contrato  Uma secção onde se mexe nas regras do jogo e se vê o resultado, com
           publicado como decidido; partilhável por ligação; PT/EN com a mesma
           forma; CSP estrita, sem terceiros; teclado, leitor de ecrã, telemóvel,
           movimento reduzido e sem JavaScript.
-Feito     Quatro instrumentos: quem a Podridão manda esta noite (§74, §51, com a
-          arte animada do dono), o dia da asfixia (§06), o tempo até matar (§07)
+Feito     Quatro instrumentos: quem a Podridão manda esta noite (§74, §51, com o
+          ritmo a que invoca e a arte animada do dono), o dia da asfixia (§06), o tempo até matar (§07)
           e a escada do muro (§10). As contas são uma função por função do
           GDScript, testadas contra os números do dossiê; as propostas só entram
           a pedido e dizem-se. Cenários de um toque lidos dos dados, pontes a

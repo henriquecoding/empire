@@ -31,7 +31,8 @@ da regra 10: metade dos números do Empire ainda está em `_proposed`.
 fazem as contas do jogo sobre os números dos CSV.**
 
 1. **Quatro instrumentos, as quatro perguntas que o §07 diz que o jogador tem de saber responder antes da noite.**
-   *Quem vem esta noite* (a massa da §74 termo a termo e a regra de escolha do §51, com a arte animada do dono, ADR
+   *Quem vem esta noite* (a massa da §74 termo a termo, a regra de escolha do §51 e o ritmo a que ela invoca — uma de
+   cada vez, do crepúsculo à alvorada, e o que a massa paga além disso fica por vir —, com a arte animada do dono, ADR
    0083); *o dia da asfixia* (o simulador do §06, com os deslizadores que o próprio dossiê desenha); *quanto tempo até
    cair* (a tabela do tempo até matar do §07, por tropa e por posto); *a escada do muro* (os cinco níveis do §10, os
    dois caminhos, os slots de contacto e o Aríete).
@@ -40,12 +41,16 @@ fazem as contas do jogo sobre os números dos CSV.**
    dela ao lado, e nenhum número de balanceamento. `tests/web/laboratorio.test.mjs` confere-a contra o que o dossiê
    escreve: o `upkeep(14) = 3,0` e o `upkeep(25) = 13,5` do §29, o dia da asfixia de cada perfil do
    `economy_profiles.csv` (11, 15, 28…), a tabela do tempo até matar do §07, a noite 1 com três Rastejantes do §25, a
-   tabela da §74 (220, 716, 782, 892, 961) e a escada 6 · 11 · 20 · 36 · 65.
+   tabela da §74 (220, 716, 782, 892, 961) e a escada 6 · 11 · 20 · 36 · 65; e as invocações que cabem numa noite
+   contam-se tick a tick, como o `RotSystem.tick` as conta.
 3. **O decidido por omissão; a proposta só a pedido, e a dizer que o é.** O `dados.mjs` chumba a construção se um
    campo de que uma conta depende estiver em `_proposed`. O crescimento da noite, os picos e as estreias (Q-151, Q-126,
    Q-240) entram só com «Juntar o que ainda é proposta», e a página diz quais são. A vida do caminho A e os postos do
    caminho B dizem «por decidir», como os monarcas (ADR 0056). Os impulsos reais ficam de fora: o preço de todos está
-   em `_proposed`.
+   em `_proposed`. A noite de dois lados (Q-179) diz-se e não se conta: o dia em que pode começar é decidido, a
+   probabilidade (`rift_both_chance`) é proposta, e o instrumento conta um lado e di-lo. As réguas da noite acabam onde
+   os dados acabam — os Amargueiros com nome no `named_cap`, as fortalezas uma por povo; os anónimos não têm teto no
+   jogo, e a régua deles diz só até onde a régua vai.
 4. **Uma experiência tem endereço.** O estado vai para `#laboratorio?f=noite&dia=12…` com `replaceState` — não enche
    o histórico, não muda nada no servidor, e só depois de alguém mexer. «Copiar a ligação» dá-a a quem a quiser ver.
 5. **A regra da casa, toda.** Sem `<script>` nem `style=""` em linha: o modelo vai dentro do script do laboratório,
@@ -59,8 +64,8 @@ fazem as contas do jogo sobre os números dos CSV.**
 7. **Por onde se começa (o pedido do dono de 19/10: «refine também o design e a user experience»).** Quem chega não
    sabe o que experimentar, por isso os instrumentos da noite e da asfixia abrem com cenários de um toque, todos
    lidos dos dados: os perfis dos testes de design do §06 (`economy_profiles.csv` — «Com 2 rotas de comércio» dá os
-   quatro dias que a conquista compra) e as noites que o dossiê conta (a primeira, a de dois lados, a estreia da
-   criatura mais cara). O cenário em que o instrumento está fica marcado; «Repor» volta ao caso por omissão. Um
+   quatro dias que a conquista compra) e as noites que o dossiê conta (a primeira, a primeira que pode vir por
+   dois lados, a estreia da criatura mais cara). O cenário em que o instrumento está fica marcado; «Repor» volta ao caso por omissão. Um
    perfil novo sem nome no site chumba a construção, como um trilho novo. A bancada chega-se por três sítios: o
    menu, o guia inicial («Mexer nas regras») e a candeia — o instrumento raso leva ao fundo. Num ecrã tátil,
    «Partilhar» abre a folha de partilha do sistema; no resto, copia a ligação.

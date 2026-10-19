@@ -23,6 +23,11 @@ export const CONTAS = janela.EmpireContas;
 
 export const FERRAMENTAS = ["noite", "economia", "combate", "muro"];
 
+// O jogo não põe teto aos Amargueiros de pé: o RotSystem conta todos. A régua precisa
+// de um fim, e este é o da régua e não do jogo — mais do dobro dos anónimos que a
+// tabela da §74 escreve. As outras réguas da noite acabam onde os dados acabam.
+const ARVORES_NA_REGUA = 12;
+
 /** O estado com que cada instrumento abre: o caso que se lê sem mexer em nada. */
 export function omissao(L) {
   const s = L.economia.deslizadores;
@@ -108,20 +113,20 @@ export function laboratorio({ t, d, v, esc, fmt }) {
   const n = L.noite;
   const on = o.noite;
   const mNoite = CONTAS.massa({ dia: on.dia, fortalezas: 0, amargueiros: 0, nomeados: 0, recusas: 0 }, n, false);
-  const fNoite = CONTAS.invocar(mNoite.total, on.dia, L.criaturas, n, { subsolo: false, propostas: false });
-  const filaTexto = fNoite.fila.map((y) => fmt(x.vivo.fila_item, { n: y.n, nome: nome(L.criaturas.find((c) => c.id === y.id).nome) })).join(", ");
+  const fNoite = CONTAS.chegam(CONTAS.invocar(mNoite.total, on.dia, L.criaturas, n, { subsolo: false, propostas: false }), CONTAS.invocacoes(n.duracao, n.cadencia));
+  const filaTexto = fNoite.fila.map((y) => fmt(x.vivo.fila_item, { n: y.de === y.ate ? y.ate : `${y.de}–${y.ate}`, nome: nome(L.criaturas.find((c) => c.id === y.id).nome) })).join(", ");
   const limpo = { fort: 0, arv: 0, nom: 0, rec: 0, sub: 0, prop: 0 };
   const estreia = L.criaturas[0];
   const sugestoesNoite = cenarios("noite", [
     [{ ...limpo, dia: 1 }, x.cenarios.noite.primeira, 1],
     [{ ...limpo, dia: n.doisLados }, x.cenarios.noite.dois_lados, n.doisLados],
-    [{ ...limpo, dia: estreia.desde, sub: 1 }, fmt(x.cenarios.noite.estreia, { nome: nome(estreia.nome) }), estreia.desde],
+    [{ ...limpo, dia: estreia.desde, sub: estreia.subsolo ? 1 : 0 }, fmt(x.cenarios.noite.estreia, { nome: nome(estreia.nome) }), estreia.desde],
   ]);
   const noite = painel("noite", 0, [
     regua("noite", "dia", x.noite.dia, 1, L.economia.dias, on.dia),
-    regua("noite", "fort", x.noite.fortalezas, 0, 5, on.fort),
-    regua("noite", "arv", x.noite.amargueiros, 0, 12, on.arv),
-    regua("noite", "nom", x.noite.nomeados, 0, 6, on.nom),
+    regua("noite", "fort", x.noite.fortalezas, 0, n.fortalezasMax, on.fort),
+    regua("noite", "arv", x.noite.amargueiros, 0, ARVORES_NA_REGUA, on.arv),
+    regua("noite", "nom", x.noite.nomeados, 0, n.nomeadosMax, on.nom),
     regua("noite", "rec", fmt(x.noite.recusas, { janela: n.janela }), 0, n.recusasMax, on.rec),
     caixa("noite", "sub", x.noite.subsolo, on.sub),
     caixa("noite", "prop", x.noite.propostas, on.prop),
@@ -136,6 +141,8 @@ export function laboratorio({ t, d, v, esc, fmt }) {
             + `<small>${fmt(x.noite.cada, { massa: c.massa })} · ${fmt(x.noite.desde, { dia: c.desde })}${c.subsolo ? ` · ${x.noite.subterraneo}` : ""}</small></span></li>`).join("")}</ul>
           <p class="lab-vazio" data-lab="vazia" hidden>${x.vivo.fila_vazia}</p>
           <p class="lab-nota" data-lab="sobra"></p>
+          <p class="lab-nota" data-lab="tempo"></p>
+          <p class="lab-nota" data-lab="lados" hidden></p>
           <p class="lab-nota lab-por-chegar" data-lab="por-chegar-linha"><span class="lab-rotulo">${x.noite.por_chegar}</span> <span data-lab="por-chegar"></span></p>
           <p class="lab-nota" data-lab="rampa" hidden></p>
           <p class="lab-nota lab-proposta" data-lab="propostas" hidden></p>`,

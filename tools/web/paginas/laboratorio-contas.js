@@ -112,7 +112,7 @@
 
   /** RotPick.choose e RotPick.take, até a massa não pagar mais nada: o orçamento da noite. */
   function invocar(total, dia, criaturas, n, o) {
-    var resta = total, veio = {}, fila = [];
+    var resta = total, veio = {}, fila = [], ordem = [];
     for (;;) {
       var escolhida = null;
       for (var i = 0; i < criaturas.length && !escolhida; i++) {
@@ -125,9 +125,31 @@
       if (!escolhida) break;
       resta -= escolhida.massa;
       veio[escolhida.id] = (veio[escolhida.id] || 0) + 1;
+      ordem.push(escolhida.id);
     }
     for (var j = 0; j < criaturas.length; j++) if (veio[criaturas[j].id]) fila.push({ id: criaturas[j].id, n: veio[criaturas[j].id] });
-    return { fila: fila, sobra: resta };
+    return { fila: fila, sobra: resta, ordem: ordem };
+  }
+
+  /** RotSystem.tick: uma invocação por intervalo, sorteado em summon_interval, enquanto ela
+      está no campo. Com os intervalos todos longos cabem `poucas`; com todos curtos, `muitas`. */
+  function invocacoes(segundos, cadencia) {
+    return { poucas: Math.floor(segundos / cadencia.ate), muitas: Math.floor(segundos / cadencia.de) };
+  }
+
+  /** As que chegam a vir: as primeiras da ordem do RotPick, por espécie — `de` com os intervalos
+      longos, até `ate` com os curtos. `fora` é o resto da ordem, que fica por gastar à alvorada. */
+  function chegam(r, t) {
+    var conta = function (k) {
+      var v = {};
+      r.ordem.slice(0, k).forEach(function (id) { v[id] = (v[id] || 0) + 1; });
+      return v;
+    };
+    var certas = conta(t.poucas), talvez = conta(t.muitas);
+    return {
+      fila: r.fila.filter(function (x) { return talvez[x.id]; }).map(function (x) { return { id: x.id, de: certas[x.id] || 0, ate: talvez[x.id] }; }),
+      fora: r.ordem.slice(t.muitas),
+    };
   }
 
   // ── §07 · o tempo até matar ─────────────────────────────────────────────
@@ -150,6 +172,6 @@
   raiz.EmpireContas = {
     producao: producao, comercio: comercio, manutencao: manutencao, custoNoite: custoNoite, balanco: balanco,
     asfixia: asfixia, perfilGanancia: perfilGanancia, massaCalendario: massaCalendario, ritmo: ritmo,
-    massa: massa, invocar: invocar, tempoAteMatar: tempoAteMatar, custoAte: custoAte,
+    massa: massa, invocar: invocar, invocacoes: invocacoes, chegam: chegam, tempoAteMatar: tempoAteMatar, custoAte: custoAte,
   };
 })(typeof window !== "undefined" ? window : this);

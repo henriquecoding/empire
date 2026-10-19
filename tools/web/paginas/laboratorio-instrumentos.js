@@ -17,8 +17,12 @@
       var n = L.noite, prop = !!s.prop;
       var m = C.massa({ dia: s.dia, fortalezas: s.fort, amargueiros: s.arv, nomeados: s.nom, recusas: s.rec }, n, prop);
       var r = C.invocar(m.total, s.dia, L.criaturas, n, { subsolo: !!s.sub, propostas: prop });
-      var veio = {};
-      r.fila.forEach(function (x) { veio[x.id] = x.n; });
+      // Ela invoca uma de cada vez (§51): só a cabeça da ordem chega antes da alvorada.
+      var t = C.invocacoes(n.duracao, n.cadencia), vem = C.chegam(r, t);
+      var massaDe = function (id) { return L.criaturas.find(function (x) { return x.id === id; }).massa; };
+      var veio = {}, quantas = {};
+      vem.fila.forEach(function (x) { veio[x.id] = x.ate; quantas[x.id] = x.de === x.ate ? String(x.ate) : x.de + "–" + x.ate; });
+      var semTempo = vem.fora.reduce(function (soma, id) { return soma + massaDe(id); }, 0);
       texto(p, "massa", num.format(m.total));
       [m.calendario, m.fortalezas, m.arvores, m.recusas].forEach(function (v, i) { texto(p, "t" + i, num.format(v)); });
       var ritmo = slot(p, "ritmo");
@@ -27,7 +31,7 @@
       p.querySelectorAll("[data-o]").forEach(function (i) {
         var k = i.dataset.o;
         var c = L.criaturas.find(function (x) { return x.id === k; });
-        var peso = k === "sobra" ? r.sobra : (veio[k] || 0) * c.massa;
+        var peso = k === "sobra" ? r.sobra + semTempo : (veio[k] || 0) * c.massa;
         i.hidden = peso < 0.05;
         i.style.flexGrow = String(peso);
       });
@@ -36,13 +40,18 @@
         var k = li.dataset.besta, q = veio[k] || 0;
         li.hidden = !q;
         if (q) {
-          li.querySelector('[data-lab="n"]').textContent = "× " + q;
-          fila.push(fmt(V.fila_item, { n: q, nome: nome(L.criaturas.find(function (x) { return x.id === k; })) }));
+          li.querySelector('[data-lab="n"]').textContent = "× " + quantas[k];
+          fila.push(fmt(V.fila_item, { n: quantas[k], nome: nome(L.criaturas.find(function (x) { return x.id === k; })) }));
         }
       });
       mostrar(slot(p, "vazia"), !fila.length);
       var sobra = texto(p, "sobra", fmt(V.sobra, { sobra: num.format(r.sobra) }));
       mostrar(sobra, r.sobra >= 0.05);
+      var tempo = fmt(V.tempo, { de: n.cadencia.de, ate: n.cadencia.ate, s: n.duracao, poucas: t.poucas, muitas: t.muitas });
+      if (vem.fora.length) tempo += " " + fmt(V.tempo_fora, { fora: vem.fora.length });
+      else if (r.ordem.length > t.poucas) tempo += " " + V.tempo_talvez;
+      texto(p, "tempo", tempo);
+      mostrar(texto(p, "lados", fmt(V.dois_lados, { dia: n.doisLados })), s.dia >= n.doisLados);
       var faltam = L.criaturas.filter(function (c) { return c.desde > s.dia || (c.subsolo && !s.sub); }).reverse().map(function (c) {
         return c.desde > s.dia ? nome(c) + " (" + fmt(V.desde_dia, { dia: c.desde }) + ")" : nome(c) + " (" + V.subsolo_fechado + ")";
       });

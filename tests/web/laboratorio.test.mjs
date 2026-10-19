@@ -101,6 +101,50 @@ test('a escolha é a do §51: a mais cara que cabe, e a noite 1 traz três Raste
   assert.ok(alados(4) <= n.propostas.estreia.valor);
 });
 
+test('a noite tem tempo: uma invocação por intervalo, do crepúsculo à alvorada (RotSystem.tick)', () => {
+  const n = L.noite;
+  const [rot] = csv(readFileSync('data/source/rot.csv', 'utf8'));
+  const [relogio] = csv(readFileSync('data/source/clock.csv', 'utf8'));
+  assert.deepEqual([n.cadencia.de, n.cadencia.ate], rot.summon_interval.split('|').map(Number));
+  assert.equal(n.duracao, Number(relogio.dusk) + Number(relogio.night), 'nasce ao crepúsculo e recua à alvorada (NightWatch)');
+  // O RotSystem tick a tick: arma o intervalo quando está por armar, desconta-o,
+  // e invoca quando chega a zero. Em ticks inteiros, para não somar erros de vírgula.
+  const hz = Number(relogio.tick_hz);
+  const vezes = (intervalo) => {
+    let falta = -1, n2 = 0;
+    for (let tick = 1; tick <= Math.round(n.duracao * hz); tick++) {
+      if (falta < 0) falta = Math.round(intervalo * hz);
+      if (--falta <= 0) { n2++; falta = -1; }
+    }
+    return n2;
+  };
+  const t = C.invocacoes(n.duracao, n.cadencia);
+  assert.equal(JSON.stringify(t), JSON.stringify({ poucas: vezes(n.cadencia.ate), muitas: vezes(n.cadencia.de) }));
+
+  // As que chegam são as primeiras da ordem do RotPick, que vai da mais cara para a mais barata.
+  const massa = (id) => L.criaturas.find((c) => c.id === id).massa;
+  for (const propostas of [false, true]) {
+    for (let dia = 1; dia <= L.economia.dias; dia++) {
+      const m = C.massa({ dia, fortalezas: n.fortalezasMax, amargueiros: 0, nomeados: n.nomeadosMax, recusas: n.recusasMax }, n, propostas).total;
+      const r = C.invocar(m, dia, L.criaturas, n, { subsolo: true, propostas });
+      assert.equal(r.ordem.length, r.fila.reduce((s, x) => s + x.n, 0), `dia ${dia}: a ordem e a fila contam o mesmo`);
+      assert.ok(r.ordem.every((id, i) => !i || massa(id) <= massa(r.ordem[i - 1])), `dia ${dia}: a ordem não é a da mais cara`);
+      const vem = C.chegam(r, t);
+      const soma = (k) => vem.fila.reduce((s, x) => s + x[k], 0);
+      assert.equal(soma('ate'), Math.min(r.ordem.length, t.muitas), `dia ${dia}: com os intervalos curtos`);
+      assert.equal(soma('de'), Math.min(r.ordem.length, t.poucas), `dia ${dia}: com os intervalos longos`);
+      assert.equal(vem.fora.length, Math.max(0, r.ordem.length - t.muitas), `dia ${dia}: as que nunca chegam a vir`);
+    }
+  }
+});
+
+test('as réguas da noite vão até onde os dados deixam', () => {
+  const eco = csv(readFileSync('data/source/economy.csv', 'utf8'));
+  assert.equal(L.noite.nomeadosMax, Number(eco.find((r) => r.key === 'named_cap').value), 'nove nomes ao mesmo tempo (§76)');
+  const fortalezas = csv(readFileSync('data/source/segments.csv', 'utf8')).filter((s) => s.kind === 'fortress');
+  assert.equal(L.noite.fortalezasMax, fortalezas.length, 'uma fortaleza por povo');
+});
+
 test('a escada do muro paga cada degrau inteiro: 6 · 11 · 20 · 36 · 65', () => {
   assert.deepEqual(L.muros.map((w) => w.custo), [6, 11, 20, 36, 65]);
   assert.equal(C.custoAte(L.muros, 3), 37);

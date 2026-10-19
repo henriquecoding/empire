@@ -87,6 +87,8 @@
 .lab-escolha input:checked+span{border-color:var(--accao);box-shadow:inset 4px 0 0 var(--accao);background:color-mix(in srgb,var(--accao) 8%,var(--papel))}
 .lab-escolha input:focus-visible+span{outline:2px solid var(--destaque);outline-offset:3px}
 .lab-escolhas:disabled .lab-escolha{cursor:not-allowed}
+/* Desligada, a escolha não conta para a conta — e por isso não fica marcada (a tropa sem posto). */
+.lab-escolhas:disabled .lab-escolha input:checked+span{border-color:var(--linha-forte);box-shadow:none;background:var(--papel)}
 
 /* Os cenários: um toque e o instrumento fica num estado que o dossiê conta. */
 .lab-cenarios{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 26px;padding:14px 0;border-block:1px dashed var(--linha)}
@@ -237,4 +239,5 @@
 @media (forced-colors:active){
   .lab-orcamento i,.ttk-barra i,.g-ponto,.lab-desenho-muro rect{forced-color-adjust:none}
   .lab-escolha input:checked+span{outline:2px solid Highlight}
+  .lab-escolhas:disabled .lab-escolha input:checked+span{outline:0}
 }

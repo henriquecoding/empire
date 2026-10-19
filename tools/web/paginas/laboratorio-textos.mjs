@@ -20,7 +20,7 @@ export const LABORATORIO = {
     experimenta: "Experimenta",
     omissao: "Repor",
     cenarios: {
-      noite: { primeira: "A primeira noite", dois_lados: "Chega por dois lados", estreia: "Estreia: {nome}" },
+      noite: { primeira: "A primeira noite", dois_lados: "Pode vir por dois lados", estreia: "Estreia: {nome}" },
       economia: {
         balanced: "O equilíbrio do §06", two_routes: "Com {rotas} rotas de comércio", everything_max: "Tudo no máximo",
         greed_20: "Ganância {ganancia}", greed_80: "Ganância {ganancia}",
@@ -106,6 +106,10 @@ export const LABORATORIO = {
       fila_vazia: "Esta noite a massa não paga ninguém.",
       fila_item: "{n} × {nome}",
       sobra: "Sobram {sobra} de massa, que já não pagam nada.",
+      tempo: "Ela levanta uma de cada vez, a cada {de} a {ate} s, do crepúsculo à alvorada ({s} s com o dia por omissão): cabem {poucas} a {muitas}.",
+      tempo_talvez: "Se os intervalos forem longos, as mais baratas do fim não chegam a vir.",
+      tempo_fora: "A massa pagava mais {fora}, que nunca chegam a vir: à alvorada ela recua com o resto por gastar.",
+      dois_lados: "A partir da noite {dia}, cada noite sorteia um lado ou dois. Com dois, cada mancha leva metade da massa, escolhe por si e tem o seu ritmo; aqui conta-se um lado. A probabilidade de vir pelos dois ainda é proposta.",
       desde_dia: "dia {dia}",
       subsolo_fechado: "só com o subsolo aberto",
       rampa: "As primeiras noites sobem em rampa: a fórmula só manda por inteiro a partir da noite {rampa}.",
@@ -147,7 +151,7 @@ export const LABORATORIO = {
     experimenta: "Try",
     omissao: "Reset",
     cenarios: {
-      noite: { primeira: "The first night", dois_lados: "It comes from both sides", estreia: "Debut: {nome}" },
+      noite: { primeira: "The first night", dois_lados: "It may come from both sides", estreia: "Debut: {nome}" },
       economia: {
         balanced: "The §06 balance", two_routes: "With {rotas} trade routes", everything_max: "Everything maxed out",
         greed_20: "Greed {ganancia}", greed_80: "Greed {ganancia}",
@@ -233,6 +237,10 @@ export const LABORATORIO = {
       fila_vazia: "Tonight the mass pays for no one.",
       fila_item: "{n} × {nome}",
       sobra: "{sobra} mass is left over, and it no longer pays for anything.",
+      tempo: "It raises one at a time, every {de} to {ate} s, from dusk to dawn ({s} s at the default day length): room for {poucas} to {muitas}.",
+      tempo_talvez: "If the intervals run long, the cheapest ones at the end never make it.",
+      tempo_fora: "The mass would pay for {fora} more, which never come: at dawn it retreats with the rest unspent.",
+      dois_lados: "From night {dia}, each night draws one side or two. With two, each stain takes half the mass, picks for itself and keeps its own pace; this counts one side. The chance of both is still a proposal.",
       desde_dia: "day {dia}",
       subsolo_fechado: "only with the underground open",
       rampa: "The first nights ramp up: the formula only applies in full from night {rampa}.",

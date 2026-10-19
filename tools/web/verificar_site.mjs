@@ -616,6 +616,21 @@ async function main() {
     const fila = () => p.evaluate(() => [...document.querySelectorAll("#lab-p-noite .lab-besta:not([hidden])")].map((li) => `${li.dataset.besta}${li.querySelector('[data-lab="n"]').textContent.replace(/\D/g, "")}`).join());
     await mudar("#lab-noite-dia", 1);
     resultado(`a noite 1 tem ${L.noite.abertura} de massa e traz três Rastejantes (§25)`, (await ler("massa")) === String(L.noite.abertura) && (await fila()) === "crawler3", `${await ler("massa")} · ${await fila()}`);
+    const estreia = L.criaturas[0];
+    const chip = new URLSearchParams(await p.getAttribute("#lab-p-noite .lab-cenario >> nth=2", "data-cenario"));
+    resultado(`o cenário da estreia (${estreia.id}) só abre o subsolo se ela vier por baixo`, chip.get("sub") === (estreia.subsolo ? "1" : "0"), chip.toString());
+    // Tudo no máximo, cedo: a massa paga mais do que a noite tem tempo de invocar (§51).
+    const regua = ["fort", "arv", "nom", "rec"];
+    await mudar("#lab-noite-dia", 3);
+    for (const k of regua) await mudar(`#lab-noite-${k}`, await p.getAttribute(`#lab-noite-${k}`, "max"));
+    const t = C.invocacoes(L.noite.duracao, L.noite.cadencia);
+    const tetos = await p.evaluate(() => [...document.querySelectorAll("#lab-p-noite .lab-besta:not([hidden]) [data-lab=n]")].map((b) => Math.max(...b.textContent.match(/\d+/g).map(Number))));
+    const tempo = await ler("tempo");
+    resultado(`a noite tem tempo: chegam no máximo ${t.muitas} (uma a cada ${L.noite.cadencia.de}–${L.noite.cadencia.ate} s, do crepúsculo à alvorada)`,
+      tetos.reduce((a, x) => a + x, 0) === t.muitas && tempo.includes(String(t.muitas)), `${tetos.join("+")} · ${tempo}`);
+    resultado(`a partir da noite ${L.noite.doisLados} diz que pode vir por dois lados, e que aqui conta um`,
+      !(await p.isVisible('#lab-p-noite [data-lab="lados"]')) && (await mudar("#lab-noite-dia", L.noite.doisLados), await p.isVisible('#lab-p-noite [data-lab="lados"]')));
+    for (const k of regua) await mudar(`#lab-noite-${k}`, 0);
     await mudar("#lab-noite-dia", 20);
     await p.click('label[for="lab-noite-prop"]');
     const m20 = C.massa({ dia: 20, fortalezas: 0, amargueiros: 0, nomeados: 0, recusas: 0 }, L.noite, true).total;
@@ -635,6 +650,12 @@ async function main() {
       depois.includes(String(comRotas)) && (await p.getAttribute(`#lab-p-economia .lab-cenario >> nth=${i}`, "class")).includes("igual"), depois);
     await p.click("#lab-partilhar");
     resultado("mexer e partilhar guarda a experiência no endereço", (await p.evaluate(() => location.hash)).startsWith("#laboratorio?f=economia&fontes="), await p.evaluate(() => location.hash));
+    await p.click("#lab-t-combate");
+    await p.click('#lab-p-combate label.lab-escolha:has(input[value="spearman"])');
+    await p.click("#lab-partilhar");
+    const semPosto = await p.evaluate(() => location.hash);
+    resultado("uma tropa sem posto desliga o «onde», e a ligação não o leva", semPosto.includes("tropa=spearman") && !semPosto.includes("onde=")
+      && (await p.evaluate(() => document.querySelector("#lab-p-combate .lab-onde").disabled)), semPosto);
     resultado("o laboratório não tem erros de JavaScript", erros.length === 0, erros.slice(0, 2).join(" | "));
     await ctx.close();
 
