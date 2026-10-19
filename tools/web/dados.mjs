@@ -137,7 +137,8 @@ function podridao(raiz) {
   return {
     violeta: `#${vr}${vg}${vb}`.toUpperCase(),
     velocidade: { base: n("speed_base"), porDia: n("speed_per_day") },
-    massa: { base: n("mass_base"), porDia: n("mass_per_day") },
+    // As primeiras noites sobem em rampa (Q-017, Q-068): RotProfile.calendar_mass.
+    massa: { base: n("mass_base"), porDia: n("mass_per_day"), abertura: n("opening_mass"), rampa: n("ramp_nights") },
     doisLados: n("two_sided_from_day"),
     raio: { base: n("lantern_radius_base"), porDia: n("lantern_radius_per_day"), teto: n("lantern_radius_max") },
     paragens: { nucleo: r.lantern_tint, meio: r.lantern_tint_mid, bordo: r.lantern_tint_edge },
@@ -301,6 +302,155 @@ function monarcas(raiz) {
   return { lista, titulo: texto("MONARCH_CHOOSE_TITLE"), intro: texto("MONARCH_CHOOSE_INTRO"), regra: texto("MONARCH_CHOOSE_RULE") };
 }
 
+// ── O laboratório (PUB-06, ADR 0085) ─────────────────────────────────────
+
+// Os quatro instrumentos do laboratório fazem as contas do jogo no browser, e
+// cada número que lá entra vem daqui: a curva e a manutenção do economy.csv
+// (§06), a massa e a regra de escolha do rot.csv e do creatures.csv (§74, §51),
+// o tempo até matar do units.csv (§07) e a escada do walls.csv (§10). Os nomes
+// são os do jogo, do strings.csv. O que está em `_proposed` vem separado, com
+// o nome do campo, e a página nunca o mostra como decidido (regra 10).
+const propostos = (linha) => new Set(String(linha._proposed || "").split("|").filter(Boolean));
+
+function chaveValor(raiz, f) {
+  const linhas = lerCsv(raiz, f);
+  const valor = (k) => {
+    const l = linhas.find((x) => x.key === k);
+    if (!l) falha(`${f}: falta a chave ${k}`);
+    if (l._proposed) falha(`${f}: ${k} está em _proposed — o laboratório só publica o decidido`);
+    return l.value;
+  };
+  return { valor, numero: (k) => { const x = Number(valor(k)); if (!Number.isFinite(x)) falha(`${f}: ${k} não é um número`); return x; } };
+}
+
+/** Uma constante de um script do jogo (`const NOME := 5`), como o SEGMENTO_DE_PARTIDA. */
+function constanteGd(raiz, f, nome) {
+  const m = readFileSync(join(raiz, f), "utf8").match(new RegExp(`^const ${nome} := (-?[0-9.]+)`, "m"));
+  if (!m) falha(`${f}: não há const ${nome} := <número>`);
+  return Number(m[1]);
+}
+
+/** Os deslizadores do simulador do §06, tal como o dossiê os desenha. */
+function deslizadoresDoDossie(raiz) {
+  const html = readFileSync(join(raiz, "docs/dossie.html"), "utf8");
+  return Object.fromEntries(["fontes", "rotas", "tropas", "ganancia"].map((k) => {
+    const m = html.match(new RegExp(`<input type="range" id="f-${k}" min="(\\d+)" max="(\\d+)" value="(\\d+)"`));
+    if (!m) falha(`docs/dossie.html: o simulador do §06 não tem o deslizador f-${k}`);
+    return [k, { min: Number(m[1]), max: Number(m[2]), valor: Number(m[3]) }];
+  }));
+}
+
+/** A folha animada de uma criatura (ADR 0083): o ficheiro e os quadros do repouso. */
+function folhaAnimada(raiz, id) {
+  const m = JSON.parse(readFileSync(join(raiz, "art/export/animated/manifest.json"), "utf8"));
+  const a = m.assets[`beast_${id}`];
+  if (!a) return null;
+  const tag = a.tags.idle;
+  if (!tag) falha(`art/export/animated/manifest.json: beast_${id} não tem a acção idle`);
+  const quadros = a.frame_origins.slice(tag.from_frame, tag.to_frame + 1);
+  // O site serve só a linha do repouso (tools/web/bestas.mjs), e corta-a por cima.
+  const linha = quadros.every((q, i) => q[1] === 0 && q[0] === i * a.size[0]);
+  if (!linha) falha(`art/export/animated/manifest.json: o repouso de beast_${id} não é a primeira linha da folha, a começar à esquerda`);
+  return {
+    origem: `art/export/animated/beast_${id}.png`, img: `/img/bestas/${id}.png`, lado: a.size[0], largura: a.size[0] * quadros.length, quadros: quadros.length,
+    ms: a.durations_ms.slice(tag.from_frame, tag.to_frame + 1).reduce((s, x) => s + x, 0),
+  };
+}
+
+function laboratorio(raiz) {
+  const falas = Object.fromEntries(lerCsv(raiz, "data/i18n/strings.csv").map((l) => [l.keys, l]));
+  const nome = (k) => {
+    const l = falas[k];
+    if (!l) falha(`strings.csv: falta ${k}`);
+    return { pt: l.pt_PT, en: l.en };
+  };
+  const eco = chaveValor(raiz, "data/source/economy.csv");
+  const [alvoMin, alvoMax] = eco.valor("suffocation_target").split("|").map(Number);
+  const economia = {
+    fixo: eco.numero("curve_income_flat"), porFonte: eco.numero("curve_income_per_source"), crescimento: eco.numero("income_growth"),
+    porRota: eco.numero("trade_route_income"), crescimentoComercio: eco.numero("trade_growth"), rede: eco.numero("trade_network_bonus"),
+    noiteBase: eco.numero("night_cost_base"), noiteCrescimento: eco.numero("night_cost_growth"),
+    gratis: eco.numero("upkeep_free_troops"), limite1: eco.numero("upkeep_tier1_limit"),
+    taxa1: eco.numero("upkeep_tier1_rate"), taxa2: eco.numero("upkeep_tier2_rate"),
+    alvo: [alvoMin, alvoMax], dias: 30, deslizadores: deslizadoresDoDossie(raiz),
+    perfis: lerCsv(raiz, "data/source/greed_profiles.csv").map((g) => {
+      const [de, ate] = g.greed_range.split("|").map(Number);
+      return { id: g.id, nome: nome(g.display_key), de, ate };
+    }),
+  };
+
+  const [rot] = lerCsv(raiz, "data/source/rot.csv");
+  const rp = propostos(rot);
+  const num = (k) => {
+    const x = Number(rot[k]);
+    if (!Number.isFinite(x)) falha(`rot.csv: ${k} não é um número («${rot[k]}»)`);
+    return x;
+  };
+  const decidido = (k) => {
+    if (rp.has(k)) falha(`rot.csv: ${k} está em _proposed e o laboratório trata-o como decidido`);
+    return num(k);
+  };
+  const proposta = (k) => ({ campo: k, valor: rot[k] === "true" ? 1 : rot[k] === "false" ? 0 : num(k), proposto: rp.has(k) });
+  const [clock] = lerCsv(raiz, "data/source/clock.csv");
+  const noite = {
+    base: decidido("mass_base"), porDia: decidido("mass_per_day"), porFortaleza: decidido("mass_per_fortress"),
+    abertura: decidido("opening_mass"), rampa: decidido("ramp_nights"),
+    porAmargueiro: decidido("mass_per_amargueiro"), porNomeado: decidido("mass_per_named_amargueiro"),
+    porRecusa: decidido("refusal_mass"), tetoRecusas: decidido("refusal_cap"), janela: decidido("refusal_window_days"),
+    recusasMax: constanteGd(raiz, "src/sim/systems/rot_system.gd", "RECUSAS_MAX"),
+    regra: rot.pick_rule,
+    propostas: {
+      crescimento: proposta("mass_growth"), desde: proposta("growth_from_night"),
+      picoCada: proposta("peak_every"), primeiroPico: proposta("first_peak_night"), pico: proposta("peak_mass_mult"), calma: proposta("calm_mass_mult"),
+      estreia: proposta("debut_step"), rampaEscrita: proposta("ramp_written"),
+    },
+  };
+  if (noite.regra !== "most_expensive_affordable") falha(`rot.csv: a regra de escolha é ${noite.regra}, e o laboratório só sabe a do §51`);
+
+  const criaturas = lerCsv(raiz, "data/source/creatures.csv").filter((c) => Number(c.mass_cost) > 0).map((c) => {
+    const p = propostos(c);
+    for (const k of ["mass_cost", "min_day", "max_health", "damage", "attack_interval"]) if (p.has(k)) falha(`creatures.csv: ${c.id}.${k} está em _proposed`);
+    return {
+      id: c.id, nome: nome(c.display_key), massa: Number(c.mass_cost), desde: Number(c.min_day), vida: Number(c.max_health),
+      dano: Number(c.damage), intervalo: Number(c.attack_interval), subsolo: c.band === "UNDERGROUND", soMuros: c.target_priority === "walls_only",
+      folha: folhaAnimada(raiz, c.id),
+    };
+  }).sort((a, b) => b.massa - a.massa);
+  if (!criaturas.length) falha("creatures.csv: não há criaturas com massa");
+  if (!criaturas.some((c) => c.soMuros)) falha("creatures.csv: nenhuma criatura só ataca muros (target_priority walls_only) — o instrumento do muro mede-se contra ela");
+
+  // §07: as tropas que se recrutam e atacam, com dano, intervalo e vida decididos.
+  const tropas = lerCsv(raiz, "data/source/units.csv").filter((u) => Number(u.damage) > 0 && Number(u.recruit_cost) > 0).map((u) => {
+    const p = propostos(u);
+    if (["damage", "attack_interval", "max_health"].some((k) => p.has(k))) return null;
+    return {
+      id: u.id, nome: nome(u.display_key), dano: Number(u.damage), intervalo: Number(u.attack_interval), vida: Number(u.max_health),
+      custo: p.has("recruit_cost") ? null : Number(u.recruit_cost), alcance: Number(u.range_px),
+      precisao: Number(u.accuracy_open || 1), precisaoProposta: p.has("accuracy_open"), posto: u.tags.split("|").includes("ranged"),
+    };
+  }).filter(Boolean);
+  if (!tropas.length) falha("units.csv: nenhuma tropa com dano, intervalo e vida decididos");
+
+  const estagios = lerCsv(raiz, "data/source/realm_stages.csv");
+  const muros = lerCsv(raiz, "data/source/walls.csv").sort((a, b) => Number(a.level) - Number(b.level)).map((w) => {
+    const p = propostos(w);
+    const abre = estagios.find((s) => s.unlocks.split("|").includes(w.id));
+    const povo = w.requires_conquest ? lerCsv(raiz, "data/source/peoples.csv").find((x) => x.id === w.requires_conquest) : null;
+    return {
+      id: w.id, nome: nome(w.display_key), nivel: Number(w.level), custo: Number(w.cost), contacto: Number(w.contact_slots),
+      vidaA: p.has("max_health_a") ? null : Number(w.max_health_a), vidaB: p.has("max_health_b") ? null : Number(w.max_health_b),
+      postosA: p.has("guard_posts_a") ? null : Number(w.guard_posts_a), postosB: p.has("guard_posts_b") ? null : Number(w.guard_posts_b),
+      unico: w.unique_per_kingdom === "true", conquista: povo ? nome(povo.display_key) : null, estagio: abre ? nome(abre.display_key) : null,
+    };
+  });
+  if (muros.some((w) => !w.custo)) falha("walls.csv: um nível sem custo");
+
+  return {
+    economia, noite, criaturas, tropas, muros,
+    torre: eco.numero("tower_accuracy"), noiteSegundos: Number(clock.night),
+  };
+}
+
 // ── As últimas decisões (docs/adr/) ──────────────────────────────────────
 
 // O título e a data de cada ADR, as mais recentes primeiro. É o diário do
@@ -398,6 +548,7 @@ export function ler(raiz) {
     povos: povos(raiz),
     roteiro: roteiro(raiz),
     monarcas: monarcas(raiz),
+    laboratorio: laboratorio(raiz),
     decisoes: decisoes(raiz),
     tickets: tickets(raiz),
     capturas: JSON.parse(readFileSync(capturas, "utf8")),

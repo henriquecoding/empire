@@ -1,0 +1,222 @@
+/* tools/web/paginas/laboratorio.css — o laboratório de mecânicas (PUB-06, ADR 0085).
+
+   Uma bancada com quatro separadores. Os tokens são os do estilo.css, nos dois
+   temas; as cores que vêm dos dados (o violeta da Podridão, o fogo) chegam pela
+   folha gerada. Os alvos têm 44 px, o texto nunca desce dos 12 px, e a cor nunca
+   é a única pista: cada linha do gráfico tem nome na legenda, e o que é
+   proposta diz-se por extenso, com um traço.
+
+   Sem JavaScript, a bancada mostra cada instrumento numa frase, com o caso por
+   omissão, e esconde os controlos que não fariam nada. */
+
+/* O roxo que se lê: o violeta da mancha no tema claro e o meio da candeia no
+   escuro — os dois acima de 4,5:1 contra o papel. O bordo do Lume (#8B5CF6) só
+   dá 3,4:1 no claro: serve uma linha, não uma palavra. */
+.laboratorio{--lab-roxo:var(--violeta,#59386b)}
+:root[data-theme="dark"] .laboratorio{--lab-roxo:var(--meio,#c084fc)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .laboratorio{--lab-roxo:var(--meio,#c084fc)}}
+
+/* clip, e não hidden: hidden faz da bancada um contentor de rolagem, e os controlos e o placar deixavam de ficar presos. */
+.lab{background:var(--papel-2);border:1px solid var(--linha-2);border-radius:var(--raio);box-shadow:var(--sombra-leve);overflow:hidden;overflow:clip}
+.lab-separadores{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--linha-2);border-bottom:1px solid var(--linha-2)}
+@media (min-width:860px){.lab-separadores{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.lab-pronto .lab-separadores{display:grid}
+.lab-separador{display:flex;align-items:center;gap:10px;min-height:60px;padding:10px 16px;text-align:left;cursor:pointer;border:0;border-radius:0;
+  background:var(--papel-3);color:var(--tinta-2);font-family:var(--f-ui);font-size:13px;font-weight:600;letter-spacing:.02em;line-height:1.3;
+  box-shadow:inset 0 -3px 0 transparent;transition:background .2s var(--ease),color .2s var(--ease),box-shadow .2s var(--ease)}
+.lab-separador:hover{color:var(--tinta);background:color-mix(in srgb,var(--papel-3) 60%,var(--papel-2))}
+.lab-separador[aria-selected="true"]{background:var(--papel-2);color:var(--tinta);box-shadow:inset 0 -3px 0 var(--destaque)}
+.lab-separador:focus-visible{outline-offset:-4px}
+.lab-sep-n{font-family:var(--f-titulo);font-variation-settings:'opsz' 36;font-weight:500;font-size:20px;color:var(--baixo);flex:none}
+.lab-separador[aria-selected="true"] .lab-sep-n{color:var(--destaque)}
+
+.lab-painel{padding:26px 20px 28px}
+@media (min-width:700px){.lab-painel{padding:34px 34px 36px}}
+.lab-pronto .lab-painel:not(.ativo){display:none}
+.lab-painel+.lab-painel{border-top:1px solid var(--linha-2)}
+.lab-pronto .lab-titulo{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lab-titulo{font-size:24px;margin:0 0 8px}
+.lab-lead{margin:0 0 26px;color:var(--tinta-2);max-width:72ch;font-size:17px}
+.lab-sem-js{font-family:var(--f-mono);font-size:14px;color:var(--tinta-2);border-left:3px solid var(--destaque);padding-left:12px;margin:0}
+.lab-sem-js-geral{margin:20px 20px 0;color:var(--baixo)}
+.lab-pronto .lab-sem-js{display:none}
+.laboratorio:not(.lab-pronto) .lab-grelha,.laboratorio:not(.lab-pronto) .lab-partilhar{display:none}
+
+.lab-grelha{display:grid;grid-template-columns:1fr;gap:30px}
+@media (min-width:1000px){.lab-grelha{grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:44px;align-items:start}}
+
+/* Num ecrã estreito os controlos vêm antes do resultado: o placar fica preso por
+   baixo do topo, e diz a resposta enquanto o dedo ainda está no deslizador. */
+.lab-placar{display:none}
+@media (max-width:999px){
+  .lab-pronto .lab-placar{display:block;position:sticky;top:calc(var(--topo) + env(safe-area-inset-top));z-index:2;margin:0 -20px 18px;padding:10px 20px;
+    background:color-mix(in srgb,var(--papel-2) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border-block:1px solid var(--linha-2);font-family:var(--f-ui);font-size:13px;font-weight:500;line-height:1.4;color:var(--tinta)}
+}
+@media (min-width:700px) and (max-width:999px){.lab-pronto .lab-placar{margin-inline:-34px;padding-inline:34px}}
+
+/* ── os controlos ──────────────────────────────────────────────────────── */
+.lab-controlos{display:grid;gap:14px;align-content:start}
+@media (min-width:1000px){.lab-controlos{position:sticky;top:calc(var(--topo) + 24px)}}
+.lab-regua{display:grid;gap:2px}
+.lab-regua label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--f-ui);font-size:12px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-2)}
+.lab-regua output{font-family:var(--f-titulo);font-variation-settings:'opsz' 36;font-weight:560;font-size:24px;letter-spacing:0;text-transform:none;
+  color:var(--tinta);font-variant-numeric:tabular-nums;line-height:1}
+.lab-regua input{width:100%;height:40px;margin:0;accent-color:var(--accao);cursor:pointer}
+.lab-caixa{position:relative;display:flex;align-items:center;min-height:44px;cursor:pointer;font-size:16px;line-height:1.35;color:var(--tinta-2)}
+/* A caixa nativa tem 20 px; o alvo é a etiqueta inteira, e a caixa desenha-se nela. */
+.lab-caixa input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.lab-caixa span{display:flex;align-items:center;gap:12px}
+.lab-caixa span::before{content:"";flex:none;width:22px;height:22px;border:2px solid var(--linha-forte);border-radius:4px;background:var(--papel);
+  display:grid;place-items:center;font:700 15px/1 var(--f-ui);color:var(--accao-tinta)}
+.lab-caixa input:checked+span::before{content:"✓";background:var(--accao);border-color:var(--accao)}
+.lab-caixa input:focus-visible+span::before{outline:2px solid var(--destaque);outline-offset:3px}
+.lab-caixa:hover span::before{border-color:var(--tinta-2)}
+.lab-escolhas{border:0;margin:0;padding:0;display:grid;gap:8px;min-width:0}
+.lab-escolhas legend{font-family:var(--f-ui);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-2);margin-bottom:8px;padding:0}
+.lab-tropas,.lab-niveis{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.lab-onde,.lab-caminhos{grid-template-columns:repeat(2,minmax(0,1fr))}
+.lab-escolhas:disabled{opacity:.45}
+.lab-escolha{position:relative;display:block;cursor:pointer}
+.lab-escolha input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.lab-escolha span{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:52px;padding:8px 12px;border:1px solid var(--linha-forte);
+  border-radius:var(--raio-p);background:var(--papel);color:var(--tinta);font-size:16px;line-height:1.25;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.lab-escolha small{font-family:var(--f-mono);font-size:12px;color:var(--baixo)}
+.lab-escolha:hover span{border-color:var(--tinta-2)}
+.lab-escolha input:checked+span{border-color:var(--accao);box-shadow:inset 4px 0 0 var(--accao);background:color-mix(in srgb,var(--accao) 8%,var(--papel))}
+.lab-escolha input:focus-visible+span{outline:2px solid var(--destaque);outline-offset:3px}
+.lab-escolhas:disabled .lab-escolha{cursor:not-allowed}
+
+/* ── o que sai ─────────────────────────────────────────────────────────── */
+.lab-saida{min-width:0;display:grid;gap:14px;align-content:start}
+.lab-rotulo{font-family:var(--f-ui);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--baixo);margin:8px 0 0}
+.lab-mostrador .lab-rotulo{margin:0}
+.lab-grande{margin:2px 0 0;font-family:var(--f-titulo);font-variation-settings:'opsz' 72;font-weight:560;font-size:clamp(40px,6vw,64px);line-height:1;
+  color:var(--tinta);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.lab-asfixia{font-size:clamp(30px,4vw,44px);display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.lab-selo{font-family:var(--f-ui);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;
+  border:1px solid currentColor;color:var(--folha)}
+.lab-selo[data-lugar="cedo"]{color:var(--brasa)}
+.lab-selo[data-lugar="cedo"]::before{content:"▲ "}
+.lab-selo[data-lugar="tarde"]{color:var(--petroleo)}
+.lab-selo[data-lugar="tarde"]::before{content:"▼ "}
+.lab-selo[data-lugar="no_alvo"]::before{content:"✓ "}
+.lab-nota{margin:0;color:var(--tinta-2);font-size:16px;line-height:1.5;max-width:70ch}
+.lab-proposta{font-size:15px;border-left:2px dashed var(--linha-forte);padding-left:12px;color:var(--baixo)}
+.lab-ritmo{color:var(--brasa);font-weight:600}
+.lab-por-decidir{font-family:var(--f-mono)!important;font-size:13px!important;color:var(--baixo)!important}
+.lab-vazio{margin:0;font-family:var(--f-mono);font-size:14px;color:var(--baixo)}
+
+/* A massa termo a termo, e o orçamento gasto, espécie a espécie. */
+.lab-termos,.lab-muro-numeros{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;background:var(--linha-2);
+  border:1px solid var(--linha-2);border-radius:var(--raio-p);overflow:hidden}
+@media (min-width:640px){.lab-termos{grid-template-columns:repeat(4,minmax(0,1fr))}.lab-muro-numeros{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.lab-termos div,.lab-muro-numeros div{background:var(--papel);padding:12px 14px}
+.lab-termos dt,.lab-muro-numeros dt{font-family:var(--f-ui);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--baixo);margin-bottom:4px}
+.lab-termos dd,.lab-muro-numeros dd{margin:0;font-family:var(--f-titulo);font-variation-settings:'opsz' 36;font-weight:560;font-size:24px;color:var(--tinta);
+  font-variant-numeric:tabular-nums;line-height:1.15}
+.lab-orcamento{display:flex;gap:2px;height:16px;border-radius:3px;overflow:hidden;background:var(--papel-3)}
+.lab-orcamento i{display:block;flex-basis:0;min-width:3px;background:var(--bordo,#8b5cf6)}
+.lab-orcamento .o-sobra{background:repeating-linear-gradient(135deg,var(--linha-forte) 0 3px,transparent 3px 6px)}
+.lab-orcamento [hidden]{display:none}
+
+/* Quem vem: a arte animada do dono, a dobrar, como no jogo — escala inteira e vizinho mais próximo. */
+.lab-bestas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.lab-besta{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px 14px 14px;border:1px solid var(--linha-2);border-radius:var(--raio-p);
+  background:radial-gradient(80% 60% at 50% 70%,color-mix(in srgb,var(--violeta,#59386b) 20%,transparent),transparent 75%),var(--papel)}
+.lab-besta[hidden]{display:none}
+.lab-besta-texto{display:grid;gap:2px}
+.lab-besta-texto b{font-family:var(--f-titulo);font-variation-settings:'opsz' 36;font-weight:600;font-size:26px;line-height:1;color:var(--tinta)}
+.lab-besta-nome{font-family:var(--f-titulo);font-weight:600;font-size:18px;color:var(--tinta)}
+.lab-besta-texto small{font-family:var(--f-mono);font-size:12px;color:var(--baixo);line-height:1.4}
+.besta{display:block;flex:none;width:calc(var(--fq,64px) * 2);height:calc(var(--fq,64px) * 2);background-repeat:no-repeat;
+  background-size:calc(var(--fl,256px) * 2) calc(var(--fa,512px) * 2);background-position:0 calc(var(--fy,0px) * -2);image-rendering:pixelated;
+  animation:besta-repouso var(--ms,800ms) steps(var(--quadros,4)) infinite}
+@keyframes besta-repouso{from{background-position-x:0}to{background-position-x:calc(var(--fq,64px) * -2 * var(--quadros,4))}}
+.besta.parada,.lab-ttk .besta{animation:none;width:var(--fq,64px);height:var(--fq,64px);background-size:var(--fl,256px) var(--fa,512px);
+  background-position:0 calc(var(--fy,0px) * -1)}
+@media (max-width:519px){
+  .lab-bestas{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lab-bestas .besta{width:var(--fq,64px);height:var(--fq,64px);background-size:var(--fl,256px) var(--fa,512px);background-position:0 calc(var(--fy,0px) * -1)}
+  @keyframes besta-repouso{from{background-position-x:0}to{background-position-x:calc(var(--fq,64px) * -1 * var(--quadros,4))}}
+}
+
+/* ── o gráfico da asfixia ──────────────────────────────────────────────── */
+.lab-grafico{margin:4px 0 0}
+.lab-legenda{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--f-mono);font-size:13px;color:var(--tinta-2);margin-bottom:10px}
+.lab-legenda span::before{content:"";display:inline-block;width:18px;height:3px;margin-right:8px;vertical-align:4px;background:currentColor}
+.l-rende::before{background:var(--folha)!important}
+.l-custa::before{background:var(--lab-roxo)!important}
+.l-alvo::before{height:12px!important;vertical-align:-1px!important;background:color-mix(in srgb,var(--destaque) 22%,transparent)!important}
+.lab-tela{position:relative;height:220px;border:1px solid var(--linha-2);border-radius:var(--raio-p);background:var(--papel);overflow:hidden}
+@media (min-width:700px){.lab-tela{height:260px}}
+.lab-tela svg{display:block;width:100%;height:100%}
+.g-alvo{fill:color-mix(in srgb,var(--destaque) 14%,transparent)}
+.g-grelha line{stroke:var(--linha-2);stroke-width:1}
+.g-rende,.g-custa{fill:none;stroke-width:3;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.g-rende{stroke:var(--folha)}
+.g-custa{stroke:var(--lab-roxo)}
+.g-foco{stroke:var(--tinta-2);stroke-width:1.5;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.g-ponto{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid var(--papel);pointer-events:none}
+.g-ponto-rende{background:var(--folha)}
+.g-ponto-custa{background:var(--lab-roxo)}
+.g-ponto[hidden]{display:none}
+.lab-eixo{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12px;color:var(--baixo);margin-top:6px}
+.lab-contas{margin:0;display:grid;border-top:1px solid var(--linha-2)}
+.lab-contas div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:8px 0;border-bottom:1px solid var(--linha-2)}
+.lab-contas dt{color:var(--tinta-2);font-size:16px}
+.lab-contas dd{margin:0;font-family:var(--f-mono);font-size:15px;color:var(--tinta);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lab-contas .c-4 dt,.lab-contas .c-5 dt{font-weight:600;color:var(--tinta)}
+.lab-contas .c-4 dd{color:var(--folha);font-weight:600}
+.lab-contas .c-5 dd{color:var(--lab-roxo);font-weight:600}
+.lab-contas[data-vence="noite"] .c-5{box-shadow:inset 3px 0 0 var(--lab-roxo);padding-left:10px}
+
+/* ── o tempo até matar ─────────────────────────────────────────────────── */
+.lab-ttk{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.lab-ttk li{display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:6px;align-items:center;
+  padding:10px 12px;border:1px solid var(--linha-2);border-radius:var(--raio-p);background:var(--papel)}
+.lab-ttk .besta{grid-row:1 / span 2}
+.ttk-texto{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px}
+.ttk-nome{font-family:var(--f-titulo);font-weight:600;font-size:18px;color:var(--tinta)}
+.ttk-valor{font-family:var(--f-mono);font-size:14px;color:var(--tinta-2)}
+.ttk-nota{font-family:var(--f-mono);font-size:13px;color:var(--lab-roxo);font-weight:600}
+.ttk-barra{position:relative;display:block;height:10px;border-radius:3px;background:var(--papel-3);margin-top:14px}
+.ttk-barra i{display:block;height:100%;width:0;border-radius:3px;background:var(--accao);transition:width .35s var(--ease)}
+.lab-ttk .longa .ttk-barra i{background:var(--lab-roxo)}
+.ttk-noite{position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:var(--tinta-2)}
+.ttk-noite span{position:absolute;bottom:100%;left:0;transform:translateX(-50%);font-family:var(--f-mono);font-size:12px;font-weight:400;color:var(--baixo);white-space:nowrap}
+.lab-ttk li:not(:first-child) .ttk-noite span{display:none}
+
+/* ── a escada do muro ──────────────────────────────────────────────────── */
+.lab-desenho-muro{border:1px solid var(--linha-2);border-radius:var(--raio-p);overflow:hidden;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--petroleo) 16%,var(--papel)) 0%,var(--papel) 80%)}
+.lab-desenho-muro svg{display:block;width:100%;height:auto;aspect-ratio:2/1}
+.m-chao{fill:#3b2d1d}.m-erva{fill:var(--folha)}
+.m-n1{fill:#8a5a33}.m-n2{fill:#a0703e}.m-n3{fill:#8d8a80}.m-n4{fill:#5c5f66}.m-n5{fill:#b7ad94}
+.m-forte{opacity:.85}
+.m-tropa{fill:var(--petroleo)}.m-cabeca{fill:#e9c9a1}
+.m-podre{fill:var(--violeta,#59386b)}.m-olho{fill:var(--nucleo,#e9d5ff)}
+.m-nucleo{fill:#6b4a2b}.m-copa{fill:#7fa543}
+
+/* ── o rodapé da bancada ───────────────────────────────────────────────── */
+.lab-rodape{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;padding:20px;border-top:1px solid var(--linha-2);background:var(--papel)}
+@media (min-width:700px){.lab-rodape{padding:22px 34px}}
+.lab-rodape .botao{min-height:48px;padding:0 18px;font-size:12.5px}
+.lab-estado{margin:0;flex:1 1 220px;font-family:var(--f-mono);font-size:13px;color:var(--folha)}
+.lab-estado:empty{display:none}
+.laboratorio .fonte{margin:20px 0 0}
+@media (max-width:480px){.lab-rodape .botao{flex:1 1 100%}}
+
+@media (prefers-reduced-motion:reduce){
+  .besta{animation:none}
+  .lab-separador,.ttk-barra i,.lab-escolha span{transition:none}
+}
+@media print{
+  .lab-separadores,.lab-controlos,.lab-rodape{display:none!important}
+  .lab-painel{display:block!important}
+}
+@media (forced-colors:active){
+  .lab-orcamento i,.ttk-barra i,.g-ponto,.lab-desenho-muro rect{forced-color-adjust:none}
+  .lab-escolha input:checked+span{outline:2px solid Highlight}
+}

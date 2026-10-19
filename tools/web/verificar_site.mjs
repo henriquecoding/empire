@@ -34,6 +34,9 @@
 //   17 · O MENU — num ecrã estreito abre, fecha e fecha com Esc.
 //   18 · O LUME — as contas do instrumento são as do rot.csv (a candeia, ADR 0034).
 //   19 · ORÇAMENTO — o peso da página de entrada, e o do caminho crítico.
+//   20 · O LABORATÓRIO — os separadores pelo teclado, as contas do jogo (a noite 1,
+//        a tabela da §74, o dia da asfixia, o tempo até matar), a ligação que
+//        guarda a experiência, e o caso por omissão sem JavaScript (PUB-06).
 //
 //   node tools/web/verificar_site.mjs [build/site]
 //
@@ -45,9 +48,11 @@ import { createServer } from "node:http";
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { join, resolve, extname, dirname } from "node:path";
 import { createRequire } from "node:module";
+import { runInNewContext } from "node:vm";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import { ler } from "./dados.mjs";
 import { TEXTOS } from "./paginas/textos.mjs";
+import { massaDoCalendario } from "./paginas/molde.mjs";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SITE = resolve(process.argv[2] || join(RAIZ, "build", "site"));
@@ -70,7 +75,9 @@ const JOGO_S = 90;
 // e o primeiro quadro. O total inclui a rolagem inteira, a 1440px / DPR 1.
 // ADR 0080: a arte atual é mais densa; mantemos WebP sem perdas e passamos os
 // cartões de 640 a 320px. Estes tetos são explícitos, não metas de LCP.
-const CRITICO_KB = 660;
+// ADR 0085: o laboratório traz 19 KB de HTML e 16 KB de folha, sem compressão
+// (3,2 e 2,4 KB em brotli); o script dele é adiado e não conta. 660 → 700.
+const CRITICO_KB = 700;
 const TOTAL_KB = 1700;
 const TIPOS = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".wasm": "application/wasm", ".css": "text/css",
@@ -439,7 +446,7 @@ async function main() {
       const f = await p.evaluate(() => ({
         seccoes: [...document.querySelectorAll("main > section")].map((s) => s.id || s.className),
         contas: [".pilares li", ".monarca", ".cartao-fase", ".cartao-fase .mini", ".povo", ".verbo", ".teclas-tabela tbody tr", ".cela", ".roteiro li",
-          ".decisoes li", ".perguntas details", ".falas li", ".numero"]
+          ".decisoes li", ".perguntas details", ".falas li", ".numero", ".lab-separador", ".lab-regua", ".lab-escolha", ".lab-besta", ".lab-ttk li"]
           .map((s) => `${s}=${document.querySelectorAll(s).length}`),
       }));
       await ctx.close();
@@ -546,8 +553,8 @@ async function main() {
       await p.dispatchEvent("#candeia-dia", "input");
       const l = await p.evaluate(() => Object.fromEntries([...document.querySelectorAll("[data-l]")].map((e) => [e.dataset.l, e.textContent])));
       const raio = Math.min(r.raio.base + r.raio.porDia * dia, r.raio.teto);
-      const massa = r.massa.base + r.massa.porDia * dia;
-      resultado(`dia ${dia}: raio ${raio} e massa ${massa}, pelo rot.csv`, Number(l.raio) === raio && Number(l.massa.replace(/\s/g, "")) === massa, JSON.stringify(l));
+      const massa = Math.round(massaDoCalendario(r.massa, dia) * 10) / 10;
+      resultado(`dia ${dia}: raio ${raio} e massa ${massa}, pelo rot.csv (com a rampa das primeiras noites)`, Number(l.raio) === raio && Number(l.massa.replace(/\s/g, "").replace(",", ".")) === massa, JSON.stringify(l));
       resultado(`dia ${dia}: chega por ${dia >= r.doisLados ? "dois lados" : "um lado"}`, l.lados === (dia >= r.doisLados ? TEXTOS.pt.noite.inst_dois : TEXTOS.pt.noite.inst_um), l.lados);
     }
     await ctx.close();
@@ -572,12 +579,74 @@ async function main() {
     const unicos = [...new Set(pedidos.filter((u) => u.startsWith(base) && !u.includes("/jogar/")))];
     const total = unicos.reduce((n, u) => n + tamanho(u), 0) / 1024;
     const criticos = await p.evaluate(() => [location.href,
-      ...[...document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"]:not([as="image"]), script[src]')].map((e) => e.href || e.src),
+      ...[...document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"]:not([as="image"]), script[src]:not([data-adiado])')].map((e) => e.href || e.src),
       document.querySelector('.quadro[fetchpriority="high"]').currentSrc]);
     const critico = [...new Set(criticos)].reduce((n, u) => n + tamanho(u), 0) / 1024;
     resultado(`caminho crítico ≤ ${CRITICO_KB} KB (${critico.toFixed(0)} KB)`, critico <= CRITICO_KB);
     resultado(`a página inteira ≤ ${TOTAL_KB} KB (${total.toFixed(0)} KB, ${unicos.length} pedidos)`, total <= TOTAL_KB);
     await ctx.close();
+  }
+
+  console.log("\n20 · o laboratório (PUB-06)");
+  {
+    const L = d.laboratorio;
+    const janela = {};
+    runInNewContext(readFileSync(join(RAIZ, "tools/web/paginas/laboratorio-contas.js"), "utf8"), { window: janela });
+    const C = janela.EmpireContas;
+    const { ctx, p, erros, pedidos } = await nova(b, base, 1440, "light");
+    await p.goto(base + "/", { waitUntil: "load" });
+    resultado("o script do laboratório não se pede ao abrir a página", !pedidos.some((u) => u.includes("/assets/laboratorio.")));
+    await p.locator("#laboratorio").scrollIntoViewIfNeeded();
+    await p.waitForSelector("#laboratorio.lab-pronto", { timeout: 10000 });
+    resultado("e chega quando a secção se aproxima", pedidos.some((u) => u.includes("/assets/laboratorio.")));
+    const vistos = () => p.evaluate(() => [...document.querySelectorAll(".lab-painel")].filter((x) => x.offsetParent).map((x) => x.dataset.ferramenta));
+    resultado("quatro separadores e um painel à vista", (await p.locator('#laboratorio [role="tab"]').count()) === 4 && (await vistos()).join() === "noite", (await vistos()).join());
+    await p.focus("#lab-t-noite");
+    await p.keyboard.press("ArrowRight");
+    const foco = await p.evaluate(() => document.activeElement.id);
+    resultado("→ passa ao separador seguinte, com o foco e o painel", foco === "lab-t-economia" && (await vistos()).join() === "economia"
+      && (await p.getAttribute("#lab-t-economia", "aria-selected")) === "true", `${foco} · ${await vistos()}`);
+    await p.keyboard.press("End");
+    resultado("End leva ao último", (await vistos()).join() === "muro");
+    await p.keyboard.press("Home");
+    resultado("Home volta ao primeiro", (await vistos()).join() === "noite");
+    const mudar = async (sel, valor) => { await p.fill(sel, String(valor)); await p.dispatchEvent(sel, "input"); };
+    const ler = (k) => p.evaluate((k) => document.querySelector(`#lab-p-noite [data-lab="${k}"]`).textContent.trim(), k);
+    const fila = () => p.evaluate(() => [...document.querySelectorAll("#lab-p-noite .lab-besta:not([hidden])")].map((li) => `${li.dataset.besta}${li.querySelector('[data-lab="n"]').textContent.replace(/\D/g, "")}`).join());
+    await mudar("#lab-noite-dia", 1);
+    resultado(`a noite 1 tem ${L.noite.abertura} de massa e traz três Rastejantes (§25)`, (await ler("massa")) === String(L.noite.abertura) && (await fila()) === "crawler3", `${await ler("massa")} · ${await fila()}`);
+    await mudar("#lab-noite-dia", 20);
+    await p.click('label[for="lab-noite-prop"]');
+    const m20 = C.massa({ dia: 20, fortalezas: 0, amargueiros: 0, nomeados: 0, recusas: 0 }, L.noite, true).total;
+    const escrito = new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 1 }).format(m20);
+    resultado(`com as propostas, o dia 20 em campo limpo é o da tabela da §74 (${Math.round(m20)})`, (await ler("massa")).replace(/\s/g, "") === escrito.replace(/\s/g, ""), await ler("massa"));
+    resultado("e diz que são propostas", await p.isVisible('#lab-p-noite [data-lab="propostas"]'));
+    await p.click("#lab-t-economia");
+    const s = L.economia.deslizadores;
+    const asf = C.asfixia({ fontes: s.fontes.valor, rotas: s.rotas.valor, tropas: s.tropas.valor, ganancia: s.ganancia.valor }, L.economia);
+    const textoAsf = await p.textContent('#lab-p-economia [data-lab="asfixia"]');
+    resultado(`a asfixia por omissão é a do §06 (dia ${asf})`, textoAsf.includes(String(asf)) && asf >= L.economia.alvo[0] && asf <= L.economia.alvo[1], textoAsf);
+    await p.click("#lab-partilhar");
+    resultado("mexer e partilhar guarda a experiência no endereço", (await p.evaluate(() => location.hash)).startsWith("#laboratorio?f=economia"), await p.evaluate(() => location.hash));
+    resultado("o laboratório não tem erros de JavaScript", erros.length === 0, erros.slice(0, 2).join(" | "));
+    await ctx.close();
+
+    const ligacao = await nova(b, base, 390, "dark");
+    await ligacao.p.goto(base + "/en/#laboratorio?f=combate&tropa=spearman&nivel=99", { waitUntil: "load" });
+    await ligacao.p.waitForSelector("#laboratorio.lab-pronto", { timeout: 10000 });
+    const lanceiro = L.tropas.find((x) => x.id === "spearman"), rastejante = L.criaturas.find((x) => x.id === "crawler");
+    const esperado = new Intl.NumberFormat("en", { maximumFractionDigits: 1 }).format(C.tempoAteMatar(lanceiro, rastejante.vida, lanceiro.precisao).segundos);
+    const linha = await ligacao.p.textContent('#lab-p-combate li[data-besta="crawler"] [data-lab="v"]');
+    resultado(`uma ligação abre o instrumento como ficou: o lanceiro mata o Rastejante em ${esperado} s (§07)`,
+      (await ligacao.p.getAttribute("#lab-t-combate", "aria-selected")) === "true" && (await ligacao.p.isChecked('#lab-p-combate input[value="spearman"]')) && linha.includes(esperado), linha);
+    await ligacao.ctx.close();
+
+    const semJs = await nova(b, base, 390, "light", { javaScriptEnabled: false });
+    await semJs.p.goto(base + "/", { waitUntil: "load" });
+    const frases = await semJs.p.evaluate(() => [...document.querySelectorAll(".lab-painel .lab-sem-js")].filter((x) => x.offsetParent && x.textContent.trim()).length);
+    resultado("sem JavaScript, cada instrumento diz o caso por omissão, e os controlos inertes não aparecem",
+      frases === 4 && !(await semJs.p.isVisible("#lab-noite-dia")), `${frases} frases`);
+    await semJs.ctx.close();
   }
 
   await b.close();
