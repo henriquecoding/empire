@@ -130,6 +130,14 @@ func test_gallery_button_opens_a_visible_stage_and_can_close_back_to_selection()
 	assert_bool(RoyalGallery.active).is_true()
 	assert_float(gallery.size.x).is_greater(200.0)
 	assert_float(gallery.size.y).is_greater(200.0)
+	for candidate: Node in gallery.find_children("*", "Button", true, false):
+		var action_button := candidate as Button
+		var font := action_button.get_theme_font("font")
+		var font_size := action_button.get_theme_font_size("font_size")
+		var text_width := (
+			font.get_string_size(action_button.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+		)
+		assert_float(action_button.size.x).is_greater_equal(text_width)
 	gallery._select_character(6)
 	assert_str(String(gallery._stage.profile)).is_equal("royal_shadow")
 	assert_str(String(gallery._stage.action)).is_equal("heal_sequence")

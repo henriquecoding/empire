@@ -15,6 +15,7 @@ const LAYER := 20
 const MARGIN := 18
 const GAP := 10
 const BUTTON_HEIGHT := 44
+const BUTTON_WIDTH := 190
 const FUTURE_CAST_FROM := 6
 static var active := false
 var _stage: RoyalStage
@@ -73,6 +74,9 @@ func _ready() -> void:
 	PauseTheme.button(controls, &"ANIM_NEXT_FRAME", _next)
 	PauseTheme.button(controls, &"ANIM_DIRECTION", _direction)
 	PauseTheme.button(controls, &"ANIM_RESTART", _stage.restart)
+	for child: Button in controls.get_children():
+		child.autowrap_mode = TextServer.AUTOWRAP_OFF
+		child.custom_minimum_size.x = BUTTON_WIDTH
 	PauseTheme.button(body, &"UI_MENU_BACK", close)
 	cast.item_selected.connect(_select_character)
 	_actions.item_selected.connect(_select_action)
