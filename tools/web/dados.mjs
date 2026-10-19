@@ -373,6 +373,10 @@ function laboratorio(raiz) {
     gratis: eco.numero("upkeep_free_troops"), limite1: eco.numero("upkeep_tier1_limit"),
     taxa1: eco.numero("upkeep_tier1_rate"), taxa2: eco.numero("upkeep_tier2_rate"),
     alvo: [alvoMin, alvoMax], dias: 30, deslizadores: deslizadoresDoDossie(raiz),
+    // Os perfis dos testes de design do §06 são os cenários que o laboratório sugere.
+    cenarios: lerCsv(raiz, "data/source/economy_profiles.csv").map((x) => ({
+      id: x.id, fontes: Number(x.sources), rotas: Number(x.routes), tropas: Number(x.troops), ganancia: Number(x.greed),
+    })),
     perfis: lerCsv(raiz, "data/source/greed_profiles.csv").map((g) => {
       const [de, ate] = g.greed_range.split("|").map(Number);
       return { id: g.id, nome: nome(g.display_key), de, ate };
@@ -397,6 +401,7 @@ function laboratorio(raiz) {
     abertura: decidido("opening_mass"), rampa: decidido("ramp_nights"),
     porAmargueiro: decidido("mass_per_amargueiro"), porNomeado: decidido("mass_per_named_amargueiro"),
     porRecusa: decidido("refusal_mass"), tetoRecusas: decidido("refusal_cap"), janela: decidido("refusal_window_days"),
+    doisLados: decidido("two_sided_from_day"),
     recusasMax: constanteGd(raiz, "src/sim/systems/rot_system.gd", "RECUSAS_MAX"),
     regra: rot.pick_rule,
     propostas: {

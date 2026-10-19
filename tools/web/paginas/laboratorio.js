@@ -91,10 +91,21 @@
   }
 
   // ── desenhar, e dizer ───────────────────────────────────────────────────
+  // O cenário em que o instrumento está, se estiver num: o «ver o dia» não conta.
+  function marcarCenario(p, s) {
+    p.querySelectorAll(".lab-cenario").forEach(function (b) {
+      var igual = true;
+      new URLSearchParams(b.dataset.cenario).forEach(function (v, k) { if (k !== "foco" && String(s[k]) !== v) igual = false; });
+      b.classList.toggle("igual", igual);
+    });
+  }
+
   function atualizar(f, falar) {
     var p = paineis[f];
     ecoar(p);
-    var frase = DESENHO[f](p, ler(p));
+    var s = ler(p);
+    marcarCenario(p, s);
+    var frase = DESENHO[f](p, s);
     if (!falar) return;
     clearTimeout(falarDepois);
     falarDepois = setTimeout(function () { texto(p, "resumo", frase); }, 500);
@@ -130,18 +141,34 @@
     var mudou = function (e) { if (e.target.name) { mexeu = true; atualizar(f, true); guardar(); } };
     p.addEventListener("input", mudou);
     p.addEventListener("change", mudou);
+    // Um cenário é um estado inteiro, na forma do endereço: o mesmo caminho que uma ligação partilhada.
+    p.addEventListener("click", function (e) {
+      var b = e.target.closest(".lab-cenario");
+      if (!b) return;
+      var s = {};
+      new URLSearchParams(b.dataset.cenario).forEach(function (v, k) { s[k] = v; });
+      escrever(p, s);
+      mexeu = true; atualizar(f, true); guardar();
+    });
   });
 
-  // ── partilhar ───────────────────────────────────────────────────────────
+  // ── partilhar: a folha do sistema num ecrã tátil, a área de transferência no resto ──
   var estado = document.getElementById("lab-estado");
   document.getElementById("lab-partilhar").addEventListener("click", function () {
     mexeu = true;
     guardar();
     var url = location.origin + endereco();
     var dizer = function (t) { estado.textContent = t; };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () { dizer(V.copiada); }, function () { dizer(V.copiar_falhou); });
-    } else dizer(V.copiar_falhou);
+    var copiar = function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { dizer(V.copiada); }, function () { dizer(V.copiar_falhou); });
+      } else dizer(V.copiar_falhou);
+    };
+    if (navigator.share && window.matchMedia("(pointer:coarse)").matches) {
+      navigator.share({ title: document.title, url: url }).then(function () { dizer(V.partilhada); }, function (e) {
+        if (!e || e.name !== "AbortError") copiar();
+      });
+    } else copiar();
   });
 
   // Os painéis que não se veem também ficam prontos: trocar de separador não espera por contas.

@@ -367,6 +367,7 @@ function noite({ t, d }) {
           <div><dt>${s.inst_lados}</dt><dd><b data-l="lados">${c.dois ? s.inst_dois : s.inst_um}</b><small>${fmt(s.inst_desde, { dia: p.doisLados })}: ${s.inst_dois}</small></dd></div>
         </dl>
         <p class="fonte">${fmt(s.inst_fonte, { dither: p.dither })}</p>
+        <a class="ponte-lab" href="#laboratorio">${s.inst_lab} <span aria-hidden="true">↘</span></a>
       </div>
     </div>
     <div class="excecoes revela">

@@ -56,7 +56,17 @@ fazem as contas do jogo sobre os números dos CSV.**
    só se pede quando a secção chega a 800 px do ecrã, ou logo, se a ligação aponta para ela; não é caminho crítico.
    Das folhas animadas do dono serve-se só a linha do repouso, cortada na construção sem descodificar píxeis
    (`tools/web/bestas.mjs`): 1,6–3,5 KB por criatura em vez de 12–25 KB.
-7. **A candeia passa a ter a rampa das primeiras noites** (Q-017, Q-068), como o `RotProfile.calendar_mass`: com o
+7. **Por onde se começa (o pedido do dono de 19/10: «refine também o design e a user experience»).** Quem chega não
+   sabe o que experimentar, por isso os instrumentos da noite e da asfixia abrem com cenários de um toque, todos
+   lidos dos dados: os perfis dos testes de design do §06 (`economy_profiles.csv` — «Com 2 rotas de comércio» dá os
+   quatro dias que a conquista compra) e as noites que o dossiê conta (a primeira, a de dois lados, a estreia da
+   criatura mais cara). O cenário em que o instrumento está fica marcado; «Repor» volta ao caso por omissão. Um
+   perfil novo sem nome no site chumba a construção, como um trilho novo. A bancada chega-se por três sítios: o
+   menu, o guia inicial («Mexer nas regras») e a candeia — o instrumento raso leva ao fundo. Num ecrã tátil,
+   «Partilhar» abre a folha de partilha do sistema; no resto, copia a ligação.
+8. **A abertura deixa de colar rótulos.** Cada fase da linha do dia é um contentor (CSS `@container`): o nome só
+   aparece se couber. A 1180 px, «Meio-dia» era cortado e colava-se a «Tarde».
+9. **A candeia passa a ter a rampa das primeiras noites** (Q-017, Q-068), como o `RotProfile.calendar_mass`: com o
    laboratório na mesma página, a noite 1 não podia ter 58 de massa numa e 24 na outra.
 
 ## Alternativas consideradas
@@ -78,8 +88,10 @@ ser a primeira página a anunciar como regra o que o dono ainda não aprovou.
   `_proposed`, ou uma regra de escolha nova no `rot.csv`, param a construção até alguém decidir o que mostrar.
 - Uma mudança numa destas funções do GDScript tem de chegar à `laboratorio-contas.js`; o teste do laboratório apanha a
   divergência quando o dossiê e os CSV também mudam, e não antes — é o limite de copiar uma conta em vez de a correr.
-- **O teto do caminho crítico sobe de 660 para 700 KB**, às claras, como a ADR 0080 fez com as fotografias. Medido
-  no build desta tarefa, sem compressão: o HTML da página passa de 107 para 126 KB e a folha de 50 para 66 KB — 695 KB
-  de caminho crítico. Em brotli, que é o que a Vercel serve, são +3,2 KB de HTML e +2,4 KB de folha. O script do
-  laboratório (37 KB, com o modelo) é adiado e não conta; a página inteira fica em 1690 KB, dentro dos 1700.
+- **Os tetos do portão sobem às claras**, como a ADR 0080 fez com as fotografias: o do caminho crítico de 660 para
+  710 KB e o da página inteira de 1700 para 1750 KB. Medido no build final desta tarefa, sem compressão: 699 KB de
+  caminho crítico (o HTML da página passa de 107 para ~130 KB e a folha de 50 para ~67 KB; em brotli, que é o que a
+  Vercel serve, ≈ +4 KB e +2,6 KB) e 1697 KB de página inteira, com o script adiado (≈ 40 KB, com o modelo) e as
+  folhas das criaturas. A folga — 11 e 53 KB — fica escrita para a próxima mudança não ter de reabrir esta decisão
+  por uma frase; o que a passar volta a ser uma decisão.
 - O portão do site ganha o grupo 20, e a conferência das duas línguas conta os cartões do laboratório.

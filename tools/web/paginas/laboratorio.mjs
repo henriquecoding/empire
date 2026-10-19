@@ -74,16 +74,24 @@ export function laboratorio({ t, d, v, esc, fmt }) {
   const caixa = (f, par, rotulo, marcado) => `<label class="lab-caixa" for="lab-${f}-${par}"><input type="checkbox" id="lab-${f}-${par}" name="${par}" value="1"${marcado ? " checked" : ""}><span>${rotulo}</span></label>`;
   const escolhas = (f, par, legenda, opcoes, valor, classe = "") => `<fieldset class="lab-escolhas${classe}"><legend>${legenda}</legend>${opcoes.map(([dela, rot, extra]) =>
     `<label class="lab-escolha"><input type="radio" name="${par}" value="${dela}"${dela === valor ? " checked" : ""}><span>${rot}${extra ? `<small>${extra}</small>` : ""}</span></label>`).join("")}</fieldset>`;
+  // Os cenários: o estado inteiro de um instrumento, na mesma forma do endereço (ver laboratorio.js).
+  const cenarios = (f, lista) => `<div class="lab-cenarios" role="group" aria-label="${x.experimenta}">
+          <p class="lab-rotulo" aria-hidden="true">${x.experimenta}</p>
+          <div class="lab-cenarios-lista">${lista.map(([estado, rot, dia]) => `<button type="button" class="lab-cenario" data-cenario="${esc(new URLSearchParams(estado).toString())}">`
+            + `${dia ? `<small>${fmt(x.cenarios.dia, { dia })}</small>` : ""}<span>${rot}</span></button>`).join("")}`
+          + `<button type="button" class="lab-cenario lab-repor" data-cenario="${esc(new URLSearchParams(o[f]).toString())}"><span>${x.omissao}</span></button></div>
+        </div>`;
   const leads = {
     noite: x.noite.lead,
     economia: fmt(x.economia.lead, { producao: pc(L.economia.crescimento), comercio: pc(L.economia.crescimentoComercio), noite: pc(L.economia.noiteCrescimento), min: L.economia.alvo[0], max: L.economia.alvo[1] }),
     combate: fmt(x.combate.lead, { noite: L.noiteSegundos }),
     muro: x.muro.lead,
   };
-  const painel = (f, i, controlos, saida, semJs) => `<div class="lab-painel${i === 0 ? " ativo" : ""}" id="lab-p-${f}" role="tabpanel" aria-labelledby="lab-t-${f}" data-ferramenta="${f}">
+  const painel = (f, i, controlos, saida, semJs, sugestoes = "") => `<div class="lab-painel${i === 0 ? " ativo" : ""}" id="lab-p-${f}" role="tabpanel" aria-labelledby="lab-t-${f}" data-ferramenta="${f}">
       <h3 class="lab-titulo">${x[f].tab}</h3>
       <p class="lab-lead">${leads[f]}</p>
       <p class="lab-sem-js">${semJs}</p>
+      ${sugestoes}
       ${f === "noite" || f === "economia" ? '<p class="lab-placar" aria-hidden="true" data-lab="placar"></p>' : ""}
       <div class="lab-grelha">
         <div class="lab-controlos">
@@ -102,6 +110,13 @@ export function laboratorio({ t, d, v, esc, fmt }) {
   const mNoite = CONTAS.massa({ dia: on.dia, fortalezas: 0, amargueiros: 0, nomeados: 0, recusas: 0 }, n, false);
   const fNoite = CONTAS.invocar(mNoite.total, on.dia, L.criaturas, n, { subsolo: false, propostas: false });
   const filaTexto = fNoite.fila.map((y) => fmt(x.vivo.fila_item, { n: y.n, nome: nome(L.criaturas.find((c) => c.id === y.id).nome) })).join(", ");
+  const limpo = { fort: 0, arv: 0, nom: 0, rec: 0, sub: 0, prop: 0 };
+  const estreia = L.criaturas[0];
+  const sugestoesNoite = cenarios("noite", [
+    [{ ...limpo, dia: 1 }, x.cenarios.noite.primeira, 1],
+    [{ ...limpo, dia: n.doisLados }, x.cenarios.noite.dois_lados, n.doisLados],
+    [{ ...limpo, dia: estreia.desde, sub: 1 }, fmt(x.cenarios.noite.estreia, { nome: nome(estreia.nome) }), estreia.desde],
+  ]);
   const noite = painel("noite", 0, [
     regua("noite", "dia", x.noite.dia, 1, L.economia.dias, on.dia),
     regua("noite", "fort", x.noite.fortalezas, 0, 5, on.fort),
@@ -124,10 +139,20 @@ export function laboratorio({ t, d, v, esc, fmt }) {
           <p class="lab-nota lab-por-chegar" data-lab="por-chegar-linha"><span class="lab-rotulo">${x.noite.por_chegar}</span> <span data-lab="por-chegar"></span></p>
           <p class="lab-nota" data-lab="rampa" hidden></p>
           <p class="lab-nota lab-proposta" data-lab="propostas" hidden></p>`,
-  fmt(x.noite.sem_js, { dia: on.dia, massa: num.format(mNoite.total), fila: filaTexto || x.vivo.fila_vazia }));
+  fmt(x.noite.sem_js, { dia: on.dia, massa: num.format(mNoite.total), fila: filaTexto || x.vivo.fila_vazia }), sugestoesNoite);
 
   // ── A asfixia ──
   const e = L.economia, oe = o.economia, sl = e.deslizadores;
+  const dentro = (k, v) => {
+    if (v < sl[k].min || v > sl[k].max) throw new Error(`laboratorio: um perfil do economy_profiles.csv põe ${k} = ${v}, fora do deslizador do §06`);
+    return v;
+  };
+  const sugestoesEconomia = cenarios("economia", e.cenarios.map((c) => {
+    const rot = x.cenarios.economia[c.id];
+    if (!rot) throw new Error(`laboratorio: o perfil ${c.id} do economy_profiles.csv não tem nome em laboratorio-textos.mjs (cenarios.economia)`);
+    const estado = { fontes: dentro("fontes", c.fontes), rotas: dentro("rotas", c.rotas), tropas: dentro("tropas", c.tropas), gan: dentro("ganancia", c.ganancia) };
+    return [{ ...estado, foco: CONTAS.asfixia({ ...c }, e) || 1 }, fmt(rot, c), null];
+  }));
   const economia = painel("economia", 1, [
     regua("economia", "fontes", x.economia.fontes, sl.fontes.min, sl.fontes.max, oe.fontes),
     regua("economia", "rotas", x.economia.rotas, sl.rotas.min, sl.rotas.max, oe.rotas),
@@ -152,7 +177,7 @@ export function laboratorio({ t, d, v, esc, fmt }) {
           ${regua("economia", "foco", x.economia.foco, 1, e.dias, oe.foco)}
           <dl class="lab-contas">${x.economia.contas.map((rot, i) => `<div class="c-${i}"><dt>${rot}</dt><dd data-lab="c${i}">0</dd></div>`).join("")}</dl>
           <p class="lab-nota" data-lab="soldo"></p>`,
-  fmt(x.economia.sem_js, { fontes: oe.fontes, rotas: oe.rotas, tropas: oe.tropas, ganancia: oe.gan, asfixia: CONTAS.asfixia({ fontes: oe.fontes, rotas: oe.rotas, tropas: oe.tropas, ganancia: oe.gan }, e) }));
+  fmt(x.economia.sem_js, { fontes: oe.fontes, rotas: oe.rotas, tropas: oe.tropas, ganancia: oe.gan, asfixia: CONTAS.asfixia({ fontes: oe.fontes, rotas: oe.rotas, tropas: oe.tropas, ganancia: oe.gan }, e) }), sugestoesEconomia);
 
   // ── O combate ──
   const oc = o.combate;

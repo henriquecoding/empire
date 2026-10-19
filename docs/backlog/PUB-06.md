@@ -4,7 +4,8 @@
 Porque    O dono, a 19/10/2026: «faça uma densa pesquisa na web para implementar
           melhorias e funcionalidades interessantes no meu site, por exemplo, uma
           secção onde a pessoa pode testar e ver todas as mecânicas que deseja;
-          quero que o site seja criativo».
+          quero que o site seja criativo»; e depois: «refine também o design e
+          user experience».
 Spec      docs/design/06-producao-conversao-e-comercio.md
           docs/design/07-o-modelo-de-combate-com-a-matematica-feita.md
           docs/design/10-muralhas-torres-e-a-casa-de-treino.md
@@ -21,8 +22,10 @@ Feito     Quatro instrumentos: quem a Podridão manda esta noite (§74, §51, co
           arte animada do dono), o dia da asfixia (§06), o tempo até matar (§07)
           e a escada do muro (§10). As contas são uma função por função do
           GDScript, testadas contra os números do dossiê; as propostas só entram
-          a pedido e dizem-se. A candeia passa a ter a rampa das primeiras
-          noites, como o jogo. O portão do site mede o laboratório.
+          a pedido e dizem-se. Cenários de um toque lidos dos dados, pontes a
+          partir do guia e da candeia, partilha nativa no telemóvel, e os
+          rótulos da linha do dia que já não colidem. A candeia passa a ter a
+          rampa das primeiras noites, como o jogo. O portão mede o laboratório.
 Fora      Mecânicas novas, balanceamento, a arte (só se lê), os impulsos reais
           (o preço deles está todo em _proposed), analytics, dependências novas.
 Estado    feito

@@ -51,6 +51,18 @@ em `_proposed`. O crescimento da noite depois da noite 10, as noites fundas e ca
 Q-240) só entram com «Juntar o que ainda é proposta», e a página diz quais são. A vida do caminho A e os postos do
 caminho B dizem «por decidir». Os impulsos reais ficaram de fora: o preço de todos está em `_proposed`.
 
+**Design e experiência (o segundo pedido do dono: «refine também o design e a user experience»).** A página inteira
+foi revista em 390, 1180 e 1440 px. Quatro mudanças, pela ordem do impacto:
+
+- *Por onde começar.* A noite e a asfixia abrem com cenários de um toque, lidos dos dados — os perfis dos testes de
+  design do §06 e as noites que o dossiê conta. O §06 escreve «põe as rotas a 2 e vê os quatro dias que a conquista
+  te compra»: agora é um botão. O cenário ativo fica marcado e «Repor» volta ao caso por omissão.
+- *Encontrar a bancada.* Além do menu, o guia inicial ganha «Mexer nas regras ↘» e a candeia acaba numa ponte para o
+  laboratório — o raso a levar ao fundo, como na pesquisa.
+- *Partilhar no telemóvel.* Num ecrã tátil, o botão abre a folha de partilha do sistema; no resto, copia a ligação.
+- *Um defeito da abertura.* A 1180 px, a linha do dia cortava «Meio-dia» e colava-o a «Tarde». Cada fase passou a
+  ser um contentor CSS, e o rótulo só aparece se couber.
+
 **Trabalho a pedido.** O script do laboratório (as contas, o modelo e o desenho num ficheiro) só se pede quando a
 secção se aproxima do ecrã, ou quando a ligação aponta para ela; e das folhas animadas do dono serve-se só a linha do
 repouso, cortada na construção (`tools/web/bestas.mjs`): 1,6–3,5 KB por criatura em vez de 12–25 KB.
@@ -73,19 +85,19 @@ do §25. Com o laboratório na mesma página, as duas tinham de dizer o mesmo.
 
 ## O peso, medido
 
-No build desta tarefa (1440 px, DPR 1, bytes sem compressão, como o portão conta):
+No build final desta tarefa (1440 px, DPR 1, bytes sem compressão, como o portão conta):
 
 | | Antes | Depois | Em brotli |
 |---|---|---|---|
-| HTML da página de entrada | 107 KB | 126 KB | 16,4 → 19,6 KB |
-| Folha de estilo | 50 KB | 66 KB | 9,4 → 11,8 KB |
-| Caminho crítico | ≈ 658 KB | 695 KB | — |
-| Página inteira, rolada até ao fim | — | 1690 KB (teto 1700) | — |
-| Script do laboratório (adiado) | — | 37 KB | — |
+| HTML da página de entrada | 107 KB | ≈ 130 KB | 16,4 → ≈ 20 KB |
+| Folha de estilo | 50 KB | ≈ 67 KB | 9,4 → ≈ 12 KB |
+| Caminho crítico | ≈ 658 KB | 699 KB (teto 660 → 710) | — |
+| Página inteira, rolada até ao fim | — | 1697 KB (teto 1700 → 1750) | — |
+| Script do laboratório (adiado) | — | ≈ 40 KB | — |
 | Folhas das criaturas | 12–25 KB cada | 1,6–3,5 KB cada | — |
 
-O teto do caminho crítico sobe de 660 para 700 KB na ADR 0085, às claras. O que o laboratório acrescenta ao primeiro
-ecrã são os seus rótulos e estilos; o trabalho dele — contas, modelo e desenho — só chega quando a secção se aproxima.
+Os tetos sobem na ADR 0085, às claras e com a folga escrita. O que o laboratório acrescenta ao primeiro ecrã são os
+seus rótulos e estilos; o trabalho dele — contas, modelo e desenho — só chega quando a secção se aproxima.
 
 ## O que fica de fora, e porquê
 

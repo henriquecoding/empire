@@ -88,6 +88,20 @@
 .lab-escolha input:focus-visible+span{outline:2px solid var(--destaque);outline-offset:3px}
 .lab-escolhas:disabled .lab-escolha{cursor:not-allowed}
 
+/* Os cenários: um toque e o instrumento fica num estado que o dossiê conta. */
+.lab-cenarios{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 26px;padding:14px 0;border-block:1px dashed var(--linha)}
+.lab-cenarios .lab-rotulo{margin:0;color:var(--destaque)}
+.laboratorio:not(.lab-pronto) .lab-cenarios{display:none}
+.lab-cenarios-lista{display:flex;flex-wrap:wrap;gap:8px}
+.lab-cenario{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;min-height:44px;padding:6px 12px;cursor:pointer;
+  border:1px solid var(--linha-forte);border-radius:999px;background:var(--papel);color:var(--tinta);font:500 13px/1.25 var(--f-ui);text-align:left;
+  transition:border-color .2s var(--ease),background .2s var(--ease),transform .15s var(--ease)}
+.lab-cenario small{font-size:12px;font-weight:400;color:var(--baixo)}
+.lab-cenario:hover{border-color:var(--accao);background:color-mix(in srgb,var(--accao) 8%,var(--papel))}
+.lab-cenario:active{transform:translateY(1px)}
+.lab-repor{border-style:dashed;color:var(--tinta-2)}
+.lab-cenario.igual{border-color:var(--accao);border-style:solid;box-shadow:inset 0 0 0 1px var(--accao);background:color-mix(in srgb,var(--accao) 12%,var(--papel))}
+
 /* ── o que sai ─────────────────────────────────────────────────────────── */
 .lab-saida{min-width:0;display:grid;gap:14px;align-content:start}
 .lab-rotulo{font-family:var(--f-ui);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--baixo);margin:8px 0 0}
@@ -208,9 +222,13 @@
 .laboratorio .fonte{margin:20px 0 0}
 @media (max-width:480px){.lab-rodape .botao{flex:1 1 100%}}
 
+/* A ponte da candeia (o instrumento raso, na secção da Podridão) para a bancada. */
+.ponte-lab{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:10px;font:600 13px/1.4 var(--f-ui);color:var(--destaque);text-decoration:none}
+.ponte-lab:hover{color:var(--tinta);text-decoration:underline}
+
 @media (prefers-reduced-motion:reduce){
   .besta{animation:none}
-  .lab-separador,.ttk-barra i,.lab-escolha span{transition:none}
+  .lab-separador,.ttk-barra i,.lab-escolha span,.lab-cenario{transition:none}
 }
 @media print{
   .lab-separadores,.lab-controlos,.lab-rodape{display:none!important}

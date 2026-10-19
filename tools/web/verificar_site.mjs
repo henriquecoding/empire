@@ -75,10 +75,11 @@ const JOGO_S = 90;
 // e o primeiro quadro. O total inclui a rolagem inteira, a 1440px / DPR 1.
 // ADR 0080: a arte atual é mais densa; mantemos WebP sem perdas e passamos os
 // cartões de 640 a 320px. Estes tetos são explícitos, não metas de LCP.
-// ADR 0085: o laboratório traz 19 KB de HTML e 16 KB de folha, sem compressão
-// (3,2 e 2,4 KB em brotli); o script dele é adiado e não conta. 660 → 700.
-const CRITICO_KB = 700;
-const TOTAL_KB = 1700;
+// ADR 0085: o laboratório traz ~23 KB de HTML e ~17 KB de folha, sem compressão
+// (≈ 4 e 2,6 KB em brotli); o script dele é adiado e não entra no crítico.
+// Medido: 699 e 1697 KB. 660 → 710 e 1700 → 1750, com a folga escrita na ADR.
+const CRITICO_KB = 710;
+const TOTAL_KB = 1750;
 const TIPOS = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".wasm": "application/wasm", ".css": "text/css",
   ".pck": "application/octet-stream", ".png": "image/png", ".webp": "image/webp", ".woff2": "font/woff2",
@@ -446,7 +447,7 @@ async function main() {
       const f = await p.evaluate(() => ({
         seccoes: [...document.querySelectorAll("main > section")].map((s) => s.id || s.className),
         contas: [".pilares li", ".monarca", ".cartao-fase", ".cartao-fase .mini", ".povo", ".verbo", ".teclas-tabela tbody tr", ".cela", ".roteiro li",
-          ".decisoes li", ".perguntas details", ".falas li", ".numero", ".lab-separador", ".lab-regua", ".lab-escolha", ".lab-besta", ".lab-ttk li"]
+          ".decisoes li", ".perguntas details", ".falas li", ".numero", ".lab-separador", ".lab-regua", ".lab-escolha", ".lab-cenario", ".lab-besta", ".lab-ttk li"]
           .map((s) => `${s}=${document.querySelectorAll(s).length}`),
       }));
       await ctx.close();
@@ -626,8 +627,14 @@ async function main() {
     const asf = C.asfixia({ fontes: s.fontes.valor, rotas: s.rotas.valor, tropas: s.tropas.valor, ganancia: s.ganancia.valor }, L.economia);
     const textoAsf = await p.textContent('#lab-p-economia [data-lab="asfixia"]');
     resultado(`a asfixia por omissão é a do §06 (dia ${asf})`, textoAsf.includes(String(asf)) && asf >= L.economia.alvo[0] && asf <= L.economia.alvo[1], textoAsf);
+    const perfis = L.economia.cenarios, i = perfis.findIndex((x) => x.rotas > 0);
+    const comRotas = C.asfixia({ ...perfis[i] }, L.economia);
+    await p.click(`#lab-p-economia .lab-cenario >> nth=${i}`);
+    const depois = await p.textContent('#lab-p-economia [data-lab="asfixia"]');
+    resultado(`o cenário «${perfis[i].id}» do economy_profiles.csv põe a asfixia no dia ${comRotas}, e fica marcado`,
+      depois.includes(String(comRotas)) && (await p.getAttribute(`#lab-p-economia .lab-cenario >> nth=${i}`, "class")).includes("igual"), depois);
     await p.click("#lab-partilhar");
-    resultado("mexer e partilhar guarda a experiência no endereço", (await p.evaluate(() => location.hash)).startsWith("#laboratorio?f=economia"), await p.evaluate(() => location.hash));
+    resultado("mexer e partilhar guarda a experiência no endereço", (await p.evaluate(() => location.hash)).startsWith("#laboratorio?f=economia&fontes="), await p.evaluate(() => location.hash));
     resultado("o laboratório não tem erros de JavaScript", erros.length === 0, erros.slice(0, 2).join(" | "));
     await ctx.close();
 
