@@ -1,5 +1,10 @@
 # Animation Bible — o mesmo ritmo para todas as personagens
 
+> Método: [guia de personagens](CHARACTER_PRODUCTION_GUIDE.md), [poses e continuidade](CHARACTER_ANIMATION_WORKFLOW.md),
+> [floração individual](ORGANIC_FLOWER_ANIMATION.md) e [checklist](CHARACTER_REVIEW_CHECKLIST.md).
+> Contagens e durações dos estudos V13/V15 são experimentais; sua preservação não altera os contratos abaixo.
+> [Decisões e estado](research/2026-10-19-character-animation/DECISOES-E-ESTADO.md).
+
 > O dossiê fixa quatro animações (§22, §58): **`idle` 6 frames · `walk` 8 · `attack` 5 · `die` 7, a 10 fps**,
 > e o *idle* de 6 frames que já desenhaste é a referência de ritmo. Este documento acrescenta o resto — os estados
 > que o relatório mestre pede, os frames de ação, os pés, os *sockets* — para que nenhuma personagem ganhe um

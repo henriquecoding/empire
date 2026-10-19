@@ -2912,5 +2912,36 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "ART-RESEARCH-2026-10-18": {
+  "title": "Preservar pesquisa de imperadores e escudeiros",
+  "porque": "O autor interrompeu e rejeitou a última rodada de imagens e pediu o arquivo da pesquisa para outro chat.",
+  "spec": [
+   "docs/art/research/2026-10-18-imperadores-escudeiros/README.md"
+  ],
+  "depende": "—",
+  "feito": "Pesquisa, fontes, estudos e referências preservados; rejeição e preferências registradas.",
+  "fora": "Produção ou aprovação de conceitos, animações finais e alterações no jogo.",
+  "estado": "feito — pesquisa e estudos arquivados; geração interrompida; conceitos finais permanecem pendentes",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "As imagens da última rodada foram rejeitadas pelo autor."
+  ]
+ },
+ "ART-KNOWLEDGE-2026-10-19": {
+  "title": "Consolidar conhecimento de personagens e animação",
+  "porque": "O autor pediu que o aprendizado e a pesquisa de criação de personagens e animações permanecessem aplicáveis no repositório.",
+  "spec": [
+   "docs/art/CHARACTER_PRODUCTION_GUIDE.md",
+   "docs/art/research/2026-10-19-character-animation/README.md"
+  ],
+  "depende": "ART-RESEARCH-2026-10-18",
+  "feito": "Pesquisa, método, decisões, fontes, prompts e evidências ligados ao fluxo de produção.",
+  "fora": "Integração dos sprites V15, aprovação artística e novas mecânicas.",
+  "estado": "feito — pesquisa consolidada, método de produção e evidências ligados ao fluxo do projeto",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

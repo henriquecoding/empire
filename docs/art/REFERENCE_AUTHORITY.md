@@ -1,5 +1,7 @@
 # Direção confirmada pelo autor — 19/09/2026
 
+> Atualização de 18/10/2026: a última rodada de imperadores/escudeiros foi rejeitada e a geração foi interrompida. Leia o [arquivo da pesquisa e guia de continuidade](research/2026-10-18-imperadores-escudeiros/README.md) antes de retomar esses personagens.
+
 Esta revisão corrige a escolha de referências da primeira implementação do PR #24. O autor esclareceu que o arqueiro usado era um conceito rejeitado, o rei precisava de redesign e os personagens enviados estavam quase completos. Essa orientação prevalece sobre inferências de aprovação feitas a partir dos arquivos antigos.
 
 **O elenco quase concluído é a base visual para o que vier a seguir.** Estar exportado, passar testes ou aparecer no jogo não torna um desenho aprovado.
@@ -69,3 +71,16 @@ O cenário integrado no PR continua parcial: os grandes planos lisos e os tronco
 5. Expandir o sistema ao restante do elenco e do reino após essa comparação.
 
 A aprovação artística pertence ao autor. Testes automatizados verificam integridade, tamanhos, tempos e seleção de arquivos; não determinam qualidade ou conclusão do desenho.
+
+Para personagens e animações, seguir o [guia de produção consolidado](CHARACTER_PRODUCTION_GUIDE.md).
+O [registro de 19/10](research/2026-10-19-character-animation/DECISOES-E-ESTADO.md) preserva a direção aceita
+de Sombra/bailarina e as rejeições anteriores. A pesquisa histórica abaixo deve ser lida junto desse estado atualizado.
+
+## 7. Pesquisa de imperadores e escudeiros — 18/10/2026
+
+Henrique pediu que a geração de conceitos fosse interrompida e que a pesquisa e os estudos fossem preservados no repositório para outro chat. A última rodada de imagens foi rejeitada; avaliações positivas do assistente não constituem aprovação do autor.
+
+O [ponto de entrada](research/2026-10-18-imperadores-escudeiros/README.md) reúne os documentos integrais, capítulos da pesquisa, fontes, estudos técnicos e referências intactas. As [decisões e rejeições](research/2026-10-18-imperadores-escudeiros/DECISOES-DO-AUTOR.md) prevalecem sobre afirmações de conclusão nos textos históricos.
+
+As preferências anteriores pelo rei/escudeiro e pelo conceito sombrio/floração são contexto para o refinamento, com pendências; não aprovam os desenhos posteriores. Quadros de 96×96, paleta e luz dos ensaios são propostas, não novas decisões canônicas. Nenhum material deste arquivo foi promovido a arte de produção.
+

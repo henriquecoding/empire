@@ -96,6 +96,8 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [CV-02](CV-02.md) | Cenários em camadas: os reinos e as transições do dono no jogo | CV-01 | parcial — 8 reinos e 13 transições no jogo; propostas especiais e transições a oeste por decidir |
 | [CV-03](CV-03.md) | Animais e criaturas animados: os pacotes de 64 × 64 do dono no jogo | ADR 0049, ADR 0057 | parcial — criaturas, caça (o pavão no lugar do faisão), cavalo, galinhas e vacas animados; búfalo, carneiro, Saqueador e pose de montar por decidir |
 
+| [ART-RESEARCH-2026-10-18](ART-RESEARCH-2026-10-18.md) | Arquivo da pesquisa de imperadores e escudeiros | — | feito — pesquisa e estudos arquivados; geração interrompida; conceitos finais permanecem pendentes |
+
 ## Fase 2 — Fatia vertical
 
 | Ticket | Tarefa | Depende | Estado |
@@ -278,3 +280,5 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | Ticket | Tarefa | Depende | Estado |
 |---|---|---|---|
 | [DOC-01](DOC-01.md) | Consolidar dossiê, painel e referências territoriais | — | feito |
+| [ART-KNOWLEDGE-2026-10-19](ART-KNOWLEDGE-2026-10-19.md) | Consolidar pesquisa e método de personagens e animação | ART-RESEARCH-2026-10-18 | feito |
+
