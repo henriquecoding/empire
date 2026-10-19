@@ -48,9 +48,11 @@ fazem as contas do jogo sobre os números dos CSV.**
    Q-240) entram só com «Juntar o que ainda é proposta», e a página diz quais são. A vida do caminho A e os postos do
    caminho B dizem «por decidir», como os monarcas (ADR 0056). Os impulsos reais ficam de fora: o preço de todos está
    em `_proposed`. A noite de dois lados (Q-179) diz-se e não se conta: o dia em que pode começar é decidido, a
-   probabilidade (`rift_both_chance`) é proposta, e o instrumento conta um lado e di-lo. As réguas da noite acabam onde
-   os dados acabam — os Amargueiros com nome no `named_cap`, as fortalezas uma por povo; os anónimos não têm teto no
-   jogo, e a régua deles diz só até onde a régua vai.
+   probabilidade (`rift_both_chance`) é proposta, e o instrumento conta um lado e di-lo — e a construção para se ela
+   deixar de ser proposta, para o texto mudar primeiro. As réguas da noite tiram o fim dos dados: as fortalezas são as
+   que uma campanha tem (uma por povo além do de casa, como o `WorldPlan`), e os Amargueiros com nome vão até aos nomes
+   que podem cair numa noite (`named_cap`). As árvores, com nome ou sem ele, não têm teto no jogo: o fim dessas réguas é
+   da régua, e o código di-lo.
 4. **Uma experiência tem endereço.** O estado vai para `#laboratorio?f=noite&dia=12…` com `replaceState` — não enche
    o histórico, não muda nada no servidor, e só depois de alguém mexer. «Copiar a ligação» dá-a a quem a quiser ver.
 5. **A regra da casa, toda.** Sem `<script>` nem `style=""` em linha: o modelo vai dentro do script do laboratório,

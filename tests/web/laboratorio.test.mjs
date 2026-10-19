@@ -141,8 +141,14 @@ test('a noite tem tempo: uma invocação por intervalo, do crepúsculo à alvora
 test('as réguas da noite vão até onde os dados deixam', () => {
   const eco = csv(readFileSync('data/source/economy.csv', 'utf8'));
   assert.equal(L.noite.nomeadosMax, Number(eco.find((r) => r.key === 'named_cap').value), 'nove nomes ao mesmo tempo (§76)');
-  const fortalezas = csv(readFileSync('data/source/segments.csv', 'utf8')).filter((s) => s.kind === 'fortress');
-  assert.equal(L.noite.fortalezasMax, fortalezas.length, 'uma fortaleza por povo');
+  // O WorldPlan.draw põe uma fortaleza por povo além do de casa, e o de casa é o do segmento de partida.
+  const povos = csv(readFileSync('data/source/peoples.csv', 'utf8'));
+  const biomas = csv(readFileSync('data/source/biomes.csv', 'utf8')).filter((b) => b.in_campaign === 'true');
+  const partida = readFileSync('src/core/sim_factory.gd', 'utf8').match(/^const SEGMENTO_DE_PARTIDA := &"([^"]+)"/m)[1];
+  const povo = csv(readFileSync('data/source/segments.csv', 'utf8')).find((x) => x.id === partida).people;
+  const casa = povos.find((p) => p.id === povo).biome;
+  assert.ok(biomas.some((b) => b.id === casa), 'o bioma de casa é de campanha');
+  assert.equal(L.noite.fortalezasMax, biomas.length - 1, 'uma fortaleza por povo, menos o de casa');
 });
 
 test('a escada do muro paga cada degrau inteiro: 6 · 11 · 20 · 36 · 65', () => {

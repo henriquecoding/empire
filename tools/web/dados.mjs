@@ -401,8 +401,20 @@ function laboratorio(raiz) {
   if (rp.has("summon_interval")) falha("rot.csv: summon_interval está em _proposed e o laboratório trata-o como decidido");
   const [de, ate] = String(rot.summon_interval).split("|").map(Number);
   if (!(de > 0 && ate >= de)) falha(`rot.csv: summon_interval não é «mínimo|máximo» («${rot.summon_interval}»)`);
-  const fortalezasNoMapa = lerCsv(raiz, "data/source/segments.csv").filter((s) => s.kind === "fortress").length;
-  if (!fortalezasNoMapa) falha("segments.csv: nenhum segmento fortress — a régua das fortalezas não tem fim");
+  // Uma fortaleza por povo além do de casa: o WorldPlan.draw recebe as regiões da campanha
+  // menos uma (frontier.gd), e as regiões são os biomas in_campaign (SimFactory.campaign_regions).
+  const partida = readFileSync(join(raiz, "src/core/sim_factory.gd"), "utf8").match(/^const SEGMENTO_DE_PARTIDA := &"([^"]+)"/m);
+  if (!partida) falha("sim_factory.gd: não há const SEGMENTO_DE_PARTIDA := &\"…\"");
+  const povoDeCasa = lerCsv(raiz, "data/source/segments.csv").find((x) => x.id === partida[1])?.people;
+  const casa = lerCsv(raiz, "data/source/peoples.csv").find((x) => x.id === povoDeCasa)?.biome;
+  if (!casa) falha(`segments.csv / peoples.csv: o segmento de partida ${partida[1]} não leva a um bioma`);
+  const fortalezasNoMapa = lerCsv(raiz, "data/source/biomes.csv").filter((b) => b.in_campaign === "true" && b.id !== casa).length;
+  if (!fortalezasNoMapa) falha("biomes.csv: nenhum bioma de campanha além do de casa — a régua das fortalezas não tem fim");
+  // O laboratório diz que a probabilidade da noite de dois lados é proposta; se deixar de o ser, o texto muda primeiro.
+  const regras = lerCsv(raiz, "data/source/rules.csv").find((x) => x.key === "rift_both_chance");
+  if (!regras || !String(regras._proposed).split("|").includes("rift_both_chance")) {
+    falha("rules.csv: rift_both_chance já não está em _proposed — o laboratório ainda a diz proposta (laboratorio-textos.mjs, dois_lados)");
+  }
   const noite = {
     base: decidido("mass_base"), porDia: decidido("mass_per_day"), porFortaleza: decidido("mass_per_fortress"),
     abertura: decidido("opening_mass"), rampa: decidido("ramp_nights"),
@@ -410,7 +422,9 @@ function laboratorio(raiz) {
     porRecusa: decidido("refusal_mass"), tetoRecusas: decidido("refusal_cap"), janela: decidido("refusal_window_days"),
     doisLados: decidido("two_sided_from_day"),
     recusasMax: constanteGd(raiz, "src/sim/systems/rot_system.gd", "RECUSAS_MAX"),
-    // Onde as réguas acabam: uma fortaleza por povo, e tantos nomes quantos há ao mesmo tempo (§76).
+    // Onde as réguas acabam: as fortalezas que uma campanha tem; e os nomes que podem cair
+    // numa noite, que são os que há ao mesmo tempo (§76). As árvores com nome não têm teto no
+    // jogo — os títulos voltam e caem outra vez —, por isso este é o fim da régua, não do jogo.
     fortalezasMax: fortalezasNoMapa, nomeadosMax: eco.numero("named_cap"),
     // O ritmo (§51): uma invocação a cada summon_interval, do crepúsculo à alvorada.
     cadencia: { de, ate }, duracao: Number(clock.dusk) + Number(clock.night),

@@ -25,7 +25,7 @@ export const FERRAMENTAS = ["noite", "economia", "combate", "muro"];
 
 // O jogo não põe teto aos Amargueiros de pé: o RotSystem conta todos. A régua precisa
 // de um fim, e este é o da régua e não do jogo — mais do dobro dos anónimos que a
-// tabela da §74 escreve. As outras réguas da noite acabam onde os dados acabam.
+// tabela da §74 escreve. As outras réguas da noite tiram o fim dos dados (dados.mjs).
 const ARVORES_NA_REGUA = 12;
 
 /** O estado com que cada instrumento abre: o caso que se lê sem mexer em nada. */
