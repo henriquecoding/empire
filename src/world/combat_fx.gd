@@ -5,8 +5,7 @@
 # ImpactView) leem daqui a MESMA pose, e e por isso que isto e estatico como o
 # Smoothing — a mesma gravacao para todos, e nenhum a inventar a sua.
 #
-# O que um golpe faz ao corpo, pela ordem em que acontece (a "Art of Screenshake"
-# da Vlambeer e o hitstop das Capcom, medidos no PR):
+# A apresentacao de um golpe (Vlambeer / Capcom):
 #
 #   1 · quem bate prepara-se e avanca (StrikePose)
 #   2 · no impacto, quem bate fica parado no frame do golpe e quem leva treme
@@ -219,6 +218,10 @@ static func attack_frame(art: OriginalArt, perfil: StringName, id: int, falta: f
 	var dura := art.action_seconds(perfil, &"attack")
 	if p < 0.0 or dura <= 0.0:
 		return -1
+	var release := (
+		StrikePose.WINDUP_S / (StrikePose.WINDUP_S + StrikePose.STRIKE_S + StrikePose.RECOVER_S)
+	)
+	p = RoyalArt.strike_progress(perfil, p, release)
 	return art.frame_at(perfil, p * dura, &"attack", false)
 
 

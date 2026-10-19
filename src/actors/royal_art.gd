@@ -2,6 +2,7 @@ class_name RoyalArt
 extends RefCounted
 
 const ROOT := "res://art/export/royals/"
+const EVENT_EPSILON := 0.000000001
 const CAST := [
 	&"royal_king",
 	&"royal_squire",
@@ -14,6 +15,7 @@ const CAST := [
 ]
 static var _assets: Dictionary = {}
 static var _textures: Dictionary = {}
+static var _impact_ratios: Dictionary = {}
 
 
 static func entry(id: StringName) -> Dictionary:
@@ -76,3 +78,30 @@ static func preview(
 	target.position = (foot + target.position * zoom).floor()
 	target.size *= zoom
 	canvas.draw_texture_rect_region(_textures[path], target, picture.source)
+
+
+## Map the existing combat release to the authored impact, keeping relative frame timings
+## on each side of that event. Markers describe presentation and never apply gameplay.
+static func strike_progress(id: StringName, progress: float, release_point: float) -> float:
+	var item := entry(id)
+	if item.is_empty() or not item.tags.has("attack"):
+		return progress
+	var events: Array = item.events.get("attack", [])
+	if events.is_empty():
+		return progress
+	if not _impact_ratios.has(id):
+		var tag: Dictionary = item.tags.attack
+		var marker := int(events[0].frame)
+		var before := 0.0
+		var total := 0.0
+		for frame in range(int(tag.from_frame), int(tag.to_frame) + 1):
+			var duration := float(item.durations_ms[frame])
+			if frame - int(tag.from_frame) < marker:
+				before += duration
+			total += duration
+		_impact_ratios[id] = before / total
+	var impact := float(_impact_ratios[id])
+	if progress < release_point:
+		return impact * progress / release_point
+	var recovery := (progress - release_point) / (1.0 - release_point)
+	return minf(1.0, impact + (1.0 - impact) * recovery + EVENT_EPSILON)

@@ -144,3 +144,19 @@ func test_gallery_button_opens_a_visible_stage_and_can_close_back_to_selection()
 	gallery.close()
 	await get_tree().process_frame
 	assert_bool(RoyalGallery.active).is_false()
+
+
+func test_delivered_impact_markers_match_the_simulated_attack_release() -> void:
+	var previous: Dictionary = CombatFx._ataques.duplicate(true)
+	var art := OriginalArt.new()
+	var who := -900
+	for profile: StringName in [&"royal_king", &"royal_nia", &"royal_archer"]:
+		var item := art.entry(profile)
+		var marker := int(item.events.attack[0].frame)
+		CombatFx.attacked(
+			who, StrikePose.Style.RANGED if profile == &"royal_archer" else StrikePose.Style.MELEE
+		)
+		var frame := CombatFx.attack_frame(art, profile, who, INF)
+		assert_int(frame).is_equal(int(item.tags.attack.from_frame) + marker)
+		who -= 1
+	CombatFx._ataques = previous
