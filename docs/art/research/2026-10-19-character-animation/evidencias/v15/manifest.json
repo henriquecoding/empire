@@ -1,0 +1,151 @@
+{
+  "version": 15,
+  "title": "Empire — Sombra, bailarina e jardim individual",
+  "status": "Pacote de animações para avaliação; integração no motor pendente",
+  "method": "Design aprovado em 19/10/2026. Novas poses geradas e adaptadas aos rasters finais 64/80; estágios próprios de cada planta, com relógios individuais. Não se afirma que todos os pixels foram desenhados manualmente.",
+  "nativeDimensions": true,
+  "alpha": "0 or 255",
+  "filter": "nearest",
+  "framesFlattened": true,
+  "directions": "right e espelho left; armamento e iluminação também espelham",
+  "characters": [
+    {
+      "id": "rei",
+      "label": "Rei",
+      "size": 80,
+      "pivot": [
+        40,
+        78
+      ],
+      "frameCount": 96,
+      "uniqueRasterFrames": 80,
+      "tags": 12,
+      "metadata": "personagens/rei/animacoes.json",
+      "revision": 13
+    },
+    {
+      "id": "escudeiro",
+      "label": "Escudeiro",
+      "size": 64,
+      "pivot": [
+        32,
+        62
+      ],
+      "frameCount": 100,
+      "uniqueRasterFrames": 80,
+      "tags": 14,
+      "metadata": "personagens/escudeiro/animacoes.json",
+      "revision": 13
+    },
+    {
+      "id": "nia",
+      "label": "Nia",
+      "size": 64,
+      "pivot": [
+        32,
+        62
+      ],
+      "frameCount": 96,
+      "uniqueRasterFrames": 80,
+      "tags": 12,
+      "metadata": "personagens/nia/animacoes.json",
+      "revision": 13
+    },
+    {
+      "id": "bardo",
+      "label": "Bardo",
+      "size": 64,
+      "pivot": [
+        32,
+        62
+      ],
+      "frameCount": 96,
+      "uniqueRasterFrames": 80,
+      "tags": 12,
+      "metadata": "personagens/bardo/animacoes.json",
+      "revision": 13
+    },
+    {
+      "id": "arqueiro",
+      "label": "Arqueiro",
+      "size": 80,
+      "pivot": [
+        28,
+        78
+      ],
+      "frameCount": 112,
+      "uniqueRasterFrames": 88,
+      "tags": 12,
+      "metadata": "personagens/arqueiro/animacoes.json",
+      "revision": 13
+    },
+    {
+      "id": "intendente",
+      "label": "Intendente",
+      "size": 64,
+      "pivot": [
+        32,
+        62
+      ],
+      "frameCount": 114,
+      "uniqueRasterFrames": 88,
+      "tags": 14,
+      "metadata": "personagens/intendente/animacoes.json",
+      "revision": 13
+    },
+    {
+      "id": "sombra",
+      "label": "Sombra",
+      "size": 80,
+      "pivot": [
+        40,
+        78
+      ],
+      "frameCount": 112,
+      "uniqueRasterFrames": 94,
+      "tags": 16,
+      "metadata": "personagens/sombra/animacoes.json",
+      "revision": 15
+    },
+    {
+      "id": "dancarina",
+      "label": "Bailarina",
+      "size": 64,
+      "pivot": [
+        32,
+        62
+      ],
+      "frameCount": 96,
+      "uniqueRasterFrames": 80,
+      "tags": 12,
+      "metadata": "personagens/dancarina/animacoes.json",
+      "revision": 15
+    }
+  ],
+  "effects": [
+    {
+      "id": "individual_garden",
+      "metadata": "efeitos/jardim-padrao.json"
+    },
+    {
+      "id": "plants",
+      "metadata": "efeitos/plantas/plantas.json"
+    },
+    {
+      "id": "sombra_healing_composite",
+      "metadata": "efeitos/sombra-cura-composta.json"
+    }
+  ],
+  "primary": {
+    "rei": "attack",
+    "escudeiro": "block",
+    "nia": "attack",
+    "bardo": "play",
+    "arqueiro": "shoot",
+    "intendente": "deliver",
+    "sombra": "heal_sequence",
+    "dancarina": "dance"
+  },
+  "totalFrameEntries": 822,
+  "uniqueRasterFramesIncludingMirrors": 670
+}

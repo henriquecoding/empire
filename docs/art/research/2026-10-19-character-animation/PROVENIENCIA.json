@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-19",
+  "scope": "Pesquisa, método e evidências; sem integração de assets no jogo",
+  "image_generation_tool": "built-in image generation",
+  "pixellab_executed": false,
+  "design_accepted_by_author": true,
+  "animation_v15_accepted_by_author": false,
+  "original_package_tested_in_godot": false,
+  "original_package_opened_in_aseprite_application": false,
+  "original_viewer_browser_runtime_tested": false,
+  "files": [
+    {
+      "path": "historico/PESQUISA-E-CORRECOES-V13.md",
+      "origin": "output/imperadores-v13/EMPIRE-ANIMACOES-V13/pesquisa/PESQUISA-E-CORRECOES-V13.md",
+      "sha256": "2f7d514851edf39b1d73d2c712cb71524d4b9f4a35c214bd71286e11a0b565fd",
+      "bytes": 5835,
+      "copied_without_modification": true
+    },
+    {
+      "path": "historico/PESQUISA-E-PROPOSTA-SOMBRA.md",
+      "origin": "output/direcao-sombra/EMPIRE-SOMBRA-BAILARINA-PESQUISA-E-PROPOSTA.md",
+      "sha256": "e62aa68b8fabe886ec8ee4e7fc432869846a1ddf5046f21103036ba2243b957a",
+      "bytes": 21579,
+      "copied_without_modification": true
+    },
+    {
+      "path": "referencias/sombra-bailarina-design-aceito.png",
+      "origin": "generated_images/exec-af402364-52ee-4c7d-b151-81728d7ea379.png",
+      "sha256": "5f207fe5b34f6c9c6b426f09c911088c3a179d32b08cf3cd9fa738916fdb4457",
+      "bytes": 1485086,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/LEIA-ME-ORIGINAL.md",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/LEIA-ME.md",
+      "sha256": "8f5c18d8af9b3196db29e28c08ec42d493d9b4c66192b7bdfdd21baffbe82c9d",
+      "bytes": 6962,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/prompts.json",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/pesquisa/PROMPTS.json",
+      "sha256": "d796044d363d9d12b0eafaf17dad097319c14c4349e9e22812df47eada91b84c",
+      "bytes": 17322,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/extracao.json",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/source-frames/extraction.json",
+      "sha256": "ccb02d38de85df269b71144e53cd669eeb0cdb70cac7f89dd008fa74118ba570",
+      "bytes": 22129,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/paletas.json",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/source-frames/paletas.json",
+      "sha256": "8993f9285c202de722e8051ca68053618564b2a27f8a1938873dac4b7094ee59",
+      "bytes": 989,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/manifest.json",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/manifest.json",
+      "sha256": "e9f69fc344396852f229b1c5b42b1af5e0b5c7157056da4c30622c806d1cb063",
+      "bytes": 3436,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/verificacao.json",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/verificacao.json",
+      "sha256": "7c191a6b2020b62e9994ae150482cc17ea9bd2584ffec19e3b2650e7e40191ee",
+      "bytes": 1683,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/jardim-padrao.json",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/efeitos/jardim-padrao.json",
+      "sha256": "d5aaee8c15ebf70a4a766042fda7592a745947ad75e152fa2f11a2e2213b51f2",
+      "bytes": 5701,
+      "copied_without_modification": true
+    },
+    {
+      "path": "evidencias/v15/jardim.cjs",
+      "origin": "output/imperadores-v15/EMPIRE-ANIMACOES-V15/source/jardim.cjs",
+      "sha256": "415f2eb42147e87431720bf08c618a815ca08c7a5d795a6ebf1b4bf7946593be",
+      "bytes": 1562,
+      "copied_without_modification": true
+    }
+  ]
+}
