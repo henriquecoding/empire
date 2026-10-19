@@ -39,3 +39,6 @@ art/export/animated/*.png -filter -diff -merge binary
 # Native scenery sources and exports are reviewed without an LFS fetch (ADR 0084).
 art/source/scenery_native/**/*.png -filter -diff -merge binary
 art/export/scenery_native/**/*.png -filter -diff -merge binary
+# V15 must load from a CI checkout without an LFS fetch (CV-04).
+art/export/royals/**/*.png -filter -diff -merge binary
+art/source/royals_v15/**/*.aseprite -filter -diff -merge binary

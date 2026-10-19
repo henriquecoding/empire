@@ -32,18 +32,18 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `dragonfly` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `root_berserker` | 2 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `mercenary` | 6 |  | `royal_knight` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `monarch` | 1 | sim | `royal_king` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `squire` | 1 | sim | `royal_squire` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `monarch` | 1 | sim | `royal_king` — emprestado | `attack`, `attack_left`, `attack_right`, `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right` | `work` |
+| `squire` | 1 | sim | `royal_squire` — emprestado | `attack`, `block`, `block_hold`, `block_hold_left`, `block_hold_right`, `block_left`, `block_right`, `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right` | `work` |
 | `builder` | 1 | sim | `royal_smith` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `smith` | 2 |  | `royal_smith` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `cook` | 2 | sim | `royal_cook` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `diplomat` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `bard` | 6 |  | `royal_bard` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `bard` | 6 |  | `royal_bard` — emprestado | `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `play`, `play_left`, `play_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right`, `work` | `attack` |
 | `climber` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
-| `buried_knight` | 6 |  | `royal_knight` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `buried_knight` | 6 |  | `royal_shadow` — emprestado | `die`, `die_left`, `die_right`, `flee`, `heal`, `heal_left`, `heal_right`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `rise`, `rise_left`, `rise_right`, `sit`, `sit_left`, `sit_right`, `stand`, `stand_left`, `stand_right`, `walk`, `walk_left`, `walk_right` | `attack`, `work` |
 | `sealed_knight` | 6 |  | `royal_knight` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `archer_hero` | 1 |  | `royal_archer` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `bard_hero` | 6 |  | `royal_bard` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `archer_hero` | 1 |  | `royal_archer` — emprestado | `attack`, `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `rise`, `rise_left`, `rise_right`, `shoot`, `shoot_left`, `shoot_right`, `walk`, `walk_left`, `walk_right` | `work` |
+| `bard_hero` | 6 |  | `royal_bard` — emprestado | `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `play`, `play_left`, `play_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right`, `work` | `attack` |
 | `diplomat_hero` | 6 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `canopy_archer` | 2 |  | `royal_bowman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `barge` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
@@ -53,10 +53,10 @@ Accoes do contrato (`src/actors/actor_action.gd`): `attack`, `die`, `flee`, `hit
 | `digger` | 7 |  | procedural (`ActorArt`) | — | `attack`, `die`, `flee`, `hit`, `idle`, `walk`, `work` |
 | `ice_warden` | 7 |  | `royal_spearman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
 | `reed_stalker` | 7 |  | `royal_bowman` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `nia` | 1 |  | `royal_nia` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `archer_emperor` | 1 |  | `royal_archer` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `bard_banner` | 1 |  | `royal_bard` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
-| `quiver_squire` | 1 |  | `royal_quiver` — emprestado | `flee`, `idle`, `walk` | `attack`, `die`, `hit`, `work` |
+| `nia` | 1 |  | `royal_nia` — emprestado | `attack`, `attack_left`, `attack_right`, `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right` | `work` |
+| `archer_emperor` | 1 |  | `royal_archer` — emprestado | `attack`, `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `rise`, `rise_left`, `rise_right`, `shoot`, `shoot_left`, `shoot_right`, `walk`, `walk_left`, `walk_right` | `work` |
+| `bard_banner` | 1 |  | `royal_bard` — emprestado | `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `play`, `play_left`, `play_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right`, `work` | `attack` |
+| `quiver_squire` | 1 |  | `royal_quiver` — emprestado | `deliver`, `deliver_left`, `deliver_right`, `die`, `die_left`, `die_right`, `flee`, `hit`, `hit_left`, `hit_right`, `idle`, `idle_left`, `idle_right`, `receive`, `receive_left`, `receive_right`, `rise`, `rise_left`, `rise_right`, `walk`, `walk_left`, `walk_right`, `work` | `attack` |
 
 ## Obras
 
@@ -131,8 +131,8 @@ O que o marco usa e ainda nao tem arte propria, accoes desenhadas ou aprovacao. 
 **Unidades**
 
 - `vagrant`: `royal_citizen` — emprestado; faltam `attack`, `die`, `hit`, `work`
-- `monarch`: `royal_king` — emprestado; faltam `attack`, `die`, `hit`, `work`
-- `squire`: `royal_squire` — emprestado; faltam `attack`, `die`, `hit`, `work`
+- `monarch`: `royal_king` — emprestado; faltam `work`
+- `squire`: `royal_squire` — emprestado; faltam `work`
 - `builder`: `royal_smith` — emprestado; faltam `attack`, `die`, `hit`, `work`
 - `cook`: `royal_cook` — emprestado; faltam `attack`, `die`, `hit`, `work`
 
@@ -239,6 +239,25 @@ Fontes integrais: `art/source/renewal/`. Export deterministico: `tools/export_re
 | `royal_winged` | 192 x 192 | 4 | idle, walk, flee |
 
 Os ataques, golpes recebidos e quedas usam poses do combate. Caminhadas com quatro frames; nao se declaram ciclos de ataque completos. Edificios conservam estados de pagamento, construcao, reparacao e ruina. Todas as especies da Podridao usam sprites desta familia e olhos emissivos.
+
+
+## Elenco V15 — pedido de integração de 19/10/2026
+
+Fonte editável: `art/source/royals_v15/`. Importação fiel: `tools/export_royals.py`.
+Os seis membros das duplas iniciais são usados no seletor e no mundo. O Cavaleiro Enterrado usa a aparência do Sombra; a Bailarina e a sequência de floração estão disponíveis na galeria dentro do jogo. Não há quarto par de gameplay definido (CV-04).
+
+| Perfil | Tela | Entradas (incluindo espelhos) | Ações |
+|---|---|---:|---|
+| `royal_archer` | 80 × 80 | 112 | idle, walk, hit, die, rise, shoot |
+| `royal_bard` | 64 × 64 | 96 | idle, walk, hit, die, rise, play |
+| `royal_dancer` | 64 × 64 | 96 | idle, walk, hit, die, rise, dance |
+| `royal_king` | 80 × 80 | 96 | idle, walk, hit, die, rise, attack |
+| `royal_nia` | 64 × 64 | 96 | idle, walk, hit, die, rise, attack |
+| `royal_quiver` | 64 × 64 | 114 | idle, walk, hit, die, rise, deliver, receive |
+| `royal_shadow` | 80 × 80 | 112 | idle, walk, hit, die, rise, sit, heal, stand |
+| `royal_squire` | 64 × 64 | 100 | idle, walk, hit, die, rise, block, block_hold |
+
+Pivôs por direção, tempos variáveis e marcadores preservados. Os marcadores não aplicam dano, cura, moedas ou projéteis; a simulação mantém essa autoridade.
 
 
 ## Cenarios em camadas — entrega de 08/10/2026

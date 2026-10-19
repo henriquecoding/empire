@@ -1,0 +1,436 @@
+{
+  "palette": [
+    "#253126",
+    "#3c4a2e",
+    "#5c7040",
+    "#8b9c60",
+    "#b6c684",
+    "#7e6634",
+    "#b88a35",
+    "#e0b34d",
+    "#f2d785",
+    "#f8e9b6",
+    "#fff3d2",
+    "#843546",
+    "#b25565",
+    "#db8e90",
+    "#e8b0a4"
+  ],
+  "variants": [
+    {
+      "id": "ivory-7",
+      "species": 0,
+      "height": 7,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "ivory-7/0.png",
+        "ivory-7/1.png",
+        "ivory-7/2.png",
+        "ivory-7/3.png",
+        "ivory-7/4.png",
+        "ivory-7/5.png",
+        "ivory-7/6.png",
+        "ivory-7/7.png",
+        "ivory-7/8.png",
+        "ivory-7/9.png",
+        "ivory-7/10.png",
+        "ivory-7/11.png",
+        "ivory-7/12.png",
+        "ivory-7/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "ivory-10",
+      "species": 0,
+      "height": 10,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "ivory-10/0.png",
+        "ivory-10/1.png",
+        "ivory-10/2.png",
+        "ivory-10/3.png",
+        "ivory-10/4.png",
+        "ivory-10/5.png",
+        "ivory-10/6.png",
+        "ivory-10/7.png",
+        "ivory-10/8.png",
+        "ivory-10/9.png",
+        "ivory-10/10.png",
+        "ivory-10/11.png",
+        "ivory-10/12.png",
+        "ivory-10/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "ivory-14",
+      "species": 0,
+      "height": 14,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "ivory-14/0.png",
+        "ivory-14/1.png",
+        "ivory-14/2.png",
+        "ivory-14/3.png",
+        "ivory-14/4.png",
+        "ivory-14/5.png",
+        "ivory-14/6.png",
+        "ivory-14/7.png",
+        "ivory-14/8.png",
+        "ivory-14/9.png",
+        "ivory-14/10.png",
+        "ivory-14/11.png",
+        "ivory-14/12.png",
+        "ivory-14/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "rose-7",
+      "species": 1,
+      "height": 7,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "rose-7/0.png",
+        "rose-7/1.png",
+        "rose-7/2.png",
+        "rose-7/3.png",
+        "rose-7/4.png",
+        "rose-7/5.png",
+        "rose-7/6.png",
+        "rose-7/7.png",
+        "rose-7/8.png",
+        "rose-7/9.png",
+        "rose-7/10.png",
+        "rose-7/11.png",
+        "rose-7/12.png",
+        "rose-7/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "rose-10",
+      "species": 1,
+      "height": 10,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "rose-10/0.png",
+        "rose-10/1.png",
+        "rose-10/2.png",
+        "rose-10/3.png",
+        "rose-10/4.png",
+        "rose-10/5.png",
+        "rose-10/6.png",
+        "rose-10/7.png",
+        "rose-10/8.png",
+        "rose-10/9.png",
+        "rose-10/10.png",
+        "rose-10/11.png",
+        "rose-10/12.png",
+        "rose-10/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "rose-14",
+      "species": 1,
+      "height": 14,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "rose-14/0.png",
+        "rose-14/1.png",
+        "rose-14/2.png",
+        "rose-14/3.png",
+        "rose-14/4.png",
+        "rose-14/5.png",
+        "rose-14/6.png",
+        "rose-14/7.png",
+        "rose-14/8.png",
+        "rose-14/9.png",
+        "rose-14/10.png",
+        "rose-14/11.png",
+        "rose-14/12.png",
+        "rose-14/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "yellow-7",
+      "species": 2,
+      "height": 7,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "yellow-7/0.png",
+        "yellow-7/1.png",
+        "yellow-7/2.png",
+        "yellow-7/3.png",
+        "yellow-7/4.png",
+        "yellow-7/5.png",
+        "yellow-7/6.png",
+        "yellow-7/7.png",
+        "yellow-7/8.png",
+        "yellow-7/9.png",
+        "yellow-7/10.png",
+        "yellow-7/11.png",
+        "yellow-7/12.png",
+        "yellow-7/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "yellow-10",
+      "species": 2,
+      "height": 10,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "yellow-10/0.png",
+        "yellow-10/1.png",
+        "yellow-10/2.png",
+        "yellow-10/3.png",
+        "yellow-10/4.png",
+        "yellow-10/5.png",
+        "yellow-10/6.png",
+        "yellow-10/7.png",
+        "yellow-10/8.png",
+        "yellow-10/9.png",
+        "yellow-10/10.png",
+        "yellow-10/11.png",
+        "yellow-10/12.png",
+        "yellow-10/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "yellow-14",
+      "species": 2,
+      "height": 14,
+      "width": 24,
+      "frameHeight": 28,
+      "root": [
+        12,
+        25
+      ],
+      "stages": 14,
+      "files": [
+        "yellow-14/0.png",
+        "yellow-14/1.png",
+        "yellow-14/2.png",
+        "yellow-14/3.png",
+        "yellow-14/4.png",
+        "yellow-14/5.png",
+        "yellow-14/6.png",
+        "yellow-14/7.png",
+        "yellow-14/8.png",
+        "yellow-14/9.png",
+        "yellow-14/10.png",
+        "yellow-14/11.png",
+        "yellow-14/12.png",
+        "yellow-14/13.png"
+      ],
+      "grow": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wither": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    }
+  ],
+  "method": "Eight drawn growth stages plus six separately drawn withering stages, fixed root. Three pre-exported sizes. No rotation or per-frame scaling."
+}

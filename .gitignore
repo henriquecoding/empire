@@ -73,3 +73,6 @@ ferramentas/saida/
 __pycache__/
 
 !art/export/renewal/
+
+# The owner's approved character delivery (CV-04).
+!art/export/royals/

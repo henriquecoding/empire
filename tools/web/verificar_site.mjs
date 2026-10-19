@@ -356,9 +356,9 @@ async function main() {
       await p.waitForTimeout(150);
       await p.keyboard.press("Escape");
       await p.keyboard.press("ArrowUp"); // Retomar, o ponto de partida da travessia.
-      // Retomar, Estado do reino, Opções, Controlos, [Ecrã inteiro], Recomeçar, Exportar, Voltar.
+      // Retomar, Estado do reino, Opções, Animações, Controlos, [Ecrã inteiro], Recomeçar, Exportar, Voltar.
       const ecra = await p.evaluate(() => Boolean(window.empireEcra && window.empireEcra.pode()));
-      for (let i = 0; i < 6 + (ecra ? 1 : 0); i++) {
+      for (let i = 0; i < 7 + (ecra ? 1 : 0); i++) {
         await p.keyboard.press("ArrowDown");
         await p.waitForTimeout(80);
       }

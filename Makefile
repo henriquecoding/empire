@@ -87,6 +87,7 @@ inventario-arte:  ## docs/art/RUNTIME_ART.md em dia com o manifesto, os CSV e o 
 	python3 tools/export_scenery.py --check
 	python3 tools/export_native_scenery.py --check
 	python3 tools/export_animated.py --check
+	python3 tools/export_royals.py --check
 
 afirmacoes:  ## A prosa e o validation.json contra a contagem real
 	python3 tools/check_claims.py
