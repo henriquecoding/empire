@@ -37,3 +37,68 @@ test('missing SHA, network errors and absent workflow fail closed', async () => 
 test('local and preview builds never wait on their own CI', async () => {
   for (const VERCEL_ENV of ['', 'preview']) assert.deepEqual(await releaseGate({ env: { VERCEL_ENV } }), { gated: false });
 });
+
+// A API do GitHub sem token dá 60 pedidos por hora a cada IP, e a máquina de build da
+// Vercel partilha o dela: a 19/10 o deploy do 722fad6 morreu num 403 a cinco minutos de o
+// CI ficar verde. Este relógio anda o que se pede a wait(), para medir as esperas.
+const cabecalhos = h => ({ get: k => h[k.toLowerCase()] ?? null });
+const resposta = (status, h = {}, corpo = {}) => ({ ok: status < 400, status, headers: cabecalhos(h),
+  json: async () => corpo, text: async () => JSON.stringify(corpo) });
+const verde = resposta(200, {}, { workflow_runs: [run] });
+const pendente = resposta(200, { 'x-ratelimit-remaining': '41' }, { workflow_runs: [{ ...run, status: 'in_progress' }] });
+const esgotado = (h, message = 'API rate limit exceeded for 1.2.3.4.') => resposta(403, h, { message });
+function relogio(respostas, mais = {}) {
+  let time = 0;
+  const fila = [...respostas], esperas = [], registos = [], pedidos = [];
+  const opcoes = { env, now: () => time, timeout: 30 * 60_000, log: m => registos.push(m),
+    wait: async ms => { esperas.push(ms); time += ms; },
+    request: async (url, init) => {
+      pedidos.push(init);
+      const r = fila.length > 1 ? fila.shift() : fila[0];
+      if (r instanceof Error) throw r;
+      return r;
+    }, ...mais };
+  return { opcoes, esperas, registos, pedidos };
+}
+test('an exhausted API limit is a wait until it renews, not a refusal', async () => {
+  const primario = relogio([esgotado({ 'x-ratelimit-remaining': '0', 'x-ratelimit-reset': '300' }), verde]);
+  assert.equal((await releaseGate(primario.opcoes)).source_sha, sha);
+  assert.ok(primario.esperas[0] >= 300_000 && primario.esperas[0] <= 305_000, `esperou ${primario.esperas[0]} ms`);
+  const tarde = relogio([resposta(429, { 'retry-after': '90' }), verde]);
+  assert.equal((await releaseGate(tarde.opcoes)).source_sha, sha);
+  assert.deepEqual(tarde.esperas, [90_000]);
+  const secundario = relogio([esgotado({}, 'You have exceeded a secondary rate limit.'), verde]);
+  assert.equal((await releaseGate(secundario.opcoes)).source_sha, sha);
+  assert.equal(secundario.esperas.length, 1);
+});
+test('a limit that only renews after the deadline refuses at once, and says why', async () => {
+  const { opcoes, esperas } = relogio([esgotado({ 'x-ratelimit-remaining': '0', 'x-ratelimit-reset': '3600' })]);
+  await assert.rejects(releaseGate(opcoes), /limite de pedidos/);
+  assert.deepEqual(esperas, []);
+});
+test('network errors and GitHub 5xx are retried, and fail closed at the deadline', async () => {
+  const volta = relogio([new Error('fetch failed'), resposta(502), verde]);
+  assert.equal((await releaseGate(volta.opcoes)).source_sha, sha);
+  assert.equal(volta.esperas.length, 2);
+  await assert.rejects(releaseGate(relogio([new Error('fetch failed')]).opcoes), /dentro do prazo.*fetch failed/);
+});
+test('a refusal that is not a rate limit still stops at once, with GitHub’s reason', async () => {
+  const { opcoes, esperas } = relogio([esgotado({}, 'Resource not accessible by integration')]);
+  await assert.rejects(releaseGate(opcoes), /HTTP 403.*Resource not accessible/);
+  assert.deepEqual(esperas, []);
+});
+test('an optional read-only token is sent, and never written to the log', async () => {
+  const com = relogio([pendente, verde], { env: { ...env, EMPIRE_GITHUB_TOKEN: 'ghp_segredo' } });
+  await releaseGate(com.opcoes);
+  assert.equal(com.pedidos[0].headers.Authorization, 'Bearer ghp_segredo');
+  assert.ok(com.registos.length && !com.registos.join('\n').includes('ghp_segredo'));
+  const sem = relogio([verde]);
+  await releaseGate(sem.opcoes);
+  assert.equal(sem.pedidos[0].headers.Authorization, undefined);
+});
+test('polls every two minutes, and says how much of the API limit is left', async () => {
+  const { opcoes, esperas, registos } = relogio([pendente, verde]);
+  await releaseGate(opcoes);
+  assert.deepEqual(esperas, [120_000]);
+  assert.match(registos[0], /41/);
+});
