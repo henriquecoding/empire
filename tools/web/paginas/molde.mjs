@@ -466,7 +466,10 @@ function estado({ t, d }) {
     return `<div class="trilho"><p class="trilho-nome">${s.trilhos[tr.id]} <span>${feitos}/${tr.tickets.length}</span><span class="sr">: ${resumo}</span></p>
           <ol class="celas" aria-hidden="true">${tr.tickets.map((x) => `<li class="cela c-${x.estado}"></li>`).join("")}</ol></div>`;
   }).join("\n        ");
-  const lista = tk.lista.map((x) => `<tr><th scope="row"><a href="${d.repo}/blob/main/docs/backlog/${x.id}.md">${x.id}</a></th><td lang="pt-PT">${esc(x.titulo)}</td><td><span class="estado e-${x.estado}">${rotEstado[x.estado]}</span></td></tr>`).join("\n              ");
+  // Os títulos são em português: a página portuguesa já o diz no <html>, e só a
+  // inglesa o repete em cada um (são 200, e o caminho crítico conta-os, §19).
+  const emPt = pt(t) ? "" : ' lang="pt-PT"';
+  const lista = tk.lista.map((x) => `<tr><th scope="row"><a href="${d.repo}/blob/main/docs/backlog/${x.id}.md">${x.id}</a></th><td${emPt}>${esc(x.titulo)}</td><td><span class="estado e-${x.estado}">${rotEstado[x.estado]}</span></td></tr>`).join("\n              ");
   const porFase = (n) => tk.trilhos.find((tr) => tr.id === `F${n}`)?.tickets;
   const roteiro = d.roteiro.map((r0) => {
     const r = pt(t) ? r0 : { ...r0, ...s.fases[r0.n] };
@@ -486,7 +489,7 @@ function estado({ t, d }) {
     const mes = new Intl.DateTimeFormat(t.lingua, { month: "short", timeZone: "UTC" }).format(data);
     return pt(t) ? `${data.getUTCDate()} ${mes}` : `${mes} ${data.getUTCDate()}`;
   };
-  const decisoes = d.decisoes.map((x) => `<li><a href="${d.repo}/blob/main/docs/adr/${x.ficheiro}"><span class="adr-n">ADR ${x.n}</span><span class="adr-t" lang="pt-PT">${esc(x.titulo)}</span>`
+  const decisoes = d.decisoes.map((x) => `<li><a href="${d.repo}/blob/main/docs/adr/${x.ficheiro}"><span class="adr-n">ADR ${x.n}</span><span class="adr-t"${emPt}>${esc(x.titulo)}</span>`
     + `${x.data ? `<time datetime="${x.data}">${quando(x.data)}</time>` : ""}</a></li>`).join("\n          ");
   const ler = [["/dossie/", s.ler[0]], [`${d.repo}/tree/main/docs/backlog`, s.ler[1]], [`${d.repo}/blob/main/docs/QUESTIONS.md`, s.ler[2]],
     [`${d.repo}/tree/main/docs/adr`, s.ler[3]], [d.repo, s.ler[4]]];
