@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "characters": [
+    {
+      "id": "rei",
+      "size": 80,
+      "entries": 96,
+      "unique_rasters_with_mirrors": 80
+    },
+    {
+      "id": "escudeiro",
+      "size": 64,
+      "entries": 100,
+      "unique_rasters_with_mirrors": 80
+    },
+    {
+      "id": "nia",
+      "size": 64,
+      "entries": 96,
+      "unique_rasters_with_mirrors": 80
+    },
+    {
+      "id": "bardo",
+      "size": 64,
+      "entries": 96,
+      "unique_rasters_with_mirrors": 80
+    },
+    {
+      "id": "arqueiro",
+      "size": 80,
+      "entries": 112,
+      "unique_rasters_with_mirrors": 88
+    },
+    {
+      "id": "intendente",
+      "size": 64,
+      "entries": 114,
+      "unique_rasters_with_mirrors": 88
+    },
+    {
+      "id": "sombra",
+      "size": 80,
+      "entries": 112,
+      "unique_rasters_with_mirrors": 94
+    },
+    {
+      "id": "dancarina",
+      "size": 64,
+      "entries": 96,
+      "unique_rasters_with_mirrors": 80
+    }
+  ],
+  "effects": [
+    {
+      "id": "sombra-cura-composta",
+      "frames": 150,
+      "size": [
+        160,
+        96
+      ]
+    },
+    {
+      "id": "flowers",
+      "instances": 28,
+      "variants": 9,
+      "growth_stages": 8,
+      "wither_stages": 6
+    }
+  ],
+  "native_dimensions": true,
+  "binary_alpha": true,
+  "png_aseprite_json_pixel_equality": true,
+  "per_plant_scene_reconstruction": true,
+  "timing_and_mirrors": true,
+  "artistic_approval_of_animation": false,
+  "tested_in_godot": false,
+  "browser_runtime_tested": false,
+  "total_character_entries": 822,
+  "note": "Verificação técnica e reconstrução independente do jardim. Não substitui revisão artística nem integração no jogo."
+}

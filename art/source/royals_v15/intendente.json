@@ -1,0 +1,2063 @@
+{
+  "id": "intendente",
+  "label": "Intendente",
+  "width": 64,
+  "height": 64,
+  "atlas": "atlas.png",
+  "frameCount": 114,
+  "uniqueRasterFrames": 88,
+  "animations": [
+    {
+      "name": "idle_right",
+      "action": "idle",
+      "direction": "right",
+      "loop": true,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/idle_right.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 0,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 0
+          },
+          "rgbaSha256": "593a9d88fafb26437610088f616990286f3027c99f661b3f864ee67cce01d99b",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 1,
+          "durationMs": 160,
+          "source": {
+            "kind": "common",
+            "frame": 1
+          },
+          "rgbaSha256": "bdaf32e54c624e26030dcd083b5edff3f8bc02600aad1204cdde4bf887552966",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 2,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 2
+          },
+          "rgbaSha256": "72d5b0dea225142f377ad712a1c80f4702b62820a4f814d7f5617c38c81ae1ed",
+          "rect": {
+            "x": 128,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 3,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 3
+          },
+          "rgbaSha256": "ea7a365a9f9fc623398616b52b7b65be3a613eabcfad0f9622da2bd1a1282430",
+          "rect": {
+            "x": 192,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "walk_right",
+      "action": "walk",
+      "direction": "right",
+      "loop": true,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/walk_right.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 4,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 4
+          },
+          "rgbaSha256": "317e687ce6e7d2e4e4d579649cc4e9ad0c2a482f5a82c01885993276b07d9bcc",
+          "rect": {
+            "x": 256,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 5,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 5
+          },
+          "rgbaSha256": "445a206ea2241d22ae51dccc02ad9851e078b02801d1fb1c259e569a1ee1f6ce",
+          "rect": {
+            "x": 320,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 6,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 6
+          },
+          "rgbaSha256": "c1b88a706ee8745c88f9ce77f030fdf190a84c04ab83ec8fd35cf7086d8e8a00",
+          "rect": {
+            "x": 384,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 7,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 7
+          },
+          "rgbaSha256": "8ad640db9fd54f97d8a0120df28ca651cc487b8e484fae6ad61a7d3ecdef001b",
+          "rect": {
+            "x": 448,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 8,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 8
+          },
+          "rgbaSha256": "95f70ef4211baf3e13c487032bdfd706b9167a20a838f4ecb02c3647694b1128",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 9,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 9
+          },
+          "rgbaSha256": "f4955c64626fd5ecd0a23d957d1db6c272a16127c2c652debebc781c8cf96b01",
+          "rect": {
+            "x": 64,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 10,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 10
+          },
+          "rgbaSha256": "d937055077a4dd04b8a52c710927af127d56c2d4d48b05884c4124a136672505",
+          "rect": {
+            "x": 128,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 11,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 11
+          },
+          "rgbaSha256": "932e7d8607308f96eb0c8ddf5bcf1bc39349bc590b323fa22f2ddb8a6bc064db",
+          "rect": {
+            "x": 192,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "hit_right",
+      "action": "hit",
+      "direction": "right",
+      "loop": false,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/hit_right.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 12,
+          "durationMs": 70,
+          "source": {
+            "kind": "common",
+            "frame": 12
+          },
+          "rgbaSha256": "dc4c75b93b64037eccaa67771b925278ee9290e750b2e3c826117ffaeb937e20",
+          "rect": {
+            "x": 256,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 13,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 13
+          },
+          "rgbaSha256": "25542ca479933973aa1c60986e822453083a23b8b60b03885de9ba03312d10d1",
+          "rect": {
+            "x": 320,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 14,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 14
+          },
+          "rgbaSha256": "353e87f78f10ec8d0af67410d318295c195ec88e453fc94e95ac69e1f2b70d88",
+          "rect": {
+            "x": 384,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 15,
+          "durationMs": 140,
+          "source": {
+            "kind": "common",
+            "frame": 15
+          },
+          "rgbaSha256": "c2c36ae81d8230bbba5b7f137d79c791ffacd6f5065dd55d29f8b59df77b80c1",
+          "rect": {
+            "x": 448,
+            "y": 64,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "die_right",
+      "action": "die",
+      "direction": "right",
+      "loop": false,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/die_right.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 16,
+          "durationMs": 110,
+          "source": {
+            "kind": "common",
+            "frame": 16
+          },
+          "rgbaSha256": "1563631dfff65a0a7f2eba0d1c163736e819de47ef1a707e0ac415a08f2f704d",
+          "rect": {
+            "x": 0,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 17,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 17
+          },
+          "rgbaSha256": "6bd1663c0b1f206a45b0bbb6b4ea8afb086d9e5ee8ecbe86847ccebdc1839452",
+          "rect": {
+            "x": 64,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 18,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 18
+          },
+          "rgbaSha256": "8760779204d21a9de2818a2c0395aaf40cf5ea14a9c1c335c7560ade2c7b4c12",
+          "rect": {
+            "x": 128,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 19,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 19
+          },
+          "rgbaSha256": "1475ff446410789b7f2a2dbce7e719147cc797764b96b16c1621e284556ecd4d",
+          "rect": {
+            "x": 192,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 20,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 20
+          },
+          "rgbaSha256": "1cb318ff71989928db638f451c207be95c799c2342ae228682f25c117f41a14a",
+          "rect": {
+            "x": 256,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 21,
+          "durationMs": 140,
+          "source": {
+            "kind": "common",
+            "frame": 21
+          },
+          "rgbaSha256": "f7e479010a0119922de6bd7573ae50e7e1c2988664412dd4eec8a526c57dd654",
+          "rect": {
+            "x": 320,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 22,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 22
+          },
+          "rgbaSha256": "e127bb1d7d888180285f55c9fc339b3413f25bd23cc781b95cf2d752472d8a65",
+          "rect": {
+            "x": 384,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 23,
+          "durationMs": 350,
+          "source": {
+            "kind": "common",
+            "frame": 23
+          },
+          "rgbaSha256": "c0599ab8a09cb53e1c4e381797ec11a6f335f7195a40b836f488a2300f6128d7",
+          "rect": {
+            "x": 448,
+            "y": 128,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "rise_right",
+      "action": "rise",
+      "direction": "right",
+      "loop": false,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/rise_right.png",
+      "reusedInReverse": true,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 24,
+          "durationMs": 150,
+          "source": {
+            "kind": "common",
+            "frame": 23
+          },
+          "rgbaSha256": "c0599ab8a09cb53e1c4e381797ec11a6f335f7195a40b836f488a2300f6128d7",
+          "rect": {
+            "x": 0,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 25,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 22
+          },
+          "rgbaSha256": "e127bb1d7d888180285f55c9fc339b3413f25bd23cc781b95cf2d752472d8a65",
+          "rect": {
+            "x": 64,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 26,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 21
+          },
+          "rgbaSha256": "f7e479010a0119922de6bd7573ae50e7e1c2988664412dd4eec8a526c57dd654",
+          "rect": {
+            "x": 128,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 27,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 20
+          },
+          "rgbaSha256": "1cb318ff71989928db638f451c207be95c799c2342ae228682f25c117f41a14a",
+          "rect": {
+            "x": 192,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 28,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 19
+          },
+          "rgbaSha256": "1475ff446410789b7f2a2dbce7e719147cc797764b96b16c1621e284556ecd4d",
+          "rect": {
+            "x": 256,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 29,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 18
+          },
+          "rgbaSha256": "8760779204d21a9de2818a2c0395aaf40cf5ea14a9c1c335c7560ade2c7b4c12",
+          "rect": {
+            "x": 320,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 30,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 17
+          },
+          "rgbaSha256": "6bd1663c0b1f206a45b0bbb6b4ea8afb086d9e5ee8ecbe86847ccebdc1839452",
+          "rect": {
+            "x": 384,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 31,
+          "durationMs": 150,
+          "source": {
+            "kind": "common",
+            "frame": 16
+          },
+          "rgbaSha256": "1563631dfff65a0a7f2eba0d1c163736e819de47ef1a707e0ac415a08f2f704d",
+          "rect": {
+            "x": 448,
+            "y": 192,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "deliver_right",
+      "action": "deliver",
+      "direction": "right",
+      "loop": false,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [
+        {
+          "frame": 4,
+          "event": "coin_stowed"
+        },
+        {
+          "frame": 16,
+          "event": "arrows_delivered"
+        }
+      ],
+      "sheet": "acoes/deliver_right.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 32,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 0
+          },
+          "rgbaSha256": "d54634b30d4c712b7fea9680d69a702066448dd13e8ba552967f0d9a3c5569d1",
+          "rect": {
+            "x": 0,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 33,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 1
+          },
+          "rgbaSha256": "33df013f75f8c7f3f0833c50a47809378711515b262b175d3d4077644a220275",
+          "rect": {
+            "x": 64,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 34,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 2
+          },
+          "rgbaSha256": "5bca5e159f121423a1457249f1bc519b64f0f67f1b86fa9ac992259b0683d44d",
+          "rect": {
+            "x": 128,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 35,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 3
+          },
+          "rgbaSha256": "42e8bd12de56fc9898fce83ea609247c34ff05509cb7afb9761f75842606acf4",
+          "rect": {
+            "x": 192,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 36,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 4
+          },
+          "rgbaSha256": "acc7ff7a7f099ac49656e9dced3866a050a31f0821c6a7e8615ad8f20b5b13f8",
+          "rect": {
+            "x": 256,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 37,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 5
+          },
+          "rgbaSha256": "fe8a68974ba370ea75a1575b1c5ce4044b781855593a8d3c98f1f5177a4a9d09",
+          "rect": {
+            "x": 320,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 38,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 6
+          },
+          "rgbaSha256": "257b8cee384b6bcfa405999673d8547fc88a2ba00e54511ef69e8d3569f7840a",
+          "rect": {
+            "x": 384,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 39,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 7
+          },
+          "rgbaSha256": "017156a36535ecf311ca71296236aab0720efe52dd144032e4edaad375147127",
+          "rect": {
+            "x": 448,
+            "y": 256,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 8,
+          "atlasIndex": 40,
+          "durationMs": 100,
+          "source": {
+            "kind": "bridge",
+            "frame": 0
+          },
+          "rgbaSha256": "c79d83c7ed9b8e64996b391039eb549325e26dd447890386d4ebd51f22ee3397",
+          "rect": {
+            "x": 0,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 9,
+          "atlasIndex": 41,
+          "durationMs": 120,
+          "source": {
+            "kind": "bridge",
+            "frame": 1
+          },
+          "rgbaSha256": "66d8d7e154ea1e604e2cbba15d2659b5b26cfd8f95c9e36d8d3748b66a915634",
+          "rect": {
+            "x": 64,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 10,
+          "atlasIndex": 42,
+          "durationMs": 120,
+          "source": {
+            "kind": "bridge",
+            "frame": 2
+          },
+          "rgbaSha256": "3ae7af24f77e505a18cf64ac2b7a61be5e6f78b1a26a4138c4156999e6d65fc9",
+          "rect": {
+            "x": 128,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 11,
+          "atlasIndex": 43,
+          "durationMs": 100,
+          "source": {
+            "kind": "bridge",
+            "frame": 3
+          },
+          "rgbaSha256": "05de99de6bde549dc027e04223e6e0d2e8673470e86061de89d04256ee7afb2f",
+          "rect": {
+            "x": 192,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 12,
+          "atlasIndex": 44,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 8
+          },
+          "rgbaSha256": "53b2ab9a5b22b1180092e4cbb5a55bd72c1adbc0d3a7f9861ca397a7f9526647",
+          "rect": {
+            "x": 256,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 13,
+          "atlasIndex": 45,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 9
+          },
+          "rgbaSha256": "f46be1d90a9e5258e8d580fb6de6f5ee9db3dfa3e81fe32ef214f79768a86745",
+          "rect": {
+            "x": 320,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 14,
+          "atlasIndex": 46,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 10
+          },
+          "rgbaSha256": "795328c05cc5ea6c3fed23bb368ddbd8836717a25689f3088d37e474cfd04086",
+          "rect": {
+            "x": 384,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 15,
+          "atlasIndex": 47,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 11
+          },
+          "rgbaSha256": "19ff7485fced96cb5fad6081625cd23f074b092dbbc2b3791f9a3a38dab76746",
+          "rect": {
+            "x": 448,
+            "y": 320,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 16,
+          "atlasIndex": 48,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 12
+          },
+          "rgbaSha256": "8957a39e94d0599d0e674af4ddb7745562bb44475bea2799b4e34fa3c72f963c",
+          "rect": {
+            "x": 0,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 17,
+          "atlasIndex": 49,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 13
+          },
+          "rgbaSha256": "f6c306ae02c3562c4cc09e94c8aee1b18e884155f99f571887fd8cc9dc5f70c7",
+          "rect": {
+            "x": 64,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 18,
+          "atlasIndex": 50,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 14
+          },
+          "rgbaSha256": "c206a42c242e6036ec0eff90011ba6206237114b64af9ff2cf313ace7212827b",
+          "rect": {
+            "x": 128,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 19,
+          "atlasIndex": 51,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 15
+          },
+          "rgbaSha256": "2bf12e26b3c608af2c9236b2ab7bc17b891a7e67fc4b1fee1bb4618bf924c366",
+          "rect": {
+            "x": 192,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "receive_right",
+      "action": "receive",
+      "direction": "right",
+      "loop": false,
+      "pivot": [
+        32,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/receive_right.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 52,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 0
+          },
+          "rgbaSha256": "d54634b30d4c712b7fea9680d69a702066448dd13e8ba552967f0d9a3c5569d1",
+          "rect": {
+            "x": 256,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 53,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 1
+          },
+          "rgbaSha256": "33df013f75f8c7f3f0833c50a47809378711515b262b175d3d4077644a220275",
+          "rect": {
+            "x": 320,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 54,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 2
+          },
+          "rgbaSha256": "5bca5e159f121423a1457249f1bc519b64f0f67f1b86fa9ac992259b0683d44d",
+          "rect": {
+            "x": 384,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 55,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 3
+          },
+          "rgbaSha256": "42e8bd12de56fc9898fce83ea609247c34ff05509cb7afb9761f75842606acf4",
+          "rect": {
+            "x": 448,
+            "y": 384,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 56,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 4
+          },
+          "rgbaSha256": "acc7ff7a7f099ac49656e9dced3866a050a31f0821c6a7e8615ad8f20b5b13f8",
+          "rect": {
+            "x": 0,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "idle_left",
+      "action": "idle",
+      "direction": "left",
+      "loop": true,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/idle_left.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 57,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 0
+          },
+          "rgbaSha256": "5947532258eac3236e26a3522ae521a25c50e495d2ea88c0e1c9060823260aad",
+          "rect": {
+            "x": 64,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 58,
+          "durationMs": 160,
+          "source": {
+            "kind": "common",
+            "frame": 1
+          },
+          "rgbaSha256": "a90b1761bdb2bece3c09bbdc8c7b8c7d40b1ba14c70b9d237c02a5933b9d7265",
+          "rect": {
+            "x": 128,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 59,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 2
+          },
+          "rgbaSha256": "a72a4e84fc8ba8169685e88fb139d5b19918668b82a1a5568ce345ad26b762bd",
+          "rect": {
+            "x": 192,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 60,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 3
+          },
+          "rgbaSha256": "61d819a7ca4e7b5afd16cef613e0dad03837131dff45cbafab19b91e800734bc",
+          "rect": {
+            "x": 256,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "walk_left",
+      "action": "walk",
+      "direction": "left",
+      "loop": true,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/walk_left.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 61,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 4
+          },
+          "rgbaSha256": "78c2eb9c8b947d2d29a681ade8d9bb89622c59626f6109f24dd1095b67fd376d",
+          "rect": {
+            "x": 320,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 62,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 5
+          },
+          "rgbaSha256": "c79dc9b39ad821b558193d1a3cb3bba5a836f56eaf87ced49aaa48bd71683aa7",
+          "rect": {
+            "x": 384,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 63,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 6
+          },
+          "rgbaSha256": "bc632fdec5bcc5f6f1e5bfbb5b7de3b522bd161ea3a8861553506ddc7efd5743",
+          "rect": {
+            "x": 448,
+            "y": 448,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 64,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 7
+          },
+          "rgbaSha256": "09656e8ff4046856ce03abc4121cb1d5047e222d4cdbd36890f327872d3f8c0b",
+          "rect": {
+            "x": 0,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 65,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 8
+          },
+          "rgbaSha256": "82d8c34a5e7cdaee158fc8682d4e8c0282af5b804aeb03573dbea0f5257188df",
+          "rect": {
+            "x": 64,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 66,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 9
+          },
+          "rgbaSha256": "476a11c0a593661f1263418f632b18a00af8e55b5dbe00d3d4bceb453a81c175",
+          "rect": {
+            "x": 128,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 67,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 10
+          },
+          "rgbaSha256": "a0719f0f2f29f09f2447b75a47c604723ed81cab86e8dcb496df3ad52d739db0",
+          "rect": {
+            "x": 192,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 68,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 11
+          },
+          "rgbaSha256": "7071d4d24debc76c7a220383e5f191160d4d2ba73a157775a7eb7a58dee45122",
+          "rect": {
+            "x": 256,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "hit_left",
+      "action": "hit",
+      "direction": "left",
+      "loop": false,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/hit_left.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 69,
+          "durationMs": 70,
+          "source": {
+            "kind": "common",
+            "frame": 12
+          },
+          "rgbaSha256": "156203460576dfbe049f18111884f90cbb8fbe3390018d63fb780ea3f2577cee",
+          "rect": {
+            "x": 320,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 70,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 13
+          },
+          "rgbaSha256": "d10f1b04c6b99f71991643ca5d716e282ef3efed5a9bb0f5d6b047187ea3f2b9",
+          "rect": {
+            "x": 384,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 71,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 14
+          },
+          "rgbaSha256": "2f0ea95f28697f1a7e2be47d44937d4c60e090bf50a28d9cbf4e5dd39d0cfadc",
+          "rect": {
+            "x": 448,
+            "y": 512,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 72,
+          "durationMs": 140,
+          "source": {
+            "kind": "common",
+            "frame": 15
+          },
+          "rgbaSha256": "872cb6fee75ec0b9622265ab298b66012f9fe42976dc287ce22ac49c69146820",
+          "rect": {
+            "x": 0,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "die_left",
+      "action": "die",
+      "direction": "left",
+      "loop": false,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/die_left.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 73,
+          "durationMs": 110,
+          "source": {
+            "kind": "common",
+            "frame": 16
+          },
+          "rgbaSha256": "5f8d75ed61096a0cbec0d2b156f05eb803a9d490960b1ac5c7c3e5845ba7b502",
+          "rect": {
+            "x": 64,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 74,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 17
+          },
+          "rgbaSha256": "b4aed67d10ecb7f376e290e0a21eebab5bf7e44e5f9f0d39a588b9ddf001aec3",
+          "rect": {
+            "x": 128,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 75,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 18
+          },
+          "rgbaSha256": "7a814b34a0e23c57b1f22f72e0eb36d66f318161dfcd4f7530d2d96aa6ddaee2",
+          "rect": {
+            "x": 192,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 76,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 19
+          },
+          "rgbaSha256": "9f5310ef0f232a1e15bc6a530fde81e909a789d4888487bacd07b16cc9264571",
+          "rect": {
+            "x": 256,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 77,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 20
+          },
+          "rgbaSha256": "d7d44f847b2952c718c71ad0443622091b76de0368ceeaba2de6018466e7c16b",
+          "rect": {
+            "x": 320,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 78,
+          "durationMs": 140,
+          "source": {
+            "kind": "common",
+            "frame": 21
+          },
+          "rgbaSha256": "779b209abe5b2bda10b1becccecd196bae7f51db5e6096a3d675327c927a4303",
+          "rect": {
+            "x": 384,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 79,
+          "durationMs": 180,
+          "source": {
+            "kind": "common",
+            "frame": 22
+          },
+          "rgbaSha256": "6f5bdce143c5f86a2a8300458a35a40671469ff298c0d3bfb6bddf8ec0e9882c",
+          "rect": {
+            "x": 448,
+            "y": 576,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 80,
+          "durationMs": 350,
+          "source": {
+            "kind": "common",
+            "frame": 23
+          },
+          "rgbaSha256": "e57d7c9abaf19353e7fa48457b0db7011f3a9ccb6490cf9ce68dadad978a3a5c",
+          "rect": {
+            "x": 0,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "rise_left",
+      "action": "rise",
+      "direction": "left",
+      "loop": false,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/rise_left.png",
+      "reusedInReverse": true,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 81,
+          "durationMs": 150,
+          "source": {
+            "kind": "common",
+            "frame": 23
+          },
+          "rgbaSha256": "e57d7c9abaf19353e7fa48457b0db7011f3a9ccb6490cf9ce68dadad978a3a5c",
+          "rect": {
+            "x": 64,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 82,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 22
+          },
+          "rgbaSha256": "6f5bdce143c5f86a2a8300458a35a40671469ff298c0d3bfb6bddf8ec0e9882c",
+          "rect": {
+            "x": 128,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 83,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 21
+          },
+          "rgbaSha256": "779b209abe5b2bda10b1becccecd196bae7f51db5e6096a3d675327c927a4303",
+          "rect": {
+            "x": 192,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 84,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 20
+          },
+          "rgbaSha256": "d7d44f847b2952c718c71ad0443622091b76de0368ceeaba2de6018466e7c16b",
+          "rect": {
+            "x": 256,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 85,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 19
+          },
+          "rgbaSha256": "9f5310ef0f232a1e15bc6a530fde81e909a789d4888487bacd07b16cc9264571",
+          "rect": {
+            "x": 320,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 86,
+          "durationMs": 100,
+          "source": {
+            "kind": "common",
+            "frame": 18
+          },
+          "rgbaSha256": "7a814b34a0e23c57b1f22f72e0eb36d66f318161dfcd4f7530d2d96aa6ddaee2",
+          "rect": {
+            "x": 384,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 87,
+          "durationMs": 120,
+          "source": {
+            "kind": "common",
+            "frame": 17
+          },
+          "rgbaSha256": "b4aed67d10ecb7f376e290e0a21eebab5bf7e44e5f9f0d39a588b9ddf001aec3",
+          "rect": {
+            "x": 448,
+            "y": 640,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 88,
+          "durationMs": 150,
+          "source": {
+            "kind": "common",
+            "frame": 16
+          },
+          "rgbaSha256": "5f8d75ed61096a0cbec0d2b156f05eb803a9d490960b1ac5c7c3e5845ba7b502",
+          "rect": {
+            "x": 0,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "deliver_left",
+      "action": "deliver",
+      "direction": "left",
+      "loop": false,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [
+        {
+          "frame": 4,
+          "event": "coin_stowed"
+        },
+        {
+          "frame": 16,
+          "event": "arrows_delivered"
+        }
+      ],
+      "sheet": "acoes/deliver_left.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 89,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 0
+          },
+          "rgbaSha256": "510a2f3cec0d6cfbc4d714c602371d2ff1a5bc35ddb8f31056a81e27386146f3",
+          "rect": {
+            "x": 64,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 90,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 1
+          },
+          "rgbaSha256": "e38b450815c04625f6c878df90b3ae5f6beb1da8b431625b499dd28208397cce",
+          "rect": {
+            "x": 128,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 91,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 2
+          },
+          "rgbaSha256": "97cdd718d63c6a463c9cbd89971e9360be2f7ed8ee4824b1e65c49e76540fe26",
+          "rect": {
+            "x": 192,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 92,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 3
+          },
+          "rgbaSha256": "08ddb71b009eb474317a9e09994741fc84e8d02b631670b969ad4045a17859a9",
+          "rect": {
+            "x": 256,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 93,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 4
+          },
+          "rgbaSha256": "faeda84201d9d3c6aeed2f46a167a322bee6bf8caee8ae92fd31a180055fa374",
+          "rect": {
+            "x": 320,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 5,
+          "atlasIndex": 94,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 5
+          },
+          "rgbaSha256": "c9a66d0d144b8a01bbe99ff0df35f1520f341fe1065c57b50343131cab345b9d",
+          "rect": {
+            "x": 384,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 6,
+          "atlasIndex": 95,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 6
+          },
+          "rgbaSha256": "5ffe11aaae096aab72cf63983f3c826a15e983d6c8df8a2d03ad3e5a396a4a2d",
+          "rect": {
+            "x": 448,
+            "y": 704,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 7,
+          "atlasIndex": 96,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 7
+          },
+          "rgbaSha256": "ccd03c9cc4165b044e9b17b884b3893491fe6421a38da65aaeb0eaecb9148243",
+          "rect": {
+            "x": 0,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 8,
+          "atlasIndex": 97,
+          "durationMs": 100,
+          "source": {
+            "kind": "bridge",
+            "frame": 0
+          },
+          "rgbaSha256": "1deec8042c6cf960a8f4f5c32c9ee9a449bb1b053d72ff7c0b9ad29d2f991fe4",
+          "rect": {
+            "x": 64,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 9,
+          "atlasIndex": 98,
+          "durationMs": 120,
+          "source": {
+            "kind": "bridge",
+            "frame": 1
+          },
+          "rgbaSha256": "6abd1e081a85c2a4a4ee7313971880d99108393feaa7395db794bf7decb251ee",
+          "rect": {
+            "x": 128,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 10,
+          "atlasIndex": 99,
+          "durationMs": 120,
+          "source": {
+            "kind": "bridge",
+            "frame": 2
+          },
+          "rgbaSha256": "e001e62398b1e074d96fe2c16c9e14c4c150a249f7698ab36618fefceaa019f0",
+          "rect": {
+            "x": 192,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 11,
+          "atlasIndex": 100,
+          "durationMs": 100,
+          "source": {
+            "kind": "bridge",
+            "frame": 3
+          },
+          "rgbaSha256": "ac5a5db5798a06de11422950a657455de6f7f07fa5c29af9030ebe46c67ea44f",
+          "rect": {
+            "x": 256,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 12,
+          "atlasIndex": 101,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 8
+          },
+          "rgbaSha256": "b5bbedb7e123a469a2db83cd7b43310ddd69f90b3d52b629b5eb5f06c14dfe13",
+          "rect": {
+            "x": 320,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 13,
+          "atlasIndex": 102,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 9
+          },
+          "rgbaSha256": "1d1b5bba7a5640d4787d4dba792b9f04cb97e37bf2258abca61541755fa901c7",
+          "rect": {
+            "x": 384,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 14,
+          "atlasIndex": 103,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 10
+          },
+          "rgbaSha256": "c5a551e60bdf4e980c0e3c125ba73850bbb770b113dbb69190d4674db63815c6",
+          "rect": {
+            "x": 448,
+            "y": 768,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 15,
+          "atlasIndex": 104,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 11
+          },
+          "rgbaSha256": "77e3235192718c7bde2e1fc519f4af44b40fd8089247c15fc9225708257a21c3",
+          "rect": {
+            "x": 0,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 16,
+          "atlasIndex": 105,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 12
+          },
+          "rgbaSha256": "8f683d6dd78a4d41cfd68b12156ce1839d2015c349b262b832872f6221e7d1f6",
+          "rect": {
+            "x": 64,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 17,
+          "atlasIndex": 106,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 13
+          },
+          "rgbaSha256": "00284f14f8510429feb8cb752e5f95d0337d9753bdc080e2808dcc7b6892571a",
+          "rect": {
+            "x": 128,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 18,
+          "atlasIndex": 107,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 14
+          },
+          "rgbaSha256": "1375e8f7d9612f143bd5e230456d3cccfb4563d707266ae98806a5265a54b730",
+          "rect": {
+            "x": 192,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 19,
+          "atlasIndex": 108,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 15
+          },
+          "rgbaSha256": "75a37d79450fc98a2fae6e0ff4938b0702f4762a91d0383038cebcbf4fadbfe7",
+          "rect": {
+            "x": 256,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    },
+    {
+      "name": "receive_left",
+      "action": "receive",
+      "direction": "left",
+      "loop": false,
+      "pivot": [
+        31,
+        62
+      ],
+      "events": [],
+      "sheet": "acoes/receive_left.png",
+      "reusedInReverse": false,
+      "frames": [
+        {
+          "index": 0,
+          "atlasIndex": 109,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 0
+          },
+          "rgbaSha256": "510a2f3cec0d6cfbc4d714c602371d2ff1a5bc35ddb8f31056a81e27386146f3",
+          "rect": {
+            "x": 320,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 1,
+          "atlasIndex": 110,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 1
+          },
+          "rgbaSha256": "e38b450815c04625f6c878df90b3ae5f6beb1da8b431625b499dd28208397cce",
+          "rect": {
+            "x": 384,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 2,
+          "atlasIndex": 111,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 2
+          },
+          "rgbaSha256": "97cdd718d63c6a463c9cbd89971e9360be2f7ed8ee4824b1e65c49e76540fe26",
+          "rect": {
+            "x": 448,
+            "y": 832,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 3,
+          "atlasIndex": 112,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 3
+          },
+          "rgbaSha256": "08ddb71b009eb474317a9e09994741fc84e8d02b631670b969ad4045a17859a9",
+          "rect": {
+            "x": 0,
+            "y": 896,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "index": 4,
+          "atlasIndex": 113,
+          "durationMs": 100,
+          "source": {
+            "kind": "action",
+            "frame": 4
+          },
+          "rgbaSha256": "faeda84201d9d3c6aeed2f46a167a322bee6bf8caee8ae92fd31a180055fa374",
+          "rect": {
+            "x": 64,
+            "y": 896,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ]
+    }
+  ]
+}

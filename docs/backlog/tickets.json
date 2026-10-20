@@ -2971,5 +2971,20 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "CV-05": {
+  "title": "Elenco e animações V15 no jogo",
+  "porque": "O autor entregou o V15 e mostrou que a produção ainda usava arte antiga após a consolidação da pesquisa.",
+  "spec": [
+   "docs/adr/0087-elenco-v15-no-jogo.md",
+   "docs/art/CHARACTER_PRODUCTION_GUIDE.md"
+  ],
+  "depende": "CV-01, ADR 0075, PR #113",
+  "feito": "Importação fiel do elenco V15; duplas iniciais animadas no seletor e no mundo; galeria com todas as ações e floração individual no motor.",
+  "fora": "Quarto par jogável, função da Bailarina e habilidade sit_heal sem definição de integração de gameplay.",
+  "estado": "parcial — arte das duplas iniciais no seletor e na partida; elenco completo e floração na galeria do jogo; quarto par jogável e regras da Bailarina ainda por definir",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

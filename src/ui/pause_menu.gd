@@ -45,6 +45,7 @@ func _ready() -> void:
 	_realm = PauseTheme.button(_frame.actions, &"UI_REALM_STATUS", _show_controls.bind(Page.REALM))
 	_novo = PauseTheme.button(_frame.actions, &"UI_NEW_GAME", _ao_recomecar)
 	_options_button = PauseTheme.button(_frame.actions, &"UI_OPTIONS", show_options)
+	PauseTheme.button(_frame.actions, &"ANIM_GALLERY_TITLE", RoyalGallery.open_on.bind(self))
 	_controls_button = PauseTheme.button(_frame.actions, &"UI_CONTROLS", _show_controls)
 	_frame.actions.add_child(ScreenRow.new())  # o ecra inteiro do browser (UX-03)
 	_zero = FreshStartPanel.new(_fechar)
@@ -122,7 +123,7 @@ func back() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not visible:
+	if not visible or RoyalGallery.active:
 		return
 	_device = Glyphs.device_of(event, _device, Input.get_joy_name(event.device))
 	_pages.help.refresh(_device)
