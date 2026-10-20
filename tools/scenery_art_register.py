@@ -25,7 +25,7 @@ def scenery_table():
     rows += ['', f'Propostas por colocar no mundo, fora do export: {proposals} (Q-259). Edificios, '
              'escadas, atividades de baixo e atores de referencia ficam nos pacotes: o que se '
              'constroi e onde ha passagem decide-o a simulacao.', '']
-    return rows + native_table()
+    return rows + native_table() + owner_table()
 
 
 def native_table():
@@ -51,4 +51,35 @@ def native_table():
              'Módulos de 64 px, PNGs recortados ao alfa, export nearest de 2/4 px, '
              'paleta limitada sem dithering. Validacao executada: '
              'docs/art/scenery_native_validation.json; guia: docs/art/NATIVE_SCENERY.md.', '']
+    return rows
+
+
+def owner_table():
+    path = ROOT / 'art/export/scenery_owner/manifest.json'
+    if not path.exists():
+        return []
+    data = json.loads(path.read_text(encoding='utf-8'))
+    uso = {}
+    for biome, k in data['kingdoms'].items():
+        uso[k['base']] = f"reino `{biome}`"
+        for v in k['variants']:
+            quando = v.get('season') or ', '.join(v.get('phases', []))
+            uso[v['view']] = f"variante de `{biome}` ({quando})"
+    for biome, site in data['sites'].items():
+        uso[site['base']] = f"sitio de agua de `{biome}`"
+        for v in site['variants']:
+            quando = v.get('season') or ', '.join(v.get('phases', []))
+            uso[v['view']] = f"variante do sitio de `{biome}` ({quando})"
+    for scene, t in data['transitions'].items():
+        uso[t['view']] = f"transicao `{scene}` ({t['from']} → {t['to']})"
+    rows = ['', '## As composicoes do dono — 15 e 16/10/2026 (ADR 0086)', '',
+            'As pinturas dos dois ZIPs, separadas em planos por `tools/owner_scenery/` e exportadas por '
+            '`tools/export_owner_scenery.py` (cada origem conferida contra o ZIP). Substituem os planos e o '
+            'chao dos reinos pela chamada OwnerScenery.patch em SceneryArt; as variantes trocam-se pela hora e '
+            'pela estacao (OwnerScenery.weights) e os sitios ficam na agua do territorio (OwnerSites).', '',
+            '| Vista | Uso | Origem | Camadas |', '|---|---|---|---|']
+    for view, item in data['views'].items():
+        layers = ', '.join(name for name in ORDER if name in item['layers'])
+        rows.append(f"| `{view}` | {uso.get(view, '—')} | `{item['src']}` | {layers} |")
+    rows.append('')
     return rows

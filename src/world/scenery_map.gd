@@ -29,6 +29,11 @@ const DIREITA := &"right"
 const A := &"a"
 const B := &"b"
 const T := &"t"
+## Num sitio de agua (ADR 0086), a coluna do quadro onde fica o meio da agua; a ORIGEM de um
+## sitio e o x do mundo onde o quadro dele comeca.
+const ANCORA := &"anchor"
+## Quanto do troco de cada lado de um sitio tem de sobrar, no minimo, para o sitio caber.
+const FOLGA := 64.0
 ## Meia largura da mistura do fundo, em px de mundo: o `background_mix_interval` das
 ## transicoes (de 400 a 880 num quadro de 1280, com a fronteira aos 640).
 const MISTURA := 240.0
@@ -101,12 +106,47 @@ static func of(trocos: Array[Dictionary], pares: Dictionary) -> SceneryMap:
 		pintadas.append({CENA: par[CENA], DE: a[ATE], ATE: b[DE], ORIGEM: a[ATE], LIMIAR: true})
 	for t in lista:
 		if t[ATE] > t[DE]:
-			t[ORIGEM] = 0.0
+			t[ORIGEM] = t.get(ORIGEM, 0.0)
 			t[LIMIAR] = false
 			mapa.stretches.append(t)
 	mapa.stretches.append_array(pintadas)
 	mapa.stretches.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return p[DE] < q[DE])
 	return mapa
+
+
+## Os trocos com os sitios de agua dentro (ADR 0086): cada sitio e Dictionary(X, CENA, MEIA,
+## ANCORA) — o x da agua no mundo, a vista, a meia largura do quadro e a coluna dele onde
+## fica a agua. O quadro inteiro do sitio fica dentro do troco onde cai, com FOLGA de cada
+## lado; se nao cabe, o sitio nao se pinta e a agua fica a do ResourceWater.
+static func with_sites(trocos: Array[Dictionary], sitios: Array) -> Array[Dictionary]:
+	var saida: Array[Dictionary] = trocos.duplicate(true)
+	for s: Dictionary in sitios:
+		var x: float = s[X]
+		for i in saida.size():
+			var t := saida[i]
+			if x < t[DE] or x >= t[ATE] or t.has(ANCORA):
+				continue
+			var de: float = x - s[ANCORA]
+			var ate: float = de + s[MEIA] + s[MEIA]
+			if de < t[DE] + FOLGA or ate > t[ATE] - FOLGA:
+				break
+			var sitio := {CENA: s[CENA], DE: de, ATE: ate, ORIGEM: de, ANCORA: s[ANCORA]}
+			var direita := {CENA: t[CENA], DE: ate, ATE: t[ATE]}
+			t[ATE] = de
+			saida.insert(i + 1, direita)
+			saida.insert(i + 1, sitio)
+			break
+	return saida
+
+
+## O troco onde esta `x` (antes das transicoes); fora do que ja ha, o da ponta mais perto.
+func stretch_at(x: float) -> Dictionary:
+	if _trocos.is_empty():
+		return {}
+	for t in _trocos:
+		if x < t[ATE]:
+			return t
+	return _trocos.back()
 
 
 ## Os trocos que tocam a janela de `de` a `ate`, de oeste para leste.
@@ -127,12 +167,7 @@ func blend(x: float) -> Dictionary:
 
 ## O bioma do troco onde esta `x`; fora do que ja ha, o da ponta mais perto.
 func biome_at(x: float) -> StringName:
-	if _trocos.is_empty():
-		return &""
-	for t in _trocos:
-		if x < t[ATE]:
-			return t[CENA]
-	return _trocos.back()[CENA]
+	return stretch_at(x).get(CENA, &"")
 
 
 ## Se o x cai numa fronteira com transicao pintada: o limiar ja tem o marco dela.

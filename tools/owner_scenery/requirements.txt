@@ -1,0 +1,15 @@
+# A separacao das composicoes do dono em planos (ADR 0086). Corre fora do CI, uma vez por
+# entrega, num venv a parte: o jogo e o portao inventario-arte so precisam do Pillow de
+# tools/requirements.txt. O torch vem do indice de CPU:
+#   pip install torch==2.14.1 torchvision --index-url https://download.pytorch.org/whl/cpu
+#   pip install -r tools/owner_scenery/requirements.txt
+# Modelos (descarregados para fora do repositorio):
+#   depth-anything/Depth-Anything-V2-Large-hf, nvidia/segformer-b5-finetuned-ade-640-640
+#   (Hugging Face, pelo transformers) e Carve/LaMa-ONNX lama_fp32.onnx.
+transformers==5.20.1
+opencv-contrib-python-headless==5.0.0.93
+scikit-image==0.26.0
+scipy==1.18.1
+onnxruntime==1.31.0
+numpy==2.5.2
+pillow==12.3.0
