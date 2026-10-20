@@ -92,6 +92,32 @@ func test_a_vista_pintada_tem_material_proprio() -> void:
 	assert_object(SceneryLight.material(plano, true)).is_same(SceneryLight.material(plano, true))
 
 
+## Mas a noite e castanha (§80, ADR 0011): com a noite, o ambiente cai na vista pintada como
+## no resto do mundo, e o luar azul do dono escurece com ele. Ao crepusculo, antes de a noite
+## entrar, a pintada leva so a luz que traz; a noite entra e sai como uma variante dela.
+func test_a_noite_cai_tambem_na_vista_pintada() -> void:
+	var dados := Registry.entry(&"economy", &"clock") as ClockData
+	var luz := Lighting.new()
+	var plano := SceneryLight.Depth.FAR
+	luz.set_phase(dados, NOITE, 0.5)
+	var mundo := SceneryLight.ambient_of(luz, dados, plano)
+	var pintada := SceneryLight.ambient_of(
+		luz, dados, plano, true, SceneryLight.night_weight(NOITE, 0.5)
+	)
+	assert_vector(mundo).is_not_equal(SceneryLight.PINTADA_AMBIENTE)
+	assert_vector(pintada).is_equal_approx(mundo, Vector3.ONE * 0.001)
+	luz.set_phase(dados, CREPUSCULO, 0.4)
+	var cedo := SceneryLight.night_weight(CREPUSCULO, 0.4)
+	assert_vector(SceneryLight.ambient_of(luz, dados, plano, true, cedo)).is_equal(
+		SceneryLight.PINTADA_AMBIENTE
+	)
+	assert_vector(SceneryLight.ambient_of(luz, dados, plano)).is_not_equal(
+		SceneryLight.PINTADA_AMBIENTE
+	)
+	assert_float(SceneryLight.night_weight(CREPUSCULO, 0.9)).is_greater(0.0).is_less(1.0)
+	assert_float(SceneryLight.night_weight(ALVORADA, 0.6)).is_equal(0.0)
+
+
 func test_a_estacao_muda_na_alvorada_do_primeiro_dia() -> void:
 	var virada := Vector2i(Seasons.AUTUMN, Seasons.SUMMER)
 	assert_float(OwnerScenery.season_weight(Seasons.AUTUMN, virada, ALVORADA, 0.0)).is_equal(0.0)

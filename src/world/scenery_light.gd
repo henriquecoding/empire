@@ -32,7 +32,8 @@ const PLANOS := {
 }
 
 ## As vistas pintadas para uma hora (a noite, o crepusculo) ja trazem a luz dela: levam o
-## material PINTADA, onde o ambiente nao desce e so as luzes do mundo se somam (ADR 0085).
+## material PINTADA, onde o ambiente da fase nao lhes cai por cima (ADR 0085) — menos o da
+## noite, que cai com ela (night_weight): a noite e castanha (§80, ADR 0011).
 const PINTADA := 100
 const PINTADA_AMBIENTE := Vector3(1.0, 1.0, 1.0)
 
@@ -41,6 +42,7 @@ static var _frame := -1
 static var _luz := Lighting.new()
 static var _clock: ClockData
 static var _comum: Dictionary = {}
+static var _noite := 0.0
 
 
 ## O material de um plano. O mesmo para todos os nos desse plano.
@@ -65,6 +67,7 @@ static func refresh(no: CanvasItem) -> void:
 	var relogio := ClockService.clock
 	var sup := int(Band.Kind.SURFACE)
 	_luz.light(_clock, sup, int(relogio.current_phase()), relogio.phase_progress())
+	_noite = night_weight(int(relogio.current_phase()), relogio.phase_progress())
 	var transformada := no.get_viewport_transform()  # com a escala do ecra
 	_comum = uniforms(_luz, transformada, transformada * PresentationBounds.of(no))
 	_comum[&"luz_celula"] = float(SimFactory.rot_profile().lantern_dither_px)  # §80: 2 px
@@ -79,12 +82,26 @@ static func feed(alvo: ShaderMaterial, plano: Depth, pintada := false) -> void:
 		return
 	for nome: StringName in _comum:
 		alvo.set_shader_parameter(nome, _comum[nome])
+	alvo.set_shader_parameter(&"ambiente", ambient_of(_luz, _clock, plano, pintada, _noite))
+	alvo.set_shader_parameter(&"alcance", PLANOS[plano].x)
+
+
+## O ambiente de um plano com a luz `luz`. A noite o plano desce pela razao do chao (§80).
+## Uma vista pintada nao leva o ambiente da fase, so o da noite, com o peso `noite` dela.
+static func ambient_of(
+	luz: Lighting, dados: ClockData, plano: Depth, pintada := false, noite := 0.0
+) -> Vector3:
 	var regra: Vector2 = PLANOS[plano]
-	var razao := pow(BandLight.ground_ratio(_clock), regra.y)
-	var tecto := lerpf(1.0, razao, _luz.dark)
-	var ambiente := _vec(WorldPalette.dim(_luz.ambient, tecto))
-	alvo.set_shader_parameter(&"ambiente", PINTADA_AMBIENTE if pintada else ambiente)
-	alvo.set_shader_parameter(&"alcance", regra.x)
+	var razao := pow(BandLight.ground_ratio(dados), regra.y)
+	var tecto := lerpf(1.0, razao, luz.dark)
+	var ambiente := _vec(WorldPalette.dim(luz.ambient, tecto))
+	return PINTADA_AMBIENTE.lerp(ambiente, noite) if pintada else ambiente
+
+
+## Quanto da noite ha agora, como para uma variante da noite (OwnerScenery.phase_weight):
+## toda nela, a entrar na segunda metade do crepusculo e a sair na primeira da alvorada.
+static func night_weight(fase: int, progresso: float) -> float:
+	return OwnerScenery.phase_weight([GameClock.Phase.NIGHT], fase, progresso)
 
 
 ## As luzes de uma Lighting, postas em px de ecra pela transformada do canvas. E

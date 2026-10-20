@@ -34,6 +34,12 @@
   primavera.
 - **Em aberto:** a maré e a chuva não são sistemas do jogo; aqui são só a hora e a estação. Se as queres ligadas a
   outra coisa (o tempo, a maré do §21), é design.
+- **A noite é castanha (§80, ADR 0011):** as variantes da noite são azuis — o luar —, e o `make silhueta` chumbava a
+  captura da meia-noite com 3,9% contados (o limite é 0,5%; à noite o frio é só da Podridão). Não se mexeu na regra nem
+  na pintura: com a noite, a vista pintada leva o ambiente da noite como o resto do mundo (`SceneryLight.night_weight`,
+  que entra na segunda metade do crepúsculo e sai na primeira da alvorada, como uma variante da noite). À meia-noite o
+  luar fica escuro e o portão conta 0,026%; de dia e até meio do crepúsculo a pintada continua com a luz que traz. Se
+  queres o luar azul, é uma exceção ao §80 — e vê antes a Q-270: o portão mede o brilho, não a saturação.
 - **Decide:** tu.
 
 ### Q-269 · Onde ficam o porto, o lago e o rio
@@ -43,6 +49,19 @@
   fica a água de antes.
 - **Em aberto:** a Q-259 perguntava também se a sede e as obras devem desviar-se do lago; não se mexeu no território.
   E a Horta não tem sítio: a pintura dela já traz o rio em baixo.
+- **Decide:** tu.
+
+### Q-270 · O portão das duas frias mede o brilho, e não a saturação
+- **Hoje:** `tools/check_silhueta.py` (desde o PR #53) lê `h, _, s = colorsys.rgb_to_hsv(...)`, e o `colorsys` devolve
+  matiz, saturação e valor, por esta ordem: o `s` é o brilho. O portão conta os píxeis azuis e violeta *claros* (valor
+  > 0,35), e não os *saturados* que a linha *Duas frias* do §80 escreve. Os números da Q-268 são esta contagem.
+- **Medido à meia-noite, com a saturação:** na `main` (os planos da ADR 0084), 19,9% do ecrã é frio e saturado (17,9%
+  sem os quase pretos, de valor ≤ 0,08); com as pinturas do dono, 31,0% (9,2% sem os quase pretos). As duas chumbam o
+  limite de 0,5%: a noite do jogo é azul-escura, e não castanha, desde antes desta entrega. O ambiente da noite escurece
+  o céu e os planos de fundo, mas um azul escurecido continua azul.
+- **Proposta:** corrigir a leitura num PR à parte e, com ela, decidir o que a noite faz ao céu e aos fundos — um ambiente
+  que tire a saturação, e não só o brilho — e se o quase preto fica fora da regra. Corrigir só o portão punha a `main`
+  vermelha, por isso não vai neste PR.
 - **Decide:** tu.
 
 ## Animais e criaturas animados — 15/10/2026 (ADR 0083)

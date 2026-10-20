@@ -265,9 +265,10 @@ def main():
         hole = L.dilate_mask(town, 4)
         b = behind[:, x0:x1]
         comp = np.where(a[..., None], rgb, b)
-        # the plane stays solid: its outline runs across where the town was, and what fills it
-        # is copied from the plane's own rock and woods, never from the sky
-        a2 = np.where(hole, L.silhouette(a & ~hole, 4000, None, L.GROUND + 24), a)
+        # the plane stays solid: its outline runs across where the town was, from the ridge on
+        # one side to the ridge on the other (not along the hole's floor, which left a box),
+        # and what fills it is copied from the plane's own rock and woods, never from the sky
+        a2 = np.where(hole, L.silhouette(a & ~hole.any(axis=0), 4000, None, L.GROUND + 24), a)
         todo = hole & a2
         filled = L.shift_fill(comp, todo, lama, ~(a & ~hole) & ~todo) if todo.any() else comp
         r2 = np.where(hole[..., None], filled, rgb)

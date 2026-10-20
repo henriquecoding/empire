@@ -45,7 +45,8 @@ estação escolhem a variante; o porto, o lago e o rio ficam na água que o terr
    tapava continua o degradê da própria pintura, linha a linha), nuvens (0,07), longe
    (0,125) e meio (0,25) num laço escolhido onde as duas pontas casam e que leva os marcos do reino (o vulcão, o
    castelo, a vila do horizonte), cada um com um período próprio. O longe é opaco até ao chão e repete-se duas vezes por
-   laço: uma como pintada, outra sem a vila do horizonte, para a vila não se ver três vezes no mesmo ecrã. O meio é uma
+   laço: uma como pintada, outra sem a vila do horizonte, para a vila não se ver três vezes no mesmo ecrã; nessa, o
+   contorno do plano passa onde a vila estava de crista a crista, e não pelo fundo da caixa dela. O meio é uma
    parede de árvores onde a pintura o tem quase de ponta a ponta (os Enramados), e só o contorno do que lá está onde é
    esparso (uma árvore, uma cerca). O perto (0,5) leva a árvore ou o rochedo do primeiro plano e mostra-se uma vez por
    2560 px, com o meio da composição atrás da sede e as pontas fechadas. O chão (`under`, `terrain`) é o caminho, a cerca
@@ -53,7 +54,10 @@ estação escolhem a variante; o porto, o lago e o rio ficam na água que o terr
 3. **As variantes.** `OwnerScenery.weights` dá o peso de cada pintura agora: a da hora (o luar, a névoa da alvorada, as
    brasas) entra na segunda metade da fase de antes e sai na primeira da de depois; a da estação (a colheita, o
    outono, a geada) muda durante a alvorada do primeiro dia. As pintadas para uma hora já trazem a luz dela: desenham-se
-   num nó com o material `SceneryLight.PINTADA`, sem o ambiente da fase por cima, e só as luzes do mundo se somam.
+   num nó com o material `SceneryLight.PINTADA`, sem o ambiente da fase por cima, e as luzes do mundo somam-se — menos o
+   ambiente da noite, que lhes cai com o peso dela (`SceneryLight.night_weight`: entra na segunda metade do crepúsculo e
+   sai na primeira da alvorada, como uma variante da noite), porque a noite é castanha (§80, ADR 0011). Sem ele, o luar
+   pintado chumbava o `make silhueta` à meia-noite: 3,9% contados, onde o limite é 0,5% (o que o portão conta: Q-270).
 4. **Os sítios (`OwnerSites`, `SceneryMap.with_sites`).** A proposta da Q-259, com as três vistas aprovadas: o lago na
    água dos Enramados (a de casa e a dos segmentos de água), o porto na dos Portuários e o rio na da Bruma. O quadro de
    1280 px fica com a água pintada no x da fonte; se não cabe inteiro no troco, não se pinta e a água continua a do
