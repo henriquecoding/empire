@@ -134,6 +134,13 @@ test('a noite tem tempo: uma invocação por intervalo, do crepúsculo à alvora
       assert.equal(soma('ate'), Math.min(r.ordem.length, t.muitas), `dia ${dia}: com os intervalos curtos`);
       assert.equal(soma('de'), Math.min(r.ordem.length, t.poucas), `dia ${dia}: com os intervalos longos`);
       assert.equal(vem.fora.length, Math.max(0, r.ordem.length - t.muitas), `dia ${dia}: as que nunca chegam a vir`);
+      // E são as da cabeça da ordem, espécie a espécie — não só o total.
+      const na = (lista, id) => lista.filter((x) => x === id).length;
+      for (const x of vem.fila) {
+        assert.equal(x.ate, na(r.ordem.slice(0, t.muitas), x.id), `dia ${dia}: ${x.id} com os intervalos curtos`);
+        assert.equal(x.de, na(r.ordem.slice(0, t.poucas), x.id), `dia ${dia}: ${x.id} com os intervalos longos`);
+      }
+      assert.equal(JSON.stringify(vem.fora), JSON.stringify(r.ordem.slice(t.muitas)), `dia ${dia}: o que fica de fora é a cauda`);
     }
   }
 });
