@@ -34,6 +34,9 @@
 //   17 · O MENU — num ecrã estreito abre, fecha e fecha com Esc.
 //   18 · O LUME — as contas do instrumento são as do rot.csv (a candeia, ADR 0034).
 //   19 · ORÇAMENTO — o peso da página de entrada, e o do caminho crítico.
+//   20 · O LABORATÓRIO — os separadores pelo teclado, as contas do jogo (a noite 1,
+//        a tabela da §74, o dia da asfixia, o tempo até matar), a ligação que
+//        guarda a experiência, e o caso por omissão sem JavaScript (PUB-06).
 //
 //   node tools/web/verificar_site.mjs [build/site]
 //
@@ -45,9 +48,11 @@ import { createServer } from "node:http";
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { join, resolve, extname, dirname } from "node:path";
 import { createRequire } from "node:module";
+import { runInNewContext } from "node:vm";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import { ler } from "./dados.mjs";
 import { TEXTOS } from "./paginas/textos.mjs";
+import { massaDoCalendario } from "./paginas/molde.mjs";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SITE = resolve(process.argv[2] || join(RAIZ, "build", "site"));
@@ -70,8 +75,11 @@ const JOGO_S = 90;
 // e o primeiro quadro. O total inclui a rolagem inteira, a 1440px / DPR 1.
 // ADR 0080: a arte atual é mais densa; mantemos WebP sem perdas e passamos os
 // cartões de 640 a 320px. Estes tetos são explícitos, não metas de LCP.
-const CRITICO_KB = 660;
-const TOTAL_KB = 1700;
+// ADR 0085: o laboratório traz ~23 KB de HTML e ~17 KB de folha, sem compressão
+// (≈ 4 e 2,6 KB em brotli); o script dele é adiado e não entra no crítico.
+// Medido: 699 e 1697 KB. 660 → 710 e 1700 → 1750, com a folga escrita na ADR.
+const CRITICO_KB = 710;
+const TOTAL_KB = 1750;
 const TIPOS = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".wasm": "application/wasm", ".css": "text/css",
   ".pck": "application/octet-stream", ".png": "image/png", ".webp": "image/webp", ".woff2": "font/woff2",
@@ -439,7 +447,7 @@ async function main() {
       const f = await p.evaluate(() => ({
         seccoes: [...document.querySelectorAll("main > section")].map((s) => s.id || s.className),
         contas: [".pilares li", ".monarca", ".cartao-fase", ".cartao-fase .mini", ".povo", ".verbo", ".teclas-tabela tbody tr", ".cela", ".roteiro li",
-          ".decisoes li", ".perguntas details", ".falas li", ".numero"]
+          ".decisoes li", ".perguntas details", ".falas li", ".numero", ".lab-separador", ".lab-regua", ".lab-escolha", ".lab-cenario", ".lab-besta", ".lab-ttk li"]
           .map((s) => `${s}=${document.querySelectorAll(s).length}`),
       }));
       await ctx.close();
@@ -546,8 +554,8 @@ async function main() {
       await p.dispatchEvent("#candeia-dia", "input");
       const l = await p.evaluate(() => Object.fromEntries([...document.querySelectorAll("[data-l]")].map((e) => [e.dataset.l, e.textContent])));
       const raio = Math.min(r.raio.base + r.raio.porDia * dia, r.raio.teto);
-      const massa = r.massa.base + r.massa.porDia * dia;
-      resultado(`dia ${dia}: raio ${raio} e massa ${massa}, pelo rot.csv`, Number(l.raio) === raio && Number(l.massa.replace(/\s/g, "")) === massa, JSON.stringify(l));
+      const massa = Math.round(massaDoCalendario(r.massa, dia) * 10) / 10;
+      resultado(`dia ${dia}: raio ${raio} e massa ${massa}, pelo rot.csv (com a rampa das primeiras noites)`, Number(l.raio) === raio && Number(l.massa.replace(/\s/g, "").replace(",", ".")) === massa, JSON.stringify(l));
       resultado(`dia ${dia}: chega por ${dia >= r.doisLados ? "dois lados" : "um lado"}`, l.lados === (dia >= r.doisLados ? TEXTOS.pt.noite.inst_dois : TEXTOS.pt.noite.inst_um), l.lados);
     }
     await ctx.close();
@@ -572,12 +580,101 @@ async function main() {
     const unicos = [...new Set(pedidos.filter((u) => u.startsWith(base) && !u.includes("/jogar/")))];
     const total = unicos.reduce((n, u) => n + tamanho(u), 0) / 1024;
     const criticos = await p.evaluate(() => [location.href,
-      ...[...document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"]:not([as="image"]), script[src]')].map((e) => e.href || e.src),
+      ...[...document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"]:not([as="image"]), script[src]:not([data-adiado])')].map((e) => e.href || e.src),
       document.querySelector('.quadro[fetchpriority="high"]').currentSrc]);
     const critico = [...new Set(criticos)].reduce((n, u) => n + tamanho(u), 0) / 1024;
     resultado(`caminho crítico ≤ ${CRITICO_KB} KB (${critico.toFixed(0)} KB)`, critico <= CRITICO_KB);
     resultado(`a página inteira ≤ ${TOTAL_KB} KB (${total.toFixed(0)} KB, ${unicos.length} pedidos)`, total <= TOTAL_KB);
     await ctx.close();
+  }
+
+  console.log("\n20 · o laboratório (PUB-06)");
+  {
+    const L = d.laboratorio;
+    const janela = {};
+    runInNewContext(readFileSync(join(RAIZ, "tools/web/paginas/laboratorio-contas.js"), "utf8"), { window: janela });
+    const C = janela.EmpireContas;
+    const { ctx, p, erros, pedidos } = await nova(b, base, 1440, "light");
+    await p.goto(base + "/", { waitUntil: "load" });
+    resultado("o script do laboratório não se pede ao abrir a página", !pedidos.some((u) => u.includes("/assets/laboratorio.")));
+    await p.locator("#laboratorio").scrollIntoViewIfNeeded();
+    await p.waitForSelector("#laboratorio.lab-pronto", { timeout: 10000 });
+    resultado("e chega quando a secção se aproxima", pedidos.some((u) => u.includes("/assets/laboratorio.")));
+    const vistos = () => p.evaluate(() => [...document.querySelectorAll(".lab-painel")].filter((x) => x.offsetParent).map((x) => x.dataset.ferramenta));
+    resultado("quatro separadores e um painel à vista", (await p.locator('#laboratorio [role="tab"]').count()) === 4 && (await vistos()).join() === "noite", (await vistos()).join());
+    await p.focus("#lab-t-noite");
+    await p.keyboard.press("ArrowRight");
+    const foco = await p.evaluate(() => document.activeElement.id);
+    resultado("→ passa ao separador seguinte, com o foco e o painel", foco === "lab-t-economia" && (await vistos()).join() === "economia"
+      && (await p.getAttribute("#lab-t-economia", "aria-selected")) === "true", `${foco} · ${await vistos()}`);
+    await p.keyboard.press("End");
+    resultado("End leva ao último", (await vistos()).join() === "muro");
+    await p.keyboard.press("Home");
+    resultado("Home volta ao primeiro", (await vistos()).join() === "noite");
+    const mudar = async (sel, valor) => { await p.fill(sel, String(valor)); await p.dispatchEvent(sel, "input"); };
+    const ler = (k) => p.evaluate((k) => document.querySelector(`#lab-p-noite [data-lab="${k}"]`).textContent.trim(), k);
+    const fila = () => p.evaluate(() => [...document.querySelectorAll("#lab-p-noite .lab-besta:not([hidden])")].map((li) => `${li.dataset.besta}${li.querySelector('[data-lab="n"]').textContent.replace(/\D/g, "")}`).join());
+    await mudar("#lab-noite-dia", 1);
+    resultado(`a noite 1 tem ${L.noite.abertura} de massa e traz três Rastejantes (§25)`, (await ler("massa")) === String(L.noite.abertura) && (await fila()) === "crawler3", `${await ler("massa")} · ${await fila()}`);
+    const estreia = L.criaturas[0];
+    const chip = new URLSearchParams(await p.getAttribute("#lab-p-noite .lab-cenario >> nth=2", "data-cenario"));
+    resultado(`o cenário da estreia (${estreia.id}) só abre o subsolo se ela vier por baixo`, chip.get("sub") === (estreia.subsolo ? "1" : "0"), chip.toString());
+    // Tudo no máximo, cedo: a massa paga mais do que a noite tem tempo de invocar (§51).
+    const regua = ["fort", "arv", "nom", "rec"];
+    await mudar("#lab-noite-dia", 3);
+    for (const k of regua) await mudar(`#lab-noite-${k}`, await p.getAttribute(`#lab-noite-${k}`, "max"));
+    const t = C.invocacoes(L.noite.duracao, L.noite.cadencia);
+    const tetos = await p.evaluate(() => [...document.querySelectorAll("#lab-p-noite .lab-besta:not([hidden]) [data-lab=n]")].map((b) => Math.max(...b.textContent.match(/\d+/g).map(Number))));
+    const tempo = await ler("tempo");
+    resultado(`a noite tem tempo: chegam no máximo ${t.muitas} (uma a cada ${L.noite.cadencia.de}–${L.noite.cadencia.ate} s, do crepúsculo à alvorada)`,
+      tetos.reduce((a, x) => a + x, 0) === t.muitas && tempo.includes(String(t.muitas)), `${tetos.join("+")} · ${tempo}`);
+    resultado(`a partir da noite ${L.noite.doisLados} diz que pode vir por dois lados, e que aqui conta um`,
+      !(await p.isVisible('#lab-p-noite [data-lab="lados"]')) && (await mudar("#lab-noite-dia", L.noite.doisLados), await p.isVisible('#lab-p-noite [data-lab="lados"]')));
+    for (const k of regua) await mudar(`#lab-noite-${k}`, 0);
+    await mudar("#lab-noite-dia", 20);
+    await p.click('label[for="lab-noite-prop"]');
+    const m20 = C.massa({ dia: 20, fortalezas: 0, amargueiros: 0, nomeados: 0, recusas: 0 }, L.noite, true).total;
+    const escrito = new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 1 }).format(m20);
+    resultado(`com as propostas, o dia 20 em campo limpo é o da tabela da §74 (${Math.round(m20)})`, (await ler("massa")).replace(/\s/g, "") === escrito.replace(/\s/g, ""), await ler("massa"));
+    resultado("e diz que são propostas", await p.isVisible('#lab-p-noite [data-lab="propostas"]'));
+    await p.click("#lab-t-economia");
+    const s = L.economia.deslizadores;
+    const asf = C.asfixia({ fontes: s.fontes.valor, rotas: s.rotas.valor, tropas: s.tropas.valor, ganancia: s.ganancia.valor }, L.economia);
+    const textoAsf = await p.textContent('#lab-p-economia [data-lab="asfixia"]');
+    resultado(`a asfixia por omissão é a do §06 (dia ${asf})`, textoAsf.includes(String(asf)) && asf >= L.economia.alvo[0] && asf <= L.economia.alvo[1], textoAsf);
+    const perfis = L.economia.cenarios, i = perfis.findIndex((x) => x.rotas > 0);
+    const comRotas = C.asfixia({ ...perfis[i] }, L.economia);
+    await p.click(`#lab-p-economia .lab-cenario >> nth=${i}`);
+    const depois = await p.textContent('#lab-p-economia [data-lab="asfixia"]');
+    resultado(`o cenário «${perfis[i].id}» do economy_profiles.csv põe a asfixia no dia ${comRotas}, e fica marcado`,
+      depois.includes(String(comRotas)) && (await p.getAttribute(`#lab-p-economia .lab-cenario >> nth=${i}`, "class")).includes("igual"), depois);
+    await p.click("#lab-partilhar");
+    resultado("mexer e partilhar guarda a experiência no endereço", (await p.evaluate(() => location.hash)).startsWith("#laboratorio?f=economia&fontes="), await p.evaluate(() => location.hash));
+    await p.click("#lab-t-combate");
+    await p.click('#lab-p-combate label.lab-escolha:has(input[value="spearman"])');
+    await p.click("#lab-partilhar");
+    const semPosto = await p.evaluate(() => location.hash);
+    resultado("uma tropa sem posto desliga o «onde», e a ligação não o leva", semPosto.includes("tropa=spearman") && !semPosto.includes("onde=")
+      && (await p.evaluate(() => document.querySelector("#lab-p-combate .lab-onde").disabled)), semPosto);
+    resultado("o laboratório não tem erros de JavaScript", erros.length === 0, erros.slice(0, 2).join(" | "));
+    await ctx.close();
+
+    const ligacao = await nova(b, base, 390, "dark");
+    await ligacao.p.goto(base + "/en/#laboratorio?f=combate&tropa=spearman&nivel=99", { waitUntil: "load" });
+    await ligacao.p.waitForSelector("#laboratorio.lab-pronto", { timeout: 10000 });
+    const lanceiro = L.tropas.find((x) => x.id === "spearman"), rastejante = L.criaturas.find((x) => x.id === "crawler");
+    const esperado = new Intl.NumberFormat("en", { maximumFractionDigits: 1 }).format(C.tempoAteMatar(lanceiro, rastejante.vida, lanceiro.precisao).segundos);
+    const linha = await ligacao.p.textContent('#lab-p-combate li[data-besta="crawler"] [data-lab="v"]');
+    resultado(`uma ligação abre o instrumento como ficou: o lanceiro mata o Rastejante em ${esperado} s (§07)`,
+      (await ligacao.p.getAttribute("#lab-t-combate", "aria-selected")) === "true" && (await ligacao.p.isChecked('#lab-p-combate input[value="spearman"]')) && linha.includes(esperado), linha);
+    await ligacao.ctx.close();
+
+    const semJs = await nova(b, base, 390, "light", { javaScriptEnabled: false });
+    await semJs.p.goto(base + "/", { waitUntil: "load" });
+    const frases = await semJs.p.evaluate(() => [...document.querySelectorAll(".lab-painel .lab-sem-js")].filter((x) => x.offsetParent && x.textContent.trim()).length);
+    resultado("sem JavaScript, cada instrumento diz o caso por omissão, e os controlos inertes não aparecem",
+      frases === 4 && !(await semJs.p.isVisible("#lab-noite-dia")), `${frases} frases`);
+    await semJs.ctx.close();
   }
 
   await b.close();

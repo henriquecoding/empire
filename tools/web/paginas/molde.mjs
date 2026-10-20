@@ -1,4 +1,6 @@
 import { EXPERIENCIA, guiaInicial, conviteFinal } from "./experiencia.mjs";
+import { laboratorio, cssDoLaboratorio } from "./laboratorio.mjs";
+import { LABORATORIO } from "./laboratorio-textos.mjs";
 // tools/web/paginas/molde.mjs — o HTML do site, a partir dos textos e dos dados (ADR 0025).
 //
 // Duas páginas saem daqui — a de entrada, uma por língua, e o 404 — e partilham
@@ -14,9 +16,10 @@ import { EXPERIENCIA, guiaInicial, conviteFinal } from "./experiencia.mjs";
 // aqui e revisto como código.
 //
 // A página, de cima para baixo: a abertura (o dia a passar no jogo), o que é o
-// jogo, os monarcas, o dia e a noite, a Podridão, os povos, como se joga, onde
-// está e as perguntas. A ordem é a de quem chega: primeiro ver, depois perceber,
-// e só no fim os números de quem o faz.
+// jogo, os monarcas, o dia e a noite, a Podridão, os povos, o laboratório (as
+// mesmas regras, para mexer), como se joga, onde está e as perguntas. A ordem é
+// a de quem chega: primeiro ver, depois perceber, e só no fim os números de quem
+// o faz.
 
 export const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -58,6 +61,7 @@ export function cssDosDados(d) {
   r.push(`:root{--violeta:${p.violeta};--nucleo:${p.paragens.nucleo};--meio:${p.paragens.meio};--bordo:${p.paragens.bordo};`
     + `--fogo-nucleo:${p.fogo.nucleo};--fogo-meio:${p.fogo.meio};--fogo-bordo:${p.fogo.bordo};`
     + `--terra:${d.relogio.fases.at(-1).tinta};--quadro:${d.capturas.largura}/${d.capturas.altura};--ecra:${d.capturas.ecra[0]}/${d.capturas.ecra[1]}}`);
+  r.push(cssDoLaboratorio(d));
   return `/* Gerado de data/ e docs/ por tools/web/paginas/molde.mjs */\n${r.join("\n")}\n`;
 }
 
@@ -92,7 +96,7 @@ ${og || ""}</head>`;
 export function topo({ t, v, ancoras }) {
   const n = t.nav;
   const itens = ancoras
-    ? [["#jogo", n.jogo], ["#monarcas", n.monarcas], ["#dia", n.dia], ["#povos", n.povos], ["#controlos", n.controlos], ["#estado", n.estado]]
+    ? [["#jogo", n.jogo], ["#monarcas", n.monarcas], ["#dia", n.dia], ["#povos", n.povos], ["#laboratorio", LABORATORIO[t.lingua === "pt-PT" ? "pt" : "en"].nav], ["#controlos", n.controlos], ["#estado", n.estado]]
     : [];
   itens.push(["/dossie/", n.dossie]);
   const outraHref = v.outra || (t.nav.outra.lingua === "en" ? "/en/" : "/");
@@ -306,11 +310,18 @@ function dia({ t, d }) {
 </section>`;
 }
 
+/** A massa do calendário, com a rampa das primeiras noites (RotProfile.calendar_mass, sem as propostas). */
+export function massaDoCalendario(m, dia) {
+  const cheia = m.base + m.porDia * dia;
+  if (m.rampa <= 1 || m.abertura <= 0 || dia >= m.rampa) return cheia;
+  return m.abertura + (cheia - m.abertura) * (Math.max(dia, 1) - 1) / (m.rampa - 1);
+}
+
 function candeia(p, dia) {
   return {
     raio: Math.min(p.raio.base + p.raio.porDia * dia, p.raio.teto),
     vel: p.velocidade.base + p.velocidade.porDia * dia,
-    massa: p.massa.base + p.massa.porDia * dia,
+    massa: massaDoCalendario(p.massa, dia),
     dois: dia >= p.doisLados,
   };
 }
@@ -331,7 +342,7 @@ function noite({ t, d }) {
   const formula = (base, porDia, extra = "") => `${num.format(base)} + ${num.format(porDia)} × ${s.inst_dia.toLowerCase()}${extra}`;
   const dados = [
     ["raio-base", p.raio.base], ["raio-dia", p.raio.porDia], ["raio-teto", p.raio.teto], ["vel-base", p.velocidade.base],
-    ["vel-dia", p.velocidade.porDia], ["massa-base", p.massa.base], ["massa-dia", p.massa.porDia], ["lados", p.doisLados],
+    ["vel-dia", p.velocidade.porDia], ["massa-base", p.massa.base], ["massa-dia", p.massa.porDia], ["abertura", p.massa.abertura], ["rampa", p.massa.rampa], ["lados", p.doisLados],
     ["dither", p.dither], ["um", s.inst_um], ["dois", s.inst_dois], ["alt", s.inst_alt], ["lingua", t.lingua],
   ].map(([k, x]) => `data-${k}="${modelo(x)}"`).join(" ");
   return `<section class="secao escura" id="noite" aria-labelledby="noite-t">
@@ -352,10 +363,11 @@ function noite({ t, d }) {
         <dl class="leituras" aria-live="polite">
           <div><dt>${s.inst_raio}</dt><dd><b data-l="raio">${num.format(c.raio)}</b> ${s.inst_px}<small>${formula(p.raio.base, p.raio.porDia, `, ${s.inst_teto} ${p.raio.teto}`)}</small></dd></div>
           <div><dt>${s.inst_vel}</dt><dd><b data-l="vel">${num.format(c.vel)}</b> ${s.inst_pxs}<small>${formula(p.velocidade.base, p.velocidade.porDia)}</small></dd></div>
-          <div><dt>${s.inst_massa}</dt><dd><b data-l="massa">${num.format(c.massa)}</b><small>${formula(p.massa.base, p.massa.porDia)}</small></dd></div>
+          <div><dt>${s.inst_massa}</dt><dd><b data-l="massa">${num.format(c.massa)}</b><small>${formula(p.massa.base, p.massa.porDia)}; ${fmt(s.inst_rampa, { rampa: p.massa.rampa })}</small></dd></div>
           <div><dt>${s.inst_lados}</dt><dd><b data-l="lados">${c.dois ? s.inst_dois : s.inst_um}</b><small>${fmt(s.inst_desde, { dia: p.doisLados })}: ${s.inst_dois}</small></dd></div>
         </dl>
         <p class="fonte">${fmt(s.inst_fonte, { dither: p.dither })}</p>
+        <a class="ponte-lab" href="#laboratorio">${s.inst_lab} <span aria-hidden="true">↘</span></a>
       </div>
     </div>
     <div class="excecoes revela">
@@ -620,6 +632,7 @@ ${monarcas({ t, d })}
 ${dia({ t, d })}
 ${noite({ t, d })}
 ${povos({ t, d })}
+${laboratorio({ t, d, v, esc, fmt })}
 ${controlos({ t, d })}
 ${estado({ t, d })}
 ${perguntas({ t, d })}

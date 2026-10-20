@@ -243,6 +243,10 @@ h1 em{font-style:normal;color:var(--destaque)}
 .fases li span{position:absolute;left:0;top:13px;font-family:var(--f-ui);font-size:12px;
   color:var(--baixo);white-space:nowrap;overflow:hidden;text-overflow:clip;max-width:100%}
 .fases li.estreita span{display:none}
+/* Cada fase é um contentor: o rótulo só aparece se a fase tiver largura para ele.
+   Sem isto, a 1180 px, «Meio-dia» era cortado e colava-se a «Tarde». */
+.fases li{container-type:inline-size}
+@container (max-width:72px){.fases li span{display:none}}
 @media (max-width:819px){.fases li span{display:none}.fases-palco{padding-bottom:4px}}
 .agulha{position:absolute;top:-2px;left:calc(var(--p,.1597) * 100%);width:3px;height:14px;margin-left:-1px;background:var(--tinta);
   box-shadow:0 0 0 2px #16120c;border-radius:1px}
