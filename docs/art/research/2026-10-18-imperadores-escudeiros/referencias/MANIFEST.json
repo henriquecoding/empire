@@ -1,0 +1,104 @@
+{
+  "status": "referências de estudo; nenhuma arte final aprovada",
+  "images": [
+    {
+      "name": "rei-escudeiro-preferencia-anterior.png",
+      "original_name": "exec-12fc0709-86d0-4a12-ad2c-7e1909807694.png",
+      "library_file_id": null,
+      "status": "Preferido antes da última rejeição; não final",
+      "size_bytes": 1769450,
+      "sha256": "296ea84552850f7189e78982ffd9c8724c26bcbf72daa36729876c94abab2e89",
+      "git_blob_sha": "db02804e08dd64ff338eb67d11d86baffc4f4a44"
+    },
+    {
+      "name": "sombra-floracao-conceito-anterior.png",
+      "original_name": "exec-59a8ac87-9438-464b-857d-970957ae85c2.png",
+      "library_file_id": null,
+      "status": "Conceito apreciado; densidade e flores criticadas; não final",
+      "size_bytes": 1998633,
+      "sha256": "f53ac09063e7c453635841b2adece8a5b27e05dce4cd470b10d65b6c7ed50704",
+      "git_blob_sha": "5c316aecdc7ea03785972c714ea34b9d96b06c08"
+    },
+    {
+      "name": "flora-044546.png",
+      "original_name": "image(20261018-044546).png",
+      "library_file_id": "libfile_7a5b13f5d9e4819193096dc9a5bd4a4b",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 1574700,
+      "sha256": "528a05da32dbfaa3c975e76f9292b3418cdd650d4667db25536e3bf97bb2551d",
+      "git_blob_sha": "b6d9e1fc8549a48d307b4b1258503c5fa820fead"
+    },
+    {
+      "name": "flora-044743.png",
+      "original_name": "image(20261018-044743).png",
+      "library_file_id": "libfile_1ff8e05b0d3c81919413cf8cf8989717",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 1545267,
+      "sha256": "ff6efe504262de70a56218d33fd38e987e748617965d6be1537e59e352454506",
+      "git_blob_sha": "27ef199865070da4a19ecfe7b94b29e9893a4580"
+    },
+    {
+      "name": "flora-044809.png",
+      "original_name": "image(20261018-044809).png",
+      "library_file_id": "libfile_b39dcb2371588191871a7514b550068a",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 1943700,
+      "sha256": "aa8ea05d33c49da9d36f4501e8007f4c40cbc250e25ac19bf96520c395b318c1",
+      "git_blob_sha": "322432f17548d3bbb32f9fd2162f055b217c28a3"
+    },
+    {
+      "name": "flora-044822.png",
+      "original_name": "image(20261018-044822).png",
+      "library_file_id": "libfile_c02525d4ebe4819181676fe89ea31fe5",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 1435405,
+      "sha256": "edfb8272aa9e6b438b68c0ccee9bd314e5aad616d7fa44a899ccbb456c61e0ff",
+      "git_blob_sha": "c5cedda640b17f4791cfc2a88710ce2298f26d06"
+    },
+    {
+      "name": "flora-044857.png",
+      "original_name": "image(20261018-044857).png",
+      "library_file_id": "libfile_b30c57930950819191881f9b5fd7cbc5",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 3564454,
+      "sha256": "ce9bbb97874d073e5c1c910c42212a810ff70650391d7e5d6b3c167364b8c594",
+      "git_blob_sha": "0e676fca0550c70ee671c8a11bce713ac5aa8327"
+    },
+    {
+      "name": "flora-044923.png",
+      "original_name": "image(20261018-044923).png",
+      "library_file_id": "libfile_51c70f7f06e88191a14da1f85449d3eb",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 1340806,
+      "sha256": "311a5962eeec7535f3fb5ad4311f0e34120d8376e9ffee00fd7d480016ed1015",
+      "git_blob_sha": "80a6fd8200cfd7d508e7274aa74623f610b47b9d"
+    },
+    {
+      "name": "flora-044928.png",
+      "original_name": "image(20261018-044928).png",
+      "library_file_id": "libfile_e76242c96570819188de738d7f303335",
+      "status": "Referência fornecida pelo autor: composição botânica, não grelha pixel art",
+      "size_bytes": 2181811,
+      "sha256": "e9b2268e7e8d35844b78ed045cc7d1fee9a53c99f07d38ef47e7294ac8309970",
+      "git_blob_sha": "f4632991008dee6280d7f014a59cadac107f92af"
+    },
+    {
+      "name": "personagens-compactos-64-referencia.jpeg",
+      "original_name": "FA5jMEvXMAET6d0.jpeg",
+      "library_file_id": "libfile_86659c9900b88191ac17c36f029c40f7",
+      "status": "Referência de construção compacta e acabamento; tamanho nativo de 64×64 informado por Henrique; cópia recebida JPEG 476×476; autoria não identificada",
+      "size_bytes": 41955,
+      "sha256": "fea1b7604eb347395ab7a9e2370a96c6a4052a8ad5b818aebd6b48f21e2c9cd6",
+      "git_blob_sha": "c23994347a2bfdcddfdf9369338be70b405b52cc"
+    },
+    {
+      "name": "pixellab-conceito-resultado-captura.png",
+      "original_name": "image(20261018-102243).png",
+      "library_file_id": "libfile_4e1e3a83f9d881918f8ac67122e7bf82",
+      "status": "Captura do site PixelLab fornecida por Henrique para estudar conversão de conceito em sprite; não é arte de Empire",
+      "size_bytes": 240270,
+      "sha256": "180f03a7666ef9423f66a19906f1b6047f77c96fa0ec617b850e45a60fd39d85",
+      "git_blob_sha": "76287cd46c9b7df7144a1104058a2a3ae601634b"
+    }
+  ]
+}

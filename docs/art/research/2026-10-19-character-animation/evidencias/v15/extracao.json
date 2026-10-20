@@ -1,0 +1,1112 @@
+[
+  {
+    "id": "sombra",
+    "kind": "sit",
+    "count": 8,
+    "size": 80,
+    "headMetric": 86,
+    "nativeHeadMetric": 14.18181818181818,
+    "scale": 0.16490486257928116,
+    "details": [
+      {
+        "frame": 0,
+        "sourceBounds": [
+          37,
+          77,
+          369,
+          515
+        ],
+        "sourceRootX": 204.5619674670798,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 1,
+        "sourceBounds": [
+          424,
+          146,
+          733,
+          515
+        ],
+        "sourceRootX": 590.1560434372049,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 2,
+        "sourceBounds": [
+          781,
+          197,
+          1130,
+          519
+        ],
+        "sourceRootX": 967.769254755223,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 3,
+        "sourceBounds": [
+          1149,
+          237,
+          1509,
+          519
+        ],
+        "sourceRootX": 1351.6606815683401,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 4,
+        "sourceBounds": [
+          18,
+          630,
+          382,
+          938
+        ],
+        "sourceRootX": 199.13403763618356,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 5,
+        "sourceBounds": [
+          402,
+          646,
+          764,
+          941
+        ],
+        "sourceRootX": 578.6874760628111,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 6,
+        "sourceBounds": [
+          778,
+          667,
+          1159,
+          941
+        ],
+        "sourceRootX": 932.5126835781041,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 7,
+        "sourceBounds": [
+          1168,
+          682,
+          1518,
+          941
+        ],
+        "sourceRootX": 1300.717202970297,
+        "scale": 0.16490486257928116,
+        "clippedPixels": 0
+      }
+    ]
+  },
+  {
+    "id": "sombra",
+    "kind": "heal",
+    "count": 8,
+    "size": 80,
+    "headMetric": 90,
+    "nativeHeadMetric": 14.18181818181818,
+    "scale": 0.15757575757575756,
+    "details": [
+      {
+        "frame": 0,
+        "sourceBounds": [
+          21,
+          55,
+          439,
+          404
+        ],
+        "sourceRootX": 244.20331325301206,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 1,
+        "sourceBounds": [
+          465,
+          71,
+          882,
+          404
+        ],
+        "sourceRootX": 694.5362976406534,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 2,
+        "sourceBounds": [
+          904,
+          88,
+          1325,
+          404
+        ],
+        "sourceRootX": 1132.2451499118165,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 3,
+        "sourceBounds": [
+          1349,
+          87,
+          1767,
+          404
+        ],
+        "sourceRootX": 1580.460258780037,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 4,
+        "sourceBounds": [
+          17,
+          530,
+          443,
+          842
+        ],
+        "sourceRootX": 224.4200136147039,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 5,
+        "sourceBounds": [
+          465,
+          518,
+          884,
+          845
+        ],
+        "sourceRootX": 694.1797153024911,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 6,
+        "sourceBounds": [
+          909,
+          503,
+          1325,
+          845
+        ],
+        "sourceRootX": 1128.877994011976,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 7,
+        "sourceBounds": [
+          1354,
+          494,
+          1767,
+          845
+        ],
+        "sourceRootX": 1571.1488577745026,
+        "scale": 0.15757575757575756,
+        "clippedPixels": 0
+      }
+    ]
+  },
+  {
+    "id": "sombra",
+    "kind": "stand",
+    "count": 8,
+    "size": 80,
+    "headMetric": 81,
+    "nativeHeadMetric": 14.18181818181818,
+    "scale": 0.17508417508417506,
+    "details": [
+      {
+        "frame": 0,
+        "sourceBounds": [
+          43,
+          153,
+          455,
+          393
+        ],
+        "sourceRootX": 244.75037369207772,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 1,
+        "sourceBounds": [
+          501,
+          141,
+          864,
+          394
+        ],
+        "sourceRootX": 672.9137519872814,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 2,
+        "sourceBounds": [
+          921,
+          127,
+          1287,
+          393
+        ],
+        "sourceRootX": 1097.737444373808,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 3,
+        "sourceBounds": [
+          1349,
+          103,
+          1734,
+          392
+        ],
+        "sourceRootX": 1539.1387765419615,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 4,
+        "sourceBounds": [
+          40,
+          536,
+          458,
+          817
+        ],
+        "sourceRootX": 247.40417000801924,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 5,
+        "sourceBounds": [
+          492,
+          458,
+          866,
+          819
+        ],
+        "sourceRootX": 673.4771514729761,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 6,
+        "sourceBounds": [
+          921,
+          443,
+          1275,
+          822
+        ],
+        "sourceRootX": 1098.4860630722278,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 7,
+        "sourceBounds": [
+          1375,
+          437,
+          1697,
+          821
+        ],
+        "sourceRootX": 1538.4843198338526,
+        "scale": 0.17508417508417506,
+        "clippedPixels": 0
+      }
+    ]
+  },
+  {
+    "id": "sombra",
+    "kind": "common",
+    "count": 23,
+    "size": 80,
+    "headMetric": 52,
+    "nativeHeadMetric": 14.18181818181818,
+    "scale": 0.2727272727272727,
+    "details": [
+      {
+        "frame": 0,
+        "sourceBounds": [
+          82,
+          10,
+          283,
+          228
+        ],
+        "sourceRootX": 177.74732620320856,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 1,
+        "sourceBounds": [
+          432,
+          9,
+          628,
+          227
+        ],
+        "sourceRootX": 528.2230508474577,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 2,
+        "sourceBounds": [
+          766,
+          10,
+          958,
+          228
+        ],
+        "sourceRootX": 859.4220735785954,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 3,
+        "sourceBounds": [
+          1110,
+          10,
+          1309,
+          227
+        ],
+        "sourceRootX": 1202.5,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 4,
+        "sourceBounds": [
+          56,
+          237,
+          280,
+          428
+        ],
+        "sourceRootX": 169.0635294117647,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 5,
+        "sourceBounds": [
+          402,
+          236,
+          609,
+          428
+        ],
+        "sourceRootX": 523.3022222222222,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 6,
+        "sourceBounds": [
+          746,
+          235,
+          958,
+          429
+        ],
+        "sourceRootX": 882.6745406824147,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 7,
+        "sourceBounds": [
+          1120,
+          238,
+          1334,
+          426
+        ],
+        "sourceRootX": 1243.8909730363423,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 8,
+        "sourceBounds": [
+          47,
+          434,
+          293,
+          625
+        ],
+        "sourceRootX": 176.6484375,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 9,
+        "sourceBounds": [
+          397,
+          437,
+          621,
+          624
+        ],
+        "sourceRootX": 541.09,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 10,
+        "sourceBounds": [
+          752,
+          436,
+          974,
+          626
+        ],
+        "sourceRootX": 870.8518518518518,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 11,
+        "sourceBounds": [
+          1113,
+          435,
+          1344,
+          626
+        ],
+        "sourceRootX": 1232.3958847736626,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 12,
+        "sourceBounds": [
+          56,
+          635,
+          295,
+          816
+        ],
+        "sourceRootX": 198.53523489932886,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 13,
+        "sourceBounds": [
+          409,
+          635,
+          644,
+          816
+        ],
+        "sourceRootX": 539.086301369863,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 14,
+        "sourceBounds": [
+          752,
+          651,
+          977,
+          819
+        ],
+        "sourceRootX": 851.2820037105752,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 15,
+        "sourceBounds": [
+          1119,
+          635,
+          1314,
+          822
+        ],
+        "sourceRootX": 1205.6986301369864,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 16,
+        "sourceBounds": [
+          48,
+          827,
+          275,
+          983
+        ],
+        "sourceRootX": 139.0880149812734,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 17,
+        "sourceBounds": [
+          398,
+          832,
+          665,
+          983
+        ],
+        "sourceRootX": 510.44,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 18,
+        "sourceBounds": [
+          742,
+          838,
+          1017,
+          981
+        ],
+        "sourceRootX": 888.5887096774194,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 19,
+        "sourceBounds": [
+          1096,
+          832,
+          1342,
+          986
+        ],
+        "sourceRootX": 1198.4437229437228,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 20,
+        "sourceBounds": [
+          43,
+          987,
+          290,
+          1114
+        ],
+        "sourceRootX": 170.1188679245283,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 21,
+        "sourceBounds": [
+          397,
+          987,
+          668,
+          1116
+        ],
+        "sourceRootX": 515.5241090146751,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 22,
+        "sourceBounds": [
+          744,
+          984,
+          1008,
+          1118
+        ],
+        "sourceRootX": 872.9416531604538,
+        "scale": 0.2727272727272727,
+        "clippedPixels": 0
+      }
+    ]
+  },
+  {
+    "id": "dancarina",
+    "kind": "dance",
+    "count": 16,
+    "size": 64,
+    "headMetric": 89,
+    "nativeHeadMetric": 16.884244372990352,
+    "scale": 0.18971061093247588,
+    "details": [
+      {
+        "frame": 0,
+        "sourceBounds": [
+          79,
+          15,
+          251,
+          305
+        ],
+        "sourceRootX": 168.36079545454547,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 1,
+        "sourceBounds": [
+          376,
+          15,
+          560,
+          306
+        ],
+        "sourceRootX": 466.48959365708623,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 2,
+        "sourceBounds": [
+          667,
+          15,
+          878,
+          306
+        ],
+        "sourceRootX": 766.805060918463,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 3,
+        "sourceBounds": [
+          980,
+          15,
+          1191,
+          306
+        ],
+        "sourceRootX": 1078.4556962025317,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 4,
+        "sourceBounds": [
+          69,
+          327,
+          279,
+          630
+        ],
+        "sourceRootX": 177.17494600431965,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 5,
+        "sourceBounds": [
+          382,
+          322,
+          567,
+          633
+        ],
+        "sourceRootX": 482.7804232804233,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 6,
+        "sourceBounds": [
+          652,
+          328,
+          873,
+          634
+        ],
+        "sourceRootX": 786.4208273894436,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 7,
+        "sourceBounds": [
+          968,
+          337,
+          1212,
+          633
+        ],
+        "sourceRootX": 1085.463746223565,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 8,
+        "sourceBounds": [
+          78,
+          647,
+          293,
+          949
+        ],
+        "sourceRootX": 188.8918918918919,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 9,
+        "sourceBounds": [
+          393,
+          649,
+          609,
+          950
+        ],
+        "sourceRootX": 495.90263459335625,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 10,
+        "sourceBounds": [
+          662,
+          660,
+          926,
+          949
+        ],
+        "sourceRootX": 781.2268907563025,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 11,
+        "sourceBounds": [
+          975,
+          655,
+          1193,
+          949
+        ],
+        "sourceRootX": 1093.942288557214,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 12,
+        "sourceBounds": [
+          80,
+          972,
+          298,
+          1261
+        ],
+        "sourceRootX": 192.64385150812066,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 13,
+        "sourceBounds": [
+          400,
+          972,
+          565,
+          1261
+        ],
+        "sourceRootX": 495.72688172043013,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 14,
+        "sourceBounds": [
+          694,
+          969,
+          879,
+          1261
+        ],
+        "sourceRootX": 788.1846758349706,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 15,
+        "sourceBounds": [
+          985,
+          970,
+          1161,
+          1260
+        ],
+        "sourceRootX": 1078.5060465116278,
+        "scale": 0.18971061093247588,
+        "clippedPixels": 0
+      }
+    ]
+  },
+  {
+    "id": "dancarina",
+    "kind": "common",
+    "count": 24,
+    "size": 64,
+    "headMetric": 90,
+    "nativeHeadMetric": 16.884244372990352,
+    "scale": 0.18760271525544836,
+    "details": [
+      {
+        "frame": 0,
+        "sourceBounds": [
+          192,
+          7,
+          307,
+          197
+        ],
+        "sourceRootX": 250.67816091954023,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 1,
+        "sourceBounds": [
+          488,
+          9,
+          597,
+          197
+        ],
+        "sourceRootX": 545.8424821002386,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 2,
+        "sourceBounds": [
+          832,
+          8,
+          943,
+          197
+        ],
+        "sourceRootX": 885.3611111111111,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 3,
+        "sourceBounds": [
+          1132,
+          7,
+          1243,
+          197
+        ],
+        "sourceRootX": 1187.9367945823928,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 4,
+        "sourceBounds": [
+          178,
+          207,
+          312,
+          395
+        ],
+        "sourceRootX": 246.18623481781376,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 5,
+        "sourceBounds": [
+          486,
+          207,
+          621,
+          396
+        ],
+        "sourceRootX": 558.7613636363636,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 6,
+        "sourceBounds": [
+          810,
+          207,
+          900,
+          395
+        ],
+        "sourceRootX": 861.7849829351536,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 7,
+        "sourceBounds": [
+          1132,
+          207,
+          1242,
+          395
+        ],
+        "sourceRootX": 1209.8566176470588,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 8,
+        "sourceBounds": [
+          194,
+          402,
+          343,
+          593
+        ],
+        "sourceRootX": 249.03571428571428,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 9,
+        "sourceBounds": [
+          488,
+          402,
+          626,
+          594
+        ],
+        "sourceRootX": 549.2470119521912,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 10,
+        "sourceBounds": [
+          825,
+          405,
+          927,
+          594
+        ],
+        "sourceRootX": 890.5820105820105,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 11,
+        "sourceBounds": [
+          1132,
+          405,
+          1244,
+          594
+        ],
+        "sourceRootX": 1209.8870967741937,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 12,
+        "sourceBounds": [
+          192,
+          601,
+          317,
+          776
+        ],
+        "sourceRootX": 251.84745762711864,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 13,
+        "sourceBounds": [
+          484,
+          600,
+          629,
+          776
+        ],
+        "sourceRootX": 558.3726937269373,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 14,
+        "sourceBounds": [
+          801,
+          622,
+          944,
+          777
+        ],
+        "sourceRootX": 876.0502958579882,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 15,
+        "sourceBounds": [
+          1113,
+          606,
+          1249,
+          777
+        ],
+        "sourceRootX": 1178.2510729613734,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 16,
+        "sourceBounds": [
+          155,
+          783,
+          369,
+          923
+        ],
+        "sourceRootX": 210.6290909090909,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 17,
+        "sourceBounds": [
+          503,
+          794,
+          695,
+          923
+        ],
+        "sourceRootX": 555.4096385542168,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 18,
+        "sourceBounds": [
+          794,
+          807,
+          978,
+          925
+        ],
+        "sourceRootX": 899.853591160221,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 19,
+        "sourceBounds": [
+          1105,
+          796,
+          1285,
+          924
+        ],
+        "sourceRootX": 1208.996805111821,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 20,
+        "sourceBounds": [
+          163,
+          937,
+          368,
+          1070
+        ],
+        "sourceRootX": 264.1304347826087,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 21,
+        "sourceBounds": [
+          488,
+          935,
+          695,
+          1071
+        ],
+        "sourceRootX": 600.5958429561201,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 22,
+        "sourceBounds": [
+          793,
+          936,
+          1023,
+          1071
+        ],
+        "sourceRootX": 931.4319654427646,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      },
+      {
+        "frame": 23,
+        "sourceBounds": [
+          1101,
+          934,
+          1310,
+          1071
+        ],
+        "sourceRootX": 1224.6492537313434,
+        "scale": 0.18760271525544836,
+        "clippedPixels": 0
+      }
+    ]
+  }
+]

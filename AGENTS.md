@@ -27,6 +27,11 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   data/i18n/strings.csv.
 - Producao (arte, mundo, UX, audio, QA): docs/art/, docs/world/, docs/ux/,
   docs/audio/, docs/qa/. Nomes de ficheiro de arte: docs/art/ASSET_BIBLE.md.
+- Personagens e animacao: ler docs/art/CHARACTER_PRODUCTION_GUIDE.md antes
+  de desenhar, gerar poses ou integrar. O guia liga pesquisa, fontes, checklist
+  e decisoes atuais em docs/art/research/2026-10-19-character-animation/.
+  Distinguir design aceito, animacao revisada e integracao testada; nao
+  promover estudos rejeitados ou prototipos de pacote a contratos de runtime.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

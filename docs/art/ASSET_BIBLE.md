@@ -1,5 +1,9 @@
 # Asset Bible — como cada asset do Empire é produzido
 
+> Para produzir ou rever personagens, começar pelo [guia consolidado](CHARACTER_PRODUCTION_GUIDE.md).
+> Ele aplica pesquisa de design, escala, poses e flores distinguindo estudos, design aceito e integração.
+> Nomes, slots e exportação continuam seguindo esta bíblia.
+
 > Complementa a direção de arte do dossiê (§01, §11, §21, §22, §58–§60) com o que ela não dizia: **que ficheiros
 > existem, com que tela, pivot, camadas, nomes e estados.** Onde este documento e o dossiê discordarem em
 > *intenção artística*, manda o dossiê; em *nome de ficheiro, pivot ou exportação*, manda este (§39: a arte fica

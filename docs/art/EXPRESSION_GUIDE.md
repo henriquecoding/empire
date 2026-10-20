@@ -1,5 +1,8 @@
 # Guia de expressões — o humor está na cara
 
+> Método e evidências: [guia de produção](CHARACTER_PRODUCTION_GUIDE.md),
+> [checklist de revisão](CHARACTER_REVIEW_CHECKLIST.md) e [pesquisa consolidada](research/2026-10-19-character-animation/README.md).
+
 > O dossiê é curto e firme: **bocas largas com dentes, olhos afastados, narizes grandes; o humor está na cara,
 > não em piadas de texto — e por isso atravessa idiomas de graça** (§01, §22). O rosto é também interface: a
 > camada `face` diz a vida e a lealdade da tropa sem barra nem número (§07, §24, §58). Este guia fixa como.
