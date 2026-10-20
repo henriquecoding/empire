@@ -84,12 +84,12 @@ func test_moving_hides_objectives_and_control_instructions() -> void:
 	var hud: GameHud = auto_free(GameHud.new())
 	add_child(hud)
 	hud._process(1.0)
-	hud._ribbon._process(1.0)
+	hud._context._process(1.0)
 	Input.action_press(&"move_right")
 	hud._process(0.0)
-	hud._ribbon._process(0.0)
+	hud._context._process(0.0)
 	assert_bool(hud._dica.visible).is_false()
-	assert_bool(hud._ribbon._goal.visible).is_false()
+	assert_bool(hud._context.visible).is_false()
 
 
 func test_collecting_coins_uses_the_counter_without_a_repeated_notice() -> void:
@@ -100,7 +100,7 @@ func test_collecting_coins_uses_the_counter_without_a_repeated_notice() -> void:
 	assert_bool(hud._aviso.visible).is_false()
 
 
-func test_an_objective_that_does_not_fit_is_not_counted_as_read() -> void:
+func test_the_compact_header_does_not_consume_unseen_objectives() -> void:
 	var viewport: SubViewport = auto_free(SubViewport.new())
 	viewport.size = Vector2i(844, 390)
 	add_child(viewport)
@@ -108,6 +108,5 @@ func test_an_objective_that_does_not_fit_is_not_counted_as_read() -> void:
 	var ribbon := HudRibbon.new()
 	viewport.add_child(ribbon)
 	ribbon.refresh()
-	ribbon._process(HintCue.READ_SECONDS + HintCue.STOP_SECONDS)
-	assert_bool(ribbon._goal.visible).is_false()
-	assert_bool(_memory.seen(ribbon._goal_key)).is_false()
+	assert_bool((ribbon._cards[&"goal"] as Rect2).has_area()).is_false()
+	assert_bool(_memory.seen(GuideHints.goal().key)).is_false()

@@ -1,6 +1,10 @@
 class_name PauseLayout
 extends Control
 
+const HOME_SIZE := Vector2(480, 590)
+const WIDE_SIZE := Vector2(860, 590)
+const FRAME_MARGIN := 24
+const HALF := 0.5
 const ACTION_WIDTH := 340
 const WIDE_WIDTH := 760
 const PAGE_WIDTH := 800
@@ -21,7 +25,7 @@ var realm: VBoxContainer
 var status: Label
 var context: Label
 var _margin: MarginContainer
-var _row: HBoxContainer
+var _row: VBoxContainer
 var _aspect: Window.ContentScaleAspect
 var _entered := false
 
@@ -37,18 +41,18 @@ func _ready() -> void:
 	_margin.add_child(column)
 	header = VBoxContainer.new()
 	column.add_child(header)
-	var brand := PauseTheme.label(header, &"UI_MENU_TITLE")
-	PauseTheme.title(brand, PauseTheme.BRAND_SIZE)
+	header.add_child(CrownBanner.new())
 	context = PauseTheme.label(header)
+	context.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	context.add_theme_color_override("font_color", PauseTheme.MUTED)
 	pages = Control.new()
 	pages.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(pages)
 	pages.resized.connect(_fit_pages)
 	home = scroll(pages)
-	_row = HBoxContainer.new()
+	_row = VBoxContainer.new()
 	_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_row.add_theme_constant_override("separation", REALM_GAP)
+	_row.add_theme_constant_override("separation", SHORT_MARGIN)
 	home.add_child(_row)
 	actions = VBoxContainer.new()
 	actions.custom_minimum_size.x = ACTION_WIDTH
@@ -58,12 +62,11 @@ func _ready() -> void:
 	realm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	realm.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	_row.add_child(realm)
-	var crest := PauseCrest.new()
-	realm.add_child(crest)
 	status = PauseTheme.label(realm)
 	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	PauseTheme.title(status, PauseTheme.STATUS_SIZE)
 	footer = PauseTheme.label(column, &"UI_MENU_HINT")
+	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	footer.add_theme_font_size_override("font_size", PauseTheme.SMALL_SIZE)
 	footer.add_theme_color_override("font_color", PauseTheme.MUTED)
 	get_viewport().size_changed.connect(fit)
@@ -74,20 +77,29 @@ func _ready() -> void:
 func fit() -> void:
 	var ui_scale := HudLayout.zoom(get_viewport())
 	scale = Vector2.ONE * ui_scale
-	size = get_viewport_rect().size / ui_scale
-	var compact := size.x < WIDE_WIDTH
-	var margin := COMPACT_MARGIN if compact else WIDE_MARGIN
-	if size.y < SHORT_HEIGHT:
-		margin = SHORT_MARGIN
+	var screen := get_viewport_rect().size / ui_scale
+	var is_home := home.visible
+	size = Vector2(
+		minf(HOME_SIZE.x if is_home else WIDE_SIZE.x, screen.x - FRAME_MARGIN),
+		minf(HOME_SIZE.y, screen.y - FRAME_MARGIN)
+	)
+	position = ((screen - size) * HALF * ui_scale).round()
+	var margin := FRAME_MARGIN if size.y >= SHORT_HEIGHT else SHORT_MARGIN
 	for side: String in ["left", "top", "right", "bottom"]:
 		_margin.add_theme_constant_override("margin_" + side, margin)
-	actions.custom_minimum_size.x = minf(ACTION_WIDTH, size.x - margin * 2)
-	actions.size_flags_horizontal = Control.SIZE_EXPAND_FILL if compact else Control.SIZE_FILL
-	realm.visible = not compact
-	footer.visible = not compact and size.y >= FOOTER_HEIGHT
-	context.visible = compact
+	actions.custom_minimum_size.x = 0
+	actions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	realm.hide()
+	footer.visible = size.y >= SHORT_HEIGHT
+	context.visible = size.y >= SHORT_HEIGHT
+	header.get_child(0).visible = size.y >= SHORT_HEIGHT
 	_row.queue_sort()
 	_fit_pages()
+	queue_redraw()
+
+
+func _draw() -> void:
+	CrownSkin.frame(self, Rect2(Vector2.ZERO, size))
 
 
 func _fit_pages() -> void:

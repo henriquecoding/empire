@@ -47,6 +47,7 @@ func _ready() -> void:
 	add_child(TravelPanel.new())
 	add_child(SiteSheet.new())
 	add_child(CombatBar.new())
+	add_child(RoyalWheel.new())
 	EventBus.game_paused.connect(_na_pausa)
 	for sinal: StringName in HudText.AVISOS:
 		EventBus.connect(sinal, _dizer_chave.bind(HudText.AVISOS[sinal]).unbind(_argumentos(sinal)))
@@ -69,8 +70,9 @@ func _process(delta: float) -> void:
 		var ability := &"HINT_CHARM" if HeroWatch.current() == &"bard" else &"HINT_MARK"
 		var mark := Assume.marks(SimLoop.field) or HeroWatch.current() == &"bard"
 		_dica.text = Glyphs.hint(_dispositivo, mark, ability)
+	_ribbon.visible = not RoyalWheel.active
 	_dispor()
-	var stopped := InteractionFocus.still() and not SiteSheet.active
+	var stopped := InteractionFocus.still() and not SiteSheet.active and not RoyalWheel.active
 	if stopped:
 		_aviso_ate = maxf(0.0, _aviso_ate - delta)
 	_aviso.visible = _aviso_ate > 0.0 and stopped
@@ -111,7 +113,7 @@ func say(mensagem: String) -> void:
 func _dizer(mensagem: String) -> void:
 	_aviso.text = mensagem
 	_aviso_ate = AVISO_S
-	_aviso.visible = InteractionFocus.still() and not SiteSheet.active
+	_aviso.visible = InteractionFocus.still() and not SiteSheet.active and not RoyalWheel.active
 
 
 func _na_pausa(pausado: bool) -> void:

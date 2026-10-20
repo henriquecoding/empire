@@ -454,7 +454,7 @@ HINT_MOVE,mover,move,rodapé de comandos (§24): o que a tecla faz,16,GB-15. O g
 HINT_DROP,moeda,coin,rodapé de comandos (§24): Verbo 1,32,GB-15
 HINT_ASSUME,interagir,interact,rodapé de comandos (§24): Verbo 2,16,GB-15. Hoje o Verbo 2 só entra em passagens (Q-066).
 HINT_MARK,habilidade,ability,rodapé de comandos (§24): marcar alvo,16,GB-15
-HINT_WHEEL,impulsos,impulses,rodapé de comandos (§24): a roda do rei,32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
+HINT_WHEEL,coroa,crown,"roda de seis famílias, aberta ao manter o comando (UX-11)",32,"GB-15. Abre o painel de estado; com ele premido, 1–6 escolhe o impulso real (§15, Q-067, Q-110)."
 HINT_PAUSE,pausa,pause,rodapé de comandos (§24),16,GB-15
 KEY_SPACE,ESPAÇO,SPACE,nome de tecla no rodapé de comandos,16,GB-15
 KEY_MOUSE_RIGHT,BOTÃO DIREITO,RIGHT CLICK,nome de botão do rato no rodapé de comandos,16,GB-15
@@ -798,7 +798,7 @@ TOUCH_STICK,ALAVANCA,STICK,controlos por toque (ADR 0047): a alavanca que anda,1
 TOUCH_DROP,MOEDA,COIN,controlos por toque (ADR 0047): o botão do Verbo 1,12,Está escrito no botão e é o nome dele nos guias: «MOEDA evoluir o Monarca».
 TOUCH_ASSUME,INTERAGIR,INTERACT,controlos por toque (ADR 0047): o botão do Verbo 2,12,Está escrito no botão e é o nome dele nos guias: «INTERAGIR dar-lhe uma moeda». O botão pulsa quando o guia o usa.
 TOUCH_SKILL,HABILIDADE,ABILITY,controlos por toque (ADR 0047): o botão da habilidade da classe,12,"O botão diz a habilidade de quem se conduz (Vigília, Marcar, Encantar); isto é o nome geral, no painel de combate e na ajuda."
-TOUCH_WHEEL,IMPULSOS,IMPULSES,controlos por toque (ADR 0047): a roda do rei,12,"Manter, arrastar até ao segmento e largar: o gesto do stick do §24."
+TOUCH_WHEEL,COROA,CROWN,controlos por toque (ADR 0047): a roda do rei,12,"Manter, arrastar até ao segmento e largar: o gesto do stick do §24."
 TOUCH_PAUSE,PAUSA,PAUSE,controlos por toque (ADR 0047): o botão da pausa,12,O botão só tem o ícone; o nome é o da ajuda.
 TOUCH_ATTACK,ATAQUE,ATTACK,controlos por toque (ADR 0047): o botão do ataque,12,"O botão diz a arma de quem se conduz (Espada, Disparar, Alaúde); isto é o nome geral."
 TOUCH_FIX,FIXAR,PIN,controlos por toque (UX-03): prender a alavanca no sítio,12,"Solta, a alavanca nasce onde o polegar pousa e arrastar nunca mexe a câmara; fixa, fica no sítio e arrastar o resto do ecrã espreita."
@@ -854,6 +854,7 @@ COMBAT_BARD_LIMIT,O Bardo já tem os encantados que consegue: espera que um enca
 COMBAT_BARD_UNPAID,"Sem moedas para pagar o canto: dá-lhe moedas, ou traz a bolsa cheia.","No coins to pay for the song: give the Bard coins, or carry a fuller purse.","combate manual — ADR 0045, ADR 0052",1200,Q-199
 COMBAT_ENCOURAGED,O Bardo incentivou os teus: andam mais depressa por uns segundos.,The Bard spurred your people: they move faster for a few seconds.,"combate manual — ADR 0045, ADR 0052",1200,Q-199
 COMBAT_ARROWS,Flechas {left}/{max},Arrows {left}/{max},"combate manual — ADR 0045, ADR 0052",1200,Q-200
+COMBAT_AMMO_COMPACT,{left}/{max},{left}/{max},Quantidade de flechas no botão de ataque,16,Q-200
 CONTEXT_BARD,"Bardo · Orçamento {budget}/{max}
 {assume} dar-lhe uma moeda","Bard · Budget {budget}/{max}
 {assume} give a coin",guia contextual de jogo,160,Q-199
@@ -1025,3 +1026,20 @@ FOUNDATION_UNDER_BLOCKED,Não há espaço seguro para a cave real aqui. Afasta-t
 UI_QUIT_CHECKPOINT,Sair para o último ponto guardado,Quit to last checkpoint,auditoria,64,
 OPT_TEXT_SCALE,Tamanho do texto e dos painéis,Text and panel size,acessibilidade,64,
 BUILDING_EMISSARY_STAND,Banca de emissários,Emissary stand,Q-203,24,
+WHEEL_TITLE,Roda da coroa,Crown wheel,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_BUILD,Construir,Build,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_RECRUIT,Recrutar,Recruit,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_CRAFT,Ofícios,Crafts,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_BOOST,Impulsos,Boosts,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_TRAVEL,Expedição,Expedition,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_HEIR,Sucessão,Succession,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_GESTURE,"Apontar e soltar · centro para cancelar
+1–6 escolher · Enter confirmar impulso · Esc fechar","Point and release · centre to cancel
+1–6 select · Enter confirm boost · Esc close",roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_BUILD_HELP,Aproxima-te de um marco de obra. A moeda paga no local; Interagir abre as condições da fundação.,Approach a building marker. Pay with coins on site; Interact opens foundation conditions.,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_RECRUIT_HELP,Aproxima-te de um vagabundo e larga uma moeda para recrutar.,Approach a wanderer and drop a coin to recruit.,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_CRAFT_HELP,Visita uma Casa de Treino. A moeda financia o ofício de um trabalhador disponível.,Visit a Training House. Coins fund a craft for an available worker.,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_BOOST_HELP,Escolher um impulso · o custo e a disponibilidade aparecem antes de confirmar.,Choose a boost · cost and availability appear before confirming.,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_TRAVEL_HELP,A expedição prepara-se na bifurcação. Aproxima-te para consultar as terras e a comitiva.,Prepare an expedition at the fork. Approach it to inspect the lands and your party.,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_HEIR_HELP,Visita a Casa do Herdeiro para treinar ou escolher o sucessor.,Visit the Heir House to train or choose a successor.,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.
+WHEEL_COST,Custo: {cost} moedas · selecionar para usar,Cost: {cost} coins · select to use,roda contextual Oficina da Coroa (UX-11),240,Sem ações remotas nem pagamentos ao abrir.

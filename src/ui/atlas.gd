@@ -2,8 +2,9 @@
 #
 # Uma gramatica so para a HUD, a ficha de um sitio e a pausa: o campo escuro onde se joga,
 # o linho claro onde se le com calma, o latao da moeda, e tres estados com significado
-# que nao muda de bioma para bioma (perigo, cumprido, informacao). A paleta e a do plano
-# mestre da HUD de 07/10/2026 (§5.4); a LINHA e a TINTA_SUAVE sao derivadas aqui e
+# que nao muda de bioma para bioma (perigo, cumprido, informacao). A Oficina da Coroa
+# (ADR 0085) aquece os materiais;
+# a LINHA e a TINTA_SUAVE sao derivadas aqui e
 # medidas no atlas_test, como os pares do plano.
 #
 # Os motivos: o canto de registo (um canto recortado, o oposto em esquadria) e as linhas
@@ -13,12 +14,12 @@ class_name Atlas
 extends RefCounted
 
 ## surface.field — o fundo opaco da HUD e dos controlos.
-const FIELD := Color("172a2b")
+const FIELD := Color("241e1c")
 ## surface.raised — subareas e botoes secundarios.
-const RAISED := Color("233b3c")
+const RAISED := Color("392e27")
 ## text.primary e text.secondary, sobre o campo.
 const TEXT := Color("f1e9d8")
-const SECONDARY := Color("bdc9c3")
+const SECONDARY := Color("cfbfa5")
 ## accent.coin — a moeda e a accao economica, e so isso.
 const COIN := Color("dab879")
 ## state.danger, state.valid e state.info: acompanhados sempre de texto ou forma.
@@ -27,10 +28,10 @@ const VALID := Color("a5cca5")
 const INFO := Color("9cc8de")
 ## surface.folio e text.ink — a leitura demorada.
 const FOLIO := Color("e7decb")
-const INK := Color("253839")
-const INK_SOFT := Color("4a5a57")
+const INK := Color("332b25")
+const INK_SOFT := Color("615346")
 ## A borda de um cartao no campo: 3,2:1, um sinal e nao texto.
-const LINE := Color("5e7a74")
+const LINE := Color("907a60")
 ## O campo deixa ver o mundo por baixo, mas nunca a ponto de o texto descer de 4,5:1.
 const FIELD_ALPHA := 0.95
 ## Quanto mede o recorte do canto de registo, e as margens da grelha de 4.

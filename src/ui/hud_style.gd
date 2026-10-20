@@ -19,8 +19,9 @@ static func font() -> FontFile:
 	return _font
 
 
-static func panel(accent: Color = BORDER) -> StyleBoxFlat:
-	var style := Atlas.card(Atlas.FIELD, accent)
+static func panel(accent: Color = BORDER) -> StyleBoxTexture:
+	var style := CrownSkin.plate(Atlas.FIELD)
+	style.modulate_color = Color.WHITE if accent == BORDER else Color(accent, 1.0)
 	style.set_content_margin_all(HudLayout.PADDING)
 	return style
 

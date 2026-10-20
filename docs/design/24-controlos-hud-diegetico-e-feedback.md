@@ -2,6 +2,8 @@
 
 _Gerado de dossie.html — nao editar a mao; edita o dossie e volta a correr._
 
+Oficina da Coroa — UX-11, ADR 0087: direção visual aprovada pelo dono em 18/10/2026, com pedido de aplicação no jogo. Durante a exploração, bolsa/capacidade e dia/fase ficam compactos nos cantos; estação e gestão ficam no Estado do reino. Ajuda contextual mantém as regras de paragem e duração. A pausa recolhe a HUD e apresenta Retomar, Estado do reino, Opções e Sair; controlos, ecrã inteiro, reinício e exportação ficam nas Opções. A roda é temporária e tem seis famílias; construção, recrutamento e ofícios apresentam o contexto local sem pagar ao abrir, e a fundação, expedição e sucessão usam as ações existentes nos sítios válidos. Impulsos exigem uma segunda escolha, com preço e recusa visíveis. F3 abre o inspetor de diagnóstico. Nenhum setor autoriza construção ou recrutamento à distância.
+
 Atualização da baseline — ADR 0078, UX-08/CV-01: o Atlas do Império unifica a linguagem da HUD. A fundação apresenta uma linha contextual; Interagir abre a ficha do sítio sem fundar nem gastar. O foco inicial é Voltar, e confirmar volta a validar pela simulação. Em janela baixa o corpo da ficha rola; a navegação mantém teclado, comando e toque. O inspetor pode mostrar fontes e alcance do território. A sua sobreposição é diagnóstico, não substitui a geografia visível.
 
 A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 mecânicas e dois botões só funciona se cada contexto estiver escrito — e o Steam Deck obriga-te a resolver isto antes da demo, não depois.
@@ -18,7 +20,7 @@ A v2 dizia "dois verbos" e parava aí. Isto é o mapa completo. Um jogo com 48 m
 | Roda do rei | Y / △ (manter) | Tab (manter) | Só com o titular da coroa. É o corpo dele, não um menu. |
 | Atacar | RB / R1 | F / botão esq. do rato | Corpo controlado; manter repete à cadência da arma |
 | Habilidade do monarca | RT / R2 | R / botão dir. do rato | Rei: Vigília; Nia: o canto pago do Bardo; Arqueiro: marca (ADR 0045, ADR 0052) |
-| Impulso real | Roda do rei → segmento | Tab → 1–5 | Um por dia (§15) |
+| Impulso real | Roda do rei → segmento | Tab → 4 → 1–6 → Enter | Um por dia (§15) |
 | Câmara livre | Stick direito | Q · Z ou rato na margem | Reconhecimento; volta sozinha em 2 s |
 | Pausa / opções | Start | Esc | Sempre |
 

@@ -1,13 +1,3 @@
-# src/ui/inspector.gd — o estado de cada sistema, a pedido (TAB).
-#
-# Nao e a roda do rei do §24. A roda tem seis segmentos — construir, recrutar,
-# oficios, impulso, expedicao, sucessao — e quatro deles nao tem sistema nenhum
-# por tras ainda (§09, §13, §15). Uma roda com quatro segmentos que nao fazem
-# nada e pior do que nao haver roda: ensina um gesto que depois muda.
-#
-# O que a tecla faz enquanto isso e o que um greybox precisa: mostrar o que os
-# sistemas estao a pensar, para se poder testar cada mecanica sem ler o registo
-# (§67, GB-03). Ver docs/QUESTIONS.md, Q-067.
 class_name Inspector
 extends Label
 
@@ -22,18 +12,19 @@ func _ready() -> void:
 
 
 func _unhandled_input(evento: InputEvent) -> void:
-	if ClassSelection.active:
+	if ClassSelection.active or not event_is_diagnostic(evento):
 		return
-	if not evento.is_action(&"king_wheel") or evento.is_echo():
-		return
-	# No comando a roda e manter e largar (§24, Q-148): o painel abre com o Y e fecha
-	# com ele, para que o apontado se veja em cada gesto. No teclado continua a
-	# alternar com o Tab (Q-067).
-	if evento is InputEventJoypadButton or evento is InputEventAction:
-		visible = evento.is_pressed()  # o comando, e o dedo na roda (ADR 0047)
-	elif evento.is_pressed():
-		visible = not visible
+	visible = not visible
 	get_viewport().set_input_as_handled()
+
+
+static func event_is_diagnostic(event: InputEvent) -> bool:
+	return (
+		event is InputEventKey
+		and event.physical_keycode == KEY_F3
+		and event.pressed
+		and not event.echo
+	)
 
 
 func _process(_delta: float) -> void:
@@ -44,7 +35,7 @@ func _process(_delta: float) -> void:
 		"\n"
 		. join(
 			[
-				"— ESTADO (TAB fecha) —",
+				"— ESTADO (F3 fecha) —",
 				(
 					"semente %d · tick %d · ids %d"
 					% [SimLoop.state.seed, SimLoop.state.tick, SimLoop.state.next_id]
@@ -59,7 +50,7 @@ func _process(_delta: float) -> void:
 				"TERRA   " + _territorio() + "  (barras no chao: agua, floresta, rocha)",
 				"PLANOS  " + _planos(),
 				"",
-				"IMPULSOS (TAB + numero, ou Y + stick e largar; um por dia)",
+				"IMPULSOS (roda da coroa; um por dia)",
 				_impulsos(),
 			]
 		)

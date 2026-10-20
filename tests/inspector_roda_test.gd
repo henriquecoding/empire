@@ -1,5 +1,4 @@
-# tests/inspector_roda_test.gd — o painel da roda no comando e manter e largar
-# (§24, Q-148; revisao do PR #44). No teclado o Tab continua a alternar (Q-067).
+# UX-11: a roda nao abre o diagnostico; F3 conserva o inspetor separado.
 extends GdUnitTestSuite
 
 const BOTAO_Y := 3
@@ -19,20 +18,22 @@ func _tab() -> InputEventKey:
 	return e
 
 
-func test_o_y_abre_ao_manter_e_fecha_ao_largar_em_cada_gesto() -> void:
+func test_o_y_nao_abre_o_diagnostico() -> void:
 	var painel: Inspector = auto_free(Inspector.new())
 	add_child(painel)
 	for _gesto in 2:
 		painel._unhandled_input(_y(true))
-		assert_bool(painel.visible).is_true()
+		assert_bool(painel.visible).is_false()
 		painel._unhandled_input(_y(false))
 		assert_bool(painel.visible).is_false()
 
 
-func test_o_tab_continua_a_alternar() -> void:
+func test_o_diagnostico_so_alterna_com_f3() -> void:
 	var painel: Inspector = auto_free(Inspector.new())
 	add_child(painel)
-	painel._unhandled_input(_tab())
+	var key := _tab()
+	key.physical_keycode = KEY_F3
+	painel._unhandled_input(key)
 	assert_bool(painel.visible).is_true()
-	painel._unhandled_input(_tab())
+	painel._unhandled_input(key)
 	assert_bool(painel.visible).is_false()

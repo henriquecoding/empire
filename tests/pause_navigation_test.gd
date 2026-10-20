@@ -29,12 +29,13 @@ func test_voltar_das_opcoes_mantem_a_partida_pausada() -> void:
 
 func test_a_confirmacao_isola_as_accoes_da_pausa() -> void:
 	var menu := _menu()
+	menu.show_options()
 	menu._zero._abrir.pressed.emit()
 	assert_bool(menu._retomar.is_visible_in_tree()).is_false()
 	assert_bool(menu._opcoes.is_visible_in_tree()).is_false()
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._zero._cancelar)
 	menu.back()
-	assert_bool(menu._retomar.is_visible_in_tree()).is_true()
+	assert_bool(menu._opcoes.is_visible_in_tree()).is_true()
 	assert_bool(menu._zero._pergunta.is_visible_in_tree()).is_false()
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._zero._abrir)
 
@@ -64,6 +65,8 @@ func test_opcoes_comecam_na_acessibilidade_e_tem_jogo_separado() -> void:
 func test_o_recomeco_nao_expoe_a_pergunta_antes_de_ser_pedido() -> void:
 	var menu := _menu()
 	assert_bool(menu._zero._pergunta.is_visible_in_tree()).is_false()
+	assert_bool(menu._zero._abrir.is_visible_in_tree()).is_false()
+	menu.show_options()
 	assert_bool(menu._zero._abrir.is_visible_in_tree()).is_true()
 
 
@@ -84,6 +87,7 @@ func test_o_rato_muda_o_foco_sem_tirar_a_protecao_do_cancelar() -> void:
 	motion.relative = Vector2(1, 0)
 	menu._options_button.gui_input.emit(motion)
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._options_button)
+	menu.show_options()
 	menu._zero._abrir.pressed.emit()
 	menu._zero._apagar.gui_input.emit(InputEventMouseMotion.new())
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._zero._cancelar)

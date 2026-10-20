@@ -1,38 +1,41 @@
 class_name HudRibbon
 extends Control
 
-const FONTS := {"coins": 22, "purse": 13, "clock": 17, "secondary": 14}
-const COINS := Rect2(49, 17, 92, 28)
-const PURSE := Rect2(49, 43, 92, 20)
-const CLOCK := Rect2(173, 19, 218, 24)
-const SEASON := Rect2(173, 42, 218, 20)
-const GOAL_INSET := Vector2(12, 4)
-const COIN_ICON := Vector3(33, 39, 9)
-const TRACK_INSET := Vector2(12, 53)
+const FONTS := Vector2i(19, 16)
+const PAUSE_ICON := 28
+const TEXT_OFFSET := Vector2(36, 6)
+const TEXT_INSET := Vector2(42, 12)
+const PAUSE_OFFSET := Vector2(60, 12)
+const PAUSE_SIZE := Vector2(44, 40)
+const ICON_OFFSET := Vector2(20, 20)
+const TRACK_OFFSET := Vector2(36, 33)
+const TRACK_INSET := 48
 
 var _coins: Label
-var _purse_title: Label
 var _clock: Label
-var _season: Label
-var _goal: Label
+var _pause: Button
 var _cards := {}
 var _progress := 0.0
-var _goal_key := &""
-var _goal_shown := true
-var _hint := HintCue.new()
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_to_group(&"instrumentos")
 	add_to_group(&"hud_header")
-	_coins = HudStyle.label(self, FONTS.coins, HudStyle.GOLD)
-	_purse_title = HudStyle.label(self, FONTS.purse, HudStyle.MUTED)
-	_clock = HudStyle.label(self, FONTS.clock)
-	_season = HudStyle.label(self, FONTS.secondary, HudStyle.MUTED)
-	_goal = HudStyle.label(self, FONTS.secondary)
-	_goal.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_goal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_coins = HudStyle.label(self, FONTS.x, HudStyle.GOLD)
+	_coins.mouse_filter = Control.MOUSE_FILTER_PASS
+	_clock = HudStyle.label(self, FONTS.y)
+	_pause = Button.new()
+	_pause.icon = CrownIcons.texture(&"pause")
+	_pause.expand_icon = true
+	_pause.add_theme_constant_override("icon_max_width", PAUSE_ICON)
+	_pause.add_theme_stylebox_override("normal", CrownSkin.plate())
+	_pause.add_theme_stylebox_override("hover", CrownSkin.plate(Atlas.RAISED))
+	_pause.add_theme_stylebox_override("pressed", CrownSkin.plate(CrownSkin.CLOTH))
+	_pause.focus_mode = Control.FOCUS_NONE
+	_pause.pressed.connect(func() -> void: SimLoop.set_paused(true))
+	add_child(_pause)
 	fit()
 
 
@@ -41,67 +44,39 @@ func fit() -> void:
 	scale = Vector2.ONE * zoom
 	size = Vector2(get_viewport_rect().size.x / zoom, HudLayout.HEADER_BOTTOM)
 	_cards = HudLayout.header(size)
-	_coins.position = COINS.position
-	_coins.size = COINS.size
-	_purse_title.position = PURSE.position
-	_purse_title.size = PURSE.size
-	_clock.position = CLOCK.position
-	_clock.size = CLOCK.size
-	_season.position = SEASON.position
-	_season.size = SEASON.size
-	if not _goal_shown:
-		_cards[&"goal"] = Rect2()
-	_goal.visible = (_cards[&"goal"] as Rect2).has_area()
-	if _goal.visible:
-		var box: Rect2 = _cards[&"goal"]
-		_goal.position = box.position + GOAL_INSET
-		_goal.size = box.size - GOAL_INSET * 2
-		box.size.y = maxf(box.size.y, _goal.get_combined_minimum_size().y + GOAL_INSET.y * 2)
-		_cards[&"goal"] = box
-		size.y = box.end.y
+	for pair: Array in [[_coins, &"purse"], [_clock, &"clock"]]:
+		var box: Rect2 = _cards[pair[1]]
+		var label: Label = pair[0]
+		label.position = box.position + TEXT_OFFSET
+		label.size = box.size - TEXT_INSET
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_pause.position = Vector2(size.x - PAUSE_OFFSET.x, PAUSE_OFFSET.y)
+	_pause.size = PAUSE_SIZE
+	_pause.visible = not TouchControls.active
+	_pause.tooltip_text = tr(&"HINT_PAUSE")
 	queue_redraw()
 
 
 func refresh() -> void:
 	if SimLoop.state == null:
-		fit()
 		return
 	var purse := RealmReadout.purse()
+	_coins.tooltip_text = tr(&"HUD_PURSE_TITLE")
 	_coins.text = tr(&"HUD_PURSE_VALUE").format({"coins": purse.x, "capacity": purse.y})
-	_purse_title.text = tr(&"HUD_PURSE_TITLE")
 	_clock.text = tr(&"HUD_TIME").format(
 		{"day": SimLoop.state.day, "phase": HudText.phase(ClockService.clock.current_phase())}
 	)
-	_season.text = SeasonText.of(SimLoop.field, SimLoop.state.day)
-	var ammo := MonarchHud.arrows(Assume.driven()).trim_prefix(" · ")
-	if TouchControls.active and not ammo.is_empty():
-		_season.text = ammo
-	var goal := GuideHints.goal()
-	_goal.text = goal.text
-	_goal_key = goal.key
 	_progress = ClockService.clock.phase_progress()
-	fit()
-	queue_redraw()
-
-
-func _process(delta: float) -> void:
-	var fits := (
-		get_viewport_rect().size.x / HudLayout.zoom(get_viewport()) >= HudLayout.GOAL_MIN_WIDTH
-	)
-	_goal_shown = _hint.present(
-		_goal_key, fits and InteractionFocus.still() and not SiteSheet.active, delta
-	)
 	fit()
 
 
 func _draw() -> void:
-	for key: StringName in _cards:
-		var box: Rect2 = _cards[key]
-		if box.has_area():
-			draw_style_box(HudStyle.panel(), box)
-	TouchArt.icon(self, &"moeda", Vector2(COIN_ICON.x, COIN_ICON.y), COIN_ICON.z, HudStyle.GOLD)
+	for key: StringName in [&"purse", &"clock"]:
+		var box: Rect2 = _cards.get(key, Rect2())
+		draw_style_box(CrownSkin.plate(), box)
+		CrownIcons.draw(self, &"purse" if key == &"purse" else &"sun", box.position + ICON_OFFSET)
 	var clock: Rect2 = _cards.get(&"clock", Rect2())
-	var track := Rect2(clock.position + TRACK_INSET, Vector2(clock.size.x - TRACK_INSET.x * 2, 2))
-	draw_rect(track, HudStyle.BORDER)
+	var track := Rect2(clock.position + TRACK_OFFSET, Vector2(clock.size.x - TRACK_INSET, 2))
+	draw_rect(track, CrownSkin.WOOD)
 	track.size.x *= _progress
 	draw_rect(track, HudStyle.GOLD)

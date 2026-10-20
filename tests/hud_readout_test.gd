@@ -44,12 +44,17 @@ func test_overview_keeps_all_resources_in_both_languages() -> void:
 func test_combat_buttons_disappear_on_touch_and_return_on_keyboard() -> void:
 	var bar: CombatBar = auto_free(CombatBar.new())
 	add_child(bar)
+	var king := SimLoop.units.index_of(SimLoop.king_id)
+	SimLoop.units.cooldowns[king] = 1.0
 	TouchControls.active = true
 	bar._process(0.0)
 	assert_bool(bar.visible).is_false()
 	TouchControls.active = false
 	bar._process(0.0)
 	assert_bool(bar.visible).is_true()
+	SimLoop.units.cooldowns[king] = 0.0
+	bar._process(0.0)
+	assert_bool(bar.visible).is_false()
 
 
 func test_realm_overview_stays_paused_and_back_restores_focus() -> void:
@@ -77,7 +82,7 @@ func test_compact_keyboard_context_does_not_cover_combat() -> void:
 	assert_bool(context.get_global_rect().intersects(bar.get_global_rect())).is_false()
 
 
-func test_long_objective_grows_its_card_and_moves_context_below_it() -> void:
+func test_long_context_fits_below_the_compact_header() -> void:
 	var viewport: SubViewport = auto_free(SubViewport.new())
 	# 760 unidades de interface: no toque cada uma vale TOUCH_POINTS pontos (UX-06).
 	viewport.size = Vector2i(ceili(HudLayout.GOAL_MIN_WIDTH * HudLayout.TOUCH_POINTS), 390)
@@ -89,28 +94,27 @@ func test_long_objective_grows_its_card_and_moves_context_below_it() -> void:
 	viewport.add_child(context)
 	for locale: String in ["pt_PT", "en"]:
 		TranslationServer.set_locale(locale)
-		ribbon._goal.text = tr(&"GUIDE_WINTER")
+		context.text = tr(&"GUIDE_WINTER")
+		context._texto_em = 1.0
 		ribbon.fit()
 		context._process(0)
-		var box: Rect2 = ribbon._cards[&"goal"]
-		assert_bool(box.encloses(ribbon._goal.get_rect())).is_true()
-		assert_int(ribbon._goal.get_visible_line_count()).is_equal(ribbon._goal.get_line_count())
-		assert_float(context.position.y).is_greater(ribbon.get_rect().end.y)
+		assert_bool((ribbon._cards[&"goal"] as Rect2).has_area()).is_false()
+		assert_int(context.get_visible_line_count()).is_equal(context.get_line_count())
+		assert_float(context.position.y).is_greater(ribbon.get_global_rect().end.y)
 
 
 func test_touch_keeps_the_archers_ammunition_visible() -> void:
-	var king := SimLoop.units.index_of(SimLoop.king_id)
-	SimLoop.units.data_ids[king] = &"archer_emperor"
+	MonarchWatch.begin(&"archer_emperor")
 	TouchControls.active = true
-	var ribbon: HudRibbon = auto_free(HudRibbon.new())
-	add_child(ribbon)
+	var pad := TouchPad.new()
 	for locale: String in ["pt_PT", "en"]:
 		TranslationServer.set_locale(locale)
-		ribbon.refresh()
-		assert_str(ribbon._season.text).is_equal(
-			MonarchHud.arrows(SimLoop.king_id).trim_prefix(" · ")
-		)
-		assert_str(ribbon._season.text).contains("/")
+		var ammunition := ""
+		for step: Array in TouchView.plan(pad, false, 1.0):
+			if step[0] == &"button" and step[3].get(&"icone") == &"flecha":
+				ammunition = step[3][&"rotulo"]
+		assert_str(ammunition).contains("/")
+		assert_str(ammunition).is_equal(MonarchHud.arrows(SimLoop.king_id, true))
 
 
 func test_captions_clear_context_and_visible_notice() -> void:
