@@ -1,4 +1,4 @@
-"""Separate one owner composition into the game's planes (ADR 0085).
+"""Separate one owner composition into the game's planes (ADR 0086).
 
 python separate.py tools/owner_scenery/views.json VIEW_ID ZIPDIR SEGDIR OUTDIR MODEL
 

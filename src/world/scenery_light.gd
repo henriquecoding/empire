@@ -32,7 +32,7 @@ const PLANOS := {
 }
 
 ## As vistas pintadas para uma hora (a noite, o crepusculo) ja trazem a luz dela: levam o
-## material PINTADA, onde o ambiente da fase nao lhes cai por cima (ADR 0085) — menos o da
+## material PINTADA, onde o ambiente da fase nao lhes cai por cima (ADR 0086) — menos o da
 ## noite, que cai com ela (night_weight): a noite e castanha (§80, ADR 0011).
 const PINTADA := 100
 const PINTADA_AMBIENTE := Vector3(1.0, 1.0, 1.0)

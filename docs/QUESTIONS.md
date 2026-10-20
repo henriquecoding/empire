@@ -7,7 +7,7 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## As composições do dono no mundo — 17/10/2026 (ADR 0085)
+## As composições do dono no mundo — 17/10/2026 (ADR 0086)
 
 > Pedido do dono (17/10/2026): *«Quero que implemente esses dois arquivos .zip que te enviei, o do google drive é
 > essencial que aplique»*. Aplicado no CV-04: os oito reinos, as oito variantes, o porto, o lago e o rio com as seis

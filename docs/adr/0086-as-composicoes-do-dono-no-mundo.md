@@ -1,4 +1,4 @@
-# ADR 0085 — As composições do dono, separadas em planos, pintam o mundo
+# ADR 0086 — As composições do dono, separadas em planos, pintam o mundo
 
 - Estado: aceite
 - Data: 2026-10-17

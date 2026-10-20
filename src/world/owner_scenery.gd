@@ -1,5 +1,5 @@
 # src/world/owner_scenery.gd — as composicoes do dono, separadas em planos, no mundo (a
-# entrega de 15 e 16/10/2026; ADR 0085).
+# entrega de 15 e 16/10/2026; ADR 0086).
 #
 # Le art/export/scenery_owner/manifest.json, escrito por tools/export_owner_scenery.py: por
 # vista, os planos (ceu, nuvens, longe, meio, perto) e o chao (under, terrain) que saem de UMA

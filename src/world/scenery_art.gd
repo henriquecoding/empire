@@ -28,7 +28,7 @@ const TIPO := "kind"
 const REINO := "kingdom"
 const TRANSICAO := "transition"
 const LIMIAR_X := "threshold_x"
-## O periodo do mosaico de uma camada, quando nao e o quadro da cena (ADR 0085): os planos das
+## O periodo do mosaico de uma camada, quando nao e o quadro da cena (ADR 0086): os planos das
 ## vistas do dono repetem-se cada um no seu laco.
 const PERIODO := "period"
 ## O quadro inteiro, de cima a baixo: o que se pede sem corte.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# tools/owner_scenery/capture.sh — capturas do jogo com as composicoes do dono (ADR 0085).
+# tools/owner_scenery/capture.sh — capturas do jogo com as composicoes do dono (ADR 0086).
 #
 #   GODOT=... bash tools/owner_scenery/capture.sh SAIDA
 #

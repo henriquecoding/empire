@@ -39,5 +39,5 @@ art/export/animated/*.png -filter -diff -merge binary
 # Native scenery sources and exports are reviewed without an LFS fetch (ADR 0084).
 art/source/scenery_native/**/*.png -filter -diff -merge binary
 art/export/scenery_native/**/*.png -filter -diff -merge binary
-# As composicoes do dono separadas em planos (ADR 0085): o jogo, o CI e o site carregam-nas.
+# As composicoes do dono separadas em planos (ADR 0086): o jogo, o CI e o site carregam-nas.
 art/export/scenery_owner/**/*.png -filter -diff -merge binary

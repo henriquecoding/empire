@@ -1,6 +1,6 @@
 # Cenários de produção nativa — CV-02
 
-> Desde 17/10/2026 (CV-04, ADR 0085) a campanha desenha as pinturas do dono separadas em
+> Desde 17/10/2026 (CV-04, ADR 0086) a campanha desenha as pinturas do dono separadas em
 > planos (`art/export/scenery_owner/`). Esta produção fica na galeria de revisão, com os
 > prefabs, os módulos e as fontes editáveis; os planos de campanha dela saem dos exports.
 

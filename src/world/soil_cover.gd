@@ -45,7 +45,7 @@ static var _windows := PackedVector4Array()
 var _clock: ClockData
 var _revelar := SoilReveal.new()
 var _dither: ShaderMaterial
-## O mesmo dither para as vistas pintadas para uma hora, com a luz delas (ADR 0085).
+## O mesmo dither para as vistas pintadas para uma hora, com a luz delas (ADR 0086).
 var _pintado: ShaderMaterial
 var _chave: Array = []
 var _terra: Dictionary = {}

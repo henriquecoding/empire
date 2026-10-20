@@ -1,4 +1,4 @@
-"""Export the owner's separated compositions as the campaign scenery (ADR 0085).
+"""Export the owner's separated compositions as the campaign scenery (ADR 0086).
 
     python3 tools/export_owner_scenery.py --camadas DIR --pacote ZIP --aprovado ZIP
     python3 tools/export_owner_scenery.py --check

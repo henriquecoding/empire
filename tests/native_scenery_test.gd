@@ -39,7 +39,7 @@ func test_actual_actor_bounds_fit_the_native_frames() -> void:
 	assert_float(worker.position.y).is_greater(517.0)
 
 
-## Desde a ADR 0085 os planos e o chao de cada reino sao os das composicoes do dono; os da
+## Desde a ADR 0086 os planos e o chao de cada reino sao os das composicoes do dono; os da
 ## producao nativa ficam na galeria.
 func test_campaign_uses_the_owner_compositions() -> void:
 	for id: String in NativeSceneryCatalog.manifest().get("families", {}):

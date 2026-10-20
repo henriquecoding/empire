@@ -71,6 +71,26 @@
     }, { rootMargin: "-45% 0px -50% 0px" }).observe(cimo);
   }
 
+  // ── 4 · o que se pede só perto de ser preciso (ADR 0080, ADR 0085) ─────
+  // Uma secção com data-adiado traz o script dela quando chega a 800 px do
+  // ecrã, ou logo, se a ligação aponta para ela. Sem IntersectionObserver, logo.
+  document.querySelectorAll("[data-adiado]").forEach(function (el) {
+    var pedido = false;
+    function pedir() {
+      if (pedido) return;
+      pedido = true;
+      var s = document.createElement("script");
+      s.src = el.dataset.adiado;
+      s.dataset.adiado = "";
+      document.head.appendChild(s);
+    }
+    if (location.hash.indexOf("#" + el.id) === 0 || !("IntersectionObserver" in window)) return pedir();
+    var olho = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { olho.disconnect(); pedir(); }
+    }, { rootMargin: "800px 0px" });
+    olho.observe(el);
+  });
+
   // Só aquece o arranque quando há intenção de jogar, numa ligação adequada.
   var preparado = false;
   function prepararJogo() {

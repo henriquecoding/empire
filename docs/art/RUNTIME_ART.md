@@ -295,7 +295,7 @@ Os planos naturais abaixo substituem os planos homonimos da entrega anterior pel
 Catalogo: 13 familias, 24 cenas. Módulos de 64 px, PNGs recortados ao alfa, export nearest de 2/4 px, paleta limitada sem dithering. Validacao executada: docs/art/scenery_native_validation.json; guia: docs/art/NATIVE_SCENERY.md.
 
 
-## As composicoes do dono — 15 e 16/10/2026 (ADR 0085)
+## As composicoes do dono — 15 e 16/10/2026 (ADR 0086)
 
 As pinturas dos dois ZIPs, separadas em planos por `tools/owner_scenery/` e exportadas por `tools/export_owner_scenery.py` (cada origem conferida contra o ZIP). Substituem os planos e o chao dos reinos pela chamada OwnerScenery.patch em SceneryArt; as variantes trocam-se pela hora e pela estacao (OwnerScenery.weights) e os sitios ficam na agua do territorio (OwnerSites).
 

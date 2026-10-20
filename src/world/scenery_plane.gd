@@ -44,10 +44,10 @@ var _chave: Array = []
 var _reinos: Array[StringName] = []
 var _fronteiras := PackedFloat32Array()
 var _usadas: Array[Texture2D] = []
-## A origem do quadro de cada reino de `_reinos`: a do mosaico, ou a de um sitio (ADR 0085).
+## A origem do quadro de cada reino de `_reinos`: a do mosaico, ou a de um sitio (ADR 0086).
 var _origens := PackedFloat32Array()
 var _sitios: Dictionary = {}
-## As vistas pintadas para uma hora desenham-se aqui, com a luz delas (ADR 0085).
+## As vistas pintadas para uma hora desenham-se aqui, com a luz delas (ADR 0086).
 var _pintada: Node2D
 
 

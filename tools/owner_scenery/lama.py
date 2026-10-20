@@ -1,4 +1,4 @@
-"""LaMa (Carve/LaMa-ONNX, 512 x 512) at the painting's own resolution (ADR 0085)."""
+"""LaMa (Carve/LaMa-ONNX, 512 x 512) at the painting's own resolution (ADR 0086)."""
 import numpy as np
 import onnxruntime as ort
 

@@ -1,4 +1,4 @@
-# A separacao das composicoes do dono em planos (ADR 0085). Corre fora do CI, uma vez por
+# A separacao das composicoes do dono em planos (ADR 0086). Corre fora do CI, uma vez por
 # entrega, num venv a parte: o jogo e o portao inventario-arte so precisam do Pillow de
 # tools/requirements.txt. O torch vem do indice de CPU:
 #   pip install torch==2.14.1 torchvision --index-url https://download.pytorch.org/whl/cpu

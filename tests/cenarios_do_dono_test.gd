@@ -1,6 +1,6 @@
 # tests/cenarios_do_dono_test.gd — as composicoes do dono no mundo: os reinos, as variantes
 # por hora e por estacao, os sitios de agua e as transicoes (as entregas de 15 e 16/10/2026;
-# ADR 0085).
+# ADR 0086).
 #
 # O dono: «Quero que implemente esses dois arquivos .zip que te enviei, o do google drive e
 # essencial que aplique».

@@ -72,7 +72,7 @@ def owner_table():
             uso[v['view']] = f"variante do sitio de `{biome}` ({quando})"
     for scene, t in data['transitions'].items():
         uso[t['view']] = f"transicao `{scene}` ({t['from']} → {t['to']})"
-    rows = ['', '## As composicoes do dono — 15 e 16/10/2026 (ADR 0085)', '',
+    rows = ['', '## As composicoes do dono — 15 e 16/10/2026 (ADR 0086)', '',
             'As pinturas dos dois ZIPs, separadas em planos por `tools/owner_scenery/` e exportadas por '
             '`tools/export_owner_scenery.py` (cada origem conferida contra o ZIP). Substituem os planos e o '
             'chao dos reinos pela chamada OwnerScenery.patch em SceneryArt; as variantes trocam-se pela hora e '

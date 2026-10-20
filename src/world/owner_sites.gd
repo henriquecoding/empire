@@ -1,4 +1,4 @@
-# src/world/owner_sites.gd — onde ficam o porto, o lago e o rio do dono (ADR 0085, Q-259).
+# src/world/owner_sites.gd — onde ficam o porto, o lago e o rio do dono (ADR 0086, Q-259).
 #
 # Cada sitio pintado fica na agua que o territorio ja conta: a de casa e a de cada segmento
 # de agua das terras geradas. A vista e a do bioma dessa agua (OwnerScenery.sites); o meio

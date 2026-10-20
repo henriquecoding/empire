@@ -26,7 +26,7 @@ func _inspect() -> void:
 		var family: Dictionary = parsed.families[id]
 		var campaign: Dictionary = family.get("campaign_layers", {})
 		families += int(not campaign.is_empty())
-		# Since ADR 0085 the campaign draws the owner's compositions: these stay in the project.
+		# Since ADR 0086 the campaign draws the owner's compositions: these stay in the project.
 		for layer: String in campaign:
 			if ResourceLoader.exists(String(campaign[layer].file)):
 				errors.append("Replaced campaign texture shipped: " + String(campaign[layer].file))

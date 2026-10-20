@@ -29,7 +29,7 @@ const DIREITA := &"right"
 const A := &"a"
 const B := &"b"
 const T := &"t"
-## Num sitio de agua (ADR 0085), a coluna do quadro onde fica o meio da agua; a ORIGEM de um
+## Num sitio de agua (ADR 0086), a coluna do quadro onde fica o meio da agua; a ORIGEM de um
 ## sitio e o x do mundo onde o quadro dele comeca.
 const ANCORA := &"anchor"
 ## Quanto do troco de cada lado de um sitio tem de sobrar, no minimo, para o sitio caber.
@@ -114,7 +114,7 @@ static func of(trocos: Array[Dictionary], pares: Dictionary) -> SceneryMap:
 	return mapa
 
 
-## Os trocos com os sitios de agua dentro (ADR 0085): cada sitio e Dictionary(X, CENA, MEIA,
+## Os trocos com os sitios de agua dentro (ADR 0086): cada sitio e Dictionary(X, CENA, MEIA,
 ## ANCORA) — o x da agua no mundo, a vista, a meia largura do quadro e a coluna dele onde
 ## fica a agua. O quadro inteiro do sitio fica dentro do troco onde cai, com FOLGA de cada
 ## lado; se nao cabe, o sitio nao se pinta e a agua fica a do ResourceWater.

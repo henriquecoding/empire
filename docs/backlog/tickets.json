@@ -2917,7 +2917,7 @@
   "title": "As composições do dono, separadas em planos, no mundo",
   "porque": "O dono entregou as composições aprovadas do porto, do lago e do rio e as 24 vistas novas dos reinos, das águas e das transições, e pediu-as no jogo.",
   "spec": [
-   "docs/adr/0085-as-composicoes-do-dono-no-mundo.md",
+   "docs/adr/0086-as-composicoes-do-dono-no-mundo.md",
    "docs/design/11-o-mundo-em-duas-camadas.md",
    "docs/design/21-geracao-procedural-do-territorio.md"
   ],
@@ -2928,6 +2928,18 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "PUB-06": {
+  "title": "O laboratório de mecânicas do site",
+  "porque": "O dono pediu pesquisa densa e uma secção onde se testam as mecânicas do jogo, com um site criativo.",
+  "spec": [
+   "docs/reports/SITE-LABORATORIO-2026-10.md"
+  ],
+  "depende": "PUB-05, CV-03",
+  "feito": "Quatro instrumentos com as contas do jogo e os números dos CSV: a noite, a asfixia, o tempo até matar e o muro; partilháveis por ligação, PT/EN, medidos no portão.",
+  "fora": "Mecânicas novas, balanceamento, arte, impulsos (preços em _proposed) e analytics.",
+  "estado": "feito",
+  "horas": "—"
  },
  "ART-RESEARCH-2026-10-18": {
   "title": "Preservar pesquisa de imperadores e escudeiros",

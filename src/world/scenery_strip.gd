@@ -38,7 +38,7 @@ const PARA_A_ESQUERDA := -1.0
 
 @export var parte: Parte = Parte.SUPERFICIE
 ## O material das vistas pintadas para uma hora, na parte ABAIXO: o do SoilCover com a luz
-## delas (ADR 0085). Sem ele, a do SoilCover.
+## delas (ADR 0086). Sem ele, a do SoilCover.
 var painted_material: Material
 
 var _janela := Vector2.ZERO

@@ -1,4 +1,4 @@
-"""Depth and sky masks for the owner's compositions (ADR 0085).
+"""Depth and sky masks for the owner's compositions (ADR 0086).
 
 python analyze.py OUTDIR IMAGE...   (writes NAME_depth.npy, NAME_cls.npy and previews)
 

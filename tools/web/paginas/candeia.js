@@ -49,7 +49,9 @@
       saida.textContent = dia;
       ler("raio").textContent = um.format(raio);
       ler("vel").textContent = um.format(n("velBase") + n("velDia") * dia);
-      ler("massa").textContent = um.format(n("massaBase") + n("massaDia") * dia);
+      // A rampa das primeiras noites: a mesma conta do RotProfile.calendar_mass.
+      var cheia = n("massaBase") + n("massaDia") * dia;
+      ler("massa").textContent = um.format(dia >= n("rampa") || n("rampa") <= 1 ? cheia : n("abertura") + (cheia - n("abertura")) * (dia - 1) / (n("rampa") - 1));
       ler("lados").textContent = dia >= n("lados") ? d.dois : d.um;
       var alt = fmt(d.alt, { dia: dia, raio: um.format(raio) });
       tela.setAttribute("aria-label", alt);
