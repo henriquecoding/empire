@@ -7,15 +7,72 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Elenco V15 — 19/10/2026 (CV-04, ADR 0085)
+## Elenco V15 — 19/10/2026 (CV-05, ADR 0087)
 
-### Q-267 · Como entra o quarto par, Sombra e Bailarina, na campanha?
+### Q-271 · Como entra o quarto par, Sombra e Bailarina, na campanha?
 - **Pedido:** integrar no jogo os personagens e as animações do pacote V15, além da pesquisa já arquivada.
 - **Implementado:** as duplas iniciais usam a nova arte; Sombra veste o corpo existente `buried_knight`; todos os arquivos e a floração individual podem ser vistos no motor pela galeria do jogo.
 - **Divergência:** `monarchs.csv` só define Rei, Nia e Imperador Arqueiro. `buried_knight` tem cura sentado/vegetação nos dados, mas a habilidade ainda não está ligada ao controlador. A Bailarina não tem corpo, serviço, preço ou efeitos definidos.
 - **Falta decidir:** acesso/desbloqueio do quarto par; identidade canônica do Sombra perante o Cavaleiro Enterrado; função da Bailarina, interrupção e persistência da habilidade. A duração visual de 12 segundos do pacote não é uma decisão de balanceamento.
 - **Limite desta integração:** a galeria não aplica cura ou buffs e a seleção inicial conserva os três pares definidos. Não atribuir regras novas à Bailarina a partir da dança.
 - **Decide:** o autor; isto bloqueia o quarto par jogável, não a instalação da arte entregue.
+
+## As composições do dono no mundo — 17/10/2026 (ADR 0086)
+
+> Pedido do dono (17/10/2026): *«Quero que implemente esses dois arquivos .zip que te enviei, o do google drive é
+> essencial que aplique»*. Aplicado no CV-04: os oito reinos, as oito variantes, o porto, o lago e o rio com as seis
+> variações e as duas transições pintam o mundo com as pinturas do dono, separadas em planos. O que segue pede uma
+> decisão tua ou arte nova.
+
+### Q-267 · O que estava por trás do que saiu
+- **Hoje:** para o Dia 1 não ter obras nem gente pintadas, saíram das pinturas os edifícios, os barcos, as pessoas, o
+  rei, as escadas e as fachadas de baixo. O que ficava por trás encheu-se com pedaços da própria pintura (e o LaMa nas
+  juntas). É verosímil, mas não é teu: onde a pintura não diz o que estava atrás de uma casa, a ferramenta adivinhou.
+- **Onde se nota mais:** atrás da casa e da grua do porto, atrás da casa do lago, atrás da quinta da Horta e da forja
+  da Fornalha; e uma faixa clara ténue sobre o mar dos Portuários, à altura do cais, onde estavam a forca e os barris.
+- **Proposta:** veres as capturas de `docs/art/owner_scenery/` e apontares o que queres repintado; a camada de cada
+  vista está em `art/export/scenery_owner/<vista>/` e repinta-se sem tocar no código (`tools/export_owner_scenery.py`).
+- **Também por decidir:** as vilas e os castelos do horizonte ficam no plano de longe, uma vez em cada dois laços. O
+  pacote pede que dependam do estado das civilizações; hoje estão sempre lá.
+- **Decide:** tu.
+
+### Q-268 · Que hora e que estação é cada variante
+- **Aplicado (reversível, em `tools/owner_scenery/views.json`):** o luar dos Enramados, da Fenda, da Geada (aurora) e o
+  do rio, de noite; a névoa da Bruma, na alvorada; a maré baixa dos Portuários, à tarde; as brasas da Fornalha, ao
+  crepúsculo e de noite; a SobRaiz húmida e o porto ao pôr do sol, no crepúsculo; o porto das lanternas, de noite; a
+  colheita da Horta e o lago de cobre, no outono; a primeira geada no lago, no inverno; o rio depois da chuva, na
+  primavera.
+- **Em aberto:** a maré e a chuva não são sistemas do jogo; aqui são só a hora e a estação. Se as queres ligadas a
+  outra coisa (o tempo, a maré do §21), é design.
+- **A noite é castanha (§80, ADR 0011):** as variantes da noite são azuis — o luar —, e o `make silhueta` chumbava a
+  captura da meia-noite com 3,9% contados (o limite é 0,5%; à noite o frio é só da Podridão). Não se mexeu na regra nem
+  na pintura: com a noite, a vista pintada leva o ambiente da noite como o resto do mundo (`SceneryLight.night_weight`,
+  que entra na segunda metade do crepúsculo e sai na primeira da alvorada, como uma variante da noite). À meia-noite o
+  luar fica escuro e o portão conta 0,026%; de dia e até meio do crepúsculo a pintada continua com a luz que traz. Se
+  queres o luar azul, é uma exceção ao §80 — e vê antes a Q-270: o portão mede o brilho, não a saturação.
+- **Decide:** tu.
+
+### Q-269 · Onde ficam o porto, o lago e o rio
+- **Aplicado (a proposta da Q-259, reversível):** o lago na água dos Enramados — a de casa (Q-257) e a de cada segmento
+  de água deles —, o porto na dos Portuários e o rio na da Bruma. O quadro de 1280 px fica com a água pintada no x da
+  fonte que o território conta, e o `ResourceWater` deixa de desenhar por cima. Onde o quadro não cabe inteiro no troco,
+  fica a água de antes.
+- **Em aberto:** a Q-259 perguntava também se a sede e as obras devem desviar-se do lago; não se mexeu no território.
+  E a Horta não tem sítio: a pintura dela já traz o rio em baixo.
+- **Decide:** tu.
+
+### Q-270 · O portão das duas frias mede o brilho, e não a saturação
+- **Hoje:** `tools/check_silhueta.py` (desde o PR #53) lê `h, _, s = colorsys.rgb_to_hsv(...)`, e o `colorsys` devolve
+  matiz, saturação e valor, por esta ordem: o `s` é o brilho. O portão conta os píxeis azuis e violeta *claros* (valor
+  > 0,35), e não os *saturados* que a linha *Duas frias* do §80 escreve. Os números da Q-268 são esta contagem.
+- **Medido à meia-noite, com a saturação:** na `main` (os planos da ADR 0084), 19,9% do ecrã é frio e saturado (17,9%
+  sem os quase pretos, de valor ≤ 0,08); com as pinturas do dono, 31,0% (9,2% sem os quase pretos). As duas chumbam o
+  limite de 0,5%: a noite do jogo é azul-escura, e não castanha, desde antes desta entrega. O ambiente da noite escurece
+  o céu e os planos de fundo, mas um azul escurecido continua azul.
+- **Proposta:** corrigir a leitura num PR à parte e, com ela, decidir o que a noite faz ao céu e aos fundos — um ambiente
+  que tire a saturação, e não só o brilho — e se o quase preto fica fora da regra. Corrigir só o portão punha a `main`
+  vermelha, por isso não vai neste PR.
+- **Decide:** tu.
 
 ## Animais e criaturas animados — 15/10/2026 (ADR 0083)
 
@@ -186,6 +243,8 @@
   Fluvial nos segmentos de água das terras dos Portuários e da Horta (`portuarios_water_01`, `horta_water_01`).
   Cada um é um quadro de 2560 px ancorado num sítio, e não um reino em mosaico.
 - **Decide:** tu — se é isto, e se a sede e as obras devem desviar-se do lago.
+- **Aplicado a 17/10/2026 (CV-04, Q-269):** com as três vistas aprovadas a 15/10 — o lago na água dos Enramados, o
+  porto na dos Portuários e o rio na da Bruma. O desvio da sede continua por decidir.
 
 ### Q-260 · As transições a oeste de casa
 - **Hoje:** cada transição tem o povo de onde se vem à esquerda (Mata Encharcada: Enramados → Bruma). A oeste de casa os

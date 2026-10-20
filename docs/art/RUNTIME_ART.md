@@ -244,7 +244,7 @@ Os ataques, golpes recebidos e quedas usam poses do combate. Caminhadas com quat
 ## Elenco V15 — pedido de integração de 19/10/2026
 
 Fonte editável: `art/source/royals_v15/`. Importação fiel: `tools/export_royals.py`.
-Os seis membros das duplas iniciais são usados no seletor e no mundo. O Cavaleiro Enterrado usa a aparência do Sombra; a Bailarina e a sequência de floração estão disponíveis na galeria dentro do jogo. Não há quarto par de gameplay definido (CV-04).
+Os seis membros das duplas iniciais são usados no seletor e no mundo. O Cavaleiro Enterrado usa a aparência do Sombra; a Bailarina e a sequência de floração estão disponíveis na galeria dentro do jogo. Não há quarto par de gameplay definido (CV-05).
 
 | Perfil | Tela | Entradas (incluindo espelhos) | Ações |
 |---|---|---:|---|
@@ -312,6 +312,41 @@ Os planos naturais abaixo substituem os planos homonimos da entrega anterior pel
 | Fenda → Geada (fenda_geada) | prefab completo; colocacao de campanha por decidir | far, mid, near, under, terrain, crossings, structures, props, foreground, water_back, water, sky, clouds | art/export/scenery_native/fenda_geada/layers.ora |
 
 Catalogo: 13 familias, 24 cenas. Módulos de 64 px, PNGs recortados ao alfa, export nearest de 2/4 px, paleta limitada sem dithering. Validacao executada: docs/art/scenery_native_validation.json; guia: docs/art/NATIVE_SCENERY.md.
+
+
+## As composicoes do dono — 15 e 16/10/2026 (ADR 0086)
+
+As pinturas dos dois ZIPs, separadas em planos por `tools/owner_scenery/` e exportadas por `tools/export_owner_scenery.py` (cada origem conferida contra o ZIP). Substituem os planos e o chao dos reinos pela chamada OwnerScenery.patch em SceneryArt; as variantes trocam-se pela hora e pela estacao (OwnerScenery.weights) e os sitios ficam na agua do territorio (OwnerSites).
+
+| Vista | Uso | Origem | Camadas |
+|---|---|---|---|
+| `bruma_base` | reino `marsh` | `01_reinos/03-bruma_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `bruma_nevoa` | variante de `marsh` (dawn) | `01_reinos/04-bruma_nevoa.png` | sky, clouds, far, mid, near, under, terrain |
+| `enramados_base` | reino `ancient_forest` | `01_reinos/01-enramados_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `enramados_bruma` | transicao `mata_encharcada` (ancient_forest → marsh) | `03_transicoes/23-enramados_bruma.png` | sky, clouds, far, mid, near, under, terrain, landmark |
+| `enramados_lua` | variante de `ancient_forest` (night) | `01_reinos/02-enramados_lua.png` | sky, clouds, far, mid, near, under, terrain |
+| `fenda_base` | reino `canyon` | `01_reinos/09-fenda_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `fenda_geada` | transicao `fenda_geada` (canyon → glacier) | `03_transicoes/24-fenda_geada.png` | sky, clouds, far, mid, near, under, terrain, landmark |
+| `fenda_luar` | variante de `canyon` (night) | `01_reinos/10-fenda_luar.png` | sky, clouds, far, mid, near, under, terrain |
+| `fornalha_base` | reino `volcanic` | `01_reinos/11-fornalha_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `fornalha_brasas` | variante de `volcanic` (dusk, night) | `01_reinos/12-fornalha_brasas.png` | sky, clouds, far, mid, near, under, terrain |
+| `geada_aurora` | variante de `glacier` (night) | `01_reinos/14-geada_aurora.png` | sky, clouds, far, mid, near, under, terrain |
+| `geada_base` | reino `glacier` | `01_reinos/13-geada_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `horta_base` | reino `floodplain` | `01_reinos/05-horta_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `horta_colheita` | variante de `floodplain` (autumn) | `01_reinos/06-horta_colheita.png` | sky, clouds, far, mid, near, under, terrain |
+| `lago_base` | sitio de agua de `ancient_forest` | `04_referencias_aprovadas/lago-aprovado-2026-10-15.png` | sky, clouds, far, mid, near, under, terrain |
+| `lago_geada` | variante do sitio de `ancient_forest` (winter) | `02_agua/20-lago_geada.png` | sky, clouds, far, mid, near, under, terrain |
+| `lago_outono` | variante do sitio de `ancient_forest` (autumn) | `02_agua/19-lago_outono.png` | sky, clouds, far, mid, near, under, terrain |
+| `porto_base` | sitio de agua de `coast` | `04_referencias_aprovadas/porto-aprovado-2026-10-15.png` | sky, clouds, far, mid, near, under, terrain |
+| `porto_crepusculo` | variante do sitio de `coast` (dusk) | `02_agua/17-porto_crepusculo.png` | sky, clouds, far, mid, near, under, terrain |
+| `porto_noite` | variante do sitio de `coast` (night) | `02_agua/18-porto_noite.png` | sky, clouds, far, mid, near, under, terrain |
+| `portuarios_base` | reino `coast` | `01_reinos/07-portuarios_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `portuarios_mare_baixa` | variante de `coast` (afternoon) | `01_reinos/08-portuarios_mare_baixa.png` | sky, clouds, far, mid, near, under, terrain |
+| `rio_base` | sitio de agua de `marsh` | `04_referencias_aprovadas/rio-aprovado-2026-10-15.png` | sky, clouds, far, mid, near, under, terrain |
+| `rio_chuva` | variante do sitio de `marsh` (spring) | `02_agua/21-rio_chuva.png` | sky, clouds, far, mid, near, under, terrain |
+| `rio_luar` | variante do sitio de `marsh` (night) | `02_agua/22-rio_luar.png` | sky, clouds, far, mid, near, under, terrain |
+| `sobraiz_base` | reino `subterranean` | `01_reinos/15-sobraiz_base.png` | sky, clouds, far, mid, near, under, terrain |
+| `sobraiz_umida` | variante de `subterranean` (dusk) | `01_reinos/16-sobraiz_umida.png` | sky, clouds, far, mid, near, under, terrain |
 
 
 ## Animais e criaturas animados — entrega de 14/10/2026

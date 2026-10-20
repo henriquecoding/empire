@@ -1,0 +1,1516 @@
+{
+ "views": {
+  "enramados_base": {
+   "src": "01_reinos/01-enramados_base.png",
+   "floors": [
+    482,
+    614
+   ],
+   "cuts": [
+    45,
+    140
+   ],
+   "remove": [
+    [
+     918,
+     300,
+     1250,
+     488,
+     125
+    ],
+    [
+     486,
+     418,
+     562,
+     490
+    ],
+    [
+     626,
+     478,
+     694,
+     618
+    ],
+    [
+     690,
+     500,
+     1064,
+     616
+    ],
+    [
+     570,
+     560,
+     624,
+     618
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     440,
+     1280,
+     486
+    ]
+   ],
+   "rail_min": 140,
+   "spans": {},
+   "near_pad": [
+    96,
+    96
+   ],
+   "near_period": 2560,
+   "mid_base": 440,
+   "mid_gap": 48,
+   "unique": [
+    [
+     850,
+     145,
+     1040,
+     245
+    ]
+   ],
+   "rail_exclude": [
+    [
+     60,
+     280,
+     330,
+     466
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     540,
+     1280,
+     600
+    ],
+    "mid": [
+     540,
+     1280,
+     520
+    ]
+   },
+   "near_reach": 96,
+   "far_fill": "shift"
+  },
+  "bruma_base": {
+   "src": "01_reinos/03-bruma_base.png",
+   "floors": [
+    440,
+    582
+   ],
+   "remove": [
+    [
+     398,
+     376,
+     472,
+     442
+    ],
+    [
+     44,
+     466,
+     244,
+     604
+    ],
+    [
+     16,
+     578,
+     214,
+     628
+    ],
+    [
+     250,
+     526,
+     304,
+     582
+    ],
+    [
+     984,
+     276,
+     1258,
+     442,
+     0
+    ],
+    [
+     942,
+     428,
+     998,
+     584
+    ],
+    [
+     1150,
+     478,
+     1262,
+     566
+    ],
+    [
+     990,
+     526,
+     1160,
+     584
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     392,
+     1280,
+     442
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     230,
+     240,
+     400
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     380,
+     1060,
+     560
+    ],
+    "mid": [
+     400,
+     1040,
+     520
+    ]
+   },
+   "near_pad": [
+    96,
+    96
+   ],
+   "clouds": false
+  },
+  "horta_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "01_reinos/05-horta_base.png",
+   "floors": [
+    484,
+    612
+   ],
+   "remove": [
+    [
+     470,
+     418,
+     542,
+     488
+    ],
+    [
+     618,
+     398,
+     690,
+     438
+    ],
+    [
+     196,
+     450,
+     400,
+     482
+    ],
+    [
+     770,
+     254,
+     1268,
+     486,
+     0.5
+    ],
+    [
+     576,
+     474,
+     664,
+     612
+    ],
+    [
+     664,
+     520,
+     1110,
+     612
+    ],
+    [
+     494,
+     560,
+     536,
+     614
+    ],
+    [
+     1100,
+     494,
+     1280,
+     560
+    ],
+    [
+     1090,
+     590,
+     1280,
+     720
+    ],
+    [
+     1100,
+     190,
+     1190,
+     290
+    ]
+   ],
+   "unique": [
+    [
+     460,
+     236,
+     540,
+     274
+    ],
+    [
+     690,
+     276,
+     760,
+     310
+    ],
+    [
+     950,
+     186,
+     1064,
+     252
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     430,
+     1280,
+     486
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     300,
+     140,
+     440
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     380,
+     1280,
+     560
+    ],
+    "mid": [
+     400,
+     1240,
+     520
+    ]
+   }
+  },
+  "portuarios_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "01_reinos/07-portuarios_base.png",
+   "floors": [
+    464,
+    584
+   ],
+   "remove": [
+    [
+     440,
+     400,
+     516,
+     468
+    ],
+    [
+     384,
+     318,
+     456,
+     464
+    ],
+    [
+     816,
+     336,
+     1112,
+     464,
+     0
+    ],
+    [
+     1094,
+     380,
+     1200,
+     440
+    ],
+    [
+     1132,
+     120,
+     1236,
+     300,
+     0
+    ],
+    [
+     636,
+     460,
+     700,
+     586
+    ],
+    [
+     700,
+     486,
+     1210,
+     584
+    ],
+    [
+     900,
+     532,
+     960,
+     584
+    ],
+    [
+     1082,
+     578,
+     1150,
+     660
+    ]
+   ],
+   "unique": [
+    [
+     556,
+     234,
+     720,
+     284
+    ],
+    [
+     970,
+     280,
+     1030,
+     330
+    ]
+   ],
+   "no_clouds": [
+    [
+     920,
+     160,
+     1010,
+     250
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     412,
+     1280,
+     466
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     230,
+     200,
+     420
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     300,
+     1120,
+     560
+    ],
+    "mid": [
+     300,
+     1100,
+     520
+    ]
+   }
+  },
+  "fenda_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "01_reinos/09-fenda_base.png",
+   "floors": [
+    478,
+    620
+   ],
+   "remove": [
+    [
+     390,
+     406,
+     470,
+     482
+    ],
+    [
+     0,
+     290,
+     250,
+     480,
+     0.4
+    ],
+    [
+     866,
+     480,
+     924,
+     620
+    ],
+    [
+     1050,
+     522,
+     1280,
+     622
+    ],
+    [
+     1076,
+     566,
+     1116,
+     622
+    ],
+    [
+     806,
+     568,
+     840,
+     620
+    ]
+   ],
+   "unique": [
+    [
+     1020,
+     76,
+     1134,
+     170
+    ],
+    [
+     756,
+     306,
+     830,
+     350
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     440,
+     1280,
+     480
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     300,
+     1280,
+     520
+    ],
+    "mid": [
+     300,
+     1000,
+     480
+    ]
+   },
+   "far_fill": "shift"
+  },
+  "fornalha_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "01_reinos/11-fornalha_base.png",
+   "floors": [
+    496,
+    616
+   ],
+   "remove": [
+    [
+     404,
+     430,
+     480,
+     498
+    ],
+    [
+     774,
+     280,
+     1280,
+     498,
+     0.4
+    ],
+    [
+     124,
+     404,
+     168,
+     452
+    ],
+    [
+     710,
+     416,
+     750,
+     460
+    ],
+    [
+     1244,
+     416,
+     1280,
+     460
+    ],
+    [
+     672,
+     498,
+     724,
+     618
+    ],
+    [
+     120,
+     520,
+     1110,
+     618
+    ],
+    [
+     360,
+     560,
+     404,
+     618
+    ]
+   ],
+   "unique": [
+    [
+     810,
+     100,
+     1100,
+     280
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     448,
+     1280,
+     498
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     200,
+     1280,
+     560
+    ],
+    "mid": [
+     200,
+     900,
+     520
+    ]
+   },
+   "far_alt": "clone"
+  },
+  "geada_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "01_reinos/13-geada_base.png",
+   "floors": [
+    488,
+    628
+   ],
+   "remove": [
+    [
+     416,
+     420,
+     494,
+     492
+    ],
+    [
+     930,
+     140,
+     1280,
+     492,
+     0.5
+    ],
+    [
+     860,
+     334,
+     980,
+     492,
+     0.5
+    ],
+    [
+     160,
+     356,
+     240,
+     470
+    ],
+    [
+     718,
+     484,
+     774,
+     630
+    ],
+    [
+     780,
+     496,
+     1280,
+     630
+    ],
+    [
+     930,
+     566,
+     980,
+     630
+    ],
+    [
+     1170,
+     40,
+     1250,
+     160
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     444,
+     1280,
+     490
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     300,
+     160,
+     460
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     160,
+     1280,
+     560
+    ],
+    "mid": [
+     180,
+     900,
+     520
+    ]
+   }
+  },
+  "sobraiz_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "01_reinos/15-sobraiz_base.png",
+   "floors": [
+    490,
+    638
+   ],
+   "remove": [
+    [
+     440,
+     400,
+     522,
+     494
+    ],
+    [
+     872,
+     356,
+     1250,
+     494,
+     0.4
+    ],
+    [
+     758,
+     456,
+     860,
+     494
+    ],
+    [
+     790,
+     494,
+     842,
+     640
+    ],
+    [
+     260,
+     540,
+     380,
+     640
+    ],
+    [
+     372,
+     578,
+     420,
+     640
+    ],
+    [
+     1016,
+     580,
+     1140,
+     640
+    ],
+    [
+     220,
+     580,
+     260,
+     640
+    ],
+    [
+     440,
+     590,
+     520,
+     640
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     440,
+     1280,
+     494
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     0,
+     470,
+     494
+    ]
+   ],
+   "auto_spans": {
+    "far": [
+     480,
+     1280,
+     560
+    ],
+    "mid": [
+     480,
+     1280,
+     520
+    ]
+   }
+  },
+  "enramados_lua": {
+   "inherit": "enramados_base",
+   "src": "01_reinos/02-enramados_lua.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "bruma_nevoa": {
+   "inherit": "bruma_base",
+   "src": "01_reinos/04-bruma_nevoa.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "horta_colheita": {
+   "inherit": "horta_base",
+   "src": "01_reinos/06-horta_colheita.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "portuarios_mare_baixa": {
+   "inherit": "portuarios_base",
+   "src": "01_reinos/08-portuarios_mare_baixa.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "fenda_luar": {
+   "inherit": "fenda_base",
+   "src": "01_reinos/10-fenda_luar.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2,
+   "orbs": [
+    [
+     786,
+     73,
+     84
+    ]
+   ]
+  },
+  "fornalha_brasas": {
+   "inherit": "fornalha_base",
+   "src": "01_reinos/12-fornalha_brasas.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "geada_aurora": {
+   "inherit": "geada_base",
+   "src": "01_reinos/14-geada_aurora.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "sobraiz_umida": {
+   "inherit": "sobraiz_base",
+   "src": "01_reinos/16-sobraiz_umida.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "porto_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "04_referencias_aprovadas/porto-aprovado-2026-10-15.png",
+   "floors": [
+    520,
+    626
+   ],
+   "remove": [
+    [
+     36,
+     240,
+     420,
+     524,
+     0.4
+    ],
+    [
+     496,
+     296,
+     712,
+     524,
+     0.4
+    ],
+    [
+     744,
+     404,
+     942,
+     524,
+     0.4
+    ],
+    [
+     416,
+     322,
+     470,
+     420
+    ],
+    [
+     786,
+     476,
+     822,
+     524
+    ],
+    [
+     438,
+     450,
+     512,
+     524
+    ],
+    [
+     996,
+     314,
+     1276,
+     668
+    ],
+    [
+     716,
+     630,
+     944,
+     690
+    ],
+    [
+     588,
+     520,
+     650,
+     626
+    ],
+    [
+     236,
+     570,
+     290,
+     628
+    ]
+   ],
+   "unique": [
+    [
+     800,
+     190,
+     1180,
+     330
+    ],
+    [
+     520,
+     232,
+     560,
+     280
+    ],
+    [
+     1150,
+     280,
+     1180,
+     330
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     470,
+     1280,
+     522
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     60,
+     330,
+     300
+    ]
+   ],
+   "spans": {
+    "far": [
+     0,
+     1280
+    ],
+    "mid": [
+     0,
+     1280
+    ]
+   },
+   "far_alt": "none",
+   "far_fill": "shift"
+  },
+  "lago_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "04_referencias_aprovadas/lago-aprovado-2026-10-15.png",
+   "floors": [
+    522,
+    612
+   ],
+   "remove": [
+    [
+     340,
+     466,
+     412,
+     524
+    ],
+    [
+     996,
+     482,
+     1040,
+     524
+    ],
+    [
+     234,
+     524,
+     280,
+     612
+    ],
+    [
+     316,
+     566,
+     360,
+     612
+    ],
+    [
+     380,
+     598,
+     580,
+     640
+    ],
+    [
+     980,
+     540,
+     1260,
+     612
+    ],
+    [
+     1170,
+     300,
+     1250,
+     360
+    ]
+   ],
+   "unique": [
+    [
+     690,
+     296,
+     760,
+     340
+    ],
+    [
+     960,
+     316,
+     1030,
+     346
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     470,
+     1280,
+     524
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     60,
+     330,
+     470
+    ]
+   ],
+   "spans": {
+    "far": [
+     0,
+     1280
+    ],
+    "mid": [
+     0,
+     1280
+    ]
+   },
+   "far_alt": "none",
+   "clone": [
+    {
+     "dst": [
+      968,
+      350,
+      1252,
+      527
+     ],
+     "src_x": [
+      880,
+      968
+     ]
+    }
+   ]
+  },
+  "rio_base": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "04_referencias_aprovadas/rio-aprovado-2026-10-15.png",
+   "floors": [
+    500,
+    612
+   ],
+   "remove": [
+    [
+     306,
+     440,
+     376,
+     504
+    ],
+    [
+     1040,
+     500,
+     1280,
+     612
+    ],
+    [
+     212,
+     566,
+     260,
+     612
+    ],
+    [
+     1118,
+     566,
+     1160,
+     612
+    ],
+    [
+     836,
+     472,
+     990,
+     590
+    ],
+    [
+     816,
+     470,
+     1280,
+     504
+    ],
+    [
+     1150,
+     140,
+     1265,
+     232
+    ],
+    [
+     816,
+     230,
+     1242,
+     345,
+     0.4
+    ]
+   ],
+   "unique": [
+    [
+     680,
+     270,
+     830,
+     340
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     456,
+     1280,
+     502
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     170,
+     400,
+     470
+    ]
+   ],
+   "spans": {
+    "far": [
+     0,
+     1280
+    ],
+    "mid": [
+     0,
+     1280
+    ]
+   },
+   "far_alt": "none",
+   "clone": [
+    {
+     "dst": [
+      816,
+      345,
+      1242,
+      472
+     ],
+     "src_x": [
+      744,
+      816
+     ]
+    }
+   ]
+  },
+  "porto_crepusculo": {
+   "inherit": "porto_base",
+   "src": "02_agua/17-porto_crepusculo.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "porto_noite": {
+   "inherit": "porto_base",
+   "src": "02_agua/18-porto_noite.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "lago_outono": {
+   "inherit": "lago_base",
+   "src": "02_agua/19-lago_outono.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "lago_geada": {
+   "inherit": "lago_base",
+   "src": "02_agua/20-lago_geada.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "rio_chuva": {
+   "inherit": "rio_base",
+   "src": "02_agua/21-rio_chuva.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "rio_luar": {
+   "inherit": "rio_base",
+   "src": "02_agua/22-rio_luar.png",
+   "auto_spans": {},
+   "find_orbs": true,
+   "orb_halo": 2.2
+  },
+  "enramados_bruma": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "03_transicoes/23-enramados_bruma.png",
+   "floors": [
+    458,
+    608
+   ],
+   "remove": [
+    [
+     324,
+     380,
+     400,
+     462
+    ],
+    [
+     916,
+     460,
+     954,
+     610
+    ],
+    [
+     806,
+     556,
+     876,
+     610
+    ]
+   ],
+   "landmark": [
+    [
+     236,
+     352,
+     296,
+     446
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     410,
+     1280,
+     460
+    ]
+   ],
+   "rail_exclude": [
+    [
+     0,
+     300,
+     236,
+     420
+    ]
+   ],
+   "spans": {
+    "far": [
+     0,
+     1280
+    ],
+    "mid": [
+     0,
+     1280
+    ]
+   }
+  },
+  "fenda_geada": {
+   "near_pad": [
+    96,
+    96
+   ],
+   "src": "03_transicoes/24-fenda_geada.png",
+   "floors": [
+    490,
+    628
+   ],
+   "remove": [
+    [
+     388,
+     418,
+     470,
+     494
+    ],
+    [
+     838,
+     490,
+     884,
+     630
+    ],
+    [
+     916,
+     576,
+     970,
+     630
+    ]
+   ],
+   "landmark": [
+    [
+     500,
+     452,
+     548,
+     494
+    ]
+   ],
+   "rail": [
+    [
+     0,
+     448,
+     1280,
+     492
+    ]
+   ],
+   "spans": {
+    "far": [
+     0,
+     1280
+    ],
+    "mid": [
+     0,
+     1280
+    ]
+   }
+  }
+ },
+ "kingdoms": {
+  "ancient_forest": {
+   "base": "enramados_base",
+   "variants": [
+    {
+     "view": "enramados_lua",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "marsh": {
+   "base": "bruma_base",
+   "variants": [
+    {
+     "view": "bruma_nevoa",
+     "phases": [
+      "dawn"
+     ]
+    }
+   ]
+  },
+  "floodplain": {
+   "base": "horta_base",
+   "variants": [
+    {
+     "view": "horta_colheita",
+     "season": "autumn"
+    }
+   ]
+  },
+  "coast": {
+   "base": "portuarios_base",
+   "variants": [
+    {
+     "view": "portuarios_mare_baixa",
+     "phases": [
+      "afternoon"
+     ]
+    }
+   ]
+  },
+  "canyon": {
+   "base": "fenda_base",
+   "variants": [
+    {
+     "view": "fenda_luar",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "volcanic": {
+   "base": "fornalha_base",
+   "variants": [
+    {
+     "view": "fornalha_brasas",
+     "phases": [
+      "dusk",
+      "night"
+     ]
+    }
+   ]
+  },
+  "glacier": {
+   "base": "geada_base",
+   "variants": [
+    {
+     "view": "geada_aurora",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "subterranean": {
+   "base": "sobraiz_base",
+   "variants": [
+    {
+     "view": "sobraiz_umida",
+     "phases": [
+      "dusk"
+     ]
+    }
+   ]
+  }
+ },
+ "sites": {
+  "ancient_forest": {
+   "base": "lago_base",
+   "anchor_x": 680,
+   "half": 640,
+   "variants": [
+    {
+     "view": "lago_outono",
+     "season": "autumn"
+    },
+    {
+     "view": "lago_geada",
+     "season": "winter"
+    }
+   ]
+  },
+  "coast": {
+   "base": "porto_base",
+   "anchor_x": 640,
+   "half": 640,
+   "variants": [
+    {
+     "view": "porto_crepusculo",
+     "phases": [
+      "dusk"
+     ]
+    },
+    {
+     "view": "porto_noite",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "marsh": {
+   "base": "rio_base",
+   "anchor_x": 700,
+   "half": 640,
+   "variants": [
+    {
+     "view": "rio_chuva",
+     "season": "spring"
+    },
+    {
+     "view": "rio_luar",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  }
+ },
+ "transitions": {
+  "mata_encharcada": {
+   "view": "enramados_bruma",
+   "from": "ancient_forest",
+   "to": "marsh"
+  },
+  "fenda_geada": {
+   "view": "fenda_geada",
+   "from": "canyon",
+   "to": "glacier"
+  }
+ }
+}

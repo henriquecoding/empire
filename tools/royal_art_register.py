@@ -14,7 +14,7 @@ def royal_table():
             'Os seis membros das duplas iniciais são usados no seletor e no mundo. '
             'O Cavaleiro Enterrado usa a aparência do Sombra; a Bailarina e a sequência '
             'de floração estão disponíveis na galeria dentro do jogo. '
-            'Não há quarto par de gameplay definido (CV-04).', '',
+            'Não há quarto par de gameplay definido (CV-05).', '',
             '| Perfil | Tela | Entradas (incluindo espelhos) | Ações |',
             '|---|---|---:|---|']
     for name, item in sorted(royal_assets().items()):

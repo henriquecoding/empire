@@ -55,4 +55,4 @@ Partir da prancha aceita e do método consolidado. Rever a 1× atuação, transf
 
 ## Pedido posterior de integração — 19/10/2026
 
-O autor anexou o V15 e pediu implementar no jogo o material criado e aprovado, pois apenas o conhecimento tinha chegado à main. O trabalho está em [CV-04](../../../backlog/CV-04.md) e [ADR 0085](../../../adr/0085-elenco-v15-no-jogo.md). Os arquivos agora têm um export de runtime próprio; conferir nesses registros o que está na partida, o que é visualização das animações e o que continua pendente de regras. O pedido autoriza essa integração, sem apagar as rejeições históricas ou substituir a revisão artística do autor.
+O autor anexou o V15 e pediu implementar no jogo o material criado e aprovado, pois apenas o conhecimento tinha chegado à main. O trabalho está em [CV-05](../../../backlog/CV-05.md) e [ADR 0087](../../../adr/0087-elenco-v15-no-jogo.md). Os arquivos agora têm um export de runtime próprio; conferir nesses registros o que está na partida, o que é visualização das animações e o que continua pendente de regras. O pedido autoriza essa integração, sem apagar as rejeições históricas ou substituir a revisão artística do autor.

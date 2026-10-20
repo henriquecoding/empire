@@ -92,10 +92,12 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [PUB-02](PUB-02.md) | O site passa a ser a página do jogo | PUB-01 | feito |
 | [PUB-04](PUB-04.md) | O site mostra o jogo de hoje | PUB-02 | feito |
 | [PUB-05](PUB-05.md) | Primeiro contacto, desempenho e resiliência do site | PUB-04, UX-08 | feito |
+| [PUB-06](PUB-06.md) | O laboratório de mecânicas do site | PUB-05, CV-03 | feito |
 | [CV-01](CV-01.md) | Cenários: diagnóstico reproduzível e o contrato dos planos | RG-28, ART-RENEWAL-01 | parcial — manifesto, sobreposição do território e contrato dos planos; kits de arte e trecho piloto por fazer |
 | [CV-02](CV-02.md) | Cenários em camadas: os reinos e as transições do dono no jogo | CV-01 | parcial — 8 reinos e 13 transições no jogo; propostas especiais e transições a oeste por decidir |
 | [CV-03](CV-03.md) | Animais e criaturas animados: os pacotes de 64 × 64 do dono no jogo | ADR 0049, ADR 0057 | parcial — criaturas, caça (o pavão no lugar do faisão), cavalo, galinhas e vacas animados; búfalo, carneiro, Saqueador e pose de montar por decidir |
-| [CV-04](CV-04.md) | Elenco e animações V15 no jogo | parcial |
+| [CV-04](CV-04.md) | As composições do dono, separadas em planos, no mundo | CV-02, ADR 0077, ADR 0081, ADR 0084 | feito — os 8 reinos, as 8 variantes, o porto, o lago e o rio com as 6 variações deles e as 2 transições; o que o enchimento estimou, os mapeamentos de hora e estação, o lugar dos sítios e o que o portão das duas frias mede esperam o dono (Q-267 a Q-270) |
+| [CV-05](CV-05.md) | Elenco e animações V15 no jogo | CV-01, ADR 0075, PR #113 | parcial — arte das duplas iniciais no seletor e na partida; elenco completo e floração na galeria do jogo; quarto par jogável e regras da Bailarina ainda por definir |
 
 | [ART-RESEARCH-2026-10-18](ART-RESEARCH-2026-10-18.md) | Arquivo da pesquisa de imperadores e escudeiros | — | feito — pesquisa e estudos arquivados; geração interrompida; conceitos finais permanecem pendentes |
 

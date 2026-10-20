@@ -1,0 +1,3164 @@
+{
+ "schema": 1,
+ "generated_by": "tools/export_owner_scenery.py",
+ "surface_y": 517,
+ "under_y": 618.5,
+ "packages": {
+  "drive.zip": "d4de1e57c930d0693c385ae0e10f464458c3ae2ffdc17114ab316dbfedaebe2e",
+  "350df1cf-EMPIRE-Agua-Composicoes-Aprovadas-2026-10-15.zip": "ffacd707337cb43e4aef9214feac2f3ab68df671514b7a1d98e93b6f9552f0af"
+ },
+ "views": {
+  "bruma_base": {
+   "src": "01_reinos/03-bruma_base.png",
+   "src_sha256": "81758dcb7ba98719b5d00be58437c0aa3c2c80abc3836963a08d236e7c93028f",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/bruma_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "40f94a0bc911f25bcfda6a1b60626469382ddfd42f9d01fbd478f9c277a7c1ca"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/bruma_base/clouds.png",
+     "rect": [
+      0,
+      0,
+      2,
+      2
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/bruma_base/far.png",
+     "rect": [
+      404,
+      244,
+      620,
+      298
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "d0b74ab1eaaed95f725528ecd4568651afd99af2a6fc37b9b159e1ab83355482",
+     "period": 620
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/bruma_base/mid.png",
+     "rect": [
+      424,
+      448,
+      596,
+      94
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "0a458cfb199743e0ac64e23e6202df110e290c1e885dbc2b1a8435dbb87f91a0",
+     "period": 596
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/bruma_base/near.png",
+     "rect": [
+      544,
+      146,
+      1472,
+      336
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "4a7c30161ecad2162920837010c4c4c452db0d2e1012cdfc3504d1207c487a8a",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/bruma_base/under.png",
+     "rect": [
+      0,
+      468,
+      1280,
+      150
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "55ffd0a9093414366b658c25ae2c9668503c24207b81f81d4a3e01fe9b3027db",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/bruma_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9d67f7419e0d37bf800251d0916cf3aebf98370ee0ae9c39a7970bfb59e48a5e",
+     "period": 1280
+    }
+   }
+  },
+  "bruma_nevoa": {
+   "src": "01_reinos/04-bruma_nevoa.png",
+   "src_sha256": "e6145c7e94cec07e00b1268338dd93a8fc163f02026e007b15079a46daff6cbd",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "53ebcdd752b3021279ac72a71572206192a9450e972507a7002dbbdf31150345"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/clouds.png",
+     "rect": [
+      0,
+      0,
+      2,
+      2
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/far.png",
+     "rect": [
+      404,
+      250,
+      620,
+      292
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "4c11e61b7a860b940156b0a3ac7720aa18505f26b6e9fa5bfa5f8f7ecbc03f04",
+     "period": 620
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/mid.png",
+     "rect": [
+      424,
+      452,
+      596,
+      90
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "0a25ed1fd24cf32e3a7b69c136ef4c53de3327d92597947a36373444c138bb7c",
+     "period": 596
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/near.png",
+     "rect": [
+      544,
+      148,
+      1472,
+      334
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f528fd2e829a832ca43a689a2739f25c9bd2b02181ec52f2ae5fed0f1dd973b9",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/under.png",
+     "rect": [
+      0,
+      468,
+      1280,
+      150
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "7e1bf1fb8db7dc1b8da495cde40b354918da224d8c7adddbe329c8f5fcb13e32",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/bruma_nevoa/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a08df83627aa6de3624b297b412ff25504e432ce47cbc970acfa33e4a20f5b61",
+     "period": 1280
+    }
+   }
+  },
+  "enramados_base": {
+   "src": "01_reinos/01-enramados_base.png",
+   "src_sha256": "f197e7c64fb41c8354a8d0b650825347d7b8a50ee18f69fb2d7e33db4dcc9137",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/enramados_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "033dfad15530583346c5f6caae25ad5b58e52841a3673707515807d4b95d08b8"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/enramados_base/clouds.png",
+     "rect": [
+      0,
+      70,
+      1280,
+      218
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "962605ab036f4a8694c79e71829f3eb29167db3b3513aade5df746d42ec49133",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/enramados_base/far.png",
+     "rect": [
+      568,
+      192,
+      1272,
+      350
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2d0a7f234f5c6310ec81f546ef467e6ca01849a5b7b164e6665386ec10c006e4",
+     "period": 1272
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/enramados_base/mid.png",
+     "rect": [
+      604,
+      278,
+      600,
+      264
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2319409cb0c66757393b2971a5dd48d0700a249b6045d4f574dfd443f4cfbbee",
+     "period": 600
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/enramados_base/near.png",
+     "rect": [
+      544,
+      56,
+      1472,
+      446
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "dcef107c1d0f9247ea18521c334432906b73a44f7cb29a6041dfb21a4d73ccc3",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/enramados_base/under.png",
+     "rect": [
+      0,
+      474,
+      1280,
+      144
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "947749e4674d721ab3259571d81dca16b9429eedf302114f4e39258720c04db2",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/enramados_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "c6a3f656eeab4e3689d0e86159cc15d7d91e54ca6f6f36b9c56ad4923cb230a2",
+     "period": 1280
+    }
+   }
+  },
+  "enramados_bruma": {
+   "src": "03_transicoes/23-enramados_bruma.png",
+   "src_sha256": "2381cffb82ce1b0a03ad27e7af0f54c5a8901c5091bf4718ba943f0d4d794202",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "489b7066c9f48c3e4d953c07a2f8f3b79c4503592d1c59e7d2f7cdf9dd8c3ff5"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/clouds.png",
+     "rect": [
+      0,
+      180,
+      1280,
+      220
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e8fa7bbc87a56652493fc781d8618b0153fd94e8f8e528383d6ee894ddb4aacc",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/far.png",
+     "rect": [
+      0,
+      94,
+      1280,
+      448
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9d8ac87e3d8b8f2b625707aac312410da74e9fc524ef7b250fe800fca8c1c377",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/mid.png",
+     "rect": [
+      0,
+      88,
+      1280,
+      454
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "689843f1bd66685e74e3a9c66cf7100bc5657203afdf700551df92805d015700",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/near.png",
+     "rect": [
+      -96,
+      78,
+      1472,
+      414
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "90790497d6505fcbea16946057e4f0764015fd5d280c2ba35a710dfbd4892a8d",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/under.png",
+     "rect": [
+      0,
+      468,
+      1280,
+      150
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e52d072d8978e3b75da6ce4d74716b7261a75bfabe4885f2e908e0cebbe3048b",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2ab87132a14f86203ce6dd3c3d03f12f425a39561a49026326af3f5fc7a35f83",
+     "period": 1280
+    },
+    "landmark": {
+     "file": "res://art/export/scenery_owner/enramados_bruma/landmark.png",
+     "rect": [
+      236,
+      410,
+      62,
+      96
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2a6b9e08a4165b4d7b8090ba3c11da018fadcdd7cdf4b05b200e1cfb624874f7"
+    }
+   }
+  },
+  "enramados_lua": {
+   "src": "01_reinos/02-enramados_lua.png",
+   "src_sha256": "faf3ea12078ca46582d713d733e621aa09633a042a8cc5f4c860151827041824",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/enramados_lua/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "aca0762191af4dc9e1ff859346bf7d6b42bbfe181548a386f9c10957d8be5c1a"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/enramados_lua/clouds.png",
+     "rect": [
+      0,
+      44,
+      1280,
+      260
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "06a7dfbbe9403baef71217ce3c18a216ed404cb65e4e68341f307f4f0c1f95e8",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/enramados_lua/far.png",
+     "rect": [
+      568,
+      192,
+      1272,
+      350
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "404601e322a3c3ed781edb0eab84045e7971062393b17ab0e4799f49dffa56b4",
+     "period": 1272
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/enramados_lua/mid.png",
+     "rect": [
+      604,
+      278,
+      600,
+      264
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b47b71df3427561abf77c4fc0ac39e706b288537034fd1fdb41a46f2609d4a62",
+     "period": 600
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/enramados_lua/near.png",
+     "rect": [
+      544,
+      56,
+      1472,
+      446
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b145b7ba6ccbca40ec605bbc3680fb7562bfd88ebd765dbae677cd443371c091",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/enramados_lua/under.png",
+     "rect": [
+      0,
+      474,
+      1280,
+      144
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "19b210f3d9bc17b68da1279ad1cbd104fb0088720e2a36358294d0a2b2c17191",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/enramados_lua/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "589c6b505502b6bbdccce09e9e9244bc9c71055876afa5d9cb3af898228a4454",
+     "period": 1280
+    }
+   }
+  },
+  "fenda_base": {
+   "src": "01_reinos/09-fenda_base.png",
+   "src_sha256": "6db3e6fcaed3eade432fd1c5c6fbf37ed8bdad7eef042c79265cdc1c5545cbc6",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/fenda_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "5f238c8c3889f86158258eb52eca3711917e45c9ddac3050da06b6cd1d21bb29"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/fenda_base/clouds.png",
+     "rect": [
+      0,
+      46,
+      1280,
+      142
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9c4786e7d0d053faf15ffb70540238a02f1c1e60d6d3d41f03e685654a7b4eb7",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/fenda_base/far.png",
+     "rect": [
+      436,
+      70,
+      1520,
+      472
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "47ccb22cdd9efb0e3a52ed7a8117cb3d79314fd3db8a03a4168423dc0df8db83",
+     "period": 1520
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/fenda_base/mid.png",
+     "rect": [
+      380,
+      390,
+      544,
+      152
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "d73eda7556be233d8183b644259a862b12761164667b0259d52288e86d6f0b9f",
+     "period": 544
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/fenda_base/near.png",
+     "rect": [
+      544,
+      64,
+      1472,
+      416
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "c444f79e109dda600b4578218e4d2f8d9148a323c5a4c27d89fdf56cdf23d667",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/fenda_base/under.png",
+     "rect": [
+      0,
+      478,
+      1280,
+      140
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "72c4937fd8f18882079d9aad04e388ff965aa7833e17d4154c6551a798be98a3",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/fenda_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "729e92f64603883b3ea01813aa7cc4b4bbfc5cf3f109072e9b4b5bb90417369c",
+     "period": 1280
+    }
+   }
+  },
+  "fenda_geada": {
+   "src": "03_transicoes/24-fenda_geada.png",
+   "src_sha256": "b0bb353bf110101c7d381a8489ef561d2ad5a3dba7e734ceaa3a6d3b30cccac9",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/fenda_geada/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e85aa57d0dc60c9e884a7d86477885e8a054063ae7c23548bb0b6fd72bc40538"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/fenda_geada/clouds.png",
+     "rect": [
+      0,
+      70,
+      1280,
+      148
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "6d79ab53db8ac26a596e122008abf00e6aa7127ae2f74fe6f2fa9ce1ab29beb9",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/fenda_geada/far.png",
+     "rect": [
+      0,
+      34,
+      1280,
+      508
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "5cba1e6a79c559f7262713ac528a94f9414e6bd44a647cc97fd398d5c62ef505",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/fenda_geada/mid.png",
+     "rect": [
+      0,
+      26,
+      1280,
+      516
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a7b751e3128c5a3e3fc43ca589ffefe6e8165adeb6a7ca4e36397103bf703705",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/fenda_geada/near.png",
+     "rect": [
+      -96,
+      210,
+      1472,
+      266
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1c000858d5e9a75a3851d5764fdba779351acbb78233af32b953e033f021247f",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/fenda_geada/under.png",
+     "rect": [
+      0,
+      474,
+      1280,
+      144
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b290c1e711943ff36a8bcefe1f511f06708e742dad169f209fe242a0fbc361a4",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/fenda_geada/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "5aef5bf0a099f7e240fd386c8009761f45a01b93ce3d856fdc02792b3fe81233",
+     "period": 1280
+    },
+    "landmark": {
+     "file": "res://art/export/scenery_owner/fenda_geada/landmark.png",
+     "rect": [
+      500,
+      478,
+      50,
+      44
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9154d2854b0da4d242408731f120a7d8fa929e131ca3c575dd79a28f6b6d987c"
+    }
+   }
+  },
+  "fenda_luar": {
+   "src": "01_reinos/10-fenda_luar.png",
+   "src_sha256": "396424eeb5443ee49477bc8fdc3bf0f4ac12e149af63efb777c7ad05e6ca4e9e",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/fenda_luar/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "19095da1ac9721579a29ef2e31e028a951ae41a6b1ea5831b3f7c9dd78daae5f"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/fenda_luar/clouds.png",
+     "rect": [
+      0,
+      66,
+      1280,
+      130
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2e1612320cf91f13458ee1c07123f07f9e1b786d7d1d70a7d37f9f81f1af2cc9",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/fenda_luar/far.png",
+     "rect": [
+      436,
+      134,
+      1520,
+      408
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "72a97b38fbd2747c0170040b7dd9e14b49b8185b49c3c7798e1d6e62c518a945",
+     "period": 1520
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/fenda_luar/mid.png",
+     "rect": [
+      380,
+      216,
+      544,
+      326
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "005f3f1772de54ff5084134646599ad470dde29ec09541d52ed3e9f9f27cad64",
+     "period": 544
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/fenda_luar/near.png",
+     "rect": [
+      544,
+      66,
+      1472,
+      426
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "4a9cf60f0808f94201399144f41cc8380e2184863b7f957f19c46e943d0af9b7",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/fenda_luar/under.png",
+     "rect": [
+      0,
+      478,
+      1280,
+      140
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "fbc655a49b47cb83f83b6821c85b06e1b38bf6c658c4ba25d7d8e0217a5bbd57",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/fenda_luar/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2f6bcfcc4518d4d208a86e80321ac2a0c531885c21d3ce64f77ad5f7a3e4ed0d",
+     "period": 1280
+    }
+   }
+  },
+  "fornalha_base": {
+   "src": "01_reinos/11-fornalha_base.png",
+   "src_sha256": "9063947695e9247170f3157ffe46e15ffea12df0056cc00d04c7f9a9d73e012a",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/fornalha_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "730424c90571cd3a15cba0c9bc488c5878fe7b6807e30311e5ab57fb97565efd"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/fornalha_base/clouds.png",
+     "rect": [
+      0,
+      76,
+      1280,
+      54
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "d515231cc97f827f2d7268722081bdda050dbc35c5af5598ef4610ea37c4b94a",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/fornalha_base/far.png",
+     "rect": [
+      256,
+      134,
+      1888,
+      408
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "90c4661f6374011e7afe5691e2ba0c2cb9a269b16aebd357efccdac3482756f7",
+     "period": 1888
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/fornalha_base/mid.png",
+     "rect": [
+      236,
+      330,
+      520,
+      212
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a0463eee70cb204600175a8eeff401058326295f490becbaea93d19a60087366",
+     "period": 520
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/fornalha_base/near.png",
+     "rect": [
+      544,
+      448,
+      1472,
+      22
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "68fde2b71fcd6b8140a4e20796a7ba1e59ed36b822352724786c5044e63b9d64",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/fornalha_base/under.png",
+     "rect": [
+      0,
+      468,
+      1280,
+      150
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a5603a6cb6f60eaf5ddc07d248796f56fc0ff78c989d47a7f64fbfd6d28183ed",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/fornalha_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "cb0d4c5180d0ddd13b7fe0ef0b756d5912f0aa2201d1ac2e78e85d1b8d16429f",
+     "period": 1280
+    }
+   }
+  },
+  "fornalha_brasas": {
+   "src": "01_reinos/12-fornalha_brasas.png",
+   "src_sha256": "87be09a89ab35f5dc22a3c1d1511548fab0e44d3252a8f210e8b855cdbc5eb8b",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f4bfafa87679b935f7be11daa4785d4a53da806ca5c95b177ffe9017881be4fb"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/clouds.png",
+     "rect": [
+      0,
+      28,
+      1280,
+      392
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "4c3e8a0a64c41de37a941929ca212d7dfb3d49fb1374ec764acfd866364ae81a",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/far.png",
+     "rect": [
+      256,
+      130,
+      1888,
+      412
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2297e7082b9ab559d74b5d534f28bbad9b959df9b57be31f6a0c58df43e61b2b",
+     "period": 1888
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/mid.png",
+     "rect": [
+      236,
+      318,
+      520,
+      224
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b575d6114d59675c1a8bcc4e6cca7259801308b49aca9bd9cf3b0296b816e0d1",
+     "period": 520
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/near.png",
+     "rect": [
+      544,
+      434,
+      1472,
+      36
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "3c835154d215206794212ca20d9799f32a627a442c71ecf62e12fed19990ac44",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/under.png",
+     "rect": [
+      0,
+      468,
+      1280,
+      150
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "69d5f0a9c4163a1d3a0d26506180aa202363d268ee5e65035e6b4fcee55976dd",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/fornalha_brasas/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "07b00ab17be77e7b8b791d69fbd6c480ec7389bfb991665033a3a0b6b2748adc",
+     "period": 1280
+    }
+   }
+  },
+  "geada_aurora": {
+   "src": "01_reinos/14-geada_aurora.png",
+   "src_sha256": "f9b1c68d665523a408afd8c39ae10f49982c989407fb99a6986f9e8876975806",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/geada_aurora/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ac3e9e0ccc17ec0b3a81d39ac034cdc5c31b436c7f768c1f100cbe6d14d331ec"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/geada_aurora/clouds.png",
+     "rect": [
+      0,
+      126,
+      1280,
+      86
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "7197facdb23b77aea64c151e8efb86bc0b3e65bc468840dabf205a3ad9b2ac29",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/geada_aurora/far.png",
+     "rect": [
+      248,
+      154,
+      560,
+      388
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "83e7e6058c83d39944c0e4b6700bf68fd53032bff5273081e39fe9e15934f3d9",
+     "period": 560
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/geada_aurora/mid.png",
+     "rect": [
+      260,
+      380,
+      544,
+      162
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "2e0533898b752ffbed9583dceac9d2b2e58df1672d53d0800a990143fd6cf2bb",
+     "period": 544
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/geada_aurora/near.png",
+     "rect": [
+      544,
+      82,
+      1472,
+      420
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1c6e8b25009daffe64e67f5a665adb0377e4d986ab9c7c2ae5377067e03cbbb0",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/geada_aurora/under.png",
+     "rect": [
+      0,
+      472,
+      1280,
+      146
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "990782e50f8fbbbd41ca9fb2f689f4df164394d17e3c2cab4339021f55293d51",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/geada_aurora/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "dd160b4d4d901e8f0ca5d1b02dfba152529f4226b8dfc3141a64a4ba32ed18f6",
+     "period": 1280
+    }
+   }
+  },
+  "geada_base": {
+   "src": "01_reinos/13-geada_base.png",
+   "src_sha256": "330dcc1053609d09dd42109c3b952b22546a0e02b8413cff5829c760e0579f4a",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/geada_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "7dd6cbbf8e2791b57e9d405ad79f935f3f96191d405158054e668dfbf3b9f609"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/geada_base/clouds.png",
+     "rect": [
+      0,
+      66,
+      1280,
+      96
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "4ee541ad7b2922a5b6ed0d401e119f6556c209d7734c7c060b5a1257c963bf49",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/geada_base/far.png",
+     "rect": [
+      248,
+      128,
+      560,
+      414
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "79876c8b156d2ebeba18f9904552b99ed1941f97798c878ce3c920ef81b7b357",
+     "period": 560
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/geada_base/mid.png",
+     "rect": [
+      260,
+      370,
+      544,
+      172
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a64e4ffdaeed03a571fceae05531000ab76fd2c2fef310433628e9314eec8139",
+     "period": 544
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/geada_base/near.png",
+     "rect": [
+      544,
+      62,
+      1472,
+      440
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "07cb1e44dd1c1d8efcc3274d5fa5f6abaace6ef11627902a65f748fb00afd0a0",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/geada_base/under.png",
+     "rect": [
+      0,
+      472,
+      1280,
+      146
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ec01f03ee0b4f20d6a26b6f7ba25cd22aeb296899998449526127b814b581027",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/geada_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e296bb445b11b4e1bb5c2034a2572ec71825b9a8553ca0d16592272a7c97ba29",
+     "period": 1280
+    }
+   }
+  },
+  "horta_base": {
+   "src": "01_reinos/05-horta_base.png",
+   "src_sha256": "398105bf4aedc261d4e21da6f27c5578b5f8d784128bba4863637788c0c094bc",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/horta_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "24bedb1a19b3c779a29bc2a423c150c05176144d318dc1af6ece555293fdaea1"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/horta_base/clouds.png",
+     "rect": [
+      0,
+      94,
+      1280,
+      188
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9f3dd18c346cf5d5d7af5e22490dd8517f9ec77cf7c2f00316f069796621ecae",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/horta_base/far.png",
+     "rect": [
+      428,
+      194,
+      1680,
+      348
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "22571474fd310f010958d3cc6ec1a550d589e31d616ba0078d8bd19aa76d12e3",
+     "period": 1680
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/horta_base/mid.png",
+     "rect": [
+      432,
+      324,
+      756,
+      176
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "8617074432eb2822dc40534a71ea3475c8a16f4b65146787d8050742c74bc7f9",
+     "period": 756
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/horta_base/near.png",
+     "rect": [
+      544,
+      110,
+      1472,
+      366
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "be7da54cfd2c1e5b0df824d8ceccac9b314ecd63d7ae0b44a2ac65276078b151",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/horta_base/under.png",
+     "rect": [
+      0,
+      462,
+      1280,
+      156
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "774bbda78df45cb3f948074d2d8599b145e2a71b2193c35cc54e609d6e7a75ea",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/horta_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ccfda0372517d18f59e94e098050e92706512db7623398bb031d8dcf2ffcd7a8",
+     "period": 1280
+    }
+   }
+  },
+  "horta_colheita": {
+   "src": "01_reinos/06-horta_colheita.png",
+   "src_sha256": "1e56df47b7460e6ab7cedcefd62a941f33a02010265222fa8e212e9ba10c3d47",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/horta_colheita/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ad63ff287138c3b5629e44a64c1745e8cf2b6a62f72e8e813393d959bc63e16d"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/horta_colheita/clouds.png",
+     "rect": [
+      0,
+      0,
+      2,
+      2
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f2bb5bbaca678ecad746b1fa5ecfa2c8a81dd18817be19f0187c036d25326317",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/horta_colheita/far.png",
+     "rect": [
+      428,
+      188,
+      1680,
+      354
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f3988c915c603cf683366dc3d893e2e967442b84ffa40b2015bf115cabfba0ed",
+     "period": 1680
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/horta_colheita/mid.png",
+     "rect": [
+      432,
+      330,
+      756,
+      176
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9c8ff2c27e437cf181753ceeb2dd04262da3868cb830231a42b8cd50986b31a8",
+     "period": 756
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/horta_colheita/near.png",
+     "rect": [
+      544,
+      116,
+      1472,
+      360
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "dc41b666c03ec667938db99622e335408b66ff3d191bfb742a84042c6d9d42cb",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/horta_colheita/under.png",
+     "rect": [
+      0,
+      462,
+      1280,
+      156
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "8417968893229cce5d44c2b2dd5f2f33aa29839220941133febcbae6e9c27de8",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/horta_colheita/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9324ad773fd1bfd82689d3d5c7246ebec42ef7b32f7d9dbaee018eb569b510b8",
+     "period": 1280
+    }
+   }
+  },
+  "lago_base": {
+   "src": "04_referencias_aprovadas/lago-aprovado-2026-10-15.png",
+   "src_sha256": "ef8281848b7a1c1c869549f560705b61db340b633939c405f904f8dbbba0d0d7",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/lago_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "265b2fbe91dea6764d79ffa6ef58b30daaf6007d9f541c4c84348055ef09224c"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/lago_base/clouds.png",
+     "rect": [
+      0,
+      24,
+      1280,
+      284
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "eac79cc25d31a0df5421b8c5581c93c97bf0ffb2abb74b44f0de8bcde7608e94",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/lago_base/far.png",
+     "rect": [
+      0,
+      68,
+      1280,
+      474
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ab968e42f52c0715ce40eaf4c37d4d85e2c01ca7cdf649043fe8682886dd4bc6",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/lago_base/mid.png",
+     "rect": [
+      0,
+      68,
+      1280,
+      474
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a0bb5d8f9e9c37d587fe21c894fd364c30f30fe6b500ccf4c80c1404467512b6",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/lago_base/near.png",
+     "rect": [
+      -96,
+      60,
+      1472,
+      418
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "fbfc2f2bff8dbbb586a5db344d47a21c225818b44978b69c06b5ae42f33b30dd",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/lago_base/under.png",
+     "rect": [
+      0,
+      464,
+      1280,
+      154
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "64037a417a64b65e310fd255f5f2ef0c6bfee254f878f146d74d6f68f0810075",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/lago_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e42a483d841fbe1936e2b31c12d6a07a3403ed2c6ce597d09fd61212d3cfc5a2",
+     "period": 1280
+    }
+   }
+  },
+  "lago_geada": {
+   "src": "02_agua/20-lago_geada.png",
+   "src_sha256": "7431793dac2b4ace2e0090a927f0f34b47bb7ff133990fe6ec140ab1b13a4b3e",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/lago_geada/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1f55e571f1ab34935e5246f962a51c852ea183022e31b580f7c9c12ad813c7a9"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/lago_geada/clouds.png",
+     "rect": [
+      0,
+      34,
+      1280,
+      246
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "3060afa56b72c8ebf0b427065a3b0b92f25226c610c365d3e84b79ecedd14bae",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/lago_geada/far.png",
+     "rect": [
+      0,
+      94,
+      1280,
+      448
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1c6fa3168b6bfffd15b48a7d8ae61be738ad1f3bf34cbdebf05bc335e57a200a",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/lago_geada/mid.png",
+     "rect": [
+      0,
+      66,
+      1280,
+      476
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "03a639a94240ed097a74ca3f8af593d6ecf89511aca9527159b6823b381a8c84",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/lago_geada/near.png",
+     "rect": [
+      -96,
+      58,
+      1472,
+      420
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "081ec7ba599c9909429ddddf716b432a18ea88205cc23ce8e9feb01f96cdb670",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/lago_geada/under.png",
+     "rect": [
+      0,
+      464,
+      1280,
+      154
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "214c02a5d3b9bcea04fbe36e37c3a5557a8e17a08ec9a638201832f9cde1e5a7",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/lago_geada/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "25735921b3c53e901eaeda3dd22d941c1f45bfd81b8f7942e27cd23fbf716fff",
+     "period": 1280
+    }
+   }
+  },
+  "lago_outono": {
+   "src": "02_agua/19-lago_outono.png",
+   "src_sha256": "45c72baeb1a5b6fec36cafde4e574d94c69cf1dd7f0144b57ff3f98f30002792",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/lago_outono/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "15d61f7827cc676742799c39e89208b674998baaa995162d2c708ef73c33615f"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/lago_outono/clouds.png",
+     "rect": [
+      0,
+      24,
+      1280,
+      258
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "3e57f2f502eeaa26528866e960979e3bb73557dc50b3bde39f4b877a81e64d51",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/lago_outono/far.png",
+     "rect": [
+      0,
+      64,
+      1280,
+      478
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b1c2d9325aac769c48f23c6e1a2f8c74f1ef499d6afe479d1948844587b37be0",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/lago_outono/mid.png",
+     "rect": [
+      0,
+      60,
+      1280,
+      482
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1f9e777ab6635138593bf515cf98c4dd55a205a5d1ed50e3844ba4fd1caeb905",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/lago_outono/near.png",
+     "rect": [
+      -96,
+      54,
+      1472,
+      424
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ba8bfbc3926ae001f5bf15fe24e0ef06273d8e43e53a453db811768967a14cf6",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/lago_outono/under.png",
+     "rect": [
+      0,
+      464,
+      1280,
+      154
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "136944e8fd7573934baf43351e0062aa470e1d526d2340e55cd8ec737f7d7550",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/lago_outono/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f049fd6ecfe029cff5316b76c3270a8615b0ed220f9824f628e9a06ef72ca7fc",
+     "period": 1280
+    }
+   }
+  },
+  "porto_base": {
+   "src": "04_referencias_aprovadas/porto-aprovado-2026-10-15.png",
+   "src_sha256": "b693346ed072eb4c10c2f6cc895a5385b0206d7c784060f8ba2840534cb1767e",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/porto_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "3cf9a0b344f583f7403f49e4275aea83291b05101bf8ec570a35a41dab379c65"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/porto_base/clouds.png",
+     "rect": [
+      0,
+      214,
+      1280,
+      50
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "50b9e56fb726bcac5676c25907159fd27e469585eba0db4a8cdb9df7f2c8072b",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/porto_base/far.png",
+     "rect": [
+      0,
+      106,
+      1280,
+      436
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "17cad31860fc5b7e6a0091258d460c50a78e99a228631a29979cd8ba49f2f7e4",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/porto_base/mid.png",
+     "rect": [
+      0,
+      128,
+      1280,
+      390
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "abcae587af3c3515778a4eeea4ef7b74f08928cc7a938f84a12593019755633e",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/porto_base/near.png",
+     "rect": [
+      -96,
+      84,
+      1472,
+      396
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "6a30d737b03e74d05ec4e5360094ca14a0ad8cf6ea677521bae4ab3d7781bd62",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/porto_base/under.png",
+     "rect": [
+      0,
+      466,
+      1280,
+      152
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "642d14057f0b4cc0c980a1c63150bc839272a684cd75002de252eff4c45898ac",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/porto_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "799f85efcf94c03b786e74c04d1553d2a92e5e403c46a47bccbfdaef8ee00582",
+     "period": 1280
+    }
+   }
+  },
+  "porto_crepusculo": {
+   "src": "02_agua/17-porto_crepusculo.png",
+   "src_sha256": "601307de30c12507837c706feffa8e066771362ad246f01324d64fd22e00b47a",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "7519eab801b81260ec5c82a8dc4af0ac57db2636497f209c7fd7878da0487e59"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/clouds.png",
+     "rect": [
+      0,
+      28,
+      1280,
+      224
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f0a4da6f37040d376eaf8c7a33e8cf5a7255a76d786837a302d370dc54f6d836",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/far.png",
+     "rect": [
+      0,
+      140,
+      1280,
+      402
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "db6f6675065f86a09b7ccb7a5a71a320f3911537f06bb410eba4f7751c3e94e2",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/mid.png",
+     "rect": [
+      0,
+      156,
+      1280,
+      362
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1cee97a14abfd1d6eebc8c1d6530c3d44f4abfc15e540262cc646b1e3bf18b49",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/near.png",
+     "rect": [
+      -96,
+      84,
+      1472,
+      396
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1e7bb9dc8bce2c8e9454a26d8e269639ab4a002cdaa161617018cbcf398f300e",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/under.png",
+     "rect": [
+      0,
+      466,
+      1280,
+      152
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "8e21382ea98be70431a43174e1215b72d6329c01593df6837d74db4e1fd683ad",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/porto_crepusculo/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "7e33633d1be0bafffaf1c60b138e84bda0a787ccc69595e2283dc3c382f535bb",
+     "period": 1280
+    }
+   }
+  },
+  "porto_noite": {
+   "src": "02_agua/18-porto_noite.png",
+   "src_sha256": "0df0bc81f1da7590e1736f66468f86a3d768742bedd0da30f85bb963e9868ca9",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/porto_noite/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "76ba2e20d1d91259d8d3dc007cf41723db76f58556d43279ba502017b28fc3a9"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/porto_noite/clouds.png",
+     "rect": [
+      0,
+      26,
+      1280,
+      368
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e44cf83938cd5333511fe9a86f63ae2157481db4b7a3170a12dfa23e714b941d",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/porto_noite/far.png",
+     "rect": [
+      0,
+      106,
+      1280,
+      436
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "faf99723c81fa144f44aaf07459cb8cf20471e1a28dcbcc8aebb69d8a32f8328",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/porto_noite/mid.png",
+     "rect": [
+      0,
+      166,
+      1280,
+      352
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a126ad65e9704c83737612ff8ebfe8c1405a0830fd6845fe5517117b1ca291ba",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/porto_noite/near.png",
+     "rect": [
+      -96,
+      84,
+      1472,
+      396
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b918df2484486012bae80fbcf717eab166a682269dd0150a07d9a28a5c6296f8",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/porto_noite/under.png",
+     "rect": [
+      0,
+      466,
+      1280,
+      152
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "68798e139eea52c61bfee8d171275c51d4202575a4259681dff0a887e11e2f23",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/porto_noite/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "c7a0c510357b75768706f744585f250f1d736ad45287c9121e0f27f4f139af39",
+     "period": 1280
+    }
+   }
+  },
+  "portuarios_base": {
+   "src": "01_reinos/07-portuarios_base.png",
+   "src_sha256": "89e89cbe8949fb9ce7041818e3e1cd6f7746be2f6659311a3ca1ff4d42ccfe02",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/portuarios_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "e4bbb91f9c5e6e31f426c6b63dc1bf850fea16999ac84fa0a928a4e95bd436be"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/portuarios_base/clouds.png",
+     "rect": [
+      0,
+      110,
+      1280,
+      242
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "51649ec773fc7a72a4a75398a7f0da312a51bf9d551572882a3395e249e30028",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/portuarios_base/far.png",
+     "rect": [
+      392,
+      252,
+      1416,
+      290
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9e49fc85cbc45f45baeca58cb65f57e79472efcddfeb7c7fcdfa2e6673a344b9",
+     "period": 1416
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/portuarios_base/mid.png",
+     "rect": [
+      404,
+      464,
+      684,
+      54
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a9a93600934ba804124a989fea4cfb6687b76ee50a2ee93e39b6b249896409b9",
+     "period": 684
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/portuarios_base/near.png",
+     "rect": [
+      544,
+      116,
+      1472,
+      360
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "62b40c567b7a4910aeffeb2b2140816df00586e643439065fcf8111125ac563d",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/portuarios_base/under.png",
+     "rect": [
+      0,
+      464,
+      1280,
+      154
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "ea8e44b71f9bb2b780df3e0ba306873ab5b134d1c1c4cea2094c1b2542902b09",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/portuarios_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b10adefca19bae9d16dad72de15e702e9e910b50b5ab41b219d59774ec514d4a",
+     "period": 1280
+    }
+   }
+  },
+  "portuarios_mare_baixa": {
+   "src": "01_reinos/08-portuarios_mare_baixa.png",
+   "src_sha256": "7b0bcb28b24bb8b3dd13da4c6b11158c0af5384371653f6d7cc510136557802a",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1b0f5d4b406b67f6bf7f6ed6774949954f8fe0281720f1a5a9cfeafe245a212b"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/clouds.png",
+     "rect": [
+      0,
+      76,
+      1280,
+      308
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "5e1a7aef69a60f111abbf5664a63c2ea5831bd81dc85fd1a8f3af0a31d586059",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/far.png",
+     "rect": [
+      392,
+      236,
+      1416,
+      306
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "18bd3f42b4ac561281a084624362678fbf79e3a37848c95a8d2663c71df37c5d",
+     "period": 1416
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/mid.png",
+     "rect": [
+      404,
+      276,
+      684,
+      242
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "afe489ae438739c79c4ae2ac629a7a351f9b23e639bda1cc4fa27c3aaa16bc03",
+     "period": 684
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/near.png",
+     "rect": [
+      544,
+      118,
+      1472,
+      356
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "76c51110d966663a73f145868d471ff62d9fc086289600a685542b4f9ff394ce",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/under.png",
+     "rect": [
+      0,
+      464,
+      1280,
+      154
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "60a296c93fc15aecb9239ec4b52a5f0f4f2f6fcd64a8c15aa30e85f478165286",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/portuarios_mare_baixa/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "63c741efd737bb4d4f99983adb8cdb90ba4ef1200e71553b91d43d2e9fd8a56b",
+     "period": 1280
+    }
+   }
+  },
+  "rio_base": {
+   "src": "04_referencias_aprovadas/rio-aprovado-2026-10-15.png",
+   "src_sha256": "f7474adf990c0953ad382176631d0a35735d6a316c81e4ea99365a38464a58db",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/rio_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "a46907e4783e3d925c8706352e3a740686d96eedc2d7cda6789b1edbf53fbd1d"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/rio_base/clouds.png",
+     "rect": [
+      0,
+      250,
+      1280,
+      34
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "6f1aed3903a5d9b54d2fd3da05139faeb9d68651e169347b2ba8c160244f8dea",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/rio_base/far.png",
+     "rect": [
+      0,
+      222,
+      1280,
+      320
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "fd3d7b99d09ff2567cbe44ee03333fa14cf009ab35444ba03ca8a5fe5bb2e0cb",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/rio_base/mid.png",
+     "rect": [
+      0,
+      282,
+      1280,
+      260
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1b17c4d737d9f38bd730ff065f28f2f4c73b332a6eaf9f4e3a29c0f302d2b2e0",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/rio_base/near.png",
+     "rect": [
+      -96,
+      188,
+      1472,
+      300
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "042d8cb7a8f1ca5c75ec023f6f512a76f2913216e89848b2453d9cbb1b2cc1b5",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/rio_base/under.png",
+     "rect": [
+      0,
+      472,
+      1280,
+      146
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "33414a2a169b721eab889ba532a26181e567854ba9e005c1b7f6f47f48eb62bb",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/rio_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "0f590d5220d9bf6c8c57869acfc33214ce0273b8666b9ecd0e958629e52909c7",
+     "period": 1280
+    }
+   }
+  },
+  "rio_chuva": {
+   "src": "02_agua/21-rio_chuva.png",
+   "src_sha256": "ba7de1f415ba522741f3652206b20bdc37fc4f4f0cb987a2eb5b899dc4c77d4a",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/rio_chuva/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "8d4520d583189f36692e703f1edd5ee881c76eeb5d051a13761629ec286e8ca8"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/rio_chuva/clouds.png",
+     "rect": [
+      0,
+      22,
+      1280,
+      264
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "674f78e7bff00f5b64b9017d9e6c3405fee2da9fd78cd3dcc4a4a52fcaa4c906",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/rio_chuva/far.png",
+     "rect": [
+      0,
+      224,
+      1280,
+      318
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b1f300eb27023b76e46cdf2b7e5f40a7fb7a4acc86f65513fbb908fd9535e4a6",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/rio_chuva/mid.png",
+     "rect": [
+      0,
+      196,
+      1280,
+      346
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "93b83dcda367d294a9f1ff7d58c2554aa453ef4c5dd1e7448004b93abf930c54",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/rio_chuva/near.png",
+     "rect": [
+      -96,
+      188,
+      1472,
+      308
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "77e8ed2a4df72cc9c48eeac5089e60b20bb6433bd396d766efe4e3ffed35fd2e",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/rio_chuva/under.png",
+     "rect": [
+      0,
+      472,
+      1280,
+      146
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "cf2d86ae1cb4f21c101c2ab58cf588c9c1823dd47e353eaafa0212c9c3a57936",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/rio_chuva/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "66b892b7fed75739538630756cb645532b00ac5f5947340329f6d8519bdba148",
+     "period": 1280
+    }
+   }
+  },
+  "rio_luar": {
+   "src": "02_agua/22-rio_luar.png",
+   "src_sha256": "0caa72cf90f85a5059cf3a6c81e80fe28b81b843ef7fc2d3962eb596d2c48fec",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/rio_luar/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1a48bf571ca1f2e1fba62d174cd33e566dcf4c5f30c5c5fe25aacf9ed5d7e764"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/rio_luar/clouds.png",
+     "rect": [
+      0,
+      38,
+      1280,
+      230
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "901262dee409350bedcbc9071e8caa53dcac275da03b887449eb1b6caa469d55",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/rio_luar/far.png",
+     "rect": [
+      0,
+      228,
+      1280,
+      314
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "34a09768840e0d045e74ad2f53d96957bc761e81dea57a672e205adc349dd9f3",
+     "period": 1280
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/rio_luar/mid.png",
+     "rect": [
+      0,
+      224,
+      1280,
+      318
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "c63c4cb6ffd46dbcda2e5e2be341f9ed9aa82ce730f390b76cac77cd0b27743c",
+     "period": 1280
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/rio_luar/near.png",
+     "rect": [
+      -96,
+      188,
+      1472,
+      300
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "b3067c71a21a04486d2297495fd62ea51adeb89c30587e40370262e27ec2194e",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/rio_luar/under.png",
+     "rect": [
+      0,
+      472,
+      1280,
+      146
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "813d45ec04705363e6f5ca1356be9de72b6f9979563c41e7d08c1ad47251e87e",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/rio_luar/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "bab5ab5248ec89390253dfe4a1467e3c6220b1483b94fc8172685e57107a3c5a",
+     "period": 1280
+    }
+   }
+  },
+  "sobraiz_base": {
+   "src": "01_reinos/15-sobraiz_base.png",
+   "src_sha256": "4b8abb4b13be500f521d3f58eba245b0491e6015abe3f0a02433ba0a710814c0",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "d7a349c5c0dc2b3a09700afb45841a16813d78e571bb4b5c611fa27bb5586c0a"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/clouds.png",
+     "rect": [
+      0,
+      98,
+      1280,
+      236
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "589eebd35b6c199128acbc6633af481ff6aedca45fc431997f98525ef125aa02",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/far.png",
+     "rect": [
+      584,
+      148,
+      560,
+      394
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "84f6854f0e2616e2d5edb1b27632265c1412c1336523230fcf83d872c7793911",
+     "period": 560
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/mid.png",
+     "rect": [
+      484,
+      102,
+      636,
+      416
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "3bfc4c34c83225a128c5222d57f26d1ff98e373df9a6ac7dfce4a24975e8247c",
+     "period": 636
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/near.png",
+     "rect": [
+      544,
+      0,
+      1472,
+      518
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "1514fae13f8f8b707f568220de1629e25801dcce8967258f0231dba4b336c9c4",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/under.png",
+     "rect": [
+      0,
+      466,
+      1280,
+      152
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "185bf7c5ff4449cfe5e18e877fe5a0cafa7ea2641329c4ce9b291a3cae80ac24",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/sobraiz_base/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "6e056568d4d7375c39ae25b8779ce3c02ccbd8498a8fa8eae3a66620b6e5d63c",
+     "period": 1280
+    }
+   }
+  },
+  "sobraiz_umida": {
+   "src": "01_reinos/16-sobraiz_umida.png",
+   "src_sha256": "99303c900a5297d79c147dc35c681cfe14da615038c016882463a056bbe46738",
+   "layers": {
+    "sky": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/sky.png",
+     "rect": [
+      0,
+      0,
+      1280,
+      720
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "f9ee970a8826d5b4a22eb075a8ac5fff2c6a51d8521f4612f428c55b6f4ebb29"
+    },
+    "clouds": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/clouds.png",
+     "rect": [
+      0,
+      54,
+      1280,
+      192
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "11c3795ee7c0bb81b8611950e324740aa1a6e59c777c5ec8733c174e14f71185",
+     "period": 1280
+    },
+    "far": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/far.png",
+     "rect": [
+      584,
+      164,
+      560,
+      378
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "d610950b0b24909276e2d3c766739988c50bdd4e89146cf618941272117340e2",
+     "period": 560
+    },
+    "mid": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/mid.png",
+     "rect": [
+      484,
+      64,
+      636,
+      454
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "0fe5d9461b8635043158d7c20f12cb458b18ff1abd5724a62a10ae450c535a0a",
+     "period": 636
+    },
+    "near": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/near.png",
+     "rect": [
+      544,
+      0,
+      1472,
+      518
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "9fefa89bf6143da649206b1a210ee1d348a7c04951a49dc882673c1c33b7b130",
+     "period": 2560
+    },
+    "under": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/under.png",
+     "rect": [
+      0,
+      466,
+      1280,
+      152
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "bdfdea48bd5b910682232460c6c875073326794c96ea6b9df6a5a259409c5584",
+     "period": 1280
+    },
+    "terrain": {
+     "file": "res://art/export/scenery_owner/sobraiz_umida/terrain.png",
+     "rect": [
+      0,
+      618,
+      1280,
+      102
+     ],
+     "scale": [
+      2,
+      2
+     ],
+     "sha256": "01620d1dc6aaaf0117c4f15f2a8b41b883f995732249e5cef2af36c2a25a50d5",
+     "period": 1280
+    }
+   }
+  }
+ },
+ "kingdoms": {
+  "ancient_forest": {
+   "base": "enramados_base",
+   "variants": [
+    {
+     "view": "enramados_lua",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "marsh": {
+   "base": "bruma_base",
+   "variants": [
+    {
+     "view": "bruma_nevoa",
+     "phases": [
+      "dawn"
+     ]
+    }
+   ]
+  },
+  "floodplain": {
+   "base": "horta_base",
+   "variants": [
+    {
+     "view": "horta_colheita",
+     "season": "autumn"
+    }
+   ]
+  },
+  "coast": {
+   "base": "portuarios_base",
+   "variants": [
+    {
+     "view": "portuarios_mare_baixa",
+     "phases": [
+      "afternoon"
+     ]
+    }
+   ]
+  },
+  "canyon": {
+   "base": "fenda_base",
+   "variants": [
+    {
+     "view": "fenda_luar",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "volcanic": {
+   "base": "fornalha_base",
+   "variants": [
+    {
+     "view": "fornalha_brasas",
+     "phases": [
+      "dusk",
+      "night"
+     ]
+    }
+   ]
+  },
+  "glacier": {
+   "base": "geada_base",
+   "variants": [
+    {
+     "view": "geada_aurora",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "subterranean": {
+   "base": "sobraiz_base",
+   "variants": [
+    {
+     "view": "sobraiz_umida",
+     "phases": [
+      "dusk"
+     ]
+    }
+   ]
+  }
+ },
+ "sites": {
+  "ancient_forest": {
+   "base": "lago_base",
+   "anchor_x": 680,
+   "half": 640,
+   "variants": [
+    {
+     "view": "lago_outono",
+     "season": "autumn"
+    },
+    {
+     "view": "lago_geada",
+     "season": "winter"
+    }
+   ]
+  },
+  "coast": {
+   "base": "porto_base",
+   "anchor_x": 640,
+   "half": 640,
+   "variants": [
+    {
+     "view": "porto_crepusculo",
+     "phases": [
+      "dusk"
+     ]
+    },
+    {
+     "view": "porto_noite",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  },
+  "marsh": {
+   "base": "rio_base",
+   "anchor_x": 700,
+   "half": 640,
+   "variants": [
+    {
+     "view": "rio_chuva",
+     "season": "spring"
+    },
+    {
+     "view": "rio_luar",
+     "phases": [
+      "night"
+     ]
+    }
+   ]
+  }
+ },
+ "transitions": {
+  "mata_encharcada": {
+   "view": "enramados_bruma",
+   "from": "ancient_forest",
+   "to": "marsh"
+  },
+  "fenda_geada": {
+   "view": "fenda_geada",
+   "from": "canyon",
+   "to": "glacier"
+  }
+ }
+}

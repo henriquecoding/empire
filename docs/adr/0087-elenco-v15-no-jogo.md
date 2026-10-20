@@ -1,4 +1,4 @@
-# ADR 0085 — O elenco V15 no jogo
+# ADR 0087 — O elenco V15 no jogo
 
 Estado: aceite para implementação pelo pedido do autor de 19/10/2026.
 
@@ -26,6 +26,6 @@ Todas as ações entregues ficam acessíveis na galeria **Animações do elenco*
 
 - Importação: pixels fonte, transparência binária, hashes, dimensões, pivôs, tags, durações e filtros de export.
 - `royal_animation_test.gd`: escolha do export no runtime, limites dos atlas, espelhos/pivôs, tempos, reação/recuperação e estágios individuais de plantas.
-- Suite completa, portões, vistoria e Web: registrar o resultado efetivo em CV-04; não deduzir teste no navegador da simples existência do ZIP.
+- Suite completa, portões, vistoria e Web: registrar o resultado efetivo em CV-05; não deduzir teste no navegador da simples existência do ZIP.
 
 A revisão artística continua sendo do autor. Não se afirma abertura dos editáveis no aplicativo Aseprite.

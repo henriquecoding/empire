@@ -30,6 +30,8 @@ art/export/*
 !art/export/scenery/
 # Nova produção em camadas e módulos (ADR 0084).
 !art/export/scenery_native/
+# As composicoes do dono separadas em planos: o export de tools/export_owner_scenery.py (ADR 0086).
+!art/export/scenery_owner/
 # Os animais e as criaturas animados do dono: o export de tools/export_animated.py (ADR 0083).
 !art/export/animated/
 

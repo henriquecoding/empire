@@ -27,9 +27,11 @@ import { ler } from "./dados.mjs";
 import { TEXTOS, conferirParidade } from "./paginas/textos.mjs";
 import { escreverAssets } from "./assets.mjs";
 import { EXPERIENCIA } from "./paginas/experiencia.mjs";
+import { LABORATORIO } from "./paginas/laboratorio-textos.mjs";
 import { entrada, erro, controlosCasca } from "./paginas/molde.mjs";
 import { reportar, painel } from "./paginas/reportes.mjs";
 import { perguntas } from "./perguntas.mjs";
+import { linhaDoRepouso } from "./bestas.mjs";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SITE = join(RAIZ, "tools", "web", "site");
@@ -150,12 +152,16 @@ function completarCasca(saida, d, robots) {
 function main() {
   const saida = resolve(process.argv[2] || join(RAIZ, "build", "site"));
   const d = ler(RAIZ);
-  const erros = [...conferirParidade(TEXTOS.pt, TEXTOS.en), ...conferirParidade(EXPERIENCIA.pt, EXPERIENCIA.en), ...conferirTraducoes(d)];
+  const erros = [...conferirParidade(TEXTOS.pt, TEXTOS.en), ...conferirParidade(EXPERIENCIA.pt, EXPERIENCIA.en), ...conferirParidade(LABORATORIO.pt, LABORATORIO.en), ...conferirTraducoes(d)];
   if (erros.length) throw new Error(`pagina: as duas línguas não batem certo:\n  ${erros.join("\n  ")}`);
 
   // O site/ é o que se serve tal e qual; o 404 e as páginas saem do molde.
   cpSync(SITE, saida, { recursive: true, filter: (f) => !f.endsWith(".gdignore") && !f.endsWith("capturas.json") });
   rmSync(join(saida, "index.html"), { force: true });
+  // As criaturas do laboratório são a arte animada do dono (ADR 0083), lida de
+  // art/export/ e servida só na linha do repouso, a única que o site mostra.
+  mkdirSync(join(saida, "img", "bestas"), { recursive: true });
+  for (const c of d.laboratorio.criaturas) if (c.folha) linhaDoRepouso(join(RAIZ, c.folha.origem), join(saida, c.folha.img), c.folha.lado);
   const assets = escreverAssets(saida, d);
   const url = d.url;
   const robots = d.producao ? "index, follow" : "noindex, nofollow";

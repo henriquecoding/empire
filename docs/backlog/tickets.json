@@ -2913,6 +2913,34 @@
   "passos": [],
   "notas": []
  },
+ "CV-04": {
+  "title": "As composições do dono, separadas em planos, no mundo",
+  "porque": "O dono entregou as composições aprovadas do porto, do lago e do rio e as 24 vistas novas dos reinos, das águas e das transições, e pediu-as no jogo.",
+  "spec": [
+   "docs/adr/0086-as-composicoes-do-dono-no-mundo.md",
+   "docs/design/11-o-mundo-em-duas-camadas.md",
+   "docs/design/21-geracao-procedural-do-territorio.md"
+  ],
+  "depende": "CV-02, ADR 0077, ADR 0081, ADR 0084",
+  "feito": "Separação das 27 pinturas em planos com os chãos do jogo, export verificado contra os ZIPs, variantes pela hora e pela estação, o porto, o lago e o rio na água do território, as duas transições, testes e capturas.",
+  "fora": "Simulação, economia, save, território, edifícios e barcos de cada povo, passagens e as escadas pintadas.",
+  "estado": "feito — os 8 reinos, as 8 variantes, o porto, o lago e o rio com as 6 variações deles e as 2 transições; o que o enchimento estimou, os mapeamentos de hora e estação, o lugar dos sítios e o que o portão das duas frias mede esperam o dono (Q-267 a Q-270)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
+ "PUB-06": {
+  "title": "O laboratório de mecânicas do site",
+  "porque": "O dono pediu pesquisa densa e uma secção onde se testam as mecânicas do jogo, com um site criativo.",
+  "spec": [
+   "docs/reports/SITE-LABORATORIO-2026-10.md"
+  ],
+  "depende": "PUB-05, CV-03",
+  "feito": "Quatro instrumentos com as contas do jogo e os números dos CSV: a noite, a asfixia, o tempo até matar e o muro; partilháveis por ligação, PT/EN, medidos no portão.",
+  "fora": "Mecânicas novas, balanceamento, arte, impulsos (preços em _proposed) e analytics.",
+  "estado": "feito",
+  "horas": "—"
+ },
  "ART-RESEARCH-2026-10-18": {
   "title": "Preservar pesquisa de imperadores e escudeiros",
   "porque": "O autor interrompeu e rejeitou a última rodada de imagens e pediu o arquivo da pesquisa para outro chat.",
@@ -2944,11 +2972,11 @@
   "passos": [],
   "notas": []
  },
- "CV-04": {
+ "CV-05": {
   "title": "Elenco e animações V15 no jogo",
   "porque": "O autor entregou o V15 e mostrou que a produção ainda usava arte antiga após a consolidação da pesquisa.",
   "spec": [
-   "docs/adr/0085-elenco-v15-no-jogo.md",
+   "docs/adr/0087-elenco-v15-no-jogo.md",
    "docs/art/CHARACTER_PRODUCTION_GUIDE.md"
   ],
   "depende": "CV-01, ADR 0075, PR #113",

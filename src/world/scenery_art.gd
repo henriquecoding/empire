@@ -28,6 +28,9 @@ const TIPO := "kind"
 const REINO := "kingdom"
 const TRANSICAO := "transition"
 const LIMIAR_X := "threshold_x"
+## O periodo do mosaico de uma camada, quando nao e o quadro da cena (ADR 0086): os planos das
+## vistas do dono repetem-se cada um no seu laco.
+const PERIODO := "period"
 ## O quadro inteiro, de cima a baixo: o que se pede sem corte.
 const TUDO := Vector2(0.0, 720.0)
 ## As posicoes do retangulo no manifesto: [x, y, largura, altura], em px do quadro.
@@ -69,7 +72,8 @@ static func map() -> SceneryMap:
 	]
 	if _mapa == null or chave != _chave_mapa:
 		_chave_mapa = chave
-		_mapa = SceneryMap.of(SceneryMap.runs(terras, SimLoop.world_width, chave[2]), pairs())
+		var trocos := SceneryMap.runs(terras, SimLoop.world_width, chave[2])
+		_mapa = SceneryMap.of(SceneryMap.with_sites(trocos, OwnerSites.water(chave[2])), pairs())
 	return _mapa
 
 
@@ -92,6 +96,11 @@ static func pairs() -> Dictionary:
 ## As cenas do manifesto, por id.
 static func scenes() -> PackedStringArray:
 	return PackedStringArray(_cenas().keys())
+
+
+## O tipo de uma cena: REINO, TRANSICAO, ou o de uma vista do dono (OwnerScenery).
+static func kind(cena: StringName) -> String:
+	return String((_cenas().get(String(cena), {}) as Dictionary).get(TIPO, ""))
 
 
 ## O que o manifesto diz de uma camada: FICHEIRO, RETANGULO (no quadro) e ESCALA.
@@ -134,6 +143,16 @@ static func draw_layer(
 	alfa := 1.0
 ) -> Texture2D:
 	return _desenhar(canvas, cena, camada, janela, Vector3(corte.x, corte.y, alfa), Mosaico.REPETIR)
+
+
+## Os quadros de uma camada que tocam a janela `janela` (origem, de, ate): o quadro `n` comeca
+## em origem + n x periodo + `desvio` e tem `largura` px. Uma camada pode comecar mais longe do que
+## um periodo (um laco que nao comeca no 0 do quadro): o primeiro conta-se pelo fim dela.
+static func tiles(janela: Vector3, desvio: float, largura: float, periodo: float) -> Vector2i:
+	var de := janela.y - janela.x - desvio
+	return Vector2i(
+		floori((de - largura) / periodo), floori((janela.z - janela.x - desvio) / periodo)
+	)
 
 
 ## O mesmo, com os quadros impares virados: as pontas de dois quadros vizinhos sao a mesma
@@ -183,13 +202,12 @@ static func _desenhar(
 	var espelho := modo == Mosaico.ESPELHAR
 	var aparar := float(s[0]) if espelho else 0.0
 	var largura := r.size.x - aparar - aparar
-	var periodo := largura if espelho else width(cena)
+	var periodo := largura if espelho else float(dados.get(PERIODO, width(cena)))
 	if y1 <= y0 or periodo <= 0.0:
 		return tex
 	var repetir := modo != Mosaico.UM
-	var primeiro := floori((janela.y - janela.x) / periodo) if repetir else 0
-	var ultimo := floori((janela.z - janela.x) / periodo) if repetir else 0
-	for n in range(primeiro, ultimo + 1):
+	var quadros := tiles(janela, 0.0 if espelho else r.position.x, largura, periodo)
+	for n in range(quadros.x, quadros.y + 1) if repetir else [0]:
 		var inicio := janela.x + float(n) * periodo
 		var esquerda := inicio + (0.0 if espelho else r.position.x)
 		# Um quadro virado desenha-se direito, numa transformada que o vira a volta do meio dele.
@@ -226,4 +244,5 @@ static func _cenas() -> Dictionary:
 		var lido: Variant = JSON.parse_string(texto) if not texto.is_empty() else null
 		_manifesto = lido if lido is Dictionary else {}
 		NativeSceneryCatalog.patch_legacy(_manifesto)
+		OwnerScenery.patch(_manifesto)
 	return _manifesto.get(CENAS, {})
