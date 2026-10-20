@@ -2986,5 +2986,17 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "PUB-07": {
+  "title": "O portão de produção espera pelo limite da API",
+  "porque": "O deploy de produção do 722fad6 morreu num 403 da API do GitHub (limite sem token, IP partilhado da Vercel) a cinco minutos de o CI ficar verde.",
+  "spec": [
+   "docs/backlog/RG-29.md"
+  ],
+  "depende": "RG-29",
+  "feito": "O limite da API é uma espera até renovar, dentro do prazo; rede e 5xx voltam a pedir e falham fechados; um 403 que não é limite recusa com a razão; pede de 2 em 2 min; EMPIRE_GITHUB_TOKEN opcional, nunca no registo.",
+  "fora": "Deploy hook a partir do CI, o cancelamento do CI na main e o Supabase do painel.",
+  "estado": "feito",
+  "horas": "—"
  }
 }
