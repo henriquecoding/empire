@@ -17,7 +17,7 @@ const UNITS := {
 	&"bard": &"royal_bard",
 	&"bard_hero": &"royal_bard",
 	&"quiver_squire": &"royal_quiver",
-	&"buried_knight": &"royal_knight",
+	&"buried_knight": &"royal_shadow",
 	&"sealed_knight": &"royal_knight",
 	&"mercenary": &"royal_knight",
 	&"cook": &"royal_cook",

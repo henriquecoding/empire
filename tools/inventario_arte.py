@@ -29,6 +29,7 @@ from temporary_art_register import temporary_assets, temporary_table
 from renewal_art_register import renewal_assets, renewal_table
 from scenery_art_register import scenery_table
 from animated_art_register import animated_table
+from royal_art_register import royal_assets, royal_table
 
 RAIZ = Path(__file__).resolve().parent.parent
 MANIFESTO = RAIZ / "art/export/enramados/manifest.json"
@@ -205,7 +206,7 @@ def documento() -> str:
     manifesto = json.loads(MANIFESTO.read_text(encoding="utf-8"))
     m = mapas()
     tab_export, usos = exportacoes(manifesto, m)
-    ativos = {"assets": {**manifesto["assets"], **temporary_assets(), **renewal_assets()}}
+    ativos = {"assets": {**manifesto["assets"], **temporary_assets(), **renewal_assets(), **royal_assets()}}
     tab_unid, faltas_unid = unidades(ativos, m)
     tab_obras, faltas_obras = obras(ativos, m)
     niveis = len(tabela("data/source/walls.csv"))
@@ -261,7 +262,7 @@ def documento() -> str:
         "",
     ]
     return "\n".join(
-        partes + temporary_table() + renewal_table() + scenery_table() + animated_table()
+        partes + temporary_table() + renewal_table() + royal_table() + scenery_table() + animated_table()
     )
 
 

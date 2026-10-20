@@ -7,15 +7,14 @@ const HIT_SECONDS := 0.12
 const HIT_TINT := Color(1.0, 0.82, 0.60)
 const SHADOW_HEIGHT := 6.0
 const IDLE_SECONDS := 0.65
-## O chapeu de quem e teu (§25, 0:20): pousa um pouco abaixo do topo da cabeca,
-## e a escala e a da caixa de 48 px do ActorArt.
+## Hats share the 48 px body scale of ActorArt.
 const HAT_DROP := 6.0
 const HAT_SCALE := 48.0
 const SHADOW_TEXTURE := preload("res://art/export/_placeholder/contact_shadow_18.png")
 
-## Os flashes deste frame, para a camada branca do UnitCanvas os pintar com a
-## forma do sprite (§24): [perfil, frame, pose, alfa].
+## White silhouettes for UnitFlash: [profile, frame, pose, alpha].
 var flashes: Array[Array] = []
+var royals := RoyalMotion.new()
 
 var _art := OriginalArt.new()
 var _fallen := FallenArt.new()
@@ -25,8 +24,7 @@ var _health: Dictionary = {}
 var _facing: Dictionary = {}
 var _hit_until: Dictionary = {}
 var _phase: Dictionary = {}
-## A accao que cada unidade mostra, e desde quando: uma accao nova comeca no seu
-## primeiro frame (a preparacao de um golpe nao entra a meio).
+## Per-unit action start; a new action starts on its first frame.
 var _action: Dictionary = {}
 var _since: Dictionary = {}
 
@@ -93,6 +91,8 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		var frame := _frame(id, profile, kind, shown, time)
 		if kind == ActorAction.Kind.ATTACK and golpe >= 0:
 			frame = golpe
+		if not RoyalArt.entry(profile).is_empty():
+			frame = royals.frame(units, i, profile, moving, frame)
 		# Sem ciclo de caminhada desenhado, o baloico de um pixel e o que diz que
 		# anda; com ele, e a arte que o diz.
 		var animated := shown in [ActorAction.Kind.WALK, ActorAction.Kind.FLEE]
@@ -128,7 +128,6 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 				}
 			)
 		)
-	# Two passes keep the shared shadow texture and actor atlas batchable.
 	for item in draws:
 		var width := _art.body_box(item.profile, Vector2.ZERO).size.x * HALF
 		var rect := Rect2(
@@ -156,6 +155,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		TitleView.draw_on(canvas, box, item.id, light)
 		_saco(canvas, box, units, i)
 		Gauge.health(canvas, box, float(units.healths[i]) / units.max_healths[i])
+	royals.forget(live)
 	_fallen.draw(canvas, band, live, time)
 	for id in _previous.keys():
 		if not live.has(id):

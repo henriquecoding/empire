@@ -7,6 +7,16 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Elenco V15 — 19/10/2026 (CV-05, ADR 0087)
+
+### Q-271 · Como entra o quarto par, Sombra e Bailarina, na campanha?
+- **Pedido:** integrar no jogo os personagens e as animações do pacote V15, além da pesquisa já arquivada.
+- **Implementado:** as duplas iniciais usam a nova arte; Sombra veste o corpo existente `buried_knight`; todos os arquivos e a floração individual podem ser vistos no motor pela galeria do jogo.
+- **Divergência:** `monarchs.csv` só define Rei, Nia e Imperador Arqueiro. `buried_knight` tem cura sentado/vegetação nos dados, mas a habilidade ainda não está ligada ao controlador. A Bailarina não tem corpo, serviço, preço ou efeitos definidos.
+- **Falta decidir:** acesso/desbloqueio do quarto par; identidade canônica do Sombra perante o Cavaleiro Enterrado; função da Bailarina, interrupção e persistência da habilidade. A duração visual de 12 segundos do pacote não é uma decisão de balanceamento.
+- **Limite desta integração:** a galeria não aplica cura ou buffs e a seleção inicial conserva os três pares definidos. Não atribuir regras novas à Bailarina a partir da dança.
+- **Decide:** o autor; isto bloqueia o quarto par jogável, não a instalação da arte entregue.
+
 ## As composições do dono no mundo — 17/10/2026 (ADR 0086)
 
 > Pedido do dono (17/10/2026): *«Quero que implemente esses dois arquivos .zip que te enviei, o do google drive é
