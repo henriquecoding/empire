@@ -19,8 +19,10 @@ Feito     403/429 de limite (x-ratelimit-remaining 0, retry-after ou a mensagem
           renovam depois dele, recusa logo e diz-se. Erros de rede e 5xx voltam
           a pedir e falham fechados no fim do prazo, com o último erro. Um 403
           que não é limite recusa logo, com a razão do GitHub. Pede de dois em
-          dois minutos (eram 60 s). EMPIRE_GITHUB_TOKEN, nas variáveis da
-          Vercel, autentica o pedido (5000 por hora).
+          dois minutos (eram 60 s), e o último pedido cai no fim do prazo.
+          EMPIRE_GITHUB_TOKEN, nas variáveis da Vercel, autentica o pedido (5000
+          por hora); um token com espaços ou quebras de linha recusa antes de
+          pedir, sem o escrever.
 Fora      Mudar quem dispara a produção (um deploy hook a partir do CI), o
           cancelamento do CI anterior na main e o Supabase do painel.
 Estado    feito

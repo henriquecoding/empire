@@ -46,20 +46,27 @@ export async function releaseGate({ env = process.env, request = fetch,
     throw new Error('Publicação recusada: é necessário o SHA completo da main.');
   const url = `https://api.github.com/repos/${REPOSITORY}/actions/workflows/ci.yml/runs?head_sha=${sha}&branch=main&event=push&per_page=100`;
   const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'empire-release-gate' };
-  if (env.EMPIRE_GITHUB_TOKEN) headers.Authorization = `Bearer ${env.EMPIRE_GITHUB_TOKEN}`;
+  // Uma quebra de linha no meio do token faria o fetch recusar o cabeçalho com uma mensagem
+  // que o repete inteiro: para-se antes de pedir, e sem o escrever.
+  const token = (env.EMPIRE_GITHUB_TOKEN ?? '').trim();
+  if (token && !/^[\x21-\x7e]+$/.test(token))
+    throw new Error('Publicação recusada: o EMPIRE_GITHUB_TOKEN tem espaços, quebras de linha ou caracteres que não cabem num cabeçalho.');
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const semToken = m => (token ? String(m).split(token).join('***') : String(m));
   const deadline = now() + timeout;
   let falha = '';
-  while (now() < deadline) {
-    let response = null;
+  for (;;) {
+    let response = null, body = null;
     try {
       response = await request(url, { headers, signal: AbortSignal.timeout(20_000) });
+      if (response.ok) body = await response.json();  // a ligação pode cair a meio do corpo
     } catch (error) {
-      falha = `rede: ${error.message}`;
+      response = null;
+      falha = `rede: ${semToken(error.message)}`;
     }
     if (response?.ok) {
       falha = '';
-      const body = await response.json();
-      if (!Array.isArray(body.workflow_runs)) throw new Error('Resposta do CI inválida.');
+      if (!Array.isArray(body?.workflow_runs)) throw new Error('Resposta do CI inválida.');
       const run = matchingRun(body.workflow_runs, sha);
       if (run?.status === 'completed') {
         if (run.conclusion !== 'success') throw new Error(`Publicação recusada: CI ${run.conclusion} (${run.html_url}).`);
@@ -75,7 +82,7 @@ export async function releaseGate({ env = process.env, request = fetch,
       if (espera !== null) {
         if (now() + espera >= deadline) {
           throw new Error('Publicação recusada: o limite de pedidos da API do GitHub só renova depois do prazo'
-            + (env.EMPIRE_GITHUB_TOKEN ? '.' : ' (um EMPIRE_GITHUB_TOKEN só de leitura na Vercel tira-o).'));
+            + (token ? '.' : ' (um EMPIRE_GITHUB_TOKEN só de leitura na Vercel tira-o).'));
         }
         log(`Limite de pedidos da API do GitHub esgotado: a esperar ${Math.ceil(espera / 1000)} s.`);
         await wait(espera);
@@ -85,7 +92,10 @@ export async function releaseGate({ env = process.env, request = fetch,
       falha = `HTTP ${response.status}`;
     }
     if (falha) log(`O GitHub não respondeu (${falha}): volta-se a pedir.`);
-    await wait(INTERVALO);
+    // O último pedido cai no fim do prazo: um CI que fique verde nos dois minutos finais conta.
+    const falta = deadline - now();
+    if (falta <= 0) break;
+    await wait(Math.min(INTERVALO, falta));
   }
   throw new Error(`Publicação recusada: o CI do mesmo commit não ficou verde dentro do prazo${falha ? ` (último erro: ${falha})` : ''}.`);
 }
