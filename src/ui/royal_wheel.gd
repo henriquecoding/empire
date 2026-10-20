@@ -125,6 +125,7 @@ func open() -> void:
 func close() -> void:
 	active = false
 	release_guard = true
+	_await_release = false
 	impulses = false
 	_keyboard = false
 	selected = -1

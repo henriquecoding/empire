@@ -47,6 +47,12 @@ func test_boost_is_a_separate_deliberate_choice() -> void:
 	assert_int(SimLoop.intents.pending()).is_equal(0)
 	wheel.close()
 	assert_bool(RoyalWheel.active).is_false()
+	wheel._process(0.0)
+	Input.action_press(&"king_wheel")
+	wheel._process(0.0)
+	Input.action_release(&"king_wheel")
+	wheel._process(0.0)
+	assert_bool(RoyalWheel.active).is_false()
 
 
 func test_pause_cancels_selection_and_restores_time() -> void:
