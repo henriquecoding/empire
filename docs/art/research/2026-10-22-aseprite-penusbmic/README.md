@@ -10,6 +10,7 @@ transcrições públicas, incluindo os três vídeos individuais enviados.
 - [Guia de estudo aplicado](../../PIXEL_ART_STUDY_GUIDE.md): ordem de leitura e relação com os contratos do jogo.
 - [Fluxo do Aseprite](../../ASEPRITE_WORKFLOW.md): operações de autoria, animação, tiles e exportação.
 - [Penusbmic — notas por aula](PENUSBMIC-NOTAS.md): processo, tempos de consulta e adaptações.
+- [Leitura visual das prévias](LEITURA-VISUAL.md): observações diretas de personagens, materiais, cenários, árvores e poses de corrida.
 - [Watt e Pixel Pete — notas](WATT-E-PIXEL-PETE-NOTAS.md): ferramentas, cor, materiais, linhas e escala.
 - [Aplicação e exercícios](APLICACAO-E-EXERCICIOS.md): provas de produção voltadas aos problemas do Empire.
 - [Fontes e limites de acesso](FONTES.md): fontes primárias e distinção entre observação e interpretação.
@@ -17,7 +18,9 @@ transcrições públicas, incluindo os três vídeos individuais enviados.
 
 ## O que foi efetivamente acessado
 
-As páginas e as transcrições foram acessadas no YouTube. As notas são uma
+As páginas e as transcrições foram acessadas no YouTube. Também foram
+inspecionadas diretamente prévias públicas do autor, registradas na leitura
+visual e no catálogo. As notas das aulas são uma
 síntese própria dos trechos didáticos identificados; as transcrições completas
 não são redistribuídas no repositório. O catálogo separa **transcrição obtida**,
 **trecho estudado**, **somente catalogado** e **acesso restrito**.
@@ -32,6 +35,10 @@ um trecho. Uma tentativa de obter storyboards também não produziu imagens
 utilizáveis. Portanto, **não houve revisão visual integral nem audição das
 aulas**. A análise detalhada apoia-se nas transcrições e é identificada como
 tal; não se declara que todos os vídeos do canal foram assistidos.
+
+Essa limitação do player não impede a análise das imagens e do GIF públicos
+do autor. A revisão dessas prévias é registrada separadamente, incluindo as
+exposições do GIF conferidas como imagens estáticas.
 
 As legendas automáticas contêm erros, como nomes de ferramentas, “16x6” e
 unidades de tempo. O estudo não os converte em especificações. Operações de

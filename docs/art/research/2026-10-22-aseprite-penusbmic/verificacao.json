@@ -3,22 +3,25 @@
   "scope": "Documentation and instructions only",
   "local_checks": {
     "git_diff_check": "passed",
-    "markdown_files_checked": 11,
-    "relative_links_checked": 63,
+    "markdown_files_checked": 12,
+    "relative_links_checked": 67,
     "invalid_relative_links": [],
     "json_parse": "passed",
     "annotated_times_against_last_caption": "passed",
     "unique_transcript_ids": 22
   },
-  "not_performed": {
+  "performed": {
     "aseprite_application_execution": false,
     "godot_visual_review": false,
     "video_full_visual_review": false,
     "audio_listening": false,
+    "public_preview_inspection": true,
+    "gif_exposures_compared": true,
     "new_assets_created": false,
     "artistic_approval_claimed": false
   },
   "runtime_source_changed": false,
   "raw_transcripts_redistributed": false,
+  "preview_images_redistributed": false,
   "ci": "Consult the linked pull request checks for the published commit; this file does not predict their outcome."
 }

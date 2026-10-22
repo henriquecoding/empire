@@ -22,6 +22,11 @@ acesso, os tempos de consulta e o hash da transcrição usada como intermediári
 O hash identifica o material consultado; não prova observação visual ou
 aprovação de uma técnica.
 
+As [prévias públicas inspecionadas](LEITURA-VISUAL.md) têm registro próprio no
+catálogo, com URL, hash e dimensões. Incluem imagens estáticas e exposições de
+um GIF comparadas separadamente. Essa evidência visual é distinta da leitura
+das transcrições e da reprodução integral dos vídeos.
+
 ## Penusbmic — páginas públicas complementares
 
 As páginas abaixo foram lidas para confirmar escopo e contexto dos materiais.
@@ -99,6 +104,7 @@ rejeitados e exemplos do professor não são promovidos silenciosamente a regras
 | Página/metadados | Autor, título e contexto consultados | Aula estudada |
 | Transcrição recuperada | Texto disponível para leitura | Imagens, áudio ou terminologia infalível |
 | Trecho anotado | Parte do conteúdo usada na síntese | Domínio de todo o canal |
+| Prévia inspecionada | Características visíveis na imagem ou exposições do GIF | Revisão visual de toda a aula ou da fonte editável |
 | Aplicação ao Empire | Proposta editorial coerente com o projeto | Regra original do professor |
 | Integridade técnica | Arquivos e links conferidos | Aprovação artística |
 | Exercício proposto | Próxima prova de autoria descrita | Exercício executado ou asset corrigido |

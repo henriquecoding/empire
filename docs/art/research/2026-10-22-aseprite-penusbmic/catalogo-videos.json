@@ -2,7 +2,7 @@
   "revision": "2026-10-22",
   "repository": "henriquecoding/empire",
   "base_commit": "a390e8795cb2d2dee2ee35277e43017b95e20b07",
-  "method": "Primary YouTube transcripts and public author pages; selected teaching sections annotated. No full visual review or audio listening. Raw transcripts are private research intermediates and are not redistributed.",
+  "method": "Primary YouTube transcripts and public author pages; selected teaching sections annotated. Public static previews and GIF exposures inspected directly. No full-video visual review or audio listening. Raw transcripts and preview images are research intermediates and are not redistributed.",
   "counts": {
     "transcripts_recovered": 22,
     "penusbmic_transcripts": 10,
@@ -10,7 +10,8 @@
     "pixel_pete_transcripts": 10,
     "playlist_entries_catalogued": 74,
     "channel_window_entries_catalogued": 30,
-    "complete_channel_review": false
+    "complete_channel_review": false,
+    "public_preview_files_inspected": 6
   },
   "studied_videos": [
     {
@@ -1234,6 +1235,95 @@
     {
       "id": "Ukg2n-G8aGA",
       "reason": "YouTube displayed members-only Supporter access. No transcript requested and no paid material accessed."
+    }
+  ],
+  "public_visual_previews_inspected": [
+    {
+      "id": "character",
+      "url": "https://img.itch.zone/aW1nLzIyNzEyNjAxLnBuZw==/original/vmZD1I.png",
+      "source_page": "https://penusbmic.itch.io/pixel-art-tutorial-the-ultimate-character-design-workflow",
+      "sha256": "5bf3439cb164ea3a529f72764af5f21ef36da2abebb54a9bb6fc8e26d6f428c8",
+      "width": 1122,
+      "height": 750,
+      "format": "PNG",
+      "frames": 1,
+      "duration_ms": null,
+      "inspection": "static_preview_and_all_gif_exposures_compared; no real-time full-video review",
+      "redistributed": false
+    },
+    {
+      "id": "tileset",
+      "url": "https://img.itch.zone/aW1nLzE5MzA5NTUzLnBuZw==/original/mckqJY.png",
+      "source_page": "https://penusbmic.itch.io/pixel-art-tutorial-create-a-castle-tileset",
+      "sha256": "1a3836046b368a40347ccc6a6ca8489d4c4d7552e17c4141199ed9789df095c7",
+      "width": 1649,
+      "height": 867,
+      "format": "PNG",
+      "frames": 1,
+      "duration_ms": null,
+      "inspection": "static_preview_and_all_gif_exposures_compared; no real-time full-video review",
+      "redistributed": false
+    },
+    {
+      "id": "scene",
+      "url": "https://img.itch.zone/aW1nLzExNzY0NTQ2LnBuZw==/original/RYBfvS.png",
+      "source_page": "https://penusbmic.itch.io/pixel-art-tutorial-building-a-statement-scene-bushes-rocks",
+      "sha256": "4d052b904fbb1e561a0fea034c760db5292d36d740c7f91d971501437739d8aa",
+      "width": 1972,
+      "height": 692,
+      "format": "PNG",
+      "frames": 1,
+      "duration_ms": null,
+      "inspection": "static_preview_and_all_gif_exposures_compared; no real-time full-video review",
+      "redistributed": false
+    },
+    {
+      "id": "walk",
+      "url": "https://img.itch.zone/aW1nLzg5NjA2NTguZ2lm/original/uuz3FE.gif",
+      "source_page": "https://penusbmic.itch.io/pixel-art-tutorial-run-walk-cycles",
+      "sha256": "c98dd4e779c376b8159b67f46d21ce2979709564bbfdaa7341648370ebedb5bc",
+      "width": 870,
+      "height": 870,
+      "format": "GIF",
+      "frames": 8,
+      "duration_ms": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "inspection": "static_preview_and_all_gif_exposures_compared; no real-time full-video review",
+      "redistributed": false
+    },
+    {
+      "id": "trees",
+      "url": "https://img.itch.zone/aW1nLzI0OTg0MTQyLnBuZw==/original/vONeZO.png",
+      "source_page": "https://penusbmic.itch.io/pixel-art-tutorial-drawing-pine-trees",
+      "sha256": "2e9012e5edde6bd6ca0f9c48901f2017eaf0bfa699ff178762035e41043b11dd",
+      "width": 960,
+      "height": 960,
+      "format": "PNG",
+      "frames": 1,
+      "duration_ms": null,
+      "inspection": "static_preview_and_all_gif_exposures_compared; no real-time full-video review",
+      "redistributed": false
+    },
+    {
+      "id": "scene-detail",
+      "url": "https://img.itch.zone/aW1nLzExNzY0NTk0LnBuZw%3D%3D/original/BJdgth.png",
+      "source_page": "https://penusbmic.itch.io/pixel-art-tutorial-building-a-statement-scene-bushes-rocks",
+      "sha256": "1766b1fd1500a17de383597237ae0975dee74b82217e22477c891d65c845849d",
+      "width": 2052,
+      "height": 692,
+      "format": "PNG",
+      "frames": 1,
+      "duration_ms": null,
+      "inspection": "static_preview_and_all_gif_exposures_compared; no real-time full-video review",
+      "redistributed": false
     }
   ]
 }

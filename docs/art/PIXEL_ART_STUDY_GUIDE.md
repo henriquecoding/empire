@@ -10,6 +10,7 @@ informa o que foi acessado e o alcance de cada leitura.
 1. Conferir [autoridade das referências](REFERENCE_AUTHORITY.md) e
    [decisões recentes](research/2026-10-19-character-animation/DECISOES-E-ESTADO.md).
 2. Consultar as [notas do Penusbmic](research/2026-10-22-aseprite-penusbmic/PENUSBMIC-NOTAS.md)
+   e a [leitura visual das prévias](research/2026-10-22-aseprite-penusbmic/LEITURA-VISUAL.md),
    e os [fundamentos complementares](research/2026-10-22-aseprite-penusbmic/WATT-E-PIXEL-PETE-NOTAS.md)
    pelo problema concreto, usando os links com tempo para rever a aula.
 3. Preparar o arquivo com o [fluxo do Aseprite](ASEPRITE_WORKFLOW.md).
