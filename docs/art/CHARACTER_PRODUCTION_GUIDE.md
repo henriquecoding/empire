@@ -9,6 +9,7 @@ Consolidação de 19/10/2026. Este é o ponto de entrada para aplicar a pesquisa
 3. Este guia, [animação por poses](CHARACTER_ANIMATION_WORKFLOW.md), [floração individual](ORGANIC_FLOWER_ANIMATION.md) e [revisão](CHARACTER_REVIEW_CHECKLIST.md).
 4. [Asset Bible](ASSET_BIBLE.md), [Animation Bible](ANIMATION_BIBLE.md) e [expressões](EXPRESSION_GUIDE.md): contratos de arquivos, slots e runtime.
 5. [Fontes e aplicação](research/2026-10-19-character-animation/FONTES-E-APLICACAO.md), [arquivo completo anterior](research/2026-10-18-imperadores-escudeiros/README.md) e [evidências V13–V15](research/2026-10-19-character-animation/README.md).
+6. [Estudo aplicado de pixel art](PIXEL_ART_STUDY_GUIDE.md) e [fluxo do Aseprite](ASEPRITE_WORKFLOW.md): pesquisa de Penusbmic, Watt e Pixel Pete, com trechos das aulas e exercícios de revisão. Complementa o método sem alterar as aprovações ou os contratos acima.
 
 Este guia organiza o método de trabalho. Não altera o dossiê, balanceamento, nomes canônicos, paleta mestra ou contratos de runtime. A precedência continua sendo a de [AGENTS.md](../../AGENTS.md) e ADR 0079. Uma opção estética documentada precisa conservar seu estado: proposta, design aceito, animação revisada ou integração verificada.
 

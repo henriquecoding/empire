@@ -1,0 +1,1239 @@
+{
+  "revision": "2026-10-22",
+  "repository": "henriquecoding/empire",
+  "base_commit": "a390e8795cb2d2dee2ee35277e43017b95e20b07",
+  "method": "Primary YouTube transcripts and public author pages; selected teaching sections annotated. No full visual review or audio listening. Raw transcripts are private research intermediates and are not redistributed.",
+  "counts": {
+    "transcripts_recovered": 22,
+    "penusbmic_transcripts": 10,
+    "watt_transcripts": 2,
+    "pixel_pete_transcripts": 10,
+    "playlist_entries_catalogued": 74,
+    "channel_window_entries_catalogued": 30,
+    "complete_channel_review": false
+  },
+  "studied_videos": [
+    {
+      "id": "sx665YgtZVQ",
+      "url": "https://www.youtube.com/watch?v=sx665YgtZVQ",
+      "title": "Pixel Art Tutorial - The Ultimate character design workflow tutorial",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P01",
+      "annotated_start_seconds": [
+        25,
+        420,
+        771,
+        892,
+        1448
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "94121c013b7813aa11172a9624ea526589de71f6d3b9fe858b63becf48099f0b",
+        "bytes": 33401,
+        "words": 6191,
+        "last_caption_second": 1805,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "OnrmsMm6NMk",
+      "url": "https://www.youtube.com/watch?v=OnrmsMm6NMk",
+      "title": "Pixel Art Tutorial: Simple Idle Animation",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P02",
+      "annotated_start_seconds": [
+        93,
+        225,
+        334,
+        420,
+        784
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "c2ffd303bdc31bcfe8d944aedfaf4007dd3471909b57026d55d6a483e85b028d",
+        "bytes": 17206,
+        "words": 3359,
+        "last_caption_second": 823,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "Kgwiwbr4QS4",
+      "url": "https://www.youtube.com/watch?v=Kgwiwbr4QS4",
+      "title": "Pixel Art Tutorial: Simple Run Animation",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P03",
+      "annotated_start_seconds": [
+        58,
+        145,
+        630,
+        720,
+        900
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "d2fb20bd89281a2cef0558f03ae2d979f1e83c900c6941166605c3be3f6d2b21",
+        "bytes": 22541,
+        "words": 4394,
+        "last_caption_second": 1386,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "KS837a-TFRc",
+      "url": "https://www.youtube.com/watch?v=KS837a-TFRc",
+      "title": "INSANELY Smooth pixel ATTACK Animation Tutorial",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P04",
+      "annotated_start_seconds": [
+        180,
+        270,
+        450,
+        630,
+        810
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "b996ae51c8485f4847faedb34f3534ccfeda28da306e64d7f420d97805ed086b",
+        "bytes": 18774,
+        "words": 3687,
+        "last_caption_second": 1132,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "qODPK9kf-h4",
+      "url": "https://www.youtube.com/watch?v=qODPK9kf-h4",
+      "title": "COMPLEX pixel art ATTACK animation tutorial",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P05",
+      "annotated_start_seconds": [
+        15,
+        180,
+        750,
+        1800
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "5aa498bff9c72765a592fe549f24dab7fa10e4fa2a9e99290658263b0bf1abbf",
+        "bytes": 49698,
+        "words": 9272,
+        "last_caption_second": 2795,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "PB6R95Q_4Xs",
+      "url": "https://www.youtube.com/watch?v=PB6R95Q_4Xs",
+      "title": "Aseprite TIPS & TRICKS you probably don't know",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P06",
+      "annotated_start_seconds": [
+        83,
+        130,
+        223,
+        288,
+        463,
+        600
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "436c6b7c61835f6868975790ec855a4d3b0e1e741ff52fa16b48e1d99e736fa2",
+        "bytes": 12745,
+        "words": 2490,
+        "last_caption_second": 702,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "F4jEt9O3F1E",
+      "url": "https://www.youtube.com/watch?v=F4jEt9O3F1E",
+      "title": "Pixel Art Tutorial: The Ultimate STYLIZED tileset tutorial",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P07",
+      "annotated_start_seconds": [
+        21,
+        138,
+        486,
+        674,
+        1260
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "d397aa2c43b75610eefcfc712fece9984d96a01021ae7d3429d6fa77456ed0d2",
+        "bytes": 26357,
+        "words": 4998,
+        "last_caption_second": 1347,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "vmqPX7wjgDE",
+      "url": "https://www.youtube.com/watch?v=vmqPX7wjgDE",
+      "title": "Pixel Art Tutorial: The Ultimate Tree Tutorial",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P08",
+      "annotated_start_seconds": [
+        35,
+        268,
+        420,
+        500,
+        720
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "3802d40e74e51119ccaefaa0877f199ebaeaaf86f667a7b5a6904f7c0686d167",
+        "bytes": 13821,
+        "words": 2559,
+        "last_caption_second": 797,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "peFLDaokmtU",
+      "url": "https://www.youtube.com/watch?v=peFLDaokmtU",
+      "title": "Pixel Art Tutorial: Simple Background Tutorial",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P09",
+      "annotated_start_seconds": [
+        28,
+        164,
+        340,
+        525,
+        740
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "86f9fb49c5f1db17ca27d0aeba9c68bb99c6e4ec05f86ce342dac6e26d9a4be4",
+        "bytes": 20778,
+        "words": 4029,
+        "last_caption_second": 1145,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "zRGV_9GRBTc",
+      "url": "https://www.youtube.com/watch?v=zRGV_9GRBTc",
+      "title": "How I Design Unique Characters Step by Step!",
+      "author": "Penusbmic",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "PENUSBMIC-NOTAS.md",
+      "note_section": "P10",
+      "annotated_start_seconds": [
+        90,
+        270,
+        1800,
+        1890,
+        2250
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "49279a95a19beff22ce3af53782145bdca1e04b906784238589a776daf2c68ed",
+        "bytes": 28562,
+        "words": 5219,
+        "last_caption_second": 2409,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "BVBiUnBUB8c",
+      "url": "https://www.youtube.com/watch?v=BVBiUnBUB8c",
+      "title": "Pixelart 101 \"Color Palette\"",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP01",
+      "annotated_start_seconds": [
+        0,
+        180,
+        450
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "8903417530423fb22b087f1fe747e3f62aa2e33ba89b996dee6ef3fa52771a6a",
+        "bytes": 12318,
+        "words": 2297,
+        "last_caption_second": 649,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "jO9ruYaCJmU",
+      "url": "https://www.youtube.com/watch?v=jO9ruYaCJmU",
+      "title": "Pixel Art 101: Shading Tutorial",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP02",
+      "annotated_start_seconds": [
+        205,
+        365,
+        709,
+        861
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "7a7158cd42f7939493490e9511ecb5cf03737a126cbf1608fc33c3e291bf8e87",
+        "bytes": 19903,
+        "words": 3785,
+        "last_caption_second": 1157,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "NMkm3lrVFlM",
+      "url": "https://www.youtube.com/watch?v=NMkm3lrVFlM",
+      "title": "Pixel Art 101: Clean Up Line Work",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP03",
+      "annotated_start_seconds": [
+        46,
+        132,
+        254
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "f3ea192ac063c9fc7fb3acc20ca545e6c5c3118445b177ef486ab0823bb467a4",
+        "bytes": 7053,
+        "words": 1349,
+        "last_caption_second": 387,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "wNcQqGzfWKE",
+      "url": "https://www.youtube.com/watch?v=wNcQqGzfWKE",
+      "title": "Pixel Art 101: Sprite & Canvas Size",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP04",
+      "annotated_start_seconds": [
+        129,
+        231,
+        262
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "63ca330989b97c861a0c82fe2a69a4ae8f38ede9a447e42f9d4a4ce241121e06",
+        "bytes": 7345,
+        "words": 1377,
+        "last_caption_second": 338,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "TE1Wock0VBY",
+      "url": "https://www.youtube.com/watch?v=TE1Wock0VBY",
+      "title": "Pixel Art 101: Grass",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP05",
+      "annotated_start_seconds": [
+        35,
+        90,
+        360,
+        630
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "758a2227e69a1087008bda7128228b36ef70f958930b6c7dc9aad2e60f8fd187",
+        "bytes": 13414,
+        "words": 2545,
+        "last_caption_second": 852,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "V92YHgQY-uo",
+      "url": "https://www.youtube.com/watch?v=V92YHgQY-uo",
+      "title": "Pixel Art 101: Trees",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP06",
+      "annotated_start_seconds": [
+        35,
+        90,
+        180,
+        540
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "a790b40d5a8bf0c9727319b6f99d018a5975b387ed7fc5a8423c9fdfe653319a",
+        "bytes": 25452,
+        "words": 4782,
+        "last_caption_second": 1647,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "nzzphDLsO8g",
+      "url": "https://www.youtube.com/watch?v=nzzphDLsO8g",
+      "title": "Pixel Art 101: Wood Texture",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP07",
+      "annotated_start_seconds": [
+        35,
+        100,
+        320
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "43edf33db033dc717009973819c3876fb93d819fbc744373d7926464df5dfb19",
+        "bytes": 7580,
+        "words": 1417,
+        "last_caption_second": 474,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "DIB7VorgJno",
+      "url": "https://www.youtube.com/watch?v=DIB7VorgJno",
+      "title": "Pixel Art 101: Rocks",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP08",
+      "annotated_start_seconds": [
+        90,
+        600,
+        780
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "f3861a00554a7a46e423782ce34340c7b26e3d1cc32d3b7e377bc10e1082f835",
+        "bytes": 22111,
+        "words": 4237,
+        "last_caption_second": 1388,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "wY1yVmX8GqQ",
+      "url": "https://www.youtube.com/watch?v=wY1yVmX8GqQ",
+      "title": "Pixel Art 101: House",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP09",
+      "annotated_start_seconds": [
+        270,
+        360,
+        990,
+        1170
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "2e1d32dd8c66584c050a9e38b1aa43038b6186d41f37aed929a4f201bf4b0cc3",
+        "bytes": 22670,
+        "words": 4274,
+        "last_caption_second": 1293,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "BeNpNmEANpw",
+      "url": "https://www.youtube.com/watch?v=BeNpNmEANpw",
+      "title": "Pixel Art 101: Water",
+      "author": "Pixel Pete - Sad Slime Games",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "PP10",
+      "annotated_start_seconds": [
+        120,
+        240,
+        420,
+        600
+      ],
+      "transcript": {
+        "language": "en",
+        "captions": "auto-generated",
+        "sha256": "97e3c1ecff56f85197078fc6c55a7a8dd1478239ca6326dba11ead9e05677a59",
+        "bytes": 19286,
+        "words": 3632,
+        "last_caption_second": 1162,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "Ep-_nJNHPc4",
+      "url": "https://www.youtube.com/watch?v=Ep-_nJNHPc4",
+      "title": "Everything You Need to Know About ASEPRITE | Pixel Art Fundamentals",
+      "author": "Watt",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "W01",
+      "annotated_start_seconds": [
+        147,
+        278,
+        517,
+        620,
+        799,
+        880
+      ],
+      "transcript": {
+        "language": "en-US",
+        "captions": "authored or unspecified",
+        "sha256": "998862b1e378883ef9e5d6b408e07e2ec502af77951655cbf4bd0a7df95551ee",
+        "bytes": 25523,
+        "words": 4648,
+        "last_caption_second": 1026,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    },
+    {
+      "id": "hISJ2uflVCg",
+      "url": "https://www.youtube.com/watch?v=hISJ2uflVCg",
+      "title": "Pixel Art Color - Creating a Palette, Hue Shifting, and Color Theory | Pixel Art Fundamentals",
+      "author": "Watt",
+      "access": "public_transcript_recovered",
+      "study_scope": "teaching_sections_annotated",
+      "note_file": "WATT-E-PIXEL-PETE-NOTAS.md",
+      "note_section": "W02",
+      "annotated_start_seconds": [
+        132,
+        175,
+        315,
+        786
+      ],
+      "transcript": {
+        "language": "en-US",
+        "captions": "authored or unspecified",
+        "sha256": "f3611cfe628cf63a797ea0accb6b0c772c71a60d09e6d077f03d0f24ef8ccdbf",
+        "bytes": 22826,
+        "words": 4139,
+        "last_caption_second": 969,
+        "redistributed": false
+      },
+      "visual_review": "not_completed_black_video_image"
+    }
+  ],
+  "provided_playlist": {
+    "id": "PLmac3HPrav-9UWt-ahViIZxpyQxJ2wPSH",
+    "url": "https://www.youtube.com/playlist?list=PLmac3HPrav-9UWt-ahViIZxpyQxJ2wPSH",
+    "author": "Pixel Pete / Sad Slime Games",
+    "entries": [
+      {
+        "id": "51u9ZgrEThg",
+        "title": "Pixelart 101 FREE College Course \"Software\"",
+        "url": "https://www.youtube.com/watch?v=51u9ZgrEThg",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "peUx7xoU0F8",
+        "title": "Pixelart 101 FREE College Course \"Styles\"",
+        "url": "https://www.youtube.com/watch?v=peUx7xoU0F8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "mNGnQMPUFxw",
+        "title": "Pixelart 101 FREE College Course \"Game Boy\"",
+        "url": "https://www.youtube.com/watch?v=mNGnQMPUFxw",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "3DWVitIDHQo",
+        "title": "Pixelart 101 \"Furniture\"",
+        "url": "https://www.youtube.com/watch?v=3DWVitIDHQo",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "BVBiUnBUB8c",
+        "title": "Pixelart 101 \"Color Palette\"",
+        "url": "https://www.youtube.com/watch?v=BVBiUnBUB8c",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "jO9ruYaCJmU",
+        "title": "Pixel Art 101: Shading Tutorial",
+        "url": "https://www.youtube.com/watch?v=jO9ruYaCJmU",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "DIB7VorgJno",
+        "title": "Pixel Art 101: Rocks",
+        "url": "https://www.youtube.com/watch?v=DIB7VorgJno",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "TE1Wock0VBY",
+        "title": "Pixel Art 101: Grass",
+        "url": "https://www.youtube.com/watch?v=TE1Wock0VBY",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "V92YHgQY-uo",
+        "title": "Pixel Art 101: Trees",
+        "url": "https://www.youtube.com/watch?v=V92YHgQY-uo",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "BeNpNmEANpw",
+        "title": "Pixel Art 101: Water",
+        "url": "https://www.youtube.com/watch?v=BeNpNmEANpw",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "XVoFyCPFzkY",
+        "title": "Pixel Art 101: Bush",
+        "url": "https://www.youtube.com/watch?v=XVoFyCPFzkY",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "wiQJqddh4f8",
+        "title": "Pixel Art 101: Buttons",
+        "url": "https://www.youtube.com/watch?v=wiQJqddh4f8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "4lVPleCJXaU",
+        "title": "Pixel Art 101: Terraria Samurai",
+        "url": "https://www.youtube.com/watch?v=4lVPleCJXaU",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "DX3IkR_fjkQ",
+        "title": "Pixel Art 101: Pixilart Tutorial",
+        "url": "https://www.youtube.com/watch?v=DX3IkR_fjkQ",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "7caBf4iwNSQ",
+        "title": "Pixel Art 101: How to Improve a Sprite!",
+        "url": "https://www.youtube.com/watch?v=7caBf4iwNSQ",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Iyc7kBcf6Go",
+        "title": "Pixel Art 101: Critique",
+        "url": "https://www.youtube.com/watch?v=Iyc7kBcf6Go",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "d7vLonmkHc0",
+        "title": "Pixel Art 101: Dungeon Wall",
+        "url": "https://www.youtube.com/watch?v=d7vLonmkHc0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "nf8_rxDkYUk",
+        "title": "Pixel Art 101: Dungeon Tiles (Part 2)",
+        "url": "https://www.youtube.com/watch?v=nf8_rxDkYUk",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "mbhFbgNK_G0",
+        "title": "Pixel Art 101: Zelda Sprite",
+        "url": "https://www.youtube.com/watch?v=mbhFbgNK_G0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "mV0iNTWnmvU",
+        "title": "Pixel Art 101: Aseprite Tips / Tutorial",
+        "url": "https://www.youtube.com/watch?v=mV0iNTWnmvU",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "SD5Bl9XNVo0",
+        "title": "Pixel Art 101: Aseprite Tips / Tutorial",
+        "url": "https://www.youtube.com/watch?v=SD5Bl9XNVo0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "NMkm3lrVFlM",
+        "title": "Pixel Art 101: Clean Up Line Work",
+        "url": "https://www.youtube.com/watch?v=NMkm3lrVFlM",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "XS9QztsGUTs",
+        "title": "Pixel Art 101: Heart & Potion",
+        "url": "https://www.youtube.com/watch?v=XS9QztsGUTs",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "SxBuVOCFl_w",
+        "title": "Pixel Art 101: Critique",
+        "url": "https://www.youtube.com/watch?v=SxBuVOCFl_w",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "wNcQqGzfWKE",
+        "title": "Pixel Art 101: Sprite & Canvas Size",
+        "url": "https://www.youtube.com/watch?v=wNcQqGzfWKE",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "wY1yVmX8GqQ",
+        "title": "Pixel Art 101: House",
+        "url": "https://www.youtube.com/watch?v=wY1yVmX8GqQ",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "nzzphDLsO8g",
+        "title": "Pixel Art 101: Wood Texture",
+        "url": "https://www.youtube.com/watch?v=nzzphDLsO8g",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "mPMq8GXNQgE",
+        "title": "Pixel Art 101: Bat",
+        "url": "https://www.youtube.com/watch?v=mPMq8GXNQgE",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "7nhqvbTC3qo",
+        "title": "Pixel Art Critique",
+        "url": "https://www.youtube.com/watch?v=7nhqvbTC3qo",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "2Rf5Q55WATE",
+        "title": "Pixel Art 101: Portrait",
+        "url": "https://www.youtube.com/watch?v=2Rf5Q55WATE",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "9eu7q2MLz18",
+        "title": "Pixel Art 101: Title",
+        "url": "https://www.youtube.com/watch?v=9eu7q2MLz18",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "AXlHcTHyBg4",
+        "title": "Pixel Art Critique (January)",
+        "url": "https://www.youtube.com/watch?v=AXlHcTHyBg4",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "mZMwgMju-kg",
+        "title": "Pixel Art 101: Crate",
+        "url": "https://www.youtube.com/watch?v=mZMwgMju-kg",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Qu6TJscBpj8",
+        "title": "Pixel Art 101: Cliff",
+        "url": "https://www.youtube.com/watch?v=Qu6TJscBpj8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "rKH0R3MOJBs",
+        "title": "Pixel Art 101: Puppy",
+        "url": "https://www.youtube.com/watch?v=rKH0R3MOJBs",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "YFKLDojG3Ag",
+        "title": "Pixel Art Critique (February)",
+        "url": "https://www.youtube.com/watch?v=YFKLDojG3Ag",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "zyPLzIAnoj0",
+        "title": "Pixel Art Critique (March Submissions)",
+        "url": "https://www.youtube.com/watch?v=zyPLzIAnoj0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Xqa8fVDQBuU",
+        "title": "Pixel Art 101: Vase",
+        "url": "https://www.youtube.com/watch?v=Xqa8fVDQBuU",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "H-J6Z4eq3fY",
+        "title": "Pixel Art Critique (April Submissions)",
+        "url": "https://www.youtube.com/watch?v=H-J6Z4eq3fY",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "wf5TfFGfg8E",
+        "title": "Pixel Art 101: Pickaxe",
+        "url": "https://www.youtube.com/watch?v=wf5TfFGfg8E",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "MzqIBAckSE4",
+        "title": "Pixel Art 101: Sad Slime (Game Dev Depression)",
+        "url": "https://www.youtube.com/watch?v=MzqIBAckSE4",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "TpOWdjTJYKc",
+        "title": "Pixel Art 101: Fishing Pole",
+        "url": "https://www.youtube.com/watch?v=TpOWdjTJYKc",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "GMOBCz5-KWs",
+        "title": "Pixel Studio - Free Pixel Art Mobile Software",
+        "url": "https://www.youtube.com/watch?v=GMOBCz5-KWs",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Mk1q4uBPiNI",
+        "title": "Pixel Art 101: Haunted Chocolatier Portrait Tutorial",
+        "url": "https://www.youtube.com/watch?v=Mk1q4uBPiNI",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "fSYy09E898o",
+        "title": "Pixel Art 101: Haunted Chocolatier Portraits Tutorial Part 2: Eyes",
+        "url": "https://www.youtube.com/watch?v=fSYy09E898o",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "MHxPEKdSK_I",
+        "title": "Pixel Art 101: Haunted Chocolatier Portrait Tutorial Part 3: Hair",
+        "url": "https://www.youtube.com/watch?v=MHxPEKdSK_I",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "hnRRdzCrzxM",
+        "title": "Pixel Art 101: How To Grow a Fanbase",
+        "url": "https://www.youtube.com/watch?v=hnRRdzCrzxM",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "m5pWUIQ2U3U",
+        "title": "Pixel Art Critique",
+        "url": "https://www.youtube.com/watch?v=m5pWUIQ2U3U",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "xlSo7GPgps0",
+        "title": "Pixel Art 101: Crystals",
+        "url": "https://www.youtube.com/watch?v=xlSo7GPgps0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "_KeZ2c0ea6Q",
+        "title": "Pixel Art Critique",
+        "url": "https://www.youtube.com/watch?v=_KeZ2c0ea6Q",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "wWPf4jEm5Yc",
+        "title": "Pixel Art Critique: Grass &  House",
+        "url": "https://www.youtube.com/watch?v=wWPf4jEm5Yc",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "F5uY78iMDbc",
+        "title": "Pokemon Scarlet & Violet (Sprigatito) BUT PIXEL ART!",
+        "url": "https://www.youtube.com/watch?v=F5uY78iMDbc",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "nU7XTDNpDW0",
+        "title": "Pixel Art 101: Sad Slime",
+        "url": "https://www.youtube.com/watch?v=nU7XTDNpDW0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "XKsXLjS1a50",
+        "title": "Pixel Art 101: Troll, Orc, Goblin",
+        "url": "https://www.youtube.com/watch?v=XKsXLjS1a50",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "ZJqoa3E6iN8",
+        "title": "Pixel Art 101: Polishing Troll, Orc, Goblin, Oni",
+        "url": "https://www.youtube.com/watch?v=ZJqoa3E6iN8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "uvK5zCt6qcY",
+        "title": "Pixel Art 101: Present",
+        "url": "https://www.youtube.com/watch?v=uvK5zCt6qcY",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "LFclLgUQ1zE",
+        "title": "PIXIL ART: Free pixel art software!",
+        "url": "https://www.youtube.com/watch?v=LFclLgUQ1zE",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "A6wr3eAlv6M",
+        "title": "Pixel Art: Castlevania Simon Belmont Remade!",
+        "url": "https://www.youtube.com/watch?v=A6wr3eAlv6M",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "TfwraOtbJdg",
+        "title": "Pixel Art: Skill Tree",
+        "url": "https://www.youtube.com/watch?v=TfwraOtbJdg",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "voCjqogB5vM",
+        "title": "Super detailed pixel art title",
+        "url": "https://www.youtube.com/watch?v=voCjqogB5vM",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "pdpZMT8nDaU",
+        "title": "Pixel Art Critique",
+        "url": "https://www.youtube.com/watch?v=pdpZMT8nDaU",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "dUN3VTCHU-s",
+        "title": "Pixel Art Portrait: \"Evelyn\" the Sexiest Goblin Ever!",
+        "url": "https://www.youtube.com/watch?v=dUN3VTCHU-s",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "5lr59xlX4gk",
+        "title": "Pixel Art Tilemap",
+        "url": "https://www.youtube.com/watch?v=5lr59xlX4gk",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "PyJ95F8OKIA",
+        "title": "Pixel Art Critique",
+        "url": "https://www.youtube.com/watch?v=PyJ95F8OKIA",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "L_8H3VUCEe8",
+        "title": "Pixel Art Critique: GOKU",
+        "url": "https://www.youtube.com/watch?v=L_8H3VUCEe8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "1952omZHN_Q",
+        "title": "Pixel Art Alpaca?",
+        "url": "https://www.youtube.com/watch?v=1952omZHN_Q",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "lsLfChSfmzA",
+        "title": "Aseprite tilemap for my pixel art game",
+        "url": "https://www.youtube.com/watch?v=lsLfChSfmzA",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "3UGmWGnxlOs",
+        "title": "Pixel Art Wukong",
+        "url": "https://www.youtube.com/watch?v=3UGmWGnxlOs",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "vFB_z-4FlUI",
+        "title": "I reached 100,000 subscribers! Thank You all!",
+        "url": "https://www.youtube.com/watch?v=vFB_z-4FlUI",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "fXivDAaBsDA",
+        "title": "Pixel Art Top Down Tips",
+        "url": "https://www.youtube.com/watch?v=fXivDAaBsDA",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "7yCycO6392E",
+        "title": "FREE Aseprite (for real)",
+        "url": "https://www.youtube.com/watch?v=7yCycO6392E",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "IwMx5LIGOQk",
+        "title": "Pixel Art Advanced Shading Tutorial Part1",
+        "url": "https://www.youtube.com/watch?v=IwMx5LIGOQk",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "2Tuf2Uk2E34",
+        "title": "Pixel Art Shading Tutorial #pixelart #gaming",
+        "url": "https://www.youtube.com/watch?v=2Tuf2Uk2E34",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Gp3QaUFijvo",
+        "title": "Pixel Art Animation Tutorial",
+        "url": "https://www.youtube.com/watch?v=Gp3QaUFijvo",
+        "study_status": "catalogued_only"
+      }
+    ]
+  },
+  "penusbmic_recent_channel_window": {
+    "url": "https://www.youtube.com/@Penusbmic/videos",
+    "is_complete_channel_inventory": false,
+    "entries": [
+      {
+        "id": "e6eCeelgIs0",
+        "title": "Making Backgrounds in the BEST Extension for Aseprite: Asemulator",
+        "url": "https://www.youtube.com/watch?v=e6eCeelgIs0",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "dLvS_vtiXKQ",
+        "title": "The BEST extension for Aseprite just released: Asemulator",
+        "url": "https://www.youtube.com/watch?v=dLvS_vtiXKQ",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Znq1D8IeRms",
+        "title": "How to Design a Pixel Art House from Scratch - JOINERS",
+        "url": "https://www.youtube.com/watch?v=Znq1D8IeRms",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "e442WRyLuxM",
+        "title": "Spell VFX Animation & Design - JOINERS",
+        "url": "https://www.youtube.com/watch?v=e442WRyLuxM",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "vmqPX7wjgDE",
+        "title": "Pixel Art Tutorial: The Ultimate Tree Tutorial",
+        "url": "https://www.youtube.com/watch?v=vmqPX7wjgDE",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "15eSOjr73Zs",
+        "title": "Creating Pixel Art Spell Icons - JOINERS",
+        "url": "https://www.youtube.com/watch?v=15eSOjr73Zs",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "CPt96zAnEEk",
+        "title": "Pixel Art Tutorial:  How to Draw Anything Isometric",
+        "url": "https://www.youtube.com/watch?v=CPt96zAnEEk",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "xd0SUTWx8AE",
+        "title": "Pixel Art Tutorial: Sprite Stacking (3D Illusion from 2D Sprites)",
+        "url": "https://www.youtube.com/watch?v=xd0SUTWx8AE",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "6-YHA2o4sSc",
+        "title": "Pixel Art Tutorial: Attack Animation on Pixquare (iPad)",
+        "url": "https://www.youtube.com/watch?v=6-YHA2o4sSc",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "0UpkYe_R7-c",
+        "title": "I Remade An Old Image From Scratch - JOINERS",
+        "url": "https://www.youtube.com/watch?v=0UpkYe_R7-c",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "yKeGXSKNeoI",
+        "title": "NEW Indie game trailer! Örnöga: Idle - Incremental Loot game!",
+        "url": "https://www.youtube.com/watch?v=yKeGXSKNeoI",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "lRb2xjKouZs",
+        "title": "Dynamic Idle Animations For Games - JOINERS",
+        "url": "https://www.youtube.com/watch?v=lRb2xjKouZs",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "F4jEt9O3F1E",
+        "title": "Pixel Art Tutorial: The Ultimate STYLIZED tileset tutorial",
+        "url": "https://www.youtube.com/watch?v=F4jEt9O3F1E",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "Ukg2n-G8aGA",
+        "title": "How I Make Awesome Pixel Art Palettes!",
+        "url": "https://www.youtube.com/watch?v=Ukg2n-G8aGA",
+        "study_status": "members_only_not_studied"
+      },
+      {
+        "id": "sx665YgtZVQ",
+        "title": "Pixel Art Tutorial - The Ultimate character design workflow tutorial",
+        "url": "https://www.youtube.com/watch?v=sx665YgtZVQ",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "zRGV_9GRBTc",
+        "title": "How I Design Unique Characters Step by Step!",
+        "url": "https://www.youtube.com/watch?v=zRGV_9GRBTc",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "aFScWIv1aJk",
+        "title": "Watch Me Animate a Cool Bug Step by Step!",
+        "url": "https://www.youtube.com/watch?v=aFScWIv1aJk",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "I6pxRBy6jA8",
+        "title": "Playing GAMES with my ART | Episode 1 The Ember Guardian",
+        "url": "https://www.youtube.com/watch?v=I6pxRBy6jA8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "qODPK9kf-h4",
+        "title": "COMPLEX pixel art ATTACK animation tutorial",
+        "url": "https://www.youtube.com/watch?v=qODPK9kf-h4",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "eu8Noby47M4",
+        "title": "How to make a Simon Stålenhag like Pixel art piece - JOINERS",
+        "url": "https://www.youtube.com/watch?v=eu8Noby47M4",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "dK9tPl0VXXw",
+        "title": "Örnöga: Idle Announcement Trailer",
+        "url": "https://www.youtube.com/watch?v=dK9tPl0VXXw",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "-eTPhlUlcm4",
+        "title": "I made a game in 100 hours & I'm bringing it to STEAM",
+        "url": "https://www.youtube.com/watch?v=-eTPhlUlcm4",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "SyoWBdGO2X4",
+        "title": "How to make a BEAUTIFUL Animated Sci-fi Landscape Tutorial - JOINERS",
+        "url": "https://www.youtube.com/watch?v=SyoWBdGO2X4",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Mapj7fL5ZSE",
+        "title": "My Indie Game Made HOW MUCH Money in its First Year!",
+        "url": "https://www.youtube.com/watch?v=Mapj7fL5ZSE",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "toBGCHVA8d8",
+        "title": "Large Character Design - JOINERS (Part 2)",
+        "url": "https://www.youtube.com/watch?v=toBGCHVA8d8",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "RewzUktNNkw",
+        "title": "Large Character Design - JOINERS (Part 1)",
+        "url": "https://www.youtube.com/watch?v=RewzUktNNkw",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "Kgwiwbr4QS4",
+        "title": "Pixel Art Tutorial: Simple Run Animation",
+        "url": "https://www.youtube.com/watch?v=Kgwiwbr4QS4",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "OnrmsMm6NMk",
+        "title": "Pixel Art Tutorial: Simple Idle Animation",
+        "url": "https://www.youtube.com/watch?v=OnrmsMm6NMk",
+        "study_status": "teaching_sections_annotated"
+      },
+      {
+        "id": "eaUNCCLZOqg",
+        "title": "Dark Samurai - Pixel Art Timelapse Video",
+        "url": "https://www.youtube.com/watch?v=eaUNCCLZOqg",
+        "study_status": "catalogued_only"
+      },
+      {
+        "id": "PB6R95Q_4Xs",
+        "title": "Aseprite TIPS & TRICKS you probably don't know",
+        "url": "https://www.youtube.com/watch?v=PB6R95Q_4Xs",
+        "study_status": "teaching_sections_annotated"
+      }
+    ]
+  },
+  "restricted_videos": [
+    {
+      "id": "Ukg2n-G8aGA",
+      "reason": "YouTube displayed members-only Supporter access. No transcript requested and no paid material accessed."
+    }
+  ]
+}

@@ -32,6 +32,11 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   e decisoes atuais em docs/art/research/2026-10-19-character-animation/.
   Distinguir design aceito, animacao revisada e integracao testada; nao
   promover estudos rejeitados ou prototipos de pacote a contratos de runtime.
+- Pixel art, Aseprite e cenarios: ler docs/art/PIXEL_ART_STUDY_GUIDE.md e
+  docs/art/ASEPRITE_WORKFLOW.md antes de produzir ou rever. A pesquisa de
+  Penusbmic, Watt e Pixel Pete tem fontes e trechos anotados em
+  docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
+  substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.
