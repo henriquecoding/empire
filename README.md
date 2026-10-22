@@ -55,7 +55,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 | `docs/QUESTIONS.md` | As perguntas em aberto — **começa por aqui** depois do dossiê |
 | `docs/backlog/` | Os tickets das Fases 0 e 1, no formato do §34 |
 | `docs/content/` | Base de dados de conteúdo: dicionário, esquema, propostas, nomes, bíblia de nomes |
-| `docs/art/` | [Guia de personagens e animação](docs/art/CHARACTER_PRODUCTION_GUIDE.md), pesquisa consolidada, Asset Bible, expressões e efeitos |
+| `docs/art/` | [Estudo de pixel art e Aseprite](docs/art/PIXEL_ART_STUDY_GUIDE.md), [personagens e animação](docs/art/CHARACTER_PRODUCTION_GUIDE.md), Asset Bible, expressões e efeitos |
 | `docs/world/` | Produção de segmentos, greybox, registo de segmentos |
 | `docs/ux/` · `docs/audio/` · `docs/localization/` | Ecrãs e HUD · som · texto e glossário |
 | `docs/qa/` | Playtest, QA, regressão, desempenho, acessibilidade |
