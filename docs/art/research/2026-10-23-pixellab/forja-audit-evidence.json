@@ -1,0 +1,135 @@
+{
+  "audit_date": "2026-10-23",
+  "repository": "henriquecoding/empire",
+  "reviewed_commit": "68ed1c87461f5d39dd21fb664eef2930ddeaac81",
+  "implementation_pr": "https://github.com/henriquecoding/empire/pull/117",
+  "environment": {
+    "python": "3.12.14",
+    "pillow": "12.3.0",
+    "godot_available_locally": false
+  },
+  "checks": [
+    {
+      "command": "python3 -m unittest discover -s tools/forja/tests -t .",
+      "tests_run": 80,
+      "passed": 79,
+      "skipped": 1,
+      "skip_reason": "Godot executable not installed locally",
+      "result": "success"
+    },
+    {
+      "command": "python3 -m tools.forja prova",
+      "checks": 11,
+      "passed": 11,
+      "result": "success"
+    },
+    {
+      "command": "python3 docs/art/research/2026-10-23-pixellab/reproduce_forja_findings.py",
+      "observations": 9,
+      "network_calls": 0,
+      "result": "recorded_counterexamples_not_quality_benchmark"
+    }
+  ],
+  "implementation_ci": {
+    "url": "https://github.com/henriquecoding/empire/actions/runs/39917391094",
+    "head_sha": "68ed1c87461f5d39dd21fb664eef2930ddeaac81",
+    "conclusion": "success"
+  },
+  "vercel": {
+    "github_status": "success",
+    "status_target": "https://vercel.com/hamriki-s-projects/empire/Ct35X8mt6mW6NfFADMy8NKu5jEmy",
+    "private_api_status": 403,
+    "private_inspection_completed": false,
+    "limitation": "Connected account lacks access to hamriki-s-projects; team authorization helper unavailable in this session",
+    "public_pages": [
+      {
+        "path": "/",
+        "status": 200,
+        "url": "https://empire-phi-eight.vercel.app/",
+        "bytes_read": 120526,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "b620576da21a1041a9d926fbbf11da1fd3f963b7433eb4f876d2642a1376b3de",
+        "has_forja": true,
+        "head_marker": true
+      },
+      {
+        "path": "/en/",
+        "status": 200,
+        "url": "https://empire-phi-eight.vercel.app/en/",
+        "bytes_read": 121941,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "35d7682855b24ebbe6fbaef4a20c7f5550a53b1560c021c0bbf57df230669024",
+        "has_forja": true,
+        "head_marker": true
+      },
+      {
+        "path": "/jogar/",
+        "status": 200,
+        "url": "https://empire-phi-eight.vercel.app/jogar/",
+        "bytes_read": 22180,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "175dcca61939ced7a976c3b9d0e21fe93f4f0948fec211d5621c2b8b4d8449ad",
+        "has_forja": false,
+        "head_marker": false
+      },
+      {
+        "path": "/dossie/",
+        "status": 200,
+        "url": "https://empire-phi-eight.vercel.app/dossie/",
+        "bytes_read": 1486029,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "7b40b7581f5ff61d2c14e7b06f8778ee2e4306f2d05ecadd93d62ca383fae941",
+        "has_forja": true,
+        "head_marker": false
+      }
+    ],
+    "public_game_assets": [
+      {
+        "url": "https://empire-phi-eight.vercel.app/jogar/index.js",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "content_length": "279815",
+        "method": "HEAD"
+      },
+      {
+        "url": "https://empire-phi-eight.vercel.app/jogar/index.wasm",
+        "status": 200,
+        "content_type": "application/wasm",
+        "content_length": "39514754",
+        "method": "HEAD"
+      },
+      {
+        "url": "https://empire-phi-eight.vercel.app/jogar/index.pck",
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "content_length": "24301744",
+        "method": "HEAD"
+      }
+    ],
+    "browser_gameplay_tested": false
+  },
+  "visual_inspection": {
+    "scope": "two existing comparison crops, not newly generated assets",
+    "files": [
+      "docs/art/research/2026-10-23-forja-pixellab/comparacao-rei-escudeiro.png",
+      "docs/art/research/2026-10-23-forja-pixellab/comparacao-sombra-bailarina.png"
+    ]
+  },
+  "code_hashes_sha256": {
+    "tools/forja/cmd_ai.py": "bcdb78a2fe39a85b44a4f5bc0d0eff2d7b74be7a52435785ed14d70e96cdd2dd",
+    "tools/forja/prompts.py": "e76725bcc0ac2c3bd7fa6735cf97546fa84f5379fdbb3bda3e0851ecfd90abe1",
+    "tools/forja/pipeline.py": "57603eba0fe95a47e1e5d7b7c465f716f831ebb6911baf48578136b84d8ca16b",
+    "tools/forja/cleanup.py": "c745b35ad076a109a767841e507530596fffebea6651038537cf9eaa5351bc96",
+    "tools/forja/inpaint.py": "cfad549bab911f2e7819da3c10ff74559825fa4f5b07c74629f388c713dfef9f",
+    "tools/forja/sheet.py": "6ba395645a22c0167f1aca13ad4991a9d6b8e5240f3ff3809d20cd037bcf5ba0",
+    "tools/forja/sheetforge.py": "51c0a71ea19d99eb4606698a8c2d466a79dc24af0f9aa782f6f99c3f06bd6a4c",
+    "tools/forja/godot.py": "da11f4e51d59c831c2bb6b55414d5799839712570d03592161834744497221ad",
+    "tools/forja/backends/http.py": "e7d618b072128d23023e1d20daba11f4f755d4797e57dd145fd00905aca8cc34",
+    "tools/forja/backends/pixellab_api.py": "f886865914e973fb8fe43992ac97af0ee038505918f09bdbeb7eaac59807ffad",
+    "tools/forja/backends/gemini_images.py": "42f2b06c3ad5c1dacc76e68905ab363759bcb1db0ba713d9fdc31f2c89ce8364"
+  },
+  "paid_generation_calls": 0,
+  "model_training_executed": false,
+  "production_forja_code_changed": false,
+  "findings_fixed_by_this_delivery": false
+}

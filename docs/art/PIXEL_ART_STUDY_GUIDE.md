@@ -5,6 +5,14 @@ Penusbmic, Watt, Pixel Pete e Aseprite a personagens, animação, materiais e
 cenários. O [registro da pesquisa](research/2026-10-22-aseprite-penusbmic/README.md)
 informa o que foi acessado e o alcance de cada leitura.
 
+Para construir ferramentas de geração, consultar a
+[pesquisa técnica do PixelLab de 23/10](research/2026-10-23-pixellab/README.md).
+Ela separa capacidades públicas de uma arquitetura própria proposta, com dados,
+treino, animação, benchmark e instruções para Claude. Inclui a
+[auditoria da Forja do PR #117](research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md),
+com falhas reproduzidas e prioridades de correção. Não altera o estado de
+aprovação dos assets nem os contratos atuais do jogo.
+
 ## Ler antes de produzir
 
 1. Conferir [autoridade das referências](REFERENCE_AUTHORITY.md) e

@@ -3014,5 +3014,17 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "ART-PIXELLAB-2026-10-23": {
+  "title": "Pesquisa técnica do PixelLab e plano de ferramenta independente",
+  "porque": "Transformar documentação pública e pesquisa de modelos em implementação verificável para pixel art do Empire.",
+  "spec": [
+   "docs/art/CHARACTER_PRODUCTION_GUIDE.md",
+   "docs/art/PIXEL_ART_STUDY_GUIDE.md"
+  ],
+  "depende": "ART-KNOWLEDGE-2026-10-19",
+  "feito": "Relatório mestre, fontes, contrato de asset, benchmark planejado e instruções para Claude.",
+  "fora": "Treinamento, chamadas pagas, recuperação de pesos privados e alteração de runtime ou assets.",
+  "estado": "feito — pesquisa pública, relatório de implementação e auditoria reproduzível da Forja do PR #117"
  }
 }
