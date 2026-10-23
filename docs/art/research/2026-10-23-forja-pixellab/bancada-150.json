@@ -1,0 +1,119 @@
+{
+ "ok": true,
+ "cases": 150,
+ "exact_or_within_1pct": 143,
+ "failures": [
+  {
+   "case": 1,
+   "scale": 4.18,
+   "jitter": 0.05,
+   "blur": 0.3,
+   "noise": 8,
+   "size": [
+    12,
+    21
+   ],
+   "expected": [
+    12,
+    21
+   ],
+   "wrong": 7
+  },
+  {
+   "case": 28,
+   "scale": 12.24,
+   "jitter": 1.36,
+   "blur": 1.27,
+   "noise": 8,
+   "size": [
+    16,
+    23
+   ],
+   "expected": [
+    16,
+    23
+   ],
+   "wrong": 3
+  },
+  {
+   "case": 75,
+   "scale": 6.03,
+   "jitter": 0.01,
+   "blur": 0.72,
+   "noise": 5,
+   "size": [
+    22,
+    36
+   ],
+   "expected": [
+    22,
+    36
+   ],
+   "wrong": 7
+  },
+  {
+   "case": 122,
+   "scale": 4.37,
+   "jitter": 0.26,
+   "blur": 0.46,
+   "noise": 7,
+   "size": [
+    16,
+    25
+   ],
+   "expected": [
+    16,
+    25
+   ],
+   "wrong": 13
+  },
+  {
+   "case": 140,
+   "scale": 5.79,
+   "jitter": 0.52,
+   "blur": 0.47,
+   "noise": 10,
+   "size": [
+    12,
+    20
+   ],
+   "expected": [
+    12,
+    20
+   ],
+   "wrong": 8
+  },
+  {
+   "case": 145,
+   "scale": 8.02,
+   "jitter": 0.44,
+   "blur": 0.72,
+   "noise": 8,
+   "size": [
+    16,
+    30
+   ],
+   "expected": [
+    16,
+    30
+   ],
+   "wrong": 8
+  },
+  {
+   "case": 149,
+   "scale": 26.66,
+   "jitter": 3.11,
+   "blur": 1.07,
+   "noise": 2,
+   "size": [
+    38,
+    64
+   ],
+   "expected": [
+    32,
+    54
+   ],
+   "wrong": null
+  }
+ ]
+}
