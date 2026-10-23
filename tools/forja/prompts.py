@@ -31,6 +31,8 @@ def pick_scale(width: int, height: int, target: str) -> int:
     gpt-image 2.x: lados multiplos de 16, 655360 a 8294400 pixels, e acima de
     2560x1440 e experimental — fica-se abaixo. Os outros: ate 2048 por lado.
     """
+    if target == "pixellab":
+        return 1
     for k in range(256, 1, -1):
         w, h = width * k, height * k
         if target == "gpt-image":
@@ -49,7 +51,7 @@ def _outline(c: contracts.Contract) -> str:
         return "outline only where it helps readability"
     if c.outline_px == 0:
         return "NO outline at all; shapes are separated by value only"
-    return f"a {c.outline_px}-logical-pixel pure black (#000000) outline around the whole silhouette and on key internal details"
+    return f"a {max(1, c.outline_px // c.cluster)}-logical-pixel pure black (#000000) outline around the whole silhouette and on key internal details"
 
 
 def _colors(pal: Palette | None, c: contracts.Contract, listed: int) -> str:
@@ -76,8 +78,12 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
     cols, rows = layout_for(frames)
     k = pick_scale(canvas[0] * cols, canvas[1] * rows, target)
     size = (canvas[0] * cols * k, canvas[1] * rows * k)
+    content_box = None
+    if target == "gemini":
+        x, y = (2048 - size[0]) // 2, (2048 - size[1]) // 2
+        content_box = [x, y, x + size[0], y + size[1]]
     key = matte.best_key(palette.colors if palette else [])
-    transparent = background == "transparent" or (background == "auto" and target == "gpt-image")
+    transparent = background == "transparent" or (background == "auto" and target in ("gpt-image", "pixellab"))
     pivot = c.pivot
     base = (canvas[1] - 1 - pivot[1] // c.cluster) if pivot else 2
     lines = [
@@ -94,7 +100,7 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
         f"Colors: {_colors(palette, c, listed)}.",
     ]
     if c.useful_height and c.useful_height[0] > 1:
-        lines.append(f"Scale: the figure is {c.useful_height[0]}-{c.useful_height[1]} logical pixels tall, "
+        lines.append(f"Scale: the figure is {c.useful_height[0] // c.cluster}-{c.useful_height[1] // c.cluster} logical pixels tall, "
                      f"feet resting on a ground baseline {base} logical pixels above the bottom edge of its cell, "
                      "centered horizontally.")
     if transparent:
@@ -111,16 +117,25 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
     if reference:
         lines.append("Identity: the attached image is the APPROVED design. Preserve proportions, head, face, clothing, "
                      "materials and colors exactly; change only the pose.")
+    if content_box:
+        lines.append(f"Output canvas: 2048x2048 pixels. Put the entire pixel grid ONLY inside the exact "
+                     f"rectangle {content_box} (left, top, right, bottom). All margins must be blank background; "
+                     "do not stretch the grid to fill the canvas. Follow the attached layout guide.")
+    if cols * rows > frames:
+        lines.append(f"Leave cells {frames + 1}-{cols * rows} empty, with background only.")
     lines.append("Avoid: photorealism, 3D render, painterly or vector style, glow, lens effects, drop shadows, "
                  "extra characters, watermarks, signatures, UI.")
     expect = {"kind": kind, "cells": [canvas[0] * cols, canvas[1] * rows], "scale": k, "layout": [cols, rows],
               "frames": frames, "tags": [list(t) for t in tags] if tags else None,
               "background": "transparent" if transparent else key, "size": list(size), "cluster": c.cluster}
+    if content_box:
+        expect.update(content_box=content_box, generator_size=[2048, 2048])
     advice = None
-    if k < 8:
+    if k < 8 and target != "pixellab":
         advice = (f"cada pixel logico tera so {k} px na imagem: o gerador perde precisao. Peca menos quadros por "
                   "prancha (ex.: --tags walk:4 duas vezes) ou uma figura por imagem.")
-    return {"prompt": "\n".join(lines), "size": f"{size[0]}x{size[1]}", "expect": expect, "advice": advice,
+    return {"prompt": "\n".join(lines), "size": "2048x2048" if content_box else f"{size[0]}x{size[1]}",
+            "expect": expect, "advice": advice,
             "pixellab": pixellab_params(subject, c, canvas, facing), "target": target}
 
 

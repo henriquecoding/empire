@@ -26,8 +26,7 @@ def do_sheet(args) -> dict:
                                     godot_texture=args.godot_texture)
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
     res = sheetforge.forge_sheet(args.image, args.out, opts, sopts, args.name, prompt, args.generator)
-    return {k: res[k] for k in ("ok", "summary", "requested", "found", "files", "metrics", "prompt_feedback",
-                                "pivot", "canvas", "tags", "stray_blobs")}
+    return res
 
 
 def do_anim(args) -> dict:
@@ -152,8 +151,9 @@ def register(sub) -> None:
     common(p)
     p.add_argument("--tags", help="ex.: 'idle' ou 'idle,walk' (contagens da Animation Bible) ou 'idle:4'")
     p.add_argument("--layout", type=pair, help="colunas x linhas da prancha (junta pedacos por celula)")
-    p.add_argument("--anchor", default="feet", choices=("feet", "mass", "bottom", "center"))
-    p.add_argument("--same-height", action="store_true", help="igualar a altura das figuras antes da grade")
+    p.add_argument("--anchor", default="auto", choices=("auto", "origin", "feet", "mass", "bottom", "center"),
+                   help="auto preserva origem com layout e escala; feet estabiliza apoio explicitamente")
+    p.add_argument("--same-height", action="store_true", help="retirado: use escala comum; deforma poses")
     p.add_argument("--deflicker", type=float, default=0.0, help="prender cores que mudam menos que isto (OKLab)")
     p.add_argument("--lock", type=box, help="caixa x0,y0,x1,y1 do rosto a travar em todos os quadros")
     p.add_argument("--mirror", action="store_true", help="exportar tambem a direcao espelhada")

@@ -1,5 +1,8 @@
 # PixelLab por dentro e a Forja — pesquisa de 23/10/2026
 
+Continuação: [REFINAMENTO.md](REFINAMENTO.md) registra a auditoria posterior,
+as correções implementadas e a revisão reproduzível do acervo V15.
+
 Pedido de Henrique: fazer uma engenharia reversa densa do [PixelLab](https://www.pixellab.ai)
 e pôr no repositório uma ferramenta completa, melhor que a original, para que
 agentes que geram imagens bem (o ChatGPT, por exemplo) trabalhem com pixel art
@@ -61,10 +64,10 @@ mostra do processo:
   com `wait_for_jobs` e lê com `get_*`. O servidor não lê ficheiros locais: as
   imagens entram por base64, URL ou upload.
 
-Uma consequência que interessa ao Empire: o PixelLab resolve a grade porque o
-seu modelo desenha na grade. Um gerador geral (gpt-image, Gemini) desenha
-"estilo pixel art" — blocos de tamanho que deriva, bordas suavizadas, ruído,
-cores a mais. A distância entre os dois é o que a Forja cobre.
+Uma consequência que interessa ao Empire: o PixelLab entrega imagens nas
+dimensões nativas pedidas. Isso não revela a arquitetura interna dos modelos.
+Geradores gerais podem produzir blocos irregulares, suavização e cores a mais;
+a Forja estima uma representação discreta e aplica contratos locais.
 
 ## Como as ferramentas abertas recuperam a grade
 
@@ -97,7 +100,7 @@ cor em OKLab.
   A documentação de imagem usa a Interactions API; até 14 referências no 2.1.
   Não documenta fundo transparente; todas as imagens levam SynthID.
 
-## O que a Forja faz a mais do que o PixelLab
+## Capacidades e especialização no Empire
 
 | PixelLab | Forja |
 | --- | --- |
@@ -108,7 +111,7 @@ cor em OKLab.
 | Wang 16 gerado por modelo | Wang 16 por campo contínuo com prova de costura zero, e `TileSet` do Godot com os bits de canto, carregado no motor |
 | Exporta PNG, GIF, folhas | `.aseprite` com camadas, tags, durações, paleta e pivô; JSON do CLI do Aseprite; `SpriteFrames` do Godot |
 | MCP remoto sem acesso a ficheiros locais | MCP local por caminhos do repositório, com a prévia como imagem |
-| Sem crítica do resultado | Lint contra o contrato com correção sugerida e o prompt corretivo para a próxima geração |
+| O MCP oferece workbench com lint, inspeção, comparação e reparo | Lint dos contratos do Empire, correção sugerida e prompt corretivo |
 | Proveniência a cargo do utilizador | Proveniência gravada em cada saída, com os estados de revisão do projeto |
 
 O que a Forja **não** faz: não treina nem traz um modelo de pixel art. A

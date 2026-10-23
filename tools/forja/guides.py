@@ -53,6 +53,10 @@ def template(expect: dict, pivot_row: int | None = None, grid: bool = False) -> 
             for y in range(y0 + k, y0 + cell_h - k, 2 * k):
                 for dy in range(min(k, h - y)):
                     px[mid, y + dy] = faint
+    if expect.get("content_box"):
+        padded = Image.new("RGBA", tuple(expect["generator_size"]), (*base, 255))
+        padded.paste(img, tuple(expect["content_box"][:2]))
+        return padded
     return img
 
 

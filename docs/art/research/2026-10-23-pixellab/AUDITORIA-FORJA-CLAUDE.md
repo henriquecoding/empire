@@ -48,6 +48,15 @@ O script registra o comportamento encontrado, não define que os bugs devam
 permanecer. Após uma correção, transforme cada caso em teste do comportamento
 desejado na suíte da Forja.
 
+## Continuação implementada
+
+O [refinamento FORJA-02](../2026-10-23-forja-pixellab/REFINAMENTO.md) liga F01–F09
+a correções e testes de regressão. Esta auditoria e suas observações originais
+permanecem como fotografia do commit auditado. As sondas exploratórias podem
+agora interromper-se numa validação antecipada; a suíte `make forja` verifica
+o comportamento corrigido. Nesta sessão posterior a inspeção privada da Vercel
+funcionou e os SHAs dos deployments foram conferidos diretamente.
+
 ## 2. Prioridades
 
 P1 significa corrigir antes de usar o caminho afetado em produção ou em lotes

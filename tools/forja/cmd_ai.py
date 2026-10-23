@@ -41,22 +41,9 @@ def do_prompt(args) -> dict:
 
 
 def generate_images(backend: str, prompt: str, size: str, references: list[bytes], model: str | None,
-                    n: int = 1, transport=None, background: str = "auto") -> dict:
-    if backend == "openai":
-        from .backends import openai_images
-        if references:
-            return openai_images.edit(prompt, references, None, size, model, n=n, background=background,
-                                      transport=transport)
-        return openai_images.generate(prompt, size, model, n=n, background=background, transport=transport)
-    if backend == "gemini":
-        from .backends import gemini_images
-        w, _, h = size.partition("x")
-        aspect = "1:1" if w == h else ("3:2" if int(w) > int(h) else "2:3")
-        return gemini_images.generate(prompt, references, model, aspect, transport=transport)
-    from .backends import pixellab_api
-    w, _, h = size.partition("x")
-    return pixellab_api.generate(prompt, int(w), int(h), model or "pixflux", transport=transport,
-                                 no_background=True)
+                    n: int = 1, transport=None, background: str = "auto", on_job=None) -> dict:
+    from . import generation
+    return generation.generate(backend, prompt, size, references, model, n, transport, background, on_job)
 
 
 def _save(images: list[bytes], out: Path, stem: str) -> list[str]:
@@ -71,17 +58,34 @@ def _save(images: list[bytes], out: Path, stem: str) -> list[str]:
 
 
 def do_generate(args) -> dict:
+    from . import generation
     prompt = args.prompt or Path(args.prompt_file).read_text(encoding="utf-8")
     size = args.size
     background = "auto"
     if args.expect:
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
-        size = size or "%dx%d" % tuple(exp["size"])
+        size = size or "%dx%d" % tuple(exp.get("generator_size", exp["size"]))
         background = "transparent" if exp.get("background") == "transparent" else "opaque"
     refs = [Path(r).read_bytes() for r in args.reference or []]
-    res = generate_images(args.backend, prompt, size or "1024x1024", refs, args.model, args.n, None, background)
     out = Path(args.out)
+    receipt = out / f"{args.name}.job.json"
+    if receipt.exists():
+        raise ValueError("pedido ja registado; retome o job ou escolha outra pasta/nome")
+    state = {"status": "submitting", "backend": args.backend, "model": args.model}
+    def checkpoint(job: str) -> None:
+        state.update(status="processing", job_id=job)
+        generation.save_json(receipt, state)
+    generation.save_json(receipt, state)
+    try:
+        res = generate_images(args.backend, prompt, size or ("64x64" if args.backend == "pixellab" else "1024x1024"),
+                              refs, args.model, args.n, None, background, checkpoint)
+    except Exception as exc:
+        state.update(status="interrupted", error=str(exc))
+        generation.save_json(receipt, state)
+        raise
     paths = _save(res["images"], out, args.name)
+    state.update(status="completed", files=paths)
+    generation.save_json(receipt, state)
     meta = {"model": res["model"], "request": res.get("request"), "prompt": prompt, "files": paths,
             "references": args.reference or []}
     (out / f"{args.name}.generation.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False) + "\n",
@@ -90,34 +94,8 @@ def do_generate(args) -> dict:
 
 
 def do_auto(args, transport=None) -> dict:
-    """Ciclo fechado: prompt -> gerar -> forjar -> lint -> prompt corretivo -> ... ate passar."""
-    tags = sheetforge.parse_tags(args.tags)
-    pal = _palette(args, args.kind)
-    built = prompts.build(args.subject, args.kind, tags, args.facing, bool(args.reference), pal,
-                          "gemini" if args.backend == "gemini" else "gpt-image")
-    exp, prompt, out = built["expect"], built["prompt"], Path(args.out)
-    refs = [Path(r).read_bytes() for r in args.reference or []]
-    history = []
-    for attempt in range(1, args.attempts + 1):
-        res = generate_images(args.backend, prompt, built["size"], refs, args.model, 1, transport,
-                              "transparent" if exp["background"] == "transparent" else "opaque")
-        [path] = _save(res["images"][:1], out / "raw", f"try{attempt}")
-        opts = pipeline.Options(kind=args.kind, palette=args.palette, bg=None if exp["background"] == "transparent"
-                                else exp["background"])
-        if exp["frames"] > 1:
-            opts.scale = float(exp["scale"])
-            r = sheetforge.forge_sheet(path, out / f"try{attempt}", opts, sheetforge.SheetOptions(
-                tags=[tuple(t) for t in exp["tags"]] if exp.get("tags") else None, layout=tuple(exp["layout"])),
-                prompt=prompt, generator=res["model"])
-            ok, feedback = r["ok"], r["prompt_feedback"]
-        else:
-            r = pipeline.forge(path, out / f"try{attempt}", opts, prompt=prompt, generator=res["model"])
-            ok, feedback = r["lint"]["ok"], r["lint"]["prompt_feedback"]
-        history.append({"attempt": attempt, "ok": ok, "image": path, "feedback": feedback})
-        if ok:
-            break
-        prompt = prompts.corrective(built["prompt"], feedback)
-    return {"ok": history[-1]["ok"], "attempts": history, "best": str(out / f"try{len(history)}")}
+    from . import auto
+    return auto.run(args, _palette(args, args.kind), transport)
 
 
 def do_inpaint(args) -> dict:
@@ -177,6 +155,8 @@ def register(sub) -> None:
     p.add_argument("--palette")
     p.add_argument("--model")
     p.add_argument("--attempts", type=int, default=3)
+    p.add_argument("--seed", type=int, help="semente PixelLab, guardada no plano")
+    p.add_argument("--dry-run", action="store_true", help="preparar plano e guias sem chamar um gerador")
     p = command(sub, "inpaint", "Mudar so uma caixa do sprite com o gpt-image; fora dela, pixels identicos", do_inpaint)
     p.add_argument("image")
     p.add_argument("--box", type=box, required=True)

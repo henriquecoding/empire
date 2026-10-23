@@ -47,6 +47,6 @@ def generate(prompt: str, references: list[bytes] | None = None, model: str | No
     data = http.send(req, transport, "gemini").json()
     images = http.find_images(data)
     if not images:
-        raise http.ApiError("gemini", 200, "a resposta nao trouxe imagem: " + str(data)[:300])
+        raise http.ApiError("gemini", 200, "a resposta nao trouxe imagem")
     return {"images": images, "model": f"gemini/{model}", "request": {"api": api, "aspect": aspect, "size": size,
                                                                       "references": len(refs)}}

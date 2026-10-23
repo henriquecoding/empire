@@ -27,6 +27,7 @@ def _png(image: Image.Image) -> bytes:
 def prepare(native: Image.Image, box: tuple[int, int, int, int], key: str | None = None,
             target: str = "gpt-image") -> tuple[bytes, bytes, int, str]:
     """(imagem, mascara, k, tamanho) prontos para a edicao."""
+    _validate_box(native, box)
     k = prompts.pick_scale(native.width, native.height, target)
     big = upscale(native, k)
     if key:
@@ -40,8 +41,9 @@ def prepare(native: Image.Image, box: tuple[int, int, int, int], key: str | None
 
 def merge(native: Image.Image, result: Image.Image, k: int, box: tuple[int, int, int, int],
           palette: Palette | None = None, key: str | None = None) -> tuple[Image.Image, dict]:
+    _validate_box(native, box)
     if result.size != (native.width * k, native.height * k):
-        result = result.resize((native.width * k, native.height * k), Image.Resampling.NEAREST)
+        raise ValueError("edicao devolvida fora da tela pedida; nao redimensionar")
     g = gridmod.known(result.size, k)
     fresh = resample.resample(result, g, "dominant").image
     fresh, _ = matte.remove(fresh, key) if key else (fresh, None)
@@ -56,6 +58,11 @@ def merge(native: Image.Image, result: Image.Image, k: int, box: tuple[int, int,
                  "outside_identical": _outside_equal(native, out, box)}
 
 
+def _validate_box(native: Image.Image, box: tuple[int, int, int, int]) -> None:
+    if not (0 <= box[0] < box[2] <= native.width and 0 <= box[1] < box[3] <= native.height):
+        raise ValueError("mascara deve ser uma caixa nao vazia dentro da tela")
+
+
 def _outside_equal(a: Image.Image, b: Image.Image, box: tuple[int, int, int, int]) -> bool:
     x = a.convert("RGBA").copy()
     y = b.convert("RGBA").copy()
@@ -68,10 +75,10 @@ def run(native: Image.Image, box: tuple[int, int, int, int], change: str, palett
         references: list[bytes] | None = None, transport=None, model: str | None = None) -> tuple[Image.Image, dict]:
     """Com o gpt-image: pede a edicao e devolve o sprite com so a caixa mudada."""
     from .backends import openai_images
-    key = "#0000FF"
+    key = None
     image, mask, k, size = prepare(native, box, key)
     answer = openai_images.edit(prompts.edit_prompt(change), [image] + (references or []), mask, size,
-                                model=model, transport=transport)
+                                model=model, transport=transport, background="transparent")
     if not answer["images"]:
         raise RuntimeError("o gerador nao devolveu imagem")
     with Image.open(io.BytesIO(answer["images"][0])) as im:

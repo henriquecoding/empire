@@ -1,0 +1,2269 @@
+{
+ "scope": "existing_V15_motion_diagnostics_only",
+ "generation_executed": false,
+ "artistic_approval": false,
+ "assets": [
+  {
+   "asset": "escudeiro",
+   "source": "art/source/royals_v15/escudeiro.aseprite",
+   "sha256": "83aa7a19864504646ea9f5f7e871f742b05b3703baa0ad809544a501f4bcad6e",
+   "canvas": [
+    64,
+    64
+   ],
+   "frame_count": 100,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.721084,
+       0.72133,
+       0.649794
+      ],
+      "loop_change_share": 0.87794,
+      "flicker_candidates": 469
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.557937,
+       0.583432,
+       0.800345,
+       0.8,
+       0.76054,
+       0.727431,
+       0.825667
+      ],
+      "loop_change_share": 0.855816,
+      "flicker_candidates": 1724
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.919811,
+       0.863164,
+       0.652917
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 156
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.781642,
+       0.863253,
+       0.785024,
+       0.888099,
+       0.863039,
+       0.764151,
+       0.749477
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 584
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.749477,
+       0.764151,
+       0.863039,
+       0.888099,
+       0.785024,
+       0.863253,
+       0.781642
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 584
+     },
+     {
+      "name": "block_right",
+      "from": 32,
+      "to": 47,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.721526,
+       0.858226,
+       0.870533,
+       0.809388,
+       0.617528,
+       0.865471,
+       0.857224,
+       0.905164,
+       0.936927,
+       0.871324,
+       0.674832,
+       0.766129,
+       0.633669,
+       0.670232,
+       0.68873
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1658
+     },
+     {
+      "name": "block_hold_right",
+      "from": 48,
+      "to": 49,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 2,
+      "distinct_shapes": 2,
+      "adjacent_change_share": [
+       0.857224
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 0
+     },
+     {
+      "name": "idle_left",
+      "from": 50,
+      "to": 53,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.721084,
+       0.72133,
+       0.649794
+      ],
+      "loop_change_share": 0.87794,
+      "flicker_candidates": 469
+     },
+     {
+      "name": "walk_left",
+      "from": 54,
+      "to": 61,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.557937,
+       0.583432,
+       0.800345,
+       0.8,
+       0.76054,
+       0.727431,
+       0.825667
+      ],
+      "loop_change_share": 0.855816,
+      "flicker_candidates": 1724
+     },
+     {
+      "name": "hit_left",
+      "from": 62,
+      "to": 65,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.919811,
+       0.863164,
+       0.652917
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 156
+     },
+     {
+      "name": "die_left",
+      "from": 66,
+      "to": 73,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.781642,
+       0.863253,
+       0.785024,
+       0.888099,
+       0.863039,
+       0.764151,
+       0.749477
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 584
+     },
+     {
+      "name": "rise_left",
+      "from": 74,
+      "to": 81,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.749477,
+       0.764151,
+       0.863039,
+       0.888099,
+       0.785024,
+       0.863253,
+       0.781642
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 584
+     },
+     {
+      "name": "block_left",
+      "from": 82,
+      "to": 97,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.721526,
+       0.858226,
+       0.870533,
+       0.809388,
+       0.617528,
+       0.865471,
+       0.857224,
+       0.905164,
+       0.936927,
+       0.871324,
+       0.674832,
+       0.766129,
+       0.633669,
+       0.670232,
+       0.68873
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1658
+     },
+     {
+      "name": "block_hold_left",
+      "from": 98,
+      "to": 99,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 2,
+      "distinct_shapes": 2,
+      "adjacent_change_share": [
+       0.857224
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 0
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "nia",
+   "source": "art/source/royals_v15/nia.aseprite",
+   "sha256": "63b6a68e3b740fecf97a18f5a1671ac4d7b8333d575615a18fa53d4757ea0e1b",
+   "canvas": [
+    64,
+    64
+   ],
+   "frame_count": 96,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.882963,
+       0.946771,
+       0.94097
+      ],
+      "loop_change_share": 0.980947,
+      "flicker_candidates": 139
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.921481,
+       0.912471,
+       0.772689,
+       0.966847,
+       0.930348,
+       0.91568,
+       0.754967
+      ],
+      "loop_change_share": 0.969987,
+      "flicker_candidates": 406
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.954488,
+       0.92038,
+       0.933283
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 79
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.940684,
+       0.958119,
+       0.933506,
+       0.911636,
+       0.931483,
+       0.843511,
+       0.822394
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 344
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.822394,
+       0.843511,
+       0.931483,
+       0.911636,
+       0.933506,
+       0.958119,
+       0.940684
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 344
+     },
+     {
+      "name": "attack_right",
+      "from": 32,
+      "to": 47,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.663681,
+       0.866118,
+       0.871637,
+       0.910392,
+       0.943146,
+       0.979278,
+       0.881988,
+       0.975472,
+       0.866901,
+       0.959057,
+       0.959799,
+       0.941333,
+       0.961949,
+       0.896426,
+       0.7952
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 817
+     },
+     {
+      "name": "idle_left",
+      "from": 48,
+      "to": 51,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.882963,
+       0.946771,
+       0.94097
+      ],
+      "loop_change_share": 0.980947,
+      "flicker_candidates": 139
+     },
+     {
+      "name": "walk_left",
+      "from": 52,
+      "to": 59,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.921481,
+       0.912471,
+       0.772689,
+       0.966847,
+       0.930348,
+       0.91568,
+       0.754967
+      ],
+      "loop_change_share": 0.969987,
+      "flicker_candidates": 406
+     },
+     {
+      "name": "hit_left",
+      "from": 60,
+      "to": 63,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.954488,
+       0.92038,
+       0.933283
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 79
+     },
+     {
+      "name": "die_left",
+      "from": 64,
+      "to": 71,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.940684,
+       0.958119,
+       0.933506,
+       0.911636,
+       0.931483,
+       0.843511,
+       0.822394
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 344
+     },
+     {
+      "name": "rise_left",
+      "from": 72,
+      "to": 79,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.822394,
+       0.843511,
+       0.931483,
+       0.911636,
+       0.933506,
+       0.958119,
+       0.940684
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 344
+     },
+     {
+      "name": "attack_left",
+      "from": 80,
+      "to": 95,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.663681,
+       0.866118,
+       0.871637,
+       0.910392,
+       0.943146,
+       0.979278,
+       0.881988,
+       0.975472,
+       0.866901,
+       0.959057,
+       0.959799,
+       0.941333,
+       0.961949,
+       0.896426,
+       0.7952
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 817
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "rei",
+   "source": "art/source/royals_v15/rei.aseprite",
+   "sha256": "504d59866c7cc25e54165f8893f40937484bd6e256478a1e1fda2c38033bdc17",
+   "canvas": [
+    80,
+    80
+   ],
+   "frame_count": 96,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.796671,
+       0.564516,
+       0.578482
+      ],
+      "loop_change_share": 0.792446,
+      "flicker_candidates": 1390
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.654119,
+       0.699112,
+       0.710731,
+       0.709024,
+       0.701058,
+       0.758621,
+       0.807371
+      ],
+      "loop_change_share": 0.792696,
+      "flicker_candidates": 2569
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.892098,
+       0.809902,
+       0.769924
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 362
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.820493,
+       0.952799,
+       0.909314,
+       0.91308,
+       0.91876,
+       0.792667,
+       0.652367
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 925
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.652367,
+       0.792667,
+       0.91876,
+       0.91308,
+       0.909314,
+       0.952799,
+       0.820493
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 925
+     },
+     {
+      "name": "attack_right",
+      "from": 32,
+      "to": 47,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.664331,
+       0.710604,
+       0.772696,
+       0.844252,
+       0.887112,
+       0.817623,
+       0.886667,
+       0.842164,
+       0.790952,
+       0.821762,
+       0.836481,
+       0.867093,
+       0.740727,
+       0.781476,
+       0.619948
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 3038
+     },
+     {
+      "name": "idle_left",
+      "from": 48,
+      "to": 51,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.796671,
+       0.564516,
+       0.578482
+      ],
+      "loop_change_share": 0.792446,
+      "flicker_candidates": 1390
+     },
+     {
+      "name": "walk_left",
+      "from": 52,
+      "to": 59,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.654119,
+       0.699112,
+       0.710731,
+       0.709024,
+       0.701058,
+       0.758621,
+       0.807371
+      ],
+      "loop_change_share": 0.792696,
+      "flicker_candidates": 2569
+     },
+     {
+      "name": "hit_left",
+      "from": 60,
+      "to": 63,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.892098,
+       0.809902,
+       0.769924
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 362
+     },
+     {
+      "name": "die_left",
+      "from": 64,
+      "to": 71,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.820493,
+       0.952799,
+       0.909314,
+       0.91308,
+       0.91876,
+       0.792667,
+       0.652367
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 925
+     },
+     {
+      "name": "rise_left",
+      "from": 72,
+      "to": 79,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.652367,
+       0.792667,
+       0.91876,
+       0.91308,
+       0.909314,
+       0.952799,
+       0.820493
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 925
+     },
+     {
+      "name": "attack_left",
+      "from": 80,
+      "to": 95,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.664331,
+       0.710604,
+       0.772696,
+       0.844252,
+       0.887112,
+       0.817623,
+       0.886667,
+       0.842164,
+       0.790952,
+       0.821762,
+       0.836481,
+       0.867093,
+       0.740727,
+       0.781476,
+       0.619948
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 3038
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "arqueiro",
+   "source": "art/source/royals_v15/arqueiro.aseprite",
+   "sha256": "f9784d1e9a2f908aa46b0c523a267b479f456fb112610973e1c2572cb491ea56",
+   "canvas": [
+    80,
+    80
+   ],
+   "frame_count": 112,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.644678,
+       0.523996,
+       0.594895
+      ],
+      "loop_change_share": 0.578125,
+      "flicker_candidates": 1073
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.81961,
+       0.831573,
+       0.7,
+       0.7671,
+       0.700398,
+       0.719933,
+       0.841202
+      ],
+      "loop_change_share": 0.778491,
+      "flicker_candidates": 1578
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.956979,
+       0.883915,
+       0.743948
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 184
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.890651,
+       0.960651,
+       0.905067,
+       0.916129,
+       0.909471,
+       0.853832,
+       0.847601
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 523
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.847601,
+       0.853832,
+       0.909471,
+       0.916129,
+       0.905067,
+       0.960651,
+       0.890651
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 523
+     },
+     {
+      "name": "shoot_right",
+      "from": 32,
+      "to": 55,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 20,
+      "distinct_shapes": 20,
+      "adjacent_change_share": [
+       0.908669,
+       0.928264,
+       0.893431,
+       0.881122,
+       0.689222,
+       0.770872,
+       0.759138,
+       0.768482,
+       0.708242,
+       0.790558,
+       0.708822,
+       0.641485,
+       0.69061,
+       0.812628,
+       0.774804,
+       0.859893,
+       0.7511,
+       0.709163,
+       0.599691,
+       0.889835,
+       0.893431,
+       0.928264,
+       0.908669
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 4454
+     },
+     {
+      "name": "idle_left",
+      "from": 56,
+      "to": 59,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.644678,
+       0.523996,
+       0.594895
+      ],
+      "loop_change_share": 0.578125,
+      "flicker_candidates": 1073
+     },
+     {
+      "name": "walk_left",
+      "from": 60,
+      "to": 67,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.81961,
+       0.831573,
+       0.7,
+       0.7671,
+       0.700398,
+       0.719933,
+       0.841202
+      ],
+      "loop_change_share": 0.778491,
+      "flicker_candidates": 1578
+     },
+     {
+      "name": "hit_left",
+      "from": 68,
+      "to": 71,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.956979,
+       0.883915,
+       0.743948
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 184
+     },
+     {
+      "name": "die_left",
+      "from": 72,
+      "to": 79,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.890651,
+       0.960651,
+       0.905067,
+       0.916129,
+       0.909471,
+       0.853832,
+       0.847601
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 523
+     },
+     {
+      "name": "rise_left",
+      "from": 80,
+      "to": 87,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.847601,
+       0.853832,
+       0.909471,
+       0.916129,
+       0.905067,
+       0.960651,
+       0.890651
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 523
+     },
+     {
+      "name": "shoot_left",
+      "from": 88,
+      "to": 111,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 20,
+      "distinct_shapes": 20,
+      "adjacent_change_share": [
+       0.908669,
+       0.928264,
+       0.893431,
+       0.881122,
+       0.689222,
+       0.770872,
+       0.759138,
+       0.768482,
+       0.708242,
+       0.790558,
+       0.708822,
+       0.641485,
+       0.69061,
+       0.812628,
+       0.774804,
+       0.859893,
+       0.7511,
+       0.709163,
+       0.599691,
+       0.889835,
+       0.893431,
+       0.928264,
+       0.908669
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 4454
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "sombra",
+   "source": "art/source/royals_v15/sombra.aseprite",
+   "sha256": "9a8e637340b92d5554b5a41bad503982f9a43abeb4796c69d8467370b2856f56",
+   "canvas": [
+    80,
+    80
+   ],
+   "frame_count": 112,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.557089,
+       0.54932,
+       0.359555
+      ],
+      "loop_change_share": 0.403568,
+      "flicker_candidates": 1496
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.563005,
+       0.679853,
+       0.694145,
+       0.699084,
+       0.769618,
+       0.802217,
+       0.57105
+      ],
+      "loop_change_share": 0.608428,
+      "flicker_candidates": 2289
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.781498,
+       0.847403,
+       0.773594
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 416
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 7,
+      "distinct_shapes": 7,
+      "adjacent_change_share": [
+       0.773109,
+       0.833964,
+       0.836923,
+       0.882796,
+       0.813268,
+       0.582254,
+       0.0
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1009
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.726336,
+       0.729459,
+       0.74524,
+       0.683107,
+       0.73923,
+       0.70799,
+       0.669796
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1665
+     },
+     {
+      "name": "sit_right",
+      "from": 32,
+      "to": 39,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.737999,
+       0.745803,
+       0.729551,
+       0.79523,
+       0.792908,
+       0.670945,
+       0.751249
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1542
+     },
+     {
+      "name": "heal_right",
+      "from": 40,
+      "to": 47,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.75429,
+       0.575391,
+       0.498219,
+       0.445038,
+       0.596491,
+       0.558348,
+       0.335219
+      ],
+      "loop_change_share": 0.753325,
+      "flicker_candidates": 2318
+     },
+     {
+      "name": "stand_right",
+      "from": 48,
+      "to": 55,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.726336,
+       0.729459,
+       0.74524,
+       0.683107,
+       0.73923,
+       0.70799,
+       0.669796
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1665
+     },
+     {
+      "name": "idle_left",
+      "from": 56,
+      "to": 59,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.557089,
+       0.54932,
+       0.359555
+      ],
+      "loop_change_share": 0.403568,
+      "flicker_candidates": 1496
+     },
+     {
+      "name": "walk_left",
+      "from": 60,
+      "to": 67,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.563005,
+       0.679853,
+       0.694145,
+       0.699084,
+       0.769618,
+       0.802217,
+       0.57105
+      ],
+      "loop_change_share": 0.608428,
+      "flicker_candidates": 2289
+     },
+     {
+      "name": "hit_left",
+      "from": 68,
+      "to": 71,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.781498,
+       0.847403,
+       0.773594
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 416
+     },
+     {
+      "name": "die_left",
+      "from": 72,
+      "to": 79,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 7,
+      "distinct_shapes": 7,
+      "adjacent_change_share": [
+       0.773109,
+       0.833964,
+       0.836923,
+       0.882796,
+       0.813268,
+       0.582254,
+       0.0
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1009
+     },
+     {
+      "name": "rise_left",
+      "from": 80,
+      "to": 87,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.726336,
+       0.729459,
+       0.74524,
+       0.683107,
+       0.73923,
+       0.70799,
+       0.669796
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1665
+     },
+     {
+      "name": "sit_left",
+      "from": 88,
+      "to": 95,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.737999,
+       0.745803,
+       0.729551,
+       0.79523,
+       0.792908,
+       0.670945,
+       0.751249
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1542
+     },
+     {
+      "name": "heal_left",
+      "from": 96,
+      "to": 103,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.75429,
+       0.575391,
+       0.498219,
+       0.445038,
+       0.596491,
+       0.558348,
+       0.335219
+      ],
+      "loop_change_share": 0.753325,
+      "flicker_candidates": 2318
+     },
+     {
+      "name": "stand_left",
+      "from": 104,
+      "to": 111,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.726336,
+       0.729459,
+       0.74524,
+       0.683107,
+       0.73923,
+       0.70799,
+       0.669796
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1665
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "bardo",
+   "source": "art/source/royals_v15/bardo.aseprite",
+   "sha256": "4ac40ed067451685d22a5de5137c5abedb75acfca2eacfb9d1b702406a22dce4",
+   "canvas": [
+    64,
+    64
+   ],
+   "frame_count": 96,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.786375,
+       0.699284,
+       0.769376
+      ],
+      "loop_change_share": 0.87322,
+      "flicker_candidates": 629
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.785553,
+       0.77707,
+       0.830189,
+       0.901927,
+       0.717578,
+       0.827335,
+       0.793119
+      ],
+      "loop_change_share": 0.869491,
+      "flicker_candidates": 1038
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.940462,
+       0.886876,
+       0.721016
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 239
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.746653,
+       0.876022,
+       0.922771,
+       0.80934,
+       0.833022,
+       0.89459,
+       0.813306
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 559
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.813306,
+       0.89459,
+       0.833022,
+       0.80934,
+       0.922771,
+       0.876022,
+       0.746653
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 559
+     },
+     {
+      "name": "play_right",
+      "from": 32,
+      "to": 47,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.690817,
+       0.666047,
+       0.661717,
+       0.696033,
+       0.68144,
+       0.680241,
+       0.527567,
+       0.568646,
+       0.691421,
+       0.655586,
+       0.66975,
+       0.689083,
+       0.653137,
+       0.66126,
+       0.656799
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 6348
+     },
+     {
+      "name": "idle_left",
+      "from": 48,
+      "to": 51,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.786375,
+       0.699284,
+       0.769376
+      ],
+      "loop_change_share": 0.87322,
+      "flicker_candidates": 629
+     },
+     {
+      "name": "walk_left",
+      "from": 52,
+      "to": 59,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.785553,
+       0.77707,
+       0.830189,
+       0.901927,
+       0.717578,
+       0.827335,
+       0.793119
+      ],
+      "loop_change_share": 0.869491,
+      "flicker_candidates": 1038
+     },
+     {
+      "name": "hit_left",
+      "from": 60,
+      "to": 63,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.940462,
+       0.886876,
+       0.721016
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 239
+     },
+     {
+      "name": "die_left",
+      "from": 64,
+      "to": 71,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.746653,
+       0.876022,
+       0.922771,
+       0.80934,
+       0.833022,
+       0.89459,
+       0.813306
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 559
+     },
+     {
+      "name": "rise_left",
+      "from": 72,
+      "to": 79,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.813306,
+       0.89459,
+       0.833022,
+       0.80934,
+       0.922771,
+       0.876022,
+       0.746653
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 559
+     },
+     {
+      "name": "play_left",
+      "from": 80,
+      "to": 95,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.690817,
+       0.666047,
+       0.661717,
+       0.696033,
+       0.68144,
+       0.680241,
+       0.527567,
+       0.568646,
+       0.691421,
+       0.655586,
+       0.66975,
+       0.689083,
+       0.653137,
+       0.66126,
+       0.656799
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 6348
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "intendente",
+   "source": "art/source/royals_v15/intendente.aseprite",
+   "sha256": "7f4c52e6ecd32dd0580028dbe9ea8605366baf85b218750bdb51b70d38e3702e",
+   "canvas": [
+    64,
+    64
+   ],
+   "frame_count": 114,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.864895,
+       0.618171,
+       0.642462
+      ],
+      "loop_change_share": 0.86456,
+      "flicker_candidates": 1058
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.821084,
+       0.787622,
+       0.804416,
+       0.791216,
+       0.787382,
+       0.870603,
+       0.910934
+      ],
+      "loop_change_share": 0.857229,
+      "flicker_candidates": 1547
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.940535,
+       0.865089,
+       0.877924
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 158
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.893265,
+       0.967742,
+       0.950952,
+       0.951963,
+       0.961345,
+       0.859386,
+       0.826335
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 354
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.826335,
+       0.859386,
+       0.961345,
+       0.951963,
+       0.950952,
+       0.967742,
+       0.893265
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 354
+     },
+     {
+      "name": "deliver_right",
+      "from": 32,
+      "to": 51,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 20,
+      "distinct_shapes": 20,
+      "adjacent_change_share": [
+       0.764013,
+       0.672345,
+       0.696113,
+       0.699335,
+       0.774083,
+       0.772855,
+       0.606026,
+       0.919198,
+       0.888692,
+       0.924285,
+       0.939427,
+       0.896407,
+       0.786143,
+       0.69479,
+       0.725479,
+       0.928503,
+       0.775674,
+       0.706156,
+       0.704209
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 3030
+     },
+     {
+      "name": "receive_right",
+      "from": 52,
+      "to": 56,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 5,
+      "distinct_shapes": 5,
+      "adjacent_change_share": [
+       0.764013,
+       0.672345,
+       0.696113,
+       0.699335
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 852
+     },
+     {
+      "name": "idle_left",
+      "from": 57,
+      "to": 60,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.864895,
+       0.618171,
+       0.642462
+      ],
+      "loop_change_share": 0.86456,
+      "flicker_candidates": 1058
+     },
+     {
+      "name": "walk_left",
+      "from": 61,
+      "to": 68,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.821084,
+       0.787622,
+       0.804416,
+       0.791216,
+       0.787382,
+       0.870603,
+       0.910934
+      ],
+      "loop_change_share": 0.857229,
+      "flicker_candidates": 1547
+     },
+     {
+      "name": "hit_left",
+      "from": 69,
+      "to": 72,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.940535,
+       0.865089,
+       0.877924
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 158
+     },
+     {
+      "name": "die_left",
+      "from": 73,
+      "to": 80,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.893265,
+       0.967742,
+       0.950952,
+       0.951963,
+       0.961345,
+       0.859386,
+       0.826335
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 354
+     },
+     {
+      "name": "rise_left",
+      "from": 81,
+      "to": 88,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.826335,
+       0.859386,
+       0.961345,
+       0.951963,
+       0.950952,
+       0.967742,
+       0.893265
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 354
+     },
+     {
+      "name": "deliver_left",
+      "from": 89,
+      "to": 108,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 20,
+      "distinct_shapes": 20,
+      "adjacent_change_share": [
+       0.764013,
+       0.672345,
+       0.696113,
+       0.699335,
+       0.774083,
+       0.772855,
+       0.606026,
+       0.919198,
+       0.888692,
+       0.924285,
+       0.939427,
+       0.896407,
+       0.786143,
+       0.69479,
+       0.725479,
+       0.928503,
+       0.775674,
+       0.706156,
+       0.704209
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 3030
+     },
+     {
+      "name": "receive_left",
+      "from": 109,
+      "to": 113,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 5,
+      "distinct_shapes": 5,
+      "adjacent_change_share": [
+       0.764013,
+       0.672345,
+       0.696113,
+       0.699335
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 852
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  },
+  {
+   "asset": "dancarina",
+   "source": "art/source/royals_v15/dancarina.aseprite",
+   "sha256": "d9c37c08cefcb50bf26896c70c7c29d1532e87b03d48cb249958db54973ea26b",
+   "canvas": [
+    64,
+    64
+   ],
+   "frame_count": 96,
+   "source_unchanged": true,
+   "review": {
+    "ready": true,
+    "artistic_approval": false,
+    "policy": {
+     "loop_jump_ratio": 3.0,
+     "loop_jump_min_share": 0.15
+    },
+    "by_tag": [
+     {
+      "name": "idle_right",
+      "from": 0,
+      "to": 3,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.772727,
+       0.708249,
+       0.57764
+      ],
+      "loop_change_share": 0.559499,
+      "flicker_candidates": 203
+     },
+     {
+      "name": "walk_right",
+      "from": 4,
+      "to": 11,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.818008,
+       0.818725,
+       0.900533,
+       0.95461,
+       0.860915,
+       0.868151,
+       0.917544
+      ],
+      "loop_change_share": 0.914754,
+      "flicker_candidates": 250
+     },
+     {
+      "name": "hit_right",
+      "from": 12,
+      "to": 15,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.852792,
+       0.921418,
+       0.868966
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 61
+     },
+     {
+      "name": "die_right",
+      "from": 16,
+      "to": 23,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.837633,
+       0.951286,
+       0.917508,
+       0.862876,
+       0.870968,
+       0.890625,
+       0.847079
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 143
+     },
+     {
+      "name": "rise_right",
+      "from": 24,
+      "to": 31,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.847079,
+       0.890625,
+       0.870968,
+       0.862876,
+       0.917508,
+       0.951286,
+       0.837633
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 143
+     },
+     {
+      "name": "dance_right",
+      "from": 32,
+      "to": 47,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.639212,
+       0.716129,
+       0.793486,
+       0.766816,
+       0.703647,
+       0.834034,
+       0.857833,
+       0.916894,
+       0.795856,
+       0.920878,
+       0.767493,
+       0.800153,
+       0.86859,
+       0.835422,
+       0.746748
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1800
+     },
+     {
+      "name": "idle_left",
+      "from": 48,
+      "to": 51,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.772727,
+       0.708249,
+       0.57764
+      ],
+      "loop_change_share": 0.559499,
+      "flicker_candidates": 203
+     },
+     {
+      "name": "walk_left",
+      "from": 52,
+      "to": 59,
+      "direction": "forward",
+      "loop": true,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.818008,
+       0.818725,
+       0.900533,
+       0.95461,
+       0.860915,
+       0.868151,
+       0.917544
+      ],
+      "loop_change_share": 0.914754,
+      "flicker_candidates": 250
+     },
+     {
+      "name": "hit_left",
+      "from": 60,
+      "to": 63,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 4,
+      "distinct_shapes": 4,
+      "adjacent_change_share": [
+       0.852792,
+       0.921418,
+       0.868966
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 61
+     },
+     {
+      "name": "die_left",
+      "from": 64,
+      "to": 71,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.837633,
+       0.951286,
+       0.917508,
+       0.862876,
+       0.870968,
+       0.890625,
+       0.847079
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 143
+     },
+     {
+      "name": "rise_left",
+      "from": 72,
+      "to": 79,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 8,
+      "distinct_shapes": 8,
+      "adjacent_change_share": [
+       0.847079,
+       0.890625,
+       0.870968,
+       0.862876,
+       0.917508,
+       0.951286,
+       0.837633
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 143
+     },
+     {
+      "name": "dance_left",
+      "from": 80,
+      "to": 95,
+      "direction": "forward",
+      "loop": false,
+      "distinct_rasters": 16,
+      "distinct_shapes": 16,
+      "adjacent_change_share": [
+       0.639212,
+       0.716129,
+       0.793486,
+       0.766816,
+       0.703647,
+       0.834034,
+       0.857833,
+       0.916894,
+       0.795856,
+       0.920878,
+       0.767493,
+       0.800153,
+       0.86859,
+       0.835422,
+       0.746748
+      ],
+      "loop_change_share": null,
+      "flicker_candidates": 1800
+     }
+    ],
+    "reference": null,
+    "findings": [],
+    "prompt_feedback": ""
+   }
+  }
+ ]
+}

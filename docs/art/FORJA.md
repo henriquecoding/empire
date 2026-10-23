@@ -9,6 +9,8 @@ ao gerador o que corrigir e exporta para Aseprite e Godot. A pesquisa que a
 fundamenta está em
 [research/2026-10-23-forja-pixellab](research/2026-10-23-forja-pixellab/README.md);
 a decisão, na [ADR 0088](../adr/0088-a-forja-de-pixel-art.md).
+O [refinamento FORJA-02](research/2026-10-23-forja-pixellab/REFINAMENTO.md)
+registra as correções da auditoria, a revisão V15 e os limites de validação.
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -32,8 +34,9 @@ A Forja inverte o processo:
 1. O pedido diz ao gerador a **grade lógica final** (por exemplo, 64×64 pixels
    lógicos desenhados como blocos de 16×16) e o tamanho de imagem que a torna
    exata. O gerador desenha *para* a resolução do jogo.
-2. A grade é recuperada — não reduzida. Cada pixel lógico volta a ser um
-   pixel, com a cor que o gerador quis.
+2. A grade é estimada e discretizada. Cores chapadas podem ser recuperadas
+   exatamente; traços menores que a célula perdem informação. No PixelLab,
+   o pedido já usa dimensões nativas e escala 1.
 3. Se a figura não cabe na tela do contrato, a Forja **recusa** com o erro
    `clipped` e devolve ao gerador a altura certa. Não encolhe a figura.
 
@@ -118,7 +121,9 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   `expect.json` (ou `--layout CxL`) cada célula pedida é recortada com a sua
   própria máscara, e figuras que se tocam continuam separadas; sem grelha, a
   separação automática precisa de espaço vazio entre figuras. Escala e paleta
-  comuns, apoio no pivô, deriva do pivô medida, cintilação A→B→A contada.
+   comuns. Com layout e escala conhecidos, conserva a origem de cada célula:
+   saltos e recuos mantêm o deslocamento. `--anchor feet` pede estabilização
+   explícita do apoio; sem geometria conhecida, o alinhamento usa os pés.
   `--deflicker 0.05` prende cores que mudam quase nada; `--lock x0,y0,x1,y1`
   cola o rosto do quadro de referência em todos os quadros (o "fixed head" do
   PixelLab); `--mirror` exporta a esquerda como espelho, contado como espelho.
@@ -151,6 +156,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `forge` | Uma figura gerada → sprite do contrato, com lint e relatório |
 | `sheet` | Prancha gerada → quadros alinhados e animação exportada |
 | `lint` | Conferir um PNG contra um contrato |
+| `review` | Revisão de movimento por tag e comparação de regiões, sem alterar pixels |
+| `animate-native` / `job` | Animação PixelLab a partir de quadro nativo / retomar o mesmo job |
 | `clean` | Alfa binário, pixels soltos, furos, ruído de cor, cluster mínimo, pixel perfect |
 | `quantize` | Paleta (OKLab) ou N cores, dither ordenado opcional |
 | `outline` | Contorno exterior, interior ou seletivo; ou tirá-lo |
@@ -165,6 +172,67 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 
 Todos os comandos imprimem JSON. O código de saída é 0 quando o resultado
 cumpre, 1 quando há achados de erro e 2 quando o pedido é inválido.
+
+## Fluxo refinado: planejar, preservar, rever
+
+Preparar um pedido sem credencial ou gasto:
+
+```bash
+python3 -m tools.forja auto "comic squire with wooden shield" \
+  --backend pixellab --kind royal_64 --dry-run -o build/forja/plano
+```
+
+Saem `plan.json`, prompt, `expect.json` e guias. O plano registra modelo,
+dimensões, hashes das referências e máximo de submissões. Para executar,
+usar outra pasta e retirar `--dry-run`; `--attempts 2` limita a duas tentativas.
+Cada saída bruta fica guardada. `run.json` registra a melhor tentativa por
+erros e avisos, sem conceder aprovação artística. Não reutilizar pastas com
+recibos anteriores. A referência PixelLab precisa da tela nativa pedida;
+o conector não a reduz nem ignora referências extras.
+
+No Gemini, `auto` usa 2K quadrado com a grade inteira dentro de margens
+registradas. As guias são anexadas; a área de conteúdo é recortada depois de
+validar o raster recebido. Um modelo sem suporte a esse plano é recusado.
+Pedidos `prompt --target gemini` também guardam o recorte no `expect.json`;
+passar esse arquivo a `forge` ou `sheet` conserva a geometria.
+
+Para animar um quadro aprovado sem o limpar ou reancorar:
+
+```bash
+python3 -m tools.forja animate-native build/forja/referencia.png \
+  --action "walk in place, side view, preserve face and shield" \
+  --frames 8 --kind royal_64 --tag walk --dry-run -o build/forja/anim-plano
+```
+
+Retirar `--dry-run` e usar uma pasta nova para executar com `PIXELLAB_API_KEY`.
+`--last-frame` fornece uma pose final opcional na mesma tela. O recibo
+`native-job.json` é salvo antes do polling. O comando preserva os rasters e
+recusa primeiro quadro alterado, quantidade ou tamanho incorretos. `seed=0`
+significa aleatório nesse endpoint; uma seed positiva é registrada no plano.
+
+```bash
+python3 -m tools.forja job --job-id ID_GUARDADO -o build/forja/retomado
+python3 -m tools.forja review build/forja/retomado/resumed_*.png \
+  --tags walk:8 --kind royal_64 --reference build/forja/referencia.png \
+  -o build/forja/revisao
+```
+
+`job` apenas consulta e baixa o resultado do trabalho existente. `review`
+produz JSON e HTML com leitor, onion skin, tira 1×, medidas e achados.
+`--protected-box x0,y0,x1,y1` exige pixels idênticos numa região explicitamente
+imóvel; não usar para uma cabeça que precisa mover-se. Para diagnóstico,
+preferir essa comparação à opção destrutiva `--lock`.
+
+`ok` indica validade estrutural; `ready` também exige ausência de avisos.
+Nenhum deles é `artistic_approval`. Uma caminhada toda estática exige revisão;
+pausas e holds repetidos podem ser intencionais. Pranchas com lacunas, extras
+ou clipping não recebem exportações para o jogo; os índices de origem e o
+relatório permitem corrigir a entrada sem deslocar tags.
+
+No pipeline `forge`/`sheet`, pixels isolados e furos são preservados por padrão.
+Usar `--remove-orphans` e `--fill-holes` apenas quando a alteração for desejada;
+`--noise 0` desliga o alisamento cromático. `review` nunca aplica esses passos.
+`--same-height` foi retirado por deformar o personagem.
 
 ## O que a Forja faz por dentro
 

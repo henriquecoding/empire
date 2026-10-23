@@ -16,6 +16,7 @@ import base64
 import contextlib
 import io
 import json
+import math
 import os
 import sys
 from pathlib import Path
@@ -62,9 +63,9 @@ def _schema(parser: argparse.ArgumentParser) -> dict:
         if action.default not in (None, False, argparse.SUPPRESS):
             prop["default"] = action.default
         props[name] = prop
-        if not action.option_strings or action.required:
+        if action.required or (not action.option_strings and action.nargs not in ("?", "*")):
             required.append(name)
-    return {"type": "object", "properties": props, "required": required}
+    return {"type": "object", "properties": props, "required": required, "additionalProperties": False}
 
 
 def tools() -> list[dict]:
@@ -75,24 +76,36 @@ def tools() -> list[dict]:
 
 def _argv(name: str, arguments: dict) -> list[str]:
     parser, _ = cli.REGISTRY[name]
-    argv = [name]
+    schema = _schema(parser)
+    if not isinstance(arguments, dict) or set(arguments) - set(schema["properties"]):
+        raise ValueError("argumentos desconhecidos ou invalidos")
+    types = {"string": (str,), "boolean": (bool,), "integer": (int,), "number": (int, float), "array": (list,)}
+    for key, value in arguments.items():
+        kind = schema["properties"][key]["type"]
+        if type(value) not in types[kind] or (kind == "array" and any(type(v) is not str for v in value)):
+            raise ValueError(f"{key}: esperado {kind}")
+        if kind == "number" and not math.isfinite(value):
+            raise ValueError(f"{key}: esperado numero finito")
+    argv, positional = [name], []
     for action in parser._actions:
         if action.dest not in arguments or arguments[action.dest] is None:
             continue
         value = arguments[action.dest]
         if not action.option_strings:
-            argv += [str(v) for v in value] if isinstance(value, list) else [str(value)]
+            positional += [str(v) for v in value] if isinstance(value, list) else [str(value)]
         elif isinstance(action, argparse._StoreTrueAction):
             argv += [action.option_strings[-1]] if value else []
         elif isinstance(value, list):
             argv += [action.option_strings[-1]] + [str(v) for v in value]
         else:
             argv += [action.option_strings[-1], str(value)]
-    return argv
+    return argv + (["--"] + positional if positional else [])
 
 
 def _preview(result: dict) -> dict | None:
     files = result.get("files") or {}
+    if isinstance(files, list):
+        files = {"preview": files[0]} if files else {}
     for key in ("preview", "sheet", "demo", "layout"):
         path = files.get(key)
         if path and str(path).endswith(".png") and Path(path).exists():
@@ -128,15 +141,21 @@ def call(name: str, arguments: dict) -> dict:
     image = _preview(result)
     if image:
         content.append(image)
-    return {"content": content, "isError": False}
+    return {"content": content, "structuredContent": result, "isError": result.get("ok") is False}
 
 
 def handle(message: dict) -> dict | None:
+    if not isinstance(message, dict) or message.get("jsonrpc") != "2.0" or not isinstance(message.get("method"), str):
+        return {"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "pedido invalido"}}
     method, mid = message.get("method"), message.get("id")
     if mid is None:
         return None
+    params = message.get("params", {})
+    if not isinstance(params, dict) or (method == "tools/call" and (
+            not isinstance(params.get("name"), str) or not isinstance(params.get("arguments", {}), dict))):
+        return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32602, "message": "parametros invalidos"}}
     if method == "initialize":
-        asked = (message.get("params") or {}).get("protocolVersion")
+        asked = params.get("protocolVersion")
         result = {"protocolVersion": asked if asked in VERSIONS else VERSIONS[0],
                   "capabilities": {"tools": {"listChanged": False}},
                   "serverInfo": {"name": "forja", "version": __version__}, "instructions": INSTRUCTIONS}
@@ -145,7 +164,6 @@ def handle(message: dict) -> dict | None:
     elif method == "tools/list":
         result = {"tools": tools()}
     elif method == "tools/call":
-        params = message.get("params") or {}
         result = call(params.get("name", ""), params.get("arguments") or {})
     else:
         return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32601, "message": f"metodo desconhecido: {method}"}}

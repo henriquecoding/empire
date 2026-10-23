@@ -17,10 +17,14 @@ def _options(args) -> pipeline.Options:
                             cells=args.cells, bg=args.bg, tolerance=args.tolerance, method=args.method,
                             outline=getattr(args, "outline_mode", "auto"), dither=args.dither,
                             noise=args.noise, fit=not getattr(args, "no_fit", False),
+                            remove_orphans=args.remove_orphans, fill_holes=args.fill_holes,
                             pivot=getattr(args, "pivot", None), canvas=getattr(args, "canvas", None))
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
+        opts.source_box = tuple(exp["content_box"]) if exp.get("content_box") else None
+        requested = exp.get("generator_size", exp.get("size"))
+        opts.request_size = tuple(requested) if requested else None
         if exp.get("layout") == [1, 1] and not (opts.scale or opts.cells):
             opts.scale = float(exp["scale"])
         if exp.get("background", "transparent") != "transparent" and not opts.bg:
@@ -39,6 +43,8 @@ def common(p) -> None:
     p.add_argument("--method", default="dominant", choices=resample.METHODS, help="voto de cada celula")
     p.add_argument("--dither", default="none", choices=quantize.DITHERS, help="so em contratos que o permitem")
     p.add_argument("--noise", type=float, default=0.08, help="ruido de cor a alisar (OKLab)")
+    p.add_argument("--remove-orphans", action="store_true", help="remover pixels opacos isolados (altera o desenho)")
+    p.add_argument("--fill-holes", action="store_true", help="preencher furos transparentes de 1 pixel")
     p.add_argument("--expect", help="o expect.json do `forja prompt`")
     p.add_argument("--generator", help="quem gerou a imagem (proveniencia)")
     p.add_argument("--prompt-file", help="o prompt usado (proveniencia)")

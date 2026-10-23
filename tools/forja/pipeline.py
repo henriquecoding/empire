@@ -30,6 +30,10 @@ class Options:
     outline: str = "auto"
     dither: str = "none"
     noise: float = 0.08
+    remove_orphans: bool = False
+    fill_holes: bool = False
+    source_box: tuple[int, int, int, int] | None = None
+    request_size: tuple[int, int] | None = None
     fit: bool = True
     pivot: tuple[int, int] | None = None
     canvas: tuple[int, int] | None = None
@@ -39,6 +43,18 @@ class Options:
 def contract_for(opts: Options) -> contracts.Contract:
     return contracts.get(opts.kind, canvas=list(opts.canvas) if opts.canvas else None,
                          pivot=list(opts.pivot) if opts.pivot else None)
+
+
+def input_image(source: str | Path, opts: Options) -> Image.Image:
+    image = open_rgba(source)
+    if opts.request_size and image.size != opts.request_size:
+        raise ValueError("resposta fora da tela pedida; recuse ou replaneie, nao redimensione")
+    if opts.source_box:
+        x0, y0, x1, y1 = opts.source_box
+        if not (0 <= x0 < x1 <= image.width and 0 <= y0 < y1 <= image.height):
+            raise ValueError("area de conteudo fora da tela")
+        image = image.crop(opts.source_box)
+    return image
 
 
 def palette_for(opts: Options, contract: contracts.Contract) -> palmod.Palette | None:
@@ -99,7 +115,7 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
            pal: palmod.Palette | None) -> tuple[Image.Image, dict]:
     """Limpeza, paleta, contorno, cluster e tela — o que torna o recorte um asset."""
     info: dict = {}
-    img, info["despeckle"] = cleanup.despeckle(native, opts.noise)
+    img, info["despeckle"] = cleanup.despeckle(native, opts.noise, opts.fill_holes, opts.remove_orphans)
     if contract.outline_px:
         img, info["outline_normalized"] = outline.normalize(img, contract.outline_color)
     if pal is not None:
@@ -134,7 +150,7 @@ def _to_final(box: list[int], info: dict, contract: contracts.Contract) -> list[
     k = info.get("cluster_upscale", 1)
     fit = info.get("fit")
     dx, dy = ((fit["pivot"][0] - fit["anchor"][0], fit["pivot"][1] - fit["anchor"][1]) if fit else (0, 0))
-    pad = 1 if info.get("outline_added") else 0
+    pad = k if info.get("outline_added") else 0
     return [box[0] * k + pad + dx, box[1] * k + pad + dy, box[2] * k + pad + dx, box[3] * k + pad + dy]
 
 
@@ -160,7 +176,7 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     name = name or source.stem
-    image = open_rgba(source)
+    image = input_image(source, opts)
     contract = contract_for(opts)
     pal = palette_for(opts, contract)
     g = gridmod.detect(image, scale=opts.scale, cells=opts.cells)

@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 import subprocess
 import unittest
@@ -79,7 +80,8 @@ class GodotTest(unittest.TestCase):
         frames = [framed(i) for i in range(3)]
         strip, rects = anim.strip(frames)
         strip.save(d / "hero.png")
-        godot.write(d / "hero.tres", godot.sprite_frames("res://hero.png", rects, [100] * 3, [("idle", 0, 2, "forward")]))
+        godot.write(d / "hero.tres", godot.sprite_frames("res://hero.png", rects, [100, 200, 300],
+                                                       [("idle", 0, 2, "forward"), ("reverse", 0, 2, "reverse")]))
         (d / "check.gd").write_text(godot.CHECK_SCRIPT)
         (d / "project.godot").write_text('config_version=5\n\n[application]\nconfig/name="forja"\n')
         subprocess.run([engine, "--headless", "--path", str(d), "--import"], capture_output=True, timeout=180)
@@ -87,3 +89,6 @@ class GodotTest(unittest.TestCase):
             out = subprocess.run([engine, "--headless", "--path", str(d), "-s", "check.gd", "--", res],
                                  capture_output=True, text=True, timeout=120)
             self.assertIn("FORJA_OK", out.stdout, out.stdout + out.stderr)
+            if res.endswith("hero.tres"):
+                line = next(s for s in out.stdout.splitlines() if s.startswith("FORJA_ORDER reverse "))
+                self.assertEqual(json.loads(line.removeprefix("FORJA_ORDER reverse ")), [[128, 3], [64, 2], [0, 1]])
