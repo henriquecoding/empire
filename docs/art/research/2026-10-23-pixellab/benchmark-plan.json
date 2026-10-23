@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "status": "planned_not_executed",
+  "purpose": "Compare accepted quality, editing time and total cost on authorized Empire references",
+  "sizes": [
+    64,
+    80
+  ],
+  "seeds": [
+    1103,
+    2207,
+    3301,
+    4409
+  ],
+  "configurations": [
+    {
+      "id": "base_text",
+      "status": "not_implemented",
+      "description": "Independent licensed baseline, text only"
+    },
+    {
+      "id": "base_reference_pose",
+      "status": "not_implemented",
+      "description": "Same baseline with authorized reference and pose"
+    },
+    {
+      "id": "adapted_reference_pose",
+      "status": "not_implemented",
+      "description": "Style-adapted baseline with the same references and pose"
+    }
+  ],
+  "static": {
+    "briefs": [
+      {
+        "id": "king_neutral",
+        "description": "Rei, expressão neutra e coroa",
+        "reference_revision": null
+      },
+      {
+        "id": "king_comic",
+        "description": "Rei, expressão cômica legível",
+        "reference_revision": null
+      },
+      {
+        "id": "squire_shield",
+        "description": "Escudeiro, escudo sem ocultar toda a silhueta",
+        "reference_revision": null
+      },
+      {
+        "id": "squire_defense",
+        "description": "Escudeiro, pose de defesa com apoio",
+        "reference_revision": null
+      },
+      {
+        "id": "archer_bow",
+        "description": "Arqueiro, arco e mão de empunhadura",
+        "reference_revision": null
+      },
+      {
+        "id": "archer_draw",
+        "description": "Arqueiro, corda puxada e segunda mão",
+        "reference_revision": null
+      },
+      {
+        "id": "nia_neutral",
+        "description": "Nia, referência canônica e pose neutra",
+        "reference_revision": null
+      },
+      {
+        "id": "bard_instrument",
+        "description": "Bardo, mãos em contato com instrumento",
+        "reference_revision": null
+      },
+      {
+        "id": "quiver_equipment",
+        "description": "Aljave, equipamento e papel legíveis",
+        "reference_revision": null
+      },
+      {
+        "id": "shadow_neutral",
+        "description": "Sombra, referência canônica aprovada",
+        "reference_revision": null
+      },
+      {
+        "id": "dancer_neutral",
+        "description": "Bailarina, referência canônica aprovada",
+        "reference_revision": null
+      },
+      {
+        "id": "small_body",
+        "description": "Corpo pequeno, cabeça sem encolhimento indevido",
+        "reference_revision": null
+      },
+      {
+        "id": "large_body",
+        "description": "Corpo grande, espaço para pose",
+        "reference_revision": null
+      },
+      {
+        "id": "cape_open",
+        "description": "Capa aberta com contorno legível",
+        "reference_revision": null
+      },
+      {
+        "id": "cape_overlap",
+        "description": "Capa em oclusão parcial dos membros",
+        "reference_revision": null
+      },
+      {
+        "id": "dark_clothing",
+        "description": "Roupa escura sobre fundo claro e escuro",
+        "reference_revision": null
+      },
+      {
+        "id": "eye_detail",
+        "description": "Olhos e cor rara de assinatura",
+        "reference_revision": null
+      },
+      {
+        "id": "asymmetry",
+        "description": "Acessório assimétrico preservado",
+        "reference_revision": null
+      },
+      {
+        "id": "left_view",
+        "description": "Vista lateral esquerda coerente",
+        "reference_revision": null
+      },
+      {
+        "id": "right_view",
+        "description": "Vista lateral direita coerente",
+        "reference_revision": null
+      },
+      {
+        "id": "hand_repair",
+        "description": "Edição localizada de mão com corpo congelado",
+        "reference_revision": null
+      },
+      {
+        "id": "arm_repair",
+        "description": "Edição localizada de braço com equipamento",
+        "reference_revision": null
+      },
+      {
+        "id": "pose_sit",
+        "description": "Sentado, mantendo proporções da cabeça",
+        "reference_revision": null
+      },
+      {
+        "id": "pose_reach",
+        "description": "Alcance com mão, apoio e envelope corretos",
+        "reference_revision": null
+      }
+    ]
+  },
+  "animation": {
+    "characters": [
+      "royal_king",
+      "royal_squire",
+      "royal_nia",
+      "royal_bard",
+      "royal_archer",
+      "royal_quiver",
+      "royal_shadow",
+      "royal_dancer"
+    ],
+    "actions": [
+      "walk_with_contacts",
+      "object_action",
+      "expressive_action"
+    ],
+    "seeds": [
+      1103,
+      2207
+    ],
+    "reference_revisions": null,
+    "timing_schedules": null
+  },
+  "pilot": {
+    "static_cases_per_configuration": 12,
+    "clips_per_configuration": 4,
+    "spend_limit": null,
+    "require_spend_limit_before_paid_execution": true
+  },
+  "evaluation": {
+    "split_unit": "character_or_asset_family",
+    "include_failed_attempts": true,
+    "blind_configuration_labels": true,
+    "human_review": [
+      "identity",
+      "silhouette",
+      "expression",
+      "proportions",
+      "pixel_clusters",
+      "palette",
+      "pose",
+      "continuity",
+      "timing",
+      "engine_integration"
+    ],
+    "automatic_gates": [
+      "dimensions",
+      "alpha_profile",
+      "palette_membership",
+      "frozen_mask_pixels",
+      "preserved_frame",
+      "frame_order_and_duration",
+      "export_roundtrip",
+      "metadata"
+    ],
+    "metrics": [
+      "accepted_without_edit_fraction",
+      "human_minutes_per_accepted_asset",
+      "attempts_per_accepted_asset",
+      "cost_per_accepted_asset",
+      "latency_p50",
+      "latency_p95",
+      "severe_defect_frequency"
+    ],
+    "pass_thresholds": null,
+    "threshold_policy": "Set after pilot and before held-out final evaluation"
+  },
+  "results": null,
+  "gpu_hours_measured": null,
+  "paid_api_calls": 0
+}

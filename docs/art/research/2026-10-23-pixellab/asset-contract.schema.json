@@ -1,0 +1,343 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "asset_id",
+    "fixture",
+    "kind",
+    "canvas",
+    "authoring_mode",
+    "alpha_policy",
+    "palette",
+    "frames",
+    "clips",
+    "provenance",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "asset_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$"
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "character",
+        "effect",
+        "prop",
+        "tile",
+        "ui"
+      ]
+    },
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "authoring_mode": {
+      "enum": [
+        "native_manual",
+        "native_generated",
+        "generated_highres_then_reduced",
+        "hybrid",
+        "synthetic_metadata_fixture"
+      ]
+    },
+    "alpha_policy": {
+      "enum": [
+        "binary",
+        "continuous",
+        "opaque"
+      ]
+    },
+    "palette": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+      },
+      "maxItems": 256
+    },
+    "frames": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "index",
+          "file",
+          "sha256",
+          "duration_ms",
+          "pivot",
+          "origin",
+          "visual_offset"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "file": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pivot": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2,
+            "items": false
+          },
+          "origin": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2,
+            "items": false
+          },
+          "visual_offset": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2,
+            "items": false
+          }
+        }
+      }
+    },
+    "clips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "frame_indices",
+          "loop",
+          "events"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "frame_indices": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "loop": {
+            "type": "boolean"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "frame_index",
+                "name",
+                "presentation_only"
+              ],
+              "properties": {
+                "frame_index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "presentation_only": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_revision",
+        "model_revision",
+        "training_allowed",
+        "sources",
+        "transforms"
+      ],
+      "properties": {
+        "reference_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "training_allowed": {
+          "type": "boolean"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "transforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "design",
+        "animation",
+        "integration"
+      ],
+      "properties": {
+        "design": {
+          "type": "string",
+          "enum": [
+            "not_reviewed",
+            "rejected",
+            "approved",
+            "not_applicable"
+          ]
+        },
+        "animation": {
+          "type": "string",
+          "enum": [
+            "not_reviewed",
+            "rejected",
+            "approved",
+            "not_applicable"
+          ]
+        },
+        "integration": {
+          "type": "string",
+          "enum": [
+            "not_reviewed",
+            "rejected",
+            "approved",
+            "not_applicable"
+          ]
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:empire:research:pixel-workbench:asset-contract:1",
+  "title": "Proposed interchange contract; not current Empire runtime schema",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "fixture": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "authoring_mode": {
+            "not": {
+              "const": "synthetic_metadata_fixture"
+            }
+          },
+          "frames": {
+            "items": {
+              "properties": {
+                "file": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

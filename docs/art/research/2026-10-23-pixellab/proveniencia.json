@@ -1,0 +1,749 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-23",
+  "scope": "public_functional_reverse_engineering_and_independent_design",
+  "repository": {
+    "full_name": "henriquecoding/empire",
+    "base_commit": "8a21352145cd3a9eed9a6324679b55faa93a948d",
+    "forja_audited_commit": "68ed1c87461f5d39dd21fb664eef2930ddeaac81",
+    "forja_pr": "https://github.com/henriquecoding/empire/pull/117"
+  },
+  "method": {
+    "collection": "Public GET and primary-source web research; targeted reading, not a claim to have read every line.",
+    "redistribution": "Source bodies are not redistributed; URLs and hashes identify the responses.",
+    "limitations": [
+      "No authenticated product session or paid generation",
+      "No GPU training or independent generated-image benchmark",
+      "No proprietary weights, code or dataset obtained",
+      "HTML hashes identify dated responses and can change for unrelated page updates"
+    ]
+  },
+  "openapi": {
+    "url": "https://api.pixellab.ai/v2/openapi.json",
+    "sha256": "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc",
+    "bytes": 500207,
+    "info_version": "dev",
+    "path_count": 102,
+    "operation_count": 113,
+    "schema_count": 275
+  },
+  "sdk_snapshots": [
+    {
+      "repository": "pixellab-code/pixellab-python",
+      "branch": "master",
+      "commit": "fe5f6a56ab78a43d9a151ef8ab7ed87c0936aad7"
+    },
+    {
+      "repository": "pixellab-code/pixellab-js",
+      "branch": "master",
+      "commit": "c95b2dc0d05fa79e64c6bb082412fbee5b29d43f"
+    }
+  ],
+  "collected_public_sources": [
+    {
+      "url": "https://www.pixellab.ai/docs",
+      "http_status": 200,
+      "sha256": "c646e61010b642fdb13a817f688884bfac3ac7a1e87a1bbe825e5ab7aa508435",
+      "bytes": 83014
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/faq",
+      "http_status": 200,
+      "sha256": "7588c859600033272ed64b7007d23331deed9dcbe3cf052bd659b8b9c9029282",
+      "bytes": 123280
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started",
+      "http_status": 200,
+      "sha256": "065fbb9af5d456d454889c47ca87175b58441e286b306a78b94ac8218bc158eb",
+      "bytes": 143323
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/map-tiles",
+      "http_status": 200,
+      "sha256": "4f81fbc4a4839fe63f88473aac6f351b98ff7048b821f3f8749945b9d74481c9",
+      "bytes": 154750
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character",
+      "http_status": 200,
+      "sha256": "e0c309fcbc694f604f5ca1fc09371abf05ae518a3e7a264a71d6dbde54ade4ad",
+      "bytes": 130402
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/installation",
+      "http_status": 200,
+      "sha256": "fb706271b622b658b3c7601db0f207a9472086f49f4bd1c8ef12fb8da8e2d69a",
+      "bytes": 100707
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/introduction-pixelorama",
+      "http_status": 200,
+      "sha256": "9d47eea101683b4242d305bbec815487b7a4611e35883f0e58f592dea240800a",
+      "bytes": 91783
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/camera",
+      "http_status": 200,
+      "sha256": "e14aae40a29fef052f9e1048ee2c4b37d0f8617545c17b78035da3d2863212cc",
+      "bytes": 99797
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/character",
+      "http_status": 200,
+      "sha256": "fe70677e5e4f07b3a490ab8a8bdf620856a29a8592455be0db7b9f8ae64e3a1c",
+      "bytes": 104569
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/color",
+      "http_status": 200,
+      "sha256": "07441c0e80e67622954e1cb77a1a9010dbcc9aad8d7f39e0106a925bb6d8d7dc",
+      "bytes": 92053
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/general",
+      "http_status": 200,
+      "sha256": "7007d381c42c651455806d9f2d73588da1fd730a6c07f4a813bbd75b721386b9",
+      "bytes": 100517
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/guidance",
+      "http_status": 200,
+      "sha256": "e07aca9520b79202aa3b41c4b056dbcbd4dd8b261d344c541b0a172452749cc7",
+      "bytes": 93514
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/init-image",
+      "http_status": 200,
+      "sha256": "36047edf467d8c6c061a48eba95d7ae972922861e7d116b6841d1e4973df85da",
+      "bytes": 90290
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/inpainting",
+      "http_status": 200,
+      "sha256": "74323cb31f4c81ef4ea691c1e372e6f0fe5b5851c8aee8f37137b6ef3b62256e",
+      "bytes": 85995
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/options/projection",
+      "http_status": 200,
+      "sha256": "799c4d589afeb0af8fc52cf9e1de44c01f86759b84608fd9626d2a6ecf83a8a5",
+      "bytes": 88730
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animate-with-skeleton",
+      "http_status": 200,
+      "sha256": "69e55eb41e2bfb42b901cb8544c4af939628b65821a808878231e438c5624b08",
+      "bytes": 177616
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animate-with-text-new",
+      "http_status": 200,
+      "sha256": "52eaedfd0b5dd608b1f2e46d403e3850a66d374bb7e25d347bd646691fbf4999",
+      "bytes": 108543
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animate-with-text-pro",
+      "http_status": 200,
+      "sha256": "da8c0a07ada9a86358932e656a5cac49ace88821271f9a51dae8a366225af669",
+      "bytes": 99281
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation",
+      "http_status": 200,
+      "sha256": "454ef2111198377d14df5b0b6662093db19bf98636a133fbbf52275039b6f964",
+      "bytes": 118671
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation",
+      "http_status": 200,
+      "sha256": "66034ef7ff2c478cb1489302be2ddfd15a100af0857cbb90f5018e2bb02fc212",
+      "bytes": 222419
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/consistent-style",
+      "http_status": 200,
+      "sha256": "e5c806103319464998a04f364a9863afc3e7b5c3971fce0ec3d5add027fc7615",
+      "bytes": 108221
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-8-rotations-pro",
+      "http_status": 200,
+      "sha256": "91088c2ece4e96f200dab8167587f6111b3adb4527cd998fa5930752f8e72a17",
+      "bytes": 109981
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-animations-automatic",
+      "http_status": 200,
+      "sha256": "69958a84125c667ba9967a3635f1454eb78cec90cfd9f004add302b3580a8844",
+      "bytes": 99105
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-image-flux",
+      "http_status": 200,
+      "sha256": "3899d8ab99e3094a683afa4a764283124f5f347246ea1aea734176c14969372f",
+      "bytes": 101630
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-instant-character",
+      "http_status": 200,
+      "sha256": "4cfd3eebb9490a5e7d844753e44974faa29b849ba1d66200826ab4ebb496150f",
+      "bytes": 95721
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-isometric-tile",
+      "http_status": 200,
+      "sha256": "91daa14a9acbd4bea8b3c7e4737cd6dcc74bcf0a9681e3af9922976186b65fca",
+      "bytes": 161322
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-map",
+      "http_status": 200,
+      "sha256": "7b4bb2d0f1be9a7f96523d530f83733c2cf91b54247e917dfdc036fd820b97a6",
+      "bytes": 96835
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-sl-image-pro",
+      "http_status": 200,
+      "sha256": "c9d860f09cd72bda079c6564adf090c508898bb52f88f1e23bfccf0e83ab2f6f",
+      "bytes": 103144
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-texture",
+      "http_status": 200,
+      "sha256": "b9ef079419efc115fd02248b534cbbf4190380ba6d7a6f03e59f9dd94e0293fd",
+      "bytes": 97558
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-tiles-pro",
+      "http_status": 200,
+      "sha256": "f91fee1e6b3eccb9211c75782209f4ba437732c7dd6d5c1ab9847f843f6e29b2",
+      "bytes": 110783
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-tileset",
+      "http_status": 200,
+      "sha256": "33050196cebffcf00361700a63a25cee51cd38e3492611cbf52d454814409f12",
+      "bytes": 108077
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-ui-elements",
+      "http_status": 200,
+      "sha256": "233ed671b71f27dcf7699d5910b101d166dcbe9c43b315677b108eadd6fe3212",
+      "bytes": 99845
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/create-ui-elements-pro",
+      "http_status": 200,
+      "sha256": "d76408c590a8de3334ad993eee548914415b94bcbc0d0be54911f2683b0b2362",
+      "bytes": 96980
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/edit-animation-pro",
+      "http_status": 200,
+      "sha256": "4071bd178d52e219be73bc55cc035f20441198bb65375f5f96fbda5e58ba1315",
+      "bytes": 91758
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/edit-image",
+      "http_status": 200,
+      "sha256": "e469266fd3395ba67c253b04daa207bfec2bc166971f5dc5141e15e41e79910f",
+      "bytes": 94500
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/edit-image-pro",
+      "http_status": 200,
+      "sha256": "4275a7934e9cf56d4717873c3ea70db5126fcedae1a0294fdd8216227845f4dc",
+      "bytes": 102110
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/extend-map",
+      "http_status": 200,
+      "sha256": "8ccf58516bc170be9c0f36ff236a1a99537760345d49634f76baa2df87b046af",
+      "bytes": 103975
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/extend-map-old",
+      "http_status": 200,
+      "sha256": "3ebd87c974172f78a7ad07e698545d00ec4274e409472e40422dd6c5b0d4c2b7",
+      "bytes": 97958
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/extend-map-v2",
+      "http_status": 200,
+      "sha256": "9b44c1320cc0d90914660ad5ef8736ac60aab3d20a459fe7d74780843fc7db6c",
+      "bytes": 101468
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/image-to-image-depth",
+      "http_status": 200,
+      "sha256": "1833d4ec84916f8d47fbfea41c3628aad85a13572160647fd013356b42180b3c",
+      "bytes": 101517
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/image-to-pixel-art",
+      "http_status": 200,
+      "sha256": "7de93d9112cf5ab05ee224e252318cdd23378bffa290e87e2936097389219d7b",
+      "bytes": 91634
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/inpaint",
+      "http_status": 200,
+      "sha256": "cbb8d490632e57accda3ea0f202198b0fb554f8a7427ba796860c4ae7b6f693b",
+      "bytes": 106586
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/inpaint-pixpatch-v2",
+      "http_status": 200,
+      "sha256": "c022eefe3ac6cf049c4f6fa1636bd5812a8df16dfd4a07182fb46638e7f5057a",
+      "bytes": 99003
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/inpaint-v3",
+      "http_status": 200,
+      "sha256": "7d391d885532f5a365505386cf4a2d8c6ffed0e231e232770d47b5ec3f23d7c5",
+      "bytes": 93810
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/interpolation",
+      "http_status": 200,
+      "sha256": "78065f86b7d195a5385ff6a25fa3d97e1426185076ab2599ffeff92ad43cab37",
+      "bytes": 98458
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/multi-image",
+      "http_status": 200,
+      "sha256": "9f8df2a024fee2cf261afd4ec4a510dd8d4c8cc48cfc5306bfc3d086800f15a8",
+      "bytes": 100033
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/pose-to-image",
+      "http_status": 200,
+      "sha256": "734736379c12b8e1e2d7866d56b2f92981d7cb3d26657031b20396534ac4a7a3",
+      "bytes": 95346
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/re-pose",
+      "http_status": 200,
+      "sha256": "985e1ec24623f525b3a230d2680399e8da8e3f50756b2bc96944cf72bb74d19e",
+      "bytes": 89728
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/reduce-colors",
+      "http_status": 200,
+      "sha256": "8203dad8627975eeb48ce7d8a23960b6ea4d5fd97aa90e7828fde76c0835cfa2",
+      "bytes": 90432
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/remove-background",
+      "http_status": 200,
+      "sha256": "bcb0b14d7495b8ae5e1e4a5935ed68fb51fe456dd544de6173cacfb43c2d0d9d",
+      "bytes": 87783
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/reshape",
+      "http_status": 200,
+      "sha256": "d1fd145846ea9064c1c42afcaa21a2c19b4b00a873493d4296555e1f58f58fe6",
+      "bytes": 99856
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/resize",
+      "http_status": 200,
+      "sha256": "2f9f736f5a6be17ef41a18afae68584e0f9dffc54961e90487b9cb6ac2d856e4",
+      "bytes": 91050
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/rotate",
+      "http_status": 200,
+      "sha256": "1b4d39ae39633ddf5cc081349ee6ade8a3bf932b6d93efe3d4553939db36b2c4",
+      "bytes": 117301
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/style",
+      "http_status": 200,
+      "sha256": "677e5755314a65508cca750d46f50e43b4b17aa1ac2f9f0269ed3a93438fbfa5",
+      "bytes": 103149
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/style_old",
+      "http_status": 200,
+      "sha256": "d1a9af3d274b2cd550aa477221a726c57c62cf2da29f89e4be007aa923a13ba9",
+      "bytes": 104584
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/text2animation",
+      "http_status": 200,
+      "sha256": "66c02b3c0732a2d0ee6b95122c884c90859a912f847769fcda5e5e76c84a5c4f",
+      "bytes": 96080
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/transfer-outfit-pro",
+      "http_status": 200,
+      "sha256": "79db1837ea5bc112bd78451f8df241554df6e2148249f3d70a5e1d0832b5374c",
+      "bytes": 90970
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/try-on",
+      "http_status": 200,
+      "sha256": "ed199e5f95d42e0bfad53af545c7e4110297b174c9e9bbfc82c7abeb4c3724b0",
+      "bytes": 99388
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/unzoom-pixelart",
+      "http_status": 200,
+      "sha256": "36ad7e2240aa7460f46c04d486c5466ffdf6ae1c50cdb9456ab4be8c2a8e9e7b",
+      "bytes": 86184
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/ways-to-use-pixellab",
+      "http_status": 200,
+      "sha256": "5c0c0434b2eebafd8eaba53617b9d652dd5ac8c9418552d270396c2663781572",
+      "bytes": 140569
+    },
+    {
+      "url": "https://api.pixellab.ai/v2/llms.txt",
+      "http_status": 200,
+      "sha256": "b5078f3604e387b7678ab2334eb20d0c82cf027ed4466768e2e997d7de77c6ae",
+      "bytes": 20276
+    },
+    {
+      "url": "https://api.pixellab.ai/mcp/llms.txt",
+      "http_status": 200,
+      "sha256": "a851acb532ff6fcf525176a96040bd5f3abca985ac654482b956eaa0237cc9be",
+      "bytes": 139422
+    },
+    {
+      "url": "https://www.pixellab.ai/pixellab-api",
+      "http_status": 200,
+      "sha256": "dbc4b56c8d7cb47218b3e3596ec140626b50305a7e1c493d42fe2fe4773cbfae",
+      "bytes": 178162
+    },
+    {
+      "url": "https://www.pixellab.ai/mcp",
+      "http_status": 200,
+      "sha256": "7d665293fa216d77e7fbe2c9c352b0e785381e4b736ddde7c92dbb4cdb652ca2",
+      "bytes": 112230
+    },
+    {
+      "url": "https://www.pixellab.ai/termsofservice",
+      "http_status": 200,
+      "sha256": "fbebc5ac1474efcbcc94c1bcdf63024538bfb4e1c2ee51420cd44f4944ee1d99",
+      "bytes": 46495
+    },
+    {
+      "url": "https://huggingface.co/pixelparty/pixel-party-xl/raw/main/README.md",
+      "http_status": 200,
+      "sha256": "724fd31dd62b654a4f4c4943ec2f0b8e76f9ccb7323f4b291188328d7a7b4fb6",
+      "bytes": 1947
+    }
+  ],
+  "central_references": [
+    {
+      "id": "P01",
+      "urls": [
+        "https://huggingface.co/pixelparty/pixel-party-xl"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P02",
+      "urls": [
+        "https://www.pixellab.ai/docs/getting-started"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P03",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/consistent-style"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P04",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/animate-with-skeleton"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P05",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/reduce-colors"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P06",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/resize"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P07",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/unzoom-pixelart"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P08",
+      "urls": [
+        "https://www.pixellab.ai/pixellab-api"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P09",
+      "urls": [
+        "https://api.pixellab.ai/v2/openapi.json",
+        "https://api.pixellab.ai/v2/llms.txt"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P10",
+      "urls": [
+        "https://github.com/pixellab-code/pixellab-python",
+        "https://github.com/pixellab-code/pixellab-js"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P11",
+      "urls": [
+        "https://github.com/pixellab-code/pixellab-mcp",
+        "https://api.pixellab.ai/mcp/llms.txt"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P12",
+      "urls": [
+        "https://www.pixellab.ai/docs/options/inpainting"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P13",
+      "urls": [
+        "https://www.pixellab.ai/docs/options/init-image"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P14",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/image-to-image-depth"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P15",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/inpaint-v3"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P16",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/animate-with-text-new"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P17",
+      "urls": [
+        "https://www.pixellab.ai/termsofservice"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P18",
+      "urls": [
+        "https://kenney.nl/support"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P19",
+      "urls": [
+        "https://arxiv.org/abs/2302.05543",
+        "https://github.com/lllyasviel/ControlNet"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P20",
+      "urls": [
+        "https://arxiv.org/abs/2308.06721",
+        "https://github.com/tencent-ailab/IP-Adapter"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P21",
+      "urls": [
+        "https://github.com/guoyww/AnimateDiff"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P22",
+      "urls": [
+        "https://arxiv.org/html/2410.06236v1",
+        "https://github.com/AlexandreBinninger/SD-piXL"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P23",
+      "urls": [
+        "https://doi.org/10.1016/j.entcom.2025.101021"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P24",
+      "urls": [
+        "https://arxiv.org/html/2412.03685v1",
+        "https://chenganhsieh.github.io/spritesheet-diffusion/"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P25",
+      "urls": [
+        "https://arxiv.org/html/2610.27253v1"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P26",
+      "urls": [
+        "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P27",
+      "urls": [
+        "https://huggingface.co/docs/diffusers/training/lora"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P28",
+      "urls": [
+        "https://huggingface.co/black-forest-labs/FLUX.1-schnell"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P29",
+      "urls": [
+        "https://arxiv.org/abs/2006.11239"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P30",
+      "urls": [
+        "https://www.pixellab.ai/docs/guides/rotating-a-character"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P31",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/create-8-rotations-pro"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P32",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/transfer-outfit-pro"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P33",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/animation-to-animation"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P34",
+      "urls": [
+        "https://bottosson.github.io/posts/oklab/"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P35",
+      "urls": [
+        "https://doc.mapeditor.org/en/stable/manual/terrain/"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P36",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/create-tileset"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P37",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/create-texture"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P38",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/create-tiles-pro"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P39",
+      "urls": [
+        "https://www.pixellab.ai/docs/tools/create-ui-elements-pro"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P40",
+      "urls": [
+        "https://www.aseprite.org/docs/cli/"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P41",
+      "urls": [
+        "https://github.com/aseprite/aseprite/blob/main/docs/ase-file-specs.md"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    },
+    {
+      "id": "P42",
+      "urls": [
+        "https://docs.godotengine.org/en/stable/tutorials/2d/2d_sprite_animation.html"
+      ],
+      "verification": "primary_source_read_or_targeted_lookup"
+    }
+  ],
+  "audit_appendix": {
+    "report": "AUDITORIA-FORJA-CLAUDE.md",
+    "observations": "forja-audit-observations.json",
+    "evidence": "forja-audit-evidence.json",
+    "scope": "code_review_local_synthetic_probes_public_site_and_github_ci"
+  }
+}
