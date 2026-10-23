@@ -1,15 +1,8 @@
-"""Achar a grade escondida numa imagem "estilo pixel art".
-
-O gerador desenha pixels logicos como blocos de ~N x N px, mas o N deriva, as
-bordas vem suavizadas e ha ruido. Passos: (1) perfil de bordas por eixo, pelo
-canal mais diferente; (2) periodo pela autocorrelacao dos dois eixos juntos,
-com o pico alargado; (3) afinacao por pente de contraste (dentes menos meios:
-multiplos e submultiplos perdem); (4) linhas por uma reta global refeita por
-minimos quadrados com as bordas confirmadas, interpoladas nas zonas lisas.
-"""
+"""Grade por bordas, autocorrelacao, pente de contraste e reta; ver docs/art/FORJA.md."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import math
 
 from PIL import Image, ImageChops
 
@@ -17,7 +10,6 @@ from .imageops import flat
 
 NOISE_FLOOR = 10
 NATIVE_STRENGTH = 0.12
-
 
 @dataclass
 class Grid:
@@ -212,6 +204,8 @@ def walk(e: list[float], period: float, phase: float, window: float = 0.3) -> tu
 
 def known(size: tuple[int, int], scale: float, offset: tuple[float, float] = (0, 0)) -> Grid:
     """A grade de uma ampliacao que nos proprios fizemos: nada a medir."""
+    if not math.isfinite(scale) or scale < 1:
+        raise ValueError("escala deve ser finita e >= 1")
     def cuts(n: int, start: float) -> list[int]:
         out, pos = [], start
         while pos <= n + 1e-6:
@@ -226,6 +220,12 @@ def detect(image: Image.Image, scale: float | None = None, cells: tuple[int, int
            floor: int = NOISE_FLOOR) -> Grid:
     """A grade de uma imagem. `scale` ou `cells` fixam o periodo; a fase e as linhas medem-se."""
     w, h = image.size
+    if scale is not None and (not math.isfinite(scale) or scale < 1):
+        raise ValueError("escala deve ser finita e >= 1")
+    if cells and any(type(v) is not int or v <= 0 or v > n for v, n in zip(cells, image.size)):
+        raise ValueError("celulas devem ser positivas e caber na imagem")
+    if scale == 1 or cells == image.size:
+        return known(image.size, 1)
     ex, ey = profiles(image, floor)
     notes = []
     if cells or scale:

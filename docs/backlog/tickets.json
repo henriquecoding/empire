@@ -3026,5 +3026,18 @@
   "feito": "Relatório mestre, fontes, contrato de asset, benchmark planejado e instruções para Claude.",
   "fora": "Treinamento, chamadas pagas, recuperação de pesos privados e alteração de runtime ou assets.",
   "estado": "feito — pesquisa pública, relatório de implementação e auditoria reproduzível da Forja do PR #117"
+ },
+ "FORJA-02": {
+  "title": "Preservar arte, contratos remotos e revisão de movimento",
+  "porque": "A auditoria encontrou pedidos incompatíveis e transformações que apagavam detalhes ou movimento.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/art/research/2026-10-23-forja-pixellab/REFINAMENTO.md"
+  ],
+  "depende": "FORJA-01, ART-PIXELLAB-2026-10-23",
+  "feito": "Regressões F01–F09, planos por fornecedor, animação nativa, retomada de jobs, revisão por tag e preservação de células e detalhes.",
+  "fora": "Piloto pago, treinamento e aprovação artística de novos assets.",
+  "estado": "feito — correções e revisão local; piloto autenticado e aprovação artística pendentes",
+  "horas": "—"
  }
 }

@@ -9,11 +9,13 @@ from __future__ import annotations
 import base64
 import json
 import os
+import math
 import time
 import urllib.error
 import urllib.request
 import uuid
 from dataclasses import dataclass, field
+from email.utils import parsedate_to_datetime
 from typing import Callable
 
 
@@ -57,16 +59,37 @@ class ApiError(RuntimeError):
 
 def send(req: Request, transport: Transport | None = None, service: str = "api",
          attempts: int = 4, wait: float = 2.0, sleep: Callable[[float], None] = time.sleep) -> Response:
-    """Envia com tentativas exponenciais nos codigos que pedem para esperar (429, 5xx...)."""
+    """GET pode repetir; uma geracao so repete uma recusa explicita por limite.
+
+    Um 5xx/timeout depois de POST pode ter sido cobrado: nunca o repetir
+    automaticamente. Corpos de erro podem repetir credenciais e nao sao logs.
+    """
+    if attempts < 1 or not math.isfinite(wait) or wait < 0:
+        raise ValueError("tentativas e intervalo invalidos")
     transport = transport or urllib_transport
+    retryable = RETRY if req.method in ("GET", "HEAD") else {429, 529}
     for attempt in range(attempts):
-        resp = transport(req)
+        try:
+            resp = transport(req)
+        except (OSError, ValueError):
+            raise ApiError(service, 0, "falha de transporte; pedido nao repetido (resultado remoto desconhecido)") from None
         if resp.status < 400:
             return resp
-        if resp.status not in RETRY or attempt == attempts - 1:
-            raise ApiError(service, resp.status, resp.body.decode("utf-8", "replace"))
+        if resp.status not in retryable or attempt == attempts - 1:
+            raise ApiError(service, resp.status, "pedido recusado; consulte o estado no fornecedor antes de repetir")
         retry_after = resp.headers.get("Retry-After") or resp.headers.get("retry-after")
-        sleep(float(retry_after) if retry_after and retry_after.isdigit() else wait * 2 ** attempt)
+        delay = wait * 2 ** attempt
+        if retry_after:
+            try:
+                delay = float(retry_after)
+            except ValueError:
+                try:
+                    delay = parsedate_to_datetime(retry_after).timestamp() - time.time()
+                except (ValueError, TypeError, OverflowError):
+                    pass
+        if not math.isfinite(delay) or delay > 60:
+            raise ApiError(service, resp.status, "Retry-After excede a espera automatica; retome mais tarde")
+        sleep(max(0.0, delay))
     raise ApiError(service, 0, "sem resposta")
 
 
@@ -122,7 +145,7 @@ def find_images(node) -> list[bytes]:
             if isinstance(v, str) and len(v) > 64 and is_image:
                 found.append(unb64(v))
         for k, v in node.items():
-            if k not in ("b64_json", "base64", "data"):
+            if k not in ("b64_json", "base64", "data") or isinstance(v, (dict, list)):
                 found += find_images(v)
     elif isinstance(node, list):
         for item in node:

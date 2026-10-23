@@ -27,7 +27,8 @@ def _neighbors(rows, x: int, y: int, offsets=N8):
             yield rows[ny][nx]
 
 
-def despeckle(image: Image.Image, noise: float = 0.08, holes: bool = True) -> tuple[Image.Image, dict]:
+def despeckle(image: Image.Image, noise: float = 0.08, holes: bool = True,
+              orphans: bool = True) -> tuple[Image.Image, dict]:
     """Tira pixels opacos sem vizinhos opacos, tapa furos de 1 px e alisa o ruido de cor."""
     rows = to_grid(image)
     src = [row[:] for row in rows]
@@ -36,7 +37,7 @@ def despeckle(image: Image.Image, noise: float = 0.08, holes: bool = True) -> tu
         for x, p in enumerate(row):
             around = list(_neighbors(src, x, y))
             solid = [q for q in around if q[3] >= 128]
-            if p[3] >= 128 and not solid:
+            if p[3] >= 128 and not solid and orphans:
                 rows[y][x] = CLEAR
                 stats["orphans"] += 1
             elif p[3] < 128 and holes and len(around) == 8 and len(solid) == 8:

@@ -16,7 +16,7 @@ from PIL import Image, ImageChops, ImageFilter
 from . import color, grid as gridmod, matte, resample
 from .imageops import foot_point, opaque_bbox, place
 
-ANCHORS = ("feet", "mass", "bottom", "center")
+ANCHORS = ("feet", "mass", "bottom", "center", "origin")
 
 
 @dataclass
@@ -70,8 +70,10 @@ def find_cells(image: Image.Image, bg: tuple[int, int, int] | None, layout: tupl
     E o caminho robusto para pranchas densas: o prompt pede celulas iguais, e o que
     esta numa celula pertence a essa figura. Manchas de 1-2 px de ruido nao contam.
     """
-    full = matte.mask(image, bg, tolerance).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.MaxFilter(3))
+    full = matte.mask(image, bg, tolerance)
     cols, rows = layout
+    if min(cols, rows) < 1 or cols > image.width or rows > image.height:
+        raise ValueError("layout invalido: celulas positivas que caibam na imagem")
     cw, ch = image.width / cols, image.height / rows
     boxes, masks = [], {}
     for j in range(rows):
@@ -84,7 +86,7 @@ def find_cells(image: Image.Image, bg: tuple[int, int, int] | None, layout: tupl
                 continue
             box = (cell[0] + bb[0], cell[1] + bb[1], cell[0] + bb[2], cell[1] + bb[3])
             own = Image.new("L", image.size, 0)
-            own.paste(part.filter(ImageFilter.MaxFilter(5)), cell[:2])
+            own.paste(part, cell[:2])
             boxes.append(box)
             masks[box] = (own, 1)
     return boxes, [], masks
@@ -168,6 +170,8 @@ def by_cells(boxes: list[tuple[int, int, int, int]], size: tuple[int, int],
 def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pad: int = 6,
             scale: float | None = None, same_height: bool = False, masks: dict | None = None) -> list[Figure]:
     """Cada caixa vira uma figura nativa. A escala e comum: a mediana das medidas."""
+    if same_height:
+        raise ValueError("same_height foi retirado: normalizar pela altura deforma poses e rosto; use escala comum")
     figures = [Figure(b) for b in boxes if b]
     crops = []
     for f in figures:
@@ -178,15 +182,10 @@ def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pa
         if own is not None:
             crop.putalpha(ImageChops.darker(crop.getchannel("A"), own))
         crops.append(crop)
-    if same_height and crops:
-        target = median(f.box[3] - f.box[1] for f in figures)
-        crops = [c.resize((max(1, round(c.width * target / (f.box[3] - f.box[1]))),
-                           max(1, round(c.height * target / (f.box[3] - f.box[1])))), Image.Resampling.LANCZOS)
-                 for c, f in zip(crops, figures)]
-    periods = [gridmod.detect(c).period[0] for c in crops]
+    periods = [scale if scale is not None else gridmod.detect(c).period[0] for c in crops]
     shared = scale or (median(p for p in periods if p > 1) if any(p > 1 for p in periods) else 1.0)
     for f, crop, own in zip(figures, crops, periods):
-        g = gridmod.detect(crop, scale=shared) if shared > 1 else gridmod.detect(crop)
+        g = gridmod.detect(crop, scale=shared)
         sampled = resample.resample(crop, g)
         native, _ = matte.remove(sampled.image, color.to_hex(bg) if bg else None)
         box = opaque_bbox(native)
@@ -205,8 +204,8 @@ def frames(figures: list[Figure], canvas: tuple[int, int], pivot: tuple[int, int
     out, report = [], []
     for i, f in enumerate(figures):
         img = f.native
-        point = anchor_point(img, anchor)
-        frame, clipped = place(img, canvas, point, pivot)
+        point = (0, 0) if anchor == "origin" else anchor_point(img, anchor)
+        frame, clipped = place(img, canvas, point, (0, 0) if anchor == "origin" else pivot)
         out.append(frame)
         report.append({"frame": i, "source_box": list(f.box), "native_size": list(img.size),
                        "period": round(f.period, 3), "purity": round(f.purity, 3),

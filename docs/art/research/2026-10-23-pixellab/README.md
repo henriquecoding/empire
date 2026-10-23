@@ -6,6 +6,9 @@ pixel art útil ao Empire, com foco em personagens de estudo de 64×64 e 80×80.
 
 ## Começar por aqui
 
+Atualização de implementação: [FORJA-02 — refinamento e regressões](../2026-10-23-forja-pixellab/REFINAMENTO.md).
+Os resultados das sondas abaixo descrevem o PR #117 antes dessas correções.
+
 1. [Auditoria da Forja do Claude](AUDITORIA-FORJA-CLAUDE.md): falhas reproduzidas,
    qualidades, GitHub/Vercel, prioridades e critérios de correção.
 2. [Relatório mestre](RELATORIO-MESTRE.md): evidências, arquitetura, dados,

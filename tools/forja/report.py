@@ -158,8 +158,8 @@ cx.fillStyle='#241f17';cx.fillRect(0,0,cv.width,cv.height);
 if(document.getElementById('on').checked){cx.globalAlpha=.3;const p=im[(k+F.length-1)%%F.length];cx.drawImage(p,0,0,cv.width,cv.height);cx.globalAlpha=1}
 cx.drawImage(a,0,0,cv.width,cv.height);document.getElementById('ix').textContent=(k+1)+'/'+F.length+' · '+D[k]+' ms'}
 function tick(){draw();if(run){t=setTimeout(()=>{k=(k+1)%%F.length;tick()},D[k])}}
-document.getElementById('pp').onclick=()=>{run=!run;if(run)tick()};
-document.getElementById('st').onclick=()=>{run=false;k=(k+1)%%F.length;draw()};
+document.getElementById('pp').onclick=()=>{clearTimeout(t);run=!run;if(run)tick()};
+document.getElementById('st').onclick=()=>{clearTimeout(t);run=false;k=(k+1)%%F.length;draw()};
 Promise.all(im.map(i=>i.decode())).then(tick);
 </script>"""
 
@@ -175,7 +175,10 @@ def animation(path: str | Path, frames: list[Image.Image], durations: list[int],
     body = [f"<h1>Forja · {html.escape(result['name'])}</h1>",
             f'<p class="{"ok" if result.get("ok") else "error"}">{result.get("summary", "")}</p>',
             "<h2>Animacao</h2>", PLAYER % (uris, json.dumps(durations), zoom),
+            "<h2>Leitura nativa</h2>", _fig(strip, "todos os quadros, 1x"),
             "<h2>Tira</h2>", _fig(upscale(on_background(strip, None, 4), 2), "todos os quadros, 2x"),
+            "<h2>Achados</h2>", _findings({"findings": result.get("findings", [])}),
+            "<h2>Correcao</h2>", f"<pre>{html.escape(result.get('prompt_feedback', ''))}</pre>",
             "<h2>Medidas</h2>", f"<pre>{html.escape(json.dumps(result.get('metrics', {}), indent=1))}</pre>",
             "<h2>Quadros</h2>", f"<table>{rows}</table>",
             "<h2>Proveniencia</h2>", f"<pre>{html.escape(json.dumps(result.get('provenance', {}), indent=1, ensure_ascii=False))}</pre>"]
