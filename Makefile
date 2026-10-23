@@ -32,7 +32,7 @@ ACTIONLINT := $(HOME)/.cache/actionlint/actionlint
 .PHONY: ajuda tudo portoes formato estilo rng workflows dossie-numeros conteudo spec \
         manifesto escala marco obras inventario-arte afirmacoes afirmacoes-escrever importar dados dados-gerar testes captura \
         captura-noite silhueta densidade densidade-prova greybox-biomas vistoria noites desempenho benchmark-sim perfil exportar exportar-windows exportar-web exportar-tudo site site-verificar site-fumo site-capturas site-fontes \
-        ferramentas ferramentas-python hooks limpar
+        ferramentas ferramentas-python hooks limpar forja
 
 ajuda:  ## Mostra os alvos
 	@grep -hE '^[a-z0-9-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -40,7 +40,7 @@ ajuda:  ## Mostra os alvos
 
 # ── O que corre sem abrir o motor ────────────────────────────────────────────
 
-portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes densidade-prova manifesto inventario-arte  ## Todos os portoes estaticos
+portoes: formato estilo rng workflows dossie-numeros conteudo spec afirmacoes densidade-prova manifesto inventario-arte forja  ## Todos os portoes estaticos
 
 formato:  ## gdformat: o formato do GDScript
 	gdformat --check src/ tests/ tools/
@@ -95,6 +95,13 @@ afirmacoes:  ## A prosa e o validation.json contra a contagem real
 
 afirmacoes-escrever:  ## Corrige os campos contaveis do validation.json
 	python3 tools/check_claims.py --write
+
+# ADR 0088: a Forja recupera pixel art de imagens geradas. A prova fabrica pixel
+# art falsa com a verdade conhecida (escala fracionaria, celulas desiguais,
+# desfoque, ruido) e chumba se a recuperacao nao bater; os testes cobrem o resto.
+forja:  ## A Forja: a prova da pixel art recuperada e os testes (ADR 0088)
+	python3 -m tools.forja prova
+	python3 -m unittest discover -s tools/forja/tests -t .
 
 # ── O que precisa do motor ───────────────────────────────────────────────────
 

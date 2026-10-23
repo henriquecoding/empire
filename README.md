@@ -69,6 +69,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 | `src/actors/` | `unit_view.gd` — os cinco slots do §58 |
 | `shaders/` | `palette_lut.gdshader` — um shader, quatro trabalhos (§60) |
 | `tools/` | `csv_to_tres.gd`, `lint_sim.gd`, `split_dossie.py`, `check_dossie_vs_csv.py`, `content_report.py`, `export_aseprite.sh` |
+| `tools/forja/` | A Forja: pixel art de geradores de imagem (ChatGPT, Gemini, PixelLab) nos contratos do jogo, com lint, Aseprite, Godot e servidor MCP — [guia](docs/art/FORJA.md) |
 | `ferramentas/` | A camada de uso do dossiê: `construir.mjs`, `extrair-dados.mjs` e os dois portões |
 | `tests/` | gdUnit4: arquitetura, dados, design |
 | `art/` · `audio/` | `art/source/` em Git LFS; `art/export/` é gerado (menos `_placeholder/`) |

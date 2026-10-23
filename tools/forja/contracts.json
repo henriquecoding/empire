@@ -1,0 +1,157 @@
+{
+  "_comment": "Contratos de arte do Empire que a Forja aplica. Cada numero vem de um documento citado em 'source'; test_contracts.py confere-os contra as tabelas da Asset Bible e da Animation Bible, para nao divergirem em silencio. Estado de cada contrato em 'status': uma proposta da Asset Bible nao e uma decisao fechada.",
+  "palette": "art/palettes/empire_working.gpl",
+  "outline_color": "#000000",
+  "fps": 10,
+  "kinds": {
+    "character_s1": {
+      "en": "small side-view game character (scale 1: squire, small troops)",
+      "label": "Personagem escala 1 (escudeiro, tropas pequenas, Rastejante)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Escalas de personagem",
+      "status": "proposta da Asset Bible (telas padrao a validar)",
+      "canvas": [64, 64], "pivot": [32, 56], "useful_height": [32, 36],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
+    "character_s2": {
+      "en": "side-view game character (scale 2: villagers, troops, craftspeople)",
+      "label": "Personagem escala 2 (aldeoes, tropas, oficios)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Escalas de personagem",
+      "status": "proposta da Asset Bible (telas padrao a validar)",
+      "canvas": [96, 96], "pivot": [48, 88], "useful_height": [46, 52],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
+    "character_s3": {
+      "en": "large side-view game character (scale 3: monarch, elites, knights)",
+      "label": "Personagem escala 3 (monarca, elites, cavaleiros)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Escalas de personagem",
+      "status": "proposta da Asset Bible (telas padrao a validar)",
+      "canvas": [128, 128], "pivot": [64, 120], "useful_height": [56, 62],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
+    "colossus": {
+      "en": "colossal side-view creature or vehicle",
+      "label": "Colosso (Ariete de lodo, Consumidora, veiculos)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Escalas de personagem",
+      "status": "proposta da Asset Bible (telas padrao a validar)",
+      "canvas": [256, 256], "pivot": [128, 248], "useful_height": [1, 160],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
+    "royal_64": {
+      "en": "side-view royal cast character on a 64x64 frame",
+      "label": "Elenco V15, quadro 64 (escudeiro, Nia, bardo, intendente, bailarina)",
+      "source": "docs/adr/0087-elenco-v15-no-jogo.md; evidencias V15 (pivot [32,62])",
+      "status": "entregue e integrado (ADR 0087); revisao artistica da animacao e do autor",
+      "canvas": [64, 64], "pivot": [32, 62], "useful_height": [1, 62],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
+    "royal_80": {
+      "en": "side-view royal cast character on an 80x80 frame",
+      "label": "Elenco V15, quadro 80 (rei, arqueiro, Sombra)",
+      "source": "docs/adr/0087-elenco-v15-no-jogo.md; evidencias V15 (pivot [40,78])",
+      "status": "entregue e integrado (ADR 0087); revisao artistica da animacao e do autor",
+      "canvas": [80, 80], "pivot": [40, 78], "useful_height": [1, 78],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
+    "creature": {
+      "en": "side-view creature of the Rot (plum and shadow, 7 colors)",
+      "label": "Criatura da Podridao",
+      "source": "docs/art/ASSET_BIBLE.md §6 (vocabulario da Podridao, 7 cores)",
+      "status": "regra da Asset Bible; tela pela escala do corpo",
+      "canvas": [96, 96], "pivot": [48, 88], "useful_height": [1, 88],
+      "outline_px": 1, "cluster": 1, "max_colors": 7, "dither": false, "anchor": "feet"
+    },
+    "building": {
+      "en": "side-view building standing on the ground line",
+      "label": "Edificio (pivot no centro da base, na linha do solo)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Edificios e cenario",
+      "status": "regra da Asset Bible",
+      "canvas": null, "pivot": null, "useful_height": null, "width_multiple": 32,
+      "outline_px": 2, "cluster": 2, "max_colors": null, "dither": false, "anchor": "bottom"
+    },
+    "prop": {
+      "en": "side-view scenery prop standing on the ground line",
+      "label": "Prop de cenario",
+      "source": "docs/art/ASSET_BIBLE.md §1 (cenario: 2 px, contorno 2 px na silhueta)",
+      "status": "regra da Asset Bible",
+      "canvas": null, "pivot": null, "useful_height": null,
+      "outline_px": 2, "cluster": 2, "max_colors": null, "dither": false, "anchor": "bottom"
+    },
+    "tile": {
+      "en": "terrain tile for a side-view game (32 px grid)",
+      "label": "Tile de terreno (grelha de 32 px)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Grelha de tile",
+      "status": "regra da Asset Bible",
+      "canvas": [32, 32], "pivot": null, "useful_height": null,
+      "outline_px": null, "cluster": 2, "max_colors": null, "dither": false, "anchor": "bottom"
+    },
+    "parallax_far": {
+      "en": "far parallax silhouette layer, a single flat value",
+      "label": "Parallax, distancia (y 300-420)",
+      "source": "docs/art/ASSET_BIBLE.md Parte XIII, Teto de valores por camada",
+      "status": "regra da Asset Bible (portao de CI previsto)",
+      "canvas": null, "pivot": null, "useful_height": null,
+      "outline_px": 0, "cluster": 4, "max_colors": 1, "dither": false, "anchor": "bottom"
+    },
+    "parallax_mid": {
+      "en": "mid parallax silhouette layer, two flat values",
+      "label": "Parallax, plano medio (y 420-517)",
+      "source": "docs/art/ASSET_BIBLE.md Parte XIII, Teto de valores por camada",
+      "status": "regra da Asset Bible (portao de CI previsto)",
+      "canvas": null, "pivot": null, "useful_height": null,
+      "outline_px": 0, "cluster": 4, "max_colors": 2, "dither": false, "anchor": "bottom"
+    },
+    "foreground": {
+      "en": "foreground silhouette layer, two flat values",
+      "label": "Primeiro plano (y 640-720)",
+      "source": "docs/art/ASSET_BIBLE.md Parte XIII, Teto de valores por camada",
+      "status": "regra da Asset Bible (portao de CI previsto)",
+      "canvas": null, "pivot": null, "useful_height": null,
+      "outline_px": 0, "cluster": 2, "max_colors": 2, "dither": false, "anchor": "bottom"
+    },
+    "fx": {
+      "en": "game visual effect",
+      "label": "Efeito (dither permitido: revelacao, dissolucao)",
+      "source": "docs/art/ASSET_BIBLE.md §1, Dithering",
+      "status": "regra da Asset Bible",
+      "canvas": null, "pivot": null, "useful_height": null,
+      "outline_px": null, "cluster": 1, "max_colors": null, "dither": true, "anchor": "center"
+    },
+    "free": {
+      "en": "pixel-art game asset",
+      "label": "Sem contrato do Empire (estudo, outro projeto)",
+      "source": "-",
+      "status": "livre",
+      "canvas": null, "pivot": null, "useful_height": null,
+      "outline_px": null, "cluster": 1, "max_colors": null, "dither": true, "anchor": "feet"
+    }
+  },
+  "tags": {
+    "_source": "docs/art/ANIMATION_BIBLE.md §2 — idle/walk/attack/die marcados (§) sao do dossie; o resto e proposta da bible",
+    "idle": {"frames": 6, "fps": 10, "loop": true, "note": "feet planted; breathing; 0.6 s cycle is the project's metronome"},
+    "walk": {"frames": 8, "fps": 10, "loop": true, "note": "in place; contact poses on frames 1 and 5; step about 10 px"},
+    "attack": {"frames": 5, "fps": 10, "loop": false, "note": "anticipation 1-2, hit on frame 3, recovery 4-5, feet planted"},
+    "die": {"frames": 7, "fps": 10, "loop": false, "note": "fall on frame 3; the last frame is the body left on the ground and must read as revivable"},
+    "hit": {"frames": 2, "fps": 10, "loop": false, "note": "reaction on frame 1, recover on 2"},
+    "run": {"frames": 6, "fps": 12, "loop": true, "note": "in place; contact on frames 1 and 4"},
+    "work": {"frames": 6, "fps": 10, "loop": true, "note": "anticipation 1-2, action 3, recovery 4-6"},
+    "carry": {"frames": 8, "fps": 10, "loop": true, "note": "walk cycle carrying something; contact on 1 and 5"},
+    "flee": {"frames": 6, "fps": 12, "loop": true, "note": "panicked run in place"},
+    "interact": {"frames": 4, "fps": 10, "loop": false, "note": "anticipation 1, action 3, recovery 4"},
+    "celebrate": {"frames": 6, "fps": 10, "loop": true, "note": "short loop, 2 px jump on frame 3"},
+    "sleep": {"frames": 4, "fps": 5, "loop": true, "note": "lying down"},
+    "shoot": {"frames": 5, "fps": 10, "loop": false, "note": "release on frame 3"},
+    "reload": {"frames": 3, "fps": 10, "loop": false, "note": "chains into shoot"},
+    "cast": {"frames": 6, "fps": 10, "loop": false, "note": "spell effect on frame 4"},
+    "block": {"frames": 3, "fps": 10, "loop": false, "note": "block on frame 2"},
+    "charge": {"frames": 4, "fps": 10, "loop": true, "note": "charging loop"},
+    "dig": {"frames": 6, "fps": 10, "loop": true, "note": "impacts on frames 3 and 6"},
+    "build": {"frames": 6, "fps": 10, "loop": true, "note": "hammer hits on frame 3"},
+    "harvest": {"frames": 6, "fps": 10, "loop": true, "note": "action on frame 4"},
+    "cook": {"frames": 6, "fps": 10, "loop": true, "note": "action on frame 4"},
+    "smith": {"frames": 6, "fps": 10, "loop": true, "note": "hammer on frame 3"},
+    "heal": {"frames": 8, "fps": 10, "loop": true, "note": "seated loop"},
+    "ride": {"frames": 8, "fps": 10, "loop": true, "note": "rider and mount in the same body"},
+    "climb": {"frames": 6, "fps": 10, "loop": true, "note": "vertical motion comes from the simulation"},
+    "spawn": {"frames": 4, "fps": 10, "loop": false, "note": "creature rises out of the Rot stain"}
+  }
+}

@@ -2998,5 +2998,21 @@
   "fora": "Deploy hook a partir do CI, o cancelamento do CI na main e o Supabase do painel.",
   "estado": "feito",
   "horas": "—"
+ },
+ "FORJA-01": {
+  "title": "A Forja: pixel art dos geradores nos contratos do Empire",
+  "porque": "O dono pediu a engenharia reversa do PixelLab e uma ferramenta no repositório para agentes que geram imagens trabalharem com pixel art como o projeto pede.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/art/research/2026-10-23-forja-pixellab/README.md",
+   "docs/adr/0088-a-forja-de-pixel-art.md"
+  ],
+  "depende": "ART-KNOWLEDGE-2026-10-19",
+  "feito": "Ferramenta tools/forja com grade, contratos, lint, pranchas, Aseprite, Godot, conectores, MCP, prova e testes.",
+  "fora": "Uso real com geradores, produção e aprovação de assets do jogo.",
+  "estado": "feito — ferramenta, servidor MCP, prova, testes e guia; uso real com geradores e aprovação de assets pendentes do dono",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

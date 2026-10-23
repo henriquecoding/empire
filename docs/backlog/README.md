@@ -285,4 +285,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 |---|---|---|---|
 | [DOC-01](DOC-01.md) | Consolidar dossiê, painel e referências territoriais | — | feito |
 | [ART-KNOWLEDGE-2026-10-19](ART-KNOWLEDGE-2026-10-19.md) | Consolidar pesquisa e método de personagens e animação | ART-RESEARCH-2026-10-18 | feito |
-
+| [FORJA-01](FORJA-01.md) | A Forja: pixel art dos geradores nos contratos do Empire | ART-KNOWLEDGE-2026-10-19 | feito — ferramenta, servidor MCP, prova, testes e guia; uso real com geradores e aprovação de assets pendentes do dono |

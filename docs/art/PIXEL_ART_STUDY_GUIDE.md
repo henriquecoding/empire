@@ -19,6 +19,9 @@ informa o que foi acessado e o alcance de cada leitura.
    [Asset](ASSET_BIBLE.md) e [Animation](ANIMATION_BIBLE.md) Bibles.
 5. Usar os [exercícios e critérios de revisão](research/2026-10-22-aseprite-penusbmic/APLICACAO-E-EXERCICIOS.md)
    para produzir uma prova pequena antes de expandir o conjunto.
+6. Com gerador de imagens (ChatGPT, Gemini, PixelLab), passar o pedido e o
+   resultado pela [Forja](FORJA.md): grade recuperada, contratos conferidos e
+   prompt corretivo.
 
 ## O que passa a orientar a prática
 

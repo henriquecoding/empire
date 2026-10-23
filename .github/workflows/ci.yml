@@ -85,6 +85,12 @@ jobs:
       - name: Densidade · o contador chumba o chapado e passa a rampa
         run: make densidade-prova
 
+      # ADR 0088: a Forja recupera pixel art de imagens geradas. A prova fabrica
+      # pixel art falsa com a verdade conhecida e chumba se a recuperacao nao
+      # bater; os testes cobrem paleta, lint, pranchas, Aseprite, tiles e MCP.
+      - name: Forja · a prova da pixel art recuperada e os testes
+        run: make forja
+
       # O motor declarado no project.godot e o fixado no .godot-version sao o
       # mesmo: sem isto, uma captura nao diz com que motor foi tirada.
       - name: Manifesto · o motor declarado e o fixado

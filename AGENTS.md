@@ -37,6 +37,11 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   Penusbmic, Watt e Pixel Pete tem fontes e trechos anotados em
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
+- Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
+  docs/art/FORJA.md (ADR 0088). `python3 -m tools.forja` compila o pedido,
+  recupera a grade (nao reduz), aplica e confere os contratos e devolve o
+  prompt corretivo; `python3 -m tools.forja mcp` serve-a por MCP. Saidas em
+  build/forja/. Adaptar uma imagem gerada nao e aprovacao artistica.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.
@@ -369,6 +374,7 @@ tools/desempenho.gd         (script)               fora do jogo  o frame e o tic
 tools/perfilador.gd         (script)               fora do jogo  o tempo de cada funcao, pelo debugger remoto do motor (RG-18)
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado
 tools/web/**                o site (ADR 0024, 0025)  fora do jogo  le data/, docs/ e o project.godot; nunca exportado
+tools/forja/**              a Forja (ADR 0088)     fora do jogo  tools/, Pillow; le art/palettes e docs/art; nunca exportado
 
 ## Ciclo de trabalho
 1. Le docs/backlog/<id>.md e as seccoes de docs/design/ que ele cita.
