@@ -3026,5 +3026,22 @@
   "feito": "Relatório mestre, fontes, contrato de asset, benchmark planejado e instruções para Claude.",
   "fora": "Treinamento, chamadas pagas, recuperação de pesos privados e alteração de runtime ou assets.",
   "estado": "feito — pesquisa pública, relatório de implementação e auditoria reproduzível da Forja do PR #117"
+ },
+ "FORJA-02": {
+  "title": "Reparar a Forja pela auditoria de 23/10 e fechar uma fatia vertical",
+  "porque": "A auditoria reproduziu nove falhas no primeiro corte da Forja: pedidos pagos repetidos ou errados, arte apagada na edição e na limpeza, saltos achatados e aprovação estrutural usada como paragem.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/adr/0089-a-forja-pede-uma-vez-e-mede.md",
+   "docs/art/research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md",
+   "docs/art/research/2026-10-23-forja-reparos/README.md"
+  ],
+  "depende": "FORJA-01",
+  "feito": "F01–F09 reparados com testes; plano por gerador; jobs duráveis com teto; revisão em três estados; fatia vertical com a bailarina (64) e a Sombra (80) do V15, só leitura; piloto definido.",
+  "fora": "Chamadas pagas, piloto executado, novos assets, aprovação artística, abertura no aplicativo Aseprite.",
+  "estado": "feito — F01–F09 reparados com testes, fatia vertical royal_64/royal_80 sem rede, piloto pago definido e por executar (sem chaves; teto por aprovar pelo dono)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

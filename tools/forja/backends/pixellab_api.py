@@ -1,65 +1,170 @@
-"""PixelLab API v2 (https://api.pixellab.ai/v2): gerar com o modelo deles e trazer o PNG.
+"""PixelLab API v2 (https://api.pixellab.ai/v2): gerar com os modelos deles, no tamanho nativo.
 
-Util para comparar resultados ou quando o autor tem plano do PixelLab. Os nomes
-dos campos seguem a especificacao OpenAPI v2 lida em 23/10/2026; nao houve
-chamada real nesta sessao (sem chave). Variaveis: PIXELLAB_API_KEY (ou PIXELLAB_SECRET).
+Contrato lido da especificacao publica em 23/10/2026 (`/v2/openapi.json`, versao
+"dev", sha256 abaixo; o mesmo hash da pesquisa em
+docs/art/research/2026-10-23-pixellab/proveniencia.json):
+
+- pixflux: area de 32x32 a 400x400; init_image (imagem inicial), color_image (paleta forcada).
+- pixen: lado minimo 16, area ate 512x512, lados multiplos de 4, quadrado se um lado < 32;
+  fundo transparente so ate 65 536 px de area; sem imagem inicial nem `shading`.
+- bitforge: area ate 200x200; init_image, color_image e style_image.
+- Resposta: imagem sincrona com `usage.usd`, ou `background_job_id` para GET
+  /background-jobs/{id} (processing, completed, failed) e DELETE para cancelar.
+- 529 e "Rate limit exceeded" (recusa clara). Nao ha idempotencia documentada.
+
+O que o modelo faz por dentro nao esta publicado; isto so fala do contrato da API.
+Nao houve chamada real nesta sessao (sem chave). Uma mudanca do hash da
+especificacao obriga a rever estes limites. Variaveis: PIXELLAB_API_KEY (ou
+PIXELLAB_SECRET, PIXELLAB_API_TOKEN).
 """
 from __future__ import annotations
 
+import io
 import time
 
-from . import http
+from PIL import Image
+
+from . import Call, Result, http, image_refs
 
 BASE = "https://api.pixellab.ai/v2"
+SPEC_SHA256 = "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc"
 OUTLINES = ("single color black outline", "single color outline", "selective outline", "lineless")
 SHADINGS = ("flat shading", "basic shading", "medium shading", "detailed shading", "highly detailed shading")
 DETAILS = ("low detail", "medium detail", "highly detailed")
 VIEWS = ("side", "low top-down", "high top-down")
 DIRECTIONS = ("north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west")
+ENUMS = {"outline": OUTLINES, "shading": SHADINGS, "detail": DETAILS, "view": VIEWS, "direction": DIRECTIONS}
+IMAGES = ("init_image", "color_image", "style_image")
+_STYLE = ("outline", "detail", "view", "direction", "no_background", "seed")
+CAPS = {
+    "pixflux": {"min_area": 32 * 32, "max_area": 400 * 400, "images": ("init_image", "color_image"),
+                "fields": _STYLE + ("shading", "isometric", "text_guidance_scale", "init_image_strength")},
+    "pixen": {"min_side": 16, "max_area": 512 * 512, "multiple": 4, "square_below": 32,
+              "transparent_max_area": 65536, "images": (), "fields": _STYLE},
+    "bitforge": {"max_area": 200 * 200, "images": IMAGES,
+                 "fields": _STYLE + ("shading", "isometric", "text_guidance_scale", "init_image_strength",
+                                     "style_strength")},
+}
+REFUSED = http.REFUSED | {529}
 
 
-def _image(data: bytes) -> dict:
-    return {"type": "base64", "base64": http.b64(data), "format": "png"}
+def capabilities(model: str) -> dict:
+    if model not in CAPS:
+        raise ValueError(f"modelo PixelLab desconhecido: {model!r} (use {', '.join(CAPS)})")
+    return {"model": model, "endpoint": f"{BASE}/create-image-{model}", "spec_sha256": SPEC_SHA256,
+            "static_image_only": True, **CAPS[model]}
+
+
+def _size(data: bytes) -> tuple[int, int]:
+    with Image.open(io.BytesIO(data)) as im:
+        return im.size
+
+
+def check(model: str, width: int, height: int, **kw) -> list[str]:
+    """Os erros que a API daria, ditos antes de qualquer rede (lista vazia: valido)."""
+    if model not in CAPS:
+        return [f"modelo PixelLab desconhecido: {model!r} (use {', '.join(CAPS)})"]
+    c, area, errors = CAPS[model], width * height, []
+    if area < c.get("min_area", 0):
+        errors.append(f"{model}: area {width}x{height} abaixo do minimo 32x32")
+    if area > c["max_area"]:
+        side = round(c["max_area"] ** 0.5)
+        errors.append(f"{model}: area {width}x{height} acima do maximo {side}x{side}")
+    if min(width, height) < c.get("min_side", 1):
+        errors.append(f"{model}: lado minimo {c['min_side']}")
+    if c.get("multiple") and (width % c["multiple"] or height % c["multiple"]):
+        errors.append(f"{model}: largura e altura multiplas de {c['multiple']}")
+    if min(width, height) < c.get("square_below", 0) and width != height:
+        errors.append(f"{model}: tem de ser quadrado com um lado abaixo de {c['square_below']}")
+    if kw.get("no_background") and area > c.get("transparent_max_area", area):
+        errors.append(f"{model}: fundo transparente so ate {c['transparent_max_area']} px de area")
+    for name, value in kw.items():
+        if value is None or value is False:
+            continue
+        if name in IMAGES:
+            if name not in c["images"]:
+                errors.append(f"{model} nao aceita {name}")
+            elif name == "init_image" and _size(value) != (width, height):
+                errors.append(f"init_image {_size(value)} tem de ter o tamanho do pedido {(width, height)}; "
+                              "a Forja nao redimensiona em silencio (use forja fit/snap antes)")
+        elif name not in c["fields"]:
+            errors.append(f"{model} nao aceita o campo {name}")
+        elif name in ENUMS and value not in ENUMS[name]:
+            errors.append(f"{name} invalido: {value!r} (use {', '.join(ENUMS[name])})")
+    return errors
 
 
 def payload(prompt: str, width: int, height: int, model: str = "pixflux", **kw) -> dict:
+    errors = check(model, width, height, **kw)
+    if errors:
+        raise ValueError("; ".join(errors))
     body: dict = {"description": prompt, "image_size": {"width": width, "height": height}}
-    for name, allowed in (("outline", OUTLINES), ("shading", SHADINGS), ("detail", DETAILS),
-                          ("view", VIEWS), ("direction", DIRECTIONS)):
-        value = kw.get(name)
-        if value:
-            if value not in allowed:
-                raise ValueError(f"{name} invalido: {value!r} (use {', '.join(allowed)})")
-            if not (model == "pixen" and name == "shading"):
-                body[name] = value
-    for name in ("no_background", "seed", "isometric", "text_guidance_scale", "init_image_strength"):
-        if kw.get(name) is not None:
-            body[name] = kw[name]
-    if kw.get("init_image"):
-        body["init_image"] = _image(kw["init_image"])
-    if kw.get("color_image"):
-        body["color_image"] = _image(kw["color_image"])
+    for name, value in kw.items():
+        if value is None:
+            continue
+        body[name] = {"type": "base64", "base64": http.b64(value), "format": "png"} if name in IMAGES else value
     return body
 
 
-def generate(prompt: str, width: int = 64, height: int = 64, model: str = "pixflux",
-             transport: http.Transport | None = None, poll: float = 5.0, **kw) -> dict:
-    """Devolve {'images': [png...], 'model', 'request'} (o pedido sem a chave)."""
-    if model not in ("pixflux", "pixen", "bitforge"):
-        raise ValueError("modelo PixelLab: pixflux, pixen ou bitforge")
-    headers = {"Authorization": "Bearer " + http.key("PIXELLAB_API_KEY", "PIXELLAB_SECRET", "PIXELLAB_API_TOKEN")}
-    body = payload(prompt, width, height, model, **kw)
-    req = http.json_request("POST", f"{BASE}/create-image-{model}", body, headers)
-    data = http.send(req, transport, "pixellab").json()
+def _headers() -> dict[str, str]:
+    return {"Authorization": "Bearer " + http.key("PIXELLAB_API_KEY", "PIXELLAB_SECRET", "PIXELLAB_API_TOKEN")}
+
+
+def _usd(data: dict) -> float | None:
+    usage = data.get("usage") if isinstance(data, dict) else None
+    if isinstance(usage, dict) and usage.get("type") == "usd" and isinstance(usage.get("usd"), (int, float)):
+        return float(usage["usd"])
+    return None
+
+
+def parse(data: dict) -> Result:
     job = data.get("background_job_id")
-    while job and not http.find_images(data):
-        time.sleep(poll) if transport is None else None
-        status = http.send(http.json_request("GET", f"{BASE}/background-jobs/{job}", None, headers),
-                           transport, "pixellab").json()
-        if status.get("status") == "failed":
-            raise http.ApiError("pixellab", 200, str(status.get("last_response")))
-        if status.get("status") == "completed":
-            data = status.get("last_response") or {}
-            break
-    return {"images": http.find_images(data), "model": f"pixellab/{model}",
-            "request": {k: v for k, v in body.items() if k not in ("init_image", "color_image")}}
+    return Result(http.find_images(data), job, "processing" if job else "completed", _usd(data))
+
+
+def call(prompt: str, width: int = 64, height: int = 64, model: str = "pixflux", **kw) -> Call:
+    """O pedido validado. Imagens (init_image, color_image, style_image) vao em bytes PNG."""
+    body = payload(prompt, width, height, model, **kw)
+    url = f"{BASE}/create-image-{model}"
+    descriptor = {"endpoint": url, "model": model, "spec_sha256": SPEC_SHA256,
+                  "params": {k: v for k, v in body.items() if k not in IMAGES},
+                  "images": image_refs([(k, kw[k]) for k in IMAGES if kw.get(k)])}
+    return Call("pixellab", f"create-image-{model}", lambda: http.json_request("POST", url, body, _headers()),
+                parse, descriptor, REFUSED)
+
+
+def parse_job(data: dict) -> Result:
+    status = data.get("status")
+    last = data.get("last_response") or {}
+    if status == "processing":
+        return Result(state="processing", detail={"status": status, "queue_position": last.get("queue_position"),
+                                                  "estimated_wait_seconds": last.get("estimated_wait_seconds")})
+    if status == "completed":
+        return Result(http.find_images(last), state="completed", usage_usd=_usd(last) or _usd(data),
+                      detail={"status": status})
+    if status == "failed":
+        return Result(state="failed", detail={"status": status, "last_response": str(last)[:400]})
+    return Result(state="unknown", detail={"status": status})
+
+
+def poll_call(job_id: str) -> Call:
+    url = f"{BASE}/background-jobs/{job_id}"
+    return Call("pixellab", "background-job", lambda: http.json_request("GET", url, None, _headers()),
+                parse_job, {"endpoint": url})
+
+
+def cancel_call(job_id: str) -> Call:
+    url = f"{BASE}/background-jobs/{job_id}"
+    return Call("pixellab", "cancel-background-job", lambda: http.json_request("DELETE", url, None, _headers()),
+                lambda data: Result(detail=data), {"endpoint": url})
+
+
+def generate(prompt: str, width: int = 64, height: int = 64, model: str = "pixflux",
+             transport: http.Transport | None = None, folder=None, budget=None,
+             sleep=time.sleep, **kw) -> dict:
+    """Pedir e esperar, com o job escrito em `folder`/jobs (se dado). Devolve imagens e o registo."""
+    from .. import jobs
+    c = call(prompt, width, height, model, **kw)
+    job = jobs.create(c, folder)
+    images = jobs.execute(job, c, transport, poll=poll_call, budget=budget, sleep=sleep)
+    return {"images": images, "model": f"pixellab/{model}", "request": c.descriptor, "job": job.data}

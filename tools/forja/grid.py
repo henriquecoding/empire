@@ -96,9 +96,9 @@ def _first_peak(r: list[float], p_min: float, p_max: int) -> tuple[float, float]
     while lag < p_max and r[lag + 1] < r[lag]:
         lag += 1
     peaks = [k for k in range(max(lag, int(p_min)), p_max + 1) if r[k] >= r[k - 1] and r[k] >= r[k + 1]]
-    if not peaks:
+    top = max((r[k] for k in peaks), default=0.0)
+    if top <= 0:  # sem picos, ou so negativos (recortes minusculos)
         return None
-    top = max(r[k] for k in peaks)
     k = next(k for k in peaks if r[k] >= 0.6 * top)
     a, b, c = r[k - 1], r[k], r[k + 1]
     bend = a - 2 * b + c

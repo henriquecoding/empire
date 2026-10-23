@@ -30,6 +30,8 @@ class Options:
     outline: str = "auto"
     dither: str = "none"
     noise: float = 0.08
+    cleanup: str = "auto"
+    protect: list[tuple[int, int, int, int]] | None = None
     fit: bool = True
     pivot: tuple[int, int] | None = None
     canvas: tuple[int, int] | None = None
@@ -99,7 +101,8 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
            pal: palmod.Palette | None) -> tuple[Image.Image, dict]:
     """Limpeza, paleta, contorno, cluster e tela — o que torna o recorte um asset."""
     info: dict = {}
-    img, info["despeckle"] = cleanup.despeckle(native, opts.noise)
+    img, info["cleanup"] = cleanup.clean(native, cleanup.policy_for(opts.kind, opts.cleanup), opts.noise,
+                                         opts.protect)
     if contract.outline_px:
         img, info["outline_normalized"] = outline.normalize(img, contract.outline_color)
     if pal is not None:
@@ -108,6 +111,7 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
     elif opts.colors:
         img, extracted = quantize.reduce(img, opts.colors, opts.dither if contract.dither else "none")
         info["palette"] = {"name": "extraida", "colors": extracted.hexes()}
+    shift = (0, 0)
     if contract.outline_px and opts.outline != "keep":
         measured = outline.measure(img, contract.outline_color)
         if opts.outline == "force" or measured["outline_share"] < 0.85:
@@ -116,10 +120,12 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
             img = outline.add(_pad(img, 1), contract.outline_color, 1)
             box = opaque_bbox(img)
             img = img.crop(box) if box else img
+            shift = (box[0] - 1, box[1] - 1) if box else (-1, -1)
             info["outline_added"] = True
     if contract.cluster > 1:
         img = upscale(img, contract.cluster)
         info["cluster_upscale"] = contract.cluster
+    info["shift"] = [shift[0] * contract.cluster, shift[1] * contract.cluster]
     if opts.fit and contract.canvas:
         anchor = _anchor(img, contract.anchor)
         target = contract.pivot or (contract.canvas[0] // 2, contract.canvas[1] - 1)

@@ -1,0 +1,52 @@
+{
+ "schema_version": 1,
+ "date": "2026-10-23",
+ "status": "nao_executado_bloqueado",
+ "why": "Nenhuma credencial de gerador nesta sessao (OPENAI_API_KEY, GEMINI_API_KEY/GOOGLE_API_KEY, PIXELLAB_API_KEY/PIXELLAB_SECRET/PIXELLAB_API_TOKEN ausentes) e o teto de gasto abaixo ainda nao foi aprovado pelo dono. Nenhuma chamada paga foi feita; nenhum resultado foi inventado.",
+ "unblock": [
+  "O dono aprova (ou muda) o teto `spend_ceiling` deste ficheiro.",
+  "Uma sessao com as chaves no ambiente corre os comandos `commands`, por esta ordem, sem os alterar.",
+  "Cada pasta guarda jobs/, budget.json, plan/, raw e try*/; nada se apaga, falhas incluidas.",
+  "A revisao humana preenche `human_review` por saida; so depois se fixam limiares (benchmark-plan.json)."
+ ],
+ "plan_source": "docs/art/research/2026-10-23-pixellab/benchmark-plan.json (piloto: 12 estaticos e 4 clips por configuracao; aqui reduzido ao primeiro corte abaixo)",
+ "references": {
+  "export_command": "python3 docs/art/research/2026-10-23-forja-reparos/fatia_vertical.py --refs build/forja/piloto/ref",
+  "dancarina": {"kind": "royal_64", "file": "build/forja/piloto/ref/dancarina-idle-0.png", "png_sha256": "c4659a241b581d10ed1602a95f786627791b2e342170eb27c5d686679c39ef5d", "rgba_sha256": "3fbba18ee269b445b13334b90e36eaebe85c5370de8d9a72b2851248b49f17eb", "source": "art/export/royals/dancarina.png quadro 0 (idle_right)", "state": "integrado (ADR 0087); design da dupla aceito em 19/10; animacao sem aprovacao artistica"},
+  "sombra": {"kind": "royal_80", "file": "build/forja/piloto/ref/sombra-idle-0.png", "png_sha256": "00515d89312453deed659c1a9b145e941386dba159912de36b7926dbf5413ac9", "rgba_sha256": "4f438a2aa3882970191ac5aa5c156671df316dd84bdd2b9728b2cbc993aa8dcd", "source": "art/export/royals/sombra.png quadro 0 (idle_right)", "state": "integrado (ADR 0087); design da dupla aceito em 19/10; animacao sem aprovacao artistica"},
+  "accepted_board": {"path": "docs/art/research/2026-10-19-character-animation/referencias/sombra-bailarina-design-aceito.png", "use": "so para a revisao humana (comparar identidade); nao vai anexado"}
+ },
+ "spend_ceiling": {
+  "approved_by_owner": false,
+  "proposal": {"max_calls_total": 24, "max_usd_known": 10.0, "per_backend_max_calls": {"pixellab": 8, "openai": 8, "gemini": 8}},
+  "how_enforced": "`--max-calls` por pasta (budget.json soma entre corridas) e `--max-usd` contra o custo que o fornecedor diz. OpenAI e Gemini nao devolvem dolares: nesses o teto que vale e o numero de chamadas.",
+  "documented_estimates": "O catalogo PixelLab lido em 23/10 estima Pixen 64x64 em cerca de US$0,00718 por imagem (estimativa do fornecedor, nao preco garantido). Sem estimativa propria para gpt-image e Gemini."
+ },
+ "cases": [
+  {"id": "dancer_neutral_static", "brief": "dancer_neutral", "kind": "royal_64", "tags": null, "backends": ["pixellab", "openai", "gemini"]},
+  {"id": "shadow_neutral_static", "brief": "shadow_neutral", "kind": "royal_80", "tags": null, "backends": ["pixellab", "openai", "gemini"]},
+  {"id": "dancer_walk_clip", "brief": "walk_with_contacts", "kind": "royal_64", "tags": "walk:8", "backends": ["openai", "gemini"], "note": "PixelLab: animacao ainda nao ligada; o plano recusa localmente"},
+  {"id": "shadow_walk_clip", "brief": "walk_with_contacts", "kind": "royal_80", "tags": "walk:8", "backends": ["openai", "gemini"]}
+ ],
+ "commands": [
+  "python3 -m tools.forja plan \"adult red-haired dancer, compact tied-up hair, expressive face, cream blouse, sage bodice, asymmetric wine skirt in two masses, opaque stockings, low brown shoes\" --backend pixellab --kind royal_64 --reference build/forja/piloto/ref/dancarina-idle-0.png -o build/forja/piloto/pixellab/dancer_neutral_static",
+  "python3 -m tools.forja auto \"adult red-haired dancer, compact tied-up hair, expressive face, cream blouse, sage bodice, asymmetric wine skirt in two masses, opaque stockings, low brown shoes\" --backend pixellab --kind royal_64 --reference build/forja/piloto/ref/dancarina-idle-0.png --attempts 2 --max-calls 2 --max-usd 1 -o build/forja/piloto/pixellab/dancer_neutral_static",
+  "python3 -m tools.forja auto \"hunched figure under a large charcoal-violet cloak with plum lining, head bowed, simple closed grey helmet with a small crooked bronze crown, silver gloves and boots, face hidden\" --backend pixellab --kind royal_80 --reference build/forja/piloto/ref/sombra-idle-0.png --attempts 2 --max-calls 2 --max-usd 1 -o build/forja/piloto/pixellab/shadow_neutral_static",
+  "python3 -m tools.forja auto \"<mesmo assunto da bailarina>\" --backend openai --kind royal_64 --reference build/forja/piloto/ref/dancarina-idle-0.png --attempts 2 --max-calls 2 -o build/forja/piloto/openai/dancer_neutral_static",
+  "python3 -m tools.forja auto \"<mesmo assunto da Sombra>\" --backend openai --kind royal_80 --reference build/forja/piloto/ref/sombra-idle-0.png --attempts 2 --max-calls 2 -o build/forja/piloto/openai/shadow_neutral_static",
+  "python3 -m tools.forja auto \"<mesmo assunto da bailarina>\" --backend openai --kind royal_64 --tags walk:8 --reference build/forja/piloto/ref/dancarina-idle-0.png --attempts 2 --max-calls 2 -o build/forja/piloto/openai/dancer_walk_clip",
+  "python3 -m tools.forja auto \"<mesmo assunto da Sombra>\" --backend openai --kind royal_80 --tags walk:8 --reference build/forja/piloto/ref/sombra-idle-0.png --attempts 2 --max-calls 2 -o build/forja/piloto/openai/shadow_walk_clip",
+  "(os mesmos quatro com --backend gemini e pastas build/forja/piloto/gemini/...)",
+  "python3 -m tools.forja jobs build/forja/piloto/<backend>/<caso>   # rever estado, custo e tentativas de cada pasta"
+ ],
+ "human_review": {
+  "per_output": ["identity", "silhouette", "expression", "proportions", "pixel_clusters", "palette", "pose", "continuity", "timing", "engine_integration"],
+  "scale": "1-5 com descritor (relatorio mestre §18.4); 5 = pronto para o uso definido",
+  "record": ["minutes_of_rework", "accepted_without_edit", "accepted_after_edit", "rejected_reason"],
+  "views": "1x e 2x em Nearest, fundo claro e escuro, movimento na velocidade final"
+ },
+ "results": null,
+ "paid_calls": 0,
+ "cost_usd": 0.0,
+ "human_minutes": null
+}

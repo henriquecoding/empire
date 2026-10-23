@@ -52,7 +52,7 @@ def _outline(c: contracts.Contract) -> str:
     return f"a {c.outline_px}-logical-pixel pure black (#000000) outline around the whole silhouette and on key internal details"
 
 
-def _colors(pal: Palette | None, c: contracts.Contract, listed: int) -> str:
+def _colors(pal: Palette | None, c: contracts.Contract, listed: int, swatch: int | None) -> str:
     if c.max_colors:
         limit = f"at most {c.max_colors} colors in total"
     else:
@@ -61,38 +61,80 @@ def _colors(pal: Palette | None, c: contracts.Contract, listed: int) -> str:
         return f"flat colors only, {limit}"
     if len(pal) <= listed:
         return f"use ONLY these colors: {', '.join(pal.hexes())}; {limit}"
-    return f"use ONLY colors from the attached palette swatch ({len(pal)} colors); {limit}"
+    if swatch:
+        return f"use ONLY colors from attached image {swatch} (the palette swatch, {len(pal)} colors); {limit}"
+    return f"flat colors only, {limit}"
+
+
+ROLES = {
+    "identity": "the APPROVED design of this character: preserve proportions, head, face, clothing, materials "
+                "and colors exactly; change only the pose",
+    "style": "a style reference: copy its pixel-art language (outline, shading, cluster size), not its subject",
+    "palette": "the palette swatch (big squares, no text)",
+    "layout": "the layout template at the exact output proportions: one figure per cell, feet on the faint "
+              "baseline, centered on the dotted axis; do NOT copy its lines",
+}
+
+
+def default_attached(reference: bool, palette: Palette | None, listed: int = 24) -> list[str]:
+    """O que o `forja prompt` manda anexar: o design aprovado e, se a paleta nao cabe no texto, a amostra."""
+    return (["identity"] if reference else []) + (["palette"] if palette is not None and len(palette) > listed else [])
+
+
+def geometry(kind: str, tags: list[tuple[str, int]] | None, target: str,
+             cells: tuple[int, int] | None = None) -> dict:
+    """Grelha logica, escala e tamanho de imagem para um gerador de lados livres (gpt-image) ou generico."""
+    c = contracts.get(kind)
+    canvas = cells or (tuple(v // c.cluster for v in c.canvas) if c.canvas else (64, 64))
+    frames = sum(n for _, n in tags) if tags else 1
+    cols, rows = layout_for(frames)
+    logical = (canvas[0] * cols, canvas[1] * rows)
+    k = pick_scale(logical[0], logical[1], target)
+    return {"canvas": list(canvas), "layout": [cols, rows], "frames": frames, "logical": list(logical),
+            "content": [0, 0, logical[0], logical[1]], "scale": k, "size": [logical[0] * k, logical[1] * k],
+            "exact": target == "gpt-image"}
 
 
 def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] | None = None,
           facing: str = "right", reference: bool = False, palette: Palette | None = None,
           target: str = "gpt-image", background: str = "auto", listed: int = 24,
-          cells: tuple[int, int] | None = None) -> dict:
+          cells: tuple[int, int] | None = None, attached: list[str] | None = None,
+          geo: dict | None = None) -> dict:
+    """O prompt e o `expect`. `attached` sao os papeis das imagens que VAO anexadas, por ordem:
+    o texto so promete essas. `geo` (do plano por backend) substitui a geometria calculada aqui."""
     if target not in TARGETS:
         raise ValueError(f"alvo desconhecido: {target}")
     c = contracts.get(kind)
-    canvas = cells or (tuple(v // c.cluster for v in c.canvas) if c.canvas else (64, 64))
-    frames = sum(n for _, n in tags) if tags else 1
-    cols, rows = layout_for(frames)
-    k = pick_scale(canvas[0] * cols, canvas[1] * rows, target)
-    size = (canvas[0] * cols * k, canvas[1] * rows * k)
+    geo = geo or geometry(kind, tags, target, cells)
+    attached = default_attached(reference, palette, listed) if attached is None else attached
+    unknown = [r for r in attached if r not in ROLES]
+    if unknown:
+        raise ValueError(f"papel de imagem desconhecido: {unknown}")
+    number = {r: attached.index(r) + 1 for r in attached}
+    canvas, (cols, rows), frames, k = geo["canvas"], geo["layout"], geo["frames"], geo["scale"]
+    (lw, lh), (x0, y0, x1, y1) = geo["logical"], geo["content"]
     key = matte.best_key(palette.colors if palette else [])
     transparent = background == "transparent" or (background == "auto" and target == "gpt-image")
     pivot = c.pivot
     base = (canvas[1] - 1 - pivot[1] // c.cluster) if pivot else 2
+    block = f"ONE crisp solid {k}x{k} square block" if geo["exact"] else (
+        f"ONE crisp solid square block of one fixed size (about {round(k)}x{round(k)} image pixels)")
     lines = [
         'Create a pixel-art game asset for "Empire", a 2D side-view kingdom builder.',
         f"Subject: {subject}.",
         f"Asset type: {c.en}.",
-        f"Pixel grid: the image is an exact grid of {canvas[0] * cols}x{canvas[1] * rows} logical pixels; "
-        f"every logical pixel is ONE crisp solid {k}x{k} square block aligned to the image edges. "
-        "No sub-pixel detail, no anti-aliasing, no blur, no gradients, no soft brushes, no texture noise.",
+        f"Pixel grid: the image is an exact grid of {lw}x{lh} logical pixels; every logical pixel is {block} "
+        "aligned to the image edges. No sub-pixel detail, no anti-aliasing, no blur, no gradients, no soft "
+        "brushes, no texture noise.",
         f"Camera: strict side view (profile), facing {facing.upper()}, like a 2D platformer sprite.",
         f"Outline: {_outline(c)}.",
         "Shading: two tones per material (light and shadow), light from the top-left, big readable flat clusters"
         + ("" if c.dither else ", no dithering") + ".",
-        f"Colors: {_colors(palette, c, listed)}.",
+        f"Colors: {_colors(palette, c, listed, number.get('palette'))}.",
     ]
+    if attached:
+        lines.append("Attached images, in order: " + "; ".join(f"image {i}: {ROLES[r]}"
+                                                                for i, r in enumerate(attached, 1)) + ".")
     if c.useful_height and c.useful_height[0] > 1:
         lines.append(f"Scale: the figure is {c.useful_height[0]}-{c.useful_height[1]} logical pixels tall, "
                      f"feet resting on a ground baseline {base} logical pixels above the bottom edge of its cell, "
@@ -102,26 +144,30 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
     else:
         lines.append(f"Background: one perfectly flat solid {key} color (chroma key) everywhere around the figure; "
                      f"never use {key} inside the figure; no shadow, floor, gradient or vignette.")
+    if (x0, y0, x1, y1) != (0, 0, lw, lh):
+        lines.append(f"Margins: draw only inside logical pixels x {x0}-{x1 - 1}, y {y0}-{y1 - 1}; everything "
+                     "outside that box is empty background.")
     if frames > 1:
         lines.append(f"Layout: a {cols}x{rows} sprite sheet of equal {canvas[0]}x{canvas[1]}-logical-pixel cells, "
                      "read left-to-right then top-to-bottom; one pose per cell; the SAME character, scale, palette and "
                      "baseline in every cell; generous empty space between figures; no text, labels, numbers, "
                      "borders, frame lines or grid lines.")
         lines += _timeline(tags or [])
-    if reference:
-        lines.append("Identity: the attached image is the APPROVED design. Preserve proportions, head, face, clothing, "
-                     "materials and colors exactly; change only the pose.")
+    if "identity" not in attached and reference:
+        raise ValueError("reference=True sem a imagem de identidade anexada")
     lines.append("Avoid: photorealism, 3D render, painterly or vector style, glow, lens effects, drop shadows, "
                  "extra characters, watermarks, signatures, UI.")
-    expect = {"kind": kind, "cells": [canvas[0] * cols, canvas[1] * rows], "scale": k, "layout": [cols, rows],
-              "frames": frames, "tags": [list(t) for t in tags] if tags else None,
-              "background": "transparent" if transparent else key, "size": list(size), "cluster": c.cluster}
+    expect = {"kind": kind, "cells": geo["logical"], "content": geo["content"], "scale": k,
+              "scale_exact": geo["exact"], "grid": "requested", "layout": [cols, rows], "frames": frames,
+              "tags": [list(t) for t in tags] if tags else None,
+              "background": "transparent" if transparent else key, "size": geo["size"], "cluster": c.cluster,
+              "attached": attached}
     advice = None
     if k < 8:
-        advice = (f"cada pixel logico tera so {k} px na imagem: o gerador perde precisao. Peca menos quadros por "
+        advice = (f"cada pixel logico tera so {k:g} px na imagem: o gerador perde precisao. Peca menos quadros por "
                   "prancha (ex.: --tags walk:4 duas vezes) ou uma figura por imagem.")
-    return {"prompt": "\n".join(lines), "size": f"{size[0]}x{size[1]}", "expect": expect, "advice": advice,
-            "pixellab": pixellab_params(subject, c, canvas, facing), "target": target}
+    return {"prompt": "\n".join(lines), "size": f"{geo['size'][0]}x{geo['size'][1]}", "expect": expect,
+            "advice": advice, "pixellab": pixellab_params(subject, c, tuple(canvas), facing), "target": target}
 
 
 def _timeline(tags: list[tuple[str, int]]) -> list[str]:

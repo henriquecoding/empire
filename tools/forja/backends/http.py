@@ -2,18 +2,30 @@
 
 Nenhuma dependencia nova (AGENTS.md, regra 8). Os testes trocam `transport` por
 um falso e conferem o pedido que sairia, sem rede nem chave. As chaves vem do
-ambiente e nunca entram em relatorios nem em mensagens de erro.
+ambiente e nunca entram em relatorios, registos nem mensagens de erro.
+
+Regra das tentativas (auditoria F01): um POST de geracao e cobrado e nenhum dos
+fornecedores ligados documenta idempotencia, por isso sai UMA vez. Se o servidor
+o recusa com uma resposta clara (4xx), o erro diz `rejected` — nada foi aceite.
+Se a resposta se perde (rede, tempo esgotado, 5xx), o erro e `SubmissionUnknown`:
+pode ter sido aceite e cobrado, e quem chamou reconcilia antes de pedir outra vez
+(`tools/forja/jobs.py`). So as consultas (GET, HEAD, DELETE de um job) se repetem,
+com espera exponencial, jitter, `Retry-After` e um prazo total.
 """
 from __future__ import annotations
 
 import base64
+import email.utils
+import http.client
 import json
 import os
+import random
 import time
 import urllib.error
 import urllib.request
 import uuid
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Callable
 
 
@@ -46,28 +58,94 @@ def urllib_transport(req: Request, timeout: float = 300.0) -> Response:
 
 
 Transport = Callable[[Request], Response]
-RETRY = {408, 409, 423, 425, 429, 500, 502, 503, 504, 529}
+SAFE = frozenset({"GET", "HEAD", "OPTIONS", "DELETE"})
+RETRY = frozenset({408, 425, 429, 500, 502, 503, 504, 529})
+NETWORK = (OSError, http.client.HTTPException)
+REFUSED = frozenset(range(400, 500)) - {408}
 
 
 class ApiError(RuntimeError):
-    def __init__(self, service: str, status: int, detail: str):
-        super().__init__(f"{service}: HTTP {status}: {detail[:400]}")
-        self.status = status
+    """`outcome`: rejected (o servidor recusou), unknown (pode ter sido aceite) ou failed (consulta sem fim)."""
+
+    def __init__(self, service: str, status: int, detail: str, outcome: str = "failed",
+                 retry_after: float | None = None):
+        super().__init__(f"{service}: HTTP {status}: {detail[:400]}" if status else f"{service}: {detail[:400]}")
+        self.service, self.status, self.outcome, self.retry_after = service, status, outcome, retry_after
 
 
-def send(req: Request, transport: Transport | None = None, service: str = "api",
-         attempts: int = 4, wait: float = 2.0, sleep: Callable[[float], None] = time.sleep) -> Response:
-    """Envia com tentativas exponenciais nos codigos que pedem para esperar (429, 5xx...)."""
+class SubmissionUnknown(ApiError):
+    """O POST saiu e a resposta nao chegou (ou foi um 5xx): nao se sabe se foi aceite."""
+
+    def __init__(self, service: str, detail: str, status: int = 0, retry_after: float | None = None):
+        super().__init__(service, status, detail, "unknown", retry_after)
+
+
+def retry_after(headers: dict[str, str], now: datetime | None = None) -> float | None:
+    """Segundos pedidos pelo servidor: `Retry-After` em segundos ou em data HTTP."""
+    value = headers.get("Retry-After") or headers.get("retry-after")
+    if not value:
+        return None
+    try:
+        return max(0.0, float(value))
+    except ValueError:
+        pass
+    try:
+        when = email.utils.parsedate_to_datetime(value)
+    except (TypeError, ValueError):
+        return None
+    return max(0.0, (when - (now or datetime.now(timezone.utc))).total_seconds())
+
+
+def _entry(req: Request, started: float, clock: Callable[[], float], **result) -> dict:
+    return {"method": req.method, "url": req.url.split("?")[0], **result,
+            "ms": round((clock() - started) * 1000)}
+
+
+def send(req: Request, transport: Transport | None = None, service: str = "api", *, deadline: float = 120.0,
+         attempts: int = 6, wait: float = 1.0, max_wait: float = 30.0,
+         sleep: Callable[[float], None] = time.sleep, clock: Callable[[], float] = time.monotonic,
+         rand: Callable[[], float] = random.random, log: list | None = None,
+         refused: frozenset[int] = REFUSED) -> Response:
+    """Envia um pedido. POST: uma vez. GET/DELETE: repete nos codigos de espera ate ao prazo.
+
+    `log` recebe uma entrada por tentativa (metodo, URL sem query, estado, tempo, espera),
+    sem cabecalhos. `refused` sao os codigos em que um POST foi claramente recusado.
+    """
     transport = transport or urllib_transport
-    for attempt in range(attempts):
-        resp = transport(req)
-        if resp.status < 400:
-            return resp
-        if resp.status not in RETRY or attempt == attempts - 1:
-            raise ApiError(service, resp.status, resp.body.decode("utf-8", "replace"))
-        retry_after = resp.headers.get("Retry-After") or resp.headers.get("retry-after")
-        sleep(float(retry_after) if retry_after and retry_after.isdigit() else wait * 2 ** attempt)
-    raise ApiError(service, 0, "sem resposta")
+    log = [] if log is None else log
+    safe = req.method.upper() in SAFE
+    start = clock()
+    status, detail, pause = 0, "sem resposta", None
+    for attempt in range(attempts if safe else 1):
+        t0 = clock()
+        try:
+            resp = transport(req)
+        except NETWORK as err:
+            log.append(_entry(req, t0, clock, error=type(err).__name__))
+            if not safe:
+                raise SubmissionUnknown(service, f"sem resposta ({type(err).__name__}): o pedido pode ter "
+                                                 "sido aceite; reconcilie antes de pedir outra vez") from err
+            status, detail, pause = 0, f"sem resposta ({type(err).__name__})", None
+        else:
+            log.append(_entry(req, t0, clock, status=resp.status))
+            if resp.status < 400:
+                return resp
+            status, detail = resp.status, resp.body.decode("utf-8", "replace")
+            pause = retry_after(resp.headers)
+            if not safe:
+                if status in refused:
+                    raise ApiError(service, status, detail, "rejected", pause)
+                raise SubmissionUnknown(service, detail, status, pause)
+            if status not in RETRY:
+                raise ApiError(service, status, detail, "rejected", pause)
+        if attempt == attempts - 1:
+            break
+        delay = pause if pause is not None else min(max_wait, wait * 2 ** attempt) * (0.5 + rand() / 2)
+        if clock() - start + delay > deadline:
+            raise ApiError(service, status, f"prazo de {deadline:g}s esgotado: {detail}", "failed", pause)
+        log[-1]["wait_s"] = round(delay, 3)
+        sleep(delay)
+    raise ApiError(service, status, f"{attempts} tentativas: {detail}", "failed", pause)
 
 
 def json_request(method: str, url: str, payload: dict | None, headers: dict[str, str]) -> Request:
@@ -93,12 +171,16 @@ def multipart(fields: list[tuple[str, str | bytes, str | None]]) -> tuple[bytes,
     return bytes(out), f"multipart/form-data; boundary={boundary}"
 
 
+class MissingKey(RuntimeError):
+    """Sem chave no ambiente: nada saiu para a rede."""
+
+
 def key(*names: str) -> str:
     for name in names:
         value = os.environ.get(name)
         if value:
             return value
-    raise RuntimeError(f"falta a chave: defina {' ou '.join(names)} no ambiente")
+    raise MissingKey(f"falta a chave: defina {' ou '.join(names)} no ambiente (nada foi enviado)")
 
 
 def b64(data: bytes) -> str:
