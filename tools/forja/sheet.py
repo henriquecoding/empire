@@ -14,9 +14,12 @@ from statistics import median
 from PIL import Image, ImageChops, ImageFilter
 
 from . import color, grid as gridmod, matte, resample
-from .imageops import foot_point, opaque_bbox, place
+from .imageops import opaque_bbox
+from .placement import ALIGNS, ANCHORS, anchor_point, frames
 
-ANCHORS = ("feet", "mass", "bottom", "center")
+__all__ = ["ALIGNS", "ANCHORS", "Figure", "anchor_point", "by_cells", "cell_rects", "extract", "find",
+           "find_cells", "find_masks", "frames", "mask_for", "reading_order"]
+
 
 
 @dataclass
@@ -26,6 +29,9 @@ class Figure:
     period: float = 0.0
     purity: float = 0.0
     notes: list[str] = field(default_factory=list)
+    origin_raw: tuple[int, int] | None = None
+    periods: tuple[float, float] = (0.0, 0.0)
+    origin: tuple[int, int] | None = None
 
 
 def find(image: Image.Image, bg: tuple[int, int, int] | None, gap: int = 12,
@@ -63,6 +69,13 @@ def find_masks(image: Image.Image, bg: tuple[int, int, int] | None, gap: int = 1
     return reading_order(keep), stray, masks
 
 
+def cell_rects(size: tuple[int, int], layout: tuple[int, int]) -> list[tuple[int, int, int, int]]:
+    cols, rows = layout
+    cw, ch = size[0] / cols, size[1] / rows
+    return [(round(i * cw), round(j * ch), round((i + 1) * cw), round((j + 1) * ch))
+            for j in range(rows) for i in range(cols)]
+
+
 def find_cells(image: Image.Image, bg: tuple[int, int, int] | None, layout: tuple[int, int],
                tolerance: int = 48) -> tuple[list, list, dict]:
     """Com a grelha pedida: cada celula e uma figura (ou None, se vazia), mesmo que se toquem.
@@ -71,22 +84,18 @@ def find_cells(image: Image.Image, bg: tuple[int, int, int] | None, layout: tupl
     esta numa celula pertence a essa figura. Manchas de 1-2 px de ruido nao contam.
     """
     full = matte.mask(image, bg, tolerance).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.MaxFilter(3))
-    cols, rows = layout
-    cw, ch = image.width / cols, image.height / rows
     boxes, masks = [], {}
-    for j in range(rows):
-        for i in range(cols):
-            cell = (round(i * cw), round(j * ch), round((i + 1) * cw), round((j + 1) * ch))
-            part = full.crop(cell)
-            bb = part.getbbox()
-            if not bb:
-                boxes.append(None)
-                continue
-            box = (cell[0] + bb[0], cell[1] + bb[1], cell[0] + bb[2], cell[1] + bb[3])
-            own = Image.new("L", image.size, 0)
-            own.paste(part.filter(ImageFilter.MaxFilter(5)), cell[:2])
-            boxes.append(box)
-            masks[box] = (own, 1)
+    for cell in cell_rects(image.size, layout):
+        part = full.crop(cell)
+        bb = part.getbbox()
+        if not bb:
+            boxes.append(None)
+            continue
+        box = (cell[0] + bb[0], cell[1] + bb[1], cell[0] + bb[2], cell[1] + bb[3])
+        own = Image.new("L", image.size, 0)
+        own.paste(part.filter(ImageFilter.MaxFilter(5)), cell[:2])
+        boxes.append(box)
+        masks[box] = (own, 1)
     return boxes, [], masks
 
 
@@ -189,43 +198,11 @@ def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pa
         g = gridmod.detect(crop, scale=shared) if shared > 1 else gridmod.detect(crop)
         sampled = resample.resample(crop, g)
         native, _ = matte.remove(sampled.image, color.to_hex(bg) if bg else None)
-        box = opaque_bbox(native)
-        f.native = native.crop(box) if box else native
-        f.period, f.purity = g.period[0], sampled.purity
+        box = opaque_bbox(native) or (0, 0, native.width, native.height)
+        f.native = native.crop(box)
+        f.period, f.purity, f.periods = g.period[0], sampled.purity, g.period
+        region = (max(0, f.box[0] - pad), max(0, f.box[1] - pad))
+        f.origin_raw = (region[0] + g.xs[box[0]], region[1] + g.ys[box[1]])
         if own > 1 and abs(own - shared) / shared > 0.08:
             f.notes.append(f"escala propria {own:.2f} difere da comum {shared:.2f}")
     return figures
-
-
-def frames(figures: list[Figure], canvas: tuple[int, int], pivot: tuple[int, int],
-           anchor: str = "feet") -> tuple[list[Image.Image], list[dict]]:
-    """As figuras na tela do contrato, com o apoio sobre o pivot."""
-    if anchor not in ANCHORS:
-        raise ValueError(f"ancora desconhecida: {anchor}")
-    out, report = [], []
-    for i, f in enumerate(figures):
-        img = f.native
-        point = anchor_point(img, anchor)
-        frame, clipped = place(img, canvas, point, pivot)
-        out.append(frame)
-        report.append({"frame": i, "source_box": list(f.box), "native_size": list(img.size),
-                       "period": round(f.period, 3), "purity": round(f.purity, 3),
-                       "anchor": list(point), "clipped_pixels": clipped, "notes": f.notes})
-    return out, report
-
-
-def _mass_x(img: Image.Image) -> int:
-    """O centro de massa horizontal: mais estavel que os pes quando as pernas mexem."""
-    alpha = img.getchannel("A")
-    xs = [x for y in range(img.height) for x in range(img.width) if alpha.getpixel((x, y)) >= 128]
-    return round(sum(xs) / len(xs)) if xs else img.width // 2
-
-
-def anchor_point(img: Image.Image, anchor: str) -> tuple[int, int]:
-    if anchor == "feet":
-        return foot_point(img) or (img.width // 2, img.height - 1)
-    if anchor == "mass":
-        return _mass_x(img), img.height - 1
-    if anchor == "bottom":
-        return img.width // 2, img.height - 1
-    return img.width // 2, img.height // 2

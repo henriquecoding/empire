@@ -292,3 +292,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | Ticket | Entrega | Depende | Estado |
 | --- | --- | --- | --- |
 | [ART-PIXELLAB-2026-10-23](ART-PIXELLAB-2026-10-23.md) | PixelLab: pesquisa, projeto técnico e auditoria da Forja do Claude | ART-KNOWLEDGE-2026-10-19 | feito |
+| [FORJA-02](FORJA-02.md) | Reparar a Forja pela auditoria (F01–F09) e fechar uma fatia vertical royal_64/royal_80 | FORJA-01 | feito — reparos testados; piloto pago definido e por executar (sem chaves; teto por aprovar) |

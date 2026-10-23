@@ -1,0 +1,173 @@
+{
+  "scope": "local_synthetic_observations_no_network",
+  "audited_commit": "68ed1c87461f5d39dd21fb664eef2930ddeaac81",
+  "checkout_commit": "4b18494e7697106f17bdf88c27ecbe80ac7f3323",
+  "observations": {
+    "F01_post_retries": {
+      "503": {
+        "post_attempts": 1,
+        "outcome": "unknown"
+      },
+      "timeout": {
+        "post_attempts": 1,
+        "outcome": "unknown"
+      },
+      "lost_response": {
+        "state": "submission_unknown",
+        "posts_first_run": 1,
+        "posts_after_reload": 0
+      }
+    },
+    "F02_pixellab_request": {
+      "kind": "royal_64",
+      "sent_size": {
+        "width": 64,
+        "height": 64
+      },
+      "reference_field": true,
+      "reference_is_the_file": true,
+      "reference_sha256_in_plan": "ad397b294769282c79be03e612b9418bb1ad614ce5ed04c0c07e69ed1ff377df",
+      "invalid_plan_errors": [
+        "PixelLab: os endpoints create-image-* geram uma imagem estatica; a animacao (animate-with-text-v3 e outros) ainda nao esta ligada na Forja. Peca uma pose de cada vez ou use --backend openai|gemini para uma prancha",
+        "init_image (64, 64) tem de ter o tamanho do pedido (96, 96); a Forja nao redimensiona em silencio (use forja fit/snap antes)"
+      ],
+      "invalid_plan_network": false
+    },
+    "F03_gemini_request_and_guides": {
+      "plan_logical_canvas": [
+        384,
+        216
+      ],
+      "content_box": [
+        0,
+        12,
+        384,
+        204
+      ],
+      "sent_format": {
+        "type": "image",
+        "aspect_ratio": "16:9",
+        "image_size": "4K"
+      },
+      "estimated_output": [
+        5456,
+        3072
+      ],
+      "grid": "requested",
+      "attachments_promised": [
+        "palette"
+      ],
+      "attached_images": 1,
+      "invalid_model_errors": [
+        "modelo Gemini de imagem desconhecido: 'nope' (use gemini-nano-banana-2.1, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-3-pro-image, gemini-2.5-flash-image)"
+      ]
+    },
+    "F04_inpaint_blue": {
+      "opaque_before": 64,
+      "opaque_after": 64,
+      "byte_identical": true,
+      "key_used": "#FFFF00",
+      "changed_pixels": 0
+    },
+    "F05_cleanup_details": {
+      "free": {
+        "policy": "conservative",
+        "isolated_pixel_alpha": 255,
+        "hole_alpha": 0,
+        "cluster": 1
+      },
+      "royal_64": {
+        "policy": "character",
+        "isolated_pixel_alpha": 255,
+        "hole_alpha": 0,
+        "cluster": 1
+      },
+      "fx": {
+        "policy": "fx",
+        "isolated_pixel_alpha": 255,
+        "hole_alpha": 0,
+        "cluster": 1
+      },
+      "prop": {
+        "policy": "scenery",
+        "isolated_pixel_alpha": 0,
+        "hole_alpha": 255,
+        "cluster": 2
+      }
+    },
+    "F06_jump_offsets": {
+      "ok": true,
+      "contract_valid": true,
+      "needs_regeneration": false,
+      "artistic_approval": "pendente",
+      "feet": [
+        [
+          6,
+          17
+        ],
+        [
+          6,
+          13
+        ]
+      ],
+      "distinct_rasters": 2,
+      "alignment": {
+        "mode": "preserve",
+        "offsets_preserved": true,
+        "drift_imposed_by_alignment": false
+      },
+      "blocking": []
+    },
+    "F07_duplicate_motion": {
+      "ok": false,
+      "contract_valid": true,
+      "needs_regeneration": true,
+      "artistic_approval": "pendente",
+      "feet": [
+        [
+          6,
+          13
+        ],
+        [
+          6,
+          13
+        ]
+      ],
+      "distinct_rasters": 1,
+      "alignment": {
+        "mode": "preserve",
+        "offsets_preserved": true,
+        "drift_imposed_by_alignment": false
+      },
+      "blocking": [
+        "static_tag"
+      ]
+    },
+    "F08_godot_reverse": {
+      "expected_indices": [
+        2,
+        1,
+        0
+      ],
+      "exported_indices": [
+        2,
+        1,
+        0
+      ],
+      "duration_multipliers": [
+        3.0,
+        2.0,
+        1.0
+      ]
+    },
+    "F09_job_polling": {
+      "get_attempts": 7,
+      "state": "timed_out",
+      "remote_id_kept": "synthetic-job",
+      "fake_seconds_elapsed": 95.9,
+      "deadline_s": 120,
+      "empty_success_state": "failed",
+      "empty_success_error": "empty_result"
+    }
+  }
+}

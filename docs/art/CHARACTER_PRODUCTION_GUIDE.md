@@ -61,7 +61,7 @@ Antes de extrair uma folha, contar e classificar as figuras reais. Houve pedidos
 
 Separar componentes opacos com inspeção: uma arma, mão ou mecha pode ser um componente desconectado que pertence ao mesmo personagem. Verificar bordas cortadas, figuras unidas, objetos extras e fundo residual. Fixar escala por uma medida estável, alinhar pelo apoio e quantizar sem destruir a expressão. Registrar o método e o que ainda exige redesenho.
 
-A [Forja](FORJA.md) aplica este método como ferramenta: compila o pedido na grade final, conta as figuras, recupera a grade sem reduzir, aplica paleta, contorno e pivô, mede deriva e cintilação e grava a proveniência.
+A [Forja](FORJA.md) aplica este método como ferramenta: planeia o pedido para cada gerador, guarda cada pedido pago sem o repetir, conta as figuras, estima a grade sem reduzir, aplica paleta, contorno e pivô, mantém os deslocamentos de cada quadro na sua célula, separa validade do contrato, indícios de movimento e aprovação do dono, e grava a proveniência. Onde o gerador desenhou mais fino do que a grade (rostos), a recuperação perde traços e o relatório aponta onde.
 
 Os prompts da V15 estão [preservados](research/2026-10-19-character-animation/evidencias/v15/prompts.json). São receitas históricas, não prova de que o modelo cumpriu todos os requisitos. PixelLab foi pesquisado, mas não executado nessas entregas; não atribuir a ele os resultados de outra ferramenta.
 

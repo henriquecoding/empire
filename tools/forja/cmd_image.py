@@ -8,7 +8,7 @@ from PIL import Image
 
 from . import cleanup, contracts, grid as gridmod, lint, outline, palette as palmod, pipeline
 from . import quantize, resample, scale
-from .cli import command, out_path, pair
+from .cli import box, command, out_path, pair
 from .imageops import binarize, open_rgba, upscale
 
 
@@ -16,13 +16,15 @@ def _options(args) -> pipeline.Options:
     opts = pipeline.Options(kind=args.kind, palette=args.palette, colors=args.colors, scale=args.scale,
                             cells=args.cells, bg=args.bg, tolerance=args.tolerance, method=args.method,
                             outline=getattr(args, "outline_mode", "auto"), dither=args.dither,
-                            noise=args.noise, fit=not getattr(args, "no_fit", False),
+                            noise=args.noise, cleanup=args.cleanup, protect=args.protect,
+                            fit=not getattr(args, "no_fit", False),
                             pivot=getattr(args, "pivot", None), canvas=getattr(args, "canvas", None))
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
-        if exp.get("layout") == [1, 1] and not (opts.scale or opts.cells):
-            opts.scale = float(exp["scale"])
+        if exp.get("grid") == "native" and not (opts.scale or opts.cells):
+            opts.scale = 1.0
+        # grade so pedida por palavras (F03): deteta-se; a escala pedida fica para comparar, nao se assume
         if exp.get("background", "transparent") != "transparent" and not opts.bg:
             opts.bg = exp["background"]
     return opts
@@ -38,7 +40,11 @@ def common(p) -> None:
     p.add_argument("--tolerance", type=float, default=0.09, help="tolerancia do fundo em OKLab")
     p.add_argument("--method", default="dominant", choices=resample.METHODS, help="voto de cada celula")
     p.add_argument("--dither", default="none", choices=quantize.DITHERS, help="so em contratos que o permitem")
-    p.add_argument("--noise", type=float, default=0.08, help="ruido de cor a alisar (OKLab)")
+    p.add_argument("--noise", type=float, default=0.08, help="ruido de cor a alisar (OKLab); 0 desliga")
+    p.add_argument("--cleanup", default="auto", choices=("auto",) + tuple(cleanup.POLICIES),
+                   help="auto: cenario tira pixels soltos e tapa furos; personagem e efeito so os apontam")
+    p.add_argument("--protect", type=box, action="append", help="caixa x0,y0,x1,y1 do recorte nativo que a limpeza "
+                   "nao toca (repetivel)")
     p.add_argument("--expect", help="o expect.json do `forja prompt`")
     p.add_argument("--generator", help="quem gerou a imagem (proveniencia)")
     p.add_argument("--prompt-file", help="o prompt usado (proveniencia)")

@@ -2,9 +2,13 @@
 e cantos dobrados nos tracos de 1 px.
 
 A Asset Bible distingue: no cenario um pixel solto e proibido (cluster minimo
-2x2); num personagem um pixel isolado pode ser o olho. Por isso o ruido de cor
-so se corrige quando o pixel e QUASE da cor dos vizinhos (ruido do gerador),
-nunca quando contrasta (intencao).
+2x2); num personagem um pixel isolado pode ser o olho, um brilho, a ponta de uma
+flecha ou o rebento de uma flor. Por isso (auditoria F05) as tres limpezas sao
+separadas e cada tipo de asset tem a sua politica: tirar pixels soltos e tapar
+furos so no cenario; num personagem ou num efeito ficam e vao para o relatorio
+como candidatos. O ruido de cor so se corrige quando o pixel e QUASE da cor dos
+vizinhos (ruido do gerador), nunca quando contrasta (intencao), e `noise=0`
+desliga-o. Pixels protegidos nunca mudam; cada mudanca fica escrita.
 """
 from __future__ import annotations
 
@@ -27,28 +31,74 @@ def _neighbors(rows, x: int, y: int, offsets=N8):
             yield rows[ny][nx]
 
 
-def despeckle(image: Image.Image, noise: float = 0.08, holes: bool = True) -> tuple[Image.Image, dict]:
-    """Tira pixels opacos sem vizinhos opacos, tapa furos de 1 px e alisa o ruido de cor."""
+SCENERY = ("building", "prop", "tile", "parallax_far", "parallax_mid", "foreground")
+POLICIES = {
+    "conservative": {"remove_orphans": False, "fill_holes": False, "denoise": False},
+    "character": {"remove_orphans": False, "fill_holes": False, "denoise": True},
+    "fx": {"remove_orphans": False, "fill_holes": False, "denoise": False},
+    "scenery": {"remove_orphans": True, "fill_holes": True, "denoise": True},
+}
+
+
+def policy_for(kind: str, name: str = "auto") -> str:
+    """A politica de limpeza de um contrato: cenario, efeito, personagem; `free` e conservadora."""
+    if name != "auto":
+        if name not in POLICIES:
+            raise ValueError(f"limpeza desconhecida: {name} (use auto, {', '.join(POLICIES)})")
+        return name
+    if kind in SCENERY:
+        return "scenery"
+    if kind == "fx":
+        return "fx"
+    return "conservative" if kind == "free" else "character"
+
+
+def clean(image: Image.Image, policy: str | dict = "conservative", noise: float = 0.08,
+          protect: list[tuple[int, int, int, int]] | None = None, limit: int = 200) -> tuple[Image.Image, dict]:
+    """Limpa pela politica e diz o que mudou, onde e porque; os pixels soltos que ficam sao candidatos.
+
+    `policy` e um nome de POLICIES ou um dict com remove_orphans, fill_holes e denoise.
+    `protect` sao caixas (x0, y0, x1, y1) em que nada muda.
+    """
+    rule = POLICIES[policy] if isinstance(policy, str) else policy
     rows = to_grid(image)
     src = [row[:] for row in rows]
-    stats = {"orphans": 0, "holes": 0, "noise": 0}
+    guarded = {(x, y) for x0, y0, x1, y1 in protect or [] for y in range(y0, y1) for x in range(x0, x1)}
+    changes: dict[str, list] = {"orphans": [], "holes": [], "noise": []}
+    kept, skipped = [], 0
     for y, row in enumerate(src):
         for x, p in enumerate(row):
             around = list(_neighbors(src, x, y))
             solid = [q for q in around if q[3] >= 128]
+            new, why = None, None
             if p[3] >= 128 and not solid:
-                rows[y][x] = CLEAR
-                stats["orphans"] += 1
-            elif p[3] < 128 and holes and len(around) == 8 and len(solid) == 8:
-                rows[y][x] = Counter(solid).most_common(1)[0][0]
-                stats["holes"] += 1
-            elif p[3] >= 128 and solid:
+                if rule["remove_orphans"]:
+                    new, why = CLEAR, "orphans"
+                else:
+                    kept.append([x, y])
+            elif p[3] < 128 and rule["fill_holes"] and len(around) == 8 and len(solid) == 8:
+                new, why = Counter(solid).most_common(1)[0][0], "holes"
+            elif p[3] >= 128 and solid and rule["denoise"] and noise > 0:
                 top, n = Counter(q[:3] for q in solid).most_common(1)[0]
                 if p[:3] != top and n >= 5 and p[:3] not in {q[:3] for q in solid} \
                         and color.delta(p[:3], top) < noise:
-                    rows[y][x] = (*top, 255)
-                    stats["noise"] += 1
-    return from_grid(rows), stats
+                    new, why = (*top, 255), "noise"
+            if new is None:
+                continue
+            if (x, y) in guarded:
+                skipped += 1
+                continue
+            rows[y][x] = new
+            changes[why].append([x, y])
+    info = {"policy": policy if isinstance(policy, str) else "explicit", **{k: len(v) for k, v in changes.items()}, "protected_kept": skipped,
+            "kept_isolated": len(kept), "candidates": kept[:limit],
+            "changed": {k: v[:limit] for k, v in changes.items() if v}}
+    return from_grid(rows), info
+
+
+def despeckle(image: Image.Image, noise: float = 0.08, holes: bool = True) -> tuple[Image.Image, dict]:
+    """`forja clean`: o pedido explicito de tirar pixels soltos (e tapar furos de 1 px, se `holes`)."""
+    return clean(image, {"remove_orphans": True, "fill_holes": holes, "denoise": True}, noise)
 
 
 def components(rows, key=lambda p: p[:3] if p[3] >= 128 else None, offsets=N4):

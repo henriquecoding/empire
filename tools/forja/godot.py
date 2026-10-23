@@ -54,13 +54,34 @@ def sprite_frames(texture: str, rects: list[tuple[int, int, int, int]], duration
                   f"region = Rect2({x}, {y}, {w}, {h})", ""]
     base = 1000.0 / fps
     anims = []
-    for name, first, last, _ in tags:
+    for name, first, last, direction in tags:
         frames = ",\n".join('{\n"duration": %s,\n"texture": SubResource("AtlasTexture_%d")\n}'
-                            % (_num(durations[i] / base), i) for i in range(first, last + 1))
+                            % (_num(durations[i] / base), i) for i in order(first, last, direction))
         anims.append('{\n"frames": [%s],\n"loop": %s,\n"name": &"%s",\n"speed": %s\n}'
                      % (frames, "true" if loops.get(name, True) else "false", name, _num(fps)))
     lines += ["[resource]", "animations = [%s]" % ", ".join(anims)]
     return "\n".join(lines) + "\n"
+
+
+DIRECTIONS = ("forward", "reverse", "pingpong", "pingpong_reverse")
+
+
+def order(first: int, last: int, direction: str = "forward") -> list[int]:
+    """Os indices na ordem em que tocam (as direcoes das tags do Aseprite; auditoria F08).
+
+    O SpriteFrames do Godot nao tem direcao: escreve-se a sequencia ja tocada, e cada
+    quadro leva a sua duracao. pingpong nao repete as pontas: 0 1 2 1 (e volta ao 0).
+    """
+    run = list(range(first, last + 1))
+    if direction == "forward":
+        return run
+    if direction == "reverse":
+        return run[::-1]
+    if direction == "pingpong":
+        return run + run[-2:0:-1]
+    if direction == "pingpong_reverse":
+        return run[::-1] + run[1:-1]
+    raise ValueError(f"direcao de tag nao suportada: {direction!r} (use {', '.join(DIRECTIONS)})")
 
 
 def _num(v: float) -> str:
@@ -102,7 +123,11 @@ func _init() -> void:
 		var sf: SpriteFrames = res as SpriteFrames
 		var counts: Array = []
 		for n: StringName in sf.get_animation_names():
-			counts.append([String(n), sf.get_frame_count(n), sf.get_animation_speed(n), sf.get_animation_loop(n)])
+			var seq: Array = []
+			for i in range(sf.get_frame_count(n)):
+				var tex: AtlasTexture = sf.get_frame_texture(n, i) as AtlasTexture
+				seq.append([tex.region.position.x, sf.get_frame_duration(n, i)])
+			counts.append([String(n), sf.get_frame_count(n), sf.get_animation_speed(n), sf.get_animation_loop(n), seq])
 		print("FORJA_OK spriteframes %s" % JSON.stringify(counts))
 	quit(0)
 '''

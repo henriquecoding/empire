@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from . import color
 from .palette import Palette, swatch
@@ -20,39 +20,42 @@ def _shade(rgb: tuple[int, int, int], amount: float) -> tuple[int, int, int]:
 
 
 def template(expect: dict, pivot_row: int | None = None, grid: bool = False) -> Image.Image:
-    """O molde do pedido: `expect` e o bloco do prompts.build."""
+    """O molde do pedido: `expect` e o bloco do prompts.build (tamanho, grelha logica, margens, celulas).
+
+    Desenha-se em coordenadas logicas e converte-se para o tamanho da imagem, para a
+    margem (Gemini) e uma escala nao inteira caberem sem esticar nada.
+    """
     w, h = expect["size"]
     cols, rows = expect["layout"]
-    k = expect["scale"]
+    lw, lh = expect.get("cells") or (w / expect["scale"], h / expect["scale"])
+    x0, y0, x1, y1 = expect.get("content") or (0, 0, lw, lh)
+    sx, sy = w / lw, h / lh
     bg = expect["background"]
     base = color.parse_hex(bg) if bg != "transparent" else (255, 255, 255)
     img = Image.new("RGBA", (w, h), (*base, 255 if bg != "transparent" else 0))
     line = (*_shade(base, 0.25), 255)
     faint = (*_shade(base, 0.08), 255)
-    cell_w, cell_h = w // cols, h // rows
-    px = img.load()
+    draw = ImageDraw.Draw(img)
+
+    def px(lx: float, ly: float) -> tuple[int, int]:
+        return min(w - 1, round(lx * sx)), min(h - 1, round(ly * sy))
+
+    if grid:
+        for lx in range(int(x0), int(x1) + 1):
+            draw.line([px(lx, y0), px(lx, y1)], fill=faint)
+        for ly in range(int(y0), int(y1) + 1):
+            draw.line([px(x0, ly), px(x1, ly)], fill=faint)
+    cw, ch = (x1 - x0) / cols, (y1 - y0) / rows
     for j in range(rows):
         for i in range(cols):
-            x0, y0 = i * cell_w, j * cell_h
-            if grid:
-                for x in range(x0, x0 + cell_w, k):
-                    for y in range(y0, y0 + cell_h):
-                        px[x, y] = faint
-                for y in range(y0, y0 + cell_h, k):
-                    for x in range(x0, x0 + cell_w):
-                        px[x, y] = faint
-            for x in range(x0, x0 + cell_w):
-                px[x, y0] = line
-            for y in range(y0, y0 + cell_h):
-                px[x0, y] = line
+            cx0, cy0 = x0 + i * cw, y0 + j * ch
+            draw.rectangle([px(cx0, cy0), px(cx0 + cw, cy0 + ch)], outline=line)
             if pivot_row is not None:
-                yb = y0 + pivot_row * k + k - 1
-                for x in range(x0 + k, x0 + cell_w - k):
-                    px[x, min(yb, h - 1)] = line
-            mid = x0 + cell_w // 2
-            for y in range(y0 + k, y0 + cell_h - k, 2 * k):
-                for dy in range(min(k, h - y)):
-                    px[mid, y + dy] = faint
+                yb = px(0, cy0 + pivot_row + 1)[1] - 1
+                draw.line([(px(cx0 + 1, 0)[0], yb), (px(cx0 + cw - 1, 0)[0], yb)], fill=line)
+            mid = px(cx0 + cw / 2, 0)[0]
+            for ly in range(int(cy0) + 1, int(cy0 + ch) - 1, 2):
+                draw.line([(mid, px(0, ly)[1]), (mid, px(0, ly + 1)[1] - 1)], fill=faint)
     return img
 
 

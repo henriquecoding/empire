@@ -4,7 +4,11 @@ Pedido de Henrique: fazer uma engenharia reversa densa do [PixelLab](https://www
 e pôr no repositório uma ferramenta completa, melhor que a original, para que
 agentes que geram imagens bem (o ChatGPT, por exemplo) trabalhem com pixel art
 exatamente como o projeto pede. O resultado é a [Forja](../../FORJA.md)
-(`tools/forja/`), decidida na [ADR 0088](../../../adr/0088-a-forja-de-pixel-art.md).
+(`tools/forja/`), decidida na [ADR 0088](../../../adr/0088-a-forja-de-pixel-art.md). "Melhor que a
+original" é o pedido, não um resultado: nenhum benchmark comparável foi feito. A
+[auditoria de 23/10](../2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md) qualificou as frases
+abaixo e achou nove falhas, reparadas em [2026-10-23-forja-reparos](../2026-10-23-forja-reparos/README.md)
+(ADR 0089).
 
 Esta pasta guarda o que foi lido e medido. Continua o estudo de 18/10
 ([pixel art compacta e PixelLab](../2026-10-18-imperadores-escudeiros/PIXEL-ART-COMPACTA-E-PIXELLAB.md)),
@@ -32,8 +36,9 @@ Bitforge, linhas "Pro" e "Pro Flash", animação v3 e PixMiniMax) servida por
 web, extensão do Aseprite, editor Pixelorama, API e MCP. O que a documentação
 mostra do processo:
 
-- **Gera na resolução final.** Os tamanhos pedidos são os do sprite (16 a 512
-  px), não os de uma ilustração a reduzir. Os modelos "Pro" geram uma grelha de
+- **Entrega na resolução pedida.** Os tamanhos pedidos à API são os do sprite
+  (16 a 512 px), não os de uma ilustração a reduzir. Como os modelos atuais
+  desenham por dentro não está publicado nas fontes lidas. Os modelos "Pro" geram uma grelha de
   candidatos (até 64 imagens de 32 px numa só chamada) e cobram pelo tamanho.
 - **Controlos fracos e fortes.** Contorno (`single color black outline`,
   `single color outline`, `selective outline`, `lineless`), sombreamento (`flat`
@@ -61,8 +66,9 @@ mostra do processo:
   com `wait_for_jobs` e lê com `get_*`. O servidor não lê ficheiros locais: as
   imagens entram por base64, URL ou upload.
 
-Uma consequência que interessa ao Empire: o PixelLab resolve a grade porque o
-seu modelo desenha na grade. Um gerador geral (gpt-image, Gemini) desenha
+Uma consequência que interessa ao Empire (inferência, não arquitetura
+recuperada): a API do PixelLab entrega pixel art nas dimensões pedidas, sem uma
+grade a recuperar do lado do cliente. Um gerador geral (gpt-image, Gemini) desenha
 "estilo pixel art" — blocos de tamanho que deriva, bordas suavizadas, ruído,
 cores a mais. A distância entre os dois é o que a Forja cobre.
 
@@ -77,7 +83,7 @@ cores a mais. A distância entre os dois é o que a Forja cobre.
 
 Limites comuns: período inteiro ou estimado por um eixo de cada vez; pente pela
 média (os múltiplos do período empatam); linhas que derivam nas zonas lisas;
-cor em RGB. A Forja junta os dois eixos na autocorrelação, alarga o pico que as
+cor em RGB. A Forja faz outras escolhas (sem comparação no mesmo conjunto de imagens): junta os dois eixos na autocorrelação, alarga o pico que as
 células desiguais partem em dois, afina com um pente de contraste (dentes menos
 meios entre dentes, onde múltiplos e submúltiplos perdem), prende as linhas a
 uma reta refeita por mínimos quadrados e interpola nas zonas lisas, e mede a
@@ -97,18 +103,21 @@ cor em OKLab.
   A documentação de imagem usa a Interactions API; até 14 referências no 2.1.
   Não documenta fundo transparente; todas as imagens levam SynthID.
 
-## O que a Forja faz a mais do que o PixelLab
+## Diferenças de desenho entre o PixelLab e a Forja
 
-| PixelLab | Forja |
+A coluna do PixelLab resume a documentação pública; a da Forja, o que está
+implementado. Não é um ranking: nenhum benchmark comparável foi executado.
+
+| PixelLab (documentado) | Forja (implementado) |
 | --- | --- |
 | Modelo próprio, na nuvem, pago por geração | Usa qualquer gerador; o processamento é local, determinístico e grátis |
 | Paletas genéricas (Lospec, PICO-8…) | A paleta de trabalho do Empire, os contratos de tela, pivô, contorno, cluster e cadência da Asset Bible e da Animation Bible |
 | `unzoom`, `correct-pixelart`, `reduce-colors` | `snap`, `clean`, `quantize`, com relatório do que decidiu |
-| Animação gerada; o agente confere a olho | Conta figuras pedidas e achadas, mede deriva do pivô, cintilação, duplicados e espelhos; trava o rosto; prende cores |
+| Animação gerada; a revisão do lado do PixelLab não foi verificada | Conta figuras pedidas e achadas, separa validade do contrato, indícios de movimento e aprovação; mantém deslocamentos; trava o rosto; prende cores |
 | Wang 16 gerado por modelo | Wang 16 por campo contínuo com prova de costura zero, e `TileSet` do Godot com os bits de canto, carregado no motor |
 | Exporta PNG, GIF, folhas | `.aseprite` com camadas, tags, durações, paleta e pivô; JSON do CLI do Aseprite; `SpriteFrames` do Godot |
 | MCP remoto sem acesso a ficheiros locais | MCP local por caminhos do repositório, com a prévia como imagem |
-| Sem crítica do resultado | Lint contra o contrato com correção sugerida e o prompt corretivo para a próxima geração |
+| Se critica os resultados não foi verificado | Lint contra os contratos do Empire com correção sugerida e o prompt corretivo para a próxima geração |
 | Proveniência a cargo do utilizador | Proveniência gravada em cada saída, com os estados de revisão do projeto |
 
 O que a Forja **não** faz: não treina nem traz um modelo de pixel art. A
@@ -116,6 +125,10 @@ qualidade do desenho depende do gerador e do pedido. O PixelLab continua
 disponível como gerador (`forja generate --backend pixellab`) para quem tiver plano.
 
 ## Medições desta sessão
+
+A prova e a bancada fabricam distorções com verdade conhecida: mostram a
+recuperação nesses tipos de distorção, não a qualidade de rostos, identidade ou
+ações, nem uma vantagem sobre outras ferramentas.
 
 - [prova.json](prova.json): a prova que corre no CI (`forja prova`).
 - [bancada-150.json](bancada-150.json): a bancada pesada reproduzível

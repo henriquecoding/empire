@@ -1,6 +1,8 @@
 """Operacoes pequenas de imagem que todos os passos usam."""
 from __future__ import annotations
 
+import io
+
 import hashlib
 from pathlib import Path
 
@@ -122,3 +124,9 @@ def foot_point(image: Image.Image, rows: int = 3) -> tuple[int, int] | None:
     xs = [x for y in range(max(box[1], bottom - rows + 1), bottom + 1)
           for x in range(box[0], box[2]) if alpha.getpixel((x, y)) >= 128]
     return (round((min(xs) + max(xs)) / 2), bottom) if xs else None
+
+
+def png_bytes(image: Image.Image) -> bytes:
+    buf = io.BytesIO()
+    image.save(buf, "PNG")
+    return buf.getvalue()
