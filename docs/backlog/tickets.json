@@ -2972,6 +2972,49 @@
   "passos": [],
   "notas": []
  },
+ "CV-05": {
+  "title": "Elenco e animações V15 no jogo",
+  "porque": "O autor entregou o V15 e mostrou que a produção ainda usava arte antiga após a consolidação da pesquisa.",
+  "spec": [
+   "docs/adr/0087-elenco-v15-no-jogo.md",
+   "docs/art/CHARACTER_PRODUCTION_GUIDE.md"
+  ],
+  "depende": "CV-01, ADR 0075, PR #113",
+  "feito": "Importação fiel do elenco V15; duplas iniciais animadas no seletor e no mundo; galeria com todas as ações e floração individual no motor.",
+  "fora": "Quarto par jogável, função da Bailarina e habilidade sit_heal sem definição de integração de gameplay.",
+  "estado": "parcial — arte das duplas iniciais no seletor e na partida; elenco completo e floração na galeria do jogo; quarto par jogável e regras da Bailarina ainda por definir",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
+ "PUB-07": {
+  "title": "O portão de produção espera pelo limite da API",
+  "porque": "O deploy de produção do 722fad6 morreu num 403 da API do GitHub (limite sem token, IP partilhado da Vercel) a cinco minutos de o CI ficar verde.",
+  "spec": [
+   "docs/backlog/RG-29.md"
+  ],
+  "depende": "RG-29",
+  "feito": "O limite da API é uma espera até renovar, dentro do prazo; rede e 5xx voltam a pedir e falham fechados; um 403 que não é limite recusa com a razão; pede de 2 em 2 min; EMPIRE_GITHUB_TOKEN opcional, nunca no registo.",
+  "fora": "Deploy hook a partir do CI, o cancelamento do CI na main e o Supabase do painel.",
+  "estado": "feito",
+  "horas": "—"
+ },
+ "FORJA-01": {
+  "title": "A Forja: pixel art dos geradores nos contratos do Empire",
+  "porque": "O dono pediu a engenharia reversa do PixelLab e uma ferramenta no repositório para agentes que geram imagens trabalharem com pixel art como o projeto pede.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/art/research/2026-10-23-forja-pixellab/README.md",
+   "docs/adr/0088-a-forja-de-pixel-art.md"
+  ],
+  "depende": "ART-KNOWLEDGE-2026-10-19",
+  "feito": "Ferramenta tools/forja com grade, contratos, lint, pranchas, Aseprite, Godot, conectores, MCP, prova e testes.",
+  "fora": "Uso real com geradores, produção e aprovação de assets do jogo.",
+  "estado": "feito — ferramenta, servidor MCP, prova, testes e guia; uso real com geradores e aprovação de assets pendentes do dono",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
  "UX-11": {
   "title": "Oficina da Coroa: HUD, roda e pausa",
   "porque": "Aplicar a direção visual aprovada sem painéis de gestão permanentes na exploração.",
@@ -2987,7 +3030,7 @@
   "horas": "—",
   "passos": [],
   "notas": [
-   "docs/ux/OFICINA-DA-COROA.md; ADR 0087"
+   "docs/ux/OFICINA-DA-COROA.md; ADR 0089"
   ]
  }
 }

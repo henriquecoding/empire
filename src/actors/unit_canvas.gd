@@ -14,6 +14,7 @@ var _branco: UnitFlash
 
 
 func _ready() -> void:
+	_batch.royals.listen()
 	material = SpriteLighting.material()
 	_branco = UnitFlash.new()
 	var tinta := ShaderMaterial.new()

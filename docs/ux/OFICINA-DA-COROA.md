@@ -1,6 +1,6 @@
 # Oficina da Coroa — implementação no Godot
 
-Pedido aprovado em 18/10/2026; integração e revisão em 20/10/2026. UX-11 e ADR 0087.
+Pedido aprovado em 18/10/2026; integração e revisão em 20/10/2026. UX-11 e ADR 0089.
 As imagens desta página são capturas do jogo no Godot 4.7.2, com o cenário real.
 
 ## Exploração
@@ -38,7 +38,8 @@ os controlos normais regressam. Perda de foco ou pausa cancela a seleção.
 ![Pausa central](oficina/pausa.png)
 
 Retomar, Estado do reino, Opções e Sair ocupam o menu principal. Controlos, ecrã
-inteiro, reinício e exportação estão nas Opções. O foco inicial é Retomar; reiniciar
+inteiro, reinício, exportação e galeria de animações estão nas Opções.
+O foco inicial é Retomar; reiniciar
 continua a exigir confirmação com Cancelar selecionado. A política de guardar/sair
 é a existente. Uma página substitui a anterior e mantém a simulação pausada.
 
@@ -58,3 +59,21 @@ continua a exigir confirmação com Cancelar selecionado. A política de guardar
   verificada pelo commit servido em /versao.json e pelo fumo de produção.
 - As capturas pequenas são simulações de viewport, não ensaios num telefone físico.
   Os conceitos gerados anteriormente orientam o aspeto; não são usados como provas.
+
+## Retoma da integração — 23/10/2026
+
+A implementação foi recuperada no ramo `codex/oficina-coroa-runtime-20261020`,
+no commit `01b3808`. A integração com a `main` em `68ed1c87` preserva o elenco
+V15, a galeria, o portão de publicação e a Forja. A decisão desta HUD passa a
+ADR 0089, porque a ADR 0087 já identifica a integração do elenco V15.
+
+A galeria acrescentada na `main` fica nas Opções. Um teste reproduziu a quinta
+entrada indevida na pausa; depois da correção, as quatro entradas aprovadas e
+o regresso da galeria às Opções, com foco reposto e simulação pausada, passam.
+
+As imagens acima documentam a implementação de 20/10, anterior ao elenco V15.
+O workflow `ci` passa a executar as regressões de roda, pausa e ciclo de toque
+com renderer e a guardar cinco capturas atuais, com manifesto, em
+`captura-da-noite/build/oficina`. O SHA da execução identifica a versão testada.
+O ambiente local desta retoma não conseguiu abrir os sockets do X11; por isso
+não se apresenta uma captura antiga como prova visual da integração atual.

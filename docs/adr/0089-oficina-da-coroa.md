@@ -1,4 +1,4 @@
-# ADR 0087 — Oficina da Coroa: exploração, roda e pausa
+# ADR 0089 — Oficina da Coroa: exploração, roda e pausa
 
 Estado: aceito pelo pedido explícito do dono de aplicar os conceitos aprovados
 (18/10/2026; continuação em 19/10/2026). Complementa ADR 0078 e §24.

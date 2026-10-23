@@ -92,8 +92,13 @@ func _ready() -> void:
 	PauseTheme.label(
 		body, &"MONARCH_CHOOSE_RULE_TOUCH" if TouchControls.active else &"MONARCH_CHOOSE_RULE"
 	)
+	var gallery := PauseTheme.button(body, &"ANIM_GALLERY_TITLE", RoyalGallery.open_on.bind(self))
 	start_button = PauseTheme.button(_layout, &"CLASS_BEGIN", begin)
 	PauseTheme.primary(start_button)
+	cards.back().focus_next = start_button.get_path()
+	start_button.focus_previous = cards.back().get_path()
+	start_button.focus_next = gallery.get_path()
+	gallery.focus_previous = start_button.get_path()
 	if succession_mode:
 		PauseTheme.button(_layout, &"UI_MENU_BACK", func() -> void: _choose.call(&""))
 	get_viewport().size_changed.connect(fit)

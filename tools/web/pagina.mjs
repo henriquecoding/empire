@@ -171,7 +171,9 @@ function main() {
     const v = { ...assets, jogar: lingua === "pt" ? "/jogar/" : "/jogar/?lingua=en" };
     const dir = join(saida, t.caminho);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, "index.html"), preencherOuChumbar(`${t.caminho}index.html`, entrada({ t, d, v, mb, url, robots })));
+    const html = preencherOuChumbar(`${t.caminho}index.html`, entrada({ t, d, v, mb, url, robots }));
+    // A indentação antes de tags não acrescenta conteúdo às páginas de entrada.
+    writeFileSync(join(dir, "index.html"), html.replace(/\n[ \t]+(?=<)/g, "\n"));
   }
   writeFileSync(join(saida, "404.html"), preencherOuChumbar("404.html", erro({ textos: TEXTOS, d, v: { ...assets, jogar: "/jogar/" } })));
   // Os reportes e o painel do dono (ADR 0026).

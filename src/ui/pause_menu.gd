@@ -58,7 +58,7 @@ func _ready() -> void:
 	_save_note.add_theme_color_override("font_color", PauseTheme.MUTED)
 	_pages.build(_frame, back, _zero)
 	_opcoes = _pages.option_panel
-	_pages.move_extras([_controls_button, _zero, _export_button])
+	_pages.move_extras([_controls_button, _zero, _export_button], self)
 	_device = PauseHelp.current_device()
 	_escrever()
 	hide()
@@ -124,7 +124,7 @@ func back() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not visible:
+	if not visible or RoyalGallery.active:
 		return
 	_device = Glyphs.device_of(event, _device, Input.get_joy_name(event.device))
 	_pages.help.refresh(_device)

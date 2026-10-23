@@ -12,6 +12,9 @@ static var _textures: Dictionary = {}
 
 
 func entry(id: StringName) -> Dictionary:
+	var royal := RoyalArt.entry(id)
+	if not royal.is_empty():
+		return royal
 	var renewal := RenewalArt.entry(id)
 	if not renewal.is_empty():
 		return renewal
@@ -113,6 +116,9 @@ func draw_on(
 func draw_posed(
 	canvas: CanvasItem, id: StringName, tint: Color, frame: int, pose: Transform2D
 ) -> void:
+	if not RoyalArt.entry(id).is_empty():
+		RoyalArt.draw_on(canvas, id, tint, frame, pose)
+		return
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])
 	var source := Rect2(Vector2(size.x * frame, 0.0), size)
@@ -157,6 +163,9 @@ func mask_posed(
 	pose: Transform2D,
 	channel: String = "mask_texture"
 ) -> void:
+	if not RoyalArt.entry(id).is_empty():
+		RoyalArt.draw_on(canvas, id, tint, frame, pose, channel)
+		return
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])
 	var origin := Vector2(item.atlas_origin[0], item.atlas_origin[1])

@@ -55,7 +55,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 | `docs/QUESTIONS.md` | As perguntas em aberto — **começa por aqui** depois do dossiê |
 | `docs/backlog/` | Os tickets das Fases 0 e 1, no formato do §34 |
 | `docs/content/` | Base de dados de conteúdo: dicionário, esquema, propostas, nomes, bíblia de nomes |
-| `docs/art/` | [Guia de personagens e animação](docs/art/CHARACTER_PRODUCTION_GUIDE.md), pesquisa consolidada, Asset Bible, expressões e efeitos |
+| `docs/art/` | [Estudo de pixel art e Aseprite](docs/art/PIXEL_ART_STUDY_GUIDE.md), [personagens e animação](docs/art/CHARACTER_PRODUCTION_GUIDE.md), Asset Bible, expressões e efeitos |
 | `docs/world/` | Produção de segmentos, greybox, registo de segmentos |
 | `docs/ux/` · `docs/audio/` · `docs/localization/` | Ecrãs e HUD · som · texto e glossário |
 | `docs/qa/` | Playtest, QA, regressão, desempenho, acessibilidade |
@@ -69,6 +69,7 @@ comandos a partir de um menu — ver [`windows/LEIA-ME.md`](windows/LEIA-ME.md).
 | `src/actors/` | `unit_view.gd` — os cinco slots do §58 |
 | `shaders/` | `palette_lut.gdshader` — um shader, quatro trabalhos (§60) |
 | `tools/` | `csv_to_tres.gd`, `lint_sim.gd`, `split_dossie.py`, `check_dossie_vs_csv.py`, `content_report.py`, `export_aseprite.sh` |
+| `tools/forja/` | A Forja: pixel art de geradores de imagem (ChatGPT, Gemini, PixelLab) nos contratos do jogo, com lint, Aseprite, Godot e servidor MCP — [guia](docs/art/FORJA.md) |
 | `ferramentas/` | A camada de uso do dossiê: `construir.mjs`, `extrair-dados.mjs` e os dois portões |
 | `tests/` | gdUnit4: arquitetura, dados, design |
 | `art/` · `audio/` | `art/source/` em Git LFS; `art/export/` é gerado (menos `_placeholder/`) |
@@ -83,7 +84,7 @@ servidor dedicado, clima completo e despertar social ficam em RG-24/RG-25.
 
 ## O estado, no dia zero
 
-- O projeto **abre, testa e exporta** em Godot 4.7.2: 1956 testes (2 saltados, cada um com a razão e o sistema que
+- O projeto **abre, testa e exporta** em Godot 4.7.2: 1966 testes (2 saltados, cada um com a razão e o sistema que
   falta escritos no próprio teste), e cada corrida verde do CI deixa o jogo exportado para **Linux, Windows e
   Web** — o de Linux é arrancado no próprio *job*, e o de Web serve-se de qualquer servidor estático.
 - A base de dados tem **38 tabelas** e 491 recursos com todos os números do dossiê, Parte XIII incluída; o que o

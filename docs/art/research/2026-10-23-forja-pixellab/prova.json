@@ -1,0 +1,202 @@
+{
+ "ok": true,
+ "passed": 11,
+ "total": 11,
+ "cases": [
+  {
+   "case": "single scale=16.0 jitter=0.0 blur=0.0 noise=0",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "single scale=15.6 jitter=1.2 blur=0.9 noise=6",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "single scale=12.3 jitter=1.5 blur=1.0 noise=8",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "single scale=8.0 jitter=0.8 blur=0.7 noise=5",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "single scale=21.7 jitter=2.0 blur=1.2 noise=8",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "single scale=5.5 jitter=0.5 blur=0.6 noise=4",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "single scale=31.0 jitter=3.0 blur=1.5 noise=10",
+   "ok": true,
+   "cells": [
+    30,
+    38
+   ],
+   "true_cells": [
+    30,
+    38
+   ],
+   "wrong_pixels": 0,
+   "opaque_pixels": 430
+  },
+  {
+   "case": "sheet 6 figuras",
+   "ok": true,
+   "found": 6,
+   "sizes": [
+    [
+     18,
+     30
+    ],
+    [
+     18,
+     31
+    ],
+    [
+     18,
+     32
+    ],
+    [
+     18,
+     30
+    ],
+    [
+     18,
+     31
+    ],
+    [
+     18,
+     32
+    ]
+   ],
+   "expected_sizes": [
+    [
+     18,
+     30
+    ],
+    [
+     18,
+     31
+    ],
+    [
+     18,
+     32
+    ],
+    [
+     18,
+     30
+    ],
+    [
+     18,
+     31
+    ],
+    [
+     18,
+     32
+    ]
+   ]
+  },
+  {
+   "case": "aseprite ida e volta",
+   "ok": true,
+   "frames": 4,
+   "layers": [
+    "body"
+   ],
+   "tags": {
+    "idle": {
+     "from_frame": 0,
+     "to_frame": 3,
+     "direction": 0
+    }
+   },
+   "durations": [
+    100,
+    100,
+    150,
+    200
+   ],
+   "pixel_equal": true,
+   "opened_in_aseprite_app": false
+  },
+  {
+   "case": "tiles Wang sem costura",
+   "ok": true,
+   "mismatched_pixels": 0
+  },
+  {
+   "case": "lint",
+   "ok": true,
+   "clean_findings": [],
+   "dirty_rules": [
+    "alpha",
+    "height",
+    "orphans",
+    "outline",
+    "palette"
+   ]
+  }
+ ]
+}

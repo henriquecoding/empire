@@ -168,11 +168,13 @@ func test_as_montarias_das_tropas_sao_um_pouco_maiores_do_que_elas() -> void:
 ## ele; e mais alta e mais pesada do que qualquer montaria das tropas.
 func test_as_montarias_dos_imperadores_levam_um_imperador() -> void:
 	var monarca: float = _alturas(true).back()
+	# The approved 80 px canvas sets the upper scale reference; native body occupancy varies by pose.
+	var tela := float(RoyalArt.entry(&"royal_king").size[1])
 	var tropas := _do_porte(P.TROPA)
 	for id: StringName in _do_porte(P.IMPERADOR):
 		var nome := String(id)
 		assert_float(_alto(id)).override_failure_message(nome).is_between(
-			monarca * IMPERADOR_DE, monarca * IMPERADOR_ATE
+			monarca * IMPERADOR_DE, tela * IMPERADOR_ATE
 		)
 		assert_float(_largo(id)).override_failure_message(nome).is_greater_equal(monarca)
 		assert_float(_alto(id)).override_failure_message(nome).is_greater(_maior(tropas, _alto))

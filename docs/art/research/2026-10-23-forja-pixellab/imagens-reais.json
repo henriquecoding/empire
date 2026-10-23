@@ -1,0 +1,68 @@
+[
+ {
+  "source": "docs/art/research/2026-10-19-character-animation/referencias/sombra-bailarina-design-aceito.png",
+  "size": [
+   1536,
+   1024
+  ],
+  "grid": {
+   "cells": [
+    285,
+    190
+   ],
+   "period": [
+    5.325,
+    5.325
+   ],
+   "confidence": 0.884,
+   "native": false,
+   "x0": 1,
+   "y0": 1,
+   "notes": []
+  },
+  "sample": {
+   "size": [
+    285,
+    190
+   ],
+   "purity": 0.979,
+   "mixed_cells": 1952
+  },
+  "native": "recuperada-sombra-bailarina.png",
+  "comparison": "comparacao-sombra-bailarina.png",
+  "command": "python3 -m tools.forja snap docs/art/research/2026-10-19-character-animation/referencias/sombra-bailarina-design-aceito.png"
+ },
+ {
+  "source": "docs/art/research/2026-10-18-imperadores-escudeiros/referencias/rei-escudeiro-preferencia-anterior.png",
+  "size": [
+   1254,
+   1254
+  ],
+  "grid": {
+   "cells": [
+    206,
+    205
+   ],
+   "period": [
+    6.093,
+    6.093
+   ],
+   "confidence": 0.939,
+   "native": false,
+   "x0": 0,
+   "y0": 1,
+   "notes": []
+  },
+  "sample": {
+   "size": [
+    206,
+    205
+   ],
+   "purity": 0.926,
+   "mixed_cells": 4922
+  },
+  "native": "recuperada-rei-escudeiro.png",
+  "comparison": "comparacao-rei-escudeiro.png",
+  "command": "python3 -m tools.forja snap docs/art/research/2026-10-18-imperadores-escudeiros/referencias/rei-escudeiro-preferencia-anterior.png"
+ }
+]

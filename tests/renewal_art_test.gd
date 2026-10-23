@@ -5,6 +5,8 @@ func test_walk_frames_are_nonempty_aligned_and_inside_the_atlas() -> void:
 	var art := OriginalArt.new()
 	var profiles: Array = RenewalArt.UNITS.values() + RenewalArt.CREATURES.values()
 	for id: StringName in profiles:
+		if not RoyalArt.entry(id).is_empty():
+			continue  # The V15 frames have their own source/timing contract tests.
 		var item := art.entry(id)
 		var texture := art.texture(id)
 		assert_object(texture).is_not_null()
