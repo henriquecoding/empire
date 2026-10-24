@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-PT">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Empire · Estudo da HUD medieval</title>
+<link rel="stylesheet" href="review.css">
+<main>
+  <header>
+    <p class="eyebrow">EMPIRE / DIREÇÃO DE ARTE / 18.10.2026</p>
+    <h1>A interface pertence<br>ao reino.</h1>
+    <p class="intro">Duas propostas em grelha nativa, aplicadas à arte do jogo. Compare os materiais, a leitura e a continuidade entre a HUD e os menus.</p>
+    <p class="notice">Estudo para aprovação. As imagens são composições de interface sobre capturas existentes; ainda não representam uma HUD implementada no jogo.</p>
+  </header>
+  <fieldset id="themes"><legend>Conceito</legend>
+    <button type="button" data-theme="oficina" aria-pressed="true"><b>01 · Oficina do Reino</b><span>Madeira, couro e latão · acolhedor e artesanal</span></button>
+    <button type="button" data-theme="vigilia" aria-pressed="false"><b>03 · Vigília da Fronteira</b><span>Ferro e tecido · compacto e defensivo</span></button>
+  </fieldset>
+  <fieldset id="modes"><legend>Contexto</legend>
+    <button data-mode="dia" aria-pressed="true">Dia</button>
+    <button data-mode="noite" aria-pressed="false">Noite</button>
+    <button data-mode="subsolo" aria-pressed="false">Subsolo / recarga</button>
+    <button data-mode="pausa" aria-pressed="false">Pausa</button>
+    <button data-mode="fundacao" aria-pressed="false">Fundação</button>
+    <button data-mode="toque" aria-pressed="false">Toque · 844 × 390</button>
+    <button data-mode="estados" aria-pressed="false">Estados / ícones</button>
+  </fieldset>
+  <section class="preview" aria-label="Pré-visualização do conceito">
+    <div class="toolbar"><h2 id="caption">Oficina do Reino · Dia</h2><label><input id="native" type="checkbox"> Tamanho original, com rolagem</label></div>
+    <div class="viewport" id="viewport"><img id="screen" src="oficina-dia.png" width="1280" height="720" alt="Conceito Oficina do Reino: HUD medieval em madeira e latão aplicada ao cenário do Empire."></div>
+    <p id="description" aria-live="polite">As contagens são ilustrativas. O personagem e o cenário conservam os pixels da captura original.</p>
+    <a id="full" href="oficina-dia.png" target="_blank" rel="noopener">Abrir a imagem original ↗</a>
+  </section>
+  <section class="notes"><article><span>01 / IDENTIDADE</span><h2>Oficina do Reino</h2><p>A linguagem da bancada, da carpintaria e da bolsa. Aro quente, junções pequenas, interior calmo. A ornamentação concentra-se nas margens; o texto fica sobre cor sólida.</p></article>
+  <article><span>03 / IDENTIDADE</span><h2>Vigília da Fronteira</h2><p>A linguagem da sentinela: ferragens frias, cantos recortados e tecido verde escuro. O latão mantém o significado de moeda; o material não muda o significado das ações.</p></article>
+  <article><span>CONSTRUÇÃO / PIXEL ART</span><h2>Decisões à escala do pixel</h2><p>Ícones desenhados em 16 × 16. Camada de interface de 640 × 360, apresentada a 2× sobre capturas de 1280 × 720. Sem suavização nos contornos e ícones. A base 64 × 64 das personagens continua a ser a referência de proporção.</p></article>
+  <article><span>AVALIAÇÃO / LIMITES</span><h2>Escolher uma direção</h2><p>Compare sobretudo a identidade, a hierarquia e o espaço livre. O conforto de leitura, o tamanho físico e os gestos terão de ser verificados na implementação e em dispositivo real. O recorte de toque é uma composição demonstrativa.</p></article></section>
+  <section class="downloads"><h2>Entrega completa</h2><p><a href="comparacao.png">Prancha comparativa</a> · <a href="manifest.json">Manifesto de proveniência</a> · <a href="https://github.com/henriquecoding/empire/blob/codex/hud-concepts-20261018/docs/ux/HUD-PIXEL-2026-10-18.md">Pesquisa e especificação no GitHub</a></p></section>
+  <noscript><p>A galeria interativa requer JavaScript. Todas as imagens continuam disponíveis:</p><ul><li><a href="oficina-dia.png">Oficina · HUD</a> · <a href="oficina-pausa.png">Pausa</a> · <a href="oficina-toque.png">Toque</a></li><li><a href="vigilia-dia.png">Vigília · HUD</a> · <a href="vigilia-pausa.png">Pausa</a> · <a href="vigilia-toque.png">Toque</a></li></ul></noscript>
+</main>
+<script src="review.js" defer></script>
+</html>
