@@ -1,4 +1,3 @@
-# Pausa e informacao detalhada, a pedido.
 class_name PauseMenu
 extends Control
 
@@ -7,7 +6,7 @@ enum Page { HOME, OPTIONS, CONTROLS, CONFIRM, REALM }
 const GRUPO_JOGO := &"jogo"
 const RECOMECAR := &"new_game"
 const ABDICAR := &"end_reign"
-const FUNDO := Color(0.035, 0.04, 0.035, 0.78)
+const FUNDO := Color(0.035, 0.025, 0.03, 0.72)
 
 var _titulo: Label
 var _opcoes: OptionsPanel
@@ -40,14 +39,15 @@ func _ready() -> void:
 	_frame = PauseLayout.new()
 	add_child(_frame)
 	_titulo = PauseTheme.label(_frame.header)
+	_titulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	PauseTheme.title(_titulo)
 	_retomar = PauseTheme.button(_frame.actions, &"UI_RESUME", _ao_retomar)
 	PauseTheme.primary(_retomar)
 	_realm = PauseTheme.button(_frame.actions, &"UI_REALM_STATUS", _show_controls.bind(Page.REALM))
 	_novo = PauseTheme.button(_frame.actions, &"UI_NEW_GAME", _ao_recomecar)
 	_options_button = PauseTheme.button(_frame.actions, &"UI_OPTIONS", show_options)
-	PauseTheme.button(_frame.actions, &"ANIM_GALLERY_TITLE", RoyalGallery.open_on.bind(self))
 	_controls_button = PauseTheme.button(_frame.actions, &"UI_CONTROLS", _show_controls)
-	_frame.actions.add_child(ScreenRow.new())  # o ecra inteiro do browser (UX-03)
+
 	_zero = FreshStartPanel.new(_fechar)
 	_frame.actions.add_child(_zero)
 	_export_button = PauseTheme.button(
@@ -55,10 +55,10 @@ func _ready() -> void:
 	)
 	_exit_button = PauseTheme.button(_frame.actions, &"UI_SAVE_AND_QUIT", _leave)
 	_save_note = PauseTheme.label(_frame.actions)
-	_save_note.add_theme_font_size_override("font_size", PauseTheme.SMALL_SIZE)
 	_save_note.add_theme_color_override("font_color", PauseTheme.MUTED)
 	_pages.build(_frame, back, _zero)
 	_opcoes = _pages.option_panel
+	_pages.move_extras([_controls_button, _zero, _export_button], self)
 	_device = PauseHelp.current_device()
 	_escrever()
 	hide()
@@ -117,8 +117,9 @@ func back() -> void:
 	_page = Page.HOME
 	_frame.switch_to(_frame.home)
 	var origin := _options_button if previous == Page.OPTIONS else _controls_button
-	if previous == Page.CONFIRM:
-		origin = _zero._abrir
+	if previous in [Page.CONFIRM, Page.CONTROLS]:
+		show_options()
+		origin = _zero._abrir if previous == Page.CONFIRM else _controls_button
 	(_realm if previous == Page.REALM else origin).grab_focus()
 
 

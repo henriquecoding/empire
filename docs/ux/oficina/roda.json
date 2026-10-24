@@ -1,0 +1,30 @@
+{
+	"context": "[P: (190.0, 68.0), S: (520.0, 65.0)]",
+	"context_lines": 2,
+	"context_visible_lines": 2,
+	"manifest": {
+		"aspect": "keep",
+		"commit": "0c351775e2c569e83fc746ca339202753cd203ae",
+		"day": 1,
+		"godot": "4.7.2-stable (official)",
+		"inspector": false,
+		"king_band": 1,
+		"king_x": 1560.0,
+		"locale": "pt_PT",
+		"phase": 0,
+		"renderer": "gl_compatibility",
+		"scale_mode": "fractional",
+		"screen_scale": 1.0,
+		"seed": 1792430124,
+		"site_sheet": false,
+		"stretch": "canvas_items",
+		"touch": false
+	},
+	"options": {
+		"output": "docs/ux/oficina/roda.png",
+		"roda": "true"
+	},
+	"prepared": true,
+	"viewport": "(1280.0, 720.0)",
+	"window": "(1280, 720)"
+}

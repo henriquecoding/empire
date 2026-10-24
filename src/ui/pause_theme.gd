@@ -112,7 +112,7 @@ static func follow_pointer(control: Control) -> void:
 
 
 static func primary(button: Button) -> void:
-	button.add_theme_stylebox_override("normal", _plate(Color("43654c")))
+	button.add_theme_stylebox_override("normal", _plate(CrownSkin.CLOTH))
 	button.add_theme_color_override("font_color", GOLD)
 
 
@@ -127,19 +127,7 @@ static func label(parent: Node, key: StringName = &"") -> Label:
 
 
 static func _plate(fill: Color, margin: int = ROW_GAP) -> StyleBoxTexture:
-	var image := Image.create(PLATE_SIZE, PLATE_SIZE, false, Image.FORMAT_RGBA8)
-	image.fill(Color("161515"))
-	image.fill_rect(PLATE_EDGE, Atlas.LINE)
-	image.fill_rect(PLATE_FACE, fill)
-	image.fill_rect(PLATE_TOP, fill.lightened(TOP_LIGHT))
-	image.fill_rect(PLATE_LEFT, fill.lightened(SIDE_LIGHT))
-	image.fill_rect(PLATE_BOTTOM, fill.darkened(BOTTOM_SHADE))
-	var style := StyleBoxTexture.new()
-	style.texture = ImageTexture.create_from_image(image)
-	for side: Side in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]:
-		style.set_texture_margin(side, SLICE_MARGIN)
-		style.set_content_margin(side, margin)
-	return style
+	return CrownSkin.plate(fill, margin)
 
 
 static func _focus() -> StyleBoxFlat:

@@ -80,6 +80,8 @@ static func blocked() -> bool:
 		ClassSelection.active
 		or TravelPanel.active
 		or SiteSheet.active
+		or RoyalWheel.active
+		or RoyalWheel.release_guard
 		or not SimLoop.running()
 		or Input.is_action_pressed(&"king_wheel")
 	)

@@ -34,10 +34,7 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	if not SimLoop.running():
 		return
-	var impulso := wheel_choice(evento, Input.is_action_pressed(&"king_wheel"))
-	if impulso >= 0:
-		_impulso(impulso)
-		get_viewport().set_input_as_handled()
+	if RoyalWheel.active or RoyalWheel.release_guard or Input.is_action_pressed(&"king_wheel"):
 		return
 	if evento.is_action_pressed(&"verb_assume"):
 		if ImperialSuccession.at_house():
@@ -98,30 +95,16 @@ func _process(delta: float) -> void:
 	if not SimLoop.running():
 		_repeticao = 0.0
 		return
-	# Com a roda premida o stick aponta e o rei para: a roda "e o corpo dele" (§24).
-	# E o tempo abranda, se o jogador nao o desligou (Q-034).
-	var roda := Input.is_action_pressed(&"king_wheel")
-	# Correr (Q-149, Q-169, Q-193): a tecla, com quem se conduz a andar; o folego e o
-	# passo contam-se no tick (SimLoop.step, MonarchWatch.pace).
+	var roda := (
+		RoyalWheel.active or RoyalWheel.release_guard or Input.is_action_pressed(&"king_wheel")
+	)
 	var anda := Input.get_axis(&"move_left", &"move_right") != 0.0 and not roda
 	SimLoop.field.stamina.wants = Input.is_action_pressed(&"king_run") and anda
-	SimLoop.field.stamina.still = not anda  # parado recupera depressa (Q-208)
-	Pace.scale = (
-		_relogio_lido().wheel_time_scale
-		if roda and Preferences.on(Preferences.WHEEL_SLOWDOWN)
-		else 1.0
-	)
+	SimLoop.field.stamina.still = not anda
+	_andar(0.0 if roda else Input.get_axis(&"move_left", &"move_right"))
 	if roda:
-		var segmento := wheel_segment(_stick(), SimLoop.field.crown.ids().size())
-		pointed = segmento  # ao centro nao aponta nada: largar Y ai cancela
-		_andar(0.0)
-	else:
-		# Largar o Y usa o que o stick apontava. Lido aqui e nao no evento: o
-		# Inspector trata o evento do Y antes de ele chegar a este no.
-		if pointed >= 0:
-			_impulso(pointed)
-		pointed = -1
-		_andar(Input.get_axis(&"move_left", &"move_right"))
+		_repeticao = 0.0
+		return
 	_repeticao = maxf(0.0, _repeticao - delta)
 	if ClassSelection.release_pending:
 		if Input.is_action_pressed(&"verb_drop"):

@@ -59,3 +59,12 @@ func _page(layout: PauseLayout, key: StringName, back: Callable) -> VBoxContaine
 	PauseLayout.scroll(panel)
 	_backs.append(PauseTheme.button(page, &"UI_MENU_BACK", back))
 	return page
+
+
+func move_extras(extras: Array[Control], gallery_parent: Node) -> void:
+	for extra: Control in extras:
+		extra.reparent(option_panel)
+	PauseTheme.button(
+		option_panel, &"ANIM_GALLERY_TITLE", RoyalGallery.open_on.bind(gallery_parent)
+	)
+	option_panel.add_child(ScreenRow.new())

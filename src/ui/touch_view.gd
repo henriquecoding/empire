@@ -32,6 +32,8 @@ const DONS := {
 ## todos os frames, e custavam mais do que o mundo que tapam (auditoria de 08/10/2026).
 static func plan(pad: TouchPad, brilho: bool, zoom: float) -> Array:
 	var l := pad.layout
+	if RoyalWheel.active:
+		return _wheel_controls(pad, zoom)
 	var raio := l.stick_radius()
 	var plano: Array = [[&"", zoom]]  # a escala nao se desenha, mas muda o rotulo
 	if pad.stick.held:
@@ -71,6 +73,9 @@ static func plan(pad: TouchPad, brilho: bool, zoom: float) -> Array:
 				var arma := CombatGlyphs.attack_name(classe)
 				estado[&"icone"] = ARMAS.get(arma, &"espada")
 				estado[&"rotulo"] = _nome(arma)
+				var ammunition := MonarchHud.arrows(Assume.driven(), true)
+				if not ammunition.is_empty():
+					estado[&"rotulo"] = ammunition
 				estado[&"pronto"] = _pronto()
 			TouchLayout.Role.SKILL:
 				var dom := CombatGlyphs.skill_name(classe)
@@ -89,11 +94,6 @@ static func plan(pad: TouchPad, brilho: bool, zoom: float) -> Array:
 			TouchLayout.Role.PAUSE:
 				estado[&"rotulo"] = ""
 		plano.append([&"button", l.centre(papel), l.radius(papel), estado])
-	if pad.holds(TouchLayout.Role.WHEEL) and rei:
-		var n := SimLoop.field.crown.ids().size()
-		var alcance := TouchPad.RODA_PX * l.scale
-		var centro := l.centre(TouchLayout.Role.WHEEL)
-		plano.append([&"wheel", centro, alcance, n, InputRouter.pointed])
 	return plano
 
 
@@ -152,3 +152,16 @@ static func _pronto() -> float:
 
 static func _nome(chave: StringName) -> String:
 	return TranslationServer.translate(chave).capitalize()
+
+
+static func _wheel_controls(pad: TouchPad, zoom: float) -> Array:
+	var plan: Array = [[&"", zoom]]
+	for role: TouchLayout.Role in [TouchLayout.Role.WHEEL, TouchLayout.Role.PAUSE]:
+		var state := {
+			&"premido": pad.holds(role),
+			&"icone": ICONES[role],
+			&"rotulo": _nome(&"TOUCH_WHEEL") if role == TouchLayout.Role.WHEEL else "",
+			&"cor": Atlas.COIN,
+		}
+		plan.append([&"button", pad.layout.centre(role), pad.layout.radius(role), state])
+	return plan

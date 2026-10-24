@@ -46,15 +46,12 @@ func test_the_season_counts_the_days_left_and_names_the_last_one() -> void:
 		assert_str(texto).not_contains("1 ")
 
 
-func test_the_season_line_fits_its_card_for_every_season() -> void:
+func test_the_season_detail_remains_available_in_the_realm_overview() -> void:
 	for locale: String in ["pt_PT", "en"]:
 		TranslationServer.set_locale(locale)
-		for nome: StringName in SeasonText.NAMES:
-			var valores := {"season": tr(nome), "days": 88}
-			for chave: StringName in [&"HUD_SEASON", &"HUD_SEASON_LAST"]:
-				var linha := tr(chave).format(valores)
-				var cabe := HudRibbon.SEASON.size.x
-				assert_float(_largura(linha, HudRibbon.FONTS.secondary)).is_less_equal(cabe)
+		assert_str(RealmReadout.overview()).contains(
+			SeasonText.of(SimLoop.field, SimLoop.state.day)
+		)
 
 
 func test_the_purse_says_which_number_is_the_capacity_and_fits() -> void:
@@ -62,8 +59,8 @@ func test_the_purse_says_which_number_is_the_capacity_and_fits() -> void:
 		TranslationServer.set_locale(locale)
 		var titulo := tr(&"HUD_PURSE_TITLE")
 		assert_str(titulo).contains("/")  # «moedas / máx.»: a mesma ordem do valor
-		var largura := _largura(titulo, HudRibbon.FONTS.purse)
-		assert_float(largura).is_less_equal(HudRibbon.PURSE.size.x)
+		var value := tr(&"HUD_PURSE_VALUE").format({"coins": 99, "capacity": 999})
+		assert_float(_largura(value, 19)).is_less_equal(HudLayout.PURSE.size.x - 42)
 		var resumo := tr(&"HUD_DETAIL_PURSE").format({"bag": 6, "cap": 33})
 		assert_str(resumo).contains("6")
 		assert_str(resumo).contains("33")

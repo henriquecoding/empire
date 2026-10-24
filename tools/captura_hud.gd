@@ -63,6 +63,21 @@ func _process(_delta: float) -> void:
 	if _frames == 20 and _options.get("inspetor", "false") == "true":
 		var estado := _game.get_node(^"Interface/Estado") as Inspector
 		estado.visible = true
+	if _frames == 20 and _options.get("pause", "false") == "true":
+		SimLoop.set_paused(true)
+		if _options.get("options", "false") == "true":
+			(_game.get_node(^"Interface/Pausa") as PauseMenu).show_options()
+	if _frames == 20 and _options.get("roda", "false") == "true":
+		var wheel := _game.get_node(^"Interface/HUD").find_child("*", false, false)
+		for child: Node in _game.get_node(^"Interface/HUD").get_children():
+			if child is RoyalWheel:
+				wheel = child
+		(wheel as RoyalWheel).open()
+		(wheel as RoyalWheel).set_process(false)
+		(wheel as RoyalWheel).selected = 0
+		(wheel as RoyalWheel)._readout()
+	if _frames == 30 and _options.get("moving", "false") == "true":
+		Input.action_press(&"move_right")
 	if _frames == 10 and _options.has("notice"):
 		(_game.get_node(^"Interface/HUD") as GameHud).say(String(_options.notice))
 	if _frames > 0:
@@ -129,4 +144,6 @@ func _manifesto() -> Dictionary:
 		"touch": TouchControls.active,
 		"site_sheet": SiteSheet.active,
 		"inspector": Inspector.shown,
+		"paused": not SimLoop.running(),
+		"wheel": RoyalWheel.active,
 	}

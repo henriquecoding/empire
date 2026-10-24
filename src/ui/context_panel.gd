@@ -46,12 +46,14 @@ func _process(delta: float) -> void:
 		var message := GuideHints.context(device)
 		text = message.text
 		_key = message.key
-		if text.is_empty() and area.x < HudLayout.GOAL_MIN_WIDTH:
+		if text.is_empty():
 			message = GuideHints.goal()
 			text = message.text
 			_key = message.key
 	# Com a ficha do sitio aberta a linha curta repetia-a (ADR 0078).
-	visible = _hint.present(_key, InteractionFocus.still() and not SiteSheet.active, delta)
+	visible = _hint.present(
+		_key, InteractionFocus.still() and not SiteSheet.active and not RoyalWheel.active, delta
+	)
 	var available := area
 	if not TouchControls.active and area.x >= HudLayout.COMBAT_MIN_WIDTH:
 		available.x -= CombatBar.WIDTH + HudLayout.COMBAT_GAP

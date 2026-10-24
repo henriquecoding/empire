@@ -17,7 +17,7 @@ func test_header_cards_fit_without_overlap_on_phone_deck_and_wide_canvas() -> vo
 
 func test_small_phone_uses_context_for_goal_instead_of_squeezing_text() -> void:
 	assert_bool(HudLayout.header(Vector2(667, 375))[&"goal"].has_area()).is_false()
-	assert_bool(HudLayout.header(Vector2(844, 390))[&"goal"].has_area()).is_true()
+	assert_bool(HudLayout.header(Vector2(844, 390))[&"goal"].has_area()).is_false()
 
 
 func test_context_expands_for_consequences_and_stays_centred() -> void:

@@ -141,6 +141,8 @@ func _process(_delta: float) -> void:
 		and not ClassSelection.active
 		and not TravelPanel.active
 		and not SiteSheet.active
+		and not RoyalWheel.active
+		and relevant()
 		and not TouchControls.active
 	)
 	if HeroWatch.feedback_serial != _feedback_serial:
@@ -189,6 +191,13 @@ func _process(_delta: float) -> void:
 		if not refusal.is_empty():
 			_skill.tooltip_text += "\n" + refusal
 		_skill_progress.value = 1.0 if refusal.is_empty() else 0.0
+
+
+static func relevant() -> bool:
+	if SimLoop.units == null:
+		return false
+	var i := SimLoop.units.index_of(Assume.driven())
+	return i >= 0 and (HeroWatch.current() != &"monarch" or SimLoop.units.cooldowns[i] > 0.0)
 
 
 func _press_attack() -> void:

@@ -33,7 +33,7 @@ static func skill_ready(who: int) -> float:
 
 
 ## " · Flechas 12/30" para quem tem aljava, ou "" (Q-200).
-static func arrows(who: int) -> String:
+static func arrows(who: int, compact := false) -> String:
 	var units := SimLoop.units
 	var i := units.index_of(who)
 	if i < 0:
@@ -42,7 +42,9 @@ static func arrows(who: int) -> String:
 	if corpo == null or corpo.ammo <= 0:
 		return ""
 	var restam := SimLoop.field.supply.left(units, i, corpo)
-	return " · " + _tr(&"COMBAT_ARROWS").format({"left": restam, "max": corpo.ammo})
+	var key := &"COMBAT_AMMO_COMPACT" if compact else &"COMBAT_ARROWS"
+	var text := _tr(key).format({"left": restam, "max": corpo.ammo})
+	return text if compact else " · " + text
 
 
 static func _tr(chave: StringName) -> String:

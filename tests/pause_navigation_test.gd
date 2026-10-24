@@ -15,6 +15,46 @@ func test_as_opcoes_nao_ocupam_a_pausa_principal() -> void:
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._retomar)
 
 
+func test_a_pausa_principal_conserva_as_quatro_entradas() -> void:
+	var menu := _menu()
+	var visible_buttons: Array[Button] = []
+	for child: Node in menu._frame.actions.get_children():
+		if child is Button and child.is_visible_in_tree():
+			visible_buttons.append(child)
+	assert_array(visible_buttons).contains_exactly(
+		[menu._retomar, menu._realm, menu._options_button, menu._exit_button]
+	)
+
+
+func test_a_galeria_volta_as_opcoes_sem_retomar_a_partida() -> void:
+	RngService.configure(20261023)
+	SimLoop.set_paused(true)
+	var menu := _menu()
+	menu.show_options()
+	var gallery_button: Button
+	for child: Node in menu.find_children("*", "Button", true, false):
+		if (child as Button).text == tr(&"ANIM_GALLERY_TITLE"):
+			gallery_button = child as Button
+	assert_object(gallery_button).is_not_null()
+	assert_bool(menu._opcoes.is_ancestor_of(gallery_button)).is_true()
+	gallery_button.grab_focus()
+	gallery_button.pressed.emit()
+	assert_bool(RoyalGallery.active).is_true()
+	var gallery := menu.get_child(menu.get_child_count() - 1) as RoyalGallery
+	assert_object(gallery).is_not_null()
+	var escape := InputEventAction.new()
+	escape.action = &"pause"
+	escape.pressed = true
+	menu._input(escape)
+	assert_int(menu._page).is_equal(PauseMenu.Page.OPTIONS)
+	gallery._input(escape)
+	await get_tree().process_frame
+	assert_bool(RoyalGallery.active).is_false()
+	assert_bool(SimLoop.running()).is_false()
+	assert_bool(menu._opcoes.is_visible_in_tree()).is_true()
+	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(gallery_button)
+
+
 func test_voltar_das_opcoes_mantem_a_partida_pausada() -> void:
 	SimLoop.set_paused(true)
 	var menu := _menu()
@@ -29,12 +69,13 @@ func test_voltar_das_opcoes_mantem_a_partida_pausada() -> void:
 
 func test_a_confirmacao_isola_as_accoes_da_pausa() -> void:
 	var menu := _menu()
+	menu.show_options()
 	menu._zero._abrir.pressed.emit()
 	assert_bool(menu._retomar.is_visible_in_tree()).is_false()
 	assert_bool(menu._opcoes.is_visible_in_tree()).is_false()
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._zero._cancelar)
 	menu.back()
-	assert_bool(menu._retomar.is_visible_in_tree()).is_true()
+	assert_bool(menu._opcoes.is_visible_in_tree()).is_true()
 	assert_bool(menu._zero._pergunta.is_visible_in_tree()).is_false()
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._zero._abrir)
 
@@ -64,6 +105,8 @@ func test_opcoes_comecam_na_acessibilidade_e_tem_jogo_separado() -> void:
 func test_o_recomeco_nao_expoe_a_pergunta_antes_de_ser_pedido() -> void:
 	var menu := _menu()
 	assert_bool(menu._zero._pergunta.is_visible_in_tree()).is_false()
+	assert_bool(menu._zero._abrir.is_visible_in_tree()).is_false()
+	menu.show_options()
 	assert_bool(menu._zero._abrir.is_visible_in_tree()).is_true()
 
 
@@ -84,6 +127,7 @@ func test_o_rato_muda_o_foco_sem_tirar_a_protecao_do_cancelar() -> void:
 	motion.relative = Vector2(1, 0)
 	menu._options_button.gui_input.emit(motion)
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._options_button)
+	menu.show_options()
 	menu._zero._abrir.pressed.emit()
 	menu._zero._apagar.gui_input.emit(InputEventMouseMotion.new())
 	assert_object(menu.get_viewport().gui_get_focus_owner()).is_same(menu._zero._cancelar)

@@ -203,6 +203,19 @@ jobs:
           xvfb-run -a make captura CAPTURA=build/classes-nia.png EXTRA="--novo --escolha true --perfil nia"
           xvfb-run -a godot --path . --resolution 390x844 tools/captura.tscn -- --novo --segundos 3 --escolha true --perfil archer_emperor --saida build/classes-compacta.png
 
+      - name: Oficina da Coroa · regressões com renderer e entrada reais
+        run: |
+          xvfb-run -a godot --path . -s addons/gdUnit4/bin/GdUnitCmdTool.gd -a tests/royal_wheel_test.gd -a tests/pause_navigation_test.gd -a tests/touch_input_lifecycle_test.gd
+
+      - name: Oficina da Coroa · exploração, roda e pausa
+        run: |
+          mkdir -p build/oficina
+          xvfb-run -a godot --path . --resolution 1280x720 tools/captura_hud.tscn -- --moving true --output build/oficina/exploracao.png
+          xvfb-run -a godot --path . --resolution 1280x720 tools/captura_hud.tscn -- --roda true --output build/oficina/roda.png
+          xvfb-run -a godot --path . --resolution 1280x720 tools/captura_hud.tscn -- --pause true --output build/oficina/pausa.png
+          xvfb-run -a godot --path . --resolution 844x390 tools/captura_hud.tscn -- --touch true --roda true --output build/oficina/roda-toque.png
+          xvfb-run -a godot --path . --resolution 844x390 tools/captura_hud.tscn -- --touch true --pause true --options true --output build/oficina/opcoes-toque.png
+
       # Sai sempre, passe ou chumbe: quando chumba, a fotografia e a primeira
       # coisa que alguem quer ver, e sem ela a percentagem nao diz onde.
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
@@ -215,6 +228,8 @@ jobs:
             build/empire.png
             build/greybox/*.png
             build/classes-*.png
+            build/oficina/
+            reports/
           retention-days: 14
           if-no-files-found: warn
 
