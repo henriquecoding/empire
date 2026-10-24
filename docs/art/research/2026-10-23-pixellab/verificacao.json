@@ -1,0 +1,23 @@
+{
+  "checked_at_utc": "2026-10-23T09:51:56.238215+00:00",
+  "scope": "research_package_integrity_only",
+  "command": "python3 docs/art/research/2026-10-23-pixellab/validate_research.py",
+  "json_documents_parsed": 6,
+  "local_links_checked": 22,
+  "central_references_checked": 42,
+  "planned_counts": {
+    "static_per_configuration": 192,
+    "static_total": 576,
+    "clips_per_configuration": 96,
+    "clips_total": 288
+  },
+  "contract": {
+    "fixture_invariants": "passed",
+    "formal_json_schema": "passed_draft2020_12",
+    "example_duration_ms": 300
+  },
+  "python_syntax_and_line_limits": "passed",
+  "generation_executed": false,
+  "training_executed": false,
+  "visual_quality_benchmark_executed": false
+}

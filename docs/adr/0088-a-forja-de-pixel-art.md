@@ -6,6 +6,8 @@
 - Complementa: ADR 0010 (o import do Aseprite, ainda por fechar), ADR 0084 e 0087 (produção com geração de imagem);
   o [guia de personagens](../art/CHARACTER_PRODUCTION_GUIDE.md) §5 e §6
 - Tarefa: [FORJA-01](../backlog/FORJA-01.md)
+- Emendada por: [ADR 0089](0089-a-forja-pede-uma-vez-e-mede.md) (reparos da auditoria de 23/10: pedidos pagos, plano por
+  gerador, preservação da arte e revisão em três estados)
 
 ## Contexto
 
@@ -33,8 +35,8 @@ relatório e proveniência.**
 2. **Os contratos são dados.** `tools/forja/contracts.json` guarda telas, pivôs, contornos, clusters, tetos de cor
    e as tags de animação, cada um com a fonte. Um teste confere-os contra as tabelas da Asset Bible e da Animation
    Bible: se um documento mudar e o outro não, o portão chumba.
-3. **Gerar na grade final.** O compilador de prompts pede a grade lógica do contrato e o tamanho de imagem que a
-   torna exata; a figura que não cabe na tela é um erro (`clipped`) com a altura certa devolvida ao gerador, nunca
+3. **Pedir a grade final.** O compilador de prompts pede a grade lógica do contrato e, onde o gerador aceita lados
+   livres, o tamanho de imagem que a torna exata (pedir não garante: a ADR 0089 manda medir o que chega); a figura que não cabe na tela é um erro (`clipped`) com a altura certa devolvida ao gerador, nunca
    uma redução.
 4. **O ciclo fecha por texto.** O lint devolve achados, a correção da Forja e uma frase em inglês para o gerador; o
    relatório traz o prompt corretivo. Um agente repete sem um humano a traduzir.
@@ -52,8 +54,9 @@ relatório e proveniência.**
 - **Usar o PixelLab como ferramenta do projeto.** Gera bem na grade, mas é pago, remoto, não lê ficheiros locais e
   não conhece paleta, pivô, cluster ou cadência do Empire. Fica como conector opcional.
 - **Instalar unfake, perfectPixel ou Pixel Snapper.** Resolvem só a grade, com dependências novas (Rust, OpenCV,
-  numpy) e sem contratos, animação, Aseprite, Godot ou ciclo de correção. As ideias foram estudadas e superadas
-  (autocorrelação dos dois eixos, pente de contraste, reta por mínimos quadrados, OKLab).
+  numpy) e sem contratos, animação, Aseprite, Godot ou ciclo de correção. As ideias foram estudadas e reaproveitadas com
+  outras escolhas (autocorrelação dos dois eixos, pente de contraste, reta por mínimos quadrados, OKLab); nenhuma
+  comparação no mesmo conjunto de imagens mostra que a Forja recupera melhor.
 - **Acrescentar numpy.** Tornaria o processamento mais rápido, mas exige ADR de dependência e uma versão que sirva o
   Python 3.11 do CI. Com o Pillow a fazer o trabalho pesado em C, uma imagem de 1024 px forja-se em menos de um
   segundo.

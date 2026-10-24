@@ -1,0 +1,198 @@
+{
+  "scope": "local_synthetic_observations_no_network",
+  "upstream_reviewed_commit": "68ed1c87461f5d39dd21fb664eef2930ddeaac81",
+  "checkout_commit": "4b18494e7697106f17bdf88c27ecbe80ac7f3323",
+  "production_files_modified_by_probe": false,
+  "observations": {
+    "F01_post_retries": {
+      "post_attempts": 4,
+      "provider_billing_observed": false,
+      "idempotency_header_present": false
+    },
+    "F02_pixellab_request": {
+      "compiled_size": [
+        1920,
+        1920
+      ],
+      "sent_size": {
+        "width": 1920,
+        "height": 1920
+      },
+      "native_parameters_available": {
+        "width": 96,
+        "height": 96
+      },
+      "input_reference_count": 1,
+      "reference_in_payload": false,
+      "request_sent_to_network": false
+    },
+    "F03_gemini_request_and_guides": {
+      "compiled_size": [
+        1920,
+        960
+      ],
+      "assumed_scale": 5,
+      "sent_format": {
+        "type": "image",
+        "aspect_ratio": "3:2",
+        "image_size": "1K"
+      },
+      "prompt_mentions_attached_palette": true,
+      "attached_images": 0,
+      "request_sent_to_network": false
+    },
+    "F04_inpaint_blue_collision": {
+      "provider_echoed_input": true,
+      "fixture_scale_override": 2,
+      "opaque_before": 64,
+      "opaque_after": 0,
+      "scale": 2,
+      "box": [
+        4,
+        4,
+        12,
+        12
+      ],
+      "changed_pixels": 64,
+      "outside_identical": true,
+      "model": "synthetic/echo"
+    },
+    "F05_cleanup_details": {
+      "noise_option": 0,
+      "isolated_pixel_before_alpha": 255,
+      "isolated_pixel_after_alpha": 0,
+      "hole_before_alpha": 0,
+      "hole_after_alpha": 255,
+      "cleanup": {
+        "orphans": 1,
+        "holes": 1,
+        "noise": 0
+      }
+    },
+    "F06_jump_offsets": {
+      "source_vertical_displacement_native_px": -4,
+      "ok": true,
+      "found": 2,
+      "source_boxes": [
+        [
+          48,
+          56,
+          80,
+          104
+        ],
+        [
+          176,
+          40,
+          208,
+          88
+        ]
+      ],
+      "metrics": {
+        "frames": 2,
+        "distinct_rasters": 1,
+        "duplicates": 1,
+        "mirror_pairs": 0,
+        "palette_size": 1,
+        "feet": [
+          [
+            6,
+            13
+          ],
+          [
+            6,
+            13
+          ]
+        ],
+        "pivot_drift": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "max_drift": 0,
+        "heights": [
+          12,
+          12
+        ],
+        "flicker": 0
+      },
+      "output_frame_count": 2
+    },
+    "F07_duplicate_motion": {
+      "source_vertical_displacement_native_px": 0,
+      "ok": true,
+      "found": 2,
+      "source_boxes": [
+        [
+          48,
+          56,
+          80,
+          104
+        ],
+        [
+          176,
+          56,
+          208,
+          104
+        ]
+      ],
+      "metrics": {
+        "frames": 2,
+        "distinct_rasters": 1,
+        "duplicates": 1,
+        "mirror_pairs": 0,
+        "palette_size": 1,
+        "feet": [
+          [
+            6,
+            13
+          ],
+          [
+            6,
+            13
+          ]
+        ],
+        "pivot_drift": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "max_drift": 0,
+        "heights": [
+          12,
+          12
+        ],
+        "flicker": 0
+      },
+      "output_frame_count": 2
+    },
+    "F08_godot_reverse": {
+      "input_direction": "reverse",
+      "expected_indices": [
+        2,
+        1,
+        0
+      ],
+      "exported_indices": [
+        0,
+        1,
+        2
+      ],
+      "godot_engine_executed": false
+    },
+    "F09_job_polling": {
+      "get_attempts": 20,
+      "stopped_by_audit_sentinel": true,
+      "elapsed_time_or_timeout_measured": false
+    }
+  }
+}

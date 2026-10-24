@@ -28,11 +28,14 @@ from .imageops import open_rgba
 VERSIONS = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 SKIP = {"mcp"}
 INSTRUCTIONS = (
-    "Forja: pixel art verdadeira para o jogo Empire a partir de imagens geradas. Fluxo: (1) forja_prompt compila "
-    "o pedido (prompt, tamanho, guias, expect.json); (2) gere a imagem com a tua ferramenta (ou forja_generate "
-    "com chave); (3) forja_forge (uma figura) ou forja_sheet (prancha) com --expect; (4) le os achados e o "
-    "prompt_feedback; se nao passou, gera de novo com o prompt corrigido. Caminhos relativos a raiz do repositorio. "
-    "Nunca escrever em art/ sem pedido do dono; usar build/forja/. Ler docs/art/FORJA.md.")
+    "Forja: pixel art para o jogo Empire a partir de imagens geradas. Fluxo: (1) forja_prompt compila o pedido "
+    "(prompt, tamanho, guias, expect.json) e diz o que anexar, por ordem; com gerador ligado, forja_plan valida o "
+    "pedido sem rede; (2) gere a imagem com a tua ferramenta (ou forja_generate/forja_auto com chave e --max-calls: "
+    "cada POST pago sai uma vez, num job que forja_jobs mostra e retoma so por consulta); (3) forja_forge (uma "
+    "figura) ou forja_sheet (prancha) com --expect; (4) le review (contract_valid, motion_checks, "
+    "needs_regeneration) e prompt_feedback; se needs_regeneration, gera de novo com o prompt corrigido. A aprovacao "
+    "artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do "
+    "dono; usar build/forja/. Ler docs/art/FORJA.md.")
 
 
 def _schema(parser: argparse.ArgumentParser) -> dict:

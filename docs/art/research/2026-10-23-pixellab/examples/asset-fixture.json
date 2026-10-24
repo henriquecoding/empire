@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "asset_id": "synthetic_contract_example",
+  "fixture": true,
+  "kind": "character",
+  "canvas": {
+    "width": 80,
+    "height": 80
+  },
+  "authoring_mode": "synthetic_metadata_fixture",
+  "alpha_policy": "binary",
+  "palette": [
+    "#182030",
+    "#526080",
+    "#D8B080"
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "file": null,
+      "sha256": null,
+      "duration_ms": 120,
+      "pivot": [
+        40,
+        72
+      ],
+      "origin": [
+        0,
+        0
+      ],
+      "visual_offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "index": 1,
+      "file": null,
+      "sha256": null,
+      "duration_ms": 180,
+      "pivot": [
+        40,
+        72
+      ],
+      "origin": [
+        0,
+        0
+      ],
+      "visual_offset": [
+        0,
+        0
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "name": "example_timing_only",
+      "frame_indices": [
+        0,
+        1
+      ],
+      "loop": true,
+      "events": []
+    }
+  ],
+  "provenance": {
+    "reference_revision": null,
+    "model_revision": null,
+    "training_allowed": false,
+    "sources": [],
+    "transforms": [
+      "metadata-only example; no raster was generated"
+    ]
+  },
+  "review": {
+    "design": "not_reviewed",
+    "animation": "not_reviewed",
+    "integration": "not_reviewed"
+  }
+}

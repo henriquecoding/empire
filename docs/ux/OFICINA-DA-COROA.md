@@ -1,6 +1,6 @@
 # Oficina da Coroa — implementação no Godot
 
-Pedido aprovado em 18/10/2026; integração e revisão em 20/10/2026. UX-11 e ADR 0089.
+Pedido aprovado em 18/10/2026; integração e revisão em 20/10/2026. UX-11 e ADR 0090.
 As imagens desta página são capturas do jogo no Godot 4.7.2, com o cenário real.
 
 ## Exploração
@@ -60,12 +60,13 @@ continua a exigir confirmação com Cancelar selecionado. A política de guardar
 - As capturas pequenas são simulações de viewport, não ensaios num telefone físico.
   Os conceitos gerados anteriormente orientam o aspeto; não são usados como provas.
 
-## Retoma da integração — 23/10/2026
+## Retoma da integração — 23–24/10/2026
 
 A implementação foi recuperada no ramo `codex/oficina-coroa-runtime-20261020`,
-no commit `01b3808`. A integração com a `main` em `68ed1c87` preserva o elenco
-V15, a galeria, o portão de publicação e a Forja. A decisão desta HUD passa a
-ADR 0089, porque a ADR 0087 já identifica a integração do elenco V15.
+no commit `01b3808`. A integração com a `main` em `cbc8366` preserva o elenco
+V15, a galeria, o portão de publicação e os reparos da Forja. A decisão desta HUD
+passa a ADR 0090: a ADR 0087 identifica o elenco V15 e as ADR 0088 e 0089
+identificam a Forja e os seus reparos.
 
 A galeria acrescentada na `main` fica nas Opções. Um teste reproduziu a quinta
 entrada indevida na pausa; depois da correção, as quatro entradas aprovadas e
@@ -77,3 +78,9 @@ com renderer e a guardar cinco capturas atuais, com manifesto, em
 `captura-da-noite/build/oficina`. O SHA da execução identifica a versão testada.
 O ambiente local desta retoma não conseguiu abrir os sockets do X11; por isso
 não se apresenta uma captura antiga como prova visual da integração atual.
+
+O [CI completo da implementação](https://github.com/henriquecoding/empire/actions/runs/39973328654)
+passou no commit `92a3896`. As cinco capturas atuais foram conferidas em 23/10.
+A integração de 24/10 só resolve documentação e contagens; não muda o código
+da HUD. O [PR #119](https://github.com/henriquecoding/empire/pull/119) acompanha
+a nova validação e a publicação autorizada pelo dono em 24/10.

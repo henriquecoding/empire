@@ -81,7 +81,7 @@ class PromptTest(unittest.TestCase):
 class InpaintTest(unittest.TestCase):
     def test_outside_box_is_identical(self):
         native = framed(3)
-        image, mask, k, size = inpaint.prepare(native, (24, 20, 40, 32), "#0000FF")
+        image, mask, k, size, key = inpaint.prepare(native, (24, 20, 40, 32), "#0000FF")
         with Image.open(io.BytesIO(image)) as im:
             result = im.convert("RGBA")
         result.paste((200, 30, 30, 255), (24 * k, 20 * k, 40 * k, 32 * k))

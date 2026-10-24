@@ -1,0 +1,897 @@
+{
+ "date": "2026-10-23",
+ "scope": "fatia vertical local; sem rede nem gasto",
+ "commit": "4b18494e7697106f17bdf88c27ecbe80ac7f3323",
+ "accepted_design_board": {
+  "path": "docs/art/research/2026-10-19-character-animation/referencias/sombra-bailarina-design-aceito.png",
+  "sha256": "5f207fe5b34f6c9c6b426f09c911088c3a179d32b08cf3cd9fa738916fdb4457",
+  "state": "design aceito para continuar (19/10); nao e spritesheet final"
+ },
+ "generation": {
+  "status": "bloqueada",
+  "credentials_present": [],
+  "spend_limit_approved_by_owner": false,
+  "paid_calls": 0,
+  "cost_usd": 0.0
+ },
+ "characters": {
+  "dancarina": {
+   "kind": "royal_64",
+   "reference": {
+    "source": "art/export/royals/dancarina.png quadro 0 (idle_right)",
+    "rgba_sha256": "3fbba18ee269b445b13334b90e36eaebe85c5370de8d9a72b2851248b49f17eb",
+    "state": "integrado (ADR 0087); animacao sem aprovacao artistica"
+   },
+   "atlas_sha256": "d4da1b8d6801f4775b92048df743fad2c32c65f9a940f3a1b1966f1cfae967d6",
+   "measures": {
+    "canvas": [
+     64,
+     64
+    ],
+    "pivot": [
+     32,
+     62
+    ],
+    "idle_opaque_box": [
+     21,
+     26,
+     43,
+     62
+    ],
+    "idle_opaque_size": [
+     22,
+     36
+    ],
+    "union_opaque_box": [
+     6,
+     3,
+     63,
+     62
+    ],
+    "opaque_area_min_max": [
+     396,
+     1201
+    ],
+    "head": "medida humana pendente: a Forja nao localiza a cabeca",
+    "world_scale": "ver ADR 0087 e o jogo"
+   },
+   "plans": [
+    {
+     "backend": "pixellab",
+     "model": "pixflux",
+     "tags": null,
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 64,
+      "height": 64,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "medium detail",
+       "view": "side",
+       "direction": "east",
+       "no_background": true,
+       "init_image_strength": 300
+      },
+      "spec_sha256": "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc"
+     },
+     "attachments": [
+      [
+       "init_image",
+       "c4659a241b581d10"
+      ],
+      [
+       "color_image",
+       "be792af21a24f0f4"
+      ]
+     ],
+     "expect": {
+      "size": [
+       64,
+       64
+      ],
+      "cells": [
+       64,
+       64
+      ],
+      "content": [
+       0,
+       0,
+       64,
+       64
+      ],
+      "scale": 1,
+      "scale_exact": true,
+      "grid": "native"
+     },
+     "prompt_sha256": "78c2bc59a1d3844fa04d3040e9218c2a1ffe350cf70fe4d6d53bc0e861efadce",
+     "notes": [
+      "o create-image do PixelLab nao tem campo de identidade: o design aprovado vai como init_image (imagem inicial), forca 300 — maior preserva mais",
+      "paleta forcada pelo color_image (112 cores)"
+     ],
+     "authoring": "generated_native",
+     "training_permission": "proibido treinar ou destilar sem autorizacao escrita do PixelLab (termos lidos em 23/10/2026)"
+    },
+    {
+     "backend": "pixellab",
+     "model": "pixflux",
+     "tags": [
+      [
+       "walk",
+       8
+      ]
+     ],
+     "ok": false,
+     "errors": [
+      "PixelLab: os endpoints create-image-* geram uma imagem estatica; a animacao (animate-with-text-v3 e outros) ainda nao esta ligada na Forja. Peca uma pose de cada vez ou use --backend openai|gemini para uma prancha"
+     ],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 64,
+      "height": 64,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "medium detail",
+       "view": "side",
+       "direction": "east",
+       "no_background": true,
+       "init_image_strength": 300
+      },
+      "spec_sha256": "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc"
+     },
+     "attachments": [
+      [
+       "init_image",
+       "c4659a241b581d10"
+      ],
+      [
+       "color_image",
+       "be792af21a24f0f4"
+      ]
+     ],
+     "expect": {
+      "size": [
+       64,
+       64
+      ],
+      "cells": [
+       64,
+       64
+      ],
+      "content": [
+       0,
+       0,
+       64,
+       64
+      ],
+      "scale": 1,
+      "scale_exact": true,
+      "grid": "native"
+     },
+     "prompt_sha256": "78c2bc59a1d3844fa04d3040e9218c2a1ffe350cf70fe4d6d53bc0e861efadce",
+     "notes": [
+      "o create-image do PixelLab nao tem campo de identidade: o design aprovado vai como init_image (imagem inicial), forca 300 — maior preserva mais",
+      "paleta forcada pelo color_image (112 cores)"
+     ],
+     "authoring": "generated_native",
+     "training_permission": "proibido treinar ou destilar sem autorizacao escrita do PixelLab (termos lidos em 23/10/2026)"
+    },
+    {
+     "backend": "openai",
+     "model": "gpt-image-2.5-sunburst",
+     "tags": null,
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "1920x1920",
+      "background": "transparent"
+     },
+     "attachments": [
+      [
+       "identity",
+       "c4659a241b581d10"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       1920,
+       1920
+      ],
+      "cells": [
+       64,
+       64
+      ],
+      "content": [
+       0,
+       0,
+       64,
+       64
+      ],
+      "scale": 30,
+      "scale_exact": true,
+      "grid": "requested"
+     },
+     "prompt_sha256": "a121542212ba6266dc8b564476b3a4afb58e2c4e442a6b82aa571b52f274e4db",
+     "notes": [],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    },
+    {
+     "backend": "openai",
+     "model": "gpt-image-2.5-sunburst",
+     "tags": [
+      [
+       "walk",
+       8
+      ]
+     ],
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "2560x1280",
+      "background": "transparent"
+     },
+     "attachments": [
+      [
+       "identity",
+       "c4659a241b581d10"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       2560,
+       1280
+      ],
+      "cells": [
+       256,
+       128
+      ],
+      "content": [
+       0,
+       0,
+       256,
+       128
+      ],
+      "scale": 10,
+      "scale_exact": true,
+      "grid": "requested"
+     },
+     "prompt_sha256": "5c435e0700229cdbb47e115418fe3daf7afc8064174ee00e1eba1884fdc37d09",
+     "notes": [],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    },
+    {
+     "backend": "gemini",
+     "model": "gemini-3.1-flash-image",
+     "tags": null,
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "1:1",
+      "image_size": "1K",
+      "estimated_output": [
+       1024,
+       1024
+      ],
+      "output_size_known": false
+     },
+     "attachments": [
+      [
+       "identity",
+       "c4659a241b581d10"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       1024,
+       1024
+      ],
+      "cells": [
+       64,
+       64
+      ],
+      "content": [
+       0,
+       0,
+       64,
+       64
+      ],
+      "scale": 16.0,
+      "scale_exact": false,
+      "grid": "requested"
+     },
+     "prompt_sha256": "b84969f779bb0fdc958c2e3478cc67f51cb2c8fea05c7db730160eca5377264c",
+     "notes": [
+      "Gemini 1:1 1K: saida estimada 1024x1024 (tabela de pixels nao documentada); prancha de 64x64 logicos centrada em 64x64, margem (0,0)"
+     ],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    },
+    {
+     "backend": "gemini",
+     "model": "gemini-3.1-flash-image",
+     "tags": [
+      [
+       "walk",
+       8
+      ]
+     ],
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "estimated_output": [
+       2736,
+       1536
+      ],
+      "output_size_known": false
+     },
+     "attachments": [
+      [
+       "identity",
+       "c4659a241b581d10"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       2736,
+       1536
+      ],
+      "cells": [
+       256,
+       144
+      ],
+      "content": [
+       0,
+       8,
+       256,
+       136
+      ],
+      "scale": 10.69,
+      "scale_exact": false,
+      "grid": "requested"
+     },
+     "prompt_sha256": "828413e7ac78c498d633aa347ed0ebef8bfc4350206e81ef00a4fa727ec4ad18",
+     "notes": [
+      "Gemini 16:9 2K: saida estimada 2736x1536 (tabela de pixels nao documentada); prancha de 256x128 logicos centrada em 256x144, margem (0,8)"
+     ],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    }
+   ],
+   "review": {
+    "frames": 48,
+    "declared_repeats": 8,
+    "unique_rasters": 40,
+    "hidden_duplicates": 0,
+    "blocking": [],
+    "per_tag": {
+     "idle": {
+      "frames": 4,
+      "ms": 880,
+      "flags": [],
+      "blocking": []
+     },
+     "walk": {
+      "frames": 8,
+      "ms": 840,
+      "flags": [],
+      "blocking": []
+     },
+     "hit": {
+      "frames": 4,
+      "ms": 470,
+      "flags": [],
+      "blocking": []
+     },
+     "die": {
+      "frames": 8,
+      "ms": 1230,
+      "flags": [],
+      "blocking": []
+     },
+     "rise": {
+      "frames": 8,
+      "ms": 1080,
+      "flags": [],
+      "blocking": []
+     },
+     "dance": {
+      "frames": 16,
+      "ms": 1825,
+      "flags": [],
+      "blocking": []
+     }
+    },
+    "artistic_approval": "pendente",
+    "source": "quadros V15 existentes, nao geracao nova"
+   },
+   "roundtrip": {
+    "strip_json_frames_identical": true,
+    "json_durations_equal": true,
+    "aseprite_pixel_equal": true,
+    "aseprite_durations_equal": true,
+    "aseprite_opened_in_app": false,
+    "godot": {
+     "engine": "4.7.2-stable (tools/verify_godot.py)",
+     "order_and_timing_equal": true
+    }
+   },
+   "previews": [
+    "fatia/dancarina-idle-walk-1x.png",
+    "fatia/dancarina-idle-walk-2x.png",
+    "fatia/dancarina-walk@2x.gif"
+   ]
+  },
+  "sombra": {
+   "kind": "royal_80",
+   "reference": {
+    "source": "art/export/royals/sombra.png quadro 0 (idle_right)",
+    "rgba_sha256": "4f438a2aa3882970191ac5aa5c156671df316dd84bdd2b9728b2cbc993aa8dcd",
+    "state": "integrado (ADR 0087); animacao sem aprovacao artistica"
+   },
+   "atlas_sha256": "c448325ddec6cecac3afe48f899449724dc3612c705bffd65a80d65a54b42bda",
+   "measures": {
+    "canvas": [
+     80,
+     80
+    ],
+    "pivot": [
+     40,
+     78
+    ],
+    "idle_opaque_box": [
+     14,
+     18,
+     69,
+     78
+    ],
+    "idle_opaque_size": [
+     55,
+     60
+    ],
+    "union_opaque_box": [
+     1,
+     5,
+     79,
+     78
+    ],
+    "opaque_area_min_max": [
+     1428,
+     2943
+    ],
+    "head": "medida humana pendente: a Forja nao localiza a cabeca",
+    "world_scale": "ver ADR 0087 e o jogo"
+   },
+   "plans": [
+    {
+     "backend": "pixellab",
+     "model": "pixflux",
+     "tags": null,
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 80,
+      "height": 80,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "medium detail",
+       "view": "side",
+       "direction": "east",
+       "no_background": true,
+       "init_image_strength": 300
+      },
+      "spec_sha256": "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc"
+     },
+     "attachments": [
+      [
+       "init_image",
+       "00515d89312453de"
+      ],
+      [
+       "color_image",
+       "be792af21a24f0f4"
+      ]
+     ],
+     "expect": {
+      "size": [
+       80,
+       80
+      ],
+      "cells": [
+       80,
+       80
+      ],
+      "content": [
+       0,
+       0,
+       80,
+       80
+      ],
+      "scale": 1,
+      "scale_exact": true,
+      "grid": "native"
+     },
+     "prompt_sha256": "5273c69a20aefc8779040977b9e0b57b10be2321667d16fa58380c0473df0fea",
+     "notes": [
+      "o create-image do PixelLab nao tem campo de identidade: o design aprovado vai como init_image (imagem inicial), forca 300 — maior preserva mais",
+      "paleta forcada pelo color_image (112 cores)"
+     ],
+     "authoring": "generated_native",
+     "training_permission": "proibido treinar ou destilar sem autorizacao escrita do PixelLab (termos lidos em 23/10/2026)"
+    },
+    {
+     "backend": "pixellab",
+     "model": "pixflux",
+     "tags": [
+      [
+       "walk",
+       8
+      ]
+     ],
+     "ok": false,
+     "errors": [
+      "PixelLab: os endpoints create-image-* geram uma imagem estatica; a animacao (animate-with-text-v3 e outros) ainda nao esta ligada na Forja. Peca uma pose de cada vez ou use --backend openai|gemini para uma prancha"
+     ],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 80,
+      "height": 80,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "medium detail",
+       "view": "side",
+       "direction": "east",
+       "no_background": true,
+       "init_image_strength": 300
+      },
+      "spec_sha256": "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc"
+     },
+     "attachments": [
+      [
+       "init_image",
+       "00515d89312453de"
+      ],
+      [
+       "color_image",
+       "be792af21a24f0f4"
+      ]
+     ],
+     "expect": {
+      "size": [
+       80,
+       80
+      ],
+      "cells": [
+       80,
+       80
+      ],
+      "content": [
+       0,
+       0,
+       80,
+       80
+      ],
+      "scale": 1,
+      "scale_exact": true,
+      "grid": "native"
+     },
+     "prompt_sha256": "5273c69a20aefc8779040977b9e0b57b10be2321667d16fa58380c0473df0fea",
+     "notes": [
+      "o create-image do PixelLab nao tem campo de identidade: o design aprovado vai como init_image (imagem inicial), forca 300 — maior preserva mais",
+      "paleta forcada pelo color_image (112 cores)"
+     ],
+     "authoring": "generated_native",
+     "training_permission": "proibido treinar ou destilar sem autorizacao escrita do PixelLab (termos lidos em 23/10/2026)"
+    },
+    {
+     "backend": "openai",
+     "model": "gpt-image-2.5-sunburst",
+     "tags": null,
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "1920x1920",
+      "background": "transparent"
+     },
+     "attachments": [
+      [
+       "identity",
+       "00515d89312453de"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       1920,
+       1920
+      ],
+      "cells": [
+       80,
+       80
+      ],
+      "content": [
+       0,
+       0,
+       80,
+       80
+      ],
+      "scale": 24,
+      "scale_exact": true,
+      "grid": "requested"
+     },
+     "prompt_sha256": "18cd905972769a5f7dfb5c20ebf2df463ae2ecdbe527c8d4ddf33d8471c642d2",
+     "notes": [],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    },
+    {
+     "backend": "openai",
+     "model": "gpt-image-2.5-sunburst",
+     "tags": [
+      [
+       "walk",
+       8
+      ]
+     ],
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "2560x1280",
+      "background": "transparent"
+     },
+     "attachments": [
+      [
+       "identity",
+       "00515d89312453de"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       2560,
+       1280
+      ],
+      "cells": [
+       320,
+       160
+      ],
+      "content": [
+       0,
+       0,
+       320,
+       160
+      ],
+      "scale": 8,
+      "scale_exact": true,
+      "grid": "requested"
+     },
+     "prompt_sha256": "aea5129ef6b93bc62b930995950f8d7e4e468adbbfe6dbe3a8f43bff2cdbaf46",
+     "notes": [],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    },
+    {
+     "backend": "gemini",
+     "model": "gemini-3.1-flash-image",
+     "tags": null,
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "1:1",
+      "image_size": "1K",
+      "estimated_output": [
+       1024,
+       1024
+      ],
+      "output_size_known": false
+     },
+     "attachments": [
+      [
+       "identity",
+       "00515d89312453de"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       1024,
+       1024
+      ],
+      "cells": [
+       80,
+       80
+      ],
+      "content": [
+       0,
+       0,
+       80,
+       80
+      ],
+      "scale": 12.8,
+      "scale_exact": false,
+      "grid": "requested"
+     },
+     "prompt_sha256": "d9ec12d246291774e245c696cee2b5b3f9f2a6b355a99116d1ca1e4a018634dd",
+     "notes": [
+      "Gemini 1:1 1K: saida estimada 1024x1024 (tabela de pixels nao documentada); prancha de 80x80 logicos centrada em 80x80, margem (0,0)"
+     ],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    },
+    {
+     "backend": "gemini",
+     "model": "gemini-3.1-flash-image",
+     "tags": [
+      [
+       "walk",
+       8
+      ]
+     ],
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "estimated_output": [
+       2736,
+       1536
+      ],
+      "output_size_known": false
+     },
+     "attachments": [
+      [
+       "identity",
+       "00515d89312453de"
+      ],
+      [
+       "palette",
+       "4185c962391e1617"
+      ]
+     ],
+     "expect": {
+      "size": [
+       2736,
+       1536
+      ],
+      "cells": [
+       320,
+       180
+      ],
+      "content": [
+       0,
+       10,
+       320,
+       170
+      ],
+      "scale": 8.55,
+      "scale_exact": false,
+      "grid": "requested"
+     },
+     "prompt_sha256": "00090e84582c2286a3bf844b25ff1ef9e57658b475c85e7e8a5eeb3d491cb65f",
+     "notes": [
+      "Gemini 16:9 2K: saida estimada 2736x1536 (tabela de pixels nao documentada); prancha de 320x160 logicos centrada em 320x180, margem (0,10)"
+     ],
+     "authoring": "generated_high_resolution_then_grid_recovered",
+     "training_permission": "nao avaliada: confirmar os termos do fornecedor antes de qualquer uso em treino"
+    }
+   ],
+   "review": {
+    "frames": 56,
+    "declared_repeats": 9,
+    "unique_rasters": 47,
+    "hidden_duplicates": 0,
+    "blocking": [],
+    "per_tag": {
+     "idle": {
+      "frames": 4,
+      "ms": 880,
+      "flags": [],
+      "blocking": []
+     },
+     "walk": {
+      "frames": 8,
+      "ms": 1040,
+      "flags": [],
+      "blocking": []
+     },
+     "hit": {
+      "frames": 4,
+      "ms": 470,
+      "flags": [],
+      "blocking": []
+     },
+     "die": {
+      "frames": 8,
+      "ms": 1230,
+      "flags": [],
+      "blocking": []
+     },
+     "rise": {
+      "frames": 8,
+      "ms": 1230,
+      "flags": [],
+      "blocking": []
+     },
+     "sit": {
+      "frames": 8,
+      "ms": 1280,
+      "flags": [],
+      "blocking": []
+     },
+     "heal": {
+      "frames": 8,
+      "ms": 1440,
+      "flags": [],
+      "blocking": []
+     },
+     "stand": {
+      "frames": 8,
+      "ms": 1230,
+      "flags": [],
+      "blocking": []
+     }
+    },
+    "artistic_approval": "pendente",
+    "source": "quadros V15 existentes, nao geracao nova"
+   },
+   "roundtrip": {
+    "strip_json_frames_identical": true,
+    "json_durations_equal": true,
+    "aseprite_pixel_equal": true,
+    "aseprite_durations_equal": true,
+    "aseprite_opened_in_app": false,
+    "godot": {
+     "engine": "4.7.2-stable (tools/verify_godot.py)",
+     "order_and_timing_equal": true
+    }
+   },
+   "previews": [
+    "fatia/sombra-idle-walk-1x.png",
+    "fatia/sombra-idle-walk-2x.png",
+    "fatia/sombra-walk@2x.gif"
+   ]
+  }
+ }
+}

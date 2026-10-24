@@ -6,28 +6,33 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import anim, aseprite, contracts, godot, motion, palette as palmod, sheetforge, tiles
+from . import anim, aseprite, contracts, godot, motion, palette as palmod, review, sheetforge, tiles
 from .cli import box, command, out_path, pair
 from .cmd_image import _options, common
 from .imageops import open_rgba
+from .placement import ALIGNS
 
 
 def do_sheet(args) -> dict:
     opts = _options(args)
     layout = args.layout
     tags = sheetforge.parse_tags(args.tags)
+    region = None
     if args.expect:
+        from .auto import region as content_region
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         layout = layout or tuple(exp["layout"])
         tags = tags or ([tuple(t) for t in exp["tags"]] if exp.get("tags") else None)
-        opts.scale = opts.scale or float(exp["scale"])
+        with Image.open(args.image) as im:
+            region = content_region(exp, list(im.size)) if exp.get("content") else None
     sopts = sheetforge.SheetOptions(tags=tags, layout=layout, anchor=args.anchor, same_height=args.same_height,
                                     deflicker=args.deflicker, lock=args.lock, mirror=args.mirror,
-                                    godot_texture=args.godot_texture)
+                                    godot_texture=args.godot_texture, region=region, align=args.align,
+                                    holds=review.parse_holds(args.hold))
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
     res = sheetforge.forge_sheet(args.image, args.out, opts, sopts, args.name, prompt, args.generator)
-    return {k: res[k] for k in ("ok", "summary", "requested", "found", "files", "metrics", "prompt_feedback",
-                                "pivot", "canvas", "tags", "stray_blobs")}
+    return {k: res[k] for k in ("ok", "review", "summary", "requested", "found", "files", "metrics",
+                                "prompt_feedback", "pivot", "canvas", "tags", "holds", "stray_blobs")}
 
 
 def do_anim(args) -> dict:
@@ -158,6 +163,9 @@ def register(sub) -> None:
     p.add_argument("--lock", type=box, help="caixa x0,y0,x1,y1 do rosto a travar em todos os quadros")
     p.add_argument("--mirror", action="store_true", help="exportar tambem a direcao espelhada")
     p.add_argument("--godot-texture", help="caminho res:// da tira, para escrever o SpriteFrames .tres")
+    p.add_argument("--align", default="auto", choices=("auto",) + ALIGNS,
+                   help="auto: com --layout mantem cada figura onde estava na celula (preserve); sem, pelo apoio")
+    p.add_argument("--hold", action="append", help="quadro repetido de proposito: quadro:ms:razao (repetivel)")
     p = command(sub, "anim", "Quadros PNG -> tira/atlas, JSON do Aseprite, .aseprite, GIF/APNG (e SpriteFrames)", do_anim)
     p.add_argument("frames", nargs="+")
     p.add_argument("-o", "--out", required=True)

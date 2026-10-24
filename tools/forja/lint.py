@@ -69,10 +69,14 @@ def _structure(img, contract, found):
     rows = to_grid(img)
     orphans = [(x, y) for y, row in enumerate(rows) for x, p in enumerate(row)
                if p[3] >= 128 and not any(q[3] >= 128 for q in cleanup._neighbors(rows, x, y))]
-    if orphans:
+    if orphans and cleanup.policy_for(contract.kind) == "scenery":
         found.append(finding("orphans", "error", f"{len(orphans)} pixels soltos (sem vizinho opaco)",
                              [list(o) for o in orphans[:8]], "forja clean",
                              hint="No stray isolated pixels or specks around the figure."))
+    elif orphans:  # F05: fora do cenario um pixel solto pode ser olho, brilho, particula ou rebento
+        found.append(finding("orphans", "warn", f"{len(orphans)} pixels soltos: confirme se sao de proposito",
+                             [list(o) for o in orphans[:8]], "forja clean (se forem ruido)",
+                             hint="No stray isolated pixels or specks around the figure, unless they are intended."))
     if contract.cluster > 1:
         islands = cleanup.small_islands(img, contract.cluster)
         if islands:

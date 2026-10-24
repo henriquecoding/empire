@@ -1,17 +1,14 @@
-"""Subcomandos com gerador: prompt, generate, auto (ciclo fechado), inpaint; e prova e mcp."""
+"""Subcomandos com gerador: prompt, plan, generate, auto (ciclo fechado), inpaint; e prova e mcp."""
 from __future__ import annotations
 
-import io
 import json
 from pathlib import Path
 
-from PIL import Image
-
-from . import contracts, guides, palette as palmod, pipeline, prompts, sheetforge
+from . import auto, backends, contracts, guides, jobs, palette as palmod, plan as plan_mod, prompts, sheetforge
 from .cli import box, command, out_path
 from .imageops import open_rgba
 
-BACKENDS = ("openai", "gemini", "pixellab")
+BACKENDS = plan_mod.BACKENDS
 
 
 def _palette(args, kind: str) -> palmod.Palette | None:
@@ -21,6 +18,7 @@ def _palette(args, kind: str) -> palmod.Palette | None:
 
 
 def do_prompt(args) -> dict:
+    """Sem gerador ligado: o prompt, o expect.json e as guias, na ordem em que se anexam."""
     tags = sheetforge.parse_tags(args.tags)
     pal = _palette(args, args.kind)
     res = prompts.build(args.subject, args.kind, tags, args.facing, args.reference, pal, args.target,
@@ -31,93 +29,80 @@ def do_prompt(args) -> dict:
     (out / "expect.json").write_text(json.dumps(res["expect"], indent=1) + "\n", encoding="utf-8")
     (out / "pixellab.json").write_text(json.dumps(res["pixellab"], indent=1) + "\n", encoding="utf-8")
     c = contracts.get(args.kind)
-    pivot_row = c.pivot[1] // c.cluster if c.pivot else None
-    files = guides.write(out, res["expect"], pal, pivot_row)
-    return {"ok": True, "prompt": res["prompt"], "size": res["size"], "expect": res["expect"], "advice": res["advice"],
+    files = guides.write(out, res["expect"], pal, c.pivot[1] // c.cluster if c.pivot else None)
+    attach = ["o design aprovado" if r == "identity" else files[r] for r in res["expect"]["attached"]]
+    return {"ok": True, "prompt": res["prompt"], "size": res["size"], "expect": res["expect"],
+            "advice": res["advice"], "attach": attach,
             "files": {"prompt": str(out / "prompt.txt"), "expect": str(out / "expect.json"),
                       "pixellab": str(out / "pixellab.json"), **files},
-            "next": f"gere a imagem ({res['size']}) com o prompt e as guias; depois: python3 -m tools.forja "
-                    f"{'sheet' if res['expect']['frames'] > 1 else 'forge'} <imagem> --expect {out / 'expect.json'} -o <pasta>"}
+            "next": f"gere a imagem ({res['size']}) com o prompt, anexando por esta ordem: {attach or 'nada'} "
+                    "(o molde guide_layout.png e opcional: o prompt nao o promete). Depois: python3 -m tools.forja "
+                    f"{'sheet' if res['expect']['frames'] > 1 else 'forge'} <imagem> --expect "
+                    f"{out / 'expect.json'} -o <pasta>"}
 
 
-def generate_images(backend: str, prompt: str, size: str, references: list[bytes], model: str | None,
-                    n: int = 1, transport=None, background: str = "auto") -> dict:
-    if backend == "openai":
+def _plan(args) -> plan_mod.Plan:
+    opt = lambda name, default=None: getattr(args, name, default)  # noqa: E731 (chamadores antigos da API)
+    refs = [("identity", r) for r in args.reference or []] + [("style", r) for r in opt("style_reference") or []]
+    return plan_mod.make(args.backend, args.subject, args.kind, sheetforge.parse_tags(args.tags), args.facing,
+                         refs, _palette(args, args.kind), args.model, opt("guides", "auto"), "auto",
+                         opt("init_strength"), opt("seed"), opt("image_size"))
+
+
+def do_plan(args) -> dict:
+    """O plano validado e escrito, sem rede: o que se pediria, a quem, com que imagens e porque."""
+    p = _plan(args)
+    path = p.write(Path(args.out) / "plan")
+    return {"ok": p.ok, "plan": str(path), "errors": p.data["errors"], "notes": p.data["notes"],
+            "request": p.data["request"], "attachments": p.data["attachments"], "expect": p.data["expect"],
+            "advice": p.data["advice"], "network": False}
+
+
+def _direct_call(args, prompt: str, refs: list[bytes]):
+    """`forja generate`: um pedido cru, validado pelo adaptador antes de sair."""
+    if args.backend == "openai":
         from .backends import openai_images
-        if references:
-            return openai_images.edit(prompt, references, None, size, model, n=n, background=background,
-                                      transport=transport)
-        return openai_images.generate(prompt, size, model, n=n, background=background, transport=transport)
-    if backend == "gemini":
+        size = args.size or "1024x1024"
+        if refs:
+            return openai_images.edit_call(prompt, refs, None, size, args.model, n=args.n,
+                                           roles=["identity"] * len(refs))
+        return openai_images.generate_call(prompt, size, args.model, n=args.n)
+    if args.backend == "gemini":
         from .backends import gemini_images
-        w, _, h = size.partition("x")
-        aspect = "1:1" if w == h else ("3:2" if int(w) > int(h) else "2:3")
-        return gemini_images.generate(prompt, references, model, aspect, transport=transport)
+        if args.size:
+            raise ValueError("o Gemini nao recebe pixels: use --aspect e --image-size (a saida e medida no retorno)")
+        return gemini_images.call(prompt, [("identity", r) for r in refs], args.model, args.aspect,
+                                  args.image_size or "1K")
     from .backends import pixellab_api
-    w, _, h = size.partition("x")
-    return pixellab_api.generate(prompt, int(w), int(h), model or "pixflux", transport=transport,
-                                 no_background=True)
-
-
-def _save(images: list[bytes], out: Path, stem: str) -> list[str]:
-    out.mkdir(parents=True, exist_ok=True)
-    paths = []
-    for i, data in enumerate(images):
-        path = out / f"{stem}_{i + 1:02d}.png"
-        with Image.open(io.BytesIO(data)) as im:
-            im.save(path)
-        paths.append(str(path))
-    return paths
+    w, h = (int(v) for v in (args.size or "64x64").lower().split("x"))
+    return pixellab_api.call(prompt, w, h, args.model or "pixflux", no_background=True,
+                             init_image=refs[0] if refs else None)
 
 
 def do_generate(args) -> dict:
     prompt = args.prompt or Path(args.prompt_file).read_text(encoding="utf-8")
-    size = args.size
-    background = "auto"
-    if args.expect:
-        exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
-        size = size or "%dx%d" % tuple(exp["size"])
-        background = "transparent" if exp.get("background") == "transparent" else "opaque"
     refs = [Path(r).read_bytes() for r in args.reference or []]
-    res = generate_images(args.backend, prompt, size or "1024x1024", refs, args.model, args.n, None, background)
+    call = _direct_call(args, prompt, refs)
     out = Path(args.out)
-    paths = _save(res["images"], out, args.name)
-    meta = {"model": res["model"], "request": res.get("request"), "prompt": prompt, "files": paths,
-            "references": args.reference or []}
-    (out / f"{args.name}.generation.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False) + "\n",
-                                                      encoding="utf-8")
-    return {"ok": bool(paths), "files": paths, "model": res["model"]}
+    budget = jobs.Budget.open(out, args.max_calls, args.max_usd)
+    job = jobs.create(call, out, extra={"backend": args.backend, "references": args.reference or []})
+    try:
+        jobs.execute(job, call, poll=backends.poller(call.service), budget=budget)
+    except (jobs.JobError, jobs.BudgetExceeded, backends.http.MissingKey) as err:
+        return {"ok": False, "error": str(err), "job": str(job.path), "state": job.state, "budget": budget.as_dict()}
+    return {"ok": True, "files": [o["file"] for o in job.data["outputs"]], "job": str(job.path),
+            "received": [o["size"] for o in job.data["outputs"]], "cost": job.data["cost"],
+            "budget": budget.as_dict()}
 
 
-def do_auto(args, transport=None) -> dict:
-    """Ciclo fechado: prompt -> gerar -> forjar -> lint -> prompt corretivo -> ... ate passar."""
-    tags = sheetforge.parse_tags(args.tags)
-    pal = _palette(args, args.kind)
-    built = prompts.build(args.subject, args.kind, tags, args.facing, bool(args.reference), pal,
-                          "gemini" if args.backend == "gemini" else "gpt-image")
-    exp, prompt, out = built["expect"], built["prompt"], Path(args.out)
-    refs = [Path(r).read_bytes() for r in args.reference or []]
-    history = []
-    for attempt in range(1, args.attempts + 1):
-        res = generate_images(args.backend, prompt, built["size"], refs, args.model, 1, transport,
-                              "transparent" if exp["background"] == "transparent" else "opaque")
-        [path] = _save(res["images"][:1], out / "raw", f"try{attempt}")
-        opts = pipeline.Options(kind=args.kind, palette=args.palette, bg=None if exp["background"] == "transparent"
-                                else exp["background"])
-        if exp["frames"] > 1:
-            opts.scale = float(exp["scale"])
-            r = sheetforge.forge_sheet(path, out / f"try{attempt}", opts, sheetforge.SheetOptions(
-                tags=[tuple(t) for t in exp["tags"]] if exp.get("tags") else None, layout=tuple(exp["layout"])),
-                prompt=prompt, generator=res["model"])
-            ok, feedback = r["ok"], r["prompt_feedback"]
-        else:
-            r = pipeline.forge(path, out / f"try{attempt}", opts, prompt=prompt, generator=res["model"])
-            ok, feedback = r["lint"]["ok"], r["lint"]["prompt_feedback"]
-        history.append({"attempt": attempt, "ok": ok, "image": path, "feedback": feedback})
-        if ok:
-            break
-        prompt = prompts.corrective(built["prompt"], feedback)
-    return {"ok": history[-1]["ok"], "attempts": history, "best": str(out / f"try{len(history)}")}
+def do_auto(args, transport=None, **kw) -> dict:
+    """Ciclo fechado: plano -> gerar (job duravel) -> forjar -> rever -> prompt corretivo -> ..."""
+    p = _plan(args)
+    out = Path(args.out)
+    if not p.ok:
+        return {"ok": False, "errors": p.data["errors"], "plan": str(p.write(out / "plan")), "network": False}
+    budget = jobs.Budget.open(out, getattr(args, "max_calls", None) or args.attempts, getattr(args, "max_usd", None))
+    return auto.run(p, out, args.attempts, budget, args.palette, transport, **kw)
 
 
 def do_inpaint(args) -> dict:
@@ -125,8 +110,10 @@ def do_inpaint(args) -> dict:
     native = open_rgba(args.image)
     pal = palmod.load(args.palette) if args.palette else None
     refs = [Path(r).read_bytes() for r in args.reference or []]
-    result, info = inpaint.run(native, args.box, args.change, pal, refs, model=args.model)
     out = out_path(args.out, Path(args.image).with_name(Path(args.image).stem + "_edit.png"))
+    budget = jobs.Budget.open(out.parent, args.max_calls, args.max_usd)
+    result, info = inpaint.run(native, args.box, args.change, pal, refs, model=args.model, folder=out.parent,
+                               budget=budget)
     result.save(out)
     return {"ok": info["outside_identical"], "out": str(out), **info}
 
@@ -144,6 +131,29 @@ def do_mcp(args) -> dict:
     return {"_raw": ""}
 
 
+def _planned(p) -> None:
+    p.add_argument("subject")
+    p.add_argument("-o", "--out", required=True)
+    p.add_argument("--backend", default="openai", choices=BACKENDS)
+    p.add_argument("--kind", default="character_s2", choices=contracts.kinds())
+    p.add_argument("--tags")
+    p.add_argument("--facing", default="right", choices=("right", "left"))
+    p.add_argument("--reference", nargs="*", help="design aprovado (papel identidade)")
+    p.add_argument("--style-reference", nargs="*", help="referencia de estilo (so onde o modelo a aceita)")
+    p.add_argument("--palette")
+    p.add_argument("--model")
+    p.add_argument("--guides", default="auto", choices=plan_mod.GUIDES,
+                   help="que guias anexar; auto = a amostra da paleta quando ela nao cabe no texto")
+    p.add_argument("--image-size", help="Gemini: 1K, 2K ou 4K (por omissao a menor com >= 8 px por pixel)")
+    p.add_argument("--init-strength", type=int, help="PixelLab: forca da imagem inicial (1-999, maior preserva)")
+    p.add_argument("--seed", type=int, help="PixelLab: seed")
+
+
+def _spend(p, default_calls: int | None) -> None:
+    p.add_argument("--max-calls", type=int, default=default_calls, help="teto de chamadas pagas nesta pasta")
+    p.add_argument("--max-usd", type=float, help="teto em dolares, contra o custo dito pelo fornecedor")
+
+
 def register(sub) -> None:
     p = command(sub, "prompt", "Compilar o pedido para o gerador: prompt, tamanho, guias e expect.json", do_prompt)
     p.add_argument("subject", help="o que desenhar, em poucas palavras (ingles ou portugues)")
@@ -155,28 +165,26 @@ def register(sub) -> None:
     p.add_argument("--target", default="gpt-image", choices=prompts.TARGETS)
     p.add_argument("--background", default="auto", choices=("auto", "transparent", "key"))
     p.add_argument("--palette")
-    p = command(sub, "generate", "Pedir a imagem a um gerador (OPENAI_API_KEY, GEMINI_API_KEY ou PIXELLAB_API_KEY)", do_generate)
+    p = command(sub, "plan", "Planear um pedido para um gerador, validado e sem rede: tamanho, imagens e limites",
+                do_plan)
+    _planned(p)
+    p = command(sub, "generate", "Pedir a imagem a um gerador (OPENAI_API_KEY, GEMINI_API_KEY ou PIXELLAB_API_KEY), "
+                "com job duravel e teto de gasto", do_generate)
     p.add_argument("--backend", default="openai", choices=BACKENDS)
     p.add_argument("--prompt")
     p.add_argument("--prompt-file")
-    p.add_argument("--expect")
-    p.add_argument("--reference", nargs="*", help="imagens de referencia (design aprovado, guias)")
+    p.add_argument("--reference", nargs="*", help="design aprovado (PixelLab: vai como init_image)")
     p.add_argument("--model")
-    p.add_argument("--size")
+    p.add_argument("--size", help="openai e pixellab: LxA em pixels")
+    p.add_argument("--aspect", default="1:1", help="Gemini: proporcao suportada (ex.: 16:9)")
+    p.add_argument("--image-size", help="Gemini: 1K, 2K ou 4K")
     p.add_argument("--n", type=int, default=1)
     p.add_argument("-o", "--out", required=True)
-    p.add_argument("--name", default="gen")
-    p = command(sub, "auto", "Ciclo fechado com um gerador: pedir, forjar, conferir e corrigir o prompt", do_auto)
-    p.add_argument("subject")
-    p.add_argument("-o", "--out", required=True)
-    p.add_argument("--backend", default="openai", choices=BACKENDS)
-    p.add_argument("--kind", default="character_s2", choices=contracts.kinds())
-    p.add_argument("--tags")
-    p.add_argument("--facing", default="right", choices=("right", "left"))
-    p.add_argument("--reference", nargs="*")
-    p.add_argument("--palette")
-    p.add_argument("--model")
+    _spend(p, 1)
+    p = command(sub, "auto", "Ciclo fechado com um gerador: planear, pedir, forjar, rever e corrigir o prompt", do_auto)
+    _planned(p)
     p.add_argument("--attempts", type=int, default=3)
+    _spend(p, None)
     p = command(sub, "inpaint", "Mudar so uma caixa do sprite com o gpt-image; fora dela, pixels identicos", do_inpaint)
     p.add_argument("image")
     p.add_argument("--box", type=box, required=True)
@@ -185,7 +193,10 @@ def register(sub) -> None:
     p.add_argument("--reference", nargs="*")
     p.add_argument("--model")
     p.add_argument("-o", "--out")
+    _spend(p, 1)
     p = command(sub, "prova", "A prova da Forja: pixel art falsa fabricada, recuperada e conferida", do_prova)
     p.add_argument("-o", "--out", help="pasta para guardar as imagens da prova")
     p.add_argument("--bench", type=int, help="em vez da prova: bancada pesada com N casos sorteados (lenta)")
     command(sub, "mcp", "Servidor MCP (stdio) com todas as ferramentas, para Codex, Claude Code e outros", do_mcp)
+    from .cmd_jobs import register as register_jobs
+    register_jobs(sub)
