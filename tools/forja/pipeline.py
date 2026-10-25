@@ -12,8 +12,8 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import cleanup, contracts, grid as gridmod, lint, matte, outline, palette as palmod
-from . import provenance, quantize, resample
+from . import cleanup, contracts, grid as gridmod, lint, masks, matte, outline, palette as palmod
+from . import provenance, quantize, resample, verdicts
 from .imageops import flat as imageops_flat, foot_point, opaque_bbox, open_rgba, place, upscale
 
 
@@ -32,6 +32,7 @@ class Options:
     noise: float = 0.08
     cleanup: str = "auto"
     protect: list[tuple[int, int, int, int]] | None = None
+    bare: list[tuple[int, int, int, int]] | None = None
     fit: bool = True
     pivot: tuple[int, int] | None = None
     canvas: tuple[int, int] | None = None
@@ -117,11 +118,15 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
         if opts.outline == "force" or measured["outline_share"] < 0.85:
             if opts.outline == "force":
                 img, _ = outline.strip(img)
-            img = outline.add(_pad(img, 1), contract.outline_color, 1)
+            keep = frozenset().union(*[masks.box((x0 + 1, y0 + 1, x1 + 1, y1 + 1))
+                                       for x0, y0, x1, y1 in opts.bare or []])
+            img = outline.add(_pad(img, 1), contract.outline_color, 1, keep=keep)
             box = opaque_bbox(img)
             img = img.crop(box) if box else img
             shift = (box[0] - 1, box[1] - 1) if box else (-1, -1)
             info["outline_added"] = True
+    if opts.bare:
+        info["outline_bare"] = [list(b) for b in opts.bare]
     if contract.cluster > 1:
         img = upscale(img, contract.cluster)
         info["cluster_upscale"] = contract.cluster
@@ -172,7 +177,8 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     g = gridmod.detect(image, scale=opts.scale, cells=opts.cells)
     native, snapinfo = snap(image, opts, g)
     final, finishinfo = finish(native, opts, contract, pal)
-    verdict = lint.check(final, contract, pal, frame=bool(contract.canvas))
+    exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo, contract)) for b in opts.bare or []])
+    verdict = lint.check(final, contract, pal, frame=bool(contract.canvas), exempt=exempt)
     clipped = (finishinfo.get("fit") or {}).get("clipped_pixels", 0)
     if clipped:
         lint.add(verdict, lint.too_big(contract, clipped, native.size))
@@ -189,7 +195,7 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
                                                 palette=pal.colors if pal and len(pal) <= 256 else None,
                                                 pivot=tuple(pivot) if pivot else None))
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
-              "lint": verdict, "files": files,
+              "lint": verdict, "files": files, "verdicts": verdicts.summary(verdicts.for_review(verdict["ok"], None)),
               "provenance": provenance.record(source, generator, prompt, opts.__dict__)}
     impure = [_to_final([x, y, x + 1, y + 1], finishinfo, contract)[:2] for x, y in sub.pop("_coords")]
     if report_html:

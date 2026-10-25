@@ -3061,5 +3061,22 @@
   "notas": [
    "docs/ux/OFICINA-DA-COROA.md; ADR 0090"
   ]
+ },
+ "FORJA-03": {
+  "title": "A Forja julga armas e equipamento: o primeiro incremento do relatório de 24–25/10",
+  "porque": "O dono criticou as armas de três personagens que tinham passado no lint: um ficheiro pode cumprir o contrato raster e ter uma lâmina bifurcada, duas guardas ou uma corda larga, e a Forja não tinha onde o escrever.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/adr/0091-a-forja-julga-o-equipamento.md",
+   "docs/art/research/2026-10-24-forja-armas/README.md",
+   "docs/art/research/2026-10-24-forja-armas/RELATORIO.md"
+  ],
+  "depende": "FORJA-02",
+  "feito": "Vereditos separados; manifesto de equipamento com observação e veredito; geometria (partes, lâmina, corda, guarda, contactos) com fixtures; reparo com máscara, método e regiões protegidas; corda refeita na grade; contorno que respeita linhas finas; pedido sem contradições de câmara e com o zero explícito.",
+  "fora": "Espada do rei, escudo do escudeiro, operações PixelLab além da imagem estática, identidade e continuidade no tempo, rampas por material, aprovação artística.",
+  "estado": "parcial — P0 aplicado e provado no arqueiro (vereditos separados, manifesto e observação, geometria, reparo com máscara e método, contorno que respeita linhas finas, pedido sem contradições); espada do rei, escudo do escudeiro, P1 e P2 por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

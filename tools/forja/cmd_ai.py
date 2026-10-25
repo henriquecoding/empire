@@ -31,8 +31,8 @@ def do_prompt(args) -> dict:
     c = contracts.get(args.kind)
     files = guides.write(out, res["expect"], pal, c.pivot[1] // c.cluster if c.pivot else None)
     attach = ["o design aprovado" if r == "identity" else files[r] for r in res["expect"]["attached"]]
-    return {"ok": True, "prompt": res["prompt"], "size": res["size"], "expect": res["expect"],
-            "advice": res["advice"], "attach": attach,
+    return {"ok": not res["conflicts"], "conflicts": res["conflicts"], "prompt": res["prompt"], "size": res["size"],
+            "expect": res["expect"], "advice": res["advice"], "attach": attach,
             "files": {"prompt": str(out / "prompt.txt"), "expect": str(out / "expect.json"),
                       "pixellab": str(out / "pixellab.json"), **files},
             "next": f"gere a imagem ({res['size']}) com o prompt, anexando por esta ordem: {attach or 'nada'} "
@@ -106,16 +106,19 @@ def do_auto(args, transport=None, **kw) -> dict:
 
 
 def do_inpaint(args) -> dict:
-    from . import inpaint
+    from . import inpaint, masks
     native = open_rgba(args.image)
     pal = palmod.load(args.palette) if args.palette else None
     refs = [Path(r).read_bytes() for r in args.reference or []]
+    region = masks.select(native, {"mask": args.mask}) if getattr(args, "mask", None) else None
+    protect = frozenset().union(*[masks.box(b, native.size) for b in getattr(args, "protect", None) or []])
     out = out_path(args.out, Path(args.image).with_name(Path(args.image).stem + "_edit.png"))
     budget = jobs.Budget.open(out.parent, args.max_calls, args.max_usd)
     result, info = inpaint.run(native, args.box, args.change, pal, refs, model=args.model, folder=out.parent,
-                               budget=budget)
+                               budget=budget, region=region, method=getattr(args, "method", "replace"),
+                               protect=protect)
     result.save(out)
-    return {"ok": info["outside_identical"], "out": str(out), **info}
+    return {"ok": info["ok"], "out": str(out), **info}
 
 
 def do_prova(args) -> dict:
@@ -185,9 +188,14 @@ def register(sub) -> None:
     _planned(p)
     p.add_argument("--attempts", type=int, default=3)
     _spend(p, None)
-    p = command(sub, "inpaint", "Mudar so uma caixa do sprite com o gpt-image; fora dela, pixels identicos", do_inpaint)
+    p = command(sub, "inpaint", "Mudar so uma caixa ou mascara do sprite com o gpt-image; fora dela, pixels identicos",
+                do_inpaint)
     p.add_argument("image")
-    p.add_argument("--box", type=box, required=True)
+    p.add_argument("--box", type=box)
+    p.add_argument("--mask", help="PNG do tamanho do sprite: os pixels opacos sao a zona a editar (em vez de --box)")
+    p.add_argument("--method", default="replace", choices=("add", "replace", "remove"),
+                   help="add so acrescenta; replace manda na zona, transparencia incluida; remove tira o que la estava")
+    p.add_argument("--protect", type=box, action="append", help="caixa que nao pode mudar (repetivel)")
     p.add_argument("--change", required=True, help="o que mudar dentro da caixa")
     p.add_argument("--palette")
     p.add_argument("--reference", nargs="*")

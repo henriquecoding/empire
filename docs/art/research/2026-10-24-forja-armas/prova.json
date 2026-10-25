@@ -1,0 +1,205 @@
+{
+ "schema": "forja.prova_arqueiro/1",
+ "date": "2026-10-25",
+ "network": false,
+ "generation": false,
+ "artistic_approval": "pending",
+ "recovery": {
+  "source": "docs/art/research/2026-10-24-forja-armas/entrega-examinada.png",
+  "source_sha256": "b3d867be7b5586c0046694564bcbc0c5d03fe9ff453988ce83ee5a054e672ad9",
+  "origin": [
+   580,
+   193
+  ],
+  "scale": 6,
+  "card_background": "#232E3C",
+  "ignored_title_rows": 5,
+  "mixed_cells_inside_sprite": 0,
+  "png": "docs/art/research/2026-10-24-forja-armas/arqueiro/arqueiro-recuperado.png",
+  "pixels_sha256": "3cdbdbe6ab64d9d5411fc4d61d74f6f6726b250985c9109f5f4b41deef97f9c7",
+  "opaque_colors": 37,
+  "useful_height": 74,
+  "matches_report": true
+ },
+ "archer": {
+  "before": {
+   "summary": {
+    "raster_contract": "pass",
+    "equipment_geometry": "fail",
+    "functional_pose": "pass",
+    "identity_consistency": "not_evaluated",
+    "temporal_consistency": "not_applicable",
+    "artistic_approval": "pending",
+    "runtime_integration": "not_tested"
+   },
+   "problems": [
+    "bow_main: largura 2 px em 22 linhas (maximo 1; ex.: [18, 19, 20]); afasta-se 1.55 px da reta entre as pontas"
+   ]
+  },
+  "repair": {
+   "anchors": [
+    [
+     62,
+     13
+    ],
+    [
+     57,
+     68
+    ]
+   ],
+   "color": "#E5D395",
+   "line_pixels": 56,
+   "kept": 51,
+   "drawn": 5,
+   "cleared": 26,
+   "inferred": [
+    [
+     60,
+     43
+    ]
+   ],
+   "reused_under_occluder": [
+    [
+     59,
+     39
+    ],
+    [
+     59,
+     40
+    ]
+   ]
+  },
+  "compose": {
+   "ok": true,
+   "outside_identical": true,
+   "protected_identical": true,
+   "changed_pixels": 32
+  },
+  "after": {
+   "summary": {
+    "raster_contract": "pass",
+    "equipment_geometry": "pass",
+    "functional_pose": "pass",
+    "identity_consistency": "not_evaluated",
+    "temporal_consistency": "not_applicable",
+    "artistic_approval": "pending",
+    "runtime_integration": "not_tested"
+   },
+   "problems": []
+  },
+  "files": {
+   "preview": "docs/art/research/2026-10-24-forja-armas/arqueiro/antes/arqueiro-recuperado_equip.png",
+   "json": "docs/art/research/2026-10-24-forja-armas/arqueiro/antes/arqueiro-recuperado_equip.json",
+   "line_png": "docs/art/research/2026-10-24-forja-armas/arqueiro/depois/arqueiro-recuperado_line.png",
+   "line_preview": "docs/art/research/2026-10-24-forja-armas/arqueiro/depois/arqueiro-recuperado_line_compare.png",
+   "line_mask": "docs/art/research/2026-10-24-forja-armas/arqueiro/depois/arqueiro-recuperado_line_mask.png",
+   "line_observation": "docs/art/research/2026-10-24-forja-armas/arqueiro/depois/arqueiro-recuperado_line.observation.json",
+   "line_json": "docs/art/research/2026-10-24-forja-armas/arqueiro/depois/arqueiro-recuperado_line.json",
+   "after_overlay": "docs/art/research/2026-10-24-forja-armas/arqueiro/depois/arqueiro-recuperado_line_equip.png"
+  }
+ },
+ "fixtures": {
+  "sword/reference": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "pass",
+   "functional_pose": "pass",
+   "problems": []
+  },
+  "sword/forked": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "problems": [
+    "sword: bifurcada em 9 linhas (ex.: [26, 27, 28]); desvio de 2.0 px do eixo base-ponta"
+   ]
+  },
+  "sword/two_guards": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "problems": [
+    "sword.blade: 2 instancias, o manifesto pede 1 (duplicada ou partida)",
+    "sword.guard: 2 instancias, o manifesto pede 1 (duplicada ou partida)",
+    "sword: interrompida em 2 linhas sem oclusor (ex.: [40, 41])",
+    "sword: 1 guarda(s) fora do sitio entre lamina e empunhadura: [[46, 40, 54, 42]]"
+   ]
+  },
+  "sword/none": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "inconclusive",
+   "problems": [
+    "sword.blade: ausente (o manifesto pede 1)",
+    "sword.guard: ausente (o manifesto pede 1)",
+    "sword.pommel: ausente (o manifesto pede 1)",
+    "sword: o manifesto pede este objeto e nenhuma parte foi encontrada"
+   ]
+  },
+  "sword/grip_hidden": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "pass",
+   "functional_pose": "pass",
+   "problems": []
+  },
+  "bow/valid": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "pass",
+   "functional_pose": "pass",
+   "problems": []
+  },
+  "bow/wide": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "problems": [
+    "bow: largura 2 px em 9 linhas (maximo 1; ex.: [21, 22, 23])"
+   ]
+  },
+  "bow/double": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "problems": [
+    "bow: largura 2 px em 36 linhas (maximo 1; ex.: [21, 22, 23]); afasta-se 3.0 px da reta entre as pontas"
+   ]
+  },
+  "bow/short": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "problems": [
+    "bow: interrompida em 8 linhas sem oclusor; nao chega a nock_bottom"
+   ]
+  },
+  "bow/wavy": {
+   "lint_errors": 0,
+   "raster_contract": "pass",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "problems": [
+    "bow.string: 3 instancias, o manifesto pede 1 (duplicada ou partida)",
+    "bow: afasta-se 2.0 px da reta entre as pontas; 3 pecas (segunda corda ou troco solto)"
+   ]
+  }
+ },
+ "outline_probes": {
+  "string_width": {
+   "before": 1,
+   "global_outline": 3,
+   "protected": 1
+  },
+  "gap_of_2_closed": {
+   "global_outline": true,
+   "protected": false
+  }
+ }
+}

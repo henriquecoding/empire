@@ -7,6 +7,51 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja: armas e equipamento — 25/10/2026 (FORJA-03, ADR 0091)
+
+> Pedido do dono (25/10/2026): *«Aplique os relatórios»*, com o relatório de 24–25/10 sobre armas, equipamento e
+> consistência visual. Aplicado o primeiro incremento (o arqueiro). O que segue são decisões de arte ou de produção
+> que a ferramenta não toma.
+
+### Q-272 · A corda de 1 px dispensa contorno?
+- **Relatório (§6.4):** a corda pode ser uma linha de um pixel sem bordas à volta, como exceção aprovada de detalhe,
+  sem tirar o contorno ao resto do personagem.
+- **Hoje:** a corda da entrega já não tem contorno; a Forja aceita zonas sem contorno declaradas (`--bare`), que o
+  lint não conta, e a corda refeita do arqueiro mantém-na sem contorno. A ASSET_BIBLE manda contorno de 1 px em
+  personagens e no detalhe interno.
+- **Proposta:** aceitar a exceção para cordas e fios (arco, besta, alaúde), sempre declarada por zona.
+- **Decide:** o autor. Até lá, a exceção é uma proposta escrita em cada relatório que a usa.
+
+### Q-273 · Que orçamento de cores tem o elenco?
+- **Divergência:** os prompts pediam 12–24 cores; os contratos `royal_64` e `royal_80` têm `max_colors: null`; a
+  entrega teve 27 (rei), 37 (arqueiro) e 46 (escudeiro). O vinho dos tecidos aproximou-se de castanho na adaptação.
+- **Proposta do relatório:** aprovar um orçamento por elenco e rampas por material antes de transformar o limite em
+  bloqueio; reduzir tudo a um número arbitrário pode piorar rosto, couro e metal.
+- **Decide:** o autor (contrato de arte).
+
+### Q-274 · Que pega tem o escudo do escudeiro?
+- **Relatório (§6.5):** pega interior (o exemplo do Met) e correias traseiras (o dhal de Worcester) são construções
+  diferentes; o escudeiro precisa de uma ficha com a frente, o verso simplificado, a pega e a vista com a mão.
+- **Bloqueia:** o manifesto do escudo (`shield`: face, borda, pega) e a verificação de contacto mão–pega.
+- **Decide:** o autor; a ficha do verso é arte de produção (não se gera nem se aprova aqui).
+
+### Q-275 · Onde fica o ponto de pega nas animações?
+- **Divergência:** a ANIMATION_BIBLE tem `socket_weapon` (onde nascem projéteis e faíscas, a ponta da arma no quadro
+  de ação), `socket_fx`, `socket_head` e `socket_carry`. O relatório pede um ponto de pega por quadro para seguir a
+  arma no tempo e avisa que não deve reutilizar `socket_weapon`.
+- **Proposta:** um `socket_grip` só de produção (marca a mão na empunhadura, não se exporta para o jogo), até a
+  integração precisar dele.
+- **Decide:** o autor; mexe no contrato de exportação.
+
+### Q-276 · A entrega criticada e a corda refeita
+- **Hoje:** os PNG, as fontes e os prompts do rei, do arqueiro e do escudeiro criticados não estão no repositório,
+  nem o pacote com o script e os JSON do relatório. O arqueiro foi recuperado da figura do relatório (cópia exata a
+  1×, conferida com as medidas dele); a corda refeita está em
+  `docs/art/research/2026-10-24-forja-armas/arqueiro/depois/`.
+- **Pergunta:** enviar as fontes e os PNG originais para fechar o rei e o escudeiro com o mesmo método; e dizer se a
+  corda refeita serve de direção (é uma proposta; a aprovação artística continua pendente).
+- **Decide:** o autor.
+
 ## Elenco V15 — 19/10/2026 (CV-05, ADR 0087)
 
 ### Q-271 · Como entra o quarto par, Sombra e Bailarina, na campanha?

@@ -117,7 +117,7 @@ def _pixellab(d: dict, c, refs, palette, model, guides_mode, init_strength, seed
             continue
         images.append((field_name, mine[0]))
     if any(f == "init_image" for f, _ in images):
-        kw["init_image_strength"] = init_strength or 300
+        kw["init_image_strength"] = 300 if init_strength is None else init_strength
         d["notes"].append("o create-image do PixelLab nao tem campo de identidade: o design aprovado vai como "
                           f"init_image (imagem inicial), forca {kw['init_image_strength']} — maior preserva mais")
     if palette is not None and guides_mode != "none" and "color_image" in caps["images"]:
@@ -235,6 +235,7 @@ def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tupl
                               for (r, p), (_, data) in zip(references, refs)],
                "errors": [], "notes": [], "prompt": "", "expect": None, "request": None, "advice": None,
                "training_permission": PERMISSION.get(backend), "contracts": contracts.get(kind).as_dict()}
+    d["errors"] += [f"assunto: {c}" for c in prompts.camera_conflicts(subject, facing)]
     if backend == "pixellab":
         images = _pixellab(d, contracts.get(kind), refs, palette, model, guides_mode, init_strength, seed)
     elif backend == "openai":

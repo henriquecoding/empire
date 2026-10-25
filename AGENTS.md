@@ -38,11 +38,12 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088 e 0089). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089 e 0091). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
-  por MCP. Saidas em build/forja/. Contrato valido nao e movimento revisto, e
+  por MCP. Saidas em build/forja/. Contrato valido nao e movimento revisto nem
+  arma bem construida (`forja equip`: manifesto, observacao e veredito), e
   adaptar uma imagem gerada nao e aprovacao artistica.
 
 ## Regras absolutas

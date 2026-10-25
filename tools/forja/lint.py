@@ -28,8 +28,9 @@ def finding(rule: str, severity: str, message: str, where=None, fix: str | None 
 
 
 def check(image: Image.Image, contract: Contract, palette: Palette | None = None,
-          frame: bool = True) -> dict:
-    """`frame=False` para pecas soltas (sem tela nem pivot a conferir)."""
+          frame: bool = True, exempt=None) -> dict:
+    """`frame=False` para pecas soltas (sem tela nem pivot a conferir). `exempt`: pixels sem contorno
+    declarados (uma corda de 1 px, um vazio), que nao contam na parte da borda com contorno."""
     img = image.convert("RGBA")
     found: list[dict] = []
     box = opaque_bbox(img)
@@ -43,7 +44,7 @@ def check(image: Image.Image, contract: Contract, palette: Palette | None = None
         found.append(finding("alpha", "error", "alfa parcial (o projeto usa alfa binario)", fix="forja clean",
                              hint="Use a fully transparent or perfectly flat background; no soft or semi-transparent edges."))
     _palette(img, contract, palette, found)
-    _structure(img, contract, found)
+    _structure(img, contract, found, exempt)
     if frame:
         _placement(img, contract, box, found)
     _style(img, contract, found)
@@ -65,7 +66,7 @@ def _palette(img, contract, palette, found):
                              hint=f"Use at most {contract.max_colors} flat colors in total."))
 
 
-def _structure(img, contract, found):
+def _structure(img, contract, found, exempt=None):
     rows = to_grid(img)
     orphans = [(x, y) for y, row in enumerate(rows) for x, p in enumerate(row)
                if p[3] >= 128 and not any(q[3] >= 128 for q in cleanup._neighbors(rows, x, y))]
@@ -85,7 +86,7 @@ def _structure(img, contract, found):
                                  [list(i[:2]) for i in islands[:8]], f"forja clean --cluster {contract.cluster}",
                                  f"Build every shape from clusters of at least {contract.cluster}x{contract.cluster} pixels; no single-pixel detail."))
     if contract.outline_px is not None:
-        m = outline.measure(img, contract.outline_color)
+        m = outline.measure(img, contract.outline_color, exempt)
         if contract.outline_px == 0 and m["outline_share"] > 0.5:
             found.append(finding("outline", "error", "contorno presente numa camada sem contorno",
                                  fix="forja outline --strip", hint="No outline at all; shapes are separated by value only."))

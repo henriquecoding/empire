@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 from statistics import median
 
-from . import jobs, pipeline, prompts, sheetforge
+from . import jobs, pipeline, prompts, review as review_mod, sheetforge
 from .backends import http, poller
 from .plan import Plan
 
@@ -80,15 +80,15 @@ def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt:
     else:
         r = pipeline.forge(raw, out, opts, prompt=prompt, generator=generator)
         detected = r["snap"]["grid"]["period"][0]
-        review = {"contract_valid": r["lint"]["ok"], "motion_checks": None, "needs_review": True,
-                  "needs_regeneration": not r["lint"]["ok"], "artistic_approval": "pendente"}
+        review = review_mod.verdict(r["lint"]["ok"], None)
         feedback = r["lint"]["prompt_feedback"]
     grid = _grid_finding(check, detected)
     if grid:
         findings.append(grid)
     hard = [f for f in findings if f["code"] in ("native_size_mismatch", "size_mismatch")]
     if hard:
-        review = {**review, "contract_valid": False, "needs_regeneration": True}
+        review = {**review, "contract_valid": False, "needs_regeneration": True,
+                  "verdicts": {**review["verdicts"], "raster_contract": "fail"}}
     return {"raster": check, "findings": findings, "review": review, "prompt_feedback": feedback,
             "files": r["files"]}
 

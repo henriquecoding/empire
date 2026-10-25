@@ -1,6 +1,7 @@
 """A revisao automatica de uma animacao: o que se mede, o que so se suspeita e o que e do autor (F07).
 
-Tres respostas que nunca se misturam:
+Tres respostas que nunca se misturam (e, desde o FORJA-03, os sete vereditos de verdicts.py,
+onde a geometria do equipamento e a pose ficam `not_evaluated` ate haver manifesto e observacao):
 - `contract_valid`: contagem, tela, paleta, contorno, nada cortado. Mede-se.
 - `motion_checks`: quadros estaticos, repetidos sem hold declarado, saltos sem
   intermedio, partes que somem, deriva do apoio. Indicios para rever; so um
@@ -15,6 +16,7 @@ from __future__ import annotations
 
 from PIL import Image
 
+from . import verdicts
 from .imageops import flat, foot_point
 
 STATIC_TAGS = ("hold", "pose", "static", "portrait")
@@ -122,4 +124,6 @@ def verdict(contract_valid: bool, motion_result: dict | None) -> dict:
             "motion_checks": motion_result["motion_checks"] if motion_result else None,
             "needs_regeneration": not contract_valid or blocking, "needs_review": True,
             "review_reasons": motion_result["review_reasons"] if motion_result else ["revisao visual do desenho"],
-            "artistic_approval": "pendente"}
+            "artistic_approval": "pendente",
+            "verdicts": verdicts.summary(verdicts.for_review(contract_valid, motion_result,
+                                                             2 if motion_result else 1))}

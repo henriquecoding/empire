@@ -12,6 +12,7 @@ contorno, luz de cima a esquerda, nada de gradiente, texto ou molduras.
 from __future__ import annotations
 
 import math
+import re
 
 from . import contracts, matte
 from .palette import Palette
@@ -74,6 +75,24 @@ ROLES = {
     "layout": "the layout template at the exact output proportions: one figure per cell, feet on the faint "
               "baseline, centered on the dotted axis; do NOT copy its lines",
 }
+
+
+VIEWS = (("tres quartos", r"three[- ]quarters?|\b3/4\b|tr[eê]s quartos"),
+         ("de frente", r"front(al)?[- ]view|\bfrontal\b|facing (the )?(viewer|camera)|de frente"),
+         ("de costas", r"back[- ]view|rear[- ]view|from behind|de costas"),
+         ("de cima", r"top[- ]down|bird'?s[- ]eye|vista de cima|isometric|isom[eé]tric"))
+OPPOSITE = {"right": r"facing left|looking left|virad[oa] para a esquerda|olhando para a esquerda",
+            "left": r"facing right|looking right|virad[oa] para a direita|olhando para a direita"}
+
+
+def camera_conflicts(text: str, facing: str) -> list[str]:
+    """O que um texto (o assunto, ou o prompt expandido por um gerador) contradiz na camara do Empire:
+    perfil estrito, virado para `facing`. A camara resolve-se num campo so, antes de escrever o prompt."""
+    low = text.lower()
+    out = [f"pede vista {name}, mas a camara e de perfil estrito" for name, rx in VIEWS if re.search(rx, low)]
+    if re.search(OPPOSITE[facing], low):
+        out.append(f"vira a figura ao contrario de --facing {facing}")
+    return out
 
 
 def default_attached(reference: bool, palette: Palette | None, listed: int = 24) -> list[str]:
@@ -167,7 +186,8 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
         advice = (f"cada pixel logico tera so {k:g} px na imagem: o gerador perde precisao. Peca menos quadros por "
                   "prancha (ex.: --tags walk:4 duas vezes) ou uma figura por imagem.")
     return {"prompt": "\n".join(lines), "size": f"{geo['size'][0]}x{geo['size'][1]}", "expect": expect,
-            "advice": advice, "pixellab": pixellab_params(subject, c, tuple(canvas), facing), "target": target}
+            "advice": advice, "pixellab": pixellab_params(subject, c, tuple(canvas), facing), "target": target,
+            "conflicts": camera_conflicts(subject, facing)}
 
 
 def _timeline(tags: list[tuple[str, int]]) -> list[str]:
