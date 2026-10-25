@@ -14,6 +14,9 @@ as decisões, nas ADR [0088](../adr/0088-a-forja-de-pixel-art.md) e
 [auditoria de 23/10](research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md)
 achou nove falhas no primeiro corte; os reparos e o que ficou aberto estão em
 [research/2026-10-23-forja-reparos](research/2026-10-23-forja-reparos/README.md).
+O [relatório de 24–25/10](research/2026-10-24-forja-armas/README.md) mostrou que
+um sprite pode cumprir o contrato e ter duas guardas na espada: a Forja passou a
+julgar o equipamento à parte ([ADR 0091](../adr/0091-a-forja-julga-o-equipamento.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -98,7 +101,11 @@ prompt. Variáveis: `OPENAI_API_KEY` (modelo por omissão
 
 Antes de gastar: `forja plan` com os mesmos argumentos mostra o pedido que
 sairia, sem rede. Um pedido inválido (tamanho fora do modelo, referência no
-tamanho errado, prancha animada no PixelLab, modelo desconhecido) falha aí.
+tamanho errado, prancha animada no PixelLab, modelo desconhecido) falha aí —
+e também um assunto que contradiz a câmara (três quartos, de frente, de costas,
+vista de cima, ou virado ao contrário de `--facing`): a câmara resolve-se num
+campo só. No PixelLab, `--init-strength 0` vai como 0; sem o valor, 300. A
+força da imagem inicial orienta; não é trava de identidade.
 
 ### Pedidos pagos: um POST, um job, um teto
 
@@ -140,6 +147,54 @@ env = { PYTHONPATH = "/caminho/para/empire" }
 O ChatGPT na web só liga a servidores MCP remotos por HTTPS. A Forja é local;
 nesse caso, use os passos da secção anterior e corra os comandos no repositório.
 
+## Armas e equipamento: o que o contrato raster não vê
+
+O lint confere tela, alfa, paleta, contorno e pivô. Não sabe o que é uma espada:
+uma lâmina bifurcada, duas guardas ou a arma em falta passam com 0 erros
+([fixtures](research/2026-10-24-forja-armas/fixtures.png)). Para isso há três
+registos que não se confundem:
+
+1. **Intenção** — o manifesto (`forja.equipment/1`): cada objeto com `id`,
+   família (`sword_straight`, `bow_simple`, `shield`, `storage`), `slot` da Asset
+   Bible, estado de uso (`held`, `rest`, `draw`…), partes e quantidades
+   (`count`, `optional`, `hidden`, `occluders` — o que tapa ou cruza a parte),
+   contactos com o corpo e material. Só apresentação: capacidade, munição ou dano
+   são recusados (vivem em `data/source`).
+2. **Observação** (`forja.observation/1`) — regiões e âncoras marcadas **numa**
+   imagem (o hash dela vai no ficheiro), por caixa e cores, lista de pixels ou
+   máscara PNG, com autor, método, data e incerteza (`baixa`, `media`, `alta`).
+   Não é um detector: diz quem viu o quê. Mudou a imagem, observa-se de novo.
+3. **Veredito** — `forja equip` mede sobre a observação: instâncias de cada parte
+   (a oclusão declarada liga as peças; os braços do arco ligam-se pela
+   empunhadura), um só traçado da base à ponta da lâmina, a corda com 1 px, perto
+   da reta entre as pontas e ligada a elas (só nos estados em que não está
+   puxada), a guarda entre lâmina e empunhadura, e os contactos (mão–punho).
+
+```bash
+forja equip sprite.png --manifest manifesto.json --observation observacao.json --kind royal_80 -o build/forja/x
+forja line  sprite.png --manifest manifesto.json --observation observacao.json --kind royal_80 --item bow_main -o build/forja/x
+```
+
+O relatório traz sete vereditos que não se somam: `raster_contract`,
+`equipment_geometry`, `functional_pose`, `identity_consistency`,
+`temporal_consistency`, `artistic_approval` e `runtime_integration`. O que não
+foi medido fica `not_evaluated` (nunca `pass`); uma parte possivelmente tapada
+fica `inconclusive`; uma região com incerteza alta não deixa passar; a
+aprovação é sempre `pending` na ferramenta. A imagem `_equip.png` mostra as
+regiões e as âncoras a 8×, para a revisão ver o que foi medido.
+
+`forja line` refaz uma linha fina — a corda — a 1 px entre as âncoras, só na zona
+da linha: não desenha por cima de um oclusor (reaproveita o pixel da própria
+linha), e um pixel que sai de cima de outra peça herda a cor dos vizinhos e fica
+registado como inferido. Depois julga outra vez com a observação reaplicada à
+imagem nova. É um candidato, não arte aprovada.
+
+Ordem que o relatório recomenda: aprovar a forma simples da arma e a mão antes do
+detalhe; reparar a menor unidade funcional inteira (a corda com as duas pontas, a
+espada com a mão, o escudo com a pega e o antebraço); só animar depois de uma
+prova estática convincente. A prova do [arqueiro](research/2026-10-24-forja-armas/README.md)
+é o exemplo completo.
+
 ## Receitas por tipo de asset
 
 Os tipos (`--kind`) e os números de cada contrato vêm de
@@ -172,11 +227,22 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   cola o rosto do quadro de referência em todos os quadros (o "fixed head" do
   PixelLab); `--mirror` exporta a esquerda como espelho, contado como espelho.
 - **Corrigir uma parte.** `forja inpaint sprite.png --box x0,y0,x1,y1 --change "…"`
-  manda a imagem ampliada sobre uma cor de chave que não existe no sprite nem
-  na paleta, com máscara, ao gpt-image; volta pela grade conhecida (outro
-  tamanho é erro) e compõe: fora da caixa os bytes ficam idênticos; dentro, o
-  que voltou igual ao enviado fica com os bytes originais (um eco devolve o
-  sprite exato, azul e transparência incluídos).
+  (ou `--mask zona.png` para uma zona qualquer) manda a imagem ampliada sobre uma
+  cor de chave que não existe no sprite nem na paleta, com máscara, ao gpt-image;
+  volta pela grade conhecida (outro tamanho é erro) e compõe: fora da zona os
+  bytes ficam idênticos; dentro, o que voltou igual ao enviado fica com os bytes
+  originais (um eco devolve o sprite exato, azul e transparência incluídos).
+  `--method add|replace|remove` declara a composição: `add` só acrescenta (o
+  objeto antigo fica por baixo do que vier transparente — é o que deixava o
+  chapéu velho no guia do PixelLab), `replace` manda na zona, `remove` tem de
+  tirar tudo o que lá estava. `--protect x0,y0,x1,y1` recusa uma zona que toque
+  essa caixa. As máscaras seguem a convenção de cada gerador (OpenAI: alfa 0
+  edita; PixelLab: branco gera, preto preserva).
+- **Corda, fio, vazio entre partes.** O contorno global engrossa uma linha de
+  1 px para 3 e fecha um vazio de 2 px. `forge --bare x0,y0,x1,y1` (no recorte
+  nativo) declara uma zona onde o contorno não entra e que o lint não conta na
+  parte da borda com contorno. É uma exceção escrita no relatório, por decidir
+  pelo autor como regra de arte (Q-272).
 - **Edifício, prop, cenário.** `--kind building` ou `prop`: o pedido usa a
   grade de 2 px (cluster 2×2 da Asset Bible) e a Forja amplia por 2 no fim;
   contorno de 2 px na silhueta. O lint aponta manchas menores que 2×2.
@@ -213,6 +279,7 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `tileset` / `seams` | Conjunto Wang 16 + TileSet do Godot; conferir emendas |
 | `palette` | Mostrar, converter, extrair, rampa, fundir cores próximas |
 | `prompt` / `plan` / `generate` / `auto` / `inpaint` | O lado do gerador: pedir, planear sem rede, gerar com job e teto |
+| `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara |
 | `jobs` | Pedidos pagos de uma pasta: ver, retomar (só consulta), cancelar |
 | `prova` / `mcp` / `kinds` | A prova, o servidor MCP, os contratos |
 
@@ -272,3 +339,7 @@ cumpre, 1 quando há achados de erro e 2 quando o pedido é inválido.
   desenhou mal (mãos ilegíveis, poses sem apoio), a Forja entrega pixel art
   limpa de um desenho fraco. A checklist de revisão de personagens continua a
   valer; um score automático não aprova direção de arte.
+- A geometria do equipamento só mede o que foi observado: sem regiões marcadas,
+  `not_evaluated`. A identidade (mesmo personagem, mesmo objeto da referência) e a
+  continuidade no tempo (arma que troca de mão, peça que some entre quadros com
+  equipamento) ainda não têm verificação: continuam a olho, quadro a quadro.

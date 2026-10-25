@@ -1,7 +1,10 @@
 """Contornos: pôr, tirar e medir.
 
 Empire (Asset Bible §1): preto puro #000000; 1 px em personagens, 2 px na
-silhueta do cenario e dos edificios, nenhum no parallax distante. O "sel-out"
+silhueta do cenario e dos edificios, nenhum no parallax distante. O contorno
+global engrossa uma corda de 1 px para 3 e fecha um vazio de 2 px (sonda do
+relatorio de 24-25/10): `keep` sao os pixels onde ele nao entra — linhas finas
+e vazios declarados, uma excecao que fica escrita no relatorio. O "sel-out"
 (contorno seletivo, a cor escura do proprio material em vez do preto) e a opcao
 "selective outline" do PixelLab; fica disponivel para estudos, nao e o contrato.
 """
@@ -34,20 +37,23 @@ def edge_pixels(rows, offsets=N4) -> list[tuple[int, int]]:
 
 
 def add(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), width: int = 1,
-        mode: str = "outer", corners: bool = True, palette: Palette | None = None) -> Image.Image:
+        mode: str = "outer", corners: bool = True, palette: Palette | None = None,
+        keep=None) -> Image.Image:
     if mode not in MODES:
         raise ValueError(f"modo de contorno desconhecido: {mode}")
     rows = to_grid(image)
     offsets = N8 if corners else N4
+    keep = keep or frozenset()
     for _ in range(max(1, width)):
         src = [row[:] for row in rows]
         if mode == "inner":
             for x, y in edge_pixels(src, offsets):
-                rows[y][x] = (*rgb, 255)
+                if (x, y) not in keep:
+                    rows[y][x] = (*rgb, 255)
             continue
         for y, row in enumerate(src):
             for x, p in enumerate(row):
-                if p[3] >= 128:
+                if p[3] >= 128 or (x, y) in keep:
                     continue
                 solid = [src[y + dy][x + dx] for dx, dy in offsets if _inside(src, x + dx, y + dy)]
                 if not solid:
@@ -85,10 +91,10 @@ def strip(image: Image.Image, rgb: tuple[int, int, int] | None = None) -> tuple[
     return from_grid(rows), rgb
 
 
-def measure(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0)) -> dict:
-    """Quanto da borda e contorno, e com que espessura (aneis consecutivos da cor)."""
+def measure(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), skip=None) -> dict:
+    """Quanto da borda e contorno, e com que espessura (aneis consecutivos da cor). `skip`: bordas isentas."""
     rows = to_grid(image)
-    edges = edge_pixels(rows)
+    edges = [e for e in edge_pixels(rows) if not skip or e not in skip]
     if not edges:
         return {"edge_pixels": 0, "outline_share": 0.0, "thickness": 0, "color": color.to_hex(rgb)}
     share = sum(rows[y][x][:3] == rgb for x, y in edges) / len(edges)

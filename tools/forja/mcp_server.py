@@ -33,7 +33,9 @@ INSTRUCTIONS = (
     "pedido sem rede; (2) gere a imagem com a tua ferramenta (ou forja_generate/forja_auto com chave e --max-calls: "
     "cada POST pago sai uma vez, num job que forja_jobs mostra e retoma so por consulta); (3) forja_forge (uma "
     "figura) ou forja_sheet (prancha) com --expect; (4) le review (contract_valid, motion_checks, "
-    "needs_regeneration) e prompt_feedback; se needs_regeneration, gera de novo com o prompt corrigido. A aprovacao "
+    "needs_regeneration) e prompt_feedback; se needs_regeneration, gera de novo com o prompt corrigido; (5) com armas "
+    "ou equipamento, forja_equip (manifesto e observacao marcada na imagem): o lint nao ve a arma, e o que nao foi "
+    "observado fica not_evaluated; forja_line refaz uma corda so na mascara. A aprovacao "
     "artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do "
     "dono; usar build/forja/. Ler docs/art/FORJA.md.")
 

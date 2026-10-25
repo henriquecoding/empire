@@ -1,0 +1,49 @@
+{
+ "schema": "forja.equipment/1",
+ "status": "proposta",
+ "subject": "arqueiro royal_80 da entrega examinada a 24/10: pose estatica de repouso, de perfil, virado a direita",
+ "view": "side",
+ "facing": "right",
+ "items": [
+  {
+   "id": "bow_main",
+   "family": "bow_simple",
+   "slot": "weapon",
+   "state": "rest",
+   "reference": {
+    "path": "../entrega-examinada.png",
+    "status": "estudo"
+   },
+   "parts": {
+    "string": {
+     "occluders": [
+      "forearm_front"
+     ]
+    },
+    "grip": {
+     "occluders": [
+      "hand_front"
+     ]
+    },
+    "limb": {
+     "occluders": [
+      "hand_front"
+     ]
+    }
+   },
+   "contacts": [
+    {
+     "part": "grip",
+     "body": "hand_front",
+     "kind": "holds"
+    }
+   ],
+   "materials": {
+    "limb": "madeira",
+    "string": "fibra",
+    "grip": "amarra e madeira"
+   },
+   "notes": "Repouso: a outra mao esta no cinto e nao ha puxada; sem flecha encaixada, o que o repouso permite (relatorio §6.4). A curva da madeira e intencional e nao se mede. A aljava (storage) fica fora desta prova."
+  }
+ ]
+}

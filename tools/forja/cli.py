@@ -49,8 +49,8 @@ def build_parser() -> argparse.ArgumentParser:
                     "nos contratos do Empire. Guia: docs/art/FORJA.md")
     parser.add_argument("--version", action="version", version=f"forja {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
-    from . import cmd_ai, cmd_image, cmd_make
-    for module in (cmd_image, cmd_make, cmd_ai):
+    from . import cmd_ai, cmd_equip, cmd_image, cmd_make
+    for module in (cmd_image, cmd_make, cmd_ai, cmd_equip):
         module.register(sub)
     return parser
 

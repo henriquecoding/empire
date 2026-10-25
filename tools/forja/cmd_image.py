@@ -17,6 +17,7 @@ def _options(args) -> pipeline.Options:
                             cells=args.cells, bg=args.bg, tolerance=args.tolerance, method=args.method,
                             outline=getattr(args, "outline_mode", "auto"), dither=args.dither,
                             noise=args.noise, cleanup=args.cleanup, protect=args.protect,
+                            bare=getattr(args, "bare", None),
                             fit=not getattr(args, "no_fit", False),
                             pivot=getattr(args, "pivot", None), canvas=getattr(args, "canvas", None))
     if getattr(args, "expect", None):
@@ -45,6 +46,8 @@ def common(p) -> None:
                    help="auto: cenario tira pixels soltos e tapa furos; personagem e efeito so os apontam")
     p.add_argument("--protect", type=box, action="append", help="caixa x0,y0,x1,y1 do recorte nativo que a limpeza "
                    "nao toca (repetivel)")
+    p.add_argument("--bare", type=box, action="append", help="caixa x0,y0,x1,y1 do recorte nativo onde o contorno "
+                   "global nao entra: corda de 1 px, vazio entre partes (excecao declarada, repetivel)")
     p.add_argument("--expect", help="o expect.json do `forja prompt`")
     p.add_argument("--generator", help="quem gerou a imagem (proveniencia)")
     p.add_argument("--prompt-file", help="o prompt usado (proveniencia)")
