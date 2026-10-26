@@ -6,6 +6,8 @@ Pesquisa pública, engenharia reversa funcional e plano de implementação para 
 
 **Estado da entrega:** pesquisa e projeto técnico concluídos; treino próprio e benchmark de geração não executados. Este documento especifica uma implementação independente. Não contém pesos, código privado, base de treino ou receita interna recuperados do PixelLab.
 
+**Atualização de 26/10/2026:** a continuação desta pesquisa, com o método de engenharia reversa, o contrato atual, a forense das imagens públicas e uma errata das secções 3.3, 3.4 e 4, está em [2026-10-26-pixellab-engenharia-reversa](../2026-10-26-pixellab-engenharia-reversa/DOSSIE.md). O texto abaixo mantém-se como estava a 23/10.
+
 **Atualização após o trabalho do Claude:** a Forja foi integrada pelo PR #117, no commit `68ed1c87461f5d39dd21fb664eef2930ddeaac81`. Ela já implementa processamento, contratos, exportadores, CLI/MCP e adaptadores de geração. A [auditoria da Forja](AUDITORIA-FORJA-CLAUDE.md) avalia esse código, reproduz nove observações e define a ordem de correção. As propostas abaixo devem ampliar essa base, sem criar uma ferramenta paralela. A entrega desta pesquisa não altera os módulos de produção da Forja. Os [resultados das sondas](forja-audit-observations.json) não são um benchmark de qualidade de geração.
 
 ## 1. A conclusão que orienta a construção

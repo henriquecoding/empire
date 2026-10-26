@@ -193,6 +193,19 @@ class PixelLabTest(unittest.TestCase):
         self.assertIn("pixen nao aceita init_image", pixellab_api.check("pixen", 64, 64, init_image=png(size=(64, 64))))
         self.assertTrue(pixellab_api.check("pixflux", 64, 64, init_image=png(size=(32, 32))))
         self.assertEqual(pixellab_api.check("pixflux", 80, 80, init_image=png(size=(80, 80))), [])
+
+    def test_side_limits_and_ranges_of_the_26_10_spec(self):
+        self.assertIn("pixflux: lado maximo 400 (pedido 800x100)", pixellab_api.check("pixflux", 800, 100))
+        self.assertIn("pixflux: lado minimo 16", pixellab_api.check("pixflux", 8, 200))
+        self.assertIn("pixen: lado maximo 768 (pedido 1024x256)", pixellab_api.check("pixen", 1024, 256))
+        self.assertEqual(pixellab_api.check("pixen", 768, 340), [])
+        self.assertIn("bitforge: lado maximo 200 (pedido 240x120)", pixellab_api.check("bitforge", 240, 120))
+        for value, ok in ((0, False), (1, True), (999, True), (1000, False)):
+            errors = pixellab_api.check("pixflux", 64, 64, init_image_strength=value)
+            self.assertEqual(errors == [], ok, (value, errors))
+        self.assertTrue(pixellab_api.check("pixflux", 64, 64, text_guidance_scale=0.5))
+        self.assertTrue(pixellab_api.check("bitforge", 64, 64, style_strength=101))
+        self.assertEqual(pixellab_api.check("bitforge", 64, 64, style_strength=0), [])
         with self.assertRaises(ValueError):
             pixellab_api.payload("x", 32, 32, outline="thick")
         with self.assertRaises(ValueError):

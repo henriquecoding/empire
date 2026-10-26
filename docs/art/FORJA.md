@@ -108,8 +108,15 @@ sairia, sem rede. Um pedido inválido (tamanho fora do modelo, referência no
 tamanho errado, prancha animada no PixelLab, modelo desconhecido) falha aí —
 e também um assunto que contradiz a câmara (três quartos, de frente, de costas,
 vista de cima, ou virado ao contrário de `--facing`): a câmara resolve-se num
-campo só. No PixelLab, `--init-strength 0` vai como 0; sem o valor, 300. A
-força da imagem inicial orienta; não é trava de identidade.
+campo só. No PixelLab, sem `--init-strength` vai 300; um valor dado nunca é
+trocado, e fora de 1–999 (o 0 incluído) o plano falha, porque a API o recusaria.
+Também falham aí os lados fora do modelo (16–400 no pixflux, 16–768 no pixen,
+16–200 no bitforge) e `text_guidance_scale` ou `style_strength` fora do
+intervalo. A força da imagem inicial orienta; não é trava de identidade. Estes
+limites vêm da especificação pública com o hash que o adaptador regista; quando
+o hash muda,
+[`contrato.py`](research/2026-10-26-pixellab-engenharia-reversa/README.md#repetir)
+diz o que divergiu.
 
 ### Pedidos pagos: um POST, um job, um teto
 

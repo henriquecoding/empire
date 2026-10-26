@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import cleanup, contracts, grid as gridmod, lint, outline, palette as palmod, pipeline
+from . import cleanup, contracts, gridcheck, lint, outline, palette as palmod, pipeline
 from . import quantize, resample, scale
 from .cli import box, command, out_path, pair
 from .imageops import binarize, open_rgba, upscale
@@ -56,7 +56,7 @@ def common(p) -> None:
 
 def do_snap(args) -> dict:
     image = open_rgba(args.image)
-    g = gridmod.detect(image, scale=args.scale, cells=args.cells)
+    g = gridcheck.detect(image, scale=args.scale, cells=args.cells)
     sampled = resample.resample(image, g, args.method)
     out = out_path(args.out, Path(args.image).with_name(Path(args.image).stem + "_native.png"))
     sampled.image.save(out)

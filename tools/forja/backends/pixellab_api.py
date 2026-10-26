@@ -1,20 +1,24 @@
 """PixelLab API v2 (https://api.pixellab.ai/v2): gerar com os modelos deles, no tamanho nativo.
 
-Contrato lido da especificacao publica em 23/10/2026 (`/v2/openapi.json`, versao
-"dev", sha256 abaixo; o mesmo hash da pesquisa em
-docs/art/research/2026-10-23-pixellab/proveniencia.json):
+Contrato lido da especificacao publica (`/v2/openapi.json`, versao "dev"). Lida
+a 23/10/2026 e revista a 26/10/2026, quando o hash mudou (sha256 abaixo):
+docs/art/research/2026-10-26-pixellab-engenharia-reversa/contrato.py confere
+estes limites contra a especificacao e lista o que diverge.
 
-- pixflux: area de 32x32 a 400x400; init_image (imagem inicial), color_image (paleta forcada).
-- pixen: lado minimo 16, area ate 512x512, lados multiplos de 4, quadrado se um lado < 32;
-  fundo transparente so ate 65 536 px de area; sem imagem inicial nem `shading`.
-- bitforge: area ate 200x200; init_image, color_image e style_image.
+- Todos: cada lado de 16 px para cima; `init_image_strength` de 1 a 999 (300 por
+  omissao), `text_guidance_scale` de 1 a 20, `style_strength` de 0 a 100.
+- pixflux: cada lado ate 400, area de 32x32 a 400x400; init_image (imagem
+  inicial), color_image (paleta forcada).
+- pixen: cada lado ate 768, area ate 512x512, lados multiplos de 4, quadrado se um
+  lado < 32; fundo transparente so ate 65 536 px de area; sem imagem inicial nem `shading`.
+- bitforge: cada lado ate 200, area ate 200x200; init_image, color_image e style_image.
 - Resposta: imagem sincrona com `usage.usd`, ou `background_job_id` para GET
   /background-jobs/{id} (processing, completed, failed) e DELETE para cancelar.
 - 529 e "Rate limit exceeded" (recusa clara). Nao ha idempotencia documentada.
 
 O que o modelo faz por dentro nao esta publicado; isto so fala do contrato da API.
-Nao houve chamada real nesta sessao (sem chave). Uma mudanca do hash da
-especificacao obriga a rever estes limites. Variaveis: PIXELLAB_API_KEY (ou
+Nao houve chamada real (sem chave). Uma mudanca do hash da especificacao obriga
+a correr o contrato.py e rever estes limites. Variaveis: PIXELLAB_API_KEY (ou
 PIXELLAB_SECRET, PIXELLAB_API_TOKEN).
 """
 from __future__ import annotations
@@ -27,7 +31,7 @@ from PIL import Image
 from . import Call, Result, http, image_refs
 
 BASE = "https://api.pixellab.ai/v2"
-SPEC_SHA256 = "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc"
+SPEC_SHA256 = "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f"
 OUTLINES = ("single color black outline", "single color outline", "selective outline", "lineless")
 SHADINGS = ("flat shading", "basic shading", "medium shading", "detailed shading", "highly detailed shading")
 DETAILS = ("low detail", "medium detail", "highly detailed")
@@ -36,12 +40,14 @@ DIRECTIONS = ("north", "north-east", "east", "south-east", "south", "south-west"
 ENUMS = {"outline": OUTLINES, "shading": SHADINGS, "detail": DETAILS, "view": VIEWS, "direction": DIRECTIONS}
 IMAGES = ("init_image", "color_image", "style_image")
 _STYLE = ("outline", "detail", "view", "direction", "no_background", "seed")
+RANGES = {"init_image_strength": (1, 999), "text_guidance_scale": (1, 20), "style_strength": (0, 100)}
 CAPS = {
-    "pixflux": {"min_area": 32 * 32, "max_area": 400 * 400, "images": ("init_image", "color_image"),
+    "pixflux": {"min_side": 16, "max_side": 400, "min_area": 32 * 32, "max_area": 400 * 400,
+                "images": ("init_image", "color_image"),
                 "fields": _STYLE + ("shading", "isometric", "text_guidance_scale", "init_image_strength")},
-    "pixen": {"min_side": 16, "max_area": 512 * 512, "multiple": 4, "square_below": 32,
+    "pixen": {"min_side": 16, "max_side": 768, "max_area": 512 * 512, "multiple": 4, "square_below": 32,
               "transparent_max_area": 65536, "images": (), "fields": _STYLE},
-    "bitforge": {"max_area": 200 * 200, "images": IMAGES,
+    "bitforge": {"min_side": 16, "max_side": 200, "max_area": 200 * 200, "images": IMAGES,
                  "fields": _STYLE + ("shading", "isometric", "text_guidance_scale", "init_image_strength",
                                      "style_strength")},
 }
@@ -72,6 +78,8 @@ def check(model: str, width: int, height: int, **kw) -> list[str]:
         errors.append(f"{model}: area {width}x{height} acima do maximo {side}x{side}")
     if min(width, height) < c.get("min_side", 1):
         errors.append(f"{model}: lado minimo {c['min_side']}")
+    if max(width, height) > c.get("max_side", max(width, height)):
+        errors.append(f"{model}: lado maximo {c['max_side']} (pedido {width}x{height})")
     if c.get("multiple") and (width % c["multiple"] or height % c["multiple"]):
         errors.append(f"{model}: largura e altura multiplas de {c['multiple']}")
     if min(width, height) < c.get("square_below", 0) and width != height:
@@ -91,6 +99,9 @@ def check(model: str, width: int, height: int, **kw) -> list[str]:
             errors.append(f"{model} nao aceita o campo {name}")
         elif name in ENUMS and value not in ENUMS[name]:
             errors.append(f"{name} invalido: {value!r} (use {', '.join(ENUMS[name])})")
+        elif name in RANGES and not RANGES[name][0] <= value <= RANGES[name][1]:
+            low, high = RANGES[name]
+            errors.append(f"{name} {value!r} fora de {low}-{high}: a API recusaria o pedido (422)")
     return errors
 
 

@@ -4,6 +4,12 @@ Pesquisa de 23/10/2026 para Henrique Passos. O objetivo é entender capacidades
 públicas do PixelLab e especificar como construir um sistema de produção de
 pixel art útil ao Empire, com foco em personagens de estudo de 64×64 e 80×80.
 
+**Atualização de 26/10/2026:** a especificação pública mudou de hash, os termos
+trazem uma cláusula Open RAIL-M que esta pesquisa não registou e alguns limites
+eram também por eixo. O método, os achados novos, a errata e a conformidade da
+Forja estão em [2026-10-26-pixellab-engenharia-reversa](../2026-10-26-pixellab-engenharia-reversa/README.md).
+Os ficheiros desta pasta ficam como estavam a 23/10.
+
 ## Começar por aqui
 
 1. [Auditoria da Forja do Claude](AUDITORIA-FORJA-CLAUDE.md): falhas reproduzidas,
