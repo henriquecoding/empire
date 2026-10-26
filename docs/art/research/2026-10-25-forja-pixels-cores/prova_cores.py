@@ -64,7 +64,8 @@ def package_proofs() -> dict:
         "dither_zero_white_pixels": lambda c: c["dither_zero_helper"]["white_pixels"]}
     rows = {name: {"4471cde": f(then), "agora": f(now)} for name, f in pick.items()}
     expected = {"scatter_vs_cluster_raster": [[0, 0], [0, 0]], "scatter_vs_cluster_coherence": ["needs_review", "pass"],
-                "equal_histogram": True, "budget_output_colors": 2, "protected_pixel_after_finish": [105, 105, 105, 255],
+                "equal_histogram": True, "budget_output_colors": 2,
+                "protected_pixel_after_finish": [105, 105, 105, 255],
                 "diagonal_helper_changed": 0, "area_1x4_and_2x2_islands": [[], []],
                 "eye_blink_middle_frame_changes": 0, "moving_stripe_changed_pixels": 0, "dither_zero_white_pixels": 0}
     for name, want in expected.items():

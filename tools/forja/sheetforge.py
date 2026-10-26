@@ -16,7 +16,8 @@ from statistics import median
 
 from PIL import Image
 
-from . import anim, color, contracts, godot, lint, matte, motion, provenance, quantize, review, sheet, temporal
+from . import anim, color, contracts, godot, guard, lint, matte, motion, provenance, quantize, review, sheet
+from . import temporal
 from . import aseprite as ase
 from .imageops import open_rgba
 from .pipeline import Options, contract_for, finish, palette_for
@@ -123,6 +124,9 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
         files["godot"] = str(godot.write(out / f"{name}.tres", godot.sprite_frames(
             sopts.godot_texture, rects_out, durations, tags, 1000 / durations[0], loops)))
     verdicts = [lint.check(f, contract, pal) for f in frames]
+    for verdict, info in zip(verdicts, details):
+        for item in guard.findings(info):
+            lint.add(verdict, item)
     for verdict, place_info, fig in zip(verdicts, placed, figures):
         if place_info["clipped_pixels"]:
             fits = fig.native.width <= canvas[0] and fig.native.height <= canvas[1]

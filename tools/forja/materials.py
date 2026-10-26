@@ -148,6 +148,12 @@ def regroup(image: Image.Image, regions: dict, ramps: dict, editable: set[str], 
     return out, {"merged": merged, "kept": kept}
 
 
+def _same_or_line(kinds: dict | None, a: str, b: str) -> bool:
+    if not kinds:
+        return False
+    return bool(kinds.get(a)) and kinds.get(a) == kinds.get(b) or "line" in (kinds.get(a), kinds.get(b))
+
+
 def separation(before: Image.Image, after: Image.Image, regions: dict, kinds: dict | None = None) -> list[dict]:
     """C(R): em cada par de regioes vizinhas, as fronteiras de pixel (N4) com cores diferentes, antes e depois.
 
@@ -163,8 +169,7 @@ def separation(before: Image.Image, after: Image.Image, regions: dict, kinds: di
     for p, mine in owner.items():
         for q in ((p[0] + 1, p[1]), (p[0], p[1] + 1)):
             other = owner.get(q)
-            if other is None or other == mine or (kinds and (kinds.get(mine) and kinds.get(mine) == kinds.get(other)
-                                                              or "line" in (kinds.get(mine), kinds.get(other)))):
+            if other is None or other == mine or _same_or_line(kinds, mine, other):
                 continue
             rec = pairs.setdefault(tuple(sorted((mine, other))), [0, 0, 0])
             rec[0] += 1

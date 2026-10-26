@@ -204,9 +204,9 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
         files["aseprite"] = str(ase.from_frames(out / f"{name}.aseprite", [final],
                                                 palette=pal.colors if pal and len(pal) <= 256 else None,
                                                 pivot=tuple(pivot) if pivot else None))
+    summary = verdicts.summary(verdicts.for_review(verdict["ok"], None, coherence=verdict["coherence"]))
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
-              "lint": verdict, "files": files, "verdicts": verdicts.summary(verdicts.for_review(verdict["ok"], None,
-                                                                          coherence=verdict["coherence"])),
+              "lint": verdict, "files": files, "verdicts": summary,
               "provenance": provenance.record(source, generator, prompt, opts.__dict__)}
     impure = [_to_final([x, y, x + 1, y + 1], finishinfo)[:2] for x, y in sub.pop("_coords")]
     if report_html:

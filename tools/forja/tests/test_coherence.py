@@ -69,8 +69,8 @@ class SameHistogramTest(unittest.TestCase):
         info = [f for f in report["findings"] if f["rule"] == "fragments"]
         self.assertEqual([f["severity"] for f in info], ["info"])
         self.assertIsNone(info[0]["prompt_hint"])
-        self.assertNotIn("fragments", {f["rule"] for f in lint.check(cluster(), contracts.get("royal_80"),
-                                                                        PAL)["findings"]})
+        plain = lint.check(cluster(), contracts.get("royal_80"), PAL)
+        self.assertNotIn("fragments", {f["rule"] for f in plain["findings"]})
 
     def test_stats_match_the_research_package(self):
         self.assertEqual(clusters.stats(scatter()), {

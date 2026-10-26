@@ -87,6 +87,16 @@ class ProtectionTest(unittest.TestCase):
         self.assertFalse(res["lint"]["ok"])
         self.assertIn("color_coherence", res["verdicts"])
 
+    def test_sheet_frames_carry_the_conflict_too(self):
+        from tools.forja import sheetforge
+        from tools.forja.tests.test_preserve import strip_sheet
+        d = tempdir()
+        strip_sheet([(face(), (10, 10)) for _ in range(2)]).save(d / "s.png")
+        res = sheetforge.forge_sheet(d / "s.png", d / "out", free(scale=4, palette="#646464", protect=[(4, 4, 5, 5)]),
+                                     sheetforge.SheetOptions(tags=[("idle", 2)], layout=(2, 1)))
+        self.assertFalse(res["review"]["contract_valid"])
+        self.assertTrue(all(f["finish"]["protect"]["conflicts"] for f in res["frames"]))
+
 
 class BudgetTest(unittest.TestCase):
     def scatter(self):

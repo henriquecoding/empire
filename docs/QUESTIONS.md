@@ -7,6 +7,54 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja: pixels, cores e continuidade — 26/10/2026 (FORJA-04, ADR 0092)
+
+> Pedido do dono (26/10/2026): *«Trabalhe densamente analisando e aplicando esses arquivos ao meu jogo, faça por
+> etapas, não tenha pressa, faça bem feito»*, com o relatório de 25/10, o dossiê dos 200 vídeos e o pacote de provas.
+> Aplicados os incrementos 1 a 5 e a prova do arqueiro
+> ([pesquisa](art/research/2026-10-25-forja-pixels-cores/README.md)). O que segue é de arte ou de contrato.
+
+### Q-277 · O cluster mínimo do cenário pede área ou bloco?
+- **Divergência:** a Asset Bible diz «cluster mínimo 2×2» no cenário. O lint conta a área (uma mancha com menos de 4
+  pixels é erro); uma tira 1×4 tem área 4 e passa, sem ter nenhum bloco 2×2 (relatório §15.2).
+- **Hoje:** o erro continua por área; o lint acrescenta uma linha `info` (`blocks`) quando a mancha tem área mas não
+  tem bloco. O `forge` do cenário amplia por 2 no fim, por isso o que ele produz já é feito de blocos.
+- **Proposta:** decidir se a regra é de área (como está) ou de bloco (cada pixel dentro de um bloco 2×2 da sua cor),
+  e a fase da grelha, antes de a transformar em erro.
+- **Decide:** o autor (contrato de arte).
+
+### Q-278 · O pano verde do arqueiro: três tons ou dois?
+- **Divergência:** a Asset Bible pede dois tons por material; o arqueiro da entrega usa três verdes no capuz e na
+  túnica (escuro, meio, claro), e a prova de 26/10 manteve os três na rampa — só fundiu os dois verdes raros e os
+  fragmentos.
+- **Proposta:** dizer se o verde escuro é a sombra do pano (e então o claro sai) ou o traço das pregas (e então é
+  linha, não tom); a mesma pergunta vale para as botas, com quatro castanhos principais e dois raros.
+- **Decide:** o autor; liga-se à Q-273 (o orçamento do elenco).
+
+### Q-279 · O quase-preto das linhas sai preto no acabamento?
+- **Hoje:** o contrato é preto puro no contorno e no detalhe interno (Asset Bible §1). O `outline.normalize` só leva ao
+  preto a borda; no interior fica o `#0B0B0B` que a quantização dá ao traço (83 pixels no arqueiro). A prova levou ao
+  preto os 31 que não estavam presos e deixou 52 nas zonas presas (rosto, mão), escritos como conflito.
+- **Proposta:** normalizar também o traço interior quase preto no `finish`, respeitando `--protect`.
+- **Decide:** o autor; muda o que o `forge` produz para todos os personagens.
+
+### Q-280 · A proposta de cores do arqueiro serve de direção?
+- **Hoje:** [antes, depois e diferenças](art/research/2026-10-25-forja-pixels-cores/arqueiro/cores/arqueiro_cores_compare.png)
+  e [entrega, corda refeita e corda + cores](art/research/2026-10-25-forja-pixels-cores/arqueiro/comparacao.png): 44
+  pixels mudam, nada no rosto, nos braços, no arco nem na corda. A fragmentação que fica está na aljava, nas botas, na
+  correia e na empunhadura e na mão — desenho, não cor.
+- **Pergunta:** ver a 1× e no jogo; dizer se o rei e o escudeiro seguem com o mesmo método e se a aljava, a correia e
+  a mão do arco vão a reparo localizado (inpainting com máscara) ou a nova geração com referência aprovada.
+- **Decide:** o autor. A aprovação artística continua pendente.
+
+### Q-281 · Quem revê as anotações e o conjunto de calibração?
+- **Hoje:** as regiões do arqueiro foram marcadas pelo agente (caixa e cores); o limite de 1–3 pixels por fragmento é o
+  ponto de partida do relatório (§11.3), sem calibração. O relatório propõe 48 imagens e 8 sequências, metade para
+  calibrar e metade reservada, com detalhes intencionais anotados (olhos, brilhos, cordas, pontas, flores, partículas).
+- **Proposta:** o autor marca (ou revê) as regiões de dois ou três personagens aceites; a Forja passa a tratar como
+  `human_reviewed` só essas anotações e calibra o limite contra elas.
+- **Decide:** o autor (o que é intencional é dele).
+
 ## Forja: armas e equipamento — 25/10/2026 (FORJA-03, ADR 0091)
 
 > Pedido do dono (25/10/2026): *«Aplique os relatórios»*, com o relatório de 24–25/10 sobre armas, equipamento e
@@ -50,6 +98,10 @@
   `docs/art/research/2026-10-24-forja-armas/arqueiro/depois/`.
 - **Pergunta:** enviar as fontes e os PNG originais para fechar o rei e o escudeiro com o mesmo método; e dizer se a
   corda refeita serve de direção (é uma proposta; a aprovação artística continua pendente).
+- **Atualização (26/10, FORJA-04):** o pacote de 25/10 trouxe as nove medidas de cada PNG original; o rei e o escudeiro
+  recuperados da mesma figura dão as nove iguais, como o arqueiro
+  (`docs/art/research/2026-10-25-forja-pixels-cores/elenco/`). Para medir já não bloqueia; para gerar de novo faltam
+  ainda os prompts e as fontes.
 - **Decide:** o autor.
 
 ## Elenco V15 — 19/10/2026 (CV-05, ADR 0087)
