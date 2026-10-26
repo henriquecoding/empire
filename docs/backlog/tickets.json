@@ -3111,5 +3111,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-05": {
+  "title": "Auditoria da Forja de 26/10: o que rebentava, o que se calava e o que chegava errado ao gerador",
+  "porque": "O dono pediu uma auditoria da Forja para ver o que melhorar e refinar; a medida de ampliação exata do PR #124 dava uma prancha 10× como 2×, e uma imagem sem figura rebentava o ciclo pago depois da cobrança.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/art/research/2026-10-26-forja-auditoria/README.md",
+   "docs/art/research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md"
+  ],
+  "depende": "FORJA-04",
+  "feito": "Ampliação exata medida com período e fase; prancha vazia e erro da forja sem perder a tentativa paga; resultado do auto pela última tentativa forjada; custo retomado no teto; prompt corretivo inglês com a medida; listas no MCP; máscara sem alfa pelo claro; JSON e código 2 para um ficheiro que não é imagem; a figura que atravessa a célula volta à dona ou fica escrita.",
+  "fora": "A forense de 26/10 refeita com a medida nova (pede rede), os artefactos do arqueiro de 24/10, o --same-height, a limpeza vetorizada, o piloto pago, aprovação artística.",
+  "estado": "feito — dez falhas (A01–A10) reproduzidas sem rede e reparadas com testes; observações abertas O1–O7 na pesquisa; piloto pago por executar (sem chaves)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

@@ -1,0 +1,166 @@
+{
+ "A01": {
+  "question": "Prancha ampliada 10x por vizinho mais proximo, a grelha do plano: que periodo sai de cada figura?",
+  "observed": {
+   "requested_scale": 10,
+   "sheet_exit": 0,
+   "periods": [
+    10.0
+   ],
+   "native_sizes": [
+    [
+     18,
+     34
+    ],
+    [
+     18,
+     34
+    ]
+   ],
+   "contract_valid": true,
+   "snap_offset_6px": {
+    "period": [
+     10,
+     10
+    ],
+    "cells": [
+     256,
+     128
+    ],
+    "notes": [
+     "ampliacao exata 10x, fase (4,4): medida, nao estimada"
+    ]
+   }
+  }
+ },
+ "A02": {
+  "question": "Uma prancha sem figuras (o gerador devolveu so o fundo): sheet e auto.",
+  "observed": {
+   "sheet": {
+    "found": 0,
+    "needs_regeneration": true,
+    "prompt_feedback": "The image came back with no figure at all: draw exactly 8 separate poses of the subject, one per cell, on the flat background."
+   },
+   "auto": {
+    "posts": 2,
+    "states": [
+     "completed",
+     "completed"
+    ],
+    "needs_regeneration": [
+     true,
+     true
+    ],
+    "auto_json_written": true
+   }
+  }
+ },
+ "A03": {
+  "question": "1a tentativa forjada e a pedir outra (tamanho errado); a 2a bate no teto de 1 chamada.",
+  "observed": {
+   "ok": false,
+   "best": "try1",
+   "next": "a ultima tentativa forjada ainda pede outra geracao; o ciclo parou: teto de 1 chamadas pagas atingido (1 feitas)",
+   "attempts": [
+    {
+     "state": "completed",
+     "forged": true
+    },
+    {
+     "state": "not_sent",
+     "forged": false
+    }
+   ],
+   "job_states": [
+    "completed"
+   ]
+  }
+ },
+ "A04": {
+  "question": "Um job PixelLab que esgota o prazo e e retomado por `forja jobs --resume`: o custo chega ao budget.json?",
+  "observed": {
+   "resumed_state": "completed",
+   "job_cost": {
+    "usd": 0.25,
+    "status": "reported_by_provider"
+   },
+   "budget_json": {
+    "max_calls": 3,
+    "max_usd": 1.0,
+    "calls": 1,
+    "usd": 0.25,
+    "unknown_cost_calls": 0
+   }
+  }
+ },
+ "A05": {
+  "question": "O texto das correcoes que o gerador recebe quando a grade nao foi seguida e a figura nao cabe.",
+  "observed": {
+   "posts": 2,
+   "corrections": "Surround the whole silhouette with a 1-pixel pure black (#000000) outline. The figure must be at most 62 pixels tall on the 64x64 canvas. Keep clear empty space between the figure and the image border. Draw the figure smaller: at most 62 logical pixels tall, completely inside its cell. Use exactly 64x64 logical pixels for the whole image: every logical pixel is one solid block of about 8x8 image pixels, not 4x4."
+  }
+ },
+ "A06": {
+  "question": "Duas caixas --protect pelo servidor MCP, como a ajuda diz (repetivel).",
+  "observed": {
+   "schema_type": "array",
+   "two_boxes_error": false,
+   "message": null
+  }
+ },
+ "A07": {
+  "question": "Uma mascara branca sobre preto, sem canal alfa (a convencao do PixelLab), de 9 pixels.",
+  "observed": {
+   "marked": 9,
+   "selected": 9
+  }
+ },
+ "A08": {
+  "question": "Prancha de 2 celulas; a lanca da figura 0 entra 6 pixels logicos na celula 1.",
+  "observed": {
+   "native_sizes": [
+    [
+     32,
+     30
+    ],
+    [
+     12,
+     30
+    ]
+   ],
+   "contract_valid": true,
+   "lint_errors": [
+    0,
+    0
+   ],
+   "cell_crossing": [
+    [
+     {
+      "action": "reassigned",
+      "cell": 0,
+      "from": [
+       1
+      ],
+      "outside": 0.038
+     }
+    ],
+    null
+   ]
+  }
+ },
+ "A09": {
+  "question": "Um ficheiro que nao e imagem: o resultado sai em JSON com o codigo 2, como o guia diz?",
+  "observed": {
+   "exit": 2,
+   "json": true
+  }
+ },
+ "A10": {
+  "question": "A frase de altura que o lint de royal_64 manda ao gerador, quando a figura nao cabe.",
+  "observed": {
+   "height_hints": [
+    "The figure must be at most 62 pixels tall on the 64x64 canvas."
+   ]
+  }
+ }
+}

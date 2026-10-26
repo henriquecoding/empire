@@ -64,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     try:
         result = run(argv)
-    except (FileNotFoundError, ValueError, KeyError, RuntimeError) as err:
+    except (OSError, ValueError, KeyError, RuntimeError) as err:  # OSError: tambem um ficheiro que nao e imagem
         print(json.dumps({"ok": False, "error": str(err)}, ensure_ascii=False))
         return 2
     if result.get("_raw") is not None:

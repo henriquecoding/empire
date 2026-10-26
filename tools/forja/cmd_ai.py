@@ -192,7 +192,8 @@ def register(sub) -> None:
                 do_inpaint)
     p.add_argument("image")
     p.add_argument("--box", type=box)
-    p.add_argument("--mask", help="PNG do tamanho do sprite: os pixels opacos sao a zona a editar (em vez de --box)")
+    p.add_argument("--mask", help="PNG do tamanho do sprite: a zona a editar sao os pixels opacos, ou os claros se a "
+                   "mascara nao tem transparencia (em vez de --box)")
     p.add_argument("--method", default="replace", choices=("add", "replace", "remove"),
                    help="add so acrescenta; replace manda na zona, transparencia incluida; remove tira o que la estava")
     p.add_argument("--protect", type=box, action="append", help="caixa que nao pode mudar (repetivel)")

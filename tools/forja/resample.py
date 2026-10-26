@@ -14,7 +14,7 @@ from PIL import Image
 
 from . import color
 from .grid import Grid
-from .imageops import CLEAR
+from .imageops import CLEAR, binarize
 
 METHODS = ("dominant", "center", "median", "mean")
 
@@ -36,6 +36,8 @@ def resample(image: Image.Image, grid: Grid, method: str = "dominant", inset: fl
         raise ValueError(f"metodo desconhecido: {method} (use {', '.join(METHODS)})")
     rgba = image.convert("RGBA")
     cols, rows = grid.size
+    if (cols, rows) == rgba.size and grid.xs[0] == 0 and grid.ys[0] == 0:
+        return Sampled(binarize(rgba), 1.0, 0, [])  # uma celula por pixel: o voto de cada uma e o proprio pixel
     out: list[tuple[int, int, int, int]] = []
     purities: list[float] = []
     impure: list[tuple[int, int]] = []

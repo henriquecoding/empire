@@ -176,7 +176,12 @@ def execute(job: Job, call: Call | None, transport=None, *, poll: Callable[[str]
         result = _submit(job, call, transport, budget, clock, sleep=sleep, rand=rand)
         if not result.remote_id:
             return _finish(job, result, budget)
-    result = _poll(job, poll, transport, deadline, every, max_every, max_polls, sleep, clock, rand)
+    try:
+        result = _poll(job, poll, transport, deadline, every, max_every, max_polls, sleep, clock, rand)
+    except JobError:
+        if job.state == "failed":  # definitivo: o custo fecha (desconhecido); prazo ou estado estranho ficam abertos
+            _settle(job, budget)
+        raise
     return _finish(job, result, budget)
 
 

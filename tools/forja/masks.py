@@ -41,8 +41,8 @@ def select(image: Image.Image, spec: dict, base: Path | None = None) -> Region:
     elif "mask" in spec:
         path = Path(spec["mask"]) if base is None else base / spec["mask"]
         with Image.open(path) as im:
-            alpha = im.convert("RGBA").getchannel("A")
-        out = frozenset((x, y) for y in range(alpha.height) for x in range(alpha.width) if alpha.getpixel((x, y)))
+            marked = marks(im)
+        out = frozenset((x, y) for y in range(marked.height) for x in range(marked.width) if marked.getpixel((x, y)))
     elif "box" in spec:
         wanted = {color.parse_hex(c) for c in spec.get("colors") or []}
         out = frozenset(p for p in box(spec["box"], img.size)
@@ -55,6 +55,18 @@ def select(image: Image.Image, spec: dict, base: Path | None = None) -> Region:
     if bad:
         raise ValueError(f"seletor fora da imagem {img.size}: {sorted(bad)[:4]}")
     return out
+
+
+def marks(mask: Image.Image) -> Image.Image:
+    """O que uma mascara PNG marca, como 'L' (0 ou 255): o alfa, se ela tem transparencia; senao o claro.
+
+    Uma mascara branca sobre preto sem canal alfa (a convencao do PixelLab, e a de quase todos os editores)
+    era lida pelo alfa, todo opaco, e marcava a imagem inteira (auditoria de 26/10, A07)."""
+    rgba = mask.convert("RGBA")
+    alpha = rgba.getchannel("A")
+    if alpha.getextrema()[0] < 255:
+        return alpha.point(lambda a: 255 if a else 0)
+    return rgba.convert("L").point(lambda v: 255 if v >= 128 else 0)
 
 
 def dilate(region, n: int = 1, size: tuple[int, int] | None = None) -> Region:

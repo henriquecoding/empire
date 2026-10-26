@@ -59,7 +59,7 @@ def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None) -> tu
     g = g or gridcheck.detect(image, scale=opts.scale, cells=opts.cells)
     sampled = resample.resample(image, g, opts.method)
     native, bginfo = matte.remove(sampled.image, opts.bg, opts.tolerance)
-    box = opaque_bbox(native) or (0, 0, native.width, native.height)
+    box = opaque_bbox(native) or (0, 0, min(1, native.width), min(1, native.height))  # vazia: nada a limpar
     native = native.crop(box)
     return native, {"grid": g.as_dict(), "sample": sampled.as_dict(), "background": bginfo,
                     "native_size": list(native.size), "subgrid": subgrid(native, sampled.impure, box)}

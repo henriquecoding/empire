@@ -79,3 +79,23 @@ def anchor_point(img: Image.Image, anchor: str) -> tuple[int, int]:
     if anchor == "bottom":
         return img.width // 2, img.height - 1
     return img.width // 2, img.height // 2
+
+
+def common_canvas(figures: list[Figure], anchor: str, align: str, margin: int = 2) -> tuple[tuple[int, int],
+                                                                                        tuple[int, int]]:
+    """Sem tela no contrato: a menor tela onde todas cabem, alinhadas como vao ficar."""
+    images = [f.native for f in figures]
+    points = [anchor_point(i, anchor) for i in images]
+    if align == "feet":
+        tops = [(-p[0], -p[1]) for p in points]
+        ref = (0, 0)
+    else:
+        feet = [(f.origin[0] + p[0], f.origin[1] + p[1]) for f, p in zip(figures, points)]
+        tops = [f.origin for f in figures]
+        ref = (round(median(x for x, _ in feet)), max(y for _, y in feet))
+    x0 = min(t[0] for t in tops)
+    y0 = min(t[1] for t in tops)
+    x1 = max(t[0] + i.width for t, i in zip(tops, images))
+    y1 = max(t[1] + i.height for t, i in zip(tops, images))
+    x1, y1 = max(x1, ref[0] + 1), max(y1, ref[1] + 1)
+    return (x1 - x0 + 2 * margin, y1 - y0 + 2 * margin), (ref[0] - x0 + margin, ref[1] - y0 + margin)

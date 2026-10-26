@@ -49,7 +49,7 @@ def _schema(parser: argparse.ArgumentParser) -> dict:
         name = action.dest
         if isinstance(action, argparse._StoreTrueAction):
             prop = {"type": "boolean"}
-        elif action.nargs in ("+", "*"):
+        elif action.nargs in ("+", "*") or isinstance(action, argparse._AppendAction):
             prop = {"type": "array", "items": {"type": "string"}}
         elif action.type is int:
             prop = {"type": "integer"}
@@ -90,6 +90,9 @@ def _argv(name: str, arguments: dict) -> list[str]:
             argv += [str(v) for v in value] if isinstance(value, list) else [str(value)]
         elif isinstance(action, argparse._StoreTrueAction):
             argv += [action.option_strings[-1]] if value else []
+        elif isinstance(action, argparse._AppendAction):  # repetivel: uma flag por item (A06)
+            for item in value if isinstance(value, list) else [value]:
+                argv += [action.option_strings[-1], str(item)]
         elif isinstance(value, list):
             argv += [action.option_strings[-1]] + [str(v) for v in value]
         else:

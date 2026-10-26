@@ -35,7 +35,9 @@ def check(image: Image.Image, contract: Contract, palette: Palette | None = None
     found: list[dict] = []
     box = opaque_bbox(img)
     if not box:
-        found.append(finding("empty", "error", "imagem sem nenhum pixel opaco"))
+        found.append(finding("empty", "error", "imagem sem nenhum pixel opaco",
+                             hint="The image came back with no figure at all: draw the subject, clearly, on the flat "
+                                  "background."))
         return {**_summary(img, contract, found), "coherence": _coherence(img, contract, found)}
     if frame and contract.canvas and img.size != contract.canvas:
         found.append(finding("canvas", "error", f"tela {img.size[0]}x{img.size[1]}, contrato "
@@ -136,7 +138,7 @@ def _placement(img, contract, box, found):
         lo, hi = contract.useful_height
         if not lo <= height <= hi:
             found.append(finding("height", "warn", f"altura util {height} px, contrato {lo}-{hi} px ({contract.status})",
-                                 hint=f"The figure must be {lo}-{hi} pixels tall on the {w}x{h} canvas."))
+                                 hint=f"The figure must be {tall(contract)} pixels tall on the {w}x{h} canvas."))
     if box[0] == 0 or box[1] == 0 or box[2] == w or box[3] == h:
         found.append(finding("margin", "warn", "o desenho toca a borda da tela (risco de corte)", [list(box)],
                              hint="Keep clear empty space between the figure and the image border."))
@@ -191,12 +193,18 @@ def _ramps(rows, length: int = 5) -> list[tuple[int, int]]:
     return out
 
 
+def tall(contract: Contract, fallback: int | None = None) -> str:
+    """A altura pedida ao gerador: "46-52", ou "at most 62" quando o contrato so tem teto (minimo 1, elenco V15)."""
+    lo, hi = contract.useful_height or (1, contract.canvas[1] if contract.canvas else fallback)
+    return f"at most {hi}" if lo <= 1 else f"{lo}-{hi}"
+
+
 def too_big(contract: Contract, clipped: int, native: tuple[int, int]) -> dict:
     """A figura nao cabe na tela: reduzir nao redesenha (licao de 18/10/2026), gera-se de novo na grade certa."""
-    lo, hi = contract.useful_height or (1, contract.canvas[1] if contract.canvas else native[1])
     return finding("clipped", "error", f"{clipped} pixels ficaram fora da tela; a figura tem {native[0]}x{native[1]} "
                    "pixels logicos. Reduzir nao redesenha feicoes: gerar de novo na grade do contrato",
-                   hint=f"Draw the figure smaller: {lo}-{hi} logical pixels tall, completely inside its cell.")
+                   hint=f"Draw the figure smaller: {tall(contract, native[1])} logical pixels tall, completely "
+                        "inside its cell.")
 
 
 def below_grid(sub: dict, box: list[int]) -> dict:

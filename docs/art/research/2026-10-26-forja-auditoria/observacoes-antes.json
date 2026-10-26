@@ -1,0 +1,149 @@
+{
+ "A01": {
+  "question": "Prancha ampliada 10x por vizinho mais proximo, a grelha do plano: que periodo sai de cada figura?",
+  "observed": {
+   "requested_scale": 10,
+   "sheet_exit": 1,
+   "periods": [
+    2.0
+   ],
+   "native_sizes": [
+    [
+     73,
+     151
+    ],
+    [
+     73,
+     151
+    ]
+   ],
+   "contract_valid": false,
+   "snap_offset_6px": {
+    "period": [
+     2,
+     2
+    ],
+    "cells": [
+     1277,
+     637
+    ],
+    "notes": [
+     "ampliacao exata 2x: medida, nao estimada"
+    ]
+   }
+  }
+ },
+ "A02": {
+  "question": "Uma prancha sem figuras (o gerador devolveu so o fundo): sheet e auto.",
+  "observed": {
+   "sheet": {
+    "raised": "IndexError: list index out of range"
+   },
+   "auto": {
+    "raised": "IndexError: list index out of range",
+    "posts": 1,
+    "auto_json_written": false
+   }
+  }
+ },
+ "A03": {
+  "question": "1a tentativa forjada e a pedir outra (tamanho errado); a 2a bate no teto de 1 chamada.",
+  "observed": {
+   "ok": false,
+   "best": null,
+   "next": "nada foi forjado; ver o erro do job e o plano",
+   "attempts": [
+    {
+     "state": "completed",
+     "forged": true
+    },
+    {
+     "state": "planned",
+     "forged": false
+    }
+   ],
+   "job_states": [
+    "completed",
+    "planned"
+   ]
+  }
+ },
+ "A04": {
+  "question": "Um job PixelLab que esgota o prazo e e retomado por `forja jobs --resume`: o custo chega ao budget.json?",
+  "observed": {
+   "resumed_state": "completed",
+   "job_cost": {
+    "usd": 0.25,
+    "status": "reported_by_provider"
+   },
+   "budget_json": {
+    "max_calls": 3,
+    "max_usd": 1.0,
+    "calls": 1,
+    "usd": 0.0,
+    "unknown_cost_calls": 0
+   }
+  }
+ },
+ "A05": {
+  "question": "O texto das correcoes que o gerador recebe quando a grade nao foi seguida e a figura nao cabe.",
+  "observed": {
+   "posts": 2,
+   "corrections": "Surround the whole silhouette with a 1-pixel pure black (#000000) outline. The figure must be 1-62 pixels tall on the 64x64 canvas. Keep clear empty space between the figure and the image border. Draw the figure smaller: 1-62 logical pixels tall, completely inside its cell. grade detetada 4.00 px, pedida 8.00 px: o gerador nao seguiu o pedido de grade"
+  }
+ },
+ "A06": {
+  "question": "Duas caixas --protect pelo servidor MCP, como a ajuda diz (repetivel).",
+  "observed": {
+   "schema_type": "string",
+   "two_boxes_error": true,
+   "message": "argumentos invalidos: usage: python3 -m tools.forja [-h] [--version]\n                              {snap,forge,lint,clea"
+  }
+ },
+ "A07": {
+  "question": "Uma mascara branca sobre preto, sem canal alfa (a convencao do PixelLab), de 9 pixels.",
+  "observed": {
+   "marked": 9,
+   "selected": 256
+  }
+ },
+ "A08": {
+  "question": "Prancha de 2 celulas; a lanca da figura 0 entra 6 pixels logicos na celula 1.",
+  "observed": {
+   "native_sizes": [
+    [
+     26,
+     30
+    ],
+    [
+     26,
+     30
+    ]
+   ],
+   "contract_valid": true,
+   "lint_errors": [
+    0,
+    0
+   ],
+   "cell_crossing": [
+    null,
+    null
+   ]
+  }
+ },
+ "A09": {
+  "question": "Um ficheiro que nao e imagem: o resultado sai em JSON com o codigo 2, como o guia diz?",
+  "observed": {
+   "raised": "UnidentifiedImageError",
+   "json": false
+  }
+ },
+ "A10": {
+  "question": "A frase de altura que o lint de royal_64 manda ao gerador, quando a figura nao cabe.",
+  "observed": {
+   "height_hints": [
+    "The figure must be 1-62 pixels tall on the 64x64 canvas."
+   ]
+  }
+ }
+}

@@ -13,7 +13,8 @@ from statistics import median
 
 from PIL import Image, ImageChops, ImageFilter
 
-from . import color, gridcheck, matte, resample
+from . import cells, color, gridcheck, matte, resample
+from .cells import blobs, cell_rects
 from .imageops import opaque_bbox
 from .placement import ALIGNS, ANCHORS, anchor_point, frames
 
@@ -51,7 +52,7 @@ def find_masks(image: Image.Image, bg: tuple[int, int, int] | None, gap: int = 1
     reach = max(1, gap // factor)
     grown = small.filter(ImageFilter.MaxFilter(2 * reach + 1)) if reach else small
     boxes, masks = [], {}
-    for (x0, y0, x1, y1), members in _blobs(grown):
+    for (x0, y0, x1, y1), members in blobs(grown):
         box = (x0 * factor, y0 * factor, min(image.width, x1 * factor), min(image.height, y1 * factor))
         tight = full.crop(box).getbbox()
         if tight:
@@ -69,40 +70,24 @@ def find_masks(image: Image.Image, bg: tuple[int, int, int] | None, gap: int = 1
     return reading_order(keep), stray, masks
 
 
-def cell_rects(size: tuple[int, int], layout: tuple[int, int]) -> list[tuple[int, int, int, int]]:
-    cols, rows = layout
-    cw, ch = size[0] / cols, size[1] / rows
-    return [(round(i * cw), round(j * ch), round((i + 1) * cw), round((j + 1) * ch))
-            for j in range(rows) for i in range(cols)]
-
-
 def find_cells(image: Image.Image, bg: tuple[int, int, int] | None, layout: tuple[int, int],
                tolerance: int = 48) -> tuple[list, list, dict]:
     """Com a grelha pedida: cada celula e uma figura (ou None, se vazia), mesmo que se toquem.
 
-    E o caminho robusto para pranchas densas: o prompt pede celulas iguais, e o que
-    esta numa celula pertence a essa figura. Manchas de 1-2 px de ruido nao contam.
+    E o caminho robusto para pranchas densas: o prompt pede celulas iguais, e cada mancha pertence a celula onde
+    esta a maior parte dela (`cells.split`, que tambem diz as que atravessam). Manchas de 1-2 px nao contam.
     """
-    full = matte.mask(image, bg, tolerance).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.MaxFilter(3))
-    boxes, masks = [], {}
-    for cell in cell_rects(image.size, layout):
-        part = full.crop(cell)
-        bb = part.getbbox()
-        if not bb:
-            boxes.append(None)
-            continue
-        box = (cell[0] + bb[0], cell[1] + bb[1], cell[0] + bb[2], cell[1] + bb[3])
-        own = Image.new("L", image.size, 0)
-        own.paste(part.filter(ImageFilter.MaxFilter(5)), cell[:2])
-        boxes.append(box)
-        masks[box] = (own, 1)
+    boxes, masks, _ = cells.split(image, bg, layout, tolerance)
     return boxes, [], masks
 
 
-def mask_for(masks: dict, box: tuple[int, int, int, int], region: tuple[int, int, int, int]) -> Image.Image | None:
-    """A mascara (resolucao cheia, recortada a `region`) das manchas que cabem em `box`."""
+def mask_for(masks: dict, box: tuple[int, int, int, int], region: tuple[int, int, int, int],
+             exact: bool = False) -> Image.Image | None:
+    """A mascara (resolucao cheia, recortada a `region`) das manchas que cabem em `box`.
+
+    `exact`: so a desta caixa (a grelha: a caixa de uma figura que ganhou a ponta da vizinha pode conter outra)."""
     out = None
-    for b, (small, factor) in masks.items():
+    for b, (small, factor) in ([(box, masks[box])] if exact and box in masks else masks.items()):
         if not (b[0] >= box[0] and b[1] >= box[1] and b[2] <= box[2] and b[3] <= box[3]):
             continue
         x0, y0, x1, y1 = region
@@ -112,37 +97,6 @@ def mask_for(masks: dict, box: tuple[int, int, int, int], region: tuple[int, int
         ox, oy = x0 - sx0 * factor, y0 - sy0 * factor
         part = part.crop((ox, oy, ox + x1 - x0, oy + y1 - y0))
         out = part if out is None else ImageChops.lighter(out, part)
-    return out
-
-
-def _blobs(mask: Image.Image) -> list[tuple[tuple[int, int, int, int], list[int]]]:
-    w, h = mask.size
-    getter = getattr(mask, "get_flattened_data", None) or mask.getdata
-    on = [v > 0 for v in getter()]
-    seen = bytearray(w * h)
-    out = []
-    for start in range(w * h):
-        if not on[start] or seen[start]:
-            continue
-        stack = [start]
-        seen[start] = 1
-        x0, y0, x1, y1 = w, h, 0, 0
-        members = []
-        while stack:
-            i = stack.pop()
-            members.append(i)
-            x, y = i % w, i // w
-            x0, y0, x1, y1 = min(x0, x), min(y0, y), max(x1, x + 1), max(y1, y + 1)
-            for dy in (-1, 0, 1):
-                ny = y + dy
-                if 0 <= ny < h:
-                    for dx in (-1, 0, 1):
-                        nx = x + dx
-                        j = ny * w + nx
-                        if 0 <= nx < w and on[j] and not seen[j]:
-                            seen[j] = 1
-                            stack.append(j)
-        out.append(((x0, y0, x1, y1), members))
     return out
 
 
@@ -175,7 +129,8 @@ def by_cells(boxes: list[tuple[int, int, int, int]], size: tuple[int, int],
 
 
 def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pad: int = 6,
-            scale: float | None = None, same_height: bool = False, masks: dict | None = None) -> list[Figure]:
+            scale: float | None = None, same_height: bool = False, masks: dict | None = None,
+            exact: bool = False) -> list[Figure]:
     """Cada caixa vira uma figura nativa. A escala e comum: a mediana das medidas."""
     figures = [Figure(b) for b in boxes if b]
     crops = []
@@ -183,7 +138,7 @@ def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pa
         region = (max(0, f.box[0] - pad), max(0, f.box[1] - pad),
                   min(image.width, f.box[2] + pad), min(image.height, f.box[3] + pad))
         crop = image.crop(region)
-        own = mask_for(masks, f.box, region) if masks else None
+        own = mask_for(masks, f.box, region, exact) if masks else None
         if own is not None:
             crop.putalpha(ImageChops.darker(crop.getchannel("A"), own))
         crops.append(crop)
