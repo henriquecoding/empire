@@ -39,6 +39,10 @@ class PlanTest(unittest.TestCase):
         errors = materials.validate({"schema": "x", "regions": {"capa": {"ramp": ["#000000"]}}}, MASTER, {"cloth"})
         self.assertEqual(len(errors), 2)
 
+    def test_grouping_needs_a_declared_ramp(self):
+        errors = materials.validate(plan(cloth={"group": True}), MASTER, {"cloth"})
+        self.assertTrue(any("rampa" in e for e in errors))
+
     def test_a_global_budget_is_not_silently_ignored(self):
         errors = materials.validate({**plan(), "budget": 8}, MASTER, set())
         self.assertTrue(any("budget" in e for e in errors))

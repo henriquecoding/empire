@@ -97,6 +97,35 @@ class ProtectionTest(unittest.TestCase):
         self.assertFalse(res["review"]["contract_valid"])
         self.assertTrue(all(f["finish"]["protect"]["conflicts"] for f in res["frames"]))
 
+    def test_sheet_deflicker_and_lock_cannot_undo_a_protected_pixel(self):
+        from tools.forja import sheetforge
+        from tools.forja.tests.test_preserve import strip_sheet
+
+        def body(speck: bool) -> Image.Image:
+            im = Image.new("RGBA", (10, 12), (200, 60, 60, 255))
+            if speck:
+                im.putpixel((4, 4), (205, 60, 60, 255))
+            return im
+
+        d = tempdir()
+        strip_sheet([(body(s), (11, 10)) for s in (False, True, False)]).save(d / "s.png")
+        sopts = sheetforge.SheetOptions(tags=[("idle", 3)], layout=(3, 1), deflicker=0.05, static=[(0, 0, 64, 64)])
+        res = sheetforge.forge_sheet(d / "s.png", d / "out", free(scale=4, protect=[(4, 4, 5, 5)]), sopts)
+        self.assertEqual(res["fixes"]["deflicker"]["changed"], 0)
+        self.assertGreaterEqual(res["fixes"]["deflicker"]["counts"]["protected"], 1)
+        self.assertEqual([f["finish"]["protect"]["changed_final"] for f in res["frames"]], [0, 0, 0])
+        plain = sheetforge.forge_sheet(d / "s.png", d / "plain", free(scale=4, cleanup="conservative"), sopts)
+        self.assertGreaterEqual(plain["fixes"]["deflicker"]["changed"], 1)
+
+    def test_a_change_after_finish_is_reported_on_the_frame(self):
+        img = Image.new("RGBA", (8, 8), (90, 90, 90, 255))
+        info = {"protect": {}}
+        frame = Image.new("RGBA", (20, 20))
+        frame.alpha_composite(img, (5, 6))
+        frame.putpixel((5 + 2, 6 + 3), (0, 0, 0, 255))
+        res = guard.verify(frame, img, guard.pixels([(2, 3, 3, 4)], img.size), guard.placed(info, (5, 6)))
+        self.assertEqual((res["changed_final"], res["where"]), (1, [[2, 3]]))
+
 
 class BudgetTest(unittest.TestCase):
     def scatter(self):

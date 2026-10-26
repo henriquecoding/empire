@@ -232,7 +232,7 @@ A observação é a mesma `forja.observation/1` do equipamento (regiões marcada
 imagem, com o hash dela), com `material` e `role` opcionais por região. O plano
 `forja.cores/1` diz que regiões ficam presas (`lock`), que rampa vale em cada região
 editável (contida na paleta mestra; sem rampa, a região não muda) e onde se agrupa
-(`group`). Um teto global de cores e o dither num personagem são recusados. Um
+(`group`, que pede uma rampa). Um teto global de cores e o dither num personagem são recusados. Um
 fragmento só se funde com as quatro provas locais do relatório: dentro da zona
 editável e longe do que está preso, o alfa igual, sem ser a cor do contorno nem um
 traço diagonal, sem juntar duas massas que o desenho separa, e na cor da rampa que
@@ -247,7 +247,8 @@ a leitura a 1× e no jogo é do dono. A prova do
 
 A proteção (`--protect` no `forge` e no `sheet`) vale até ao PNG final: repõe-se
 depois da paleta e do contorno, o contorno não entra num pixel vazio protegido e a
-garantia mede-se nas posições finais. Uma cor protegida que a paleta obrigatória
+garantia mede-se nas posições finais — numa prancha, em cada quadro exportado, depois
+do `--deflicker` (que não estabiliza um pixel protegido) e do `--lock`. Uma cor protegida que a paleta obrigatória
 não tem fica exata e é o erro `protect_conflict`. `--colors N` com uma paleta dá
 N cores da própria paleta (as protegidas e o preto do contorno entram sempre); se
 não cabem, é o erro `colors_budget`.

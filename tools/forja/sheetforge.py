@@ -86,7 +86,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     natives = [f.native for f in figures]
     if pal is None and opts.colors:
         pal = quantize.shared_palette(natives, opts.colors)
-    details = []
+    details, sources = [], [f.native for f in figures]
     for fig in figures:
         done, info = finish(fig.native, Options(**{**opts.__dict__, "fit": False}), contract, pal)
         fig.native = done
@@ -101,12 +101,18 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     pivot = pivot or (canvas[0] // 2, canvas[1] - 1)
     frames, placed = sheet.frames(figures, canvas, pivot, anchor, align)
     fixes = {}
+    guarded = [guard.pixels(opts.protect, s.size) for s in sources]
+    keep = frozenset().union(*[guard.frame_pixels(g, guard.placed(d, p["offset"]))
+                               for g, d, p in zip(guarded, details, placed)])
     if sopts.deflicker:
-        frames, flicker = temporal.stabilize(frames, sopts.deflicker, sopts.static, sopts.actions)
+        frames, flicker = temporal.stabilize(frames, sopts.deflicker, sopts.static, sopts.actions, keep)
         fixes["deflicker"] = {"changed": len(flicker["changed"]), "counts": flicker["counts"],
                               "static": flicker["static"], "actions": flicker["actions"], "note": flicker["note"]}
     if sopts.lock:
         frames, fixes["lock"] = motion.lock(frames, sopts.lock)
+    for frame, src, g, info, place_info in zip(frames, sources, guarded, details, placed):
+        if g:
+            info["protect"].update(guard.verify(frame, src, g, guard.placed(info, place_info["offset"])))
     tags, durations = _timeline(sopts.tags, len(frames))
     for h in sopts.holds or []:
         if h.get("ms") and 0 <= h["frame"] < len(durations):

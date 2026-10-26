@@ -27,7 +27,7 @@ from PIL import Image
 from . import color, masks
 from .imageops import from_grid, grid as to_grid
 
-STATUSES = ("review", "motion", "expected", "inconclusive")
+STATUSES = ("review", "motion", "expected", "protected", "inconclusive")
 
 
 def _patch(rows, x: int, y: int) -> list:
@@ -72,8 +72,10 @@ def _changes(grids, threshold: float) -> list[tuple[int, int, int, str]]:
     return found
 
 
-def _classify(grids, change, static, actions) -> str:
+def _classify(grids, change, static, actions, keep=frozenset()) -> str:
     i, x, y, _ = change
+    if (x, y) in keep:
+        return "protected"
     if (x, y) in actions:
         return "expected"
     if moved(grids[i - 1], grids[i], x, y):
@@ -82,11 +84,13 @@ def _classify(grids, change, static, actions) -> str:
 
 
 def diagnose(frames: list[Image.Image], threshold: float = 0.05, static=None, actions=None,
-             limit: int = 200) -> dict:
-    """Os candidatos a cintilacao de uma sequencia, cada um com o seu estado. Nao muda nenhum pixel."""
+             limit: int = 200, keep=frozenset()) -> dict:
+    """Os candidatos a cintilacao de uma sequencia, cada um com o seu estado. Nao muda nenhum pixel.
+
+    `keep`: pixels protegidos (do quadro), que nunca se estabilizam."""
     grids = [to_grid(f) for f in frames]
     zone, acts = _boxes(static), _boxes(actions)
-    cands = [{"frame": c[0], "at": [c[1], c[2]], "kind": c[3], "status": _classify(grids, c, zone, acts)}
+    cands = [{"frame": c[0], "at": [c[1], c[2]], "kind": c[3], "status": _classify(grids, c, zone, acts, keep)}
              for c in _changes(grids, threshold)]
     counts = Counter(c["status"] for c in cands)
     return {"threshold": threshold, "static": [list(b) for b in static or []],
@@ -102,16 +106,16 @@ def _note(counts: Counter, has_static: bool) -> str:
 
 
 def stabilize(frames: list[Image.Image], threshold: float = 0.05, static=None,
-              actions=None) -> tuple[list[Image.Image], dict]:
+              actions=None, keep=frozenset()) -> tuple[list[Image.Image], dict]:
     """Corrige so os candidatos `review`, contra o quadro anterior ja corrigido; diz o que mudou e onde."""
     grids = [to_grid(f) for f in frames]
-    report = diagnose(frames, threshold, static, actions)
+    report = diagnose(frames, threshold, static, actions, keep=keep)
     zone, acts = _boxes(static), _boxes(actions)
     changed = []
     if zone:
         for i in range(1, len(grids)):
             for c in _changes(grids[max(0, i - 1):i + 2], threshold):
-                if c[0] != 1 or _classify(grids[max(0, i - 1):i + 2], c, zone, acts) != "review":
+                if c[0] != 1 or _classify(grids[max(0, i - 1):i + 2], c, zone, acts, keep) != "review":
                     continue
                 x, y = c[1], c[2]
                 grids[i][y][x] = grids[i - 1][y][x]

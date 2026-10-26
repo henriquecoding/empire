@@ -45,6 +45,8 @@ def validate(plan: dict, master: Palette, names: set[str]) -> list[str]:
             errors.append(f"regiao {name!r} nao esta na observacao")
         if name in lock:
             errors.append(f"{name}: presa e editavel ao mesmo tempo")
+        if spec.get("group") and not spec.get("ramp"):
+            errors.append(f"{name}: agrupar pede uma rampa declarada (sem rampa a regiao nao muda)")
         for h in spec.get("ramp", []):
             if color.parse_hex(h) not in master:
                 errors.append(f"{name}: {h} nao esta na paleta mestra {master.name or ''}".rstrip())

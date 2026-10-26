@@ -52,10 +52,11 @@ def frames(figures: list[Figure], canvas: tuple[int, int], pivot: tuple[int, int
                 target[1] += lift
             frame, clipped = place(f.native, canvas, (0, 0), tuple(target))
             info = {"origin": list(f.origin), "lift": ground - feet[i][1] - (lift if align == "contact"
-                                                                               and 0 < lift <= 1 else 0)}
+                                                                               and 0 < lift <= 1 else 0),
+                    "offset": list(target)}
         else:
             frame, clipped = place(f.native, canvas, point, pivot)
-            info = {"origin": None, "lift": 0}
+            info = {"origin": None, "lift": 0, "offset": [pivot[0] - point[0], pivot[1] - point[1]]}
         out.append(frame)
         report.append({"frame": i, "source_box": list(f.box), "native_size": list(f.native.size),
                        "period": round(f.period, 3), "purity": round(f.purity, 3), "anchor": list(point),

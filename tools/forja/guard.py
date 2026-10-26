@@ -64,6 +64,18 @@ def final_xy(xy, info: dict) -> tuple[int, int]:
     return xy[0] * k - sx + dx, xy[1] * k - sy + dy
 
 
+def placed(info: dict, offset) -> dict:
+    """O mapeamento de `info` com a figura deslocada `offset` dentro do quadro de uma prancha."""
+    return {**info, "fit": {"pivot": list(offset), "anchor": [0, 0]}}
+
+
+def frame_pixels(guarded, info: dict) -> frozenset:
+    """Os pixels de um quadro (ou PNG final) que os pixels protegidos ocupam."""
+    k = info.get("cluster_upscale", 1)
+    return frozenset((x + i, y + j) for p in guarded for x, y in [final_xy(p, info)]
+                     for j in range(k) for i in range(k))
+
+
 def verify(final: Image.Image, source: Image.Image, guarded, info: dict) -> dict:
     """E(P): quantos pixels protegidos nao chegaram iguais ao PNG final (cortados pela tela contam)."""
     k = info.get("cluster_upscale", 1)
