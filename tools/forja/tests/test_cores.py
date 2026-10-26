@@ -8,10 +8,11 @@ import contextlib
 import io
 import json
 import unittest
+from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from tools.forja import cli, equipment, mcp_server
+from tools.forja import cli, clusters, equipment, mcp_server
 from tools.forja.imageops import flat
 from tools.forja.tests.helpers import tempdir
 
@@ -101,6 +102,33 @@ class CoresTest(unittest.TestCase):
 
     def test_mcp_lists_the_colour_tool(self):
         self.assertIn("forja_cores", {t["name"] for t in mcp_server.tools()})
+
+
+RESEARCH = Path(__file__).resolve().parents[3] / "docs/art/research/2026-10-25-forja-pixels-cores"
+
+
+class ArcherColourProofTest(unittest.TestCase):
+    """A prova do FORJA-04 (docs/art/research/2026-10-25-forja-pixels-cores): os numeros que o README cita."""
+
+    def test_the_cast_matches_the_package_measurements(self):
+        want = json.loads((RESEARCH / "pacote/evidencias/resultados.json").read_text(encoding="utf-8"))["assets"]
+        for name in ("rei", "arqueiro", "escudeiro"):
+            img = Image.open(RESEARCH / "elenco" / name / f"{name}.png").convert("RGBA")
+            self.assertEqual(clusters.stats(img), want[name]["stats"], name)
+
+    def test_the_archer_plan_changes_only_the_cloth_trousers_and_lines(self):
+        base = RESEARCH / "arqueiro"
+        res = cli.run(["cores", str(RESEARCH / "elenco/arqueiro/arqueiro.png"), "--observation",
+                       str(base / "observacao-cores.json"), "--plan", str(base / "plano-cores.json"), "--kind",
+                       "royal_80", "-o", str(tempdir())])
+        self.assertTrue(res["ok"])
+        self.assertEqual((res["changed_pixels"], res["locked"], res["outside_zone_changed"], res["merged"]),
+                         (44, {"pixels": 1054, "changed": 0}, 0, 1))
+        self.assertEqual(res["remap"], {"hood": 0, "tunic": 7, "trousers": 5, "lines": 31})
+        fig = res["metrics"]["figure"]
+        self.assertEqual((fig["components8"], fig["singletons8"], fig["U"], fig["colors"]),
+                         ([321, 277], [144, 116], [80, 50], [37, 34]))
+        self.assertEqual(res["lint"]["after"]["errors"], 0)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,51 @@
+{
+ "schema": "forja.cores/1",
+ "subject": "arqueiro royal_80 recuperado: agrupar a cor do pano verde (capuz e tunica) e das calcas e levar o quase-preto das linhas ao preto do contrato, com o rosto, os bracos, o arco e a corda presos",
+ "palette": "empire",
+ "dither": "none",
+ "budget": null,
+ "lock": [
+  "face",
+  "eye",
+  "mouth",
+  "arm_back",
+  "arm_front",
+  "bow_zone",
+  "forearm_front",
+  "hand_front",
+  "bow_main.limb",
+  "bow_main.grip",
+  "bow_main.string"
+ ],
+ "regions": {
+  "hood": {
+   "ramp": [
+    "#2B3421",
+    "#416E4E",
+    "#899543"
+   ],
+   "group": true
+  },
+  "tunic": {
+   "ramp": [
+    "#2B3421",
+    "#416E4E",
+    "#899543"
+   ],
+   "group": true
+  },
+  "trousers": {
+   "ramp": [
+    "#232323",
+    "#563F2D"
+   ],
+   "group": true
+  },
+  "lines": {
+   "ramp": [
+    "#000000"
+   ]
+  }
+ },
+ "notes": "Verdes: a rampa sao os tres verdes que o gerador ja usava (escuro, meio, claro), todos da paleta mestra; os dois verdes raros (#627331, 1 px; #8FA647, 5 px) e o cinzento solto vao para o tom mais perto da rampa. Tres tons e nao dois: reduzir a dois e decisao de arte (Q-273). Calcas: dois tons (Asset Bible §1), o terceiro (#332F2F, 5 px) a 0,05 do escuro. Linhas: o contrato e preto puro no contorno e no detalhe interno (Asset Bible §1); o #0B0B0B e o preto quantizado (outline.normalize so trata a borda); nas zonas presas fica como esta e o conflito e escrito. Proposta, nao aprovacao."
+}

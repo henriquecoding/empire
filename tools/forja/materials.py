@@ -114,8 +114,9 @@ def _decide(rows, labels, cand: dict, pixels, ramp, locked, touched, outline) ->
         return None, {**note, "why": "nenhuma cor da rampa a volta"}
     (top, n), total = votes.most_common(1)[0], len(ring)
     if n * 2 <= total:
-        return None, {**note, "why": "vizinhanca dividida: escolher a olho",
-                      "alternatives": [color.to_hex(c) for c, _ in votes.most_common(2)]}
+        why = ("vizinhanca dividida: escolher a olho" if len(votes) > 1 else
+               "cercado sobretudo pelo contorno ou por outra regiao: escolher a olho")
+        return None, {**note, "why": why, "alternatives": [color.to_hex(c) for c, _ in votes.most_common(2)]}
     if len({labels[p] for p, c in ring if c == top}) > 1:
         return None, {**note, "why": f"separa duas massas de {color.to_hex(top)}: pinta-lo juntava o que o "
                                      "desenho separa"}
@@ -151,7 +152,8 @@ def separation(before: Image.Image, after: Image.Image, regions: dict, kinds: di
     """C(R): em cada par de regioes vizinhas, as fronteiras de pixel (N4) com cores diferentes, antes e depois.
 
     Um pixel em varias regioes pertence a mais pequena (o olho dentro do rosto). Com `kinds` (regiao ->
-    material), dois lados do mesmo material declarado nao contam: ali a fronteira nao e uma separacao."""
+    material), dois lados do mesmo material declarado nao contam (ali a fronteira nao e uma separacao), nem uma
+    regiao de material `line`: o traco nao e um material, e a estrutura dele confere-se no contorno do lint."""
     owner = {}
     for name in sorted(regions, key=lambda n: (len(regions[n]), n)):
         for p in regions[name]:
@@ -161,7 +163,8 @@ def separation(before: Image.Image, after: Image.Image, regions: dict, kinds: di
     for p, mine in owner.items():
         for q in ((p[0] + 1, p[1]), (p[0], p[1] + 1)):
             other = owner.get(q)
-            if other is None or other == mine or (kinds and kinds.get(mine) and kinds.get(mine) == kinds.get(other)):
+            if other is None or other == mine or (kinds and (kinds.get(mine) and kinds.get(mine) == kinds.get(other)
+                                                              or "line" in (kinds.get(mine), kinds.get(other)))):
                 continue
             rec = pairs.setdefault(tuple(sorted((mine, other))), [0, 0, 0])
             rec[0] += 1
@@ -193,10 +196,18 @@ def apply(image: Image.Image, plan: dict, regions: dict, master: Palette,
     report = {"changed_pixels": len(changed), "outside_zone_changed": sum(p not in zone for p in changed),
               "locked": {"pixels": len(locked), "changed": sum(p in locked for p in changed)},
               "alpha_identical": image.getchannel("A").tobytes() == out.getchannel("A").tobytes(),
-              "remap": remapped, "regroup": grouped, "metrics": clusters.compare(before, after),
+              "remap": remapped, "regroup": grouped, "metrics": compare(before, after),
               "separation": sep, "status": {"before": before["status"], "after": after["status"]},
               "counts": {"before": before["counts"], "after": after["counts"]},
               "before": before, "after": after}
     report["ok"] = (not report["outside_zone_changed"] and not report["locked"]["changed"]
                     and report["alpha_identical"] and not any(s["lost"] for s in sep))
     return out, report
+
+
+def compare(before: dict, after: dict) -> dict:
+    """Antes e depois por regiao (e na figura): o que cada metrica fez."""
+    keys = ("area", "colors", "components8", "singletons8", "S8", "F", "U")
+    names = ["figure"] + [n for n in before["regions"] if n in after["regions"]]
+    pick = lambda d, n: d["figure"] if n == "figure" else d["regions"][n]  # noqa: E731
+    return {n: {k: [pick(before, n)[k], pick(after, n)[k]] for k in keys} for n in names}

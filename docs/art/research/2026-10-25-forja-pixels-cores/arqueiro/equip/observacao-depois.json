@@ -1,0 +1,122 @@
+{
+ "schema": "forja.observation/1",
+ "image_sha256": "fc579a59789cd603c8958c71fef1df5869d2df4576bab474d2629054b79b172e",
+ "observer": {
+  "author": "Claude (agente de codigo, sessao FORJA-03) (seletores reaplicados)",
+  "method": "marcacao manual por caixa e cores sobre o PNG recuperado a 1x, conferida na ampliacao 14x; reaplicados ao candidato das cores",
+  "date": "2026-10-25",
+  "source_observation": "docs/art/research/2026-10-24-forja-armas/arqueiro/observacao.json"
+ },
+ "regions": {
+  "bow_main.string": {
+   "box": [
+    55,
+    12,
+    64,
+    70
+   ],
+   "colors": [
+    "#E5D395",
+    "#F2DEB7"
+   ],
+   "uncertainty": "baixa",
+   "note": "a linha clara entre as pontas do arco"
+  },
+  "bow_main.limb": {
+   "box": [
+    56,
+    5,
+    73,
+    74
+   ],
+   "colors": [
+    "#915F46",
+    "#946934",
+    "#7D4433",
+    "#763728",
+    "#FFB416",
+    "#F3B022"
+   ],
+   "exclude": {
+    "box": [
+     56,
+     38,
+     64,
+     48
+    ]
+   },
+   "uncertainty": "baixa",
+   "note": "a madeira e as amarras douradas das pontas; sem a bracadeira"
+  },
+  "bow_main.grip": {
+   "box": [
+    64,
+    35,
+    72,
+    50
+   ],
+   "colors": [
+    "#915F46",
+    "#946934",
+    "#7D4433",
+    "#763728",
+    "#FFB416",
+    "#F3B022",
+    "#6C3206",
+    "#4F2E10",
+    "#452D21"
+   ],
+   "uncertainty": "media",
+   "note": "as amarras acima e abaixo da mao e os castanhos escuros entre os dedos, lidos como a empunhadura"
+  },
+  "hand_front": {
+   "box": [
+    63,
+    38,
+    72,
+    48
+   ],
+   "colors": [
+    "#EAA55A",
+    "#E3BC88",
+    "#D97C2B",
+    "#F19312",
+    "#FE9505"
+   ],
+   "uncertainty": "baixa",
+   "note": "a mao da frente fechada no arco"
+  },
+  "forearm_front": {
+   "box": [
+    56,
+    38,
+    64,
+    48
+   ],
+   "exclude": {
+    "box": [
+     56,
+     38,
+     64,
+     48
+    ],
+    "colors": [
+     "#E5D395",
+     "#F2DEB7"
+    ]
+   },
+   "uncertainty": "baixa",
+   "note": "a bracadeira e o antebraco da frente, por baixo da corda"
+  }
+ },
+ "anchors": {
+  "bow_main.nock_top": [
+   62,
+   13
+  ],
+  "bow_main.nock_bottom": [
+   57,
+   68
+  ]
+ }
+}

@@ -15,9 +15,9 @@ regra de arte; o que nao se mede (planos, banding, rampas, tempo) diz-se em `not
 """
 from __future__ import annotations
 
-from collections import Counter, deque
+from collections import Counter
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 from . import color
 from .imageops import grid as to_grid
@@ -25,6 +25,7 @@ from .imageops import grid as to_grid
 N8 = ((-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1))
 N4 = ((0, -1), (-1, 0), (1, 0), (0, 1))
 SMALL = 3
+EDGE_CAP = 32
 ROLES = ("eye", "mouth", "brow", "nose", "highlight", "seam", "string", "tip", "buckle", "particle", "flower",
          "spark", "accent")
 STATUSES = ("review", "protected", "expected", "inconclusive")
@@ -37,28 +38,53 @@ def _opaque(p) -> bool:
     return p[3] >= 128
 
 
+def _all(rows, offsets) -> list[tuple[tuple[int, int, int], list[tuple[int, int]]]]:
+    """Os componentes da imagem inteira, sobre inteiros e um bytearray (o caminho rapido de `components`)."""
+    h, w = len(rows), len(rows[0]) if rows else 0
+    flat = [(p[0] << 16 | p[1] << 8 | p[2]) if p[3] >= 128 else -1 for row in rows for p in row]
+    seen, out = bytearray(w * h), []
+    for i, c in enumerate(flat):
+        if c < 0 or seen[i]:
+            continue
+        seen[i], stack, members = 1, [i], []
+        while stack:
+            j = stack.pop()
+            members.append((j % w, j // w))
+            x, y = j % w, j // w
+            for dx, dy in offsets:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < w and 0 <= ny < h:
+                    k = ny * w + nx
+                    if not seen[k] and flat[k] == c:
+                        seen[k] = 1
+                        stack.append(k)
+        out.append(((c >> 16, c >> 8 & 255, c & 255), members))
+    return out
+
+
 def components(rows, keep=None, offsets=N8) -> list[tuple[tuple[int, int, int], list[tuple[int, int]]]]:
-    """Componentes da mesma cor opaca, so com os pixels de `keep` (None: todos)."""
+    """Componentes da mesma cor opaca, so com os pixels de `keep` (None: todos). Com `keep`, so se anda nele."""
+    if keep is None:
+        return _all(rows, offsets)
     h, w = len(rows), len(rows[0]) if rows else 0
     seen: set = set()
     out = []
-    for y in range(h):
-        for x in range(w):
-            if (x, y) in seen or not _opaque(rows[y][x]) or (keep is not None and (x, y) not in keep):
-                continue
-            k = rows[y][x][:3]
-            stack, members = [(x, y)], []
-            seen.add((x, y))
-            while stack:
-                cx, cy = stack.pop()
-                members.append((cx, cy))
-                for dx, dy in offsets:
-                    nx, ny = cx + dx, cy + dy
-                    if 0 <= nx < w and 0 <= ny < h and (nx, ny) not in seen and _opaque(rows[ny][nx]) \
-                            and rows[ny][nx][:3] == k and (keep is None or (nx, ny) in keep):
-                        seen.add((nx, ny))
-                        stack.append((nx, ny))
-            out.append((k, members))
+    for x, y in sorted(keep, key=lambda p: (p[1], p[0])):
+        if (x, y) in seen or not (0 <= x < w and 0 <= y < h) or not _opaque(rows[y][x]):
+            continue
+        k = rows[y][x][:3]
+        stack, members = [(x, y)], []
+        seen.add((x, y))
+        while stack:
+            cx, cy = stack.pop()
+            members.append((cx, cy))
+            for dx, dy in offsets:
+                nx, ny = cx + dx, cy + dy
+                if 0 <= nx < w and 0 <= ny < h and (nx, ny) not in seen and _opaque(rows[ny][nx]) \
+                        and rows[ny][nx][:3] == k and (nx, ny) in keep:
+                    seen.add((nx, ny))
+                    stack.append((nx, ny))
+        out.append((k, members))
     return out
 
 
@@ -87,20 +113,25 @@ def stats(image: Image.Image) -> dict:
             "alpha_orphans8": lonely}
 
 
-def edge_distance(rows) -> dict[tuple[int, int], int]:
-    """A distancia (8 vizinhos) de cada pixel opaco ao vazio mais perto; fora da tela conta como vazio."""
-    dist, queue = {}, deque()
-    for y, row in enumerate(rows):
-        for x, p in enumerate(row):
-            if _opaque(p) and any(q is None or not _opaque(q) for _, _, q in _around(rows, x, y)):
-                dist[(x, y)] = 1
-                queue.append((x, y))
-    while queue:
-        x, y = queue.popleft()
-        for nx, ny, q in _around(rows, x, y):
-            if q is not None and _opaque(q) and (nx, ny) not in dist:
-                dist[(nx, ny)] = dist[(x, y)] + 1
-                queue.append((nx, ny))
+def edge_distance(image: Image.Image, wanted, cap: int = EDGE_CAP) -> dict[tuple[int, int], int]:
+    """A distancia (8 vizinhos) ao vazio mais perto, so para os pixels de `wanted`; fora da tela conta como vazio.
+
+    Erosoes sucessivas do alfa (MinFilter 3x3, em C): o pixel que some na erosao d esta a d do vazio. Mais fundo
+    que `cap` fica `cap` (quer dizer `cap` ou mais): num sprite a borda esta sempre mais perto."""
+    w, h = image.size
+    mask = Image.new("L", (w + 2, h + 2), 0)
+    mask.paste(image.getchannel("A").point(lambda a: 255 if a >= 128 else 0), (1, 1))
+    todo, dist, d = set(wanted), {}, 0
+    while todo:
+        d += 1
+        mask = mask.filter(ImageFilter.MinFilter(3))
+        px = mask.load()
+        gone = {p for p in todo if not px[p[0] + 1, p[1] + 1]}
+        dist.update((p, d) for p in gone)
+        todo -= gone
+        if d >= cap:
+            dist.update((p, cap) for p in todo)
+            break
     return dist
 
 
@@ -149,14 +180,31 @@ def candidate(rows, rgb, members, regions: dict, protected, dist) -> dict:
             "regions": inside, "status": status, "reason": reason}
 
 
-def metrics(rows, keep=None, review_here: int = 0, small: int = SMALL) -> dict:
+def _single4_all(rows) -> int:
+    w = len(rows[0]) if rows else 0
+    flat = [(p[0] << 16 | p[1] << 8 | p[2]) if p[3] >= 128 else -1 for row in rows for p in row]
+    n, size = 0, len(flat)
+    for i, c in enumerate(flat):
+        x = i % w
+        n += c >= 0 and not ((x and flat[i - 1] == c) or (x < w - 1 and flat[i + 1] == c)
+                             or (i >= w and flat[i - w] == c) or (i + w < size and flat[i + w] == c))
+    return n
+
+
+def _single4(rows, x: int, y: int, keep) -> bool:
+    h, w, k = len(rows), len(rows[0]), rows[y][x][:3]
+    return not any(0 <= x + dx < w and 0 <= y + dy < h and _opaque(rows[y + dy][x + dx])
+                   and rows[y + dy][x + dx][:3] == k and (keep is None or (x + dx, y + dy) in keep) for dx, dy in N4)
+
+
+def metrics(rows, keep=None, review_here: int = 0, small: int = SMALL, g8=None) -> dict:
     """Area, cores, componentes N8 por 100 pixels (F), fracao em singletons N8 (S8) e candidatos sem papel (U)."""
-    g8 = components(rows, keep)
-    g4 = components(rows, keep, N4)
+    g8 = components(rows, keep) if g8 is None else g8
     area = sum(len(m) for _, m in g8)
     single8 = sum(len(m) == 1 for _, m in g8)
+    single4 = _single4_all(rows) if keep is None else sum(_single4(rows, x, y, keep) for _, m in g8 for x, y in m)
     out = {"area": area, "colors": len({k for k, _ in g8}), "components8": len(g8),
-           "singletons4": sum(len(m) == 1 for _, m in g4), "singletons8": single8,
+           "singletons4": single4, "singletons8": single8,
            "interior_singletons8": sum(len(m) == 1 and _interior(rows, *m[0]) for _, m in g8),
            "small_components8": sum(len(m) <= small for _, m in g8), "U": review_here}
     out["S8"] = round(single8 / area, 4) if area else "n/a"
@@ -172,12 +220,13 @@ def diagnose(image: Image.Image, regions: dict | None = None, protected=frozense
     sob protecao. Sem regioes, a figura e a unica regiao conhecida (o alfa) e o material e desconhecido."""
     rows = to_grid(image)
     known = _check(regions)
-    dist = edge_distance(rows)
-    cands = [candidate(rows, k, m, known, frozenset(protected), dist)
-             for k, m in components(rows) if len(m) <= small]
+    g8 = components(rows)
+    small_ones = [(k, m) for k, m in g8 if len(m) <= small]
+    dist = edge_distance(image.convert("RGBA"), [p for _, m in small_ones for p in m])
+    cands = [candidate(rows, k, m, known, frozenset(protected), dist) for k, m in small_ones]
     counts = Counter(c["status"] for c in cands)
     review = [c for c in cands if c["status"] == "review"]
-    figure = metrics(rows, None, len(review), small)
+    figure = metrics(rows, None, len(review), small, g8)
     per_region = {n: metrics(rows, r["pixels"], sum(n in c["regions"] for c in review), small)
                   for n, r in known.items()}
     if not figure["area"]:
@@ -197,11 +246,3 @@ def summary(diag: dict, n: int = 8) -> dict:
     """O que o lint leva: estado, contagens, a figura e onde estao os primeiros candidatos a rever."""
     return {"status": diag["status"], "counts": diag["counts"], "figure": diag["figure"],
             "where": [c["at"] for c in diag["candidates"] if c["status"] == "review"][:n]}
-
-
-def compare(before: dict, after: dict) -> dict:
-    """Antes e depois por regiao (e na figura): o que cada metrica fez."""
-    keys = ("area", "colors", "components8", "singletons8", "S8", "F", "U")
-    names = ["figure"] + [n for n in before["regions"] if n in after["regions"]]
-    pick = lambda d, n: d["figure"] if n == "figure" else d["regions"][n]  # noqa: E731
-    return {n: {k: [pick(before, n)[k], pick(after, n)[k]] for k in keys} for n in names}

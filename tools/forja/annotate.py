@@ -73,12 +73,13 @@ def candidates(image: Image.Image, diag: dict, k: int = 8) -> Image.Image:
     """Os fragmentos de cor do diagnostico (clusters.py), contornados pela cor do estado, com a contagem."""
     groups = {s: frozenset((x, y) for c in diag["candidates"] if c["status"] == s for x, y in c["pixels"])
               for s in STATUS_TINTS}
-    named = {f"{s}: {diag['counts'].get(s, 0)}": groups[s] for s in STATUS_TINTS}
-    return overlay(image, named, {}, k, {f"{s}: {diag['counts'].get(s, 0)}": t for s, t in STATUS_TINTS.items()})
+    named = {f"{s}: {diag['counts'].get(s, 0)} fragmentos": groups[s] for s in STATUS_TINTS}
+    return overlay(image, named, {}, k, {f"{s}: {diag['counts'].get(s, 0)} fragmentos": t
+                                         for s, t in STATUS_TINTS.items()})
 
 
 def diff(before: Image.Image, after: Image.Image) -> Image.Image:
-    """O que mudou, a cor nova; o que ficou, apagado em cinzento escuro (o alfa e o de antes)."""
+    """Onde mudou, a magenta (a ciano se ficou vazio); o que ficou, em cinzento, so para dar o lugar."""
     a, b = before.convert("RGBA"), after.convert("RGBA")
     out = Image.new("RGBA", a.size)
     pa, pb, po = a.load(), b.load(), out.load()
@@ -86,8 +87,8 @@ def diff(before: Image.Image, after: Image.Image) -> Image.Image:
         for x in range(a.width):
             p, q = pa[x, y], pb[x, y]
             if p != q:
-                po[x, y] = q if q[3] >= 128 else (255, 0, 255, 255)
+                po[x, y] = (255, 0, 255, 255) if q[3] >= 128 else (0, 255, 255, 255)
             elif p[3] >= 128:
-                g = round((0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2]) * 0.35)
+                g = 70 + round((0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2]) * 0.3)
                 po[x, y] = (g, g, g, 255)
     return out

@@ -125,6 +125,14 @@ class SeparationTest(unittest.TestCase):
         self.assertEqual((lost[0]["distinct_before"], lost[0]["distinct_after"]), (12, 0))
         self.assertTrue(lost[0]["lost"])
 
+    def test_same_material_and_line_work_are_not_separations(self):
+        before = field()
+        ImageDraw.Draw(before).rectangle((6, 0, 11, 11), fill=(*BROWN, 255))
+        left = frozenset(p for p in everything(before) if p[0] < 6)
+        right = frozenset(p for p in everything(before) if p[0] >= 6)
+        for kinds in ({"a": "cloth", "b": "cloth"}, {"a": "line", "b": "skin"}):
+            self.assertEqual(materials.separation(before, field(), {"a": left, "b": right}, kinds), [])
+
 
 if __name__ == "__main__":
     unittest.main()

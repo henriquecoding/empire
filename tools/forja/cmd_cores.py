@@ -25,8 +25,19 @@ def _raster(image, kind: str | None) -> dict | None:
             "rules": sorted({f["rule"] for f in report["findings"]})}
 
 
+def _dump(obj, depth: int = 0) -> str:
+    """JSON legivel por cima e compacto por baixo: um candidato, uma linha."""
+    if depth >= 3 or not isinstance(obj, (dict, list)) or not obj:
+        return json.dumps(obj, ensure_ascii=False, separators=(", ", ": "))
+    pad = " " * (depth + 1)
+    items = ([f"{pad}{json.dumps(k, ensure_ascii=False)}: {_dump(v, depth + 1)}" for k, v in obj.items()]
+             if isinstance(obj, dict) else [pad + _dump(v, depth + 1) for v in obj])
+    open_, close = "{}" if isinstance(obj, dict) else "[]"
+    return open_ + "\n" + ",\n".join(items) + "\n" + " " * depth + close
+
+
 def _write(path: Path, data: dict) -> str:
-    path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(_dump(data) + "\n", encoding="utf-8")
     return str(path)
 
 
@@ -66,9 +77,8 @@ def do_cores(args) -> dict:
         out / f"{stem}_cores_compare.png")
     locked = frozenset().union(*[regions[n]["pixels"] for n in plan.get("lock", [])])
     zone = frozenset().union(*[regions[n]["pixels"] for n in plan.get("regions", {})]) - locked
-    annotate.overlay(image, {f"preso ({len(locked)} px)": locked, f"editavel ({len(zone)} px)": zone}, {}, k,
-                     {f"preso ({len(locked)} px)": (72, 168, 255), f"editavel ({len(zone)} px)": (90, 230, 130)}
-                     ).save(out / f"{stem}_cores_zonas.png")
+    annotate.overlay(image, {"preso": locked, "editavel": zone}, {}, k,
+                     {"preso": (72, 168, 255), "editavel": (90, 230, 130)}).save(out / f"{stem}_cores_zonas.png")
     annotate.candidates(image, rep["before"], k).save(out / f"{stem}_cores_candidatos_antes.png")
     annotate.candidates(result, rep["after"], k).save(out / f"{stem}_cores_candidatos_depois.png")
     files = {"png": str(out / f"{stem}_cores.png"), "preview": str(out / f"{stem}_cores@{k}x.png"),
@@ -76,7 +86,11 @@ def do_cores(args) -> dict:
              "candidates_before": str(out / f"{stem}_cores_candidatos_antes.png"),
              "candidates_after": str(out / f"{stem}_cores_candidatos_depois.png")}
     after_lint = _raster(result, args.kind)
-    files["json"] = _write(out / f"{stem}_cores.json", {**head, "plan": plan, "lint_after": after_lint, **rep})
+    remaining = [c for c in rep["after"]["candidates"] if c["status"] in ("review", "inconclusive")]
+    written = {k: v for k, v in rep.items() if k not in ("before", "after")}
+    files["json"] = _write(out / f"{stem}_cores.json", {**head, "plan": plan, "lint_after": after_lint, **written,
+                                                        "remaining": remaining,
+                                                        "not_measured": rep["after"]["not_measured"]})
     lost = [s["pair"] for s in rep["separation"] if s["lost"]]
     return {"ok": rep["ok"] and (after_lint is None or after_lint["ok"]), "changed_pixels": rep["changed_pixels"],
             "locked": rep["locked"], "outside_zone_changed": rep["outside_zone_changed"],
