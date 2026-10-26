@@ -1,0 +1,33 @@
+{
+  "total": 200,
+  "obtidas": 180,
+  "breves": 20,
+  "sem_transcricao": 20,
+  "pendentes": 0,
+  "fichamentos": 40,
+  "por_secao": {
+    "videos": {
+      "total": 90,
+      "obtidas": 77,
+      "breves": 3,
+      "sem_transcricao": 13
+    },
+    "shorts": {
+      "total": 105,
+      "obtidas": 98,
+      "breves": 17,
+      "sem_transcricao": 7
+    },
+    "streams": {
+      "total": 5,
+      "obtidas": 5,
+      "breves": 0,
+      "sem_transcricao": 0
+    }
+  },
+  "idiomas": {
+    "pt": 10,
+    "pt-BR": 35,
+    "en": 135
+  }
+}

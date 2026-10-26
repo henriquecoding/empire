@@ -17,6 +17,10 @@ achou nove falhas no primeiro corte; os reparos e o que ficou aberto estão em
 O [relatório de 24–25/10](research/2026-10-24-forja-armas/README.md) mostrou que
 um sprite pode cumprir o contrato e ter duas guardas na espada: a Forja passou a
 julgar o equipamento à parte ([ADR 0091](../adr/0091-a-forja-julga-o-equipamento.md)).
+O [relatório de 25/10](research/2026-10-25-forja-pixels-cores/README.md) mostrou que
+16 pontos de cor espalhados e o mesmo histograma num bloco davam as mesmas
+respostas: a Forja passou a ver a cor no espaço, a proteger até ao PNG final e a
+não congelar o movimento ([ADR 0092](../adr/0092-a-forja-ve-a-cor-no-espaco.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -175,8 +179,8 @@ forja equip sprite.png --manifest manifesto.json --observation observacao.json -
 forja line  sprite.png --manifest manifesto.json --observation observacao.json --kind royal_80 --item bow_main -o build/forja/x
 ```
 
-O relatório traz sete vereditos que não se somam: `raster_contract`,
-`equipment_geometry`, `functional_pose`, `identity_consistency`,
+O relatório traz oito vereditos que não se somam: `raster_contract`,
+`color_coherence` (ADR 0092), `equipment_geometry`, `functional_pose`, `identity_consistency`,
 `temporal_consistency`, `artistic_approval` e `runtime_integration`. O que não
 foi medido fica `not_evaluated` (nunca `pass`); uma parte possivelmente tapada
 fica `inconclusive`; uma região com incerteza alta não deixa passar; a
@@ -195,6 +199,60 @@ espada com a mão, o escudo com a pega e o antebraço); só animar depois de uma
 prova estática convincente. A prova do [arqueiro](research/2026-10-24-forja-armas/README.md)
 é o exemplo completo.
 
+## A cor no espaço: o que o lint raster não via
+
+Paleta certa e nenhum pixel sem vizinho opaco não querem dizer cor organizada: um
+ponto de cor cercado de pixels opacos passava sem aviso, e 16 pontos espalhados
+davam as mesmas respostas que os mesmos 16 pixels num bloco
+([fixtures](research/2026-10-25-forja-pixels-cores/pacote/evidencias/scatter.png)).
+A Forja conta agora a cor por componentes ligados, com 4 e com 8 vizinhos (com 4,
+uma diagonal de 1 px parte-se em pedaços), e cada componente de 1–3 pixels é um
+candidato com descritores e um estado:
+
+| Estado | Quando |
+| --- | --- |
+| `protected` | toca a zona protegida (`--protect` ou as regiões presas de um plano) |
+| `expected` | está numa região com papel de acento declarado: `eye`, `mouth`, `brow`, `nose`, `highlight`, `seam`, `string`, `tip`, `buckle`, `particle`, `flower`, `spark`, `accent` |
+| `inconclusive` | ligado só pela diagonal (um traço: analisar, nunca apagar) ou numa região de incerteza alta |
+| `review` | fragmento sem papel conhecido: suspeita com evidência, não defeito confirmado |
+
+O lint traz este diagnóstico (`coherence`) e uma linha `info` (`fragments`) que não
+chumba nem entra no prompt; os vereditos ganham o eixo `color_coherence`. Por
+região: S8 (fração de pixels em singletons N8), F (componentes por 100 pixels) e U
+(fragmentos a rever); com área zero a taxa é `n/a`. O limite de 1–3 pixels é o
+ponto de partida do relatório, por calibrar (Q-281); nenhuma percentagem apaga
+pixels.
+
+```bash
+forja cores sprite.png --kind royal_80 -o build/forja/x                    # diagnóstico e imagem dos candidatos
+forja cores sprite.png --observation regioes.json --plan cores.json -o build/forja/x   # agrupar por região
+```
+
+A observação é a mesma `forja.observation/1` do equipamento (regiões marcadas numa
+imagem, com o hash dela), com `material` e `role` opcionais por região. O plano
+`forja.cores/1` diz que regiões ficam presas (`lock`), que rampa vale em cada região
+editável (contida na paleta mestra; sem rampa, a região não muda) e onde se agrupa
+(`group`, que pede uma rampa). Um teto global de cores e o dither num personagem são recusados. Um
+fragmento só se funde com as quatro provas locais do relatório: dentro da zona
+editável e longe do que está preso, o alfa igual, sem ser a cor do contorno nem um
+traço diagonal, sem juntar duas massas que o desenho separa, e na cor da rampa que
+tem a maioria estrita da vizinhança; na dúvida fica, com as alternativas escritas.
+O resultado prova E(P) = 0 (nada preso mudou), zero mudanças fora da zona, o alfa
+igual e C(R) (as fronteiras entre materiais diferentes continuam com cores
+diferentes), e escreve o candidato a 1× e a 8×, antes/depois/diferenças (a
+magenta), as zonas e os candidatos antes e depois. `ok` só prova o que não mudou;
+a leitura a 1× e no jogo é do dono. A prova do
+[arqueiro](research/2026-10-25-forja-pixels-cores/README.md#o-arqueiro-a-prova-pequena-da-22)
+é o exemplo completo.
+
+A proteção (`--protect` no `forge` e no `sheet`) vale até ao PNG final: repõe-se
+depois da paleta e do contorno, o contorno não entra num pixel vazio protegido e a
+garantia mede-se nas posições finais — numa prancha, em cada quadro exportado, depois
+do `--deflicker` (que não estabiliza um pixel protegido) e do `--lock`. Uma cor protegida que a paleta obrigatória
+não tem fica exata e é o erro `protect_conflict`. `--colors N` com uma paleta dá
+N cores da própria paleta (as protegidas e o preto do contorno entram sempre); se
+não cabem, é o erro `colors_budget`.
+
 ## Receitas por tipo de asset
 
 Os tipos (`--kind`) e os números de cada contrato vêm de
@@ -207,7 +265,7 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   personagem ou efeito, um pixel solto ou um furo de 1 px ficam e aparecem como
   candidatos no relatório (podem ser um olho, um brilho, um rebento); só o
   cenário os tira. Ruído de cor quase igual ao vizinho é alisado (`--noise 0`
-  desliga) e `--protect x0,y0,x1,y1` guarda uma caixa.
+  desliga) e `--protect x0,y0,x1,y1` guarda uma caixa até ao PNG final.
 - **Animação.** `prompt --tags walk` (ou `idle,walk`) pede a prancha com as
   contagens e notas da Animation Bible → `sheet`. A Forja conta as figuras
   reais contra as pedidas e **não inventa** um quadro em falta. Com o
@@ -223,7 +281,11 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   indícios de movimento (quadros todos iguais — único que obriga a gerar de novo
   —, repetidos sem declaração, salto sem intermédio, parte que some) e a
   aprovação do dono. Ordem e continuidade de braços e mãos só se veem a olho.
-  `--deflicker 0.05` prende cores que mudam quase nada; `--lock x0,y0,x1,y1`
+  `--deflicker 0.05` só corrige dentro de `--static x0,y0,x1,y1` (caixas
+  confirmadas paradas) e nunca em `--action` (o olho que pisca, a boca, a chama):
+  uma vizinhança deslocada é movimento e fica; sem `--static`, nada muda e o
+  relatório diz quantas mudanças ficaram por avaliar (o `drift_threshold` do
+  PixelLab compara com o primeiro quadro e não é este controlo); `--lock x0,y0,x1,y1`
   cola o rosto do quadro de referência em todos os quadros (o "fixed head" do
   PixelLab); `--mirror` exporta a esquerda como espelho, contado como espelho.
 - **Corrigir uma parte.** `forja inpaint sprite.png --box x0,y0,x1,y1 --change "…"`
@@ -269,8 +331,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `forge` | Uma figura gerada → sprite do contrato, com lint e relatório |
 | `sheet` | Prancha gerada → quadros alinhados e animação exportada |
 | `lint` | Conferir um PNG contra um contrato |
-| `clean` | Alfa binário, pixels soltos, furos, ruído de cor, cluster mínimo, pixel perfect |
-| `quantize` | Paleta (OKLab) ou N cores, dither ordenado opcional |
+| `clean` | Alfa binário, pixels soltos, furos, ruído de cor, cluster mínimo (8 vizinhos; `--connectivity 4` no cenário), pixel perfect |
+| `quantize` | Paleta (OKLab) ou N cores, dither ordenado opcional (`--strength 0` é sem dither) |
 | `outline` | Contorno exterior, interior ou seletivo; ou tirá-lo |
 | `fit` | Pousar na tela e no pivô do contrato |
 | `scale` | Ampliação inteira, Scale2x, rotação RotSprite, redução por voto |
@@ -280,6 +342,7 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `palette` | Mostrar, converter, extrair, rampa, fundir cores próximas |
 | `prompt` / `plan` / `generate` / `auto` / `inpaint` | O lado do gerador: pedir, planear sem rede, gerar com job e teto |
 | `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara |
+| `cores` | A cor no espaço: fragmentos N4/N8 e o estado de cada um; com plano, rampas por material e agrupamento só nas regiões editáveis |
 | `jobs` | Pedidos pagos de uma pasta: ver, retomar (só consulta), cancelar |
 | `prova` / `mcp` / `kinds` | A prova, o servidor MCP, os contratos |
 
@@ -298,7 +361,8 @@ cumpre, 1 quando há achados de erro e 2 quando o pedido é inválido.
 - **Fundo.** Alfa, chave (a cor mais longe da paleta do projeto, escolhida pelo
   prompt) ou fundo liso por enchimento a partir da borda, na resolução nativa.
 - **Cor.** OKLab para todas as distâncias; k-means sem sorteio; dither
-  posicional entre as duas cores mais próximas.
+  posicional entre as duas cores mais próximas. A distância perceptual não diz se
+  um pixel é pele, pano ou fundo: isso vem das regiões e das rampas (`cores`).
 - **Exportação.** `.aseprite` escrito pela especificação pública e relido pelo
   leitor do projeto (`tools/aseprite_source.py`); JSON no formato do CLI do
   Aseprite; `.tres` do Godot carregados no motor fixado pelo teste opcional. As
@@ -343,3 +407,7 @@ cumpre, 1 quando há achados de erro e 2 quando o pedido é inválido.
   `not_evaluated`. A identidade (mesmo personagem, mesmo objeto da referência) e a
   continuidade no tempo (arma que troca de mão, peça que some entre quadros com
   equipamento) ainda não têm verificação: continuam a olho, quadro a quadro.
+- O diagnóstico de cor não vê planos de luz, banding, rampas nem curvas, e não
+  sabe o que é intencional sem uma região anotada: `review` é suspeita. As
+  anotações da prova do arqueiro são do agente; as do dono são as que contam
+  (Q-281). Os efeitos (`fx`) ficam `not_evaluated` até haver política para eles.

@@ -3078,5 +3078,22 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-04": {
+  "title": "A Forja vê a cor no espaço: o relatório de 25/10 sobre pixels, cores e continuidade",
+  "porque": "Duas imagens com o mesmo histograma — 16 pontos de cor espalhados ou um bloco — passavam no lint com as mesmas respostas; a proteção perdia-se na paleta, --colors calava-se ao lado de uma paleta e o deflicker congelava movimento e reabria um olho fechado.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/adr/0092-a-forja-ve-a-cor-no-espaco.md",
+   "docs/art/research/2026-10-25-forja-pixels-cores/README.md",
+   "docs/art/research/2026-10-25-forja-pixels-cores/RELATORIO.md"
+  ],
+  "depende": "FORJA-03",
+  "feito": "Fragmentos de cor N4/N8 com estado e métricas por região e o eixo color_coherence; proteção até ao PNG final com conflito explícito; orçamento de cores como subconjunto da paleta; rampas por material e agrupamento só com prova local (forja cores); cintilação diagnosticada e corrigida só em regiões paradas declaradas; área, conectividade e bloco separados; a prova do arqueiro com rosto, braços, arco e corda presos.",
+  "fora": "Calibração com anotações revistas pelo dono, política de cor dos efeitos, correspondência temporal por âncoras, rei e escudeiro com plano, a revisão lado a lado no relatório (incremento 6), aprovação artística.",
+  "estado": "parcial — incrementos 1 a 5 do relatório aplicados com testes, provas do pacote invertidas e a prova do arqueiro (agrupamento por região com rosto, braços, arco e corda presos); calibração, efeitos, correspondência por regiões anotadas, rei, escudeiro e a interface de revisão (incremento 6) por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

@@ -1,6 +1,6 @@
 """A revisao automatica de uma animacao: o que se mede, o que so se suspeita e o que e do autor (F07).
 
-Tres respostas que nunca se misturam (e, desde o FORJA-03, os sete vereditos de verdicts.py,
+Tres respostas que nunca se misturam (e, desde o FORJA-03, os vereditos de verdicts.py,
 onde a geometria do equipamento e a pose ficam `not_evaluated` ate haver manifesto e observacao):
 - `contract_valid`: contagem, tela, paleta, contorno, nada cortado. Mede-se.
 - `motion_checks`: quadros estaticos, repetidos sem hold declarado, saltos sem
@@ -118,7 +118,7 @@ def motion(frames: list[Image.Image], tags: list[tuple], holds: list[dict] | Non
             "review_reasons": reasons}
 
 
-def verdict(contract_valid: bool, motion_result: dict | None) -> dict:
+def verdict(contract_valid: bool, motion_result: dict | None, coherence: list[dict] | None = None) -> dict:
     blocking = bool(motion_result and motion_result["blocking"])
     return {"contract_valid": contract_valid,
             "motion_checks": motion_result["motion_checks"] if motion_result else None,
@@ -126,4 +126,4 @@ def verdict(contract_valid: bool, motion_result: dict | None) -> dict:
             "review_reasons": motion_result["review_reasons"] if motion_result else ["revisao visual do desenho"],
             "artistic_approval": "pendente",
             "verdicts": verdicts.summary(verdicts.for_review(contract_valid, motion_result,
-                                                             2 if motion_result else 1))}
+                                                             2 if motion_result else 1, coherence))}

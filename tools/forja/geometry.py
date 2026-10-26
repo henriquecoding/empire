@@ -220,7 +220,8 @@ def evaluate(manifest: dict, obs: dict) -> list[dict]:
     return checks
 
 
-def review(manifest: dict, obs: dict, raster_ok: bool | None = None, frames: int = 1) -> dict:
+def review(manifest: dict, obs: dict, raster_ok: bool | None = None, frames: int = 1,
+           coherence: dict | None = None) -> dict:
     """Os vereditos de uma imagem com manifesto: geometria e pose medidas; o resto como estiver."""
     errors = equipment.validate(manifest)
     if errors:
@@ -229,6 +230,8 @@ def review(manifest: dict, obs: dict, raster_ok: bool | None = None, frames: int
     v = verdicts.initial(frames)
     if raster_ok is not None:
         verdicts.put(v, "raster_contract", "pass" if raster_ok else "fail")
+    if coherence is not None:
+        verdicts.put(v, "color_coherence", coherence["status"], [{"counts": coherence["counts"]}])
     verdicts.from_checks(v, "equipment_geometry", checks)
     verdicts.from_checks(v, "functional_pose", checks)
     return {"verdicts": v, "summary": verdicts.summary(v), "blocking": verdicts.blocking(v), "checks": checks}

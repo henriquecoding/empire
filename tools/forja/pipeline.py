@@ -12,9 +12,9 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import cleanup, contracts, grid as gridmod, lint, masks, matte, outline, palette as palmod
+from . import cleanup, contracts, grid as gridmod, guard, lint, masks, matte, outline, palette as palmod
 from . import provenance, quantize, resample, verdicts
-from .imageops import flat as imageops_flat, foot_point, opaque_bbox, open_rgba, place, upscale
+from .imageops import count_colors, flat as imageops_flat, foot_point, opaque_bbox, open_rgba, place, upscale
 
 
 @dataclass
@@ -102,24 +102,30 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
            pal: palmod.Palette | None) -> tuple[Image.Image, dict]:
     """Limpeza, paleta, contorno, cluster e tela — o que torna o recorte um asset."""
     info: dict = {}
+    guarded = guard.pixels(opts.protect, native.size)
     img, info["cleanup"] = cleanup.clean(native, cleanup.policy_for(opts.kind, opts.cleanup), opts.noise,
                                          opts.protect)
     if contract.outline_px:
         img, info["outline_normalized"] = outline.normalize(img, contract.outline_color)
-    if pal is not None:
-        img = quantize.to_palette(img, pal, opts.dither if contract.dither else "none")
-        info["palette"] = {"name": pal.name, "size": len(pal)}
-    elif opts.colors:
-        img, extracted = quantize.reduce(img, opts.colors, opts.dither if contract.dither else "none")
-        info["palette"] = {"name": "extraida", "colors": extracted.hexes()}
+    required = guard.colors(native, guarded) + ([contract.outline_color] if contract.outline_px else [])
+    img, palinfo = quantize.apply(img, pal, opts.colors, opts.dither if contract.dither else "none", required)
+    if palinfo:
+        info["palette"] = palinfo
+    if guarded:
+        img, restored = guard.restore(img, native, guarded)
+        info["protect"] = {"boxes": [list(b) for b in opts.protect], "restored": restored,
+                           "conflicts": guard.conflicts(native, guarded, pal)}
     shift = (0, 0)
     if contract.outline_px and opts.outline != "keep":
         measured = outline.measure(img, contract.outline_color)
         if opts.outline == "force" or measured["outline_share"] < 0.85:
             if opts.outline == "force":
                 img, _ = outline.strip(img)
+                if guarded:
+                    img, n = guard.restore(img, native, guarded)
+                    info["protect"]["restored"] += n
             keep = frozenset().union(*[masks.box((x0 + 1, y0 + 1, x1 + 1, y1 + 1))
-                                       for x0, y0, x1, y1 in opts.bare or []])
+                                       for x0, y0, x1, y1 in opts.bare or []], {(x + 1, y + 1) for x, y in guarded})
             img = outline.add(_pad(img, 1), contract.outline_color, 1, keep=keep)
             box = opaque_bbox(img)
             img = img.crop(box) if box else img
@@ -137,16 +143,18 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
         img, clipped = place(img, contract.canvas, anchor, target)
         info["fit"] = {"canvas": list(contract.canvas), "pivot": list(target), "anchor": list(anchor),
                        "clipped_pixels": clipped}
+    if guarded:
+        info["protect"].update(guard.verify(img, native, guarded, info))
+    budget = info.get("palette", {}).get("budget")
+    if budget:
+        budget["output_colors"] = count_colors(img)
+        budget["within"] = budget["output_colors"] <= budget["requested"]
     return img, info
 
 
-def _to_final(box: list[int], info: dict, contract: contracts.Contract) -> list[int]:
-    """Uma caixa do recorte nativo nas coordenadas do PNG final (cluster e tela)."""
-    k = info.get("cluster_upscale", 1)
-    fit = info.get("fit")
-    dx, dy = ((fit["pivot"][0] - fit["anchor"][0], fit["pivot"][1] - fit["anchor"][1]) if fit else (0, 0))
-    pad = 1 if info.get("outline_added") else 0
-    return [box[0] * k + pad + dx, box[1] * k + pad + dy, box[2] * k + pad + dx, box[3] * k + pad + dy]
+def _to_final(box: list[int], info: dict) -> list[int]:
+    """Uma caixa do recorte nativo nas coordenadas do PNG final (contorno, cluster e tela)."""
+    return [*guard.final_xy(box[:2], info), *guard.final_xy(box[2:], info)]
 
 
 def _pad(img: Image.Image, n: int) -> Image.Image:
@@ -177,14 +185,16 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     g = gridmod.detect(image, scale=opts.scale, cells=opts.cells)
     native, snapinfo = snap(image, opts, g)
     final, finishinfo = finish(native, opts, contract, pal)
-    exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo, contract)) for b in opts.bare or []])
+    exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo)) for b in opts.bare or []])
     verdict = lint.check(final, contract, pal, frame=bool(contract.canvas), exempt=exempt)
     clipped = (finishinfo.get("fit") or {}).get("clipped_pixels", 0)
     if clipped:
         lint.add(verdict, lint.too_big(contract, clipped, native.size))
     sub = snapinfo["subgrid"]
     if sub["box"] and (sub["share"] >= 0.05 or sub["largest"] >= 12):
-        lint.add(verdict, lint.below_grid(sub, _to_final(sub["box"], finishinfo, contract)))
+        lint.add(verdict, lint.below_grid(sub, _to_final(sub["box"], finishinfo)))
+    for item in guard.findings(finishinfo):
+        lint.add(verdict, item)
     final.save(out / f"{name}.png")
     upscale(final, 4).save(out / f"{name}@4x.png")
     files = {"png": str(out / f"{name}.png"), "preview": str(out / f"{name}@4x.png")}
@@ -194,10 +204,11 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
         files["aseprite"] = str(ase.from_frames(out / f"{name}.aseprite", [final],
                                                 palette=pal.colors if pal and len(pal) <= 256 else None,
                                                 pivot=tuple(pivot) if pivot else None))
+    summary = verdicts.summary(verdicts.for_review(verdict["ok"], None, coherence=verdict["coherence"]))
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
-              "lint": verdict, "files": files, "verdicts": verdicts.summary(verdicts.for_review(verdict["ok"], None)),
+              "lint": verdict, "files": files, "verdicts": summary,
               "provenance": provenance.record(source, generator, prompt, opts.__dict__)}
-    impure = [_to_final([x, y, x + 1, y + 1], finishinfo, contract)[:2] for x, y in sub.pop("_coords")]
+    impure = [_to_final([x, y, x + 1, y + 1], finishinfo)[:2] for x, y in sub.pop("_coords")]
     if report_html:
         from . import report
         files["report"] = str(report.single(out / "report.html", image, g, final, result, impure))
