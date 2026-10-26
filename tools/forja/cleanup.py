@@ -125,14 +125,21 @@ def components(rows, key=lambda p: p[:3] if p[3] >= 128 else None, offsets=N4):
     return out
 
 
-def min_cluster(image: Image.Image, size: int = 2) -> tuple[Image.Image, int]:
-    """Funde na cor vizinha mais comum cada mancha de cor com menos de size x size pixels."""
+def min_cluster(image: Image.Image, size: int = 2, connectivity: int = 8,
+                protect: list[tuple[int, int, int, int]] | None = None) -> tuple[Image.Image, int]:
+    """Funde na cor vizinha mais comum cada mancha com menos de size x size pixels de AREA.
+
+    Por omissao a mancha conta com 8 vizinhos: uma diagonal de um pixel e uma linha e fica (com 4 vizinhos,
+    a prova do relatorio de 25/10 apagou uma diagonal de oito). `connectivity=4` e escolha explicita, para o
+    cenario, onde o detalhe de 1 px e proibido. `protect`: caixas que nao mudam."""
     rows = to_grid(image)
+    guarded = {(x, y) for x0, y0, x1, y1 in protect or [] for y in range(y0, y1) for x in range(x0, x1)}
+    offsets = N8 if connectivity == 8 else N4
     merged = 0
     for _ in range(3):
         changed = 0
-        for k, members in components(rows):
-            if len(members) >= size * size:
+        for k, members in components(rows, offsets=offsets):
+            if len(members) >= size * size or guarded.intersection(members):
                 continue
             spots = set(members)
             around = Counter(rows[ny][nx][:3] for x, y in members for nx, ny in
@@ -152,9 +159,37 @@ def min_cluster(image: Image.Image, size: int = 2) -> tuple[Image.Image, int]:
 
 
 def small_islands(image: Image.Image, size: int = 2) -> list[tuple[int, int, int]]:
-    """Manchas de cor menores que size x size: (x, y, pixels) do primeiro pixel de cada uma."""
+    """Manchas de cor (4 vizinhos) com AREA menor que size x size: (x, y, pixels) do primeiro pixel de cada.
+
+    Area nao e forma: uma tira 1x4 tem a area de um bloco 2x2 e nao aparece aqui (ver `footprint`)."""
     rows = to_grid(image)
     return [(m[0][0], m[0][1], len(m)) for _, m in components(rows) if len(m) < size * size]
+
+
+def footprint(image: Image.Image, k: int = 2) -> dict:
+    """Area, caixa e bloco de cada mancha de cor (4 vizinhos): tres medidas que nao se confundem.
+
+    `below_area`: menos de k*k pixels; `without_block`: area que chega mas nenhum bloco k x k da mesma cor (uma
+    tira 1x4); `uncovered_pixels`: pixels que nao estao dentro de nenhum bloco k x k da sua cor."""
+    rows = to_grid(image)
+    h, w = len(rows), len(rows[0])
+    covered: set = set()
+    for y in range(h - k + 1):
+        for x in range(w - k + 1):
+            p = rows[y][x]
+            if p[3] >= 128 and all(rows[y + j][x + i][3] >= 128 and rows[y + j][x + i][:3] == p[:3]
+                                   for j in range(k) for i in range(k)):
+                covered.update((x + i, y + j) for j in range(k) for i in range(k))
+    comps = components(rows)
+    shapes, below = [], 0
+    for _, m in comps:
+        if len(m) < k * k:
+            below += 1
+        elif not covered.intersection(m):
+            xs, ys = [p[0] for p in m], [p[1] for p in m]
+            shapes.append({"at": list(m[0]), "area": len(m), "size": [max(xs) - min(xs) + 1, max(ys) - min(ys) + 1]})
+    return {"k": k, "components": len(comps), "below_area": below, "without_block": len(shapes),
+            "uncovered_pixels": sum(p not in covered for _, m in comps for p in m), "shapes": shapes[:16]}
 
 
 def pixel_perfect(image: Image.Image, line: tuple[int, int, int] = (0, 0, 0)) -> tuple[Image.Image, int]:

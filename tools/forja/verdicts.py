@@ -7,11 +7,12 @@ a aprovacao artistica e sempre do autor e a ferramenta so escreve `pending`.
 """
 from __future__ import annotations
 
-AXES = ("raster_contract", "equipment_geometry", "functional_pose", "identity_consistency",
+AXES = ("raster_contract", "color_coherence", "equipment_geometry", "functional_pose", "identity_consistency",
         "temporal_consistency", "artistic_approval", "runtime_integration")
 STATES = ("pass", "fail", "needs_review", "inconclusive", "not_evaluated", "not_applicable", "pending", "not_tested")
 QUESTIONS = {
     "raster_contract": "tela, alfa, paleta, contorno, pivo, nada cortado",
+    "color_coherence": "a cor forma massas: nenhum fragmento de 1-3 px sem papel declarado (planos e banding a olho)",
     "equipment_geometry": "as partes de cada objeto existem, na quantidade certa, construidas e ligadas",
     "functional_pose": "a pose comunica um uso possivel: mao na empunhadura, corda no estado certo",
     "identity_consistency": "continua a ser o mesmo personagem e o mesmo objeto da referencia aceita",
@@ -67,10 +68,17 @@ def from_checks(verdicts: dict, axis: str, checks: list[dict]) -> dict:
     return put(verdicts, axis, combine([c["status"] for c in mine]), mine)
 
 
-def for_review(contract_valid: bool, motion_result: dict | None, frames: int = 1) -> dict:
-    """Os vereditos da revisao automatica de uma figura ou prancha (sem manifesto de equipamento)."""
+def for_review(contract_valid: bool, motion_result: dict | None, frames: int = 1,
+               coherence: dict | list[dict] | None = None) -> dict:
+    """Os vereditos da revisao automatica de uma figura ou prancha (sem manifesto de equipamento).
+
+    `coherence`: o diagnostico de cor (clusters.py) da figura, ou um por quadro; nunca bloqueia."""
     v = initial(frames)
     put(v, "raster_contract", "pass" if contract_valid else "fail")
+    if coherence is not None:
+        found = coherence if isinstance(coherence, list) else [coherence]
+        put(v, "color_coherence", combine([c["status"] for c in found]),
+            [{"status": c["status"], "counts": c["counts"]} for c in found])
     if motion_result is not None:
         blocking = bool(motion_result["blocking"])
         put(v, "temporal_consistency", "fail" if blocking else "needs_review", motion_result["review_reasons"])

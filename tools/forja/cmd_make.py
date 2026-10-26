@@ -26,7 +26,8 @@ def do_sheet(args) -> dict:
         with Image.open(args.image) as im:
             region = content_region(exp, list(im.size)) if exp.get("content") else None
     sopts = sheetforge.SheetOptions(tags=tags, layout=layout, anchor=args.anchor, same_height=args.same_height,
-                                    deflicker=args.deflicker, lock=args.lock, mirror=args.mirror,
+                                    deflicker=args.deflicker, static=args.static, actions=args.action,
+                                    lock=args.lock, mirror=args.mirror,
                                     godot_texture=args.godot_texture, region=region, align=args.align,
                                     holds=review.parse_holds(args.hold))
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
@@ -159,7 +160,12 @@ def register(sub) -> None:
     p.add_argument("--layout", type=pair, help="colunas x linhas da prancha (junta pedacos por celula)")
     p.add_argument("--anchor", default="feet", choices=("feet", "mass", "bottom", "center"))
     p.add_argument("--same-height", action="store_true", help="igualar a altura das figuras antes da grade")
-    p.add_argument("--deflicker", type=float, default=0.0, help="prender cores que mudam menos que isto (OKLab)")
+    p.add_argument("--deflicker", type=float, default=0.0, help="cintilacao: mudancas menores que isto (OKLab); "
+                   "so se corrigem dentro de --static, sem movimento e fora de --action")
+    p.add_argument("--static", type=box, action="append", help="caixa x0,y0,x1,y1 (quadro final) confirmada como "
+                   "parada, onde o --deflicker pode corrigir (repetivel)")
+    p.add_argument("--action", type=box, action="append", help="caixa x0,y0,x1,y1 com accao de proposito (olho que "
+                   "pisca, boca, chama): nunca se estabiliza (repetivel)")
     p.add_argument("--lock", type=box, help="caixa x0,y0,x1,y1 do rosto a travar em todos os quadros")
     p.add_argument("--mirror", action="store_true", help="exportar tambem a direcao espelhada")
     p.add_argument("--godot-texture", help="caminho res:// da tira, para escrever o SpriteFrames .tres")

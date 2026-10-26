@@ -16,7 +16,7 @@ from statistics import median
 
 from PIL import Image
 
-from . import anim, color, contracts, godot, lint, matte, motion, provenance, quantize, review, sheet
+from . import anim, color, contracts, godot, lint, matte, motion, provenance, quantize, review, sheet, temporal
 from . import aseprite as ase
 from .imageops import open_rgba
 from .pipeline import Options, contract_for, finish, palette_for
@@ -29,6 +29,8 @@ class SheetOptions:
     anchor: str = "feet"
     same_height: bool = False
     deflicker: float = 0.0
+    static: list[tuple[int, int, int, int]] | None = None
+    actions: list[tuple[int, int, int, int]] | None = None
     lock: tuple[int, int, int, int] | None = None
     mirror: bool = False
     godot_texture: str | None = None
@@ -99,7 +101,9 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     frames, placed = sheet.frames(figures, canvas, pivot, anchor, align)
     fixes = {}
     if sopts.deflicker:
-        frames, fixes["deflicker_pixels"] = quantize.deflicker(frames, sopts.deflicker)
+        frames, flicker = temporal.stabilize(frames, sopts.deflicker, sopts.static, sopts.actions)
+        fixes["deflicker"] = {"changed": len(flicker["changed"]), "counts": flicker["counts"],
+                              "static": flicker["static"], "actions": flicker["actions"], "note": flicker["note"]}
     if sopts.lock:
         frames, fixes["lock"] = motion.lock(frames, sopts.lock)
     tags, durations = _timeline(sopts.tags, len(frames))
@@ -133,7 +137,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     contract_valid = (expected in (None, found)) and all(v["ok"] for v in verdicts) and not clipped
     loops = {t: (contracts.tag(t) or {}).get("loop", True) for t, *_ in tags}
     moved = review.motion(frames, tags, sopts.holds, align, loops)
-    rv = review.verdict(contract_valid, moved)
+    rv = review.verdict(contract_valid, moved, [v["coherence"] for v in verdicts])
     metrics["alignment"] = {"mode": align, "offsets_preserved": align != "feet",
                             "drift_imposed_by_alignment": align == "feet"}
     result = {"name": name, "ok": not rv["needs_regeneration"], "review": rv,

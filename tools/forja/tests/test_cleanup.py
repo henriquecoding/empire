@@ -115,9 +115,10 @@ class QuantizeTest(unittest.TestCase):
         out = quantize.to_palette(img, pal, "bayer4")
         self.assertEqual({p[:3] for p in flat(out)}, {(0, 0, 0), (255, 255, 255)})
 
-    def test_deflicker_locks_tiny_changes(self):
+    def test_deflicker_locks_tiny_changes_only_in_a_static_region(self):
         a = Image.new("RGBA", (2, 2), (100, 100, 100, 255))
         b = Image.new("RGBA", (2, 2), (101, 100, 100, 255))
-        out, fixed = quantize.deflicker([a, b])
+        self.assertEqual(quantize.deflicker([a, b])[1], 0)
+        out, fixed = quantize.deflicker([a, b], static=[(0, 0, 2, 2)])
         self.assertEqual(fixed, 4)
         self.assertEqual(out[1].tobytes(), a.tobytes())

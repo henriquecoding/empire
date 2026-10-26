@@ -48,7 +48,8 @@ def _failed(result: dict) -> list[str]:
 def do_equip(args) -> dict:
     image, manifest, _, obs, _ = _load(args)
     report = _raster(image, args)
-    result = geometry.review(manifest, obs, report["ok"] if report else None)
+    result = geometry.review(manifest, obs, report["ok"] if report else None,
+                             coherence=report["coherence"] if report else None)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     stem = Path(args.image).stem

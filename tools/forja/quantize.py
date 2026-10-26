@@ -11,7 +11,7 @@ from PIL import Image
 
 from . import color
 from .imageops import CLEAR, grid as to_grid, from_grid
-from .palette import Palette, extract
+from .palette import Palette, extract, histogram
 
 DITHERS = ("none", "bayer2", "bayer4", "bayer8")
 
@@ -29,6 +29,8 @@ def bayer(n: int) -> list[list[float]]:
 
 def to_palette(image: Image.Image, palette: Palette, dither: str = "none",
                strength: float = 1.0) -> Image.Image:
+    """`strength` e a amplitude da matriz em volta de 0.5: 1 e o padrao classico, 0 e a cor mais perto (sem
+    dither). Antes, zero empurrava todos os pixels para o meio e pintava meio xadrez (relatorio de 25/10, §7)."""
     if dither not in DITHERS:
         raise ValueError(f"dithering desconhecido: {dither} (use {', '.join(DITHERS)})")
     rows = to_grid(image)
@@ -42,8 +44,7 @@ def to_palette(image: Image.Image, palette: Palette, dither: str = "none",
                 row[x] = (*palette.nearest(p), 255)
                 continue
             i, j, t = palette.two_nearest(p)
-            t = 0.5 + (t - 0.5) * strength if strength != 1 else t
-            limit = matrix[y % len(matrix)][x % len(matrix)]
+            limit = 0.5 + (matrix[y % len(matrix)][x % len(matrix)] - 0.5) * max(0.0, strength)
             row[x] = (*palette.colors[j if t > limit else i], 255)
     return from_grid(rows)
 
@@ -51,6 +52,56 @@ def to_palette(image: Image.Image, palette: Palette, dither: str = "none",
 def reduce(image: Image.Image, count: int, dither: str = "none") -> tuple[Image.Image, Palette]:
     pal = extract(image, count)
     return to_palette(image, pal, dither), pal
+
+
+def subset(image: Image.Image, palette: Palette, k: int, required=()) -> Palette:
+    """`k` cores da paleta para esta imagem: as obrigatorias primeiro, depois as que o k-means aponta.
+
+    Fica sempre dentro da paleta dada (relatorio de 25/10, §8): o orcamento escolhe entre as cores
+    autorizadas, nao inventa outras."""
+    mapped = to_palette(image, palette)
+    used = [c for _, c in histogram(mapped)]
+    chosen = list(dict.fromkeys(c for c in required if c in palette))
+    if len(set(used) | set(chosen)) <= k:
+        return Palette(list(dict.fromkeys(chosen + used)), palette.name)
+    for center in extract(mapped, k).colors:
+        if len(chosen) >= k:
+            break
+        free = [c for c in used if c not in chosen]
+        if free:
+            chosen.append(min(free, key=lambda c: color.delta(c, center)))
+    chosen += [c for c in used if c not in chosen][:max(0, k - len(chosen))]
+    return Palette(chosen[:k], palette.name)
+
+
+def apply(image: Image.Image, palette: Palette | None, count: int | None, dither: str = "none",
+          required=()) -> tuple[Image.Image, dict | None]:
+    """A paleta e o orcamento de cores juntos, sem que um cale o outro.
+
+    Com paleta e `count`, sai um subconjunto da paleta; sem paleta, `count` cores extraidas. `required` (as
+    cores protegidas e a do contorno do contrato) entram sempre; se nao cabem no orcamento, ele nao se aplica
+    e o conflito fica escrito."""
+    if palette is None and not count:
+        return image, None
+    report = {"name": palette.name, "size": len(palette)} if palette is not None else {"name": "extraida"}
+    if not count:
+        return to_palette(image, palette, dither), report
+    need = list(dict.fromkeys(c for c in required if palette is None or c in palette))
+    budget = {"requested": count, "applied": False, "required": [color.to_hex(c) for c in need]}
+    report["budget"] = budget
+    if len(need) > count:
+        budget["conflict"] = (f"o orcamento de {count} cores e menor que as {len(need)} cores obrigatorias "
+                              "(protegidas e contorno): nao se aplica")
+        return (to_palette(image, palette, dither) if palette is not None else image), report
+    if palette is not None:
+        chosen = subset(image, palette, count, need)
+    else:
+        rest = extract(image, count - len(need)).colors if count > len(need) else []
+        chosen = Palette(list(dict.fromkeys(need + rest)), "extraida")
+    budget.update(applied=True, chosen=chosen.hexes())
+    if palette is None:
+        report["colors"] = chosen.hexes()
+    return to_palette(image, chosen, dither), report
 
 
 def shared_palette(frames: list[Image.Image], count: int) -> Palette:
@@ -78,56 +129,18 @@ def off_palette(image: Image.Image, palette: Palette) -> list[tuple[int, int, in
     return [(x, y, n, color.to_hex(palette.nearest(c))) for c, (x, y, n) in seen.items()]
 
 
-def deflicker(frames: list[Image.Image], threshold: float = 0.05) -> tuple[list[Image.Image], int]:
-    """Prende ao quadro anterior as cores que mudaram quase nada.
+def deflicker(frames: list[Image.Image], threshold: float = 0.05, static=None,
+              actions=None) -> tuple[list[Image.Image], int]:
+    """Prende ao quadro anterior as cores que mudaram quase nada, so nas regioes estaticas (temporal.py).
 
-    E o `drift_threshold` do PixelLab feito as claras: um pixel que no quadro
-    seguinte tem uma cor a menos de `threshold` (OKLab) da que tinha herda-a; um
-    pixel que mudou de verdade (outra cor, outro material) fica.
-    """
-    if not frames:
-        return [], 0
-    out = [frames[0].copy()]
-    fixed = 0
-    prev = to_grid(frames[0])
-    for frame in frames[1:]:
-        rows = to_grid(frame)
-        for y, row in enumerate(rows):
-            if y >= len(prev):
-                break
-            for x, p in enumerate(row):
-                if x >= len(prev[y]):
-                    break
-                q = prev[y][x]
-                if p[3] >= 128 and q[3] >= 128 and p[:3] != q[:3] and color.delta(p[:3], q[:3]) < threshold:
-                    row[x] = q
-                    fixed += 1
-        out.append(from_grid(rows))
-        prev = rows
-    out, blips = blink(out)
-    return out, fixed + blips
+    Nao e o `drift_threshold` do PixelLab (ver temporal.py). Sem `static`, so diagnostica: nada muda."""
+    from . import temporal
+    out, report = temporal.stabilize(frames, threshold, static, actions)
+    return out, len(report["changed"])
 
 
-def blink(frames: list[Image.Image]) -> tuple[list[Image.Image], int]:
-    """Pixel que pisca A -> B -> A com os 8 vizinhos parados: ruido do gerador, volta a A.
-
-    Num movimento verdadeiro os vizinhos mudam com o pixel; num piscar isolado
-    nao. So entre quadros consecutivos da mesma tela.
-    """
-    if len(frames) < 3:
-        return frames, 0
-    grids = [to_grid(f) for f in frames]
-    h, w = len(grids[0]), len(grids[0][0])
-    fixed = 0
-    for i in range(1, len(grids) - 1):
-        a, b, c = grids[i - 1], grids[i], grids[i + 1]
-        for y in range(1, h - 1):
-            for x in range(1, w - 1):
-                if a[y][x] != c[y][x] or b[y][x] == a[y][x] or a[y][x][3] < 128 or b[y][x][3] < 128:
-                    continue
-                still = sum(a[y + dy][x + dx] == b[y + dy][x + dx]
-                            for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dx or dy)
-                if still >= 7:
-                    b[y][x] = a[y][x]
-                    fixed += 1
-    return [from_grid(g) for g in grids], fixed
+def blink(frames: list[Image.Image], static=None, actions=None) -> tuple[list[Image.Image], int]:
+    """Um pixel A -> B -> A volta a A so numa regiao estatica e sem movimento; um piscar declarado fica."""
+    from . import temporal
+    out, report = temporal.stabilize(frames, 0.0, static, actions)
+    return out, len(report["changed"])

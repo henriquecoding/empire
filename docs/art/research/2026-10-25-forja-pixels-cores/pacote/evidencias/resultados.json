@@ -1,0 +1,373 @@
+{
+  "source_sha256": {
+    "__init__.py": "36448dbd79dc5ebb827a056b204d1da4abc4ae9cbc645a08b0727ab0dca35a34",
+    "cleanup.py": "af2044a03004d508323b7d5e4295ee3fc7554c4f02c1427a68ed1682551912ea",
+    "color.py": "8801e4876ee6e0cf59bee02c4437977464d3e1ef15bb739b7e4bf7556d880ee0",
+    "contracts.py": "8b56e4578f83e7f627efd3f473a061afe9a5c9bdd8998ce3293758206af52785",
+    "grid.py": "727072a06c07eb05c549fe2187ab8b076dc10b4b383bfa1b410c65456eb7016e",
+    "imageops.py": "afef2af1e909e34267cbc3629f9552ded03fb920f331a8950a1b9b89eb7c6036",
+    "lint.py": "d86791a2da6ab53675589168e4845dd45c311f8005d9e0ef6380653b5e375d48",
+    "matte.py": "fcfc5cfb66bf808d6fde14446564631069073e93d1bebb8d8f2bdb00b001992f",
+    "outline.py": "71b9e330d8c15235981ebd19d87cc1c6a4fafc87ec1b1089940ccc9542e33c5c",
+    "palette.py": "35dcd26c6fc854cb0214e52a1f27b00fe6c90e1bb6f90077b085b401c29011cb",
+    "pipeline.py": "6b72725599e5b9f8d81e4c4d65fd9984aeb99ffcacc774a3626c9c545193e3a3",
+    "provenance.py": "17516b3499dd2a4b21fcfa8b70e89c2b4328d832f42e2e372ed700b9210419d4",
+    "quantize.py": "8729bc40d76b673d2abf7650c29049c0a07a8683d070b59973eeea393a485bba",
+    "resample.py": "42405e5788902b50ea0e7ebc683bcb5fea030a2f9bf519c7cb8d579c5018a964"
+  },
+  "cases": {
+    "scatter": {
+      "stats": {
+        "size": [
+          80,
+          80
+        ],
+        "opaque": 2440,
+        "colors": 3,
+        "components4": 18,
+        "components8": 18,
+        "color_singletons4": 16,
+        "color_singletons8": 16,
+        "interior_color_singletons8": 16,
+        "alpha_orphans8": 0
+      },
+      "lint": {
+        "kind": "royal_80",
+        "size": [
+          80,
+          80
+        ],
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "findings": [],
+        "prompt_feedback": ""
+      },
+      "cleanup_changed": 0,
+      "cleanup": {
+        "policy": "character",
+        "orphans": 0,
+        "holes": 0,
+        "noise": 0,
+        "protected_kept": 0,
+        "kept_isolated": 0,
+        "candidates": [],
+        "changed": {}
+      }
+    },
+    "cluster": {
+      "stats": {
+        "size": [
+          80,
+          80
+        ],
+        "opaque": 2440,
+        "colors": 3,
+        "components4": 3,
+        "components8": 3,
+        "color_singletons4": 0,
+        "color_singletons8": 0,
+        "interior_color_singletons8": 0,
+        "alpha_orphans8": 0
+      },
+      "lint": {
+        "kind": "royal_80",
+        "size": [
+          80,
+          80
+        ],
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "findings": [],
+        "prompt_feedback": ""
+      },
+      "cleanup_changed": 0,
+      "cleanup": {
+        "policy": "character",
+        "orphans": 0,
+        "holes": 0,
+        "noise": 0,
+        "protected_kept": 0,
+        "kept_isolated": 0,
+        "candidates": [],
+        "changed": {}
+      }
+    },
+    "equal_histogram": true,
+    "palette_and_color_budget": {
+      "requested_colors": 2,
+      "supplied_palette_size": 3,
+      "output_colors": 3,
+      "finish_palette_report": {
+        "name": "",
+        "size": 3
+      }
+    },
+    "subtle_detail": {
+      "changed_without_protection": 1,
+      "changed_with_cleanup_protection": 0,
+      "cleanup": {
+        "policy": "character",
+        "orphans": 0,
+        "holes": 0,
+        "noise": 1,
+        "protected_kept": 0,
+        "kept_isolated": 0,
+        "candidates": [],
+        "changed": {
+          "noise": [
+            [
+              4,
+              4
+            ]
+          ]
+        }
+      },
+      "delta_oklab": 0.017577214459568516
+    },
+    "protection_scope": {
+      "cleanup_kept": 1,
+      "protected_pixel_before": [
+        105,
+        105,
+        105,
+        255
+      ],
+      "protected_pixel_after_finish": [
+        100,
+        100,
+        100,
+        255
+      ]
+    },
+    "diagonal_helper": {
+      "before": {
+        "size": [
+          16,
+          16
+        ],
+        "opaque": 256,
+        "colors": 2,
+        "components4": 9,
+        "components8": 2,
+        "color_singletons4": 8,
+        "color_singletons8": 0,
+        "interior_color_singletons8": 0,
+        "alpha_orphans8": 0
+      },
+      "after": {
+        "size": [
+          16,
+          16
+        ],
+        "opaque": 256,
+        "colors": 1,
+        "components4": 1,
+        "components8": 1,
+        "color_singletons4": 0,
+        "color_singletons8": 0,
+        "interior_color_singletons8": 0,
+        "alpha_orphans8": 0
+      },
+      "changed": 8,
+      "reported_changes": 8,
+      "scope": "min_cluster helper, not pipeline.finish default"
+    },
+    "area_vs_footprint": {
+      "1x4_islands_reported": [],
+      "2x2_islands_reported": []
+    },
+    "intentional_eye_blink": {
+      "reported_changes": 1,
+      "middle_frame_changes": 1,
+      "middle_equals_open_after": true
+    },
+    "moving_near_color": {
+      "reported_changes": 24,
+      "changed_pixels": 24,
+      "second_frame_equals_first_after": true,
+      "threshold_zero_changes": 0
+    },
+    "dither_zero_helper": {
+      "white_pixels": 128,
+      "total": 256,
+      "scope": "explicit helper strength=0, not default pipeline option"
+    }
+  },
+  "assets": {
+    "rei": {
+      "stats": {
+        "size": [
+          80,
+          80
+        ],
+        "opaque": 2783,
+        "colors": 27,
+        "components4": 501,
+        "components8": 236,
+        "color_singletons4": 247,
+        "color_singletons8": 97,
+        "interior_color_singletons8": 89,
+        "alpha_orphans8": 0
+      },
+      "lint_recomputed": {
+        "kind": "royal_80",
+        "size": [
+          80,
+          80
+        ],
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "findings": [
+          {
+            "rule": "gradient",
+            "severity": "warn",
+            "message": "3 rampas longas de tons vizinhos (possivel gradiente)",
+            "where": [
+              [
+                47,
+                15
+              ],
+              [
+                31,
+                64
+              ],
+              [
+                45,
+                16
+              ]
+            ],
+            "fix": null,
+            "prompt_hint": "Two tones per material (light and shadow); no gradients or soft shading."
+          }
+        ],
+        "prompt_feedback": "Two tones per material (light and shadow); no gradients or soft shading."
+      },
+      "sha256": "df89f41a99229aeaac3ca94a0fc271e74e8fb3fa039111fae26b6d67bc886983"
+    },
+    "arqueiro": {
+      "stats": {
+        "size": [
+          80,
+          80
+        ],
+        "opaque": 2323,
+        "colors": 37,
+        "components4": 658,
+        "components8": 321,
+        "color_singletons4": 342,
+        "color_singletons8": 144,
+        "interior_color_singletons8": 122,
+        "alpha_orphans8": 0
+      },
+      "lint_recomputed": {
+        "kind": "royal_80",
+        "size": [
+          80,
+          80
+        ],
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "findings": [
+          {
+            "rule": "gradient",
+            "severity": "warn",
+            "message": "5 rampas longas de tons vizinhos (possivel gradiente)",
+            "where": [
+              [
+                41,
+                17
+              ],
+              [
+                44,
+                18
+              ],
+              [
+                42,
+                22
+              ],
+              [
+                24,
+                33
+              ],
+              [
+                66,
+                48
+              ]
+            ],
+            "fix": null,
+            "prompt_hint": "Two tones per material (light and shadow); no gradients or soft shading."
+          }
+        ],
+        "prompt_feedback": "Two tones per material (light and shadow); no gradients or soft shading."
+      },
+      "sha256": "0fdad41f2768d4590e6c8786243d779b1175e52460b8e290a9319d794a0336be"
+    },
+    "escudeiro": {
+      "stats": {
+        "size": [
+          64,
+          64
+        ],
+        "opaque": 1845,
+        "colors": 46,
+        "components4": 441,
+        "components8": 216,
+        "color_singletons4": 230,
+        "color_singletons8": 94,
+        "interior_color_singletons8": 84,
+        "alpha_orphans8": 0
+      },
+      "lint_recomputed": {
+        "kind": "royal_64",
+        "size": [
+          64,
+          64
+        ],
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "findings": [
+          {
+            "rule": "gradient",
+            "severity": "warn",
+            "message": "14 rampas longas de tons vizinhos (possivel gradiente)",
+            "where": [
+              [
+                38,
+                10
+              ],
+              [
+                40,
+                11
+              ],
+              [
+                41,
+                12
+              ],
+              [
+                41,
+                23
+              ],
+              [
+                50,
+                33
+              ],
+              [
+                26,
+                34
+              ]
+            ],
+            "fix": null,
+            "prompt_hint": "Two tones per material (light and shadow); no gradients or soft shading."
+          }
+        ],
+        "prompt_feedback": "Two tones per material (light and shadow); no gradients or soft shading."
+      },
+      "sha256": "045753d2938aedde60e85e34653f123e78b86452c4210155e384d4a7f3401bb0"
+    }
+  }
+}
