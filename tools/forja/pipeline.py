@@ -12,7 +12,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import cleanup, contracts, grid as gridmod, lint, masks, matte, outline, palette as palmod
+from . import cleanup, contracts, grid as gridmod, gridcheck, lint, masks, matte, outline, palette as palmod
 from . import provenance, quantize, resample, verdicts
 from .imageops import flat as imageops_flat, foot_point, opaque_bbox, open_rgba, place, upscale
 
@@ -56,7 +56,7 @@ def palette_for(opts: Options, contract: contracts.Contract) -> palmod.Palette |
 
 def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None) -> tuple[Image.Image, dict]:
     """Imagem gerada -> nativa recortada, com fundo transparente."""
-    g = g or gridmod.detect(image, scale=opts.scale, cells=opts.cells)
+    g = g or gridcheck.detect(image, scale=opts.scale, cells=opts.cells)
     sampled = resample.resample(image, g, opts.method)
     native, bginfo = matte.remove(sampled.image, opts.bg, opts.tolerance)
     box = opaque_bbox(native) or (0, 0, native.width, native.height)
@@ -174,7 +174,7 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     image = open_rgba(source)
     contract = contract_for(opts)
     pal = palette_for(opts, contract)
-    g = gridmod.detect(image, scale=opts.scale, cells=opts.cells)
+    g = gridcheck.detect(image, scale=opts.scale, cells=opts.cells)
     native, snapinfo = snap(image, opts, g)
     final, finishinfo = finish(native, opts, contract, pal)
     exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo, contract)) for b in opts.bare or []])

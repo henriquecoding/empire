@@ -1,0 +1,3575 @@
+{
+  "near_threshold_oklab": 0.02,
+  "summary": {
+    "images": 60,
+    "model_outputs": 16,
+    "roles": {
+      "model_output": 16,
+      "user_input": 4,
+      "ui_screenshot": 40
+    },
+    "exact_upscale_gt1": 1,
+    "scales": [
+      1,
+      2
+    ],
+    "with_c2pa": 0,
+    "with_exif": 0,
+    "with_text_chunks": 0,
+    "art_alpha_classes": {
+      "none": 0,
+      "binary": 12,
+      "graded": 4
+    },
+    "art_with_near_duplicate_colors": 15,
+    "art_opaque_colors_range": [
+      130,
+      1603
+    ],
+    "estimate_wrong_on_outputs": 8,
+    "checked_wrong_on_outputs": 0
+  },
+  "images": [
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/final-mage.png",
+      "role": "model_output",
+      "sha256": "a2b99ae99bb24cf44519e91f75d52d3a94f0e6f1d2dcca93a49ddf9a1c39ef03",
+      "bytes": 3164,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          64,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 213,
+        "alpha_zero": 3109,
+        "alpha_partial": 2,
+        "alpha_class": "graded",
+        "near_duplicate_pairs": 361,
+        "colors_with_a_near_twin": 185
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/fixed-head.png",
+      "role": "model_output",
+      "sha256": "dd965154188bbff4e6f403f69b5fd11b72ebca2a6c6eb2ca3dd1d360c68ccd20",
+      "bytes": 3139,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          64,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 177,
+        "alpha_zero": 3109,
+        "alpha_partial": 1,
+        "alpha_class": "graded",
+        "near_duplicate_pairs": 269,
+        "colors_with_a_near_twin": 158
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/human-mage.png",
+      "role": "model_output",
+      "sha256": "d1a6faab4a62d7e65442c059b3575ecb63d27e4f5964573f96cd7fe1e3271fc6",
+      "bytes": 3031,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          64,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 130,
+        "alpha_zero": 3161,
+        "alpha_partial": 1,
+        "alpha_class": "graded",
+        "near_duplicate_pairs": 163,
+        "colors_with_a_near_twin": 114
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/init-and-inpaint-settings.png",
+      "role": "ui_screenshot",
+      "sha256": "b217b431544cd6895c5248f7e007a08c0776862fcc751d3a3a31c299af11729a",
+      "bytes": 71633,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        558,
+        896
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        558,
+        896
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          54,
+          87
+        ],
+        "period": [
+          10.27,
+          10.27
+        ],
+        "native": false,
+        "confidence": 0.236
+      },
+      "forja_grid_checked": {
+        "cells": [
+          54,
+          87
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 1417,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/init-image.png",
+      "role": "user_input",
+      "sha256": "b58a5a131207afa5598e3486882c7f5167c00aede7ed94caa135d6d7d2cd22fe",
+      "bytes": 520,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          64,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 3,
+        "alpha_zero": 3113,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 0,
+        "colors_with_a_near_twin": 0
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/pixellab-menu1.png",
+      "role": "ui_screenshot",
+      "sha256": "af73bc49212b4b778d4b0f75e692154fbd5c672e6a975b29c0c1b2ea7410e79e",
+      "bytes": 11709,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        264,
+        281
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        264,
+        281
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          21,
+          22
+        ],
+        "period": [
+          12.39,
+          12.39
+        ],
+        "native": false,
+        "confidence": 0.293
+      },
+      "forja_grid_checked": {
+        "cells": [
+          21,
+          22
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 54,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 172,
+        "colors_with_a_near_twin": 52
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/pixellab-menu2.png",
+      "role": "ui_screenshot",
+      "sha256": "d55df011ab85146b40c762e0d0769af123a49ab7969117c3be59ed330d3a3e08",
+      "bytes": 18845,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        328,
+        396
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        328,
+        396
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          28,
+          34
+        ],
+        "period": [
+          11.56,
+          11.56
+        ],
+        "native": false,
+        "confidence": 0.163
+      },
+      "forja_grid_checked": {
+        "cells": [
+          28,
+          34
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 63,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 207,
+        "colors_with_a_near_twin": 61
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/style-dialog.png",
+      "role": "ui_screenshot",
+      "sha256": "ac350f44a5dc714accc05adb8285e33bf2e19d09b578393e2f7c60a2e22b7d57",
+      "bytes": 61043,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        739,
+        899
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        739,
+        899
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          35,
+          43
+        ],
+        "period": [
+          20.44,
+          20.44
+        ],
+        "native": false,
+        "confidence": 0.26
+      },
+      "forja_grid_checked": {
+        "cells": [
+          35,
+          43
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 108,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 415,
+        "colors_with_a_near_twin": 106
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/getting-started/use-inpainting.png",
+      "role": "ui_screenshot",
+      "sha256": "260aa4f7fbbb5ddbdda36e671406f3ec9bea3d5751f7a07db3739804e2cd73f4",
+      "bytes": 72582,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        558,
+        897
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        558,
+        897
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          55,
+          88
+        ],
+        "period": [
+          10.19,
+          10.19
+        ],
+        "native": false,
+        "confidence": 0.246
+      },
+      "forja_grid_checked": {
+        "cells": [
+          55,
+          88
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 1299,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/map-tiles/expand-settings.png",
+      "role": "ui_screenshot",
+      "sha256": "ad98db84502a97d577f8cd385c742ff36a287b015ad6c4e6087b8dbadd9a68fe",
+      "bytes": 12323,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        642,
+        353
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        642,
+        353
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          28,
+          16
+        ],
+        "period": [
+          21.91,
+          21.91
+        ],
+        "native": false,
+        "confidence": 0.453
+      },
+      "forja_grid_checked": {
+        "cells": [
+          28,
+          16
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 171,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1310,
+        "colors_with_a_near_twin": 158
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/map-tiles/start-init.png",
+      "role": "user_input",
+      "sha256": "6f3f46f865dc1e6a6eed7888c27ddd1c4b204a2b23aa38b595150a572fb0cf50",
+      "bytes": 1547,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        128,
+        128
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        128,
+        128
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          128,
+          128
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          128,
+          128
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 7,
+        "alpha_zero": 12288,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 0,
+        "colors_with_a_near_twin": 0
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/map-tiles/step1-options.png",
+      "role": "ui_screenshot",
+      "sha256": "620c9132631be3d72c32abae6e2a451874b4e645af274b565c386845ccce672a",
+      "bytes": 10535,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        663,
+        764
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        663,
+        764
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          29,
+          33
+        ],
+        "period": [
+          22.56,
+          22.56
+        ],
+        "native": false,
+        "confidence": 0.251
+      },
+      "forja_grid_checked": {
+        "cells": [
+          29,
+          33
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 21,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 3,
+        "colors_with_a_near_twin": 6
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/map-tiles/step1-result.png",
+      "role": "model_output",
+      "sha256": "1dc67724037f2643b71ca9762c7430d4943206439e3e19380a43304eafc7c516",
+      "bytes": 8185,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        128,
+        128
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        128,
+        128
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          128,
+          128
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          128,
+          128
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 209,
+        "alpha_zero": 12288,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 2307,
+        "colors_with_a_near_twin": 206
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/map-tiles/step5.png",
+      "role": "model_output",
+      "sha256": "80eb64d9760bcd8f4b1f7d9b1e6bb89b67eb3c0a2a6fdb8103513567349705b2",
+      "bytes": 30597,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        128,
+        128
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        128,
+        128
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          8,
+          9
+        ],
+        "period": [
+          16.2,
+          16.2
+        ],
+        "native": false,
+        "confidence": 0.491
+      },
+      "forja_grid_checked": {
+        "cells": [
+          128,
+          128
+        ],
+        "native": true,
+        "notes": [
+          "periodo 16.20 recusado: pureza das celulas 0.63 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 1603,
+        "alpha_zero": 0,
+        "alpha_partial": 279,
+        "alpha_class": "graded",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/pirate-perspective-change.gif",
+      "role": "model_output",
+      "sha256": "d877e283cd78ea978c7c5ba9b442c74aa5658a6f8478d7232fbace65b96e3cb7",
+      "bytes": 5418,
+      "format": "GIF",
+      "mode": "P",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 3,
+      "distinct_frames": 3,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          12,
+          11
+        ],
+        "period": [
+          6.14,
+          6.14
+        ],
+        "native": false,
+        "confidence": 0.68
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "periodo 6.14 recusado: pureza das celulas 0.54 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 195,
+        "alpha_zero": 2919,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 235,
+        "colors_with_a_near_twin": 165
+      },
+      "metadata": {}
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/pirate-rotation.gif",
+      "role": "model_output",
+      "sha256": "fa5a8bd89f846749fa8068bc5ba05ae09f84b922066d0cebc24c3fa544b1aa52",
+      "bytes": 13804,
+      "format": "GIF",
+      "mode": "P",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "distinct_frames": 8,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          12,
+          11
+        ],
+        "period": [
+          6.14,
+          6.14
+        ],
+        "native": false,
+        "confidence": 0.68
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "periodo 6.14 recusado: pureza das celulas 0.54 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 195,
+        "alpha_zero": 2919,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 235,
+        "colors_with_a_near_twin": 165
+      },
+      "metadata": {}
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/pirate-south-east.png",
+      "role": "model_output",
+      "sha256": "fc6c2e456b9adaf8e04596eb1972b9191ce6892b22d954e6ed17868446d048f6",
+      "bytes": 3011,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          12,
+          10
+        ],
+        "period": [
+          6.17,
+          6.17
+        ],
+        "native": false,
+        "confidence": 0.601
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "periodo 6.17 recusado: pureza das celulas 0.55 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 146,
+        "alpha_zero": 2968,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 144,
+        "colors_with_a_near_twin": 111
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/pirate_south.png",
+      "role": "model_output",
+      "sha256": "f1f5fe1a4747f1a7144fb777cf772b1a2b25c0ea4111ea4cc303058581fa6c58",
+      "bytes": 3323,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        64,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        64,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          12,
+          11
+        ],
+        "period": [
+          6.14,
+          6.14
+        ],
+        "native": false,
+        "confidence": 0.68
+      },
+      "forja_grid_checked": {
+        "cells": [
+          64,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "periodo 6.14 recusado: pureza das celulas 0.54 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 195,
+        "alpha_zero": 2919,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 235,
+        "colors_with_a_near_twin": 165
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/rotation-settings.png",
+      "role": "ui_screenshot",
+      "sha256": "5049b47775590847b1ae90e914404baba7445efd485fe8ecd8b17646c1360e52",
+      "bytes": 68472,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        526,
+        861
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        526,
+        861
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          21,
+          38
+        ],
+        "period": [
+          23.01,
+          23.01
+        ],
+        "native": false,
+        "confidence": 0.25
+      },
+      "forja_grid_checked": {
+        "cells": [
+          21,
+          38
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 1641,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/views-and-directions-vertical.png",
+      "role": "model_output",
+      "sha256": "22b7bcc83e64dcd75c9378abe4fab63fba0f74278f0c8088f46dbbc32aa37646",
+      "bytes": 90521,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        512,
+        1360
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        512,
+        1360
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          29,
+          77
+        ],
+        "period": [
+          17.78,
+          17.78
+        ],
+        "native": false,
+        "confidence": 0.605
+      },
+      "forja_grid_checked": {
+        "cells": [
+          512,
+          1360
+        ],
+        "native": true,
+        "notes": [
+          "periodo 17.78 recusado: pureza das celulas 0.57 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 167,
+        "alpha_zero": 595888,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 169,
+        "colors_with_a_near_twin": 136
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/rotating-a-character/views-and-directions.png",
+      "role": "model_output",
+      "sha256": "8751c91bc46311d63ac429bc5714211bc8e139bb9c770d18497e32bbe2681f1d",
+      "bytes": 52408,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        576,
+        256
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        576,
+        256
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          576,
+          256
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          576,
+          256
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 167,
+        "alpha_zero": 122348,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 169,
+        "colors_with_a_near_twin": 136
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/animation-to-animation.png",
+      "role": "ui_screenshot",
+      "sha256": "0aa6834c724909244cdceab715768d9678bea63ebde7805d2672f0970252036a",
+      "bytes": 43674,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        1269,
+        868
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        1269,
+        868
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          49,
+          33
+        ],
+        "period": [
+          25.81,
+          25.81
+        ],
+        "native": false,
+        "confidence": 0.147
+      },
+      "forja_grid_checked": {
+        "cells": [
+          49,
+          33
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 823,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "gAMA",
+          "pHYs",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/generate-1-frozen.png",
+      "role": "ui_screenshot",
+      "sha256": "ba1c2b8bdd46d18f3a31cce2e718ae23d8ebfa2860330c7455485ec6487e555c",
+      "bytes": 44730,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        1267,
+        983
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        1267,
+        983
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          63,
+          49
+        ],
+        "period": [
+          20.13,
+          20.13
+        ],
+        "native": false,
+        "confidence": 0.267
+      },
+      "forja_grid_checked": {
+        "cells": [
+          63,
+          49
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 595,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 861,
+        "colors_with_a_near_twin": 448
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "gAMA",
+          "pHYs",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/generate-3-frozen.png",
+      "role": "ui_screenshot",
+      "sha256": "bd70abb7cbe2f3aaa6454d0ad647eda51aefe35411cd54c6a51133e84a87d6dc",
+      "bytes": 42708,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        1029,
+        832
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        1029,
+        832
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          47,
+          38
+        ],
+        "period": [
+          21.79,
+          21.79
+        ],
+        "native": false,
+        "confidence": 0.198
+      },
+      "forja_grid_checked": {
+        "cells": [
+          47,
+          38
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 822,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "gAMA",
+          "pHYs",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/generate-custom.png",
+      "role": "ui_screenshot",
+      "sha256": "b273e0ca787effd28bf7ede0f319b20b0207aea0546361f726cbbc0d1d25a213",
+      "bytes": 43013,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        1027,
+        828
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        1027,
+        828
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          47,
+          38
+        ],
+        "period": [
+          21.79,
+          21.79
+        ],
+        "native": false,
+        "confidence": 0.211
+      },
+      "forja_grid_checked": {
+        "cells": [
+          47,
+          38
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 826,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "gAMA",
+          "pHYs",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/generate_1_and_template.gif",
+      "role": "model_output",
+      "sha256": "15fac7b59c3bd01d3550f5840542c8904bce535533e8a487f6e10958e40f1a31",
+      "bytes": 7290,
+      "format": "GIF",
+      "mode": "P",
+      "size": [
+        128,
+        64
+      ],
+      "frames": 4,
+      "distinct_frames": 4,
+      "exact_scale": 1,
+      "logical_size": [
+        128,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          128,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          128,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 166,
+        "alpha_zero": 6606,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 61,
+        "colors_with_a_near_twin": 78
+      },
+      "metadata": {}
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/generate_2_and_template.gif",
+      "role": "model_output",
+      "sha256": "0888ee620ac64528a68b741581cf8d2a04bf9625677180394b04e9a664ac7bf2",
+      "bytes": 7259,
+      "format": "GIF",
+      "mode": "P",
+      "size": [
+        128,
+        64
+      ],
+      "frames": 4,
+      "distinct_frames": 4,
+      "exact_scale": 1,
+      "logical_size": [
+        128,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          128,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          128,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 161,
+        "alpha_zero": 6634,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 58,
+        "colors_with_a_near_twin": 76
+      },
+      "metadata": {}
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/generate_3_and_template.gif",
+      "role": "model_output",
+      "sha256": "0e269966a07af609e3521c60251fd0ab8bc4755d51916dc771db035f61bc4de9",
+      "bytes": 7265,
+      "format": "GIF",
+      "mode": "P",
+      "size": [
+        128,
+        64
+      ],
+      "frames": 4,
+      "distinct_frames": 4,
+      "exact_scale": 1,
+      "logical_size": [
+        128,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          128,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          128,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 161,
+        "alpha_zero": 6634,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 58,
+        "colors_with_a_near_twin": 76
+      },
+      "metadata": {}
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/select-frames.png",
+      "role": "ui_screenshot",
+      "sha256": "834ad300d5c54e37f23656e1486360a5131a717ac7b5a1b9872760fc024a9676",
+      "bytes": 5282,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        517,
+        103
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        517,
+        103
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          517,
+          103
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          517,
+          103
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 30,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 10,
+        "colors_with_a_near_twin": 16
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "gAMA",
+          "pHYs",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/guides/skeleton-animation/template-skeleton.png",
+      "role": "user_input",
+      "sha256": "53abc996c640cee9240e43d2ada79e1a2535bce0bc143ac9748c8bd8fac16dd6",
+      "bytes": 49740,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        1271,
+        835
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        1271,
+        835
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          59,
+          39
+        ],
+        "period": [
+          21.45,
+          21.45
+        ],
+        "native": false,
+        "confidence": 0.204
+      },
+      "forja_grid_checked": {
+        "cells": [
+          59,
+          39
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 836,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "gAMA",
+          "pHYs",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/installation/add-extension.png",
+      "role": "ui_screenshot",
+      "sha256": "d220bdb6837001efafdcc2ae26a798bd180784ab1a004715a8f18f29d45b3c94",
+      "bytes": 7941,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        449,
+        495
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        449,
+        495
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          27,
+          30
+        ],
+        "period": [
+          16.62,
+          16.62
+        ],
+        "native": false,
+        "confidence": 0.351
+      },
+      "forja_grid_checked": {
+        "cells": [
+          27,
+          30
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 13,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 2,
+        "colors_with_a_near_twin": 4
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/installation/file-access.png",
+      "role": "ui_screenshot",
+      "sha256": "a3004696ec052cbf9d24ce975b4da6a1664d8116be454c3b23a13ce7d577fe03",
+      "bytes": 5203,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        660,
+        304
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 2,
+      "logical_size": [
+        330,
+        152
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          660,
+          304
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          330,
+          152
+        ],
+        "native": false,
+        "notes": [
+          "ampliacao exata 2x: medida, nao estimada"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 13,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 2,
+        "colors_with_a_near_twin": 4
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/installation/pixellab-menu.png",
+      "role": "ui_screenshot",
+      "sha256": "012293345032fd46e4e6180e144dec177b2f79fc2a11a03519dd9de67f632258",
+      "bytes": 28853,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        228,
+        637
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        228,
+        637
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          18,
+          50
+        ],
+        "period": [
+          12.6,
+          12.6
+        ],
+        "native": false,
+        "confidence": 0.266
+      },
+      "forja_grid_checked": {
+        "cells": [
+          18,
+          50
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 208,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 2471,
+        "colors_with_a_near_twin": 204
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/installation/websocket-access.png",
+      "role": "ui_screenshot",
+      "sha256": "a0ebcf16a9502ad986ed7924458fff78e23f823ca12270331af71e755bf79524",
+      "bytes": 5228,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        682,
+        304
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 2,
+      "logical_size": [
+        341,
+        152
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          26,
+          11
+        ],
+        "period": [
+          26.33,
+          26.33
+        ],
+        "native": false,
+        "confidence": 0.23
+      },
+      "forja_grid_checked": {
+        "cells": [
+          341,
+          152
+        ],
+        "native": false,
+        "notes": [
+          "ampliacao exata 2x: medida, nao estimada"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 13,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 2,
+        "colors_with_a_near_twin": 4
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/A2AMENU.png",
+      "role": "ui_screenshot",
+      "sha256": "1ce277feba751d6d5cad10a51ea219f94a7eaba775f079649a09c11eec8e1d20",
+      "bytes": 5332,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        364
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        364
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          46,
+          35
+        ],
+        "period": [
+          10.05,
+          10.05
+        ],
+        "native": false,
+        "confidence": 0.358
+      },
+      "forja_grid_checked": {
+        "cells": [
+          46,
+          35
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 15,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 4,
+        "colors_with_a_near_twin": 8
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/Animation2AnimationMM.png",
+      "role": "ui_screenshot",
+      "sha256": "28957ca402f56f578478c66013a268af8b13e9fba0f8e13b1add3ae8b58a7ee3",
+      "bytes": 2432,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        133,
+        320
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        133,
+        320
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          21,
+          50
+        ],
+        "period": [
+          6.23,
+          6.23
+        ],
+        "native": false,
+        "confidence": 0.321
+      },
+      "forja_grid_checked": {
+        "cells": [
+          21,
+          50
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 13,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 2,
+        "colors_with_a_near_twin": 4
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/Imageamnt.png",
+      "role": "ui_screenshot",
+      "sha256": "05ae300ee55efd2791e42640ab4cdfd2f95516cbd835f80519fb6a43e8acde0b",
+      "bytes": 1094,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        64
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        64
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          463,
+          64
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          463,
+          64
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 11,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/actiona2a.png",
+      "role": "ui_screenshot",
+      "sha256": "2a8c5c8f873d2b3a12565ed09d8fff2ded499daf8e801ed001cf919baf61b6de",
+      "bytes": 445,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        21
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        21
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          463,
+          21
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          463,
+          21
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 7,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/animationrefarea.png",
+      "role": "ui_screenshot",
+      "sha256": "ae03d71dc341f408c0446b459b1cc76ebad6060bd41759dd5938e50e96757aa3",
+      "bytes": 756,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        258,
+        89
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        258,
+        89
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          16,
+          6
+        ],
+        "period": [
+          15.91,
+          15.91
+        ],
+        "native": false,
+        "confidence": 0.369
+      },
+      "forja_grid_checked": {
+        "cells": [
+          16,
+          6
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 6,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/apperance2a.png",
+      "role": "ui_screenshot",
+      "sha256": "fc8436ca8e7eadce1f27bef454523c6802c8fe2ceeebef32c617609c12e4cca2",
+      "bytes": 6111,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        462,
+        227
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        462,
+        227
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          44,
+          22
+        ],
+        "period": [
+          10.5,
+          10.5
+        ],
+        "native": false,
+        "confidence": 0.347
+      },
+      "forja_grid_checked": {
+        "cells": [
+          44,
+          22
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 9,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/cameraa2a.png",
+      "role": "ui_screenshot",
+      "sha256": "8222bd068d27cab4217fa38522554522e873791ef3397e916b1660c2945b74ff",
+      "bytes": 1409,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        63
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        63
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          463,
+          63
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          463,
+          63
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 9,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/desca2a.png",
+      "role": "ui_screenshot",
+      "sha256": "f5b9c939451d7f1d4ae4075fb423b8f29062f1a78deafad41710bc9a262712fb",
+      "bytes": 706,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        34
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        34
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          463,
+          34
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          463,
+          34
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 8,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/directiona2a.png",
+      "role": "ui_screenshot",
+      "sha256": "d2836c823021c1fcc84c74f68e509f40bf8a719160e9f6c8561eb912944cdf74",
+      "bytes": 1625,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        114
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        114
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          34,
+          8
+        ],
+        "period": [
+          13.8,
+          13.8
+        ],
+        "native": false,
+        "confidence": 0.324
+      },
+      "forja_grid_checked": {
+        "cells": [
+          34,
+          8
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 9,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "pHYs"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/framerefa2a.png",
+      "role": "user_input",
+      "sha256": "dc11fc1c22173f411fe808d3f55fa5cc4a93e21c42a20166c73b42d8aba8f41e",
+      "bytes": 5626,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        58,
+        88
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        58,
+        88
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          58,
+          88
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          58,
+          88
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 32,
+        "alpha_zero": 2594,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 0,
+        "colors_with_a_near_twin": 0
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/genninga2a.png",
+      "role": "ui_screenshot",
+      "sha256": "15dcf4f49eced1323fe876fcb31570c569cb471ddf52e6112b4d9e8e6f025ea3",
+      "bytes": 119394,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        671,
+        324
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        671,
+        324
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          671,
+          324
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          671,
+          324
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 17455,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": null
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/initrefchecksa2a.png",
+      "role": "ui_screenshot",
+      "sha256": "6dd20cc696f3663c8cefd7f455b7b277be864efabd7e6c295d671079d15e2317",
+      "bytes": 2214,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        463,
+        83
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        83
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          37,
+          6
+        ],
+        "period": [
+          12.45,
+          12.45
+        ],
+        "native": false,
+        "confidence": 0.2
+      },
+      "forja_grid_checked": {
+        "cells": [
+          37,
+          6
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 13,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/numgena2a.png",
+      "role": "ui_screenshot",
+      "sha256": "fb2a7b56f0617058706518b506cbb9e5e2b53121f4cbfc77fb2e6c2f4d69ab6e",
+      "bytes": 6199,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        469,
+        140
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        469,
+        140
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          40,
+          12
+        ],
+        "period": [
+          11.69,
+          11.69
+        ],
+        "native": false,
+        "confidence": 0.506
+      },
+      "forja_grid_checked": {
+        "cells": [
+          40,
+          12
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 100,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 422,
+        "colors_with_a_near_twin": 91
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/refa2agen.png",
+      "role": "ui_screenshot",
+      "sha256": "b0c3900d2c4e1d971ee6acaa81c32f691ae8dcf910132aca0cd342111d1349f4",
+      "bytes": 10696,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        469,
+        148
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        469,
+        148
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          41,
+          13
+        ],
+        "period": [
+          11.54,
+          11.54
+        ],
+        "native": false,
+        "confidence": 0.566
+      },
+      "forja_grid_checked": {
+        "cells": [
+          41,
+          13
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 266,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 3113,
+        "colors_with_a_near_twin": 198
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/resultsa2a.gif",
+      "role": "model_output",
+      "sha256": "7df0087f234bcd0e6c42e858ac6eaa0011c5ce74b38b20fc45a3275304a7a459",
+      "bytes": 219959,
+      "format": "GIF",
+      "mode": "P",
+      "size": [
+        384,
+        384
+      ],
+      "frames": 6,
+      "distinct_frames": 6,
+      "exact_scale": 1,
+      "logical_size": [
+        384,
+        384
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          26,
+          26
+        ],
+        "period": [
+          15.05,
+          15.05
+        ],
+        "native": false,
+        "confidence": 0.65
+      },
+      "forja_grid_checked": {
+        "cells": [
+          384,
+          384
+        ],
+        "native": true,
+        "notes": [
+          "periodo 15.05 recusado: pureza das celulas 0.55 < 0.8; tratada como pixel art nativa (escala 1). Se for uma ampliacao, de --scale ou --cells"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 252,
+        "alpha_zero": 96099,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 163,
+        "colors_with_a_near_twin": 123
+      },
+      "metadata": {}
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/animation-to-animation/robustfreedomguidance.png",
+      "role": "ui_screenshot",
+      "sha256": "c1625650b3d534aeae7f2640d036e9cad7a4f38d076b340d26397fd821a19088",
+      "bytes": 1102,
+      "format": "PNG",
+      "mode": "RGB",
+      "size": [
+        469,
+        63
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        469,
+        63
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          48,
+          6
+        ],
+        "period": [
+          9.87,
+          9.87
+        ],
+        "native": false,
+        "confidence": 0.593
+      },
+      "forja_grid_checked": {
+        "cells": [
+          48,
+          6
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 10,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/description.png",
+      "role": "ui_screenshot",
+      "sha256": "0fd9b1c2c8bcc4c59ae123ff8a791396bf6ecf124582f147940caca27430a6cb",
+      "bytes": 747,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        471,
+        32
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        471,
+        32
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          471,
+          32
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          471,
+          32
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 7,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/guidance.png",
+      "role": "ui_screenshot",
+      "sha256": "1b3ecc74ecfd623b1a209b6bf38785c54ece525f628098f5121f103106498598",
+      "bytes": 618,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        467,
+        25
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        467,
+        25
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          467,
+          25
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          467,
+          25
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 10,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/init.png",
+      "role": "ui_screenshot",
+      "sha256": "55eba63af9f438963275c766d217dd4c9c0fbe95b6b0e2de79e534b995d3ffb0",
+      "bytes": 1185,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        462,
+        92
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        462,
+        92
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          38,
+          7
+        ],
+        "period": [
+          12.05,
+          12.05
+        ],
+        "native": false,
+        "confidence": 0.273
+      },
+      "forja_grid_checked": {
+        "cells": [
+          38,
+          7
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 12,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 3,
+        "colors_with_a_near_twin": 6
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/json.png",
+      "role": "ui_screenshot",
+      "sha256": "eac2a8bb6e14e5bde07127682eaf2d3bcb5b7734c965e11475bd39eddaf42d18",
+      "bytes": 1451,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        471,
+        70
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        471,
+        70
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          40,
+          6
+        ],
+        "period": [
+          11.72,
+          11.72
+        ],
+        "native": false,
+        "confidence": 0.204
+      },
+      "forja_grid_checked": {
+        "cells": [
+          40,
+          6
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 9,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/menu.png",
+      "role": "ui_screenshot",
+      "sha256": "7689d45486c90fad8bc2a6d3ce5e03e0b637eb9f328bf43f51e871ceac870996",
+      "bytes": 3181,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        144,
+        246
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        144,
+        246
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          23,
+          39
+        ],
+        "period": [
+          6.18,
+          6.18
+        ],
+        "native": false,
+        "confidence": 0.363
+      },
+      "forja_grid_checked": {
+        "cells": [
+          23,
+          39
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 12,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 2,
+        "colors_with_a_near_twin": 4
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/menuwindow.png",
+      "role": "ui_screenshot",
+      "sha256": "ee93ba84bb70ff6c5e03c03d458ed807709da6b3d7a67069e1d241b3caf8dce1",
+      "bytes": 10852,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        471,
+        403
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        471,
+        403
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          43,
+          37
+        ],
+        "period": [
+          10.93,
+          10.93
+        ],
+        "native": false,
+        "confidence": 0.338
+      },
+      "forja_grid_checked": {
+        "cells": [
+          43,
+          37
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 153,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1103,
+        "colors_with_a_near_twin": 146
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/osd.png",
+      "role": "ui_screenshot",
+      "sha256": "fc8436ca8e7eadce1f27bef454523c6802c8fe2ceeebef32c617609c12e4cca2",
+      "bytes": 6111,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        462,
+        227
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        462,
+        227
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          44,
+          22
+        ],
+        "period": [
+          10.5,
+          10.5
+        ],
+        "native": false,
+        "confidence": 0.347
+      },
+      "forja_grid_checked": {
+        "cells": [
+          44,
+          22
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 9,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/shapes.png",
+      "role": "ui_screenshot",
+      "sha256": "4e42ca7497fbc6066f44d4b0956de86acb69bec23988719176a85a9b443bcf22",
+      "bytes": 5153,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        320,
+        96
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        320,
+        96
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          21,
+          7
+        ],
+        "period": [
+          15.53,
+          15.53
+        ],
+        "native": false,
+        "confidence": 0.29
+      },
+      "forja_grid_checked": {
+        "cells": [
+          21,
+          7
+        ],
+        "native": false,
+        "notes": []
+      },
+      "logical": {
+        "opaque_colors": 175,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1686,
+        "colors_with_a_near_twin": 174
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/isometric/tilesize.png",
+      "role": "ui_screenshot",
+      "sha256": "5289bf412ffa6fbe9a02a6d3af28e800d73a59a67f93c8e881a9f36c0c7ea5da",
+      "bytes": 1087,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        463,
+        55
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 1,
+      "logical_size": [
+        463,
+        55
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          463,
+          55
+        ],
+        "period": [
+          1.0,
+          1.0
+        ],
+        "native": true,
+        "confidence": 0.0
+      },
+      "forja_grid_checked": {
+        "cells": [
+          463,
+          55
+        ],
+        "native": true,
+        "notes": [
+          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 9,
+        "alpha_zero": 0,
+        "alpha_partial": 0,
+        "alpha_class": "none",
+        "near_duplicate_pairs": 1,
+        "colors_with_a_near_twin": 2
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    },
+    {
+      "url": "https://www.pixellab.ai/docs/tools/sand-ocean-tileset.png",
+      "role": "model_output",
+      "sha256": "359667caf96027b62315618b7eabe55b44d315eb1a35ae8ecf832a2dd33e726d",
+      "bytes": 10821,
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        320,
+        256
+      ],
+      "frames": 1,
+      "distinct_frames": 1,
+      "exact_scale": 2,
+      "logical_size": [
+        160,
+        128
+      ],
+      "forja_grid_estimate": {
+        "cells": [
+          80,
+          64
+        ],
+        "period": [
+          4.0,
+          4.0
+        ],
+        "native": false,
+        "confidence": 0.233
+      },
+      "forja_grid_checked": {
+        "cells": [
+          160,
+          128
+        ],
+        "native": false,
+        "notes": [
+          "ampliacao exata 2x: medida, nao estimada"
+        ]
+      },
+      "logical": {
+        "opaque_colors": 133,
+        "alpha_zero": 3072,
+        "alpha_partial": 0,
+        "alpha_class": "binary",
+        "near_duplicate_pairs": 119,
+        "colors_with_a_near_twin": 88
+      },
+      "metadata": {
+        "chunks": [
+          "IDAT",
+          "IEND",
+          "IHDR",
+          "sRGB"
+        ],
+        "text_keys": [],
+        "c2pa": false,
+        "exif": false,
+        "animated": false
+      }
+    }
+  ],
+  "limits": [
+    "Imagens de documentacao: escolhidas pelo fornecedor, modelo e versao desconhecidos.",
+    "Uma ampliacao exata ou nativa diz como o ficheiro foi gravado, nao como foi gerado."
+  ]
+}

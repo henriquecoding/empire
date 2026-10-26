@@ -13,7 +13,7 @@ from statistics import median
 
 from PIL import Image, ImageChops, ImageFilter
 
-from . import color, grid as gridmod, matte, resample
+from . import color, gridcheck, matte, resample
 from .imageops import opaque_bbox
 from .placement import ALIGNS, ANCHORS, anchor_point, frames
 
@@ -192,10 +192,10 @@ def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pa
         crops = [c.resize((max(1, round(c.width * target / (f.box[3] - f.box[1]))),
                            max(1, round(c.height * target / (f.box[3] - f.box[1])))), Image.Resampling.LANCZOS)
                  for c, f in zip(crops, figures)]
-    periods = [gridmod.detect(c).period[0] for c in crops]
+    periods = [gridcheck.detect(c).period[0] for c in crops]
     shared = scale or (median(p for p in periods if p > 1) if any(p > 1 for p in periods) else 1.0)
     for f, crop, own in zip(figures, crops, periods):
-        g = gridmod.detect(crop, scale=shared) if shared > 1 else gridmod.detect(crop)
+        g = gridcheck.detect(crop, scale=shared) if shared > 1 else gridcheck.detect(crop)
         sampled = resample.resample(crop, g)
         native, _ = matte.remove(sampled.image, color.to_hex(bg) if bg else None)
         box = opaque_bbox(native) or (0, 0, native.width, native.height)

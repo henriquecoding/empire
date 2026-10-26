@@ -1,0 +1,91 @@
+{
+  "manifest": {
+    "files": 12,
+    "matching": 12,
+    "rows": [
+      {
+        "file": "Relatorio-Forja-Pixels-Cores-Claude-2026-10-25.md",
+        "ok": true
+      },
+      {
+        "file": "Dossie-PixelLab-200-Videos-2026-10-25.md",
+        "ok": true
+      },
+      {
+        "file": "README-Pacote-Claude.md",
+        "ok": true
+      },
+      {
+        "file": "provas-pixels-cores.py",
+        "ok": true
+      },
+      {
+        "file": "fichamentos-video.json",
+        "ok": true
+      },
+      {
+        "file": "catalogo/cobertura-videos.csv",
+        "ok": true
+      },
+      {
+        "file": "catalogo/cobertura-videos.json",
+        "ok": true
+      },
+      {
+        "file": "catalogo/resumo-cobertura.json",
+        "ok": true
+      },
+      {
+        "file": "evidencias/resultados.json",
+        "ok": true
+      },
+      {
+        "file": "evidencias/fontes-codigo.json",
+        "ok": true
+      },
+      {
+        "file": "evidencias/scatter.png",
+        "ok": true
+      },
+      {
+        "file": "evidencias/cluster.png",
+        "ok": true
+      }
+    ]
+  },
+  "catalog_oembed": {
+    "items": 200,
+    "status": {
+      "200": 200
+    },
+    "authors": {
+      "PixelLab": 200
+    },
+    "titles_matching": 199,
+    "differences": [
+      {
+        "video_id": "zqZiQBS3LX0",
+        "status": 200,
+        "author": "PixelLab",
+        "title_match": false,
+        "title_now": "How to Make a Full Game Character in PixelLab (Idle, Walk, Attacks, States)",
+        "title_catalog": "Tutorial: Make a Full Game Character in PixelLab (Idle, Walk, Attacks, States)"
+      }
+    ]
+  },
+  "spec_claims": {
+    "spec_sha256": "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f",
+    "claims": {
+      "reduce_colors_total_512x512": true,
+      "num_colors_and_palette_image_exclusive": true,
+      "dithering_2x2_4x4_8x8": true,
+      "drift_threshold_compares_with_first_frame": true,
+      "drift_threshold_zero_corrects_every_frame": true
+    },
+    "all_true": true
+  },
+  "limits": [
+    "O oEmbed confirma que o video existe, o autor e o titulo de hoje; nao confere legendas.",
+    "A conferencia nao repete a leitura dos videos nem julga a arte."
+  ]
+}

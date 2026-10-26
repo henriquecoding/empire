@@ -3078,5 +3078,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "ART-PIXELLAB-2026-10-26": {
+  "title": "Engenharia reversa do PixelLab: método, contrato, forense e conferência do envio de 26/10",
+  "porque": "O dono pediu a pesquisa de como se faz engenharia reversa e o refinamento de tudo o que já se tinha feito sobre o PixelLab; o contrato público tinha mudado e a Forja divergia dele.",
+  "spec": [
+   "docs/art/research/2026-10-26-pixellab-engenharia-reversa/README.md",
+   "docs/art/research/2026-10-23-pixellab/README.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "ART-PIXELLAB-2026-10-23",
+  "feito": "Metodologia com lei, termos e catálogo de técnicas; dossiê com hipóteses H01–H15 e nível de evidência; coleta, contrato, inferência, forense, conferência e verificador reproduzíveis; adaptador PixelLab conforme o contrato de 26/10; força 0 recusada antes da rede; grade que mede ampliações exatas e recusa períodos desmentidos; envio de 26/10 conferido.",
+  "fora": "Sondas pagas (sem chave nem teto aprovado), treino ou destilação com saídas do PixelLab, rotas privadas, aprovação artística.",
+  "estado": "feito — método pesquisado, achados novos com nível de evidência, Forja conforme o contrato de 26/10, grade",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

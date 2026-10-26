@@ -17,12 +17,15 @@ class RequestTest(unittest.TestCase):
         framed(5, (80, 80), (40, 78)).save(path)
         return str(path)
 
-    def test_explicit_zero_strength_stays_zero(self):
+    def test_explicit_zero_strength_is_not_replaced_and_is_refused_before_the_network(self):
         ref = self.reference()
-        for given, sent in ((None, 300), (0, 0), (500, 500)):
+        for given, sent in ((None, 300), (0, 0), (1, 1), (500, 500)):
             p = plan.make("pixellab", "comic archer", "royal_80", references=[("identity", ref)],
                           init_strength=given)
             self.assertEqual(p.data["request"]["params"]["init_image_strength"], sent, given)
+            self.assertEqual(p.ok, given != 0, given)
+        refused = plan.make("pixellab", "comic archer", "royal_80", references=[("identity", ref)], init_strength=0)
+        self.assertIn("init_image_strength 0 fora de 1-999", " ".join(refused.data["errors"]))
 
     def test_camera_contradiction_blocks_the_plan_before_any_network(self):
         p = plan.make("pixellab", "comic king in three-quarter profile with a short sword", "royal_80")

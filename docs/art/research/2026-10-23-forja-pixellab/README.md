@@ -10,6 +10,10 @@ original" é o pedido, não um resultado: nenhum benchmark comparável foi feito
 abaixo e achou nove falhas, reparadas em [2026-10-23-forja-reparos](../2026-10-23-forja-reparos/README.md)
 (ADR 0089).
 
+A 26/10 a [engenharia reversa continuou](../2026-10-26-pixellab-engenharia-reversa/README.md): o
+contrato mudou, o adaptador PixelLab passou a conferir limites por eixo e intervalos, e a grade deixou de
+destruir sprites nativos.
+
 Esta pasta guarda o que foi lido e medido. Continua o estudo de 18/10
 ([pixel art compacta e PixelLab](../2026-10-18-imperadores-escudeiros/PIXEL-ART-COMPACTA-E-PIXELLAB.md)),
 que já documentava conceito + estilo, resize, unzoom e inpainting.

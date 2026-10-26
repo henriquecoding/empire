@@ -11,7 +11,10 @@ Ela separa capacidades públicas de uma arquitetura própria proposta, com dados
 treino, animação, benchmark e instruções para Claude. Inclui a
 [auditoria da Forja do PR #117](research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md),
 com falhas reproduzidas e prioridades de correção. Não altera o estado de
-aprovação dos assets nem os contratos atuais do jogo.
+aprovação dos assets nem os contratos atuais do jogo. A
+[continuação de 26/10](research/2026-10-26-pixellab-engenharia-reversa/README.md)
+traz o método de engenharia reversa, o contrato atual com a conformidade da
+Forja, a forense das imagens públicas e a errata do que mudou.
 
 ## Ler antes de produzir
 

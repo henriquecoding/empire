@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "status": "planned_not_executed",
+  "results": null,
+  "paid_api_calls": 0,
+  "purpose": "Sondagem caixa-preta do PixelLab pela API oficial, com chave e teto aprovados pelo dono. Cada sonda responde a uma hipotese do DOSSIE.md e tem regra de decisao escrita antes de gastar.",
+  "rules": [
+    "Uso programatico so pela API oficial (termos, 2.2). Nada de automatizar a interface web nem de chamar endpoints nao documentados.",
+    "As saidas nao treinam nem destilam nenhum modelo (termos, 1.2 e 3.3). Ficam em build/forja/sondas/, nunca em art/.",
+    "Cada POST pago passa pela Forja (jobs/<id>.json escrito antes do pedido, --max-calls e --max-usd). Nenhum retry de um POST com resultado desconhecido.",
+    "Pedidos que a especificacao ja diz recusados nao se enviam para 'ver o que acontece': o contrato.py ja os conhece.",
+    "Guardar a resposta bruta (sem a chave), os tempos de fila e de execucao e o custo devolvido em usage.usd.",
+    "Antes de enviar, correr contrato.py: se o hash da especificacao mudou, rever o plano."
+  ],
+  "unit_prices_source": "https://www.pixellab.ai/pixellab-api (estimativas publicas lidas a 26/10/2026; nao sao preco garantido)",
+  "probes": [
+    {
+      "id": "S01",
+      "hypothesis": "H07: a mesma seed no mesmo pedido devolve os mesmos bytes nos modelos classicos",
+      "test_type": "invariance",
+      "endpoint": "POST /v2/create-image-pixen",
+      "params": {"image_size": "64x64", "description": "fixa", "seed": [7, 7, 7, 42, 42, 42]},
+      "calls": 6,
+      "unit_usd": 0.00718,
+      "measure": ["SHA-256 dos PNG", "pixeis diferentes entre repeticoes"],
+      "decision": "Bytes iguais nas tres repeticoes de cada seed: deterministico; diferencas pequenas: nao deterministico (registar a fracao); a Forja grava a seed mas nao promete repeticao."
+    },
+    {
+      "id": "S02",
+      "hypothesis": "H03: pixflux, pixen e bitforge devolvem pixel art nativa no tamanho pedido (escala exata 1) com cores quase repetidas",
+      "test_type": "minimum_functionality",
+      "endpoint": "POST /v2/create-image-{pixflux,pixen,bitforge}",
+      "params": {"image_size": ["64x64", "80x80"], "description": "fixa", "seed": 7},
+      "calls": 6,
+      "unit_usd": 0.0080,
+      "measure": ["forense.py: exact_scale, grade, cores opacas, pares quase iguais, classe do alfa"],
+      "decision": "exact_scale 1 e grade nativa nos seis: a Forja trata a saida como nativa sem estimar; senao registar o modelo e o tamanho que fogem."
+    },
+    {
+      "id": "S03",
+      "hypothesis": "H08: init_image_strength preserva mais a referencia quanto maior, de forma monotona",
+      "test_type": "directional_expectation",
+      "endpoint": "POST /v2/create-image-pixflux",
+      "params": {"image_size": "80x80", "init_image": "referencia aprovada (royal_80)", "init_image_strength": [1, 100, 300, 600, 999], "seed": 7},
+      "calls": 5,
+      "unit_usd": 0.0080,
+      "measure": ["fracao de pixeis iguais a referencia", "distancia media OKLab", "IoU da silhueta"],
+      "decision": "Curva monotona: documentar os pontos uteis por tarefa (ideia, forma, retoque); nao monotona: a forca nao e um controlo fiavel de preservacao."
+    },
+    {
+      "id": "S04",
+      "hypothesis": "H09: color_image obriga a paleta (todos os pixeis opacos na paleta) ou so orienta",
+      "test_type": "directional_expectation",
+      "endpoint": "POST /v2/create-image-pixflux",
+      "params": {"image_size": "64x64", "color_image": "paleta de trabalho do Empire", "seed": [7, 42]},
+      "calls": 4,
+      "unit_usd": 0.0080,
+      "measure": ["fracao de pixeis opacos fora da paleta, com e sem color_image"],
+      "decision": "Zero fora da paleta: e restricao; senao e orientacao e o acabamento da Forja continua obrigatorio."
+    },
+    {
+      "id": "S05",
+      "hypothesis": "H10: o enum outline muda o contorno de forma mensuravel (controlo 'fraco' segundo a documentacao)",
+      "test_type": "directional_expectation",
+      "endpoint": "POST /v2/create-image-pixflux",
+      "params": {"image_size": "64x64", "outline": ["single color black outline", "lineless"], "seed": 7},
+      "calls": 2,
+      "unit_usd": 0.0080,
+      "measure": ["fracao da borda da silhueta com a cor mais escura", "lint royal_64 da Forja"],
+      "decision": "Diferenca clara: usar o campo; diferenca nula: retirar do pedido e deixar o contorno ao acabamento."
+    },
+    {
+      "id": "S06",
+      "hypothesis": "H02: o Pro desenha numa tela de ~1024 px e fatia; o numero de candidatos segue a tabela publicada",
+      "test_type": "minimum_functionality",
+      "endpoint": "POST /v2/generate-image-v2",
+      "params": {"image_size": ["32x32", "85x85", "86x86"], "seed": 7},
+      "calls": 3,
+      "unit_usd": 0.08,
+      "measure": ["numero de imagens", "tamanho de cada uma", "exact_scale e grade", "blocos PNG (C2PA, texto, EXIF)", "tempo de fila e de execucao"],
+      "decision": "64, 16 e 4 imagens confirmam a tabela (contrato, nao fornecedor). Metadados C2PA ou de outro fornecedor seriam evidencia forte; a ausencia nao prova nada, porque o processamento reescreve o PNG."
+    },
+    {
+      "id": "S07",
+      "hypothesis": "H11: a mascara do bitforge e branca = gerar, e o exterior fica identico",
+      "test_type": "invariance",
+      "endpoint": "POST /v2/create-image-bitforge",
+      "params": {"image_size": "64x64", "inpainting_image": "sprite de teste", "mask_image": "quadrado branco 12x12", "seed": 7},
+      "calls": 2,
+      "unit_usd": 0.0072,
+      "measure": ["pixeis mudados fora da mascara antes e depois da recomposicao da Forja"],
+      "decision": "Exterior identico: o fornecedor preserva; senao a recomposicao da Forja e obrigatoria (ja e o comportamento por omissao)."
+    },
+    {
+      "id": "S08",
+      "hypothesis": "H12: o reduce-colors com palette_image partilha uma paleta entre quadros",
+      "test_type": "invariance",
+      "endpoint": "POST /v2/reduce-colors",
+      "params": {"images": "4 quadros 64x64 de um estudo", "palette_image": "paleta de trabalho do Empire"},
+      "calls": 1,
+      "unit_usd": 0.01,
+      "measure": ["cores fora da paleta", "cores usadas por quadro", "pixeis mudados em regioes paradas"],
+      "decision": "Comparar com o quantize da Forja nos mesmos quadros; adotar so o que for melhor numa revisao cega."
+    }
+  ]
+}

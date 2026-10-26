@@ -1,0 +1,89 @@
+{
+  "description": "Conformidade da Forja no commit base (origin/main 74f71a1) contra a especificacao de 26/10, antes do reparo deste trabalho. Gerado por contrato.py; guardado como evidencia do antes.",
+  "forja_commit": "74f71a18d9e8ad87da98d6a696daf86acc6b4c1a",
+  "spec_sha256": "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f",
+  "forja_spec_sha256": "e322e725493611c6bd5c96ea05b8020c5e7859750f4ac588955ae311e5a92fdc",
+  "checked": 63,
+  "mismatches": [
+    {
+      "model": "pixflux",
+      "limit": "min_side",
+      "forja": 1,
+      "spec": 16.0
+    },
+    {
+      "model": "pixflux",
+      "limit": "max_side",
+      "forja": null,
+      "spec": 400.0
+    },
+    {
+      "model": "pixflux",
+      "range": "text_guidance_scale",
+      "forja": null,
+      "spec": {
+        "minimum": 1.0,
+        "maximum": 20.0,
+        "default": 8
+      }
+    },
+    {
+      "model": "pixflux",
+      "range": "init_image_strength",
+      "forja": null,
+      "spec": {
+        "minimum": 1.0,
+        "maximum": 999.0,
+        "default": 300
+      }
+    },
+    {
+      "model": "pixen",
+      "limit": "max_side",
+      "forja": null,
+      "spec": 768.0
+    },
+    {
+      "model": "bitforge",
+      "limit": "min_side",
+      "forja": 1,
+      "spec": 16.0
+    },
+    {
+      "model": "bitforge",
+      "limit": "max_side",
+      "forja": null,
+      "spec": 200.0
+    },
+    {
+      "model": "bitforge",
+      "range": "text_guidance_scale",
+      "forja": null,
+      "spec": {
+        "minimum": 1.0,
+        "maximum": 20.0,
+        "default": 8.0
+      }
+    },
+    {
+      "model": "bitforge",
+      "range": "style_strength",
+      "forja": null,
+      "spec": {
+        "minimum": 0.0,
+        "maximum": 100.0,
+        "default": 0
+      }
+    },
+    {
+      "model": "bitforge",
+      "range": "init_image_strength",
+      "forja": null,
+      "spec": {
+        "minimum": 1.0,
+        "maximum": 999.0,
+        "default": 300
+      }
+    }
+  ]
+}

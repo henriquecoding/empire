@@ -294,3 +294,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [ART-PIXELLAB-2026-10-23](ART-PIXELLAB-2026-10-23.md) | PixelLab: pesquisa, projeto técnico e auditoria da Forja do Claude | ART-KNOWLEDGE-2026-10-19 | feito |
 | [FORJA-02](FORJA-02.md) | Reparar a Forja pela auditoria (F01–F09) e fechar uma fatia vertical royal_64/royal_80 | FORJA-01 | feito — reparos testados; piloto pago definido e por executar (sem chaves; teto por aprovar) |
 | [FORJA-03](FORJA-03.md) | A Forja julga armas e equipamento: vereditos, manifesto, geometria e reparo na máscara (relatório de 24–25/10) | FORJA-02 | parcial — P0 provado no arqueiro; rei, escudeiro, P1 e P2 por fazer |
+| [ART-PIXELLAB-2026-10-26](ART-PIXELLAB-2026-10-26.md) | PixelLab: método de engenharia reversa, contrato, forense, Forja conforme e conferência do envio de 26/10 | ART-PIXELLAB-2026-10-23 | feito — sondas pagas planeadas e por executar |

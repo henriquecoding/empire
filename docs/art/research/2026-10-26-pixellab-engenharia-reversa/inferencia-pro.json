@@ -1,0 +1,463 @@
+{
+  "sources_sha256": {
+    "openapi": "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f",
+    "catalog_html": "8debd9df843057d1798f3e7f5f8c14805fa5b210149cb2220a5e9fa2ed75d1d0",
+    "gemini_html": "23b041cde262a9e77147ed222f169c92eaa7df9c2ef41478a21c26f47801a20d"
+  },
+  "output_counts": [
+    {
+      "min": 1,
+      "max": 32,
+      "images": 64,
+      "grid": 8,
+      "logical_canvas": 256,
+      "device_px_at": {
+        "4": 1024,
+        "3": 768,
+        "2": 512
+      },
+      "largest_scale_fitting_1024": 4
+    },
+    {
+      "min": 33,
+      "max": 35,
+      "images": 49,
+      "grid": 7,
+      "logical_canvas": 245,
+      "device_px_at": {
+        "4": 980,
+        "3": 735,
+        "2": 490
+      },
+      "largest_scale_fitting_1024": 4
+    },
+    {
+      "min": 36,
+      "max": 41,
+      "images": 36,
+      "grid": 6,
+      "logical_canvas": 246,
+      "device_px_at": {
+        "4": 984,
+        "3": 738,
+        "2": 492
+      },
+      "largest_scale_fitting_1024": 4
+    },
+    {
+      "min": 42,
+      "max": 50,
+      "images": 25,
+      "grid": 5,
+      "logical_canvas": 250,
+      "device_px_at": {
+        "4": 1000,
+        "3": 750,
+        "2": 500
+      },
+      "largest_scale_fitting_1024": 4
+    },
+    {
+      "min": 51,
+      "max": 64,
+      "images": 16,
+      "grid": 4,
+      "logical_canvas": 256,
+      "device_px_at": {
+        "4": 1024,
+        "3": 768,
+        "2": 512
+      },
+      "largest_scale_fitting_1024": 4
+    },
+    {
+      "min": 65,
+      "max": 84,
+      "images": 9,
+      "grid": 3,
+      "logical_canvas": 252,
+      "device_px_at": {
+        "4": 1008,
+        "3": 756,
+        "2": 504
+      },
+      "largest_scale_fitting_1024": 4
+    },
+    {
+      "min": 85,
+      "max": 85,
+      "images": 16,
+      "grid": 4,
+      "logical_canvas": 340,
+      "device_px_at": {
+        "4": 1360,
+        "3": 1020,
+        "2": 680
+      },
+      "largest_scale_fitting_1024": 3
+    },
+    {
+      "min": 86,
+      "max": 170,
+      "images": 4,
+      "grid": 2,
+      "logical_canvas": 340,
+      "device_px_at": {
+        "4": 1360,
+        "3": 1020,
+        "2": 680
+      },
+      "largest_scale_fitting_1024": 3
+    }
+  ],
+  "logical_canvas_by_grid": [
+    245,
+    246,
+    250,
+    252,
+    256,
+    340
+  ],
+  "price_tiers": {
+    "generate-image-v2": [
+      {
+        "side": 256,
+        "usd": 0.08
+      },
+      {
+        "side": 341,
+        "usd": 0.115
+      },
+      {
+        "side": 512,
+        "usd": 0.15
+      }
+    ],
+    "generate-with-style-v2": [
+      {
+        "side": 256,
+        "usd": 0.08
+      },
+      {
+        "side": 341,
+        "usd": 0.115
+      },
+      {
+        "side": 512,
+        "usd": 0.15
+      }
+    ],
+    "generate-ui-v2": [
+      {
+        "side": 256,
+        "usd": 0.08
+      },
+      {
+        "side": 341,
+        "usd": 0.115
+      },
+      {
+        "side": 512,
+        "usd": 0.15
+      }
+    ],
+    "animate-with-text-v2": [
+      {
+        "side": 128,
+        "usd": 0.08
+      },
+      {
+        "side": 170,
+        "usd": 0.115
+      },
+      {
+        "side": 256,
+        "usd": 0.15
+      }
+    ],
+    "edit-animation-v2": [
+      {
+        "side": 128,
+        "usd": 0.08
+      },
+      {
+        "side": 170,
+        "usd": 0.115
+      },
+      {
+        "side": 256,
+        "usd": 0.15
+      }
+    ],
+    "interpolation-v2": [
+      {
+        "side": 128,
+        "usd": 0.08
+      },
+      {
+        "side": 170,
+        "usd": 0.115
+      },
+      {
+        "side": 256,
+        "usd": 0.15
+      }
+    ],
+    "transfer-outfit-v2": [
+      {
+        "side": 128,
+        "usd": 0.08
+      },
+      {
+        "side": 170,
+        "usd": 0.115
+      },
+      {
+        "side": 256,
+        "usd": 0.15
+      }
+    ],
+    "generate-8-rotations-v2": [
+      {
+        "side": 85,
+        "usd": 0.08
+      },
+      {
+        "side": 113,
+        "usd": 0.115
+      },
+      {
+        "side": 168,
+        "usd": 0.15
+      }
+    ],
+    "inpaint-v3": [
+      {
+        "side": 256,
+        "usd": 0.08
+      },
+      {
+        "side": 341,
+        "usd": 0.115
+      },
+      {
+        "side": 512,
+        "usd": 0.15
+      }
+    ],
+    "edit-images-v2": [
+      {
+        "side": 256,
+        "usd": 0.08
+      },
+      {
+        "side": 341,
+        "usd": 0.115
+      },
+      {
+        "side": 512,
+        "usd": 0.15
+      }
+    ],
+    "create-tiles-pro": [
+      {
+        "side": 42,
+        "usd": 0.08
+      },
+      {
+        "side": 56,
+        "usd": 0.115
+      },
+      {
+        "side": 85,
+        "usd": 0.15
+      }
+    ]
+  },
+  "price_tiers_as_fraction_of_image_tiers": {
+    "generate-image-v2": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "generate-with-style-v2": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "generate-ui-v2": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "animate-with-text-v2": [
+      0.5,
+      0.499,
+      0.5
+    ],
+    "edit-animation-v2": [
+      0.5,
+      0.499,
+      0.5
+    ],
+    "interpolation-v2": [
+      0.5,
+      0.499,
+      0.5
+    ],
+    "transfer-outfit-v2": [
+      0.5,
+      0.499,
+      0.5
+    ],
+    "generate-8-rotations-v2": [
+      0.332,
+      0.331,
+      0.328
+    ],
+    "inpaint-v3": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edit-images-v2": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "create-tiles-pro": [
+      0.164,
+      0.164,
+      0.166
+    ]
+  },
+  "image_tiers_times_scale": [
+    {
+      "side": 256,
+      "x": 4.0
+    },
+    {
+      "side": 341,
+      "x": 3.002932551319648
+    },
+    {
+      "side": 512,
+      "x": 2.0
+    }
+  ],
+  "aspect_caps": {
+    "named": {
+      "512x512": "square",
+      "688x384": "16:9"
+    },
+    "max_width": 792.0,
+    "max_height": 688.0
+  },
+  "gemini_1k_halved": {
+    "nano-banana-2.1": {
+      "ratios": [
+        "16:9",
+        "1:1",
+        "1:4",
+        "1:8",
+        "21:9",
+        "2:3",
+        "3:2",
+        "3:4",
+        "4:1",
+        "4:3",
+        "4:5",
+        "5:4",
+        "8:1",
+        "9:16"
+      ],
+      "named_caps_found": [
+        "512x512",
+        "688x384"
+      ],
+      "max_half_width": 1536,
+      "max_half_height": 1536,
+      "all_named_match": true,
+      "max_width_match": false,
+      "max_height_match": false
+    },
+    "3.1-flash-image": {
+      "ratios": [
+        "16:9",
+        "1:1",
+        "1:4",
+        "1:8",
+        "21:9",
+        "2:3",
+        "3:2",
+        "3:4",
+        "4:1",
+        "4:3",
+        "4:5",
+        "5:4",
+        "8:1",
+        "9:16"
+      ],
+      "named_caps_found": [
+        "512x512",
+        "688x384"
+      ],
+      "max_half_width": 1536,
+      "max_half_height": 1536,
+      "all_named_match": true,
+      "max_width_match": false,
+      "max_height_match": false
+    },
+    "3.1-pro-image": {
+      "ratios": [
+        "16:9",
+        "1:1",
+        "21:9",
+        "2:3",
+        "3:2",
+        "3:4",
+        "4:3",
+        "4:5",
+        "5:4",
+        "9:16"
+      ],
+      "named_caps_found": [
+        "512x512",
+        "688x384"
+      ],
+      "max_half_width": 792,
+      "max_half_height": 688,
+      "all_named_match": true,
+      "max_width_match": true,
+      "max_height_match": true
+    },
+    "gemini-2.5-flash-image": {
+      "ratios": [
+        "16:9",
+        "1:1",
+        "21:9",
+        "2:3",
+        "3:2",
+        "3:4",
+        "4:3",
+        "4:5",
+        "5:4",
+        "9:16"
+      ],
+      "named_caps_found": [
+        "512x512"
+      ],
+      "max_half_width": 768,
+      "max_half_height": 672,
+      "all_named_match": false,
+      "max_width_match": false,
+      "max_height_match": false
+    }
+  },
+  "reading": [
+    "Escaloes de preco 256/341/512 = 1024/4, 1024/3, 1024/2: uma tela de ~1024 px a escala inteira.",
+    "k*s_max fica entre 245 e 256 para grelhas 3x3 a 8x8, e 340 para 2x2 e para o caso 85 px (4x4).",
+    "Nenhuma regra unica de margem reproduz todas as linhas: a formula exata fica em aberto.",
+    "Coincidencia de tabela de resolucao e indicio, nao prova de fornecedor."
+  ]
+}

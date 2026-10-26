@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-10-26T10:14:34+00:00",
+  "command": "python3 -I docs/art/research/2026-10-26-pixellab-engenharia-reversa/verificar.py",
+  "links": 38,
+  "scripts": 6,
+  "probes": {
+    "probes": 8,
+    "calls": 29,
+    "usd": 0.44
+  },
+  "contract": {
+    "operations": 113,
+    "paths": 102,
+    "schemas": 275,
+    "checked": 63,
+    "mismatches_before": 10
+  },
+  "provenance": {
+    "sources": 86,
+    "http_200": 86,
+    "same_bytes": 2,
+    "changed_bytes": 64,
+    "gone": 0,
+    "new": 20
+  },
+  "cited_numbers": 7,
+  "generation_executed": false,
+  "paid_api_calls": 0
+}
