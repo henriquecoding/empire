@@ -44,3 +44,7 @@ art/export/royals/**/*.png -filter -diff -merge binary
 art/source/royals_v15/**/*.aseprite -filter -diff -merge binary
 # As composicoes do dono separadas em planos (ADR 0086): o jogo, o CI e o site carregam-nas.
 art/export/scenery_owner/**/*.png -filter -diff -merge binary
+
+# O pacote da pesquisa de 25/10 traz um manifesto SHA-256: os ficheiros guardam-se byte a byte
+# (o CSV veio com CRLF), para o manifesto continuar a conferir num checkout novo.
+docs/art/research/2026-10-25-forja-pixels-cores/pacote/** -text
