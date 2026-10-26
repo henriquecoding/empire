@@ -14,7 +14,7 @@ from collections import Counter
 
 from PIL import Image
 
-from . import cleanup, color, outline
+from . import cleanup, clusters, color, outline
 from .contracts import Contract
 from .imageops import flat, foot_point, grid as to_grid, is_binary_alpha, opaque_bbox
 from .palette import Palette
@@ -36,7 +36,7 @@ def check(image: Image.Image, contract: Contract, palette: Palette | None = None
     box = opaque_bbox(img)
     if not box:
         found.append(finding("empty", "error", "imagem sem nenhum pixel opaco"))
-        return _summary(img, contract, found)
+        return {**_summary(img, contract, found), "coherence": _coherence(img, contract, found)}
     if frame and contract.canvas and img.size != contract.canvas:
         found.append(finding("canvas", "error", f"tela {img.size[0]}x{img.size[1]}, contrato "
                              f"{contract.canvas[0]}x{contract.canvas[1]}", fix=f"forja fit --kind {contract.kind}"))
@@ -48,7 +48,21 @@ def check(image: Image.Image, contract: Contract, palette: Palette | None = None
     if frame:
         _placement(img, contract, box, found)
     _style(img, contract, found)
-    return _summary(img, contract, found)
+    coherence = _coherence(img, contract, found)
+    return {**_summary(img, contract, found), "coherence": coherence}
+
+
+def _coherence(img, contract, found) -> dict:
+    """A cor no espaco (clusters.py), ao lado do contrato: informa, nao chumba nem entra no prompt."""
+    if contract.kind == "fx":
+        return {"status": "not_evaluated", "counts": {}, "figure": None, "where": [],
+                "reason": "efeitos: particulas e padroes tem politica propria (por decidir)"}
+    diag = clusters.summary(clusters.diagnose(img))
+    if diag["counts"]["review"]:
+        found.append(finding("fragments", "info", f"{diag['counts']['review']} fragmentos de cor de 1-"
+                             f"{clusters.SMALL} px sem papel declarado (candidatos: olhos, brilhos e pontas podem "
+                             "ser de proposito)", diag["where"], "forja cores <png> [--observation ...]"))
+    return diag
 
 
 def _palette(img, contract, palette, found):
@@ -81,10 +95,15 @@ def _structure(img, contract, found, exempt=None):
     if contract.cluster > 1:
         islands = cleanup.small_islands(img, contract.cluster)
         if islands:
-            found.append(finding("cluster", "error", f"{len(islands)} manchas menores que "
+            found.append(finding("cluster", "error", f"{len(islands)} manchas com area menor que "
                                  f"{contract.cluster}x{contract.cluster} (cluster minimo do cenario)",
                                  [list(i[:2]) for i in islands[:8]], f"forja clean --cluster {contract.cluster}",
                                  f"Build every shape from clusters of at least {contract.cluster}x{contract.cluster} pixels; no single-pixel detail."))
+        shape = cleanup.footprint(img, contract.cluster)
+        if shape["without_block"]:
+            found.append(finding("blocks", "info", f"{shape['without_block']} manchas com area de sobra mas sem um "
+                                 f"bloco {contract.cluster}x{contract.cluster} (tiras): o cluster minimo pede area ou "
+                                 "bloco? (Q-277)", [s["at"] for s in shape["shapes"][:8]]))
     if contract.outline_px is not None:
         m = outline.measure(img, contract.outline_color, exempt)
         if contract.outline_px == 0 and m["outline_share"] > 0.5:

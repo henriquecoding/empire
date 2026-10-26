@@ -35,7 +35,8 @@ INSTRUCTIONS = (
     "figura) ou forja_sheet (prancha) com --expect; (4) le review (contract_valid, motion_checks, "
     "needs_regeneration) e prompt_feedback; se needs_regeneration, gera de novo com o prompt corrigido; (5) com armas "
     "ou equipamento, forja_equip (manifesto e observacao marcada na imagem): o lint nao ve a arma, e o que nao foi "
-    "observado fica not_evaluated; forja_line refaz uma corda so na mascara. A aprovacao "
+    "observado fica not_evaluated; forja_line refaz uma corda so na mascara; (6) forja_cores ve a cor no espaco "
+    "(fragmentos de 1-3 px: review e suspeita, nao defeito) e, com plano, agrupa so nas regioes editaveis. A aprovacao "
     "artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do "
     "dono; usar build/forja/. Ler docs/art/FORJA.md.")
 

@@ -1,0 +1,71 @@
+{
+  "repository": "henriquecoding/empire",
+  "commit": "4471cde384c94e8833e4e61347551ac8c69320b0",
+  "accessed": "2026-10-25",
+  "sources": [
+    {
+      "path": "tools/forja/lint.py",
+      "git_blob_sha": "fddf0a67922a96cada0a6ab83368e35bf9c85835"
+    },
+    {
+      "path": "tools/forja/quantize.py",
+      "git_blob_sha": "45b442983a32bbbb36a21c61de0703228cd41f4b"
+    },
+    {
+      "path": "tools/forja/cleanup.py",
+      "git_blob_sha": "ac596e69ecc58fc9caedbd70805b550559810490"
+    },
+    {
+      "path": "tools/forja/palette.py",
+      "git_blob_sha": "fca9c943c5f757746996f681554fcb44afa82e43"
+    },
+    {
+      "path": "tools/forja/contracts.json",
+      "git_blob_sha": "671c4bb40d0213d9b811192ef6026a5c163ae490"
+    },
+    {
+      "path": "tools/forja/pipeline.py",
+      "git_blob_sha": "a39e43f12d906409d75910b7f1a57b20e7b5bb41"
+    },
+    {
+      "path": "tools/forja/color.py",
+      "git_blob_sha": "7e437e20ce825e95781112b4e77f0bd3c0911e0d"
+    },
+    {
+      "path": "tools/forja/imageops.py",
+      "git_blob_sha": "0f5a419ca17d39172272340f7dcc6375152dd7be"
+    },
+    {
+      "path": "tools/forja/contracts.py",
+      "git_blob_sha": "12c623b2e39572c83f97f061492a94cbf07a2df6"
+    },
+    {
+      "path": "tools/forja/outline.py",
+      "git_blob_sha": "ca580c26bad7ee14f8561ff41819196b4d25ed26"
+    },
+    {
+      "path": "tools/forja/grid.py",
+      "git_blob_sha": "d2b43a6c53148c2d92577a652c66177b056e729e"
+    },
+    {
+      "path": "tools/forja/matte.py",
+      "git_blob_sha": "f677ce0ad7bbe8d19d159bac31cbf3f8a3727e56"
+    },
+    {
+      "path": "tools/forja/provenance.py",
+      "git_blob_sha": "b9dcbccd5c99809a6187b8a8c66db4aba6340529"
+    },
+    {
+      "path": "tools/forja/resample.py",
+      "git_blob_sha": "1cd312ad96ab67b70fb9236f50e1a0d6f1b464b2"
+    },
+    {
+      "path": "tools/forja/__init__.py",
+      "git_blob_sha": "00d033d5e6c591000ea99f8418d0aaa8c5d46765"
+    },
+    {
+      "path": "art/palettes/empire_working.gpl",
+      "git_blob_sha": "a2b61ca94622dbccc5ac17cde2db79c8e9177440"
+    }
+  ]
+}

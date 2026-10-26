@@ -82,7 +82,7 @@ def do_clean(args) -> dict:
     img = binarize(open_rgba(args.image))
     img, stats = cleanup.despeckle(img, args.noise, not args.no_holes)
     if args.cluster > 1:
-        img, stats["merged"] = cleanup.min_cluster(img, args.cluster)
+        img, stats["merged"] = cleanup.min_cluster(img, args.cluster, args.connectivity)
     if args.pixel_perfect:
         img, stats["pixel_perfect"] = cleanup.pixel_perfect(img)
     out = out_path(args.out, Path(args.image))
@@ -180,7 +180,9 @@ def register(sub) -> None:
     p.add_argument("image")
     p.add_argument("-o", "--out")
     p.add_argument("--noise", type=float, default=0.08)
-    p.add_argument("--cluster", type=int, default=1)
+    p.add_argument("--cluster", type=int, default=1, help="fundir manchas com area menor que NxN")
+    p.add_argument("--connectivity", type=int, default=8, choices=(4, 8),
+                   help="8: uma diagonal de 1 px e uma linha e fica; 4: so no cenario, onde o detalhe de 1 px e proibido")
     p.add_argument("--pixel-perfect", action="store_true")
     p.add_argument("--no-holes", action="store_true")
     p = command(sub, "quantize", "Levar a uma paleta (OKLab) ou reduzir a N cores, com dither ordenado opcional", do_quantize)
@@ -189,7 +191,7 @@ def register(sub) -> None:
     p.add_argument("--palette")
     p.add_argument("--colors", type=int)
     p.add_argument("--dither", default="none", choices=quantize.DITHERS)
-    p.add_argument("--strength", type=float, default=1.0)
+    p.add_argument("--strength", type=float, default=1.0, help="amplitude do dither: 1 classico, 0 sem dither")
     p = command(sub, "outline", "Por (exterior, interior, seletivo) ou tirar o contorno", do_outline)
     p.add_argument("image")
     p.add_argument("-o", "--out")

@@ -16,7 +16,8 @@ from statistics import median
 
 from PIL import Image
 
-from . import anim, color, contracts, godot, lint, matte, motion, provenance, quantize, review, sheet
+from . import anim, color, contracts, godot, guard, lint, matte, motion, provenance, quantize, review, sheet
+from . import temporal
 from . import aseprite as ase
 from .imageops import open_rgba
 from .pipeline import Options, contract_for, finish, palette_for
@@ -29,6 +30,8 @@ class SheetOptions:
     anchor: str = "feet"
     same_height: bool = False
     deflicker: float = 0.0
+    static: list[tuple[int, int, int, int]] | None = None
+    actions: list[tuple[int, int, int, int]] | None = None
     lock: tuple[int, int, int, int] | None = None
     mirror: bool = False
     godot_texture: str | None = None
@@ -83,7 +86,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     natives = [f.native for f in figures]
     if pal is None and opts.colors:
         pal = quantize.shared_palette(natives, opts.colors)
-    details = []
+    details, sources = [], [f.native for f in figures]
     for fig in figures:
         done, info = finish(fig.native, Options(**{**opts.__dict__, "fit": False}), contract, pal)
         fig.native = done
@@ -98,10 +101,18 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     pivot = pivot or (canvas[0] // 2, canvas[1] - 1)
     frames, placed = sheet.frames(figures, canvas, pivot, anchor, align)
     fixes = {}
+    guarded = [guard.pixels(opts.protect, s.size) for s in sources]
+    keep = frozenset().union(*[guard.frame_pixels(g, guard.placed(d, p["offset"]))
+                               for g, d, p in zip(guarded, details, placed)])
     if sopts.deflicker:
-        frames, fixes["deflicker_pixels"] = quantize.deflicker(frames, sopts.deflicker)
+        frames, flicker = temporal.stabilize(frames, sopts.deflicker, sopts.static, sopts.actions, keep)
+        fixes["deflicker"] = {"changed": len(flicker["changed"]), "counts": flicker["counts"],
+                              "static": flicker["static"], "actions": flicker["actions"], "note": flicker["note"]}
     if sopts.lock:
         frames, fixes["lock"] = motion.lock(frames, sopts.lock)
+    for frame, src, g, info, place_info in zip(frames, sources, guarded, details, placed):
+        if g:
+            info["protect"].update(guard.verify(frame, src, g, guard.placed(info, place_info["offset"])))
     tags, durations = _timeline(sopts.tags, len(frames))
     for h in sopts.holds or []:
         if h.get("ms") and 0 <= h["frame"] < len(durations):
@@ -119,6 +130,9 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
         files["godot"] = str(godot.write(out / f"{name}.tres", godot.sprite_frames(
             sopts.godot_texture, rects_out, durations, tags, 1000 / durations[0], loops)))
     verdicts = [lint.check(f, contract, pal) for f in frames]
+    for verdict, info in zip(verdicts, details):
+        for item in guard.findings(info):
+            lint.add(verdict, item)
     for verdict, place_info, fig in zip(verdicts, placed, figures):
         if place_info["clipped_pixels"]:
             fits = fig.native.width <= canvas[0] and fig.native.height <= canvas[1]
@@ -133,7 +147,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     contract_valid = (expected in (None, found)) and all(v["ok"] for v in verdicts) and not clipped
     loops = {t: (contracts.tag(t) or {}).get("loop", True) for t, *_ in tags}
     moved = review.motion(frames, tags, sopts.holds, align, loops)
-    rv = review.verdict(contract_valid, moved)
+    rv = review.verdict(contract_valid, moved, [v["coherence"] for v in verdicts])
     metrics["alignment"] = {"mode": align, "offsets_preserved": align != "feet",
                             "drift_imposed_by_alignment": align == "feet"}
     result = {"name": name, "ok": not rv["needs_regeneration"], "review": rv,

@@ -160,7 +160,7 @@ de 25/10, o dossiê dos 200 vídeos e o pacote. `conferir_envio.py` grava
 | As 12 páginas PixelLab que o relatório cita | Todas respondem 200 com o título esperado |
 | Alegações sobre a API (512×512 somados, exclusividade, dither, `drift_threshold`) | Todas verdadeiras na especificação de hoje |
 | Suíte da Forja no ramo | 239 testes, 3 saltados como antes; `prova_cores.py` dá o mesmo resultado (44 pixeis mudados, S8 0,062 → 0,050) |
-| CI do PR | 16 verificações verdes, sem conflitos com a `main` (lido às 06:20 UTC) |
+| CI do PR | 16 verificações verdes, sem conflitos com a `main` (lido às 06:20 UTC); o PR entrou depois na `main` (`c401ac7`) e este trabalho foi junto por cima, com as provas do FORJA-04 a dar o mesmo resultado |
 
 Um pormenor sem consequência: a descrição do PR diz 236 testes da Forja; o commit de revisão posterior
 acrescentou três. O dossiê dos vídeos diz o que não fez (não transcreve, não assistiu a tudo) e a

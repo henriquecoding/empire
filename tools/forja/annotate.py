@@ -14,16 +14,16 @@ TINTS = ((255, 72, 72), (72, 168, 255), (255, 210, 0), (90, 230, 130), (225, 90,
 BG = (52, 58, 72)
 
 
-def overlay(image: Image.Image, regions: dict, anchors: dict, k: int = 8) -> Image.Image:
+def overlay(image: Image.Image, regions: dict, anchors: dict, k: int = 8, tints: dict | None = None) -> Image.Image:
     font = ImageFont.load_default()
-    names = sorted(regions)
+    names = sorted(regions) if tints is None else list(regions)
     big = on_background(upscale(image.convert("RGBA"), k), BG)
     legend_h = 14 * len(names) + 14 * bool(anchors) + 8
     out = Image.new("RGBA", (big.width, big.height + legend_h), (*BG, 255))
     out.alpha_composite(big)
     draw = ImageDraw.Draw(out)
     for i, name in enumerate(names):
-        tint, region = TINTS[i % len(TINTS)], regions[name]
+        tint, region = (tints or {}).get(name, TINTS[i % len(TINTS)]), regions[name]
         for x, y in region:
             x0, y0, x1, y1 = x * k, y * k, x * k + k - 1, y * k + k - 1
             for (dx, dy), edge in (((0, -1), (x0, y0, x1, y0)), ((0, 1), (x0, y1, x1, y1)),
@@ -62,4 +62,33 @@ def strip(images: list[Image.Image], labels: list[str], k: int = 8, gap: int = 1
         out.alpha_composite(tile, (x, gap // 2))
         draw.text((x + images[0].width + 8, gap // 2 + 2), label, fill=(235, 235, 235, 255), font=font)
         x += tile.width + gap
+    return out
+
+
+STATUS_TINTS = {"review": (255, 72, 72), "inconclusive": (255, 210, 0), "expected": (90, 230, 130),
+                "protected": (72, 168, 255)}
+
+
+def candidates(image: Image.Image, diag: dict, k: int = 8) -> Image.Image:
+    """Os fragmentos de cor do diagnostico (clusters.py), contornados pela cor do estado, com a contagem."""
+    groups = {s: frozenset((x, y) for c in diag["candidates"] if c["status"] == s for x, y in c["pixels"])
+              for s in STATUS_TINTS}
+    named = {f"{s}: {diag['counts'].get(s, 0)} fragmentos": groups[s] for s in STATUS_TINTS}
+    return overlay(image, named, {}, k, {f"{s}: {diag['counts'].get(s, 0)} fragmentos": t
+                                         for s, t in STATUS_TINTS.items()})
+
+
+def diff(before: Image.Image, after: Image.Image) -> Image.Image:
+    """Onde mudou, a magenta (a ciano se ficou vazio); o que ficou, em cinzento, so para dar o lugar."""
+    a, b = before.convert("RGBA"), after.convert("RGBA")
+    out = Image.new("RGBA", a.size)
+    pa, pb, po = a.load(), b.load(), out.load()
+    for y in range(a.height):
+        for x in range(a.width):
+            p, q = pa[x, y], pb[x, y]
+            if p != q:
+                po[x, y] = (255, 0, 255, 255) if q[3] >= 128 else (0, 255, 255, 255)
+            elif p[3] >= 128:
+                g = 70 + round((0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2]) * 0.3)
+                po[x, y] = (g, g, g, 255)
     return out

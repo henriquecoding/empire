@@ -1,0 +1,407 @@
+{
+ "schema": "forja.observation/1",
+ "image_sha256": "3cdbdbe6ab64d9d5411fc4d61d74f6f6726b250985c9109f5f4b41deef97f9c7",
+ "observer": {
+  "author": "Claude (agente de codigo, sessao FORJA-04)",
+  "method": "marcacao manual por caixa e cores sobre o PNG recuperado a 1x, conferida num mapa de caracteres e a 12x; as regioes do arco, da mao e do antebraco sao as da observacao do FORJA-03",
+  "date": "2026-10-26",
+  "file": "../../2026-10-24-forja-armas/arqueiro/arqueiro-recuperado.png",
+  "source_observation": "../../2026-10-24-forja-armas/arqueiro/observacao.json"
+ },
+ "regions": {
+  "hood": {
+   "box": [
+    25,
+    4,
+    53,
+    31
+   ],
+   "colors": [
+    "#2B3421",
+    "#416E4E",
+    "#627331",
+    "#899543",
+    "#8FA647"
+   ],
+   "material": "cloth_green",
+   "uncertainty": "baixa",
+   "note": "o capuz verde; a linha y=31 separa-o da tunica so para medir por regiao (o mesmo material)"
+  },
+  "tunic": {
+   "box": [
+    28,
+    31,
+    55,
+    62
+   ],
+   "colors": [
+    "#2B3421",
+    "#416E4E",
+    "#627331",
+    "#899543",
+    "#8FA647",
+    "#4C4849"
+   ],
+   "material": "cloth_green",
+   "uncertainty": "baixa",
+   "note": "a tunica verde e a fralda, ate as calcas, com o cinzento solto em (47,33); os outros dois cinzentos (35,37) e (41,38) ficam de fora: estao na borda da correia",
+   "exclude": {
+    "pixels": [
+     [
+      35,
+      37
+     ],
+     [
+      41,
+      38
+     ]
+    ]
+   }
+  },
+  "face": {
+   "box": [
+    36,
+    9,
+    54,
+    32
+   ],
+   "exclude": {
+    "box": [
+     36,
+     9,
+     54,
+     32
+    ],
+    "colors": [
+     "#2B3421",
+     "#416E4E",
+     "#627331",
+     "#899543",
+     "#8FA647"
+    ]
+   },
+   "material": "skin",
+   "uncertainty": "baixa",
+   "note": "a cabeca sem o capuz: pele, cabelo, nariz, contorno e tracos"
+  },
+  "eye": {
+   "box": [
+    43,
+    17,
+    46,
+    19
+   ],
+   "colors": [
+    "#FCFCFC",
+    "#0B0B0B"
+   ],
+   "role": "eye",
+   "material": "skin",
+   "uncertainty": "baixa",
+   "note": "o branco do olho e a pupila"
+  },
+  "mouth": {
+   "box": [
+    44,
+    21,
+    48,
+    24
+   ],
+   "colors": [
+    "#FCFCFC",
+    "#0B0B0B"
+   ],
+   "role": "mouth",
+   "material": "skin",
+   "uncertainty": "baixa",
+   "note": "o sorriso: dentes e o traco da boca"
+  },
+  "quiver": {
+   "box": [
+    16,
+    17,
+    33,
+    32
+   ],
+   "exclude": {
+    "box": [
+     16,
+     17,
+     33,
+     32
+    ],
+    "colors": [
+     "#2B3421",
+     "#416E4E",
+     "#627331",
+     "#899543",
+     "#8FA647"
+    ]
+   },
+   "material": "leather",
+   "uncertainty": "media",
+   "note": "as penas das flechas e a boca da aljava, atras do ombro"
+  },
+  "arm_back": {
+   "box": [
+    16,
+    32,
+    36,
+    50
+   ],
+   "exclude": {
+    "box": [
+     16,
+     32,
+     36,
+     50
+    ],
+    "colors": [
+     "#2B3421",
+     "#416E4E",
+     "#627331",
+     "#899543",
+     "#8FA647"
+    ]
+   },
+   "material": "cloth_cream",
+   "uncertainty": "baixa",
+   "note": "a manga de tras, a luva e a mao no cinto"
+  },
+  "arm_front": {
+   "box": [
+    46,
+    34,
+    57,
+    48
+   ],
+   "exclude": {
+    "box": [
+     46,
+     34,
+     57,
+     48
+    ],
+    "colors": [
+     "#2B3421",
+     "#416E4E",
+     "#627331",
+     "#899543",
+     "#8FA647"
+    ]
+   },
+   "material": "cloth_cream",
+   "uncertainty": "baixa",
+   "note": "a manga da frente ate a bracadeira"
+  },
+  "strap_belt": {
+   "box": [
+    34,
+    32,
+    48,
+    51
+   ],
+   "colors": [
+    "#FFB416",
+    "#4F2E10",
+    "#6C3206",
+    "#763728",
+    "#7D4433",
+    "#452D21",
+    "#0B0B0B"
+   ],
+   "material": "leather",
+   "uncertainty": "media",
+   "note": "a correia da aljava em diagonal, o cinto e a fivela"
+  },
+  "buckle": {
+   "box": [
+    40,
+    46,
+    45,
+    51
+   ],
+   "colors": [
+    "#FFB416"
+   ],
+   "role": "buckle",
+   "material": "metal",
+   "uncertainty": "baixa",
+   "note": "a fivela dourada"
+  },
+  "trousers": {
+   "box": [
+    26,
+    55,
+    52,
+    66
+   ],
+   "colors": [
+    "#563F2D",
+    "#232323",
+    "#332F2F"
+   ],
+   "material": "cloth_dark",
+   "uncertainty": "baixa",
+   "note": "as calcas: um castanho-cinza, um escuro e um terceiro tom a 0,05 do escuro"
+  },
+  "boots": {
+   "box": [
+    18,
+    65,
+    62,
+    79
+   ],
+   "exclude": {
+    "box": [
+     18,
+     65,
+     62,
+     79
+    ],
+    "colors": [
+     "#2B3421",
+     "#416E4E",
+     "#627331",
+     "#899543",
+     "#8FA647"
+    ]
+   },
+   "material": "leather",
+   "uncertainty": "baixa",
+   "note": "as botas e o contorno delas"
+  },
+  "bow_main.string": {
+   "box": [
+    55,
+    12,
+    64,
+    70
+   ],
+   "colors": [
+    "#E5D395",
+    "#F2DEB7"
+   ],
+   "uncertainty": "baixa",
+   "note": "a linha clara entre as pontas do arco",
+   "material": "string",
+   "role": "string"
+  },
+  "bow_main.limb": {
+   "box": [
+    56,
+    5,
+    73,
+    74
+   ],
+   "colors": [
+    "#915F46",
+    "#946934",
+    "#7D4433",
+    "#763728",
+    "#FFB416",
+    "#F3B022"
+   ],
+   "exclude": {
+    "box": [
+     56,
+     38,
+     64,
+     48
+    ]
+   },
+   "uncertainty": "baixa",
+   "note": "a madeira e as amarras douradas das pontas; sem a bracadeira",
+   "material": "wood"
+  },
+  "bow_main.grip": {
+   "box": [
+    64,
+    35,
+    72,
+    50
+   ],
+   "colors": [
+    "#915F46",
+    "#946934",
+    "#7D4433",
+    "#763728",
+    "#FFB416",
+    "#F3B022",
+    "#6C3206",
+    "#4F2E10",
+    "#452D21"
+   ],
+   "uncertainty": "media",
+   "note": "as amarras acima e abaixo da mao e os castanhos escuros entre os dedos, lidos como a empunhadura",
+   "material": "wood"
+  },
+  "hand_front": {
+   "box": [
+    63,
+    38,
+    72,
+    48
+   ],
+   "colors": [
+    "#EAA55A",
+    "#E3BC88",
+    "#D97C2B",
+    "#F19312",
+    "#FE9505"
+   ],
+   "uncertainty": "baixa",
+   "note": "a mao da frente fechada no arco",
+   "material": "skin"
+  },
+  "forearm_front": {
+   "box": [
+    56,
+    38,
+    64,
+    48
+   ],
+   "exclude": {
+    "box": [
+     56,
+     38,
+     64,
+     48
+    ],
+    "colors": [
+     "#E5D395",
+     "#F2DEB7"
+    ]
+   },
+   "uncertainty": "baixa",
+   "note": "a bracadeira e o antebraco da frente, por baixo da corda",
+   "material": "leather"
+  },
+  "lines": {
+   "box": [
+    0,
+    0,
+    80,
+    80
+   ],
+   "colors": [
+    "#000000",
+    "#0B0B0B"
+   ],
+   "material": "line",
+   "uncertainty": "media",
+   "note": "o contorno e o traco interno: preto e o quase-preto que a quantizacao deixa nas linhas"
+  },
+  "bow_zone": {
+   "box": [
+    55,
+    4,
+    74,
+    76
+   ],
+   "uncertainty": "baixa",
+   "note": "a zona inteira do arco, da corda, da bracadeira e da mao da frente, com o traco: presa para nada mudar ali"
+  }
+ },
+ "anchors": {}
+}

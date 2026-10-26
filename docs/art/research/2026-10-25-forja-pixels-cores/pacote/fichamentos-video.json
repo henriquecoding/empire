@@ -1,0 +1,247 @@
+[
+  {
+    "id": "WSbBuAwRm18",
+    "anchors": "1:13–3:17; 4:39–5:14; 5:16–7:00",
+    "notes": "O tutorial estabelece a paleta do personagem antes de criar estados e animações. Recomenda corrigir pixels indesejados e detalhes confusos antes da redução; usa uma camada nova para comparar com o original. Aplica a paleta escolhida às oito direções e, depois, a todos os frames de cada animação. Estende o mesmo procedimento à interface, aos tiles e aos objetos.",
+    "forja": "Separar limpeza estrutural, normalização cromática e revisão final. Uma paleta comum impede tons extras, mas não prova que cada cluster esteja bem desenhado."
+  },
+  {
+    "id": "tx-JUE8KbJM",
+    "anchors": "0:58–3:38; 4:48–6:25",
+    "notes": "Usa um personagem como referência para variações e para ampliar o elenco. Seleciona resultados aproveitáveis e acrescenta referências de estilo; repete o procedimento com retratos, frutas, alimentos e edifícios. A quantidade de saídas varia com o canvas apresentado. Destaca cores, sombreamento, contorno e linguagem de formas como sinais oferecidos pelas referências.",
+    "forja": "Curar as referências antes de reutilizá-las. Não promover automaticamente cada geração a referência, porque isso pode perpetuar ruído. Os números de saídas demonstrados pertencem à versão da aula."
+  },
+  {
+    "id": "LcJQQwltQ2Q",
+    "anchors": "1:05–1:37; 2:38–2:52; 5:05–6:42; 8:07–9:44",
+    "notes": "A limpeza aparece após gerar rotações, após criar novos personagens, antes de animar cada estado e antes de espelhar. O apresentador reconhece artefatos e pixels dispersos. Recorta a referência perto do personagem para o próximo instrumento. Distingue ciclos de ações únicas ao configurar o frame inicial e relata mais correção manual em certas direções.",
+    "forja": "Criar pontos de revisão antes de operações que multiplicam um defeito. O recorte de referência precisa preservar escala e pivô conhecidos. Uma recomendação histórica de modelo não substitui comparação atual."
+  },
+  {
+    "id": "zqZiQBS3LX0",
+    "anchors": "6:38–7:21; 8:08–11:32; 12:09–15:42",
+    "notes": "Na reação a golpe, remove pontos dispersos, recompõe contornos e reaproveita a cor do cabelo. Usa frames inicial e final, reenquadramento e linha do chão para conectar queda e recuperação. Mostra um bastão na mão errada e uma manga assimétrica cuja cor se perde numa direção; explica por que não espelhar esses casos.",
+    "forja": "Reparo deve contemplar remover, preencher e reconstruir contorno. Proteger lateralidade e identidade material entre direções. A própria aula relata exceções à alegação de preservação do Skeleton V3; não tratá-la como garantia absoluta."
+  },
+  {
+    "id": "VxAHJvcJr_Y",
+    "anchors": "2:37–3:52; 5:05–5:49; 6:45–7:15; 8:42–10:26",
+    "notes": "O criador de VFX permite ajustar cores, contorno, faixas de sombra, quantidade de cores e dithering. Organiza camadas atrás e à frente do personagem, compara fundos claros e escuros e sincroniza impactos com poses. Mostra iluminação móvel do sprite, exportação com manifesto e correção de uma fumaça que apareceu no momento inadequado.",
+    "forja": "Definir contratos próprios para efeitos e iluminação. Mudança de brilho, partículas e dispersão podem ser intencionais; não usar a mesma política de limpeza aplicada ao corpo estável do personagem."
+  },
+  {
+    "id": "MbkqpDUFkEg",
+    "anchors": "0:54–1:16; 2:55–4:06; 7:25–9:17; 9:22–10:46",
+    "notes": "Compara tamanhos e palavras de estilo. Recomenda descrições curtas de material e relata que a palavra textura reduz adereços indesejados nos exemplos. Conecta tilesets por terrenos compartilhados, corrige uma pedra manualmente e demonstra a opção de união de cantos diagonais. Um exemplo de mapa desloca um caminho após detectar uma borda preta.",
+    "forja": "Auditar continuidade de bordas no mapa montado, inclusive diagonais e encontros entre conjuntos. Reposicionar o mapa é um contorno do problema demonstrado, não prova de que o tile foi corrigido. Testar alterações de prompt isoladamente."
+  },
+  {
+    "id": "t8FIMv-8QpI",
+    "anchors": "2:18–2:46; 5:07–6:14; 7:40–7:46; 9:22–9:33; 11:10–11:15",
+    "notes": "Relata cintilação de cores e a corrige entre frames; limpa pixels verdes de um portal quadro a quadro. Alinha animações antes de uni-las e usa poucos pixels azuis como início intencional de um efeito de gelo. Remove um frame final com deslocamento e distingue expansão do texto da opção de aprimoramento durante a geração.",
+    "forja": "Os pixels pequenos do nascimento do gelo são um controle positivo para o detector. O descarte de frames mostrado exige revisar duração e eventos no jogo; não deve virar limpeza automática. Diferenciar cor instável de energia e partículas planejadas."
+  },
+  {
+    "id": "9eAlZlQmZBg",
+    "anchors": "1:34–2:33; 4:13–5:04; 5:26–6:55",
+    "notes": "Distingue acrescentar conteúdo em camada de substituir ou remover parte do original. Relata alterações externas à máscara e apresenta o recorte à máscara para restringir a edição. Na expansão de cenário, seleciona uma região compatível com o limite do modelo e mantém parte da imagem existente como contexto. Recomenda revisar pixels, perspectiva e cores após gerar.",
+    "forja": "A máscara deve governar a composição achatada. Acrescentar uma camada não remove pixels antigos. Validar a preservação fora da região editável até o fim do acabamento."
+  },
+  {
+    "id": "j2bE9gq914U",
+    "anchors": "1:15–2:15; 3:48–4:37; 7:25–9:36; 10:13–12:19",
+    "notes": "Relaciona a pose inicial à ação solicitada. Na fogueira, propõe copiar a madeira do primeiro frame quando ela deve ficar imóvel, mas reconhece que variação luminosa também pode ser desejada. Explica transições com dois frames, encadeamento pelo frame final e ciclos ancorados na mesma pose.",
+    "forja": "Usar estabilização apenas em regiões explicitamente estáticas. Registrar intenção de iluminação e de movimento; um piscar deliberado ou uma transformação não pode ser removido por votação temporal."
+  },
+  {
+    "id": "Y68m9k60Lg0",
+    "anchors": "5:35–7:17; 9:16–10:11; 10:34–13:23; 15:47–16:36",
+    "notes": "Apresenta Pro Flash, Skeleton V3 e PixMiniMax. Corrige máscara insuficiente ao criar roupa. A recomendação de animação muda com a atualização do modelo. O texto expandido para uma direção entra em conflito com outras; efeitos também trocam de cor. O apresentador ajusta orientação e cor, regenera algumas direções e revisa o conjunto. Usa a mesma imagem nas extremidades de um ciclo.",
+    "forja": "Guardar versão do modelo e prompt efetivamente enviado por direção. Não reutilizar texto expandido sem conferir orientação. Referência e promessa de consistência não substituem inspeção cromática final."
+  },
+  {
+    "id": "BdoUMKhZ1Ys",
+    "anchors": "1:34–2:30; 2:42–3:40; 3:44–4:33",
+    "notes": "Organiza o layout de interface, corrige limites antes de separar elementos e configura nine-slice manualmente para preservar bordas. Abre o editor para remover pixels dispersos e cria estados de barra. Reutiliza um botão como referência de estilo para itens de inventário.",
+    "forja": "Separação, estados e redimensionamento precisam de validação própria. Limpar bordas antes de multiplicá-las no nine-slice; avaliar a leitura dos ícones na interface final."
+  },
+  {
+    "id": "OHrdbkpmcHE",
+    "anchors": "0:51–1:42; 2:09–2:24; 4:29–5:33; 6:29–7:41",
+    "notes": "Diferencia referência de conceito, que orienta assunto, de referência de estilo em pixel art na escala aceita. Combina ambas para produzir poses e famílias de personagens. As opções de estilo abrangem paleta, contorno, detalhe e sombreamento. Reconhece que as saídas ainda precisam de limpeza e refinamento.",
+    "forja": "Separar os papéis das imagens de entrada no manifesto e registrar sua escala. Não confundir uma referência conceitual de alta resolução com uma amostra nativa de clusters aprovados."
+  },
+  {
+    "id": "r8ySiSRRvz4",
+    "anchors": "3:11–3:49; 9:54",
+    "notes": "A aula corrige a face copiando uma versão limpa e alinhando-a aos frames. Um disparo esbarra no limite do canvas: o problema requer espaço para a ação. Parte de poses-chave e depois interpola; ao final, considera a resposta da animação dentro do jogo.",
+    "forja": "Tratar posicionamento, margem e identidade antes do acabamento; copiar detalhes somente quando pose e expressão permitirem."
+  },
+  {
+    "id": "o8AZRTx36DE",
+    "anchors": "0:52–2:14; 2:39–4:46; 7:38–10:07; 10:42–10:59",
+    "notes": "Limpa pontos antes de animar, acrescenta margem e realinha uma cabeça instável. Seleciona frames para responder melhor no jogo. Usa personagem e chão como contexto do cenário, testa repetição horizontal e separa camadas para paralaxe. Uma cópia indesejada do personagem no fundo exige novo reparo.",
+    "forja": "Validar escala útil, espaço para ação, ritmo e emendas. Extrair camadas ou pedir preservação não garante composição correta; inspecionar o resultado achatado e o mapa em movimento."
+  },
+  {
+    "id": "moCpjMOOBGk",
+    "anchors": "0:54; 2:36; 6:10; 8:32; 11:57",
+    "notes": "Recomenda limpar as rotações antes de animar, observa contorno duplicado e inconsistências de escala dos pixels. Expõe limitações dos templates usados para objetos nas mãos. Distingue o tamanho do canvas do tamanho útil do personagem e limpa uma flecha antes de gerar rotações.",
+    "forja": "Registrar resolução útil e função dos equipamentos. Limpar e aprovar referências antes de propagá-las."
+  },
+  {
+    "id": "oCJWxfEwX-o",
+    "anchors": "4:07; 5:05; 8:04",
+    "notes": "O fluxo de estados permite preparar variações antes de animar. O apresentador corrige mudanças na boca e ressalta que espelhar depende da simetria do personagem. Uma direção incompleta permanece como parte da demonstração.",
+    "forja": "Uma boca que muda pode ser ruído ou expressão necessária. Não transformar exemplos inacabados em referência aprovada."
+  },
+  {
+    "id": "nITrIQw1gag",
+    "anchors": "1:42–2:21",
+    "notes": "Defende referências semelhantes em densidade de pixels, contorno, sombreamento e proporção. Prefere um pequeno conjunto coerente a muitas imagens heterogêneas; a quantidade citada é orientação prática da aula, não limite universal validado.",
+    "forja": "Criar famílias de referência compatíveis com os contratos 64/80 e com a paleta existente."
+  },
+  {
+    "id": "7HTLYLo3tTQ",
+    "anchors": "1:18–2:12; 2:38–3:14",
+    "notes": "Parte de uma referência visual para desenvolver um elenco e usa animação por texto para ações sem templates adequados. Estende regras visuais à interface e ao cenário; o fundo maior recebe inpainting. A afirmação de ausência de deriva é a avaliação do apresentador, não uma medição independente.",
+    "forja": "Manter uma referência aprovada como âncora, revisando cada nova família. O motor e o agente de código usados no exemplo não garantem qualidade dos pixels."
+  },
+  {
+    "id": "XhmpenTmPLg",
+    "anchors": "0:59–1:45; 3:26–3:37; 5:54–6:24; 9:27–9:47",
+    "notes": "Pede instruções de mudança explícitas e recomenda edições pequenas e iterativas. Usa redução de cores para alguns artefatos. Registra limites da versão demonstrada em imagens pequenas: mudar cor pode funcionar melhor que acrescentar objetos.",
+    "forja": "O adaptador de Edit deve descrever a mudança; o de Inpaint deve seguir o contrato específico. Checar identidade, composição e pixels externos após cada operação, sem transportar limitações antigas como fatos atuais."
+  },
+  {
+    "id": "8TRHAC3fUpo",
+    "anchors": "1:39–2:35; 3:19–3:37; 6:07–7:18; 8:35–8:42",
+    "notes": "Compara caminhada pelo criador, skeleton e transferência de animação. Corrige cabeça, cor dos olhos e mochila que muda de forma. Cada frame aceito pode alimentar a geração seguinte; referências sujas podem propagar inconsistência. Espelhar depende de simetria.",
+    "forja": "Aprovar o frame antes de reutilizá-lo como contexto. Preservar expressão e deslocamento ao copiar uma região; não congelar indiscriminadamente a cabeça."
+  },
+  {
+    "id": "1CjxHZoZE_I",
+    "anchors": "3:14–3:19; 5:35–6:18; 7:14–7:30; 8:28–8:57",
+    "notes": "Interpola entre imagens inicial e final, corrige um detalhe desaparecido e comenta um frame parado e uma boca que se move sem intenção. Mostra redução de cores depois da animação e edição de duração/quantidade de frames.",
+    "forja": "Checar eventos, loop e intenção da boca separadamente da estabilidade cromática. Remover um frame muda o ritmo e requer revisão; elogios percentuais do apresentador não são métricas de qualidade."
+  },
+  {
+    "id": "owkamgYVWAs",
+    "anchors": "0:30–1:40; 2:19–2:28; 4:09–4:17",
+    "notes": "Explica transferência de animação, controles de câmera, detalhe, sombreamento, paleta e referência. Uma geração aceita vira referência das seguintes; a aula reconhece a necessidade de limpeza manual.",
+    "forja": "Não tratar a estimativa promocional de progresso como medição. Aprovar referência e movimento antes de gerar o restante."
+  },
+  {
+    "id": "hOZzbQBjKPc",
+    "anchors": "1:50–2:24; 7:59–8:24; 9:24–11:32; 13:10–13:25",
+    "notes": "Combina redução de cores, rotação, skeleton e edição. Recomenda limpar frames antes de usá-los como contexto. Corrige mão e braço em ordem errada por inpainting e imagem inicial; reconhece mudanças de cor ainda presentes.",
+    "forja": "Avaliar oclusão e movimento antes da correção cromática. O conselho antigo sobre forçar pontos da cabeça depende da versão e não deve sobrepor instruções recentes sem teste."
+  },
+  {
+    "id": "68BYzLoLh-U",
+    "anchors": "0:37–1:17; 2:05–3:13; 4:13–4:56; 7:01–8:47",
+    "notes": "Limpa o sprite e reduz cores próximas. Usa áreas visíveis como contexto de estilo, observa reutilização de cores e relaciona o tamanho da máscara ao volume do elemento gerado. Esboça espada e escudo antes do inpainting e revisa o resultado manualmente.",
+    "forja": "Distinguir instrução para Inpaint daquela para Edit. O contexto de cor ajuda, mas não é garantia de paleta nem de equipamento funcional."
+  },
+  {
+    "id": "sE1s5ZYfxqk",
+    "anchors": "0:29–1:35; 3:04–4:17; 7:15–7:33",
+    "notes": "Gera transições de terreno com controles de projeção, tamanho e contorno. Depois do inpainting das escadas, remove pixels indesejados e ajusta bordas para conexão com o terreno. Auto-tiling seleciona peças; a revisão pode exigir seleção manual.",
+    "forja": "Testar o mapa composto, as emendas e a perspectiva. Escolha correta de tile e correção dos pixels na borda são problemas distintos."
+  },
+  {
+    "id": "zBfVT5pwCSs",
+    "anchors": "6:39–7:57; 8:09–11:16; 13:41–18:17; 23:07–23:25",
+    "notes": "Corrige um frame específico e usa máscaras para preservar outros. Limpa pequenos pixels antes de continuar a geração. A falta de uma mão exige rever pose, posição, imagem inicial e visibilidade das camadas; uma restrição de pose pode conflitar com o esboço.",
+    "forja": "Validar camadas, frames de contexto e coordenadas antes de culpar o modelo. Parâmetros numéricos antigos de força não devem ser transportados automaticamente para versões atuais."
+  },
+  {
+    "id": "9KUAQqzaxsU",
+    "anchors": "3:25–3:57; 4:54–5:44; 6:47–8:31; 9:54–10:24",
+    "notes": "Apresenta o editor, esboço inicial, geração com referência de estilo, rotação, edição e inpainting de cenário. Demonstra escolher a saída como camada ou frame e distinguir uma alteração textual de uma região pintada.",
+    "forja": "Separar exploração de candidatos da promoção de uma referência. O fluxo mostra ferramentas; não demonstra correção automática de clusters ou qualidade garantida."
+  },
+  {
+    "id": "-L4Zyvklsc8",
+    "anchors": "0:11–0:54",
+    "notes": "Gera objetos por inpainting ao lado de um personagem já presente, usando-o como referência de escala.",
+    "forja": "Comparar altura e densidade de detalhe no contexto real. A presença da referência ajuda o pedido, mas a dimensão e a legibilidade ainda precisam ser medidas."
+  },
+  {
+    "id": "Tz4LHify1Is",
+    "anchors": "0:30–1:05",
+    "notes": "Apresenta conversão de fotografia ou arte conceitual por Image to Pixel Art Pro, definindo a imagem como referência.",
+    "forja": "Converter uma imagem é etapa distinta de reparar ruído num sprite nativo. As comparações promocionais com outros geradores não equivalem a benchmark."
+  },
+  {
+    "id": "dFQ2ffwMlo4",
+    "anchors": "0:08–0:59",
+    "notes": "Propõe variações de casa, personagem e arma a partir de uma imagem base, incluindo mudanças de estação, classe, equipamento e elemento.",
+    "forja": "A variação precisa manter os atributos exigidos e ter suas alterações autorizadas por região; reconhecer a mesma ideia não significa preservar exatamente os pixels."
+  },
+  {
+    "id": "QzoLfjllbPg",
+    "anchors": "0:02–1:01",
+    "notes": "Apresenta um panorama de dez ferramentas: personagem, animação, conversão, tiles, edição, objetos, retrato, interface e fonte.",
+    "forja": "Usar como índice de funcionalidades e encaminhar a análise técnica às aulas longas e à documentação; a lista não ensina um algoritmo de limpeza."
+  },
+  {
+    "id": "ibJHXTuTzFQ",
+    "anchors": "0:21–0:50",
+    "notes": "Um disparo falha por falta de espaço para recuo e efeito; reposicionar o personagem permite nova tentativa. A queda parte de poses importantes e usa interpolação.",
+    "forja": "Registrar margem de ação e âncoras. Evitar tentar resolver com paleta ou remoção de pixels uma falha causada pelo limite do canvas."
+  },
+  {
+    "id": "3zs3FdJEdBA",
+    "anchors": "0:24–0:51; 0:53–1:41",
+    "notes": "Prepara estados a partir de uma referência, remove pixels perdidos antes de animar e usa interpolação entre poses para ataque e morte.",
+    "forja": "Aprovar estados limpos antes das sequências. Revisar também o texto expandido e a estabilidade dos materiais após a animação."
+  },
+  {
+    "id": "X0B_u-TTYVM",
+    "anchors": "0:19–0:48",
+    "notes": "Apresenta três caminhos de redução: seleção automática, quantidade escolhida e adesão a uma paleta existente no editor.",
+    "forja": "Conferir pertencimento e orçamento no arquivo final; respeitar a paleta não comprova agrupamento espacial adequado."
+  },
+  {
+    "id": "tdEZVVqslys",
+    "anchors": "0:09–1:20; 1:25–1:51",
+    "notes": "Parte de um personagem em 64×64 para gerar outros por referência de estilo. Adiciona referências e reserva margem antes de animar.",
+    "forja": "A curadoria precisa anteceder a expansão do elenco. O padding deve permitir a ação mantendo escala útil e pivô."
+  },
+  {
+    "id": "q6oEg-HxyqI",
+    "anchors": "58:52–59:48; 1:01:30–1:02:46",
+    "notes": "Recorte temático da live: corrige um pixel, aplica redução a vários frames e compara quantidade escolhida com paleta específica. O fluxo retorna ao editor para limpeza e salva a animação revisada.",
+    "forja": "Distinguir a paleta compartilhada da revisão local. O número 20 é exemplo daquela demonstração e não teto recomendado ao Empire.",
+    "analise": "recorte_tematico"
+  },
+  {
+    "id": "fBPLVhV_jag",
+    "anchors": "10:47–12:14; 1:56:41–1:58:28",
+    "notes": "Recorte temático da live: apresenta redução automática, por quantidade ou paleta. Depois extrai uma paleta do personagem e aplica às animações; ainda observa mudança de sombreamento na face.",
+    "forja": "Mesmo com cores permitidas, a posição e a forma das sombras podem variar. A associação verbal entre redução e mixels não prova correção geométrica da grade.",
+    "analise": "recorte_tematico"
+  },
+  {
+    "id": "lWSeMkZTsT4",
+    "anchors": "12:10–12:24; 1:51:22–1:51:45; 2:34:17–2:34:42; 2:47:01–2:47:23",
+    "notes": "Recortes temáticos da live: combina redução de cores e correção manual. Diz que certos modelos da interface daquela versão não tinham opção direta de paleta e propõe redução posterior.",
+    "forja": "Registrar quais controles existem no backend e na versão usados. Não presumir que um campo de paleta esteja disponível em toda ferramenta, nem transformar a observação histórica em limite atual.",
+    "analise": "recorte_tematico"
+  },
+  {
+    "id": "jP5hyRELbLw",
+    "anchors": "1:23:02–1:27:48; 1:29:29–1:30:56",
+    "notes": "Recorte temático da live: responde a uma dúvida sobre quatro tons de cinza e paleta reduzida. Procura o importador no lugar errado e depois localiza a importação de paleta nas opções. Diferencia a geração da aplicação posterior da paleta.",
+    "forja": "Conferir a interface real e a documentação; não copiar a primeira tentativa hesitante como procedimento. Uma paleta de quatro tons responde a esse exemplo, sem redefinir a paleta Empire.",
+    "analise": "recorte_tematico"
+  },
+  {
+    "id": "qYeGOijp-3w",
+    "anchors": "15:18–15:52; 19:36–20:03; 1:20:13–1:20:44; 1:50:30–1:51:00",
+    "notes": "Recortes temáticos da live: extrai paleta de um sprite base, seleciona frames e a reaplica. A redução é acompanhada de correções manuais de linhas; reforça limpar rotações antes de reutilizá-las.",
+    "forja": "Guardar a origem da paleta e selecionar explicitamente frames e regiões. Cor comum não dispensa revisão de contorno, sombra e detalhes.",
+    "analise": "recorte_tematico"
+  }
+]
