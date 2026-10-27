@@ -6,8 +6,9 @@ Guia: [FORJA.md](../../FORJA.md). Auditoria anterior: [23/10](../2026-10-23-pixe
 com os [reparos](../2026-10-23-forja-reparos/README.md).
 
 **Em resumo:** dez falhas reproduzidas sem rede (A01–A10), todas reparadas com testes que falham no código
-auditado. A mais grave é uma regressão de 26/10: a medida de "ampliação exata" só conferia blocos a partir do
-canto da imagem, e numa prancha — onde cada recorte começa fora da grade — uma ampliação 10× saía "exata 2×", com
+auditado; a 27/10, a pedido do dono (*«Quero que corrija e aplique o que descobriu»*), também as observações
+O1–O6 e duas falhas achadas ao aplicá-las (A11, A12) — ver [Aplicado a 27/10](#aplicado-a-2710). A mais
+grave é uma regressão de 26/10: a medida de "ampliação exata" só conferia blocos a partir do canto da imagem, e numa prancha — onde cada recorte começa fora da grade — uma ampliação 10× saía "exata 2×", com
 a nota "medida, não estimada": quadros cinco vezes maiores, cortados, e o contrato a falhar sem dizer porquê. A
 segunda é do ciclo pago: uma imagem sem figura rebentava o `forja sheet` e o `forja auto` com um `IndexError`,
 depois de o pedido já ter sido cobrado. Nenhuma chamada paga, nenhuma chave, nada em `art/`, nenhuma dependência
@@ -19,10 +20,10 @@ nova, nenhuma aprovação artística.
 | --- | --- | --- |
 | Leitura | Os 61 módulos de produção (8 646 linhas no `00bc2d3`), um a um: grade, amostragem, fundo, limpeza, paleta, contorno, lint, pranchas, exportação, prompts, plano, jobs, conectores, MCP, equipamento e cor | Os achados abaixo |
 | Formato `.aseprite` | O escritor (`aseprite.py`) contra o [`ase-file-specs.md`](https://github.com/aseprite/aseprite/blob/main/docs/ase-file-specs.md) lido a 26/10: cabeçalho de 128 bytes, quadro de 16, camada, cel comprimido, perfil de cor, tags, paleta e slice com pivô | Bate campo a campo; continua por abrir no aplicativo |
-| Suíte e prova | `make forja` antes e depois | 246 testes (3 saltados: sem Godot) → 265; prova 11/11 nos dois |
+| Suíte e prova | `make forja` antes e depois | 246 testes (3 saltados: sem Godot) → 270; prova 11/11 nos dois |
 | Sondas | [`sondas.py`](sondas.py): dez cenários com transporte falso, sem rede nem gasto, que registam o comportamento (não o julgam) | [antes](observacoes-antes.json) e [depois](observacoes-depois.json), do mesmo script |
 | Regressões | As sondas F01–F09 de 23/10, as provas do arqueiro (24/10 e 25/10) | F01–F09 iguais (só o hash do commit muda); as duas provas passam |
-| Tempos | `forge` de um `royal_64` a 1920×1920; `sheet` de 8 quadros a 2560×1280 | 3,3 s e 2,9 s; uma imagem vazia de 1920×1920, 0,8 s |
+| Tempos | `forge` de um `royal_64` a 1920×1920; `sheet` de 8 quadros a 2560×1280 | 3,3 s → 2,3 s (O6) e 2,9 s; uma imagem vazia de 1920×1920, 0,8 s; uma pintura sem grade de 1920×1920, 225 s → 8,5 s (O4) |
 
 ## Achados
 
@@ -102,23 +103,42 @@ com o pedido "Keep every pose completely inside its own cell…". Na grelha, cad
 - `Palette.__contains__` refazia um conjunto com as 112 cores a cada chamada.
 - `_common_canvas` passou do `sheetforge` para `placement.common_canvas`, onde vive a pergunta "onde fica cada
   quadro" (o `sheetforge` precisava das linhas para as travessias e fica abaixo das 250).
+- 27/10: `too_big` e `below_grid` passaram do `lint` para `limits.py`, com o `no_grid` e o `clipped` (o `lint`
+  passava das 250 linhas).
+
+<a id="aplicado-a-2710"></a>
+## Aplicado a 27/10
+
+O que estava aberto, e o que apareceu ao aplicá-lo. "Antes" é o `00bc2d3`, "depois" o código de hoje, no mesmo
+cenário de [`sondas.py`](sondas.py) (O1 e O2 não têm sonda: um pede as imagens públicas, o outro é um portão).
+
+| # | O que se fez | Antes | Depois | Testes |
+| --- | --- | --- | --- | --- |
+| O1 | A [forense de 26/10](../2026-10-26-pixellab-engenharia-reversa/forense.py) passa a usar `gridcheck.exact_grid`; as 60 imagens públicas descarregadas outra vez (os 60 SHA-256 iguais aos de 26/10) e [`forense-imagens.json`](../2026-10-26-pixellab-engenharia-reversa/forense-imagens.json) regravado | o tileset da documentação "é 2×" e a estimativa de período 4 "um erro": 8 de 16 saídas com a grade errada | nos pixels **visíveis** o tileset é 4× (80×64): o "2×" vinha de 508 cores escondidas debaixo do alfa 0, e a estimativa acertava nele — 7 de 16; 8 ecrãs e 1 esboço são capturas 2× recortadas em pixel ímpar, que a cópia alinhada ao canto não via | o `verificar.py` da pesquisa confere a prosa contra o JSON; errata no [dossiê](../2026-10-26-pixellab-engenharia-reversa/DOSSIE.md#errata) |
+| O2 | Os artefactos do arqueiro de 24/10 refrescados (só o eixo `color_coherence`, do FORJA-04); o `make forja` corre as duas provas do arqueiro e chumba um JSON que mude sem commit, como o `spec` | derivavam calados | uma deriva chumba o CI | `make forja` |
+| O3 | `sheet --same-height` mede cada figura na sua própria grade, em vez de a esticar com LANCZOS até à altura mediana | figuras a 8× e 10×, uma agachada: nativas 11×24 e 17×24 (a alta encolheu, o agachar cresceu de 20 para 24) | 14×30 e 14×20, iguais à verdade pixel a pixel | `test_auditoria_aplicada.OpenItemsTest` |
+| O4 | Uma imagem sem grade com mais do dobro da tela recusa-se logo (`no_grid`, em `limits.py`) | pintura de 400×400: 8,5 s, `clipped` e `outline`, "Draw the figure smaller"; de 1920×1920: 225 s | menos de 0,1 s e 8,5 s, "Draw real pixel art: every logical pixel is one crisp solid square block…" | `OpenItemsTest` |
+| O5 | O lado cortado pela tela sai da medida do contorno (e da espessura): é o `margin`; o `clipped` cala as frases de altura e de margem, que são a mesma causa; a margem fala da célula | retângulo cortado: `outline` (erro) e três frases; com o `clipped`, "62" três vezes | `margin` e `pivot`; uma frase por causa | `OpenItemsTest`, `CorrectiveTest` |
+| O6 | `gridcheck.measure` devolve a amostragem que a conferência já fez; o `snap` reaproveita-a | 2 amostragens | 1 | `OpenItemsTest` |
+| A11 | Achado ao testar O3: a grade de um recorte media-se depois da máscara da figura, que corta o fundo opaco em degraus de 2 px | figura a 8× numa prancha com fundo de chave: período 9,24 | 8 e 10, cada uma a sua | `OpenItemsTest` |
+| A12 | `forja scale --down` prometia "nunca a média" e fazia a média de tons do mesmo balde; o voto `mode` (a cor exata mais frequente) | bloco de 96–111: sai 105, que não estava lá | 111 | `OpenItemsTest` |
+
+Pelo caminho também se desfez uma regra minha: uma primeira leitura do tileset (4× "com fase (2,2)") levou a
+preferir a grade alinhada num ficheiro inteiro; a nota não tinha fase nenhuma, e a regra estragaria as capturas
+HiDPI recortadas em pixel ímpar. E a grade da prancha inteira não serve aos recortes: com figuras a 8× e 10×
+seria 2×.
 
 ## O que fica aberto
 
 | # | Observação | Porque não se mexeu |
 | --- | --- | --- |
-| O1 | A [forense de 26/10](../2026-10-26-pixellab-engenharia-reversa/forense.py) tem a sua cópia do `exact_scale` alinhado ao canto: numa imagem pública com margem fora de fase, a coluna `exact_scale` dela subestima o k | As imagens de terceiros não entram no repositório e pedem rede; repetir com `gridcheck.exact_grid` |
-| O2 | Os artefactos do arqueiro de 24/10 (FORJA-03) estão atrás do código desde o FORJA-04: `prova_arqueiro.py` reescreve-os com o eixo `color_coherence` e não falha — só compara as medidas dela | É o registo do que se viu a 24/10; refrescá-lo é decisão do dono |
-| O3 | `sheet --same-height` redimensiona com LANCZOS antes da grade, o que borra os blocos | Opção explícita e documentada; trocar pela grade própria de cada figura é escolha de comportamento |
-| O4 | Uma imagem grande sem grade (tratada como nativa) passa pela limpeza e pelo lint em Python, pixel a pixel: dezenas de segundos a 1920×1920 | Só o caso vazio e a amostragem ficaram rápidos; vetorizar a limpeza é outro trabalho |
-| O5 | Uma figura cortada pela tela recebe também "Surround the whole silhouette with… outline" e "Keep clear empty space… image border": duas frases para uma causa, e "image border" fala da tela, não da imagem gerada | Avisos verdadeiros; juntar as frases pede uma regra de prioridade entre achados |
-| O6 | O `forge` amostra a imagem duas vezes (a pureza no `gridcheck` e o recorte no `snap`), ~0,6 s a 1920×1920 | Pouco para o código que pede |
-| O7 | O piloto pago continua por executar ([piloto.json](../2026-10-23-forja-reparos/piloto.json)) | Sem chaves nem teto aprovado |
+| O7 | O piloto pago continua por executar ([piloto.json](../2026-10-23-forja-reparos/piloto.json)). Os dez planos foram refeitos sem rede a 27/10 com a Forja de hoje: as referências batem com os hashes do piloto, os oito pedidos estáticos e de caminhada da OpenAI e do Gemini são válidos, e a caminhada no PixelLab continua recusada antes da rede, como o piloto prevê | Sem chaves no ambiente nem teto aprovado pelo dono |
+| — | Uma imagem grande sem grade que **não** passa do dobro da tela continua a passar pela limpeza e pelo lint em Python | Abaixo disso a recusa seria um palpite; é lento, não errado |
 
 ## Repetir
 
 ```bash
-python3 -m unittest discover -s tools/forja/tests -t .                     # 265 testes (GODOT=<motor> para os do Godot)
+python3 -m unittest discover -s tools/forja/tests -t .                     # 270 testes (GODOT=<motor> para os do Godot)
 python3 -m tools.forja prova                                                # 11/11
 python3 docs/art/research/2026-10-26-forja-auditoria/sondas.py --out /tmp/depois.json
 python3 docs/art/research/2026-10-23-forja-reparos/sondas_depois.py         # F01-F09, iguais

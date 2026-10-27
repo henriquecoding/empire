@@ -102,7 +102,7 @@ Cada afirmação leva um nível. Subir de nível exige uma prova nova, não uma 
 | Nível | Exemplo neste trabalho |
 | --- | --- |
 | **Facto publicado** — está numa fonte primária, com URL, data e hash | "Pixen: cada lado de 16 a 768, área até 512×512" (OpenAPI de 26/10) |
-| **Medição reproduzível** — um script mede, e qualquer um repete | "O estimador de grade da Forja errava 8 de 16 saídas da documentação" (`forense.py`) |
+| **Medição reproduzível** — um script mede, e qualquer um repete | "O estimador de grade da Forja errava 7 de 16 saídas da documentação" (`forense.py`) |
 | **Inferência testada** — uma hipótese com uma previsão que podia falhar e não falhou | "A tela do Pro é ~1024 px a escala 4/3/2" (preços, contagens e tetos, `inferencia_pro.py`) |
 | **Hipótese** — compatível com os factos, sem teste ainda | "Os modelos clássicos são deterministas por seed" (sonda S01) |
 | **Desconhecido** — a evidência pública não resolve | Pesos, dados, número de parâmetros, custo real por inferência |

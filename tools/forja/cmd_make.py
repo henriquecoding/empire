@@ -159,7 +159,8 @@ def register(sub) -> None:
     p.add_argument("--tags", help="ex.: 'idle' ou 'idle,walk' (contagens da Animation Bible) ou 'idle:4'")
     p.add_argument("--layout", type=pair, help="colunas x linhas da prancha (junta pedacos por celula)")
     p.add_argument("--anchor", default="feet", choices=("feet", "mass", "bottom", "center"))
-    p.add_argument("--same-height", action="store_true", help="igualar a altura das figuras antes da grade")
+    p.add_argument("--same-height", action="store_true", help="cada figura na sua propria grade (o gerador desenhou "
+                   "pixels de tamanhos diferentes); nada se estica")
     p.add_argument("--deflicker", type=float, default=0.0, help="cintilacao: mudancas menores que isto (OKLab); "
                    "so se corrigem dentro de --static, sem movimento e fora de --action")
     p.add_argument("--static", type=box, action="append", help="caixa x0,y0,x1,y1 (quadro final) confirmada como "

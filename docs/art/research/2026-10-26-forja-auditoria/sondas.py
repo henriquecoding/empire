@@ -251,9 +251,89 @@ def a10_height_hint(tmp: Path) -> dict:
     return {"height_hints": [f["prompt_hint"] for f in rep["findings"] if f["rule"] == "height"]}
 
 
+def mixed_board() -> tuple[Image.Image, list[Image.Image]]:
+    """Uma figura a 8x e outra, mais baixa (agachada), a 10x, sobre fundo de chave opaco."""
+    tall, low = synth.sprite(1, (18, 30)), synth.sprite(2, (18, 20))
+    board = Image.new("RGBA", (420, 300), (0, 0, 255, 255))
+    board.alpha_composite(tall.resize((18 * 8, 30 * 8), Image.NEAREST), (20, 20))
+    board.alpha_composite(low.resize((18 * 10, 20 * 10), Image.NEAREST), (220, 60))
+    return board, [tall, low]
+
+
+@guarded
+def o3_same_height(tmp: Path) -> dict:
+    """--same-height numa prancha com pixels de 8 e de 10: que tamanho nativo sai de cada figura?"""
+    board, truths = mixed_board()
+    boxes, _, masks = sheet.find_masks(board, (0, 0, 255))
+    figures = sheet.extract(board, boxes, (0, 0, 255), same_height=True, masks=masks)
+    return {"native_sizes": [list(f.native.size) for f in figures],
+            "truth_sizes": [list(t.crop(t.getchannel("A").getbbox()).size) for t in truths]}
+
+
+@guarded
+def o4_no_grid(tmp: Path) -> dict:
+    """Uma pintura lisa de 400x400, sem grade, como royal_64: quanto tempo, e o que se pede ao gerador?"""
+    import time
+    from PIL import ImageFilter
+    from tools.forja import pipeline
+    paint = Image.new("RGBA", (400, 400))
+    paint.putdata([(x % 256, (x * y) % 256, y % 256, 255) for y in range(400) for x in range(400)])
+    paint.filter(ImageFilter.GaussianBlur(8)).save(tmp / "o4.png")
+    t0 = time.monotonic()
+    res = pipeline.forge(tmp / "o4.png", tmp / "o4", pipeline.Options(kind="royal_64"), report_html=False)
+    return {"seconds": round(time.monotonic() - t0, 1), "errors": sorted(f["rule"] for f in res["lint"]["findings"]
+                                                                          if f["severity"] == "error"),
+            "prompt_feedback": res["lint"]["prompt_feedback"][:200]}
+
+
+@guarded
+def o5_clipped_hints(tmp: Path) -> dict:
+    """Um retangulo com contorno cortado pela tela: que achados e que frases para o gerador?"""
+    from tools.forja import contracts, lint
+    img = Image.new("RGBA", (64, 64))
+    img.paste((0, 0, 0, 255), (20, 30, 64, 64))
+    img.paste((180, 60, 60, 255), (21, 31, 64, 64))
+    rep = lint.check(img, contracts.get("royal_64"))
+    return {"rules": sorted(f["rule"] for f in rep["findings"]), "prompt_feedback": rep["prompt_feedback"]}
+
+
+@guarded
+def o6_samplings(tmp: Path) -> dict:
+    """Quantas vezes o `forge` amostra a imagem inteira (a conferencia da grade e o recorte)?"""
+    from tools.forja import pipeline, resample
+    fake, _, _ = synth.fake(synth.sprite(5), 8.0, 0.6, 0.6, 4, (0, 0, 255), 3, 5)
+    fake.save(tmp / "o6.png")
+    real, calls = resample.resample, []
+    spy = lambda *a, **k: calls.append(1) or real(*a, **k)  # noqa: E731
+    with mock.patch("tools.forja.resample.resample", spy), mock.patch("tools.forja.gridcheck.resample", spy):
+        pipeline.forge(tmp / "o6.png", tmp / "o6", pipeline.Options(), report_html=False)
+    return {"samplings": len(calls)}
+
+
+@guarded
+def a11_mask_edge(tmp: Path) -> dict:
+    """A figura a 8x da prancha mista, sem --same-height: o periodo dela, medido no recorte com a mascara."""
+    board, _ = mixed_board()
+    boxes, _, masks = sheet.find_masks(board, (0, 0, 255))
+    return {"periods": [f.period for f in sheet.extract(board, boxes, (0, 0, 255), masks=masks, same_height=True)]}
+
+
+@guarded
+def a12_downscale(tmp: Path) -> dict:
+    """`forja scale --down 3` de um bloco de nove tons do mesmo balde (96-111): a cor que sai estava no bloco?"""
+    from tools.forja import scale
+    block = Image.new("RGBA", (3, 3))
+    tones = [(v, 100, 100, 255) for v in (96, 97, 98, 99, 108, 109, 110, 111, 111)]
+    block.putdata(tones)
+    out = scale.downscale(block, 3).getpixel((0, 0))
+    return {"out": list(out), "was_in_block": out in tones}
+
+
 PROBES = {"A01": a01_exact_scale_phase, "A02": a02_empty_sheet, "A03": a03_auto_stops_on_budget,
           "A04": a04_resumed_cost, "A05": a05_corrective_language, "A06": a06_mcp_repeatable,
-          "A07": a07_mask_without_alpha, "A08": a08_cell_crossing, "A09": a09_cli_contract, "A10": a10_height_hint}
+          "A07": a07_mask_without_alpha, "A08": a08_cell_crossing, "A09": a09_cli_contract, "A10": a10_height_hint,
+          "O3": o3_same_height, "O4": o4_no_grid, "O5": o5_clipped_hints, "O6": o6_samplings,
+          "A11": a11_mask_edge, "A12": a12_downscale}
 
 
 def main() -> int:

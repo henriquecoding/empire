@@ -126,8 +126,12 @@ class CorrectiveTest(unittest.TestCase):
         self.assertNotIn("grade detetada", text)
         self.assertIn("Use exactly 64x64 logical pixels for the whole image", text)
         self.assertIn("about 8x8 image pixels, not 4x4", text)
-        self.assertIn("at most 62 pixels tall", text)
+        self.assertIn("Draw the figure smaller: at most 62 logical pixels tall", text)
         self.assertNotIn("1-62", text)
+        # O5: a altura, a margem e o contorno do corte sao a mesma causa: uma frase so
+        self.assertEqual(text.count("62"), 1)
+        self.assertNotIn("Surround the whole silhouette", text)
+        self.assertNotIn("image border", text)
 
     def test_a_size_mismatch_says_the_size(self):
         d = tempdir()

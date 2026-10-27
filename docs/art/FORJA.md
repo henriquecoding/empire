@@ -23,7 +23,8 @@ respostas: a Forja passou a ver a cor no espaço, a proteger até ao PNG final e
 não congelar o movimento ([ADR 0092](../adr/0092-a-forja-ve-a-cor-no-espaco.md)).
 A [auditoria de 26/10](research/2026-10-26-forja-auditoria/README.md) achou dez
 falhas (A01–A10) — a mais grave, uma ampliação exata medida na fase errada, que
-fazia uma prancha 10× sair "exata 2×" — e reparou-as com testes.
+fazia uma prancha 10× sair "exata 2×" — e reparou-as com testes; a 27/10 aplicou o
+que ficara aberto (O1–O6) e mais duas falhas achadas pelo caminho (A11, A12).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -283,7 +284,9 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   personagem ou efeito, um pixel solto ou um furo de 1 px ficam e aparecem como
   candidatos no relatório (podem ser um olho, um brilho, um rebento); só o
   cenário os tira. Ruído de cor quase igual ao vizinho é alisado (`--noise 0`
-  desliga) e `--protect x0,y0,x1,y1` guarda uma caixa até ao PNG final.
+  desliga) e `--protect x0,y0,x1,y1` guarda uma caixa até ao PNG final. Uma
+  imagem sem grade com mais do dobro da tela recusa-se logo (`no_grid`): não é
+  pixel art nesta escala, e limpá-la levava minutos para pedir a coisa errada.
 - **Animação.** `prompt --tags walk` (ou `idle,walk`) pede a prancha com as
   contagens e notas da Animation Bible → `sheet`. A Forja conta as figuras
   reais contra as pedidas e **não inventa** um quadro em falta. Com o
@@ -293,7 +296,9 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   volta à figura dona) e o que fica dividido corta-se pela linha — as duas saem no
   relatório (`cell_crossing`, aviso) com o pedido ao gerador; sem grelha, a
   separação automática precisa de espaço vazio entre figuras. Escala e paleta
-  comuns. Com a grelha, cada figura **fica onde estava na sua célula** e só o
+  comuns; `--same-height` mede cada figura na sua própria grade (pixels de
+  tamanhos diferentes na mesma prancha) e não estica nada — um agachar continua
+  mais baixo. Com a grelha, cada figura **fica onde estava na sua célula** e só o
   chão comum vai ao pivô (`--align preserve`): um salto continua no ar, um
   agachar não cresce, uma flor cresce da mesma raiz. `--align feet` alinha cada
   quadro pelo próprio apoio e o relatório diz que a deriva zero daí é imposta.
@@ -382,7 +387,9 @@ ficheiro que não é imagem).
   múltiplos e submúltiplos perdem); linhas por uma reta refeita por mínimos
   quadrados com as bordas confirmadas e interpolação nas zonas lisas.
 - **Amostragem.** Cada célula vota a cor dominante no miolo (sem a borda
-  suavizada); uma cor chapada sai igual, uma ruidosa sai limpa.
+  suavizada); uma cor chapada sai igual, uma ruidosa sai limpa. `--method mode`
+  toma só a cor exata mais frequente, sem misturar (o `scale --down` usa-o). A
+  grade de um recorte mede-se antes da máscara da figura.
 - **Fundo.** Alfa, chave (a cor mais longe da paleta do projeto, escolhida pelo
   prompt) ou fundo liso por enchimento a partir da borda, na resolução nativa.
 - **Cor.** OKLab para todas as distâncias; k-means sem sorteio; dither

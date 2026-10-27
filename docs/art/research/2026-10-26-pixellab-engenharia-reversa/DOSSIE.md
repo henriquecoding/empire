@@ -15,8 +15,9 @@ que continua desconhecido. Recolha: 86 respostas públicas por GET, sem chave ne
    corrigidos e testados; a conformidade passa agora em 63 verificações sem divergências. Um deles
    desfaz uma recomendação do relatório de 24/10 (ver [§7](#forja)).
 3. **A forense das imagens públicas achou um defeito destrutivo na Forja**: o estimador de grade errava
-   8 de 16 saídas de modelo da documentação (um personagem nativo de 64×64 saía com 12×11 pixels). Com
-   as salvaguardas novas erra 0 de 16.
+   7 de 16 saídas de modelo da documentação (um personagem nativo de 64×64 saía com 12×11 pixels). Com
+   as salvaguardas novas erra 0 de 16. (Até 27/10 dizia-se 8: o tileset contava como erro, ver a
+   [errata](#errata).)
 4. **Os termos obrigam à licença Open RAIL-M do Stable Diffusion** — indício de linhagem que a pesquisa de
    23/10 não registou ([H01](#h01)).
 5. **As ferramentas "Pro" desenham numa tela de ~1024 px a escala inteira (4×, 3×, 2×) e fatiam o
@@ -105,7 +106,7 @@ Cada linha diz o que a refutaria. "Sonda" remete para o [protocolo](PROTOCOLO-SO
 | <a id="h12"></a>H12 | O `reduce-colors` com `palette_image` partilha uma paleta entre quadros sem mudar regiões paradas | Especificação | — | S08 | Hipótese |
 | <a id="h13"></a>H13 | A API é Python (FastAPI/Pydantic, uvicorn) em AWS `eu-west-1` | §2 e §3 | — | — | Medição |
 | <a id="h14"></a>H14 | O PixMiniMax usa um modelo de vídeo da MiniMax | "Powered by MiniMax H3"; preço pelo tempo de geração; quadros em múltiplos de 4 | — | — | Facto publicado |
-| <a id="h15"></a>H15 | As saídas públicas são gravadas nativas (sem ampliação) | 15 de 16 com escala exata 1; um tileset a 2× exato | Amostra pequena e antiga | S02 | Medição na amostra |
+| <a id="h15"></a>H15 | As saídas públicas são gravadas nativas (sem ampliação) | 15 de 16 com escala exata 1; um tileset a 4× exato no que se vê | Amostra pequena e antiga | S02 | Medição na amostra |
 
 ## 6. Forense das imagens da documentação
 
@@ -115,12 +116,12 @@ utilizador (esboços, esqueleto) e 40 ecrãs da interface. As imagens não estã
 
 | Medida, nas 16 saídas | Resultado |
 | --- | --- |
-| Gravadas nativas (escala exata 1) | 15; um tileset é uma ampliação exata 2× de 160×128 |
+| Gravadas nativas (escala exata 1) | 15; um tileset é uma ampliação exata 4× de 80×64 nos pixels visíveis (2× só com as 508 cores escondidas debaixo do alfa 0) |
 | Cores opacas | de 130 a 1603 |
 | Com pares de cores quase iguais (OKLab < 0,02) | 15 |
 | Alfa | 12 binário, 4 com meios-tons (os magos e o mapa mais antigos) |
 | Metadados | nenhuma com C2PA, EXIF ou blocos de texto |
-| Grade estimada pela Forja **antes** | errada em 8 de 16 (o pirata de 64×64 → 12×11; o mapa de 128×128 → 8×9; o tileset 2× → metade) |
+| Grade estimada pela Forja **antes** | errada em 7 de 16 (o pirata de 64×64 → 12×11; o mapa de 128×128 → 8×9) |
 | Grade com as salvaguardas **depois** | errada em 0 de 16 |
 
 <a id="forja"></a>
@@ -166,6 +167,7 @@ Um pormenor sem consequência: a descrição do PR diz 236 testes da Forja; o co
 acrescentou três. O dossiê dos vídeos diz o que não fez (não transcreve, não assistiu a tudo) e a
 conferência não muda isso: o oEmbed confirma existência, autor e título, não as legendas.
 
+<a id="errata"></a>
 ## 9. Errata ao que já estava escrito
 
 | Onde | O que dizia | O que se sabe agora |
@@ -176,6 +178,7 @@ conferência não muda isso: o oEmbed confirma existência, autor e título, nã
 | [Pesquisa da Forja de 23/10](../2026-10-23-forja-pixellab/README.md) | "118 ferramentas" no MCP | O guia de hoje descreve 117; a contagem depende do que se conta como ferramenta |
 | `pixellab_api.py` (23/10) | Limites só por área; hash `e322e725…` | Limites por eixo e intervalos; hash `1c895d3f…` |
 | FORJA-03 / guia da Forja | "`--init-strength 0` vai como 0" | 0 é recusado antes da rede ([§7](#forja)) |
+| Esta pesquisa, §1 e §6 (corrigido a 27/10, [auditoria da Forja](../2026-10-26-forja-auditoria/README.md), O1) | O tileset é uma ampliação 2× e a estimativa de período 4 era um erro (8 de 16); 0 ecrãs ampliados | A cópia de `exact_scale` desta `forense.py` contava a cor escondida debaixo do alfa 0 e só via blocos a partir do canto. Com a medida da Forja: o tileset é 4× (80×64) no que se vê, a estimativa acertava nele (7 de 16), e 8 ecrãs e 1 esboço são capturas 2× recortadas em pixel ímpar |
 
 ## 10. O que continua desconhecido
 

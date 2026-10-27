@@ -131,33 +131,38 @@ def by_cells(boxes: list[tuple[int, int, int, int]], size: tuple[int, int],
 def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pad: int = 6,
             scale: float | None = None, same_height: bool = False, masks: dict | None = None,
             exact: bool = False) -> list[Figure]:
-    """Cada caixa vira uma figura nativa. A escala e comum: a mediana das medidas."""
+    """Cada caixa vira uma figura nativa, numa escala comum: a mediana das medidas (um recorte que e uma ampliacao
+    exata nessa escala fica com a grade medida, e a fase dele). `same_height`: cada figura na sua propria grade, para
+    uma prancha com pixels de tamanhos diferentes; nada se estica (antes, LANCZOS ate a altura mediana: borrava os
+    blocos e fazia um agachar crescer). A grade da prancha inteira nao serve: com 8x e 10x juntos, seria 2x."""
     figures = [Figure(b) for b in boxes if b]
+    regions = [(max(0, f.box[0] - pad), max(0, f.box[1] - pad),
+                min(image.width, f.box[2] + pad), min(image.height, f.box[3] + pad)) for f in figures]
     crops = []
-    for f in figures:
-        region = (max(0, f.box[0] - pad), max(0, f.box[1] - pad),
-                  min(image.width, f.box[2] + pad), min(image.height, f.box[3] + pad))
+    for f, region in zip(figures, regions):
         crop = image.crop(region)
         own = mask_for(masks, f.box, region, exact) if masks else None
         if own is not None:
             crop.putalpha(ImageChops.darker(crop.getchannel("A"), own))
         crops.append(crop)
-    if same_height and crops:
-        target = median(f.box[3] - f.box[1] for f in figures)
-        crops = [c.resize((max(1, round(c.width * target / (f.box[3] - f.box[1]))),
-                           max(1, round(c.height * target / (f.box[3] - f.box[1])))), Image.Resampling.LANCZOS)
-                 for c, f in zip(crops, figures)]
-    periods = [gridcheck.detect(c).period[0] for c in crops]
+    # a grade mede-se no recorte sem a mascara: a borda dela, reduzida, corta o fundo opaco em degraus que nao sao
+    # da grade (uma figura a 8x saia "exata 4x")
+    exact = [(1, (0, 0)) if scale else gridcheck.exact_grid(image.crop(r)) for r in regions]
+    periods = [float(k) if k > 1 else gridcheck.detect(c).period[0] for c, (k, _) in zip(crops, exact)]
     shared = scale or (median(p for p in periods if p > 1) if any(p > 1 for p in periods) else 1.0)
-    for f, crop, own in zip(figures, crops, periods):
-        g = gridcheck.detect(crop, scale=shared) if shared > 1 else gridcheck.detect(crop)
+    for f, crop, region, own, (k, phase) in zip(figures, crops, regions, periods, exact):
+        if k > 1 and (same_height or k == shared):
+            g = gridcheck.phased(crop.size, k, phase)
+        elif same_height or shared <= 1:
+            g = gridcheck.detect(crop)
+        else:
+            g = gridcheck.detect(crop, scale=shared)
         sampled = resample.resample(crop, g)
         native, _ = matte.remove(sampled.image, color.to_hex(bg) if bg else None)
         box = opaque_bbox(native) or (0, 0, native.width, native.height)
         f.native = native.crop(box)
         f.period, f.purity, f.periods = g.period[0], sampled.purity, g.period
-        region = (max(0, f.box[0] - pad), max(0, f.box[1] - pad))
         f.origin_raw = (region[0] + g.xs[box[0]], region[1] + g.ys[box[1]])
-        if own > 1 and abs(own - shared) / shared > 0.08:
+        if not same_height and own > 1 and abs(own - shared) / shared > 0.08:
             f.notes.append(f"escala propria {own:.2f} difere da comum {shared:.2f}")
     return figures

@@ -5,7 +5,7 @@
    "requested_scale": 10,
    "sheet_exit": 0,
    "periods": [
-    10.0
+    10
    ],
    "native_sizes": [
     [
@@ -97,7 +97,7 @@
   "question": "O texto das correcoes que o gerador recebe quando a grade nao foi seguida e a figura nao cabe.",
   "observed": {
    "posts": 2,
-   "corrections": "Surround the whole silhouette with a 1-pixel pure black (#000000) outline. The figure must be at most 62 pixels tall on the 64x64 canvas. Keep clear empty space between the figure and the image border. Draw the figure smaller: at most 62 logical pixels tall, completely inside its cell. Use exactly 64x64 logical pixels for the whole image: every logical pixel is one solid block of about 8x8 image pixels, not 4x4."
+   "corrections": "Draw the figure smaller: at most 62 logical pixels tall, completely inside its cell. Use exactly 64x64 logical pixels for the whole image: every logical pixel is one solid block of about 8x8 image pixels, not 4x4."
   }
  },
  "A06": {
@@ -161,6 +161,78 @@
    "height_hints": [
     "The figure must be at most 62 pixels tall on the 64x64 canvas."
    ]
+  }
+ },
+ "O3": {
+  "question": "--same-height numa prancha com pixels de 8 e de 10: que tamanho nativo sai de cada figura?",
+  "observed": {
+   "native_sizes": [
+    [
+     14,
+     30
+    ],
+    [
+     14,
+     20
+    ]
+   ],
+   "truth_sizes": [
+    [
+     14,
+     30
+    ],
+    [
+     14,
+     20
+    ]
+   ]
+  }
+ },
+ "O4": {
+  "question": "Uma pintura lisa de 400x400, sem grade, como royal_64: quanto tempo, e o que se pede ao gerador?",
+  "observed": {
+   "seconds": 0.0,
+   "errors": [
+    "no_grid"
+   ],
+   "prompt_feedback": "Draw real pixel art: every logical pixel is one crisp solid square block on an exact grid, with no painterly shading, blur or anti-aliasing."
+  }
+ },
+ "O5": {
+  "question": "Um retangulo com contorno cortado pela tela: que achados e que frases para o gerador?",
+  "observed": {
+   "rules": [
+    "margin",
+    "pivot"
+   ],
+   "prompt_feedback": "Feet must rest exactly on the baseline marked in the template. Keep clear empty space between the figure and the edges of its cell."
+  }
+ },
+ "O6": {
+  "question": "Quantas vezes o `forge` amostra a imagem inteira (a conferencia da grade e o recorte)?",
+  "observed": {
+   "samplings": 1
+  }
+ },
+ "A11": {
+  "question": "A figura a 8x da prancha mista, sem --same-height: o periodo dela, medido no recorte com a mascara.",
+  "observed": {
+   "periods": [
+    8,
+    10
+   ]
+  }
+ },
+ "A12": {
+  "question": "`forja scale --down 3` de um bloco de nove tons do mesmo balde (96-111): a cor que sai estava no bloco?",
+  "observed": {
+   "out": [
+    111,
+    100,
+    100,
+    255
+   ],
+   "was_in_block": true
   }
  }
 }

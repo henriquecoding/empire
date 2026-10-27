@@ -57,5 +57,6 @@ def rotsprite(image: Image.Image, degrees: float, expand: bool = True) -> Image.
 
 
 def downscale(image: Image.Image, factor: int) -> Image.Image:
-    """Reducao inteira por voto da cor dominante (nunca a media, que inventa cores)."""
-    return resample(image, known(image.size, factor), "dominant", inset=0.0).image
+    """Reducao inteira pela cor exata mais frequente de cada bloco (nunca a media, que inventa cores; o voto
+    dominante fazia a media de cores parecidas — auditoria de 26/10)."""
+    return resample(image, known(image.size, factor), "mode", inset=0.0).image

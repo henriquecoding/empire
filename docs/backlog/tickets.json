@@ -3121,9 +3121,9 @@
    "docs/art/research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md"
   ],
   "depende": "FORJA-04",
-  "feito": "Ampliação exata medida com período e fase; prancha vazia e erro da forja sem perder a tentativa paga; resultado do auto pela última tentativa forjada; custo retomado no teto; prompt corretivo inglês com a medida; listas no MCP; máscara sem alfa pelo claro; JSON e código 2 para um ficheiro que não é imagem; a figura que atravessa a célula volta à dona ou fica escrita.",
-  "fora": "A forense de 26/10 refeita com a medida nova (pede rede), os artefactos do arqueiro de 24/10, o --same-height, a limpeza vetorizada, o piloto pago, aprovação artística.",
-  "estado": "feito — dez falhas (A01–A10) reproduzidas sem rede e reparadas com testes; observações abertas O1–O7 na pesquisa; piloto pago por executar (sem chaves)",
+  "feito": "Ampliação exata medida com período e fase; prancha vazia e erro da forja sem perder a tentativa paga; resultado do auto pela última tentativa forjada; custo retomado no teto; prompt corretivo inglês com a medida; listas no MCP; máscara sem alfa pelo claro; JSON e código 2 para um ficheiro que não é imagem; a figura que atravessa a célula volta à dona ou fica escrita. A 27/10: a forense de 26/10 refeita (o tileset é 4× no que se vê, com errata), as provas do arqueiro no make forja, --same-height sem esticar, recusa rápida sem grade, uma frase por causa, uma amostragem, a grade antes da máscara e o downscale sem média.",
+  "fora": "O piloto pago (sem chaves nem teto aprovado), aprovação artística, arte em art/.",
+  "estado": "feito — A01–A12 e as observações O1–O6 reparadas com testes; o piloto pago (O7) por executar, com os dez planos revalidados sem rede (sem chaves nem teto aprovado)",
   "horas": "—",
   "passos": [],
   "notas": []

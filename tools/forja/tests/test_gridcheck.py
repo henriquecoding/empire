@@ -1,9 +1,10 @@
 """A grade medida antes da estimada, e a recusa de um periodo que a amostragem desmente.
 
-Os dois defeitos vieram da forense das imagens publicas do PixelLab (pesquisa de 26/10):
-um tileset ampliado 2x saia com metade da resolucao, e um sprite nativo de 64x64 saia
-com 12x11 celulas e `ok`. As imagens de terceiros nao entram no repositorio; os casos
-aqui reproduzem os dois mecanismos.
+Os dois defeitos vieram da forense das imagens publicas do PixelLab (pesquisa de 26/10): uma
+ampliacao exata pequena sai com metade da resolucao pela estimativa, e um sprite nativo de 64x64
+saia com 12x11 celulas e `ok`. (O tileset que a forense deu como 2x e 4x no que se ve; a errata
+esta no dossie.) As imagens de terceiros nao entram no repositorio; os casos aqui reproduzem os
+mecanismos, e os da auditoria de 26/10 (A01: a fase) tambem.
 """
 import random
 import unittest

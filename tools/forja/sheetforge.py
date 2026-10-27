@@ -15,8 +15,8 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import anim, cells, color, contracts, godot, guard, lint, matte, motion, placement, provenance, quantize
-from . import review, sheet, temporal
+from . import anim, cells, color, contracts, godot, guard, limits, lint, matte, motion, placement, provenance
+from . import quantize, review, sheet, temporal
 from . import aseprite as ase
 from .imageops import open_rgba
 from .pipeline import Options, contract_for, finish, palette_for
@@ -140,12 +140,15 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
         if i in crossing:
             placed[i]["cell_crossing"] = crossing[i]
     for verdict, place_info, fig in zip(verdicts, placed, figures):
-        if place_info["clipped_pixels"]:
-            fits = fig.native.width <= canvas[0] and fig.native.height <= canvas[1]
-            lint.add(verdict, lint.too_big(contract, place_info["clipped_pixels"], fig.native.size) if not fits else
-                     lint.finding("placement", "error", f"{place_info['clipped_pixels']} pixels fora da tela pelo "
-                                  "lugar da figura na celula", fix="gerar de novo, ou --align contact/feet",
-                                  hint="Keep every pose inside its cell, on the same ground line as the others."))
+        if not place_info["clipped_pixels"]:
+            continue
+        if fig.native.width > canvas[0] or fig.native.height > canvas[1]:
+            limits.clipped(verdict, limits.too_big(contract, place_info["clipped_pixels"], fig.native.size))
+        else:
+            lint.add(verdict, lint.finding("placement", "error", f"{place_info['clipped_pixels']} pixels fora da tela "
+                                           "pelo lugar da figura na celula", fix="gerar de novo, ou --align contact/feet",
+                                           hint="Keep every pose inside its cell, on the same ground line as the "
+                                                "others."))
     metrics = anim.metrics(frames, pivot)
     found = len(frames)
     summary = f"{found} quadros achados" + (f" de {expected} pedidos" if expected else "")

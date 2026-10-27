@@ -5,9 +5,12 @@ Recebe uma pasta de imagens (descarregadas por GET publico, fora do
 repositorio) e um ficheiro `fetch.log` com linhas "<estado> <caminho> <ficheiro>".
 Grava so medidas, o URL e o SHA-256 de cada imagem. As medidas:
 
-- `exact_scale`: o maior k (1 a 16) em que a imagem e uma ampliacao exata por
-  vizinho mais proximo (todos os blocos k x k de uma so cor RGBA). k = 1 diz que
-  nao ha blocos maiores que um pixel: arte nativa ou imagem que nao e pixel art.
+- `exact_scale` e `exact_phase`: o maior k em que a imagem e uma ampliacao exata por
+  vizinho mais proximo (todos os blocos k x k de uma so cor RGBA), pela medida da Forja
+  (`gridcheck.exact_grid`: fronteiras, maximo divisor comum e fase; num ficheiro inteiro, a
+  grade alinhada ao canto). k = 1 diz que nao ha blocos maiores que um pixel: arte nativa ou
+  imagem que nao e pixel art. Ate 27/10 a medida era uma copia que so conferia blocos a partir
+  do canto e parava em 16 (auditoria da Forja de 26/10, O1).
 - a grade que a Forja estima (tools/forja/grid) e a que ela aceita (tools/forja/gridcheck).
 - cores opacas, pares de cores quase iguais (distancia OKLab < 0.02, o sinal de
   geracao em cor continua sem paleta indexada) e a classe do alfa (binario ou com
@@ -67,15 +70,13 @@ def png_chunks(raw: bytes) -> dict:
             "exif": "eXIf" in types, "animated": "acTL" in types}
 
 
-def exact_scale(im: Image.Image) -> int:
-    w, h = im.size
+def logical(im: Image.Image, k: int, phase: tuple[int, int]) -> Image.Image:
+    """A imagem logica de uma ampliacao exata: um pixel por bloco (o do canto, que e igual aos outros)."""
+    g = gridcheck.phased(im.size, k, phase)
     px = im.load()
-    for k in range(16, 1, -1):
-        if w % k or h % k:
-            continue
-        if all(px[x, y] == px[x - x % k, y - y % k] for y in range(h) for x in range(w)):
-            return k
-    return 1
+    out = Image.new("RGBA", g.size)
+    out.putdata([px[x, y] for y in g.ys[:-1] for x in g.xs[:-1]])
+    return out
 
 
 def color_stats(im: Image.Image) -> dict:
@@ -111,14 +112,14 @@ def measure(path: Path) -> dict:
         fmt, mode, size = im.format, im.mode, im.size
         seq = frames(im)
     first = seq[0]
-    scale = exact_scale(first)
-    native = first.resize((first.width // scale, first.height // scale), Image.NEAREST) if scale > 1 else first
+    scale, phase = gridcheck.exact_grid(first)
+    native = logical(first, scale, phase) if scale > 1 else first
     estimate, checked = grid.detect(first), gridcheck.detect(first)
     distinct = len({hashlib.sha256(f.tobytes()).hexdigest() for f in seq})
     return {
         "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw), "format": fmt, "mode": mode,
         "size": list(size), "frames": len(seq), "distinct_frames": distinct,
-        "exact_scale": scale, "logical_size": list(native.size),
+        "exact_scale": scale, "exact_phase": list(phase), "logical_size": list(native.size),
         "forja_grid_estimate": {"cells": list(estimate.size), "period": [round(p, 2) for p in estimate.period],
                                 "native": estimate.native, "confidence": round(estimate.confidence, 3)},
         "forja_grid_checked": {"cells": list(checked.size), "native": checked.native, "notes": checked.notes},

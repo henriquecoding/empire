@@ -33,8 +33,8 @@ Continua a pesquisa de [23/10](../2026-10-23-pixellab/README.md) e confere o env
   só fala com a API v1.
 - **Forja reparada.** 10 divergências do adaptador PixelLab corrigidas (63 verificações sem
   divergências); a força 0 da imagem inicial passa a ser recusada antes da rede, porque a API vai de 1 a
-  999; a grade deixa de destruir sprites nativos e ampliações exatas (errava 8 de 16 saídas da
-  documentação, agora 0 de 16).
+  999; a grade deixa de destruir sprites nativos e ampliações exatas (errava 7 de 16 saídas da
+  documentação, agora 0 de 16; até 27/10 contava-se 8, ver a errata do dossiê).
 - **Envio de hoje conferido.** Pacote 12/12, 200/200 vídeos, alegações verdadeiras, testes e CI verdes.
 
 Nada disto aprova arte, gera imagens, escreve em `art/` ou acrescenta dependências.

@@ -9,7 +9,8 @@
    candidato, as diferencas, as zonas, as metricas por regiao e o que ficou por resolver; os vereditos de
    equipamento antes e depois (iguais: a corda larga e de outro reparo, o do FORJA-03).
 4. O mesmo plano sobre a corda refeita do FORJA-03: as duas propostas juntas, e as mesmas mudancas de cor.
-Grava tudo nesta pasta e falha se um resultado mudar. Sem rede, sem geracao, sem aprovacao.
+Grava tudo nesta pasta e falha se uma medida mudar; o `make forja` chumba tambem um ficheiro gravado que mude
+sem commit. Sem rede, sem geracao, sem aprovacao.
 
     python3 docs/art/research/2026-10-25-forja-pixels-cores/prova_cores.py
 """

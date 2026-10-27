@@ -46,7 +46,8 @@ def check(image: Image.Image, contract: Contract, palette: Palette | None = None
         found.append(finding("alpha", "error", "alfa parcial (o projeto usa alfa binario)", fix="forja clean",
                              hint="Use a fully transparent or perfectly flat background; no soft or semi-transparent edges."))
     _palette(img, contract, palette, found)
-    _structure(img, contract, found, exempt)
+    # o desenho cortado pela tela nao tem contorno nesse corte: isso e o `margin`, nao o contorno (auditoria O5)
+    _structure(img, contract, found, frozenset(exempt or ()) | _cut(img) if frame else exempt)
     if frame:
         _placement(img, contract, box, found)
     _style(img, contract, found)
@@ -141,7 +142,7 @@ def _placement(img, contract, box, found):
                                  hint=f"The figure must be {tall(contract)} pixels tall on the {w}x{h} canvas."))
     if box[0] == 0 or box[1] == 0 or box[2] == w or box[3] == h:
         found.append(finding("margin", "warn", "o desenho toca a borda da tela (risco de corte)", [list(box)],
-                             hint="Keep clear empty space between the figure and the image border."))
+                             hint="Keep clear empty space between the figure and the edges of its cell."))
     if contract.width_multiple and (box[2] - box[0]) % contract.width_multiple:
         found.append(finding("width", "info", f"largura {box[2] - box[0]} px nao e multipla de {contract.width_multiple}"))
 
@@ -199,21 +200,12 @@ def tall(contract: Contract, fallback: int | None = None) -> str:
     return f"at most {hi}" if lo <= 1 else f"{lo}-{hi}"
 
 
-def too_big(contract: Contract, clipped: int, native: tuple[int, int]) -> dict:
-    """A figura nao cabe na tela: reduzir nao redesenha (licao de 18/10/2026), gera-se de novo na grade certa."""
-    return finding("clipped", "error", f"{clipped} pixels ficaram fora da tela; a figura tem {native[0]}x{native[1]} "
-                   "pixels logicos. Reduzir nao redesenha feicoes: gerar de novo na grade do contrato",
-                   hint=f"Draw the figure smaller: {tall(contract, native[1])} logical pixels tall, completely "
-                        "inside its cell.")
-
-
-def below_grid(sub: dict, box: list[int]) -> dict:
-    """Detalhe desenhado mais fino que a grade (o rosto, quase sempre): o voto nao o recupera."""
-    return finding("subgrid", "warn", f"{sub['cells']} celulas misturadas ({sub['share']:.0%} da figura); a maior zona "
-                   f"tem {sub['largest']} celulas em {box}: ali o gerador desenhou mais fino do que a grade",
-                   [box], f"forja inpaint <png> --box {','.join(str(v) for v in box)} --change \"...\"",
-                   "Draw the face and small details with whole pixels on the same grid as the body: eyes, mouth "
-                   "and brows as 1-2 pixel marks, never lines thinner than one block.")
+def _cut(img: Image.Image) -> frozenset:
+    """Os pixels opacos no rebordo da tela."""
+    w, h = img.size
+    a = img.getchannel("A").load()
+    ring = {(x, y) for x in range(w) for y in (0, h - 1)} | {(x, y) for y in range(h) for x in (0, w - 1)}
+    return frozenset(p for p in ring if a[p] >= 128)
 
 
 def add(report: dict, item: dict) -> dict:

@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 from . import cleanup, contracts, grid as gridmod, gridcheck, guard, lint, masks, matte, outline, palette as palmod
-from . import provenance, quantize, resample, verdicts
+from . import limits, provenance, quantize, resample, verdicts
 from .imageops import count_colors, flat as imageops_flat, foot_point, opaque_bbox, open_rgba, place, upscale
 
 
@@ -54,10 +54,13 @@ def palette_for(opts: Options, contract: contracts.Contract) -> palmod.Palette |
     return None
 
 
-def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None) -> tuple[Image.Image, dict]:
-    """Imagem gerada -> nativa recortada, com fundo transparente."""
+def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None,
+         sampled: resample.Sampled | None = None) -> tuple[Image.Image, dict]:
+    """Imagem gerada -> nativa recortada, com fundo transparente. `sampled`: a amostragem que a conferencia da grade
+    ja fez pelo voto dominante (O6), que so serve se o metodo pedido e esse."""
     g = g or gridcheck.detect(image, scale=opts.scale, cells=opts.cells)
-    sampled = resample.resample(image, g, opts.method)
+    if sampled is None or opts.method != "dominant":
+        sampled = resample.resample(image, g, opts.method)
     native, bginfo = matte.remove(sampled.image, opts.bg, opts.tolerance)
     box = opaque_bbox(native) or (0, 0, min(1, native.width), min(1, native.height))  # vazia: nada a limpar
     native = native.crop(box)
@@ -157,6 +160,13 @@ def _to_final(box: list[int], info: dict) -> list[int]:
     return [*guard.final_xy(box[:2], info), *guard.final_xy(box[2:], info)]
 
 
+def _gridless(image: Image.Image, g: gridmod.Grid, opts: Options, contract: contracts.Contract) -> bool:
+    """Sem grade nenhuma e com mais do dobro da tela nos dois lados: nao e pixel art nesta escala (O4). Antes, uma
+    pintura de 1920x1920 passava 225 s pela limpeza e pelo lint para acabar a pedir "Draw the figure smaller"."""
+    return (g.native and not (opts.scale or opts.cells) and bool(contract.canvas)
+            and all(s > 2 * c for s, c in zip(image.size, contract.canvas)))
+
+
 def _pad(img: Image.Image, n: int) -> Image.Image:
     out = Image.new("RGBA", (img.width + 2 * n, img.height + 2 * n))
     out.alpha_composite(img, (n, n))
@@ -182,19 +192,26 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     image = open_rgba(source)
     contract = contract_for(opts)
     pal = palette_for(opts, contract)
-    g = gridcheck.detect(image, scale=opts.scale, cells=opts.cells)
-    native, snapinfo = snap(image, opts, g)
-    final, finishinfo = finish(native, opts, contract, pal)
-    exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo)) for b in opts.bare or []])
-    verdict = lint.check(final, contract, pal, frame=bool(contract.canvas), exempt=exempt)
-    clipped = (finishinfo.get("fit") or {}).get("clipped_pixels", 0)
-    if clipped:
-        lint.add(verdict, lint.too_big(contract, clipped, native.size))
+    g, sampled = gridcheck.measure(image, opts.scale, opts.cells)
+    if _gridless(image, g, opts, contract):
+        final, finishinfo = Image.new("RGBA", contract.canvas), {}
+        snapinfo = {"grid": g.as_dict(), "sample": {"size": list(image.size), "purity": None}, "background": None,
+                    "native_size": list(image.size), "subgrid": {"box": None, "_coords": []}}
+        verdict = limits.no_grid(final, contract, image.size)
+    else:
+        native, snapinfo = snap(image, opts, g, sampled)
+        final, finishinfo = finish(native, opts, contract, pal)
+        exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo)) for b in opts.bare or []])
+        verdict = lint.check(final, contract, pal, frame=bool(contract.canvas), exempt=exempt)
+        clipped = (finishinfo.get("fit") or {}).get("clipped_pixels", 0)
+        if clipped:
+            limits.clipped(verdict, limits.too_big(contract, clipped, native.size))
+        sub = snapinfo["subgrid"]
+        if sub["box"] and (sub["share"] >= 0.05 or sub["largest"] >= 12):
+            lint.add(verdict, limits.below_grid(sub, _to_final(sub["box"], finishinfo)))
+        for item in guard.findings(finishinfo):
+            lint.add(verdict, item)
     sub = snapinfo["subgrid"]
-    if sub["box"] and (sub["share"] >= 0.05 or sub["largest"] >= 12):
-        lint.add(verdict, lint.below_grid(sub, _to_final(sub["box"], finishinfo)))
-    for item in guard.findings(finishinfo):
-        lint.add(verdict, item)
     final.save(out / f"{name}.png")
     upscale(final, 4).save(out / f"{name}@4x.png")
     files = {"png": str(out / f"{name}.png"), "preview": str(out / f"{name}@4x.png")}
