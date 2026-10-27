@@ -100,11 +100,47 @@ def content_payload(prompt: str, references: list[bytes], aspect: str) -> dict:
 
 
 def parse(data: dict) -> Result:
-    images = http.find_images(data)
-    out = data.get("output_image") if isinstance(data, dict) else None
-    if not images and isinstance(out, dict) and isinstance(out.get("data"), str):
+    """So a imagem final. Os modelos 3.x pensam antes de desenhar: ate duas imagens intermedias ("thought images",
+    nao cobradas) vem nos passos `type: "thought"` (Interactions) ou nas partes `thought: true` (generateContent), e
+    a ultima imagem e a final. Antes, todas as imagens da resposta saiam por ordem e a Forja forjava a primeira — um
+    rascunho (auditoria de 27/10, B01). `output_image` e "o ultimo bloco de imagem gerado" (documentacao lida a
+    27/10/2026)."""
+    if not isinstance(data, dict):
+        return Result([])
+    out = data.get("output_image")
+    thoughts = len(http.find_images(_thoughts(data)))
+    if isinstance(out, dict) and isinstance(out.get("data"), str):
         images = [http.unb64(out["data"])]
-    return Result(images, detail={"text": str(data.get("output_text") or "")[:300]} if isinstance(data, dict) else {})
+    else:
+        images = http.find_images(_final(data))
+    detail = {"text": str(data.get("output_text") or "")[:300]}
+    if thoughts:
+        detail["thought_images_skipped"] = thoughts
+    return Result(images, detail=detail)
+
+
+def _is_thought(node) -> bool:
+    return isinstance(node, dict) and (node.get("type") == "thought" or node.get("thought") is True)
+
+
+def _final(node):
+    """A resposta sem os passos e as partes de pensamento."""
+    if isinstance(node, dict):
+        return {k: _final(v) for k, v in node.items() if not _is_thought(v)}
+    if isinstance(node, list):
+        return [_final(v) for v in node if not _is_thought(v)]
+    return node
+
+
+def _thoughts(node) -> list:
+    """Os passos e as partes de pensamento, para contar as imagens intermedias que ficaram de fora."""
+    if _is_thought(node):
+        return [node]
+    if isinstance(node, dict):
+        return [t for v in node.values() for t in _thoughts(v)]
+    if isinstance(node, list):
+        return [t for v in node for t in _thoughts(v)]
+    return []
 
 
 def call(prompt: str, references: list[tuple[str, bytes]] | None = None, model: str | None = None,

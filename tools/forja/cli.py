@@ -61,10 +61,12 @@ def run(argv: list[str]) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
+    from PIL import Image
     argv = sys.argv[1:] if argv is None else argv
     try:
         result = run(argv)
-    except (OSError, ValueError, KeyError, RuntimeError) as err:  # OSError: tambem um ficheiro que nao e imagem
+    # OSError: tambem um ficheiro que nao e imagem; a bomba de descompressao (B13) nao e OSError e dava um traceback
+    except (OSError, ValueError, KeyError, RuntimeError, Image.DecompressionBombError) as err:
         print(json.dumps({"ok": False, "error": str(err)}, ensure_ascii=False))
         return 2
     if result.get("_raw") is not None:

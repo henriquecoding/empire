@@ -40,7 +40,8 @@ class OpenItemsTest(unittest.TestCase):
         res = pipeline.forge(d / "pintura.png", d / "o", pipeline.Options(kind="royal_64"))
         self.assertEqual([f["rule"] for f in res["lint"]["findings"]], ["no_grid"])
         self.assertIn("crisp solid square block", res["lint"]["prompt_feedback"])
-        self.assertEqual(Image.open(res["files"]["png"]).size, (64, 64))
+        with Image.open(res["files"]["png"]) as im:
+            self.assertEqual(im.size, (64, 64))
         self.assertTrue(Path(res["files"]["report"]).exists())
 
     def test_a_cut_edge_is_a_margin_not_a_missing_outline(self):

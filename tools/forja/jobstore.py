@@ -1,18 +1,21 @@
 """O registo duravel dos jobs e o teto de gasto (a parte sem rede de `jobs.py`).
 
-Um job e um ficheiro JSON escrito com troca atomica (tmp + replace): se o processo
-morre a meio, fica o estado anterior, nunca meio ficheiro. O orcamento fica em
-`<pasta>/budget.json` e soma entre corridas, para uma retomada nao o esquecer.
+Um job e um ficheiro JSON escrito com troca atomica e `fsync` (durable.py): se o processo
+ou a maquina morrem a meio, fica o estado anterior inteiro, nunca meio ficheiro nem um
+vazio. O orcamento fica em `<pasta>/budget.json` e soma entre corridas, para uma retomada
+nao o esquecer; cada conta relê-o com um lock, para dois processos na mesma pasta nao
+passarem o teto (auditoria de 27/10, B03).
 """
 from __future__ import annotations
 
+import contextlib
 import datetime
 import json
-import os
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
 
+from . import durable
 from .backends import Call, digest, sha
 
 FINAL = ("completed", "failed", "cancelled")
@@ -57,10 +60,7 @@ class Job:
         self.data["updated_utc"] = now()
         if self.path is None:
             return
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = self.path.with_suffix(".tmp")
-        tmp.write_text(json.dumps(self.data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-        os.replace(tmp, self.path)
+        durable.write_text(self.path, json.dumps(self.data, indent=1, ensure_ascii=False) + "\n")
 
     def mark(self, state: str, note: str | None = None, **fields) -> None:
         self.data.update(fields)
@@ -109,9 +109,7 @@ class Budget:
     @classmethod
     def open(cls, folder: str | Path | None, max_calls: int, max_usd: float | None = None) -> "Budget":
         b = cls(max_calls, max_usd, path=Path(folder) / "budget.json" if folder else None)
-        if b.path and b.path.exists():
-            saved = json.loads(b.path.read_text(encoding="utf-8"))
-            b.calls, b.usd, b.unknown_cost_calls = saved["calls"], saved["usd"], saved["unknown_cost_calls"]
+        b._reload()
         return b
 
     @classmethod
@@ -123,23 +121,43 @@ class Budget:
         data = json.loads(path.read_text(encoding="utf-8"))
         return cls.open(folder, data["max_calls"], data.get("max_usd"))
 
-    def check(self, estimate: float | None) -> None:
+    def _reload(self) -> None:
+        if self.path and self.path.exists():
+            saved = json.loads(self.path.read_text(encoding="utf-8"))
+            self.calls, self.usd, self.unknown_cost_calls = saved["calls"], saved["usd"], saved["unknown_cost_calls"]
+
+    def _guard(self):
+        return durable.locked(self.path) if self.path else _nothing()
+
+    def _refuse(self, estimate: float | None) -> None:
         if self.calls >= self.max_calls:
             raise BudgetExceeded(f"teto de {self.max_calls} chamadas pagas atingido ({self.calls} feitas)")
         if self.max_usd is not None and (self.usd >= self.max_usd
                                          or (estimate is not None and self.usd + estimate > self.max_usd)):
             raise BudgetExceeded(f"teto de US${self.max_usd:g} atingido (US${self.usd:g} conhecidos)")
 
-    def spend(self) -> None:
-        self.calls += 1
-        self.save()
+    def check(self, estimate: float | None) -> None:
+        """So confere, com o que esta no disco agora; quem vai gastar usa `reserve`."""
+        with self._guard():
+            self._reload()
+            self._refuse(estimate)
+
+    def reserve(self, estimate: float | None = None) -> None:
+        """Conferir e contar a chamada num so passo, com o lock: entre os dois nenhum outro processo gasta."""
+        with self._guard():
+            self._reload()
+            self._refuse(estimate)
+            self.calls += 1
+            self.save()
 
     def settle(self, usd: float | None) -> None:
-        if usd is None:
-            self.unknown_cost_calls += 1
-        else:
-            self.usd += usd
-        self.save()
+        with self._guard():
+            self._reload()
+            if usd is None:
+                self.unknown_cost_calls += 1
+            else:
+                self.usd += usd
+            self.save()
 
     def as_dict(self) -> dict:
         out = {"max_calls": self.max_calls, "max_usd": self.max_usd, "calls": self.calls, "usd": round(self.usd, 6),
@@ -151,8 +169,12 @@ class Budget:
 
     def save(self) -> None:
         if self.path:
-            self.path.parent.mkdir(parents=True, exist_ok=True)
-            self.path.write_text(json.dumps(self.as_dict(), indent=1) + "\n", encoding="utf-8")
+            durable.write_text(self.path, json.dumps(self.as_dict(), indent=1) + "\n")
+
+
+@contextlib.contextmanager
+def _nothing():
+    yield
 
 
 def stored(job: Job) -> list[bytes]:

@@ -43,15 +43,21 @@ def oklab(rgb: tuple[int, int, int]) -> tuple[float, float, float]:
     return lab
 
 
-def from_oklab(lab: tuple[float, float, float]) -> tuple[int, int, int]:
+def _linear_rgb(lab: tuple[float, float, float]) -> tuple[float, float, float]:
     big_l, a, b = lab
     l_ = big_l + 0.3963377774 * a + 0.2158037573 * b
     m_ = big_l - 0.1055613458 * a - 0.0638541728 * b
     s_ = big_l - 0.0894841775 * a - 1.2914855480 * b
     l, m, s = l_ ** 3, m_ ** 3, s_ ** 3
-    return (to_srgb8(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
-            to_srgb8(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
-            to_srgb8(-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s))
+    return (4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+            -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+            -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s)
+
+
+def from_oklab(lab: tuple[float, float, float]) -> tuple[int, int, int]:
+    """Prende cada canal a [0, 255]: fora do gamut sRGB isso muda o matiz (ver `from_lch(..., gamut=True)`)."""
+    r, g, b = _linear_rgb(lab)
+    return to_srgb8(r), to_srgb8(g), to_srgb8(b)
 
 
 def dist2(p: tuple[float, float, float], q: tuple[float, float, float]) -> float:
@@ -69,9 +75,23 @@ def lch(rgb: tuple[int, int, int]) -> tuple[float, float, float]:
     return big_l, math.hypot(a, b), math.degrees(math.atan2(b, a)) % 360
 
 
-def from_lch(big_l: float, c: float, h: float) -> tuple[int, int, int]:
+def from_lch(big_l: float, c: float, h: float, gamut: bool = False) -> tuple[int, int, int]:
+    """`gamut`: fora do sRGB, baixa o croma ate caber, com a luminosidade e o matiz fixos — a "preservar a
+    luminosidade" de Ottosson (sRGB gamut clipping, 2021). Prender cada canal desviava o matiz de uma rampa ate
+    21 graus (auditoria de 27/10, B15)."""
     rad = math.radians(h)
-    return from_oklab((big_l, c * math.cos(rad), c * math.sin(rad)))
+    lab = (big_l, c * math.cos(rad), c * math.sin(rad))
+    if gamut and not _inside(lab):
+        lo, hi = 0.0, c
+        for _ in range(24):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if _inside((big_l, mid * math.cos(rad), mid * math.sin(rad))) else (lo, mid)
+        lab = (big_l, lo * math.cos(rad), lo * math.sin(rad))
+    return from_oklab(lab)
+
+
+def _inside(lab: tuple[float, float, float], eps: float = 1e-6) -> bool:
+    return all(-eps <= v <= 1 + eps for v in _linear_rgb(lab))
 
 
 def luma(rgb: tuple[int, int, int]) -> float:

@@ -38,7 +38,10 @@ def edge_pixels(rows, offsets=N4) -> list[tuple[int, int]]:
 
 def add(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), width: int = 1,
         mode: str = "outer", corners: bool = True, palette: Palette | None = None,
-        keep=None) -> Image.Image:
+        keep=None, gaps: bool = False) -> Image.Image:
+    """`gaps`: no modo exterior, so onde a borda ainda nao tem o contorno — um pixel vazio cujos vizinhos opacos sao
+    todos da cor do contorno fica vazio. Pondo o anel inteiro por fora de um contorno que ja cobria metade da borda,
+    essa metade ficava com 2 px, e o lint nao o via (auditoria de 27/10, B05)."""
     if mode not in MODES:
         raise ValueError(f"modo de contorno desconhecido: {mode}")
     rows = to_grid(image)
@@ -56,7 +59,7 @@ def add(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), width: int = 
                 if p[3] >= 128 or (x, y) in keep:
                     continue
                 solid = [src[y + dy][x + dx] for dx, dy in offsets if _inside(src, x + dx, y + dy)]
-                if not solid:
+                if not solid or (gaps and all(q[:3] == rgb for q in solid)):
                     continue
                 if mode == "selective":
                     base = Counter(q[:3] for q in solid).most_common(1)[0][0]
@@ -69,7 +72,7 @@ def add(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), width: int = 
 def darken(rgb: tuple[int, int, int], palette: Palette | None = None, amount: float = 0.45) -> tuple[int, int, int]:
     """A sombra do material: mais escura, um pouco mais fria; na paleta, se houver."""
     big_l, c, h = color.lch(rgb)
-    shade = color.from_lch(max(0.04, big_l * (1 - amount)), c * 0.8, (h - 12) % 360)
+    shade = color.from_lch(max(0.04, big_l * (1 - amount)), c * 0.8, (h - 12) % 360, gamut=True)
     if palette is None or not len(palette):
         return shade
     darker = [p for p in palette.colors if color.oklab(p)[0] < big_l - 0.05]

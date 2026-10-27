@@ -13,9 +13,68 @@ CLEAR = (0, 0, 0, 0)
 
 
 def open_rgba(path: str | Path) -> Image.Image:
+    """A imagem como se ve: a orientacao EXIF aplicada e as cores em sRGB (auditoria de 27/10, B06 e B07).
+
+    Um desenho a mao fotografado no telemovel vem deitado com a etiqueta Orientation; um PNG exportado com um perfil
+    que nao e sRGB (Display P3, Adobe RGB, o do monitor) tem os numeros noutro espaco, e a paleta do projeto e sRGB.
+    O que se fez fica em `info["forja_source"]` (e na proveniencia)."""
     with Image.open(path) as im:
         im.seek(0)
-        return im.convert("RGBA")
+        return _seen(im)
+
+
+def from_bytes(data: bytes) -> Image.Image:
+    """Como `open_rgba`, para uma imagem que chegou na resposta de um gerador."""
+    with Image.open(io.BytesIO(data)) as im:
+        im.seek(0)
+        return _seen(im)
+
+
+def _seen(im: Image.Image) -> Image.Image:
+    from PIL import ImageOps
+    notes = {}
+    orientation = im.getexif().get(0x0112, 1)
+    if orientation not in (None, 1):
+        im = ImageOps.exif_transpose(im)
+        notes["exif_orientation"] = orientation
+    out, icc = _srgb(im)
+    if icc:
+        notes["icc"] = icc
+    out.info["forja_source"] = notes
+    return out
+
+
+def _srgb(im: Image.Image) -> tuple[Image.Image, str | None]:
+    """RGBA em sRGB. Um perfil sRGB (ou nenhum) nao se converte: a conversao arredondaria cores exatas."""
+    data = im.info.get("icc_profile")
+    rgba = im.convert("RGBA")
+    if not data:
+        return rgba, None
+    try:
+        from PIL import ImageCms
+    except ImportError:  # Pillow sem littlecms
+        return rgba, "perfil ICC por converter (Pillow sem ImageCms): lido como sRGB"
+    try:
+        src = ImageCms.ImageCmsProfile(io.BytesIO(data))
+        name = (ImageCms.getProfileDescription(src) or "").strip() or "sem nome"
+        space = src.profile.xcolor_space.strip()
+    except (ImageCms.PyCMSError, OSError, ValueError, AttributeError) as err:
+        return rgba, f"perfil ICC ilegivel ({type(err).__name__}): lido como sRGB"
+    if "srgb" in name.lower():
+        return rgba, None
+    mode = {"RGB": "RGB", "GRAY": "L", "CMYK": "CMYK"}.get(space)
+    if mode is None:
+        return rgba, f"perfil {name!r} em {space}: sem conversao, lido como sRGB"
+    try:
+        base = im if im.mode == mode else (rgba.convert(mode) if mode != "CMYK" else im)
+        out = ImageCms.profileToProfile(base, src, ImageCms.createProfile("sRGB"),
+                                        renderingIntent=ImageCms.Intent.RELATIVE_COLORIMETRIC, outputMode="RGB")
+    except (ImageCms.PyCMSError, OSError, ValueError) as err:
+        return rgba, f"perfil {name!r} nao convertido ({err}): lido como sRGB"
+    out = out.convert("RGBA")
+    out.putalpha(rgba.getchannel("A"))
+    out.info.pop("icc_profile", None)  # os numeros ja sao sRGB: gravar o perfil antigo com eles mentia
+    return out, f"convertido de {name!r} para sRGB (intencao colorimetrica relativa)"
 
 
 def sha256(path: str | Path) -> str:

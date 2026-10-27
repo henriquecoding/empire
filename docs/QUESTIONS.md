@@ -7,6 +7,32 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja: auditoria de 27/10/2026 (FORJA-07, ADR 0094)
+
+> Pedido do dono (27/10/2026): *«Elabora uma densa e extensa auditoria na forja, encontre falhas e coisas a melhorar
+> e refinar, depois busque na web como fazer isso e aplique»*. Aplicados B01–B16
+> ([auditoria](art/research/2026-10-27-forja-auditoria/README.md)). O que segue muda um contrato e é do dono.
+
+### Q-286 · A cor da paleta escolhe-se com a luminosidade Lr de Ottosson?
+- **Hoje:** a cor mais próxima mede-se em OKLab (ADR 0088). O L do OKLab é uma raiz cúbica pura, íngreme junto ao
+  preto: o `#020201` fica a 0,084 do `#000000` e a 0,067 do `#0B0B0B`. Nas sondas, com o contorno a `#000000` e o ruído
+  de um gerador, 62, 317 e 39 dos 588 pixels pretos saem `#0B0B0B` (σ 3, σ 4, JPEG q85). Na borda da figura o
+  `outline.normalize` já os leva ao preto; dentro dela (um traço interior, um olho) ficam no `#0B0B0B`.
+- **Medida:** com o Lr (Okhsv/Okhsl, 2021, «perto do L* do CIELab» num ecrã com branco de referência), 0 pixels pretos
+  errados e as outras cores iguais nas mesmas sondas; a prova e a suíte não mudam (só um teste de dither, que fixava um
+  cinzento a 0,32 do preto em OKLab, a 0,22 em Lr). Mas o Lr muda a cor escolhida em 1 459 de 20 000 cores sRGB
+  sorteadas, em todas as luminosidades: é outra métrica, não um reparo.
+- **Proposta:** aceitar o Lr só na escolha da cor da paleta (`Palette.index` e `two_nearest`; as distâncias de ruído e
+  de fundo continuam em OKLab), ou manter o OKLab e levar ao preto, dentro da figura, o que tem L abaixo de um limiar.
+- **Decide:** o dono (a métrica de cor da Forja); a medida repete-se com `sondas.py` (`O1`).
+
+### Q-287 · Uma falha no contorno com 85% ou mais da borda a preto fecha-se, ou só se avisa?
+- **Hoje:** com menos de 85% da borda a preto o `forge` fecha as falhas (B05); com 85% ou mais não faz nada e o lint
+  não diz nada. É o que deixa uma corda de 1 px sem contorno, de propósito, sem a engrossar para 3.
+- **Proposta:** um aviso `outline_gaps` com os troços sem contorno (fora das zonas `--bare`), sem mexer nos pixels; ou
+  fechar também, e a corda passa a precisar sempre de `--bare` (Q-272).
+- **Decide:** o dono (contrato de contorno); liga-se à Q-272 (a corda dispensa contorno?).
+
 ## Forja: recuperar antes de proteger — 27/10/2026 (FORJA-06, ADR 0093)
 
 > Pedido do dono (27/10/2026): *«Implemente isso, e também pesquise profundamente na web mais coisas que possam

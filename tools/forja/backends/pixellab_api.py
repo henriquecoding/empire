@@ -1,9 +1,10 @@
 """PixelLab API v2 (https://api.pixellab.ai/v2): gerar com os modelos deles, no tamanho nativo.
 
 Contrato lido da especificacao publica (`/v2/openapi.json`, versao "dev"). Lida
-a 23/10/2026 e revista a 26/10/2026, quando o hash mudou (sha256 abaixo):
-docs/art/research/2026-10-26-pixellab-engenharia-reversa/contrato.py confere
-estes limites contra a especificacao e lista o que diverge.
+a 23/10/2026 e revista a 26/10/2026 e a 27/10/2026, quando o hash mudou (sha256 abaixo;
+a 27/10 so mudou a descricao de POST /generate-font-pro, com os 63 limites da Forja
+conformes): docs/art/research/2026-10-26-pixellab-engenharia-reversa/contrato.py
+confere estes limites contra a especificacao e lista o que diverge.
 
 - Todos: cada lado de 16 px para cima; `init_image_strength` de 1 a 999 (300 por
   omissao), `text_guidance_scale` de 1 a 20, `style_strength` de 0 a 100.
@@ -31,7 +32,7 @@ from PIL import Image
 from . import Call, Result, http, image_refs
 
 BASE = "https://api.pixellab.ai/v2"
-SPEC_SHA256 = "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f"
+SPEC_SHA256 = "b6dd212ca4e7f60c9eb93e776303a92f6e0bb4f794cf3a2bf49099e9a00e8834"
 OUTLINES = ("single color black outline", "single color outline", "selective outline", "lineless")
 SHADINGS = ("flat shading", "basic shading", "medium shading", "detailed shading", "highly detailed shading")
 DETAILS = ("low detail", "medium detail", "highly detailed")

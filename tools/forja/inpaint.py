@@ -18,13 +18,12 @@
 """
 from __future__ import annotations
 
-import io
 import itertools
 
 from PIL import Image
 
 from . import color, compose, grid as gridmod, masks, matte, prompts, quantize, resample
-from .imageops import CLEAR, binarize, flat, png_bytes, upscale
+from .imageops import CLEAR, binarize, flat, from_bytes, png_bytes, upscale
 from .palette import Palette, from_image
 
 _EXTRA = tuple("#%02X%02X%02X" % c for c in itertools.product((0, 128, 255), repeat=3))
@@ -132,8 +131,7 @@ def run(native: Image.Image, box: tuple[int, int, int, int] | None, change: str,
     roles = ["edit_target"] + ["identity"] * len(references or [])
     answer = openai_images.edit(prompts.edit_prompt(change), [image] + (references or []), mask, size,
                                 model=model, transport=transport, folder=folder, budget=budget, roles=roles)
-    with Image.open(io.BytesIO(answer["images"][0])) as im:
-        result = im.convert("RGBA")
+    result = from_bytes(answer["images"][0])
     try:
         out, info = merge(native, result, k, box, palette, key, region, method, protect, old)
     except SizeMismatch as err:
