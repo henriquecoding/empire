@@ -12,7 +12,7 @@ import json
 from datetime import date
 from pathlib import Path
 
-from . import compose, contracts, jobs, lint, masks, palette as palmod, refs, verdicts
+from . import compose, contracts, jobs, lint, masks, palette as palmod, refs, signals, verdicts
 from .cli import box, command, out_path
 from .cmd_ai import _spend
 from .imageops import open_rgba
@@ -87,7 +87,13 @@ def do_verify(args) -> dict:
     summary = verdicts.summary(v)
     close = verdicts.closure(summary, approval, material, preservation)
     broken = bool(preservation) and not (preservation["outside_identical"] and preservation["protected_identical"])
-    return {"ok": not broken and not verdicts.blocking(v), "deliverable": close["deliverable"],
+    sig = None
+    if args.signals:  # FORJA-07: os pinos no PNG final continuam la depois da composicao e do acabamento
+        data = signals.load(args.signals)
+        sig = signals.state(signals.target_pins(candidate, data.get("pins", [])),
+                            signals.regions(data.get("regions", []), None, None))
+    return {"ok": not broken and not verdicts.blocking(v) and (sig or {}).get("status") != "blocked",
+            "signals": sig, "deliverable": close["deliverable"] and (sig is None or sig["status"] == "pass"),
             "preservation": preservation, "lint": raster and {k: raster[k] for k in ("ok", "errors", "warnings")},
             "material": material, "approval": approval, "master": refs.record(reg, master),
             "candidate": refs.record(reg, candidate), "verdicts": summary, "closure": close, "read_only": True,
@@ -134,6 +140,7 @@ def register(sub) -> None:
     p.add_argument("--palette", help="paleta do lint (por omissao a do contrato)")
     p.add_argument("--cores", help="o JSON do forja cores com plano: o estado do material")
     p.add_argument("--equip", help="o JSON do forja equip: os vereditos do equipamento")
+    p.add_argument("--signals", help="forja.signals/1 com pinos em target_pixel: a cor declarada continua no PNG")
     p = command(sub, "refs", "O registo de autoridade das referencias (conceito, em revisao, aprovado, rejeitado): "
                 "mostrar, conferir os hashes e acrescentar um estado (nunca approved)", do_refs)
     p.add_argument("register", help="o registo forja.refs/1 (criado se nao existe)")

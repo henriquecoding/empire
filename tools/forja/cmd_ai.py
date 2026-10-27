@@ -4,7 +4,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import auto, backends, contracts, guides, jobs, palette as palmod, plan as plan_mod, prompts, refs, sheetforge
+from . import auto, backends, constraints, contracts, fidelity, guides, jobs, palette as palmod, plan as plan_mod
+from . import prompts, refs, sheetforge
 from .cli import command
 
 BACKENDS = plan_mod.BACKENDS
@@ -34,21 +35,45 @@ def _reference(args) -> bool | str:
     return refs.PROMPT_ROLE[args.reference_state]
 
 
+def _decisions(args) -> dict:
+    """Cores e tons so entram por decisao dita no pedido (FORJA-07): a origem fica `explicit_request`."""
+    return {k: v for k, v in (("max_colors", getattr(args, "max_colors", None)),
+                              ("tones", getattr(args, "tones", None))) if v}
+
+
+def _fidelity(args, given: list) -> dict:
+    contract = fidelity.load(args.fidelity) if getattr(args, "fidelity", None) else None
+    return fidelity.prepare(contract, getattr(args, "character", None), getattr(args, "pose", None),
+                            getattr(args, "mode", None), given)
+
+
 def do_prompt(args) -> dict:
     """Sem gerador ligado: o prompt, o expect.json e as guias, na ordem em que se anexam."""
     tags = sheetforge.parse_tags(args.tags)
     pal = _palette(args, args.kind)
-    res = prompts.build(args.subject, args.kind, tags, args.facing, _reference(args), pal, args.target,
-                        args.background)
+    role = _reference(args)
+    given = [("identity", args.reference_file, Path(args.reference_file).read_bytes())] if args.reference_file else []
+    prep = _fidelity(args, given)
+    if prep["errors"]:
+        return {"ok": False, "errors": prep["errors"], "mode": prep["mode"]}
+    attached = [r for r, _, _ in prep["attach"]] + prompts.default_attached(role, pal)
+    res = prompts.build(args.subject, args.kind, tags, args.facing, role or bool(prep["attach"]), pal, args.target,
+                        args.background, attached=attached, mode=prep["mode"],
+                        fidelity={**(prep["prompt"] or {}), **_decisions(args)})
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    for r, _, data in prep["attach"]:
+        (out / "attach_concept_authority.png").write_bytes(data)
     (out / "prompt.txt").write_text(res["prompt"] + "\n", encoding="utf-8")
     (out / "expect.json").write_text(json.dumps(res["expect"], indent=1) + "\n", encoding="utf-8")
     (out / "pixellab.json").write_text(json.dumps(res["pixellab"], indent=1) + "\n", encoding="utf-8")
     c = contracts.get(args.kind)
     files = guides.write(out, res["expect"], pal, c.pivot[1] // c.cluster if c.pivot else None)
-    attach = [LABELS[r] if r in LABELS else files[r] for r in res["expect"]["attached"]]
+    files.update({"concept": str(out / "attach_concept_authority.png")} if prep["attach"] else {})
+    attach = [files[r] if r in files else LABELS[r] for r in res["expect"]["attached"]]
     return {"ok": not res["conflicts"], "conflicts": res["conflicts"], "prompt": res["prompt"], "size": res["size"],
+            "mode": res["mode"], "constraints": res["constraints"], "implicit": res["implicit"],
+            "fidelity": prep["record"], "notes": prep["notes"],
             "expect": res["expect"], "advice": res["advice"], "attach": attach,
             "files": {"prompt": str(out / "prompt.txt"), "expect": str(out / "expect.json"),
                       "pixellab": str(out / "pixellab.json"), **files},
@@ -65,7 +90,9 @@ def _plan(args) -> plan_mod.Plan:
     return plan_mod.make(args.backend, args.subject, args.kind, sheetforge.parse_tags(args.tags), args.facing,
                          given, _palette(args, args.kind), args.model, opt("guides", "auto"), "auto",
                          opt("init_strength"), opt("seed"), opt("image_size"),
-                         refs.load(opt("refs")) if opt("refs") else None)
+                         refs.load(opt("refs")) if opt("refs") else None, opt("mode"),
+                         fidelity.load(opt("fidelity")) if opt("fidelity") else None, opt("character"), opt("pose"),
+                         _decisions(args))
 
 
 def do_plan(args) -> dict:
@@ -157,6 +184,17 @@ def _planned(p) -> None:
     p.add_argument("--image-size", help="Gemini: 1K, 2K ou 4K (por omissao a menor com >= 8 px por pixel)")
     p.add_argument("--init-strength", type=int, help="PixelLab: forca da imagem inicial (1-999, maior preserva)")
     p.add_argument("--seed", type=int, help="PixelLab: seed")
+    _faithful(p)
+
+
+def _faithful(p) -> None:
+    p.add_argument("--mode", choices=constraints.MODES, help="stylized (o de antes), adapt_concept (fiel ao recorte "
+                   "de autoridade), edit_approved_master; por omissao adapt_concept com --fidelity ou um conceito")
+    p.add_argument("--fidelity", help="contrato forja.fidelity/1: a autoridade, as invariantes e os rejeitados")
+    p.add_argument("--character", help="o personagem no contrato de fidelidade")
+    p.add_argument("--pose", help="a pose no contrato de fidelidade")
+    p.add_argument("--max-colors", type=int, help="teto de cores decidido no pedido (origem explicit_request)")
+    p.add_argument("--tones", type=int, help="tons por material decididos no pedido (origem explicit_request)")
 
 
 def _spend(p, default_calls: int | None) -> None:
@@ -179,6 +217,7 @@ def register(sub) -> None:
     p.add_argument("--target", default="gpt-image", choices=prompts.TARGETS)
     p.add_argument("--background", default="auto", choices=("auto", "transparent", "key"))
     p.add_argument("--palette")
+    _faithful(p)
     p = command(sub, "plan", "Planear um pedido para um gerador, validado e sem rede: tamanho, imagens e limites",
                 do_plan)
     _planned(p)

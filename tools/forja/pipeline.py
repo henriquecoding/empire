@@ -7,14 +7,15 @@ para que o agente (ou o autor) saiba o que aconteceu sem abrir as imagens.
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from PIL import Image
 
 from . import cleanup, contracts, grid as gridmod, gridcheck, guard, lint, masks, matte, outline, palette as palmod
-from . import limits, provenance, quantize, resample, verdicts
-from .imageops import count_colors, flat as imageops_flat, foot_point, opaque_bbox, open_rgba, place, upscale
+from . import limits, loss, provenance, quantize, resample, signals, verdicts
+from .imageops import count_colors, foot_point, opaque_bbox, open_rgba, place, upscale
+from .loss import subgrid  # mudou-se para loss.py; pipeline.subgrid continua (os ensaios de 27/10)
 
 
 @dataclass
@@ -37,6 +38,8 @@ class Options:
     pivot: tuple[int, int] | None = None
     canvas: tuple[int, int] | None = None
     notes: list[str] = field(default_factory=list)
+    reduce: bool = False  # FORJA-07: a grade dada e uma reducao deliberada (adaptacao, nao recuperacao)
+    signals: dict | None = None  # forja.signals/1: pinos e regioes declarados para esta imagem
 
 
 def contract_for(opts: Options) -> contracts.Contract:
@@ -58,47 +61,26 @@ def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None,
          sampled: resample.Sampled | None = None) -> tuple[Image.Image, dict]:
     """Imagem gerada -> nativa recortada, com fundo transparente. `sampled`: a amostragem que a conferencia da grade
     ja fez pelo voto dominante (O6), que so serve se o metodo pedido e esse."""
-    g = g or gridcheck.detect(image, scale=opts.scale, cells=opts.cells)
+    g = g or gridcheck.detect(image, scale=opts.scale, cells=opts.cells, reduce=opts.reduce)
     if sampled is None or opts.method != "dominant":
         sampled = resample.resample(image, g, opts.method)
-    native, bginfo = matte.remove(sampled.image, opts.bg, opts.tolerance)
+    lost = loss.observe(image, g, sampled.image)
+    pins = signals.resolve([p for p in (opts.signals or {}).get("pins", []) if not p.get("target_pixel")], g)
+    native, bginfo = matte.remove(signals.apply(sampled.image, pins)[0], opts.bg, opts.tolerance)
     box = opaque_bbox(native) or (0, 0, min(1, native.width), min(1, native.height))  # vazia: nada a limpar
     native = native.crop(box)
     return native, {"grid": g.as_dict(), "sample": sampled.as_dict(), "background": bginfo,
-                    "native_size": list(native.size), "subgrid": subgrid(native, sampled.impure, box)}
+                    "native_size": list(native.size), "subgrid": subgrid(native, sampled.impure, box),
+                    "loss": loss.crop(lost, box), "pins": signals.crop(pins, box)}
 
 
-def subgrid(native: Image.Image, impure: list[tuple[int, int]], box: tuple[int, int, int, int]) -> dict:
-    """A maior zona de celulas misturadas: o gerador desenhou ali mais fino do que a propria grade.
-
-    Costuma ser o rosto. O voto nao recupera um traco mais fino que a celula; diz-se onde e,
-    para o gerador, como desenhar (ou corrige-se essa caixa com `forja inpaint`).
-    """
-    alpha = native.getchannel("A")
-    cells = {(x - box[0], y - box[1]) for x, y in impure
-             if 0 <= x - box[0] < native.width and 0 <= y - box[1] < native.height
-             and alpha.getpixel((x - box[0], y - box[1])) >= 128}
-    solid = sum(1 for v in imageops_flat(alpha) if v >= 128) or 1
-    best: list[tuple[int, int]] = []
-    seen: set = set()
-    for start in cells:
-        if start in seen:
-            continue
-        group, stack = [], [start]
-        seen.add(start)
-        while stack:
-            x, y = stack.pop()
-            group.append((x, y))
-            for nx in range(x - 1, x + 2):
-                for ny in range(y - 1, y + 2):
-                    if (nx, ny) in cells and (nx, ny) not in seen:
-                        seen.add((nx, ny))
-                        stack.append((nx, ny))
-        best = max(best, group, key=len)
-    region = ([min(x for x, _ in best), min(y for _, y in best), max(x for x, _ in best) + 1,
-               max(y for _, y in best) + 1] if best else None)
-    return {"cells": len(cells), "share": round(len(cells) / solid, 3), "largest": len(best), "box": region,
-            "_coords": sorted(cells)}
+def _signals(final: Image.Image, snapinfo: dict, finishinfo: dict | None, opts: Options) -> dict:
+    """Os sinais declarados depois do ultimo passo que muda pixels (FORJA-07)."""
+    declared = opts.signals or {}
+    pins = signals.verify_pins(final, snapinfo.get("pins", []), finishinfo)
+    pins += signals.target_pins(final, [p for p in declared.get("pins", []) if p.get("target_pixel")])
+    erased = (snapinfo.get("loss") or {}).get("erased", [])
+    return signals.state(pins, signals.regions(declared.get("regions", []), erased, finishinfo))
 
 
 def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
@@ -192,7 +174,7 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     image = open_rgba(source)
     contract = contract_for(opts)
     pal = palette_for(opts, contract)
-    g, sampled = gridcheck.measure(image, opts.scale, opts.cells)
+    g, sampled = gridcheck.measure(image, opts.scale, opts.cells, opts.reduce)
     if _gridless(image, g, opts, contract):
         final, finishinfo = Image.new("RGBA", contract.canvas), {}
         snapinfo = {"grid": g.as_dict(), "sample": {"size": list(image.size), "purity": None}, "background": None,
@@ -200,7 +182,9 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
         verdict = limits.no_grid(final, contract, image.size)
     else:
         native, snapinfo = snap(image, opts, g, sampled)
-        final, finishinfo = finish(native, opts, contract, pal)
+        pinned = signals.protect_boxes(snapinfo["pins"])
+        final, finishinfo = finish(native, replace(opts, protect=(opts.protect or []) + pinned) if pinned else opts,
+                                   contract, pal)
         exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo)) for b in opts.bare or []])
         verdict = lint.check(final, contract, pal, frame=bool(contract.canvas), exempt=exempt)
         clipped = (finishinfo.get("fit") or {}).get("clipped_pixels", 0)
@@ -209,8 +193,12 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
         sub = snapinfo["subgrid"]
         if sub["box"] and (sub["share"] >= 0.05 or sub["largest"] >= 12):
             lint.add(verdict, limits.below_grid(sub, _to_final(sub["box"], finishinfo)))
-        for item in guard.findings(finishinfo):
+        for item in guard.findings(finishinfo) + limits.losses(snapinfo, lambda b: _to_final(b, finishinfo)):
             lint.add(verdict, item)
+    with Image.open(source) as im:
+        snapinfo["grid_report"] = gridcheck.report(image, g, snapinfo["native_size"], contract.canvas, im.format)
+    for item in limits.grid_origin(snapinfo["grid_report"]) if "loss" in snapinfo else []:  # sem grade: o no_grid
+        lint.add(verdict, item)
     sub = snapinfo["subgrid"]
     final.save(out / f"{name}.png")
     upscale(final, 4).save(out / f"{name}@4x.png")
@@ -224,6 +212,7 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     summary = verdicts.summary(verdicts.for_review(verdict["ok"], None, coherence=verdict["coherence"]))
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
               "lint": verdict, "files": files, "verdicts": summary,
+              "signals": _signals(final, snapinfo, finishinfo if "loss" in snapinfo else None, opts),
               "provenance": provenance.record(source, generator, prompt, opts.__dict__)}
     impure = [_to_final([x, y, x + 1, y + 1], finishinfo)[:2] for x, y in sub.pop("_coords")]
     if report_html:

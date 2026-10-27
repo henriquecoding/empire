@@ -3143,5 +3143,22 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-07": {
+  "title": "Medir o que a amostragem perde e prender cada pedido à autoridade da pose",
+  "porque": "O dono rejeitou o Rei, o Escudeiro e o Arqueiro de 27/10 e mandou implementar a auditoria de fidelidade: a pureza ficava em 1,0 com traços apagados, a grade dada pelo operador valia como evidência, o arqueiro veio de outra referência e o compilador impunha dois tons e 12-24 cores a contratos sem limite.",
+  "spec": [
+   "docs/art/research/2026-10-27-forja-auditoria-fidelidade/AUDITORIA.md",
+   "docs/art/research/2026-10-27-forja-auditoria-fidelidade/PLANO-DE-IMPLEMENTACAO.md",
+   "docs/art/research/2026-10-27-forja-auditoria-fidelidade/README.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-06",
+  "feito": "Perda da amostragem célula a célula (outside_core, minority, alpha_discarded) com o achado erased e a pureza medida em todos os métodos; a origem da grade (medida, estimada, declarada, reduzida, não medida), o orçamento contra a tela, as zonas de escala fina e as cores de uma entrada com perdas afirmadas à parte; o contrato forja.fidelity/1 com o recorte de autoridade anexado, reference_conflict, rejeitados recusados e o guia em revisão que não substitui o conceito; os modos do pedido com a origem de cada restrição e nenhuma preferência do compilador no modo fiel; pinos e regiões com layout_conflict e verificação até ao PNG final; a revisão em quatro estados com a prancha lado a lado; a prova reproduzível dos 93 ensaios da auditoria.",
+  "fora": "O piloto artístico do Rei e a base nativa fiel dos três personagens (desenho), anotar regiões e pinos, chamadas pagas, aprovação artística, arte em art/.",
+  "estado": "feito — as cinco etapas de código do plano da auditoria de 27/10 (revisão 2), com testes e a prova reproduzível; o piloto artístico do Rei e a base nativa fiel dos três personagens (desenho) por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

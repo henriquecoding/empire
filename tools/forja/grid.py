@@ -27,13 +27,14 @@ class Grid:
     confidence: float
     native: bool = False
     notes: list[str] = field(default_factory=list)
+    origin: str = "estimated"  # FORJA-07: gridcheck.ORIGINS; a dada pelo operador nao prova autoria nativa
 
     @property
     def size(self) -> tuple[int, int]:
         return len(self.xs) - 1, len(self.ys) - 1
 
     def as_dict(self) -> dict:
-        return {"cells": list(self.size), "period": [round(p, 3) for p in self.period],
+        return {"cells": list(self.size), "period": [round(p, 3) for p in self.period], "origin": self.origin,
                 "confidence": round(self.confidence, 3), "native": self.native,
                 "x0": self.xs[0], "y0": self.ys[0], "notes": self.notes}
 
@@ -219,7 +220,7 @@ def known(size: tuple[int, int], scale: float, offset: tuple[float, float] = (0,
             pos += scale
         return out
     return Grid(cuts(size[0], offset[0]), cuts(size[1], offset[1]), (scale, scale), 1.0,
-                scale == 1, ["grade conhecida"])
+                scale == 1, ["grade conhecida"], "operator_declared")
 
 
 def detect(image: Image.Image, scale: float | None = None, cells: tuple[int, int] | None = None,
@@ -236,12 +237,11 @@ def detect(image: Image.Image, scale: float | None = None, cells: tuple[int, int
         p, strength = estimate(ex, ey)
         if strength < NATIVE_STRENGTH:
             return Grid(list(range(w + 1)), list(range(h + 1)), (1.0, 1.0), 0.0, True,
-                        ["sem grade visivel: tratada como pixel art nativa (escala 1)"])
+                        ["sem grade visivel: tratada como pixel art nativa (escala 1)"], "unmeasured")
         px = py = p
-    xs, cx = _axis(ex, px)
-    ys, cy = _axis(ey, py)
+    (xs, cx), (ys, cy) = _axis(ex, px), _axis(ey, py)
     confidence = min(1.0, strength / 0.6) * (0.5 + 0.25 * (cx + cy))
-    return Grid(xs, ys, (px, py), confidence, False, notes)
+    return Grid(xs, ys, (px, py), confidence, False, notes, "operator_declared" if cells or scale else "estimated")
 
 
 def _axis(e: list[float], period: float) -> tuple[list[int], float]:

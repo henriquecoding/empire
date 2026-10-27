@@ -45,3 +45,37 @@ def no_grid(img: Image.Image, contract: Contract, size: tuple[int, int]) -> dict
                              "grid, with no painterly shading, blur or anti-aliasing.")
     coherence = {"status": "not_evaluated", "counts": {}, "figure": None, "where": [], "reason": "sem grade"}
     return {**lint._summary(img, contract, [item]), "coherence": coherence}
+
+
+def losses(snapinfo: dict, to_final) -> list[dict]:
+    """As celulas cujo conteudo a amostragem apagou (loss.py), mesmo com pureza alta e abaixo dos limiares do
+    `subgrid`: uma so celula pode ser um olho. Informa onde, no PNG final; o que era fica no JSON (`snap.loss`)."""
+    from .loss import groups
+    info = snapinfo.get("loss") or {}
+    if not info.get("erased_cells"):
+        return []
+    by = ", ".join(f"{n} {k}" for k, n in info["by_kind"].items() if n)
+    boxes = [to_final(b) for b in groups(info)[:4]]
+    return [lint.finding("erased", "warn", f"{info['erased_cells']} celulas com conteudo apagado pela amostragem "
+                         f"({by}); pureza {snapinfo['sample'].get('purity')}: a pureza mede o miolo que ficou, nao o "
+                         f"que saiu. Zonas no PNG final: {boxes}", boxes,
+                         hint="Draw small features (eyes, brows, teeth, strings) as whole logical pixels: each mark "
+                              "fills its whole block, never a partial block or a line thinner than one block.")]
+
+
+def grid_origin(report: dict) -> list[dict]:
+    """A reducao deliberada e o recuperado que nao cabe na tela, ditos como tal (FORJA-07)."""
+    out = []
+    if report["origin"] == "deliberately_reduced":
+        out.append(lint.finding("grid_reduced", "info", "grade reduzida deliberadamente: o resultado e uma "
+                                "adaptacao com perda e nao prova recuperacao fiel nem autoria nativa"))
+    if report["fits_target"] is False:
+        mix = report.get("mixed_scale")
+        zones = (f"; quase toda a imagem segue uma grade de {mix['coarse_period']} px ({mix['coarse_cells'][0]}x"
+                 f"{mix['coarse_cells'][1]} celulas) e {mix['fine_cells']} celulas pedem a de {mix['fine_period']} "
+                 f"px, por exemplo {mix['zones'][:3]} na entrada") if mix else ""
+        out.append(lint.finding("grid_budget", "warn", f"a grade {report['origin']} recupera {report['native_size'][0]}"
+                                f"x{report['native_size'][1]} pixels e a tela e {report['target_canvas'][0]}x"
+                                f"{report['target_canvas'][1]}{zones}. Reduzir para caber e adaptacao com perda "
+                                "(desenho, --reduce), nao recuperacao", mix["zones"][:3] if mix else []))
+    return out

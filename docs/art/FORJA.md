@@ -326,6 +326,47 @@ forja verify cand.png --master arqueiro-mestre.png --mask arco-e-mao.png --prote
   --refs registo.json
 ```
 
+## Medir o que se perde e prender o pedido à autoridade
+
+A [auditoria de 27/10](research/2026-10-27-forja-auditoria-fidelidade/README.md) mostrou que a pureza da amostragem
+pode ser 1,0 enquanto um traço declarado importante desaparece, que uma grade dada pelo operador valia como evidência,
+e que o arqueiro rejeitado veio de outra referência, com o compilador a impor dois tons e 12–24 cores a contratos sem
+limite. Cinco coisas mudaram (ADR 0094):
+
+1. **O que a amostragem apaga fica escrito.** O `forge` lê cada célula inteira contra o pixel escolhido e grava
+   `snap.loss`: as células `erased` (`outside_core`, `minority`, `alpha_discarded`), com a cor perdida, mesmo as que
+   ficaram vazias; o achado `erased` aponta as zonas no PNG final. Sem limiar global: uma célula conta. A pureza é a
+   mesma medida em todos os métodos e só fala do miolo (`purity_basis: core`).
+2. **A grade diz de onde veio** (`snap.grid.origin`, `snap.grid_report`): `exactly_measured`, `estimated`,
+   `operator_declared` (conferida contra a medida), `deliberately_reduced` e `unmeasured`. `--reduce` (com `--scale` ou
+   `--cells`) declara uma redução para caber: sai como adaptação com perda, nunca como recuperação. O relatório diz se
+   o recuperado cabe na tela (`grid_budget`), onde a escala é mais fina (`mixed_scale`) e separa a grade das cores: um
+   JPEG pode ter grade exata e cores que não são as originais (`lossy_input`, `original_colors`).
+3. **O pedido fiel prende-se à pose de autoridade.** O contrato `forja.fidelity/1` guarda a prancha (sha256), o recorte
+   de cada personagem e pose, as invariantes, as regiões, os pinos e os candidatos rejeitados. Com `--fidelity
+   --character`, `plan`/`auto`/`prompt` anexam o recorte como conceito (`prompt` grava-o em
+   `attach_concept_authority.png`), recusam um conceito que não é ele (`reference_conflict`) e um rejeitado, e um guia
+   em revisão sozinho. O modo (`--mode`: `stylized`, `adapt_concept`, `edit_approved_master`) decide as restrições, e
+   cada uma diz a origem (`constraints` no plano); o modo fiel não tem nenhuma `compiler_default` — cores e tons só
+   entram com `--max-colors`/`--tones`.
+4. **Sinais declarados** (`forja.signals/1`, preso ao hash da imagem): `forge --signals` aplica os pinos `authorized`
+   depois do voto e verifica-os no PNG final; dois pinos de cores diferentes na mesma célula são `layout_conflict` e
+   nenhum se aplica; uma região `required` com uma célula apagada bloqueia. `verify --signals` repete os pinos depois
+   da composição.
+5. **A revisão tem quatro estados** (`forja fidelity`): `runtime`, `declared_feature_preservation`,
+   `identity_and_pose` e `native_master_approval`. Um rejeitado fica `blocked` na identidade mesmo com o runtime em
+   `pass`; a identidade só passa por uma revisão registada desta imagem (uma observação por aspeto) ou pela aprovação
+   do dono. `--sheet` põe o conceito e o candidato lado a lado, a 1× e ampliado por inteiro.
+
+```bash
+CONTRATO=docs/art/research/2026-10-27-forja-auditoria-fidelidade/fidelidade.json
+forja fidelity $CONTRATO                                      # conferir; o que esta pendente por personagem
+forja prompt "imperial archer" --kind royal_80 --fidelity $CONTRATO --character arqueiro -o build/forja/arq/pedido
+forja forge gerado.png --expect build/forja/arq/pedido/expect.json -o build/forja/arq [--signals sinais.json]
+forja fidelity $CONTRATO --character arqueiro --candidate build/forja/arq/gerado.png \
+  --forge-json build/forja/arq/gerado.json --sheet build/forja/arq/lado-a-lado.png
+```
+
 ## Receitas por tipo de asset
 
 Os tipos (`--kind`) e os números de cada contrato vêm de
@@ -423,7 +464,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `palette` | Mostrar, converter, extrair, rampa, fundir cores próximas |
 | `prompt` / `plan` / `generate` / `auto` / `inpaint` | O lado do gerador: pedir, planear sem rede, gerar com job e teto |
 | `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara, na cor declarada |
-| `refs` / `verify` | O registo de autoridade das referências; reconferir um candidato contra o mestre, só a ler, e dizer se a entrega fecha |
+| `refs` / `verify` | O registo de autoridade das referências; reconferir um candidato contra o mestre, só a ler, e dizer se a entrega fecha (`--signals`: os pinos no PNG final) |
+| `fidelity` | O contrato de fidelidade: conferir a autoridade, gravar o recorte de uma pose, rever um candidato em quatro estados e pô-lo ao lado do conceito |
 | `cores` | A cor no espaço: fragmentos N4/N8 e o estado de cada um; com plano, rampas por material e agrupamento só nas regiões editáveis |
 | `jobs` | Pedidos pagos de uma pasta: ver, retomar (só consulta), cancelar |
 | `prova` / `mcp` / `kinds` | A prova, o servidor MCP, os contratos |
@@ -445,7 +487,9 @@ ficheiro que não é imagem).
 - **Amostragem.** Cada célula vota a cor dominante no miolo (sem a borda
   suavizada); uma cor chapada sai igual, uma ruidosa sai limpa. `--method mode`
   toma só a cor exata mais frequente, sem misturar (o `scale --down` usa-o). A
-  grade de um recorte mede-se antes da máscara da figura.
+  grade de um recorte mede-se antes da máscara da figura. Depois do voto, a
+  célula inteira é lida contra o pixel escolhido (`loss.py`): o que sumiu sem
+  ficar num vizinho nem numa mistura é `erased`.
 - **Fundo.** Alfa, chave (a cor mais longe da paleta do projeto, escolhida pelo
   prompt) ou fundo liso por enchimento a partir da borda, na resolução nativa.
 - **Cor.** OKLab para todas as distâncias; k-means sem sorteio; dither
@@ -484,7 +528,10 @@ ficheiro que não é imagem).
   (um sorriso de meio bloco, olhos em traço fino). Nenhum voto por célula
   recupera esse traço. A Forja mede as células misturadas, mostra-as a vermelho
   no relatório e, quando pesam, avisa (`subgrid`) com a instrução para o
-  gerador; o conserto é gerar de novo ou `forja inpaint` nessa caixa. Nas duas
+  gerador; o conserto é gerar de novo ou `forja inpaint` nessa caixa. Desde
+  27/10 também diz o que foi apagado, célula a célula (`erased`), mesmo com a
+  pureza em 1,0; a perda é evidência, não reconhecimento: se a cor apagada é um
+  dente ou ruído, di-lo quem declara a região (Q-287). Nas duas
   pranchas reais do projeto o corpo voltou fiel e o rosto perdeu traços
   ([comparação](research/2026-10-23-forja-pixellab/README.md#imagens-reais-do-projeto)).
 - Escalas muito pequenas (4–6 px por pixel lógico) com desfoque podem trocar

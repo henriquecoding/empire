@@ -39,8 +39,13 @@ INSTRUCTIONS = (
     "(fragmentos de 1-3 px: review e suspeita, nao defeito) e, com plano, agrupa so nas regioes editaveis; (7) uma "
     "referencia tem estado no registo forja_refs (so o mestre que o dono aprovou e APPROVED); a edicao local e "
     "forja_inpaint com --refs (recusa o rejeitado antes do pedido) e fecha com forja_verify contra o mestre, so a "
-    "ler. A aprovacao artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ "
-    "sem pedido do dono; usar build/forja/. Ler docs/art/FORJA.md.")
+    "ler; (8) para adaptar um conceito, forja_plan/forja_prompt com --fidelity e --character (o recorte de autoridade "
+    "vai anexado, um conceito alternativo e reference_conflict, sem as preferencias do compilador); no forja_forge, "
+    "snap.loss e o achado erased dizem o que a amostragem apagou mesmo com pureza 1,0, grid_report diz de onde veio a "
+    "grade e --signals prende pixels e regioes declarados; forja_fidelity com --candidate da os quatro estados "
+    "(runtime, sinais, identidade, mestre) e --sheet o conceito ao lado. A aprovacao artistica e sempre do dono. "
+    "Caminhos relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do dono; usar build/forja/. Ler "
+    "docs/art/FORJA.md.")
 
 
 def _schema(parser: argparse.ArgumentParser) -> dict:
