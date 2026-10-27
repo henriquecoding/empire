@@ -45,14 +45,19 @@ def region(expect: dict, received: list[int]) -> tuple[int, int, int, int] | Non
     return round(x0 * w / lw), round(y0 * h / lh), round(x1 * w / lw), round(y1 * h / lh)
 
 
-def _grid_finding(check: dict, detected: float | None) -> dict | None:
+def _grid_finding(check: dict, detected: float | None, cells: list[int]) -> dict | None:
+    """`detail` e para quem le o relatorio; `hint` (em ingles) vai para o gerador no prompt corretivo."""
     if detected is None or check["expected_period"] <= 1:
         return None
-    deviation = abs(detected - check["expected_period"]) / check["expected_period"]
+    want = check["expected_period"]
+    deviation = abs(detected - want) / want
     check["detected_period"], check["period_deviation"] = round(detected, 3), round(deviation, 3)
     if deviation > 0.12:
         return {"code": "grid_not_followed", "detail": f"grade detetada {detected:.2f} px, pedida "
-                f"{check['expected_period']:.2f} px: o gerador nao seguiu o pedido de grade"}
+                f"{want:.2f} px: o gerador nao seguiu o pedido de grade",
+                "hint": f"Use exactly {cells[0]}x{cells[1]} logical pixels for the whole image: every logical pixel "
+                        f"is one solid block of about {want:.0f}x{want:.0f} image pixels, not {detected:.0f}x"
+                        f"{detected:.0f}."}
     return None
 
 
@@ -65,7 +70,8 @@ def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt:
         findings.append({"code": "native_size_mismatch", "detail": f"pedido {exp['size']}, recebido {received}: "
                          "nao se trata como nativo; a grade e detetada"})
     elif exp.get("scale_exact", True) and not check["matches"]:
-        findings.append({"code": "size_mismatch", "detail": f"pedido {exp['size']}, recebido {received}"})
+        findings.append({"code": "size_mismatch", "detail": f"pedido {exp['size']}, recebido {received}",
+                         "hint": f"The image must be exactly {exp['size'][0]}x{exp['size'][1]} pixels."})
     opts = pipeline.Options(kind=plan.data["kind"], palette=palette,
                             bg=None if exp["background"] == "transparent" else exp["background"])
     if exp["grid"] == "native" and check["matches"]:
@@ -82,7 +88,7 @@ def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt:
         detected = r["snap"]["grid"]["period"][0]
         review = review_mod.verdict(r["lint"]["ok"], None)
         feedback = r["lint"]["prompt_feedback"]
-    grid = _grid_finding(check, detected)
+    grid = _grid_finding(check, detected, exp["cells"])
     if grid:
         findings.append(grid)
     hard = [f for f in findings if f["code"] in ("native_size_mismatch", "size_mismatch")]
@@ -101,6 +107,11 @@ def run(plan: Plan, out: Path, attempts: int, budget: jobs.Budget, palette: str 
     prompt, history = plan.data["prompt"], []
     for attempt in range(1, attempts + 1):
         call = plan.call(prompt)
+        try:
+            budget.check(call.estimate_usd)  # antes do job: um teto atingido nao deixa um pedido `planned` orfao
+        except jobs.BudgetExceeded as err:
+            history.append({"attempt": attempt, "state": "not_sent", "error": str(err), "review": None})
+            break
         job = jobs.create(call, out, extra={
             "attempt": attempt, "backend": plan.data["backend"], "model": plan.data["model"],
             "plan_sha256": plan_sha, "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
@@ -115,19 +126,36 @@ def run(plan: Plan, out: Path, attempts: int, budget: jobs.Budget, palette: str 
         output = job.data["outputs"][0]
         raw = Path(output["file"])
         generator = f"{plan.data['backend']}/{plan.data['model']}"
-        res = forge_attempt(plan, raw, output["size"], out / f"try{attempt}", prompt, generator, palette)
-        history.append({**entry, "state": job.state, "image": str(raw), "extra_images": len(images) - 1, **res})
+        entry.update(state=job.state, image=str(raw), extra_images=len(images) - 1)
+        try:
+            res = forge_attempt(plan, raw, output["size"], out / f"try{attempt}", prompt, generator, palette)
+        except Exception as err:  # noqa: BLE001 — a imagem paga fica no job; o erro e da Forja, nao do gerador
+            history.append({**entry, "error": f"forja: {type(err).__name__}: {err}", "review": None})
+            break
+        history.append({**entry, **res})
         if not res["review"]["needs_regeneration"]:
             break
-        hints = " ".join(f["detail"] for f in res["findings"] if f["code"] == "grid_not_followed")
+        hints = " ".join(f["hint"] for f in res["findings"] if f.get("hint"))
         prompt = prompts.corrective(plan.data["prompt"], (res["prompt_feedback"] + " " + hints).strip())
-    last = history[-1] if history else {}
+    return _close(out, plan_file, history, budget)
+
+
+def _close(out: Path, plan_file: Path, history: list[dict], budget: jobs.Budget) -> dict:
+    """O resultado diz a ultima tentativa forjada, e porque o ciclo parou se parou depois dela (A03)."""
+    forged = [h for h in history if h.get("review")]
+    last = forged[-1] if forged else {}
     review = last.get("review") or {}
+    stopped = history[-1].get("error") if history and history[-1] is not last else None
+    if not review:
+        step = "nada foi forjado; ver o erro do job e o plano"
+    elif review.get("needs_regeneration"):
+        step = "a ultima tentativa forjada ainda pede outra geracao" + (f"; o ciclo parou: {stopped}" if stopped
+                                                                        else " e as tentativas acabaram")
+    else:
+        step = "revisao humana: design, movimento e integracao continuam pendentes"
     result = {"ok": bool(review) and not review.get("needs_regeneration", True), "attempts": history,
               "plan": str(plan_file), "budget": budget.as_dict(),
-              "best": str(out / f"try{len(history)}") if review else None,
-              "review": review or None,
-              "next": "revisao humana: design, movimento e integracao continuam pendentes" if review else
-                      "nada foi forjado; ver o erro do job e o plano"}
+              "best": str(out / f"try{last['attempt']}") if review else None,
+              "review": review or None, "stopped": stopped, "next": step}
     (out / "auto.json").write_text(json.dumps(result, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     return result

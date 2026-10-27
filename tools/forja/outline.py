@@ -100,7 +100,7 @@ def measure(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), skip=None
     share = sum(rows[y][x][:3] == rgb for x, y in edges) / len(edges)
     thickness, work = 0, [row[:] for row in rows]
     while thickness < 4:
-        ring = edge_pixels(work)
+        ring = [e for e in edge_pixels(work) if not skip or e not in skip]
         if not ring or sum(work[y][x][:3] == rgb for x, y in ring) / len(ring) < 0.6:
             break
         thickness += 1

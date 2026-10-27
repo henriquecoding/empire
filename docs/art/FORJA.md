@@ -21,6 +21,10 @@ O [relatório de 25/10](research/2026-10-25-forja-pixels-cores/README.md) mostro
 16 pontos de cor espalhados e o mesmo histograma num bloco davam as mesmas
 respostas: a Forja passou a ver a cor no espaço, a proteger até ao PNG final e a
 não congelar o movimento ([ADR 0092](../adr/0092-a-forja-ve-a-cor-no-espaco.md)).
+A [auditoria de 26/10](research/2026-10-26-forja-auditoria/README.md) achou dez
+falhas (A01–A10) — a mais grave, uma ampliação exata medida na fase errada, que
+fazia uma prancha 10× sair "exata 2×" — e reparou-as com testes; a 27/10 aplicou o
+que ficara aberto (O1–O6) e mais duas falhas achadas pelo caminho (A11, A12).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -134,14 +138,21 @@ diz o que divergiu.
   `forja jobs <pasta> --resume ID` só consulta; `--cancel ID` pede ao fornecedor
   e regista a resposta sem prometer que não houve cobrança.
 - `--max-calls` e `--max-usd` são o teto da pasta (`budget.json`, somado entre
-  corridas). OpenAI e Gemini não devolvem dólares: aí o teto que vale é o número
-  de chamadas.
+  corridas; uma retomada soma nele o custo que o fornecedor disser, e um job que o
+  fornecedor dá por falhado conta como custo desconhecido). OpenAI e Gemini não
+  devolvem dólares: aí o teto que vale é o número de chamadas.
+- No `auto`, uma imagem sem figura é uma tentativa que pede outra geração; um erro
+  da própria Forja para o ciclo com a imagem paga guardada no job. O resultado diz
+  a última tentativa forjada (`best`) e, se o ciclo parou depois dela, porquê
+  (`stopped`). O prompt corretivo é inglês, como o pedido: a grade não seguida e o
+  tamanho errado chegam ao gerador com a medida.
 
 ### Como servidor MCP (Codex, Claude Code, outros clientes)
 
 `python3 -m tools.forja mcp` serve todas as ferramentas por stdio
 (`forja_prompt`, `forja_forge`, `forja_sheet`, `forja_lint`, `forja_tileset`…).
-Os esquemas saem dos mesmos argumentos da linha de comandos. As respostas trazem
+Os esquemas saem dos mesmos argumentos da linha de comandos; os repetíveis
+(`protect`, `bare`, `static`, `action`, `hold`) vão como listas. As respostas trazem
 o JSON e a prévia ampliada como imagem, para o agente ver o que fez. O servidor
 trabalha a partir da raiz do repositório: os caminhos relativos partem dela.
 
@@ -173,7 +184,8 @@ registos que não se confundem:
    são recusados (vivem em `data/source`).
 2. **Observação** (`forja.observation/1`) — regiões e âncoras marcadas **numa**
    imagem (o hash dela vai no ficheiro), por caixa e cores, lista de pixels ou
-   máscara PNG, com autor, método, data e incerteza (`baixa`, `media`, `alta`).
+   máscara PNG (o alfa, se ela tem transparência; senão o claro: branco marca),
+   com autor, método, data e incerteza (`baixa`, `media`, `alta`).
    Não é um detector: diz quem viu o quê. Mudou a imagem, observa-se de novo.
 3. **Veredito** — `forja equip` mede sobre a observação: instâncias de cada parte
    (a oclusão declarada liga as peças; os braços do arco ligam-se pela
@@ -272,14 +284,21 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   personagem ou efeito, um pixel solto ou um furo de 1 px ficam e aparecem como
   candidatos no relatório (podem ser um olho, um brilho, um rebento); só o
   cenário os tira. Ruído de cor quase igual ao vizinho é alisado (`--noise 0`
-  desliga) e `--protect x0,y0,x1,y1` guarda uma caixa até ao PNG final.
+  desliga) e `--protect x0,y0,x1,y1` guarda uma caixa até ao PNG final. Uma
+  imagem sem grade com mais do dobro da tela recusa-se logo (`no_grid`): não é
+  pixel art nesta escala, e limpá-la levava minutos para pedir a coisa errada.
 - **Animação.** `prompt --tags walk` (ou `idle,walk`) pede a prancha com as
   contagens e notas da Animation Bible → `sheet`. A Forja conta as figuras
   reais contra as pedidas e **não inventa** um quadro em falta. Com o
   `expect.json` (ou `--layout CxL`) cada célula pedida é recortada com a sua
-  própria máscara, e figuras que se tocam continuam separadas; sem grelha, a
+  própria máscara, e figuras que se tocam continuam separadas; uma mancha vai para
+  a célula onde está a maior parte dela (a ponta de uma lança que entra na vizinha
+  volta à figura dona) e o que fica dividido corta-se pela linha — as duas saem no
+  relatório (`cell_crossing`, aviso) com o pedido ao gerador; sem grelha, a
   separação automática precisa de espaço vazio entre figuras. Escala e paleta
-  comuns. Com a grelha, cada figura **fica onde estava na sua célula** e só o
+  comuns; `--same-height` mede cada figura na sua própria grade (pixels de
+  tamanhos diferentes na mesma prancha) e não estica nada — um agachar continua
+  mais baixo. Com a grelha, cada figura **fica onde estava na sua célula** e só o
   chão comum vai ao pivô (`--align preserve`): um salto continua no ar, um
   agachar não cresce, uma flor cresce da mesma raiz. `--align feet` alinha cada
   quadro pelo próprio apoio e o relatório diz que a deriva zero daí é imposta.
@@ -354,17 +373,23 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `prova` / `mcp` / `kinds` | A prova, o servidor MCP, os contratos |
 
 Todos os comandos imprimem JSON. O código de saída é 0 quando o resultado
-cumpre, 1 quando há achados de erro e 2 quando o pedido é inválido.
+cumpre, 1 quando há achados de erro e 2 quando o pedido é inválido (também um
+ficheiro que não é imagem).
 
 ## O que a Forja faz por dentro
 
-- **Grade.** Perfil de bordas por eixo; período pela autocorrelação dos dois
+- **Grade.** Uma ampliação exata por vizinho mais próximo mede-se, não se estima:
+  as colunas e linhas onde a imagem muda dão o período (o máximo divisor comum das
+  distâncias) e a fase, mesmo num recorte que não começa na grade. Senão: perfil
+  de bordas por eixo; período pela autocorrelação dos dois
   eixos juntos, com o pico alargado contra células desiguais; afinação
   fracionária por pente de contraste (dentes nas linhas menos meios entre elas:
   múltiplos e submúltiplos perdem); linhas por uma reta refeita por mínimos
   quadrados com as bordas confirmadas e interpolação nas zonas lisas.
 - **Amostragem.** Cada célula vota a cor dominante no miolo (sem a borda
-  suavizada); uma cor chapada sai igual, uma ruidosa sai limpa.
+  suavizada); uma cor chapada sai igual, uma ruidosa sai limpa. `--method mode`
+  toma só a cor exata mais frequente, sem misturar (o `scale --down` usa-o). A
+  grade de um recorte mede-se antes da máscara da figura.
 - **Fundo.** Alfa, chave (a cor mais longe da paleta do projeto, escolhida pelo
   prompt) ou fundo liso por enchimento a partir da borda, na resolução nativa.
 - **Cor.** OKLab para todas as distâncias; k-means sem sorteio; dither

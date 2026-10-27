@@ -16,7 +16,8 @@ def do_jobs(args) -> dict:
         return {"ok": True, **jobs.cancel(job, backends.canceller(job.data["service"]))}
     if args.resume:
         try:
-            jobs.execute(job, None, poll=backends.poller(job.data["service"]), deadline=args.deadline)
+            jobs.execute(job, None, poll=backends.poller(job.data["service"]), deadline=args.deadline,
+                         budget=jobs.Budget.saved(args.folder))
         except jobs.JobError as err:
             return {"ok": False, "state": job.state, "error": str(err), "job": str(job.path)}
     return {"ok": job.state == "completed", "job": job.data}

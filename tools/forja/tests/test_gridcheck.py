@@ -1,9 +1,10 @@
 """A grade medida antes da estimada, e a recusa de um periodo que a amostragem desmente.
 
-Os dois defeitos vieram da forense das imagens publicas do PixelLab (pesquisa de 26/10):
-um tileset ampliado 2x saia com metade da resolucao, e um sprite nativo de 64x64 saia
-com 12x11 celulas e `ok`. As imagens de terceiros nao entram no repositorio; os casos
-aqui reproduzem os dois mecanismos.
+Os dois defeitos vieram da forense das imagens publicas do PixelLab (pesquisa de 26/10): uma
+ampliacao exata pequena sai com metade da resolucao pela estimativa, e um sprite nativo de 64x64
+saia com 12x11 celulas e `ok`. (O tileset que a forense deu como 2x e 4x no que se ve; a errata
+esta no dossie.) As imagens de terceiros nao entram no repositorio; os casos aqui reproduzem os
+mecanismos, e os da auditoria de 26/10 (A01: a fase) tambem.
 """
 import random
 import unittest
@@ -11,7 +12,7 @@ from unittest import mock
 
 from PIL import Image
 
-from tools.forja import grid, gridcheck, pipeline, synth
+from tools.forja import grid, gridcheck, pipeline, sheet, synth
 from tools.forja.tests.helpers import sprite
 
 
@@ -48,6 +49,41 @@ class ExactScaleTest(unittest.TestCase):
         self.assertEqual(gridcheck.exact_scale(sprite(4)), 1)
         fake, _, _ = synth.fake(sprite(5), 8.0, 0.8, 0.7, 5, (255, 0, 255), 3, 5)
         self.assertEqual(gridcheck.exact_scale(fake), 1)
+
+    def test_an_upscale_cut_out_of_phase_keeps_its_scale(self):
+        """A01: recortada 6 px ao lado, uma ampliacao 10x saia "exata 2x" (o 6 e par) e a figura 5x maior."""
+        native = sprite(4)
+        big = native.resize((native.width * 10, native.height * 10), Image.NEAREST)
+        for dx, dy in ((6, 6), (3, 7), (5, 0), (9, 1)):
+            crop = big.crop((dx, dy, big.width, big.height))
+            self.assertEqual(gridcheck.exact_grid(crop), (10, ((10 - dx) % 10, (10 - dy) % 10)), (dx, dy))
+            out, info = pipeline.snap(crop, pipeline.Options(outline="keep", fit=False))
+            ref = native.crop(native.getchannel("A").getbbox())
+            self.assertEqual(out.tobytes(), ref.tobytes(), (dx, dy))
+            self.assertIn("fase", info["grid"]["notes"][0])
+
+    def test_a_flat_image_keeps_the_old_answer(self):
+        """Lisa, e ampliacao de qualquer k: fica o maior ate 16 que divide os lados (o vazio sai rapido)."""
+        self.assertEqual(gridcheck.exact_grid(Image.new("RGBA", (64, 48))), (16, (0, 0)))
+        self.assertEqual(gridcheck.exact_grid(Image.new("RGBA", (63, 47), (9, 9, 9, 255))), (1, (0, 0)))
+
+    def test_hidden_colour_under_transparency_is_not_drawing(self):
+        native = sprite(4)
+        big = native.resize((native.width * 4, native.height * 4), Image.NEAREST)
+        px = big.load()
+        px[1, 1] = (255, 0, 0, 0)
+        self.assertEqual(gridcheck.exact_scale(big), 4)
+
+    def test_an_exact_sheet_keeps_every_frame_at_its_size(self):
+        frames = [sprite(s, (18, 30)) for s in range(4)]
+        sheet_img = Image.new("RGBA", (4 * 40, 40))
+        for i, f in enumerate(frames):
+            sheet_img.alpha_composite(f, (i * 40 + 11, 5))
+        big = sheet_img.resize((sheet_img.width * 10, sheet_img.height * 10), Image.NEAREST)
+        boxes, _, masks = sheet.find_cells(big, None, (4, 1))
+        figures = sheet.extract(big, boxes, None, masks=masks)
+        self.assertEqual([f.period for f in figures], [10.0] * 4)
+        self.assertEqual([f.native.size for f in figures], [f.crop(f.getchannel("A").getbbox()).size for f in frames])
 
 
 class PurityGuardTest(unittest.TestCase):

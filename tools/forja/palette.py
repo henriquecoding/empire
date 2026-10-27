@@ -25,6 +25,7 @@ class Palette:
         for c in colors:
             seen.setdefault((c[0], c[1], c[2]), len(seen))
         self.colors = list(seen)
+        self._set = frozenset(seen)
         self.name = name
         self.names = names if names and len(names) == len(self.colors) else [""] * len(self.colors)
         self._labs = [color.oklab(c) for c in self.colors]
@@ -34,7 +35,7 @@ class Palette:
         return len(self.colors)
 
     def __contains__(self, rgb: tuple[int, ...]) -> bool:
-        return (rgb[0], rgb[1], rgb[2]) in set(self.colors)
+        return (rgb[0], rgb[1], rgb[2]) in self._set
 
     def index(self, rgb: tuple[int, ...]) -> int:
         """Indice da cor mais proxima em OKLab (memorizado)."""

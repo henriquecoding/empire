@@ -25,6 +25,7 @@
   "before": {
    "summary": {
     "raster_contract": "pass",
+    "color_coherence": "needs_review",
     "equipment_geometry": "fail",
     "functional_pose": "pass",
     "identity_consistency": "not_evaluated",
@@ -78,6 +79,7 @@
   "after": {
    "summary": {
     "raster_contract": "pass",
+    "color_coherence": "needs_review",
     "equipment_geometry": "pass",
     "functional_pose": "pass",
     "identity_consistency": "not_evaluated",

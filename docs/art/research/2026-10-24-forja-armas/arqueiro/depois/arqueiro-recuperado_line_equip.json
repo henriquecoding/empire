@@ -14,6 +14,7 @@
   "errors": 0,
   "warnings": 1,
   "rules": [
+   "fragments",
    "gradient"
   ]
  },
@@ -21,6 +22,19 @@
   "raster_contract": {
    "status": "pass",
    "evidence": []
+  },
+  "color_coherence": {
+   "status": "needs_review",
+   "evidence": [
+    {
+     "counts": {
+      "review": 184,
+      "protected": 0,
+      "expected": 0,
+      "inconclusive": 44
+     }
+    }
+   ]
   },
   "equipment_geometry": {
    "status": "pass",
@@ -148,6 +162,7 @@
  },
  "summary": {
   "raster_contract": "pass",
+  "color_coherence": "needs_review",
   "equipment_geometry": "pass",
   "functional_pose": "pass",
   "identity_consistency": "not_evaluated",

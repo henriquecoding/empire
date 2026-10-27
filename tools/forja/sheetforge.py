@@ -12,12 +12,11 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from statistics import median
 
 from PIL import Image
 
-from . import anim, color, contracts, godot, guard, lint, matte, motion, provenance, quantize, review, sheet
-from . import temporal
+from . import anim, cells, color, contracts, godot, guard, limits, lint, matte, motion, placement, provenance
+from . import quantize, review, sheet, temporal
 from . import aseprite as ase
 from .imageops import open_rgba
 from .pipeline import Options, contract_for, finish, palette_for
@@ -72,16 +71,21 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     if sopts.region:
         image = image.crop(sopts.region)
     bg = _bg(image, opts.bg)
+    crossing = {}
     if sopts.layout:
-        cells, stray, masks = sheet.find_cells(image, bg, sopts.layout)
-        rects = [r for r, b in zip(sheet.cell_rects(image.size, sopts.layout), cells) if b]
-        boxes = [b for b in cells if b]
+        found_cells, masks, crossed = cells.split(image, bg, sopts.layout)
+        rects = [r for r, b in zip(cells.cell_rects(image.size, sopts.layout), found_cells) if b]
+        boxes, stray, crossing = [b for b in found_cells if b], [], cells.by_frame(found_cells, crossed)
     else:
         boxes, stray, masks = sheet.find_masks(image, bg)
         rects = None
     expected = sum(n for _, n in sopts.tags) if sopts.tags else None
-    figures = sheet.extract(image, boxes, bg, scale=opts.scale, same_height=sopts.same_height, masks=masks)
+    figures = sheet.extract(image, boxes, bg, scale=opts.scale, same_height=sopts.same_height, masks=masks,
+                            exact=bool(sopts.layout))
     contract = contract_for(opts)
+    if not figures:
+        return _empty(out, name, contract, expected, stray, provenance.record(
+            source, generator, prompt, {**opts.__dict__, **sopts.__dict__}))
     pal = palette_for(opts, contract)
     natives = [f.native for f in figures]
     if pal is None and opts.colors:
@@ -97,7 +101,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     anchor = sopts.anchor if sopts.anchor in sheet.ANCHORS else "feet"
     canvas, pivot = contract.canvas, contract.pivot
     if not canvas:
-        canvas, pivot = _common_canvas(figures, anchor, align if rects else "feet")
+        canvas, pivot = placement.common_canvas(figures, anchor, align if rects else "feet")
     pivot = pivot or (canvas[0] // 2, canvas[1] - 1)
     frames, placed = sheet.frames(figures, canvas, pivot, anchor, align)
     fixes = {}
@@ -130,16 +134,21 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
         files["godot"] = str(godot.write(out / f"{name}.tres", godot.sprite_frames(
             sopts.godot_texture, rects_out, durations, tags, 1000 / durations[0], loops)))
     verdicts = [lint.check(f, contract, pal) for f in frames]
-    for verdict, info in zip(verdicts, details):
-        for item in guard.findings(info):
+    for i, (verdict, info) in enumerate(zip(verdicts, details)):
+        for item in guard.findings(info) + ([cells.finding(crossing[i])] if i in crossing else []):
             lint.add(verdict, item)
+        if i in crossing:
+            placed[i]["cell_crossing"] = crossing[i]
     for verdict, place_info, fig in zip(verdicts, placed, figures):
-        if place_info["clipped_pixels"]:
-            fits = fig.native.width <= canvas[0] and fig.native.height <= canvas[1]
-            lint.add(verdict, lint.too_big(contract, place_info["clipped_pixels"], fig.native.size) if not fits else
-                     lint.finding("placement", "error", f"{place_info['clipped_pixels']} pixels fora da tela pelo "
-                                  "lugar da figura na celula", fix="gerar de novo, ou --align contact/feet",
-                                  hint="Keep every pose inside its cell, on the same ground line as the others."))
+        if not place_info["clipped_pixels"]:
+            continue
+        if fig.native.width > canvas[0] or fig.native.height > canvas[1]:
+            limits.clipped(verdict, limits.too_big(contract, place_info["clipped_pixels"], fig.native.size))
+        else:
+            lint.add(verdict, lint.finding("placement", "error", f"{place_info['clipped_pixels']} pixels fora da tela "
+                                           "pelo lugar da figura na celula", fix="gerar de novo, ou --align contact/feet",
+                                           hint="Keep every pose inside its cell, on the same ground line as the "
+                                                "others."))
     metrics = anim.metrics(frames, pivot)
     found = len(frames)
     summary = f"{found} quadros achados" + (f" de {expected} pedidos" if expected else "")
@@ -174,6 +183,23 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     return result
 
 
+def _empty(out: Path, name: str, contract, expected: int | None, stray: list, record: dict) -> dict:
+    """Nenhuma figura na imagem (A02): nada a exportar, e o gerador tem de desenhar outra vez."""
+    rv = {**review.verdict(False, None), "review_reasons": ["nenhuma figura na imagem"]}
+    poses = f"exactly {expected} separate poses" if expected else "the requested poses"
+    result = {"name": name, "ok": False, "review": rv, "summary": "0 quadros achados"
+              + (f" de {expected} pedidos" if expected else ""), "requested": expected, "found": 0,
+              "stray_blobs": [list(b) for b in stray], "contract": contract.as_dict(), "tags": [], "durations": [],
+              "holds": [], "pivot": list(contract.pivot) if contract.pivot else None,
+              "canvas": list(contract.canvas) if contract.canvas else None, "frames": [], "metrics": {"frames": 0},
+              "fixes": {}, "files": {}, "provenance": record,
+              "prompt_feedback": f"The image came back with no figure at all: draw {poses} of the subject, one per "
+                                 "cell, on the flat background."}
+    (out / f"{name}.forja.json").write_text(json.dumps(result, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    result["files"]["forja_json"] = str(out / f"{name}.forja.json")
+    return result
+
+
 def _origins(figures: list, rects: list, details: list[dict], cluster: int) -> None:
     """A posicao de cada figura dentro da sua celula, em pixels finais (para manter saltos e passadas)."""
     for f, cell, info in zip(figures, rects, details):
@@ -181,26 +207,6 @@ def _origins(figures: list, rects: list, details: list[dict], cluster: int) -> N
         ox = round((f.origin_raw[0] - cell[0]) / px) * cluster + info.get("shift", [0, 0])[0]
         oy = round((f.origin_raw[1] - cell[1]) / py) * cluster + info.get("shift", [0, 0])[1]
         f.origin = (ox, oy)
-
-
-def _common_canvas(figures: list, anchor: str, align: str, margin: int = 2) -> tuple[tuple[int, int],
-                                                                                  tuple[int, int]]:
-    """Sem tela no contrato: a menor tela onde todas cabem, alinhadas como vao ficar."""
-    images = [f.native for f in figures]
-    points = [sheet.anchor_point(i, anchor) for i in images]
-    if align == "feet":
-        tops = [(-p[0], -p[1]) for p in points]
-        ref = (0, 0)
-    else:
-        feet = [(f.origin[0] + p[0], f.origin[1] + p[1]) for f, p in zip(figures, points)]
-        tops = [f.origin for f in figures]
-        ref = (round(median(x for x, _ in feet)), max(y for _, y in feet))
-    x0 = min(t[0] for t in tops)
-    y0 = min(t[1] for t in tops)
-    x1 = max(t[0] + i.width for t, i in zip(tops, images))
-    y1 = max(t[1] + i.height for t, i in zip(tops, images))
-    x1, y1 = max(x1, ref[0] + 1), max(y1, ref[1] + 1)
-    return (x1 - x0 + 2 * margin, y1 - y0 + 2 * margin), (ref[0] - x0 + margin, ref[1] - y0 + margin)
 
 
 def _timeline(tags: list[tuple[str, int]] | None, count: int) -> tuple[list[tuple[str, int, int, str]], list[int]]:

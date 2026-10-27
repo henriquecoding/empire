@@ -114,6 +114,15 @@ class Budget:
             b.calls, b.usd, b.unknown_cost_calls = saved["calls"], saved["usd"], saved["unknown_cost_calls"]
         return b
 
+    @classmethod
+    def saved(cls, folder: str | Path) -> "Budget | None":
+        """O teto ja gravado na pasta, para uma retomada somar nele o custo que o fornecedor disser (A04)."""
+        path = Path(folder) / "budget.json"
+        if not path.exists():
+            return None
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return cls.open(folder, data["max_calls"], data.get("max_usd"))
+
     def check(self, estimate: float | None) -> None:
         if self.calls >= self.max_calls:
             raise BudgetExceeded(f"teto de {self.max_calls} chamadas pagas atingido ({self.calls} feitas)")

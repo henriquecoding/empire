@@ -9,7 +9,8 @@
 3. `forja line`: a corda refeita a 1 px entre as pontas, so dentro da mascara; vereditos depois.
 4. As fixtures do relatorio (espada) e as do arco, com o lint raster e a geometria lado a lado.
 5. As duas sondas do contorno global (corda engrossada, vazio fechado), sem e com a protecao.
-Grava tudo nesta pasta e falha se um resultado mudar. Sem rede, sem geracao, sem aprovacao.
+Grava tudo nesta pasta e falha se uma medida mudar; o `make forja` chumba tambem um ficheiro gravado que mude
+sem commit. Sem rede, sem geracao, sem aprovacao.
 
     python3 docs/art/research/2026-10-24-forja-armas/prova_arqueiro.py
 """

@@ -11,7 +11,7 @@
     "exact_upscale_gt1": 1,
     "scales": [
       1,
-      2
+      4
     ],
     "with_c2pa": 0,
     "with_exif": 0,
@@ -26,7 +26,7 @@
       130,
       1603
     ],
-    "estimate_wrong_on_outputs": 8,
+    "estimate_wrong_on_outputs": 7,
     "checked_wrong_on_outputs": 0
   },
   "images": [
@@ -44,6 +44,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -105,6 +109,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -166,6 +174,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -227,6 +239,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         558,
         896
@@ -285,6 +301,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -346,6 +366,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         264,
         281
@@ -405,6 +429,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         328,
         396
@@ -464,6 +492,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         739,
         899
@@ -523,6 +555,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         558,
         897
@@ -580,10 +616,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        0
+      ],
       "logical_size": [
-        642,
-        353
+        322,
+        177
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -599,11 +639,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          28,
-          16
+          322,
+          177
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,0): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 171,
@@ -640,6 +682,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         128,
         128
@@ -700,10 +746,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        1
+      ],
       "logical_size": [
-        663,
-        764
+        332,
+        383
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -719,11 +769,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          29,
-          33
+          332,
+          383
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,1): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 21,
@@ -760,6 +812,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         128,
         128
@@ -821,6 +877,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         128,
         128
@@ -881,6 +941,10 @@
       "frames": 3,
       "distinct_frames": 3,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -931,6 +995,10 @@
       "frames": 8,
       "distinct_frames": 8,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -981,6 +1049,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -1042,6 +1114,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         64,
         64
@@ -1103,6 +1179,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         526,
         861
@@ -1161,6 +1241,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         512,
         1360
@@ -1222,6 +1306,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         576,
         256
@@ -1282,10 +1370,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        1
+      ],
       "logical_size": [
-        1269,
-        868
+        635,
+        435
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1301,11 +1393,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          49,
-          33
+          635,
+          435
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,1): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 823,
@@ -1342,10 +1436,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        0
+      ],
       "logical_size": [
-        1267,
-        983
+        634,
+        492
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1361,11 +1459,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          63,
-          49
+          634,
+          492
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,0): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 595,
@@ -1403,10 +1503,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        0,
+        1
+      ],
       "logical_size": [
-        1029,
-        832
+        515,
+        417
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1422,11 +1526,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          47,
-          38
+          515,
+          417
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (0,1): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 822,
@@ -1463,10 +1569,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        1
+      ],
       "logical_size": [
-        1027,
-        828
+        514,
+        415
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1482,11 +1592,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          47,
-          38
+          514,
+          415
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,1): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 826,
@@ -1524,6 +1636,10 @@
       "frames": 4,
       "distinct_frames": 4,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         128,
         64
@@ -1574,6 +1690,10 @@
       "frames": 4,
       "distinct_frames": 4,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         128,
         64
@@ -1624,6 +1744,10 @@
       "frames": 4,
       "distinct_frames": 4,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         128,
         64
@@ -1673,10 +1797,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        1
+      ],
       "logical_size": [
-        517,
-        103
+        259,
+        52
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1692,12 +1820,12 @@
       },
       "forja_grid_checked": {
         "cells": [
-          517,
-          103
+          259,
+          52
         ],
-        "native": true,
+        "native": false,
         "notes": [
-          "sem grade visivel: tratada como pixel art nativa (escala 1)"
+          "ampliacao exata 2x, fase (1,1): medida, nao estimada"
         ]
       },
       "logical": {
@@ -1736,10 +1864,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        1
+      ],
       "logical_size": [
-        1271,
-        835
+        636,
+        418
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1755,11 +1887,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          59,
-          39
+          636,
+          418
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,1): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 836,
@@ -1796,10 +1930,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 1,
+      "exact_scale": 2,
+      "exact_phase": [
+        1,
+        1
+      ],
       "logical_size": [
-        449,
-        495
+        225,
+        248
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -1815,11 +1953,13 @@
       },
       "forja_grid_checked": {
         "cells": [
-          27,
-          30
+          225,
+          248
         ],
         "native": false,
-        "notes": []
+        "notes": [
+          "ampliacao exata 2x, fase (1,1): medida, nao estimada"
+        ]
       },
       "logical": {
         "opaque_colors": 13,
@@ -1856,6 +1996,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 2,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         330,
         152
@@ -1917,6 +2061,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         228,
         637
@@ -1976,6 +2124,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 2,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         341,
         152
@@ -2037,6 +2189,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         364
@@ -2096,6 +2252,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         133,
         320
@@ -2155,6 +2315,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         64
@@ -2216,6 +2380,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         21
@@ -2277,6 +2445,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         258,
         89
@@ -2336,6 +2508,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         462,
         227
@@ -2395,6 +2571,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         63
@@ -2456,6 +2636,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         34
@@ -2517,6 +2701,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         114
@@ -2576,6 +2764,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         58,
         88
@@ -2637,6 +2829,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         671,
         324
@@ -2697,6 +2893,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         83
@@ -2756,6 +2956,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         469,
         140
@@ -2815,6 +3019,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         469,
         148
@@ -2874,6 +3082,10 @@
       "frames": 6,
       "distinct_frames": 6,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         384,
         384
@@ -2924,6 +3136,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         469,
         63
@@ -2983,6 +3199,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         471,
         32
@@ -3044,6 +3264,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         467,
         25
@@ -3105,6 +3329,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         462,
         92
@@ -3164,6 +3392,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         471,
         70
@@ -3223,6 +3455,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         144,
         246
@@ -3282,6 +3518,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         471,
         403
@@ -3341,6 +3581,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         462,
         227
@@ -3400,6 +3644,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         320,
         96
@@ -3459,6 +3707,10 @@
       "frames": 1,
       "distinct_frames": 1,
       "exact_scale": 1,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
         463,
         55
@@ -3519,10 +3771,14 @@
       ],
       "frames": 1,
       "distinct_frames": 1,
-      "exact_scale": 2,
+      "exact_scale": 4,
+      "exact_phase": [
+        0,
+        0
+      ],
       "logical_size": [
-        160,
-        128
+        80,
+        64
       ],
       "forja_grid_estimate": {
         "cells": [
@@ -3538,17 +3794,17 @@
       },
       "forja_grid_checked": {
         "cells": [
-          160,
-          128
+          80,
+          64
         ],
         "native": false,
         "notes": [
-          "ampliacao exata 2x: medida, nao estimada"
+          "ampliacao exata 4x: medida, nao estimada"
         ]
       },
       "logical": {
         "opaque_colors": 133,
-        "alpha_zero": 3072,
+        "alpha_zero": 768,
         "alpha_partial": 0,
         "alpha_class": "binary",
         "near_duplicate_pairs": 119,

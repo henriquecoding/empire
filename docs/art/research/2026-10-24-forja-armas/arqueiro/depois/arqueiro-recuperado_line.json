@@ -59,6 +59,7 @@
   "errors": 0,
   "warnings": 1,
   "rules": [
+   "fragments",
    "gradient"
   ]
  },
@@ -66,6 +67,10 @@
   "verdicts": {
    "raster_contract": {
     "status": "pass",
+    "evidence": []
+   },
+   "color_coherence": {
+    "status": "not_evaluated",
     "evidence": []
    },
    "equipment_geometry": {
@@ -207,6 +212,7 @@
   },
   "summary": {
    "raster_contract": "pass",
+   "color_coherence": "not_evaluated",
    "equipment_geometry": "fail",
    "functional_pose": "pass",
    "identity_consistency": "not_evaluated",
@@ -336,6 +342,10 @@
     "status": "pass",
     "evidence": []
    },
+   "color_coherence": {
+    "status": "not_evaluated",
+    "evidence": []
+   },
    "equipment_geometry": {
     "status": "pass",
     "evidence": [
@@ -462,6 +472,7 @@
   },
   "summary": {
    "raster_contract": "pass",
+   "color_coherence": "not_evaluated",
    "equipment_geometry": "pass",
    "functional_pose": "pass",
    "identity_consistency": "not_evaluated",

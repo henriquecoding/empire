@@ -99,9 +99,16 @@ afirmacoes-escrever:  ## Corrige os campos contaveis do validation.json
 # ADR 0088: a Forja recupera pixel art de imagens geradas. A prova fabrica pixel
 # art falsa com a verdade conhecida (escala fracionaria, celulas desiguais,
 # desfoque, ruido) e chumba se a recuperacao nao bater; os testes cobrem o resto.
-forja:  ## A Forja: a prova da pixel art recuperada e os testes (ADR 0088)
+# As provas do arqueiro (24/10 e 25/10) reescrevem os seus resultados: um JSON que mude sem
+# commit chumba, como o docs/design no `spec` (antes derivavam caladas; auditoria O2). So os
+# JSON: guardam o hash dos pixels, e o PNG comprimido pode variar com o zlib de cada maquina.
+FORJA_PROVAS := 'docs/art/research/2026-10-24-forja-armas/*.json' 'docs/art/research/2026-10-25-forja-pixels-cores/*.json'
+forja:  ## A Forja: a prova da pixel art recuperada, os testes e as provas do arqueiro (ADR 0088)
 	python3 -m tools.forja prova
 	python3 -m unittest discover -s tools/forja/tests -t .
+	python3 docs/art/research/2026-10-24-forja-armas/prova_arqueiro.py
+	python3 docs/art/research/2026-10-25-forja-pixels-cores/prova_cores.py
+	git diff --exit-code -- $(FORJA_PROVAS)
 
 # ── O que precisa do motor ───────────────────────────────────────────────────
 

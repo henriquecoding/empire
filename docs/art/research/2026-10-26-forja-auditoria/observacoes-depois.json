@@ -1,0 +1,238 @@
+{
+ "A01": {
+  "question": "Prancha ampliada 10x por vizinho mais proximo, a grelha do plano: que periodo sai de cada figura?",
+  "observed": {
+   "requested_scale": 10,
+   "sheet_exit": 0,
+   "periods": [
+    10
+   ],
+   "native_sizes": [
+    [
+     18,
+     34
+    ],
+    [
+     18,
+     34
+    ]
+   ],
+   "contract_valid": true,
+   "snap_offset_6px": {
+    "period": [
+     10,
+     10
+    ],
+    "cells": [
+     256,
+     128
+    ],
+    "notes": [
+     "ampliacao exata 10x, fase (4,4): medida, nao estimada"
+    ]
+   }
+  }
+ },
+ "A02": {
+  "question": "Uma prancha sem figuras (o gerador devolveu so o fundo): sheet e auto.",
+  "observed": {
+   "sheet": {
+    "found": 0,
+    "needs_regeneration": true,
+    "prompt_feedback": "The image came back with no figure at all: draw exactly 8 separate poses of the subject, one per cell, on the flat background."
+   },
+   "auto": {
+    "posts": 2,
+    "states": [
+     "completed",
+     "completed"
+    ],
+    "needs_regeneration": [
+     true,
+     true
+    ],
+    "auto_json_written": true
+   }
+  }
+ },
+ "A03": {
+  "question": "1a tentativa forjada e a pedir outra (tamanho errado); a 2a bate no teto de 1 chamada.",
+  "observed": {
+   "ok": false,
+   "best": "try1",
+   "next": "a ultima tentativa forjada ainda pede outra geracao; o ciclo parou: teto de 1 chamadas pagas atingido (1 feitas)",
+   "attempts": [
+    {
+     "state": "completed",
+     "forged": true
+    },
+    {
+     "state": "not_sent",
+     "forged": false
+    }
+   ],
+   "job_states": [
+    "completed"
+   ]
+  }
+ },
+ "A04": {
+  "question": "Um job PixelLab que esgota o prazo e e retomado por `forja jobs --resume`: o custo chega ao budget.json?",
+  "observed": {
+   "resumed_state": "completed",
+   "job_cost": {
+    "usd": 0.25,
+    "status": "reported_by_provider"
+   },
+   "budget_json": {
+    "max_calls": 3,
+    "max_usd": 1.0,
+    "calls": 1,
+    "usd": 0.25,
+    "unknown_cost_calls": 0
+   }
+  }
+ },
+ "A05": {
+  "question": "O texto das correcoes que o gerador recebe quando a grade nao foi seguida e a figura nao cabe.",
+  "observed": {
+   "posts": 2,
+   "corrections": "Draw the figure smaller: at most 62 logical pixels tall, completely inside its cell. Use exactly 64x64 logical pixels for the whole image: every logical pixel is one solid block of about 8x8 image pixels, not 4x4."
+  }
+ },
+ "A06": {
+  "question": "Duas caixas --protect pelo servidor MCP, como a ajuda diz (repetivel).",
+  "observed": {
+   "schema_type": "array",
+   "two_boxes_error": false,
+   "message": null
+  }
+ },
+ "A07": {
+  "question": "Uma mascara branca sobre preto, sem canal alfa (a convencao do PixelLab), de 9 pixels.",
+  "observed": {
+   "marked": 9,
+   "selected": 9
+  }
+ },
+ "A08": {
+  "question": "Prancha de 2 celulas; a lanca da figura 0 entra 6 pixels logicos na celula 1.",
+  "observed": {
+   "native_sizes": [
+    [
+     32,
+     30
+    ],
+    [
+     12,
+     30
+    ]
+   ],
+   "contract_valid": true,
+   "lint_errors": [
+    0,
+    0
+   ],
+   "cell_crossing": [
+    [
+     {
+      "action": "reassigned",
+      "cell": 0,
+      "from": [
+       1
+      ],
+      "outside": 0.038
+     }
+    ],
+    null
+   ]
+  }
+ },
+ "A09": {
+  "question": "Um ficheiro que nao e imagem: o resultado sai em JSON com o codigo 2, como o guia diz?",
+  "observed": {
+   "exit": 2,
+   "json": true
+  }
+ },
+ "A10": {
+  "question": "A frase de altura que o lint de royal_64 manda ao gerador, quando a figura nao cabe.",
+  "observed": {
+   "height_hints": [
+    "The figure must be at most 62 pixels tall on the 64x64 canvas."
+   ]
+  }
+ },
+ "O3": {
+  "question": "--same-height numa prancha com pixels de 8 e de 10: que tamanho nativo sai de cada figura?",
+  "observed": {
+   "native_sizes": [
+    [
+     14,
+     30
+    ],
+    [
+     14,
+     20
+    ]
+   ],
+   "truth_sizes": [
+    [
+     14,
+     30
+    ],
+    [
+     14,
+     20
+    ]
+   ]
+  }
+ },
+ "O4": {
+  "question": "Uma pintura lisa de 400x400, sem grade, como royal_64: quanto tempo, e o que se pede ao gerador?",
+  "observed": {
+   "seconds": 0.0,
+   "errors": [
+    "no_grid"
+   ],
+   "prompt_feedback": "Draw real pixel art: every logical pixel is one crisp solid square block on an exact grid, with no painterly shading, blur or anti-aliasing."
+  }
+ },
+ "O5": {
+  "question": "Um retangulo com contorno cortado pela tela: que achados e que frases para o gerador?",
+  "observed": {
+   "rules": [
+    "margin",
+    "pivot"
+   ],
+   "prompt_feedback": "Feet must rest exactly on the baseline marked in the template. Keep clear empty space between the figure and the edges of its cell."
+  }
+ },
+ "O6": {
+  "question": "Quantas vezes o `forge` amostra a imagem inteira (a conferencia da grade e o recorte)?",
+  "observed": {
+   "samplings": 1
+  }
+ },
+ "A11": {
+  "question": "A figura a 8x da prancha mista, sem --same-height: o periodo dela, medido no recorte com a mascara.",
+  "observed": {
+   "periods": [
+    8,
+    10
+   ]
+  }
+ },
+ "A12": {
+  "question": "`forja scale --down 3` de um bloco de nove tons do mesmo balde (96-111): a cor que sai estava no bloco?",
+  "observed": {
+   "out": [
+    111,
+    100,
+    100,
+    255
+   ],
+   "was_in_block": true
+  }
+ }
+}

@@ -4,7 +4,8 @@ Cada celula vira UM pixel. Por omissao vota a cor dominante no miolo da celula
 (as bordas trazem a suavizacao do gerador): agrupa as cores em baldes de 16
 niveis por canal, escolhe o balde mais cheio e, dentro dele, a cor exata mais
 frequente se ela pesar; senao a media em luz linear do balde. Assim uma cor
-chapada sai exatamente igual, e uma cor ruidosa sai limpa.
+chapada sai exatamente igual, e uma cor ruidosa sai limpa. `mode` e so a cor exata
+mais frequente (para reduzir pixel art que ja e limpa, sem misturar).
 """
 from __future__ import annotations
 
@@ -14,9 +15,9 @@ from PIL import Image
 
 from . import color
 from .grid import Grid
-from .imageops import CLEAR
+from .imageops import CLEAR, binarize
 
-METHODS = ("dominant", "center", "median", "mean")
+METHODS = ("dominant", "mode", "center", "median", "mean")
 
 
 @dataclass
@@ -36,6 +37,8 @@ def resample(image: Image.Image, grid: Grid, method: str = "dominant", inset: fl
         raise ValueError(f"metodo desconhecido: {method} (use {', '.join(METHODS)})")
     rgba = image.convert("RGBA")
     cols, rows = grid.size
+    if (cols, rows) == rgba.size and grid.xs[0] == 0 and grid.ys[0] == 0:
+        return Sampled(binarize(rgba), 1.0, 0, [])  # uma celula por pixel: o voto de cada uma e o proprio pixel
     out: list[tuple[int, int, int, int]] = []
     purities: list[float] = []
     impure: list[tuple[int, int]] = []
@@ -69,6 +72,8 @@ def _cell(rgba: Image.Image, box: tuple[int, int, int, int], method: str,
     covered = sum(n for n, _ in solid)
     if not area or covered / area < coverage:
         return CLEAR, 1.0
+    if method == "mode":  # a cor exata mais frequente: nunca uma cor que nao estava la
+        return (*max(solid)[1], 255), 1.0
     if method == "center":
         p = region.getpixel((region.width // 2, region.height // 2))
         if p[3] < 128:
