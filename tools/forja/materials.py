@@ -209,7 +209,21 @@ def apply(image: Image.Image, plan: dict, regions: dict, master: Palette,
               "before": before, "after": after}
     report["ok"] = (not report["outside_zone_changed"] and not report["locked"]["changed"]
                     and report["alpha_identical"] and not any(s["lost"] for s in sep))
+    report["material"] = material_state(remapped, sep)
     return out, report
+
+
+def material_state(remapped: dict, sep: list[dict]) -> dict:
+    """O material, a parte da prova tecnica (FORJA-06, solucao de 27/10, §5): um pixel preso fora da rampa da sua
+    regiao e um conflito de seletores (a lamina que apanha a mao), e uma fronteira perdida junta materiais. Enquanto
+    houver um dos dois, o material fica `pending`, mesmo com `ok`: nao se tira a protecao para limpar o relatorio,
+    reveem-se as regioes (lamina, punho e maos separados, cada um com autoridade)."""
+    conflicts = {n: r["locked_off_ramp"] for n, r in remapped.items() if r["locked_off_ramp"]}
+    lost = [s["pair"] for s in sep if s["lost"]]
+    return {"status": "pending" if conflicts or lost else "resolved",
+            "conflicts": sum(len(v) for v in conflicts.values()), "regions": sorted(conflicts),
+            "separation_lost": lost,
+            "next": "rever os seletores: separar as regioes que se sobrepoem ao que esta preso" if conflicts else None}
 
 
 def compare(before: dict, after: dict) -> dict:

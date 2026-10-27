@@ -4,7 +4,8 @@ Nada sai para a rede antes de o plano passar (F02/F03). Cada tentativa e um job
 duravel com teto de gasto (F01/F09). O que chega e medido, nao assumido: o
 tamanho recebido contra o pedido e a grade detetada contra a pedida — a escala so
 e dada como conhecida quando o fornecedor desenha no tamanho nativo e o tamanho
-recebido o confirma. O ciclo para quando o contrato passa e a revisao automatica
+recebido o confirma (expectation.py: a mesma conta do `forge` e do `sheet` manuais,
+FORJA-06). O ciclo para quando o contrato passa e a revisao automatica
 do movimento nao pede outra geracao (F07); a aprovacao artistica fica sempre
 pendente, para o autor.
 """
@@ -13,9 +14,8 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-from statistics import median
 
-from . import jobs, pipeline, prompts, review as review_mod, sheetforge
+from . import expectation, jobs, pipeline, prompts, review as review_mod, sheetforge
 from .backends import http, poller
 from .plan import Plan
 
@@ -24,79 +24,27 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def raster_check(expect: dict, received: list[int]) -> dict:
-    """O tamanho que chegou contra o pedido. No Gemini o pedido e estimado: so se regista o desvio."""
-    want = expect["size"]
-    out = {"requested": list(want), "received": list(received), "matches": list(received) == list(want),
-           "requested_is_estimate": not expect.get("scale_exact", True)}
-    lw, lh = expect["cells"]
-    out["expected_period"] = round(received[0] / lw, 3) if expect["grid"] != "native" else 1.0
-    out["aspect_deviation"] = round(abs(received[0] / received[1] - want[0] / want[1]) / (want[0] / want[1]), 4)
-    return out
-
-
-def region(expect: dict, received: list[int]) -> tuple[int, int, int, int] | None:
-    """A caixa da prancha (sem margens) no raster recebido, pelas proporcoes logicas do plano."""
-    lw, lh = expect["cells"]
-    x0, y0, x1, y1 = expect.get("content") or (0, 0, lw, lh)
-    if (x0, y0, x1, y1) == (0, 0, lw, lh):
-        return None
-    w, h = received
-    return round(x0 * w / lw), round(y0 * h / lh), round(x1 * w / lw), round(y1 * h / lh)
-
-
-def _grid_finding(check: dict, detected: float | None, cells: list[int]) -> dict | None:
-    """`detail` e para quem le o relatorio; `hint` (em ingles) vai para o gerador no prompt corretivo."""
-    if detected is None or check["expected_period"] <= 1:
-        return None
-    want = check["expected_period"]
-    deviation = abs(detected - want) / want
-    check["detected_period"], check["period_deviation"] = round(detected, 3), round(deviation, 3)
-    if deviation > 0.12:
-        return {"code": "grid_not_followed", "detail": f"grade detetada {detected:.2f} px, pedida "
-                f"{want:.2f} px: o gerador nao seguiu o pedido de grade",
-                "hint": f"Use exactly {cells[0]}x{cells[1]} logical pixels for the whole image: every logical pixel "
-                        f"is one solid block of about {want:.0f}x{want:.0f} image pixels, not {detected:.0f}x"
-                        f"{detected:.0f}."}
-    return None
-
-
 def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt: str, generator: str,
                   palette: str | None) -> dict:
     exp = plan.data["expect"]
-    check = raster_check(exp, received)
-    findings = []
-    if exp["grid"] == "native" and not check["matches"]:
-        findings.append({"code": "native_size_mismatch", "detail": f"pedido {exp['size']}, recebido {received}: "
-                         "nao se trata como nativo; a grade e detetada"})
-    elif exp.get("scale_exact", True) and not check["matches"]:
-        findings.append({"code": "size_mismatch", "detail": f"pedido {exp['size']}, recebido {received}",
-                         "hint": f"The image must be exactly {exp['size'][0]}x{exp['size'][1]} pixels."})
     opts = pipeline.Options(kind=plan.data["kind"], palette=palette,
                             bg=None if exp["background"] == "transparent" else exp["background"])
-    if exp["grid"] == "native" and check["matches"]:
+    if expectation.native(exp, received):
         opts.scale = 1.0
     if exp["frames"] > 1:
         sopts = sheetforge.SheetOptions(tags=[tuple(t) for t in exp["tags"]] if exp.get("tags") else None,
-                                        layout=tuple(exp["layout"]), region=region(exp, received))
+                                        layout=tuple(exp["layout"]), region=expectation.region(exp, received))
         r = sheetforge.forge_sheet(raw, out, opts, sopts, prompt=prompt, generator=generator)
-        periods = [f["period"] for f in r["frames"] if f["period"] > 1]
-        detected = median(periods) if periods else None
+        detected = expectation.from_period(r["frames"])
         review, feedback = r["review"], r["prompt_feedback"]
     else:
         r = pipeline.forge(raw, out, opts, prompt=prompt, generator=generator)
         detected = r["snap"]["grid"]["period"][0]
         review = review_mod.verdict(r["lint"]["ok"], None)
         feedback = r["lint"]["prompt_feedback"]
-    grid = _grid_finding(check, detected, exp["cells"])
-    if grid:
-        findings.append(grid)
-    hard = [f for f in findings if f["code"] in ("native_size_mismatch", "size_mismatch")]
-    if hard:
-        review = {**review, "contract_valid": False, "needs_regeneration": True,
-                  "verdicts": {**review["verdicts"], "raster_contract": "fail"}}
-    return {"raster": check, "findings": findings, "review": review, "prompt_feedback": feedback,
-            "files": r["files"]}
+    cmp = expectation.compare(exp, received, detected)
+    return {"raster": cmp["raster"], "findings": cmp["findings"], "review": expectation.mark(review, cmp),
+            "prompt_feedback": feedback, "files": r["files"]}
 
 
 def run(plan: Plan, out: Path, attempts: int, budget: jobs.Budget, palette: str | None = None,

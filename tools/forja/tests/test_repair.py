@@ -113,7 +113,8 @@ class StringRepairTest(unittest.TestCase):
         self.arm = masks.select(self.img, {"box": [0, 0, 24, 40], "colors": ["#C82828"]})
 
     def test_the_line_ends_one_pixel_wide_and_never_paints_over_the_arm(self):
-        candidate, zone, info = repair.straighten(self.img, self.line, (9, 2), (8, 37), keep=self.arm)
+        candidate, zone, info = repair.straighten(self.img, self.line, (9, 2), (8, 37), keep=self.arm,
+                                                  colors=[CREAM])  # FORJA-06: a cor e declarada, nao votada
         out, proof = compose.compose(self.img, candidate, zone, "replace", protect=self.arm - zone,
                                      old=self.line, joints=[(9, 2), (8, 37)])
         self.assertTrue(proof["ok"], proof)

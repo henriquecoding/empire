@@ -70,6 +70,13 @@ def _colors(pal: Palette | None, c: contracts.Contract, listed: int, swatch: int
 ROLES = {
     "identity": "the APPROVED design of this character: preserve proportions, head, face, clothing, materials "
                 "and colors exactly; change only the pose",
+    "identity_review": "an adaptation of this character that is still IN REVIEW and NOT approved: use it for scale "
+                       "and placement on the grid only; where it differs from the concept art, follow the concept",
+    "identity_unrecorded": "a reference design of this character whose approval is NOT recorded: keep its "
+                           "proportions, head, face, clothing, materials and colors, as a reference, not a master",
+    "concept": "the authority CONCEPT ART of this character (not on the pixel grid): match its face (eyes, brows, "
+               "nose, mouth, facial hair), proportions, materials and equipment, redrawn on the logical grid; do "
+               "not copy its brushwork, gradients or resolution",
     "style": "a style reference: copy its pixel-art language (outline, shading, cluster size), not its subject",
     "palette": "the palette swatch (big squares, no text)",
     "layout": "the layout template at the exact output proportions: one figure per cell, feet on the faint "
@@ -95,9 +102,11 @@ def camera_conflicts(text: str, facing: str) -> list[str]:
     return out
 
 
-def default_attached(reference: bool, palette: Palette | None, listed: int = 24) -> list[str]:
-    """O que o `forja prompt` manda anexar: o design aprovado e, se a paleta nao cabe no texto, a amostra."""
-    return (["identity"] if reference else []) + (["palette"] if palette is not None and len(palette) > listed else [])
+def default_attached(reference: bool | str, palette: Palette | None, listed: int = 24) -> list[str]:
+    """O que o `forja prompt` manda anexar: a referencia, no papel do seu estado (FORJA-06: sem registo nao e
+    'APPROVED'), e, se a paleta nao cabe no texto, a amostra."""
+    role = reference if isinstance(reference, str) else "identity_unrecorded"
+    return ([role] if reference else []) + (["palette"] if palette is not None and len(palette) > listed else [])
 
 
 def geometry(kind: str, tags: list[tuple[str, int]] | None, target: str,
@@ -115,7 +124,7 @@ def geometry(kind: str, tags: list[tuple[str, int]] | None, target: str,
 
 
 def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] | None = None,
-          facing: str = "right", reference: bool = False, palette: Palette | None = None,
+          facing: str = "right", reference: bool | str = False, palette: Palette | None = None,
           target: str = "gpt-image", background: str = "auto", listed: int = 24,
           cells: tuple[int, int] | None = None, attached: list[str] | None = None,
           geo: dict | None = None) -> dict:
@@ -172,8 +181,8 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
                      "baseline in every cell; generous empty space between figures; no text, labels, numbers, "
                      "borders, frame lines or grid lines.")
         lines += _timeline(tags or [])
-    if "identity" not in attached and reference:
-        raise ValueError("reference=True sem a imagem de identidade anexada")
+    if reference and not set(attached) & {"identity", "identity_review", "identity_unrecorded", "concept"}:
+        raise ValueError("reference sem a imagem de identidade anexada")
     lines.append("Avoid: photorealism, 3D render, painterly or vector style, glow, lens effects, drop shadows, "
                  "extra characters, watermarks, signatures, UI.")
     expect = {"kind": kind, "cells": geo["logical"], "content": geo["content"], "scale": k,

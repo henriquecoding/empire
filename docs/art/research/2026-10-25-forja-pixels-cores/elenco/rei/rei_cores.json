@@ -196,5 +196,31 @@
    "degraus de curvas e diagonais",
    "continuidade entre quadros"
   ]
+ },
+ "banding": {
+  "pairs": 14,
+  "horizontal": 7,
+  "vertical": 7,
+  "by_region": {},
+  "examples": [
+   {"axis": "horizontal", "at": [32, 29], "length": 2, "colors": ["#E3BC88", "#0B0B0B"]},
+   {"axis": "horizontal", "at": [32, 30], "length": 2, "colors": ["#0B0B0B", "#F19312"]},
+   {"axis": "horizontal", "at": [42, 36], "length": 2, "colors": ["#FE9505", "#F19312"]},
+   {"axis": "horizontal", "at": [32, 38], "length": 3, "colors": ["#3D4059", "#222034"]},
+   {"axis": "horizontal", "at": [32, 39], "length": 3, "colors": ["#222034", "#3D4059"]},
+   {"axis": "horizontal", "at": [38, 39], "length": 2, "colors": ["#D97C2B", "#FFB416"]},
+   {"axis": "horizontal", "at": [22, 41], "length": 2, "colors": ["#222034", "#0B0B0B"]},
+   {"axis": "vertical", "at": [26, 70], "length": 2, "colors": ["#8C501C", "#0B0B0B"]},
+   {"axis": "vertical", "at": [29, 71], "length": 2, "colors": ["#C9C6CD", "#FCFCFC"]},
+   {"axis": "vertical", "at": [30, 71], "length": 2, "colors": ["#FCFCFC", "#0B0B0B"]},
+   {"axis": "vertical", "at": [34, 40], "length": 2, "colors": ["#3D4059", "#222034"]},
+   {"axis": "vertical", "at": [36, 38], "length": 2, "colors": ["#0B0B0B", "#FFB416"]},
+   {"axis": "vertical", "at": [39, 38], "length": 2, "colors": ["#D97C2B", "#FFB416"]},
+   {"axis": "vertical", "at": [54, 61], "length": 2, "colors": ["#EAA55A", "#763728"]}
+  ],
+  "status": "review",
+  "rule": "dois segmentos de cores diferentes com 2+ px, vizinhos pelo lado comprido e com as duas pontas alinhadas (sem contorno nem vazio)",
+  "source": "Bites, Eisemann, Kellnhofer, Molenaar: Pixel Fixer (TU Delft, 2025), banding entre segmentos alinhados",
+  "note": "suspeita para rever a 1x: uma faixa pode ser de proposito; nada foi mudado"
  }
 }

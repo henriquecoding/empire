@@ -1,0 +1,250 @@
+{
+ "schema": "forja.prova_fidelidade/1",
+ "date": "2026-10-27",
+ "network": false,
+ "paid_calls": 0,
+ "generator_response": "simulada",
+ "source_state": "fixtures rejeitadas pelo dono (fixtures/STATE.json)",
+ "artistic_approval": "pending",
+ "local": {
+  "rei": {
+   "scale": 24,
+   "sent": "1920x1920",
+   "changed_pixels": 1,
+   "lint_ok": true,
+   "banding": 5
+  },
+  "arqueiro": {
+   "scale": 24,
+   "sent": "1920x1920",
+   "changed_pixels": 1,
+   "lint_ok": true,
+   "banding": 11
+  },
+  "escudeiro": {
+   "scale": 30,
+   "sent": "1920x1920",
+   "changed_pixels": 1,
+   "lint_ok": true,
+   "banding": 8
+  }
+ },
+ "stopped_edit": {
+  "stopped": "size_mismatch",
+  "sent": "1920x1920",
+  "job": "simulado",
+  "next": "repita so a zona (o mesmo mestre e a mesma mascara) ou repare-a a mao; um tamanho errado nao e motivo para gerar o personagem inteiro outra vez"
+ },
+ "authority": {
+  "register": "docs/art/research/2026-10-27-forja-fidelidade/evidencias/refs.json",
+  "plans": {
+   "rei": {
+    "ok": false,
+    "stage": "recovery",
+    "approved_word": false
+   },
+   "arqueiro": {
+    "ok": true,
+    "stage": "recovery",
+    "approved_word": false
+   }
+  }
+ },
+ "king_blade": {
+  "material": {
+   "status": "pending",
+   "conflicts": 9,
+   "regions": [
+    "blade"
+   ],
+   "separation_lost": [],
+   "next": "rever os seletores: separar as regioes que se sobrepoem ao que esta preso"
+  },
+  "banding": {
+   "before": 8,
+   "after": 8
+  },
+  "closure_missing": [
+   "identity_consistency",
+   "material",
+   "artistic_approval"
+  ]
+ },
+ "string": {
+  "inconclusive": {
+   "core_pixels": 86,
+   "colors_in_core": [
+    "#000000",
+    "#D9B836",
+    "#FBECC3"
+   ]
+  },
+  "paint": {
+   "mode": "fill",
+   "source": "declared",
+   "colors": [
+    "#FBECC3"
+   ],
+   "core": [
+    56,
+    22,
+    57,
+    70
+   ],
+   "core_pixels": 40,
+   "outline_protected": 46,
+   "kept": 30,
+   "filled": 10
+  },
+  "compose": {
+   "ok": true,
+   "outside_identical": true,
+   "protected_identical": true,
+   "changed_pixels": 10
+  },
+  "geometry_after": "fail",
+  "files": {
+   "png": "docs/art/research/2026-10-27-forja-fidelidade/evidencias/corda/arqueiro-before-string_line.png",
+   "preview": "docs/art/research/2026-10-27-forja-fidelidade/evidencias/corda/arqueiro-before-string_line_compare.png",
+   "mask": "docs/art/research/2026-10-27-forja-fidelidade/evidencias/corda/arqueiro-before-string_line_mask.png",
+   "observation": "docs/art/research/2026-10-27-forja-fidelidade/evidencias/corda/arqueiro-before-string_line.observation.json",
+   "json": "docs/art/research/2026-10-27-forja-fidelidade/evidencias/corda/arqueiro-before-string_line.json"
+  }
+ },
+ "manual_forge": {
+  "raster": {
+   "requested": [
+    1920,
+    1920
+   ],
+   "received": [
+    512,
+    512
+   ],
+   "matches": false,
+   "requested_is_estimate": false,
+   "expected_period": 8.0,
+   "aspect_deviation": 0.0,
+   "detected_period": 8,
+   "period_deviation": 0.0
+  },
+  "hard": [
+   "size_mismatch"
+  ]
+ },
+ "checks": [
+  {
+   "check": "rei: o eco devolve o RGBA exato",
+   "status": "pass"
+  },
+  {
+   "check": "rei: o rosto e o exterior ficam iguais",
+   "status": "pass"
+  },
+  {
+   "check": "rei: o pixel autorizado entra",
+   "status": "pass"
+  },
+  {
+   "check": "rei: o tamanho errado para a tentativa",
+   "status": "pass"
+  },
+  {
+   "check": "rei: a mascara sobre o protegido e recusada",
+   "status": "pass"
+  },
+  {
+   "check": "arqueiro: o eco devolve o RGBA exato",
+   "status": "pass"
+  },
+  {
+   "check": "arqueiro: o rosto e o exterior ficam iguais",
+   "status": "pass"
+  },
+  {
+   "check": "arqueiro: o pixel autorizado entra",
+   "status": "pass"
+  },
+  {
+   "check": "arqueiro: o tamanho errado para a tentativa",
+   "status": "pass"
+  },
+  {
+   "check": "arqueiro: a mascara sobre o protegido e recusada",
+   "status": "pass"
+  },
+  {
+   "check": "escudeiro: o eco devolve o RGBA exato",
+   "status": "pass"
+  },
+  {
+   "check": "escudeiro: o rosto e o exterior ficam iguais",
+   "status": "pass"
+  },
+  {
+   "check": "escudeiro: o pixel autorizado entra",
+   "status": "pass"
+  },
+  {
+   "check": "escudeiro: o tamanho errado para a tentativa",
+   "status": "pass"
+  },
+  {
+   "check": "escudeiro: a mascara sobre o protegido e recusada",
+   "status": "pass"
+  },
+  {
+   "check": "as tres fixtures rejeitadas passam no lint: contrato valido nao e aprovacao",
+   "status": "pass"
+  },
+  {
+   "check": "tamanho errado: um pedido, nenhuma imagem, o job guardado",
+   "status": "pass"
+  },
+  {
+   "check": "a versao rejeitada nao e editada por zonas, e nada sai para o gerador",
+   "status": "pass"
+  },
+  {
+   "check": "nenhuma das duas e chamada APPROVED; a rejeitada nao entra no plano",
+   "status": "pass"
+  },
+  {
+   "check": "lamina: 26 mudancas, nada preso muda, o ok tecnico passa",
+   "status": "pass"
+  },
+  {
+   "check": "lamina: 9 pixels presos fora da rampa deixam o material pendente",
+   "status": "pass",
+   "conflicts": 9
+  },
+  {
+   "check": "verify: contrato valido, e nao entregavel (material e aprovacao)",
+   "status": "pass"
+  },
+  {
+   "check": "corda sem cor declarada: inconclusiva, nada escrito",
+   "status": "pass"
+  },
+  {
+   "check": "corda: 30 claros conservados e 10 interrupcoes preenchidas",
+   "status": "pass"
+  },
+  {
+   "check": "corda: o contorno x=57 e o antebraco ficam iguais",
+   "status": "pass"
+  },
+  {
+   "check": "corda: cor fora da paleta recusada",
+   "status": "pass"
+  },
+  {
+   "check": "corda: miolo sobre a mao recusado",
+   "status": "pass"
+  },
+  {
+   "check": "forge manual: o tamanho que nao e o pedido fica escrito e invalida",
+   "status": "pass"
+  }
+ ]
+}

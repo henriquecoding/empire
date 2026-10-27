@@ -1,0 +1,14 @@
+{
+  "author_state": "rejected_by_Henrique_2026-10-27",
+  "usage": "offline_regression_fixtures_not_approved_art",
+  "files": {
+    "rei-before-colors.png": "78aa0d7ca5f27c880f2b70f5427040ad0f8137e93b642d6fca942e2828b49096",
+    "rei.png": "a5e8f2912177a56fa6e99b85f69ec73192a9f0f98a60f44c86d440a7d8cf1574",
+    "rei-colors-observation.json": "16f35661b129b66bb519bcbd7473d55983c6b303da6882b3beabf2705f23d02a",
+    "arqueiro.png": "24c7715cee7f76d0e8afb05319f532a2f4ac8c0db1123a5b6a158bc190e69c6b",
+    "escudeiro.png": "2c3282e84d03b4f778f62ff47ec62aeb18bcc817f87b8febd2329e0a782f516d",
+    "arqueiro-before-string.png": "94bd3508e8c2adcf0b7586a6af7b83ce96837aba05eb265b8e28066aad2a885d",
+    "arqueiro-regressed-string.png": "5688aade466adf251aefc2f86ce3766a44bcb4694017ae75a31af03ced75ad16",
+    "arqueiro-equipment-observation.json": "72a233a1b7b5032b011a6394b6aa998e38ddb2e76c68ade63159cb584951649e"
+  }
+}

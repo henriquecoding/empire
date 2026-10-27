@@ -25,6 +25,10 @@ A [auditoria de 26/10](research/2026-10-26-forja-auditoria/README.md) achou dez
 falhas (A01–A10) — a mais grave, uma ampliação exata medida na fase errada, que
 fazia uma prancha 10× sair "exata 2×" — e reparou-as com testes; a 27/10 aplicou o
 que ficara aberto (O1–O6) e mais duas falhas achadas pelo caminho (A11, A12).
+A [solução de 27/10](research/2026-10-27-forja-fidelidade/README.md), depois de o dono rejeitar o Rei, o Arqueiro e
+o Escudeiro, mudou a ordem: o desenho recupera-se antes de se proteger, e só se protege o mestre que o dono aprovou —
+cada referência tem autoridade registada, a edição local prende-se ao mestre e o encerramento não chama aprovação a uma
+evidência de ficheiro ([ADR 0093](../adr/0093-a-forja-protege-o-mestre-aprovado.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -82,9 +86,12 @@ forja prompt / plan ──► gerador (job) ──► forja forge / sheet ──
 
 1. `forja prompt "squire with a round wooden shield" --kind character_s1 --tags idle -o build/forja/escudeiro/pedido`
 2. Gerar a imagem no tamanho indicado (`size`) com o texto de `prompt.txt`,
-   anexando exatamente as imagens de `attach`, por essa ordem (o design
-   aprovado, se compilou com `--reference`, e a amostra da paleta quando ela não
-   cabe no texto). O prompt numera as imagens anexadas e não promete nenhuma
+   anexando exatamente as imagens de `attach`, por essa ordem (a referência, se
+   compilou com `--reference`, e a amostra da paleta quando ela não
+   cabe no texto). A referência leva o seu estado: sem registo, o prompt diz que a
+   aprovação não está registada; `--reference-state adaptation_in_review` ou
+   `concept` dizem-no; «APPROVED» só com `--refs registo.json --reference-file imagem.png`
+   e uma linha `approved` do dono. O prompt numera as imagens anexadas e não promete nenhuma
    outra; o molde `guide_layout.png` é opcional. A amostra da paleta não é
    enfeite: com as cores dela, quadros iguais saem iguais; sem ela, o ruído do
    gerador troca tons vizinhos de quadro para quadro. Se a resposta trouxer
@@ -210,7 +217,12 @@ regiões e as âncoras a 8×, para a revisão ver o que foi medido.
 da linha: não desenha por cima de um oclusor (reaproveita o pixel da própria
 linha), e um pixel que sai de cima de outra peça herda a cor dos vizinhos e fica
 registado como inferido. Depois julga outra vez com a observação reaplicada à
-imagem nova. É um candidato, não arte aprovada.
+imagem nova. É um candidato, não arte aprovada. A cor é **declarada** (`--color`,
+ou as `colors` do seletor da região) e vai para todo o pixel da linha final, salvo o
+que já é da família declarada; sem ela o reparo é `inconclusive` — com o miolo e o
+contorno na mesma seleção, a maioria era o preto. `--core`/`--core-box` separam o
+miolo, e o resto da região da linha (o contorno) fica protegido; `--mode fill` pinta o
+miolo tal como está, sem redesenhar o percurso (ADR 0093).
 
 Ordem que o relatório recomenda: aprovar a forma simples da arma e a mão antes do
 detalhe; reparar a menor unidade funcional inteira (a corda com as duas pontas, a
@@ -264,6 +276,13 @@ a leitura a 1× e no jogo é do dono. A prova do
 [arqueiro](research/2026-10-25-forja-pixels-cores/README.md#o-arqueiro-a-prova-pequena-da-22)
 é o exemplo completo.
 
+Com plano, o resultado diz também o **material**: um pixel preso fora da rampa da sua
+região (a lâmina cuja caixa apanha a mão) ou uma fronteira perdida deixa `material:
+pending`, mesmo com `ok` — revê-se o seletor, não se tira a proteção. E o banding
+(`banding.py`, a definição do *Pixel Fixer*, TU Delft 2025): dois segmentos de cores
+diferentes, 2+ px, vizinhos pelo lado comprido e com as pontas alinhadas, sem contorno
+nem vazio — suspeita, como os fragmentos, por calibrar (Q-283).
+
 A proteção (`--protect` no `forge` e no `sheet`) vale até ao PNG final: repõe-se
 depois da paleta e do contorno, o contorno não entra num pixel vazio protegido e a
 garantia mede-se nas posições finais — numa prancha, em cada quadro exportado, depois
@@ -271,6 +290,41 @@ do `--deflicker` (que não estabiliza um pixel protegido) e do `--lock`. Uma cor
 não tem fica exata e é o erro `protect_conflict`. `--colors N` com uma paleta dá
 N cores da própria paleta (as protegidas e o preto do contorno entram sempre); se
 não cabem, é o erro `colors_budget`.
+
+## Recuperar antes de proteger: autoridade, edição local e encerramento
+
+A [solução de 27/10](research/2026-10-27-forja-fidelidade/README.md) separa duas etapas que não usam o mesmo ciclo. A
+**recuperação** reconcilia o conceito com a grade (80×80 para o Rei e o Arqueiro, 64×64 para o Escudeiro): massas,
+rosto, materiais, equipamento — é desenho, e o que sai é uma adaptação em revisão. A **edição local** conserva um mestre
+já aprovado e muda só a zona autorizada. Proteger o último resultado rejeitado congelaria a descaracterização.
+
+1. **Registo de autoridade** (`forja.refs/1`, `forja refs`): o conceito, cada adaptação e cada versão rejeitada, pelo
+   hash dos pixels, com o estado (`concept`, `adaptation_in_review`, `approved`, `rejected`), a origem e de onde
+   deriva. `approved` e `rejected` dizem quem decidiu e quando; a Forja acrescenta estados e **nunca escreve
+   `approved`** — é uma linha do dono, à mão. A última saída não substitui a referência só por ser mais recente.
+2. **O pedido diz o estado.** `plan`/`auto` com `--refs`: só o mestre registado vai como «the APPROVED design»; a
+   adaptação em revisão diz «IN REVIEW and NOT approved»; `--concept` anexa o conceito de autoridade (o rosto, as
+   proporções e os materiais a redesenhar na grade); uma rejeitada, ou uma fora do registo dado, não entra. O plano diz
+   a fase (`authority.stage`: `recovery` ou `from_master`).
+3. **O que chega confere-se nos dois caminhos.** O `forge` e o `sheet` com `--expect` fazem a conta do `auto`
+   (`expectation.py`): um tamanho que não é o pedido invalida o contrato e fica escrito em `expectation`; um pedido
+   nativo só é lido a 1× com o tamanho certo.
+4. **A edição local parte do mestre.** `forja inpaint --refs` recusa uma versão rejeitada e o conceito **antes** do
+   pedido pago; o resultado leva o estado e o hash do mestre e `delivery` (o que falta). Um retorno noutro tamanho para
+   a tentativa (`stopped: size_mismatch`, com o job): repete-se só a zona, nunca o personagem inteiro.
+5. **O encerramento só lê.** `forja verify candidato.png --master mestre.png --box … --protect … --kind … [--refs …]
+   [--cores …] [--equip …]` repete a prova contra o mestre depois de qualquer acabamento e responde às quatro condições:
+   corresponde ao conceito, contrato e materiais, preservado fora da mudança, revisão registada. `ok` diz que nada
+   falhou no que se mediu; `deliverable` só com a aprovação do dono **desta imagem exata** no registo — um pixel mudado e
+   volta a pendente. Um eixo `not_evaluated` nunca fecha.
+
+```bash
+forja refs registo.json --add rei-v3.png --state adaptation_in_review --origin "conceito + mao" --by Claude
+forja inpaint arqueiro-mestre.png --refs registo.json --mask arco-e-mao.png --protect 38,23,49,38 \
+  --method replace --palette empire --change "Repair only the bow and grip inside the mask." --max-calls 1 -o cand.png
+forja verify cand.png --master arqueiro-mestre.png --mask arco-e-mao.png --protect 38,23,49,38 --kind royal_80 \
+  --refs registo.json
+```
 
 ## Receitas por tipo de asset
 
@@ -325,7 +379,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   chapéu velho no guia do PixelLab), `replace` manda na zona, `remove` tem de
   tirar tudo o que lá estava. `--protect x0,y0,x1,y1` recusa uma zona que toque
   essa caixa. As máscaras seguem a convenção de cada gerador (OpenAI: alfa 0
-  edita; PixelLab: branco gera, preto preserva).
+  edita; PixelLab: branco gera, preto preserva). Com `--refs`, só sobre um mestre ou
+  uma adaptação registada; um tamanho errado para a tentativa; depois, `forja verify`.
 - **Corda, fio, vazio entre partes.** O contorno global engrossa uma linha de
   1 px para 3 e fecha um vazio de 2 px. `forge --bare x0,y0,x1,y1` (no recorte
   nativo) declara uma zona onde o contorno não entra e que o lint não conta na
@@ -367,7 +422,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `tileset` / `seams` | Conjunto Wang 16 + TileSet do Godot; conferir emendas |
 | `palette` | Mostrar, converter, extrair, rampa, fundir cores próximas |
 | `prompt` / `plan` / `generate` / `auto` / `inpaint` | O lado do gerador: pedir, planear sem rede, gerar com job e teto |
-| `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara |
+| `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara, na cor declarada |
+| `refs` / `verify` | O registo de autoridade das referências; reconferir um candidato contra o mestre, só a ler, e dizer se a entrega fecha |
 | `cores` | A cor no espaço: fragmentos N4/N8 e o estado de cada um; com plano, rampas por material e agrupamento só nas regiões editáveis |
 | `jobs` | Pedidos pagos de uma pasta: ver, retomar (só consulta), cancelar |
 | `prova` / `mcp` / `kinds` | A prova, o servidor MCP, os contratos |
@@ -406,7 +462,9 @@ ficheiro que não é imagem).
 
 - Uma imagem forjada é **adaptação de imagem gerada**. A proveniência grava a
   entrada, o prompt, o gerador e os parâmetros, com `artistic_approval: false`
-  e `manual_review: pendente`. Cumprir o contrato não é aprovação artística.
+  e `manual_review: pendente`. Cumprir o contrato não é aprovação artística: as cinco
+  fixtures rejeitadas de 27/10 passam no lint. A aprovação vem só do registo do dono
+  (`forja.refs/1`), para a imagem exata, e é o que o `verify` lê.
 - A Forja escreve onde lhe dizem; use `build/forja/`. Não escreve em `art/`
   sem pedido explícito do dono (AGENTS.md, regra 9).
 - O `.aseprite` foi conferido como ficheiro (ida e volta pixel a pixel); não
@@ -439,7 +497,8 @@ ficheiro que não é imagem).
   `not_evaluated`. A identidade (mesmo personagem, mesmo objeto da referência) e a
   continuidade no tempo (arma que troca de mão, peça que some entre quadros com
   equipamento) ainda não têm verificação: continuam a olho, quadro a quadro.
-- O diagnóstico de cor não vê planos de luz, banding, rampas nem curvas, e não
+- O diagnóstico de cor não vê planos de luz, rampas nem curvas (o banding, desde
+  27/10, conta-se como suspeita), e não
   sabe o que é intencional sem uma região anotada: `review` é suspeita. As
   anotações da prova do arqueiro são do agente; as do dono são as que contam
   (Q-281). Os efeitos (`fx`) ficam `not_evaluated` até haver política para eles.

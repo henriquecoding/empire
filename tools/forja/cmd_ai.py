@@ -1,14 +1,15 @@
-"""Subcomandos com gerador: prompt, plan, generate, auto (ciclo fechado), inpaint; e prova e mcp."""
+"""Subcomandos com gerador: prompt, plan, generate, auto (ciclo fechado); e prova e mcp. O inpaint esta em cmd_local."""
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-from . import auto, backends, contracts, guides, jobs, palette as palmod, plan as plan_mod, prompts, sheetforge
-from .cli import box, command, out_path
-from .imageops import open_rgba
+from . import auto, backends, contracts, guides, jobs, palette as palmod, plan as plan_mod, prompts, refs, sheetforge
+from .cli import command
 
 BACKENDS = plan_mod.BACKENDS
+LABELS = {"identity": "o mestre aprovado", "identity_review": "a adaptacao em revisao",
+          "identity_unrecorded": "a referencia (aprovacao nao registada)", "concept": "o conceito de autoridade"}
 
 
 def _palette(args, kind: str) -> palmod.Palette | None:
@@ -17,11 +18,27 @@ def _palette(args, kind: str) -> palmod.Palette | None:
     return palmod.load(args.palette or palmod.ROOT / contracts.get(kind).palette)
 
 
+def _reference(args) -> bool | str:
+    """O papel da referencia que o agente vai anexar. So o registo do dono diz `approved` (FORJA-06)."""
+    if args.reference_file:
+        if not args.refs:
+            raise ValueError("--reference-file pede --refs: o estado da referencia vem do registo")
+        role, _, error = refs.resolve("identity", Path(args.reference_file).read_bytes(), refs.load(args.refs))
+        if error:
+            raise ValueError(error)
+        return role
+    if args.reference_state == "approved":
+        raise ValueError("aprovado so pelo registo do dono: --refs registo.json --reference-file imagem.png")
+    if not args.reference and args.reference_state == refs.UNRECORDED:
+        return False
+    return refs.PROMPT_ROLE[args.reference_state]
+
+
 def do_prompt(args) -> dict:
     """Sem gerador ligado: o prompt, o expect.json e as guias, na ordem em que se anexam."""
     tags = sheetforge.parse_tags(args.tags)
     pal = _palette(args, args.kind)
-    res = prompts.build(args.subject, args.kind, tags, args.facing, args.reference, pal, args.target,
+    res = prompts.build(args.subject, args.kind, tags, args.facing, _reference(args), pal, args.target,
                         args.background)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -30,7 +47,7 @@ def do_prompt(args) -> dict:
     (out / "pixellab.json").write_text(json.dumps(res["pixellab"], indent=1) + "\n", encoding="utf-8")
     c = contracts.get(args.kind)
     files = guides.write(out, res["expect"], pal, c.pivot[1] // c.cluster if c.pivot else None)
-    attach = ["o design aprovado" if r == "identity" else files[r] for r in res["expect"]["attached"]]
+    attach = [LABELS[r] if r in LABELS else files[r] for r in res["expect"]["attached"]]
     return {"ok": not res["conflicts"], "conflicts": res["conflicts"], "prompt": res["prompt"], "size": res["size"],
             "expect": res["expect"], "advice": res["advice"], "attach": attach,
             "files": {"prompt": str(out / "prompt.txt"), "expect": str(out / "expect.json"),
@@ -43,10 +60,12 @@ def do_prompt(args) -> dict:
 
 def _plan(args) -> plan_mod.Plan:
     opt = lambda name, default=None: getattr(args, name, default)  # noqa: E731 (chamadores antigos da API)
-    refs = [("identity", r) for r in args.reference or []] + [("style", r) for r in opt("style_reference") or []]
+    given = ([("identity", r) for r in args.reference or []] + [("concept", r) for r in opt("concept") or []]
+             + [("style", r) for r in opt("style_reference") or []])
     return plan_mod.make(args.backend, args.subject, args.kind, sheetforge.parse_tags(args.tags), args.facing,
-                         refs, _palette(args, args.kind), args.model, opt("guides", "auto"), "auto",
-                         opt("init_strength"), opt("seed"), opt("image_size"))
+                         given, _palette(args, args.kind), args.model, opt("guides", "auto"), "auto",
+                         opt("init_strength"), opt("seed"), opt("image_size"),
+                         refs.load(opt("refs")) if opt("refs") else None)
 
 
 def do_plan(args) -> dict:
@@ -105,22 +124,6 @@ def do_auto(args, transport=None, **kw) -> dict:
     return auto.run(p, out, args.attempts, budget, args.palette, transport, **kw)
 
 
-def do_inpaint(args) -> dict:
-    from . import inpaint, masks
-    native = open_rgba(args.image)
-    pal = palmod.load(args.palette) if args.palette else None
-    refs = [Path(r).read_bytes() for r in args.reference or []]
-    region = masks.select(native, {"mask": args.mask}) if getattr(args, "mask", None) else None
-    protect = frozenset().union(*[masks.box(b, native.size) for b in getattr(args, "protect", None) or []])
-    out = out_path(args.out, Path(args.image).with_name(Path(args.image).stem + "_edit.png"))
-    budget = jobs.Budget.open(out.parent, args.max_calls, args.max_usd)
-    result, info = inpaint.run(native, args.box, args.change, pal, refs, model=args.model, folder=out.parent,
-                               budget=budget, region=region, method=getattr(args, "method", "replace"),
-                               protect=protect)
-    result.save(out)
-    return {"ok": info["ok"], "out": str(out), **info}
-
-
 def do_prova(args) -> dict:
     from . import prova
     if args.bench:
@@ -141,7 +144,11 @@ def _planned(p) -> None:
     p.add_argument("--kind", default="character_s2", choices=contracts.kinds())
     p.add_argument("--tags")
     p.add_argument("--facing", default="right", choices=("right", "left"))
-    p.add_argument("--reference", nargs="*", help="design aprovado (papel identidade)")
+    p.add_argument("--reference", nargs="*", help="referencia de identidade; o estado (aprovado, em revisao) vem "
+                   "de --refs")
+    p.add_argument("--concept", nargs="*", help="conceito de autoridade (fora da grade): o rosto e as proporcoes a "
+                   "recuperar")
+    p.add_argument("--refs", help="registo forja.refs/1: o estado de cada referencia, pelo hash dos pixels")
     p.add_argument("--style-reference", nargs="*", help="referencia de estilo (so onde o modelo a aceita)")
     p.add_argument("--palette")
     p.add_argument("--model")
@@ -164,7 +171,11 @@ def register(sub) -> None:
     p.add_argument("--kind", default="character_s2", choices=contracts.kinds())
     p.add_argument("--tags", help="animacao: 'walk' ou 'idle,walk' ou 'attack:5'")
     p.add_argument("--facing", default="right", choices=("right", "left"))
-    p.add_argument("--reference", action="store_true", help="vai anexar o design aprovado")
+    p.add_argument("--reference", action="store_true", help="vai anexar uma referencia de identidade")
+    p.add_argument("--reference-state", default=refs.UNRECORDED, choices=(refs.UNRECORDED, "concept",
+                   "adaptation_in_review", "approved"), help="o estado dela; approved so com --refs e --reference-file")
+    p.add_argument("--refs", help="registo forja.refs/1 (com --reference-file: o estado sai dele)")
+    p.add_argument("--reference-file", help="a imagem que vai anexada, conferida no registo")
     p.add_argument("--target", default="gpt-image", choices=prompts.TARGETS)
     p.add_argument("--background", default="auto", choices=("auto", "transparent", "key"))
     p.add_argument("--palette")
@@ -188,21 +199,6 @@ def register(sub) -> None:
     _planned(p)
     p.add_argument("--attempts", type=int, default=3)
     _spend(p, None)
-    p = command(sub, "inpaint", "Mudar so uma caixa ou mascara do sprite com o gpt-image; fora dela, pixels identicos",
-                do_inpaint)
-    p.add_argument("image")
-    p.add_argument("--box", type=box)
-    p.add_argument("--mask", help="PNG do tamanho do sprite: a zona a editar sao os pixels opacos, ou os claros se a "
-                   "mascara nao tem transparencia (em vez de --box)")
-    p.add_argument("--method", default="replace", choices=("add", "replace", "remove"),
-                   help="add so acrescenta; replace manda na zona, transparencia incluida; remove tira o que la estava")
-    p.add_argument("--protect", type=box, action="append", help="caixa que nao pode mudar (repetivel)")
-    p.add_argument("--change", required=True, help="o que mudar dentro da caixa")
-    p.add_argument("--palette")
-    p.add_argument("--reference", nargs="*")
-    p.add_argument("--model")
-    p.add_argument("-o", "--out")
-    _spend(p, 1)
     p = command(sub, "prova", "A prova da Forja: pixel art falsa fabricada, recuperada e conferida", do_prova)
     p.add_argument("-o", "--out", help="pasta para guardar as imagens da prova")
     p.add_argument("--bench", type=int, help="em vez da prova: bancada pesada com N casos sorteados (lenta)")

@@ -35,6 +35,18 @@
   ],
   "note": "pixels inferidos: a cor da peca vizinha, porque o que estava por baixo da linha nao se ve"
  },
+ "paint": {
+  "mode": "reroute",
+  "source": "observation",
+  "colors": [
+   "#E5D395",
+   "#F2DEB7"
+  ],
+  "core": "bow_main.string",
+  "core_pixels": 78,
+  "outline_protected": 0,
+  "repainted": 0
+ },
  "compose": {
   "method": "replace",
   "editable_pixels": 83,
