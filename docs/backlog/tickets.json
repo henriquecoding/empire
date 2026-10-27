@@ -3127,5 +3127,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-06": {
+  "title": "Recuperar antes de proteger: autoridade das referências, edição presa ao mestre e encerramento",
+  "porque": "O dono rejeitou o Rei, o Arqueiro e o Escudeiro e mandou implementar a solução de 27/10: a Forja protegia o ficheiro mais recente, chamava APPROVED a qualquer referência, deixava a maioria decidir a cor da corda e dava ok com conflitos de material.",
+  "spec": [
+   "docs/art/research/2026-10-27-forja-fidelidade/SOLUCAO.md",
+   "docs/art/research/2026-10-27-forja-fidelidade/README.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-05",
+  "feito": "Registo de autoridade forja.refs/1 e prompt que nomeia o estado (só o mestre registado é APPROVED); a mesma conta de pedido e retorno no auto e no forge/sheet manuais; inpaint preso ao mestre, que recusa o rejeitado antes do pedido e para num tamanho errado com o job guardado; verify só a ler; corda com miolo, contorno e cor declarados, inconclusiva sem cor; material pendente com pixels presos fora da rampa; encerramento com as quatro condições e a aprovação só pelo registo do dono; banding como suspeita (Pixel Fixer, TU Delft 2025); prova reproduzível com as fixtures rejeitadas e pesquisa complementar com fontes.",
+  "fora": "Redesenhar os rostos (desenho do mestre), chamadas pagas, a conversão guiada do PixelLab, aprovação artística, arte em art/.",
+  "estado": "feito — as seis etapas do §7 da solução de 27/10, com testes, a prova reproduzível e a pesquisa complementar; a recuperação dos rostos do Rei, do Arqueiro e do Escudeiro (desenho) por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

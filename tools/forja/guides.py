@@ -63,6 +63,16 @@ def palette_swatch(palette: Palette, cell: int = 48, columns: int = 8) -> Image.
     return swatch(palette, columns=columns, cell=cell)
 
 
+def color_image(palette: Palette) -> Image.Image:
+    """A paleta como o `color_image` do PixelLab: quadrados de 4x4, 16 por linha, sem texto."""
+    cols = min(16, len(palette))
+    img = Image.new("RGBA", (cols * 4, -(-len(palette) // cols) * 4), (0, 0, 0, 0))
+    for i, rgb in enumerate(palette.colors):
+        x, y = i % cols * 4, i // cols * 4
+        img.paste((*rgb, 255), (x, y, x + 4, y + 4))
+    return img
+
+
 def write(out_dir: str | Path, expect: dict, palette: Palette | None, pivot_row: int | None) -> dict:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)

@@ -469,6 +469,15 @@
   }
  },
  "ok": true,
+ "material": {
+  "status": "pending",
+  "conflicts": 52,
+  "regions": [
+   "lines"
+  ],
+  "separation_lost": [],
+  "next": "rever os seletores: separar as regioes que se sobrepoem ao que esta preso"
+ },
  "remaining": [
   {
    "at": [24, 20],
@@ -1423,6 +1432,30 @@
    "reason": "fragmento de cor sem papel declarado"
   }
  ],
+ "banding": {
+  "before": {
+   "pairs": 18,
+   "horizontal": 7,
+   "vertical": 11,
+   "by_region": {"hood": 0, "tunic": 0, "face": 4, "eye": 0, "mouth": 0, "quiver": 2, "arm_back": 1, "arm_front": 1, "strap_belt": 6, "buckle": 0, "trousers": 0, "boots": 2, "bow_main.string": 0, "bow_main.limb": 0, "bow_main.grip": 0, "hand_front": 1, "forearm_front": 0, "lines": 3, "bow_zone": 2},
+   "examples": [{"axis": "horizontal", "at": [29, 26], "length": 2, "colors": ["#8C501C", "#763728"]}, {"axis": "horizontal", "at": [39, 29], "length": 2, "colors": ["#0B0B0B", "#899543"]}, {"axis": "horizontal", "at": [24, 31], "length": 2, "colors": ["#763728", "#4F2E10"]}, {"axis": "horizontal", "at": [38, 38], "length": 2, "colors": ["#FFB416", "#4F2E10"]}, {"axis": "horizontal", "at": [38, 40], "length": 2, "colors": ["#4F2E10", "#FFB416"]}, {"axis": "horizontal", "at": [69, 41], "length": 2, "colors": ["#EAA55A", "#0B0B0B"]}, {"axis": "horizontal", "at": [69, 42], "length": 2, "colors": ["#0B0B0B", "#EAA55A"]}, {"axis": "vertical", "at": [25, 74], "length": 3, "colors": ["#915F46", "#946934"]}, {"axis": "vertical", "at": [31, 36], "length": 3, "colors": ["#D2A262", "#FFE2AA"]}, {"axis": "vertical", "at": [37, 39], "length": 2, "colors": ["#FFB416", "#4F2E10"]}, {"axis": "vertical", "at": [38, 48], "length": 2, "colors": ["#7D4433", "#763728"]}, {"axis": "vertical", "at": [39, 39], "length": 2, "colors": ["#4F2E10", "#FFB416"]}, {"axis": "vertical", "at": [39, 48], "length": 2, "colors": ["#763728", "#452D21"]}, {"axis": "vertical", "at": [40, 15], "length": 3, "colors": ["#763728", "#EAA55A"]}, {"axis": "vertical", "at": [44, 10], "length": 2, "colors": ["#0B0B0B", "#6C3206"]}, {"axis": "vertical", "at": [45, 10], "length": 2, "colors": ["#6C3206", "#763728"]}, {"axis": "vertical", "at": [46, 68], "length": 2, "colors": ["#7D4433", "#946934"]}, {"axis": "vertical", "at": [54, 45], "length": 2, "colors": ["#D2A262", "#C9AD77"]}],
+   "status": "review",
+   "rule": "dois segmentos de cores diferentes com 2+ px, vizinhos pelo lado comprido e com as duas pontas alinhadas (sem contorno nem vazio)",
+   "source": "Bites, Eisemann, Kellnhofer, Molenaar: Pixel Fixer (TU Delft, 2025), banding entre segmentos alinhados",
+   "note": "suspeita para rever a 1x: uma faixa pode ser de proposito; nada foi mudado"
+  },
+  "after": {
+   "pairs": 18,
+   "horizontal": 7,
+   "vertical": 11,
+   "by_region": {"hood": 0, "tunic": 0, "face": 4, "eye": 0, "mouth": 0, "quiver": 2, "arm_back": 1, "arm_front": 1, "strap_belt": 6, "buckle": 0, "trousers": 0, "boots": 2, "bow_main.string": 0, "bow_main.limb": 0, "bow_main.grip": 0, "hand_front": 1, "forearm_front": 0, "lines": 3, "bow_zone": 2},
+   "examples": [{"axis": "horizontal", "at": [29, 26], "length": 2, "colors": ["#8C501C", "#763728"]}, {"axis": "horizontal", "at": [39, 29], "length": 2, "colors": ["#0B0B0B", "#899543"]}, {"axis": "horizontal", "at": [24, 31], "length": 2, "colors": ["#763728", "#4F2E10"]}, {"axis": "horizontal", "at": [38, 38], "length": 2, "colors": ["#FFB416", "#4F2E10"]}, {"axis": "horizontal", "at": [38, 40], "length": 2, "colors": ["#4F2E10", "#FFB416"]}, {"axis": "horizontal", "at": [69, 41], "length": 2, "colors": ["#EAA55A", "#0B0B0B"]}, {"axis": "horizontal", "at": [69, 42], "length": 2, "colors": ["#0B0B0B", "#EAA55A"]}, {"axis": "vertical", "at": [25, 74], "length": 3, "colors": ["#915F46", "#946934"]}, {"axis": "vertical", "at": [31, 36], "length": 3, "colors": ["#D2A262", "#FFE2AA"]}, {"axis": "vertical", "at": [37, 39], "length": 2, "colors": ["#FFB416", "#4F2E10"]}, {"axis": "vertical", "at": [38, 48], "length": 2, "colors": ["#7D4433", "#763728"]}, {"axis": "vertical", "at": [39, 39], "length": 2, "colors": ["#4F2E10", "#FFB416"]}, {"axis": "vertical", "at": [39, 48], "length": 2, "colors": ["#763728", "#452D21"]}, {"axis": "vertical", "at": [40, 15], "length": 3, "colors": ["#763728", "#EAA55A"]}, {"axis": "vertical", "at": [44, 10], "length": 2, "colors": ["#0B0B0B", "#6C3206"]}, {"axis": "vertical", "at": [45, 10], "length": 2, "colors": ["#6C3206", "#763728"]}, {"axis": "vertical", "at": [46, 68], "length": 2, "colors": ["#7D4433", "#946934"]}, {"axis": "vertical", "at": [54, 45], "length": 2, "colors": ["#D2A262", "#C9AD77"]}],
+   "status": "review",
+   "rule": "dois segmentos de cores diferentes com 2+ px, vizinhos pelo lado comprido e com as duas pontas alinhadas (sem contorno nem vazio)",
+   "source": "Bites, Eisemann, Kellnhofer, Molenaar: Pixel Fixer (TU Delft, 2025), banding entre segmentos alinhados",
+   "note": "suspeita para rever a 1x: uma faixa pode ser de proposito; nada foi mudado"
+  }
+ },
  "not_measured": [
   "planos de luz e sombra (se a cor explica o volume)",
   "banding (faixas que repetem a borda)",

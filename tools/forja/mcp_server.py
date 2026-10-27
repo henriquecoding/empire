@@ -36,9 +36,11 @@ INSTRUCTIONS = (
     "needs_regeneration) e prompt_feedback; se needs_regeneration, gera de novo com o prompt corrigido; (5) com armas "
     "ou equipamento, forja_equip (manifesto e observacao marcada na imagem): o lint nao ve a arma, e o que nao foi "
     "observado fica not_evaluated; forja_line refaz uma corda so na mascara; (6) forja_cores ve a cor no espaco "
-    "(fragmentos de 1-3 px: review e suspeita, nao defeito) e, com plano, agrupa so nas regioes editaveis. A aprovacao "
-    "artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do "
-    "dono; usar build/forja/. Ler docs/art/FORJA.md.")
+    "(fragmentos de 1-3 px: review e suspeita, nao defeito) e, com plano, agrupa so nas regioes editaveis; (7) uma "
+    "referencia tem estado no registo forja_refs (so o mestre que o dono aprovou e APPROVED); a edicao local e "
+    "forja_inpaint com --refs (recusa o rejeitado antes do pedido) e fecha com forja_verify contra o mestre, so a "
+    "ler. A aprovacao artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ "
+    "sem pedido do dono; usar build/forja/. Ler docs/art/FORJA.md.")
 
 
 def _schema(parser: argparse.ArgumentParser) -> dict:

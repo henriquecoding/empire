@@ -1,0 +1,114 @@
+{
+  "schema": "forja.observation/1",
+  "image_sha256": "7e80233fbf432e984e098b21f9a964f37f0e5206eed57eeb745eba23194f2220",
+  "observer": {
+    "author": "Codex",
+    "method": "Marcação visual por caixa e material na imagem nativa e ampliada; rostos e equipamento protegidos",
+    "date": "2026-10-26"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        24,
+        12,
+        53,
+        41
+      ],
+      "uncertainty": "baixa",
+      "material": "rosto"
+    },
+    "hand_back": {
+      "box": [
+        16,
+        54,
+        26,
+        65
+      ],
+      "uncertainty": "baixa",
+      "material": "pele"
+    },
+    "hand_front": {
+      "box": [
+        55,
+        50,
+        64,
+        60
+      ],
+      "uncertainty": "baixa",
+      "material": "pele"
+    },
+    "sword_hilt": {
+      "box": [
+        16,
+        54,
+        28,
+        67
+      ],
+      "uncertainty": "baixa",
+      "material": "metal e mão"
+    },
+    "cape": {
+      "box": [
+        3,
+        35,
+        55,
+        73
+      ],
+      "uncertainty": "baixa",
+      "colors": [
+        "#222034",
+        "#3D4059",
+        "#3A2C32",
+        "#5A3A3B"
+      ],
+      "material": "tecido azul"
+    },
+    "tunic": {
+      "box": [
+        30,
+        41,
+        63,
+        68
+      ],
+      "uncertainty": "baixa",
+      "colors": [
+        "#763728",
+        "#5A3A3B",
+        "#3A2C32"
+      ],
+      "material": "tecido vinho"
+    },
+    "sleeve": {
+      "box": [
+        17,
+        41,
+        35,
+        60
+      ],
+      "uncertainty": "baixa",
+      "colors": [
+        "#FBECC3",
+        "#E3D7BC",
+        "#E1BEA0",
+        "#FFE2AA"
+      ],
+      "material": "linho"
+    },
+    "blade": {
+      "box": [
+        24,
+        63,
+        39,
+        78
+      ],
+      "uncertainty": "baixa",
+      "colors": [
+        "#F0F0F0",
+        "#E1BEA0",
+        "#E2DFE6"
+      ],
+      "material": "aco"
+    }
+  },
+  "anchors": {}
+}

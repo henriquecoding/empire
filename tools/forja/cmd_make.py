@@ -6,9 +6,9 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import anim, aseprite, contracts, godot, motion, palette as palmod, review, sheetforge, tiles
+from . import anim, aseprite, contracts, expectation, godot, motion, palette as palmod, review, sheetforge, tiles
 from .cli import box, command, out_path, pair
-from .cmd_image import _options, common
+from .cmd_image import _options, common, expected
 from .imageops import open_rgba
 from .placement import ALIGNS
 
@@ -19,12 +19,11 @@ def do_sheet(args) -> dict:
     tags = sheetforge.parse_tags(args.tags)
     region = None
     if args.expect:
-        from .auto import region as content_region
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         layout = layout or tuple(exp["layout"])
         tags = tags or ([tuple(t) for t in exp["tags"]] if exp.get("tags") else None)
         with Image.open(args.image) as im:
-            region = content_region(exp, list(im.size)) if exp.get("content") else None
+            region = expectation.region(exp, list(im.size)) if exp.get("content") else None
     sopts = sheetforge.SheetOptions(tags=tags, layout=layout, anchor=args.anchor, same_height=args.same_height,
                                     deflicker=args.deflicker, static=args.static, actions=args.action,
                                     lock=args.lock, mirror=args.mirror,
@@ -32,8 +31,13 @@ def do_sheet(args) -> dict:
                                     holds=review.parse_holds(args.hold))
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
     res = sheetforge.forge_sheet(args.image, args.out, opts, sopts, args.name, prompt, args.generator)
-    return {k: res[k] for k in ("ok", "review", "summary", "requested", "found", "files", "metrics",
-                                "prompt_feedback", "pivot", "canvas", "tags", "holds", "stray_blobs")}
+    cmp = expected(args, res, expectation.from_period(res["frames"]))
+    if cmp:
+        res["review"] = expectation.mark(res["review"], cmp)
+        res["ok"] = res["ok"] and not cmp["hard"]
+    return {**{k: res[k] for k in ("ok", "review", "summary", "requested", "found", "files", "metrics",
+                                   "prompt_feedback", "pivot", "canvas", "tags", "holds", "stray_blobs")},
+            "expectation": cmp}
 
 
 def do_anim(args) -> dict:

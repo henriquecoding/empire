@@ -30,6 +30,10 @@ from .palette import Palette, from_image
 _EXTRA = tuple("#%02X%02X%02X" % c for c in itertools.product((0, 128, 255), repeat=3))
 
 
+class SizeMismatch(ValueError):
+    """A edicao voltou noutro tamanho: a tentativa para (FORJA-06). Nao e motivo para redesenhar o personagem."""
+
+
 def key_for(colors: list[tuple[int, int, int]]) -> tuple[str, float]:
     """A cor de chave mais longe de todas as cores dadas, e essa distancia (OKLab)."""
     used = list(dict.fromkeys(colors))
@@ -83,8 +87,8 @@ def merge(native: Image.Image, result: Image.Image, k: int, box: tuple[int, int,
     native = native.convert("RGBA")
     want = (native.width * k, native.height * k)
     if result.size != want:
-        raise ValueError(f"a edicao voltou com {result.size[0]}x{result.size[1]}, pedida {want[0]}x{want[1]}: "
-                         "nao se estica nem se adivinha a grade")
+        raise SizeMismatch(f"a edicao voltou com {result.size[0]}x{result.size[1]}, pedida {want[0]}x{want[1]}: "
+                           "nao se estica nem se adivinha a grade")
     sampled = resample.resample(result.convert("RGBA"), gridmod.known(result.size, k), "dominant").image
     alpha_mode = any(p[3] < 255 for p in flat(sampled))
     if alpha_mode:
@@ -118,7 +122,10 @@ def run(native: Image.Image, box: tuple[int, int, int, int] | None, change: str,
         references: list[bytes] | None = None, transport=None, model: str | None = None,
         folder=None, budget=None, region=None, method: str = "replace", protect=frozenset(),
         old=frozenset()) -> tuple[Image.Image, dict]:
-    """Com o gpt-image: pede a edicao (job duravel) e devolve o sprite com so a zona mudada."""
+    """Com o gpt-image: pede a edicao (job duravel) e devolve o sprite com so a zona mudada.
+
+    A mascara que toca uma zona protegida e recusada antes do pedido. Uma resposta noutro tamanho para a tentativa
+    e devolve (None, relatorio) com o job: a imagem paga fica guardada, e o passo seguinte e repetir so a zona."""
     from .backends import openai_images
     compose.refuse_protected(editable(native, box, region), protect)
     image, mask, k, size, key = prepare(native, box, palette=palette, region=region)
@@ -127,7 +134,13 @@ def run(native: Image.Image, box: tuple[int, int, int, int] | None, change: str,
                                 model=model, transport=transport, folder=folder, budget=budget, roles=roles)
     with Image.open(io.BytesIO(answer["images"][0])) as im:
         result = im.convert("RGBA")
-    out, info = merge(native, result, k, box, palette, key, region, method, protect, old)
+    try:
+        out, info = merge(native, result, k, box, palette, key, region, method, protect, old)
+    except SizeMismatch as err:
+        return None, {"ok": False, "stopped": "size_mismatch", "error": str(err), "scale": k, "sent": size,
+                      "model": answer["model"], "job": answer["job"]["id"],
+                      "next": "repita so a zona (o mesmo mestre e a mesma mascara) ou repare-a a mao; um tamanho "
+                              "errado nao e motivo para gerar o personagem inteiro outra vez"}
     info["key_distance"] = key_for(_used(native, palette))[1]
     info["model"], info["job"] = answer["model"], answer["job"]["id"]
     return out, info

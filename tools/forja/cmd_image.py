@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import cleanup, contracts, gridcheck, lint, outline, palette as palmod, pipeline
+from . import cleanup, contracts, expectation, gridcheck, lint, outline, palette as palmod, pipeline
 from . import quantize, resample, scale
 from .cli import box, command, out_path, pair
 from .imageops import binarize, open_rgba, upscale
@@ -23,7 +23,9 @@ def _options(args) -> pipeline.Options:
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
-        if exp.get("grid") == "native" and not (opts.scale or opts.cells):
+        with Image.open(args.image) as im:
+            received = im.size
+        if expectation.native(exp, received) and not (opts.scale or opts.cells):
             opts.scale = 1.0
         # grade so pedida por palavras (F03): deteta-se; a escala pedida fica para comparar, nao se assume
         if exp.get("background", "transparent") != "transparent" and not opts.bg:
@@ -63,11 +65,26 @@ def do_snap(args) -> dict:
     return {"ok": True, "out": str(out), "grid": g.as_dict(), "sample": sampled.as_dict()}
 
 
+def expected(args, res: dict, detected: float | None) -> dict | None:
+    """Com --expect, o confronto do pedido com o que chegou (FORJA-06), escrito tambem no JSON do resultado."""
+    if not getattr(args, "expect", None):
+        return None
+    exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
+    with Image.open(args.image) as im:
+        cmp = expectation.compare(exp, im.size, detected)
+    path = Path(res["files"].get("json") or res["files"]["forja_json"])
+    path.write_text(json.dumps({**json.loads(path.read_text(encoding="utf-8")), "expectation": cmp}, indent=1,
+                               ensure_ascii=False) + "\n", encoding="utf-8")
+    return cmp
+
+
 def do_forge(args) -> dict:
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
     res = pipeline.forge(args.image, args.out, _options(args), args.name, prompt, args.generator, args.aseprite)
-    return {"ok": res["lint"]["ok"], "files": res["files"], "lint": {k: res["lint"][k] for k in
-            ("errors", "warnings", "prompt_feedback")}, "findings": res["lint"]["findings"],
+    cmp = expected(args, res, res["snap"]["grid"]["period"][0])
+    return {"ok": res["lint"]["ok"] and not (cmp and cmp["hard"]), "files": res["files"],
+            "lint": {k: res["lint"][k] for k in ("errors", "warnings", "prompt_feedback")},
+            "findings": res["lint"]["findings"], "expectation": cmp,
             "grid": res["snap"]["grid"], "native_size": res["snap"]["native_size"], "fit": res["finish"].get("fit")}
 
 

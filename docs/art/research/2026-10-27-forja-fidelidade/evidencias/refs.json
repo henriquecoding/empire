@@ -1,0 +1,20 @@
+{
+ "schema": "forja.refs/1",
+ "entries": [
+  {
+   "id": "rei-v2",
+   "file": "../fixtures/rei.png",
+   "state": "rejected",
+   "pixels_sha256": "89b78b0113a664b64f11c798c5c8d9dda03477457d8776330f3dd035576e2be0",
+   "decided_by": "Henrique",
+   "date": "2026-10-27",
+   "reason": "fixture rejeitada (SOLUCAO.md)"
+  },
+  {
+   "id": "arqueiro-v2",
+   "file": "../fixtures/arqueiro.png",
+   "state": "adaptation_in_review",
+   "pixels_sha256": "a779435b6af1b1e4a4bedc3e9fbf8227e9faeaa72b89f686b43bbc50bb76b92e"
+  }
+ ]
+}

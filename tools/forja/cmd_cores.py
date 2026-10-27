@@ -5,13 +5,16 @@ Sem plano so diagnostica: componentes de cor com 4 e 8 vizinhos, fragmentos de 1
 agrupamento com prova local (materials.py) e escreve o candidato a 1x e ampliado, o antes/depois/diferencas, as
 zonas presas e editaveis, as metricas por regiao e o que ficou por resolver. E uma proposta: a leitura a 1x, no
 jogo, e a aprovacao artistica sao do autor.
+
+FORJA-06: o resultado diz o estado do material (`pending` com um pixel preso fora da rampa, mesmo com `ok`) e, antes e
+depois, os pares em banding (banding.py) — suspeita, como os fragmentos.
 """
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-from . import annotate, clusters, contracts, equipment, guard, lint, materials, palette as palmod
+from . import annotate, banding, clusters, contracts, equipment, guard, lint, materials, palette as palmod
 from .cli import box, command
 from .imageops import open_rgba, upscale
 
@@ -65,8 +68,10 @@ def do_cores(args) -> dict:
         diag = clusters.diagnose(image, regions, guard.pixels(args.protect, image.size))
         annotate.candidates(image, diag, k).save(out / f"{stem}_cores_candidatos.png")
         files = {"candidates": str(out / f"{stem}_cores_candidatos.png")}
-        files["json"] = _write(out / f"{stem}_cores.json", {**head, "diagnosis": diag})
+        bands = banding.find(image, regions)
+        files["json"] = _write(out / f"{stem}_cores.json", {**head, "diagnosis": diag, "banding": bands})
         return {"ok": True, "status": diag["status"], "counts": diag["counts"], "metrics": _metrics(diag),
+                "banding": {k: bands[k] for k in ("pairs", "horizontal", "vertical", "by_region", "status")},
                 "files": files, "note": "diagnostico: nada mudou; review e suspeita, nao defeito confirmado"}
     plan = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     master = palmod.load(args.palette or plan.get("palette") or "empire")
@@ -88,8 +93,9 @@ def do_cores(args) -> dict:
     after_lint = _raster(result, args.kind)
     remaining = [c for c in rep["after"]["candidates"] if c["status"] in ("review", "inconclusive")]
     written = {k: v for k, v in rep.items() if k not in ("before", "after")}
+    bands = {"before": banding.find(image, regions), "after": banding.find(result, regions)}
     files["json"] = _write(out / f"{stem}_cores.json", {**head, "plan": plan, "lint_after": after_lint, **written,
-                                                        "remaining": remaining,
+                                                        "remaining": remaining, "banding": bands,
                                                         "not_measured": rep["after"]["not_measured"]})
     lost = [s["pair"] for s in rep["separation"] if s["lost"]]
     return {"ok": rep["ok"] and (after_lint is None or after_lint["ok"]), "changed_pixels": rep["changed_pixels"],
@@ -97,8 +103,10 @@ def do_cores(args) -> dict:
             "alpha_identical": rep["alpha_identical"], "merged": len(rep["regroup"]["merged"]),
             "kept": len(rep["regroup"]["kept"]), "remap": {n: r["changed"] for n, r in rep["remap"].items()},
             "status": rep["status"], "counts": rep["counts"], "metrics": rep["metrics"], "separation_lost": lost,
-            "lint": {"before": head["lint"], "after": after_lint}, "files": files,
-            "note": "ok so prova o que nao mudou; a leitura a 1x e a aprovacao sao do autor"}
+            "lint": {"before": head["lint"], "after": after_lint}, "files": files, "material": rep["material"],
+            "banding": {k: v["pairs"] for k, v in bands.items()},
+            "note": "ok so prova o que nao mudou; um material pending impede a aprovacao do material; a leitura a 1x "
+                    "e a aprovacao sao do autor"}
 
 
 def register(sub) -> None:

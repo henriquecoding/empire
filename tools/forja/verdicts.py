@@ -93,3 +93,46 @@ def blocking(verdicts: dict) -> list[str]:
 def summary(verdicts: dict) -> dict:
     """Eixo -> estado, para ler de relance (a evidencia fica no relatorio completo)."""
     return {axis: verdicts[axis]["status"] for axis in AXES}
+
+
+CONDITIONS = {
+    "matches_authority": "corresponde ao conceito de autoridade: identidade, expressao e proporcoes (a olho, o dono)",
+    "contract_and_materials": "tela, grade e papeis de material: o contrato raster passa e nenhum conflito de rampa "
+                              "fica pendente",
+    "preserved_outside_change": "fora da mudanca autorizada, os pixels do mestre (so numa edicao local)",
+    "review_recorded": "o estado real de revisao registado: a aprovacao do dono, para esta imagem exata",
+}
+_CLOSED = ("pass", "not_applicable")
+
+
+def closure(summary: dict, approval: dict, material: dict | None = None, preservation: dict | None = None) -> dict:
+    """As quatro condicoes de uma entrega (solucao de 27/10, §9; FORJA-06). Um eixo `not_evaluated` nunca fecha
+    nada. O que so o dono ve (identidade, aprovacao) fecha-se pelo registo dele desta imagem exata; um lint limpo, um
+    hash igual ou uma prova de preservacao sao evidencia de ficheiro e nunca passam por aprovacao."""
+    owner = approval.get("status") == "approved"
+    raster, mat = summary.get("raster_contract", "not_evaluated"), (material or {}).get("status", "not_evaluated")
+    cond = {"matches_authority": "fail" if summary.get("identity_consistency") == "fail" else
+            ("pass" if owner else "pending"), "review_recorded": "pass" if owner else "pending"}
+    if raster != "pass":
+        cond["contract_and_materials"] = raster
+    elif mat == "pending":
+        cond["contract_and_materials"] = "pending"
+    else:
+        cond["contract_and_materials"] = "pass" if mat == "resolved" or owner else "not_evaluated"
+    if preservation is None:
+        cond["preserved_outside_change"] = "not_applicable"
+    else:
+        kept = preservation.get("outside_identical") and preservation.get("protected_identical")
+        cond["preserved_outside_change"] = "pass" if kept else "fail"
+    failed = [a for a in AXES if summary.get(a) == "fail"]
+    missing = (["identity_consistency"] * (cond["matches_authority"] != "pass")
+               + ["raster_contract"] * (raster != "pass") + ["material"] * (raster == "pass" and
+                                                                           cond["contract_and_materials"] != "pass")
+               + ["preservation"] * (cond["preserved_outside_change"] not in _CLOSED)
+               + ["artistic_approval"] * (not owner))
+    done = all(s in _CLOSED for s in cond.values()) and not failed
+    return {"deliverable": done, "state": "approved" if done else "adaptation_in_review",
+            "conditions": {k: {"status": v, "question": CONDITIONS[k]} for k, v in cond.items()},
+            "missing": list(dict.fromkeys(missing + failed)), "approval": approval,
+            "note": "lint, hashes e provas sao evidencia de ficheiro: nao e aprovacao artistica; essa e do dono, no "
+                    "registo forja.refs/1"}

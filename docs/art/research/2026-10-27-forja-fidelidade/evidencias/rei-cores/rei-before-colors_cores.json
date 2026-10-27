@@ -1,0 +1,638 @@
+{
+ "image": "docs/art/research/2026-10-27-forja-fidelidade/fixtures/rei-before-colors.png",
+ "observation": "docs/art/research/2026-10-27-forja-fidelidade/fixtures/rei-colors-observation.json",
+ "observer": {
+  "author": "Codex",
+  "method": "Marcação visual por caixa e material na imagem nativa e ampliada; rostos e equipamento protegidos",
+  "date": "2026-10-26"
+ },
+ "artistic_approval": "pending",
+ "lint": {
+  "ok": true,
+  "errors": 0,
+  "warnings": 1,
+  "rules": [
+   "fragments",
+   "gradient"
+  ]
+ },
+ "plan": {
+  "schema": "forja.cores/1",
+  "lock": [
+   "face",
+   "hand_back",
+   "hand_front",
+   "sword_hilt"
+  ],
+  "regions": {
+   "blade": {"ramp": ["#A19D9E", "#F0F0F0"], "group": false}
+  }
+ },
+ "lint_after": {
+  "ok": true,
+  "errors": 0,
+  "warnings": 1,
+  "rules": [
+   "fragments",
+   "gradient"
+  ]
+ },
+ "changed_pixels": 26,
+ "outside_zone_changed": 0,
+ "locked": {
+  "pixels": 826,
+  "changed": 0
+ },
+ "alpha_identical": true,
+ "remap": {
+  "blade": {
+   "ramp": ["#A19D9E", "#F0F0F0"],
+   "colors_before": 2,
+   "colors_after": 3,
+   "changed": 26,
+   "locked_off_ramp": [[24, 63, "#E1BEA0"], [24, 64, "#E1BEA0"], [25, 64, "#E1BEA0"], [24, 65, "#E1BEA0"], [25, 65, "#E1BEA0"], [26, 65, "#E1BEA0"], [25, 66, "#E1BEA0"], [26, 66, "#E1BEA0"], [27, 66, "#E1BEA0"]]
+  }
+ },
+ "regroup": {
+  "merged": [],
+  "kept": []
+ },
+ "metrics": {
+  "figure": {
+   "area": [2347, 2347],
+   "colors": [14, 15],
+   "components8": [116, 117],
+   "singletons8": [20, 20],
+   "S8": [0.0085, 0.0085],
+   "F": [4.94, 4.99],
+   "U": [17, 17]
+  },
+  "face": {
+   "area": [592, 592],
+   "colors": [12, 12],
+   "components8": [47, 47],
+   "singletons8": [11, 11],
+   "S8": [0.0186, 0.0186],
+   "F": [7.94, 7.94],
+   "U": [0, 0]
+  },
+  "hand_back": {
+   "area": [110, 110],
+   "colors": [10, 10],
+   "components8": [14, 14],
+   "singletons8": [3, 3],
+   "S8": [0.0273, 0.0273],
+   "F": [12.73, 12.73],
+   "U": [0, 0]
+  },
+  "hand_front": {
+   "area": [78, 78],
+   "colors": [9, 9],
+   "components8": [10, 10],
+   "singletons8": [3, 3],
+   "S8": [0.0385, 0.0385],
+   "F": [12.82, 12.82],
+   "U": [0, 0]
+  },
+  "sword_hilt": {
+   "area": [156, 156],
+   "colors": [10, 10],
+   "components8": [19, 19],
+   "singletons8": [4, 4],
+   "S8": [0.0256, 0.0256],
+   "F": [12.18, 12.18],
+   "U": [0, 0]
+  },
+  "cape": {
+   "area": [454, 454],
+   "colors": [4, 4],
+   "components8": [39, 39],
+   "singletons8": [9, 9],
+   "S8": [0.0198, 0.0198],
+   "F": [8.59, 8.59],
+   "U": [9, 9]
+  },
+  "tunic": {
+   "area": [341, 341],
+   "colors": [3, 3],
+   "components8": [16, 16],
+   "singletons8": [6, 6],
+   "S8": [0.0176, 0.0176],
+   "F": [4.69, 4.69],
+   "U": [5, 5]
+  },
+  "sleeve": {
+   "area": [160, 160],
+   "colors": [3, 3],
+   "components8": [11, 11],
+   "singletons8": [3, 3],
+   "S8": [0.0187, 0.0187],
+   "F": [6.88, 6.88],
+   "U": [4, 4]
+  },
+  "blade": {
+   "area": [69, 69],
+   "colors": [2, 3],
+   "components8": [2, 3],
+   "singletons8": [0, 0],
+   "S8": [0.0, 0.0],
+   "F": [2.9, 4.35],
+   "U": [0, 0]
+  }
+ },
+ "separation": [
+  {
+   "pair": ["blade", "hand_back"],
+   "borders": 4,
+   "distinct_before": 3,
+   "distinct_after": 3,
+   "lost": false
+  },
+  {
+   "pair": ["blade", "sword_hilt"],
+   "borders": 5,
+   "distinct_before": 4,
+   "distinct_after": 4,
+   "lost": false
+  },
+  {
+   "pair": ["cape", "face"],
+   "borders": 51,
+   "distinct_before": 51,
+   "distinct_after": 51,
+   "lost": false
+  },
+  {
+   "pair": ["cape", "hand_back"],
+   "borders": 8,
+   "distinct_before": 5,
+   "distinct_after": 5,
+   "lost": false
+  },
+  {
+   "pair": ["cape", "sleeve"],
+   "borders": 1,
+   "distinct_before": 1,
+   "distinct_after": 1,
+   "lost": false
+  },
+  {
+   "pair": ["cape", "sword_hilt"],
+   "borders": 15,
+   "distinct_before": 8,
+   "distinct_after": 8,
+   "lost": false
+  },
+  {
+   "pair": ["cape", "tunic"],
+   "borders": 23,
+   "distinct_before": 19,
+   "distinct_after": 19,
+   "lost": false
+  },
+  {
+   "pair": ["face", "sleeve"],
+   "borders": 4,
+   "distinct_before": 4,
+   "distinct_after": 4,
+   "lost": false
+  },
+  {
+   "pair": ["face", "tunic"],
+   "borders": 2,
+   "distinct_before": 2,
+   "distinct_after": 2,
+   "lost": false
+  },
+  {
+   "pair": ["hand_back", "sleeve"],
+   "borders": 8,
+   "distinct_before": 4,
+   "distinct_after": 4,
+   "lost": false
+  },
+  {
+   "pair": ["hand_back", "sword_hilt"],
+   "borders": 17,
+   "distinct_before": 8,
+   "distinct_after": 8,
+   "lost": false
+  },
+  {
+   "pair": ["hand_front", "tunic"],
+   "borders": 8,
+   "distinct_before": 3,
+   "distinct_after": 3,
+   "lost": false
+  },
+  {
+   "pair": ["sleeve", "sword_hilt"],
+   "borders": 2,
+   "distinct_before": 0,
+   "distinct_after": 0,
+   "lost": false
+  }
+ ],
+ "status": {
+  "before": "needs_review",
+  "after": "needs_review"
+ },
+ "counts": {
+  "before": {
+   "review": 17,
+   "protected": 24,
+   "expected": 0,
+   "inconclusive": 3
+  },
+  "after": {
+   "review": 17,
+   "protected": 24,
+   "expected": 0,
+   "inconclusive": 3
+  }
+ },
+ "ok": true,
+ "material": {
+  "status": "pending",
+  "conflicts": 9,
+  "regions": [
+   "blade"
+  ],
+  "separation_lost": [],
+  "next": "rever os seletores: separar as regioes que se sobrepoem ao que esta preso"
+ },
+ "remaining": [
+  {
+   "at": [29, 42],
+   "pixels": [[29, 42], [30, 42], [30, 43]],
+   "color": "#E1BEA0",
+   "size": 3,
+   "bbox": [29, 42, 31, 44],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 8,
+   "dominant": "#E3D7BC",
+   "dominant_delta": 0.0636,
+   "nearest_delta": 0.0636,
+   "neighbors": {"#E3D7BC": 8, "#FBECC3": 7, "#000000": 3},
+   "regions": ["sleeve"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [31, 46],
+   "pixels": [[31, 46]],
+   "color": "#E1BEA0",
+   "size": 1,
+   "bbox": [31, 46, 32, 47],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 11,
+   "dominant": "#000000",
+   "dominant_delta": 0.8262,
+   "nearest_delta": 0.0636,
+   "neighbors": {"#000000": 3, "#FBECC3": 2, "#E3D7BC": 2},
+   "regions": ["sleeve"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [34, 46],
+   "pixels": [[34, 46]],
+   "color": "#5A3A3B",
+   "size": 1,
+   "bbox": [34, 46, 35, 47],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 12,
+   "dominant": "#452D21",
+   "dominant_delta": 0.0674,
+   "nearest_delta": 0.0592,
+   "neighbors": {"#452D21": 4, "#763728": 4},
+   "regions": ["cape", "tunic"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [58, 46],
+   "pixels": [[58, 46], [58, 47]],
+   "color": "#E3D7BC",
+   "size": 2,
+   "bbox": [58, 46, 59, 48],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 2,
+   "dominant": "#FBECC3",
+   "dominant_delta": 0.0654,
+   "nearest_delta": 0.0654,
+   "neighbors": {"#FBECC3": 11, "#000000": 3},
+   "regions": [],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [30, 47],
+   "pixels": [[30, 47]],
+   "color": "#E3D7BC",
+   "size": 1,
+   "bbox": [30, 47, 31, 48],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 11,
+   "dominant": "#FBECC3",
+   "dominant_delta": 0.0654,
+   "nearest_delta": 0.0636,
+   "neighbors": {"#FBECC3": 4, "#000000": 2, "#E1BEA0": 1},
+   "regions": ["sleeve"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [28, 49],
+   "pixels": [[28, 49]],
+   "color": "#E1BEA0",
+   "size": 1,
+   "bbox": [28, 49, 29, 50],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 11,
+   "dominant": "#FBECC3",
+   "dominant_delta": 0.1236,
+   "nearest_delta": 0.0636,
+   "neighbors": {"#FBECC3": 4, "#E3D7BC": 2, "#000000": 2},
+   "regions": ["sleeve"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [35, 50],
+   "pixels": [[35, 50]],
+   "color": "#5A3A3B",
+   "size": 1,
+   "bbox": [35, 50, 36, 51],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 15,
+   "dominant": "#763728",
+   "dominant_delta": 0.0592,
+   "nearest_delta": 0.0592,
+   "neighbors": {"#763728": 4, "#452D21": 4},
+   "regions": ["cape", "tunic"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [30, 52],
+   "pixels": [[30, 52]],
+   "color": "#3A2C32",
+   "size": 1,
+   "bbox": [30, 52, 31, 53],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 13,
+   "dominant": "#000000",
+   "dominant_delta": 0.3121,
+   "nearest_delta": 0.0361,
+   "neighbors": {"#000000": 5, "#222034": 2, "#452D21": 1},
+   "regions": ["cape", "tunic"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [12, 56],
+   "pixels": [[12, 56]],
+   "color": "#3A2C32",
+   "size": 1,
+   "bbox": [12, 56, 13, 57],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 4,
+   "dominant": "#222034",
+   "dominant_delta": 0.0651,
+   "nearest_delta": 0.0651,
+   "neighbors": {"#222034": 7, "#3D4059": 1},
+   "regions": ["cape"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [47, 57],
+   "pixels": [[47, 57], [46, 58], [47, 58]],
+   "color": "#763728",
+   "size": 3,
+   "bbox": [46, 57, 48, 59],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 9,
+   "dominant": "#000000",
+   "dominant_delta": 0.427,
+   "nearest_delta": 0.103,
+   "neighbors": {"#000000": 11, "#825C2E": 7},
+   "regions": ["tunic"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [29, 60],
+   "pixels": [[29, 60], [28, 61]],
+   "color": "#5A3A3B",
+   "size": 2,
+   "bbox": [28, 60, 30, 62],
+   "n4_pieces": 2,
+   "interior": true,
+   "edge_distance": 9,
+   "dominant": "#452D21",
+   "dominant_delta": 0.0674,
+   "nearest_delta": 0.0674,
+   "neighbors": {"#452D21": 5, "#000000": 5, "#FFB416": 4},
+   "regions": ["cape"],
+   "status": "inconclusive",
+   "reason": "ligado so pela diagonal: analisar como traco, nao apagar"
+  },
+  {
+   "at": [49, 60],
+   "pixels": [[49, 60]],
+   "color": "#763728",
+   "size": 1,
+   "bbox": [49, 60, 50, 61],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 7,
+   "dominant": "#000000",
+   "dominant_delta": 0.427,
+   "nearest_delta": 0.4203,
+   "neighbors": {"#000000": 6, "#FFB416": 2},
+   "regions": ["tunic"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [8, 62],
+   "pixels": [[8, 62]],
+   "color": "#3A2C32",
+   "size": 1,
+   "bbox": [8, 62, 9, 63],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 2,
+   "dominant": "#222034",
+   "dominant_delta": 0.0651,
+   "nearest_delta": 0.0651,
+   "neighbors": {"#222034": 4, "#3D4059": 3, "#000000": 1},
+   "regions": ["cape"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [12, 66],
+   "pixels": [[12, 66]],
+   "color": "#3A2C32",
+   "size": 1,
+   "bbox": [12, 66, 13, 67],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 3,
+   "dominant": "#3D4059",
+   "dominant_delta": 0.0801,
+   "nearest_delta": 0.0651,
+   "neighbors": {"#3D4059": 4, "#222034": 4},
+   "regions": ["cape"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [38, 66],
+   "pixels": [[38, 66], [38, 67], [37, 68]],
+   "color": "#3A2C32",
+   "size": 3,
+   "bbox": [37, 66, 39, 69],
+   "n4_pieces": 2,
+   "interior": false,
+   "edge_distance": 1,
+   "dominant": "#3D4059",
+   "dominant_delta": 0.0801,
+   "nearest_delta": 0.0801,
+   "neighbors": {"#3D4059": 9, "#000000": 9},
+   "regions": ["cape", "tunic"],
+   "status": "inconclusive",
+   "reason": "ligado so pela diagonal: analisar como traco, nao apagar"
+  },
+  {
+   "at": [16, 68],
+   "pixels": [[16, 68], [16, 69]],
+   "color": "#3A2C32",
+   "size": 2,
+   "bbox": [16, 68, 17, 70],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 2,
+   "dominant": "#222034",
+   "dominant_delta": 0.0651,
+   "nearest_delta": 0.0651,
+   "neighbors": {"#222034": 7, "#3D4059": 5, "#000000": 2},
+   "regions": ["cape"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [23, 68],
+   "pixels": [[23, 68], [23, 69]],
+   "color": "#222034",
+   "size": 2,
+   "bbox": [23, 68, 24, 70],
+   "n4_pieces": 1,
+   "interior": false,
+   "edge_distance": 1,
+   "dominant": "#3A2C32",
+   "dominant_delta": 0.0651,
+   "nearest_delta": 0.0651,
+   "neighbors": {"#3A2C32": 9, "#000000": 4},
+   "regions": ["cape"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [26, 69],
+   "pixels": [[26, 69]],
+   "color": "#3A2C32",
+   "size": 1,
+   "bbox": [26, 69, 27, 70],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 3,
+   "dominant": "#000000",
+   "dominant_delta": 0.3121,
+   "nearest_delta": 0.2091,
+   "neighbors": {"#000000": 6, "#A19D9E": 1, "#825C2E": 1},
+   "regions": ["cape"],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  },
+  {
+   "at": [31, 76],
+   "pixels": [[31, 76], [29, 77], [30, 77]],
+   "color": "#763728",
+   "size": 3,
+   "bbox": [29, 76, 32, 78],
+   "n4_pieces": 2,
+   "interior": false,
+   "edge_distance": 1,
+   "dominant": "#000000",
+   "dominant_delta": 0.427,
+   "nearest_delta": 0.0592,
+   "neighbors": {"#000000": 9, "#825C2E": 8, "#5A3A3B": 2},
+   "regions": [],
+   "status": "inconclusive",
+   "reason": "ligado so pela diagonal: analisar como traco, nao apagar"
+  },
+  {
+   "at": [31, 77],
+   "pixels": [[31, 77]],
+   "color": "#5A3A3B",
+   "size": 1,
+   "bbox": [31, 77, 32, 78],
+   "n4_pieces": 1,
+   "interior": true,
+   "edge_distance": 2,
+   "dominant": "#000000",
+   "dominant_delta": 0.3888,
+   "nearest_delta": 0.0592,
+   "neighbors": {"#000000": 5, "#763728": 2, "#825C2E": 1},
+   "regions": [],
+   "status": "review",
+   "reason": "fragmento de cor sem papel declarado"
+  }
+ ],
+ "banding": {
+  "before": {
+   "pairs": 8,
+   "horizontal": 4,
+   "vertical": 4,
+   "by_region": {"face": 5, "hand_back": 0, "hand_front": 0, "sword_hilt": 0, "cape": 3, "tunic": 0, "sleeve": 0, "blade": 0},
+   "examples": [{"axis": "horizontal", "at": [38, 23], "length": 2, "colors": ["#763728", "#FFB416"]}, {"axis": "horizontal", "at": [47, 38], "length": 2, "colors": ["#FBECC3", "#222034"]}, {"axis": "horizontal", "at": [42, 39], "length": 5, "colors": ["#FBECC3", "#222034"]}, {"axis": "horizontal", "at": [31, 56], "length": 2, "colors": ["#452D21", "#5A3A3B"]}, {"axis": "vertical", "at": [13, 58], "length": 2, "colors": ["#3A2C32", "#222034"]}, {"axis": "vertical", "at": [15, 51], "length": 3, "colors": ["#222034", "#3A2C32"]}, {"axis": "vertical", "at": [32, 40], "length": 2, "colors": ["#3A2C32", "#222034"]}, {"axis": "vertical", "at": [50, 35], "length": 2, "colors": ["#FBECC3", "#222034"]}],
+   "status": "review",
+   "rule": "dois segmentos de cores diferentes com 2+ px, vizinhos pelo lado comprido e com as duas pontas alinhadas (sem contorno nem vazio)",
+   "source": "Bites, Eisemann, Kellnhofer, Molenaar: Pixel Fixer (TU Delft, 2025), banding entre segmentos alinhados",
+   "note": "suspeita para rever a 1x: uma faixa pode ser de proposito; nada foi mudado"
+  },
+  "after": {
+   "pairs": 8,
+   "horizontal": 4,
+   "vertical": 4,
+   "by_region": {"face": 5, "hand_back": 0, "hand_front": 0, "sword_hilt": 0, "cape": 3, "tunic": 0, "sleeve": 0, "blade": 0},
+   "examples": [{"axis": "horizontal", "at": [38, 23], "length": 2, "colors": ["#763728", "#FFB416"]}, {"axis": "horizontal", "at": [47, 38], "length": 2, "colors": ["#FBECC3", "#222034"]}, {"axis": "horizontal", "at": [42, 39], "length": 5, "colors": ["#FBECC3", "#222034"]}, {"axis": "horizontal", "at": [31, 56], "length": 2, "colors": ["#452D21", "#5A3A3B"]}, {"axis": "vertical", "at": [13, 58], "length": 2, "colors": ["#3A2C32", "#222034"]}, {"axis": "vertical", "at": [15, 51], "length": 3, "colors": ["#222034", "#3A2C32"]}, {"axis": "vertical", "at": [32, 40], "length": 2, "colors": ["#3A2C32", "#222034"]}, {"axis": "vertical", "at": [50, 35], "length": 2, "colors": ["#FBECC3", "#222034"]}],
+   "status": "review",
+   "rule": "dois segmentos de cores diferentes com 2+ px, vizinhos pelo lado comprido e com as duas pontas alinhadas (sem contorno nem vazio)",
+   "source": "Bites, Eisemann, Kellnhofer, Molenaar: Pixel Fixer (TU Delft, 2025), banding entre segmentos alinhados",
+   "note": "suspeita para rever a 1x: uma faixa pode ser de proposito; nada foi mudado"
+  }
+ },
+ "not_measured": [
+  "planos de luz e sombra (se a cor explica o volume)",
+  "banding (faixas que repetem a borda)",
+  "dois tons por material e rampas",
+  "microvariacao de tons quase iguais em areas grandes",
+  "degraus de curvas e diagonais",
+  "continuidade entre quadros"
+ ]
+}

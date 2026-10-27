@@ -1,0 +1,18 @@
+{
+ "schema": "forja.cores/1",
+ "lock": [
+  "face",
+  "hand_back",
+  "hand_front",
+  "sword_hilt"
+ ],
+ "regions": {
+  "blade": {
+   "ramp": [
+    "#A19D9E",
+    "#F0F0F0"
+   ],
+   "group": false
+  }
+ }
+}

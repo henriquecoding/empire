@@ -7,6 +7,41 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja: recuperar antes de proteger — 27/10/2026 (FORJA-06, ADR 0093)
+
+> Pedido do dono (27/10/2026): *«Implemente isso, e também pesquise profundamente na web mais coisas que possam
+> complementar isso»*, com a solução de 27/10. Aplicadas as seis etapas do §7
+> ([pesquisa](art/research/2026-10-27-forja-fidelidade/README.md)). O que segue é do dono.
+
+### Q-282 · Onde vive o registo de autoridade de cada personagem, e quem o mantém?
+- **Hoje:** a Forja lê um `forja.refs/1` onde lho dizem (`--refs`), confere os hashes e nunca escreve `approved`. A
+  prova usa um registo de demonstração em `evidencias/`, com as fixtures rejeitadas.
+- **Proposta:** um registo por personagem junto da fonte da arte (por exemplo `art/source/<personagem>/refs.json`),
+  escrito pelo dono ou por pedido explícito dele (regra 9), com o conceito de autoridade, cada adaptação e o estado.
+- **Decide:** o dono — é ele quem aprova e onde a aprovação fica guardada.
+
+### Q-283 · O banding de 2 px com as duas pontas alinhadas serve no Empire?
+- **Hoje:** `banding.py` usa a definição do *Pixel Fixer* (TU Delft, 2025) e conta, sem corrigir: Rei 5, Arqueiro 11,
+  Escudeiro 8 nas fixtures; no elenco de 25/10, 14, 18 e 26. Um cinto ou uma barra de cor também é uma faixa.
+- **Proposta:** calibrar o limite com as anotações da Q-281 e deixar uma região com papel declarado (`seam`, `accent`)
+  fora da contagem.
+- **Decide:** o dono (o que é faixa de propósito é dele).
+
+### Q-284 · A observação da corda separa miolo e contorno?
+- **Hoje:** na fixture do arqueiro, `bow_main.string` inclui o contorno x=57; o reparo pinta o miolo x=56 e protege o
+  contorno, mas a geometria mede a região toda e continua a dizer «largura 2 px».
+- **Proposta:** observar a corda como duas regiões (`string` e `string_outline`) e medir a largura só no miolo; vale
+  para qualquer linha fina com contorno (fio, correia).
+- **Decide:** o dono (contrato de observação); liga-se à Q-272 (a corda dispensa contorno?).
+
+### Q-285 · A conversão guiada do PixelLab (`fixer`) entra na Forja?
+- **Hoje:** a especificação de 27/10 documenta `fixer` (modo fiel) e `init_image_strength` 0–999 no
+  `/image-to-pixelart`, com o aviso de que acima de ~300 a resposta é a imagem de entrada, não pixel art. O adaptador não
+  o expõe e não houve ensaio (sem chave nem teto aprovado).
+- **Proposta:** um piloto pago pequeno, uma variável de cada vez (força 100, 200, 300 com `fixer`), com o conceito do
+  Rei, antes de o ligar ao `plan`; o resultado entra como `adaptation_in_review`, nunca como mestre.
+- **Decide:** o dono (custo e uso do fornecedor); liga-se ao piloto O7 do FORJA-05.
+
 ## Forja: pixels, cores e continuidade — 26/10/2026 (FORJA-04, ADR 0092)
 
 > Pedido do dono (26/10/2026): *«Trabalhe densamente analisando e aplicando esses arquivos ao meu jogo, faça por

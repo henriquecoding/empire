@@ -10,7 +10,7 @@ from unittest import mock
 
 from PIL import Image
 
-from tools.forja import cli, cmd_ai, color, plan, synth
+from tools.forja import cli, cmd_ai, color, equipment, plan, refs, synth
 from tools.forja.tests.helpers import framed, tempdir
 from tools.forja.tests.test_backends import ENV, Fake
 
@@ -165,8 +165,11 @@ class OpenAIPlanTest(unittest.TestCase):
         d = tempdir()
         ref = d / "approved.png"
         framed(5, (80, 80), (40, 78)).save(ref)
+        entry = {"id": "rei", "file": ref.name, "pixels_sha256": equipment.image_sha(Image.open(ref)),
+                 "state": "approved", "decided_by": "Henrique", "date": "2026-10-27"}  # FORJA-06: so o registo aprova
+        (d / "refs.json").write_text(json.dumps({"schema": refs.SCHEMA, "entries": [entry]}))
         p = plan.make("openai", "comic king", "royal_80", [("walk", 8)], references=[("identity", str(ref))],
-                      palette=cmd_ai._palette(args("x", "-o", "y"), "royal_80"))
+                      palette=cmd_ai._palette(args("x", "-o", "y"), "royal_80"), register=refs.load(d / "refs.json"))
         self.assertEqual(p.data["request"]["endpoint"], "images.edits")
         req = p.call().request()
         self.assertEqual(req.body.count(b'name="image[]"'), 2)

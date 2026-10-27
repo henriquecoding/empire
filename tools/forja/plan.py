@@ -20,9 +20,7 @@ import math
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from PIL import Image
-
-from . import contracts, guides, prompts
+from . import contracts, guides, prompts, refs as refs_mod
 from .backends import Call, gemini_images, openai_images, pixellab_api, sha
 from .imageops import png_bytes as png
 from .palette import Palette
@@ -52,12 +50,14 @@ class Plan:
         if d["backend"] == "pixellab":
             kw = {**r["params"], **{role: data for role, data in self.images}}
             return pixellab_api.call(prompt, r["width"], r["height"], d["model"], **kw)
+        roles = [refs_mod.family(x) for x, _ in self.images]
         if d["backend"] == "openai":
             if self.images:
                 return openai_images.edit_call(prompt, [b for _, b in self.images], None, r["size"], d["model"],
-                                               background=r["background"], roles=[x for x, _ in self.images])
+                                               background=r["background"], roles=roles)
             return openai_images.generate_call(prompt, r["size"], d["model"], background=r["background"])
-        return gemini_images.call(prompt, self.images, d["model"], r["aspect_ratio"], r["image_size"])
+        return gemini_images.call(prompt, list(zip(roles, [b for _, b in self.images])), d["model"],
+                                  r["aspect_ratio"], r["image_size"])
 
     def write(self, folder: str | Path) -> Path:
         out = Path(folder)
@@ -69,15 +69,6 @@ class Plan:
         (out / "plan.json").write_text(json.dumps(self.data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         (out / "prompt.txt").write_text(self.data["prompt"] + "\n", encoding="utf-8")
         return out / "plan.json"
-
-
-def _palette_png(palette: Palette) -> bytes:
-    cols = min(16, len(palette))
-    img = Image.new("RGBA", (cols * 4, math.ceil(len(palette) / cols) * 4), (0, 0, 0, 0))
-    for i, rgb in enumerate(palette.colors):
-        x, y = i % cols * 4, i // cols * 4
-        img.paste((*rgb, 255), (x, y, x + 4, y + 4))
-    return png(img)
 
 
 def _want(guides_mode: str, role: str, palette: Palette | None, listed: int = 24) -> bool:
@@ -108,7 +99,7 @@ def _pixellab(d: dict, c, refs, palette, model, guides_mode, init_strength, seed
         kw.pop(name)
     images: list[tuple[str, bytes]] = []
     for role, field_name in (("identity", "init_image"), ("style", "style_image")):
-        mine = [data for r, data in refs if r == role]
+        mine = [data for r, data in refs if refs_mod.family(r) == role]
         if not mine:
             continue
         if field_name not in caps["images"] or len(mine) > 1:
@@ -118,10 +109,11 @@ def _pixellab(d: dict, c, refs, palette, model, guides_mode, init_strength, seed
         images.append((field_name, mine[0]))
     if any(f == "init_image" for f, _ in images):
         kw["init_image_strength"] = 300 if init_strength is None else init_strength
-        d["notes"].append("o create-image do PixelLab nao tem campo de identidade: o design aprovado vai como "
-                          f"init_image (imagem inicial), forca {kw['init_image_strength']} — maior preserva mais")
+        d["notes"].append("o create-image do PixelLab nao tem campo de identidade: a referencia "
+                          f"({', '.join(d['authority']['states'])}) vai como init_image (imagem inicial), forca "
+                          f"{kw['init_image_strength']} — maior preserva mais")
     if palette is not None and guides_mode != "none" and "color_image" in caps["images"]:
-        images.append(("color_image", _palette_png(palette)))
+        images.append(("color_image", png(guides.color_image(palette))))
         d["notes"].append(f"paleta forcada pelo color_image ({len(palette)} cores)")
     elif palette is not None:
         d["notes"].append("o modelo nao recebe a paleta: aplica-se so no acabamento")
@@ -139,7 +131,7 @@ def _pixellab(d: dict, c, refs, palette, model, guides_mode, init_strength, seed
 
 
 def _attach(d: dict, refs, palette, guides_mode, expect_for_layout) -> list[tuple[str, bytes]]:
-    images = [(r, data) for r, data in refs if r in ("identity", "style")]
+    images = [(r, data) for r, data in refs if refs_mod.family(r) in ("identity", "style")]
     if _want(guides_mode, "palette", palette):
         images.append(("palette", png(guides.palette_swatch(palette))))
     if _want(guides_mode, "layout", palette) and d["frames"] > 1:
@@ -209,7 +201,7 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
     probe = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, "gemini", background,
                           attached=[], geo=geo)["expect"]
     images = _attach(d, refs, palette, guides_mode, probe)
-    d["errors"] += gemini_images.check(model, aspect, size, [r for r, _ in images])
+    d["errors"] += gemini_images.check(model, aspect, size, [refs_mod.family(r) for r, _ in images])
     built = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, "gemini", background,
                           attached=[r for r, _ in images], geo=geo)
     d["request"] = {"endpoint": "interactions", "aspect_ratio": aspect, "image_size": size,
@@ -224,17 +216,25 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
 def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] | None = None,
          facing: str = "right", references: list[tuple[str, str]] = (), palette: Palette | None = None,
          model: str | None = None, guides_mode: str = "auto", background: str = "auto",
-         init_strength: int | None = None, seed: int | None = None, size: str | None = None) -> Plan:
-    """`references`: (papel, caminho) com papel identity ou style. Nada sai para a rede aqui."""
+         init_strength: int | None = None, seed: int | None = None, size: str | None = None,
+         register: dict | None = None) -> Plan:
+    """`references`: (papel, caminho) com papel identity, concept ou style; o estado de cada uma vem do `register`
+    (refs.py) e decide as palavras do prompt (FORJA-06). Nada sai para a rede aqui."""
     if guides_mode not in GUIDES:
         raise ValueError(f"guias: {', '.join(GUIDES)}")
-    refs = [(role, Path(path).read_bytes()) for role, path in references]
+    seen = [(str(p), data, *refs_mod.resolve(r, data, register))
+            for r, p in references for data in [Path(p).read_bytes()]]
+    refs = [(r, data) for _, data, r, _, err in seen if not err]
+    states = [rec["state"] for _, _, r, rec, err in seen if not err and refs_mod.family(r) == "identity"]
     d: dict = {"schema": 1, "backend": backend, "model": model, "kind": kind, "subject": subject, "facing": facing,
                "tags": [list(t) for t in tags] if tags else None, "frames": sum(n for _, n in tags) if tags else 1,
-               "references": [{"role": r, "path": str(p), "sha256": sha(data)}
-                              for (r, p), (_, data) in zip(references, refs)],
-               "errors": [], "notes": [], "prompt": "", "expect": None, "request": None, "advice": None,
+               "references": [{"role": role, "prompt_role": r, "path": p, "sha256": sha(data), "state": rec["state"],
+                               "id": rec["id"]} for (role, _), (p, data, r, rec, _) in zip(references, seen)],
+               "authority": {"stage": refs_mod.stage(states), "states": states, "register": register and register["path"]},
+               "errors": [f"referencia {p}: {err}" for p, _, _, _, err in seen if err], "notes": [], "prompt": "",
+               "expect": None, "request": None, "advice": None,
                "training_permission": PERMISSION.get(backend), "contracts": contracts.get(kind).as_dict()}
+    d["notes"] += [] if "approved" in states else ["recuperacao: o que sair e uma adaptacao em revisao, nao um mestre"]
     d["errors"] += [f"assunto: {c}" for c in prompts.camera_conflicts(subject, facing)]
     if backend == "pixellab":
         images = _pixellab(d, contracts.get(kind), refs, palette, model, guides_mode, init_strength, seed)
@@ -244,7 +244,7 @@ def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tupl
         images = _gemini(d, refs, palette, model, guides_mode, background, size)
     else:
         raise ValueError(f"gerador desconhecido: {backend} (use {', '.join(BACKENDS)})")
-    d["attachments"] = [{"index": i, "role": r, "sha256": sha(b), "bytes": len(b)}
+    d["attachments"] = [{"index": i, "role": refs_mod.family(r), "prompt_role": r, "sha256": sha(b), "bytes": len(b)}
                         for i, (r, b) in enumerate(images, 1)]
     d["prompt_sha256"] = hashlib.sha256(d["prompt"].encode("utf-8")).hexdigest()
     return Plan(d, images)

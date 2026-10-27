@@ -1,0 +1,599 @@
+{
+ "image": "docs/art/research/2026-10-27-forja-fidelidade/fixtures/arqueiro-before-string.png",
+ "item": "bow_main",
+ "repair": {
+  "color": "#FBECC3"
+ },
+ "paint": {
+  "mode": "fill",
+  "source": "declared",
+  "colors": [
+   "#FBECC3"
+  ],
+  "core": [
+   56,
+   22,
+   57,
+   70
+  ],
+  "core_pixels": 40,
+  "outline_protected": 46,
+  "kept": 30,
+  "filled": 10
+ },
+ "compose": {
+  "method": "replace",
+  "editable_pixels": 40,
+  "editable_box": [
+   56,
+   22,
+   57,
+   70
+  ],
+  "changed_pixels": 10,
+  "outside_changed": 0,
+  "outside_identical": true,
+  "outside_examples": [],
+  "protected_pixels": 274,
+  "protected_identical": true,
+  "findings": [],
+  "ok": true,
+  "protected_overlap": 0
+ },
+ "lint_after": {
+  "ok": true,
+  "errors": 0,
+  "warnings": 1,
+  "rules": [
+   "fragments",
+   "gradient"
+  ]
+ },
+ "before": {
+  "verdicts": {
+   "raster_contract": {
+    "status": "pass",
+    "evidence": []
+   },
+   "color_coherence": {
+    "status": "not_evaluated",
+    "evidence": []
+   },
+   "equipment_geometry": {
+    "status": "fail",
+    "evidence": [
+     {
+      "axis": "equipment_geometry",
+      "check": "part_count",
+      "item": "bow_main",
+      "part": "limb",
+      "status": "pass",
+      "detail": "bow_main.limb: 1 de 1",
+      "evidence": {
+       "found": 1,
+       "wanted": 1,
+       "boxes": [
+        [
+         55,
+         17,
+         66,
+         75
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "part_count",
+      "item": "bow_main",
+      "part": "string",
+      "status": "pass",
+      "detail": "bow_main.string: 1 de 1",
+      "evidence": {
+       "found": 1,
+       "wanted": 1,
+       "boxes": [
+        [
+         56,
+         21,
+         58,
+         72
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "part_count",
+      "item": "bow_main",
+      "part": "grip",
+      "status": "pass",
+      "detail": "bow_main.grip: 1 de 1",
+      "evidence": {
+       "found": 1,
+       "wanted": 1,
+       "boxes": [
+        [
+         61,
+         42,
+         65,
+         55
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "string_line",
+      "item": "bow_main",
+      "part": "string",
+      "status": "fail",
+      "detail": "bow_main: largura 2 px em 43 linhas (maximo 1; ex.: [21, 22, 23])",
+      "evidence": {
+       "max_width": 2,
+       "wide_lines": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+       ],
+       "max_deviation": 1.0,
+       "gaps": [],
+       "pieces": 1,
+       "ends": [
+        [
+         57,
+         21
+        ],
+        [
+         57,
+         71
+        ]
+       ]
+      }
+     }
+    ]
+   },
+   "functional_pose": {
+    "status": "pass",
+    "evidence": [
+     {
+      "axis": "functional_pose",
+      "check": "contact",
+      "item": "bow_main",
+      "part": "grip",
+      "status": "pass",
+      "detail": "bow_main: hand_front encostada a grip",
+      "evidence": {
+       "body": "hand_front",
+       "distance": 1
+      }
+     }
+    ]
+   },
+   "identity_consistency": {
+    "status": "not_evaluated",
+    "evidence": []
+   },
+   "temporal_consistency": {
+    "status": "not_applicable",
+    "evidence": []
+   },
+   "artistic_approval": {
+    "status": "pending",
+    "evidence": []
+   },
+   "runtime_integration": {
+    "status": "not_tested",
+    "evidence": []
+   }
+  },
+  "summary": {
+   "raster_contract": "pass",
+   "color_coherence": "not_evaluated",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "identity_consistency": "not_evaluated",
+   "temporal_consistency": "not_applicable",
+   "artistic_approval": "pending",
+   "runtime_integration": "not_tested"
+  },
+  "blocking": [
+   "equipment_geometry"
+  ],
+  "checks": [
+   {
+    "axis": "equipment_geometry",
+    "check": "part_count",
+    "item": "bow_main",
+    "part": "limb",
+    "status": "pass",
+    "detail": "bow_main.limb: 1 de 1",
+    "evidence": {
+     "found": 1,
+     "wanted": 1,
+     "boxes": [
+      [
+       55,
+       17,
+       66,
+       75
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "part_count",
+    "item": "bow_main",
+    "part": "string",
+    "status": "pass",
+    "detail": "bow_main.string: 1 de 1",
+    "evidence": {
+     "found": 1,
+     "wanted": 1,
+     "boxes": [
+      [
+       56,
+       21,
+       58,
+       72
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "part_count",
+    "item": "bow_main",
+    "part": "grip",
+    "status": "pass",
+    "detail": "bow_main.grip: 1 de 1",
+    "evidence": {
+     "found": 1,
+     "wanted": 1,
+     "boxes": [
+      [
+       61,
+       42,
+       65,
+       55
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "string_line",
+    "item": "bow_main",
+    "part": "string",
+    "status": "fail",
+    "detail": "bow_main: largura 2 px em 43 linhas (maximo 1; ex.: [21, 22, 23])",
+    "evidence": {
+     "max_width": 2,
+     "wide_lines": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ],
+     "max_deviation": 1.0,
+     "gaps": [],
+     "pieces": 1,
+     "ends": [
+      [
+       57,
+       21
+      ],
+      [
+       57,
+       71
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "functional_pose",
+    "check": "contact",
+    "item": "bow_main",
+    "part": "grip",
+    "status": "pass",
+    "detail": "bow_main: hand_front encostada a grip",
+    "evidence": {
+     "body": "hand_front",
+     "distance": 1
+    }
+   }
+  ]
+ },
+ "after": {
+  "verdicts": {
+   "raster_contract": {
+    "status": "pass",
+    "evidence": []
+   },
+   "color_coherence": {
+    "status": "not_evaluated",
+    "evidence": []
+   },
+   "equipment_geometry": {
+    "status": "fail",
+    "evidence": [
+     {
+      "axis": "equipment_geometry",
+      "check": "part_count",
+      "item": "bow_main",
+      "part": "limb",
+      "status": "pass",
+      "detail": "bow_main.limb: 1 de 1",
+      "evidence": {
+       "found": 1,
+       "wanted": 1,
+       "boxes": [
+        [
+         55,
+         17,
+         66,
+         75
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "part_count",
+      "item": "bow_main",
+      "part": "string",
+      "status": "pass",
+      "detail": "bow_main.string: 1 de 1",
+      "evidence": {
+       "found": 1,
+       "wanted": 1,
+       "boxes": [
+        [
+         56,
+         21,
+         58,
+         72
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "part_count",
+      "item": "bow_main",
+      "part": "grip",
+      "status": "pass",
+      "detail": "bow_main.grip: 1 de 1",
+      "evidence": {
+       "found": 1,
+       "wanted": 1,
+       "boxes": [
+        [
+         61,
+         42,
+         65,
+         55
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "string_line",
+      "item": "bow_main",
+      "part": "string",
+      "status": "fail",
+      "detail": "bow_main: largura 2 px em 43 linhas (maximo 1; ex.: [21, 22, 23])",
+      "evidence": {
+       "max_width": 2,
+       "wide_lines": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+       ],
+       "max_deviation": 1.0,
+       "gaps": [],
+       "pieces": 1,
+       "ends": [
+        [
+         57,
+         21
+        ],
+        [
+         57,
+         71
+        ]
+       ]
+      }
+     }
+    ]
+   },
+   "functional_pose": {
+    "status": "pass",
+    "evidence": [
+     {
+      "axis": "functional_pose",
+      "check": "contact",
+      "item": "bow_main",
+      "part": "grip",
+      "status": "pass",
+      "detail": "bow_main: hand_front encostada a grip",
+      "evidence": {
+       "body": "hand_front",
+       "distance": 1
+      }
+     }
+    ]
+   },
+   "identity_consistency": {
+    "status": "not_evaluated",
+    "evidence": []
+   },
+   "temporal_consistency": {
+    "status": "not_applicable",
+    "evidence": []
+   },
+   "artistic_approval": {
+    "status": "pending",
+    "evidence": []
+   },
+   "runtime_integration": {
+    "status": "not_tested",
+    "evidence": []
+   }
+  },
+  "summary": {
+   "raster_contract": "pass",
+   "color_coherence": "not_evaluated",
+   "equipment_geometry": "fail",
+   "functional_pose": "pass",
+   "identity_consistency": "not_evaluated",
+   "temporal_consistency": "not_applicable",
+   "artistic_approval": "pending",
+   "runtime_integration": "not_tested"
+  },
+  "blocking": [
+   "equipment_geometry"
+  ],
+  "checks": [
+   {
+    "axis": "equipment_geometry",
+    "check": "part_count",
+    "item": "bow_main",
+    "part": "limb",
+    "status": "pass",
+    "detail": "bow_main.limb: 1 de 1",
+    "evidence": {
+     "found": 1,
+     "wanted": 1,
+     "boxes": [
+      [
+       55,
+       17,
+       66,
+       75
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "part_count",
+    "item": "bow_main",
+    "part": "string",
+    "status": "pass",
+    "detail": "bow_main.string: 1 de 1",
+    "evidence": {
+     "found": 1,
+     "wanted": 1,
+     "boxes": [
+      [
+       56,
+       21,
+       58,
+       72
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "part_count",
+    "item": "bow_main",
+    "part": "grip",
+    "status": "pass",
+    "detail": "bow_main.grip: 1 de 1",
+    "evidence": {
+     "found": 1,
+     "wanted": 1,
+     "boxes": [
+      [
+       61,
+       42,
+       65,
+       55
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "string_line",
+    "item": "bow_main",
+    "part": "string",
+    "status": "fail",
+    "detail": "bow_main: largura 2 px em 43 linhas (maximo 1; ex.: [21, 22, 23])",
+    "evidence": {
+     "max_width": 2,
+     "wide_lines": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ],
+     "max_deviation": 1.0,
+     "gaps": [],
+     "pieces": 1,
+     "ends": [
+      [
+       57,
+       21
+      ],
+      [
+       57,
+       71
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "functional_pose",
+    "check": "contact",
+    "item": "bow_main",
+    "part": "grip",
+    "status": "pass",
+    "detail": "bow_main: hand_front encostada a grip",
+    "evidence": {
+     "body": "hand_front",
+     "distance": 1
+    }
+   }
+  ]
+ },
+ "artistic_approval": "pending"
+}
