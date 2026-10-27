@@ -5,8 +5,13 @@ import base64
 import io
 import json
 import os
+import subprocess
+import sys
 import unittest
+from pathlib import Path
 from unittest import mock
+
+from PIL import Image
 
 from tools.forja import cli, durable, jobs, mcp_server
 from tools.forja.backends import gemini_images
@@ -14,6 +19,7 @@ from tools.forja.tests.helpers import tempdir
 from tools.forja.tests.test_backends import ENV, Fake, png
 
 DRAFT, FINAL = png((200, 10, 10, 255)), png((10, 200, 10, 255))
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def b64(data: bytes) -> str:
@@ -106,11 +112,21 @@ class McpTest(unittest.TestCase):
         got = self.serve('{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"forja_nada"}}')
         self.assertEqual(got[0]["error"]["code"], -32602)
 
-    def test_utf8_paths_arrive_intact(self):
-        msg = {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
-               "params": {"name": "forja_lint", "arguments": {"image": "build/forja/cenários/árvore≥.png"}}}
-        got = self.serve(json.dumps(msg, ensure_ascii=False), raw=True)
-        self.assertIn("cenários/árvore≥.png", got[0]["result"]["content"][0]["text"])
+    def test_a_cp1252_pipe_still_reads_utf8(self):
+        """O servidor como arranca no Windows: o pipe na pagina de codigo da consola, o cliente em UTF-8. O "A" de
+        "Arvore" com acento e C3 81, e 0x81 nao existe no cp1252: antes, o servidor morria a ler."""
+        folder = tempdir() / "cenários"
+        folder.mkdir()
+        Image.new("RGBA", (64, 64)).save(folder / "Árvore.png")
+        msgs = [{"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {
+            "name": "forja_lint", "arguments": {"image": str(folder / "Árvore.png"), "kind": "royal_64"}}},
+            {"jsonrpc": "2.0", "id": 2, "method": "ping"}]
+        data = "".join(json.dumps(m, ensure_ascii=False) + "\n" for m in msgs).encode("utf-8")
+        r = subprocess.run([sys.executable, "-m", "tools.forja", "mcp"], input=data, capture_output=True, timeout=120,
+                           cwd=ROOT, env={**os.environ, "PYTHONIOENCODING": "cp1252", "PYTHONUTF8": "0"})
+        replies = [json.loads(x) for x in r.stdout.decode("utf-8").split("\n") if x.strip()]
+        self.assertEqual([x["id"] for x in replies], [1, 2])
+        self.assertEqual(json.loads(replies[0]["result"]["content"][0]["text"])["kind"], "royal_64")
 
     def test_the_preview_stays_in_content_without_structured_content(self):
         call = '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"forja_kinds","arguments":{}}}'
