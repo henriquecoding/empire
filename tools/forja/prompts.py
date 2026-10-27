@@ -14,7 +14,7 @@ from __future__ import annotations
 import math
 import re
 
-from . import contracts, matte
+from . import constraints, contracts, matte
 from .palette import Palette
 
 TARGETS = ("gpt-image", "gemini", "pixellab", "generic")
@@ -43,28 +43,6 @@ def pick_scale(width: int, height: int, target: str) -> int:
             continue
         return k
     return 2
-
-
-def _outline(c: contracts.Contract) -> str:
-    if c.outline_px is None:
-        return "outline only where it helps readability"
-    if c.outline_px == 0:
-        return "NO outline at all; shapes are separated by value only"
-    return f"a {c.outline_px}-logical-pixel pure black (#000000) outline around the whole silhouette and on key internal details"
-
-
-def _colors(pal: Palette | None, c: contracts.Contract, listed: int, swatch: int | None) -> str:
-    if c.max_colors:
-        limit = f"at most {c.max_colors} colors in total"
-    else:
-        limit = "a short palette (about 12-24 colors)"
-    if pal is None or not len(pal):
-        return f"flat colors only, {limit}"
-    if len(pal) <= listed:
-        return f"use ONLY these colors: {', '.join(pal.hexes())}; {limit}"
-    if swatch:
-        return f"use ONLY colors from attached image {swatch} (the palette swatch, {len(pal)} colors); {limit}"
-    return f"flat colors only, {limit}"
 
 
 ROLES = {
@@ -127,9 +105,10 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
           facing: str = "right", reference: bool | str = False, palette: Palette | None = None,
           target: str = "gpt-image", background: str = "auto", listed: int = 24,
           cells: tuple[int, int] | None = None, attached: list[str] | None = None,
-          geo: dict | None = None) -> dict:
+          geo: dict | None = None, mode: str = "stylized", fidelity: dict | None = None) -> dict:
     """O prompt e o `expect`. `attached` sao os papeis das imagens que VAO anexadas, por ordem:
-    o texto so promete essas. `geo` (do plano por backend) substitui a geometria calculada aqui."""
+    o texto so promete essas. `geo` (do plano por backend) substitui a geometria calculada aqui. `mode` e
+    `fidelity` ({invariants, where, max_colors, tones}) decidem as restricoes e a origem de cada uma (FORJA-07)."""
     if target not in TARGETS:
         raise ValueError(f"alvo desconhecido: {target}")
     c = contracts.get(kind)
@@ -147,6 +126,9 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
     base = (canvas[1] - 1 - pivot[1] // c.cluster) if pivot else 2
     block = f"ONE crisp solid {k}x{k} square block" if geo["exact"] else (
         f"ONE crisp solid square block of one fixed size (about {round(k)}x{round(k)} image pixels)")
+    fid = fidelity or {}
+    rules = constraints.rules(c, palette, facing, mode, listed, number.get("palette"), fid.get("invariants"),
+                              fid.get("where"), fid.get("max_colors"), fid.get("tones"))
     lines = [
         'Create a pixel-art game asset for "Empire", a 2D side-view kingdom builder.',
         f"Subject: {subject}.",
@@ -154,12 +136,7 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
         f"Pixel grid: the image is an exact grid of {lw}x{lh} logical pixels; every logical pixel is {block} "
         "aligned to the image edges. No sub-pixel detail, no anti-aliasing, no blur, no gradients, no soft "
         "brushes, no texture noise.",
-        f"Camera: strict side view (profile), facing {facing.upper()}, like a 2D platformer sprite.",
-        f"Outline: {_outline(c)}.",
-        "Shading: two tones per material (light and shadow), light from the top-left, big readable flat clusters"
-        + ("" if c.dither else ", no dithering") + ".",
-        f"Colors: {_colors(palette, c, listed, number.get('palette'))}.",
-    ]
+    ] + [r["text"] for r in rules]
     if attached:
         lines.append("Attached images, in order: " + "; ".join(f"image {i}: {ROLES[r]}"
                                                                 for i, r in enumerate(attached, 1)) + ".")
@@ -189,14 +166,17 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
               "scale_exact": geo["exact"], "grid": "requested", "layout": [cols, rows], "frames": frames,
               "tags": [list(t) for t in tags] if tags else None,
               "background": "transparent" if transparent else key, "size": geo["size"], "cluster": c.cluster,
-              "attached": attached}
+              "attached": attached, "mode": mode}
     advice = None
     if k < 8:
         advice = (f"cada pixel logico tera so {k:g} px na imagem: o gerador perde precisao. Peca menos quadros por "
                   "prancha (ex.: --tags walk:4 duas vezes) ou uma figura por imagem.")
     return {"prompt": "\n".join(lines), "size": f"{geo['size'][0]}x{geo['size'][1]}", "expect": expect,
             "advice": advice, "pixellab": pixellab_params(subject, c, tuple(canvas), facing), "target": target,
-            "conflicts": camera_conflicts(subject, facing)}
+            "conflicts": camera_conflicts(subject, facing), "mode": mode,
+            "constraints": [{"id": "pixel_grid", "origin": "request"}] + [{k: r[k] for k in ("id", "origin")}
+                                                                       for r in rules],
+            "implicit": constraints.implicit(rules)}
 
 
 def _timeline(tags: list[tuple[str, int]]) -> list[str]:

@@ -132,7 +132,9 @@ def single(path: str | Path, source: Image.Image, grid: Grid, final: Image.Image
             _fig(_thumb(source), f"origem {source.width}x{source.height}"),
             _fig(_grid_crop(source, grid), f"grade achada (recorte 1:1): periodo {snap['grid']['period'][0]}, "
                  f"{snap['grid']['cells'][0]}x{snap['grid']['cells'][1]} celulas, confianca {snap['grid']['confidence']}"),
-            "</div>", f"<p>pureza das celulas {snap['sample']['purity']} · fundo {html.escape(json.dumps(snap['background']))}</p>",
+            "</div>", f"<p>pureza das celulas {snap['sample']['purity']} (so o miolo) · grade "
+            f"{snap['grid'].get('origin')} · celulas apagadas {(snap.get('loss') or {}).get('erased_cells', '-')} · "
+            f"fundo {html.escape(json.dumps(snap['background']))}</p>",
             "<h2>Resultado</h2>", _views(final, zoom), "<h2>Paleta</h2>", _palette(final),
             "<h2>Celulas misturadas</h2>", '<p class="info">A vermelho, onde o gerador desenhou mais fino do que a '
             "grade (muitas vezes o rosto): o voto escolhe uma cor e o traco fino perde-se.</p>",

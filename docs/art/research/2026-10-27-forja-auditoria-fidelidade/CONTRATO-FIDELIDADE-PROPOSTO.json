@@ -1,0 +1,133 @@
+{
+  "format": "empire.forja.fidelity-proposal",
+  "version": 1,
+  "status": "draft_not_implemented",
+  "date": "2026-10-27",
+  "forja_commit_examined": "0fea413d05b35d9311801c16d4dca883feceed52",
+  "purpose": "Especificar fidelidade e revisao; este arquivo nao e consumido pela Forja atual.",
+  "authority": {
+    "file_relative_to_this_document": "../dados/referencia-enviada.jpeg",
+    "sha256": "552ac1a2eb2ef4ddd6d8da82701d5969aaae45809be558415accb022f2ee840b",
+    "size": [1536, 1024],
+    "role": "user_supplied_concept_for_this_revision",
+    "native_master_approved": false,
+    "crop_convention": "xyxy, coordenadas da imagem inteira; direita/baixo exclusivos",
+    "crop_annotation_status": "manual_inspection_boxes_may_include_ground_or_shadow",
+    "derived_guide_can_replace_identity_authority": false,
+    "original_concept_must_remain_attached_in_adaptation": true
+  },
+  "operation": {
+    "mode_for_next_pilot": "adapt_concept",
+    "allowed_modes": ["recover_grid", "adapt_concept", "edit_approved_master"],
+    "recover_grid_requires": ["source_grid_provenance", "recovered_size", "loss_report"],
+    "adapt_concept_requires": ["authority_crop", "semantic_invariants", "native_layout_review", "identity_review"],
+    "edit_approved_master_requires": ["user_approved_exact_master_hash", "authorized_mask", "unchanged_exterior_after_all_processing"],
+    "grid_origin_enum": ["exactly_measured", "estimated", "operator_declared", "deliberately_reduced"],
+    "operator_declared_is_not_evidence_of_native_authorship": true
+  },
+  "palette_policy": {
+    "source": "project_contract_and_explicit_art_direction",
+    "runtime_contracts_changed": false,
+    "max_colors_in_examined_royal_contracts": null,
+    "implicit_two_tones_per_material_in_faithful_mode": false,
+    "implicit_12_to_24_color_cap_in_faithful_mode": false,
+    "material_colors": "to_be_chosen_and_reviewed_in_native_pilot",
+    "quantization_must_recheck_critical_features": true
+  },
+  "characters": [
+    {
+      "id": "rei",
+      "pose": "estatica_superior_da_prancha",
+      "authority_crop_xyxy": [55, 140, 565, 618],
+      "target_canvas": [80, 80],
+      "target_useful_bbox": null,
+      "native_layout_status": "pending",
+      "required_invariants": [
+        "corpo largo e relacao cabeca_tronco proximos do conceito",
+        "sobrancelha, palpebra, pupila e sorriso assimetrico preservam a atuacao",
+        "nariz permanece na familia cromatica da pele",
+        "tunica vinho, capa azul e mangas creme com planos legiveis",
+        "losango no peito e coroa reconheciveis",
+        "uma espada baixa na pose de referencia"
+      ],
+      "critical_regions": [
+        {"id": "face_system", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "atuacao conjunta do olho, sobrancelha, nariz, boca e bochecha", "required": true},
+        {"id": "chest_emblem", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "forma e contraste do losango", "required": true},
+        {"id": "material_planes", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "separacao de pele, tecido vinho, creme, capa azul e metal", "required": true}
+      ],
+      "previous_candidate_review": "rejected_by_user",
+      "replacement_candidate": null
+    },
+    {
+      "id": "escudeiro",
+      "pose": "estatica_superior_da_prancha",
+      "authority_crop_xyxy": [640, 285, 978, 618],
+      "target_canvas": [64, 64],
+      "target_useful_bbox": null,
+      "native_layout_status": "pending",
+      "required_invariants": [
+        "expressao ansiosa na relacao olho, nariz e boca",
+        "aba do elmo cinza posicionada em relacao ao olho como no conceito",
+        "escudo de madeira com miolo azul a frente do corpo",
+        "tecido vinho e creme, mangas com volume legivel",
+        "pose e exposicao do equipamento conservadas sem gesto inventado"
+      ],
+      "critical_regions": [
+        {"id": "helmet_face", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "ansiedade e relacao aba_olho_nariz_boca", "required": true},
+        {"id": "shield_hands", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "escudo e maos na pose de referencia", "required": true},
+        {"id": "material_planes", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "leitura de metal, madeira, vinho e creme", "required": true}
+      ],
+      "previous_candidate_review": "rejected_by_user",
+      "replacement_candidate": null
+    },
+    {
+      "id": "arqueiro",
+      "pose": "estatica_superior_da_prancha",
+      "authority_crop_xyxy": [1115, 210, 1477, 618],
+      "target_canvas": [80, 80],
+      "target_useful_bbox": null,
+      "native_layout_status": "pending",
+      "required_invariants": [
+        "capuz verde e roupa predominantemente creme",
+        "expressao alerta e contida conforme a referencia",
+        "arco baixo a frente com as maos na relacao de referencia",
+        "corpo compacto e proporcoes proximas do conceito",
+        "sem substituir o alvo por tunica verde comprida, sorriso amplo, mao na cintura e arco vertical"
+      ],
+      "critical_regions": [
+        {"id": "hood_face", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "contorno do capuz e expressao alerta", "required": true},
+        {"id": "bow_hands_string", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "posicao das maos, orientacao do arco e linha fina que deva ficar visivel", "required": true},
+        {"id": "cream_clothing", "source_box": null, "target_box": null, "status": "annotation_pending", "purpose": "material creme predominante no tronco e mangas", "required": true}
+      ],
+      "previous_candidate_review": "rejected_by_user",
+      "replacement_candidate": null
+    }
+  ],
+  "proposed_loss_diagnostics": {
+    "record_whole_cell_and_sampled_core_separately": true,
+    "record_input_alpha_even_if_output_is_transparent": true,
+    "purity_is_not_identity_confidence": true,
+    "purity_not_computed_by_method_must_be_explicit": true,
+    "critical_region_loss_can_block_even_if_global_share_is_small": true,
+    "unannotated_required_region_state": "pending",
+    "same_target_pixel_different_required_colors_state": "layout_conflict",
+    "silent_pin_overwrite_allowed": false,
+    "recheck_after": ["sampling", "palette", "cleanup", "outline", "fit", "composition"]
+  },
+  "pixel_pins": [],
+  "review_state": {
+    "runtime": "not_evaluated_for_replacement",
+    "declared_feature_preservation": "pending_annotations",
+    "identity_and_pose": "pending_replacement_candidate",
+    "native_master_user_approval": "absent",
+    "technical_pass_implies_identity_pass": false,
+    "technical_pass_implies_master_approval": false,
+    "required_feature_failure": "blocked",
+    "missing_required_evidence": "pending"
+  },
+  "limits": [
+    "As coordenadas de rosto e sinais nativos permanecem pendentes; nao foram inventadas por escala global.",
+    "As restricoes dependem de anotacao e revisao humana; nao se promete deteccao semantica automatica.",
+    "Este contrato nao implementa adaptacao, nao cria um candidato e nao altera os contratos de runtime."
+  ]
+}

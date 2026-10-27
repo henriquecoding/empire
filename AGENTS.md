@@ -38,7 +38,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092 e 0093). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093 e 0094). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
@@ -47,7 +47,10 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   organizada (`forja cores`: fragmentos de cor e agrupamento so por regiao), e
   adaptar uma imagem gerada nao e aprovacao artistica: so o mestre que o dono
   aprovou no registo (`forja refs`) e protegido e chamado aprovado, e uma entrega
-  fecha-se com `forja verify` contra ele.
+  fecha-se com `forja verify` contra ele. Adaptar um conceito e pedir com o
+  contrato de fidelidade (`--fidelity --character`: o recorte de autoridade vai
+  anexado, sem as preferencias do compilador) e rever com `forja fidelity`; uma
+  pureza alta nao prova que um traco sobreviveu (`snap.loss`, achado `erased`).
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

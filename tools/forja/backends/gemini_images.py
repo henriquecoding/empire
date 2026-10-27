@@ -23,6 +23,7 @@ Sem chamada real nesta sessao (sem chave). Variaveis: GEMINI_API_KEY (ou GOOGLE_
 from __future__ import annotations
 
 import hashlib
+import math
 import os
 
 from . import Call, Result, http, image_refs
@@ -57,6 +58,18 @@ def capabilities(model: str | None = None) -> dict:
 def ratio(aspect: str) -> float:
     a, _, b = aspect.partition(":")
     return int(a) / int(b)
+
+
+def fit_aspect(lw: int, lh: int, aspects) -> tuple[str, int, int]:
+    """A proporcao suportada que menos margem obriga, e a tela logica com essa margem."""
+    best = None
+    for a in aspects:
+        r = ratio(a)
+        w, h = (math.ceil(lh * r), lh) if r >= lw / lh else (lw, math.ceil(lw / r))
+        waste = w * h / (lw * lh) - 1
+        if best is None or waste < best[0] - 1e-9:
+            best = (waste, a, w, h)
+    return best[1], best[2], best[3]
 
 
 def estimate(aspect: str, size: str) -> tuple[int, int]:
