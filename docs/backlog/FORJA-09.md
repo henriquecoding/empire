@@ -1,6 +1,7 @@
 # FORJA-09 — escala de tropa, defeitos da referência e preservação nativa
 
-Estado: implementação local em revisão; validação e estado de integração no relatório de 28/10.
+Estado feito — C01–C12 aplicados tal como vieram e revistos no FORJA-10 (a conversão passa a emoldurar a
+          fonte); a conversão real e os mestres seguem no FORJA-10
 
 ## Pedido e autoridade
 

@@ -38,7 +38,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094 e 0095). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095 e 0097). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
@@ -55,6 +55,9 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   o Arqueiro Real e distinto e o Rei mantem 80x80. Conferir o papel antes do pedido.
   A autoridade de identidade pode conter defeitos: registar `reference_issues`, corrigir
   so as excecoes autorizadas e provar a correcao na imagem exata, sem copiar o erro.
+  ADR 0097: o que se viu numa imagem regista-se com `forja visual` (presa ao hash, antes
+  do pedido e depois do retorno; o incerto fica pendente); refinar ao pixel e `forja patch`
+  na mascara, sem regenerar o corpo; autoridade que ja e pixel art recupera-se na grade dela.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.
