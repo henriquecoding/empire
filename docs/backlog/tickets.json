@@ -3160,5 +3160,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-08": {
+  "title": "Auditoria técnica da Forja de 27/10: a imagem paga certa, o voto sem fronteiras, o gasto entre processos e o MCP",
+  "porque": "O dono pediu uma auditoria densa, a pesquisa na web e a aplicação: o Gemini entregava os rascunhos do pensamento como a imagem paga, o voto dava a célula à cor minoritária numa fronteira de balde, dois processos passavam o teto de gasto e o servidor MCP morria com JSON que não é um objeto ou com acentos no Windows.",
+  "spec": [
+   "docs/art/research/2026-10-27-forja-auditoria/README.md",
+   "docs/adr/0095-a-forja-le-como-se-ve.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-07",
+  "feito": "Só a imagem final do Gemini; o voto em oito grelhas deslocadas (Scott, 1985); teto com lock entre processos e registos com fsync; servidor MCP que responde aos erros do JSON-RPC, lê e escreve UTF-8, dá -32602 à ferramenta desconhecida e traz título e anotações; o contorno global fecha só as falhas; orientação EXIF e perfil ICC na abertura; o hash dos pixels sem a cor escondida; a bomba de descompressão em JSON; a vírgula no caminho da paleta; a rampa com o matiz fixo; o hash novo da especificação do PixelLab; sondas antes e depois do mesmo cenário.",
+  "fora": "A luminosidade Lr na escolha da cor (Q-290), fechar a falha de contorno com 85% da borda a preto (Q-291), progresso e cancelamento no MCP, chamadas pagas, aprovação artística, arte em art/.",
+  "estado": "feito — B01–B15 reparados com testes e B16 (o hash da especificação do PixelLab) atualizado; O1 e O2 ficam para o dono (Q-290, Q-291)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

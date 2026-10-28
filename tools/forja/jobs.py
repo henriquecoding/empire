@@ -50,12 +50,10 @@ def _usage(job: Job, result: Result) -> None:
 def _submit(job: Job, call: Call, transport, budget: Budget | None, clock, **kw) -> Result:
     req = call.request()  # le a chave: se falta, nada muda
     if budget:
-        budget.check(call.estimate_usd)
+        budget.reserve(call.estimate_usd)  # conferir e contar juntos: outro processo nao passa no meio (B03)
     attempt = {"n": len(job.data["attempts"]) + 1, "started_utc": _now(), "exchanges": []}
     job.data["attempts"].append(attempt)
     job.mark("submitting", f"POST {attempt['n']}")
-    if budget:
-        budget.spend()
     t0 = clock()
     try:
         resp = http.send(req, transport, call.service, refused=call.refused, log=attempt["exchanges"],

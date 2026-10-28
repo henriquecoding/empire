@@ -1,0 +1,184 @@
+{
+ "commit": "9cf9fed",
+ "B01": {
+  "images": 1,
+  "first_is_final": true
+ },
+ "B02": {
+  "boundary_cells_wrong": {
+   "(128, 64, 200)": "0/50",
+   "(16, 32, 48)": "0/50",
+   "(100, 150, 90)": "1/50"
+  },
+  "sprite_pixels_off_by_more_than_6": {
+   "noise4": "0/2580",
+   "noise6": "1/2580",
+   "jpeg85": "0/2580",
+   "jpeg75": "10/2580"
+  },
+  "palette_colors_near_a_bucket_edge": "86/112"
+ },
+ "B03": {
+  "posts_with_cap_1": 1,
+  "results": [
+   "sent",
+   {
+    "crash": "BudgetExceeded: teto de 1 chamadas pagas atingido (1 feitas)"
+   }
+  ],
+  "budget_json_calls": 1
+ },
+ "B04_B11_B12": {
+  "replies": {
+   "[]": {
+    "error": -32600,
+    "isError": null,
+    "structured": false
+   },
+   "42": {
+    "error": -32600,
+    "isError": null,
+    "structured": false
+   },
+   "params lista": {
+    "error": -32602,
+    "isError": null,
+    "structured": false
+   },
+   "ferramenta desconhecida": {
+    "error": -32602,
+    "isError": null,
+    "structured": false
+   },
+   "initialize": {
+    "error": null,
+    "isError": null,
+    "structured": false
+   },
+   "kinds": {
+    "error": null,
+    "isError": false,
+    "structured": false
+   }
+  },
+  "generate_annotations": {
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "idempotentHint": false,
+   "openWorldHint": true
+  }
+ },
+ "B05": {
+  "middle_row": "#rrrrrrrrrrrr#",
+  "outline_findings": [
+   "outline"
+  ]
+ },
+ "B06_B07": {
+  "exif6_200x100_opened_as": [
+   100,
+   200
+  ],
+  "linear_gray128_reads_as": 188,
+  "srgb_expected": 188
+ },
+ "B08": {
+  "register_after_resave": "valid"
+ },
+ "B09": {
+  "fsync_calls_writing_a_planned_job": 2
+ },
+ "B10": {
+  "jsonrpc_replies": 2,
+  "other_stdout": [],
+  "lint_ran_on_the_file": true,
+  "error": null,
+  "exit": 0,
+  "stderr_last": ""
+ },
+ "B13": {
+  "exit": 2,
+  "json": true,
+  "traceback": false
+ },
+ "B14": {
+  "loaded": [
+   "#0A141E"
+  ]
+ },
+ "B15": {
+  "#FFD000": {
+   "ramp": [
+    "#97993C",
+    "#C8B62E",
+    "#FFD000",
+    "#FFF4DF",
+    "#FFF3E4"
+   ],
+   "max_hue_drift_deg": 0.6
+  },
+  "#2040FF": {
+   "ramp": [
+    "#002E53",
+    "#004493",
+    "#2040FF",
+    "#646EFF",
+    "#9994FF"
+   ],
+   "max_hue_drift_deg": 0.8
+  },
+  "#FF2020": {
+   "ramp": [
+    "#910F3A",
+    "#C71439",
+    "#FF2020",
+    "#FF835E",
+    "#FFBB9B"
+   ],
+   "max_hue_drift_deg": 0.3
+  }
+ },
+ "B16": {
+  "adapter_spec_sha256": "b6dd212ca4e7f60c",
+  "spec_read_27_10": "b6dd212ca4e7f60c",
+  "diff": {
+   "previous_sha256": "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f",
+   "added": [],
+   "removed": [],
+   "request_changed": [],
+   "description_changed": [
+    "POST /generate-font-pro"
+   ],
+   "facts_changed": []
+  },
+  "conformance": []
+ },
+ "O1": {
+  "noise3": {
+   "black_px": 588,
+   "black_wrong_oklab": 62,
+   "black_wrong_lr": 0,
+   "other_wrong_oklab": 0,
+   "other_wrong_lr": 0
+  },
+  "noise4": {
+   "black_px": 588,
+   "black_wrong_oklab": 317,
+   "black_wrong_lr": 0,
+   "other_wrong_oklab": 0,
+   "other_wrong_lr": 0
+  },
+  "jpeg85": {
+   "black_px": 588,
+   "black_wrong_oklab": 39,
+   "black_wrong_lr": 0,
+   "other_wrong_oklab": 1,
+   "other_wrong_lr": 1
+  },
+  "srgb_sample_that_would_change_palette_colour": "1459/20000",
+  "#020201": {
+   "oklab": "#0B0B0B",
+   "lr": "#000000"
+  }
+ }
+}

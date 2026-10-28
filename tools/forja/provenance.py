@@ -25,12 +25,15 @@ def commit() -> str | None:
     return out.stdout.strip() or None
 
 
-def record(source: str | Path | None, generator: str | None, prompt: str | None, params: dict) -> dict:
+def record(source: str | Path | None, generator: str | None, prompt: str | None, params: dict,
+           seen: dict | None = None) -> dict:
+    """`seen`: o que a abertura fez a imagem antes de a ler (orientacao EXIF, perfil ICC; imageops.open_rgba)."""
     src = Path(source) if source else None
     return {
         "tool": "forja", "version": __version__, "commit": commit(),
         "created_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "input": {"path": str(src) if src else None, "sha256": sha256(src) if src and src.exists() else None},
+        "input": {"path": str(src) if src else None, "sha256": sha256(src) if src and src.exists() else None,
+                  **({"opened": seen} if seen else {})},
         "generator": generator or "desconhecido", "prompt": prompt,
         "params": {k: (list(v) if isinstance(v, tuple) else v) for k, v in params.items()},
         "state": {"adapted_from_generated_image": True, "manual_review": "pendente",

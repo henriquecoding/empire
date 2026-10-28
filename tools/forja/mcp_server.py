@@ -27,6 +27,8 @@ from .imageops import open_rgba
 
 VERSIONS = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 SKIP = {"mcp"}
+READ_ONLY = {"kinds", "lint", "verify"}
+PAID = {"generate", "auto", "inpaint"}
 INSTRUCTIONS = (
     "Forja: pixel art para o jogo Empire a partir de imagens geradas. Fluxo: (1) forja_prompt compila o pedido "
     "(prompt, tamanho, guias, expect.json) e diz o que anexar, por ordem; com gerador ligado, forja_plan valida o "
@@ -80,10 +82,27 @@ def _schema(parser: argparse.ArgumentParser) -> dict:
     return {"type": "object", "properties": props, "required": required}
 
 
+def annotations(name: str) -> dict:
+    """O que o cliente sabe antes de chamar (MCP 2025-03-26+): o pago sai para a rede e nao se repete igual; os jobs
+    consultam e cancelam no fornecedor; o resto so escreve as suas saidas."""
+    if name in READ_ONLY:
+        return {"readOnlyHint": True, "openWorldHint": False}
+    if name in PAID:
+        return {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": False, "openWorldHint": True}
+    if name == "jobs":
+        return {"readOnlyHint": False, "destructiveHint": True, "idempotentHint": False, "openWorldHint": True}
+    return {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": name != "refs", "openWorldHint": False}
+
+
 def tools() -> list[dict]:
-    cli.build_parser()
-    return [{"name": f"forja_{name}", "description": parser.description, "inputSchema": _schema(parser)}
+    _registry()
+    return [{"name": f"forja_{name}", "title": f"Forja {name}", "description": parser.description,
+             "inputSchema": _schema(parser), "annotations": annotations(name)}
             for name, (parser, _) in cli.REGISTRY.items() if name not in SKIP]
+
+
+def _registry() -> dict:
+    return cli.REGISTRY or (cli.build_parser() and cli.REGISTRY)  # `forja mcp` ja o montou; quem importa, nao
 
 
 def _argv(name: str, arguments: dict) -> list[str]:
@@ -128,10 +147,14 @@ def _preview(result: dict) -> dict | None:
     return {"type": "image", "data": base64.b64encode(buf.getvalue()).decode("ascii"), "mimeType": "image/png"}
 
 
+class UnknownTool(KeyError):
+    """Erro de protocolo (-32602), nao de execucao: o nome nao e de nenhuma ferramenta (MCP, Tools, Error Handling)."""
+
+
 def call(name: str, arguments: dict) -> dict:
     command = name[len("forja_"):] if name.startswith("forja_") else name
-    if command not in cli.REGISTRY or command in SKIP:
-        return {"content": [{"type": "text", "text": f"ferramenta desconhecida: {name}"}], "isError": True}
+    if command not in _registry() or command in SKIP:
+        raise UnknownTool(name)
     errors = io.StringIO()
     try:
         with contextlib.redirect_stdout(sys.stderr), contextlib.redirect_stderr(errors):
@@ -144,45 +167,84 @@ def call(name: str, arguments: dict) -> dict:
     image = _preview(result)
     if image:
         content.append(image)
+    # sem `structuredContent`: ha clientes que, com ele, so passam esse campo ao modelo, e a previa perdia-se (B12)
     return {"content": content, "isError": False}
 
 
-def handle(message: dict) -> dict | None:
+def _error(mid, code: int, message: str) -> dict:
+    return {"jsonrpc": "2.0", "id": mid, "error": {"code": code, "message": message}}
+
+
+def handle(message) -> dict | None:
+    """Uma mensagem JSON-RPC; o que nao e pedido valido e erro com id null (JSON-RPC 2.0, §5) e o batch, que o MCP
+    tirou em 2025-06-18, e recusado. Antes, `[]` ou `42` acabavam com o servidor (FORJA-08, B04)."""
+    if isinstance(message, list):
+        return _error(None, -32600, "batch JSON-RPC nao suportado: uma mensagem por linha (MCP 2025-06-18)")
+    if not isinstance(message, dict):
+        return _error(None, -32600, "pedido invalido: um objeto JSON-RPC 2.0")
     method, mid = message.get("method"), message.get("id")
+    if not isinstance(method, str):  # uma resposta do cliente, ou lixo com id
+        return None if mid is None or "result" in message or "error" in message else _error(
+            mid, -32600, "pedido invalido: falta o metodo")
+    params = message.get("params") or {}
     if mid is None:
         return None
+    if not isinstance(params, dict):
+        return _error(mid, -32602, "params tem de ser um objeto")
     if method == "initialize":
-        asked = (message.get("params") or {}).get("protocolVersion")
+        asked = params.get("protocolVersion")
         result = {"protocolVersion": asked if asked in VERSIONS else VERSIONS[0],
                   "capabilities": {"tools": {"listChanged": False}},
-                  "serverInfo": {"name": "forja", "version": __version__}, "instructions": INSTRUCTIONS}
+                  "serverInfo": {"name": "forja", "title": "Forja (Empire)", "version": __version__},
+                  "instructions": INSTRUCTIONS}
     elif method == "ping":
         result = {}
     elif method == "tools/list":
         result = {"tools": tools()}
     elif method == "tools/call":
-        params = message.get("params") or {}
-        result = call(params.get("name", ""), params.get("arguments") or {})
+        arguments = params.get("arguments") or {}
+        if not isinstance(arguments, dict):
+            return _error(mid, -32602, "arguments tem de ser um objeto")
+        try:
+            result = call(str(params.get("name", "")), arguments)
+        except UnknownTool as err:
+            return _error(mid, -32602, f"ferramenta desconhecida: {err.args[0]}")
     else:
-        return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32601, "message": f"metodo desconhecido: {method}"}}
+        return _error(mid, -32601, f"metodo desconhecido: {method}")
     return {"jsonrpc": "2.0", "id": mid, "result": result}
 
 
+def _reply(line) -> dict | None:
+    try:
+        text = line.decode("utf-8") if isinstance(line, bytes) else line
+    except UnicodeDecodeError:
+        return _error(None, -32700, "mensagem que nao e UTF-8")
+    if not text.strip():
+        return None
+    try:
+        message = json.loads(text)
+    except json.JSONDecodeError:
+        return _error(None, -32700, "JSON invalido")
+    try:
+        return handle(message)
+    except Exception as err:  # noqa: BLE001 — o servidor continua; o erro vai ao cliente
+        return _error(message.get("id") if isinstance(message, dict) else None, -32603,
+                      f"erro interno: {type(err).__name__}: {err}")
+
+
 def serve(stdin=None, stdout=None) -> None:
-    """Corre a partir da raiz do repositorio, seja qual for a pasta do cliente."""
+    """Corre a partir da raiz do repositorio, seja qual for a pasta do cliente.
+
+    As mensagens sao UTF-8 (MCP, Transports): o stdin le-se em bytes e o stdout escreve UTF-8, com \\n, seja qual
+    for a codificacao da consola. No Windows um pipe vinha em cp1252: "cenários" chegava "cenÃ¡rios", e um caractere
+    fora do cp1252 na resposta rebentava o servidor (FORJA-08, B10)."""
     os.chdir(Path(__file__).resolve().parents[2])
-    stdin = stdin or sys.stdin
+    if stdout is None and hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", newline="\n")
+        sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
     stdout = stdout or sys.stdout
-    for line in stdin:
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            message = json.loads(line)
-        except json.JSONDecodeError:
-            reply = {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "JSON invalido"}}
-        else:
-            reply = handle(message)
+    for line in stdin if stdin is not None else sys.stdin.buffer:
+        reply = _reply(line)
         if reply is not None:
             stdout.write(json.dumps(reply, ensure_ascii=False) + "\n")
             stdout.flush()

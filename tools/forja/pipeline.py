@@ -111,7 +111,7 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
                     info["protect"]["restored"] += n
             keep = frozenset().union(*[masks.box((x0 + 1, y0 + 1, x1 + 1, y1 + 1))
                                        for x0, y0, x1, y1 in opts.bare or []], {(x + 1, y + 1) for x, y in guarded})
-            img = outline.add(_pad(img, 1), contract.outline_color, 1, keep=keep)
+            img = outline.add(_pad(img, 1), contract.outline_color, 1, keep=keep, gaps=opts.outline != "force")
             box = opaque_bbox(img)
             img = img.crop(box) if box else img
             shift = (box[0] - 1, box[1] - 1) if box else (-1, -1)
@@ -213,7 +213,8 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
               "lint": verdict, "files": files, "verdicts": summary,
               "signals": _signals(final, snapinfo, finishinfo if "loss" in snapinfo else None, opts),
-              "provenance": provenance.record(source, generator, prompt, opts.__dict__)}
+              "provenance": provenance.record(source, generator, prompt, opts.__dict__,
+                                              image.info.get("forja_source"))}
     impure = [_to_final([x, y, x + 1, y + 1], finishinfo)[:2] for x, y in sub.pop("_coords")]
     if report_html:
         from . import report

@@ -112,8 +112,17 @@ def items(manifest: dict) -> list[dict]:
 
 
 def image_sha(image: Image.Image) -> str:
-    """O hash dos pixels (RGBA, tamanho incluido): a observacao vale para esta imagem e nao para outra."""
+    """O hash dos pixels (RGBA, tamanho incluido): a observacao vale para esta imagem e nao para outra.
+
+    Um pixel de alfa 0 conta como (0, 0, 0, 0): a cor escondida no transparente nao se ve, e um editor que re-grava o
+    PNG zera-a ou guarda-a a vontade dele. Antes, o mestre aprovado re-gravado sem mudar um pixel visivel deixava de
+    estar no registo (FORJA-08, B08). Uma imagem sem cor escondida tem o mesmo hash que tinha."""
     rgba = image.convert("RGBA")
+    alpha = rgba.getchannel("A")
+    if alpha.getextrema()[0] == 0:
+        clean = Image.new("RGBA", rgba.size, (0, 0, 0, 0))
+        clean.paste(rgba, (0, 0), alpha.point(lambda a: 255 if a else 0))
+        rgba = clean
     return hashlib.sha256(f"{rgba.width}x{rgba.height}:".encode() + rgba.tobytes()).hexdigest()
 
 

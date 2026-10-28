@@ -1,0 +1,174 @@
+{
+ "commit": "0fea413",
+ "B01": {
+  "images": 3,
+  "first_is_final": false
+ },
+ "B02": {
+  "boundary_cells_wrong": {
+   "(128, 64, 200)": "50/50",
+   "(16, 32, 48)": "50/50",
+   "(100, 150, 90)": "1/50"
+  },
+  "sprite_pixels_off_by_more_than_6": {
+   "noise4": "0/2580",
+   "noise6": "40/2580",
+   "jpeg85": "8/2580",
+   "jpeg75": "21/2580"
+  },
+  "palette_colors_near_a_bucket_edge": "86/112"
+ },
+ "B03": {
+  "posts_with_cap_1": 2,
+  "results": [
+   "sent",
+   "sent"
+  ],
+  "budget_json_calls": 1
+ },
+ "B04_B11_B12": {
+  "replies": {
+   "[]": {
+    "crash": "AttributeError: 'list' object has no attribute 'get'"
+   },
+   "42": {
+    "crash": "AttributeError: 'int' object has no attribute 'get'"
+   },
+   "params lista": {
+    "crash": "AttributeError: 'list' object has no attribute 'get'"
+   },
+   "ferramenta desconhecida": {
+    "error": null,
+    "isError": true,
+    "structured": false
+   },
+   "initialize": {
+    "error": null,
+    "isError": null,
+    "structured": false
+   },
+   "kinds": {
+    "error": null,
+    "isError": true,
+    "structured": false
+   }
+  },
+  "generate_annotations": null
+ },
+ "B05": {
+  "middle_row": "#rrrrrrrrrrrr##",
+  "outline_findings": [
+   "outline"
+  ]
+ },
+ "B06_B07": {
+  "exif6_200x100_opened_as": [
+   200,
+   100
+  ],
+  "linear_gray128_reads_as": 128,
+  "srgb_expected": 188
+ },
+ "B08": {
+  "crash": "ValueError: registo de referencias invalido: rei: a imagem mudou depois do registo (pixels ce879cd241a6, registados 95a086643ef4): registe-a de novo"
+ },
+ "B09": {
+  "fsync_calls_writing_a_planned_job": 0
+ },
+ "B10": {
+  "jsonrpc_replies": 0,
+  "other_stdout": [
+   {
+    "ok": false,
+    "error": "'charmap' codec can't decode byte 0x81 in position 137: character maps to <undefined>"
+   }
+  ],
+  "lint_ran_on_the_file": false,
+  "error": null,
+  "exit": 2,
+  "stderr_last": ""
+ },
+ "B13": {
+  "exit": 1,
+  "json": false,
+  "traceback": true
+ },
+ "B14": {
+  "crash": "ValueError: cor invalida: '/tmp/tmp14yrnndl/tons'"
+ },
+ "B15": {
+  "#FFD000": {
+   "ramp": [
+    "#97993C",
+    "#C8B62E",
+    "#FFD000",
+    "#FFEC77",
+    "#FFEA9B"
+   ],
+   "max_hue_drift_deg": 20.8
+  },
+  "#2040FF": {
+   "ramp": [
+    "#002380",
+    "#0034BE",
+    "#2040FF",
+    "#636BFF",
+    "#998FFF"
+   ],
+   "max_hue_drift_deg": 14.8
+  },
+  "#FF2020": {
+   "ramp": [
+    "#910F3A",
+    "#C71439",
+    "#FF2020",
+    "#FF7140",
+    "#FFA86C"
+   ],
+   "max_hue_drift_deg": 8.3
+  }
+ },
+ "B16": {
+  "adapter_spec_sha256": "1c895d3f51aadf1a",
+  "spec_read_27_10": "b6dd212ca4e7f60c",
+  "diff": {
+   "previous_sha256": "1c895d3f51aadf1a4cfe8b39cf4924788c02d5a8c8f682385ff5f18ba2f2997f",
+   "added": [],
+   "removed": [],
+   "request_changed": [],
+   "description_changed": [
+    "POST /generate-font-pro"
+   ],
+   "facts_changed": []
+  },
+  "conformance": []
+ },
+ "O1": {
+  "noise3": {
+   "black_px": 588,
+   "black_wrong_oklab": 64,
+   "black_wrong_lr": 0,
+   "other_wrong_oklab": 0,
+   "other_wrong_lr": 0
+  },
+  "noise4": {
+   "black_px": 588,
+   "black_wrong_oklab": 343,
+   "black_wrong_lr": 0,
+   "other_wrong_oklab": 7,
+   "other_wrong_lr": 7
+  },
+  "jpeg85": {
+   "black_px": 588,
+   "black_wrong_oklab": 45,
+   "black_wrong_lr": 0,
+   "other_wrong_oklab": 3,
+   "other_wrong_lr": 3
+  },
+  "srgb_sample_that_would_change_palette_colour": "1459/20000",
+  "#020201": {
+   "oklab": "#0B0B0B",
+   "lr": "#000000"
+  }
+ }
+}

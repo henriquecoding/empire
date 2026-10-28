@@ -29,6 +29,10 @@ A [solução de 27/10](research/2026-10-27-forja-fidelidade/README.md), depois d
 o Escudeiro, mudou a ordem: o desenho recupera-se antes de se proteger, e só se protege o mestre que o dono aprovou —
 cada referência tem autoridade registada, a edição local prende-se ao mestre e o encerramento não chama aprovação a uma
 evidência de ficheiro ([ADR 0093](../adr/0093-a-forja-protege-o-mestre-aprovado.md)).
+A [auditoria técnica de 27/10](research/2026-10-27-forja-auditoria/README.md) achou dezasseis falhas (B01–B16) e
+reparou-as com testes: o Gemini entregava os rascunhos do pensamento como a imagem paga, o voto dava a célula à cor
+minoritária numa fronteira de balde, dois processos passavam o teto e o servidor MCP morria com JSON que não é um objeto
+ou com acentos no Windows ([ADR 0095](../adr/0095-a-forja-le-como-se-ve.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -147,7 +151,13 @@ diz o que divergiu.
 - `--max-calls` e `--max-usd` são o teto da pasta (`budget.json`, somado entre
   corridas; uma retomada soma nele o custo que o fornecedor disser, e um job que o
   fornecedor dá por falhado conta como custo desconhecido). OpenAI e Gemini não
-  devolvem dólares: aí o teto que vale é o número de chamadas.
+  devolvem dólares: aí o teto que vale é o número de chamadas. Cada conta relê o
+  `budget.json` com um lock entre processos, e conferir e contar a chamada são um só
+  passo: dois `generate` na mesma pasta não passam o teto. Os jobs e o teto escrevem-se
+  com troca atómica e `fsync` (`durable.py`).
+- Do Gemini entra só a imagem final: os modelos 3.x desenham até duas imagens de
+  pensamento antes dela (não cobradas), e a Forja deixa-as de fora e conta-as
+  (`thought_images_skipped`).
 - No `auto`, uma imagem sem figura é uma tentativa que pede outra geração; um erro
   da própria Forja para o ciclo com a imagem paga guardada no job. O resultado diz
   a última tentativa forjada (`best`) e, se o ciclo parou depois dela, porquê
@@ -160,8 +170,14 @@ diz o que divergiu.
 (`forja_prompt`, `forja_forge`, `forja_sheet`, `forja_lint`, `forja_tileset`…).
 Os esquemas saem dos mesmos argumentos da linha de comandos; os repetíveis
 (`protect`, `bare`, `static`, `action`, `hold`) vão como listas. As respostas trazem
-o JSON e a prévia ampliada como imagem, para o agente ver o que fez. O servidor
-trabalha a partir da raiz do repositório: os caminhos relativos partem dela.
+o JSON e a prévia ampliada como imagem, para o agente ver o que fez (sem
+`structuredContent`: há clientes que, com ele, só passam esse campo ao modelo). Cada
+ferramenta tem `title` e anotações: `generate`, `auto` e `inpaint` saem para a rede e
+não se repetem iguais; `jobs` consulta e cancela no fornecedor; `kinds`, `lint` e
+`verify` só leem. O stdio é UTF-8 em qualquer sistema; uma mensagem que não é um
+pedido válido, ou um batch, é um erro JSON-RPC e o servidor continua; uma ferramenta
+desconhecida é o erro `-32602`, e um argumento inválido um resultado `isError`. O
+servidor trabalha a partir da raiz do repositório: os caminhos relativos partem dela.
 
 Claude Code lê o `.mcp.json` da raiz (pede autorização na primeira vez). No
 Codex, em `~/.codex/config.toml`:
@@ -299,7 +315,7 @@ rosto, materiais, equipamento — é desenho, e o que sai é uma adaptação em 
 já aprovado e muda só a zona autorizada. Proteger o último resultado rejeitado congelaria a descaracterização.
 
 1. **Registo de autoridade** (`forja.refs/1`, `forja refs`): o conceito, cada adaptação e cada versão rejeitada, pelo
-   hash dos pixels, com o estado (`concept`, `adaptation_in_review`, `approved`, `rejected`), a origem e de onde
+   hash dos pixels (um pixel de alfa 0 conta como vazio, qualquer que seja a cor escondida nele), com o estado (`concept`, `adaptation_in_review`, `approved`, `rejected`), a origem e de onde
    deriva. `approved` e `rejected` dizem quem decidiu e quando; a Forja acrescenta estados e **nunca escreve
    `approved`** — é uma linha do dono, à mão. A última saída não substitui a referência só por ser mais recente.
 2. **O pedido diz o estado.** `plan`/`auto` com `--refs`: só o mestre registado vai como «the APPROVED design»; a
@@ -375,7 +391,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 
 - **Personagem parado.** `prompt --kind character_s2` (ou `royal_64`/`royal_80`
   para o elenco V15) → `forge`. Contorno preto de 1 px, pés no pivô, alfa
-  binário, paleta de trabalho. A limpeza segue o tipo (`--cleanup`): num
+  binário, paleta de trabalho. Com menos de 85% da borda a preto, o contorno fecha
+  só as falhas e não engrossa o que já lá estava. A limpeza segue o tipo (`--cleanup`): num
   personagem ou efeito, um pixel solto ou um furo de 1 px ficam e aparecem como
   candidatos no relatório (podem ser um olho, um brilho, um rebento); só o
   cenário os tira. Ruído de cor quase igual ao vizinho é alisado (`--noise 0`
@@ -443,7 +460,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   não substituem desenhar a pose.
 - **Paletas.** `forja palette show empire`, `palette extract imagem.png --colors 16`,
   `palette ramp #5A8C3C --steps 5` (rampa com desvio de matiz, claros quentes e
-  escuros frios). Uma rampa nova é proposta até o dono a aceitar.
+  escuros frios; fora do sRGB o croma baixa até caber, com a luminosidade e o matiz
+  fixos). Uma rampa nova é proposta até o dono a aceitar.
 
 ## Referência dos comandos
 
@@ -484,8 +502,14 @@ ficheiro que não é imagem).
   fracionária por pente de contraste (dentes nas linhas menos meios entre elas:
   múltiplos e submúltiplos perdem); linhas por uma reta refeita por mínimos
   quadrados com as bordas confirmadas e interpolação nas zonas lisas.
+- **Abertura.** A orientação EXIF aplica-se (uma foto de um desenho à mão vem
+  deitada) e um perfil ICC que não é sRGB converte-se para sRGB, a paleta do projeto;
+  um perfil sRGB não se toca. O que se fez fica em `provenance.input.opened`.
 - **Amostragem.** Cada célula vota a cor dominante no miolo (sem a borda
-  suavizada); uma cor chapada sai igual, uma ruidosa sai limpa. `--method mode`
+  suavizada); uma cor chapada sai igual, uma ruidosa sai limpa. Os baldes de 16
+  níveis procuram-se em oito grelhas deslocadas meio balde (o histograma deslocado
+  médio de Scott): numa só, uma cor ruidosa na fronteira de um balde perdia para a
+  minoria. `--method mode`
   toma só a cor exata mais frequente, sem misturar (o `scale --down` usa-o). A
   grade de um recorte mede-se antes da máscara da figura. Depois do voto, a
   célula inteira é lida contra o pixel escolhido (`loss.py`): o que sumiu sem

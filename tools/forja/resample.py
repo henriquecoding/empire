@@ -3,9 +3,16 @@
 Cada celula vira UM pixel. Por omissao vota a cor dominante no miolo da celula
 (as bordas trazem a suavizacao do gerador): agrupa as cores em baldes de 16
 niveis por canal, escolhe o balde mais cheio e, dentro dele, a cor exata mais
-frequente se ela pesar; senao a media em luz linear do balde. Assim uma cor
-chapada sai exatamente igual, e uma cor ruidosa sai limpa. `mode` e so a cor exata
-mais frequente (para reduzir pixel art que ja e limpa, sem misturar).
+frequente se ela pesar; senao a media em luz linear da vizinhanca do balde. Assim
+uma cor chapada sai exatamente igual, e uma cor ruidosa sai limpa. `mode` e so a cor
+exata mais frequente (para reduzir pixel art que ja e limpa, sem misturar).
+
+Os baldes procuram-se em oito grelhas, deslocadas meio balde em cada canal (o
+histograma deslocado medio de Scott, 1985): numa grelha so, uma cor ruidosa que cai
+numa fronteira (128 = 8 x 16) divide-se por dois a oito baldes e perde para a minoria
+— 86 das 112 cores da paleta tem um canal a 3 niveis de uma fronteira (FORJA-08, B02).
+A media faz-se depois na vizinhanca centrada no balde (um passo de deslocamento da
+media), que a fronteira ja nao corta.
 
 A pureza e a mesma medida em todos os metodos (FORJA-07; auditoria de 27/10, §12.5): a parte do miolo amostrado
 perto (OKLab < NEAR) da cor escolhida. Antes so o dominante a calculava e os outros devolviam 1,0 por convencao. Mede
@@ -13,6 +20,7 @@ o miolo, nao a celula inteira nem a identidade: o que ficou fora do miolo ou do 
 """
 from __future__ import annotations
 
+import itertools
 from dataclasses import dataclass, field
 
 from PIL import Image
@@ -23,6 +31,8 @@ from .imageops import CLEAR, binarize
 
 METHODS = ("dominant", "mode", "center", "median", "mean")
 NEAR = 0.08
+SHIFTS = tuple(itertools.product((0, 8), repeat=3))
+REACH = 8
 
 
 @dataclass
@@ -99,13 +109,30 @@ def _pick(region: Image.Image, solid: list, covered: int, method: str) -> tuple[
         return color.mean_color(solid)
     if method == "median":
         return _median(solid, covered)
-    buckets: dict[tuple[int, int, int], list[tuple[int, tuple[int, int, int]]]] = {}
-    for n, c in solid:
-        buckets.setdefault((c[0] >> 4, c[1] >> 4, c[2] >> 4), []).append((n, c))
-    best = max(buckets.values(), key=lambda items: sum(n for n, _ in items))
+    best = _bucket(solid)
     weight = sum(n for n, _ in best)
     exact = max(best)
-    return exact[1] if exact[0] >= 0.35 * weight else color.mean_color(best)
+    return exact[1] if exact[0] >= 0.35 * weight else color.mean_color(_around(solid, color.mean_color(best)) or best)
+
+
+def _bucket(solid: list[tuple[int, tuple[int, int, int]]]) -> list[tuple[int, tuple[int, int, int]]]:
+    """O balde mais cheio nas oito grelhas deslocadas; no empate fica a grelha sem deslocamento (a de antes)."""
+    best: list = []
+    weight = -1
+    for s in SHIFTS:
+        buckets: dict[tuple[int, int, int], list[tuple[int, tuple[int, int, int]]]] = {}
+        for n, c in solid:
+            buckets.setdefault(((c[0] + s[0]) >> 4, (c[1] + s[1]) >> 4, (c[2] + s[2]) >> 4), []).append((n, c))
+        top = max(buckets.values(), key=lambda items: sum(n for n, _ in items))
+        w = sum(n for n, _ in top)
+        if w > weight:
+            best, weight = top, w
+    return best
+
+
+def _around(solid, center: tuple[int, int, int]) -> list[tuple[int, tuple[int, int, int]]]:
+    """As cores a REACH niveis (por canal) do centro do balde: a vizinhanca que a fronteira nao corta."""
+    return [(n, c) for n, c in solid if max(abs(c[i] - center[i]) for i in range(3)) <= REACH]
 
 
 def _median(solid: list[tuple[int, tuple[int, int, int]]], total: int) -> tuple[int, int, int]:

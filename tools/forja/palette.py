@@ -76,7 +76,7 @@ def load(source: str | Path | None) -> Palette:
     if source in (None, "", "empire"):
         source = EMPIRE_PALETTE
     text = str(source)
-    if "," in text or (text.startswith("#") and not Path(text).exists()):
+    if not Path(text).is_file() and ("," in text or text.startswith("#")):  # um caminho pode ter virgulas (B14)
         return Palette([color.parse_hex(h) for h in text.replace(" ", "").split(",") if h], "inline")
     path = Path(text)
     suffix = path.suffix.lower()
@@ -219,7 +219,7 @@ def ramp(base: tuple[int, int, int], steps: int = 5, hue_shift: float = 18.0,
         t = (i / (steps - 1) - 0.5) * 2 if steps > 1 else 0.0
         target = h + _hue_toward(h, 85.0) * hue_shift * t
         lum = max(0.05, min(0.97, big_l + t * light_range / 2))
-        out.append(color.from_lch(lum, c * (1 - 0.35 * abs(t)), target % 360))
+        out.append(color.from_lch(lum, c * (1 - 0.35 * abs(t)), target % 360, gamut=True))
     return Palette(out, f"ramp {color.to_hex(base)}")
 
 

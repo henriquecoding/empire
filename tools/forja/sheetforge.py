@@ -68,6 +68,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     out.mkdir(parents=True, exist_ok=True)
     name = name or source.stem
     image = open_rgba(source)
+    seen = image.info.get("forja_source")
     if sopts.region:
         image = image.crop(sopts.region)
     bg = _bg(image, opts.bg)
@@ -169,7 +170,8 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
               "metrics": metrics, "fixes": fixes, "files": files,
               "prompt_feedback": " ".join(dict.fromkeys(f["prompt_hint"] for v in verdicts for f in v["findings"]
                                                         if f["prompt_hint"])),
-              "provenance": provenance.record(source, generator, prompt, {**opts.__dict__, **sopts.__dict__})}
+              "provenance": provenance.record(source, generator, prompt, {**opts.__dict__, **sopts.__dict__},
+                                              seen)}
     if moved["blocking"]:
         result["prompt_feedback"] = ("Every frame must show a different pose of the action (no copies). "
                                      + result["prompt_feedback"]).strip()
