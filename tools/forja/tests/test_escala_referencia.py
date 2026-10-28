@@ -3,7 +3,7 @@ import copy
 import json
 import unittest
 
-from tools.forja import cli, equipment, fidelity, geometry, limits, plan, prompts, review_state
+from tools.forja import cli, contracts, equipment, fidelity, geometry, limits, native_prompt, plan, prompts, review_state
 from tools.forja.tests import audit_fixtures as fx, equip_fixtures as ef
 from tools.forja.tests.helpers import framed, tempdir
 
@@ -130,6 +130,13 @@ class ReferenceRepairTest(unittest.TestCase):
         self.assertIn('Native canvas: 64x64', generated['description'])
         self.assertNotIn('shading', generated)
 
+
+    def test_native_prompt_names_the_logical_canvas_the_request_sends(self):
+        built = native_prompt.build('stone tile', contracts.get('tile'), None, 'right', 'stylized', {})
+        self.assertIn('Native canvas: 16x16 actual pixels', built['prompt'])
+        self.assertIn('32x32 on screen', built['prompt'])
+        built = native_prompt.build('troop archer', contracts.get('troop_64'), None, 'right', 'stylized', {})
+        self.assertIn('Native canvas: 64x64 actual pixels;', built['prompt'])
 
 if __name__ == '__main__':
     unittest.main()

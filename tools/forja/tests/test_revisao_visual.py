@@ -121,6 +121,32 @@ class ControlTest(unittest.TestCase):
                                        'observations': {a: 'ok' for a in review_state.ASPECTS}}])
         self.assertEqual(review_state.identity(ch, image, None, rev)['status'], 'pass')
 
+    def test_inferred_region_or_anchor_never_becomes_a_geometric_pass(self):
+        image = ef.bow('valid')
+        rev = review(image)
+        rev['regions']['bow.grip'] = {'box': [60, 34, 70, 47], 'state': 'inferred', 'colors': [ef.WOOD]}
+        obs = vr.observation(rev)
+        self.assertEqual(obs['regions']['bow.grip']['uncertainty'], 'alta')
+        nocks = [c for c in geometry.review(ef.bow_manifest(), equipment.observe(image, obs))['checks']
+                 if c['check'] == 'bow_nocks']
+        self.assertEqual(nocks[0]['status'], 'inconclusive')
+        rev = review(image)
+        rev['anchors']['bow.nock_bottom']['state'] = 'inferred'
+        obs = vr.observation(rev)
+        self.assertNotIn('bow.nock_bottom', obs['anchors'])
+        nocks = [c for c in geometry.review(ef.bow_manifest(), equipment.observe(image, obs))['checks']
+                 if c['check'] == 'bow_nocks']
+        self.assertEqual(nocks[0]['status'], 'not_evaluated')
+
+    def test_a_reference_phase_review_is_not_evidence_for_the_candidate(self):
+        image = ef.bow('valid')
+        ref = review(image, 'reference', invariant_checks=[{'invariant': 'capuz verde', 'status': 'changed',
+                                                            'evidence': 'sem capuz'}])
+        ch = archer(identity_reviews=[{'pixels_sha256': equipment.image_sha(image), 'status': 'pass',
+                                       'reviewed_by': 'x', 'date': 'd',
+                                       'observations': {a: 'ok' for a in review_state.ASPECTS}}])
+        self.assertEqual(review_state.identity(ch, image, None, ref)['status'], 'blocked')
+
     def test_uncertainty_stays_visible_and_never_becomes_pass(self):
         image = ef.bow('valid')
         rev = review(image, findings=[finding(certainty='uncertain')])

@@ -35,6 +35,9 @@ def identity(ch: dict, candidate: Image.Image, reg: dict | None, visual: dict | 
     if rec["state"] == "rejected":
         return {"status": "blocked", "evidence": [f"registo {rec['register']}: {rec['id']} rejeitada"]}
     seen = visual_review.state(visual, candidate, ch) if visual else None
+    if seen and visual.get("phase") != "candidate":
+        seen = {**seen, "status": "invalid", "errors": [f"revisao da fase {visual.get('phase')!r}: a evidencia do "
+                                                         "candidato e uma revisao candidate desta imagem"]}
     if seen and seen["status"] in ("invalid", "blocked"):
         return {"status": "blocked", "evidence": seen.get("errors") or seen["blocking"], "visual_review": seen}
     if seen:

@@ -142,7 +142,7 @@
     49
    ],
    "note": "a pega esta debaixo da mao da frente; inferida pelos dois membros",
-   "uncertainty": "media"
+   "uncertainty": "alta"
   }
  },
  "anchors": {
@@ -155,5 +155,6 @@
    44
   ]
  },
- "occluded": {}
+ "occluded": {},
+ "inferred_anchors": []
 }

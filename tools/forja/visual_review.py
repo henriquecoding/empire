@@ -190,20 +190,20 @@ def for_reference(base: str | Path, ch: dict, crop: Image.Image) -> dict:
 
 
 def observation(rev: dict) -> dict:
-    """A observacao `forja.observation/1` do forja equip: o tapado fica de fora (inconclusivo), o inferido incerto."""
+    """A observacao `forja.observation/1` do forja equip: o tapado fica de fora e o inferido entra com incerteza
+    `alta`, para a geometria que depende dele sair inconclusiva e nunca `pass`; uma ancora inferida nao e medida."""
     regions, occluded = {}, {}
     for name, r in rev.get("regions", {}).items():
         if r["state"] == "occluded":
             occluded[name] = r.get("occluded_by")
             continue
-        level = r.get("uncertainty", "baixa")
-        if r["state"] == "inferred" and level == "baixa":
-            level = "media"
         regions[name] = {k: v for k, v in r.items() if k in ("box", "colors", "exclude", "note")}
-        regions[name]["uncertainty"] = level
+        regions[name]["uncertainty"] = "alta" if r["state"] == "inferred" else r.get("uncertainty", "baixa")
     who = dict(rev["observer"], method=f"{rev['observer']['method']} ({SCHEMA})")
+    anchors = {k: a["point"] for k, a in rev.get("anchors", {}).items() if a.get("state") == "observed"}
     return {"schema": OBS_SCHEMA, "image_sha256": rev["image"]["sha256"], "observer": who, "regions": regions,
-            "anchors": {k: a["point"] for k, a in rev.get("anchors", {}).items()}, "occluded": occluded}
+            "anchors": anchors, "occluded": occluded,
+            "inferred_anchors": sorted(k for k, a in rev.get("anchors", {}).items() if a.get("state") != "observed")}
 
 
 def issue_reviews(rev: dict) -> list[dict]:

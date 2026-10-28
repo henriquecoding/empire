@@ -12,7 +12,7 @@ perguntas Q-292–Q-294 em [QUESTIONS.md](../../../QUESTIONS.md).
 | Grade | pass | 80×80, 64×64, 64×64 reais; zero pixels cortados; fonte e método por etapa com hash (`prova.json`) |
 | Preservação | pass nos pinos; regiões pendentes | 10 pinos de 1 px verificados no PNG final; as regiões não têm o JSON de perda do forge porque a perda aconteceu na recuperação (medida abaixo) |
 | Identidade | **pendente (dono)** | revisão visual do agente por invariante (`revisoes/*-candidato.json`) e folhas lado a lado; o `identity_reviews` é de uma pessoa |
-| Arma | pass na geometria | uma corda, 1 px, reta, ligada à madeira nas duas pontas, pega entre elas, mão da frente na pega (`equip/veredito.json`) |
+| Arma | corda pass; pega inconclusiva | `string_line` pass: uma corda, 1 px, reta, ligada à madeira nas duas pontas; `bow_nocks` e o contacto ficam inconclusivos porque a pega está debaixo da mão e é inferida, não vista (`equip/veredito.json`) |
 | Cor e pixels | revisto | tons da própria prancha, sem teto (60/49/38 cores); materiais separados; nenhum pixel isolado apagado às cegas |
 | Revisão | pass nos reparos | três defeitos da referência corrigidos e registados por hash (`reference_issue_reviews`); aprovação do mestre pendente |
 | Integração | **não integrado** | Godot 4.7.2 abre os três PNG com as mesmas medidas e alfa binário (sonda, não o jogo); `.aseprite` relido igual ao PNG pelo leitor do projeto, não aberto no Aseprite |
@@ -63,7 +63,8 @@ Reparo, só na arma: a lasca sai e a túnica continua até ao contorno da braça
 de baixo (35,45), à frente do corpo** — clara sobre o fundo e a braçadeira, num tom médio sobre o creme, onde a
 clara desaparecia; um brilho da manga com o tom da corda, encostado a ela, passou a creme (o `forja equip` mediu
 2 px de largura nesse ponto). Rosto, capuz, roupa, mãos e gesto de repouso ficam. Medido pelo `forja equip`:
-`string_line`, `bow_nocks` e `contact` em pass. Num fundo claro a parte clara da corda quase some (Q-294).
+`string_line` em pass; `bow_nocks`, a contagem da pega e o contacto ficam inconclusivos, porque a pega está
+debaixo da mão da frente e foi marcada como inferida (um inferido nunca dá pass; revisão do Codex no PR #130). Num fundo claro a parte clara da corda quase some (Q-294).
 
 ## Identidade (observação do agente, não aprovação)
 

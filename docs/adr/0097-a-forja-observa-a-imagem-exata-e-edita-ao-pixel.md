@@ -52,8 +52,9 @@ Escudeiro e Arqueiro. Recuperada nessa grade, sem reduzir, a figura dá 81×77, 
 ## Consequências e limites
 
 Os três candidatos (Rei 80×80, Escudeiro 64×64, Arqueiro de tropa 64×64) cumprem o contrato do runtime, ficam dentro
-da caixa útil, com o pivô nos pés e sem corte, e os pinos de 1 px estão verificados. O arco do arqueiro passa a
-geometria (uma corda, fina, reta, ligada à madeira nas duas pontas, pega entre elas). Isto não é aprovação: a
+da caixa útil, com o pivô nos pés e sem corte, e os pinos de 1 px estão verificados. A corda do arqueiro passa a
+geometria (uma, fina, reta, ligada à madeira nas duas pontas); a pega, debaixo da mão, é inferida e deixa
+`bow_nocks` inconclusivo — uma região ou âncora inferida entra com incerteza alta e nunca dá pass. Isto não é aprovação: a
 identidade e o mestre são do dono, e as decisões de orçamento (capa do Rei 4 px para dentro com margem esquerda 0;
 três linhas do arqueiro) e a corda em dois tons estão em Q-292–Q-294. A revisão visual foi escrita pelo agente: o
 transporte simulado testa o contrato, não a qualidade de uma visão, e nenhuma taxa de acerto foi medida. O
