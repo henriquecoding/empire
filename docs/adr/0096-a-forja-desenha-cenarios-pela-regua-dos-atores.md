@@ -44,14 +44,17 @@ tamanho de célula por plano; e as emendas provam-se pela topologia, não pelo c
    baixo, a altura da porta e os vãos, no tamanho exato do pedido. `forja cena`, e `plan`/`auto` com `--scene`, planeiam
    sem rede para os três geradores; o PixelLab desenha nas células, e acima do modelo o plano falha e propõe a partição.
 4. **Sem tela inventada.** `prompts.geometry` recusa um contrato sem tela e sem extensão dita, em vez de 64×64.
-   Um plano opaco forja-se com `--bg keep`. A tela e o pivô da cena chegam ao `forge` e ao `auto` pelo `expect`.
+   Um plano opaco forja-se com `--bg keep`. A tela, o pivô, o fundo de cada gerador e a origem da cena chegam ao
+   `forge` e ao `auto` pelo `expect`: com a grade pedida medida, a peça fica onde ela a pôs, sem recentrar.
 5. **A estrutura confere-se à parte.** `forja estrutura` mede, sem nota global: extensão, grade, base no chão, cada vão
    (escuro, aceso ou vazado; a altura livre até à soleira contra a régua), os sinais (presentes; iguais ao mestre quando
    há mestre), a repetição e os conectores (o degrau da emenda contra o maior entre colunas interiores), e os estados
-   (nada muda fora das zonas declaradas). O que não se mediu fica `not_evaluated`; a aprovação fica `pending`.
+   (nada muda fora das zonas declaradas). O que não se mediu fica `not_evaluated`, também um estado declarado sem
+   imagem; a aprovação fica `pending`.
 6. **As emendas Wang provam-se.** `forja tileset` confere os 64+64 pares compatíveis pela topologia da aresta e os
    cachos partidos nas emendas e nos 512 cruzamentos 2×2.
-7. **A prova é uma cena.** `forja montagem` põe a peça no mundo 1280×720, na linha do chão e na fase da grade, com os
+7. **A prova é uma cena.** `forja montagem` põe a peça no mundo 1280×720 pela sua âncora (chão, horizonte ou fundo do
+   ecrã; repetida em x quando o contrato o pede) e na fase da grade, com os
    atores reais, de dia e numa noite aproximada (a modulação da fase do `clock.csv`, sem luzes); `forja escala` leva uma
    referência à régua por marcos funcionais, diz se os marcos concordam, compara o pixel aparente com a célula e mostra a
    referência na escala do jogo, ao lado dos atores.

@@ -35,7 +35,8 @@ def partition(total: int, max_side: int, overlap: int, step: int = 1) -> list[li
     return [[s, s + size] for s in starts]
 
 
-def _references(sc: dict, base: Path, register: dict | None, d: dict) -> list[tuple[str, bytes]]:
+def references(sc: dict, base: Path, register: dict | None, d: dict) -> list[tuple[str, bytes]]:
+    """As referencias da cena com o estado no registo (em `d`); a rejeitada fica de fora e da erro."""
     out = []
     for r in sc.get("references", []):
         with Image.open(base / r["file"]) as im:
@@ -143,7 +144,7 @@ def _pixellab(d, res, palette, model, seed) -> list:
     d["prompt"] = params["description"]
     exp = scene_prompt.build(res, "generic")["expect"]  # o PixelLab recebe a descricao; o expect so mede
     d["expect"] = {**exp, "scale": 1, "scale_exact": True, "grid": "native", "size": [w, h],
-                   "attached": [r for r, _ in images]}
+                   "attached": [r for r, _ in images], "background": scene_prompt.backdrop(res, "pixellab")}
     d["authoring"] = "generated_native"
     return images
 
@@ -164,7 +165,7 @@ def make(backend: str, scene_path: str | Path, palette: Palette | None = None, m
                    "recuperacao: o que sair e uma adaptacao em revisao, nao um mestre nativo"],
                "prompt": "", "expect": None, "request": None, "advice": None, "constraints": [], "implicit": [],
                "training_permission": plan_mod.PERMISSION.get(backend), "contracts": res["contract"]}
-    refs = _references(sc, Path(sc["_base"]), register, d)
+    refs = references(sc, Path(sc["_base"]), register, d)
     d["authority"]["states"] = [r["state"] for r in d["references"]]
     if backend == "openai":
         images = _openai(d, res, refs, palette, model, guides_mode)

@@ -33,7 +33,7 @@ def _options(args) -> pipeline.Options:
         # grade so pedida por palavras (F03): deteta-se; a escala pedida fica para comparar, nao se assume
         if exp.get("background", "transparent") != "transparent" and not opts.bg:
             opts.bg = exp["background"]
-        opts.canvas, opts.pivot = expectation.frame(exp, opts.canvas, opts.pivot)
+        opts.canvas, opts.pivot, opts.origin, opts.origin_grid = expectation.frame(exp, opts.canvas, opts.pivot)
     return opts
 
 

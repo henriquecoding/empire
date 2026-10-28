@@ -141,7 +141,7 @@ class MontagemTest(unittest.TestCase):
         res = resolved()
         b = montagem.bench(fx.house(), res)
         left, top = b["placement"]["asset_top_left"]
-        self.assertEqual(top + 128, b["placement"]["base_edge_y"])
+        self.assertEqual(top + 128, b["placement"]["anchor_world_y_edge"])
         self.assertEqual(left % 2, 0)
         self.assertEqual(b["day"].getpixel((left + 60, top + 127)), fx.DARK)
         self.assertEqual({a["actor"] for a in b["actors"]}, {res["ruler"]["tallest"]["id"],

@@ -28,11 +28,11 @@ corretamente para personagens no caso do meu jogo que estão sendo gerados em 64
 | Dimensão explícita por tipo; sem 64×64 por omissão | `prompts.geometry` recusa um contrato sem tela; a extensão vem do `forja.scene/1` | `test_cenarios.PromptTest` |
 | Vocabulário arquitetónico e papéis de referência | `scene_prompt.py`: projeção, chão, régua, vãos, sinais, materiais, telhado, cada linha com origem; seis papéis (`scenery.json`) | `PromptTest`, `prova.json` §cenas |
 | Projeção do mundo separada da orientação do ator | `camera_conflicts(..., "elevation")`: a fachada é a vista lateral; isométrica, três quartos e perspetiva continuam conflito | `PromptTest` |
-| Fundo e bordas | `--bg keep` num plano opaco; o contorno dito em pixels lógicos (`constraints.outline`) | `test_cenarios.OpaquePlaneTest` |
+| Fundo e bordas | `--bg keep` num plano opaco; a cor-chave para quem não devolve alfa; a origem da cena no `forge`; o contorno dito em pixels lógicos (`constraints.outline`) | `test_cenarios.OpaquePlaneTest`, `test_cenarios_revisao` |
 | Adaptador por capacidades | `scene_plan.py`: gpt-image, Gemini e PixelLab nas células; partição quando excede; `plan`/`auto --scene`; hash `ae1f76eb…` do PixelLab conferido (63/63) | `ScenePlanTest`, `contrato-2026-10-28.json` |
 | Régua e fase | `regua.py`: atores, mundo e fase da arte do dono lidos dos ficheiros; métricas com origem | `test_cenarios.ReguaTest` |
 | Módulos, emendas, estados | `estrutura.py` (extensão, grade, base, vãos, sinais, repetição, conectores, estados); `tiles.pairs` e `tiles.junctions` (64+64 pares, 512 cruzamentos) | `test_estrutura` |
-| Montagem | `montagem.py`: bancada com os atores reais, dia e noite aproximada; `forja escala` por marcos | `MontagemTest`, `evidencias/` |
+| Montagem | `montagem.py`: bancada com os atores reais, cada peça pela sua âncora (`scene.place`), dia e noite aproximada; `forja escala` por marcos | `MontagemTest`, `test_cenarios_revisao.AnchorTest`, `evidencias/` |
 | Piloto | quatro contratos (a oficina como marco, a forja jogável comprimida, o carvalho, o terreno), a escala das referências contra a pegada da simulação, a oficina reduzida revista e montada e o contraexemplo da oficina encolhida | `prova_cenarios.py`, `prova.json` |
 
 ## Por fazer

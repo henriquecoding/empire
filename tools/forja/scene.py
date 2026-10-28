@@ -27,6 +27,7 @@ from .equipment import image_sha
 SCHEMA = "forja.scene/1"
 OPENINGS = ("door", "window", "arch", "bay", "gate")
 TREATMENTS = ("interior", "lit", "transparent")  # escuro, aceso (janela, forja) ou vazado
+GROUNDS = {"surface": "surface_y", "horizon": "horizon_y", "bottom": "screen_bottom"}  # scenery.json -> lattice
 
 
 def _box(box, size: tuple[int, int]) -> str | None:
@@ -172,8 +173,7 @@ def resolve(scene: dict, root: Path | None = None) -> dict:
     pivot = [w // 2, h - 1]  # o forge pousa o centro da base do recorte aqui (ancora `bottom` dos contratos)
     return {"id": scene["id"], "asset": scene["asset"], "kind": c.kind, "contract": c.as_dict(), "step": step,
             "extent_px": [w, h], "cells": [w // step, h // step], "background": spec["background"],
-            "projection": spec["projection"], "anchor": {"mode": spec["anchor"],
-                                                         "local_px": [w // 2 if spec["anchor"] == "base_center" else 0, h],
+            "projection": spec["projection"], "anchor": {"mode": spec["anchor"], "local_px": _local(spec["anchor"], w, h),
                                                          "ground": spec["ground"]},
             "repeat": repeat, "connectors": bool(spec.get("connectors")),
             "openings": [{**o, "cells": [v // step for v in o["box_px"]]} for o in scene.get("openings", [])],
@@ -185,3 +185,28 @@ def resolve(scene: dict, root: Path | None = None) -> dict:
             "metrics": found, "lattice": regua.lattice(step, wld), "world": wld, "warnings": check["warnings"],
             "forge_args": ["--kind", c.kind, "--canvas", f"{w}x{h}", "--pivot", f"{pivot[0]},{pivot[1]}"]
             + (["--bg", "keep"] if spec["background"] == "opaque" else []), "spec": spec, "scene": scene}
+
+
+def _local(mode: str, w: int, h: int) -> list[int]:
+    """O ponto da peca que assenta na ancora: o centro da base, o canto de baixo ou o de cima a esquerda."""
+    return [w // 2 if mode == "base_center" else 0, 0 if mode == "top_left" else h]
+
+
+def place(res: dict, size: tuple[int, int], x: int | None = None) -> dict:
+    """Onde a peca fica no mundo pela ancora declarada (a aresta do chao, do horizonte ou do fundo do ecra), na fase
+    da grade; com repeticao em x, as copias que cobrem a janela a partir dela."""
+    w, h = size
+    wld, lat, step, mode = res["world"], res["lattice"], res["step"], res["anchor"]["mode"]
+    ground = res["anchor"]["ground"]
+    found = lat["anchors"].get(GROUNDS[ground])
+    edge = found["edge"] if found else wld["viewport"][1] if ground == "bottom" else None
+    if edge is None:
+        raise ValueError(f"o mundo nao tem a ancora {GROUNDS[ground]} para pousar a peca")
+    local = _local(mode, w, h)
+    cx = (wld["viewport"][0] // 2 if x is None else x) if mode == "base_center" else 0
+    left = (cx - local[0] - lat["phase"][0]) // step * step + lat["phase"][0]
+    top = edge - local[1]
+    lefts = list(range(left - -(-left // w) * w, wld["viewport"][0], w)) if "x" in res["repeat"] else [left]
+    return {"asset_top_left": [left, top], "copies": [[v, top] for v in lefts], "anchor_mode": mode,
+            "anchor_local_px": local, "ground": ground, "anchor_world_y_edge": edge, "top_world_y": top,
+            "lattice_phase": lat["phase"], "rule": "world = anchor_world - anchor_local + pixel_local"}

@@ -40,6 +40,9 @@ class Options:
     notes: list[str] = field(default_factory=list)
     reduce: bool = False  # FORJA-07: a grade dada e uma reducao deliberada (adaptacao, nao recuperacao)
     signals: dict | None = None  # forja.signals/1: pinos e regioes declarados para esta imagem
+    origin: tuple[int, int] | None = None  # cena (FORJA-09): a celula da grade pedida que e o canto da tela
+    origin_grid: tuple[int, int] | None = None  # e a grade pedida; so com ela medida a figura fica onde a grade a pos
+    crop_at: tuple[int, int] | None = None  # interno: onde o recorte do snap comecava na grade recebida
 
 
 def contract_for(opts: Options) -> contracts.Contract:
@@ -70,6 +73,7 @@ def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None,
     box = opaque_bbox(native) or (0, 0, min(1, native.width), min(1, native.height))  # vazia: nada a limpar
     native = native.crop(box)
     return native, {"grid": g.as_dict(), "sample": sampled.as_dict(), "background": bginfo,
+                    "grid_cells": list(sampled.image.size), "crop_origin": [box[0], box[1]],
                     "native_size": list(native.size), "subgrid": subgrid(native, sampled.impure, box),
                     "loss": loss.crop(lost, box), "pins": signals.crop(pins, box)}
 
@@ -123,11 +127,16 @@ def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
         info["cluster_upscale"] = contract.cluster
     info["shift"] = [shift[0] * contract.cluster, shift[1] * contract.cluster]
     if opts.fit and contract.canvas:
-        anchor = _anchor(img, contract.anchor)
-        target = contract.pivot or (contract.canvas[0] // 2, contract.canvas[1] - 1)
+        if opts.origin is not None and opts.crop_at is not None:  # cena: fica onde a grade a pos, sem recentrar
+            anchor, c = (0, 0), contract.cluster if info.get("outline_added") else 0
+            target = tuple(_inside((opts.crop_at[i] - opts.origin[i]) * contract.cluster + info["shift"][i],
+                                   img.size[i], contract.canvas[i], c) for i in (0, 1))
+        else:
+            anchor = _anchor(img, contract.anchor)
+            target = contract.pivot or (contract.canvas[0] // 2, contract.canvas[1] - 1)
         img, clipped = place(img, contract.canvas, anchor, target)
         info["fit"] = {"canvas": list(contract.canvas), "pivot": list(target), "anchor": list(anchor),
-                       "clipped_pixels": clipped}
+                       "clipped_pixels": clipped, "mode": "origin" if anchor == (0, 0) else "anchor"}
     if guarded:
         info["protect"].update(guard.verify(img, native, guarded, info))
     budget = info.get("palette", {}).get("budget")
@@ -163,6 +172,12 @@ def _anchor(img: Image.Image, mode: str) -> tuple[int, int]:
     return img.width // 2, img.height - 1
 
 
+def _inside(t: int, size: int, room: int, cell: int) -> int:
+    """A origem de uma cena com o contorno que a forja acrescentou: recua ate essa celula para ele nao sair da tela
+    (a base fica no chao, como no modo ancora); um excesso maior continua a ser corte."""
+    return min(max(t, min(0, t + cell)), max(room - size, t - cell))
+
+
 def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | None = None,
           prompt: str | None = None, generator: str | None = None, aseprite: bool = False,
           report_html: bool = True) -> dict:
@@ -183,7 +198,11 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     else:
         native, snapinfo = snap(image, opts, g, sampled)
         pinned = signals.protect_boxes(snapinfo["pins"])
-        final, finishinfo = finish(native, replace(opts, protect=(opts.protect or []) + pinned) if pinned else opts,
+        held = opts.origin is not None and snapinfo["grid_cells"] == list(opts.origin_grid or [])
+        snapinfo["placement"] = "origin" if held else "anchor" if opts.origin is None else \
+            "anchor: a grade recebida nao e a pedida, a figura foi centrada pela base (rever os vaos)"
+        fopts = replace(opts, crop_at=tuple(snapinfo["crop_origin"]) if held else None)
+        final, finishinfo = finish(native, replace(fopts, protect=(opts.protect or []) + pinned) if pinned else fopts,
                                    contract, pal)
         exempt = frozenset().union(*[masks.box(_to_final(list(b), finishinfo)) for b in opts.bare or []])
         verdict = lint.check(final, contract, pal, frame=bool(contract.canvas), exempt=exempt)

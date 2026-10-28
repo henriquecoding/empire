@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import constraints, contracts, prompts, regua
+from . import constraints, contracts, matte, prompts, regua
 from .palette import Palette
 
 ROLE_TEXT = {"palette": prompts.ROLES["palette"],
@@ -161,8 +161,12 @@ def build(res: dict, target: str = "gpt-image", attached: list[str] | None = Non
     if attached:
         lines.append("Attached images, in order: " + "; ".join(f"image {i}: {role_text(r)}"
                                                                 for i, r in enumerate(attached, 1)) + ".")
-    lines.append(f"Background: fully transparent around the {res['asset'].replace('_', ' ')}; no sky, no backdrop, "
-                 "no checkerboard.")
+    background = backdrop(res, target, palette)
+    asset = res["asset"].replace("_", " ")
+    lines.append(f"Background: fully transparent around the {asset}; no sky, no backdrop, no checkerboard."
+                 if background in ("transparent", "keep") else
+                 f"Background: one perfectly flat solid {background} color (chroma key) everywhere around the {asset}; "
+                 f"never use {background} inside it; no shadow, floor, gradient or vignette.")
     if (x0, y0, x1, y1) != (0, 0, lw, lh):
         lines.append(f"Margins: draw only inside logical pixels x {x0}-{x1 - 1}, y {y0}-{y1 - 1}; the walk line is "
                      f"row {y1 - 1}; everything outside that box is empty background.")
@@ -170,8 +174,8 @@ def build(res: dict, target: str = "gpt-image", attached: list[str] | None = Non
                  "photorealism, 3D render, painterly brushwork, blur, glow, watermark.")
     expect = {"kind": res["kind"], "cells": [lw, lh], "content": [x0, y0, x1, y1], "scale": k,
               "scale_exact": geo["exact"], "grid": "requested", "layout": [1, 1], "frames": 1, "tags": None,
-              "background": "transparent", "size": geo["size"], "cluster": res["step"], "attached": attached,
-              "mode": "scene", "scene": res["id"], "forge_args": res["forge_args"]}
+              "background": background, "size": geo["size"], "cluster": res["step"], "attached": attached,
+              "mode": "scene", "scene": res["id"], "forge_args": res["forge_args"], "placement": "origin"}
     advice = None if k >= 8 else (f"cada pixel logico tera so {k:g} px na imagem: divida a cena em objetos ou planos "
                                   "e peca cada um no seu tamanho")
     return {"prompt": "\n".join(lines), "size": f"{geo['size'][0]}x{geo['size'][1]}", "expect": expect,
@@ -179,6 +183,15 @@ def build(res: dict, target: str = "gpt-image", attached: list[str] | None = Non
             "conflicts": prompts.camera_conflicts(res["scene"]["subject"], "right", "elevation"), "mode": "scene",
             "constraints": [{"id": "pixel_grid", "origin": "request"}] + [{k: r[k] for k in ("id", "origin")}
                                                                        for r in found], "implicit": []}
+
+
+def backdrop(res: dict, target: str, palette: Palette | None = None) -> str:
+    """O fundo pedido e o que o `forge` faz com ele: so o gpt-image (e o PixelLab) devolvem alfa; os outros pintam uma
+    cor-chave liso, que sai em todo o lado. Uma peca que toca as bordas por desenho (faixa de terreno, muro, planos)
+    nao passa pela detecao do fundo pela borda, que tomaria a terra pelo fundo: `keep` so binariza o alfa."""
+    if target in ("gpt-image", "pixellab"):
+        return "keep" if res["repeat"] else "transparent"
+    return matte.best_key(palette.colors if palette else [])
 
 
 def pixellab_params(res: dict) -> dict:

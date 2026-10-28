@@ -777,7 +777,8 @@
     223,
     223
    ],
-   "clipped_pixels": 0
+   "clipped_pixels": 0,
+   "mode": "anchor"
   },
   "verdicts": {
    "raster_contract": "pass",
@@ -843,6 +844,46 @@
     "check": "work_area",
     "status": "inconclusive",
     "detail": "work_area: presente (99%); sem mestre, a forma revê-se a olho"
+   },
+   {
+    "check": "empty",
+    "status": "not_evaluated",
+    "detail": "empty: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "scaffold",
+    "status": "not_evaluated",
+    "detail": "scaffold: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "building",
+    "status": "not_evaluated",
+    "detail": "building: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "damaged",
+    "status": "not_evaluated",
+    "detail": "damaged: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "ruin",
+    "status": "not_evaluated",
+    "detail": "ruin: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "night",
+    "status": "not_evaluated",
+    "detail": "night: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "active",
+    "status": "not_evaluated",
+    "detail": "active: declarado no contrato, sem imagem para conferir"
+   },
+   {
+    "check": "snow",
+    "status": "not_evaluated",
+    "detail": "snow: declarado no contrato, sem imagem para conferir"
    }
   ],
   "placement": {
@@ -850,15 +891,25 @@
     416,
     294
    ],
-   "base_edge_y": 518,
-   "anchor_local": [
+   "copies": [
+    [
+     416,
+     294
+    ]
+   ],
+   "anchor_mode": "base_center",
+   "anchor_local_px": [
     224,
     224
    ],
+   "ground": "surface",
+   "anchor_world_y_edge": 518,
+   "top_world_y": 294,
    "lattice_phase": [
     0,
     0
-   ]
+   ],
+   "rule": "world = anchor_world - anchor_local + pixel_local"
   },
   "night_tint": [
    107,

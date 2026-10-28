@@ -414,15 +414,22 @@ os comandos seguem-no.
    elevação lateral — a fachada é a vista lateral do mundo; isométrica, três quartos e perspetiva são conflito — com a
    régua em pixels lógicos, os vãos em coordenadas, os sinais, a gramática de cada material e o telhado, cada linha com
    a origem; a régua em imagem (silhuetas reais, altura da porta, vãos) no tamanho exato do pedido; o `expect.json`
-   com a tela e o pivô da cena. O PixelLab desenha nas células; acima do modelo, o plano falha e propõe a partição.
-5. **Forjar**: `forja forge gerada.png --expect …/expect.json` pousa a peça na tela e no pivô da cena (o contorno de 1
-   célula soma-se fora da silhueta: uma redução declarada deixa 1 célula de folga). Um plano opaco: `--bg keep`.
+   com a tela, o pivô e o fundo da cena (alfa no gpt-image e no PixelLab; nos outros, a cor-chave que o prompt pede;
+   `keep` numa peça que toca as bordas por desenho, para a terra não ser tomada pelo fundo). As referências passam
+   pelo registo (`--refs`) também no pedido manual: a rejeitada não se anexa e o pedido falha. O PixelLab desenha nas
+   células; acima do modelo, o plano falha e propõe a partição.
+5. **Forjar**: `forja forge gerada.png --expect …/expect.json` deixa a peça onde a grade pedida a pôs (os vãos e os
+   sinais do contrato ficam no sítio); se a grade recebida não é a pedida, centra-a pela base e di-lo. O contorno de 1
+   célula que a Forja acrescenta soma-se fora da silhueta: recua a peça no máximo essa célula para caber na tela, e uma
+   redução declarada deixa 1 célula de folga. Um plano opaco: `--bg keep`.
 6. **Rever a estrutura** (`forja estrutura peça.png --scene cena.json [--master] [--left|--right] [--state nome=png]`):
    extensão, grade, base no chão, cada vão até à soleira contra a régua, os sinais (iguais ao mestre quando há mestre),
    a repetição e os conectores (o degrau da emenda contra o maior entre colunas interiores) e os estados (nada muda
-   fora das zonas declaradas). Os eixos não se somam; o que não se mediu fica `not_evaluated`.
-7. **Montar** (`forja montagem peça.png --scene cena.json`): a peça no mundo 1280×720, na linha do chão e na fase da
-   grade, com os atores reais à porta e ao lado, a 1× e a 2×, de dia e numa noite aproximada (só a modulação da fase
+   fora das zonas declaradas; um estado ou condição declarada sem imagem deixa o eixo `not_evaluated`). Os eixos não
+   se somam; o que não se mediu fica `not_evaluated`.
+7. **Montar** (`forja montagem peça.png --scene cena.json`): a peça no mundo 1280×720 pela sua âncora — a base na linha
+   do chão, a faixa de terreno com o lábio nela, o plano longe no horizonte, o primeiro plano no fundo do ecrã,
+   repetida em x quando o contrato o pede — na fase da grade, com os atores reais à porta e ao lado, a 1× e a 2×, de dia e numa noite aproximada (só a modulação da fase
    do `clock.csv`). A aprovação é do dono, para a imagem exata (`forja refs`, `forja verify`).
 
 ```bash

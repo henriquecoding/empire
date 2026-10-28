@@ -51,16 +51,20 @@ def do_cena(args) -> dict:
     out = Path(args.out)
     pal = _palette(args.palette, res)
     files = {"resolved": _write(out / "cena.json", _brief(res))}
+    register = refs_mod.load(args.refs) if args.refs else None
     if args.backend:
-        register = refs_mod.load(args.refs) if args.refs else None
         p = scene_plan.make(args.backend, args.scene, pal, args.model, args.guides, args.image_size, args.seed,
                             register)
         files["plan"] = str(p.write(out / "plan"))
         return {"ok": p.ok, "errors": p.data["errors"], "notes": p.data["notes"], "request": p.data["request"],
                 "attachments": p.data["attachments"], "expect": p.data["expect"], "advice": p.data["advice"],
                 "files": files, "network": False, "warnings": res["warnings"]}
+    seen: dict = {"errors": [], "references": []}  # o mesmo registo do plano: a rejeitada nao se anexa
+    scene_plan.references(sc, Path(sc["_base"]), register, seen)
+    kept = [(i, r) for i, (r, e) in enumerate(zip(res["references"], seen["references"]), 1)
+            if e["state"] != "rejected"]
     probe = scene_prompt.build(res, args.target, [], palette=pal)
-    roles = [r["role"] for r in res["references"]] + ["ruler"] + (["palette"] if pal is not None else [])
+    roles = [r["role"] for _, r in kept] + ["ruler"] + (["palette"] if pal is not None else [])
     built = scene_prompt.build(res, args.target, roles, palette=pal)
     scene_prompt.ruler_guide(res, probe["expect"]).save(out / "guide_ruler.png")
     files["ruler"] = str(out / "guide_ruler.png")
@@ -71,9 +75,10 @@ def do_cena(args) -> dict:
     files.update(prompt=str(out / "prompt.txt"), expect=_write(out / "expect.json", {
         **built["expect"], "canvas_px": res["extent_px"], "pivot_px": [res["extent_px"][0] // 2,
                                                                        res["extent_px"][1] - 1]}))
-    attach = [_reference(sc, r, i, out) for i, r in enumerate(res["references"], 1)] + [files["ruler"]] + (
+    attach = [_reference(sc, r, i, out) for i, r in kept] + [files["ruler"]] + (
         [files["palette"]] if pal is not None else [])
-    return {"ok": not built["conflicts"], "conflicts": built["conflicts"], "warnings": res["warnings"],
+    return {"ok": not built["conflicts"] and not seen["errors"], "errors": seen["errors"],
+            "references": seen["references"], "conflicts": built["conflicts"], "warnings": res["warnings"],
             "size": built["size"], "cells": res["cells"], "prompt": built["prompt"], "constraints":
             built["constraints"], "attach": attach, "advice": built["advice"], "files": files,
             "next": f"gere a imagem ({built['size']}) com o prompt, anexando por esta ordem: {attach}; depois "

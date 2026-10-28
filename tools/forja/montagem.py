@@ -20,7 +20,7 @@ import csv
 
 from PIL import Image
 
-from . import gridcheck, regua
+from . import gridcheck, regua, scene
 from .imageops import opaque_bbox, upscale
 
 SKY, GROUND = (143, 160, 170, 255), (74, 59, 42, 255)
@@ -63,27 +63,26 @@ def _actor(img: Image.Image, actor: str, foot_x: int, foot_y: int, root=None) ->
 
 
 def bench(asset: Image.Image, res: dict, x: int | None = None, root=None) -> dict:
-    """A peca na linha do chao e os atores a volta. Devolve as imagens (dia, noite) e onde ficou cada coisa."""
+    """A peca pousada pela sua ancora (o chao, o horizonte ou o fundo do ecra; repetida em x se o contrato o pede) e
+    os atores a volta, na linha do chao. Devolve as imagens (dia, noite) e onde ficou cada coisa."""
     wld = res["world"]
-    step = res["step"]
-    edge = res["lattice"]["anchors"]["surface_y"]["edge"]
-    w, h = asset.size
-    cx = x if x is not None else wld["viewport"][0] // 2
-    local = res["anchor"]["local_px"]
-    left = (cx - local[0]) // step * step + res["lattice"]["phase"][0]
-    top = edge - h
+    vw = wld["viewport"][0]
+    w = asset.width
+    where = scene.place(res, asset.size, x)
     stage = _stage(wld)
-    _put(stage, asset.convert("RGBA"), (left, top))
+    piece = asset.convert("RGBA")
+    for xy in where["copies"]:
+        _put(stage, piece, tuple(xy))
+    left = where["asset_top_left"][0]
     doors = [o for o in res["openings"] if o["kind"] in ("door", "gate", "arch", "bay")]
     foot_y = int(wld["surface_y"])
     tall, short = res["ruler"]["tallest"]["id"], res["ruler"]["shortest"]["id"]
     door_x = left + (doors[0]["box_px"][0] + doors[0]["box_px"][2]) // 2 if doors else left - 48
-    actors = [_actor(stage, tall, door_x, foot_y, root), _actor(stage, short, left + w + 40, foot_y, root),
-              _actor(stage, tall, left - 56, foot_y, root)]
+    spots = [(tall, door_x), (short, left + w + 40), (tall, left - 56)]
+    actors = [_actor(stage, a, min(max(fx, 40), vw - 40), foot_y, root) for a, fx in spots]
     tint = night_tint(root)
-    return {"day": stage, "night": _modulate(stage, tint["rgb"]),
-            "placement": {"asset_top_left": [left, top], "base_edge_y": edge, "anchor_local": local,
-                          "lattice_phase": res["lattice"]["phase"]}, "actors": actors, "night_tint": tint}
+    return {"day": stage, "night": _modulate(stage, tint["rgb"]), "placement": where, "actors": actors,
+            "night_tint": tint}
 
 
 def _marks(marks: list[dict]) -> dict:

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from PIL import Image
 
-from . import color, contracts, lint, masks, regua
+from . import color, contracts, lint, masks, regua, scene
 from .imageops import opaque_bbox
 
 AXES = ("raster_contract", "structure", "identity_signals", "continuity", "states", "artistic_approval",
@@ -27,7 +27,7 @@ def _shift(img: Image.Image, res: dict) -> tuple[int, int]:
     """Do referencial da extensao para o da imagem, pela ancora."""
     w, h = res["extent_px"]
     dx = img.width // 2 - w // 2 if res["anchor"]["mode"] == "base_center" else 0
-    return dx, img.height - h
+    return dx, 0 if res["anchor"]["mode"] == "top_left" else img.height - h
 
 
 def _place(box: list[int], shift: tuple[int, int]) -> list[int]:
@@ -170,7 +170,12 @@ def _continuity(img: Image.Image, res: dict, neighbors: dict) -> list[dict]:
 
 
 def _states(base: Image.Image, res: dict, states: dict) -> list[dict]:
-    out = []
+    """Cada estado ou condicao declarada contra a base (`done`, ou o primeiro estado): a que nao veio fica por avaliar,
+    para o eixo nao passar com metade das variantes."""
+    declared = res["states"] + res["conditions"]
+    first = "done" if "done" in res["states"] else res["states"][0]
+    out = [check("states", n, "not_evaluated", f"{n}: declarado no contrato, sem imagem para conferir")
+           for n in declared if n != first and n not in states]
     for name, img in states.items():
         if img.size != base.size:
             out.append(check("states", name, "fail", f"{name}: {img.size}, a base e {base.size} (a origem muda)"))
@@ -210,11 +215,7 @@ def review(img: Image.Image, res: dict, master: Image.Image | None = None, neigh
     checks += _signals(img, res, shift, master) + _continuity(img, res, neighbors or {})
     checks += _states(img, res, states)
     v = summarize(checks, raster["ok"])
-    w, h = img.size
-    world_edge = res["lattice"]["anchors"].get("surface_y", {}).get("edge")
-    placement = {"anchor_local_px": [w // 2 if res["anchor"]["mode"] == "base_center" else 0, h],
-                 "anchor_world_y_edge": world_edge, "top_world_y": world_edge - h if world_edge else None,
-                 "rule": "world = anchor_world - anchor_local + pixel_local"}
+    placement = scene.place(res, img.size)
     return {"verdicts": v, "blocking": [a for a, s in v.items() if s == "fail"], "checks": checks,
             "raster": {k: raster[k] for k in ("ok", "errors", "warnings", "prompt_feedback")},
             "placement": placement, "scene": res["id"]}
