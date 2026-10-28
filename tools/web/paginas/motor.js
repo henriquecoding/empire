@@ -140,6 +140,15 @@
         throw new Error(en ? "The connection took too long. Your text is still here; check the saved state before trying again."
           : "A ligação demorou demasiado. O texto continua aqui; confirma o estado guardado antes de tentar novamente.");
       }
+      // O fetch só rejeita com TypeError quando não houve resposta nenhuma: sem rede,
+      // ou o servidor parado («Failed to fetch» no Chrome, «Load failed» no Safari).
+      if (erro && erro.name === "TypeError" && erro.estado === undefined) {
+        var ingles = document.documentElement && document.documentElement.lang === "en";
+        var mudo = new Error(ingles ? "The server did not respond. Check your connection and try again."
+          : "O servidor não respondeu. Confirma a ligação à internet e tenta novamente.");
+        mudo.semResposta = true;
+        throw mudo;
+      }
       throw erro;
     }).finally(function () { clearTimeout(prazo); });
   }

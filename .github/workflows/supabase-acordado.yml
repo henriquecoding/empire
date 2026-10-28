@@ -1,0 +1,40 @@
+name: Supabase acordado
+
+# O plano gratuito do Supabase pausa o projeto ao fim de 7 dias sem atividade, e
+# o painel passa a dar «Failed to fetch» ao entrar (aconteceu duas vezes ate
+# 28/10/2026). De tres em tres dias, isto faz um pedido real a base de dados,
+# pela API e com a chave publicavel: chama empire_vivo(), que nao le nenhuma
+# tabela (tools/web/supabase/004_empire_vivo.sql).
+#
+# Se o projeto ja estiver pausado, o passo chumba e o GitHub avisa o dono por
+# email: reativa-se em supabase.com/dashboard → projeto empire → Restore.
+on:
+  schedule:
+    - cron: "17 6 */3 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acordar:
+    name: Um pedido a base de dados
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          lfs: false
+          sparse-checkout: tools/web/supabase/config.json
+          sparse-checkout-cone-mode: false
+
+      - name: POST /rest/v1/rpc/empire_vivo
+        run: |
+          url=$(jq -r .url tools/web/supabase/config.json)
+          chave=$(jq -r .chave tools/web/supabase/config.json)
+          resposta=$(curl -sS --fail-with-body --retry 3 --retry-delay 20 --retry-all-errors --max-time 30 \
+            -X POST "$url/rest/v1/rpc/empire_vivo" \
+            -H "apikey: $chave" -H "Authorization: Bearer $chave" \
+            -H "Content-Type: application/json" -d '{}')
+          echo "resposta: $resposta"
+          test "$resposta" = "true"

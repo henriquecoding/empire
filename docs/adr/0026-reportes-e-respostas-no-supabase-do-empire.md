@@ -46,3 +46,7 @@ site que só falam com ele quando a pessoa carrega num botão.**
 - O projeto Supabase passa a fazer parte do site: se estiver em baixo ou por configurar, as páginas publicam-se
   na mesma e dizem que o envio não está ligado.
 - Uma resposta mudada no painel volta a `nova`: tem de ser aplicada outra vez.
+- (28/10/2026) No plano gratuito o Supabase pausa o projeto ao fim de 7 dias sem atividade, e o painel dava
+  «Failed to fetch». O workflow `supabase-acordado.yml` chama `empire_vivo()` (migração 004) de três em três
+  dias; se o projeto já estiver pausado, chumba e o GitHub avisa o dono. O painel diz agora que o servidor não
+  respondeu e que o projeto pode estar em pausa, em vez de «Failed to fetch».
