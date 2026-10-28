@@ -1,7 +1,11 @@
-"""Conversao com output_size nativo; contrato publico de 28/10, sem redimensionamento local ou POST de prova."""
+"""Conversao com output_size nativo; contrato publico de 28/10, sem redimensionamento local ou POST de prova.
+
+A especificacao pede a mesma proporcao na entrada e na saida e recomenda a saida a 1/4 da entrada: o recorte de
+autoridade (510x478 no Rei) ganha moldura, nunca reamostragem, para cair inteiro na caixa util (FORJA-10)."""
 from __future__ import annotations
 
 import io
+import math
 
 from PIL import Image
 
@@ -15,6 +19,24 @@ MODEL = 'image-to-pixelart'
 def source_size(source: bytes) -> tuple[int, int]:
     with Image.open(io.BytesIO(source)) as image:
         return image.size
+
+
+def frame(image: Image.Image, out: tuple[int, int], useful=None) -> tuple[Image.Image, dict]:
+    """Moldura sem reamostragem: a proporcao da saida e a fonte inteira na caixa util, pes na base dela."""
+    (iw, ih), (w, h) = image.size, out
+    x0, y0, x1, y1 = useful or (0, 0, w, h)
+    k = min((x1 - x0) / iw, (y1 - y0) / ih)
+    pw, ph = math.ceil(w / k), math.ceil(h / k)
+    ox = min(max(0, round(x0 / k + ((x1 - x0) / k - iw) / 2)), pw - iw)
+    oy = min(max(0, round(y1 / k) - ih), ph - ih)
+    rgba = image.convert('RGBA')
+    edge = [rgba.getpixel((x, y)) for x in (0, iw - 1) for y in (0, ih - 1)]
+    fill = (0, 0, 0, 0) if min(p[3] for p in edge) < 255 else sorted(edge)[len(edge) // 2]
+    framed = Image.new('RGBA', (pw, ph), fill)
+    framed.paste(rgba, (ox, oy))
+    return framed, {'source_size': [iw, ih], 'framed_size': [pw, ph], 'offset': [ox, oy],
+                    'output_px_per_source_px': round(k, 4), 'useful_box': [x0, y0, x1, y1],
+                    'fill': '#%02X%02X%02X%02X' % tuple(fill), 'resampled': False}
 
 
 def check(source: bytes, width: int, height: int, strength: int = 200) -> list[str]:
@@ -63,8 +85,17 @@ def prepare(d: dict, contract, references, init_strength, seed) -> list[tuple[st
                            'defect in a verified local edit before conversion; it must not be copied silently')
     if any(k in d['fidelity_prompt'] for k in ('max_colors', 'tones')):
         d['errors'].append('image-to-pixelart has no color-count or tone-count field; not sent silently')
-    source = png_bytes(from_bytes(sources[0][1]))  # orientacao/cor conferidas; PNG, sem redimensionar
     w, h = contract.canvas
+    framed, info = frame(from_bytes(sources[0][1]), (w, h), d['fidelity_prompt'].get('target_useful_bbox'))
+    source = png_bytes(framed)  # orientacao/cor conferidas; PNG com moldura, sem redimensionar
+    d['source_frame'] = info
+    if info['framed_size'] != info['source_size']:
+        d['notes'].append(f"fonte {info['source_size']} com moldura {info['framed_size']} (sem reamostragem): a "
+                          f"proporcao da saida e a caixa util {info['useful_box']}, como a especificacao pede")
+    ratio = info['framed_size'][0] / w
+    if not 3 <= ratio <= 5:
+        d['notes'].append(f'fonte {ratio:.1f}x maior que a saida; o fornecedor recomenda 4x e diz que, fora disso, '
+                          'redimensiona em segundo plano: conferir a grade da resposta antes de a tratar como nativa')
     strength = 200 if init_strength is None else init_strength
     d['errors'] += check(source, w, h, strength)
     if seed is not None and (type(seed) is not int or seed < 0):

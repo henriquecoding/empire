@@ -10,6 +10,7 @@
   "native_1x_rgba_identical": true,
   "native_output_structured_not_text": true,
   "source_not_locally_resized": true,
+  "source_framed_to_output_aspect": true,
   "authorized_defect_exceptions_sent": true,
   "known_repairs_need_new_image_evidence": true,
   "conversion_cannot_silently_copy_known_defect": true,
@@ -75,7 +76,7 @@
   "params": {
    "image_size": {
     "width": 320,
-    "height": 280
+    "height": 320
    },
    "output_size": {
     "width": 64,
@@ -87,8 +88,8 @@
   "images": [
    {
     "role": "conversion_source",
-    "sha256": "041ffe210e9d23beabd04c9e060331b924ded7fd03576dfc653c6ca47bbb2659",
-    "bytes": 1000
+    "sha256": "593f53cc173371fc029b4e2afe681fecb8ef2860eaf319961122eaac81c20e9c",
+    "bytes": 1130
    }
   ]
  },

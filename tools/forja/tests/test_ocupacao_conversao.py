@@ -1,5 +1,6 @@
 """Medir margens sem as confundir com a figura e converter com tamanho nativo estruturado."""
 import base64
+import io
 import json
 import os
 import unittest
@@ -8,6 +9,7 @@ from unittest import mock
 from PIL import Image
 
 from tools.forja import auto, cli, equipment, jobs, pipeline, plan
+from tools.forja.backends import pixellab_convert
 from tools.forja.tests import audit_fixtures as fx
 from tools.forja.tests.helpers import tempdir
 from tools.forja.tests.test_backends import ENV, Fake, png
@@ -74,7 +76,8 @@ class NativeConversionTest(unittest.TestCase):
         self.assertTrue(p.ok, p.data['errors'])
         call = p.call()
         self.assertEqual(call.descriptor['params']['output_size'], {'width': 64, 'height': 64})
-        self.assertEqual(call.descriptor['params']['image_size'], {'width': 320, 'height': 280})
+        self.assertEqual(call.descriptor['params']['image_size'], {'width': 320, 'height': 320})
+        self.assertEqual(p.data['source_frame']['offset'], [0, 40])
         self.assertTrue(call.descriptor['params']['fixer'])
         self.assertEqual(p.data['expect']['size'], [64, 64])
         self.assertEqual(p.data['expect']['grid'], 'native')
@@ -96,7 +99,9 @@ class NativeConversionTest(unittest.TestCase):
         self.assertEqual(body['init_image_strength'], 150)
         data = base64.b64decode(body['image']['base64'])
         self.assertTrue(data.startswith(b'\x89PNG'))
-        self.assertEqual(body['image_size'], {'width': 320, 'height': 280})
+        self.assertEqual(body['image_size'], {'width': 320, 'height': 320})
+        with Image.open(io.BytesIO(data)) as sent, Image.open(d / 'concept.jpg') as given:
+            self.assertEqual(sent.convert('RGB').crop((0, 40, 320, 320)).tobytes(), given.convert('RGB').tobytes())
         self.assertNotIn('base64', json.dumps(p.call().descriptor))
 
     def test_a_wrong_native_response_is_blocked_and_not_paid_for_again(self):
@@ -110,6 +115,19 @@ class NativeConversionTest(unittest.TestCase):
         self.assertFalse(r['ok'])
         self.assertEqual(len(fake.requests), 1)
         self.assertIn('identical paid request is not repeated', r['stopped'])
+
+    def test_source_is_framed_not_resampled_to_the_output_aspect_and_useful_box(self):
+        image = Image.new('RGB', (510, 478), (90, 90, 90))
+        image.paste((200, 30, 40), (100, 50, 400, 478))
+        framed, info = pixellab_convert.frame(image, (80, 80), (2, 2, 78, 79))
+        self.assertEqual(framed.width, framed.height)
+        self.assertFalse(info['resampled'])
+        ox, oy = info['offset']
+        self.assertEqual(framed.convert('RGB').crop((ox, oy, ox + 510, oy + 478)).tobytes(), image.tobytes())
+        k = info['output_px_per_source_px']
+        self.assertLessEqual(510 * k, 76.001)
+        self.assertLessEqual(round((oy + 478) * k), 79)
+        self.assertEqual(info['fill'], '#5A5A5AFF')
 
     def test_conversion_size_and_strength_are_checked_before_a_job(self):
         d = tempdir()

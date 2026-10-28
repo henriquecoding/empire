@@ -51,7 +51,9 @@ def run() -> dict:
         request = conversion.call().descriptor
         result['conversion_request'] = request
         checks['native_output_structured_not_text'] = conversion.ok and request['params']['output_size'] == {'width': 64, 'height': 64}
-        checks['source_not_locally_resized'] = request['params']['image_size'] == {'width': 320, 'height': 280}
+        framed = conversion.data['source_frame']
+        checks['source_not_locally_resized'] = framed['source_size'] == [320, 280] and not framed['resampled']
+        checks['source_framed_to_output_aspect'] = request['params']['image_size'] == {'width': 320, 'height': 320}
     ch = fidelity.character(contract, 'arqueiro_tropa')
     prompt = plan.make('openai', 'arqueiro de tropa', fidelity=contract, character='arqueiro_tropa')
     checks['authorized_defect_exceptions_sent'] = prompt.ok and all(i['instruction'] in prompt.data['prompt'] for i in ch['reference_issues'])
