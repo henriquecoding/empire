@@ -75,7 +75,7 @@ PERSPECTIVE = r"\bperspective\b|vanishing point|ponto de fuga|\bperspetiva\b|\bp
 
 def camera_conflicts(text: str, facing: str, projection: str = "actor") -> list[str]:
     """O que um texto (o assunto, ou o prompt expandido por um gerador) contradiz na camara do Empire. Um ator: perfil
-    estrito, virado para `facing`. Uma construcao (`elevation`, FORJA-09): a fachada vista de frente E a vista lateral
+    estrito, virado para `facing`. Uma construcao (`elevation`, FORJA-11): a fachada vista de frente E a vista lateral
     do mundo, e nao tem lado; contradizem-na a vista de cima, a isometrica, os tres quartos e a perspetiva."""
     low = text.lower()
     views = VIEWS if projection == "actor" else [v for v in VIEWS if v[0] in ("tres quartos", "de cima")]
@@ -98,7 +98,7 @@ def default_attached(reference: bool | str, palette: Palette | None, listed: int
 def geometry(kind: str, tags: list[tuple[str, int]] | None, target: str,
              cells: tuple[int, int] | None = None) -> dict:
     """Grelha logica, escala e tamanho de imagem para um gerador de lados livres (gpt-image) ou generico. Um contrato
-    sem tela (edificio, prop, planos) nao recebe 64x64 por omissao (FORJA-09): a extensao diz-se (`forja cena`)."""
+    sem tela (edificio, prop, planos) nao recebe 64x64 por omissao (FORJA-11): a extensao diz-se (`forja cena`)."""
     c = contracts.get(kind)
     canvas = cells or (tuple(v // c.cluster for v in c.canvas) if c.canvas else None)
     if canvas is None:

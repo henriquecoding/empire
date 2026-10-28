@@ -1,4 +1,4 @@
-"""Cenarios (FORJA-09), a revisao do PR #131: a cena forjada fica onde a grade a pos, o fundo que cada gerador devolve,
+"""Cenarios (FORJA-11), a revisao do PR #131: a cena forjada fica onde a grade a pos, o fundo que cada gerador devolve,
 a peca pousada pela sua ancora, os estados que faltam e o registo das referencias no pedido manual."""
 import json
 import unittest

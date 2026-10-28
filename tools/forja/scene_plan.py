@@ -1,4 +1,4 @@
-"""O plano de uma cena por gerador, validado sem rede (FORJA-09). Devolve um `plan.Plan`: o `generate`/`auto` e os
+"""O plano de uma cena por gerador, validado sem rede (FORJA-11). Devolve um `plan.Plan`: o `generate`/`auto` e os
 jobs nao mudam.
 
 - O tamanho vem da extensao do contrato de cena (`scene.py`), nunca de uma tela de personagem por omissao.

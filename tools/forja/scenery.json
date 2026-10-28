@@ -1,5 +1,5 @@
 {
- "_comment": "Cenarios e construcoes na Forja (FORJA-09, ADR 0096). Nenhum numero do mundo nem dos atores e escrito aqui: a regua le-os dos ficheiros que o jogo usa (sources). As metricas sao fatores sobre essa regua, cada uma com a origem; as que dizem 'proposta' esperam pelo dono (Q-292). Pesquisa: docs/art/research/2026-10-28-forja-cenarios/.",
+ "_comment": "Cenarios e construcoes na Forja (FORJA-11, ADR 0098). Nenhum numero do mundo nem dos atores e escrito aqui: a regua le-os dos ficheiros que o jogo usa (sources). As metricas sao fatores sobre essa regua, cada uma com a origem; as que dizem 'proposta' esperam pelo dono (Q-295). Pesquisa: docs/art/research/2026-10-28-forja-cenarios/.",
  "schema": "forja.scenery-data/1",
  "world": {
   "project": "project.godot",
@@ -32,7 +32,7 @@
     1.1,
     1.24
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "portas comuns medidas a 1,0-1,2x o ator (Stardew, Terraria; a porta real e 1,16x); abaixo de 1,05x parece apertada, acima de 1,3x o ator parece uma crianca (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -43,7 +43,7 @@
     0.4,
     0.5
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "largura/altura 0,45-0,5 nas metricas reais e 3D; 32 px alinha com o tile (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -54,7 +54,7 @@
     1.35,
     1.6
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "portas publicas e monumentais medidas a 1,4-1,9x (Celeste, Kingdom Olympus, Hyper Light Drifter) (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -65,7 +65,7 @@
     1.35,
     1.6
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "porta, verga e parede acima; o Empire comprime mais do que Kingdom (2,1x) e Celeste (2,8x) (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -76,7 +76,7 @@
     1.84,
     2.1
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "beiral e um telhado 2:1 sobre 128 px; coerente com o edificio pequeno de ~120x130 da Asset Bible (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -87,7 +87,7 @@
     0.55,
     0.68
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "as cabecas das tropas cobrem so o terco de baixo da janela; a verga alinha com o topo da porta (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -98,7 +98,7 @@
     0.3,
     0.44
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "minimo legivel de 8x10 px com moldura de 1 celula; maior compete com a porta (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -109,7 +109,7 @@
     0.49,
     0.62
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "a altura da anca: a guarda nao tapa o rosto de quem passa atras (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -119,7 +119,7 @@
     6,
     8
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "3-4 celulas; o real e o Source dao 0,10-0,11x o ator (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -130,7 +130,7 @@
     0.43,
     0.56
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "trabalho a altura da mao; o barril ~0,5x o rei (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   },
   {
@@ -141,7 +141,7 @@
     1.23,
     1.36
    ],
-   "origin": "proposta FORJA-09 (Q-292)",
+   "origin": "proposta FORJA-11 (Q-295)",
    "why": "acima da verga e fora das cabecas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
   }
  ],
@@ -383,7 +383,7 @@
   "default_pitch": "2:1 (26,6 graus), degraus de 2x1 celulas",
   "steep_pitch": "1:1 (45 graus) para colmo, torres e frontoes",
   "spire": "1:2 so em pinaculos",
-  "origin": "proposta FORJA-09 (Q-292); so passos regulares evitam escadas tortas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))",
+  "origin": "proposta FORJA-11 (Q-295); so passos regulares evitam escadas tortas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))",
   "en": "Roof: a regular pitch of about 2:1 (rise 1 cell for every 2 cells of run) built from equal steps; 1:1 only for thatch, towers or steep gables; no wobbly or irregular roof lines."
  }
 }

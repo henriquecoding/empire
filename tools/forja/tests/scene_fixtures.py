@@ -1,4 +1,4 @@
-"""Fixtures das cenas (FORJA-09): uma casa sintetica na grade de 2 px, o contrato dela e uma faixa de terreno."""
+"""Fixtures das cenas (FORJA-11): uma casa sintetica na grade de 2 px, o contrato dela e uma faixa de terreno."""
 from __future__ import annotations
 
 import json

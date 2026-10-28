@@ -3,8 +3,8 @@
 Pesquisa para o Empire (Godot 4, 1280×720 renderizado 1:1). Data de acesso de todas as fontes: 2026-10-28.
 Lista de fontes legível por máquina: `A-fontes.json` (mesma pasta). Os identificadores `[Sxx]` remetem para ela.
 
-> **Nota de integração (28/10, FORJA-09).** O método do §4.2 (marcos, s_porta, s_planta, r) e a tabela do §5.1
-> entraram na Forja como `forja escala` e `tools/forja/scenery.json`, com as métricas como propostas (Q-292).
+> **Nota de integração (28/10, FORJA-11).** O método do §4.2 (marcos, s_porta, s_planta, r) e a tabela do §5.1
+> entraram na Forja como `forja escala` e `tools/forja/scenery.json`, com as métricas como propostas (Q-295).
 > Síntese e piloto: [README](../README.md).
 
 Convenções deste documento:

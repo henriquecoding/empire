@@ -1,11 +1,11 @@
-# ADR 0096 — A Forja desenha cenários e construções pela régua dos atores
+# ADR 0098 — A Forja desenha cenários e construções pela régua dos atores
 
 - Estado: aceite
 - Data: 2026-10-28
 - Secção do dossiê: §01, §11, §21 e §22 (a unidade gráfica, as faixas, os segmentos, o cenário)
 - Complementa: ADR 0088 (a Forja), 0089 (pede uma vez e mede), 0093 (o mestre aprovado), 0094 (a perda e a autoridade)
   e 0095; a Asset Bible e os contratos raster não mudam
-- Tarefa: [FORJA-09](../backlog/FORJA-09.md)
+- Tarefa: [FORJA-11](../backlog/FORJA-11.md)
 - Origem: o relatório do dono *A construção de um mundo em pixel art* (revisão 2, 28/10) e o pedido: *«transformar a
   forja também em uma ferramenta/estrutura pronta para desenvolver cenários e construções […] e como pegar uma
   referencia e adequar ela corretamente para personagens […] 64x64 e 80x80»*;
@@ -31,7 +31,7 @@ tamanho de célula por plano; e as emendas provam-se pela topologia, não pelo c
    linha do chão e o nível inferior do manifesto das composições do dono, o horizonte da `band.gd`, a janela do
    `project.godot`, e a fase da grade de 2 px dos planos já exportados (todos em (0, 0)). Nenhum destes números se
    escreve à mão. As métricas de arquitetura são fatores sobre a régua, com origem, em `tools/forja/scenery.json`; as
-   propostas esperam pelo dono (Q-292). Sem a textura (checkout sem LFS), a silhueta é a caixa do corpo, e di-lo.
+   propostas esperam pelo dono (Q-295). Sem a textura (checkout sem LFS), a silhueta é a caixa do corpo, e di-lo.
 2. **Uma cena tem contrato.** `forja.scene/1`: o asset (`building`, `wall_segment`, `prop`, `tree`, `terrain_strip`,
    `plane_far`, `plane_mid`, `foreground`) e o contrato raster dele, a **extensão explícita** em px de ecrã, a projeção
    (elevação lateral, separada da orientação dos atores), os vãos medidos pela régua (uma porta abaixo do mínimo é
@@ -85,4 +85,4 @@ tamanho de célula por plano; e as emendas provam-se pela topologia, não pelo c
 - A Forja passa a **ler** `art/export/royals/manifest.json`, `art/export/scenery_owner/manifest.json`, `src/sim/band.gd`,
   `project.godot` e `data/source/clock.csv`; continua a não escrever fora de onde lhe dizem.
 - Aprovar continua a ser do dono, para a imagem exata (ADR 0093). As métricas, a fase do nível inferior, o contorno do
-  cenário e a cadência do parallax ficam como perguntas (Q-292–Q-297).
+  cenário e a cadência do parallax ficam como perguntas (Q-295–Q-300).

@@ -7,7 +7,7 @@
 > referencia e adequar ela corretamente para personagens no caso do meu jogo que estão sendo gerados em 64x64 e
 > 80x80.»* Com o relatório de 32 páginas *A construção de um mundo em pixel art* (revisão 2) e o pacote para o Claude.
 >
-> Tarefa: [FORJA-09](../../../backlog/FORJA-09.md). Decisão: [ADR 0096](../../../adr/0096-a-forja-desenha-cenarios-pela-regua-dos-atores.md).
+> Tarefa: [FORJA-11](../../../backlog/FORJA-11.md). Decisão: [ADR 0098](../../../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md).
 > Guia de uso: [FORJA.md, «Cenários e construções»](../../FORJA.md#cenários-e-construções).
 
 ## O que está aqui
@@ -23,7 +23,7 @@
 | [`evidencias/`](evidencias/) | As imagens da prova: escala das referências, régua, oficina reduzida, montagem de dia e de noite, Wang 16 |
 
 Convenção herdada das três pesquisas: **facto** (com fonte), **medição** (nossa, reproduzível), **inferência** e
-**proposta**. Uma proposta não é decisão (ADR 0079): as que mudam contratos estão em `docs/QUESTIONS.md` (Q-292–Q-297).
+**proposta**. Uma proposta não é decisão (ADR 0079): as que mudam contratos estão em `docs/QUESTIONS.md` (Q-295–Q-300).
 
 ## 1. Como adequar uma referência aos atores de 64×64 e 80×80
 
@@ -43,7 +43,7 @@ um número escrito à mão (`forja regua`):
 
 O pé de um ator pinta a fila y=517; a aresta de baixo dele é 518, par: **a linha do chão está na grade da arte que
 já existe**, e um edifício cuja última fila é 517 assenta nela sem meio pixel. O horizonte (420) e o fundo do ecrã
-(720) também. Só o nível inferior (618,5) cai fora: a aresta 619 é ímpar (Q-293). A régua não arredonda posições da
+(720) também. Só o nível inferior (618,5) cai fora: a aresta 619 é ímpar (Q-296). A régua não arredonda posições da
 simulação para caber na grade (relatório §19).
 
 ### 1.2 As medidas da arquitetura, sobre a régua
@@ -69,7 +69,7 @@ cada uma com a origem; em px de ecrã, a `forja regua` dá hoje (arredondado par
 | Lanterna de parede (centro) | 80–88 | 40–44 | 1,23–1,36 × |
 
 Telhado: 2:1 por omissão, em degraus iguais; 1:1 só em colmo, torres e frontões (A §5.1). Tudo isto é proposta até o
-dono decidir (Q-292). O edifício pequeno de ~120×130 da Asset Bible cabe nestas medidas sem as forçar.
+dono decidir (Q-295). O edifício pequeno de ~120×130 da Asset Bible cabe nestas medidas sem as forçar.
 
 ### 1.3 O método, em quatro números
 
@@ -110,7 +110,7 @@ A escala diz o tamanho da porta; a **simulação** diz a largura da obra. A forj
 referências têm 450–470 px: são **marcos** de cenário, não a forja do jogo. Para a forja jogável a planta comprime-se a
 ~0,27 (`forja escala --footprint 120`): fica uma baía, a chaminé, a boca da forja e os apoios, com a porta na régua —
 comprimem-se os vãos e os pisos, não a porta (A §5.3). O contrato
-[`forja-jogo-enramados.json`](cenas/forja-jogo-enramados.json) descreve essa forja em 128×136 (Q-295).
+[`forja-jogo-enramados.json`](cenas/forja-jogo-enramados.json) descreve essa forja em 128×136 (Q-298).
 
 O caminho errado também está na prova: **encolher** a oficina para 120 px apaga 741 de 1 682 células (44%) e deixa a
 baía com 21 px legíveis, contra os 72 que o Rei pede; a revisão estrutural bloqueia
@@ -150,7 +150,7 @@ A pesquisa B (63 fontes) e o relatório do dono convergem em cinco ideias, que a
 O que **não** entrou, e porquê: os endpoints novos do PixelLab para ambientes (`create-tileset-sidescroller`,
 `generate-image-v2`, `map-objects`, `inpaint-image-pro-flash`) pedem adaptador, testes e uma sondagem paga; a tabela de
 pixels do Gemini agora publicada (C P-8); a grade por janelas em cenas largas (C P-6); o lint de retilinearidade de
-telhados (C P-7); a família 1D de tiles de superfície (B §7b). Ficam no [FORJA-09](../../../backlog/FORJA-09.md) como
+telhados (C P-7); a família 1D de tiles de superfície (B §7b). Ficam no [FORJA-11](../../../backlog/FORJA-11.md) como
 seguimento.
 
 ## 4. O piloto

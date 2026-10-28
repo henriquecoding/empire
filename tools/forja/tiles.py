@@ -164,7 +164,7 @@ def _cuts(profile: list[int]) -> list[int]:
 
 def pairs(sheet: Image.Image, size: int, cls=None, tol: int = 2) -> dict:
     """Os 64 pares horizontais e os 64 verticais que a codificacao por cantos deixa juntar, cada um conferido pela
-    topologia da emenda (FORJA-09): as duas arestas tem o mesmo numero de mudancas de terreno, nas mesmas alturas
+    topologia da emenda (FORJA-11): as duas arestas tem o mesmo numero de mudancas de terreno, nas mesmas alturas
     (ate `tol` px), e a mesma classe onde nao muda. `cls(pixel)` da 1 ao terreno de cima; por omissao, o opaco (a
     plataforma lateral). A heuristica do `seams` (contraste medio) nao prova isto."""
     sheet = sheet.convert("RGBA")
@@ -214,7 +214,7 @@ def _broken(img: Image.Image, cluster: int, seam_x: int | None, seam_y: int | No
 
 
 def junctions(sheet: Image.Image, size: int, cluster: int = 2) -> dict:
-    """Os cachos partidos pelas emendas (FORJA-09; relatorio B, V2): nos 128 pares compativeis, uma mancha menor do que
+    """Os cachos partidos pelas emendas (FORJA-11; relatorio B, V2): nos 128 pares compativeis, uma mancha menor do que
     o cacho que atravessa a emenda; nos 512 blocos 2x2 (a grelha 3x3 de cantos), uma que atravessa o cruzamento."""
     sheet = sheet.convert("RGBA")
     tiles_ = [_crop(sheet, i, size) for i in range(16)]

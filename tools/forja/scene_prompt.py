@@ -1,4 +1,4 @@
-"""O pedido de uma cena ou construcao: do `forja.scene/1` a um prompt que o gerador cumpre (FORJA-09).
+"""O pedido de uma cena ou construcao: do `forja.scene/1` a um prompt que o gerador cumpre (FORJA-11).
 
 O compilador dos personagens fala de rosto, roupa e pose, e de uma camara de perfil virada para um lado. Uma casa
 nao tem nada disso: tem projecao (elevacao lateral, a fachada paralela ao plano da imagem), uma linha de chao, vaos

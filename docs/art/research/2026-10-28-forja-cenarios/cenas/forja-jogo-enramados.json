@@ -13,7 +13,7 @@
   128,
   136
  ],
- "footprint_note": "a simulacao da a forja 120 px de largura (data/source/buildings.csv, forge.width_px); a tela de 128 e a grelha de 32 da Asset Bible (Q-295)",
+ "footprint_note": "a simulacao da a forja 120 px de largura (data/source/buildings.csv, forge.width_px); a tela de 128 e a grelha de 32 da Asset Bible (Q-298)",
  "openings": [
   {
    "id": "baia",

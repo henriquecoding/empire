@@ -36,7 +36,7 @@ ou com acentos no Windows ([ADR 0095](../adr/0095-a-forja-le-como-se-ve.md)).
 O [relatório de 28/10](research/2026-10-28-forja-cenarios/README.md) estendeu-a a cenários e construções: uma casa
 tinha tela de personagem por omissão, prompt de rosto e pose e nada que conferisse a porta, o chão ou as emendas. A
 Forja passou a desenhar pela régua dos atores reais, com um contrato de cena, uma revisão estrutural e a bancada no
-mundo ([ADR 0096](../adr/0096-a-forja-desenha-cenarios-pela-regua-dos-atores.md)).
+mundo ([ADR 0098](../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -398,7 +398,7 @@ os comandos seguem-no.
    inferior do manifesto das composições do dono, o horizonte da `band.gd`, a janela do `project.godot` e a fase da
    grade de 2 px medida nos planos do dono. As medidas de arquitetura (porta comum, porta pública, beiral, cumeeira,
    peitoril, guarda, degrau, barril, lanterna) são fatores sobre a régua, em `tools/forja/scenery.json`, cada uma com
-   a origem; são propostas até o dono decidir (Q-292). Sem LFS, a silhueta de um ator é a caixa do corpo, e di-lo.
+   a origem; são propostas até o dono decidir (Q-295). Sem LFS, a silhueta de um ator é a caixa do corpo, e di-lo.
 2. **Adequar uma referência** (`forja escala`): marcos funcionais medidos nela (`--mark caixa=métrica`: a porta, o
    barril, a janela), o do próprio objeto primeiro. Sai a escala de cada marco e se se cruzam (uma referência gerada
    pode desenhar partes em escalas diferentes), o pixel aparente contra a célula de 2 px (mais grossa: acrescentar
@@ -594,7 +594,7 @@ ficheiro que não é imagem).
 
 ## Estados e limites
 
-- **Cenários (FORJA-09).** As medidas de arquitetura da régua são propostas (Q-292). A revisão estrutural mede o que o
+- **Cenários (FORJA-11).** As medidas de arquitetura da régua são propostas (Q-295). A revisão estrutural mede o que o
   contrato declara — extensão, grade, chão, vãos, sinais, emendas, estados — e não a beleza, a retilinearidade de um
   telhado nem a luz; a noite da bancada é só a modulação da fase. O piloto não foi gerado: as referências são
   `concept` e a oficina reduzida da prova é uma demonstração de método, não um mestre.

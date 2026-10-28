@@ -3177,17 +3177,17 @@
   "passos": [],
   "notas": []
  },
- "FORJA-09": {
+ "FORJA-11": {
   "title": "A Forja desenha cenários e construções pela régua dos atores",
   "porque": "O dono pediu que a Forja passasse a produzir cenários e construções coesos e estruturados como nos bons jogos de pixel art, com a pesquisa aprofundada em paralelo, e que dissesse como adequar uma referência aos atores de 64×64 e 80×80: um edifício não tinha tela (o pedido dava-lhe 64×64), o prompt falava de rosto e pose, o contorno chegava ao gerador com o dobro da espessura e nada conferia porta, chão, sinais, emendas ou estados.",
   "spec": [
    "docs/art/research/2026-10-28-forja-cenarios/README.md",
-   "docs/adr/0096-a-forja-desenha-cenarios-pela-regua-dos-atores.md",
+   "docs/adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md",
    "docs/art/FORJA.md"
   ],
   "depende": "FORJA-08",
   "feito": "A régua lida do jogo (atores do manifesto V15, chão, nível inferior, horizonte, janela e a fase da grade da arte do dono) e as métricas de arquitetura com origem; o contrato forja.scene/1; o prompt de elevação lateral com a régua em imagem; o plano sem rede para gpt-image, Gemini e PixelLab e plan/auto --scene; a revisão estrutural (extensão, grade, base, vãos, sinais, repetição, conectores, estados); os 64+64 pares Wang e os cachos nas emendas; a bancada com os atores reais e a escala das referências por marcos; o hash da especificação do PixelLab conferido; três pesquisas com 167 fontes e a prova do piloto.",
-  "fora": "A geração paga do piloto, os endpoints de ambiente do PixelLab, a tabela de pixels do Gemini, a grade por janelas, o lint de retilinearidade, a família 1D de tiles e a camada emissiva; as métricas, a fase do nível inferior, o contorno do cenário e a cadência do parallax ficam para o dono (Q-292–Q-297); aprovação artística; arte em art/.",
+  "fora": "A geração paga do piloto, os endpoints de ambiente do PixelLab, a tabela de pixels do Gemini, a grade por janelas, o lint de retilinearidade, a família 1D de tiles e a camada emissiva; as métricas, a fase do nível inferior, o contorno do cenário e a cadência do parallax ficam para o dono (Q-295–Q-300); aprovação artística; arte em art/.",
   "estado": "parcial — a régua, o contrato de cena, o pedido, o plano sem rede, a revisão estrutural, as emendas Wang, a bancada e a escala das referências, com testes e a prova do piloto; a geração paga do piloto, os endpoints de ambiente do PixelLab e a aprovação do dono por fazer",
   "horas": "—",
   "passos": [],

@@ -4,10 +4,10 @@ Pesquisa de 28/10/2026 para estender a Forja (`tools/forja`, `docs/art/FORJA.md`
 edifícios, árvores, tiras de terreno, planos de parallax, em vista lateral. Nenhum ficheiro do repositório foi
 alterado. As fontes estão em `C-fontes.json` (mesma pasta), com os ids `[Cnn]` usados aqui.
 
-> **Nota de integração (28/10, FORJA-09).** P-1 aplicada: o `contrato.py` correu contra a especificação de hoje
+> **Nota de integração (28/10, FORJA-11).** P-1 aplicada: o `contrato.py` correu contra a especificação de hoje
 > (só mudou a descrição de `POST /create-tiles-pro`; 63/63 limites conformes) e o adaptador regista `ae1f76eb…`.
 > O plano por gerador das cenas (P-2, P-3 em parte) e a régua em imagem (P-4) entraram; P-5 a P-11 ficam no
-> FORJA-09. Síntese: [README](../README.md).
+> FORJA-11. Síntese: [README](../README.md).
 
 Convenções:
 - `[Cnn]` — afirmação factual sustentada por essa fonte (lida a 28/10/2026, salvo indicação).

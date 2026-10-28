@@ -1,10 +1,10 @@
-"""A regua de escala: os atores reais e o mundo, lidos dos ficheiros do jogo (FORJA-09).
+"""A regua de escala: os atores reais e o mundo, lidos dos ficheiros do jogo (FORJA-11).
 
 Um cenario adapta-se aos atores e nunca o contrario (papel `actor_ruler`: nao se encolhem os atores para a casa
 caber). A altura e a largura de cada ator saem do manifesto V15 (`body_bounds`, escrito pelo export), a linha do chao
 do manifesto das composicoes do dono e da `band.gd`, a janela do `project.godot`: a Forja nao escreve estes numeros
 (AGENTS.md: o que a ferramenta conta nao se escreve a mao). As metricas de arquitetura — porta, beiral, peitoril,
-guarda — sao fatores sobre a regua, cada uma com a sua origem; as que dizem proposta esperam pelo dono (Q-292).
+guarda — sao fatores sobre a regua, cada uma com a sua origem; as que dizem proposta esperam pelo dono (Q-295).
 
 A grade do cenario e de 2 px (Asset Bible §1). A linha do chao, y=517, e impar: a fase que a poe numa aresta de celula
 e 1, e o nivel inferior (y=618,5) fica a meio de uma celula em qualquer fase. A regua diz a fase e o resto de cada
@@ -135,7 +135,7 @@ def lattice(step: int, wld: dict) -> dict:
             "off_lattice": loose,
             "rule": "a arte do cenario assenta nesta fase; a simulacao nao arredonda posicoes para caber nela",
             "decision": None if not loose else "por decidir pelo dono como a apresentacao resolve "
-                                               f"{', '.join(loose)} (Q-293)"}
+                                               f"{', '.join(loose)} (Q-296)"}
 
 
 def _snap(lo: float, hi: float, step: int) -> tuple[int, int]:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A prova do FORJA-09: cenarios e construcoes na Forja, sobre as referencias do pacote de 28/10.
+"""A prova do FORJA-11: cenarios e construcoes na Forja, sobre as referencias do pacote de 28/10.
 
 1. As cinco referencias: tamanho, modo, hash dos pixels, alfa e a grade medida (o pixel aparente de cada uma).
 2. A regua: os atores, o mundo e a fase da grade lidos dos ficheiros do jogo, e as metricas de arquitetura.

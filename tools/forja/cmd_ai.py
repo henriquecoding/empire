@@ -85,7 +85,7 @@ def do_prompt(args) -> dict:
 
 def _plan(args) -> plan_mod.Plan:
     opt = lambda name, default=None: getattr(args, name, default)  # noqa: E731 (chamadores antigos da API)
-    if opt("scene"):  # uma cena ou construcao: o contrato forja.scene/1 diz o assunto e a extensao (FORJA-09)
+    if opt("scene"):  # uma cena ou construcao: o contrato forja.scene/1 diz o assunto e a extensao (FORJA-11)
         from . import scene_plan
         return scene_plan.make(args.backend, args.scene, _palette(args, "building"), args.model, opt("guides", "auto"),
                                opt("image_size"), opt("seed"), refs.load(opt("refs")) if opt("refs") else None)
@@ -169,7 +169,7 @@ def do_mcp(args) -> dict:
 
 def _planned(p) -> None:
     p.add_argument("subject", nargs="?", help="o que desenhar (com --scene, o assunto vem do contrato)")
-    p.add_argument("--scene", help="contrato forja.scene/1 de uma cena ou construcao (FORJA-09)")
+    p.add_argument("--scene", help="contrato forja.scene/1 de uma cena ou construcao (FORJA-11)")
     p.add_argument("-o", "--out", required=True)
     p.add_argument("--backend", default="openai", choices=BACKENDS)
     p.add_argument("--kind", default="character_s2", choices=contracts.kinds())

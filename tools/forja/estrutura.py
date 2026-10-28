@@ -1,4 +1,4 @@
-"""A revisao estrutural de uma cena forjada contra o seu contrato (`forja.scene/1`, FORJA-09).
+"""A revisao estrutural de uma cena forjada contra o seu contrato (`forja.scene/1`, FORJA-11).
 
 O lint confere o raster (tela, alfa, paleta, contorno, cluster). Nao sabe se a casa flutua, se a porta fechou na
 quantizacao, se o sinal que a identifica sumiu, se a faixa de terreno repete sem degrau ou se o estado `damaged`

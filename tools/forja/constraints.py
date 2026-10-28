@@ -31,7 +31,7 @@ def outline(c: contracts.Contract) -> dict:
     if c.outline_px == 0:
         return _rule("outline", "Outline: NO outline at all; shapes are separated by value only.",
                      f"contract:{c.kind}")
-    width = max(1, c.outline_px // c.cluster)  # o contrato diz px de ecra; o pedido fala em pixels logicos (FORJA-09)
+    width = max(1, c.outline_px // c.cluster)  # o contrato diz px de ecra; o pedido fala em pixels logicos (FORJA-11)
     return _rule("outline", f"Outline: a {width}-logical-pixel pure black (#000000) outline around the whole "
                  "silhouette and on key internal details.", f"contract:{c.kind}")
 

@@ -3,7 +3,7 @@
 Pesquisa para o Empire (Godot 4.7, GDScript; Forja em Python). Acedido a 2026-10-28.
 Fontes numeradas `[Fnn]` — lista completa, com URL e afirmação, em `B-fontes.json` (mesma pasta).
 
-> **Nota de integração (28/10, FORJA-09).** Depois desta pesquisa entraram na Forja `tiles.pairs` (V1, os 64+64
+> **Nota de integração (28/10, FORJA-11).** Depois desta pesquisa entraram na Forja `tiles.pairs` (V1, os 64+64
 > pares pela topologia da aresta) e `tiles.junctions` (V2, os cachos partidos nas emendas e nos 512 cruzamentos),
 > a revisão estrutural (V6, V10, V11, V12 em parte) e a régua. O resto da §7 continua proposta. Síntese:
 > [README](../README.md).
@@ -170,7 +170,7 @@ cuja borda tem uma linha de contraste alto. Serve para texturas de enchimento (t
 conjunto Wang.
 
 [Repo, árvore de trabalho por confirmar a 28/10] Durante esta pesquisa apareceu, ainda sem commit, um
-`tiles.pairs()` (FORJA-09) em `tools/forja/tiles.py`: percorre os 64 pares horizontais e os 64 verticais e
+`tiles.pairs()` (FORJA-11) em `tools/forja/tiles.py`: percorre os 64 pares horizontais e os 64 verticais e
 compara o perfil de classe das duas arestas (mesmo número de mudanças de terreno, nas mesmas alturas até 2 px).
 Cobre o passo 1 abaixo pela topologia da aresta. Ficam por cobrir a junção 2×2 (passo 2), os cachos partidos na
 emenda e a completude.

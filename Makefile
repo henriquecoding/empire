@@ -105,7 +105,7 @@ afirmacoes-escrever:  ## Corrige os campos contaveis do validation.json
 FORJA_PROVAS := 'docs/art/research/2026-10-24-forja-armas/*.json' 'docs/art/research/2026-10-25-forja-pixels-cores/*.json' \
 	'docs/art/research/2026-10-27-forja-fidelidade/*.json' 'docs/art/research/2026-10-27-forja-auditoria-fidelidade/*.json' \
 	'docs/art/research/2026-10-28-forja-cenarios/*.json'
-forja:  ## A Forja: a prova da pixel art recuperada, os testes e as provas do arqueiro, da fidelidade, da auditoria e dos cenarios (ADR 0088, 0096)
+forja:  ## A Forja: a prova da pixel art recuperada, os testes e as provas do arqueiro, da fidelidade, da auditoria e dos cenarios (ADR 0088, 0098)
 	python3 -m tools.forja prova
 	python3 -m unittest discover -s tools/forja/tests -t .
 	python3 docs/art/research/2026-10-24-forja-armas/prova_arqueiro.py

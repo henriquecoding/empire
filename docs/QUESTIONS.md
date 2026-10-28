@@ -7,13 +7,13 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Forja: cenários e construções — 28/10/2026 (FORJA-09, ADR 0096)
+## Forja: cenários e construções — 28/10/2026 (FORJA-11, ADR 0098)
 
 > Pedido do dono (28/10/2026): transformar a Forja numa estrutura para cenários e construções e dizer como adequar uma
 > referência aos atores de 64×64 e 80×80 ([pesquisa, método e piloto](art/research/2026-10-28-forja-cenarios/README.md)).
 > O que segue muda um contrato de arte, da simulação ou de apresentação, e é do dono.
 
-### Q-292 · As medidas de arquitetura da régua passam a contrato?
+### Q-295 · As medidas de arquitetura da régua passam a contrato?
 - **Hoje:** `tools/forja/scenery.json` tem fatores sobre os atores lidos do manifesto V15 (o Rei, 65 px, o mais alto; a
   Nia, 50 px, a mais baixa): porta comum 72–80 px, porta pública 88–104, beiral 88–104, cumeeira de edifício pequeno
   120–136, peitoril 36–44, janela 20–28, guarda 32–40, degrau 6–8, barril 28–36, lanterna a 80–88; telhado 2:1. Vêm de
@@ -24,7 +24,7 @@
   de revisão com os atores reais; ou ajustar os fatores.
 - **Decide:** o dono (contrato de arte).
 
-### Q-293 · O nível inferior (y=618,5) fica fora da grade de 2 px: quem resolve?
+### Q-296 · O nível inferior (y=618,5) fica fora da grade de 2 px: quem resolve?
 - **Hoje:** os 191 planos exportados da arte do dono estão na fase (0, 0). O pé de um ator na superfície pinta a fila
   517 e a aresta 518 cai na grade; o horizonte (420) e o fundo do ecrã (720) também. No nível inferior o pé fica a
   618,5: a aresta 619 é ímpar, e com o filtro *nearest* o ator e o chão renderizam a meio pixel (pesquisa A, §3.4).
@@ -32,7 +32,7 @@
   sem tocar na simulação; ou a simulação passa a 618 ou 619 (muda `under_y` e a geometria do subsolo).
 - **Decide:** o dono (apresentação ou simulação).
 
-### Q-294 · O contorno do cenário é preto de 2 px ou seletivo?
+### Q-297 · O contorno do cenário é preto de 2 px ou seletivo?
 - **Hoje:** a Asset Bible manda 2 px de preto na silhueta do cenário e a Forja cumpre. A pesquisa A (SLYNYRD, Derek Yu,
   Saint11) recomenda, num cenário ao lado de atores a 1 px, um contorno seletivo um tom abaixo do vizinho: o preto de
   2 px lê-se «gordo» ao lado do contorno de 1 px dos atores, e dentro do raio de luz a Parte XIII já tira o contorno.
@@ -40,7 +40,7 @@
   mudar a Asset Bible.
 - **Decide:** o dono (contrato de arte, §22).
 
-### Q-295 · A forja tem 120 px na simulação e a oficina das referências tem ~450 à escala dos atores
+### Q-298 · A forja tem 120 px na simulação e a oficina das referências tem ~450 à escala dos atores
 - **Hoje:** `data/source/buildings.csv` dá à forja 120 px (as obras de ofício dos povos têm 80); a Asset Bible pede larguras
   múltiplas de 32. A oficina do pacote, medida pelo barril dela, fica com ~450 px; a da Enramados, pelo barril, ~470. À
   pegada de 120 a planta comprime-se a ~0,27: uma baía, a chaminé e os sinais, com a porta na régua. Encolher a imagem
@@ -50,7 +50,7 @@
   (balanceamento).
 - **Decide:** o dono (arte e, se mudar a pegada, balanceamento).
 
-### Q-296 · Os planos de parallax repetem por espelho e com fatores 0,07 e 0,65
+### Q-299 · Os planos de parallax repetem por espelho e com fatores 0,07 e 0,65
 - **Hoje:** `SceneryArt.draw_mirrored` repete os planos pintados por espelho: não há junta, mas cada período ímpar
   inverte o lado iluminado, e a Asset Bible proíbe espelhar o que tem lado iluminado. Os fatores 0,07 (nuvens) e 0,65
   (o plano `Grove` de `enramados_start_base_01.tscn`) dão passos irregulares com a câmara inteira; 1/16 e 5/8 dariam passos regulares
@@ -59,7 +59,7 @@
   na captura.
 - **Decide:** o dono (apresentação).
 
-### Q-297 · A 1080p o pixel dos atores fica irregular
+### Q-300 · A 1080p o pixel dos atores fica irregular
 - **Hoje:** `project.godot` usa `canvas_items` com escala fracionária: de 1280×720 a 1920×1080 é ×1,5. As células de
   2 px do cenário passam a 3 px de ecrã, iguais; um pixel de ator alterna entre 1 e 2 px (pesquisa A, §3.4).
 - **Proposta:** medir em captura; se se notar, ensaiar o «Up and Down» do Saint11 (ampliar ×2 com *nearest* num

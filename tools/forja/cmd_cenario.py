@@ -1,4 +1,4 @@
-"""Subcomandos de cenario e construcao (FORJA-09): regua, cena, estrutura, montagem e escala.
+"""Subcomandos de cenario e construcao (FORJA-11): regua, cena, estrutura, montagem e escala.
 
 O ciclo de uma peca de cenario: `escala` mede uma referencia contra a regua dos atores; `cena` valida o contrato
 forja.scene/1 e compila o pedido (ou o plano por gerador, sem rede); o gerador desenha; `forge --expect` pousa a peca

@@ -1,4 +1,4 @@
-# FORJA-09 — a Forja desenha cenários e construções pela régua dos atores
+# FORJA-11 — a Forja desenha cenários e construções pela régua dos atores
 
 Estado parcial — a régua, o contrato de cena, o pedido, o plano sem rede, a revisão estrutural, as emendas Wang, a
           bancada e a escala das referências, com testes e a prova do piloto; a geração paga do piloto, os endpoints de
@@ -17,7 +17,7 @@ corretamente para personagens no caso do meu jogo que estão sendo gerados em 64
 
 [Pesquisa, método e piloto](../art/research/2026-10-28-forja-cenarios/README.md) (o relatório do dono em
 [`pacote/`](../art/research/2026-10-28-forja-cenarios/pacote/), e as pesquisas A, B e C),
-[Guia da Forja](../art/FORJA.md), [ADR 0096](../adr/0096-a-forja-desenha-cenarios-pela-regua-dos-atores.md),
+[Guia da Forja](../art/FORJA.md), [ADR 0098](../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md),
 [ADR 0088](../adr/0088-a-forja-de-pixel-art.md), [ADR 0093](../adr/0093-a-forja-protege-o-mestre-aprovado.md),
 [Asset Bible §1](../art/ASSET_BIBLE.md), [cenários nativos](../art/NATIVE_SCENERY.md), AGENTS.md (regras 1, 8 e 9).
 
@@ -48,7 +48,7 @@ corretamente para personagens no caso do meu jogo que estão sendo gerados em 64
 ## Limite
 
 Sem escrita em `art/`, `audio/`, `src/`, `scenes/` ou `data/`; sem dependências novas; sem chamada paga; sem aprovação
-artística. As métricas de arquitetura são propostas (Q-292).
+artística. As métricas de arquitetura são propostas (Q-295).
 
 ## Verificação
 

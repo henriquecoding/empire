@@ -1,4 +1,4 @@
-"""O contrato de uma cena ou construcao: `forja.scene/1` (FORJA-09).
+"""O contrato de uma cena ou construcao: `forja.scene/1` (FORJA-11).
 
 O personagem tinha o rosto e a pose; uma construcao tem o seu equivalente: a inclinacao do telhado, a espessura do
 beiral, a porta que um ator usa, a chamine ligada, os apoios, a base no chao. O contrato diz isso antes de qualquer

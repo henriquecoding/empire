@@ -20,7 +20,7 @@ Para cenários e construções, ler o [estudo de 28/10](research/2026-10-28-forj
 personagem↔cenário medida em jogos publicados, as proporções de porta, beiral e telhado sobre os atores reais, o
 método para adequar uma referência aos atores de 64×64 e 80×80 (marcos, pixel aparente, compressão da planta;
 redesenhar, não reduzir), a estrutura modular (tiles laterais, kits, estados, parallax) e as rotas de geração. É
-pesquisa e proposta: as medidas esperam pela decisão do dono (Q-292).
+pesquisa e proposta: as medidas esperam pela decisão do dono (Q-295).
 
 ## Ler antes de produzir
 

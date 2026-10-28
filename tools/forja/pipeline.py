@@ -40,7 +40,7 @@ class Options:
     notes: list[str] = field(default_factory=list)
     reduce: bool = False  # FORJA-07: a grade dada e uma reducao deliberada (adaptacao, nao recuperacao)
     signals: dict | None = None  # forja.signals/1: pinos e regioes declarados para esta imagem
-    origin: tuple[int, int] | None = None  # cena (FORJA-09): a celula da grade pedida que e o canto da tela
+    origin: tuple[int, int] | None = None  # cena (FORJA-11): a celula da grade pedida que e o canto da tela
     origin_grid: tuple[int, int] | None = None  # e a grade pedida; so com ela medida a figura fica onde a grade a pos
     crop_at: tuple[int, int] | None = None  # interno: onde o recorte do snap comecava na grade recebida
 

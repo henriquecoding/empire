@@ -1,4 +1,4 @@
-"""Cenarios e construcoes (FORJA-09): a regua, o contrato de cena, o pedido e o plano por gerador."""
+"""Cenarios e construcoes (FORJA-11): a regua, o contrato de cena, o pedido e o plano por gerador."""
 import json
 import re
 import shutil
@@ -40,7 +40,7 @@ class ReguaTest(unittest.TestCase):
         self.assertTrue(lat["art"]["consistent"])
         self.assertTrue(lat["anchors"]["surface_y"]["cell_edge"])
         if lat["off_lattice"]:
-            self.assertIn("Q-293", lat["decision"])
+            self.assertIn("Q-296", lat["decision"])
         no_art = regua.lattice(2, {**regua.world(), "art_phase": {}})
         self.assertTrue(no_art["anchors"]["surface_y"]["cell_edge"])
 
