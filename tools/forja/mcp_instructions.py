@@ -24,4 +24,8 @@ INSTRUCTIONS = (
     "bloqueia, o incerto fica pendente e a classe declarada nao muda; --observation-out alimenta o forja_equip. "
     "(10) Para refinar ao pixel sem regenerar, forja_patch (forja.pixel_patch/1): pintar, reescrever uma regiao ou "
     "mover um agrupamento so na mascara, com protegidos e pinos; o exterior fica byte a byte e a observacao anterior "
-    "deixa de valer.")
+    "deixa de valer. (11) Cenarios e construcoes: forja_regua (a regua dos atores reais, so le), forja_escala (uma "
+    "referencia levada a regua por marcos: escala, coerencia, pixel aparente, compressao da planta), forja_cena "
+    "(contrato forja.scene/1: pedido de elevacao lateral, regua em imagem e plano sem rede), forja_forge com esse "
+    "expect.json (a peca fica onde a grade a pos), forja_estrutura (porta, chao, sinais, emendas, estados) e "
+    "forja_montagem (a peca no mundo pela sua ancora, com os atores); uma referencia nao se reduz, redesenha-se.")

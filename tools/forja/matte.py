@@ -48,8 +48,11 @@ def detect(image: Image.Image) -> dict:
 
 def remove(image: Image.Image, bg: str | tuple[int, int, int] | None = None,
            tolerance: float = 0.09, mode: str | None = None) -> tuple[Image.Image, dict]:
-    """A imagem com o fundo transparente, e o que foi decidido."""
-    info = detect(image) if bg is None else {"mode": mode or "flat", "share": None}
+    """A imagem com o fundo transparente, e o que foi decidido. `bg="keep"`: um plano opaco (ceu, terreno) nao tem
+    fundo a tirar; so se binariza o alfa (FORJA-11)."""
+    if bg == "keep":
+        bg, mode = None, "none"
+    info = detect(image) if bg is None and mode is None else {"mode": mode or "flat", "share": None}
     if bg is not None:
         rgb = color.parse_hex(bg) if isinstance(bg, str) else tuple(bg)
         info["color"] = color.to_hex(rgb)

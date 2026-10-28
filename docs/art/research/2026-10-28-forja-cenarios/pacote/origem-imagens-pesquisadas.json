@@ -1,0 +1,44 @@
+[
+  {
+    "file": "kingdom-norse.jpg",
+    "source_id": "G02",
+    "url": "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1708680/ss_43a4b9b37e7cf84d977ebe0e48b998bfb6a25928.1920x1080.jpg",
+    "sha256": "0060cc87f88fe8e3f031a6d673018d618ca1e776fe2959bad1b5fac547e05828",
+    "use": "critical visual analysis in report; not Empire asset authority"
+  },
+  {
+    "file": "owlboy-4.png",
+    "source_id": "G06",
+    "url": "https://www.dpadstudio.com/screens/4.png",
+    "sha256": "807d4f476833f80a1f0783a4ea9fa6ab01d7031e7d63348bd623ed8238f1a9cb",
+    "use": "critical visual analysis in report; not Empire asset authority"
+  },
+  {
+    "file": "owlboy-7.png",
+    "source_id": "G06",
+    "url": "https://www.dpadstudio.com/screens/7.png",
+    "sha256": "1a9a2821882d4562044f2ce484ec2977d1d51803b77351ac098696b89543124b",
+    "use": "critical visual analysis in report; not Empire asset authority"
+  },
+  {
+    "file": "eastward-street.jpg",
+    "source_id": "G04",
+    "url": "https://eastwardgame.com/wp-content/uploads/2023/10/eastward-features-1.jpg",
+    "sha256": "22c9e6d6bce3f344437124729609361a68e0b06cd62dbc6dbd5dd439672c4a3d",
+    "use": "critical visual analysis in report; not Empire asset authority"
+  },
+  {
+    "file": "eastward-night.jpg",
+    "source_id": "G04",
+    "url": "https://eastwardgame.com/wp-content/uploads/2023/10/eastward-features-5.jpg",
+    "sha256": "9f688086aab36d6971417cf14bf5e3582e6e01d130f1869b8e08a29d51db97d5",
+    "use": "critical visual analysis in report; not Empire asset authority"
+  },
+  {
+    "file": "slynyrd-side-tiles.gif",
+    "source_id": "A05",
+    "url": "https://images.squarespace-cdn.com/content/v1/551a19f8e4b0e8322a93850a/1590527500267-SXSYSF4OGDQ5DM5QNFW3/72-Rocky_Grass_Tiles.gif",
+    "sha256": "5d75a21d12723a178176d81ac8762b7a97850a174bf444034645968386e90106",
+    "use": "critical visual analysis in report; not Empire asset authority"
+  }
+]

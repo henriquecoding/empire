@@ -28,7 +28,7 @@ from .mcp_instructions import INSTRUCTIONS
 
 VERSIONS = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 SKIP = {"mcp"}
-READ_ONLY = {"kinds", "lint", "verify"}
+READ_ONLY = {"kinds", "lint", "verify", "regua"}
 PAID = {"generate", "auto", "inpaint"}
 
 
@@ -110,7 +110,7 @@ def _argv(name: str, arguments: dict) -> list[str]:
 
 def _preview(result: dict) -> dict | None:
     files = result.get("files") or {}
-    for key in ("preview", "sheet", "demo", "layout"):
+    for key in ("preview", "sheet", "demo", "layout", "day", "bench", "ruler"):
         path = files.get(key)
         if path and str(path).endswith(".png") and Path(path).exists():
             break
@@ -120,13 +120,11 @@ def _preview(result: dict) -> dict | None:
         return None
     img = open_rgba(path)
     factor = max(1, min(8, 768 // max(img.size)))
-    if factor > 1:
-        img = img.resize((img.width * factor, img.height * factor), Image.Resampling.NEAREST)
+    img = img.resize((img.width * factor, img.height * factor), Image.Resampling.NEAREST) if factor > 1 else img
     buf = io.BytesIO()
     img.save(buf, "PNG")
-    if buf.tell() > 3_000_000:
-        return None
-    return {"type": "image", "data": base64.b64encode(buf.getvalue()).decode("ascii"), "mimeType": "image/png"}
+    data = base64.b64encode(buf.getvalue()).decode("ascii")
+    return None if buf.tell() > 3_000_000 else {"type": "image", "data": data, "mimeType": "image/png"}
 
 
 class UnknownTool(KeyError):
@@ -146,9 +144,7 @@ def call(name: str, arguments: dict) -> dict:
     except Exception as err:  # noqa: BLE001 — o erro volta ao agente, o servidor continua
         return {"content": [{"type": "text", "text": f"{type(err).__name__}: {err}"}], "isError": True}
     content = [{"type": "text", "text": json.dumps(result, ensure_ascii=False, indent=1)}]
-    image = _preview(result)
-    if image:
-        content.append(image)
+    content += [image] if (image := _preview(result)) else []
     # sem `structuredContent`: ha clientes que, com ele, so passam esse campo ao modelo, e a previa perdia-se (B12)
     return {"content": content, "isError": False}
 

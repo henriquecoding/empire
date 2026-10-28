@@ -1,0 +1,74 @@
+{
+  "method": "image generation tool; metadata inspection with Pillow; no production conversion performed",
+  "references": [
+    {
+      "id": "enramados",
+      "file": "/workspace/scratch/f0be9348ad2a/output/v2/referencias-originais/enramados-referencia.png",
+      "size_px": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "74f0d35978fa4aafc7c4cab4a13c3dd23d9729a2f79784b87f432503d876f535",
+      "role": "generated_visual_reference",
+      "artistic_approval": "pending",
+      "runtime_asset": false,
+      "matches_game_canvas_1280x720": false,
+      "native_grid_certified": false
+    },
+    {
+      "id": "porto",
+      "file": "/workspace/scratch/f0be9348ad2a/output/v2/referencias-originais/porto-referencia.png",
+      "size_px": [
+        1671,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "99972ba73d0f5c15816e05f2700d115cb8b14804873ef176cfb07e11328cfb96",
+      "role": "generated_visual_reference",
+      "artistic_approval": "pending",
+      "runtime_asset": false,
+      "matches_game_canvas_1280x720": false,
+      "native_grid_certified": false
+    },
+    {
+      "id": "fornalha",
+      "file": "/workspace/scratch/f0be9348ad2a/output/v2/referencias-originais/fornalha-referencia.png",
+      "size_px": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "9ec45166169c4ea041f9c3bbc83512014f67b5f1fcbd732c1882e6cb2bb8e5ae",
+      "role": "generated_visual_reference",
+      "artistic_approval": "pending",
+      "runtime_asset": false,
+      "matches_game_canvas_1280x720": false,
+      "native_grid_certified": false
+    },
+    {
+      "id": "oficina",
+      "file": "/workspace/scratch/f0be9348ad2a/output/v2/referencias-originais/oficina-referencia.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "5b26b73947a135eba02d46e2830956483dd11e3d0f655fcd5ad0b64149fa029c",
+      "role": "generated_visual_reference",
+      "artistic_approval": "pending",
+      "runtime_asset": false,
+      "matches_game_canvas_1280x720": false,
+      "native_grid_certified": false,
+      "alpha": {
+        "transparent": 771329,
+        "partial": 801535,
+        "opaque": 0,
+        "extrema": [
+          0,
+          254
+        ]
+      }
+    }
+  ]
+}

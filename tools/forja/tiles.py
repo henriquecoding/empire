@@ -145,3 +145,102 @@ def repeat(image: Image.Image, nx: int = 3, ny: int = 3) -> Image.Image:
         for i in range(nx):
             out.paste(image, (i * image.width, j * image.height))
     return out
+
+
+EDGES = {"horizontal": ("right", "left", lambda a, b: (a["NE"], a["SE"]) == (b["NW"], b["SW"])),
+         "vertical": ("bottom", "top", lambda a, b: (a["SW"], a["SE"]) == (b["NW"], b["NE"]))}
+
+
+def _edge(sheet: Image.Image, index: int, size: int, side: str, cls) -> list[int]:
+    x0, y0 = (index % 4) * size, (index // 4) * size
+    pts = {"right": [(x0 + size - 1, y0 + i) for i in range(size)], "left": [(x0, y0 + i) for i in range(size)],
+           "bottom": [(x0 + i, y0 + size - 1) for i in range(size)], "top": [(x0 + i, y0) for i in range(size)]}
+    return [cls(sheet.getpixel(p)) for p in pts[side]]
+
+
+def _cuts(profile: list[int]) -> list[int]:
+    return [i for i in range(1, len(profile)) if profile[i] != profile[i - 1]]
+
+
+def pairs(sheet: Image.Image, size: int, cls=None, tol: int = 2) -> dict:
+    """Os 64 pares horizontais e os 64 verticais que a codificacao por cantos deixa juntar, cada um conferido pela
+    topologia da emenda (FORJA-11): as duas arestas tem o mesmo numero de mudancas de terreno, nas mesmas alturas
+    (ate `tol` px), e a mesma classe onde nao muda. `cls(pixel)` da 1 ao terreno de cima; por omissao, o opaco (a
+    plataforma lateral). A heuristica do `seams` (contraste medio) nao prova isto."""
+    sheet = sheet.convert("RGBA")
+    cls = cls or (lambda p: int(p[3] >= 128))
+    out: dict = {}
+    for axis, (side_a, side_b, match) in EDGES.items():
+        bad, n = [], 0
+        for a in range(16):
+            for b in range(16):
+                if not match(corners(a), corners(b)):
+                    continue
+                n += 1
+                pa, pb = _edge(sheet, a, size, side_a, cls), _edge(sheet, b, size, side_b, cls)
+                ca, cb = _cuts(pa), _cuts(pb)
+                if len(ca) != len(cb) or any(abs(x - y) > tol for x, y in zip(ca, cb)) or pa[0] != pb[0]:
+                    bad.append({"a": a, "b": b, "cuts": [ca, cb]})
+        out[axis] = {"pairs": n, "bad_count": len(bad), "bad": bad[:16]}
+    out["ok"] = not (out["horizontal"]["bad_count"] or out["vertical"]["bad_count"])
+    return out
+
+
+def upper_class(*textures: Image.Image | None):
+    """A classe do terreno de cima pelas cores das texturas dele (a de cima e o rebordo)."""
+    colors = {p[:3] for t in textures if t is not None for p in flat(t.convert("RGBA")) if p[3] >= 128}
+    return lambda p: int(p[3] >= 128 and p[:3] in colors)
+
+
+def _crop(sheet: Image.Image, index: int, size: int) -> Image.Image:
+    x, y = (index % 4) * size, (index // 4) * size
+    return sheet.crop((x, y, x + size, y + size))
+
+
+def _broken(img: Image.Image, cluster: int, seam_x: int | None, seam_y: int | None, border: bool) -> list[list]:
+    """Manchas de cor menores que cluster x cluster que atravessam as emendas dadas (e, com `border`, que nao tocam a
+    borda da janela: essas continuam fora dela)."""
+    from .cleanup import components
+    from .imageops import grid as to_grid
+    w, h = img.size
+    out = []
+    for _, m in components(to_grid(img)):
+        xs, ys = {x for x, _ in m}, {y for _, y in m}
+        across = (seam_x is None or {seam_x - 1, seam_x} <= xs) and (seam_y is None or {seam_y - 1, seam_y} <= ys)
+        cut = border and (min(xs) == 0 or min(ys) == 0 or max(xs) == w - 1 or max(ys) == h - 1)
+        if len(m) < cluster * cluster and across and not cut:
+            out.append([min(xs), min(ys), len(m)])
+    return out
+
+
+def junctions(sheet: Image.Image, size: int, cluster: int = 2) -> dict:
+    """Os cachos partidos pelas emendas (FORJA-11; relatorio B, V2): nos 128 pares compativeis, uma mancha menor do que
+    o cacho que atravessa a emenda; nos 512 blocos 2x2 (a grelha 3x3 de cantos), uma que atravessa o cruzamento."""
+    sheet = sheet.convert("RGBA")
+    tiles_ = [_crop(sheet, i, size) for i in range(16)]
+    seam: list[dict] = []
+    for axis, (_, _, match) in EDGES.items():
+        for a in range(16):
+            for b in range(16):
+                if not match(corners(a), corners(b)):
+                    continue
+                pair = Image.new("RGBA", (size * 2, size) if axis == "horizontal" else (size, size * 2))
+                pair.paste(tiles_[a], (0, 0))
+                pair.paste(tiles_[b], (size, 0) if axis == "horizontal" else (0, size))
+                found = _broken(pair, cluster, size if axis == "horizontal" else None,
+                                None if axis == "horizontal" else size, False)
+                seam += [{"axis": axis, "a": a, "b": b, "at": f} for f in found]
+    corner: list[dict] = []
+    r = 2 * cluster
+    for code in range(512):
+        bit = [code >> k & 1 for k in range(9)]
+        quad = [bit[0] << 3 | bit[1] << 2 | bit[3] << 1 | bit[4], bit[1] << 3 | bit[2] << 2 | bit[4] << 1 | bit[5],
+                bit[3] << 3 | bit[4] << 2 | bit[6] << 1 | bit[7], bit[4] << 3 | bit[5] << 2 | bit[7] << 1 | bit[8]]
+        block = Image.new("RGBA", (2 * r, 2 * r))
+        for i, t in enumerate(quad):
+            part = tiles_[t].crop((size - r, size - r, size, size) if i == 0 else (0, size - r, r, size) if i == 1
+                                  else (size - r, 0, size, r) if i == 2 else (0, 0, r, r))
+            block.paste(part, ((i % 2) * r, (i // 2) * r))
+        corner += [{"tiles": quad, "at": f} for f in _broken(block, cluster, r, r, True)]
+    return {"pairs_checked": 128, "seam_islands": len(seam), "seam": seam[:16], "blocks_checked": 512,
+            "corner_islands": len(corner), "corner": corner[:16], "ok": not seam and not corner}

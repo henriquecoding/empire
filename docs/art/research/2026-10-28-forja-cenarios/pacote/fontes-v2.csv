@@ -1,0 +1,35 @@
+﻿ID,Título,URL,Alcance
+G01,Kingdom Two Crowns · site oficial,https://kingdomthegame.com/kingdom-two-crowns/,Resultado lateral e galeria oficial.
+G02,Kingdom Two Crowns: Norse Lands · Steam,https://store.steampowered.com/app/1708680/Kingdom_Two_Crowns_Norse_Lands/,"Captura oficial: arquitetura, percurso e água."
+G03,Kingdom · diário de arte Call of Olympus,https://store.steampowered.com/news/posts/?appids=701160&enddate=1718377302&feed=steam_community_announcements,Depoimento das artistas Sara e Valentina; referências arquitetónicas e vegetais.
+G04,Eastward · Media oficial,https://eastwardgame.com/media/,Capturas oficiais de ambiente; detalhes e contraste.
+G05,Eastward · entrevista com Tommo Zhou,https://www.gamedeveloper.com/art/eastward-s-creators-share-insights-on-making-pixel-art-adventures,"Depoimento da equipa sobre partes, iluminação e composição."
+G06,Owlboy · press kit D-Pad Studio,https://www.dpadstudio.com/presskitOwlboy.html,"Capturas oficiais 4, 7, 11, 15 e 2 inspecionadas."
+G07,Owlboy · entrevista com Simon Andersen e Adrian Bauer,https://www.gamedeveloper.com/art/using-graphics-to-express-character-and-theme-in-i-owlboy-i-,Depoimentos dos criadores sobre tema e história dos ambientes.
+A01,Saint11 · Cluster Sketching and Painting,https://saint11.art/pixel_art_articles/article2/,"Massas, refinamento e pequenos sinais."
+A02,Saint11 · Basic Shading,https://saint11.art/pixel_art_articles/article4/,"Volumes, sombras e brilhos."
+A03,Saint11 · Anti-Alias and Banding,https://saint11.art/pixel_art_articles/article5/,Decisões de aresta na grade.
+A04,SLYNYRD · Texture,https://www.slynyrd.com/blog/2018/2/15/pixelblog-2-texture,Motivos e distribuição de textura.
+A05,SLYNYRD · Side View Tiles,https://www.slynyrd.com/blog/2020/5/21/pixelblog-28-side-view-tiles,Autoria de terreno e planos laterais; GIFs inspecionados.
+A06,SLYNYRD · Parallax Scrolling,https://www.slynyrd.com/blog/2019/11/12/pixelblog-23-parallax-scrolling,Profundidade estática e repetição em movimento.
+A07,SLYNYRD · Landscape Backgrounds,https://www.slynyrd.com/blog/2026/5/27/pixelblog-62-landscape-backgrounds,"Planos de cor, atmosfera e escala de textura."
+A08,SLYNYRD · Plant Life,https://www.slynyrd.com/blog/2019/3/7/pixelblog-15-plant-life,"Espécie, abstração e clusters de copa."
+A09,SLYNYRD · Rocks,https://www.slynyrd.com/blog/2019/1/22/pixelblog-13-rocks,"Forma, face e contexto geológico."
+A10,SLYNYRD · Water in Motion,https://www.slynyrd.com/blog/2018/10/12/pixelblog-10-water-in-motion,"Corrente, queda, reflexão e movimento."
+A11,SLYNYRD · Light and Shadow,https://www.slynyrd.com/blog/2018/6/15/pixelblog-6-light-and-shadow,Direção da luz e volumes.
+A12,SLYNYRD · Cityscapes,https://www.slynyrd.com/blog/2019/2/23/pixelblog-14-cityscapes,Construção geométrica e faces da arquitetura.
+A13,"SLYNYRD · Bricks, Walls, Doors, and More",https://www.slynyrd.com/blog/2023/7/21/pixelblog-45-bricks-walls-doors-and-more,"Alvenaria, padrões e variações."
+A14,"SLYNYRD · Knights, Monsters, & Castles",https://www.slynyrd.com/blog/2025/7/28/pixelblog-57-knights-monsters-amp-castles,"Elemento de estilo, estrutura e família de castelos."
+A15,SLYNYRD · City Builder,https://www.slynyrd.com/blog/2024/7/25/pixelblog-51-city-builder,"Estrutura de edifícios, origem e contorno colorido; projeção própria da aula."
+A16,Saint11 · Scaling Pixel Art,https://saint11.art/blog/scaling/,"Autoria, ampliação e limites da redução."
+P01,PixelLab · OpenAPI v2,https://api.pixellab.ai/v2/openapi.json,Sche­mas consultados e snapshot para verificação local; sem geração remota.
+P02,PixelLab · Create Tileset,https://www.pixellab.ai/docs/tools/create-tileset,Diferenças entre terreno lateral e top-down.
+P03,PixelLab · Create tiles (Pro),https://www.pixellab.ai/docs/tools/create-tiles-pro,Kit building e opções conectáveis.
+P04,PixelLab · Image to pixel art,https://www.pixellab.ai/docs/tools/image-to-pixel-art,Conversão e controlos de fidelidade.
+P05,PixelLab · Create S-XL image (Pro),https://www.pixellab.ai/docs/tools/create-sl-image-pro,Geração de imagem com referências.
+T01,Aseprite · Tilemap,https://www.aseprite.org/docs/tilemap/,Autoria de tiles e colocação.
+T02,Aseprite · Sprite Sheets,https://www.aseprite.org/docs/sprite-sheet/,"Camadas, tags e exportação."
+T03,Aseprite · Slices,https://www.aseprite.org/docs/slices/,Regiões nomeadas e pivôs.
+T04,Godot · 2D Parallax,https://docs.godotengine.org/en/stable/tutorials/2d/2d_parallax.html,"Origem, scroll_scale e cobertura."
+T05,Godot · Using TileSets,https://docs.godotengine.org/en/stable/tutorials/2d/using_tilesets.html,Atlas e semântica de terreno.
+T06,Godot · 2D lights and shadows,https://docs.godotengine.org/en/stable/tutorials/2d/2d_lights_and_shadows.html,"Luzes, recetores e oclusores."

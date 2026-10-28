@@ -1,0 +1,171 @@
+{
+  "status": "research_plan_not_submitted",
+  "implementation_status": "proposed",
+  "world": {
+    "canvas_px": [
+      1280,
+      720
+    ],
+    "surface_y": 517,
+    "lower_reference_y": 618.5,
+    "simulation_positions": "preserve"
+  },
+  "art_contract": {
+    "asset_kind": "environment_composition",
+    "biome": "enramados",
+    "projection": "side_view_1_5D",
+    "logical_canvas": [
+      640,
+      360
+    ],
+    "world_pixels_per_cell": 2,
+    "grid_phase": "unresolved_blocks_runtime_export",
+    "actor_sizes": {
+      "troop": [
+        64,
+        64
+      ],
+      "king": [
+        80,
+        80
+      ]
+    }
+  },
+  "references": [
+    {
+      "id": "enramados",
+      "file": "referencias-originais/enramados-referencia.png",
+      "sha256": "74f0d35978fa4aafc7c4cab4a13c3dd23d9729a2f79784b87f432503d876f535",
+      "role": "visual_reference",
+      "approval": "pending"
+    },
+    {
+      "id": "porto",
+      "file": "referencias-originais/porto-referencia.png",
+      "sha256": "99972ba73d0f5c15816e05f2700d115cb8b14804873ef176cfb07e11328cfb96",
+      "role": "visual_reference",
+      "approval": "pending"
+    },
+    {
+      "id": "fornalha",
+      "file": "referencias-originais/fornalha-referencia.png",
+      "sha256": "9ec45166169c4ea041f9c3bbc83512014f67b5f1fcbd732c1882e6cb2bb8e5ae",
+      "role": "visual_reference",
+      "approval": "pending"
+    },
+    {
+      "id": "oficina",
+      "file": "referencias-originais/oficina-referencia.png",
+      "sha256": "5b26b73947a135eba02d46e2830956483dd11e3d0f655fcd5ad0b64149fa029c",
+      "role": "visual_reference",
+      "approval": "pending"
+    }
+  ],
+  "pilot": {
+    "assets": [
+      "oficina",
+      "arvore",
+      "terreno",
+      "planos_de_fundo"
+    ],
+    "building_identity": [
+      "roof_pitch",
+      "door_opening",
+      "chimney_join",
+      "supports",
+      "foundation_anchor"
+    ],
+    "material_grammar": [
+      "timber_along_grain",
+      "stone_faces_and_joints",
+      "overlapping_roof_rows",
+      "clustered_foliage",
+      "stratified_soil"
+    ]
+  },
+  "generation_candidate": {
+    "operation": "/generate-image-v2",
+    "request_template": {
+      "description": "Side-view Enramados woodland environment composition: a structurally coherent timber workshop with thick tiled eaves, a readable doorway, joined stone chimney, functional forge equipment and grounded supports. Anatomical broad-canopy trees, grouped foliage, distinct stone faces and stratified soil. Hierarchical pixel clusters and selective material texture. Quiet horizontal gameplay lane, clear depth planes, restrained distant contrast. Preserve the chosen workshop identity and the composition reference; do not add actors.",
+      "image_size": {
+        "width": 640,
+        "height": 360
+      },
+      "no_background": false
+    },
+    "unresolved": [
+      "endpoint aspect-size preflight",
+      "reference_images and style_image encoding",
+      "approved native style master",
+      "artistic review"
+    ],
+    "submitted": false
+  },
+  "conversion_candidate": {
+    "operation": "/image-to-pixelart",
+    "per_layer_output_limit": 512,
+    "partition_example": {
+      "logical_canvas": [
+        640,
+        360
+      ],
+      "regions": [
+        {
+          "origin": [
+            0,
+            0
+          ],
+          "size": [
+            352,
+            360
+          ]
+        },
+        {
+          "origin": [
+            288,
+            0
+          ],
+          "size": [
+            352,
+            360
+          ]
+        }
+      ],
+      "overlap_cells": 64,
+      "shared_authority": "same master and protected seam",
+      "automatic_seam_guarantee": false
+    },
+    "parameters_to_compare": [
+      "fixer",
+      "init_image_strength"
+    ],
+    "submitted": false
+  },
+  "blocked_routes": [
+    {
+      "operation": "/generate-with-style-v2",
+      "for": "arbitrary panorama output",
+      "reason": "consulted output is square and inferred from style images"
+    }
+  ],
+  "stages": [
+    "brief",
+    "references",
+    "composition",
+    "structure",
+    "material_grammar",
+    "native_master",
+    "layers_and_cleanplates",
+    "variants",
+    "assembly",
+    "exact_version_review"
+  ],
+  "export_blockers": [
+    "references unapproved",
+    "native masters absent",
+    "grid phase unresolved",
+    "runtime assembly untested"
+  ],
+  "paid_api_execution": false,
+  "new_repository_implementation": false
+}

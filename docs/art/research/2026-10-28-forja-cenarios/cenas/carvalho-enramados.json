@@ -1,0 +1,58 @@
+{
+ "schema": "forja.scene/1",
+ "id": "carvalho_enramados",
+ "asset": "tree",
+ "people": "enramados",
+ "subject": "an ancient broad oak of the Enramados seen from the side: a thick leaning trunk, structural branches spreading to one side, a canopy of grouped leaf masses with holes of sky, and roots gripping the ground",
+ "brief": {
+  "story": "an old oak that frames the workshop clearing; moss on the north side of the trunk"
+ },
+ "extent_px": [
+  224,
+  320
+ ],
+ "signals": [
+  "trunk_anatomy",
+  "canopy_silhouette",
+  "contact_roots"
+ ],
+ "materials": [
+  "foliage",
+  "timber"
+ ],
+ "states": [
+  "done"
+ ],
+ "conditions": [
+  "autumn",
+  "snow",
+  "night"
+ ],
+ "references": [
+  {
+   "role": "composition",
+   "file": "../referencias/enramados-referencia.png",
+   "crop": [
+    0,
+    0,
+    420,
+    640
+   ],
+   "pixels_sha256": "e92369325c62615a80b2d572348b9b05d42cb8794bdcd28e6873621e1fd2ec81",
+   "note": "o carvalho que enquadra a cena a esquerda"
+  },
+  {
+   "role": "material",
+   "file": "../referencias/enramados-referencia.png",
+   "crop": [
+    0,
+    0,
+    420,
+    330
+   ],
+   "pixels_sha256": "e92369325c62615a80b2d572348b9b05d42cb8794bdcd28e6873621e1fd2ec81",
+   "note": "a gramatica da copa: bolso de sombra, massas medias, poucos acentos"
+  }
+ ],
+ "palette": "empire"
+}

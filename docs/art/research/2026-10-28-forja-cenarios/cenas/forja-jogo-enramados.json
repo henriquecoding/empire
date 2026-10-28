@@ -1,0 +1,103 @@
+{
+ "schema": "forja.scene/1",
+ "id": "forja_jogo_enramados",
+ "asset": "building",
+ "people": "enramados",
+ "function": "smithy",
+ "subject": "a compact Enramados smithy seen as a side elevation: one open forge bay with the glowing forge mouth and the anvil, a thick tiled eave, an offset fieldstone chimney joined to the roof, timber posts and a stone plinth on the ground",
+ "brief": {
+  "story": "the gameplay forge: the same family as the hero workshop of the pack, compressed to one bay; the smith works at the anvil in the bay",
+  "light": "a warm forge glow inside the bay"
+ },
+ "extent_px": [
+  128,
+  136
+ ],
+ "footprint_note": "a simulacao da a forja 120 px de largura (data/source/buildings.csv, forge.width_px); a tela de 128 e a grelha de 32 da Asset Bible (Q-298)",
+ "openings": [
+  {
+   "id": "baia",
+   "kind": "bay",
+   "box_px": [
+    40,
+    48,
+    88,
+    136
+   ],
+   "treatment": "interior"
+  }
+ ],
+ "signals": [
+  "roof_pitch",
+  "eave_thickness",
+  "chimney_join",
+  "supports",
+  "foundation_anchor",
+  "work_area"
+ ],
+ "signal_regions": {
+  "chimney_join": [
+   92,
+   0,
+   116,
+   44
+  ],
+  "roof_pitch": [
+   0,
+   16,
+   128,
+   56
+  ],
+  "foundation_anchor": [
+   0,
+   128,
+   128,
+   136
+  ],
+  "work_area": [
+   40,
+   88,
+   88,
+   136
+  ]
+ },
+ "materials": [
+  "timber",
+  "stone",
+  "roof_tile",
+  "brick",
+  "metal"
+ ],
+ "states": [
+  "empty",
+  "scaffold",
+  "building",
+  "done",
+  "damaged",
+  "ruin"
+ ],
+ "conditions": [
+  "night",
+  "active",
+  "snow"
+ ],
+ "state_changes": {
+  "damaged": [
+   [
+    0,
+    16,
+    128,
+    56
+   ]
+  ]
+ },
+ "references": [
+  {
+   "role": "asset_concept",
+   "file": "../referencias/oficina-referencia.png",
+   "pixels_sha256": "50f588999e3461055345e58c8fdd7c679a724f8360d138373621131e65636473",
+   "note": "a oficina do pacote: os sinais (chamine, boca da forja, bigorna, apoios, beiral) a manter; a planta comprime-se para uma baia (escala: compressao ~0,27)"
+  }
+ ],
+ "palette": "empire"
+}

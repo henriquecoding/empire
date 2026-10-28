@@ -72,7 +72,7 @@
  "conversion_request": {
   "endpoint": "https://api.pixellab.ai/v2/image-to-pixelart",
   "model": "image-to-pixelart",
-  "spec_sha256": "b6dd212ca4e7f60c9eb93e776303a92f6e0bb4f794cf3a2bf49099e9a00e8834",
+  "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596",
   "params": {
    "image_size": {
     "width": 320,

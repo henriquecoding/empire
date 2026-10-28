@@ -16,6 +16,12 @@ aprovação dos assets nem os contratos atuais do jogo. A
 traz o método de engenharia reversa, o contrato atual com a conformidade da
 Forja, a forense das imagens públicas e a errata do que mudou.
 
+Para cenários e construções, ler o [estudo de 28/10](research/2026-10-28-forja-cenarios/README.md): a escala
+personagem↔cenário medida em jogos publicados, as proporções de porta, beiral e telhado sobre os atores reais, o
+método para adequar uma referência aos atores de 64×64 e 80×80 (marcos, pixel aparente, compressão da planta;
+redesenhar, não reduzir), a estrutura modular (tiles laterais, kits, estados, parallax) e as rotas de geração. É
+pesquisa e proposta: as medidas esperam pela decisão do dono (Q-295).
+
 ## Ler antes de produzir
 
 1. Conferir [autoridade das referências](REFERENCE_AUTHORITY.md) e

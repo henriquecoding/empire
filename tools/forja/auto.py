@@ -27,8 +27,9 @@ def _sha(path: Path) -> str:
 def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt: str, generator: str,
                   palette: str | None) -> dict:
     exp = plan.data["expect"]
-    opts = pipeline.Options(kind=plan.data["kind"], palette=palette,
-                            bg=None if exp["background"] == "transparent" else exp["background"],
+    canvas, pivot, origin, grid = expectation.frame(exp)  # a tela, o pivot e a origem de uma cena (FORJA-11)
+    opts = pipeline.Options(kind=plan.data["kind"], palette=palette, canvas=canvas, pivot=pivot, origin=origin,
+                            origin_grid=grid, bg=None if exp["background"] == "transparent" else exp["background"],
                             useful_box=tuple(exp["target_useful_bbox"]) if exp.get("target_useful_bbox") else None)
     if expectation.native(exp, received):
         opts.scale = 1.0

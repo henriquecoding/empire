@@ -33,6 +33,10 @@ A [auditoria técnica de 27/10](research/2026-10-27-forja-auditoria/README.md) a
 reparou-as com testes: o Gemini entregava os rascunhos do pensamento como a imagem paga, o voto dava a célula à cor
 minoritária numa fronteira de balde, dois processos passavam o teto e o servidor MCP morria com JSON que não é um objeto
 ou com acentos no Windows ([ADR 0095](../adr/0095-a-forja-le-como-se-ve.md)).
+O [relatório de 28/10](research/2026-10-28-forja-cenarios/README.md) estendeu-a a cenários e construções: uma casa
+tinha tela de personagem por omissão, prompt de rosto e pose e nada que conferisse a porta, o chão ou as emendas. A
+Forja passou a desenhar pela régua dos atores reais, com um contrato de cena, uma revisão estrutural e a bancada no
+mundo ([ADR 0098](../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -383,6 +387,64 @@ forja fidelity $CONTRATO --character arqueiro --candidate build/forja/arq/gerado
   --forge-json build/forja/arq/gerado.json --sheet build/forja/arq/lado-a-lado.png
 ```
 
+## Cenários e construções
+
+Um edifício não tem rosto nem pose; tem a inclinação do telhado, o beiral, a porta que um ator usa, a chaminé ligada,
+os apoios e a base no chão. E o tamanho dele não sai da referência: sai dos atores. O
+[relatório de 28/10](research/2026-10-28-forja-cenarios/README.md) e as três pesquisas dele (167 fontes) dão o método;
+os comandos seguem-no.
+
+1. **A régua** (`forja regua`, só lê): a altura e a largura de cada ator do manifesto V15, a linha do chão e o nível
+   inferior do manifesto das composições do dono, o horizonte da `band.gd`, a janela do `project.godot` e a fase da
+   grade de 2 px medida nos planos do dono. As medidas de arquitetura (porta comum, porta pública, beiral, cumeeira,
+   peitoril, guarda, degrau, barril, lanterna) são fatores sobre a régua, em `tools/forja/scenery.json`, cada uma com
+   a origem; são propostas até o dono decidir (Q-295). Sem LFS, a silhueta de um ator é a caixa do corpo, e di-lo.
+2. **Adequar uma referência** (`forja escala`): marcos funcionais medidos nela (`--mark caixa=métrica`: a porta, o
+   barril, a janela), o do próprio objeto primeiro. Sai a escala de cada marco e se se cruzam (uma referência gerada
+   pode desenhar partes em escalas diferentes), o pixel aparente contra a célula de 2 px (mais grossa: acrescentar
+   detalhe; mais fina: simplificar; sem grade: só silhueta e materiais), a extensão em px e em segmentos de 640, e com
+   `--footprint` a compressão da planta contra a largura da simulação. A bancada põe a referência na escala do jogo,
+   ao lado do ator mais alto e do mais baixo. **Não se reduz uma referência: redesenha-se.**
+3. **O contrato** (`forja.scene/1`): o asset (`building`, `wall_segment`, `prop`, `tree`, `terrain_strip`, `plane_far`,
+   `plane_mid`, `foreground`), a extensão explícita em px de ecrã (sem ela o pedido é recusado: não há 64×64 por
+   omissão), os vãos (`door`, `gate`, `arch`, `bay`, `window`; escuros, acesos ou vazados) medidos pela régua, os sinais
+   de identidade com nome e região, os materiais, os estados de obra e as condições com o que cada estado pode mudar, e
+   as referências por papel (`asset_concept`, `composition`, `style_master`, `material`, `junction`, `actor_ruler`).
+4. **O pedido** (`forja cena`; `forja cena --backend` ou `plan`/`auto --scene` para o plano sem rede): prompt de
+   elevação lateral — a fachada é a vista lateral do mundo; isométrica, três quartos e perspetiva são conflito — com a
+   régua em pixels lógicos, os vãos em coordenadas, os sinais, a gramática de cada material e o telhado, cada linha com
+   a origem; a régua em imagem (silhuetas reais, altura da porta, vãos) no tamanho exato do pedido; o `expect.json`
+   com a tela, o pivô e o fundo da cena (alfa no gpt-image e no PixelLab; nos outros, a cor-chave que o prompt pede;
+   `keep` numa peça que toca as bordas por desenho, para a terra não ser tomada pelo fundo). As referências passam
+   pelo registo (`--refs`) também no pedido manual: a rejeitada não se anexa e o pedido falha. O PixelLab desenha nas
+   células; acima do modelo, o plano falha e propõe a partição.
+5. **Forjar**: `forja forge gerada.png --expect …/expect.json` deixa a peça onde a grade pedida a pôs (os vãos e os
+   sinais do contrato ficam no sítio); se a grade recebida não é a pedida, centra-a pela base e di-lo. O contorno de 1
+   célula que a Forja acrescenta soma-se fora da silhueta: recua a peça no máximo essa célula para caber na tela, e uma
+   redução declarada deixa 1 célula de folga. Um plano opaco: `--bg keep`.
+6. **Rever a estrutura** (`forja estrutura peça.png --scene cena.json [--master] [--left|--right] [--state nome=png]`):
+   extensão, grade, base no chão, cada vão até à soleira contra a régua, os sinais (iguais ao mestre quando há mestre),
+   a repetição e os conectores (o degrau da emenda contra o maior entre colunas interiores) e os estados (nada muda
+   fora das zonas declaradas; um estado ou condição declarada sem imagem deixa o eixo `not_evaluated`). Os eixos não
+   se somam; o que não se mediu fica `not_evaluated`.
+7. **Montar** (`forja montagem peça.png --scene cena.json`): a peça no mundo 1280×720 pela sua âncora — a base na linha
+   do chão, a faixa de terreno com o lábio nela, o plano longe no horizonte, o primeiro plano no fundo do ecrã,
+   repetida em x quando o contrato o pede — na fase da grade, com os atores reais à porta e ao lado, a 1× e a 2×, de dia e numa noite aproximada (só a modulação da fase
+   do `clock.csv`). A aprovação é do dono, para a imagem exata (`forja refs`, `forja verify`).
+
+```bash
+forja regua
+forja escala referencia.png --mark 538,780,628,887=barrel_height --footprint 120 -o build/forja/escala
+forja cena cena.json -o build/forja/pedido                       # prompt, régua, expect.json
+forja cena cena.json --backend pixellab -o build/forja/pedido     # o plano, sem rede
+forja forge gerada.png --expect build/forja/pedido/expect.json -o build/forja/peca
+forja estrutura build/forja/peca/gerada.png --scene cena.json
+forja montagem build/forja/peca/gerada.png --scene cena.json -o build/forja/montagem
+```
+
+O piloto dos Enramados (a oficina como marco, a forja jogável comprimida, o carvalho e a faixa de terreno) e a prova
+estão na [pesquisa](research/2026-10-28-forja-cenarios/README.md).
+
 ## Receitas por tipo de asset
 
 ### Decidir escala, examinar a referência e gerar no orçamento nativo (28/10)
@@ -499,15 +561,17 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
   nativo) declara uma zona onde o contorno não entra e que o lint não conta na
   parte da borda com contorno. É uma exceção escrita no relatório, por decidir
   pelo autor como regra de arte (Q-272).
-- **Edifício, prop, cenário.** `--kind building` ou `prop`: o pedido usa a
-  grade de 2 px (cluster 2×2 da Asset Bible) e a Forja amplia por 2 no fim;
-  contorno de 2 px na silhueta. O lint aponta manchas menores que 2×2.
+- **Edifício, prop, cenário.** Um contrato `forja.scene/1` e `forja cena` (secção anterior): o pedido usa a
+  grade de 2 px (cluster 2×2 da Asset Bible) e a Forja amplia por 2 no fim; contorno de 2 px na silhueta (1 pixel
+  lógico no pedido). O lint aponta manchas menores que 2×2; `forja estrutura` confere a porta, o chão e os sinais.
 - **Terreno em tiles.** Gerar texturas com `prompts.texture_prompt`, forjá-las
   (`--kind tile`), conferir com `forja seams` e montar o conjunto
   `forja tileset --lower terra.png --upper relva.png --rim #3C2C1E --godot-texture res://…`.
   Saem os 16 tiles por cantos (codificação do PixelLab: `NW<<3|NE<<2|SW<<1|SE`),
   um mapa de demonstração e um `TileSet` do Godot em "Match Corners". Com
-  `--lower none --rim-side top` sai a plataforma lateral (relva só por cima).
+  `--lower none --rim-side top` sai a plataforma lateral (relva só por cima). O resultado confere os 64 pares
+  horizontais e os 64 verticais compatíveis pela topologia da aresta (`pairs`) e os cachos partidos nas emendas e nos
+  512 cruzamentos 2×2 (`junctions`); o `seams` (contraste médio) não prova um conjunto Wang.
 - **Parallax e primeiro plano.** `--kind parallax_far`, `parallax_mid`,
   `foreground`: sem contorno e com o teto de valores da Parte XIII.
 - **Efeitos.** `--kind fx` permite `--dither bayer2|bayer4|bayer8`.
@@ -543,6 +607,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `visual` | A revisão visual de uma imagem exata (referência ou candidato): validar, estado com o incerto visível, imagem marcada, observação para o `equip` |
 | `patch` | Editar pixels nativos por operações explícitas numa máscara, com protegidos, hashes antes/depois e diferença |
 | `jobs` | Pedidos pagos de uma pasta: ver, retomar (só consulta), cancelar |
+| `regua` / `escala` | A régua dos atores e do mundo, lida do jogo; adequar uma referência por marcos (escala, coerência, pixel aparente, extensão, compressão da planta) |
+| `cena` / `estrutura` / `montagem` | O contrato de cena: pedido de elevação lateral e plano sem rede; a revisão estrutural; a bancada com os atores reais |
 | `prova` / `mcp` / `kinds` | A prova, o servidor MCP, os contratos |
 
 Todos os comandos imprimem JSON. O código de saída é 0 quando o resultado
@@ -584,6 +650,11 @@ ficheiro que não é imagem).
   podem partilhar um erro: abrir no aplicativo continua por registar.
 
 ## Estados e limites
+
+- **Cenários (FORJA-11).** As medidas de arquitetura da régua são propostas (Q-295). A revisão estrutural mede o que o
+  contrato declara — extensão, grade, chão, vãos, sinais, emendas, estados — e não a beleza, a retilinearidade de um
+  telhado nem a luz; a noite da bancada é só a modulação da fase. O piloto não foi gerado: as referências são
+  `concept` e a oficina reduzida da prova é uma demonstração de método, não um mestre.
 
 - Uma imagem forjada é **adaptação de imagem gerada**. A proveniência grava a
   entrada, o prompt, o gerador e os parâmetros, com `artistic_approval: false`

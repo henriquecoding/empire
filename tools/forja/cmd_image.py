@@ -38,6 +38,7 @@ def _options(args) -> pipeline.Options:
         # grade so pedida por palavras (F03): deteta-se; a escala pedida fica para comparar, nao se assume
         if exp.get("background", "transparent") != "transparent" and not opts.bg:
             opts.bg = exp["background"]
+        opts.canvas, opts.pivot, opts.origin, opts.origin_grid = expectation.frame(exp, opts.canvas, opts.pivot)
     return opts
 
 
@@ -47,7 +48,7 @@ def common(p) -> None:
     p.add_argument("--colors", type=int, help="sem paleta: extrair N cores (k-means OKLab)")
     p.add_argument("--scale", type=float, help="tamanho do pixel logico, se conhecido")
     p.add_argument("--cells", type=pair, help="grelha logica conhecida, LxA (ex.: 64x64)")
-    p.add_argument("--bg", help="cor de fundo a remover (#RRGGBB); por omissao deteta pela borda")
+    p.add_argument("--bg", help="fundo a remover (#RRGGBB) ou 'keep' num plano opaco; por omissao deteta pela borda")
     p.add_argument("--tolerance", type=float, default=0.09, help="tolerancia do fundo em OKLab")
     p.add_argument("--method", default="dominant", choices=resample.METHODS, help="voto de cada celula")
     p.add_argument("--dither", default="none", choices=quantize.DITHERS, help="so em contratos que o permitem")
@@ -87,13 +88,12 @@ def do_forge(args) -> dict:
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
     res = pipeline.forge(args.image, args.out, _options(args), args.name, prompt, args.generator, args.aseprite)
     cmp = expected(args, res, res["snap"]["grid"]["period"][0])
-    sig = res["signals"]
+    sig, lost = res["signals"], res["snap"].get("loss") or {}
     return {"ok": res["lint"]["ok"] and not (cmp and cmp["hard"]), "files": res["files"],
             "lint": {k: res["lint"][k] for k in ("errors", "warnings", "prompt_feedback")},
-            "findings": res["lint"]["findings"], "expectation": cmp,
-            "grid": res["snap"]["grid"], "grid_report": res["snap"]["grid_report"],
-            "native_size": res["snap"]["native_size"], "fit": res["finish"].get("fit"),
-            "loss": {k: v for k, v in (res["snap"].get("loss") or {}).items() if k != "erased"},
+            "findings": res["lint"]["findings"], "expectation": cmp, "grid": res["snap"]["grid"],
+            "grid_report": res["snap"]["grid_report"], "native_size": res["snap"]["native_size"],
+            "fit": res["finish"].get("fit"), "loss": {k: v for k, v in lost.items() if k != "erased"},
             "signals": {k: sig[k] for k in ("status", "blocked", "pending")}, "delivery": res["delivery"],
             "occupancy": res["snap"].get("occupancy")}
 

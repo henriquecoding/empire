@@ -149,6 +149,12 @@ def count_colors(image: Image.Image) -> int:
     return len({p[:3] for _, p in found if p[3] >= 128})
 
 
+def inside(t: int, size: int, room: int, cell: int) -> int:
+    """A origem de uma cena com o contorno que a forja acrescentou: recua ate essa celula para ele nao sair da tela
+    (a base fica no chao, como no modo ancora); um excesso maior continua a ser corte."""
+    return min(max(t, min(0, t + cell)), max(room - size, t - cell))
+
+
 def place(sprite: Image.Image, canvas: tuple[int, int], anchor: tuple[int, int],
           target: tuple[int, int]) -> tuple[Image.Image, int]:
     """Cola `sprite` numa tela vazia com `anchor` (no sprite) sobre `target` (na tela).

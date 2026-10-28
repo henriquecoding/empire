@@ -1,0 +1,329 @@
+{
+  "consulted": "2026-10-28",
+  "external": [
+    [
+      "P01",
+      "PixelLab API: contrato público",
+      "https://api.pixellab.ai/v2/openapi.json",
+      "Parâmetros e operações; esquema consultado, sem chamada de geração."
+    ],
+    [
+      "P02",
+      "PixelLab Create Tileset",
+      "https://www.pixellab.ai/docs/tools/create-tileset",
+      "Vistas lateral/top-down, tamanhos e tipos distintos."
+    ],
+    [
+      "P03",
+      "PixelLab Create Tiles (Pro)",
+      "https://www.pixellab.ai/docs/tools/create-tiles-pro",
+      "Building não inclui vista lateral; style refs limitadas a variations."
+    ],
+    [
+      "P04",
+      "PixelLab Camera Options",
+      "https://www.pixellab.ai/docs/options/camera",
+      "Câmara e direção são condicionamentos fracos."
+    ],
+    [
+      "P05",
+      "PixelLab Init Images and Inpainting",
+      "https://www.pixellab.ai/docs/getting-started",
+      "Exemplo de edição local; convenção da interface não deve ser assumida na API."
+    ],
+    [
+      "A01",
+      "Saint11: Cluster Sketching and Painting",
+      "https://saint11.art/pixel_art_articles/article2/",
+      "Massas antes de detalhes; exceções para pixels com função."
+    ],
+    [
+      "A02",
+      "Saint11: Scaling Pixel Art",
+      "https://saint11.art/blog/scaling/",
+      "Grade, escalas inteiras e limites de redução."
+    ],
+    [
+      "A03",
+      "SLYNYRD: Side View Tiles",
+      "https://www.slynyrd.com/blog/2020/5/21/pixelblog-28-side-view-tiles",
+      "Autoria de peças para vista lateral."
+    ],
+    [
+      "A04",
+      "SLYNYRD: Cityscapes",
+      "https://www.slynyrd.com/blog/2019/2/23/pixelblog-14-cityscapes",
+      "Volumes e faces na construção da arquitetura."
+    ],
+    [
+      "A05",
+      "SLYNYRD: Texture",
+      "https://www.slynyrd.com/blog/2018/2/15/pixelblog-2-texture",
+      "Textura por agrupamentos; preservar áreas calmas."
+    ],
+    [
+      "A06",
+      "SLYNYRD: Parallax Scrolling",
+      "https://www.slynyrd.com/blog/2019/11/12/pixelblog-23-parallax-scrolling",
+      "Profundidade estática, repetição e movimento."
+    ],
+    [
+      "A07",
+      "SLYNYRD: Landscape Backgrounds (2026)",
+      "https://www.slynyrd.com/blog/2026/5/27/pixelblog-62-landscape-backgrounds",
+      "Planos de cor, atmosfera, clusters e leitura; consulta do texto, sem reproduzir imagens."
+    ],
+    [
+      "E01",
+      "Godot: Using TileSets",
+      "https://docs.godotengine.org/en/stable/tutorials/2d/using_tilesets.html",
+      "Atlas, terrain bits e custos das scene tiles."
+    ],
+    [
+      "E02",
+      "Godot: Using TileMaps",
+      "https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html",
+      "Camadas, colisão e organização de recursos."
+    ],
+    [
+      "E03",
+      "Godot: 2D Parallax",
+      "https://docs.godotengine.org/en/stable/tutorials/2d/2d_parallax.html",
+      "Cobertura de repeat_size, origem e escalas."
+    ],
+    [
+      "E04",
+      "Godot: Multiple Resolutions",
+      "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+      "Separação canvas_items/viewport e apresentação em escalas diferentes."
+    ],
+    [
+      "E05",
+      "Godot: GPU Optimization",
+      "https://docs.godotengine.org/en/stable/tutorials/performance/gpu_optimization.html",
+      "Custo de área, transparência, textura e draw calls."
+    ],
+    [
+      "E06",
+      "Tiled: Using Terrains",
+      "https://doc.mapeditor.org/en/stable/manual/terrain/",
+      "Corner, edge e mixed não são a mesma codificação."
+    ],
+    [
+      "T01",
+      "Aseprite: Tilemap",
+      "https://www.aseprite.org/docs/tilemap/",
+      "Autoria reutilizável por tiles."
+    ],
+    [
+      "T02",
+      "Aseprite: Sprite Sheets",
+      "https://www.aseprite.org/docs/sprite-sheet/",
+      "Exportar por camadas e tags."
+    ],
+    [
+      "T03",
+      "Aseprite: Slices",
+      "https://www.aseprite.org/docs/slices/",
+      "Regiões nomeadas e pivôs."
+    ]
+  ],
+  "repository": {
+    "name": "henriquecoding/empire",
+    "commit": "afbe0087dd4219752771c800a77e3786218257f8",
+    "files": [
+      {
+        "path": "tools/forja/tiles.py",
+        "blob_sha": "08f29a82bbd30dd293b510b804cbed7979c037c5",
+        "lines": 148,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/tiles.py"
+      },
+      {
+        "path": "tools/forja/contracts.json",
+        "blob_sha": "671c4bb40d0213d9b811192ef6026a5c163ae490",
+        "lines": 158,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/contracts.json"
+      },
+      {
+        "path": "docs/art/PIXEL_ART_STUDY_GUIDE.md",
+        "blob_sha": "f913f90557424d27f43863ec55eb5ab442bf6dc2",
+        "lines": 104,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/docs/art/PIXEL_ART_STUDY_GUIDE.md"
+      },
+      {
+        "path": "docs/art/ASEPRITE_WORKFLOW.md",
+        "blob_sha": "70f4b429a9ecb52c3787369e116e4ba49a2e3f07",
+        "lines": 164,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/docs/art/ASEPRITE_WORKFLOW.md"
+      },
+      {
+        "path": "docs/art/ASSET_BIBLE.md",
+        "blob_sha": "63c3996a9c7c766f86c56838d84ac00793b96b85",
+        "lines": 310,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/docs/art/ASSET_BIBLE.md"
+      },
+      {
+        "path": "tools/forja/prompts.py",
+        "blob_sha": "e72fe513631076bfa379d049478a9b0f0bdfbca4",
+        "lines": 217,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/prompts.py"
+      },
+      {
+        "path": "tools/forja/plan.py",
+        "blob_sha": "96ff7b1063c36b7f2758f6472598da5f48876031",
+        "lines": 251,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/plan.py"
+      },
+      {
+        "path": "tools/forja/expectation.py",
+        "blob_sha": "0aeea34f7c2f8a9ae7cff498661282d09a5525c4",
+        "lines": 95,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/expectation.py"
+      },
+      {
+        "path": "tools/forja/lint.py",
+        "blob_sha": "7576d69a321b2ba1c7552d038e36f8a47c9d249e",
+        "lines": 227,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/lint.py"
+      },
+      {
+        "path": "tools/forja/imageops.py",
+        "blob_sha": "09471bbd0f401b38b2070cae53110ef1cc705fe7",
+        "lines": 192,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/imageops.py"
+      },
+      {
+        "path": "tools/forja/godot.py",
+        "blob_sha": "f3f523d75b57f6a520c0425073d47a88a78fdd87",
+        "lines": 134,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/godot.py"
+      },
+      {
+        "path": "tools/forja/cmd_image.py",
+        "blob_sha": "f7fd06e90abc406cc7d741e2e4c39dfaad612e99",
+        "lines": 251,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/cmd_image.py"
+      },
+      {
+        "path": "tools/forja/cmd_make.py",
+        "blob_sha": "0b56d0bdfe2600df553258e44092da23d5aa752a",
+        "lines": 236,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/cmd_make.py"
+      },
+      {
+        "path": "tools/forja/constraints.py",
+        "blob_sha": "cc1af3ee19f4dbd8a3021fd2dae62e846f7ca412",
+        "lines": 109,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/constraints.py"
+      },
+      {
+        "path": "tools/forja/contracts.py",
+        "blob_sha": "12c623b2e39572c83f97f061492a94cbf07a2df6",
+        "lines": 71,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/contracts.py"
+      },
+      {
+        "path": "tools/forja/backends/pixellab_api.py",
+        "blob_sha": "91a5672b76cb9eba0301b03e9f430f6591b13925",
+        "lines": 183,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/backends/pixellab_api.py"
+      },
+      {
+        "path": "tools/forja/pipeline.py",
+        "blob_sha": "95b0c5ad8731f975fef43b428eb62c0e8ca2f68a",
+        "lines": 225,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/forja/pipeline.py"
+      },
+      {
+        "path": "src/sim/band.gd",
+        "blob_sha": "f1a0a0e2089555441e4b8897cbef692144eab163",
+        "lines": 28,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/sim/band.gd"
+      },
+      {
+        "path": "src/world/world_palette.gd",
+        "blob_sha": "963214b2e88c35c1c61343d64433a2d8c750906d",
+        "lines": 121,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/world_palette.gd"
+      },
+      {
+        "path": "src/world/building_skins.gd",
+        "blob_sha": "ee365b5d952352bda91520f3e1c73d406359e2ed",
+        "lines": 150,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/building_skins.gd"
+      },
+      {
+        "path": "src/world/scenery_art.gd",
+        "blob_sha": "4cff5fff9fb95c57ffe65019bca496f2b347ebe6",
+        "lines": 249,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/scenery_art.gd"
+      },
+      {
+        "path": "src/world/scenery_map.gd",
+        "blob_sha": "670d49452e87ad0835ee0ba698bfb2374e7d7af4",
+        "lines": 183,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/scenery_map.gd"
+      },
+      {
+        "path": "src/world/scenery_plane.gd",
+        "blob_sha": "3b178c327bbedd9184e3f37aabc4a14e8b687c5a",
+        "lines": 185,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/scenery_plane.gd"
+      },
+      {
+        "path": "src/world/scenery_strip.gd",
+        "blob_sha": "9217658615f669ad0a9a95e5bd02ede9765c3900",
+        "lines": 176,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/scenery_strip.gd"
+      },
+      {
+        "path": "src/world/owner_scenery.gd",
+        "blob_sha": "bbd0134b85538f6195024eba54866b467019ae64",
+        "lines": 237,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/owner_scenery.gd"
+      },
+      {
+        "path": "src/world/owner_sites.gd",
+        "blob_sha": "2ec07ae3077751e8ee7942a12e39f1ee76f580de",
+        "lines": 52,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/owner_sites.gd"
+      },
+      {
+        "path": "src/world/native_scenery_catalog.gd",
+        "blob_sha": "9e145e0d0f8a1b384f2946f58d7e5ee9d9c5d231",
+        "lines": 57,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/world/native_scenery_catalog.gd"
+      },
+      {
+        "path": "src/sim/systems/under_fit.gd",
+        "blob_sha": "0fcd90f0c99397911f6113a272678bf9bfa13a8b",
+        "lines": 141,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/src/sim/systems/under_fit.gd"
+      },
+      {
+        "path": "tools/export_scenery.py",
+        "blob_sha": "8fc4827a07bb27fb4e2762c638e557eb2a4c0ec7",
+        "lines": 231,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/tools/export_scenery.py"
+      },
+      {
+        "path": "art/export/scenery/manifest.json",
+        "blob_sha": "b7083a154a48a34783530ec3c603e04c15cc8fd0",
+        "lines": 2145,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/art/export/scenery/manifest.json"
+      },
+      {
+        "path": "art/export/scenery_owner/manifest.json",
+        "blob_sha": "63b535dfbcf81743843f1e76d0f5a7e170e8cdd8",
+        "lines": 3165,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/art/export/scenery_owner/manifest.json"
+      },
+      {
+        "path": "art/export/scenery_native/manifest.json",
+        "blob_sha": "aefabacdc42f76c59e6f6aef1da853f0358b5569",
+        "lines": 4704,
+        "url": "https://github.com/henriquecoding/empire/blob/afbe0087dd4219752771c800a77e3786218257f8/art/export/scenery_native/manifest.json"
+      }
+    ]
+  }
+}

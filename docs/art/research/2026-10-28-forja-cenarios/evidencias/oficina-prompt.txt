@@ -1,0 +1,26 @@
+Create a pixel-art game asset for "Empire", a 2D side-view kingdom builder.
+Subject: an Enramados smithy workshop seen as a side elevation: a long low tiled roof with a thick eave, an offset fieldstone chimney joined to the roof, an open work bay with the forge mouth and the anvil, timber posts and braces carrying the roof, a stone plinth resting on the ground.
+Asset type: side-elevation building standing on the walk line.
+Who built it and how it is used: built by the Enramados woodfolk under great oaks, of damp fieldstone and heavy timber; the smith works in the open bay and soot marks the wall above the forge mouth.
+Pixel grid: the image is an exact grid of 224x112 logical pixels; every logical pixel is ONE crisp solid 11x11 square block aligned to the image edges. No sub-pixel detail, no anti-aliasing, no blur, no gradients, no soft brushes, no texture noise.
+Projection: orthographic side elevation, the view of a side-scrolling game: the facade is parallel to the picture plane; no perspective, no vanishing point, no top-down, isometric or three-quarter view. Roofs, ledges and platforms may show a thin top face for thickness.
+Ground: the building rests on a flat walk line along the bottom edge of the image (the bottom row of logical pixels is the ground contact); it neither floats nor sinks; do not paint a cast shadow on the ground (the game adds the contact shadow).
+Scale: one logical pixel is 2x2 screen pixels in the game. The tallest character is 32.5 logical pixels tall and the smallest 25.0; the architecture is sized for them, never the characters for the building.
+Bay 'baia': a clear opening at logical pixels x 120-177, y 48-111 (a dark interior, its sill on the ground line); nothing crosses it.
+Window 'janela': a clear opening at logical pixels x 27-38, y 55-77 (a lit interior, brighter than the wall, above the ground); nothing crosses it.
+Identity (must read clearly at 1x): the slope and the long low roof line; a thick eave with a shadow under it, separating roof from wall; the chimney joined to the roof and to its base, offset from the centre; posts, braces and beams that carry the roof down to the base; a plinth or base that sits on the ground, no floating, no burying; the work bay and tools that tell the craft.
+Material timber: long planks along the grain, end caps, knots, joints and braces; concentrate detail at joints and edges facing the light.
+Material stone: a lit face, a side face, joints, cracks and protruding blocks; concentrate detail at corners, supports, openings and wear.
+Material roof tile: overlapping rows, a broken piece, ridge and eave; concentrate detail at silhouette, overlap and where water runs.
+Material brick: courses, an arch, soot over the furnace mouth; concentrate detail at the arch and where heat marks it.
+Material metal: plates, rivets, a bright rim; concentrate detail at the working edge.
+Detail has hierarchy: large calm surfaces, detail concentrated where things are joined, used or lit; no uniform noise texture, no random dark specks.
+People and place: broad trunks, canopies and clearings; architecture of structural timber, damp stone, roots around the supports.
+Roof: a regular pitch of about 2:1 (rise 1 cell for every 2 cells of run) built from equal steps; 1:1 only for thatch, towers or steep gables; no wobbly or irregular roof lines.
+Outline: a 1-logical-pixel pure black (#000000) outline on the outer silhouette; inside, separate surfaces by value and colored edges, not black lines.
+Shading: light from the top-left; a light plane and a shadow plane per material, a dark accent only at contacts and joints; no gradients, no dithering.
+Colors: use ONLY colors from attached image 4 (the palette swatch, 112 colors); no numeric color cap (the contract sets none): keep every material of the concept art distinct, with the light and shadow planes it needs.
+Light: a warm forge glow inside the bay and one lantern under the eave; warm light only where a source exists, as stepped color clusters; no glow halo, no bloom.
+Attached images, in order: image 1: the asset concept (asset_concept): use it for silhouette, proportions, parts and materials; do NOT copy its resolution, brushwork and accidental defects; image 2: the scene composition (composition): use it for the relation of masses, the walk line, landmarks and open intervals; do NOT copy collision, functional positions and any building it shows; image 3: the SCALE RULER at the exact output size: silhouettes of the real game characters standing on the walk line and the doorway height they need; do NOT draw these figures, marks or lines; image 4: the palette swatch (big squares, no text).
+Background: fully transparent around the building; no sky, no backdrop, no checkerboard.
+Avoid: characters, animals, text or lettered signs, UI, frames, perspective or isometric projection, photorealism, 3D render, painterly brushwork, blur, glow, watermark.
