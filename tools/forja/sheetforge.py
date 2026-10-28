@@ -138,6 +138,8 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     for i, (verdict, info) in enumerate(zip(verdicts, details)):
         for item in guard.findings(info) + ([cells.finding(crossing[i])] if i in crossing else []):
             lint.add(verdict, item)
+        for item in limits.useful_budget(frames[i], opts.useful_box) if opts.useful_box else []:
+            lint.add(verdict, item)
         if i in crossing:
             placed[i]["cell_crossing"] = crossing[i]
     for verdict, place_info, fig in zip(verdicts, placed, figures):

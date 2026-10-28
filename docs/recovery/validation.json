@@ -14,7 +14,7 @@
  "gdunit_discovered": 1966,
  "gdunit_skipped": 2,
  "spec_sections": 98,
- "adrs": 96,
+ "adrs": 98,
  "portable_checks_passed": 15,
  "numeric_comparisons": 212,
  "cli_isolation_tests_passed": 3,

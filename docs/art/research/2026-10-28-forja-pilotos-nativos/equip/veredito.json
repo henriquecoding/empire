@@ -1,0 +1,53 @@
+{
+ "image_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+ "summary": {
+  "raster_contract": "not_evaluated",
+  "color_coherence": "not_evaluated",
+  "equipment_geometry": "inconclusive",
+  "functional_pose": "inconclusive",
+  "identity_consistency": "not_evaluated",
+  "temporal_consistency": "not_applicable",
+  "artistic_approval": "pending",
+  "runtime_integration": "not_tested"
+ },
+ "blocking": [],
+ "checks": [
+  {
+   "check": "part_count",
+   "part": "limb",
+   "status": "pass",
+   "detail": "bow_main.limb: 1 de 1"
+  },
+  {
+   "check": "part_count",
+   "part": "string",
+   "status": "pass",
+   "detail": "bow_main.string: 1 de 1"
+  },
+  {
+   "check": "part_count",
+   "part": "grip",
+   "status": "inconclusive",
+   "detail": "bow_main.grip: 1 de 1 (observacao incerta: bow_main.grip)"
+  },
+  {
+   "check": "string_line",
+   "part": "string",
+   "status": "pass",
+   "detail": "bow_main: fina, reta entre as pontas e ligada a elas"
+  },
+  {
+   "check": "bow_nocks",
+   "part": "limb",
+   "status": "inconclusive",
+   "detail": "bow_main: duas pontas ligadas a madeira e pega entre elas (observacao incerta)"
+  },
+  {
+   "check": "contact",
+   "part": "grip",
+   "status": "inconclusive",
+   "detail": "bow_main: hand_front encostada a grip (observacao incerta: bow_main.grip)"
+  }
+ ],
+ "note": "geometria medida sobre a observacao do agente; a aprovacao da arma continua a ser do dono"
+}

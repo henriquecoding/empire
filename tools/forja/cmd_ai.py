@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from . import auto, backends, constraints, contracts, fidelity, guides, jobs, palette as palmod, plan as plan_mod
-from . import prompts, refs, sheetforge
+from . import production, prompts, refs, sheetforge
 from .cli import command
 
 BACKENDS = plan_mod.BACKENDS
@@ -50,16 +50,19 @@ def _fidelity(args, given: list) -> dict:
 def do_prompt(args) -> dict:
     """Sem gerador ligado: o prompt, o expect.json e as guias, na ordem em que se anexam."""
     tags = sheetforge.parse_tags(args.tags)
-    pal = _palette(args, args.kind)
     role = _reference(args)
     given = [("identity", args.reference_file, Path(args.reference_file).read_bytes())] if args.reference_file else []
     prep = _fidelity(args, given)
+    selected = production.resolve(args.subject, args.kind, prep["record"])
+    kind = selected["kind"]
+    pal = _palette(args, kind)
+    prep["errors"] += selected["errors"]
     if prep["errors"]:
         return {"ok": False, "errors": prep["errors"], "mode": prep["mode"]}
     attached = [r for r, _, _ in prep["attach"]] + prompts.default_attached(role, pal)
-    res = prompts.build(args.subject, args.kind, tags, args.facing, role or bool(prep["attach"]), pal, args.target,
+    res = prompts.build(args.subject, kind, tags, args.facing, role or bool(prep["attach"]), pal, args.target,
                         args.background, attached=attached, mode=prep["mode"],
-                        fidelity={**(prep["prompt"] or {}), **_decisions(args)})
+                        fidelity={**(prep["prompt"] or {}), **_decisions(args), "role": selected["role"]})
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     for r, _, data in prep["attach"]:
@@ -67,7 +70,7 @@ def do_prompt(args) -> dict:
     (out / "prompt.txt").write_text(res["prompt"] + "\n", encoding="utf-8")
     (out / "expect.json").write_text(json.dumps(res["expect"], indent=1) + "\n", encoding="utf-8")
     (out / "pixellab.json").write_text(json.dumps(res["pixellab"], indent=1) + "\n", encoding="utf-8")
-    c = contracts.get(args.kind)
+    c = contracts.get(kind)
     files = guides.write(out, res["expect"], pal, c.pivot[1] // c.cluster if c.pivot else None)
     files.update({"concept": str(out / "attach_concept_authority.png")} if prep["attach"] else {})
     attach = [files[r] if r in files else LABELS[r] for r in res["expect"]["attached"]]
@@ -88,7 +91,7 @@ def _plan(args) -> plan_mod.Plan:
     given = ([("identity", r) for r in args.reference or []] + [("concept", r) for r in opt("concept") or []]
              + [("style", r) for r in opt("style_reference") or []])
     return plan_mod.make(args.backend, args.subject, args.kind, sheetforge.parse_tags(args.tags), args.facing,
-                         given, _palette(args, args.kind), args.model, opt("guides", "auto"), "auto",
+                         given, _palette(args, args.kind or "character_s2"), args.model, opt("guides", "auto"), "auto",
                          opt("init_strength"), opt("seed"), opt("image_size"),
                          refs.load(opt("refs")) if opt("refs") else None, opt("mode"),
                          fidelity.load(opt("fidelity")) if opt("fidelity") else None, opt("character"), opt("pose"),
@@ -168,7 +171,7 @@ def _planned(p) -> None:
     p.add_argument("subject")
     p.add_argument("-o", "--out", required=True)
     p.add_argument("--backend", default="openai", choices=BACKENDS)
-    p.add_argument("--kind", default="character_s2", choices=contracts.kinds())
+    p.add_argument("--kind", choices=contracts.kinds())
     p.add_argument("--tags")
     p.add_argument("--facing", default="right", choices=("right", "left"))
     p.add_argument("--reference", nargs="*", help="referencia de identidade; o estado (aprovado, em revisao) vem "
@@ -206,7 +209,7 @@ def register(sub) -> None:
     p = command(sub, "prompt", "Compilar o pedido para o gerador: prompt, tamanho, guias e expect.json", do_prompt)
     p.add_argument("subject", help="o que desenhar, em poucas palavras (ingles ou portugues)")
     p.add_argument("-o", "--out", required=True)
-    p.add_argument("--kind", default="character_s2", choices=contracts.kinds())
+    p.add_argument("--kind", choices=contracts.kinds())
     p.add_argument("--tags", help="animacao: 'walk' ou 'idle,walk' ou 'attack:5'")
     p.add_argument("--facing", default="right", choices=("right", "left"))
     p.add_argument("--reference", action="store_true", help="vai anexar uma referencia de identidade")

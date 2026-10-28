@@ -3176,5 +3176,37 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-09": {
+  "title": "Escala de tropa, defeitos da referência e preservação nativa (handoff de 28/10)",
+  "porque": "O arqueiro de tropa saía num quadro 80×80 de Arqueiro Real, o Rei passava os 80×80 e a prancha tinha um erro na arma que se copiava por fidelidade; a Forja só descobria o corte no fim.",
+  "spec": [
+   "docs/adr/0096-a-forja-decide-a-escala-antes-de-gerar.md",
+   "docs/art/research/2026-10-28-forja-escala-e-referencia/README.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-08",
+  "feito": "Papel antes do preset (troop_64); orçamento útil no pedido e na conferência; exceções da referência com prova por hash; ocupação e diagnóstico sem corte; leitura 1× intacta; bow_nocks; conversão image-to-pixelart com output_size.",
+  "fora": "Conversão real paga, mestres aprovados, arte em art/.",
+  "estado": "feito — C01–C12 aplicados tal como vieram e revistos no FORJA-10 (a conversão passa a emoldurar a fonte); a conversão real e os mestres seguem no FORJA-10",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
+ "FORJA-10": {
+  "title": "Revisão visual da imagem exata, patch nativo ao pixel e os três pilotos na grade da prancha",
+  "porque": "O núcleo não via sozinho uma arma ou uma expressão, refinar pedia outra geração global e faltava um caminho que desse a grade exigida com reparos locais; Henrique viu que a corda do arqueiro estava atrás do corpo.",
+  "spec": [
+   "docs/adr/0097-a-forja-observa-a-imagem-exata-e-edita-ao-pixel.md",
+   "docs/art/research/2026-10-28-forja-pilotos-nativos/README.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-09",
+  "feito": "forja.visual_review/1 (forja visual) ligado ao contrato, ao fidelity e ao equip; forja.pixel_patch/1 (forja patch); tons por limiar; conversão com moldura; Rei 80, Escudeiro 64 e Arqueiro de tropa 64 recuperados na grade da prancha, com o arco refeito (corda à frente do corpo) e provados no make forja.",
+  "fora": "Conversão real paga, identidade e aprovação do mestre (do dono), integração no jogo, art/.",
+  "estado": "parcial — P0, P1, tons e os três pilotos feitos e provados no make forja; a conversão real (sem credencial), a identidade e o mestre ficam para o dono (Q-292–Q-294)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

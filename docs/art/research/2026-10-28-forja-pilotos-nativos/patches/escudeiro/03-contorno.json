@@ -1,0 +1,38 @@
+{
+ "schema": "forja.pixel_patch/1",
+ "base": {
+  "pixels_sha256": "fb35d68301ad76766395ee863f0832bf67a7083a9387c3b86377d9233470641c",
+  "canvas": [
+   49,
+   49
+  ]
+ },
+ "mask": [
+  [
+   44,
+   13,
+   48,
+   16
+  ]
+ ],
+ "author": "Claude (agente), conferido a olho a 1x e 7x",
+ "date": "2026-10-28",
+ "reason": "contorno: no topo do escudo (y=14) dois pixels de madeira ficaram sem o contorno que a prancha tem",
+ "operations": [
+  {
+   "op": "paint",
+   "pixels": [
+    [
+     45,
+     14,
+     "#000000"
+    ],
+    [
+     46,
+     14,
+     "#000000"
+    ]
+   ]
+  }
+ ]
+}

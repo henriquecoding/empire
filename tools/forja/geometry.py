@@ -12,7 +12,7 @@ parte tapada declarada da `inconclusive` e nunca `pass`. Sem regiao nem ancora: 
 """
 from __future__ import annotations
 
-from . import equipment, masks, verdicts
+from . import bow_topology, equipment, masks, verdicts
 
 
 def _check(axis: str, name: str, item: str, status: str, detail: str, part: str | None = None, **evidence) -> dict:
@@ -214,6 +214,8 @@ def evaluate(manifest: dict, obs: dict) -> list[dict]:
             checks.append(_axis(item, obs))
         if item["line"]:
             checks.append(_line(item, obs))
+        if item["family"] == "bow_simple":
+            checks.append(bow_topology.check(item, obs))
         if item["family"] == "sword_straight":
             checks.append(_guard(item, obs))
         checks += _contacts(item, obs)
