@@ -1,0 +1,105 @@
+{
+ "schema": "forja.visual_review/1",
+ "phase": "reference",
+ "image": {
+  "sha256": "9c8253e0fdfe3618b2e3c6c142d0609d583a16329aae6775f5dd3a52706cf082",
+  "size": [
+   338,
+   333
+  ]
+ },
+ "subject": {
+  "character": "escudeiro",
+  "pose": "estatica_superior_da_prancha",
+  "declared_role": "squire",
+  "target_canvas": [
+   64,
+   64
+  ],
+  "declared_by": "Henrique"
+ },
+ "observer": {
+  "author": "Claude (agente)",
+  "model": "claude-opus-5-5",
+  "date": "2026-10-28",
+  "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip"
+ },
+ "regions": {
+  "helmet": {
+   "box": [
+    61,
+    14,
+    269,
+    131
+   ],
+   "state": "observed"
+  },
+  "face_anxious": {
+   "box": [
+    145,
+    66,
+    256,
+    163
+   ],
+   "state": "observed"
+  },
+  "eye": {
+   "box": [
+    178,
+    72,
+    210,
+    111
+   ],
+   "state": "observed"
+  },
+  "mouth": {
+   "box": [
+    184,
+    111,
+    223,
+    137
+   ],
+   "state": "observed"
+  },
+  "shield": {
+   "box": [
+    217,
+    92,
+    327,
+    318
+   ],
+   "state": "observed"
+  },
+  "shield_blue_core": {
+   "box": [
+    249,
+    118,
+    307,
+    299
+   ],
+   "state": "observed"
+  },
+  "hand_on_shield": {
+   "box": [
+    171,
+    156,
+    236,
+    215
+   ],
+   "state": "observed"
+  },
+  "sleeves": {
+   "box": [
+    68,
+    124,
+    178,
+    234
+   ],
+   "state": "observed"
+  }
+ },
+ "anchors": {},
+ "findings": [],
+ "invariant_checks": [],
+ "repair_claims": []
+}

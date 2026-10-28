@@ -26,6 +26,11 @@ def _options(args) -> pipeline.Options:
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
+        from . import production
+        selected = production.resolve("", opts.kind, {"kind": exp.get("kind"), "role": exp.get("role")})
+        if selected["errors"]:
+            raise ValueError("; ".join(selected["errors"]))
+        opts.useful_box = tuple(exp["target_useful_bbox"]) if exp.get("target_useful_bbox") else None
         with Image.open(args.image) as im:
             received = im.size
         if expectation.native(exp, received) and not (opts.scale or opts.cells):
@@ -73,16 +78,10 @@ def do_snap(args) -> dict:
 
 
 def expected(args, res: dict, detected: float | None) -> dict | None:
-    """Com --expect, o confronto do pedido com o que chegou (FORJA-06), escrito tambem no JSON do resultado."""
+    """O mesmo confronto no forge e na prancha, persistido junto do estado de entrega."""
     if not getattr(args, "expect", None):
         return None
-    exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
-    with Image.open(args.image) as im:
-        cmp = expectation.compare(exp, im.size, detected)
-    path = Path(res["files"].get("json") or res["files"]["forja_json"])
-    path.write_text(json.dumps({**json.loads(path.read_text(encoding="utf-8")), "expectation": cmp}, indent=1,
-                               ensure_ascii=False) + "\n", encoding="utf-8")
-    return cmp
+    return expectation.record(args.expect, args.image, res, detected)
 
 
 def do_forge(args) -> dict:
@@ -95,7 +94,8 @@ def do_forge(args) -> dict:
             "findings": res["lint"]["findings"], "expectation": cmp, "grid": res["snap"]["grid"],
             "grid_report": res["snap"]["grid_report"], "native_size": res["snap"]["native_size"],
             "fit": res["finish"].get("fit"), "loss": {k: v for k, v in lost.items() if k != "erased"},
-            "signals": {k: sig[k] for k in ("status", "blocked", "pending")}}
+            "signals": {k: sig[k] for k in ("status", "blocked", "pending")}, "delivery": res["delivery"],
+            "occupancy": res["snap"].get("occupancy")}
 
 
 def do_lint(args) -> dict:

@@ -1,0 +1,183 @@
+{
+ "schema": "forja.visual_review/1",
+ "phase": "reference",
+ "image": {
+  "sha256": "9011e3f673dcadbc050034a0fcae56d36b155e4cfc9adc8803c13d7508b83f4d",
+  "size": [
+   362,
+   408
+  ]
+ },
+ "subject": {
+  "character": "arqueiro_tropa",
+  "pose": "estatica_superior_da_prancha",
+  "declared_role": "troop",
+  "target_canvas": [
+   64,
+   64
+  ],
+  "declared_by": "Henrique"
+ },
+ "observer": {
+  "author": "Claude (agente)",
+  "model": "claude-opus-5-5",
+  "date": "2026-10-28",
+  "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip"
+ },
+ "regions": {
+  "hood": {
+   "box": [
+    64,
+    8,
+    246,
+    202
+   ],
+   "state": "observed"
+  },
+  "face": {
+   "box": [
+    114,
+    39,
+    246,
+    158
+   ],
+   "state": "observed"
+  },
+  "eye": {
+   "box": [
+    183,
+    64,
+    208,
+    96
+   ],
+   "state": "observed"
+  },
+  "mouth": {
+   "box": [
+    183,
+    108,
+    214,
+    127
+   ],
+   "state": "observed"
+  },
+  "quiver": {
+   "box": [
+    21,
+    64,
+    108,
+    202
+   ],
+   "state": "observed"
+  },
+  "hand_rear": {
+   "box": [
+    121,
+    264,
+    189,
+    314
+   ],
+   "state": "observed"
+  },
+  "hand_front": {
+   "box": [
+    227,
+    277,
+    283,
+    320
+   ],
+   "state": "observed"
+  },
+  "front_bracer": {
+   "box": [
+    208,
+    233,
+    258,
+    289
+   ],
+   "state": "observed"
+  },
+  "bow_main.limb_upper": {
+   "box": [
+    271,
+    152,
+    352,
+    302
+   ],
+   "state": "observed"
+  },
+  "bow_main.string_visible": {
+   "box": [
+    246,
+    177,
+    327,
+    233
+   ],
+   "state": "observed"
+  },
+  "bow_main.string_hidden": {
+   "box": [
+    164,
+    221,
+    252,
+    296
+   ],
+   "state": "occluded",
+   "occluded_by": "front_bracer",
+   "note": "a corda some atras da manga e do tronco"
+  }
+ },
+ "anchors": {},
+ "findings": [
+  {
+   "id": "lasca_cinzenta",
+   "category": "unidentified_fragment",
+   "box": [
+    196,
+    258,
+    227,
+    302
+   ],
+   "state": "observed",
+   "certainty": "certain",
+   "evidence": "linha cinzenta de 1 px com contorno preto dos dois lados entre a tunica e a bracadeira da frente; nao continua nenhum membro, nao tem haste nem ponta (nao e flecha); a cor e a do fundo da prancha",
+   "description": "fragmento sem funcao entre as maos",
+   "action": "repair",
+   "reference_issue": "bow_unidentified_fragment"
+  },
+  {
+   "id": "entalhe_de_cima_no_vazio",
+   "category": "equipment_defect",
+   "box": [
+    302,
+    171,
+    333,
+    202
+   ],
+   "state": "observed",
+   "certainty": "certain",
+   "evidence": "o pixel de cima da corda toca o contorno do membro, nao a madeira",
+   "description": "a corda nao chega a madeira na ponta de cima",
+   "action": "repair",
+   "reference_issue": "bow_connections"
+  },
+  {
+   "id": "corda_atras_do_corpo",
+   "category": "equipment_defect",
+   "box": [
+    164,
+    177,
+    327,
+    302
+   ],
+   "state": "observed",
+   "certainty": "certain",
+   "evidence": "a corda desce da ponta de cima e desaparece na manga; a ponta de baixo nao tem corda visivel",
+   "description": "Henrique, 28/10: a corda esta atras do personagem e a arma mal feita",
+   "action": "repair",
+   "reference_issue": "bow_string_behind_body"
+  }
+ ],
+ "invariant_checks": [],
+ "repair_claims": []
+}

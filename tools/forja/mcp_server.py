@@ -24,34 +24,12 @@ from PIL import Image
 
 from . import __version__, cli
 from .imageops import open_rgba
+from .mcp_instructions import INSTRUCTIONS
 
 VERSIONS = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 SKIP = {"mcp"}
 READ_ONLY = {"kinds", "lint", "verify", "regua"}
 PAID = {"generate", "auto", "inpaint"}
-INSTRUCTIONS = (
-    "Forja: pixel art para o jogo Empire a partir de imagens geradas. Fluxo: (1) forja_prompt compila o pedido "
-    "(prompt, tamanho, guias, expect.json) e diz o que anexar, por ordem; com gerador ligado, forja_plan valida o "
-    "pedido sem rede; (2) gere a imagem com a tua ferramenta (ou forja_generate/forja_auto com chave e --max-calls: "
-    "cada POST pago sai uma vez, num job que forja_jobs mostra e retoma so por consulta); (3) forja_forge (uma figura)"
-    " ou forja_sheet (prancha) com --expect; (4) le review (contract_valid, motion_checks, needs_regeneration) e "
-    "prompt_feedback; se needs_regeneration, gera de novo com o prompt corrigido; (5) com armas ou equipamento, "
-    "forja_equip (manifesto e observacao marcada na imagem): o lint nao ve a arma, e o que nao foi observado fica "
-    "not_evaluated; forja_line refaz uma corda so na mascara; (6) forja_cores ve a cor no espaco (fragmentos de 1-3 "
-    "px: review e suspeita, nao defeito) e, com plano, agrupa so nas regioes editaveis; (7) uma referencia tem estado "
-    "no registo forja_refs (so o mestre que o dono aprovou e APPROVED); a edicao local e forja_inpaint com --refs "
-    "(recusa o rejeitado antes do pedido) e fecha com forja_verify contra o mestre, so a ler; (8) para adaptar um "
-    "conceito, forja_plan/forja_prompt com --fidelity e --character (o recorte de autoridade vai anexado, um conceito "
-    "alternativo e reference_conflict, sem as preferencias do compilador); no forja_forge, snap.loss e o achado erased"
-    " dizem o que a amostragem apagou mesmo com pureza 1,0, grid_report diz de onde veio a grade e --signals prende "
-    "pixels e regioes declarados; forja_fidelity com --candidate da os quatro estados (runtime, sinais, identidade, "
-    "mestre) e --sheet o conceito ao lado. (9) cenarios e construcoes: forja_regua (a regua dos atores reais, so le), "
-    "forja_escala (uma referencia levada a regua por marcos: escala, coerencia, pixel aparente, compressao da planta),"
-    " forja_cena (contrato forja.scene/1: pedido de elevacao lateral, regua em imagem e plano sem rede), forja_forge "
-    "com esse expect.json, forja_estrutura (porta, chao, sinais, emendas, estados) e forja_montagem (a peca no mundo "
-    "com os atores); uma referencia nao se reduz, redesenha-se. A aprovacao artistica e sempre do dono. Caminhos "
-    "relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do dono; usar build/forja/. Ler "
-    "docs/art/FORJA.md.")
 
 
 def _schema(parser: argparse.ArgumentParser) -> dict:

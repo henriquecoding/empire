@@ -1,0 +1,23 @@
+{
+ "schema": "forja.equipment/1",
+ "status": "proposta",
+ "subject": "arqueiro de tropa (troop_64), pose estatica de repouso de 28/10, de perfil, virado a direita",
+ "view": "side",
+ "facing": "right",
+ "items": [
+  {
+   "id": "bow_main",
+   "family": "bow_simple",
+   "slot": "weapon",
+   "state": "rest",
+   "reference": {"path": "../candidatos/arqueiro_tropa.png", "status": "estudo"},
+   "parts": {
+    "grip": {"occluders": ["hand_front"]},
+    "limb": {"occluders": ["hand_front", "hand_rear"]}
+   },
+   "contacts": [{"part": "grip", "body": "hand_front", "kind": "holds"}],
+   "materials": {"limb": "madeira", "string": "fibra", "grip": "madeira"},
+   "notes": "Repouso: sem flecha encaixada. A corda vai A FRENTE do corpo, de entalhe a entalhe (Henrique, 28/10). A mao de tras fica junto a ponta de baixo; a aljava (storage) fica fora desta prova."
+  }
+ ]
+}

@@ -1,0 +1,160 @@
+{
+ "schema": "forja.observation/1",
+ "image_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+ "observer": {
+  "author": "Claude (agente)",
+  "model": "claude-opus-5-5",
+  "date": "2026-10-28",
+  "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip (forja.visual_review/1)"
+ },
+ "regions": {
+  "hood": {
+   "box": [
+    17,
+    2,
+    46,
+    31
+   ],
+   "uncertainty": "baixa"
+  },
+  "face": {
+   "box": [
+    25,
+    6,
+    46,
+    25
+   ],
+   "uncertainty": "baixa"
+  },
+  "eye": {
+   "box": [
+    36,
+    10,
+    40,
+    15
+   ],
+   "uncertainty": "baixa"
+  },
+  "mouth": {
+   "box": [
+    36,
+    17,
+    41,
+    20
+   ],
+   "uncertainty": "baixa"
+  },
+  "quiver": {
+   "box": [
+    10,
+    10,
+    24,
+    31
+   ],
+   "uncertainty": "baixa"
+  },
+  "hand_rear": {
+   "box": [
+    26,
+    40,
+    35,
+    49
+   ],
+   "colors": [
+    "#FCB275",
+    "#F89861",
+    "#F3814E",
+    "#D47044"
+   ],
+   "uncertainty": "baixa"
+  },
+  "hand_front": {
+   "box": [
+    43,
+    42,
+    52,
+    50
+   ],
+   "colors": [
+    "#FCB275",
+    "#F89861",
+    "#F3814E",
+    "#D47044"
+   ],
+   "uncertainty": "baixa"
+  },
+  "front_bracer": {
+   "box": [
+    40,
+    36,
+    48,
+    45
+   ],
+   "uncertainty": "baixa"
+  },
+  "bow_main.limb": {
+   "box": [
+    34,
+    24,
+    62,
+    49
+   ],
+   "colors": [
+    "#9A5324",
+    "#A55926",
+    "#B15B26",
+    "#8A4821",
+    "#47200D",
+    "#7A3F1D",
+    "#703A1A",
+    "#64341A"
+   ],
+   "exclude": {
+    "box": [
+     22,
+     24,
+     50,
+     45
+    ]
+   },
+   "note": "os dois membros: o de cima ate a ponta e o de baixo da mao da frente a de tras",
+   "uncertainty": "baixa"
+  },
+  "bow_main.string": {
+   "box": [
+    33,
+    27,
+    59,
+    45
+   ],
+   "colors": [
+    "#F2EADD",
+    "#878171"
+   ],
+   "note": "uma corda reta, clara sobre o fundo e a bracadeira, media sobre o creme",
+   "uncertainty": "baixa"
+  },
+  "bow_main.grip": {
+   "box": [
+    43,
+    43,
+    50,
+    49
+   ],
+   "note": "a pega esta debaixo da mao da frente; inferida pelos dois membros",
+   "uncertainty": "alta"
+  }
+ },
+ "anchors": {
+  "bow_main.nock_top": [
+   58,
+   28
+  ],
+  "bow_main.nock_bottom": [
+   34,
+   44
+  ]
+ },
+ "occluded": {},
+ "inferred_anchors": []
+}

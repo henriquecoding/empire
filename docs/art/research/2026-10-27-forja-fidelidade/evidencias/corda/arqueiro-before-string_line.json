@@ -159,6 +159,28 @@
         ]
        ]
       }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "bow_nocks",
+      "item": "bow_main",
+      "part": "limb",
+      "status": "pass",
+      "detail": "bow_main: duas pontas ligadas a madeira e pega entre elas",
+      "evidence": {
+       "grip_projection": 0.539,
+       "loose": [],
+       "tips": [
+        [
+         57,
+         21
+        ],
+        [
+         57,
+         71
+        ]
+       ]
+      }
      }
     ]
    },
@@ -309,6 +331,28 @@
     }
    },
    {
+    "axis": "equipment_geometry",
+    "check": "bow_nocks",
+    "item": "bow_main",
+    "part": "limb",
+    "status": "pass",
+    "detail": "bow_main: duas pontas ligadas a madeira e pega entre elas",
+    "evidence": {
+     "grip_projection": 0.539,
+     "loose": [],
+     "tips": [
+      [
+       57,
+       21
+      ],
+      [
+       57,
+       71
+      ]
+     ]
+    }
+   },
+   {
     "axis": "functional_pose",
     "check": "contact",
     "item": "bow_main",
@@ -422,6 +466,28 @@
        "gaps": [],
        "pieces": 1,
        "ends": [
+        [
+         57,
+         21
+        ],
+        [
+         57,
+         71
+        ]
+       ]
+      }
+     },
+     {
+      "axis": "equipment_geometry",
+      "check": "bow_nocks",
+      "item": "bow_main",
+      "part": "limb",
+      "status": "pass",
+      "detail": "bow_main: duas pontas ligadas a madeira e pega entre elas",
+      "evidence": {
+       "grip_projection": 0.539,
+       "loose": [],
+       "tips": [
         [
          57,
          21
@@ -570,6 +636,28 @@
      "gaps": [],
      "pieces": 1,
      "ends": [
+      [
+       57,
+       21
+      ],
+      [
+       57,
+       71
+      ]
+     ]
+    }
+   },
+   {
+    "axis": "equipment_geometry",
+    "check": "bow_nocks",
+    "item": "bow_main",
+    "part": "limb",
+    "status": "pass",
+    "detail": "bow_main: duas pontas ligadas a madeira e pega entre elas",
+    "evidence": {
+     "grip_projection": 0.539,
+     "loose": [],
+     "tips": [
       [
        57,
        21

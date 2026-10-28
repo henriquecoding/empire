@@ -29,8 +29,8 @@ def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt:
     exp = plan.data["expect"]
     canvas, pivot, origin, grid = expectation.frame(exp)  # a tela, o pivot e a origem de uma cena (FORJA-11)
     opts = pipeline.Options(kind=plan.data["kind"], palette=palette, canvas=canvas, pivot=pivot, origin=origin,
-                            origin_grid=grid,
-                            bg=None if exp["background"] == "transparent" else exp["background"])
+                            origin_grid=grid, bg=None if exp["background"] == "transparent" else exp["background"],
+                            useful_box=tuple(exp["target_useful_bbox"]) if exp.get("target_useful_bbox") else None)
     if expectation.native(exp, received):
         opts.scale = 1.0
     if exp["frames"] > 1:
@@ -84,6 +84,11 @@ def run(plan: Plan, out: Path, attempts: int, budget: jobs.Budget, palette: str 
             break
         history.append({**entry, **res})
         if not res["review"]["needs_regeneration"]:
+            break
+        if plan.data["model"] == "image-to-pixelart":
+            history.append({"attempt": attempt + 1, "state": "not_sent", "review": None,
+                            "error": "conversion has no corrective text field: review the native result; "
+                                     "an identical paid request is not repeated"})
             break
         hints = " ".join(f["hint"] for f in res["findings"] if f.get("hint"))
         prompt = prompts.corrective(plan.data["prompt"], (res["prompt_feedback"] + " " + hints).strip())

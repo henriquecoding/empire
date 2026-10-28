@@ -38,7 +38,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095 e 0098). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095, 0097 e 0098). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
@@ -50,10 +50,18 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   fecha-se com `forja verify` contra ele. Adaptar um conceito e pedir com o
   contrato de fidelidade (`--fidelity --character`: o recorte de autoridade vai
   anexado, sem as preferencias do compilador) e rever com `forja fidelity`; uma
-  pureza alta nao prova que um traco sobreviveu (`snap.loss`, achado `erased`). Cenarios e construcoes desenham-se
-  pela regua dos atores reais (`forja regua`, `escala`): o contrato `forja.scene/1` diz a extensao, os vaos, os sinais
-  e os estados, o pedido e o de elevacao lateral (`forja cena`), e a peca confere-se com `forja estrutura` e no mundo
-  com `forja montagem` (ADR 0098). Uma referencia nao se reduz: redesenha-se na grade, a escala dos atores.
+  pureza alta nao prova que um traco sobreviveu (`snap.loss`, achado `erased`).
+  Regra de 28/10 (ADR 0096): tropas, incluindo o arqueiro de tropa, usam `troop_64`;
+  o Arqueiro Real e distinto e o Rei mantem 80x80. Conferir o papel antes do pedido.
+  A autoridade de identidade pode conter defeitos: registar `reference_issues`, corrigir
+  so as excecoes autorizadas e provar a correcao na imagem exata, sem copiar o erro.
+  ADR 0097: o que se viu numa imagem regista-se com `forja visual` (presa ao hash, antes
+  do pedido e depois do retorno; o incerto fica pendente); refinar ao pixel e `forja patch`
+  na mascara, sem regenerar o corpo; autoridade que ja e pixel art recupera-se na grade dela.
+  ADR 0098: cenarios e construcoes desenham-se pela regua dos atores reais (`forja regua`,
+  `escala`): o contrato `forja.scene/1` diz a extensao, os vaos, os sinais e os estados, o
+  pedido e o de elevacao lateral (`forja cena`), e a peca confere-se com `forja estrutura` e
+  no mundo com `forja montagem`. Uma referencia nao se reduz: redesenha-se na grade.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

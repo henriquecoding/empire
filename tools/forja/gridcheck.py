@@ -122,6 +122,8 @@ def measure(image: Image.Image, scale: float | None = None, cells: tuple[int, in
     """A grade e, quando a conferencia ja a amostrou pelo voto dominante, essa amostragem (o `forge` nao a refaz)."""
     if reduce and not (scale or cells):
         raise ValueError("--reduce pede a grade da reducao: --scale ou --cells")
+    if (scale == 1 and not cells) or cells == image.size:
+        return declared(image, grid.known(image.size, 1), reduce), None
     if scale or cells:
         return declared(image, grid.detect(image, scale=scale, cells=cells), reduce), None
     k, phase = exact_grid(image)

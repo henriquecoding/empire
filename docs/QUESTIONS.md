@@ -66,6 +66,41 @@
   `SubViewport` e reduzir com filtro linear) ou um shader *sharp bilinear*.
 - **Decide:** o dono (apresentação); não muda a arte.
 
+## Forja: revisão visual, patch nativo e pilotos — 28/10/2026 (FORJA-10, ADR 0097)
+
+> Pedido do dono (28/10/2026): *«Quero que implemente o que está no relatório, além disso pesquise densamente na web
+> para refinar e melhorar ainda mais essa pesquisa e elaboração dos relatórios»*; durante o trabalho, *«A corda está
+> atrás do personagem, a arma está mal feita»*. Aplicados P0, P1 e os três pilotos
+> ([relatório](art/research/2026-10-28-forja-pilotos-nativos/README.md)). O que segue é do dono.
+
+### Q-292 · A capa do Rei e as linhas do arqueiro: o orçamento de tela fica assim?
+- **Hoje:** na grade da própria prancha o Rei tem 81×77 e a capa vai 44 px para trás do centro dos pés; com o pivô
+  `royal_80` em (40,78) a tela dá 40. O candidato recolhe o contorno de trás da capa 4 px (curva comprimida, borda
+  clara e contorno mantidos) e usa margem esquerda 0 só desse lado; caixa útil `[0,2,78,79]`. O arqueiro tem 64
+  linhas para 61 úteis: saíram a 3 (copa do capuz), a 30 (tronco) e a 52 (calças), fora do rosto e das mãos.
+- **Alternativas:** manter a margem 2 no Rei (a capa entra 6 px e a faixa atrás do braço fica com 3–4 px); mexer no
+  pivô (proibido sem decisão); para o arqueiro, margem de cima 1 e só duas linhas. A escala relativa do elenco também
+  mudou um pouco: cada figura da prancha tem o seu período (6,04/6,48/6,25 px), por isso a recuperação nativa já
+  desloca a relação de tamanho até 7 % (liga-se à Q-288).
+- **Decide:** o dono (silhueta e escala do elenco).
+
+### Q-293 · As rampas tiradas da prancha entram na paleta do projeto?
+- **Hoje:** quantizar para `empire_working.gpl` troca a túnica vinho por castanho e mancha a pele e o escudo. Os
+  pilotos usam os tons da própria prancha (143 cores nos três, `paleta-pilotos-proposta.gpl`), juntos por limiar sem
+  teto; a cor do projeto só entra quando é indistinguível.
+- **Proposta:** registar em `art/palettes/` as rampas por material (vinho, azul da capa, creme, pele, madeira, metal)
+  que o dono aceitar, e só então reduzir; até lá, o `runtime` confere contra a paleta proposta (liga-se à Q-289).
+- **Decide:** o dono (direção de arte; a regra 9 guarda `art/`).
+
+### Q-294 · A corda do arqueiro em dois tons, e a ponta de baixo junto à mão de trás, servem?
+- **Hoje:** a corda nova é uma linha reta de 1 px de entalhe a entalhe, à frente do corpo: clara (`#F2EADD`) sobre o
+  fundo e a braçadeira, média (`#878171`) sobre o creme da túnica, onde a clara desaparecia. Num fundo claro a parte
+  clara quase some. A ponta de baixo fica encostada à mão de trás, como na prancha; o membro de baixo visível é mais
+  curto que o de cima (o handoff não impõe simetria).
+- **Proposta:** confirmar em cena (fundos reais do jogo) antes de animar; se a corda tiver de ler em fundo claro,
+  um contorno parcial escuro só nesse troço.
+- **Decide:** o dono (leitura da arma).
+
 ## Forja: auditoria técnica de 27/10/2026 (FORJA-08, ADR 0095)
 
 > Pedido do dono (27/10/2026): *«Elabora uma densa e extensa auditoria na forja, encontre falhas e coisas a melhorar

@@ -447,6 +447,61 @@ estão na [pesquisa](research/2026-10-28-forja-cenarios/README.md).
 
 ## Receitas por tipo de asset
 
+### Decidir escala, examinar a referência e gerar no orçamento nativo (28/10)
+
+O [contrato atual desta prancha](research/2026-10-28-forja-escala-e-referencia/fidelidade.json) e a
+[auditoria de 28/10](research/2026-10-28-forja-escala-e-referencia/README.md) aplicam a ADR 0096:
+
+- `troop`/`arqueiro de tropa` escolhe `troop_64`; `royal archer`/`arqueiro real` escolhe `royal_80`.
+  Com fidelidade, o papel e o `kind` vêm da autoridade. Um preset dado em conflito é erro antes da rede.
+  Um simples `archer` não é inferido como monarca. O `--expect` conserva essa decisão até ao `forge`.
+- `target_useful_bbox` reserva a área da figura completa, incluindo a arma, antes dos detalhes. O prompt
+  recebe-a e a saída é conferida contra ela. Ela não obriga o gerador a obedecer nem autoriza reduzir a arte.
+- `reference_issues`: uma autoridade pode conter um erro. `unresolved` bloqueia; `repair` exige autor,
+  data, região e instrução; `preserve_intentional` exige uma decisão explícita. A exceção autorizada segue no
+  pedido, sem alterar as outras invariantes. A identidade continua pendente até haver prova da correção,
+  por defeito e pelo hash do candidato, em `reference_issue_reviews`.
+- `snap.occupancy` separa tela, caixa opaca com alfa ≥128, margens removíveis e vazio interior. O Rei da
+  entrega mede 97×96 **de desenho ocupado**, já sem margens: não cabe em 80×80 por retirar transparência.
+- Leitura conhecida a 1× preserva cada pixel: não volta a estimar fase nem linhas. Um sinal obrigatório
+  perdido bloqueia também `forge.ok`. Se o encaixe cortar, `uncut_png` conserva o diagnóstico inteiro;
+  `delivery` fica bloqueado. `bow_nocks` confere as duas pontas da corda na madeira, além da linha reta.
+
+Há duas operações distintas no PixelLab. `create-image-*` cria na dimensão nativa e agora conserva as
+invariantes e exceções de fidelidade no texto; não recebe silenciosamente uma referência grande como se
+fosse um mestre nativo. `--backend pixellab --model image-to-pixelart` converte uma fonte grande com
+`fixer=true` e `output_size` estruturado de 64×64/80×80, sem redimensionamento local. O plano valida o contrato
+público antes do job. A força inicial é 200 por omissão, declarada no pedido, ou o valor explícito válido.
+Esta rota não tem campo para instruções textuais: recusa uma referência com reparos conhecidos por fazer,
+em vez de copiar o defeito ou ignorar o texto. Uma falha não dispara outro POST idêntico.
+
+Esta integração foi testada com transporte simulado; não houve chamada paga nem validação visual do
+serviço nesta auditoria. A ferramenta de imagens embutida só recebe a grade por texto: não se promete que
+ela produz 64×64/80×80 nativos. O resultado continua medido e sujeito à revisão de identidade e equipamento.
+
+### Observar, editar ao pixel e partir da grade da prancha (28/10, FORJA-10)
+
+A [ADR 0097](../adr/0097-a-forja-observa-a-imagem-exata-e-edita-ao-pixel.md) fecha as lacunas do handoff de 28/10;
+os [pilotos](research/2026-10-28-forja-pilotos-nativos/README.md) aplicam-na aos três estáticos.
+
+- **Revisão visual** (`forja visual`, `forja.visual_review/1`). Antes do pedido, sobre o recorte de autoridade
+  (`--phase reference`), e depois do retorno, sobre o candidato: `--template-out` grava o esqueleto (hash, tamanho,
+  classe e invariantes do dono); quem olha preenche regiões e âncoras (observadas, inferidas ou tapadas, com quem
+  tapa) e achados com caixa, evidência e certeza; `--marks-out` desenha as caixas numeradas para conferir. Um defeito
+  certo sem decisão em `reference_issues` bloqueia, o incerto fica pendente, a classe declarada não muda e um reparo
+  só se declara na imagem nova. Ligada no contrato (`visual_review.reference`), entra em `prompt`, `plan`, `auto` e
+  MCP; no `forja fidelity --visual-review` dá os `reference_issue_reviews`; `--observation-out` alimenta o `forja equip`,
+  que continua a medir a corda e as pontas. A identidade continua a pedir uma pessoa ou o dono.
+- **Patch nativo** (`forja patch`, `forja.pixel_patch/1`): `paint`, `region` (linhas e legenda, `keep` deixa o pixel)
+  e `move` (agrupamento ou bloco inteiro), só na máscara, com protegidos e pinos conferidos na base; recusa outra
+  imagem, fora da tela, alfa intermédio e cor fora da paleta. Prova o exterior igual byte a byte, grava a diferença e
+  os dois hashes, e a observação anterior deixa de valer. Sem blur, reamostragem nem limpeza de pixels soltos.
+- **Tons** (`tools/forja/tones.py`): numa fonte com compressão, as cores juntam-se por limiar OKLab, sem teto; um
+  tom pequeno e longe de tudo fica. Quantizar para a paleta de trabalho trocava o vinho por castanho (Q-293).
+- **Grade da prancha primeiro.** Quando a autoridade já é pixel art, `snap` no recorte recupera a grade dela
+  (`gridcheck` deu 0,94–0,96 nos três); a geração e a conversão ficam para o que não é pixel art. A conversão
+  `image-to-pixelart` emoldura a fonte na proporção da saída (`source_frame`), sem reamostrar.
+
 Os tipos (`--kind`) e os números de cada contrato vêm de
 `tools/forja/contracts.json`, conferido contra a Asset Bible e a Animation Bible
 pelos testes. `forja kinds` mostra-os; esta página não os copia.
@@ -549,6 +604,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `refs` / `verify` | O registo de autoridade das referências; reconferir um candidato contra o mestre, só a ler, e dizer se a entrega fecha (`--signals`: os pinos no PNG final) |
 | `fidelity` | O contrato de fidelidade: conferir a autoridade, gravar o recorte de uma pose, rever um candidato em quatro estados e pô-lo ao lado do conceito |
 | `cores` | A cor no espaço: fragmentos N4/N8 e o estado de cada um; com plano, rampas por material e agrupamento só nas regiões editáveis |
+| `visual` | A revisão visual de uma imagem exata (referência ou candidato): validar, estado com o incerto visível, imagem marcada, observação para o `equip` |
+| `patch` | Editar pixels nativos por operações explícitas numa máscara, com protegidos, hashes antes/depois e diferença |
 | `jobs` | Pedidos pagos de uma pasta: ver, retomar (só consulta), cancelar |
 | `regua` / `escala` | A régua dos atores e do mundo, lida do jogo; adequar uma referência por marcos (escala, coerência, pixel aparente, extensão, compressão da planta) |
 | `cena` / `estrutura` / `montagem` | O contrato de cena: pedido de elevação lateral e plano sem rede; a revisão estrutural; a bancada com os atores reais |

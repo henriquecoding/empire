@@ -108,6 +108,17 @@ class StatesTest(unittest.TestCase):
         self.assertEqual(rep["verdicts"]["states"], "pass")
 
 
+class PlanCliTest(unittest.TestCase):
+    def test_plan_takes_a_scene_and_refuses_a_request_without_subject(self):
+        out = tempdir()
+        res = cli.run(["plan", "--scene", str(fx.write(out, fx.contract())), "--backend", "pixellab",
+                       "-o", str(out / "plano")])
+        self.assertTrue(res["ok"], res)
+        self.assertEqual((res["request"]["width"], res["request"]["height"]), (64, 64))
+        with self.assertRaisesRegex(ValueError, "diga o assunto"):
+            cli.run(["plan", "-o", str(out / "nada")])
+
+
 class ManualRefsTest(unittest.TestCase):
     def test_the_manual_request_refuses_a_rejected_reference(self):
         out = tempdir()

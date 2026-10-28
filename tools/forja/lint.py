@@ -159,7 +159,9 @@ def _style(img, contract, found):
     if ramps:
         found.append(finding("gradient", "warn", f"{len(ramps)} rampas longas de tons vizinhos (possivel gradiente)",
                              [list(r) for r in ramps[:6]],
-                             hint="Two tones per material (light and shadow); no gradients or soft shading."))
+                             hint="Use clear flat light planes and coherent ramps per material; remove unintended "
+                             "soft color noise while preserving the concept's folds and expression. No implicit "
+                             "two-tone limit."))
 
 
 def _is_checker(rows, x, y) -> bool:

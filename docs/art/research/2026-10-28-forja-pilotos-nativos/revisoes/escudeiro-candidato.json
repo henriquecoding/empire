@@ -1,0 +1,131 @@
+{
+ "schema": "forja.visual_review/1",
+ "phase": "candidate",
+ "image": {
+  "sha256": "49089997b03cab5c7cccb154c752de201b010a1e2a095368573e2c98c565362b",
+  "size": [
+   64,
+   64
+  ]
+ },
+ "subject": {
+  "character": "escudeiro",
+  "pose": "estatica_superior_da_prancha",
+  "declared_role": "squire",
+  "target_canvas": [
+   64,
+   64
+  ],
+  "declared_by": "Henrique"
+ },
+ "observer": {
+  "author": "Claude (agente)",
+  "model": "claude-opus-5-5",
+  "date": "2026-10-28",
+  "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip"
+ },
+ "regions": {
+  "helmet": {
+   "box": [
+    16,
+    15,
+    48,
+    33
+   ],
+   "state": "observed"
+  },
+  "face_anxious": {
+   "box": [
+    29,
+    23,
+    46,
+    38
+   ],
+   "state": "observed"
+  },
+  "eye": {
+   "box": [
+    34,
+    24,
+    39,
+    30
+   ],
+   "state": "observed"
+  },
+  "mouth": {
+   "box": [
+    35,
+    30,
+    41,
+    34
+   ],
+   "state": "observed"
+  },
+  "shield": {
+   "box": [
+    40,
+    27,
+    57,
+    62
+   ],
+   "state": "observed"
+  },
+  "shield_blue_core": {
+   "box": [
+    45,
+    31,
+    54,
+    59
+   ],
+   "state": "observed"
+  },
+  "hand_on_shield": {
+   "box": [
+    33,
+    37,
+    43,
+    46
+   ],
+   "state": "observed"
+  },
+  "sleeves": {
+   "box": [
+    17,
+    32,
+    34,
+    49
+   ],
+   "state": "observed"
+  }
+ },
+ "anchors": {},
+ "findings": [],
+ "invariant_checks": [
+  {
+   "invariant": "expressao ansiosa na relacao olho, nariz e boca",
+   "status": "preserved",
+   "evidence": "olho arregalado, sobrancelha e boca aberta de lado como no recorte; rosto sem edicao"
+  },
+  {
+   "invariant": "aba do elmo cinza posicionada em relacao ao olho como no conceito",
+   "status": "preserved",
+   "evidence": "aba do elmo cinza por cima do olho, na mesma distancia"
+  },
+  {
+   "invariant": "escudo de madeira com miolo azul a frente do corpo",
+   "status": "preserved",
+   "evidence": "escudo de madeira com miolo azul a frente do corpo, com o contorno do topo fechado (2 px)"
+  },
+  {
+   "invariant": "tecido vinho e creme, mangas com volume legivel",
+   "status": "preserved",
+   "evidence": "tecido vinho e creme em tons proprios; mangas com dobras"
+  },
+  {
+   "invariant": "pose e exposicao do equipamento conservadas sem gesto inventado",
+   "status": "preserved",
+   "evidence": "mesma pose, sem espada nem gesto novo"
+  }
+ ],
+ "repair_claims": []
+}

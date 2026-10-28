@@ -1,0 +1,65 @@
+{
+ "schema": "forja.pixel_patch/1",
+ "base": {
+  "pixels_sha256": "c2b237ce2dc830873cfe45c6fcc8ce4be2113ff744da0aa69a45dc398d3707eb",
+  "canvas": [
+   54,
+   64
+  ]
+ },
+ "mask": [
+  [
+   0,
+   0,
+   54,
+   53
+  ]
+ ],
+ "author": "Claude (agente), conferido a olho a 1x e 7x",
+ "date": "2026-10-28",
+ "reason": "orcamento troop_64: tres linhas inteiras fora do rosto e das maos (3 copa do capuz, 30 tronco, 52 calcas) para 61 linhas uteis; pivo nos pes",
+ "operations": [
+  {
+   "op": "move",
+   "box": [
+    0,
+    0,
+    54,
+    3
+   ],
+   "select": "all",
+   "to": [
+    0,
+    1
+   ]
+  },
+  {
+   "op": "move",
+   "box": [
+    0,
+    0,
+    54,
+    30
+   ],
+   "select": "all",
+   "to": [
+    0,
+    1
+   ]
+  },
+  {
+   "op": "move",
+   "box": [
+    0,
+    0,
+    54,
+    52
+   ],
+   "select": "all",
+   "to": [
+    0,
+    1
+   ]
+  }
+ ]
+}

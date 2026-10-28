@@ -8,7 +8,26 @@ revisao e para o prompt corretivo. Um pedido nativo (PixelLab) so e tratado como
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
+from PIL import Image
+
 HARD = ("native_size_mismatch", "size_mismatch")
+
+
+def record(expect_path, source, result: dict, detected: float | None) -> dict:
+    """Persistir o confronto do pedido e bloquear tambem o estado de entrega, quando ha erro duro."""
+    exp = json.loads(Path(expect_path).read_text(encoding="utf-8"))
+    with Image.open(source) as image:
+        cmp = compare(exp, image.size, detected)
+    path = Path(result["files"].get("json") or result["files"]["forja_json"])
+    stored = {**json.loads(path.read_text(encoding="utf-8")), "expectation": cmp}
+    if cmp["hard"] and "delivery" in stored:
+        stored["delivery"].update(usable_sprite=False, state="blocked")
+        result["delivery"] = stored["delivery"]
+    path.write_text(json.dumps(stored, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    return cmp
 
 
 def raster_check(expect: dict, received: list[int]) -> dict:

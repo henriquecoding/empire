@@ -24,8 +24,9 @@ def below_grid(sub: dict, box: list[int]) -> dict:
     return lint.finding("subgrid", "warn", f"{sub['cells']} celulas misturadas ({sub['share']:.0%} da figura); a "
                         f"maior zona tem {sub['largest']} celulas em {box}: ali o gerador desenhou mais fino do que "
                         "a grade", [box], f"forja inpaint <png> --box {','.join(str(v) for v in box)} --change \"...\"",
-                        "Draw the face and small details with whole pixels on the same grid as the body: eyes, mouth "
-                        "and brows as 1-2 pixel marks, never lines thinner than one block.")
+                        "Redraw the face and small details with whole pixels on the body's grid. Preserve the "
+                        "expression and relationships of eyes, brow, nose and mouth; reserve sufficient native "
+                        "pixels for them rather than replacing the face with generic marks.")
 
 
 def clipped(report: dict, item: dict) -> dict:
@@ -79,3 +80,15 @@ def grid_origin(report: dict) -> list[dict]:
                                 f"{report['target_canvas'][1]}{zones}. Reduzir para caber e adaptacao com perda "
                                 "(desenho, --reduce), nao recuperacao", mix["zones"][:3] if mix else []))
     return out
+
+
+def useful_budget(image: Image.Image, box) -> list[dict]:
+    """Caixa planeada explicitamente pelo contrato de fidelidade, sem a impor por amostragem."""
+    from .imageops import opaque_bbox
+    actual = opaque_bbox(image)
+    if actual and not (box[0] <= actual[0] and box[1] <= actual[1] and actual[2] <= box[2] and actual[3] <= box[3]):
+        return [lint.finding("native_budget", "error", f"caixa ocupada {list(actual)} fora da caixa util planeada "
+                            f"{list(box)}; redesenhar dentro da grade, sem corte ou reducao silenciosa", [list(actual)],
+                            hint=f"Redraw the complete silhouette within native box {list(box)}, including equipment. "
+                            "Preserve facial acting and hands; do not crop or shrink the oversized drawing.")]
+    return []

@@ -181,3 +181,12 @@ def make(backend: str, scene_path: str | Path, palette: Palette | None = None, m
                         for i, (r, b) in enumerate(images, 1)]
     d["prompt_sha256"] = hashlib.sha256(d["prompt"].encode("utf-8")).hexdigest()
     return plan_mod.Plan(d, images)
+
+
+def from_args(args, palette) -> plan_mod.Plan:
+    """O plano de `forja plan`/`auto --scene`; sem cena nem assunto, recusa. `palette` so se chama com cena."""
+    get = lambda name, default=None: getattr(args, name, default)  # noqa: E731
+    if not get("scene"):
+        raise ValueError("diga o assunto, ou --scene com um contrato forja.scene/1")
+    return make(args.backend, args.scene, palette(), get("model"), get("guides", "auto"), get("image_size"),
+                get("seed"), refs_mod.load(get("refs")) if get("refs") else None)
