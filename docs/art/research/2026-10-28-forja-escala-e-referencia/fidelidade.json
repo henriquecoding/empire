@@ -40,12 +40,12 @@
     80
    ],
    "target_useful_bbox": [
-    2,
+    0,
     2,
     78,
     79
    ],
-   "native_layout_status": "pending",
+   "native_layout_status": "candidate_in_review",
    "required_invariants": [
     "corpo largo e relacao cabeca_tronco proximos do conceito",
     "sobrancelha, palpebra, pupila e sorriso assimetrico preservam a atuacao",
@@ -71,30 +71,94 @@
    "critical_regions": [
     {
      "id": "face_system",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      327,
+      194,
+      447,
+      315
+     ],
+     "target_box": [
+      38,
+      10,
+      58,
+      30
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "atuacao conjunta do olho, sobrancelha, nariz, boca e bochecha"
     },
     {
      "id": "chest_emblem",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      393,
+      339,
+      472,
+      424
+     ],
+     "target_box": [
+      49,
+      34,
+      62,
+      48
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "forma e contraste do losango"
     },
     {
      "id": "material_planes",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      97,
+      303,
+      562,
+      569
+     ],
+     "target_box": [
+      0,
+      28,
+      77,
+      72
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "separacao de pele, tecido vinho, creme, capa azul e metal"
     }
    ],
-   "pixel_pins": [],
+   "pixel_pins": [
+    {
+     "id": "pupila",
+     "target_pixel": [
+      42,
+      17
+     ],
+     "color": "#000000",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "branco_do_olho",
+     "target_pixel": [
+      40,
+      17
+     ],
+     "color": "#F8F7F6",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "dente",
+     "target_pixel": [
+      43,
+      22
+     ],
+     "color": "#F8F7F6",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    }
+   ],
    "rejected_candidates": [
     {
      "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/rei.png",
@@ -119,9 +183,28 @@
     }
    ],
    "identity_reviews": [],
-   "replacement_candidate": null,
+   "replacement_candidate": {
+    "file": "../2026-10-28-forja-pilotos-nativos/candidatos/rei.png",
+    "pixels_sha256": "f081cbe351474e2669dabe5189d53d97adbc4707c5c3e60bf239e98ef2712f76",
+    "status": "in_review",
+    "date": "2026-10-28",
+    "authoring": "grade da prancha recuperada + patches nativos; nao gerado"
+   },
    "reference_issue_reviews": [],
-   "role": "monarch"
+   "role": "monarch",
+   "native_layout_decision": {
+    "date": "2026-10-28",
+    "by": "Claude (agente), a confirmar por Henrique",
+    "status": "proposta",
+    "measured": "na grade da propria prancha (periodo 6,04 px, confianca 0,96) o Rei tem 81x77; a altura cabe (y 2..78) e a capa vai 44 px para tras do centro dos pes, com o pivo royal_80 em (40,78)",
+    "decision": "contorno de tras da capa 4 px para dentro (curva comprimida, borda clara e contorno mantidos) e margem esquerda 0 so do lado da capa; caixa util [0,2,78,79]; tela e pivo inalterados",
+    "alternative": "manter a margem 2: a capa teria de entrar 6 px e a faixa atras do braco ficaria com 3-4 px",
+    "question": "Q-292"
+   },
+   "visual_review": {
+    "reference": "../2026-10-28-forja-pilotos-nativos/revisoes/rei-referencia.json",
+    "candidate": "../2026-10-28-forja-pilotos-nativos/revisoes/rei-candidato.json"
+   }
   },
   {
    "id": "escudeiro",
@@ -143,7 +226,7 @@
     62,
     63
    ],
-   "native_layout_status": "pending",
+   "native_layout_status": "candidate_in_review",
    "required_invariants": [
     "expressao ansiosa na relacao olho, nariz e boca",
     "aba do elmo cinza posicionada em relacao ao olho como no conceito",
@@ -166,30 +249,94 @@
    "critical_regions": [
     {
      "id": "helmet_face",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      701,
+      299,
+      909,
+      448
+     ],
+     "target_box": [
+      16,
+      15,
+      48,
+      38
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "ansiedade e relacao aba_olho_nariz_boca"
     },
     {
      "id": "shield_hands",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      811,
+      377,
+      967,
+      603
+     ],
+     "target_box": [
+      33,
+      27,
+      57,
+      62
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "escudo e maos na pose de referencia"
     },
     {
      "id": "material_planes",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      675,
+      383,
+      870,
+      558
+     ],
+     "target_box": [
+      12,
+      28,
+      42,
+      55
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "leitura de metal, madeira, vinho e creme"
     }
    ],
-   "pixel_pins": [],
+   "pixel_pins": [
+    {
+     "id": "pupila",
+     "target_pixel": [
+      39,
+      28
+     ],
+     "color": "#000000",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "branco_do_olho",
+     "target_pixel": [
+      38,
+      28
+     ],
+     "color": "#FAF8F9",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "boca_aberta",
+     "target_pixel": [
+      39,
+      33
+     ],
+     "color": "#FAF8F9",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    }
+   ],
    "rejected_candidates": [
     {
      "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/escudeiro.png",
@@ -205,9 +352,26 @@
     }
    ],
    "identity_reviews": [],
-   "replacement_candidate": null,
+   "replacement_candidate": {
+    "file": "../2026-10-28-forja-pilotos-nativos/candidatos/escudeiro.png",
+    "pixels_sha256": "49089997b03cab5c7cccb154c752de201b010a1e2a095368573e2c98c565362b",
+    "status": "in_review",
+    "date": "2026-10-28",
+    "authoring": "grade da prancha recuperada + patches nativos; nao gerado"
+   },
    "reference_issue_reviews": [],
-   "role": "squire"
+   "role": "squire",
+   "native_layout_decision": {
+    "date": "2026-10-28",
+    "by": "Claude (agente)",
+    "status": "medido",
+    "measured": "na grade da prancha (periodo 6,48 px, confianca 0,94) o Escudeiro tem 45x48 e cabe em [2,2,62,63] sem mudar o desenho",
+    "decision": "nenhum ajuste de orcamento"
+   },
+   "visual_review": {
+    "reference": "../2026-10-28-forja-pilotos-nativos/revisoes/escudeiro-referencia.json",
+    "candidate": "../2026-10-28-forja-pilotos-nativos/revisoes/escudeiro-candidato.json"
+   }
   },
   {
    "id": "arqueiro_tropa",
@@ -229,7 +393,7 @@
     62,
     63
    ],
-   "native_layout_status": "pending",
+   "native_layout_status": "candidate_in_review",
    "required_invariants": [
     "capuz verde e roupa predominantemente creme",
     "expressao alerta e contida conforme a referencia",
@@ -254,30 +418,105 @@
    "critical_regions": [
     {
      "id": "hood_face",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      1179,
+      218,
+      1361,
+      412
+     ],
+     "target_box": [
+      17,
+      2,
+      46,
+      31
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "contorno do capuz e expressao alerta"
     },
     {
      "id": "bow_hands_string",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      1223,
+      362,
+      1467,
+      530
+     ],
+     "target_box": [
+      24,
+      24,
+      63,
+      50
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "posicao das maos, orientacao do arco e linha fina que deva ficar visivel"
     },
     {
      "id": "cream_clothing",
-     "authority_box": null,
-     "target_box": null,
+     "authority_box": [
+      1179,
+      356,
+      1354,
+      530
+     ],
+     "target_box": [
+      17,
+      23,
+      45,
+      50
+     ],
      "required": true,
-     "status": "annotation_pending",
+     "status": "annotated_on_candidate",
      "purpose": "material creme predominante no tronco e mangas"
     }
    ],
-   "pixel_pins": [],
+   "pixel_pins": [
+    {
+     "id": "pupila",
+     "target_pixel": [
+      38,
+      13
+     ],
+     "color": "#000000",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "branco_do_olho",
+     "target_pixel": [
+      37,
+      13
+     ],
+     "color": "#FDFBF9",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "sobrancelha",
+     "target_pixel": [
+      36,
+      11
+     ],
+     "color": "#47200D",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    },
+    {
+     "id": "boca_entreaberta",
+     "target_pixel": [
+      37,
+      19
+     ],
+     "color": "#FDFBF9",
+     "status": "authorized",
+     "role": "face",
+     "source_annotation": "Claude (agente), 2026-10-28, no candidato em revisao"
+    }
+   ],
    "rejected_candidates": [
     {
      "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/arqueiro.png",
@@ -302,8 +541,63 @@
     }
    ],
    "identity_reviews": [],
-   "replacement_candidate": null,
-   "reference_issue_reviews": [],
+   "replacement_candidate": {
+    "file": "../2026-10-28-forja-pilotos-nativos/candidatos/arqueiro_tropa.png",
+    "pixels_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+    "status": "in_review",
+    "date": "2026-10-28",
+    "authoring": "grade da prancha recuperada + patches nativos; nao gerado"
+   },
+   "reference_issue_reviews": [
+    {
+     "id": "bow_unidentified_fragment",
+     "pixels_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+     "status": "pass",
+     "reviewed_by": "Claude (agente)",
+     "date": "2026-10-28",
+     "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip",
+     "box": [
+      37,
+      41,
+      43,
+      47
+     ],
+     "observation": "entre a tunica e a bracadeira so ha creme da tunica e o contorno da bracadeira; nenhum cinzento",
+     "source": "forja.visual_review/1"
+    },
+    {
+     "id": "bow_connections",
+     "pixels_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+     "status": "pass",
+     "reviewed_by": "Claude (agente)",
+     "date": "2026-10-28",
+     "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip",
+     "box": [
+      33,
+      26,
+      61,
+      47
+     ],
+     "observation": "a corda toca a madeira em (59,28) e na ponta de baixo em (35,45); forja equip mede bow_nocks",
+     "source": "forja.visual_review/1"
+    },
+    {
+     "id": "bow_string_behind_body",
+     "pixels_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+     "status": "pass",
+     "reviewed_by": "Claude (agente)",
+     "date": "2026-10-28",
+     "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip",
+     "box": [
+      33,
+      27,
+      59,
+      45
+     ],
+     "observation": "a corda e uma linha reta continua de entalhe a entalhe, desenhada por cima da bracadeira e da tunica; nada a esconde",
+     "source": "forja.visual_review/1"
+    }
+   ],
    "role": "troop",
    "reference_issues": [
     {
@@ -335,8 +629,35 @@
      "authorized_by": "Henrique",
      "date": "2026-10-28",
      "instruction": "Make both string-to-limb connections unambiguous. Keep the resting diagonal bow and declare any sleeve or hand occlusion; do not add a duplicate string or turn the bow into a staff."
+    },
+    {
+     "id": "bow_string_behind_body",
+     "scope": "equipment",
+     "authority_box": [
+      1220,
+      355,
+      1476,
+      535
+     ],
+     "description": "Henrique, 28/10: \"A corda esta atras do personagem, a arma esta mal feita\". Na prancha a corda sai da ponta de cima e some atras da manga e do tronco; o arco nao tem construcao legivel.",
+     "disposition": "repair",
+     "authorized_by": "Henrique",
+     "date": "2026-10-28",
+     "instruction": "Rebuild the bow: the string is one straight line from the upper nock to the lower nock, drawn IN FRONT of the body (over the sleeve and tunic), not hidden behind the character; keep the upper limb curve, the grip in the front hand, the lower tip at the rear hand and the resting gesture."
     }
-   ]
+   ],
+   "native_layout_decision": {
+    "date": "2026-10-28",
+    "by": "Claude (agente), a confirmar por Henrique",
+    "status": "proposta",
+    "measured": "na grade da prancha (periodo 6,25 px, confianca 0,95) o arqueiro tem 53x64; a tela da 61 linhas uteis com o pivo troop_64 em (32,62)",
+    "decision": "saem tres linhas inteiras fora do rosto e das maos (3, copa do capuz; 30, tronco; 52, calcas); a ponta de cima do arco entra 1 px; caixa util [2,2,62,63] mantida",
+    "question": "Q-292"
+   },
+   "visual_review": {
+    "reference": "../2026-10-28-forja-pilotos-nativos/revisoes/arqueiro_tropa-referencia.json",
+    "candidate": "../2026-10-28-forja-pilotos-nativos/revisoes/arqueiro_tropa-candidato.json"
+   }
   }
  ]
 }

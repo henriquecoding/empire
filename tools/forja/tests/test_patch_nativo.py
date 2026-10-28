@@ -101,6 +101,14 @@ class PatchTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'fora da mascara|fora da tela'):
             pp.apply(image, p)
 
+    def test_moving_the_whole_block_removes_one_row_without_redrawing_the_rest(self):
+        image = base()
+        p = patch(image, {'op': 'move', 'box': [4, 10, 12, 12], 'select': 'all', 'to': [0, -1]})
+        p['mask'] = [[4, 9, 12, 12]]
+        out, rep = pp.apply(image, p)
+        self.assertEqual(out.crop((4, 9, 12, 10)).tobytes(), image.crop((4, 10, 12, 11)).tobytes())
+        self.assertEqual(out.crop((4, 11, 12, 12)).tobytes(), bytes(8 * 4))
+
     def test_no_operation_removes_isolated_pixels_or_resamples(self):
         image = base()
         out, rep = pp.apply(image, patch(image, {'op': 'paint', 'pixels': [[6, 9, RED]]}))

@@ -99,13 +99,15 @@ afirmacoes-escrever:  ## Corrige os campos contaveis do validation.json
 # ADR 0088: a Forja recupera pixel art de imagens geradas. A prova fabrica pixel
 # art falsa com a verdade conhecida (escala fracionaria, celulas desiguais,
 # desfoque, ruido) e chumba se a recuperacao nao bater; os testes cobrem o resto.
-# As provas do arqueiro (24/10 e 25/10), a da fidelidade e a da auditoria (27/10) reescrevem os seus resultados: um JSON que mude sem
+# As provas do arqueiro (24/10 e 25/10), a da fidelidade, a da auditoria (27/10) e os pilotos (28/10) reescrevem os seus resultados: um JSON que mude sem
 # commit chumba, como o docs/design no `spec` (antes derivavam caladas; auditoria O2). So os
 # JSON: guardam o hash dos pixels, e o PNG comprimido pode variar com o zlib de cada maquina.
 FORJA_PROVAS := 'docs/art/research/2026-10-24-forja-armas/*.json' 'docs/art/research/2026-10-25-forja-pixels-cores/*.json' \
 	'docs/art/research/2026-10-27-forja-fidelidade/*.json' 'docs/art/research/2026-10-27-forja-auditoria-fidelidade/*.json' \
-	'docs/art/research/2026-10-28-forja-escala-e-referencia/*.json'
-forja:  ## A Forja: a prova da pixel art recuperada, os testes e as provas do arqueiro, da fidelidade e da auditoria (ADR 0088)
+	'docs/art/research/2026-10-28-forja-escala-e-referencia/*.json' 'docs/art/research/2026-10-28-forja-pilotos-nativos/*.json' \
+	'docs/art/research/2026-10-28-forja-pilotos-nativos/*.gpl' 'docs/art/research/2026-10-28-forja-pilotos-nativos/revisoes/*.json' \
+	'docs/art/research/2026-10-28-forja-pilotos-nativos/equip/*.json'
+forja:  ## A Forja: a prova da pixel art recuperada, os testes, as provas e os pilotos nativos de 28/10 (ADR 0088, 0097)
 	python3 -m tools.forja prova
 	python3 -m unittest discover -s tools/forja/tests -t .
 	python3 docs/art/research/2026-10-24-forja-armas/prova_arqueiro.py
@@ -113,6 +115,9 @@ forja:  ## A Forja: a prova da pixel art recuperada, os testes e as provas do ar
 	python3 docs/art/research/2026-10-27-forja-fidelidade/prova_fidelidade.py
 	python3 docs/art/research/2026-10-27-forja-auditoria-fidelidade/prova_auditoria.py
 	python3 docs/art/research/2026-10-28-forja-escala-e-referencia/prova_escala.py
+	python3 docs/art/research/2026-10-28-forja-pilotos-nativos/pilotos.py --write
+	python3 docs/art/research/2026-10-28-forja-pilotos-nativos/revisoes.py --contrato
+	python3 docs/art/research/2026-10-28-forja-pilotos-nativos/prova_arco.py
 	git diff --exit-code -- $(FORJA_PROVAS)
 
 # ── O que precisa do motor ───────────────────────────────────────────────────

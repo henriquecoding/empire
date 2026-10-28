@@ -1,0 +1,148 @@
+{
+ "schema": "forja.visual_review/1",
+ "phase": "reference",
+ "image": {
+  "sha256": "8fe430de3a5a3377ba45add2a0e9904ae38520bfec0aa994c03799fb1d667de1",
+  "size": [
+   510,
+   478
+  ]
+ },
+ "subject": {
+  "character": "rei",
+  "pose": "estatica_superior_da_prancha",
+  "declared_role": "monarch",
+  "target_canvas": [
+   80,
+   80
+  ],
+  "declared_by": "Henrique"
+ },
+ "observer": {
+  "author": "Claude (agente)",
+  "model": "claude-opus-5-5",
+  "date": "2026-10-28",
+  "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip"
+ },
+ "regions": {
+  "crown": {
+   "box": [
+    193,
+    6,
+    320,
+    72
+   ],
+   "state": "observed"
+  },
+  "face_system": {
+   "box": [
+    272,
+    54,
+    392,
+    175
+   ],
+   "state": "observed"
+  },
+  "eye_lid_pupil": {
+   "box": [
+    302,
+    78,
+    332,
+    115
+   ],
+   "state": "observed"
+  },
+  "grin_teeth": {
+   "box": [
+    284,
+    115,
+    368,
+    145
+   ],
+   "state": "observed"
+  },
+  "hair_sideburns": {
+   "box": [
+    139,
+    54,
+    284,
+    187
+   ],
+   "state": "observed"
+  },
+  "chest_emblem": {
+   "box": [
+    338,
+    199,
+    417,
+    284
+   ],
+   "state": "observed"
+  },
+  "sword": {
+   "box": [
+    72,
+    308,
+    248,
+    453
+   ],
+   "state": "observed"
+  },
+  "hand_sword": {
+   "box": [
+    78,
+    308,
+    151,
+    368
+   ],
+   "state": "observed"
+  },
+  "hand_right": {
+   "box": [
+    435,
+    272,
+    501,
+    332
+   ],
+   "state": "observed"
+  },
+  "cape_back": {
+   "box": [
+    18,
+    163,
+    115,
+    429
+   ],
+   "state": "observed"
+  },
+  "belt_buckle": {
+   "box": [
+    181,
+    284,
+    441,
+    344
+   ],
+   "state": "observed"
+  }
+ },
+ "anchors": {},
+ "findings": [
+  {
+   "id": "pupila_e_dentes",
+   "category": "detail_preserved",
+   "box": [
+    302,
+    78,
+    368,
+    145
+   ],
+   "state": "observed",
+   "certainty": "certain",
+   "evidence": "pupila de 1 px e dentes claros no sorriso",
+   "description": "detalhes de 1 px com funcao; nao sao ruido",
+   "action": "keep"
+  }
+ ],
+ "invariant_checks": [],
+ "repair_claims": []
+}

@@ -1,0 +1,194 @@
+{
+ "schema": "forja.visual_review/1",
+ "phase": "candidate",
+ "image": {
+  "sha256": "f081cbe351474e2669dabe5189d53d97adbc4707c5c3e60bf239e98ef2712f76",
+  "size": [
+   80,
+   80
+  ]
+ },
+ "subject": {
+  "character": "rei",
+  "pose": "estatica_superior_da_prancha",
+  "declared_role": "monarch",
+  "target_canvas": [
+   80,
+   80
+  ],
+  "declared_by": "Henrique"
+ },
+ "observer": {
+  "author": "Claude (agente)",
+  "model": "claude-opus-5-5",
+  "date": "2026-10-28",
+  "method": "inspecao visual a 1x e ampliada (6-10x) ao lado do recorte de autoridade; caixas conferidas na imagem marcada; geometria do arco medida a parte pelo forja equip"
+ },
+ "regions": {
+  "crown": {
+   "box": [
+    25,
+    2,
+    46,
+    13
+   ],
+   "state": "observed"
+  },
+  "face_system": {
+   "box": [
+    38,
+    10,
+    58,
+    30
+   ],
+   "state": "observed"
+  },
+  "eye_lid_pupil": {
+   "box": [
+    43,
+    14,
+    48,
+    20
+   ],
+   "state": "observed"
+  },
+  "grin_teeth": {
+   "box": [
+    40,
+    20,
+    54,
+    25
+   ],
+   "state": "observed"
+  },
+  "hair_sideburns": {
+   "box": [
+    16,
+    10,
+    40,
+    32
+   ],
+   "state": "observed"
+  },
+  "chest_emblem": {
+   "box": [
+    49,
+    34,
+    62,
+    48
+   ],
+   "state": "observed"
+  },
+  "sword": {
+   "box": [
+    5,
+    52,
+    34,
+    76
+   ],
+   "state": "observed"
+  },
+  "hand_sword": {
+   "box": [
+    6,
+    52,
+    18,
+    62
+   ],
+   "state": "observed"
+  },
+  "hand_right": {
+   "box": [
+    65,
+    46,
+    76,
+    56
+   ],
+   "state": "observed"
+  },
+  "cape_back": {
+   "box": [
+    0,
+    28,
+    12,
+    72
+   ],
+   "state": "observed"
+  },
+  "belt_buckle": {
+   "box": [
+    23,
+    48,
+    66,
+    58
+   ],
+   "state": "observed"
+  }
+ },
+ "anchors": {},
+ "findings": [
+  {
+   "id": "pupila_e_dentes",
+   "category": "detail_preserved",
+   "box": [
+    43,
+    14,
+    54,
+    25
+   ],
+   "state": "observed",
+   "certainty": "certain",
+   "evidence": "pupila de 1 px e dentes claros no sorriso",
+   "description": "detalhes de 1 px com funcao; nao sao ruido",
+   "action": "keep"
+  },
+  {
+   "id": "capa_recolhida",
+   "category": "other",
+   "box": [
+    0,
+    40,
+    12,
+    72
+   ],
+   "state": "observed",
+   "certainty": "certain",
+   "evidence": "o contorno de tras da capa esta ate 4 px mais perto do braco que na prancha",
+   "description": "decisao de orcamento da tela (Q-292), a confirmar",
+   "action": "ask_owner"
+  }
+ ],
+ "invariant_checks": [
+  {
+   "invariant": "corpo largo e relacao cabeca_tronco proximos do conceito",
+   "status": "preserved",
+   "evidence": "mesma silhueta e relacao cabeca-tronco da prancha: os pixels sao os da grade dela; so o contorno de tras da capa entrou 4 px"
+  },
+  {
+   "invariant": "sobrancelha, palpebra, pupila e sorriso assimetrico preservam a atuacao",
+   "status": "preserved",
+   "evidence": "palpebra, pupila de 1 px, sobrancelha e o sorriso torto com os dentes como no recorte; nenhum pixel do rosto foi editado"
+  },
+  {
+   "invariant": "nariz permanece na familia cromatica da pele",
+   "status": "preserved",
+   "evidence": "nariz em laranja de pele, da mesma familia da bochecha"
+  },
+  {
+   "invariant": "tunica vinho, capa azul e mangas creme com planos legiveis",
+   "status": "preserved",
+   "evidence": "vinho, azul-marinho e creme em tons proprios (a paleta de trabalho trocava-os); a capa ficou 4 px mais estreita atras do braco"
+  },
+  {
+   "invariant": "losango no peito e coroa reconheciveis",
+   "status": "preserved",
+   "evidence": "losango dourado no peito e coroa de tres pontas legiveis a 1x"
+  },
+  {
+   "invariant": "uma espada baixa na pose de referencia",
+   "status": "preserved",
+   "evidence": "uma espada baixa na mao esquerda, lamina para baixo, como na prancha"
+  }
+ ],
+ "repair_claims": []
+}

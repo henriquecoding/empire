@@ -6,8 +6,8 @@ pinos com a cor que tem) e as operacoes, por ordem:
 
 - `paint`: pixels [[x, y, cor], ...];
 - `region`: uma caixa reescrita por linhas de caracteres e uma legenda (`keep` deixa o pixel como esta);
-- `move`: um agrupamento (pixels opacos ou de certas cores numa caixa) deslocado por [dx, dy], com o destino
-  validado e o lugar que vaga preenchido.
+- `move`: um agrupamento (pixels opacos, de certas cores, ou o bloco inteiro com `all`) deslocado por [dx, dy],
+  com o destino validado e o lugar que vaga preenchido.
 
 O executor recusa coordenadas fora da tela, outra imagem ou outra tela, alfa intermedio, cor fora da paleta (sem
 `allow_new_colors`), editar fora da mascara ou num pixel protegido; nao ha blur, reamostragem nem limpeza de pixels
@@ -120,13 +120,13 @@ def _move(w: _Work, op: dict, n: str) -> None:
     area = _box(op.get("box"), w.size, n)
     dx, dy = op.get("to") or (0, 0)
     pick = op.get("select", "opaque")
-    wanted = None if pick == "opaque" else {rgba(c) for c in pick}
-    moving = {p: w.px[p] for p in area if w.px[p][3] and (wanted is None or w.px[p] in wanted)}
+    wanted = None if pick in ("opaque", "all") else {rgba(c) for c in pick}
+    moving = {p: w.px[p] for p in area if pick == "all" or w.px[p][3] and (wanted is None or w.px[p] in wanted)}
     if not moving:
         raise ValueError(f"{n}: nada selecionado na caixa {op['box']}")
     fill = rgba(op.get("fill", "transparent"))
     for (x, y) in moving:
-        if (x + dx, y + dy) not in moving:
+        if (x - dx, y - dy) not in moving:
             w.put(x, y, fill, n)
     for (x, y), value in moving.items():
         w.put(x + dx, y + dy, value, n)

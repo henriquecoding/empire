@@ -1,0 +1,373 @@
+{
+ "schema": "forja.pilotos/1",
+ "authority_sha256": "552ac1a2eb2ef4ddd6d8da82701d5969aaae45809be558415accb022f2ee840b",
+ "characters": {
+  "rei": {
+   "kind": "royal_80",
+   "role": "monarch",
+   "steps": [
+    {
+     "step": "recuperar",
+     "grid_cells": [
+      85,
+      79
+     ],
+     "period_px": [
+      6.037,
+      6.037
+     ],
+     "confidence": 0.961,
+     "background": "#66615E",
+     "size": [
+      81,
+      77
+     ],
+     "pixels_sha256": "a342351c6623cccd7abfe761a9798e98e970b81257c3766544ee85310e68c174"
+    },
+    {
+     "step": "01-limpeza",
+     "changed_pixels": 142,
+     "changed_bbox": [
+      13,
+      68,
+      75,
+      77
+     ],
+     "reason": "limpeza: fundo da prancha preso entre partes e sombra do chao; 1 bolsoes, 3 sombras, 0 restos a mao",
+     "pixels_sha256": "904605ac2df486753c7657b3056993544130cc460f20c388a55e2b7389f7b03b"
+    },
+    {
+     "step": "02-tons",
+     "input_colors": 2637,
+     "tones": 60,
+     "pixels_sha256": "0f09d56d9c931d056c20fae10fc3b0bdbb192dc8b331b035c1c31f1168a19838"
+    },
+    {
+     "step": "03-capa",
+     "changed_pixels": 140,
+     "changed_bbox": [
+      0,
+      39,
+      9,
+      66
+     ],
+     "reason": "orcamento royal_80: a capa entra 4 px atras (curva comprimida) para caber na tela com o pivo no centro dos pes; braco, espada e rosto intactos",
+     "pixels_sha256": "cee6c2d781442b68857549acc1c0f9b49940c91f819d2ca8a08b56d6b63ba7db"
+    }
+   ],
+   "pixels_sha256": "f081cbe351474e2669dabe5189d53d97adbc4707c5c3e60bf239e98ef2712f76",
+   "canvas": [
+    80,
+    80
+   ],
+   "occupancy": {
+    "canvas": [
+     80,
+     80
+    ],
+    "alpha_threshold": 128,
+    "opaque_bbox": [
+     0,
+     2,
+     77,
+     79
+    ],
+    "useful_size": [
+     77,
+     77
+    ],
+    "clear_margins": {
+     "left": 0,
+     "top": 2,
+     "right": 3,
+     "bottom": 1
+    },
+    "opaque_pixels": 3916,
+    "empty_pixels_inside_bbox": 2013,
+    "fits_canvas": true,
+    "target_canvas": [
+     80,
+     80
+    ],
+    "note": "vazio interior nao e margem removivel; a caixa util mede a extensao do desenho"
+   },
+   "inside_useful_box": true,
+   "pivot": [
+    40,
+    78
+   ],
+   "clipped_pixels": 0,
+   "colors": 60,
+   "lint_ok": true,
+   "lint_errors": [],
+   "delivery": {
+    "usable_sprite": true,
+    "state": "candidate_in_review",
+    "artistic_approval": "pending"
+   },
+   "authoring": "recuperado da grade da prancha + patches nativos; nao gerado",
+   "artistic_approval": "pending (Henrique)",
+   "aseprite": {
+    "frames": 1,
+    "layers": [
+     "body"
+    ],
+    "tags": {},
+    "durations": [
+     100
+    ],
+    "pixel_equal": true,
+    "opened_in_aseprite_app": false
+   }
+  },
+  "escudeiro": {
+   "kind": "royal_64",
+   "role": "squire",
+   "steps": [
+    {
+     "step": "recuperar",
+     "grid_cells": [
+      52,
+      52
+     ],
+     "period_px": [
+      6.476,
+      6.476
+     ],
+     "confidence": 0.943,
+     "background": "#67625F",
+     "size": [
+      49,
+      49
+     ],
+     "pixels_sha256": "2db30fba9ce9f999cef06852af280676d526f54f54b17b30fe0146e216e8b045"
+    },
+    {
+     "step": "01-limpeza",
+     "changed_pixels": 183,
+     "changed_bbox": [
+      0,
+      39,
+      49,
+      49
+     ],
+     "reason": "limpeza: fundo da prancha preso entre partes e sombra do chao; 2 bolsoes, 1 sombras, 2 restos a mao",
+     "pixels_sha256": "c93a4fc15e4fed702455c5fece57fafa200c82252fbe7c9df7a5e634f83580e7"
+    },
+    {
+     "step": "02-tons",
+     "input_colors": 1169,
+     "tones": 49,
+     "pixels_sha256": "fb35d68301ad76766395ee863f0832bf67a7083a9387c3b86377d9233470641c"
+    },
+    {
+     "step": "03-contorno",
+     "changed_pixels": 2,
+     "changed_bbox": [
+      45,
+      14,
+      47,
+      15
+     ],
+     "reason": "contorno: no topo do escudo (y=14) dois pixels de madeira ficaram sem o contorno que a prancha tem",
+     "pixels_sha256": "0239f7f8d0118649af0e617d7a941785a06e01e0bfb61302fa0afa2aac0a0aee"
+    }
+   ],
+   "pixels_sha256": "49089997b03cab5c7cccb154c752de201b010a1e2a095368573e2c98c565362b",
+   "canvas": [
+    64,
+    64
+   ],
+   "occupancy": {
+    "canvas": [
+     64,
+     64
+    ],
+    "alpha_threshold": 128,
+    "opaque_bbox": [
+     12,
+     15,
+     57,
+     63
+    ],
+    "useful_size": [
+     45,
+     48
+    ],
+    "clear_margins": {
+     "left": 12,
+     "top": 15,
+     "right": 7,
+     "bottom": 1
+    },
+    "opaque_pixels": 1493,
+    "empty_pixels_inside_bbox": 667,
+    "fits_canvas": true,
+    "target_canvas": [
+     64,
+     64
+    ],
+    "note": "vazio interior nao e margem removivel; a caixa util mede a extensao do desenho"
+   },
+   "inside_useful_box": true,
+   "pivot": [
+    32,
+    62
+   ],
+   "clipped_pixels": 0,
+   "colors": 49,
+   "lint_ok": true,
+   "lint_errors": [],
+   "delivery": {
+    "usable_sprite": true,
+    "state": "candidate_in_review",
+    "artistic_approval": "pending"
+   },
+   "authoring": "recuperado da grade da prancha + patches nativos; nao gerado",
+   "artistic_approval": "pending (Henrique)",
+   "aseprite": {
+    "frames": 1,
+    "layers": [
+     "body"
+    ],
+    "tags": {},
+    "durations": [
+     100
+    ],
+    "pixel_equal": true,
+    "opened_in_aseprite_app": false
+   }
+  },
+  "arqueiro_tropa": {
+   "kind": "troop_64",
+   "role": "troop",
+   "steps": [
+    {
+     "step": "recuperar",
+     "grid_cells": [
+      58,
+      66
+     ],
+     "period_px": [
+      6.245,
+      6.245
+     ],
+     "confidence": 0.95,
+     "background": "#67625F",
+     "size": [
+      54,
+      64
+     ],
+     "pixels_sha256": "3a80b65c943cabf98a3be7863869ee79b9d831224b289d550d2c4ade052c930a"
+    },
+    {
+     "step": "01-limpeza",
+     "changed_pixels": 280,
+     "changed_bbox": [
+      0,
+      29,
+      49,
+      64
+     ],
+     "reason": "limpeza: fundo da prancha preso entre partes e sombra do chao; 3 bolsoes, 3 sombras, 3 restos a mao",
+     "pixels_sha256": "e26144d7449aef2554b4cc27c5cd9bfd717ea24750d9316bd78845a75ce58045"
+    },
+    {
+     "step": "02-tons",
+     "input_colors": 1273,
+     "tones": 38,
+     "pixels_sha256": "c2b237ce2dc830873cfe45c6fcc8ce4be2113ff744da0aa69a45dc398d3707eb"
+    },
+    {
+     "step": "03-linhas",
+     "changed_pixels": 1115,
+     "changed_bbox": [
+      1,
+      0,
+      54,
+      53
+     ],
+     "reason": "orcamento troop_64: tres linhas inteiras fora do rosto e das maos (3 copa do capuz, 30 tronco, 52 calcas) para 61 linhas uteis; pivo nos pes",
+     "pixels_sha256": "70f5c7107d19d67d80dff40a05396505a68023ad3901f84bcc9585f805d94c2a"
+    },
+    {
+     "step": "04-arco",
+     "changed_pixels": 65,
+     "changed_bbox": [
+      25,
+      26,
+      54,
+      47
+     ],
+     "reason": "reparo autorizado por Henrique (28/10: 'a corda esta atras do personagem, a arma esta mal feita'): lasca cinzenta fora, ponta de cima 1 px para dentro, corda reta de entalhe a entalhe a frente do corpo",
+     "pixels_sha256": "fc2fbe606860995c4c18e990ec73c9e0ea5c247f83b5e8f99f0c8e8afed6b0d4"
+    }
+   ],
+   "pixels_sha256": "673113a0f2511e955678cca2b6bd5898d0d3e35140487a5b5dd49f0c2f2e8ff0",
+   "canvas": [
+    64,
+    64
+   ],
+   "occupancy": {
+    "canvas": [
+     64,
+     64
+    ],
+    "alpha_threshold": 128,
+    "opaque_bbox": [
+     10,
+     2,
+     62,
+     63
+    ],
+    "useful_size": [
+     52,
+     61
+    ],
+    "clear_margins": {
+     "left": 10,
+     "top": 2,
+     "right": 2,
+     "bottom": 1
+    },
+    "opaque_pixels": 1731,
+    "empty_pixels_inside_bbox": 1441,
+    "fits_canvas": true,
+    "target_canvas": [
+     64,
+     64
+    ],
+    "note": "vazio interior nao e margem removivel; a caixa util mede a extensao do desenho"
+   },
+   "inside_useful_box": true,
+   "pivot": [
+    32,
+    62
+   ],
+   "clipped_pixels": 0,
+   "colors": 38,
+   "lint_ok": true,
+   "lint_errors": [],
+   "delivery": {
+    "usable_sprite": true,
+    "state": "candidate_in_review",
+    "artistic_approval": "pending"
+   },
+   "authoring": "recuperado da grade da prancha + patches nativos; nao gerado",
+   "artistic_approval": "pending (Henrique)",
+   "aseprite": {
+    "frames": 1,
+    "layers": [
+     "body"
+    ],
+    "tags": {},
+    "durations": [
+     100
+    ],
+    "pixel_equal": true,
+    "opened_in_aseprite_app": false
+   }
+  }
+ },
+ "ok": true
+}
