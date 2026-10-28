@@ -3145,17 +3145,34 @@
   "notas": []
  },
  "FORJA-07": {
-  "title": "Auditoria da Forja de 27/10: a imagem paga certa, o voto sem fronteiras, o gasto entre processos e o MCP",
-  "porque": "O dono pediu uma auditoria densa, a pesquisa na web e a aplicação: o Gemini entregava os rascunhos do pensamento como a imagem paga, o voto dava a célula à cor minoritária numa fronteira de balde, dois processos passavam o teto de gasto e o servidor MCP morria com JSON que não é um objeto ou com acentos no Windows.",
+  "title": "Medir o que a amostragem perde e prender cada pedido à autoridade da pose",
+  "porque": "O dono rejeitou o Rei, o Escudeiro e o Arqueiro de 27/10 e mandou implementar a auditoria de fidelidade: a pureza ficava em 1,0 com traços apagados, a grade dada pelo operador valia como evidência, o arqueiro veio de outra referência e o compilador impunha dois tons e 12-24 cores a contratos sem limite.",
   "spec": [
-   "docs/art/research/2026-10-27-forja-auditoria/README.md",
-   "docs/adr/0094-a-forja-le-como-se-ve.md",
+   "docs/art/research/2026-10-27-forja-auditoria-fidelidade/AUDITORIA.md",
+   "docs/art/research/2026-10-27-forja-auditoria-fidelidade/PLANO-DE-IMPLEMENTACAO.md",
+   "docs/art/research/2026-10-27-forja-auditoria-fidelidade/README.md",
    "docs/art/FORJA.md"
   ],
   "depende": "FORJA-06",
+  "feito": "Perda da amostragem célula a célula (outside_core, minority, alpha_discarded) com o achado erased e a pureza medida em todos os métodos; a origem da grade (medida, estimada, declarada, reduzida, não medida), o orçamento contra a tela, as zonas de escala fina e as cores de uma entrada com perdas afirmadas à parte; o contrato forja.fidelity/1 com o recorte de autoridade anexado, reference_conflict, rejeitados recusados e o guia em revisão que não substitui o conceito; os modos do pedido com a origem de cada restrição e nenhuma preferência do compilador no modo fiel; pinos e regiões com layout_conflict e verificação até ao PNG final; a revisão em quatro estados com a prancha lado a lado; a prova reproduzível dos 93 ensaios da auditoria.",
+  "fora": "O piloto artístico do Rei e a base nativa fiel dos três personagens (desenho), anotar regiões e pinos, chamadas pagas, aprovação artística, arte em art/.",
+  "estado": "feito — as cinco etapas de código do plano da auditoria de 27/10 (revisão 2), com testes e a prova reproduzível; o piloto artístico do Rei e a base nativa fiel dos três personagens (desenho) por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
+ "FORJA-08": {
+  "title": "Auditoria técnica da Forja de 27/10: a imagem paga certa, o voto sem fronteiras, o gasto entre processos e o MCP",
+  "porque": "O dono pediu uma auditoria densa, a pesquisa na web e a aplicação: o Gemini entregava os rascunhos do pensamento como a imagem paga, o voto dava a célula à cor minoritária numa fronteira de balde, dois processos passavam o teto de gasto e o servidor MCP morria com JSON que não é um objeto ou com acentos no Windows.",
+  "spec": [
+   "docs/art/research/2026-10-27-forja-auditoria/README.md",
+   "docs/adr/0095-a-forja-le-como-se-ve.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-07",
   "feito": "Só a imagem final do Gemini; o voto em oito grelhas deslocadas (Scott, 1985); teto com lock entre processos e registos com fsync; servidor MCP que responde aos erros do JSON-RPC, lê e escreve UTF-8, dá -32602 à ferramenta desconhecida e traz título e anotações; o contorno global fecha só as falhas; orientação EXIF e perfil ICC na abertura; o hash dos pixels sem a cor escondida; a bomba de descompressão em JSON; a vírgula no caminho da paleta; a rampa com o matiz fixo; o hash novo da especificação do PixelLab; sondas antes e depois do mesmo cenário.",
-  "fora": "A luminosidade Lr na escolha da cor (Q-286), fechar a falha de contorno com 85% da borda a preto (Q-287), progresso e cancelamento no MCP, chamadas pagas, aprovação artística, arte em art/.",
-  "estado": "feito — B01–B15 reparados com testes e B16 (o hash da especificação do PixelLab) atualizado; O1 e O2 ficam para o dono (Q-286, Q-287)",
+  "fora": "A luminosidade Lr na escolha da cor (Q-290), fechar a falha de contorno com 85% da borda a preto (Q-291), progresso e cancelamento no MCP, chamadas pagas, aprovação artística, arte em art/.",
+  "estado": "feito — B01–B15 reparados com testes e B16 (o hash da especificação do PixelLab) atualizado; O1 e O2 ficam para o dono (Q-290, Q-291)",
   "horas": "—",
   "passos": [],
   "notas": []

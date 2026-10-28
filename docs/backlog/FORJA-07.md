@@ -1,45 +1,42 @@
-# FORJA-07 — auditoria da Forja de 27/10: a imagem paga certa, o voto sem fronteiras, o gasto entre processos e o MCP
+# FORJA-07 — medir o que a amostragem perde e prender cada pedido à autoridade da pose
 
-Estado feito — B01–B15 reparados com testes e B16 (o hash da especificação do PixelLab) atualizado; O1 e O2 ficam para
-          o dono (Q-286, Q-287)
+Estado feito — as cinco etapas de código do plano da auditoria de 27/10 (revisão 2), com testes e a prova reproduzível;
+          o piloto artístico do Rei e a base nativa fiel dos três personagens (desenho) por fazer
 
 ## Pedido
 
-O dono, a 27/10/2026: *«Elabora uma densa e extensa auditoria na forja, encontre falhas e coisas a melhorar e refinar,
-depois busque na web como fazer isso e aplique»*.
+O dono, a 27/10/2026, com o relatório *Forja: por que os sprites perderam o conceito* (revisão 2) e o pacote
+`Forja-Auditoria-Fidelidade-Evidencias-2026-10-27`: *«Quero que implemente isso»*.
 
 ## Spec e autoridade
 
+[A auditoria](../art/research/2026-10-27-forja-auditoria-fidelidade/AUDITORIA.md),
+[o plano de implementação](../art/research/2026-10-27-forja-auditoria-fidelidade/PLANO-DE-IMPLEMENTACAO.md),
 [Guia da Forja](../art/FORJA.md), [ADR 0088](../adr/0088-a-forja-de-pixel-art.md),
-[ADR 0089](../adr/0089-a-forja-pede-uma-vez-e-mede.md), [ADR 0093](../adr/0093-a-forja-protege-o-mestre-aprovado.md),
-[ADR 0094](../adr/0094-a-forja-le-como-se-ve.md), as auditorias de
-[23/10](../art/research/2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md) e
-[26/10](../art/research/2026-10-26-forja-auditoria/README.md), AGENTS.md (regras 1, 8 e 9).
+[ADR 0093](../adr/0093-a-forja-protege-o-mestre-aprovado.md), [ADR 0094](../adr/0094-a-forja-mede-o-que-perde-e-prende-a-autoridade.md),
+AGENTS.md (regras 1, 8 e 9).
 
 ## Entrega
 
-[Auditoria, antes e depois, e fontes](../art/research/2026-10-27-forja-auditoria/README.md), com as sondas
-reproduzíveis:
+[Pesquisa, prova e contrato](../art/research/2026-10-27-forja-auditoria-fidelidade/README.md):
 
-| Achado | O que entrou | Evidência |
+| Plano | O que entrou | Evidência |
 | --- | --- | --- |
-| B01 as imagens de pensamento do Gemini | `gemini_images.parse`: `output_image`, ou as imagens fora dos passos e partes de pensamento; `thought_images_skipped` | `test_auditoria_ii_rede.GeminiThoughtTest` |
-| B02 o voto na fronteira do balde | `resample`: oito grelhas deslocadas (Scott, 1985) e a média na vizinhança centrada | `test_auditoria_ii.VoteTest` |
-| B03 e B09 o teto e o disco | `durable.py`: troca atómica com `fsync` e lock entre processos; `Budget.reserve` | `test_auditoria_ii_rede.BudgetTest` |
-| B04, B10–B12 o servidor MCP | erros JSON-RPC com id null, sem batch; stdio em UTF-8; `-32602` para a ferramenta desconhecida; `title` e anotações (o `structuredContent` estudado e deixado de fora) | `test_auditoria_ii_rede.McpTest` |
-| B05 o contorno parcial | `outline.add(..., gaps=True)` no `forge`: fecha só as falhas | `test_auditoria_ii.OutlineGapTest` |
-| B06 e B07 a abertura | `imageops.open_rgba`: orientação EXIF e perfil ICC para sRGB; `provenance.input.opened` | `test_auditoria_ii.OpenTest` |
-| B08 o hash dos pixels | `equipment.image_sha`: o alfa 0 conta como `(0, 0, 0, 0)` | `test_auditoria_ii.HashTest` |
-| B13–B15 a superfície e a rampa | a bomba de descompressão em JSON; a vírgula num caminho de paleta; o croma da rampa baixa até caber, com o matiz fixo | `test_auditoria_ii.SurfaceTest`, `RampTest` |
-| B16 a especificação do PixelLab | `SPEC_SHA256` novo; `contrato-2026-10-27.json` (só uma descrição mudou; 63/63 conformes) | `contrato.py` |
+| §1 | `fidelity.py` (`forja.fidelity/1`) e `constraints.py`: recorte de autoridade anexado, `reference_conflict`, rejeitados recusados, guia em revisão sozinho recusado, modos `stylized`/`adapt_concept`/`edit_approved_master`/`recover_grid`, a origem de cada restrição e nenhuma preferência do compilador no modo fiel; `--fidelity --character --pose --mode --max-colors --tones` no `plan`, `auto` e `prompt` | `test_contrato_fidelidade.RequestTest` |
+| §2 | `Grid.origin` e `gridcheck.report` (`snap.grid_report`): medida, estimada, declarada (conferida), reduzida (`--reduce`) ou não medida; orçamento contra a tela e zonas de escala fina; grade e cores afirmadas em separado | `test_perdas.GridOriginTest`, `RecoveryControlTest` |
+| §3 | `loss.py`: `snap.loss` e o achado `erased`, célula a célula, com as células vazias incluídas; a pureza medida em todos os métodos | `SamplerLossTest`, `PipelineLossTest` |
+| §4 | `signals.py` (`forja.signals/1`): pinos autorizados até ao PNG final, `layout_conflict` sem vencedor, pendentes, regiões perdidas; `forge --signals`, `verify --signals` | `test_sinais` |
+| §5 | `review_state.py` e `forja fidelity`: os quatro estados, o rejeitado `blocked` na identidade com o runtime em `pass`, a prancha lado a lado | `test_contrato_fidelidade.ReviewTest` |
 
 ## Limite
 
-Sem escrita em `art/`, `audio/`, `src/`, `scenes/` ou `data/`; sem dependências novas; sem chamada paga; sem aprovação
-artística. A luminosidade Lr na escolha da cor (O1) foi medida e não aplicada: muda a métrica da ADR 0088 (Q-286).
+Sem escrita em `art/`, `audio/`, `src/`, `scenes/` ou `data/`; sem dependências novas; sem chamada paga; sem geração;
+sem aprovação artística. O §6 do plano (o piloto do Rei) é desenho e não foi feito. As regiões, os pinos e a caixa útil
+ficam pendentes no contrato (Q-286, Q-288). O JSON da prova de 27/10 (FORJA-06) muda um valor (o plano do arqueiro só
+com o guia em revisão passa a `ok: false`); a verificação dela continua a passar.
 
 ## Verificação
 
-`make forja` (a prova 11/11, a suíte com 318 testes e as provas de 24/10, 25/10 e 27/10 sem deriva); a suíte em Python
-3.11 com o Pillow 12.3.0 fixado; `python3 docs/art/research/2026-10-27-forja-auditoria/sondas.py` (antes e depois no
-mesmo cenário); portões estáticos locais; CI do PR.
+`make forja` (a prova, a suíte com os testes novos, as provas de 24/10, 25/10 e 27/10 sem deriva);
+`python3 docs/art/research/2026-10-27-forja-auditoria-fidelidade/prova_auditoria.py`; portões estáticos locais; CI do
+PR.

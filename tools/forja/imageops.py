@@ -13,7 +13,7 @@ CLEAR = (0, 0, 0, 0)
 
 
 def open_rgba(path: str | Path) -> Image.Image:
-    """A imagem como se ve: a orientacao EXIF aplicada e as cores em sRGB (auditoria de 27/10, B06 e B07).
+    """A imagem como se ve: a orientacao EXIF aplicada e as cores em sRGB (FORJA-08, B06 e B07).
 
     Um desenho a mao fotografado no telemovel vem deitado com a etiqueta Orientation; um PNG exportado com um perfil
     que nao e sRGB (Display P3, Adobe RGB, o do monitor) tem os numeros noutro espaco, e a paleta do projeto e sRGB.

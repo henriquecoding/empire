@@ -1,0 +1,15 @@
+{
+ "author_state": "rejected_by_Henrique_2026-10-27",
+ "usage": "offline_regression_fixtures_not_approved_art",
+ "source": "pacote Forja-Auditoria-Fidelidade-Evidencias-2026-10-27 (dados/entrega-rejeitada); o escudeiro nao teve retoque (base igual a entrega)",
+ "files": {
+  "arqueiro-base-antes-do-retoque.png": "bde9c329d794fbc54a32175a4efd5c73a6fba5314fe2bd4869dbeb00239ffc78",
+  "arqueiro.png": "2c7ac643f2cf27e79b7e7108aeb2a9cdb26e97aa0734e12584fef38b7a404bf9",
+  "escudeiro.png": "5b496ebfad171f85ff22b6964cb5fb59dfc5bf624426e6b4eb1cb4947b9b0c6d",
+  "rei-base-antes-do-retoque.png": "3de42a5c02a2163444fd9ce6fb4317773866b9058c883f0eb0924455eff06e2a",
+  "rei.png": "4ad4fa8913389f91f73845df8c6aa206207f7bfcc941346702fcc74ac536bd77"
+ },
+ "authority": {
+  "referencia/referencia-enviada.jpeg": "552ac1a2eb2ef4ddd6d8da82701d5969aaae45809be558415accb022f2ee840b"
+ }
+}

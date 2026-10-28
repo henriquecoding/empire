@@ -41,7 +41,7 @@ def add(image: Image.Image, rgb: tuple[int, int, int] = (0, 0, 0), width: int = 
         keep=None, gaps: bool = False) -> Image.Image:
     """`gaps`: no modo exterior, so onde a borda ainda nao tem o contorno — um pixel vazio cujos vizinhos opacos sao
     todos da cor do contorno fica vazio. Pondo o anel inteiro por fora de um contorno que ja cobria metade da borda,
-    essa metade ficava com 2 px, e o lint nao o via (auditoria de 27/10, B05)."""
+    essa metade ficava com 2 px, e o lint nao o via (FORJA-08, B05)."""
     if mode not in MODES:
         raise ValueError(f"modo de contorno desconhecido: {mode}")
     rows = to_grid(image)

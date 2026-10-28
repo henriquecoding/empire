@@ -6,8 +6,8 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import cleanup, contracts, expectation, gridcheck, lint, outline, palette as palmod, pipeline
-from . import quantize, resample, scale
+from . import cleanup, contracts, expectation, gridcheck, lint, loss, outline, palette as palmod, pipeline
+from . import quantize, resample, scale, signals
 from .cli import box, command, out_path, pair
 from .imageops import binarize, open_rgba, upscale
 
@@ -19,7 +19,10 @@ def _options(args) -> pipeline.Options:
                             noise=args.noise, cleanup=args.cleanup, protect=args.protect,
                             bare=getattr(args, "bare", None),
                             fit=not getattr(args, "no_fit", False),
-                            pivot=getattr(args, "pivot", None), canvas=getattr(args, "canvas", None))
+                            pivot=getattr(args, "pivot", None), canvas=getattr(args, "canvas", None),
+                            reduce=getattr(args, "reduce", False))
+    if getattr(args, "signals", None):
+        opts.signals = signals.load(args.signals, open_rgba(args.image))
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
@@ -58,11 +61,14 @@ def common(p) -> None:
 
 def do_snap(args) -> dict:
     image = open_rgba(args.image)
-    g = gridcheck.detect(image, scale=args.scale, cells=args.cells)
+    g = gridcheck.detect(image, scale=args.scale, cells=args.cells, reduce=args.reduce)
     sampled = resample.resample(image, g, args.method)
     out = out_path(args.out, Path(args.image).with_name(Path(args.image).stem + "_native.png"))
     sampled.image.save(out)
-    return {"ok": True, "out": str(out), "grid": g.as_dict(), "sample": sampled.as_dict()}
+    lost = loss.observe(image, g, sampled.image)
+    return {"ok": True, "out": str(out), "grid": g.as_dict(), "sample": sampled.as_dict(),
+            "grid_report": gridcheck.report(image, g, sampled.image.size, None),
+            "loss": {k: v for k, v in lost.items() if k != "erased"} | {"erased": lost["erased"][:24]}}
 
 
 def expected(args, res: dict, detected: float | None) -> dict | None:
@@ -82,10 +88,14 @@ def do_forge(args) -> dict:
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
     res = pipeline.forge(args.image, args.out, _options(args), args.name, prompt, args.generator, args.aseprite)
     cmp = expected(args, res, res["snap"]["grid"]["period"][0])
+    sig = res["signals"]
     return {"ok": res["lint"]["ok"] and not (cmp and cmp["hard"]), "files": res["files"],
             "lint": {k: res["lint"][k] for k in ("errors", "warnings", "prompt_feedback")},
             "findings": res["lint"]["findings"], "expectation": cmp,
-            "grid": res["snap"]["grid"], "native_size": res["snap"]["native_size"], "fit": res["finish"].get("fit")}
+            "grid": res["snap"]["grid"], "grid_report": res["snap"]["grid_report"],
+            "native_size": res["snap"]["native_size"], "fit": res["finish"].get("fit"),
+            "loss": {k: v for k, v in (res["snap"].get("loss") or {}).items() if k != "erased"},
+            "signals": {k: sig[k] for k in ("status", "blocked", "pending")}}
 
 
 def do_lint(args) -> dict:
@@ -179,6 +189,7 @@ def register(sub) -> None:
     p.add_argument("--scale", type=float)
     p.add_argument("--cells", type=pair)
     p.add_argument("--method", default="dominant", choices=resample.METHODS)
+    p.add_argument("--reduce", action="store_true", help="a grade dada e uma reducao deliberada (adaptacao)")
     p = command(sub, "forge", "Imagem gerada -> sprite do contrato: grade, fundo, paleta, contorno, tela, lint e relatorio", do_forge)
     p.add_argument("image")
     p.add_argument("-o", "--out", required=True, help="pasta de saida")
@@ -188,6 +199,10 @@ def register(sub) -> None:
     p.add_argument("--canvas", type=pair, help="tela LxA (sobrepoe o contrato)")
     p.add_argument("--pivot", type=pair, help="pivot X,Y (sobrepoe o contrato)")
     p.add_argument("--aseprite", action="store_true", help="tambem escrever .aseprite")
+    p.add_argument("--reduce", action="store_true", help="com --scale/--cells: a grade e uma reducao deliberada "
+                   "para caber (adaptacao com perda, nao recuperacao); sai marcada assim")
+    p.add_argument("--signals", help="forja.signals/1 desta imagem: pinos (pixel e cor declarados) e regioes "
+                   "criticas, verificados ate ao PNG final")
     p = command(sub, "lint", "Conferir um PNG contra o contrato (achados, correcoes e prompt corretivo)", do_lint)
     p.add_argument("image")
     p.add_argument("--kind", default="free", choices=contracts.kinds())

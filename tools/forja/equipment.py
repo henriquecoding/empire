@@ -116,7 +116,7 @@ def image_sha(image: Image.Image) -> str:
 
     Um pixel de alfa 0 conta como (0, 0, 0, 0): a cor escondida no transparente nao se ve, e um editor que re-grava o
     PNG zera-a ou guarda-a a vontade dele. Antes, o mestre aprovado re-gravado sem mudar um pixel visivel deixava de
-    estar no registo (auditoria de 27/10, B08). Uma imagem sem cor escondida tem o mesmo hash que tinha."""
+    estar no registo (FORJA-08, B08). Uma imagem sem cor escondida tem o mesmo hash que tinha."""
     rgba = image.convert("RGBA")
     alpha = rgba.getchannel("A")
     if alpha.getextrema()[0] == 0:

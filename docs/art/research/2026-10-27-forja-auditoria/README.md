@@ -1,10 +1,13 @@
-# Auditoria da Forja — 27/10/2026
+# Auditoria técnica da Forja — 27/10/2026
 
 Pedido do dono, a 27/10/2026: *«Elabora uma densa e extensa auditoria na forja, encontre falhas e coisas a melhorar
 e refinar, depois busque na web como fazer isso e aplique»*. Código auditado: `0fea413` (a `main` depois do PR #126).
-Tarefa: [FORJA-07](../../../backlog/FORJA-07.md); decisão: [ADR 0094](../../../adr/0094-a-forja-le-como-se-ve.md).
+Tarefa: [FORJA-08](../../../backlog/FORJA-08.md); decisão: [ADR 0095](../../../adr/0095-a-forja-le-como-se-ve.md).
 Guia: [FORJA.md](../../FORJA.md). Auditorias anteriores: [23/10](../2026-10-23-pixellab/AUDITORIA-FORJA-CLAUDE.md)
-(F01–F09) e [26/10](../2026-10-26-forja-auditoria/README.md) (A01–A12).
+(F01–F09) e [26/10](../2026-10-26-forja-auditoria/README.md) (A01–A12). No mesmo dia entrou na `main` a
+[auditoria de fidelidade](../2026-10-27-forja-auditoria-fidelidade/README.md) (FORJA-07, ADR 0094, PR #127), que mede o
+que a amostragem perde e prende o pedido à autoridade da pose; não tocava nestes achados, e os dois trabalhos
+juntaram-se (os testes e as provas de ambos correm juntos).
 
 **Em resumo:** dezasseis achados (B01–B16), todos reproduzidos sem rede, sem chave e sem gasto; quinze reparados
 com testes que falham no código auditado, e o décimo sexto é manutenção (a especificação do PixelLab mudou hoje). Os
@@ -12,7 +15,7 @@ três mais graves custam dinheiro ou dão a cor errada sem aviso: o conector do 
 pensamento* — rascunhos que o modelo desenha antes da final — e o `auto` forjava a primeira, depois de pagar (B01); o
 voto que escolhe a cor de cada célula partia uma cor ruidosa na fronteira de um balde de 16 níveis e elegia a minoria,
 e 86 das 112 cores da paleta estão a 3 níveis de uma fronteira (B02); e dois processos na mesma pasta faziam dois
-pedidos pagos com um teto de um (B03). Uma observação medida fica para o dono (O1, [Q-286](../../../QUESTIONS.md)): o
+pedidos pagos com um teto de um (B03). Uma observação medida fica para o dono (O1, [Q-290](../../../QUESTIONS.md)): o
 preto do contorno, com o ruído do gerador, cai no `#0B0B0B` porque o L do OKLab é íngreme junto ao preto; a correção
 de Ottosson acerta-o, mas muda a cor escolhida em 7% do espaço sRGB, e a ADR 0088 fixa o OKLab. Nenhuma chamada
 paga, nada em `art/`, nenhuma dependência nova, nenhuma aprovação artística.
@@ -24,7 +27,7 @@ paga, nada em `art/`, nenhuma dependência nova, nenhuma aprovação artística.
 | Leitura | Os 67 módulos de produção (9 546 linhas no `0fea413`), um a um: grade, amostragem, fundo, limpeza, paleta, contorno, lint, pranchas, exportação, prompts, plano, jobs, conectores, MCP, equipamento, cor e referências | As suspeitas que as sondas confirmaram ou desmentiram |
 | Pesquisa na web | Especificação MCP 2025-11-25 (transportes, ferramentas, esquema) e o registo de 2025-06-18; JSON-RPC 2.0; guia de geração de imagens do Gemini e da OpenAI; a especificação OpenAPI do PixelLab, relida ao vivo; Ottosson (gamut clipping e Lr); o histograma deslocado médio de Scott; atomicwrites e locks entre processos; Pillow (`exif_transpose`, `ImageCms`) | [Fontes](#fontes), lidas a 27/10/2026 |
 | Sondas | [`sondas.py`](sondas.py): dezasseis cenários e a medida de O1, com transporte falso, sem rede nem gasto, que registam o comportamento (não o julgam) | [antes](observacoes-antes.json) (`0fea413`) e [depois](observacoes-depois.json), do mesmo script |
-| Suíte e portões | `make forja` antes e depois; a suíte também em Python 3.11 com o Pillow 12.3.0 fixado (o do CI); `pyflakes` nos ficheiros mudados | 294 testes (3 saltados: sem Godot) → 318; prova 11/11; as provas de 24/10, 25/10 e 27/10 sem deriva nos JSON |
+| Suíte e portões | `make forja` antes e depois; a suíte também em Python 3.11 com o Pillow 12.3.0 fixado (o do CI); `pyflakes` nos ficheiros mudados | 294 testes (3 saltados: sem Godot) → 318; prova 11/11; as provas de 24/10, 25/10 e 27/10 sem deriva nos JSON. Juntada a `main` com o FORJA-07: 357 testes, e a prova da auditoria de fidelidade muda duas purezas escritas (ver B02) |
 | PixelLab ao vivo | `contrato.py` contra `https://api.pixellab.ai/v2/openapi.json` (GET sem chave) | [`contrato-2026-10-27.json`](../2026-10-26-pixellab-engenharia-reversa/contrato-2026-10-27.json): só mudou a descrição de `POST /generate-font-pro`; 63 limites, 0 divergências |
 
 ## Achados
@@ -72,7 +75,9 @@ cor minoritária e limpa ganha. É o «problema da borda do balde» de um histog
 histograma deslocado médio — vários histogramas com a mesma largura e origens diferentes. Aqui são oito, deslocados
 meio balde em cada canal; ganha o balde mais cheio de todos (no empate, o de antes), e a média faz-se na vizinhança
 centrada nele, que a fronteira já não corta. Uma célula lisa, ou com duas cores exatas, sai igual a antes; as provas
-de 24/10, 25/10 e 27/10 não mudaram um byte.
+de 24/10, 25/10 e da fidelidade de 27/10 não mudaram um byte. A prova da auditoria de fidelidade (FORJA-07), que entrou
+depois na `main`, escreve a pureza de duas grades que recusa nos conceitos: 0,36 → 0,35 e 0,58 → 0,60, abaixo de 0,8 nos
+dois casos, por isso a recusa é a mesma.
 
 ### B03 e B09 — o teto e o registo no disco
 
@@ -134,8 +139,8 @@ adaptador continua conforme.
 
 | ID | Observação | Medida | Destino |
 | --- | --- | --- | --- |
-| O1 | O preto do contorno, ruidoso, cai no `#0B0B0B` | sprites com o contorno a `#000000`: 62, 317 e 39 de 588 pixels pretos errados (σ 3, σ 4, JPEG q85); com o Lr de Ottosson, 0 e as outras cores iguais; mas o Lr muda a cor escolhida em 1 459 de 20 000 cores sRGB sorteadas, em todas as luminosidades | [Q-286](../../../QUESTIONS.md) — muda a métrica que a ADR 0088 fixou |
-| O2 | Uma falha no contorno com 85% ou mais da borda a preto passa calada | o lint não diz nada; o `forge` não a fecha, para não engrossar uma corda de 1 px | [Q-287](../../../QUESTIONS.md) |
+| O1 | O preto do contorno, ruidoso, cai no `#0B0B0B` | sprites com o contorno a `#000000`: 62, 317 e 39 de 588 pixels pretos errados (σ 3, σ 4, JPEG q85); com o Lr de Ottosson, 0 e as outras cores iguais; mas o Lr muda a cor escolhida em 1 459 de 20 000 cores sRGB sorteadas, em todas as luminosidades | [Q-290](../../../QUESTIONS.md) — muda a métrica que a ADR 0088 fixou |
+| O2 | Uma falha no contorno com 85% ou mais da borda a preto passa calada | o lint não diz nada; o `forge` não a fecha, para não engrossar uma corda de 1 px | [Q-291](../../../QUESTIONS.md) |
 | O3 | As ferramentas longas do MCP não dão progresso nem se cancelam | `forja_auto` pode esperar até 15 min por um job do PixelLab | proposta: `notifications/progress` quando o pedido traz `_meta.progressToken`, e `notifications/cancelled` entre consultas |
 | O4 | Fundo transparente no `gpt-image-2` | o guia oficial lido hoje só nomeia os 2.5; fontes de terceiros dizem que o 2 não o aceita | sem mudança: a Forja pede o 2.5 por omissão, e uma recusa 4xx não é cobrada (`rejected`) |
 | O5 | `imageSize` no `generateContent` do Gemini | um relato no fórum diz que é ignorado com `TEXT` nas modalidades | sem mudança: a Forja só pede 1K por esse caminho |

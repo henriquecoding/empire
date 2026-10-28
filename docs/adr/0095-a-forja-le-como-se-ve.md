@@ -1,12 +1,12 @@
-# ADR 0094 — A Forja lê a imagem como se vê, vota sem fronteiras de balde e conta o gasto entre processos
+# ADR 0095 — A Forja lê a imagem como se vê, vota sem fronteiras de balde e conta o gasto entre processos
 
 - Estado: aceite
 - Data: 2026-10-27
 - Secção do dossiê: §01 e §22 (a unidade gráfica, a paleta, o contorno)
-- Complementa: ADR 0088 (a Forja), ADR 0089 (pede uma vez e mede) e ADR 0093 (o registo de autoridade, pelo hash dos
-  pixels); a Asset Bible não muda
-- Tarefa: [FORJA-07](../backlog/FORJA-07.md)
-- Origem: a [auditoria de 27/10](../art/research/2026-10-27-forja-auditoria/README.md), com o pedido do dono:
+- Complementa: ADR 0088 (a Forja), ADR 0089 (pede uma vez e mede), ADR 0093 (o registo de autoridade, pelo hash dos
+  pixels) e ADR 0094 (a perda da amostragem e a autoridade da pose, decidida no mesmo dia); a Asset Bible não muda
+- Tarefa: [FORJA-08](../backlog/FORJA-08.md)
+- Origem: a [auditoria técnica de 27/10](../art/research/2026-10-27-forja-auditoria/README.md), com o pedido do dono:
   *«Elabora uma densa e extensa auditoria na forja, encontre falhas e coisas a melhorar e refinar, depois busque na web
   como fazer isso e aplique»*
 
@@ -47,7 +47,7 @@ registo escrito antes do POST não chegava ao disco com garantia (B09).
   uma unidade ao lado.
 - **Recusar uma imagem com perfil ICC.** Mandava o agente converter à mão, sem dizer com que intenção.
 - **A luminosidade Lr de Ottosson na escolha da cor da paleta.** Acerta o preto ruidoso (O1), mas muda a cor escolhida
-  em 7% do espaço sRGB e a ADR 0088 fixa o OKLab: fica como pergunta (Q-286), com a medida nas sondas.
+  em 7% do espaço sRGB e a ADR 0088 fixa o OKLab: fica como pergunta (Q-290), com a medida nas sondas.
 - **Uma dependência de lock (filelock, portalocker).** O `fcntl` e o `msvcrt` da biblioteca padrão chegam (regra 8).
 
 ## Consequências
@@ -59,9 +59,10 @@ registo escrito antes do POST não chegava ao disco com garantia (B09).
   numa célula ruidosa perto de uma fronteira; uma foto com orientação abre na orientação certa e uma imagem com perfil
   não sRGB muda de números; `Budget.spend` dá lugar a `Budget.reserve`; uma ferramenta desconhecida no MCP é erro de
   protocolo, não resultado; o contorno global do `forge` fecha só as falhas.
-- As provas de 24/10, 25/10 e 27/10 e a prova da Forja saem iguais, byte a byte; nenhum hash registado no repositório
-  muda.
-- Fica por fazer: o preto perto do `#0B0B0B` (Q-286); a falha de contorno com 85% da borda já a preto (Q-287); progresso
+- As provas de 24/10, 25/10 e da fidelidade de 27/10 e a prova da Forja saem iguais, byte a byte; a prova da auditoria
+  de fidelidade (ADR 0094) muda a pureza escrita em duas notas de grade recusada (0,36 → 0,35 e 0,58 → 0,60), sem mudar
+  a recusa; nenhum hash registado no repositório muda.
+- Fica por fazer: o preto perto do `#0B0B0B` (Q-290); a falha de contorno com 85% da borda já a preto (Q-291); progresso
   e cancelamento das ferramentas longas no MCP.
 - Se a decisão for revertida: voltar `backends/gemini_images.py`, `resample.py`, `imageops.py`, `equipment.py`,
   `jobstore.py` e `jobs.py` ao commit anterior e tirar `durable.py` com os testes `test_auditoria_ii*.py` — e o

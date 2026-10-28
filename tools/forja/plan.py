@@ -16,11 +16,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-import math
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from . import contracts, guides, prompts, refs as refs_mod
+from . import contracts, fidelity as fidelity_mod, guides, prompts, refs as refs_mod
 from .backends import Call, gemini_images, openai_images, pixellab_api, sha
 from .imageops import png_bytes as png
 from .palette import Palette
@@ -130,6 +129,13 @@ def _pixellab(d: dict, c, refs, palette, model, guides_mode, init_strength, seed
     return images
 
 
+def _built(d: dict, palette, target: str, background: str, attached: list[str], geo: dict) -> dict:
+    built = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, target, background,
+                          attached=attached, geo=geo, mode=d["mode"], fidelity=d["fidelity_prompt"])
+    d.update(constraints=built["constraints"], implicit=built["implicit"])
+    return built
+
+
 def _attach(d: dict, refs, palette, guides_mode, expect_for_layout) -> list[tuple[str, bytes]]:
     images = [(r, data) for r, data in refs if refs_mod.family(r) in ("identity", "style")]
     if _want(guides_mode, "palette", palette):
@@ -148,13 +154,11 @@ def _openai(d: dict, refs, palette, model, guides_mode, background) -> list[tupl
         d["errors"].append(str(err))
         return []
     geo = prompts.geometry(d["kind"], d["tags"], "gpt-image")
-    probe = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, "gpt-image", background,
-                          attached=[], geo=geo)["expect"]
+    probe = _built(d, palette, "gpt-image", background, [], geo)["expect"]
     images = _attach(d, refs, palette, guides_mode, probe)
     if len(images) > openai_images.MAX_IMAGES:
         d["errors"].append(f"gpt-image: ate {openai_images.MAX_IMAGES} imagens; o plano tem {len(images)}")
-    built = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, "gpt-image", background,
-                          attached=[r for r, _ in images], geo=geo)
+    built = _built(d, palette, "gpt-image", background, [r for r, _ in images], geo)
     try:
         openai_images.check_size(built["size"], model)
     except ValueError as err:
@@ -167,18 +171,6 @@ def _openai(d: dict, refs, palette, model, guides_mode, background) -> list[tupl
     return images
 
 
-def _fit_aspect(lw: int, lh: int, aspects) -> tuple[str, int, int]:
-    """A proporcao suportada que menos margem obriga, e a tela logica com essa margem."""
-    best = None
-    for a in aspects:
-        r = gemini_images.ratio(a)
-        w, h = (math.ceil(lh * r), lh) if r >= lw / lh else (lw, math.ceil(lw / r))
-        waste = w * h / (lw * lh) - 1
-        if best is None or waste < best[0] - 1e-9:
-            best = (waste, a, w, h)
-    return best[1], best[2], best[3]
-
-
 def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> list[tuple[str, bytes]]:
     try:
         caps = gemini_images.capabilities(model)
@@ -188,7 +180,7 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
     model = d["model"] = caps["model"]
     base = prompts.geometry(d["kind"], d["tags"], "gemini")
     lw, lh = base["logical"]
-    aspect, w, h = _fit_aspect(lw, lh, caps["aspects"])
+    aspect, w, h = gemini_images.fit_aspect(lw, lh, caps["aspects"])
     ox, oy = (w - lw) // 2, (h - lh) // 2
     if size and size not in caps["sizes"]:
         d["errors"].append(f"{model}: resolucao {size} nao suportada (use {', '.join(caps['sizes'])})")
@@ -198,12 +190,10 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
     est = gemini_images.estimate(aspect, size)
     geo = {**base, "logical": [w, h], "content": [ox, oy, ox + lw, oy + lh], "scale": round(est[0] / w, 2),
            "size": list(est), "exact": False}
-    probe = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, "gemini", background,
-                          attached=[], geo=geo)["expect"]
+    probe = _built(d, palette, "gemini", background, [], geo)["expect"]
     images = _attach(d, refs, palette, guides_mode, probe)
     d["errors"] += gemini_images.check(model, aspect, size, [refs_mod.family(r) for r, _ in images])
-    built = prompts.build(d["subject"], d["kind"], d["tags"], d["facing"], False, palette, "gemini", background,
-                          attached=[r for r, _ in images], geo=geo)
+    built = _built(d, palette, "gemini", background, [r for r, _ in images], geo)
     d["request"] = {"endpoint": "interactions", "aspect_ratio": aspect, "image_size": size,
                     "estimated_output": list(est), "output_size_known": False}
     d.update(prompt=built["prompt"], expect=built["expect"], advice=built["advice"],
@@ -217,13 +207,19 @@ def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tupl
          facing: str = "right", references: list[tuple[str, str]] = (), palette: Palette | None = None,
          model: str | None = None, guides_mode: str = "auto", background: str = "auto",
          init_strength: int | None = None, seed: int | None = None, size: str | None = None,
-         register: dict | None = None) -> Plan:
+         register: dict | None = None, mode: str | None = None, fidelity: dict | None = None,
+         character: str | None = None, pose: str | None = None, decisions: dict | None = None) -> Plan:
     """`references`: (papel, caminho) com papel identity, concept ou style; o estado de cada uma vem do `register`
-    (refs.py) e decide as palavras do prompt (FORJA-06). Nada sai para a rede aqui."""
+    (refs.py) e decide as palavras do prompt (FORJA-06). `fidelity` (fidelity.py) com `character`/`pose` prende o
+    pedido a autoridade e da o modo (FORJA-07); `decisions`: max_colors e tones ditos no pedido. Nada sai para a rede."""
     if guides_mode not in GUIDES:
         raise ValueError(f"guias: {', '.join(GUIDES)}")
-    seen = [(str(p), data, *refs_mod.resolve(r, data, register))
-            for r, p in references for data in [Path(p).read_bytes()]]
+    given = [(r, str(p), Path(p).read_bytes()) for r, p in references]
+    seen = [(name, data, *refs_mod.resolve(r, data, register)) for r, name, data in given]
+    prep = fidelity_mod.prepare(fidelity, character, pose, mode, [(got[2] or ref[0], *ref[1:])
+                                                                  for ref, got in zip(given, seen)])
+    references = list(references) + [(r, name) for r, name, _ in prep["attach"]]
+    seen += [(name, data, *refs_mod.resolve(r, data, register)) for r, name, data in prep["attach"]]
     refs = [(r, data) for _, data, r, _, err in seen if not err]
     states = [rec["state"] for _, _, r, rec, err in seen if not err and refs_mod.family(r) == "identity"]
     d: dict = {"schema": 1, "backend": backend, "model": model, "kind": kind, "subject": subject, "facing": facing,
@@ -234,7 +230,11 @@ def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tupl
                "errors": [f"referencia {p}: {err}" for p, _, _, _, err in seen if err], "notes": [], "prompt": "",
                "expect": None, "request": None, "advice": None,
                "training_permission": PERMISSION.get(backend), "contracts": contracts.get(kind).as_dict()}
-    d["notes"] += [] if "approved" in states else ["recuperacao: o que sair e uma adaptacao em revisao, nao um mestre"]
+    d.update(mode=prep["mode"], fidelity=prep["record"], constraints=[], implicit=[],
+             fidelity_prompt={**(prep["prompt"] or {}), **(decisions or {})})
+    d["errors"] += prep["errors"] + fidelity_mod.guide_alone(prep["mode"], seen, states)
+    d["notes"] += prep["notes"] + ([] if "approved" in states else
+                                   ["recuperacao: o que sair e uma adaptacao em revisao, nao um mestre"])
     d["errors"] += [f"assunto: {c}" for c in prompts.camera_conflicts(subject, facing)]
     if backend == "pixellab":
         images = _pixellab(d, contracts.get(kind), refs, palette, model, guides_mode, init_strength, seed)

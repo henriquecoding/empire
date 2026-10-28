@@ -41,8 +41,13 @@ INSTRUCTIONS = (
     "(fragmentos de 1-3 px: review e suspeita, nao defeito) e, com plano, agrupa so nas regioes editaveis; (7) uma "
     "referencia tem estado no registo forja_refs (so o mestre que o dono aprovou e APPROVED); a edicao local e "
     "forja_inpaint com --refs (recusa o rejeitado antes do pedido) e fecha com forja_verify contra o mestre, so a "
-    "ler. A aprovacao artistica e sempre do dono. Caminhos relativos a raiz do repositorio. Nunca escrever em art/ "
-    "sem pedido do dono; usar build/forja/. Ler docs/art/FORJA.md.")
+    "ler; (8) para adaptar um conceito, forja_plan/forja_prompt com --fidelity e --character (o recorte de autoridade "
+    "vai anexado, um conceito alternativo e reference_conflict, sem as preferencias do compilador); no forja_forge, "
+    "snap.loss e o achado erased dizem o que a amostragem apagou mesmo com pureza 1,0, grid_report diz de onde veio a "
+    "grade e --signals prende pixels e regioes declarados; forja_fidelity com --candidate da os quatro estados "
+    "(runtime, sinais, identidade, mestre) e --sheet o conceito ao lado. A aprovacao artistica e sempre do dono. "
+    "Caminhos relativos a raiz do repositorio. Nunca escrever em art/ sem pedido do dono; usar build/forja/. Ler "
+    "docs/art/FORJA.md.")
 
 
 def _schema(parser: argparse.ArgumentParser) -> dict:
@@ -172,7 +177,7 @@ def _error(mid, code: int, message: str) -> dict:
 
 def handle(message) -> dict | None:
     """Uma mensagem JSON-RPC; o que nao e pedido valido e erro com id null (JSON-RPC 2.0, §5) e o batch, que o MCP
-    tirou em 2025-06-18, e recusado. Antes, `[]` ou `42` acabavam com o servidor (auditoria de 27/10, B04)."""
+    tirou em 2025-06-18, e recusado. Antes, `[]` ou `42` acabavam com o servidor (FORJA-08, B04)."""
     if isinstance(message, list):
         return _error(None, -32600, "batch JSON-RPC nao suportado: uma mensagem por linha (MCP 2025-06-18)")
     if not isinstance(message, dict):
@@ -232,7 +237,7 @@ def serve(stdin=None, stdout=None) -> None:
 
     As mensagens sao UTF-8 (MCP, Transports): o stdin le-se em bytes e o stdout escreve UTF-8, com \\n, seja qual
     for a codificacao da consola. No Windows um pipe vinha em cp1252: "cenários" chegava "cenÃ¡rios", e um caractere
-    fora do cp1252 na resposta rebentava o servidor (auditoria de 27/10, B10)."""
+    fora do cp1252 na resposta rebentava o servidor (FORJA-08, B10)."""
     os.chdir(Path(__file__).resolve().parents[2])
     if stdout is None and hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", newline="\n")

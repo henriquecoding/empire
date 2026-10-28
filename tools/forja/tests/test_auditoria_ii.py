@@ -1,4 +1,4 @@
-"""A auditoria de 27/10 (B02, B05-B08, B13-B15): o que a Forja lia, votava e desenhava errado sem dizer.
+"""A auditoria tecnica de 27/10, FORJA-08 (B02, B05-B08, B13-B15): o que a Forja lia, votava e desenhava errado sem dizer.
 
 Os testes de rede, teto e MCP estao em test_auditoria_ii_rede. Cenarios e antes/depois:
 docs/art/research/2026-10-27-forja-auditoria/.

@@ -10,9 +10,13 @@ exata mais frequente (para reduzir pixel art que ja e limpa, sem misturar).
 Os baldes procuram-se em oito grelhas, deslocadas meio balde em cada canal (o
 histograma deslocado medio de Scott, 1985): numa grelha so, uma cor ruidosa que cai
 numa fronteira (128 = 8 x 16) divide-se por dois a oito baldes e perde para a minoria
-— 86 das 112 cores da paleta tem um canal a 3 niveis de uma fronteira (auditoria de
-27/10, B02). A media faz-se depois na vizinhanca centrada no balde (um passo de
-deslocamento da media), que a fronteira ja nao corta.
+— 86 das 112 cores da paleta tem um canal a 3 niveis de uma fronteira (FORJA-08, B02).
+A media faz-se depois na vizinhanca centrada no balde (um passo de deslocamento da
+media), que a fronteira ja nao corta.
+
+A pureza e a mesma medida em todos os metodos (FORJA-07; auditoria de 27/10, §12.5): a parte do miolo amostrado
+perto (OKLab < NEAR) da cor escolhida. Antes so o dominante a calculava e os outros devolviam 1,0 por convencao. Mede
+o miolo, nao a celula inteira nem a identidade: o que ficou fora do miolo ou do voto e o `loss.py` que o ve.
 """
 from __future__ import annotations
 
@@ -26,6 +30,7 @@ from .grid import Grid
 from .imageops import CLEAR, binarize
 
 METHODS = ("dominant", "mode", "center", "median", "mean")
+NEAR = 0.08
 SHIFTS = tuple(itertools.product((0, 8), repeat=3))
 REACH = 8
 
@@ -36,9 +41,12 @@ class Sampled:
     purity: float
     mixed: int
     impure: list = field(default_factory=list)
+    method: str = "dominant"
+    core_share: float = 1.0
 
     def as_dict(self) -> dict:
-        return {"size": list(self.image.size), "purity": round(self.purity, 3), "mixed_cells": self.mixed}
+        return {"size": list(self.image.size), "purity": round(self.purity, 3), "mixed_cells": self.mixed,
+                "method": self.method, "purity_basis": "core", "core_share": round(self.core_share, 3)}
 
 
 def resample(image: Image.Image, grid: Grid, method: str = "dominant", inset: float = 0.18,
@@ -48,15 +56,18 @@ def resample(image: Image.Image, grid: Grid, method: str = "dominant", inset: fl
     rgba = image.convert("RGBA")
     cols, rows = grid.size
     if (cols, rows) == rgba.size and grid.xs[0] == 0 and grid.ys[0] == 0:
-        return Sampled(binarize(rgba), 1.0, 0, [])  # uma celula por pixel: o voto de cada uma e o proprio pixel
+        return Sampled(binarize(rgba), 1.0, 0, [], method)  # uma celula por pixel: o voto de cada uma e o pixel
     out: list[tuple[int, int, int, int]] = []
     purities: list[float] = []
     impure: list[tuple[int, int]] = []
+    shares = 0.0
     for j in range(rows):
         y0, y1 = grid.ys[j], grid.ys[j + 1]
         for i in range(cols):
             x0, x1 = grid.xs[i], grid.xs[i + 1]
-            pixel, purity = _cell(rgba, _inner(x0, y0, x1, y1, inset), method, coverage)
+            core = _inner(x0, y0, x1, y1, inset)
+            shares += (core[2] - core[0]) * (core[3] - core[1]) / max(1, (x1 - x0) * (y1 - y0))
+            pixel, purity = _cell(rgba, core, method, coverage)
             out.append(pixel)
             if pixel[3]:
                 purities.append(purity)
@@ -64,7 +75,8 @@ def resample(image: Image.Image, grid: Grid, method: str = "dominant", inset: fl
                     impure.append((i, j))
     native = Image.new("RGBA", (cols, rows))
     native.putdata(out)
-    return Sampled(native, sum(purities) / len(purities) if purities else 1.0, len(impure), impure)
+    return Sampled(native, sum(purities) / len(purities) if purities else 1.0, len(impure), impure, method,
+                   shares / max(1, cols * rows))
 
 
 def _inner(x0: int, y0: int, x1: int, y1: int, inset: float) -> tuple[int, int, int, int]:
@@ -82,23 +94,25 @@ def _cell(rgba: Image.Image, box: tuple[int, int, int, int], method: str,
     covered = sum(n for n, _ in solid)
     if not area or covered / area < coverage:
         return CLEAR, 1.0
+    pick = _pick(region, solid, covered, method)
+    near = sum(n for n, c in solid if color.delta(c, pick) < NEAR)
+    return (pick[0], pick[1], pick[2], 255), near / covered
+
+
+def _pick(region: Image.Image, solid: list, covered: int, method: str) -> tuple[int, int, int]:
     if method == "mode":  # a cor exata mais frequente: nunca uma cor que nao estava la
-        return (*max(solid)[1], 255), 1.0
+        return max(solid)[1]
     if method == "center":
         p = region.getpixel((region.width // 2, region.height // 2))
-        if p[3] < 128:
-            p = max(solid)[1] + (255,)
-        return (p[0], p[1], p[2], 255), 1.0
+        return p[:3] if p[3] >= 128 else max(solid)[1]
     if method == "mean":
-        return (*color.mean_color(solid), 255), 1.0
+        return color.mean_color(solid)
     if method == "median":
-        return (*_median(solid, covered), 255), 1.0
+        return _median(solid, covered)
     best = _bucket(solid)
     weight = sum(n for n, _ in best)
     exact = max(best)
-    pick = exact[1] if exact[0] >= 0.35 * weight else color.mean_color(_around(solid, color.mean_color(best)) or best)
-    near = sum(n for n, c in solid if color.delta(c, pick) < 0.08)
-    return (pick[0], pick[1], pick[2], 255), near / covered
+    return exact[1] if exact[0] >= 0.35 * weight else color.mean_color(_around(solid, color.mean_color(best)) or best)
 
 
 def _bucket(solid: list[tuple[int, tuple[int, int, int]]]) -> list[tuple[int, tuple[int, int, int]]]:

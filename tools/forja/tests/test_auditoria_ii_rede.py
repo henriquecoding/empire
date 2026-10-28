@@ -1,4 +1,4 @@
-"""A auditoria de 27/10 (B01, B03, B04, B09-B12): a imagem paga certa, o teto entre processos, o registo no disco e
+"""A auditoria tecnica de 27/10, FORJA-08 (B01, B03, B04, B09-B12): a imagem paga certa, o teto entre processos, o registo no disco e
 o servidor MCP que nao morre. Os testes da imagem estao em test_auditoria_ii.
 """
 import base64

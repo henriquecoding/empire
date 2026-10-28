@@ -7,13 +7,13 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Forja: auditoria de 27/10/2026 (FORJA-07, ADR 0094)
+## Forja: auditoria técnica de 27/10/2026 (FORJA-08, ADR 0095)
 
 > Pedido do dono (27/10/2026): *«Elabora uma densa e extensa auditoria na forja, encontre falhas e coisas a melhorar
 > e refinar, depois busque na web como fazer isso e aplique»*. Aplicados B01–B16
 > ([auditoria](art/research/2026-10-27-forja-auditoria/README.md)). O que segue muda um contrato e é do dono.
 
-### Q-286 · A cor da paleta escolhe-se com a luminosidade Lr de Ottosson?
+### Q-290 · A cor da paleta escolhe-se com a luminosidade Lr de Ottosson?
 - **Hoje:** a cor mais próxima mede-se em OKLab (ADR 0088). O L do OKLab é uma raiz cúbica pura, íngreme junto ao
   preto: o `#020201` fica a 0,084 do `#000000` e a 0,067 do `#0B0B0B`. Nas sondas, com o contorno a `#000000` e o ruído
   de um gerador, 62, 317 e 39 dos 588 pixels pretos saem `#0B0B0B` (σ 3, σ 4, JPEG q85). Na borda da figura o
@@ -26,12 +26,50 @@
   de fundo continuam em OKLab), ou manter o OKLab e levar ao preto, dentro da figura, o que tem L abaixo de um limiar.
 - **Decide:** o dono (a métrica de cor da Forja); a medida repete-se com `sondas.py` (`O1`).
 
-### Q-287 · Uma falha no contorno com 85% ou mais da borda a preto fecha-se, ou só se avisa?
+### Q-291 · Uma falha no contorno com 85% ou mais da borda a preto fecha-se, ou só se avisa?
 - **Hoje:** com menos de 85% da borda a preto o `forge` fecha as falhas (B05); com 85% ou mais não faz nada e o lint
   não diz nada. É o que deixa uma corda de 1 px sem contorno, de propósito, sem a engrossar para 3.
 - **Proposta:** um aviso `outline_gaps` com os troços sem contorno (fora das zonas `--bare`), sem mexer nos pixels; ou
   fechar também, e a corda passa a precisar sempre de `--bare` (Q-272).
 - **Decide:** o dono (contrato de contorno); liga-se à Q-272 (a corda dispensa contorno?).
+
+## Forja: a auditoria de fidelidade — 27/10/2026 (FORJA-07, ADR 0094)
+
+> Pedido do dono (27/10/2026): *«Quero que implemente isso»*, com a auditoria de 27/10 (revisão 2) e o pacote de
+> evidências. Aplicadas as cinco etapas de código do plano
+> ([pesquisa](art/research/2026-10-27-forja-auditoria-fidelidade/README.md)). O que segue é do dono.
+
+### Q-286 · Quem anota as regiões críticas e os pinos dos três personagens?
+- **Hoje:** o [contrato de fidelidade](art/research/2026-10-27-forja-auditoria-fidelidade/fidelidade.json) tem as
+  regiões (`face_system`, `helmet_face`, `bow_hands_string`…) com `authority_box` e `target_box` a `null`, e nenhum
+  pino. Sem caixa, a região fica `pending` e a revisão não fecha; um pino só se aplica com `status: authorized`.
+- **Proposta:** o dono marca as caixas na prancha (`authority_box`); as do destino (`target_box`) e os pinos vêm
+  quando houver um layout nativo fiel, a partir dele, nunca por escala da tela. Um agente pode propor caixas como
+  `annotation_pending`; `authorized` é do dono.
+- **Decide:** o dono (o que é indispensável no rosto é dele).
+
+### Q-287 · Os limiares da perda servem nos rostos reais, e a prancha animada também a mede?
+- **Hoje:** `erased` conta o que passa de 4 % da célula e fica a mais de 0,08 OKLab do pixel, dos vizinhos e das
+  misturas; calibrado nas fixtures sintéticas e nos ensaios do pacote. Numa imagem gerada real há dezenas a centenas
+  de células apagadas, quase sempre no rosto. O `sheet` ainda não a mede por quadro.
+- **Proposta:** calibrar com pares conceito/candidato aceites e rejeitados pelo dono (Q-281) e levar `loss.observe`
+  ao `sheetforge` quadro a quadro; até lá, `erased` é aviso e só bloqueia dentro de uma região `required`.
+- **Decide:** o dono (o conjunto de calibração).
+
+### Q-288 · Que altura útil tem cada personagem parado?
+- **Hoje:** `target_useful_bbox` está a `null` nos três; os contratos `royal_80` e `royal_64` aceitam de 1 px ao
+  teto. O escudeiro rejeitado ocupava 45 linhas numa tela de 64 (auditoria, §4).
+- **Proposta:** planear a caixa útil de cada pose estática a partir do conceito e do elenco (a relação entre os
+  três), antes do piloto, e escrevê-la no contrato de fidelidade; o `prompt` passa-a como escala.
+- **Decide:** o dono (direção de arte e escala do elenco).
+
+### Q-289 · Que paleta é o runtime do elenco real?
+- **Hoje:** os contratos `royal_80` e `royal_64` apontam para a paleta mestra (`empire`). Contra ela, os três
+  rejeitados têm 25–26 cores fora e o Rei V15 integrado também não a cumpre; a sessão de 27/10 conferiu os candidatos
+  contra a paleta extraída deles próprios (auditoria, §6). `forja fidelity --palette` aceita outra paleta.
+- **Proposta:** decidir se o elenco usa a paleta mestra, uma paleta própria registada (`art/palettes/`) ou rampas por
+  material; até lá, o `runtime` da revisão usa a do contrato e diz quantas cores ficam fora.
+- **Decide:** o dono (direção de arte; a regra 9 guarda `art/`).
 
 ## Forja: recuperar antes de proteger — 27/10/2026 (FORJA-06, ADR 0093)
 

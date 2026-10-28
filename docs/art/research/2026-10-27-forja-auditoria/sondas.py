@@ -273,7 +273,7 @@ def b16_pixellab():
 
 
 def o1_near_black():
-    """O que fica aberto (Q-286): o preto ruidoso contra a paleta, com o L do OKLab e com o Lr de Ottosson, e quanto
+    """O que fica aberto (Q-290): o preto ruidoso contra a paleta, com o L do OKLab e com o Lr de Ottosson, e quanto
     da escolha de cor mudaria se o Lr entrasse (amostra fixa do espaco sRGB). A Forja continua em OKLab."""
     import math
     from tools.forja import color, grid as gridmod, palette as palmod, resample

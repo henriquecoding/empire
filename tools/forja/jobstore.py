@@ -4,7 +4,7 @@ Um job e um ficheiro JSON escrito com troca atomica e `fsync` (durable.py): se o
 ou a maquina morrem a meio, fica o estado anterior inteiro, nunca meio ficheiro nem um
 vazio. O orcamento fica em `<pasta>/budget.json` e soma entre corridas, para uma retomada
 nao o esquecer; cada conta relê-o com um lock, para dois processos na mesma pasta nao
-passarem o teto (auditoria de 27/10, B03).
+passarem o teto (FORJA-08, B03).
 """
 from __future__ import annotations
 

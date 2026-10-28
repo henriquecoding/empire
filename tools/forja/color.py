@@ -78,7 +78,7 @@ def lch(rgb: tuple[int, int, int]) -> tuple[float, float, float]:
 def from_lch(big_l: float, c: float, h: float, gamut: bool = False) -> tuple[int, int, int]:
     """`gamut`: fora do sRGB, baixa o croma ate caber, com a luminosidade e o matiz fixos — a "preservar a
     luminosidade" de Ottosson (sRGB gamut clipping, 2021). Prender cada canal desviava o matiz de uma rampa ate
-    21 graus (auditoria de 27/10, B15)."""
+    21 graus (FORJA-08, B15)."""
     rad = math.radians(h)
     lab = (big_l, c * math.cos(rad), c * math.sin(rad))
     if gamut and not _inside(lab):

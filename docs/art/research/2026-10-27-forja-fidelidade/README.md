@@ -2,6 +2,10 @@
 
 > Pedido do dono (27/10/2026), com o pacote `Solucao-Forja-Fidelidade-2026-10-27`: *«Implemente isso, e também
 > pesquise profundamente na web mais coisas que possam complementar isso»*.
+>
+> Continua em [a auditoria de fidelidade](../2026-10-27-forja-auditoria-fidelidade/README.md) (FORJA-07, ADR 0094): a
+> perda da amostragem medida, a origem da grade, o pedido preso ao recorte de autoridade e a revisão em quatro estados.
+> Desde então, o plano do arqueiro desta [prova](prova.json) só com a adaptação em revisão anexada sai `ok: false`.
 
 A solução recebida ([SOLUCAO.md](SOLUCAO.md), cópia exata: sha256 `b9d9303c…`, o mesmo do manifesto do pacote; o zip
 tinha `e508982f…`) diz em uma frase o que mudou: **o desenho recupera-se antes de se proteger**. Proteger o último
