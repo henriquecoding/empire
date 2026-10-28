@@ -100,6 +100,15 @@ test('rede indisponível ao renovar mantém a sessão para tentar outra vez', as
   offline = false; await M.pedir('/rest/v1/empire_respostas'); assert.equal(M.sessao().token, 'new');
 });
 
+test('sem resposta do servidor, entrar diz que ninguém respondeu e não «Failed to fetch»', async () => {
+  const { M } = boot(null, async () => { throw new TypeError('Failed to fetch'); });
+  const erro = await M.entrar('teste@example.invalid', 'senha-de-teste').catch(e => e);
+  assert.equal(erro.semResposta, true);
+  assert.match(erro.message, /não respondeu/);
+  assert.doesNotMatch(erro.message, /Failed to fetch/);
+  assert.equal(M.sessao(), null);
+});
+
 test('403 de autorização não renova nem repete uma escrita', async () => {
   const { M, requests } = boot(session(), () => reply(403, { message: 'permission denied' }));
   await assert.rejects(M.pedir('/rest/v1/empire_respostas', { metodo: 'POST', corpo: [] }), /permission denied/);

@@ -18,7 +18,7 @@ async function fixture() {
     grant execute on function auth.uid() to anon, authenticated;
     create function public.rls_auto_enable() returns event_trigger language plpgsql as $$ begin return; end $$;
     insert into auth.users values ('${ADMIN}'),('${OTHER}');`);
-  for (const file of ['001_empire_reportes.sql','002_empire_reportes_teto.sql','003_empire_auditoria_revisoes_e_seguranca.sql'])
+  for (const file of ['001_empire_reportes.sql','002_empire_reportes_teto.sql','003_empire_auditoria_revisoes_e_seguranca.sql','004_empire_vivo.sql'])
     await db.exec(readFileSync('tools/web/supabase/' + file,'utf8'));
   await db.exec(`insert into public.empire_admins(user_id) values ('${ADMIN}');`);
   return db;
@@ -71,5 +71,16 @@ test('reportes iguais de pessoas distintas existem; reenvio da mesma operação 
     await assert.rejects(submit('00000000-0000-0000-0000-000000000012'),/demasiados reportes/);
     assert.equal((await db.query('select count(*)::int n from public.empire_feedback')).rows[0].n,30);
     await assert.rejects(as(db,'authenticated',ADMIN,'truncate public.empire_feedback'),/permission denied/);
+  } finally { await db.close(); }
+});
+
+test('o visitante chama empire_vivo() para manter o projeto acordado, e não lê nada com isso', async () => {
+  const db = await fixture();
+  try {
+    assert.equal((await as(db,'anon',null,'select public.empire_vivo() as vivo')).rows[0].vivo,true);
+    await assert.rejects(as(db,'anon',null,'select * from public.empire_admins'),/permission denied/);
+    const fn = (await db.query(`select prosecdef, provolatile from pg_proc where proname = 'empire_vivo'`)).rows[0];
+    assert.equal(fn.prosecdef,false);
+    assert.equal(fn.provolatile,'s');
   } finally { await db.close(); }
 });

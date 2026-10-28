@@ -137,7 +137,9 @@
     ev.preventDefault(); var b = ev.target.querySelector("button"); b.disabled = true;
     dizer($("entrar-estado"), "A entrar…");
     M.entrar($("en-email").value.trim(), $("en-senha").value).then(() => { $("en-senha").value = ""; abrir(); },
-      e => dizer($("entrar-estado"), "Não foi possível entrar: " + e.message, "erro")).finally(() => { b.disabled = false; });
+      e => dizer($("entrar-estado"), "Não foi possível entrar: " + e.message + (e.semResposta
+        ? " Se a internet estiver bem, o projeto Supabase do Empire pode estar em pausa: reativa-o em supabase.com/dashboard." : ""),
+      "erro")).finally(() => { b.disabled = false; });
   });
   $("sair").addEventListener("click", () => {
     if (sujas.size || window.EmpireReportes.suja() || C.pendente()) return dizer($("lote-estado"), "Tens alterações por guardar ou um envio em curso. Guarda-as ou usa «Descartar rascunho» antes de sair.", "aviso");
