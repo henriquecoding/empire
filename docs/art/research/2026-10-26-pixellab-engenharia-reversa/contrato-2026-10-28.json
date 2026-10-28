@@ -1,0 +1,2026 @@
+{
+  "observed_at_utc": "2026-10-28T14:57:19+00:00",
+  "source": "https://api.pixellab.ai/v2/openapi.json",
+  "read_from": "copia local (--input)",
+  "sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596",
+  "canonical_sha256": "5426dbde0ca590be026114f28b40eb878d9bf9acfe0efad9130e5620742652be",
+  "bytes": 501206,
+  "openapi": "3.1.0",
+  "counts": {
+    "paths": 102,
+    "operations": 113,
+    "schemas": 275,
+    "deprecated": 0
+  },
+  "stack_signals": {
+    "fastapi_validation_schemas": true,
+    "operation_ids_with_fastapi_default_suffix": 105,
+    "operation_ids_explicit": [
+      "create_character_pro_flash",
+      "create_image_pro_flash",
+      "create_object_pro_flash",
+      "edit_image_pro_flash",
+      "get_pro_flash_capabilities",
+      "get_pro_flash_cost",
+      "image_to_pixelart_pro_flash",
+      "inpaint_image_pro_flash"
+    ],
+    "module_paths_from_schema_names": [
+      "app/endpoints/external/v2/animate_with_skeleton",
+      "app/endpoints/external/v2/animate_with_text",
+      "app/endpoints/external/v2/animate_with_text_v2",
+      "app/endpoints/external/v2/create_character_with_4_directions",
+      "app/endpoints/external/v2/create_character_with_8_directions",
+      "app/endpoints/external/v2/create_image_bitforge",
+      "app/endpoints/external/v2/create_image_pixen",
+      "app/endpoints/external/v2/create_image_pixflux",
+      "app/endpoints/external/v2/create_isometric_tile",
+      "app/endpoints/external/v2/create_map_object",
+      "app/endpoints/external/v2/create_ui_asset",
+      "app/endpoints/external/v2/edit_animation_v2",
+      "app/endpoints/external/v2/edit_image",
+      "app/endpoints/external/v2/edit_images_v2",
+      "app/endpoints/external/v2/generate_8_rotations_v2",
+      "app/endpoints/external/v2/generate_image_v2",
+      "app/endpoints/external/v2/generate_ui_v2",
+      "app/endpoints/external/v2/image_to_pixelart",
+      "app/endpoints/external/v2/inpaint",
+      "app/endpoints/external/v2/inpaint_v3",
+      "app/endpoints/external/v2/interpolation_v2",
+      "app/endpoints/external/v2/remove_background",
+      "app/endpoints/external/v2/resize",
+      "app/endpoints/external/v2/rotate",
+      "app/endpoints/external/v2/transfer_outfit_v2"
+    ],
+    "info_version": "dev",
+    "servers": [
+      {
+        "url": "/v2"
+      }
+    ]
+  },
+  "image_facts": {
+    "pixflux": {
+      "axis": {
+        "width": {
+          "minimum": 16.0,
+          "maximum": 400.0,
+          "multipleOf": null
+        },
+        "height": {
+          "minimum": 16.0,
+          "maximum": 400.0,
+          "multipleOf": null
+        }
+      },
+      "max_area": 160000,
+      "min_area": 1024,
+      "square_below": null,
+      "transparent_max_area": null,
+      "fields": [
+        "background_removal_task",
+        "color_image",
+        "description",
+        "detail",
+        "direction",
+        "image_size",
+        "init_image",
+        "init_image_strength",
+        "isometric",
+        "negative_description",
+        "no_background",
+        "outline",
+        "seed",
+        "shading",
+        "text_guidance_scale",
+        "view"
+      ],
+      "ranges": {
+        "text_guidance_scale": {
+          "minimum": 1.0,
+          "maximum": 20.0,
+          "default": 8
+        },
+        "init_image_strength": {
+          "minimum": 1.0,
+          "maximum": 999.0,
+          "default": 300
+        }
+      }
+    },
+    "pixen": {
+      "axis": {
+        "width": {
+          "minimum": 16.0,
+          "maximum": 768.0,
+          "multipleOf": 4.0
+        },
+        "height": {
+          "minimum": 16.0,
+          "maximum": 768.0,
+          "multipleOf": 4.0
+        }
+      },
+      "max_area": 262144,
+      "min_area": null,
+      "square_below": 32,
+      "transparent_max_area": 65536,
+      "fields": [
+        "background_removal_task",
+        "description",
+        "detail",
+        "direction",
+        "enhance_prompt",
+        "image_size",
+        "no_background",
+        "outline",
+        "seed",
+        "view"
+      ],
+      "ranges": {}
+    },
+    "bitforge": {
+      "axis": {
+        "width": {
+          "minimum": 16.0,
+          "maximum": 200.0,
+          "multipleOf": null
+        },
+        "height": {
+          "minimum": 16.0,
+          "maximum": 200.0,
+          "multipleOf": null
+        }
+      },
+      "max_area": 40000,
+      "min_area": null,
+      "square_below": null,
+      "transparent_max_area": null,
+      "fields": [
+        "color_image",
+        "coverage_percentage",
+        "description",
+        "detail",
+        "direction",
+        "extra_guidance_scale",
+        "image_size",
+        "init_image",
+        "init_image_strength",
+        "inpainting_image",
+        "isometric",
+        "mask_image",
+        "negative_description",
+        "no_background",
+        "oblique_projection",
+        "outline",
+        "seed",
+        "shading",
+        "skeleton_guidance_scale",
+        "skeleton_keypoints",
+        "style_image",
+        "style_strength",
+        "text_guidance_scale",
+        "view"
+      ],
+      "ranges": {
+        "text_guidance_scale": {
+          "minimum": 1.0,
+          "maximum": 20.0,
+          "default": 8.0
+        },
+        "extra_guidance_scale": {
+          "minimum": 0.0,
+          "maximum": 20.0,
+          "default": 3.0
+        },
+        "style_strength": {
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "default": 0
+        },
+        "coverage_percentage": {
+          "minimum": 0.0,
+          "maximum": 100.0
+        },
+        "init_image_strength": {
+          "minimum": 1.0,
+          "maximum": 999.0,
+          "default": 300
+        },
+        "skeleton_guidance_scale": {
+          "minimum": 0.0,
+          "maximum": 5.0,
+          "default": 1.0
+        }
+      }
+    }
+  },
+  "forja_conformance": {
+    "forja_spec_sha256": "b6dd212ca4e7f60c9eb93e776303a92f6e0bb4f794cf3a2bf49099e9a00e8834",
+    "checked": 63,
+    "mismatches": []
+  },
+  "operations": {
+    "POST /animate-character": {
+      "operation_id": "create_character_animation_animate_character_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "404",
+        "409",
+        "422",
+        "429"
+      ],
+      "request_sha256": "489b042a4201d32b",
+      "description_sha256": "c8cb786ee1e749e3"
+    },
+    "POST /animate-pixminimax": {
+      "operation_id": "animate_pixminimax_animate_pixminimax_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "3a5e800e83342a6f",
+      "description_sha256": "a465d26a018b646e"
+    },
+    "POST /animate-with-skeleton": {
+      "operation_id": "animate_with_skeleton_animate_with_skeleton_post",
+      "tags": [
+        "Skeleton Animation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "ed9ac081d015f405",
+      "description_sha256": "2521165e20dc6ed3"
+    },
+    "POST /animate-with-skeleton-v3": {
+      "operation_id": "animate_with_skeleton_v3_animate_with_skeleton_v3_post",
+      "tags": [
+        "Skeleton Animation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "e15182a33e060990",
+      "description_sha256": "62ae26253282fca8"
+    },
+    "POST /animate-with-text": {
+      "operation_id": "animate_with_text_animate_with_text_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "f75ea2f964c35618",
+      "description_sha256": "f9fcf22425badae6"
+    },
+    "POST /animate-with-text-v2": {
+      "operation_id": "animate_with_text_v2_animate_with_text_v2_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "4bbfb038eed70f30",
+      "description_sha256": "919cd5fffb3c8bd8"
+    },
+    "POST /animate-with-text-v3": {
+      "operation_id": "animate_with_text_v3_animate_with_text_v3_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "4deb7f26167c0c66",
+      "description_sha256": "2cafeeddf6c0a7cb"
+    },
+    "GET /background-jobs/{job_id}": {
+      "operation_id": "get_background_job_status_background_jobs__job_id__get",
+      "tags": [
+        "Jobs"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422",
+        "429"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "a9d0118c319a3fcf"
+    },
+    "DELETE /background-jobs/{job_id}": {
+      "operation_id": "cancel_background_job_background_jobs__job_id__delete",
+      "tags": [
+        "Jobs"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "409",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "a8d08b7ca3252b40"
+    },
+    "GET /balance": {
+      "operation_id": "get_balance_balance_get",
+      "tags": [
+        "Account"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "d7c05bd8c1392e10"
+    },
+    "GET /characters": {
+      "operation_id": "list_characters_characters_get",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422",
+        "429"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "180555f6b2986336"
+    },
+    "POST /characters/animations": {
+      "operation_id": "create_character_animation_characters_animations_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "422"
+      ],
+      "request_sha256": "489b042a4201d32b",
+      "description_sha256": "fb15de0a200f26d0"
+    },
+    "GET /characters/{character_id}": {
+      "operation_id": "get_character_characters__character_id__get",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "422",
+        "429"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "c86e1b6753410505"
+    },
+    "DELETE /characters/{character_id}": {
+      "operation_id": "delete_character_v2_characters__character_id__delete",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "ca0eba0e2fdc3748"
+    },
+    "DELETE /characters/{character_id}/animations": {
+      "operation_id": "delete_character_animations_characters__character_id__animations_delete",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "409",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "273a6992bb839a8a"
+    },
+    "DELETE /characters/{character_id}/animations/{animation_group_id}": {
+      "operation_id": "delete_character_animation_group_characters__character_id__animations__animation_group_id__delete",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "4685b7ccbe8dd8ae"
+    },
+    "DELETE /characters/{character_id}/animations/{animation_group_id}/directions/{direction}": {
+      "operation_id": "delete_character_animation_direction_characters__character_id__animations__animation_group_id__directions__direction__delete",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "002da97c3cbd4673"
+    },
+    "POST /characters/{character_id}/portrait": {
+      "operation_id": "set_portrait_characters__character_id__portrait_post",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "90ced820d68dc0bb",
+      "description_sha256": "addcda55f3b880e7"
+    },
+    "GET /characters/{character_id}/spritesheet": {
+      "operation_id": "download_character_spritesheet_characters__character_id__spritesheet_get",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "404",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "ab1d8d7dfc6b9a4f"
+    },
+    "PATCH /characters/{character_id}/tags": {
+      "operation_id": "update_character_tags_characters__character_id__tags_patch",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "404",
+        "422",
+        "429"
+      ],
+      "request_sha256": "390f702cf486cfb4",
+      "description_sha256": "b7676d2c56a01ec8"
+    },
+    "GET /characters/{character_id}/zip": {
+      "operation_id": "download_character_characters__character_id__zip_get",
+      "tags": [
+        "Character Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "404",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "994730234df5bcbd"
+    },
+    "POST /correct-pixelart": {
+      "operation_id": "correct_pixelart_endpoint_correct_pixelart_post",
+      "tags": [
+        "Cleanup"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "3a36d2f6c03303e6",
+      "description_sha256": "d001980e45ba2b2b"
+    },
+    "POST /create-1-direction-object": {
+      "operation_id": "create_1_direction_object_create_1_direction_object_post",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "6c18988a52a1b37e",
+      "description_sha256": "2d406eda42c2c3ea"
+    },
+    "POST /create-8-direction-object": {
+      "operation_id": "create_8_direction_object_create_8_direction_object_post",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "7e2b9abb43ebf19b",
+      "description_sha256": "2161f071696787b5"
+    },
+    "POST /create-character-pro": {
+      "operation_id": "create_character_pro_create_character_pro_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "0546e3b960a23d19",
+      "description_sha256": "5d2542a3a3a90e97"
+    },
+    "POST /create-character-pro-flash": {
+      "operation_id": "create_character_pro_flash",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "422"
+      ],
+      "request_sha256": "b28d218d0b379eb3",
+      "description_sha256": "88da27d6b2096087"
+    },
+    "POST /create-character-state": {
+      "operation_id": "create_character_state_create_character_state_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "402",
+        "404",
+        "422",
+        "429"
+      ],
+      "request_sha256": "67dd238b0675f677",
+      "description_sha256": "ff80255718abe225"
+    },
+    "POST /create-character-v3": {
+      "operation_id": "create_character_v3_create_character_v3_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "9d646bb9e82e8688",
+      "description_sha256": "5e4f26e148af5efa"
+    },
+    "POST /create-character-with-4-directions": {
+      "operation_id": "create_character_with_4_directions_create_character_with_4_directions_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "91b97d637f51dfd2",
+      "description_sha256": "f28d32e9cd561fde"
+    },
+    "POST /create-character-with-8-directions": {
+      "operation_id": "create_character_with_8_directions_create_character_with_8_directions_post",
+      "tags": [
+        "Character Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "d572a480511dfad2",
+      "description_sha256": "b7304d62785b6d1f"
+    },
+    "POST /create-image-bitforge": {
+      "operation_id": "generate_image_bitforge_create_image_bitforge_post",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "34bbcbc892fda5d6",
+      "description_sha256": "15ffac73902ac597"
+    },
+    "POST /create-image-pixen": {
+      "operation_id": "generate_image_pixen_create_image_pixen_post",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "c6fc80ee5f1ce28f",
+      "description_sha256": "04ce304e7a18a431"
+    },
+    "POST /create-image-pixflux": {
+      "operation_id": "generate_image_pixflux_create_image_pixflux_post",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "6b576bd95296b427",
+      "description_sha256": "de0cd4275d3483c8"
+    },
+    "POST /create-image-pixflux-background": {
+      "operation_id": "create_image_pixflux_background_create_image_pixflux_background_post",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "6b576bd95296b427",
+      "description_sha256": "6a7db79dab1e7872"
+    },
+    "POST /create-image-pro-flash": {
+      "operation_id": "create_image_pro_flash",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "422"
+      ],
+      "request_sha256": "f35f55237ede4da7",
+      "description_sha256": "ea879f0e95ee8d59"
+    },
+    "POST /create-isometric-tile": {
+      "operation_id": "generate_isometric_tile_create_isometric_tile_post",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "202",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "c6beb668e44e6df7",
+      "description_sha256": "f291d0ad6724de05"
+    },
+    "POST /create-object-pro-flash": {
+      "operation_id": "create_object_pro_flash",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "422"
+      ],
+      "request_sha256": "1201c1eb6fbe80ef",
+      "description_sha256": "9b75407a0e573dce"
+    },
+    "POST /create-tiles-pro": {
+      "operation_id": "create_tiles_pro_create_tiles_pro_post",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "5533e720abf85eb3",
+      "description_sha256": "530e65802ec3ea6c"
+    },
+    "POST /create-tileset": {
+      "operation_id": "generate_tileset_create_tileset_post",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "202",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "766d7da98b4a4f38",
+      "description_sha256": "0dcb277172aa3360"
+    },
+    "POST /create-tileset-sidescroller": {
+      "operation_id": "generate_tileset_sidescroller_create_tileset_sidescroller_post",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "d75e13e5091c936e",
+      "description_sha256": "cf978404fa9a7a9b"
+    },
+    "POST /create-ui-asset": {
+      "operation_id": "create_ui_asset_create_ui_asset_post",
+      "tags": [
+        "Game UI"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "e7dc6f3fa3704c21",
+      "description_sha256": "112ea042997862c3"
+    },
+    "POST /edit-animation-v2": {
+      "operation_id": "edit_animation_v2_edit_animation_v2_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "2a7908cb53c22b6a",
+      "description_sha256": "844874ce4b5fd101"
+    },
+    "POST /edit-image": {
+      "operation_id": "edit_image_edit_image_post",
+      "tags": [
+        "Edit"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "ea5164c0d0117ce1",
+      "description_sha256": "1d691224e70ae6f9"
+    },
+    "POST /edit-image-pixen": {
+      "operation_id": "edit_image_pixen_edit_image_pixen_post",
+      "tags": [
+        "Edit"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "400",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "0c32fed0a7f0749b",
+      "description_sha256": "a6a4b2931d0fd7bf"
+    },
+    "POST /edit-image-pro-flash": {
+      "operation_id": "edit_image_pro_flash",
+      "tags": [
+        "Edit"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "422"
+      ],
+      "request_sha256": "1d06e1a19790f048",
+      "description_sha256": "790050658682f97b"
+    },
+    "POST /edit-images-v2": {
+      "operation_id": "edit_images_v2_edit_images_v2_post",
+      "tags": [
+        "Edit"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "f66cff02dc9e726f",
+      "description_sha256": "2b3d8c93baf8cd78"
+    },
+    "POST /enhance-animation-v3-prompt": {
+      "operation_id": "enhance_animation_v3_prompt_enhance_animation_v3_prompt_post",
+      "tags": [
+        "Enhance Prompt"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422"
+      ],
+      "request_sha256": "4071ad0b9d2b0c9f",
+      "description_sha256": "5e1fcd6b4aee5be2"
+    },
+    "POST /enhance-character-v3-prompt": {
+      "operation_id": "enhance_character_v3_prompt_enhance_character_v3_prompt_post",
+      "tags": [
+        "Enhance Prompt"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422"
+      ],
+      "request_sha256": "8862617f8a813768",
+      "description_sha256": "1280c8dbbc8c98cd"
+    },
+    "POST /enhance-pixen-prompt": {
+      "operation_id": "enhance_pixen_prompt_enhance_pixen_prompt_post",
+      "tags": [
+        "Enhance Prompt"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422"
+      ],
+      "request_sha256": "98c535e7c5ed366e",
+      "description_sha256": "d6b0101787d7b7ab"
+    },
+    "POST /estimate-skeleton": {
+      "operation_id": "estimate_skeleton_estimate_skeleton_post",
+      "tags": [
+        "Skeleton Animation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "56bbb02be05becba",
+      "description_sha256": "364cb1879842b128"
+    },
+    "POST /generate-8-rotations-v2": {
+      "operation_id": "generate_8_rotations_v2_generate_8_rotations_v2_post",
+      "tags": [
+        "Rotate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "aebe778937d11860",
+      "description_sha256": "5c62816fc618ae82"
+    },
+    "POST /generate-8-rotations-v3": {
+      "operation_id": "generate_8_rotations_v3_generate_8_rotations_v3_post",
+      "tags": [
+        "Rotate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "7ddfa86f05ce5096",
+      "description_sha256": "dac39a6dd335dd32"
+    },
+    "POST /generate-font-pro": {
+      "operation_id": "generate_font_pro_generate_font_pro_post",
+      "tags": [
+        "Fonts"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "7fe6fcdf1845a88d",
+      "description_sha256": "4d443e93b0b9a3e5"
+    },
+    "GET /generate-font-pro/{job_id}": {
+      "operation_id": "get_font_generate_font_pro__job_id__get",
+      "tags": [
+        "Fonts"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "410",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "e3b0c44298fc1c14"
+    },
+    "POST /generate-image-v2": {
+      "operation_id": "generate_image_v2_generate_image_v2_post",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "553d48701162f844",
+      "description_sha256": "6da421859014e3dc"
+    },
+    "POST /generate-ui-v2": {
+      "operation_id": "generate_ui_v2_generate_ui_v2_post",
+      "tags": [
+        "Game UI"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "ed6feec8df5a9483",
+      "description_sha256": "c2df8ee359ee19a3"
+    },
+    "POST /generate-with-style-v2": {
+      "operation_id": "generate_with_style_v2_generate_with_style_v2_post",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "3c248c9e5ea18874",
+      "description_sha256": "334776d6d34b4a36"
+    },
+    "POST /image-to-pixelart": {
+      "operation_id": "image_to_pixelart_image_to_pixelart_post",
+      "tags": [
+        "Image to Pixel Art"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "529d34b06d6c78d0",
+      "description_sha256": "3437564732bb824e"
+    },
+    "POST /image-to-pixelart-pro": {
+      "operation_id": "image_to_pixelart_pro_image_to_pixelart_pro_post",
+      "tags": [
+        "Image to Pixel Art"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "b07a613229b0f40e",
+      "description_sha256": "fd78d862e47b4f37"
+    },
+    "POST /image-to-pixelart-pro-flash": {
+      "operation_id": "image_to_pixelart_pro_flash",
+      "tags": [
+        "Image to Pixel Art"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "422"
+      ],
+      "request_sha256": "2a0a98fed6af8bf2",
+      "description_sha256": "93eb1d0826ad996f"
+    },
+    "POST /image-to-text": {
+      "operation_id": "image_to_text_endpoint_image_to_text_post",
+      "tags": [
+        "Image to Text"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "503"
+      ],
+      "request_sha256": "cc418b2474342bc8",
+      "description_sha256": "b01f56ff72cafda8"
+    },
+    "POST /inpaint": {
+      "operation_id": "generate_inpainting_inpaint_post",
+      "tags": [
+        "Inpaint"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "88f3158d292669f9",
+      "description_sha256": "0f452ceb9f813473"
+    },
+    "POST /inpaint-image-pro-flash": {
+      "operation_id": "inpaint_image_pro_flash",
+      "tags": [
+        "Inpaint"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "422"
+      ],
+      "request_sha256": "d068055a832ba57d",
+      "description_sha256": "5d3e4ca6cb9cb9d7"
+    },
+    "POST /inpaint-v3": {
+      "operation_id": "inpaint_v3_inpaint_v3_post",
+      "tags": [
+        "Inpaint"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "e9a9cebb98c39b1c",
+      "description_sha256": "59bf830b70af394e"
+    },
+    "POST /interpolation-v2": {
+      "operation_id": "interpolation_v2_interpolation_v2_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "4b5ae59ee7b25090",
+      "description_sha256": "21f3a5ec95766617"
+    },
+    "GET /isometric-tiles": {
+      "operation_id": "list_isometric_tiles_isometric_tiles_get",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "6781255c992a8df4"
+    },
+    "GET /isometric-tiles/{tile_id}": {
+      "operation_id": "get_isometric_tile_isometric_tiles__tile_id__get",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "2b520d4b6a7ebe64"
+    },
+    "DELETE /isometric-tiles/{tile_id}": {
+      "operation_id": "delete_isometric_tile_isometric_tiles__tile_id__delete",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "25df1f055adccfab"
+    },
+    "POST /lip-sync": {
+      "operation_id": "get_lip_sync_lip_sync_post",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "c574de2b71ce9a35",
+      "description_sha256": "0f7b679eeb6539ba"
+    },
+    "GET /llms.txt": {
+      "operation_id": "get_llms_txt_llms_txt_get",
+      "tags": [
+        "Documentation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "23e7ed586e116cd3"
+    },
+    "POST /map-objects": {
+      "operation_id": "create_map_object_map_objects_post",
+      "tags": [
+        "Map Objects"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "7032b8ad7127e2a8",
+      "description_sha256": "3e7694b4166b0956"
+    },
+    "GET /map-objects/{object_id}": {
+      "operation_id": "get_map_object_map_objects__object_id__get",
+      "tags": [
+        "Map Objects"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "410",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "1d83d445e6cfa1a0"
+    },
+    "POST /normal-map": {
+      "operation_id": "normal_map_normal_map_post",
+      "tags": [
+        "Cleanup"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "400",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "aa866aa26f4e58c4",
+      "description_sha256": "a041bd8a0e16b1f9"
+    },
+    "GET /objects": {
+      "operation_id": "list_objects_objects_get",
+      "tags": [
+        "Object Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "d2cc82b689908bef"
+    },
+    "GET /objects/{object_id}": {
+      "operation_id": "get_object_objects__object_id__get",
+      "tags": [
+        "Object Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "9b40f67c706e9e7d"
+    },
+    "DELETE /objects/{object_id}": {
+      "operation_id": "delete_object_objects__object_id__delete",
+      "tags": [
+        "Object Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "ffcf046423469039"
+    },
+    "POST /objects/{object_id}/animations": {
+      "operation_id": "animate_object_objects__object_id__animations_post",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "402",
+        "404",
+        "409",
+        "422",
+        "429"
+      ],
+      "request_sha256": "b86e97fba5a7d1d0",
+      "description_sha256": "3842eba474da9532"
+    },
+    "DELETE /objects/{object_id}/animations": {
+      "operation_id": "delete_object_animations_objects__object_id__animations_delete",
+      "tags": [
+        "Object Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "409",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "ec74189240cb5d4d"
+    },
+    "POST /objects/{object_id}/dismiss-review": {
+      "operation_id": "dismiss_review_objects__object_id__dismiss_review_post",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "e3b0c44298fc1c14"
+    },
+    "POST /objects/{object_id}/select-frames": {
+      "operation_id": "select_object_frames_objects__object_id__select_frames_post",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "ef9c245d2fa882fe",
+      "description_sha256": "e3b0c44298fc1c14"
+    },
+    "GET /objects/{object_id}/spritesheet": {
+      "operation_id": "download_object_spritesheet_objects__object_id__spritesheet_get",
+      "tags": [
+        "Object Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "5384d080322cd76a"
+    },
+    "POST /objects/{object_id}/states": {
+      "operation_id": "create_object_state_objects__object_id__states_post",
+      "tags": [
+        "Object Creation"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "402",
+        "404",
+        "422",
+        "429"
+      ],
+      "request_sha256": "36aaccf9faa1cba3",
+      "description_sha256": "ab497dda15792459"
+    },
+    "PATCH /objects/{object_id}/tags": {
+      "operation_id": "update_object_tags_objects__object_id__tags_patch",
+      "tags": [
+        "Object Library"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "390f702cf486cfb4",
+      "description_sha256": "c2fb95667eff4425"
+    },
+    "POST /portrait-character-pro": {
+      "operation_id": "portrait_character_pro_portrait_character_pro_post",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "400",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "ff9f5ca6e19926ac",
+      "description_sha256": "4e70e0755a72d989"
+    },
+    "GET /portrait-character-pro/{job_id}": {
+      "operation_id": "get_portrait_character_portrait_character_pro__job_id__get",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "410",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "e3b0c44298fc1c14"
+    },
+    "GET /pro-flash/capabilities": {
+      "operation_id": "get_pro_flash_capabilities",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "65026e38a5f379f3"
+    },
+    "GET /pro-flash/cost": {
+      "operation_id": "get_pro_flash_cost",
+      "tags": [
+        "Create Image"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "23660256826cb8bb"
+    },
+    "POST /reduce-colors": {
+      "operation_id": "reduce_colors_endpoint_reduce_colors_post",
+      "tags": [
+        "Cleanup"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "a4518c65a59ec0eb",
+      "description_sha256": "57559e0ff2595028"
+    },
+    "POST /remove-background": {
+      "operation_id": "remove_background_endpoint_remove_background_post",
+      "tags": [
+        "Cleanup"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "eef1d28d0db69d85",
+      "description_sha256": "65e5e6cf91ca3a74"
+    },
+    "POST /resize": {
+      "operation_id": "resize_image_resize_post",
+      "tags": [
+        "Cleanup"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "25c7d04a3b112cd9",
+      "description_sha256": "c16e2ba166b1bf1d"
+    },
+    "POST /rotate": {
+      "operation_id": "generate_rotation_rotate_post",
+      "tags": [
+        "Rotate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "5dff3c67fd7fa202",
+      "description_sha256": "b49bfc9bbde13d1d"
+    },
+    "POST /talking-gif": {
+      "operation_id": "create_talking_gif_talking_gif_post",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "19c738396ed1ad0c",
+      "description_sha256": "59338d25cab6a123"
+    },
+    "GET /tiles-pro": {
+      "operation_id": "list_tiles_pro_tiles_pro_get",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "daeca4fde5a453e7"
+    },
+    "GET /tiles-pro/{tile_id}": {
+      "operation_id": "get_tiles_pro_tiles_pro__tile_id__get",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "f33c4972edfa0af7"
+    },
+    "DELETE /tiles-pro/{tile_id}": {
+      "operation_id": "delete_tiles_pro_tiles_pro__tile_id__delete",
+      "tags": [
+        "Tiles"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "409",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "de709c589814d0bf"
+    },
+    "GET /tilesets": {
+      "operation_id": "list_tilesets_tilesets_get",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "a4552e0374603b61"
+    },
+    "POST /tilesets": {
+      "operation_id": "generate_tileset_tilesets_post",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "766d7da98b4a4f38",
+      "description_sha256": "7bc74b21018b32cf"
+    },
+    "GET /tilesets-sidescroller": {
+      "operation_id": "list_sidescroller_tilesets_tilesets_sidescroller_get",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "f1e2de4f9f086092"
+    },
+    "POST /tilesets-sidescroller": {
+      "operation_id": "generate_tileset_sidescroller_tilesets_sidescroller_post",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429",
+        "529"
+      ],
+      "request_sha256": "d75e13e5091c936e",
+      "description_sha256": "975b4a4eb151799a"
+    },
+    "GET /tilesets-sidescroller/{tileset_id}": {
+      "operation_id": "get_sidescroller_tileset_tilesets_sidescroller__tileset_id__get",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "9ff4719c40ae3acc"
+    },
+    "DELETE /tilesets-sidescroller/{tileset_id}": {
+      "operation_id": "delete_sidescroller_tileset_tilesets_sidescroller__tileset_id__delete",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "f9309a18f295c57f"
+    },
+    "GET /tilesets/{tileset_id}": {
+      "operation_id": "get_tileset_tilesets__tileset_id__get",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422",
+        "423"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "848e314a1728555d"
+    },
+    "DELETE /tilesets/{tileset_id}": {
+      "operation_id": "delete_topdown_tileset_tilesets__tileset_id__delete",
+      "tags": [
+        "Tilesets"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "70ba426463662a22"
+    },
+    "POST /transfer-outfit-v2": {
+      "operation_id": "transfer_outfit_v2_transfer_outfit_v2_post",
+      "tags": [
+        "Animate"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "f60f3b21a10fba8d",
+      "description_sha256": "16c15cb66544a06c"
+    },
+    "GET /ui-assets": {
+      "operation_id": "list_ui_assets_ui_assets_get",
+      "tags": [
+        "Game UI"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "e00da037ff37f173"
+    },
+    "GET /ui-assets/{ui_asset_id}": {
+      "operation_id": "get_ui_asset_ui_assets__ui_asset_id__get",
+      "tags": [
+        "Game UI"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "4e98439558357cec"
+    },
+    "DELETE /ui-assets/{ui_asset_id}": {
+      "operation_id": "delete_ui_asset_ui_assets__ui_asset_id__delete",
+      "tags": [
+        "Game UI"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "66025e27f2478e6c"
+    },
+    "POST /unzoom": {
+      "operation_id": "unzoom_endpoint_unzoom_post",
+      "tags": [
+        "Cleanup"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "402",
+        "422",
+        "429"
+      ],
+      "request_sha256": "6125ce2fa2ce000d",
+      "description_sha256": "bd95f343f87a947e"
+    },
+    "POST /uploads": {
+      "operation_id": "create_upload_uploads_post",
+      "tags": [
+        "Uploads"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "422"
+      ],
+      "request_sha256": "6fa940bbdf54effd",
+      "description_sha256": "13429d75bf340213"
+    },
+    "POST /uploads/{ticket}": {
+      "operation_id": "create_upload_with_ticket_uploads__ticket__post",
+      "tags": [
+        "Uploads"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "422"
+      ],
+      "request_sha256": "6fa940bbdf54effd",
+      "description_sha256": "98c1207f6ca790f6"
+    },
+    "POST /vfx": {
+      "operation_id": "create_vfx_vfx_post",
+      "tags": [
+        "VFX"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "400",
+        "401",
+        "402",
+        "422",
+        "429",
+        "503"
+      ],
+      "request_sha256": "ee2ceecb7a35eb33",
+      "description_sha256": "130c96ad1a7330df"
+    },
+    "POST /vocal-animation": {
+      "operation_id": "create_vocal_animation_vocal_animation_post",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "202",
+        "400",
+        "401",
+        "402",
+        "403",
+        "404",
+        "422",
+        "429"
+      ],
+      "request_sha256": "ea6f858f3053d133",
+      "description_sha256": "f1f0e5c841b405a3"
+    },
+    "GET /vocal-animation/{job_id}": {
+      "operation_id": "get_vocal_animation_vocal_animation__job_id__get",
+      "tags": [
+        "Portraits & Voice"
+      ],
+      "deprecated": false,
+      "responses": [
+        "200",
+        "401",
+        "404",
+        "410",
+        "422"
+      ],
+      "request_sha256": "44136fa355b3678a",
+      "description_sha256": "cc05c30c53cb6ed6"
+    }
+  },
+  "limits": [
+    "Estrutura e textos publicos; o comportamento real do servidor nao foi exercido.",
+    "Limites so em prosa podem escapar ao extrator; ver image_facts antes de confiar."
+  ],
+  "diff": {
+    "previous_sha256": "b6dd212ca4e7f60c9eb93e776303a92f6e0bb4f794cf3a2bf49099e9a00e8834",
+    "added": [],
+    "removed": [],
+    "request_changed": [],
+    "description_changed": [
+      "POST /create-tiles-pro"
+    ],
+    "facts_changed": []
+  }
+}

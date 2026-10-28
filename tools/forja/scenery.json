@@ -1,0 +1,389 @@
+{
+ "_comment": "Cenarios e construcoes na Forja (FORJA-09, ADR 0096). Nenhum numero do mundo nem dos atores e escrito aqui: a regua le-os dos ficheiros que o jogo usa (sources). As metricas sao fatores sobre essa regua, cada uma com a origem; as que dizem 'proposta' esperam pelo dono (Q-292). Pesquisa: docs/art/research/2026-10-28-forja-cenarios/.",
+ "schema": "forja.scenery-data/1",
+ "world": {
+  "project": "project.godot",
+  "owner_manifest": "art/export/scenery_owner/manifest.json",
+  "band": "src/sim/band.gd",
+  "parallax_speeds": "docs/art/NATIVE_SCENERY.md (ceu, nuvens, distancia, plano medio, marcos: 0,03125 / 0,07 / 0,125 / 0,25 / 0,5)"
+ },
+ "actors": {
+  "manifest": "art/export/royals/manifest.json",
+  "ruler": [
+   "royal_king",
+   "royal_archer",
+   "royal_shadow",
+   "royal_bard",
+   "royal_quiver",
+   "royal_squire",
+   "royal_nia"
+  ],
+  "excluded": {
+   "royal_dancer": "galeria: a Bailarina nao circula no mundo de jogo (RUNTIME_ART, CV-05)"
+  },
+  "origin": "medido: body_bounds do manifesto V15, escrito por tools/export_royals.py"
+ },
+ "metrics": [
+  {
+   "id": "door_clear_height",
+   "label": "vao livre de uma porta comum (altura)",
+   "base": "tallest",
+   "factor": [
+    1.1,
+    1.24
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "portas comuns medidas a 1,0-1,2x o ator (Stardew, Terraria; a porta real e 1,16x); abaixo de 1,05x parece apertada, acima de 1,3x o ator parece uma crianca (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "door_clear_width",
+   "label": "vao livre de uma porta comum (largura)",
+   "base": "door_clear_height",
+   "factor": [
+    0.4,
+    0.5
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "largura/altura 0,45-0,5 nas metricas reais e 3D; 32 px alinha com o tile (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "public_door_height",
+   "label": "porta publica: forja, armazem, portao (altura)",
+   "base": "tallest",
+   "factor": [
+    1.35,
+    1.6
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "portas publicas e monumentais medidas a 1,4-1,9x (Celeste, Kingdom Olympus, Hyper Light Drifter) (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "eave_height",
+   "label": "beiral de uma casa terrea (chao ao topo da parede)",
+   "base": "tallest",
+   "factor": [
+    1.35,
+    1.6
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "porta, verga e parede acima; o Empire comprime mais do que Kingdom (2,1x) e Celeste (2,8x) (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "ridge_height",
+   "label": "altura total de um edificio pequeno (cumeeira)",
+   "base": "tallest",
+   "factor": [
+    1.84,
+    2.1
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "beiral e um telhado 2:1 sobre 128 px; coerente com o edificio pequeno de ~120x130 da Asset Bible (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "window_sill",
+   "label": "peitoril da janela, acima do chao",
+   "base": "tallest",
+   "factor": [
+    0.55,
+    0.68
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "as cabecas das tropas cobrem so o terco de baixo da janela; a verga alinha com o topo da porta (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "window_height",
+   "label": "altura da janela",
+   "base": "tallest",
+   "factor": [
+    0.3,
+    0.44
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "minimo legivel de 8x10 px com moldura de 1 celula; maior compete com a porta (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "railing_height",
+   "label": "guarda, corrimao, balaustrada",
+   "base": "tallest",
+   "factor": [
+    0.49,
+    0.62
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "a altura da anca: a guarda nao tapa o rosto de quem passa atras (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "step_riser",
+   "label": "espelho de um degrau",
+   "px": [
+    6,
+    8
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "3-4 celulas; o real e o Source dao 0,10-0,11x o ator (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "barrel_height",
+   "label": "barril, caixote, bigorna (prop de trabalho)",
+   "base": "tallest",
+   "factor": [
+    0.43,
+    0.56
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "trabalho a altura da mao; o barril ~0,5x o rei (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  },
+  {
+   "id": "lantern_height",
+   "label": "centro de uma lanterna de parede",
+   "base": "tallest",
+   "factor": [
+    1.23,
+    1.36
+   ],
+   "origin": "proposta FORJA-09 (Q-292)",
+   "why": "acima da verga e fora das cabecas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))"
+  }
+ ],
+ "assets": {
+  "building": {
+   "contract": "building",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_center",
+   "ground": "surface",
+   "repeat": [],
+   "openings": true,
+   "en": "side-elevation building standing on the walk line"
+  },
+  "wall_segment": {
+   "contract": "building",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_center",
+   "ground": "surface",
+   "repeat": [
+    "x"
+   ],
+   "connectors": true,
+   "en": "repeatable side-elevation wall segment standing on the walk line"
+  },
+  "prop": {
+   "contract": "prop",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_center",
+   "ground": "surface",
+   "repeat": [],
+   "en": "side-view scenery prop standing on the walk line"
+  },
+  "tree": {
+   "contract": "prop",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_center",
+   "ground": "surface",
+   "repeat": [],
+   "en": "side-view tree with readable anatomy: trunk, structural branches, canopy masses, sky holes and contact roots"
+  },
+  "terrain_strip": {
+   "contract": "tile",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "top_left",
+   "ground": "surface",
+   "repeat": [
+    "x"
+   ],
+   "connectors": true,
+   "en": "repeatable side-view terrain strip: walkable top surface over a cut face of soil"
+  },
+  "plane_far": {
+   "contract": "parallax_far",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_left",
+   "ground": "horizon",
+   "repeat": [
+    "x"
+   ],
+   "en": "far parallax silhouette band, one flat value"
+  },
+  "plane_mid": {
+   "contract": "parallax_mid",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_left",
+   "ground": "surface",
+   "repeat": [
+    "x"
+   ],
+   "en": "mid parallax silhouette band, two flat values"
+  },
+  "foreground": {
+   "contract": "foreground",
+   "background": "transparent",
+   "projection": "elevation",
+   "anchor": "base_left",
+   "ground": "bottom",
+   "repeat": [
+    "x"
+   ],
+   "en": "foreground silhouette band, two flat values"
+  }
+ },
+ "roles": {
+  "asset_concept": {
+   "label": "conceito do asset",
+   "carries": "silhouette, proportions, parts and materials",
+   "forbids": "its resolution, brushwork and accidental defects",
+   "en": "asset concept"
+  },
+  "composition": {
+   "label": "composicao da cena",
+   "carries": "the relation of masses, the walk line, landmarks and open intervals",
+   "forbids": "collision, functional positions and any building it shows",
+   "en": "scene composition"
+  },
+  "style_master": {
+   "label": "mestre de estilo",
+   "carries": "cluster size, edges, density and outline language",
+   "forbids": "its subject or its architecture",
+   "en": "style master"
+  },
+  "material": {
+   "label": "material",
+   "carries": "how timber, stone, roof tile, foliage or water behave",
+   "forbids": "spreading that pattern over the whole scene",
+   "en": "material reference"
+  },
+  "junction": {
+   "label": "contexto de juncao",
+   "carries": "the neighbours, supports and continuity at the joint",
+   "forbids": "changing the neighbour outside the authorised region",
+   "en": "junction context"
+  },
+  "actor_ruler": {
+   "label": "regua de atores",
+   "carries": "the visible body, weapon, support and clearance of the real actors",
+   "forbids": "shrinking the actors so the building fits",
+   "en": "actor ruler"
+  }
+ },
+ "states": {
+  "construction": [
+   "empty",
+   "scaffold",
+   "building",
+   "done",
+   "damaged",
+   "ruin"
+  ],
+  "conditions": [
+   "night",
+   "snow",
+   "rain",
+   "autumn",
+   "active"
+  ],
+  "static": {
+   "building": "body, supports, openings and roof stay; furnace, smoke and activity may vary",
+   "tree": "trunk, branches and roots stay; foliage and small linked motion may vary",
+   "water": "level and banks stay; reflection, current and sparkle may vary",
+   "construction": "origin and the volume of the planned level stay; exposed materials and progress marks vary",
+   "environment": "geology and landmarks stay; light, weather and condition vegetation vary"
+  }
+ },
+ "signals": {
+  "roof_pitch": "the slope and the long low roof line",
+  "eave_thickness": "a thick eave with a shadow under it, separating roof from wall",
+  "roof_trim": "the ridge and gable trim that carry the people's identity",
+  "door_opening": "a doorway an actor can use: dark, clear, sill on the walk line",
+  "chimney_join": "the chimney joined to the roof and to its base, offset from the centre",
+  "supports": "posts, braces and beams that carry the roof down to the base",
+  "foundation_anchor": "a plinth or base that sits on the ground, no floating, no burying",
+  "work_area": "the work bay and tools that tell the craft",
+  "canopy_silhouette": "the canopy outline with its holes of sky",
+  "trunk_anatomy": "trunk, structural branches and the direction of growth",
+  "contact_roots": "roots and grass that tie the base to the ground"
+ },
+ "materials": {
+  "timber": {
+   "motifs": "long planks along the grain, end caps, knots, joints and braces",
+   "focus": "joints and edges facing the light"
+  },
+  "stone": {
+   "motifs": "a lit face, a side face, joints, cracks and protruding blocks",
+   "focus": "corners, supports, openings and wear"
+  },
+  "roof_tile": {
+   "motifs": "overlapping rows, a broken piece, ridge and eave",
+   "focus": "silhouette, overlap and where water runs"
+  },
+  "thatch": {
+   "motifs": "bundled layers, a combed eave, ridge binding",
+   "focus": "the eave edge and the ridge"
+  },
+  "soil": {
+   "motifs": "strata masses, dark pockets and roots",
+   "focus": "changes of plane and the limit of a cavity"
+  },
+  "foliage": {
+   "motifs": "a dark shadow pocket, connected mid-value leaf masses, few lit edge clusters, sky holes",
+   "focus": "the lit edge and the holes"
+  },
+  "water": {
+   "motifs": "level line, broken horizontal reflections, current lines",
+   "focus": "the bank and the reflected masses"
+  },
+  "brick": {
+   "motifs": "courses, an arch, soot over the furnace mouth",
+   "focus": "the arch and where heat marks it"
+  },
+  "metal": {
+   "motifs": "plates, rivets, a bright rim",
+   "focus": "the working edge"
+  }
+ },
+ "families": {
+  "enramados": {
+   "nature": "broad trunks, canopies and clearings",
+   "architecture": "structural timber, damp stone, roots around the supports"
+  },
+  "bruma": {
+   "nature": "hanging canopies and wet margins",
+   "architecture": "raised structures, reeds, contact with water"
+  },
+  "horta": {
+   "nature": "fields in bands and fences",
+   "architecture": "shelters, stalls and grouped farm tools"
+  },
+  "portuarios": {
+   "nature": "open coast, rock and wind-bent plants",
+   "architecture": "quays, warehouses, salt, ropes and mooring gear"
+  },
+  "fenda": {
+   "nature": "strata, large faces and openings",
+   "architecture": "supports fixed to the rock, entrance trims"
+  },
+  "fornalha": {
+   "nature": "basalt, fractures and void",
+   "architecture": "brick and metal near the heat, localized soot"
+  },
+  "geada": {
+   "nature": "snow accumulation and exposed trees",
+   "architecture": "eaves, roofs and access built against the weather"
+  },
+  "sobraiz": {
+   "nature": "root arches and alcoves",
+   "architecture": "compact structures with organic, recognizable silhouettes"
+  }
+ },
+ "roof": {
+  "default_pitch": "2:1 (26,6 graus), degraus de 2x1 celulas",
+  "steep_pitch": "1:1 (45 graus) para colmo, torres e frontoes",
+  "spire": "1:2 so em pinaculos",
+  "origin": "proposta FORJA-09 (Q-292); so passos regulares evitam escadas tortas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))",
+  "en": "Roof: a regular pitch of about 2:1 (rise 1 cell for every 2 cells of run) built from equal steps; 1:1 only for thatch, towers or steep gables; no wobbly or irregular roof lines."
+ }
+}

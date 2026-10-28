@@ -32,7 +32,7 @@ from PIL import Image
 from . import Call, Result, http, image_refs
 
 BASE = "https://api.pixellab.ai/v2"
-SPEC_SHA256 = "b6dd212ca4e7f60c9eb93e776303a92f6e0bb4f794cf3a2bf49099e9a00e8834"
+SPEC_SHA256 = "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
 OUTLINES = ("single color black outline", "single color outline", "selective outline", "lineless")
 SHADINGS = ("flat shading", "basic shading", "medium shading", "detailed shading", "highly detailed shading")
 DETAILS = ("low detail", "medium detail", "highly detailed")

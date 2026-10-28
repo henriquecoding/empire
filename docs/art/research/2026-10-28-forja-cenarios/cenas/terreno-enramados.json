@@ -1,0 +1,41 @@
+{
+ "schema": "forja.scene/1",
+ "id": "terreno_enramados",
+ "asset": "terrain_strip",
+ "people": "enramados",
+ "subject": "a repeatable strip of Enramados ground seen from the side: a walkable grass lip on top, a cut face of dark soil with strata, roots and a few embedded stones, ending at the lower level",
+ "extent_px": [
+  256,
+  100
+ ],
+ "signals": [
+  "contact_roots"
+ ],
+ "materials": [
+  "soil",
+  "foliage",
+  "stone"
+ ],
+ "states": [
+  "done"
+ ],
+ "conditions": [
+  "autumn",
+  "snow"
+ ],
+ "references": [
+  {
+   "role": "material",
+   "file": "../referencias/enramados-referencia.png",
+   "crop": [
+    0,
+    600,
+    1672,
+    941
+   ],
+   "pixels_sha256": "e92369325c62615a80b2d572348b9b05d42cb8794bdcd28e6873621e1fd2ec81",
+   "note": "o corte de terra com raizes e a cave de pedra"
+  }
+ ],
+ "palette": "empire"
+}

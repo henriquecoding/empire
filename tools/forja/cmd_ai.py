@@ -85,6 +85,12 @@ def do_prompt(args) -> dict:
 
 def _plan(args) -> plan_mod.Plan:
     opt = lambda name, default=None: getattr(args, name, default)  # noqa: E731 (chamadores antigos da API)
+    if opt("scene"):  # uma cena ou construcao: o contrato forja.scene/1 diz o assunto e a extensao (FORJA-09)
+        from . import scene_plan
+        return scene_plan.make(args.backend, args.scene, _palette(args, "building"), args.model, opt("guides", "auto"),
+                               opt("image_size"), opt("seed"), refs.load(opt("refs")) if opt("refs") else None)
+    if not args.subject:
+        raise ValueError("diga o assunto, ou --scene com um contrato forja.scene/1")
     given = ([("identity", r) for r in args.reference or []] + [("concept", r) for r in opt("concept") or []]
              + [("style", r) for r in opt("style_reference") or []])
     return plan_mod.make(args.backend, args.subject, args.kind, sheetforge.parse_tags(args.tags), args.facing,
@@ -99,9 +105,8 @@ def do_plan(args) -> dict:
     """O plano validado e escrito, sem rede: o que se pediria, a quem, com que imagens e porque."""
     p = _plan(args)
     path = p.write(Path(args.out) / "plan")
-    return {"ok": p.ok, "plan": str(path), "errors": p.data["errors"], "notes": p.data["notes"],
-            "request": p.data["request"], "attachments": p.data["attachments"], "expect": p.data["expect"],
-            "advice": p.data["advice"], "network": False}
+    keys = ("errors", "notes", "request", "attachments", "expect", "advice")
+    return {"ok": p.ok, "plan": str(path), **{k: p.data[k] for k in keys}, "network": False}
 
 
 def _direct_call(args, prompt: str, refs: list[bytes]):
@@ -153,9 +158,7 @@ def do_auto(args, transport=None, **kw) -> dict:
 
 def do_prova(args) -> dict:
     from . import prova
-    if args.bench:
-        return prova.bench(args.bench)
-    return prova.run(Path(args.out) if args.out else None)
+    return prova.bench(args.bench) if args.bench else prova.run(Path(args.out) if args.out else None)
 
 
 def do_mcp(args) -> dict:
@@ -165,7 +168,8 @@ def do_mcp(args) -> dict:
 
 
 def _planned(p) -> None:
-    p.add_argument("subject")
+    p.add_argument("subject", nargs="?", help="o que desenhar (com --scene, o assunto vem do contrato)")
+    p.add_argument("--scene", help="contrato forja.scene/1 de uma cena ou construcao (FORJA-09)")
     p.add_argument("-o", "--out", required=True)
     p.add_argument("--backend", default="openai", choices=BACKENDS)
     p.add_argument("--kind", default="character_s2", choices=contracts.kinds())

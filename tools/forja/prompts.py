@@ -70,13 +70,21 @@ OPPOSITE = {"right": r"facing left|looking left|virad[oa] para a esquerda|olhand
             "left": r"facing right|looking right|virad[oa] para a direita|olhando para a direita"}
 
 
-def camera_conflicts(text: str, facing: str) -> list[str]:
-    """O que um texto (o assunto, ou o prompt expandido por um gerador) contradiz na camara do Empire:
-    perfil estrito, virado para `facing`. A camara resolve-se num campo so, antes de escrever o prompt."""
+PERSPECTIVE = r"\bperspective\b|vanishing point|ponto de fuga|\bperspetiva\b|\bperspectiva\b"
+
+
+def camera_conflicts(text: str, facing: str, projection: str = "actor") -> list[str]:
+    """O que um texto (o assunto, ou o prompt expandido por um gerador) contradiz na camara do Empire. Um ator: perfil
+    estrito, virado para `facing`. Uma construcao (`elevation`, FORJA-09): a fachada vista de frente E a vista lateral
+    do mundo, e nao tem lado; contradizem-na a vista de cima, a isometrica, os tres quartos e a perspetiva."""
     low = text.lower()
-    out = [f"pede vista {name}, mas a camara e de perfil estrito" for name, rx in VIEWS if re.search(rx, low)]
-    if re.search(OPPOSITE[facing], low):
+    views = VIEWS if projection == "actor" else [v for v in VIEWS if v[0] in ("tres quartos", "de cima")]
+    camera = "de perfil estrito" if projection == "actor" else "a elevacao lateral do mundo"
+    out = [f"pede vista {name}, mas a camara e {camera}" for name, rx in views if re.search(rx, low)]
+    if projection == "actor" and re.search(OPPOSITE[facing], low):
         out.append(f"vira a figura ao contrario de --facing {facing}")
+    if projection != "actor" and re.search(PERSPECTIVE, low):
+        out.append("pede perspetiva, mas a projecao e a elevacao lateral (sem ponto de fuga)")
     return out
 
 
@@ -89,9 +97,13 @@ def default_attached(reference: bool | str, palette: Palette | None, listed: int
 
 def geometry(kind: str, tags: list[tuple[str, int]] | None, target: str,
              cells: tuple[int, int] | None = None) -> dict:
-    """Grelha logica, escala e tamanho de imagem para um gerador de lados livres (gpt-image) ou generico."""
+    """Grelha logica, escala e tamanho de imagem para um gerador de lados livres (gpt-image) ou generico. Um contrato
+    sem tela (edificio, prop, planos) nao recebe 64x64 por omissao (FORJA-09): a extensao diz-se (`forja cena`)."""
     c = contracts.get(kind)
-    canvas = cells or (tuple(v // c.cluster for v in c.canvas) if c.canvas else (64, 64))
+    canvas = cells or (tuple(v // c.cluster for v in c.canvas) if c.canvas else None)
+    if canvas is None:
+        raise ValueError(f"{kind}: o contrato nao tem tela e a extensao nao foi dita; descreva a cena num contrato "
+                         "forja.scene/1 (forja cena) ou diga as celulas")
     frames = sum(n for _, n in tags) if tags else 1
     cols, rows = layout_for(frames)
     logical = (canvas[0] * cols, canvas[1] * rows)

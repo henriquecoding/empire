@@ -1,0 +1,506 @@
+[
+  {
+    "id": "C01",
+    "url": "https://api.pixellab.ai/v2/openapi.json",
+    "title": "Pixel Lab API v2 — OpenAPI specification (version 'dev')",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Especificação v2: 102 caminhos/113 operações, SHA-256 ae1f76eb…; limites e parâmetros de generate-image-v2, pixen, pixflux, bitforge, pro-flash, tilesets (top-down e sidescroller), tiles-pro, map-objects, objects/states, inpaint(-v3/-pro-flash), edit(-pixen/-v2), rotate, animate-v3, unzoom, correct, reduce-colors; Pro Flash: 'same seed does not promise the same image'; inpaint pro flash preserva RGBA fora da máscara.",
+    "kind": "official-spec"
+  },
+  {
+    "id": "C02",
+    "url": "https://api.pixellab.ai/v1/openapi.json",
+    "title": "Pixel Lab API v1 — OpenAPI specification",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "v1 com 8 operações (pixflux, bitforge, animate skeleton/text, rotate, inpaint, estimate-skeleton, balance); pixflux ≤400, bitforge/inpaint/rotate ≤200; SHA-256 eb7a18b1…",
+    "kind": "official-spec"
+  },
+  {
+    "id": "C03",
+    "url": "https://api.pixellab.ai/v2/llms.txt",
+    "title": "Pixel Lab API — llms.txt",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Índice dos endpoints por secção com marcação legacy; ligações para OpenAPI, SDKs, servidor MCP e guias.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C04",
+    "url": "https://api.pixellab.ai/mcp",
+    "title": "PixelLab MCP server — tools/list (103 ferramentas)",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Ferramentas MCP de ambiente: create_sidescroller_tileset com mode standard/pro e base_tile_id só em pro; custos (standard 1 geração, pro 15); map_object transparente até 40 000 px e inpainting ≤192²; object states 'SAME object in another condition'; inpaint_image congela fora da máscara; escadas de candidatos/custo do create_image_pro e recibo como fonte de verdade.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C05",
+    "url": "https://github.com/pixellab-code/pixellab-mcp",
+    "title": "pixellab-mcp — README",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "README lista só 4 ferramentas (create_character, animate_character, create_tileset, create_isometric_tile); desatualizado face ao servidor.",
+    "kind": "repo"
+  },
+  {
+    "id": "C06",
+    "url": "https://www.pixellab.ai/docs/tools/create-tileset",
+    "title": "Create tileset — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Top-down e sidescroller; tiles 16/24(beta, top-down)/32, pro 16/32/64; exporta Wang, dual-grid 15 e 3x3; custos standard 1–4, sidescroller 2–3, pro 10–25; falhas não são cobradas; Tier 1.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C07",
+    "url": "https://www.pixellab.ai/docs/tools/create-sl-image-pro",
+    "title": "Create S-XL image (Pro) — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Canvas 16 a 512² quadrado, ~¼ MP não quadrado: 576×464, 600×448, 632×424, 688×384, 792×336; aspeto mais próximo escolhido automaticamente; ≤4 referências + estilo + paleta; tabela de candidatos e gerações (10/15/25).",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C08",
+    "url": "https://www.pixellab.ai/docs/tools/create-tiles-pro",
+    "title": "Create tiles (Pro) — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Tipos tiles/paths/tileset/building; building só square top-down, isométrico, oblíquo; paredes 1–3 tiles; referências de estilo só para tiles independentes; 10–25 gerações.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C09",
+    "url": "https://www.pixellab.ai/docs/tools/create-map",
+    "title": "Create map (pixflux) — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Gera mapas em vista top-down ou sidescroller; canvas ≤200² (grátis), ≤320² (Tier 1), ≤400² (Tier 2+).",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C10",
+    "url": "https://www.pixellab.ai/docs/guides/map-tiles",
+    "title": "Creating maps (guide) — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Construção por secções sobrepostas com inpainting; 'The model can only see what is inside the selection when generating'; modelo treinado em tiles 16×16.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C11",
+    "url": "https://www.pixellab.ai/docs/tools/extend-map-v2",
+    "title": "Extend map (v2) — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Ferramenta experimental de extensão de mapa; canvas ≤180×180; Tier 2.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C12",
+    "url": "https://www.pixellab.ai/docs/tools/create-texture",
+    "title": "Create texture — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Texturas a partir de descrição para usar com o Create Tileset; sem menção a tileabilidade ou tamanhos; Tier 1.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C13",
+    "url": "https://www.pixellab.ai/docs/tools/consistent-style",
+    "title": "Create images from style references (Pro) — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Estilo a partir de referências; tabela de candidatos/gerações; máximo 512×512; mais referências semelhantes dão mais consistência, sem garantia.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C14",
+    "url": "https://pixellab.ai/select-interface",
+    "title": "Choose How You Want to Create — PixelLab",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Interfaces: Simple Creator, Character Creator, Map Workshop (Pixel Apprentice+), Pixelorama, extensão Aseprite, Game Builder, MCP, API.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C15",
+    "url": "https://www.pixellab.ai/docs/faq",
+    "title": "FAQ — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Subscrição; uso comercial e Steam permitidos; pede que não se treinem modelos com as imagens; não guardam imagens por omissão.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C16",
+    "url": "https://www.cutout.pro/learn/pixellab/",
+    "title": "PixelLab guide (terceiros) — preços",
+    "author": "cutout.pro",
+    "accessed": "2026-10-28",
+    "claim": "Preços de planos citados por terceiros (10/30/50 USD/mês, 1000/3000/6000 gerações); não confirmados em página oficial (lido via resultado de pesquisa).",
+    "kind": "third-party"
+  },
+  {
+    "id": "C17",
+    "url": "https://developers.openai.com/api/docs/guides/image-generation",
+    "title": "Image generation — OpenAI API guide",
+    "author": "OpenAI",
+    "accessed": "2026-10-28",
+    "claim": "Modelos gpt-image-2.5-sunburst/flare; tamanhos livres (múltiplos de 16, 1:3–3:1, ≤3840, 655 360–8 294 400 px, >2560×1440 experimental); transparência; máscara prompt-based na 1.ª imagem; input_fidelity a omitir no gpt-image-2; limitações de consistência e posição; gpt-image-1 desligado a 23/10/2026; preços por token.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C18",
+    "url": "https://developers.openai.com/api/reference/resources/images.md",
+    "title": "Images — OpenAI API reference",
+    "author": "OpenAI",
+    "accessed": "2026-10-28",
+    "claim": "Edição: até 16 imagens; background transparent suportado nos 2.5 e em preview no gpt-image-2; input_fidelity high/low no 1.5, low no 1-mini, omitir no gpt-image-2; tamanhos arbitrários até 3840×2160; qualidade xhigh/max nos 2.5; sem parâmetro seed.",
+    "kind": "official-spec"
+  },
+  {
+    "id": "C19",
+    "url": "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst",
+    "title": "GPT-Image-2.5 Sunburst — model page",
+    "author": "OpenAI",
+    "accessed": "2026-10-28",
+    "claim": "Snapshot gpt-image-2.5-sunburst-2026-09-08; endpoints generations, edits, batch; inpainting; preços 8/30 USD por M tokens (15 em batch); limites de taxa.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C20",
+    "url": "https://developers.openai.com/cookbook/examples/multimodal/image-gen-models-prompting-guide",
+    "title": "GPT image models prompting guide (cookbook, archived)",
+    "author": "OpenAI",
+    "accessed": "2026-10-28",
+    "claim": "Ordem cena→assunto→detalhes→restrições; 'change only X' + repetir lista a preservar; referências por índice e descrição; 'If layout matters, call out placement'; transparência em preview no gpt-image-2; >2560×1440 mais variável; data 21/04/2026.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C21",
+    "url": "https://developers.openai.com/cookbook/examples/multimodal/image-gen-1.5-prompting_guide",
+    "title": "gpt-image-1.5 prompting guide (cookbook, archived)",
+    "author": "OpenAI",
+    "accessed": "2026-10-28",
+    "claim": "Mesmas práticas para o 1.5; input_fidelity high para manter semelhança em edições; âncora de personagem reutilizável.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C22",
+    "url": "https://community.openai.com/t/gpt-image-1-input-fidelity/1317640",
+    "title": "GPT Image 1 Input Fidelity — OpenAI community",
+    "author": "OpenAI community",
+    "accessed": "2026-10-28",
+    "claim": "Discussão de 2025 sobre input_fidelity nas edições; com máscara e fidelidade alta o modelo desvia-se mais dentro da máscara (relato; lido via resultado de pesquisa).",
+    "kind": "community"
+  },
+  {
+    "id": "C23",
+    "url": "https://ai.google.dev/gemini-api/docs/image-generation",
+    "title": "Image generation with Gemini (Nano Banana) — Gemini API docs (updated 2026-10-26)",
+    "author": "Google",
+    "accessed": "2026-10-28",
+    "claim": "Modelos 2.1, 3.1 Flash, 3.1 Flash Lite, 3 Pro, 2.5 Flash; aspetos incl. 4:1 e 8:1; tabela de pixels por aspeto e tamanho (0.5K–4K); limites de referências (objetos/personagens/estilo, 14 no total); imagens de pensamento; SynthID; sem transparência nem seed documentadas.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C24",
+    "url": "https://cloud.google.com/blog/products/ai-machine-learning/ultimate-prompting-guide-for-nano-banana",
+    "title": "The ultimate Nano Banana prompting guide",
+    "author": "Khulan Davaajav, Hussain Chinoy (Google Cloud)",
+    "accessed": "2026-10-28",
+    "claim": "06/03/2026: moldura positiva ('empty street' em vez de 'no cars'); verbo forte; termos de câmara; fórmula referências + relação + cenário; até 14 referências; dizer o que fica igual.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C25",
+    "url": "https://dev.to/jenissimo/how-to-tame-your-ai-pixel-art-3pk5",
+    "title": "How to Tame Your AI Pixel Art",
+    "author": "Eugeniy Smirnov (jenissimo)",
+    "accessed": "2026-10-28",
+    "claim": "30/07/2025: método do unfake.js (Sobel, histograma de picos, alinhamento por deslocamento, Wu, dominante com margem 5%); falhas de grade, antialias, paleta; limites para imagens demasiado pictóricas.",
+    "kind": "practitioner"
+  },
+  {
+    "id": "C26",
+    "url": "https://pypi.org/project/unfake/",
+    "title": "unfake (PyPI)",
+    "author": "porta de unfake.js",
+    "accessed": "2026-10-28",
+    "claim": "Porta Python/Rust: deteção de escala runs-based e edge-aware, downscale por cor dominante, --no-snap, limpeza morph/jaggy (lido via resultado de pesquisa).",
+    "kind": "repo"
+  },
+  {
+    "id": "C27",
+    "url": "https://github.com/Hugo-Dz/spritefusion-pixel-snapper",
+    "title": "spritefusion-pixel-snapper",
+    "author": "Hugo Duprez",
+    "accessed": "2026-10-28",
+    "claim": "Encosta pixels a uma grade, paleta quantizada (16 por omissão) ou hex; tamanho de pixel auto ou entre 1 e metade do menor lado; CLI e WASM.",
+    "kind": "repo"
+  },
+  {
+    "id": "C28",
+    "url": "https://github.com/KennethJAllen/proper-pixel-art",
+    "title": "proper-pixel-art",
+    "author": "Kenneth J. Allen",
+    "accessed": "2026-10-28",
+    "claim": "Canny + fecho + Hough probabilístico + perfis de gradiente; malha com linhas em falta subdivididas; cor dominante ou paleta; funciona bem se já aproximadamente alinhado à grade.",
+    "kind": "repo"
+  },
+  {
+    "id": "C29",
+    "url": "https://repository.tudelft.nl/record/uuid:b3c91b18-d9e8-48e0-91ce-8afafd2439d8",
+    "title": "Pixel Fixer: Semi-Automated Techniques for Correcting Pixel Art (BSc thesis, 2025)",
+    "author": "Rares Bites (TU Delft)",
+    "accessed": "2026-10-28",
+    "claim": "Corrige banding e pillow-shading com regras artísticas e anotações; não é recuperação de grade (registo deu 503; descrição via resultado de pesquisa).",
+    "kind": "paper"
+  },
+  {
+    "id": "C30",
+    "url": "https://pyezo.itch.io/pixelfixer",
+    "title": "PixelFixer",
+    "author": "pyezo",
+    "accessed": "2026-10-28",
+    "claim": "Ferramenta Windows para reduzir pixel art gerada por IA; deteção de tamanho de pixel treinada em dados rotulados, tamanhos não inteiros; alinhamento manual só planeado.",
+    "kind": "tool"
+  },
+  {
+    "id": "C31",
+    "url": "https://astropulse.gitbook.io/retro-diffusion/aseprite-extension/retro-diffusion-scripts/k-centroid-resize-menu",
+    "title": "K-Centroid Resize Menu — Retro Diffusion docs",
+    "author": "Astropulse",
+    "accessed": "2026-10-28",
+    "claim": "Divide em tiles e escolhe a cor mais proeminente por k-means; 2 centroides por omissão; mais centroides, mais ruído.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C32",
+    "url": "https://github.com/Astropulse/K-Centroid-Aseprite",
+    "title": "K-Centroid-Aseprite",
+    "author": "Astropulse",
+    "accessed": "2026-10-28",
+    "claim": "Algoritmo de redução k-means em Lua para Aseprite, MIT; lento em reduções grandes (lido via resultado de pesquisa).",
+    "kind": "repo"
+  },
+  {
+    "id": "C33",
+    "url": "https://github.com/Retro-Diffusion/api-examples",
+    "title": "Retro Diffusion API examples",
+    "author": "Retro Diffusion",
+    "accessed": "2026-10-28",
+    "claim": "Estilos rd_pro__platformer (12–256), rd_plus__environment (64–384), rd_tile__tileset/single_tile/scene_object; tile_x/tile_y e seam_tiling com seam_width; strength 0–1; input_palette; seed '≈ same image'; preços por imagem e check_cost.",
+    "kind": "repo"
+  },
+  {
+    "id": "C34",
+    "url": "https://replicate.com/retro-diffusion/rd-tile/readme",
+    "title": "rd-tile — Replicate model readme",
+    "author": "Retro Diffusion / Replicate",
+    "accessed": "2026-10-28",
+    "claim": "Modos single tile, tile variation, tileset(_advanced), tile object, scene object; tilesets com transições entre materiais.",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C35",
+    "url": "https://replicate.com/blog/retro-diffusions-pixel-art-models-are-now-on-replicate",
+    "title": "Retro Diffusion's pixel art models are now on Replicate",
+    "author": "Replicate",
+    "accessed": "2026-10-28",
+    "claim": "19/11/2025: rd-fast, rd-plus, rd-tile, rd-animation; 'trained specifically for grid-aligned, limited-palette pixel art'; maioria suporta tiling sem emenda e paletas.",
+    "kind": "vendor-blog"
+  },
+  {
+    "id": "C36",
+    "url": "https://runware.ai/blog/retro-diffusion-creating-authentic-pixel-art-with-ai-at-scale",
+    "title": "Retro Diffusion: Creating authentic pixel art with AI at scale",
+    "author": "Félix Sanz (Runware)",
+    "accessed": "2026-10-28",
+    "claim": "28/03/2025: dados, preparação e pós-processamento; redução própria por clustering + quantização; RD_FLUX sobre FLUX.",
+    "kind": "vendor-blog"
+  },
+  {
+    "id": "C37",
+    "url": "https://pixelover.io/",
+    "title": "PixelOver",
+    "author": "PixelOver",
+    "accessed": "2026-10-28",
+    "claim": "Escala/rotação pixel-perfect, indexação de paleta, dither, contornos; algoritmos determinísticos, 'Nothing is AI-generated'.",
+    "kind": "tool"
+  },
+  {
+    "id": "C38",
+    "url": "https://arxiv.org/abs/2409.14184",
+    "title": "Content-aware Tile Generation using Exterior Boundary Inpainting",
+    "author": "Sam Sartor, Pieter Peers",
+    "accessed": "2026-10-28",
+    "claim": "2024 (DOI 10.1145/3687981): geração de tiles como inpainting com condições de fronteira exterior, sem treino; Wang e Dual Wang.",
+    "kind": "paper"
+  },
+  {
+    "id": "C39",
+    "url": "https://github.com/samsartor/content_aware_tiles",
+    "title": "content_aware_tiles",
+    "author": "Sam Sartor",
+    "accessed": "2026-10-28",
+    "claim": "Implementação: tiles auto-tiláveis, estocásticos e Wang; inpainting SD2 a 256 px (lido via resultado de pesquisa).",
+    "kind": "repo"
+  },
+  {
+    "id": "C40",
+    "url": "https://arxiv.org/html/2412.15185v1",
+    "title": "Tiled Diffusion",
+    "author": "Or Madar, Ohad Fried",
+    "accessed": "2026-10-28",
+    "claim": "CVPR 2025: cópia de faixas de latente a cada passo para acolchoar lados ligados; janela de contexto; similaridade de largura 5 no latente; artefactos nas ligações X/Y; padding circular só faz auto-tiling.",
+    "kind": "paper"
+  },
+  {
+    "id": "C41",
+    "url": "https://multidiffusion.github.io/",
+    "title": "MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation",
+    "author": "Omer Bar-Tal, Lior Yariv, Yaron Lipman, Tali Dekel",
+    "accessed": "2026-10-28",
+    "claim": "ICML 2023 (arXiv 2302.08113): funde trajetórias sobre recortes sobrepostos numa otimização; panoramas 512×4608.",
+    "kind": "paper"
+  },
+  {
+    "id": "C42",
+    "url": "https://huggingface.co/Arrexel/pattern-diffusion",
+    "title": "Pattern Diffusion — model card",
+    "author": "Arrexel",
+    "accessed": "2026-10-28",
+    "claim": "Padding circular em todas as camadas piora FID/CLIP; circular só nos passos finais + noise rolling evita a perda (lido via resultado de pesquisa).",
+    "kind": "repo"
+  },
+  {
+    "id": "C43",
+    "url": "https://research.nvidia.com/publication/2023-07_interactive-ai-material-generation-and-editing-nvidia-omniverse",
+    "title": "Interactive AI Material Generation and Editing in NVIDIA Omniverse",
+    "author": "NVIDIA Research",
+    "accessed": "2026-10-28",
+    "claim": "2023: convoluções com padding circular para texturas tiláveis (lido via resultado de pesquisa).",
+    "kind": "paper"
+  },
+  {
+    "id": "C44",
+    "url": "https://ipol.im/pub/art/2017/171/article_lr.pdf",
+    "title": "Image Quilting (Efros & Freeman 2001) — reimplementação IPOL",
+    "author": "IPOL",
+    "accessed": "2026-10-28",
+    "claim": "Retalhos sobrepostos unidos por corte de erro mínimo na sobreposição (programação dinâmica); falhas de crescimento de lixo e cópia literal (lido via resultado de pesquisa).",
+    "kind": "paper"
+  },
+  {
+    "id": "C45",
+    "url": "https://cpl.cc.gatech.edu/projects/graphcuttextures",
+    "title": "Graphcut Textures: Image and Video Synthesis Using Graph Cuts",
+    "author": "Vivek Kwatra, Arno Schödl, Irfan Essa, Greg Turk, Aaron Bobick",
+    "accessed": "2026-10-28",
+    "claim": "SIGGRAPH 2003: retalhos copiados e unidos ao longo de costuras ótimas por graph cut.",
+    "kind": "paper"
+  },
+  {
+    "id": "C46",
+    "url": "https://arxiv.org/abs/2404.02733",
+    "title": "InstantStyle: Free Lunch towards Style-Preserving in Text-to-Image Generation",
+    "author": "Haofan Wang et al.",
+    "accessed": "2026-10-28",
+    "claim": "04/2024: estilo e conteúdo entrelaçados nas referências; separação por subtração de features e injeção só em blocos de estilo.",
+    "kind": "paper"
+  },
+  {
+    "id": "C47",
+    "url": "https://www.spriteforge.tech/blog/why-ai-tilesets-dont-tile",
+    "title": "Why AI Tilesets Don't Tile (and What a Wang Set Is)",
+    "author": "SpriteForge",
+    "accessed": "2026-10-28",
+    "claim": "13/08/2026: emendas, carimbo repetido; o modelo não tem grade de tiles; a redução destrói arestas; recomenda gerar na grade e conjuntos Wang de 16.",
+    "kind": "vendor-blog"
+  },
+  {
+    "id": "C48",
+    "url": "https://www.summerengine.com/blog/ai-2d-game-asset-generator.md",
+    "title": "AI 2D Game Asset Generator: What Works in 2026 (Honest Guide)",
+    "author": "Summer Team",
+    "accessed": "2026-10-28",
+    "claim": "06/06/2026: fundos/parallax fortes; tilesets o pedido mais difícil; geradores especializados ainda pedem passagem manual.",
+    "kind": "vendor-blog"
+  },
+  {
+    "id": "C49",
+    "url": "https://reddit.sentinel-team.org/posts/1s4coqw/snapshots/2026-03-27T21%3A10%3A01.661162Z",
+    "title": "Sprite frames generation from hand-drawn or rendered art (r/aigamedev, espelho)",
+    "author": "utilizadores r/aigamedev",
+    "accessed": "2026-10-28",
+    "claim": "~08/2025: Gemini, Grok e ChatGPT mudam perspetiva e enquadramento arbitrariamente e trocam detalhes.",
+    "kind": "community"
+  },
+  {
+    "id": "C50",
+    "url": "https://dev.to/kenjidev9662/practical-workflow-for-ai-pixel-art-gemini-2d-animation-experiment-21le",
+    "title": "Practical Workflow for AI Pixel Art: Gemini 2D Animation Experiment",
+    "author": "Kenji",
+    "accessed": "2026-10-28",
+    "claim": "14/03 (ano não indicado): pranchas laterais com Nano Banana 2; sem PNG transparente, fundo preto/verde recortado; combos perdem consistência.",
+    "kind": "practitioner"
+  },
+  {
+    "id": "C51",
+    "url": "https://irisogli.blogspot.com/2026/03/create-free-2d-parallax-system-using-ai.html",
+    "title": "Create free 2D parallax system using AI",
+    "author": "irisogli (blog)",
+    "accessed": "2026-10-28",
+    "claim": "03/2026: gerar uma cena e depois planos far/mid/near com o mesmo ângulo, horizonte, luz e estilo, em 16:9 (lido via resultado de pesquisa).",
+    "kind": "practitioner"
+  },
+  {
+    "id": "C52",
+    "url": "https://sorceress.games/blog/drift-a-parallax-ai-generator-25d-game-backgrounds-2026",
+    "title": "Drift: a parallax AI generator (2.5D game backgrounds 2026)",
+    "author": "Sorceress",
+    "accessed": "2026-10-28",
+    "claim": "Camadas de jogo têm de tilar na horizontal, aspetos previsíveis (4:1 no plano médio), primeiro plano transparente (lido via resultado de pesquisa).",
+    "kind": "vendor-blog"
+  },
+  {
+    "id": "C53",
+    "url": "https://www.sourcepulse.org/projects/30726264",
+    "title": "image-extender (boona13)",
+    "author": "boona13",
+    "accessed": "2026-10-28",
+    "claim": "Extensão de fundos de parallax com Gemini e Poisson blending nas emendas (lido via resultado de pesquisa).",
+    "kind": "repo"
+  },
+  {
+    "id": "C54",
+    "url": "https://www.pixellab.ai/docs/installation",
+    "title": "Installation — PixelLab docs",
+    "author": "PixelLab",
+    "accessed": "2026-10-28",
+    "claim": "Extensão Aseprite exige Aseprite ≥1.3; a versão de teste não permite extensões (lido via resultado de pesquisa).",
+    "kind": "official-doc"
+  },
+  {
+    "id": "C55",
+    "url": "https://reddit.sentinel-team.org/posts/1smb4k4/snapshots/2026-04-17T17%3A15%3A22.941568Z",
+    "title": "r/aigamedev (espelho) — comentário sobre modelos gerais para spritesheets",
+    "author": "utilizador r/aigamedev",
+    "accessed": "2026-10-28",
+    "claim": "04/2026: comentário promocional diz que modelos gerais como o Nano Banana não produzem transparência nem entendem animação (lido via resultado de pesquisa).",
+    "kind": "community"
+  },
+  {
+    "id": "C56",
+    "url": "https://reddit.sentinel-team.org/posts/1r8owqw/snapshots/2026-02-21T05%3A50%3A01.663559Z",
+    "title": "Opiniões sobre PixelLab (tileset, personagens, animação) — espelho Reddit",
+    "author": "utilizadores Reddit",
+    "accessed": "2026-10-28",
+    "claim": "02/2026: opiniões mistas; tileset por outpainting elogiado; animação ainda fraca em sprites simples (lido via resultado de pesquisa).",
+    "kind": "community"
+  }
+]

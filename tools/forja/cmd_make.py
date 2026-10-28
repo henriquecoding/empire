@@ -96,7 +96,9 @@ def do_tileset(args) -> dict:
              "json": str(out / f"{args.name}.json")}
     if args.godot_texture:
         files["godot"] = str(godot.write(out / f"{args.name}.tres", godot.tileset(args.godot_texture, args.size)))
-    return {"ok": True, "files": files, "tiles": 16}
+    joins = tiles.pairs(sheet, args.size, tiles.upper_class(upper, rim) if lower is not None else None)
+    cut = tiles.junctions(sheet, args.size, args.cluster)
+    return {"ok": joins["ok"] and cut["ok"], "files": files, "tiles": 16, "pairs": joins, "junctions": cut}
 
 
 def do_seams(args) -> dict:

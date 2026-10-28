@@ -1,0 +1,22 @@
+{
+  "reference_hash_dimension_mode_alpha": "passed",
+  "plan_geometry_and_partition_arithmetic": "passed",
+  "conversion_partition_side_limits_16_512": "passed",
+  "pending_approval_and_export_blockers": "passed",
+  "external_source_count": 34,
+  "pixel_api_snapshot_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596",
+  "pdf_visual_review": "all 32 pages reviewed in contact sheets; key art, API and bibliography pages inspected separately; final changes reviewed after rerender",
+  "not_executed": [
+    "Forja implementation",
+    "native grid certification",
+    "paid PixelLab API call",
+    "Godot runtime benchmark",
+    "new full repository test suite"
+  ],
+  "artistic_approval": "pending",
+  "native_masters_delivered": 0,
+  "generated_visual_references_delivered": 4,
+  "pdf_pages": 32,
+  "pdf_boundary_check": "passed",
+  "pdf_web_links": 35
+}

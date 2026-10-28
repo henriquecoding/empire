@@ -38,7 +38,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094 e 0095). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095 e 0096). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
@@ -50,7 +50,10 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   fecha-se com `forja verify` contra ele. Adaptar um conceito e pedir com o
   contrato de fidelidade (`--fidelity --character`: o recorte de autoridade vai
   anexado, sem as preferencias do compilador) e rever com `forja fidelity`; uma
-  pureza alta nao prova que um traco sobreviveu (`snap.loss`, achado `erased`).
+  pureza alta nao prova que um traco sobreviveu (`snap.loss`, achado `erased`). Cenarios e construcoes desenham-se
+  pela regua dos atores reais (`forja regua`, `escala`): o contrato `forja.scene/1` diz a extensao, os vaos, os sinais
+  e os estados, o pedido e o de elevacao lateral (`forja cena`), e a peca confere-se com `forja estrutura` e no mundo
+  com `forja montagem` (ADR 0096). Uma referencia nao se reduz: redesenha-se na grade, a escala dos atores.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.
@@ -383,7 +386,7 @@ tools/desempenho.gd         (script)               fora do jogo  o frame e o tic
 tools/perfilador.gd         (script)               fora do jogo  o tempo de cada funcao, pelo debugger remoto do motor (RG-18)
 ferramentas/*.mjs, src/*.js camada de uso do dossie fora do jogo  docs/; nunca exportado
 tools/web/**                o site (ADR 0024, 0025)  fora do jogo  le data/, docs/ e o project.godot; nunca exportado
-tools/forja/**              a Forja (ADR 0088)     fora do jogo  tools/, Pillow; le art/palettes e docs/art; nunca exportado
+tools/forja/**              a Forja (ADR 0088)     fora do jogo  tools/, Pillow; le art/palettes, os manifestos de art/export, docs/art, data/source, band.gd e project.godot; nunca exportado
 
 ## Ciclo de trabalho
 1. Le docs/backlog/<id>.md e as seccoes de docs/design/ que ele cita.

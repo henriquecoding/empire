@@ -1,0 +1,434 @@
+[
+ {
+  "id": "S01",
+  "url": "https://www.gamedeveloper.com/design/-i-kingdom-two-crowns-i-and-the-practical-intersection-of-pixel-art-and-roguelike-design",
+  "title": "Kingdom Two Crowns and the practical intersection of pixel art and roguelike design",
+  "author": "Game Developer (entrevista a Thomas 'noio' van den Berg)",
+  "accessed": "2026-10-28",
+  "claim": "noio escolheu pixel art por ser economica e pelo 'impressionist feel'; quer o 'shortest possible path between sketch/production/in-engine'; 'pixel art does not let itself be scaled to arbitrary sizes'. Sem numeros de resolucao.",
+  "kind": "primary"
+ },
+ {
+  "id": "S02",
+  "url": "https://steamcommunity.com/app/701160/discussions/0/2844543519798977532/",
+  "title": "HD? Better Textures? :: Kingdom Two Crowns General Discussions",
+  "author": "Sapador (comunidade); resposta de RawFuryAngelica (Raw Fury)",
+  "accessed": "2026-10-28",
+  "claim": "Sprites do Kingdom: 'each square formed by 3 to 8 pixels, depending on the zoom level'; duas opcoes de zoom por dispositivo; a editora concorda que o jogo nao deve ficar desfocado nem esticado.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S03",
+  "url": "https://forums.tigsource.com/index.php?topic=40539.0",
+  "title": "Kingdom (devlog TIGSource)",
+  "author": "Thomas van den Berg (noio)",
+  "accessed": "2026-10-28",
+  "claim": "[INACESSIVEL: 403] Segundo resumo de pesquisa, nao verificado: o Kingdom renderiza para uma 'screen texture' pequena que depois e ampliada, em vez de escalar cada sprite.",
+  "kind": "primary"
+ },
+ {
+  "id": "S04",
+  "url": "https://stardewvalleywiki.com/Modding:Farmer_sprite",
+  "title": "Modding:Farmer sprite",
+  "author": "Stardew Valley Wiki",
+  "accessed": "2026-10-28",
+  "claim": "'Each sprite is 16 pixels wide by 32 pixels tall' (agricultor).",
+  "kind": "secondary"
+ },
+ {
+  "id": "S05",
+  "url": "https://stardewvalleywiki.com/Modding:Maps",
+  "title": "Modding:Maps",
+  "author": "Stardew Valley Wiki",
+  "accessed": "2026-10-28",
+  "claim": "Tiles de 16x16 px ('should always be 16'); a acao Door coloca-se 'on the lower of the two door tiles', logo a porta tem 2 tiles (32 px) de altura.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S06",
+  "url": "https://github.com/NoelFB/Celeste/blob/master/Source/Player/Player.cs",
+  "title": "Celeste - Player.cs (classe publicada pelo estudio)",
+  "author": "Maddy Thorson / Noel Berry (Extremely OK Games)",
+  "accessed": "2026-10-28",
+  "claim": "normalHitbox = new Hitbox(8, 11, -4, -11); duckHitbox 8x6; normalHurtbox 8x9. A hitbox da Madeline tem 8x11 px.",
+  "kind": "primary"
+ },
+ {
+  "id": "S07",
+  "url": "https://docs.tmodloader.net/docs/stable/class_player.html",
+  "title": "Player Class Reference (tModLoader)",
+  "author": "tModLoader",
+  "accessed": "2026-10-28",
+  "claim": "Player.defaultWidth = 20, Player.defaultHeight = 42 (hitbox do jogador do Terraria, em px).",
+  "kind": "secondary"
+ },
+ {
+  "id": "S08",
+  "url": "https://terraria.wiki.gg/wiki/Doors",
+  "title": "Doors",
+  "author": "Terraria Wiki",
+  "accessed": "2026-10-28",
+  "claim": "Porta fechada 'dimensions are 1x3 tiles'; aberta 2x3; tem de ser colocada num espaco 'exactly three blocks high'.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S09",
+  "url": "https://www.nexusmods.com/terraria/articles/24",
+  "title": "Item Attributes (Terraria)",
+  "author": "Nexus Mods (autor da comunidade)",
+  "accessed": "2026-10-28",
+  "claim": "[NAO ABERTO; via resumo de pesquisa] 'There are 16 pixels per tile' no Terraria.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S10",
+  "url": "https://starbounder.org/Player",
+  "title": "Player",
+  "author": "Starbounder (wiki de Starbound)",
+  "accessed": "2026-10-28",
+  "claim": "'The Player is by default 2x4 blocks tall'; encolhe para 2x2 com techs de esfera.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S11",
+  "url": "https://community.playstarbound.com/threads/how-tile-textures-work.44646/",
+  "title": "How Tile Textures Work (tutorial)",
+  "author": "comunidade Starbound (2013)",
+  "accessed": "2026-10-28",
+  "claim": "[NAO ABERTO; via resumo de pesquisa] Os tiles do Starbound tem 8x8 px; o tutorial declara-se desatualizado.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S12",
+  "url": "https://dpadstudio.com/Blog/postHibit.html",
+  "title": "Blog D-Pad Studio (resolucao 640x360)",
+  "author": "D-Pad Studio (criadores de Owlboy)",
+  "accessed": "2026-10-28",
+  "claim": "Propoe 640x360 como base para jogos 2D em pixel (escala para 720p, 1080p e 4K); o Owlboy estava preso a 1024x768 e o suporte widescreen obrigou a redesenhar 'all of the backdrops'.",
+  "kind": "primary"
+ },
+ {
+  "id": "S13",
+  "url": "https://www.gamedeveloper.com/production/art-design-deep-dive-using-a-3d-pipeline-for-2d-animation-in-i-dead-cells-i-",
+  "title": "Art Design Deep Dive: Using a 3D pipeline for 2D animation in Dead Cells",
+  "author": "Thomas Vasseur (Motion Twin)",
+  "accessed": "2026-10-28",
+  "claim": "Personagem com cerca de 50 px de altura no jogo; o 3D e renderizado 'in a very small size and without antialiasing'; toon shader com normal maps; o detalhe ficou aquem e trocou-se por animacao.",
+  "kind": "primary"
+ },
+ {
+  "id": "S14",
+  "url": "https://gamedeveloper.com/production/art-design-deep-dive-giving-back-colors-to-cryptic-worlds-in-i-dead-cells-i-",
+  "title": "Art Design Deep Dive: Giving back colors to cryptic worlds in Dead Cells",
+  "author": "Gwenael Masse (Motion Twin)",
+  "accessed": "2026-10-28",
+  "claim": "Parallax pintado em cinzentos e depois com gradient map; 'the background of the levels and the collisions have to contrast as much as possible'; interativos em contraste intermedio; ameacas saturadas.",
+  "kind": "primary"
+ },
+ {
+  "id": "S15",
+  "url": "https://www.yachtclubgames.com/blog/breaking-the-nes",
+  "title": "Breaking the NES",
+  "author": "Yacht Club Games",
+  "accessed": "2026-10-28",
+  "claim": "Resolucao virtual 400x240 (a NES da 256x240; a mesma altura com mais largura); tiles de fundo 16x16; sprites com 4-5 cores mais transparencia; paleta NES com poucas cores extra.",
+  "kind": "primary"
+ },
+ {
+  "id": "S16",
+  "url": "https://gamingbolt.com/our-game-is-480p-yeah-its-low-resolution-and-very-intentionally-so",
+  "title": "'Our Game is 480p. Yeah, It's Low Resolution, And Very Intentionally So'",
+  "author": "GamingBolt (entrevista a Alx Preston, Heart Machine)",
+  "accessed": "2026-10-28",
+  "claim": "[NAO ABERTO DIRETAMENTE; via resumo de pesquisa] Preston: o jogo e '480p', de baixa resolucao intencionalmente; em 2D 'it's just the resolution you draw your sprite at'.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S17",
+  "url": "https://www.gamedeveloper.com/art/eastward-s-creators-share-insights-on-making-pixel-art-adventures",
+  "title": "Eastward's creators share insights on making pixel art adventures",
+  "author": "Game Developer (entrevista a Pixpil)",
+  "accessed": "2026-10-28",
+  "claim": "Arte base em Aseprite (Moran), separada por estrutura (telhado e parede em camadas), reconstruida em ambiente 3D com bump maps pintados; nevoeiro e luz por shaders; 'elevation is your friend'.",
+  "kind": "primary"
+ },
+ {
+  "id": "S18",
+  "url": "https://book.leveldesignbook.com/process/blockout/metrics",
+  "title": "Metrics (The Level Design Book)",
+  "author": "Robert Yang et al.",
+  "accessed": "2026-10-28",
+  "claim": "Metricas: real (polegadas) jogador 69, porta 36x80, parede 96, degrau 7x11; Source 72 / 56x112 / 128 / 8x12; Unreal 176 cm / 110x220 / 300 / 15x25; Unity 1,8 m / 1,25x2,5 / 3,0. 'Don't follow real world scale'; 'build at the player's scale'; escadas a 30-35 graus.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S19",
+  "url": "https://itch.io/post/12886254",
+  "title": "Comentarios de 64x64 Side View Battlers",
+  "author": "SolaarNoble e CParkDev (itch.io)",
+  "accessed": "2026-10-28",
+  "claim": "Tilesets comuns de 16x16, 24x24 ou 32x32 (48x48 no RPG Maker); um personagem de 64 px de altura e 'pretty large' para andar num mapa.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S20",
+  "url": "https://itch.io/post/14375894",
+  "title": "Comentarios de Zombie Interior - HD Isometric Tileset",
+  "author": "compriab e SmallScaleInt (itch.io)",
+  "accessed": "2026-10-28",
+  "claim": "Portas grandes demais: 'their size seems like that of a child in relation to the door'; o problema esta so nas portas e janelas; 'Orthographic viewpoints often cause issues with visual scale'; o autor promete portas menores.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S21",
+  "url": "https://slynyrd.com/blog/2020/5/21/pixelblog-28-side-view-tiles",
+  "title": "Pixelblog 28 - Side View Tiles",
+  "author": "Raymond Schlitter (SLYNYRD)",
+  "accessed": "2026-10-28",
+  "claim": "Tiles de 16x16 px, pares e quadrados, de preferencia potencias de 2; 'Anything over 32x32px seems like overkill for pixel art'.",
+  "kind": "primary"
+ },
+ {
+  "id": "S22",
+  "url": "https://slynyrd.com/blog/2023/7/21/pixelblog-45-bricks-walls-doors-and-more",
+  "title": "Pixelblog 45 - Bricks, Walls, Doors and More",
+  "author": "Raymond Schlitter (SLYNYRD)",
+  "accessed": "2026-10-28",
+  "claim": "Assets para tilemap de 16x16; com 1 px de argamassa os tijolos tem 15, 7, 3 ou 1 px; as sombras nao passam de um tile; tijolos da parede lateral mais baixos que os do topo.",
+  "kind": "primary"
+ },
+ {
+  "id": "S23",
+  "url": "https://slynyrd.com/blog/2024/7/25/pixelblog-51-city-builder",
+  "title": "Pixelblog 51 - City Builder",
+  "author": "Raymond Schlitter (SLYNYRD)",
+  "accessed": "2026-10-28",
+  "claim": "Plantas em unidades de 16x16; a altura pode sair um pouco da planta por cima, nunca por baixo nem pelos lados; ordem telhado/estrutura -> janelas/portas -> sombras -> contornos; contornos subtis 'slightly darker than the adjacent pixels'; manter 'key characteristics'.",
+  "kind": "primary"
+ },
+ {
+  "id": "S24",
+  "url": "https://slynyrd.com/blog/2019/2/23/pixelblog-14-cityscapes",
+  "title": "Pixelblog 14 - Cityscapes",
+  "author": "Raymond Schlitter (SLYNYRD)",
+  "accessed": "2026-10-28",
+  "claim": "Na vista 3/4 os lados encurtam para cerca de 3/4 da largura; desenhos geometricos 'often more conservative than what is possible in real life'; esquema de cor uniforme para coesao.",
+  "kind": "primary"
+ },
+ {
+  "id": "S25",
+  "url": "https://slynyrd.com/blog/2025/7/28/pixelblog-57-knights-monsters-amp-castles",
+  "title": "Pixelblog 57 - Knights, Monsters & Castles",
+  "author": "Raymond Schlitter (SLYNYRD)",
+  "accessed": "2026-10-28",
+  "claim": "'push the detail just far enough until the mind can fill in the rest'; evitar 'too many small scattered clusters'; o castelo comeca por uma torre com telhado.",
+  "kind": "primary"
+ },
+ {
+  "id": "S26",
+  "url": "https://www.derekyu.com/makegames/pixelart.html",
+  "title": "Pixel Art Tutorial: Basics",
+  "author": "Derek Yu",
+  "accessed": "2026-10-28",
+  "claim": "Quanto mais pequeno o sprite, 'the more responsibility each individual pixel has'; o bigode do Mario existe para separar nariz e cara; em pequeno, manchas de cor em vez de contorno; teste de semicerrar os olhos; selective outlining; espelhar e dessaturar para verificar.",
+  "kind": "primary"
+ },
+ {
+  "id": "S27",
+  "url": "https://www.derekyu.com/makegames/pixelart2.html",
+  "title": "Pixel Art: Common Mistakes",
+  "author": "Derek Yu",
+  "accessed": "2026-10-28",
+  "claim": "Um fundo mais indistinto ajuda as personagens a destacar-se, se for intencional; reduzir formas complexas a volumes simples ('a few green spheres'); evitar pillow shading e cores parecidas demais.",
+  "kind": "primary"
+ },
+ {
+  "id": "S28",
+  "url": "https://saint11.art/blog/scaling/",
+  "title": "Scaling Pixel Art",
+  "author": "Pedro Medeiros (Saint11)",
+  "accessed": "2026-10-28",
+  "claim": "Ampliar so por inteiros e com nearest; 'you shouldn't scale pixel art down'; excecao: arte ja ampliada; 'Up and Down' para alvos nao inteiros; misturar resolucoes so com canvases separados, multiplos inteiros e no maximo duas resolucoes.",
+  "kind": "primary"
+ },
+ {
+  "id": "S29",
+  "url": "https://saint11.art/blog/consistency/",
+  "title": "Consistency",
+  "author": "Pedro Medeiros (Saint11)",
+  "accessed": "2026-10-28",
+  "claim": "'choose a resolution and stick to it'; 'the quarantine; styles never leak from one world to another'; escalar todos os sprites pelo mesmo inteiro; nada abaixo de 1 px; camadas 'stabilize in integer coordinates'; uma so paleta.",
+  "kind": "primary"
+ },
+ {
+  "id": "S30",
+  "url": "https://slynyrd.com/blog/2019/11/12/pixelblog-23-parallax-scrolling",
+  "title": "Pixelblog 23 - Parallax Scrolling",
+  "author": "Raymond Schlitter (SLYNYRD)",
+  "accessed": "2026-10-28",
+  "claim": "Arte a 1x; cada camada mais proxima avanca a taxas inteiras (1 px/frame, 1 px/2 frames); abaixo de 1 px/frame o movimento parece aos solavancos; o parallax nao cria profundidade se a cena parada nao a tiver.",
+  "kind": "primary"
+ },
+ {
+  "id": "S31",
+  "url": "https://itch.io/post/8448610",
+  "title": "Comentario sobre Pixel Logic (Michael Azzi), p. 21",
+  "author": "utilizador itch.io (citacao em segunda mao)",
+  "accessed": "2026-10-28",
+  "claim": "[NAO ABERTO; via resumo de pesquisa] O Pixel Logic diz para nunca misturar resolucoes e manter a mesma espessura de contorno; o livro esta em https://gumroad.com/l/pixel-logic.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S32",
+  "url": "https://community.flowlab.io/t/mini-rant-stop-using-mixels/38287",
+  "title": "Mini-rant: stop using mixels",
+  "author": "sup3r87 (Flowlab Community)",
+  "accessed": "2026-10-28",
+  "claim": "Mixels so numa camada de fundo, e mesmo ai 'you still can't change the pixel size within the background'; manter uma so dimensao de pixel por estilo.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S33",
+  "url": "https://yari-pixels.github.io/Articles/mixels.html",
+  "title": "My fascination with mixels",
+  "author": "Yari (yari-pixels)",
+  "accessed": "2026-10-28",
+  "claim": "Definicao: 'pixels of different sizes combined together'; uso deliberado em efeitos (coracoes, po) para os separar da imagem; cita Minecraft, Terraria e Stardew.",
+  "kind": "secondary"
+ },
+ {
+  "id": "S34",
+  "url": "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+  "title": "Multiple resolutions",
+  "author": "Godot Engine documentation",
+  "accessed": "2026-10-28",
+  "claim": "Para pixel art: stretch mode 'viewport' e scale mode 'integer'; 'Most pixel art games use viewport sizes between 256x224 and 640x480'; '640x360 is a good baseline'.",
+  "kind": "primary"
+ },
+ {
+  "id": "S35",
+  "url": "https://docs.godotengine.org/en/stable/classes/class_projectsettings.html",
+  "title": "ProjectSettings (snap_2d_transforms_to_pixel, snap_2d_vertices_to_pixel, stretch)",
+  "author": "Godot Engine documentation (texto em godot-docs/classes/class_projectsettings.rst)",
+  "accessed": "2026-10-28",
+  "claim": "snap_2d_transforms_to_pixel arredonda as posicoes dos CanvasItem a pixeis inteiros, com custo na suavidade da camara; nao combinar com snap_2d_vertices_to_pixel; scale_mode 'integer' da aparencia nitida; canvas_items perde a correspondencia 1:1 e e o padrao a partir do 4.7.",
+  "kind": "primary"
+ },
+ {
+  "id": "S36",
+  "url": "https://saint11.art/blog/3d-ref/",
+  "title": "Using 3d models as pixel art reference",
+  "author": "Pedro Medeiros (Saint11)",
+  "accessed": "2026-10-28",
+  "claim": "Gravar o modelo, reduzir tamanho e paleta no Aseprite ('we will just redraw the whole thing'), redesenhar numa camada por cima, ajustar o tempo e verificar no jogo.",
+  "kind": "primary"
+ },
+ {
+  "id": "S37",
+  "url": "https://saint11.art/blog/big-pixel-art/",
+  "title": "Big Pixel Art",
+  "author": "Pedro Medeiros (Saint11)",
+  "accessed": "2026-10-28",
+  "claim": "A peca 'Into Certain Death' (2022) 'was made using an AI-generated image as base': imagem de IA usada como base de pixel art redesenhada.",
+  "kind": "primary"
+ },
+ {
+  "id": "M01",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/701160/ss_ca9df45386d8ead4a0cf62a16c2524095a610f6c.1920x1080.jpg",
+  "title": "Medicao: Kingdom Two Crowns, capturas Steam k1 e k4 (ss_ca9df453..., ss_55d314b0...)",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 3 px a 1080p = vista 640x360; aldeoes e arqueiros 17-20 px; monarca montado ~40 px; muralha 26 px; base de pedra da torre 41 px; torre ~104 px; fundos na mesma grelha; chao a ~58% da altura do ecra.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M02",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/701160/1b1bdd1e3fc0b508cd3ef86dfc555bf520c5bf57/ss_1b1bdd1e3fc0b508cd3ef86dfc555bf520c5bf57.1920x1080.jpg",
+  "title": "Medicao: Kingdom Two Crowns (Olympus), captura Steam k5",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha ~5 px (vista ~384x216); pessoa ~52 px de ecra (~10 px nativos); porta dupla ~87 px de ecra (1,67x); beiral ~110 (2,1x); telhado ate ~199 (3,8x). A grelha difere de k1/k4 com o mesmo tamanho em ecra, o que sugere reamostragem por zoom.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M03",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/504230/ss_1ad297c2044cdcf450ee83e56350cafb590da755.1920x1080.jpg",
+  "title": "Medicao: Celeste, captura Steam s1 (cabana)",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 6 px = 320x180 (5 de 6 capturas); Madeline ~14 px; porta ~20 px (~1,4x); janela ~10-11 px com peitoril ~14 px; beiral ~39 (2,8x); cumeeira ~55 (3,9x); retratos de dialogo em alta resolucao, fora da grelha.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M04",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/115800/ss_5d7ceffe78305efe3125b2f806cb301f59531963.1920x1080.jpg",
+  "title": "Medicao: Owlboy, capturas Steam (s2-s4 a 720p, s5-s7 e s6 a 1080p)",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "2x a 720p e 3x a 1080p = vista 640x360; Otus ~36-38 px; balcao da loja ~45 px.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M05",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/774361/ss_957b6216519c614984ee71c6f6a524d75ea6353b.1920x1080.jpg",
+  "title": "Medicao: Blasphemous, captura Steam s5",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 3 px a 1080p = vista 640x360 (6 de 8 capturas); inimigo de pe ~44-45 px.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M06",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257850/ss_19c973259b736f14c4541ba044f3761b39a18737.1920x1080.jpg",
+  "title": "Medicao: Hyper Light Drifter, captura Steam s2",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 4 px a 1080p = vista 480x270 (5 de 6 capturas; uma a 5x); Drifter ~28 px; portal do templo ~54 px de altura e ~61 de largura.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M07",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1244090/ss_f756ff477590284c7192ffcef99237de056e4aeb.1920x1080.jpg",
+  "title": "Medicao: Sea of Stars, capturas Steam s1 e s6",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 3 px = vista 640x360 (6 de 6 capturas); Garl ~50 px; Zale agachado ~42 px.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M08",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_b887651a93b0525739049eb4194f633de2df75be.1920x1080.jpg",
+  "title": "Medicao: Stardew Valley, capturas Steam",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 4 px a 1080p = vista 480x270 (5 de 6 capturas).",
+  "kind": "measurement"
+ },
+ {
+  "id": "M09",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1218210/cc71607f945ff06c8b15af4555c92c6e884402f2/ss_cc71607f945ff06c8b15af4555c92c6e884402f2.1920x1080.jpg",
+  "title": "Medicao: Coromon, capturas Steam",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 4 px a 1080p = vista 480x270 (6 de 6 capturas).",
+  "kind": "measurement"
+ },
+ {
+  "id": "M10",
+  "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1229240/ss_b25ed2e671e7b616ec14e7ed3a2f483909e368c4.1920x1080.jpg",
+  "title": "Medicao: Chained Echoes, capturas Steam",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Grelha 3 px = vista 640x360 em 2 de 6 capturas; nas restantes inconclusivo.",
+  "kind": "measurement"
+ },
+ {
+  "id": "M11",
+  "url": "https://store.steampowered.com/api/appdetails?appids=921570&filters=screenshots",
+  "title": "Medicao negativa: Octopath Traveler (921570), Songs of Conquest (867210), Moonlighter (606150), Children of Morta (330020), Katana ZERO (460950)",
+  "author": "medicao propria (Claude)",
+  "accessed": "2026-10-28",
+  "claim": "Sem grelha inteira global em Octopath e Songs of Conquest (cena 3D ou HD-2D); Moonlighter e Children of Morta inconclusivos; Katana ZERO alterna 3x e 6x entre capturas.",
+  "kind": "measurement"
+ }
+]

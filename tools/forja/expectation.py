@@ -92,3 +92,9 @@ def from_period(frames: list[dict]) -> float | None:
         return None
     mid = len(periods) // 2
     return periods[mid] if len(periods) % 2 else (periods[mid - 1] + periods[mid]) / 2
+
+
+def frame(exp: dict, canvas=None, pivot=None) -> tuple:
+    """A tela e o pivot que o pedido de uma cena fixou (FORJA-09); o que foi dito na linha de comandos prevalece."""
+    return (canvas or (tuple(exp["canvas_px"]) if exp.get("canvas_px") else None),
+            pivot or (tuple(exp["pivot_px"]) if exp.get("pivot_px") else None))

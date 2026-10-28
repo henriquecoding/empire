@@ -1,0 +1,50 @@
+{
+ "schema": "forja.refs/1",
+ "entries": [
+  {
+   "id": "oficina_pacote_2026_10_28",
+   "file": "referencias/oficina-referencia.png",
+   "pixels_sha256": "50f588999e3461055345e58c8fdd7c679a724f8360d138373621131e65636473",
+   "state": "concept",
+   "recorded_by": "Claude",
+   "origin": "pacote do dono de 28/10: estudo gerado (visual_reference), aprovacao pendente",
+   "date": "2026-10-28"
+  },
+  {
+   "id": "enramados_pacote_2026_10_28",
+   "file": "referencias/enramados-referencia.png",
+   "pixels_sha256": "e92369325c62615a80b2d572348b9b05d42cb8794bdcd28e6873621e1fd2ec81",
+   "state": "concept",
+   "recorded_by": "Claude",
+   "origin": "pacote do dono de 28/10: estudo gerado (visual_reference), aprovacao pendente",
+   "date": "2026-10-28"
+  },
+  {
+   "id": "porto_pacote_2026_10_28",
+   "file": "referencias/porto-referencia.png",
+   "pixels_sha256": "6972741b0a24e78512787f3cbfe407d2bccf6f4f671e304f4718bdb80f174309",
+   "state": "concept",
+   "recorded_by": "Claude",
+   "origin": "pacote do dono de 28/10: estudo gerado (visual_reference), aprovacao pendente",
+   "date": "2026-10-28"
+  },
+  {
+   "id": "fornalha_pacote_2026_10_28",
+   "file": "referencias/fornalha-referencia.png",
+   "pixels_sha256": "d92aaf367f028b600a05a03a0fa25cf6f07e47b8986d1537afffd3f9a9b21e92",
+   "state": "concept",
+   "recorded_by": "Claude",
+   "origin": "pacote do dono de 28/10: estudo gerado (visual_reference), aprovacao pendente",
+   "date": "2026-10-28"
+  },
+  {
+   "id": "enramados_conversa_2026_10_28",
+   "file": "referencias/enramados-referencia-conversa.png",
+   "pixels_sha256": "ea4e2e2d125570714075f21734c387c956dc4409c7f0ef4520ae8936b359019d",
+   "state": "concept",
+   "recorded_by": "Claude",
+   "origin": "imagem anexada pelo dono na conversa de 28/10; outra versao da Enramados do pacote (pixels diferentes)",
+   "date": "2026-10-28"
+  }
+ ]
+}

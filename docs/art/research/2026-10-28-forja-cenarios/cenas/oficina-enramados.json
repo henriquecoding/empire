@@ -1,0 +1,129 @@
+{
+ "schema": "forja.scene/1",
+ "id": "oficina_enramados",
+ "asset": "building",
+ "people": "enramados",
+ "function": "smithy",
+ "subject": "an Enramados smithy workshop seen as a side elevation: a long low tiled roof with a thick eave, an offset fieldstone chimney joined to the roof, an open work bay with the forge mouth and the anvil, timber posts and braces carrying the roof, a stone plinth resting on the ground",
+ "brief": {
+  "story": "built by the Enramados woodfolk under great oaks, of damp fieldstone and heavy timber; the smith works in the open bay and soot marks the wall above the forge mouth",
+  "light": "a warm forge glow inside the bay and one lantern under the eave"
+ },
+ "extent_px": [
+  448,
+  224
+ ],
+ "openings": [
+  {
+   "id": "baia",
+   "kind": "bay",
+   "box_px": [
+    240,
+    96,
+    356,
+    224
+   ],
+   "treatment": "interior"
+  },
+  {
+   "id": "janela",
+   "kind": "window",
+   "box_px": [
+    54,
+    110,
+    78,
+    156
+   ],
+   "treatment": "lit"
+  }
+ ],
+ "signals": [
+  "roof_pitch",
+  "eave_thickness",
+  "chimney_join",
+  "supports",
+  "foundation_anchor",
+  "work_area"
+ ],
+ "signal_regions": {
+  "chimney_join": [
+   92,
+   40,
+   140,
+   84
+  ],
+  "work_area": [
+   156,
+   118,
+   234,
+   224
+  ],
+  "foundation_anchor": [
+   0,
+   208,
+   448,
+   224
+  ],
+  "roof_pitch": [
+   132,
+   40,
+   378,
+   110
+  ]
+ },
+ "materials": [
+  "timber",
+  "stone",
+  "roof_tile",
+  "brick",
+  "metal"
+ ],
+ "states": [
+  "empty",
+  "scaffold",
+  "building",
+  "done",
+  "damaged",
+  "ruin"
+ ],
+ "conditions": [
+  "night",
+  "active",
+  "snow"
+ ],
+ "state_changes": {
+  "damaged": [
+   [
+    132,
+    40,
+    378,
+    110
+   ]
+  ]
+ },
+ "references": [
+  {
+   "role": "asset_concept",
+   "file": "../referencias/oficina-referencia.png",
+   "pixels_sha256": "50f588999e3461055345e58c8fdd7c679a724f8360d138373621131e65636473",
+   "note": "o conceito da oficina: silhueta, partes e materiais; reorganizado e com alfa parcial, nao e um recorte do panorama"
+  },
+  {
+   "role": "composition",
+   "file": "../referencias/enramados-referencia.png",
+   "crop": [
+    250,
+    200,
+    1120,
+    606
+   ],
+   "pixels_sha256": "e92369325c62615a80b2d572348b9b05d42cb8794bdcd28e6873621e1fd2ec81",
+   "note": "a oficina no panorama: relacao com a arvore, o chao e a casa; a escala vem do barril dela, nao da porta da casa"
+  }
+ ],
+ "scale_evidence": {
+  "oficina": "marco barril (538,780,628,887) = barrel_height -> escala 0,299; 452x222 px",
+  "enramados": "marco barril (562,541,611,600) = barrel_height -> escala 0,542; 472x220 px; a porta da casa (1389,519,1429,606) pede 0,87-0,99: sem escala comum"
+ },
+ "palette": "empire"
+}

@@ -1,0 +1,1879 @@
+{
+ "schema": "forja.fontes/1",
+ "generated_from": [
+  "pesquisa/A-fontes.json",
+  "pesquisa/B-fontes.json",
+  "pesquisa/C-fontes.json",
+  "pacote/fontes-v2.json"
+ ],
+ "note": "indice unico por URL (acesso: 28/10/2026); a afirmacao completa e o grau (facto, medicao, inferencia) estao na lista da frente que a cita",
+ "count": 185,
+ "sources": [
+  {
+   "url": "http://higherorderfun.com/blog/2012/05/20/the-guide-to-implementing-2d-platformers/",
+   "title": "The guide to implementing 2D platformers",
+   "author": "Rodrigo Monteiro",
+   "kind": "dev-post",
+   "claim": "Rampas por altura do chão em cada lado do tile (4:1 em 4 tiles, 2:1 em 2; 12 tiles com espelhos); não parar rampas a meio do tile; plataforma de sentido único só é obstáculo se o jogador estava inteiramente por cima; escadas como estado.",
+   "frentes": [
+    "B:F24"
+   ]
+  },
+  {
+   "url": "https://80.lv/articles/kingdom-developer-on-creating-pixel-environments/",
+   "title": "Kingdom Developer on Creating Pixel Environments",
+   "author": "Theodore McKenzie, entrevista a Thomas van den Berg, 2023-05-11",
+   "kind": "interview",
+   "claim": "Noutro projeto do autor: reflexos com uma câmara que renderiza a cena por baixo; regras de pixel art em 3D (píxeis alinhados com a geometria, mesmo tamanho).",
+   "frentes": [
+    "B:F34"
+   ]
+  },
+  {
+   "url": "https://80.lv/articles/kingdom-how-2-guys-created-a-side-scrolling-strategy",
+   "title": "Kingdom: How 2 Guys Created a Side-Scrolling Strategy",
+   "author": "Kirill Tokarev, entrevista a Thomas van den Berg (noio), 2015-11-11",
+   "kind": "interview",
+   "claim": "Mapa de 'blocos de construção' lado a lado; 'tudo num plano nivelado'; stubs de torres e muros onde permitidos para evitar sobreposição; arte 'coerentemente tosca' colada pelo motor com luz e efeitos; baixa resolução ajuda desempenho.",
+   "frentes": [
+    "B:F31"
+   ]
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/image-generation",
+   "title": "Image generation with Gemini (Nano Banana) — Gemini API docs (updated 2026-10-26)",
+   "author": "Google",
+   "kind": "official-doc",
+   "claim": "Modelos 2.1, 3.1 Flash, 3.1 Flash Lite, 3 Pro, 2.5 Flash; aspetos incl. 4:1 e 8:1; tabela de pixels por aspeto e tamanho (0.5K–4K); limites de referências (objetos/personagens/estilo, 14 no total); imagens de pensamento; SynthID; sem transparência nem seed documentadas.",
+   "frentes": [
+    "C:C23"
+   ]
+  },
+  {
+   "url": "https://api.pixellab.ai/mcp",
+   "title": "PixelLab MCP server — tools/list (103 ferramentas)",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Ferramentas MCP de ambiente: create_sidescroller_tileset com mode standard/pro e base_tile_id só em pro; custos (standard 1 geração, pro 15); map_object transparente até 40 000 px e inpainting ≤192²; object states 'SAME object in another condition'; inpaint_image congela fora da máscara; escadas de candidatos/custo do create_image_pro e recibo como fonte de verdade.",
+   "frentes": [
+    "C:C04"
+   ]
+  },
+  {
+   "url": "https://api.pixellab.ai/v1/openapi.json",
+   "title": "Pixel Lab API v1 — OpenAPI specification",
+   "author": "PixelLab",
+   "kind": "official-spec",
+   "claim": "v1 com 8 operações (pixflux, bitforge, animate skeleton/text, rotate, inpaint, estimate-skeleton, balance); pixflux ≤400, bitforge/inpaint/rotate ≤200; SHA-256 eb7a18b1…",
+   "frentes": [
+    "C:C02"
+   ]
+  },
+  {
+   "url": "https://api.pixellab.ai/v2/llms.txt",
+   "title": "Pixel Lab API — llms.txt",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Índice dos endpoints por secção com marcação legacy; ligações para OpenAPI, SDKs, servidor MCP e guias.",
+   "frentes": [
+    "C:C03"
+   ]
+  },
+  {
+   "url": "https://api.pixellab.ai/v2/openapi.json",
+   "title": "Pixel Lab API v2 — OpenAPI specification (version 'dev')",
+   "author": "PixelLab",
+   "kind": "official-spec",
+   "claim": "Especificação v2: 102 caminhos/113 operações, SHA-256 ae1f76eb…; limites e parâmetros de generate-image-v2, pixen, pixflux, bitforge, pro-flash, tilesets (top-down e sidescroller), tiles-pro, map-objects, objects/states, inpaint(-v3/-pro-flash), edit(-pixen/-v2), rotate, animate-v3, unzoom, correct, reduce-colors; Pro Flash: 'same seed does not promise the same image'; inpaint pro flash preserva RGBA fora da máscara.",
+   "frentes": [
+    "C:C01",
+    "pacote:P01"
+   ]
+  },
+  {
+   "url": "https://arxiv.org/abs/2404.02733",
+   "title": "InstantStyle: Free Lunch towards Style-Preserving in Text-to-Image Generation",
+   "author": "Haofan Wang et al.",
+   "kind": "paper",
+   "claim": "04/2024: estilo e conteúdo entrelaçados nas referências; separação por subtração de features e injeção só em blocos de estilo.",
+   "frentes": [
+    "C:C46"
+   ]
+  },
+  {
+   "url": "https://arxiv.org/abs/2409.14184",
+   "title": "Content-aware Tile Generation using Exterior Boundary Inpainting",
+   "author": "Sam Sartor, Pieter Peers",
+   "kind": "paper",
+   "claim": "2024 (DOI 10.1145/3687981): geração de tiles como inpainting com condições de fronteira exterior, sem treino; Wang e Dual Wang.",
+   "frentes": [
+    "C:C38"
+   ]
+  },
+  {
+   "url": "https://arxiv.org/html/2412.15185v1",
+   "title": "Tiled Diffusion",
+   "author": "Or Madar, Ohad Fried",
+   "kind": "paper",
+   "claim": "CVPR 2025: cópia de faixas de latente a cada passo para acolchoar lados ligados; janela de contexto; similaridade de largura 5 no latente; artefactos nas ligações X/Y; padding circular só faz auto-tiling.",
+   "frentes": [
+    "C:C40"
+   ]
+  },
+  {
+   "url": "https://astropulse.gitbook.io/retro-diffusion/aseprite-extension/retro-diffusion-scripts/k-centroid-resize-menu",
+   "title": "K-Centroid Resize Menu — Retro Diffusion docs",
+   "author": "Astropulse",
+   "kind": "official-doc",
+   "claim": "Divide em tiles e escolhe a cor mais proeminente por k-means; 2 centroides por omissão; mais centroides, mais ruído.",
+   "frentes": [
+    "C:C31"
+   ]
+  },
+  {
+   "url": "https://book.leveldesignbook.com/process/blockout/metrics",
+   "title": "Metrics (The Level Design Book)",
+   "author": "Robert Yang et al.",
+   "kind": "secondary",
+   "claim": "Metricas: real (polegadas) jogador 69, porta 36x80, parede 96, degrau 7x11; Source 72 / 56x112 / 128 / 8x12; Unreal 176 cm / 110x220 / 300 / 15x25; Unity 1,8 m / 1,25x2,5 / 3,0. 'Don't follow real world scale'; 'build at the player's scale'; escadas a 30-35 graus.",
+   "frentes": [
+    "A:S18",
+    "B:F41"
+   ]
+  },
+  {
+   "url": "https://cloud.google.com/blog/products/ai-machine-learning/ultimate-prompting-guide-for-nano-banana",
+   "title": "The ultimate Nano Banana prompting guide",
+   "author": "Khulan Davaajav, Hussain Chinoy (Google Cloud)",
+   "kind": "official-doc",
+   "claim": "06/03/2026: moldura positiva ('empty street' em vez de 'no cars'); verbo forte; termos de câmara; fórmula referências + relação + cenário; até 14 referências; dizer o que fica igual.",
+   "frentes": [
+    "C:C24"
+   ]
+  },
+  {
+   "url": "https://community.aseprite.org/t/export-sprite-sheet-difference-between-trim-sprite-and-trim-cels/17365",
+   "title": "Export Sprite Sheet — Trim Sprite vs Trim Cels (fórum Aseprite)",
+   "author": "Comunidade Aseprite",
+   "kind": "forum",
+   "claim": "Exemplos com JSON: em Trim Sprite todos os frames têm o mesmo spriteSourceSize (x,y,w,h relativos à tela); em Trim Cels cada frame tem o seu; sourceSize mantém o tamanho da tela (32x32) nos dois modos; frame é a caixa na folha.",
+   "frentes": [
+    "B:F46"
+   ]
+  },
+  {
+   "url": "https://community.flowlab.io/t/mini-rant-stop-using-mixels/38287",
+   "title": "Mini-rant: stop using mixels",
+   "author": "sup3r87 (Flowlab Community)",
+   "kind": "secondary",
+   "claim": "Mixels so numa camada de fundo, e mesmo ai 'you still can't change the pixel size within the background'; manter uma so dimensao de pixel por estilo.",
+   "frentes": [
+    "A:S32"
+   ]
+  },
+  {
+   "url": "https://community.openai.com/t/gpt-image-1-input-fidelity/1317640",
+   "title": "GPT Image 1 Input Fidelity — OpenAI community",
+   "author": "OpenAI community",
+   "kind": "community",
+   "claim": "Discussão de 2025 sobre input_fidelity nas edições; com máscara e fidelidade alta o modelo desvia-se mais dentro da máscara (relato; lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C22"
+   ]
+  },
+  {
+   "url": "https://community.playstarbound.com/threads/how-tile-textures-work.44646/",
+   "title": "How Tile Textures Work (tutorial)",
+   "author": "comunidade Starbound (2013)",
+   "kind": "secondary",
+   "claim": "[NAO ABERTO; via resumo de pesquisa] Os tiles do Starbound tem 8x8 px; o tutorial declara-se desatualizado.",
+   "frentes": [
+    "A:S11"
+   ]
+  },
+  {
+   "url": "https://cpl.cc.gatech.edu/projects/graphcuttextures",
+   "title": "Graphcut Textures: Image and Video Synthesis Using Graph Cuts",
+   "author": "Vivek Kwatra, Arno Schödl, Irfan Essa, Greg Turk, Aaron Bobick",
+   "kind": "paper",
+   "claim": "SIGGRAPH 2003: retalhos copiados e unidos ao longo de costuras ótimas por graph cut.",
+   "frentes": [
+    "C:C45"
+   ]
+  },
+  {
+   "url": "https://dev.to/jenissimo/how-to-tame-your-ai-pixel-art-3pk5",
+   "title": "How to Tame Your AI Pixel Art",
+   "author": "Eugeniy Smirnov (jenissimo)",
+   "kind": "practitioner",
+   "claim": "30/07/2025: método do unfake.js (Sobel, histograma de picos, alinhamento por deslocamento, Wu, dominante com margem 5%); falhas de grade, antialias, paleta; limites para imagens demasiado pictóricas.",
+   "frentes": [
+    "C:C25"
+   ]
+  },
+  {
+   "url": "https://dev.to/kenjidev9662/practical-workflow-for-ai-pixel-art-gemini-2d-animation-experiment-21le",
+   "title": "Practical Workflow for AI Pixel Art: Gemini 2D Animation Experiment",
+   "author": "Kenji",
+   "kind": "practitioner",
+   "claim": "14/03 (ano não indicado): pranchas laterais com Nano Banana 2; sem PNG transparente, fundo preto/verde recortado; combos perdem consistência.",
+   "frentes": [
+    "C:C50"
+   ]
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/guides/image-generation",
+   "title": "Image generation — OpenAI API guide",
+   "author": "OpenAI",
+   "kind": "official-doc",
+   "claim": "Modelos gpt-image-2.5-sunburst/flare; tamanhos livres (múltiplos de 16, 1:3–3:1, ≤3840, 655 360–8 294 400 px, >2560×1440 experimental); transparência; máscara prompt-based na 1.ª imagem; input_fidelity a omitir no gpt-image-2; limitações de consistência e posição; gpt-image-1 desligado a 23/10/2026; preços por token.",
+   "frentes": [
+    "C:C17"
+   ]
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst",
+   "title": "GPT-Image-2.5 Sunburst — model page",
+   "author": "OpenAI",
+   "kind": "official-doc",
+   "claim": "Snapshot gpt-image-2.5-sunburst-2026-09-08; endpoints generations, edits, batch; inpainting; preços 8/30 USD por M tokens (15 em batch); limites de taxa.",
+   "frentes": [
+    "C:C19"
+   ]
+  },
+  {
+   "url": "https://developers.openai.com/api/reference/resources/images.md",
+   "title": "Images — OpenAI API reference",
+   "author": "OpenAI",
+   "kind": "official-spec",
+   "claim": "Edição: até 16 imagens; background transparent suportado nos 2.5 e em preview no gpt-image-2; input_fidelity high/low no 1.5, low no 1-mini, omitir no gpt-image-2; tamanhos arbitrários até 3840×2160; qualidade xhigh/max nos 2.5; sem parâmetro seed.",
+   "frentes": [
+    "C:C18"
+   ]
+  },
+  {
+   "url": "https://developers.openai.com/cookbook/examples/multimodal/image-gen-1.5-prompting_guide",
+   "title": "gpt-image-1.5 prompting guide (cookbook, archived)",
+   "author": "OpenAI",
+   "kind": "official-doc",
+   "claim": "Mesmas práticas para o 1.5; input_fidelity high para manter semelhança em edições; âncora de personagem reutilizável.",
+   "frentes": [
+    "C:C21"
+   ]
+  },
+  {
+   "url": "https://developers.openai.com/cookbook/examples/multimodal/image-gen-models-prompting-guide",
+   "title": "GPT image models prompting guide (cookbook, archived)",
+   "author": "OpenAI",
+   "kind": "official-doc",
+   "claim": "Ordem cena→assunto→detalhes→restrições; 'change only X' + repetir lista a preservar; referências por índice e descrição; 'If layout matters, call out placement'; transparência em preview no gpt-image-2; >2560×1440 mais variável; data 21/04/2026.",
+   "frentes": [
+    "C:C20"
+   ]
+  },
+  {
+   "url": "https://doc.mapeditor.org/en/stable/manual/terrain/",
+   "title": "Using Terrains (Tiled manual)",
+   "author": "Thorbjørn Lindeijer e contribuidores do Tiled",
+   "kind": "docs",
+   "claim": "Corner set 16, Edge set 16 ('comum para estradas, cercas ou plataformas'), Mixed 256 ou reduzido (blob 47); probabilidade por tile/terreno; probabilidade 0 mantém a informação sem colocar; sem transição o pincel não sabe ajudar.",
+   "frentes": [
+    "B:F08"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/3.5/tutorials/2d/using_tilemaps.html",
+   "title": "Using TileMaps — autotile (Godot 3.5 docs)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "Bitmask 2x2 = 15 tiles; 3x3 (minimal) = 47; 3x3 = 256 (cantos só na diagonal).",
+   "frentes": [
+    "B:F14"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_atlastexture.html",
+   "title": "AtlasTexture (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "Recorta outra textura por region; margin para pequenos ajustes; filter_clip evita bleeding.",
+   "frentes": [
+    "B:F57"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_canvasitemmaterial.html",
+   "title": "CanvasItemMaterial (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "light_mode NORMAL/UNSHADED/LIGHT_ONLY; blend_mode MIX/ADD/SUB/MUL/PREMULT_ALPHA.",
+   "frentes": [
+    "B:F55"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_canvastexture.html",
+   "title": "CanvasTexture (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "Textura 2D com diffuse, normal e specular; normal só tem efeito com Light2D.",
+   "frentes": [
+    "B:F56"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_ninepatchrect.html",
+   "title": "NinePatchRect (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "AXIS_STRETCH_MODE_STRETCH pode distorcer; TILE repete sem distorção; TILE_FIT repete e estica; patch margins.",
+   "frentes": [
+    "B:F52"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_parallax2d.html",
+   "title": "Parallax2D (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "autoscroll, follow_viewport, ignore_camera_scroll, limit_begin/end, repeat_size, repeat_times, screen_offset, scroll_offset, scroll_scale; o nó sobrepõe a sua posição; physics_interpolation_mode sobreposto.",
+   "frentes": [
+    "B:F48"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_projectsettings.html",
+   "title": "ProjectSettings (snap_2d_transforms_to_pixel, snap_2d_vertices_to_pixel, stretch)",
+   "author": "Godot Engine documentation (texto em godot-docs/classes/class_projectsettings.rst)",
+   "kind": "primary",
+   "claim": "snap_2d_transforms_to_pixel arredonda as posicoes dos CanvasItem a pixeis inteiros, com custo na suavidade da camara; nao combinar com snap_2d_vertices_to_pixel; scale_mode 'integer' da aparencia nitida; canvas_items perde a correspondencia 1:1 e e o padrao a partir do 4.7.",
+   "frentes": [
+    "A:S35"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_sprite2d.html",
+   "title": "Sprite2D (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "centered, offset, region_enabled, region_rect, region_filter_clip_enabled, hframes/vframes, flip_h/v.",
+   "frentes": [
+    "B:F58"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_tiledata.html",
+   "title": "TileData (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "probability (padrões aleatórios), texture_origin, y_sort_origin, z_index, terrain/terrain_set, set_terrain_peering_bit, set_collision_polygon_one_way(_margin), set_occluder_polygon, modulate, material, set_custom_data.",
+   "frentes": [
+    "B:F11"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_tilemaplayer.html",
+   "title": "TileMapLayer (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "Uma camada por nó; set_cells_terrain_connect/path; rendering_quadrant_size; collision/occlusion/navigation; _use_tile_data_runtime_update e _tile_data_runtime_update.",
+   "frentes": [
+    "B:F12"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_tileset.html",
+   "title": "TileSet (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "TERRAIN_MODE_MATCH_CORNERS_AND_SIDES / MATCH_CORNERS / MATCH_SIDES; enum CellNeighbor com 16 valores.",
+   "frentes": [
+    "B:F10"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/classes/class_tilesetatlassource.html",
+   "title": "TileSetAtlasSource (Godot class reference)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "create_tile(coords, size): tiles com várias células do atlas; margins, separation, texture_region_size, use_texture_padding (1 px de padding).",
+   "frentes": [
+    "B:F16"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/tutorials/2d/2d_lights_and_shadows.html",
+   "title": "2D lights and shadows (Godot docs)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "PointLight2D, DirectionalLight2D, LightOccluder2D, cull masks, CanvasTexture normais/especular; luz calculada à resolução do viewport; snap de LIGHT_VERTEX/SHADOW_VERTEX; filtro de sombra None para pixel art.",
+   "frentes": [
+    "B:F54",
+    "pacote:T06"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/tutorials/2d/2d_parallax.html",
+   "title": "2D Parallax (Godot docs)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "scroll_scale, repeat_size (salto), repeat_times para zoom, scroll_offset; textura que repete e >= viewport; canvas de repetição começa em (0,0); escala não conta para repeat_size; Parallax2D recomendado sobre ParallaxLayer.",
+   "frentes": [
+    "B:F47",
+    "pacote:T04"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html",
+   "title": "Using TileMaps (Godot docs)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "Pintura de terreno Connect vs Path; pintura aleatória e scattering para detalhe ocasional sem repetir; padrões guardados no TileSet; scene tiles via coleção de cenas.",
+   "frentes": [
+    "B:F13"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/tutorials/2d/using_tilesets.html",
+   "title": "Using TileSets (Godot docs)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "Três modos de terreno; peering bits com -1 = vazio; alternativos com Flip H/V/Transpose sem herdar propriedades; camadas de física, oclusão e dados personalizados; texture origin; margens/separação; use texture padding.",
+   "frentes": [
+    "B:F09",
+    "pacote:T05"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+   "title": "Multiple resolutions",
+   "author": "Godot Engine documentation",
+   "kind": "primary",
+   "claim": "Para pixel art: stretch mode 'viewport' e scale mode 'integer'; 'Most pixel art games use viewport sizes between 256x224 and 640x480'; '640x360 is a good baseline'.",
+   "frentes": [
+    "A:S34",
+    "B:F51"
+   ]
+  },
+  {
+   "url": "https://docs.godotengine.org/en/stable/tutorials/shaders/screen-reading_shaders.html",
+   "title": "Screen-reading shaders (Godot docs)",
+   "author": "Godot Engine contributors",
+   "kind": "docs",
+   "claim": "hint_screen_texture lê o que já foi desenhado; cópia única do ecrã na primeira leitura; BackBufferCopy num ponto da árvore; ler fora da região copiada é indefinido.",
+   "frentes": [
+    "B:F59"
+   ]
+  },
+  {
+   "url": "https://docs.tmodloader.net/docs/stable/class_player.html",
+   "title": "Player Class Reference (tModLoader)",
+   "author": "tModLoader",
+   "kind": "secondary",
+   "claim": "Player.defaultWidth = 20, Player.defaultHeight = 42 (hitbox do jogador do Terraria, em px).",
+   "frentes": [
+    "A:S07"
+   ]
+  },
+  {
+   "url": "https://docs.tmodloader.net/docs/stable/class_tile_object_data.html",
+   "title": "TileObjectData (tModLoader docs)",
+   "author": "tModLoader contributors",
+   "kind": "docs",
+   "claim": "Origin, AnchorBottom/Top/Left/Right/Wall, Width/Height em tiles, CoordinateHeights (16, a última pode ser 18), CoordinateWidth 16, CoordinatePadding 2, RandomStyleRange.",
+   "frentes": [
+    "B:F28"
+   ]
+  },
+  {
+   "url": "https://docs.unity3d.com/2022.3/Documentation/Manual/9SliceSprites.html",
+   "title": "9-slicing Sprites (Unity Manual 2022.3)",
+   "author": "Unity Technologies",
+   "kind": "docs",
+   "claim": "Sliced: cantos mantêm o tamanho, arestas e centro esticam; Tiled: o sprite não escala, arestas e centro repetem; Continuous repete uniformemente; Adaptive só repete ao atingir o Stretch Value (1 = ao dobro do tamanho); escalar pela Transform ignora o 9-slicing.",
+   "frentes": [
+    "B:F53"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.1145/1183287.1183296",
+   "title": "An alternative for Wang tiles: colored edges versus colored corners (ACM TOG 25(4), 2006)",
+   "author": "Ares Lagae, Philip Dutré",
+   "kind": "paper",
+   "claim": "Lido pelo resumo: tiles de aresta não restringem os vizinhos diagonais (problema do canto); tiles de canto restringem-nos e são mais fáceis de usar.",
+   "frentes": [
+    "B:F61"
+   ]
+  },
+  {
+   "url": "https://dpadstudio.com/Blog/postHibit.html",
+   "title": "Blog D-Pad Studio (resolucao 640x360)",
+   "author": "D-Pad Studio (criadores de Owlboy)",
+   "kind": "primary",
+   "claim": "Propoe 640x360 como base para jogos 2D em pixel (escala para 720p, 1080p e 4K); o Owlboy estava preso a 1024x768 e o suporte widescreen obrigou a redesenhar 'all of the backdrops'.",
+   "frentes": [
+    "A:S12"
+   ]
+  },
+  {
+   "url": "https://eastwardgame.com/media/",
+   "title": "Eastward · Media oficial",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Capturas oficiais de ambiente; detalhes e contraste.",
+   "frentes": [
+    "pacote:G04"
+   ]
+  },
+  {
+   "url": "https://forum.defold.com/t/water-reflections/75802",
+   "title": "Water reflections (fórum Defold)",
+   "author": "Vários utilizadores",
+   "kind": "forum",
+   "claim": "Secundária: aponta para o devlog do autor no TIGSource (tópico 40539); clonar e virar a cena e aplicar efeito de água; sugere segunda passagem de distorção a outra velocidade; exemplo com render target.",
+   "frentes": [
+    "B:F36"
+   ]
+  },
+  {
+   "url": "https://forum.godotengine.org/t/aiming-for-pixel-perfection-in-godot/79368",
+   "title": "Aiming for pixel perfection in Godot (fórum)",
+   "author": "Ubiguchi e outros",
+   "kind": "forum",
+   "claim": "PR #87297 (4.3) simplifica o snap de transformadas 2D arredondando a posição de cada CanvasItem; o snap não resolve sozinho tremuras de plataformas móveis.",
+   "frentes": [
+    "B:F50"
+   ]
+  },
+  {
+   "url": "https://forums.tigsource.com/index.php?topic=40539.0",
+   "title": "Kingdom (devlog TIGSource)",
+   "author": "Thomas van den Berg (noio)",
+   "kind": "primary",
+   "claim": "[INACESSIVEL: 403] Segundo resumo de pesquisa, nao verificado: o Kingdom renderiza para uma 'screen texture' pequena que depois e ampliada, em vez de escalar cada sprite.",
+   "frentes": [
+    "A:S03"
+   ]
+  },
+  {
+   "url": "https://gamedeveloper.com/production/art-design-deep-dive-giving-back-colors-to-cryptic-worlds-in-i-dead-cells-i-",
+   "title": "Art Design Deep Dive: Giving back colors to cryptic worlds in Dead Cells",
+   "author": "Gwenael Masse (Motion Twin)",
+   "kind": "primary",
+   "claim": "Parallax pintado em cinzentos e depois com gradient map; 'the background of the levels and the collisions have to contrast as much as possible'; interativos em contraste intermedio; ameacas saturadas.",
+   "frentes": [
+    "A:S14"
+   ]
+  },
+  {
+   "url": "https://gamingbolt.com/our-game-is-480p-yeah-its-low-resolution-and-very-intentionally-so",
+   "title": "'Our Game is 480p. Yeah, It's Low Resolution, And Very Intentionally So'",
+   "author": "GamingBolt (entrevista a Alx Preston, Heart Machine)",
+   "kind": "secondary",
+   "claim": "[NAO ABERTO DIRETAMENTE; via resumo de pesquisa] Preston: o jogo e '480p', de baixa resolucao intencionalmente; em 2D 'it's just the resolution you draw your sprite at'.",
+   "frentes": [
+    "A:S16"
+   ]
+  },
+  {
+   "url": "https://github-wiki-see.page/m/EverestAPI/Resources/wiki/Custom-Tilesets",
+   "title": "Custom Tilesets (Celeste, Everest wiki)",
+   "author": "Comunidade Everest (modding de Celeste)",
+   "kind": "wiki",
+   "claim": "ForegroundTiles.xml vs BackgroundTiles.xml; atributo ignores para não ligar a outros tilesets; copy escolhe o template.",
+   "frentes": [
+    "B:F26"
+   ]
+  },
+  {
+   "url": "https://github-wiki-see.page/m/EverestAPI/Resources/wiki/Tileset-Format-Reference",
+   "title": "Tileset Format Reference (Celeste, Everest wiki)",
+   "author": "Comunidade Everest (modding de Celeste)",
+   "kind": "wiki",
+   "claim": "Máscaras 3x3 com 1/0/x; camadas padding e center; listas de tiles por regra numa grelha de 8x8; scanWidth/scanHeight configuráveis.",
+   "frentes": [
+    "B:F25"
+   ]
+  },
+  {
+   "url": "https://github.com/Astropulse/K-Centroid-Aseprite",
+   "title": "K-Centroid-Aseprite",
+   "author": "Astropulse",
+   "kind": "repo",
+   "claim": "Algoritmo de redução k-means em Lua para Aseprite, MIT; lento em reduções grandes (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C32"
+   ]
+  },
+  {
+   "url": "https://github.com/Hugo-Dz/spritefusion-pixel-snapper",
+   "title": "spritefusion-pixel-snapper",
+   "author": "Hugo Duprez",
+   "kind": "repo",
+   "claim": "Encosta pixels a uma grade, paleta quantizada (16 por omissão) ou hex; tamanho de pixel auto ou entre 1 e metade do menor lado; CLI e WASM.",
+   "frentes": [
+    "C:C27"
+   ]
+  },
+  {
+   "url": "https://github.com/KennethJAllen/proper-pixel-art",
+   "title": "proper-pixel-art",
+   "author": "Kenneth J. Allen",
+   "kind": "repo",
+   "claim": "Canny + fecho + Hough probabilístico + perfis de gradiente; malha com linhas em falta subdivididas; cor dominante ou paleta; funciona bem se já aproximadamente alinhado à grade.",
+   "frentes": [
+    "C:C28"
+   ]
+  },
+  {
+   "url": "https://github.com/NoelFB/Celeste/blob/master/Source/Player/Player.cs",
+   "title": "Celeste - Player.cs (classe publicada pelo estudio)",
+   "author": "Maddy Thorson / Noel Berry (Extremely OK Games)",
+   "kind": "primary",
+   "claim": "normalHitbox = new Hitbox(8, 11, -4, -11); duckHitbox 8x6; normalHurtbox 8x9. A hitbox da Madeline tem 8x11 px.",
+   "frentes": [
+    "A:S06"
+   ]
+  },
+  {
+   "url": "https://github.com/Portponky/better-terrain",
+   "title": "Better Terrain (plugin Godot 4)",
+   "author": "Portponky",
+   "kind": "code",
+   "claim": "Lido por resumo de pesquisa: substitui o '3x3' e '3x3 minimal' do Godot 3 e o 'Match sides' / 'Match corners and sides' do Godot 4 (correspondência Match Corners and Sides ~ 3x3 minimal).",
+   "frentes": [
+    "B:F15"
+   ]
+  },
+  {
+   "url": "https://github.com/Retro-Diffusion/api-examples",
+   "title": "Retro Diffusion API examples",
+   "author": "Retro Diffusion",
+   "kind": "repo",
+   "claim": "Estilos rd_pro__platformer (12–256), rd_plus__environment (64–384), rd_tile__tileset/single_tile/scene_object; tile_x/tile_y e seam_tiling com seam_width; strength 0–1; input_palette; seed '≈ same image'; preços por imagem e check_cost.",
+   "frentes": [
+    "C:C33"
+   ]
+  },
+  {
+   "url": "https://github.com/godotengine/godot/pull/88424",
+   "title": "Physics interpolation (2D) — PR #88424",
+   "author": "rburing, lawnjelly, markdibarry e outros",
+   "kind": "code",
+   "claim": "Parallax não deve ser interpolado; Parallax2D depende de saltar entre dois pontos; interpolação desligada no método de repetição; fundido para 4.3 (2024-03-24).",
+   "frentes": [
+    "B:F49"
+   ]
+  },
+  {
+   "url": "https://github.com/jess-hammer/dual-grid-tilemap-system-godot",
+   "title": "Dual-Grid Tilemap System in Godot (C#)",
+   "author": "jess::codes (Jess Hammer)",
+   "kind": "code",
+   "claim": "Node2D que gere uma TileMapLayer 'mundo' e uma ou mais de 'visualização'; 16 regras; 4 vizinhos em vez de 8; 16 tiles (6 com simetria); cantos arredondados; não usa terrenos do Godot; credita Oskar Stålberg.",
+   "frentes": [
+    "B:F06"
+   ]
+  },
+  {
+   "url": "https://github.com/pixellab-code/pixellab-mcp",
+   "title": "pixellab-mcp — README",
+   "author": "PixelLab",
+   "kind": "repo",
+   "claim": "README lista só 4 ferramentas (create_character, animate_character, create_tileset, create_isometric_tile); desatualizado face ao servidor.",
+   "frentes": [
+    "C:C05"
+   ]
+  },
+  {
+   "url": "https://github.com/samsartor/content_aware_tiles",
+   "title": "content_aware_tiles",
+   "author": "Sam Sartor",
+   "kind": "repo",
+   "claim": "Implementação: tiles auto-tiláveis, estocásticos e Wang; inpainting SD2 a 256 px (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C39"
+   ]
+  },
+  {
+   "url": "https://godotshaders.com/shader/testing_the_waters/",
+   "title": "Testing the waters (shader Godot)",
+   "author": "Nicko4di, 2026-03-31",
+   "kind": "code",
+   "claim": "Espelha UV na linha da água; arredonda UV a uma grelha 480x270 antes e depois da distorção; duas texturas de deslocamento; tinta e distorção com a profundidade; 'inspirado no post de Kingdom'.",
+   "frentes": [
+    "B:F37"
+   ]
+  },
+  {
+   "url": "https://graphics.uni-konstanz.de/publikationen/Cohen2003WangTilesImage/index.html",
+   "title": "Wang Tiles for Image and Texture Generation (SIGGRAPH 2003)",
+   "author": "Michael F. Cohen, Jonathan Shade, Stefan Hiller, Oliver Deussen",
+   "kind": "paper",
+   "claim": "Encher o plano sem repetição visível com poucos tiles de Wang de arestas coloridas; extensão com informação nos cantos para objetos sobre várias arestas.",
+   "frentes": [
+    "B:F60"
+   ]
+  },
+  {
+   "url": "https://hackmd.io/@tModLoader/HJUiVKXzu",
+   "title": "Framing (guia tModLoader)",
+   "author": "Comunidade tModLoader",
+   "kind": "wiki",
+   "claim": "Terraria: tiles de terreno 'emoldurados' mudam de aspeto com os vizinhos (frameX/frameY); multitiles FrameImportant têm aspeto fixo; o jogo emoldura ao carregar o mundo.",
+   "frentes": [
+    "B:F27"
+   ]
+  },
+  {
+   "url": "https://huggingface.co/Arrexel/pattern-diffusion",
+   "title": "Pattern Diffusion — model card",
+   "author": "Arrexel",
+   "kind": "repo",
+   "claim": "Padding circular em todas as camadas piora FID/CLIP; circular só nos passos finais + noise rolling evita a perda (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C42"
+   ]
+  },
+  {
+   "url": "https://ipol.im/pub/art/2017/171/article_lr.pdf",
+   "title": "Image Quilting (Efros & Freeman 2001) — reimplementação IPOL",
+   "author": "IPOL",
+   "kind": "paper",
+   "claim": "Retalhos sobrepostos unidos por corte de erro mínimo na sobreposição (programação dinâmica); falhas de crescimento de lixo e cópia literal (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C44"
+   ]
+  },
+  {
+   "url": "https://irisogli.blogspot.com/2026/03/create-free-2d-parallax-system-using-ai.html",
+   "title": "Create free 2D parallax system using AI",
+   "author": "irisogli (blog)",
+   "kind": "practitioner",
+   "claim": "03/2026: gerar uma cena e depois planos far/mid/near com o mesmo ângulo, horizonte, luz e estilo, em 16:9 (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C51"
+   ]
+  },
+  {
+   "url": "https://itch.io/post/12886254",
+   "title": "Comentarios de 64x64 Side View Battlers",
+   "author": "SolaarNoble e CParkDev (itch.io)",
+   "kind": "secondary",
+   "claim": "Tilesets comuns de 16x16, 24x24 ou 32x32 (48x48 no RPG Maker); um personagem de 64 px de altura e 'pretty large' para andar num mapa.",
+   "frentes": [
+    "A:S19"
+   ]
+  },
+  {
+   "url": "https://itch.io/post/14375894",
+   "title": "Comentarios de Zombie Interior - HD Isometric Tileset",
+   "author": "compriab e SmallScaleInt (itch.io)",
+   "kind": "secondary",
+   "claim": "Portas grandes demais: 'their size seems like that of a child in relation to the door'; o problema esta so nas portas e janelas; 'Orthographic viewpoints often cause issues with visual scale'; o autor promete portas menores.",
+   "frentes": [
+    "A:S20"
+   ]
+  },
+  {
+   "url": "https://itch.io/post/14866462",
+   "title": "Comentário sobre o reflexo à Kingdom (itch.io)",
+   "author": "Martin Candela (rellikiox)",
+   "kind": "forum",
+   "claim": "Secundária: seguindo o post do autor de Kingdom no TIGSource, desenhar o que se reflete num canvas, virar, passar por shader de distorção e tingir de azul.",
+   "frentes": [
+    "B:F35"
+   ]
+  },
+  {
+   "url": "https://itch.io/post/8448610",
+   "title": "Comentario sobre Pixel Logic (Michael Azzi), p. 21",
+   "author": "utilizador itch.io (citacao em segunda mao)",
+   "kind": "secondary",
+   "claim": "[NAO ABERTO; via resumo de pesquisa] O Pixel Logic diz para nunca misturar resolucoes e manter a mesma espessura de contorno; o livro esta em https://gumroad.com/l/pixel-logic.",
+   "frentes": [
+    "A:S31"
+   ]
+  },
+  {
+   "url": "https://kingdomthegame.com/kingdom-two-crowns/",
+   "title": "Kingdom Two Crowns · site oficial",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Resultado lateral e galeria oficial.",
+   "frentes": [
+    "pacote:G01"
+   ]
+  },
+  {
+   "url": "https://multidiffusion.github.io/",
+   "title": "MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation",
+   "author": "Omer Bar-Tal, Lior Yariv, Yaron Lipman, Tali Dekel",
+   "kind": "paper",
+   "claim": "ICML 2023 (arXiv 2302.08113): funde trajetórias sobre recortes sobrepostos numa otimização; panoramas 512×4608.",
+   "frentes": [
+    "C:C41"
+   ]
+  },
+  {
+   "url": "https://pixellab.ai/select-interface",
+   "title": "Choose How You Want to Create — PixelLab",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Interfaces: Simple Creator, Character Creator, Map Workshop (Pixel Apprentice+), Pixelorama, extensão Aseprite, Game Builder, MCP, API.",
+   "frentes": [
+    "C:C14"
+   ]
+  },
+  {
+   "url": "https://pixelover.io/",
+   "title": "PixelOver",
+   "author": "PixelOver",
+   "kind": "tool",
+   "claim": "Escala/rotação pixel-perfect, indexação de paleta, dither, contornos; algoritmos determinísticos, 'Nothing is AI-generated'.",
+   "frentes": [
+    "C:C37"
+   ]
+  },
+  {
+   "url": "https://pyezo.itch.io/pixelfixer",
+   "title": "PixelFixer",
+   "author": "pyezo",
+   "kind": "tool",
+   "claim": "Ferramenta Windows para reduzir pixel art gerada por IA; deteção de tamanho de pixel treinada em dados rotulados, tamanhos não inteiros; alinhamento manual só planeado.",
+   "frentes": [
+    "C:C30"
+   ]
+  },
+  {
+   "url": "https://pypi.org/project/unfake/",
+   "title": "unfake (PyPI)",
+   "author": "porta de unfake.js",
+   "kind": "repo",
+   "claim": "Porta Python/Rust: deteção de escala runs-based e edge-aware, downscale por cor dominante, --no-snap, limpeza morph/jaggy (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C26"
+   ]
+  },
+  {
+   "url": "https://reddit.sentinel-team.org/posts/1r8owqw/snapshots/2026-02-21T05%3A50%3A01.663559Z",
+   "title": "Opiniões sobre PixelLab (tileset, personagens, animação) — espelho Reddit",
+   "author": "utilizadores Reddit",
+   "kind": "community",
+   "claim": "02/2026: opiniões mistas; tileset por outpainting elogiado; animação ainda fraca em sprites simples (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C56"
+   ]
+  },
+  {
+   "url": "https://reddit.sentinel-team.org/posts/1s4coqw/snapshots/2026-03-27T21%3A10%3A01.661162Z",
+   "title": "Sprite frames generation from hand-drawn or rendered art (r/aigamedev, espelho)",
+   "author": "utilizadores r/aigamedev",
+   "kind": "community",
+   "claim": "~08/2025: Gemini, Grok e ChatGPT mudam perspetiva e enquadramento arbitrariamente e trocam detalhes.",
+   "frentes": [
+    "C:C49"
+   ]
+  },
+  {
+   "url": "https://reddit.sentinel-team.org/posts/1smb4k4/snapshots/2026-04-17T17%3A15%3A22.941568Z",
+   "title": "r/aigamedev (espelho) — comentário sobre modelos gerais para spritesheets",
+   "author": "utilizador r/aigamedev",
+   "kind": "community",
+   "claim": "04/2026: comentário promocional diz que modelos gerais como o Nano Banana não produzem transparência nem entendem animação (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C55"
+   ]
+  },
+  {
+   "url": "https://replicate.com/blog/retro-diffusions-pixel-art-models-are-now-on-replicate",
+   "title": "Retro Diffusion's pixel art models are now on Replicate",
+   "author": "Replicate",
+   "kind": "vendor-blog",
+   "claim": "19/11/2025: rd-fast, rd-plus, rd-tile, rd-animation; 'trained specifically for grid-aligned, limited-palette pixel art'; maioria suporta tiling sem emenda e paletas.",
+   "frentes": [
+    "C:C35"
+   ]
+  },
+  {
+   "url": "https://replicate.com/retro-diffusion/rd-tile/readme",
+   "title": "rd-tile — Replicate model readme",
+   "author": "Retro Diffusion / Replicate",
+   "kind": "official-doc",
+   "claim": "Modos single tile, tile variation, tileset(_advanced), tile object, scene object; tilesets com transições entre materiais.",
+   "frentes": [
+    "C:C34"
+   ]
+  },
+  {
+   "url": "https://repository.tudelft.nl/record/uuid:b3c91b18-d9e8-48e0-91ce-8afafd2439d8",
+   "title": "Pixel Fixer: Semi-Automated Techniques for Correcting Pixel Art (BSc thesis, 2025)",
+   "author": "Rares Bites (TU Delft)",
+   "kind": "paper",
+   "claim": "Corrige banding e pillow-shading com regras artísticas e anotações; não é recuperação de grade (registo deu 503; descrição via resultado de pesquisa).",
+   "frentes": [
+    "C:C29"
+   ]
+  },
+  {
+   "url": "https://research.nvidia.com/publication/2023-07_interactive-ai-material-generation-and-editing-nvidia-omniverse",
+   "title": "Interactive AI Material Generation and Editing in NVIDIA Omniverse",
+   "author": "NVIDIA Research",
+   "kind": "paper",
+   "claim": "2023: convoluções com padding circular para texturas tiláveis (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C43"
+   ]
+  },
+  {
+   "url": "https://runware.ai/blog/retro-diffusion-creating-authentic-pixel-art-with-ai-at-scale",
+   "title": "Retro Diffusion: Creating authentic pixel art with AI at scale",
+   "author": "Félix Sanz (Runware)",
+   "kind": "vendor-blog",
+   "claim": "28/03/2025: dados, preparação e pós-processamento; redução própria por clustering + quantização; RD_FLUX sobre FLUX.",
+   "frentes": [
+    "C:C36"
+   ]
+  },
+  {
+   "url": "https://saint11.art/blog/3d-ref/",
+   "title": "Using 3d models as pixel art reference",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "primary",
+   "claim": "Gravar o modelo, reduzir tamanho e paleta no Aseprite ('we will just redraw the whole thing'), redesenhar numa camada por cima, ajustar o tempo e verificar no jogo.",
+   "frentes": [
+    "A:S36"
+   ]
+  },
+  {
+   "url": "https://saint11.art/blog/big-pixel-art/",
+   "title": "Big Pixel Art",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "primary",
+   "claim": "A peca 'Into Certain Death' (2022) 'was made using an AI-generated image as base': imagem de IA usada como base de pixel art redesenhada.",
+   "frentes": [
+    "A:S37"
+   ]
+  },
+  {
+   "url": "https://saint11.art/blog/consistency/",
+   "title": "Consistency",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "primary",
+   "claim": "'choose a resolution and stick to it'; 'the quarantine; styles never leak from one world to another'; escalar todos os sprites pelo mesmo inteiro; nada abaixo de 1 px; camadas 'stabilize in integer coordinates'; uma so paleta.",
+   "frentes": [
+    "A:S29"
+   ]
+  },
+  {
+   "url": "https://saint11.art/blog/scaling/",
+   "title": "Scaling Pixel Art",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "primary",
+   "claim": "Ampliar so por inteiros e com nearest; 'you shouldn't scale pixel art down'; excecao: arte ja ampliada; 'Up and Down' para alvos nao inteiros; misturar resolucoes so com canvases separados, multiplos inteiros e no maximo duas resolucoes.",
+   "frentes": [
+    "A:S28",
+    "pacote:A16"
+   ]
+  },
+  {
+   "url": "https://saint11.art/img/pixel-tutorials/Parallax.gif",
+   "title": "Parallax and Depth (tutorial em imagem)",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "tutorial",
+   "claim": "render_x = (x - camera.x) * scroll_factor + offset.x; primeiro plano com fator > 1; UI com 0; perto = saturação/contraste/luz altos, quente, muito detalhe; longe = o inverso, pode fundir-se com a cor do céu.",
+   "frentes": [
+    "B:F18"
+   ]
+  },
+  {
+   "url": "https://saint11.art/img/pixel-tutorials/Tiles.gif",
+   "title": "Making Tiles (tutorial em imagem)",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "tutorial",
+   "claim": "Tile mestre que repete nas 4 arestas (deslocar 50%, refazer o centro, deslocar outra vez); TOP/MID/BOT, fazer primeiro as arestas do meio; tubos, tile isolado, cantos internos, cruz; tile curinga; variar só o centro do meio e do topo.",
+   "frentes": [
+    "B:F17"
+   ]
+  },
+  {
+   "url": "https://saint11.art/img/pixel-tutorials/Water.gif",
+   "title": "Animating Water (tutorial em imagem)",
+   "author": "Pedro Medeiros (Saint11)",
+   "kind": "tutorial",
+   "claim": "Água com 2 camadas: a de cima com círculos a mudar de tamanho, sem mexer mais de 1 px; a de baixo deslocada a velocidade constante; ondas com um só cacho cada.",
+   "frentes": [
+    "B:F19"
+   ]
+  },
+  {
+   "url": "https://saint11.art/pixel_art_articles/article2/",
+   "title": "Saint11 · Cluster Sketching and Painting",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Massas, refinamento e pequenos sinais.",
+   "frentes": [
+    "pacote:A01"
+   ]
+  },
+  {
+   "url": "https://saint11.art/pixel_art_articles/article4/",
+   "title": "Saint11 · Basic Shading",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Volumes, sombras e brilhos.",
+   "frentes": [
+    "pacote:A02"
+   ]
+  },
+  {
+   "url": "https://saint11.art/pixel_art_articles/article5/",
+   "title": "Saint11 · Anti-Alias and Banding",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Decisões de aresta na grade.",
+   "frentes": [
+    "pacote:A03"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/115800/ss_5d7ceffe78305efe3125b2f806cb301f59531963.1920x1080.jpg",
+   "title": "Medicao: Owlboy, capturas Steam (s2-s4 a 720p, s5-s7 e s6 a 1080p)",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "2x a 720p e 3x a 1080p = vista 640x360; Otus ~36-38 px; balcao da loja ~45 px.",
+   "frentes": [
+    "A:M04"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1218210/cc71607f945ff06c8b15af4555c92c6e884402f2/ss_cc71607f945ff06c8b15af4555c92c6e884402f2.1920x1080.jpg",
+   "title": "Medicao: Coromon, capturas Steam",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 4 px a 1080p = vista 480x270 (6 de 6 capturas).",
+   "frentes": [
+    "A:M09"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1229240/ss_b25ed2e671e7b616ec14e7ed3a2f483909e368c4.1920x1080.jpg",
+   "title": "Medicao: Chained Echoes, capturas Steam",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 3 px = vista 640x360 em 2 de 6 capturas; nas restantes inconclusivo.",
+   "frentes": [
+    "A:M10"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1244090/ss_f756ff477590284c7192ffcef99237de056e4aeb.1920x1080.jpg",
+   "title": "Medicao: Sea of Stars, capturas Steam s1 e s6",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 3 px = vista 640x360 (6 de 6 capturas); Garl ~50 px; Zale agachado ~42 px.",
+   "frentes": [
+    "A:M07"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257850/ss_19c973259b736f14c4541ba044f3761b39a18737.1920x1080.jpg",
+   "title": "Medicao: Hyper Light Drifter, captura Steam s2",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 4 px a 1080p = vista 480x270 (5 de 6 capturas; uma a 5x); Drifter ~28 px; portal do templo ~54 px de altura e ~61 de largura.",
+   "frentes": [
+    "A:M06"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_b887651a93b0525739049eb4194f633de2df75be.1920x1080.jpg",
+   "title": "Medicao: Stardew Valley, capturas Steam",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 4 px a 1080p = vista 480x270 (5 de 6 capturas).",
+   "frentes": [
+    "A:M08"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/504230/ss_1ad297c2044cdcf450ee83e56350cafb590da755.1920x1080.jpg",
+   "title": "Medicao: Celeste, captura Steam s1 (cabana)",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 6 px = 320x180 (5 de 6 capturas); Madeline ~14 px; porta ~20 px (~1,4x); janela ~10-11 px com peitoril ~14 px; beiral ~39 (2,8x); cumeeira ~55 (3,9x); retratos de dialogo em alta resolucao, fora da grelha.",
+   "frentes": [
+    "A:M03"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/701160/1b1bdd1e3fc0b508cd3ef86dfc555bf520c5bf57/ss_1b1bdd1e3fc0b508cd3ef86dfc555bf520c5bf57.1920x1080.jpg",
+   "title": "Medicao: Kingdom Two Crowns (Olympus), captura Steam k5",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha ~5 px (vista ~384x216); pessoa ~52 px de ecra (~10 px nativos); porta dupla ~87 px de ecra (1,67x); beiral ~110 (2,1x); telhado ate ~199 (3,8x). A grelha difere de k1/k4 com o mesmo tamanho em ecra, o que sugere reamostragem por zoom.",
+   "frentes": [
+    "A:M02"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/701160/ss_ca9df45386d8ead4a0cf62a16c2524095a610f6c.1920x1080.jpg",
+   "title": "Medicao: Kingdom Two Crowns, capturas Steam k1 e k4 (ss_ca9df453..., ss_55d314b0...)",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 3 px a 1080p = vista 640x360; aldeoes e arqueiros 17-20 px; monarca montado ~40 px; muralha 26 px; base de pedra da torre 41 px; torre ~104 px; fundos na mesma grelha; chao a ~58% da altura do ecra.",
+   "frentes": [
+    "A:M01"
+   ]
+  },
+  {
+   "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/774361/ss_957b6216519c614984ee71c6f6a524d75ea6353b.1920x1080.jpg",
+   "title": "Medicao: Blasphemous, captura Steam s5",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Grelha 3 px a 1080p = vista 640x360 (6 de 8 capturas); inimigo de pe ~44-45 px.",
+   "frentes": [
+    "A:M05"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2018/11/16/pixelblog-11-landscape-pixeling",
+   "title": "Pixelblog 11 — Landscape Pixeling",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "tutorial",
+   "claim": "Perspetiva atmosférica: o distante toma a cor da neblina, menos saturação e menos cores; perto, contraste luz/sombra claro; mais perto do horizonte = mais distante.",
+   "frentes": [
+    "B:F23"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2019/11/12/pixelblog-23-parallax-scrolling",
+   "title": "Pixelblog 23 - Parallax Scrolling",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "primary",
+   "claim": "Arte a 1x; cada camada mais proxima avanca a taxas inteiras (1 px/frame, 1 px/2 frames); abaixo de 1 px/frame o movimento parece aos solavancos; o parallax nao cria profundidade se a cena parada nao a tiver.",
+   "frentes": [
+    "A:S30"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2019/2/23/pixelblog-14-cityscapes",
+   "title": "Pixelblog 14 - Cityscapes",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "primary",
+   "claim": "Na vista 3/4 os lados encurtam para cerca de 3/4 da largura; desenhos geometricos 'often more conservative than what is possible in real life'; esquema de cor uniforme para coesao.",
+   "frentes": [
+    "A:S24"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2020/5/21/pixelblog-28-side-view-tiles",
+   "title": "Pixelblog 28 - Side View Tiles",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "primary",
+   "claim": "Tiles de 16x16 px, pares e quadrados, de preferencia potencias de 2; 'Anything over 32x32px seems like overkill for pixel art'.",
+   "frentes": [
+    "A:S21"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2023/7/21/pixelblog-45-bricks-walls-doors-and-more",
+   "title": "Pixelblog 45 - Bricks, Walls, Doors and More",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "primary",
+   "claim": "Assets para tilemap de 16x16; com 1 px de argamassa os tijolos tem 15, 7, 3 ou 1 px; as sombras nao passam de um tile; tijolos da parede lateral mais baixos que os do topo.",
+   "frentes": [
+    "A:S22"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2024/7/25/pixelblog-51-city-builder",
+   "title": "Pixelblog 51 - City Builder",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "primary",
+   "claim": "Plantas em unidades de 16x16; a altura pode sair um pouco da planta por cima, nunca por baixo nem pelos lados; ordem telhado/estrutura -> janelas/portas -> sombras -> contornos; contornos subtis 'slightly darker than the adjacent pixels'; manter 'key characteristics'.",
+   "frentes": [
+    "A:S23"
+   ]
+  },
+  {
+   "url": "https://slynyrd.com/blog/2025/7/28/pixelblog-57-knights-monsters-amp-castles",
+   "title": "Pixelblog 57 - Knights, Monsters & Castles",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "primary",
+   "claim": "'push the detail just far enough until the mind can fill in the rest'; evitar 'too many small scattered clusters'; o castelo comeca por uma torre com telhado.",
+   "frentes": [
+    "A:S25"
+   ]
+  },
+  {
+   "url": "https://sorceress.games/blog/drift-a-parallax-ai-generator-25d-game-backgrounds-2026",
+   "title": "Drift: a parallax AI generator (2.5D game backgrounds 2026)",
+   "author": "Sorceress",
+   "kind": "vendor-blog",
+   "claim": "Camadas de jogo têm de tilar na horizontal, aspetos previsíveis (4:1 no plano médio), primeiro plano transparente (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C52"
+   ]
+  },
+  {
+   "url": "https://starbounder.org/Player",
+   "title": "Player",
+   "author": "Starbounder (wiki de Starbound)",
+   "kind": "secondary",
+   "claim": "'The Player is by default 2x4 blocks tall'; encolhe para 2x2 com techs de esfera.",
+   "frentes": [
+    "A:S10"
+   ]
+  },
+  {
+   "url": "https://stardewvalleywiki.com/Modding:Farmer_sprite",
+   "title": "Modding:Farmer sprite",
+   "author": "Stardew Valley Wiki",
+   "kind": "secondary",
+   "claim": "'Each sprite is 16 pixels wide by 32 pixels tall' (agricultor).",
+   "frentes": [
+    "A:S04"
+   ]
+  },
+  {
+   "url": "https://stardewvalleywiki.com/Modding:Maps",
+   "title": "Modding:Maps",
+   "author": "Stardew Valley Wiki",
+   "kind": "secondary",
+   "claim": "Tiles de 16x16 px ('should always be 16'); a acao Door coloca-se 'on the lower of the two door tiles', logo a porta tem 2 tiles (32 px) de altura.",
+   "frentes": [
+    "A:S05"
+   ]
+  },
+  {
+   "url": "https://steamcommunity.com/app/701160/discussions/0/2844543519798977532/",
+   "title": "HD? Better Textures? :: Kingdom Two Crowns General Discussions",
+   "author": "Sapador (comunidade); resposta de RawFuryAngelica (Raw Fury)",
+   "kind": "secondary",
+   "claim": "Sprites do Kingdom: 'each square formed by 3 to 8 pixels, depending on the zoom level'; duas opcoes de zoom por dispositivo; a editora concorda que o jogo nao deve ficar desfocado nem esticado.",
+   "frentes": [
+    "A:S02"
+   ]
+  },
+  {
+   "url": "https://store.steampowered.com/api/appdetails?appids=921570&filters=screenshots",
+   "title": "Medicao negativa: Octopath Traveler (921570), Songs of Conquest (867210), Moonlighter (606150), Children of Morta (330020), Katana ZERO (460950)",
+   "author": "medicao propria (Claude)",
+   "kind": "measurement",
+   "claim": "Sem grelha inteira global em Octopath e Songs of Conquest (cena 3D ou HD-2D); Moonlighter e Children of Morta inconclusivos; Katana ZERO alterna 3x e 6x entre capturas.",
+   "frentes": [
+    "A:M11"
+   ]
+  },
+  {
+   "url": "https://store.steampowered.com/app/1708680/Kingdom_Two_Crowns_Norse_Lands/",
+   "title": "Kingdom Two Crowns: Norse Lands · Steam",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Captura oficial: arquitetura, percurso e água.",
+   "frentes": [
+    "pacote:G02"
+   ]
+  },
+  {
+   "url": "https://store.steampowered.com/news/posts/?appids=701160&enddate=1718377302&feed=steam_community_announcements",
+   "title": "Kingdom · diário de arte Call of Olympus",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Depoimento das artistas Sara e Valentina; referências arquitetónicas e vegetais.",
+   "frentes": [
+    "pacote:G03"
+   ]
+  },
+  {
+   "url": "https://terraria.wiki.gg/wiki/Doors",
+   "title": "Doors",
+   "author": "Terraria Wiki",
+   "kind": "secondary",
+   "claim": "Porta fechada 'dimensions are 1x3 tiles'; aberta 2x3; tem de ser colocada num espaco 'exactly three blocks high'.",
+   "frentes": [
+    "A:S08"
+   ]
+  },
+  {
+   "url": "https://unity.com/case-study/hollow-knight",
+   "title": "Hollow Knight case study (Unity)",
+   "author": "Unity Technologies",
+   "kind": "dev-post",
+   "claim": "Níveis com assets 2D em camadas num ambiente 3D; luz com formas transparentes suaves; arte à mão guardada como PNG; 2D Toolkit.",
+   "frentes": [
+    "B:F30"
+   ]
+  },
+  {
+   "url": "https://www.aseprite.org/docs/cli/",
+   "title": "Command Line Interface (Aseprite docs)",
+   "author": "Igara Studio",
+   "kind": "docs",
+   "claim": "--data, --format, --sheet, --split-layers/tags/slices/grid, --layer, --tag, --slice, --trim, --trim-by-grid, --ignore-empty, --list-*, --export-tileset, --filename-format, paddings, --extrude, --merge-duplicates, --script.",
+   "frentes": [
+    "B:F43"
+   ]
+  },
+  {
+   "url": "https://www.aseprite.org/docs/linked-cels/",
+   "title": "Linked Cels (Aseprite docs)",
+   "author": "Igara Studio",
+   "kind": "docs",
+   "claim": "Cels ligados partilham imagem e coordenada; editar um muda todos.",
+   "frentes": [
+    "B:F45"
+   ]
+  },
+  {
+   "url": "https://www.aseprite.org/docs/slices/",
+   "title": "Slices (Aseprite docs)",
+   "author": "Igara Studio",
+   "kind": "docs",
+   "claim": "Slice com nome, limites, retângulo de 9-slice e pivô; JSON em meta.slices com keys por frame (frame, bounds, center).",
+   "frentes": [
+    "B:F42",
+    "pacote:T03"
+   ]
+  },
+  {
+   "url": "https://www.aseprite.org/docs/sprite-sheet/",
+   "title": "Aseprite · Sprite Sheets",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Camadas, tags e exportação.",
+   "frentes": [
+    "pacote:T02"
+   ]
+  },
+  {
+   "url": "https://www.aseprite.org/docs/tags/",
+   "title": "Tags (Aseprite docs)",
+   "author": "Igara Studio",
+   "kind": "docs",
+   "claim": "Uma tag indica uma animação do sprite; direção Forward/Reverse/Ping-pong.",
+   "frentes": [
+    "B:F63"
+   ]
+  },
+  {
+   "url": "https://www.aseprite.org/docs/tilemap/",
+   "title": "Tilemap (Aseprite docs)",
+   "author": "Igara Studio",
+   "kind": "docs",
+   "claim": "Camadas de tilemap desde 1.3, um tileset por camada, índice 0 vazio, modos Manual/Auto/Stack.",
+   "frentes": [
+    "B:F44",
+    "pacote:T01"
+   ]
+  },
+  {
+   "url": "https://www.boristhebrave.com/2021/11/14/classification-of-tilesets/",
+   "title": "Classification of Tilesets",
+   "author": "Boris the Brave (Adam Newgas)",
+   "kind": "dev-post",
+   "claim": "Notação S-V2/S-E2/S-V2E2; marching squares 16 (6 com RM), 2-edge 16, blob 47 (16 com RM); autotilers pintam células e inferem arestas e vértices; classificação descreve estrutura, não arte.",
+   "frentes": [
+    "B:F01"
+   ]
+  },
+  {
+   "url": "https://www.boristhebrave.com/2023/05/31/quarter-tile-autotiling/",
+   "title": "Quarter-Tile Autotiling",
+   "author": "Boris the Brave (Adam Newgas)",
+   "kind": "dev-post",
+   "claim": "Dual grid (Stålberg): tiles deslocados meio tile, cantos = centros das células; 16 tiles (6 com rotação); difícil de perceber e com tiles ambíguos. Quarter-tile: 5 quartos com rotação, 14-20 sem; não faz curvas maiores do que meio tile; é o sistema do RPG Maker.",
+   "frentes": [
+    "B:F02"
+   ]
+  },
+  {
+   "url": "https://www.boristhebrave.com/permanent/24/06/cr31/stagecast/wang/1sidecorn.html",
+   "title": "1-side corner tiles (espelho do cr31 Stagecast)",
+   "author": "Guy Walker (cr31)",
+   "kind": "wiki",
+   "claim": "Tiles com todos os lados iguais casam sempre, sem cálculo de índice; derivados do conjunto de canto de 16.",
+   "frentes": [
+    "B:F05"
+   ]
+  },
+  {
+   "url": "https://www.boristhebrave.com/permanent/24/06/cr31/stagecast/wang/2corn.html",
+   "title": "2-corner Wang tiles (espelho do cr31 Stagecast)",
+   "author": "Guy Walker (cr31)",
+   "kind": "wiki",
+   "claim": "16 tiles de canto (NE=1, SE=2, SW=4, NW=8); 'uma aresta só afeta um tile adjacente, o canto afeta três'; cantos criam manchas de terreno.",
+   "frentes": [
+    "B:F04"
+   ]
+  },
+  {
+   "url": "https://www.boristhebrave.com/permanent/24/06/cr31/stagecast/wang/blob.html",
+   "title": "Wang 'Blob' Tileset (espelho do cr31 Stagecast)",
+   "author": "Guy Walker (cr31), espelho de Boris the Brave",
+   "kind": "wiki",
+   "claim": "Blob = subconjunto de 47 tiles do conjunto 2-edge 2-corner de 256; um canto só conta se as arestas adjacentes contam; pesos N=1, NE=2, E=4 ... NW=128; empacotamentos 6x8 e 7x7.",
+   "frentes": [
+    "B:F03"
+   ]
+  },
+  {
+   "url": "https://www.cutout.pro/learn/pixellab/",
+   "title": "PixelLab guide (terceiros) — preços",
+   "author": "cutout.pro",
+   "kind": "third-party",
+   "claim": "Preços de planos citados por terceiros (10/30/50 USD/mês, 1000/3000/6000 gerações); não confirmados em página oficial (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C16"
+   ]
+  },
+  {
+   "url": "https://www.derekyu.com/makegames/pixelart.html",
+   "title": "Pixel Art Tutorial: Basics",
+   "author": "Derek Yu",
+   "kind": "primary",
+   "claim": "Quanto mais pequeno o sprite, 'the more responsibility each individual pixel has'; o bigode do Mario existe para separar nariz e cara; em pequeno, manchas de cor em vez de contorno; teste de semicerrar os olhos; selective outlining; espelhar e dessaturar para verificar.",
+   "frentes": [
+    "A:S26"
+   ]
+  },
+  {
+   "url": "https://www.derekyu.com/makegames/pixelart2.html",
+   "title": "Pixel Art: Common Mistakes",
+   "author": "Derek Yu",
+   "kind": "primary",
+   "claim": "Um fundo mais indistinto ajuda as personagens a destacar-se, se for intencional; reduzir formas complexas a volumes simples ('a few green spheres'); evitar pillow shading e cores parecidas demais.",
+   "frentes": [
+    "A:S27"
+   ]
+  },
+  {
+   "url": "https://www.dpadstudio.com/presskitOwlboy.html",
+   "title": "Owlboy · press kit D-Pad Studio",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Capturas oficiais 4, 7, 11, 15 e 2 inspecionadas.",
+   "frentes": [
+    "pacote:G06"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/art/eastward-s-creators-share-insights-on-making-pixel-art-adventures",
+   "title": "Eastward's creators share insights on making pixel art adventures",
+   "author": "Game Developer (entrevista a Pixpil)",
+   "kind": "primary",
+   "claim": "Arte base em Aseprite (Moran), separada por estrutura (telhado e parede em camadas), reconstruida em ambiente 3D com bump maps pintados; nevoeiro e luz por shaders; 'elevation is your friend'.",
+   "frentes": [
+    "A:S17",
+    "pacote:G05"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/art/using-graphics-to-express-character-and-theme-in-i-owlboy-i-",
+   "title": "Owlboy · entrevista com Simon Andersen e Adrian Bauer",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Depoimentos dos criadores sobre tema e história dos ambientes.",
+   "frentes": [
+    "pacote:G07"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/audio/dev-interview-thomas-van-den-berg",
+   "title": "Dev Interview: Thomas van den Berg",
+   "author": "Wes Platt, 2016-06-27",
+   "kind": "interview",
+   "claim": "O shader de água e as nuvens estão entre as partes preferidas do autor; o método do reflexo veio dos fóruns do Flixel.",
+   "frentes": [
+    "B:F32"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/design/-i-kingdom-two-crowns-i-and-the-practical-intersection-of-pixel-art-and-roguelike-design",
+   "title": "Kingdom Two Crowns and the practical intersection of pixel art and roguelike design",
+   "author": "Game Developer (entrevista a Thomas 'noio' van den Berg)",
+   "kind": "primary",
+   "claim": "noio escolheu pixel art por ser economica e pelo 'impressionist feel'; quer o 'shortest possible path between sketch/production/in-engine'; 'pixel art does not let itself be scaled to arbitrary sizes'. Sem numeros de resolucao.",
+   "frentes": [
+    "A:S01",
+    "B:F33"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/design/building-the-level-design-of-a-procedurally-generated-metroidvania-a-hybrid-approach-",
+   "title": "Building the level design of a procedurally generated Metroidvania: a hybrid approach",
+   "author": "Sébastien Bénard (Motion Twin)",
+   "kind": "dev-post",
+   "claim": "Lido por resumo de pesquisa: mapa e ligações fixos à mão; biblioteca de salas desenhadas à mão por bioma, dispostas proceduralmente.",
+   "frentes": [
+    "B:F62"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/design/skyrim-s-modular-approach-to-level-design",
+   "title": "Skyrim's Modular Approach to Level Design",
+   "author": "Joel Burgess (com Nate Purkeypile), GDC 2013",
+   "kind": "talk",
+   "claim": "Kits são sistemas; pegada como grelha; pegadas múltiplas; encaixe grande (metade da pegada); pivô no chão ao centro; evitar kits que repetem em todos os eixos; art fatigue — detalhe repetido nota-se mais; hero pieces raras; kits de cola.",
+   "frentes": [
+    "B:F40"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/production/art-design-deep-dive-giving-back-colors-to-cryptic-worlds-in-i-dead-cells-i-",
+   "title": "Art Design Deep Dive: Giving back colors to cryptic worlds in Dead Cells",
+   "author": "Gwenaël Massé (Motion Twin), 2018-04-03",
+   "kind": "dev-post",
+   "claim": "Fundo dividido em secções com regras por tipo de decoração; fundo e colisões contrastam o mais possível; parallax em cinzento + gradient map por bioma; normais desenhadas à mão; profundidade com paletas análogas, partículas e nuvens de primeiro plano.",
+   "frentes": [
+    "B:F29"
+   ]
+  },
+  {
+   "url": "https://www.gamedeveloper.com/production/art-design-deep-dive-using-a-3d-pipeline-for-2d-animation-in-i-dead-cells-i-",
+   "title": "Art Design Deep Dive: Using a 3D pipeline for 2D animation in Dead Cells",
+   "author": "Thomas Vasseur (Motion Twin)",
+   "kind": "primary",
+   "claim": "Personagem com cerca de 50 px de altura no jogo; o 3D e renderizado 'in a very small size and without antialiasing'; toon shader com normal maps; o detalhe ficou aquem e trocou-se por animacao.",
+   "frentes": [
+    "A:S13"
+   ]
+  },
+  {
+   "url": "https://www.magicgameworld.com/kingdom-two-crowns-buildings-kingdom/",
+   "title": "Kingdom Two Crowns – Buildings – Kingdom",
+   "author": "Magic Game World",
+   "kind": "guide",
+   "claim": "Secundária: escada do centro (acampamento, fogueira, tendas, aldeia com barreiras, vila com edifício tipo igreja, forte com muros de pedra, castelo, castelo de ferro).",
+   "frentes": [
+    "B:F39"
+   ]
+  },
+  {
+   "url": "https://www.magicgameworld.com/kingdom-two-crowns-walls/",
+   "title": "Kingdom Two Crowns – Walls",
+   "author": "Magic Game World",
+   "kind": "guide",
+   "claim": "Secundária: níveis de muro (monte de terra, barricada 1, madeira 3, pedra 5, castelo 8, ferro 12) por era; descreve resistência, não aspeto.",
+   "frentes": [
+    "B:F38"
+   ]
+  },
+  {
+   "url": "https://www.nexusmods.com/terraria/articles/24",
+   "title": "Item Attributes (Terraria)",
+   "author": "Nexus Mods (autor da comunidade)",
+   "kind": "secondary",
+   "claim": "[NAO ABERTO; via resumo de pesquisa] 'There are 16 pixels per tile' no Terraria.",
+   "frentes": [
+    "A:S09"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/faq",
+   "title": "FAQ — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Subscrição; uso comercial e Steam permitidos; pede que não se treinem modelos com as imagens; não guardam imagens por omissão.",
+   "frentes": [
+    "C:C15"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/guides/map-tiles",
+   "title": "Creating maps (guide) — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Construção por secções sobrepostas com inpainting; 'The model can only see what is inside the selection when generating'; modelo treinado em tiles 16×16.",
+   "frentes": [
+    "C:C10"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/installation",
+   "title": "Installation — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Extensão Aseprite exige Aseprite ≥1.3; a versão de teste não permite extensões (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C54"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/consistent-style",
+   "title": "Create images from style references (Pro) — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Estilo a partir de referências; tabela de candidatos/gerações; máximo 512×512; mais referências semelhantes dão mais consistência, sem garantia.",
+   "frentes": [
+    "C:C13"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/create-map",
+   "title": "Create map (pixflux) — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Gera mapas em vista top-down ou sidescroller; canvas ≤200² (grátis), ≤320² (Tier 1), ≤400² (Tier 2+).",
+   "frentes": [
+    "C:C09"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/create-sl-image-pro",
+   "title": "Create S-XL image (Pro) — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Canvas 16 a 512² quadrado, ~¼ MP não quadrado: 576×464, 600×448, 632×424, 688×384, 792×336; aspeto mais próximo escolhido automaticamente; ≤4 referências + estilo + paleta; tabela de candidatos e gerações (10/15/25).",
+   "frentes": [
+    "C:C07",
+    "pacote:P05"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/create-texture",
+   "title": "Create texture — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Texturas a partir de descrição para usar com o Create Tileset; sem menção a tileabilidade ou tamanhos; Tier 1.",
+   "frentes": [
+    "C:C12"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/create-tiles-pro",
+   "title": "Create tiles (Pro) — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Tipos tiles/paths/tileset/building; building só square top-down, isométrico, oblíquo; paredes 1–3 tiles; referências de estilo só para tiles independentes; 10–25 gerações.",
+   "frentes": [
+    "C:C08",
+    "pacote:P03"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/create-tileset",
+   "title": "Create tileset — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Top-down e sidescroller; tiles 16/24(beta, top-down)/32, pro 16/32/64; exporta Wang, dual-grid 15 e 3x3; custos standard 1–4, sidescroller 2–3, pro 10–25; falhas não são cobradas; Tier 1.",
+   "frentes": [
+    "C:C06",
+    "pacote:P02"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/extend-map-v2",
+   "title": "Extend map (v2) — PixelLab docs",
+   "author": "PixelLab",
+   "kind": "official-doc",
+   "claim": "Ferramenta experimental de extensão de mapa; canvas ≤180×180; Tier 2.",
+   "frentes": [
+    "C:C11"
+   ]
+  },
+  {
+   "url": "https://www.pixellab.ai/docs/tools/image-to-pixel-art",
+   "title": "PixelLab · Image to pixel art",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Conversão e controlos de fidelidade.",
+   "frentes": [
+    "pacote:P04"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2018/10/12/pixelblog-10-water-in-motion",
+   "title": "SLYNYRD · Water in Motion",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Corrente, queda, reflexão e movimento.",
+   "frentes": [
+    "pacote:A10"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2018/2/15/pixelblog-2-texture",
+   "title": "SLYNYRD · Texture",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Motivos e distribuição de textura.",
+   "frentes": [
+    "pacote:A04"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2018/6/15/pixelblog-6-light-and-shadow",
+   "title": "SLYNYRD · Light and Shadow",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Direção da luz e volumes.",
+   "frentes": [
+    "pacote:A11"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2019/1/22/pixelblog-13-rocks",
+   "title": "SLYNYRD · Rocks",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Forma, face e contexto geológico.",
+   "frentes": [
+    "pacote:A09"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2019/11/12/pixelblog-23-parallax-scrolling",
+   "title": "Pixelblog 23 — Parallax Scrolling",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "tutorial",
+   "claim": "Movimento em píxeis inteiros; px/frame tem de dividir a largura da tela; evitar < 1 px/frame; loops internos dividem o total de frames; camadas sem pontos dominantes escondem o loop.",
+   "frentes": [
+    "B:F22",
+    "pacote:A06"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2019/2/23/pixelblog-14-cityscapes",
+   "title": "SLYNYRD · Cityscapes",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Construção geométrica e faces da arquitetura.",
+   "frentes": [
+    "pacote:A12"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2019/3/7/pixelblog-15-plant-life",
+   "title": "SLYNYRD · Plant Life",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Espécie, abstração e clusters de copa.",
+   "frentes": [
+    "pacote:A08"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2019/8/27/pixelblog-20-top-down-tiles",
+   "title": "Pixelblog 20 — Top Down Tiles",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "tutorial",
+   "claim": "Dominância visual numa zona torna o padrão óbvio; cachos que passam a aresta escondem a emenda; não tocar cachos-chave; um só tile torna-se monótono; Tiled Mode da Aseprite para ver a repetição.",
+   "frentes": [
+    "B:F21"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2020/5/21/pixelblog-28-side-view-tiles",
+   "title": "Pixelblog 28 — Side View Tiles",
+   "author": "Raymond Schlitter (SLYNYRD)",
+   "kind": "tutorial",
+   "claim": "16x16 comum, >32x32 exagero; tiles extra de relva/plantas evitam topo plano preservando a colisão; arestas e cantos 'cabinet'; suportes no fundo imediato; uma variante dos tiles em fila basta; espelhar só com luz simétrica ou ambígua.",
+   "frentes": [
+    "B:F20",
+    "pacote:A05"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2023/7/21/pixelblog-45-bricks-walls-doors-and-more",
+   "title": "SLYNYRD · Bricks, Walls, Doors, and More",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Alvenaria, padrões e variações.",
+   "frentes": [
+    "pacote:A13"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2024/7/25/pixelblog-51-city-builder",
+   "title": "SLYNYRD · City Builder",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Estrutura de edifícios, origem e contorno colorido; projeção própria da aula.",
+   "frentes": [
+    "pacote:A15"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2025/7/28/pixelblog-57-knights-monsters-amp-castles",
+   "title": "SLYNYRD · Knights, Monsters, & Castles",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Elemento de estilo, estrutura e família de castelos.",
+   "frentes": [
+    "pacote:A14"
+   ]
+  },
+  {
+   "url": "https://www.slynyrd.com/blog/2026/5/27/pixelblog-62-landscape-backgrounds",
+   "title": "SLYNYRD · Landscape Backgrounds",
+   "author": "",
+   "kind": "pacote",
+   "claim": "Planos de cor, atmosfera e escala de textura.",
+   "frentes": [
+    "pacote:A07"
+   ]
+  },
+  {
+   "url": "https://www.sourcepulse.org/projects/30726264",
+   "title": "image-extender (boona13)",
+   "author": "boona13",
+   "kind": "repo",
+   "claim": "Extensão de fundos de parallax com Gemini e Poisson blending nas emendas (lido via resultado de pesquisa).",
+   "frentes": [
+    "C:C53"
+   ]
+  },
+  {
+   "url": "https://www.spriteforge.tech/blog/why-ai-tilesets-dont-tile",
+   "title": "Why AI Tilesets Don't Tile (and What a Wang Set Is)",
+   "author": "SpriteForge",
+   "kind": "vendor-blog",
+   "claim": "13/08/2026: emendas, carimbo repetido; o modelo não tem grade de tiles; a redução destrói arestas; recomenda gerar na grade e conjuntos Wang de 16.",
+   "frentes": [
+    "C:C47"
+   ]
+  },
+  {
+   "url": "https://www.summerengine.com/blog/ai-2d-game-asset-generator.md",
+   "title": "AI 2D Game Asset Generator: What Works in 2026 (Honest Guide)",
+   "author": "Summer Team",
+   "kind": "vendor-blog",
+   "claim": "06/06/2026: fundos/parallax fortes; tilesets o pedido mais difícil; geradores especializados ainda pedem passagem manual.",
+   "frentes": [
+    "C:C48"
+   ]
+  },
+  {
+   "url": "https://www.yachtclubgames.com/blog/breaking-the-nes",
+   "title": "Breaking the NES",
+   "author": "Yacht Club Games",
+   "kind": "primary",
+   "claim": "Resolucao virtual 400x240 (a NES da 256x240; a mesma altura com mais largura); tiles de fundo 16x16; sprites com 4-5 cores mais transparencia; paleta NES com poucas cores extra.",
+   "frentes": [
+    "A:S15"
+   ]
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=jEWFSv3ivTg",
+   "title": "Drawing Fewer Tiles (dual grid) — vídeo",
+   "author": "jess::codes (Jess Hammer)",
+   "kind": "video",
+   "claim": "Vídeo de origem do sistema dual grid citado por portes e fóruns; conteúdo não transcrito nesta pesquisa (URL obtido por resultados de pesquisa).",
+   "frentes": [
+    "B:F07"
+   ]
+  },
+  {
+   "url": "https://yari-pixels.github.io/Articles/mixels.html",
+   "title": "My fascination with mixels",
+   "author": "Yari (yari-pixels)",
+   "kind": "secondary",
+   "claim": "Definicao: 'pixels of different sizes combined together'; uso deliberado em efeitos (coracoes, po) para os separar da imagem; cita Minecraft, Terraria e Stardew.",
+   "frentes": [
+    "A:S33"
+   ]
+  }
+ ]
+}

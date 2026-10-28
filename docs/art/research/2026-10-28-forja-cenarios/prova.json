@@ -1,0 +1,1011 @@
+{
+ "referencias": {
+  "enramados-referencia-conversa": {
+   "size": [
+    1672,
+    941
+   ],
+   "mode": "RGB",
+   "pixels_sha256": "ea4e2e2d125570714075f21734c387c956dc4409c7f0ef4520ae8936b359019d",
+   "alpha": {
+    "clear": 0,
+    "partial": 0,
+    "opaque": 1573352
+   },
+   "grid": {
+    "period": null,
+    "origin": "unmeasured",
+    "cells": [
+     1672,
+     941
+    ]
+   }
+  },
+  "enramados-referencia": {
+   "size": [
+    1672,
+    941
+   ],
+   "mode": "RGB",
+   "pixels_sha256": "e92369325c62615a80b2d572348b9b05d42cb8794bdcd28e6873621e1fd2ec81",
+   "alpha": {
+    "clear": 0,
+    "partial": 0,
+    "opaque": 1573352
+   },
+   "grid": {
+    "period": 5.58,
+    "origin": "estimated",
+    "cells": [
+     292,
+     164
+    ]
+   }
+  },
+  "fornalha-referencia": {
+   "size": [
+    1672,
+    941
+   ],
+   "mode": "RGB",
+   "pixels_sha256": "d92aaf367f028b600a05a03a0fa25cf6f07e47b8986d1537afffd3f9a9b21e92",
+   "alpha": {
+    "clear": 0,
+    "partial": 0,
+    "opaque": 1573352
+   },
+   "grid": {
+    "period": 25.06,
+    "origin": "estimated",
+    "cells": [
+     67,
+     39
+    ]
+   }
+  },
+  "oficina-referencia": {
+   "size": [
+    1536,
+    1024
+   ],
+   "mode": "RGBA",
+   "pixels_sha256": "50f588999e3461055345e58c8fdd7c679a724f8360d138373621131e65636473",
+   "alpha": {
+    "clear": 771329,
+    "partial": 801535,
+    "opaque": 0
+   },
+   "grid": {
+    "period": 3.987,
+    "origin": "estimated",
+    "cells": [
+     385,
+     256
+    ]
+   }
+  },
+  "porto-referencia": {
+   "size": [
+    1671,
+    941
+   ],
+   "mode": "RGB",
+   "pixels_sha256": "6972741b0a24e78512787f3cbfe407d2bccf6f4f671e304f4718bdb80f174309",
+   "alpha": {
+    "clear": 0,
+    "partial": 0,
+    "opaque": 1572411
+   },
+   "grid": {
+    "period": null,
+    "origin": "unmeasured",
+    "cells": [
+     1671,
+     941
+    ]
+   }
+  }
+ },
+ "regua": {
+  "tallest": {
+   "id": "royal_king",
+   "height": 65,
+   "width": 64,
+   "canvas": [
+    80,
+    80
+   ],
+   "foot": [
+    40,
+    78
+   ],
+   "body_bounds": [
+    -33,
+    -64,
+    64,
+    65
+   ]
+  },
+  "shortest": {
+   "id": "royal_nia",
+   "height": 50,
+   "width": 45,
+   "canvas": [
+    64,
+    64
+   ],
+   "foot": [
+    32,
+    62
+   ],
+   "body_bounds": [
+    -21,
+    -49,
+    45,
+    50
+   ]
+  },
+  "world": {
+   "viewport": [
+    1280,
+    720
+   ],
+   "surface_y": 517,
+   "under_y": 618.5,
+   "horizon_y": 420
+  },
+  "lattice": {
+   "phase": [
+    0,
+    0
+   ],
+   "phase_source": "medida na arte do dono",
+   "off_lattice": [
+    "under_y"
+   ]
+  },
+  "metrics": {
+   "door_clear_height": [
+    72,
+    80
+   ],
+   "door_clear_width": [
+    30,
+    40
+   ],
+   "public_door_height": [
+    88,
+    104
+   ],
+   "eave_height": [
+    88,
+    104
+   ],
+   "ridge_height": [
+    120,
+    136
+   ],
+   "window_sill": [
+    36,
+    44
+   ],
+   "window_height": [
+    20,
+    28
+   ],
+   "railing_height": [
+    32,
+    40
+   ],
+   "step_riser": [
+    6,
+    8
+   ],
+   "barrel_height": [
+    28,
+    36
+   ],
+   "lantern_height": [
+    80,
+    88
+   ]
+  }
+ },
+ "escala": {
+  "oficina": {
+   "scale": 0.299,
+   "landmarks": [
+    {
+     "metric": "barrel_height",
+     "box": [
+      538,
+      780,
+      628,
+      887
+     ],
+     "measured_px": 107,
+     "target_px": [
+      28,
+      36
+     ],
+     "scale_range": [
+      0.2617,
+      0.3364
+     ]
+    }
+   ],
+   "common_range": [
+    0.2617,
+    0.3364
+   ],
+   "consistent": true,
+   "scale_note": null,
+   "reference_grid": {
+    "period": 3.987,
+    "origin": "estimated",
+    "cells": [
+     385,
+     256
+    ]
+   },
+   "apparent_cell_px": 1.19,
+   "cell_ratio": 0.59,
+   "detail": "mais fina: cada pixel da referencia vale 1.19 px de ecra, 0.59x a celula; o redesenho simplifica (funde, tira, exagera os sinais de identidade); reduzir apaga-os",
+   "crop": [
+    17,
+    145,
+    1527,
+    890
+   ],
+   "target_extent_px": [
+    452,
+    222
+   ],
+   "target_cells": [
+    226,
+    111
+   ],
+   "segment_share": 0.71,
+   "ground_y": 888,
+   "plan": {
+    "footprint_px": 120,
+    "compression": 0.265,
+    "rule": "comprimir a arquitetura (vaos, pisos, janelas) e manter a porta e os sinais na regua"
+   }
+  },
+  "enramados": {
+   "scale": 0.5424,
+   "landmarks": [
+    {
+     "metric": "barrel_height",
+     "box": [
+      562,
+      541,
+      611,
+      600
+     ],
+     "measured_px": 59,
+     "target_px": [
+      28,
+      36
+     ],
+     "scale_range": [
+      0.4746,
+      0.6102
+     ]
+    },
+    {
+     "metric": "door_clear_height",
+     "box": [
+      1389,
+      519,
+      1429,
+      606
+     ],
+     "measured_px": 87,
+     "target_px": [
+      72,
+      80
+     ],
+     "scale_range": [
+      0.8276,
+      0.9195
+     ]
+    }
+   ],
+   "common_range": null,
+   "consistent": false,
+   "scale_note": "os marcos nao tem escala comum: a referencia mistura escalas; vale o primeiro (o marco do proprio objeto) e a excecao regista-se no contrato",
+   "reference_grid": {
+    "period": 5.58,
+    "origin": "estimated",
+    "cells": [
+     292,
+     164
+    ]
+   },
+   "apparent_cell_px": 3.03,
+   "cell_ratio": 1.51,
+   "detail": "mais grossa: cada pixel da referencia vale 3.03 px de ecra, 1.51x a celula de 2 px; o redesenho acrescenta detalhe na grade do jogo, ou a peca le-se mais grossa do que os vizinhos",
+   "crop": [
+    250,
+    200,
+    1120,
+    606
+   ],
+   "target_extent_px": [
+    472,
+    220
+   ],
+   "target_cells": [
+    236,
+    110
+   ],
+   "segment_share": 0.74,
+   "ground_y": 602,
+   "plan": {
+    "footprint_px": 120,
+    "compression": 0.254,
+    "rule": "comprimir a arquitetura (vaos, pisos, janelas) e manter a porta e os sinais na regua"
+   }
+  },
+  "enramados-conversa": {
+   "scale": 0.8736,
+   "landmarks": [
+    {
+     "metric": "door_clear_height",
+     "box": [
+      1389,
+      519,
+      1429,
+      606
+     ],
+     "measured_px": 87,
+     "target_px": [
+      72,
+      80
+     ],
+     "scale_range": [
+      0.8276,
+      0.9195
+     ]
+    }
+   ],
+   "common_range": [
+    0.8276,
+    0.9195
+   ],
+   "consistent": true,
+   "scale_note": null,
+   "reference_grid": {
+    "period": null,
+    "origin": "unmeasured",
+    "cells": [
+     1672,
+     941
+    ]
+   },
+   "apparent_cell_px": null,
+   "cell_ratio": null,
+   "detail": "sem grade medida: a referencia e pictorica (ou tem pixels de tamanhos misturados); o redesenho decide o detalhe todo na grade de 2 px",
+   "crop": [
+    0,
+    0,
+    1672,
+    941
+   ],
+   "target_extent_px": [
+    1460,
+    822
+   ],
+   "target_cells": [
+    730,
+    411
+   ],
+   "segment_share": 2.28,
+   "ground_y": 606,
+   "plan": null
+  }
+ },
+ "cenas": {
+  "carvalho-enramados": {
+   "cells": [
+    112,
+    160
+   ],
+   "warnings": [],
+   "size": "1568x2240",
+   "constraints": [
+    "request",
+    "scene:elevation (relatorio de 28/10, §9)",
+    "asset_bible §1 (sombra de contacto); scene:anchor",
+    "regua: royal_king e royal_nia (art/export/royals/manifest.json)",
+    "scene:signals",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "relatorio de 28/10, §4 e §7",
+    "scenery.json:families (proposta, relatorio §16)",
+    "contract:prop (2 px de ecra = 1 pixel logico)",
+    "asset_bible §1",
+    "palette:Empire Working (dossie v5.1, §22); contract:prop (max_colors null)"
+   ],
+   "plans": {
+    "openai": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "1568x2240",
+      "background": "transparent"
+     },
+     "roles": [
+      "composition",
+      "material",
+      "ruler",
+      "palette"
+     ]
+    },
+    "gemini": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "2:3",
+      "image_size": "2K",
+      "estimated_output": [
+       1680,
+       2496
+      ],
+      "output_size_known": false
+     },
+     "roles": [
+      "composition",
+      "material",
+      "ruler",
+      "palette"
+     ]
+    },
+    "pixellab": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 112,
+      "height": 160,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "highly detailed",
+       "view": "side",
+       "no_background": true
+      },
+      "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
+     },
+     "roles": [
+      "color_image"
+     ]
+    }
+   },
+   "prompt_lines": 19
+  },
+  "forja-jogo-enramados": {
+   "cells": [
+    64,
+    68
+   ],
+   "warnings": [],
+   "size": "1792x1904",
+   "constraints": [
+    "request",
+    "scene:elevation (relatorio de 28/10, §9)",
+    "asset_bible §1 (sombra de contacto); scene:anchor",
+    "regua: royal_king e royal_nia (art/export/royals/manifest.json)",
+    "scene:openings",
+    "scene:signals",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "relatorio de 28/10, §4 e §7",
+    "scenery.json:families (proposta, relatorio §16)",
+    "proposta FORJA-09 (Q-292); so passos regulares evitam escadas tortas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))",
+    "contract:building (2 px de ecra = 1 pixel logico)",
+    "asset_bible §1",
+    "palette:Empire Working (dossie v5.1, §22); contract:building (max_colors null)",
+    "scene:brief"
+   ],
+   "plans": {
+    "openai": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "1792x1904",
+      "background": "transparent"
+     },
+     "roles": [
+      "asset_concept",
+      "ruler",
+      "palette"
+     ]
+    },
+    "gemini": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "1:1",
+      "image_size": "1K",
+      "estimated_output": [
+       1024,
+       1024
+      ],
+      "output_size_known": false
+     },
+     "roles": [
+      "asset_concept",
+      "ruler",
+      "palette"
+     ]
+    },
+    "pixellab": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 64,
+      "height": 68,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "highly detailed",
+       "view": "side",
+       "no_background": true
+      },
+      "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
+     },
+     "roles": [
+      "color_image"
+     ]
+    }
+   },
+   "prompt_lines": 25
+  },
+  "oficina-enramados": {
+   "cells": [
+    224,
+    112
+   ],
+   "warnings": [],
+   "size": "2464x1232",
+   "constraints": [
+    "request",
+    "scene:elevation (relatorio de 28/10, §9)",
+    "asset_bible §1 (sombra de contacto); scene:anchor",
+    "regua: royal_king e royal_nia (art/export/royals/manifest.json)",
+    "scene:openings",
+    "scene:openings",
+    "scene:signals",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "relatorio de 28/10, §4 e §7",
+    "scenery.json:families (proposta, relatorio §16)",
+    "proposta FORJA-09 (Q-292); so passos regulares evitam escadas tortas (docs/art/research/2026-10-28-forja-cenarios/ (pesquisa A, §5.1))",
+    "contract:building (2 px de ecra = 1 pixel logico)",
+    "asset_bible §1",
+    "palette:Empire Working (dossie v5.1, §22); contract:building (max_colors null)",
+    "scene:brief"
+   ],
+   "plans": {
+    "openai": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "2464x1232",
+      "background": "transparent"
+     },
+     "roles": [
+      "asset_concept",
+      "composition",
+      "ruler",
+      "palette"
+     ]
+    },
+    "gemini": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "estimated_output": [
+       2736,
+       1536
+      ],
+      "output_size_known": false
+     },
+     "roles": [
+      "asset_concept",
+      "composition",
+      "ruler",
+      "palette"
+     ]
+    },
+    "pixellab": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 224,
+      "height": 112,
+      "params": {
+       "outline": "single color black outline",
+       "shading": "basic shading",
+       "detail": "highly detailed",
+       "view": "side",
+       "no_background": true
+      },
+      "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
+     },
+     "roles": [
+      "color_image"
+     ]
+    }
+   },
+   "prompt_lines": 26
+  },
+  "terreno-enramados": {
+   "cells": [
+    128,
+    50
+   ],
+   "warnings": [],
+   "size": "2048x800",
+   "constraints": [
+    "request",
+    "scene:elevation (relatorio de 28/10, §9)",
+    "asset_bible §1 (sombra de contacto); scene:anchor",
+    "regua: royal_king e royal_nia (art/export/royals/manifest.json)",
+    "scene:signals",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "scenery.json:materials (relatorio de 28/10, §11)",
+    "relatorio de 28/10, §4 e §7",
+    "scenery.json:families (proposta, relatorio §16)",
+    "asset_bible §1",
+    "palette:Empire Working (dossie v5.1, §22); contract:tile (max_colors null)",
+    "scene:repeat"
+   ],
+   "plans": {
+    "openai": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "images.edits",
+      "size": "2048x800",
+      "background": "transparent"
+     },
+     "roles": [
+      "material",
+      "ruler",
+      "palette"
+     ]
+    },
+    "gemini": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "interactions",
+      "aspect_ratio": "21:9",
+      "image_size": "1K",
+      "estimated_output": [
+       1568,
+       672
+      ],
+      "output_size_known": false
+     },
+     "roles": [
+      "material",
+      "ruler",
+      "palette"
+     ]
+    },
+    "pixellab": {
+     "ok": true,
+     "errors": [],
+     "request": {
+      "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
+      "width": 128,
+      "height": 50,
+      "params": {
+       "outline": null,
+       "shading": "basic shading",
+       "detail": "highly detailed",
+       "view": "side",
+       "no_background": true
+      },
+      "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
+     },
+     "roles": [
+      "color_image"
+     ]
+    }
+   },
+   "prompt_lines": 19
+  }
+ },
+ "adaptacao": {
+  "lint": {
+   "errors": 0,
+   "warnings": 5,
+   "rules": [
+    "erased",
+    "gradient",
+    "grid_reduced",
+    "margin",
+    "pivot_x",
+    "subgrid",
+    "width"
+   ]
+  },
+  "loss": {
+   "erased_cells": 2352,
+   "absorbed_cells": 9062,
+   "cells": 24310,
+   "by_kind": {
+    "outside_core": 628,
+    "minority": 1621,
+    "alpha_discarded": 103
+   },
+   "basis": "celula inteira contra o pixel escolhido; cor apagada = sem vizinho nem mistura"
+  },
+  "fit": {
+   "canvas": [
+    448,
+    224
+   ],
+   "pivot": [
+    224,
+    223
+   ],
+   "anchor": [
+    223,
+    223
+   ],
+   "clipped_pixels": 0
+  },
+  "verdicts": {
+   "raster_contract": "pass",
+   "structure": "pass",
+   "identity_signals": "inconclusive",
+   "continuity": "not_evaluated",
+   "states": "not_evaluated",
+   "artistic_approval": "pending",
+   "runtime_integration": "not_evaluated"
+  },
+  "checks": [
+   {
+    "check": "extent",
+    "status": "pass",
+    "detail": "448x224 px"
+   },
+   {
+    "check": "lattice",
+    "status": "pass",
+    "detail": "lados multiplos de 2 px"
+   },
+   {
+    "check": "base_contact",
+    "status": "pass",
+    "detail": "pousa no chao em 308 de 446 colunas"
+   },
+   {
+    "check": "opening:baia",
+    "status": "pass",
+    "detail": "baia: vao legivel de 119 px ate a soleira"
+   },
+   {
+    "check": "opening:janela",
+    "status": "pass",
+    "detail": "janela: vao legivel de 25 px"
+   },
+   {
+    "check": "roof_pitch",
+    "status": "inconclusive",
+    "detail": "roof_pitch: presente (76%); sem mestre, a forma revê-se a olho"
+   },
+   {
+    "check": "eave_thickness",
+    "status": "not_evaluated",
+    "detail": "eave_thickness: sem regiao marcada no contrato"
+   },
+   {
+    "check": "chimney_join",
+    "status": "inconclusive",
+    "detail": "chimney_join: presente (99%); sem mestre, a forma revê-se a olho"
+   },
+   {
+    "check": "supports",
+    "status": "not_evaluated",
+    "detail": "supports: sem regiao marcada no contrato"
+   },
+   {
+    "check": "foundation_anchor",
+    "status": "inconclusive",
+    "detail": "foundation_anchor: presente (89%); sem mestre, a forma revê-se a olho"
+   },
+   {
+    "check": "work_area",
+    "status": "inconclusive",
+    "detail": "work_area: presente (99%); sem mestre, a forma revê-se a olho"
+   }
+  ],
+  "placement": {
+   "asset_top_left": [
+    416,
+    294
+   ],
+   "base_edge_y": 518,
+   "anchor_local": [
+    224,
+    224
+   ],
+   "lattice_phase": [
+    0,
+    0
+   ]
+  },
+  "night_tint": [
+   107,
+   96,
+   84
+  ],
+  "encolhida": {
+   "loss": {
+    "erased_cells": 741,
+    "absorbed_cells": 434,
+    "cells": 1682,
+    "by_kind": {
+     "outside_core": 112,
+     "minority": 591,
+     "alpha_discarded": 38
+    },
+    "basis": "celula inteira contra o pixel escolhido; cor apagada = sem vizinho nem mistura"
+   },
+   "bay": "baia: vao legivel de 21 px, a regua pede 72",
+   "verdicts": {
+    "raster_contract": "pass",
+    "structure": "fail",
+    "identity_signals": "fail",
+    "continuity": "not_evaluated",
+    "states": "not_evaluated",
+    "artistic_approval": "pending",
+    "runtime_integration": "not_evaluated"
+   }
+  }
+ },
+ "wang": {
+  "pairs": {
+   "horizontal": 0,
+   "vertical": 0
+  },
+  "junctions": {
+   "pairs_checked": 128,
+   "seam_islands": 0,
+   "blocks_checked": 512,
+   "corner_islands": 0
+  }
+ },
+ "checks": [
+  {
+   "check": "referencias",
+   "status": "pass",
+   "measured": [
+    "enramados-referencia",
+    "enramados-referencia-conversa",
+    "fornalha-referencia",
+    "oficina-referencia",
+    "porto-referencia"
+   ]
+  },
+  {
+   "check": "oficina com alfa parcial",
+   "status": "pass"
+  },
+  {
+   "check": "oficina: o detalhe e mais fino do que a celula",
+   "status": "pass",
+   "extent": [
+    452,
+    222
+   ]
+  },
+  {
+   "check": "enramados: barril e porta sem escala comum",
+   "status": "pass"
+  },
+  {
+   "check": "barris convergem para a mesma oficina",
+   "status": "pass"
+  },
+  {
+   "check": "enramados da conversa sem grade",
+   "status": "pass"
+  },
+  {
+   "check": "a oficina do pacote e um marco: a forja do jogo comprime a planta",
+   "status": "pass",
+   "footprint": 120,
+   "compression": 0.265
+  },
+  {
+   "check": "carvalho-enramados: plano sem rede valido nos tres geradores",
+   "status": "pass"
+  },
+  {
+   "check": "carvalho-enramados: nenhuma restricao escondida do compilador",
+   "status": "pass"
+  },
+  {
+   "check": "forja-jogo-enramados: plano sem rede valido nos tres geradores",
+   "status": "pass"
+  },
+  {
+   "check": "forja-jogo-enramados: nenhuma restricao escondida do compilador",
+   "status": "pass"
+  },
+  {
+   "check": "oficina-enramados: plano sem rede valido nos tres geradores",
+   "status": "pass"
+  },
+  {
+   "check": "oficina-enramados: nenhuma restricao escondida do compilador",
+   "status": "pass"
+  },
+  {
+   "check": "terreno-enramados: plano sem rede valido nos tres geradores",
+   "status": "pass"
+  },
+  {
+   "check": "terreno-enramados: nenhuma restricao escondida do compilador",
+   "status": "pass"
+  },
+  {
+   "check": "encolher a referencia a pegada fecha a baia: redesenhar, nao reduzir",
+   "status": "pass",
+   "detail": "baia: vao legivel de 21 px, a regua pede 72",
+   "erased": 741
+  },
+  {
+   "check": "a reducao e declarada e sai como adaptacao com perda",
+   "status": "pass"
+  },
+  {
+   "check": "a amostragem apagou celulas e di-lo",
+   "status": "pass",
+   "erased": 2352
+  },
+  {
+   "check": "a oficina reduzida cumpre a estrutura do contrato",
+   "status": "pass"
+  },
+  {
+   "check": "a aprovacao fica pendente",
+   "status": "pass"
+  },
+  {
+   "check": "wang 16: 64+64 pares e cachos inteiros nas emendas",
+   "status": "pass",
+   "pairs_bad": 0
+  },
+  {
+   "check": "a regua le o rei e a fase da arte do dono",
+   "status": "pass"
+  }
+ ]
+}
