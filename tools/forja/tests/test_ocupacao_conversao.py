@@ -67,6 +67,21 @@ class OccupancyTest(unittest.TestCase):
         self.assertFalse(r['ok'])
 
 
+    def test_every_animation_frame_answers_to_the_useful_box_too(self):
+        from tools.forja import sheetforge
+        from tools.forja.tests.test_preserve import strip_sheet
+        d = tempdir()
+        body = Image.new('RGBA', (8, 20), (90, 40, 20, 255))
+        strip_sheet([(body, (8, 6)) for _ in range(2)]).save(d / 's.png')
+        sopts = sheetforge.SheetOptions(tags=[('idle', 2)], layout=(2, 1))
+        opts = dict(kind='free', scale=4, palette='none', fit=False, outline='keep', cleanup='conservative')
+        plain = sheetforge.forge_sheet(d / 's.png', d / 'a', pipeline.Options(**opts), sopts)
+        boxed = sheetforge.forge_sheet(d / 's.png', d / 'b', pipeline.Options(**opts, useful_box=(0, 0, 8, 10)), sopts)
+        self.assertTrue(plain['review']['contract_valid'])
+        self.assertEqual([fr['lint_errors'] for fr in plain['frames']], [0, 0])
+        self.assertTrue(all(fr['lint_errors'] for fr in boxed['frames']))
+        self.assertFalse(boxed['review']['contract_valid'])
+
 class NativeConversionTest(unittest.TestCase):
     def test_large_concept_has_a_native_64_conversion_plan_without_local_resize(self):
         d = tempdir()
