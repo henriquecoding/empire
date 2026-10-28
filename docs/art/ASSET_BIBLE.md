@@ -46,6 +46,12 @@
 do pivot para pó e sombra, e espaço acima e aos lados para armas e ataques. *As telas padrão são uma proposta:
 valida-a separando o `Empire troop` (tela atual 192 × 192) antes de a fixares — é a Etapa 4 do relatório.*
 
+**Decisão posterior do dono, 28/10/2026 (ADR 0096):** a autoria atual de tropas, incluindo o arqueiro de tropa,
+usa quadro **64×64**, contrato `troop_64`; Rei e Arqueiro Real são distintos e mantêm o quadro 80×80 do elenco
+atual. Esta decisão prevalece sobre a proposta de tela 96×96 para tropas na tabela histórica acima. Não é uma
+reescala dos arquivos já integrados. Tela, caixa ocupada, altura útil e área reservada para a arma são medidas
+separadas; não encher nem reduzir um personagem para fazer coincidir uma dessas medidas com outra.
+
 ### Edifícios e cenário
 
 | Coisa | Regra |

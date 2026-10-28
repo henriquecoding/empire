@@ -19,8 +19,8 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from . import contracts, fidelity as fidelity_mod, guides, prompts, refs as refs_mod
-from .backends import Call, gemini_images, openai_images, pixellab_api, sha
+from . import contracts, fidelity as fidelity_mod, guides, plan_native, production, prompts, refs as refs_mod
+from .backends import Call, gemini_images, openai_images, pixellab_api, pixellab_convert, sha
 from .imageops import png_bytes as png
 from .palette import Palette
 
@@ -46,6 +46,8 @@ class Plan:
             raise ValueError("plano invalido: " + "; ".join(self.data["errors"]))
         d, prompt = self.data, prompt or self.data["prompt"]
         r = d["request"]
+        if d["backend"] == "pixellab" and d["model"] == pixellab_convert.MODEL:
+            return pixellab_convert.call(self.images[0][1], r["width"], r["height"], **r["params"])
         if d["backend"] == "pixellab":
             kw = {**r["params"], **{role: data for role, data in self.images}}
             return pixellab_api.call(prompt, r["width"], r["height"], d["model"], **kw)
@@ -75,58 +77,6 @@ def _want(guides_mode: str, role: str, palette: Palette | None, listed: int = 24
         return palette is not None and (guides_mode in ("palette", "all") or
                                         (guides_mode == "auto" and len(palette) > listed))
     return guides_mode in ("layout", "all")
-
-
-def _pixellab(d: dict, c, refs, palette, model, guides_mode, init_strength, seed) -> list[tuple[str, bytes]]:
-    model = d["model"] = model or "pixflux"
-    caps = pixellab_api.CAPS.get(model)
-    if caps is None:
-        d["errors"].append(f"modelo PixelLab desconhecido: {model!r} (use {', '.join(pixellab_api.CAPS)})")
-        return []
-    if d["frames"] > 1:
-        d["errors"].append("PixelLab: os endpoints create-image-* geram uma imagem estatica; a animacao "
-                           "(animate-with-text-v3 e outros) ainda nao esta ligada na Forja. Peca uma pose de cada "
-                           "vez ou use --backend openai|gemini para uma prancha")
-    if not c.canvas:
-        d["errors"].append(f"{d['kind']}: contrato sem tela fixa; o PixelLab precisa de um tamanho nativo")
-        return []
-    w, h = (v // c.cluster for v in c.canvas)
-    params = prompts.pixellab_params(d["subject"], c, (w, h), d["facing"])
-    kw = {k: v for k, v in params.items() if k not in ("description", "image_size")}
-    for name in [k for k in kw if k not in caps["fields"]]:
-        d["notes"].append(f"{model} nao tem o campo {name}: nao enviado")
-        kw.pop(name)
-    images: list[tuple[str, bytes]] = []
-    for role, field_name in (("identity", "init_image"), ("style", "style_image")):
-        mine = [data for r, data in refs if refs_mod.family(r) == role]
-        if not mine:
-            continue
-        if field_name not in caps["images"] or len(mine) > 1:
-            d["errors"].append(f"{model}: aceita no maximo uma {field_name}" if field_name in caps["images"]
-                               else f"{model} nao aceita {field_name} (papel {role}); use pixflux ou bitforge")
-            continue
-        images.append((field_name, mine[0]))
-    if any(f == "init_image" for f, _ in images):
-        kw["init_image_strength"] = 300 if init_strength is None else init_strength
-        d["notes"].append("o create-image do PixelLab nao tem campo de identidade: a referencia "
-                          f"({', '.join(d['authority']['states'])}) vai como init_image (imagem inicial), forca "
-                          f"{kw['init_image_strength']} — maior preserva mais")
-    if palette is not None and guides_mode != "none" and "color_image" in caps["images"]:
-        images.append(("color_image", png(guides.color_image(palette))))
-        d["notes"].append(f"paleta forcada pelo color_image ({len(palette)} cores)")
-    elif palette is not None:
-        d["notes"].append("o modelo nao recebe a paleta: aplica-se so no acabamento")
-    if seed is not None:
-        kw["seed"] = seed
-    d["errors"] += pixellab_api.check(model, w, h, **kw, **dict(images))
-    d["request"] = {"endpoint": f"{pixellab_api.BASE}/create-image-{model}", "width": w, "height": h,
-                    "params": kw, "spec_sha256": pixellab_api.SPEC_SHA256}
-    d["prompt"] = f"{d['subject']}, {c.en}"
-    d["expect"] = {"kind": d["kind"], "cells": [w, h], "content": [0, 0, w, h], "scale": 1, "scale_exact": True,
-                   "grid": "native", "layout": [1, 1], "frames": 1, "tags": None, "background": "transparent",
-                   "size": [w, h], "cluster": c.cluster, "attached": [r for r, _ in images]}
-    d["authoring"] = "generated_native"
-    return images
 
 
 def _built(d: dict, palette, target: str, background: str, attached: list[str], geo: dict) -> dict:
@@ -203,7 +153,7 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
     return images
 
 
-def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] | None = None,
+def make(backend: str, subject: str, kind: str | None = None, tags: list[tuple[str, int]] | None = None,
          facing: str = "right", references: list[tuple[str, str]] = (), palette: Palette | None = None,
          model: str | None = None, guides_mode: str = "auto", background: str = "auto",
          init_strength: int | None = None, seed: int | None = None, size: str | None = None,
@@ -214,6 +164,9 @@ def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tupl
     pedido a autoridade e da o modo (FORJA-07); `decisions`: max_colors e tones ditos no pedido. Nada sai para a rede."""
     if guides_mode not in GUIDES:
         raise ValueError(f"guias: {', '.join(GUIDES)}")
+    ch = fidelity_mod.character(fidelity, character, pose) if fidelity and character else None
+    selected = production.resolve(subject, kind, ch)
+    kind = selected["kind"]
     given = [(r, str(p), Path(p).read_bytes()) for r, p in references]
     seen = [(name, data, *refs_mod.resolve(r, data, register)) for r, name, data in given]
     prep = fidelity_mod.prepare(fidelity, character, pose, mode, [(got[2] or ref[0], *ref[1:])
@@ -230,20 +183,22 @@ def make(backend: str, subject: str, kind: str = "character_s2", tags: list[tupl
                "errors": [f"referencia {p}: {err}" for p, _, _, _, err in seen if err], "notes": [], "prompt": "",
                "expect": None, "request": None, "advice": None,
                "training_permission": PERMISSION.get(backend), "contracts": contracts.get(kind).as_dict()}
-    d.update(mode=prep["mode"], fidelity=prep["record"], constraints=[], implicit=[],
-             fidelity_prompt={**(prep["prompt"] or {}), **(decisions or {})})
-    d["errors"] += prep["errors"] + fidelity_mod.guide_alone(prep["mode"], seen, states)
+    d.update(mode=prep["mode"], fidelity=prep["record"], production=selected, constraints=[], implicit=[],
+             fidelity_prompt={**(prep["prompt"] or {}), **(decisions or {}), "role": selected["role"]})
+    d["errors"] += selected["errors"] + prep["errors"] + fidelity_mod.guide_alone(prep["mode"], seen, states)
     d["notes"] += prep["notes"] + ([] if "approved" in states else
                                    ["recuperacao: o que sair e uma adaptacao em revisao, nao um mestre"])
     d["errors"] += [f"assunto: {c}" for c in prompts.camera_conflicts(subject, facing)]
     if backend == "pixellab":
-        images = _pixellab(d, contracts.get(kind), refs, palette, model, guides_mode, init_strength, seed)
+        images = plan_native.prepare(d, contracts.get(kind), refs, palette, model, guides_mode, init_strength, seed)
     elif backend == "openai":
         images = _openai(d, refs, palette, model, guides_mode, background)
     elif backend == "gemini":
         images = _gemini(d, refs, palette, model, guides_mode, background, size)
     else:
         raise ValueError(f"gerador desconhecido: {backend} (use {', '.join(BACKENDS)})")
+    if d["expect"] is not None:
+        d["expect"].update(role=selected["role"], target_useful_bbox=d["fidelity_prompt"].get("target_useful_bbox"))
     d["attachments"] = [{"index": i, "role": refs_mod.family(r), "prompt_role": r, "sha256": sha(b), "bytes": len(b)}
                         for i, (r, b) in enumerate(images, 1)]
     d["prompt_sha256"] = hashlib.sha256(d["prompt"].encode("utf-8")).hexdigest()

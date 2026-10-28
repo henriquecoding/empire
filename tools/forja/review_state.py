@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import fidelity, refs, signals
+from . import fidelity, production, refs, signals
 from .equipment import image_sha
 from .imageops import on_background, upscale
 
@@ -34,6 +34,9 @@ def identity(ch: dict, candidate: Image.Image, reg: dict | None) -> dict:
     rec = refs.record(reg, candidate)
     if rec["state"] == "rejected":
         return {"status": "blocked", "evidence": [f"registo {rec['register']}: {rec['id']} rejeitada"]}
+    repairs = production.repairs_state(ch, image_sha(candidate))
+    if repairs["status"] != "pass":
+        return repairs
     if refs.approval(reg, candidate)["status"] == "approved":
         return {"status": "pass", "evidence": [f"aprovada pelo dono no registo ({rec['id']})"]}
     sha = image_sha(candidate)

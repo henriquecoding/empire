@@ -4,6 +4,14 @@
   "outline_color": "#000000",
   "fps": 10,
   "kinds": {
+    "troop_64": {
+      "en": "side-view regular troop character on a 64x64 native frame",
+      "label": "Tropa, quadro nativo 64 (inclui arqueiro de tropa; distinto do Arqueiro Real)",
+      "source": "docs/adr/0096-a-forja-decide-a-escala-antes-de-gerar.md; Henrique, 28/10/2026",
+      "status": "regra explicita do dono para tropas em 28/10/2026; nao aprova o desenho",
+      "canvas": [64, 64], "pivot": [32, 62], "useful_height": [1, 62],
+      "outline_px": 1, "cluster": 1, "max_colors": null, "dither": false, "anchor": "feet"
+    },
     "character_s1": {
       "en": "small side-view game character (scale 1: squire, small troops)",
       "label": "Personagem escala 1 (escudeiro, tropas pequenas, Rastejante)",

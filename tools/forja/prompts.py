@@ -14,7 +14,7 @@ from __future__ import annotations
 import math
 import re
 
-from . import constraints, contracts, matte
+from . import constraints, contracts, matte, native_prompt, production
 from .palette import Palette
 
 TARGETS = ("gpt-image", "gemini", "pixellab", "generic")
@@ -129,6 +129,7 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
     fid = fidelity or {}
     rules = constraints.rules(c, palette, facing, mode, listed, number.get("palette"), fid.get("invariants"),
                               fid.get("where"), fid.get("max_colors"), fid.get("tones"))
+    rules += production.rules(fid)
     lines = [
         'Create a pixel-art game asset for "Empire", a 2D side-view kingdom builder.',
         f"Subject: {subject}.",
@@ -166,13 +167,16 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
               "scale_exact": geo["exact"], "grid": "requested", "layout": [cols, rows], "frames": frames,
               "tags": [list(t) for t in tags] if tags else None,
               "background": "transparent" if transparent else key, "size": geo["size"], "cluster": c.cluster,
-              "attached": attached, "mode": mode}
+              "attached": attached, "mode": mode, "role": fid.get("role"),
+              "target_useful_bbox": fid.get("target_useful_bbox")}
     advice = None
     if k < 8:
         advice = (f"cada pixel logico tera so {k:g} px na imagem: o gerador perde precisao. Peca menos quadros por "
                   "prancha (ex.: --tags walk:4 duas vezes) ou uma figura por imagem.")
     return {"prompt": "\n".join(lines), "size": f"{geo['size'][0]}x{geo['size'][1]}", "expect": expect,
-            "advice": advice, "pixellab": pixellab_params(subject, c, tuple(canvas), facing), "target": target,
+            "advice": advice, "pixellab": pixellab_params(
+                native_prompt.build(subject, c, palette, facing, mode, fid)["prompt"] if c.canvas else subject,
+                c, tuple(canvas), facing, mode), "target": target,
             "conflicts": camera_conflicts(subject, facing), "mode": mode,
             "constraints": [{"id": "pixel_grid", "origin": "request"}] + [{k: r[k] for k in ("id", "origin")}
                                                                        for r in rules],
@@ -189,12 +193,16 @@ def _timeline(tags: list[tuple[str, int]]) -> list[str]:
     return out
 
 
-def pixellab_params(subject: str, c: contracts.Contract, canvas: tuple[int, int], facing: str) -> dict:
+def pixellab_params(subject: str, c: contracts.Contract, canvas: tuple[int, int], facing: str,
+                    mode: str = "stylized") -> dict:
     """O mesmo pedido nos termos da API do PixelLab (create-image-pixflux)."""
     outline = {None: None, 0: "lineless"}.get(c.outline_px, "single color black outline")
-    return {"description": subject, "image_size": {"width": canvas[0], "height": canvas[1]},
-            "outline": outline, "shading": "basic shading", "detail": "medium detail", "view": "side",
-            "direction": "east" if facing == "right" else "west", "no_background": True}
+    params = {"description": subject, "image_size": {"width": canvas[0], "height": canvas[1]},
+              "outline": outline, "view": "side", "direction": "east" if facing == "right" else "west",
+              "no_background": True}
+    if mode not in constraints.FAITHFUL:
+        params.update(shading="basic shading", detail="medium detail")
+    return params
 
 
 def corrective(original: str, feedback: str) -> str:

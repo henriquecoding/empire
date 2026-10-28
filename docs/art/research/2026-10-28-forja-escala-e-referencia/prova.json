@@ -1,0 +1,123 @@
+{
+ "network_calls": 0,
+ "paid_calls": 0,
+ "approval": "pending",
+ "checks": {
+  "troop_native_64": true,
+  "troop_80_refused": true,
+  "transparent_margins_do_not_make_97x96_fit": true,
+  "uncut_diagnostic_preserved": true,
+  "native_1x_rgba_identical": true,
+  "native_output_structured_not_text": true,
+  "source_not_locally_resized": true,
+  "authorized_defect_exceptions_sent": true,
+  "known_repairs_need_new_image_evidence": true,
+  "conversion_cannot_silently_copy_known_defect": true,
+  "normal_curved_bow_still_passes": true,
+  "string_attached_to_empty_space_fails": true
+ },
+ "troop_policy": {
+  "kind": "troop_64",
+  "size": [
+   64,
+   64
+  ],
+  "wrong_kind_errors": [
+   "role_conflict: troop usa troop_64, nao royal_80"
+  ]
+ },
+ "occupied_extent": {
+  "canvas": [
+   101,
+   100
+  ],
+  "alpha_threshold": 128,
+  "opaque_bbox": [
+   2,
+   2,
+   99,
+   98
+  ],
+  "useful_size": [
+   97,
+   96
+  ],
+  "clear_margins": {
+   "left": 2,
+   "top": 2,
+   "right": 2,
+   "bottom": 2
+  },
+  "opaque_pixels": 9312,
+  "empty_pixels_inside_bbox": 0,
+  "fits_canvas": false,
+  "target_canvas": [
+   80,
+   80
+  ],
+  "note": "vazio interior nao e margem removivel; a caixa util mede a extensao do desenho"
+ },
+ "native_read": {
+  "input": [
+   64,
+   64
+  ],
+  "useful": [
+   58,
+   58
+  ],
+  "grid": "operator_declared"
+ },
+ "conversion_request": {
+  "endpoint": "https://api.pixellab.ai/v2/image-to-pixelart",
+  "model": "image-to-pixelart",
+  "spec_sha256": "b6dd212ca4e7f60c9eb93e776303a92f6e0bb4f794cf3a2bf49099e9a00e8834",
+  "params": {
+   "image_size": {
+    "width": 320,
+    "height": 280
+   },
+   "output_size": {
+    "width": 64,
+    "height": 64
+   },
+   "fixer": true,
+   "init_image_strength": 200
+  },
+  "images": [
+   {
+    "role": "conversion_source",
+    "sha256": "041ffe210e9d23beabd04c9e060331b924ded7fd03576dfc653c6ca47bbb2659",
+    "bytes": 1000
+   }
+  ]
+ },
+ "bow_negative_control": [
+  {
+   "axis": "equipment_geometry",
+   "check": "bow_nocks",
+   "item": "bow",
+   "part": "limb",
+   "status": "fail",
+   "detail": "bow: corda sem contacto com a madeira em nock_top, nock_bottom",
+   "evidence": {
+    "grip_projection": 0.5,
+    "loose": [
+     "nock_top",
+     "nock_bottom"
+    ],
+    "tips": [
+     [
+      57,
+      21
+     ],
+     [
+      57,
+      59
+     ]
+    ]
+   }
+  }
+ ],
+ "ok": true
+}

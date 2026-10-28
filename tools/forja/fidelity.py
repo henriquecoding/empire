@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import constraints, contracts, signals
+from . import constraints, contracts, production, signals
 from .equipment import image_sha
 
 SCHEMA = "forja.fidelity/1"
@@ -52,6 +52,7 @@ def validate(data: dict, base: Path) -> list[str]:
     keys = [(c.get("id"), c.get("pose")) for c in data.get("characters", [])]
     for ch in data.get("characters", []):
         name = f"{ch.get('id')}/{ch.get('pose')}"
+        errors += [f"{name}: {e}" for e in production.validate(ch)]
         if not ch.get("id") or not ch.get("pose") or keys.count((ch["id"], ch["pose"])) > 1:
             errors.append(f"{name}: id e pose em falta ou repetidos")
         x0, y0, x1, y1 = ch.get("authority_crop_xyxy") or (0, 0, 0, 0)
@@ -131,6 +132,8 @@ def prepare(contract: dict | None, ident: str | None, pose: str | None, mode: st
     if not ident:
         raise ValueError("--fidelity pede --character")
     ch = character(contract, ident, pose)
+    decisions = production.prepare(ch)
+    out["errors"] += decisions["errors"]
     crop = crop_png(contract, ch)
     sha = image_sha(_pixels(crop))
     out["mode"] = mode or "adapt_concept"
@@ -146,10 +149,12 @@ def prepare(contract: dict | None, ident: str | None, pose: str | None, mode: st
                                  f" {'; '.join(bad.get('reasons', []))}")
     if not any(r == "concept" for r, _, _ in given) and out["mode"] in constraints.FAITHFUL:
         out["attach"].append(("concept", f"autoridade:{where(ch)}", crop))
-    out["prompt"] = {"invariants": ch.get("prompt_invariants") or ch.get("required_invariants"), "where": where(ch)}
+    out["prompt"] = {"invariants": ch.get("prompt_invariants") or ch.get("required_invariants"), "where": where(ch),
+                     **decisions["prompt"]}
     out["record"] = {"contract": contract["path"], "character": ch["id"], "pose": ch["pose"],
                      "authority_sha256": contract["authority"]["sha256"], "crop": ch["authority_crop_xyxy"],
-                     "crop_pixels_sha256": sha, "kind": ch["kind"], "target_canvas": ch["target_canvas"]}
+                     "crop_pixels_sha256": sha, "kind": ch["kind"], "target_canvas": ch["target_canvas"],
+                     "role": ch.get("role"), "target_useful_bbox": ch.get("target_useful_bbox")}
     return out
 
 

@@ -1,0 +1,13 @@
+{
+ "make_forja": "pass",
+ "tests": 381,
+ "new_tests": 24,
+ "skipped": 3,
+ "new_reproducible_checks": 12,
+ "new_reproducible_checks_passed": 12,
+ "python": "3.12.14",
+ "pillow": "12.3.0",
+ "godot_local": "not installed; run_tests.sh exit 127",
+ "paid_api_calls": 0,
+ "live_conversion_validated": false
+}

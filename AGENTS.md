@@ -51,6 +51,10 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   contrato de fidelidade (`--fidelity --character`: o recorte de autoridade vai
   anexado, sem as preferencias do compilador) e rever com `forja fidelity`; uma
   pureza alta nao prova que um traco sobreviveu (`snap.loss`, achado `erased`).
+  Regra de 28/10 (ADR 0096): tropas, incluindo o arqueiro de tropa, usam `troop_64`;
+  o Arqueiro Real e distinto e o Rei mantem 80x80. Conferir o papel antes do pedido.
+  A autoridade de identidade pode conter defeitos: registar `reference_issues`, corrigir
+  so as excecoes autorizadas e provar a correcao na imagem exata, sem copiar o erro.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

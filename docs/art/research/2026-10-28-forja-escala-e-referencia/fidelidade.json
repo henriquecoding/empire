@@ -1,0 +1,342 @@
+{
+ "schema": "forja.fidelity/1",
+ "date": "2026-10-28",
+ "status": "contrato atual de recuperacao; nenhum mestre aprovado",
+ "derived_from": "CONTRATO-FIDELIDADE-PROPOSTO.json (auditoria de 27/10, revisao 2)",
+ "authority": {
+  "file": "../2026-10-27-forja-auditoria-fidelidade/referencia/referencia-enviada.jpeg",
+  "sha256": "552ac1a2eb2ef4ddd6d8da82701d5969aaae45809be558415accb022f2ee840b",
+  "size": [
+   1536,
+   1024
+  ],
+  "role": "user_supplied_concept_for_this_revision",
+  "native_master_approved": false,
+  "crop_convention": "xyxy, coordenadas da imagem inteira; direita/baixo exclusivos",
+  "crop_annotation_status": "manual_inspection_boxes_may_include_ground_or_shadow",
+  "derived_guide_can_replace_identity_authority": false,
+  "original_concept_must_remain_attached_in_adaptation": true
+ },
+ "palette_policy": {
+  "source": "project_contract_and_explicit_art_direction",
+  "max_colors_in_examined_royal_contracts": null,
+  "implicit_two_tones_per_material_in_faithful_mode": false,
+  "implicit_12_to_24_color_cap_in_faithful_mode": false,
+  "material_colors": "to_be_chosen_and_reviewed_in_native_pilot"
+ },
+ "characters": [
+  {
+   "id": "rei",
+   "pose": "estatica_superior_da_prancha",
+   "kind": "royal_80",
+   "authority_crop_xyxy": [
+    55,
+    140,
+    565,
+    618
+   ],
+   "target_canvas": [
+    80,
+    80
+   ],
+   "target_useful_bbox": [
+    2,
+    2,
+    78,
+    79
+   ],
+   "native_layout_status": "pending",
+   "required_invariants": [
+    "corpo largo e relacao cabeca_tronco proximos do conceito",
+    "sobrancelha, palpebra, pupila e sorriso assimetrico preservam a atuacao",
+    "nariz permanece na familia cromatica da pele",
+    "tunica vinho, capa azul e mangas creme com planos legiveis",
+    "losango no peito e coroa reconheciveis",
+    "uma espada baixa na pose de referencia"
+   ],
+   "prompt_invariants": [
+    "broad body and the head-to-torso relation of the concept",
+    "brow, eyelid, pupil and the asymmetric grin act together as in the concept",
+    "the nose stays in the skin color family",
+    "wine tunic, blue cape and cream sleeves with readable light planes",
+    "recognizable diamond emblem on the chest and crown",
+    "one sword held low, as in the reference pose"
+   ],
+   "blocking_changes": [
+    "emagrecimento",
+    "sorriso generico",
+    "emblema arbitrario",
+    "rosto reduzido a dentes sem a expressao"
+   ],
+   "critical_regions": [
+    {
+     "id": "face_system",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "atuacao conjunta do olho, sobrancelha, nariz, boca e bochecha"
+    },
+    {
+     "id": "chest_emblem",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "forma e contraste do losango"
+    },
+    {
+     "id": "material_planes",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "separacao de pele, tecido vinho, creme, capa azul e metal"
+    }
+   ],
+   "pixel_pins": [],
+   "rejected_candidates": [
+    {
+     "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/rei.png",
+     "pixels_sha256": "76bb357c05e051fab6a08e4612ddbf2f5bcb58fb77814d88dce690e34331a6de",
+     "decided_by": "Henrique",
+     "date": "2026-10-27",
+     "reasons": [
+      "rosto e sorriso mais esquematicos",
+      "relacao entre marcas faciais mudou",
+      "dobras e planos perderam diferenciacao",
+      "emblema mudou de forma"
+     ]
+    },
+    {
+     "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/rei-base-antes-do-retoque.png",
+     "pixels_sha256": "b9c894133e95a5406a5b394c58b39db46d1c38edb41388c32d6803774cac0a5c",
+     "decided_by": "Henrique",
+     "date": "2026-10-27",
+     "reasons": [
+      "base da entrega rejeitada, antes dos sete pixels dos dentes"
+     ]
+    }
+   ],
+   "identity_reviews": [],
+   "replacement_candidate": null,
+   "reference_issue_reviews": [],
+   "role": "monarch"
+  },
+  {
+   "id": "escudeiro",
+   "pose": "estatica_superior_da_prancha",
+   "kind": "royal_64",
+   "authority_crop_xyxy": [
+    640,
+    285,
+    978,
+    618
+   ],
+   "target_canvas": [
+    64,
+    64
+   ],
+   "target_useful_bbox": [
+    2,
+    2,
+    62,
+    63
+   ],
+   "native_layout_status": "pending",
+   "required_invariants": [
+    "expressao ansiosa na relacao olho, nariz e boca",
+    "aba do elmo cinza posicionada em relacao ao olho como no conceito",
+    "escudo de madeira com miolo azul a frente do corpo",
+    "tecido vinho e creme, mangas com volume legivel",
+    "pose e exposicao do equipamento conservadas sem gesto inventado"
+   ],
+   "prompt_invariants": [
+    "anxious expression in the relation of eye, nose and mouth",
+    "grey helmet brim placed against the eye as in the concept",
+    "wooden shield with a blue core held in front of the body",
+    "wine and cream cloth, sleeves with readable volume",
+    "the pose and the visible equipment of the concept, no invented gesture"
+   ],
+   "blocking_changes": [
+    "rosto neutro",
+    "mudanca do gesto para mostrar espada",
+    "elmo e escudo que ocultam sinais diferentes daqueles do conceito"
+   ],
+   "critical_regions": [
+    {
+     "id": "helmet_face",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "ansiedade e relacao aba_olho_nariz_boca"
+    },
+    {
+     "id": "shield_hands",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "escudo e maos na pose de referencia"
+    },
+    {
+     "id": "material_planes",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "leitura de metal, madeira, vinho e creme"
+    }
+   ],
+   "pixel_pins": [],
+   "rejected_candidates": [
+    {
+     "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/escudeiro.png",
+     "pixels_sha256": "067d3690e3df47d23dd1e3585b4bacc22607abb315ab67ee50fda807ca629b8a",
+     "decided_by": "Henrique",
+     "date": "2026-10-27",
+     "reasons": [
+      "rosto menor e mais rigido",
+      "menos informacao no elmo e na manga",
+      "postura e exposicao da espada alteradas",
+      "45 pixels de altura numa tela de 64"
+     ]
+    }
+   ],
+   "identity_reviews": [],
+   "replacement_candidate": null,
+   "reference_issue_reviews": [],
+   "role": "squire"
+  },
+  {
+   "id": "arqueiro_tropa",
+   "pose": "estatica_superior_da_prancha",
+   "kind": "troop_64",
+   "authority_crop_xyxy": [
+    1115,
+    210,
+    1477,
+    618
+   ],
+   "target_canvas": [
+    64,
+    64
+   ],
+   "target_useful_bbox": [
+    2,
+    2,
+    62,
+    63
+   ],
+   "native_layout_status": "pending",
+   "required_invariants": [
+    "capuz verde e roupa predominantemente creme",
+    "expressao alerta e contida conforme a referencia",
+    "arco baixo a frente com as maos na relacao de referencia",
+    "corpo compacto e proporcoes proximas do conceito",
+    "sem substituir o alvo por tunica verde comprida, sorriso amplo, mao na cintura e arco vertical"
+   ],
+   "prompt_invariants": [
+    "a regular troop archer, distinct from the Royal Archer, authored in a native 64x64 frame",
+    "green hood and mostly cream clothing",
+    "alert, restrained expression as in the reference",
+    "the bow held low in front, with the hands placed as in the reference",
+    "compact body and the proportions of the concept",
+    "NOT a long green tunic, NOT a wide smile, NOT a hand on the hip, NOT a vertical raised bow"
+   ],
+   "blocking_changes": [
+    "tunica verde comprida",
+    "sorriso novo",
+    "mao na cintura",
+    "arco vertical retirado de outra referencia"
+   ],
+   "critical_regions": [
+    {
+     "id": "hood_face",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "contorno do capuz e expressao alerta"
+    },
+    {
+     "id": "bow_hands_string",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "posicao das maos, orientacao do arco e linha fina que deva ficar visivel"
+    },
+    {
+     "id": "cream_clothing",
+     "authority_box": null,
+     "target_box": null,
+     "required": true,
+     "status": "annotation_pending",
+     "purpose": "material creme predominante no tronco e mangas"
+    }
+   ],
+   "pixel_pins": [],
+   "rejected_candidates": [
+    {
+     "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/arqueiro.png",
+     "pixels_sha256": "055728a4355cee82f2fcef715e46401573c68b88e6505cd2b059f10c3848c866",
+     "decided_by": "Henrique",
+     "date": "2026-10-27",
+     "reasons": [
+      "outro desenho: roupa verde comprida",
+      "corpo mais esguio",
+      "sorriso largo",
+      "mao na cintura e arco vertical"
+     ]
+    },
+    {
+     "file": "../2026-10-27-forja-auditoria-fidelidade/fixtures/arqueiro-base-antes-do-retoque.png",
+     "pixels_sha256": "bc8749245996ea3cd1ab3c240bb5ec88279aac2e11d3a4063035515c6d8cc304",
+     "decided_by": "Henrique",
+     "date": "2026-10-27",
+     "reasons": [
+      "base da entrega rejeitada, antes dos dezoito pixels da corda"
+     ]
+    }
+   ],
+   "identity_reviews": [],
+   "replacement_candidate": null,
+   "reference_issue_reviews": [],
+   "role": "troop",
+   "reference_issues": [
+    {
+     "id": "bow_unidentified_fragment",
+     "scope": "equipment",
+     "authority_box": [
+      1290,
+      455,
+      1360,
+      520
+     ],
+     "description": "Segmento cinzento semelhante a lamina entre as maos, sem funcao de parte identificada do arco. Observacao visual; nao detector automatico.",
+     "disposition": "repair",
+     "authorized_by": "Henrique",
+     "date": "2026-10-28",
+     "instruction": "Remove the unassigned grey blade-like fragment between the hands. Keep the wooden bow coherent, with a central grip, two limb tips and one light string attached to both nocks. Preserve the character face, hood, cream clothing and overall resting gesture."
+    },
+    {
+     "id": "bow_connections",
+     "scope": "equipment",
+     "authority_box": [
+      1220,
+      355,
+      1476,
+      535
+     ],
+     "description": "Corda visivel desaparece na manga; continuidade, ponto inferior e pega exigem observacao propria, sem inferir que uma oclusao e uma ligacao correta.",
+     "disposition": "repair",
+     "authorized_by": "Henrique",
+     "date": "2026-10-28",
+     "instruction": "Make both string-to-limb connections unambiguous. Keep the resting diagonal bow and declare any sleeve or hand occlusion; do not add a duplicate string or turn the bow into a staff."
+    }
+   ]
+  }
+ ]
+}
