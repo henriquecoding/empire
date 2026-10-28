@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import fidelity, production, refs, signals
+from . import fidelity, production, refs, signals, visual_review
 from .equipment import image_sha
 from .imageops import on_background, upscale
 
@@ -26,7 +26,7 @@ STATES = ("runtime", "declared_feature_preservation", "identity_and_pose", "nati
 ASPECTS = ("face", "clothing", "proportions", "hands", "equipment")
 
 
-def identity(ch: dict, candidate: Image.Image, reg: dict | None) -> dict:
+def identity(ch: dict, candidate: Image.Image, reg: dict | None, visual: dict | None = None) -> dict:
     bad = fidelity.rejected(ch, candidate)
     if bad:
         return {"status": "blocked", "evidence": [f"candidato rejeitado por {bad['decided_by']} em {bad['date']}: "
@@ -34,9 +34,17 @@ def identity(ch: dict, candidate: Image.Image, reg: dict | None) -> dict:
     rec = refs.record(reg, candidate)
     if rec["state"] == "rejected":
         return {"status": "blocked", "evidence": [f"registo {rec['register']}: {rec['id']} rejeitada"]}
+    seen = visual_review.state(visual, candidate, ch) if visual else None
+    if seen and seen["status"] in ("invalid", "blocked"):
+        return {"status": "blocked", "evidence": seen.get("errors") or seen["blocking"], "visual_review": seen}
+    if seen:
+        derived = visual_review.issue_reviews(visual)
+        ch = {**ch, "reference_issue_reviews": ch.get("reference_issue_reviews", []) + derived}
     repairs = production.repairs_state(ch, image_sha(candidate))
     if repairs["status"] != "pass":
         return repairs
+    if seen and seen["status"] == "pending":
+        return {"status": "pending", "evidence": seen["uncertain"], "visual_review": seen}
     if refs.approval(reg, candidate)["status"] == "approved":
         return {"status": "pass", "evidence": [f"aprovada pelo dono no registo ({rec['id']})"]}
     sha = image_sha(candidate)
@@ -56,7 +64,7 @@ def identity(ch: dict, candidate: Image.Image, reg: dict | None) -> dict:
 
 
 def review(ch: dict, candidate: Image.Image, reg: dict | None = None, lint_result: dict | None = None,
-           forge: dict | None = None) -> dict:
+           forge: dict | None = None, visual: dict | None = None) -> dict:
     """Os quatro estados de um candidato contra a pose de autoridade `ch` do contrato de fidelidade."""
     runtime = ({"status": "pending", "evidence": ["contrato raster nao conferido"]} if lint_result is None else
                {"status": "pass" if lint_result["ok"] else "blocked",
@@ -71,7 +79,7 @@ def review(ch: dict, candidate: Image.Image, reg: dict | None = None, lint_resul
                     "evidence": sig["blocked"] + sig["pending"], "signals": sig}
     approval = refs.approval(reg, candidate)
     states = {"runtime": runtime, "declared_feature_preservation": preservation,
-              "identity_and_pose": identity(ch, candidate, reg),
+              "identity_and_pose": identity(ch, candidate, reg, visual),
               "native_master_approval": {"status": "pass" if approval["status"] == "approved" else "pending",
                                          "evidence": [approval]}}
     blocked = [k for k in STATES if states[k]["status"] == "blocked"]

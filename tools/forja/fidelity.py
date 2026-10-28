@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import constraints, contracts, production, signals
+from . import constraints, contracts, production, signals, visual_review
 from .equipment import image_sha
 
 SCHEMA = "forja.fidelity/1"
@@ -136,6 +136,9 @@ def prepare(contract: dict | None, ident: str | None, pose: str | None, mode: st
     out["errors"] += decisions["errors"]
     crop = crop_png(contract, ch)
     sha = image_sha(_pixels(crop))
+    seen = visual_review.for_reference(contract["base"], ch, _pixels(crop))
+    out["errors"] += seen["errors"]
+    out["notes"] += seen["notes"]
     out["mode"] = mode or "adapt_concept"
     for role, name, data in given:
         pixels = _pixels(data)
