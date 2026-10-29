@@ -46,6 +46,8 @@ def assemble(size: tuple[int, int], layers: dict[str, list[Image.Image | None]],
     n = max(len(frames) for frames in layers.values())
     if any(len(frames) not in (1, n) for frames in layers.values()):
         raise ValueError("todas as camadas de um corpo partilham o numero de quadros (ASSET_BIBLE §2)")
+    if durations is not None and len(durations) != n:
+        raise ValueError(f"{len(durations)} duracoes para {n} quadros: o escritor perderia quadros")
     order = sorted(layers, key=empire.z_order)
     stack: list[tuple] = []
     if reference is not None:

@@ -9,7 +9,7 @@ from tools.forja import aseprite, cli, mcp_server
 from tools.forja import ase
 from tools.forja.ase import empire
 from tools.forja.ase.describe import diff
-from tools.forja.ase.model import Layer
+from tools.forja.ase.model import Layer, SliceKey
 from tools.forja.ase import cena as scene_ase
 from tools.forja.tests import scene_fixtures as fx
 from tools.forja.tests.ase_cases import _box, body, cena
@@ -106,6 +106,15 @@ class CenaTest(unittest.TestCase):
         self.assertEqual(drift, ["vao porta: contrato [48, 44, 80, 128], ficheiro [48, 44, 68, 128]"])
         self.assertEqual(res["openings"][0]["box_px"], fx.DOOR)
 
+    def test_uma_chave_noutro_quadro_tambem_conta(self):
+        s = cena()
+        next(x for x in s.slices if x.name == "opening_porta").keys.append(SliceKey(1, 48, 44, 8, 84))
+        zone = next(x for x in s.slices if x.name == "state_damaged_0")
+        zone.keys = [SliceKey(0, 0, 0, 128, 40)]  # a zona do dano tambem no quadro base
+        drift = scene_ase.drift(self.resolved(), scene_ase.read(ase.read(ase.write(s))))
+        self.assertEqual(drift, ["vao porta no quadro 1: contrato [48, 44, 80, 128], ficheiro [48, 44, 56, 128]",
+                                 "zona do estado damaged: nos quadros [0, 1], o estado e o quadro 1"])
+
     def test_estado_base_obrigatorio(self):
         with self.assertRaises(ValueError):
             scene_ase.write(self.resolved(), {"damaged": fx.house()})
@@ -133,6 +142,26 @@ class ComandosTest(unittest.TestCase):
         s = ase.read(d / "corpo.aseprite")
         self.assertEqual(s.slices[0].keys[0].pivot, (32, 56))  # o pivot do contrato
         self.assertEqual(s.user.properties[""]["kind"].value, "character_s1")  # lido de volta, com o tipo
+
+    def test_a_linha_do_tempo_e_a_da_camada_mais_longa(self):
+        d = tempdir()
+        main = self.frames(d, "corpo", 1, (150, 100, 60, 255))
+        self.frames(d, "arco", 4, (90, 60, 30, 255))
+        res = cli.run(["aseprite", *main, "-o", str(d / "c.aseprite"), "--slot", f"weapon_bow_l1={d}/arco_*.png"])
+        self.assertTrue(res["ok"], res)
+        self.assertEqual(ase.read(d / "c.aseprite").frames, 4)  # o arco nao perde quadros
+        with self.assertRaises(ValueError):
+            aseprite.assemble((64, 64), {"body": [Image.open(main[0])] * 3}, [100])
+
+    def test_exportar_recusa_camadas_com_o_mesmo_nome(self):
+        d = tempdir()
+        img = _box((8, 8), [1, 1, 4, 4], (200, 0, 0, 255))
+        aseprite.save(ase.build((8, 8), [("body", [img]), ("body", [img])]), d / "twin.aseprite")
+        with self.assertRaises(ValueError):
+            cli.run(["exportar", str(d / "twin.aseprite"), "-o", str(d / "out")])
+        self.assertFalse((d / "out").exists())  # nada escrito
+        self.assertEqual(len(cli.run(["exportar", str(d / "twin.aseprite"), "-o", str(d / "c"),
+                                      "--composite"])["files"]), 1)
 
     def test_nunca_escreve_em_art(self):
         d = tempdir()

@@ -45,7 +45,8 @@ def do_aseprite(args) -> dict:
         layers[name] = _frames(files)
     if len({img.size for images in layers.values() for img in images}) != 1:
         raise ValueError("todas as camadas de um corpo partilham a tela (ASSET_BIBLE §2)")
-    tl, durations = sheetforge._timeline(sheetforge.parse_tags(args.tags), len(frames))
+    count = max(len(images) for images in layers.values())  # a linha do tempo e a da camada mais longa
+    tl, durations = sheetforge._timeline(sheetforge.parse_tags(args.tags), count)
     pal = palmod.load(args.palette).colors if args.palette else None
     pivot = args.pivot or (contracts.get(args.kind).pivot if args.kind else None)
     sprite = aseprite.assemble(frames[0].size, layers, durations, tl, pal, pivot,
@@ -76,6 +77,11 @@ def do_exportar(args) -> dict:
     sprite = read_ase(args.file)
     title = args.title or Path(args.file).stem
     out = outside_art(args.out or f"build/forja/exportar/{title}")
+    names = [layer.name for layer in sprite.layers]
+    twins = sorted({n for n in names if names.count(n) > 1})
+    if twins and (args.layer in twins or not (args.composite or args.layer)):
+        raise ValueError(f"camadas com o mesmo nome ({', '.join(twins)}): o --layer junta-as numa folha so; "
+                         "renomeia-as no Aseprite ou usa --composite")
     if args.composite or args.layer:
         stem = f"{title}_{empire.export_name(args.layer)}" if args.layer else title
         jobs = [(stem, *sheet(sprite, title, f"{stem}.png", layer=args.layer, kind=args.sheet_type,

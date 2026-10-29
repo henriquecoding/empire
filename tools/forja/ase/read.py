@@ -16,8 +16,10 @@ from .model import (BYTES, LAYER_KINDS, Cel, Layer, Slice, SliceKey, Sprite, Tag
 
 
 def _palette(sprite: Sprite, frame: int, entries: dict[int, tuple], size: int | None = None) -> None:
+    """A paleta do quadro: a anterior com as entradas novas. O tamanho declarado no chunk novo manda (o decoder do
+    Aseprite faz `resize`, tambem para menos); os chunks antigos nao o dizem e so crescem."""
     prev = list(sprite.palette(frame))
-    size = max(size or 0, len(prev), max(entries, default=-1) + 1)
+    size = max(size or len(prev), max(entries, default=-1) + 1)
     pal = [prev[i] if i < len(prev) else (0, 0, 0, 255, None) for i in range(size)]
     for i, c in entries.items():
         pal[i] = c

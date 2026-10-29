@@ -100,6 +100,16 @@ class ConformidadeTest(unittest.TestCase):
                     self.assertEqual(pixels(img), pixels(Image.open(FIX / "export" / f"{stem}.png")), stem)
 
 
+class FormatoTest(unittest.TestCase):
+    def test_a_paleta_encolhe_quando_o_chunk_o_diz(self):
+        img = Image.new("P", (2, 2), 1)
+        pal = [(0, 0, 0, 255, None), (255, 0, 0, 255, None), (0, 255, 0, 255, None), (0, 0, 255, 255, None)]
+        s = ase.build((2, 2), [("a", [img, img])], [100, 100], depth=8, palette=pal)
+        s.palettes[1] = pal[:2]  # o decoder do Aseprite faz resize para o tamanho declarado
+        back = ase.read(ase.write(s))
+        self.assertEqual([len(back.palette(f)) for f in range(2)], [4, 2])
+
+
 class MisturaTest(unittest.TestCase):
     def test_aritmetica_de_8_bits_do_aseprite(self):
         self.assertEqual([blend.mul(a, b) for a, b in [(255, 255), (128, 128), (0, 200), (200, 1)]], [255, 64, 0, 1])

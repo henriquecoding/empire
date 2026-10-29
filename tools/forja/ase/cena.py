@@ -65,20 +65,42 @@ def _props(s: Slice) -> dict:
     return plain(s.user.properties.get("", {}))
 
 
+def _boxes(s: Slice, frames: int) -> list[list[int] | None]:
+    """A caixa da slice em cada quadro: uma chave vale do seu quadro ate a seguinte; antes da primeira, ou com
+    largura 0, a slice nao existe nesse quadro."""
+    out, cur = [], None
+    for f in range(frames):
+        for k in s.keys:
+            if k.frame == f:
+                cur = [k.x, k.y, k.x + k.w, k.y + k.h] if k.w and k.h else None
+        out.append(cur)
+    return out
+
+
 def read(sprite: Sprite) -> dict:
-    """O contrato como o ficheiro o diz agora: estados, pivot, vaos, regioes de sinal e zonas de mudanca."""
-    out: dict = {"states": [t.name for t in sprite.tags], "openings": {}, "signal_regions": {}, "state_changes": {}}
+    """O contrato como o ficheiro o diz agora: estados, pivot, vaos, regioes de sinal e zonas de mudanca. Um vao ou
+    um sinal que muda de caixa noutro quadro traz `frames` com as caixas desse quadro; uma zona traz os quadros
+    onde existe."""
+    out: dict = {"states": [t.name for t in sprite.tags], "openings": {}, "signal_regions": {}, "signal_frames": {},
+                 "state_changes": {}, "state_frames": {}}
     for s in sprite.slices:
+        boxes = _boxes(s, sprite.frames)
+        box = next((b for b in boxes if b), None)
+        other = {f: b for f, b in enumerate(boxes) if b != box}
         k = s.keys[0]
-        box = [k.x, k.y, k.x + k.w, k.y + k.h]
         if s.name == "pivot" and k.pivot:
             out["pivot"] = [k.x + k.pivot[0], k.y + k.pivot[1]]
         elif s.name.startswith("opening_"):
-            out["openings"][s.name[len("opening_"):]] = {"box_px": box, **_props(s)}
+            out["openings"][s.name[len("opening_"):]] = {"box_px": box, **_props(s), **({"frames": other} if other
+                                                                                           else {})}
         elif s.name.startswith("signal_"):
             out["signal_regions"][s.name[len("signal_"):]] = box
+            if other:
+                out["signal_frames"][s.name[len("signal_"):]] = other
         elif s.name.startswith("state_"):
-            out["state_changes"].setdefault(_props(s).get("state"), []).append(box)
+            state = _props(s).get("state")
+            out["state_changes"].setdefault(state, []).append(box)
+            out["state_frames"].setdefault(state, []).append([f for f, b in enumerate(boxes) if b])
     return out
 
 
@@ -90,10 +112,19 @@ def drift(res: dict, seen: dict) -> list[str]:
     for oid in sorted(set(want) | set(got)):
         if want.get(oid) != got.get(oid):
             out.append(f"vao {oid}: contrato {want.get(oid)}, ficheiro {got.get(oid)}")
+        for f, box in sorted(seen["openings"].get(oid, {}).get("frames", {}).items()):
+            out.append(f"vao {oid} no quadro {f}: contrato {want.get(oid)}, ficheiro {box}")
     for name in sorted(set(res["signal_regions"]) | set(seen["signal_regions"])):
         if res["signal_regions"].get(name) != seen["signal_regions"].get(name):
             out.append(f"sinal {name}: contrato {res['signal_regions'].get(name)}, ficheiro "
                        f"{seen['signal_regions'].get(name)}")
+        for f, box in sorted(seen.get("signal_frames", {}).get(name, {}).items()):
+            out.append(f"sinal {name} no quadro {f}: contrato {res['signal_regions'].get(name)}, ficheiro {box}")
+    for state, spans in sorted(seen.get("state_frames", {}).items()):
+        frame = seen["states"].index(state) if state in seen["states"] else None
+        for span in spans:
+            if span != [frame]:
+                out.append(f"zona do estado {state}: nos quadros {span}, o estado e o quadro {frame}")
     for state in sorted(set(res["state_changes"]) & set(seen["states"]) | set(seen["state_changes"])):
         if res["state_changes"].get(state) != seen["state_changes"].get(state):
             out.append(f"estado {state}: contrato {res['state_changes'].get(state)}, ficheiro "
