@@ -2,8 +2,9 @@
 
 Os conceitos abaixo foram escolhidos por Henrique. As revisões do alquimista e do seu
 escudeiro executam pedidos posteriores: traços asiáticos com o nariz longo original,
-e gesto de ajudante que entrega a próxima poção. A decisão de design não declara aprovação
-de sprites nativos, animações ou integração Godot.
+e gesto de ajudante que entrega a próxima poção. Henrique aceitou a revisão mais
+recente e pediu a integração: «Ok, agora quero que leve tudo a forja». A decisão de
+design não declara aprovação de sprites nativos, animações ou integração Godot.
 
 ## Usar na Forja
 
@@ -79,7 +80,7 @@ a pinça. A bolsa, a dose pronta e o gesto de entrega explicam o apoio.
 A preparação e entrega de doses são uma proposta de função. Não há uma mecânica
 de produção, recarga, cura, dano ou consumo de poções implementada nesta tarefa.
 
-## Frasco partilhado e expressão — revisão seguinte
+## Frasco partilhado e expressão — revisão aceite
 
 O frasco entregue pelo escudeiro usa o mesmo molde e porte do que o imperador
 segura. A diferença entre telas de 64×64 e 80×80 não reduz o objeto transportado:

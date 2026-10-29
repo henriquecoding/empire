@@ -106,10 +106,10 @@
       "paired_with": "alchemist_squire",
       "function": "Studies and prepares potions; keep the accepted royal silhouette and comic personality.",
       "design_decision": {
-        "status": "owner_requested_revision",
+        "status": "accepted",
         "by": "Henrique",
         "date": "2026-10-29",
-        "evidence": "Adorei de verdade os 3 designs; fazer o alquimista asiático; O nariz estava otimo antes.",
+        "evidence": "Adorei de verdade os 3 designs; fazer o alquimista asiático; O nariz estava otimo antes.; Ok, agora quero que leve tudo a forja",
         "scope": "concept identity; no native sprite or animation approved"
       },
       "native_master_approved": false,
@@ -129,10 +129,10 @@
       "paired_with": "alchemist_emperor",
       "function": "Visual proposal: prepares and offers the next prepared potion to the emperor, while he studies or uses the current one; no shield guard role.",
       "design_decision": {
-        "status": "owner_requested_revision",
+        "status": "accepted",
         "by": "Henrique",
         "date": "2026-10-29",
-        "evidence": "Frasco do mesmo tamanho do imperador; refinar design e expressão do escudeiro.",
+        "evidence": "Frasco do mesmo tamanho do imperador; refinar design e expressão do escudeiro.; Ok, agora quero que leve tudo a forja",
         "scope": "concept identity; no native sprite or animation approved"
       },
       "native_master_approved": false,

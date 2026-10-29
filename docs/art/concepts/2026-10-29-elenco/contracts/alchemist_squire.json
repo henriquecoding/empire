@@ -62,10 +62,10 @@
         "human converted to plant creature"
       ],
       "design_decision": {
-        "status": "owner_requested_revision",
+        "status": "accepted",
         "by": "Henrique",
         "date": "2026-10-29",
-        "evidence": "O frasco na mão do escudeiro deve ser do tamanho do que estará na mão do imperador; o design e a expressão do escudeiro devem ser melhor feitos.",
+        "evidence": "O frasco na mão do escudeiro deve ser do tamanho do que estará na mão do imperador; o design e a expressão do escudeiro devem ser melhor feitos.; Ok, agora quero que leve tudo a forja",
         "scope": "concept identity; no native sprite or animation approved"
       },
       "pixel_pins": [],
