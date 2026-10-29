@@ -43,6 +43,7 @@ tamanho de célula por plano; e as emendas provam-se pela topologia, não pelo c
    Asset Bible) e cada linha diz a origem. Vai com a régua em imagem: as silhuetas reais do ator mais alto e do mais
    baixo, a altura da porta e os vãos, no tamanho exato do pedido. `forja cena`, e `plan`/`auto` com `--scene`, planeiam
    sem rede para os três geradores; o PixelLab desenha nas células, e acima do modelo o plano falha e propõe a partição.
+   Uma referência que o gerador não pode receber recusa-se: registada e enviada são campos diferentes (FORJA-12).
 4. **Sem tela inventada.** `prompts.geometry` recusa um contrato sem tela e sem extensão dita, em vez de 64×64.
    Um plano opaco forja-se com `--bg keep`. A tela, o pivô, o fundo de cada gerador e a origem da cena chegam ao
    `forge` e ao `auto` pelo `expect`: com a grade pedida medida, a peça fica onde ela a pôs, sem recentrar.

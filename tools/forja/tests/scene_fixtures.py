@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw
 
 WALL, ROOF, DARK, SOIL, GRASS = (186, 170, 140, 255), (60, 90, 100, 255), (40, 30, 24, 255), (92, 64, 40, 255), \
     (110, 160, 60, 255)
-DOOR = [52, 44, 76, 128]
+DOOR = [48, 44, 80, 128]  # 32 px: a largura livre da regua (30-40) e a altura do Rei (72-80)
 
 
 def house(size: tuple[int, int] = (128, 128), door: list[int] | None = DOOR, lift: int = 0) -> Image.Image:

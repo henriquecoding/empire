@@ -7,7 +7,10 @@ jobs nao mudam.
   regioes partilham o mestre, as coordenadas e a faixa protegida, e a juncao revê-se (relatorio de 28/10, §22).
 - gpt-image e Gemini recebem o prompt de elevacao lateral, as referencias da cena no papel de cada uma, a regua em
   imagem e a amostra da paleta.
-Uma referencia `approved` so vale pelo registo do dono (`refs`); uma rejeitada nao entra.
+Uma referencia `approved` so vale pelo registo do dono (`refs`); uma rejeitada nao entra. Registada e enviada sao
+campos diferentes (`sent`): uma referencia que o gerador nao pode receber da erro, nao fica so escrita no plano
+(auditoria de 28/10, A5). No PixelLab o conceito vai como `init_image` (no tamanho do pedido) e o mestre de estilo
+como `style_image` (bitforge); os outros papeis nao tem entrada no create-image.
 """
 from __future__ import annotations
 
@@ -21,6 +24,8 @@ from . import guides, plan as plan_mod, refs as refs_mod, scene as scene_mod, sc
 from .backends import gemini_images, openai_images, pixellab_api, sha
 from .imageops import png_bytes as png
 from .palette import Palette
+
+PIXELLAB_INPUTS = {"asset_concept": "init_image", "style_master": "style_image"}
 
 
 def partition(total: int, max_side: int, overlap: int, step: int = 1) -> list[list[int]]:
@@ -106,20 +111,36 @@ def _gemini(d, res, refs, palette, model, guides_mode, size) -> list:
     if size and size not in caps["sizes"]:
         d["errors"].append(f"{model}: resolucao {size} nao suportada (use {', '.join(caps['sizes'])})")
         size = None
-    size = size or next((s for s in caps["sizes"] if gemini_images.estimate(aspect, s)[0] / w >= 8),
+    size = size or next((s for s in caps["sizes"] if gemini_images.estimate(aspect, s, model)[0] / w >= 8),
                         caps["sizes"][-1])
-    est = gemini_images.estimate(aspect, size)
+    est = gemini_images.estimate(aspect, size, model)
     geo = {**base, "logical": [w, h], "content": [ox, oy, ox + lw, oy + lh], "scale": round(est[0] / w, 2),
            "size": list(est), "exact": False}
     images = _attach(res, refs, palette, guides_mode, scene_prompt.build(res, "gemini", [], geo)["expect"])
     _built(d, res, palette, "gemini", [r for r, _ in images], geo)
     d["errors"] += gemini_images.check(model, aspect, size, [refs_mod.family(r) for r, _ in images])
     d["request"] = {"endpoint": "interactions", "aspect_ratio": aspect, "image_size": size,
-                    "estimated_output": list(est), "output_size_known": False}
+                    "estimated_output": list(est),
+                    "output_size_known": gemini_images.published(model, aspect, size) is not None}
     return images
 
 
-def _pixellab(d, res, palette, model, seed) -> list:
+def _pixellab_refs(d: dict, refs: list, model: str, caps: dict) -> list[tuple[str, bytes]]:
+    images: list[tuple[str, bytes]] = []
+    for role, data in refs:
+        field = PIXELLAB_INPUTS.get(role)
+        if field is None:
+            d["errors"].append(f"PixelLab {model}: a referencia {role} nao chega ao modelo (o create-image nao tem "
+                               "entrada para esse papel); use openai ou gemini, ou tire-a do contrato")
+        elif field not in caps["images"] or any(f == field for f, _ in images):
+            d["errors"].append(f"PixelLab {model}: a referencia {role} nao chega ao modelo ({field}: "
+                               + ("so uma)" if field in caps["images"] else "use bitforge)"))
+        else:
+            images.append((field, data))
+    return images
+
+
+def _pixellab(d, res, refs, palette, model, seed) -> list:
     model = d["model"] = model or "pixflux"
     caps = pixellab_api.CAPS.get(model)
     if caps is None:
@@ -128,8 +149,12 @@ def _pixellab(d, res, palette, model, seed) -> list:
     w, h = res["cells"]
     params = scene_prompt.pixellab_params(res)
     kw = {k: v for k, v in params.items() if k not in ("description", "image_size") and k in caps["fields"]}
-    images = [("color_image", png(guides.color_image(palette)))] if palette is not None and \
-        "color_image" in caps["images"] else []
+    images = _pixellab_refs(d, refs, model, caps)
+    if any(f == "init_image" for f, _ in images):
+        kw["init_image_strength"] = 300
+        d["notes"].append("o conceito vai como init_image (imagem inicial, forca 300): no tamanho do pedido")
+    if palette is not None and "color_image" in caps["images"]:
+        images.append(("color_image", png(guides.color_image(palette))))
     if seed is not None:
         kw["seed"] = seed
     found = pixellab_api.check(model, w, h, **kw, **dict(images))
@@ -172,9 +197,17 @@ def make(backend: str, scene_path: str | Path, palette: Palette | None = None, m
     elif backend == "gemini":
         images = _gemini(d, res, refs, palette, model, guides_mode, size)
     elif backend == "pixellab":
-        images = _pixellab(d, res, palette, model, seed)
+        images = _pixellab(d, res, refs, palette, model, seed)
     else:
         raise ValueError(f"gerador desconhecido: {backend} (use {', '.join(plan_mod.BACKENDS)})")
+    pool = [(r, sha(b)) for r, b in images]  # uma a uma: o mesmo ficheiro pode ir em dois papeis
+    for e in d["references"]:
+        hit = next((p for p in pool if p[1] == e["sha256"]), None) if e["state"] != "rejected" else None
+        if hit:
+            pool.remove(hit)
+        e["sent"] = hit[0] if hit else None
+        if e["state"] != "rejected" and e["sent"] is None and not any(e["role"] in x for x in d["errors"]):
+            d["errors"].append(f"referencia {e['path']} ({e['role']}): registada mas nao enviada ao {backend}")
     if d["expect"]:
         d["expect"].update(canvas_px=res["extent_px"], pivot_px=[res["extent_px"][0] // 2, res["extent_px"][1] - 1])
     d["attachments"] = [{"index": i, "role": refs_mod.family(r), "prompt_role": r, "sha256": sha(b), "bytes": len(b)}

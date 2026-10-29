@@ -110,8 +110,10 @@ def do_estrutura(args) -> dict:
     res = scene_mod.resolve(scene_mod.load(args.scene))
     neighbors = {k: open_rgba(v) for k, v in (("left", args.left), ("right", args.right)) if v}
     pal = _palette(args.palette, res)
-    rep = estrutura.review(open_rgba(args.image), res, open_rgba(args.master) if args.master else None, neighbors,
-                           _states(args.state), pal)
+    master = open_rgba(args.master) if args.master else None
+    rec = refs_mod.lookup(refs_mod.load(args.refs), master) if master is not None and args.refs else None
+    rep = estrutura.review(open_rgba(args.image), res, master, neighbors, _states(args.state), pal,
+                           master_state=rec["state"] if rec else None)
     if args.out:
         rep["file"] = _write(Path(args.out), rep)
     return {"ok": not rep["blocking"], **rep}
@@ -183,7 +185,8 @@ def register(sub) -> None:
                 "vaos, sinais de identidade, repeticao, conectores e estados", do_estrutura)
     p.add_argument("image")
     p.add_argument("--scene", required=True)
-    p.add_argument("--master", help="o mestre aprovado: os sinais tem de ficar iguais a ele")
+    p.add_argument("--master", help="o mestre: os sinais tem de ficar iguais a ele (so passa se --refs o aprova)")
+    p.add_argument("--refs", help="registo forja.refs/1: o estado do mestre (so approved faz passar a igualdade)")
     p.add_argument("--left", help="o modulo vizinho a esquerda")
     p.add_argument("--right", help="o modulo vizinho a direita")
     p.add_argument("--state", action="append", help="nome=caminho.png de um estado (igual a base fora das zonas)")

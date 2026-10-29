@@ -146,6 +146,7 @@ def _snap(lo: float, hi: float, step: int) -> tuple[int, int]:
 def metrics(rul: dict, step: int = 2) -> list[dict]:
     """Cada metrica em px de ecra e em celulas, arredondada para dentro da grade (o minimo sobe, o maximo desce)."""
     bases = {"tallest": rul["tallest"]["height"], "shortest": rul["shortest"]["height"]}
+    profile = data()["metrics_profile"]  # proposta ate o dono decidir: as verificacoes dizem-no
     out: list[dict] = []
     for m in data()["metrics"]:
         if "px" in m:
@@ -158,7 +159,7 @@ def metrics(rul: dict, step: int = 2) -> list[dict]:
         lo, hi = _snap(lo, hi, step)
         out.append({"id": m["id"], "label": m["label"], "px": [lo, hi], "cells": [lo // step, hi // step],
                     "base": m.get("base"), "base_px": base, "factor": m.get("factor"), "origin": m["origin"],
-                    "why": m["why"]})
+                    "why": m["why"], "status": profile["status"], "decision": profile["decision"]})
     return out
 
 

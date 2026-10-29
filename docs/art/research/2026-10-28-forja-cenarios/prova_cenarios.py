@@ -111,7 +111,12 @@ def scenes() -> dict:
         if path.stem == "oficina-enramados":
             (OUT / "oficina-prompt.txt").write_text(built["prompt"] + "\n", encoding="utf-8")
             scene_prompt.ruler_guide(res, built["expect"]).save(OUT / "oficina-regua.png")
-        check(f"{path.stem}: plano sem rede valido nos tres geradores", all(v["ok"] for v in plans.values()))
+        check(f"{path.stem}: plano sem rede valido no gpt-image e no Gemini", plans["openai"]["ok"] and
+              plans["gemini"]["ok"])
+        lost = plans["pixellab"]["errors"]  # auditoria A5: a referencia que o create-image nao recebe e recusada
+        check(f"{path.stem}: o PixelLab recusa as referencias que nao pode receber, em vez de as perder",
+              not plans["pixellab"]["ok"] and all("nao chega" in e or "init_image" in e for e in lost),
+              refused=len(lost))
         check(f"{path.stem}: nenhuma restricao escondida do compilador",
               "compiler_default" not in out[path.stem]["constraints"])
     return out

@@ -25,7 +25,7 @@ def leaning(size: int = 64) -> Image.Image:
     d = ImageDraw.Draw(cells)
     d.rectangle([5, 21, 40, size - 1], fill=fx.WALL)
     d.rectangle([3, 17, 42, 21], fill=fx.ROOF)
-    d.rectangle([26, 22, 37, size - 1], fill=fx.DARK)
+    d.rectangle([24, 22, 39, size - 1], fill=fx.DARK)
     return cells
 
 
@@ -98,14 +98,17 @@ class AnchorTest(unittest.TestCase):
 
 class StatesTest(unittest.TestCase):
     def test_a_declared_variant_without_an_image_is_not_evaluated(self):
-        res = resolved(conditions=["night"])
+        res = resolved(conditions=["night"], state_changes={"damaged": [[0, 0, 128, 40]], "night": [[0, 0, 128, 128]]})
         rep = estrutura.review(fx.house(), res)
         self.assertEqual({c["check"]: c["status"] for c in rep["checks"] if c["axis"] == "states"},
                          {"damaged": "not_evaluated", "night": "not_evaluated"})
-        rep = estrutura.review(fx.house(), res, states={"damaged": fx.house()})
-        self.assertEqual(rep["verdicts"]["states"], "not_evaluated")
-        rep = estrutura.review(fx.house(), res, states={"damaged": fx.house(), "night": fx.house()})
-        self.assertEqual(rep["verdicts"]["states"], "pass")
+        changed = fx.house()
+        ImageDraw.Draw(changed).rectangle([10, 10, 30, 20], fill=(0, 0, 0, 0))  # dentro das zonas das duas
+        rep = estrutura.review(fx.house(), res, states={"damaged": changed})
+        self.assertNotEqual(rep["verdicts"]["states"], "pass")  # a noite falta
+        self.assertEqual(next(c for c in rep["checks"] if c["check"] == "night")["status"], "not_evaluated")
+        rep = estrutura.review(fx.house(), res, states={"damaged": changed, "night": changed})
+        self.assertEqual(rep["verdicts"]["states"], "inconclusive")  # tudo veio e mudou; o significado ve-se a olho
 
 
 class PlanCliTest(unittest.TestCase):

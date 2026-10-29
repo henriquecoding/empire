@@ -42,7 +42,7 @@ class EstruturaTest(unittest.TestCase):
         sunk.paste(fx.house(door=[52, 44, 76, 128]).resize((128, 64), Image.Resampling.NEAREST), (0, 64))
         self.assertEqual(status(estrutura.review(sunk, self.res), "opening:porta"), "fail")  # o ceu nao e vao
         short = fx.house()
-        ImageDraw.Draw(short).rectangle([52, 44, 75, 79], fill=fx.WALL)
+        ImageDraw.Draw(short).rectangle([48, 44, 79, 79], fill=fx.WALL)
         rep = estrutura.review(short, self.res)
         self.assertEqual(status(rep, "opening:porta"), "fail")
         self.assertIn("structure", rep["blocking"])
@@ -78,9 +78,13 @@ class EstruturaTest(unittest.TestCase):
         rep = estrutura.review(fx.house(), self.res)
         self.assertEqual(status(rep, "chimney_join"), "inconclusive")
         self.assertEqual(status(rep, "roof_pitch"), "not_evaluated")
-        self.assertEqual(status(estrutura.review(fx.house(), self.res, master=fx.house()), "chimney_join"), "pass")
+        same = estrutura.review(fx.house(), self.res, master=fx.house())  # igual a uma imagem nao a faz mestre
+        self.assertEqual(status(same, "chimney_join"), "inconclusive")
+        self.assertEqual(status(estrutura.review(fx.house(), self.res, master=fx.house(), master_state="approved"),
+                                "chimney_join"), "pass")
         rgb = fx.house().convert("RGB")
-        self.assertEqual(status(estrutura.review(rgb.convert("RGBA"), self.res, master=rgb), "chimney_join"), "pass")
+        self.assertEqual(status(estrutura.review(rgb.convert("RGBA"), self.res, master=rgb, master_state="approved"),
+                                "chimney_join"), "pass")
         moved = fx.house()
         ImageDraw.Draw(moved).rectangle([94, 0, 107, 7], fill=(0, 0, 0, 0))
         self.assertEqual(status(estrutura.review(moved, self.res, master=fx.house()), "chimney_join"), "fail")
@@ -90,7 +94,7 @@ class EstruturaTest(unittest.TestCase):
         ImageDraw.Draw(damaged).rectangle([10, 10, 30, 20], fill=(0, 0, 0, 0))
         self.assertEqual(status(estrutura.review(fx.house(), self.res, states={"damaged": damaged}), "damaged"),
                          "pass")
-        ImageDraw.Draw(damaged).rectangle([52, 100, 75, 127], fill=fx.WALL)
+        ImageDraw.Draw(damaged).rectangle([48, 100, 79, 127], fill=fx.WALL)
         rep = estrutura.review(fx.house(), self.res, states={"damaged": damaged})
         self.assertEqual(status(rep, "damaged"), "fail")
         self.assertEqual(rep["verdicts"]["states"], "fail")

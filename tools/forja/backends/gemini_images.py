@@ -14,17 +14,21 @@ em 23/10/2026 (paginas atualizadas entre 2026-09-03 e 2026-10-15):
   objetos 10/6/14; estilo: 3, so no 3-pro; para o 2.5 a tabela nao diz (so o total).
   O papel de cada imagem diz-se no texto.
 - Na Interactions API: `response_format: {type: image, aspect_ratio, image_size}`.
-- A tabela de pixels de saida por proporcao NAO foi encontrada: o tamanho em pixels
-  e uma estimativa (area do quadrado da resolucao, lados multiplos de 16) e a Forja
-  mede o que chega em vez de assumir a escala. Fundo transparente nao documentado:
-  pede-se fundo de chave e a Forja recorta.
+- A tabela de pixels de saida por proporcao e resolucao esta na copia em texto da
+  pagina (image-generation.md.txt, lida a 28/10/2026): `gemini_pixels.json`, linha a
+  linha, por modelo; o 3-pro liga-se a tabela "3.1 Pro Image" por inferencia (a
+  pagina nao diz o id). Sem tabela (flash-lite), estimativa pela area. A Forja mede
+  o que chega na mesma (FORJA-12). Fundo transparente nao documentado: pede-se fundo
+  de chave e a Forja recorta.
 Sem chamada real nesta sessao (sem chave). Variaveis: GEMINI_API_KEY (ou GOOGLE_API_KEY).
 """
 from __future__ import annotations
 
 import hashlib
+import json
 import math
 import os
+from pathlib import Path
 
 from . import Call, Result, http, image_refs
 
@@ -46,13 +50,23 @@ MODELS = {
                                "style": None},
 }
 MAX_REFERENCES = 14
+PIXELS = json.loads(Path(__file__).with_name("gemini_pixels.json").read_text(encoding="utf-8"))
 
 
 def capabilities(model: str | None = None) -> dict:
     model = model or DEFAULT_MODEL
     if model not in MODELS:
         raise ValueError(f"modelo Gemini de imagem desconhecido: {model!r} (use {', '.join(MODELS)})")
-    return {"model": model, **MODELS[model], "pixel_table": "nao documentada: tamanho medido no retorno"}
+    table = PIXELS["models"].get(model, {}).get("table")
+    return {"model": model, **MODELS[model], "pixel_table": f"{table} ({PIXELS['source']}, lida a "
+            f"{PIXELS['read']})" if table else "nao publicada: estimativa pela area; tamanho medido no retorno"}
+
+
+def published(model: str | None, aspect: str, size: str) -> tuple[int, int] | None:
+    """Os pixels que a tabela publicada da para este modelo, proporcao e resolucao, ou nada."""
+    table = PIXELS["models"].get(model or DEFAULT_MODEL, {}).get("table")
+    found = PIXELS["tables"].get(table, {}).get(aspect, {}).get(size) if table else None
+    return (found[0], found[1]) if found else None
 
 
 def ratio(aspect: str) -> float:
@@ -72,8 +86,11 @@ def fit_aspect(lw: int, lh: int, aspects) -> tuple[str, int, int]:
     return best[1], best[2], best[3]
 
 
-def estimate(aspect: str, size: str) -> tuple[int, int]:
-    """Pixels provaveis da saida: a area do quadrado da resolucao, lados multiplos de 16. So estimativa."""
+def estimate(aspect: str, size: str, model: str | None = None) -> tuple[int, int]:
+    """Os pixels da saida: os da tabela publicada; sem ela, a area do quadrado da resolucao, lados multiplos de 16."""
+    found = published(model, aspect, size)
+    if found:
+        return found
     side, r = SIDES[size], ratio(aspect)
     w = round(side * r ** 0.5 / 16) * 16
     return w, round(side * side / w / 16) * 16
@@ -177,7 +194,7 @@ def call(prompt: str, references: list[tuple[str, bytes]] | None = None, model: 
     headers = lambda: {"x-goog-api-key": http.key("GEMINI_API_KEY", "GOOGLE_API_KEY")}  # noqa: E731
     descriptor = {"endpoint": url, "params": {"model": model, "api": api, "aspect_ratio": aspect, "image_size": size},
                   "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(), "images": image_refs(refs),
-                  "estimated_output": list(estimate(aspect, size))}
+                  "estimated_output": list(estimate(aspect, size, model))}
     return Call("gemini", api, lambda: http.json_request("POST", url, body, headers()), parse, descriptor)
 
 

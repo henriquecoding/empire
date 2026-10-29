@@ -3224,5 +3224,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-12": {
+  "title": "Auditoria dos cenários de 28/10: os contraexemplos fechados e a ordem do que falta",
+  "porque": "A auditoria do dono sobre o FORJA-11 reproduziu sete contraexemplos que os verificadores de cenas deixavam passar (uma porta de 2 px, uma casa suspensa num bloco solto, duas cores sem emenda, um estado igual à base, uma referência do PixelLab que não chegava ao modelo, estados vazios e uma altura com uma fila a mais) e pediu a tabela do Gemini, o mestre pelo registo e o perfil de medidas dito como proposta.",
+  "spec": [
+   "docs/art/research/2026-10-28-forja-cenarios-auditoria/README.md",
+   "docs/adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-11",
+  "feito": "A largura útil do vão no contrato e na revisão; o apoio da estrutura principal; a emenda por alfa e por cor; o estado que tem de mudar dentro das zonas; registada e enviada separadas, com init_image e style_image no PixelLab ou recusa; estados vazios recusados; a altura por filas; a tabela de pixels publicada do Gemini; o mestre que só passa aprovado no registo; o perfil de medidas com rule_status; 14 testes adversariais.",
+  "fora": "A ordem 3 a 8 da auditoria: o contrato ligado à obra e ao SiteStage, máscaras semânticas, Aseprite e export, a galeria Godot, o piloto Enramados, os adaptadores de ambiente do PixelLab e o catálogo de módulos; as medidas e a largura da baía ficam para o dono (Q-295, Q-301).",
+  "estado": "parcial — A1–A7, a tabela de pixels do Gemini, o mestre pelo registo e o perfil de medidas fechados com testes; a ordem 3 a 8 da auditoria por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }
