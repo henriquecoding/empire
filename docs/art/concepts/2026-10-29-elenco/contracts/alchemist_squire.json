@@ -136,9 +136,150 @@
           "scale": "same_absolute_world_pixel_dimensions",
           "scale_with_character_canvas": false,
           "native_shared_dimensions": null,
-          "status": "owner_rule; native prop dimensions pending authored master"
+          "status": "owner_rule; native prop dimensions pending authored master",
+          "allowed_variations": [
+            "liquid_color",
+            "orientation",
+            "occlusion"
+          ],
+          "model": null,
+          "model_status": "pending: forja.prop_model/1 desenhado na grade a partir do conceito e aprovado pelo dono; os 13x20 da entrega v3 não são o padrão (auditoria de 29/10, caso A)"
         }
-      ]
+      ],
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Rosto cómico individual de adulto: sobrancelhas grossas e assimétricas, uma pálpebra cética semicerrada a olhar de lado, nariz grande e arredondado e um meio sorriso torto contido; não o rosto genérico de olhos redondos.",
+        "authority_face_box": [
+          1048,
+          307,
+          1296,
+          498
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "eye_open",
+            "feature": "eye",
+            "intent": "olho aberto do lado do nariz",
+            "authority_box": [
+              1095,
+              342,
+              1123,
+              377
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "eye_squint",
+            "feature": "lid",
+            "intent": "pálpebra cética semicerrada",
+            "authority_box": [
+              1138,
+              367,
+              1181,
+              397
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "pupil_squint",
+            "feature": "pupil",
+            "intent": "o olhar vai para a esquerda do conceito, para o imperador",
+            "authority_box": [
+              1143,
+              372,
+              1158,
+              390
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "brow_arched",
+            "feature": "brow",
+            "intent": "sobrancelha grossa e arqueada sobre o olho cético",
+            "authority_box": [
+              1140,
+              327,
+              1195,
+              362
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "brow_short",
+            "feature": "brow",
+            "intent": "a outra sobrancelha, diferente da arqueada",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "nose",
+            "feature": "nose",
+            "intent": "nariz grande e arredondado",
+            "authority_box": [
+              1058,
+              362,
+              1128,
+              419
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "smile",
+            "feature": "mouth",
+            "intent": "meio sorriso torto e contido",
+            "authority_box": [
+              1093,
+              412,
+              1168,
+              435
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [
+          {
+            "id": "gaze",
+            "type": "offset",
+            "a": "pupil_squint",
+            "within": "eye_squint",
+            "expect": "left",
+            "intent": "olha de lado para o imperador"
+          },
+          {
+            "id": "half_smile",
+            "type": "asymmetry",
+            "a": "smile",
+            "expect": "right_higher",
+            "min": 1,
+            "intent": "meio sorriso torto"
+          },
+          {
+            "id": "brow_over_lid",
+            "type": "above",
+            "a": "brow_arched",
+            "b": "eye_squint",
+            "intent": "a sobrancelha arqueada fica sobre a pálpebra cética"
+          }
+        ],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

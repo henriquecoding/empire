@@ -89,7 +89,69 @@
       "visual_review": {
         "reference": "../reviews/mercenary.json"
       },
-      "role": "troop"
+      "role": "troop",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "A curva e os cantos do sorriso, os espaços entre os dentes, o olhar e o nariz; a correção não se limita aos quatro pixels dos dentes.",
+        "authority_face_box": [
+          613,
+          236,
+          967,
+          590
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "smile",
+            "feature": "mouth",
+            "intent": "curva do sorriso",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "smile_corner",
+            "feature": "mouth_corner",
+            "intent": "cantos do sorriso",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "teeth",
+            "feature": "teeth",
+            "intent": "dentes com espaços entre eles",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olhar",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "nose",
+            "feature": "nose",
+            "intent": "nariz e a relação dele com a boca",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

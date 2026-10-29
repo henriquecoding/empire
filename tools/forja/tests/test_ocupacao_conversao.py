@@ -47,7 +47,7 @@ class OccupancyTest(unittest.TestCase):
         image.save(d / 'king.png')
         r = pipeline.forge(d / 'king.png', d / 'o', pipeline.Options(kind='royal_80', scale=1,
             palette='none', bg='#FF00FF', noise=0, cleanup='conservative', outline='keep'), report_html=False)
-        self.assertFalse(r['delivery']['usable_sprite'])
+        self.assertFalse(r['delivery']['raster_valid'])
         self.assertTrue(r['finish']['fit']['clipped_pixels'])
         with Image.open(r['files']['uncut_png']) as uncut:
             self.assertEqual(uncut.size, (97, 96))

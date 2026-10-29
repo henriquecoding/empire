@@ -41,4 +41,8 @@ INSTRUCTIONS = (
     "(--kind); forja_ase so le e diz como o Aseprite ve o ficheiro e o que foge as convencoes (slots, tags, pivot; "
     "--scene compara as slices com o contrato de cena); forja_exportar escreve a folha e o JSON por camada como o "
     "tools/export_aseprite.sh e a CLI; forja_tileset e forja_estrutura com --aseprite levam o terreno e a "
-    "construcao (estados, vaos, sinais) ao Aseprite.")
+    "construcao (estados, vaos, sinais) ao Aseprite. (14) A entrega fecha pela cadeia e pelo conceito (ADR 0101): "
+    "forja_forge so diz raster_valid e label study; uma base nativa reexportada leva --lineage do forge anterior (as "
+    "perdas criticas ficam abertas ate uma resolucao provada nesta imagem); forja_fidelity com --forge-json e "
+    "--resolutions da release_ready; forja_par mede o frasco partilhado contra o molde e a pega; a ficha facial do "
+    "conceito, nao os pinos do candidato, prova a personalidade; forja_lote lista os 15 do elenco com os estados.")

@@ -3,6 +3,14 @@
 > Método e evidências: [guia de produção](CHARACTER_PRODUCTION_GUIDE.md),
 > [checklist de revisão](CHARACTER_REVIEW_CHECKLIST.md) e [pesquisa consolidada](research/2026-10-19-character-animation/README.md).
 
+> **Precedência (29/10/2026, [FORJA-15](../backlog/FORJA-15.md), ADR 0101).** Este guia é a gramática genérica de
+> quando não havia conceitos escolhidos. Para um personagem do [elenco](concepts/2026-10-29-elenco/README.md), manda
+> o conceito escolhido pelo dono: o contrato de fidelidade, as invariantes e a ficha facial (`face_sheet`). Nenhuma
+> regra daqui muda nariz, humanidade, assimetria, acessório ou expressão aceita. Três trechos estão **superados** e
+> ficam marcados abaixo: a sobrancelha "ruído em repouso", a proibição genérica de boca assimétrica em repouso e a
+> Horta vegetal. A [auditoria de fidelidade de 29/10](research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md) não
+> provou que vazaram para o prompt da entrega; a Forja não os lê.
+
 > O dossiê é curto e firme: **bocas largas com dentes, olhos afastados, narizes grandes; o humor está na cara,
 > não em piadas de texto — e por isso atravessa idiomas de graça** (§01, §22). O rosto é também interface: a
 > camada `face` diz a vida e a lealdade da tropa sem barra nem número (§07, §24, §58). Este guia fixa como.
@@ -15,15 +23,17 @@ na escala 3 soma-se 1 px.
 | Elemento | Regra | Porquê |
 |---|---|---|
 | Olhos | 1 × 2 px (pupila preta), **afastados**: 3–4 px entre eles | olhos afastados leem-se como ingénuos e cómicos a esta escala |
-| Sobrancelhas | Opcionais. 1 px de altura, 2–3 px de largura; só aparecem para dizer alguma coisa (raiva, medo) | em repouso, sobrancelha é ruído |
+| Sobrancelhas | Opcionais. 1 px de altura, 2–3 px de largura; só aparecem para dizer alguma coisa (raiva, medo) | ~~em repouso, sobrancelha é ruído~~ — **superado (29/10):** sobrancelhas grossas, assimétricas ou céticas em repouso são escolhas dos conceitos aprovados (alquimista e escudeiro, mineira, corsária) |
 | Nariz | **Grande**: 3–4 px, tom de pele mais escuro, sem contorno próprio | é a massa que dá carácter ao perfil |
 | Boca | **Larga**: 5–7 px; fechada é uma linha de 1 px; aberta mostra dentes | a boca é o mostrador de emoção |
 | Dentes | Blocos brancos de 1–2 px, com o contorno da boca a separá-los | "bocas largas com dentes" é a assinatura (§01) |
 | Contorno | 1 px preto no exterior da cabeça; o rosto interior não leva contorno | lei da escala dupla: personagens a 1 px (§01) |
 | Cor | Dois tons de pele por povo (sombra e luz), da rampa do povo | §22: dois tons por material |
 
-**Proibido:** pupilas maiores do que 2 × 2 px (viram *anime*), bochechas com gradiente, bocas assimétricas em
-repouso, e deformar a cabeça em *squash & stretch* (ANIMATION_BIBLE §1).
+**Proibido:** pupilas maiores do que 2 × 2 px (viram *anime*), bochechas com gradiente, ~~bocas assimétricas em
+repouso~~, e deformar a cabeça em *squash & stretch* (ANIMATION_BIBLE §1). **Superado (29/10):** o sorriso torto, o
+meio sorriso e o sorriso convencido assimétrico dos conceitos escolhidos são a personalidade deles; a ficha facial
+regista-os como relações (`asymmetry`) e uma linha neutra é a falha.
 
 ## 2 · A matriz
 
@@ -65,7 +75,7 @@ A gramática é a mesma para todos; muda o sotaque. Nada disto está no dossiê:
 | Enramados | Rostos compridos, nariz de ponta; sobrancelhas espessas como ramos |
 | Portuários | Olhos semicerrados de sol e sal; pele mais escura; rugas de 1 px nos cantos |
 | Fenda | Sobrancelha pesada contínua; nariz largo e chato; pouca expressão — a pedra fala pouco |
-| Horta | Os legumes: cabeça é o próprio vegetal (Knight Potato, Archer Leek); olhos e boca pintados sobre a forma |
+| Horta | ~~Os legumes: cabeça é o próprio vegetal (Knight Potato, Archer Leek); olhos e boca pintados sobre a forma~~ — **superado:** a Horta é uma civilização humana; o nabo é um produto que o camponês leva (o dono, 28–29/10: «nao quero personagens plantas») |
 | Fornalha | Fuligem na cara (manchas de 2 px); à noite, os olhos refletem a forja |
 | Sob-Raiz | Olhos maiores (2 × 2 em repouso, habituados ao escuro); pele pálida; nariz pequeno — a exceção à regra |
 

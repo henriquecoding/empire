@@ -91,7 +91,51 @@
       "visual_review": {
         "reference": "../reviews/miner_squire.json"
       },
-      "role": "squire"
+      "role": "squire",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Expressão cética como conjunto: olho, sobrancelha e boca juntos; zero perdas não resolve a simplificação.",
+        "authority_face_box": [
+          1160,
+          350,
+          1391,
+          546
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olho cético",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "brow",
+            "feature": "brow",
+            "intent": "sobrancelha cética",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "mouth",
+            "feature": "mouth",
+            "intent": "boca cética",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

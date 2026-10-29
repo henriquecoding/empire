@@ -126,9 +126,148 @@
           "scale": "same_absolute_world_pixel_dimensions",
           "scale_with_character_canvas": false,
           "native_shared_dimensions": null,
-          "status": "owner_rule; native prop dimensions pending authored master"
+          "status": "owner_rule; native prop dimensions pending authored master",
+          "allowed_variations": [
+            "liquid_color",
+            "orientation",
+            "occlusion"
+          ],
+          "model": null,
+          "model_status": "pending: forja.prop_model/1 desenhado na grade a partir do conceito e aprovado pelo dono; os 13x20 da entrega v3 não são o padrão (auditoria de 29/10, caso A)"
         }
-      ]
+      ],
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Sorriso convencido e assimétrico de um velho alquimista do Leste Asiático, olhar matreiro de lado e o nariz original longo e projetado; sobrancelha e pera brancas.",
+        "authority_face_box": [
+          421,
+          139,
+          646,
+          347
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olho do Leste Asiático, semicerrado e matreiro",
+            "authority_box": [
+              496,
+              214,
+              551,
+              234
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "pupil",
+            "feature": "pupil",
+            "intent": "o olhar vai para a direita do conceito",
+            "authority_box": [
+              531,
+              221,
+              543,
+              234
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "brow",
+            "feature": "brow",
+            "intent": "sobrancelha branca arqueada",
+            "authority_box": [
+              491,
+              169,
+              556,
+              194
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "nose",
+            "feature": "nose",
+            "intent": "nariz original longo e projetado, na família da pele",
+            "authority_box": [
+              548,
+              224,
+              634,
+              264
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "grin",
+            "feature": "mouth",
+            "intent": "sorriso convencido e assimétrico",
+            "authority_box": [
+              503,
+              246,
+              586,
+              282
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "teeth",
+            "feature": "teeth",
+            "intent": "dentes à mostra no sorriso",
+            "authority_box": [
+              516,
+              259,
+              571,
+              279
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "goatee",
+            "feature": "facial_hair",
+            "intent": "pera branca pontuda",
+            "authority_box": [
+              556,
+              289,
+              591,
+              347
+            ],
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [
+          {
+            "id": "gaze",
+            "type": "offset",
+            "a": "pupil",
+            "within": "eye",
+            "expect": "right",
+            "intent": "olha de lado para a direita do conceito"
+          },
+          {
+            "id": "grin",
+            "type": "asymmetry",
+            "a": "grin",
+            "expect": "left_higher",
+            "min": 1,
+            "intent": "o sorriso convencido sobe de um lado"
+          }
+        ],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

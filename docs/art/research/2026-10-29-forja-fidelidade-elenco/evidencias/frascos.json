@@ -1,0 +1,70 @@
+{
+  "bottles": [
+    {
+      "character": "alchemist_emperor",
+      "size": [
+        13,
+        20
+      ],
+      "visible_pixels": 162,
+      "row_widths": [
+        4,
+        6,
+        6,
+        7,
+        6,
+        6,
+        4,
+        4,
+        6,
+        9,
+        11,
+        13,
+        12,
+        12,
+        12,
+        12,
+        10,
+        9,
+        7,
+        6
+      ],
+      "identical_to_v2": true
+    },
+    {
+      "character": "alchemist_squire",
+      "size": [
+        13,
+        20
+      ],
+      "visible_pixels": 168,
+      "row_widths": [
+        4,
+        6,
+        6,
+        6,
+        6,
+        6,
+        8,
+        8,
+        10,
+        12,
+        10,
+        12,
+        13,
+        13,
+        13,
+        13,
+        7,
+        6,
+        5,
+        4
+      ],
+      "identical_to_v2": true
+    }
+  ],
+  "same_envelope": true,
+  "visible_mask_iou": 0.7277486910994765,
+  "visible_mask_mirrored_iou": 0.625615763546798,
+  "caveat": "Mascaras visiveis, com oclusoes diferentes; IoU nao prova defeito artistico."
+}

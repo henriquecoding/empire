@@ -89,7 +89,60 @@
       "visual_review": {
         "reference": "../reviews/spearman.json"
       },
-      "role": "troop"
+      "role": "troop",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Sobrancelhas e careta cerrada; a diferença entre dentes, boca e planos do queixo mantém-se.",
+        "authority_face_box": [
+          531,
+          268,
+          925,
+          595
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "brow",
+            "feature": "brow",
+            "intent": "sobrancelhas cerradas",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "teeth",
+            "feature": "teeth",
+            "intent": "dentes cerrados",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "mouth",
+            "feature": "mouth",
+            "intent": "careta",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "chin",
+            "feature": "other",
+            "intent": "planos do queixo",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

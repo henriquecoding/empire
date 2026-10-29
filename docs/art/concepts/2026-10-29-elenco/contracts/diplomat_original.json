@@ -88,6 +88,50 @@
       ],
       "visual_review": {
         "reference": "../reviews/diplomat_original.json"
+      },
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Olhos e lentes no nariz, o sorriso e a mão que ajusta os óculos; as lentes não se fundem com a pele.",
+        "authority_face_box": [
+          605,
+          305,
+          982,
+          637
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olho atrás da lente",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "glasses",
+            "feature": "glasses",
+            "intent": "lentes no nariz, separadas da pele",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "smile",
+            "feature": "mouth",
+            "intent": "sorriso cómico",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
       }
     }
   ]

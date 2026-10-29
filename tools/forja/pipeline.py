@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 from . import cleanup, contracts, grid as gridmod, gridcheck, guard, lint, masks, matte, outline, palette as palmod
-from . import limits, loss, occupancy, provenance, quantize, resample, signals, verdicts
+from . import limits, lineage, loss, occupancy, provenance, quantize, resample, signals, verdicts
 from .imageops import count_colors, foot_point, inside, opaque_bbox, open_rgba, place, upscale
 from .loss import subgrid  # mudou-se para loss.py; pipeline.subgrid continua (os ensaios de 27/10)
 
@@ -42,6 +42,8 @@ class Options:
     signals: dict | None = None  # forja.signals/1: pinos e regioes declarados para esta imagem
     origin: tuple[int, int] | None = None  # cena (FORJA-11): a celula da grade pedida que e o canto da tela
     origin_grid: tuple[int, int] | None = None  # e a grade pedida; so com ela medida a figura fica onde a grade a pos
+    lineage: dict | None = None  # FORJA-15: a cadeia da etapa que produziu esta entrada (o JSON do forge anterior)
+    native_root: bool = False  # e a entrada ja nativa e a origem da cadeia (desenho nativo), nao uma recuperacao
     crop_at: tuple[int, int] | None = None  # interno: onde o recorte do snap comecava na grade recebida
     useful_box: tuple[int, int, int, int] | None = None
 
@@ -78,15 +80,6 @@ def snap(image: Image.Image, opts: Options, g: gridmod.Grid | None = None,
                     "grid_cells": list(sampled.image.size), "crop_origin": [box[0], box[1]],
                     "native_size": list(native.size), "subgrid": subgrid(native, sampled.impure, box),
                     "loss": loss.crop(lost, box), "pins": signals.crop(pins, box), "occupancy": occupied}
-
-
-def _signals(final: Image.Image, snapinfo: dict, finishinfo: dict | None, opts: Options) -> dict:
-    """Os sinais declarados depois do ultimo passo que muda pixels (FORJA-07)."""
-    declared = opts.signals or {}
-    pins = signals.verify_pins(final, snapinfo.get("pins", []), finishinfo)
-    pins += signals.target_pins(final, [p for p in declared.get("pins", []) if p.get("target_pixel")])
-    erased = (snapinfo.get("loss") or {}).get("erased", [])
-    return signals.state(pins, signals.regions(declared.get("regions", []), erased, finishinfo))
 
 
 def finish(native: Image.Image, opts: Options, contract: contracts.Contract,
@@ -214,12 +207,15 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
         snapinfo["grid_report"] = gridcheck.report(image, g, snapinfo["native_size"], contract.canvas, im.format)
     for item in limits.grid_origin(snapinfo["grid_report"]) if "loss" in snapinfo else []:  # sem grade: o no_grid
         lint.add(verdict, item)
-    sig = _signals(final, snapinfo, finishinfo if "loss" in snapinfo else None, opts)
+    sig = signals.final_state(final, snapinfo, finishinfo if "loss" in snapinfo else None, opts.signals)
     for reason in sig["blocked"]:
         lint.add(verdict, lint.finding("required_signal", "error", reason))
     if opts.useful_box and "loss" in snapinfo:
         for item in limits.useful_budget(final, opts.useful_box):
             lint.add(verdict, item)
+    lin = lineage.forge(image, final, g, snapinfo, finishinfo if "loss" in snapinfo else None, opts)
+    for item in limits.inherited(lin):
+        lint.add(verdict, item)
     sub = snapinfo["subgrid"]
     final.save(out / f"{name}.png")
     upscale(final, 4).save(out / f"{name}@4x.png")
@@ -237,10 +233,9 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
     summary = verdicts.summary(verdicts.for_review(verdict["ok"], None, coherence=verdict["coherence"]))
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
               "lint": verdict, "files": files, "verdicts": summary,
-              "signals": sig, "delivery": {"usable_sprite": verdict["ok"],
-                  "state": "candidate_in_review" if verdict["ok"] else "blocked", "artistic_approval": "pending"},
+              "signals": sig, "delivery": lineage.delivery(verdict["ok"], lin), "lineage": lin,
               "provenance": provenance.record(source, generator, prompt, opts.__dict__,
-                                              image.info.get("forja_source"))}
+                                              image.info.get("forja_source"), lin)}
     impure = [_to_final([x, y, x + 1, y + 1], finishinfo)[:2] for x, y in sub.pop("_coords")]
     if report_html:
         from . import report

@@ -35,7 +35,7 @@ def run() -> dict:
             palette='none', noise=0, cleanup='conservative', outline='keep'), report_html=False)
         result['occupied_extent'] = r['snap']['occupancy']
         result['occupied_extent']['target_canvas'] = [80, 80]
-        checks['transparent_margins_do_not_make_97x96_fit'] = r['snap']['native_size'] == [97, 96] and not r['delivery']['usable_sprite']
+        checks['transparent_margins_do_not_make_97x96_fit'] = r['snap']['native_size'] == [97, 96] and not r['delivery']['raster_valid']
         with Image.open(r['files']['uncut_png']) as uncut:
             checks['uncut_diagnostic_preserved'] = uncut.size == (97, 96)
         native = Image.new('RGBA', (64, 64))

@@ -1,0 +1,2000 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-29",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../../Authorities/761c22144034f0d4.png",
+    "sha256": "761c22144034f0d47b0b0dcb55d29c1589b3fcd947af17ad0e9b2603c154f6e8",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "08b4530407acb287368ad270d08fbff61be0efe80f6fd200a5c086f5cb122da8",
+    "library_file_id": null,
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "alchemist_squire",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        854,
+        242,
+        1518,
+        1003
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "native identity revision observed by agent; artistic owner approval pending",
+      "required_invariants": [
+        "Dark-skinned adult human man with short dark curls, a folded cream work cap with a narrow plum band, and an individual comic face.",
+        "Asymmetrical thick eyebrows, one skeptical slightly squinting eyelid, clear cheek and chin planes, and a restrained crooked half-smile; avoid the generic sad round-eyed baby face.",
+        "Preserve the compact sturdy build, plum tabard, cream sleeves, broad ochre scarf fold, short waist apron and brown boots.",
+        "Compact belt satchel with two spare corked bottles, a small ingredient pouch and simple soft work gloves.",
+        "He offers the next prepared potion upright in one hand toward his lord; the other hand retrieves supplies from his satchel.",
+        "The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire.",
+        "Exactly two arms with a natural supporting grip, clear shoulders and elbows; no shield, no tongs and no bulky wooden bottle carrier.",
+        "Firmly planted feet and a slight compensating lean make the full-sized bottle weight readable; mirror the whole pose consistently when adapting its facing direction."
+      ],
+      "prompt_invariants": [
+        "Dark-skinned adult human man with short dark curls, a folded cream work cap with a narrow plum band, and an individual comic face.",
+        "Asymmetrical thick eyebrows, one skeptical slightly squinting eyelid, clear cheek and chin planes, and a restrained crooked half-smile; avoid the generic sad round-eyed baby face.",
+        "Preserve the compact sturdy build, plum tabard, cream sleeves, broad ochre scarf fold, short waist apron and brown boots.",
+        "Compact belt satchel with two spare corked bottles, a small ingredient pouch and simple soft work gloves.",
+        "He offers the next prepared potion upright in one hand toward his lord; the other hand retrieves supplies from his satchel.",
+        "The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire.",
+        "Exactly two arms with a natural supporting grip, clear shoulders and elbows; no shield, no tongs and no bulky wooden bottle carrier.",
+        "Firmly planted feet and a slight compensating lean make the full-sized bottle weight readable; mirror the whole pose consistently when adapting its facing direction."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "O frasco na mão do escudeiro deve ser do tamanho do que estará na mão do imperador; o design e a expressão do escudeiro devem ser melhor feitos.; Ok, agora quero que leve tudo a forja",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [
+        {
+          "id": "restored_pixel_1",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            9
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_2",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            9
+          ],
+          "color": "#CD6714",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_3",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            9
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_4",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            9
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_5",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            9
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_6",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            9
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_7",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            9
+          ],
+          "color": "#FCE2BB",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_8",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            10
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_9",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            10
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_10",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            10
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_11",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            10
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_12",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            10
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_13",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            10
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_14",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            10
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_15",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            10
+          ],
+          "color": "#FCE2BB",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_16",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            11
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_17",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            11
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_18",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            11
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_19",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            11
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_20",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            11
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_21",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            11
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_22",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            11
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_23",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            11
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_24",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            37,
+            11
+          ],
+          "color": "#FCE2BB",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_25",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            12
+          ],
+          "color": "#CD6714",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_26",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            12
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_27",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            12
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_28",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            12
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_29",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            12
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_30",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            12
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_31",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            12
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_32",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            12
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_33",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            12
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_34",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            13
+          ],
+          "color": "#FDFCFC",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_35",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            13
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_36",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            13
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_37",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            13
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_38",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            13
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_39",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            13
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_40",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            13
+          ],
+          "color": "#34160B",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_41",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            13
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_42",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            13
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_45",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            14
+          ],
+          "color": "#000000",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_46",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            14
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_47",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            14
+          ],
+          "color": "#FDFCFC",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_48",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            14
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_49",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            14
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_50",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            14
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_51",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            14
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_52",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            14
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_53",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            37,
+            14
+          ],
+          "color": "#77381E",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_54",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            14
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_55",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            24,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_56",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            25,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_57",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_58",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_59",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_60",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_61",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_62",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            15
+          ],
+          "color": "#FDFCFC",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_63",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            15
+          ],
+          "color": "#FDFCFC",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_64",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            15
+          ],
+          "color": "#000000",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_65",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_66",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            15
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_67",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            15
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_69",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            24,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_70",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            25,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_71",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_72",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_73",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            16
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_74",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_75",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_76",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            16
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_77",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            16
+          ],
+          "color": "#FDFCFC",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_78",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            16
+          ],
+          "color": "#FDFCFC",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_79",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_80",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            16
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_81",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            37,
+            16
+          ],
+          "color": "#77381E",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_82",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            16
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_84",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            24,
+            17
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_85",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            25,
+            17
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_86",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            17
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_87",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            17
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_88",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            17
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_89",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            17
+          ],
+          "color": "#77381E",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_90",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            17
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_91",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            17
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_92",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            17
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_93",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            17
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_94",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            17
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_95",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            17
+          ],
+          "color": "#77381E",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_96",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            37,
+            17
+          ],
+          "color": "#481F10",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_97",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            39,
+            17
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_99",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_100",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_101",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_102",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            18
+          ],
+          "color": "#000000",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_103",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_104",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_105",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_106",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            18
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_107",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            39,
+            18
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_108",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_109",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_110",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_111",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_112",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_113",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_114",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_115",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_116",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_117",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            19
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_118",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            37,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_119",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            19
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_120",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            39,
+            19
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_121",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_122",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_123",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_124",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_125",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_126",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_127",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_128",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_129",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_130",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_131",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            20
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_132",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_133",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            39,
+            20
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_134",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            25,
+            21
+          ],
+          "color": "#9E1735",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_135",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_136",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_137",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_138",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_139",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_140",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_141",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            21
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_142",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            21
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_143",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            21
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_144",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            22
+          ],
+          "color": "#9E1735",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_145",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            22
+          ],
+          "color": "#E37132",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_146",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            22
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_147",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            22
+          ],
+          "color": "#C35F25",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_148",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            22
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_149",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            22
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_150",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            22
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_151",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            22
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_152",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            22
+          ],
+          "color": "#A84D24",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_153",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            38,
+            22
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_154",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            26,
+            23
+          ],
+          "color": "#9E1735",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_155",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            27,
+            23
+          ],
+          "color": "#CD6714",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_156",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            28,
+            23
+          ],
+          "color": "#CD6714",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_157",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            23
+          ],
+          "color": "#CD6714",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_158",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            23
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_159",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            23
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_160",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            23
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_161",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            36,
+            23
+          ],
+          "color": "#A84D24",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_162",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            37,
+            23
+          ],
+          "color": "#873D1F",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_163",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            29,
+            24
+          ],
+          "color": "#CD6714",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_164",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            30,
+            24
+          ],
+          "color": "#FB9801",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_165",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            24
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_166",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            24
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_167",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            34,
+            24
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_168",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            35,
+            24
+          ],
+          "color": "#B45324",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_169",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            31,
+            25
+          ],
+          "color": "#FB9801",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_170",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            32,
+            25
+          ],
+          "color": "#FB9801",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        },
+        {
+          "id": "restored_pixel_171",
+          "role": "visually reviewed face or hat pixel",
+          "target_pixel": [
+            33,
+            25
+          ],
+          "color": "#FB9801",
+          "status": "authorized",
+          "source_annotation": "Native identity edit from approved-reference comparison, protected through final export."
+        }
+      ],
+      "rejected_candidates": [
+        {
+          "file": "rejected-1.png",
+          "pixels_sha256": "d976c615b7b7377949206823e439e78978fd63181f258610cabb34260fc7f5af",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Escudo generico: substituido por equipamento funcional de ajudante de alquimia a pedido do dono."
+          ]
+        },
+        {
+          "file": "rejected-2.png",
+          "pixels_sha256": "04a59f15c2734f11c4fd8499640b4215fb878643c061d00236ad66c4c304c29f",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Caixa e pinça não comunicam uma ajuda clara; o dono considerou o escudeiro estranho e sem funcionalidade compreensível."
+          ]
+        },
+        {
+          "file": "rejected-3.png",
+          "pixels_sha256": "34d6f67699b2cd20ed0f6d6fb350ca0c4ee69b21e16633774b3e47b816ee1947",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Frasco menor do que o do imperador; design e expressão do escudeiro pedem refinamento."
+          ]
+        },
+        {
+          "file": "rejected-v1.png",
+          "pixels_sha256": "ac90afde6211f3cb163f7b35710b307bb6e04fa6bc2f25516d48a647a7213812",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Rejected previous sprite delivery: facial and equipment details lost after forced reduction/color cap/outline rebuilding."
+          ]
+        },
+        {
+          "file": "previous-v2.png",
+          "pixels_sha256": "10c424accebb0cb7e2793df37a7f4996e89618a06b5985f1c570017893060964",
+          "date": "2026-10-29",
+          "decided_by": "Codex, auditando o feedback geral de Henrique",
+          "reasons": [
+            "O olhar parecia baixo e o meio sorriso virou uma linha quase neutra."
+          ],
+          "scope": "Agent identifies the affected piece; owner did not individually name it."
+        }
+      ],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            1048,
+            307,
+            1296,
+            498
+          ],
+          "target_box": [
+            22,
+            9,
+            47,
+            29
+          ],
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            854,
+            290,
+            1448,
+            827
+          ],
+          "target_box": [
+            4,
+            5,
+            20,
+            31
+          ],
+          "required": true,
+          "purpose": "Visual proposal: prepares and offers the next prepared potion to the emperor, while he studies or uses the current one; no shield guard role."
+        }
+      ],
+      "visual_review": {
+        "reference": "reference-review.json"
+      },
+      "role": "squire",
+      "function_scope": "visual_proposal_not_runtime",
+      "shared_prop_constraints": [
+        {
+          "id": "alchemy_standard_flask",
+          "paired_with": "alchemist_emperor",
+          "scale": "same_absolute_world_pixel_dimensions",
+          "scale_with_character_canvas": false,
+          "native_shared_dimensions": null,
+          "status": "owner_rule; native prop dimensions pending authored master"
+        }
+      ]
+    }
+  ]
+}

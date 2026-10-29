@@ -90,6 +90,59 @@
       ],
       "visual_review": {
         "reference": "../reviews/farmer.json"
+      },
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "A alegria do rosto humano idoso, o bigode e a separação entre o nabo e as mãos; preservar a humanidade.",
+        "authority_face_box": [
+          480,
+          250,
+          875,
+          658
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olhos alegres de idoso",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "moustache",
+            "feature": "facial_hair",
+            "intent": "bigode",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "smile",
+            "feature": "mouth",
+            "intent": "sorriso alegre",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "wrinkle",
+            "feature": "wrinkle",
+            "intent": "rugas do rosto idoso",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
       }
     }
   ]

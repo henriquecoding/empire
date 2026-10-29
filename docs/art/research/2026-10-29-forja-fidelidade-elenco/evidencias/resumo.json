@@ -1,0 +1,16 @@
+{
+  "schema": "empire.forja_audit/1",
+  "date": "2026-10-29",
+  "examined": 15,
+  "runtime_pass": 15,
+  "signals_pass": 15,
+  "deliverable": 0,
+  "unchanged": 7,
+  "final_zero_loss": 15,
+  "original_mercenary_purity": 0.97,
+  "original_mercenary_erased": 5,
+  "reproduced_erased_teeth": 4,
+  "shared_constraint_mutation_ignored": true,
+  "interpretation": "Passes tecnicos nao aprovam a arte; o feedback atual rejeita a qualidade do lote.",
+  "game_and_aseprite_app_tested": false
+}
