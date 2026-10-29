@@ -1,0 +1,56 @@
+{ "frames": [
+   {
+    "filename": "forja_rgba (hidden) 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 100
+   },
+   {
+    "filename": "forja_rgba (hidden) 1.aseprite",
+    "frame": { "x": 40, "y": 0, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 140
+   },
+   {
+    "filename": "forja_rgba (hidden) 2.aseprite",
+    "frame": { "x": 80, "y": 0, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 80
+   },
+   {
+    "filename": "forja_rgba (hidden) 3.aseprite",
+    "frame": { "x": 120, "y": 0, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 220
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3.18.6-dirty-dev",
+  "image": "forja_rgba_hidden.png",
+  "format": "RGBA8888",
+  "size": { "w": 160, "h": 30 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 3, "direction": "forward", "color": "#ff0000ff" },
+   { "name": "walk", "from": 0, "to": 1, "direction": "reverse", "repeat": "2", "color": "#0080ffff", "data": "passo", "properties": {"loop": true} },
+   { "name": "attack", "from": 1, "to": 3, "direction": "pingpong", "repeat": "3", "color": "#00ff00ff" },
+   { "name": "die", "from": 3, "to": 3, "direction": "pingpong_reverse", "repeat": "1" }
+  ],
+  "layers": [
+   { "name": "hidden", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}

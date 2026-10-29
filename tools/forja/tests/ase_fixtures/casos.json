@@ -1,0 +1,246 @@
+{
+ "aseprite": "Aseprite 1.3.18.6-dirty-dev",
+ "cases": {
+  "blends_rgba.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "blends_rgba-0.png"
+   ],
+   "dump": "blends_rgba.json"
+  },
+  "blends_gray.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "blends_gray-0.png"
+   ],
+   "dump": "blends_gray.json"
+  },
+  "structure.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "structure-0.png",
+    "structure-1.png",
+    "structure-2.png"
+   ],
+   "dump": "structure.json"
+  },
+  "indexed.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "indexed-0.png"
+   ],
+   "dump": "indexed.json"
+  },
+  "tilemap.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "tilemap-0.png"
+   ],
+   "dump": "tilemap.json"
+  },
+  "forja_rgba.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_rgba-0.png",
+    "forja_rgba-1.png",
+    "forja_rgba-2.png",
+    "forja_rgba-3.png"
+   ],
+   "dump": "forja_rgba.json",
+   "resaved": "forja_rgba_resaved.aseprite"
+  },
+  "forja_gray.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_gray-0.png"
+   ],
+   "dump": "forja_gray.json",
+   "resaved": "forja_gray_resaved.aseprite"
+  },
+  "forja_indexed.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_indexed-0.png",
+    "forja_indexed-1.png"
+   ],
+   "dump": "forja_indexed.json",
+   "resaved": "forja_indexed_resaved.aseprite"
+  },
+  "forja_tilemap.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_tilemap-0.png",
+    "forja_tilemap-1.png"
+   ],
+   "dump": "forja_tilemap.json",
+   "resaved": "forja_tilemap_resaved.aseprite"
+  },
+  "forja_body.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_body-0.png",
+    "forja_body-1.png",
+    "forja_body-2.png",
+    "forja_body-3.png",
+    "forja_body-4.png",
+    "forja_body-5.png",
+    "forja_body-6.png",
+    "forja_body-7.png",
+    "forja_body-8.png",
+    "forja_body-9.png",
+    "forja_body-10.png",
+    "forja_body-11.png",
+    "forja_body-12.png"
+   ],
+   "dump": "forja_body.json",
+   "resaved": "forja_body_resaved.aseprite"
+  },
+  "forja_wang.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_wang-0.png"
+   ],
+   "dump": "forja_wang.json",
+   "resaved": "forja_wang_resaved.aseprite"
+  },
+  "forja_cena.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_cena-0.png",
+    "forja_cena-1.png"
+   ],
+   "dump": "forja_cena.json",
+   "resaved": "forja_cena_resaved.aseprite"
+  },
+  "troop.aseprite": {
+   "origin": "empire",
+   "frames": [
+    "troop-0.png",
+    "troop-1.png",
+    "troop-2.png",
+    "troop-3.png",
+    "troop-4.png",
+    "troop-5.png"
+   ],
+   "dump": "troop.json",
+   "source": "art/source/originals/troop.aseprite"
+  },
+  "archer.aseprite": {
+   "origin": "empire",
+   "frames": [
+    "archer-0.png"
+   ],
+   "dump": "archer.json",
+   "source": "art/source/originals/archer.aseprite"
+  },
+  "rose-7.aseprite": {
+   "origin": "empire",
+   "frames": [
+    "rose-7-0.png",
+    "rose-7-1.png",
+    "rose-7-2.png",
+    "rose-7-3.png",
+    "rose-7-4.png",
+    "rose-7-5.png",
+    "rose-7-6.png",
+    "rose-7-7.png",
+    "rose-7-8.png",
+    "rose-7-9.png",
+    "rose-7-10.png",
+    "rose-7-11.png",
+    "rose-7-12.png",
+    "rose-7-13.png"
+   ],
+   "dump": "rose-7.json",
+   "source": "art/source/royals_v15/plants/rose-7.aseprite"
+  }
+ },
+ "sheets": [
+  {
+   "source": "structure.aseprite",
+   "label": "structure_sheet",
+   "options": {
+    "layers": true,
+    "slices": true
+   }
+  },
+  {
+   "source": "structure.aseprite",
+   "label": "structure_weapon",
+   "options": {
+    "layer": "weapon_bow_l1"
+   }
+  },
+  {
+   "source": "forja_rgba.aseprite",
+   "label": "forja_rgba_sheet",
+   "options": {
+    "columns": 2,
+    "layers": true,
+    "slices": true
+   }
+  },
+  {
+   "source": "forja_rgba.aseprite",
+   "label": "forja_rgba_hidden",
+   "options": {
+    "layer": "hidden",
+    "layers": true
+   }
+  },
+  {
+   "source": "indexed.aseprite",
+   "label": "indexed_sheet",
+   "options": {
+    "layers": true,
+    "slices": true
+   }
+  },
+  {
+   "source": "blends_gray.aseprite",
+   "label": "blends_gray_sheet",
+   "options": {
+    "kind": "columns"
+   }
+  },
+  {
+   "source": "troop.aseprite",
+   "label": "troop_sheet",
+   "options": {
+    "layers": true,
+    "slices": true
+   }
+  }
+ ],
+ "script": {
+  "troop.aseprite": [
+   "troop_body",
+   "troop_equipments",
+   "troop_face",
+   "troop_shield",
+   "troop_sword"
+  ],
+  "archer.aseprite": [
+   "archer_archer",
+   "archer_arms_and_weapons",
+   "archer_body",
+   "archer_equipments",
+   "archer_face",
+   "archer_layer_1"
+  ],
+  "forja_rgba.aseprite": [
+   "forja_rgba_body",
+   "forja_rgba_equip",
+   "forja_rgba_fx",
+   "forja_rgba_overlay",
+   "forja_rgba_weapon_bow_l1"
+  ],
+  "structure.aseprite": [
+   "structure_body",
+   "structure_equip",
+   "structure_fx",
+   "structure_overlay",
+   "structure_weapon_bow_l1"
+  ]
+ }
+}

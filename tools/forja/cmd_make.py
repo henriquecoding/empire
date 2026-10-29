@@ -1,4 +1,4 @@
-"""Subcomandos de producao: sheet, anim, aseprite, tileset, seams, palette, motion, kinds."""
+"""Subcomandos de producao: sheet, anim, tileset, seams, palette, motion, kinds (o `aseprite` esta em cmd_ase)."""
 from __future__ import annotations
 
 import json
@@ -7,6 +7,8 @@ from pathlib import Path
 from PIL import Image
 
 from . import anim, aseprite, contracts, expectation, godot, motion, palette as palmod, review, sheetforge, tiles
+from .ase import read as read_ase
+from .ase import render as render_ase
 from .cli import box, command, out_path, pair
 from .cmd_image import _options, common, expected
 from .imageops import open_rgba
@@ -64,15 +66,6 @@ def do_anim(args) -> dict:
     return {"ok": True, "files": files, "tags": [list(t) for t in tl], "metrics": anim.metrics(frames, pivot)}
 
 
-def do_aseprite(args) -> dict:
-    frames = [open_rgba(f) for f in args.frames]
-    tags = sheetforge.parse_tags(args.tags)
-    tl, durations = sheetforge._timeline(tags, len(frames))
-    pal = palmod.load(args.palette).colors if args.palette else None
-    path = aseprite.from_frames(args.out, frames, args.layer, durations, tl, pal, args.pivot)
-    return {"ok": True, "out": str(path), "verify": aseprite.verify(path, frames)}
-
-
 def _texture(spec: str | None, size: int) -> Image.Image | None:
     if not spec or spec == "none":
         return None
@@ -89,16 +82,23 @@ def do_tileset(args) -> dict:
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     sheet.save(out / f"{args.name}.png")
-    tiles.demo_map(sheet, args.size, seed=args.seed).save(out / f"{args.name}_demo.png")
+    demo = tiles.demo_map(sheet, args.size, seed=args.seed)
+    demo.save(out / f"{args.name}_demo.png")
     (out / f"{args.name}.json").write_text(json.dumps({"tile_size": args.size, "encoding": "NW<<3|NE<<2|SW<<1|SE",
                                                        "tiles": meta}, indent=1) + "\n", encoding="utf-8")
     files = {"sheet": str(out / f"{args.name}.png"), "demo": str(out / f"{args.name}_demo.png"),
              "json": str(out / f"{args.name}.json")}
     if args.godot_texture:
         files["godot"] = str(godot.write(out / f"{args.name}.tres", godot.tileset(args.godot_texture, args.size)))
+    extra = {}
+    if args.aseprite:  # o tileset e o mapa de exemplo num tilemap do Aseprite (FORJA-14)
+        sprite = aseprite.tilemap(sheet, args.size, tiles.demo_indices(seed=args.seed), args.name)
+        files["aseprite"] = str(aseprite.save(sprite, out / f"{args.name}.aseprite"))
+        extra["aseprite_equal"] = render_ase(read_ase(files["aseprite"])).tobytes() == demo.tobytes()
     joins = tiles.pairs(sheet, args.size, tiles.upper_class(upper, rim) if lower is not None else None)
     cut = tiles.junctions(sheet, args.size, args.cluster)
-    return {"ok": joins["ok"] and cut["ok"], "files": files, "tiles": 16, "pairs": joins, "junctions": cut}
+    return {"ok": joins["ok"] and cut["ok"] and extra.get("aseprite_equal", True), "files": files, "tiles": 16,
+            "pairs": joins, "junctions": cut, **extra}
 
 
 def do_seams(args) -> dict:
@@ -189,13 +189,6 @@ def register(sub) -> None:
     p.add_argument("--columns", type=int)
     p.add_argument("--mirror", action="store_true")
     p.add_argument("--godot-texture")
-    p = command(sub, "aseprite", "Quadros PNG -> .aseprite (camada, tags, duracoes, paleta, pivot) e verificacao", do_aseprite)
-    p.add_argument("frames", nargs="+")
-    p.add_argument("-o", "--out", required=True)
-    p.add_argument("--tags")
-    p.add_argument("--layer", default="body")
-    p.add_argument("--palette")
-    p.add_argument("--pivot", type=pair)
     p = command(sub, "tileset", "Conjunto Wang de 16 por cantos (topo ou plataforma lateral) + TileSet do Godot", do_tileset)
     p.add_argument("--lower", required=True, help="textura PNG, #cor, ou 'none' (transparente: plataforma)")
     p.add_argument("--upper", required=True, help="textura PNG ou #cor")
@@ -209,6 +202,7 @@ def register(sub) -> None:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--cluster", type=int, default=2, help="2 = lei dos 2 px do cenario")
     p.add_argument("--godot-texture")
+    p.add_argument("--aseprite", action="store_true", help="tambem o tileset e o mapa de exemplo num tilemap .aseprite")
     p = command(sub, "seams", "A textura repete sem emenda? (e uma previa 3x3)", do_seams)
     p.add_argument("image")
     p.add_argument("-o", "--out")

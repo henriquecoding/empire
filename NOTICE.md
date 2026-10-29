@@ -63,6 +63,32 @@ A Silkscreen também entra no menu do jogo desde a ADR 0040; as restantes famíl
 |---|---|---|
 | gdUnit4 6.2.1 — Mike Schulze | MIT | `addons/gdUnit4/` (excluído do *export*) |
 | gdtoolkit (gdformat, gdlint) — Pawel Lampe | MIT | instalado pelo CI |
+| Aseprite 1.3.18.6 — `src/doc`, `src/render`, `src/dio`, portados para Python | MIT | `tools/forja/ase/` (a Forja; ADR 0100) |
+
+### Aseprite — o código MIT portado na Forja
+
+As misturas e a composição (`src/doc/blend_funcs.cpp`, `src/render/render.cpp`, `src/doc/render_plan.cpp`) e a ordem
+de leitura e escrita do `.aseprite` (`src/dio`) do Aseprite 1.3.18.6 foram portadas para Python em
+`tools/forja/ase/`. O resto do Aseprite (`src/app`) está sob a EULA dele e não se portou; o aplicativo é só uma
+ferramenta de arte e da prova de conformidade, e não se distribui.
+
+> Copyright (c) 2018-present Igara Studio S.A. (`src/doc`), (c) 2019-2023 Igara Studio S.A. (`src/render`),
+> (c) 2018-2026 Igara Studio S.A. (`src/dio`).
+> Copyright (c) 2001-2018 David Capello (`src/doc`, `src/render`), (c) 2016-2018 David Capello (`src/dio`).
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+> documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+> the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
+> to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in all copies or substantial portions
+> of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+> TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+> CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+> IN THE SOFTWARE.
 
 ## Planeado (entra com ADR, e com a sua linha aqui)
 

@@ -21,6 +21,8 @@ art/source/originals/** -filter -diff -merge binary
 # Proxies gratuitos pequenos: o CI e o site fazem checkout sem LFS.
 art/export/temporary/*.png -filter -diff -merge binary
 art/source/temporary/**/*.png -filter -diff -merge binary
+# A prova de conformidade da Forja com o Aseprite (FORJA-13): ficheiros minusculos que o CI le sem LFS.
+tools/forja/tests/ase_fixtures/** -filter -diff -merge binary
 
 # Ficheiros do Godot sao texto: tem de dar diff legivel numa revisao
 *.gd    text eol=lf

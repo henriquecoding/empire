@@ -148,9 +148,13 @@ ser adequado num pipeline que reconstitui offsets; conferir isso antes.
 `--list-slices` e `--list-tags` incluem esses metadados no JSON. Sua presença
 não comprova que o importador os consome.
 
-Para entrega por slot, a referência existente é `tools/export_aseprite.sh`,
-cujo próprio cabeçalho registra que ainda precisa de prova no aplicativo. Este
-estudo não remove essa pendência nem declara o Aseprite Wizard instalado.
+Para entrega por slot, a referência é `tools/export_aseprite.sh`. A 29/10
+(FORJA-14) correu com o Aseprite 1.3.18.6 sobre o `troop.aseprite`: nomes,
+quadros, tags e durações conferem, e o pivot não vai no JSON (o script não passa
+`--list-slices`; Q-302). A Forja faz o mesmo sem o Aseprite (`forja exportar`;
+`--composite` é este diagnóstico) e confere um `.aseprite` contra as convenções
+(`forja ase`); ver o [guia da Forja](FORJA.md#aseprite-o-formato-inteiro-como-o-aplicativo-o-vê).
+Nada disto declara o Aseprite Wizard instalado.
 
 ## 8. Conferência da entrega
 

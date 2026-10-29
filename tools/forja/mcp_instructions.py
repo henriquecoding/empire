@@ -35,4 +35,10 @@ INSTRUCTIONS = (
     "O alquimista e asiatico com o nariz longo original; o escudeiro oferece a proxima pocao e leva uma bolsa compacta. "
     "Esta ajuda e proposta visual, nao uma mecanica de pocoes ja implementada; sem escudo, pinca ou caixa pesada. "
     "O frasco do escudeiro mantem o mesmo tamanho absoluto do frasco do imperador; nao encolher com a tela de 64. "
-    "Design escolhido nao aprova um mestre nativo, animacao ou integracao. Nao substituir o escudeiro real ja definido.")
+    "Design escolhido nao aprova um mestre nativo, animacao ou integracao. Nao substituir o escudeiro real ja definido. "
+    "(13) Aseprite (o formato inteiro, provado contra o Aseprite 1.3.18.6): forja_aseprite monta um corpo com uma "
+    "camada por slot (--slot, ordem Z da §58), a referencia (--reference), uma tag por animacao e o pivot do contrato "
+    "(--kind); forja_ase so le e diz como o Aseprite ve o ficheiro e o que foge as convencoes (slots, tags, pivot; "
+    "--scene compara as slices com o contrato de cena); forja_exportar escreve a folha e o JSON por camada como o "
+    "tools/export_aseprite.sh e a CLI; forja_tileset e forja_estrutura com --aseprite levam o terreno e a "
+    "construcao (estados, vaos, sinais) ao Aseprite.")

@@ -1,0 +1,925 @@
+{
+ "ok": true,
+ "checks": [
+  {
+   "check": "blends_rgba: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "blends_rgba: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "blends_gray: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "blends_gray: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "structure: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "structure: os 3 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "indexed: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "indexed: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "tilemap: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "tilemap: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_rgba: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_rgba: os 4 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_rgba: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_gray: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_gray: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_gray: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_indexed: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_indexed: os 2 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_indexed: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_tilemap: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_tilemap: os 2 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_tilemap: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_body: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_body: os 13 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_body: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_wang: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_wang: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_wang: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_cena: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_cena: os 2 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_cena: o Aseprite regrava sem perder nada",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "troop: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "troop: os 6 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "archer: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "archer: os 1 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "rose-7: a Forja le o que o Aseprite ve",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "rose-7: os 14 quadros renderizados iguais ao export",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha structure_sheet: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha structure_weapon: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha forja_rgba_sheet: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha forja_rgba_hidden: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha indexed_sheet: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha blends_gray_sheet: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "folha troop_sheet: JSON e PNG iguais aos da CLI",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "troop: a exportacao por camada igual a do tools/export_aseprite.sh",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "archer: a exportacao por camada igual a do tools/export_aseprite.sh",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "forja_rgba: a exportacao por camada igual a do tools/export_aseprite.sh",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "check": "structure: a exportacao por camada igual a do tools/export_aseprite.sh",
+   "ok": true,
+   "diff": []
+  }
+ ],
+ "cases": {
+  "blends_rgba.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "blends_rgba-0.png"
+   ],
+   "dump": "blends_rgba.json"
+  },
+  "blends_gray.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "blends_gray-0.png"
+   ],
+   "dump": "blends_gray.json"
+  },
+  "structure.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "structure-0.png",
+    "structure-1.png",
+    "structure-2.png"
+   ],
+   "dump": "structure.json"
+  },
+  "indexed.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "indexed-0.png"
+   ],
+   "dump": "indexed.json"
+  },
+  "tilemap.aseprite": {
+   "origin": "aseprite",
+   "frames": [
+    "tilemap-0.png"
+   ],
+   "dump": "tilemap.json"
+  },
+  "forja_rgba.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_rgba-0.png",
+    "forja_rgba-1.png",
+    "forja_rgba-2.png",
+    "forja_rgba-3.png"
+   ],
+   "dump": "forja_rgba.json",
+   "resaved": "forja_rgba_resaved.aseprite"
+  },
+  "forja_gray.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_gray-0.png"
+   ],
+   "dump": "forja_gray.json",
+   "resaved": "forja_gray_resaved.aseprite"
+  },
+  "forja_indexed.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_indexed-0.png",
+    "forja_indexed-1.png"
+   ],
+   "dump": "forja_indexed.json",
+   "resaved": "forja_indexed_resaved.aseprite"
+  },
+  "forja_tilemap.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_tilemap-0.png",
+    "forja_tilemap-1.png"
+   ],
+   "dump": "forja_tilemap.json",
+   "resaved": "forja_tilemap_resaved.aseprite"
+  },
+  "forja_body.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_body-0.png",
+    "forja_body-1.png",
+    "forja_body-2.png",
+    "forja_body-3.png",
+    "forja_body-4.png",
+    "forja_body-5.png",
+    "forja_body-6.png",
+    "forja_body-7.png",
+    "forja_body-8.png",
+    "forja_body-9.png",
+    "forja_body-10.png",
+    "forja_body-11.png",
+    "forja_body-12.png"
+   ],
+   "dump": "forja_body.json",
+   "resaved": "forja_body_resaved.aseprite"
+  },
+  "forja_wang.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_wang-0.png"
+   ],
+   "dump": "forja_wang.json",
+   "resaved": "forja_wang_resaved.aseprite"
+  },
+  "forja_cena.aseprite": {
+   "origin": "forja",
+   "frames": [
+    "forja_cena-0.png",
+    "forja_cena-1.png"
+   ],
+   "dump": "forja_cena.json",
+   "resaved": "forja_cena_resaved.aseprite"
+  },
+  "troop.aseprite": {
+   "origin": "empire",
+   "frames": [
+    "troop-0.png",
+    "troop-1.png",
+    "troop-2.png",
+    "troop-3.png",
+    "troop-4.png",
+    "troop-5.png"
+   ],
+   "dump": "troop.json",
+   "source": "art/source/originals/troop.aseprite"
+  },
+  "archer.aseprite": {
+   "origin": "empire",
+   "frames": [
+    "archer-0.png"
+   ],
+   "dump": "archer.json",
+   "source": "art/source/originals/archer.aseprite"
+  },
+  "rose-7.aseprite": {
+   "origin": "empire",
+   "frames": [
+    "rose-7-0.png",
+    "rose-7-1.png",
+    "rose-7-2.png",
+    "rose-7-3.png",
+    "rose-7-4.png",
+    "rose-7-5.png",
+    "rose-7-6.png",
+    "rose-7-7.png",
+    "rose-7-8.png",
+    "rose-7-9.png",
+    "rose-7-10.png",
+    "rose-7-11.png",
+    "rose-7-12.png",
+    "rose-7-13.png"
+   ],
+   "dump": "rose-7.json",
+   "source": "art/source/royals_v15/plants/rose-7.aseprite"
+  }
+ },
+ "sheets": [
+  {
+   "source": "structure.aseprite",
+   "label": "structure_sheet",
+   "options": {
+    "layers": true,
+    "slices": true
+   }
+  },
+  {
+   "source": "structure.aseprite",
+   "label": "structure_weapon",
+   "options": {
+    "layer": "weapon_bow_l1"
+   }
+  },
+  {
+   "source": "forja_rgba.aseprite",
+   "label": "forja_rgba_sheet",
+   "options": {
+    "columns": 2,
+    "layers": true,
+    "slices": true
+   }
+  },
+  {
+   "source": "forja_rgba.aseprite",
+   "label": "forja_rgba_hidden",
+   "options": {
+    "layer": "hidden",
+    "layers": true
+   }
+  },
+  {
+   "source": "indexed.aseprite",
+   "label": "indexed_sheet",
+   "options": {
+    "layers": true,
+    "slices": true
+   }
+  },
+  {
+   "source": "blends_gray.aseprite",
+   "label": "blends_gray_sheet",
+   "options": {
+    "kind": "columns"
+   }
+  },
+  {
+   "source": "troop.aseprite",
+   "label": "troop_sheet",
+   "options": {
+    "layers": true,
+    "slices": true
+   }
+  }
+ ],
+ "script": {
+  "troop.aseprite": [
+   "troop_body",
+   "troop_equipments",
+   "troop_face",
+   "troop_shield",
+   "troop_sword"
+  ],
+  "archer.aseprite": [
+   "archer_archer",
+   "archer_arms_and_weapons",
+   "archer_body",
+   "archer_equipments",
+   "archer_face",
+   "archer_layer_1"
+  ],
+  "forja_rgba.aseprite": [
+   "forja_rgba_body",
+   "forja_rgba_equip",
+   "forja_rgba_fx",
+   "forja_rgba_overlay",
+   "forja_rgba_weapon_bow_l1"
+  ],
+  "structure.aseprite": [
+   "structure_body",
+   "structure_equip",
+   "structure_fx",
+   "structure_overlay",
+   "structure_weapon_bow_l1"
+  ]
+ },
+ "art_source": [
+  {
+   "source": "art/source/originals/archer.aseprite",
+   "sha256": "d557cf2bc0982fc17add3b4e93ddfcbaccb17c9b7b97f21bbfd3aaec77385e18",
+   "ok": true,
+   "size": [
+    192,
+    192
+   ],
+   "frames": 1,
+   "layers": 6,
+   "tags": 0,
+   "diff": []
+  },
+  {
+   "source": "art/source/originals/concept.aseprite",
+   "sha256": "db9fa33dd3a12c116ed984dcb1a6760428ade9de350ef7b8dc5ad59dd12eefa3",
+   "ok": true,
+   "size": [
+    5120,
+    720
+   ],
+   "frames": 1,
+   "layers": 67,
+   "tags": 0,
+   "diff": []
+  },
+  {
+   "source": "art/source/originals/troop.aseprite",
+   "sha256": "6cc4f1604d4a3a604a2d90a0e0449e183a470a8363390517e2583317125a5eca",
+   "ok": true,
+   "size": [
+    192,
+    192
+   ],
+   "frames": 6,
+   "layers": 7,
+   "tags": 1,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/arqueiro.aseprite",
+   "sha256": "f9784d1e9a2f908aa46b0c523a267b479f456fb112610973e1c2572cb491ea56",
+   "ok": true,
+   "size": [
+    80,
+    80
+   ],
+   "frames": 112,
+   "layers": 1,
+   "tags": 12,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/bardo.aseprite",
+   "sha256": "4ac40ed067451685d22a5de5137c5abedb75acfca2eacfb9d1b702406a22dce4",
+   "ok": true,
+   "size": [
+    64,
+    64
+   ],
+   "frames": 96,
+   "layers": 1,
+   "tags": 12,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/dancarina.aseprite",
+   "sha256": "d9c37c08cefcb50bf26896c70c7c29d1532e87b03d48cb249958db54973ea26b",
+   "ok": true,
+   "size": [
+    64,
+    64
+   ],
+   "frames": 96,
+   "layers": 1,
+   "tags": 12,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/escudeiro.aseprite",
+   "sha256": "83aa7a19864504646ea9f5f7e871f742b05b3703baa0ad809544a501f4bcad6e",
+   "ok": true,
+   "size": [
+    64,
+    64
+   ],
+   "frames": 100,
+   "layers": 1,
+   "tags": 14,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/flores.aseprite",
+   "sha256": "664a0a8b526b6da70325d5d07481633e9b1ca4f9e83c619efbc8d82e98b5b392",
+   "ok": true,
+   "size": [
+    160,
+    40
+   ],
+   "frames": 150,
+   "layers": 2,
+   "tags": 1,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/intendente.aseprite",
+   "sha256": "7f4c52e6ecd32dd0580028dbe9ea8605366baf85b218750bdb51b70d38e3702e",
+   "ok": true,
+   "size": [
+    64,
+    64
+   ],
+   "frames": 114,
+   "layers": 1,
+   "tags": 14,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/nia.aseprite",
+   "sha256": "63b6a68e3b740fecf97a18f5a1671ac4d7b8333d575615a18fa53d4757ea0e1b",
+   "ok": true,
+   "size": [
+    64,
+    64
+   ],
+   "frames": 96,
+   "layers": 1,
+   "tags": 12,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/ivory-10.aseprite",
+   "sha256": "8ae9c76fb772c8b71c477993c111e23393bb41f5b2219b655eb64720c50b042c",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/ivory-14.aseprite",
+   "sha256": "c40c3f1444705ef4f721c47b673a0a648afdc64e4f59577912b3dea0eb3f669b",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/ivory-7.aseprite",
+   "sha256": "832a3020e49a0cf2197aa97283b596e5993309b0d7c69d7ba89f21094fe58aac",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/rose-10.aseprite",
+   "sha256": "33dcc52d7f1b9e0c0b826005da4a0547e10a1403588fe753d977eab97251460b",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/rose-14.aseprite",
+   "sha256": "904603e55bc857fd3566533d079a1772f4536a2f6d9cd1039e6d13a57cc24479",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/rose-7.aseprite",
+   "sha256": "e3898b24a41c66b5abb6f27fe76013302ffc25dc89aefa15eb019b7a151a522e",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/yellow-10.aseprite",
+   "sha256": "7488366548938101a60fc135ac5fd565d9dc5d7a5b31fd0417e556b7f2887a38",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/yellow-14.aseprite",
+   "sha256": "3433f1645b02612910df5ae735829573c50a582a060def14cd6f99a0961a4c26",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/plants/yellow-7.aseprite",
+   "sha256": "466ff1ce3b4ea8809a089190a0bf9d7a4c88c683d4ab01ae6a8115778d309961",
+   "ok": true,
+   "size": [
+    24,
+    28
+   ],
+   "frames": 14,
+   "layers": 1,
+   "tags": 2,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/rei.aseprite",
+   "sha256": "504d59866c7cc25e54165f8893f40937484bd6e256478a1e1fda2c38033bdc17",
+   "ok": true,
+   "size": [
+    80,
+    80
+   ],
+   "frames": 96,
+   "layers": 1,
+   "tags": 12,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/sombra-cura-composta.aseprite",
+   "sha256": "80e8b8728edc312d2c4db9536132070ece621fa00c2fc8db4c1b4a5e80bb06cc",
+   "ok": true,
+   "size": [
+    160,
+    96
+   ],
+   "frames": 150,
+   "layers": 3,
+   "tags": 1,
+   "diff": []
+  },
+  {
+   "source": "art/source/royals_v15/sombra.aseprite",
+   "sha256": "9a8e637340b92d5554b5a41bad503982f9a43abeb4796c69d8467370b2856f56",
+   "ok": true,
+   "size": [
+    80,
+    80
+   ],
+   "frames": 112,
+   "layers": 1,
+   "tags": 16,
+   "diff": []
+  }
+ ],
+ "aseprite": "Aseprite 1.3.18.6-dirty-dev",
+ "files": {
+  "archer-0.png": "7d35535dfa93f0679aa829d3778c4d4865e395cc311f38457cb5d0fc9af5cf56",
+  "archer.aseprite": "d557cf2bc0982fc17add3b4e93ddfcbaccb17c9b7b97f21bbfd3aaec77385e18",
+  "archer.json": "fa0d104ee7b75649c006c321f740c26bf45ad51aed4ab87ea73642cb4367fd01",
+  "blends_gray-0.png": "1ec6515844799ff9edb75104d41c9c532e9fd030405b26697727c65033698f00",
+  "blends_gray.aseprite": "7ded725fb1faafa160b4b8a664427fab0cd929add50c777839f78d3ca1450f62",
+  "blends_gray.json": "e81f3e484257a2593383e9004b7809b4733868c92ef0707adb2e78a007bf7fca",
+  "blends_gray_sheet.json": "7739194677a1605211ab71725efbaf0bad1cd1abeaaf8d1108397fa2fb903160",
+  "blends_gray_sheet.png": "24b65b12f627130f27715fdff29f532622414322a056a09ec1f66f40aebc8b1a",
+  "blends_rgba-0.png": "3ccb6397fb669e1a9c69b3f8834eab2f624ee85c80df4b3517410a92c02ddd34",
+  "blends_rgba.aseprite": "1a83349bc0c47274103a7b97aec1bf86b9d37f8acddec146f67a7877c54337ae",
+  "blends_rgba.json": "4a282b49fdcbc025b9c4309d1bc63cb65ce3d7fe22d29b270dd41e3cb3576379",
+  "export/archer_archer.json": "2309fa395cadb4bb3799609fcae7439ec5675a9ac40a6ec8e5c4c74749285908",
+  "export/archer_archer.png": "7d35535dfa93f0679aa829d3778c4d4865e395cc311f38457cb5d0fc9af5cf56",
+  "export/archer_arms_and_weapons.json": "caccca99c17f48228363055e9916d731877aada867522d7bea0ac20055134115",
+  "export/archer_arms_and_weapons.png": "90be2a4d2d16500f2d5ee684a60e3a4b9a93c96d7d31e8b6347d3438203d2ce9",
+  "export/archer_body.json": "03530f38108c811682a8c1721b52e39064db4e0b3139192f56125b0ec6ec7486",
+  "export/archer_body.png": "0019354871506e3381a767b3ac7199c5e284943416ce8cd7fccffbbde52028fd",
+  "export/archer_equipments.json": "5d6dbb6a6f3459c5e5b6a58287e889a93492fc037cc329e24298395a0c67a0f2",
+  "export/archer_equipments.png": "943211fb969179a1ada9792d98aa6ea5c3d9e8c72e35fe202b24641d774836df",
+  "export/archer_face.json": "01bb16687944b266e21d8d412ed3d20d9d7a104b5bb3a9ce9310310b5672925d",
+  "export/archer_face.png": "5e5e0c9a6a158a5383788dc28e0169f0854927ed35ba20077b49e226996e1eec",
+  "export/archer_layer_1.json": "fe17ee51e154b8d0a6ae0c3e1877b946a139e98120e033af455cf27fa1029385",
+  "export/archer_layer_1.png": "943211fb969179a1ada9792d98aa6ea5c3d9e8c72e35fe202b24641d774836df",
+  "export/forja_rgba_body.json": "2d872347e697c6a72bd9b90d69a2236d50487c7a01ad55da8d37b542b031f9ad",
+  "export/forja_rgba_body.png": "e2a3a5f8e78f9b4c32ff42e508f2695bccd0900c850ae0bed46459b21405ad0f",
+  "export/forja_rgba_equip.json": "bea3ef07486b2739b4f0b85c4aa615a605fad66db0e91c408ac3b04043977926",
+  "export/forja_rgba_equip.png": "f5debe42fcf29f662b6a3e6aca11aa5691ae8b051530c6bfaa2b2b9aaaba57cd",
+  "export/forja_rgba_fx.json": "7c92322d92c867e573415afc665a005a2cdd9d29799792d6c5f7a3ab3cef979c",
+  "export/forja_rgba_fx.png": "6a0665603f06d482aa3f0c2f784911177205641ca92791fce10aed9719e7f1ba",
+  "export/forja_rgba_overlay.json": "5627e05f57d8245a9e0cc6d28811b00b7fb056cd30a85b12694a376ca077887c",
+  "export/forja_rgba_overlay.png": "6a0665603f06d482aa3f0c2f784911177205641ca92791fce10aed9719e7f1ba",
+  "export/forja_rgba_weapon_bow_l1.json": "c996526ac11765b354afc0a605a3439367f47e667255059ac2d3076d61867710",
+  "export/forja_rgba_weapon_bow_l1.png": "60cff10ff0a98b56e26e6fd41c95eba823e8dd0ad9a0a5a752e83eafcbc49619",
+  "export/structure_body.json": "c8349e0618ad7e7eacff0086b75bbf440131d3f00d0efb6ba091d6aa1cc4efb3",
+  "export/structure_body.png": "5c4eef02d0f96a679811a55e2e36aeef7815364ce58eb7c8e66b88f6437c03ea",
+  "export/structure_equip.json": "c6a4b2f87ae9b2352e8b9866abff8236f0654ce98cd21f47e0a61bc6f91a1da6",
+  "export/structure_equip.png": "cc75db64fa7c72e113c6ab3f83ab5a9eedda01a20747ef61ea18c09533886485",
+  "export/structure_fx.json": "19d0e6441fe5252248d8d5be4403eea0cffdf03189f09ffc7640586181424cb5",
+  "export/structure_fx.png": "770eb6588068b4c712e6641bea342493e8540ac4ec68c2fb2727bcba6b1ab07a",
+  "export/structure_overlay.json": "55a20cf3b1074eff5d4ce2c6591e974b651ee3ffaebf7fc14491397db3b26d39",
+  "export/structure_overlay.png": "770eb6588068b4c712e6641bea342493e8540ac4ec68c2fb2727bcba6b1ab07a",
+  "export/structure_weapon_bow_l1.json": "0768d308751e8e0b71b7a101d9e5be61645ec426eb288c6867bc0e0f1cb49a9c",
+  "export/structure_weapon_bow_l1.png": "74bd6c7feaff1dc47b55938c987d2adaee5fd573ebdfb61199e8ef5eebef7fd2",
+  "export/troop_body.json": "e0267b94d7966039350cc1cb742c5256d36707c8961a347f220ba33547bf5776",
+  "export/troop_body.png": "1b1f7c4608be372572d28267cb7d310b45d5322a031a69397da73ed3f5f1ae18",
+  "export/troop_equipments.json": "69f911fe711ee9cd93938ee8667113450024aaf85f4bf0e457961d84599df8e9",
+  "export/troop_equipments.png": "2dc40688f823d0b2eeb3cb80f727b61ade7da5e295e78da677c9f91446cfa1e8",
+  "export/troop_face.json": "74424423848cc831e692b897b6cf87c908aa1b21c26db6b8db96d72fcb3ac6c7",
+  "export/troop_face.png": "07a09d0807a16353c597ec9380b8f9d15cefb99432ee47579b8d7423463e8213",
+  "export/troop_shield.json": "b3d730bda4d600fadfd2c1a5e789b1bc36e3c44f95d15434deb46015a58580f0",
+  "export/troop_shield.png": "65a0d408021d0c21b0adb32831860c9a447438375644d098b1f6ae3d31aad1b0",
+  "export/troop_sword.json": "e726194f9e6f7ea1ee7165a75a9c2bde86ebc4cc3947a3fe89f202cd55b5d70e",
+  "export/troop_sword.png": "515f6b81cf8cacd93a04183d364b589465b908f31abb93200074da78d683d1a4",
+  "forja_body-0.png": "b450df26b57f232fed684418b2c6c0de5546e9a3fb2b8a1273f3419d5cec0328",
+  "forja_body-1.png": "8b4f8a10f49f6388c8e73e83000be4c57f15271e52c023201ba66c5de239946a",
+  "forja_body-10.png": "8076ed77ed253780d992a4051e932b407cad5e2faeb783e1f8641f7f402ef084",
+  "forja_body-11.png": "b00e02178a4b8fd1d564eeaf086be79aef1f01009ad71afdd9d7f266d25a2cc0",
+  "forja_body-12.png": "fc307c49d6ff3c528e09e8ab5373e65928178f5dbe9b9f0770f0256be06c409f",
+  "forja_body-2.png": "5077f641dc9c6ceb91b22ca7be071bd8656582bbf73ea2aedc9a49c203a8d092",
+  "forja_body-3.png": "2f5c2f802caceefd97876c8bd68f3f887797daeff5a761eb91dabd489558ccbc",
+  "forja_body-4.png": "127981bca2652d8da0386b21ce8eb66a5d71260dd88e3584570326b2e0913b37",
+  "forja_body-5.png": "093be9909ca26607e13b9f038cef2d09e08536738126ffb30d14b1201b812bae",
+  "forja_body-6.png": "cbb0962feda6dd70bab237399b2cba7d12b6ac45b2e4fa776ec2e7f8cc83ca0b",
+  "forja_body-7.png": "58413ce8adfd89796afb44e1605a4311ff51b0e48e2fdefe9015ed4729265cfd",
+  "forja_body-8.png": "0a96260c5b67773106aefda8508e351f0561ce16b5ad1d44d6f4ce600f2b35d2",
+  "forja_body-9.png": "bdcf88eda3ecadf7fad449c99dc9898a6cdc81a9698103dcd83123b1a8b32760",
+  "forja_body.aseprite": "c1a1212a3569ff09d6b68d26fe5d5eb10b180a967711e0f1cbd00c4c00b2a268",
+  "forja_body.json": "6633f08245fe29d64a78899735f23a2574ec5bd32930ae94e3eadf7524ddb5c0",
+  "forja_body_resaved.aseprite": "10f26b4920360ba854bfac216fa6b70ca178600bf1d7c52a1e144aecbb2507c1",
+  "forja_cena-0.png": "a30760f12cef6ae8bd86e2302690610bb6a7d69b10828f7348dbfd2d95a2b70e",
+  "forja_cena-1.png": "1946a681e86de74eafb6286cf6cff5d5ba35b929002bd5b61bf569c1d67d1e58",
+  "forja_cena.aseprite": "1986525d83fec5a7ca210739713d2d601fa2b7d7fd2ef5506f927d6702280c3e",
+  "forja_cena.json": "1c60d716a51d2ce4a36cb9f0e0c69ddb02da98a536e224076827c6c1109a2378",
+  "forja_cena_resaved.aseprite": "7cb05b2de73e0decfdf4a5c74f664b7d04d1d073a0049eb3b9e487d421f97b0d",
+  "forja_gray-0.png": "ba71c21004baa96a11a60c4b4105e536cff2ea2a1643439517d43b9b9531e48b",
+  "forja_gray.aseprite": "1d423840276305619fd1d7c86ac0ae4a700704c07e00a90a5c2a735be5791c8d",
+  "forja_gray.json": "c7ba01fad7b2adf8c3f7417fdf01d40811a1e2b0184790cb21330a09d5ab255b",
+  "forja_gray_resaved.aseprite": "3e07b83ff417785e4e3c803ef57a23ef521e2c55543491535dc0389ba12950be",
+  "forja_indexed-0.png": "8138a16a9054f9c08a527c1103bca2719325d557470a215c2326d95ec7887f17",
+  "forja_indexed-1.png": "0a3d3619ee5a73fc62dd6acb17ad57269f5e9602bf551d25ce9baf0375c2bfd7",
+  "forja_indexed.aseprite": "e314b1a7d7e4966c385eb757e0b2a22b2e5eabb5b45bd017f764b1289558e296",
+  "forja_indexed.json": "4d19cb46ed6e397c5583d5fcf400e483ecb1b2e036d8c5da62261024a540746c",
+  "forja_indexed_resaved.aseprite": "0aa1e64eca81d533e164442d117c21451618abf10e64bd61b29588eaeb174835",
+  "forja_rgba-0.png": "9931a817a7363a806799e24b1aefea41984fe74caa9b5319699e44fa487451b6",
+  "forja_rgba-1.png": "dea5e3f28b815e6a14fcd7a98110f95b9882e640f1356f298e982a029dc4b775",
+  "forja_rgba-2.png": "7308e91eac5d4de8834dee9d63cd9530659a27b902b79d8c862d7e47b211f6c7",
+  "forja_rgba-3.png": "9fc4def03d573a05239a912272a5b91e027d548a87bc7d72b70442413bce8f6e",
+  "forja_rgba.aseprite": "a455285fde86cc64c8203eb3f71bc00842a0b00d9cd0249b5ed5fa2d6205e32a",
+  "forja_rgba.json": "99891d3de1f86208c79b03579f1a158ab51871dc60702770752228f5f6d9a6da",
+  "forja_rgba_hidden.json": "39834195f97fa8388b5c2e3fc7c80f9109e333ad17d37399af6c61a2d19d9fb7",
+  "forja_rgba_hidden.png": "2e8ce76cb55472e2e84f254dfc6c5517827b31e2400379d8afa44a3dbde034be",
+  "forja_rgba_resaved.aseprite": "dbe21c12b2f7dd33c8f081d1f938d9f421ffaddf3ec83132d8aea517f8f94368",
+  "forja_rgba_sheet.json": "749ce0259bb0f6f7fb2744ea6dfba12419141e357b38afaf7ebb0a026d7fd168",
+  "forja_rgba_sheet.png": "578e2af82ecc45a794409ac1dee82842f4c0fe57ca92184fcd3ccb2c85256177",
+  "forja_tilemap-0.png": "b94d345d1587a096f84f5cde0c71be84716061c5f99043bfbbdc6c75dd560623",
+  "forja_tilemap-1.png": "b6dcbbb01ef105656a1fdb811777f655ae8eaa856c4f26ddc5d3a62305f64c81",
+  "forja_tilemap.aseprite": "8446d12d2f36124082027b08ba417da32fc7582af12fa691990cbe7b4609084f",
+  "forja_tilemap.json": "7adf4e8a25f5e0475bf952493f32d299d4c7ea9be152a071e2728a308cbaea0f",
+  "forja_tilemap_resaved.aseprite": "69128d7c7d8e194b2596e5d62e0ecdef4914923a72a03f1f072bd2db1ac5560a",
+  "forja_wang-0.png": "504aa8d51e15f621cb0313a4a2caf4c21700b4cd705df004a35e2cdc9b8ab2f2",
+  "forja_wang.aseprite": "9023bb02439bd18bba3c569ab9720298d7855a9fd97a9c7d6e56a0f7aadecd26",
+  "forja_wang.json": "21c67d026fcad17091619e290978e2baed704013f7ce2742e99d237e104345e4",
+  "forja_wang_resaved.aseprite": "3a5c4c26c922008e522568daf9dc580e6b6800d512002b5991293569463d5b70",
+  "indexed-0.png": "6c3e4cd7e4ed027c3dd7cd70f5bc9dd3eb04a0b435804a9c85e33e67d7c1a616",
+  "indexed.aseprite": "8389a12b2186108555ec5c114ba5299719198b5a0ed6f4ec613f63d0c49683db",
+  "indexed.json": "352dec4924ffce9cc1948bedb310cdf958a9d7fa2abe70cbe6a7d52e192be23f",
+  "indexed_sheet.json": "7cad794b02c3869ab0af1489223839cc712fe2f33286851fe3b870435023d523",
+  "indexed_sheet.png": "991d0d5ed5910cb0418bdd7957899c112f81228062ca0014a6d776efc7e84b13",
+  "rose-7-0.png": "7d97286bb3d41655e7e1bcce36e97cad7d75000a8a15bb1c7f79f136962d039d",
+  "rose-7-1.png": "2bace09f31e5f063c88bccfae63b88a271e99d64d343d4ebbe57d6df13238c93",
+  "rose-7-10.png": "02f8eef737950b3341a7916b1ef76f785157af74a1d64050a57ef1c41e1ede73",
+  "rose-7-11.png": "fd6348e7e4c3c164c1097791b849da823a4488c1fa083df87af2bc1ac043f3eb",
+  "rose-7-12.png": "d933f3b9c70dadf474d95989df1bcb05b9df0ea5fbcb9e845406fa56be026956",
+  "rose-7-13.png": "a8c43bd6dd9cde0688a9526b6f5b330d7f0bd240a4e5aa0f2af19084ceb6b679",
+  "rose-7-2.png": "66d2ee88f7d48de60cda006fcc1e33890e292457a0a97e680beb047ed235f49f",
+  "rose-7-3.png": "7951a191ea228b2515d4bf9294c9cfa6cddb77467fe43aa2440c0050dd305d81",
+  "rose-7-4.png": "33d83cb1786ebbd8f0138f9baae89f0459515e831bdeb6fec6d1de458876e4c5",
+  "rose-7-5.png": "05bdf6c3a5d3095e2fb735c7ae178641200737e1370a6a0c60353f665cb0ed42",
+  "rose-7-6.png": "dbe0fbc9929f4e15649fdaa9025b17ea6a26fb2ff5437c914b59b25fc605b1d2",
+  "rose-7-7.png": "cff7eee85c9cfd802ce10292018c9d508a2cfa39875cf6314e344400e914e6bf",
+  "rose-7-8.png": "7fcef9318a8f2d37a8d23b35cbd1fdec47c678d28b894659e04cb72eb0d9e5ea",
+  "rose-7-9.png": "58689e82210f2f33c3773fd67ea2e7d902663c8cc33b213d651ec268a357b81c",
+  "rose-7.aseprite": "e3898b24a41c66b5abb6f27fe76013302ffc25dc89aefa15eb019b7a151a522e",
+  "rose-7.json": "de687d6f38715089b14ed7ce9d57ca4c82a9933aa612db2cbdc2dcfb313b313f",
+  "structure-0.png": "bec09b09888a0961e025d047430e7b1ba577160089e9a43bf8f0b7e1c2907bdb",
+  "structure-1.png": "bf7b89fbab4630b42fa6918eca9a0a356c510783e5ba4676e17e3120956ba509",
+  "structure-2.png": "bec09b09888a0961e025d047430e7b1ba577160089e9a43bf8f0b7e1c2907bdb",
+  "structure.aseprite": "6acdec2ab4cb2053f85e83974c7ffae580338909b87147d066fc374b6f487d4a",
+  "structure.json": "f7b51dd49a32f0e0f719ff4527c5503318993685abcd0ae78ca8228ca3ffdccd",
+  "structure_sheet.json": "d5f1d5a59b9c91d608a33f9dff9df353404bb4d4b38d5695d118a0a8d2113043",
+  "structure_sheet.png": "a043824b1693b7a5b33aff1d1ce7249bf28a73c04049bc8f75a5799a3fb47e65",
+  "structure_weapon.json": "ec008a98f06d3223474116d2d4b468dbd7db9f65ce3537250dcdba458bdd735e",
+  "structure_weapon.png": "74bd6c7feaff1dc47b55938c987d2adaee5fd573ebdfb61199e8ef5eebef7fd2",
+  "tilemap-0.png": "5495aec881b56834bbb14fae969bd231d119619014addbd72c8dc93b46e36139",
+  "tilemap.aseprite": "b11ab3673587d9564c20d8fff6420709fe74fb1cf855d75b033fef81515ab77c",
+  "tilemap.json": "8e09b61d4603fc4f370d920ebb49108e70bab46f5d28a9c38ccbace8bad25dfd",
+  "troop-0.png": "77cc089a44289320db5f25eee737a599ccb72b08e2e35452a608e7f808cd4410",
+  "troop-1.png": "77cc089a44289320db5f25eee737a599ccb72b08e2e35452a608e7f808cd4410",
+  "troop-2.png": "4ec83e3cabb2f5d8bd70d944e7a1a7d6ffa2c57507db89711fc2cf3ee7abd504",
+  "troop-3.png": "33fe0b0f2a094aa3a87f0c108af07506dfee8b00fa7c845014cf4dfab4577fe1",
+  "troop-4.png": "1c698289625a7c5076b98ae200d9ba360e339bf963444bb00473ec9f29b366ed",
+  "troop-5.png": "77cc089a44289320db5f25eee737a599ccb72b08e2e35452a608e7f808cd4410",
+  "troop.aseprite": "6cc4f1604d4a3a604a2d90a0e0449e183a470a8363390517e2583317125a5eca",
+  "troop.json": "a8699aac73b3745ec8e02097ac2571eb94cb2c898d22d4a268905f5c338b0fd7",
+  "troop_sheet.json": "8bfb0e1b0e9906f836f55a68f3872229bdfa1b00082ed08dee6ea391e3707f05",
+  "troop_sheet.png": "afb264e44dfd6fbb173118d307d4414f6da98af20893fbf1405d602ac7dd2040"
+ }
+}

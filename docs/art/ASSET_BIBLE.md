@@ -184,9 +184,10 @@ Cada linha do `ASSET_REGISTER.csv` está num destes estados. Só se avança quan
 1. **Autoras** em `art/source/` (Git LFS desde o primeiro commit, §28; `art/source/.gdignore` impede o Godot de
    tentar importar `.aseprite`, §69).
 2. **Exportas** com `tools/export_aseprite.sh <ficheiro.aseprite>`: uma folha por camada, com as tags no JSON.
-   O *script* usa a linha de comandos da Aseprite (`--layer`, `--sheet`, `--data`, `--list-tags`). *Não foi
-   testado no ambiente onde este repositório foi montado, porque lá não há Aseprite — corre-o uma vez com o
-   `Empire troop` antes de confiares nele.*
+   O *script* usa a linha de comandos da Aseprite (`--layer`, `--sheet`, `--data`, `--list-tags`). *Correu a
+   29/10 (FORJA-14) com o Aseprite 1.3.18.6 sobre o `Empire troop`: nomes, quadros, tags e durações conferem; o
+   pivot não vai no JSON (Q-302).* `forja exportar` escreve o mesmo sem a Aseprite, e `forja ase` confere o
+   ficheiro contra estas regras.
 3. **Importas** com o Godot Aseprite Wizard (§22, §28) para `SpriteFrames`, respeitando tags e camadas. A
    dependência precisa da ADR 0010 antes de entrar em `addons/` (regra 8 do AGENTS.md).
 4. **Ligas** o `SpriteFrames` ao `UnitData.sprite_frames` (ou equivalente) no CSV — a coluna aceita um caminho

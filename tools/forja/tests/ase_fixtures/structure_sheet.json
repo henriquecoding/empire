@@ -1,0 +1,55 @@
+{ "frames": [
+   {
+    "filename": "structure 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 24 },
+    "sourceSize": { "w": 32, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "structure 1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 24 },
+    "sourceSize": { "w": 32, "h": 24 },
+    "duration": 150
+   },
+   {
+    "filename": "structure 2.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 24 },
+    "sourceSize": { "w": 32, "h": 24 },
+    "duration": 200
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3.18.6-dirty-dev",
+  "image": "structure_sheet.png",
+  "format": "RGBA8888",
+  "size": { "w": 96, "h": 24 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 2, "direction": "forward", "color": "#2864d7ff", "data": "tag idle", "properties": {"loop": false} },
+   { "name": "walk", "from": 0, "to": 1, "direction": "reverse", "repeat": "2", "color": "#5064afff", "data": "tag walk", "properties": {"loop": true} },
+   { "name": "attack", "from": 1, "to": 2, "direction": "pingpong", "repeat": "3", "color": "#786487ff", "data": "tag attack", "properties": {"loop": false} },
+   { "name": "die", "from": 2, "to": 2, "direction": "pingpong_reverse", "repeat": "1", "color": "#a0645fff", "data": "tag die", "properties": {"loop": true} }
+  ],
+  "layers": [
+   { "name": "body", "opacity": 255, "blendMode": "normal", "cels": [{ "frame": 0, "color": "#0ac81eff", "data": "corpo", "properties": {"pose": "idle"} }, { "frame": 1, "color": "#0ac81eff", "data": "corpo", "properties": {"pose": "idle"} }, { "frame": 2, "color": "#0ac81eff", "data": "corpo", "properties": {"pose": "idle"} }] },
+   { "name": "equip", "data": "grupo", "cels": [{ "frame": 0, "opacity": 220, "zIndex": -1 }, { "frame": 1, "zIndex": 2 }, { "frame": 2, "opacity": 220, "zIndex": -1 }] },
+   { "name": "weapon_bow_l1", "group": "equip", "opacity": 180, "blendMode": "multiply", "color": "#ff0000ff", "properties": {"level": 1, "slot": "weapon"}, "cels": [{ "frame": 0, "opacity": 220, "zIndex": -1 }, { "frame": 1, "zIndex": 2 }, { "frame": 2, "opacity": 220, "zIndex": -1 }] },
+   { "name": "fx", "group": "equip" },
+   { "name": "overlay", "group": "fx", "opacity": 255, "blendMode": "screen" }
+  ],
+  "slices": [
+   { "name": "pivot", "properties": {"kind": "pivot"}, "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 0, "w": 32, "h": 24 }, "pivot": {"x": 16, "y": 22 } }] },
+   { "name": "socket_hand", "color": "#0000ffff", "data": "mao", "keys": [{ "frame": 0, "bounds": {"x": 4, "y": 4, "w": 20, "h": 12 }, "center": {"x": 2, "y": 2, "w": 16, "h": 8 } }] }
+  ]
+ }
+}
