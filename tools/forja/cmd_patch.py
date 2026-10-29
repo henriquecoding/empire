@@ -10,7 +10,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import contracts, equipment, fidelity, geometry, lint, palette as palmod, pixel_patch, review_state
+from . import contracts, equipment, fidelity, geometry, lineage, lint, palette as palmod, pixel_patch
+from . import review_state
 from .cli import command
 from .imageops import open_rgba, upscale
 
@@ -58,10 +59,15 @@ def do_patch(args) -> dict:
         raster = lint.check(result, c, pal, frame=bool(c.canvas))
         report["lint"] = {"ok": raster["ok"],
                           "errors": [f["message"] for f in raster["findings"] if f["severity"] == "error"]}
+    lin = None
+    if args.lineage:  # FORJA-15: a etapa entra na cadeia; o que cai na mascara fica marcado, nao resolvido
+        data = pixel_patch.load(args.patch)
+        lin = report["lineage"] = lineage.patch(lineage.load(args.lineage), report, data.get("mask") or [])
     if args.fidelity:
         ch = fidelity.character(fidelity.load(args.fidelity), args.character, args.pose)
-        rev = review_state.review(ch, result, None, None if not args.kind else raster)
-        report["review"] = {"summary": rev["summary"], "blocked": rev["blocked"], "deliverable": rev["deliverable"]}
+        rev = review_state.review(ch, result, None, None if not args.kind else raster, {"lineage": lin} if lin else None)
+        report["review"] = {"summary": rev["summary"], "blocked": rev["blocked"], "deliverable": rev["deliverable"],
+                            "release": rev["release"]["status"], "label": rev["label"]}
     report["equipment"] = _equipment(args, result, report["result_pixels_sha256"])
     files["json"].write_text(json.dumps({**report, "base": args.base, "patch": args.patch,
                                          "files": {k: str(v) for k, v in files.items()}}, indent=1,
@@ -86,3 +92,4 @@ def register(sub) -> None:
     p.add_argument("--manifest", help="manifesto forja.equipment/1")
     p.add_argument("--observation", help="observacao forja.observation/1 (so conta se for da imagem nova)")
     p.add_argument("--zoom", type=int, default=8, help="ampliacao inteira das previas")
+    p.add_argument("--lineage", help="o JSON do forge (ou cadeia) da base: o relatorio leva a cadeia com esta etapa")

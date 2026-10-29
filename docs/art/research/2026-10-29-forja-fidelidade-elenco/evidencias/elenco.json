@@ -1,0 +1,587 @@
+[
+  {
+    "character": "alchemist_emperor",
+    "canvas": [
+      80,
+      80
+    ],
+    "pixels_sha256": "c8bc100bfc11c5fd9d7ab8a12ee87ac50804b04fd5e84ebc585a19f2478933ca",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.92,
+      "erased_cells": 78
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/alchemist_emperor/native-base.png",
+        "sha256": "01fa12c1e0a29919e1d008df7736a7217aff40e09e12f188aa3623f31bcae088"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      38,
+      13,
+      55,
+      30
+    ]
+  },
+  {
+    "character": "alchemist_squire",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "1136637f78edd947becd7dcc602eb3210e8b50c65841d8701b0d5084106dfe80",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.968,
+      "erased_cells": 35
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/alchemist_squire/native-base.png",
+        "sha256": "86a075fd3c6e90b37947785e4a2416218281a4d1e03220034dc27be237571d24"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      22,
+      9,
+      47,
+      29
+    ]
+  },
+  {
+    "character": "builder",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "c9df8e35e08fcb83c9bf826d61eff73f8f3302bc468ea9643bc6617540cfc4b5",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.892,
+      "erased_cells": 70
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/builder/native-base.png",
+        "sha256": "67dae8b3efcbee27a35e1f3bfcc2b7c0540771f84d24f3a1846c02a9fdfeac14"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      28,
+      6,
+      51,
+      29
+    ]
+  },
+  {
+    "character": "cook",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "6e408680b2346fa2f6482283d8914da67e7b6bcdf0aff3ffda97cd572fbaabcf",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.979,
+      "erased_cells": 0
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/cook/native-base.png",
+        "sha256": "273f007f27f6afb8dacf376594051417b574bbf5273fd750972dd46411b346e8"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      17,
+      13,
+      47,
+      37
+    ]
+  },
+  {
+    "character": "corsair_empress",
+    "canvas": [
+      80,
+      80
+    ],
+    "pixels_sha256": "80303234668d57d9a47878cebc2a6e3315465aea7a1e5fc72f18c30f6fb5c457",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.978,
+      "erased_cells": 24
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/corsair_empress/native-base.png",
+        "sha256": "72c5d7c58ee34905564eda420c6e971739b2cbcfbf425cfcc2bc4e3d6717bf3e"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      29,
+      20,
+      48,
+      40
+    ]
+  },
+  {
+    "character": "corsair_squire",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "5213bec66a0051c640e2613ca7ac1cf0b394b02e3d9e7d06c5887fc3a39f88a2",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.888,
+      "erased_cells": 242
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/corsair_squire/native-base.png",
+        "sha256": "81097c2dc7b336298896ee17cdfd90c2fd50013df7aeb62d197ffe7f6981643f"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      24,
+      6,
+      44,
+      26
+    ]
+  },
+  {
+    "character": "diplomat_08",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "a02bf22d4adde6eef80fc2a05ac8b17589125bd82824bdd850b29918cb38dd60",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.893,
+      "erased_cells": 72
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/diplomat_08/native-base.png",
+        "sha256": "9edcbda7ec3b49bf80c86c44f8936e407c748e11be5867c1d913589c822fd86d"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      25,
+      7,
+      50,
+      29
+    ]
+  },
+  {
+    "character": "diplomat_original",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "6bb97b711a139aed50926acb7a56043f21a17226f63d85e7b0eecdbdadb0dd8c",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.94,
+      "erased_cells": 198
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/diplomat_original/native-base.png",
+        "sha256": "91bf96f09dadf9fede281d942cd20f471c832e93b19c832289855ac62f510603"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      25,
+      7,
+      50,
+      29
+    ]
+  },
+  {
+    "character": "farmer",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "5af8a01103b6328ce58951962ce078b0da40a83a3f753dc7deecc3a0b0ced92a",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.892,
+      "erased_cells": 81
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/farmer/native-base.png",
+        "sha256": "6ef9447110f229941514baf48d42b8dbd4696a814451195757d33c3f02062fde"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      26,
+      7,
+      51,
+      30
+    ]
+  },
+  {
+    "character": "mercenary",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "c9ce6f6e467b099703c6ec0ec217482e82cee69c72f9d41e4bf0c6e718d1a868",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.97,
+      "erased_cells": 5
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/mercenary/native-base.png",
+        "sha256": "952f8c559a71606b7838bf4a23db5ac29a4fd08d94228fe1e7cc4f1e6699dafe"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      19,
+      7,
+      42,
+      29
+    ]
+  },
+  {
+    "character": "miner_emperor",
+    "canvas": [
+      80,
+      80
+    ],
+    "pixels_sha256": "7ded4b239e52b1d9d50b0a40e2194cb37a0263e618663e9be48b845028faf3f3",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.978,
+      "erased_cells": 29
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/miner_emperor/native-base.png",
+        "sha256": "f85d660552158dc5f202e5574733b8ed03518a62d56e054e5ccf97fdd85a544b"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      31,
+      18,
+      56,
+      42
+    ]
+  },
+  {
+    "character": "miner_squire",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "d90c2558b184f42c2941efc0d6df2d5603646831e06ff1c177dab18648de5e37",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.984,
+      "erased_cells": 0
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/miner_squire/native-base.png",
+        "sha256": "69ac2137f0bd9944eff547a296d31cd2b3ed926f2ec5e4dc2a17d67ee345cb41"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      32,
+      15,
+      46,
+      27
+    ]
+  },
+  {
+    "character": "root_berserker",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "0174729688cbfbd912928297aec9a1e77b0af676209107a58431a790612c14d3",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.986,
+      "erased_cells": 3
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/root_berserker/native-base.png",
+        "sha256": "5e709fbf44d99b98180a92c55096b2dc97b78067986f02efe0c9f0a3e3fea6c4"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      26,
+      11,
+      47,
+      34
+    ]
+  },
+  {
+    "character": "spearman",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "26e1cef5bb9e8b362e81077b56375375ef5fe26ed8e0f14c2f8c46122a5b9337",
+    "unchanged_from_v2": false,
+    "prior_recovery": {
+      "file": "edit-snap.json",
+      "purity": 0.982,
+      "erased_cells": 8
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v3/Forja/spearman/native-base.png",
+        "sha256": "17dc76d30b3f09064ee856ad3e5bb757b2d67f587de6a9727d3e39f6f47f4c52"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      27,
+      18,
+      45,
+      33
+    ]
+  },
+  {
+    "character": "steward",
+    "canvas": [
+      64,
+      64
+    ],
+    "pixels_sha256": "a084f72bd08d546f75c36597804ce06a520ed6c3625f7b9b85ce4c4d9d448654",
+    "unchanged_from_v2": true,
+    "prior_recovery": {
+      "file": "recovery-snap.json",
+      "purity": 0.887,
+      "erased_cells": 55
+    },
+    "final_recovery": {
+      "erased_cells": 0,
+      "source": {
+        "path": "/workspace/scratch/89893ffb057a/EMPIRE-Sprites-15-v2/Forja/steward/native-base.png",
+        "sha256": "9ff1d9fbbaa5030159d05d93c8a58d40b24dd6511b9c13419bc9199d2e21a8a1"
+      }
+    },
+    "summary": {
+      "runtime": "pass",
+      "declared_feature_preservation": "pass",
+      "identity_and_pose": "pending",
+      "native_master_approval": "pending"
+    },
+    "deliverable": false,
+    "legacy_delivery": {
+      "usable_sprite": true,
+      "state": "candidate_in_review",
+      "artistic_approval": "pending"
+    },
+    "face_box": [
+      22,
+      8,
+      48,
+      32
+    ]
+  }
+]

@@ -7,6 +7,39 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja: auditoria de fidelidade do elenco — 29/10/2026 (FORJA-15, ADR 0101)
+
+> Pedido do dono (29/10/2026), sobre a [auditoria](art/research/2026-10-29-forja-fidelidade-elenco/README.md):
+> *«Implemente essas correções e faça merge na main»*. A Forja passou a medir o molde, a ficha facial e a cadeia das
+> perdas; o que ela mede tem de vir de uma decisão do dono, e isto ficou por decidir.
+
+### Q-304 · O molde nativo do frasco partilhado dos alquimistas
+- **Hoje:** `alchemy_standard_flask` diz o mesmo molde e o mesmo tamanho absoluto para os dois, com
+  `native_shared_dimensions: null` e `model: null`. Os dois frascos v3 têm o mesmo envelope 13×20 com bojos diferentes
+  (IoU 0,728); o `forja par` mede-os e fica `pending` de propósito: o envelope igual não prova o molde.
+- **Proposta:** desenhar na grade um `forja.prop_model/1` (rolha, aro, gargalo, bojo) a partir do frasco verde do
+  conceito do imperador, com `authored_from` no recorte; o dono aprova-o (`status: approved`, quem e quando) e a medida
+  entra nos dois contratos. Os 13×20 atuais não se adotam por conveniência (auditoria, caso A).
+- **Decide:** o dono (direção de arte).
+
+### Q-305 · As caixas nativas dos marcos faciais e as relações do par dos alquimistas
+- **Hoje:** os 15 contratos têm a ficha facial (`face_sheet`, `pending_annotation`) com a intenção e os marcos da
+  triagem da auditoria; o par dos alquimistas tem também as caixas no conceito e as relações que o agente leu nele (o
+  imperador olha para a direita e o sorriso sobe à esquerda; o escudeiro olha para a esquerda, o meio sorriso sobe à
+  direita e a sobrancelha arqueada fica sobre a pálpebra cética). Sem `target_box` e cores na grade nativa, nenhuma
+  relação se mede e a preservação fica pendente.
+- **Proposta:** reservar as caixas e as cores de cada marco no layout nativo antes do pedido (o `target_useful_bbox`
+  já está escolhido) e o dono confirma as relações do par antes de passar a `registered`.
+- **Decide:** o dono (identidade de cada personagem).
+
+### Q-306 · Os limiares provisórios da forma e da grade
+- **Hoje:** o molde passa com IoU ≥ 0,85 e 1 px de folga por linha; menos de 60 % do modelo à vista é inconclusivo;
+  abaixo de 0,75 de confiança a grade é duvidosa e a perda crítica pede redesenho. Saíram das fixtures, não de pares
+  aceites e rejeitados.
+- **Proposta:** calibrá-los com os primeiros mestres aprovados e as versões rejeitadas do elenco (o benchmark tem zero
+  exemplos bons revistos).
+- **Decide:** o dono, com a prova.
+
 ## Forja e Aseprite — 29/10/2026 (FORJA-14, ADR 0100)
 
 > Pedido do dono (29/10/2026): *«total compatibilidade ao aseprite»*. A Forja passou a ler, escrever, renderizar e

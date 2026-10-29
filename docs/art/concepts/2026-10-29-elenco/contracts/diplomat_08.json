@@ -88,6 +88,41 @@
       ],
       "visual_review": {
         "reference": "../reviews/diplomat_08.json"
+      },
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Sorriso e olhar próprios; os dois óculos azuis no peito são equipamento e ficam.",
+        "authority_face_box": [
+          570,
+          270,
+          985,
+          650
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olhar próprio",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "smile",
+            "feature": "mouth",
+            "intent": "sorriso próprio",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
       }
     }
   ]

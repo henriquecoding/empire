@@ -91,7 +91,51 @@
       "visual_review": {
         "reference": "../reviews/corsair_empress.json"
       },
-      "role": "monarch"
+      "role": "monarch",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Confiança cética: pálpebra pesada, sobrancelha arqueada e o canto do sorriso; recuperar a confiança sem neutralizar o rosto.",
+        "authority_face_box": [
+          430,
+          122,
+          675,
+          303
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "lid",
+            "feature": "lid",
+            "intent": "pálpebra pesada e confiante",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "brow",
+            "feature": "brow",
+            "intent": "sobrancelha arqueada",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "smile_corner",
+            "feature": "mouth_corner",
+            "intent": "canto do sorriso levantado",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

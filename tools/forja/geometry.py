@@ -12,7 +12,7 @@ parte tapada declarada da `inconclusive` e nunca `pass`. Sem regiao nem ancora: 
 """
 from __future__ import annotations
 
-from . import bow_topology, equipment, masks, verdicts
+from . import bow_topology, equipment, masks, prop_shape, verdicts
 
 
 def _check(axis: str, name: str, item: str, status: str, detail: str, part: str | None = None, **evidence) -> dict:
@@ -218,6 +218,8 @@ def evaluate(manifest: dict, obs: dict) -> list[dict]:
             checks.append(bow_topology.check(item, obs))
         if item["family"] == "sword_straight":
             checks.append(_guard(item, obs))
+        if item.get("model"):  # FORJA-15: o molde do objeto, nao so o envelope
+            checks.append(prop_shape.check(item, obs, manifest.get("_base")))
         checks += _contacts(item, obs)
     return checks
 

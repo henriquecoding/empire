@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import fidelity, refs
+from . import fidelity, props, refs
 
 SCHEMA = 'forja.cast/1'
 DEFAULT = Path(__file__).with_name('cast.json')
@@ -21,6 +21,7 @@ def load(path: str | Path = DEFAULT) -> dict:
         errors.append('elenco sem personagens')
     keys: set[str] = set()
     ids = {entry.get('id') for entry in entries}
+    chars: dict[str, dict] = {}
     for entry in entries:
         name = entry.get('id') or '?'
         for key in [entry.get('id'), *entry.get('aliases', [])]:
@@ -38,12 +39,14 @@ def load(path: str | Path = DEFAULT) -> dict:
         try:
             contract = fidelity.load(base / entry.get('contract', ''))
             ch = fidelity.character(contract, name, entry.get('pose'))
+            chars[name] = ch
             if ch['kind'] != entry.get('kind'):
                 errors.append(f'{name}: kind diverge do contrato de identidade')
             if not ch.get('prompt_invariants') or not entry.get('function'):
                 errors.append(f'{name}: invariantes ou funcao em falta')
         except (OSError, ValueError, KeyError) as exc:
             errors.append(f'{name}: contrato invalido: {exc}')
+    errors += props.pairs(chars)  # FORJA-15: o par existe e declara a mesma restricao e medida
     try:
         register = refs.load(base / data.get('reference_register', ''))
         if any(e['state'] == 'approved' for e in register['entries']):

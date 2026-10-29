@@ -14,6 +14,7 @@ from PIL import Image
 from tools.forja import cli, equipment, fidelity, plan, refs, review_state
 from tools.forja.imageops import flat
 from tools.forja.tests import audit_fixtures as fx
+from tools.forja.tests import fidelity_fixtures as ff
 from tools.forja.tests.helpers import framed, tempdir
 from tools.forja.tests.test_fidelidade import OWNER, register
 
@@ -149,13 +150,13 @@ class ReviewTest(unittest.TestCase):
 
     def test_only_a_complete_human_review_and_the_owner_close_it(self):
         d = tempdir()
-        cand = framed(5, (80, 80), (40, 78))
+        cand = ff.face_image()
         sha = equipment.image_sha(cand)
-        ch = {"id": "rei", "pose": "p", "pixel_pins": [], "rejected_candidates": [],
-              "critical_regions": [{"id": "face", "required": True, "target_box": [30, 10, 50, 30]}],
+        ch = {"id": "rei", "pose": "p", "pixel_pins": [], "rejected_candidates": [], "face_sheet": ff.sheet(),
+              "critical_regions": [{"id": "face", "required": True, "target_box": [3, 3, 18, 22]}],
               "identity_reviews": [{"pixels_sha256": sha, "reviewed_by": "Henrique", "date": "2026-10-28",
                                     "status": "pass", "observations": {"face": "palpebra e sorriso como no conceito"}}]}
-        forge = {"snap": {"loss": {"erased": []}}, "finish": {}, "signals": {"pins": []}}
+        forge = {"snap": {"loss": {"erased": []}}, "finish": {}, "signals": {"pins": []}, "lineage": ff.chain(cand)}
         lint_ok = {"ok": True, "findings": []}
         rev = review_state.review(ch, cand, None, lint_ok, forge)
         self.assertEqual(rev["summary"]["identity_and_pose"], "pending")
@@ -164,8 +165,13 @@ class ReviewTest(unittest.TestCase):
         rev = review_state.review(ch, cand, reg, lint_ok, forge)
         self.assertEqual(set(rev["summary"].values()), {"pass"})
         self.assertTrue(rev["deliverable"])
+        self.assertEqual(rev["label"], "release")
+        unchained = review_state.review(ch, cand, reg, lint_ok, {k: v for k, v in forge.items() if k != "lineage"})
+        self.assertEqual(set(unchained["summary"].values()), {"pass"})
+        self.assertFalse(unchained["deliverable"])  # FORJA-15: sem a cadeia, as perdas de antes nao se conhecem
+        self.assertEqual(unchained["release"]["status"], "pending")
         moved = cand.copy()
-        moved.putpixel((40, 40), (1, 2, 3, 255))
+        moved.putpixel((20, 2), (1, 2, 3, 255))
         self.assertFalse(review_state.review(ch, moved, reg, lint_ok, forge)["deliverable"])
 
     def test_the_sheet_puts_concept_and_candidate_side_by_side(self):

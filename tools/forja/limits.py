@@ -64,6 +64,33 @@ def losses(snapinfo: dict, to_final) -> list[dict]:
                               "fills its whole block, never a partial block or a line thinner than one block.")]
 
 
+def _px(o: dict) -> list[int]:
+    x, y = o["target_pixel"]
+    return [x, y, x + 1, y + 1]
+
+
+def inherited(lin: dict) -> list[dict]:
+    """O que a cadeia traz (FORJA-15, P0-01 e P1-01): as perdas criticas de etapas anteriores continuam abertas mesmo
+    com zero perdas aqui, e uma perda critica nova numa grade duvidosa ou mais fina que a celula pede redesenho nativo
+    da regiao ou marcacao explicita, nao um voto mais agressivo."""
+    from .lineage import GRID_DOUBT
+    n, out = len(lin["stages"]), []
+    old = [o for o in lin["occurrences"] if o.get("critical") and o.get("stage", n) < n]
+    if old:
+        out.append(lint.finding("inherited_loss", "warn", f"{len(old)} perdas criticas herdadas de etapas anteriores "
+                                f"({sorted({r for o in old for r in o['regions']})}) continuam abertas: zero perdas nesta "
+                                "etapa nao as encerra; resolver com prova de reparo, excecao autorizada ou revisao",
+                                [_px(o) for o in old if o.get("target_pixel")][:8]))
+    doubt = [o for o in lin["occurrences"] if o.get("critical") and o.get("stage") == n and o.get("target_pixel")
+             and ((o.get("grid_confidence") or 1) < GRID_DOUBT or o["kind"] == "outside_core")]
+    if doubt:
+        out.append(lint.finding("redraw_region", "warn", f"{len(doubt)} celulas criticas apagadas numa grade duvidosa "
+                                "ou num traco mais fino que a celula: redesenho nativo da regiao ou marcacao explicita, "
+                                "com o corpo e o equipamento fora da edicao", [_px(o) for o in doubt][:8],
+                                hint="Redraw only the marked feature with whole native pixels; keep body and equipment."))
+    return out
+
+
 def grid_origin(report: dict) -> list[dict]:
     """A reducao deliberada e o recuperado que nao cabe na tela, ditos como tal (FORJA-07)."""
     out = []

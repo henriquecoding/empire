@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import constraints, contracts, production, signals, visual_review
+from . import constraints, contracts, face, production, signals, visual_review
 from .equipment import image_sha
 
 SCHEMA = "forja.fidelity/1"
@@ -64,6 +64,11 @@ def validate(data: dict, base: Path) -> list[str]:
             errors.append(f"{name}: target_canvas {ch.get('target_canvas')} nao e a tela de {ch['kind']}")
         errors += [f"{name}: {e}" for e in signals.validate({"schema": signals.SCHEMA, "pins": ch.get("pixel_pins", []),
                                                               "regions": ch.get("critical_regions", [])})]
+        errors += [f"{name}: {e}" for e in face.validate(ch.get("face_sheet"), ch.get("target_canvas"),
+                                                          ch.get("authority_crop_xyxy"))]
+        errors += [f"{name}: pino {p.get('id')}: source_kind authority sem authority_xy dentro do recorte"
+                   for p in ch.get("pixel_pins", []) if p.get("source_kind") == "authority" and not _within(
+                       p.get("authority_xy"), ch.get("authority_crop_xyxy"))]
         for r in ch.get("rejected_candidates", []):
             file = base / str(r.get("file", ""))
             if not file.is_file() or not (r.get("decided_by") and r.get("date")):
@@ -73,6 +78,11 @@ def validate(data: dict, base: Path) -> list[str]:
                 if image_sha(im) != r.get("pixels_sha256"):
                     errors.append(f"{name}: o candidato rejeitado {r['file']} mudou depois do registo")
     return errors
+
+
+def _within(xy, crop) -> bool:
+    return isinstance(xy, list) and len(xy) == 2 and bool(crop) and crop[0] <= xy[0] < crop[2] and \
+        crop[1] <= xy[1] < crop[3]
 
 
 def character(data: dict, ident: str, pose: str | None = None) -> dict:

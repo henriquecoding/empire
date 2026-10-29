@@ -38,7 +38,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095, 0097, 0098, 0099 e 0100). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095, 0097, 0098, 0099, 0100 e 0101). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
@@ -69,6 +69,10 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   (provado contra o aplicativo; o CI repete-o com as fixtures): `forja aseprite --slot` monta um
   corpo por slots, `forja ase` confere um ficheiro contra as convencoes da Asset Bible e
   `forja exportar` faz o que o `tools/export_aseprite.sh` faz, sem o Aseprite.
+  ADR 0101: a entrega fecha pela cadeia e pelo conceito. O `forge` so diz `raster_valid` (estudo); `forja fidelity`
+  com `--forge-json` fecha com os quatro estados e as perdas herdadas (`--lineage`, resolucao provada nesta imagem).
+  O objeto partilhado mede-se contra o molde (`forja par`) e a personalidade pela ficha facial do conceito; pinos
+  tirados do candidato protegem-no, nao provam fidelidade. `forja lote` nunca omite um personagem do elenco.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

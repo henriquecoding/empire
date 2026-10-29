@@ -88,6 +88,50 @@
       ],
       "visual_review": {
         "reference": "../reviews/steward.json"
+      },
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Olhar preocupado e boca aberta; o livro, as três chaves e os contactos revêem-se também.",
+        "authority_face_box": [
+          543,
+          238,
+          949,
+          609
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "brow",
+            "feature": "brow",
+            "intent": "sobrancelha preocupada",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olhar preocupado",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "mouth",
+            "feature": "mouth",
+            "intent": "boca aberta",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
       }
     }
   ]

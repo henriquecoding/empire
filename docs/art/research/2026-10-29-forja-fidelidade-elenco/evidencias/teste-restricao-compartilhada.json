@@ -1,0 +1,9 @@
+{
+  "original_errors": [],
+  "mutated_errors": [],
+  "mutation": [
+    99,
+    3
+  ],
+  "result": "Mudar apenas shared_prop_constraints nao muda a validacao atual."
+}

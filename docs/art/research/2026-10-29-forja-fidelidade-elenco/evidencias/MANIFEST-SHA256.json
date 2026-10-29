@@ -1,0 +1,317 @@
+[
+  {
+    "path": "Relatorio-Forja-Fidelidade-20261029.pdf",
+    "bytes": 2783121,
+    "sha256": "dd56d656fb3d852109e310efa80a5a7171a3ff4a72e4d4c1d49db06600fe3dc3"
+  },
+  {
+    "path": "Relatorio-Forja.md",
+    "bytes": 26168,
+    "sha256": "dde753c6d99deca5230afb9b8cdc6940b6f808dea3f18a7d3addcf5a7fe61b2f"
+  },
+  {
+    "path": "evidencias/01-rostos-elenco-completo.png",
+    "bytes": 929203,
+    "sha256": "6c6c4a5ee7d5cd0342fd1fb61c584fed65fa2593c9145c081723e6b87e7ab175"
+  },
+  {
+    "path": "evidencias/02-rostos-casos-principais.png",
+    "bytes": 243423,
+    "sha256": "e47f38286eea0edfe73db35b2cf97a838722fa9dd946af2f8c811b7df60d44b9"
+  },
+  {
+    "path": "evidencias/03-pocoes-conceito-sprite.png",
+    "bytes": 225844,
+    "sha256": "4cc0c54a8f9e181c6e9f20d1a8910df01b3e2ffc700c8502f2e43b564ea55887"
+  },
+  {
+    "path": "evidencias/04-dentes-etapas-reais.png",
+    "bytes": 93459,
+    "sha256": "2d4d318cee17ca769128925ec2d077f2c95701379da9c529dd231a5be40e5bac"
+  },
+  {
+    "path": "evidencias/05-mascaras-frascos.png",
+    "bytes": 11038,
+    "sha256": "84af69bf45c70f1392fabe969285ab705c56c5875fe3755a0881d230f1b60faa"
+  },
+  {
+    "path": "evidencias/06-elenco-v3.png",
+    "bytes": 81345,
+    "sha256": "4e42f793f53e71d3cd895c3d2805eda4369152c835ed5bc40fdeb11c9718020a"
+  },
+  {
+    "path": "evidencias/casos/alchemist_emperor/alchemist_emperor.json",
+    "bytes": 17347,
+    "sha256": "281491d158ef85a4124deb514043c02b403b413902235cc9bf495c326ea930a8"
+  },
+  {
+    "path": "evidencias/casos/alchemist_emperor/contract.json",
+    "bytes": 7167,
+    "sha256": "d41bd81ae7ef9eb2025c9a6f8e3eaab117458cb1eaddd01dcaf83ba553be4426"
+  },
+  {
+    "path": "evidencias/casos/alchemist_emperor/fidelity-state.json",
+    "bytes": 9216,
+    "sha256": "7a06e21e3f6d4479b715844fee2ee7deb2af5adba7aed1b0ddcbeb6db798f7b0"
+  },
+  {
+    "path": "evidencias/casos/alchemist_emperor/final.png",
+    "bytes": 3637,
+    "sha256": "d8ce9be048e0d58f1c53b29cfe1eb6eaa1c782712102076927b7bdfe0587c384"
+  },
+  {
+    "path": "evidencias/casos/alchemist_emperor/flask-mask.json",
+    "bytes": 5807,
+    "sha256": "9e365183242bbc299ebc840342d66bc6157d4771f8936ebbed8d0cd70936cdaa"
+  },
+  {
+    "path": "evidencias/casos/alchemist_emperor/source-preservation.json",
+    "bytes": 402,
+    "sha256": "5853caf25068b011c5143ac38706fb95fa3724fd6f856e8d03f2432b1b766205"
+  },
+  {
+    "path": "evidencias/casos/alchemist_squire/alchemist_squire.json",
+    "bytes": 136421,
+    "sha256": "50025dbf239c2b3565280b466be61cfc68f05ee0bceb8b23700daeab5644e99a"
+  },
+  {
+    "path": "evidencias/casos/alchemist_squire/contract.json",
+    "bytes": 69544,
+    "sha256": "8da92575d9683d31224a0b3181ec4cc1aa7ba658e779663f4b0aacdda3d1d94a"
+  },
+  {
+    "path": "evidencias/casos/alchemist_squire/fidelity-state.json",
+    "bytes": 141657,
+    "sha256": "59f53b3149a862ab14b991de79748315f47d0a42f897cfb448da71e28c9b84fc"
+  },
+  {
+    "path": "evidencias/casos/alchemist_squire/final.png",
+    "bytes": 3061,
+    "sha256": "86a075fd3c6e90b37947785e4a2416218281a4d1e03220034dc27be237571d24"
+  },
+  {
+    "path": "evidencias/casos/alchemist_squire/flask-mask.json",
+    "bytes": 5913,
+    "sha256": "04bc2d7d876b25c45ad1ed5e3579ba8366dd90866e4c8f41cf7c33f510932e36"
+  },
+  {
+    "path": "evidencias/casos/alchemist_squire/source-preservation.json",
+    "bytes": 435,
+    "sha256": "d3da1573aaad5b0a6225c52dff9356a8c2f985cd9db0bb0a97c832cccfb861d4"
+  },
+  {
+    "path": "evidencias/casos/alquimistas-conceito-aprovado.png",
+    "bytes": 1725750,
+    "sha256": "761c22144034f0d47b0b0dcb55d29c1589b3fcd947af17ad0e9b2603c154f6e8"
+  },
+  {
+    "path": "evidencias/casos/mercenary/contract.json",
+    "bytes": 64795,
+    "sha256": "d4b3cb3b4733f5bf3623ee72d8657f95659ddd558e02447ee8fca25c6cdfb850"
+  },
+  {
+    "path": "evidencias/casos/mercenary/fidelity-state.json",
+    "bytes": 136932,
+    "sha256": "82a14512be77adf263ca3899c913fba44abe6837eb9301af877e36a71f9f0b6a"
+  },
+  {
+    "path": "evidencias/casos/mercenary/final.png",
+    "bytes": 2756,
+    "sha256": "952f8c559a71606b7838bf4a23db5ac29a4fd08d94228fe1e7cc4f1e6699dafe"
+  },
+  {
+    "path": "evidencias/casos/mercenary/mercenary.json",
+    "bytes": 133741,
+    "sha256": "6d066ea8eab5e96ab336a332b124a1a7e019783c131dc0416b46ad398b4ed9dc"
+  },
+  {
+    "path": "evidencias/casos/mercenary/source-preservation.json",
+    "bytes": 435,
+    "sha256": "bb60fdc3f647a8bd7d40ae65f3cc361d4fbb2bc2d2eb97a887e9704e555c8bd6"
+  },
+  {
+    "path": "evidencias/casos/mercenary-final-coords.png",
+    "bytes": 104501,
+    "sha256": "a2c5ffd372f1d0ccb5ba657cbd5f1a2f14a62dd57ee2db67f0235b9a09828904"
+  },
+  {
+    "path": "evidencias/casos/mercenary-grid-coords.png",
+    "bytes": 120921,
+    "sha256": "fcbefbd0df8197cac0fee37eadb0ce7df57bc35e8e85cd5c426a2ef09aedca0a"
+  },
+  {
+    "path": "evidencias/casos/mercenary-grid.json",
+    "bytes": 182,
+    "sha256": "0540d8560030b325d5c338f8c422495dd036b0a427c20c04d4b314ddd9961ac2"
+  },
+  {
+    "path": "evidencias/casos/mercenary-recovered.png",
+    "bytes": 4399,
+    "sha256": "514710f227abe44e92d62165e0a9f1fdc467c47f82c7597211d90bbf50e4d7da"
+  },
+  {
+    "path": "evidencias/casos/mercenary-snap.json",
+    "bytes": 4966,
+    "sha256": "2b76373436ff245d2a4e92fda2f811fd07dbdbe1e2a810d3f00fbb1d93379979"
+  },
+  {
+    "path": "evidencias/casos/mercenary-source.png",
+    "bytes": 666460,
+    "sha256": "8c746573c729fd0ce0cb2635f9b12e7fba5516ed48867c1a4c66c7efa62580e2"
+  },
+  {
+    "path": "evidencias/casos/mercenary-teeth.json",
+    "bytes": 1698,
+    "sha256": "336b6c9b343610a00328a32344a9b2e1c480e293d2c42aa19696c9801294db23"
+  },
+  {
+    "path": "evidencias/casos/miner_squire/contract.json",
+    "bytes": 37280,
+    "sha256": "475a015b25dc030f8c477dec75add82bef2c46111d60d559117197a45f437875"
+  },
+  {
+    "path": "evidencias/casos/miner_squire/fidelity-state.json",
+    "bytes": 76487,
+    "sha256": "462792ff13f122f58f4919933a9995bf122fcc8df9c961f74483fab9d458dca2"
+  },
+  {
+    "path": "evidencias/casos/miner_squire/final.png",
+    "bytes": 2288,
+    "sha256": "69ac2137f0bd9944eff547a296d31cd2b3ed926f2ec5e4dc2a17d67ee345cb41"
+  },
+  {
+    "path": "evidencias/casos/miner_squire/miner_squire.json",
+    "bytes": 77642,
+    "sha256": "2ebabca71952e6868e2a45f6e5588eedfa5280b7a96bb8daa4dedcdeaa69993c"
+  },
+  {
+    "path": "evidencias/casos/miner_squire/source-preservation.json",
+    "bytes": 434,
+    "sha256": "7de8127d4a48d37c6ea3ec081dd8dd819aac1326df4ae309990f8bae0b584ecd"
+  },
+  {
+    "path": "evidencias/codigo-conferido.json",
+    "bytes": 2059,
+    "sha256": "d0cdff64c37cf475fcf1f410035d32c9d2718edae89582138fc878ec727b6018"
+  },
+  {
+    "path": "evidencias/elenco.json",
+    "bytes": 14855,
+    "sha256": "e4fbde0703500eaf61bbe6ad8989f88a2730780062c143595e071eac3f550d4a"
+  },
+  {
+    "path": "evidencias/frascos.json",
+    "bytes": 1065,
+    "sha256": "42e9ab97a5d70daee4991b9539334572741fa81a2ccf40a24ceaf5d7ac16b156"
+  },
+  {
+    "path": "evidencias/reproducao-minima.json",
+    "bytes": 571,
+    "sha256": "64033aa12ecdfbd70cdc1fa68b4dd4b438a41f4805253a6c0b8f0e88ab1cedd3"
+  },
+  {
+    "path": "evidencias/resumo.json",
+    "bytes": 483,
+    "sha256": "930abdc9148454f78e17454a459028bddec0a67394aa12e404ce2401bf614f80"
+  },
+  {
+    "path": "evidencias/teste-restricao-compartilhada.json",
+    "bytes": 167,
+    "sha256": "e616ce98b7767d3b71474b8e208a317567a8a2887e4505f57a14d0330e15bc00"
+  },
+  {
+    "path": "evidencias/verificacao-pdf.json",
+    "bytes": 127,
+    "sha256": "750d89721721563844927b0c29490a2355bed813452efe159d789001197b99c8"
+  },
+  {
+    "path": "fontes/equipment.py",
+    "bytes": 8831,
+    "sha256": "85f9bdf3259b58037c0474817017ec589d22e1ef8cb4024c8a4411bf0edd8984"
+  },
+  {
+    "path": "fontes/export_personality_v3.py",
+    "bytes": 11897,
+    "sha256": "247aeec5b641d4fbdf9605ad1104b275ed4f0c665acf08d7b1dd0a5133cfab71"
+  },
+  {
+    "path": "fontes/fidelity.py",
+    "bytes": 9407,
+    "sha256": "5cc5e4fc0e17adbb77cec3e66f24fefc2607b2db8014d36e4e6a667a25ca63b4"
+  },
+  {
+    "path": "fontes/limits.py",
+    "bytes": 6217,
+    "sha256": "bdab84874979458038c58bf18d7ce0995f6cf0e31b37fe45f732ca1cfebedb27"
+  },
+  {
+    "path": "fontes/loss.py",
+    "bytes": 8161,
+    "sha256": "8f3325b6e2679c694bee17e5e4ea52779ea24a29979447dadbad22b14471ed93"
+  },
+  {
+    "path": "fontes/patch_cast_v2.py",
+    "bytes": 4398,
+    "sha256": "e8dc38ed64e2fcb91e860f4131102221630e959bd0f4ed91c2b5b8bc6f129c1e"
+  },
+  {
+    "path": "fontes/pipeline.py",
+    "bytes": 14152,
+    "sha256": "9743a81de3f370044c5b5dbedce2828ccd8d1f96442464e0056c85705fd2c9eb"
+  },
+  {
+    "path": "fontes/production.py",
+    "bytes": 6313,
+    "sha256": "6e6641a5f05641280bfe16b70e93ce69679a6bfe5f9f4601a2fad3c4bd1f58a1"
+  },
+  {
+    "path": "fontes/provenance.py",
+    "bytes": 1766,
+    "sha256": "8c83c61c52edf546187a023b522ae12cea1ad318cff56eb5b0ae0f58b2449778"
+  },
+  {
+    "path": "fontes/resample.py",
+    "bytes": 7054,
+    "sha256": "5752629cd8e68a621f11d2356518222974db2ecccdcaa5bfd130760e0d0f55a7"
+  },
+  {
+    "path": "fontes/review_state.py",
+    "bytes": 8120,
+    "sha256": "c00dab9120f504fe9d338006e3a4417e7e723709b014ffac7bcb56d05f2d56a9"
+  },
+  {
+    "path": "fontes/select_personality_v3.py",
+    "bytes": 4272,
+    "sha256": "6db4bd13ed6764c966d51119ff78480fad7960ef86641a73716addb6fc41be06"
+  },
+  {
+    "path": "fontes/signals.py",
+    "bytes": 10222,
+    "sha256": "5d36a0ca34f7ea0cb2c7cb62a9a1f54a266f08b38eafd4bedec24867badac310"
+  },
+  {
+    "path": "fontes/visual_review.py",
+    "bytes": 13270,
+    "sha256": "de9ac4b78adf2b750787875ea7398fea7752657db12e38a3253be637d5636be3"
+  },
+  {
+    "path": "scripts/auditar.py",
+    "bytes": 7373,
+    "sha256": "0363bd313649e8690b5491d036f7f009dd13a1322b4fb09472748bb30059b86e"
+  },
+  {
+    "path": "scripts/gerar_pdf.py",
+    "bytes": 8135,
+    "sha256": "405dfff3777228073d1d27649a9cbd3ae1bd2f08474edf50775b6f675a89fe1f"
+  },
+  {
+    "path": "scripts/pranchas.py",
+    "bytes": 5822,
+    "sha256": "ff9928c81c87c47a9b6455f05324eb68b5a7ed3fe67b958e382b53765e5fbb5d"
+  },
+  {
+    "path": "scripts/reproduzir_casos.py",
+    "bytes": 2300,
+    "sha256": "3c8a6e90aac03185954ceef6d2e5a56b870545f91bce6c5f2c3c24aa4ad8f419"
+  }
+]

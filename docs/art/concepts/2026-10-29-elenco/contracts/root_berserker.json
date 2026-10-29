@@ -89,7 +89,51 @@
       "visual_review": {
         "reference": "../reviews/root_berserker.json"
       },
-      "role": "troop"
+      "role": "troop",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Sobrancelha raivosa e dentes separados dentro da barba; o personagem é humano.",
+        "authority_face_box": [
+          535,
+          249,
+          988,
+          670
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "brow",
+            "feature": "brow",
+            "intent": "sobrancelha raivosa",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "teeth",
+            "feature": "teeth",
+            "intent": "dentes separados",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "beard",
+            "feature": "facial_hair",
+            "intent": "barba que envolve a boca",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }
