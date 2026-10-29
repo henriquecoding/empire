@@ -105,13 +105,16 @@ def wang16(size: int, lower: Image.Image | None, upper: Image.Image | None, **kw
     return sheet, meta
 
 
+def demo_indices(cols: int = 12, rows: int = 8, seed: int = 1) -> list[list[int]]:
+    """O mapa de exemplo: cantos sorteados (de forma fixa) e o indice do tile certo em cada celula."""
+    g = [[_lattice(i, j, 1 << 16, seed) > -0.1 for i in range(cols + 1)] for j in range(rows + 1)]
+    return [[g[j][i] << 3 | g[j][i + 1] << 2 | g[j + 1][i] << 1 | g[j + 1][i + 1] for i in range(cols)] for j in range(rows)]
+
+
 def demo_map(sheet: Image.Image, size: int, cols: int = 12, rows: int = 8, seed: int = 1) -> Image.Image:
-    """Um mapa de exemplo: cantos sorteados (de forma fixa) e o tile certo em cada celula."""
-    grid = [[_lattice(i, j, 1 << 16, seed) > -0.1 for i in range(cols + 1)] for j in range(rows + 1)]
     out = Image.new("RGBA", (cols * size, rows * size), CLEAR)
-    for j in range(rows):
-        for i in range(cols):
-            index = grid[j][i] << 3 | grid[j][i + 1] << 2 | grid[j + 1][i] << 1 | grid[j + 1][i + 1]
+    for j, row in enumerate(demo_indices(cols, rows, seed)):
+        for i, index in enumerate(row):
             x, y = (index % 4) * size, (index // 4) * size
             out.paste(sheet.crop((x, y, x + size, y + size)), (i * size, j * size))
     return out

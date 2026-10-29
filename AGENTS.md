@@ -38,7 +38,7 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   docs/art/research/2026-10-22-aseprite-penusbmic/. Tecnicas de uma aula nao
   substituem referencias aceitas, paleta, escala, cadencia ou contratos do jogo.
 - Arte com gerador de imagens (ChatGPT, Gemini, PixelLab): passa pela Forja,
-  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095, 0097 e 0098). `python3 -m tools.forja` planeia o
+  docs/art/FORJA.md (ADR 0088, 0089, 0091, 0092, 0093, 0094, 0095, 0097, 0098 e 0099). `python3 -m tools.forja` planeia o
   pedido por gerador (`plan`, sem rede), envia cada POST pago uma so vez num
   job com teto (`jobs`), estima a grade (nao reduz), aplica e confere os
   contratos e devolve o prompt corretivo; `python3 -m tools.forja mcp` serve-a
@@ -62,6 +62,10 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   `escala`): o contrato `forja.scene/1` diz a extensao, os vaos, os sinais e os estados, o
   pedido e o de elevacao lateral (`forja cena`), e a peca confere-se com `forja estrutura` e
   no mundo com `forja montagem`. Uma referencia nao se reduz: redesenha-se na grade.
+  ADR 0099: a Forja le, escreve, renderiza e exporta o `.aseprite` como o Aseprite 1.3.18.6
+  (provado contra o aplicativo; o CI repete-o com as fixtures): `forja aseprite --slot` monta um
+  corpo por slots, `forja ase` confere um ficheiro contra as convencoes da Asset Bible e
+  `forja exportar` faz o que o `tools/export_aseprite.sh` faz, sem o Aseprite.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

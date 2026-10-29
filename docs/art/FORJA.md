@@ -38,6 +38,10 @@ tinha tela de personagem por omissão, prompt de rosto e pose e nada que conferi
 Forja passou a desenhar pela régua dos atores reais, com um contrato de cena, uma revisão estrutural e a bancada no
 mundo ([ADR 0098](../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md)).
 
+A 29/10 passou a falar Aseprite: lê, escreve, renderiza e exporta o `.aseprite` 1.3 como o aplicativo, provado contra
+o Aseprite 1.3.18.6 compilado, com as camadas por slot e as tags por animação da Asset Bible
+([ADR 0099](../adr/0099-a-forja-fala-aseprite-provado-contra-o-aplicativo.md)).
+
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
 python3 -m tools.forja kinds           # os contratos: telas, pivôs, contornos, tags
@@ -454,6 +458,49 @@ forja montagem build/forja/peca/gerada.png --scene cena.json -o build/forja/mont
 O piloto dos Enramados (a oficina como marco, a forja jogável comprimida, o carvalho e a faixa de terreno) e a prova
 estão na [pesquisa](research/2026-10-28-forja-cenarios/README.md).
 
+## Aseprite: o formato inteiro, como o aplicativo o vê
+
+A fonte de toda a arte é o `.aseprite` (Asset Bible §2, §3 e §5). A Forja lê e escreve o formato 1.3 inteiro
+(`tools/forja/ase/`), compõe como o Aseprite (as 19 misturas e a composição portadas do código MIT dele, com as
+exceções de Grayscale e Indexed) e exporta a folha e o JSON da CLI. Cada ponto confere-se contra o Aseprite 1.3.18.6
+compilado: os quadros, o que o Lua dele vê, a regravação, as folhas e o próprio `tools/export_aseprite.sh`, também nas
+22 fontes de `art/source/` ([prova](research/2026-10-29-forja-aseprite/README.md)); o CI repete-o sem ele.
+
+1. **Montar um corpo** (`forja aseprite`): os quadros da camada principal, mais uma camada por slot (`--slot
+   nome=quadros`, por lista ou glob; um quadro só repete-se, como a sombra), pela ordem Z da §58, cada uma com o slot e
+   a variante nos dados; `--reference` entra como camada de referência (o Aseprite não a compõe nem a exporta); uma tag
+   por animação (`--tags idle,die`, as contagens do ANIMATION_BIBLE; uma tag sem ciclo toca uma vez); `--kind` confere a
+   tela e dá o pivot do contrato, na slice `pivot`. O relatório traz `layer_equal` (cada camada sozinha igual aos
+   quadros dados) e o lint.
+2. **Conferir um `.aseprite`** (`forja ase`, só lê): camadas e pais, mistura, opacidade, cels, tags, slices com todas as
+   chaves e dados, como o Aseprite os vê, e o lint `forja.ase_check/1` — slot, variante ou nome antigo da tabela da §2;
+   camadas de trabalho; slot escondido (o export salta-o); mistura ou z-index que o jogo não reproduz; tags do
+   ANIMATION_BIBLE (com `_left`/`_right`), contagens, durações, sobreposições e quadros sem tag; pivot (`pivot` ou o
+   `ground_pivot` dos V15, Q-302); `--kind` para a tela e o pivot do contrato. Só são erro dois nomes de camada iguais
+   (o `--layer` não os separa) e a tela fora do contrato.
+3. **Exportar** (`forja exportar`, nunca em `art/`): por omissão, o que o `tools/export_aseprite.sh` escreve — uma folha
+   em linha e o JSON com as tags por camada listada, fora `Knight`, `References` e `Background`, `<nome>_<camada>`;
+   `--slices` leva o pivot ao JSON; `--composite` faz a folha de diagnóstico do ASEPRITE_WORKFLOW §7 e `--layer` a de
+   uma camada, como a CLI (`--sheet-type`, `--columns`).
+4. **Terreno e construções**: `forja tileset --aseprite` põe o conjunto Wang de 16 num tileset (a peça 0 é a vazia do
+   formato) e o mapa de exemplo numa camada tilemap, para editar as peças no modo Tilemap; `forja estrutura
+   --aseprite` escreve a peça com um quadro e uma tag por estado e o contrato em slices (`pivot`, `opening_<id>`,
+   `signal_<nome>`, `state_<estado>_<n>`, esta só no quadro do estado), e `forja ase --scene` diz o que o ficheiro
+   difere do contrato, sem o reescrever.
+
+```bash
+forja aseprite build/forja/corpo/body_*.png --slot "weapon_bow_l1=build/forja/arco/*.png" \
+  --reference build/forja/ref.png --tags idle,walk --kind character_s1 -o build/forja/corpo/villager.aseprite
+forja ase build/forja/corpo/villager.aseprite --kind character_s1
+forja exportar build/forja/corpo/villager.aseprite --slices -o build/forja/exportar/villager
+forja estrutura peca.png --scene cena.json --state damaged=dano.png --aseprite build/forja/peca/casa.aseprite
+forja ase build/forja/peca/casa.aseprite --scene cena.json
+```
+
+O que não está: as opções da folha que o pipeline não usa (`--trim`, `--merge-duplicates`, `--split-*`, `packed`,
+`json-hash`); a prova da composição com `compose_groups` ligado e da mistura antiga; a conversão ICC; a interface
+gráfica (a prova é a CLI em batch, o mesmo motor de documento).
+
 ## Receitas por tipo de asset
 
 ### Decidir escala, examinar a referência e gerar no orçamento nativo (28/10)
@@ -604,9 +651,10 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `outline` | Contorno exterior, interior ou seletivo; ou tirá-lo |
 | `fit` | Pousar na tela e no pivô do contrato |
 | `scale` | Ampliação inteira, Scale2x, rotação RotSprite, redução por voto |
-| `anim` / `aseprite` | Quadros PNG → tira, JSON do Aseprite, `.aseprite`, GIF/APNG, SpriteFrames |
+| `anim` / `aseprite` | Quadros PNG → tira, JSON do Aseprite, `.aseprite` (um corpo com uma camada por slot, referência, tags e pivot), GIF/APNG, SpriteFrames |
+| `ase` / `exportar` | Um `.aseprite` como o Aseprite o vê e as convenções do Empire (só lê; `--scene`); a folha e o JSON por camada como o `tools/export_aseprite.sh` e a CLI, sem o Aseprite |
 | `lock` / `motion` | Travar o rosto; respirar, piscar, dissolver, empurrão |
-| `tileset` / `seams` | Conjunto Wang 16 + TileSet do Godot; conferir emendas |
+| `tileset` / `seams` | Conjunto Wang 16 + TileSet do Godot (`--aseprite`: em tilemap); conferir emendas |
 | `palette` | Mostrar, converter, extrair, rampa, fundir cores próximas |
 | `prompt` / `plan` / `generate` / `auto` / `inpaint` | O lado do gerador: pedir, planear sem rede, gerar com job e teto |
 | `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara, na cor declarada |
@@ -651,12 +699,11 @@ ficheiro que não é imagem).
 - **Cor.** OKLab para todas as distâncias; k-means sem sorteio; dither
   posicional entre as duas cores mais próximas. A distância perceptual não diz se
   um pixel é pele, pano ou fundo: isso vem das regiões e das rampas (`cores`).
-- **Exportação.** `.aseprite` escrito pela especificação pública e relido pelo
-  leitor do projeto (`tools/aseprite_source.py`); JSON no formato do CLI do
-  Aseprite; `.tres` do Godot carregados no motor fixado pelo teste opcional. As
-  direções das tags (`reverse`, `pingpong`, `pingpong_reverse`) saem na ordem
-  em que tocam, cada quadro com a sua duração. Um escritor e um leitor nossos
-  podem partilhar um erro: abrir no aplicativo continua por registar.
+- **Exportação.** `.aseprite` com os bytes do encoder do Aseprite e relido pelo
+  leitor exato (`tools/forja/ase/`), ambos conferidos contra o aplicativo
+  (FORJA-13); JSON no formato do CLI do Aseprite; `.tres` do Godot carregados no
+  motor fixado pelo teste opcional. As direções das tags (`reverse`, `pingpong`,
+  `pingpong_reverse`) saem na ordem em que tocam, cada quadro com a sua duração.
 
 ## Estados e limites
 
@@ -675,8 +722,10 @@ ficheiro que não é imagem).
   (`forja.refs/1`), para a imagem exata, e é o que o `verify` lê.
 - A Forja escreve onde lhe dizem; use `build/forja/`. Não escreve em `art/`
   sem pedido explícito do dono (AGENTS.md, regra 9).
-- O `.aseprite` foi conferido como ficheiro (ida e volta pixel a pixel); não
-  houve abertura no aplicativo Aseprite neste ambiente.
+- O formato `.aseprite` da Forja foi conferido contra o Aseprite 1.3.18.6 em batch
+  (abrir, renderizar, descrever, regravar, exportar), também nas entregas de cada
+  tipo; um ficheiro em particular aberto no aplicativo continua a ser outra etapa
+  (`opened_in_aseprite_app: false`), e a interface gráfica não se abriu.
 - Os conectores OpenAI, Gemini e PixelLab seguem as referências lidas em
   23/10/2026 (o hash da especificação do PixelLab está no adaptador) e foram
   testados com um transporte falso. Não houve chamada real (sem chaves): o

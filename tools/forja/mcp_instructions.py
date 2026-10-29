@@ -28,4 +28,10 @@ INSTRUCTIONS = (
     "referencia levada a regua por marcos: escala, coerencia, pixel aparente, compressao da planta), forja_cena "
     "(contrato forja.scene/1: pedido de elevacao lateral, regua em imagem e plano sem rede), forja_forge com esse "
     "expect.json (a peca fica onde a grade a pos), forja_estrutura (porta, chao, sinais, emendas, estados) e "
-    "forja_montagem (a peca no mundo pela sua ancora, com os atores); uma referencia nao se reduz, redesenha-se.")
+    "forja_montagem (a peca no mundo pela sua ancora, com os atores); uma referencia nao se reduz, redesenha-se. "
+    "(12) Aseprite (o formato inteiro, provado contra o Aseprite 1.3.18.6): forja_aseprite monta um corpo com uma "
+    "camada por slot (--slot, ordem Z da §58), a referencia (--reference), uma tag por animacao e o pivot do contrato "
+    "(--kind); forja_ase so le e diz como o Aseprite ve o ficheiro e o que foge as convencoes (slots, tags, pivot; "
+    "--scene compara as slices com o contrato de cena); forja_exportar escreve a folha e o JSON por camada como o "
+    "tools/export_aseprite.sh e a CLI; forja_tileset e forja_estrutura com --aseprite levam o terreno e a "
+    "construcao (estados, vaos, sinais) ao Aseprite.")

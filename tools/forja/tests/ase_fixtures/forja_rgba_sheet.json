@@ -1,0 +1,66 @@
+{ "frames": [
+   {
+    "filename": "forja_rgba 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 100
+   },
+   {
+    "filename": "forja_rgba 1.aseprite",
+    "frame": { "x": 40, "y": 0, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 140
+   },
+   {
+    "filename": "forja_rgba 2.aseprite",
+    "frame": { "x": 0, "y": 30, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 80
+   },
+   {
+    "filename": "forja_rgba 3.aseprite",
+    "frame": { "x": 40, "y": 30, "w": 40, "h": 30 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 30 },
+    "sourceSize": { "w": 40, "h": 30 },
+    "duration": 220
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3.18.6-dirty-dev",
+  "image": "forja_rgba_sheet.png",
+  "format": "RGBA8888",
+  "size": { "w": 80, "h": 60 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 3, "direction": "forward", "color": "#ff0000ff" },
+   { "name": "walk", "from": 0, "to": 1, "direction": "reverse", "repeat": "2", "color": "#0080ffff", "data": "passo", "properties": {"loop": true} },
+   { "name": "attack", "from": 1, "to": 3, "direction": "pingpong", "repeat": "3", "color": "#00ff00ff" },
+   { "name": "die", "from": 3, "to": 3, "direction": "pingpong_reverse", "repeat": "1" }
+  ],
+  "layers": [
+   { "name": "Background", "opacity": 255, "blendMode": "normal" },
+   { "name": "body", "opacity": 255, "blendMode": "normal", "color": "#00ff00ff", "data": "corpo", "properties": {"slot": "body"}, "cels": [{ "frame": 0, "color": "#0a141eff", "data": "pose", "properties": {"key": true} }, { "frame": 1, "color": "#0a141eff", "data": "pose", "properties": {"key": true} }] },
+   { "name": "equip", "cels": [{ "frame": 0, "opacity": 180, "zIndex": -2 }, { "frame": 2, "zIndex": 1 }] },
+   { "name": "weapon_bow_l1", "group": "equip", "opacity": 200, "blendMode": "multiply", "cels": [{ "frame": 0, "opacity": 180, "zIndex": -2 }] },
+   { "name": "fx", "group": "equip", "cels": [{ "frame": 2, "zIndex": 1 }] },
+   { "name": "overlay", "group": "fx", "opacity": 160, "blendMode": "screen", "cels": [{ "frame": 2, "zIndex": 1 }] },
+   { "name": "References", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+   { "name": "socket_hand", "color": "#0000ffff", "data": "mao", "keys": [{ "frame": 0, "bounds": {"x": 4, "y": 4, "w": 20, "h": 12 }, "center": {"x": 2, "y": 2, "w": 16, "h": 8 } }, { "frame": 1, "bounds": {"x": 6, "y": 4, "w": 20, "h": 12 }, "center": {"x": 2, "y": 2, "w": 16, "h": 8 } }, { "frame": 3, "bounds": {"x": 0, "y": 0, "w": 0, "h": 0 } }] },
+   { "name": "pivot", "properties": {"kind": "pivot"}, "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 0, "w": 40, "h": 30 }, "pivot": {"x": 20, "y": 28 } }, { "frame": 2, "bounds": {"x": 0, "y": 0, "w": 40, "h": 30 }, "pivot": {"x": 21, "y": 28 } }] }
+  ]
+ }
+}

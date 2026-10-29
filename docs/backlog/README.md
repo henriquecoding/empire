@@ -26,7 +26,7 @@ Quando acabar, muda o **Estado** no próprio ficheiro e nesta tabela, no mesmo *
 | [F0-12](F0-12.md) | RngService: os seis fluxos, snapshot e restore | F0-11 | feito |
 | [F0-13](F0-13.md) | SaveService: escrita atómica e três slots | F0-11 | feito |
 | [F0-14](F0-14.md) | UnitView com cinco slots e o shader da paleta | F0-10 | feito |
-| [F0-15](F0-15.md) | Spike: importar arte do Aseprite e fechar a ADR 0010 | F0-02 | por fazer |
+| [F0-15](F0-15.md) | Spike: importar arte do Aseprite e fechar a ADR 0010 | F0-02 | parcial — o script testado com um ficheiro real (FORJA-13, 29/10); a ADR 0010 por aceitar |
 
 ## Fase 1 — Núcleo jogável
 
@@ -302,3 +302,4 @@ resultado pela mesma *seed*. São o F0-10, o ART-01, o GB-01, o F1-01, o F1-06, 
 | [FORJA-10](FORJA-10.md) | Revisão visual da imagem exata, patch nativo ao pixel, tons por limiar e os três pilotos na grade da prancha, com o arco refeito | FORJA-09 | parcial — P0, P1, tons e os três pilotos feitos e provados no make forja; a conversão real (sem credencial), a identidade e o mestre ficam para o dono (Q-292–Q-294) |
 | [FORJA-11](FORJA-11.md) | A Forja desenha cenários e construções pela régua dos atores: régua, contrato de cena, pedido de elevação lateral, plano sem rede, revisão estrutural, emendas Wang, bancada e escala das referências (relatório de 28/10) | FORJA-08 | parcial — piloto provado sem rede; geração paga, endpoints de ambiente do PixelLab e aprovação do dono por fazer |
 | [FORJA-12](FORJA-12.md) | Auditoria dos cenários de 28/10: largura do vão, apoio ligado à estrutura, emenda pela cor, estado que muda, referência que chega ao gerador, estados vazios, altura por filas, tabela de pixels do Gemini, mestre pelo registo e perfil de medidas (A1–A7) | FORJA-11 | parcial |
+| [FORJA-13](FORJA-13.md) | A Forja fala Aseprite: leitor e escritor do formato 1.3 inteiro, as misturas e a composição do aplicativo, a folha e o JSON da CLI, a exportação por camada, as convenções do Empire (slots, tags, pivot) e o corpo, o terreno e a construção em `.aseprite`, provados contra o Aseprite 1.3.18.6 | FORJA-12 | feito |

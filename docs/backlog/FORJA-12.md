@@ -39,7 +39,8 @@ A ordem da auditoria, a partir do passo 3:
    estados, máscaras semânticas de vãos e apoios por tipologia, encaixes com classe, e a correspondência com
    `SiteStage`/`BuildingSkins` (o que é imagem, efeito ou simulação).
 2. Transportar o contrato no Aseprite (slices para base, vãos, apoios e encaixes) e no export, com teste de ida e
-   volta.
+   volta — **feito no [FORJA-13](FORJA-13.md)** para o pivot, os vãos, os sinais e as zonas de estado
+   (`forja estrutura --aseprite`, `forja ase --scene`); os apoios e os encaixes esperam o passo 1.
 3. Consumir os candidatos na galeria Godot que já existe (`tools/native_scenery_review.tscn`, `verify_` e
    `capture_native_scenery.tscn`): Rei e Nia à volta, caminhada nos dois sentidos, dia/crepúsculo/noite com as luzes
    reais, estados, cópias e vizinhos, superfície e nível inferior, 720p e 1080p.

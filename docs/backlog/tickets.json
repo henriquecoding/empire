@@ -273,7 +273,7 @@
   "depende": "F0-02",
   "feito": "tools/export_aseprite.sh testado com um ficheiro real; a ADR 0010 passa a aceite",
   "fora": "Desenhar a arte — é o ART-01.",
-  "estado": "por fazer",
+  "estado": "parcial — o script testado com um ficheiro real (FORJA-13, 29/10); a ADR 0010 por aceitar",
   "horas": "4",
   "notas": [
    "A ADR 0010 está como proposta: é o último ficheiro de tools/ por testar."
@@ -3237,6 +3237,24 @@
   "feito": "A largura útil do vão no contrato e na revisão; o apoio da estrutura principal; a emenda por alfa e por cor; o estado que tem de mudar dentro das zonas; registada e enviada separadas, com init_image e style_image no PixelLab ou recusa; estados vazios recusados; a altura por filas; a tabela de pixels publicada do Gemini; o mestre que só passa aprovado no registo; o perfil de medidas com rule_status; 14 testes adversariais.",
   "fora": "A ordem 3 a 8 da auditoria: o contrato ligado à obra e ao SiteStage, máscaras semânticas, Aseprite e export, a galeria Godot, o piloto Enramados, os adaptadores de ambiente do PixelLab e o catálogo de módulos; as medidas e a largura da baía ficam para o dono (Q-295, Q-301).",
   "estado": "parcial — A1–A7, a tabela de pixels do Gemini, o mestre pelo registo e o perfil de medidas fechados com testes; a ordem 3 a 8 da auditoria por fazer",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
+ "FORJA-13": {
+  "title": "A Forja fala Aseprite: o formato inteiro, provado contra o aplicativo",
+  "porque": "O dono quer a Forja perfeitamente ajustada ao Aseprite, com camadas e animações bem separadas e definidas. O escritor antigo só escrevia uma camada RGBA e nunca tinha sido aberto no aplicativo; o tools/export_aseprite.sh nunca tinha corrido.",
+  "spec": [
+   "docs/art/research/2026-10-29-forja-aseprite/README.md",
+   "docs/adr/0099-a-forja-fala-aseprite-provado-contra-o-aplicativo.md",
+   "docs/art/ASSET_BIBLE.md",
+   "docs/art/ASEPRITE_WORKFLOW.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-12",
+  "feito": "O leitor e o escritor do .aseprite 1.3 inteiro, as 19 misturas e a composição do aplicativo, a folha e o JSON da CLI, a exportação por camada do tools/export_aseprite.sh; as convenções do Empire (slots, variantes, ordem Z, camadas de trabalho, tags do ANIMATION_BIBLE, pivot) com o lint forja ase; o corpo por slots, o terreno Wang em tilemap e a construção com os estados e o contrato em slices; tudo provado contra o Aseprite 1.3.18.6 compilado (48 verificações e as 22 fontes do dono) e repetido no CI sem ele.",
+  "fora": "As opções da folha que o pipeline não usa (--trim, --merge-duplicates, --split-*, packed, json-hash); a prova de compose_groups ligado, da mistura antiga, da conversão ICC e dos ficheiros externos; a interface gráfica; a importação no Godot (ADR 0010); o pivot no JSON do script e as tags V15 fora da Animation Bible ficam para o dono (Q-302, Q-303); aprovação artística; arte em art/.",
+  "estado": "feito — o formato 1.3, a composição, a folha e o JSON da CLI e a exportação por camada provados contra o Aseprite 1.3.18.6; as convenções do Empire, o corpo, o terreno e a construção em `.aseprite`; Q-302 e Q-303 para o dono",
   "horas": "—",
   "passos": [],
   "notas": []

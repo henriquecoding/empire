@@ -7,6 +7,31 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja e Aseprite — 29/10/2026 (FORJA-13, ADR 0099)
+
+> Pedido do dono (29/10/2026): *«total compatibilidade ao aseprite»*. A Forja passou a ler, escrever, renderizar e
+> exportar como o Aseprite 1.3.18.6, provado contra ele ([prova](art/research/2026-10-29-forja-aseprite/README.md)).
+> Correr o `tools/export_aseprite.sh` e ler as 22 fontes de `art/source/` deixou isto por decidir.
+
+### Q-302 · O pivot vai no JSON da exportação, e com que nome de slice?
+- **Hoje:** o script exporta, por camada, a folha e o JSON com as tags, sem `--list-slices`: o pivot não chega ao JSON
+  (e os originais não têm slice). As fontes V15 guardam-no numa slice `ground_pivot` (a tela inteira, o ponto nos pés:
+  40,78 no rei, 32,62 na Nia, os pivots de `royal_80` e `royal_64`), nome que nenhum documento regista; a Forja escreve
+  `pivot`. O lint aceita os dois.
+- **Proposta:** acrescentar `--list-slices` ao script (a Forja já o faz com `forja exportar --slices`) e fixar um nome
+  na Asset Bible §2 — `ground_pivot`, o dos V15, com a Forja a passar a escrevê-lo; ou manter o pivot só no contrato.
+- **Decide:** o dono (pipeline de arte).
+
+### Q-303 · As ações dos V15 entram no ANIMATION_BIBLE?
+- **Hoje:** as fontes V15 têm tags `<ação>_right`/`_left` (o jogo usa-as, RUNTIME_ART) com ações que o ANIMATION_BIBLE
+  não lista (`rise`, `play`, `deliver`, `receive`, `sit`, `stand`, `dance`, `block_hold`; as plantas `grow` e `wither`;
+  as composições `individual_lifecycle` e `sit_grow_heal_stand_wither`) e contagens e durações próprias (o
+  `idle_right` do rei tem 4 quadros de 160–180 ms; a Bíblia diz 6 quadros a 10 fps). O lint avisa o nome e informa a
+  contagem; não decide.
+- **Proposta:** acrescentar à Bíblia as ações que o jogo já desenha, com as contagens dos V15 como as aprovadas; ou
+  registá-las como exceções dos V15.
+- **Decide:** o dono (contrato de animação).
+
 ## Forja: auditoria dos cenários — 28/10/2026 (FORJA-12)
 
 > Pedido do dono (28/10/2026), sobre a [auditoria](art/research/2026-10-28-forja-cenarios-auditoria/README.md):

@@ -11,7 +11,9 @@ import json
 from pathlib import Path
 
 from . import estrutura, guides, montagem, palette as palmod, regua, scene as scene_mod, scene_plan, scene_prompt
+from . import aseprite, cmd_ase
 from . import refs as refs_mod
+from .ase import cena as scene_ase
 from .cli import box, command, pair
 from .imageops import open_rgba, upscale
 
@@ -116,6 +118,9 @@ def do_estrutura(args) -> dict:
                            master_state=rec["state"] if rec else None)
     if args.out:
         rep["file"] = _write(Path(args.out), rep)
+    if args.aseprite:  # a peca, os estados e o contrato em slices, para o Aseprite (FORJA-13)
+        images = {res["states"][0]: open_rgba(args.image), **_states(args.state)}
+        rep["aseprite"] = str(aseprite.save(scene_ase.write(res, images), cmd_ase.outside_art(args.aseprite)))
     return {"ok": not rep["blocking"], **rep}
 
 
@@ -192,6 +197,8 @@ def register(sub) -> None:
     p.add_argument("--state", action="append", help="nome=caminho.png de um estado (igual a base fora das zonas)")
     p.add_argument("--palette")
     p.add_argument("-o", "--out", help="escrever o relatorio JSON aqui")
+    p.add_argument("--aseprite", help="escrever tambem o .aseprite: um quadro e uma tag por estado, vaos, sinais, "
+                   "zonas e pivot em slices (nunca em art/)")
     p = command(sub, "montagem", "Pousar a peca no mundo 1280x720 com os atores reais: dia e noite aproximada, 1x e "
                 "2x", do_montagem)
     p.add_argument("image")

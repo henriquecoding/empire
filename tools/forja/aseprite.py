@@ -1,69 +1,85 @@
-"""Escrever um .aseprite RGBA: camadas, quadros com duracao, tags, paleta e slices.
+"""Escrever e conferir o .aseprite das entregas da Forja (`sheet`, `anim`, `aseprite`, `forge --aseprite`).
 
-Segue a especificacao publica do formato (aseprite/docs/ase-file-specs.md). O
-leitor do projeto, tools/aseprite_source.py, le o que isto escreve — e o
-teste de ida e volta. Abrir no aplicativo Aseprite e outra verificacao, que
-este ambiente nao tem: o guia de personagens (§6) pede que se registe a
-diferenca entre "conferido como ficheiro" e "aberto no aplicativo".
+O formato e o de `tools/forja/ase` (FORJA-13): o que a Forja escreve abre no Aseprite 1.3.18.6 igual, provado
+contra o aplicativo compilado (docs/art/research/2026-10-29-forja-aseprite/) e repetido no CI sem ele
+(tools/forja/tests/test_ase_conformidade.py). Cada camada de slot leva o slot e a variante nos dados; os slots
+empilham-se pela ordem Z da §58; a camada `References` entra como camada de referencia (o Aseprite nunca a compoe
+nem a exporta); um quadro igual ao anterior da mesma camada fica cel ligada; uma tag do ANIMATION_BIBLE sem ciclo
+toca uma vez; o pivot e a slice `pivot`. Abrir ESTE ficheiro no aplicativo continua a ser outra etapa
+(`opened_in_aseprite_app`, o guia de personagens §6).
 """
 from __future__ import annotations
 
-import importlib.util
 import struct
-import zlib
 from pathlib import Path
 
 from PIL import Image
 
-DIRECTIONS = {"forward": 0, "reverse": 1, "pingpong": 2, "pingpong_reverse": 3}
+from . import contracts
+from .ase import empire, model
+from .ase import read as read_ase
+from .ase import render
+from .ase import write as write_ase
+from .ase.build import sprite as build_sprite
+
+DIRECTIONS = {name: i for i, name in enumerate(model.DIRECTIONS)}
+REFERENCE = "References"
 
 
-def _string(text: str) -> bytes:
-    raw = text.encode("utf-8")
-    return struct.pack("<H", len(raw)) + raw
+def tag(name: str, first: int, last: int, direction: str = "forward") -> model.Tag:
+    """Uma tag; a do ANIMATION_BIBLE sem ciclo (`loop: false`, como `die`) repete uma vez."""
+    base = name.removesuffix("_left").removesuffix("_right")
+    loop = (contracts.tag(base) or {}).get("loop", True)
+    return model.Tag(name, first, last, DIRECTIONS.get(direction, 0), 0 if loop else 1)
 
 
-def _chunk(kind: int, data: bytes) -> bytes:
-    return struct.pack("<IH", len(data) + 6, kind) + data
+def pivot_slice(size: tuple[int, int], pivot: tuple[int, int], name: str = "pivot") -> model.Slice:
+    """A slice da tela inteira com o pivot (no Aseprite, relativo a slice: aqui, a origem da tela)."""
+    return model.Slice(name, [model.SliceKey(0, 0, 0, size[0], size[1], None, tuple(pivot))])
 
 
-def _palette(colors: list[tuple[int, int, int]]) -> bytes:
-    body = struct.pack("<III8x", len(colors), 0, max(0, len(colors) - 1))
-    for r, g, b in colors:
-        body += struct.pack("<H4B", 0, r, g, b, 255)
-    return _chunk(0x2019, body)
-
-
-def _layer(name: str) -> bytes:
-    return _chunk(0x2004, struct.pack("<6HB3x", 3, 0, 0, 0, 0, 0, 255) + _string(name))
-
-
-def _cel(index: int, image: Image.Image) -> bytes | None:
-    rgba = image.convert("RGBA")
-    box = rgba.getchannel("A").getbbox()
-    if not box:
-        return None
-    part = rgba.crop(box)
-    head = struct.pack("<HhhBHh5x", index, box[0], box[1], 255, 2, 0)
-    return _chunk(0x2005, head + struct.pack("<HH", part.width, part.height)
-                  + zlib.compress(part.tobytes(), 9))
-
-
-def _tags(tags: list[tuple[str, int, int, str]]) -> bytes:
-    body = struct.pack("<H8x", len(tags))
-    for name, first, last, direction in tags:
-        body += struct.pack("<HHBH6x3Bx", first, last, DIRECTIONS.get(direction, 0), 0, 0, 0, 0)
-        body += _string(name)
-    return _chunk(0x2018, body)
-
-
-def _slice(name: str, box: tuple[int, int, int, int], pivot: tuple[int, int] | None) -> bytes:
-    flags = 2 if pivot else 0
-    body = struct.pack("<III", 1, flags, 0) + _string(name)
-    body += struct.pack("<IiiII", 0, box[0], box[1], box[2], box[3])
+def assemble(size: tuple[int, int], layers: dict[str, list[Image.Image | None]], durations: list[int] | None = None,
+             tags: list[tuple[str, int, int, str]] | None = None, palette: list[tuple] | None = None,
+             pivot: tuple[int, int] | None = None, reference: Image.Image | None = None,
+             kind: str | None = None) -> model.Sprite:
+    """O sprite de um corpo: uma camada por slot (pela ordem Z da §58), uma tag por animacao, o pivot em slice."""
+    n = max(len(frames) for frames in layers.values())
+    if any(len(frames) not in (1, n) for frames in layers.values()):
+        raise ValueError("todas as camadas de um corpo partilham o numero de quadros (ASSET_BIBLE §2)")
+    order = sorted(layers, key=empire.z_order)
+    stack: list[tuple] = []
+    if reference is not None:
+        stack.append((model.Layer(REFERENCE, flags=1 | 64), [reference]))
+    for name in order:
+        frames = layers[name] if len(layers[name]) == n else layers[name] * n
+        stack.append((model.Layer(name, user=empire.layer_user(name)), frames))
+    pal = [(*c[:3], c[3] if len(c) > 3 else 255) for c in palette] if palette else None
+    sprite = build_sprite(size, stack, durations or [100] * n, palette=pal)
+    sprite.tags = [tag(*t) for t in tags or []]
     if pivot:
-        body += struct.pack("<ii", pivot[0] - box[0], pivot[1] - box[1])
-    return _chunk(0x2022, body)
+        sprite.slices = [pivot_slice(size, pivot)]
+    if kind:
+        sprite.user = model.UserData(properties={"": {"kind": kind, "made_by": "forja"}})
+    return sprite
+
+
+def tilemap(sheet: Image.Image, size: int, indices: list[list[int]], name: str = "wang",
+            layer: str = "map") -> model.Sprite:
+    """Um conjunto Wang de 16 (`tiles.wang16`) como tileset do Aseprite — a peca 0 e a vazia do formato, a peca k+1
+    e o indice k — e uma camada tilemap com o mapa dado, para editar as pecas no modo Tilemap sem as reordenar."""
+    strip = Image.new("RGBA", (size, size * 17))
+    for k in range(16):
+        x, y = (k % 4) * size, (k // 4) * size
+        strip.paste(sheet.crop((x, y, x + size, y + size)), (0, (k + 1) * size))
+    rows, cols = len(indices), len(indices[0])
+    sprite = model.Sprite(cols * size, rows * size, durations=[100], grid=(0, 0, size, size))
+    sprite.tilesets = [model.Tileset(0, name, size, size, 17, pixels=strip.tobytes())]
+    sprite.layers = [model.Layer(layer, "tilemap", tileset=0)]
+    cells = [k + 1 for row in indices for k in row]
+    sprite.cels[(0, 0)] = model.Cel(0, 0, width=cols, height=rows, pixels=struct.pack(f"<{len(cells)}I", *cells),
+                                    tilemap={"bits": 32, "id": model.TILE_ID, "xflip": model.TILE_XFLIP,
+                                             "yflip": model.TILE_YFLIP, "dflip": model.TILE_DFLIP})
+    return sprite
 
 
 def write(path: str | Path, size: tuple[int, int], layers: list[str],
@@ -72,59 +88,56 @@ def write(path: str | Path, size: tuple[int, int], layers: list[str],
           palette: list[tuple[int, int, int]] | None = None,
           slices: list[tuple[str, tuple[int, int, int, int], tuple[int, int] | None]] | None = None,
           grid: tuple[int, int] = (0, 0)) -> Path:
-    """`frames[i]` mapeia indice de camada -> imagem do tamanho da tela."""
-    durations = durations or [100] * len(frames)
-    blobs = []
-    for i, cels in enumerate(frames):
-        chunks = []
-        if i == 0:
-            chunks.append(_chunk(0x2007, struct.pack("<HHI8x", 1, 0, 0)))
-            if palette:
-                chunks.append(_palette(palette))
-            chunks += [_layer(name) for name in layers]
-            if tags:
-                chunks.append(_tags(tags))
-            for name, box, pivot in slices or []:
-                chunks.append(_slice(name, box, pivot))
-        for index in sorted(cels):
-            cel = _cel(index, cels[index])
-            if cel:
-                chunks.append(cel)
-        body = b"".join(chunks)
-        blobs.append(struct.pack("<IHHH2xI", 16 + len(body), 0xF1FA, min(len(chunks), 0xFFFF),
-                                 durations[i], len(chunks)) + body)
-    frames_bytes = b"".join(blobs)
-    header = struct.pack("<IHHHHHIHII B3x HBBhhHH84x", 128 + len(frames_bytes), 0xA5E0, len(frames),
-                         size[0], size[1], 32, 1, 100, 0, 0, 0, len(palette or []), 1, 1,
-                         0, 0, grid[0], grid[1])
+    """`frames[i]` mapeia indice de camada -> imagem do tamanho da tela; as camadas ficam pela ordem dada."""
+    stack = [(model.Layer(name, user=empire.layer_user(name)), [cels.get(k) for cels in frames])
+             for k, name in enumerate(layers)]
+    pal = [(*c[:3], 255) for c in palette] if palette else None
+    sprite = build_sprite(size, stack, durations or [100] * len(frames), palette=pal)
+    sprite.tags = [tag(*t) for t in tags or []]
+    for name, (x, y, w, h), pivot in slices or []:
+        rel = (pivot[0] - x, pivot[1] - y) if pivot else None
+        sprite.slices.append(model.Slice(name, [model.SliceKey(0, x, y, w, h, None, rel)]))
+    if grid != (0, 0):
+        sprite.grid = (0, 0, grid[0], grid[1])
+    return save(sprite, path)
+
+
+def save(sprite: model.Sprite, path: str | Path) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(header + frames_bytes)
+    write_ase(sprite, path)
     return path
 
 
 def from_frames(path: str | Path, frames: list[Image.Image], layer: str = "body",
                 durations: list[int] | None = None, tags=None, palette=None, pivot=None) -> Path:
-    """O caso comum: uma camada, um quadro por imagem; o pivot vira um slice."""
+    """O caso comum: uma camada, um quadro por imagem; o pivot vira a slice `pivot`."""
     size = frames[0].size
     slices = [("pivot", (0, 0, size[0], size[1]), pivot)] if pivot else None
     return write(path, size, [layer], [{0: f} for f in frames], durations, tags, palette, slices)
 
 
-def reader():
-    """O leitor do projeto (tools/aseprite_source.py), carregado pelo caminho."""
-    source = Path(__file__).resolve().parents[1] / "aseprite_source.py"
-    spec = importlib.util.spec_from_file_location("aseprite_source", source)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+def verify(path: str | Path, frames: list[Image.Image] | None, layers: dict[str, list] | None = None) -> dict:
+    """Le o ficheiro com o leitor exato e compara cada quadro composto, pixel a pixel, com as imagens (None: sem
+    composto a comparar); com `layers`, compara cada camada sozinha (como o export por camada a ve) com os seus."""
+    src = read_ase(path)
+    equal = None if frames is None else src.frames == len(frames) and all(
+        render(src, i).tobytes() == f.convert("RGBA").tobytes() for i, f in enumerate(frames))
+    out = {"frames": src.frames, "layers": [layer.name for layer in src.layers],
+           "tags": {t.name: {"from_frame": t.first, "to_frame": t.last, "direction": t.direction,
+                             "repeat": t.repeat} for t in src.tags},
+           "durations": list(src.durations), "pixel_equal": equal, "opened_in_aseprite_app": False}
+    if layers:
+        names = [layer.name for layer in src.layers]
+        out["layer_equal"] = {name: name in names and _layer_equal(src, names.index(name), images)
+                              for name, images in layers.items()}
+    return out
 
 
-def verify(path: str | Path, frames: list[Image.Image]) -> dict:
-    """Le o ficheiro com o leitor do projeto e compara pixel a pixel com os quadros."""
-    src = reader().read(path)
-    equal = all(reader().composite(src, i, range(len(src["layers"]))).tobytes()
-                == frames[i].convert("RGBA").tobytes() for i in range(len(frames)))
-    return {"frames": len(src["frames"]), "layers": [layer["name"] for layer in src["layers"]],
-            "tags": src["tags"], "durations": src["durations"], "pixel_equal": equal,
-            "opened_in_aseprite_app": False}
+def _layer_equal(src: model.Sprite, index: int, images: list[Image.Image | None]) -> bool:
+    blank = Image.new("RGBA", (src.width, src.height))
+    for f in range(src.frames):
+        img = images[f] if len(images) > 1 else images[0]  # um quadro so repete-se (a sombra)
+        if render(src, f, {index}).tobytes() != (img or blank).convert("RGBA").tobytes():
+            return False
+    return True
