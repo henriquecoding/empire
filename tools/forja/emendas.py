@@ -42,9 +42,9 @@ def _p90(values: list[float]) -> float:
 
 def joint(left: Image.Image, right: Image.Image, cell: int = 2) -> dict:
     """A juncao de dois modulos lado a lado: o alfa e a cor da emenda contra o interior das pecas."""
-    if left.height != right.height:
-        return {"ok": False, "jump": None, "interior": None, "criteria": {"alpha": False, "colour": None},
-                "detail": f"alturas {left.height} e {right.height}"}
+    if left.height != right.height:  # os mesmos campos de sempre: quem le o resultado nao tem de saber o caso
+        return {"ok": False, "jump": None, "interior": None, "colour_seam": None, "colour_limit": None,
+                "criteria": {"alpha": False, "colour": None}, "detail": f"alturas {left.height} e {right.height}"}
     jump = sum(a != b for a, b in zip(_profile(left, left.width - 1), _profile(right, 0)))
     steps = [sum(a != b for a, b in zip(_profile(im, x), _profile(im, x + 1)))
              for im in (left, right) for x in range(im.width - 1)]

@@ -73,6 +73,15 @@ class SeamTest(unittest.TestCase):
         self.assertTrue(estrutura.joint(fx.strip(), fx.strip())["ok"])
         self.assertTrue(estrutura.joint(light, light)["ok"])
 
+    def test_a_neighbour_of_another_height_fails_the_connector_without_breaking_the_review(self):
+        strip = scene.resolve(scene.load(fx.write(tempdir(), fx.contract(
+            asset="terrain_strip", extent_px=[64, 32], openings=[], signals=[], signal_regions={},
+            materials=["soil"], states=["done"], state_changes={}))))
+        rep = estrutura.review(fx.strip(), strip, neighbors={"right": fx.strip((64, 30))})
+        c = found(rep, "connector_right")
+        self.assertEqual((c["status"], c["evidence"]["colour_seam"]), ("fail", None))
+        self.assertIn("alturas", c["detail"])
+
 
 class StateTest(unittest.TestCase):
     def test_a4_a_state_identical_to_the_base_does_not_pass(self):
