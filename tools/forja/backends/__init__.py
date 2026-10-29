@@ -60,9 +60,12 @@ def image_refs(images: list[tuple[str, bytes]]) -> list[dict]:
     return [{"role": role, "sha256": sha(data), "bytes": len(data)} for role, data in images]
 
 
-def poller(service: str):
+def poller(service: str, operation: str = ''):
     """Quem sabe consultar um job remoto deste fornecedor (so o PixelLab tem jobs)."""
     if service == "pixellab":
+        if operation in ('animate-with-skeleton-v3', 'animate-with-text-v3'):
+            from . import pixellab_animation
+            return pixellab_animation.poll_call
         from . import pixellab_api
         return pixellab_api.poll_call
     return None

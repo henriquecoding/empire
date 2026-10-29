@@ -97,7 +97,7 @@ def export(frames: list[Image.Image], out_dir: str | Path, name: str, durations:
     return files
 
 
-def metrics(frames: list[Image.Image], pivot: tuple[int, int] | None = None) -> dict:
+def metrics(frames: list[Image.Image], pivot: tuple[int, int] | None = None, loop: bool = True) -> dict:
     """O que a revisao de uma animacao quer saber antes de olhar."""
     feet = [foot_point(f) for f in frames]
     boxes = [opaque_bbox(f) for f in frames]
@@ -113,17 +113,17 @@ def metrics(frames: list[Image.Image], pivot: tuple[int, int] | None = None) -> 
             "mirror_pairs": sum(1 for r in unique if flips[r] != r and flips[r] in unique) // 2,
             "palette_size": len(colors), "feet": [list(p) if p else None for p in feet],
             "pivot_drift": drift, "max_drift": max((abs(d[0]) + abs(d[1]) for d in drift if d), default=0),
-            "heights": [b[3] - b[1] if b else 0 for b in boxes], "flicker": flicker(frames)}
+            "heights": [b[3] - b[1] if b else 0 for b in boxes], "flicker": flicker(frames, loop)}
 
 
-def flicker(frames: list[Image.Image]) -> int:
+def flicker(frames: list[Image.Image], loop: bool = True) -> int:
     """Pixels que piscam A -> B -> A em tres quadros seguidos (ciclicos): ruido, nao movimento."""
     if len(frames) < 3:
         return 0
     data = [flat(f) for f in frames]
     n = len(data)
     count = 0
-    for i in range(n):
+    for i in range(n if loop else n - 2):
         a, b, c = data[i], data[(i + 1) % n], data[(i + 2) % n]
         count += sum(1 for p, q, r in zip(a, b, c) if p == r and q != p and p[3] >= 128 and q[3] >= 128)
     return count

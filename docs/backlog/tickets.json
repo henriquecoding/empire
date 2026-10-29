@@ -3271,5 +3271,20 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-15": {
+  "title": "Coreografia, animação e bancada de revisão",
+  "porque": "Implementar a pesquisa sobre poses, animações e cenários, com contratos e evidência por quadro.",
+  "spec": [
+   "docs/adr/0101-coreografia-e-revisao-de-movimento-na-forja.md",
+   "docs/art/FORJA_MOVIMENTO.md"
+  ],
+  "depende": "FORJA-14",
+  "feito": "Poses e clips, PixelLab com jobs, apoios e transições, componentes locais, Aseprite/Godot, bancada estática e comparação de custo observado.",
+  "fora": "Geração paga, aprovação artística, editor visual de poses, arte em runtime e novos modelos.",
+  "estado": "feito — coreografia, adaptador, cenários locais, exportação e bancada; aprovação artística e benchmark pago são etapas de produção.",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

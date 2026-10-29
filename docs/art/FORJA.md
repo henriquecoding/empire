@@ -1,5 +1,10 @@
 # Forja — pixel art de verdade a partir de qualquer gerador
 
+**Movimento:** [poses, coreografia, animação e cenários locais](FORJA_MOVIMENTO.md)
+documenta `poses`, `coreografia`, `animar`, `rever-clip`, `transicao`,
+`cena-movimento` e `comparar-clips`, também pelo MCP. A bancada `/forja/` revê
+pacotes com tempo, referência e hashes, sem enviar imagens ou aprovar arte.
+
 Os [conceitos escolhidos em 28–29/10](concepts/2026-10-29-elenco/README.md) estão integrados no
 catálogo `forja elenco` (MCP: `forja_elenco`). O comando lista o elenco e prepara pedidos com
 as imagens, pares, funções e invariantes certas. `prompt`, `plan` e `auto` também resolvem

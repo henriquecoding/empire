@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import constraints, contracts, matte, prompts, regua
+from . import constraints, contracts, matte, prompts, regua, scene_motion
 from .palette import Palette
 
 ROLE_TEXT = {"palette": prompts.ROLES["palette"],
@@ -110,7 +110,7 @@ def rules(res: dict, palette: Palette | None, swatch: int | None, listed: int = 
                  "three-quarter view. Roofs, ledges and platforms may show a thin top face for thickness.",
                  f"scene:{res['projection']} (relatorio de 28/10, §9)"),
            _ground(res)]
-    out += _scale_lines(res, offset) + _identity(res)
+    out += _scale_lines(res, offset) + _identity(res) + scene_motion.rules(res['scene'])
     if res["asset"] in ("building", "wall_segment"):
         roof = regua.data()["roof"]
         out.append(_rule("roof", roof["en"], roof["origin"]))

@@ -21,7 +21,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import contracts, regua
+from . import contracts, regua, scene_motion
 from .equipment import image_sha
 
 SCHEMA = "forja.scene/1"
@@ -159,6 +159,8 @@ def validate(scene: dict, base: Path | None = None, found: list[dict] | None = N
     if scene.get("people") and scene["people"] not in d["families"]:
         warns.append(f"povo {scene['people']!r} sem familia no scenery.json ({', '.join(d['families'])})")
     errors += _references(scene, base or Path("."))
+    if size:
+        errors += scene_motion.validate(scene, base or Path('.'))
     return {"errors": errors, "warnings": warns}
 
 
