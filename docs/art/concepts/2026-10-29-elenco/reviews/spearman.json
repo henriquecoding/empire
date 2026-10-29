@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "d86a76545805eaeec46664bca5c053fcdca1a17e61bebd9108a0bf481ce4792e",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "spearman",
+    "declared_role": "troop"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        531,
+        268,
+        925,
+        595
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        152,
+        16,
+        1155,
+        1250
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        531,
+        268,
+        925,
+        595
+      ],
+      "description": "Stocky dark-skinned human spearman with round belly, enormous iron helmet and a stubborn grimace.",
+      "evidence": "Stocky dark-skinned human spearman with round belly, enormous iron helmet and a stubborn grimace.; Burgundy tabard over cream sleeves, broad belt, charcoal trousers and brown boots.; One straight continuous spear with one metal point, and one blue round shield with one boss."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

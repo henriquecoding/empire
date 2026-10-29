@@ -1,10 +1,10 @@
-# ADR 0099 — A Forja fala Aseprite, provado contra o aplicativo
+# ADR 0100 — A Forja fala Aseprite, provado contra o aplicativo
 
 - Estado: aceite
 - Data: 2026-10-29
 - Secção do dossiê: §22 e §28 (os slots e a fonte em Aseprite)
 - Complementa: ADR 0088 (a Forja), 0098 (cenários); a Asset Bible §2, §3 e §5 e o `tools/export_aseprite.sh` não mudam
-- Tarefa: [FORJA-13](../backlog/FORJA-13.md)
+- Tarefa: [FORJA-14](../backlog/FORJA-14.md)
 - Origem: o pedido do dono de 29/10, *«total compatibilidade ao aseprite […] compatível com camadas e animações bem
   searadas e definidas»*; [pesquisa e prova](../art/research/2026-10-29-forja-aseprite/README.md)
 

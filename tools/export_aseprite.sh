@@ -5,7 +5,7 @@
 # Uso:  tools/export_aseprite.sh art/source/enramados/enramados_villager.aseprite
 #       ASEPRITE=/caminho/para/aseprite tools/export_aseprite.sh <ficheiro>
 #
-# Testado a 29/10/2026 (FORJA-13) com o Aseprite 1.3.18.6 sobre o "Empire troop": nomes, quadros, tags e
+# Testado a 29/10/2026 (FORJA-14) com o Aseprite 1.3.18.6 sobre o "Empire troop": nomes, quadros, tags e
 # duracoes conferem; o pivot nao vai no JSON (sem --list-slices; Q-302). `python3 -m tools.forja exportar`
 # escreve o mesmo sem o Aseprite (tools/forja/tests/test_ase_conformidade.py confere-o contra este script).
 set -euo pipefail

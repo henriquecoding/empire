@@ -7,7 +7,7 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
-## Forja e Aseprite — 29/10/2026 (FORJA-13, ADR 0099)
+## Forja e Aseprite — 29/10/2026 (FORJA-14, ADR 0100)
 
 > Pedido do dono (29/10/2026): *«total compatibilidade ao aseprite»*. A Forja passou a ler, escrever, renderizar e
 > exportar como o Aseprite 1.3.18.6, provado contra ele ([prova](art/research/2026-10-29-forja-aseprite/README.md)).

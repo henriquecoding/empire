@@ -1,4 +1,4 @@
--- Gera, com o proprio Aseprite, os sprites de conformidade da Forja (FORJA-13).
+-- Gera, com o proprio Aseprite, os sprites de conformidade da Forja (FORJA-14).
 -- Uso: aseprite -b --script-param out=<pasta> --script gerar.lua
 -- Cada sprite cobre uma parte da especificacao 1.3; a Forja le-os e tem de os renderizar igual ao export do
 -- Aseprite e de ver a mesma estrutura que o `ler.lua` ve.

@@ -1,6 +1,6 @@
 """Escrever e conferir o .aseprite das entregas da Forja (`sheet`, `anim`, `aseprite`, `forge --aseprite`).
 
-O formato e o de `tools/forja/ase` (FORJA-13): o que a Forja escreve abre no Aseprite 1.3.18.6 igual, provado
+O formato e o de `tools/forja/ase` (FORJA-14): o que a Forja escreve abre no Aseprite 1.3.18.6 igual, provado
 contra o aplicativo compilado (docs/art/research/2026-10-29-forja-aseprite/) e repetido no CI sem ele
 (tools/forja/tests/test_ase_conformidade.py). Cada camada de slot leva o slot e a variante nos dados; os slots
 empilham-se pela ordem Z da §58; a camada `References` entra como camada de referencia (o Aseprite nunca a compoe

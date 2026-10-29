@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "dc64ea62dc9aa046be463a22ba137214d4f588d7bf1b90e3bef304dfaf9429ac",
+    "size": [
+      516,
+      799
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "corsair_squire",
+    "declared_role": "squire"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        110,
+        90,
+        351,
+        266
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        62,
+        348,
+        488,
+        640
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        110,
+        90,
+        351,
+        266
+      ],
+      "description": "Young adult fair-skinned red-haired human woman with burgundy cap and an unimpressed expression.",
+      "evidence": "Young adult fair-skinned red-haired human woman with burgundy cap and an unimpressed expression.; Slim angular build, long nose and skeptical raised eyebrow; not a small copy of the empress.; Cream shirt, petrol-blue vest, burgundy neckerchief and brown boots.; Carries a single tidy coil of hemp rope with visible supporting hands and one belaying pin."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

@@ -1,4 +1,4 @@
-"""A conformidade da Forja com o Aseprite 1.3.18.6 (FORJA-13), repetida sem o Aseprite.
+"""A conformidade da Forja com o Aseprite 1.3.18.6 (FORJA-14), repetida sem o Aseprite.
 
 Os ficheiros de `ase_fixtures/` sairam do Aseprite real (`conformidade.py` da pesquisa de 29/10): sprites que ele
 criou pelo Lua, tres fontes do dono copiadas de `art/source/`, os quadros que exportou, o que o Lua dele viu em cada

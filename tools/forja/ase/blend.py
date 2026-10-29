@@ -1,4 +1,4 @@
-"""Os modos de mistura do Aseprite, pixel a pixel, na mesma aritmetica inteira (FORJA-13).
+"""Os modos de mistura do Aseprite, pixel a pixel, na mesma aritmetica inteira (FORJA-14).
 
 Portado de `src/doc/blend_funcs.cpp` do Aseprite 1.3.18.6 (Copyright (c) 2019-2025 Igara Studio S.A., Copyright
 (c) 2001-2017 David Capello; licenca MIT, como as macros MUL_UN8/DIV_UN8 do pixman que ele usa; o aviso esta no

@@ -149,7 +149,7 @@ ser adequado num pipeline que reconstitui offsets; conferir isso antes.
 não comprova que o importador os consome.
 
 Para entrega por slot, a referência é `tools/export_aseprite.sh`. A 29/10
-(FORJA-13) correu com o Aseprite 1.3.18.6 sobre o `troop.aseprite`: nomes,
+(FORJA-14) correu com o Aseprite 1.3.18.6 sobre o `troop.aseprite`: nomes,
 quadros, tags e durações conferem, e o pivot não vai no JSON (o script não passa
 `--list-slices`; Q-302). A Forja faz o mesmo sem o Aseprite (`forja exportar`;
 `--composite` é este diagnóstico) e confere um `.aseprite` contra as convenções

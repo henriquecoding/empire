@@ -1,4 +1,4 @@
-"""Renderizar um quadro como o Aseprite o renderiza (FORJA-13), portado de `render/render.cpp` e
+"""Renderizar um quadro como o Aseprite o renderiza (FORJA-14), portado de `render/render.cpp` e
 `doc/render_plan.cpp` do Aseprite 1.3.18.6 (licenca MIT; o aviso esta no NOTICE.md).
 
 O plano: as camadas pela ordem do ficheiro (o indice), cada cel deslocada pelo seu z-index (NOTE.5), as escondidas

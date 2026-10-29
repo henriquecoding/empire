@@ -1,4 +1,4 @@
-"""Escrever um .aseprite inteiro (FORJA-13), na ordem do `dio/aseprite_encoder.cpp` do Aseprite 1.3.18.6 (MIT;
+"""Escrever um .aseprite inteiro (FORJA-14), na ordem do `dio/aseprite_encoder.cpp` do Aseprite 1.3.18.6 (MIT;
 NOTICE.md).
 
 No primeiro quadro: ficheiros externos, perfil de cor, paleta (a antiga 0x0004 quando cabe: ate 256 cores, todas

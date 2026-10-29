@@ -1,5 +1,5 @@
 """O sprite descrito na forma em que o proprio Aseprite o descreve (o `ler.lua` da conformidade), e a diferenca
-entre duas descricoes (FORJA-13).
+entre duas descricoes (FORJA-14).
 
 Serve a prova: o mesmo ficheiro lido pela Forja e pelo Aseprite tem de dar a mesma descricao — camadas e os pais,
 flags, mistura, opacidade, cels (posicao, tamanho, opacidade, z-index), dados e propriedades de cada objeto, tags,

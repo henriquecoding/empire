@@ -118,7 +118,7 @@ def do_estrutura(args) -> dict:
                            master_state=rec["state"] if rec else None)
     if args.out:
         rep["file"] = _write(Path(args.out), rep)
-    if args.aseprite:  # a peca, os estados e o contrato em slices, para o Aseprite (FORJA-13)
+    if args.aseprite:  # a peca, os estados e o contrato em slices, para o Aseprite (FORJA-14)
         images = {res["states"][0]: open_rgba(args.image), **_states(args.state)}
         rep["aseprite"] = str(aseprite.save(scene_ase.write(res, images), cmd_ase.outside_art(args.aseprite)))
     return {"ok": not rep["blocking"], **rep}

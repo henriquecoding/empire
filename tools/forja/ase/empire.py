@@ -1,4 +1,4 @@
-"""As convencoes do Empire num .aseprite (FORJA-13): slots, variantes, camadas de trabalho, tags e pivot, e a
+"""As convencoes do Empire num .aseprite (FORJA-14): slots, variantes, camadas de trabalho, tags e pivot, e a
 exportacao por camada do `tools/export_aseprite.sh`, feita sem o Aseprite.
 
 Regras: ASSET_BIBLE §2 (os slots da §58 com o `storage` da Q-153; `Knight`, `References` e `Background` sao de

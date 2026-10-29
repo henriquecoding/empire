@@ -63,7 +63,7 @@ A Silkscreen também entra no menu do jogo desde a ADR 0040; as restantes famíl
 |---|---|---|
 | gdUnit4 6.2.1 — Mike Schulze | MIT | `addons/gdUnit4/` (excluído do *export*) |
 | gdtoolkit (gdformat, gdlint) — Pawel Lampe | MIT | instalado pelo CI |
-| Aseprite 1.3.18.6 — `src/doc`, `src/render`, `src/dio`, portados para Python | MIT | `tools/forja/ase/` (a Forja; ADR 0099) |
+| Aseprite 1.3.18.6 — `src/doc`, `src/render`, `src/dio`, portados para Python | MIT | `tools/forja/ase/` (a Forja; ADR 0100) |
 
 ### Aseprite — o código MIT portado na Forja
 

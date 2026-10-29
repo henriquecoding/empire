@@ -1,4 +1,4 @@
-"""Ler um .aseprite inteiro (FORJA-13), como o `dio/aseprite_decoder.cpp` do Aseprite 1.3.18.6 o le (MIT; NOTICE.md).
+"""Ler um .aseprite inteiro (FORJA-14), como o `dio/aseprite_decoder.cpp` do Aseprite 1.3.18.6 o le (MIT; NOTICE.md).
 
 Cada chunk da especificacao: camadas (normal, grupo, tilemap; com UUID), cels (crua, ligada, comprimida, tilemap),
 cel extra, perfil de cor, ficheiros externos, tags (direcao, repeticao), paletas nova e antigas, dados de utilizador

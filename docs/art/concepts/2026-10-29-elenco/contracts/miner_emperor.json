@@ -1,0 +1,97 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-29",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/miner-pair.png",
+    "sha256": "07f8c7d05b2aaf41150a3dae5ec7182258ed1997fee42090dd25c7b1cb0d13a0",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "367f8818da41d13846f93529ab490c87fa5e5f8f56393751bae7934fbe27baa1",
+    "library_file_id": "libfile_fdad8cf6f0d08191a3b7f8b58e781c0e",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "miner_emperor",
+      "pose": "idle",
+      "kind": "royal_80",
+      "target_canvas": [
+        80,
+        80
+      ],
+      "authority_crop_xyxy": [
+        20,
+        10,
+        930,
+        1008
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        79,
+        79
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Middle-aged South Asian human man with broad belly, large black-grey moustache and broad nose.",
+        "Preserve skeptical half-lidded acting and the self-important compact build.",
+        "Dented iron cap with blunt gold crown points, burnt-orange cape, cream shirt and slate work apron.",
+        "One pick-hammer on a continuous wooden haft; one pick end and one flat hammer face."
+      ],
+      "prompt_invariants": [
+        "Middle-aged South Asian human man with broad belly, large black-grey moustache and broad nose.",
+        "Preserve skeptical half-lidded acting and the self-important compact build.",
+        "Dented iron cap with blunt gold crown points, burnt-orange cape, cream shirt and slate work apron.",
+        "One pick-hammer on a continuous wooden haft; one pick end and one flat hammer face."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            432,
+            133,
+            690,
+            370
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            40,
+            281,
+            328,
+            963
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Carries a pick-hammer and retains the practical equipment of a mining sovereign."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/miner_emperor.json"
+      },
+      "role": "monarch"
+    }
+  ]
+}

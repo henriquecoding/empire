@@ -1,0 +1,144 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-29",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/alchemist-pair.png",
+    "sha256": "761c22144034f0d47b0b0dcb55d29c1589b3fcd947af17ad0e9b2603c154f6e8",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "08b4530407acb287368ad270d08fbff61be0efe80f6fd200a5c086f5cb122da8",
+    "library_file_id": null,
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "alchemist_squire",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        854,
+        242,
+        1518,
+        1003
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Dark-skinned adult human man with short dark curls, a folded cream work cap with a narrow plum band, and an individual comic face.",
+        "Asymmetrical thick eyebrows, one skeptical slightly squinting eyelid, clear cheek and chin planes, and a restrained crooked half-smile; avoid the generic sad round-eyed baby face.",
+        "Preserve the compact sturdy build, plum tabard, cream sleeves, broad ochre scarf fold, short waist apron and brown boots.",
+        "Compact belt satchel with two spare corked bottles, a small ingredient pouch and simple soft work gloves.",
+        "He offers the next prepared potion upright in one hand toward his lord; the other hand retrieves supplies from his satchel.",
+        "The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire.",
+        "Exactly two arms with a natural supporting grip, clear shoulders and elbows; no shield, no tongs and no bulky wooden bottle carrier.",
+        "Firmly planted feet and a slight compensating lean make the full-sized bottle weight readable; mirror the whole pose consistently when adapting its facing direction."
+      ],
+      "prompt_invariants": [
+        "Dark-skinned adult human man with short dark curls, a folded cream work cap with a narrow plum band, and an individual comic face.",
+        "Asymmetrical thick eyebrows, one skeptical slightly squinting eyelid, clear cheek and chin planes, and a restrained crooked half-smile; avoid the generic sad round-eyed baby face.",
+        "Preserve the compact sturdy build, plum tabard, cream sleeves, broad ochre scarf fold, short waist apron and brown boots.",
+        "Compact belt satchel with two spare corked bottles, a small ingredient pouch and simple soft work gloves.",
+        "He offers the next prepared potion upright in one hand toward his lord; the other hand retrieves supplies from his satchel.",
+        "The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire.",
+        "Exactly two arms with a natural supporting grip, clear shoulders and elbows; no shield, no tongs and no bulky wooden bottle carrier.",
+        "Firmly planted feet and a slight compensating lean make the full-sized bottle weight readable; mirror the whole pose consistently when adapting its facing direction."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "O frasco na mão do escudeiro deve ser do tamanho do que estará na mão do imperador; o design e a expressão do escudeiro devem ser melhor feitos.; Ok, agora quero que leve tudo a forja",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [
+        {
+          "file": "../history/alchemist_squire-superseded.png",
+          "pixels_sha256": "d976c615b7b7377949206823e439e78978fd63181f258610cabb34260fc7f5af",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Escudo generico: substituido por equipamento funcional de ajudante de alquimia a pedido do dono."
+          ]
+        },
+        {
+          "file": "../history/alchemist_squire-tongs-superseded.png",
+          "pixels_sha256": "04a59f15c2734f11c4fd8499640b4215fb878643c061d00236ad66c4c304c29f",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Caixa e pinça não comunicam uma ajuda clara; o dono considerou o escudeiro estranho e sem funcionalidade compreensível."
+          ]
+        },
+        {
+          "file": "../history/alchemist_squire-small-flask-superseded.png",
+          "pixels_sha256": "34d6f67699b2cd20ed0f6d6fb350ca0c4ee69b21e16633774b3e47b816ee1947",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Frasco menor do que o do imperador; design e expressão do escudeiro pedem refinamento."
+          ]
+        }
+      ],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            1048,
+            307,
+            1296,
+            498
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            854,
+            290,
+            1448,
+            827
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Visual proposal: prepares and offers the next prepared potion to the emperor, while he studies or uses the current one; no shield guard role."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/alchemist_squire.json"
+      },
+      "role": "squire",
+      "function_scope": "visual_proposal_not_runtime",
+      "shared_prop_constraints": [
+        {
+          "id": "alchemy_standard_flask",
+          "paired_with": "alchemist_emperor",
+          "scale": "same_absolute_world_pixel_dimensions",
+          "scale_with_character_canvas": false,
+          "native_shared_dimensions": null,
+          "status": "owner_rule; native prop dimensions pending authored master"
+        }
+      ]
+    }
+  ]
+}

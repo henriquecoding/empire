@@ -91,7 +91,7 @@ def do_tileset(args) -> dict:
     if args.godot_texture:
         files["godot"] = str(godot.write(out / f"{args.name}.tres", godot.tileset(args.godot_texture, args.size)))
     extra = {}
-    if args.aseprite:  # o tileset e o mapa de exemplo num tilemap do Aseprite (FORJA-13)
+    if args.aseprite:  # o tileset e o mapa de exemplo num tilemap do Aseprite (FORJA-14)
         sprite = aseprite.tilemap(sheet, args.size, tiles.demo_indices(seed=args.seed), args.name)
         files["aseprite"] = str(aseprite.save(sprite, out / f"{args.name}.aseprite"))
         extra["aseprite_equal"] = render_ase(read_ase(files["aseprite"])).tobytes() == demo.tobytes()

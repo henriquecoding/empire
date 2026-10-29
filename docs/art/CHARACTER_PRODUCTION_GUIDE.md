@@ -2,6 +2,11 @@
 
 Consolidação de 19/10/2026. Este é o ponto de entrada para aplicar a pesquisa, continuar o elenco e evitar as falhas das revisões anteriores.
 
+Os conceitos escolhidos em 28–29/10 e as revisões pedidas pelo dono estão no
+[elenco da Forja](concepts/2026-10-29-elenco/README.md). Consultar `python3 -m tools.forja elenco`
+antes de gerar estes personagens. `--character` carrega a autoridade e as invariantes;
+o estado de conceito escolhido continua separado da aprovação do sprite nativo.
+
 ## Ordem de leitura e autoridade
 
 1. [Referências do próprio projeto](REFERENCE_AUTHORITY.md): soldado, cozinheiro e elenco são a família visual.

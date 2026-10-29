@@ -1,4 +1,4 @@
-"""Exportar folha PNG + JSON como a CLI do Aseprite (`--sheet --data --format json-array`), sem o Aseprite (FORJA-13).
+"""Exportar folha PNG + JSON como a CLI do Aseprite (`--sheet --data --format json-array`), sem o Aseprite (FORJA-14).
 
 O formato reproduz-se pela saida observada da CLI 1.3.18.6, nao pelo codigo dela: quadros em linha (`rows`,
 `horizontal`; com `columns`, N por linha) ou em coluna (`columns`, `vertical`); o nome de cada quadro e
@@ -135,7 +135,7 @@ def sheet(sprite: Sprite, title: str, image: str, layer: str | None = None, kind
                        "frame": {"x": x, "y": y, "w": w, "h": h}, "rotated": False, "trimmed": False,
                        "spriteSourceSize": {"x": 0, "y": 0, "w": w, "h": h}, "sourceSize": {"w": w, "h": h},
                        "duration": sprite.durations[f]})
-    meta = {"app": "forja (Empire)", "version": "FORJA-13, formato da CLI do Aseprite 1.3.18.6", "image": image,
+    meta = {"app": "forja (Empire)", "version": "FORJA-14, formato da CLI do Aseprite 1.3.18.6", "image": image,
             "format": "I8" if indexed else "RGBA8888", "size": {"w": out.width, "h": out.height}, "scale": "1"}
     if tags:
         meta["frameTags"] = _tags(sprite)

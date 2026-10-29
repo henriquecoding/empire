@@ -1,4 +1,4 @@
-"""As convencoes do Empire num .aseprite e os comandos `aseprite`, `ase` e `exportar` (FORJA-13)."""
+"""As convencoes do Empire num .aseprite e os comandos `aseprite`, `ase` e `exportar` (FORJA-14)."""
 import json
 import unittest
 from pathlib import Path

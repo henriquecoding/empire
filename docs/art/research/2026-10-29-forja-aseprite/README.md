@@ -1,8 +1,8 @@
-# A Forja e o Aseprite — o formato inteiro, provado contra o aplicativo (29/10/2026, FORJA-13)
+# A Forja e o Aseprite — o formato inteiro, provado contra o aplicativo (29/10/2026, FORJA-14)
 
 > Pedido do dono (29/10/2026): *«Se puder fazer total compatibilidade ao aseprite é meu sonho pois quero que seja
 > perfeitamente ajustado para essa ferramenta e compatível com camadas e animações bem searadas e definidas»*.
-> Ticket [FORJA-13](../../../backlog/FORJA-13.md); decisão [ADR 0099](../../../adr/0099-a-forja-fala-aseprite-provado-contra-o-aplicativo.md).
+> Ticket [FORJA-14](../../../backlog/FORJA-14.md); decisão [ADR 0100](../../../adr/0100-a-forja-fala-aseprite-provado-contra-o-aplicativo.md).
 
 ## Em uma frase
 

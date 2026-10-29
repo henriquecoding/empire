@@ -273,7 +273,7 @@
   "depende": "F0-02",
   "feito": "tools/export_aseprite.sh testado com um ficheiro real; a ADR 0010 passa a aceite",
   "fora": "Desenhar a arte — é o ART-01.",
-  "estado": "parcial — o script testado com um ficheiro real (FORJA-13, 29/10); a ADR 0010 por aceitar",
+  "estado": "parcial — o script testado com um ficheiro real (FORJA-14, 29/10); a ADR 0010 por aceitar",
   "horas": "4",
   "notas": [
    "A ADR 0010 está como proposta: é o último ficheiro de tools/ por testar."
@@ -3242,11 +3242,24 @@
   "notas": []
  },
  "FORJA-13": {
+  "title": "A Forja conserva o elenco escolhido e a função de cada dupla",
+  "porque": "Os conceitos escolhidos precisam chegar ao gerador com a identidade, equipamento, função e escala corretos.",
+  "spec": [
+   "docs/art/concepts/2026-10-29-elenco/README.md",
+   "docs/adr/0099-a-forja-conserva-o-elenco-escolhido.md"
+  ],
+  "depende": "FORJA-10",
+  "feito": "Catálogo de conceitos, contratos de fidelidade, originais, revisão visual e seleção CLI/MCP.",
+  "fora": "Sprites nativos finais, animação e novas mecânicas de simulação.",
+  "estado": "feito — catálogo de conceitos, contratos, referências e pedidos CLI/MCP integrados; sprites nativos e animações por produzir",
+  "horas": "—"
+ },
+ "FORJA-14": {
   "title": "A Forja fala Aseprite: o formato inteiro, provado contra o aplicativo",
   "porque": "O dono quer a Forja perfeitamente ajustada ao Aseprite, com camadas e animações bem separadas e definidas. O escritor antigo só escrevia uma camada RGBA e nunca tinha sido aberto no aplicativo; o tools/export_aseprite.sh nunca tinha corrido.",
   "spec": [
    "docs/art/research/2026-10-29-forja-aseprite/README.md",
-   "docs/adr/0099-a-forja-fala-aseprite-provado-contra-o-aplicativo.md",
+   "docs/adr/0100-a-forja-fala-aseprite-provado-contra-o-aplicativo.md",
    "docs/art/ASSET_BIBLE.md",
    "docs/art/ASEPRITE_WORKFLOW.md",
    "docs/art/FORJA.md"

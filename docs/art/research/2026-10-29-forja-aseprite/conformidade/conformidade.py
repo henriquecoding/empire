@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A prova de conformidade da Forja com o Aseprite 1.3.18.6 (FORJA-13). Precisa do Aseprite (a CLI basta).
+"""A prova de conformidade da Forja com o Aseprite 1.3.18.6 (FORJA-14). Precisa do Aseprite (a CLI basta).
 
     ASEPRITE=/caminho/aseprite python3 conformidade.py [--fixtures]
 

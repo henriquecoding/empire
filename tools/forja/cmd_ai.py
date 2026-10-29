@@ -4,14 +4,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import auto, backends, constraints, contracts, fidelity, guides, jobs, palette as palmod, plan as plan_mod
+from . import auto, backends, cast, constraints, contracts, fidelity, guides, jobs, palette as palmod, plan as plan_mod
 from . import production, prompts, refs, sheetforge
 from .cli import command
 
 BACKENDS = plan_mod.BACKENDS
 LABELS = {"identity": "o mestre aprovado", "identity_review": "a adaptacao em revisao",
           "identity_unrecorded": "a referencia (aprovacao nao registada)", "concept": "o conceito de autoridade"}
-
 
 def _palette(args, kind: str) -> palmod.Palette | None:
     if args.palette == "none" or (kind == "free" and not args.palette):
@@ -42,8 +41,8 @@ def _decisions(args) -> dict:
 
 
 def _fidelity(args, given: list) -> dict:
-    contract = fidelity.load(args.fidelity) if getattr(args, "fidelity", None) else None
-    return fidelity.prepare(contract, getattr(args, "character", None), getattr(args, "pose", None),
+    contract, ident = cast.request_contract(args)
+    return fidelity.prepare(contract, ident, getattr(args, "pose", None),
                             getattr(args, "mode", None), given)
 
 
@@ -93,11 +92,12 @@ def _plan(args) -> plan_mod.Plan:
         return scene_plan.from_args(args, lambda: _palette(args, "building"))
     given = ([("identity", r) for r in args.reference or []] + [("concept", r) for r in opt("concept") or []]
              + [("style", r) for r in opt("style_reference") or []])
+    contract, ident = cast.request_contract(args)
     return plan_mod.make(args.backend, args.subject, args.kind, sheetforge.parse_tags(args.tags), args.facing,
                          given, _palette(args, args.kind or "character_s2"), args.model, opt("guides", "auto"), "auto",
                          opt("init_strength"), opt("seed"), opt("image_size"),
                          refs.load(opt("refs")) if opt("refs") else None, opt("mode"),
-                         fidelity.load(opt("fidelity")) if opt("fidelity") else None, opt("character"), opt("pose"),
+                         contract, ident, opt("pose"),
                          _decisions(args))
 
 
@@ -195,7 +195,7 @@ def _faithful(p) -> None:
     p.add_argument("--mode", choices=constraints.MODES, help="stylized (o de antes), adapt_concept (fiel ao recorte "
                    "de autoridade), edit_approved_master; por omissao adapt_concept com --fidelity ou um conceito")
     p.add_argument("--fidelity", help="contrato forja.fidelity/1: a autoridade, as invariantes e os rejeitados")
-    p.add_argument("--character", help="o personagem no contrato de fidelidade")
+    p.add_argument("--character", help="id/alias do elenco; com --fidelity, o personagem nesse contrato")
     p.add_argument("--pose", help="a pose no contrato de fidelidade")
     p.add_argument("--max-colors", type=int, help="teto de cores decidido no pedido (origem explicit_request)")
     p.add_argument("--tones", type=int, help="tons por material decididos no pedido (origem explicit_request)")

@@ -1,4 +1,4 @@
--- O que o Aseprite ve num .aseprite, em JSON, para conferir o leitor e o escritor da Forja (FORJA-13).
+-- O que o Aseprite ve num .aseprite, em JSON, para conferir o leitor e o escritor da Forja (FORJA-14).
 -- Uso: aseprite -b <ficheiro.aseprite> --script-param out=<ficheiro.json> --script ler.lua
 
 local spr = app.sprite

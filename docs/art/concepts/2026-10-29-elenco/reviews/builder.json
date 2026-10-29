@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "240f8678ee69b7c714119b1bf91c3404d3bd732d1dde0b48eca29125eb87ba0f",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "builder",
+    "declared_role": null
+  },
+  "regions": {
+    "face": {
+      "box": [
+        598,
+        245,
+        920,
+        570
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        231,
+        242,
+        1160,
+        663
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        598,
+        245,
+        920,
+        570
+      ],
+      "description": "Human woman with yellow headscarf, dark bob, broad friendly smile and raised eyebrow.",
+      "evidence": "Human woman with yellow headscarf, dark bob, broad friendly smile and raised eyebrow.; Cream rolled sleeves, olive work tunic, leather belt pouch and brown boots.; One large wooden mallet rests across the shoulder with a continuous shaft and visible grip."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

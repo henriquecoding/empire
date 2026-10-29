@@ -1,5 +1,10 @@
 # Forja — pixel art de verdade a partir de qualquer gerador
 
+Os [conceitos escolhidos em 28–29/10](concepts/2026-10-29-elenco/README.md) estão integrados no
+catálogo `forja elenco` (MCP: `forja_elenco`). O comando lista o elenco e prepara pedidos com
+as imagens, pares, funções e invariantes certas. `prompt`, `plan` e `auto` também resolvem
+`--character id/alias` no catálogo quando não há `--fidelity` explícito. Ver [ADR 0099](../adr/0099-a-forja-conserva-o-elenco-escolhido.md).
+
 Ferramenta do repositório (`tools/forja/`) para agentes de IA e pessoas
 produzirem pixel art do Empire com geradores de imagem — ChatGPT/gpt-image,
 Gemini, PixelLab ou desenho à mão. Ela não é um modelo de imagem: é o que fica
@@ -40,7 +45,7 @@ mundo ([ADR 0098](../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md)
 
 A 29/10 passou a falar Aseprite: lê, escreve, renderiza e exporta o `.aseprite` 1.3 como o aplicativo, provado contra
 o Aseprite 1.3.18.6 compilado, com as camadas por slot e as tags por animação da Asset Bible
-([ADR 0099](../adr/0099-a-forja-fala-aseprite-provado-contra-o-aplicativo.md)).
+([ADR 0100](../adr/0100-a-forja-fala-aseprite-provado-contra-o-aplicativo.md)).
 
 ```bash
 python3 -m tools.forja --help          # todos os subcomandos
@@ -701,7 +706,7 @@ ficheiro que não é imagem).
   um pixel é pele, pano ou fundo: isso vem das regiões e das rampas (`cores`).
 - **Exportação.** `.aseprite` com os bytes do encoder do Aseprite e relido pelo
   leitor exato (`tools/forja/ase/`), ambos conferidos contra o aplicativo
-  (FORJA-13); JSON no formato do CLI do Aseprite; `.tres` do Godot carregados no
+  (FORJA-14); JSON no formato do CLI do Aseprite; `.tres` do Godot carregados no
   motor fixado pelo teste opcional. As direções das tags (`reverse`, `pingpong`,
   `pingpong_reverse`) saem na ordem em que tocam, cada quadro com a sua duração.
 

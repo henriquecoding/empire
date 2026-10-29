@@ -1,4 +1,4 @@
-"""Subcomandos do Aseprite (FORJA-13): `aseprite` monta o .aseprite de um corpo (uma camada por slot, uma tag por
+"""Subcomandos do Aseprite (FORJA-14): `aseprite` monta o .aseprite de um corpo (uma camada por slot, uma tag por
 animacao, pivot e referencia), `ase` le um .aseprite como o Aseprite o ve e confere as convencoes do Empire, e
 `exportar` escreve as folhas PNG + JSON como a CLI do Aseprite e o `tools/export_aseprite.sh`, sem o Aseprite.
 """

@@ -1,4 +1,4 @@
-"""O contrato de uma cena (forja.scene/1) dentro do .aseprite (FORJA-13; o passo 2 que o FORJA-12 deixou).
+"""O contrato de uma cena (forja.scene/1) dentro do .aseprite (FORJA-14; o passo 2 que o FORJA-12 deixou).
 
 Um quadro e uma tag por estado desenhado (ASSET_BIBLE §3: num edificio, tags = estados); a slice `pivot` no ponto
 que o forge pousa (o centro da base), com a ancora e o chao nos dados; uma slice por vao (`opening_<id>`, com o tipo

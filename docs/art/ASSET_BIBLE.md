@@ -185,7 +185,7 @@ Cada linha do `ASSET_REGISTER.csv` está num destes estados. Só se avança quan
    tentar importar `.aseprite`, §69).
 2. **Exportas** com `tools/export_aseprite.sh <ficheiro.aseprite>`: uma folha por camada, com as tags no JSON.
    O *script* usa a linha de comandos da Aseprite (`--layer`, `--sheet`, `--data`, `--list-tags`). *Correu a
-   29/10 (FORJA-13) com o Aseprite 1.3.18.6 sobre o `Empire troop`: nomes, quadros, tags e durações conferem; o
+   29/10 (FORJA-14) com o Aseprite 1.3.18.6 sobre o `Empire troop`: nomes, quadros, tags e durações conferem; o
    pivot não vai no JSON (Q-302).* `forja exportar` escreve o mesmo sem a Aseprite, e `forja ase` confere o
    ficheiro contra estas regras.
 3. **Importas** com o Godot Aseprite Wizard (§22, §28) para `SpriteFrames`, respeitando tags e camadas. A

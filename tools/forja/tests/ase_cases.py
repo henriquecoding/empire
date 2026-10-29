@@ -1,4 +1,4 @@
-"""Os sprites que a Forja escreve para a prova de conformidade com o Aseprite (FORJA-13).
+"""Os sprites que a Forja escreve para a prova de conformidade com o Aseprite (FORJA-14).
 
 Cobrem o que o gerador em Lua nao alcanca: camada de referencia com limites precisos, grupo colapsado, movimento
 bloqueado, UUID de camadas, slices com varias chaves (e uma escondida), os dezanove tipos de propriedade e um mapa de

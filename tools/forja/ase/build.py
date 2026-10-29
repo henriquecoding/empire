@@ -1,4 +1,4 @@
-"""Montar um sprite a partir de imagens (FORJA-13): cada cel recortada ao conteudo, como o Aseprite a guarda, e as
+"""Montar um sprite a partir de imagens (FORJA-14): cada cel recortada ao conteudo, como o Aseprite a guarda, e as
 cels repetidas na mesma camada ligadas ao primeiro quadro igual (as cels ligadas do Aseprite: a mesma imagem e a
 mesma posicao, editadas uma vez). Os modos de cor sao os do formato: RGBA, Grayscale (valor e alfa) e Indexed (o
 indice; a paleta e a do sprite, e o indice transparente nunca e uma cor desenhada).
