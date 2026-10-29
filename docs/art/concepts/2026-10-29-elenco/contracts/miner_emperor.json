@@ -91,7 +91,51 @@
       "visual_review": {
         "reference": "../reviews/miner_emperor.json"
       },
-      "role": "monarch"
+      "role": "monarch",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Olhar convencido, o desenho do bigode e a separação entre boca e queixo.",
+        "authority_face_box": [
+          432,
+          133,
+          690,
+          370
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "lid",
+            "feature": "lid",
+            "intent": "olhar convencido",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "moustache",
+            "feature": "facial_hair",
+            "intent": "o desenho do bigode",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "mouth",
+            "feature": "mouth",
+            "intent": "boca separada do queixo",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

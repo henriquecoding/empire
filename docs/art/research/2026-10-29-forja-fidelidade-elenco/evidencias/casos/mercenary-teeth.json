@@ -1,0 +1,112 @@
+{
+  "teeth": [
+    [
+      38,
+      23
+    ],
+    [
+      39,
+      23
+    ],
+    [
+      38,
+      24
+    ],
+    [
+      39,
+      24
+    ]
+  ],
+  "erased": [
+    {
+      "cell": [
+        38,
+        23
+      ],
+      "kind": "minority",
+      "color": "#FFFFED",
+      "kept": "#000000",
+      "cell_share": 0.266,
+      "core_share": 0.284,
+      "source_box": [
+        745,
+        451,
+        764,
+        470
+      ],
+      "native": [
+        31,
+        18
+      ],
+      "inside_crop": true
+    },
+    {
+      "cell": [
+        39,
+        23
+      ],
+      "kind": "minority",
+      "color": "#FFF6D1",
+      "kept": "#050403",
+      "cell_share": 0.526,
+      "core_share": 0.538,
+      "source_box": [
+        764,
+        451,
+        784,
+        470
+      ],
+      "native": [
+        32,
+        18
+      ],
+      "inside_crop": true
+    },
+    {
+      "cell": [
+        38,
+        24
+      ],
+      "kind": "minority",
+      "color": "#FFFFFF",
+      "kept": "#040403",
+      "cell_share": 0.526,
+      "core_share": 0.538,
+      "source_box": [
+        745,
+        470,
+        764,
+        490
+      ],
+      "native": [
+        31,
+        19
+      ],
+      "inside_crop": true
+    },
+    {
+      "cell": [
+        39,
+        24
+      ],
+      "kind": "minority",
+      "color": "#FFFFFF",
+      "kept": "#050504",
+      "cell_share": 0.5,
+      "core_share": 0.5,
+      "source_box": [
+        764,
+        470,
+        784,
+        490
+      ],
+      "native": [
+        32,
+        19
+      ],
+      "inside_crop": true
+    }
+  ],
+  "already_repaired_in_v3": true,
+  "demonstrates": "Perda na etapa original; nao afirmar que os quatro continuam ausentes no PNG v3."
+}

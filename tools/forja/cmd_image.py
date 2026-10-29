@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 
 from . import cleanup, contracts, expectation, gridcheck, lint, loss, outline, palette as palmod, pipeline
-from . import quantize, resample, scale, signals
+from . import lineage, production, quantize, resample, scale, signals
 from .cli import box, command, out_path, pair
 from .imageops import binarize, open_rgba, upscale
 
@@ -17,16 +17,15 @@ def _options(args) -> pipeline.Options:
                             cells=args.cells, bg=args.bg, tolerance=args.tolerance, method=args.method,
                             outline=getattr(args, "outline_mode", "auto"), dither=args.dither,
                             noise=args.noise, cleanup=args.cleanup, protect=args.protect,
-                            bare=getattr(args, "bare", None),
-                            fit=not getattr(args, "no_fit", False),
+                            bare=getattr(args, "bare", None), fit=not getattr(args, "no_fit", False),
                             pivot=getattr(args, "pivot", None), canvas=getattr(args, "canvas", None),
                             reduce=getattr(args, "reduce", False))
     if getattr(args, "signals", None):
         opts.signals = signals.load(args.signals, open_rgba(args.image))
+    lineage.apply(opts, args)
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
-        from . import production
         selected = production.resolve("", opts.kind, {"kind": exp.get("kind"), "role": exp.get("role")})
         if selected["errors"]:
             raise ValueError("; ".join(selected["errors"]))
@@ -95,7 +94,7 @@ def do_forge(args) -> dict:
             "grid_report": res["snap"]["grid_report"], "native_size": res["snap"]["native_size"],
             "fit": res["finish"].get("fit"), "loss": {k: v for k, v in lost.items() if k != "erased"},
             "signals": {k: sig[k] for k in ("status", "blocked", "pending")}, "delivery": res["delivery"],
-            "occupancy": res["snap"].get("occupancy")}
+            "occupancy": res["snap"].get("occupancy"), "lineage": lineage.summary(res["lineage"])}
 
 
 def do_lint(args) -> dict:
@@ -203,6 +202,7 @@ def register(sub) -> None:
                    "para caber (adaptacao com perda, nao recuperacao); sai marcada assim")
     p.add_argument("--signals", help="forja.signals/1 desta imagem: pinos (pixel e cor declarados) e regioes "
                    "criticas, verificados ate ao PNG final")
+    lineage.cli_args(p)
     p = command(sub, "lint", "Conferir um PNG contra o contrato (achados, correcoes e prompt corretivo)", do_lint)
     p.add_argument("image")
     p.add_argument("--kind", default="free", choices=contracts.kinds())

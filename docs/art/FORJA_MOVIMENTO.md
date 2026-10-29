@@ -1,6 +1,6 @@
 # Forja — poses, movimento e cenários locais
 
-ADR 0101 · FORJA-15 · 29/10/2026. Ferramentas de estudo e revisão; arte aprovada
+ADR 0102 · FORJA-16 · 29/10/2026. Ferramentas de estudo e revisão; arte aprovada
 continua a exigir o dono e o registo de referências. Começar pelo
 [guia de personagens](CHARACTER_PRODUCTION_GUIDE.md), [Forja](FORJA.md) e
 [Aseprite](ASEPRITE_WORKFLOW.md).

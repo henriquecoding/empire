@@ -1,0 +1,363 @@
+{
+ "schema": "empire.forja_prova/1",
+ "ticket": "FORJA-15",
+ "audit": "AUDITORIA.md (29/10/2026)",
+ "chain": {
+  "first_stage": {
+   "purity": 0.97,
+   "erased": 5,
+   "critical": 4
+  },
+  "second_stage": {
+   "erased": 0,
+   "carried": 5,
+   "closure": "blocked"
+  }
+ },
+ "flask": {
+  "v3_pair": {
+   "status": "pending",
+   "envelopes": {
+    "alchemist_emperor": [
+     13,
+     20
+    ],
+    "alchemist_squire": [
+     13,
+     20
+    ]
+   },
+   "declared": null
+  },
+  "shapes": {
+   "molde": "pass",
+   "bojo_fino_gargalo_longo": "fail",
+   "espelho_declarado": "pass",
+   "espelho_nao_declarado": "fail",
+   "modelo_proposto": "inconclusive"
+  }
+ },
+ "faces": {
+  "conceito": {
+   "status": "pass",
+   "failed": []
+  },
+  "pupila_movida": {
+   "status": "blocked",
+   "failed": [
+    "gaze"
+   ]
+  },
+  "linha_neutra": {
+   "status": "blocked",
+   "failed": [
+    "smile"
+   ]
+  }
+ },
+ "cast": [
+  {
+   "character": "corsair_empress",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "90b9b3f628d060f9ecb108a7bf1e18fa8cf4639af71d706380267e6c25d8724f"
+  },
+  {
+   "character": "corsair_squire",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "dc64ea62dc9aa046be463a22ba137214d4f588d7bf1b90e3bef304dfaf9429ac"
+  },
+  {
+   "character": "miner_emperor",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "b6e493c1cef4648b7a6a8105283fa08bd2672b5c6e1338758b565e4028a1084f"
+  },
+  {
+   "character": "miner_squire",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "f8b2fe5c1f1c5897abd91d00187a31ef3a060dbda0a05e38b8f979c4e6a7c4d9"
+  },
+  {
+   "character": "alchemist_emperor",
+   "face_sheet": "pending_annotation",
+   "landmarks": 7,
+   "landmarks_in_concept": 7,
+   "relations": 2,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [
+    "alchemy_standard_flask"
+   ],
+   "authority_crop_pixels_sha256": "becf02ed040bdfc5ae687dc8e3b4cc91c4ce3841d0098778c353453bf91dcbfe"
+  },
+  {
+   "character": "alchemist_squire",
+   "face_sheet": "pending_annotation",
+   "landmarks": 7,
+   "landmarks_in_concept": 6,
+   "relations": 3,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [
+    "alchemy_standard_flask"
+   ],
+   "authority_crop_pixels_sha256": "dc5237ea90721d89cc7e7d34bd55ea6405228ec3d1849da01d671296a89bf317"
+  },
+  {
+   "character": "cook",
+   "face_sheet": "pending_annotation",
+   "landmarks": 4,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "c7e8e398a085128ecdfb3a4e69d0e84446390ebf5d2c78594efcf0093a972185"
+  },
+  {
+   "character": "diplomat_original",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "a3b910e436bcfb3d9c50d35daee3d1d3d83fd26573352e2e20077978beaec0de"
+  },
+  {
+   "character": "diplomat_08",
+   "face_sheet": "pending_annotation",
+   "landmarks": 2,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "4d554cfe1bc8ad35dacf6577aff99ff9a4702f9d0922c03ac7ff228b31c3e7cb"
+  },
+  {
+   "character": "builder",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "240f8678ee69b7c714119b1bf91c3404d3bd732d1dde0b48eca29125eb87ba0f"
+  },
+  {
+   "character": "mercenary",
+   "face_sheet": "pending_annotation",
+   "landmarks": 5,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "f9afc24f238e56d8ba545ccd8cc736ca1d073dcca1d3bd500050302c78cc14d2"
+  },
+  {
+   "character": "farmer",
+   "face_sheet": "pending_annotation",
+   "landmarks": 4,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "03ee0853c9ef903b3365246db5abe08d55db2be2d867d1e18278607b49ba4545"
+  },
+  {
+   "character": "steward",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "a8ac71b98755abab849978a00132e26ad1bbd18bcce7e38666fc93b01bdd5d1a"
+  },
+  {
+   "character": "root_berserker",
+   "face_sheet": "pending_annotation",
+   "landmarks": 3,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "ee75976b273ec59314a006393650b4653c3495d2a12fee1efaaab333f939ef83"
+  },
+  {
+   "character": "spearman",
+   "face_sheet": "pending_annotation",
+   "landmarks": 4,
+   "landmarks_in_concept": 0,
+   "relations": 0,
+   "reserved_in_native_grid": 0,
+   "face_check": "pending",
+   "shared_props": [],
+   "authority_crop_pixels_sha256": "d86a76545805eaeec46664bca5c053fcdca1a17e61bebd9108a0bf481ce4792e"
+  }
+ ],
+ "reviewed_good_examples": 0,
+ "limits": [
+  "nenhum mestre nativo aprovado: sem exemplos bons revistos no benchmark",
+  "o molde do frasco e as caixas nativas dos marcos estao por desenhar e aprovar (Q-304, Q-305)",
+  "fixtures sinteticas isolam a medida; nao sao o frasco nem o rosto de nenhum personagem"
+ ],
+ "checks": [
+  {
+   "check": "dentes_apagados_com_pureza_0970",
+   "status": "pass",
+   "purity": 0.97,
+   "erased": 5
+  },
+  {
+   "check": "dentes_criticos_com_votos",
+   "status": "pass",
+   "votes": [
+    [
+     "#000000",
+     "#040303",
+     "#FFFFED"
+    ],
+    [
+     "#000000",
+     "#070605",
+     "#FFF6D1"
+    ],
+    [
+     "#000000",
+     "#FFFFFF",
+     "#070707"
+    ],
+    [
+     "#000000",
+     "#040200",
+     "#FFFFFF"
+    ]
+   ]
+  },
+  {
+   "check": "reexportar_nao_encerra",
+   "status": "pass",
+   "open": [
+    "1:38,23",
+    "1:39,23",
+    "1:38,24",
+    "1:39,24"
+   ]
+  },
+  {
+   "check": "base_nativa_sem_cadeia_fica_pendente",
+   "status": "pass"
+  },
+  {
+   "check": "forge_nao_chama_entrega",
+   "status": "pass",
+   "labels": [
+    "blocked",
+    "study"
+   ]
+  },
+  {
+   "check": "mascara_do_png_v3_alchemist_emperor",
+   "status": "pass"
+  },
+  {
+   "check": "mascara_do_png_v3_alchemist_squire",
+   "status": "pass"
+  },
+  {
+   "check": "v3_mesmo_envelope_nao_prova_o_molde",
+   "status": "pass"
+  },
+  {
+   "check": "mutacao_99x3_recusada",
+   "status": "pass",
+   "errors": [
+    "alchemist_squire/idle: shared_prop alchemy_standard_flask: 99x3 nao cabe na tela 64x64"
+   ]
+  },
+  {
+   "check": "forma_do_frasco",
+   "status": "pass",
+   "shapes": {
+    "molde": "pass",
+    "bojo_fino_gargalo_longo": "fail",
+    "espelho_declarado": "pass",
+    "espelho_nao_declarado": "fail",
+    "modelo_proposto": "inconclusive"
+   }
+  },
+  {
+   "check": "rosto_t05_t06",
+   "status": "pass",
+   "faces": {
+    "conceito": {
+     "status": "pass",
+     "failed": []
+    },
+    "pupila_movida": {
+     "status": "blocked",
+     "failed": [
+      "gaze"
+     ]
+    },
+    "linha_neutra": {
+     "status": "blocked",
+     "failed": [
+      "smile"
+     ]
+    }
+   }
+  },
+  {
+   "check": "pinos_do_candidato_nao_provam",
+   "status": "pass"
+  },
+  {
+   "check": "nenhum_mestre_aprovado_no_registo",
+   "status": "pass"
+  },
+  {
+   "check": "elenco_completo_com_ficha",
+   "status": "pass"
+  },
+  {
+   "check": "ficha_pendente_nao_passa",
+   "status": "pass"
+  },
+  {
+   "check": "par_dos_alquimistas_anotado",
+   "status": "pass"
+  }
+ ]
+}

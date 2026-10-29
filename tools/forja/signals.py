@@ -184,6 +184,15 @@ def regions(declared: list[dict], erased: list[dict] | None, info: dict | None) 
     return out
 
 
+def final_state(final: Image.Image, snapinfo: dict, finishinfo: dict | None, declared: dict | None) -> dict:
+    """Os sinais declarados depois do ultimo passo que muda pixels (FORJA-07), so desta etapa (`scope`)."""
+    declared = declared or {}
+    pins = verify_pins(final, snapinfo.get("pins", []), finishinfo)
+    pins += target_pins(final, [p for p in declared.get("pins", []) if p.get("target_pixel")])
+    erased = (snapinfo.get("loss") or {}).get("erased", [])
+    return {**state(pins, regions(declared.get("regions", []), erased, finishinfo)), "scope": "this_stage"}
+
+
 def state(pins: list[dict], regs: list[dict]) -> dict:
     """O estado dos sinais declarados: blocked, pending ou pass, com as razoes."""
     blocked = ([f"pino {p['id']}: {p['state']}" for p in pins if p["state"] in ("lost", "layout_conflict")]

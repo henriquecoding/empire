@@ -91,7 +91,51 @@
       "visual_review": {
         "reference": "../reviews/corsair_squire.json"
       },
-      "role": "squire"
+      "role": "squire",
+      "face_sheet": {
+        "schema": "forja.face_sheet/1",
+        "status": "pending_annotation",
+        "intent": "Olhar lateral e boca contrariada.",
+        "authority_face_box": [
+          1050,
+          292,
+          1291,
+          468
+        ],
+        "target_mirrored": false,
+        "landmarks": [
+          {
+            "id": "pupil",
+            "feature": "pupil",
+            "intent": "olhar de lado",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "eye",
+            "feature": "eye",
+            "intent": "olho que contém a pupila",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          },
+          {
+            "id": "mouth",
+            "feature": "mouth",
+            "intent": "boca contrariada",
+            "authority_box": null,
+            "target_box": null,
+            "colors": null,
+            "source": "authority"
+          }
+        ],
+        "relations": [],
+        "source": "auditoria de fidelidade de 29/10 (docs/art/research/2026-10-29-forja-fidelidade-elenco/AUDITORIA.md, §10)",
+        "note": "Marcos e relações no sentido do conceito; target_box e cores por reservar no layout nativo de cada sprite. O conceito escolhido prevalece: nariz grande, assimetria, dentes irregulares e olhos semicerrados são escolhas, não ruído."
+      }
     }
   ]
 }

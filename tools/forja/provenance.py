@@ -26,16 +26,20 @@ def commit() -> str | None:
 
 
 def record(source: str | Path | None, generator: str | None, prompt: str | None, params: dict,
-           seen: dict | None = None) -> dict:
-    """`seen`: o que a abertura fez a imagem antes de a ler (orientacao EXIF, perfil ICC; imageops.open_rgba)."""
+           seen: dict | None = None, lineage: dict | None = None) -> dict:
+    """`seen`: o que a abertura fez a imagem antes de a ler (orientacao EXIF, perfil ICC; imageops.open_rgba).
+    `lineage`: a cadeia (FORJA-15) — a entrada nao e so um ficheiro, e a saida de uma etapa com ancestrais."""
     src = Path(source) if source else None
+    chain = ({"stages": [{k: s[k] for k in ("n", "stage", "input_sha256", "output_sha256")} for s in lineage["stages"]],
+              "root": lineage["root"], "occurrences": len(lineage["occurrences"])} if lineage else None)
     return {
         "tool": "forja", "version": __version__, "commit": commit(),
         "created_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "input": {"path": str(src) if src else None, "sha256": sha256(src) if src and src.exists() else None,
                   **({"opened": seen} if seen else {})},
         "generator": generator or "desconhecido", "prompt": prompt,
-        "params": {k: (list(v) if isinstance(v, tuple) else v) for k, v in params.items()},
+        "params": {k: (list(v) if isinstance(v, tuple) else v) for k, v in params.items() if k != "lineage"},
+        **({"lineage": chain} if chain else {}),
         "state": {"adapted_from_generated_image": True, "manual_review": "pendente",
                   "artistic_approval": False, "tested_in_godot": False},
     }

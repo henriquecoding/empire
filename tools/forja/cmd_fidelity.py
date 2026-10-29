@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import contracts, fidelity, lint, palette as palmod, refs, review_state, visual_review
+from . import contracts, fidelity, lineage, lint, palette as palmod, refs, review_state, visual_review
 from .cli import command, out_path
 from .equipment import image_sha
 from .imageops import open_rgba
@@ -47,8 +47,9 @@ def do_fidelity(args) -> dict:
         raster = lint.check(candidate, c, palmod.load(args.palette or palmod.ROOT / c.palette), frame=bool(c.canvas))
         forge = json.loads(Path(args.forge_json).read_text(encoding="utf-8")) if args.forge_json else None
         visual = visual_review.load(args.visual_review) if args.visual_review else None
-        rev = review_state.review(ch, candidate, refs.load(args.refs) if args.refs else None, raster, forge, visual)
-        result.update(review=rev, ok=not rev["blocked"], deliverable=rev["deliverable"])
+        rev = review_state.review(ch, candidate, refs.load(args.refs) if args.refs else None, raster, forge, visual,
+                                  lineage.load_resolutions(args.resolutions))
+        result.update(review=rev, ok=not rev["blocked"], deliverable=rev["deliverable"], label=rev["label"])
         if args.sheet:
             path = out_path(args.sheet, Path(args.sheet))
             review_state.sheet(contract, ch, candidate).save(path)
@@ -68,5 +69,7 @@ def register(sub) -> None:
     p.add_argument("--refs", help="registo forja.refs/1: rejeitada ou aprovada pelo dono, para esta imagem exata")
     p.add_argument("--palette", help="paleta do runtime (por omissao a do contrato da pose)")
     p.add_argument("--sheet", help="PNG com o conceito e o candidato lado a lado (1x e ampliado por inteiro)")
+    p.add_argument("--resolutions", help="forja.loss_resolutions/1: reparo provado nesta imagem, excecao autorizada "
+                   "ou revisao inconclusiva, uma por ocorrencia herdada (FORJA-15)")
     p.add_argument("--visual-review", help="revisao forja.visual_review/1 deste candidato (forja visual): bloqueia "
                    "com um defeito certo, deixa pendente o incerto e da os reference_issue_reviews dos reparos")

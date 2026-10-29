@@ -1,4 +1,4 @@
-"""Pose nativa: coordenadas da tela, anatomia, apoios e oclusao separados (FORJA-15)."""
+"""Pose nativa: coordenadas da tela, anatomia, apoios e oclusao separados (FORJA-16)."""
 from __future__ import annotations
 
 import math

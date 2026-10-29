@@ -1,4 +1,4 @@
-# ADR 0101 — coreografia e revisão de movimento na Forja
+# ADR 0102 — coreografia e revisão de movimento na Forja
 
 Data: 29/10/2026 · Estado: aceite para ferramentas, por pedido do dono.
 
@@ -46,7 +46,7 @@ de produção e revisão. Métodos experimentais não viram dependências sem pi
 
 ## Evidência e uso
 
-[FORJA-15](../backlog/FORJA-15.md), [guia operacional](../art/FORJA_MOVIMENTO.md),
+[FORJA-16](../backlog/FORJA-16.md), [guia operacional](../art/FORJA_MOVIMENTO.md),
 testes `test_choreography`, `test_clip_delivery`, `test_scene_motion`,
 `test_motion_benchmark`, `tests/web/forja.test.mjs` e `tests/web/forja-ui.mjs`.
 

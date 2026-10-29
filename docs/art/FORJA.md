@@ -48,6 +48,11 @@ tinha tela de personagem por omissão, prompt de rosto e pose e nada que conferi
 Forja passou a desenhar pela régua dos atores reais, com um contrato de cena, uma revisão estrutural e a bancada no
 mundo ([ADR 0098](../adr/0098-a-forja-desenha-cenarios-pela-regua-dos-atores.md)).
 
+A [auditoria de fidelidade de 29/10](research/2026-10-29-forja-fidelidade-elenco/README.md) mostrou que dimensões
+certas e pixels protegidos não conservaram a poção nem a personalidade do elenco: a entrega passou a fechar pela
+cadeia de etapas e pelo conceito ([ADR 0101](../adr/0101-a-forja-fecha-a-entrega-pela-cadeia-e-pelo-conceito.md),
+secção [«Fechar pela cadeia e pelo conceito»](#fechar-pela-cadeia-e-pelo-conceito)).
+
 A 29/10 passou a falar Aseprite: lê, escreve, renderiza e exporta o `.aseprite` 1.3 como o aplicativo, provado contra
 o Aseprite 1.3.18.6 compilado, com as camadas por slot e as tags por animação da Asset Bible
 ([ADR 0100](../adr/0100-a-forja-fala-aseprite-provado-contra-o-aplicativo.md)).
@@ -401,6 +406,55 @@ forja fidelity $CONTRATO --character arqueiro --candidate build/forja/arq/gerado
   --forge-json build/forja/arq/gerado.json --sheet build/forja/arq/lado-a-lado.png
 ```
 
+## Fechar pela cadeia e pelo conceito
+
+A [auditoria de fidelidade de 29/10](research/2026-10-29-forja-fidelidade-elenco/README.md) (ADR 0101) achou quatro
+casos nos 15 sprites v3: dois frascos 13×20 com bojos diferentes a passar pelo envelope, a personalidade reduzida a
+marcas genéricas com pinos tirados da própria adaptação, quatro dentes da mercenária apagados com pureza 0,970 e a
+última etapa com zero perdas por começar numa base já nativa. Mudou isto:
+
+1. **A cadeia** (`forja.lineage/1`). O `forge` grava a etapa (hash dos pixels à entrada e à saída, grade, recorte,
+   contorno, cluster, tela) e as perdas novas; com `--lineage anterior.json` leva as de antes pelas coordenadas desta
+   (uma entrada que não é a saída da anterior é recusada); `--native-root` declara que uma base já nativa é a origem
+   (desenho nativo). O `patch --lineage` acrescenta a edição: o que cai na máscara fica marcado, não resolvido. Cada
+   perda numa região obrigatória é crítica e leva os votos da célula, a margem e a confiança da grade.
+2. **Um fecho só.** O `forge` diz `delivery.raster_valid` e `label` (`study` ou `blocked`), nunca `release_ready`
+   (saiu o `usable_sprite`). `forja fidelity --candidate --forge-json [--resolutions]` fecha: `deliverable` e
+   `release_ready` pedem os quatro estados em `pass` e nenhuma perda crítica aberta. Uma resolução
+   (`forja.loss_resolutions/1`) é `repaired` com os pixels e as cores nesta imagem exata e no sítio da ocorrência,
+   `excepted` com `authorized_by` e data, ou `inconclusive` (continua aberta); um reparo libera só a sua ocorrência.
+   Um estudo exporta-se, mas não se chama mestre.
+3. **O objeto partilhado.** `shared_prop_constraints` valida-se (par, escala, medida dentro da tela, variações) e o
+   elenco confere o par. O frasco é a família `flask` (`body`, `neck`, `lip`, `cork`, `liquid`, `highlight`) e, com
+   `model` no manifesto, compara-se com o molde nativo `forja.prop_model/1` (linhas e legenda, `authored_from` no
+   conceito): envelope, largura por linha de cada parte e IoU, sem a cor e sem o que o oclusor declarado tapa; espelho
+   só com `orientation` nas variações; contra um modelo `proposed`, no máximo `inconclusive`. `forja par` mede as duas
+   imagens da dupla e a pega (os contactos).
+4. **A ficha facial** (`forja.face_sheet/1`, no contrato de fidelidade): a intenção da expressão, os marcos (olho,
+   pálpebra, pupila, sobrancelha, nariz, cantos da boca, dentes, pelos) com a caixa no conceito e a caixa e as cores
+   reservadas na grade, e as relações (`offset` para o olhar, `asymmetry` para o sorriso torto, `above`, `pieces` para
+   os dentes separados, `extent` para o nariz que se projeta), medidas em agrupamentos de pixels. O estado
+   `declared_feature_preservation` conta só os sinais herdados da autoridade (regiões, ficha, pinos com
+   `source_kind: authority` e `authority_xy`); os pinos do candidato ficam em `candidate_protection`. A ficha vai para o
+   pedido fiel como regra do dono. Os 15 contratos têm-na `pending_annotation`; o par dos alquimistas, anotado no
+   conceito (Q-305).
+5. **O lote.** `forja lote pasta [--previous anterior]` dá uma entrada por personagem do elenco, com ou sem candidato,
+   com os estados separados e quem ficou igual à entrega anterior.
+
+```bash
+forja forge gerado.png --expect pedido/expect.json --signals sinais.json -o build/forja/a
+forja forge build/forja/a/gerado.png --lineage build/forja/a/gerado.json -o build/forja/b   # a base nativa: herda
+forja patch build/forja/b/gerado.png rosto.patch.json --lineage build/forja/b/gerado.json -o build/forja/c
+forja fidelity CONTRATO --character mercenary --candidate build/forja/c/gerado_patch.png \
+  --forge-json build/forja/c/gerado_patch.json --resolutions resolucoes.json
+forja par --constraint alchemy_standard_flask --side alchemist_emperor e.png e-man.json e-obs.json \
+  --side alchemist_squire s.png s-man.json s-obs.json
+forja lote build/forja/elenco --previous build/forja/elenco-v2 -o build/forja/elenco/lote.json
+```
+
+O `forja fidelity` com `--forge-json` lê a cadeia do campo `lineage` do JSON; o do `patch` tem-na no relatório. O
+`.aseprite` exportado não leva o rótulo de estudo: fica no JSON.
+
 ## Cenários e construções
 
 Um edifício não tem rosto nem pose; tem a inclinação do telhado, o beiral, a porta que um ator usa, a chaminé ligada,
@@ -669,7 +723,8 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `prompt` / `plan` / `generate` / `auto` / `inpaint` | O lado do gerador: pedir, planear sem rede, gerar com job e teto |
 | `equip` / `line` | Vereditos de equipamento contra o manifesto e a observação; a corda refeita na máscara, na cor declarada |
 | `refs` / `verify` | O registo de autoridade das referências; reconferir um candidato contra o mestre, só a ler, e dizer se a entrega fecha (`--signals`: os pinos no PNG final) |
-| `fidelity` | O contrato de fidelidade: conferir a autoridade, gravar o recorte de uma pose, rever um candidato em quatro estados e pô-lo ao lado do conceito |
+| `fidelity` | O contrato de fidelidade: conferir a autoridade, gravar o recorte de uma pose, rever um candidato em quatro estados com a cadeia das perdas (`--resolutions`) e pô-lo ao lado do conceito |
+| `par` / `lote` | O objeto partilhado de uma dupla contra o molde e a pega; uma entrada por personagem do elenco, estados separados (só leem) |
 | `cores` | A cor no espaço: fragmentos N4/N8 e o estado de cada um; com plano, rampas por material e agrupamento só nas regiões editáveis |
 | `visual` | A revisão visual de uma imagem exata (referência ou candidato): validar, estado com o incerto visível, imagem marcada, observação para o `equip` |
 | `patch` | Editar pixels nativos por operações explícitas numa máscara, com protegidos, hashes antes/depois e diferença |
@@ -725,6 +780,11 @@ ficheiro que não é imagem).
   cor das emendas (0,02 OKLab) é provisória até haver pares aceites e rejeitados; o significado de um estado não se
   mede (FORJA-12).
 
+- **Fidelidade do elenco (FORJA-15).** A Forja mede o que o contrato declara e a observação marcou: o molde contra o
+  modelo, as relações da ficha nos marcos reservados e as perdas na cadeia. Não reconhece um dente nem uma pálpebra
+  sozinha, e uma relação que passa não prova que a expressão ficou boa: a revisão visual e o dono decidem. O molde do
+  frasco e as caixas nativas dos marcos estão por desenhar e aprovar (Q-304, Q-305) e os limiares são provisórios
+  (Q-306); até lá o par e a ficha ficam pendentes de propósito.
 - Uma imagem forjada é **adaptação de imagem gerada**. A proveniência grava a
   entrada, o prompt, o gerador e os parâmetros, com `artistic_approval: false`
   e `manual_review: pendente`. Cumprir o contrato não é aprovação artística: as cinco

@@ -49,10 +49,10 @@ def build_parser() -> argparse.ArgumentParser:
                     "nos contratos do Empire. Guia: docs/art/FORJA.md")
     parser.add_argument("--version", action="version", version=f"forja {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
-    from . import (cmd_ai, cmd_ase, cmd_cast, cmd_cenario, cmd_choreography, cmd_cores, cmd_equip, cmd_fidelity, cmd_image, cmd_local,
-                   cmd_make, cmd_motion_study, cmd_patch, cmd_visual)
+    from . import (cmd_ai, cmd_ase, cmd_cast, cmd_cenario, cmd_choreography, cmd_cores, cmd_equip,
+                   cmd_fidelity, cmd_image, cmd_local, cmd_lote, cmd_make, cmd_motion_study, cmd_patch, cmd_visual)
     for module in (cmd_image, cmd_make, cmd_ase, cmd_ai, cmd_local, cmd_equip, cmd_cores, cmd_fidelity, cmd_visual,
-                   cmd_patch, cmd_cenario, cmd_cast, cmd_choreography, cmd_motion_study):
+                   cmd_patch, cmd_cenario, cmd_cast, cmd_lote, cmd_choreography, cmd_motion_study):
         module.register(sub)
     return parser
 

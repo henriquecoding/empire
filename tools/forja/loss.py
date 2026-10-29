@@ -81,6 +81,23 @@ def observe(image: Image.Image, grid: Grid, native: Image.Image, inset: float = 
     return summary(erased, absorbed, cols * rows)
 
 
+def votes(rgba: Image.Image, box, core) -> list[dict]:
+    """Os grupos de cor da celula (OKLab < NEAR do mais pesado), com a parte na celula e no miolo: o voto que ganhou
+    e as alternativas, para a revisao ver a escolha em vez de a adivinhar (FORJA-15, P1-01). Nao muda o voto."""
+    cell, mid = rgba.crop(box), rgba.crop(core)
+    area, core_area = max(1, cell.width * cell.height), max(1, mid.width * mid.height)
+    inner = {p[:3]: n for n, p in mid.getcolors(core_area) or [] if p[3] >= 128}
+    left = sorted(((n, p[:3]) for n, p in cell.getcolors(area) or [] if p[3] >= 128), reverse=True)
+    out = []
+    while left and len(out) < 3:
+        head = left[0][1]
+        group = [(n, c) for n, c in left if color.delta(c, head) < NEAR]
+        left = [(n, c) for n, c in left if color.delta(c, head) >= NEAR]
+        out.append({"color": color.to_hex(head), "cell_share": round(sum(n for n, _ in group) / area, 3),
+                    "core_share": round(sum(inner.get(c, 0) for _, c in group) / core_area, 3)})
+    return out
+
+
 def _record(rgba, box, inset, cell, here, gone, share) -> dict:
     core = _inner(*box, inset)
     lost = {c for _, c in gone}
@@ -89,8 +106,11 @@ def _record(rgba, box, inset, cell, here, gone, share) -> dict:
     core_share = inner / max(1, region.width * region.height)
     kind = "alpha_discarded" if here is None else ("minority" if inner else "outside_core")
     main = max(gone)[1]
+    vs = votes(rgba, box, core)
+    won = next((v["core_share"] for v in vs if here and color.delta(color.parse_hex(v["color"]), here) < NEAR), 0.0)
     return {"cell": list(cell), "kind": kind, "color": color.to_hex(main), "kept": color.to_hex(here) if here else None,
-            "cell_share": round(share, 3), "core_share": round(core_share, 3), "source_box": list(box)}
+            "cell_share": round(share, 3), "core_share": round(core_share, 3), "source_box": list(box),
+            "votes": vs, "margin": round(won - round(core_share, 3), 3)}
 
 
 def summary(erased: list[dict], absorbed: int, cells: int) -> dict:

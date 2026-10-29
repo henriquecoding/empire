@@ -1,0 +1,31 @@
+{
+  "code_matches_audited_snapshot": true,
+  "grid": [
+    64,
+    64
+  ],
+  "purity": 0.97,
+  "erased": 5,
+  "erased_tooth_cells": [
+    [
+      38,
+      23
+    ],
+    [
+      39,
+      23
+    ],
+    [
+      38,
+      24
+    ],
+    [
+      39,
+      24
+    ]
+  ],
+  "original_validation": [],
+  "mutated_shared_dimensions_validation": [],
+  "scope": "O teste minimo de contrato executa production.validate; a auditoria completa tambem executou fidelity.validate.",
+  "warning": "Diagnostico do comportamento defeituoso original, nao suite de aceite de uma correcao."
+}

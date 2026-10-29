@@ -34,6 +34,10 @@ FAMILIES = {
     "shield": {"parts": {"face": 1, "rim": 1, "grip": 1}, "behavior": "rigid",
                "states": ("carried", "held", "block")},
     "storage": {"parts": {"container": 1, "strap": 1}, "behavior": "cloth", "states": ("worn", "carried")},
+    # FORJA-15 (P0-02): o frasco de vidro do alquimista; o liquido e o brilho mudam de cor, nao de molde
+    "flask": {"parts": {"body": 1, "neck": 1, "lip": 1, "cork": 1, "liquid": 1, "highlight": 1},
+              "optional": ("liquid", "highlight"), "behavior": "rigid",
+              "states": ("held", "offered", "carried", "stowed")},
 }
 SLOTS = ("weapon", "shield", "storage", "head", "face")
 REFERENCE_STATUS = ("aprovada", "estudo", "rejeitada")
@@ -43,7 +47,8 @@ SCHEMA, OBS_SCHEMA = "forja.equipment/1", "forja.observation/1"
 
 
 def load(path: str | Path) -> dict:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    """O manifesto; `_base` e a pasta dele, para um `model` relativo (FORJA-15)."""
+    return {**json.loads(Path(path).read_text(encoding="utf-8")), "_base": str(Path(path).resolve().parent)}
 
 
 def _gameplay(obj, where: str) -> list[str]:
@@ -101,7 +106,8 @@ def items(manifest: dict) -> list[dict]:
         for part, count in fam["parts"].items():
             given = item.get("parts", {}).get(part, {})
             joins = [f"{item['id']}.{p}" for p in fam.get("joins", {}).get(part, ())]
-            parts[part] = {"count": given.get("count", count), "optional": bool(given.get("optional")),
+            parts[part] = {"count": given.get("count", count),
+                           "optional": bool(given.get("optional", part in fam.get("optional", ()))),
                            "hidden": bool(given.get("hidden")), "occluders": list(given.get("occluders", [])),
                            "joins": joins,
                            "max_width": given.get("max_width", 1 if part == fam.get("line") else None)}

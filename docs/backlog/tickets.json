@@ -3273,10 +3273,26 @@
   "notas": []
  },
  "FORJA-15": {
+  "title": "Auditoria de fidelidade de 29/10: a entrega fecha pela cadeia e pelo conceito",
+  "porque": "A auditoria do dono sobre os 15 sprites v3 do elenco mostrou que dimensões certas e pixels protegidos não conservaram a poção nem a personalidade: os dois frascos 13×20 tinham bojos diferentes e a restrição partilhada não tinha leitor (99×3 passava), os pinos saíam da própria adaptação, quatro dentes da mercenária sumiram com pureza 0,970, a etapa final dizia zero perdas por começar numa base já nativa e usable_sprite era verdadeiro com a entrega pendente.",
+  "spec": [
+   "docs/art/research/2026-10-29-forja-fidelidade-elenco/README.md",
+   "docs/adr/0101-a-forja-fecha-a-entrega-pela-cadeia-e-pelo-conceito.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-13",
+  "feito": "A cadeia de etapas forja.lineage/1 com as perdas herdadas e as resoluções; o fecho único (raster_valid no forge, release_ready no fidelity, rótulo study/release/blocked); o esquema e o par de shared_prop_constraints, a família flask, o molde forja.prop_model/1 e forja par; a ficha facial forja.face_sheet/1 nos 15 contratos, os sinais da autoridade separados dos pinos do candidato e a ficha no pedido fiel; votos, margem e confiança por célula apagada, redraw_region e inherited_loss; forja lote; a precedência no EXPRESSION_GUIDE; os testes T01–T13 e a prova do elenco.",
+  "fora": "O molde nativo do frasco, as caixas nativas dos marcos e os limiares ficam para o dono (Q-304–Q-306); a revisão e a nova geração dos 15 sprites; o rótulo de estudo no .aseprite; aprovação artística; arte em art/.",
+  "estado": "parcial — P0-01, P0-02, P0-03, P1-01, P1-02 e P2-01 aplicados na Forja com os testes T01–T13 e a prova do elenco; o molde do frasco, as caixas nativas dos marcos e a revisão dos 15 sprites ficam para o dono (Q-304–Q-306)",
+  "horas": "—",
+  "passos": [],
+  "notas": []
+ },
+ "FORJA-16": {
   "title": "Coreografia, animação e bancada de revisão",
   "porque": "Implementar a pesquisa sobre poses, animações e cenários, com contratos e evidência por quadro.",
   "spec": [
-   "docs/adr/0101-coreografia-e-revisao-de-movimento-na-forja.md",
+   "docs/adr/0102-coreografia-e-revisao-de-movimento-na-forja.md",
    "docs/art/FORJA_MOVIMENTO.md"
   ],
   "depende": "FORJA-14",
