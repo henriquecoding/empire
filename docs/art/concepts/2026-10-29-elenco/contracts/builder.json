@@ -1,0 +1,94 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/builder.png",
+    "sha256": "b00d528917cbdbc7cb1a1618e05f7c160573757559590c22e2f4cabdddd97bdc",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "240f8678ee69b7c714119b1bf91c3404d3bd732d1dde0b48eca29125eb87ba0f",
+    "library_file_id": "libfile_18707532560c8191b8a318f5d27649ee",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "builder",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Human woman with yellow headscarf, dark bob, broad friendly smile and raised eyebrow.",
+        "Cream rolled sleeves, olive work tunic, leather belt pouch and brown boots.",
+        "One large wooden mallet rests across the shoulder with a continuous shaft and visible grip."
+      ],
+      "prompt_invariants": [
+        "Human woman with yellow headscarf, dark bob, broad friendly smile and raised eyebrow.",
+        "Cream rolled sleeves, olive work tunic, leather belt pouch and brown boots.",
+        "One large wooden mallet rests across the shoulder with a continuous shaft and visible grip."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            598,
+            245,
+            920,
+            570
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            231,
+            242,
+            1160,
+            663
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Carries a wooden building mallet and belt pouch for construction work."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/builder.json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "03ee0853c9ef903b3365246db5abe08d55db2be2d867d1e18278607b49ba4545",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "farmer",
+    "declared_role": null
+  },
+  "regions": {
+    "face": {
+      "box": [
+        480,
+        250,
+        875,
+        658
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        701,
+        291,
+        1207,
+        914
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        480,
+        250,
+        875,
+        658
+      ],
+      "description": "Elderly HUMAN farmer with straw hat, white side hair, white moustache and a proud uneven smile.",
+      "evidence": "Elderly HUMAN farmer with straw hat, white side hair, white moustache and a proud uneven smile.; Olive patched tunic, cream sleeves, brown belt and boots.; Both hands hold one large harvested turnip; leaves grow from the turnip, never from his body.; Horta is a human farming civilization; do not turn the farmer into a plant creature."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

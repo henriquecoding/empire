@@ -1,0 +1,97 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-29",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/corsair-pair.png",
+    "sha256": "4a5018561f499469bcae0a3626be2c97ca09216bacf231450d3df502cd84d3b6",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "d70ba6a34d0e43a0ad31be52a2eea57ef8dc8b43402f196cef534386215fb4d6",
+    "library_file_id": "libfile_08e7117a35848191a2005878b7bfcabc",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "corsair_squire",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        940,
+        202,
+        1456,
+        1001
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Young adult fair-skinned red-haired human woman with burgundy cap and an unimpressed expression.",
+        "Slim angular build, long nose and skeptical raised eyebrow; not a small copy of the empress.",
+        "Cream shirt, petrol-blue vest, burgundy neckerchief and brown boots.",
+        "Carries a single tidy coil of hemp rope with visible supporting hands and one belaying pin."
+      ],
+      "prompt_invariants": [
+        "Young adult fair-skinned red-haired human woman with burgundy cap and an unimpressed expression.",
+        "Slim angular build, long nose and skeptical raised eyebrow; not a small copy of the empress.",
+        "Cream shirt, petrol-blue vest, burgundy neckerchief and brown boots.",
+        "Carries a single tidy coil of hemp rope with visible supporting hands and one belaying pin."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            1050,
+            292,
+            1291,
+            468
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            1002,
+            550,
+            1428,
+            842
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Handles ropes and mooring equipment for the corsair empress."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/corsair_squire.json"
+      },
+      "role": "squire"
+    }
+  ]
+}

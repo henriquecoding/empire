@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "a8ac71b98755abab849978a00132e26ad1bbd18bcce7e38666fc93b01bdd5d1a",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "steward",
+    "declared_role": null
+  },
+  "regions": {
+    "face": {
+      "box": [
+        543,
+        238,
+        949,
+        609
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        329,
+        292,
+        1235,
+        952
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        543,
+        238,
+        949,
+        609
+      ],
+      "description": "Elderly human steward with white side hair, small blue hat and an outraged open mouth.",
+      "evidence": "Elderly human steward with white side hair, small blue hat and an outraged open mouth.; Preserve the broad nose, raised brows, blue vest, cream sleeves and burgundy sash.; One large burgundy ledger tucked under an arm and a visible ring of keys in the other hand."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

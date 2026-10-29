@@ -1,0 +1,134 @@
+{
+  "corsair": {
+    "file": "images/corsair-pair.png",
+    "sha256": "4a5018561f499469bcae0a3626be2c97ca09216bacf231450d3df502cd84d3b6",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "d70ba6a34d0e43a0ad31be52a2eea57ef8dc8b43402f196cef534386215fb4d6",
+    "library_file_id": "libfile_08e7117a35848191a2005878b7bfcabc",
+    "native_master_approved": false
+  },
+  "miner": {
+    "file": "images/miner-pair.png",
+    "sha256": "07f8c7d05b2aaf41150a3dae5ec7182258ed1997fee42090dd25c7b1cb0d13a0",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "367f8818da41d13846f93529ab490c87fa5e5f8f56393751bae7934fbe27baa1",
+    "library_file_id": "libfile_fdad8cf6f0d08191a3b7f8b58e781c0e",
+    "native_master_approved": false
+  },
+  "alchemist": {
+    "file": "images/alchemist-pair.png",
+    "sha256": "761c22144034f0d47b0b0dcb55d29c1589b3fcd947af17ad0e9b2603c154f6e8",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "08b4530407acb287368ad270d08fbff61be0efe80f6fd200a5c086f5cb122da8",
+    "library_file_id": null,
+    "native_master_approved": false
+  },
+  "cook": {
+    "file": "images/cook.png",
+    "sha256": "f2d19895aab53bb872f381f22c76b55371f6399b7418334e31ee0f87e3fa5037",
+    "size": [
+      1183,
+      1330
+    ],
+    "pixels_sha256": "c7e8e398a085128ecdfb3a4e69d0e84446390ebf5d2c78594efcf0093a972185",
+    "library_file_id": "libfile_7dcd130ea6248191a90d5b20ebc7d59d",
+    "native_master_approved": false
+  },
+  "diplomat_original": {
+    "file": "images/diplomat-original.png",
+    "sha256": "52503a5f5b3aa1a2ef7d5012e8c48a9f581acc52ad3500816483c76a0c053926",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "a3b910e436bcfb3d9c50d35daee3d1d3d83fd26573352e2e20077978beaec0de",
+    "library_file_id": "libfile_6527ecf45e1881919c0bb3a1806a7909",
+    "native_master_approved": false
+  },
+  "diplomat_08": {
+    "file": "images/diplomat-08.png",
+    "sha256": "b4d374698ccd0a3ccbc6931433afa10fca4ebd99546197764224f0a6598491b9",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "4d554cfe1bc8ad35dacf6577aff99ff9a4702f9d0922c03ac7ff228b31c3e7cb",
+    "library_file_id": "libfile_678c370042e08191baa838590eb8c038",
+    "native_master_approved": false
+  },
+  "builder": {
+    "file": "images/builder.png",
+    "sha256": "b00d528917cbdbc7cb1a1618e05f7c160573757559590c22e2f4cabdddd97bdc",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "240f8678ee69b7c714119b1bf91c3404d3bd732d1dde0b48eca29125eb87ba0f",
+    "library_file_id": "libfile_18707532560c8191b8a318f5d27649ee",
+    "native_master_approved": false
+  },
+  "mercenary": {
+    "file": "images/mercenary.png",
+    "sha256": "a652d234dbd6637ed43f09b784e222908b9fb3f422b59e6d80a4e6aece3957cc",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "f9afc24f238e56d8ba545ccd8cc736ca1d073dcca1d3bd500050302c78cc14d2",
+    "library_file_id": "libfile_7ab6cc0b82d48191a4d7f419150f435b",
+    "native_master_approved": false
+  },
+  "steward": {
+    "file": "images/steward.png",
+    "sha256": "ef2bfb2c974a756236c0adcdefdea55800a99a0be238057f18fe2df0dba5ebbf",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "a8ac71b98755abab849978a00132e26ad1bbd18bcce7e38666fc93b01bdd5d1a",
+    "library_file_id": "libfile_5818e16d6f248191a0b150002bf83ba0",
+    "native_master_approved": false
+  },
+  "farmer": {
+    "file": "images/farmer.png",
+    "sha256": "d87871360136337c8d54477b985b9117a2cc89c9f39323ed9b54bbc5f638ff03",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "03ee0853c9ef903b3365246db5abe08d55db2be2d867d1e18278607b49ba4545",
+    "library_file_id": "libfile_1f5e1ee16f2c8191853b481a8fa20b1c",
+    "native_master_approved": false
+  },
+  "root_berserker": {
+    "file": "images/root-berserker.png",
+    "sha256": "aeb75b49fce3f66f1704cc61796d9e6f70e2117a8c7408ade41b244432c551f8",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "ee75976b273ec59314a006393650b4653c3495d2a12fee1efaaab333f939ef83",
+    "library_file_id": "libfile_2c7d2723c0c481919612953d454e949a",
+    "native_master_approved": false
+  },
+  "spearman": {
+    "file": "images/spearman.png",
+    "sha256": "d8e201a23cbde4a59cf4ef9ddaae0db27ac0caa4e4d99b045653590b689ac274",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "d86a76545805eaeec46664bca5c053fcdca1a17e61bebd9108a0bf481ce4792e",
+    "library_file_id": "libfile_bbd42c3cc7e08191aca702c1c71529a0",
+    "native_master_approved": false
+  }
+}

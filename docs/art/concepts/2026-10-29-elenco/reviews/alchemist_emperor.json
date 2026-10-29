@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "becf02ed040bdfc5ae687dc8e3b4cc91c4ce3841d0098778c353453bf91dcbfe",
+    "size": [
+      700,
+      988
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "alchemist_emperor",
+    "declared_role": "monarch"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        271,
+        123,
+        496,
+        331
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        508,
+        143,
+        675,
+        425
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        271,
+        123,
+        496,
+        331
+      ],
+      "description": "Elderly East Asian human alchemist with white swept-back hair, white eyebrows and a pointed white goatee.",
+      "evidence": "Elderly East Asian human alchemist with white swept-back hair, white eyebrows and a pointed white goatee.; Preserve the original large long projecting nose in the skin color family, with East Asian eyes.; Keep the smug asymmetric grin, crooked gold crown and plum-and-gold royal coat with cream cuffs.; One large corked green potion flask in his raised hand; other hand behind his back."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

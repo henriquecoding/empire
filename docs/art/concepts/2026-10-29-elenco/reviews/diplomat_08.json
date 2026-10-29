@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "4d554cfe1bc8ad35dacf6577aff99ff9a4702f9d0922c03ac7ff228b31c3e7cb",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "diplomat_08",
+    "declared_role": null
+  },
+  "regions": {
+    "face": {
+      "box": [
+        570,
+        270,
+        985,
+        650
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        390,
+        607,
+        760,
+        900
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        570,
+        270,
+        985,
+        650
+      ],
+      "description": "Human diplomat with dark wavy hair, raised brow, large rounded nose and broad self-satisfied grin.",
+      "evidence": "Human diplomat with dark wavy hair, raised brow, large rounded nose and broad self-satisfied grin.; Preserve the burgundy feathered beret, oversized wine coat, cream collar and gold details.; Sealed oversized parchment under one arm and spectacles hanging at the chest; face stays visible."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

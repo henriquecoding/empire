@@ -1,5 +1,10 @@
 # Forja — pixel art de verdade a partir de qualquer gerador
 
+Os [conceitos escolhidos em 28–29/10](concepts/2026-10-29-elenco/README.md) estão integrados no
+catálogo `forja elenco` (MCP: `forja_elenco`). O comando lista o elenco e prepara pedidos com
+as imagens, pares, funções e invariantes certas. `prompt`, `plan` e `auto` também resolvem
+`--character id/alias` no catálogo quando não há `--fidelity` explícito. Ver [ADR 0099](../adr/0099-a-forja-conserva-o-elenco-escolhido.md).
+
 Ferramenta do repositório (`tools/forja/`) para agentes de IA e pessoas
 produzirem pixel art do Empire com geradores de imagem — ChatGPT/gpt-image,
 Gemini, PixelLab ou desenho à mão. Ela não é um modelo de imagem: é o que fica

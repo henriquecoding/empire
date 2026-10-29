@@ -1,0 +1,349 @@
+{
+  "schema": "forja.cast/1",
+  "date": "2026-10-29",
+  "reference_register": "../../docs/art/concepts/2026-10-29-elenco/refs.json",
+  "characters": [
+    {
+      "id": "corsair_empress",
+      "label": "Imperatriz Corsária",
+      "aliases": [
+        "imperatriz_corsaria"
+      ],
+      "kind": "royal_80",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/corsair_empress.json",
+      "subject": "Imperatriz Corsária. Commands through a confident captain stance and carries one functional cutlass.",
+      "paired_with": "corsair_squire",
+      "function": "Commands through a confident captain stance and carries one functional cutlass.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "corsair_squire",
+      "label": "Escudeira das cordas",
+      "aliases": [
+        "escudeira_corsaria"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/corsair_squire.json",
+      "subject": "Escudeira das cordas. Handles ropes and mooring equipment for the corsair empress.",
+      "paired_with": "corsair_empress",
+      "function": "Handles ropes and mooring equipment for the corsair empress.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "miner_emperor",
+      "label": "Imperador Mineiro",
+      "aliases": [
+        "imperador_mineiro"
+      ],
+      "kind": "royal_80",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/miner_emperor.json",
+      "subject": "Imperador Mineiro. Carries a pick-hammer and retains the practical equipment of a mining sovereign.",
+      "paired_with": "miner_squire",
+      "function": "Carries a pick-hammer and retains the practical equipment of a mining sovereign.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "miner_squire",
+      "label": "Escudeira lanternista",
+      "aliases": [
+        "escudeira_mineiro",
+        "escudeira_lanterna"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/miner_squire.json",
+      "subject": "Escudeira lanternista. Carries the lantern and lights the miner emperor's working area.",
+      "paired_with": "miner_emperor",
+      "function": "Carries the lantern and lights the miner emperor's working area.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "alchemist_emperor",
+      "label": "Imperador Alquimista",
+      "aliases": [
+        "imperador_alquimista",
+        "alquimista"
+      ],
+      "kind": "royal_80",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/alchemist_emperor.json",
+      "subject": "Imperador Alquimista. Studies and prepares potions; keep the accepted royal silhouette and comic personality.",
+      "paired_with": "alchemist_squire",
+      "function": "Studies and prepares potions; keep the accepted royal silhouette and comic personality.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs; fazer o alquimista asiático; O nariz estava otimo antes.; Ok, agora quero que leve tudo a forja",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "alchemist_squire",
+      "label": "Escudeiro do alquimista",
+      "aliases": [
+        "escudeiro_alquimista",
+        "boticario"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/alchemist_squire.json",
+      "subject": "Escudeiro do alquimista. Visual proposal: prepares and offers the next prepared potion to the emperor, while he studies or uses the current one; no shield guard role.",
+      "paired_with": "alchemist_emperor",
+      "function": "Visual proposal: prepares and offers the next prepared potion to the emperor, while he studies or uses the current one; no shield guard role.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Frasco do mesmo tamanho do imperador; refinar design e expressão do escudeiro.; Ok, agora quero que leve tudo a forja",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false,
+      "function_scope": "visual_proposal_not_runtime"
+    },
+    {
+      "id": "cook",
+      "label": "Cozinheiro",
+      "aliases": [
+        "cozinheiro"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/cook.json",
+      "subject": "Cozinheiro. Carries one wooden spoon and visibly performs the cook's craft.",
+      "paired_with": null,
+      "function": "Carries one wooden spoon and visibly performs the cook's craft.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "O cozinheiro ficou otimo.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "diplomat_original",
+      "label": "Diplomata cómico original",
+      "aliases": [
+        "diplomata_original"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/diplomat_original.json",
+      "subject": "Diplomata cómico original. Carries and presents a sealed diplomatic parchment, with a comic self-important gesture.",
+      "paired_with": null,
+      "function": "Carries and presents a sealed diplomatic parchment, with a comic self-important gesture.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei esse, faça outros modelos sexos e etinias tambem.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "diplomat_08",
+      "label": "Diplomata 08",
+      "aliases": [
+        "diplomata_08"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/diplomat_08.json",
+      "subject": "Diplomata 08. Presents diplomatic documents; retains the accepted eighth visual variation.",
+      "paired_with": null,
+      "function": "Presents diplomatic documents; retains the accepted eighth visual variation.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Gostei do 8 e do que tinha criado antes que eu aprovei.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "builder",
+      "label": "Construtora",
+      "aliases": [
+        "construtora"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/builder.json",
+      "subject": "Construtora. Carries a wooden building mallet and belt pouch for construction work.",
+      "paired_with": null,
+      "function": "Carries a wooden building mallet and belt pouch for construction work.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "mercenary",
+      "label": "Mercenária",
+      "aliases": [
+        "mercenaria"
+      ],
+      "kind": "troop_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/mercenary.json",
+      "subject": "Mercenária. Carries one short sword as a recognizable mercenary, with no duplicated weapons.",
+      "paired_with": null,
+      "function": "Carries one short sword as a recognizable mercenary, with no duplicated weapons.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "farmer",
+      "label": "Camponês com nabo",
+      "aliases": [
+        "campones",
+        "agricultor_horta"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/farmer.json",
+      "subject": "Camponês com nabo. Shows a harvested turnip and the human farming economy of Horta.",
+      "paired_with": null,
+      "function": "Shows a harvested turnip and the human farming economy of Horta.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16). O senhor com o nabo na mão estava perfeito.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "steward",
+      "label": "Intendente do livro-caixa",
+      "aliases": [
+        "intendente"
+      ],
+      "kind": "royal_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/steward.json",
+      "subject": "Intendente do livro-caixa. Keeps the accounts and keys; the ledger and key ring explain his administrative craft.",
+      "paired_with": null,
+      "function": "Keeps the accounts and keys; the ledger and key ring explain his administrative craft.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "root_berserker",
+      "label": "Berserker da raiz",
+      "aliases": [
+        "berserker_raiz"
+      ],
+      "kind": "troop_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/root_berserker.json",
+      "subject": "Berserker da raiz. Wields a heavy wooden root club; human body and clear two-hand contact remain essential.",
+      "paired_with": null,
+      "function": "Wields a heavy wooden root club; human body and clear two-hand contact remain essential.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Gostei do berserker da raiz e do ultimo somente; nao quero personagens plantas.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "spearman",
+      "label": "Lanceiro barrigudo 12B",
+      "aliases": [
+        "lanceiro",
+        "lanceiro_12b"
+      ],
+      "kind": "troop_64",
+      "pose": "idle",
+      "contract": "../../docs/art/concepts/2026-10-29-elenco/contracts/spearman.json",
+      "subject": "Lanceiro barrigudo 12B. Uses a spear and a round shield; preserve the distinct large-helmet and belly silhouette.",
+      "paired_with": null,
+      "function": "Uses a spear and a round shield; preserve the distinct large-helmet and belly silhouette.",
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Gostei do berserker da raiz e do ultimo somente (ultimo: lanceiro 12B).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "native_master_approved": false,
+      "runtime_integrated": false
+    }
+  ],
+  "excluded": [
+    "plant-bodied farmer",
+    "unapproved later redesigns",
+    "replacement of the already established royal squire"
+  ],
+  "policy": "Exact selected concepts; generated native candidates and animations require their own review."
+}

@@ -62,6 +62,9 @@ faixas verticais: AERIAL, SURFACE, UNDERGROUND.
   `escala`): o contrato `forja.scene/1` diz a extensao, os vaos, os sinais e os estados, o
   pedido e o de elevacao lateral (`forja cena`), e a peca confere-se com `forja estrutura` e
   no mundo com `forja montagem`. Uma referencia nao se reduz: redesenha-se na grade.
+  ADR 0099: os conceitos escolhidos pelo dono consultam-se em `forja elenco`; `prompt`,
+  `plan` e `auto --character id/alias` resolvem a autoridade, funcao e escala do catalogo
+  quando nao ha `--fidelity` explicito. Design escolhido nao aprova um mestre nativo.
 
 ## Regras absolutas
 1. Maximo 250 linhas por script. O gdlint chumba — nao e um conselho.

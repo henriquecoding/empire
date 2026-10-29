@@ -28,4 +28,11 @@ INSTRUCTIONS = (
     "referencia levada a regua por marcos: escala, coerencia, pixel aparente, compressao da planta), forja_cena "
     "(contrato forja.scene/1: pedido de elevacao lateral, regua em imagem e plano sem rede), forja_forge com esse "
     "expect.json (a peca fica onde a grade a pos), forja_estrutura (porta, chao, sinais, emendas, estados) e "
-    "forja_montagem (a peca no mundo pela sua ancora, com os atores); uma referencia nao se reduz, redesenha-se.")
+    "forja_montagem (a peca no mundo pela sua ancora, com os atores); uma referencia nao se reduz, redesenha-se. "
+    "(12) Para os personagens escolhidos pelo dono, consultar primeiro forja_elenco: lista decisoes, pares e funcao. "
+    "forja_elenco com character e out prepara o pedido fiel com a imagem exata, sem rede; forja_plan, forja_prompt "
+    "e forja_auto com --character id/alias tambem carregam esse contrato quando --fidelity nao foi dado. "
+    "O alquimista e asiatico com o nariz longo original; o escudeiro oferece a proxima pocao e leva uma bolsa compacta. "
+    "Esta ajuda e proposta visual, nao uma mecanica de pocoes ja implementada; sem escudo, pinca ou caixa pesada. "
+    "O frasco do escudeiro mantem o mesmo tamanho absoluto do frasco do imperador; nao encolher com a tela de 64. "
+    "Design escolhido nao aprova um mestre nativo, animacao ou integracao. Nao substituir o escudeiro real ja definido.")

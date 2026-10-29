@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "ee75976b273ec59314a006393650b4653c3495d2a12fee1efaaab333f939ef83",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "root_berserker",
+    "declared_role": "troop"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        535,
+        249,
+        988,
+        670
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        78,
+        534,
+        1250,
+        1023
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        535,
+        249,
+        988,
+        670
+      ],
+      "description": "Broad HUMAN berserker with wild red hair, large red beard, furrowed eyebrows and clenched comic teeth.",
+      "evidence": "Broad HUMAN berserker with wild red hair, large red beard, furrowed eyebrows and clenched comic teeth.; A twisted brown root band rests over his hair as an accessory; no plant growth from skin.; One large heavy root-wood club held with two sensible grips; leather, olive and burgundy clothes."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

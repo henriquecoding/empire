@@ -1,0 +1,94 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/steward.png",
+    "sha256": "ef2bfb2c974a756236c0adcdefdea55800a99a0be238057f18fe2df0dba5ebbf",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "a8ac71b98755abab849978a00132e26ad1bbd18bcce7e38666fc93b01bdd5d1a",
+    "library_file_id": "libfile_5818e16d6f248191a0b150002bf83ba0",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "steward",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Elderly human steward with white side hair, small blue hat and an outraged open mouth.",
+        "Preserve the broad nose, raised brows, blue vest, cream sleeves and burgundy sash.",
+        "One large burgundy ledger tucked under an arm and a visible ring of keys in the other hand."
+      ],
+      "prompt_invariants": [
+        "Elderly human steward with white side hair, small blue hat and an outraged open mouth.",
+        "Preserve the broad nose, raised brows, blue vest, cream sleeves and burgundy sash.",
+        "One large burgundy ledger tucked under an arm and a visible ring of keys in the other hand."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            543,
+            238,
+            949,
+            609
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            329,
+            292,
+            1235,
+            952
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Keeps the accounts and keys; the ledger and key ring explain his administrative craft."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/steward.json"
+      }
+    }
+  ]
+}

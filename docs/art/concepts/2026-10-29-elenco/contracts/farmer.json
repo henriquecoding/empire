@@ -1,0 +1,96 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/farmer.png",
+    "sha256": "d87871360136337c8d54477b985b9117a2cc89c9f39323ed9b54bbc5f638ff03",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "03ee0853c9ef903b3365246db5abe08d55db2be2d867d1e18278607b49ba4545",
+    "library_file_id": "libfile_1f5e1ee16f2c8191853b481a8fa20b1c",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "farmer",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Elderly HUMAN farmer with straw hat, white side hair, white moustache and a proud uneven smile.",
+        "Olive patched tunic, cream sleeves, brown belt and boots.",
+        "Both hands hold one large harvested turnip; leaves grow from the turnip, never from his body.",
+        "Horta is a human farming civilization; do not turn the farmer into a plant creature."
+      ],
+      "prompt_invariants": [
+        "Elderly HUMAN farmer with straw hat, white side hair, white moustache and a proud uneven smile.",
+        "Olive patched tunic, cream sleeves, brown belt and boots.",
+        "Both hands hold one large harvested turnip; leaves grow from the turnip, never from his body.",
+        "Horta is a human farming civilization; do not turn the farmer into a plant creature."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei os 3 ultimos e a segunda (lote 09-16: 10, 14, 15 e 16). O senhor com o nabo na mão estava perfeito.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            480,
+            250,
+            875,
+            658
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            701,
+            291,
+            1207,
+            914
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Shows a harvested turnip and the human farming economy of Horta."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/farmer.json"
+      }
+    }
+  ]
+}

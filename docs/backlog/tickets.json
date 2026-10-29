@@ -3240,5 +3240,18 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-13": {
+  "title": "A Forja conserva o elenco escolhido e a função de cada dupla",
+  "porque": "Os conceitos escolhidos precisam chegar ao gerador com a identidade, equipamento, função e escala corretos.",
+  "spec": [
+   "docs/art/concepts/2026-10-29-elenco/README.md",
+   "docs/adr/0099-a-forja-conserva-o-elenco-escolhido.md"
+  ],
+  "depende": "FORJA-10",
+  "feito": "Catálogo de conceitos, contratos de fidelidade, originais, revisão visual e seleção CLI/MCP.",
+  "fora": "Sprites nativos finais, animação e novas mecânicas de simulação.",
+  "estado": "feito — catálogo de conceitos, contratos, referências e pedidos CLI/MCP integrados; sprites nativos e animações por produzir",
+  "horas": "—"
  }
 }
