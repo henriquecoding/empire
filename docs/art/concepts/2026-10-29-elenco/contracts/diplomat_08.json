@@ -1,0 +1,94 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/diplomat-08.png",
+    "sha256": "b4d374698ccd0a3ccbc6931433afa10fca4ebd99546197764224f0a6598491b9",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "4d554cfe1bc8ad35dacf6577aff99ff9a4702f9d0922c03ac7ff228b31c3e7cb",
+    "library_file_id": "libfile_678c370042e08191baa838590eb8c038",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "diplomat_08",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Human diplomat with dark wavy hair, raised brow, large rounded nose and broad self-satisfied grin.",
+        "Preserve the burgundy feathered beret, oversized wine coat, cream collar and gold details.",
+        "Sealed oversized parchment under one arm and spectacles hanging at the chest; face stays visible."
+      ],
+      "prompt_invariants": [
+        "Human diplomat with dark wavy hair, raised brow, large rounded nose and broad self-satisfied grin.",
+        "Preserve the burgundy feathered beret, oversized wine coat, cream collar and gold details.",
+        "Sealed oversized parchment under one arm and spectacles hanging at the chest; face stays visible."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Gostei do 8 e do que tinha criado antes que eu aprovei.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            570,
+            270,
+            985,
+            650
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            390,
+            607,
+            760,
+            900
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Presents diplomatic documents; retains the accepted eighth visual variation."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/diplomat_08.json"
+      }
+    }
+  ]
+}

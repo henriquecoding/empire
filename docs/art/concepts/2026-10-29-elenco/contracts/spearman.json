@@ -1,0 +1,95 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/spearman.png",
+    "sha256": "d8e201a23cbde4a59cf4ef9ddaae0db27ac0caa4e4d99b045653590b689ac274",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "d86a76545805eaeec46664bca5c053fcdca1a17e61bebd9108a0bf481ce4792e",
+    "library_file_id": "libfile_bbd42c3cc7e08191aca702c1c71529a0",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "spearman",
+      "pose": "idle",
+      "kind": "troop_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Stocky dark-skinned human spearman with round belly, enormous iron helmet and a stubborn grimace.",
+        "Burgundy tabard over cream sleeves, broad belt, charcoal trousers and brown boots.",
+        "One straight continuous spear with one metal point, and one blue round shield with one boss."
+      ],
+      "prompt_invariants": [
+        "Stocky dark-skinned human spearman with round belly, enormous iron helmet and a stubborn grimace.",
+        "Burgundy tabard over cream sleeves, broad belt, charcoal trousers and brown boots.",
+        "One straight continuous spear with one metal point, and one blue round shield with one boss."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Gostei do berserker da raiz e do ultimo somente (ultimo: lanceiro 12B).",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            531,
+            268,
+            925,
+            595
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            152,
+            16,
+            1155,
+            1250
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Uses a spear and a round shield; preserve the distinct large-helmet and belly silhouette."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/spearman.json"
+      },
+      "role": "troop"
+    }
+  ]
+}

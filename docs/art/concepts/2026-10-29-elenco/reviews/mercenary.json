@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "f9afc24f238e56d8ba545ccd8cc736ca1d073dcca1d3bd500050302c78cc14d2",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "mercenary",
+    "declared_role": "troop"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        613,
+        236,
+        967,
+        590
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        154,
+        768,
+        792,
+        1148
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        613,
+        236,
+        967,
+        590
+      ],
+      "description": "South Asian human woman with dark-grey swept hair, gold hoop earring and a crooked toothy grin.",
+      "evidence": "South Asian human woman with dark-grey swept hair, gold hoop earring and a crooked toothy grin.; Preserve her broad sturdy build, burgundy scarf, cream shirt and single metal shoulder guard.; One short sword held low with correct blade, guard and grip; free hand on hip."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "dc5237ea90721d89cc7e7d34bd55ea6405228ec3d1849da01d671296a89bf317",
+    "size": [
+      664,
+      761
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "alchemist_squire",
+    "declared_role": "squire"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        194,
+        65,
+        442,
+        256
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        0,
+        48,
+        594,
+        585
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        194,
+        65,
+        442,
+        256
+      ],
+      "description": "Dark-skinned adult human man with short dark curls, a folded cream work cap with a narrow plum band, and an individual comic face.",
+      "evidence": "Dark-skinned adult human man with short dark curls, a folded cream work cap with a narrow plum band, and an individual comic face.; Asymmetrical thick eyebrows, one skeptical slightly squinting eyelid, clear cheek and chin planes, and a restrained crooked half-smile; avoid the generic sad round-eyed baby face.; Preserve the compact sturdy build, plum tabard, cream sleeves, broad ochre scarf fold, short waist apron and brown boots.; Compact belt satchel with two spare corked bottles, a small ingredient pouch and simple soft work gloves.; He offers the next prepared potion upright in one hand toward his lord; the other hand retrieves supplies from his satchel.; The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire.; Exactly two arms with a natural supporting grip, clear shoulders and elbows; no shield, no tongs and no bulky wooden bottle carrier.; Firmly planted feet and a slight compensating lean make the full-sized bottle weight readable; mirror the whole pose consistently when adapting its facing direction."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate.",
+    "Held flasks have comparable visible size in the concept; exact shared native prop dimensions still require the authored sprite master."
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/root-berserker.png",
+    "sha256": "aeb75b49fce3f66f1704cc61796d9e6f70e2117a8c7408ade41b244432c551f8",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "ee75976b273ec59314a006393650b4653c3495d2a12fee1efaaab333f939ef83",
+    "library_file_id": "libfile_2c7d2723c0c481919612953d454e949a",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "root_berserker",
+      "pose": "idle",
+      "kind": "troop_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Broad HUMAN berserker with wild red hair, large red beard, furrowed eyebrows and clenched comic teeth.",
+        "A twisted brown root band rests over his hair as an accessory; no plant growth from skin.",
+        "One large heavy root-wood club held with two sensible grips; leather, olive and burgundy clothes."
+      ],
+      "prompt_invariants": [
+        "Broad HUMAN berserker with wild red hair, large red beard, furrowed eyebrows and clenched comic teeth.",
+        "A twisted brown root band rests over his hair as an accessory; no plant growth from skin.",
+        "One large heavy root-wood club held with two sensible grips; leather, olive and burgundy clothes."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Gostei do berserker da raiz e do ultimo somente; nao quero personagens plantas.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            535,
+            249,
+            988,
+            670
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            78,
+            534,
+            1250,
+            1023
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Wields a heavy wooden root club; human body and clear two-hand contact remain essential."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/root_berserker.json"
+      },
+      "role": "troop"
+    }
+  ]
+}

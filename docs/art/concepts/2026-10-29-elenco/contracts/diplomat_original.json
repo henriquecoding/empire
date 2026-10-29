@@ -1,0 +1,94 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-28",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/diplomat-original.png",
+    "sha256": "52503a5f5b3aa1a2ef7d5012e8c48a9f581acc52ad3500816483c76a0c053926",
+    "size": [
+      1254,
+      1254
+    ],
+    "pixels_sha256": "a3b910e436bcfb3d9c50d35daee3d1d3d83fd26573352e2e20077978beaec0de",
+    "library_file_id": "libfile_6527ecf45e1881919c0bb3a1806a7909",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "diplomat_original",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Elderly human emissary with white side hair, low round spectacles and a large expressive nose.",
+        "Keep the burgundy oversized coat, cream collar, feathered beret and confident grin.",
+        "One oversized rolled parchment with wax seal tucked under an arm; other hand adjusts spectacles."
+      ],
+      "prompt_invariants": [
+        "Elderly human emissary with white side hair, low round spectacles and a large expressive nose.",
+        "Keep the burgundy oversized coat, cream collar, feathered beret and confident grin.",
+        "One oversized rolled parchment with wax seal tucked under an arm; other hand adjusts spectacles."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-28",
+        "evidence": "Adorei esse, faça outros modelos sexos e etinias tambem.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            605,
+            305,
+            982,
+            637
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            402,
+            601,
+            760,
+            897
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Carries and presents a sealed diplomatic parchment, with a comic self-important gesture."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/diplomat_original.json"
+      }
+    }
+  ]
+}

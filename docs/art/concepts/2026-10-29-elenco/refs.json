@@ -1,0 +1,125 @@
+{
+  "schema": "forja.refs/1",
+  "entries": [
+    {
+      "id": "corsair",
+      "file": "images/corsair-pair.png",
+      "pixels_sha256": "d70ba6a34d0e43a0ad31be52a2eea57ef8dc8b43402f196cef534386215fb4d6",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_08e7117a35848191a2005878b7bfcabc",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "miner",
+      "file": "images/miner-pair.png",
+      "pixels_sha256": "367f8818da41d13846f93529ab490c87fa5e5f8f56393751bae7934fbe27baa1",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_fdad8cf6f0d08191a3b7f8b58e781c0e",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "alchemist",
+      "file": "images/alchemist-pair.png",
+      "pixels_sha256": "08b4530407acb287368ad270d08fbff61be0efe80f6fd200a5c086f5cb122da8",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "owner-requested image revision",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "cook",
+      "file": "images/cook.png",
+      "pixels_sha256": "c7e8e398a085128ecdfb3a4e69d0e84446390ebf5d2c78594efcf0093a972185",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_7dcd130ea6248191a90d5b20ebc7d59d",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "diplomat_original",
+      "file": "images/diplomat-original.png",
+      "pixels_sha256": "a3b910e436bcfb3d9c50d35daee3d1d3d83fd26573352e2e20077978beaec0de",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_6527ecf45e1881919c0bb3a1806a7909",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "diplomat_08",
+      "file": "images/diplomat-08.png",
+      "pixels_sha256": "4d554cfe1bc8ad35dacf6577aff99ff9a4702f9d0922c03ac7ff228b31c3e7cb",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_678c370042e08191baa838590eb8c038",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "builder",
+      "file": "images/builder.png",
+      "pixels_sha256": "240f8678ee69b7c714119b1bf91c3404d3bd732d1dde0b48eca29125eb87ba0f",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_18707532560c8191b8a318f5d27649ee",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "mercenary",
+      "file": "images/mercenary.png",
+      "pixels_sha256": "f9afc24f238e56d8ba545ccd8cc736ca1d073dcca1d3bd500050302c78cc14d2",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_7ab6cc0b82d48191a4d7f419150f435b",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "steward",
+      "file": "images/steward.png",
+      "pixels_sha256": "a8ac71b98755abab849978a00132e26ad1bbd18bcce7e38666fc93b01bdd5d1a",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_5818e16d6f248191a0b150002bf83ba0",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "farmer",
+      "file": "images/farmer.png",
+      "pixels_sha256": "03ee0853c9ef903b3365246db5abe08d55db2be2d867d1e18278607b49ba4545",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_1f5e1ee16f2c8191853b481a8fa20b1c",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "root_berserker",
+      "file": "images/root-berserker.png",
+      "pixels_sha256": "ee75976b273ec59314a006393650b4653c3495d2a12fee1efaaab333f939ef83",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_2c7d2723c0c481919612953d454e949a",
+      "note": "Design selection is recorded per character; this is not a native master."
+    },
+    {
+      "id": "spearman",
+      "file": "images/spearman.png",
+      "pixels_sha256": "d86a76545805eaeec46664bca5c053fcdca1a17e61bebd9108a0bf481ce4792e",
+      "state": "concept",
+      "recorded_by": "Codex",
+      "date": "2026-10-29",
+      "origin": "libfile_bbd42c3cc7e08191aca702c1c71529a0",
+      "note": "Design selection is recorded per character; this is not a native master."
+    }
+  ]
+}

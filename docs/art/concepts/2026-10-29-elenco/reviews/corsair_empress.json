@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "90b9b3f628d060f9ecb108a7bf1e18fa8cf4639af71d706380267e6c25d8724f",
+    "size": [
+      785,
+      983
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "corsair_empress",
+    "declared_role": "monarch"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        290,
+        104,
+        535,
+        285
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        625,
+        72,
+        764,
+        567
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        290,
+        104,
+        535,
+        285
+      ],
+      "description": "Mature Black human empress with broad strong build, short white curls and a crooked gold crown.",
+      "evidence": "Mature Black human empress with broad strong build, short white curls and a crooked gold crown.; Preserve the confident raised eyebrow, broad nose and smug asymmetric smile.; Petrol-blue long naval coat, cream lapels, gold trim, amber sash and brown boots.; One curved cutlass with continuous blade, guard and grip; other hand on hip."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

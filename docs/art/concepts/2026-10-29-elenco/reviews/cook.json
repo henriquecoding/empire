@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "c7e8e398a085128ecdfb3a4e69d0e84446390ebf5d2c78594efcf0093a972185",
+    "size": [
+      1183,
+      1330
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "cook",
+    "declared_role": null
+  },
+  "regions": {
+    "face": {
+      "box": [
+        470,
+        334,
+        881,
+        697
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        840,
+        396,
+        1158,
+        959
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        470,
+        334,
+        881,
+        697
+      ],
+      "description": "Round-cheeked stocky human cook with large cream chef hat, reddish sideburns and cheerful sideways eyes.",
+      "evidence": "Round-cheeked stocky human cook with large cream chef hat, reddish sideburns and cheerful sideways eyes.; Keep the tongue-out grin, rounded nose, cream apron, burgundy scarf and wooden spoon.; Preserve the head-to-belly relation and recognizable hand-on-hip pose during native adaptation."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

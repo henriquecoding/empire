@@ -1,0 +1,134 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-29",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/alchemist-pair.png",
+    "sha256": "761c22144034f0d47b0b0dcb55d29c1589b3fcd947af17ad0e9b2603c154f6e8",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "08b4530407acb287368ad270d08fbff61be0efe80f6fd200a5c086f5cb122da8",
+    "library_file_id": null,
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "alchemist_emperor",
+      "pose": "idle",
+      "kind": "royal_80",
+      "target_canvas": [
+        80,
+        80
+      ],
+      "authority_crop_xyxy": [
+        150,
+        16,
+        850,
+        1004
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        79,
+        79
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Elderly East Asian human alchemist with white swept-back hair, white eyebrows and a pointed white goatee.",
+        "Preserve the original large long projecting nose in the skin color family, with East Asian eyes.",
+        "Keep the smug asymmetric grin, crooked gold crown and plum-and-gold royal coat with cream cuffs.",
+        "One large corked green potion flask in his raised hand; other hand behind his back.",
+        "The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire."
+      ],
+      "prompt_invariants": [
+        "Elderly East Asian human alchemist with white swept-back hair, white eyebrows and a pointed white goatee.",
+        "Preserve the original large long projecting nose in the skin color family, with East Asian eyes.",
+        "Keep the smug asymmetric grin, crooked gold crown and plum-and-gold royal coat with cream cuffs.",
+        "One large corked green potion flask in his raised hand; other hand behind his back.",
+        "The offered amber flask has the same absolute world size and standard bottle mold as the emperor's held green flask: equal body diameter, glass height, neck and cork; do not shrink it for the smaller squire."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "owner_requested_revision",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs; fazer o alquimista asiático; O nariz estava otimo antes.",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [
+        {
+          "file": "../history/alchemist_emperor-superseded.png",
+          "pixels_sha256": "c674c3005d5183dc952ef0c33c7a3e9da127755f14ad6b0ae5c939c7413a8b82",
+          "decided_by": "Henrique",
+          "date": "2026-10-29",
+          "reasons": [
+            "Nariz encurtado: o dono pediu restaurar o nariz longo original."
+          ]
+        }
+      ],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            421,
+            139,
+            646,
+            347
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            658,
+            159,
+            825,
+            441
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Studies and prepares potions; keep the accepted royal silhouette and comic personality."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/alchemist_emperor.json"
+      },
+      "role": "monarch",
+      "reference_issues": [
+        {
+          "id": "long_nose_is_intentional",
+          "disposition": "preserve_intentional",
+          "authorized_by": "Henrique",
+          "date": "2026-10-29",
+          "authority_box": [
+            535,
+            220,
+            640,
+            280
+          ],
+          "instruction": "Preserve the original long projecting nose together with the East Asian facial identity."
+        }
+      ],
+      "shared_prop_constraints": [
+        {
+          "id": "alchemy_standard_flask",
+          "paired_with": "alchemist_squire",
+          "scale": "same_absolute_world_pixel_dimensions",
+          "scale_with_character_canvas": false,
+          "native_shared_dimensions": null,
+          "status": "owner_rule; native prop dimensions pending authored master"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "a3b910e436bcfb3d9c50d35daee3d1d3d83fd26573352e2e20077978beaec0de",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "diplomat_original",
+    "declared_role": null
+  },
+  "regions": {
+    "face": {
+      "box": [
+        605,
+        305,
+        982,
+        637
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        402,
+        601,
+        760,
+        897
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        605,
+        305,
+        982,
+        637
+      ],
+      "description": "Elderly human emissary with white side hair, low round spectacles and a large expressive nose.",
+      "evidence": "Elderly human emissary with white side hair, low round spectacles and a large expressive nose.; Keep the burgundy oversized coat, cream collar, feathered beret and confident grin.; One oversized rolled parchment with wax seal tucked under an arm; other hand adjusts spectacles."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

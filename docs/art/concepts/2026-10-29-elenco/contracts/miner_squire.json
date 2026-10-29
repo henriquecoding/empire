@@ -1,0 +1,97 @@
+{
+  "schema": "forja.fidelity/1",
+  "date": "2026-10-29",
+  "status": "accepted concept or requested concept revision",
+  "authority": {
+    "file": "../images/miner-pair.png",
+    "sha256": "07f8c7d05b2aaf41150a3dae5ec7182258ed1997fee42090dd25c7b1cb0d13a0",
+    "size": [
+      1536,
+      1024
+    ],
+    "pixels_sha256": "367f8818da41d13846f93529ab490c87fa5e5f8f56393751bae7934fbe27baa1",
+    "library_file_id": "libfile_fdad8cf6f0d08191a3b7f8b58e781c0e",
+    "native_master_approved": false
+  },
+  "characters": [
+    {
+      "id": "miner_squire",
+      "pose": "idle",
+      "kind": "royal_64",
+      "target_canvas": [
+        64,
+        64
+      ],
+      "authority_crop_xyxy": [
+        962,
+        218,
+        1504,
+        1007
+      ],
+      "target_useful_bbox": [
+        1,
+        1,
+        63,
+        63
+      ],
+      "native_layout_status": "canvas chosen; native detail layout pending",
+      "required_invariants": [
+        "Petite sturdy olive-skinned human woman with a messy dark bob and oversized tilted iron helmet.",
+        "Prominent straight eyebrows and deadpan wary expression, visibly distinct from the emperor.",
+        "Orange scarf, cream shirt, short slate vest, thick gloves and brown boots.",
+        "One brass oil lantern held by its handle; warm light stays inside the lantern."
+      ],
+      "prompt_invariants": [
+        "Petite sturdy olive-skinned human woman with a messy dark bob and oversized tilted iron helmet.",
+        "Prominent straight eyebrows and deadpan wary expression, visibly distinct from the emperor.",
+        "Orange scarf, cream shirt, short slate vest, thick gloves and brown boots.",
+        "One brass oil lantern held by its handle; warm light stays inside the lantern."
+      ],
+      "blocking_changes": [
+        "identity redesign",
+        "generic facial expression",
+        "equipment duplicated",
+        "human converted to plant creature"
+      ],
+      "design_decision": {
+        "status": "accepted",
+        "by": "Henrique",
+        "date": "2026-10-29",
+        "evidence": "Adorei de verdade os 3 designs",
+        "scope": "concept identity; no native sprite or animation approved"
+      },
+      "pixel_pins": [],
+      "rejected_candidates": [],
+      "critical_regions": [
+        {
+          "id": "face",
+          "authority_box": [
+            1160,
+            350,
+            1391,
+            546
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "eyes, eyebrow, nose, mouth and facial hair retain the approved acting"
+        },
+        {
+          "id": "equipment",
+          "authority_box": [
+            1325,
+            545,
+            1493,
+            867
+          ],
+          "target_box": null,
+          "required": true,
+          "purpose": "Carries the lantern and lights the miner emperor's working area."
+        }
+      ],
+      "visual_review": {
+        "reference": "../reviews/miner_squire.json"
+      },
+      "role": "squire"
+    }
+  ]
+}

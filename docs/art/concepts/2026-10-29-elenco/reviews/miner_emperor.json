@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "b6e493c1cef4648b7a6a8105283fa08bd2672b5c6e1338758b565e4028a1084f",
+    "size": [
+      910,
+      998
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "miner_emperor",
+    "declared_role": "monarch"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        412,
+        123,
+        670,
+        360
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        20,
+        271,
+        308,
+        953
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        412,
+        123,
+        670,
+        360
+      ],
+      "description": "Middle-aged South Asian human man with broad belly, large black-grey moustache and broad nose.",
+      "evidence": "Middle-aged South Asian human man with broad belly, large black-grey moustache and broad nose.; Preserve skeptical half-lidded acting and the self-important compact build.; Dented iron cap with blunt gold crown points, burnt-orange cape, cream shirt and slate work apron.; One pick-hammer on a continuous wooden haft; one pick end and one flat hammer face."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

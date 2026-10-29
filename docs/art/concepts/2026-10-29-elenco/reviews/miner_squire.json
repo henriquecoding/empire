@@ -1,0 +1,63 @@
+{
+  "schema": "forja.visual_review/1",
+  "phase": "reference",
+  "image": {
+    "sha256": "f8b2fe5c1f1c5897abd91d00187a31ef3a060dbda0a05e38b8f979c4e6a7c4d9",
+    "size": [
+      542,
+      789
+    ]
+  },
+  "observer": {
+    "author": "Codex",
+    "method": "direct visual inspection of exact concept image",
+    "model": "GPT-6",
+    "date": "2026-10-29"
+  },
+  "subject": {
+    "character": "miner_squire",
+    "declared_role": "squire"
+  },
+  "regions": {
+    "face": {
+      "box": [
+        198,
+        132,
+        429,
+        328
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    },
+    "equipment": {
+      "box": [
+        363,
+        327,
+        531,
+        649
+      ],
+      "state": "observed",
+      "uncertainty": "baixa"
+    }
+  },
+  "findings": [
+    {
+      "id": "identity_and_function",
+      "category": "detail_preserved",
+      "state": "observed",
+      "certainty": "certain",
+      "action": "keep",
+      "box": [
+        198,
+        132,
+        429,
+        328
+      ],
+      "description": "Petite sturdy olive-skinned human woman with a messy dark bob and oversized tilted iron helmet.",
+      "evidence": "Petite sturdy olive-skinned human woman with a messy dark bob and oversized tilted iron helmet.; Prominent straight eyebrows and deadpan wary expression, visibly distinct from the emperor.; Orange scarf, cream shirt, short slate vest, thick gloves and brown boots.; One brass oil lantern held by its handle; warm light stays inside the lantern."
+    }
+  ],
+  "notes": [
+    "Concept appearance observed; pixel-scale contact geometry remains for the native candidate."
+  ]
+}

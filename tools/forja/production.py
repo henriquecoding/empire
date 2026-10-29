@@ -12,8 +12,9 @@ def inferred(text: str) -> str | None:
                 r'\s+(?:(?:a|an|the|o|um|uma)\s+)?$')
     patterns = [('troop', r'\btropas?\b|\btroops?\b'),
                 ('royal_archer', r'\broyal archer\b|\barqueiro real\b'),
-                ('monarch', r'\bking\b|\bqueen\b|\bmonarch\b|\brei\b|\brainha\b|\bmonarca\b|\bemperor\b|\bimperador\b'),
-                ('squire', r'\bsquire\b|\bescudeiro\b')]
+                ('monarch', r'\bking\b|\bqueen\b|\bmonarch\b|\brei\b|\brainha\b|\bmonarca\b|\bemperor\b|'
+                            r'\bempress\b|\bimperador\b|\bimperatriz\b'),
+                ('squire', r'\bsquires?\b|\bescudeir[oa]s?\b')]
     for role, pattern in patterns:
         if any(not re.search(excluded, text[:match.start()]) for match in re.finditer(pattern, text)):
             return role
