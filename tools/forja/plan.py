@@ -135,9 +135,9 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
     if size and size not in caps["sizes"]:
         d["errors"].append(f"{model}: resolucao {size} nao suportada (use {', '.join(caps['sizes'])})")
         size = None
-    size = size or next((s for s in caps["sizes"] if gemini_images.estimate(aspect, s)[0] / w >= 8),
+    size = size or next((s for s in caps["sizes"] if gemini_images.estimate(aspect, s, model)[0] / w >= 8),
                         caps["sizes"][-1])
-    est = gemini_images.estimate(aspect, size)
+    est = gemini_images.estimate(aspect, size, model)
     geo = {**base, "logical": [w, h], "content": [ox, oy, ox + lw, oy + lh], "scale": round(est[0] / w, 2),
            "size": list(est), "exact": False}
     probe = _built(d, palette, "gemini", background, [], geo)["expect"]
@@ -145,7 +145,8 @@ def _gemini(d: dict, refs, palette, model, guides_mode, background, size) -> lis
     d["errors"] += gemini_images.check(model, aspect, size, [refs_mod.family(r) for r, _ in images])
     built = _built(d, palette, "gemini", background, [r for r, _ in images], geo)
     d["request"] = {"endpoint": "interactions", "aspect_ratio": aspect, "image_size": size,
-                    "estimated_output": list(est), "output_size_known": False}
+                    "estimated_output": list(est),
+                    "output_size_known": gemini_images.published(model, aspect, size) is not None}
     d.update(prompt=built["prompt"], expect=built["expect"], advice=built["advice"],
              authoring="generated_high_resolution_then_grid_recovered")
     d["notes"].append(f"Gemini {aspect} {size}: saida estimada {est[0]}x{est[1]} (tabela de pixels nao documentada); "

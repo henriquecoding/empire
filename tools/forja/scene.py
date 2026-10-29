@@ -51,7 +51,7 @@ def _extent(scene: dict, step: int) -> tuple[list[str], tuple[int, int] | None]:
 def _openings(scene: dict, size: tuple[int, int], step: int, found: list[dict]) -> tuple[list[str], list[str]]:
     errors, warns = [], []
     door, public = regua.metric(found, "door_clear_height"), regua.metric(found, "public_door_height")
-    sill = regua.metric(found, "window_sill")
+    sill, width = regua.metric(found, "window_sill"), regua.metric(found, "door_clear_width")
     for o in scene.get("openings", []):
         name = o.get("id", "?")
         if o.get("kind") not in OPENINGS:
@@ -75,6 +75,9 @@ def _openings(scene: dict, size: tuple[int, int], step: int, found: list[dict]) 
             elif o["kind"] == "door" and h > door["px"][1]:
                 warns.append(f"vao {name}: {h} px acima de {door['px'][1]}: le-se como porta publica (88-104) ou "
                              "portao; confirme o papel")
+            if o["kind"] != "bay" and x1 - x0 < width["px"][0]:  # a baia de trabalho nao e passagem (Q-301)
+                errors.append(f"vao {name}: {x1 - x0} px de largura; pede pelo menos {width['px'][0]} "
+                              f"({width['label']}, {width['origin']})")
             if lift > step and not o.get("raised"):
                 errors.append(f"vao {name}: a soleira esta {lift} px acima da base; uma porta assenta no chao "
                               "(declare raised: true se houver degraus)")
@@ -134,6 +137,14 @@ def validate(scene: dict, base: Path | None = None, found: list[dict] | None = N
     if unknown:
         errors.append(f"signal_regions sem sinal declarado: {unknown}")
     states = d["states"]
+    if "states" in scene and not (isinstance(scene["states"], list) and scene["states"]):
+        errors.append("states: pelo menos um estado, o primeiro (ou done) e a base da revisao")
+    declared = scene.get("states") or ["done"]
+    first = "done" if "done" in declared else declared[0]
+    zones = scene.get("state_changes") or {}
+    bare = [n for n in declared + scene.get("conditions", []) if n != first and n not in zones]
+    if bare:
+        warns.append(f"estados sem zonas em state_changes: {bare} (nada pode mudar neles; a revisao chumba-os)")
     for field, known in (("states", states["construction"]), ("conditions", states["conditions"])):
         unknown = [s for s in scene.get(field, []) if s not in known]
         if unknown:

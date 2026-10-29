@@ -113,7 +113,7 @@ comprimem-se os vãos e os pisos, não a porta (A §5.3). O contrato
 [`forja-jogo-enramados.json`](cenas/forja-jogo-enramados.json) descreve essa forja em 128×136 (Q-298).
 
 O caminho errado também está na prova: **encolher** a oficina para 120 px apaga 741 de 1 682 células (44%) e deixa a
-baía com 21 px legíveis, contra os 72 que o Rei pede; a revisão estrutural bloqueia
+baía com 20 px legíveis, contra os 72 que o Rei pede; a revisão estrutural bloqueia
 ([`oficina-encolhida.png`](evidencias/oficina-encolhida.png)). Redesenhar, não reduzir.
 
 ## 2. Estrutura: o que torna um cenário remontável
@@ -160,7 +160,7 @@ célula de folga de cada lado para o contorno): é uma adaptação com perda, n�
 
 - grade `deliberately_reduced`; 2 352 células apagadas pela amostragem e 33% de células misturadas — o detalhe da
   referência é mais fino do que a célula, como a escala previa;
-- estrutura: extensão 448×224, grade, base no chão, a baía com 119 px livres até à soleira (o Rei passa), a janela
+- estrutura: extensão 448×224, grade, base no chão, a baía com 118 px livres até à soleira (o Rei passa; 119 antes da correção da altura, FORJA-12), a janela
   acesa legível;
 - sinais presentes mas `inconclusive`: sem mestre aprovado não há contra o que comparar a forma;
 - aprovação `pending`.
@@ -171,7 +171,10 @@ De noite (só a modulação da fase, sem as luzes da §80), o Rei diante da baí
 ([`montagem-oficina-noite.png`](evidencias/montagem-oficina-noite.png)): é o argumento para a camada emissiva própria
 da forja (B §5.4) e para rever a baía na captura do motor.
 
-Os quatro contratos do piloto planeiam-se sem erros para os três geradores (prova §4). O pedido da oficina está em
+Os quatro contratos do piloto planeiam-se sem erros no gpt-image e no Gemini (prova §4). O PixelLab recusa-os: as
+referências deles (composição, material, o conceito em alta resolução) não têm entrada no `create-image` ou não estão
+no tamanho do pedido, e antes da auditoria de 28/10 ficavam escritas no plano sem chegar ao modelo (FORJA-12, A5).
+Os estados e as condições que declaram ainda não dizem onde mudam (`state_changes`): o contrato avisa. O pedido da oficina está em
 [`oficina-prompt.txt`](evidencias/oficina-prompt.txt) com a [régua em imagem](evidencias/oficina-regua.png). Não houve
 geração paga: o passo seguinte é gerar, forjar com o `expect.json` e rever com `estrutura` e `montagem`.
 

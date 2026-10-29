@@ -78,7 +78,7 @@ class SceneTest(unittest.TestCase):
         self.assertEqual((res["kind"], res["step"], res["cells"]), ("building", 2, [64, 64]))
         self.assertEqual(res["anchor"]["local_px"], [64, 128])
         self.assertEqual(res["forge_args"], ["--kind", "building", "--canvas", "128x128", "--pivot", "64,127"])
-        self.assertEqual(res["openings"][0]["cells"], [26, 22, 38, 64])
+        self.assertEqual(res["openings"][0]["cells"], [24, 22, 40, 64])
 
     def test_the_extent_is_explicit_and_on_the_grid(self):
         self.assertTrue(any("extent_px" in e for e in self.errors(extent_px=None)))
@@ -87,11 +87,11 @@ class SceneTest(unittest.TestCase):
                                                                            self.dir)["warnings"]))
 
     def test_doors_are_measured_against_the_tallest_actor_and_sit_on_the_ground(self):
-        short = [{"id": "porta", "kind": "door", "box_px": [52, 80, 76, 128]}]
+        short = [{"id": "porta", "kind": "door", "box_px": [48, 80, 80, 128]}]
         self.assertTrue(any("pede pelo menos" in e for e in self.errors(openings=short)))
         gate = [{"id": "portao", "kind": "gate", "box_px": [40, 44, 88, 128]}]
         self.assertTrue(any("porta publica" in e for e in self.errors(openings=gate)))
-        floating = [{"id": "porta", "kind": "door", "box_px": [52, 20, 76, 110]}]
+        floating = [{"id": "porta", "kind": "door", "box_px": [48, 20, 80, 110]}]
         self.assertTrue(any("soleira" in e for e in self.errors(openings=floating)))
         self.assertFalse(self.errors(openings=[{**floating[0], "raised": True}]))
         self.assertTrue(any("tipo" in e for e in self.errors(openings=[{"id": "x", "kind": "hole",
@@ -138,7 +138,7 @@ class PromptTest(unittest.TestCase):
         text = built["prompt"]
         self.assertIn("orthographic side elevation", text)
         self.assertNotIn("profile", text)
-        self.assertIn("x 26-37, y 22-63", text)
+        self.assertIn("x 24-39, y 22-63", text)
         tall = self.res["ruler"]["tallest"]["height"] / 2
         self.assertIn(f"{tall:.1f} logical pixels tall", text)
         self.assertIn("do NOT copy its resolution", text)
@@ -170,7 +170,7 @@ class PromptTest(unittest.TestCase):
 class ScenePlanTest(unittest.TestCase):
     def setUp(self):
         self.dir = tempdir()
-        fx.house().save(self.dir / "ref.png")
+        fx.house().resize((64, 64), Image.Resampling.NEAREST).save(self.dir / "ref.png")  # o tamanho do pedido
         self.path = fx.write(self.dir, fx.contract(references=[{"role": "asset_concept", "file": "ref.png"}]))
 
     def test_partition_covers_with_overlap(self):
@@ -195,7 +195,7 @@ class ScenePlanTest(unittest.TestCase):
     def test_pixellab_draws_cells_and_refuses_a_panorama_with_a_partition(self):
         p = scene_plan.make("pixellab", self.path, palmod.load(palmod.ROOT / contracts.get("building").palette))
         self.assertTrue(p.ok, p.data["errors"])
-        self.assertEqual([a["prompt_role"] for a in p.data["attachments"]], ["color_image"])
+        self.assertEqual([a["prompt_role"] for a in p.data["attachments"]], ["init_image", "color_image"])
         self.assertEqual((p.data["request"]["width"], p.data["request"]["height"]), (64, 64))
         wide = fx.contract(extent_px=[1280, 256], openings=[], signal_regions={})
         big = scene_plan.make("pixellab", fx.write(self.dir, wide, "panorama.json"))

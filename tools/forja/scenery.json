@@ -23,6 +23,11 @@
   },
   "origin": "medido: body_bounds do manifesto V15, escrito por tools/export_royals.py"
  },
+ "metrics_profile": {
+  "status": "proposal",
+  "decision": "Q-295",
+  "rule": "as medidas sao um perfil de pesquisa, nao regra aprovada: cada verificacao que as usa diz rule_status e a pergunta que as decide; so o dono as passa a approved"
+ },
  "metrics": [
   {
    "id": "door_clear_height",

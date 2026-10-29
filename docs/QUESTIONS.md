@@ -7,6 +7,21 @@
 > Formato: o que diverge, onde, a proposta, o que bloqueia e quem decide. **Abertas** esperam por ti; **resolvidas
 > na v5.2** estão aplicadas e documentadas, e podes revertê-las.
 
+## Forja: auditoria dos cenários — 28/10/2026 (FORJA-12)
+
+> Pedido do dono (28/10/2026), sobre a [auditoria](art/research/2026-10-28-forja-cenarios-auditoria/README.md):
+> *«Corrija isso»*. Os contraexemplos fecharam-se; isto ficou por decidir.
+
+### Q-301 · A baía de trabalho exige a largura de uma passagem?
+- **Hoje:** a revisão exige à porta, ao portão e ao arco a largura livre da régua (30–40 px, proposta da Q-295),
+  medida na metade de baixo do vão. A baía (`bay`) chega à soleira com a altura de uma porta, mas mostra o interior
+  mobilado: na oficina reduzida do piloto a baía tem 116 px de caixa e 12 px de largura útil (o interior escuro por
+  fila, no percentil 10), porque a bancada, a bigorna e as ferramentas são mais claras. A Forja reporta essa largura
+  e não a exige.
+- **Proposta:** manter assim (a baía é uma abertura de trabalho, o ator para à frente dela); ou declarar no contrato
+  uma faixa de passagem dentro da baía, que então se exige.
+- **Decide:** o dono (função da obra).
+
 ## Forja: cenários e construções — 28/10/2026 (FORJA-11, ADR 0098)
 
 > Pedido do dono (28/10/2026): transformar a Forja numa estrutura para cenários e construções e dizer como adequar uma
@@ -44,7 +59,7 @@
 - **Hoje:** `data/source/buildings.csv` dá à forja 120 px (as obras de ofício dos povos têm 80); a Asset Bible pede larguras
   múltiplas de 32. A oficina do pacote, medida pelo barril dela, fica com ~450 px; a da Enramados, pelo barril, ~470. À
   pegada de 120 a planta comprime-se a ~0,27: uma baía, a chaminé e os sinais, com a porta na régua. Encolher a imagem
-  apaga 44% das células e fecha a baía (21 px legíveis contra 72; prova do piloto).
+  apaga 44% das células e fecha a baía (20 px legíveis contra 72; prova do piloto).
 - **Proposta:** a oficina larga é um marco de cenário do segmento; a forja jogável é a compressão dela, numa tela de
   128 px (contrato `forja-jogo-enramados.json`), com a pegada de 120 da simulação ao centro. Ou alargar a pegada
   (balanceamento).

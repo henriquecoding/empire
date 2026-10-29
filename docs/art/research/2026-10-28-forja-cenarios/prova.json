@@ -413,7 +413,9 @@
     112,
     160
    ],
-   "warnings": [],
+   "warnings": [
+    "estados sem zonas em state_changes: ['autumn', 'snow', 'night'] (nada pode mudar neles; a revisao chumba-os)"
+   ],
    "size": "1568x2240",
    "constraints": [
     "request",
@@ -453,10 +455,10 @@
       "aspect_ratio": "2:3",
       "image_size": "2K",
       "estimated_output": [
-       1680,
-       2496
+       1696,
+       2528
       ],
-      "output_size_known": false
+      "output_size_known": true
      },
      "roles": [
       "composition",
@@ -466,8 +468,11 @@
      ]
     },
     "pixellab": {
-     "ok": true,
-     "errors": [],
+     "ok": false,
+     "errors": [
+      "PixelLab pixflux: a referencia composition nao chega ao modelo (o create-image nao tem entrada para esse papel); use openai ou gemini, ou tire-a do contrato",
+      "PixelLab pixflux: a referencia material nao chega ao modelo (o create-image nao tem entrada para esse papel); use openai ou gemini, ou tire-a do contrato"
+     ],
      "request": {
       "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
       "width": 112,
@@ -493,7 +498,9 @@
     64,
     68
    ],
-   "warnings": [],
+   "warnings": [
+    "estados sem zonas em state_changes: ['empty', 'scaffold', 'building', 'ruin', 'night', 'active', 'snow'] (nada pode mudar neles; a revisao chumba-os)"
+   ],
    "size": "1792x1904",
    "constraints": [
     "request",
@@ -541,7 +548,7 @@
        1024,
        1024
       ],
-      "output_size_known": false
+      "output_size_known": true
      },
      "roles": [
       "asset_concept",
@@ -550,8 +557,10 @@
      ]
     },
     "pixellab": {
-     "ok": true,
-     "errors": [],
+     "ok": false,
+     "errors": [
+      "init_image (1536, 1024) tem de ter o tamanho do pedido (64, 68); a Forja nao redimensiona em silencio (use forja fit/snap antes)"
+     ],
      "request": {
       "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
       "width": 64,
@@ -561,11 +570,13 @@
        "shading": "basic shading",
        "detail": "highly detailed",
        "view": "side",
-       "no_background": true
+       "no_background": true,
+       "init_image_strength": 300
       },
       "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
      },
      "roles": [
+      "init_image",
       "color_image"
      ]
     }
@@ -577,7 +588,9 @@
     224,
     112
    ],
-   "warnings": [],
+   "warnings": [
+    "estados sem zonas em state_changes: ['empty', 'scaffold', 'building', 'ruin', 'night', 'active', 'snow'] (nada pode mudar neles; a revisao chumba-os)"
+   ],
    "size": "2464x1232",
    "constraints": [
     "request",
@@ -624,10 +637,10 @@
       "aspect_ratio": "16:9",
       "image_size": "2K",
       "estimated_output": [
-       2736,
+       2752,
        1536
       ],
-      "output_size_known": false
+      "output_size_known": true
      },
      "roles": [
       "asset_concept",
@@ -637,8 +650,11 @@
      ]
     },
     "pixellab": {
-     "ok": true,
-     "errors": [],
+     "ok": false,
+     "errors": [
+      "PixelLab pixflux: a referencia composition nao chega ao modelo (o create-image nao tem entrada para esse papel); use openai ou gemini, ou tire-a do contrato",
+      "init_image (1536, 1024) tem de ter o tamanho do pedido (224, 112); a Forja nao redimensiona em silencio (use forja fit/snap antes)"
+     ],
      "request": {
       "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
       "width": 224,
@@ -648,11 +664,13 @@
        "shading": "basic shading",
        "detail": "highly detailed",
        "view": "side",
-       "no_background": true
+       "no_background": true,
+       "init_image_strength": 300
       },
       "spec_sha256": "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
      },
      "roles": [
+      "init_image",
       "color_image"
      ]
     }
@@ -664,7 +682,9 @@
     128,
     50
    ],
-   "warnings": [],
+   "warnings": [
+    "estados sem zonas em state_changes: ['autumn', 'snow'] (nada pode mudar neles; a revisao chumba-os)"
+   ],
    "size": "2048x800",
    "constraints": [
     "request",
@@ -704,10 +724,10 @@
       "aspect_ratio": "21:9",
       "image_size": "1K",
       "estimated_output": [
-       1568,
+       1584,
        672
       ],
-      "output_size_known": false
+      "output_size_known": true
      },
      "roles": [
       "material",
@@ -716,8 +736,10 @@
      ]
     },
     "pixellab": {
-     "ok": true,
-     "errors": [],
+     "ok": false,
+     "errors": [
+      "PixelLab pixflux: a referencia material nao chega ao modelo (o create-image nao tem entrada para esse papel); use openai ou gemini, ou tire-a do contrato"
+     ],
      "request": {
       "endpoint": "https://api.pixellab.ai/v2/create-image-pixflux",
       "width": 128,
@@ -808,12 +830,12 @@
    {
     "check": "opening:baia",
     "status": "pass",
-    "detail": "baia: vao legivel de 119 px ate a soleira"
+    "detail": "baia: vao legivel de 118x12 px ate a soleira"
    },
    {
     "check": "opening:janela",
     "status": "pass",
-    "detail": "janela: vao legivel de 25 px"
+    "detail": "janela: vao legivel de 24x6 px"
    },
    {
     "check": "roof_pitch",
@@ -928,7 +950,7 @@
     },
     "basis": "celula inteira contra o pixel escolhido; cor apagada = sem vizinho nem mistura"
    },
-   "bay": "baia: vao legivel de 21 px, a regua pede 72",
+   "bay": "baia: vao legivel de 20 px, a regua pede 72 (perfil proposto, Q-295)",
    "verdicts": {
     "raster_contract": "pass",
     "structure": "fail",
@@ -995,32 +1017,52 @@
    "compression": 0.265
   },
   {
-   "check": "carvalho-enramados: plano sem rede valido nos tres geradores",
+   "check": "carvalho-enramados: plano sem rede valido no gpt-image e no Gemini",
    "status": "pass"
+  },
+  {
+   "check": "carvalho-enramados: o PixelLab recusa as referencias que nao pode receber, em vez de as perder",
+   "status": "pass",
+   "refused": 2
   },
   {
    "check": "carvalho-enramados: nenhuma restricao escondida do compilador",
    "status": "pass"
   },
   {
-   "check": "forja-jogo-enramados: plano sem rede valido nos tres geradores",
+   "check": "forja-jogo-enramados: plano sem rede valido no gpt-image e no Gemini",
    "status": "pass"
+  },
+  {
+   "check": "forja-jogo-enramados: o PixelLab recusa as referencias que nao pode receber, em vez de as perder",
+   "status": "pass",
+   "refused": 1
   },
   {
    "check": "forja-jogo-enramados: nenhuma restricao escondida do compilador",
    "status": "pass"
   },
   {
-   "check": "oficina-enramados: plano sem rede valido nos tres geradores",
+   "check": "oficina-enramados: plano sem rede valido no gpt-image e no Gemini",
    "status": "pass"
+  },
+  {
+   "check": "oficina-enramados: o PixelLab recusa as referencias que nao pode receber, em vez de as perder",
+   "status": "pass",
+   "refused": 2
   },
   {
    "check": "oficina-enramados: nenhuma restricao escondida do compilador",
    "status": "pass"
   },
   {
-   "check": "terreno-enramados: plano sem rede valido nos tres geradores",
+   "check": "terreno-enramados: plano sem rede valido no gpt-image e no Gemini",
    "status": "pass"
+  },
+  {
+   "check": "terreno-enramados: o PixelLab recusa as referencias que nao pode receber, em vez de as perder",
+   "status": "pass",
+   "refused": 1
   },
   {
    "check": "terreno-enramados: nenhuma restricao escondida do compilador",
@@ -1029,7 +1071,7 @@
   {
    "check": "encolher a referencia a pegada fecha a baia: redesenhar, nao reduzir",
    "status": "pass",
-   "detail": "baia: vao legivel de 21 px, a regua pede 72",
+   "detail": "baia: vao legivel de 20 px, a regua pede 72 (perfil proposto, Q-295)",
    "erased": 741
   },
   {

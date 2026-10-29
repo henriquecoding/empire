@@ -398,7 +398,8 @@ os comandos seguem-no.
    inferior do manifesto das composições do dono, o horizonte da `band.gd`, a janela do `project.godot` e a fase da
    grade de 2 px medida nos planos do dono. As medidas de arquitetura (porta comum, porta pública, beiral, cumeeira,
    peitoril, guarda, degrau, barril, lanterna) são fatores sobre a régua, em `tools/forja/scenery.json`, cada uma com
-   a origem; são propostas até o dono decidir (Q-295). Sem LFS, a silhueta de um ator é a caixa do corpo, e di-lo.
+   a origem; são um perfil proposto até o dono decidir (Q-295), e cada verificação que as usa di-lo (`rule_status`).
+   Sem LFS, a silhueta de um ator é a caixa do corpo, e di-lo.
 2. **Adequar uma referência** (`forja escala`): marcos funcionais medidos nela (`--mark caixa=métrica`: a porta, o
    barril, a janela), o do próprio objeto primeiro. Sai a escala de cada marco e se se cruzam (uma referência gerada
    pode desenhar partes em escalas diferentes), o pixel aparente contra a célula de 2 px (mais grossa: acrescentar
@@ -416,17 +417,25 @@ os comandos seguem-no.
    a origem; a régua em imagem (silhuetas reais, altura da porta, vãos) no tamanho exato do pedido; o `expect.json`
    com a tela, o pivô e o fundo da cena (alfa no gpt-image e no PixelLab; nos outros, a cor-chave que o prompt pede;
    `keep` numa peça que toca as bordas por desenho, para a terra não ser tomada pelo fundo). As referências passam
-   pelo registo (`--refs`) também no pedido manual: a rejeitada não se anexa e o pedido falha. O PixelLab desenha nas
-   células; acima do modelo, o plano falha e propõe a partição.
+   pelo registo (`--refs`) também no pedido manual: a rejeitada não se anexa e o pedido falha. Registada e enviada são
+   campos diferentes (`sent`): o PixelLab recebe o conceito como `init_image` (no tamanho do pedido) e o mestre de
+   estilo como `style_image` (bitforge), e recusa os outros papéis em vez de os perder. O PixelLab desenha nas
+   células; acima do modelo, o plano falha e propõe a partição. O Gemini pede e espera os pixels da tabela publicada
+   (`backends/gemini_pixels.json`).
 5. **Forjar**: `forja forge gerada.png --expect …/expect.json` deixa a peça onde a grade pedida a pôs (os vãos e os
    sinais do contrato ficam no sítio); se a grade recebida não é a pedida, centra-a pela base e di-lo. O contorno de 1
    célula que a Forja acrescenta soma-se fora da silhueta: recua a peça no máximo essa célula para caber na tela, e uma
    redução declarada deixa 1 célula de folga. Um plano opaco: `--bg keep`.
-6. **Rever a estrutura** (`forja estrutura peça.png --scene cena.json [--master] [--left|--right] [--state nome=png]`):
-   extensão, grade, base no chão, cada vão até à soleira contra a régua, os sinais (iguais ao mestre quando há mestre),
-   a repetição e os conectores (o degrau da emenda contra o maior entre colunas interiores) e os estados (nada muda
-   fora das zonas declaradas; um estado ou condição declarada sem imagem deixa o eixo `not_evaluated`). Os eixos não
-   se somam; o que não se mediu fica `not_evaluated`.
+6. **Rever a estrutura** (`forja estrutura peça.png --scene cena.json [--master m.png --refs registo.json]
+   [--left|--right] [--state nome=png]`): extensão, grade; a base no chão pela estrutura principal (um bloco solto no
+   chão não segura uma casa suspensa; postes ligados ao corpo seguram); cada vão até à soleira, com a altura em filas
+   e a largura útil na metade de baixo contra a régua (a porta, o portão e o arco; a baía de trabalho reporta-a, Q-301);
+   os sinais (iguais ao mestre só passam se o registo o aprova); a repetição e os conectores por dois critérios, alfa
+   e cor, contra o interior das peças; e os estados (nada muda fora das zonas declaradas e alguma coisa muda dentro;
+   um igual à base chumba, um que muda fica `inconclusive` até se ver; um declarado sem imagem fica `not_evaluated`).
+   Os eixos não se somam; o que não se mediu fica `not_evaluated`. Vãos em `vaos.py`, emendas e estados em
+   `emendas.py`; os contraexemplos da [auditoria de 28/10](research/2026-10-28-forja-cenarios-auditoria/README.md)
+   são testes.
 7. **Montar** (`forja montagem peça.png --scene cena.json`): a peça no mundo 1280×720 pela sua âncora — a base na linha
    do chão, a faixa de terreno com o lábio nela, o plano longe no horizonte, o primeiro plano no fundo do ecrã,
    repetida em x quando o contrato o pede — na fase da grade, com os atores reais à porta e ao lado, a 1× e a 2×, de dia e numa noite aproximada (só a modulação da fase
@@ -654,7 +663,10 @@ ficheiro que não é imagem).
 - **Cenários (FORJA-11).** As medidas de arquitetura da régua são propostas (Q-295). A revisão estrutural mede o que o
   contrato declara — extensão, grade, chão, vãos, sinais, emendas, estados — e não a beleza, a retilinearidade de um
   telhado nem a luz; a noite da bancada é só a modulação da fase. O piloto não foi gerado: as referências são
-  `concept` e a oficina reduzida da prova é uma demonstração de método, não um mestre.
+  `concept` e a oficina reduzida da prova é uma demonstração de método, não um mestre. A luminosidade de um vão é um
+  indício, não a função (uma região escura pode ser porta, viga ou fenda): mede-se só na caixa declarada. A folga de
+  cor das emendas (0,02 OKLab) é provisória até haver pares aceites e rejeitados; o significado de um estado não se
+  mede (FORJA-12).
 
 - Uma imagem forjada é **adaptação de imagem gerada**. A proveniência grava a
   entrada, o prompt, o gerador e os parâmetros, com `artistic_approval: false`

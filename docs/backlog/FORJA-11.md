@@ -41,7 +41,7 @@ corretamente para personagens no caso do meu jogo que estão sendo gerados em 64
    `estrutura` e `montagem`, e registar a decisão dele (`forja refs`).
 2. Ligar os endpoints de ambiente do PixelLab (`create-tileset-sidescroller`, `generate-image-v2`, `map-objects`,
    `inpaint-image-pro-flash`) com testes e uma sondagem paga (pesquisa C, P-1 a P-3).
-3. A tabela de pixels do Gemini agora publicada, e as proporções 4:1/8:1 para as tiras de parallax (C, P-8).
+3. As proporções 4:1/8:1 para as tiras de parallax (C, P-8); a tabela de pixels do Gemini entrou no [FORJA-12](FORJA-12.md).
 4. A grade por janelas em cenas largas (C, P-6) e o lint de retilinearidade de telhados e paredes (C, P-7).
 5. A família 1D de tiles da superfície (B §7b) e a camada emissiva por edifício (B §5.4), se o dono as aceitar.
 
