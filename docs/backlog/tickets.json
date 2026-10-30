@@ -3303,5 +3303,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-17": {
+  "title": "auditar sprites, continuidade e exportação de animações",
+  "porque": "Os pedidos e a prancha animada não conservavam integralmente origem, perdas e intenção; prévias e metadados podiam divergir da ação.",
+  "spec": [
+   "docs/art/OWNER_RULES.md",
+   "docs/adr/0103-a-forja-planeia-e-confere-a-sequencia-por-acao.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-16",
+  "feito": "Plano de poses, correções de timeline, prévias, lock e limites entre ações; cadeia da prancha e auditoria com fontes primárias.",
+  "fora": "Aprovação artística de sequências, novos assets e integração paga dos endpoints de animação.",
+  "estado": "feito — correções e auditoria implementadas; testes/provas locais aprovados, CI exigida antes do merge.",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

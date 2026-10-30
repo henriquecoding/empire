@@ -1,0 +1,78 @@
+{
+  "base_commit": "a145f8ca226b240a5a7afc8ecc1f408b2c04be16",
+  "local_baseline": {
+    "tests": 549,
+    "seconds": 128.572,
+    "result": "pass",
+    "skipped": 3,
+    "log_sha256": "24178505979888145917f0061849538b93dfa4e04f8290733c2dab3387300959"
+  },
+  "local_full_suite_and_proofs": {
+    "tests": 572,
+    "seconds": 143.449,
+    "result": "pass",
+    "skipped": 3,
+    "log_sha256": "baec8ad33c3d575b0a46eb708900bfc815d76dbcdfb72e5044f8e853272441e5",
+    "command": "make forja",
+    "exit_code": 0
+  },
+  "latest_targeted_regressions": {
+    "tests": 24,
+    "seconds": 0.769,
+    "result": "pass",
+    "skipped": 0,
+    "log_sha256": "0e6c142718bde1a74db0bdf213802851dd77461ee2c940f5834cbe85f29175db",
+    "command": "python3 -m unittest tools.forja.tests.test_auditoria_animacao -q"
+  },
+  "red_runs": [
+    {
+      "file": "forja-red.log",
+      "summary": [
+        "FAILED (failures=19, errors=6)"
+      ]
+    },
+    {
+      "file": "forja-red-second.log",
+      "summary": [
+        "FAILED (errors=3)"
+      ]
+    },
+    {
+      "file": "forja-red-camera.log",
+      "summary": [
+        "FAILED (failures=1)"
+      ]
+    },
+    {
+      "file": "forja-red-actions.log",
+      "summary": [
+        "FAILED (failures=2)"
+      ]
+    }
+  ],
+  "other_static_gates": {
+    "result": "pass",
+    "command": "make workflows rng dossie-numeros conteudo spec afirmacoes densidade-prova manifesto inventario-arte",
+    "format_and_style": "gdformat/gdlint passed; no GDScript changed"
+  },
+  "player_controls": {
+    "syntax": "pass",
+    "one_shot_stops": true,
+    "step_does_not_wrap": true,
+    "timer_cancellation": "pass",
+    "environment": "Node vm com DOM/canvas simulados; navegador real indisponivel: download do Chromium falhou"
+  },
+  "godot_local": {
+    "result": "not_run",
+    "reason": "godot nao instalado; suite de engine fica para CI"
+  },
+  "art_scope": {
+    "new_generation": false,
+    "art_files_modified": false,
+    "new_artistic_approval": false
+  },
+  "script_line_limit": {
+    "limit": 250,
+    "exceeding": []
+  }
+}

@@ -6,6 +6,9 @@ a 27/10 so mudou a descricao de POST /generate-font-pro, com os 63 limites da Fo
 conformes): docs/art/research/2026-10-26-pixellab-engenharia-reversa/contrato.py
 confere estes limites contra a especificacao e lista o que diverge.
 
+Revalidada em 30/10/2026: novo hash da especificacao, os mesmos 63 limites sem divergencias.
+Auditoria e limites de animacao: docs/art/research/2026-10-30-forja-auditoria/AUDITORIA.md.
+
 - Todos: cada lado de 16 px para cima; `init_image_strength` de 1 a 999 (300 por
   omissao), `text_guidance_scale` de 1 a 20, `style_strength` de 0 a 100.
 - pixflux: cada lado ate 400, area de 32x32 a 400x400; init_image (imagem
@@ -32,7 +35,7 @@ from PIL import Image
 from . import Call, Result, http, image_refs
 
 BASE = "https://api.pixellab.ai/v2"
-SPEC_SHA256 = "ae1f76eb70320706c9c6f375e5378177d5ff94323436474245bd81146554b596"
+SPEC_SHA256 = "e7bdfc6e50fc4fdeea424cf92841b5509e01e8acf8975e7dae44bcab34730e4a"
 OUTLINES = ("single color black outline", "single color outline", "selective outline", "lineless")
 SHADINGS = ("flat shading", "basic shading", "medium shading", "detailed shading", "highly detailed shading")
 DETAILS = ("low detail", "medium detail", "highly detailed")

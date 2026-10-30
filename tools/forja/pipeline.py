@@ -47,6 +47,7 @@ class Options:
     owner_rules: dict | None = None  # regras consultadas pelo pedido; conservadas na cadeia
     crop_at: tuple[int, int] | None = None  # interno: onde o recorte do snap comecava na grade recebida
     useful_box: tuple[int, int, int, int] | None = None
+    animation_plan: dict | None = None
 
 
 def contract_for(opts: Options) -> contracts.Contract:

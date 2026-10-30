@@ -1,0 +1,1325 @@
+{
+  "base_commit": "a145f8ca226b240a5a7afc8ecc1f408b2c04be16",
+  "scope": "royals V15; metricas e primeiro quadro vistos; movimento integral nao revisto",
+  "assets": [
+    {
+      "id": "royal_king",
+      "canvas": [
+        80,
+        80
+      ],
+      "first_pose_bbox": [
+        7,
+        14,
+        71,
+        79
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            180,
+            160,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            70,
+            100,
+            100,
+            140
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            110,
+            100,
+            100,
+            120,
+            120,
+            140,
+            180,
+            350
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            150,
+            120,
+            120,
+            100,
+            100,
+            100,
+            120,
+            150
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "attack": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            130,
+            90,
+            80,
+            90,
+            130,
+            70,
+            50,
+            45,
+            65,
+            80,
+            80,
+            80,
+            100,
+            100,
+            100,
+            150
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": 5,
+          "matches_canonical_count": false
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_squire",
+      "canvas": [
+        64,
+        64
+      ],
+      "first_pose_bbox": [
+        9,
+        11,
+        56,
+        63
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            180,
+            160,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            70,
+            100,
+            100,
+            140
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            110,
+            100,
+            100,
+            120,
+            120,
+            140,
+            180,
+            350
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            150,
+            120,
+            120,
+            100,
+            100,
+            100,
+            120,
+            150
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "block": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": 3,
+          "matches_canonical_count": false
+        },
+        "block_hold": {
+          "from": 48,
+          "to": 49,
+          "frames": 2,
+          "durations_ms": [
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 2,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "attack": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": 5,
+          "matches_canonical_count": false
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_nia",
+      "canvas": [
+        64,
+        64
+      ],
+      "first_pose_bbox": [
+        11,
+        13,
+        56,
+        63
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            180,
+            160,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            70,
+            100,
+            100,
+            140
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            110,
+            100,
+            100,
+            120,
+            120,
+            140,
+            180,
+            350
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            150,
+            120,
+            120,
+            100,
+            100,
+            100,
+            120,
+            150
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "attack": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            130,
+            80,
+            80,
+            100,
+            70,
+            50,
+            70,
+            90,
+            80,
+            100,
+            50,
+            70,
+            80,
+            90,
+            100,
+            130
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": 5,
+          "matches_canonical_count": false
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_bard",
+      "canvas": [
+        64,
+        64
+      ],
+      "first_pose_bbox": [
+        7,
+        5,
+        58,
+        63
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            180,
+            160,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            70,
+            100,
+            100,
+            140
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            110,
+            100,
+            100,
+            120,
+            120,
+            140,
+            180,
+            350
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            150,
+            120,
+            120,
+            100,
+            100,
+            100,
+            120,
+            150
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "play": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "work": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_archer",
+      "canvas": [
+        80,
+        80
+      ],
+      "first_pose_bbox": [
+        7,
+        15,
+        50,
+        79
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            180,
+            160,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            70,
+            100,
+            100,
+            140
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            110,
+            100,
+            100,
+            120,
+            120,
+            140,
+            180,
+            350
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            150,
+            120,
+            120,
+            100,
+            100,
+            100,
+            120,
+            150
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "shoot": {
+          "from": 32,
+          "to": 55,
+          "frames": 24,
+          "durations_ms": [
+            120,
+            100,
+            100,
+            100,
+            130,
+            90,
+            90,
+            90,
+            90,
+            90,
+            90,
+            100,
+            160,
+            120,
+            60,
+            90,
+            90,
+            100,
+            100,
+            130,
+            100,
+            100,
+            100,
+            130
+          ],
+          "distinct_visible_rasters": 20,
+          "canonical_count": 5,
+          "matches_canonical_count": false
+        },
+        "attack": {
+          "from": 32,
+          "to": 55,
+          "frames": 24,
+          "durations_ms": [
+            120,
+            100,
+            100,
+            100,
+            130,
+            90,
+            90,
+            90,
+            90,
+            90,
+            90,
+            100,
+            160,
+            120,
+            60,
+            90,
+            90,
+            100,
+            100,
+            130,
+            100,
+            100,
+            100,
+            130
+          ],
+          "distinct_visible_rasters": 20,
+          "canonical_count": 5,
+          "matches_canonical_count": false
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_quiver",
+      "canvas": [
+        64,
+        64
+      ],
+      "first_pose_bbox": [
+        7,
+        9,
+        56,
+        63
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            180,
+            160,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            70,
+            100,
+            100,
+            140
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            110,
+            100,
+            100,
+            120,
+            120,
+            140,
+            180,
+            350
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            150,
+            120,
+            120,
+            100,
+            100,
+            100,
+            120,
+            150
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "deliver": {
+          "from": 32,
+          "to": 51,
+          "frames": 20,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            120,
+            120,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 20,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "receive": {
+          "from": 52,
+          "to": 56,
+          "frames": 5,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 5,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "work": {
+          "from": 32,
+          "to": 51,
+          "frames": 20,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            120,
+            120,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 20,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_shadow",
+      "canvas": [
+        80,
+        80
+      ],
+      "first_pose_bbox": [
+        14,
+        18,
+        69,
+        78
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            220,
+            200,
+            220,
+            240
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            130,
+            130,
+            130,
+            130,
+            130,
+            130,
+            130,
+            130
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            80,
+            110,
+            120,
+            160
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            110,
+            120,
+            140,
+            160,
+            180,
+            320
+          ],
+          "distinct_visible_rasters": 7,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            170,
+            150,
+            160,
+            150,
+            140,
+            130,
+            140,
+            190
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "sit": {
+          "from": 32,
+          "to": 39,
+          "frames": 8,
+          "durations_ms": [
+            170,
+            140,
+            130,
+            130,
+            150,
+            160,
+            180,
+            220
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "heal": {
+          "from": 40,
+          "to": 47,
+          "frames": 8,
+          "durations_ms": [
+            180,
+            180,
+            180,
+            180,
+            180,
+            180,
+            180,
+            180
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "stand": {
+          "from": 48,
+          "to": 55,
+          "frames": 8,
+          "durations_ms": [
+            170,
+            150,
+            160,
+            150,
+            140,
+            130,
+            140,
+            190
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            130,
+            130,
+            130,
+            130,
+            130,
+            130,
+            130,
+            130
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    },
+    {
+      "id": "royal_dancer",
+      "canvas": [
+        64,
+        64
+      ],
+      "first_pose_bbox": [
+        21,
+        26,
+        43,
+        62
+      ],
+      "tags": {
+        "idle": {
+          "from": 0,
+          "to": 3,
+          "frames": 4,
+          "durations_ms": [
+            220,
+            200,
+            220,
+            240
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        },
+        "walk": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            105,
+            105,
+            105,
+            105,
+            105,
+            105,
+            105,
+            105
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 8,
+          "matches_canonical_count": true
+        },
+        "hit": {
+          "from": 12,
+          "to": 15,
+          "frames": 4,
+          "durations_ms": [
+            80,
+            110,
+            120,
+            160
+          ],
+          "distinct_visible_rasters": 4,
+          "canonical_count": 2,
+          "matches_canonical_count": false
+        },
+        "die": {
+          "from": 16,
+          "to": 23,
+          "frames": 8,
+          "durations_ms": [
+            100,
+            100,
+            110,
+            120,
+            140,
+            160,
+            180,
+            320
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 7,
+          "matches_canonical_count": false
+        },
+        "rise": {
+          "from": 24,
+          "to": 31,
+          "frames": 8,
+          "durations_ms": [
+            160,
+            140,
+            120,
+            110,
+            110,
+            120,
+            140,
+            180
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "dance": {
+          "from": 32,
+          "to": 47,
+          "frames": 16,
+          "durations_ms": [
+            160,
+            110,
+            95,
+            125,
+            100,
+            100,
+            105,
+            100,
+            100,
+            105,
+            110,
+            115,
+            100,
+            110,
+            130,
+            160
+          ],
+          "distinct_visible_rasters": 16,
+          "canonical_count": null,
+          "matches_canonical_count": null
+        },
+        "flee": {
+          "from": 4,
+          "to": 11,
+          "frames": 8,
+          "durations_ms": [
+            105,
+            105,
+            105,
+            105,
+            105,
+            105,
+            105,
+            105
+          ],
+          "distinct_visible_rasters": 8,
+          "canonical_count": 6,
+          "matches_canonical_count": false
+        }
+      },
+      "artistic_approval": "not_granted_by_audit"
+    }
+  ]
+}

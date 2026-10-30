@@ -25,8 +25,11 @@ def _mismatch(template: Image.Image, frame: Image.Image, at: tuple[int, int]) ->
 
 
 def lock(frames: list[Image.Image], box: tuple[int, int, int, int], ref: int = 0, search: int = 3,
-         max_mismatch: float = 0.65) -> tuple[list[Image.Image], list[dict]]:
+         max_mismatch: float = 0.65, keep=frozenset()) -> tuple[list[Image.Image], list[dict]]:
     """Cola a regiao `box` do quadro `ref` em cada quadro, no deslocamento que melhor encaixa."""
+    if not frames or not 0 <= ref < len(frames) or len({f.size for f in frames}) != 1 or search < 0 or not (
+            0 <= box[0] < box[2] <= frames[ref].width and 0 <= box[1] < box[3] <= frames[ref].height):
+        raise ValueError("lock: quadros, regiao e pesquisa invalidos")
     template = frames[ref].crop(box)
     out, report = [], []
     for i, frame in enumerate(frames):
@@ -40,11 +43,20 @@ def lock(frames: list[Image.Image], box: tuple[int, int, int, int], ref: int = 0
         at = (box[0] + best[0], box[1] + best[1])
         before = _mismatch(template, frame, at)
         result = frame.copy()
-        if before <= max_mismatch:
-            result.alpha_composite(template, at)
+        window = frame.crop((*at, at[0] + template.width, at[1] + template.height))
+        same_shape = window.getchannel("A").tobytes() == template.getchannel("A").tobytes()
+        inside = 0 <= at[0] <= frame.width - template.width and 0 <= at[1] <= frame.height - template.height
+        locked = inside and same_shape and before <= max_mismatch
+        if locked:
+            result.paste(template, at)
+            for x, y in keep:
+                if 0 <= x < frame.width and 0 <= y < frame.height:
+                    result.putpixel((x, y), frame.getpixel((x, y)))
         out.append(result)
         report.append({"frame": i, "offset": list(best), "before": round(before, 3),
-                       "locked": before <= max_mismatch})
+                       "locked": locked, "reason": "matching silhouette" if locked else
+                       "silhouette changed or occluded: review the pose" if not same_shape else
+                       "outside canvas" if not inside else "mismatch above limit"})
     return out, report
 
 

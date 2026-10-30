@@ -140,7 +140,7 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
         f"ONE crisp solid square block of one fixed size (about {round(k)}x{round(k)} image pixels)")
     fid = fidelity or {}
     rules = constraints.rules(c, palette, facing, mode, listed, number.get("palette"), fid.get("invariants"),
-                              fid.get("where"), fid.get("max_colors"), fid.get("tones"))
+                              fid.get("where"), fid.get("max_colors"), fid.get("tones"), animated=frames > 1)
     rules += production.rules(fid)
     rules += owner_rules.prompt_rules(kind, frames > 1)
     consulted = owner_rules.context(fid.get("owner_authority"))
@@ -172,7 +172,9 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
                      "read left-to-right then top-to-bottom; one pose per cell; the SAME character, scale, palette and "
                      "baseline in every cell; generous empty space between figures; no text, labels, numbers, "
                      "borders, frame lines or grid lines.")
-        lines += _timeline(tags or [])
+        from . import choreography
+        animation_plan = choreography.plan(tags, canvas, pivot)
+        lines += _timeline(tags or []) + choreography.instructions(animation_plan)
     if reference and not set(attached) & {"identity", "identity_review", "identity_unrecorded", "concept"}:
         raise ValueError("reference sem a imagem de identidade anexada")
     lines.append("Avoid: photorealism, 3D render, painterly or vector style, glow, lens effects, drop shadows, "
@@ -184,6 +186,8 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
               "background": "transparent" if transparent else key, "size": geo["size"], "cluster": c.cluster,
               "attached": attached, "mode": mode, "role": fid.get("role"),
               "target_useful_bbox": fid.get("target_useful_bbox")}
+    if frames > 1:
+        expect["animation_plan"] = animation_plan
     advice = None
     if k < 8:
         advice = (f"cada pixel logico tera so {k:g} px na imagem: o gerador perde precisao. Peca menos quadros por "

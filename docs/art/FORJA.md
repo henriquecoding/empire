@@ -834,3 +834,42 @@ ficheiro que não é imagem).
   sabe o que é intencional sem uma região anotada: `review` é suspeita. As
   anotações da prova do arqueiro são do agente; as do dono são as que contam
   (Q-281). Os efeitos (`fx`) ficam `not_evaluated` até haver política para eles.
+
+## Auditoria de sprites e animações — 30/10/2026 (FORJA-17)
+
+A [auditoria](research/2026-10-30-forja-auditoria/AUDITORIA.md) e a
+[ADR 0103](../adr/0103-a-forja-planeia-e-confere-a-sequencia-por-acao.md) registam os casos reproduzidos.
+Os pedidos de prancha incluem `expect.animation_plan` (`forja.animation_plan/1`): tela, pivô, tags, cadência
+por ação e chaves que as bibles já fixam. O modo fiel conserva câmara e identidade; as poses articuladas
+seguem a ação, em vez de receberem a ordem contraditória de conservar a pose estática em todos os quadros.
+Contagens experimentais não mudam o contrato de runtime.
+
+A prancha conserva `forja.animation_lineage/1`: consulta original das regras, plano, hash da entrada e do
+atlas, grade/perdas/transformação por quadro e cadeia anterior. `--lineage` tem de corresponder aos pixels
+da prancha de entrada. Uma redução deliberada continua diagnóstica após reexportar. A cadeia de atlas
+não é uma cadeia de sprite individual e não pode ser fechada por `forja fidelity` como se fosse uma pose.
+A aprovação artística da sequência continua explícita e pendente.
+
+`sheet` expõe `--outline keep|auto|force`, `--reduce`, `--native-root` e `--lineage`. As opções de método,
+grade e células chegam ao amostrador; `--cells` representa a grade da prancha inteira, com pixels quadrados.
+`--scale 1` não volta a estimar a resolução do sprite. `--outline keep` conserva a construção da silhueta;
+ainda se aplicam as opções de limpeza/paleta e as regras de cor do contrato.
+
+`anim` recusa diferenças entre os PNGs e a contagem declarada, em vez de truncar tags ou perder quadros.
+`sheet` conserva a prova de poses em falta/excesso para diagnosticar o gerador; excesso fica em `unassigned`
+e o contrato não passa. Tempos, intervalos, telas e holds são validados antes de exportar.
+
+Correções temporais e lock ficam dentro de cada tag. O lock exige uma pegada alfa compatível e preserva
+regiões `--action` e pixels protegidos. Um rosto com outra silhueta ou ocluído fica sem alteração e com
+motivo. Não é uma ferramenta de criação de atuação facial.
+
+O GIF/APNG principal mostra a primeira ação; ações seguintes têm `tag-<índice>` próprio. A ordem segue
+forward/reverse/pingpong, com o tempo de cada quadro. Ataques e mortes reproduzem uma vez. GIF tem precisão
+de centésimos de segundo; conferir cadências como 12 fps no APNG/JSON, sem tomar o arredondamento do GIF
+como mudança de contrato. O leitor HTML seleciona a ação, para no fim das ações sem ciclo e oferece 1×,
+ampliação inteira, fundos claro/escuro e onion skin dentro da ação.
+
+A API pública do PixelLab foi revalidada. Os endpoints de animação continuam sem adaptador de geração na
+Forja; não usar a existência deles para afirmar que o `create-image-*` produz animações. A auditoria
+explica limites de contagem, referência e esqueleto, incluindo a incompatibilidade direta de contagens
+ímpares do jogo com `animate-with-text-v3`.

@@ -15,8 +15,8 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import anim, cells, color, contracts, godot, guard, limits, lint, matte, motion, placement, provenance
-from . import quantize, review, sheet, temporal
+from . import anim, cells, color, contracts, godot, guard, limits, lint, matte, placement, provenance
+from . import quantize, review, sheet, sheet_audit, timeline
 from . import aseprite as ase
 from .imageops import open_rgba
 from .pipeline import Options, contract_for, finish, palette_for
@@ -50,6 +50,7 @@ def parse_tags(text: str | None, default: str = "anim") -> list[tuple[str, int]]
         if not frames:
             raise ValueError(f"tag sem contagem conhecida: {name} (use {name}:N)")
         out.append((name or default, frames))
+    timeline.declarations(out)
     return out
 
 
@@ -69,6 +70,10 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     name = name or source.stem
     image = open_rgba(source)
     seen = image.info.get("forja_source")
+    source_image = image
+    scale = sheet_audit.validate(opts, sopts, image.size)
+    if opts.lineage and opts.lineage.get("output_sha256") != sheet_audit.image_sha(source_image):
+        raise ValueError("a cadeia nao liga: esta prancha nao e a saida da etapa anterior")
     if sopts.region:
         image = image.crop(sopts.region)
     bg = _bg(image, opts.bg)
@@ -81,8 +86,8 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
         boxes, stray, masks = sheet.find_masks(image, bg)
         rects = None
     expected = sum(n for _, n in sopts.tags) if sopts.tags else None
-    figures = sheet.extract(image, boxes, bg, scale=opts.scale, same_height=sopts.same_height, masks=masks,
-                            exact=bool(sopts.layout))
+    figures = sheet.extract(image, boxes, bg, scale=scale, same_height=sopts.same_height, masks=masks,
+                            exact=bool(sopts.layout), reduce=opts.reduce, method=opts.method, audit=True)
     contract = contract_for(opts)
     if not figures:
         return _empty(out, name, contract, expected, stray, provenance.record(
@@ -105,20 +110,15 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
         canvas, pivot = placement.common_canvas(figures, anchor, align if rects else "feet")
     pivot = pivot or (canvas[0] // 2, canvas[1] - 1)
     frames, placed = sheet.frames(figures, canvas, pivot, anchor, align)
-    fixes = {}
+    tags, durations = _timeline(sopts.tags, len(frames))
+    timeline.holds(sopts.holds, len(frames))
     guarded = [guard.pixels(opts.protect, s.size) for s in sources]
     keep = frozenset().union(*[guard.frame_pixels(g, guard.placed(d, p["offset"]))
                                for g, d, p in zip(guarded, details, placed)])
-    if sopts.deflicker:
-        frames, flicker = temporal.stabilize(frames, sopts.deflicker, sopts.static, sopts.actions, keep)
-        fixes["deflicker"] = {"changed": len(flicker["changed"]), "counts": flicker["counts"],
-                              "static": flicker["static"], "actions": flicker["actions"], "note": flicker["note"]}
-    if sopts.lock:
-        frames, fixes["lock"] = motion.lock(frames, sopts.lock)
+    frames, fixes = sheet_audit.correct(frames, tags, sopts, keep)
     for frame, src, g, info, place_info in zip(frames, sources, guarded, details, placed):
         if g:
             info["protect"].update(guard.verify(frame, src, g, guard.placed(info, place_info["offset"])))
-    tags, durations = _timeline(sopts.tags, len(frames))
     for h in sopts.holds or []:
         if h.get("ms") and 0 <= h["frame"] < len(durations):
             durations[h["frame"]] = h["ms"]
@@ -136,6 +136,11 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
             sopts.godot_texture, rects_out, durations, tags, 1000 / durations[0], loops)))
     verdicts = [lint.check(f, contract, pal) for f in frames]
     for i, (verdict, info) in enumerate(zip(verdicts, details)):
+        snap = figures[i].snap
+        transform = guard.placed(info, placed[i]["offset"])
+        for item in limits.grid_origin(snap["grid_report"]) + limits.losses(
+                snap, lambda b, t=transform: [*guard.final_xy(b[:2], t), *guard.final_xy(b[2:], t)]):
+            lint.add(verdict, item)
         for item in guard.findings(info) + ([cells.finding(crossing[i])] if i in crossing else []):
             lint.add(verdict, item)
         for item in limits.useful_budget(frames[i], opts.useful_box) if opts.useful_box else []:
@@ -152,7 +157,7 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
                                            "pelo lugar da figura na celula", fix="gerar de novo, ou --align contact/feet",
                                            hint="Keep every pose inside its cell, on the same ground line as the "
                                                 "others."))
-    metrics = anim.metrics(frames, pivot)
+    metrics = sheet_audit.metrics(frames, pivot, tags)
     found = len(frames)
     summary = f"{found} quadros achados" + (f" de {expected} pedidos" if expected else "")
     clipped = sum(p["clipped_pixels"] for p in placed)
@@ -162,13 +167,15 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     rv = review.verdict(contract_valid, moved, [v["coherence"] for v in verdicts])
     metrics["alignment"] = {"mode": align, "offsets_preserved": align != "feet",
                             "drift_imposed_by_alignment": align == "feet"}
+    chain = sheet_audit.chain(source_image, frames, figures, details, placed, opts, sopts.region)
     result = {"name": name, "ok": not rv["needs_regeneration"], "review": rv,
+              "lineage": chain, "delivery": sheet_audit.delivery(contract_valid, chain),
               "summary": summary, "requested": expected, "found": found, "stray_blobs": [list(b) for b in stray],
               "region": list(sopts.region) if sopts.region else None,
               "contract": contract.as_dict(), "tags": [list(t) for t in tags], "durations": durations,
               "holds": sopts.holds or [], "pivot": list(pivot), "canvas": list(canvas), "frames": [
-                  {**p, "finish": d, "lint_errors": v["errors"], "lint_warnings": v["warnings"]}
-                  for p, d, v in zip(placed, details, verdicts)],
+                  {**p, "finish": d, "snap": f.snap, "lint_errors": v["errors"], "lint_warnings": v["warnings"]}
+                  for p, d, v, f in zip(placed, details, verdicts, figures)],
               "metrics": metrics, "fixes": fixes, "files": files,
               "prompt_feedback": " ".join(dict.fromkeys(f["prompt_hint"] for v in verdicts for f in v["findings"]
                                                         if f["prompt_hint"])),
@@ -213,18 +220,6 @@ def _origins(figures: list, rects: list, details: list[dict], cluster: int) -> N
         f.origin = (ox, oy)
 
 
-def _timeline(tags: list[tuple[str, int]] | None, count: int) -> tuple[list[tuple[str, int, int, str]], list[int]]:
-    if not tags:
-        return [("anim", 0, count - 1, "forward")], [1000 // contracts.load_data()["fps"]] * count
-    out, durations, start = [], [], 0
-    for name, n in tags:
-        if start >= count:
-            break
-        last = min(count, start + n) - 1
-        info = contracts.tag(name) or {}
-        out.append((name, start, last, "forward"))
-        durations += [round(1000 / info.get("fps", 10))] * (last - start + 1)
-        start = last + 1
-    durations += [durations[-1] if durations else 100] * (count - len(durations))
-    return out, durations
+def _timeline(tags: list[tuple[str, int]] | None, count: int, strict: bool = False):
+    return timeline.build(tags, count, strict)
 

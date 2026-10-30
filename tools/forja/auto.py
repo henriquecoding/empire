@@ -31,7 +31,7 @@ def forge_attempt(plan: Plan, raw: Path, received: list[int], out: Path, prompt:
     opts = pipeline.Options(kind=plan.data["kind"], palette=palette, canvas=canvas, pivot=pivot, origin=origin,
                             origin_grid=grid, bg=None if exp["background"] == "transparent" else exp["background"],
                             useful_box=tuple(exp["target_useful_bbox"]) if exp.get("target_useful_bbox") else None,
-                            owner_rules=exp.get("owner_rules"))
+                            owner_rules=exp.get("owner_rules"), animation_plan=exp.get("animation_plan"))
     if expectation.native(exp, received):
         opts.scale = 1.0
     if exp["frames"] > 1:
