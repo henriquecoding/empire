@@ -39,5 +39,8 @@ implementa um portão de aprovação artística de sequências equivalente ao `f
 Nenhum novo asset foi integrado nem aprovado. A ligação aos endpoints de animação do PixelLab continua
 explicitamente ausente; a pesquisa atual regista requisitos e incompatibilidades de contagem.
 
+Essas duas lacunas são fechadas posteriormente pela [ADR 0104](0104-a-forja-gera-e-reve-animacoes-nativas.md),
+com adaptadores, revisão da sequência e reparo nativo de quadros. As limitações de avaliação artística mantêm-se.
+
 Sem dependências novas no projeto. Fontes primárias, casos reproduzidos e validação estão na
 [auditoria](../art/research/2026-10-30-forja-auditoria/AUDITORIA.md).

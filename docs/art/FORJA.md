@@ -869,7 +869,8 @@ de centésimos de segundo; conferir cadências como 12 fps no APNG/JSON, sem tom
 como mudança de contrato. O leitor HTML seleciona a ação, para no fim das ações sem ciclo e oferece 1×,
 ampliação inteira, fundos claro/escuro e onion skin dentro da ação.
 
-A API pública do PixelLab foi revalidada. Os endpoints de animação continuam sem adaptador de geração na
-Forja; não usar a existência deles para afirmar que o `create-image-*` produz animações. A auditoria
-explica limites de contagem, referência e esqueleto, incluindo a incompatibilidade direta de contagens
-ímpares do jogo com `animate-with-text-v3`.
+A ligação de geração nativa e o portão de sequência foram implementados no FORJA-18 (ADR 0104).
+O [guia de animação](FORJA_ANIMATION.md) descreve `anim-plan`, `animar`, `anim-patch`, `animacao` e
+`entrega-anim`: referência nativa, poses observadas, retoma sem repetir POST e revisão de cada quadro/ação.
+`create-image-*` continua estático. `text-v3` exige contagens pares; `skeleton-v3` permite attack 5/die 7.
+Os testes usam respostas simuladas; a implementação não equivale a geração real ou aprovação artística.
