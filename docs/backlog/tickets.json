@@ -3319,5 +3319,24 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-18": {
+  "title": "Geração nativa de animações, reparo por quadro e revisão da sequência completa",
+  "porque": "A auditoria deixou os endpoints e o fecho da sequência por implementar; rever só uma pose não valida toda a animação.",
+  "spec": [
+   "docs/art/OWNER_RULES.md",
+   "docs/art/ANIMATION_BIBLE.md",
+   "docs/art/FORJA_ANIMATION.md",
+   "docs/adr/0104-a-forja-gera-e-reve-animacoes-nativas.md"
+  ],
+  "depende": "FORJA-17",
+  "feito": "Plano offline, adaptadores text-v3/skeleton-v3, retoma sem repetir POST, exports nativos, patch por máscara e portão com revisão por quadro/ação e aprovação do dono separada.",
+  "fora": "Geração paga, criação/aprovação de novos assets e alterações de runtime, escala, paleta ou cadência.",
+  "estado": "feito — adaptadores, retoma, reparo por quadro e portão implementados; CI exigida antes do merge.",
+  "horas": "—",
+  "passos": [],
+  "notas": [
+   "Transporte falso e rasters sintéticos; não constitui validação artística do fornecedor."
+  ]
  }
 }

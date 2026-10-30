@@ -136,7 +136,7 @@ Na especificação atual:
 - O template de quadrúpede e a profundidade dos pontos precisam de corresponder ao animal; não aplicar
   automaticamente o corpo humano ao cavalo, javali ou carneiro.
 
-Esses endpoints continuam **sem integração de geração na Forja**. Ligar um deles requer primeiro um
+No fecho do FORJA-17, esses endpoints estavam **sem integração de geração na Forja**. Ligar um deles requer um
 adaptador com validação de pontos/contagens, budget/jobs sem repetição indevida de POST pago, conservação
 da identidade e revisão dos quadros recebidos. Esta auditoria prepara e melhora o fluxo local; não chama
 uma integração proposta de funcionalidade entregue.
@@ -148,3 +148,20 @@ a prancha deve conservar a consulta e a cadeia. Rever rosto, mão/pega e objeto 
 testar a ação completa. O portão do mestre estático continua a exigir fidelidade e revisão exatas.
 A aprovação artística de sequências ainda é uma etapa explícita a concluir pelo dono; a nova cadeia
 de animação não a concede.
+
+## Implementação posterior — FORJA-18
+
+Henrique pediu a implementação dos pontos pendentes. A [ADR 0104](../../../adr/0104-a-forja-gera-e-reve-animacoes-nativas.md)
+e o [guia operacional](../../FORJA_ANIMATION.md) documentam o resultado:
+
+- Adaptadores `text-v3` e `skeleton-v3`, mestre/pose final nativos, autoridade e poses validadas antes da rede.
+- Jobs retomáveis, orçamento persistente e índice plano/job; nenhuma repetição automática de POST pago.
+- Conservação dos quadros brutos e da ordem; retorno incorreto fica diagnóstico, sem adaptar contagens.
+- Refinamento nativo por máscara em quadros explícitos, preservando os restantes e a cadeia anterior.
+- Prova com conceito, ficha pendente por quadro/ação e `entrega-anim` ligado aos pixels e à timeline completos.
+- Resolução explícita de perdas e aprovação separada de Henrique para o hash exato da sequência.
+
+Os testes usam transporte falso e imagens sintéticas. Não houve geração paga, novos assets integrados
+ou aprovação artística automática. `hit` 2 permanece no caminho de desenho nativo/prancha: não cabe
+nos limites desses dois endpoints. A implementação fecha o fluxo de ferramentas; o resultado artístico
+continua a exigir observação real, correção e decisão do dono.

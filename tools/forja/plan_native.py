@@ -18,8 +18,8 @@ def prepare(d: dict, c, refs, palette, model, guides_mode, init_strength, seed) 
         return []
     if d["frames"] > 1:
         d["errors"].append("PixelLab: os endpoints create-image-* geram uma imagem estatica; a animacao "
-                           "(animate-with-text-v3 e outros) ainda nao esta ligada na Forja. Peca uma pose de cada "
-                           "vez ou use --backend openai|gemini para uma prancha")
+                           "nativa usa forja anim-plan e animar com um mestre nativo; text-v3 pede contagens "
+                           "pares e skeleton-v3 recebe poses observadas. Para prancha use openai|gemini")
     if not c.canvas:
         d["errors"].append(f"{d['kind']}: contrato sem tela fixa; o PixelLab precisa de um tamanho nativo")
         return []

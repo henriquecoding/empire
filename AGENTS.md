@@ -13,6 +13,10 @@ Reducao com perda fica como diagnostico, nunca entrega. Rever a imagem exata a 1
 fundos claro/escuro e lado a lado com o conceito: contorno sem pixels duplos acidentais, maos/pega,
 expressao, forma do objeto, proporcoes e materiais. Preencher a ficha visual e correr `forja entrega`
 antes de apresentar. `ready_for_review` exige evidencia; aprovar o mestre continua a pertencer ao dono.
+Para animacao, usar `anim-plan`/`animar` com mestre nativo e poses observadas (ADR 0104),
+`anim-patch` para refinar quadros em mascaras e `animacao`/`entrega-anim` para rever a sequencia exata.
+Ler docs/art/FORJA_ANIMATION.md. Nao truncar/duplicar poses para satisfazer limites do fornecedor;
+uma alteracao a pixels, timeline ou origem exige nova revisao. A aprovacao da sequencia e de Henrique.
 
 ## O que e
 Kingdom-builder 2D em pixel art. Godot 4.7.2 (o pin de .godot-version), GDScript. Mundo 1.5D com tres

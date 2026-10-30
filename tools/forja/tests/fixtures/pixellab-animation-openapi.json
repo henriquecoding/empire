@@ -1,0 +1,251 @@
+{
+ "source": "https://api.pixellab.ai/v2/openapi.json",
+ "retrieved": "2026-10-30",
+ "sha256": "e7bdfc6e50fc4fdeea424cf92841b5509e01e8acf8975e7dae44bcab34730e4a",
+ "schemas": {
+  "AnimateWithTextV3Request": {
+   "properties": {
+    "first_frame": {
+     "$ref": "#/components/schemas/Base64Image"
+    },
+    "last_frame": {
+     "anyOf": [
+      {
+       "$ref": "#/components/schemas/Base64Image"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "action": {
+     "type": "string",
+     "maxLength": 1000,
+     "minLength": 1
+    },
+    "frame_count": {
+     "type": "integer",
+     "maximum": 16.0,
+     "minimum": 4.0,
+     "default": 8
+    },
+    "seed": {
+     "anyOf": [
+      {
+       "type": "integer",
+       "minimum": 0.0
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 0
+    },
+    "no_background": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "drift_threshold": {
+     "anyOf": [
+      {
+       "type": "number",
+       "minimum": 0.0
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "enhance_prompt": {
+     "type": "boolean",
+     "default": false
+    }
+   },
+   "additionalProperties": false,
+   "type": "object",
+   "required": [
+    "first_frame",
+    "action"
+   ]
+  },
+  "AnimateWithSkeletonV3Request": {
+   "properties": {
+    "description": {
+     "type": "string",
+     "minLength": 1
+    },
+    "action": {
+     "type": "string",
+     "minLength": 1
+    },
+    "direction": {
+     "$ref": "#/components/schemas/Direction"
+    },
+    "view": {
+     "$ref": "#/components/schemas/CameraView",
+     "default": "low top-down"
+    },
+    "first_frame": {
+     "$ref": "#/components/schemas/Base64Image"
+    },
+    "first_frame_keypoints": {
+     "items": {
+      "$ref": "#/components/schemas/Keypoint-Input"
+     },
+     "type": "array"
+    },
+    "keypoints": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/Keypoint-Input"
+      },
+      "type": "array"
+     },
+     "type": "array"
+    },
+    "template_id": {
+     "type": "string",
+     "enum": [
+      "mannequin",
+      "bear",
+      "cat",
+      "dog",
+      "horse",
+      "lion"
+     ],
+     "default": "mannequin"
+    },
+    "seed": {
+     "type": "integer",
+     "minimum": 0.0,
+     "default": 0
+    },
+    "no_background": {
+     "type": "boolean",
+     "default": true
+    }
+   },
+   "additionalProperties": false,
+   "type": "object",
+   "required": [
+    "description",
+    "action",
+    "direction",
+    "first_frame",
+    "first_frame_keypoints",
+    "keypoints"
+   ]
+  },
+  "Keypoint-Input": {
+   "properties": {
+    "x": {
+     "type": "number",
+     "maximum": 1.0,
+     "minimum": 0.0
+    },
+    "y": {
+     "type": "number",
+     "maximum": 1.0,
+     "minimum": 0.0
+    },
+    "label": {
+     "$ref": "#/components/schemas/SkeletonLabel"
+    },
+    "z_index": {
+     "type": "integer",
+     "default": 0
+    },
+    "depth": {
+     "anyOf": [
+      {
+       "type": "number",
+       "maximum": 255.0,
+       "minimum": 0.0
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   },
+   "additionalProperties": false,
+   "type": "object",
+   "required": [
+    "x",
+    "y",
+    "label"
+   ]
+  },
+  "SkeletonLabel": {
+   "type": "string",
+   "enum": [
+    "NOSE",
+    "NECK",
+    "RIGHT SHOULDER",
+    "RIGHT ELBOW",
+    "RIGHT ARM",
+    "LEFT SHOULDER",
+    "LEFT ELBOW",
+    "LEFT ARM",
+    "RIGHT HIP",
+    "RIGHT KNEE",
+    "RIGHT LEG",
+    "LEFT HIP",
+    "LEFT KNEE",
+    "LEFT LEG",
+    "RIGHT EYE",
+    "LEFT EYE",
+    "RIGHT EAR",
+    "LEFT EAR"
+   ]
+  },
+  "Direction": {
+   "type": "string",
+   "enum": [
+    "north",
+    "north-east",
+    "east",
+    "south-east",
+    "south",
+    "south-west",
+    "west",
+    "north-west"
+   ]
+  },
+  "CameraView": {
+   "type": "string",
+   "enum": [
+    "side",
+    "low top-down",
+    "high top-down"
+   ]
+  },
+  "Base64Image": {
+   "properties": {
+    "type": {
+     "type": "string",
+     "const": "base64",
+     "default": "base64"
+    },
+    "base64": {
+     "type": "string"
+    },
+    "format": {
+     "type": "string",
+     "default": "png"
+    }
+   },
+   "additionalProperties": false,
+   "type": "object",
+   "required": [
+    "base64"
+   ]
+  }
+ }
+}

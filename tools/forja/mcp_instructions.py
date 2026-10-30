@@ -50,4 +50,13 @@ INSTRUCTIONS = (
     "forja_forge so diz raster_valid e label study; uma base nativa reexportada leva --lineage do forge anterior (as "
     "perdas criticas ficam abertas ate uma resolucao provada nesta imagem); forja_fidelity com --forge-json e "
     "--resolutions da release_ready; forja_par mede o frasco partilhado contra o molde e a pega; a ficha facial do "
-    "conceito, nao os pinos do candidato, prova a personalidade; forja_lote lista os 15 do elenco com os estados.")
+    "conceito, nao os pinos do candidato, prova a personalidade; forja_lote lista os 15 do elenco com os estados. "
+    "(15) Animacao nativa: forja_anim-plan valida sem rede o mestre 64/80, origem, autoridade, contagem e poses. "
+    "text-v3 pede 4..16 quadros pares; skeleton-v3 aceita 3..15 com os 18 pontos observados por pose, incluindo "
+    "a pose inicial ligada ao hash do mestre. Nao inventar esqueletos nem truncar quadros para cumprir a contagem. "
+    "forja_animar executa ou retoma na mesma pasta e teto, um POST por job, sem repetir pedidos ambiguos. "
+    "forja_animacao cria prova e ficha pendente de cada quadro e acao; forja_anim-patch repara so mascaras "
+    "de quadros explicitos, conserva a cadeia e invalida a revisao. forja_entrega-anim exige contrato, origem, "
+    "pixels/tempos/tags/pivot identicos nos exports, perdas resolvidas e observacao completa. --release exige "
+    "aprovacao separada de Henrique do hash desta sequencia; nunca a preencher automaticamente. "
+    "Guia: docs/art/FORJA_ANIMATION.md. Os adaptadores foram provados com transporte falso, nao com geracao paga.")
