@@ -1,5 +1,8 @@
 # Pixel art do Empire — estudo aplicado e ordem de trabalho
 
+Consultar as [regras obrigatórias do dono](OWNER_RULES.md) e `forja regras` antes de produzir e entregar.
+O estudo complementa a autoridade escolhida; a revisão da imagem exata e `forja entrega` fecham a verificação.
+
 Atualizado em 22/10/2026. Este é o ponto de entrada para aplicar o estudo de
 Penusbmic, Watt, Pixel Pete e Aseprite a personagens, animação, materiais e
 cenários. O [registro da pesquisa](research/2026-10-22-aseprite-penusbmic/README.md)

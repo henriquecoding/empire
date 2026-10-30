@@ -4,6 +4,12 @@ Usar com o [guia](CHARACTER_PRODUCTION_GUIDE.md) e o ticket da personagem. Cada 
 
 ## Design e escala
 
+- [ ] Regras do dono consultadas antes de produzir e de entregar (`forja regras`, [fonte](OWNER_RULES.md)).
+- [ ] Contorno de 1 px intencional, escadas e junções revistas; sem pixels duplos acidentais.
+- [ ] Mãos e objeto desenhados juntos: dedos, punho, apoio, peso e oclusão; contacto sozinho não aprova a pega.
+- [ ] Expressão conserva olhar, nariz, boca, assimetria, dentes e pelos do conceito.
+- [ ] Poção mantém bojo redondo, gargalo, aro, rolha e volume; tamanho absoluto igual no par dos alquimistas.
+- [ ] Sem redução com perda usada como entrega; orçamento de rosto/mãos/objeto cabe na grade nativa.
 - [ ] Referências e decisão do autor identificadas; versão rejeitada não foi tratada como padrão.
 - [ ] Silhueta distingue papel e personalidade; comparação com o elenco na mesma linha dos pés.
 - [ ] Prova em 1×, em fundos claros/escuros e na escala pretendida do mundo.
@@ -34,6 +40,8 @@ Usar com o [guia](CHARACTER_PRODUCTION_GUIDE.md) e o ticket da personagem. Cada 
 
 ## Arquivos e procedência
 
+- [ ] Ficha visual presa aos pixels e ao conceito; vistas 1×/inteira, fundos claros/escuros e comparação lado a lado.
+- [ ] `expect` e cadeia conservados; `forja entrega` passou no âmbito declarado, sem confundir revisão com aprovação.
 - [ ] PNGs individuais/atlas/ASE/JSON decodificam e representam os mesmos pixels e tempos.
 - [ ] Alpha, dimensões, retângulos, pivôs, tags, loops e sockets conferidos.
 - [ ] Não houve recorte/recentralização automática por pose; armas não estão cortadas.

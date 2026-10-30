@@ -1,5 +1,12 @@
 # Forja — pixel art de verdade a partir de qualquer gerador
 
+**Consulta obrigatória antes de produzir e entregar:** [regras do dono](OWNER_RULES.md),
+`python3 -m tools.forja regras` (MCP: `forja_regras`). Prompts e planos levam as regras, a sua revisão
+e o recorte de autoridade. Conservar `--expect` e `--lineage` até à imagem final.
+`forja entrega PASTA` (MCP: `forja_entrega`) falha com personagens ausentes, redução com perda,
+consulta desatualizada ou revisão visual em falta. `--character ID` limita explicitamente a um piloto.
+`ready_for_review` distingue candidato revisto de mestre aprovado; dimensões e exportação não aprovam arte.
+
 Os [conceitos escolhidos em 28–29/10](concepts/2026-10-29-elenco/README.md) estão integrados no
 catálogo `forja elenco` (MCP: `forja_elenco`). O comando lista o elenco e prepara pedidos com
 as imagens, pares, funções e invariantes certas. `prompt`, `plan` e `auto` também resolvem

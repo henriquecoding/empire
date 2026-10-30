@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from . import constraints, contracts, face, production, signals, visual_review
+from . import constraints, contracts, face, owner_rules, production, signals, visual_review
 from .equipment import image_sha
 
 SCHEMA = "forja.fidelity/1"
@@ -91,7 +91,7 @@ def character(data: dict, ident: str, pose: str | None = None) -> dict:
         poses = [c["pose"] for c in data.get("characters", []) if c["id"] == ident]
         why = "diga --pose: " + ", ".join(poses) if poses else "nao esta no contrato"
         raise ValueError(f"personagem {ident!r} pose {pose!r}: {why}")
-    return found[0]
+    return owner_rules.bind_character(found[0], data)
 
 
 def where(ch: dict) -> str:
@@ -125,6 +125,10 @@ def prepare(contract: dict | None, ident: str | None, pose: str | None, mode: st
 
     Devolve {mode, attach (papel, nome, bytes) a juntar, errors, notes, prompt (para prompts.build), record}."""
     out = {"mode": mode, "attach": [], "errors": [], "notes": [], "prompt": None, "record": None}
+    for _, name, data in given:
+        refused = owner_rules.rejected(image_sha(_pixels(data)))
+        if refused:
+            out["errors"].append(f"{name}: guia de entrega rejeitada pelo dono: {refused['reason']}")
     if mode == "recover_grid":
         out["errors"].append("recover_grid nao gera: recupera-se a ampliacao que existe com forja forge/snap")
         return out
@@ -168,6 +172,7 @@ def prepare(contract: dict | None, ident: str | None, pose: str | None, mode: st
                      "authority_sha256": contract["authority"]["sha256"], "crop": ch["authority_crop_xyxy"],
                      "crop_pixels_sha256": sha, "kind": ch["kind"], "target_canvas": ch["target_canvas"],
                      "role": ch.get("role"), "target_useful_bbox": ch.get("target_useful_bbox")}
+    out["prompt"]["owner_authority"] = out["record"]
     return out
 
 

@@ -67,7 +67,7 @@ def _entry(data: dict, e: dict, folder: Path, previous: Path | None) -> dict:
     row = {"character": e["id"], "label_pt": e.get("label"), "kind": e["kind"]}
     png = folder / f"{e['id']}.png"
     if not png.is_file():
-        return {**row, "candidate": None, "label": "no_candidate", "deliverable": False,
+        return {**row, "candidate": None, "label": "no_candidate", "deliverable": False, "ready_for_review": False,
                 "summary": None, "note": "sem candidato nesta pasta: continua no relatorio"}
     ch = fidelity.character(cast.authority(data, e), e["id"], e.get("pose"))
     image = open_rgba(png)
@@ -86,13 +86,15 @@ def _entry(data: dict, e: dict, folder: Path, previous: Path | None) -> dict:
             "summary": rev["summary"], "release": rev["release"]["status"],
             "open_critical_losses": len(rev["release"]["open_critical"]), "label": rev["label"],
             "deliverable": rev["deliverable"], "unchanged_from_previous": same,
+            "ready_for_review": rev["ready_for_review"], "production_review": rev["production_review"],
             "face": rev["states"]["declared_feature_preservation"]["face"]["status"]}
 
 
-def do_batch(args) -> dict:
+def do_batch(args, selected: set[str] | None = None) -> dict:
     data = cast.load(args.catalog)
     folder, previous = Path(args.folder), Path(args.previous) if args.previous else None
-    rows = [_entry(data, e, folder, previous) for e in data["characters"]]
+    rows = [_entry(data, e, folder, previous) for e in data["characters"]
+            if selected is None or e["id"] in selected]
     labels = {k: sum(1 for r in rows if r["label"] == k) for k in ("release", "study", "blocked", "no_candidate")}
     report = {"schema": "forja.batch_report/1", "cast": data["path"], "folder": str(folder), "entries": rows,
               "count": len(rows), "labels": labels, "deliverable": sum(1 for r in rows if r["deliverable"]),

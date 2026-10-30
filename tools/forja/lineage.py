@@ -108,6 +108,7 @@ def forge(image: Image.Image, final: Image.Image, g, snapinfo: dict, info: dict 
                            "fit": (info or {}).get("fit")},
              "new_losses": new, "carried": len(occ) - new, "edited": []}
     return {"schema": SCHEMA, "root": root, "stages": stages + [stage], "occurrences": occ,
+            "owner_rules": parent.get("owner_rules") if parent else opts.owner_rules,
             "output_sha256": stage["output_sha256"]}
 
 
@@ -127,10 +128,14 @@ def patch(parent: dict, report: dict, boxes: list) -> dict:
 def delivery(raster_ok: bool, lin: dict | None) -> dict:
     """O estado do forge: o raster valido nao e a entrega. So o fecho (`forja fidelity`) diz `release_ready`."""
     critical = sum(1 for o in (lin or {}).get("occurrences", []) if o.get("critical"))
-    return {"raster_valid": raster_ok, "release_ready": False, "label": "study" if raster_ok else "blocked",
+    reduced = any((s.get("transform", {}).get("grid") or {}).get("origin") == "deliberately_reduced"
+                  for s in (lin or {}).get("stages", []))
+    return {"raster_valid": raster_ok, "ready_for_review": False, "release_ready": False,
+            "diagnostic_only": reduced,
+            "label": "study" if raster_ok else "blocked",
             "state": "candidate_in_review" if raster_ok else "blocked", "artistic_approval": "pending",
             "critical_losses": critical,
-            "closure": "forja fidelity --candidate --forge-json: runtime, sinais, identidade, mestre e perdas herdadas"}
+            "closure": "forja fidelity e forja entrega: regras, consulta, revisao visual, cadeia e aprovacao do mestre"}
 
 
 def load_resolutions(path: str | Path | None) -> list[dict]:

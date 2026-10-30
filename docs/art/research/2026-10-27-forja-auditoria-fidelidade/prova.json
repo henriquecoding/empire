@@ -1606,7 +1606,17 @@
      "shading": "concept",
      "colors": "contract:royal_80 (max_colors null)",
      "small_features": "fidelity: auditoria de 27/10, §8 (etapa C)",
-     "invariants": "fidelity:rei/estatica_superior_da_prancha"
+     "invariants": "fidelity:rei/estatica_superior_da_prancha",
+     "owner_authority": "owner:Henrique",
+     "owner_native_grid": "owner:Henrique",
+     "owner_proportions": "owner:Henrique",
+     "owner_contour": "owner:Henrique",
+     "owner_hands_grip": "owner:Henrique",
+     "owner_face": "owner:Henrique",
+     "owner_equipment_shape": "owner:Henrique",
+     "owner_materials": "owner:Henrique",
+     "owner_revisions": "owner:Henrique",
+     "owner_delivery_gate": "owner:Henrique"
     }
    },
    "escudeiro": {
@@ -1622,7 +1632,17 @@
      "shading": "concept",
      "colors": "contract:royal_64 (max_colors null)",
      "small_features": "fidelity: auditoria de 27/10, §8 (etapa C)",
-     "invariants": "fidelity:escudeiro/estatica_superior_da_prancha"
+     "invariants": "fidelity:escudeiro/estatica_superior_da_prancha",
+     "owner_authority": "owner:Henrique",
+     "owner_native_grid": "owner:Henrique",
+     "owner_proportions": "owner:Henrique",
+     "owner_contour": "owner:Henrique",
+     "owner_hands_grip": "owner:Henrique",
+     "owner_face": "owner:Henrique",
+     "owner_equipment_shape": "owner:Henrique",
+     "owner_materials": "owner:Henrique",
+     "owner_revisions": "owner:Henrique",
+     "owner_delivery_gate": "owner:Henrique"
     }
    },
    "arqueiro": {
@@ -1638,7 +1658,17 @@
      "shading": "concept",
      "colors": "contract:royal_80 (max_colors null)",
      "small_features": "fidelity: auditoria de 27/10, §8 (etapa C)",
-     "invariants": "fidelity:arqueiro/estatica_superior_da_prancha"
+     "invariants": "fidelity:arqueiro/estatica_superior_da_prancha",
+     "owner_authority": "owner:Henrique",
+     "owner_native_grid": "owner:Henrique",
+     "owner_proportions": "owner:Henrique",
+     "owner_contour": "owner:Henrique",
+     "owner_hands_grip": "owner:Henrique",
+     "owner_face": "owner:Henrique",
+     "owner_equipment_shape": "owner:Henrique",
+     "owner_materials": "owner:Henrique",
+     "owner_revisions": "owner:Henrique",
+     "owner_delivery_gate": "owner:Henrique"
     }
    }
   },
