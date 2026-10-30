@@ -149,24 +149,34 @@ def single(path: str | Path, source: Image.Image, grid: Grid, final: Image.Image
     return path
 
 
-PLAYER = """<canvas id="cv"></canvas><p><button id="pp">pausar</button> <button id="st">quadro</button>
+PLAYER = """<p><select id="tag"></select>
+<label>escala <select id="zoom"><option>1</option><option>2</option><option selected>%d</option></select></label>
+<label>fundo <select id="bg"><option value="#241f17">escuro</option><option value="#eee8df">claro</option></select></label></p>
+<canvas id="cv"></canvas><p><button id="pp">pausar</button> <button id="st">quadro</button>
 <label><input type="checkbox" id="on"> onion</label> <span id="ix"></span></p>
 <script>
-const F=%s,D=%s,Z=%d;const cv=document.getElementById('cv'),cx=cv.getContext('2d');
-const im=F.map(s=>{const i=new Image();i.src=s;return i});let k=0,run=true,t=null;
+const F=%s,D=%s,T=%s;const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const im=F.map(s=>{const i=new Image();i.src=s;return i});let k=0,run=true,t=null,tag=0;
+const pick=document.getElementById('tag');T.forEach((a,i)=>{const o=document.createElement('option');o.value=i;o.textContent=a.name;pick.append(o)});
 cx.imageSmoothingEnabled=false;
-function draw(){const a=im[k];cv.width=a.naturalWidth*Z;cv.height=a.naturalHeight*Z;cx.imageSmoothingEnabled=false;
-cx.fillStyle='#241f17';cx.fillRect(0,0,cv.width,cv.height);
-if(document.getElementById('on').checked){cx.globalAlpha=.3;const p=im[(k+F.length-1)%%F.length];cx.drawImage(p,0,0,cv.width,cv.height);cx.globalAlpha=1}
-cx.drawImage(a,0,0,cv.width,cv.height);document.getElementById('ix').textContent=(k+1)+'/'+F.length+' · '+D[k]+' ms'}
-function tick(){draw();if(run){t=setTimeout(()=>{k=(k+1)%%F.length;tick()},D[k])}}
-document.getElementById('pp').onclick=()=>{run=!run;if(run)tick()};
-document.getElementById('st').onclick=()=>{run=false;k=(k+1)%%F.length;draw()};
+function draw(){const i=T[tag].indices[k],a=im[i],Z=Number(document.getElementById('zoom').value);
+cv.width=a.naturalWidth*Z;cv.height=a.naturalHeight*Z;cx.imageSmoothingEnabled=false;
+cx.fillStyle=document.getElementById('bg').value;cx.fillRect(0,0,cv.width,cv.height);
+if(document.getElementById('on').checked && k>0){cx.globalAlpha=.3;cx.drawImage(im[T[tag].indices[k-1]],0,0,cv.width,cv.height);cx.globalAlpha=1}
+cx.drawImage(a,0,0,cv.width,cv.height);document.getElementById('ix').textContent=(i+1)+'/'+F.length+' · '+D[i]+' ms';
+document.getElementById('pp').textContent=run?'pausar':'reproduzir'}
+function advance(){if(k+1<T[tag].indices.length){k++;return true}if(T[tag].loop){k=0;return true}return false}
+function tick(){clearTimeout(t);draw();if(run)t=setTimeout(()=>{if(!advance())run=false;tick()},D[T[tag].indices[k]])}
+document.getElementById('pp').onclick=()=>{clearTimeout(t);run=!run;if(run && k===T[tag].indices.length-1)k=0;tick()};
+document.getElementById('st').onclick=()=>{clearTimeout(t);run=false;advance();draw()};
+pick.onchange=()=>{clearTimeout(t);tag=Number(pick.value);k=0;run=true;tick()};
+for(const id of ['zoom','bg','on'])document.getElementById(id).onchange=draw;
 Promise.all(im.map(i=>i.decode())).then(tick);
 </script>"""
 
 
 def animation(path: str | Path, frames: list[Image.Image], durations: list[int], result: dict) -> Path:
+    from . import timeline
     zoom = max(2, min(8, 384 // max(frames[0].size)))
     uris = json.dumps([data_uri(f) for f in frames])
     strip = Image.new("RGBA", (frames[0].width * len(frames), frames[0].height))
@@ -176,7 +186,8 @@ def animation(path: str | Path, frames: list[Image.Image], durations: list[int],
                    for i, r in enumerate(result.get("frames", [])))
     body = [f"<h1>Forja · {html.escape(result['name'])}</h1>",
             f'<p class="{"ok" if result.get("ok") else "error"}">{result.get("summary", "")}</p>',
-            "<h2>Animacao</h2>", PLAYER % (uris, json.dumps(durations), zoom),
+            "<h2>Animacao</h2>", PLAYER % (zoom, uris, json.dumps(durations),
+                                          json.dumps(timeline.playback(result["tags"]))),
             "<h2>Tira</h2>", _fig(upscale(on_background(strip, None, 4), 2), "todos os quadros, 2x"),
             "<h2>Medidas</h2>", f"<pre>{html.escape(json.dumps(result.get('metrics', {}), indent=1))}</pre>",
             "<h2>Quadros</h2>", f"<table>{rows}</table>",

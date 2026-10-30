@@ -25,6 +25,7 @@ def _options(args) -> pipeline.Options:
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
         opts.owner_rules = exp.get("owner_rules")
+        opts.animation_plan = exp.get("animation_plan")
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
         selected = production.resolve("", opts.kind, {"kind": exp.get("kind"), "role": exp.get("role")})
         if selected["errors"]:
@@ -39,7 +40,6 @@ def _options(args) -> pipeline.Options:
             opts.bg = exp["background"]
         opts.canvas, opts.pivot, opts.origin, opts.origin_grid = expectation.frame(exp, opts.canvas, opts.pivot)
     return opts
-
 
 def common(p) -> None:
     p.add_argument("--kind", default="free", choices=contracts.kinds(), help="contrato do Empire (ver `kinds`)")

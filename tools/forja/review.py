@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from PIL import Image
 
-from . import verdicts
+from . import timeline, verdicts
 from .imageops import flat, foot_point
 
 STATIC_TAGS = ("hold", "pose", "static", "portrait")
@@ -31,6 +31,7 @@ def parse_holds(items: list[str] | None) -> list[dict]:
         if not reason.strip():
             raise ValueError(f"hold sem razao: {item!r} (use quadro:ms:razao)")
         out.append({"frame": int(frame), "ms": int(ms) if ms else None, "reason": reason.strip()})
+        timeline.holds(out, max(h["frame"] for h in out) + 1)
     return out
 
 
@@ -58,8 +59,9 @@ def _components(frame: Image.Image) -> int:
 def motion(frames: list[Image.Image], tags: list[tuple], holds: list[dict] | None = None,
            align: str = "preserve", loop: bool | dict = True) -> dict:
     """Os indicios de uma timeline. Os pares comparam-se dentro de cada tag (e o fecho do loop dela)."""
+    timeline.holds(holds, len(frames))
     holds_at = {h["frame"]: h for h in holds or []}
-    rasters = [f.tobytes() for f in frames]
+    rasters = [timeline.visible(f).tobytes() for f in frames]
     checks, blocking = [], []
     for name, start, end, *_ in tags:
         span = rasters[start:end + 1]

@@ -39,6 +39,9 @@ def do_sheet(args) -> dict:
         res["ok"] = res["ok"] and not cmp["hard"]
     return {**{k: res[k] for k in ("ok", "review", "summary", "requested", "found", "files", "metrics",
                                    "prompt_feedback", "pivot", "canvas", "tags", "holds", "stray_blobs")},
+            "delivery": res.get("delivery"),
+            "lineage": {"schema": res["lineage"]["schema"], "frames": len(res["lineage"]["frames"]),
+                        "diagnostic_only": res["lineage"]["diagnostic_only"]} if res.get("lineage") else None,
             "expectation": cmp}
 
 
@@ -47,8 +50,8 @@ def do_anim(args) -> dict:
     if len({f.size for f in frames}) != 1:
         raise ValueError("todos os quadros precisam da mesma tela")
     tags = sheetforge.parse_tags(args.tags)
-    tl, durations = sheetforge._timeline(tags, len(frames))
-    if args.ms:
+    tl, durations = sheetforge._timeline(tags, len(frames), strict=True)
+    if args.ms is not None:
         durations = [args.ms] * len(frames)
     pivot = args.pivot
     files = anim.export(frames, args.out, args.name, durations, tl, pivot, args.columns)
@@ -63,7 +66,10 @@ def do_anim(args) -> dict:
         loops = {t: (contracts.tag(t) or {}).get("loop", True) for t, *_ in tl}
         files["godot"] = str(godot.write(Path(args.out) / f"{args.name}.tres", godot.sprite_frames(
             args.godot_texture, rects, durations, tl, 1000 / durations[0], loops)))
-    return {"ok": True, "files": files, "tags": [list(t) for t in tl], "metrics": anim.metrics(frames, pivot)}
+    from . import sheet_audit
+    return {"ok": True, "files": files, "tags": [list(t) for t in tl],
+            "metrics": sheet_audit.metrics(frames, pivot, tl), "release_ready": False,
+            "note": "empacotamento dos PNGs; identidade, movimento e aprovacao continuam pendentes"}
 
 
 def _texture(spec: str | None, size: int) -> Image.Image | None:
@@ -167,6 +173,10 @@ def register(sub) -> None:
     p.add_argument("--anchor", default="feet", choices=("feet", "mass", "bottom", "center"))
     p.add_argument("--same-height", action="store_true", help="cada figura na sua propria grade (o gerador desenhou "
                    "pixels de tamanhos diferentes); nada se estica")
+    p.add_argument("--outline", dest="outline_mode", default="auto", choices=("auto", "keep", "force"))
+    p.add_argument("--reduce", action="store_true", help="reducao diagnostica, registada por quadro")
+    from . import lineage
+    lineage.cli_args(p)
     p.add_argument("--deflicker", type=float, default=0.0, help="cintilacao: mudancas menores que isto (OKLab); "
                    "so se corrigem dentro de --static, sem movimento e fora de --action")
     p.add_argument("--static", type=box, action="append", help="caixa x0,y0,x1,y1 (quadro final) confirmada como "

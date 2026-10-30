@@ -12,6 +12,7 @@ from pathlib import Path
 
 from PIL import Image
 
+from . import timeline
 from .imageops import CLEAR, flat, foot_point, on_background, opaque_bbox, upscale
 
 
@@ -66,34 +67,41 @@ def save_gif(frames: list[Image.Image], durations: list[int], path: str | Path, 
     shown = [upscale(on_background(f, bg) if bg else f, scale).convert("RGB") for f in frames]
     path = Path(path)
     shown[0].save(path, save_all=True, append_images=shown[1:], duration=durations,
-                  loop=0 if loop else 1, disposal=2, optimize=False)
+                  **({"loop": 0} if loop else {}), disposal=2, optimize=False)
     return path
 
 
-def save_apng(frames: list[Image.Image], durations: list[int], path: str | Path, scale: int = 4) -> Path:
+def save_apng(frames: list[Image.Image], durations: list[int], path: str | Path, scale: int = 4,
+              loop: bool = True) -> Path:
     shown = [upscale(f, scale) for f in frames]
     path = Path(path)
-    shown[0].save(path, save_all=True, append_images=shown[1:], duration=durations, loop=0,
-                  disposal=1, default_image=False)
+    shown[0].save(path, save_all=True, append_images=shown[1:], duration=durations, loop=0 if loop else 1,
+                  disposal=0, blend=0, default_image=False)
     return path
 
 
 def export(frames: list[Image.Image], out_dir: str | Path, name: str, durations: list[int] | None = None,
            tags: list[tuple[str, int, int, str]] | None = None, pivot: tuple[int, int] | None = None,
-           columns: int | None = None, previews: bool = True) -> dict:
+           columns: int | None = None, previews: bool = True, loops=None) -> dict:
     """Escreve <name>.png (tira/atlas), <name>.json (Aseprite), e previas GIF/APNG."""
+    durations = [100] * len(frames) if durations is None else durations
+    tags = [(name, 0, len(frames) - 1, "forward")] if tags is None else tags
+    timeline.validate(frames, durations, tags, columns)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    durations = durations or [100] * len(frames)
-    tags = tags or [(name, 0, len(frames) - 1, "forward")]
     sheet, rects = strip(frames, columns)
     sheet.save(out / f"{name}.png")
     data = aseprite_json(f"{name}.png", sheet.size, rects, durations, tags, name, pivot)
     (out / f"{name}.json").write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
     files = {"sheet": str(out / f"{name}.png"), "json": str(out / f"{name}.json")}
     if previews:
-        files["gif"] = str(save_gif(frames, durations, out / f"{name}@4x.gif"))
-        files["apng"] = str(save_apng(frames, durations, out / f"{name}@4x.png"))
+        for i, tag in enumerate(timeline.playback(tags, loops)):
+            seq = [frames[j] for j in tag["indices"]]
+            times = [durations[j] for j in tag["indices"]]
+            stem = name if i == 0 else f"{name}.tag-{i}"
+            suffix = "" if i == 0 else f"_tag_{i}"
+            files["gif" + suffix] = str(save_gif(seq, times, out / f"{stem}@4x.gif", loop=tag["loop"]))
+            files["apng" + suffix] = str(save_apng(seq, times, out / f"{stem}@4x.png", loop=tag["loop"]))
     return files
 
 
@@ -101,9 +109,10 @@ def metrics(frames: list[Image.Image], pivot: tuple[int, int] | None = None) -> 
     """O que a revisao de uma animacao quer saber antes de olhar."""
     feet = [foot_point(f) for f in frames]
     boxes = [opaque_bbox(f) for f in frames]
-    rasters = [f.tobytes() for f in frames]
+    rasters = [timeline.visible(f).tobytes() for f in frames]
     unique = set(rasters)
-    flips = {f.tobytes(): f.transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes() for f in frames}
+    flips = {timeline.visible(f).tobytes(): timeline.visible(f).transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes()
+             for f in frames}
     colors = set()
     for f in frames:
         colors |= {p[:3] for p in flat(f) if p[3] >= 128}
@@ -116,14 +125,14 @@ def metrics(frames: list[Image.Image], pivot: tuple[int, int] | None = None) -> 
             "heights": [b[3] - b[1] if b else 0 for b in boxes], "flicker": flicker(frames)}
 
 
-def flicker(frames: list[Image.Image]) -> int:
+def flicker(frames: list[Image.Image], loop: bool = True) -> int:
     """Pixels que piscam A -> B -> A em tres quadros seguidos (ciclicos): ruido, nao movimento."""
     if len(frames) < 3:
         return 0
     data = [flat(f) for f in frames]
     n = len(data)
     count = 0
-    for i in range(n):
+    for i in range(n if loop else n - 2):
         a, b, c = data[i], data[(i + 1) % n], data[(i + 2) % n]
         count += sum(1 for p, q, r in zip(a, b, c) if p == r and q != p and p[3] >= 128 and q[3] >= 128)
     return count

@@ -13,7 +13,7 @@ from statistics import median
 
 from PIL import Image, ImageChops, ImageFilter
 
-from . import cells, color, gridcheck, matte, resample
+from . import cells, color, gridcheck, loss, matte, resample
 from .cells import blobs, cell_rects
 from .imageops import opaque_bbox
 from .placement import ALIGNS, ANCHORS, anchor_point, frames
@@ -33,6 +33,7 @@ class Figure:
     origin_raw: tuple[int, int] | None = None
     periods: tuple[float, float] = (0.0, 0.0)
     origin: tuple[int, int] | None = None
+    snap: dict | None = None
 
 
 def find(image: Image.Image, bg: tuple[int, int, int] | None, gap: int = 12,
@@ -130,7 +131,7 @@ def by_cells(boxes: list[tuple[int, int, int, int]], size: tuple[int, int],
 
 def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pad: int = 6,
             scale: float | None = None, same_height: bool = False, masks: dict | None = None,
-            exact: bool = False) -> list[Figure]:
+            exact: bool = False, reduce: bool = False, method: str = "dominant", audit: bool = False) -> list[Figure]:
     """Cada caixa vira uma figura nativa, numa escala comum: a mediana das medidas (um recorte que e uma ampliacao
     exata nessa escala fica com a grade medida, e a fase dele). `same_height`: cada figura na sua propria grade, para
     uma prancha com pixels de tamanhos diferentes; nada se estica (antes, LANCZOS ate a altura mediana: borrava os
@@ -151,18 +152,25 @@ def extract(image: Image.Image, boxes: list, bg: tuple[int, int, int] | None, pa
     periods = [float(k) if k > 1 else gridcheck.detect(c).period[0] for c, (k, _) in zip(crops, exact)]
     shared = scale or (median(p for p in periods if p > 1) if any(p > 1 for p in periods) else 1.0)
     for f, crop, region, own, (k, phase) in zip(figures, crops, regions, periods, exact):
-        if k > 1 and (same_height or k == shared):
+        if scale is not None:
+            g = gridcheck.detect(crop, scale=scale, reduce=reduce)
+        elif k > 1 and (same_height or k == shared):
             g = gridcheck.phased(crop.size, k, phase)
         elif same_height or shared <= 1:
             g = gridcheck.detect(crop)
         else:
             g = gridcheck.detect(crop, scale=shared)
-        sampled = resample.resample(crop, g)
+        sampled = resample.resample(crop, g, method)
         native, _ = matte.remove(sampled.image, color.to_hex(bg) if bg else None)
         box = opaque_bbox(native) or (0, 0, native.width, native.height)
         f.native = native.crop(box)
         f.period, f.purity, f.periods = g.period[0], sampled.purity, g.period
         f.origin_raw = (region[0] + g.xs[box[0]], region[1] + g.ys[box[1]])
+        if audit:
+            f.snap = {"grid": g.as_dict(), "sample": sampled.as_dict(), "source_region": list(region),
+                      "crop_origin": list(box[:2]), "native_size": list(f.native.size),
+                      "loss": loss.crop(loss.observe(crop, g, sampled.image), box),
+                      "grid_report": gridcheck.report(crop, g, f.native.size, None)}
         if not same_height and own > 1 and abs(own - shared) / shared > 0.08:
             f.notes.append(f"escala propria {own:.2f} difere da comum {shared:.2f}")
     return figures

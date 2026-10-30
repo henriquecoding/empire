@@ -33,8 +33,9 @@ GRID_DOUBT = 0.75  # abaixo disto a fase da grade e duvidosa: pede-se redesenho 
 def load(path: str | Path) -> dict:
     """A cadeia de um JSON do forge (o campo `lineage`) ou de um `forja.lineage/1` solto."""
     data = json.loads(Path(path).read_text(encoding="utf-8"))
-    lin = data.get("lineage") if data.get("schema") != SCHEMA else data
-    if not lin or lin.get("schema") != SCHEMA:
+    schemas = (SCHEMA, "forja.animation_lineage/1")
+    lin = data if data.get("schema") in schemas else data.get("lineage")
+    if not lin or lin.get("schema") not in schemas:
         raise ValueError(f"{path}: sem cadeia {SCHEMA} (um JSON do forge feito antes do FORJA-15 nao a tem)")
     return lin
 
@@ -74,6 +75,8 @@ def _inside(xy, box) -> bool:
 def forge(image: Image.Image, final: Image.Image, g, snapinfo: dict, info: dict | None, opts) -> dict:
     """A etapa do forge acrescentada a cadeia de `opts.lineage` (ou a primeira), com as perdas novas e as herdadas."""
     parent, sha_in = opts.lineage, image_sha(image)
+    if parent and parent.get("schema") != SCHEMA:
+        raise ValueError("cadeia de animacao: use forja sheet para a prancha; nao e a cadeia de um sprite individual")
     if parent and parent.get("output_sha256") != sha_in:
         raise ValueError(f"a cadeia nao liga: a etapa anterior deu {str(parent.get('output_sha256'))[:12]}..., esta "
                          f"entrada e {sha_in[:12]}...; passe o JSON do forge que produziu esta imagem")

@@ -72,7 +72,12 @@ def shading(c: contracts.Contract, faithful: bool, tones: int | None = None) -> 
                  f"readable flat clusters{dither}.", DEFAULT)
 
 
-def camera(c: contracts.Contract, facing: str, faithful: bool) -> dict:
+def camera(c: contracts.Contract, facing: str, faithful: bool, animated: bool = False) -> dict:
+    if faithful and animated:
+        return _rule("camera", f"Camera: the same camera and side-view direction as the concept, facing "
+                     f"{facing.upper()}. The concept establishes identity and proportions; articulated poses "
+                     "follow the animation timeline while preserving the owner's invariants and reference exceptions.",
+                     f"contract:{c.kind} (side view); concept; animation timeline")
     if faithful:
         return _rule("camera", f"Camera: side view facing {facing.upper()}, the same view, pose and gesture as the "
                      "concept art (chest, sleeves and hands organized as it shows them).",
@@ -95,11 +100,11 @@ def fidelity(invariants: list[str] | None, where: str | None) -> list[dict]:
 
 def rules(c: contracts.Contract, pal: Palette | None, facing: str, mode: str, listed: int, swatch: int | None,
           invariants: list[str] | None = None, where: str | None = None, max_colors: int | None = None,
-          tones: int | None = None) -> list[dict]:
+          tones: int | None = None, animated: bool = False) -> list[dict]:
     if mode not in MODES:
         raise ValueError(f"modo desconhecido: {mode} (use {', '.join(MODES)})")
     faithful = mode in FAITHFUL
-    out = [camera(c, facing, faithful), outline(c), shading(c, faithful, tones),
+    out = [camera(c, facing, faithful, animated), outline(c), shading(c, faithful, tones),
            colors(pal, c, listed, swatch, faithful, max_colors)]
     return out + (fidelity(invariants, where) if faithful else [])
 
