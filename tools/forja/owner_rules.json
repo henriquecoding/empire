@@ -1,0 +1,244 @@
+{
+  "schema": "forja.owner_rules/1",
+  "owner": "Henrique",
+  "date": "2026-10-30",
+  "precedence": "Decisões explícitas mais recentes do dono e conceitos escolhidos prevalecem sobre regras genéricas, propostas históricas e avaliações do assistente.",
+  "required_reading": [
+    "AGENTS.md",
+    "docs/art/OWNER_RULES.md",
+    "docs/art/CHARACTER_PRODUCTION_GUIDE.md",
+    "docs/art/PIXEL_ART_STUDY_GUIDE.md",
+    "docs/art/ASEPRITE_WORKFLOW.md",
+    "docs/art/FORJA.md"
+  ],
+  "review_checks": ["authority", "native_grid", "proportions", "contour", "hands_grip", "face", "equipment_shape", "materials"],
+  "rules": [
+    {
+      "id": "authority",
+      "rule": "Conceito escolhido é a autoridade. Não substituir identidade por um sprite reduzido, rejeitado ou em revisão; corrigir defeitos conhecidos sem copiar o erro.",
+      "prompt": "Keep the owner's selected concept as identity authority. Never let a rejected, reduced or unreviewed sprite replace it, even as a density guide. Repair only documented reference defects.",
+      "source": {
+        "date": "2026-10-26",
+        "author": "Henrique",
+        "quote": "o conceito e o resultado final devem ser muito próximos ou quase iguais"
+      }
+    },
+    {
+      "id": "native_grid",
+      "rule": "Planejar o desenho na grade final: tropas e escudeiros atuais em 64×64; imperadores grandes do catálogo, Rei e Arqueiro Real em 80×80. Arqueiro de tropa é distinto. Redução com perda é diagnóstico, não sprite pronto.",
+      "prompt": "Design on the final native grid, with the class and canvas from the character contract: regular archer troop 64x64, royal archer and king 80x80. Lossy reduction is diagnostic only; redraw native clusters instead of shrinking a detailed illustration.",
+      "source": {
+        "date": "2026-10-28",
+        "author": "Henrique",
+        "quote": "O arqueiro tropa deve ser moldado em 64x64 pois é uma tropa"
+      }
+    },
+    {
+      "id": "proportions",
+      "rule": "Separar tamanho do ficheiro, área opaca, escala no mundo e espaço reservado a rosto, mãos e objetos. Aproveitar a grade sem esticar a figura nem normalizar corpos diferentes.",
+      "prompt": "Plan useful silhouette, face, hands and equipment before detail. Canvas dimensions alone do not prove native detail or good use of space. Keep distinct body proportions; do not stretch art to fill a square.",
+      "source": {
+        "date": "2026-10-30",
+        "author": "Henrique",
+        "quote": "os personagens não parecem ter 80x80 ou 64x64 parecem ter menos"
+      }
+    },
+    {
+      "id": "contour",
+      "rule": "Contorno de personagem com intenção de 1 px; rever escadas, junções, pixels duplos e espessura a 1×. Não declarar estilo resolvido por dilatação automática ou apagar pixels expressivos indiscriminadamente.",
+      "prompt": "Review the one-native-pixel silhouette by hand at 1x: deliberate staircase rhythm, clean joins, no accidental doubled pixels or thick corners. Automatic dilation is not finished pixel-art contour design. Preserve intentional eyes and highlights.",
+      "source": {
+        "date": "2026-10-30",
+        "author": "Henrique",
+        "quote": "as bordas não foram feitas pensadas para o estilo pixel art, estão com pixels duplos"
+      }
+    },
+    {
+      "id": "hands_grip",
+      "rule": "Mãos com anatomia, dedos legíveis, punho, apoio, peso e oclusão. Encostar mão ao objeto não prova pega correta. Rever os dois como um desenho conjunto.",
+      "prompt": "Draw hands and the held object together: readable fingers, wrist, weight, support, grip and front/back occlusion. Pixel contact alone does not prove a natural functional grip.",
+      "source": {
+        "date": "2026-10-30",
+        "author": "Henrique",
+        "quote": "a poção nao é mais redonda e não se encaixa bem na mão"
+      }
+    },
+    {
+      "id": "face",
+      "rule": "Preservar expressão, olhar, pálpebras, sobrancelhas, nariz na família da pele, assimetria, boca, dentes e pelos do conceito. Contagem de dentes ou pinos do candidato não substituem personalidade; barba/bigode persistem no dano.",
+      "prompt": "Preserve the exact facial acting and personality: gaze, eyelids, brows, skin-family nose, mouth asymmetry, teeth and facial hair. Tooth counts or candidate-derived pins alone are not expression fidelity. Keep beard and moustache through damage states.",
+      "source": {
+        "date": "2026-10-30",
+        "author": "Henrique",
+        "quote": "a expressão no rosto está mal"
+      }
+    },
+    {
+      "id": "equipment_shape",
+      "rule": "Objeto completo e funcional: poção com bojo redondo, gargalo, aro, rolha, volume e brilho; forma contra conceito, não apenas envelope ou molde novo. Dupla usa mesmo tamanho absoluto. Armas sem partes duplicadas, tortas ou ausentes.",
+      "prompt": "For equipment present in the selected concept, keep its exact shape and function, not just its bounding box. Keep a round potion bulb with its neck, lip, cork, volume and highlight; for the alchemist pair the flask keeps the same absolute size. Review grip and roundness against the concept; no improvised substitute mold, duplicate blades or broken shafts. Do not add equipment absent from the concept.",
+      "source": {
+        "date": "2026-10-29",
+        "author": "Henrique",
+        "quote": "objetos na mão como a poção nao parece mais a poção"
+      }
+    },
+    {
+      "id": "materials",
+      "rule": "Cores e planos de luz preservam materiais e agrupamentos. Não impor teto arbitrário de 24 cores ou limpeza que apague olhos, dentes, detalhes pequenos e brilhos. Rampa proposta não é paleta de runtime aprovada.",
+      "prompt": "Keep concept materials, light planes and coherent pixel clusters. Do not impose an arbitrary 24-color cap or erase meaningful pupils, teeth and highlights. Distinguish a proposed study ramp from an approved runtime palette.",
+      "source": {
+        "date": "2026-10-25",
+        "author": "Henrique",
+        "quote": "a forja gera pixels disconexos dos outros atrapalhando visualmente a suavidade e beleza da arte"
+      }
+    },
+    {
+      "id": "revisions",
+      "rule": "Respeitar design aceito e rejeições mais recentes. Horta é humana e o nabo é colhido; não criar personagens-planta. Não substituir escudeiro real já definido nem promover conceitos rejeitados.",
+      "prompt": "Honor the latest accepted designs and rejections. Horta is a human farming civilization; the turnip is harvested produce, not a plant body. Do not replace the already-established royal squire.",
+      "source": {
+        "date": "2026-10-28",
+        "author": "Henrique",
+        "quote": "nao quero personagens plantas"
+      }
+    },
+    {
+      "id": "animations",
+      "rule": "Resolver poses-chave, intermediários, articulações, apoio e peso; não simular animação movendo ou rodando partes rígidas. Braços e equipamento não desaparecem; flores crescem individualmente, em ordem orgânica aleatória; Sombra e bailarina mantêm a direção aceita.",
+      "prompt": "For animations, draw key poses and meaningful in-betweens with joints, support and weight. Do not rotate rigid cutouts as a substitute. Keep arms and equipment visible; flowers grow individually and organically, preserving the accepted Shadow and dancer design.",
+      "source": {
+        "date": "2026-10-18",
+        "author": "Henrique",
+        "quote": "cada flor deve ser crescida aleatóriamente uma a uma para parecer ser organico"
+      }
+    },
+    {
+      "id": "scene_scale",
+      "rule": "Cenários e construções seguem a régua real dos atores, camadas, acessos inferiores e continuidade. Animais pequenos permanecem menores que os grandes; textura e densidade não destroem leitura.",
+      "prompt": "Build scenery against actual actor scale, layered continuity and usable lower paths, ports and water. Keep small animals smaller than large animals. Pixel texture and density must support readability.",
+      "source": {
+        "date": "2026-10-28",
+        "author": "Henrique",
+        "quote": "os cenários sao em pixel arte"
+      }
+    },
+    {
+      "id": "delivery_gate",
+      "rule": "Consultar regras e autoridade antes de produzir e antes de entregar. Rever conceito, fonte e candidato a 1× e ampliação inteira, em claro/escuro. Fidelidade pendente ou falha não vira pronta por passar dimensões, exportação Aseprite ou testes; comparar regressões controlando entrada e parâmetros.",
+      "prompt": "Read the owner rules and exact concept before production and again before handoff. Review reference, source and final sprite at 1x and integer zoom on light/dark backgrounds. Export validity is not artistic fidelity; unresolved or failed reviews cannot be presented as ready. Compare regressions with the same inputs and parameters.",
+      "source": {
+        "date": "2026-10-30",
+        "author": "Henrique",
+        "quote": "coloque regras na forja para que sejam consultadas antes de entregar as coisas"
+      }
+    }
+  ],
+  "rejected_native_candidates": [
+    {
+      "character": "corsair_empress",
+      "pixels_sha256": "e2bea0b817afa02d3d5a88d8b2683dce08b72d13d425523281355ca51eb01a51",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "corsair_squire",
+      "pixels_sha256": "d2942e9bd9fccd3997feca55b1861a72b8b2ab6bab6d8c0df1f334efb984086e",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "miner_emperor",
+      "pixels_sha256": "8aeae34335f7176d52d91f7b9e6298e69485ceb4ff052da5ddffb5b5bef10d7b",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "miner_squire",
+      "pixels_sha256": "785a2dff32ceb60ae1d64951cb4c34a20c4aa8bd1ac3e00d45b4ede79be3e0df",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "alchemist_emperor",
+      "pixels_sha256": "4cec7da82fbe57b2b0fe219ade4b62cd9a0578a3572425bc6b42d6f4a58d79f9",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "alchemist_squire",
+      "pixels_sha256": "acc6b46fb62b7587bcf3475958264c640978f922365c299d3a4298f4b9fa868c",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "cook",
+      "pixels_sha256": "1995bba181ab6c799fd7020504f7245221a1e6e40e098644c2a139824f625ccb",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "diplomat_original",
+      "pixels_sha256": "16f7c62994b50da9be400e537d68e5937b398e4af933fee6816fe9634031ebb2",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "diplomat_08",
+      "pixels_sha256": "fd588e6ca72b0806fc56eca8cf1f1cbb81ff58b96108d70eab1248b02617ab57",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "builder",
+      "pixels_sha256": "279b38d5e7ff8cd18661ec93de2a8982b76649d0d954b01bd81409f9fca0a69d",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "mercenary",
+      "pixels_sha256": "ab53de229956fc83987283ea1aa17984553d3d8a68b079a3056cd8bda7935c8f",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "farmer",
+      "pixels_sha256": "e42446b865805fb9c25dc4a88d57b0c8c22a3d3d0a44a9335f590d5a2fc49daf",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "steward",
+      "pixels_sha256": "45bfd418630bcac4dc0e2492dc6702819690bce09fd630a059933424a05ae7a1",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "root_berserker",
+      "pixels_sha256": "161119e7ba9cb91afacb32115fa287a6f79d2fc050b634f46dc57a0f68660ce7",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    },
+    {
+      "character": "spearman",
+      "pixels_sha256": "29e3a42a95fa34b66f7b29409ffbd6e544208e82466e4008a96b7e015287bcbe",
+      "date": "2026-10-30",
+      "decided_by": "Henrique",
+      "reason": "Lote de 30/10 rejeitado: maos, bordas duplicadas, expressao, forma/pega da pocao e resolucao aparente. O conceito original permanece a autoridade."
+    }
+  ]
+}

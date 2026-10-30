@@ -11,7 +11,6 @@ from . import lineage, production, quantize, resample, scale, signals
 from .cli import box, command, out_path, pair
 from .imageops import binarize, open_rgba, upscale
 
-
 def _options(args) -> pipeline.Options:
     opts = pipeline.Options(kind=args.kind, palette=args.palette, colors=args.colors, scale=args.scale,
                             cells=args.cells, bg=args.bg, tolerance=args.tolerance, method=args.method,
@@ -25,6 +24,7 @@ def _options(args) -> pipeline.Options:
     lineage.apply(opts, args)
     if getattr(args, "expect", None):
         exp = json.loads(Path(args.expect).read_text(encoding="utf-8"))
+        opts.owner_rules = exp.get("owner_rules")
         opts.kind = args.kind if args.kind != "free" else exp.get("kind", opts.kind)
         selected = production.resolve("", opts.kind, {"kind": exp.get("kind"), "role": exp.get("role")})
         if selected["errors"]:

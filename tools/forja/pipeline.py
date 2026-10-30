@@ -44,6 +44,7 @@ class Options:
     origin_grid: tuple[int, int] | None = None  # e a grade pedida; so com ela medida a figura fica onde a grade a pos
     lineage: dict | None = None  # FORJA-15: a cadeia da etapa que produziu esta entrada (o JSON do forge anterior)
     native_root: bool = False  # e a entrada ja nativa e a origem da cadeia (desenho nativo), nao uma recuperacao
+    owner_rules: dict | None = None  # regras consultadas pelo pedido; conservadas na cadeia
     crop_at: tuple[int, int] | None = None  # interno: onde o recorte do snap comecava na grade recebida
     useful_box: tuple[int, int, int, int] | None = None
 

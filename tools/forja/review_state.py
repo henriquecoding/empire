@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import face, fidelity, lineage, production, refs, signals, visual_review
+from . import delivery_review, face, fidelity, lineage, production, refs, signals, visual_review
 from .equipment import image_sha
 from .imageops import on_background, upscale
 
@@ -112,10 +112,16 @@ def review(ch: dict, candidate: Image.Image, reg: dict | None = None, lint_resul
                               [r["id"] for r in req if not r.get("target_box")])
     blocked = [k for k in STATES if states[k]["status"] == "blocked"] + (
         ["inherited_losses"] if release["status"] == "blocked" else [])
-    done = all(states[k]["status"] == "pass" for k in STATES) and release["status"] == "pass"
+    protocol = delivery_review.check(ch, candidate, forge, visual)
+    if protocol["status"] == "blocked":
+        blocked.append("owner_rules")
+    done = all(states[k]["status"] == "pass" for k in STATES) and release["status"] == "pass" and protocol["ready_for_review"]
+    ready = protocol["ready_for_review"] and release["status"] == "pass" and all(
+        states[k]["status"] == "pass" for k in STATES if k != "native_master_approval")
     return {"character": ch["id"], "pose": ch["pose"], "candidate_pixels_sha256": image_sha(candidate),
             "states": states, "summary": {k: states[k]["status"] for k in STATES}, "blocked": blocked,
             "release": release, "deliverable": done, "release_ready": done,
+            "production_review": protocol, "ready_for_review": ready,
             "raster_valid": runtime["status"] == "pass", "label": "release" if done else "blocked" if blocked else "study",
             "technical_pass": runtime["status"] == "pass", "technical_pass_implies_identity_pass": False,
             "note": "a Forja nao preenche a identidade nem a aprovacao: sao de quem reve e do dono; um estudo "

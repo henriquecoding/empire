@@ -1,6 +1,11 @@
 """As instrucoes que o servidor MCP da ao cliente no initialize: o fluxo da Forja, por ordem."""
 
 INSTRUCTIONS = (
+    "ANTES DE PRODUZIR OU ENTREGAR: consultar forja_regras e a autoridade de forja_elenco. "
+    "As regras de Henrique em docs/art/OWNER_RULES.md prevalecem sobre propostas genericas e avaliacoes do agente. "
+    "Conservar --expect e --lineage. Antes de apresentar o resultado, forja_entrega exige a revisao de maos/pega, "
+    "rosto, contorno, objeto e grade util ligada aos pixels, ao conceito e a revisao atual das regras. "
+    "Reducoes sao diagnosticos; tamanho, contacto e exportacao Aseprite nao aprovam arte. "
     "Forja: pixel art para o jogo Empire a partir de imagens geradas. Fluxo: (1) forja_prompt compila o pedido "
     "(prompt, tamanho, guias, expect.json) e diz o que anexar, por ordem; com gerador ligado, forja_plan valida o "
     "pedido sem rede; (2) gere a imagem com a tua ferramenta (ou forja_generate/forja_auto com chave e --max-calls: "

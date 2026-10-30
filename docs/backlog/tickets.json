@@ -3287,5 +3287,21 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-16": {
+  "title": "regras do dono consultadas antes de produzir e entregar",
+  "porque": "As observações e regras do dono não eram consultadas de forma versionada antes de gerar e entregar; os mesmos defeitos de mãos, contorno, rosto, poção e grade voltaram.",
+  "spec": [
+   "docs/art/OWNER_RULES.md",
+   "docs/adr/0102-a-forja-consulta-as-regras-do-dono-antes-de-entregar.md",
+   "docs/art/FORJA.md"
+  ],
+  "depende": "FORJA-15",
+  "feito": "Regras e rejeições versionadas; consulta CLI/MCP, prompts e expect ligados ao conceito; cadeia conserva a origem; ficha visual obrigatória e portão forja entrega; testes de regressão.",
+  "fora": "Nova geração ou aprovação de sprites e alterações ao runtime.",
+  "estado": "feito — regras, consulta nos pedidos e portão de entrega implementados; validação no `make forja` e na CI do PR",
+  "horas": "—",
+  "passos": [],
+  "notas": []
  }
 }

@@ -13,7 +13,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from . import fidelity, visual_review as vr
+from . import delivery_review, fidelity, visual_review as vr
 from .cli import command, out_path
 from .equipment import image_sha
 from .imageops import on_background, open_rgba, upscale
@@ -27,6 +27,7 @@ def template(image: Image.Image, phase: str, ch: dict | None = None) -> dict:
                         "target_canvas": ch.get("target_canvas"), "authority_crop_xyxy": ch.get("authority_crop_xyxy")},
             "observer": {"author": None, "model": None, "method": None, "date": None},
             "expected_equipment": ch.get("expected_equipment", []), "regions": {}, "anchors": {}, "findings": [],
+            "owner_rules": delivery_review.template(ch, image) if phase == "candidate" and ch else None,
             "invariant_checks": [{"invariant": i, "status": "uncertain", "evidence": ""}
                                  for i in ch.get("required_invariants", [])],
             "repair_claims": [{"issue": i["id"], "status": "uncertain", "box": None, "evidence": ""}

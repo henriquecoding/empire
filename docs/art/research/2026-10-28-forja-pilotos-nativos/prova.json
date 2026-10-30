@@ -102,12 +102,14 @@
    "lint_errors": [],
    "delivery": {
     "raster_valid": true,
+    "ready_for_review": false,
     "release_ready": false,
+    "diagnostic_only": false,
     "label": "study",
     "state": "candidate_in_review",
     "artistic_approval": "pending",
     "critical_losses": 0,
-    "closure": "forja fidelity --candidate --forge-json: runtime, sinais, identidade, mestre e perdas herdadas"
+    "closure": "forja fidelity e forja entrega: regras, consulta, revisao visual, cadeia e aprovacao do mestre"
    },
    "authoring": "recuperado da grade da prancha + patches nativos; nao gerado",
    "artistic_approval": "pending (Henrique)",
@@ -224,12 +226,14 @@
    "lint_errors": [],
    "delivery": {
     "raster_valid": true,
+    "ready_for_review": false,
     "release_ready": false,
+    "diagnostic_only": false,
     "label": "study",
     "state": "candidate_in_review",
     "artistic_approval": "pending",
     "critical_losses": 0,
-    "closure": "forja fidelity --candidate --forge-json: runtime, sinais, identidade, mestre e perdas herdadas"
+    "closure": "forja fidelity e forja entrega: regras, consulta, revisao visual, cadeia e aprovacao do mestre"
    },
    "authoring": "recuperado da grade da prancha + patches nativos; nao gerado",
    "artistic_approval": "pending (Henrique)",
@@ -358,12 +362,14 @@
    "lint_errors": [],
    "delivery": {
     "raster_valid": true,
+    "ready_for_review": false,
     "release_ready": false,
+    "diagnostic_only": false,
     "label": "study",
     "state": "candidate_in_review",
     "artistic_approval": "pending",
     "critical_losses": 0,
-    "closure": "forja fidelity --candidate --forge-json: runtime, sinais, identidade, mestre e perdas herdadas"
+    "closure": "forja fidelity e forja entrega: regras, consulta, revisao visual, cadeia e aprovacao do mestre"
    },
    "authoring": "recuperado da grade da prancha + patches nativos; nao gerado",
    "artistic_approval": "pending (Henrique)",

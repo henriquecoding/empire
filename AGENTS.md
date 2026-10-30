@@ -3,6 +3,17 @@
 Vale para qualquer agente. O CLAUDE.md tem tres linhas a apontar para aqui.
 Se leres um unico ficheiro deste repositorio, e este.
 
+## Forja — regras do dono antes de produzir e antes de entregar
+
+Ler [docs/art/OWNER_RULES.md](docs/art/OWNER_RULES.md) e consultar `python3 -m tools.forja regras`
+antes de gerar, desenhar, adaptar ou apresentar arte. Vale para qualquer agente e gerador.
+Consultar o elenco e o conceito escolhido; candidatos rejeitados nao sao guias de identidade ou densidade.
+Conservar `expect` e `--lineage`: dimensoes 64/80 e exportacao valida nao provam autoria na grade nativa.
+Reducao com perda fica como diagnostico, nunca entrega. Rever a imagem exata a 1x, ampliacao inteira,
+fundos claro/escuro e lado a lado com o conceito: contorno sem pixels duplos acidentais, maos/pega,
+expressao, forma do objeto, proporcoes e materiais. Preencher a ficha visual e correr `forja entrega`
+antes de apresentar. `ready_for_review` exige evidencia; aprovar o mestre continua a pertencer ao dono.
+
 ## O que e
 Kingdom-builder 2D em pixel art. Godot 4.7.2 (o pin de .godot-version), GDScript. Mundo 1.5D com tres
 faixas verticais: AERIAL, SURFACE, UNDERGROUND.
