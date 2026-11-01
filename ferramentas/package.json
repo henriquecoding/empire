@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
-    "@electric-sql/pglite": "0.5.8",
+    "@electric-sql/pglite": "0.5.13",
     "playwright": "1.64.0"
   },
   "name": "empire-qa",
